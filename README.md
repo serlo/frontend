@@ -83,6 +83,10 @@ const Block = styled.div`
 `
 ```
 
+This will lead to following result:
+
+![grafik](https://user-images.githubusercontent.com/13507950/75994301-0ad8bd00-5efb-11ea-9c20-175f54b68969.png)
+
 More examples will follow in this guide.
 
 ## Styling (the bad, but sometimes necessary way)
@@ -113,6 +117,80 @@ export const GlobalStyle = createGlobalStyle`
 `
 ```
 
+## Code style
+
+We use Prettier to auto-format our code: `{"semi": false, "singleQuote": true}`.
+
 ## Assets
 
 Everything within the `public`-folder is automatically accessible. But your images and files, fonts, ... into this directory.
+
+## Fonts
+
+The beautiful `Karmilla` font face is available by default. To include other fonts, you can add them as assets and reference them using css (`@font-face{...}`).
+
+## Responsive designs
+
+The recommend way is using media queries. If you need more fine-grained control, react-socks is included. You can enable components depending on the screen width or access the width directly:
+
+```tsx
+import { Breakpoint, useCurrentWidth } from 'react-socks'
+
+export default function HelloWorld(props) {
+  const width = useCurrentWidth()
+  return (
+    <>
+      <Breakpoint small down>
+        <p style={{ textAlign: 'center' }}>Mobile only!</p>
+      </Breakpoint>
+      <Breakpoint medium up>
+        <p style={{ textAlign: 'center' }}>Bigger Screens</p>
+      </Breakpoint>
+      <p>Current width: {width}</p>
+    </>
+  )
+}
+```
+
+## Dependencies
+
+Add packages with the command `yarn add packagename` or `yarn add -D packagename`. After installing the package, change the version in the `package.json` to the lowest necessary version, e.g. `^2.0.0` or `^16.8.0`. This will improve compatibility.
+
+The difference between normal dependencies and devDependencies is probably not crucial. Rule of thumb: If something is run on the client, than add it as normal dependencies.
+
+## Flexbox
+
+[Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/) is great and can easily be written in css. Currently no library here.
+
+## Icons
+
+We are including Fontawesome 5 free and brand icons. Using them is straight forward:
+
+```tsx
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import styled from 'styled-components'
+
+export default function HelloWorld(props) {
+  return (
+    <StyledParagraph>
+      <FontAwesomeIcon icon="coffee" />
+    </StyledParagraph>
+  )
+}
+
+const StyledParagraph = styled.p`
+  color: brown;
+  text-align: center;
+`
+```
+
+Important: To reduce bundle size, we add every icon once to our library before it can be references by string. Look at `src/iconlibrary.tsx` and add the icon there:
+
+```tsx
+import { faBars, faUser, faCoffee } from '@fortawesome/free-solid-svg-icons'
+import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
+
+export function myLibrary() {
+  return [faBars, faUser, faCoffee, faTwitter, faFacebook]
+}
+```
