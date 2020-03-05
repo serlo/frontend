@@ -194,3 +194,14 @@ export function myLibrary() {
   return [faBars, faUser, faCoffee, faTwitter, faFacebook]
 }
 ```
+
+## Deployment
+
+Everytime you push to the master branch or merge a pull request, the frontend is built and deployed. To build the frontend on your local machine, run
+
+```
+yarn build
+yarn start
+```
+
+and access the application through `localhost:3000`. The build also gives you a nice overview of the project's size.
