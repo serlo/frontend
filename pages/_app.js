@@ -8,6 +8,8 @@ config.autoAddCss = false
 import { myLibrary } from '../src/iconlibrary'
 import { GlobalStyle } from '../src/globalstyles'
 import { BreakpointProvider } from 'react-socks'
+import { ThemeProvider } from 'styled-components'
+import { theme } from '../src/theme'
 
 library.add.apply(library, myLibrary())
 
@@ -18,7 +20,9 @@ class MyApp extends App {
       <>
         <GlobalStyle />
         <BreakpointProvider>
-          <Component {...pageProps} />
+          <ThemeProvider theme={theme}>
+            <Component {...pageProps} />
+          </ThemeProvider>
         </BreakpointProvider>
       </>
     )

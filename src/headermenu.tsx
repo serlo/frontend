@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import * as React from 'react'
-import { StyledIcon } from './icon'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default function Menu(props) {
   return (
@@ -19,8 +19,8 @@ const Entry = props => {
     <>
       <Li>
         <Link onClick={() => setOpen(!isOpen)}>
-          {entry.title}
-          {entry.children && <StyledIcon src={'/img/caret-down.svg'} />}
+          {entry.title}{' '}
+          {entry.children && <FontAwesomeIcon icon="caret-down" />}
         </Link>
         {isOpen && entry.children && (
           <SubMenu>

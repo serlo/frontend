@@ -47,7 +47,7 @@ export default function Content(props) {
 Content.getInitialProps = async () => {
   const url = `https://somedomain.org/1234`
   const res = await fetch(url)
-  return {data: res.json()}
+  return { data: res.json() }
 }
 ```
 
@@ -205,3 +205,12 @@ yarn start
 ```
 
 and access the application through `localhost:3000`. The build also gives you a nice overview of the project's size.
+
+## Theming
+
+You can define global css vars in our theme. This theme is available to all styled-components. Tools from polished can be used, too. Look at `src/theme.tsx` for more information.
+
+## Open questions
+
+- We have a lot of css vars, put them into theming?
+- How to structure components?

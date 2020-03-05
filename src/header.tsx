@@ -1,13 +1,17 @@
 import styled from 'styled-components'
 import Menu from './headermenu'
 import { menudata } from './menudata'
+import Logo from './logo'
+import { SearchInput } from './searchinput'
 
 export default function Header() {
   return (
     <TopNavWrap>
       <PaddedBox>
         <StyledMenuWrapper links={menudata}></StyledMenuWrapper>
+        <Logo subline={'Die freie Lernplattform'} />
       </PaddedBox>
+      <SearchInput />
     </TopNavWrap>
   )
 }
@@ -29,14 +33,6 @@ const PaddedBox = styled.div`
   flex-direction: column;
   padding: 24px;
 `
-
-const StyledMenu = props => {
-  return (
-    <StyledMenuWrapper>
-      <Menu {...props} />
-    </StyledMenuWrapper>
-  )
-}
 
 const StyledMenuWrapper = styled(Menu)`
   display: none;
