@@ -131,7 +131,13 @@ The beautiful `Karmilla` font face is available by default. To include other fon
 
 ## Responsive designs
 
-The recommend way is using media queries. If you need more fine-grained control, react-socks is included. You can enable components depending on the screen width or access the width directly:
+The recommend way is using media queries.
+
+```tsx
+EXAMPLE HERE
+```
+
+Onyl if you need more fine-grained control, use react-socks. You can enable components depending on the screen width or access the width directly:
 
 ```tsx
 import { Breakpoint, useCurrentWidth } from 'react-socks'
@@ -210,7 +216,14 @@ and access the application through `localhost:3000`. The build also gives you a 
 
 You can define global css vars in our theme. This theme is available to all styled-components. Tools from polished can be used, too. Look at `src/theme.tsx` for more information.
 
-## Open questions
+## CSS Reset
 
-- We have a lot of css vars, put them into theming?
-- How to structure components?
+According to this [article](https://jaydenseric.com/blog/forget-normalize-or-resets-lay-your-own-css-foundation), laying your own css foundation is doable and nowadays the preferred way. The file `globalstyles.tsx` contains our css global styles for some kind of good default without bloat.
+
+## onclickoutside
+
+! add example here.
+
+## Components
+
+? How to structure components?

@@ -8,7 +8,7 @@ export const menudata = [
       { url: '#', title: 'Mathematik' },
       { url: '#', title: 'Biologie' },
       { url: '#', title: 'Angewandte Nachhaltigkeit' },
-      { url: '#', title: 'informatik' },
+      { url: '#', title: 'Informatik' },
       { url: '#', title: 'Chemie' },
       { url: '#', title: 'Physik' },
       { url: '#', title: 'Fächer im Aufbau' }

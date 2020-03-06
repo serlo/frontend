@@ -1,42 +1,31 @@
 import styled from 'styled-components'
-import Menu from './headermenu'
+import { Menu } from './desktopmenu'
 import { menudata } from './menudata'
 import Logo from './logo'
 import { SearchInput } from './searchinput'
 
 export default function Header() {
   return (
-    <TopNavWrap>
-      <PaddedBox>
-        <StyledMenuWrapper links={menudata}></StyledMenuWrapper>
+    <BlueHeader>
+      <PaddedDiv>
+        <DesktopMenu links={menudata}></DesktopMenu>
         <Logo subline={'Die freie Lernplattform'} />
-      </PaddedBox>
+      </PaddedDiv>
       <SearchInput />
-    </TopNavWrap>
+    </BlueHeader>
   )
 }
 
-const TopNavWrap = styled.header`
-  background-color: rgb(240, 247, 251);
-  padding: 0;
-  align-items: start;
-  position: static;
-`
-const PaddedBox = styled.div`
-  display: flex;
-  box-sizing: border-box;
-  outline: currentcolor none medium;
-  max-width: 100%;
-  margin: 0px;
-  min-width: 0px;
-  min-height: 0px;
-  flex-direction: column;
-  padding: 24px;
+const BlueHeader = styled.header`
+  background-color: ${props => props.theme.colors.bluewhite};
 `
 
-const StyledMenuWrapper = styled(Menu)`
-  display: none;
-  @media screen and (min-width: 52rem) {
-    display: block;
+const PaddedDiv = styled.div`
+  padding: 2rem 1.5rem 1.5rem;
+`
+
+const DesktopMenu = styled(Menu)`
+  @media screen and (max-width: ${props => props.theme.breakpoints.sm}) {
+    display: none;
   }
 `
