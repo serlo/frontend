@@ -23,7 +23,9 @@ const List = styled.ul`
   list-style-type: none;
 `
 
-const Entry = props => {
+const EntryRaw = props => {
   const { data, className } = props
-  return <p>Hallo</p>
+  return <p className="className">{data.title}</p>
 }
+
+const Entry = styled(EntryRaw)``
