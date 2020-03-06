@@ -27,17 +27,18 @@ const Entry = props => {
   const hasChildren = link.children !== undefined
   return (
     <Li>
-      <Link onClick={() => setOpen(!isOpen)} active={isOpen && hasChildren}>
+      <Link
+        onMouseDown={!isOpen ? () => setOpen(!isOpen) : undefined}
+        active={isOpen && hasChildren}
+      >
         {link.title} {hasChildren && <FontAwesomeIcon icon="caret-down" />}
       </Link>
       {isOpen && link.children && (
         <SubMenu
           children={link.children}
           onClose={() => {
-            setTimeout(() => setOpen(false), 50)
+            setOpen(false)
           }}
-          stopPropagation={true}
-          preventDefault={true}
         />
       )}
     </Li>
