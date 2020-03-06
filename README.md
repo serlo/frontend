@@ -224,6 +224,10 @@ According to this [article](https://jaydenseric.com/blog/forget-normalize-or-res
 
 ! add example here.
 
+## polished
+
+! use some css helper functions
+
 ## Components
 
 ? How to structure components?

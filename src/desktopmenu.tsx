@@ -93,6 +93,7 @@ const SubList = styled.ul`
   box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px;
   display: block;
   overflow: auto;
+  z-index: 5;
 `
 
 const SubLi = styled.li`

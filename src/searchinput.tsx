@@ -1,8 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { lighten } from 'polished'
 
 export const SearchInput = props => {
+  const { className, value } = props
+
   const [focused, setFocused] = React.useState(false)
   const inputRef = React.useRef(null)
 
@@ -16,14 +19,14 @@ export const SearchInput = props => {
   }
 
   return (
-    <_Wrap id="searchform" name="searchform">
+    <SearchForm id="searchform" name="searchform" className={className}>
       <_Input
         type="text"
         name="searchtext"
         ref={inputRef}
         placeholder="Suche"
         aria-label="Suche"
-        value={props.value}
+        value={value}
         focused={focused}
         onFocus={() => {
           setFocused(true)
@@ -38,68 +41,66 @@ export const SearchInput = props => {
         type="submit"
         focused={focused}
       >
-        <FontAwesomeIcon icon="search" />
+        <FontAwesomeIcon icon="search" size={'lg'} />
       </_Button>
-    </_Wrap>
+    </SearchForm>
   )
 }
 
-const _Wrap = styled.form`
-  background-color: rgb(186, 219, 238)};
+const SearchForm = styled.form`
+  background-color: ${props => lighten(0.1, props.theme.colors.lighterblue)};
+
+  @media screen and (min-width: ${props => props.theme.breakpoints.sm}) {
+    position: absolute;
+    top: 8rem;
+    right: 2rem;
+    height: 2.2rem;
+    width: 14rem;
+    background-color: transparent;
+    border-radius: 1.1rem;
+    transition: all 0.4s ease;
+    justify-content: flex-end;
+  }
+
   width: 100%;
   display: flex;
-  margin-top: 0;
+  justify-content: center;
   transition: background-color 0.4s ease;
 
   &:focus-within {
-    background-color: rgb(186, 219, 238);
+    background-color: ${props => lighten(0.1, props.theme.colors.lighterblue)};
   }
 
-  @media (min-width: 52rem) {
-    width: 7rem;
-    position: absolute;
-    top: 7.95rem;
-    right: 2rem;
-    background-color: transparent;
-    border-radius: 1.1rem;
-    height: 2.2rem;
-    margin-top: 0;
-
-    transition: all 0.4s ease;
-
-    &:focus-within {
-      width: 12rem;
-      background-color: rgb(186, 219, 238);
-    }
-  }
-
-  @media (min-width: 75rem) {
+  @media screen and (min-width: ${props => props.theme.breakpoints.lg}) {
     right: 1.7rem;
     margin-top: -0.3rem;
     margin-left: auto;
   }
 `
+
 const _Button = styled.button<any>`
   background-color: ${props =>
-    props.focused ? 'rgb(0, 126, 193)' : 'rgb(186, 219, 238)'};
+    props.focused
+      ? props.theme.colors.brand
+      : lighten(0.1, props.theme.colors.lighterblue)};
   transition: background-color 0.2s ease-in;
-  min-width: 2.5rem;
+
+  color: ${props => (props.focused ? 'white' : props.theme.colors.brand)};
+
   height: 2.5rem;
+  min-width: 2.5rem;
+
   border: 0;
-  color: rgb(0, 126, 193);
-  color: ${props => (props.focused ? '#fff' : 'rgb(0, 126, 193)')};
-  border-radius: 0;
   outline: none;
   cursor: pointer;
 
-  &:hover {
-    background-color: rgb(0, 126, 193);
-    color: #fff;
+  :hover {
+    background-color: ${props => props.theme.colors.brand};
+    color: white;
   }
 
-  @media (min-width: 52rem) {
-    color: #fff;
-    top: 0;
+  @media (min-width: ${props => props.theme.breakpoints.sm}) {
+    color: white;
     padding: 0.1rem 0 0 0.1rem;
     min-width: 2.2rem;
     height: 2.2rem;
@@ -107,33 +108,36 @@ const _Button = styled.button<any>`
   }
 `
 const _Input = styled.input<any>`
-  color: rgb(0, 126, 193);
+  color: ${props => props.theme.colors.brand};
   font-weight: bold;
-  width: calc(100% - 3rem);
+  font-size: 1.15em;
+
   background-color: transparent;
+
+  flex-grow: 1;
+
   border: 0;
-  /* height: 2.5rem; */
-  padding-left: 3rem;
   outline: none;
+
+  margin-left: 3rem;
   cursor: ${props => (props.focused ? 'auto' : 'pointer')};
 
-  &::placeholder {
-    color: rgb(0, 126, 193);
-    outline: none;
+  ::placeholder {
+    color: ${props => props.theme.colors.brand};
   }
 
-  &:focus::placeholder {
+  :focus::placeholder {
     opacity: 0;
   }
 
-  @media (min-width: 52rem) {
-    padding: 0 0 0 0.8rem;
-    margin-top: -0.2rem;
-    &::placeholder {
-      color: rgb(186, 219, 238);
+  @media (min-width: ${props => props.theme.breakpoints.sm}) {
+    margin-left: 0;
+    padding-left: 0.5rem;
+    padding-right: 0.4rem;
+    width: 6rem;
+    ::placeholder {
+      color: ${props => props.theme.colors.lightblue};
       text-align: right;
-      padding-right: 1rem;
-      margin-top: -0.1rem;
     }
   }
 `
