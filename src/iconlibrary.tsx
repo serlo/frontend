@@ -3,7 +3,8 @@ import {
   faUser,
   faCoffee,
   faCaretDown,
-  faSearch
+  faSearch,
+  faTimes
 } from '@fortawesome/free-solid-svg-icons'
 import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
 
@@ -13,6 +14,7 @@ export function myLibrary() {
     faUser,
     faCoffee,
     faSearch,
+    faTimes,
     faCaretDown,
     faTwitter,
     faFacebook

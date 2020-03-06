@@ -222,7 +222,7 @@ According to this [article](https://jaydenseric.com/blog/forget-normalize-or-res
 
 ## onclickoutside
 
-! add example here.
+! add example here. take care: conflict between onclickoutside and original click handler, workaround with onMouseDown
 
 ## polished
 
@@ -230,4 +230,8 @@ According to this [article](https://jaydenseric.com/blog/forget-normalize-or-res
 
 ## Components
 
-? How to structure components?
+? How to structure components? Default to styled always?
+
+## States and hierarchies
+
+If you ever want to manipulate the dom of a sibling: don't do it! Push the state up the hierarchy instead, expose an onChange-handler and let the parent manipulate the sibling.
