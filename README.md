@@ -98,11 +98,42 @@ Visit `localhost:3000/helloworld`. Click on the text. Every click should toggle 
 
 ## Features
 
+### TypeScript
+
+We love types. They help us to maintain code and keep the codebase consistent. We also love rapid development and prototyping. You decide: Add your type declarations immediately as you code or later when the codebase stabilizes. The choice is up to you:
+
+```tsx
+// pages/helloworld.tsx
+
+function HelloWorld() {
+  return <Greeter title="Hello" subline="Welcome to the frontend!" />
+}
+
+interface GreeterProps {
+  title: string
+  subline?: string
+}
+
+function Greeter(props: GreeterProps) {
+  const { title, subline } = props
+  return (
+    <>
+      <h1>{title}</h1>
+      {subline && <small>{subline}</small>}
+    </>
+  )
+}
+
+export default HelloWorld
+```
+
+### Responsive Design
+
+Optimize pages for mobile and desktop.
+
 ---
 
 TODO below here
-
-### Typescript
 
 ## Typescript
 

@@ -9,7 +9,8 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "lint": "yarn tsc --noEmit"
+    "typecheck": "yarn tsc --noEmit",
+    "prettify": "yarn prettier --write \"{src,pages}/**/*.{js,tsx}\""
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.0.0",
@@ -30,6 +31,7 @@
     "@types/styled-components": "^5.0.0",
     "@zeit/next-css": "^1.0.0",
     "babel-plugin-styled-components": "^1.10.0",
+    "prettier": "^1.19.1",
     "react-is": "^16.8.0",
     "typescript": "^3.8.0",
     "webpack": "^4.4.0"

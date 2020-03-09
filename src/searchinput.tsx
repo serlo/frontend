@@ -136,7 +136,7 @@ const _Input = styled.input<{ focused: boolean }>`
     padding-left: 0.5rem;
     padding-right: 0.4rem;
     width: 6rem;
-    ::placeholder {
+    &::placeholder {
       color: ${props => props.theme.colors.lightblue};
       text-align: right;
     }

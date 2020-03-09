@@ -1,5 +1,11 @@
 import Header from './header'
 
 export default function Main(props) {
-  return <Header />
+  const { data } = props
+  return (
+    <>
+      <Header />
+      <div dangerouslySetInnerHTML={{ __html: data.content.content }} />
+    </>
+  )
 }

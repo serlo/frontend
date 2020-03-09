@@ -1,24 +1,20 @@
-import React from 'react'
-import styled from 'styled-components'
-
 function HelloWorld() {
-  return <ClickMeTitle title="Welcome to the frontend!" />
+  return <Greeter title="Hello" subline="Welcome to the frontend!" />
 }
 
-function ClickMeTitle(props) {
-  const { title } = props
-  const [clicked, setClicked] = React.useState(false)
+interface GreeterProps {
+  title: string
+  subline?: string
+}
+
+function Greeter(props: GreeterProps) {
+  const { title, subline } = props
   return (
-    <BigParagraph onClick={() => setClicked(!clicked)}>
-      {title + (clicked ? ' :)' : '')}
-    </BigParagraph>
+    <>
+      <h1>{title}</h1>
+      {subline && <small>{subline}</small>}
+    </>
   )
 }
-
-const BigParagraph = styled.p`
-  text-align: center;
-  font-size: 3em;
-  color: lightgreen;
-`
 
 export default HelloWorld
