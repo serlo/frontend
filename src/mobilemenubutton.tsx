@@ -1,12 +1,13 @@
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { lighten } from 'polished'
+import { faTimes, faBars } from '@fortawesome/free-solid-svg-icons'
 
 export default function MobileMenuButton(props) {
   const { open, onClick } = props
   return (
     <MenuButton onClick={onClick}>
-      <FontAwesomeIcon icon={open ? 'times' : 'bars'} size="2x" />
+      <FontAwesomeIcon icon={open ? faTimes : faBars} size="2x" />
     </MenuButton>
   )
 }

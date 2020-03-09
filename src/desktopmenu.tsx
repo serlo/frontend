@@ -77,6 +77,7 @@ const Link = styled.a<{ active?: boolean }>`
 // improve this one day
 const SubMenuInner: any = props => {
   const { children, onClose } = props
+  SubMenuInner.handleClickOutside = onClose
   return (
     <SubList>
       {children.map((entry, index) => {
