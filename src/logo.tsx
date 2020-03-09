@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { lighten } from 'polished'
 
 export default function Logo(props) {
+  const { subline } = props
   return (
     <>
       <h1>
@@ -9,10 +10,10 @@ export default function Logo(props) {
           <Image alt="Serlo" src={'/img/serlo-logo.svg'} />
         </a>
       </h1>
-      {!props.subline ? null : (
+      {!subline ? null : (
         <SublineH2>
           <SublineLink className="subline icon" href="#">
-            {props.subline}
+            {subline}
           </SublineLink>
         </SublineH2>
       )}
@@ -29,11 +30,11 @@ const SublineH2 = styled.h2`
   padding-left: 1.5rem;
   padding-top: 0.8rem;
 
-  @media screen and (min-width: 18rem) {
+  @media (min-width: 288px) {
     padding-left: 3.5rem;
   }
 
-  @media screen and (max-width: 15rem) {
+  @media (max-width: 240px) {
     padding-left: 0.5rem;
   }
 `

@@ -7,7 +7,7 @@ export const theme = {
     lighterblue: '#91c5e4'
   },
   breakpoints: {
-    sm: '50rem',
-    lg: '76rem'
+    sm: '800px',
+    lg: '1216px'
   }
 }

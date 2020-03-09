@@ -28,3 +28,5 @@ export const menudata = [
   { url: '#', title: 'Registrieren' },
   { url: '#', title: 'Spenden' }
 ]
+
+export default menudata

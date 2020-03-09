@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const MobileMenu = props => {
+export default function MobileMenu(props) {
   const { links } = props
   return (
     <List>

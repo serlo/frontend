@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { lighten } from 'polished'
 
-export const MobileMenuButton = props => {
+export default function MobileMenuButton(props) {
   const { open, onClick } = props
   return (
     <MenuButton onClick={onClick}>
@@ -16,7 +16,7 @@ const MenuButton = styled.button`
   position absolute;
   top: 1rem;
   right: 1rem;
-  @media screen and (min-width: ${props => props.theme.breakpoints.sm}) {
+  @media (min-width: ${props => props.theme.breakpoints.sm}) {
       display: none;
   }
 

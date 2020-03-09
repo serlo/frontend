@@ -1,15 +1,24 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React from 'react'
 import styled from 'styled-components'
 
-export default function HelloWorld(props) {
+function HelloWorld() {
+  return <ClickMeTitle title="Welcome to the frontend!" />
+}
+
+function ClickMeTitle(props) {
+  const { title } = props
+  const [clicked, setClicked] = React.useState(false)
   return (
-    <StyledParagraph>
-      <FontAwesomeIcon icon="coffee" />
-    </StyledParagraph>
+    <BigParagraph onClick={() => setClicked(!clicked)}>
+      {title + (clicked ? ' :)' : '')}
+    </BigParagraph>
   )
 }
 
-const StyledParagraph = styled.p`
-  color: brown;
+const BigParagraph = styled.p`
   text-align: center;
+  font-size: 3em;
+  color: lightgreen;
 `
+
+export default HelloWorld

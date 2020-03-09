@@ -2,26 +2,36 @@ import styled from 'styled-components'
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import onClickOutside from 'react-onclickoutside'
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
 
-export function Menu(props) {
-  const { className, links } = props
+export default function Menu(props) {
+  const { links } = props
   return (
-    <nav className={className}>
-      <List className={className}>
+    <ResponsiveNav>
+      <List>
         {links.map((link, index) => (
           <Entry link={link} key={index} />
         ))}
       </List>
-    </nav>
+    </ResponsiveNav>
   )
 }
+
+const ResponsiveNav = styled.nav`
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    display: none;
+  }
+`
 
 const List = styled.ul`
   text-align: right;
   user-select: none;
+  display: block;
+  margin: 0;
+  padding: 0;
 `
 
-const Entry = props => {
+function Entry(props) {
   const { link } = props
   const [isOpen, setOpen] = React.useState(false)
   const hasChildren = link.children !== undefined
@@ -31,7 +41,7 @@ const Entry = props => {
         onMouseDown={!isOpen ? () => setOpen(!isOpen) : undefined}
         active={isOpen && hasChildren}
       >
-        {link.title} {hasChildren && <FontAwesomeIcon icon="caret-down" />}
+        {link.title} {hasChildren && <FontAwesomeIcon icon={faCaretDown} />}
       </Link>
       {isOpen && link.children && (
         <SubMenu
@@ -49,12 +59,12 @@ const Li = styled.li`
   display: inline-block;
   cursor: pointer;
 `
-const Link = styled.a<any>`
+const Link = styled.a<{ active?: boolean }>`
   color: ${props =>
     props.theme.colors[props.active ? 'darkgray' : 'lightblue']};
 
-  :active,
-  :hover {
+  &:active,
+  &:hover {
     color: ${props => props.theme.colors.darkgray};
   }
 
@@ -64,9 +74,9 @@ const Link = styled.a<any>`
   transition: all 0.2s ease-in-out 0s;
 `
 
+// improve this one day
 const SubMenuInner: any = props => {
   const { children, onClose } = props
-  SubMenuInner.handleClickOutside = onClose
   return (
     <SubList>
       {children.map((entry, index) => {
@@ -94,6 +104,7 @@ const SubList = styled.ul`
   display: block;
   overflow: auto;
   z-index: 5;
+  list-style-type: none;
 `
 
 const SubLi = styled.li`

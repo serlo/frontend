@@ -2,9 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { lighten } from 'polished'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
-export const SearchInput = props => {
-  const { className, value } = props
+export default function SearchInput(props) {
+  const { value } = props
 
   const [focused, setFocused] = React.useState(false)
   const inputRef = React.useRef(null)
@@ -19,7 +20,7 @@ export const SearchInput = props => {
   }
 
   return (
-    <SearchForm id="searchform" name="searchform" className={className}>
+    <SearchForm id="searchform" name="searchform">
       <_Input
         type="text"
         name="searchtext"
@@ -41,7 +42,7 @@ export const SearchInput = props => {
         type="submit"
         focused={focused}
       >
-        <FontAwesomeIcon icon="search" size={'lg'} />
+        <FontAwesomeIcon icon={faSearch} size="lg" />
       </_Button>
     </SearchForm>
   )
@@ -50,7 +51,7 @@ export const SearchInput = props => {
 const SearchForm = styled.form`
   background-color: ${props => lighten(0.1, props.theme.colors.lighterblue)};
 
-  @media screen and (min-width: ${props => props.theme.breakpoints.sm}) {
+  @media (min-width: ${props => props.theme.breakpoints.sm}) {
     position: absolute;
     top: 8rem;
     right: 2rem;
@@ -71,14 +72,14 @@ const SearchForm = styled.form`
     background-color: ${props => lighten(0.1, props.theme.colors.lighterblue)};
   }
 
-  @media screen and (min-width: ${props => props.theme.breakpoints.lg}) {
+  @media (min-width: ${props => props.theme.breakpoints.lg}) {
     right: 1.7rem;
     margin-top: -0.3rem;
     margin-left: auto;
   }
 `
 
-const _Button = styled.button<any>`
+const _Button = styled.button<{ focused: boolean }>`
   background-color: ${props =>
     props.focused
       ? props.theme.colors.brand
@@ -94,7 +95,7 @@ const _Button = styled.button<any>`
   outline: none;
   cursor: pointer;
 
-  :hover {
+  &:hover {
     background-color: ${props => props.theme.colors.brand};
     color: white;
   }
@@ -107,7 +108,7 @@ const _Button = styled.button<any>`
     border-radius: 1.1rem;
   }
 `
-const _Input = styled.input<any>`
+const _Input = styled.input<{ focused: boolean }>`
   color: ${props => props.theme.colors.brand};
   font-weight: bold;
   font-size: 1.15em;
@@ -122,11 +123,11 @@ const _Input = styled.input<any>`
   margin-left: 3rem;
   cursor: ${props => (props.focused ? 'auto' : 'pointer')};
 
-  ::placeholder {
+  &::placeholder {
     color: ${props => props.theme.colors.brand};
   }
 
-  :focus::placeholder {
+  &:focus::placeholder {
     opacity: 0;
   }
 
