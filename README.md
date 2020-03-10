@@ -160,7 +160,7 @@ const GrowingParagraph = styled.p`
 export default HelloWorld
 ```
 
-On wide screens, both paragraphs are shown next to each other:
+This example makes use of [flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/). On wide screens, both paragraphs are shown next to each other:
 
 ![](https://user-images.githubusercontent.com/13507950/76287324-7d9fba80-62a4-11ea-9f59-6d682aa8ac36.png)
 
@@ -240,7 +240,7 @@ export default HelloWorld
 
 ### Style Adaption
 
-Often you need two components with only slightly different styles. Adapt your styles based on props:
+Often you need two components with only slightly different styles. Adapt your styles [based on props](https://styled-components.com/docs/basics#adapting-based-on-props):
 
 ```tsx
 import styled from 'styled-components'
@@ -304,7 +304,11 @@ Import your helper from polished and use it in interpolations.
 
 ### Assets
 
-Put static content like images or documents into the `public` folder. Exmpale: The file `public/img/serlo-logo.svg` is accessible at `localhost:3000/img/serlo-logo.svg`. You can use assets in your components as well:
+Put static content like images or documents into the `public` folder.
+
+Example: The file `public/img/serlo-logo.svg` is accessible at `localhost:3000/img/serlo-logo.svg`
+
+You can use assets in your components as well:
 
 ```tsx
 function HelloWorld() {
@@ -314,162 +318,82 @@ function HelloWorld() {
 export default HelloWorld
 ```
 
----
+### Code Formatting
 
-TODO below here
+Format your code in a consistent way by running
 
-## Typescript
+```
+yarn prettify
+```
 
-Use Typescript and JSX for your components. Type-checking is not strict, so start prototyping without types and add them later when interfaces stabilize. The code is type-checked, even in development. Look at `tsconfig.json` to inspect typescript options.
+Make sure your code is properly formatted before every commit.
 
-## Data fetching
+## Advanced Topics
 
-Your page needs data? Use getInitialProps to populate your component. Write the fetcher isomorphic: it should run on the server and the client, because we are doing ssr:
+### Data Fetching
+
+Before you render a page, you can fetch data from an external source. Use `getInitialProps` and an [isomorphic fetch](https://www.npmjs.com/package/isomorphic-unfetch) library:
 
 ```tsx
 import fetch from 'isomorphic-unfetch'
-
-export default function Content(props) {
-  return <p>JSON.stringify(props.data)</p>
-}
-
-Content.getInitialProps = async () => {
-  const url = `https://somedomain.org/1234`
-  const res = await fetch(url)
-  return { data: res.json() }
-}
-```
-
-The return value of `getInitialProps` is passed to the page and then you can access the data.
-
-## Styling (the bad, but sometimes necessary way)
-
-You want to add some css? The most traditional approach is to import a css file:
-
-```tsx
-import '../css/example.css'
-
-export default function HelloWorld(props) {
-  return <p>Welcome to the frontend!</p>
-}
-```
-
-You can also add css using the `createGlobalStyle` helper:
-
-```tsx
-import { createGlobalStyle } from 'styled-components'
-
-export default function HelloWorld(props) {
-  return <p>Welcome to the frontend!</p>
-}
-
-export const GlobalStyle = createGlobalStyle`
-  body {
-    background-color: green;
-  }
-`
-```
-
-## Code style
-
-We use Prettier to auto-format our code: `{"semi": false, "singleQuote": true}`.
-
-## Assets
-
-Everything within the `public`-folder is automatically accessible. But your images and files, fonts, ... into this directory.
-
-## Fonts
-
-The beautiful `Karmilla` font face is available by default. To include other fonts, you can add them as assets and reference them using css (`@font-face{...}`).
-
-## Responsive designs
-
-The recommend way is using media queries.
-
-```tsx
-EXAMPLE HERE
-```
-
-## Dependencies
-
-Add packages with the command `yarn add packagename` or `yarn add -D packagename`. After installing the package, change the version in the `package.json` to the lowest necessary version, e.g. `^2.0.0` or `^16.8.0`. This will improve compatibility.
-
-The difference between normal dependencies and devDependencies is probably not crucial. Rule of thumb: If something is run on the client, than add it as normal dependencies.
-
-## Flexbox
-
-[Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/) is great and can easily be written in css. Currently no library here.
-
-## Icons
-
-We are including Fontawesome 5 free and brand icons. Using them is straight forward:
-
-```tsx
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCoffee } from '...'
 import styled from 'styled-components'
 
-export default function HelloWorld(props) {
-  return (
-    <StyledParagraph>
-      <FontAwesomeIcon icon={faCoffee} />
-    </StyledParagraph>
-  )
+function HelloWorld(props) {
+  const allFacts = props.data.all
+  const randomFact = allFacts[Math.floor(Math.random() * allFacts.length)]
+  return <Wall>{randomFact.text}</Wall>
 }
 
-const StyledParagraph = styled.p`
-  color: brown;
+HelloWorld.getInitialProps = async () => {
+  const url = 'https://cat-fact.herokuapp.com/facts'
+  const res = await fetch(url)
+  return { data: await res.json() }
+}
+
+const Wall = styled.div`
   text-align: center;
+  background-color: ${props => props.theme.colors.brand};
+  color: white;
+  padding: 20px;
+  margin-top: 50px;
 `
+
+export default HelloWorld
 ```
 
-## Deployment
+This example fetches some random cat facts and pass them on to the page. Some more error handling wouldn't hurt.
 
-Everytime you push to the master branch or merge a pull request, the frontend is built and deployed. To build the frontend on your local machine, run
+### Deployment
+
+Build and run the frontend with these commands:
 
 ```
 yarn build
 yarn start
 ```
 
-and access the application through `localhost:3000`. The build also gives you a nice overview of the project's size.
+This will trigger a production build. It will also summarize the size of all output artifacts.
 
-## Theming
+### Reusable Components
 
-You can define global css vars in our theme. This theme is available to all styled-components. Tools from polished can be used, too. Look at `src/theme.tsx` for more information.
+During development, useful components will emerge. Share them here, so everybody can enjoy your work:
 
-## CSS Reset
+- onclickoutside (comming soon)
+- ...
 
-No css reset done, because it's not necessary because each component should take care of the styling themselves.
+### Missing Dependencies
 
-## onclickoutside
+Sometimes, peer dependencies are missing. Add them to `package.json` and note it here:
 
-! add example here. take care: conflict between onclickoutside and original click handler, workaround with onMouseDown
+- `styled-components` depends on `react-is`
+- `next-css` depends on `webpack`
 
-## polished
+## FAQ
 
-! use some css helper functions
+### Is there any css reset?
 
-## Components
+No, we are not using any [css resets](https://github.com/jaydenseric/Fix/issues/3). Each component should reset the styles they use.
 
-? How to structure components? Default to styled always?
+### Do I have to vendor prefix my css?
 
-## States and hierarchies
-
-If you ever want to manipulate the dom of a sibling: don't do it! Push the state up the hierarchy instead, expose an onChange-handler and let the parent manipulate the sibling.
-
-### missing peer dependencies
-
-styled-components -> react-is
-
-next-css -> webpack
-
-### px in media queries
-
-https://adamwathan.me/dont-use-em-for-media-queries/
-
-### Passing functions as props
-
-https://reactjs.org/docs/faq-functions.html
-
-Small inline calbacks are generally ok.
+No, styled components [takes care](https://styled-components.com/docs/basics#motivation) of this already.
