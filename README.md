@@ -1,4 +1,4 @@
-# How to frontend
+# How To Frontend
 
 Welcome to the new serlo.org frontend.
 
@@ -19,7 +19,7 @@ yarn dev
 
 The server is now running on `localhost:3000`.
 
-You can change the port by running e.g. `yarn dev --port 8080`.
+You can change the port by running `yarn dev --port 8080`.
 
 ### Creating pages
 
@@ -52,7 +52,7 @@ function HelloWorld() {
 
 const BigParagraph = styled.p`
   text-align: center;
-  font-size: 3em;
+  font-size: 3rem;
   color: lightgreen;
 `
 
@@ -76,16 +76,17 @@ function HelloWorld() {
 function ClickMeTitle(props) {
   const { title } = props
   const [clicked, setClicked] = React.useState(false)
+  const smiley = clicked ? ' :)' : ''
   return (
     <BigParagraph onClick={() => setClicked(!clicked)}>
-      {title + (clicked ? ' :)' : '')}
+      {title + smiley}
     </BigParagraph>
   )
 }
 
 const BigParagraph = styled.p`
   text-align: center;
-  font-size: 3em;
+  font-size: 3rem;
   color: lightgreen;
 `
 
@@ -96,15 +97,13 @@ Visit `localhost:3000/helloworld`. Click on the text. Every click should toggle 
 
 ![grafik](https://user-images.githubusercontent.com/13507950/76195662-1a048700-61e9-11ea-8abb-e98cf1bf3e32.png)
 
-## Features
+## Basic Features
 
 ### TypeScript
 
 We love types. They help us to maintain code and keep the codebase consistent. We also love rapid development and prototyping. You decide: Add your type declarations immediately as you code or later when the codebase stabilizes. The choice is up to you:
 
 ```tsx
-// pages/helloworld.tsx
-
 function HelloWorld() {
   return <Greeter title="Hello" subline="Welcome to the frontend!" />
 }
@@ -129,7 +128,191 @@ export default HelloWorld
 
 ### Responsive Design
 
-Optimize pages for mobile and desktop.
+Users will come to the frontend using very different devices, from narrow smartphones to very wide screens. Adapt your components and change there appearing with media queries:
+
+```tsx
+import styled from 'styled-components'
+
+function HelloWorld() {
+  return (
+    <ResponsiveBox>
+      <GrowingParagraph>Hallo</GrowingParagraph>
+      <GrowingParagraph>Welt</GrowingParagraph>
+    </ResponsiveBox>
+  )
+}
+
+const ResponsiveBox = styled.div`
+  display: flex;
+  @media (max-width: 500px) {
+    flex-direction: column;
+  }
+`
+
+const GrowingParagraph = styled.p`
+  flex-grow: 1;
+  text-align: center;
+  font-size: 2rem;
+  padding: 16px;
+  background-color: lightgreen;
+`
+
+export default HelloWorld
+```
+
+On wide screens, both paragraphs are shown next to each other:
+
+![](https://user-images.githubusercontent.com/13507950/76287324-7d9fba80-62a4-11ea-9f59-6d682aa8ac36.png)
+
+On smaller screens, they are below each other:
+
+![](https://user-images.githubusercontent.com/13507950/76287406-b17ae000-62a4-11ea-9901-73f7b6b868cc.png)
+
+### Theming
+
+We can improve the previous example by extracting commenly used constants like breakpoints or colors into a [theme](https://styled-components.com/docs/advanced#theming). The file `src/theme.tsx` defines our global theme which you can access in every component:
+
+```tsx
+import styled from 'styled-components'
+
+function HelloWorld() {
+  return (
+    <ResponsiveBox>
+      <GrowingParagraph>Hallo</GrowingParagraph>
+      <GrowingParagraph>Welt</GrowingParagraph>
+    </ResponsiveBox>
+  )
+}
+
+const ResponsiveBox = styled.div`
+  display: flex;
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    flex-direction: column;
+  }
+`
+
+const GrowingParagraph = styled.p`
+  flex-grow: 1;
+  text-align: center;
+  font-size: 2rem;
+  padding: 16px;
+  background-color: ${props => props.theme.colors.brand};
+`
+
+export default HelloWorld
+```
+
+### Units
+
+There exists a bunch of different length units.
+
+**tl;dr**
+
+- Use [px](https://stackoverflow.com/questions/11799236/should-i-use-px-or-rem-value-units-in-my-css)
+- [Don't](https://mindtheshift.wordpress.com/2015/04/02/r-i-p-rem-viva-css-reference-pixel/) [use](https://blog.usejournal.com/dont-use-rem-em-for-paddings-margins-and-more-94e19026b000) [rem/em](https://adamwathan.me/dont-use-em-for-media-queries/) unless you know what you are [doing](https://blog.evanshunt.com/using-proportional-font-scaling-with-responsive-web-design-30e99094fca0)
+
+### Icons
+
+Add some eye candy by using icons. We integrated [Font Awesome](https://github.com/FortAwesome/react-fontawesome) and adding icons is straight forward:
+
+```tsx
+import styled from 'styled-components'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCoffee } from '@fortawesome/free-solid-svg-icons'
+
+function HelloWorld() {
+  return (
+    <BigIcon>
+      <FontAwesomeIcon icon={faCoffee} size="1x" />
+    </BigIcon>
+  )
+}
+
+const BigIcon = styled.div`
+  text-align: center;
+  font-size: 3rem;
+  color: brown;
+  margin: 30px;
+`
+
+export default HelloWorld
+```
+
+### Style Adaption
+
+Often you need two components with only slightly different styles. Adapt your styles based on props:
+
+```tsx
+import styled from 'styled-components'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCandyCane } from '@fortawesome/free-solid-svg-icons'
+
+function HelloWorld() {
+  return (
+    <BigIcon iconColor="pink">
+      <FontAwesomeIcon icon={faCandyCane} size="1x" />
+    </BigIcon>
+  )
+}
+
+const BigIcon = styled.div<{ iconColor: string }>`
+  text-align: center;
+  font-size: 3rem;
+  color: ${props => props.iconColor};
+  margin: 30px;
+`
+
+export default HelloWorld
+```
+
+This is one of the rare places where typing is mandatory.
+
+### CSS Helper
+
+To boost your creativity, we included a bunch of useful css [helper](https://polished.js.org/docs/):
+
+```tsx
+import React from 'react'
+import styled from 'styled-components'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCandyCane } from '@fortawesome/free-solid-svg-icons'
+import { lighten } from 'polished'
+
+function HelloWorld() {
+  const [lighter, setLighter] = React.useState(0)
+  return (
+    <>
+      <p>Click it:</p>
+      <BigIcon lighter={lighter} onClick={() => setLighter(lighter + 0.01)}>
+        <FontAwesomeIcon icon={faCandyCane} size="1x" />
+      </BigIcon>
+    </>
+  )
+}
+
+const BigIcon = styled.div<{ lighter: number }>`
+  text-align: center;
+  font-size: 3rem;
+  color: ${props => lighten(props.lighter, 'pink')};
+  margin: 30px;
+`
+
+export default HelloWorld
+```
+
+Import your helper from polished and use it in interpolations.
+
+### Assets
+
+Put static content like images or documents into the `public` folder. Exmpale: The file `public/img/serlo-logo.svg` is accessible at `localhost:3000/img/serlo-logo.svg`. You can use assets in your components as well:
+
+```tsx
+function HelloWorld() {
+  return <img src="/img/serlo-logo.svg" alt="serlo logo" />
+}
+
+export default HelloWorld
+```
 
 ---
 
