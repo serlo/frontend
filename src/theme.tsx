@@ -4,10 +4,13 @@ export const theme = {
     lightblue: '#52a6d0',
     darkgray: '#212529',
     brand: '#007ec1',
-    lighterblue: '#91c5e4'
+    lighterblue: '#91c5e4',
+    brandGreen: '#95bc1a',
+    lightBackground: '#f4fbff'
   },
   breakpoints: {
     sm: '800px',
+    md: '1024px',
     lg: '1216px'
   }
 }
