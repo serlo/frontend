@@ -328,9 +328,84 @@ yarn prettify
 
 Make sure your code is properly formatted before every commit.
 
-### Tooltips and Dropdowns
+### Tooltips, Dropdowns & Menus
 
-Use tippy.js and use popper.js, demo follows
+You can add elements that [pop out](https://atomiks.github.io/tippyjs/) of the page with [Tippy](https://github.com/atomiks/tippyjs-react). A basic drop button looks like this:
+
+```tsx
+import styled from 'styled-components'
+import Tippy from '@tippyjs/react'
+
+function HelloWorld() {
+  return (
+    <Wall>
+      <Tippy
+        content={<Drop>Surprise )(</Drop>}
+        trigger="click"
+        placement="bottom-start"
+      >
+        <button>Click Me!</button>
+      </Tippy>
+    </Wall>
+  )
+}
+
+const Wall = styled.div`
+  margin-top: 100px;
+  display: flex;
+  justify-content: center;
+`
+
+const Drop = styled.div`
+  background-color: lightgreen;
+  padding: 5px;
+  box-shadow: 8px 8px 2px 1px rgba(0, 255, 0, 0.2);
+`
+
+export default HelloWorld
+```
+
+Surround the target element with the `Tippy` component and pass the content to it. There are many more [props](https://atomiks.github.io/tippyjs/v6/all-props/) to explore.
+
+### Modals
+
+Show information to the user with modals. [react-modal](https://github.com/reactjs/react-modal) provides the necessary functionality. This example shows how you can get started:
+
+```tsx
+import React from 'react'
+import Modal from '../src/reactmodal' // our wrapper
+
+const centeredModal = {
+  overlay: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  content: {
+    position: 'static'
+  }
+}
+
+function HelloWorld() {
+  const [open, setOpen] = React.useState(false)
+  return (
+    <>
+      <button onClick={() => setOpen(true)}>Open modal</button>
+      <Modal
+        isOpen={open}
+        onRequestClose={() => setOpen(false)}
+        style={centeredModal}
+      >
+        This is the content of the modal
+      </Modal>
+    </>
+  )
+}
+
+export default HelloWorld
+```
+
+You handle the state by yourself. The `Modal` component has [many options](http://reactcommunity.org/react-modal/) available. Import the modal from `src/reactmodal.tsx`. This takes care of the app element.
 
 ## Advanced Topics
 
@@ -378,25 +453,83 @@ yarn start
 
 This will trigger a production build. It will also summarize the size of all output artifacts.
 
-### Reusable Components
+To get detailed information about bundle size, run this:
 
-During development, useful components will emerge. Share them here, so everybody can enjoy your work:
+```
+yarn analyze
+```
 
-- ...
+Results are saved to `.next/analyze/client.html` and `.next/analyze/server.html`.
 
 ### Missing Dependencies
 
 Sometimes, peer dependencies are missing. Add them to `package.json` and note it here:
 
-- `styled-components` depends on `react-is`
-- `next-css` depends on `webpack`
+- `styled-components` depends on `react-is` (missing)
+- `next-css` depends on `webpack` (missing)
 
 ## FAQ
 
 ### Is there any css reset?
 
-No, we are not using any [css resets](https://github.com/jaydenseric/Fix/issues/3). Each component should reset the styles they use.
+No, we are not using any [css resets](https://github.com/jaydenseric/Fix/issues/3). Each component should reset their own styles.
 
 ### Do I have to vendor prefix my css?
 
 No, styled components [takes care](https://styled-components.com/docs/basics#motivation) of this already.
+
+### How do I disable server side rendering for a component?
+
+[WARNING: This is dangerous! Use this with care!!!!] Some components rely on client specific objects (window, document). The server can not render them and will throw an error. You can disable server side rendering by checking `window` and returning early:
+
+```tsx
+function FancyComponent() {
+  if (typeof window === 'undefined') return null
+  return <span>{window.location.href}</span>
+}
+```
+
+### How can I focus an element?
+
+To focus a html element, you need access to the underlying DOM node. Use the [ref hook](https://reactjs.org/docs/hooks-reference.html#useref) for this.
+
+### How can I change the state of a sibling?
+
+Generally, you can't and shouldn't. Extract the state to the parent instead and pass change handlers:
+
+```tsx
+import React from 'react'
+
+function HelloWorld() {
+  return <Parent />
+}
+
+function Parent() {
+  const [msg, setMsg] = React.useState('hello')
+  return (
+    <>
+      <Brother setMsg={setMsg} />
+      <hr />
+      <Sister msg={msg} />
+    </>
+  )
+}
+
+function Brother(props) {
+  const { setMsg } = props
+  return <button onClick={() => setMsg('Yeah!')}>Click here</button>
+}
+
+function Sister(props) {
+  const { msg } = props
+  return <p>{msg}</p>
+}
+
+export default HelloWorld
+```
+
+The brother can pass a message to its sister by declaring the state in the parent. React takes care of updating and rendering.
+
+## Notes
+
+- react-use-scroll-position ...

@@ -3,15 +3,23 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
 
-import Tippy from '@tippyjs/react'
+import Tippy, { useSingleton } from '@tippyjs/react'
 
 export default function Menu(props) {
   const { links } = props
+  const [source, target] = useSingleton()
   return (
     <ResponsiveNav>
+      <Tippy
+        singleton={source}
+        trigger="click"
+        placement="bottom-start"
+        interactive={true}
+        duration={[null, null]}
+      />
       <List>
         {links.map((link, index) => (
-          <Entry link={link} key={index} />
+          <Entry link={link} key={index} target={target} />
         ))}
       </List>
     </ResponsiveNav>
@@ -33,17 +41,14 @@ const List = styled.ul`
 `
 
 function Entry(props) {
-  const { link } = props
+  const { link, target } = props
   const hasChildren = link.children !== undefined
   return (
     <Li>
       {hasChildren ? (
         <Tippy
           content={<SubMenuInner children={link.children} />}
-          trigger="click"
-          placement="bottom-start"
-          interactive={true}
-          duration={[null, null]}
+          singleton={target}
         >
           <Link>
             {link.title} <FontAwesomeIcon icon={faCaretDown} />

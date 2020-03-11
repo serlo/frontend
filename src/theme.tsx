@@ -6,7 +6,8 @@ export const theme = {
     brand: '#007ec1',
     lighterblue: '#91c5e4',
     brandGreen: '#95bc1a',
-    lightBackground: '#f4fbff'
+    lightBackground: '#f4fbff',
+    dark1: '#333333'
   },
   breakpoints: {
     sm: '800px',

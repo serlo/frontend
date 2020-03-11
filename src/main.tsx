@@ -1,4 +1,5 @@
 import Header from './header'
+import Toolbox from './toolbox'
 import Footer from './footer'
 import styled from 'styled-components'
 
@@ -7,6 +8,7 @@ export default function Main(props) {
   return (
     <>
       <Header />
+      <Toolbox />
       <DummyContainer>
         <div dangerouslySetInnerHTML={{ __html: data.content.content }} />
       </DummyContainer>
