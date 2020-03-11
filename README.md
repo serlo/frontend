@@ -328,6 +328,10 @@ yarn prettify
 
 Make sure your code is properly formatted before every commit.
 
+### Tooltips and Dropdowns
+
+Use tippy.js and use popper.js, demo follows
+
 ## Advanced Topics
 
 ### Data Fetching
@@ -378,7 +382,6 @@ This will trigger a production build. It will also summarize the size of all out
 
 During development, useful components will emerge. Share them here, so everybody can enjoy your work:
 
-- onclickoutside (comming soon)
 - ...
 
 ### Missing Dependencies

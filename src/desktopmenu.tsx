@@ -1,8 +1,9 @@
 import styled from 'styled-components'
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import onClickOutside from 'react-onclickoutside'
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
+
+import Tippy from '@tippyjs/react'
 
 export default function Menu(props) {
   const { links } = props
@@ -33,23 +34,23 @@ const List = styled.ul`
 
 function Entry(props) {
   const { link } = props
-  const [isOpen, setOpen] = React.useState(false)
   const hasChildren = link.children !== undefined
   return (
     <Li>
-      <Link
-        onMouseDown={!isOpen ? () => setOpen(!isOpen) : undefined}
-        active={isOpen && hasChildren}
-      >
-        {link.title} {hasChildren && <FontAwesomeIcon icon={faCaretDown} />}
-      </Link>
-      {isOpen && link.children && (
-        <SubMenu
-          children={link.children}
-          onClose={() => {
-            setOpen(false)
-          }}
-        />
+      {hasChildren ? (
+        <Tippy
+          content={<SubMenuInner children={link.children} />}
+          trigger="click"
+          placement="bottom-start"
+          interactive={true}
+          duration={[null, null]}
+        >
+          <Link>
+            {link.title} <FontAwesomeIcon icon={faCaretDown} />
+          </Link>
+        </Tippy>
+      ) : (
+        <Link>{link.title}</Link>
       )}
     </Li>
   )
@@ -72,12 +73,13 @@ const Link = styled.a<{ active?: boolean }>`
   margin-right: 0.6rem;
   font-weight: bold;
   transition: all 0.2s ease-in-out 0s;
+
+  cursor: pointer;
 `
 
 // improve this one day
-const SubMenuInner: any = props => {
-  const { children, onClose } = props
-  SubMenuInner.handleClickOutside = onClose
+function SubMenuInner(props) {
+  const { children } = props
   return (
     <SubList>
       {children.map((entry, index) => {
@@ -91,12 +93,7 @@ const SubMenuInner: any = props => {
   )
 }
 
-const SubMenu = onClickOutside(SubMenuInner, {
-  handleClickOutside: () => SubMenuInner.handleClickOutside
-})
-
 const SubList = styled.ul`
-  position: absolute;
   background-color: white;
   padding: 1rem 0.5rem 0.5rem;
   margin: 0;
@@ -104,10 +101,11 @@ const SubList = styled.ul`
   box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px;
   display: block;
   overflow: auto;
-  z-index: 5;
   list-style-type: none;
+  width: auto;
 `
 
 const SubLi = styled.li`
   margin-bottom: 0.6rem;
+  cursor: default;
 `

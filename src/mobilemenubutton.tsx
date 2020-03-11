@@ -31,4 +31,5 @@ const MenuButton = styled.button`
   outline: none;
   border: 0;
   box-shadow: none;
+  cursor: pointer;
 `
