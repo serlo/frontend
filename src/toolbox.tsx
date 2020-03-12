@@ -1,12 +1,30 @@
+import React from 'react'
 import styled from 'styled-components'
 import { faPencilAlt, faShareAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
+
 import ShareModal from './sharemodal'
-import { useScrollYPosition } from 'react-use-scroll-position'
 
 export default function Toolbox() {
   const [open, setOpen] = React.useState(false)
+  const [visible, setVisible] = React.useState(true)
+
+  React.useEffect(() => {
+    function handleScroll() {
+      const scrollY = window.pageYOffset
+      const docHeight = document.documentElement.scrollHeight
+      const spaceToBottom = Math.max(0, docHeight - scrollY)
+      const shouldVisible = spaceToBottom > 1800
+      setVisible(shouldVisible)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  console.log('rerender')
+
+  if (!visible) return null
 
   return (
     <>

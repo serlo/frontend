@@ -1,8 +1,7 @@
-import styled from 'styled-components'
 import React from 'react'
+import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
-
 import Tippy, { useSingleton } from '@tippyjs/react'
 
 export default function Menu(props) {
@@ -15,11 +14,10 @@ export default function Menu(props) {
         trigger="click"
         placement="bottom-start"
         interactive={true}
-        duration={[null, null]}
       />
       <List>
-        {links.map((link, index) => (
-          <Entry link={link} key={index} target={target} />
+        {links.map(link => (
+          <Entry link={link} key={link.title} target={target} />
         ))}
       </List>
     </ResponsiveNav>
@@ -63,8 +61,8 @@ function Entry(props) {
 
 const Li = styled.li`
   display: inline-block;
-  cursor: pointer;
 `
+
 const Link = styled.a<{ active?: boolean }>`
   color: ${props =>
     props.theme.colors[props.active ? 'darkgray' : 'lightblue']};
@@ -74,22 +72,21 @@ const Link = styled.a<{ active?: boolean }>`
     color: ${props => props.theme.colors.darkgray};
   }
 
-  padding: 0.2em 0.4em;
-  margin-right: 0.6rem;
+  padding: 3px 6px;
+  margin-right: 10px;
   font-weight: bold;
   transition: all 0.2s ease-in-out 0s;
 
   cursor: pointer;
 `
 
-// improve this one day
 function SubMenuInner(props) {
   const { children } = props
   return (
     <SubList>
-      {children.map((entry, index) => {
+      {children.map(entry => {
         return (
-          <SubLi key={index}>
+          <SubLi key={entry.title}>
             <Link>{entry.title}</Link>
           </SubLi>
         )
@@ -100,7 +97,7 @@ function SubMenuInner(props) {
 
 const SubList = styled.ul`
   background-color: white;
-  padding: 1rem 0.5rem 0.5rem;
+  padding: 16px 8px 8px;
   margin: 0;
   text-align: left;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px;
@@ -111,6 +108,5 @@ const SubList = styled.ul`
 `
 
 const SubLi = styled.li`
-  margin-bottom: 0.6rem;
-  cursor: default;
+  margin-bottom: 10px;
 `

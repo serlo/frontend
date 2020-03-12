@@ -1,7 +1,6 @@
-import Modal from './reactmodal'
+import React from 'react'
 import styled from 'styled-components'
 import { lighten } from 'polished'
-import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faCopy,
@@ -15,6 +14,8 @@ import {
   faGoogle
 } from '@fortawesome/free-brands-svg-icons'
 
+import Modal from './reactmodal'
+
 export default function ShareModal(props) {
   if (typeof window === 'undefined') return null
   const { open, onClose } = props
@@ -26,7 +27,6 @@ export default function ShareModal(props) {
     document.execCommand('copy')
     e.target.focus()
     setCopySuccess('In Zwischenablage kopiert!')
-    /* TODO: Get int8 string */
   }
 
   const url = window.location.href
@@ -103,8 +103,8 @@ const ModalStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
-    width: '30rem',
-    borderRadius: '1.1rem'
+    width: '480px',
+    borderRadius: '17px'
   }
 }
 
@@ -143,14 +143,14 @@ const Button = styled.button`
 
 const Gray = styled.small`
   opacity: 0.6;
-  margin-top: 0.3rem;
-  margin-bottom: 0.3rem;
+  margin-top: 5px;
+  margin-bottom: 5px;
   display: block;
 `
 const CloseButton = styled.button`
   position: absolute;
-  top: 0.8rem;
-  right: 0.8rem;
+  top: 14px;
+  right: 14px;
   background-color: transparent;
   border: none;
   cursor: pointer;

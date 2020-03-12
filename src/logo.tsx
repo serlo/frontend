@@ -10,7 +10,7 @@ export default function Logo(props) {
           <Image alt="Serlo" src={'/img/serlo-logo.svg'} />
         </a>
       </h1>
-      {!subline ? null : (
+      {subline && (
         <SublineH2>
           <SublineLink className="subline icon" href="#">
             {subline}
@@ -22,20 +22,20 @@ export default function Logo(props) {
 }
 
 const Image = styled.img`
-  width: 9.3rem;
-  padding: 0.8rem 0 0 0.67rem;
+  width: 150px;
+  padding: 15px 0 0 6px;
 `
 
 const SublineH2 = styled.h2`
-  padding-left: 1.5rem;
-  padding-top: 0.8rem;
+  padding-left: 24px;
+  padding-top: 15px;
 
   @media (min-width: 288px) {
-    padding-left: 3.5rem;
+    padding-left: 56px;
   }
 
   @media (max-width: 240px) {
-    padding-left: 0.5rem;
+    padding-left: 8px;
   }
 `
 

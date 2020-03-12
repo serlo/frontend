@@ -529,7 +529,3 @@ export default HelloWorld
 ```
 
 The brother can pass a message to its sister by declaring the state in the parent. React takes care of updating and rendering.
-
-## Notes
-
-- react-use-scroll-position ...

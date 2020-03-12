@@ -53,12 +53,12 @@ const SearchForm = styled.form`
 
   @media (min-width: ${props => props.theme.breakpoints.sm}) {
     position: absolute;
-    top: 8rem;
-    right: 2rem;
-    height: 2.2rem;
-    width: 14rem;
+    top: 128px;
+    right: 32px;
+    height: 35px;
+    width: 224px;
     background-color: transparent;
-    border-radius: 1.1rem;
+    border-radius: 18px;
     transition: all 0.4s ease;
     justify-content: flex-end;
   }
@@ -73,8 +73,8 @@ const SearchForm = styled.form`
   }
 
   @media (min-width: ${props => props.theme.breakpoints.lg}) {
-    right: 1.7rem;
-    margin-top: -0.3rem;
+    right: 27px;
+    margin-top: -5px;
     margin-left: auto;
   }
 `
@@ -88,8 +88,8 @@ const _Button = styled.button<{ focused: boolean }>`
 
   color: ${props => (props.focused ? 'white' : props.theme.colors.brand)};
 
-  height: 2.5rem;
-  min-width: 2.5rem;
+  height: 40px;
+  min-width: 40px;
 
   border: 0;
   outline: none;
@@ -102,10 +102,10 @@ const _Button = styled.button<{ focused: boolean }>`
 
   @media (min-width: ${props => props.theme.breakpoints.sm}) {
     color: white;
-    padding: 0.1rem 0 0 0.1rem;
-    min-width: 2.2rem;
-    height: 2.2rem;
-    border-radius: 1.1rem;
+    padding: 2px 0 0 2px;
+    min-width: 35px;
+    height: 35px;
+    border-radius: 17px;
   }
 `
 const _Input = styled.input<{ focused: boolean }>`
@@ -120,7 +120,7 @@ const _Input = styled.input<{ focused: boolean }>`
   border: 0;
   outline: none;
 
-  margin-left: 3rem;
+  margin-left: 48px;
   cursor: ${props => (props.focused ? 'auto' : 'pointer')};
 
   &::placeholder {
@@ -133,9 +133,9 @@ const _Input = styled.input<{ focused: boolean }>`
 
   @media (min-width: ${props => props.theme.breakpoints.sm}) {
     margin-left: 0;
-    padding-left: 0.5rem;
-    padding-right: 0.4rem;
-    width: 6rem;
+    padding-left: 8px;
+    padding-right: 6px;
+    width: 96px;
     &::placeholder {
       color: ${props => props.theme.colors.lightblue};
       text-align: right;

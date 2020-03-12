@@ -15,16 +15,16 @@ export default function MobileMenuButton(props) {
 const MenuButton = styled.button`
   border: 0;
   position absolute;
-  top: 1rem;
-  right: 1rem;
+  top: 16px;
+  right: 16px;
   @media (min-width: ${props => props.theme.breakpoints.sm}) {
       display: none;
   }
 
   background-color: ${props => lighten(0.18, props.theme.colors.lighterblue)};
-  border-radius: 5rem;
-  width: 3rem;
-  height: 3rem;
+  border-radius: 80px;
+  width: 48px;
+  height: 48px;
   padding: 0;
   color: ${props => props.theme.colors.brand};
 

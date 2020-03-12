@@ -1,8 +1,8 @@
+import React from 'react'
 import styled from 'styled-components'
 import { transparentize } from 'polished'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCaretDown, faBars } from '@fortawesome/free-solid-svg-icons'
-import React from 'react'
 
 export default function MobileMenu(props) {
   const { links } = props
@@ -80,7 +80,7 @@ const List = styled.ul`
 `
 
 const Seperator = styled.li`
-  height: 1.5rem;
+  height: 24px;
   border-bottom: 1px solid ${props => props.theme.colors.lighterblue};
 `
 
@@ -88,7 +88,7 @@ const EntryLink = styled.a<{ isChild?: boolean }>`
   background-color: ${props => props.theme.colors.bluewhite};
   display: flex;
   align-items: start;
-  padding: 1em;
+  padding: 16px;
   color: ${props => props.theme.colors.brand};
   border-bottom: 1px solid;
   border-color: ${props => props.theme.colors.lighterblue};
@@ -104,14 +104,14 @@ const EntryLink = styled.a<{ isChild?: boolean }>`
 `
 
 const IconWrapper = styled.div`
-  width: 2.5em;
-  height: 2.5em;
+  width: 40px;
+  height: 40px;
   background-color: #d7ebf4;
-  border-radius: 10em;
+  border-radius: 160px;
   display: flex;
   justify-content: center;
   align-items: center;
   color: ${props => props.theme.colors.lightblue};
   text-align: center;
-  margin-right: 1em;
+  margin-right: 16px;
 `

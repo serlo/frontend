@@ -5,62 +5,62 @@ import {
   faChevronUp,
   faChevronCircleRight
 } from '@fortawesome/free-solid-svg-icons'
+
 import { footerNavEntries } from './footerdata'
 import { FooterNav } from './footernav'
 
 export default function Footer() {
-  return <About />
+  return (
+    <>
+      <About />
+      <FooterNav navEntries={footerNavEntries} />
+    </>
+  )
 }
 
 function About() {
   return (
-    <>
-      <AboutContainer>
-        <LogoContainer>
-          <a href="#">
-            <Image alt="Serlo" src={'/img/serlo-logo-white.svg'} />
-          </a>
-          <Subline>
-            <a href="#">Die freie Lernplattform</a>
-          </Subline>
-          <TopButton>
-            <FontAwesomeIcon icon={faChevronUp} size="lg" />
-          </TopButton>
-        </LogoContainer>
-        <InfoContainer>
-          <Summary>
-            <SummaryHeading>
-              <SerloLink href="#">Serlo.org</SerloLink> ist die Wikipedia fürs
-              Lernen
-            </SummaryHeading>
-            <SummaryText>
-              Wir sind eine engagierte Gemeinschaft, die daran arbeitet,
-              hochwertige Bildung weltweit frei verfügbar zu machen.
-            </SummaryText>
-            <SummaryButtonBox>
-              <SummaryButton>
-                <FontAwesomeIcon icon={faChevronCircleRight} size="sm" /> Mehr
-                Erfahren
-              </SummaryButton>
-            </SummaryButtonBox>
-          </Summary>
-          <Support>
-            <ImageLink>
-              <img
-                alt="Icon: Participate"
-                src={'/img/footer_participate.svg'}
-              />
-              <SupportButton>Mitmachen</SupportButton>
-            </ImageLink>
-            <ImageLink>
-              <img alt="Icon: Spenden" src={'/img/footer_donate.svg'} />
-              <SupportButton>Spenden</SupportButton>
-            </ImageLink>
-          </Support>
-        </InfoContainer>
-      </AboutContainer>
-      <FooterNav navEntries={footerNavEntries} />
-    </>
+    <AboutContainer>
+      <LogoContainer>
+        <a href="#">
+          <Image alt="Serlo" src={'/img/serlo-logo-white.svg'} />
+        </a>
+        <Subline>
+          <a href="#">Die freie Lernplattform</a>
+        </Subline>
+        <TopButton>
+          <FontAwesomeIcon icon={faChevronUp} size="lg" />
+        </TopButton>
+      </LogoContainer>
+      <InfoContainer>
+        <Summary>
+          <SummaryHeading>
+            <SerloLink href="#">Serlo.org</SerloLink> ist die Wikipedia fürs
+            Lernen
+          </SummaryHeading>
+          <SummaryText>
+            Wir sind eine engagierte Gemeinschaft, die daran arbeitet,
+            hochwertige Bildung weltweit frei verfügbar zu machen.
+          </SummaryText>
+          <SummaryButtonBox>
+            <SummaryButton>
+              <FontAwesomeIcon icon={faChevronCircleRight} size="sm" /> Mehr
+              Erfahren
+            </SummaryButton>
+          </SummaryButtonBox>
+        </Summary>
+        <Support>
+          <ImageLink>
+            <img alt="Icon: Participate" src={'/img/footer_participate.svg'} />
+            <SupportButton>Mitmachen</SupportButton>
+          </ImageLink>
+          <ImageLink>
+            <img alt="Icon: Spenden" src={'/img/footer_donate.svg'} />
+            <SupportButton>Spenden</SupportButton>
+          </ImageLink>
+        </Support>
+      </InfoContainer>
+    </AboutContainer>
   )
 }
 
@@ -138,7 +138,7 @@ const SerloLink = styled.a`
   &:hover {
     background-color: rgba(0, 126, 193, 0.65);
   }
-  border-radius: 0.25em;
+  border-radius: 4px;
   color: white;
   text-decoration: none;
   padding: 2px;

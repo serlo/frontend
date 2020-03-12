@@ -22,4 +22,5 @@ const DummyContainer = styled.div`
   margin-right: auto;
   max-width 1000px;
   padding: 32px;
+  overflow: hidden;
 `

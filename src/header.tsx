@@ -1,10 +1,11 @@
+import React from 'react'
 import styled from 'styled-components'
+
 import Menu from './desktopmenu'
 import menudata from './menudata'
 import Logo from './logo'
 import SearchInput from './searchinput'
 import MobileMenuButton from './mobilemenubutton'
-import React from 'react'
 import MobileMenu from './mobilemenu'
 
 export default function Header() {
@@ -28,5 +29,5 @@ const BlueHeader = styled.header`
 `
 
 const PaddedDiv = styled.div`
-  padding: 2rem 1.5rem 1.5rem;
+  padding: 32px 24px 24px;
 `
