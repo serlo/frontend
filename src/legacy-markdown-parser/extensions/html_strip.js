@@ -127,7 +127,7 @@ function stripUnwantedHTML(html) {
           value = '#'
         }
 
-        if (name === 'href' && /\/[\d]+/.test(value)) {
+        if (name === 'href' && /^\/[\d]+$/.test(value)) {
           value = '/content' + value
         }
 
