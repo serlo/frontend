@@ -22,8 +22,6 @@ export default function Toolbox() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  console.log('rerender')
-
   if (!visible) return null
 
   return (

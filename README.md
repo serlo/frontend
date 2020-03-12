@@ -529,3 +529,9 @@ export default HelloWorld
 ```
 
 The brother can pass a message to its sister by declaring the state in the parent. React takes care of updating and rendering.
+
+## Notes
+
+- Educational renderer for edtr-io content
+- KaTeX is big, 70kb + css + fonts
+- adding showdown
