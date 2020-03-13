@@ -10,8 +10,12 @@ function transform(node, index) {
     if (node.children.length === 1 && node.children[0].type === 'text') {
       if (/^\/[\d]+$/.test(node.attribs.href)) {
         return (
-          <Link as={'/content' + node.attribs.href} href="/content/[id]">
-            <a key={index}>{node.children[0].data}</a>
+          <Link
+            as={'/content' + node.attribs.href}
+            href="/content/[id]"
+            key={index}
+          >
+            <a>{node.children[0].data}</a>
           </Link>
         )
       }
