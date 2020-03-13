@@ -10,12 +10,8 @@ function Content(props) {
   }
 }
 
-Content.getInitialProps = async ({ query, req }) => {
-  let url = id => `https://de.serlo.org/entities/${id}?format=json`
-  if (typeof window !== 'undefined') {
-    url = id => `${window.location.origin}/api/serloproxy/${id}`
-  }
-  return await fetchContent(query.id, url)
+Content.getInitialProps = async ({ query }) => {
+  return await fetchContent(query.id)
 }
 
 export default Content

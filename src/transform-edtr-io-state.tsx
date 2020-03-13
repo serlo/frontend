@@ -2,7 +2,6 @@
 
 import styled from 'styled-components'
 import dynamic from 'next/dynamic'
-import Link from 'next/link'
 
 // @ts-ignore
 const Math = dynamic(import('./mathcomponent'))
@@ -24,7 +23,11 @@ function matchUp(state) {
     return handleText(state.state, matchUp)
   }
 
-  return <span>Unknown plugin {plugin}</span>
+  return (
+    <span>
+      Unknown plugin {plugin}, state: {JSON.stringify(state)}
+    </span>
+  )
 }
 
 function handleRow(state, next) {
@@ -101,11 +104,11 @@ function textPlugin(state, index = 0) {
     let href = state.href
     if (/\/[\d]+/.test(href)) {
       href = '/content' + href
-      return (
+      /*return (
         <Link href="/content/[id]" as={href} key={index}>
           <a key={index}>{textPlugin(state.children)}</a>
         </Link>
-      )
+      )*/
     }
     return (
       <a href={href} key={index}>

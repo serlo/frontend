@@ -1,12 +1,11 @@
 import styled from 'styled-components'
 import ReactHtmlParser from 'react-html-parser'
-import Link from 'next/link'
 
 import { converter } from './legacy-markdown-parser'
 import KaTeXSpan from './katexstyles'
 
 function transform(node, index) {
-  if (node.type === 'tag' && node.name === 'a') {
+  /*if (node.type === 'tag' && node.name === 'a') {
     if (node.children.length === 1 && node.children[0].type === 'text') {
       if (/^\/[\d]+$/.test(node.attribs.href)) {
         return (
@@ -20,7 +19,7 @@ function transform(node, index) {
         )
       }
     }
-  }
+  }*/
 }
 
 export default function LegacyRenderer(props) {
