@@ -29,5 +29,5 @@ const BlueHeader = styled.header`
 `
 
 const PaddedDiv = styled.div`
-  padding: 32px 24px 24px;
+  padding: 24px 24px 24px;
 `

@@ -46,20 +46,20 @@ const BoxWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  @media (max-width: 500px) {
+    display: none;
+  }
 `
 
-const IconButton = styled.button`
-  color: ${props => props.theme.colors.brandGreen};
+export const IconButton = styled.button`
   font-weight: bold;
   border: none;
   background-color: transparent;
-  padding: 6px 6px;
+  padding: 4px 4px;
   margin: 4px;
   border-radius: 20px;
   cursor: pointer;
   transition: background-color 0.2s;
-  &:hover {
-    color: white;
-    background-color: ${props => props.theme.colors.brandGreen};
-  }
+  color: white;
+  background-color: ${props => props.theme.colors.brandGreen};
 `
