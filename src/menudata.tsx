@@ -3,14 +3,12 @@ import {
   faUserEdit,
   faGraduationCap,
   faUserCircle,
-  faUserPlus,
   faHandHoldingHeart,
   faUserFriends
 } from '@fortawesome/free-solid-svg-icons'
 
 export const menudata = [
   { url: '#', title: 'Über Serlo', icon: faInfoCircle },
-  { url: '#', title: 'Mitmachen', icon: faUserEdit },
   {
     url: '#',
     title: 'Fächer',
@@ -30,6 +28,7 @@ export const menudata = [
     title: 'Community',
     icon: faUserFriends,
     children: [
+      { url: '#', title: 'Mitmachen', icon: faUserEdit },
       { url: '#', title: 'Startseite für Autor*innen' },
       { url: '#', title: 'Chat für Autor*innen' },
       { url: '#', title: 'Veranstaltungen für Autor*innen' },
@@ -37,7 +36,6 @@ export const menudata = [
     ]
   },
   { url: '#', title: 'Anmelden', icon: faUserCircle },
-  { url: '#', title: 'Registrieren', icon: faUserPlus },
   { url: '#', title: 'Spenden', icon: faHandHoldingHeart }
 ]
 

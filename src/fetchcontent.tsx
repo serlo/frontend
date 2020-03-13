@@ -1,10 +1,9 @@
 import fetch from 'isomorphic-unfetch'
 
-export async function fetchContent(id) {
+export async function fetchContent(id, url) {
   // this prototype only handles numeric ids
   if (/^\d+$/.test(id)) {
-    const url = `https://de.serlo.org/entities/${id}?format=json`
-    const res = await fetch(url)
+    const res = await fetch(url(id))
     if (res.status === 200) {
       const json = await res.json()
       return { data: json }

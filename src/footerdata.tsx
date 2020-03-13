@@ -1,8 +1,4 @@
-import {
-  faGithubSquare,
-  faFacebookSquare,
-  faTwitterSquare
-} from '@fortawesome/free-brands-svg-icons'
+import { faGithubSquare } from '@fortawesome/free-brands-svg-icons'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 
 export const footerNavEntries = [
@@ -21,10 +17,13 @@ export const footerNavEntries = [
   {
     title: 'Fächer',
     children: [
-      { title: 'Mathematik', url: '/mathe' },
-      { title: 'Biologie', url: '/biologie' },
-      { title: 'Angewandte Nachhaltigkeit', url: '/nachhaltigkeit' },
-      { title: 'Fächer im Aufbau', url: '/neue-faecher' }
+      { url: '#', title: 'Mathematik' },
+      { url: '#', title: 'Biologie' },
+      { url: '#', title: 'Angewandte Nachhaltigkeit' },
+      { url: '#', title: 'Informatik' },
+      { url: '#', title: 'Chemie' },
+      { url: '#', title: 'Physik' },
+      { url: '#', title: 'Fächer im Aufbau' }
     ]
   },
   {
@@ -35,16 +34,6 @@ export const footerNavEntries = [
         url:
           'https://serlo.us7.list-manage.com/subscribe?u=23f4b04bf70ea485a766e532d&amp;id=a7bb2bbc4f',
         icon: faEnvelope
-      },
-      {
-        title: 'Facebook',
-        url: 'https://www.facebook.com/serlo.org',
-        icon: faFacebookSquare
-      },
-      {
-        title: 'Twitter',
-        url: 'https://twitter.com/de_serlo',
-        icon: faTwitterSquare
       },
       {
         title: 'Github',

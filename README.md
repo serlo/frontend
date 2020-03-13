@@ -626,4 +626,5 @@ The brother can pass a message to its sister by declaring the state in the paren
 
 - Educational renderer for edtr-io content
 - KaTeX is big, I have copied the font files and added the font face to the app (globally), the remaining styles are within a styled component, this should avoid any overhead.
-- leacy content renderer using showdown and generating html (bääh)
+- legacy content renderer using showdown and generating html (bääh), ok, lets parse it anyway
+- the current api call (de.serlo.org/entities/:id) has no CORS header, use a proxy

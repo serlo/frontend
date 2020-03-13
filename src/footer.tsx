@@ -28,7 +28,7 @@ function About() {
         <Subline>
           <a href="#">Die freie Lernplattform</a>
         </Subline>
-        <TopButton>
+        <TopButton onClick={() => window.scrollTo(0, 0)}>
           <FontAwesomeIcon icon={faChevronUp} size="lg" />
         </TopButton>
       </LogoContainer>

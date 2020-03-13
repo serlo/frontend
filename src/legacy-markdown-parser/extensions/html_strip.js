@@ -127,10 +127,6 @@ function stripUnwantedHTML(html) {
           value = '#'
         }
 
-        if (name === 'href' && /^\/[\d]+$/.test(value)) {
-          value = '/content' + value
-        }
-
         // scope links and sources to http protocol
         if (
           forceProtocol &&

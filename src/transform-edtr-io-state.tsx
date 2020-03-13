@@ -2,6 +2,7 @@
 
 import styled from 'styled-components'
 import dynamic from 'next/dynamic'
+import Link from 'next/link'
 
 // @ts-ignore
 const Math = dynamic(import('./mathcomponent'))
@@ -100,6 +101,11 @@ function textPlugin(state, index = 0) {
     let href = state.href
     if (/\/[\d]+/.test(href)) {
       href = '/content' + href
+      return (
+        <Link href="/content/[id]" as={href} key={index}>
+          <a key={index}>{textPlugin(state.children)}</a>
+        </Link>
+      )
     }
     return (
       <a href={href} key={index}>
@@ -117,7 +123,7 @@ function textPlugin(state, index = 0) {
     return <li key={index}>{textPlugin(state.children)}</li>
   }
   if (type === 'list-item-child') {
-    return textPlugin(state.children, index)
+    return <div key={index}>{textPlugin(state.children, index)}</div>
   }
 
   return <>Unknown</>

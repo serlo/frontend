@@ -7,7 +7,6 @@ config.autoAddCss = false
 
 import '../public/fonts/karmilla.css'
 import '../public/fonts/katex/katex.css'
-//import 'katex/dist/katex.css'
 
 import { GlobalStyle } from '../src/globalstyles'
 import { ThemeProvider } from 'styled-components'

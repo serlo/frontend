@@ -25,6 +25,7 @@
     "polished": "^3.0.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-html-parser": "^2.0.2",
     "react-modal": "^3.11.0",
     "showdown": "^1.9.0",
     "styled-components": "^5.0.0"
@@ -36,6 +37,7 @@
     "@types/styled-components": "^5.0.0",
     "babel-plugin-styled-components": "^1.10.0",
     "cross-env": "^7.0.0",
+    "micro-cors": "^0.1.1",
     "prettier": "1.19.1",
     "react-is": "^16.7.0",
     "typescript": "^3.8.0"
