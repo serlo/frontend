@@ -3,8 +3,11 @@ import Toolbox from './toolbox'
 import Footer from './footer'
 import styled from 'styled-components'
 
+import dynamic from 'next/dynamic'
+
 import EdtrIoRenderer from './transform-edtr-io-state'
-import LegacyRenderer from './transform-legacy-state'
+
+const LegacyRenderer = dynamic(import('./transform-legacy-state'))
 
 export default function Main(props) {
   const { data } = props

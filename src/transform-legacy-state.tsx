@@ -1,31 +1,34 @@
 import styled from 'styled-components'
 
 import { converter } from './legacy-markdown-parser'
+import KaTeXSpan from './katexstyles'
 
 export default function LegacyRenderer(props) {
   const { state } = props
   return state.map((entry, index) => (
-    <Row key={index}>
-      {entry.map((entry, index) => {
-        const html = converter.makeHtml(entry.content)
-        if (entry.col == 24) {
-          return (
-            <Col24
-              key={index}
-              dangerouslySetInnerHTML={{ __html: html }}
-            ></Col24>
-          )
-        }
-        if (entry.col == 12) {
-          return (
-            <Col12
-              key={index}
-              dangerouslySetInnerHTML={{ __html: html }}
-            ></Col12>
-          )
-        }
-      })}
-    </Row>
+    <KaTeXSpan as="div" key={index}>
+      <Row>
+        {entry.map((entry, index) => {
+          const html = converter.makeHtml(entry.content)
+          if (entry.col == 24) {
+            return (
+              <Col24
+                key={index}
+                dangerouslySetInnerHTML={{ __html: html }}
+              ></Col24>
+            )
+          }
+          if (entry.col == 12) {
+            return (
+              <Col12
+                key={index}
+                dangerouslySetInnerHTML={{ __html: html }}
+              ></Col12>
+            )
+          }
+        })}
+      </Row>
+    </KaTeXSpan>
   ))
 }
 

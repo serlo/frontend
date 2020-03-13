@@ -461,12 +461,100 @@ yarn analyze
 
 Results are saved to `.next/analyze/client.html` and `.next/analyze/server.html`.
 
+### Dynamic Import
+
+If some part of a page is heavy and only relevant for a smaller fraction of users, import it dynamically. Write your component as usual:
+
+```tsx
+// src/fancycomponent.tsx
+
+function FancyComponent() {
+  return <p>This is some heavy component</p>
+}
+
+export default FancyComponent
+```
+
+Use a [dynamic import](https://nextjs.org/docs/advanced-features/dynamic-import) to load the component:
+
+```tsx
+// pages/helloworld.tsx
+
+import React from 'react'
+import dynamic from 'next/dynamic'
+
+const FancyComponent = dynamic(import('../src/fancycomponent'))
+
+function HelloWorld() {
+  const [visible, setVisible] = React.useState(false)
+  return (
+    <>
+      <p>
+        <button onClick={() => setVisible(true)}>Load ...</button>
+      </p>
+      {visible && <FancyComponent />}
+    </>
+  )
+}
+
+export default HelloWorld
+```
+
+The source code of `FancyComponent` is splitting into a separate chunk and is only loaded when users click the button.
+
+### Fonts
+
+Fonts consists of two parts: Font files and a css file with the font face declaration. Put these files into the assets folder and import the css file into `pages/_app.js`. Reference the font files with absolute urls (we don't want to bundle them). This makes the font available to all components.
+
+### Listening to Scroll & Resize
+
+It is possible to listen to scroll and resize events as a last resort for responsive design, e.g. if media queries are insufficient. Use `useEffect` to accomplish this task:
+
+```tsx
+import React from 'react'
+import styled from 'styled-components'
+
+function HelloWorld() {
+  const [gray, setGray] = React.useState(false)
+
+  React.useEffect(() => {
+    function handleScroll() {
+      const scrollY = window.pageYOffset
+      setGray(scrollY > 250)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  return (
+    <BigDiv>
+      <Par gray={gray}>Please scroll down a little bit ...</Par>
+    </BigDiv>
+  )
+}
+
+const BigDiv = styled.div`
+  height: 4000px;
+`
+
+const Par = styled.p<{ gray: boolean }>`
+  font-size: 3rem;
+  text-align: center;
+  margin-top: 500px;
+  ${props => (props.gray ? 'color:lightgray;' : '')}
+`
+
+export default HelloWorld
+```
+
+This text will gray out if you scroll down. `useEffect` with an empty dependency array is called once on mount. The return value is called when the component unmounts and will remove the event listener. Set the state directly within the event handler.
+
 ### Missing Dependencies
 
-Sometimes, peer dependencies are missing. Add them to `package.json` and note it here:
+Sometimes, peer dependencies are missing. Install them manually and note it here:
 
 - `styled-components` depends on `react-is` (missing)
-- `next-css` depends on `webpack` (missing)
 
 ## FAQ
 
@@ -477,6 +565,10 @@ No, we are not using any [css resets](https://github.com/jaydenseric/Fix/issues/
 ### Do I have to vendor prefix my css?
 
 No, styled components [takes care](https://styled-components.com/docs/basics#motivation) of this already.
+
+### Can I add external css?
+
+Only if it is absolutely necessary. You are able to import external `.css`-files in `pages/_app.js`. These stylesheets are always global and included in every page. If possible, use a package that supports styled components.
 
 ### How do I disable server side rendering for a component?
 
@@ -533,5 +625,5 @@ The brother can pass a message to its sister by declaring the state in the paren
 ## Notes
 
 - Educational renderer for edtr-io content
-- KaTeX is big, 70kb + css + fonts
-- adding showdown
+- KaTeX is big, I have copied the font files and added the font face to the app (globally), the remaining styles are within a styled component, this should avoid any overhead.
+- leacy content renderer using showdown and generating html (bääh)

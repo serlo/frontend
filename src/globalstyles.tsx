@@ -9,7 +9,5 @@ export const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     font: 16px/1 'Karmilla';
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
   }
 `

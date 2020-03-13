@@ -1,8 +1,8 @@
 // From Editor renderer
-
 import KaTeX from 'katex'
-import * as React from 'react'
-import '../public/fonts/katex.css'
+import React from 'react'
+
+import KaTeXSpan from './katexstyles'
 
 export interface MathProps {
   formula: string
@@ -10,7 +10,7 @@ export interface MathProps {
   innerRef?: React.Ref<HTMLElement>
 }
 
-export const Math = (props: MathProps) => {
+const Math = (props: MathProps) => {
   const { inline, innerRef } = props
   let formula = props.formula
 
@@ -29,14 +29,18 @@ export const Math = (props: MathProps) => {
   })
 
   if (inline) {
-    return <span ref={innerRef} dangerouslySetInnerHTML={{ __html: html }} />
+    return (
+      <KaTeXSpan ref={innerRef} dangerouslySetInnerHTML={{ __html: html }} />
+    )
   } else {
     return (
-      <span
-        style={{ display: 'block', margin: '1em 0', textAlign: 'center' }}
+      <KaTeXSpan
+        style={{ display: 'block', margin: '16px 0', textAlign: 'center' }}
         ref={props.innerRef}
         dangerouslySetInnerHTML={{ __html: html }}
       />
     )
   }
 }
+
+export default Math

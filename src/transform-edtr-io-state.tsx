@@ -1,7 +1,10 @@
 // This is completely redundant work, for educational purposes only
 
 import styled from 'styled-components'
-import { Math } from './mathcomponent'
+import dynamic from 'next/dynamic'
+
+// @ts-ignore
+const Math = dynamic(import('./mathcomponent'))
 
 export default function EdtrIoRenderer(props) {
   const { state } = props
@@ -98,7 +101,11 @@ function textPlugin(state, index = 0) {
     if (/\/[\d]+/.test(href)) {
       href = '/content' + href
     }
-    return <a href={href}>{textPlugin(state.children)}</a>
+    return (
+      <a href={href} key={index}>
+        {textPlugin(state.children)}
+      </a>
+    )
   }
   if (type === 'math') {
     return <Math key={index} inline={state.inline} formula={state.src} />
