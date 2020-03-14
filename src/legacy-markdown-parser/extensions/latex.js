@@ -20,7 +20,6 @@
  * @link      https://github.com/serlo-org/serlo.org for the canonical source repository
  */
 /* global define */
-const KaTeX = require('katex')
 
 var _EncodeCode
 var serloSpecificCharsToEscape
@@ -48,16 +47,9 @@ var latex = function() {
       text = text.replace(/\$/g, '\\$')
       text = text.replace(/%/g, '\\%')
 
-      //c = _EncodeCode(c)
+      c = _EncodeCode(c)
 
-      const html = KaTeX.renderToString(c, {
-        displayMode: false,
-        throwOnError: false
-      })
-
-      return m1 + html
-
-      //return m1 + '<span class="mathInline">%%' + c + '%%</span>'
+      return m1 + '<span class="mathInline">' + c + '</span>'
     })
 
     text = text.replace(/(^|[^\\])(¨D¨D)([^\r]*?[^~])\2(?!¨D)/gm, function(
@@ -72,14 +64,8 @@ var latex = function() {
       // c = _EncodeCode(c)
       // Escape already transliterated $
       // However, do not escape already escaped $s
-      //text = text.replace(/[^\\]¨D/g, '\\¨D')
-      //return m1 + '<span class="math">¨D¨D' + c + '¨D¨D</span>'
-      const html = KaTeX.renderToString(c, {
-        displayMode: false,
-        throwOnError: false
-      })
-
-      return m1 + html
+      text = text.replace(/[^\\]¨D/g, '\\¨D')
+      return m1 + '<span class="math">' + c + '</span>'
     })
 
     return text

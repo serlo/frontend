@@ -34,7 +34,6 @@ function Index() {
       </p>
       <form
         onSubmit={e => {
-          console.log('hi')
           const node: any = serloId.current
           if (node) {
             window.location.href = '/content/' + node.value

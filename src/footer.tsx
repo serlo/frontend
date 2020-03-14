@@ -22,12 +22,6 @@ function About() {
   return (
     <AboutContainer>
       <LogoContainer>
-        <a href="#">
-          <Image alt="Serlo" src={'/img/serlo-logo-white.svg'} />
-        </a>
-        <Subline>
-          <a href="#">Die freie Lernplattform</a>
-        </Subline>
         <TopButton onClick={() => window.scrollTo(0, 0)}>
           <FontAwesomeIcon icon={faChevronUp} size="lg" />
         </TopButton>
@@ -75,6 +69,7 @@ const LogoContainer = styled.div`
   flex-basis: 66.6667%;
   background-color: ${props => props.theme.colors.brand};
   position: relative;
+  min-height: 60px;
 `
 
 const Subline = styled.p`
@@ -98,7 +93,7 @@ const Image = styled.img`
 
 const TopButton = styled.div`
   right: 20px;
-  top: 12px;
+  top: 10px;
   height: 40px;
   width: 40px;
   position: absolute;
@@ -124,7 +119,7 @@ const Summary = styled.div`
   background-color: ${props => props.theme.colors.lightblue};
   display: flex;
   flex-direction: column;
-  padding: 45px 15px 2px 24px;
+  padding: 12px 15px 0 15px;
   font-size: 18px;
   line-height: 24px;
   color: white;
@@ -132,6 +127,8 @@ const Summary = styled.div`
 
 const SummaryHeading = styled.div`
   font-weight: bold;
+  margin-top: 4px;
+  margin-bottom: 6px;
 `
 
 const SerloLink = styled.a`
@@ -145,11 +142,11 @@ const SerloLink = styled.a`
 `
 
 const SummaryText = styled.div`
-  margin: 32px 0;
+  margin: 16px 0;
 `
 const SummaryButtonBox = styled.div`
   margin-top: 10px;
-  margin-bottom: 32px;
+  margin-bottom: 10px;
 `
 
 const SummaryButton = styled.button`
@@ -170,8 +167,8 @@ const Support = styled.div`
   background-color: ${props => props.theme.colors.brandGreen};
   display: flex;
   justify-content: space-around;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding-top: 8px;
+  padding-bottom: 8px;
   color: white;
 `
 
@@ -180,7 +177,7 @@ const ImageLink = styled.a`
   flex-direction: column;
   align-items: center;
   > img {
-    width: 80px;
+    width: 60px;
   }
   cursor: pointer;
 `

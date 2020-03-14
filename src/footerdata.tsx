@@ -6,24 +6,10 @@ export const footerNavEntries = [
     title: 'Allgemein',
     children: [
       { title: 'Über Serlo', url: '/serlo' },
-      { title: 'Mitmachen', url: '/mitmachen' },
-      { title: 'Spenden', url: '/spenden' },
       { title: 'Presse', url: '/presse' },
       { title: 'Kontakt', url: '/kontakt' },
       { title: 'Serlo in anderen Sprachen', url: '/93321' },
       { title: 'API', url: '/105250' }
-    ]
-  },
-  {
-    title: 'Fächer',
-    children: [
-      { url: '#', title: 'Mathematik' },
-      { url: '#', title: 'Biologie' },
-      { url: '#', title: 'Angewandte Nachhaltigkeit' },
-      { url: '#', title: 'Informatik' },
-      { url: '#', title: 'Chemie' },
-      { url: '#', title: 'Physik' },
-      { url: '#', title: 'Fächer im Aufbau' }
     ]
   },
   {

@@ -34,7 +34,7 @@ export default function Toolbox() {
           <FontAwesomeIcon icon={faShareAlt} size="1x" /> Teilen!
         </IconButton>
       </BoxWrapper>
-      {<ShareModal open={open} onClose={() => setOpen(false)} />}
+      <ShareModal open={open} onClose={() => setOpen(false)} />
     </>
   )
 }
@@ -46,20 +46,23 @@ const BoxWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  @media (max-width: 500px) {
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
     display: none;
   }
 `
 
-export const IconButton = styled.button`
+const IconButton = styled.button`
+  color: ${props => props.theme.colors.brandGreen};
   font-weight: bold;
   border: none;
   background-color: transparent;
-  padding: 4px 4px;
+  padding: 6px 6px;
   margin: 4px;
   border-radius: 20px;
   cursor: pointer;
   transition: background-color 0.2s;
-  color: white;
-  background-color: ${props => props.theme.colors.brandGreen};
+  &:hover {
+    color: white;
+    background-color: ${props => props.theme.colors.brandGreen};
+  }
 `

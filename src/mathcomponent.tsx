@@ -30,7 +30,11 @@ const Math = (props: MathProps) => {
 
   if (inline) {
     return (
-      <KaTeXSpan ref={innerRef} dangerouslySetInnerHTML={{ __html: html }} />
+      <KaTeXSpan
+        style={{ fontSize: '16px' }}
+        ref={innerRef}
+        dangerouslySetInnerHTML={{ __html: html }}
+      />
     )
   } else {
     return (

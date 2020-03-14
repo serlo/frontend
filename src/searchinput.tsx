@@ -2,12 +2,13 @@ import React from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { lighten } from 'polished'
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faSearch, faSlidersH } from '@fortawesome/free-solid-svg-icons'
 
 export default function SearchInput(props) {
   const { value } = props
 
   const [focused, setFocused] = React.useState(false)
+  const [showSettings, setShowSettings] = React.useState(false)
   const inputRef = React.useRef(null)
 
   function onButtonClick(e: React.MouseEvent) {
@@ -20,33 +21,54 @@ export default function SearchInput(props) {
   }
 
   return (
-    <SearchForm id="searchform" name="searchform">
-      <_Input
-        type="text"
-        name="searchtext"
-        ref={inputRef}
-        placeholder="Suche"
-        aria-label="Suche"
-        value={value}
-        focused={focused}
-        onFocus={() => {
-          setFocused(true)
-        }}
-        onBlur={() => {
-          setFocused(false)
-        }}
-      />
-      <_Button
-        onMouseDown={e => e.preventDefault()}
-        onClick={onButtonClick}
-        type="submit"
-        focused={focused}
-      >
-        <FontAwesomeIcon icon={faSearch} size="lg" />
-      </_Button>
-    </SearchForm>
+    <>
+      <SearchForm id="searchform" name="searchform">
+        <Settings
+          onClick={e => {
+            e.preventDefault()
+            setShowSettings(!showSettings)
+          }}
+        >
+          <FontAwesomeIcon icon={faSlidersH} size="lg" />
+        </Settings>
+
+        <_Input
+          type="text"
+          name="searchtext"
+          ref={inputRef}
+          placeholder="Suche"
+          aria-label="Suche"
+          value={value}
+          focused={focused}
+          onFocus={() => {
+            setFocused(true)
+          }}
+          onBlur={() => {
+            setFocused(false)
+          }}
+        />
+        <_Button
+          onMouseDown={e => e.preventDefault()}
+          onClick={onButtonClick}
+          type="submit"
+          focused={focused}
+        >
+          <FontAwesomeIcon icon={faSearch} size="lg" />
+        </_Button>
+      </SearchForm>
+      {showSettings && (
+        <SearchSettings>Hier kommen Sucheinstellungen hin</SearchSettings>
+      )}
+    </>
   )
 }
+
+const SearchSettings = styled.div`
+  text-align: center;
+  padding: 30px;
+  background-color: ${props => lighten(0.1, props.theme.colors.lighterblue)};
+  border-top: thin solid ${props => props.theme.colors.brand};
+`
 
 const SearchForm = styled.form`
   background-color: ${props => lighten(0.1, props.theme.colors.lighterblue)};
@@ -77,6 +99,15 @@ const SearchForm = styled.form`
     margin-top: -5px;
     margin-left: auto;
   }
+`
+
+const Settings = styled.button`
+  width: 45px;
+  height: 40px;
+  background-color: transparent;
+  border: none;
+  color: ${props => lighten(0.5, props.theme.colors.darkgray)};
+  cursor: pointer;
 `
 
 const _Button = styled.button<{ focused: boolean }>`
@@ -116,11 +147,13 @@ const _Input = styled.input<{ focused: boolean }>`
   background-color: transparent;
 
   flex-grow: 1;
+  flex-shrink: 1;
+  width: 100px;
 
   border: 0;
   outline: none;
 
-  margin-left: 48px;
+  margin-left: 4px;
   cursor: ${props => (props.focused ? 'auto' : 'pointer')};
 
   &::placeholder {

@@ -1,8 +1,14 @@
-// This is completely redundant work, for educational purposes only
-
-import styled from 'styled-components'
 import dynamic from 'next/dynamic'
-import { transparentize, darken } from 'polished'
+import {
+  Rows,
+  Row,
+  ImgWrapper,
+  Img,
+  StyledP,
+  StyledH2,
+  StyledH3,
+  StyledA
+} from './visuals'
 
 // @ts-ignore
 const Math = dynamic(import('./mathcomponent'))
@@ -41,17 +47,6 @@ function handleRow(state, next) {
   )
 }
 
-const Rows = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-`
-
-const Row = styled.div`
-  width: 100%;
-  margin-bottom: 12px;
-`
-
 function handleImage(state, next) {
   return (
     <ImgWrapper maxWidth={state.maxWidth ? state.maxWidth : 0}>
@@ -59,20 +54,6 @@ function handleImage(state, next) {
     </ImgWrapper>
   )
 }
-
-const ImgWrapper = styled.div<{ maxWidth: number }>`
-  max-width: ${props => (props.maxWidth > 0 ? props.maxWidth + 'px' : '')};
-  display: block;
-  margin-left: 8px;
-  margin-right: 8px;
-`
-
-const Img = styled.img`
-  max-width: 100%;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-`
 
 function handleText(state, next) {
   return textPlugin(state)
@@ -103,7 +84,7 @@ function textPlugin(state, index = 0) {
   }
   if (type === 'a') {
     let href = state.href
-    if (/\/[\d]+/.test(href)) {
+    if (/^\/[\d]+$/.test(href)) {
       href = '/content' + href
       /*return (
         <Link href="/content/[id]" as={href} key={index}>
@@ -132,32 +113,3 @@ function textPlugin(state, index = 0) {
 
   return <>Unknown</>
 }
-
-const StyledP = styled.p`
-  margin: 0 15px 10px;
-  hyphens: auto;
-  line-height: 1.3;
-  font-size: 18px;
-`
-
-const StyledH2 = styled.h2`
-  margin-left: 15px;
-  margin-right: 15px;
-  margin-top: 0;
-  border-bottom: 1px solid
-    ${props => transparentize(0.7, props.theme.colors.dark1)};
-  padding-bottom: 6px;
-  margin-bottom: 8px;
-`
-
-const StyledH3 = styled.h3`
-  margin-left: 15px;
-  margin-top: 0;
-  margin-bottom: 0;
-`
-
-const StyledA = styled.a`
-  color: ${props => darken(0.05, props.theme.colors.brandGreen)};
-  text-decoration: none;
-  font-weight: bold;
-`

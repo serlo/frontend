@@ -48,7 +48,7 @@ export function FooterNav(props: NavProps) {
 }
 
 const FooterNavGrid = styled.div`
-  padding: 32px 24px 64px;
+  padding: 0 15px 24px;
   background-color: ${props => props.theme.colors.lightBackground};
 `
 
