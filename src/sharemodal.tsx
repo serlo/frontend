@@ -17,8 +17,8 @@ import {
 import Modal from './reactmodal'
 
 export default function ShareModal(props) {
-  if (typeof window === 'undefined') return null
   const { open, onClose } = props
+  if (!open) return null
   const shareInputRef = React.useRef(null)
   const [copySuccess, setCopySuccess] = React.useState('')
 

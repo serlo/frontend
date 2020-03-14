@@ -461,7 +461,7 @@ yarn analyze
 
 Results are saved to `.next/analyze/client.html` and `.next/analyze/server.html`.
 
-### Dynamic Import
+### Dynamic Import Component
 
 If some part of a page is heavy and only relevant for a smaller fraction of users, import it dynamically. Write your component as usual:
 
@@ -568,18 +568,68 @@ No, styled components [takes care](https://styled-components.com/docs/basics#mot
 
 ### Can I add external css?
 
-Only if it is absolutely necessary. You are able to import external `.css`-files in `pages/_app.js`. These stylesheets are always global and included in every page. If possible, use a package that supports styled components.
+Only if it is absolutely necessary. You are able to import external `.css` files in `pages/_app.js`. These stylesheets are always global and included in every page. If possible, use a package that supports styled components.
 
-### How do I disable server side rendering for a component?
+### Some client specific objects (window, document) are causing trouble with server side rendering. What can I do?
 
-[WARNING: This is dangerous! Use this with care!!!!] Some components rely on client specific objects (window, document). The server can not render them and will throw an error. You can disable server side rendering by checking `window` and returning early:
+Delay these parts of the code after your component mounted, using the `useEffect` hook:
 
 ```tsx
-function FancyComponent() {
-  if (typeof window === 'undefined') return null
-  return <span>{window.location.href}</span>
+import React from 'react'
+import styled from 'styled-components'
+
+function HelloWorld() {
+  const [href, setHref] = React.useState(undefined)
+
+  React.useEffect(() => {
+    setHref(window.location.href)
+  }, [])
+
+  return href ? <BigDiv>Your site's url is {href}</BigDiv> : null
+}
+
+const BigDiv = styled.div`
+  text-align: center;
+  margin-top: 100px;
+`
+
+export default HelloWorld
+```
+
+Using the state is important: This ensures that server side rendering and client side hydration matches up.
+
+### How can I detect whether I am serverside or clientside?
+
+The most idomatic way to do this is checking the type of window:
+
+```tsx
+if (typeof window === 'undefined') {
+  // serverside
 }
 ```
+
+A bigger example:
+
+```tsx
+function HelloWorld(props) {
+  return <>{JSON.stringify(props.data)}</>
+}
+
+HelloWorld.getInitialProps = async () => {
+  if (typeof window === 'undefined') {
+    const fs = await import('fs')
+    const util = await import('util')
+    const data = await util.promisify(fs.readFile)('package.json', 'utf-8')
+    console.log(data)
+    return { data: JSON.parse(data) }
+  }
+  return {}
+}
+
+export default HelloWorld
+```
+
+The `fs` module is only available in nodejs, but it's ok to use it when you check that you are serverside and load it with a [dynamic import](https://javascript.info/modules-dynamic-imports). There is also some [async/await](https://javascript.info/async-await) syntax shown here.
 
 ### How can I focus an element?
 
