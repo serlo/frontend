@@ -1,4 +1,3 @@
-// From Editor renderer
 import KaTeX from 'katex'
 import React from 'react'
 
@@ -10,7 +9,7 @@ export interface MathProps {
   innerRef?: React.Ref<HTMLElement>
 }
 
-const Math = (props: MathProps) => {
+function Math(props: MathProps) {
   const { inline, innerRef } = props
   let formula = props.formula
 

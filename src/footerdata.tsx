@@ -6,6 +6,7 @@ export const footerNavEntries = [
     title: 'Allgemein',
     children: [
       { title: 'Über Serlo', url: '/serlo' },
+      { title: 'Partner & Förderer', url: '/partner' },
       { title: 'Presse', url: '/presse' },
       { title: 'Kontakt', url: '/kontakt' },
       { title: 'Serlo in anderen Sprachen', url: '/93321' },

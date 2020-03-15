@@ -3,7 +3,8 @@ import Toolbox from './toolbox'
 import Footer from './footer'
 import styled from 'styled-components'
 
-import ContentTypes from './contenttypes'
+import ContentTypes from './content-api/contenttypes'
+import { DummyContainer } from './visuals'
 
 export default function Main(props) {
   const { data } = props
@@ -18,10 +19,3 @@ export default function Main(props) {
     </div>
   )
 }
-
-const DummyContainer = styled.main`
-  margin-left: auto;
-  margin-right: auto;
-  max-width 900px;
-  overflow: hidden;
-`

@@ -1,6 +1,17 @@
 import styled from 'styled-components'
 import { transparentize, darken } from 'polished'
 
+export const DummyContainer = styled.main`
+  margin-left: auto;
+  margin-right: auto;
+  max-width 900px;
+  overflow: hidden;
+`
+
+export const HSpace = styled.div<{ amount?: number }>`
+  height: ${props => (props.amount ? props.amount : 30)}px;
+`
+
 export const ArticleHeading = styled.h1`
   margin-top: 35px;
   margin-left: 15px;
@@ -115,51 +126,6 @@ export const Col = styled.div<{ size: number }>`
     box-sizing: border-box;
     width: ${props => Math.floor((props.size * 100) / 24)}%;
     max-width: ${props => Math.floor((props.size * 100) / 24)}%;
-    padding: 10px 32px;
-  }
-`
-
-export const Col24 = styled.div`
-  width: 100%;
-  max-width: 100%;
-`
-
-export const Col12 = styled.div`
-  @media (min-width: ${props => props.theme.breakpoints.mobile}) {
-    flex-basis: 50%;
-    box-sizing: border-box;
-    width: 50%;
-    max-width: 50%;
-    padding: 10px 32px;
-  }
-`
-
-export const Col8 = styled.div`
-  @media (min-width: ${props => props.theme.breakpoints.mobile}) {
-    flex-basis: 33%;
-    box-sizing: border-box;
-    width: 33%;
-    max-width: 33%;
-    padding: 10px 32px;
-  }
-`
-
-export const Col6 = styled.div`
-  @media (min-width: ${props => props.theme.breakpoints.mobile}) {
-    flex-basis: 25%;
-    box-sizing: border-box;
-    width: 25%;
-    max-width: 25%;
-    padding: 10px 32px;
-  }
-`
-
-export const Col16 = styled.div`
-  @media (min-width: ${props => props.theme.breakpoints.mobile}) {
-    flex-basis: 66%;
-    box-sizing: border-box;
-    width: 66%;
-    max-width: 66%;
     padding: 10px 32px;
   }
 `

@@ -6,13 +6,18 @@ export default function Logo(props) {
   return (
     <>
       <div>
-        <a href="#">
-          <Image alt="Serlo" src={'/img/serlo-logo.svg'} width="160" height="80"/>
+        <a href="/">
+          <Image
+            alt="Serlo"
+            src={'/img/serlo-logo.svg'}
+            width="160"
+            height="80"
+          />
         </a>
       </div>
       {subline && (
         <SublineH2>
-          <SublineLink className="subline icon" href="#">
+          <SublineLink className="subline icon" href="/">
             {subline}
           </SublineLink>
         </SublineH2>

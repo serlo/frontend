@@ -4,33 +4,29 @@ import dynamic from 'next/dynamic'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faShareAlt, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 
-import { ArticleHeading, ToolLine, ToolLineButton } from './visuals'
-import ShareModal from './sharemodal'
+import { ArticleHeading, ToolLine, ToolLineButton } from '../visuals'
+import ShareModal from '../sharemodal'
 
 import EdtrIoRenderer from './transform-edtr-io-state'
+import Ups from './ups'
 const LegacyRenderer = dynamic(import('./transform-legacy-state'))
 
 export default function ContentTypes(props) {
   const { data } = props
-  if (data.type === 'article') {
-    return renderArticle(data.content)
+  console.log(data.contentType)
+  if (data.contentType === 'article' || data.contentType === 'Page revision') {
+    return renderArticle(data.data)
   }
-  return (
-    <>
-      <p>Aufgabentyp in Arbeit: {data.type}</p>
-      <p>{JSON.stringify(data)}</p>
-    </>
-  )
+  return <Ups />
 }
 
 function renderArticle(content) {
   const [open, setOpen] = React.useState(false)
-  let innerContent = JSON.parse(content.content)
   let comp = null
-  if (innerContent.plugin) {
-    comp = <EdtrIoRenderer state={innerContent} />
+  if (content.edtrio) {
+    comp = <EdtrIoRenderer state={JSON.parse(content.edtrio)} />
   } else {
-    comp = <LegacyRenderer state={innerContent} />
+    comp = <LegacyRenderer state={content.legacy} />
   }
   return (
     <>

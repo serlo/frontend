@@ -8,19 +8,19 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 
 export const menudata = [
-  { url: '#', title: 'Über Serlo', icon: faInfoCircle },
+  { url: '/serlo', title: 'Über Serlo', icon: faInfoCircle },
   {
     url: '#',
     title: 'Fächer',
     icon: faGraduationCap,
     children: [
-      { url: '#', title: 'Mathematik' },
-      { url: '#', title: 'Biologie' },
-      { url: '#', title: 'Angewandte Nachhaltigkeit' },
-      { url: '#', title: 'Informatik' },
-      { url: '#', title: 'Chemie' },
-      { url: '#', title: 'Physik' },
-      { url: '#', title: 'Fächer im Aufbau' }
+      { url: '/mathematik', title: 'Mathematik' },
+      { url: '/biologie', title: 'Biologie' },
+      { url: '/nachhaltigkeit', title: 'Angewandte Nachhaltigkeit' },
+      { url: '/informatik', title: 'Informatik' },
+      { url: '/chemie', title: 'Chemie' },
+      { url: '/physik', title: 'Physik' },
+      { url: '/community/neue-fächer-themen', title: 'Fächer im Aufbau' }
     ]
   },
   {
@@ -28,10 +28,13 @@ export const menudata = [
     title: 'Community',
     icon: faUserFriends,
     children: [
-      { url: '#', title: 'Mitmachen', icon: faUserEdit },
-      { url: '#', title: 'Startseite für Autor*innen' },
-      { url: '#', title: 'Chat für Autor*innen' },
-      { url: '#', title: 'Veranstaltungen für Autor*innen' },
+      { url: '/mitmachen', title: 'Mitmachen', icon: faUserEdit },
+      { url: '/community', title: 'Startseite für Autor*innen' },
+      { url: 'https://community.serlo.org/', title: 'Chat für Autor*innen' },
+      {
+        url: '/community/veranstaltungen/veranstaltungsübersicht',
+        title: 'Veranstaltungen für Autor*innen'
+      },
       { url: '#', title: 'Ungeprüfte Bearbeitungen' }
     ]
   },

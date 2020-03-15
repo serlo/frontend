@@ -1,5 +1,7 @@
+import WipHint from '../src/content-api/wiphint'
+
 function HelloWorld() {
-  return <>Hello</>
+  return <WipHint part="Startseite" />
 }
 
 export default HelloWorld

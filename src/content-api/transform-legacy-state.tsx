@@ -1,6 +1,5 @@
 import ReactHtmlParser, { processNodes } from 'react-html-parser'
 
-import { converter } from './legacy-markdown-parser'
 import {
   Rows,
   Row,
@@ -17,29 +16,14 @@ import {
   StyledH4,
   StyledH5,
   StyledOl
-} from './visuals'
-import Math from './mathcomponent'
+} from '../visuals'
+
+import Math from '../math'
 
 export default function LegacyRenderer(props) {
   const { state } = props
-  return (
-    <Rows>
-      {state.map((entry, index) => (
-        <Row key={index}>
-          <LayoutRow>
-            {entry.map((entry, index) => {
-              const html = converter.makeHtml(entry.content)
-              return (
-                <Col size={entry.col} key={index}>
-                  {ReactHtmlParser(html, { transform })}
-                </Col>
-              )
-            })}
-          </LayoutRow>
-        </Row>
-      ))}
-    </Rows>
-  )
+  console.log('legacy')
+  return <Rows>{ReactHtmlParser(state, { transform })}</Rows>
 }
 
 function transform(node, index) {
@@ -114,16 +98,26 @@ function transform(node, index) {
     }
     if (node.name === 'a') {
       let href = node.attribs.href
-      if (/^\/[\d]+$/.test(href)) {
-        href = '/content' + href
-      }
       return (
         <StyledA href={href} key={index}>
           {processNodes(node.children, transform)}
         </StyledA>
       )
     }
+    if (node.name === 'hr') {
+      return <hr key={index} />
+    }
     if (node.name === 'div' && node.attribs && node.attribs.class) {
+      if (node.attribs.class == 'r') {
+        return <Row key={index}>{processNodes(node.children, transform)}</Row>
+      }
+      if (/^c[\d]+$/.test(node.attribs.class)) {
+        return (
+          <Col key={index} size={parseInt(node.attribs.class.substring(1))}>
+            {processNodes(node.children, transform)}
+          </Col>
+        )
+      }
       if (node.attribs.class.includes('spoiler')) {
         return <StyledP key={index}>[Spoiler]</StyledP>
       }

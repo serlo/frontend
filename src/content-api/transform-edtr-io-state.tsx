@@ -8,13 +8,13 @@ import {
   StyledH2,
   StyledH3,
   StyledA
-} from './visuals'
+} from '../visuals'
 
-// @ts-ignore
-const Math = dynamic(import('./mathcomponent'))
+const Math = dynamic(import('../math'))
 
 export default function EdtrIoRenderer(props) {
   const { state } = props
+  console.log('edtr-io')
   return matchUp(state)
 }
 
