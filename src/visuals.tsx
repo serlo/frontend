@@ -1,5 +1,12 @@
 import styled from 'styled-components'
 import { transparentize, darken } from 'polished'
+import { theme } from './theme'
+
+const makeMargin = props =>
+  props.full ? '' : 'margin-left:15px;margin-right:15px;'
+
+const makePadding = props =>
+  props.full ? '' : 'padding-left:15px;padding-right:15px;'
 
 export const DummyContainer = styled.main`
   margin-left: auto;
@@ -18,7 +25,7 @@ export const ArticleHeading = styled.h1`
   font-size: 32px;
   padding: 0;
   margin-right: 15px;
-  margin-bottom: 0;
+  margin-bottom: 20px;
 `
 
 export const ToolLine = styled.div`
@@ -28,7 +35,7 @@ export const ToolLine = styled.div`
   @media (max-width: ${props => props.theme.breakpoints.mobile}) {
     display: flex;
   }
-  margin-bottom: 8px;
+  margin-bottom: 40px;
   justify-content: flex-end;
 `
 
@@ -58,50 +65,58 @@ export const Row = styled.div`
   margin-bottom: 12px;
 `
 
-export const ImgWrapper = styled.div<{ maxWidth: number }>`
+export const ImgCentered = styled.div`
+  ${makePadding}
+  margin-bottom: 38px;
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`
+
+export const Img = styled.img<{ maxWidth?: number }>`
   max-width: ${props => (props.maxWidth > 0 ? props.maxWidth + 'px' : '')};
-  display: block;
-  margin-left: 10px;
-  margin-right: 10px;
 `
 
-export const Img = styled.img`
-  max-width: 100%;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-`
-
-export const StyledP = styled.p`
-  margin: 0 15px 10px;
+export const StyledP = styled.p<{ full?: boolean; slim?: boolean }>`
+  ${makeMargin}
+  margin-top: 0;
+  margin-bottom: ${props => (props.slim ? '0' : '38px')};
   hyphens: auto;
   line-height: 1.3;
   font-size: 18px;
 `
 
 export const StyledH2 = styled.h2`
-  margin-left: 15px;
-  margin-right: 15px;
+  ${makeMargin}
   margin-top: 0;
   border-bottom: 1px solid
     ${props => transparentize(0.7, props.theme.colors.dark1)};
   padding-bottom: 6px;
-  margin-bottom: 8px;
+  margin-bottom: 38px;
+  font-size: 24px;
   hyphens: auto;
 `
 
 export const StyledH3 = styled.h3`
-  margin: 0 15px;
+  ${makeMargin}
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 21px;
 `
 
 export const StyledH4 = styled.h4`
-  margin: 0 15px;
-  font-size: 17px;
+  ${makeMargin}
+  margin-top: 0;
+  margin-bottom: 18px;
+  font-size: 19px;
 `
 
 export const StyledH5 = styled.h5`
-  margin: 0 15px;
-  font-size: 16px;
+  ${makeMargin}
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 17px;
 `
 
 export const StyledA = styled.a`
@@ -111,6 +126,14 @@ export const StyledA = styled.a`
   &:visited {
     color: ${props => darken(0.2, props.theme.colors.brandGreen)};
   }
+`
+
+export const MathCentered = styled.div`
+  ${makePadding}
+  width:100%;
+  text-align: center;
+  margin-bottom: 38px;
+  font-size: 19px;
 `
 
 export const LayoutRow = styled.div`
@@ -131,16 +154,25 @@ export const Col = styled.div<{ size: number }>`
 `
 
 export const StyledLi = styled.li`
-  margin-bottom: 4px;
   hyphens: auto;
   line-height: 1.3;
   font-size: 18px;
+  margin-bottom: 8px;
 `
 
 export const StyledUl = styled.ul`
-  margin: 0 15px 8px;
+  ${makeMargin}
+  margin-bottom: 38px;
 `
 
 export const StyledOl = styled.ol`
-  margin: 0 15px 8px;
+  ${makeMargin}
+  margin-bottom: 38px;
+`
+
+export const Important = styled.div`
+  border-left: 6px solid ${props => theme.colors.brand};
+  padding-left: 10px;
+  padding-right: 10px
+  margin-bottom: 38px;
 `

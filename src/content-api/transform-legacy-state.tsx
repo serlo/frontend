@@ -6,7 +6,6 @@ import {
   LayoutRow,
   Col,
   StyledP,
-  ImgWrapper,
   Img,
   StyledH2,
   StyledA,

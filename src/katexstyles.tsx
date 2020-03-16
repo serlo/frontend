@@ -2,8 +2,8 @@ import styled from 'styled-components'
 
 const KaTeXSpan = styled.span`
   .katex {
-    font: normal 1.15em KaTeX_Main, Times New Roman, serif;
-    line-height: 1.2;
+    font: normal 1em KaTeX_Main, Times New Roman, serif;
+    line-height: 1.4;
     text-indent: 0;
     text-rendering: auto;
   }

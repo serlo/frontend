@@ -29,16 +29,11 @@ function Math(props: MathProps) {
 
   if (inline) {
     return (
-      <KaTeXSpan
-        style={{ fontSize: '16px' }}
-        ref={innerRef}
-        dangerouslySetInnerHTML={{ __html: html }}
-      />
+      <KaTeXSpan ref={innerRef} dangerouslySetInnerHTML={{ __html: html }} />
     )
   } else {
     return (
       <KaTeXSpan
-        style={{ display: 'block', margin: '16px 0', textAlign: 'center' }}
         ref={props.innerRef}
         dangerouslySetInnerHTML={{ __html: html }}
       />
