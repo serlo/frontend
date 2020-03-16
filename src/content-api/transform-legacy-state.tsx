@@ -1,7 +1,6 @@
-import ReactHtmlParser, { processNodes } from 'react-html-parser'
+import * as htmlparser2 from 'htmlparser2'
 
 import {
-  Rows,
   Row,
   LayoutRow,
   Col,
@@ -14,148 +13,215 @@ import {
   StyledH3,
   StyledH4,
   StyledH5,
-  StyledOl
+  StyledOl,
+  InlineImg,
+  MathCentered,
+  Important
 } from '../visuals'
 
 import Math from '../math'
+import Spoiler from '../spoiler'
 
 export default function LegacyRenderer(props) {
   const { state } = props
   console.log('legacy')
-  return <Rows>{ReactHtmlParser(state, { transform })}</Rows>
+  const dom = htmlparser2.parseDOM(state)
+  return transform(dom)
 }
 
-function transform(node, index) {
-  if (node.type === 'text') {
-    return <span key={index}>{node.data}</span>
+function transform(node, path = [], index = 0) {
+  if (!node) {
+    console.log('transform hat leeren Knoten erhalten')
+    return null
   }
+
+  if (Array.isArray(node)) {
+    return node.map((child, index) => transform(child, path, index))
+  }
+
+  // console.log('>', path, index, node)
+
   if (node.type === 'tag') {
+    if (node.name === 'div' && node.attribs && node.attribs.class) {
+      const className = node.attribs.class
+      if (className === 'r') {
+        return (
+          <LayoutRow key={index}>
+            {transform(node.children, [...path, 'r'])}
+          </LayoutRow>
+        )
+      }
+      if (/^c[\d]+$/.test(className)) {
+        return (
+          <Col key={index} size={parseInt(className.substring(1))}>
+            {transform(node.children, [...path, className])}
+          </Col>
+        )
+      }
+      if (className.includes('spoiler')) {
+        // tricky ...
+        const title = node.children[0].children[1].data
+        const content = node.children[1].children
+        return (
+          <Spoiler key={index} title={title} defaultOpen={false}>
+            {transform(content, [...path, 'spoiler'])}
+          </Spoiler>
+        )
+      }
+      if (className === 'injection') {
+        return (
+          <StyledP key={index}>
+            [Injection: {transform(node.children, [...path, 'injection'])}]
+          </StyledP>
+        )
+      }
+    }
+    if (node.name === 'span') {
+      const className = node.attribs.class
+      if (className === 'mathInline') {
+        let formula = node.children[0].data
+        formula = formula.substring(2, formula.length - 2)
+        // console.log('formula', formula)
+        return <Math formula={formula} key={index} inline />
+      }
+      if (className === 'math') {
+        // we can not center this block line formula
+        let formula = node.children[0].data
+        formula = formula.substring(2, formula.length - 2)
+        return (
+          <span style={{ display: 'inline-block' }} key={index}>
+            <Math formula={formula} />
+          </span>
+        )
+      }
+    }
     if (node.name === 'p') {
-      if (
-        node.children
-          .reduce((acc, val) => acc + (val.data ? val.data : 'x'), '')
-          .trim() == ''
-      )
-        return null
+      if (node.children.length == 1) {
+        const child = node.children[0]
+        if (child.type === 'tag') {
+          if (child.name === 'span' && child.attribs.class === 'math') {
+            let formula = child.children[0].data
+            formula = formula.substring(2, formula.length - 2)
+            // console.log('formula block', formula)
+            return (
+              <MathCentered key={index}>
+                <Math formula={formula} />
+              </MathCentered>
+            )
+          }
+        }
+      }
+      const full = path.includes('li')
       return (
-        <StyledP key={index}>{processNodes(node.children, transform)}</StyledP>
+        <StyledP key={index} full={full} slim={full}>
+          {transform(node.children, [...path, 'p'])}
+        </StyledP>
       )
     }
     if (node.name === 'strong') {
       return (
-        <strong key={index}>{processNodes(node.children, transform)}</strong>
+        <strong key={index}>
+          {transform(node.children, [...path, 'strong'])}
+        </strong>
       )
     }
     if (node.name === 'em') {
-      return <em key={index}>{processNodes(node.children, transform)}</em>
-    }
-    if (node.name === 'br') {
-      return <br key={index} />
-    }
-    if (node.name === 'span') {
-      if (node.attribs.class === 'mathInline') {
-        //console.log(node.children[0].data)
-        return <Math formula={node.children[0].data} inline key={index} />
-      }
-      if (node.attribs.class === 'math') {
-        //console.log(node.children[0].data)
-        return <Math formula={node.children[0].data} key={index} />
-      }
+      return <em key={index}>{transform(node.children, [...path, 'em'])}</em>
     }
     if (node.name === 'img') {
-      return (
-        <Img key={index} src={node.attribs.src} alt={node.attribs.alt}></Img>
-      )
+      if (path.includes('p')) {
+        return (
+          <InlineImg
+            src={node.attribs.src}
+            alt={node.attribs.alt}
+            key={index}
+          ></InlineImg>
+        )
+      }
     }
     if (node.name === 'h2') {
       return (
         <StyledH2 key={index}>
-          {processNodes(node.children, transform)}
+          {transform(node.children, [...path, 'h2'])}
         </StyledH2>
       )
     }
     if (node.name === 'h3') {
       return (
         <StyledH3 key={index}>
-          {processNodes(node.children, transform)}
+          {transform(node.children, [...path, 'h3'])}
         </StyledH3>
       )
     }
     if (node.name === 'h4') {
       return (
         <StyledH4 key={index}>
-          {processNodes(node.children, transform)}
+          {transform(node.children, [...path, 'h4'])}
         </StyledH4>
       )
     }
     if (node.name === 'h5') {
       return (
-        <StyledH5 key={index} style={{ marginBottom: '4px' }}>
-          {processNodes(node.children, transform)}
+        <StyledH5 key={index}>
+          {transform(node.children, [...path, 'h5'])}
         </StyledH5>
       )
-    }
-    if (node.name === 'a') {
-      let href = node.attribs.href
-      return (
-        <StyledA href={href} key={index}>
-          {processNodes(node.children, transform)}
-        </StyledA>
-      )
-    }
-    if (node.name === 'hr') {
-      return <hr key={index} />
-    }
-    if (node.name === 'div' && node.attribs && node.attribs.class) {
-      if (node.attribs.class == 'r') {
-        return <Row key={index}>{processNodes(node.children, transform)}</Row>
-      }
-      if (/^c[\d]+$/.test(node.attribs.class)) {
-        return (
-          <Col key={index} size={parseInt(node.attribs.class.substring(1))}>
-            {processNodes(node.children, transform)}
-          </Col>
-        )
-      }
-      if (node.attribs.class.includes('spoiler')) {
-        return <StyledP key={index}>[Spoiler]</StyledP>
-      }
-      if (node.attribs.class.includes('injection')) {
-        return <StyledP key={index}>[Injection]</StyledP>
-      }
-      if (node.attribs.class.includes('table')) {
-        return <StyledP key={index}>[Table]</StyledP>
-      }
     }
     if (node.name === 'ul') {
       return (
         <StyledUl key={index}>
-          {processNodes(node.children, transform)}
+          {transform(node.children, [...path, 'ul'])}
         </StyledUl>
       )
     }
     if (node.name === 'ol') {
       return (
         <StyledOl key={index}>
-          {processNodes(node.children, transform)}
+          {transform(node.children, [...path, 'ol'])}
         </StyledOl>
       )
     }
     if (node.name === 'li') {
       return (
         <StyledLi key={index}>
-          {processNodes(node.children, transform)}
+          {transform(node.children, [...path, 'li'])}
         </StyledLi>
       )
     }
-
+    if (node.name === 'a') {
+      if (node.children.length > 0) {
+        return (
+          <StyledA href={node.attribs.href} key={index}>
+            {transform(node.children, [...path, 'a'])}
+          </StyledA>
+        )
+      } else {
+        return (
+          <StyledA href={node.attribs.href} key={index}>
+            {node.attribs.href}
+          </StyledA>
+        )
+      }
+    }
+    if (node.name === 'hr') {
+      return <hr key={index} style={{ marginBottom: '38px' }} />
+    }
+    if (node.name === 'br') {
+      return <br key={index} />
+    }
     if (node.name === 'blockquote') {
       return (
-        <blockquote key={index}>
-          {processNodes(node.children, transform)}
-        </blockquote>
+        <Important key={index}>
+          {transform(node.children, [...path, 'blockquote'])}
+        </Important>
       )
     }
   }
-  console.log(node.type, node.name, node)
+  if (node.type === 'text') {
+    const text = node.data.replace('&nbsp;', '')
+    return text
+  }
+
+  console.log('missing', node, path)
+  return null
 }

@@ -128,12 +128,14 @@ export const StyledA = styled.a`
   }
 `
 
-export const MathCentered = styled.div`
+export const MathCentered = styled.div<{ full?: boolean }>`
   ${makePadding}
   width:100%;
+  box-sizing: border-box;
   text-align: center;
   margin-bottom: 38px;
   font-size: 19px;
+  overflow: scroll;
 `
 
 export const LayoutRow = styled.div`
@@ -145,11 +147,10 @@ export const LayoutRow = styled.div`
 
 export const Col = styled.div<{ size: number }>`
   @media (min-width: ${props => props.theme.breakpoints.mobile}) {
-    flex-basis: ${props => Math.floor((props.size * 100) / 24)}%;
     box-sizing: border-box;
+    flex-basis: ${props => Math.floor((props.size * 100) / 24)}%;
     width: ${props => Math.floor((props.size * 100) / 24)}%;
     max-width: ${props => Math.floor((props.size * 100) / 24)}%;
-    padding: 10px 32px;
   }
 `
 
@@ -163,11 +164,13 @@ export const StyledLi = styled.li`
 export const StyledUl = styled.ul`
   ${makeMargin}
   margin-bottom: 38px;
+  margin-top: 0;
 `
 
 export const StyledOl = styled.ol`
   ${makeMargin}
   margin-bottom: 38px;
+  margin-top: 0;
 `
 
 export const Important = styled.div`
@@ -175,4 +178,10 @@ export const Important = styled.div`
   padding-left: 10px;
   padding-right: 10px
   margin-bottom: 38px;
+`
+
+export const InlineImg = styled.img`
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 `

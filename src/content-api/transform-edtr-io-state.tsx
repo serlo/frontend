@@ -12,7 +12,9 @@ import {
   StyledUl,
   StyledOl,
   StyledLi,
-  Important
+  Important,
+  LayoutRow,
+  Col
 } from '../visuals'
 import Spoiler from '../spoiler'
 
@@ -25,12 +27,17 @@ export default function EdtrIoRenderer(props) {
 }
 
 // node kann array oder object sein
-function transform(node, path = [], index = 0) {
-  if (!node) return null
+function transform(node, path = [], index = '0') {
+  if (!node) {
+    console.log('transform hat leeren Knoten erhalten', path)
+    return null
+  }
   // durchlaufe arrays
   if (node.length > 0) {
     return node.map((child, index) => transform(child, path, index))
   }
+
+  //console.log('>', path, index, node)
 
   if (node.plugin) {
     if (node.plugin === 'rows') {
@@ -50,6 +57,15 @@ function transform(node, path = [], index = 0) {
     }
     if (node.plugin === 'spoiler') {
       return handleSpoiler(node, path, index)
+    }
+    if (node.plugin === 'injection') {
+      return handleInjection(node, path, index)
+    }
+    if (node.plugin === 'geogebra') {
+      return handleGeoGebra(node, path, index)
+    }
+    if (node.plugin === 'layout') {
+      return handleLayout(node, path, index)
     }
   }
 
@@ -82,7 +98,7 @@ function transform(node, path = [], index = 0) {
     return null
   }
 
-  console.log('missing', node)
+  console.log('missing', node, path)
 }
 
 function handleImage(node, path, index) {
@@ -99,6 +115,12 @@ function handleImage(node, path, index) {
 }
 
 function handleParagraph(node, path, index) {
+  if (node.children.length === 1) {
+    const child = node.children[0]
+    if (child.type && child.type.includes('ordered-list')) {
+      return transform(child, path, index)
+    }
+  }
   const full = path.includes('li')
   return (
     <StyledP key={index} full={full} slim={full}>
@@ -191,5 +213,35 @@ function handleSpoiler(node, path, index) {
     <Spoiler key={index} title={state.title} defaultOpen={false}>
       {transform(state.content, [...path, 'spoiler'])}
     </Spoiler>
+  )
+}
+
+function handleInjection(node, path, index) {
+  const { state } = node
+  return (
+    <StyledP key={index}>
+      [Injection: <StyledA href={state}>{state}</StyledA>]
+    </StyledP>
+  )
+}
+
+function handleGeoGebra(node, path, index) {
+  const { state } = node
+  console.log(state)
+  return <StyledP key={index}>[GeoGebra: {state}]</StyledP>
+}
+
+function handleLayout(node, path, index) {
+  const { state } = node
+  return (
+    <LayoutRow key={index}>
+      {state.map((entry, index) => {
+        return (
+          <Col size={entry.width * 2} key={index}>
+            {transform(entry.child, [...path, 'layout'])}
+          </Col>
+        )
+      })}
+    </LayoutRow>
   )
 }

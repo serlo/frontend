@@ -26,6 +26,7 @@ const StyledSpoiler = styled.div`
   display: flex;
   flex-direction: column;
   border-left: 4px solid gray;
+  margin-bottom: 38px;
 `
 
 const SpoilerTitle = styled.button`
@@ -39,6 +40,7 @@ const SpoilerTitle = styled.button`
   padding: 2px;
   cursor: pointer;
   color: black;
+  text-align: left;
 `
 
 const SpoilerContent = styled.div`

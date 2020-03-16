@@ -21,34 +21,32 @@ function Index() {
         <WipHint part="Startseite" />
         <ArticleHeading>Startseite</ArticleHeading>
         <HSpace />
-        <StyledP>
-          Links:
-          <StyledUl>
-            <StyledLi>
-              <StyledA href="/mathe">Mathematik lernen</StyledA>
-            </StyledLi>
-            <StyledLi>
-              <StyledA href="/abc">
-                Alphabetisierung für NeusprachlerInnen
-              </StyledA>
-            </StyledLi>
-            <StyledLi>
-              <StyledA href="/nachhaltigkeit">Nachhaltigkeit lernen</StyledA>
-            </StyledLi>
-            <StyledLi>
-              <StyledA href="/biologie">Biologie lernen</StyledA>
-            </StyledLi>
-            <StyledLi>
-              <StyledA href="/eltern">Einstieg für Eltern</StyledA>
-            </StyledLi>
-            <StyledLi>
-              <StyledA href="/lehrkraefte">Einstieg für LehrerInnen</StyledA>
-            </StyledLi>
-            <StyledLi>
-              <StyledA href="/jobs">Jobs und Engagement</StyledA>
-            </StyledLi>
-          </StyledUl>
-        </StyledP>
+        <StyledP>Links:</StyledP>
+        <StyledUl>
+          <StyledLi>
+            <StyledA href="/mathe">Mathematik lernen</StyledA>
+          </StyledLi>
+          <StyledLi>
+            <StyledA href="/abc">
+              Alphabetisierung für NeusprachlerInnen
+            </StyledA>
+          </StyledLi>
+          <StyledLi>
+            <StyledA href="/nachhaltigkeit">Nachhaltigkeit lernen</StyledA>
+          </StyledLi>
+          <StyledLi>
+            <StyledA href="/biologie">Biologie lernen</StyledA>
+          </StyledLi>
+          <StyledLi>
+            <StyledA href="/eltern">Einstieg für Eltern</StyledA>
+          </StyledLi>
+          <StyledLi>
+            <StyledA href="/lehrkraefte">Einstieg für LehrerInnen</StyledA>
+          </StyledLi>
+          <StyledLi>
+            <StyledA href="/jobs">Jobs und Engagement</StyledA>
+          </StyledLi>
+        </StyledUl>
         <HSpace />
       </DummyContainer>
       <Footer />
