@@ -4,11 +4,19 @@ import dynamic from 'next/dynamic'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faShareAlt, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 
-import { ArticleHeading, ToolLine, ToolLineButton } from '../visuals'
+import {
+  ArticleHeading,
+  ToolLine,
+  ToolLineButton,
+  StyledLi,
+  StyledA,
+  StyledUl
+} from '../visuals'
 import ShareModal from '../sharemodal'
 
 import EdtrIoRenderer from './transform-edtr-io-state'
 import Ups from './ups'
+import WipHint from './wiphint'
 const LegacyRenderer = dynamic(import('./transform-legacy-state'))
 
 export default function ContentTypes(props) {
@@ -16,6 +24,21 @@ export default function ContentTypes(props) {
   console.log(data.contentType)
   if (data.contentType === 'article' || data.contentType === 'Page revision') {
     return renderArticle(data.data)
+  }
+  if (data.contentType === 'topic' || data.contentType === 'subject') {
+    return (
+      <>
+        <WipHint part="Taxonomie" />
+        <ArticleHeading>{data.data.title}</ArticleHeading>
+        <StyledUl>
+          {data.data.anchors.map((entry, index) => (
+            <StyledLi key={index}>
+              <StyledA href={entry.href}>{entry.title}</StyledA>
+            </StyledLi>
+          ))}
+        </StyledUl>
+      </>
+    )
   }
   return <Ups />
 }

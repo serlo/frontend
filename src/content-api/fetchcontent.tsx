@@ -58,6 +58,20 @@ export default async function fetchContent(alias) {
       data.legacy = page
     }
   }
+  if (contentType === 'topic' || contentType === 'subject') {
+    const h1 = /<h1>([^<]+)<\/h1>/.exec(html)
+    if (h1) {
+      data.title = h1[1]
+    }
+    const anchors = []
+    const re = /<a href="(\/[^"]+)">([^<]+)<\/a>/g
+    let t
+    let limit = 1000
+    while ((t = re.exec(html)) && limit-- > 0) {
+      anchors.push({ href: t[1], title: t[2].trim() })
+    }
+    data.anchors = anchors
+  }
 
   return { alias, contentType, data }
 }

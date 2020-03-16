@@ -21,6 +21,8 @@ import {
 
 import Math from '../math'
 import Spoiler from '../spoiler'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
 
 export default function LegacyRenderer(props) {
   const { state } = props
@@ -36,7 +38,7 @@ function transform(node, path = [], index = 0) {
   }
 
   if (Array.isArray(node)) {
-    return node.map((child, index) => transform(child, path, index))
+    return node.map((child, index, arr) => transform(child, path, index))
   }
 
   // console.log('>', path, index, node)
@@ -74,6 +76,14 @@ function transform(node, path = [], index = 0) {
             [Injection: {transform(node.children, [...path, 'injection'])}]
           </StyledP>
         )
+      }
+    }
+    if (node.name == 'div') {
+      if (node.children[3]) {
+        const warning = node.children[3]
+        if (warning.attribs.class === 'legacy-injection') {
+          return <StyledP key={index}>[Injection Error]</StyledP>
+        }
       }
     }
     if (node.name === 'span') {
@@ -141,28 +151,28 @@ function transform(node, path = [], index = 0) {
     }
     if (node.name === 'h2') {
       return (
-        <StyledH2 key={index}>
+        <StyledH2 key={index} id={node.attribs.id}>
           {transform(node.children, [...path, 'h2'])}
         </StyledH2>
       )
     }
     if (node.name === 'h3') {
       return (
-        <StyledH3 key={index}>
+        <StyledH3 key={index} id={node.attribs.id}>
           {transform(node.children, [...path, 'h3'])}
         </StyledH3>
       )
     }
     if (node.name === 'h4') {
       return (
-        <StyledH4 key={index}>
+        <StyledH4 key={index} id={node.attribs.id}>
           {transform(node.children, [...path, 'h4'])}
         </StyledH4>
       )
     }
     if (node.name === 'h5') {
       return (
-        <StyledH5 key={index}>
+        <StyledH5 key={index} id={node.attribs.id}>
           {transform(node.children, [...path, 'h5'])}
         </StyledH5>
       )
@@ -190,6 +200,14 @@ function transform(node, path = [], index = 0) {
     }
     if (node.name === 'a') {
       if (node.children.length > 0) {
+        if (node.attribs.href.startsWith('http')) {
+          return (
+            <StyledA href={node.attribs.href} key={index}>
+              {transform(node.children, [...path, 'a'])}{' '}
+              <FontAwesomeIcon icon={faExternalLinkAlt} size="xs" />
+            </StyledA>
+          )
+        }
         return (
           <StyledA href={node.attribs.href} key={index}>
             {transform(node.children, [...path, 'a'])}

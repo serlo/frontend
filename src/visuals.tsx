@@ -78,10 +78,15 @@ export const Img = styled.img<{ maxWidth?: number }>`
   max-width: ${props => (props.maxWidth > 0 ? props.maxWidth + 'px' : '')};
 `
 
-export const StyledP = styled.p<{ full?: boolean; slim?: boolean }>`
+export const StyledP = styled.p<{
+  full?: boolean
+  slim?: boolean
+  halfslim?: boolean
+}>`
   ${makeMargin}
   margin-top: 0;
   margin-bottom: ${props => (props.slim ? '0' : '38px')};
+  ${props => (props.halfslim ? 'margin-bottom: 12px;' : '')}
   hyphens: auto;
   line-height: 1.3;
   font-size: 18px;

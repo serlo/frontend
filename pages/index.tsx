@@ -20,8 +20,7 @@ function Index() {
       <DummyContainer>
         <WipHint part="Startseite" />
         <ArticleHeading>Startseite</ArticleHeading>
-        <HSpace />
-        <StyledP>Links:</StyledP>
+        <StyledP halfslim>Links:</StyledP>
         <StyledUl>
           <StyledLi>
             <StyledA href="/mathe">Mathematik lernen</StyledA>

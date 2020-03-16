@@ -17,6 +17,8 @@ import {
   Col
 } from '../visuals'
 import Spoiler from '../spoiler'
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Math = dynamic(import('../math'))
 
@@ -27,14 +29,48 @@ export default function EdtrIoRenderer(props) {
 }
 
 // node kann array oder object sein
-function transform(node, path = [], index = '0') {
+function transform(node, path = [], index = 0) {
   if (!node) {
     console.log('transform hat leeren Knoten erhalten', path)
     return null
   }
   // durchlaufe arrays
-  if (node.length > 0) {
-    return node.map((child, index) => transform(child, path, index))
+  if (Array.isArray(node)) {
+    return node
+      .filter(node => {
+        if (node.type === 'p') {
+          if (node.children.length === 1) {
+            const child = node.children[0]
+            console.log('single parent', child)
+            if (child.text !== undefined && child.text.trim() === '') {
+              // leerer Paragraph
+              console.log('filtered')
+              return false
+            }
+          }
+        }
+        return true
+      })
+      .map((child, index, arr) => {
+        if (index < arr.length - 1) {
+          if (child.type === 'p') {
+            const next = arr[index + 1]
+            if (next.type.includes('-list')) {
+              child.listAhead = true
+            }
+            if (
+              next.children &&
+              next.children[0] &&
+              next.children[0].type &&
+              next.children[0].type.includes('-list')
+            ) {
+              child.listAhead = true
+            }
+            console.log(child.listAhead, arr, next)
+          }
+        }
+        return transform(child, path, index)
+      })
   }
 
   //console.log('>', path, index, node)
@@ -122,14 +158,25 @@ function handleParagraph(node, path, index) {
     }
   }
   const full = path.includes('li')
+  if (node.listAhead) {
+    console.log(node)
+  }
   return (
-    <StyledP key={index} full={full} slim={full}>
+    <StyledP key={index} full={full} slim={full} halfslim={node.listAhead}>
       {transform(node.children, [...path, 'p'])}
     </StyledP>
   )
 }
 
 function handleLink(node, path, index) {
+  if (node.href.startsWith('http')) {
+    return (
+      <StyledA href={node.href} key={index}>
+        {transform(node.children, [...path, 'a'])}{' '}
+        <FontAwesomeIcon icon={faExternalLinkAlt} size="xs" />
+      </StyledA>
+    )
+  }
   return (
     <StyledA href={node.href} key={index}>
       {transform(node.children, [...path, 'a'])}
