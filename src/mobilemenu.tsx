@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { transparentize } from 'polished'
+import { transparentize, lighten } from 'polished'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCaretDown, faBars } from '@fortawesome/free-solid-svg-icons'
 
@@ -39,7 +39,7 @@ function Entry(props) {
               <FontAwesomeIcon
                 icon={icon ? icon : faBars}
                 size="1x"
-                style={{ fontSize: '1.3em' }}
+                style={{ fontSize: '25px' }}
               />
             </IconWrapper>
           ) : null}
@@ -79,10 +79,10 @@ const List = styled.ul`
   }
 `
 
-const Seperator = styled.li`
+/*const Seperator = styled.li`
   height: 24px;
   border-bottom: 1px solid ${props => props.theme.colors.lighterblue};
-`
+`*/
 
 const EntryLink = styled.a<{ isChild?: boolean }>`
   background-color: ${props => props.theme.colors.bluewhite};
@@ -106,7 +106,7 @@ const EntryLink = styled.a<{ isChild?: boolean }>`
 const IconWrapper = styled.div`
   width: 40px;
   height: 40px;
-  background-color: #d7ebf4;
+  background-color: ${props => lighten(0.3, props.theme.colors.lightblue)};
   border-radius: 160px;
   display: flex;
   justify-content: center;

@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { lighten } from 'polished'
 
 export interface NavChild {
   title: string
@@ -79,7 +80,7 @@ const ColWithPadding = styled.div`
 const CategoryHeader = styled.h3`
   font-size: 1rem;
   margin-bottom: 8px;
-  color: #444;
+  color: ${props => lighten(0.05, props.theme.colors.dark1)};
 `
 
 const NavList = styled.ul`
@@ -94,7 +95,7 @@ const NavLi = styled.li`
 
   &:after {
     content: ' • ';
-    color: #ccc;
+    color: ${props => lighten(0.2, props.theme.colors.dark1)};
     margin-right: 3px;
   }
   &:last-child:after {
@@ -112,16 +113,16 @@ const NavLi = styled.li`
 `
 
 const NavLink = styled.a`
-  color: #888;
+  color: ${props => lighten(0.15, props.theme.colors.dark1)};
   text-decoration: none;
 
   &:focus {
     text-decoration: none;
-    color: #888;
+    color: ${props => lighten(0.1, props.theme.colors.dark1)};
   }
   &:hover {
     color: ${props => props.theme.colors.darkGray};
-    border-bottom: 2px solid #ccc;
+    border-bottom: 2px solid ${props => lighten(0.2, props.theme.colors.dark1)};
   }
   &:hover,
   &:active {

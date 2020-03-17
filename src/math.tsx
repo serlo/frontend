@@ -1,7 +1,7 @@
 import KaTeX from 'katex'
 import React from 'react'
 
-import KaTeXSpan from './katexstyles'
+import KaTeXSpan from '../external/katexstyles'
 
 export interface MathProps {
   formula: string

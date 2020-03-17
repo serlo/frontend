@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { transparentize } from 'polished'
+import { transparentize, lighten } from 'polished'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faChevronUp,
@@ -133,7 +133,7 @@ const SummaryHeading = styled.div`
 
 const SerloLink = styled.a`
   &:hover {
-    background-color: rgba(0, 126, 193, 0.65);
+    background-color: ${props => lighten(0.05, props.theme.colors.brand)};
   }
   border-radius: 4px;
   color: white;

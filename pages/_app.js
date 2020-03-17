@@ -8,7 +8,6 @@ config.autoAddCss = false
 import '../public/fonts/karmilla.css'
 import '../public/fonts/katex/katex.css'
 
-import { GlobalStyle } from '../src/globalstyles'
 import { ThemeProvider } from 'styled-components'
 import { theme } from '../src/theme'
 
@@ -16,12 +15,9 @@ class MyApp extends App {
   render() {
     const { Component, pageProps } = this.props
     return (
-      <>
-        <GlobalStyle />
-        <ThemeProvider theme={theme}>
-          <Component {...pageProps} />
-        </ThemeProvider>
-      </>
+      <ThemeProvider theme={theme}>
+        <Component {...pageProps} />
+      </ThemeProvider>
     )
   }
 }

@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { transparentize, darken } from 'polished'
+
 import { theme } from './theme'
 
 const makeMargin = props =>
@@ -8,11 +9,11 @@ const makeMargin = props =>
 const makePadding = props =>
   props.full ? '' : 'padding-left:15px;padding-right:15px;'
 
-export const DummyContainer = styled.main`
+export const DummyContainer = styled.main<{ hide?: boolean }>`
   margin-left: auto;
   margin-right: auto;
   max-width 900px;
-  overflow: hidden;
+  ${props => (props.hide ? 'overflow: hidden;' : '')}
 `
 
 export const HSpace = styled.div<{ amount?: number }>`

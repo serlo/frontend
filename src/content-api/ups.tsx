@@ -2,12 +2,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTools } from '@fortawesome/free-solid-svg-icons'
 import styled from 'styled-components'
 
-function Ups() {
+function Ups(props) {
+  const { type } = props
   return (
     <UpsDiv>
       <FontAwesomeIcon icon={faTools} size="2x" />
 
-      <p>Dieser Inhaltstyp wird noch nicht unterstützt.</p>
+      <p>{type}: Dieser Inhaltstyp wird noch nicht unterstützt.</p>
       <p>
         <button onClick={() => window.history.back()}>Zurück</button>
       </p>
@@ -22,6 +23,8 @@ const UpsDiv = styled.div`
   flex-direction: column;
   text-align: center;
   margin-top: 50px;
-  font-size: 28px;
+  margin-left: 15px;
+  margin-right: 15px;
+  font-size: 24px;
 `
 export default Ups

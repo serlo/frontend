@@ -25,7 +25,7 @@ const StyledSpoiler = styled.div`
   width: 100%
   display: flex;
   flex-direction: column;
-  border-left: 4px solid gray;
+  border-left: 4px solid ${props => props.theme.colors.gray};
   margin-bottom: 38px;
 `
 

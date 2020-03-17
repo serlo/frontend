@@ -3,6 +3,7 @@ export const theme = {
     bluewhite: '#f0f7fb',
     lightblue: '#52a6d0',
     darkgray: '#212529',
+    gray: '#808487',
     brand: '#007ec1',
     lighterblue: '#91c5e4',
     brandGreen: '#95bc1a',

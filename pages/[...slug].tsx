@@ -8,14 +8,14 @@ import Footer from '../src/footer'
 function PageView(props) {
   const { data } = props
   return (
-    <div lang="de">
+    <>
       <Header />
       <Toolbox />
       <DummyContainer>
         <ContentTypes data={data} />
       </DummyContainer>
       <Footer />
-    </div>
+    </>
   )
 }
 

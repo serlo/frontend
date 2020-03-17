@@ -1,5 +1,5 @@
-import styled from 'styled-components'
 import React from 'react'
+
 import Header from '../src/header'
 import WipHint from '../src/content-api/wiphint'
 import Footer from '../src/footer'
