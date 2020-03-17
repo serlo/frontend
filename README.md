@@ -499,7 +499,7 @@ yarn analyze
 
 Results are saved to `.next/analyze/client.html` and `.next/analyze/server.html`.
 
-### Dynamic Import Component
+### Importing Component dynamically
 
 If some part of a page is heavy and only relevant for a smaller fraction of users, import it dynamically. Write your component as usual:
 
@@ -540,9 +540,67 @@ export default HelloWorld
 
 The source code of `FancyComponent` is splitting into a separate chunk and is only loaded when users click the button.
 
-### Fonts
+### Reusing CSS Snippets
 
-Fonts consists of two parts: Font files and a css file with the font face declaration. Put these files into the assets folder and import the css file into `pages/_app.js`. Reference the font files with absolute urls (we don't want to bundle them). This makes the font available to all components.
+You can extend components by adding style snippets. These snippets are functions that add new props to a styled component:
+
+```tsx
+import styled from 'styled-components'
+
+function HelloWorld() {
+  return (
+    <>
+      <ChatParagraph side="left">Hey, how are you?</ChatParagraph>
+      <ChatParagraph side="right">I'm fine!</ChatParagraph>
+    </>
+  )
+}
+
+interface SideProps {
+  side: 'left' | 'right'
+}
+
+function withSide(props: SideProps) {
+  if (props.side === 'left') {
+    return `
+      color: blue;
+      text-align: left;
+    `
+  } else if (props.side === 'right') {
+    return `
+      color: green;
+      text-align: right;
+    `
+  } else {
+    return ''
+  }
+}
+
+const ChatParagraph = styled.p<SideProps>`
+  ${withSide}
+  margin: 20px;
+`
+
+export default HelloWorld
+```
+
+This example adds the `side` prop to the `ChatParagraph` and allows users to change the appearance of the component.
+
+You can reuse this function in another component:
+
+```tsx
+const AnotherChatParagraph = styled.p<SideProps>`
+  ${withSide}
+  margin: 15px;
+  border: 3px solid gray;
+`
+```
+
+### \_document.js and \_app.js
+
+Your pages get wrapped in two components, [\_document.js](https://nextjs.org/docs/advanced-features/custom-document) and [\_app.js](https://nextjs.org/docs/advanced-features/custom-app). You can override both files. The document contains everything that is outside of your react app, especially the html and body tag. This is a good place to set styles on these or to define the language. The document is rendered on the server only.
+
+The app is the entrypoint of your page and is rendered client-side as well. You can add global providers or import css files here.
 
 ### Listening to Scroll & Resize
 
@@ -712,6 +770,4 @@ The brother can pass a message to its sister by declaring the state in the paren
 
 ## Notes
 
-- Educational renderer for edtr-io content
-- KaTeX is big, I have copied the font files and added the font face to the app (globally), the remaining styles are within a styled component, this should avoid any overhead.
-- legacy content renderer using showdown and generating html (bääh), ok, lets parse it anyway
+- content-api is handling data fetching by parsing serlo.org
