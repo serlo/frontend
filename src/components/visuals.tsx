@@ -141,7 +141,7 @@ export const MathCentered = styled.div<{ full?: boolean }>`
   text-align: center;
   margin-bottom: 38px;
   font-size: 19px;
-  overflow: scroll;
+  overflow: auto;
 `
 
 export const LayoutRow = styled.div`
