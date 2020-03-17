@@ -8,7 +8,8 @@ function Ups(props) {
     <UpsDiv>
       <FontAwesomeIcon icon={faTools} size="2x" />
 
-      <p>{type}: Dieser Inhaltstyp wird noch nicht unterstützt.</p>
+      <p>{type}:</p>
+      <p>Dieser Inhaltstyp wird noch nicht unterstützt.</p>
       <p>
         <button onClick={() => window.history.back()}>Zurück</button>
       </p>

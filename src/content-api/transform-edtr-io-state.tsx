@@ -24,13 +24,12 @@ const Math = dynamic(import('../components/math'))
 
 export default function EdtrIoRenderer(props) {
   const { state } = props
-  console.log('edtr-io')
   return transform(state)
 }
 
 // node kann array oder object sein
 function transform(node, path = [], index = 0) {
-  if (!node) {
+  if (!node || Object.keys(node).length === 0) {
     console.log('transform hat leeren Knoten erhalten', path)
     return null
   }
@@ -41,10 +40,8 @@ function transform(node, path = [], index = 0) {
         if (node.type === 'p') {
           if (node.children.length === 1) {
             const child = node.children[0]
-            console.log('single parent', child)
             if (child.text !== undefined && child.text.trim() === '') {
               // leerer Paragraph
-              console.log('filtered')
               return false
             }
           }
@@ -66,7 +63,6 @@ function transform(node, path = [], index = 0) {
             ) {
               child.listAhead = true
             }
-            console.log(child.listAhead, arr, next)
           }
         }
         return transform(child, path, index)
@@ -103,6 +99,12 @@ function transform(node, path = [], index = 0) {
     if (node.plugin === 'layout') {
       return handleLayout(node, path, index)
     }
+    if (node.plugin === 'exercise') {
+      return handleExercise(node, path, index)
+    }
+    if (node.plugin === 'solution') {
+      return handleSolution(node, path, index)
+    }
   }
 
   if (node.type) {
@@ -135,6 +137,11 @@ function transform(node, path = [], index = 0) {
   }
 
   console.log('missing', node, path)
+  return (
+    <StyledP>
+      [fehlt: {node.plugin} / {node.type}]
+    </StyledP>
+  )
 }
 
 function handleImage(node, path, index) {
@@ -156,11 +163,11 @@ function handleParagraph(node, path, index) {
     if (child.type && child.type.includes('ordered-list')) {
       return transform(child, path, index)
     }
+    if (child.type && child.type == 'math' && child.inline == false) {
+      return transform(child, path, index)
+    }
   }
   const full = path.includes('li')
-  if (node.listAhead) {
-    console.log(node)
-  }
   return (
     <StyledP key={index} full={full} slim={full} halfslim={node.listAhead}>
       {transform(node.children, [...path, 'p'])}
@@ -212,7 +219,7 @@ function handleMath(node, path, index) {
 }
 
 function handleText(node, path, index) {
-  let result = node.text
+  let result = node.text || ''
   if (node.strong) {
     result = <strong key={index}>{result}</strong>
   }
@@ -274,7 +281,6 @@ function handleInjection(node, path, index) {
 
 function handleGeoGebra(node, path, index) {
   const { state } = node
-  console.log(state)
   return <StyledP key={index}>[GeoGebra: {state}]</StyledP>
 }
 
@@ -291,4 +297,18 @@ function handleLayout(node, path, index) {
       })}
     </LayoutRow>
   )
+}
+
+function handleExercise(node, path, index) {
+  const { state } = node
+  return transform(state.content, [...path, 'exercise'], index)
+}
+
+function handleSolution(node, path, index) {
+  const { state } = node
+  console.log(state)
+  return [
+    transform(state.strategy, [...path, 'solution'], index),
+    transform(state.steps, [...path, 'solution'], index)
+  ]
 }

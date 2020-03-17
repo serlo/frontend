@@ -26,7 +26,6 @@ import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
 
 export default function LegacyRenderer(props) {
   const { state } = props
-  console.log('legacy')
   const dom = htmlparser2.parseDOM(state)
   return transform(dom)
 }
@@ -38,7 +37,24 @@ function transform(node, path = [], index = 0) {
   }
 
   if (Array.isArray(node)) {
-    return node.map((child, index, arr) => transform(child, path, index))
+    return node
+      .filter(child => {
+        if (child.type == 'text' && child.data.trim() == '') {
+          return false
+        }
+        return true
+      })
+      .map((child, index, arr) => {
+        if (index < arr.length - 1) {
+          const next = arr[index + 1]
+          if (next.type === 'tag') {
+            if (next.name === 'ul' || next.name === 'ol') {
+              child.listAhead = true
+            }
+          }
+        }
+        return transform(child, path, index)
+      })
   }
 
   // console.log('>', path, index, node)
@@ -122,8 +138,9 @@ function transform(node, path = [], index = 0) {
         }
       }
       const full = path.includes('li')
+      const halfslim = node.listAhead
       return (
-        <StyledP key={index} full={full} slim={full}>
+        <StyledP key={index} full={full} slim={full} halfslim={halfslim}>
           {transform(node.children, [...path, 'p'])}
         </StyledP>
       )
@@ -241,5 +258,9 @@ function transform(node, path = [], index = 0) {
   }
 
   console.log('missing', node, path)
-  return null
+  return (
+    <StyledP key={index}>
+      [fehlt: {node.type} / {node.name} / {JSON.stringify(node.attribs)}]
+    </StyledP>
+  )
 }

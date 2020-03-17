@@ -1,17 +1,21 @@
 import fetch from 'isomorphic-unfetch'
 
-const hideAll =
-  '?hideTopbar&hideLeftSidebar&hideRightSidebar&hideBreadcrumbs&hideDiscussions&hideBanner&hideHorizon&hideFooter&fullWidth'
-
 export default async function fetchContent(alias) {
-  const res = await fetch('https://de.serlo.org' + alias + hideAll)
+  const res = await fetch('https://de.serlo.org' + alias + '?contentOnly', {
+    headers: {
+      'User-Agent':
+        'Mozilla/5.0 (X11; Linux x86_64; rv:74.0) Gecko/20100101 Firefox/74.0'
+    }
+  })
   const html = await res.text()
 
   const ctype = /<meta name="content_type" content="([\w\- ]+)">/.exec(html)
-  const contentType = ctype === null ? 'unknown' : ctype[1]
+  let contentType = ctype === null ? 'unknown' : ctype[1]
 
-  if (contentType === 'unknown') {
-    console.log(html)
+  if (html.includes('existiert nicht')) {
+    contentType = 'Unbekannte Seite'
+  } else if (html.includes('Cloudflare')) {
+    contentType = 'Cloudflare verweigert Zugriff'
   }
 
   const data: any = {}
@@ -72,6 +76,18 @@ export default async function fetchContent(alias) {
     }
     data.anchors = anchors
   }
-
+  if (contentType === 'topic-folder' || contentType === 'text-exercise') {
+    // filter all edtrio tags
+    const contents = []
+    const re = /data\-raw\-content='([\w\+\/\=]+)'/g
+    let t
+    let limit = 1000
+    while ((t = re.exec(html)) && limit-- > 0) {
+      contents.push(Buffer.from(t[1], 'base64').toString())
+    }
+    data.legacyCount = (html.match(/<div class="r">/) || []).length
+    data.contents = contents
+    console.log(data)
+  }
   return { alias, contentType, data }
 }
