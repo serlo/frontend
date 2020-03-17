@@ -1,9 +1,9 @@
 import fetchContent from '../src/content-api/fetchcontent'
-import Header from '../src/header'
-import Toolbox from '../src/toolbox'
-import { DummyContainer } from '../src/visuals'
-import ContentTypes from '../src/content-api/contenttypes'
-import Footer from '../src/footer'
+import Header from '../src/components/header'
+import Toolbox from '../src/components/toolbox'
+import { DummyContainer } from '../src/components/visuals'
+import ContentTypes from '../src/components/contenttypes'
+import Footer from '../src/components/footer'
 
 function PageView(props) {
   const { data } = props

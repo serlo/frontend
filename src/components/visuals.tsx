@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { transparentize, darken } from 'polished'
 
-import { theme } from './theme'
+import { theme } from '../theme'
 
 const makeMargin = props =>
   props.full ? '' : 'margin-left:15px;margin-right:15px;'

@@ -17,10 +17,10 @@ import {
   InlineImg,
   MathCentered,
   Important
-} from '../visuals'
+} from '../components/visuals'
 
-import Math from '../math'
-import Spoiler from '../spoiler'
+import Math from '../components/math'
+import Spoiler from '../components/spoiler'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
 

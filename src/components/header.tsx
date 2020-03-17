@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import Menu from './desktopmenu'
-import menudata from './menudata'
+import menudata from '../menudata'
 import Logo from './logo'
 import SearchInput from './searchinput'
 import MobileMenuButton from './mobilemenubutton'

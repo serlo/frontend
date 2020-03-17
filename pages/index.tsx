@@ -1,8 +1,8 @@
 import React from 'react'
 
-import Header from '../src/header'
-import WipHint from '../src/content-api/wiphint'
-import Footer from '../src/footer'
+import Header from '../src/components/header'
+import WipHint from '../src/components/wiphint'
+import Footer from '../src/components/footer'
 import {
   DummyContainer,
   StyledP,
@@ -11,7 +11,7 @@ import {
   StyledLi,
   ArticleHeading,
   HSpace
-} from '../src/visuals'
+} from '../src/components/visuals'
 
 function Index() {
   return (

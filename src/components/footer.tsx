@@ -6,7 +6,7 @@ import {
   faChevronCircleRight
 } from '@fortawesome/free-solid-svg-icons'
 
-import { footerNavEntries } from './footerdata'
+import { footerNavEntries } from '../footerdata'
 import { FooterNav } from './footernav'
 
 export default function Footer() {

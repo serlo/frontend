@@ -15,12 +15,12 @@ import {
   Important,
   LayoutRow,
   Col
-} from '../visuals'
-import Spoiler from '../spoiler'
+} from '../components/visuals'
+import Spoiler from '../components/spoiler'
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-const Math = dynamic(import('../math'))
+const Math = dynamic(import('../components/math'))
 
 export default function EdtrIoRenderer(props) {
   const { state } = props

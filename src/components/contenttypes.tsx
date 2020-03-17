@@ -11,13 +11,13 @@ import {
   StyledLi,
   StyledA,
   StyledUl
-} from '../visuals'
-import ShareModal from '../sharemodal'
+} from './visuals'
+import ShareModal from './sharemodal'
 
-import EdtrIoRenderer from './transform-edtr-io-state'
+import EdtrIoRenderer from '../content-api/transform-edtr-io-state'
 import Ups from './ups'
 import WipHint from './wiphint'
-const LegacyRenderer = dynamic(import('./transform-legacy-state'))
+const LegacyRenderer = dynamic(import('../content-api/transform-legacy-state'))
 
 export default function ContentTypes(props) {
   const { data } = props
