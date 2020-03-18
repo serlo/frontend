@@ -126,6 +126,9 @@ function transform(node, path = [], index = 0) {
     if (node.type === 'list-item') {
       return handleListItem(node, path, index)
     }
+    if (node.type === 'list-item-child') {
+      return transform(node.children, path, index)
+    }
   }
 
   if (node.text) {

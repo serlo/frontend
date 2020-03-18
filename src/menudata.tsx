@@ -14,7 +14,7 @@ export const menudata = [
     title: 'Fächer',
     icon: faGraduationCap,
     children: [
-      { url: '/mathematik', title: 'Mathematik' },
+      { url: '/mathe', title: 'Mathematik' },
       { url: '/biologie', title: 'Biologie' },
       { url: '/nachhaltigkeit', title: 'Angewandte Nachhaltigkeit' },
       { url: '/informatik', title: 'Informatik' },

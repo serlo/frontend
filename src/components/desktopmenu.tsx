@@ -53,7 +53,7 @@ function Entry(props) {
           </Link>
         </Tippy>
       ) : (
-        <Link>{link.title}</Link>
+        <Link href={link.url}>{link.title}</Link>
       )}
     </Li>
   )
@@ -72,6 +72,8 @@ const Link = styled.a<{ active?: boolean }>`
     color: ${props => props.theme.colors.darkgray};
   }
 
+  text-decoration: none;
+
   padding: 3px 6px;
   margin-right: 10px;
   font-weight: bold;
@@ -87,7 +89,7 @@ function SubMenuInner(props) {
       {children.map(entry => {
         return (
           <SubLi key={entry.title}>
-            <Link>{entry.title}</Link>
+            <Link href={entry.url}>{entry.title}</Link>
           </SubLi>
         )
       })}
