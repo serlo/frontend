@@ -8,7 +8,8 @@ export const theme = {
     lighterblue: '#91c5e4',
     brandGreen: '#95bc1a',
     lightBackground: '#f4fbff',
-    dark1: '#333333'
+    lightBlueBackground: '#dbecf6',
+    dark1: '#333333',
   },
   breakpoints: {
     mobile: '500px',

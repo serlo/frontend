@@ -19,6 +19,7 @@ import EdtrIoRenderer from '../content-api/transform-edtr-io-state'
 import Ups from './ups'
 import WipHint from './wiphint'
 import styled from 'styled-components'
+import Breadcrumbs from './breadcrumbs'
 const LegacyRenderer = dynamic(import('../content-api/transform-legacy-state'))
 
 export default function ContentTypes(props) {
@@ -30,6 +31,9 @@ export default function ContentTypes(props) {
     return (
       <>
         <WipHint part="Taxonomie" />
+        {data.data.breadcrumbs && (
+          <Breadcrumbs entries={data.data.breadcrumbs} />
+        )}
         <ArticleHeading>{data.data.title}</ArticleHeading>
         <StyledUl>
           {data.data.anchors.map((entry, index) => (
@@ -48,6 +52,9 @@ export default function ContentTypes(props) {
     return (
       <>
         <WipHint part="Aufgaben" />
+        {data.data.breadcrumbs && (
+          <Breadcrumbs entries={data.data.breadcrumbs} />
+        )}
         <ArticleHeading>Aufgaben</ArticleHeading>
         {data.data.contents.map((entry, index) => (
           <>
@@ -81,6 +88,7 @@ function renderArticle(content) {
       <DesktopOnly>
         <WipHint part="Desktop-Ansicht" />
       </DesktopOnly>
+      {content.breadcrumbs && <Breadcrumbs entries={content.breadcrumbs} />}
       <ArticleHeading>{content.title}</ArticleHeading>
       <ToolLine>
         {content.legacy && (
