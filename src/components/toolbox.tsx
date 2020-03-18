@@ -27,7 +27,11 @@ export default function Toolbox() {
   return (
     <>
       <BoxWrapper>
-        <IconButton>
+        <IconButton
+          onClick={() => {
+            window.location.href = '/create'
+          }}
+        >
           <FontAwesomeIcon icon={faPencilAlt} size="1x" /> Inhalte bearbeiten
         </IconButton>
         <IconButton onClick={() => setOpen(true)}>

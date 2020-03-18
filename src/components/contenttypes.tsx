@@ -89,7 +89,11 @@ function renderArticle(content) {
         <ToolLineButton onClick={() => setOpen(true)}>
           <FontAwesomeIcon icon={faShareAlt} size="1x" /> Teilen
         </ToolLineButton>
-        <ToolLineButton>
+        <ToolLineButton
+          onClick={() => {
+            window.location.href = '/create'
+          }}
+        >
           <FontAwesomeIcon icon={faPencilAlt} size="1x" /> Bearbeiten
         </ToolLineButton>
         {<ShareModal open={open} onClose={() => setOpen(false)} />}
