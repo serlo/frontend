@@ -20,13 +20,13 @@ export const HSpace = styled.div<{ amount?: number }>`
   height: ${props => (props.amount ? props.amount : 30)}px;
 `
 
-export const ArticleHeading = styled.h1`
-  margin-top: 35px;
+export const ArticleHeading = styled.h1<{ editMode?: boolean }>`
+  margin-top: ${props => (props.editMode ? '15px' : '35px')};
   margin-left: 15px;
   font-size: 32px;
   padding: 0;
   margin-right: 15px;
-  margin-bottom: 20px;
+  margin-bottom: ${props => (props.editMode ? '38px' : '20px')};
 `
 
 export const ToolLine = styled.div`

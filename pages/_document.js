@@ -3,7 +3,7 @@ import { ServerStyleSheet } from 'styled-components'
 
 const bodyStyles = {
   margin: 0,
-  font: "16px/1 'Karmilla'"
+  fontFamily: 'Karmilla'
 }
 
 export default class MyDocument extends Document {

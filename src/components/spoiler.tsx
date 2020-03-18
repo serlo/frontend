@@ -8,24 +8,17 @@ function Spoiler(props) {
   const [open, setOpen] = React.useState(defaultOpen)
   return (
     <StyledSpoiler>
-      <SpoilerHeader open={open} onClick={() => setOpen(!open)} title={title} />
+      <SpoilerTitle onClick={() => setOpen(!open)}>
+        {open ? (
+          <FontAwesomeIcon icon={faCaretDown} />
+        ) : (
+          <FontAwesomeIcon icon={faCaretRight} />
+        )}{' '}
+        {title}
+        {children}
+      </SpoilerTitle>
       {open && <SpoilerContent>{children}</SpoilerContent>}
     </StyledSpoiler>
-  )
-}
-
-export function SpoilerHeader(props) {
-  const { open, onClick, title, children } = props
-  return (
-    <SpoilerTitle onClick={onClick}>
-      {open ? (
-        <FontAwesomeIcon icon={faCaretDown} />
-      ) : (
-        <FontAwesomeIcon icon={faCaretRight} />
-      )}{' '}
-      {title}
-      {children}
-    </SpoilerTitle>
   )
 }
 

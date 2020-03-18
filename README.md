@@ -204,12 +204,11 @@ export default HelloWorld
 
 ### Units
 
-There exists a bunch of different length units.
+There exists a bunch of different length units. Most of the time, [px](https://stackoverflow.com/questions/11799236/should-i-use-px-or-rem-value-units-in-my-css) is fine. Sometimes there are better alternativs, especially in regard of [a11y](https://www.24a11y.com/2019/pixels-vs-relative-units-in-css-why-its-still-a-big-deal/):
 
-**tl;dr**
-
-- Use [px](https://stackoverflow.com/questions/11799236/should-i-use-px-or-rem-value-units-in-my-css)
-- [Don't](https://mindtheshift.wordpress.com/2015/04/02/r-i-p-rem-viva-css-reference-pixel/) [use](https://blog.usejournal.com/dont-use-rem-em-for-paddings-margins-and-more-94e19026b000) [rem/em](https://adamwathan.me/dont-use-em-for-media-queries/) unless you know what you are [doing](https://blog.evanshunt.com/using-proportional-font-scaling-with-responsive-web-design-30e99094fca0)
+- Use `rem` for `font-size`, so users can zoom the text (e.g. farsighted people or users on 4k monitors)
+- Use dimensionless values for `line-height` to scale well.
+- Test your component how it behaves when text zooms and eventually make adjustments.
 
 ### Icons
 
