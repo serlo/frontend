@@ -89,5 +89,26 @@ export default async function fetchContent(alias) {
     data.contents = contents
     console.log(data)
   }
+
+  const breadcrumbsStart = '<ol id="breadcrumbs">'
+  const bcIndex = html.indexOf(breadcrumbsStart)
+  if (bcIndex >= 0) {
+    // read breadcrumbs
+    const bcEnd = html.indexOf('</ol>', bcIndex)
+    const bcs = html.substring(bcIndex + breadcrumbsStart.length, bcEnd)
+    const re = /<li> <a href="([^"]+)"> <span>([^<]+)<\/span> <\/a> <\/li>/g
+    const links = []
+    let t
+    let limit = 1000
+    while ((t = re.exec(html)) && limit-- > 0) {
+      links.push({ url: t[1], label: t[2] })
+    }
+    const myself = /<li>[\s]*<span>([^<]+)<\/span>[\s]*<\/li>/.exec(html)
+    if (myself) {
+      links.push({ url: '#', label: myself[1] })
+    }
+    data.breadcrumbs = links
+  }
+
   return { alias, contentType, data }
 }
