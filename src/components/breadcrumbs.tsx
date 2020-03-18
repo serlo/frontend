@@ -15,8 +15,8 @@ interface BreadcrumbEntry {
 
 export default function Breadcrumbs(props: BreadcrumbProps) {
   const { entries } = props
-  if (!entries || entries.length < 1) {
-    return <p>""</p>
+  if (!entries || entries.length < 2) {
+    return null
   }
 
   return (

@@ -31,7 +31,9 @@ export default function ContentTypes(props) {
     return (
       <>
         <WipHint part="Taxonomie" />
-        {data.data.breadcrumbs && Breadcrumbs(data.data.breadcrumbs)}
+        {data.data.breadcrumbs && (
+          <Breadcrumbs entries={data.data.breadcrumbs} />
+        )}
         <ArticleHeading>{data.data.title}</ArticleHeading>
         <StyledUl>
           {data.data.anchors.map((entry, index) => (
@@ -50,7 +52,9 @@ export default function ContentTypes(props) {
     return (
       <>
         <WipHint part="Aufgaben" />
-        {data.data.breadcrumbs && Breadcrumbs(data.data.breadcrumbs)}
+        {data.data.breadcrumbs && (
+          <Breadcrumbs entries={data.data.breadcrumbs} />
+        )}
         <ArticleHeading>Aufgaben</ArticleHeading>
         {data.data.contents.map((entry, index) => (
           <>
@@ -84,7 +88,7 @@ function renderArticle(content) {
       <DesktopOnly>
         <WipHint part="Desktop-Ansicht" />
       </DesktopOnly>
-      {content.breadcrumbs && Breadcrumbs(content.breadcrumbs)}
+      {content.breadcrumbs && <Breadcrumbs entries={content.breadcrumbs} />}
       <ArticleHeading>{content.title}</ArticleHeading>
       <ToolLine>
         {content.legacy && (
