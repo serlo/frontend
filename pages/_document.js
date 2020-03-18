@@ -1,5 +1,10 @@
-import Document from 'next/document'
+import Document, { Html, Head, Main, NextScript } from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
+
+const bodyStyles = {
+  margin: 0,
+  fontFamily: 'Karmilla'
+}
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx) {
@@ -25,5 +30,17 @@ export default class MyDocument extends Document {
     } finally {
       sheet.seal()
     }
+  }
+
+  render() {
+    return (
+      <Html lang="de">
+        <Head />
+        <body style={bodyStyles}>
+          <Main />
+          <NextScript />
+        </body>
+      </Html>
+    )
   }
 }
