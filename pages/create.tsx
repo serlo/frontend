@@ -20,6 +20,7 @@ import {
   faCaretDown,
   faCaretRight
 } from '@fortawesome/free-solid-svg-icons'
+import Tippy from '@tippyjs/react'
 
 import Header from '../src/components/navigation/Header'
 import Footer from '../src/components/navigation/Footer'
@@ -45,11 +46,13 @@ import { Col } from '../src/components/content/Col'
 import { SpoilerContainer } from '../src/components/content/SpoilerContainer'
 import { SpoilerTitle } from '../src/components/content/SpoilerTitle'
 import { SpoilerBody } from '../src/components/content/SpoilerBody'
-import Tippy from '@tippyjs/react'
+import Modal from '../src/components/Modal'
 
 /*
  *  Page
  */
+
+const ModalContext = React.createContext<any>({})
 
 function Create() {
   const editor = useMemo(
@@ -63,25 +66,46 @@ function Create() {
     console.log(editor.children)
     setReady(true)
   }, [editor])
+  const [modalOpen, setModalOpen] = React.useState(false)
+  const [comp, setComp] = React.useState(null)
+  function doEdit(component) {
+    setComp(component)
+    setModalOpen(true)
+  }
+  function closeModal() {
+    setModalOpen(false)
+  }
   return (
     <>
       <Header />
       <StyledMain>
         <HSpace amount={15} />
-        <Slate
-          editor={editor}
-          value={value}
-          onChange={value => {
-            setValue(value)
-          }}
-        >
-          <Toolbox />
-          <Container>
-            {ready && (
-              <Editable renderElement={renderElement} renderLeaf={renderLeaf} />
-            )}
-          </Container>
-        </Slate>
+        <ModalContext.Provider value={{ doEdit, closeModal }}>
+          <Slate
+            editor={editor}
+            value={value}
+            onChange={value => {
+              setValue(value)
+            }}
+          >
+            <Toolbox />
+            <Container>
+              {ready && (
+                <Editable
+                  renderElement={renderElement}
+                  renderLeaf={renderLeaf}
+                />
+              )}
+            </Container>
+            <Modal
+              isOpen={modalOpen}
+              style={{ overlay: { zIndex: 1000 } }}
+              onRequestClose={() => setModalOpen(false)}
+            >
+              {comp}
+            </Modal>
+          </Slate>
+        </ModalContext.Provider>
         <HSpace amount={200} />
       </StyledMain>
       <Footer />
@@ -114,27 +138,6 @@ const StyledHx = {
 }
 
 const simpleRenderer = {
-  a: ({ element, attributes, children }) => (
-    <Tippy
-      content={
-        <VoidSpan>
-          <button onClick={() => console.log('hi')}>Link bearbeiten</button>
-        </VoidSpan>
-      }
-      interactive
-      appendTo={document.body}
-    >
-      <StyledA href={element.href} {...attributes}>
-        {children}
-        {element.href.startsWith('http') && (
-          <VoidSpan>
-            {' '}
-            <FontAwesomeIcon icon={faExternalLinkAlt} size="xs" />
-          </VoidSpan>
-        )}
-      </StyledA>
-    </Tippy>
-  ),
   'inline-math': ({ element, attributes, children }) => (
     <VoidSpan {...attributes}>
       <Tippy
@@ -192,7 +195,8 @@ const componentRenderer = {
   'spoiler-title': MySpoilerTitle,
   'spoiler-body': MySpoilerBody,
   row: MyLayout,
-  col: MyCol
+  col: MyCol,
+  a: MyA
 }
 
 function renderElement(props) {
@@ -471,6 +475,13 @@ function withPlugin(editor) {
         return
       }
     }
+    if (node.type === 'a') {
+      if (node.children.length === 1 && node.children[0].text === '') {
+        console.log('n: empty link, removing')
+        Transforms.removeNodes(editor, { at: path })
+        return
+      }
+    }
 
     normalizeNode(entry)
   }
@@ -529,6 +540,78 @@ function MySpoilerBody(props) {
     >
       {children}
     </SpoilerBody>
+  )
+}
+
+function MyA(props) {
+  const { attributes, element, children } = props
+  const editor = useEditor()
+  const path = ReactEditor.findPath(editor, element)
+  const { doEdit } = React.useContext(ModalContext)
+  return (
+    <Tippy
+      content={
+        <button onClick={() => doEdit(<ASettings path={path} />)}>
+          Link bearbeiten
+        </button>
+      }
+      interactive
+      zIndex={50}
+      appendTo={document.body}
+    >
+      <StyledA href={element.href} {...attributes}>
+        {children}
+        {element.href.startsWith('http') && (
+          <VoidSpan>
+            {' '}
+            <FontAwesomeIcon icon={faExternalLinkAlt} size="xs" />
+          </VoidSpan>
+        )}
+      </StyledA>
+    </Tippy>
+  )
+}
+
+function ASettings(props) {
+  const { path } = props
+  const editor = useEditor()
+  const element = Node.get(editor, path)
+  const [href, setHref] = React.useState(element.href)
+  const [preview, setPreview] = React.useState(false)
+  const { closeModal } = React.useContext(ModalContext)
+  return (
+    <>
+      <label>
+        Link-Adresse:
+        <br />
+        <input
+          type="text"
+          value={href}
+          size={50}
+          onChange={e => {
+            setHref(e.target.value)
+            Transforms.setNodes(editor, { href }, { at: path })
+          }}
+        />
+      </label>
+      <br />
+      <br />
+      <button onClick={() => closeModal()}>Fertig</button>
+      <br />
+      <br />
+      <hr />
+      <input
+        type="checkbox"
+        checked={preview}
+        onChange={e => setPreview(e.target.checked)}
+      />
+      Vorschau (funktioniert nicht bei jeder externen Website):
+      <br />
+      <br />
+      {preview && (
+        <iframe src={href} style={{ width: '100%', height: '600px' }} />
+      )}
+    </>
   )
 }
 
@@ -599,7 +682,7 @@ function MyCol(props) {
   return (
     <Col
       {...attributes}
-      size={(element.size / sizeSum) * 24}
+      cSize={(element.size / sizeSum) * 24}
       style={{ outline: highlight ? '1px solid lightblue' : 'none' }}
     >
       {children}
@@ -613,6 +696,8 @@ function MyImg(props) {
   const { selection } = editor
   const path = ReactEditor.findPath(editor, element)
   let highlight = selection && Range.includes(selection, path)
+  const { doEdit } = React.useContext(ModalContext)
+
   return (
     <ImgCentered
       {...attributes}
@@ -620,21 +705,98 @@ function MyImg(props) {
     >
       <Tippy
         content={
-          <button onClick={() => console.log('hi')}>Bild bearbeiten</button>
+          <button onClick={() => doEdit(<ImgSettings path={path} />)}>
+            Bild bearbeiten
+          </button>
         }
         interactive
+        zIndex={50}
         placement="top-end"
         appendTo={document.body}
       >
         <StyledImg
           src={element.src}
-          alt={element.alt}
+          alt={element.alt || 'leeres Bild'}
           maxWidth={element.maxWidth ? element.maxWidth : 0}
           contentEditable={false}
         ></StyledImg>
       </Tippy>
       {children}
     </ImgCentered>
+  )
+}
+
+function ImgSettings(props) {
+  const { path } = props
+  const editor = useEditor()
+  const element = Node.get(editor, path)
+  const [src, setSrc] = React.useState(element.src)
+  const [alt, setAlt] = React.useState(element.alt)
+  const [maxWidth, setMaxWidth] = React.useState(element.maxWidth)
+  const { closeModal } = React.useContext(ModalContext)
+  return (
+    <>
+      <label>
+        Bildquelle:
+        <br />
+        <input
+          type="text"
+          size={50}
+          value={src}
+          onChange={e => {
+            setSrc(e.target.value)
+            Transforms.setNodes(editor, { src: e.target.value }, { at: path })
+          }}
+        />
+      </label>
+      <br />
+      <br />
+      <label>
+        Beschreibung
+        <br />
+        <input
+          type="text"
+          size={50}
+          value={alt}
+          onChange={e => {
+            setAlt(e.target.value)
+            Transforms.setNodes(editor, { alt: e.target.value }, { at: path })
+          }}
+        />
+      </label>
+      <br />
+      <br />
+      <label>
+        Maximale Breite in pixel (0 = volle Breite)
+        <br />
+        <input
+          type="number"
+          size={50}
+          step={50}
+          value={maxWidth || 0}
+          onChange={e => {
+            setMaxWidth(e.target.value)
+            Transforms.setNodes(
+              editor,
+              { maxWidth: e.target.value },
+              { at: path }
+            )
+          }}
+        />
+      </label>
+      <br />
+      <br />
+      <button onClick={() => closeModal()}>Fertig</button>
+      <br />
+      <br />
+      <hr />
+      Vorschau:
+      <br />
+      <br />
+      <ImgCentered>
+        <StyledImg src={src} alt={alt} maxWidth={maxWidth} />
+      </ImgCentered>
+    </>
   )
 }
 
@@ -778,7 +940,7 @@ const initialValue = [
       { text: 'das ist cool udn hier: ', color: 'blue' },
       {
         type: 'a',
-        href: 'https://google.de/',
+        href: 'https://de.serlo.org/',
         children: [{ text: 'Hier lang!' }]
       },
       {

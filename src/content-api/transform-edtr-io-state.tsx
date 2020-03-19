@@ -291,7 +291,7 @@ function handleLayout(node, path, index) {
     <LayoutRow key={index}>
       {state.map((entry, index) => {
         return (
-          <Col size={entry.width * 2} key={index}>
+          <Col cSize={entry.width * 2} key={index}>
             {transform(entry.child, [...path, 'layout'])}
           </Col>
         )

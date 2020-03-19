@@ -66,7 +66,7 @@ function transform(node, path = [], index = 0) {
       }
       if (/^c[\d]+$/.test(className)) {
         return (
-          <Col key={index} size={parseInt(className.substring(1))}>
+          <Col key={index} cSize={parseInt(className.substring(1))}>
             {transform(node.children, [...path, className])}
           </Col>
         )
