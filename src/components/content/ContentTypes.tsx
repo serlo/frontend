@@ -89,7 +89,7 @@ function renderArticle(content) {
         <WipHint part="Desktop-Ansicht" />
       </DesktopOnly>
       {content.breadcrumbs && <Breadcrumbs entries={content.breadcrumbs} />}
-      <StyledH1>{content.title}</StyledH1>
+      <StyledH1 displayMode>{content.title}</StyledH1>
       <ToolLine>
         {content.legacy && (
           <LegacyIndicator title="Inhalt im alten Format">L</LegacyIndicator>

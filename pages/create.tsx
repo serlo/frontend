@@ -1,13 +1,21 @@
 import React, { useEffect, useState, useMemo } from 'react'
 import styled from 'styled-components'
 
-import { createEditor, Node, Transforms, Editor, Element, Range } from 'slate'
+import {
+  createEditor,
+  Node,
+  Transforms,
+  Editor,
+  Element,
+  Range,
+  Path,
+  Text
+} from 'slate'
 import { Slate, Editable, withReact, useEditor, ReactEditor } from 'slate-react'
 import { withHistory } from 'slate-history'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
-  faHeartBroken,
   faExternalLinkAlt,
   faCaretDown,
   faCaretRight
@@ -16,11 +24,6 @@ import {
 import Header from '../src/components/navigation/Header'
 import Footer from '../src/components/navigation/Footer'
 import Math from '../src/components/content/Math'
-import {
-  StyledSpoiler,
-  SpoilerContent,
-  SpoilerTitle
-} from '../src/components/content/Spoiler'
 import { StyledP } from '../src/components/tags/StyledP'
 import { StyledH2 } from '../src/components/tags/StyledH2'
 import { StyledH3 } from '../src/components/tags/StyledH3'
@@ -39,6 +42,14 @@ import { ImgCentered } from '../src/components/content/ImgCentered'
 import { Important } from '../src/components/content/Important'
 import { LayoutRow } from '../src/components/content/LayoutRow'
 import { Col } from '../src/components/content/Col'
+import { SpoilerContainer } from '../src/components/content/SpoilerContainer'
+import { SpoilerTitle } from '../src/components/content/SpoilerTitle'
+import { SpoilerBody } from '../src/components/content/SpoilerBody'
+import Tippy from '@tippyjs/react'
+
+/*
+ *  Page
+ */
 
 function Create() {
   const editor = useMemo(
@@ -46,9 +57,11 @@ function Create() {
     []
   )
   const [value, setValue] = useState<Node[]>(initialValue)
+  const [ready, setReady] = useState(false)
   useEffect(() => {
     Editor.normalize(editor, { force: true })
     console.log(editor.children)
+    setReady(true)
   }, [editor])
   return (
     <>
@@ -64,7 +77,9 @@ function Create() {
         >
           <Toolbox />
           <Container>
-            <Editable renderElement={renderElement} renderLeaf={renderLeaf} />
+            {ready && (
+              <Editable renderElement={renderElement} renderLeaf={renderLeaf} />
+            )}
           </Container>
         </Slate>
         <HSpace amount={200} />
@@ -78,28 +93,557 @@ function Toolbox() {
   const editor = useEditor()
   return (
     <StyledToolbox>
-      <FontAwesomeIcon
-        icon={faHeartBroken}
-        onClick={e => {
-          editor.insertText('heartbroken')
-          e.preventDefault()
-        }}
-      />
-      <FontAwesomeIcon icon={faHeartBroken} />
+      <button>Command 1</button>
+      <button>Command 2</button>
     </StyledToolbox>
   )
 }
 
-const StyledToolbox = styled.div`
-  padding: 15px;
-  background-color: white;
-  svg:hover {
-    color: lightblue;
-    cursor: pointer;
+export default Create
+
+/*
+ *  Renderer
+ */
+
+const StyledHx = {
+  1: StyledH1,
+  2: StyledH2,
+  3: StyledH3,
+  4: StyledH4,
+  5: StyledH5
+}
+
+const simpleRenderer = {
+  a: ({ element, attributes, children }) => (
+    <Tippy
+      content={
+        <VoidSpan>
+          <button onClick={() => console.log('hi')}>Link bearbeiten</button>
+        </VoidSpan>
+      }
+      interactive
+      appendTo={document.body}
+    >
+      <StyledA href={element.href} {...attributes}>
+        {children}
+        {element.href.startsWith('http') && (
+          <VoidSpan>
+            {' '}
+            <FontAwesomeIcon icon={faExternalLinkAlt} size="xs" />
+          </VoidSpan>
+        )}
+      </StyledA>
+    </Tippy>
+  ),
+  'inline-math': ({ element, attributes, children }) => (
+    <VoidSpan {...attributes}>
+      <Tippy
+        content={
+          <button onClick={() => console.log('hi')}>Formel bearbeiten</button>
+        }
+        interactive
+        appendTo={document.body}
+      >
+        <span>
+          <Math formula={element.formula} inline />
+        </span>
+      </Tippy>
+      {children}
+    </VoidSpan>
+  ),
+  h: ({ element, attributes, children }) => {
+    const Comp = StyledHx[element.level]
+    return <Comp {...attributes}>{children}</Comp>
+  },
+  math: ({ element, attributes, children }) => (
+    <MathCentered {...attributes} contentEditable={false}>
+      <Tippy
+        content={
+          <button onClick={() => console.log('hi')}>Formel bearbeiten</button>
+        }
+        interactive
+        appendTo={document.body}
+      >
+        <span>
+          <Math formula={element.formula} />
+        </span>
+      </Tippy>
+      {children}
+    </MathCentered>
+  ),
+  ul: ({ attributes, children }) => (
+    <StyledUl {...attributes}>{children}</StyledUl>
+  ),
+  ol: ({ attributes, children }) => (
+    <StyledOl {...attributes}>{children}</StyledOl>
+  ),
+  li: ({ attributes, children }) => (
+    <StyledLi {...attributes}>{children}</StyledLi>
+  ),
+  important: ({ attributes, children }) => (
+    <Important {...attributes}>{children}</Important>
+  )
+}
+
+const componentRenderer = {
+  p: MyP,
+  img: MyImg,
+  'spoiler-container': MySpoiler,
+  'spoiler-title': MySpoilerTitle,
+  'spoiler-body': MySpoilerBody,
+  row: MyLayout,
+  col: MyCol
+}
+
+function renderElement(props) {
+  const { element, attributes, children } = props
+
+  const type = element.type
+  if (type) {
+    if (type in simpleRenderer) {
+      return simpleRenderer[type](props)
+    }
+    if (type in componentRenderer) {
+      const Comp = componentRenderer[type]
+      return <Comp {...props} />
+    }
   }
-  svg {
+
+  return <StyledP {...attributes}>{children}</StyledP>
+}
+
+const colors = {
+  blue: '#1794c1',
+  green: '#469a40',
+  orange: '#ff6703'
+}
+
+function renderLeaf(props) {
+  const { leaf, attributes, children } = props
+  const styles: any = {}
+  if (leaf.color) {
+    styles.color = colors[leaf.color]
+  }
+  if (leaf.strong) {
+    styles.fontWeight = 'bold'
+  }
+  if (leaf.em) {
+    styles.fontStyle = 'italic'
+  }
+  return (
+    <span {...attributes} style={styles}>
+      {children}
+    </span>
+  )
+}
+
+/*
+ *  Schema
+ */
+
+const voidElements = ['math', 'img', 'inline-math']
+const inlineElements = ['inline-math', 'a']
+const onlyInlineChildren = ['a', 'p', 'h', 'li', 'spoiler-title']
+const onlySomeBlocksAllowed = [
+  {
+    parent: 'spoiler-body',
+    children: ['p', 'img', 'math', 'ul', 'ol', 'row'],
+    wrap: 'p'
+  },
+  {
+    parent: 'col',
+    children: ['p', 'img', 'math', 'ul', 'ol'],
+    wrap: 'p'
+  },
+  {
+    parent: 'important',
+    children: ['p', 'img', 'math', 'ul', 'ol', 'row'],
+    wrap: 'p'
+  },
+  {
+    parent: '#root',
+    children: [
+      'p',
+      'h',
+      'img',
+      'math',
+      'spoiler-container',
+      'ul',
+      'ol',
+      'row',
+      'important'
+    ],
+    wrap: 'p'
+  },
+  {
+    parent: 'ul',
+    children: ['li'],
+    wrap: 'li'
+  },
+  {
+    parent: 'ol',
+    children: ['li'],
+    wrap: 'li'
+  },
+  {
+    parent: 'row',
+    children: ['col'],
+    wrap: 'col'
+  }
+]
+
+function withPlugin(editor) {
+  const { isVoid, isInline, normalizeNode } = editor
+
+  editor.isVoid = element =>
+    voidElements.includes(element.type) || isVoid(element)
+
+  editor.isInline = element =>
+    inlineElements.includes(element.type) || isInline(editor)
+
+  editor.normalizeNode = entry => {
+    const [node, path] = entry as [Node, Path]
+
+    if (Element.isElement(node) || path.length === 0) {
+      // void elements contain exactly one empty text node
+      if (editor.isVoid(node)) {
+        const children = node.children
+        if (children.length > 0) {
+          if (children.length !== 1 || children[0].text !== '') {
+            console.log('n: remove children from void nodes')
+            Transforms.removeNodes(editor, { at: path.concat(0), voids: true })
+            return
+          }
+        }
+      }
+      // some elements only allow inline children
+      if (onlyInlineChildren.includes(node.type)) {
+        for (const [child, childpath] of Node.children(editor, path)) {
+          if (Element.isElement(child) && !editor.isInline(child)) {
+            console.log('n: only inlines allowed, unwrapping')
+            Transforms.unwrapNodes(editor, { at: childpath, voids: true })
+            return
+          }
+        }
+      }
+      // disallow nesting of anchors
+      if (node.type === 'a') {
+        for (const [anchestor] of Node.ancestors(editor, path, {
+          reverse: true
+        })) {
+          if (Element.isElement(anchestor) && anchestor.type === 'a') {
+            console.log('n: disallow a nesting, unwrapping inner')
+            Transforms.unwrapNodes(editor, { at: path, voids: true })
+            return
+          }
+        }
+      }
+      // check for allowed children
+      for (const { parent, children, wrap } of onlySomeBlocksAllowed) {
+        if (node.type === parent || (parent === '#root' && path.length === 0)) {
+          for (const [child, childpath] of Node.children(editor, path)) {
+            if (Text.isText(child)) {
+              console.log('n: should be block, wrapping')
+              Transforms.wrapNodes(
+                editor,
+                { type: wrap, children: [{ text: '' }] },
+                { at: childpath, voids: true }
+              )
+              return
+            }
+            if (Element.isElement(child) && !children.includes(child.type)) {
+              console.log('n: child not allowed, unwrapping')
+              Transforms.unwrapNodes(editor, { at: childpath, voids: true })
+              return
+            }
+          }
+        }
+      }
+      // spoiler has exactly one title and one body
+      if (node.type === 'spoiler-container') {
+        if (
+          node.children.length !== 2 ||
+          node.children[0].type !== 'spoiler-title' ||
+          node.children[1].type !== 'spoiler-body'
+        ) {
+          let hasTitle = false
+          let hasBody = false
+
+          for (const [child] of Node.children(editor, path)) {
+            if (child.type == 'spoiler-title') hasTitle = true
+            if (child.type == 'spoiler-body' && hasTitle) hasBody = true
+          }
+
+          if (!hasTitle) {
+            console.log('n: spoiler missing title')
+            Transforms.insertNodes(
+              editor,
+              { type: 'spoiler-title', children: [{ text: '' }] },
+              { at: path.concat(0), voids: true }
+            )
+            return
+          }
+          if (!hasBody) {
+            console.log('n: spoiler missing body')
+            Transforms.insertNodes(
+              editor,
+              { type: 'spoiler-body', children: [{ text: '' }] },
+              { at: path.concat(node.children.length), voids: true }
+            )
+            return
+          }
+
+          hasTitle = false
+          hasBody = false
+
+          for (const [child, childpath] of Node.children(editor, path)) {
+            if (child.type == 'spoiler-title') {
+              if (hasTitle) {
+                console.log('n: spoiler has too many titles')
+                Transforms.removeNodes(editor, { at: childpath, voids: true })
+                return
+              }
+              hasTitle = true
+            } else if (child.type == 'spoiler-body') {
+              if (hasBody || !hasTitle) {
+                console.log('n: spoiler has too many bodys')
+                Transforms.removeNodes(editor, { at: childpath, voids: true })
+                return
+              }
+              hasBody = true
+            } else {
+              console.log('n: spoiler has invalid child')
+              Transforms.removeNodes(editor, { at: childpath, voids: true })
+              return
+            }
+          }
+        }
+      }
+      // layout begins with h1 and ends with empty paragraph
+      if (path.length === 0) {
+        const childCount = editor.children.length
+        if (
+          childCount < 1 ||
+          (editor.children[0].type !== 'h' && editor.children[0].level !== 1)
+        ) {
+          console.log('n: missing h1')
+          Transforms.insertNodes(
+            editor,
+            {
+              type: 'h',
+              level: 1,
+              children: [{ text: 'Überschrift des Artikels' }]
+            },
+            { at: [0], voids: true }
+          )
+          return
+        }
+        if (
+          childCount < 1 ||
+          editor.children[childCount - 1].type !== 'p' ||
+          editor.children[childCount - 1].children.length !== 1 ||
+          editor.children[childCount - 1].children[0].text !== ''
+        ) {
+          console.log('n: missing ending paragraph')
+          Transforms.insertNodes(
+            editor,
+            {
+              type: 'p',
+              children: [{ text: '' }]
+            },
+            { at: [childCount], voids: true }
+          )
+          return
+        }
+      }
+    }
+    if (node.type === 'h') {
+      if (!Number.isInteger(node.level) || node.level < 1 || node.level > 5) {
+        console.log('n: heading is missing / has wrong level')
+        Transforms.setNodes(editor, { level: 2 }, { at: path, voids: true })
+        return
+      }
+    }
+    if (node.type === 'col') {
+      if (!Number.isInteger(node.size) || node.size <= 0) {
+        console.log('n: col is missing / has wrong size')
+        Transforms.setNodes(editor, { size: 4 }, { at: path, voids: true })
+        return
+      }
+    }
+
+    normalizeNode(entry)
+  }
+
+  return editor
+}
+
+/*
+ *  Components
+ */
+
+const SpoilerContext = React.createContext<any>({})
+
+function MySpoiler(props) {
+  const [open, setOpen] = React.useState(true)
+  const { attributes, children } = props
+  function toggleOpen() {
+    setOpen(!open)
+  }
+  return (
+    <SpoilerContext.Provider value={{ open, toggleOpen }}>
+      <SpoilerContainer {...attributes}>{children}</SpoilerContainer>
+    </SpoilerContext.Provider>
+  )
+}
+
+function MySpoilerTitle(props) {
+  const { attributes, children } = props
+  const context = React.useContext(SpoilerContext)
+  return (
+    <SpoilerTitle {...attributes} style={{ cursor: 'inherit' }}>
+      <VoidSpan
+        onClick={() => {
+          context.toggleOpen()
+        }}
+        role="button"
+      >
+        {context.open ? (
+          <FontAwesomeIcon icon={faCaretDown} />
+        ) : (
+          <FontAwesomeIcon icon={faCaretRight} />
+        )}{' '}
+      </VoidSpan>
+      {children}
+    </SpoilerTitle>
+  )
+}
+
+function MySpoilerBody(props) {
+  const { attributes, element, children } = props
+  const context = React.useContext(SpoilerContext)
+  return (
+    <SpoilerBody
+      {...attributes}
+      style={{ display: context.open ? 'block' : 'none' }}
+    >
+      {children}
+    </SpoilerBody>
+  )
+}
+
+function MyP(props) {
+  const { attributes, element, children } = props
+  const editor = useEditor()
+  const path = ReactEditor.findPath(editor, element)
+  const parent = Node.parent(editor, path)
+  const full = parent.type === 'li'
+
+  const myIndex = path[path.length - 1]
+  let halfslim = false
+  if (myIndex < parent.children.length - 1) {
+    const next = parent.children[myIndex + 1]
+    if (next.type == 'ul' || next.type == 'ol') {
+      halfslim = true
+    }
+  }
+
+  return (
+    <StyledP {...attributes} full={full} slim={full} halfslim={halfslim}>
+      {children}
+    </StyledP>
+  )
+}
+
+function MyLayout(props) {
+  const { attributes, element, children } = props
+  const editor = useEditor()
+  const { selection } = editor
+  const path = ReactEditor.findPath(editor, element)
+  let highlight = selection && Range.includes(selection, path)
+  return (
+    <Tippy
+      content={
+        <VoidSpan>
+          <button onClick={() => console.log('hi')}>Layout bearbeiten</button>
+        </VoidSpan>
+      }
+      interactive
+      placement="top-end"
+      appendTo={document.body}
+    >
+      <LayoutRow
+        {...attributes}
+        style={{
+          backgroundColor: highlight ? '#f5f5ff' : 'transparent'
+        }}
+      >
+        {children}
+      </LayoutRow>
+    </Tippy>
+  )
+}
+
+function MyCol(props) {
+  const { attributes, element, children } = props
+  const editor = useEditor()
+  const { selection } = editor
+  const path = ReactEditor.findPath(editor, element)
+  let highlight = selection && Range.includes(selection, path)
+  const parent = Path.parent(path)
+  let sizeSum = 0
+  for (const [child] of Node.children(editor, parent)) {
+    sizeSum += child.size
+  }
+  console.log(sizeSum)
+  return (
+    <Col
+      {...attributes}
+      size={(element.size / sizeSum) * 24}
+      style={{ outline: highlight ? '1px solid lightblue' : 'none' }}
+    >
+      {children}
+    </Col>
+  )
+}
+
+function MyImg(props) {
+  const { attributes, element, children } = props
+  const editor = useEditor()
+  const { selection } = editor
+  const path = ReactEditor.findPath(editor, element)
+  let highlight = selection && Range.includes(selection, path)
+  return (
+    <ImgCentered
+      {...attributes}
+      style={{ outline: highlight ? '1px solid lightblue' : 'none' }}
+    >
+      <Tippy
+        content={
+          <button onClick={() => console.log('hi')}>Bild bearbeiten</button>
+        }
+        interactive
+        placement="top-end"
+        appendTo={document.body}
+      >
+        <StyledImg
+          src={element.src}
+          alt={element.alt}
+          maxWidth={element.maxWidth ? element.maxWidth : 0}
+          contentEditable={false}
+        ></StyledImg>
+      </Tippy>
+      {children}
+    </ImgCentered>
+  )
+}
+
+const StyledToolbox = styled.div`
+  padding: 5px;
+  & button {
     margin-right: 10px;
   }
+  background-color: white;
   border: 1px solid lightblue;
   margin-bottom: 12px;
   position: sticky;
@@ -112,11 +656,98 @@ const Container = styled.div`
   border: 1px solid lightgreen;
 `
 
-export default Create
+const VoidSpan = styled.span.attrs({ contentEditable: false })`
+  user-select: none;
+`
 
 /*
------------------------------------------- Initial Value -------------------------------------
-*/
+ *  Value
+ */
+
+const testMakeInlineVoidNodesVoid = [
+  {
+    type: 'p',
+    children: [
+      {
+        type: 'inline-math',
+        formula: 'a^2 + b^2 = c^2',
+        children: [{ text: '123' }, { text: '45' }]
+      }
+    ]
+  }
+]
+
+const testTopLevelTextNodes = [{ text: '123' }]
+
+const testUnwrapBlockInInline = [
+  {
+    type: 'p',
+    children: [
+      {
+        type: 'a',
+        href: 'https://serlo.de',
+        children: [
+          {
+            type: 'p',
+            children: [
+              {
+                type: 'p',
+                children: [{ text: 'hallo' }]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
+
+const testDisallowANesting = [
+  {
+    type: 'p',
+    children: [
+      {
+        type: 'a',
+        href: 'https://serlo.de',
+        children: [
+          {
+            type: 'a',
+            href: 'https://serlo.de',
+            children: [
+              {
+                text: '123'
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
+
+const testCheckAllowedChildren = [
+  {
+    type: 'col',
+    size: 12,
+    children: [
+      { text: '123' },
+      {
+        type: 'important',
+        children: [{ text: '' }]
+      }
+    ]
+  }
+]
+
+const testSpoilerNormalization = [
+  {
+    type: 'spoiler-container',
+    children: [
+      { type: 'spoiler-body', children: [{ text: 't1' }] },
+      { type: 'spoiler-title', children: [{ text: 't2' }] }
+    ]
+  }
+]
 
 const initialValue = [
   { type: 'h', level: 1, children: [{ text: 'Titel des Artikels' }] },
@@ -131,7 +762,7 @@ const initialValue = [
   },
   {
     type: 'h',
-    level: 2,
+    level: 10,
     children: [{ text: 'Das ist die Hauptüberschrift (h2)' }]
   },
   {
@@ -166,7 +797,7 @@ const initialValue = [
     children: [{ text: 'Ein Teilbereich davon ist (h3)' }]
   },
   {
-    type: 'spoiler',
+    type: 'spoiler-container',
     children: [
       {
         type: 'spoiler-title',
@@ -178,7 +809,7 @@ const initialValue = [
         ]
       },
       {
-        type: 'spoiler-container',
+        type: 'spoiler-body',
         children: [
           {
             type: 'p',
@@ -189,11 +820,11 @@ const initialValue = [
             children: [{ text: 'Und noch mehr!' }]
           },
           {
-            type: 'spoiler',
+            type: 'spoiler-container',
             title: 'Noch einer',
             children: [
               {
-                type: 'spoiler-container',
+                type: 'spoiler-body',
                 children: [
                   { text: '...', color: 'blue' },
                   { text: '---', color: 'green' },
@@ -306,7 +937,7 @@ const initialValue = [
       },
       {
         type: 'col',
-        size: 6,
+        size: -6,
         children: [
           {
             type: 'p',
@@ -316,7 +947,7 @@ const initialValue = [
       },
       {
         type: 'col',
-        size: 6,
+        size: 20,
         children: [
           {
             type: 'p',
@@ -333,418 +964,3 @@ const initialValue = [
     children: [{ text: '' }]
   }
 ]
-
-/*
------------------------------------------- Render Element -------------------------------------
-*/
-
-function renderElement(props) {
-  const { element, attributes, children } = props
-  if (element.type === 'h' && element.level === 1) {
-    return (
-      <StyledH1 {...attributes} editMode>
-        {children}
-      </StyledH1>
-    )
-  }
-  if (element.type === 'h' && element.level === 2) {
-    return <StyledH2 {...attributes}>{children}</StyledH2>
-  }
-  if (element.type === 'h' && element.level === 3) {
-    return <StyledH3 {...attributes}>{children}</StyledH3>
-  }
-  if (element.type === 'h' && element.level === 4) {
-    return <StyledH4 {...attributes}>{children}</StyledH4>
-  }
-  if (element.type === 'h' && element.level === 5) {
-    return <StyledH5 {...attributes}>{children}</StyledH5>
-  }
-  if (element.type === 'p') {
-    return <MyP {...props} />
-  }
-  if (element.type === 'math') {
-    return (
-      <MathCentered {...attributes} contentEditable={false}>
-        <Math formula={element.formula} />
-        {children}
-      </MathCentered>
-    )
-  }
-  if (element.type === 'spoiler') {
-    return <MySpoiler {...props} />
-  }
-  if (element.type === 'spoiler-container') {
-    return <MySpoilerContent {...props} />
-  }
-  if (element.type === 'spoiler-title') {
-    return <MySpoilerTitle {...props} />
-  }
-  if (element.type === 'inline-math') {
-    return (
-      <span
-        {...attributes}
-        contentEditable={false}
-        style={{ userSelect: 'none' }}
-      >
-        <Math formula={element.formula} inline />
-        {children}
-      </span>
-    )
-  }
-  if (element.type === 'a') {
-    if (element.href.startsWith('http')) {
-      return (
-        <StyledA href={element.href} {...attributes}>
-          {children}
-          <span contentEditable={false} style={{ userSelect: 'none' }}>
-            {' '}
-            <FontAwesomeIcon icon={faExternalLinkAlt} size="xs" />
-          </span>
-        </StyledA>
-      )
-    }
-    return (
-      <StyledA href={element.href} {...attributes}>
-        {children}
-      </StyledA>
-    )
-  }
-  if (element.type === 'ul') {
-    return <StyledUl {...attributes}>{children}</StyledUl>
-  }
-  if (element.type === 'ol') {
-    return <StyledOl {...attributes}>{children}</StyledOl>
-  }
-  if (element.type === 'li') {
-    return <StyledLi {...attributes}>{children}</StyledLi>
-  }
-  if (element.type === 'important') {
-    return <Important {...attributes}>{children}</Important>
-  }
-  if (element.type === 'row') {
-    return <MyLayout {...props} />
-  }
-  if (element.type === 'col') {
-    return <MyCol {...props} />
-  }
-  if (element.type === 'img') {
-    return <MyImg {...props} />
-  }
-
-  return <StyledP {...attributes}>{children}</StyledP>
-}
-
-/*
------------------------------------------- Render Leaf -------------------------------------
-*/
-
-const colors = {
-  blue: '#1794c1',
-  green: '#469a40',
-  orange: '#ff6703'
-}
-
-function renderLeaf(props) {
-  const { leaf, attributes, children } = props
-  let result = children
-  if (leaf.strong) {
-    result = <strong>{result}</strong>
-  }
-  if (leaf.em) {
-    result = <em>{result}</em>
-  }
-  if (leaf.color) {
-    result = <span style={{ color: colors[leaf.color] }}>{result}</span>
-  }
-  return <span {...attributes}>{result}</span>
-}
-
-/*
------------------------------------------- Editor Plugin -------------------------------------
-*/
-
-function withPlugin(editor) {
-  const { isVoid, isInline, normalizeNode } = editor
-
-  editor.isVoid = element => {
-    if (
-      element.type == 'math' ||
-      element.type == 'img' ||
-      element.type == 'inline-math'
-    ) {
-      return true
-    }
-    return isVoid(element)
-  }
-
-  editor.isInline = element => {
-    if (element.type == 'inline-math') {
-      return true
-    }
-    if (element.type == 'a') {
-      return true
-    }
-    return isInline(editor)
-  }
-
-  editor.normalizeNode = entry => {
-    const [node, path] = entry
-
-    if (editor.isVoid(node)) {
-      if (
-        !Array.isArray(node.children) ||
-        node.children.length !== 1 ||
-        node.children[0].text !== ''
-      ) {
-        Transforms.setNodes(editor, { children: [{ text: '' }] }, { at: path })
-        return
-      }
-    }
-
-    if (
-      node.type === 'a' ||
-      node.type === 'p' ||
-      node.type === 'h' ||
-      node.type === 'li'
-    ) {
-      // erlaube nur Inline
-      if (!editor.isInline(node)) {
-        Transforms.setNodes(editor, { children: [{ text: '' }] }, { at: path })
-        return
-      }
-      for (let i = 0; i < node.children.length; i++) {
-        const child = node.children[i]
-        if (Element.isElement(child) && !editor.isInline(child)) {
-          Transforms.unwrapNodes(editor, { at: path.concat(i) })
-          return
-        }
-      }
-    }
-
-    if (
-      Element.isElement(node) &&
-      (node.type === 'important' ||
-        node.type === 'spoiler-container' ||
-        node.type === 'col')
-    ) {
-      for (let i = 0; i < node.children.length; i++) {
-        const child = node.children[i]
-        if (
-          (Element.isElement(child) && editor.isInline(child)) ||
-          child.text
-        ) {
-          // maybe merging text nodes?
-          Transforms.wrapNodes(
-            editor,
-            { type: 'p', children: [] },
-            { at: path.concat(i) }
-          )
-          return
-        }
-      }
-      // erlaube nur Block
-    }
-    if (Element.isElement(node)) {
-      for (let i = 0; i < node.children.length; i++) {
-        const child = node.children[i]
-        const childpath = path.concat(i)
-        if (
-          node.type === 'spoiler' &&
-          child.type !== 'spoiler-container' &&
-          child.type !== 'spoiler-title'
-        ) {
-          Transforms.wrapNodes(
-            editor,
-            { type: 'spoiler-container', children: [] },
-            { at: childpath }
-          )
-          return
-        }
-        if (node.type === 'row' && child.type !== 'col') {
-          Transforms.wrapNodes(
-            editor,
-            { type: 'col', children: [] },
-            { at: childpath }
-          )
-          return
-        }
-        if (node.type === 'ul' && child.type !== 'li') {
-          Transforms.wrapNodes(
-            editor,
-            { type: 'li', children: [] },
-            { at: childpath }
-          )
-          return
-        }
-        if (node.type === 'ol' && child.type !== 'li') {
-          Transforms.wrapNodes(
-            editor,
-            { type: 'li', children: [] },
-            { at: childpath }
-          )
-          return
-        }
-      }
-    }
-    if (Element.isElement(node)) {
-      const parentType = Node.get(editor, path.slice(0, -1)).type
-      if (node.type === 'spoiler-container') {
-        if (path.length < 2 || parentType !== 'spoiler') {
-          Transforms.removeNodes(editor, { at: path })
-          return
-        }
-      }
-      if (node.type === 'col') {
-        if (path.length < 2 || parentType !== 'row') {
-          Transforms.removeNodes(editor, { at: path })
-          return
-        }
-      }
-      if (node.type === 'li') {
-        if (path.length < 2 || !(parentType === 'ul' || parentType === 'ol')) {
-          Transforms.removeNodes(editor, { at: path })
-          return
-        }
-      }
-    }
-
-    normalizeNode(entry)
-  }
-
-  return editor
-}
-
-/*
------------------------------------------ Adapted visuals -----------------------------------------
-*/
-
-const SpoilerContext = React.createContext<any>({})
-
-function MySpoiler(props) {
-  const [open, setOpen] = React.useState(true)
-  const { attributes, children } = props
-  function toggleOpen() {
-    setOpen(!open)
-  }
-  return (
-    <SpoilerContext.Provider value={{ open, toggleOpen }}>
-      <StyledSpoiler {...attributes}>{children}</StyledSpoiler>
-    </SpoilerContext.Provider>
-  )
-}
-
-function MySpoilerTitle(props) {
-  const { attributes, children } = props
-  const context = React.useContext(SpoilerContext)
-  return (
-    <SpoilerTitle {...attributes} as={'div'} style={{ cursor: 'inherit' }}>
-      <span
-        contentEditable={false}
-        style={{ userSelect: 'none' }}
-        onClick={() => {
-          context.toggleOpen()
-        }}
-      >
-        {context.open ? (
-          <FontAwesomeIcon icon={faCaretDown} />
-        ) : (
-          <FontAwesomeIcon icon={faCaretRight} />
-        )}{' '}
-      </span>
-      {children}
-    </SpoilerTitle>
-  )
-}
-
-function MySpoilerContent(props) {
-  const { attributes, element, children } = props
-  const context = React.useContext(SpoilerContext)
-  return (
-    <SpoilerContent
-      {...attributes}
-      style={{ display: context.open ? 'block' : 'none' }}
-    >
-      {children}
-    </SpoilerContent>
-  )
-}
-
-function MyP(props) {
-  const { attributes, element, children } = props
-  const editor = useEditor()
-  const path = ReactEditor.findPath(editor, element)
-  const parent = Node.parent(editor, path)
-  const full = parent.type === 'li'
-
-  const myIndex = path[path.length - 1]
-  let halfslim = false
-  if (myIndex < parent.children.length - 1) {
-    const next = parent.children[myIndex + 1]
-    if (next.type == 'ul' || next.type == 'ol') {
-      halfslim = true
-    }
-  }
-
-  return (
-    <StyledP {...attributes} full={full} slim={full} halfslim={halfslim}>
-      {children}
-    </StyledP>
-  )
-}
-
-function MyLayout(props) {
-  const { attributes, element, children } = props
-  const editor = useEditor()
-  const { selection } = editor
-  const path = ReactEditor.findPath(editor, element)
-  let highlight = selection && Range.includes(selection, path)
-  return (
-    <LayoutRow
-      {...attributes}
-      style={{
-        backgroundColor: highlight ? '#f5f5ff' : 'transparent'
-      }}
-    >
-      {children}
-    </LayoutRow>
-  )
-}
-
-function MyCol(props) {
-  const { attributes, element, children } = props
-  const editor = useEditor()
-  const { selection } = editor
-  const path = ReactEditor.findPath(editor, element)
-  let highlight = selection && Range.includes(selection, path)
-  return (
-    <Col
-      {...attributes}
-      size={element.size}
-      style={{ outline: highlight ? '1px solid lightblue' : 'none' }}
-    >
-      {children}
-    </Col>
-  )
-}
-
-function MyImg(props) {
-  const { attributes, element, children } = props
-  const editor = useEditor()
-  const { selection } = editor
-  const path = ReactEditor.findPath(editor, element)
-  let highlight = selection && Range.includes(selection, path)
-  return (
-    <ImgCentered
-      {...attributes}
-      style={{ outline: highlight ? '1px solid lightblue' : 'none' }}
-    >
-      <StyledImg
-        src={element.src}
-        alt={element.alt}
-        maxWidth={element.maxWidth ? element.maxWidth : 0}
-        contentEditable={false}
-      ></StyledImg>
-      {children}
-    </ImgCentered>
-  )
-}

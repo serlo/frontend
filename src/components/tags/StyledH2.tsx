@@ -9,6 +9,7 @@ export const StyledH2 = styled.h2`
     ${props => transparentize(0.7, props.theme.colors.dark1)};
   padding-bottom: 6px;
   margin-bottom: 38px;
-  font-size: 24px;
+  font-size: 1.5rem;
   hyphens: auto;
+  line-height: 1.22;
 `
