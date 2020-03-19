@@ -3,23 +3,21 @@ import React from 'react'
 import Header from '../src/components/navigation/Header'
 import WipHint from '../src/components/WipHint'
 import Footer from '../src/components/navigation/Footer'
-import {
-  DummyContainer,
-  StyledP,
-  StyledUl,
-  StyledA,
-  StyledLi,
-  ArticleHeading,
-  HSpace
-} from '../src/components/visuals'
+import { StyledP } from '../src/components/tags/StyledP'
+import { StyledMain } from '../src/components/tags/StyledMain'
+import { StyledH1 } from '../src/components/tags/StyledH1'
+import { StyledUl } from '../src/components/tags/StyledUl'
+import { StyledLi } from '../src/components/tags/StyledLi'
+import { StyledA } from '../src/components/tags/StyledA'
+import { HSpace } from '../src/components/content/HSpace'
 
 function Index() {
   return (
     <>
       <Header />
-      <DummyContainer>
+      <StyledMain>
         <WipHint part="Startseite" />
-        <ArticleHeading>Startseite</ArticleHeading>
+        <StyledH1>Startseite</StyledH1>
         <StyledP halfslim>Links:</StyledP>
         <StyledUl>
           <StyledLi>
@@ -47,7 +45,7 @@ function Index() {
           </StyledLi>
         </StyledUl>
         <HSpace />
-      </DummyContainer>
+      </StyledMain>
       <Footer />
     </>
   )

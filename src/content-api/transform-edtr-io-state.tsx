@@ -1,26 +1,24 @@
 import dynamic from 'next/dynamic'
-import {
-  Img,
-  StyledP,
-  StyledH2,
-  StyledH3,
-  StyledH4,
-  StyledA,
-  ImgCentered,
-  StyledH5,
-  MathCentered,
-  StyledUl,
-  StyledOl,
-  StyledLi,
-  Important,
-  LayoutRow,
-  Col
-} from '../components/visuals'
-import Spoiler from '../components/Spoiler'
+import Spoiler from '../components/content/Spoiler'
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { StyledP } from '../components/tags/StyledP'
+import { StyledH2 } from '../components/tags/StyledH2'
+import { StyledH5 } from '../components/tags/StyledH5'
+import { StyledH4 } from '../components/tags/StyledH4'
+import { StyledH3 } from '../components/tags/StyledH3'
+import { StyledUl } from '../components/tags/StyledUl'
+import { StyledOl } from '../components/tags/StyledOl'
+import { StyledLi } from '../components/tags/StyledLi'
+import { StyledImg } from '../components/tags/StyledImg'
+import { StyledA } from '../components/tags/StyledA'
+import { ImgCentered } from '../components/content/ImgCentered'
+import { MathCentered } from '../components/content/MathCentered'
+import { Important } from '../components/content/Important'
+import { LayoutRow } from '../components/content/LayoutRow'
+import { Col } from '../components/content/Col'
 
-const Math = dynamic(import('../components/Math'))
+const Math = dynamic(import('../components/content/Math'))
 
 export default function EdtrIoRenderer(props) {
   const { state } = props
@@ -151,11 +149,11 @@ function handleImage(node, path, index) {
   const { state } = node
   return (
     <ImgCentered key={index}>
-      <Img
+      <StyledImg
         src={state.src}
         alt={state.alt}
         maxWidth={state.maxWidth ? state.maxWidth : 0}
-      ></Img>
+      ></StyledImg>
     </ImgCentered>
   )
 }

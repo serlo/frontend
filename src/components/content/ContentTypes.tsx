@@ -4,23 +4,23 @@ import dynamic from 'next/dynamic'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faShareAlt, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 
-import {
-  ArticleHeading,
-  ToolLine,
-  ToolLineButton,
-  StyledLi,
-  StyledA,
-  StyledUl,
-  StyledP
-} from './visuals'
-import ShareModal from './navigation/ShareModal'
+import ShareModal from '../navigation/ShareModal'
 
-import EdtrIoRenderer from '../content-api/transform-edtr-io-state'
-import Ups from './Ups'
-import WipHint from './WipHint'
+import EdtrIoRenderer from '../../content-api/transform-edtr-io-state'
+import Ups from '../Ups'
+import WipHint from '../WipHint'
 import styled from 'styled-components'
-import Breadcrumbs from './navigation/Breadcrumbs'
-const LegacyRenderer = dynamic(import('../content-api/transform-legacy-state'))
+import Breadcrumbs from '../navigation/Breadcrumbs'
+import { StyledP } from '../tags/StyledP'
+import { StyledUl } from '../tags/StyledUl'
+import { StyledLi } from '../tags/StyledLi'
+import { StyledA } from '../tags/StyledA'
+import { StyledH1 } from '../tags/StyledH1'
+import { ToolLine } from '../navigation/ToolLine'
+import { ToolLineButton } from '../navigation/ToolLineButton'
+const LegacyRenderer = dynamic(
+  import('../../content-api/transform-legacy-state')
+)
 
 export default function ContentTypes(props) {
   const { data } = props
@@ -34,7 +34,7 @@ export default function ContentTypes(props) {
         {data.data.breadcrumbs && (
           <Breadcrumbs entries={data.data.breadcrumbs} />
         )}
-        <ArticleHeading>{data.data.title}</ArticleHeading>
+        <StyledH1>{data.data.title}</StyledH1>
         <StyledUl>
           {data.data.anchors.map((entry, index) => (
             <StyledLi key={index}>
@@ -55,7 +55,7 @@ export default function ContentTypes(props) {
         {data.data.breadcrumbs && (
           <Breadcrumbs entries={data.data.breadcrumbs} />
         )}
-        <ArticleHeading>Aufgaben</ArticleHeading>
+        <StyledH1>Aufgaben</StyledH1>
         {data.data.contents.map((entry, index) => (
           <>
             <hr key={index} />
@@ -89,7 +89,7 @@ function renderArticle(content) {
         <WipHint part="Desktop-Ansicht" />
       </DesktopOnly>
       {content.breadcrumbs && <Breadcrumbs entries={content.breadcrumbs} />}
-      <ArticleHeading>{content.title}</ArticleHeading>
+      <StyledH1>{content.title}</StyledH1>
       <ToolLine>
         {content.legacy && (
           <LegacyIndicator title="Inhalt im alten Format">L</LegacyIndicator>

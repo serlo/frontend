@@ -1,28 +1,23 @@
 import * as htmlparser2 from 'htmlparser2'
 
-import {
-  Row,
-  LayoutRow,
-  Col,
-  StyledP,
-  Img,
-  StyledH2,
-  StyledA,
-  StyledLi,
-  StyledUl,
-  StyledH3,
-  StyledH4,
-  StyledH5,
-  StyledOl,
-  InlineImg,
-  MathCentered,
-  Important
-} from '../components/visuals'
-
-import Math from '../components/Math'
-import Spoiler from '../components/Spoiler'
+import Math from '../components/content/Math'
+import Spoiler from '../components/content/Spoiler'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
+import { StyledP } from '../components/tags/StyledP'
+import { StyledH2 } from '../components/tags/StyledH2'
+import { StyledH3 } from '../components/tags/StyledH3'
+import { StyledH4 } from '../components/tags/StyledH4'
+import { StyledH5 } from '../components/tags/StyledH5'
+import { StyledUl } from '../components/tags/StyledUl'
+import { StyledOl } from '../components/tags/StyledOl'
+import { StyledLi } from '../components/tags/StyledLi'
+import { StyledA } from '../components/tags/StyledA'
+import { StyledImg } from '../components/tags/StyledImg'
+import { MathCentered } from '../components/content/MathCentered'
+import { LayoutRow } from '../components/content/LayoutRow'
+import { Col } from '../components/content/Col'
+import { Important } from '../components/content/Important'
 
 export default function LegacyRenderer(props) {
   const { state } = props
@@ -158,11 +153,12 @@ function transform(node, path = [], index = 0) {
     if (node.name === 'img') {
       if (path.includes('p')) {
         return (
-          <InlineImg
+          <StyledImg
+            inline
             src={node.attribs.src}
             alt={node.attribs.alt}
             key={index}
-          ></InlineImg>
+          ></StyledImg>
         )
       }
     }

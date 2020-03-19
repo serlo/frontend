@@ -15,32 +15,30 @@ import {
 
 import Header from '../src/components/navigation/Header'
 import Footer from '../src/components/navigation/Footer'
-import {
-  DummyContainer,
-  StyledP,
-  HSpace,
-  ArticleHeading,
-  StyledA,
-  StyledH2,
-  StyledH3,
-  MathCentered,
-  StyledUl,
-  StyledLi,
-  StyledH4,
-  StyledH5,
-  StyledOl,
-  Important,
-  LayoutRow,
-  Col,
-  ImgCentered,
-  Img
-} from '../src/components/visuals'
-import Math from '../src/components/Math'
+import Math from '../src/components/content/Math'
 import {
   StyledSpoiler,
   SpoilerContent,
   SpoilerTitle
-} from '../src/components/Spoiler'
+} from '../src/components/content/Spoiler'
+import { StyledP } from '../src/components/tags/StyledP'
+import { StyledH2 } from '../src/components/tags/StyledH2'
+import { StyledH3 } from '../src/components/tags/StyledH3'
+import { StyledH4 } from '../src/components/tags/StyledH4'
+import { StyledH5 } from '../src/components/tags/StyledH5'
+import { StyledUl } from '../src/components/tags/StyledUl'
+import { StyledOl } from '../src/components/tags/StyledOl'
+import { StyledLi } from '../src/components/tags/StyledLi'
+import { StyledA } from '../src/components/tags/StyledA'
+import { StyledImg } from '../src/components/tags/StyledImg'
+import { StyledH1 } from '../src/components/tags/StyledH1'
+import { StyledMain } from '../src/components/tags/StyledMain'
+import { HSpace } from '../src/components/content/HSpace'
+import { MathCentered } from '../src/components/content/MathCentered'
+import { ImgCentered } from '../src/components/content/ImgCentered'
+import { Important } from '../src/components/content/Important'
+import { LayoutRow } from '../src/components/content/LayoutRow'
+import { Col } from '../src/components/content/Col'
 
 function Create() {
   const editor = useMemo(
@@ -55,7 +53,7 @@ function Create() {
   return (
     <>
       <Header />
-      <DummyContainer lang="de">
+      <StyledMain>
         <HSpace amount={15} />
         <Slate
           editor={editor}
@@ -70,7 +68,7 @@ function Create() {
           </Container>
         </Slate>
         <HSpace amount={200} />
-      </DummyContainer>
+      </StyledMain>
       <Footer />
     </>
   )
@@ -344,9 +342,9 @@ function renderElement(props) {
   const { element, attributes, children } = props
   if (element.type === 'h' && element.level === 1) {
     return (
-      <ArticleHeading {...attributes} editMode>
+      <StyledH1 {...attributes} editMode>
         {children}
-      </ArticleHeading>
+      </StyledH1>
     )
   }
   if (element.type === 'h' && element.level === 2) {
@@ -740,12 +738,12 @@ function MyImg(props) {
       {...attributes}
       style={{ outline: highlight ? '1px solid lightblue' : 'none' }}
     >
-      <Img
+      <StyledImg
         src={element.src}
         alt={element.alt}
         maxWidth={element.maxWidth ? element.maxWidth : 0}
         contentEditable={false}
-      ></Img>
+      ></StyledImg>
       {children}
     </ImgCentered>
   )
