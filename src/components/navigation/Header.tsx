@@ -1,12 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import Menu from './desktopmenu'
-import menudata from '../menudata'
-import Logo from './logo'
-import SearchInput from './searchinput'
-import MobileMenuButton from './mobilemenubutton'
-import MobileMenu from './mobilemenu'
+import Menu from './Menu'
+import menudata from '../../menudata'
+import Logo from './Logo'
+import SearchInput from './SearchInput'
+import MobileMenuButton from './MobileMenuButton'
+import MobileMenu from './MobileMenu'
 
 export default function Header() {
   const [isOpen, setOpen] = React.useState(false)

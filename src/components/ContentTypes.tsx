@@ -13,13 +13,13 @@ import {
   StyledUl,
   StyledP
 } from './visuals'
-import ShareModal from './sharemodal'
+import ShareModal from './navigation/ShareModal'
 
 import EdtrIoRenderer from '../content-api/transform-edtr-io-state'
-import Ups from './ups'
-import WipHint from './wiphint'
+import Ups from './Ups'
+import WipHint from './WipHint'
 import styled from 'styled-components'
-import Breadcrumbs from './breadcrumbs'
+import Breadcrumbs from './navigation/Breadcrumbs'
 const LegacyRenderer = dynamic(import('../content-api/transform-legacy-state'))
 
 export default function ContentTypes(props) {

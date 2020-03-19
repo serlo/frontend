@@ -1,8 +1,8 @@
 import React from 'react'
 
-import Header from '../src/components/header'
-import WipHint from '../src/components/wiphint'
-import Footer from '../src/components/footer'
+import Header from '../src/components/navigation/Header'
+import WipHint from '../src/components/WipHint'
+import Footer from '../src/components/navigation/Footer'
 import {
   DummyContainer,
   StyledP,

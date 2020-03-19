@@ -1,5 +1,5 @@
 function HelloWorld() {
-  return null
+  return
 }
 
 export default HelloWorld

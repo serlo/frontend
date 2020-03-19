@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { faPencilAlt, faShareAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import ShareModal from './sharemodal'
+import ShareModal from './ShareModal'
 
 export default function Toolbox() {
   const [open, setOpen] = React.useState(false)

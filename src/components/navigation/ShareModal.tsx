@@ -14,7 +14,7 @@ import {
   faGoogle
 } from '@fortawesome/free-brands-svg-icons'
 
-import Modal from './reactmodal'
+import Modal from '../Modal'
 
 export default function ShareModal(props) {
   const { open, onClose } = props

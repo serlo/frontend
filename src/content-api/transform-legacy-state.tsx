@@ -19,8 +19,8 @@ import {
   Important
 } from '../components/visuals'
 
-import Math from '../components/math'
-import Spoiler from '../components/spoiler'
+import Math from '../components/Math'
+import Spoiler from '../components/Spoiler'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
 

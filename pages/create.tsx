@@ -13,8 +13,8 @@ import {
   faCaretRight
 } from '@fortawesome/free-solid-svg-icons'
 
-import Header from '../src/components/header'
-import Footer from '../src/components/footer'
+import Header from '../src/components/navigation/Header'
+import Footer from '../src/components/navigation/Footer'
 import {
   DummyContainer,
   StyledP,
@@ -35,12 +35,12 @@ import {
   ImgCentered,
   Img
 } from '../src/components/visuals'
-import Math from '../src/components/math'
+import Math from '../src/components/Math'
 import {
   StyledSpoiler,
   SpoilerContent,
   SpoilerTitle
-} from '../src/components/spoiler'
+} from '../src/components/Spoiler'
 
 function Create() {
   const editor = useMemo(

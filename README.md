@@ -10,7 +10,7 @@ Install [Node.js](https://nodejs.org/en/) (>=10) and [yarn](https://classic.yarn
 
 Clone this repo, install dependencies and start the dev server:
 
-```
+```sh
 git clone https://github.com/serlo/frontend.git
 cd frontend
 yarn
@@ -729,6 +729,53 @@ The `fs` module is only available in nodejs, but it's ok to use it when you chec
 ### How can I focus an element?
 
 To focus a html element, you need access to the underlying DOM node. Use the [ref hook](https://reactjs.org/docs/hooks-reference.html#useref) for this.
+
+### What does this syntax mean?
+
+JavaScript compilers allow a greater range of syntax. Here is a small cheatsheet.
+
+#### Destructuring Object
+
+```tsx
+const { title, url } = props
+// -->
+const title = props.title
+const url = props.url
+```
+
+#### Destructuing Array
+
+```tsx
+const [open, setOpen] = React.useState(false)
+// -->
+const __temp = React.useState(false)
+const open = __temp[0]
+const setOpen = __temp[1]
+```
+
+#### Object Property Shorthand
+
+```tsx
+return { title, content }
+// -->
+return { title: title, content: content }
+```
+
+#### String Interpolation
+
+```tsx
+return `The key ${key} can not be found in ${db}.`
+// -->
+return 'The key ' + key + ' can not be found in ' + db + '.'
+```
+
+#### JSX
+
+```tsx
+return <Par gray={true}>This is a paragraph</Par>
+// -->
+return React.createElement(Par, { gray: true }, `This is a paragraph`)
+```
 
 ### How can I change the state of a sibling?
 
