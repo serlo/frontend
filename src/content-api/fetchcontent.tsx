@@ -1,6 +1,13 @@
 import fetch from 'isomorphic-unfetch'
 
 export default async function fetchContent(alias) {
+  // deeeeeep shit
+  alias = alias.replace('ä', '%C3%A4')
+  alias = alias.replace('ö', '%C3%B6')
+  alias = alias.replace('ü', '%C3%BC')
+  alias = alias.replace('ß', '%C3%9F')
+  console.log(alias)
+
   const res = await fetch('https://de.serlo.org' + alias + '?contentOnly', {
     headers: {
       'User-Agent':
@@ -87,7 +94,6 @@ export default async function fetchContent(alias) {
     }
     data.legacyCount = (html.match(/<div class="r">/) || []).length
     data.contents = contents
-    console.log(data)
   }
 
   const breadcrumbsStart = '<ol id="breadcrumbs">'

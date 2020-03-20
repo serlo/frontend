@@ -307,7 +307,6 @@ function handleExercise(node, path, index) {
 
 function handleSolution(node, path, index) {
   const { state } = node
-  console.log(state)
   return [
     transform(state.strategy, [...path, 'solution'], index),
     transform(state.steps, [...path, 'solution'], index)
