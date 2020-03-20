@@ -7,7 +7,6 @@ function Ups(props) {
   return (
     <UpsDiv>
       <FontAwesomeIcon icon={faTools} size="2x" />
-
       <p>{type}:</p>
       <p>Dieser Inhaltstyp wird noch nicht unterstützt.</p>
       <p>

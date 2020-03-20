@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react'
+import React, { useEffect, useState, useMemo, Children } from 'react'
 import styled from 'styled-components'
 
 import {
@@ -11,7 +11,14 @@ import {
   Path,
   Text
 } from 'slate'
-import { Slate, Editable, withReact, useEditor, ReactEditor } from 'slate-react'
+import {
+  Slate,
+  Editable,
+  withReact,
+  useEditor,
+  ReactEditor,
+  useSlate
+} from 'slate-react'
 import { withHistory } from 'slate-history'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -47,6 +54,8 @@ import { SpoilerContainer } from '../src/components/content/SpoilerContainer'
 import { SpoilerTitle } from '../src/components/content/SpoilerTitle'
 import { SpoilerBody } from '../src/components/content/SpoilerBody'
 import Modal from '../src/components/Modal'
+import { hsl } from 'polished'
+import { Transform } from 'stream'
 
 /*
  *  Page
@@ -114,11 +123,253 @@ function Create() {
 }
 
 function Toolbox() {
-  const editor = useEditor()
+  const editor = useSlate()
+  let marks = Editor.marks(editor)
+  if (!marks) marks = {}
+  const { selection } = editor
+  let showAdds = false
+  if (Range.isRange(selection)) {
+    if (Range.isCollapsed(selection)) {
+      const parent = Node.get(editor, Path.parent(selection.anchor.path))
+      if (
+        parent.type == 'p' &&
+        parent.children.length == 1 &&
+        parent.children[0].text == ''
+      ) {
+        showAdds = true
+      }
+    }
+  }
   return (
     <StyledToolbox>
-      <button>Command 1</button>
-      <button>Command 2</button>
+      <ToolButton
+        active={marks.strong}
+        onMouseDown={e => {
+          if (marks.strong) Editor.removeMark(editor, 'strong')
+          else Editor.addMark(editor, 'strong', true)
+          e.preventDefault()
+        }}
+      >
+        Fett
+      </ToolButton>
+      <ToolButton
+        active={marks.em}
+        onMouseDown={e => {
+          if (marks.em) Editor.removeMark(editor, 'em')
+          else Editor.addMark(editor, 'em', true)
+          e.preventDefault()
+        }}
+      >
+        Kursiv
+      </ToolButton>
+      <ToolButton
+        active={marks.color == 'blue'}
+        onMouseDown={e => {
+          if (marks.color == 'blue') Editor.removeMark(editor, 'color')
+          else Editor.addMark(editor, 'color', 'blue')
+          e.preventDefault()
+        }}
+      >
+        Blau
+      </ToolButton>
+      <ToolButton
+        active={marks.color == 'green'}
+        onMouseDown={e => {
+          if (marks.color == 'green') Editor.removeMark(editor, 'color')
+          else Editor.addMark(editor, 'color', 'green')
+          e.preventDefault()
+        }}
+      >
+        Grün
+      </ToolButton>
+      <ToolButton
+        active={marks.color == 'orange'}
+        onMouseDown={e => {
+          if (marks.color == 'orange') Editor.removeMark(editor, 'color')
+          else Editor.addMark(editor, 'color', 'orange')
+          e.preventDefault()
+        }}
+      >
+        Orange
+      </ToolButton>
+      <ToolButton
+        onMouseDown={e => {
+          Editor.removeMark(editor, 'color')
+          Editor.removeMark(editor, 'strong')
+          Editor.removeMark(editor, 'em')
+          e.preventDefault()
+        }}
+      >
+        Form. lös.
+      </ToolButton>
+      | &nbsp;
+      {Range.isRange(selection) && Range.isExpanded(selection) && (
+        <ToolButton
+          onMouseDown={e => {
+            e.preventDefault()
+            Transforms.wrapNodes(
+              editor,
+              {
+                type: 'a',
+                href: '',
+                children: [{ text: '' }]
+              },
+              { split: true }
+            )
+          }}
+        >
+          +A
+        </ToolButton>
+      )}
+      {showAdds ? (
+        <>
+          <ToolButton
+            onMouseDown={e => {
+              e.preventDefault()
+              Transforms.removeNodes(editor)
+              Transforms.insertNodes(editor, {
+                type: 'h',
+                level: 2,
+                children: [{ text: '' }]
+              })
+            }}
+          >
+            +H2
+          </ToolButton>
+          <ToolButton
+            onMouseDown={e => {
+              e.preventDefault()
+              Transforms.removeNodes(editor)
+              Transforms.insertNodes(editor, {
+                type: 'h',
+                level: 3,
+                children: [{ text: '' }]
+              })
+            }}
+          >
+            +H3
+          </ToolButton>
+          <ToolButton
+            onMouseDown={e => {
+              e.preventDefault()
+              Transforms.removeNodes(editor)
+              Transforms.insertNodes(editor, {
+                type: 'h',
+                level: 4,
+                children: [{ text: '' }]
+              })
+            }}
+          >
+            +H4
+          </ToolButton>
+          <ToolButton
+            onMouseDown={e => {
+              e.preventDefault()
+              Transforms.removeNodes(editor)
+              Transforms.insertNodes(editor, {
+                type: 'spoiler-container',
+                children: [
+                  { type: 'spoiler-title', children: [{ text: '' }] },
+                  { type: 'spoiler-body', children: [{ text: '' }] }
+                ]
+              })
+            }}
+          >
+            +Sp.
+          </ToolButton>
+          <ToolButton
+            onMouseDown={e => {
+              e.preventDefault()
+              Transforms.removeNodes(editor)
+              Transforms.insertNodes(editor, {
+                type: 'img',
+                src: '',
+                alt: '',
+                children: [{ text: '' }]
+              })
+            }}
+          >
+            +Img
+          </ToolButton>
+          <ToolButton
+            onMouseDown={e => {
+              e.preventDefault()
+              Transforms.removeNodes(editor)
+              Transforms.insertNodes(editor, {
+                type: 'important',
+                children: [{ text: '' }]
+              })
+            }}
+          >
+            +Imp.
+          </ToolButton>
+          <ToolButton
+            onMouseDown={e => {
+              e.preventDefault()
+              Transforms.removeNodes(editor)
+              Transforms.insertNodes(editor, {
+                type: 'ul',
+                children: [{ type: 'li', children: [{ text: '' }] }]
+              })
+            }}
+          >
+            +Ul
+          </ToolButton>
+          <ToolButton
+            onMouseDown={e => {
+              e.preventDefault()
+              Transforms.removeNodes(editor)
+              Transforms.insertNodes(editor, {
+                type: 'ol',
+                children: [{ type: 'li', children: [{ text: '' }] }]
+              })
+            }}
+          >
+            +Ol
+          </ToolButton>
+          <ToolButton
+            onMouseDown={e => {
+              e.preventDefault()
+              Transforms.removeNodes(editor)
+              Transforms.insertNodes(editor, {
+                type: 'math',
+                formula: '',
+                children: [{ text: '' }]
+              })
+            }}
+          >
+            +For.
+          </ToolButton>
+          <ToolButton
+            onMouseDown={e => {
+              e.preventDefault()
+              Transforms.removeNodes(editor)
+              Transforms.insertNodes(editor, {
+                type: 'row',
+                children: [
+                  { type: 'col', size: 6, children: [{ text: '' }] },
+                  { type: 'col', size: 6, children: [{ text: '' }] }
+                ]
+              })
+            }}
+          >
+            +Lay.
+          </ToolButton>
+        </>
+      ) : (
+        <ToolButton
+          onMouseDown={e => {
+            e.preventDefault()
+            Transforms.insertNodes(editor, {
+              type: 'inline-math',
+              formula: '',
+              children: [{ text: '' }]
+            })
+          }}
+        >
+          +Formel
+        </ToolButton>
+      )}
     </StyledToolbox>
   )
 }
@@ -138,42 +389,10 @@ const StyledHx = {
 }
 
 const simpleRenderer = {
-  'inline-math': ({ element, attributes, children }) => (
-    <VoidSpan {...attributes}>
-      <Tippy
-        content={
-          <button onClick={() => console.log('hi')}>Formel bearbeiten</button>
-        }
-        interactive
-        appendTo={document.body}
-      >
-        <span>
-          <Math formula={element.formula} inline />
-        </span>
-      </Tippy>
-      {children}
-    </VoidSpan>
-  ),
   h: ({ element, attributes, children }) => {
     const Comp = StyledHx[element.level]
     return <Comp {...attributes}>{children}</Comp>
   },
-  math: ({ element, attributes, children }) => (
-    <MathCentered {...attributes} contentEditable={false}>
-      <Tippy
-        content={
-          <button onClick={() => console.log('hi')}>Formel bearbeiten</button>
-        }
-        interactive
-        appendTo={document.body}
-      >
-        <span>
-          <Math formula={element.formula} />
-        </span>
-      </Tippy>
-      {children}
-    </MathCentered>
-  ),
   ul: ({ attributes, children }) => (
     <StyledUl {...attributes}>{children}</StyledUl>
   ),
@@ -196,7 +415,9 @@ const componentRenderer = {
   'spoiler-body': MySpoilerBody,
   row: MyLayout,
   col: MyCol,
-  a: MyA
+  a: MyA,
+  'inline-math': MyInlineMath,
+  math: MyMath
 }
 
 function renderElement(props) {
@@ -297,7 +518,7 @@ const onlySomeBlocksAllowed = [
 ]
 
 function withPlugin(editor) {
-  const { isVoid, isInline, normalizeNode } = editor
+  const { isVoid, isInline, normalizeNode, insertBreak } = editor
 
   editor.isVoid = element =>
     voidElements.includes(element.type) || isVoid(element)
@@ -370,35 +591,17 @@ function withPlugin(editor) {
           node.children[0].type !== 'spoiler-title' ||
           node.children[1].type !== 'spoiler-body'
         ) {
+          if (
+            node.children.length < 2 ||
+            node.children[0].type !== 'spoiler-title'
+          ) {
+            console.log('n: incomplete spoiler')
+            Transforms.removeNodes(editor, { at: path, voids: true })
+            return
+          }
+
           let hasTitle = false
           let hasBody = false
-
-          for (const [child] of Node.children(editor, path)) {
-            if (child.type == 'spoiler-title') hasTitle = true
-            if (child.type == 'spoiler-body' && hasTitle) hasBody = true
-          }
-
-          if (!hasTitle) {
-            console.log('n: spoiler missing title')
-            Transforms.insertNodes(
-              editor,
-              { type: 'spoiler-title', children: [{ text: '' }] },
-              { at: path.concat(0), voids: true }
-            )
-            return
-          }
-          if (!hasBody) {
-            console.log('n: spoiler missing body')
-            Transforms.insertNodes(
-              editor,
-              { type: 'spoiler-body', children: [{ text: '' }] },
-              { at: path.concat(node.children.length), voids: true }
-            )
-            return
-          }
-
-          hasTitle = false
-          hasBody = false
 
           for (const [child, childpath] of Node.children(editor, path)) {
             if (child.type == 'spoiler-title') {
@@ -428,7 +631,8 @@ function withPlugin(editor) {
         const childCount = editor.children.length
         if (
           childCount < 1 ||
-          (editor.children[0].type !== 'h' && editor.children[0].level !== 1)
+          editor.children[0].type !== 'h' ||
+          editor.children[0].level !== 1
         ) {
           console.log('n: missing h1')
           Transforms.insertNodes(
@@ -460,30 +664,54 @@ function withPlugin(editor) {
           return
         }
       }
-    }
-    if (node.type === 'h') {
-      if (!Number.isInteger(node.level) || node.level < 1 || node.level > 5) {
-        console.log('n: heading is missing / has wrong level')
-        Transforms.setNodes(editor, { level: 2 }, { at: path, voids: true })
-        return
+      // headings only on topleve and h1 only at beginning
+      if (node.type === 'h') {
+        if (!Number.isInteger(node.level) || node.level < 1 || node.level > 5) {
+          console.log('n: heading is missing / has wrong level, removing')
+          Transforms.removeNodes(editor, { at: path, voids: true })
+          return
+        }
+        if (node.level == 1 && (path.length !== 1 || path[0] !== 0)) {
+          console.log('n: h1 within document, unwrapping')
+          Transforms.unwrapNodes(editor, { at: path, voids: true })
+        }
       }
-    }
-    if (node.type === 'col') {
-      if (!Number.isInteger(node.size) || node.size <= 0) {
-        console.log('n: col is missing / has wrong size')
-        Transforms.setNodes(editor, { size: 4 }, { at: path, voids: true })
-        return
+      // cols should have proper sizes
+      if (node.type === 'col') {
+        if (!Number.isInteger(node.size) || node.size <= 0) {
+          console.log('n: col is missing / has wrong size', node.size)
+          Transforms.setNodes(editor, { size: 4 }, { at: path, voids: true })
+          return
+        }
       }
-    }
-    if (node.type === 'a') {
-      if (node.children.length === 1 && node.children[0].text === '') {
-        console.log('n: empty link, removing')
-        Transforms.removeNodes(editor, { at: path })
-        return
+      // remove empty links
+      if (node.type === 'a') {
+        if (node.children.length === 1 && node.children[0].text === '') {
+          console.log('n: empty link, removing')
+          Transforms.removeNodes(editor, { at: path })
+          return
+        }
+      }
+      // adjacent unordered lists should be merged
+      for (let i = 1; i < node.children.length; i++) {
+        if (
+          node.children[i].type === node.children[i - 1].type &&
+          (node.children[i].type === 'ul' || node.children[i].type === 'ol')
+        ) {
+          console.log('n: adjacent lists found, merging')
+          Transforms.mergeNodes(editor, { at: path.concat(i), voids: true })
+          return
+        }
       }
     }
 
     normalizeNode(entry)
+  }
+
+  editor.insertBreak = () => {
+    const { selection } = editor
+    console.log(selection)
+    insertBreak()
   }
 
   return editor
@@ -543,6 +771,98 @@ function MySpoilerBody(props) {
   )
 }
 
+function MyMath(props) {
+  const { attributes, element, children } = props
+  const editor = useEditor()
+  const path = ReactEditor.findPath(editor, element)
+  const { doEdit } = React.useContext(ModalContext)
+  const { selection } = editor
+  let highlight = selection && Range.includes(selection, path)
+  return (
+    <MathCentered {...attributes} contentEditable={false}>
+      <Tippy
+        content={
+          <button onClick={() => doEdit(<MathSettings path={path} />)}>
+            Formel bearbeiten
+          </button>
+        }
+        interactive
+        zIndex={50}
+        appendTo={document.body}
+      >
+        <span style={{ outline: highlight ? '1px solid lightblue' : 'none' }}>
+          {element.formula ? (
+            <Math formula={element.formula} />
+          ) : (
+            '[leere Formel]'
+          )}
+        </span>
+      </Tippy>
+      {children}
+    </MathCentered>
+  )
+}
+
+function MyInlineMath(props) {
+  const { attributes, element, children } = props
+  const editor = useEditor()
+  const path = ReactEditor.findPath(editor, element)
+  const { doEdit } = React.useContext(ModalContext)
+  const { selection } = editor
+  let highlight = selection && Range.includes(selection, path)
+  return (
+    <VoidSpan {...attributes}>
+      <Tippy
+        content={
+          <button onClick={() => doEdit(<MathSettings path={path} />)}>
+            Formel bearbeiten
+          </button>
+        }
+        interactive
+        zIndex={50}
+        appendTo={document.body}
+      >
+        <span style={{ outline: highlight ? '1px solid lightblue' : 'none' }}>
+          {element.formula ? (
+            <Math formula={element.formula} inline />
+          ) : (
+            '[leere Formel]'
+          )}
+        </span>
+      </Tippy>
+      {children}
+    </VoidSpan>
+  )
+}
+
+function MathSettings(props) {
+  const { path } = props
+  const editor = useEditor()
+  const element = Node.get(editor, path)
+  const [formula, setFormula] = React.useState(element.formula)
+  const { closeModal } = React.useContext(ModalContext)
+  return (
+    <>
+      <LatexInputArea
+        onChange={e => {
+          setFormula(e.target.value)
+          Transforms.setNodes(editor, { formula: e.target.value }, { at: path })
+        }}
+        value={formula}
+      />
+      <br />
+      <br />
+      <button onClick={() => closeModal()}>Fertig</button>
+      <br />
+      <br />
+      <hr />
+      <MathCentered>
+        <Math formula={formula} />
+      </MathCentered>
+    </>
+  )
+}
+
 function MyA(props) {
   const { attributes, element, children } = props
   const editor = useEditor()
@@ -557,6 +877,7 @@ function MyA(props) {
       }
       interactive
       zIndex={50}
+      placement="top-end"
       appendTo={document.body}
     >
       <StyledA href={element.href} {...attributes}>
@@ -590,12 +911,20 @@ function ASettings(props) {
           size={50}
           onChange={e => {
             setHref(e.target.value)
-            Transforms.setNodes(editor, { href }, { at: path })
+            Transforms.setNodes(editor, { href: e.target.value }, { at: path })
           }}
         />
       </label>
       <br />
       <br />
+      <button
+        onClick={() => {
+          Transforms.unwrapNodes(editor, { at: path })
+          closeModal()
+        }}
+      >
+        Löschen
+      </button>{' '}
       <button onClick={() => closeModal()}>Fertig</button>
       <br />
       <br />
@@ -644,15 +973,19 @@ function MyLayout(props) {
   const { selection } = editor
   const path = ReactEditor.findPath(editor, element)
   let highlight = selection && Range.includes(selection, path)
+  const { doEdit } = React.useContext(ModalContext)
   return (
     <Tippy
       content={
         <VoidSpan>
-          <button onClick={() => console.log('hi')}>Layout bearbeiten</button>
+          <button onClick={() => doEdit(<LayoutSettings path={path} />)}>
+            Layout bearbeiten
+          </button>
         </VoidSpan>
       }
       interactive
       placement="top-end"
+      zIndex={50}
       appendTo={document.body}
     >
       <LayoutRow
@@ -667,6 +1000,81 @@ function MyLayout(props) {
   )
 }
 
+function LayoutSettings(props) {
+  const { path } = props
+  const editor = useEditor()
+  const element = Node.get(editor, path)
+  const { closeModal } = React.useContext(ModalContext)
+  let sizeSum = 0
+  for (const [child] of Node.children(editor, path)) {
+    sizeSum += child.size
+  }
+  return (
+    <>
+      <p>Verhältnis der Spalten:</p>
+      {element.children.map((entry, index) => (
+        <input
+          type="number"
+          value={entry.size}
+          key={index}
+          min={1}
+          onChange={e => {
+            Transforms.setNodes(
+              editor,
+              { size: parseInt(e.target.value) },
+              { at: path.concat(index) }
+            )
+          }}
+        />
+      ))}
+      <button
+        onClick={() => {
+          Transforms.insertNodes(
+            editor,
+            {
+              type: 'col',
+              size: 4,
+              children: [{ text: '' }]
+            },
+            { at: path.concat(element.children.length) }
+          )
+        }}
+      >
+        Spalte hinzu
+      </button>
+      <br />
+      <br />
+      <button
+        onClick={() => {
+          for (const [child, childpath] of Node.children(editor, path)) {
+            Transforms.unsetNodes(editor, 'size', { at: childpath })
+            Transforms.setNodes(editor, { size: child.size }, { at: childpath })
+          }
+          closeModal()
+        }}
+      >
+        Fertig
+      </button>
+      <br />
+      <br />
+      <hr />
+      <br />
+      <br />
+      <LayoutRow>
+        {element.children.map((entry, index) => (
+          <Col
+            cSize={(entry.size / sizeSum) * 24}
+            key={index}
+            style={{ backgroundColor: hsl(index * 200, 0.75, 0.4) }}
+          >
+            &nbsp;
+          </Col>
+        ))}
+      </LayoutRow>
+    </>
+  )
+}
+
 function MyCol(props) {
   const { attributes, element, children } = props
   const editor = useEditor()
@@ -678,7 +1086,6 @@ function MyCol(props) {
   for (const [child] of Node.children(editor, parent)) {
     sizeSum += child.size
   }
-  console.log(sizeSum)
   return (
     <Col
       {...attributes}
@@ -801,10 +1208,8 @@ function ImgSettings(props) {
 }
 
 const StyledToolbox = styled.div`
-  padding: 5px;
-  & button {
-    margin-right: 10px;
-  }
+  padding-top: 5px;
+  padding-left: 5px;
   background-color: white;
   border: 1px solid lightblue;
   margin-bottom: 12px;
@@ -820,6 +1225,22 @@ const Container = styled.div`
 
 const VoidSpan = styled.span.attrs({ contentEditable: false })`
   user-select: none;
+`
+
+const LatexInputArea = styled.textarea`
+  width: 100%;
+  height: 200px;
+  font-size: 1.2rem;
+  margin-top: 30px;
+`
+
+const ToolButton = styled.button<{ active?: boolean }>`
+  color: black;
+  background-color: ${props => (props.active ? 'lightblue' : 'transparent')};
+  border: 1px solid black;
+  padding: 4px;
+  margin-right: 10px;
+  margin-bottom: 5px;
 `
 
 /*
@@ -911,6 +1332,28 @@ const testSpoilerNormalization = [
   }
 ]
 
+const testMergeLists = [
+  {
+    type: 'ol',
+    children: [
+      {
+        type: 'li',
+        children: [{ text: 'entry 1' }]
+      }
+    ]
+  },
+
+  {
+    type: 'ol',
+    children: [
+      {
+        type: 'li',
+        children: [{ text: 'entry 2' }]
+      }
+    ]
+  }
+]
+
 const initialValue = [
   { type: 'h', level: 1, children: [{ text: 'Titel des Artikels' }] },
   {
@@ -957,6 +1400,11 @@ const initialValue = [
     type: 'h',
     level: 3,
     children: [{ text: 'Ein Teilbereich davon ist (h3)' }]
+  },
+  {
+    type: 'h',
+    level: 1,
+    children: [{ text: 'ein streun\nener Titel' }]
   },
   {
     type: 'spoiler-container',
