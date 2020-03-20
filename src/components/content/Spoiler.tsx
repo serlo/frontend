@@ -5,6 +5,8 @@ import { SpoilerContainer } from './SpoilerContainer'
 import { SpoilerTitle } from './SpoilerTitle'
 import { SpoilerBody } from './SpoilerBody'
 
+// deprecated
+
 function Spoiler(props) {
   const { defaultOpen, title, children } = props
   const [open, setOpen] = React.useState(defaultOpen)

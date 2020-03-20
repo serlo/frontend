@@ -1,5 +1,7 @@
-import React, { useEffect, useState, useMemo, Children } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import styled from 'styled-components'
+import Tippy from '@tippyjs/react'
+import { hsl } from 'polished'
 
 import {
   createEditor,
@@ -8,8 +10,7 @@ import {
   Editor,
   Element,
   Range,
-  Path,
-  Text
+  Path
 } from 'slate'
 import {
   Slate,
@@ -21,41 +22,35 @@ import {
 } from 'slate-react'
 import { withHistory } from 'slate-history'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faExternalLinkAlt,
-  faCaretDown,
-  faCaretRight
-} from '@fortawesome/free-solid-svg-icons'
-import Tippy from '@tippyjs/react'
-
 import Header from '../src/components/navigation/Header'
 import Footer from '../src/components/navigation/Footer'
-import Math from '../src/components/content/Math'
-import { StyledP } from '../src/components/tags/StyledP'
-import { StyledH2 } from '../src/components/tags/StyledH2'
-import { StyledH3 } from '../src/components/tags/StyledH3'
-import { StyledH4 } from '../src/components/tags/StyledH4'
-import { StyledH5 } from '../src/components/tags/StyledH5'
-import { StyledUl } from '../src/components/tags/StyledUl'
-import { StyledOl } from '../src/components/tags/StyledOl'
-import { StyledLi } from '../src/components/tags/StyledLi'
-import { StyledA } from '../src/components/tags/StyledA'
-import { StyledImg } from '../src/components/tags/StyledImg'
-import { StyledH1 } from '../src/components/tags/StyledH1'
 import { StyledMain } from '../src/components/tags/StyledMain'
 import { HSpace } from '../src/components/content/HSpace'
-import { MathCentered } from '../src/components/content/MathCentered'
-import { ImgCentered } from '../src/components/content/ImgCentered'
-import { Important } from '../src/components/content/Important'
-import { LayoutRow } from '../src/components/content/LayoutRow'
-import { Col } from '../src/components/content/Col'
-import { SpoilerContainer } from '../src/components/content/SpoilerContainer'
-import { SpoilerTitle } from '../src/components/content/SpoilerTitle'
-import { SpoilerBody } from '../src/components/content/SpoilerBody'
 import Modal from '../src/components/Modal'
-import { hsl } from 'polished'
-import { Transform } from 'stream'
+import withArticle from '../src/schema/articleNormalizer'
+import {
+  renderLeaf,
+  renderH,
+  renderUl,
+  renderOl,
+  renderLi,
+  renderImportant,
+  renderP,
+  renderInlineMath,
+  renderAOuter,
+  renderAExtInd,
+  renderImg,
+  renderImgInner,
+  renderImgOuter,
+  renderMath,
+  renderMathOuter,
+  renderRow,
+  renderCol,
+  renderSpoilerContainer,
+  renderSpoilerTitle,
+  renderSpoilerToggle,
+  renderSpoilerBody
+} from '../src/schema/articleRenderer'
 
 /*
  *  Page
@@ -65,7 +60,7 @@ const ModalContext = React.createContext<any>({})
 
 function Create() {
   const editor = useMemo(
-    () => withPlugin(withHistory(withReact(createEditor()))),
+    () => withPlugin(withArticle(withHistory(withReact(createEditor())))),
     []
   )
   const [value, setValue] = useState<Node[]>(initialValue)
@@ -380,31 +375,12 @@ export default Create
  *  Renderer
  */
 
-const StyledHx = {
-  1: StyledH1,
-  2: StyledH2,
-  3: StyledH3,
-  4: StyledH4,
-  5: StyledH5
-}
-
 const simpleRenderer = {
-  h: ({ element, attributes, children }) => {
-    const Comp = StyledHx[element.level]
-    return <Comp {...attributes}>{children}</Comp>
-  },
-  ul: ({ attributes, children }) => (
-    <StyledUl {...attributes}>{children}</StyledUl>
-  ),
-  ol: ({ attributes, children }) => (
-    <StyledOl {...attributes}>{children}</StyledOl>
-  ),
-  li: ({ attributes, children }) => (
-    <StyledLi {...attributes}>{children}</StyledLi>
-  ),
-  important: ({ attributes, children }) => (
-    <Important {...attributes}>{children}</Important>
-  )
+  h: renderH,
+  ul: renderUl,
+  ol: renderOl,
+  li: renderLi,
+  important: renderImportant
 }
 
 const componentRenderer = {
@@ -421,9 +397,9 @@ const componentRenderer = {
 }
 
 function renderElement(props) {
-  const { element, attributes, children } = props
-
+  const { element } = props
   const type = element.type
+
   if (type) {
     if (type in simpleRenderer) {
       return simpleRenderer[type](props)
@@ -434,198 +410,21 @@ function renderElement(props) {
     }
   }
 
-  return <StyledP {...attributes}>{children}</StyledP>
-}
-
-const colors = {
-  blue: '#1794c1',
-  green: '#469a40',
-  orange: '#ff6703'
-}
-
-function renderLeaf(props) {
-  const { leaf, attributes, children } = props
-  const styles: any = {}
-  if (leaf.color) {
-    styles.color = colors[leaf.color]
-  }
-  if (leaf.strong) {
-    styles.fontWeight = 'bold'
-  }
-  if (leaf.em) {
-    styles.fontStyle = 'italic'
-  }
-  return (
-    <span {...attributes} style={styles}>
-      {children}
-    </span>
-  )
+  console.log('unknown element, ignoring', element)
+  return null
 }
 
 /*
  *  Schema
  */
 
-const voidElements = ['math', 'img', 'inline-math']
-const inlineElements = ['inline-math', 'a']
-const onlyInlineChildren = ['a', 'p', 'h', 'li', 'spoiler-title']
-const onlySomeBlocksAllowed = [
-  {
-    parent: 'spoiler-body',
-    children: ['p', 'img', 'math', 'ul', 'ol', 'row'],
-    wrap: 'p'
-  },
-  {
-    parent: 'col',
-    children: ['p', 'img', 'math', 'ul', 'ol'],
-    wrap: 'p'
-  },
-  {
-    parent: 'important',
-    children: ['p', 'img', 'math', 'ul', 'ol', 'row'],
-    wrap: 'p'
-  },
-  {
-    parent: '#root',
-    children: [
-      'p',
-      'h',
-      'img',
-      'math',
-      'spoiler-container',
-      'ul',
-      'ol',
-      'row',
-      'important'
-    ],
-    wrap: 'p'
-  },
-  {
-    parent: 'ul',
-    children: ['li'],
-    wrap: 'li'
-  },
-  {
-    parent: 'ol',
-    children: ['li'],
-    wrap: 'li'
-  },
-  {
-    parent: 'row',
-    children: ['col'],
-    wrap: 'col'
-  }
-]
-
 function withPlugin(editor) {
-  const { isVoid, isInline, normalizeNode, insertBreak } = editor
-
-  editor.isVoid = element =>
-    voidElements.includes(element.type) || isVoid(element)
-
-  editor.isInline = element =>
-    inlineElements.includes(element.type) || isInline(editor)
+  const { normalizeNode, insertBreak } = editor
 
   editor.normalizeNode = entry => {
     const [node, path] = entry as [Node, Path]
 
     if (Element.isElement(node) || path.length === 0) {
-      // void elements contain exactly one empty text node
-      if (editor.isVoid(node)) {
-        const children = node.children
-        if (children.length > 0) {
-          if (children.length !== 1 || children[0].text !== '') {
-            console.log('n: remove children from void nodes')
-            Transforms.removeNodes(editor, { at: path.concat(0), voids: true })
-            return
-          }
-        }
-      }
-      // some elements only allow inline children
-      if (onlyInlineChildren.includes(node.type)) {
-        for (const [child, childpath] of Node.children(editor, path)) {
-          if (Element.isElement(child) && !editor.isInline(child)) {
-            console.log('n: only inlines allowed, unwrapping')
-            Transforms.unwrapNodes(editor, { at: childpath, voids: true })
-            return
-          }
-        }
-      }
-      // disallow nesting of anchors
-      if (node.type === 'a') {
-        for (const [anchestor] of Node.ancestors(editor, path, {
-          reverse: true
-        })) {
-          if (Element.isElement(anchestor) && anchestor.type === 'a') {
-            console.log('n: disallow a nesting, unwrapping inner')
-            Transforms.unwrapNodes(editor, { at: path, voids: true })
-            return
-          }
-        }
-      }
-      // check for allowed children
-      for (const { parent, children, wrap } of onlySomeBlocksAllowed) {
-        if (node.type === parent || (parent === '#root' && path.length === 0)) {
-          for (const [child, childpath] of Node.children(editor, path)) {
-            if (Text.isText(child)) {
-              console.log('n: should be block, wrapping')
-              Transforms.wrapNodes(
-                editor,
-                { type: wrap, children: [{ text: '' }] },
-                { at: childpath, voids: true }
-              )
-              return
-            }
-            if (Element.isElement(child) && !children.includes(child.type)) {
-              console.log('n: child not allowed, unwrapping')
-              Transforms.unwrapNodes(editor, { at: childpath, voids: true })
-              return
-            }
-          }
-        }
-      }
-      // spoiler has exactly one title and one body
-      if (node.type === 'spoiler-container') {
-        if (
-          node.children.length !== 2 ||
-          node.children[0].type !== 'spoiler-title' ||
-          node.children[1].type !== 'spoiler-body'
-        ) {
-          if (
-            node.children.length < 2 ||
-            node.children[0].type !== 'spoiler-title'
-          ) {
-            console.log('n: incomplete spoiler')
-            Transforms.removeNodes(editor, { at: path, voids: true })
-            return
-          }
-
-          let hasTitle = false
-          let hasBody = false
-
-          for (const [child, childpath] of Node.children(editor, path)) {
-            if (child.type == 'spoiler-title') {
-              if (hasTitle) {
-                console.log('n: spoiler has too many titles')
-                Transforms.removeNodes(editor, { at: childpath, voids: true })
-                return
-              }
-              hasTitle = true
-            } else if (child.type == 'spoiler-body') {
-              if (hasBody || !hasTitle) {
-                console.log('n: spoiler has too many bodys')
-                Transforms.removeNodes(editor, { at: childpath, voids: true })
-                return
-              }
-              hasBody = true
-            } else {
-              console.log('n: spoiler has invalid child')
-              Transforms.removeNodes(editor, { at: childpath, voids: true })
-              return
-            }
-          }
-        }
-      }
       // layout begins with h1 and ends with empty paragraph
       if (path.length === 0) {
         const childCount = editor.children.length
@@ -664,47 +463,7 @@ function withPlugin(editor) {
           return
         }
       }
-      // headings only on topleve and h1 only at beginning
-      if (node.type === 'h') {
-        if (!Number.isInteger(node.level) || node.level < 1 || node.level > 5) {
-          console.log('n: heading is missing / has wrong level, removing')
-          Transforms.removeNodes(editor, { at: path, voids: true })
-          return
-        }
-        if (node.level == 1 && (path.length !== 1 || path[0] !== 0)) {
-          console.log('n: h1 within document, unwrapping')
-          Transforms.unwrapNodes(editor, { at: path, voids: true })
-        }
-      }
-      // cols should have proper sizes
-      if (node.type === 'col') {
-        if (!Number.isInteger(node.size) || node.size <= 0) {
-          console.log('n: col is missing / has wrong size', node.size)
-          Transforms.setNodes(editor, { size: 4 }, { at: path, voids: true })
-          return
-        }
-      }
-      // remove empty links
-      if (node.type === 'a') {
-        if (node.children.length === 1 && node.children[0].text === '') {
-          console.log('n: empty link, removing')
-          Transforms.removeNodes(editor, { at: path })
-          return
-        }
-      }
-      // adjacent unordered lists should be merged
-      for (let i = 1; i < node.children.length; i++) {
-        if (
-          node.children[i].type === node.children[i - 1].type &&
-          (node.children[i].type === 'ul' || node.children[i].type === 'ol')
-        ) {
-          console.log('n: adjacent lists found, merging')
-          Transforms.mergeNodes(editor, { at: path.concat(i), voids: true })
-          return
-        }
-      }
     }
-
     normalizeNode(entry)
   }
 
@@ -731,7 +490,7 @@ function MySpoiler(props) {
   }
   return (
     <SpoilerContext.Provider value={{ open, toggleOpen }}>
-      <SpoilerContainer {...attributes}>{children}</SpoilerContainer>
+      {renderSpoilerContainer({ attributes, children })}
     </SpoilerContext.Provider>
   )
 }
@@ -739,36 +498,34 @@ function MySpoiler(props) {
 function MySpoilerTitle(props) {
   const { attributes, children } = props
   const context = React.useContext(SpoilerContext)
-  return (
-    <SpoilerTitle {...attributes} style={{ cursor: 'inherit' }}>
-      <VoidSpan
-        onClick={() => {
-          context.toggleOpen()
-        }}
-        role="button"
-      >
-        {context.open ? (
-          <FontAwesomeIcon icon={faCaretDown} />
-        ) : (
-          <FontAwesomeIcon icon={faCaretRight} />
-        )}{' '}
-      </VoidSpan>
-      {children}
-    </SpoilerTitle>
-  )
+  return renderSpoilerTitle({
+    attributes: { ...attributes, style: { cursor: 'inherit' } },
+    children: (
+      <>
+        <VoidSpan
+          onClick={() => {
+            context.toggleOpen()
+          }}
+          role="button"
+        >
+          {renderSpoilerToggle(context.open)}
+        </VoidSpan>
+        {children}
+      </>
+    )
+  })
 }
 
 function MySpoilerBody(props) {
-  const { attributes, element, children } = props
+  const { attributes, children } = props
   const context = React.useContext(SpoilerContext)
-  return (
-    <SpoilerBody
-      {...attributes}
-      style={{ display: context.open ? 'block' : 'none' }}
-    >
-      {children}
-    </SpoilerBody>
-  )
+  return renderSpoilerBody({
+    attributes: {
+      ...attributes,
+      style: { display: context.open ? 'block' : 'none' }
+    },
+    children
+  })
 }
 
 function MyMath(props) {
@@ -778,29 +535,28 @@ function MyMath(props) {
   const { doEdit } = React.useContext(ModalContext)
   const { selection } = editor
   let highlight = selection && Range.includes(selection, path)
-  return (
-    <MathCentered {...attributes} contentEditable={false}>
-      <Tippy
-        content={
-          <button onClick={() => doEdit(<MathSettings path={path} />)}>
-            Formel bearbeiten
-          </button>
-        }
-        interactive
-        zIndex={50}
-        appendTo={document.body}
-      >
-        <span style={{ outline: highlight ? '1px solid lightblue' : 'none' }}>
-          {element.formula ? (
-            <Math formula={element.formula} />
-          ) : (
-            '[leere Formel]'
-          )}
-        </span>
-      </Tippy>
-      {children}
-    </MathCentered>
-  )
+  return renderMathOuter({
+    attributes: { ...attributes, contentEditable: false },
+    children: (
+      <>
+        <Tippy
+          content={
+            <button onClick={() => doEdit(<MathSettings path={path} />)}>
+              Formel bearbeiten
+            </button>
+          }
+          interactive
+          zIndex={50}
+          appendTo={document.body}
+        >
+          <span style={{ outline: highlight ? '1px solid lightblue' : 'none' }}>
+            {element.formula ? renderMath({ element }) : '[leere Formel]'}
+          </span>
+        </Tippy>
+        {children}
+      </>
+    )
+  })
 }
 
 function MyInlineMath(props) {
@@ -823,11 +579,7 @@ function MyInlineMath(props) {
         appendTo={document.body}
       >
         <span style={{ outline: highlight ? '1px solid lightblue' : 'none' }}>
-          {element.formula ? (
-            <Math formula={element.formula} inline />
-          ) : (
-            '[leere Formel]'
-          )}
+          {element.formula ? renderInlineMath({ element }) : '[leere Formel]'}
         </span>
       </Tippy>
       {children}
@@ -856,9 +608,7 @@ function MathSettings(props) {
       <br />
       <br />
       <hr />
-      <MathCentered>
-        <Math formula={formula} />
-      </MathCentered>
+      {renderMath({ element: { formula } })}
     </>
   )
 }
@@ -880,15 +630,16 @@ function MyA(props) {
       placement="top-end"
       appendTo={document.body}
     >
-      <StyledA href={element.href} {...attributes}>
-        {children}
-        {element.href.startsWith('http') && (
-          <VoidSpan>
-            {' '}
-            <FontAwesomeIcon icon={faExternalLinkAlt} size="xs" />
-          </VoidSpan>
-        )}
-      </StyledA>
+      {renderAOuter({
+        element,
+        attributes,
+        children: (
+          <>
+            {children}
+            <VoidSpan>{renderAExtInd({ element })}</VoidSpan>
+          </>
+        )
+      })}
     </Tippy>
   )
 }
@@ -948,23 +699,13 @@ function MyP(props) {
   const { attributes, element, children } = props
   const editor = useEditor()
   const path = ReactEditor.findPath(editor, element)
-  const parent = Node.parent(editor, path)
-  const full = parent.type === 'li'
 
-  const myIndex = path[path.length - 1]
-  let halfslim = false
-  if (myIndex < parent.children.length - 1) {
-    const next = parent.children[myIndex + 1]
-    if (next.type == 'ul' || next.type == 'ol') {
-      halfslim = true
-    }
-  }
-
-  return (
-    <StyledP {...attributes} full={full} slim={full} halfslim={halfslim}>
-      {children}
-    </StyledP>
-  )
+  return renderP({
+    attributes: { ...attributes },
+    children,
+    value: editor,
+    path
+  })
 }
 
 function MyLayout(props) {
@@ -988,14 +729,13 @@ function MyLayout(props) {
       zIndex={50}
       appendTo={document.body}
     >
-      <LayoutRow
-        {...attributes}
-        style={{
-          backgroundColor: highlight ? '#f5f5ff' : 'transparent'
-        }}
-      >
-        {children}
-      </LayoutRow>
+      {renderRow({
+        attributes: {
+          ...attributes,
+          style: { backgroundColor: highlight ? '#f5f5ff' : 'transparent' }
+        },
+        children
+      })}
     </Tippy>
   )
 }
@@ -1005,10 +745,6 @@ function LayoutSettings(props) {
   const editor = useEditor()
   const element = Node.get(editor, path)
   const { closeModal } = React.useContext(ModalContext)
-  let sizeSum = 0
-  for (const [child] of Node.children(editor, path)) {
-    sizeSum += child.size
-  }
   return (
     <>
       <p>Verhältnis der Spalten:</p>
@@ -1060,17 +796,24 @@ function LayoutSettings(props) {
       <hr />
       <br />
       <br />
-      <LayoutRow>
-        {element.children.map((entry, index) => (
-          <Col
-            cSize={(entry.size / sizeSum) * 24}
-            key={index}
-            style={{ backgroundColor: hsl(index * 200, 0.75, 0.4) }}
-          >
-            &nbsp;
-          </Col>
-        ))}
-      </LayoutRow>
+      {renderRow({
+        children: (
+          <>
+            {element.children.map((entry, index) =>
+              renderCol({
+                element: entry,
+                attributes: {
+                  key: index,
+                  style: { backgroundColor: hsl(index * 200, 0.75, 0.4) }
+                },
+                children: <>&nbsp;</>,
+                value: editor,
+                path: path.concat(index)
+              })
+            )}
+          </>
+        )
+      })}
     </>
   )
 }
@@ -1081,20 +824,17 @@ function MyCol(props) {
   const { selection } = editor
   const path = ReactEditor.findPath(editor, element)
   let highlight = selection && Range.includes(selection, path)
-  const parent = Path.parent(path)
-  let sizeSum = 0
-  for (const [child] of Node.children(editor, parent)) {
-    sizeSum += child.size
-  }
-  return (
-    <Col
-      {...attributes}
-      cSize={(element.size / sizeSum) * 24}
-      style={{ outline: highlight ? '1px solid lightblue' : 'none' }}
-    >
-      {children}
-    </Col>
-  )
+
+  return renderCol({
+    element,
+    attributes: {
+      ...attributes,
+      style: { outline: highlight ? '1px solid lightblue' : 'none' }
+    },
+    children,
+    value: editor,
+    path
+  })
 }
 
 function MyImg(props) {
@@ -1105,32 +845,35 @@ function MyImg(props) {
   let highlight = selection && Range.includes(selection, path)
   const { doEdit } = React.useContext(ModalContext)
 
-  return (
-    <ImgCentered
-      {...attributes}
-      style={{ outline: highlight ? '1px solid lightblue' : 'none' }}
-    >
-      <Tippy
-        content={
-          <button onClick={() => doEdit(<ImgSettings path={path} />)}>
-            Bild bearbeiten
-          </button>
-        }
-        interactive
-        zIndex={50}
-        placement="top-end"
-        appendTo={document.body}
-      >
-        <StyledImg
-          src={element.src}
-          alt={element.alt || 'leeres Bild'}
-          maxWidth={element.maxWidth ? element.maxWidth : 0}
-          contentEditable={false}
-        ></StyledImg>
-      </Tippy>
-      {children}
-    </ImgCentered>
-  )
+  return renderImgOuter({
+    attributes: {
+      ...attributes,
+      style: {
+        outline: highlight ? '1px solid lightblue' : 'none'
+      }
+    },
+    children: (
+      <>
+        <Tippy
+          content={
+            <button onClick={() => doEdit(<ImgSettings path={path} />)}>
+              Bild bearbeiten
+            </button>
+          }
+          interactive
+          zIndex={50}
+          placement="top-end"
+          appendTo={document.body}
+        >
+          {renderImgInner({
+            element,
+            attributes: { contentEditable: false }
+          })}
+        </Tippy>
+        {children}
+      </>
+    )
+  })
 }
 
 function ImgSettings(props) {
@@ -1140,6 +883,7 @@ function ImgSettings(props) {
   const [src, setSrc] = React.useState(element.src)
   const [alt, setAlt] = React.useState(element.alt)
   const [maxWidth, setMaxWidth] = React.useState(element.maxWidth)
+  console.log(element)
   const { closeModal } = React.useContext(ModalContext)
   return (
     <>
@@ -1200,9 +944,7 @@ function ImgSettings(props) {
       Vorschau:
       <br />
       <br />
-      <ImgCentered>
-        <StyledImg src={src} alt={alt} maxWidth={maxWidth} />
-      </ImgCentered>
+      {renderImg({ element })}
     </>
   )
 }
