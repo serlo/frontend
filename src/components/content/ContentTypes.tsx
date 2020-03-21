@@ -6,7 +6,6 @@ import { faShareAlt, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 
 import ShareModal from '../navigation/ShareModal'
 
-import EdtrIoRenderer from '../../content-api/transform-edtr-io-state'
 import Ups from '../Ups'
 import WipHint from '../WipHint'
 import styled from 'styled-components'
@@ -18,14 +17,19 @@ import { StyledA } from '../tags/StyledA'
 import { StyledH1 } from '../tags/StyledH1'
 import { ToolLine } from '../navigation/ToolLine'
 import { ToolLineButton } from '../navigation/ToolLineButton'
-const LegacyRenderer = dynamic(
-  import('../../content-api/transform-legacy-state')
-)
+import { createEditor, Editor } from 'slate'
+import withArticle from '../../schema/articleNormalizer'
+import Article from '../../schema/articleRenderer'
+import Create from '../../content-api/create'
+import Toolbox from '../navigation/Toolbox'
+import { convertEdtrioState } from '../../schema/convertEdtrioState'
+import EdtrIoRenderer from '../../content-api/transform-edtr-io-state'
+import convertLegacyState from '../../schema/convertLegacyState'
 
 export default function ContentTypes(props) {
   const { data } = props
   if (data.contentType === 'article' || data.contentType === 'Page revision') {
-    return renderArticle(data.data)
+    return <RenderArticle content={data.data} />
   }
   if (data.contentType === 'topic' || data.contentType === 'subject') {
     return (
@@ -75,13 +79,37 @@ export default function ContentTypes(props) {
   return <Ups type={data.contentType} />
 }
 
-function renderArticle(content) {
+function RenderArticle({ content }) {
   const [open, setOpen] = React.useState(false)
-  let comp = null
-  if (content.edtrio) {
-    comp = <EdtrIoRenderer state={JSON.parse(content.edtrio)} />
-  } else {
-    comp = <LegacyRenderer state={content.legacy} />
+  const [value, setValue] = React.useState(undefined)
+  const [editMode, setEditMode] = React.useState(false)
+  if (!value && content.edtrio) {
+    const edtrio = JSON.parse(content.edtrio)
+    const value = convertEdtrioState(edtrio)
+    const editor = withArticle(createEditor())
+    editor.children = value.children
+    Editor.normalize(editor, { force: true })
+    setValue(editor.children)
+  }
+  if (!value && content.legacy) {
+    const value: any = convertLegacyState(content.legacy)
+    const editor = withArticle(createEditor())
+    editor.children = value.children
+    Editor.normalize(editor, { force: true })
+    setValue(editor.children)
+  }
+  if (editMode) {
+    return (
+      <Create
+        defaultValue={value}
+        onExit={() => setEditMode(false)}
+        onChange={value => setValue(value)}
+        title={content.title}
+      />
+    )
+  }
+  if (value && value[0] && value[0].type === 'h' && value[0].level === 1) {
+    setValue(value.slice(1))
   }
   return (
     <>
@@ -99,14 +127,20 @@ function renderArticle(content) {
         </ToolLineButton>
         <ToolLineButton
           onClick={() => {
-            window.location.href = '/create'
+            setEditMode(true)
           }}
         >
           <FontAwesomeIcon icon={faPencilAlt} size="1x" /> Bearbeiten
         </ToolLineButton>
         {<ShareModal open={open} onClose={() => setOpen(false)} />}
       </ToolLine>
-      {comp}
+
+      <Toolbox
+        onEdit={() => {
+          setEditMode(true)
+        }}
+      />
+      <Article value={value} />
     </>
   )
 }

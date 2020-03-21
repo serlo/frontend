@@ -6,7 +6,6 @@ export default async function fetchContent(alias) {
   alias = alias.replace('ö', '%C3%B6')
   alias = alias.replace('ü', '%C3%BC')
   alias = alias.replace('ß', '%C3%9F')
-  console.log(alias)
 
   const res = await fetch('https://de.serlo.org' + alias + '?contentOnly', {
     headers: {

@@ -79,7 +79,9 @@ export default function withArticle(editor) {
       if (onlyInlineChildren.includes(node.type)) {
         for (const [child, childpath] of Node.children(editor, path)) {
           if (Element.isElement(child) && !editor.isInline(child)) {
-            console.log('n: only inlines allowed, unwrapping')
+            console.log(
+              `n: only inlines allowed in ${node.type}, unwrapping ${child.type}`
+            )
             Transforms.unwrapNodes(editor, { at: childpath, voids: true })
             return
           }
@@ -102,7 +104,9 @@ export default function withArticle(editor) {
         if (node.type === parent || (parent === '#root' && path.length === 0)) {
           for (const [child, childpath] of Node.children(editor, path)) {
             if (Text.isText(child)) {
-              console.log('n: should be block, wrapping')
+              console.log(
+                `n: text should be block in ${parent}, wrapping in ${wrap}`
+              )
               Transforms.wrapNodes(
                 editor,
                 { type: wrap, children: [{ text: '' }] },
@@ -111,7 +115,9 @@ export default function withArticle(editor) {
               return
             }
             if (Element.isElement(child) && !children.includes(child.type)) {
-              console.log('n: child not allowed, unwrapping')
+              console.log(
+                `n: ${child.type} not allowed in ${parent}, unwrapping`
+              )
               Transforms.unwrapNodes(editor, { at: childpath, voids: true })
               return
             }
@@ -129,7 +135,7 @@ export default function withArticle(editor) {
             node.children.length < 2 ||
             node.children[0].type !== 'spoiler-title'
           ) {
-            console.log('n: incomplete spoiler')
+            console.log('n: incomplete spoiler, removing')
             Transforms.removeNodes(editor, { at: path, voids: true })
             return
           }
@@ -175,7 +181,7 @@ export default function withArticle(editor) {
       // cols should have proper sizes
       if (node.type === 'col') {
         if (!Number.isInteger(node.size) || node.size <= 0) {
-          console.log('n: col is missing / has wrong size', node.size)
+          console.log(`n: col has wrong size ${node.size}`)
           Transforms.setNodes(editor, { size: 4 }, { at: path, voids: true })
           return
         }
@@ -198,6 +204,17 @@ export default function withArticle(editor) {
           Transforms.mergeNodes(editor, { at: path.concat(i), voids: true })
           return
         }
+      }
+    }
+
+    if (Text.isText(node)) {
+      let text = node.text
+      if (text.includes('\n')) {
+        text = text.split('\n').join('')
+        console.log('n: removing newlines from text')
+        Transforms.removeNodes(editor, { at: path })
+        Transforms.insertNodes(editor, { text }, { at: path })
+        return
       }
     }
 

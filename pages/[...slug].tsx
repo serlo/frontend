@@ -10,7 +10,6 @@ function PageView(props) {
   return (
     <>
       <Header />
-      <Toolbox />
       <StyledMain>
         <ContentTypes data={data} />
       </StyledMain>

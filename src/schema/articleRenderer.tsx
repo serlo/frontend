@@ -112,9 +112,7 @@ function renderElement(props) {
   return renderer[props.element.type](props)
 }
 
-function nowrap(x) {
-  return x
-}
+const nowrap = comp => comp
 
 const externalIndicator = (
   <>
@@ -154,7 +152,7 @@ export function renderP({
     const parent = Node.parent(value, path)
     full = parent.type === 'li'
 
-    // next block is list type?
+    // check if next block is list
     const myIndex = path[path.length - 1]
     halfslim = false
     if (myIndex < parent.children.length - 1) {

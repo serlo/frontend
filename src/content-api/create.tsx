@@ -22,12 +22,12 @@ import {
 } from 'slate-react'
 import { withHistory } from 'slate-history'
 
-import Header from '../src/components/navigation/Header'
-import Footer from '../src/components/navigation/Footer'
-import { StyledMain } from '../src/components/tags/StyledMain'
-import { HSpace } from '../src/components/content/HSpace'
-import Modal from '../src/components/Modal'
-import withArticle from '../src/schema/articleNormalizer'
+import Header from '../components/navigation/Header'
+import Footer from '../components/navigation/Footer'
+import { StyledMain } from '../components/tags/StyledMain'
+import { HSpace } from '../components/content/HSpace'
+import Modal from '../components/Modal'
+import withArticle from '../schema/articleNormalizer'
 import {
   renderLeaf,
   renderH,
@@ -46,7 +46,7 @@ import {
   renderSpoilerToggle,
   renderSpoilerBody,
   renderA
-} from '../src/schema/articleRenderer'
+} from '../schema/articleRenderer'
 
 /*
  *  Page
@@ -54,13 +54,15 @@ import {
 
 const ModalContext = React.createContext<any>({})
 
-function Create() {
+function Create({ defaultValue, onExit, onChange, title }) {
   const editor = useMemo(
     () => withPlugin(withArticle(withHistory(withReact(createEditor())))),
     []
   )
-  const [value, setValue] = useState<Node[]>(initialValue)
-  const [ready, setReady] = useState(false)
+  const [value, setValue] = useState<Node[]>(
+    [{ type: 'h', level: 1, children: [{ text: title }] }].concat(defaultValue)
+  )
+  const [ready, setReady] = useState(true)
   useEffect(() => {
     Editor.normalize(editor, { force: true })
     //console.log(editor.children)
@@ -77,43 +79,37 @@ function Create() {
   }
   return (
     <>
-      <Header />
-      <StyledMain>
-        <HSpace amount={15} />
-        <ModalContext.Provider value={{ doEdit, closeModal }}>
-          <Slate
-            editor={editor}
-            value={value}
-            onChange={value => {
-              setValue(value)
-            }}
+      <HSpace amount={15} />
+      <ModalContext.Provider value={{ doEdit, closeModal }}>
+        <Slate
+          editor={editor}
+          value={value}
+          onChange={value => {
+            setValue(value)
+            onChange(value)
+          }}
+        >
+          <Toolbox onExit={onExit} />
+          <Container>
+            {ready && (
+              <Editable renderElement={renderElement} renderLeaf={renderLeaf} />
+            )}
+          </Container>
+          <Modal
+            isOpen={modalOpen}
+            style={{ overlay: { zIndex: 1000 } }}
+            onRequestClose={() => setModalOpen(false)}
           >
-            <Toolbox />
-            <Container>
-              {ready && (
-                <Editable
-                  renderElement={renderElement}
-                  renderLeaf={renderLeaf}
-                />
-              )}
-            </Container>
-            <Modal
-              isOpen={modalOpen}
-              style={{ overlay: { zIndex: 1000 } }}
-              onRequestClose={() => setModalOpen(false)}
-            >
-              {comp}
-            </Modal>
-          </Slate>
-        </ModalContext.Provider>
-        <HSpace amount={200} />
-      </StyledMain>
-      <Footer />
+            {comp}
+          </Modal>
+        </Slate>
+      </ModalContext.Provider>
+      <HSpace amount={200} />
     </>
   )
 }
 
-function Toolbox() {
+function Toolbox({ onExit }) {
   const editor = useSlate()
   let marks = Editor.marks(editor)
   if (!marks) marks = {}
@@ -133,6 +129,10 @@ function Toolbox() {
   }
   return (
     <StyledToolbox>
+      <ToolButton active={marks.strong} onMouseDown={() => onExit()}>
+        <strong>EXIT</strong>
+      </ToolButton>
+      {'| '}
       <ToolButton
         active={marks.strong}
         onMouseDown={e => {
@@ -429,7 +429,7 @@ function withPlugin(editor) {
           editor.children[0].type !== 'h' ||
           editor.children[0].level !== 1
         ) {
-          console.log('n: missing h1')
+          console.log('create: missing h1')
           Transforms.insertNodes(
             editor,
             {
@@ -447,7 +447,7 @@ function withPlugin(editor) {
           editor.children[childCount - 1].children.length !== 1 ||
           editor.children[childCount - 1].children[0].text !== ''
         ) {
-          console.log('n: missing ending paragraph')
+          console.log('create: missing ending paragraph')
           Transforms.insertNodes(
             editor,
             {
@@ -465,7 +465,6 @@ function withPlugin(editor) {
 
   editor.insertBreak = () => {
     const { selection } = editor
-    console.log(selection)
     insertBreak()
   }
 
@@ -777,7 +776,7 @@ function LayoutSettings(props) {
       <button
         onClick={() => {
           for (const [child, childpath] of Node.children(editor, path)) {
-            Transforms.unsetNodes(editor, 'size', { at: childpath })
+            Transforms.setNodes(editor, { size: 9999 }, { at: childpath })
             Transforms.setNodes(editor, { size: child.size }, { at: childpath })
           }
           closeModal()
@@ -873,7 +872,6 @@ function ImgSettings(props) {
   const [src, setSrc] = React.useState(element.src)
   const [alt, setAlt] = React.useState(element.alt)
   const [maxWidth, setMaxWidth] = React.useState(element.maxWidth)
-  console.log(element)
   const { closeModal } = React.useContext(ModalContext)
   return (
     <>

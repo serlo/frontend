@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import ShareModal from './ShareModal'
 
-export default function Toolbox() {
+export default function Toolbox({ onEdit = () => {} }) {
   const [open, setOpen] = React.useState(false)
   const [visible, setVisible] = React.useState(true)
 
@@ -27,11 +27,7 @@ export default function Toolbox() {
   return (
     <>
       <BoxWrapper>
-        <IconButton
-          onClick={() => {
-            window.location.href = '/create'
-          }}
-        >
+        <IconButton onClick={onEdit}>
           <FontAwesomeIcon icon={faPencilAlt} size="1x" /> Inhalte bearbeiten
         </IconButton>
         <IconButton onClick={() => setOpen(true)}>
