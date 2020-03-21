@@ -1,4 +1,5 @@
-import { Node, Path } from 'slate'
+import React from 'react'
+import { Node, Path, Element } from 'slate'
 import dynamic from 'next/dynamic'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -27,7 +28,6 @@ import { StyledImg } from '../components/tags/StyledImg'
 import { SpoilerTitle } from '../components/content/SpoilerTitle'
 import { SpoilerBody } from '../components/content/SpoilerBody'
 import { SpoilerContainer } from '../components/content/SpoilerContainer'
-import React from 'react'
 
 const Math = dynamic(import('../components/content/Math'))
 
@@ -35,7 +35,7 @@ interface ArticleProps {
   value: Node[]
 }
 
-function Article(props: ArticleProps) {
+export default function Article(props: ArticleProps) {
   const { value } = props
   const root = { children: value }
   return <>{value.map((_, index) => render(root, [index]))}</>
@@ -43,22 +43,26 @@ function Article(props: ArticleProps) {
 
 function render(value, path = []) {
   const currentNode = Node.get(value, path)
-  if (Array.isArray(currentNode.children)) {
-    const children = currentNode.children.map((_child, index) =>
+  const key = path[path.length - 1]
+  if (Element.isElement(currentNode)) {
+    const children = currentNode.children.map((_, index) =>
       render(value, path.concat(index))
     )
     return renderElement({
       element: currentNode,
-      attributes: { key: path[path.length - 1] },
+      attributes: { key },
       children,
       value,
       path
     })
   }
+  if (currentNode.text === '') {
+    return null // avoid rendering empty spans
+  }
   return renderLeaf({
-    leaf: Node.get(value, path),
-    attributes: { key: path[path.length - 1] },
-    children: Node.get(value, path).text
+    leaf: currentNode,
+    attributes: { key },
+    children: currentNode.text
   })
 }
 
@@ -94,8 +98,8 @@ const renderer = {
   img: renderImg,
   math: renderMath,
   'spoiler-container': renderSpoiler,
-  'spoiler-title': () => null,
-  'spoiler-body': ({ children }) => children,
+  'spoiler-title': ({ children }) => children,
+  'spoiler-body': renderSpoilerBody,
   ul: renderUl,
   ol: renderOl,
   li: renderLi,
@@ -108,35 +112,28 @@ function renderElement(props) {
   return renderer[props.element.type](props)
 }
 
-export function renderA({ element, attributes = {}, children = null }) {
-  return renderAOuter({
-    element,
-    attributes,
-    children: (
-      <>
-        {children}
-        {renderAExtInd({ element })}
-      </>
-    )
-  })
+function nowrap(x) {
+  return x
 }
 
-export function renderAOuter({ element, attributes = {}, children = null }) {
+const externalIndicator = (
+  <>
+    {' '}
+    <FontAwesomeIcon icon={faExternalLinkAlt} size="xs" />
+  </>
+)
+
+export function renderA({
+  element,
+  attributes = {},
+  children = null,
+  wrapExtInd = nowrap
+}) {
   return (
     <StyledA href={element.href} {...attributes}>
       {children}
+      {element.href.startsWith('http') && wrapExtInd(externalIndicator)}
     </StyledA>
-  )
-}
-
-export function renderAExtInd({ element }) {
-  return (
-    element.href.startsWith('http') && (
-      <>
-        {' '}
-        <FontAwesomeIcon icon={faExternalLinkAlt} size="xs" />
-      </>
-    )
   )
 }
 
@@ -157,6 +154,7 @@ export function renderP({
     const parent = Node.parent(value, path)
     full = parent.type === 'li'
 
+    // next block is list type?
     const myIndex = path[path.length - 1]
     halfslim = false
     if (myIndex < parent.children.length - 1) {
@@ -187,72 +185,64 @@ export function renderH({ element, attributes = {}, children = null }) {
   return <Comp {...attributes}>{children}</Comp>
 }
 
-export function renderImg({ element, attributes = {} }) {
-  return renderImgOuter({
-    attributes,
-    children: renderImgInner({ element })
-  })
-}
-
-export function renderImgOuter({ attributes = {}, children = null }) {
-  return <ImgCentered {...attributes}>{children}</ImgCentered>
-}
-
-export function renderImgInner({ element, attributes = {} }) {
+export function renderImg({
+  element,
+  attributes = {},
+  children = null,
+  wrapImg = nowrap
+}) {
   return (
-    <StyledImg
-      src={element.src}
-      alt={element.alt || 'leeres Bild'}
-      maxWidth={element.maxWidth ? element.maxWidth : 0}
-      {...attributes}
-    ></StyledImg>
-  )
-}
-
-export function renderMath({ element, attributes = {} }) {
-  return renderMathOuter({ attributes, children: renderMathInner({ element }) })
-}
-
-export function renderMathOuter({ attributes = {}, children = null }) {
-  return <MathCentered {...attributes}>{children}</MathCentered>
-}
-
-export function renderMathInner({ element, attributes = {} }) {
-  return <Math formula={element.formula} {...attributes} />
-}
-
-export function renderSpoiler({ element, attributes = {} }) {
-  const title = element.children[0].children[0].text
-  const children = render(element.children[1]) // escape hatch
-  return (
-    <Spoiler {...attributes} defaultOpen={false} title={title}>
+    <ImgCentered {...attributes}>
+      {wrapImg(
+        <StyledImg
+          src={element.src}
+          alt={element.alt || 'Bild'}
+          maxWidth={element.maxWidth ? element.maxWidth : 0}
+        ></StyledImg>
+      )}
       {children}
-    </Spoiler>
+    </ImgCentered>
   )
 }
 
-export function Spoiler(props) {
-  const { defaultOpen, title, children } = props
-  const [open, setOpen] = React.useState(defaultOpen)
-  return renderSpoilerContainer({
-    children: (
-      <>
-        {renderSpoilerTitle({
-          attributes: {
-            onClick: () => setOpen(!open),
-            role: 'button'
-          },
-          children: (
-            <>
-              {renderSpoilerToggle(open)}
-              {title}
-            </>
-          )
-        })}
-        {open && renderSpoilerBody({ children })}
-      </>
-    )
-  })
+export function renderMath({
+  element,
+  attributes = {},
+  children = null,
+  wrapFormula = nowrap
+}) {
+  return (
+    <MathCentered {...attributes}>
+      {wrapFormula(<Math formula={element.formula} />)}
+      {children}
+    </MathCentered>
+  )
+}
+
+export function renderSpoiler({ attributes = {}, children }) {
+  return <Spoiler {...attributes} body={children[1]} title={children[0]} />
+}
+
+function Spoiler(props) {
+  const { body, title } = props
+  const [open, setOpen] = React.useState(false)
+  return (
+    <SpoilerContainer>
+      {renderSpoilerTitle({
+        attributes: {
+          onClick: () => setOpen(!open),
+          role: 'button'
+        },
+        children: (
+          <>
+            {renderSpoilerToggle(open)}
+            {title}
+          </>
+        )
+      })}
+      {open && body}
+    </SpoilerContainer>
+  )
 }
 
 export function renderSpoilerContainer({ attributes = {}, children = null }) {
@@ -317,4 +307,3 @@ export function renderCol({
 export function renderImportant({ attributes, children }) {
   return <Important {...attributes}>{children}</Important>
 }
-export default Article

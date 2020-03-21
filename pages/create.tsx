@@ -37,19 +37,15 @@ import {
   renderImportant,
   renderP,
   renderInlineMath,
-  renderAOuter,
-  renderAExtInd,
   renderImg,
-  renderImgInner,
-  renderImgOuter,
   renderMath,
-  renderMathOuter,
   renderRow,
   renderCol,
   renderSpoilerContainer,
   renderSpoilerTitle,
   renderSpoilerToggle,
-  renderSpoilerBody
+  renderSpoilerBody,
+  renderA
 } from '../src/schema/articleRenderer'
 
 /*
@@ -67,7 +63,7 @@ function Create() {
   const [ready, setReady] = useState(false)
   useEffect(() => {
     Editor.normalize(editor, { force: true })
-    console.log(editor.children)
+    //console.log(editor.children)
     setReady(true)
   }, [editor])
   const [modalOpen, setModalOpen] = React.useState(false)
@@ -535,9 +531,11 @@ function MyMath(props) {
   const { doEdit } = React.useContext(ModalContext)
   const { selection } = editor
   let highlight = selection && Range.includes(selection, path)
-  return renderMathOuter({
-    attributes: { ...attributes, contentEditable: false },
-    children: (
+  return renderMath({
+    element,
+    attributes,
+    children,
+    wrapFormula: comp => (
       <>
         <Tippy
           content={
@@ -550,7 +548,7 @@ function MyMath(props) {
           appendTo={document.body}
         >
           <span style={{ outline: highlight ? '1px solid lightblue' : 'none' }}>
-            {element.formula ? renderMath({ element }) : '[leere Formel]'}
+            {element.formula ? comp : '[leere Formel]'}
           </span>
         </Tippy>
         {children}
@@ -630,15 +628,11 @@ function MyA(props) {
       placement="top-end"
       appendTo={document.body}
     >
-      {renderAOuter({
+      {renderA({
         element,
         attributes,
-        children: (
-          <>
-            {children}
-            <VoidSpan>{renderAExtInd({ element })}</VoidSpan>
-          </>
-        )
+        children,
+        wrapExtInd: comp => <VoidSpan>{comp}</VoidSpan>
       })}
     </Tippy>
   )
@@ -845,33 +839,29 @@ function MyImg(props) {
   let highlight = selection && Range.includes(selection, path)
   const { doEdit } = React.useContext(ModalContext)
 
-  return renderImgOuter({
+  return renderImg({
+    element,
     attributes: {
       ...attributes,
       style: {
         outline: highlight ? '1px solid lightblue' : 'none'
       }
     },
-    children: (
-      <>
-        <Tippy
-          content={
-            <button onClick={() => doEdit(<ImgSettings path={path} />)}>
-              Bild bearbeiten
-            </button>
-          }
-          interactive
-          zIndex={50}
-          placement="top-end"
-          appendTo={document.body}
-        >
-          {renderImgInner({
-            element,
-            attributes: { contentEditable: false }
-          })}
-        </Tippy>
-        {children}
-      </>
+    children,
+    wrapImg: comp => (
+      <Tippy
+        content={
+          <button onClick={() => doEdit(<ImgSettings path={path} />)}>
+            Bild bearbeiten
+          </button>
+        }
+        interactive
+        zIndex={50}
+        placement="top-end"
+        appendTo={document.body}
+      >
+        {comp}
+      </Tippy>
     )
   })
 }
@@ -923,6 +913,7 @@ function ImgSettings(props) {
         <input
           type="number"
           size={50}
+          min={0}
           step={50}
           value={maxWidth || 0}
           onChange={e => {
