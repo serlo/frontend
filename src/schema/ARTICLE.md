@@ -144,7 +144,7 @@ There are some [built-in constraint](https://docs.slatejs.org/concepts/10-normal
 
 ### Text
 
-Text must not contain line breaks, tabs, or multiple whitespaces. The normalizer will remove them.
+Text must not contain line breaks. The normalizer will remove them.
 
 ### Marks
 
@@ -224,13 +224,17 @@ Implementing these guidelines needs user interaction. The normalizer can or shou
 
 Most of the time they are unnecessary.
 
+## No doubled spaces
+
+Most of the time not intended.
+
 ### Correct nesting of headings
 
 Don't skip levels when using headings.
 
 ### Urls should be valid
 
-This is probably a typo.
+[probably harder to define than expected]
 
 ### Urls to serlo.org should be relative
 

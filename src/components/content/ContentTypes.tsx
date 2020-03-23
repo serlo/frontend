@@ -25,6 +25,9 @@ import Toolbox from '../navigation/Toolbox'
 import { convertEdtrioState } from '../../schema/convertEdtrioState'
 import EdtrIoRenderer from '../../content-api/transform-edtr-io-state'
 import convertLegacyState from '../../schema/convertLegacyState'
+import checkArticleGuidelines from '../../schema/articleGuidelines'
+import { Hints } from '../Hints'
+import { HSpace } from './HSpace'
 
 export default function ContentTypes(props) {
   const { data } = props
@@ -141,6 +144,9 @@ function RenderArticle({ content }) {
         }}
       />
       <Article value={value} />
+      <HSpace amount={20} />
+      <Hints hints={checkArticleGuidelines(value)} />
+      <HSpace amount={40} />
     </>
   )
 }

@@ -47,6 +47,8 @@ import {
   renderSpoilerBody,
   renderA
 } from '../schema/articleRenderer'
+import checkArticleGuidelines from '../schema/articleGuidelines'
+import { Hints } from '../components/Hints'
 
 /*
  *  Page
@@ -70,6 +72,7 @@ function Create({ defaultValue, onExit, onChange, title }) {
   }, [editor])
   const [modalOpen, setModalOpen] = React.useState(false)
   const [comp, setComp] = React.useState(null)
+  const [hints, setHints] = React.useState([])
   function doEdit(component) {
     setComp(component)
     setModalOpen(true)
@@ -87,9 +90,11 @@ function Create({ defaultValue, onExit, onChange, title }) {
           onChange={value => {
             setValue(value)
             onChange(value)
+            setHints(checkArticleGuidelines(value))
           }}
         >
           <Toolbox onExit={onExit} />
+          <Hints hints={hints} />
           <Container>
             {ready && (
               <Editable renderElement={renderElement} renderLeaf={renderLeaf} />
