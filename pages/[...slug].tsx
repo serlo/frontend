@@ -1,6 +1,5 @@
-import fetchContent from '../src/content-api/fetchcontent'
+import fetchContent from '../src/content-api/fetchContentFromSerloOrg'
 import Header from '../src/components/navigation/Header'
-import Toolbox from '../src/components/navigation/Toolbox'
 import ContentTypes from '../src/components/content/ContentTypes'
 import Footer from '../src/components/navigation/Footer'
 import { StyledMain } from '../src/components/tags/StyledMain'

@@ -1,5 +1,4 @@
 import React from 'react'
-import dynamic from 'next/dynamic'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faShareAlt, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
@@ -10,7 +9,6 @@ import Ups from '../Ups'
 import WipHint from '../WipHint'
 import styled from 'styled-components'
 import Breadcrumbs from '../navigation/Breadcrumbs'
-import { StyledP } from '../tags/StyledP'
 import { StyledUl } from '../tags/StyledUl'
 import { StyledLi } from '../tags/StyledLi'
 import { StyledA } from '../tags/StyledA'
@@ -20,10 +18,9 @@ import { ToolLineButton } from '../navigation/ToolLineButton'
 import { createEditor, Editor } from 'slate'
 import withArticle from '../../schema/articleNormalizer'
 import Article from '../../schema/articleRenderer'
-import Create from '../../content-api/create'
+import Create from '../../create/create'
 import Toolbox from '../navigation/Toolbox'
 import { convertEdtrioState } from '../../schema/convertEdtrioState'
-import EdtrIoRenderer from '../../content-api/transform-edtr-io-state'
 import convertLegacyState from '../../schema/convertLegacyState'
 import checkArticleGuidelines from '../../schema/articleGuidelines'
 import { Hints } from '../Hints'
@@ -52,7 +49,7 @@ export default function ContentTypes(props) {
       </>
     )
   }
-  if (
+  /*if (
     data.contentType === 'topic-folder' ||
     data.contentType === 'text-exercise'
   ) {
@@ -78,7 +75,7 @@ export default function ContentTypes(props) {
         </StyledP>
       </>
     )
-  }
+  }*/
   return <Ups type={data.contentType} />
 }
 
