@@ -5,6 +5,7 @@ export const StyledH3 = styled.h3`
   ${makeMargin}
   margin-top: 0;
   margin-bottom: 20px;
-  font-size: 1.3125rem;
+  font-size: 1.5rem;
   line-height: 1.22;
+  font-weight: normal;
 `
