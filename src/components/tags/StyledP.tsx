@@ -13,6 +13,6 @@ export const StyledP = styled.p<StyledPProps>`
   margin-bottom: ${props => (props.slim ? '0' : '30px')};
   ${props => (props.halfslim ? 'margin-bottom: 12px;' : '')}
   hyphens: auto;
-  line-height: 1.45;
-  font-size: 1.05rem;
+  line-height: 1.5;
+  font-size: 1rem;
 `
