@@ -2,8 +2,8 @@ import { Path, Transforms, Node, Text, Element } from 'slate'
 
 const voidElements = ['math', 'img', 'inline-math']
 const inlineElements = ['inline-math', 'a']
-const onlyInlineChildren = ['a', 'p', 'h', 'li', 'spoiler-title']
-const onlySomeBlocksAllowed = [
+export const onlyInlineChildren = ['a', 'p', 'h', 'li', 'spoiler-title']
+export const onlySomeBlocksAllowed = [
   {
     parent: 'spoiler-body',
     children: ['p', 'img', 'math', 'ul', 'ol', 'row'],
