@@ -232,9 +232,9 @@ Most of the time not intended.
 
 Don't skip levels when using headings.
 
-### Urls should be valid
+### a tags should have non-empty href
 
-[probably harder to define than expected]
+Thats the minimum requirement
 
 ### Urls to serlo.org should be relative
 

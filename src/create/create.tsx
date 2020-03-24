@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useMemo } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import Tippy from '@tippyjs/react'
+import Modal from '../components/Modal'
 import { hsl } from 'polished'
 
 import {
@@ -22,12 +23,7 @@ import {
 } from 'slate-react'
 import { withHistory } from 'slate-history'
 
-import Header from '../components/navigation/Header'
-import Footer from '../components/navigation/Footer'
-import { StyledMain } from '../components/tags/StyledMain'
-import { HSpace } from '../components/content/HSpace'
-import Modal from '../components/Modal'
-import withArticle from '../schema/articleNormalizer'
+import withArticle, { onlySomeBlocksAllowed } from '../schema/articleNormalizer'
 import {
   renderLeaf,
   renderH,
@@ -45,332 +41,393 @@ import {
   renderSpoilerTitle,
   renderSpoilerToggle,
   renderSpoilerBody,
-  renderA
+  renderA,
+  articleColors
 } from '../schema/articleRenderer'
 import checkArticleGuidelines from '../schema/articleGuidelines'
 import { Hints } from '../components/Hints'
-
-/*
- *  Page
- */
+import { HSpace } from '../components/content/HSpace'
 
 const ModalContext = React.createContext<any>({})
 
-function Create({ defaultValue, onExit, onChange, title }) {
-  const editor = useMemo(
+export default function Create({ value, onChange }) {
+  const editor = React.useMemo(
     () => withPlugin(withArticle(withHistory(withReact(createEditor())))),
     []
   )
-  const [value, setValue] = useState<Node[]>(
-    [{ type: 'h', level: 1, children: [{ text: title }] }].concat(defaultValue)
-  )
-  const [ready, setReady] = useState(true)
-  useEffect(() => {
-    Editor.normalize(editor, { force: true })
-    //console.log(editor.children)
-    setReady(true)
-  }, [editor])
-  const [modalOpen, setModalOpen] = React.useState(false)
-  const [comp, setComp] = React.useState(null)
-  const [hints, setHints] = React.useState([])
-  function doEdit(component) {
-    setComp(component)
-    setModalOpen(true)
-  }
-  function closeModal() {
-    setModalOpen(false)
-  }
+  const [modal, setModal] = React.useState(null)
+  const [hints, setHints] = React.useState(() => checkArticleGuidelines(value))
   return (
-    <>
-      <HSpace amount={15} />
-      <ModalContext.Provider value={{ doEdit, closeModal }}>
-        <Slate
-          editor={editor}
-          value={value}
-          onChange={value => {
-            setValue(value)
-            onChange(value)
-            setHints(checkArticleGuidelines(value))
-          }}
+    <ModalContext.Provider
+      value={{
+        doEdit: comp => {
+          setModal(comp)
+        },
+        closeModal: () => setModal(null)
+      }}
+    >
+      <Slate
+        editor={editor}
+        value={value}
+        onChange={value => {
+          onChange(value)
+          setHints(checkArticleGuidelines(value))
+        }}
+      >
+        <Toolbar />
+        <Container>
+          {<Editable renderElement={renderElement} renderLeaf={renderLeaf} />}
+        </Container>
+        <Modal
+          isOpen={modal !== null}
+          style={{ overlay: { zIndex: 1000 } }}
+          onRequestClose={() => setModal(null)}
         >
-          <Toolbox onExit={onExit} />
-          <Hints hints={hints} />
-          <Container>
-            {ready && (
-              <Editable renderElement={renderElement} renderLeaf={renderLeaf} />
-            )}
-          </Container>
-          <Modal
-            isOpen={modalOpen}
-            style={{ overlay: { zIndex: 1000 } }}
-            onRequestClose={() => setModalOpen(false)}
-          >
-            {comp}
-          </Modal>
-        </Slate>
-      </ModalContext.Provider>
-      <HSpace amount={200} />
-    </>
+          {modal}
+        </Modal>
+        <HSpace amount={20} />
+        <Hints hints={hints} />
+        <HSpace amount={40} />
+      </Slate>
+    </ModalContext.Provider>
   )
 }
 
-function Toolbox({ onExit }) {
-  const editor = useSlate()
-  let marks = Editor.marks(editor)
-  if (!marks) marks = {}
+function Toolbar() {
+  // Toolbar sollte Elemente nur nach ganz bestimmten Kriterien anzeigen
+  const editor = useEditor()
   const { selection } = editor
-  let showAdds = false
-  if (Range.isRange(selection)) {
-    if (Range.isCollapsed(selection)) {
-      const parent = Node.get(editor, Path.parent(selection.anchor.path))
-      if (
-        parent.type == 'p' &&
-        parent.children.length == 1 &&
-        parent.children[0].text == ''
-      ) {
-        showAdds = true
+
+  // Zeige nur sinnvolle Optionen an
+  function getNextElementPath(p, block = true) {
+    let path = p.slice(0)
+    let node = Node.get(editor, path)
+    while (
+      path.length > 0 &&
+      (!Element.isElement(node) || editor.isInline(node) === block)
+    ) {
+      path = Path.parent(path)
+      node = Node.get(editor, path)
+    }
+    return path
+  }
+  const selectType = []
+  let selected = ''
+  let selectBoxPath = []
+  let allowedAdd = []
+  let addCurrentNode
+  let addCurrentPath
+  if (selection) {
+    const anchorParentPath = getNextElementPath(selection.anchor.path)
+    const focusParentPath = getNextElementPath(selection.focus.path)
+    if (Path.equals(anchorParentPath, focusParentPath)) {
+      selectBoxPath = anchorParentPath
+      let parent = Path.parent(anchorParentPath)
+      let parentType =
+        parent.length === 0 ? '#root' : Node.get(editor, parent).type
+      const allowed = onlySomeBlocksAllowed.filter(
+        obj => obj.parent == parentType
+      )
+      const node = Node.get(editor, anchorParentPath)
+      if (node.level === 1) {
+        selectType.push('h1')
+        selected = 'h1'
+      } else {
+        if (allowed.length > 0) {
+          if (allowed[0].children.includes('p')) selectType.push('p')
+          if (allowed[0].children.includes('important'))
+            selectType.push('important')
+          if (allowed[0].children.includes('h')) {
+            selectType.push('h2', 'h3', 'h4', 'h5')
+          }
+        }
+        selected = node.type + (node.level || '')
+      }
+      if (Range.isCollapsed(selection) && allowed.length > 0) {
+        // was darf man hier hinzufügen?
+        ;['img', 'math', 'spoiler-container', 'ul', 'ol', 'row'].forEach(
+          key => {
+            if (allowed[0].children.includes(key)) allowedAdd.push(key)
+          }
+        )
+        addCurrentNode = Node.get(editor, anchorParentPath)
+        addCurrentPath = anchorParentPath
       }
     }
   }
+
+  // check marks
+  let marks = Editor.marks(editor)
+  if (!marks) marks = {}
+
+  function handleMark(key, val) {
+    if (marks[key] == val) {
+      Editor.removeMark(editor, key)
+    } else {
+      Editor.addMark(editor, key, val)
+    }
+  }
+
+  function buildColorOption(color, title) {
+    return (
+      <option
+        onMouseDown={e => {
+          e.preventDefault()
+          handleMark('color', color)
+        }}
+        value={color}
+        style={{ color: articleColors[color] }}
+      >
+        {title}
+      </option>
+    )
+  }
+
+  // Link behaviour
+  let inLink = false
+  let linkPath = []
+  if (selection) {
+    const inlineAnchorPath = getNextElementPath(selection.anchor.path, false)
+    const inlineFocusPath = getNextElementPath(selection.focus.path, false)
+    if (
+      inlineAnchorPath.length > 0 &&
+      Path.equals(inlineAnchorPath, inlineFocusPath) &&
+      Node.get(editor, inlineAnchorPath).type === 'a'
+    ) {
+      inLink = true
+      linkPath = inlineAnchorPath
+    }
+  }
+
   return (
     <StyledToolbox>
-      <ToolButton active={marks.strong} onMouseDown={() => onExit()}>
-        <strong>EXIT</strong>
-      </ToolButton>
-      {'| '}
-      <ToolButton
-        active={marks.strong}
-        onMouseDown={e => {
-          if (marks.strong) Editor.removeMark(editor, 'strong')
-          else Editor.addMark(editor, 'strong', true)
+      {buildSelect(selectType, selected, (key, e) => {
+        e.preventDefault()
+        const newProps: any = {}
+        if (/^h[\d]+$/.test(key)) {
+          newProps.type = 'h'
+          newProps.level = parseInt(key.substring(1))
+        } else {
+          newProps.type = key
+        }
+        Transforms.setNodes(editor, newProps, { at: selectBoxPath })
+      })}{' '}
+      <TipOver
+        content={buildAdd(allowedAdd, (key, e) => {
           e.preventDefault()
+          Transforms.splitNodes(editor)
+          if (key in defaultInserts) {
+            Transforms.insertNodes(editor, defaultInserts[key])
+          }
+          if (
+            addCurrentNode.type === 'p' &&
+            addCurrentNode.children.length == 1 &&
+            addCurrentNode.children[0].text == ''
+          ) {
+            Transforms.removeNodes(editor, { at: addCurrentPath })
+          }
+        })}
+        trigger="click"
+      >
+        <button disabled={allowedAdd.length === 0}>Hinzufügen ...</button>
+      </TipOver>{' '}
+      <button
+        style={{ fontWeight: marks.strong ? 'bold' : 'normal' }}
+        onMouseDown={e => {
+          e.preventDefault()
+          handleMark('strong', true)
         }}
       >
         Fett
-      </ToolButton>
-      <ToolButton
-        active={marks.em}
+      </button>{' '}
+      <button
+        style={{ fontStyle: marks.em ? 'italic' : 'normal' }}
         onMouseDown={e => {
-          if (marks.em) Editor.removeMark(editor, 'em')
-          else Editor.addMark(editor, 'em', true)
           e.preventDefault()
+          handleMark('em', true)
         }}
       >
         Kursiv
-      </ToolButton>
-      <ToolButton
-        active={marks.color == 'blue'}
-        onMouseDown={e => {
-          if (marks.color == 'blue') Editor.removeMark(editor, 'color')
-          else Editor.addMark(editor, 'color', 'blue')
-          e.preventDefault()
-        }}
-      >
-        Blau
-      </ToolButton>
-      <ToolButton
-        active={marks.color == 'green'}
-        onMouseDown={e => {
-          if (marks.color == 'green') Editor.removeMark(editor, 'color')
-          else Editor.addMark(editor, 'color', 'green')
-          e.preventDefault()
-        }}
-      >
-        Grün
-      </ToolButton>
-      <ToolButton
-        active={marks.color == 'orange'}
-        onMouseDown={e => {
-          if (marks.color == 'orange') Editor.removeMark(editor, 'color')
-          else Editor.addMark(editor, 'color', 'orange')
-          e.preventDefault()
-        }}
-      >
-        Orange
-      </ToolButton>
-      <ToolButton
-        onMouseDown={e => {
-          Editor.removeMark(editor, 'color')
-          Editor.removeMark(editor, 'strong')
-          Editor.removeMark(editor, 'em')
-          e.preventDefault()
-        }}
-      >
-        Form. lös.
-      </ToolButton>
-      | &nbsp;
-      {Range.isRange(selection) && Range.isExpanded(selection) && (
-        <ToolButton
+      </button>{' '}
+      <select value={marks.color || 'none'} onChange={() => {}}>
+        <option
           onMouseDown={e => {
             e.preventDefault()
-            Transforms.wrapNodes(
-              editor,
-              {
+            Editor.removeMark(editor, 'color')
+          }}
+          value="none"
+        >
+          ohne Farbe
+        </option>
+        {buildColorOption('blue', 'blau')}
+        {buildColorOption('green', 'grün')}
+        {buildColorOption('orange', 'orange')}
+      </select>{' '}
+      <button
+        onMouseDown={e => {
+          if (inLink) {
+            Transforms.unwrapNodes(editor, { at: linkPath })
+          } else {
+            if (selection && Range.isCollapsed(selection)) {
+              Transforms.insertNodes(editor, {
                 type: 'a',
                 href: '',
-                children: [{ text: '' }]
-              },
-              { split: true }
-            )
-          }}
-        >
-          +A
-        </ToolButton>
-      )}
-      {showAdds ? (
-        <>
-          <ToolButton
-            onMouseDown={e => {
-              e.preventDefault()
-              Transforms.removeNodes(editor)
-              Transforms.insertNodes(editor, {
-                type: 'h',
-                level: 2,
-                children: [{ text: '' }]
+                children: [{ text: 'neuer Link' }]
               })
-            }}
-          >
-            +H2
-          </ToolButton>
-          <ToolButton
-            onMouseDown={e => {
-              e.preventDefault()
-              Transforms.removeNodes(editor)
-              Transforms.insertNodes(editor, {
-                type: 'h',
-                level: 3,
-                children: [{ text: '' }]
-              })
-            }}
-          >
-            +H3
-          </ToolButton>
-          <ToolButton
-            onMouseDown={e => {
-              e.preventDefault()
-              Transforms.removeNodes(editor)
-              Transforms.insertNodes(editor, {
-                type: 'h',
-                level: 4,
-                children: [{ text: '' }]
-              })
-            }}
-          >
-            +H4
-          </ToolButton>
-          <ToolButton
-            onMouseDown={e => {
-              e.preventDefault()
-              Transforms.removeNodes(editor)
-              Transforms.insertNodes(editor, {
-                type: 'spoiler-container',
-                children: [
-                  { type: 'spoiler-title', children: [{ text: '' }] },
-                  { type: 'spoiler-body', children: [{ text: '' }] }
-                ]
-              })
-            }}
-          >
-            +Sp.
-          </ToolButton>
-          <ToolButton
-            onMouseDown={e => {
-              e.preventDefault()
-              Transforms.removeNodes(editor)
-              Transforms.insertNodes(editor, {
-                type: 'img',
-                src: '',
-                alt: '',
-                children: [{ text: '' }]
-              })
-            }}
-          >
-            +Img
-          </ToolButton>
-          <ToolButton
-            onMouseDown={e => {
-              e.preventDefault()
-              Transforms.removeNodes(editor)
-              Transforms.insertNodes(editor, {
-                type: 'important',
-                children: [{ text: '' }]
-              })
-            }}
-          >
-            +Imp.
-          </ToolButton>
-          <ToolButton
-            onMouseDown={e => {
-              e.preventDefault()
-              Transforms.removeNodes(editor)
-              Transforms.insertNodes(editor, {
-                type: 'ul',
-                children: [{ type: 'li', children: [{ text: '' }] }]
-              })
-            }}
-          >
-            +Ul
-          </ToolButton>
-          <ToolButton
-            onMouseDown={e => {
-              e.preventDefault()
-              Transforms.removeNodes(editor)
-              Transforms.insertNodes(editor, {
-                type: 'ol',
-                children: [{ type: 'li', children: [{ text: '' }] }]
-              })
-            }}
-          >
-            +Ol
-          </ToolButton>
-          <ToolButton
-            onMouseDown={e => {
-              e.preventDefault()
-              Transforms.removeNodes(editor)
-              Transforms.insertNodes(editor, {
-                type: 'math',
-                formula: '',
-                children: [{ text: '' }]
-              })
-            }}
-          >
-            +For.
-          </ToolButton>
-          <ToolButton
-            onMouseDown={e => {
-              e.preventDefault()
-              Transforms.removeNodes(editor)
-              Transforms.insertNodes(editor, {
-                type: 'row',
-                children: [
-                  { type: 'col', size: 6, children: [{ text: '' }] },
-                  { type: 'col', size: 6, children: [{ text: '' }] }
-                ]
-              })
-            }}
-          >
-            +Lay.
-          </ToolButton>
-        </>
-      ) : (
-        <ToolButton
-          onMouseDown={e => {
-            e.preventDefault()
-            Transforms.insertNodes(editor, {
-              type: 'inline-math',
-              formula: '',
-              children: [{ text: '' }]
-            })
-          }}
-        >
-          +Formel
-        </ToolButton>
-      )}
+            } else {
+              Transforms.wrapNodes(
+                editor,
+                {
+                  type: 'a',
+                  href: '',
+                  children: [{ text: '' }]
+                },
+                { split: true }
+              )
+            }
+          }
+          e.preventDefault()
+        }}
+      >
+        {inLink ? 'Unlink' : '+ Link'}
+      </button>{' '}
+      <button
+        onMouseDown={e => {
+          e.preventDefault()
+          Transforms.insertNodes(editor, {
+            type: 'inline-math',
+            formula: '',
+            children: [{ text: '' }]
+          })
+        }}
+        disabled={!selection || Range.isExpanded(selection)}
+      >
+        + Formel
+      </button>
     </StyledToolbox>
   )
 }
 
-export default Create
+const defaultInserts = {
+  img: {
+    type: 'img',
+    alt: 'Bild',
+    src: '',
+    children: [{ text: '' }]
+  },
+  math: {
+    type: 'math',
+    children: [{ text: '' }]
+  },
+  'spoiler-container': {
+    type: 'spoiler-container',
+    children: [
+      {
+        type: 'spoiler-title',
+        children: [{ text: '' }]
+      },
+      {
+        type: 'spoiler-body',
+        children: [
+          {
+            type: 'p',
+            children: [{ text: '' }]
+          }
+        ]
+      }
+    ]
+  },
+  ul: {
+    type: 'ul',
+    children: [
+      {
+        type: 'li',
+        children: [{ text: '' }]
+      }
+    ]
+  },
+  ol: {
+    type: 'ol',
+    children: [
+      {
+        type: 'li',
+        children: [{ text: '' }]
+      }
+    ]
+  },
+  row: {
+    type: 'row',
+    children: [
+      {
+        type: 'col',
+        size: 4,
+        children: [
+          {
+            type: 'p',
+            children: [{ text: '' }]
+          }
+        ]
+      },
+      {
+        type: 'col',
+        size: 4,
+        children: [
+          {
+            type: 'p',
+            children: [{ text: '' }]
+          }
+        ]
+      }
+    ]
+  }
+}
+
+function buildSelect(available, selected, handler) {
+  function buildOption(key, value) {
+    return available.includes(key) ? (
+      <option onMouseDown={e => handler(key, e)} value={key}>
+        {value}
+      </option>
+    ) : null
+  }
+  return (
+    <select value={selected} style={{ width: '130px' }} onChange={() => {}}>
+      {buildOption('h1', 'Titel')}
+      {buildOption('p', 'Absatz')}
+      {buildOption('h2', 'Überschrift 2')}
+      {buildOption('h3', 'Überschrift 3')}
+      {buildOption('h4', 'Überschrift 4')}
+      {buildOption('h5', 'Überschrift 5')}
+      {buildOption('important', ' zu Merkkasten ...')}
+    </select>
+  )
+}
+
+function buildAdd(allowed, handler) {
+  function buildButton(key, value) {
+    return allowed.includes(key) ? (
+      <>
+        <button
+          style={{ marginBottom: '3px' }}
+          onMouseDown={e => handler(key, e)}
+        >
+          {value}
+        </button>
+        <br />
+      </>
+    ) : null
+  }
+  return (
+    <>
+      {buildButton('img', 'Bild')}
+      {buildButton('math', 'Formelblock')}
+      {buildButton('spoiler-container', 'Spoiler')}
+      {buildButton('ul', 'Liste')}
+      {buildButton('ol', 'Aufzählung')}
+      {buildButton('row', 'Spalten')}
+    </>
+  )
+}
 
 /*
  *  Renderer
@@ -420,7 +477,12 @@ function renderElement(props) {
  */
 
 function withPlugin(editor) {
-  const { normalizeNode, insertBreak } = editor
+  const { normalizeNode, insertBreak, insertNode } = editor
+
+  editor.insertNode = entry => {
+    console.log('hi')
+    insertNode(entry)
+  }
 
   editor.normalizeNode = entry => {
     const [node, path] = entry as [Node, Path]
@@ -440,7 +502,7 @@ function withPlugin(editor) {
             {
               type: 'h',
               level: 1,
-              children: [{ text: 'Überschrift des Artikels' }]
+              children: [{ text: '' }]
             },
             { at: [0], voids: true }
           )
@@ -480,7 +542,33 @@ function withPlugin(editor) {
  *  Components
  */
 
+function SettingsInput(props) {
+  const { innerProps, title } = props
+  return (
+    <>
+      <label>
+        {title}
+        <br />
+        <input type="text" size={50} {...innerProps} />
+      </label>
+      <br />
+      <br />
+    </>
+  )
+}
+
 const SpoilerContext = React.createContext<any>({})
+
+function TipOver(props) {
+  return (
+    <Tippy
+      interactive
+      zIndex={50}
+      appendTo={typeof document !== 'undefined' ? document.body : undefined}
+      {...props}
+    />
+  )
+}
 
 function MySpoiler(props) {
   const [open, setOpen] = React.useState(true)
@@ -541,20 +629,17 @@ function MyMath(props) {
     children,
     wrapFormula: comp => (
       <>
-        <Tippy
+        <TipOver
           content={
             <button onClick={() => doEdit(<MathSettings path={path} />)}>
               Formel bearbeiten
             </button>
           }
-          interactive
-          zIndex={50}
-          appendTo={document.body}
         >
           <span style={{ outline: highlight ? '1px solid lightblue' : 'none' }}>
             {element.formula ? comp : '[leere Formel]'}
           </span>
-        </Tippy>
+        </TipOver>
         {children}
       </>
     )
@@ -570,20 +655,17 @@ function MyInlineMath(props) {
   let highlight = selection && Range.includes(selection, path)
   return (
     <VoidSpan {...attributes}>
-      <Tippy
+      <TipOver
         content={
           <button onClick={() => doEdit(<MathSettings path={path} />)}>
             Formel bearbeiten
           </button>
         }
-        interactive
-        zIndex={50}
-        appendTo={document.body}
       >
         <span style={{ outline: highlight ? '1px solid lightblue' : 'none' }}>
           {element.formula ? renderInlineMath({ element }) : '[leere Formel]'}
         </span>
-      </Tippy>
+      </TipOver>
       {children}
     </VoidSpan>
   )
@@ -621,16 +703,13 @@ function MyA(props) {
   const path = ReactEditor.findPath(editor, element)
   const { doEdit } = React.useContext(ModalContext)
   return (
-    <Tippy
+    <TipOver
       content={
         <button onClick={() => doEdit(<ASettings path={path} />)}>
           Link bearbeiten
         </button>
       }
-      interactive
-      zIndex={50}
       placement="top-end"
-      appendTo={document.body}
     >
       {renderA({
         element,
@@ -638,7 +717,7 @@ function MyA(props) {
         children,
         wrapExtInd: comp => <VoidSpan>{comp}</VoidSpan>
       })}
-    </Tippy>
+    </TipOver>
   )
 }
 
@@ -651,21 +730,16 @@ function ASettings(props) {
   const { closeModal } = React.useContext(ModalContext)
   return (
     <>
-      <label>
-        Link-Adresse:
-        <br />
-        <input
-          type="text"
-          value={href}
-          size={50}
-          onChange={e => {
+      <SettingsInput
+        title="Link-Adresse:"
+        innerProps={{
+          value: href,
+          onChange: e => {
             setHref(e.target.value)
             Transforms.setNodes(editor, { href: e.target.value }, { at: path })
-          }}
-        />
-      </label>
-      <br />
-      <br />
+          }
+        }}
+      />
       <button
         onClick={() => {
           Transforms.unwrapNodes(editor, { at: path })
@@ -714,7 +788,7 @@ function MyLayout(props) {
   let highlight = selection && Range.includes(selection, path)
   const { doEdit } = React.useContext(ModalContext)
   return (
-    <Tippy
+    <TipOver
       content={
         <VoidSpan>
           <button onClick={() => doEdit(<LayoutSettings path={path} />)}>
@@ -722,10 +796,7 @@ function MyLayout(props) {
           </button>
         </VoidSpan>
       }
-      interactive
       placement="top-end"
-      zIndex={50}
-      appendTo={document.body}
     >
       {renderRow({
         attributes: {
@@ -734,7 +805,7 @@ function MyLayout(props) {
         },
         children
       })}
-    </Tippy>
+    </TipOver>
   )
 }
 
@@ -853,19 +924,16 @@ function MyImg(props) {
     },
     children,
     wrapImg: comp => (
-      <Tippy
+      <TipOver
         content={
           <button onClick={() => doEdit(<ImgSettings path={path} />)}>
             Bild bearbeiten
           </button>
         }
-        interactive
-        zIndex={50}
         placement="top-end"
-        appendTo={document.body}
       >
         {comp}
-      </Tippy>
+      </TipOver>
     )
   })
 }
@@ -880,36 +948,26 @@ function ImgSettings(props) {
   const { closeModal } = React.useContext(ModalContext)
   return (
     <>
-      <label>
-        Bildquelle:
-        <br />
-        <input
-          type="text"
-          size={50}
-          value={src}
-          onChange={e => {
+      <SettingsInput
+        title="Bildquelle:"
+        innerProps={{
+          value: src,
+          onChange: e => {
             setSrc(e.target.value)
             Transforms.setNodes(editor, { src: e.target.value }, { at: path })
-          }}
-        />
-      </label>
-      <br />
-      <br />
-      <label>
-        Beschreibung
-        <br />
-        <input
-          type="text"
-          size={50}
-          value={alt}
-          onChange={e => {
+          }
+        }}
+      />
+      <SettingsInput
+        title="Beschreibung:"
+        innerProps={{
+          value: alt,
+          onChange: e => {
             setAlt(e.target.value)
             Transforms.setNodes(editor, { alt: e.target.value }, { at: path })
-          }}
-        />
-      </label>
-      <br />
-      <br />
+          }
+        }}
+      />
       <label>
         Maximale Breite in pixel (0 = volle Breite)
         <br />
@@ -944,8 +1002,7 @@ function ImgSettings(props) {
 }
 
 const StyledToolbox = styled.div`
-  padding-top: 5px;
-  padding-left: 5px;
+  padding: 5px;
   background-color: white;
   border: 1px solid lightblue;
   margin-bottom: 12px;
@@ -968,13 +1025,4 @@ const LatexInputArea = styled.textarea`
   height: 200px;
   font-size: 1.2rem;
   margin-top: 30px;
-`
-
-const ToolButton = styled.button<{ active?: boolean }>`
-  color: black;
-  background-color: ${props => (props.active ? 'lightblue' : 'transparent')};
-  border: 1px solid black;
-  padding: 4px;
-  margin-right: 10px;
-  margin-bottom: 5px;
 `
