@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 interface HorizonProp {
@@ -11,9 +11,11 @@ interface HorizonProp {
 export default function Horizon(entries: HorizonProp[]) {
     return (
         <Wrapper>
-            {entries.map((horizonEntry) => {
+            {entries.map((horizonEntry, index) => {
+                const key = 'horizon_' + index
                 return (
-                    <Item href={horizonEntry.url}>
+                    <Item href={horizonEntry.url}
+                         key={key + '_child' + index}>
                         <Image alt={horizonEntry.title} src={horizonEntry.imageUrl} />
                         <Headline>{horizonEntry.title}</Headline>
                         <Text>{horizonEntry.text}</Text>
@@ -28,7 +30,7 @@ const Wrapper = styled.div`
     align-items: center;
     display: flex;
     justify-content: space-between;
-    padding: 2rem 1.5rem 1.5rem;
+    padding: 32px 24px 24px;
     @media (max-width: ${props => props.theme.breakpoints.sm}) {
         flex-direction: column;
     }
@@ -60,7 +62,7 @@ const Image = styled.img`
 
 const Headline = styled.p`
     font-weight: bold;
-    font-size: 20px;
+    font-size: 1.25rem;
     margin: 10px 0 5px;
     padding: 0 5px;
 `
