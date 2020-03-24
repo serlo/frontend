@@ -31,7 +31,7 @@ import { SpoilerContainer } from '../components/content/SpoilerContainer'
 
 const Math = dynamic(import('../components/content/Math'))
 
-interface ArticleProps {
+export interface ArticleProps {
   value: Node[]
 }
 

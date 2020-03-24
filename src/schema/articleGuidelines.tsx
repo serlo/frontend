@@ -38,6 +38,9 @@ function elementWise(value, path, length) {
     }
   }
   if (value.type === 'a') {
+    if (value.href.trim() === '') {
+      messages.push(`Hinweis: Verlinkung bei ${JSON.stringify(path)} ist leer.`)
+    }
     if (/^(http|https):\/\/(de|en)\.serlo\.org/i.test(value.href)) {
       messages.push(
         'Hinweis: Verlinkung ' +
@@ -64,7 +67,11 @@ function checkHeadings(elements) {
   let currentLevel = 1
   let currentIndex = 0
   const messages = []
-  if (elements[0].type == 'h' && elements[0].level == 1) {
+  if (
+    elements.length > 0 &&
+    elements[0].type == 'h' &&
+    elements[0].level == 1
+  ) {
     currentIndex = 1
   }
   while (currentIndex < elements.length) {

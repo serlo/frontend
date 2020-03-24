@@ -25,6 +25,7 @@ import convertLegacyState from '../../schema/convertLegacyState'
 import checkArticleGuidelines from '../../schema/articleGuidelines'
 import { Hints } from '../Hints'
 import { HSpace } from './HSpace'
+import { StyledP } from '../tags/StyledP'
 
 export default function ContentTypes(props) {
   const { data } = props
@@ -99,17 +100,28 @@ function RenderArticle({ content }) {
     setValue(editor.children)
   }
   if (editMode) {
+    if (value.length < 1 || value[0].type !== 'h' || value[0].level !== 1) {
+      setValue([
+        { type: 'h', level: 1, children: [{ text: content.title }] },
+        ...value,
+        { type: 'p', children: [{ text: '' }] }
+      ])
+    }
     return (
-      <Create
-        defaultValue={value}
-        onExit={() => setEditMode(false)}
-        onChange={value => setValue(value)}
-        title={content.title}
-      />
+      <>
+        <HSpace amount={15} />
+        <Create value={value} onChange={value => setValue(value)} />
+        <HSpace amount={20} />
+        <StyledP>
+          <button onClick={() => setEditMode(false)}>
+            Bearbeitungsmodus schließen
+          </button>
+        </StyledP>
+      </>
     )
   }
   if (value && value[0] && value[0].type === 'h' && value[0].level === 1) {
-    setValue(value.slice(1))
+    setValue(value.slice(1, -1))
   }
   return (
     <>

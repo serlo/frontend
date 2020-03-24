@@ -21,7 +21,7 @@ export default async function fetchContent(alias) {
   if (html.includes('existiert nicht')) {
     contentType = 'Unbekannte Seite'
   } else if (html.includes('Cloudflare')) {
-    contentType = 'Cloudflare verweigert Zugriff'
+    contentType = 'Problem beim Zugriff'
   }
 
   const data: any = {}
@@ -105,7 +105,7 @@ export default async function fetchContent(alias) {
     const links = []
     let t
     let limit = 1000
-    while ((t = re.exec(html)) && limit-- > 0) {
+    while ((t = re.exec(bcs)) && limit-- > 0) {
       links.push({ url: t[1], label: t[2] })
     }
     const myself = /<li>[\s]*<span>([^<]+)<\/span>[\s]*<\/li>/.exec(html)
