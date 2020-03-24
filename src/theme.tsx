@@ -3,6 +3,7 @@ export const theme = {
     bluewhite: '#f0f7fb',
     lightblue: '#52a6d0',
     darkgray: '#212529',
+    gray: '#808487',
     brand: '#007ec1',
     lighterblue: '#91c5e4',
     brandGreen: '#95bc1a',
@@ -11,6 +12,7 @@ export const theme = {
     dark1: '#333333',
   },
   breakpoints: {
+    mobile: '500px',
     sm: '800px',
     md: '1024px',
     lg: '1216px'

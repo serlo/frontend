@@ -10,7 +10,7 @@ Install [Node.js](https://nodejs.org/en/) (>=10) and [yarn](https://classic.yarn
 
 Clone this repo, install dependencies and start the dev server:
 
-```
+```sh
 git clone https://github.com/serlo/frontend.git
 cd frontend
 yarn
@@ -204,12 +204,11 @@ export default HelloWorld
 
 ### Units
 
-There exists a bunch of different length units.
+There exists a bunch of different length units. Most of the time, [px](https://stackoverflow.com/questions/11799236/should-i-use-px-or-rem-value-units-in-my-css) is fine. Sometimes there are better alternativs, especially in regard of [a11y](https://www.24a11y.com/2019/pixels-vs-relative-units-in-css-why-its-still-a-big-deal/):
 
-**tl;dr**
-
-- Use [px](https://stackoverflow.com/questions/11799236/should-i-use-px-or-rem-value-units-in-my-css)
-- [Don't](https://mindtheshift.wordpress.com/2015/04/02/r-i-p-rem-viva-css-reference-pixel/) [use](https://blog.usejournal.com/dont-use-rem-em-for-paddings-margins-and-more-94e19026b000) [rem/em](https://adamwathan.me/dont-use-em-for-media-queries/) unless you know what you are [doing](https://blog.evanshunt.com/using-proportional-font-scaling-with-responsive-web-design-30e99094fca0)
+- Use `rem` for `font-size`, so users can zoom the text (e.g. farsighted people or users on 4k monitors)
+- Use dimensionless values for `line-height` to scale well.
+- Test your component how it behaves when text zooms and eventually make adjustments.
 
 ### Icons
 
@@ -407,6 +406,44 @@ export default HelloWorld
 
 You handle the state by yourself. The `Modal` component has [many options](http://reactcommunity.org/react-modal/) available. Import the modal from `src/reactmodal.tsx`. This takes care of the app element.
 
+### Formulas
+
+You can use [KaTeX](https://github.com/KaTeX/KaTeX) to render formulas:
+
+```tsx
+import styled from 'styled-components'
+import Math from '../src/math'
+
+function HelloWorld() {
+  return (
+    <>
+      <Paragraph>
+        This changed the world:{' '}
+        <Math formula={'c = \\pm\\sqrt{a^2 + b^2}'} inline />.
+      </Paragraph>
+      <Paragraph>This too:</Paragraph>
+      <CenteredParagraph>
+        <Math formula={'E = mc^2'} />
+      </CenteredParagraph>
+    </>
+  )
+}
+
+const Paragraph = styled.p`
+  margin: 20px;
+  font-size: 18px;
+`
+
+const CenteredParagraph = styled.p`
+  text-align: center;
+  font-size: 18px;
+`
+
+export default HelloWorld
+```
+
+Our math component takes two props: `formula` is the LaTeX string, `inline` is optional and will make the formula a bit smaller. The rendered formula is a `span` that can be placed anywhere.
+
 ## Advanced Topics
 
 ### Data Fetching
@@ -461,12 +498,158 @@ yarn analyze
 
 Results are saved to `.next/analyze/client.html` and `.next/analyze/server.html`.
 
+### Importing Component dynamically
+
+If some part of a page is heavy and only relevant for a smaller fraction of users, import it dynamically. Write your component as usual:
+
+```tsx
+// src/fancycomponent.tsx
+
+function FancyComponent() {
+  return <p>This is some heavy component</p>
+}
+
+export default FancyComponent
+```
+
+Use a [dynamic import](https://nextjs.org/docs/advanced-features/dynamic-import) to load the component:
+
+```tsx
+// pages/helloworld.tsx
+
+import React from 'react'
+import dynamic from 'next/dynamic'
+
+const FancyComponent = dynamic(import('../src/fancycomponent'))
+
+function HelloWorld() {
+  const [visible, setVisible] = React.useState(false)
+  return (
+    <>
+      <p>
+        <button onClick={() => setVisible(true)}>Load ...</button>
+      </p>
+      {visible && <FancyComponent />}
+    </>
+  )
+}
+
+export default HelloWorld
+```
+
+The source code of `FancyComponent` is splitting into a separate chunk and is only loaded when users click the button.
+
+### Reusing CSS Snippets
+
+You can extend components by adding style snippets. These snippets are functions that add new props to a styled component:
+
+```tsx
+import styled from 'styled-components'
+
+function HelloWorld() {
+  return (
+    <>
+      <ChatParagraph side="left">Hey, how are you?</ChatParagraph>
+      <ChatParagraph side="right">I'm fine!</ChatParagraph>
+    </>
+  )
+}
+
+interface SideProps {
+  side: 'left' | 'right'
+}
+
+function withSide(props: SideProps) {
+  if (props.side === 'left') {
+    return `
+      color: blue;
+      text-align: left;
+    `
+  } else if (props.side === 'right') {
+    return `
+      color: green;
+      text-align: right;
+    `
+  } else {
+    return ''
+  }
+}
+
+const ChatParagraph = styled.p<SideProps>`
+  ${withSide}
+  margin: 20px;
+`
+
+export default HelloWorld
+```
+
+This example adds the `side` prop to the `ChatParagraph` and allows users to change the appearance of the component.
+
+You can reuse this function in another component:
+
+```tsx
+const AnotherChatParagraph = styled.p<SideProps>`
+  ${withSide}
+  margin: 15px;
+  border: 3px solid gray;
+`
+```
+
+### \_document.js and \_app.js
+
+Your pages get wrapped in two components, [\_document.js](https://nextjs.org/docs/advanced-features/custom-document) and [\_app.js](https://nextjs.org/docs/advanced-features/custom-app). You can override both files. The document contains everything that is outside of your react app, especially the html and body tag. This is a good place to set styles on these or to define the language. The document is rendered on the server only.
+
+The app is the entrypoint of your page and is rendered client-side as well. You can add global providers or import css files here.
+
+### Listening to Scroll & Resize
+
+It is possible to listen to scroll and resize events as a last resort for responsive design, e.g. if media queries are insufficient. Use `useEffect` to accomplish this task:
+
+```tsx
+import React from 'react'
+import styled from 'styled-components'
+
+function HelloWorld() {
+  const [gray, setGray] = React.useState(false)
+
+  React.useEffect(() => {
+    function handleScroll() {
+      const scrollY = window.pageYOffset
+      setGray(scrollY > 250)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  return (
+    <BigDiv>
+      <Par gray={gray}>Please scroll down a little bit ...</Par>
+    </BigDiv>
+  )
+}
+
+const BigDiv = styled.div`
+  height: 4000px;
+`
+
+const Par = styled.p<{ gray: boolean }>`
+  font-size: 3rem;
+  text-align: center;
+  margin-top: 500px;
+  ${props => (props.gray ? 'color:lightgray;' : '')}
+`
+
+export default HelloWorld
+```
+
+This text will gray out if you scroll down. `useEffect` with an empty dependency array is called once on mount. The return value is called when the component unmounts and will remove the event listener. Set the state directly within the event handler.
+
 ### Missing Dependencies
 
-Sometimes, peer dependencies are missing. Add them to `package.json` and note it here:
+Sometimes, peer dependencies are missing. Install them manually and note it here:
 
 - `styled-components` depends on `react-is` (missing)
-- `next-css` depends on `webpack` (missing)
 
 ## FAQ
 
@@ -478,20 +661,121 @@ No, we are not using any [css resets](https://github.com/jaydenseric/Fix/issues/
 
 No, styled components [takes care](https://styled-components.com/docs/basics#motivation) of this already.
 
-### How do I disable server side rendering for a component?
+### Can I add external css?
 
-[WARNING: This is dangerous! Use this with care!!!!] Some components rely on client specific objects (window, document). The server can not render them and will throw an error. You can disable server side rendering by checking `window` and returning early:
+Only if it is absolutely necessary. You are able to import external `.css` files in `pages/_app.js`. These stylesheets are always global and included in every page. If possible, use a package that supports styled components.
+
+### Some client specific objects (window, document) are causing trouble with server side rendering. What can I do?
+
+Delay these parts of the code after your component mounted, using the `useEffect` hook:
 
 ```tsx
-function FancyComponent() {
-  if (typeof window === 'undefined') return null
-  return <span>{window.location.href}</span>
+import React from 'react'
+import styled from 'styled-components'
+
+function HelloWorld() {
+  const [href, setHref] = React.useState(undefined)
+
+  React.useEffect(() => {
+    setHref(window.location.href)
+  }, [])
+
+  return href ? <BigDiv>Your site's url is {href}</BigDiv> : null
+}
+
+const BigDiv = styled.div`
+  text-align: center;
+  margin-top: 100px;
+`
+
+export default HelloWorld
+```
+
+Using the state is important: This ensures that server side rendering and client side hydration matches up.
+
+### How can I detect whether I am serverside or clientside?
+
+The most idomatic way to do this is checking the type of window:
+
+```tsx
+if (typeof window === 'undefined') {
+  // serverside
 }
 ```
+
+A bigger example:
+
+```tsx
+function HelloWorld(props) {
+  return <>{JSON.stringify(props.data)}</>
+}
+
+HelloWorld.getInitialProps = async () => {
+  if (typeof window === 'undefined') {
+    const fs = await import('fs')
+    const util = await import('util')
+    const data = await util.promisify(fs.readFile)('package.json', 'utf-8')
+    console.log(data)
+    return { data: JSON.parse(data) }
+  }
+  return {}
+}
+
+export default HelloWorld
+```
+
+The `fs` module is only available in nodejs, but it's ok to use it when you check that you are serverside and load it with a [dynamic import](https://javascript.info/modules-dynamic-imports). There is also some [async/await](https://javascript.info/async-await) syntax shown here.
 
 ### How can I focus an element?
 
 To focus a html element, you need access to the underlying DOM node. Use the [ref hook](https://reactjs.org/docs/hooks-reference.html#useref) for this.
+
+### What does this syntax mean?
+
+JavaScript compilers allow a greater range of syntax. Here is a small cheatsheet.
+
+#### Destructuring Object
+
+```tsx
+const { title, url } = props
+// -->
+const title = props.title
+const url = props.url
+```
+
+#### Destructuing Array
+
+```tsx
+const [open, setOpen] = React.useState(false)
+// -->
+const __temp = React.useState(false)
+const open = __temp[0]
+const setOpen = __temp[1]
+```
+
+#### Object Property Shorthand
+
+```tsx
+return { title, content }
+// -->
+return { title: title, content: content }
+```
+
+#### String Interpolation
+
+```tsx
+return `The key ${key} can not be found in ${db}.`
+// -->
+return 'The key ' + key + ' can not be found in ' + db + '.'
+```
+
+#### JSX
+
+```tsx
+return <Par gray={true}>This is a paragraph</Par>
+// -->
+return React.createElement(Par, { gray: true }, `This is a paragraph`)
+```
 
 ### How can I change the state of a sibling?
 
@@ -532,4 +816,4 @@ The brother can pass a message to its sister by declaring the state in the paren
 
 ## Notes
 
-- react-use-scroll-position ...
+- content-api is handling data fetching by parsing serlo.org
