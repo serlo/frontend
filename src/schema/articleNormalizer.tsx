@@ -5,7 +5,7 @@ const inlineElements = ['inline-math', 'a']
 
 export const articleSchema = {
   a: {
-    children: []
+    children: ['inline-math']
   },
   'inline-math': {
     children: []

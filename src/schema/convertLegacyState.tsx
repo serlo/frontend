@@ -115,7 +115,6 @@ function convert(node) {
         return children
       }
       // compat: unwrap formulas from p
-      console.log('p children', children)
       if (children.length === 1 && children[0].type === 'math') {
         return children
       }

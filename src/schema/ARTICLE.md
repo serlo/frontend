@@ -156,7 +156,7 @@ Every void element has exactly one empty text as a child. Additional children or
 
 ### a
 
-A link must only contain text. Children that are elements will be unwrapped. A link that contains no text will be removed.
+A link must only contain text or `inline-math`. Children that are elements will be unwrapped. A link that contains no text will be removed.
 
 ### inline-math
 
