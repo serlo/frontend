@@ -9,7 +9,7 @@ export const theme = {
     brandGreen: '#95bc1a',
     lightBackground: '#f4fbff',
     lightBlueBackground: '#dbecf6',
-    dark1: '#333333',
+    dark1: '#333333'
   },
   breakpoints: {
     mobile: '500px',

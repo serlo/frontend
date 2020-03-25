@@ -26,6 +26,8 @@ import checkArticleGuidelines from '../../schema/articleGuidelines'
 import { Hints } from '../Hints'
 import { HSpace } from './HSpace'
 import { StyledP } from '../tags/StyledP'
+import Horizon from './Horizon'
+import { horizonData } from '../../horizondata'
 
 export default function ContentTypes(props) {
   const { data } = props
@@ -156,6 +158,7 @@ function RenderArticle({ content }) {
       <HSpace amount={20} />
       <Hints hints={checkArticleGuidelines(value)} />
       <HSpace amount={40} />
+      <Horizon entries={horizonData} />
     </>
   )
 }
