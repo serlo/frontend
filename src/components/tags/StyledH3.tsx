@@ -6,5 +6,6 @@ export const StyledH3 = styled.h3`
   margin-top: 0;
   margin-bottom: 20px;
   font-size: 1.3125rem;
+  font-weight: bold;
   line-height: 1.22;
 `

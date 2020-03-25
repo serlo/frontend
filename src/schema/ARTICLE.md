@@ -74,13 +74,13 @@ Block
 
 ### `h`
 
-Attributes: level (1-5), anchor
+Attributes: level (1-5)
 
 Block
 
 ### `img`
 
-Attributes: src, alt, href, description
+Attributes: src, alt, href
 
 Block, Void
 
@@ -127,6 +127,12 @@ Block
 ### `important`
 
 Block
+
+### `anchor`
+
+Attributes: id
+
+Block, Void
 
 ###
 
