@@ -98,7 +98,9 @@ function RenderArticle({ content }) {
     const value: any = convertLegacyState(content.legacy)
     const editor = withArticle(createEditor())
     editor.children = value.children
+    const starttime = Date.now()
     Editor.normalize(editor, { force: true })
+    console.log('normalize time', Date.now() - starttime)
     setValue(editor.children)
   }
   if (editMode) {
@@ -133,9 +135,6 @@ function RenderArticle({ content }) {
       {content.breadcrumbs && <Breadcrumbs entries={content.breadcrumbs} />}
       <StyledH1 displayMode>{content.title}</StyledH1>
       <ToolLine>
-        {content.legacy && (
-          <LegacyIndicator title="Inhalt im alten Format">L</LegacyIndicator>
-        )}
         <ToolLineButton onClick={() => setOpen(true)}>
           <FontAwesomeIcon icon={faShareAlt} size="1x" /> Teilen
         </ToolLineButton>

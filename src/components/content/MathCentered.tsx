@@ -11,6 +11,7 @@ export const MathCentered = styled.div<MathCenteredProps>`
   box-sizing: border-box;
   text-align: center;
   margin-bottom: 38px;
-  font-size: 19px;
+  font-size: 1.4rem;
+  padding: 10px 0;
   overflow: auto;
 `

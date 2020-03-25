@@ -23,7 +23,10 @@ import {
 } from 'slate-react'
 import { withHistory } from 'slate-history'
 
-import withArticle, { onlySomeBlocksAllowed } from '../schema/articleNormalizer'
+import withArticle, {
+  onlySomeBlocksAllowed,
+  articleSchema
+} from '../schema/articleNormalizer'
 import {
   renderLeaf,
   renderH,
@@ -125,29 +128,27 @@ function Toolbar() {
       let parent = Path.parent(anchorParentPath)
       let parentType =
         parent.length === 0 ? '#root' : Node.get(editor, parent).type
-      const allowed = onlySomeBlocksAllowed.filter(
-        obj => obj.parent == parentType
-      )
+      const allowed = articleSchema[parentType]
       const node = Node.get(editor, anchorParentPath)
       if (node.level === 1) {
         selectType.push('h1')
         selected = 'h1'
       } else {
-        if (allowed.length > 0) {
-          if (allowed[0].children.includes('p')) selectType.push('p')
-          if (allowed[0].children.includes('important'))
+        if (allowed) {
+          if (allowed.children.includes('p')) selectType.push('p')
+          if (allowed.children.includes('important'))
             selectType.push('important')
-          if (allowed[0].children.includes('h')) {
+          if (allowed.children.includes('h')) {
             selectType.push('h2', 'h3', 'h4', 'h5')
           }
         }
         selected = node.type + (node.level || '')
       }
-      if (Range.isCollapsed(selection) && allowed.length > 0) {
+      if (Range.isCollapsed(selection) && allowed) {
         // was darf man hier hinzufügen?
         ;['img', 'math', 'spoiler-container', 'ul', 'ol', 'row'].forEach(
           key => {
-            if (allowed[0].children.includes(key)) allowedAdd.push(key)
+            if (allowed.children.includes(key)) allowedAdd.push(key)
           }
         )
         addCurrentNode = Node.get(editor, anchorParentPath)

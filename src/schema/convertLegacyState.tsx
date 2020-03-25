@@ -115,6 +115,7 @@ function convert(node) {
         return children
       }
       // compat: unwrap formulas from p
+      console.log('p children', children)
       if (children.length === 1 && children[0].type === 'math') {
         return children
       }
@@ -152,10 +153,15 @@ function convert(node) {
       ]
     }
     if (node.name === 'li') {
+      // compat: wrap li in p
+      let children = convert(node.children)
+      if (children[0].type !== 'p') {
+        children = [{ type: 'p', children }]
+      }
       return [
         {
           type: 'li',
-          children: convert(node.children)
+          children
         }
       ]
     }

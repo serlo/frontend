@@ -74,13 +74,13 @@ Block
 
 ### `h`
 
-Attributes: level (1-5)
+Attributes: level (1-5), anchor
 
 Block
 
 ### `img`
 
-Attributes: src, alt
+Attributes: src, alt, href, description
 
 Block, Void
 
@@ -168,7 +168,7 @@ A paragraph may only contain inline elements or text. Block elements will be unw
 
 ### h
 
-The level must be an integer between 1 and 5. A heading with an invalid level will be removed. A heading may only contain text. Elements will be unwrapped.
+The level must be an integer between 1 and 5. A heading with an invalid level will be removed. A heading may only contain text or `inline-math`. Other elements will be unwrapped.
 
 ### img
 
@@ -184,7 +184,7 @@ A `spoiler-container` must have exactly two children: A `spoiler-title` and a `s
 
 ### spoiler-title
 
-A `spoiler-title` may only contain text. Elements will be unwrapped.
+A `spoiler-title` may only contain text or `inline-math`. Other elements will be unwrapped.
 
 ### spoiler-body
 
@@ -196,7 +196,7 @@ A list may only contain elements of type `li`. Elements of other types will be u
 
 ### li
 
-A list item may only contain inline elements or text. Block elements will be unwrapped.
+A list item may only contain elements of type `p`, `img`, `math` or another `ul` or `ol` of the same parent type, maximal nested twice. Other elements will be unwrapped. Text will be wrapped in `p`.
 
 ### row
 

@@ -7,6 +7,6 @@ export interface MainProps {
 export const StyledMain = styled.main<MainProps>`
   margin-left: auto;
   margin-right: auto;
-  max-width 900px;
+  max-width 800px;
   ${props => (props.hide ? 'overflow: hidden;' : '')}
 `

@@ -3,19 +3,26 @@ import Header from '../src/components/navigation/Header'
 import ContentTypes from '../src/components/content/ContentTypes'
 import Footer from '../src/components/navigation/Footer'
 import { StyledMain } from '../src/components/tags/StyledMain'
+import styled from 'styled-components'
 
 function PageView(props) {
   const { data } = props
   return (
     <>
       <Header />
-      <StyledMain>
-        <ContentTypes data={data} />
-      </StyledMain>
+      <RelatveContainer>
+        <StyledMain>
+          <ContentTypes data={data} />
+        </StyledMain>
+      </RelatveContainer>
       <Footer />
     </>
   )
 }
+
+const RelatveContainer = styled.div`
+  position: relative;
+`
 
 export async function getServerSideProps(props) {
   const data = await fetchContent('/' + props.params.slug.join('/'))
