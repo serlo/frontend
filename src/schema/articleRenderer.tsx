@@ -10,7 +10,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 
 import { ImgCentered } from '../components/content/ImgCentered'
-import { MathCentered } from '../components/content/MathCentered'
+import { MathWrapper } from '../components/content/MathWrapper'
 import { LayoutRow } from '../components/content/LayoutRow'
 import { Col } from '../components/content/Col'
 import { Important } from '../components/content/Important'
@@ -105,7 +105,8 @@ const renderer = {
   li: renderLi,
   row: renderRow,
   col: renderCol,
-  important: renderImportant
+  important: renderImportant,
+  anchor: renderAnchor
 }
 
 function renderElement(props) {
@@ -147,14 +148,18 @@ export function renderP({
 }) {
   let full = false
   let halfslim = false
+  let slim = full
 
   if (value) {
     const parent = Node.parent(value, path)
-    full = parent.type === 'li'
+    if (parent.type === 'li') {
+      full = true
+      halfslim = true
+      slim = true
+    }
 
     // check if next block is list
     const myIndex = path[path.length - 1]
-    halfslim = false
     if (myIndex < parent.children.length - 1) {
       const next = parent.children[myIndex + 1]
       if (next.type == 'ul' || next.type == 'ol') {
@@ -162,12 +167,14 @@ export function renderP({
       }
     }
     if (parent.type === 'important') {
-      halfslim = true
+      // TODO slim only if last?
+      slim = true
+      halfslim = false
     }
   }
 
   return (
-    <StyledP {...attributes} full={full} slim={full} halfslim={halfslim}>
+    <StyledP {...attributes} full={full} slim={slim} halfslim={halfslim}>
       {children}
     </StyledP>
   )
@@ -192,14 +199,23 @@ export function renderImg({
   children = null,
   wrapImg = nowrap
 }) {
+  const img = (
+    <StyledImg
+      src={element.src}
+      alt={element.alt || 'Bild'}
+      maxWidth={element.maxWidth ? element.maxWidth : 0}
+    ></StyledImg>
+  )
   return (
     <ImgCentered {...attributes}>
       {wrapImg(
-        <StyledImg
-          src={element.src}
-          alt={element.alt || 'Bild'}
-          maxWidth={element.maxWidth ? element.maxWidth : 0}
-        ></StyledImg>
+        element.href ? (
+          <a href={element.href} style={{ maxWidth: '100%', display: 'block' }}>
+            {img}
+          </a>
+        ) : (
+          img
+        )
       )}
       {children}
     </ImgCentered>
@@ -210,13 +226,26 @@ export function renderMath({
   element,
   attributes = {},
   children = null,
-  wrapFormula = nowrap
+  wrapFormula = nowrap,
+  value = null,
+  path = []
 }) {
+  let centered = true
+  let slim = false
+  if (element.alignLeft) {
+    centered = false
+  }
+  if (value) {
+    const parent = Node.parent(value, path)
+    if (parent.type === 'important') {
+      slim = true
+    }
+  }
   return (
-    <MathCentered {...attributes}>
+    <MathWrapper slim={slim} centered={centered} {...attributes}>
       {wrapFormula(<Math formula={element.formula} />)}
       {children}
-    </MathCentered>
+    </MathWrapper>
   )
 }
 
@@ -307,4 +336,8 @@ export function renderCol({
 
 export function renderImportant({ attributes, children }) {
   return <Important {...attributes}>{children}</Important>
+}
+
+export function renderAnchor({ element, attributes }) {
+  return <a id={element.id} {...attributes} />
 }

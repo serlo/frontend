@@ -103,6 +103,31 @@ export function convert(node) {
       }
     ]
   }
+  if (plugin === 'table') {
+    return [
+      {
+        type: 'p',
+        children: [{ text: '[Tabelle]' }]
+      }
+    ]
+  }
+  if (plugin === 'video') {
+    return [
+      {
+        type: 'p',
+        children: [{ text: '[Video]' }]
+      }
+    ]
+  }
+  if (plugin === 'anchor') {
+    return [
+      {
+        type: 'anchor',
+        id: node.state,
+        children: [{ text: '' }]
+      }
+    ]
+  }
 
   const type = node.type
   if (type === 'p') {
@@ -110,6 +135,61 @@ export function convert(node) {
     const children = convert(node.children)
     if (children.length === 1 && children[0].type === 'math') {
       return children
+    }
+    // compat handle newlines
+    if (node.children.some(child => child.text && child.text.includes('\n'))) {
+      const splitted = node.children.flatMap(child => {
+        if (child.text && child.text.includes('\n')) {
+          const parts = child.text.split('\n').flatMap(text => [
+            {
+              text
+            },
+            '##break##'
+          ])
+          parts.pop()
+          return parts
+        }
+        return convert(child)
+      })
+      let current = []
+      let result = []
+      if (splitted[0] === '##break##') splitted.shift()
+      if (splitted[splitted.length - 1] !== '##break##')
+        splitted.push('##break##')
+      splitted.forEach((el, i) => {
+        if (el === '##break##') {
+          result.push({
+            type: 'p',
+            children: current
+          })
+          current = []
+        } else {
+          current.push(el)
+        }
+      })
+      return result
+    }
+    const math = children.filter(
+      child => child.type === 'math' || child.type === 'inline-math'
+    )
+    if (math.length === 1) {
+      if (
+        children.every(
+          child =>
+            child.type === 'math' ||
+            child.type === 'inline-math' ||
+            child.text === ''
+        )
+      ) {
+        return [
+          {
+            type: 'math',
+            formula: math[0].formula,
+            alignLeft: true,
+            children: [{ text: '' }]
+          }
+        ]
+      }
     }
     return [
       {

@@ -74,13 +74,13 @@ Block
 
 ### `h`
 
-Attributes: level (1-5), anchor
+Attributes: level (1-5)
 
 Block
 
 ### `img`
 
-Attributes: src, alt, href, description
+Attributes: src, alt, href
 
 Block, Void
 
@@ -128,6 +128,12 @@ Block
 
 Block
 
+### `anchor`
+
+Attributes: id
+
+Block, Void
+
 ###
 
 ###
@@ -156,7 +162,7 @@ Every void element has exactly one empty text as a child. Additional children or
 
 ### a
 
-A link must only contain text. Children that are elements will be unwrapped. A link that contains no text will be removed.
+A link must only contain text or `inline-math`. Children that are elements will be unwrapped. A link that contains no text will be removed.
 
 ### inline-math
 

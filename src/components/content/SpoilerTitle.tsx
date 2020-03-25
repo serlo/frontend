@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { darken } from 'polished'
 
 export const SpoilerTitle = styled.div`
   margin: 0;
@@ -9,5 +10,6 @@ export const SpoilerTitle = styled.div`
   cursor: pointer;
   text-align: left;
   color: ${props => props.theme.colors.dark1};
-  background-color: ${props => props.theme.colors.lightBlueBackground};
+  background-color: ${props =>
+    darken(0.04, props.theme.colors.lightBackground)};
 `

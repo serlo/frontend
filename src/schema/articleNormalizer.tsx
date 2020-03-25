@@ -1,11 +1,11 @@
 import { Path, Transforms, Node, Text, Element, Editor } from 'slate'
 
-const voidElements = ['math', 'img', 'inline-math']
+const voidElements = ['math', 'img', 'inline-math', 'anchor']
 const inlineElements = ['inline-math', 'a']
 
 export const articleSchema = {
   a: {
-    children: []
+    children: ['inline-math']
   },
   'inline-math': {
     children: []
@@ -57,7 +57,8 @@ export const articleSchema = {
       'row',
       'important',
       'h',
-      'spoiler-container'
+      'spoiler-container',
+      'anchor'
     ],
     wrapTextIn: { type: 'p', children: [{ text: '' }] }
   }
@@ -78,7 +79,7 @@ export default function withArticle(editor: Editor) {
 
     // - remove empty links
     if (type === 'a' && Node.string(node).trim() == '') {
-      console.log(`n: Removing empty link`)
+      console.log(`n: Removing empty link to ${node.href}`)
       Transforms.removeNodes(editor, { at: path })
       return
     }

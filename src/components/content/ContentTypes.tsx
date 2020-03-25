@@ -89,25 +89,28 @@ function RenderArticle({ content }) {
   if (!value && content.edtrio) {
     const edtrio = JSON.parse(content.edtrio)
     const value = convertEdtrioState(edtrio)
-    const editor = withArticle(createEditor())
-    editor.children = value.children
-    Editor.normalize(editor, { force: true })
-    setValue(editor.children)
+    //const editor = withArticle(createEditor())
+    //editor.children = value.children
+    //Editor.normalize(editor, { force: true })
+    setValue(value.children)
   }
   if (!value && content.legacy) {
     const value: any = convertLegacyState(content.legacy)
-    const editor = withArticle(createEditor())
-    editor.children = value.children
-    const starttime = Date.now()
-    Editor.normalize(editor, { force: true })
-    console.log('normalize time', Date.now() - starttime)
-    setValue(editor.children)
+    //const editor = withArticle(createEditor())
+    //editor.children = value.children
+    //const starttime = Date.now()
+    //Editor.normalize(editor, { force: true })
+    //console.log('normalize time', Date.now() - starttime)
+    setValue(value.children)
   }
   if (editMode) {
     if (value.length < 1 || value[0].type !== 'h' || value[0].level !== 1) {
+      const editor = withArticle(createEditor())
+      editor.children = value
+      Editor.normalize(editor, { force: true })
       setValue([
         { type: 'h', level: 1, children: [{ text: content.title }] },
-        ...value,
+        ...editor.children,
         { type: 'p', children: [{ text: '' }] }
       ])
     }

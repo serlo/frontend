@@ -33,11 +33,15 @@ function convert(node) {
           ]
         }
         if (/^c[\d]+$/.test(className)) {
+          let children = convert(node.children)
+          if (children.length === 0) {
+            children = [{ type: 'p', children: [{ text: '' }] }]
+          }
           return [
             {
               type: 'col',
               size: parseInt(className.substring(1)),
-              children: convert(node.children)
+              children
             }
           ]
         }
@@ -77,16 +81,24 @@ function convert(node) {
             }
           ]
         }
+        if (className === 'table-responsive') {
+          return [
+            {
+              type: 'p',
+              children: [{ text: '[Tabelle]' }]
+            }
+          ]
+        }
       }
     }
     if (node.name === 'span') {
       if (node.attribs) {
         const className = node.attribs.class
         if (className === 'mathInline') {
-          const formula = node.children[0].data.substring(
-            2,
-            node.children[0].data.length - 2
-          )
+          const formula = node.children[0].data
+            .substring(2, node.children[0].data.length - 2)
+            .split('&lt;')
+            .join('<')
           return [
             {
               type: 'inline-math',
@@ -96,11 +108,13 @@ function convert(node) {
           ]
         }
         if (className === 'math') {
-          const formula = node.children[0].data.substring(
-            2,
-            node.children[0].data.length - 2
-          )
-          return [{ type: 'math', formula, children: [{ text: '' }] }]
+          const formula = node.children[0].data
+            .substring(2, node.children[0].data.length - 2)
+            .split('&lt;')
+            .join('<')
+          return [
+            { type: 'math', formula, alignLeft: true, children: [{ text: '' }] }
+          ]
         }
       }
     }
@@ -115,10 +129,53 @@ function convert(node) {
         return children
       }
       // compat: unwrap formulas from p
-      console.log('p children', children)
-      if (children.length === 1 && children[0].type === 'math') {
-        return children
+      const maths = children.filter(child => child.type === 'math')
+      if (maths.length >= 1) {
+        let current = []
+        let result = []
+        children.forEach(child => {
+          if (child.type === 'math') {
+            if (current.length > 0) {
+              result.push({
+                type: 'p',
+                children: current
+              })
+              current = []
+            }
+            result.push(child)
+          } else {
+            current.push(child)
+          }
+        })
+        if (current.length > 0) {
+          result.push({
+            type: 'p',
+            children: current
+          })
+        }
+        return result
       }
+      // compat: convert single inline-math in paragraph to block formula
+      const inlineMaths = children.filter(child => child.type === 'inline-math')
+      if (inlineMaths.length === 1) {
+        if (
+          children.every(
+            child =>
+              child.type === 'inline-math' ||
+              (child.text !== undefined && child.text.trim() == '')
+          )
+        ) {
+          return [
+            {
+              type: 'math',
+              alignLeft: true,
+              formula: inlineMaths[0].formula,
+              children: [{ text: '' }]
+            }
+          ]
+        }
+      }
+
       return [
         {
           type: 'p',
@@ -212,10 +269,18 @@ function convert(node) {
       ]
     }
     if (node.name === 'a') {
-      const children = convert(node.children)
-      // compat: don't link images (for now)
+      let children = convert(node.children)
+      // compat: link images by tag
       if (children.length === 1 && children[0].type === 'img') {
+        children[0].href = node.attribs.href
         return children
+      }
+      // compat: handle empty tag
+      if (
+        children.length == 0 ||
+        (children.length == 1 && children[0].text === '')
+      ) {
+        children = [{ text: node.attribs.href }]
       }
       return [
         {

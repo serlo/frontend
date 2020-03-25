@@ -10,6 +10,7 @@ export const StyledH2 = styled.h2`
   padding-bottom: 6px;
   margin-bottom: 38px;
   font-size: 1.5rem;
+  font-weight: bold;
   hyphens: auto;
   line-height: 1.22;
 `
