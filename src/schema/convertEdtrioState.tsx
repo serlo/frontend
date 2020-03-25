@@ -106,10 +106,15 @@ export function convert(node) {
 
   const type = node.type
   if (type === 'p') {
+    // compat unwrap math from p
+    const children = convert(node.children)
+    if (children.length === 1 && children[0].type === 'math') {
+      return children
+    }
     return [
       {
         type: 'p',
-        children: convert(node.children)
+        children
       }
     ]
   }
@@ -136,7 +141,7 @@ export function convert(node) {
       {
         type: 'math',
         formula: node.src,
-        children: convert(node.children)
+        children: [{ text: '' }]
       }
     ]
   }
@@ -145,7 +150,7 @@ export function convert(node) {
       {
         type: 'inline-math',
         formula: node.src,
-        children: convert(node.children)
+        children: [{ text: '' }]
       }
     ]
   }
@@ -166,7 +171,7 @@ export function convert(node) {
     ]
   }
   if (type === 'list-item-child') {
-    return convert(node.children)
+    return [{ type: 'p', children: convert(node.children) }]
   }
 
   if (node.text !== undefined) {

@@ -2,7 +2,8 @@ import styled from 'styled-components'
 
 export const ToolLineButton = styled.button`
   font-weight: bold;
-  font-size: 12px;
+  font-size: 0.825rem;
+  font-family: inherit;
   border: none;
   padding: 4px 4px;
   margin: 2px;
@@ -13,4 +14,8 @@ export const ToolLineButton = styled.button`
   color: ${props => props.theme.colors.brandGreen};
   background-color: transparent;
   border: thin solid;
+  &:hover {
+    color: white;
+    background-color: ${props => props.theme.colors.brandGreen};
+  }
 `

@@ -4,28 +4,13 @@ import { faPencilAlt, faShareAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import ShareModal from './ShareModal'
+import { HSpace } from '../content/HSpace'
 
 export default function Toolbox({ onEdit = () => {} }) {
   const [open, setOpen] = React.useState(false)
-  const [visible, setVisible] = React.useState(true)
-
-  React.useEffect(() => {
-    function handleScroll() {
-      const scrollY = window.pageYOffset
-      const docHeight = document.documentElement.scrollHeight
-      const spaceToBottom = Math.max(0, docHeight - scrollY)
-      const shouldVisible = spaceToBottom > 1800
-      setVisible(shouldVisible)
-    }
-
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
-  if (!visible) return null
 
   return (
-    <>
+    <AbsoluteWrapper>
       <BoxWrapper>
         <IconButton onClick={onEdit}>
           <FontAwesomeIcon icon={faPencilAlt} size="1x" /> Inhalte bearbeiten
@@ -35,18 +20,26 @@ export default function Toolbox({ onEdit = () => {} }) {
         </IconButton>
       </BoxWrapper>
       <ShareModal open={open} onClose={() => setOpen(false)} />
-    </>
+    </AbsoluteWrapper>
   )
 }
 
-const BoxWrapper = styled.div`
-  position: fixed;
+const AbsoluteWrapper = styled.div`
+  position: absolute;
   right: 32px;
+  bottom: 32px;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+`
+
+const BoxWrapper = styled.div`
+  position: sticky;
   bottom: 32px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
     display: none;
   }
 `
@@ -54,6 +47,7 @@ const BoxWrapper = styled.div`
 const IconButton = styled.button`
   color: ${props => props.theme.colors.brandGreen};
   font-weight: bold;
+  font-family: inherit;
   border: none;
   background-color: transparent;
   padding: 6px 6px;

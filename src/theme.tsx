@@ -10,6 +10,8 @@ export const theme = {
     lightBackground: '#f4fbff',
     lightBlueBackground: '#dbecf6',
     dark1: '#333333',
+    linkColor: '#337AB7',
+    linkHoverColor: '#23527c'
   },
   breakpoints: {
     mobile: '500px',

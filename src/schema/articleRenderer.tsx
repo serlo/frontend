@@ -161,6 +161,9 @@ export function renderP({
         halfslim = true
       }
     }
+    if (parent.type === 'important') {
+      halfslim = true
+    }
   }
 
   return (
