@@ -13,20 +13,10 @@ import {
   Range,
   Path
 } from 'slate'
-import {
-  Slate,
-  Editable,
-  withReact,
-  useEditor,
-  ReactEditor,
-  useSlate
-} from 'slate-react'
+import { Slate, Editable, withReact, useEditor, ReactEditor } from 'slate-react'
 import { withHistory } from 'slate-history'
 
-import withArticle, {
-  onlySomeBlocksAllowed,
-  articleSchema
-} from '../schema/articleNormalizer'
+import withArticle, { articleSchema } from '../schema/articleNormalizer'
 import {
   renderLeaf,
   renderH,
@@ -96,24 +86,25 @@ export default function Create({ value, onChange }) {
   )
 }
 
+function getNextElementPath(editor, p, block = true) {
+  let path = p.slice(0)
+  let node = Node.get(editor, path)
+  while (
+    path.length > 0 &&
+    (!Element.isElement(node) || editor.isInline(node) === block)
+  ) {
+    path = Path.parent(path)
+    node = Node.get(editor, path)
+  }
+  return path
+}
+
 function Toolbar() {
   // Toolbar sollte Elemente nur nach ganz bestimmten Kriterien anzeigen
   const editor = useEditor()
   const { selection } = editor
 
   // Zeige nur sinnvolle Optionen an
-  function getNextElementPath(p, block = true) {
-    let path = p.slice(0)
-    let node = Node.get(editor, path)
-    while (
-      path.length > 0 &&
-      (!Element.isElement(node) || editor.isInline(node) === block)
-    ) {
-      path = Path.parent(path)
-      node = Node.get(editor, path)
-    }
-    return path
-  }
   const selectType = []
   let selected = ''
   let selectBoxPath = []
@@ -121,8 +112,8 @@ function Toolbar() {
   let addCurrentNode
   let addCurrentPath
   if (selection) {
-    const anchorParentPath = getNextElementPath(selection.anchor.path)
-    const focusParentPath = getNextElementPath(selection.focus.path)
+    const anchorParentPath = getNextElementPath(editor, selection.anchor.path)
+    const focusParentPath = getNextElementPath(editor, selection.focus.path)
     if (Path.equals(anchorParentPath, focusParentPath)) {
       selectBoxPath = anchorParentPath
       let parent = Path.parent(anchorParentPath)
@@ -188,8 +179,16 @@ function Toolbar() {
   let inLink = false
   let linkPath = []
   if (selection) {
-    const inlineAnchorPath = getNextElementPath(selection.anchor.path, false)
-    const inlineFocusPath = getNextElementPath(selection.focus.path, false)
+    const inlineAnchorPath = getNextElementPath(
+      editor,
+      selection.anchor.path,
+      false
+    )
+    const inlineFocusPath = getNextElementPath(
+      editor,
+      selection.focus.path,
+      false
+    )
     if (
       inlineAnchorPath.length > 0 &&
       Path.equals(inlineAnchorPath, inlineFocusPath) &&
@@ -343,7 +342,12 @@ const defaultInserts = {
     children: [
       {
         type: 'li',
-        children: [{ text: '' }]
+        children: [
+          {
+            type: 'p',
+            children: [{ text: '' }]
+          }
+        ]
       }
     ]
   },
@@ -352,7 +356,12 @@ const defaultInserts = {
     children: [
       {
         type: 'li',
-        children: [{ text: '' }]
+        children: [
+          {
+            type: 'p',
+            children: [{ text: '' }]
+          }
+        ]
       }
     ]
   },
@@ -533,6 +542,82 @@ function withPlugin(editor) {
 
   editor.insertBreak = () => {
     const { selection } = editor
+    if (Range.isCollapsed(selection)) {
+      const enclosingBlockAnchorPath = getNextElementPath(
+        editor,
+        selection.anchor.path
+      )
+      const enclosingBlock = Node.get(editor, enclosingBlockAnchorPath)
+      if (
+        enclosingBlock.type === 'h' ||
+        enclosingBlock.type === 'img' ||
+        enclosingBlock.type === 'math'
+      ) {
+        enclosingBlockAnchorPath[enclosingBlockAnchorPath.length - 1]++
+        Transforms.insertNodes(
+          editor,
+          { type: 'p', children: [{ text: '' }] },
+          { at: enclosingBlockAnchorPath }
+        )
+        Transforms.select(editor, enclosingBlockAnchorPath)
+        return
+      }
+      if (enclosingBlock.type === 'p') {
+        const outerEnclosingBlockPath = getNextElementPath(
+          editor,
+          Path.parent(enclosingBlockAnchorPath)
+        )
+        const outerBlock = Node.get(editor, outerEnclosingBlockPath)
+        if (Node.string(enclosingBlock) == '') {
+          if (outerBlock.type === 'important') {
+            outerEnclosingBlockPath[outerEnclosingBlockPath.length - 1]++
+            Transforms.insertNodes(
+              editor,
+              {
+                type: 'p',
+                children: [{ text: '' }]
+              },
+              { at: outerEnclosingBlockPath }
+            )
+            Transforms.select(editor, outerEnclosingBlockPath)
+            return
+          }
+          if (outerBlock.type === 'li') {
+            const outerParentPath = Path.parent(outerEnclosingBlockPath)
+            outerParentPath[outerParentPath.length - 1]++
+            Transforms.insertNodes(
+              editor,
+              {
+                type: 'p',
+                children: [{ text: '' }]
+              },
+              { at: outerParentPath }
+            )
+            Transforms.select(editor, outerParentPath)
+            return
+          }
+        }
+        if (outerBlock.type === 'li') {
+          outerEnclosingBlockPath[outerEnclosingBlockPath.length - 1]++
+          Transforms.insertNodes(
+            editor,
+            {
+              type: 'li',
+              children: [
+                {
+                  type: 'p',
+                  children: [{ text: '' }]
+                }
+              ]
+            },
+            { at: outerEnclosingBlockPath }
+          )
+          Transforms.select(editor, outerEnclosingBlockPath)
+          return
+        }
+      }
+    }
+
     insertBreak()
   }
 
@@ -643,7 +728,9 @@ function MyMath(props) {
         </TipOver>
         {children}
       </>
-    )
+    ),
+    value: editor,
+    path
   })
 }
 
@@ -678,6 +765,7 @@ function MathSettings(props) {
   const element = Node.get(editor, path)
   const [formula, setFormula] = React.useState(element.formula)
   const { closeModal } = React.useContext(ModalContext)
+  const [alignLeft, setAlignLeft] = React.useState(element.alignLeft)
   return (
     <>
       <LatexInputArea
@@ -689,11 +777,28 @@ function MathSettings(props) {
       />
       <br />
       <br />
+      <label>
+        <input
+          type="checkbox"
+          checked={alignLeft}
+          onChange={e => {
+            setAlignLeft(e.target.checked)
+            if (e.target.checked) {
+              Transforms.setNodes(editor, { alignLeft: true }, { at: path })
+            } else {
+              Transforms.unsetNodes(editor, 'alignLeft', { at: path })
+            }
+          }}
+        />{' '}
+        Linksbündig anzeigen
+      </label>
+      <br />
+      <br />
       <button onClick={() => closeModal()}>Fertig</button>
       <br />
       <br />
       <hr />
-      {renderMath({ element: { formula } })}
+      {renderMath({ element: { formula, alignLeft } })}
     </>
   )
 }
@@ -945,6 +1050,7 @@ function ImgSettings(props) {
   const element = Node.get(editor, path)
   const [src, setSrc] = React.useState(element.src)
   const [alt, setAlt] = React.useState(element.alt)
+  const [href, setHref] = React.useState(element.href)
   const [maxWidth, setMaxWidth] = React.useState(element.maxWidth)
   const { closeModal } = React.useContext(ModalContext)
   return (
@@ -966,6 +1072,16 @@ function ImgSettings(props) {
           onChange: e => {
             setAlt(e.target.value)
             Transforms.setNodes(editor, { alt: e.target.value }, { at: path })
+          }
+        }}
+      />
+      <SettingsInput
+        title="Verlinkung (optional):"
+        innerProps={{
+          value: href || '',
+          onChange: e => {
+            setHref(e.target.value)
+            Transforms.setNodes(editor, { href: e.target.value }, { at: path })
           }
         }}
       />

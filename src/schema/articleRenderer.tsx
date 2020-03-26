@@ -168,8 +168,13 @@ export function renderP({
     }
     if (parent.type === 'important') {
       // TODO slim only if last?
-      slim = true
-      halfslim = false
+      if (myIndex == parent.children.length - 1) {
+        slim = true
+        halfslim = false
+      } else {
+        halfslim = true
+        slim = false
+      }
     }
   }
 
@@ -232,17 +237,27 @@ export function renderMath({
 }) {
   let centered = true
   let slim = false
+  let fullslim = false
   if (element.alignLeft) {
     centered = false
   }
   if (value) {
     const parent = Node.parent(value, path)
+    const myIndex = path[path.length - 1]
     if (parent.type === 'important') {
       slim = true
     }
+    if (myIndex == parent.children.length - 1) {
+      fullslim = true
+    }
   }
   return (
-    <MathWrapper slim={slim} centered={centered} {...attributes}>
+    <MathWrapper
+      slim={slim}
+      fullslim={fullslim}
+      centered={centered}
+      {...attributes}
+    >
       {wrapFormula(<Math formula={element.formula} />)}
       {children}
     </MathWrapper>
