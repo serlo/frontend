@@ -89,7 +89,8 @@ const BreadcrumbLast = styled(Breadcrumb)`
     background: ${props =>
       transparentize(0.35, props.theme.colors.lightBlueBackground)};
     border-radius: 12px;
-    padding-left: 2px;
+    padding-left: 4px;
+    margin-top: 8px;
 
     &:hover {
       background: ${props => transparentize(0.35, props.theme.colors.brand)};
