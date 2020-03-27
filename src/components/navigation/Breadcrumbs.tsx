@@ -24,7 +24,8 @@ export default function Breadcrumbs(props: BreadcrumbProps) {
   at least on mobile but probably on larger screens too.
   */
 
-  const filteredEntries = entries.slice(0,entries.length - 1)
+  //const filteredEntries = entries.slice(0,entries.length - 1)
+  const filteredEntries = entries
 
   return (
     <BreadcrumbWrapper>
@@ -44,17 +45,23 @@ export default function Breadcrumbs(props: BreadcrumbProps) {
 
 function BreadcrumbEntries(props) {
   const { bcEntry, i, l } = props
-  
-  //should probably happen on server side, don't show "all topics"
-  if( i == 1 ) return null
 
-  //TODO: Consider max number of items to display.
-  //const entryLabel = (l.length > 4 && i == 2) ? '…' : bcEntry.label
-  //if( l.length > 4 && i > 1 && i < l.length - 1 ) return null
+  //should probably happen on server side, don't show "all topics"
+  if (i == 1) return null
+
+  const overflow = l.length > 5
+  const itemsToRemove = l.length - 5
+  const ellipsesItem = overflow && i == 2
+
+  if (overflow && i > 2 && i < 1 + itemsToRemove) return null
 
   return l.length !== i + 1 ? (
     <>
-      <Breadcrumb href={bcEntry.url}>{bcEntry.label}</Breadcrumb>
+      {ellipsesItem ? (
+        <Breadcrumb>…</Breadcrumb>
+      ) : (
+        <Breadcrumb href={bcEntry.url}>{bcEntry.label}</Breadcrumb>
+      )}
     </>
   ) : (
     <BreadcrumbLast href={bcEntry.url}>
@@ -71,38 +78,37 @@ const BreadcrumbWrapper = styled.div`
 `
 
 const Breadcrumb = styled.a`
-
   display: inline-block;
   border-radius: 5px;
   color: ${props => props.theme.colors.brand};
   font-weight: normal;
   text-decoration: none;
-  font-size: 20px;
-  margin: 0 20px 0 0;
+  font-size: 1rem;
+  margin: 0 12px 0 0;
   padding: 2px 6px;
   white-space: nowrap;
 
-  &:hover {
+  &[href]:hover {
     background: ${props => transparentize(0.35, props.theme.colors.brand)};
     color: ${props => props.theme.colors.bluewhite};
   }
 
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
     display: none;
+    font-size: 1.33rem;
   }
 
-  @media (min-width: ${props => props.theme.breakpoints.md}) {
+  @media (min-width: ${props => props.theme.breakpoints.sm}) {
     &:after {
-      content: ">";
+      content: '>';
       color: ${props => props.theme.colors.lightgray};
       position: absolute;
-      margin-left: 13px
+      margin-left: 8px;
     }
   }
 `
 
 const BreadcrumbLast = styled(Breadcrumb)`
-
   &:after {
     display: none;
   }
