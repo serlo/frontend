@@ -59,6 +59,7 @@ function About() {
 }
 
 const AboutContainer = styled.div`
+  margin-top: 32px;
   display: flex;
   @media (max-width: ${props => props.theme.breakpoints.md}) {
     flex-direction: column;
@@ -66,10 +67,10 @@ const AboutContainer = styled.div`
 `
 
 const LogoContainer = styled.div`
-  flex-basis: 66.6667%;
   background-color: ${props => props.theme.colors.brand};
   position: relative;
   min-height: 54px;
+  width: 100%;
 `
 
 const Subline = styled.p`
@@ -110,15 +111,12 @@ const TopButton = styled.div`
 `
 
 const InfoContainer = styled.div`
-  flex-basis: 33.3333%;
-  display: flex;
-  flex-direction: column;
+  flex-shrink: 2;
+  width: 100%;
 `
 
 const Summary = styled.div`
   background-color: ${props => props.theme.colors.lightblue};
-  display: flex;
-  flex-direction: column;
   padding: 32px ${props => props.theme.defaults.sidepadding} 16px;
   font-size: 18px;
   line-height: 24px;
