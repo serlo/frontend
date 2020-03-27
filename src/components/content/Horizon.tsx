@@ -43,6 +43,11 @@ const Item = styled.a`
   max-width: 400px;
   width: 30%;
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    /* quickfix: slider or not loading them at all would be better */
+    display: none;
+    &:first-child {
+      display: block;
+    }
     margin-bottom: 30px;
     width: 100%;
   }
