@@ -11,8 +11,8 @@ export default function Menu(props) {
     <ResponsiveNav>
       <Tippy
         singleton={source}
-        trigger="click"
         placement="bottom-start"
+        trigger="mouseenter focus click"
         interactive={true}
       />
       <List>
