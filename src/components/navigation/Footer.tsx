@@ -133,7 +133,7 @@ const SummaryHeading = styled.div`
 
 const SerloLink = styled.a`
   &:hover {
-    background-color: ${props => lighten(0.05, props.theme.colors.brand)};
+    background-color: ${props => props.theme.colors.brand};
   }
   border-radius: 4px;
   color: white;
