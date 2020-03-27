@@ -170,6 +170,10 @@ const Support = styled.div`
   padding-top: 16px;
   padding-bottom: 16px;
   color: white;
+
+  @media (min-width: ${props => props.theme.breakpoints.lg}) {
+    justify-content: start;
+  }
 `
 
 const ImageLink = styled.a`
@@ -180,6 +184,13 @@ const ImageLink = styled.a`
     width: 60px;
   }
   cursor: pointer;
+
+  @media (min-width: ${props => props.theme.breakpoints.lg}) {
+    &:first-child {
+      ${makeResponsivePadding}
+      margin-left: -6px;
+    }
+  }
 `
 
 const SupportButton = styled.div`
