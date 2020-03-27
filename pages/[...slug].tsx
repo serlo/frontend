@@ -1,4 +1,4 @@
-import fetchContent from '../src/content-api/fetchContentFromSerloOrg'
+import fetchContentQL from '../src/content-api/fetchContentFromSerloOrg'
 import Header from '../src/components/navigation/Header'
 import ContentTypes from '../src/components/content/ContentTypes'
 import Footer from '../src/components/navigation/Footer'
@@ -25,7 +25,7 @@ const RelatveContainer = styled.div`
 `
 
 export async function getServerSideProps(props) {
-  const data = await fetchContent('/' + props.params.slug.join('/'))
+  const data = await fetchContentQL('/' + props.params.slug.join('/'))
   return { props: { data } }
 }
 

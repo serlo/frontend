@@ -31,7 +31,7 @@ import { horizonData } from '../../horizondata'
 
 export default function ContentTypes(props) {
   const { data } = props
-  if (data.contentType === 'article' || data.contentType === 'Page revision') {
+  if (data.contentType === 'Article' || data.contentType === 'Page') {
     return <RenderArticle content={data.data} />
   }
   if (data.contentType === 'topic' || data.contentType === 'subject') {
@@ -87,7 +87,7 @@ function RenderArticle({ content }) {
   const [value, setValue] = React.useState(undefined)
   const [editMode, setEditMode] = React.useState(false)
   if (!value && content.edtrio) {
-    const edtrio = JSON.parse(content.edtrio)
+    const edtrio = content.edtrio
     const value = convertEdtrioState(edtrio)
     //const editor = withArticle(createEditor())
     //editor.children = value.children
@@ -132,9 +132,6 @@ function RenderArticle({ content }) {
   }
   return (
     <>
-      <DesktopOnly>
-        <WipHint part="Desktop-Ansicht" />
-      </DesktopOnly>
       {content.breadcrumbs && <Breadcrumbs entries={content.breadcrumbs} />}
       <StyledH1 displayMode>{content.title}</StyledH1>
       <ToolLine>

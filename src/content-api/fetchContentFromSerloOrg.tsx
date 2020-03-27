@@ -1,6 +1,74 @@
 import fetch from 'isomorphic-unfetch'
+import { request } from 'graphql-request'
+import { render } from '../../external/legacy_render'
 
-export default async function fetchContent(alias) {
+const endpoint = 'https://api.serlo.org/graphql'
+
+export default async function fetchContentQL(alias) {
+  const data: any = {}
+  let contentType = 'unknown'
+
+  let QUERY
+
+  if (/\/[\d]+/.test(alias)) {
+    // by id
+    const id = alias.substring(1)
+    QUERY = `
+    {
+      uuid(id:${id}) {
+        __typename
+        ... on Page {
+          currentRevision {
+            title
+            content
+          }
+        }
+        ... on Article {
+          currentRevision {
+            title
+            content
+          }
+        }
+      }
+    }`
+  } else {
+    QUERY = `
+    {
+      uuid(alias:{instance:de,path:"${alias}"}) {
+        __typename
+        ... on Page {
+          currentRevision {
+            title
+            content
+          }
+        }
+        ... on Article {
+          currentRevision {
+            title
+            content
+          }
+        }
+      }
+    }`
+  }
+
+  if (QUERY) {
+    let reqData = await request(endpoint, QUERY)
+    contentType = reqData.uuid.__typename
+    let value = reqData.uuid.currentRevision.content
+    data.title = reqData.uuid.currentRevision.title
+    if (value.startsWith('[')) {
+      // legacy
+      data.legacy = await render(value)
+    } else {
+      data.edtrio = JSON.parse(value)
+    }
+  }
+
+  return { alias, contentType, data }
+}
+
+export async function fetchContent(alias) {
   // deeeeeep shit
   alias = alias.replace('ä', '%C3%A4')
   alias = alias.replace('ö', '%C3%B6')
