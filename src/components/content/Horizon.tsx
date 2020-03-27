@@ -11,7 +11,7 @@ interface HorizonProp {
 export default function Horizon({ entries }: { entries: HorizonProp[] }) {
   return (
     <Wrapper>
-      {entries.map((horizonEntry, index) => {
+      {entries.sort(() => Math.random() - 0.5).map((horizonEntry, index) => {
         return (
           <Item href={horizonEntry.url} key={index}>
             <Image alt={horizonEntry.title} src={horizonEntry.imageUrl} />
@@ -43,6 +43,11 @@ const Item = styled.a`
   max-width: 400px;
   width: 30%;
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    /* quickfix: slider or not loading them at all would be better */
+    display: none;
+    &:first-child {
+      display: block;
+    }
     margin-bottom: 30px;
     width: 100%;
   }

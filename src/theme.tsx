@@ -19,5 +19,9 @@ export const theme = {
     sm: '800px',
     md: '1024px',
     lg: '1216px'
+  },
+  defaults: {
+    sideSpacingMobile: '16px',
+    sideSpacingLg: '40px'
   }
 }
