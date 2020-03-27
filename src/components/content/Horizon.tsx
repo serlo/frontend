@@ -11,7 +11,7 @@ interface HorizonProp {
 export default function Horizon({ entries }: { entries: HorizonProp[] }) {
   return (
     <Wrapper>
-      {entries.map((horizonEntry, index) => {
+      {entries.sort(() => Math.random() - 0.5).map((horizonEntry, index) => {
         return (
           <Item href={horizonEntry.url} key={index}>
             <Image alt={horizonEntry.title} src={horizonEntry.imageUrl} />
