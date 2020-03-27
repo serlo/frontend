@@ -1,8 +1,12 @@
 import styled from 'styled-components'
 import { lighten } from 'polished'
 
-export default function Logo(props) {
-  const { subline } = props
+const logoWordmarkPaddingLeft = 77
+const logoPaddingLeft = 6
+const logoTargetWidth = 160
+const logoOriginalWidth = 237
+
+export default function Logo({ subline }: { subline: string }) {
   return (
     <>
       <div>
@@ -10,7 +14,7 @@ export default function Logo(props) {
           <Image
             alt="Serlo"
             src={'/img/serlo-logo.svg'}
-            width="160"
+            width={logoTargetWidth}
             height="80"
           />
         </a>
@@ -27,11 +31,15 @@ export default function Logo(props) {
 }
 
 const Image = styled.img`
-  padding-left: 6px;
+  padding-left: ${logoPaddingLeft}px;
 `
 
+const sublineH2PaddingLeft =
+  logoPaddingLeft +
+  (logoWordmarkPaddingLeft * logoTargetWidth) / logoOriginalWidth
+
 const SublineH2 = styled.div`
-  padding-left: 0;
+  padding-left: ${sublineH2PaddingLeft}px;
   padding-top: 15px;
 `
 
