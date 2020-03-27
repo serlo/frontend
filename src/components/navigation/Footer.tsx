@@ -118,7 +118,8 @@ const InfoContainer = styled.div`
 
 const Summary = styled.div`
   background-color: ${props => props.theme.colors.lightblue};
-  padding: 32px 0 16px;
+  padding-top: 32px;
+  padding-bottom: 16px;
   ${makeResponsivePadding}
   font-size: 18px;
   line-height: 24px;
@@ -196,7 +197,7 @@ const ImageLink = styled.a`
 const SupportButton = styled.div`
   margin-top: 3px;
   border-radius: 80px;
-  padding: 6px 6px;
+  padding: 3px 6px;
   ${ImageLink}:hover & {
     background-color: ${props => props.theme.colors.brand};
   }
