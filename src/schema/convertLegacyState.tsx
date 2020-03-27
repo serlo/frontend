@@ -57,7 +57,7 @@ function convert(node) {
           return [
             {
               type: 'spoiler-title',
-              children: convert(node.children[1])
+              children: convert(node.children.slice(1))
             }
           ]
         }
