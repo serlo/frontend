@@ -23,7 +23,7 @@ function About() {
   return (
     <AboutContainer>
       <LogoContainer>
-        <TopButton onClick={() => window.scrollTo(0, 0)}>
+        <TopButton onClick={() => window.scrollTo(0, 0)} title="Nach oben">
           <FontAwesomeIcon icon={faChevronUp} size="lg" />
         </TopButton>
       </LogoContainer>
