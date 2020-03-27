@@ -83,9 +83,8 @@ const Breadcrumb = styled.a`
   font-weight: normal;
   text-decoration: none;
   font-size: 1rem;
-  margin: 0 12px 0 0;
   padding: 2px 6px;
-  white-space: nowrap;
+  align-items: center;
 
   &[href]:hover {
     background: ${props => transparentize(0.35, props.theme.colors.brand)};
@@ -94,10 +93,13 @@ const Breadcrumb = styled.a`
 
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
     display: none;
-    font-size: 1.33rem;
+    font-size: 1.25rem;
   }
 
   @media (min-width: ${props => props.theme.breakpoints.sm}) {
+    white-space: nowrap;
+    margin: 0 12px 0 0;
+
     &:after {
       content: '>';
       color: ${props => props.theme.colors.lightgray};
