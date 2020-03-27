@@ -20,6 +20,7 @@ export const theme = {
     lg: '1216px'
   },
   defaults: {
-    sidepadding: '16px',
+    sideSpacingMobile: '16px',
+    sideSpacingLg: '40px'
   }
 }

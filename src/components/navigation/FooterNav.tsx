@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { lighten } from 'polished'
+import { makeResponsivePadding } from '../../helper/csshelper'
 
 export interface NavChild {
   title: string
@@ -60,7 +61,8 @@ const FooterNavContainer = styled.div`
 
 const ColWithPadding = styled.div`
   margin-top: 16px;
-  padding: 0 ${props => props.theme.defaults.sidepadding};
+  padding: 0;
+  ${makeResponsivePadding}
   box-sizing: border-box;
   @media (min-width: ${props => props.theme.breakpoints.md}) {
     flex-grow: 1;
@@ -73,7 +75,7 @@ const ColWithPadding = styled.div`
     max-width: 50%;
   }
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    flex-basis: 100%
+    flex-basis: 100%;
     max-width: 100%;
   }
 `
@@ -93,7 +95,7 @@ const NavList = styled.ul`
 
 const NavLi = styled.li`
   display: inline-block;
-  
+
   &:after {
     content: ' • ';
     color: ${props => lighten(0.2, props.theme.colors.dark1)};

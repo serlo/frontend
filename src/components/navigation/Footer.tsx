@@ -8,6 +8,7 @@ import {
 
 import { footerNavEntries } from '../../footerdata'
 import { FooterNav } from './FooterNav'
+import { makeResponsivePadding } from '../../helper/csshelper'
 
 export default function Footer() {
   return (
@@ -93,7 +94,7 @@ const Image = styled.img`
 `
 
 const TopButton = styled.div`
-  right: ${props => props.theme.defaults.sidepadding};
+  right: 16px;
   top: 7px;
   height: 40px;
   width: 40px;
@@ -117,7 +118,8 @@ const InfoContainer = styled.div`
 
 const Summary = styled.div`
   background-color: ${props => props.theme.colors.lightblue};
-  padding: 32px ${props => props.theme.defaults.sidepadding} 16px;
+  padding: 32px 0 16px;
+  ${makeResponsivePadding}
   font-size: 18px;
   line-height: 24px;
   color: white;
