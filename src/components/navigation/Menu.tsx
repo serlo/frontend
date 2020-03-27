@@ -74,8 +74,8 @@ const Link = styled.a<{ active?: boolean }>`
 
   text-decoration: none;
 
-  padding: 3px 6px;
-  margin-right: 10px;
+  display: block;
+  padding: 15px 11px 3px 11px;
   font-weight: bold;
   transition: all 0.2s ease-in-out 0s;
 
@@ -88,9 +88,9 @@ function SubMenuInner(props) {
     <SubList>
       {children.map(entry => {
         return (
-          <SubLi key={entry.title}>
-            <Link href={entry.url}>{entry.title}</Link>
-          </SubLi>
+          <li key={entry.title}>
+            <SubLink href={entry.url}>{entry.title}</SubLink>
+          </li>
         )
       })}
     </SubList>
@@ -109,6 +109,7 @@ const SubList = styled.ul`
   width: auto;
 `
 
-const SubLi = styled.li`
-  margin-bottom: 10px;
+const SubLink = styled(Link)`
+  padding-top: 6px;
+  padding-bottom: 6px;
 `
