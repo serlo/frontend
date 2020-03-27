@@ -104,7 +104,7 @@ const Breadcrumb = styled.a`
 const BreadcrumbLast = styled(Breadcrumb)`
 
   &:after {
-    display: none !important;
+    display: none;
   }
 
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
