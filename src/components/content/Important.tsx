@@ -1,9 +1,9 @@
 import styled from 'styled-components'
+import { makeMargin } from '../../helper/csshelper'
 
 export const Important = styled.div`
-  border: 2px solid ${props => props.theme.colors.brand};
+  border-right: 2px solid ${props => props.theme.colors.orange};
   padding: 10px;
-  margin-bottom: 38px;
-  margin-left: 15px;
-  margin-right: 15px;
+  margin-bottom: ${props => props.theme.spacing.mb.block};
+  ${makeMargin}
 `

@@ -9,7 +9,7 @@ export const StyledA = styled.a`
     color: ${props => darken(0.1, props.theme.colors.linkColor)};
   }
   &:hover {
-    text-decoration: underline;
-    color: ${props => props.theme.colors.hoverLinkColor};
+    color: ${props => props.theme.colors.brand};
   }
+  text-decoration: underline;
 `
