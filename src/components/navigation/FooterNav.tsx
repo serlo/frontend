@@ -49,7 +49,7 @@ export function FooterNav(props: NavProps) {
 }
 
 const FooterNavGrid = styled.div`
-  padding: 0 15px 24px;
+  padding: 8px ${props => props.theme.defaults.sidepadding} 40px;
   background-color: ${props => props.theme.colors.lightBackground};
 `
 
@@ -59,6 +59,7 @@ const FooterNavContainer = styled.div`
 `
 
 const ColWithPadding = styled.div`
+  margin-top: 16px;
   padding-right: 16px;
   box-sizing: border-box;
   @media (min-width: ${props => props.theme.breakpoints.lg}) {
