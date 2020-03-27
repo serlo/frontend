@@ -24,8 +24,7 @@ export default function Breadcrumbs(props: BreadcrumbProps) {
   at least on mobile but probably on larger screens too.
   */
 
-  //const filteredEntries = entries.slice(0,entries.length - 1)
-  const filteredEntries = entries
+  const filteredEntries = entries.slice(0,entries.length - 1)
 
   return (
     <BreadcrumbWrapper>
