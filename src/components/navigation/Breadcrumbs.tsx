@@ -72,8 +72,11 @@ function BreadcrumbEntries(props) {
   )
 }
 
-const BreadcrumbWrapper = styled.div`
-  margin: 10px;
+const BreadcrumbWrapper = styled.nav`
+  margin: 25px 10px 0 10px;
+  @media (min-width: ${props => props.theme.breakpoints.sm}) {
+    margin-bottom: 45px;
+  }
 `
 
 const Breadcrumb = styled.a`
@@ -82,7 +85,7 @@ const Breadcrumb = styled.a`
   color: ${props => props.theme.colors.brand};
   font-weight: normal;
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 1.125rem;
   padding: 2px 6px;
   align-items: center;
 
@@ -120,7 +123,6 @@ const BreadcrumbLast = styled(Breadcrumb)`
       transparentize(0.35, props.theme.colors.lightBlueBackground)};
     border-radius: 12px;
     padding-left: 4px;
-    margin-top: 8px;
 
     &:hover {
       background: ${props => transparentize(0.35, props.theme.colors.brand)};
