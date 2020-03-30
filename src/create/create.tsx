@@ -1040,7 +1040,9 @@ function MyImg(props) {
       >
         {comp}
       </TipOver>
-    )
+    ),
+    value: editor,
+    path
   })
 }
 

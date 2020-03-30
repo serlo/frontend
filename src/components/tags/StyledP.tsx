@@ -3,6 +3,7 @@ import { makeMargin } from '../../helper/csshelper'
 
 export interface StyledPProps {
   mb?: string
+  full?: boolean
 }
 
 export const StyledP = styled.p<StyledPProps>`
