@@ -87,7 +87,7 @@ const SearchForm = styled.form`
 
   @media (min-width: ${props => props.theme.breakpoints.sm}) {
     position: absolute;
-    top: 145px;
+    top: 133px;
     right: 32px;
     height: 35px;
     width: 224px;
@@ -99,7 +99,7 @@ const SearchForm = styled.form`
 
   @media (min-width: ${props => props.theme.breakpoints.lg}) {
     right: 27px;
-    margin-top: -5px;
+    /* margin-top: -5px; */
     margin-left: auto;
   }
 `
@@ -145,6 +145,8 @@ const _Input = styled.input<{ focused: boolean }>`
   color: ${props => props.theme.colors.brand};
   font-weight: bold;
   font-size: 1em;
+  padding-left: 50px;
+  padding-right: 7px;
 
   background-color: transparent;
 

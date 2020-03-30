@@ -27,7 +27,7 @@ function Entry(props) {
           onClick={
             children
               ? e => {
-                  // if(open) e.currentTarget.blur()
+                  //TODO: Also close open siblings
                   setOpen(!open)
                   e.preventDefault()
                 }
@@ -125,5 +125,5 @@ const IconWrapper = styled.div`
   align-items: center;
   color: ${props => props.theme.colors.lightblue};
   text-align: center;
-  margin-right: 16px;
+  margin-right: 10px;
 `
