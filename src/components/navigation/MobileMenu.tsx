@@ -56,12 +56,14 @@ function Entry(props) {
           </EntryLinkText>
         </EntryLink>
       </li>
-      {open && children ?
+      {open && children ? (
         <>
-        {children.map((entry, index) => (
-          <Entry {...entry} isChild={true} key={index + '--' + childKey} />
-        ))} <Seperator/>
-        </> : null }
+          {children.map((entry, index) => (
+            <Entry {...entry} isChild={true} key={index + '--' + childKey} />
+          ))}{' '}
+          <Seperator />
+        </>
+      ) : null}
     </>
   )
 }
@@ -99,10 +101,12 @@ const EntryLink = styled.a<{ isChild?: boolean; open?: boolean }>`
   text-decoration: none;
   font-size: ${props => (props.isChild ? '1rem' : '1.33rem')};
 
-  background-color: ${props => (props.open ? transparentize(0.8, props.theme.colors.brand) : props.theme.colors.bluewhite)};
+  background-color: ${props =>
+    props.open
+      ? transparentize(0.8, props.theme.colors.brand)
+      : props.theme.colors.bluewhite};
 
-  ${props => (props.isChild) ? 'background-color: #fff;' : ''}
-  
+  ${props => (props.isChild ? 'background-color: #fff;' : '')}
 
   &:active {
     background: ${props => transparentize(0.8, props.theme.colors.brand)};
@@ -112,7 +116,6 @@ const EntryLink = styled.a<{ isChild?: boolean; open?: boolean }>`
       background: ${props => transparentize(0.8, props.theme.colors.brand)};
     }
   }
-
 `
 
 const IconWrapper = styled.div`

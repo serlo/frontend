@@ -27,9 +27,7 @@ export default function Logo({ subline }: { subline: string }) {
   )
 }
 
-const Image = styled.img`
-  
-`
+const Image = styled.img``
 
 const SublineWrap = styled.div`
   padding-left: 50px;
