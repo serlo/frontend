@@ -132,9 +132,6 @@ function RenderArticle({ content }) {
   }
   return (
     <>
-      <DesktopOnly>
-        <WipHint part="Desktop-Ansicht" />
-      </DesktopOnly>
       {content.breadcrumbs && <Breadcrumbs entries={content.breadcrumbs} />}
       <StyledH1 displayMode>{content.title}</StyledH1>
       <ToolLine>

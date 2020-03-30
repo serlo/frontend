@@ -18,7 +18,7 @@ function Index() {
       <StyledMain>
         <WipHint part="Startseite" />
         <StyledH1>Startseite</StyledH1>
-        <StyledP halfslim>Links:</StyledP>
+        <StyledP mb={'slim'}>Links:</StyledP>
         <StyledUl>
           <StyledLi>
             <StyledA href="/mathe">Mathematik lernen</StyledA>

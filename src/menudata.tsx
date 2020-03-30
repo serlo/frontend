@@ -8,7 +8,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 
 export const menudata = [
-  { url: '/serlo', title: 'Über Serlo', icon: faInfoCircle },
   {
     url: '#',
     title: 'Fächer',
@@ -23,12 +22,13 @@ export const menudata = [
       { url: '/community/neue-fächer-themen', title: 'Fächer im Aufbau' }
     ]
   },
+  { url: '/serlo', title: 'Über Serlo', icon: faInfoCircle },
+  { url: '/mitmachen', title: 'Mitmachen', icon: faUserEdit },
   {
     url: '#',
     title: 'Community',
     icon: faUserFriends,
     children: [
-      { url: '/mitmachen', title: 'Mitmachen', icon: faUserEdit },
       { url: '/community', title: 'Startseite für Autor*innen' },
       { url: 'https://community.serlo.org/', title: 'Chat für Autor*innen' },
       {
@@ -38,8 +38,8 @@ export const menudata = [
       { url: '#', title: 'Ungeprüfte Bearbeitungen' }
     ]
   },
-  { url: '#', title: 'Anmelden', icon: faUserCircle },
-  { url: '#', title: 'Spenden', icon: faHandHoldingHeart }
+  { url: '#', title: 'Spenden', icon: faHandHoldingHeart },
+  { url: '#', title: 'Anmelden', icon: faUserCircle }
 ]
 
 export default menudata
