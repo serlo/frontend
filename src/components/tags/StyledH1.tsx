@@ -12,6 +12,4 @@ export const StyledH1 = styled.h1<StyledH1Props>`
   margin-right: 15px;
   margin-bottom: ${props => (props.displayMode ? '38px' : '38px')};
   line-height: 1.22;
-  text-decoration: underline;
-  text-decoration-color: ${props => props.theme.colors.orange};
 `

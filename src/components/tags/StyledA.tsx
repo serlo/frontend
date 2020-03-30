@@ -10,6 +10,6 @@ export const StyledA = styled.a`
   }
   &:hover {
     color: ${props => props.theme.colors.brand};
+    text-decoration: underline;
   }
-  text-decoration: underline;
 `
