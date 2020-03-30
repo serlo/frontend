@@ -1,8 +1,9 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
 import Tippy, { useSingleton } from '@tippyjs/react'
+import { makeButton } from '../../helper/csshelper'
 
 export default function Menu(props) {
   const { links } = props
@@ -15,6 +16,9 @@ export default function Menu(props) {
         placement="bottom-start"
         trigger="mouseenter focus click"
         interactive={true}
+        delay={[50, 0]}
+        duration={[300, 100]}
+        animation="fade"
       />
       <List>
         {links.map(link => (
@@ -36,12 +40,12 @@ function Entry(props) {
           content={<SubMenuInner children={link.children} />}
           singleton={target}
         >
-          <Link>
+          <Link /*active={true}*/>
             {link.title} <FontAwesomeIcon icon={faCaretDown} />
           </Link>
         </Tippy>
       ) : (
-        <Link href={link.url}>{link.title}</Link>
+        <Link /*active={true}*/ href={link.url}>{link.title}</Link>
       )}
     </Li>
   )
@@ -54,7 +58,9 @@ function SubMenuInner(props) {
       {children.map(entry => {
         return (
           <li key={entry.title}>
-            <SubLink href={entry.url}>{entry.title}</SubLink>
+            <SubLink href={entry.url}>
+              <_Button>{entry.title}</_Button>
+            </SubLink>
           </li>
         )
       })}
@@ -80,34 +86,35 @@ const Li = styled.li`
   display: inline-block;
 `
 
-const Link = styled.a<{ active?: boolean }>`
-  color: ${props =>
-    props.theme.colors[props.active ? 'darkgray' : 'lightblue']};
-
-  transition: background-color 0.2s;
-
+const linkStyle = css`
   &:active,
   &:hover,
   &[aria-expanded='true'] {
     color: #fff;
     background-color: ${props => props.theme.colors.brand};
   }
-
   text-decoration: none;
+`
+
+const Link = styled.a<{ active?: boolean }>`
+  color: ${props =>
+    props.theme.colors[props.active ? 'darkgray' : 'lightblue']};
+
+  background-color: ${props =>
+    props.theme.colors[props.active ? 'lighterblue' : 'inherit']};
+
+  ${makeButton}
+  ${linkStyle}
+
+  transition: all 0.3s ease-in-out 0s;
 
   display: block;
   margin: 11px 3px 0 3px;
-  font-weight: bold;
-  transition: all 0.2s ease-in-out 0s;
-  border-radius: 80px;
-  padding: 5px 9px;
-
-  cursor: pointer;
 `
 
 const SubList = styled.ul`
   background-color: white;
-  padding: 16px 8px 8px;
+  padding: 12px 15px 12px 10px;
   margin: 0;
   text-align: left;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px;
@@ -115,14 +122,23 @@ const SubList = styled.ul`
   overflow: auto;
   list-style-type: none;
   width: auto;
+  border-radius: 10px;
 `
 
-const SubLink = styled(Link)`
-  padding-top: 6px;
-  padding-bottom: 6px;
-
-  &:hover {
-    background: inherit;
-    color: ${props => props.theme.colors.darkgray};
+const SubLink = styled.a`
+  padding-top: 8px;
+  padding-bottom: 8px;
+  display: block;
+  text-decoration: none;
+  &:hover span {
+    color: #fff;
+    background-color: ${props => props.theme.colors.brand};
   }
+`
+
+const _Button = styled.span`
+  text-decoration: none;
+  ${linkStyle}
+  ${makeButton}
+  color: ${props => props.theme.colors.lightblue};
 `
