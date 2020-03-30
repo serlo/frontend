@@ -23,21 +23,21 @@ export default function SearchInput(props) {
   return (
     <>
       <SearchForm id="searchform" name="searchform">
-        <Settings
+        {/* <Settings
           onClick={e => {
             e.preventDefault()
             setShowSettings(!showSettings)
           }}
         >
           <FontAwesomeIcon icon={faSlidersH} size="lg" />
-        </Settings>
+        </Settings> */}
 
         <_Input
-          type="text"
+          type="search"
           name="searchtext"
           ref={inputRef}
           placeholder="Suche"
-          aria-label="Suche"
+          aria-label="Alle Inhalte durchsuchen"
           value={value}
           focused={focused}
           onFocus={() => {
@@ -56,9 +56,9 @@ export default function SearchInput(props) {
           <FontAwesomeIcon icon={faSearch} size="lg" />
         </_Button>
       </SearchForm>
-      {showSettings && (
+      {/* {showSettings && (
         <SearchSettings>Hier kommen Sucheinstellungen hin</SearchSettings>
-      )}
+      )} */}
     </>
   )
 }
@@ -118,13 +118,13 @@ const _Button = styled.button<{ focused: boolean }>`
   transition: background-color 0.2s ease-in;
 
   color: ${props => (props.focused ? 'white' : props.theme.colors.brand)};
-
   height: 40px;
   min-width: 40px;
-
+  padding: 0;
   border: 0;
   outline: none;
   cursor: pointer;
+  font-size: 0.8em;
 
   &:hover {
     background-color: ${props => props.theme.colors.brand};
@@ -133,7 +133,6 @@ const _Button = styled.button<{ focused: boolean }>`
 
   @media (min-width: ${props => props.theme.breakpoints.sm}) {
     color: white;
-    padding: 2px 0 0 2px;
     min-width: 35px;
     height: 35px;
     border-radius: 17px;
@@ -142,7 +141,7 @@ const _Button = styled.button<{ focused: boolean }>`
 const _Input = styled.input<{ focused: boolean }>`
   color: ${props => props.theme.colors.brand};
   font-weight: bold;
-  font-size: 1.15em;
+  font-size: 1em;
 
   background-color: transparent;
 
