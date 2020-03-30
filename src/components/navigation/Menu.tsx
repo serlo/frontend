@@ -7,6 +7,7 @@ import Tippy, { useSingleton } from '@tippyjs/react'
 export default function Menu(props) {
   const { links } = props
   const [source, target] = useSingleton()
+
   return (
     <ResponsiveNav>
       <Tippy
@@ -24,23 +25,10 @@ export default function Menu(props) {
   )
 }
 
-const ResponsiveNav = styled.nav`
-  @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    display: none;
-  }
-`
-
-const List = styled.ul`
-  text-align: right;
-  user-select: none;
-  display: block;
-  margin: 0;
-  padding: 0;
-`
-
 function Entry(props) {
   const { link, target } = props
   const hasChildren = link.children !== undefined
+
   return (
     <Li>
       {hasChildren ? (
@@ -59,29 +47,6 @@ function Entry(props) {
   )
 }
 
-const Li = styled.li`
-  display: inline-block;
-`
-
-const Link = styled.a<{ active?: boolean }>`
-  color: ${props =>
-    props.theme.colors[props.active ? 'darkgray' : 'lightblue']};
-
-  &:active,
-  &:hover {
-    color: ${props => props.theme.colors.darkgray};
-  }
-
-  text-decoration: none;
-
-  display: block;
-  padding: 15px 11px 3px 11px;
-  font-weight: bold;
-  transition: all 0.2s ease-in-out 0s;
-
-  cursor: pointer;
-`
-
 function SubMenuInner(props) {
   const { children } = props
   return (
@@ -96,6 +61,49 @@ function SubMenuInner(props) {
     </SubList>
   )
 }
+
+const ResponsiveNav = styled.nav`
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    display: none;
+  }
+`
+
+const List = styled.ul`
+  text-align: right;
+  user-select: none;
+  display: block;
+  margin: 0;
+  padding: 0;
+`
+
+const Li = styled.li`
+  display: inline-block;
+`
+
+const Link = styled.a<{ active?: boolean }>`
+  color: ${props =>
+    props.theme.colors[props.active ? 'darkgray' : 'lightblue']};
+
+  transition: background-color 0.2s;
+
+  &:active,
+  &:hover,
+  &[aria-expanded='true'] {
+    color: #fff;
+    background-color: ${props => props.theme.colors.brand};
+  }
+
+  text-decoration: none;
+
+  display: block;
+  margin: 11px 3px 0 3px;
+  font-weight: bold;
+  transition: all 0.2s ease-in-out 0s;
+  border-radius: 80px;
+  padding: 5px 9px;
+
+  cursor: pointer;
+`
 
 const SubList = styled.ul`
   background-color: white;
@@ -112,4 +120,9 @@ const SubList = styled.ul`
 const SubLink = styled(Link)`
   padding-top: 6px;
   padding-bottom: 6px;
+
+  &:hover {
+    background: inherit;
+    color: ${props => props.theme.colors.darkgray};
+  }
 `
