@@ -202,7 +202,7 @@ A list may only contain elements of type `li`. Elements of other types will be u
 
 ### li
 
-A list item may only contain elements of type `p`, `img`, `math` or another `ul` or `ol` of the same parent type, maximal nested twice. Other elements will be unwrapped. Text will be wrapped in `p`.
+A list item may only contain elements of type `p`, `img`, `math` or another `ul` or `ol` of the same parent type. If the `li` contains a nested list, this is only allowed for two levels and the first child must be a `p`, if not, an empty `p` will be added. Other elements will be unwrapped. Text will be wrapped in `p`.
 
 ### row
 

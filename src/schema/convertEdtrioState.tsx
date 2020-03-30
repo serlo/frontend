@@ -74,10 +74,17 @@ export function convert(node) {
       {
         type: 'row',
         children: node.state.map(child => {
+          const children = convert(child.child)
+          // compat: math align left
+          children.forEach(child => {
+            if (child.type === 'math') {
+              child.alignLeft = true
+            }
+          })
           return {
             type: 'col',
             size: child.width,
-            children: convert(child.child)
+            children
           }
         })
       }
@@ -137,8 +144,14 @@ export function convert(node) {
       return children
     }
     // compat handle newlines
-    if (node.children.some(child => child.text && child.text.includes('\n'))) {
-      const splitted = node.children.flatMap(child => {
+    if (
+      children.some(
+        child =>
+          (child.text && child.text.includes('\n')) ||
+          child.type === 'inline-math'
+      )
+    ) {
+      const splitted = children.flatMap(child => {
         if (child.text && child.text.includes('\n')) {
           const parts = child.text.split('\n').flatMap(text => [
             {
@@ -149,7 +162,7 @@ export function convert(node) {
           parts.pop()
           return parts
         }
-        return convert(child)
+        return child
       })
       let current = []
       let result = []
@@ -251,7 +264,19 @@ export function convert(node) {
     ]
   }
   if (type === 'list-item-child') {
-    return [{ type: 'p', children: convert(node.children) }]
+    // compat: don't wrap ps
+    const children = convert(node.children)
+    if (
+      children.filter(
+        child =>
+          child.type === 'inline-math' ||
+          child.type === 'a' ||
+          child.text !== undefined
+      ).length === 0
+    ) {
+      return children
+    }
+    return [{ type: 'p', children }]
   }
 
   if (node.text !== undefined) {

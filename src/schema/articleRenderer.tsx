@@ -148,6 +148,7 @@ export function renderP({
   path = []
 }) {
   let mb = 'block'
+  let full = false
 
   if (value) {
     const parent = Node.parent(value, path)
@@ -170,10 +171,13 @@ export function renderP({
         }
       }
     }
+    if (parent.type === 'li') {
+      full = true
+    }
   }
 
   return (
-    <StyledP {...attributes} mb={mb}>
+    <StyledP {...attributes} mb={mb} full={full}>
       {children}
     </StyledP>
   )
@@ -208,6 +212,7 @@ export function renderImg({
     ></StyledImg>
   )
   let mb = 'block'
+  let full = false
 
   if (value) {
     const parent = Node.parent(value, path)
@@ -230,9 +235,12 @@ export function renderImg({
         }
       }
     }
+    if (parent.type === 'li') {
+      full = true
+    }
   }
   return (
-    <ImgCentered {...attributes} mb={mb}>
+    <ImgCentered {...attributes} mb={mb} full={full}>
       {wrapImg(
         element.href ? (
           <a href={element.href} style={{ maxWidth: '100%', display: 'block' }}>
@@ -275,9 +283,25 @@ export function renderMath({
       }
     }
   }
+  let formula = element.formula
+  let bigger = false
+  if (
+    element.formula.includes('\\int') ||
+    element.formula.includes('frac') ||
+    element.formula.includes('^')
+  ) {
+    bigger = true
+  }
+  if (
+    formula.includes('\\begin{aligned}') ||
+    formula.includes('\\begin{array}')
+  ) {
+    formula = '\\def\\arraystretch{1.6} ' + formula
+  }
+
   return (
-    <MathWrapper mb={mb} centered={centered} {...attributes}>
-      {wrapFormula(<Math formula={element.formula} />)}
+    <MathWrapper mb={mb} centered={centered} bigger={bigger} {...attributes}>
+      {wrapFormula(<Math formula={formula} />)}
       {children}
     </MathWrapper>
   )
