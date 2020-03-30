@@ -139,7 +139,15 @@ function Toolbar() {
         // was darf man hier hinzufügen?
         ;['img', 'math', 'spoiler-container', 'ul', 'ol', 'row'].forEach(
           key => {
-            if (allowed.children.includes(key)) allowedAdd.push(key)
+            if (allowed.children.includes(key)) {
+              if (key === 'ul' || key === 'ol') {
+                // check level
+                if (anchorParentPath.length > 3) {
+                  return
+                }
+              }
+              allowedAdd.push(key)
+            }
           }
         )
         addCurrentNode = Node.get(editor, anchorParentPath)
@@ -317,6 +325,7 @@ const defaultInserts = {
   },
   math: {
     type: 'math',
+    formula: '',
     children: [{ text: '' }]
   },
   'spoiler-container': {
