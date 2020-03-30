@@ -1,6 +1,7 @@
 import * as htmlparser2 from 'htmlparser2'
 
 export default function convertLegacyState(html) {
+  console.log('legacy')
   const dom = htmlparser2.parseDOM(html)
   return { children: convert(dom) }
 }
@@ -210,9 +211,16 @@ function convert(node) {
       ]
     }
     if (node.name === 'li') {
-      // compat: wrap li in p
+      // compat: wrap li in p only if there are only inlines
       let children = convert(node.children)
-      if (children[0].type !== 'p') {
+      if (
+        children.filter(
+          child =>
+            child.text === undefined &&
+            child.type !== 'a' &&
+            child.type !== 'inline-math'
+        ).length == 0
+      ) {
         children = [{ type: 'p', children }]
       }
       return [
