@@ -7,7 +7,7 @@ import Logo from './Logo'
 import SearchInput from './SearchInput'
 import MobileMenuButton from './MobileMenuButton'
 import MobileMenu from './MobileMenu'
-import { makePadding } from '../../helper/csshelper'
+import { makeResponsivePadding } from '../../helper/csshelper'
 
 export default function Header() {
   const [isOpen, setOpen] = React.useState(false)
@@ -31,7 +31,7 @@ const BlueHeader = styled.header`
 
 //TODO: Move to responsive paddings
 const PaddedDiv = styled.div`
-  ${makePadding}
+  ${makeResponsivePadding}
   padding-top: 12px;
   padding-bottom: 24px;
 `
