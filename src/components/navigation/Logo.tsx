@@ -45,6 +45,7 @@ const SublineLink = styled.a`
   }
 
   @media (min-width: ${props => props.theme.breakpoints.sm}) {
-    font-size: 1.66rem;
+    font-size: 1.65rem;
+    letter-spacing: 0.008em;
   }
 `

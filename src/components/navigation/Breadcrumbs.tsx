@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { transparentize } from 'polished'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons'
+import { makeButton } from '../../helper/csshelper'
 
 interface BreadcrumbProps {
   entries?: BreadcrumbEntry[]
@@ -24,7 +25,7 @@ export default function Breadcrumbs(props: BreadcrumbProps) {
   at least on mobile but probably on larger screens too.
   */
 
-  const filteredEntries = entries.slice(0,entries.length - 1)
+  const filteredEntries = entries.slice(0, entries.length - 1)
 
   return (
     <BreadcrumbWrapper>
@@ -81,17 +82,17 @@ const BreadcrumbWrapper = styled.nav`
 
 const Breadcrumb = styled.a`
   display: inline-block;
-  border-radius: 5px;
   color: ${props => props.theme.colors.brand};
+
+  ${makeButton}
+
   font-weight: normal;
-  text-decoration: none;
   font-size: 1.125rem;
-  padding: 2px 6px;
   align-items: center;
 
   &[href]:hover {
-    background: ${props => transparentize(0.35, props.theme.colors.brand)};
-    color: ${props => props.theme.colors.bluewhite};
+    background: ${props => props.theme.colors.brand};
+    color: #fff;
   }
 
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
@@ -101,13 +102,13 @@ const Breadcrumb = styled.a`
 
   @media (min-width: ${props => props.theme.breakpoints.sm}) {
     white-space: nowrap;
-    margin: 0 12px 0 0;
+    margin: 0 19px 0 0;
 
     &:after {
       content: '>';
       color: ${props => props.theme.colors.lightgray};
       position: absolute;
-      margin-left: 8px;
+      margin-left: 12px;
     }
   }
 `

@@ -104,6 +104,7 @@ const Link = styled.a<{ active?: boolean }>`
     props.theme.colors[props.active ? 'lighterblue' : 'inherit']};
 
   ${makeButton}
+
   ${linkStyle}
 
   transition: all 0.3s ease-in-out 0s;
@@ -140,5 +141,6 @@ const _Button = styled.span`
   text-decoration: none;
   ${linkStyle}
   ${makeButton}
+  padding: 0.27em 0.6em;
   color: ${props => props.theme.colors.lightblue};
 `

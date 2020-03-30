@@ -1,6 +1,6 @@
 export const makeMargin = props =>
-  props.full ? '' : 
-  `
+  props.full ? '' :
+    `
   margin-left:${props.theme.defaults.sideSpacingMobile};
   margin-right:${props.theme.defaults.sideSpacingMobile};
   `
@@ -16,8 +16,8 @@ export const makeResponsiveMargin = props =>
   `
 
 export const makePadding = props =>
-props.full ? '' : 
-  `
+  props.full ? '' :
+    `
   padding-left:${props.theme.defaults.sideSpacingMobile};
   padding-right:${props.theme.defaults.sideSpacingMobile};
   `
@@ -37,7 +37,7 @@ export const makeButton = props =>
   font-weight: bold;
   transition: all 0.2s ease-in-out 0s;
   border-radius: 2em;
-  padding: 0.27em 0.6em;
+  padding: 0.1em 0.35em;
   text-decoration: none;
   cursor: pointer;
 `
