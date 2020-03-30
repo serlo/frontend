@@ -11,7 +11,7 @@ interface HorizonProp {
 export default function Horizon({ entries }: { entries: HorizonProp[] }) {
   return (
     <Wrapper>
-      {entries.map((horizonEntry, index) => {
+      {entries.sort(() => Math.random() - 0.5).map((horizonEntry, index) => {
         return (
           <Item href={horizonEntry.url} key={index}>
             <Image alt={horizonEntry.title} src={horizonEntry.imageUrl} />
@@ -25,7 +25,7 @@ export default function Horizon({ entries }: { entries: HorizonProp[] }) {
 }
 
 const Wrapper = styled.div`
-  align-items: center;
+  align-items: stretch;
   display: flex;
   justify-content: space-between;
   padding: 32px 24px 24px;
@@ -42,7 +42,19 @@ const Item = styled.a`
   text-decoration: none;
   max-width: 400px;
   width: 30%;
+  padding: 15px 10px;
+
+  &:hover {
+    box-shadow: 0px 0px 10px 0px rgba(170,170,170,0.25);
+    color: ${props => props.theme.colors.darkgray};
+  }
+
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    /* quickfix: slider or not loading them at all would be better */
+    display: none;
+    &:first-child {
+      display: block;
+    }
     margin-bottom: 30px;
     width: 100%;
   }
@@ -58,7 +70,7 @@ const Image = styled.img`
   }
 `
 
-const Headline = styled.p`
+const Headline = styled.h4`
   font-weight: bold;
   font-size: 1.25rem;
   margin: 10px 0 5px;

@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { lighten } from 'polished'
+import { makeResponsivePadding } from '../../helper/csshelper'
 
 export interface NavChild {
   title: string
@@ -49,7 +50,7 @@ export function FooterNav(props: NavProps) {
 }
 
 const FooterNavGrid = styled.div`
-  padding: 0 15px 24px;
+  padding: 8px 0 40px;
   background-color: ${props => props.theme.colors.lightBackground};
 `
 
@@ -59,20 +60,22 @@ const FooterNavContainer = styled.div`
 `
 
 const ColWithPadding = styled.div`
-  padding-right: 16px;
+  margin-top: 16px;
+  padding: 0;
+  ${makeResponsivePadding}
   box-sizing: border-box;
-  @media (min-width: ${props => props.theme.breakpoints.lg}) {
+  @media (min-width: ${props => props.theme.breakpoints.md}) {
     flex-grow: 1;
     flex-basis: 0;
   }
   @media (max-width: ${props =>
-    props.theme.breakpoints.lg}) and (min-width: ${props =>
-  props.theme.breakpoints.md}){
+    props.theme.breakpoints.md}) and (min-width: ${props =>
+  props.theme.breakpoints.sm}){
     flex-basis: 50%;
     max-width: 50%;
   }
-  @media (max-width: ${props => props.theme.breakpoints.md}) {
-    flex-basis: 100%
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    flex-basis: 100%;
     max-width: 100%;
   }
 `
@@ -91,23 +94,24 @@ const NavList = styled.ul`
 `
 
 const NavLi = styled.li`
-  display: inline;
+  display: inline-block;
 
   &:after {
     content: ' • ';
     color: ${props => lighten(0.2, props.theme.colors.dark1)};
-    margin-right: 3px;
+    margin-right: 6px;
   }
   &:last-child:after {
     content: '';
   }
 
-  @media (min-width: ${props => props.theme.breakpoints.lg}) {
+  @media (min-width: ${props => props.theme.breakpoints.sm}) {
     display: block;
-    margin-top: 5px;
+    margin-top: 2px;
+
     &:after {
-      display: none;
       content: '';
+      display: none;
     }
   }
 `
