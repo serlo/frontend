@@ -163,6 +163,11 @@ const _Input = styled.input<{ focused: boolean }>`
     color: ${props => props.theme.colors.brand};
   }
 
+  ::-webkit-input-placeholder{opacity:1}
+  ::-moz-placeholder{opacity:1}
+  :-ms-input-placeholder{opacity:1}
+
+
   &:focus::placeholder {
     opacity: 0;
   }
