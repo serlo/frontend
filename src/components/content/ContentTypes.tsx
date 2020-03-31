@@ -139,13 +139,13 @@ function RenderArticle({ content }) {
         <ToolLineButton onClick={() => setOpen(true)}>
           <FontAwesomeIcon icon={faShareAlt} size="1x" /> Teilen
         </ToolLineButton>
-        <ToolLineButton
+        {/* <ToolLineButton
           onClick={() => {
             setEditMode(true)
           }}
         >
           <FontAwesomeIcon icon={faPencilAlt} size="1x" /> Bearbeiten
-        </ToolLineButton>
+        </ToolLineButton> */}
         {<ShareModal open={open} onClose={() => setOpen(false)} />}
       </ToolLine>
 
@@ -156,6 +156,11 @@ function RenderArticle({ content }) {
       />
       <Article value={value} />
       <HSpace amount={20} />
+      <ToolLine>
+        <ToolLineButton onClick={() => setOpen(true)}>
+          <FontAwesomeIcon icon={faShareAlt} size="1x" /> Teilen
+        </ToolLineButton>
+      </ToolLine>
       <Hints hints={checkArticleGuidelines(value)} />
       <HSpace amount={40} />
       <Horizon entries={horizonData} />
