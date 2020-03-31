@@ -110,6 +110,7 @@ function buildButtons(list) {
   ))
 }
 
+//this is overriding the styles of the modal-content only. see doc to change overlay etc.
 export const StyledModal = styled(Modal)`
   position: absolute;
   top: 40%;
