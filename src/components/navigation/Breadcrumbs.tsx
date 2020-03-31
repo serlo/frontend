@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { transparentize } from 'polished'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons'
-import { makeButton } from '../../helper/csshelper'
+import { makeDefaultButton } from '../../helper/csshelper'
 
 interface BreadcrumbProps {
   entries?: BreadcrumbEntry[]
@@ -74,7 +74,7 @@ function BreadcrumbEntries(props) {
 }
 
 const BreadcrumbWrapper = styled.nav`
-  margin: 25px 10px 0 10px;
+  margin: 25px 0 0 10px;
   @media (min-width: ${props => props.theme.breakpoints.sm}) {
     margin-bottom: 45px;
   }
@@ -84,7 +84,9 @@ const Breadcrumb = styled.a`
   display: inline-block;
   color: ${props => props.theme.colors.brand};
 
-  ${makeButton}
+  ${makeDefaultButton}
+  padding-top: 2px;
+  padding-bottom: 2px;
 
   font-weight: normal;
   font-size: 1.125rem;

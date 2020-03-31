@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
 import Tippy, { useSingleton } from '@tippyjs/react'
-import { makeButton } from '../../helper/csshelper'
+import { makeDefaultButton } from '../../helper/csshelper'
 
 export default function Menu(props) {
   const { links } = props
@@ -97,18 +97,16 @@ const linkStyle = css`
 `
 
 const Link = styled.a<{ active?: boolean }>`
+  ${makeDefaultButton}
+  ${linkStyle}
   color: ${props =>
     props.theme.colors[props.active ? 'darkgray' : 'lightblue']};
 
   background-color: ${props =>
     props.theme.colors[props.active ? 'lighterblue' : 'inherit']};
 
-  ${makeButton}
-
-  ${linkStyle}
-
+  font-weight: bold;
   transition: all 0.3s ease-in-out 0s;
-
   display: block;
   margin: 11px 3px 0 3px;
 `
@@ -127,8 +125,8 @@ const SubList = styled.ul`
 `
 
 const SubLink = styled.a`
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding-top: 3px;
+  padding-bottom: 3px;
   display: block;
   text-decoration: none;
   &:hover span {
@@ -140,7 +138,6 @@ const SubLink = styled.a`
 const _Button = styled.span`
   text-decoration: none;
   ${linkStyle}
-  ${makeButton}
-  padding: 0.27em 0.6em;
-  color: ${props => props.theme.colors.lightblue};
+  ${makeDefaultButton}
+  color: ${props => props.theme.colors.brand};
 `
