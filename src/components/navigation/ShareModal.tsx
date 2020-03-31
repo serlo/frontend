@@ -190,8 +190,8 @@ const CloseButton = styled.button`
     background-color: ${props => props.theme.colors.brand};
     color: white;
   }
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
   border-radius: 30px;
   text-align: center;
 `

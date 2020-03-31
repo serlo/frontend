@@ -25,7 +25,7 @@ export default function Toolbox({ onEdit = () => {} }) {
   )
 }
 
-const AbsoluteWrapper = styled.div`
+const AbsoluteWrapper = styled.nav`
   position: absolute;
   right: 32px;
   bottom: 32px;

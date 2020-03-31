@@ -148,12 +148,6 @@ function RenderArticle({ content }) {
         </ToolLineButton> */}
         {<ShareModal open={open} onClose={() => setOpen(false)} />}
       </ToolLine>
-
-      <Toolbox
-        onEdit={() => {
-          setEditMode(true)
-        }}
-      />
       <Article value={value} />
       <HSpace amount={20} />
       <ToolLine>
@@ -161,6 +155,11 @@ function RenderArticle({ content }) {
           <FontAwesomeIcon icon={faShareAlt} size="1x" /> Teilen
         </ToolLineButton>
       </ToolLine>
+      <Toolbox
+        onEdit={() => {
+          setEditMode(true)
+        }}
+      />
       <Hints hints={checkArticleGuidelines(value)} />
       <HSpace amount={40} />
       <Horizon entries={horizonData} />
