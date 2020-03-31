@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { lighten } from 'polished'
 import { faSearch, faSlidersH } from '@fortawesome/free-solid-svg-icons'
-import { makePadding } from '../../helper/csshelper'
+import { inputFontReset } from '../../helper/csshelper'
 
 export default function SearchInput(props) {
   const { value } = props
@@ -142,9 +142,10 @@ const _Button = styled.button<{ focused: boolean }>`
   }
 `
 const _Input = styled.input<{ focused: boolean }>`
+  ${inputFontReset}
   color: ${props => props.theme.colors.brand};
   font-weight: bold;
-  font-size: 1em;
+  
   padding-left: 50px;
   padding-right: 7px;
 

@@ -3,7 +3,7 @@ import { ServerStyleSheet } from 'styled-components'
 
 const bodyStyles = {
   margin: 0,
-  fontFamily: 'Karmilla',
+  fontFamily: 'Karmilla, sans-serif',
   letterSpacing: '-0.007em'
 }
 

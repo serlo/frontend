@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { faPencilAlt, faShareAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { makeGreenButton } from '../../helper/csshelper'
 
 import ShareModal from './ShareModal'
 import { HSpace } from '../content/HSpace'
@@ -13,7 +14,7 @@ export default function Toolbox({ onEdit = () => {} }) {
     <AbsoluteWrapper>
       <BoxWrapper>
         <IconButton onClick={onEdit}>
-          <FontAwesomeIcon icon={faPencilAlt} size="1x" /> Inhalte bearbeiten
+          <FontAwesomeIcon icon={faPencilAlt} size="1x" /> Inhalt bearbeiten
         </IconButton>
         <IconButton onClick={() => setOpen(true)}>
           <FontAwesomeIcon icon={faShareAlt} size="1x" /> Teilen!
@@ -44,19 +45,13 @@ const BoxWrapper = styled.div`
   }
 `
 
-const IconButton = styled.button`
-  color: ${props => props.theme.colors.brandGreen};
+const IconButton = styled.a`
+  ${makeGreenButton}
   font-weight: bold;
-  font-family: inherit;
-  border: none;
-  background-color: transparent;
-  padding: 6px 6px;
+  padding-top: 4px;
+  padding-bottom: 4px;
   margin: 4px;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  &:hover {
-    color: white;
-    background-color: ${props => props.theme.colors.brandGreen};
+  svg {
+    margin-right: 2px;
   }
 `
