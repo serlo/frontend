@@ -102,7 +102,7 @@ export async function fetchContent(alias) {
 
     const edtrio = /data\-raw\-content='([\w\+\/\=]+)'/.exec(html)
     if (edtrio) {
-      data.edtrio = Buffer.from(edtrio[1], 'base64').toString()
+      data.edtrio = JSON.parse(Buffer.from(edtrio[1], 'base64').toString())
     } else {
       // legacy format
       const articleStart = html.indexOf('<article>')
@@ -115,6 +115,7 @@ export async function fetchContent(alias) {
         .trim()
       data.legacy = legacy
     }
+    contentType = 'Article'
   }
   if (contentType === 'Page revision') {
     // static pages?
@@ -125,7 +126,7 @@ export async function fetchContent(alias) {
 
     const edtrio = /data\-raw\-content='([\w\+\/\=]+)'/.exec(html)
     if (edtrio) {
-      data.edtrio = Buffer.from(edtrio[1], 'base64').toString()
+      data.edtrio = JSON.parse(Buffer.from(edtrio[1], 'base64').toString())
     } else {
       const startPattern = '<section itemprop="articleBody" class="editable">'
       const pageStart = html.indexOf(startPattern)
@@ -135,6 +136,7 @@ export async function fetchContent(alias) {
         .trim()
       data.legacy = page
     }
+    contentType = 'PageRevision'
   }
   if (contentType === 'topic' || contentType === 'subject') {
     const h1 = /<h1>([^<]+)<\/h1>/.exec(html)
