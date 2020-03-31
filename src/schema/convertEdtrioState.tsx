@@ -1,3 +1,5 @@
+const colors = ['blue', 'green', 'orange']
+
 export function convertEdtrioState(state) {
   return { children: convert(state) }
 }
@@ -280,6 +282,9 @@ export function convert(node) {
   }
 
   if (node.text !== undefined) {
+    if (node.color) {
+      node.color = colors[node.color]
+    }
     return [node]
   }
 
