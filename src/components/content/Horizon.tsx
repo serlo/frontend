@@ -11,15 +11,17 @@ interface HorizonProp {
 export default function Horizon({ entries }: { entries: HorizonProp[] }) {
   return (
     <Wrapper>
-      {entries.sort(() => Math.random() - 0.5).map((horizonEntry, index) => {
-        return (
-          <Item href={horizonEntry.url} key={index}>
-            <Image alt={horizonEntry.title} src={horizonEntry.imageUrl} />
-            <Headline>{horizonEntry.title}</Headline>
-            <Text>{horizonEntry.text}</Text>
-          </Item>
-        )
-      })}
+      {entries
+        .sort(() => Math.random() - 0.5)
+        .map((horizonEntry, index) => {
+          return (
+            <Item href={horizonEntry.url} key={index}>
+              <Image alt={horizonEntry.title} src={horizonEntry.imageUrl} />
+              <Headline>{horizonEntry.title}</Headline>
+              <Text>{horizonEntry.text}</Text>
+            </Item>
+          )
+        })}
     </Wrapper>
   )
 }
@@ -45,7 +47,7 @@ const Item = styled.a`
   padding: 15px 10px;
 
   &:hover {
-    box-shadow: 0px 0px 10px 0px rgba(170,170,170,0.25);
+    box-shadow: 0px 0px 10px 0px rgba(170, 170, 170, 0.25);
     color: ${props => props.theme.colors.darkgray};
   }
 

@@ -10,7 +10,7 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "yarn tsc --noEmit",
-    "prettify": "yarn prettier --write \"{src,pages}/**/*.{js,tsx}\"",
+    "prettify": "yarn prettier --write \"{src,pages}/**/*.{js,tsx,ts}\"",
     "analyze": "cross-env ANALYZE=true yarn build"
   },
   "dependencies": {
