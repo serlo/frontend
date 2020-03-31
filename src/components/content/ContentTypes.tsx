@@ -32,7 +32,7 @@ import dynamic from 'next/dynamic'
 
 export default function ContentTypes(props) {
   const { data } = props
-  if (data.contentType === 'article' || data.contentType === 'Page revision') {
+  if (data.contentType === 'Article' || data.contentType === 'Page') {
     return <RenderArticle content={data.data} />
   }
   if (data.contentType === 'topic' || data.contentType === 'subject') {
@@ -88,7 +88,7 @@ function RenderArticle({ content }) {
   const [value, setValue] = React.useState(undefined)
   const [editMode, setEditMode] = React.useState(false)
   if (!value && content.edtrio) {
-    const edtrio = JSON.parse(content.edtrio)
+    const edtrio = content.edtrio
     const value = convertEdtrioState(edtrio)
     //const editor = withArticle(createEditor())
     //editor.children = value.children
