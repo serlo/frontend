@@ -8,6 +8,10 @@ import {
 
 import { footerNavEntries } from '../../footerdata'
 import { FooterNav } from './FooterNav'
+import {
+  makeResponsivePadding,
+  makeDefaultButton
+} from '../../helper/csshelper'
 
 export default function Footer() {
   return (
@@ -22,7 +26,7 @@ function About() {
   return (
     <AboutContainer>
       <LogoContainer>
-        <TopButton onClick={() => window.scrollTo(0, 0)}>
+        <TopButton onClick={() => window.scrollTo(0, 0)} title="Nach oben">
           <FontAwesomeIcon icon={faChevronUp} size="lg" />
         </TopButton>
       </LogoContainer>
@@ -59,6 +63,7 @@ function About() {
 }
 
 const AboutContainer = styled.div`
+  margin-top: 32px;
   display: flex;
   @media (max-width: ${props => props.theme.breakpoints.md}) {
     flex-direction: column;
@@ -66,10 +71,10 @@ const AboutContainer = styled.div`
 `
 
 const LogoContainer = styled.div`
-  flex-basis: 66.6667%;
   background-color: ${props => props.theme.colors.brand};
   position: relative;
-  min-height: 60px;
+  min-height: 54px;
+  width: 100%;
 `
 
 const Subline = styled.p`
@@ -92,8 +97,8 @@ const Image = styled.img`
 `
 
 const TopButton = styled.div`
-  right: 20px;
-  top: 10px;
+  right: 16px;
+  top: 7px;
   height: 40px;
   width: 40px;
   position: absolute;
@@ -110,16 +115,15 @@ const TopButton = styled.div`
 `
 
 const InfoContainer = styled.div`
-  flex-basis: 33.3333%;
-  display: flex;
-  flex-direction: column;
+  flex-shrink: 2;
+  width: 100%;
 `
 
 const Summary = styled.div`
   background-color: ${props => props.theme.colors.lightblue};
-  display: flex;
-  flex-direction: column;
-  padding: 12px 15px 0 15px;
+  padding-top: 32px;
+  padding-bottom: 16px;
+  ${makeResponsivePadding}
   font-size: 18px;
   line-height: 24px;
   color: white;
@@ -133,12 +137,10 @@ const SummaryHeading = styled.div`
 
 const SerloLink = styled.a`
   &:hover {
-    background-color: ${props => lighten(0.05, props.theme.colors.brand)};
+    text-decoration: underline;
   }
-  border-radius: 4px;
   color: white;
   text-decoration: none;
-  padding: 2px;
 `
 
 const SummaryText = styled.div`
@@ -149,27 +151,22 @@ const SummaryButtonBox = styled.div`
   margin-bottom: 10px;
 `
 
-const SummaryButton = styled.button`
-  border-radius: 80px;
-  padding: 3px 6px;
-  border: none;
-  background-color: transparent;
-  color: inherit;
-  font-size: inherit;
-  font-family: inherit;
-  &:hover {
-    background-color: ${props => props.theme.colors.brand};
-  }
-  cursor: pointer;
+const SummaryButton = styled.a`
+  ${makeDefaultButton}
+  color: #fff;
 `
 
 const Support = styled.div`
   background-color: ${props => props.theme.colors.brandGreen};
   display: flex;
   justify-content: space-around;
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding-top: 16px;
+  padding-bottom: 16px;
   color: white;
+
+  @media (min-width: ${props => props.theme.breakpoints.lg}) {
+    justify-content: start;
+  }
 `
 
 const ImageLink = styled.a`
@@ -180,11 +177,19 @@ const ImageLink = styled.a`
     width: 60px;
   }
   cursor: pointer;
+
+  @media (min-width: ${props => props.theme.breakpoints.lg}) {
+    &:first-child {
+      ${makeResponsivePadding}
+      margin-left: -6px;
+    }
+  }
 `
 
 const SupportButton = styled.div`
-  border-radius: 80px;
-  padding: 6px 6px;
+  margin-top: 3px;
+  ${makeDefaultButton}
+  color: #fff;
   ${ImageLink}:hover & {
     background-color: ${props => props.theme.colors.brand};
   }

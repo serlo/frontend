@@ -62,7 +62,8 @@ function render(value, path = []) {
   return renderLeaf({
     leaf: currentNode,
     attributes: { key },
-    children: currentNode.text
+    children: currentNode.text,
+    readonly: true
   })
 }
 
@@ -72,7 +73,7 @@ export const articleColors = {
   orange: '#ff6703'
 }
 
-export function renderLeaf({ leaf, attributes, children }) {
+export function renderLeaf({ leaf, attributes, children, readonly = false }) {
   const styles: any = {}
   if (leaf.color) {
     styles.color = articleColors[leaf.color]
@@ -146,40 +147,37 @@ export function renderP({
   value = null,
   path = []
 }) {
+  let mb = 'block'
   let full = false
-  let halfslim = false
-  let slim = full
 
   if (value) {
     const parent = Node.parent(value, path)
+    const myIndex = path[path.length - 1]
+    if (
+      parent.type === 'li' ||
+      parent.type === 'important' ||
+      parent.type === 'spoiler-body'
+    ) {
+      if (myIndex === parent.children.length - 1) {
+        mb = 'none'
+      }
+    }
+    // opti: list ahead
+    if (mb == 'block') {
+      if (myIndex < parent.children.length - 1) {
+        const next = parent.children[myIndex + 1]
+        if (next.type == 'ul' || next.type == 'ol') {
+          mb = 'slim'
+        }
+      }
+    }
     if (parent.type === 'li') {
       full = true
-      halfslim = true
-      slim = true
-    }
-
-    // check if next block is list
-    const myIndex = path[path.length - 1]
-    if (myIndex < parent.children.length - 1) {
-      const next = parent.children[myIndex + 1]
-      if (next.type == 'ul' || next.type == 'ol') {
-        halfslim = true
-      }
-    }
-    if (parent.type === 'important') {
-      // TODO slim only if last?
-      if (myIndex == parent.children.length - 1) {
-        slim = true
-        halfslim = false
-      } else {
-        halfslim = true
-        slim = false
-      }
     }
   }
 
   return (
-    <StyledP {...attributes} full={full} slim={slim} halfslim={halfslim}>
+    <StyledP {...attributes} mb={mb} full={full}>
       {children}
     </StyledP>
   )
@@ -202,7 +200,9 @@ export function renderImg({
   element,
   attributes = {},
   children = null,
-  wrapImg = nowrap
+  wrapImg = nowrap,
+  value = null,
+  path = []
 }) {
   const img = (
     <StyledImg
@@ -211,8 +211,36 @@ export function renderImg({
       maxWidth={element.maxWidth ? element.maxWidth : 0}
     ></StyledImg>
   )
+  let mb = 'block'
+  let full = false
+
+  if (value) {
+    const parent = Node.parent(value, path)
+    const myIndex = path[path.length - 1]
+    if (
+      parent.type === 'li' ||
+      parent.type === 'important' ||
+      parent.type === 'spoiler-body'
+    ) {
+      if (myIndex === parent.children.length - 1) {
+        mb = 'none'
+      }
+    }
+    // opti: list ahead
+    if (mb == 'block') {
+      if (myIndex < parent.children.length - 1) {
+        const next = parent.children[myIndex + 1]
+        if (next.type == 'ul' || next.type == 'ol') {
+          mb = 'slim'
+        }
+      }
+    }
+    if (parent.type === 'li') {
+      full = true
+    }
+  }
   return (
-    <ImgCentered {...attributes}>
+    <ImgCentered {...attributes} mb={mb} full={full}>
       {wrapImg(
         element.href ? (
           <a href={element.href} style={{ maxWidth: '100%', display: 'block' }}>
@@ -236,29 +264,44 @@ export function renderMath({
   path = []
 }) {
   let centered = true
-  let slim = false
-  let fullslim = false
   if (element.alignLeft) {
     centered = false
   }
+
+  let mb = 'block'
+
   if (value) {
     const parent = Node.parent(value, path)
     const myIndex = path[path.length - 1]
-    if (parent.type === 'important') {
-      slim = true
-    }
-    if (myIndex == parent.children.length - 1) {
-      fullslim = true
+    if (
+      parent.type === 'li' ||
+      parent.type === 'important' ||
+      parent.type === 'spoiler-body'
+    ) {
+      if (myIndex === parent.children.length - 1) {
+        mb = 'none'
+      }
     }
   }
+  let formula = element.formula
+  let bigger = false
+  if (
+    element.formula.includes('\\int') ||
+    element.formula.includes('frac') ||
+    element.formula.includes('^')
+  ) {
+    bigger = true
+  }
+  if (
+    formula.includes('\\begin{aligned}') ||
+    formula.includes('\\begin{array}')
+  ) {
+    formula = '\\def\\arraystretch{1.6} ' + formula
+  }
+
   return (
-    <MathWrapper
-      slim={slim}
-      fullslim={fullslim}
-      centered={centered}
-      {...attributes}
-    >
-      {wrapFormula(<Math formula={element.formula} />)}
+    <MathWrapper mb={mb} centered={centered} bigger={bigger} {...attributes}>
+      {wrapFormula(<Math formula={formula} />)}
       {children}
     </MathWrapper>
   )

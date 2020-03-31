@@ -11,7 +11,7 @@ function PageView(props) {
     <>
       <Header />
       <RelatveContainer>
-        <StyledMain>
+        <StyledMain hide>
           <ContentTypes data={data} />
         </StyledMain>
       </RelatveContainer>

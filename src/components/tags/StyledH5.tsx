@@ -4,7 +4,7 @@ import { makeMargin } from '../../helper/csshelper'
 export const StyledH5 = styled.h5`
   ${makeMargin}
   margin-top: 0;
-  margin-bottom: 16px;
+  margin-bottom: ${props => props.theme.spacing.mb.h5};
   font-size: 1.0625rem;
   line-height: 1.22;
 `

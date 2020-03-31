@@ -18,7 +18,7 @@ import { ToolLineButton } from '../navigation/ToolLineButton'
 import { createEditor, Editor } from 'slate'
 import withArticle from '../../schema/articleNormalizer'
 import Article from '../../schema/articleRenderer'
-import Create from '../../create/create'
+const Create = dynamic(import('../../create/create'))
 import Toolbox from '../navigation/Toolbox'
 import { convertEdtrioState } from '../../schema/convertEdtrioState'
 import convertLegacyState from '../../schema/convertLegacyState'
@@ -28,6 +28,7 @@ import { HSpace } from './HSpace'
 import { StyledP } from '../tags/StyledP'
 import Horizon from './Horizon'
 import { horizonData } from '../../horizondata'
+import dynamic from 'next/dynamic'
 
 export default function ContentTypes(props) {
   const { data } = props

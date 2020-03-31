@@ -3,6 +3,6 @@ import { makeMargin } from '../../helper/csshelper'
 
 export const StyledUl = styled.ul`
   ${makeMargin}
-  margin-bottom: 38px;
+  margin-bottom: ${props => props.theme.spacing.mb.block};
   margin-top: 0;
 `

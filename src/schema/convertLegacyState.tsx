@@ -37,6 +37,30 @@ function convert(node) {
           if (children.length === 0) {
             children = [{ type: 'p', children: [{ text: '' }] }]
           }
+          // compat: wrap every inline child in p, grouped
+          children = children.reduce((acc, val) => {
+            if (
+              val.type === 'inline-math' ||
+              val.type === 'a' ||
+              val.text !== undefined
+            ) {
+              let last = undefined
+              if (acc.length > 0) {
+                last = acc[acc.length - 1]
+              }
+              if (last && last.type === 'p') {
+                last.children.push(val)
+                return acc
+              } else {
+                acc.push({ type: 'p', children: [val] })
+                return acc
+              }
+            } else {
+              // block element
+              acc.push(val)
+              return acc
+            }
+          }, [])
           return [
             {
               type: 'col',
@@ -57,7 +81,7 @@ function convert(node) {
           return [
             {
               type: 'spoiler-title',
-              children: convert(node.children[1])
+              children: convert(node.children.slice(1))
             }
           ]
         }
@@ -99,6 +123,8 @@ function convert(node) {
             .substring(2, node.children[0].data.length - 2)
             .split('&lt;')
             .join('<')
+            .split('&nbsp;')
+            .join(' ')
           return [
             {
               type: 'inline-math',
@@ -112,6 +138,8 @@ function convert(node) {
             .substring(2, node.children[0].data.length - 2)
             .split('&lt;')
             .join('<')
+            .split('&nbsp;')
+            .join(' ')
           return [
             { type: 'math', formula, alignLeft: true, children: [{ text: '' }] }
           ]
@@ -210,9 +238,16 @@ function convert(node) {
       ]
     }
     if (node.name === 'li') {
-      // compat: wrap li in p
+      // compat: wrap li in p only if there are only inlines
       let children = convert(node.children)
-      if (children[0].type !== 'p') {
+      if (
+        children.filter(
+          child =>
+            child.text === undefined &&
+            child.type !== 'a' &&
+            child.type !== 'inline-math'
+        ).length == 0
+      ) {
         children = [{ type: 'p', children }]
       }
       return [
@@ -326,6 +361,8 @@ function convert(node) {
       .join('')
       .split('\n')
       .join('')
+      .split('&lt;')
+      .join('<')
     // compat: remove empty text
     if (!text) return []
     return [{ text }]
