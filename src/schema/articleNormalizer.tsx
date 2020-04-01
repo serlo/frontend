@@ -1,6 +1,6 @@
 import { Path, Transforms, Node, Text, Element, Editor } from 'slate'
 
-const voidElements = ['math', 'img', 'inline-math', 'anchor']
+const voidElements = ['math', 'img', 'inline-math', 'anchor', 'injection']
 const inlineElements = ['inline-math', 'a']
 
 export const articleSchema = {
@@ -75,7 +75,8 @@ export const articleSchema = {
       'h',
       'spoiler-container',
       'anchor',
-      'table'
+      'table',
+      'injection'
     ],
     wrapTextIn: { type: 'p', children: [{ text: '' }] }
   }

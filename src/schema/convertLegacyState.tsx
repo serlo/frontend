@@ -94,14 +94,12 @@ function convert(node) {
           ]
         }
         if (className === 'injection') {
+          const href = node.children[0].attribs.href
           return [
             {
-              type: 'p',
-              children: [
-                { text: '[Injection: ' },
-                ...convert(node.children),
-                { text: ']' }
-              ]
+              type: 'injection',
+              href,
+              children: [{ text: '' }]
             }
           ]
         }
