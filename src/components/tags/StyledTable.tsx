@@ -1,7 +1,7 @@
 import styled from 'styled-components'
+import { makeMargin } from '../../helper/csshelper'
 
 export const StyledTable = styled.table`
   border-collapse: collapse;
-  margin-left: auto;
-  margin-right: auto;
+  ${makeMargin}
 `
