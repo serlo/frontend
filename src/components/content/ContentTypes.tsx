@@ -33,7 +33,14 @@ import dynamic from 'next/dynamic'
 export default function ContentTypes(props) {
   const { data } = props
   if (data.contentType === 'Article' || data.contentType === 'Page') {
-    return <RenderArticle content={data.data} randoms={data.randoms} noBreadcrumbs={true}/>
+    return (
+      <RenderArticle
+        content={data.data}
+        randoms={data.randoms}
+        noBreadcrumbs={true}
+      />
+    )
+  }
   if (data.contentType === 'topic' || data.contentType === 'subject') {
     return (
       <>
