@@ -1,9 +1,7 @@
 import fetchContent from '../src/content-api/fetchContentFromSerloOrg'
 import Header from '../src/components/navigation/Header'
 import ContentTypes from '../src/components/content/ContentTypes'
-import SideMenu, {
-  SideMenuBalancer
-} from '../src/components/navigation/SideMenu'
+import SideMenu from '../src/components/navigation/SideMenu'
 import MobileSideMenu from '../src/components/navigation/MobileSideMenu'
 import Footer from '../src/components/navigation/Footer'
 import styled from 'styled-components'
@@ -17,12 +15,11 @@ function PageView(props) {
       <>
         <Header />
         <MobileSideMenu links={metamenudata} />
+        <SideMenu links={metamenudata} />
         <RelatveContainer>
-          <SideMenu links={metamenudata} />
           <StyledMain>
             <ContentTypes data={data} />
           </StyledMain>
-          <SideMenuBalancer></SideMenuBalancer>
         </RelatveContainer>
         <Footer />
       </>
