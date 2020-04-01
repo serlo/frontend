@@ -1,29 +1,22 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 import { makeDefaultButton } from '../../helper/csshelper'
-// import { useRouter } from 'next/router'
 
 export default function MetaMenu(props) {
-  const { links } = props
+  const { links, pagealias } = props
 
   return (
     <MetaMenuWrapper>
       <List>
-        {links.map((entry, i) => {
-          //TODO: build with server or useRouter (currently only router.pathname only returns ...slug )
-          //const router = useRouter()
-          //console.log(router.pathname)
-          const active =
-            process.browser && entry.url == window.location.pathname
-
-          return (
-            <Li key={entry.url}>
-              <Link href={entry.url}>
-                <ButtonStyle active={active}>{entry.title}</ButtonStyle>
-              </Link>
-            </Li>
-          )
-        })}
+        {links.map((entry, i) => (
+          <Li key={entry.url}>
+            <Link href={entry.url}>
+              <ButtonStyle active={pagealias === entry.url}>
+                {entry.title}
+              </ButtonStyle>
+            </Link>
+          </Li>
+        ))}
       </List>
     </MetaMenuWrapper>
   )

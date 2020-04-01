@@ -15,7 +15,7 @@ function PageView(props) {
       <>
         <Header />
         <MobileMetaMenu links={metamenudata} />
-        <MetaMenu links={metamenudata} />
+        <MetaMenu links={metamenudata} pagealias={alias} />
         <RelatveContainer>
           <StyledMain>
             <ContentTypes data={data} />
