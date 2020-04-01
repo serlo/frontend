@@ -136,6 +136,9 @@ export function convert(node) {
       }
     ]
   }
+  if (plugin === 'geogebra') {
+    return [{ type: 'geogebra', id: node.state, children: [{ text: '' }] }]
+  }
 
   const type = node.type
   if (type === 'p') {
@@ -252,6 +255,14 @@ export function convert(node) {
     return [
       {
         type: 'ul',
+        children: convert(node.children)
+      }
+    ]
+  }
+  if (type === 'ordered-list') {
+    return [
+      {
+        type: 'ol',
         children: convert(node.children)
       }
     ]
