@@ -1,8 +1,8 @@
 import fetchContent from '../src/content-api/fetchContentFromSerloOrg'
 import Header from '../src/components/navigation/Header'
 import ContentTypes from '../src/components/content/ContentTypes'
-import SideMenu from '../src/components/navigation/SideMenu'
-import MobileSideMenu from '../src/components/navigation/MobileSideMenu'
+import MetaMenu from '../src/components/navigation/MetaMenu'
+import MobileMetaMenu from '../src/components/navigation/MobileMetaMenu'
 import Footer from '../src/components/navigation/Footer'
 import styled from 'styled-components'
 import { metamenudata } from '../src/metamenudata'
@@ -14,8 +14,8 @@ function PageView(props) {
     return (
       <>
         <Header />
-        <MobileSideMenu links={metamenudata} />
-        <SideMenu links={metamenudata} />
+        <MobileMetaMenu links={metamenudata} />
+        <MetaMenu links={metamenudata} />
         <RelatveContainer>
           <StyledMain>
             <ContentTypes data={data} />

@@ -3,11 +3,11 @@ import styled, { css } from 'styled-components'
 import { makeDefaultButton } from '../../helper/csshelper'
 // import { useRouter } from 'next/router'
 
-export default function SideMenu(props) {
+export default function MetaMenu(props) {
   const { links } = props
 
   return (
-    <SideMenuWrapper>
+    <MetaMenuWrapper>
       <List>
         {links.map((entry, i) => {
           //TODO: build with server or useRouter (currently only router.pathname only returns ...slug )
@@ -25,11 +25,11 @@ export default function SideMenu(props) {
           )
         })}
       </List>
-    </SideMenuWrapper>
+    </MetaMenuWrapper>
   )
 }
 
-const SideMenuWrapper = styled.nav`
+const MetaMenuWrapper = styled.nav`
   display: none;
 
   @media (min-width: ${props => props.theme.breakpoints.lg}) {
