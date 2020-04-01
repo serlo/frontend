@@ -1,6 +1,7 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { makeDefaultButton } from '../../helper/csshelper'
+// import { useRouter } from 'next/router'
 
 export default function SideMenu(props) {
   const { links } = props
@@ -8,13 +9,21 @@ export default function SideMenu(props) {
   return (
     <SideMenuWrapper>
       <List>
-        {links.map(entry => (
-          <Li key={entry.url}>
-            <Link href={entry.url}>
-              <ButtonStyle>{entry.title}</ButtonStyle>
-            </Link>
-          </Li>
-        ))}
+        {links.map((entry, i) => {
+          //TODO: build with server or useRouter (currently only router.pathname only returns ...slug )
+          //const router = useRouter()
+          //console.log(router.pathname)
+          const active =
+            process.browser && entry.url == window.location.pathname
+
+          return (
+            <Li key={entry.url}>
+              <Link href={entry.url}>
+                <ButtonStyle active={active}>{entry.title}</ButtonStyle>
+              </Link>
+            </Li>
+          )
+        })}
       </List>
     </SideMenuWrapper>
   )
@@ -52,7 +61,7 @@ const Link = styled.a`
   padding-bottom: 14px;
 `
 
-const ButtonStyle = styled.span`
+const ButtonStyle = styled.span<{ active?: boolean }>`
   ${makeDefaultButton}
   font-weight: bold;
   padding: 3px 7px;
@@ -61,4 +70,15 @@ const ButtonStyle = styled.span`
     color: #fff;
     background-color: ${props => props.theme.colors.brand};
   }
+
+  ${props =>
+    props.active &&
+    css`
+      &,
+      &:hover,
+      ${Link}:hover & {
+        color: #333;
+        background-color: ${props => props.theme.colors.lightBlueBackground};
+      }
+    `};
 `
