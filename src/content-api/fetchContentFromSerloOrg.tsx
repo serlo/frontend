@@ -1,6 +1,74 @@
 import fetch from 'isomorphic-unfetch'
+import { request } from 'graphql-request'
+import { render } from '../../external/legacy_render'
 
-export default async function fetchContent(alias) {
+const endpoint = 'https://api.serlo.org/graphql'
+
+export default async function fetchContentQL(alias) {
+  const data: any = {}
+  let contentType = 'unknown'
+
+  let QUERY
+
+  if (/\/[\d]+/.test(alias)) {
+    // by id
+    const id = alias.substring(1)
+    QUERY = `
+    {
+      uuid(id:${id}) {
+        __typename
+        ... on Page {
+          currentRevision {
+            title
+            content
+          }
+        }
+        ... on Article {
+          currentRevision {
+            title
+            content
+          }
+        }
+      }
+    }`
+  } else {
+    QUERY = `
+    {
+      uuid(alias:{instance:de,path:"${alias}"}) {
+        __typename
+        ... on Page {
+          currentRevision {
+            title
+            content
+          }
+        }
+        ... on Article {
+          currentRevision {
+            title
+            content
+          }
+        }
+      }
+    }`
+  }
+
+  if (QUERY) {
+    let reqData = await request(endpoint, QUERY)
+    contentType = reqData.uuid.__typename
+    let value = reqData.uuid.currentRevision.content
+    data.title = reqData.uuid.currentRevision.title
+    if (value.startsWith('[')) {
+      // legacy
+      data.legacy = await render(value)
+    } else {
+      data.edtrio = JSON.parse(value)
+    }
+  }
+
+  return { alias, contentType, data }
+}
+
+export async function fetchContent(alias) {
   // deeeeeep shit
   alias = alias.replace('ä', '%C3%A4')
   alias = alias.replace('ö', '%C3%B6')
@@ -34,7 +102,7 @@ export default async function fetchContent(alias) {
 
     const edtrio = /data\-raw\-content='([\w\+\/\=]+)'/.exec(html)
     if (edtrio) {
-      data.edtrio = Buffer.from(edtrio[1], 'base64').toString()
+      data.edtrio = JSON.parse(Buffer.from(edtrio[1], 'base64').toString())
     } else {
       // legacy format
       const articleStart = html.indexOf('<article>')
@@ -47,6 +115,7 @@ export default async function fetchContent(alias) {
         .trim()
       data.legacy = legacy
     }
+    contentType = 'Article'
   }
   if (contentType === 'Page revision') {
     // static pages?
@@ -57,7 +126,7 @@ export default async function fetchContent(alias) {
 
     const edtrio = /data\-raw\-content='([\w\+\/\=]+)'/.exec(html)
     if (edtrio) {
-      data.edtrio = Buffer.from(edtrio[1], 'base64').toString()
+      data.edtrio = JSON.parse(Buffer.from(edtrio[1], 'base64').toString())
     } else {
       const startPattern = '<section itemprop="articleBody" class="editable">'
       const pageStart = html.indexOf(startPattern)
@@ -67,6 +136,7 @@ export default async function fetchContent(alias) {
         .trim()
       data.legacy = page
     }
+    contentType = 'Page'
   }
   if (contentType === 'topic' || contentType === 'subject') {
     const h1 = /<h1>([^<]+)<\/h1>/.exec(html)
@@ -115,5 +185,11 @@ export default async function fetchContent(alias) {
     data.breadcrumbs = links
   }
 
-  return { alias, contentType, data }
+  // random numbers
+  const randoms = []
+  for (let i = 0; i < 10; i++) {
+    randoms.push(Math.random())
+  }
+
+  return { alias, contentType, data, randoms }
 }

@@ -69,4 +69,3 @@ export const inputFontReset = props =>
     font-size: 1rem;
     font-family: Karmilla, sans-serif;
     letter-spacing: '-0.007em';
-  `
