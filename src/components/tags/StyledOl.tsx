@@ -9,6 +9,9 @@ export const StyledOl = styled.ol`
   padding-left: 25px;
   list-style-type: none;
   counter-reset: list-counter;
+  
+  /* hack, there should not be <p>s inside <li>s */
+  > li > p { display: inline-block; }
 
   > li {
     margin-bottom: 7px;
