@@ -32,7 +32,7 @@ import dynamic from 'next/dynamic'
 
 export default function ContentTypes(props) {
   const { data } = props
-  if (data.contentType === 'article' || data.contentType === 'Page revision') {
+  if (data.contentType === 'Article' || data.contentType === 'Page') {
     return <RenderArticle content={data.data} />
   }
   if (data.contentType === 'topic' || data.contentType === 'subject') {
@@ -88,7 +88,7 @@ function RenderArticle({ content }) {
   const [value, setValue] = React.useState(undefined)
   const [editMode, setEditMode] = React.useState(false)
   if (!value && content.edtrio) {
-    const edtrio = JSON.parse(content.edtrio)
+    const edtrio = content.edtrio
     const value = convertEdtrioState(edtrio)
     //const editor = withArticle(createEditor())
     //editor.children = value.children
@@ -139,23 +139,27 @@ function RenderArticle({ content }) {
         <ToolLineButton onClick={() => setOpen(true)}>
           <FontAwesomeIcon icon={faShareAlt} size="1x" /> Teilen
         </ToolLineButton>
-        <ToolLineButton
+        {/* <ToolLineButton
           onClick={() => {
             setEditMode(true)
           }}
         >
           <FontAwesomeIcon icon={faPencilAlt} size="1x" /> Bearbeiten
-        </ToolLineButton>
+        </ToolLineButton> */}
         {<ShareModal open={open} onClose={() => setOpen(false)} />}
       </ToolLine>
-
+      <Article value={value} />
+      <HSpace amount={20} />
+      <ToolLine>
+        <ToolLineButton onClick={() => setOpen(true)}>
+          <FontAwesomeIcon icon={faShareAlt} size="1x" /> Teilen
+        </ToolLineButton>
+      </ToolLine>
       <Toolbox
         onEdit={() => {
           setEditMode(true)
         }}
       />
-      <Article value={value} />
-      <HSpace amount={20} />
       <Hints hints={checkArticleGuidelines(value)} />
       <HSpace amount={40} />
       <Horizon entries={horizonData} />
