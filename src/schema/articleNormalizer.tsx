@@ -35,6 +35,22 @@ export const articleSchema = {
     children: ['p', 'img', 'math', 'ul', 'ol'],
     wrapTextIn: { type: 'p', children: [{ text: '' }] }
   },
+  table: {
+    children: ['tr'],
+    wrapTextIn: { type: 'tr', children: [{ text: '' }] }
+  },
+  tr: {
+    children: ['th', 'td'],
+    wrapTextIn: { type: 'td', children: [{ text: '' }] }
+  },
+  th: {
+    children: ['p', 'math'],
+    wrapTextIn: { type: 'p', children: [{ text: '' }] }
+  },
+  td: {
+    children: ['p', 'math'],
+    wrapTextIn: { type: 'p', children: [{ text: '' }] }
+  },
   row: {
     children: ['col'],
     wrapTextIn: { type: 'p', size: 4, children: [{ text: '' }] }
@@ -58,7 +74,8 @@ export const articleSchema = {
       'important',
       'h',
       'spoiler-container',
-      'anchor'
+      'anchor',
+      'table'
     ],
     wrapTextIn: { type: 'p', children: [{ text: '' }] }
   }

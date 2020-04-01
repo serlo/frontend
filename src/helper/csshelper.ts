@@ -38,21 +38,21 @@ export const makeResponsivePadding = props =>
 
 export const makeDefaultButton = props =>
   css`
-  display: inline-block;
-  transition: all 0.2s ease-in-out 0s;
-  border-radius: 2em;
-  padding: 2px 7px;
-  text-decoration: none;
-  cursor: pointer;
-  border: none;
-  background-color: transparent;
-  color: ${props => props.theme.colors.brand};
-  &:hover {
-    color: #fff;
-    background-color: ${props => props.theme.colors.brand};
-  }
-  cursor: pointer;
-`
+    display: inline-block;
+    transition: all 0.2s ease-in-out 0s;
+    border-radius: 2em;
+    padding: 2px 7px;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    color: ${props => props.theme.colors.brand};
+    &:hover {
+      color: #fff;
+      background-color: ${props => props.theme.colors.brand};
+    }
+    cursor: pointer;
+  `
 
 export const makeGreenButton = props =>
   css`
@@ -66,7 +66,7 @@ export const makeGreenButton = props =>
 
 export const inputFontReset = props =>
   css`
- font-size: 1rem;
- font-family: Karmilla, sans-serif;
- letter-spacing: '-0.007em';
- `
+    font-size: 1rem;
+    font-family: Karmilla, sans-serif;
+    letter-spacing: '-0.007em';
+  `

@@ -136,7 +136,7 @@ export async function fetchContent(alias) {
         .trim()
       data.legacy = page
     }
-    contentType = 'PageRevision'
+    contentType = 'Page'
   }
   if (contentType === 'topic' || contentType === 'subject') {
     const h1 = /<h1>([^<]+)<\/h1>/.exec(html)
@@ -185,5 +185,11 @@ export async function fetchContent(alias) {
     data.breadcrumbs = links
   }
 
-  return { alias, contentType, data }
+  // random numbers
+  const randoms = []
+  for (let i = 0; i < 10; i++) {
+    randoms.push(Math.random())
+  }
+
+  return { alias, contentType, data, randoms }
 }

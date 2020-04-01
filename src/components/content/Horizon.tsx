@@ -2,27 +2,46 @@ import React from 'react'
 import styled from 'styled-components'
 import { makePadding } from '../../helper/csshelper'
 
-interface HorizonProp {
+interface HorizonEntry {
   imageUrl: string
   title: string
   text: string
   url: string
 }
 
-export default function Horizon({ entries }: { entries: HorizonProp[] }) {
+interface HorizonProps {
+  entries: HorizonEntry[]
+  randoms: number[]
+}
+
+function shuffle(a, randoms) {
+  var j, x, i
+  for (i = a.length - 1; i > 0; i--) {
+    const r = randoms.pop()
+    j = Math.floor(randoms.pop() * (i + 1))
+    x = a[i]
+    a[i] = a[j]
+    a[j] = x
+  }
+  return a
+}
+
+export default function Horizon({ entries, randoms }: HorizonProps) {
+  // this is absolute deep shit
+  entries = entries.slice(0)
+  randoms = randoms.slice(0)
+  shuffle(entries, randoms)
   return (
     <Wrapper>
-      {entries
-        .sort(() => Math.random() - 0.5)
-        .map((horizonEntry, index) => {
-          return (
-            <Item href={horizonEntry.url} key={index}>
-              <Image alt={horizonEntry.title} src={horizonEntry.imageUrl} />
-              <Headline>{horizonEntry.title}</Headline>
-              <Text>{horizonEntry.text}</Text>
-            </Item>
-          )
-        })}
+      {entries.map((horizonEntry, index) => {
+        return (
+          <Item href={horizonEntry.url} key={index}>
+            <Image alt={horizonEntry.title} src={horizonEntry.imageUrl} />
+            <Headline>{horizonEntry.title}</Headline>
+            <Text>{horizonEntry.text}</Text>
+          </Item>
+        )
+      })}
     </Wrapper>
   )
 }

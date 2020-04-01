@@ -216,6 +216,22 @@ The column must have a size attribute. This attribute must be an integer greater
 
 A important container may only contain elements of type `p`, `img`, `math`, `ul`, `ol`, `row`. Other elements will be unwrapped. Text will be wrapped in `p`.
 
+### table
+
+A table may only contain elements of type `tr`. Other elements will be unwrapped. Text will be wrapped in `tr`.
+
+### tr
+
+A table row may only contain `th` or `td`. Other elements will be unwrapped. Text will be wrapped in `td`.
+
+### th
+
+A table header may only contain `p` or `math`. Other elements will be unwrapped. Text will be wrapped in `p`.
+
+### td
+
+Table data may only contain `p` or `math`. Other elements will be unwrapped. Text will be wrapped in `p`.
+
 ### Root
 
 The document root may only contain elements of type `p`, `h`, `img`, `math`, `spoiler-container`, `ul`, `ol`, `row`, `important`. Other elements will be unwrapped. Text will be wrapped in `p`. A h1 may only appear as first child of root. Otherwise, it will be unwrapped.
