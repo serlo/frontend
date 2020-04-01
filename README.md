@@ -372,7 +372,7 @@ Show information to the user with modals. [react-modal](https://github.com/react
 
 ```tsx
 import React from 'react'
-import Modal from '../src/reactmodal' // our wrapper
+import Modal from '../Modal' // our wrapper
 
 const centeredModal = {
   overlay: {

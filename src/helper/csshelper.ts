@@ -53,3 +53,20 @@ export const makeDefaultButton = props =>
   }
   cursor: pointer;
 `
+
+export const makeGreenButton = props =>
+  css`
+  ${makeDefaultButton}
+  color: ${props => props.theme.colors.brandGreen};
+  &:hover {
+    color: #fff;
+    background-color: ${props => props.theme.colors.brandGreen};
+  }
+`
+
+export const inputFontReset = props =>
+  css`
+ font-size: 1rem;
+ font-family: Karmilla, sans-serif;
+ letter-spacing: '-0.007em';
+ `
