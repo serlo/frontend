@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { lighten } from 'polished'
 import { faSearch, faSlidersH } from '@fortawesome/free-solid-svg-icons'
+import { inputFontReset } from '../../helper/csshelper'
 
 export default function SearchInput(props) {
   const { value } = props
@@ -23,21 +24,21 @@ export default function SearchInput(props) {
   return (
     <>
       <SearchForm id="searchform" name="searchform">
-        <Settings
+        {/* <Settings
           onClick={e => {
             e.preventDefault()
             setShowSettings(!showSettings)
           }}
         >
           <FontAwesomeIcon icon={faSlidersH} size="lg" />
-        </Settings>
+        </Settings> */}
 
         <_Input
-          type="text"
+          type="search"
           name="searchtext"
           ref={inputRef}
           placeholder="Suche"
-          aria-label="Suche"
+          aria-label="Alle Inhalte durchsuchen"
           value={value}
           focused={focused}
           onFocus={() => {
@@ -56,26 +57,37 @@ export default function SearchInput(props) {
           <FontAwesomeIcon icon={faSearch} size="lg" />
         </_Button>
       </SearchForm>
-      {showSettings && (
+      {/* {showSettings && (
         <SearchSettings>Hier kommen Sucheinstellungen hin</SearchSettings>
-      )}
+      )} */}
     </>
   )
 }
 
-const SearchSettings = styled.div`
-  text-align: center;
-  padding: 30px;
-  background-color: ${props => lighten(0.1, props.theme.colors.lighterblue)};
-  border-top: thin solid ${props => props.theme.colors.brand};
-`
+// const SearchSettings = styled.div`
+//   text-align: center;
+//   padding: 30px;
+//   background-color: ${props => lighten(0.1, props.theme.colors.lighterblue)};
+//   border-top: thin solid ${props => props.theme.colors.brand};
+// `
 
 const SearchForm = styled.form`
   background-color: ${props => lighten(0.1, props.theme.colors.lighterblue)};
+  display: flex;
+  justify-content: center;
+  transition: background-color 0.4s ease;
+
+  &:focus-within {
+    background-color: ${props => lighten(0.1, props.theme.colors.lighterblue)};
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding-left: 16px;
+  }
 
   @media (min-width: ${props => props.theme.breakpoints.sm}) {
     position: absolute;
-    top: 128px;
+    top: 133px;
     right: 32px;
     height: 35px;
     width: 224px;
@@ -85,30 +97,21 @@ const SearchForm = styled.form`
     justify-content: flex-end;
   }
 
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  transition: background-color 0.4s ease;
-
-  &:focus-within {
-    background-color: ${props => lighten(0.1, props.theme.colors.lighterblue)};
-  }
-
   @media (min-width: ${props => props.theme.breakpoints.lg}) {
     right: 27px;
-    margin-top: -5px;
+    /* margin-top: -5px; */
     margin-left: auto;
   }
 `
 
-const Settings = styled.button`
-  width: 45px;
-  height: 40px;
-  background-color: transparent;
-  border: none;
-  color: ${props => lighten(0.5, props.theme.colors.darkgray)};
-  cursor: pointer;
-`
+// const Settings = styled.button`
+//   width: 45px;
+//   height: 40px;
+//   background-color: transparent;
+//   border: none;
+//   color: ${props => lighten(0.5, props.theme.colors.darkgray)};
+//   cursor: pointer;
+// `
 
 const _Button = styled.button<{ focused: boolean }>`
   background-color: ${props =>
@@ -118,13 +121,13 @@ const _Button = styled.button<{ focused: boolean }>`
   transition: background-color 0.2s ease-in;
 
   color: ${props => (props.focused ? 'white' : props.theme.colors.brand)};
-
   height: 40px;
   min-width: 40px;
-
+  padding: 0;
   border: 0;
   outline: none;
   cursor: pointer;
+  font-size: 0.8em;
 
   &:hover {
     background-color: ${props => props.theme.colors.brand};
@@ -133,16 +136,18 @@ const _Button = styled.button<{ focused: boolean }>`
 
   @media (min-width: ${props => props.theme.breakpoints.sm}) {
     color: white;
-    padding: 2px 0 0 2px;
     min-width: 35px;
     height: 35px;
     border-radius: 17px;
   }
 `
 const _Input = styled.input<{ focused: boolean }>`
+  ${inputFontReset}
   color: ${props => props.theme.colors.brand};
   font-weight: bold;
-  font-size: 1.15em;
+  
+  padding-left: 50px;
+  padding-right: 7px;
 
   background-color: transparent;
 
@@ -153,11 +158,11 @@ const _Input = styled.input<{ focused: boolean }>`
   border: 0;
   outline: none;
 
-  margin-left: 4px;
   cursor: ${props => (props.focused ? 'auto' : 'pointer')};
 
   &::placeholder {
     color: ${props => props.theme.colors.brand};
+    opacity: 1;
   }
 
   &:focus::placeholder {
@@ -166,7 +171,7 @@ const _Input = styled.input<{ focused: boolean }>`
 
   @media (min-width: ${props => props.theme.breakpoints.sm}) {
     margin-left: 0;
-    padding-left: 8px;
+    padding-left: 12px;
     padding-right: 6px;
     width: 96px;
     &::placeholder {

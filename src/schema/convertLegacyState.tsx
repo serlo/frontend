@@ -1,7 +1,6 @@
 import * as htmlparser2 from 'htmlparser2'
 
 export default function convertLegacyState(html) {
-  console.log('legacy')
   const dom = htmlparser2.parseDOM(html)
   return { children: convert(dom) }
 }
@@ -38,6 +37,30 @@ function convert(node) {
           if (children.length === 0) {
             children = [{ type: 'p', children: [{ text: '' }] }]
           }
+          // compat: wrap every inline child in p, grouped
+          children = children.reduce((acc, val) => {
+            if (
+              val.type === 'inline-math' ||
+              val.type === 'a' ||
+              val.text !== undefined
+            ) {
+              let last = undefined
+              if (acc.length > 0) {
+                last = acc[acc.length - 1]
+              }
+              if (last && last.type === 'p') {
+                last.children.push(val)
+                return acc
+              } else {
+                acc.push({ type: 'p', children: [val] })
+                return acc
+              }
+            } else {
+              // block element
+              acc.push(val)
+              return acc
+            }
+          }, [])
           return [
             {
               type: 'col',
@@ -83,12 +106,7 @@ function convert(node) {
           ]
         }
         if (className === 'table-responsive') {
-          return [
-            {
-              type: 'p',
-              children: [{ text: '[Tabelle]' }]
-            }
-          ]
+          return convert(node.children)
         }
       }
     }
@@ -96,10 +114,16 @@ function convert(node) {
       if (node.attribs) {
         const className = node.attribs.class
         if (className === 'mathInline') {
+          // compat nested math element in table - wtf??
+          if (!node.children[0].data) {
+            return convert(node.children)
+          }
           const formula = node.children[0].data
             .substring(2, node.children[0].data.length - 2)
             .split('&lt;')
             .join('<')
+            .split('&nbsp;')
+            .join(' ')
           return [
             {
               type: 'inline-math',
@@ -113,6 +137,8 @@ function convert(node) {
             .substring(2, node.children[0].data.length - 2)
             .split('&lt;')
             .join('<')
+            .split('&nbsp;')
+            .join(' ')
           return [
             { type: 'math', formula, alignLeft: true, children: [{ text: '' }] }
           ]
@@ -230,6 +256,39 @@ function convert(node) {
         }
       ]
     }
+    if (node.name === 'table') {
+      return [{ type: 'table', children: convert(node.children) }]
+    }
+    if (node.name === 'thead') {
+      return convert(node.children)
+    }
+    if (node.name === 'tbody') {
+      return convert(node.children)
+    }
+    if (node.name === 'tr') {
+      return [
+        {
+          type: 'tr',
+          children: convert(node.children)
+        }
+      ]
+    }
+    if (node.name === 'th') {
+      return [
+        {
+          type: 'th',
+          children: convert(node.children)
+        }
+      ]
+    }
+    if (node.name === 'td') {
+      return [
+        {
+          type: 'td',
+          children: convert(node.children)
+        }
+      ]
+    }
     if (node.name === 'h2') {
       return [
         {
@@ -334,6 +393,8 @@ function convert(node) {
       .join('')
       .split('\n')
       .join('')
+      .split('&lt;')
+      .join('<')
     // compat: remove empty text
     if (!text) return []
     return [{ text }]

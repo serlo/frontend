@@ -28,12 +28,19 @@ import { StyledImg } from '../components/tags/StyledImg'
 import { SpoilerTitle } from '../components/content/SpoilerTitle'
 import { SpoilerBody } from '../components/content/SpoilerBody'
 import { SpoilerContainer } from '../components/content/SpoilerContainer'
+import { StyledTable } from '../components/tags/StyledTable'
+import { StyledTR } from '../components/tags/StyledTR'
+import { StyledTH } from '../components/tags/StyledTH'
+import { StyledTD } from '../components/tags/StyledTD'
+import { TableWrapper } from '../components/content/TableWrapper'
 
 const Math = dynamic(import('../components/content/Math'))
 
 export interface ArticleProps {
   value: Node[]
 }
+
+export const enclosingParents = ['li', 'important', 'spoiler', 'th', 'td']
 
 export default function Article(props: ArticleProps) {
   const { value } = props
@@ -107,7 +114,11 @@ const renderer = {
   row: renderRow,
   col: renderCol,
   important: renderImportant,
-  anchor: renderAnchor
+  anchor: renderAnchor,
+  table: renderTable,
+  tr: renderTR,
+  th: renderTH,
+  td: renderTD
 }
 
 function renderElement(props) {
@@ -148,15 +159,12 @@ export function renderP({
   path = []
 }) {
   let mb = 'block'
+  let full = false
 
   if (value) {
     const parent = Node.parent(value, path)
     const myIndex = path[path.length - 1]
-    if (
-      parent.type === 'li' ||
-      parent.type === 'important' ||
-      parent.type === 'spoiler-body'
-    ) {
+    if (enclosingParents.includes(parent.type)) {
       if (myIndex === parent.children.length - 1) {
         mb = 'none'
       }
@@ -170,10 +178,13 @@ export function renderP({
         }
       }
     }
+    if (parent.type === 'li') {
+      full = true
+    }
   }
 
   return (
-    <StyledP {...attributes} mb={mb}>
+    <StyledP {...attributes} mb={mb} full={full}>
       {children}
     </StyledP>
   )
@@ -208,15 +219,12 @@ export function renderImg({
     ></StyledImg>
   )
   let mb = 'block'
+  let full = false
 
   if (value) {
     const parent = Node.parent(value, path)
     const myIndex = path[path.length - 1]
-    if (
-      parent.type === 'li' ||
-      parent.type === 'important' ||
-      parent.type === 'spoiler-body'
-    ) {
+    if (enclosingParents.includes(parent.type)) {
       if (myIndex === parent.children.length - 1) {
         mb = 'none'
       }
@@ -230,9 +238,12 @@ export function renderImg({
         }
       }
     }
+    if (parent.type === 'li') {
+      full = true
+    }
   }
   return (
-    <ImgCentered {...attributes} mb={mb}>
+    <ImgCentered {...attributes} mb={mb} full={full}>
       {wrapImg(
         element.href ? (
           <a href={element.href} style={{ maxWidth: '100%', display: 'block' }}>
@@ -265,19 +276,31 @@ export function renderMath({
   if (value) {
     const parent = Node.parent(value, path)
     const myIndex = path[path.length - 1]
-    if (
-      parent.type === 'li' ||
-      parent.type === 'important' ||
-      parent.type === 'spoiler-body'
-    ) {
+    if (enclosingParents.includes(parent.type)) {
       if (myIndex === parent.children.length - 1) {
         mb = 'none'
       }
     }
   }
+  let formula = element.formula
+  let bigger = false
+  if (
+    element.formula.includes('\\int') ||
+    element.formula.includes('frac') ||
+    element.formula.includes('^')
+  ) {
+    bigger = true
+  }
+  if (
+    formula.includes('\\begin{aligned}') ||
+    formula.includes('\\begin{array}')
+  ) {
+    formula = '\\def\\arraystretch{1.6} ' + formula
+  }
+
   return (
-    <MathWrapper mb={mb} centered={centered} {...attributes}>
-      {wrapFormula(<Math formula={element.formula} />)}
+    <MathWrapper mb={mb} centered={centered} bigger={bigger} {...attributes}>
+      {wrapFormula(<Math formula={formula} />)}
       {children}
     </MathWrapper>
   )
@@ -343,6 +366,28 @@ export function renderOl({ attributes, children }) {
 
 export function renderLi({ attributes, children }) {
   return <StyledLi {...attributes}>{children}</StyledLi>
+}
+
+export function renderTable({ attributes, children }) {
+  return (
+    <TableWrapper key={attributes.key}>
+      <StyledTable>
+        <tbody {...attributes}>{children}</tbody>
+      </StyledTable>
+    </TableWrapper>
+  )
+}
+
+export function renderTR({ attributes, children }) {
+  return <StyledTR {...attributes}>{children}</StyledTR>
+}
+
+export function renderTH({ attributes, children }) {
+  return <StyledTH {...attributes}>{children}</StyledTH>
+}
+
+export function renderTD({ attributes, children }) {
+  return <StyledTD {...attributes}>{children}</StyledTD>
 }
 
 export function renderRow({ attributes = {}, children = null }) {

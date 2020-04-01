@@ -202,7 +202,7 @@ A list may only contain elements of type `li`. Elements of other types will be u
 
 ### li
 
-A list item may only contain elements of type `p`, `img`, `math` or another `ul` or `ol` of the same parent type, maximal nested twice. Other elements will be unwrapped. Text will be wrapped in `p`.
+A list item may only contain elements of type `p`, `img`, `math` or another `ul` or `ol` of the same parent type. If the `li` contains a nested list, this is only allowed for two levels and the first child must be a `p`, if not, an empty `p` will be added. Other elements will be unwrapped. Text will be wrapped in `p`.
 
 ### row
 
@@ -215,6 +215,22 @@ The column must have a size attribute. This attribute must be an integer greater
 ### important
 
 A important container may only contain elements of type `p`, `img`, `math`, `ul`, `ol`, `row`. Other elements will be unwrapped. Text will be wrapped in `p`.
+
+### table
+
+A table may only contain elements of type `tr`. Other elements will be unwrapped. Text will be wrapped in `tr`.
+
+### tr
+
+A table row may only contain `th` or `td`. Other elements will be unwrapped. Text will be wrapped in `td`.
+
+### th
+
+A table header may only contain `p` or `math`. Other elements will be unwrapped. Text will be wrapped in `p`.
+
+### td
+
+Table data may only contain `p` or `math`. Other elements will be unwrapped. Text will be wrapped in `p`.
 
 ### Root
 

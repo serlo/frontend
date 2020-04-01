@@ -35,7 +35,11 @@ import {
   renderSpoilerToggle,
   renderSpoilerBody,
   renderA,
-  articleColors
+  articleColors,
+  renderTR,
+  renderTH,
+  renderTD,
+  renderTable
 } from '../schema/articleRenderer'
 import checkArticleGuidelines from '../schema/articleGuidelines'
 import { Hints } from '../components/Hints'
@@ -139,7 +143,15 @@ function Toolbar() {
         // was darf man hier hinzufügen?
         ;['img', 'math', 'spoiler-container', 'ul', 'ol', 'row'].forEach(
           key => {
-            if (allowed.children.includes(key)) allowedAdd.push(key)
+            if (allowed.children.includes(key)) {
+              if (key === 'ul' || key === 'ol') {
+                // check level
+                if (anchorParentPath.length > 3) {
+                  return
+                }
+              }
+              allowedAdd.push(key)
+            }
           }
         )
         addCurrentNode = Node.get(editor, anchorParentPath)
@@ -317,6 +329,7 @@ const defaultInserts = {
   },
   math: {
     type: 'math',
+    formula: '',
     children: [{ text: '' }]
   },
   'spoiler-container': {
@@ -448,7 +461,11 @@ const simpleRenderer = {
   ul: renderUl,
   ol: renderOl,
   li: renderLi,
-  important: renderImportant
+  important: renderImportant,
+  table: renderTable,
+  tr: renderTR,
+  th: renderTH,
+  td: renderTD
 }
 
 const componentRenderer = {
@@ -1040,7 +1057,9 @@ function MyImg(props) {
       >
         {comp}
       </TipOver>
-    )
+    ),
+    value: editor,
+    path
   })
 }
 

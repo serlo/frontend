@@ -2,11 +2,11 @@ import styled from 'styled-components'
 
 export const ToolLine = styled.div`
   margin-right: 16px;
-  margin-top: 5px;
+  margin-top: -25px;
+  margin-bottom: 15px;
   display: none;
   @media (max-width: ${props => props.theme.breakpoints.lg}) {
     display: flex;
   }
-  margin-bottom: 20px;
   justify-content: flex-end;
 `

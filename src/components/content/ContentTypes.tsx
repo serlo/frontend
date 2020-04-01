@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faShareAlt, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
+import { faShareAlt } from '@fortawesome/free-solid-svg-icons'
 
 import ShareModal from '../navigation/ShareModal'
 
@@ -18,7 +18,7 @@ import { ToolLineButton } from '../navigation/ToolLineButton'
 import { createEditor, Editor } from 'slate'
 import withArticle from '../../schema/articleNormalizer'
 import Article from '../../schema/articleRenderer'
-import Create from '../../create/create'
+const Create = dynamic(import('../../create/create'))
 import Toolbox from '../navigation/Toolbox'
 import { convertEdtrioState } from '../../schema/convertEdtrioState'
 import convertLegacyState from '../../schema/convertLegacyState'
@@ -28,11 +28,12 @@ import { HSpace } from './HSpace'
 import { StyledP } from '../tags/StyledP'
 import Horizon from './Horizon'
 import { horizonData } from '../../horizondata'
+import dynamic from 'next/dynamic'
 
 export default function ContentTypes(props) {
   const { data } = props
-  if (data.contentType === 'article' || data.contentType === 'Page revision') {
-    return <RenderArticle content={data.data} />
+  if (data.contentType === 'Article' || data.contentType === 'Page') {
+    return <RenderArticle content={data.data} randoms={data.randoms} />
   }
   if (data.contentType === 'topic' || data.contentType === 'subject') {
     return (
@@ -82,12 +83,12 @@ export default function ContentTypes(props) {
   return <Ups type={data.contentType} />
 }
 
-function RenderArticle({ content }) {
+function RenderArticle({ content, randoms }) {
   const [open, setOpen] = React.useState(false)
   const [value, setValue] = React.useState(undefined)
   const [editMode, setEditMode] = React.useState(false)
   if (!value && content.edtrio) {
-    const edtrio = JSON.parse(content.edtrio)
+    const edtrio = content.edtrio
     const value = convertEdtrioState(edtrio)
     //const editor = withArticle(createEditor())
     //editor.children = value.children
@@ -138,26 +139,30 @@ function RenderArticle({ content }) {
         <ToolLineButton onClick={() => setOpen(true)}>
           <FontAwesomeIcon icon={faShareAlt} size="1x" /> Teilen
         </ToolLineButton>
-        <ToolLineButton
+        {/* <ToolLineButton
           onClick={() => {
             setEditMode(true)
           }}
         >
           <FontAwesomeIcon icon={faPencilAlt} size="1x" /> Bearbeiten
-        </ToolLineButton>
+        </ToolLineButton> */}
         {<ShareModal open={open} onClose={() => setOpen(false)} />}
       </ToolLine>
-
+      <Article value={value} />
+      <HSpace amount={20} />
+      <ToolLine>
+        <ToolLineButton onClick={() => setOpen(true)}>
+          <FontAwesomeIcon icon={faShareAlt} size="1x" /> Teilen
+        </ToolLineButton>
+      </ToolLine>
       <Toolbox
         onEdit={() => {
           setEditMode(true)
         }}
       />
-      <Article value={value} />
-      <HSpace amount={20} />
       <Hints hints={checkArticleGuidelines(value)} />
       <HSpace amount={40} />
-      <Horizon entries={horizonData} />
+      <Horizon entries={horizonData} randoms={randoms} />
     </>
   )
 }
