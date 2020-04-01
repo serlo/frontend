@@ -13,12 +13,6 @@ import {
   faWhatsappSquare,
   faGoogle
 } from '@fortawesome/free-brands-svg-icons'
-import { StyledH2 } from '../tags/StyledH2'
-import {
-  makeMargin,
-  makeGreenButton,
-  inputFontReset
-} from '../../helper/csshelper'
 
 import Modal from '../Modal'
 
@@ -75,8 +69,8 @@ export default function ShareModal(props) {
   ]
 
   return (
-    <StyledModal isOpen={open} onRequestClose={onClose}>
-      <StyledH2>Weitergeben!</StyledH2>
+    <Modal isOpen={open} onRequestClose={onClose} style={ModalStyles}>
+      <StyledH2>Teile den Inhalt!</StyledH2>
       <div>
         <ShareInput
           ref={shareInputRef}
@@ -84,70 +78,48 @@ export default function ShareModal(props) {
           defaultValue={url}
         />{' '}
         {document.queryCommandSupported('copy') && (
-          <>
-            {copySuccess !== '' && <Gray>{copySuccess}&nbsp;</Gray>}
-            <br />
-            <Button onClick={copyToClipboard}>
-              <FontAwesomeIcon icon={faCopy} /> Kopieren
-            </Button>
-          </>
+          <Button onClick={copyToClipboard}>
+            <FontAwesomeIcon icon={faCopy} /> Kopieren
+          </Button>
         )}{' '}
+        <br />
+        <Gray>{copySuccess}&nbsp;</Gray>
         <CloseButton onClick={onClose} title="Close">
           <FontAwesomeIcon icon={faTimes} size="lg" />
         </CloseButton>
-        <ButtonWrapper>{buildButtons(socialShare)}</ButtonWrapper>
-        <ButtonWrapper>{buildButtons(lmsShare)}</ButtonWrapper>
+        <div>{buildButtons(socialShare)}</div>
+        <br />
+        <div>{buildButtons(lmsShare)}</div>
       </div>
-    </StyledModal>
+    </Modal>
   )
 }
 
-function buildButtons(list) {
-  return list.map(entry => (
-    <Button href={entry.href} key={entry.title}>
-      <FontAwesomeIcon icon={entry.icon} /> {entry.title}
-    </Button>
-  ))
+const ModalStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    width: '480px',
+    borderRadius: '17px',
+    maxWidth: '85%'
+  }
 }
 
-//this is overriding the styles of the modal-content only. see doc to change overlay etc.
-export const StyledModal = styled(Modal)`
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  margin-right: -50%;
-  transform: translate(-50%, -50%);
-  width: 500px;
-  border-radius: 12px;
-  max-width: 85%;
-  border: 0;
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
-  padding: 10px 10px 30px 10px;
-  background-color: #fff;
-  outline: none;
-`
-
-const ButtonWrapper = styled.div`
-  margin-top: 17px;
-  display: flex;
-  align-items: flex-start;
-  flex-direction: column;
-  @media (min-width: ${props => props.theme.breakpoints.sm}) {
-    flex-direction: row;
-  }
+const StyledH2 = styled.h2`
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
 `
 
 const ShareInput = styled.input`
-  ${inputFontReset}
-
   border-radius: 18px;
   border: 0;
-  padding: 5px 10px;
+  padding: 5px;
   width: 250px;
-
-  ${makeMargin}
-  margin-bottom: 8px;
-
   background-color: ${props => lighten(0.45, props.theme.colors.brandGreen)};
 
   &:focus {
@@ -156,26 +128,24 @@ const ShareInput = styled.input`
   }
 `
 
-const Button = styled.a`
-  ${makeGreenButton}
-  font-weight: bold;
-  margin-left: 20px;
-
-  @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    ${makeMargin}
-    margin-top: 6px;
-    display: inline;
-    /* background-color: ${props =>
-      lighten(0.45, props.theme.colors.brandGreen)}; */
+const Button = styled.button`
+  color: ${props => props.theme.colors.brandGreen};
+  background-color: transparent;
+  border: none;
+  &:hover {
+    color: white;
+    background-color: ${props => props.theme.colors.brandGreen};
   }
+  padding: 5px;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-left: 20px;
 `
 
 const Gray = styled.small`
-  color: ${props => props.theme.colors.brand};
-  ${makeMargin}
+  opacity: 0.6;
   margin-top: 5px;
   margin-bottom: 5px;
-  padding-left: 10px;
   display: block;
 `
 const CloseButton = styled.button`
@@ -191,8 +161,21 @@ const CloseButton = styled.button`
     background-color: ${props => props.theme.colors.brand};
     color: white;
   }
-  width: 35px;
-  height: 35px;
+  width: 40px;
+  height: 40px;
   border-radius: 30px;
   text-align: center;
 `
+
+function buildButtons(list) {
+  return list.map(entry => (
+    <Button
+      onClick={() => {
+        window.location.href = entry.href
+      }}
+      key={entry.title}
+    >
+      <FontAwesomeIcon icon={entry.icon} /> {entry.title}
+    </Button>
+  ))
+}

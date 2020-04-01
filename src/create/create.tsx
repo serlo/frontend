@@ -35,11 +35,7 @@ import {
   renderSpoilerToggle,
   renderSpoilerBody,
   renderA,
-  articleColors,
-  renderTR,
-  renderTH,
-  renderTD,
-  renderTable
+  articleColors
 } from '../schema/articleRenderer'
 import checkArticleGuidelines from '../schema/articleGuidelines'
 import { Hints } from '../components/Hints'
@@ -461,11 +457,7 @@ const simpleRenderer = {
   ul: renderUl,
   ol: renderOl,
   li: renderLi,
-  important: renderImportant,
-  table: renderTable,
-  tr: renderTR,
-  th: renderTH,
-  td: renderTD
+  important: renderImportant
 }
 
 const componentRenderer = {

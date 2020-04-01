@@ -10,7 +10,7 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "yarn tsc --noEmit",
-    "prettify": "yarn prettier --write \"{src,pages}/**/*.{js,tsx,ts}\"",
+    "prettify": "yarn prettier --write \"{src,pages}/**/*.{js,tsx}\"",
     "analyze": "cross-env ANALYZE=true yarn build"
   },
   "dependencies": {
@@ -19,7 +19,6 @@
     "@fortawesome/free-solid-svg-icons": "^5.0.0",
     "@fortawesome/react-fontawesome": "^0.1.0",
     "@tippyjs/react": "^4.0.0-alpha.0",
-    "graphql-request": "^1.8.2",
     "htmlparser2": "^4.1.0",
     "isomorphic-unfetch": "^3.0.0",
     "katex": "0.11.1",

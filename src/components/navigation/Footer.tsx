@@ -8,10 +8,7 @@ import {
 
 import { footerNavEntries } from '../../footerdata'
 import { FooterNav } from './FooterNav'
-import {
-  makeResponsivePadding,
-  makeDefaultButton
-} from '../../helper/csshelper'
+import { makeResponsivePadding } from '../../helper/csshelper'
 
 export default function Footer() {
   return (
@@ -137,10 +134,12 @@ const SummaryHeading = styled.div`
 
 const SerloLink = styled.a`
   &:hover {
-    text-decoration: underline;
+    background-color: ${props => props.theme.colors.brand};
   }
+  border-radius: 4px;
   color: white;
   text-decoration: none;
+  padding: 2px;
 `
 
 const SummaryText = styled.div`
@@ -151,9 +150,18 @@ const SummaryButtonBox = styled.div`
   margin-bottom: 10px;
 `
 
-const SummaryButton = styled.a`
-  ${makeDefaultButton}
-  color: #fff;
+const SummaryButton = styled.button`
+  border-radius: 80px;
+  padding: 3px 6px;
+  border: none;
+  background-color: transparent;
+  color: inherit;
+  font-size: inherit;
+  font-family: inherit;
+  &:hover {
+    background-color: ${props => props.theme.colors.brand};
+  }
+  cursor: pointer;
 `
 
 const Support = styled.div`
@@ -188,8 +196,8 @@ const ImageLink = styled.a`
 
 const SupportButton = styled.div`
   margin-top: 3px;
-  ${makeDefaultButton}
-  color: #fff;
+  border-radius: 80px;
+  padding: 3px 6px;
   ${ImageLink}:hover & {
     background-color: ${props => props.theme.colors.brand};
   }

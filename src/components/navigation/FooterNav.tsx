@@ -69,8 +69,8 @@ const ColWithPadding = styled.div`
     flex-basis: 0;
   }
   @media (max-width: ${props =>
-      props.theme.breakpoints.md}) and (min-width: ${props =>
-      props.theme.breakpoints.sm}) {
+    props.theme.breakpoints.md}) and (min-width: ${props =>
+  props.theme.breakpoints.sm}){
     flex-basis: 50%;
     max-width: 50%;
   }

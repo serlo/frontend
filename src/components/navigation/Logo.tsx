@@ -1,9 +1,8 @@
 import styled from 'styled-components'
 import { lighten } from 'polished'
 
-const logoTargetWidth = 160
-
-export default function Logo({ subline }: { subline: string }) {
+export default function Logo(props) {
+  const { subline } = props
   return (
     <>
       <div>
@@ -11,41 +10,39 @@ export default function Logo({ subline }: { subline: string }) {
           <Image
             alt="Serlo"
             src={'/img/serlo-logo.svg'}
-            width={logoTargetWidth}
+            width="160"
             height="80"
           />
         </a>
       </div>
       {subline && (
-        <SublineWrap>
+        <SublineH2>
           <SublineLink className="subline icon" href="/">
             {subline}
           </SublineLink>
-        </SublineWrap>
+        </SublineH2>
       )}
     </>
   )
 }
 
-const Image = styled.img``
+const Image = styled.img`
+  padding-left: 6px;
+`
 
-const SublineWrap = styled.div`
-  padding-left: 50px;
-  padding-top: 5px;
+const SublineH2 = styled.div`
+  padding-left: 0;
+  padding-top: 15px;
 `
 
 const SublineLink = styled.a`
   color: ${props => lighten(0.25, props.theme.colors.darkgray)};
   font-weight: 500;
-  font-size: 1.55rem;
+  font-size: 1.66rem;
+  letter-spacing: 0.04rem;
   text-decoration: none;
 
   &:hover {
     color: ${props => props.theme.colors.brand};
-  }
-
-  @media (min-width: ${props => props.theme.breakpoints.sm}) {
-    font-size: 1.65rem;
-    letter-spacing: 0.008em;
   }
 `

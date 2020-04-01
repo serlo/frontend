@@ -27,21 +27,19 @@ function Entry(props) {
           onClick={
             children
               ? e => {
-                  //TODO: Also close open siblings
                   setOpen(!open)
                   e.preventDefault()
                 }
               : undefined
           }
           isChild={isChild}
-          open={open}
         >
           {!isChild ? (
             <IconWrapper>
               <FontAwesomeIcon
                 icon={icon ? icon : faBars}
                 size="1x"
-                style={{ fontSize: '23px' }}
+                style={{ fontSize: '25px' }}
               />
             </IconWrapper>
           ) : null}
@@ -56,14 +54,11 @@ function Entry(props) {
           </EntryLinkText>
         </EntryLink>
       </li>
-      {open && children ? (
-        <>
-          {children.map((entry, index) => (
-            <Entry {...entry} isChild={true} key={index + '--' + childKey} />
-          ))}{' '}
-          <Seperator />
-        </>
-      ) : null}
+      {open &&
+        children &&
+        children.map((entry, index) => (
+          <Entry {...entry} isChild={true} key={index + '--' + childKey} />
+        ))}
     </>
   )
 }
@@ -71,7 +66,7 @@ function Entry(props) {
 const EntryLinkText = styled.span<{ isChild?: boolean }>`
   display: inline-block;
   vertical-align: middle;
-  margin-top: ${props => (props.isChild ? '0' : '0.45rem')};
+  margin-top: ${props => (props.isChild ? '0' : '1.1rem')};
 `
 
 const List = styled.ul`
@@ -84,13 +79,13 @@ const List = styled.ul`
   }
 `
 
-const Seperator = styled.li`
-  height: 28px;
-  background-color: #fff;
+/*const Seperator = styled.li`
+  height: 24px;
   border-bottom: 1px solid ${props => props.theme.colors.lighterblue};
-`
+`*/
 
-const EntryLink = styled.a<{ isChild?: boolean; open?: boolean }>`
+const EntryLink = styled.a<{ isChild?: boolean }>`
+  background-color: ${props => props.theme.colors.bluewhite};
   display: flex;
   align-items: start;
   padding: 16px;
@@ -99,22 +94,12 @@ const EntryLink = styled.a<{ isChild?: boolean; open?: boolean }>`
   border-color: ${props => props.theme.colors.lighterblue};
   font-weight: bold;
   text-decoration: none;
-  font-size: ${props => (props.isChild ? '1rem' : '1.33rem')};
+  font-size: ${props => props => (props.isChild ? '1rem' : '1.33rem')};
 
-  background-color: ${props =>
-    props.open
-      ? transparentize(0.8, props.theme.colors.brand)
-      : props.theme.colors.bluewhite};
-
-  ${props => (props.isChild ? 'background-color: #fff;' : '')}
-
+  &:hover,
+  &:focus,
   &:active {
     background: ${props => transparentize(0.8, props.theme.colors.brand)};
-  }
-  @media (hover: hover) {
-    &:hover {
-      background: ${props => transparentize(0.8, props.theme.colors.brand)};
-    }
   }
 `
 
@@ -128,5 +113,5 @@ const IconWrapper = styled.div`
   align-items: center;
   color: ${props => props.theme.colors.lightblue};
   text-align: center;
-  margin-right: 10px;
+  margin-right: 16px;
 `

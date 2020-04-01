@@ -15,7 +15,7 @@ export const theme = {
     lightblue: '#52a6d0',
     darkgray: '#212529',
     gray: '#808487',
-    lightgray: '#ccc',
+    lightgray: '#aaa',
     brand: '#007ec1',
     lighterblue: '#91c5e4',
     brandGreen: '#95bc1a',

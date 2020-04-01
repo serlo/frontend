@@ -1,8 +1,3 @@
-import { converter } from '../../external/markdown'
-import convertLegacyState from './convertLegacyState'
-
-const colors = ['blue', 'green', 'orange']
-
 export function convertEdtrioState(state) {
   return { children: convert(state) }
 }
@@ -116,8 +111,12 @@ export function convert(node) {
     ]
   }
   if (plugin === 'table') {
-    const html = converter.makeHtml(node.state)
-    return convertLegacyState(html).children
+    return [
+      {
+        type: 'p',
+        children: [{ text: '[Tabelle]' }]
+      }
+    ]
   }
   if (plugin === 'video') {
     return [
@@ -281,9 +280,6 @@ export function convert(node) {
   }
 
   if (node.text !== undefined) {
-    if (node.color) {
-      node.color = colors[node.color]
-    }
     return [node]
   }
 

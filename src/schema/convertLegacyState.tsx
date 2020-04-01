@@ -106,7 +106,12 @@ function convert(node) {
           ]
         }
         if (className === 'table-responsive') {
-          return convert(node.children)
+          return [
+            {
+              type: 'p',
+              children: [{ text: '[Tabelle]' }]
+            }
+          ]
         }
       }
     }
@@ -114,10 +119,6 @@ function convert(node) {
       if (node.attribs) {
         const className = node.attribs.class
         if (className === 'mathInline') {
-          // compat nested math element in table - wtf??
-          if (!node.children[0].data) {
-            return convert(node.children)
-          }
           const formula = node.children[0].data
             .substring(2, node.children[0].data.length - 2)
             .split('&lt;')
@@ -253,39 +254,6 @@ function convert(node) {
         {
           type: 'li',
           children
-        }
-      ]
-    }
-    if (node.name === 'table') {
-      return [{ type: 'table', children: convert(node.children) }]
-    }
-    if (node.name === 'thead') {
-      return convert(node.children)
-    }
-    if (node.name === 'tbody') {
-      return convert(node.children)
-    }
-    if (node.name === 'tr') {
-      return [
-        {
-          type: 'tr',
-          children: convert(node.children)
-        }
-      ]
-    }
-    if (node.name === 'th') {
-      return [
-        {
-          type: 'th',
-          children: convert(node.children)
-        }
-      ]
-    }
-    if (node.name === 'td') {
-      return [
-        {
-          type: 'td',
-          children: convert(node.children)
         }
       ]
     }
