@@ -32,6 +32,7 @@ import { StyledTable } from '../components/tags/StyledTable'
 import { StyledTR } from '../components/tags/StyledTR'
 import { StyledTH } from '../components/tags/StyledTH'
 import { StyledTD } from '../components/tags/StyledTD'
+import { TableWrapper } from '../components/content/TableWrapper'
 
 const Math = dynamic(import('../components/content/Math'))
 
@@ -369,9 +370,11 @@ export function renderLi({ attributes, children }) {
 
 export function renderTable({ attributes, children }) {
   return (
-    <StyledTable key={attributes.key}>
-      <tbody {...attributes}>{children}</tbody>
-    </StyledTable>
+    <TableWrapper key={attributes.key}>
+      <StyledTable>
+        <tbody {...attributes}>{children}</tbody>
+      </StyledTable>
+    </TableWrapper>
   )
 }
 
