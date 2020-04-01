@@ -7,7 +7,7 @@ import ShareModal from '../navigation/ShareModal'
 
 import Ups from '../Ups'
 import WipHint from '../WipHint'
-import styled from 'styled-components'
+import styled, { ThemeProvider } from 'styled-components'
 import Breadcrumbs from '../navigation/Breadcrumbs'
 import { StyledUl } from '../tags/StyledUl'
 import { StyledLi } from '../tags/StyledLi'
@@ -131,6 +131,9 @@ function RenderArticle({ content, randoms }) {
   if (value && value[0] && value[0].type === 'h' && value[0].level === 1) {
     setValue(value.slice(1, -1))
   }
+  let mathContext =
+    content.breadcrumbs &&
+    content.breadcrumbs.some(crumb => crumb.url == '/mathe/5')
   return (
     <>
       {content.breadcrumbs && <Breadcrumbs entries={content.breadcrumbs} />}
@@ -148,7 +151,16 @@ function RenderArticle({ content, randoms }) {
         </ToolLineButton> */}
         {<ShareModal open={open} onClose={() => setOpen(false)} />}
       </ToolLine>
-      <Article value={value} />
+      <ThemeProvider
+        theme={original => {
+          if (mathContext) {
+            original.colors.h2 = original.colors.orange
+          }
+          return original
+        }}
+      >
+        <Article value={value} />
+      </ThemeProvider>
       <HSpace amount={20} />
       <ToolLine>
         <ToolLineButton onClick={() => setOpen(true)}>

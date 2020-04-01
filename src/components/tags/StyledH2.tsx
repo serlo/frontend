@@ -14,5 +14,5 @@ export const StyledH2 = styled.h2`
   font-weight: bold;
   hyphens: auto;
   line-height: 1.22;
-  color: ${props => props.theme.colors.h23};
+  color: ${props => props.theme.colors.h2};
 `

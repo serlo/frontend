@@ -10,5 +10,4 @@ export const StyledH3 = styled.h3`
   font-size: 1.3125rem;
   font-weight: bold;
   line-height: 1.22;
-  color: ${props => props.theme.colors.h23};
 `

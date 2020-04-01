@@ -25,7 +25,7 @@ export const theme = {
     linkColor: '#337AB7',
     linkHoverColor: '#23527c',
     orange: '#ff6703',
-    h23: '#ff6703'
+    h2: 'black'
   },
   breakpoints: {
     mobile: '500px',
