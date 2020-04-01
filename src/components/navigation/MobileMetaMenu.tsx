@@ -18,7 +18,7 @@ export default function MobileMetaMenu(props) {
             </div>
           )
         })}
-        selected={selected.title}
+        selected={selected && selected.title}
         scrollToSelected={true}
         onSelect={x => {
           window.location.href = props.links.filter(

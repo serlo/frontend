@@ -6,32 +6,38 @@ import MobileMetaMenu from '../src/components/navigation/MobileMetaMenu'
 import Footer from '../src/components/navigation/Footer'
 import styled from 'styled-components'
 import { metamenudata } from '../src/metamenudata'
+import Breadcrumbs from '../src/components/navigation/Breadcrumbs'
+import { HSpace } from '../src/components/content/HSpace'
+import Horizon from '../src/components/content/Horizon'
+import { horizonData } from '../src/horizondata'
 
 function PageView(props) {
   const { data } = props
   const alias = data.alias
-  if (alias == '/serlo' || metamenudata.some(entry => alias == entry.url)) {
-    return (
-      <>
-        <Header />
-        <MobileMetaMenu links={metamenudata} pagealias={alias} />
-        <MetaMenu links={metamenudata} pagealias={alias} />
-        <RelatveContainer>
-          <StyledMain>
-            <ContentTypes data={data} />
-          </StyledMain>
-        </RelatveContainer>
-        <Footer />
-      </>
-    )
-  }
+  const isMeta =
+    alias == '/serlo' || metamenudata.some(entry => alias == entry.url)
+  const showBreadcrumbs =
+    data.contentType === 'Article' || data.contentType === 'Page'
   return (
     <>
       <Header />
+      {isMeta && (
+        <>
+          <MobileMetaMenu links={metamenudata} pagealias={alias} />
+          <MetaMenu links={metamenudata} pagealias={alias} />
+        </>
+      )}
       <RelatveContainer>
-        <StyledMain>
-          <ContentTypes data={data} />
-        </StyledMain>
+        <MaxWidthDiv>
+          {showBreadcrumbs && data.breadcrumbs && (
+            <Breadcrumbs entries={data.breadcrumbs} />
+          )}
+          <StyledMain>
+            <ContentTypes data={data} />
+          </StyledMain>
+          <HSpace amount={40} />
+          <Horizon entries={horizonData} randoms={data.randoms} />
+        </MaxWidthDiv>
       </RelatveContainer>
       <Footer />
     </>
@@ -44,10 +50,11 @@ const RelatveContainer = styled.div`
   justify-content: center;
 `
 
-const StyledMain = styled.main`
+const MaxWidthDiv = styled.div`
   max-width: 800px;
-  overflow: hidden;
 `
+
+const StyledMain = styled.main``
 
 export async function getServerSideProps(props) {
   const data = await fetchContent('/' + props.params.slug.join('/'))
