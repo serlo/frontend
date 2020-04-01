@@ -1,6 +1,10 @@
 import fetchContent from '../src/content-api/fetchContentFromSerloOrg'
 import Header from '../src/components/navigation/Header'
 import ContentTypes from '../src/components/content/ContentTypes'
+import SideMenu, {
+  SideMenuBalancer
+} from '../src/components/navigation/SideMenu'
+import MobileSideMenu from '../src/components/navigation/MobileSideMenu'
 import Footer from '../src/components/navigation/Footer'
 import styled from 'styled-components'
 import { metamenudata } from '../src/metamenudata'
@@ -12,21 +16,9 @@ function PageView(props) {
     return (
       <>
         <Header />
-        <MobileMenuWrapper>
-          {metamenudata.map(entry => (
-            <a href={entry.url} key={entry.url}>
-              {entry.title}
-            </a>
-          ))}
-        </MobileMenuWrapper>
+        <MobileSideMenu links={metamenudata} />
         <RelatveContainer>
-          <SideMenuWrapper>
-            {metamenudata.map(entry => (
-              <p key={entry.url}>
-                <a href={entry.url}>{entry.title}</a>
-              </p>
-            ))}
-          </SideMenuWrapper>
+          <SideMenu links={metamenudata} />
           <StyledMain>
             <ContentTypes data={data} />
           </StyledMain>
@@ -58,40 +50,6 @@ const RelatveContainer = styled.div`
 const StyledMain = styled.main`
   max-width: 800px;
   overflow: hidden;
-`
-
-const SideMenuWrapper = styled.div`
-  display: none;
-  width: 200px;
-  flex-shrink: 0;
-  margin-right: 30px;
-  background-color: lightgreen;
-  @media (min-width: ${props => props.theme.breakpoints.lg}) {
-    display: block;
-  }
-`
-
-const SideMenuBalancer = styled.div`
-  display: none;
-  width: 200px;
-  flex-shrink: 1;
-  flex-grow: 0;
-  margin-left: 30px;
-  @media (min-width: ${props => props.theme.breakpoints.lg}) {
-    display: block;
-  }
-`
-
-const MobileMenuWrapper = styled.div`
-  width: 100%;
-  height: 50px;
-  background-color: lightsteelblue;
-  @media (min-width: ${props => props.theme.breakpoints.lg}) {
-    display: none;
-  }
-  & a {
-    margin-right: 10px;
-  }
 `
 
 export async function getServerSideProps(props) {
