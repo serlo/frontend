@@ -33,8 +33,7 @@ import dynamic from 'next/dynamic'
 export default function ContentTypes(props) {
   const { data } = props
   if (data.contentType === 'Article' || data.contentType === 'Page') {
-    return <RenderArticle content={data.data} randoms={data.randoms} />
-  }
+    return <RenderArticle content={data.data} randoms={data.randoms} noBreadcrumbs={true}/>
   if (data.contentType === 'topic' || data.contentType === 'subject') {
     return (
       <>
@@ -83,7 +82,7 @@ export default function ContentTypes(props) {
   return <Ups type={data.contentType} />
 }
 
-function RenderArticle({ content, randoms }) {
+function RenderArticle({ content, randoms, noBreadcrumbs }) {
   const [open, setOpen] = React.useState(false)
   const [value, setValue] = React.useState(undefined)
   const [editMode, setEditMode] = React.useState(false)
@@ -133,7 +132,9 @@ function RenderArticle({ content, randoms }) {
   }
   return (
     <>
-      {content.breadcrumbs && <Breadcrumbs entries={content.breadcrumbs} />}
+      {!noBreadcrumbs && content.breadcrumbs && (
+        <Breadcrumbs entries={content.breadcrumbs} />
+      )}
       <StyledH1 displayMode>{content.title}</StyledH1>
       <ToolLine>
         <ToolLineButton onClick={() => setOpen(true)}>
