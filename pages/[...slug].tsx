@@ -1,4 +1,4 @@
-import fetchContent from '../src/content-api/fetchContentFromSerloOrg'
+import { fetchContent } from '../src/content-api/fetchContentFromSerloOrg'
 import Header from '../src/components/navigation/Header'
 import ContentTypes from '../src/components/content/ContentTypes'
 import Footer from '../src/components/navigation/Footer'

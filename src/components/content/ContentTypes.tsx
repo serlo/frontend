@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faShareAlt, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
+import { faShareAlt } from '@fortawesome/free-solid-svg-icons'
 
 import ShareModal from '../navigation/ShareModal'
 
@@ -33,7 +33,7 @@ import dynamic from 'next/dynamic'
 export default function ContentTypes(props) {
   const { data } = props
   if (data.contentType === 'Article' || data.contentType === 'Page') {
-    return <RenderArticle content={data.data} />
+    return <RenderArticle content={data.data} randoms={data.randoms} />
   }
   if (data.contentType === 'topic' || data.contentType === 'subject') {
     return (
@@ -83,7 +83,7 @@ export default function ContentTypes(props) {
   return <Ups type={data.contentType} />
 }
 
-function RenderArticle({ content }) {
+function RenderArticle({ content, randoms }) {
   const [open, setOpen] = React.useState(false)
   const [value, setValue] = React.useState(undefined)
   const [editMode, setEditMode] = React.useState(false)
@@ -162,7 +162,7 @@ function RenderArticle({ content }) {
       />
       <Hints hints={checkArticleGuidelines(value)} />
       <HSpace amount={40} />
-      <Horizon entries={horizonData} />
+      <Horizon entries={horizonData} randoms={randoms} />
     </>
   )
 }
