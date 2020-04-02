@@ -137,7 +137,13 @@ export function convert(node) {
     ]
   }
   if (plugin === 'geogebra') {
-    return [{ type: 'geogebra', id: node.state, children: [{ text: '' }] }]
+    // compat: full url given
+    let id = node.state
+    const match = /geogebra\.org\/m\/(.+)/.exec(id)
+    if (match) {
+      id = match[1]
+    }
+    return [{ type: 'geogebra', id, children: [{ text: '' }] }]
   }
 
   const type = node.type
