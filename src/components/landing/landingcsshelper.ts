@@ -16,12 +16,6 @@ export const makeSVGStyle = ({ Parent }) => {
           fill: ${props => lighten(0.07, props.theme.colors.lighterblue)};
         }
       }
-      @media (min-width: ${props => props.theme.breakpoints.lg}) {
-        display: block;
-        margin: 0 auto;
-        width: auto;
-        height: auto;
-      }
       /* animations */
       & {
         width: 6rem;
@@ -38,6 +32,19 @@ export const makeSVGStyle = ({ Parent }) => {
           transition: transform .6s cubic-bezier(0.175, 0.6, 0.32, 1.275);
         }
       }
+      
+      @media (min-width: ${props => props.theme.breakpoints.lg}) {
+        display: block;
+        margin: 0 auto;
+        width: auto;
+        height: auto;
+        max-width: 120px;
+      }
+
+      @media (min-width: 1470px) {
+        max-width: 100%;
+      }
+
       ${Parent}:hover &, ${Parent}:focus &, ${Parent}:active & {
         &.bio { animation: jump .7s ease-in-out; }
         &.abc { transform: scale(1.25) rotate(10deg); }
@@ -47,6 +54,7 @@ export const makeSVGStyle = ({ Parent }) => {
         .blue { fill: ${props => props.theme.colors.brand}; } /* TODO: Helperblue */
         .green { fill: #becd2b; }
       }
+      
       @keyframes jump {
         16% { transform: translateY(1rem); }
         33% { transform: translateY(-.6rem); }
