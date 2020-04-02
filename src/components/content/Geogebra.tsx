@@ -4,7 +4,8 @@ import styled from 'styled-components'
 import { makeMargin } from '../../helper/csshelper'
 import fetch from 'isomorphic-unfetch'
 
-export default function Geogebra({ id }) {
+const Geogebra = React.forwardRef((props: any, ref: any) => {
+  const id = props.id
   const [data, setData] = React.useState(undefined)
   React.useEffect(() => {
     fetch('https://www.geogebra.org/api/json.php', {
@@ -41,24 +42,28 @@ export default function Geogebra({ id }) {
   }, [id])
   if (!data) {
     return (
-      <Placeholder>
+      <Placeholder ref={ref}>
         <img
           src="https://cdn.geogebra.org/static/img/GeoGebra-logo.png"
           alt="GeoGebra"
         />
+        {props.children}
       </Placeholder>
     )
   }
   return (
-    <GeogebraContainer ratio={data.ratio}>
+    <GeogebraContainer ratio={data.ratio} ref={ref}>
       <GeogebraFrame
         title={id}
         scrolling="no"
         src={'https://www.geogebra.org/material/iframe/id/' + id}
       />
+      {props.children}
     </GeogebraContainer>
   )
-}
+})
+
+export default Geogebra
 
 const Placeholder = styled.div`
   display: flex;

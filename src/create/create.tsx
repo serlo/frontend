@@ -39,13 +39,15 @@ import {
   renderTR,
   renderTH,
   renderTD,
-  renderTable
+  renderTable,
+  renderGeogebra
 } from '../schema/articleRenderer'
 import checkArticleGuidelines from '../schema/articleGuidelines'
 import { Hints } from '../components/Hints'
 import { HSpace } from '../components/content/HSpace'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAnchor } from '@fortawesome/free-solid-svg-icons'
+import Geogebra from '../components/content/Geogebra'
 
 const ModalContext = React.createContext<any>({})
 
@@ -151,7 +153,8 @@ function Toolbar() {
           'ol',
           'row',
           'anchor',
-          'table'
+          'table',
+          'geogebra'
         ].forEach(key => {
           if (allowed.children.includes(key)) {
             if (key === 'ul' || key === 'ol') {
@@ -463,6 +466,11 @@ const defaultInserts = {
         ]
       }
     ]
+  },
+  geogebra: {
+    type: 'geogebra',
+    id: '',
+    children: [{ text: '' }]
   }
 }
 
@@ -511,6 +519,7 @@ function buildAdd(allowed, handler) {
       {buildButton('row', 'Spalten')}
       {buildButton('table', 'Tabelle')}
       {buildButton('anchor', 'Anchor')}
+      {buildButton('geogebra', 'Applet')}
     </>
   )
 }
@@ -542,7 +551,8 @@ const componentRenderer = {
   a: MyA,
   'inline-math': MyInlineMath,
   math: MyMath,
-  anchor: MyAnchor
+  anchor: MyAnchor,
+  geogebra: MyGeogebra
 }
 
 function renderElement(props) {
@@ -1232,31 +1242,6 @@ function MyAnchor(props) {
       {children}
     </StyledAnchorPlaceholder>
   )
-
-  /*return renderImg({
-    element,
-    attributes: {
-      ...attributes,
-      style: {
-        
-      }
-    },
-    children,
-    wrapImg: comp => (
-      <TipOver
-        content={
-          <button onClick={() => doEdit(<ImgSettings path={path} />)}>
-            Bild bearbeiten
-          </button>
-        }
-        placement="top-end"
-      >
-        {comp}
-      </TipOver>
-    ),
-    value: editor,
-    path
-  })*/
 }
 
 function AnchorSettings(props) {
@@ -1279,6 +1264,28 @@ function AnchorSettings(props) {
       />
       <button onClick={() => closeModal()}>Fertig</button>
     </>
+  )
+}
+
+function MyGeogebra(props) {
+  const { element } = props
+  const editor = useEditor()
+  const path = ReactEditor.findPath(editor, element)
+  const { doEdit } = React.useContext(ModalContext)
+
+  return (
+    <TipOver
+      placement="top"
+      content={
+        <button onClick={() => doEdit(<AnchorSettings path={path} />)}>
+          Applet bearbeiten
+        </button>
+      }
+    >
+      <div contentEditable={false} style={{ userSelect: 'none' }}>
+        {renderGeogebra(props)}
+      </div>
+    </TipOver>
   )
 }
 

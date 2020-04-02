@@ -150,9 +150,11 @@ Attributes: id
 
 Block, Void
 
-###
+### `geogebra`
 
-###
+Attributes: id
+
+Block, Void
 
 ## Constraints
 
@@ -250,7 +252,11 @@ Table data may only contain `p` or `math`. Other elements will be unwrapped. Tex
 
 ### anchor
 
-No additional contraints
+No additional contraints.
+
+### geogebra
+
+No additional constraints.
 
 ### Root
 
