@@ -26,14 +26,12 @@ import checkArticleGuidelines from '../../schema/articleGuidelines'
 import { Hints } from '../Hints'
 import { HSpace } from './HSpace'
 import { StyledP } from '../tags/StyledP'
-import Horizon from './Horizon'
-import { horizonData } from '../../horizondata'
 import dynamic from 'next/dynamic'
 
 export default function ContentTypes(props) {
   const { data } = props
   if (data.contentType === 'Article' || data.contentType === 'Page') {
-    return <RenderArticle content={data.data} randoms={data.randoms} />
+    return <RenderArticle content={data.data} />
   }
   if (data.contentType === 'topic' || data.contentType === 'subject') {
     return (
@@ -83,7 +81,7 @@ export default function ContentTypes(props) {
   return <Ups type={data.contentType} />
 }
 
-function RenderArticle({ content, randoms }) {
+function RenderArticle({ content }) {
   const [open, setOpen] = React.useState(false)
   const [value, setValue] = React.useState(undefined)
   const [editMode, setEditMode] = React.useState(false)
@@ -133,7 +131,6 @@ function RenderArticle({ content, randoms }) {
   }
   return (
     <>
-      {content.breadcrumbs && <Breadcrumbs entries={content.breadcrumbs} />}
       <StyledH1 displayMode>{content.title}</StyledH1>
       <ToolLine>
         <ToolLineButton onClick={() => setOpen(true)}>
@@ -161,8 +158,6 @@ function RenderArticle({ content, randoms }) {
         }}
       />
       <Hints hints={checkArticleGuidelines(value)} />
-      <HSpace amount={40} />
-      <Horizon entries={horizonData} randoms={randoms} />
     </>
   )
 }
