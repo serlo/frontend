@@ -5,16 +5,11 @@ export const StyledOl = styled.ol`
 
   ${makeMargin}
   margin-bottom: ${props => props.theme.spacing.mb.block};
-  margin-top: ${props => props.theme.spacing.mb.block};
   padding-left: 25px;
   list-style-type: none;
   counter-reset: list-counter;
-  
-  /* hack, there should not be <p>s inside <li>s */
-  > li > p { display: inline-block; }
 
   > li {
-    margin-bottom: 7px;
             
     &:before {
       position: absolute;
