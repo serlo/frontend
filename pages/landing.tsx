@@ -2,7 +2,7 @@ import Header from '../src/components/navigation/Header'
 import LandingSubjects from '../src/components/landing/LandingSubjects'
 import LandingAbout from '../src/components/landing/LandingAbout'
 import Footer from '../src/components/navigation/Footer'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { StyledH2 } from '../src/components/tags/StyledH2'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
@@ -21,9 +21,9 @@ export default function Landing(props) {
     <>
       <Header />
       <RelatveContainer>
-        <Section>
+        <SubjectsSection>
           <LandingSubjects />
-        </Section>
+        </SubjectsSection>
 
         <AboutSection>
           <LandingAbout />
@@ -31,29 +31,29 @@ export default function Landing(props) {
 
         <Section>
           <_StyledH2>Serlo.org ist die Wikipedia fürs Lernen</_StyledH2>
-          <img
-            src="https://packages.serlo.org/serlo-org-static-assets@1/home/participate.svg"
-            alt="together"
-          />
-          <p>
-            Wir suchen LehrerInnen mit Begeisterung für ihr Fach. Werden Sie
-            AutorIn auf serlo.org, erstellen Sie <b>neue Inhalte</b> und helfen
-            Sie uns, die <b>Qualität</b> der Lernplattform zu sichern.
-          </p>
-          <Button href="/community">
-            Zur Startseite für AutorInnen{' '}
-            <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
-          </Button>
-
-          <p>
-            Wir suchen neue hauptamtliche und ehrenamtliche Teammitglieder für
-            die Bereiche <b>Softwareentwicklung</b>, <b>Redaktion</b> und{' '}
-            <b>NGO-Management</b>.
-          </p>
-          <Button href="/jobs">
-            Jobs und Engagement{' '}
-            <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
-          </Button>
+          <ParticipateIcon />
+          <Col>
+            <p>
+              Wir suchen LehrerInnen mit Begeisterung für ihr Fach. Werden Sie
+              AutorIn auf serlo.org, erstellen Sie <b>neue Inhalte</b> und
+              helfen Sie uns, die <b>Qualität</b> der Lernplattform zu sichern.
+            </p>
+            <Button href="/community">
+              Zur Startseite für AutorInnen{' '}
+              <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
+            </Button>
+          </Col>
+          <Col>
+            <p>
+              Wir suchen neue hauptamtliche und ehrenamtliche Teammitglieder für
+              die Bereiche <b>Softwareentwicklung</b>, <b>Redaktion</b> und{' '}
+              <b>NGO-Management</b>.
+            </p>
+            <Button href="/jobs">
+              Jobs und Engagement{' '}
+              <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
+            </Button>
+          </Col>
         </Section>
 
         <PrinciplesSection>
@@ -65,23 +65,26 @@ export default function Landing(props) {
             Werden Sie Teil unserer Bewegung für freie Bildung
           </_StyledH2>
           <DonateIcon />
-          <p>
-            Bildung gehört uns allen! Werden Sie Mitglied in unserer
-            Organisation Serlo Education e.V. und so zu MitherausgeberIn der
-            freien Lernplattform.
-          </p>
-          <Button href="/beitreten">
-            Mitglied werden{' '}
-            <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
-          </Button>
-
-          <p>
-            Softwareentwicklung und Lerninhalte erstellen kostet Geld. Wir
-            freuen uns sehr, wenn Sie Serlo mit einer Spende unterstützen.
-          </p>
-          <Button href="/spenden">
-            spenden <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
-          </Button>
+          <Col>
+            <p>
+              Bildung gehört uns allen! Werden Sie Mitglied in unserer
+              Organisation Serlo Education e.V. und so zu MitherausgeberIn der
+              freien Lernplattform.
+            </p>
+            <Button href="/beitreten">
+              Mitglied werden{' '}
+              <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
+            </Button>
+          </Col>
+          <Col>
+            <p>
+              Softwareentwicklung und Lerninhalte erstellen kostet Geld. Wir
+              freuen uns sehr, wenn Sie Serlo mit einer Spende unterstützen.
+            </p>
+            <Button href="/spenden">
+              Spenden <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
+            </Button>
+          </Col>
         </Section>
       </RelatveContainer>
       <Footer />
@@ -93,7 +96,52 @@ const RelatveContainer = styled.div`
   position: relative;
 `
 
-const Section = styled.section``
+const SubjectsSection = styled.section``
+
+const Section = styled.section`
+  margin-top: 60px;
+  margin-bottom: 60px;
+  ${makeResponsivePadding}
+
+  @media (min-width: ${props => props.theme.breakpoints.sm}) {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    
+    > h2 {
+      width: 100%;
+      
+    }
+  }
+
+  @media (min-width: ${props => props.theme.breakpoints.lg}) {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+`
+
+const Col = styled.div`
+  margin-top: 40px;
+
+  @media (min-width: ${props => props.theme.breakpoints.sm}) {
+    margin-top: 0;
+    margin-right: 30px;
+    flex: 1;
+
+    > p {
+      min-height: 80px;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  @media (min-width: ${props => props.theme.breakpoints.lg}) {
+    margin-right: 50px;
+  }
+`
 
 const AboutSection = styled.section`
   margin-top: 50px;
@@ -104,13 +152,15 @@ const AboutSection = styled.section`
     flex-direction: row;
   }
 `
-const _StyledH2 = styled(StyledH2)`
+const _StyledH2 = styled.h2`
+  font-size: 1.66rem;
   color: ${props => props.theme.colors.brand};
   border: 0;
 `
 
 const Button = styled.a`
   ${makeDefaultButton}
+  margin-left: -3px;
   font-weight: bold;
   padding-top: 3px;
   padding-top: 3px;
@@ -129,9 +179,24 @@ const PrinciplesSection = styled.section`
   }
 `
 
+function iconStyle() {
+  return css`
+    > path {
+      fill: ${props => props.theme.colors.brandGreen};
+    }
+    width: 100px;
+    margin-right: 30px;
+    @media (min-width: ${props => props.theme.breakpoints.lg}) {
+      margin-right: 50px;
+      width: 120px;
+    }
+  `
+}
+
+const ParticipateIcon = styled(ParticipateSVG)`
+  ${iconStyle}
+`
+
 const DonateIcon = styled(DonateSVG)`
-  > path {
-    fill: ${props => props.theme.colors.brandGreen};
-  }
-  width: 120px;
+  ${iconStyle}
 `
