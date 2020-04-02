@@ -12,49 +12,72 @@ import MathSVG from '../../../public/img/subjects-math.svg'
 import AbcSVG from '../../../public/img/subjects-abc.svg'
 import SustainabilitySVG from '../../../public/img/subjects-sustainability.svg'
 import BiologySVG from '../../../public/img/subjects-biology.svg'
+import BlankSVG from '../../../public/img/subjects-blank.svg'
 
 export default function LandingSubjects() {
   return (
-    <SubjectsWrapper>
-      {/* xs={12} sm={6} lg={3} */}
-      <Subject
-        url={'#'}
-        title={'Mathematik lernen'}
-        icon={<_MathSVG className={'math'} />}
-      />
-      <Subject
-        url={'#'}
-        title={'Alphabetisierung'}
-        icon={<_AbcSVG className={'abc'} />}
-      />
-      <Subject
-        url={'#'}
-        title={'Nachhaltigkeit lernen'}
-        icon={<_SustainabilitySVG className={'sus'} />}
-      />
-      <Subject
-        url={'#'}
-        title={'Biologie lernen'}
-        icon={<_BiologySVG className={'bio'} />}
-      />
-    </SubjectsWrapper>
+    <>
+      <SubjectsWrapper>
+        <Subject
+          url={'#'}
+          title={'Mathematik lernen'}
+          SubjectSVG={<_MathSVG className={'math'} />}
+        />
+        <Subject
+          url={'#'}
+          title={'Alphabetisierung'}
+          SubjectSVG={<_AbcSVG className={'abc'} />}
+        />
+        <Subject
+          url={'#'}
+          title={'Nachhaltigkeit lernen'}
+          SubjectSVG={<_SustainabilitySVG className={'sus'} />}
+        />
+        <Subject
+          url={'#'}
+          title={'Biologie lernen'}
+          SubjectSVG={<_BiologySVG className={'bio'} />}
+        />
+      </SubjectsWrapper>
+
+      <SubjectsWrapper extraLinks={true}>
+        <Subject
+          url={'#'}
+          title={'Einstieg für Eltern'}
+          SubjectSVG={<_BlankSVG />}
+          alwaysShowArrow={true}
+        />
+        <Subject
+          url={'#'}
+          title={'Einstieg für LehrerInnen'}
+          SubjectSVG={<_BlankSVG />}
+          alwaysShowArrow={true}
+        />
+      </SubjectsWrapper>
+    </>
   )
 }
 
-function Subject({ url, title, icon }) {
+function Subject(props) {
+  const { url, title, SubjectSVG } = props
+
   return (
     <SubjectLink href={url}>
       {' '}
-      {icon}
+      {SubjectSVG}
       <Header>
         {title}
-        <StyledIcon icon={faArrowCircleRight} size="1x" />
+        <StyledIcon
+          alwaysShow={props.alwaysShowArrow}
+          icon={faArrowCircleRight}
+          size="1x"
+        />
       </Header>
     </SubjectLink>
   )
 }
 
-const SubjectsWrapper = styled.div`
+const SubjectsWrapper = styled.div<{ extraLinks?: boolean }>`
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -70,6 +93,20 @@ const SubjectsWrapper = styled.div`
   @media (min-width: ${props => props.theme.breakpoints.lg}) {
     justify-content: space-between;
     margin-top: 40px;
+
+    /* bit hacky, but way easier */
+    ${props =>
+      props.extraLinks &&
+      css`
+        justify-content: start;
+        > a > svg {
+          display: none;
+        }
+        > a > h2 {
+          margin-right: 40px;
+          font-size: 1.3rem;
+        }
+      `}
   }
 `
 
@@ -83,7 +120,7 @@ const SubjectLink = styled.a`
   }
   @media (min-width: ${props => props.theme.breakpoints.sm}) {
     border-bottom: 0;
-    min-width: 420px;
+    min-width: 430px;
     width: 43%;
     padding-left: 0;
     &:hover {
@@ -107,6 +144,9 @@ const _SustainabilitySVG = styled(SustainabilitySVG)`
   ${makeSVGStyle({ Parent: SubjectLink })}
 `
 const _AbcSVG = styled(AbcSVG)`
+  ${makeSVGStyle({ Parent: SubjectLink })}
+`
+const _BlankSVG = styled(BlankSVG)`
   ${makeSVGStyle({ Parent: SubjectLink })}
 `
 
@@ -134,10 +174,15 @@ const Header = styled.h2`
   }
 `
 
-const StyledIcon = styled(FontAwesomeIcon)`
+const StyledIcon = styled(FontAwesomeIcon)<{ alwaysShow?: boolean }>`
   margin-left: 0.4rem;
   vertical-align: middle;
-  @media (min-width: ${props => props.theme.breakpoints.sm}) {
-    display: none;
-  }
+
+  ${props =>
+    !props.alwaysShow &&
+    css`
+      @media (min-width: ${props => props.theme.breakpoints.sm}) {
+        display: none;
+      }
+    `}
 `
