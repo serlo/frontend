@@ -30,6 +30,7 @@ export function convert(node) {
         type: 'img',
         src: node.state.src,
         alt: node.state.alt,
+        maxWidth: node.state.maxWidth,
         children: [{ text: '' }]
       }
     ]

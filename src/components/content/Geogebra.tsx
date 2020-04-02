@@ -1,11 +1,12 @@
-import { StyledP } from '../tags/StyledP'
 import React from 'react'
 import styled from 'styled-components'
-import { makeMargin } from '../../helper/csshelper'
 import fetch from 'isomorphic-unfetch'
 
-const Geogebra = React.forwardRef((props: any, ref: any) => {
-  const id = props.id
+interface GeogebraProps {
+  id: string
+}
+
+export default function Geogebra({ id }: GeogebraProps) {
   const [data, setData] = React.useState(undefined)
   React.useEffect(() => {
     fetch('https://www.geogebra.org/api/json.php', {
@@ -42,28 +43,24 @@ const Geogebra = React.forwardRef((props: any, ref: any) => {
   }, [id])
   if (!data) {
     return (
-      <Placeholder ref={ref}>
+      <Placeholder>
         <img
           src="https://cdn.geogebra.org/static/img/GeoGebra-logo.png"
           alt="GeoGebra"
         />
-        {props.children}
       </Placeholder>
     )
   }
   return (
-    <GeogebraContainer ratio={data.ratio} ref={ref}>
+    <GeogebraContainer ratio={data.ratio}>
       <GeogebraFrame
         title={id}
         scrolling="no"
         src={'https://www.geogebra.org/material/iframe/id/' + id}
       />
-      {props.children}
     </GeogebraContainer>
   )
-})
-
-export default Geogebra
+}
 
 const Placeholder = styled.div`
   display: flex;
@@ -71,8 +68,6 @@ const Placeholder = styled.div`
   box-sizing: border-box;
   border: 2px ${props => props.theme.colors.lightgray} solid;
   border-radius: 4px;
-  ${makeMargin}
-  margin-bottom: ${props => props.theme.spacing.mb.block};
   padding: 10px;
 `
 
@@ -92,6 +87,4 @@ const GeogebraContainer = styled.div<{ ratio: number }>`
   display: block;
   height: 0;
   overflow: hidden;
-  ${makeMargin}
-  margin-bottom: ${props => props.theme.spacing.mb.block};
 `
