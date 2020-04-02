@@ -1,12 +1,9 @@
 import { css } from 'styled-components'
 
-export const makeMargin = props =>
-  props.full
-    ? ''
-    : `
+export const makeMargin = props => `
   margin-left:${props.theme.defaults.sideSpacingMobile};
   margin-right:${props.theme.defaults.sideSpacingMobile};
-  `
+`
 
 export const makeResponsiveMargin = props =>
   `
@@ -18,12 +15,9 @@ export const makeResponsiveMargin = props =>
   }
   `
 
-export const makePadding = props =>
-  props.full
-    ? ''
-    : `
-padding-left:${props.theme.defaults.sideSpacingMobile};
-padding-right:${props.theme.defaults.sideSpacingMobile};
+export const makePadding = props => `
+  padding-left:${props.theme.defaults.sideSpacingMobile};
+  padding-right:${props.theme.defaults.sideSpacingMobile};
 `
 
 export const makeResponsivePadding = props =>
