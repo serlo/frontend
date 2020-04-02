@@ -136,6 +136,15 @@ export function convert(node) {
       }
     ]
   }
+  if (plugin === 'geogebra') {
+    // compat: full url given
+    let id = node.state
+    const match = /geogebra\.org\/m\/(.+)/.exec(id)
+    if (match) {
+      id = match[1]
+    }
+    return [{ type: 'geogebra', id, children: [{ text: '' }] }]
+  }
 
   const type = node.type
   if (type === 'p') {
@@ -252,6 +261,14 @@ export function convert(node) {
     return [
       {
         type: 'ul',
+        children: convert(node.children)
+      }
+    ]
+  }
+  if (type === 'ordered-list') {
+    return [
+      {
+        type: 'ol',
         children: convert(node.children)
       }
     ]

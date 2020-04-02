@@ -33,6 +33,7 @@ import { StyledTR } from '../components/tags/StyledTR'
 import { StyledTH } from '../components/tags/StyledTH'
 import { StyledTD } from '../components/tags/StyledTD'
 import { TableWrapper } from '../components/content/TableWrapper'
+import Geogebra from '../components/content/Geogebra'
 
 const Math = dynamic(import('../components/content/Math'))
 
@@ -40,7 +41,7 @@ export interface ArticleProps {
   value: Node[]
 }
 
-export const enclosingParents = ['li', 'important', 'spoiler', 'th', 'td']
+export const enclosingParents = ['li', 'important', 'spoiler-body', 'th', 'td']
 
 export default function Article(props: ArticleProps) {
   const { value } = props
@@ -118,7 +119,8 @@ const renderer = {
   table: renderTable,
   tr: renderTR,
   th: renderTH,
-  td: renderTD
+  td: renderTD,
+  geogebra: renderGeogebra
 }
 
 function renderElement(props) {
@@ -419,4 +421,12 @@ export function renderImportant({ attributes, children }) {
 
 export function renderAnchor({ element, attributes }) {
   return <a id={element.id} {...attributes} />
+}
+
+export function renderGeogebra({ element, attributes, children }) {
+  return (
+    <Geogebra id={element.id} {...attributes}>
+      {children}
+    </Geogebra>
+  )
 }
