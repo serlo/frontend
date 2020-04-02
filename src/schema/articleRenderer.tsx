@@ -41,7 +41,7 @@ export interface ArticleProps {
   value: Node[]
 }
 
-export const enclosingParents = ['li', 'important', 'spoiler', 'th', 'td']
+export const enclosingParents = ['li', 'important', 'spoiler-body', 'th', 'td']
 
 export default function Article(props: ArticleProps) {
   const { value } = props

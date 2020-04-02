@@ -44,6 +44,8 @@ import {
 import checkArticleGuidelines from '../schema/articleGuidelines'
 import { Hints } from '../components/Hints'
 import { HSpace } from '../components/content/HSpace'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAnchor } from '@fortawesome/free-solid-svg-icons'
 
 const ModalContext = React.createContext<any>({})
 
@@ -141,19 +143,26 @@ function Toolbar() {
       }
       if (Range.isCollapsed(selection) && allowed) {
         // was darf man hier hinzufügen?
-        ;['img', 'math', 'spoiler-container', 'ul', 'ol', 'row'].forEach(
-          key => {
-            if (allowed.children.includes(key)) {
-              if (key === 'ul' || key === 'ol') {
-                // check level
-                if (anchorParentPath.length > 3) {
-                  return
-                }
+        ;[
+          'img',
+          'math',
+          'spoiler-container',
+          'ul',
+          'ol',
+          'row',
+          'anchor',
+          'table'
+        ].forEach(key => {
+          if (allowed.children.includes(key)) {
+            if (key === 'ul' || key === 'ol') {
+              // check level
+              if (anchorParentPath.length > 3) {
+                return
               }
-              allowedAdd.push(key)
             }
+            allowedAdd.push(key)
           }
-        )
+        })
         addCurrentNode = Node.get(editor, anchorParentPath)
         addCurrentPath = anchorParentPath
       }
@@ -229,7 +238,10 @@ function Toolbar() {
           e.preventDefault()
           Transforms.splitNodes(editor)
           if (key in defaultInserts) {
-            Transforms.insertNodes(editor, defaultInserts[key])
+            Transforms.insertNodes(
+              editor,
+              JSON.parse(JSON.stringify(defaultInserts[key]))
+            )
           }
           if (
             addCurrentNode.type === 'p' &&
@@ -402,6 +414,55 @@ const defaultInserts = {
         ]
       }
     ]
+  },
+  anchor: {
+    type: 'anchor',
+    id: '',
+    children: [{ text: '' }]
+  },
+  table: {
+    type: 'table',
+    children: [
+      {
+        type: 'tr',
+        children: [
+          {
+            type: 'th',
+            children: [{ text: 'Titel 1' }]
+          },
+          {
+            type: 'th',
+            children: [{ text: 'Titel 2' }]
+          }
+        ]
+      },
+      {
+        type: 'tr',
+        children: [
+          {
+            type: 'td',
+            children: [{ text: '' }]
+          },
+          {
+            type: 'td',
+            children: [{ text: '' }]
+          }
+        ]
+      },
+      {
+        type: 'tr',
+        children: [
+          {
+            type: 'td',
+            children: [{ text: '' }]
+          },
+          {
+            type: 'td',
+            children: [{ text: '' }]
+          }
+        ]
+      }
+    ]
   }
 }
 
@@ -448,6 +509,8 @@ function buildAdd(allowed, handler) {
       {buildButton('ul', 'Liste')}
       {buildButton('ol', 'Aufzählung')}
       {buildButton('row', 'Spalten')}
+      {buildButton('table', 'Tabelle')}
+      {buildButton('anchor', 'Anchor')}
     </>
   )
 }
@@ -478,7 +541,8 @@ const componentRenderer = {
   col: MyCol,
   a: MyA,
   'inline-math': MyInlineMath,
-  math: MyMath
+  math: MyMath,
+  anchor: MyAnchor
 }
 
 function renderElement(props) {
@@ -1136,6 +1200,99 @@ function ImgSettings(props) {
     </>
   )
 }
+
+function MyAnchor(props) {
+  const { attributes, element, children } = props
+  const editor = useEditor()
+  const { selection } = editor
+  const path = ReactEditor.findPath(editor, element)
+  let highlight = selection && Range.includes(selection, path)
+  const { doEdit } = React.useContext(ModalContext)
+
+  return (
+    <StyledAnchorPlaceholder
+      {...attributes}
+      contentEditable={false}
+      style={{ userSelect: 'none' }}
+    >
+      <TipOver
+        placement="right"
+        content={
+          <button onClick={() => doEdit(<AnchorSettings path={path} />)}>
+            Anchor bearbeiten
+          </button>
+        }
+      >
+        <StyledIconWrapper
+          style={{ outline: highlight ? '1px solid lightblue' : 'none' }}
+        >
+          <FontAwesomeIcon icon={faAnchor} size="1x" />
+        </StyledIconWrapper>
+      </TipOver>
+      {children}
+    </StyledAnchorPlaceholder>
+  )
+
+  /*return renderImg({
+    element,
+    attributes: {
+      ...attributes,
+      style: {
+        
+      }
+    },
+    children,
+    wrapImg: comp => (
+      <TipOver
+        content={
+          <button onClick={() => doEdit(<ImgSettings path={path} />)}>
+            Bild bearbeiten
+          </button>
+        }
+        placement="top-end"
+      >
+        {comp}
+      </TipOver>
+    ),
+    value: editor,
+    path
+  })*/
+}
+
+function AnchorSettings(props) {
+  const { path } = props
+  const editor = useEditor()
+  const element = Node.get(editor, path)
+  const [id, setId] = React.useState(element.id)
+  const { closeModal } = React.useContext(ModalContext)
+  return (
+    <>
+      <SettingsInput
+        title="ID:"
+        innerProps={{
+          value: id,
+          onChange: e => {
+            setId(e.target.value)
+            Transforms.setNodes(editor, { id: e.target.value }, { at: path })
+          }
+        }}
+      />
+      <button onClick={() => closeModal()}>Fertig</button>
+    </>
+  )
+}
+
+const StyledAnchorPlaceholder = styled.div`
+  position: relative;
+  height: 0;
+  width: 100%;
+`
+
+const StyledIconWrapper = styled.div`
+  position: absolute;
+  left: 2px;
+  bottom: -4px;
+`
 
 const StyledToolbox = styled.div`
   padding: 5px;
