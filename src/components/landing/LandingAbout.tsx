@@ -58,7 +58,7 @@ export default function LandingAbout() {
         <p>
           Die <b>freie Lernplattform serlo.org</b> bietet:
         </p>
-        <StyledUl>
+        <StyledUl fullWidth>
           <StyledLi>einfache Erklärungen</StyledLi>
           <StyledLi>Kurse</StyledLi>
           <StyledLi>Lernvideos</StyledLi>
