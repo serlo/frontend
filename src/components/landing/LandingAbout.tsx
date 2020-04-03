@@ -1,7 +1,6 @@
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import {
   makeResponsivePadding,
-  makePadding,
   makeDefaultButton
 } from '../../helper/csshelper'
 import { StyledUl } from '../tags/StyledUl'
@@ -75,7 +74,7 @@ export default function LandingAbout() {
           Unsere Vision ist es,{' '}
           <b>hochwertige Bildung weltweit frei verfügbar</b> zu machen.
         </p>
-        <AboutButton>
+        <AboutButton href={'/serlo'}>
           Mehr erfahren <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
         </AboutButton>
       </TextCol>

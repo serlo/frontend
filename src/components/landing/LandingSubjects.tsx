@@ -1,6 +1,5 @@
-import styled, { css } from 'styled-components'
+import styled, { css, keyframes } from 'styled-components'
 import { lighten } from 'polished'
-import { makeSVGStyle } from './landingcsshelper'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
 import {
@@ -19,38 +18,38 @@ export default function LandingSubjects() {
     <>
       <SubjectsWrapper>
         <Subject
-          url={'#'}
+          url={'/mathe'}
           title={'Mathematik lernen'}
-          SubjectSVG={<_MathSVG className={'math'} />}
+          SubjectSVG={<MathSVG className={'math'} />}
         />
         <Subject
-          url={'#'}
+          url={'/abc'}
           title={'Alphabetisierung'}
-          SubjectSVG={<_AbcSVG className={'abc'} />}
+          SubjectSVG={<AbcSVG className={'abc'} />}
         />
         <Subject
-          url={'#'}
+          url={'/nachhaltigkeit'}
           title={'Nachhaltigkeit lernen'}
-          SubjectSVG={<_SustainabilitySVG className={'sus'} />}
+          SubjectSVG={<SustainabilitySVG className={'sus'} />}
         />
         <Subject
-          url={'#'}
+          url={'/biologie'}
           title={'Biologie lernen'}
-          SubjectSVG={<_BiologySVG className={'bio'} />}
+          SubjectSVG={<BiologySVG className={'bio'} />}
         />
       </SubjectsWrapper>
 
       <SubjectsWrapper extraLinks={true}>
         <Subject
-          url={'#'}
+          url={'/eltern'}
           title={'Einstieg für Eltern'}
-          SubjectSVG={<_BlankSVG />}
+          SubjectSVG={<BlankSVG />}
           alwaysShowArrow={true}
         />
         <Subject
-          url={'#'}
+          url={'/lehrkraefte'}
           title={'Einstieg für LehrerInnen'}
-          SubjectSVG={<_BlankSVG />}
+          SubjectSVG={<BlankSVG />}
           alwaysShowArrow={true}
         />
       </SubjectsWrapper>
@@ -67,11 +66,9 @@ function Subject(props) {
       {SubjectSVG}
       <Header>
         {title}
-        <StyledIcon
-          alwaysShow={props.alwaysShowArrow}
-          icon={faArrowCircleRight}
-          size="1x"
-        />
+        <StyledIcon alwaysShow={props.alwaysShowArrow}>
+          <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
+        </StyledIcon>
       </Header>
     </SubjectLink>
   )
@@ -99,14 +96,32 @@ const SubjectsWrapper = styled.div<{ extraLinks?: boolean }>`
       props.extraLinks &&
       css`
         justify-content: start;
-        > a > svg {
+        && > a > svg {
           display: none;
         }
-        > a > h2 {
+        & > a > h2 {
           margin-right: 40px;
           font-size: 1.3rem;
         }
       `}
+  }
+`
+
+const jump = keyframes`
+  16% {
+    transform: translateY(1rem);
+  }
+  33% {
+    transform: translateY(-0.6rem);
+  }
+  50% {
+    transform: translateY(0.4rem);
+  }
+  67% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(0);
   }
 `
 
@@ -132,22 +147,81 @@ const SubjectLink = styled.a`
     min-width: auto;
     width: auto;
   }
-`
 
-const _MathSVG = styled(MathSVG)`
-  ${makeSVGStyle({ Parent: SubjectLink })}
-`
-const _BiologySVG = styled(BiologySVG)`
-  ${makeSVGStyle({ Parent: SubjectLink })}
-`
-const _SustainabilitySVG = styled(SustainabilitySVG)`
-  ${makeSVGStyle({ Parent: SubjectLink })}
-`
-const _AbcSVG = styled(AbcSVG)`
-  ${makeSVGStyle({ Parent: SubjectLink })}
-`
-const _BlankSVG = styled(BlankSVG)`
-  ${makeSVGStyle({ Parent: SubjectLink })}
+  & svg.bio,
+  & svg.math,
+  & svg.abc,
+  & svg.sus {
+    .blue {
+      fill: ${props => props.theme.colors.lighterblue};
+      transition: all 0.2s ease-in-out;
+    }
+    .green {
+      fill: #becd2b;
+      transition: all 0.2s ease-in-out;
+    }
+    @media (min-width: ${props => props.theme.breakpoints.sm}) {
+      .blue {
+        fill: ${props => lighten(0.07, props.theme.colors.lighterblue)};
+      }
+    }
+
+    /* animations */
+    width: 6rem;
+    height: 6rem;
+    margin-top: 1rem;
+    margin-right: 1rem;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    animation-play-state: paused;
+
+    @media (min-width: ${props => props.theme.breakpoints.lg}) {
+      display: block;
+      margin: 0 auto;
+      width: auto;
+      height: auto;
+      max-width: 120px;
+    }
+
+    @media (min-width: 1470px) {
+      max-width: 100%;
+    }
+  }
+
+  & .math {
+    transition-duration: 0.6s;
+  }
+  & .sus path.water {
+    transform: scale(0) translateY(-30px);
+    transform-origin: 9% 60%;
+    transition: transform 0.6s cubic-bezier(0.175, 0.6, 0.32, 1.275);
+  }
+
+  &:hover,
+  &:focus,
+  &:active {
+    & .bio {
+      animation: ${jump} 0.7s ease-in-out;
+    }
+    & .abc {
+      transform: scale(1.25) rotate(10deg);
+    }
+    & .math {
+      transform: rotateY(-180deg) rotateX(-3deg);
+    }
+    & .sus {
+      transform: rotate(-30deg);
+    }
+    & .sus .blue.water {
+      transform: scale(1.08);
+    }
+    && .blue {
+      fill: ${props => props.theme.colors.brand};
+    } /* TODO: Helperblue */
+    && .green {
+      fill: #becd2b;
+    }
+  }
 `
 
 const Header = styled.h2`
@@ -174,7 +248,7 @@ const Header = styled.h2`
   }
 `
 
-const StyledIcon = styled(FontAwesomeIcon)<{ alwaysShow?: boolean }>`
+const StyledIcon = styled.span<{ alwaysShow?: boolean }>`
   margin-left: 0.4rem;
   vertical-align: middle;
 

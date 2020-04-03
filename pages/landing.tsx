@@ -1,100 +1,96 @@
+import styled from 'styled-components'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
+
 import Header from '../src/components/navigation/Header'
 import LandingSubjects from '../src/components/landing/LandingSubjects'
 import LandingAbout from '../src/components/landing/LandingAbout'
 import Footer from '../src/components/navigation/Footer'
-import styled, { css } from 'styled-components'
-import { StyledH2 } from '../src/components/tags/StyledH2'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
+
 import {
   makeDefaultButton,
   makeResponsivePadding
 } from '../src/helper/csshelper'
+
 import PrinciplesSVG from '../public/img/landing_principles_graphic.svg'
 import DonateSVG from '../public/img/footer_donate.svg'
 import ParticipateSVG from '../public/img/footer_participate.svg'
 
-// import CloseSVG from '../public/img/serlo-logo.svg'
-export default function Landing(props) {
-  const { data } = props
+export default function Landing() {
   return (
     <>
       <Header />
-      <RelatveContainer>
-        <SubjectsSection>
-          <LandingSubjects />
-        </SubjectsSection>
+      <SubjectsSection>
+        <LandingSubjects />
+      </SubjectsSection>
 
-        <AboutSection>
-          <LandingAbout />
-        </AboutSection>
+      <AboutSection>
+        <LandingAbout />
+      </AboutSection>
 
-        <Section>
-          <_StyledH2>Serlo.org ist die Wikipedia fürs Lernen</_StyledH2>
-          <ParticipateIcon />
-          <Col>
-            <p>
-              Wir suchen LehrerInnen mit Begeisterung für ihr Fach. Werden Sie
-              AutorIn auf serlo.org, erstellen Sie <b>neue Inhalte</b> und
-              helfen Sie uns, die <b>Qualität</b> der Lernplattform zu sichern.
-            </p>
-            <Button href="/community">
-              Zur Startseite für AutorInnen{' '}
-              <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
-            </Button>
-          </Col>
-          <Col>
-            <p>
-              Wir suchen neue hauptamtliche und ehrenamtliche Teammitglieder für
-              die Bereiche <b>Softwareentwicklung</b>, <b>Redaktion</b> und{' '}
-              <b>NGO-Management</b>.
-            </p>
-            <Button href="/jobs">
-              Jobs und Engagement{' '}
-              <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
-            </Button>
-          </Col>
-        </Section>
+      <Section>
+        <StyledH2>Serlo.org ist die Wikipedia fürs Lernen</StyledH2>
+        <IconStyle>
+          <ParticipateSVG />
+        </IconStyle>
+        <Col>
+          <p>
+            Wir suchen LehrerInnen mit Begeisterung für ihr Fach. Werden Sie
+            AutorIn auf serlo.org, erstellen Sie <b>neue Inhalte</b> und helfen
+            Sie uns, die <b>Qualität</b> der Lernplattform zu sichern.
+          </p>
+          <Button href="/community">
+            Zur Startseite für AutorInnen{' '}
+            <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
+          </Button>
+        </Col>
+        <Col>
+          <p>
+            Wir suchen neue hauptamtliche und ehrenamtliche Teammitglieder für
+            die Bereiche <b>Softwareentwicklung</b>, <b>Redaktion</b> und{' '}
+            <b>NGO-Management</b>.
+          </p>
+          <Button href="/jobs">
+            Jobs und Engagement{' '}
+            <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
+          </Button>
+        </Col>
+      </Section>
 
-        <PrinciplesSection>
-          <PrinciplesSVG />
-        </PrinciplesSection>
+      <PrinciplesSection>
+        <PrinciplesSVG />
+      </PrinciplesSection>
 
-        <Section>
-          <_StyledH2>
-            Werden Sie Teil unserer Bewegung für freie Bildung
-          </_StyledH2>
-          <DonateIcon />
-          <Col>
-            <p>
-              Bildung gehört uns allen! Werden Sie Mitglied in unserer
-              Organisation Serlo Education e.V. und so zu MitherausgeberIn der
-              freien Lernplattform.
-            </p>
-            <Button href="/beitreten">
-              Mitglied werden{' '}
-              <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
-            </Button>
-          </Col>
-          <Col>
-            <p>
-              Softwareentwicklung und Lerninhalte erstellen kostet Geld. Wir
-              freuen uns sehr, wenn Sie Serlo mit einer Spende unterstützen.
-            </p>
-            <Button href="/spenden">
-              Spenden <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
-            </Button>
-          </Col>
-        </Section>
-      </RelatveContainer>
+      <Section>
+        <StyledH2>Werden Sie Teil unserer Bewegung für freie Bildung</StyledH2>
+        <IconStyle>
+          <DonateSVG />
+        </IconStyle>
+        <Col>
+          <p>
+            Bildung gehört uns allen! Werden Sie Mitglied in unserer
+            Organisation Serlo Education e.V. und so zu MitherausgeberIn der
+            freien Lernplattform.
+          </p>
+          <Button href="/beitreten">
+            Mitglied werden{' '}
+            <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
+          </Button>
+        </Col>
+        <Col>
+          <p>
+            Softwareentwicklung und Lerninhalte erstellen kostet Geld. Wir
+            freuen uns sehr, wenn Sie Serlo mit einer Spende unterstützen.
+          </p>
+          <Button href="/spenden">
+            Spenden <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
+          </Button>
+        </Col>
+      </Section>
       <Footer />
     </>
   )
 }
-
-const RelatveContainer = styled.div`
-  position: relative;
-`
 
 const SubjectsSection = styled.section``
 
@@ -107,11 +103,6 @@ const Section = styled.section`
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    
-    > h2 {
-      width: 100%;
-      
-    }
   }
 
   @media (min-width: ${props => props.theme.breakpoints.lg}) {
@@ -129,7 +120,7 @@ const Col = styled.div`
     margin-right: 30px;
     flex: 1;
 
-    > p {
+    & > p {
       min-height: 80px;
     }
 
@@ -152,7 +143,8 @@ const AboutSection = styled.section`
     flex-direction: row;
   }
 `
-const _StyledH2 = styled.h2`
+
+const StyledH2 = styled.h2`
   font-size: 1.66rem;
   color: ${props => props.theme.colors.brand};
   border: 0;
@@ -166,6 +158,7 @@ const Button = styled.a`
   padding-top: 3px;
   background-color: ${props => props.theme.colors.lightBlueBackground};
 `
+
 const PrinciplesSection = styled.section`
   background-color: ${props => props.theme.colors.brand};
   text-align: center;
@@ -173,30 +166,21 @@ const PrinciplesSection = styled.section`
   padding-top: 70px;
   padding-bottom: 70px;
 
-  > svg {
+  & > svg {
     height: 450px;
     width: 100%;
   }
 `
 
-function iconStyle() {
-  return css`
-    > path {
-      fill: ${props => props.theme.colors.brandGreen};
-    }
-    width: 100px;
-    margin-right: 30px;
-    @media (min-width: ${props => props.theme.breakpoints.lg}) {
-      margin-right: 50px;
-      width: 120px;
-    }
-  `
-}
-
-const ParticipateIcon = styled(ParticipateSVG)`
-  ${iconStyle}
-`
-
-const DonateIcon = styled(DonateSVG)`
-  ${iconStyle}
+const IconStyle = styled.div`
+  & > path,
+  & .st0 {
+    fill: ${props => props.theme.colors.brandGreen};
+  }
+  width: 100px;
+  margin-right: 30px;
+  @media (min-width: ${props => props.theme.breakpoints.lg}) {
+    margin-right: 50px;
+    width: 120px;
+  }
 `
