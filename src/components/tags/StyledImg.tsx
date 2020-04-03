@@ -1,11 +1,11 @@
 import styled from 'styled-components'
 
-export interface StyledImgProps {
+interface StyledImgProps {
   maxWidth?: number
   inline?: boolean
 }
 
-export const StyledImg = styled.img<StyledImgProps>`
+const StyledImg = styled.img<StyledImgProps>`
   max-width: 100%;
   max-width: ${props => (props.maxWidth > 0 ? props.maxWidth + 'px' : '')};
   ${props =>
@@ -17,3 +17,5 @@ export const StyledImg = styled.img<StyledImgProps>`
       `
       : ''}
 `
+
+export default StyledImg

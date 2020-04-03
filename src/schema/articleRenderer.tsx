@@ -2,33 +2,33 @@ import React from 'react'
 import { Node, Element } from 'slate'
 import dynamic from 'next/dynamic'
 
-import { ImgCentered } from '../components/content/ImgCentered'
-import { MathWrapper } from '../components/content/MathWrapper'
-import { LayoutRow } from '../components/content/LayoutRow'
-import { Col } from '../components/content/Col'
-import { Important } from '../components/content/Important'
-import { StyledA } from '../components/tags/StyledA'
-import { StyledH1 } from '../components/tags/StyledH1'
-import { StyledH2 } from '../components/tags/StyledH2'
-import { StyledH3 } from '../components/tags/StyledH3'
-import { StyledH4 } from '../components/tags/StyledH4'
-import { StyledH5 } from '../components/tags/StyledH5'
-import { StyledUl } from '../components/tags/StyledUl'
-import { StyledOl } from '../components/tags/StyledOl'
-import { StyledLi } from '../components/tags/StyledLi'
-import { StyledP } from '../components/tags/StyledP'
-import { StyledImg } from '../components/tags/StyledImg'
-import { SpoilerTitle } from '../components/content/SpoilerTitle'
-import { SpoilerBody } from '../components/content/SpoilerBody'
-import { SpoilerContainer } from '../components/content/SpoilerContainer'
-import { StyledTable } from '../components/tags/StyledTable'
-import { StyledTR } from '../components/tags/StyledTR'
-import { StyledTH } from '../components/tags/StyledTH'
-import { StyledTD } from '../components/tags/StyledTD'
-import { TableWrapper } from '../components/content/TableWrapper'
-import { SpoilerToggle } from '../components/content/SpoilerToggle'
-import { ExternalLink } from '../components/content/ExternalLink'
-import { GeogebraWrapper } from '../components/content/GeogebraWrapper'
+import ImgCentered from '../components/content/ImgCentered'
+import MathWrapper from '../components/content/MathWrapper'
+import LayoutRow from '../components/content/LayoutRow'
+import Col from '../components/content/Col'
+import Important from '../components/content/Important'
+import StyledA from '../components/tags/StyledA'
+import StyledH1 from '../components/tags/StyledH1'
+import StyledH2 from '../components/tags/StyledH2'
+import StyledH3 from '../components/tags/StyledH3'
+import StyledH4 from '../components/tags/StyledH4'
+import StyledH5 from '../components/tags/StyledH5'
+import StyledUl from '../components/tags/StyledUl'
+import StyledOl from '../components/tags/StyledOl'
+import StyledLi from '../components/tags/StyledLi'
+import StyledP from '../components/tags/StyledP'
+import StyledImg from '../components/tags/StyledImg'
+import SpoilerTitle from '../components/content/SpoilerTitle'
+import SpoilerBody from '../components/content/SpoilerBody'
+import SpoilerContainer from '../components/content/SpoilerContainer'
+import StyledTable from '../components/tags/StyledTable'
+import StyledTR from '../components/tags/StyledTR'
+import StyledTH from '../components/tags/StyledTH'
+import StyledTD from '../components/tags/StyledTD'
+import TableWrapper from '../components/content/TableWrapper'
+import SpoilerToggle from '../components/content/SpoilerToggle'
+import ExternalLink from '../components/content/ExternalLink'
+import GeogebraWrapper from '../components/content/GeogebraWrapper'
 
 import SpecialCSS from '../components/content/SpecialCSS'
 import { theme } from '../theme'
@@ -36,12 +36,8 @@ import { theme } from '../theme'
 const Math = dynamic(import('../components/content/Math'))
 const Geogebra = dynamic(import('../components/content/Geogebra'))
 
-export interface ArticleProps {
-  value: Node[]
-}
-
-export default function Article(props: ArticleProps) {
-  const { value } = props
+export function renderArticle(value: Node[]) {
+  if (!value) return null
   const root = { children: value }
   return (
     <SpecialCSS>{value.map((_, index) => render(root, [index]))}</SpecialCSS>

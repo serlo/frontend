@@ -2,7 +2,17 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 import { makeDefaultButton } from '../../helper/csshelper'
 
-export default function MetaMenu(props) {
+interface MetaMenuProps {
+  links: MetaMenuLink[]
+  pagealias: string
+}
+
+interface MetaMenuLink {
+  title: string
+  url: string
+}
+
+export default function MetaMenu(props: MetaMenuProps) {
   const { links, pagealias } = props
 
   return (

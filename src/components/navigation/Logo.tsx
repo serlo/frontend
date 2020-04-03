@@ -3,7 +3,11 @@ import { lighten } from 'polished'
 
 const logoTargetWidth = 160
 
-export default function Logo({ subline }: { subline: string }) {
+interface LogoProps {
+  subline: string
+}
+
+export default function Logo({ subline }: LogoProps) {
   return (
     <>
       <div>

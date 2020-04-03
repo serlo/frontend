@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
 
-export function ExternalLink() {
+export default function ExternalLink() {
   return (
     <>
       {' '}

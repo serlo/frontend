@@ -1,8 +1,7 @@
 import styled from 'styled-components'
 import { makeMargin } from '../../helper/csshelper'
-import { lighten } from 'polished'
 
-export const StyledH3 = styled.h3`
+const StyledH3 = styled.h3`
   ${makeMargin}
   margin-top: 0;
   padding-top: 12px;
@@ -12,3 +11,5 @@ export const StyledH3 = styled.h3`
   line-height: 1.22;
   color: ${props => props.theme.colors.h23};
 `
+
+export default StyledH3

@@ -9,26 +9,30 @@ import Ups from '../Ups'
 import WipHint from '../WipHint'
 import styled from 'styled-components'
 import Breadcrumbs from '../navigation/Breadcrumbs'
-import { StyledUl } from '../tags/StyledUl'
-import { StyledLi } from '../tags/StyledLi'
-import { StyledA } from '../tags/StyledA'
-import { StyledH1 } from '../tags/StyledH1'
-import { ToolLine } from '../navigation/ToolLine'
-import { ToolLineButton } from '../navigation/ToolLineButton'
+import StyledUl from '../tags/StyledUl'
+import StyledLi from '../tags/StyledLi'
+import StyledA from '../tags/StyledA'
+import StyledH1 from '../tags/StyledH1'
+import ToolLine from '../navigation/ToolLine'
+import ToolLineButton from '../navigation/ToolLineButton'
 import { createEditor, Editor } from 'slate'
-import withArticle from '../../schema/articleNormalizer'
-import Article from '../../schema/articleRenderer'
+import { withArticle } from '../../schema/articleNormalizer'
+import { renderArticle } from '../../schema/articleRenderer'
 const Create = dynamic(import('../../create/create'))
 import Toolbox from '../navigation/Toolbox'
 import { convertEdtrioState } from '../../schema/convertEdtrioState'
-import convertLegacyState from '../../schema/convertLegacyState'
-import checkArticleGuidelines from '../../schema/articleGuidelines'
-import { Hints } from '../Hints'
-import { HSpace } from './HSpace'
-import { StyledP } from '../tags/StyledP'
+import { convertLegacyState } from '../../schema/convertLegacyState'
+import { checkArticleGuidelines } from '../../schema/articleGuidelines'
+import Hints from '../Hints'
+import HSpace from './HSpace'
+import StyledP from '../tags/StyledP'
 import dynamic from 'next/dynamic'
 
-export default function ContentTypes(props) {
+interface ContentTypesProps {
+  data: { contentType: string; data: any } // :-)
+}
+
+export default function ContentTypes(props: ContentTypesProps) {
   const { data } = props
   if (data.contentType === 'Article' || data.contentType === 'Page') {
     return <RenderArticle content={data.data} />
@@ -145,7 +149,7 @@ function RenderArticle({ content }) {
         </ToolLineButton> */}
         {<ShareModal open={open} onClose={() => setOpen(false)} />}
       </ToolLine>
-      <Article value={value} />
+      {renderArticle(value)}
       <HSpace amount={20} />
       <ToolLine>
         <ToolLineButton onClick={() => setOpen(true)}>

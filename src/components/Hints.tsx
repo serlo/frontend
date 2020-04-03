@@ -1,11 +1,19 @@
 import styled from 'styled-components'
 import { lighten } from 'polished'
 
-export function Hints(props) {
+interface HintsProps {
+  hints: string[]
+}
+
+export default function Hints(props: HintsProps) {
   const { hints } = props
-  return hints.length > 0
-    ? hints.map((hint, index) => <HintBlock key={index}>{hint}</HintBlock>)
-    : null
+  return hints.length > 0 ? (
+    <>
+      {hints.map((hint, index) => (
+        <HintBlock key={index}>{hint}</HintBlock>
+      ))}
+    </>
+  ) : null
 }
 
 const HintBlock = styled.div`

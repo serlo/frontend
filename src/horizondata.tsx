@@ -5,7 +5,7 @@ export const horizonData = [
     title: 'Öfters hier?',
     text:
       'Wenn serlo.org deine Lieblingslernplattform ist freuen wir uns von dir zu erfahren, wieso! Klicke hier um uns eine Nachricht zu hinterlassen. ',
-    url: 'https://de.serlo.org/horizon/37/out'
+    url: '/horizon/37/out'
   },
   {
     imageUrl:
@@ -13,7 +13,7 @@ export const horizonData = [
     title: 'Mitmachen bei Serlo',
     text:
       'Hinter serlo.org stehen viele engagierte Menschen, die Bildung besser und gerechter machen wollen. Auch du kannst mitmachen! Klicke hier, um zu erfahren, wie du Teil der Serlo Community werden kannst.',
-    url: 'https://de.serlo.org/horizon/24/out'
+    url: '/horizon/24/out'
   },
   {
     imageUrl:
@@ -21,6 +21,6 @@ export const horizonData = [
     title: 'Gib uns Feedback!',
     text:
       'Mit der Kommentar-Funktion kannst du uns zu jedem Inhalt sagen was dir gefällt - und was besser sein könnte. Du kannst auch Fragen stellen, wenn etwas unklar ist. Wir freuen uns über deinen Input! ',
-    url: 'https://de.serlo.org/horizon/23/out'
+    url: '/horizon/23/out'
   }
 ]

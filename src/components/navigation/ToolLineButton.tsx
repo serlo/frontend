@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { makeGreenButton } from '../../helper/csshelper'
 
-export const ToolLineButton = styled.a`
+const ToolLineButton = styled.a`
   ${makeGreenButton}
   font-weight: bold;
   font-size: 0.9rem;
@@ -17,3 +17,5 @@ export const ToolLineButton = styled.a`
     background-color: ${props => props.theme.colors.brandGreen};
   }
 `
+
+export default ToolLineButton

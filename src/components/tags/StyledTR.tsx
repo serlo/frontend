@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const StyledTR = styled.tr``
+const StyledTR = styled.tr``
 
 /*
   Cool, but need work. Only for one-dimentional table atm.
@@ -15,3 +15,5 @@ export const StyledTR = styled.tr``
     }
   }
   */
+
+export default StyledTR

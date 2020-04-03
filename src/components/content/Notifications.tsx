@@ -1,19 +1,23 @@
 import React from 'react'
 import styled from 'styled-components'
 
+interface NotificationsProps {
+  entries: NotificationEntry[]
+}
+
 interface User {
   id: string
   username: string
 }
 
-interface NotificationProp {
+interface NotificationEntry {
   author: User
   body: string
   timestamp: string
   readed: boolean
 }
 
-export default function Notifications(entries: NotificationProp[]) {
+export default function Notifications({ entries }: NotificationsProps) {
   return (
     <Wrapper>
       {entries.map((entry, i, l) => {
@@ -61,13 +65,13 @@ const Item = styled.div<{ readed: boolean; theme: any }>`
       : `
     font-weight: 600;
     &:before {
-        content: '';
-        display: inline-block;
-        background: ${props.theme.colors.brand};
-        border-radius: 50%;
-        width: 10px;
-        height: 10px;
-        margin-right: 7px;
+      content: '';
+      display: inline-block;
+      background: ${props.theme.colors.brand};
+      border-radius: 50%;
+      width: 10px;
+      height: 10px;
+      margin-right: 7px;
     }
   `}
 `

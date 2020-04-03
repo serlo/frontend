@@ -2,7 +2,17 @@ import React from 'react'
 import styled from 'styled-components'
 import ScrollMenu from 'react-horizontal-scrolling-menu'
 
-export default function MobileMetaMenu(props) {
+interface MobileMetaMenuProps {
+  links: MetaMenuEntry[]
+  pagealias: string
+}
+
+interface MetaMenuEntry {
+  title: string
+  url: string
+}
+
+export default function MobileMetaMenu(props: MobileMetaMenuProps) {
   const selected = props.links.filter(entry => entry.url === props.pagealias)[0]
   return (
     <StyledScrollMenu>

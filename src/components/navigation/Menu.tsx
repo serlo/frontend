@@ -5,7 +5,17 @@ import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
 import Tippy, { useSingleton } from '@tippyjs/react'
 import { makeDefaultButton } from '../../helper/csshelper'
 
-export default function Menu(props) {
+interface MenuProps {
+  links: MenuLink[]
+}
+
+interface MenuLink {
+  title: string
+  url: string
+  children?: MenuLink[]
+}
+
+export default function Menu(props: MenuProps) {
   const { links } = props
   const [source, target] = useSingleton()
 

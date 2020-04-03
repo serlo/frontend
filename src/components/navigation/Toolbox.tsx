@@ -5,9 +5,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { makeGreenButton } from '../../helper/csshelper'
 
 import ShareModal from './ShareModal'
-import { HSpace } from '../content/HSpace'
 
-export default function Toolbox({ onEdit = () => {} }) {
+interface ToolboxProps {
+  onEdit: () => void
+}
+
+export default function Toolbox({ onEdit }: ToolboxProps) {
   const [open, setOpen] = React.useState(false)
 
   return (

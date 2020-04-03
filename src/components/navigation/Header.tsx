@@ -29,7 +29,6 @@ const BlueHeader = styled.header`
   background-color: ${props => props.theme.colors.bluewhite};
 `
 
-//TODO: Move to responsive paddings
 const PaddedDiv = styled.div`
   ${makeResponsivePadding}
   padding-top: 12px;

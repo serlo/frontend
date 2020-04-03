@@ -4,7 +4,17 @@ import { transparentize, lighten } from 'polished'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCaretDown, faBars } from '@fortawesome/free-solid-svg-icons'
 
-export default function MobileMenu(props) {
+interface MobileMenuProps {
+  links: MobileMenuLink[]
+}
+
+interface MobileMenuLink {
+  title: string
+  url: string
+  children?: MobileMenuLink[]
+}
+
+export default function MobileMenu(props: MobileMenuProps) {
   const { links } = props
   return (
     <List>
@@ -15,8 +25,14 @@ export default function MobileMenu(props) {
   )
 }
 
-function Entry(props) {
-  const { url, title, childKey, icon, isChild, children } = props
+function Entry({
+  url,
+  title,
+  childKey = undefined,
+  icon = null,
+  isChild = false,
+  children = undefined
+}) {
   const [open, setOpen] = React.useState(false)
   return (
     <>

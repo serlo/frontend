@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const StyledTH = styled.th`
+const StyledTH = styled.th`
   padding: 10px;
   border: 0;
   border-bottom-width: 3px;
@@ -8,3 +8,5 @@ export const StyledTH = styled.th`
   text-align: left;
   padding-left: 0.75rem;
 `
+
+export default StyledTH

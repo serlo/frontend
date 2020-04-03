@@ -2,7 +2,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTools } from '@fortawesome/free-solid-svg-icons'
 import styled from 'styled-components'
 
-function Ups(props) {
+interface UpsProps {
+  type: string
+}
+
+export default function Ups(props: UpsProps) {
   const { type } = props
   return (
     <UpsDiv>
@@ -27,4 +31,3 @@ const UpsDiv = styled.div`
   margin-right: 15px;
   font-size: 24px;
 `
-export default Ups

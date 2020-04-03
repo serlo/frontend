@@ -3,7 +3,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { lighten } from 'polished'
 import { faTimes, faBars } from '@fortawesome/free-solid-svg-icons'
 
-export default function MobileMenuButton(props) {
+interface MobileMenuButtonProps {
+  open: boolean
+  onClick: () => void
+}
+
+export default function MobileMenuButton(props: MobileMenuButtonProps) {
   const { open, onClick } = props
   return (
     <MenuButton onClick={onClick}>

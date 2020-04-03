@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const SpoilerContainer = styled.div<{ hide?: boolean }>`
+const SpoilerContainer = styled.div<{ hide?: boolean }>`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -8,3 +8,5 @@ export const SpoilerContainer = styled.div<{ hide?: boolean }>`
   box-sizing: border-box;
   margin-bottom: ${props => props.theme.spacing.mb.block};
 `
+
+export default SpoilerContainer
