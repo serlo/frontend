@@ -148,6 +148,9 @@ const StyledH2 = styled.h2`
   font-size: 1.66rem;
   color: ${props => props.theme.colors.brand};
   border: 0;
+  @media (min-width: ${props => props.theme.breakpoints.sm}) {
+    width: 100%;
+  }
 `
 
 const Button = styled.a`

@@ -143,7 +143,7 @@ const PartnerWrap = styled.div`
   width: 100%;
 `
 
-const StyledH2 = styled.div`
+const StyledH2 = styled.h2`
   font-weight: 400;
   font-size: 1.125rem;
   margin-bottom: 20px;
