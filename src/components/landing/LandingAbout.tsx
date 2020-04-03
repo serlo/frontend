@@ -13,7 +13,7 @@ export default function LandingAbout() {
     <>
       <AboutCol>
         <PartnerWrap>
-          <h2>Partner und Förderer</h2>
+          <StyledH2>Partner und Förderer</StyledH2>
           <PartnerLogos>
             <PartnerLogo
               src="https://packages.serlo.org/serlo-org-static-assets@1/de/home/logo-beisheim.png"
@@ -141,13 +141,14 @@ const PartnerWrap = styled.div`
   margin-top: auto;
   margin-bottom: 30px;
   width: 100%;
-
-  > h2 {
-    font-weight: 400;
-    font-size: 1.125rem;
-    margin-bottom: 20px;
-  }
 `
+
+const StyledH2 = styled.div`
+  font-weight: 400;
+  font-size: 1.125rem;
+  margin-bottom: 20px;
+`
+
 const PartnerLogos = styled.div`
   color: #fff;
   display: flex;
