@@ -13,7 +13,7 @@ import {
   faWhatsappSquare,
   faGoogle
 } from '@fortawesome/free-brands-svg-icons'
-import { StyledH2 } from '../tags/StyledH2'
+import StyledH2 from '../tags/StyledH2'
 import {
   makeMargin,
   makeGreenButton,

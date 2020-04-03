@@ -2,7 +2,11 @@ import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTools } from '@fortawesome/free-solid-svg-icons'
 
-function WipHint(props) {
+interface WipHintProps {
+  part: string
+}
+
+export default function WipHint(props: WipHintProps) {
   const { part } = props
   return (
     <Hint>
@@ -25,5 +29,3 @@ const Hint = styled.div`
 const HintText = styled.p`
   margin: 0 10px;
 `
-
-export default WipHint

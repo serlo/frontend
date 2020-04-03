@@ -49,7 +49,7 @@ import {
   renderGeogebra
 } from '../schema/articleRenderer'
 import checkArticleGuidelines from '../schema/articleGuidelines'
-import { Hints } from '../components/Hints'
+import Hints from '../components/Hints'
 import { HSpace } from '../components/content/HSpace'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAnchor } from '@fortawesome/free-solid-svg-icons'

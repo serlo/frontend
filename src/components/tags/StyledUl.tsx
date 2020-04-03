@@ -1,7 +1,11 @@
 import styled from 'styled-components'
 import { makeMargin } from '../../helper/csshelper'
 
-export const StyledUl = styled.ul<{ fullWidth?: boolean }>`
+interface StyledUlProps {
+  fullWidth?: boolean
+}
+
+const StyledUl = styled.ul<StyledUlProps>`
   ${props => (props.fullWidth ? '' : makeMargin(props))}
   margin-bottom: ${props => props.theme.spacing.mb.block};
   margin-top: 0;
@@ -21,3 +25,5 @@ export const StyledUl = styled.ul<{ fullWidth?: boolean }>`
       }
     }        
 `
+
+export default StyledUl

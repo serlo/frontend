@@ -32,9 +32,9 @@ function PageView(props) {
           {showBreadcrumbs && data.breadcrumbs && (
             <Breadcrumbs entries={data.breadcrumbs} />
           )}
-          <StyledMain>
+          <main>
             <ContentTypes data={data} />
-          </StyledMain>
+          </main>
           <HSpace amount={40} />
           <Horizon entries={horizonData} randoms={data.randoms} />
         </MaxWidthDiv>
@@ -53,8 +53,6 @@ const RelatveContainer = styled.div`
 const MaxWidthDiv = styled.div`
   max-width: 800px;
 `
-
-const StyledMain = styled.main``
 
 export async function getServerSideProps(props) {
   const data = await fetchContent('/' + props.params.slug.join('/'))

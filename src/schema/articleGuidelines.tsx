@@ -5,7 +5,7 @@ export default function checkArticleGuidelines(value: Node[]) {
   return [...checkHeadings(value), ...elementWise(value, [], value.length)]
 }
 
-function elementWise(value, path, length) {
+function elementWise(value, path, length): string[] {
   if (!value) return []
   if (Array.isArray(value)) {
     return value.flatMap((child, index) =>
@@ -63,7 +63,7 @@ function elementWise(value, path, length) {
   return [...messages, ...childmessages]
 }
 
-function checkHeadings(elements) {
+function checkHeadings(elements): string[] {
   let currentLevel = 1
   let currentIndex = 0
   const messages = []

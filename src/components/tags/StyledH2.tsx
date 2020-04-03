@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { transparentize, darken, lighten } from 'polished'
 import { makeMargin } from '../../helper/csshelper'
 
-export const StyledH2 = styled.h2`
+const StyledH2 = styled.h2`
   ${makeMargin}
   margin-top: 0;
   border-bottom: 1px solid
@@ -16,3 +16,5 @@ export const StyledH2 = styled.h2`
   line-height: 1.22;
   color: ${props => props.theme.colors.h23};
 `
+
+export default StyledH2
