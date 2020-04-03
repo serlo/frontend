@@ -23,7 +23,7 @@ import {
 } from 'slate-react'
 import { withHistory } from 'slate-history'
 
-import withArticle, { articleSchema } from '../schema/articleNormalizer'
+import { withArticle, articleSchema } from '../schema/articleNormalizer'
 import {
   renderLeaf,
   renderH,
@@ -48,7 +48,7 @@ import {
   renderTable,
   renderGeogebra
 } from '../schema/articleRenderer'
-import checkArticleGuidelines from '../schema/articleGuidelines'
+import { checkArticleGuidelines } from '../schema/articleGuidelines'
 import Hints from '../components/Hints'
 import { HSpace } from '../components/content/HSpace'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

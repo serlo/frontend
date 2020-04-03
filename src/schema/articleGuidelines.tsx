@@ -1,6 +1,6 @@
 import { Node } from 'slate'
 
-export default function checkArticleGuidelines(value: Node[]) {
+export function checkArticleGuidelines(value: Node[]) {
   if (!value) return []
   return [...checkHeadings(value), ...elementWise(value, [], value.length)]
 }

@@ -38,8 +38,8 @@ export const menudata = [
       { url: '#', title: 'Ungeprüfte Bearbeitungen' }
     ]
   },
-  { url: '#', title: 'Spenden', icon: faHandHoldingHeart },
-  { url: '#', title: 'Anmelden', icon: faUserCircle }
+  { url: '/spenden', title: 'Spenden', icon: faHandHoldingHeart },
+  { url: '/auth/login', title: 'Anmelden', icon: faUserCircle }
 ]
 
 export default menudata

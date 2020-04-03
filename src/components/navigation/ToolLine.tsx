@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const ToolLine = styled.div`
+const ToolLine = styled.div`
   margin-right: 16px;
   margin-top: -25px;
   margin-bottom: 15px;
@@ -10,3 +10,5 @@ export const ToolLine = styled.div`
   }
   justify-content: flex-end;
 `
+
+export default ToolLine

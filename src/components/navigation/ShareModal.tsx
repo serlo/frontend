@@ -22,7 +22,12 @@ import {
 
 import Modal from '../Modal'
 
-export default function ShareModal(props) {
+interface ShareModalProps {
+  open: boolean
+  onClose: () => void
+}
+
+export default function ShareModal(props: ShareModalProps) {
   const { open, onClose } = props
   if (!open) return null
   const shareInputRef = React.useRef(null)

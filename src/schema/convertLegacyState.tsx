@@ -1,6 +1,6 @@
 import * as htmlparser2 from 'htmlparser2'
 
-export default function convertLegacyState(html) {
+export function convertLegacyState(html: string) {
   const dom = htmlparser2.parseDOM(html)
   return { children: convert(dom) }
 }

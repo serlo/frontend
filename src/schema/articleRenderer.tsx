@@ -36,7 +36,7 @@ import { theme } from '../theme'
 const Math = dynamic(import('../components/content/Math'))
 const Geogebra = dynamic(import('../components/content/Geogebra'))
 
-export default function renderArticle(value: Node[]) {
+export function renderArticle(value: Node[]) {
   if (!value) return null
   const root = { children: value }
   return (
