@@ -80,7 +80,7 @@ Block
 
 ### `img`
 
-Attributes: src, alt
+Attributes: src, alt, href
 
 Block, Void
 
@@ -114,6 +114,22 @@ Block
 
 Block
 
+### `table`
+
+Block
+
+### `tr`
+
+Block
+
+### `td`
+
+Block
+
+### `th`
+
+Block
+
 ### `row`
 
 Block
@@ -128,9 +144,17 @@ Block
 
 Block
 
-###
+### `anchor`
 
-###
+Attributes: id
+
+Block, Void
+
+### `geogebra`
+
+Attributes: id
+
+Block, Void
 
 ## Constraints
 
@@ -156,7 +180,7 @@ Every void element has exactly one empty text as a child. Additional children or
 
 ### a
 
-A link must only contain text. Children that are elements will be unwrapped. A link that contains no text will be removed.
+A link must only contain text or `inline-math`. Children that are elements will be unwrapped. A link that contains no text will be removed.
 
 ### inline-math
 
@@ -168,7 +192,7 @@ A paragraph may only contain inline elements or text. Block elements will be unw
 
 ### h
 
-The level must be an integer between 1 and 5. A heading with an invalid level will be removed. A heading may only contain text. Elements will be unwrapped.
+The level must be an integer between 1 and 5. A heading with an invalid level will be removed. A heading may only contain text or `inline-math`. Other elements will be unwrapped.
 
 ### img
 
@@ -184,7 +208,7 @@ A `spoiler-container` must have exactly two children: A `spoiler-title` and a `s
 
 ### spoiler-title
 
-A `spoiler-title` may only contain text. Elements will be unwrapped.
+A `spoiler-title` may only contain text or `inline-math`. Other elements will be unwrapped.
 
 ### spoiler-body
 
@@ -196,7 +220,7 @@ A list may only contain elements of type `li`. Elements of other types will be u
 
 ### li
 
-A list item may only contain inline elements or text. Block elements will be unwrapped.
+A list item may only contain elements of type `p`, `img`, `math` or another `ul` or `ol` of the same parent type. If the `li` contains a nested list, this is only allowed for two levels and the first child must be a `p`, if not, an empty `p` will be added. Other elements will be unwrapped. Text will be wrapped in `p`.
 
 ### row
 
@@ -209,6 +233,30 @@ The column must have a size attribute. This attribute must be an integer greater
 ### important
 
 A important container may only contain elements of type `p`, `img`, `math`, `ul`, `ol`, `row`. Other elements will be unwrapped. Text will be wrapped in `p`.
+
+### table
+
+A table may only contain elements of type `tr`. Other elements will be unwrapped. Text will be wrapped in `tr`.
+
+### tr
+
+A table row may only contain `th` or `td`. Other elements will be unwrapped. Text will be wrapped in `td`.
+
+### th
+
+A table header may only contain `p` or `math`. Other elements will be unwrapped. Text will be wrapped in `p`.
+
+### td
+
+Table data may only contain `p` or `math`. Other elements will be unwrapped. Text will be wrapped in `p`.
+
+### anchor
+
+No additional contraints.
+
+### geogebra
+
+No additional constraints.
 
 ### Root
 

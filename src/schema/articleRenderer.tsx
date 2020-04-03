@@ -1,16 +1,9 @@
 import React from 'react'
-import { Node, Path, Element } from 'slate'
+import { Node, Element } from 'slate'
 import dynamic from 'next/dynamic'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faExternalLinkAlt,
-  faCaretDown,
-  faCaretRight
-} from '@fortawesome/free-solid-svg-icons'
-
 import { ImgCentered } from '../components/content/ImgCentered'
-import { MathCentered } from '../components/content/MathCentered'
+import { MathWrapper } from '../components/content/MathWrapper'
 import { LayoutRow } from '../components/content/LayoutRow'
 import { Col } from '../components/content/Col'
 import { Important } from '../components/content/Important'
@@ -28,8 +21,20 @@ import { StyledImg } from '../components/tags/StyledImg'
 import { SpoilerTitle } from '../components/content/SpoilerTitle'
 import { SpoilerBody } from '../components/content/SpoilerBody'
 import { SpoilerContainer } from '../components/content/SpoilerContainer'
+import { StyledTable } from '../components/tags/StyledTable'
+import { StyledTR } from '../components/tags/StyledTR'
+import { StyledTH } from '../components/tags/StyledTH'
+import { StyledTD } from '../components/tags/StyledTD'
+import { TableWrapper } from '../components/content/TableWrapper'
+import { SpoilerToggle } from '../components/content/SpoilerToggle'
+import { ExternalLink } from '../components/content/ExternalLink'
+import { GeogebraWrapper } from '../components/content/GeogebraWrapper'
+
+import SpecialCSS from '../components/content/SpecialCSS'
+import { theme } from '../theme'
 
 const Math = dynamic(import('../components/content/Math'))
+const Geogebra = dynamic(import('../components/content/Geogebra'))
 
 export interface ArticleProps {
   value: Node[]
@@ -38,7 +43,9 @@ export interface ArticleProps {
 export default function Article(props: ArticleProps) {
   const { value } = props
   const root = { children: value }
-  return <>{value.map((_, index) => render(root, [index]))}</>
+  return (
+    <SpecialCSS>{value.map((_, index) => render(root, [index]))}</SpecialCSS>
+  )
 }
 
 function render(value, path = []) {
@@ -62,17 +69,18 @@ function render(value, path = []) {
   return renderLeaf({
     leaf: currentNode,
     attributes: { key },
-    children: currentNode.text
+    children: currentNode.text,
+    readonly: true
   })
 }
 
 export const articleColors = {
-  blue: '#1794c1',
-  green: '#469a40',
-  orange: '#ff6703'
+  blue: theme.colors.blue,
+  green: theme.colors.green,
+  orange: theme.colors.orange
 }
 
-export function renderLeaf({ leaf, attributes, children }) {
+export function renderLeaf({ leaf, attributes, children, readonly = false }) {
   const styles: any = {}
   if (leaf.color) {
     styles.color = articleColors[leaf.color]
@@ -82,6 +90,10 @@ export function renderLeaf({ leaf, attributes, children }) {
   }
   if (leaf.em) {
     styles.fontStyle = 'italic'
+  }
+  // avoid rendering spans without styles, assume that children is text
+  if (readonly && Object.keys(styles).length === 0) {
+    return children
   }
   return (
     <span {...attributes} style={styles}>
@@ -97,7 +109,7 @@ const renderer = {
   h: renderH,
   img: renderImg,
   math: renderMath,
-  'spoiler-container': renderSpoiler,
+  'spoiler-container': renderSpoilerForEndUser,
   'spoiler-title': ({ children }) => children,
   'spoiler-body': renderSpoilerBody,
   ul: renderUl,
@@ -105,7 +117,13 @@ const renderer = {
   li: renderLi,
   row: renderRow,
   col: renderCol,
-  important: renderImportant
+  important: renderImportant,
+  anchor: renderAnchor,
+  table: renderTable,
+  tr: renderTR,
+  th: renderTH,
+  td: renderTD,
+  geogebra: renderGeogebra
 }
 
 function renderElement(props) {
@@ -113,13 +131,6 @@ function renderElement(props) {
 }
 
 const nowrap = comp => comp
-
-const externalIndicator = (
-  <>
-    {' '}
-    <FontAwesomeIcon icon={faExternalLinkAlt} size="xs" />
-  </>
-)
 
 export function renderA({
   element,
@@ -130,7 +141,7 @@ export function renderA({
   return (
     <StyledA href={element.href} {...attributes}>
       {children}
-      {element.href.startsWith('http') && wrapExtInd(externalIndicator)}
+      {element.href.startsWith('http') && wrapExtInd(<ExternalLink />)}
     </StyledA>
   )
 }
@@ -139,35 +150,8 @@ export function renderInlineMath({ element, attributes = {} }) {
   return <Math formula={element.formula} inline {...attributes} />
 }
 
-export function renderP({
-  attributes = {},
-  children = null,
-  value = null,
-  path = []
-}) {
-  let full = false
-  let halfslim = false
-
-  if (value) {
-    const parent = Node.parent(value, path)
-    full = parent.type === 'li'
-
-    // check if next block is list
-    const myIndex = path[path.length - 1]
-    halfslim = false
-    if (myIndex < parent.children.length - 1) {
-      const next = parent.children[myIndex + 1]
-      if (next.type == 'ul' || next.type == 'ol') {
-        halfslim = true
-      }
-    }
-  }
-
-  return (
-    <StyledP {...attributes} full={full} slim={full} halfslim={halfslim}>
-      {children}
-    </StyledP>
-  )
+export function renderP({ attributes = {}, children = null }) {
+  return <StyledP {...attributes}>{children}</StyledP>
 }
 
 const StyledHx = {
@@ -189,14 +173,27 @@ export function renderImg({
   children = null,
   wrapImg = nowrap
 }) {
+  function wrapInA(comp) {
+    if (element.href) {
+      // needs investigation if this could be simplified
+      return (
+        <a href={element.href} style={{ maxWidth: '100%', display: 'block' }}>
+          {comp}
+        </a>
+      )
+    }
+    return comp
+  }
   return (
     <ImgCentered {...attributes}>
       {wrapImg(
-        <StyledImg
-          src={element.src}
-          alt={element.alt || 'Bild'}
-          maxWidth={element.maxWidth ? element.maxWidth : 0}
-        ></StyledImg>
+        wrapInA(
+          <StyledImg
+            src={element.src}
+            alt={element.alt || 'Bild'}
+            maxWidth={element.maxWidth ? element.maxWidth : 0}
+          ></StyledImg>
+        )
       )}
       {children}
     </ImgCentered>
@@ -209,54 +206,63 @@ export function renderMath({
   children = null,
   wrapFormula = nowrap
 }) {
+  let formula = element.formula
+  let bigger = false
+  if (
+    element.formula.includes('\\int') ||
+    element.formula.includes('frac') ||
+    element.formula.includes('^')
+  ) {
+    bigger = true
+  }
+  if (
+    formula.includes('\\begin{aligned}') ||
+    formula.includes('\\begin{array}')
+  ) {
+    formula = '\\def\\arraystretch{1.6} ' + formula
+  }
+
   return (
-    <MathCentered {...attributes}>
-      {wrapFormula(<Math formula={element.formula} />)}
+    <MathWrapper centered={!element.alignLeft} bigger={bigger} {...attributes}>
+      {wrapFormula(<Math formula={formula} />)}
       {children}
-    </MathCentered>
+    </MathWrapper>
   )
 }
 
-export function renderSpoiler({ attributes = {}, children }) {
-  return <Spoiler {...attributes} body={children[1]} title={children[0]} />
+// output only
+function renderSpoilerForEndUser({ attributes = {}, children }) {
+  return (
+    <SpoilerForEndUser {...attributes} title={children[0]} body={children[1]} />
+  )
 }
 
-function Spoiler(props) {
+function SpoilerForEndUser(props) {
   const { body, title } = props
   const [open, setOpen] = React.useState(false)
-  return (
-    <SpoilerContainer>
-      {renderSpoilerTitle({
-        attributes: {
-          onClick: () => setOpen(!open),
-          role: 'button'
-        },
-        children: (
-          <>
-            {renderSpoilerToggle(open)}
-            {title}
-          </>
-        )
-      })}
-      {open && body}
-    </SpoilerContainer>
-  )
+  return renderSpoilerContainer({
+    children: (
+      <>
+        {renderSpoilerTitle({
+          attributes: {
+            onClick: () => setOpen(!open),
+            role: 'button'
+          },
+          children: (
+            <>
+              <SpoilerToggle open={open} />
+              {title}
+            </>
+          )
+        })}
+        {open && body}
+      </>
+    )
+  })
 }
 
 export function renderSpoilerContainer({ attributes = {}, children = null }) {
   return <SpoilerContainer {...attributes}>{children}</SpoilerContainer>
-}
-
-export function renderSpoilerToggle(open) {
-  return (
-    <>
-      {open ? (
-        <FontAwesomeIcon icon={faCaretDown} />
-      ) : (
-        <FontAwesomeIcon icon={faCaretRight} />
-      )}{' '}
-    </>
-  )
 }
 
 export function renderSpoilerTitle({ attributes = {}, children = null }) {
@@ -267,41 +273,67 @@ export function renderSpoilerBody({ attributes = {}, children = null }) {
   return <SpoilerBody {...attributes}>{children}</SpoilerBody>
 }
 
-export function renderUl({ attributes, children }) {
+export function renderUl({ attributes = {}, children = null }) {
   return <StyledUl {...attributes}>{children}</StyledUl>
 }
 
-export function renderOl({ attributes, children }) {
+export function renderOl({ attributes = {}, children = null }) {
   return <StyledOl {...attributes}>{children}</StyledOl>
 }
 
-export function renderLi({ attributes, children }) {
+export function renderLi({ attributes = {}, children = null }) {
   return <StyledLi {...attributes}>{children}</StyledLi>
+}
+
+export function renderTable({ attributes = {}, children = null }) {
+  const { key, ...otherAttribs } = attributes as any
+  return (
+    <TableWrapper key={key}>
+      <StyledTable>
+        <tbody {...otherAttribs}>{children}</tbody>
+      </StyledTable>
+    </TableWrapper>
+  )
+}
+
+export function renderTR({ attributes = {}, children = null }) {
+  return <StyledTR {...attributes}>{children}</StyledTR>
+}
+
+export function renderTH({ attributes = {}, children = null }) {
+  return <StyledTH {...attributes}>{children}</StyledTH>
+}
+
+export function renderTD({ attributes = {}, children = null }) {
+  return <StyledTD {...attributes}>{children}</StyledTD>
 }
 
 export function renderRow({ attributes = {}, children = null }) {
   return <LayoutRow {...attributes}>{children}</LayoutRow>
 }
 
-export function renderCol({
-  element,
-  attributes = {},
-  children = null,
-  value,
-  path
-}) {
-  const parent = Path.parent(path)
-  let sizeSum = 0
-  for (const [child] of Node.children(value, parent)) {
-    sizeSum += child.size
-  }
+export function renderCol({ element, attributes = {}, children = null }) {
   return (
-    <Col {...attributes} cSize={(element.size / sizeSum) * 24}>
+    <Col {...attributes} cSize={element.size}>
       {children}
     </Col>
   )
 }
 
-export function renderImportant({ attributes, children }) {
+export function renderImportant({ attributes = {}, children = null }) {
   return <Important {...attributes}>{children}</Important>
+}
+
+export function renderGeogebra({ element, attributes = {}, children = null }) {
+  return (
+    <GeogebraWrapper {...attributes}>
+      <Geogebra id={element.id} />
+      {children}
+    </GeogebraWrapper>
+  )
+}
+
+// output only
+function renderAnchor({ element, attributes = {} }) {
+  return <a id={element.id} {...attributes} />
 }

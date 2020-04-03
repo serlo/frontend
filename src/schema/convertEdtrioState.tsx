@@ -1,3 +1,8 @@
+import { converter } from '../../external/markdown'
+import convertLegacyState from './convertLegacyState'
+
+const colors = ['blue', 'green', 'orange']
+
 export function convertEdtrioState(state) {
   return { children: convert(state) }
 }
@@ -25,6 +30,7 @@ export function convert(node) {
         type: 'img',
         src: node.state.src,
         alt: node.state.alt,
+        maxWidth: node.state.maxWidth,
         children: [{ text: '' }]
       }
     ]
@@ -74,10 +80,17 @@ export function convert(node) {
       {
         type: 'row',
         children: node.state.map(child => {
+          const children = convert(child.child)
+          // compat: math align left
+          children.forEach(child => {
+            if (child.type === 'math') {
+              child.alignLeft = true
+            }
+          })
           return {
             type: 'col',
             size: child.width,
-            children: convert(child.child)
+            children
           }
         })
       }
@@ -103,13 +116,109 @@ export function convert(node) {
       }
     ]
   }
-
-  const type = node.type
-  if (type === 'p') {
+  if (plugin === 'table') {
+    const html = converter.makeHtml(node.state)
+    return convertLegacyState(html).children
+  }
+  if (plugin === 'video') {
     return [
       {
         type: 'p',
-        children: convert(node.children)
+        children: [{ text: '[Video]' }]
+      }
+    ]
+  }
+  if (plugin === 'anchor') {
+    return [
+      {
+        type: 'anchor',
+        id: node.state,
+        children: [{ text: '' }]
+      }
+    ]
+  }
+  if (plugin === 'geogebra') {
+    // compat: full url given
+    let id = node.state
+    const match = /geogebra\.org\/m\/(.+)/.exec(id)
+    if (match) {
+      id = match[1]
+    }
+    return [{ type: 'geogebra', id, children: [{ text: '' }] }]
+  }
+
+  const type = node.type
+  if (type === 'p') {
+    // compat unwrap math from p
+    const children = convert(node.children)
+    if (children.length === 1 && children[0].type === 'math') {
+      return children
+    }
+    // compat handle newlines
+    if (
+      children.some(
+        child =>
+          (child.text && child.text.includes('\n')) ||
+          child.type === 'inline-math'
+      )
+    ) {
+      const splitted = children.flatMap(child => {
+        if (child.text && child.text.includes('\n')) {
+          const parts = child.text.split('\n').flatMap(text => [
+            {
+              text
+            },
+            '##break##'
+          ])
+          parts.pop()
+          return parts
+        }
+        return child
+      })
+      let current = []
+      let result = []
+      if (splitted[0] === '##break##') splitted.shift()
+      if (splitted[splitted.length - 1] !== '##break##')
+        splitted.push('##break##')
+      splitted.forEach((el, i) => {
+        if (el === '##break##') {
+          result.push({
+            type: 'p',
+            children: current
+          })
+          current = []
+        } else {
+          current.push(el)
+        }
+      })
+      return result
+    }
+    const math = children.filter(
+      child => child.type === 'math' || child.type === 'inline-math'
+    )
+    if (math.length === 1) {
+      if (
+        children.every(
+          child =>
+            child.type === 'math' ||
+            child.type === 'inline-math' ||
+            child.text === ''
+        )
+      ) {
+        return [
+          {
+            type: 'math',
+            formula: math[0].formula,
+            alignLeft: true,
+            children: [{ text: '' }]
+          }
+        ]
+      }
+    }
+    return [
+      {
+        type: 'p',
+        children
       }
     ]
   }
@@ -136,7 +245,7 @@ export function convert(node) {
       {
         type: 'math',
         formula: node.src,
-        children: convert(node.children)
+        children: [{ text: '' }]
       }
     ]
   }
@@ -145,7 +254,7 @@ export function convert(node) {
       {
         type: 'inline-math',
         formula: node.src,
-        children: convert(node.children)
+        children: [{ text: '' }]
       }
     ]
   }
@@ -153,6 +262,14 @@ export function convert(node) {
     return [
       {
         type: 'ul',
+        children: convert(node.children)
+      }
+    ]
+  }
+  if (type === 'ordered-list') {
+    return [
+      {
+        type: 'ol',
         children: convert(node.children)
       }
     ]
@@ -166,10 +283,25 @@ export function convert(node) {
     ]
   }
   if (type === 'list-item-child') {
-    return convert(node.children)
+    // compat: don't wrap ps
+    const children = convert(node.children)
+    if (
+      children.filter(
+        child =>
+          child.type === 'inline-math' ||
+          child.type === 'a' ||
+          child.text !== undefined
+      ).length === 0
+    ) {
+      return children
+    }
+    return [{ type: 'p', children }]
   }
 
   if (node.text !== undefined) {
+    if (node.color) {
+      node.color = colors[node.color]
+    }
     return [node]
   }
 

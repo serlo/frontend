@@ -33,11 +33,39 @@ function convert(node) {
           ]
         }
         if (/^c[\d]+$/.test(className)) {
+          let children = convert(node.children)
+          if (children.length === 0) {
+            children = [{ type: 'p', children: [{ text: '' }] }]
+          }
+          // compat: wrap every inline child in p, grouped
+          children = children.reduce((acc, val) => {
+            if (
+              val.type === 'inline-math' ||
+              val.type === 'a' ||
+              val.text !== undefined
+            ) {
+              let last = undefined
+              if (acc.length > 0) {
+                last = acc[acc.length - 1]
+              }
+              if (last && last.type === 'p') {
+                last.children.push(val)
+                return acc
+              } else {
+                acc.push({ type: 'p', children: [val] })
+                return acc
+              }
+            } else {
+              // block element
+              acc.push(val)
+              return acc
+            }
+          }, [])
           return [
             {
               type: 'col',
               size: parseInt(className.substring(1)),
-              children: convert(node.children)
+              children
             }
           ]
         }
@@ -53,7 +81,7 @@ function convert(node) {
           return [
             {
               type: 'spoiler-title',
-              children: convert(node.children[1])
+              children: convert(node.children.slice(1))
             }
           ]
         }
@@ -77,16 +105,25 @@ function convert(node) {
             }
           ]
         }
+        if (className === 'table-responsive') {
+          return convert(node.children)
+        }
       }
     }
     if (node.name === 'span') {
       if (node.attribs) {
         const className = node.attribs.class
         if (className === 'mathInline') {
-          const formula = node.children[0].data.substring(
-            2,
-            node.children[0].data.length - 2
-          )
+          // compat nested math element in table - wtf??
+          if (!node.children[0].data) {
+            return convert(node.children)
+          }
+          const formula = node.children[0].data
+            .substring(2, node.children[0].data.length - 2)
+            .split('&lt;')
+            .join('<')
+            .split('&nbsp;')
+            .join(' ')
           return [
             {
               type: 'inline-math',
@@ -96,11 +133,15 @@ function convert(node) {
           ]
         }
         if (className === 'math') {
-          const formula = node.children[0].data.substring(
-            2,
-            node.children[0].data.length - 2
-          )
-          return [{ type: 'math', formula, children: [{ text: '' }] }]
+          const formula = node.children[0].data
+            .substring(2, node.children[0].data.length - 2)
+            .split('&lt;')
+            .join('<')
+            .split('&nbsp;')
+            .join(' ')
+          return [
+            { type: 'math', formula, alignLeft: true, children: [{ text: '' }] }
+          ]
         }
       }
     }
@@ -115,9 +156,53 @@ function convert(node) {
         return children
       }
       // compat: unwrap formulas from p
-      if (children.length === 1 && children[0].type === 'math') {
-        return children
+      const maths = children.filter(child => child.type === 'math')
+      if (maths.length >= 1) {
+        let current = []
+        let result = []
+        children.forEach(child => {
+          if (child.type === 'math') {
+            if (current.length > 0) {
+              result.push({
+                type: 'p',
+                children: current
+              })
+              current = []
+            }
+            result.push(child)
+          } else {
+            current.push(child)
+          }
+        })
+        if (current.length > 0) {
+          result.push({
+            type: 'p',
+            children: current
+          })
+        }
+        return result
       }
+      // compat: convert single inline-math in paragraph to block formula
+      const inlineMaths = children.filter(child => child.type === 'inline-math')
+      if (inlineMaths.length === 1) {
+        if (
+          children.every(
+            child =>
+              child.type === 'inline-math' ||
+              (child.text !== undefined && child.text.trim() == '')
+          )
+        ) {
+          return [
+            {
+              type: 'math',
+              alignLeft: true,
+              formula: inlineMaths[0].formula,
+              children: [{ text: '' }]
+            }
+          ]
+        }
+      }
+
       return [
         {
           type: 'p',
@@ -152,9 +237,54 @@ function convert(node) {
       ]
     }
     if (node.name === 'li') {
+      // compat: wrap li in p only if there are only inlines
+      let children = convert(node.children)
+      if (
+        children.filter(
+          child =>
+            child.text === undefined &&
+            child.type !== 'a' &&
+            child.type !== 'inline-math'
+        ).length == 0
+      ) {
+        children = [{ type: 'p', children }]
+      }
       return [
         {
           type: 'li',
+          children
+        }
+      ]
+    }
+    if (node.name === 'table') {
+      return [{ type: 'table', children: convert(node.children) }]
+    }
+    if (node.name === 'thead') {
+      return convert(node.children)
+    }
+    if (node.name === 'tbody') {
+      return convert(node.children)
+    }
+    if (node.name === 'tr') {
+      return [
+        {
+          type: 'tr',
+          children: convert(node.children)
+        }
+      ]
+    }
+    if (node.name === 'th') {
+      return [
+        {
+          type: 'th',
+          children: convert(node.children)
+        }
+      ]
+    }
+    if (node.name === 'td') {
+      return [
+        {
+          type: 'td',
           children: convert(node.children)
         }
       ]
@@ -206,10 +336,18 @@ function convert(node) {
       ]
     }
     if (node.name === 'a') {
-      const children = convert(node.children)
-      // compat: don't link images (for now)
+      let children = convert(node.children)
+      // compat: link images by tag
       if (children.length === 1 && children[0].type === 'img') {
+        children[0].href = node.attribs.href
         return children
+      }
+      // compat: handle empty tag
+      if (
+        children.length == 0 ||
+        (children.length == 1 && children[0].text === '')
+      ) {
+        children = [{ text: node.attribs.href }]
       }
       return [
         {
@@ -255,6 +393,8 @@ function convert(node) {
       .join('')
       .split('\n')
       .join('')
+      .split('&lt;')
+      .join('<')
     // compat: remove empty text
     if (!text) return []
     return [{ text }]

@@ -1,15 +1,15 @@
 import styled from 'styled-components'
+import { darken } from 'polished'
 
 export const SpoilerTitle = styled.div`
-  background-color: transparent;
   margin: 0;
   padding: 0;
-  margin-left: 15px;
-  margin-right: 15px;
   font-size: 1.125rem;
   line-height: 1.3;
-  padding: 2px;
+  padding: 10px 15px;
   cursor: pointer;
-  color: black;
   text-align: left;
+  color: ${props => props.theme.colors.dark1};
+  background-color: ${props =>
+    darken(0.04, props.theme.colors.lightBackground)};
 `

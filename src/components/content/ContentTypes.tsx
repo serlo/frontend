@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faShareAlt, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
+import { faShareAlt } from '@fortawesome/free-solid-svg-icons'
 
 import ShareModal from '../navigation/ShareModal'
 
@@ -18,7 +18,7 @@ import { ToolLineButton } from '../navigation/ToolLineButton'
 import { createEditor, Editor } from 'slate'
 import withArticle from '../../schema/articleNormalizer'
 import Article from '../../schema/articleRenderer'
-import Create from '../../create/create'
+const Create = dynamic(import('../../create/create'))
 import Toolbox from '../navigation/Toolbox'
 import { convertEdtrioState } from '../../schema/convertEdtrioState'
 import convertLegacyState from '../../schema/convertLegacyState'
@@ -26,10 +26,11 @@ import checkArticleGuidelines from '../../schema/articleGuidelines'
 import { Hints } from '../Hints'
 import { HSpace } from './HSpace'
 import { StyledP } from '../tags/StyledP'
+import dynamic from 'next/dynamic'
 
 export default function ContentTypes(props) {
   const { data } = props
-  if (data.contentType === 'article' || data.contentType === 'Page revision') {
+  if (data.contentType === 'Article' || data.contentType === 'Page') {
     return <RenderArticle content={data.data} />
   }
   if (data.contentType === 'topic' || data.contentType === 'subject') {
@@ -85,25 +86,30 @@ function RenderArticle({ content }) {
   const [value, setValue] = React.useState(undefined)
   const [editMode, setEditMode] = React.useState(false)
   if (!value && content.edtrio) {
-    const edtrio = JSON.parse(content.edtrio)
+    const edtrio = content.edtrio
     const value = convertEdtrioState(edtrio)
-    const editor = withArticle(createEditor())
-    editor.children = value.children
-    Editor.normalize(editor, { force: true })
-    setValue(editor.children)
+    //const editor = withArticle(createEditor())
+    //editor.children = value.children
+    //Editor.normalize(editor, { force: true })
+    setValue(value.children)
   }
   if (!value && content.legacy) {
     const value: any = convertLegacyState(content.legacy)
-    const editor = withArticle(createEditor())
-    editor.children = value.children
-    Editor.normalize(editor, { force: true })
-    setValue(editor.children)
+    //const editor = withArticle(createEditor())
+    //editor.children = value.children
+    //const starttime = Date.now()
+    //Editor.normalize(editor, { force: true })
+    //console.log('normalize time', Date.now() - starttime)
+    setValue(value.children)
   }
   if (editMode) {
     if (value.length < 1 || value[0].type !== 'h' || value[0].level !== 1) {
+      const editor = withArticle(createEditor())
+      editor.children = value
+      Editor.normalize(editor, { force: true })
       setValue([
         { type: 'h', level: 1, children: [{ text: content.title }] },
-        ...value,
+        ...editor.children,
         { type: 'p', children: [{ text: '' }] }
       ])
     }
@@ -125,37 +131,33 @@ function RenderArticle({ content }) {
   }
   return (
     <>
-      <DesktopOnly>
-        <WipHint part="Desktop-Ansicht" />
-      </DesktopOnly>
-      {content.breadcrumbs && <Breadcrumbs entries={content.breadcrumbs} />}
       <StyledH1 displayMode>{content.title}</StyledH1>
       <ToolLine>
-        {content.legacy && (
-          <LegacyIndicator title="Inhalt im alten Format">L</LegacyIndicator>
-        )}
         <ToolLineButton onClick={() => setOpen(true)}>
           <FontAwesomeIcon icon={faShareAlt} size="1x" /> Teilen
         </ToolLineButton>
-        <ToolLineButton
+        {/* <ToolLineButton
           onClick={() => {
             setEditMode(true)
           }}
         >
           <FontAwesomeIcon icon={faPencilAlt} size="1x" /> Bearbeiten
-        </ToolLineButton>
+        </ToolLineButton> */}
         {<ShareModal open={open} onClose={() => setOpen(false)} />}
       </ToolLine>
-
+      <Article value={value} />
+      <HSpace amount={20} />
+      <ToolLine>
+        <ToolLineButton onClick={() => setOpen(true)}>
+          <FontAwesomeIcon icon={faShareAlt} size="1x" /> Teilen
+        </ToolLineButton>
+      </ToolLine>
       <Toolbox
         onEdit={() => {
           setEditMode(true)
         }}
       />
-      <Article value={value} />
-      <HSpace amount={20} />
       <Hints hints={checkArticleGuidelines(value)} />
-      <HSpace amount={40} />
     </>
   )
 }

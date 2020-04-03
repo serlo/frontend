@@ -6,6 +6,7 @@ export interface StyledImgProps {
 }
 
 export const StyledImg = styled.img<StyledImgProps>`
+  max-width: 100%;
   max-width: ${props => (props.maxWidth > 0 ? props.maxWidth + 'px' : '')};
   ${props =>
     props.inline

@@ -19,11 +19,11 @@ import {
   withReact,
   useEditor,
   ReactEditor,
-  useSlate
+  useSelected
 } from 'slate-react'
 import { withHistory } from 'slate-history'
 
-import withArticle, { onlySomeBlocksAllowed } from '../schema/articleNormalizer'
+import withArticle, { articleSchema } from '../schema/articleNormalizer'
 import {
   renderLeaf,
   renderH,
@@ -39,14 +39,22 @@ import {
   renderCol,
   renderSpoilerContainer,
   renderSpoilerTitle,
-  renderSpoilerToggle,
   renderSpoilerBody,
   renderA,
-  articleColors
+  articleColors,
+  renderTR,
+  renderTH,
+  renderTD,
+  renderTable,
+  renderGeogebra
 } from '../schema/articleRenderer'
 import checkArticleGuidelines from '../schema/articleGuidelines'
 import { Hints } from '../components/Hints'
 import { HSpace } from '../components/content/HSpace'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAnchor } from '@fortawesome/free-solid-svg-icons'
+import SpecialCSS from '../components/content/SpecialCSS'
+import { SpoilerToggle } from '../components/content/SpoilerToggle'
 
 const ModalContext = React.createContext<any>({})
 
@@ -55,17 +63,19 @@ export default function Create({ value, onChange }) {
     () => withPlugin(withArticle(withHistory(withReact(createEditor())))),
     []
   )
+
   const [modal, setModal] = React.useState(null)
   const [hints, setHints] = React.useState(() => checkArticleGuidelines(value))
+
+  const renderElementWithEditor = React.useCallback(
+    props => renderElement(props, editor),
+    [editor]
+  )
+
+  const modalContext = React.useRef({ setModal })
+
   return (
-    <ModalContext.Provider
-      value={{
-        doEdit: comp => {
-          setModal(comp)
-        },
-        closeModal: () => setModal(null)
-      }}
-    >
+    <ModalContext.Provider value={modalContext.current}>
       <Slate
         editor={editor}
         value={value}
@@ -76,7 +86,14 @@ export default function Create({ value, onChange }) {
       >
         <Toolbar />
         <Container>
-          {<Editable renderElement={renderElement} renderLeaf={renderLeaf} />}
+          <SpecialCSS>
+            {
+              <Editable
+                renderElement={renderElementWithEditor}
+                renderLeaf={renderLeaf}
+              />
+            }
+          </SpecialCSS>
         </Container>
         <Modal
           isOpen={modal !== null}
@@ -93,24 +110,25 @@ export default function Create({ value, onChange }) {
   )
 }
 
+function getNextElementPath(editor, p, block = true) {
+  let path = p.slice(0)
+  let node = Node.get(editor, path)
+  while (
+    path.length > 0 &&
+    (!Element.isElement(node) || editor.isInline(node) === block)
+  ) {
+    path = Path.parent(path)
+    node = Node.get(editor, path)
+  }
+  return path
+}
+
 function Toolbar() {
   // Toolbar sollte Elemente nur nach ganz bestimmten Kriterien anzeigen
   const editor = useEditor()
   const { selection } = editor
 
   // Zeige nur sinnvolle Optionen an
-  function getNextElementPath(p, block = true) {
-    let path = p.slice(0)
-    let node = Node.get(editor, path)
-    while (
-      path.length > 0 &&
-      (!Element.isElement(node) || editor.isInline(node) === block)
-    ) {
-      path = Path.parent(path)
-      node = Node.get(editor, path)
-    }
-    return path
-  }
   const selectType = []
   let selected = ''
   let selectBoxPath = []
@@ -118,38 +136,52 @@ function Toolbar() {
   let addCurrentNode
   let addCurrentPath
   if (selection) {
-    const anchorParentPath = getNextElementPath(selection.anchor.path)
-    const focusParentPath = getNextElementPath(selection.focus.path)
+    const anchorParentPath = getNextElementPath(editor, selection.anchor.path)
+    const focusParentPath = getNextElementPath(editor, selection.focus.path)
     if (Path.equals(anchorParentPath, focusParentPath)) {
       selectBoxPath = anchorParentPath
       let parent = Path.parent(anchorParentPath)
       let parentType =
         parent.length === 0 ? '#root' : Node.get(editor, parent).type
-      const allowed = onlySomeBlocksAllowed.filter(
-        obj => obj.parent == parentType
-      )
+      const allowed = articleSchema[parentType]
       const node = Node.get(editor, anchorParentPath)
       if (node.level === 1) {
         selectType.push('h1')
         selected = 'h1'
       } else {
-        if (allowed.length > 0) {
-          if (allowed[0].children.includes('p')) selectType.push('p')
-          if (allowed[0].children.includes('important'))
+        if (allowed) {
+          if (allowed.children.includes('p')) selectType.push('p')
+          if (allowed.children.includes('important'))
             selectType.push('important')
-          if (allowed[0].children.includes('h')) {
+          if (allowed.children.includes('h')) {
             selectType.push('h2', 'h3', 'h4', 'h5')
           }
         }
         selected = node.type + (node.level || '')
       }
-      if (Range.isCollapsed(selection) && allowed.length > 0) {
+      if (Range.isCollapsed(selection) && allowed) {
         // was darf man hier hinzufügen?
-        ;['img', 'math', 'spoiler-container', 'ul', 'ol', 'row'].forEach(
-          key => {
-            if (allowed[0].children.includes(key)) allowedAdd.push(key)
+        ;[
+          'img',
+          'math',
+          'spoiler-container',
+          'ul',
+          'ol',
+          'row',
+          'anchor',
+          'table',
+          'geogebra'
+        ].forEach(key => {
+          if (allowed.children.includes(key)) {
+            if (key === 'ul' || key === 'ol') {
+              // check level
+              if (anchorParentPath.length > 3) {
+                return
+              }
+            }
+            allowedAdd.push(key)
           }
-        )
+        })
         addCurrentNode = Node.get(editor, anchorParentPath)
         addCurrentPath = anchorParentPath
       }
@@ -187,8 +219,16 @@ function Toolbar() {
   let inLink = false
   let linkPath = []
   if (selection) {
-    const inlineAnchorPath = getNextElementPath(selection.anchor.path, false)
-    const inlineFocusPath = getNextElementPath(selection.focus.path, false)
+    const inlineAnchorPath = getNextElementPath(
+      editor,
+      selection.anchor.path,
+      false
+    )
+    const inlineFocusPath = getNextElementPath(
+      editor,
+      selection.focus.path,
+      false
+    )
     if (
       inlineAnchorPath.length > 0 &&
       Path.equals(inlineAnchorPath, inlineFocusPath) &&
@@ -217,7 +257,10 @@ function Toolbar() {
           e.preventDefault()
           Transforms.splitNodes(editor)
           if (key in defaultInserts) {
-            Transforms.insertNodes(editor, defaultInserts[key])
+            Transforms.insertNodes(
+              editor,
+              JSON.parse(JSON.stringify(defaultInserts[key]))
+            )
           }
           if (
             addCurrentNode.type === 'p' &&
@@ -317,6 +360,7 @@ const defaultInserts = {
   },
   math: {
     type: 'math',
+    formula: '',
     children: [{ text: '' }]
   },
   'spoiler-container': {
@@ -342,7 +386,12 @@ const defaultInserts = {
     children: [
       {
         type: 'li',
-        children: [{ text: '' }]
+        children: [
+          {
+            type: 'p',
+            children: [{ text: '' }]
+          }
+        ]
       }
     ]
   },
@@ -351,7 +400,12 @@ const defaultInserts = {
     children: [
       {
         type: 'li',
-        children: [{ text: '' }]
+        children: [
+          {
+            type: 'p',
+            children: [{ text: '' }]
+          }
+        ]
       }
     ]
   },
@@ -379,6 +433,60 @@ const defaultInserts = {
         ]
       }
     ]
+  },
+  anchor: {
+    type: 'anchor',
+    id: '',
+    children: [{ text: '' }]
+  },
+  table: {
+    type: 'table',
+    children: [
+      {
+        type: 'tr',
+        children: [
+          {
+            type: 'th',
+            children: [{ text: 'Titel 1' }]
+          },
+          {
+            type: 'th',
+            children: [{ text: 'Titel 2' }]
+          }
+        ]
+      },
+      {
+        type: 'tr',
+        children: [
+          {
+            type: 'td',
+            children: [{ text: '' }]
+          },
+          {
+            type: 'td',
+            children: [{ text: '' }]
+          }
+        ]
+      },
+      {
+        type: 'tr',
+        children: [
+          {
+            type: 'td',
+            children: [{ text: '' }]
+          },
+          {
+            type: 'td',
+            children: [{ text: '' }]
+          }
+        ]
+      }
+    ]
+  },
+  geogebra: {
+    type: 'geogebra',
+    id: '',
+    children: [{ text: '' }]
   }
 }
 
@@ -425,6 +533,9 @@ function buildAdd(allowed, handler) {
       {buildButton('ul', 'Liste')}
       {buildButton('ol', 'Aufzählung')}
       {buildButton('row', 'Spalten')}
+      {buildButton('table', 'Tabelle')}
+      {buildButton('anchor', 'Anchor')}
+      {buildButton('geogebra', 'Applet')}
     </>
   )
 }
@@ -438,11 +549,15 @@ const simpleRenderer = {
   ul: renderUl,
   ol: renderOl,
   li: renderLi,
-  important: renderImportant
+  important: renderImportant,
+  table: renderTable,
+  tr: renderTR,
+  th: renderTH,
+  td: renderTD,
+  p: renderP
 }
 
 const componentRenderer = {
-  p: MyP,
   img: MyImg,
   'spoiler-container': MySpoiler,
   'spoiler-title': MySpoilerTitle,
@@ -451,12 +566,17 @@ const componentRenderer = {
   col: MyCol,
   a: MyA,
   'inline-math': MyInlineMath,
-  math: MyMath
+  math: MyMath,
+  anchor: MyAnchor,
+  geogebra: MyGeogebra
 }
 
-function renderElement(props) {
+function renderElement(props, editor) {
   const { element } = props
   const type = element.type
+  const path = ReactEditor.findPath(editor, element)
+
+  console.log(path)
 
   if (type) {
     if (type in simpleRenderer) {
@@ -464,7 +584,7 @@ function renderElement(props) {
     }
     if (type in componentRenderer) {
       const Comp = componentRenderer[type]
-      return <Comp {...props} />
+      return <Comp {...props} editor={editor} path={path} />
     }
   }
 
@@ -480,7 +600,6 @@ function withPlugin(editor) {
   const { normalizeNode, insertBreak, insertNode } = editor
 
   editor.insertNode = entry => {
-    console.log('hi')
     insertNode(entry)
   }
 
@@ -532,6 +651,82 @@ function withPlugin(editor) {
 
   editor.insertBreak = () => {
     const { selection } = editor
+    if (Range.isCollapsed(selection)) {
+      const enclosingBlockAnchorPath = getNextElementPath(
+        editor,
+        selection.anchor.path
+      )
+      const enclosingBlock = Node.get(editor, enclosingBlockAnchorPath)
+      if (
+        enclosingBlock.type === 'h' ||
+        enclosingBlock.type === 'img' ||
+        enclosingBlock.type === 'math'
+      ) {
+        enclosingBlockAnchorPath[enclosingBlockAnchorPath.length - 1]++
+        Transforms.insertNodes(
+          editor,
+          { type: 'p', children: [{ text: '' }] },
+          { at: enclosingBlockAnchorPath }
+        )
+        Transforms.select(editor, enclosingBlockAnchorPath)
+        return
+      }
+      if (enclosingBlock.type === 'p') {
+        const outerEnclosingBlockPath = getNextElementPath(
+          editor,
+          Path.parent(enclosingBlockAnchorPath)
+        )
+        const outerBlock = Node.get(editor, outerEnclosingBlockPath)
+        if (Node.string(enclosingBlock) == '') {
+          if (outerBlock.type === 'important') {
+            outerEnclosingBlockPath[outerEnclosingBlockPath.length - 1]++
+            Transforms.insertNodes(
+              editor,
+              {
+                type: 'p',
+                children: [{ text: '' }]
+              },
+              { at: outerEnclosingBlockPath }
+            )
+            Transforms.select(editor, outerEnclosingBlockPath)
+            return
+          }
+          if (outerBlock.type === 'li') {
+            const outerParentPath = Path.parent(outerEnclosingBlockPath)
+            outerParentPath[outerParentPath.length - 1]++
+            Transforms.insertNodes(
+              editor,
+              {
+                type: 'p',
+                children: [{ text: '' }]
+              },
+              { at: outerParentPath }
+            )
+            Transforms.select(editor, outerParentPath)
+            return
+          }
+        }
+        if (outerBlock.type === 'li') {
+          outerEnclosingBlockPath[outerEnclosingBlockPath.length - 1]++
+          Transforms.insertNodes(
+            editor,
+            {
+              type: 'li',
+              children: [
+                {
+                  type: 'p',
+                  children: [{ text: '' }]
+                }
+              ]
+            },
+            { at: outerEnclosingBlockPath }
+          )
+          Transforms.select(editor, outerEnclosingBlockPath)
+          return
+        }
+      }
+    }
+
     insertBreak()
   }
 
@@ -596,7 +791,7 @@ function MySpoilerTitle(props) {
           }}
           role="button"
         >
-          {renderSpoilerToggle(context.open)}
+          <SpoilerToggle open={context.open} />
         </VoidSpan>
         {children}
       </>
@@ -617,12 +812,10 @@ function MySpoilerBody(props) {
 }
 
 function MyMath(props) {
-  const { attributes, element, children } = props
-  const editor = useEditor()
-  const path = ReactEditor.findPath(editor, element)
-  const { doEdit } = React.useContext(ModalContext)
-  const { selection } = editor
-  let highlight = selection && Range.includes(selection, path)
+  const { attributes, element, children, path } = props
+  const { setModal } = React.useContext(ModalContext)
+  let highlight = useSelected()
+  console.log('render math')
   return renderMath({
     element,
     attributes,
@@ -631,7 +824,7 @@ function MyMath(props) {
       <>
         <TipOver
           content={
-            <button onClick={() => doEdit(<MathSettings path={path} />)}>
+            <button onClick={() => setModal(<MathSettings path={path} />)}>
               Formel bearbeiten
             </button>
           }
@@ -647,17 +840,14 @@ function MyMath(props) {
 }
 
 function MyInlineMath(props) {
-  const { attributes, element, children } = props
-  const editor = useEditor()
-  const path = ReactEditor.findPath(editor, element)
-  const { doEdit } = React.useContext(ModalContext)
-  const { selection } = editor
-  let highlight = selection && Range.includes(selection, path)
+  const { attributes, element, children, path } = props
+  const { setModal } = React.useContext(ModalContext)
+  let highlight = useSelected()
   return (
     <VoidSpan {...attributes}>
       <TipOver
         content={
-          <button onClick={() => doEdit(<MathSettings path={path} />)}>
+          <button onClick={() => setModal(<MathSettings path={path} />)}>
             Formel bearbeiten
           </button>
         }
@@ -676,7 +866,8 @@ function MathSettings(props) {
   const editor = useEditor()
   const element = Node.get(editor, path)
   const [formula, setFormula] = React.useState(element.formula)
-  const { closeModal } = React.useContext(ModalContext)
+  const { setModal } = React.useContext(ModalContext)
+  const [alignLeft, setAlignLeft] = React.useState(element.alignLeft)
   return (
     <>
       <LatexInputArea
@@ -688,24 +879,39 @@ function MathSettings(props) {
       />
       <br />
       <br />
-      <button onClick={() => closeModal()}>Fertig</button>
+      <label>
+        <input
+          type="checkbox"
+          checked={alignLeft}
+          onChange={e => {
+            setAlignLeft(e.target.checked)
+            if (e.target.checked) {
+              Transforms.setNodes(editor, { alignLeft: true }, { at: path })
+            } else {
+              Transforms.unsetNodes(editor, 'alignLeft', { at: path })
+            }
+          }}
+        />{' '}
+        Linksbündig anzeigen
+      </label>
+      <br />
+      <br />
+      <button onClick={() => setModal(null)}>Fertig</button>
       <br />
       <br />
       <hr />
-      {renderMath({ element: { formula } })}
+      {renderMath({ element: { formula, alignLeft } })}
     </>
   )
 }
 
 function MyA(props) {
-  const { attributes, element, children } = props
-  const editor = useEditor()
-  const path = ReactEditor.findPath(editor, element)
-  const { doEdit } = React.useContext(ModalContext)
+  const { attributes, element, children, path } = props
+  const { setModal } = React.useContext(ModalContext)
   return (
     <TipOver
       content={
-        <button onClick={() => doEdit(<ASettings path={path} />)}>
+        <button onClick={() => setModal(<ASettings path={path} />)}>
           Link bearbeiten
         </button>
       }
@@ -727,7 +933,7 @@ function ASettings(props) {
   const element = Node.get(editor, path)
   const [href, setHref] = React.useState(element.href)
   const [preview, setPreview] = React.useState(false)
-  const { closeModal } = React.useContext(ModalContext)
+  const { setModal } = React.useContext(ModalContext)
   return (
     <>
       <SettingsInput
@@ -743,12 +949,12 @@ function ASettings(props) {
       <button
         onClick={() => {
           Transforms.unwrapNodes(editor, { at: path })
-          closeModal()
+          setModal(null)
         }}
       >
         Löschen
       </button>{' '}
-      <button onClick={() => closeModal()}>Fertig</button>
+      <button onClick={() => setModal(null)}>Fertig</button>
       <br />
       <br />
       <hr />
@@ -767,31 +973,15 @@ function ASettings(props) {
   )
 }
 
-function MyP(props) {
-  const { attributes, element, children } = props
-  const editor = useEditor()
-  const path = ReactEditor.findPath(editor, element)
-
-  return renderP({
-    attributes: { ...attributes },
-    children,
-    value: editor,
-    path
-  })
-}
-
 function MyLayout(props) {
-  const { attributes, element, children } = props
-  const editor = useEditor()
-  const { selection } = editor
-  const path = ReactEditor.findPath(editor, element)
-  let highlight = selection && Range.includes(selection, path)
-  const { doEdit } = React.useContext(ModalContext)
+  const { attributes, children, path } = props
+  let highlight = useSelected()
+  const { setModal } = React.useContext(ModalContext)
   return (
     <TipOver
       content={
         <VoidSpan>
-          <button onClick={() => doEdit(<LayoutSettings path={path} />)}>
+          <button onClick={() => setModal(<LayoutSettings path={path} />)}>
             Layout bearbeiten
           </button>
         </VoidSpan>
@@ -813,7 +1003,7 @@ function LayoutSettings(props) {
   const { path } = props
   const editor = useEditor()
   const element = Node.get(editor, path)
-  const { closeModal } = React.useContext(ModalContext)
+  const { setModal } = React.useContext(ModalContext)
   return (
     <>
       <p>Verhältnis der Spalten:</p>
@@ -851,11 +1041,7 @@ function LayoutSettings(props) {
       <br />
       <button
         onClick={() => {
-          for (const [child, childpath] of Node.children(editor, path)) {
-            Transforms.setNodes(editor, { size: 9999 }, { at: childpath })
-            Transforms.setNodes(editor, { size: child.size }, { at: childpath })
-          }
-          closeModal()
+          setModal(null)
         }}
       >
         Fertig
@@ -875,9 +1061,7 @@ function LayoutSettings(props) {
                   key: index,
                   style: { backgroundColor: hsl(index * 200, 0.75, 0.4) }
                 },
-                children: <>&nbsp;</>,
-                value: editor,
-                path: path.concat(index)
+                children: <>&nbsp;</>
               })
             )}
           </>
@@ -888,31 +1072,22 @@ function LayoutSettings(props) {
 }
 
 function MyCol(props) {
-  const { attributes, element, children } = props
-  const editor = useEditor()
-  const { selection } = editor
-  const path = ReactEditor.findPath(editor, element)
-  let highlight = selection && Range.includes(selection, path)
-
+  const { attributes, element, children, path } = props
+  let highlight = useSelected()
   return renderCol({
     element,
     attributes: {
       ...attributes,
       style: { outline: highlight ? '1px solid lightblue' : 'none' }
     },
-    children,
-    value: editor,
-    path
+    children
   })
 }
 
 function MyImg(props) {
-  const { attributes, element, children } = props
-  const editor = useEditor()
-  const { selection } = editor
-  const path = ReactEditor.findPath(editor, element)
-  let highlight = selection && Range.includes(selection, path)
-  const { doEdit } = React.useContext(ModalContext)
+  const { attributes, element, children, path } = props
+  let highlight = useSelected()
+  const { setModal } = React.useContext(ModalContext)
 
   return renderImg({
     element,
@@ -926,7 +1101,7 @@ function MyImg(props) {
     wrapImg: comp => (
       <TipOver
         content={
-          <button onClick={() => doEdit(<ImgSettings path={path} />)}>
+          <button onClick={() => setModal(<ImgSettings path={path} />)}>
             Bild bearbeiten
           </button>
         }
@@ -944,8 +1119,9 @@ function ImgSettings(props) {
   const element = Node.get(editor, path)
   const [src, setSrc] = React.useState(element.src)
   const [alt, setAlt] = React.useState(element.alt)
+  const [href, setHref] = React.useState(element.href)
   const [maxWidth, setMaxWidth] = React.useState(element.maxWidth)
-  const { closeModal } = React.useContext(ModalContext)
+  const { setModal } = React.useContext(ModalContext)
   return (
     <>
       <SettingsInput
@@ -965,6 +1141,16 @@ function ImgSettings(props) {
           onChange: e => {
             setAlt(e.target.value)
             Transforms.setNodes(editor, { alt: e.target.value }, { at: path })
+          }
+        }}
+      />
+      <SettingsInput
+        title="Verlinkung (optional):"
+        innerProps={{
+          value: href || '',
+          onChange: e => {
+            setHref(e.target.value)
+            Transforms.setNodes(editor, { href: e.target.value }, { at: path })
           }
         }}
       />
@@ -989,7 +1175,7 @@ function ImgSettings(props) {
       </label>
       <br />
       <br />
-      <button onClick={() => closeModal()}>Fertig</button>
+      <button onClick={() => setModal(null)}>Fertig</button>
       <br />
       <br />
       <hr />
@@ -1000,6 +1186,93 @@ function ImgSettings(props) {
     </>
   )
 }
+
+function MyAnchor(props) {
+  const { attributes, children, path } = props
+  let highlight = useSelected()
+  const { setModal } = React.useContext(ModalContext)
+
+  return (
+    <StyledAnchorPlaceholder
+      {...attributes}
+      contentEditable={false}
+      style={{ userSelect: 'none' }}
+    >
+      <TipOver
+        placement="right"
+        content={
+          <button onClick={() => setModal(<AnchorSettings path={path} />)}>
+            Anchor bearbeiten
+          </button>
+        }
+      >
+        <StyledIconWrapper
+          style={{ outline: highlight ? '1px solid lightblue' : 'none' }}
+        >
+          <FontAwesomeIcon icon={faAnchor} size="1x" />
+        </StyledIconWrapper>
+      </TipOver>
+      {children}
+    </StyledAnchorPlaceholder>
+  )
+}
+
+function AnchorSettings(props) {
+  const { path } = props
+  const editor = useEditor()
+  const element = Node.get(editor, path)
+  const [id, setId] = React.useState(element.id)
+  const { setModal } = React.useContext(ModalContext)
+  return (
+    <>
+      <SettingsInput
+        title="ID:"
+        innerProps={{
+          value: id,
+          onChange: e => {
+            setId(e.target.value)
+            Transforms.setNodes(editor, { id: e.target.value }, { at: path })
+          }
+        }}
+      />
+      <button onClick={() => setModal(null)}>Fertig</button>
+    </>
+  )
+}
+
+function MyGeogebra(props) {
+  const { element } = props
+  const editor = useEditor()
+  const path = ReactEditor.findPath(editor, element)
+  const { setModal } = React.useContext(ModalContext)
+
+  return (
+    <TipOver
+      placement="top"
+      content={
+        <button onClick={() => setModal(<AnchorSettings path={path} />)}>
+          Applet bearbeiten
+        </button>
+      }
+    >
+      <div contentEditable={false} style={{ userSelect: 'none' }}>
+        {renderGeogebra(props)}
+      </div>
+    </TipOver>
+  )
+}
+
+const StyledAnchorPlaceholder = styled.div`
+  position: relative;
+  height: 0;
+  width: 100%;
+`
+
+const StyledIconWrapper = styled.div`
+  position: absolute;
+  left: 2px;
+  bottom: -4px;
+`
 
 const StyledToolbox = styled.div`
   padding: 5px;
