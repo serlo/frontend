@@ -7,7 +7,7 @@ import Footer from '../src/components/navigation/Footer'
 import styled from 'styled-components'
 import { metamenudata } from '../src/metamenudata'
 import Breadcrumbs from '../src/components/navigation/Breadcrumbs'
-import { HSpace } from '../src/components/content/HSpace'
+import HSpace from '../src/components/content/HSpace'
 import Horizon from '../src/components/content/Horizon'
 import { horizonData } from '../src/horizondata'
 

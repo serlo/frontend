@@ -24,11 +24,15 @@ import { convertEdtrioState } from '../../schema/convertEdtrioState'
 import { convertLegacyState } from '../../schema/convertLegacyState'
 import { checkArticleGuidelines } from '../../schema/articleGuidelines'
 import Hints from '../Hints'
-import { HSpace } from './HSpace'
+import HSpace from './HSpace'
 import StyledP from '../tags/StyledP'
 import dynamic from 'next/dynamic'
 
-export default function ContentTypes(props) {
+interface ContentTypesProps {
+  data: { contentType: string; data: any } // :-)
+}
+
+export default function ContentTypes(props: ContentTypesProps) {
   const { data } = props
   if (data.contentType === 'Article' || data.contentType === 'Page') {
     return <RenderArticle content={data.data} />

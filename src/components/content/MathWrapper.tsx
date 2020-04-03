@@ -1,12 +1,12 @@
 import styled from 'styled-components'
 import { makePadding } from '../../helper/csshelper'
 
-export interface MathWrapperProps {
+interface MathWrapperProps {
   centered?: boolean
   bigger?: boolean
 }
 
-export const MathWrapper = styled.div<MathWrapperProps>`
+const MathWrapper = styled.div<MathWrapperProps>`
   ${makePadding}
   width:100%;
   box-sizing: border-box;
@@ -18,3 +18,5 @@ export const MathWrapper = styled.div<MathWrapperProps>`
   overflow: auto;
   ${props => (props.bigger ? 'line-height:2.5;' : '')}
 `
+
+export default MathWrapper

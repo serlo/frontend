@@ -3,14 +3,13 @@ import React from 'react'
 
 import KaTeXSpan from '../../../external/katexstyles'
 
-export interface MathProps {
+interface MathProps {
   formula: string
   inline?: boolean
-  innerRef?: React.Ref<HTMLElement>
 }
 
-function Math(props: MathProps) {
-  const { inline, innerRef } = props
+export default function Math(props: MathProps) {
+  const { inline = false } = props
   let formula = props.formula
 
   // make empty formulas clickable
@@ -27,18 +26,5 @@ function Math(props: MathProps) {
     throwOnError: false
   })
 
-  if (inline) {
-    return (
-      <KaTeXSpan ref={innerRef} dangerouslySetInnerHTML={{ __html: html }} />
-    )
-  } else {
-    return (
-      <KaTeXSpan
-        ref={props.innerRef}
-        dangerouslySetInnerHTML={{ __html: html }}
-      />
-    )
-  }
+  return <KaTeXSpan dangerouslySetInnerHTML={{ __html: html }} />
 }
-
-export default Math
