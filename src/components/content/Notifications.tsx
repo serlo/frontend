@@ -13,10 +13,14 @@ interface NotificationProp {
   readed: boolean
 }
 
-export default function Notifications(entries: NotificationProp[]) {
+interface NotificationProps {
+  entries: NotificationProp[]
+}
+
+export default function Notifications({ entries }: NotificationProps) {
   return (
     <Wrapper>
-      {entries.map((entry, i, l) => {
+      {entries.map(entry => {
         return (
           <Item readed={entry.readed}>
             <Link href={`https://serlo.org/${entry.author.id}`}>
