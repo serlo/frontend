@@ -68,6 +68,7 @@ const Item = styled.a`
   max-width: 400px;
   width: 29.3%;
   padding: 15px 10px;
+  box-sizing: border-box;
 
   &:hover {
     box-shadow: 0px 0px 10px 0px rgba(170, 170, 170, 0.25);

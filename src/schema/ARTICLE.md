@@ -114,6 +114,22 @@ Block
 
 Block
 
+### `table`
+
+Block
+
+### `tr`
+
+Block
+
+### `td`
+
+Block
+
+### `th`
+
+Block
+
 ### `row`
 
 Block
@@ -134,9 +150,11 @@ Attributes: id
 
 Block, Void
 
-###
+### `geogebra`
 
-###
+Attributes: id
+
+Block, Void
 
 ## Constraints
 
@@ -231,6 +249,14 @@ A table header may only contain `p` or `math`. Other elements will be unwrapped.
 ### td
 
 Table data may only contain `p` or `math`. Other elements will be unwrapped. Text will be wrapped in `p`.
+
+### anchor
+
+No additional contraints.
+
+### geogebra
+
+No additional constraints.
 
 ### Root
 

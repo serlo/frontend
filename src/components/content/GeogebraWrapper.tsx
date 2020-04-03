@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { makeMargin } from '../../helper/csshelper'
 
-export const StyledTable = styled.table`
-  border-collapse: collapse;
+export const GeogebraWrapper = styled.div`
   ${makeMargin}
+  margin-bottom: ${props => props.theme.spacing.mb.block};
 `

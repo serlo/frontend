@@ -30,6 +30,7 @@ export function convert(node) {
         type: 'img',
         src: node.state.src,
         alt: node.state.alt,
+        maxWidth: node.state.maxWidth,
         children: [{ text: '' }]
       }
     ]
@@ -135,6 +136,15 @@ export function convert(node) {
         children: [{ text: '' }]
       }
     ]
+  }
+  if (plugin === 'geogebra') {
+    // compat: full url given
+    let id = node.state
+    const match = /geogebra\.org\/m\/(.+)/.exec(id)
+    if (match) {
+      id = match[1]
+    }
+    return [{ type: 'geogebra', id, children: [{ text: '' }] }]
   }
 
   const type = node.type
@@ -252,6 +262,14 @@ export function convert(node) {
     return [
       {
         type: 'ul',
+        children: convert(node.children)
+      }
+    ]
+  }
+  if (type === 'ordered-list') {
+    return [
+      {
+        type: 'ol',
         children: convert(node.children)
       }
     ]

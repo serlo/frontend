@@ -14,8 +14,12 @@ function CreateDemo() {
   ])
   return (
     <>
-      <Create value={value} onChange={val => setValue(val)} />
-      <HSpace amount={40} />
+      <div
+        style={{ maxWidth: '800px', marginLeft: 'auto', marginRight: 'auto' }}
+      >
+        <Create value={value} onChange={val => setValue(val)} />
+        <HSpace amount={40} />
+      </div>
       <code>
         <pre style={{ overflow: 'auto' }}>{JSON.stringify(value)}</pre>
       </code>
