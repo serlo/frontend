@@ -1,189 +1,139 @@
 import styled from 'styled-components'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
 
 import Header from '../src/components/navigation/Header'
 import LandingSubjects from '../src/components/landing/LandingSubjects'
 import LandingAbout from '../src/components/landing/LandingAbout'
 import Footer from '../src/components/navigation/Footer'
+import Topic from '../src/components/content/topic'
+import { TopicPurposes } from '../src/components/content/topic'
 
-import {
-  makeDefaultButton,
-  makeResponsivePadding
-} from '../src/helper/csshelper'
+const topic = {
+  title: 'Satzgruppe des Pythagoras',
+  url: 'https://de.serlo.org/mathe/geometrie/satzgruppe-pythagoras',
+  description: {
+    img:
+      'https://assets.serlo.org/legacy/56efc1b684b67_0b712ac6f94fcb971ecdc341af21717403d92fb2.png',
+    text:
+      'Hier findest du alle Artikel, Aufgaben, Videos und Kurse zu der Satzgruppe des Pythagoras. Zur Satzgruppe des Pythagoras gehören der Satz des Pythagoras, der Höhen- und der Kathetensatz.'
+  },
+  purpose: TopicPurposes.detail,
+  links: {
+    courses: [
+      {
+        title: 'Überblick zum Satz des Pythagoras',
+        url: 'https://de.serlo.org/18521/formel'
+      }
+    ],
+    articles: [
+      {
+        title: 'Hypotenuse ',
+        url: 'https://de.serlo.org/18521/formel'
+      },
+      {
+        title: 'Kathete ',
+        url: 'https://de.serlo.org/18521/formel'
+      },
+      {
+        title: 'Höhen- und Kathetensatz ',
+        url: 'https://de.serlo.org/18521/formel'
+      },
+      {
+        title: 'Satz des Pythagoras ',
+        url: 'https://de.serlo.org/18521/formel'
+      }
+    ],
+    videos: [
+      {
+        title: 'Hypotenuse ',
+        url: 'https://de.serlo.org/18521/formel'
+      },
+      {
+        title: 'Kathete ',
+        url: 'https://de.serlo.org/18521/formel'
+      }
+    ],
+    applets: [
+      {
+        title: 'Hypotenuse ',
+        url: 'https://de.serlo.org/18521/formel'
+      },
+      {
+        title: 'Kathete ',
+        url: 'https://de.serlo.org/18521/formel'
+      }
+    ],
+    excercises: [
+      {
+        title: 'Hypotenuse ',
+        url: 'https://de.serlo.org/18521/formel'
+      },
+      {
+        title: 'Kathete ',
+        url: 'https://de.serlo.org/18521/formel'
+      }
+    ]
+  }
+}
 
-import PrinciplesSVG from '../public/img/landing_principles_graphic.svg'
-import DonateSVG from '../public/img/footer_donate.svg'
-import ParticipateSVG from '../public/img/footer_participate.svg'
+const smallTopic = {
+  title: 'Lange ueberschrift fuer den Satzgruppe des Pythagoras',
+  url: 'https://de.serlo.org/mathe/geometrie/satzgruppe-pythagoras',
+  description: {
+    img:
+      'https://assets.serlo.org/legacy/56efc1b684b67_0b712ac6f94fcb971ecdc341af21717403d92fb2.png',
+    text:
+      'Hier findest du alle Artikel, Aufgaben, Videos und Kurse zu der Satzgruppe des Pythagoras. Zur Satzgruppe des Pythagoras gehören der Satz des Pythagoras, der Höhen- und der Kathetensatz.'
+  },
+  purpose: TopicPurposes.overview,
+  links: {
+    subfolders: [
+      {
+        title: 'Hypotenuse ',
+        url: 'https://de.serlo.org/18521/formel'
+      },
+      {
+        title: 'Kathete ',
+        url: 'https://de.serlo.org/18521/formel'
+      },
+      {
+        title: 'Höhen- und Kathetensatz ',
+        url: 'https://de.serlo.org/18521/formel'
+      },
+      {
+        title: 'Satz des Pythagoras ',
+        url: 'https://de.serlo.org/18521/formel'
+      }
+    ],
+    articles: [
+      {
+        title: 'Hypotenuse ',
+        url: 'https://de.serlo.org/18521/formel'
+      },
+      {
+        title: 'Satz des Pythagoras ',
+        url: 'https://de.serlo.org/18521/formel'
+      }
+    ]
+  }
+}
 
 export default function Landing() {
   return (
     <>
       <Header />
-      <SubjectsSection>
-        <LandingSubjects />
-      </SubjectsSection>
+      <Container>
+        <h2>Topic fuer Uebersichten</h2>
+        <Topic props={smallTopic}></Topic>
 
-      <AboutSection>
-        <LandingAbout />
-      </AboutSection>
-
-      <Section>
-        <StyledH2>Serlo.org ist die Wikipedia fürs Lernen</StyledH2>
-        <IconStyle>
-          <ParticipateSVG />
-        </IconStyle>
-        <Col>
-          <p>
-            Wir suchen LehrerInnen mit Begeisterung für ihr Fach. Werden Sie
-            AutorIn auf serlo.org, erstellen Sie <b>neue Inhalte</b> und helfen
-            Sie uns, die <b>Qualität</b> der Lernplattform zu sichern.
-          </p>
-          <Button href="/community">
-            Zur Startseite für AutorInnen{' '}
-            <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
-          </Button>
-        </Col>
-        <Col>
-          <p>
-            Wir suchen neue hauptamtliche und ehrenamtliche Teammitglieder für
-            die Bereiche <b>Softwareentwicklung</b>, <b>Redaktion</b> und{' '}
-            <b>NGO-Management</b>.
-          </p>
-          <Button href="/jobs">
-            Jobs und Engagement{' '}
-            <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
-          </Button>
-        </Col>
-      </Section>
-
-      <PrinciplesSection>
-        <PrinciplesSVG />
-      </PrinciplesSection>
-
-      <Section>
-        <StyledH2>Werden Sie Teil unserer Bewegung für freie Bildung</StyledH2>
-        <IconStyle>
-          <DonateSVG />
-        </IconStyle>
-        <Col>
-          <p>
-            Bildung gehört uns allen! Werden Sie Mitglied in unserer
-            Organisation Serlo Education e.V. und so zu MitherausgeberIn der
-            freien Lernplattform.
-          </p>
-          <Button href="/beitreten">
-            Mitglied werden{' '}
-            <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
-          </Button>
-        </Col>
-        <Col>
-          <p>
-            Softwareentwicklung und Lerninhalte erstellen kostet Geld. Wir
-            freuen uns sehr, wenn Sie Serlo mit einer Spende unterstützen.
-          </p>
-          <Button href="/spenden">
-            Spenden <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
-          </Button>
-        </Col>
-      </Section>
+        <h2>Topic Detailansicht</h2>
+        <Topic props={topic}></Topic>
+      </Container>
       <Footer />
     </>
   )
 }
 
-const SubjectsSection = styled.section``
-
-const Section = styled.section`
-  margin-top: 60px;
-  margin-bottom: 60px;
-  ${makeResponsivePadding}
-
-  @media (min-width: ${props => props.theme.breakpoints.sm}) {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  @media (min-width: ${props => props.theme.breakpoints.lg}) {
-    max-width: 900px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-`
-
-const Col = styled.div`
-  margin-top: 40px;
-
-  @media (min-width: ${props => props.theme.breakpoints.sm}) {
-    margin-top: 0;
-    margin-right: 30px;
-    flex: 1;
-
-    & > p {
-      min-height: 80px;
-    }
-
-    &:last-child {
-      margin-right: 0;
-    }
-  }
-
-  @media (min-width: ${props => props.theme.breakpoints.lg}) {
-    margin-right: 50px;
-  }
-`
-
-const AboutSection = styled.section`
-  margin-top: 50px;
-  display: flex;
-  flex-direction: column;
-
-  @media (min-width: ${props => props.theme.breakpoints.sm}) {
-    flex-direction: row;
-  }
-`
-
-const StyledH2 = styled.h2`
-  font-size: 1.66rem;
-  color: ${props => props.theme.colors.brand};
-  border: 0;
-  @media (min-width: ${props => props.theme.breakpoints.sm}) {
-    width: 100%;
-  }
-`
-
-const Button = styled.a`
-  ${makeDefaultButton}
-  margin-left: -3px;
-  font-weight: bold;
-  padding-top: 3px;
-  padding-top: 3px;
-  background-color: ${props => props.theme.colors.lightBlueBackground};
-`
-
-const PrinciplesSection = styled.section`
-  background-color: ${props => props.theme.colors.brand};
-  text-align: center;
-  ${makeResponsivePadding}
-  padding-top: 70px;
-  padding-bottom: 70px;
-
-  & > svg {
-    height: 450px;
-    width: 100%;
-  }
-`
-
-const IconStyle = styled.div`
-  & > path,
-  & .st0 {
-    fill: ${props => props.theme.colors.brandGreen};
-  }
-  width: 100px;
-  margin-right: 30px;
-  @media (min-width: ${props => props.theme.breakpoints.lg}) {
-    margin-right: 50px;
-    width: 120px;
-  }
+const Container = styled.div`
+  max-width: 800px;
+  margin: auto;
 `
