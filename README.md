@@ -484,13 +484,16 @@ This example fetches some random cat facts and pass them on to the page. Some mo
 Build and run the frontend with these commands:
 
 ```
-yarn build
 yarn start
 ```
 
-This will trigger a production build. It will also summarize the size of all output artifacts.
+This will trigger a production build (`docker` and `docker-compose` need to be installed). To stop the created docker image, run:
 
-To get detailed information about bundle size, run this:
+```
+yarn stop
+```
+
+To get detailed information about bundle size and a summarize of all output artifacts, run this:
 
 ```
 yarn analyze
