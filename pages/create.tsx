@@ -1,6 +1,6 @@
 import Create from '../src/create/create'
 import React from 'react'
-import { HSpace } from '../src/components/content/HSpace'
+import HSpace from '../src/components/content/HSpace'
 
 function CreateDemo() {
   const [value, setValue] = React.useState([

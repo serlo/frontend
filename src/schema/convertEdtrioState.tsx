@@ -1,5 +1,5 @@
 import { converter } from '../../external/markdown'
-import convertLegacyState from './convertLegacyState'
+import { convertLegacyState } from './convertLegacyState'
 
 const colors = ['blue', 'green', 'orange']
 

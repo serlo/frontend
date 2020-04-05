@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { transparentize, lighten } from 'polished'
+import { transparentize } from 'polished'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faChevronUp,

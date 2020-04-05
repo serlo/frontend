@@ -4,17 +4,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { lighten } from 'polished'
 import { makeResponsivePadding } from '../../helper/csshelper'
 
-export interface NavChild {
+interface NavChild {
   title: string
   url: string
   icon?: any
 }
-export interface NavEntry {
+interface NavEntry {
   title: string
   children: NavChild[]
 }
 
-export interface NavProps {
+interface NavProps {
   navEntries: NavEntry[]
 }
 

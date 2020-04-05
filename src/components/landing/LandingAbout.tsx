@@ -3,8 +3,8 @@ import {
   makeResponsivePadding,
   makeDefaultButton
 } from '../../helper/csshelper'
-import { StyledUl } from '../tags/StyledUl'
-import { StyledLi } from '../tags/StyledLi'
+import StyledUl from '../tags/StyledUl'
+import StyledLi from '../tags/StyledLi'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
 

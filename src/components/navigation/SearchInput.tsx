@@ -2,21 +2,20 @@ import React from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { lighten } from 'polished'
-import { faSearch, faSlidersH } from '@fortawesome/free-solid-svg-icons'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { inputFontReset } from '../../helper/csshelper'
 
-export default function SearchInput(props) {
-  const { value } = props
-
+export default function SearchInput() {
   const [focused, setFocused] = React.useState(false)
-  const [showSettings, setShowSettings] = React.useState(false)
+  //const [showSettings, setShowSettings] = React.useState(false)
   const inputRef = React.useRef(null)
+  const [value, setValue] = React.useState('')
 
-  function onButtonClick(e: React.MouseEvent) {
+  function onButtonClick(e) {
     e.preventDefault()
 
-    if (focused && inputRef.current.value.length > 0)
-      alert('sending:' + inputRef.current.value)
+    if (focused && value.length > 0)
+      window.location.href = '/search?q=' + encodeURIComponent(value)
 
     inputRef.current.focus()
   }
@@ -33,7 +32,7 @@ export default function SearchInput(props) {
           <FontAwesomeIcon icon={faSlidersH} size="lg" />
         </Settings> */}
 
-        <_Input
+        <Input
           type="search"
           name="searchtext"
           ref={inputRef}
@@ -47,15 +46,16 @@ export default function SearchInput(props) {
           onBlur={() => {
             setFocused(false)
           }}
+          onChange={e => setValue(e.target.value)}
         />
-        <_Button
+        <Button
           onMouseDown={e => e.preventDefault()}
           onClick={onButtonClick}
           type="submit"
           focused={focused}
         >
           <FontAwesomeIcon icon={faSearch} size="lg" />
-        </_Button>
+        </Button>
       </SearchForm>
       {/* {showSettings && (
         <SearchSettings>Hier kommen Sucheinstellungen hin</SearchSettings>
@@ -113,7 +113,7 @@ const SearchForm = styled.form`
 //   cursor: pointer;
 // `
 
-const _Button = styled.button<{ focused: boolean }>`
+const Button = styled.button<{ focused: boolean }>`
   background-color: ${props =>
     props.focused
       ? props.theme.colors.brand
@@ -141,7 +141,7 @@ const _Button = styled.button<{ focused: boolean }>`
     border-radius: 17px;
   }
 `
-const _Input = styled.input<{ focused: boolean }>`
+const Input = styled.input<{ focused: boolean }>`
   ${inputFontReset}
   color: ${props => props.theme.colors.brand};
   font-weight: bold;

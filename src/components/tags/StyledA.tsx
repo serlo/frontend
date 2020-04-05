@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { darken } from 'polished'
 
-export const StyledA = styled.a`
+const StyledA = styled.a`
   color: ${props => props.theme.colors.brand};
   text-decoration: none;
   font-weight: normal;
@@ -12,3 +12,5 @@ export const StyledA = styled.a`
     text-decoration: underline;
   }
 `
+
+export default StyledA
