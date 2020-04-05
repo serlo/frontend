@@ -8,7 +8,7 @@ import { faCubes } from '@fortawesome/free-solid-svg-icons'
 import { faFile } from '@fortawesome/free-solid-svg-icons'
 import { faCircle } from '@fortawesome/free-solid-svg-icons'
 import { faFolderOpen } from '@fortawesome/free-solid-svg-icons'
-import { LinksInterface, TopicPurposes } from './topic'
+import { LinksInterface, TopicPurposes } from './Topic'
 
 interface LinksProps {
   links: LinksInterface

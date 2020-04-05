@@ -4,8 +4,8 @@ import Header from '../src/components/navigation/Header'
 import LandingSubjects from '../src/components/landing/LandingSubjects'
 import LandingAbout from '../src/components/landing/LandingAbout'
 import Footer from '../src/components/navigation/Footer'
-import Topic from '../src/components/content/topic'
-import { TopicPurposes } from '../src/components/content/topic'
+import Topic from '../src/components/content/Topic'
+import { TopicPurposes } from '../src/components/content/Topic'
 
 const topic = {
   title: 'Satzgruppe des Pythagoras',
