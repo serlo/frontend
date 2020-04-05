@@ -1,6 +1,8 @@
 import styled from 'styled-components'
+import { makeMargin } from '../../helper/csshelper'
 
 const SpoilerContainer = styled.div<{ hide?: boolean }>`
+  ${makeMargin}
   width: 100%;
   display: flex;
   flex-direction: column;
