@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { TopicLinkList } from './TopicLinkList'
+import TopicLinkList from './TopicLinkList'
 
 export interface LinkInterface {
   title: string
@@ -35,28 +35,28 @@ interface TopicProp {
 }
 
 interface TopicProps {
-  props: TopicProp
+  data: TopicProp
 }
 
-export default function Topic({ props }: TopicProps) {
+export default function Topic({ data }: TopicProps) {
   return (
     <>
-      {props.purpose === TopicPurposes.detail ? (
-        <Headline>{props.title}</Headline>
+      {data.purpose === TopicPurposes.detail ? (
+        <Headline>{data.title}</Headline>
       ) : (
-        <HeadlineLink>{props.title}</HeadlineLink>
+        <HeadlineLink>{data.title}</HeadlineLink>
       )}
-      <Wrapper purpose={props.purpose}>
+      <Wrapper purpose={data.purpose}>
         <Overview>
-          <TopicImage src={props.description.img} alt={props.title} />
-          {props.purpose === TopicPurposes.detail && (
-            <Description>{props.description.text}</Description>
+          <TopicImage src={data.description.img} alt={data.title} />
+          {data.purpose === TopicPurposes.detail && (
+            <Description>{data.description.text}</Description>
           )}
         </Overview>
         <LinkList>
           <TopicLinkList
-            links={props.links}
-            purpose={props.purpose}
+            links={data.links}
+            purpose={data.purpose}
           ></TopicLinkList>
         </LinkList>
       </Wrapper>

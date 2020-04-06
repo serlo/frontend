@@ -76,33 +76,34 @@ function RenderIcon(props: IconProps) {
   }
 }
 
-export function TopicLinkList({ links, purpose }: LinksProps) {
+export default function TopicLinkList({ links, purpose }: LinksProps) {
   const IconsSize =
     purpose === TopicPurposes.detail ? IconSizeEnum.three : IconSizeEnum.two
   return (
     <>
       {Object.keys(links).map(link => {
-        return (
-          <>
-            {links[link] && links[link].length > 0 && (
-              <LinkSection purpose={purpose}>
-                <IconWrapper purpose={purpose}>
-                  <RenderIcon icon={link} size={IconsSize}></RenderIcon>
-                </IconWrapper>
-                <div>
-                  {purpose === TopicPurposes.detail && (
-                    <LinkSectionHeadline>
-                      {HeadlineEnum[link]}
-                    </LinkSectionHeadline>
-                  )}
-                  {links[link].map(article => {
-                    return <Link href={article.url}>{article.title}</Link>
-                  })}
-                </div>
-              </LinkSection>
-            )}
-          </>
-        )
+        return links[link] && links[link].length > 0 ? (
+          <LinkSection purpose={purpose} key={link}>
+            <IconWrapper purpose={purpose}>
+              <RenderIcon icon={link} size={IconsSize}></RenderIcon>
+            </IconWrapper>
+            <div>
+              {purpose === TopicPurposes.detail && (
+                <LinkSectionHeadline>{HeadlineEnum[link]}</LinkSectionHeadline>
+              )}
+              {links[link].map(article => {
+                return (
+                  <Link
+                    href={article.url}
+                    key={article.url + '_' + article.title}
+                  >
+                    {article.title}
+                  </Link>
+                )
+              })}
+            </div>
+          </LinkSection>
+        ) : null
       })}
     </>
   )
