@@ -61,6 +61,8 @@ import Hints from '../src/components/Hints'
 import Modal from '../src/components/Modal'
 import Ups from '../src/components/Ups'
 import WipHint from '../src/components/WipHint'
+import Topic from '../src/components/content/Topic'
+import { topic, smallTopic } from '../src/topicdummydata'
 
 const gallery = [
   {
@@ -233,6 +235,17 @@ const gallery = [
         </StyledTable>
       </TableWrapper>
     )
+  },
+
+  {
+    title: 'Topic + TopicLinkList (expanded)',
+    description: 'Show a single topic page',
+    component: <Topic data={topic}></Topic>
+  },
+  {
+    title: 'Topic + TopicLinkList (small)',
+    description: 'Show a nested topic in a compressed view',
+    component: <Topic data={smallTopic}></Topic>
   },
   {
     title: 'LandingAbout',
