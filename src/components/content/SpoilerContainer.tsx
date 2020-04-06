@@ -1,7 +1,10 @@
 import styled from 'styled-components'
+import { makeMargin } from '../../helper/csshelper'
 
 const SpoilerContainer = styled.div<{ hide?: boolean }>`
-  width: 100%;
+  @media (min-width: ${props => props.theme.breakpoints.mobile}) {
+    ${makeMargin}
+  }
   display: flex;
   flex-direction: column;
   border-left: 4px solid ${props => props.theme.colors.brand};
