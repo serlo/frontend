@@ -530,7 +530,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: row;
   height: 100vh;
-  @media (max-width: 600px) {
+  @media (max-width: 820px) {
     height: 100%;
     flex-direction: column;
   }
@@ -548,7 +548,7 @@ const ComponentChooser = styled.div`
   flex-shrink: 0;
   background-color: #fafafa;
   overflow: scroll;
-  @media (max-width: 600px) {
+  @media (max-width: 820px) {
     border-right: 0;
     border-bottom: 2px solid black;
     width: 100%;
