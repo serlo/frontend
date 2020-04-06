@@ -18,7 +18,7 @@ interface NavProps {
   navEntries: NavEntry[]
 }
 
-export function FooterNav(props: NavProps) {
+export default function FooterNav(props: NavProps) {
   return (
     <FooterNavGrid>
       <nav>
