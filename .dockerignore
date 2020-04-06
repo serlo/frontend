@@ -1,0 +1,8 @@
+\.git
+Dockerfile
+\.gitignore
+\.prettierrc
+LICENSE
+\.next
+node_modules
+README\.md
