@@ -5,7 +5,6 @@ const SpoilerContainer = styled.div<{ hide?: boolean }>`
   @media (min-width: ${props => props.theme.breakpoints.mobile}) {
     ${makeMargin}
   }
-  width: 100%;
   display: flex;
   flex-direction: column;
   border-left: 4px solid ${props => props.theme.colors.brand};
