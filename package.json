@@ -8,7 +8,9 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start",
+    "start": "docker-compose up --build --detach",
+    "start:next": "next start",
+    "stop": "docker-compose down",
     "typecheck": "yarn tsc --noEmit",
     "prettify": "yarn prettier --write \"{src,pages}/**/*.{js,tsx,ts}\"",
     "analyze": "cross-env ANALYZE=true yarn build"
