@@ -326,13 +326,27 @@ Import your helper from polished and use it in interpolations.
 
 Put static content like images or documents into the `public` folder.
 
-Example: The file `public/img/serlo-logo.svg` is accessible via `localhost:3000/img/serlo-logo.svg`
+Example: The file `public/img/placeholder.png` is accessible via `localhost:3000/img/placeholder.png`
 
-You can use assets in your components as well:
+You can use assets in your components:
 
 ```tsx
 function HelloWorld() {
-  return <img src="/img/serlo-logo.svg" alt="serlo logo" />
+  return <img src="/img/placeholder.png" alt="placeholder" />
+}
+
+export default HelloWorld
+```
+
+### SVG
+
+You can import a svg directly. They are inlined and usable as component:
+
+```tsx
+import SerloLogo from '../public/img/serlo-logo.svg'
+
+function HelloWorld() {
+  return <SerloLogo />
 }
 
 export default HelloWorld
@@ -393,7 +407,7 @@ Show information to the user with modals. [react-modal](https://github.com/react
 
 ```tsx
 import React from 'react'
-import Modal from '../Modal' // our wrapper
+import Modal from '../components/Modal' // our wrapper
 
 const centeredModal = {
   overlay: {
