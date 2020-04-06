@@ -19,11 +19,9 @@ yarn dev
 
 The server is now running on `localhost:3000`.
 
-You can change the port by running `yarn dev --port 8080`.
-
 ### Creating pages
 
-Routes are mapped to individual files in the folder `pages`. Create a [page](https://nextjs.org/docs/basic-features/pages) by adding following file:
+Routes are mapped to individual files in the `pages`-folder. Create a [page](https://nextjs.org/docs/basic-features/pages) by adding following file:
 
 ```tsx
 // pages/helloworld.tsx
@@ -39,7 +37,7 @@ Visit `localhost:3000/helloworld` to view this page.
 
 ### Adding styles
 
-You can attach [styles](https://styled-components.com/docs/basics#getting-started) to each html element and use them in your component:
+You can attach [styles](https://styled-components.com/docs/basics#getting-started) to html elements and use them in your component:
 
 ```tsx
 // pages/helloworld.tsx
@@ -113,8 +111,7 @@ interface GreeterProps {
   subline?: string
 }
 
-function Greeter(props: GreeterProps) {
-  const { title, subline } = props
+function Greeter({ title, subline }: GreeterProps) {
   return (
     <>
       <h1>{title}</h1>
@@ -125,6 +122,30 @@ function Greeter(props: GreeterProps) {
 
 export default HelloWorld
 ```
+
+### Components
+
+The frontend is a growing collection of components. Package every part of the UI as a component, save them in `src/components` and let the file name match the components name. Export the component as a default and type the props. A complete component file would look like this:
+
+```tsx
+// src/components/Greeter.tsx
+
+interface GreeterProps {
+  title: string
+  subline?: string
+}
+
+export default function Greeter({ title, subline }: GreeterProps) {
+  return (
+    <>
+      <h1>{title}</h1>
+      {subline && <small>{subline}</small>}
+    </>
+  )
+}
+```
+
+Visit `localhost:3000/__gallery` for a quick overview of all components. Consider adding your new component into the gallery.
 
 ### Responsive Design
 
@@ -264,11 +285,11 @@ const BigIcon = styled.div<{ iconColor: string }>`
 export default HelloWorld
 ```
 
-This is one of the rare places where typing is mandatory.
+This is one of the rare places where types are mandatory.
 
-### CSS Helper
+### Polished
 
-To boost your creativity, we included a bunch of useful css [helper](https://polished.js.org/docs/):
+To boost your creativity, we included a bunch of useful css [helper from polished](https://polished.js.org/docs/):
 
 ```tsx
 import React from 'react'
@@ -305,7 +326,7 @@ Import your helper from polished and use it in interpolations.
 
 Put static content like images or documents into the `public` folder.
 
-Example: The file `public/img/serlo-logo.svg` is accessible at `localhost:3000/img/serlo-logo.svg`
+Example: The file `public/img/serlo-logo.svg` is accessible via `localhost:3000/img/serlo-logo.svg`
 
 You can use assets in your components as well:
 
@@ -448,36 +469,7 @@ Our math component takes two props: `formula` is the LaTeX string, `inline` is o
 
 ### Data Fetching
 
-Before you render a page, you can fetch data from an external source. Use `getInitialProps` and an [isomorphic fetch](https://www.npmjs.com/package/isomorphic-unfetch) library:
-
-```tsx
-import fetch from 'isomorphic-unfetch'
-import styled from 'styled-components'
-
-function HelloWorld(props) {
-  const allFacts = props.data.all
-  const randomFact = allFacts[Math.floor(Math.random() * allFacts.length)]
-  return <Wall>{randomFact.text}</Wall>
-}
-
-HelloWorld.getInitialProps = async () => {
-  const url = 'https://cat-fact.herokuapp.com/facts'
-  const res = await fetch(url)
-  return { data: await res.json() }
-}
-
-const Wall = styled.div`
-  text-align: center;
-  background-color: ${props => props.theme.colors.brand};
-  color: white;
-  padding: 20px;
-  margin-top: 50px;
-`
-
-export default HelloWorld
-```
-
-This example fetches some random cat facts and pass them on to the page. Some more error handling wouldn't hurt.
+Data fetching is handled by our GraphQL data fetcher. Look at `src/fetcher/README.md` for a detailed explanation.
 
 ### Deployment
 
@@ -603,7 +595,7 @@ The app is the entrypoint of your page and is rendered client-side as well. You 
 
 ### Listening to Scroll & Resize
 
-It is possible to listen to scroll and resize events as a last resort for responsive design, e.g. if media queries are insufficient. Use `useEffect` to accomplish this task:
+It is possible to listen to scroll and resize events as a very very (!!) last resort for responsive design, e.g. if media queries are insufficient. Use `useEffect` to accomplish this task:
 
 ```tsx
 import React from 'react'
@@ -645,11 +637,11 @@ export default HelloWorld
 
 This text will gray out if you scroll down. `useEffect` with an empty dependency array is called once on mount. The return value is called when the component unmounts and will remove the event listener. Set the state directly within the event handler.
 
-### Missing Dependencies
+### Peer dependencies
 
-Sometimes, peer dependencies are missing. Install them manually and note it here:
+Here is a list of included peer dependencies:
 
-- `styled-components` depends on `react-is` (missing)
+- `styled-components` depends on `react-is`
 
 ## FAQ
 
@@ -814,6 +806,6 @@ export default HelloWorld
 
 The brother can pass a message to its sister by declaring the state in the parent. React takes care of updating and rendering.
 
-## Notes
+### How can I change the port of the dev server?
 
-- content-api is handling data fetching by parsing serlo.org
+You can change the port by running `yarn dev --port 8080`.

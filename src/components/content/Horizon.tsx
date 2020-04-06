@@ -11,14 +11,14 @@ interface HorizonEntry {
 
 interface HorizonProps {
   entries: HorizonEntry[]
-  randoms: number[]
+  randoms?: number[]
 }
 
 function shuffle(a, randoms) {
   var j, x, i
   for (i = a.length - 1; i > 0; i--) {
-    const r = randoms.pop()
-    j = Math.floor(randoms.pop() * (i + 1))
+    const r = randoms.length > 0 ? randoms.pop() : Math.random()
+    j = Math.floor(r * (i + 1))
     x = a[i]
     a[i] = a[j]
     a[j] = x
@@ -26,7 +26,7 @@ function shuffle(a, randoms) {
   return a
 }
 
-export default function Horizon({ entries, randoms }: HorizonProps) {
+export default function Horizon({ entries, randoms = [] }: HorizonProps) {
   // this is absolute deep shit
   entries = entries.slice(0)
   randoms = randoms.slice(0)
