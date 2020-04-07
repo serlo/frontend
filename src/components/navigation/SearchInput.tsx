@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { lighten } from 'polished'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
@@ -21,81 +21,90 @@ export default function SearchInput() {
     return document.querySelector(selector)
   }
 
+  // TODO: Get placeholder of Google element (when it exists) replace with "Suche"
+  // and copy original string to Google branding in overlay
+
   // Experiment: "lazy load" scripts and build input on the fly when using the search for the first time
-  // function activateSearch() {
-  //   // setActive(true)
+  function activateSearch() {
+    if (searchActive) return
 
-  //   if (!searchLoaded) {
-  //     // var cx = '016022363195733463411:78jhtkzhbhc'
-  //     var cx = '017461339636837994840:ifahsiurxu4' //current serlo search
-  //     var gcse = document.createElement('script')
-  //     gcse.type = 'text/javascript'
-  //     gcse.async = true
-  //     gcse.src = 'https://cse.google.com/cse.js?cx=' + cx
-  //     var s = document.getElementsByTagName('script')[0]
-  //     s.parentNode.insertBefore(gcse, s)
+    if (!searchLoaded) {
+      // var cx = '016022363195733463411:78jhtkzhbhc'
+      var cx = '017461339636837994840:ifahsiurxu4' //current serlo search
+      var gcse = document.createElement('script')
+      gcse.type = 'text/javascript'
+      gcse.async = true
+      gcse.src = 'https://cse.google.com/cse.js?cx=' + cx
+      var s = document.getElementsByTagName('script')[0]
+      s.parentNode.insertBefore(gcse, s)
 
-  //     setSearchLoaded(true)
-  //   }
+      setSearchLoaded(true)
+    }
 
-  //   checkElement('#gsc-i-id1').then(input => {
-  //     input.focus()
-  //     input.addEventListener('input', function(e) {
-  //       inputRef.current.value = e.target.value
-  //     })
-  //     setSearchActive(true)
-  //     // setActive(true)
-  //   })
-  // }
-
-  // function onFocus() {
-  //   activateSearch()
-  //   setFocused(true)
-  // }
-
-  function onChange(e) {
-    setValue(e.target.value)
-    const input = document.getElementById('gsc-i-id1') as HTMLInputElement
-    input.value = e.target.value
+    checkElement('#gsc-i-id1').then(input => {
+      input.focus()
+      // input.addEventListener('input', function(e) {
+      //   inputRef.current.value = e.target.value
+      // })
+      setSearchActive(true)
+    })
   }
+
   return (
     <>
-      <SearchForm id="searchform">
-        {/* <Settings
-          onClick={e => {
-            e.preventDefault()
-            setShowSettings(!showSettings)
-          }}
-        >
-          <FontAwesomeIcon icon={faSlidersH} size="lg" />
-        </Settings> */}
+      <SearchForm id="searchform" onClick={activateSearch}>
+        {!searchLoaded && <a>Placeholder</a>}
         <div
           className="gcse-searchbox"
           data-autocompletemaxcompletions="5"
         ></div>
       </SearchForm>
 
+      <AutocompleteStyle />
+
       <SearchResultsWrap>
         <div className="gcse-searchresults"></div>
       </SearchResultsWrap>
-      {/* {showSettings && (
-        <SearchSettings>Hier kommen Sucheinstellungen hin</SearchSettings>
-      )} */}
     </>
   )
 }
 
-// const SearchSettings = styled.div`
-//   text-align: center;
-//   padding: 30px;
-//   background-color: ${props => lighten(0.1, props.theme.colors.lighterblue)};
-//   border-top: thin solid ${props => props.theme.colors.brand};
-// `
+const AutocompleteStyle = createGlobalStyle`
+  table.gstl_50.gssb_c{
+
+    z-index: 100010;
+
+    /* TODO: Get value from theme */
+    @media (max-width: 800px) { 
+      margin-top: 2px;
+      display:block !important;
+      left: 5px !important;
+      right: 5px !important;
+      width: auto !important;
+    }
+
+    @media (min-width: 800px) {
+      margin-left: 10px;
+      margin-top: 2px;
+      width: auto;
+      display:block !important;
+    }
+
+    .gsc-completion-container > tbody > tr {
+      border-top: 1px solid #ccc;
+    }
+
+    .gssb_a td{
+      white-space: normal !important;
+      font-size: 1rem;
+      font-family: Karmilla, sans-serif;
+    }
+  }
+`
 
 const SearchForm = styled.div`
   #___gcse_0,
   & > div {
-    /* display: none; */
     flex: 1;
   }
 
@@ -109,20 +118,16 @@ const SearchForm = styled.div`
   }
 
   .gsc-control-cse {
-    /* opacity: 1; */
     background-color: white;
     border: 0;
-    /* padding-top: 0;
-    padding-left: 0;
-    padding-bottom: 0; */
     padding: 0;
-    /* position: absolute; */
     z-index: 20;
-    /* display: none; */
   }
 
   input.gsc-input {
     background: transparent !important;
+
+    text-indent: 0 !important;
 
     &, &::placeholder {
       font-size: 1rem !important;
@@ -130,33 +135,37 @@ const SearchForm = styled.div`
       font-weight: bold;
       color: ${props => props.theme.colors.brand};
       font-size: 1rem !important;
-      text-indent: 0 !important;
     }
 
     &::placeholder {
       text-indent: 50px !important;
     }
+    
+    @media (min-width: ${props => props.theme.breakpoints.sm}) {
+      &{text-indent: 15px !important;}
+    }
+
   }
 
   .gsib_a {
     padding: 0;
+
+    @media (min-width: ${props => props.theme.breakpoints.sm}) {
+      padding: 2px 0 0 0;
+      vertical-align: top;
+    }
   }
 
   form.gsc-search-box,
   table.gsc-search-box {
     margin-bottom: 0 !important;
   }
-/* 
-  .gsc-results-wrapper-overlay {
-    top: 220px;
+
+  td.gsc-search-button{
+    vertical-align: top;
   }
 
-  .gsc-modal-background-image {
-    top: 210px;
-    opacity: 1;
-  } */
-
-  .gsc-search-button {
+  button.gsc-search-button, button.gsc-search-button:hover, button.gsc-search-button:focus  {
 
     background-color: ${props => props.theme.colors.brand};
     transition: background-color 0.2s ease-in;
@@ -169,9 +178,23 @@ const SearchForm = styled.div`
     outline: none;
     cursor: pointer;
     font-size: 0.8em;
+    border-radius: 0;
 
     & > svg {
-      width: 19px;
+      width: 18px;
+      height: 18px
+    }
+
+    @media (min-width: ${props => props.theme.breakpoints.sm}) {
+      border-radius: 5rem;
+      width: 35px;
+      height: 35px;
+      min-width: auto;
+      margin: 0;
+    }
+
+    &:hover, &:focus{
+      background-color: ${props => props.theme.colors.lighterblue};
     }
 /* 
   @media (min-width: ${props => props.theme.breakpoints.sm}) {
@@ -186,14 +209,14 @@ const SearchForm = styled.div`
   display: flex;
   /* justify-content: center; */
   transition: background-color 0.4s ease;
-  min-height: 38px;
-
+  
   &:focus-within {
     background-color: ${props => lighten(0.1, props.theme.colors.lighterblue)};
   }
 
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
     padding-left: 16px;
+    min-height: 38px;
   }
 
   @media (min-width: ${props => props.theme.breakpoints.sm}) {
@@ -216,6 +239,17 @@ const SearchForm = styled.div`
 `
 
 const SearchResultsWrap = styled.div`
+  .gsc-results-wrapper-overlay {
+    top: 220px;
+    padding: 0 6px 220px 6px;
+    box-shadow: none;
+  }
+
+  .gsc-modal-background-image {
+    top: 210px;
+    opacity: 1;
+  }
+
   .gsc-control-wrapper-cse {
     .gsc-results-wrapper-visible::before {
       content: 'Custom Search';

@@ -40,16 +40,6 @@ export default class MyDocument extends Document {
         <body style={bodyStyles}>
           <Main />
           <NextScript />
-          {/* <script
-            async
-            src="https://cse.google.com/cse.js?cx=016022363195733463411:78jhtkzhbhc"
-          ></script> */}
-
-          {/* current serlo search */}
-          <script
-            async
-            src="https://cse.google.com/cse.js?cx=017461339636837994840:ifahsiurxu4"
-          ></script>
         </body>
       </Html>
     )
