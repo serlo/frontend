@@ -477,7 +477,11 @@ gallery.sort((a, b) => a.title.localeCompare(b.title))
 export default function Gallery() {
   const [current, setCurrent] = React.useState('')
   React.useEffect(() => {
-    setCurrent(localStorage.getItem('__gallery_selected'))
+    console.log(window.location.hash)
+    const hash = window.location.hash.substring(1)
+    if (gallery.find(item => item.title === hash)) {
+      setCurrent(hash)
+    }
   }, [])
   const currentItem = gallery.filter(item => item.title === current)[0]
   return (
@@ -490,7 +494,7 @@ export default function Gallery() {
               active={entry.title === current}
               onClick={() => {
                 setCurrent(entry.title)
-                localStorage.setItem('__gallery_selected', entry.title)
+                window.location.hash = entry.title
               }}
               key={entry.title}
             >
@@ -617,17 +621,6 @@ function MyShareModal() {
       <ShareModal open={open} onClose={() => setOpen(false)} />
     </>
   )
-}
-
-const centeredModal = {
-  overlay: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  content: {
-    position: 'static'
-  }
 }
 
 function MyModal() {
