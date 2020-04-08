@@ -29,8 +29,8 @@ export default function SearchInput() {
     if (searchActive) return
 
     if (!searchLoaded) {
-      // var cx = '016022363195733463411:78jhtkzhbhc'
-      var cx = '017461339636837994840:ifahsiurxu4' //current serlo search
+      var cx = '016022363195733463411:78jhtkzhbhc'
+      //var cx = '017461339636837994840:ifahsiurxu4' //current serlo search
       var gcse = document.createElement('script')
       gcse.type = 'text/javascript'
       gcse.async = true
@@ -251,6 +251,9 @@ const SearchResultsWrap = styled.div`
   }
 
   .gsc-control-wrapper-cse {
+    max-width: 800px;
+    margin: 0 auto;
+
     .gsc-results-wrapper-visible::before {
       content: 'Custom Search';
       font-weight: bold;
@@ -262,5 +265,37 @@ const SearchResultsWrap = styled.div`
         left center no-repeat;
       text-indent: 50px;
     }
+
+    .gsc-url-top,
+    div.gs-per-result-labels {
+      display: none;
+    }
+
+    div.gs-title {
+      margin-bottom: 4px;
+    }
+  }
+
+  .gsc-control-cse {
+    font-family: Karmilla, sans-serif;
+
+    .gs-spelling,
+    .gs-result .gs-title,
+    .gs-result .gs-title * {
+      font-size: 1.125rem;
+    }
+
+    &,
+    .gsc-table-result {
+      font-size: 1rem;
+    }
+  }
+
+  .gsc-webResult .gsc-result {
+    padding-bottom: 15px;
+  }
+
+  .gsc-table-cell-thumbnail.gsc-thumbnail {
+    display: none;
   }
 `
