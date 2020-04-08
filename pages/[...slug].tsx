@@ -10,6 +10,8 @@ import Breadcrumbs from '../src/components/navigation/Breadcrumbs'
 import HSpace from '../src/components/content/HSpace'
 import Horizon from '../src/components/content/Horizon'
 import { horizonData } from '../src/horizondata'
+import fetch from 'isomorphic-unfetch'
+import absoluteUrl from 'next-absolute-url'
 
 function PageView(props) {
   const { data } = props
@@ -55,7 +57,9 @@ const MaxWidthDiv = styled.div`
 `
 
 export async function getServerSideProps(props) {
-  const data = await fetchContent('/' + props.params.slug.join('/'))
+  const { origin } = absoluteUrl(props.req)
+  const res = await fetch(`${origin}/api/${props.params.slug.join('/')}`)
+  const data = await res.json()
   return { props: { data } }
 }
 
