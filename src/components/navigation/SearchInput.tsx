@@ -282,6 +282,7 @@ const SearchResultsWrap = styled.div`
     .gs-result .gs-title,
     .gs-result .gs-title * {
       font-size: 1.125rem;
+      text-decoration: none;
     }
 
     &,
