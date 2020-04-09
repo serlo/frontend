@@ -529,7 +529,7 @@ Use a [dynamic import](https://nextjs.org/docs/advanced-features/dynamic-import)
 import React from 'react'
 import dynamic from 'next/dynamic'
 
-const FancyComponent = dynamic(import('../src/fancycomponent'))
+const FancyComponent = dynamic(() => import('../src/fancycomponent'))
 
 function HelloWorld() {
   const [visible, setVisible] = React.useState(false)

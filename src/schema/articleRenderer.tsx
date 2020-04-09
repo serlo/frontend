@@ -1,5 +1,5 @@
 import React from 'react'
-import { Node, Element } from 'slate'
+//import { Node, Element } from 'slate'
 import dynamic from 'next/dynamic'
 
 import ImgCentered from '../components/content/ImgCentered'
@@ -33,8 +33,8 @@ import GeogebraWrapper from '../components/content/GeogebraWrapper'
 import SpecialCSS from '../components/content/SpecialCSS'
 import { theme } from '../theme'
 
-const Math = dynamic(import('../components/content/Math'))
-const Geogebra = dynamic(import('../components/content/Geogebra'))
+const Math = dynamic(() => import('../components/content/Math'))
+const Geogebra = dynamic(() => import('../components/content/Geogebra'))
 
 export function renderArticle(value: Node[]) {
   if (!value) return null
@@ -44,10 +44,18 @@ export function renderArticle(value: Node[]) {
   )
 }
 
+function getNode(value, path) {
+  if (path.length === 0) {
+    return value
+  } else {
+    return getNode(value.children[path[0]], path.slice(1))
+  }
+}
+
 function render(value, path = []) {
-  const currentNode = Node.get(value, path)
+  const currentNode = getNode(value, path)
   const key = path[path.length - 1]
-  if (Element.isElement(currentNode)) {
+  if (currentNode && Array.isArray(currentNode.children)) {
     const children = currentNode.children.map((_, index) =>
       render(value, path.concat(index))
     )

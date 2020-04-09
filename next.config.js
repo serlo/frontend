@@ -17,5 +17,8 @@ module.exports = withBundleAnalyzer({
     })
 
     return config
+  },
+  devIndicators: {
+    autoPrerender: false
   }
 })

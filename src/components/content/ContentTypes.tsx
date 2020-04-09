@@ -6,27 +6,26 @@ import { faShareAlt } from '@fortawesome/free-solid-svg-icons'
 import ShareModal from '../navigation/ShareModal'
 
 import Ups from '../Ups'
-import WipHint from '../WipHint'
-import styled from 'styled-components'
-import Breadcrumbs from '../navigation/Breadcrumbs'
-import StyledUl from '../tags/StyledUl'
-import StyledLi from '../tags/StyledLi'
-import StyledA from '../tags/StyledA'
+//import WipHint from '../WipHint'
+//import styled from 'styled-components'
+//import Breadcrumbs from '../navigation/Breadcrumbs'
+//import StyledUl from '../tags/StyledUl'
+//import StyledLi from '../tags/StyledLi'
+//import StyledA from '../tags/StyledA'
 import StyledH1 from '../tags/StyledH1'
 import ToolLine from '../navigation/ToolLine'
 import ToolLineButton from '../navigation/ToolLineButton'
-import { createEditor, Editor } from 'slate'
-import { withArticle } from '../../schema/articleNormalizer'
+//import { createEditor, Editor } from 'slate'
+//import { withArticle } from '../../schema/articleNormalizer'
 import { renderArticle } from '../../schema/articleRenderer'
-const Create = dynamic(import('../../create/create'))
+//const Create = dynamic(import('../../create/create'))
 import Toolbox from '../navigation/Toolbox'
-import { convertEdtrioState } from '../../schema/convertEdtrioState'
-import { convertLegacyState } from '../../schema/convertLegacyState'
-import { checkArticleGuidelines } from '../../schema/articleGuidelines'
-import Hints from '../Hints'
+
+//import { checkArticleGuidelines } from '../../schema/articleGuidelines'
+//import Hints from '../Hints'
 import HSpace from './HSpace'
-import StyledP from '../tags/StyledP'
-import dynamic from 'next/dynamic'
+//import StyledP from '../tags/StyledP'
+//import dynamic from 'next/dynamic'
 
 interface ContentTypesProps {
   data: { contentType: string; data: any } // :-)
@@ -35,9 +34,9 @@ interface ContentTypesProps {
 export default function ContentTypes(props: ContentTypesProps) {
   const { data } = props
   if (data.contentType === 'Article' || data.contentType === 'Page') {
-    return <RenderArticle content={data.data} />
+    return <RenderArticle data={data.data} />
   }
-  if (data.contentType === 'topic' || data.contentType === 'subject') {
+  /*if (data.contentType === 'topic' || data.contentType === 'subject') {
     return (
       <>
         <WipHint part="Taxonomie" />
@@ -54,7 +53,7 @@ export default function ContentTypes(props: ContentTypesProps) {
         </StyledUl>
       </>
     )
-  }
+  }*/
   /*if (
     data.contentType === 'topic-folder' ||
     data.contentType === 'text-exercise'
@@ -85,34 +84,17 @@ export default function ContentTypes(props: ContentTypesProps) {
   return <Ups type={data.contentType} />
 }
 
-function RenderArticle({ content }) {
+function RenderArticle({ data }) {
   const [open, setOpen] = React.useState(false)
-  const [value, setValue] = React.useState(undefined)
-  const [editMode, setEditMode] = React.useState(false)
-  if (!value && content.edtrio) {
-    const edtrio = content.edtrio
-    const value = convertEdtrioState(edtrio)
-    //const editor = withArticle(createEditor())
-    //editor.children = value.children
-    //Editor.normalize(editor, { force: true })
-    setValue(value.children)
-  }
-  if (!value && content.legacy) {
-    const value: any = convertLegacyState(content.legacy)
-    //const editor = withArticle(createEditor())
-    //editor.children = value.children
-    //const starttime = Date.now()
-    //Editor.normalize(editor, { force: true })
-    //console.log('normalize time', Date.now() - starttime)
-    setValue(value.children)
-  }
-  if (editMode) {
+  //const [value, setValue] = React.useState(data.value)
+  //const [editMode, setEditMode] = React.useState(false)
+  /*if (editMode) {
     if (value.length < 1 || value[0].type !== 'h' || value[0].level !== 1) {
       const editor = withArticle(createEditor())
       editor.children = value
       Editor.normalize(editor, { force: true })
       setValue([
-        { type: 'h', level: 1, children: [{ text: content.title }] },
+        { type: 'h', level: 1, children: [{ text: data.title }] },
         ...editor.children,
         { type: 'p', children: [{ text: '' }] }
       ])
@@ -132,10 +114,10 @@ function RenderArticle({ content }) {
   }
   if (value && value[0] && value[0].type === 'h' && value[0].level === 1) {
     setValue(value.slice(1, -1))
-  }
+  }*/
   return (
     <>
-      <StyledH1 displayMode>{content.title}</StyledH1>
+      <StyledH1 displayMode>{data.title}</StyledH1>
       <ToolLine>
         <ToolLineButton onClick={() => setOpen(true)}>
           <FontAwesomeIcon icon={faShareAlt} size="1x" /> Teilen
@@ -149,7 +131,7 @@ function RenderArticle({ content }) {
         </ToolLineButton> */}
         {<ShareModal open={open} onClose={() => setOpen(false)} />}
       </ToolLine>
-      {renderArticle(value)}
+      {renderArticle(data.value.children)}
       <HSpace amount={20} />
       <ToolLine>
         <ToolLineButton onClick={() => setOpen(true)}>
@@ -158,15 +140,15 @@ function RenderArticle({ content }) {
       </ToolLine>
       <Toolbox
         onEdit={() => {
-          setEditMode(true)
+          //setEditMode(true)
         }}
       />
-      <Hints hints={checkArticleGuidelines(value)} />
+      {/*<Hints hints={checkArticleGuidelines(value)} />*/}
     </>
   )
 }
 
-const DesktopOnly = styled.div`
+/*const DesktopOnly = styled.div`
   @media (max-width: ${props => props.theme.breakpoints.mobile}) {
     display: none;
   }
@@ -185,3 +167,4 @@ const LegacyIndicator = styled.div`
   cursor: default;
   user-select: none;
 `
+*/
