@@ -1,10 +1,14 @@
 import fetch from 'isomorphic-unfetch'
 import { request } from 'graphql-request'
 import { render } from '../../external/legacy_render'
+import { metamenudata } from '../metamenudata'
+import { horizonData } from '../horizondata'
+import { convertLegacyState } from '../schema/convertLegacyState'
+import { convertEdtrioState } from '../schema/convertEdtrioState'
 
 const endpoint = 'https://api.serlo.org/graphql'
 
-export default async function fetchContentQL(alias) {
+export async function fetchContentQL(alias) {
   const data: any = {}
   let contentType = 'unknown'
 
@@ -68,7 +72,7 @@ export default async function fetchContentQL(alias) {
   return { alias, contentType, data }
 }
 
-export async function fetchContent(alias) {
+export default async function fetchContent(alias) {
   // deeeeeep shit
   alias = alias.replace('ä', '%C3%A4')
   alias = alias.replace('ö', '%C3%B6')
@@ -167,6 +171,7 @@ export async function fetchContent(alias) {
 
   const breadcrumbsStart = '<ol id="breadcrumbs">'
   const bcIndex = html.indexOf(breadcrumbsStart)
+  let breadcrumbs = undefined
   if (bcIndex >= 0) {
     // read breadcrumbs
     const bcEnd = html.indexOf('</ol>', bcIndex)
@@ -182,14 +187,48 @@ export async function fetchContent(alias) {
     if (myself) {
       links.push({ url: '#', label: myself[1] })
     }
-    data.breadcrumbs = links
+    breadcrumbs = links
   }
 
-  // random numbers
-  const randoms = []
-  for (let i = 0; i < 10; i++) {
-    randoms.push(Math.random())
+  // do some more post-processing here!!
+  const isMeta =
+    alias == '/serlo' || metamenudata.some(entry => alias == entry.url)
+  const showBreadcrumbs =
+    !isMeta &&
+    breadcrumbs.length > 1 &&
+    (contentType === 'Article' || contentType === 'Page')
+
+  // horizon
+  const horizonIndices = shuffle(Object.keys(horizonData))
+
+  // convert
+  if (data.legacy) {
+    data.value = convertLegacyState(data.legacy)
+    delete data.legacy
+  } else if (data.edtrio) {
+    data.value = convertEdtrioState(data.edtrio)
+    delete data.edtrio
   }
 
-  return { alias, contentType, data, randoms }
+  return {
+    alias,
+    contentType,
+    data,
+    isMeta,
+    showBreadcrumbs,
+    horizonIndices,
+    breadcrumbs
+  }
+}
+
+function shuffle(a) {
+  var j, x, i
+  for (i = a.length - 1; i > 0; i--) {
+    const r = Math.random()
+    j = Math.floor(r * (i + 1))
+    x = a[i]
+    a[i] = a[j]
+    a[j] = x
+  }
+  return a
 }

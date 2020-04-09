@@ -1,9 +1,10 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 import { makeDefaultButton } from '../../helper/csshelper'
+import { metamenudata } from '../../metamenudata'
+import MobileMetaMenu from './MobileMetaMenu'
 
 interface MetaMenuProps {
-  links: MetaMenuLink[]
   pagealias: string
 }
 
@@ -13,22 +14,26 @@ interface MetaMenuLink {
 }
 
 export default function MetaMenu(props: MetaMenuProps) {
-  const { links, pagealias } = props
+  const { pagealias } = props
+  const links = metamenudata
 
   return (
-    <MetaMenuWrapper>
-      <List>
-        {links.map((entry, i) => (
-          <Li key={entry.url}>
-            <Link href={entry.url}>
-              <ButtonStyle active={pagealias === entry.url}>
-                {entry.title}
-              </ButtonStyle>
-            </Link>
-          </Li>
-        ))}
-      </List>
-    </MetaMenuWrapper>
+    <>
+      <MobileMetaMenu links={metamenudata} pagealias={pagealias} />
+      <MetaMenuWrapper>
+        <List>
+          {links.map((entry, i) => (
+            <Li key={entry.url}>
+              <Link href={entry.url}>
+                <ButtonStyle active={pagealias === entry.url}>
+                  {entry.title}
+                </ButtonStyle>
+              </Link>
+            </Li>
+          ))}
+        </List>
+      </MetaMenuWrapper>
+    </>
   )
 }
 

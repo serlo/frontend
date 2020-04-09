@@ -11,7 +11,7 @@ interface MobileMenuButtonProps {
 export default function MobileMenuButton(props: MobileMenuButtonProps) {
   const { open, onClick } = props
   return (
-    <MenuButton onClick={onClick}>
+    <MenuButton onClick={onClick} aria-label="Menu">
       <FontAwesomeIcon icon={open ? faTimes : faBars} size="2x" />
     </MenuButton>
   )

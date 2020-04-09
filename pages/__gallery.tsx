@@ -300,7 +300,7 @@ const gallery = [
   {
     title: 'MetaMenu',
     description: 'Render side menu for meta pages.',
-    component: <MetaMenu links={metamenudata} pagealias={'/transparenz'} />
+    component: <MetaMenu pagealias={'/transparenz'} />
   },
   {
     title: 'MobileMenu',
