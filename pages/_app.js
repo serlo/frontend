@@ -7,13 +7,14 @@ config.autoAddCss = false
 
 import '../public/fonts/karmilla.css'
 import '../public/fonts/katex/katex.css'
+import '../public/fonts/hkgrotesk.css'
 
 import { ThemeProvider, createGlobalStyle } from 'styled-components'
 import { theme } from '../src/theme'
 
 const FontRewrite = createGlobalStyle`
   html, body, input, button {
-    font-family: '${props => props.font}', sans-serif !important;
+    font-family: '${props => props.font}', serif !important;
     letter-spacing: ${props => props.spacing} !important;
   }
 `
