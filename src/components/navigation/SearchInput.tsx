@@ -95,9 +95,8 @@ const AutocompleteStyle = createGlobalStyle`
     }
 
     .gssb_a td{
+      ${inputFontReset}
       white-space: normal !important;
-      font-size: 1rem;
-      font-family: Karmilla, sans-serif;
     }
   }
 `
@@ -277,7 +276,7 @@ const SearchResultsWrap = styled.div`
   }
 
   .gsc-control-cse {
-    font-family: Karmilla, sans-serif;
+    ${inputFontReset}
 
     .gs-spelling,
     .gs-result .gs-title,
