@@ -1,37 +1,58 @@
 import Header from '../src/components/navigation/Header'
-import ContentTypes from '../src/components/content/ContentTypes'
 import Footer from '../src/components/navigation/Footer'
 import styled from 'styled-components'
 import HSpace from '../src/components/content/HSpace'
 import Horizon from '../src/components/content/Horizon'
-import { horizonData } from '../src/horizondata'
+import { horizonData } from '../src/data/horizondata'
 import fetch from 'isomorphic-unfetch'
 import absoluteUrl from 'next-absolute-url'
 import dynamic from 'next/dynamic'
+import Head from 'next/head'
+import ArticlePage from '../src/components/content/ArticlePage'
+import StyledP from '../src/components/tags/StyledP'
 
 const MetaMenu = dynamic(() => import('../src/components/navigation/MetaMenu'))
 const Breadcrumbs = dynamic(() =>
   import('../src/components/navigation/Breadcrumbs')
 )
+const Topic = dynamic(() => import('../src/components/content/Topic'))
 
 function PageView(props) {
   const { data } = props
-  console.log(`Fetch time: ${data.fetchTime}ms`)
-  const { alias, isMeta, showBreadcrumbs, horizonIndices, breadcrumbs } = data
+  const {
+    alias,
+    isMeta,
+    showBreadcrumbs,
+    horizonIndices,
+    breadcrumbs,
+    contentType,
+    title
+  } = data
   return (
     <>
+      <Head>
+        <title>{title}</title>
+      </Head>
       <Header />
       {isMeta && <MetaMenu pagealias={alias} />}
       <RelatveContainer>
         <MaxWidthDiv>
+          {data.error ? <StyledP>{data.error}</StyledP> : null}
           {showBreadcrumbs && breadcrumbs && (
             <Breadcrumbs entries={breadcrumbs} />
           )}
           <main>
-            <ContentTypes data={data} />
+            {data && (contentType === 'Article' || contentType === 'Page') && (
+              <ArticlePage data={data.data} />
+            )}
+            {contentType === 'TaxonomyTerm' && <Topic data={data.data} />}
           </main>
           <HSpace amount={40} />
-          <Horizon entries={horizonIndices.map(index => horizonData[index])} />
+          {horizonIndices && (
+            <Horizon
+              entries={horizonIndices.map(index => horizonData[index])}
+            />
+          )}
         </MaxWidthDiv>
       </RelatveContainer>
       <Footer />
@@ -51,10 +72,10 @@ const MaxWidthDiv = styled.div`
 
 export async function getServerSideProps(props) {
   const { origin } = absoluteUrl(props.req)
-  const startTime = Date.now()
-  const res = await fetch(`${origin}/api/${props.params.slug.join('/')}`)
+  const res = await fetch(
+    `${origin}/api/${encodeURIComponent(props.params.slug.join('/'))}`
+  )
   const data = await res.json()
-  data.fetchTime = Date.now() - startTime
   return { props: { data } }
 }
 

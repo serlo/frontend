@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import TopicLinkList from './TopicLinkList'
+import { renderArticle } from '../../schema/articleRenderer'
 
 export interface LinkInterface {
   title: string
@@ -21,17 +22,13 @@ export enum TopicPurposes {
   detail
 }
 
-interface Description {
-  img: string
-  text: string
-}
-
 interface TopicProp {
   title: string
   url?: string
-  description: Description
+  description: any
   purpose?: TopicPurposes
   links: LinksInterface
+  children?: TopicProp[]
 }
 
 interface TopicProps {
@@ -44,19 +41,24 @@ export default function Topic({ data }: TopicProps) {
       {data.purpose === TopicPurposes.detail ? (
         <Headline>{data.title}</Headline>
       ) : (
-        <HeadlineLink>{data.title}</HeadlineLink>
+        <HeadlineLink href={data.url}>{data.title}</HeadlineLink>
       )}
+
       <Wrapper purpose={data.purpose}>
         <Overview>
-          <TopicImage src={data.description.img} alt={data.title} />
-          {data.purpose === TopicPurposes.detail && (
-            <Description>{data.description.text}</Description>
-          )}
+          {data.description && renderArticle(data.description)}
         </Overview>
+        {data.children &&
+          data.children.map(child => (
+            <>
+              <Topic data={child} key={child.title} />
+              <hr style={{ width: '100%' }} />
+            </>
+          ))}
         <LinkList>
           <TopicLinkList
-            links={data.links}
-            purpose={data.purpose}
+            links={data.links || {}}
+            purpose={data.purpose || TopicPurposes.overview}
           ></TopicLinkList>
         </LinkList>
       </Wrapper>
