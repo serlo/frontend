@@ -2,7 +2,6 @@ export const theme = {
   spacing: {
     mb: {
       block: '30px',
-      slim: '16px', // between paragraph/img and list
       li: '8px',
       h2: '22px',
       h3: '20px',

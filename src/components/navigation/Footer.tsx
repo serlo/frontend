@@ -6,7 +6,7 @@ import {
   faChevronCircleRight
 } from '@fortawesome/free-solid-svg-icons'
 
-import { footerNavEntries } from '../../footerdata'
+import { footerNavEntries } from '../../data/footerdata'
 import FooterNav from './FooterNav'
 import {
   makeResponsivePadding,

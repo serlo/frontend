@@ -16,7 +16,7 @@ interface BreadcrumbEntry {
 
 export default function Breadcrumbs(props: BreadcrumbProps) {
   const { entries } = props
-  if (!entries || entries.length < 2) {
+  if (!entries || entries.length < 1) {
     return null
   }
 
@@ -25,11 +25,9 @@ export default function Breadcrumbs(props: BreadcrumbProps) {
   at least on mobile but probably on larger screens too.
   */
 
-  const filteredEntries = entries.slice(0, entries.length - 1)
-
   return (
     <BreadcrumbWrapper>
-      {filteredEntries.map((bcEntry, i, l) => {
+      {entries.map((bcEntry, i, l) => {
         return (
           <BreadcrumbEntries
             bcEntry={bcEntry}
@@ -45,9 +43,6 @@ export default function Breadcrumbs(props: BreadcrumbProps) {
 
 function BreadcrumbEntries(props) {
   const { bcEntry, i, l } = props
-
-  //should probably happen on server side, don't show "all topics"
-  if (i == 1) return null
 
   const overflow = l.length > 5
   const itemsToRemove = l.length - 5

@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
+import Head from 'next/head'
 
 import Header from '../src/components/navigation/Header'
 import LandingSubjects from '../src/components/landing/LandingSubjects'
@@ -19,6 +20,9 @@ import ParticipateSVG from '../public/img/footer_participate.svg'
 export default function Landing() {
   return (
     <>
+      <Head>
+        <title>Serlo - Die freie Lernplattform</title>
+      </Head>
       <Header />
       <SubjectsSection>
         <LandingSubjects />
@@ -172,6 +176,7 @@ const PrinciplesSection = styled.section`
   & > svg {
     height: 450px;
     width: 100%;
+    font-family: inherit;
   }
 `
 

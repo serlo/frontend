@@ -36,9 +36,7 @@ export default class MyDocument extends Document {
   render() {
     return (
       <Html lang="de">
-        <Head>
-          <title>Serlo</title>
-        </Head>
+        <Head />
         <body style={bodyStyles}>
           <Main />
           <NextScript />

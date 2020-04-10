@@ -7,10 +7,11 @@ import { makeGreenButton } from '../../helper/csshelper'
 import ShareModal from './ShareModal'
 
 interface ToolboxProps {
-  onEdit: () => void
+  onEdit?: () => void
+  onShare?: () => void
 }
 
-export default function Toolbox({ onEdit }: ToolboxProps) {
+export default function Toolbox({ onEdit, onShare }: ToolboxProps) {
   const [open, setOpen] = React.useState(false)
 
   return (
@@ -19,11 +20,10 @@ export default function Toolbox({ onEdit }: ToolboxProps) {
         <IconButton onClick={onEdit}>
           <FontAwesomeIcon icon={faPencilAlt} size="1x" /> Inhalt bearbeiten
         </IconButton>
-        <IconButton onClick={() => setOpen(true)}>
+        <IconButton onClick={onShare}>
           <FontAwesomeIcon icon={faShareAlt} size="1x" /> Teilen!
         </IconButton>
       </BoxWrapper>
-      <ShareModal open={open} onClose={() => setOpen(false)} />
     </AbsoluteWrapper>
   )
 }
