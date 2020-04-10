@@ -19,7 +19,7 @@ export default function ArticlePage({ data }) {
           <FontAwesomeIcon icon={faShareAlt} size="1x" /> Teilen
         </ToolLineButton>
       </ToolLine>
-      {renderArticle(data.value.children)}
+      {data.value && renderArticle(data.value.children)}
       <HSpace amount={20} />
       <ToolLine>
         <ToolLineButton onClick={() => setOpen(true)}>

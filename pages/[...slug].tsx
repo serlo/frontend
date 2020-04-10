@@ -9,11 +9,13 @@ import absoluteUrl from 'next-absolute-url'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import ArticlePage from '../src/components/content/ArticlePage'
+import StyledP from '../src/components/tags/StyledP'
 
 const MetaMenu = dynamic(() => import('../src/components/navigation/MetaMenu'))
 const Breadcrumbs = dynamic(() =>
   import('../src/components/navigation/Breadcrumbs')
 )
+const Topic = dynamic(() => import('../src/components/content/Topic'))
 
 function PageView(props) {
   const { data } = props
@@ -35,6 +37,7 @@ function PageView(props) {
       {isMeta && <MetaMenu pagealias={alias} />}
       <RelatveContainer>
         <MaxWidthDiv>
+          {data.error ? <StyledP>{data.error}</StyledP> : null}
           {showBreadcrumbs && breadcrumbs && (
             <Breadcrumbs entries={breadcrumbs} />
           )}
@@ -42,6 +45,7 @@ function PageView(props) {
             {data && (contentType === 'Article' || contentType === 'Page') && (
               <ArticlePage data={data.data} />
             )}
+            {contentType === 'TaxonomyTerm' && <Topic data={data.data} />}
           </main>
           <HSpace amount={40} />
           {horizonIndices && (
