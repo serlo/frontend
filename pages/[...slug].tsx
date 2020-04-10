@@ -72,7 +72,9 @@ const MaxWidthDiv = styled.div`
 
 export async function getServerSideProps(props) {
   const { origin } = absoluteUrl(props.req)
-  const res = await fetch(`${origin}/api/${props.params.slug.join('/')}`)
+  const res = await fetch(
+    encodeURIComponent(`${origin}/api/${props.params.slug.join('/')}`)
+  )
   const data = await res.json()
   return { props: { data } }
 }
