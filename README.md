@@ -223,6 +223,10 @@ const GrowingParagraph = styled.p`
 export default HelloWorld
 ```
 
+#### Colors
+
+Visit `localhost:3000/_colors` to see all the colors predefined in the theme. 
+
 ### Units
 
 There exists a bunch of different length units. Most of the time, [px](https://stackoverflow.com/questions/11799236/should-i-use-px-or-rem-value-units-in-my-css) is fine. Sometimes there are better alternativs, especially in regard of [a11y](https://www.24a11y.com/2019/pixels-vs-relative-units-in-css-why-its-still-a-big-deal/):
