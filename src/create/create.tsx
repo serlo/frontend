@@ -576,8 +576,6 @@ function renderElement(props, editor) {
   const type = element.type
   const path = ReactEditor.findPath(editor, element)
 
-  console.log(path)
-
   if (type) {
     if (type in simpleRenderer) {
       return simpleRenderer[type](props)
