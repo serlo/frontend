@@ -1,4 +1,4 @@
-import { lighten, setLightness, mix, tint, shade } from 'polished'
+import { tint, shade } from 'polished'
 
 type Color = {
   [key: string]: string
@@ -15,12 +15,11 @@ colors.lighterblue = tint(0.55, colors.brand) //#8cc4e3
 colors.lightBlueBackground = tint(0.85, colors.brand) //#d8ebf5
 colors.bluewhite = tint(0.94, colors.brand) //#f0f7fb
 colors.lightBackground = tint(0.96, colors.brand) //#f3f9fb
-colors.lightBlueBackground = '#dbecf6'
 
 //black, gray, white
 colors.black = '#000'
 colors.darkgray = tint(0.135, colors.black) //#222
-colors.dark1 = tint(0.2, colors.black) //#333 -> maybe replace
+colors.dark1 = tint(0.2, colors.black) //#333 -> maybe merge with darkgray
 colors.gray = tint(0.505, colors.black) //#808080
 colors.lightgray = tint(0.8, colors.black) //#ccc
 colors.white = '#fff'
