@@ -6,6 +6,7 @@ import LandingAbout from '../src/components/landing/LandingAbout'
 import Footer from '../src/components/navigation/Footer'
 import Topic from '../src/components/content/Topic'
 import { TopicPurposes } from '../src/components/content/Topic'
+import CookieBar from '../src/components/content/CookieBar'
 
 const topic = {
   title: 'Satzgruppe des Pythagoras',
@@ -129,6 +130,7 @@ export default function Landing() {
         <Topic props={topic}></Topic>
       </Container>
       <Footer />
+      <CookieBar></CookieBar>
     </>
   )
 }
