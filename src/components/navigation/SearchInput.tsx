@@ -45,9 +45,6 @@ export default function SearchInput() {
 
     checkElement('#gsc-i-id1').then(input => {
       input.focus()
-      // input.addEventListener('input', function(e) {
-      //   inputRef.current.value = e.target.value
-      // })
       setSearchActive(true)
     })
   }
@@ -98,6 +95,10 @@ const sharedTextStyles = css`
   font-size: 1rem;
   font-weight: bold;
   color: ${props => props.theme.colors.brand};
+
+  @media (min-width: ${props => props.theme.breakpoints.sm}) {
+    margin-left: 15px;
+  }
 `
 
 const sharedButtonStyles = css`
@@ -132,51 +133,7 @@ const sharedIconStyles = css`
   }
 `
 
-const PlaceholderText = styled.div`
-  ${sharedTextStyles}
-`
-
-const PlaceholderButton = styled.div`
-  ${sharedButtonStyles}
-`
-
-const PlaceholderIcon = styled(SearchIcon)`
-  ${sharedIconStyles}
-`
-
-const SearchForm = styled.div`
-  background-color: ${props => lighten(0.1, props.theme.colors.lighterblue)};
-  display: flex;
-  /* justify-content: center; */
-  transition: background-color 0.4s ease;
-
-  &:focus-within {
-    background-color: ${props => lighten(0.1, props.theme.colors.lighterblue)};
-  }
-
-  @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    padding-left: 16px;
-    min-height: 38px;
-  }
-
-  @media (min-width: ${props => props.theme.breakpoints.sm}) {
-    position: absolute;
-    top: 133px;
-    right: 32px;
-    height: 35px;
-    width: 224px;
-    background-color: transparent;
-    border-radius: 18px;
-    transition: all 0.4s ease;
-    justify-content: flex-end;
-  }
-
-  @media (min-width: ${props => props.theme.breakpoints.lg}) {
-    right: 27px;
-    /* margin-top: -5px; */
-    margin-left: auto;
-  }
-
+const gscMiscResets = css`
   #___gcse_0 {
     flex: 1;
   }
@@ -189,32 +146,6 @@ const SearchForm = styled.div`
     border: 0;
     padding: 0;
     background: none;
-  }
-
-  input.gsc-input {
-    background: transparent !important;
-
-    text-indent: 0 !important;
-
-    &,
-    &::placeholder {
-      ${inputFontReset}
-      ${sharedTextStyles}
-      font-size: 1rem !important;
-    }
-
-    &::placeholder {
-      text-indent: 50px !important;
-    }
-
-    @media (min-width: ${props => props.theme.breakpoints.sm}) {
-      & {
-        text-indent: 15px !important;
-      }
-      &::placeholder {
-        text-indent: 0 !important;
-      }
-    }
   }
 
   .gsib_a {
@@ -234,32 +165,114 @@ const SearchForm = styled.div`
   td.gsc-search-button {
     vertical-align: top;
   }
+`
 
-  button.gsc-search-button {
-    ${sharedButtonStyles}
+const gcsInput = css`
+  background: transparent !important;
+  text-indent: 0 !important;
 
-    /*resets*/
-    pointer-events: auto;
-    padding: 0;
-    border: 0;
-    outline: none;
-    border-radius: 0;
+  &,
+  &::placeholder {
+    ${inputFontReset}
+    ${sharedTextStyles}
+      font-size: 1rem !important;
+  }
 
-    & > svg {
-      /* doesn't need shared styles */
-      width: 18px;
-      height: 18px;
+  &::placeholder {
+    text-indent: 50px !important;
+  }
+
+  @media (min-width: 450px) {
+    text-indent: 50px !important;
+  }
+
+  @media (min-width: ${props => props.theme.breakpoints.sm}) {
+    text-indent: 15px !important;
+
+    &::placeholder {
+      text-indent: 15px !important;
     }
   }
 `
 
+const gcsButton = css`
+  ${sharedButtonStyles}
+
+  /*resets*/
+  pointer-events: auto;
+  padding: 0;
+  border: 0;
+  outline: none;
+  border-radius: 0;
+
+  & > svg {
+    /* doesn't need shared styles */
+    width: 18px;
+    height: 18px;
+  }
+`
+
+const PlaceholderText = styled.div`
+  ${sharedTextStyles}
+`
+
+const PlaceholderButton = styled.div`
+  ${sharedButtonStyles}
+`
+
+const PlaceholderIcon = styled(SearchIcon)`
+  ${sharedIconStyles}
+`
+
+const SearchForm = styled.div`
+  background-color: ${props => lighten(0.1, props.theme.colors.lighterblue)};
+  display: flex;
+  transition: background-color 0.4s ease;
+
+  &:focus-within {
+    background-color: ${props => lighten(0.1, props.theme.colors.lighterblue)};
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding-left: 16px;
+    min-height: 38px;
+  }
+
+  @media (min-width: ${props => props.theme.breakpoints.sm}) {
+    position: absolute;
+    top: 133px;
+    right: 32px;
+    height: ${smHeightPx};
+    width: 200px;
+    background-color: transparent;
+    border-radius: 18px;
+    transition: all 0.4s ease;
+    justify-content: flex-end;
+  }
+
+  @media (min-width: ${props => props.theme.breakpoints.lg}) {
+    right: 27px;
+    margin-left: auto;
+  }
+
+  ${gscMiscResets}
+
+  input.gsc-input {
+    ${gcsInput}
+  }
+
+  button.gsc-search-button {
+    ${gcsButton}
+  }
+`
+
+/* needs to be global style because it's just added as last body element */
 const AutocompleteStyle = createGlobalStyle`
   table.gstl_50.gssb_c{
 
     z-index: 100010;
 
-    /* TODO: Get value from theme */
-    @media (max-width: 800px) { 
+    @media (max-width: ${props => props.theme.breakpoints.sm}) {
       margin-top: 2px;
       display:block !important;
       left: 5px !important;
@@ -267,7 +280,8 @@ const AutocompleteStyle = createGlobalStyle`
       width: auto !important;
     }
 
-    @media (min-width: 800px) {
+    @media (min-width: ${props => props.theme.breakpoints.sm}) {
+      left: inherit !important;
       margin-left: 10px;
       margin-top: 2px;
       width: auto;
