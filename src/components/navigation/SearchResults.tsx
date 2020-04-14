@@ -29,7 +29,7 @@ const SearchResultsWrap = styled.div`
     margin: 0 auto;
 
     .gsc-results-wrapper-visible::before {
-      content: 'Custom Search';
+      content: attr(data-customsearch);
       font-weight: bold;
       display: block;
       color: ${props => props.theme.colors.brand};

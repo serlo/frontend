@@ -22,9 +22,6 @@ export default function SearchInput() {
     return document.querySelector(selector)
   }
 
-  // TODO: Get placeholder of Google element (when it exists) replace with "Suche"
-  // and copy original string to Google branding in overlay
-
   // Experiment: "lazy load" scripts and build input on the fly when using the search for the first time
   function activateSearch() {
     if (searchActive) return
@@ -43,6 +40,14 @@ export default function SearchInput() {
     }
 
     checkElement('#gsc-i-id1').then(input => {
+      // TODO: Get placeholder of Google element (when it exists) replace with "Suche"
+      // and copy original string to Google branding in overlay
+      const placeholder = input.getAttribute('placeholder')
+      input.setAttribute('placeholder', 'Suche')
+      document
+        .querySelector('#___gcse_1 .gsc-results-wrapper-overlay')
+        .setAttribute('data-customsearch', placeholder)
+
       input.focus()
       setSearchActive(true)
     })
