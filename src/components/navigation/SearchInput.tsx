@@ -11,10 +11,6 @@ export default function SearchInput() {
   const [searchLoaded, setSearchLoaded] = React.useState(false)
   const [searchActive, setSearchActive] = React.useState(false)
 
-  //const [showSettings, setShowSettings] = React.useState(false)
-  const inputRef = React.useRef(null)
-  const [value, setValue] = React.useState('')
-
   const checkElement = async selector => {
     while (document.querySelector(selector) === null) {
       await new Promise(resolve => requestAnimationFrame(resolve))
@@ -40,8 +36,6 @@ export default function SearchInput() {
     }
 
     checkElement('#gsc-i-id1').then(input => {
-      // TODO: Get placeholder of Google element (when it exists) replace with "Suche"
-      // and copy original string to Google branding in overlay
       const placeholder = input.getAttribute('placeholder')
       input.setAttribute('placeholder', 'Suche')
       document
@@ -242,6 +236,7 @@ const SearchForm = styled.div`
   background-color: ${props => lighten(0.1, props.theme.colors.lighterblue)};
   display: flex;
   transition: background-color 0.4s ease;
+  cursor: pointer;
 
   &:focus-within {
     background-color: ${props => lighten(0.1, props.theme.colors.lighterblue)};
@@ -295,11 +290,9 @@ const AutocompleteStyle = createGlobalStyle`
     }
 
     @media (min-width: ${props => props.theme.breakpoints.sm}) {
-      left: inherit !important;
       margin-left: 10px;
       margin-top: 2px;
       width: auto;
-      display:block !important;
     }
 
     .gsc-completion-container > tbody > tr {

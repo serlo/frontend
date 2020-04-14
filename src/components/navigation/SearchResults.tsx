@@ -10,18 +10,30 @@ const SearchResultsWrap = styled.div`
   .gsc-control-cse {
     border: 0;
     padding: 0;
-    /* z-index: 20; */
   }
 
   .gsc-results-wrapper-overlay {
     top: 220px;
-    padding: 0 6px 220px 6px;
+    padding: 0 0 220px 0;
     box-shadow: none;
+
+    width: 96%;
+    left: ${props => props.theme.defaults.sideSpacingMobile};
+
+    @media (min-width: ${props => props.theme.breakpoints.sm}) {
+      > div {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+    }
   }
 
   .gsc-modal-background-image {
-    top: 210px;
     opacity: 1;
+    top: 210px;
+    @media (min-width: ${props => props.theme.breakpoints.sm}) {
+      top: 190px;
+    }
   }
 
   .gsc-control-wrapper-cse {
@@ -38,6 +50,11 @@ const SearchResultsWrap = styled.div`
       background: url('http://www.google.com/cse/static/images/1x/googlelogo_lightgrey_46x16dp.png')
         left center no-repeat;
       text-indent: 50px;
+
+      @media (min-width: ${props => props.theme.breakpoints.sm}) {
+        max-width: 800px;
+        margin: 0 auto;
+      }
     }
 
     .gsc-url-top,
