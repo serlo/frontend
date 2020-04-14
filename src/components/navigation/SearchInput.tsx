@@ -1,9 +1,11 @@
 import React from 'react'
-import styled, { createGlobalStyle } from 'styled-components'
+import styled, { createGlobalStyle, css } from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { lighten } from 'polished'
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { inputFontReset } from '../../helper/csshelper'
+import SearchIcon from '../../../public/img/search-icon.svg'
+// import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import SearchResults from './SearchResults'
 
 export default function SearchInput() {
   const [focused, setFocused] = React.useState(false)
@@ -53,7 +55,14 @@ export default function SearchInput() {
   return (
     <>
       <SearchForm id="searchform" onClick={activateSearch}>
-        {!searchLoaded && <a>Placeholder</a>}
+        {!searchLoaded && (
+          <>
+            <PlaceholderText>Suche</PlaceholderText>
+            <PlaceholderButton>
+              <PlaceholderIcon />
+            </PlaceholderButton>
+          </>
+        )}
         <div
           className="gcse-searchbox"
           data-autocompletemaxcompletions="5"
@@ -62,12 +71,187 @@ export default function SearchInput() {
 
       <AutocompleteStyle />
 
-      <SearchResultsWrap>
+      <SearchResults>
         <div className="gcse-searchresults"></div>
-      </SearchResultsWrap>
+      </SearchResults>
     </>
   )
 }
+
+const height = 40
+const heightPx = height + 'px'
+
+const smHeight = 35
+const smHeightPx = smHeight + 'px'
+
+/*
+beware, a bit of improvised styled component use ahead.
+this is kind of a pattern for lack of better solutions:
+https://github.com/styled-components/styled-components/issues/1209#issue-263146426
+still nicer than repeating all styles later imho.
+*/
+
+const sharedTextStyles = css`
+  flex: 1;
+  margin-left: 52px;
+  line-height: ${heightPx};
+  font-size: 1rem;
+  font-weight: bold;
+  color: ${props => props.theme.colors.brand};
+`
+
+const sharedButtonStyles = css`
+  height: ${heightPx};
+  width: ${heightPx};
+
+  background-color: ${props => props.theme.colors.brand};
+  transition: background-color 0.2s ease-in;
+  text-align: center;
+  pointer-events: none;
+
+  @media (min-width: ${props => props.theme.breakpoints.sm}) {
+    border-radius: 5rem;
+    width: 35px;
+    height: 35px;
+    margin: 0;
+  }
+
+  &:hover,
+  &:focus {
+    background-color: ${props => props.theme.colors.lighterblue};
+  }
+`
+
+const sharedIconStyles = css`
+  width: 18px;
+  height: 18px;
+  fill: #fff;
+  margin-top: ${(height - 19) / 2}px;
+  @media (min-width: ${props => props.theme.breakpoints.sm}) {
+    margin-top: ${(smHeight - 18) / 2}px;
+  }
+`
+
+const PlaceholderText = styled.div`
+  ${sharedTextStyles}
+`
+
+const PlaceholderButton = styled.div`
+  ${sharedButtonStyles}
+`
+
+const PlaceholderIcon = styled(SearchIcon)`
+  ${sharedIconStyles}
+`
+
+const SearchForm = styled.div`
+  background-color: ${props => lighten(0.1, props.theme.colors.lighterblue)};
+  display: flex;
+  /* justify-content: center; */
+  transition: background-color 0.4s ease;
+
+  &:focus-within {
+    background-color: ${props => lighten(0.1, props.theme.colors.lighterblue)};
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding-left: 16px;
+    min-height: 38px;
+  }
+
+  @media (min-width: ${props => props.theme.breakpoints.sm}) {
+    position: absolute;
+    top: 133px;
+    right: 32px;
+    height: 35px;
+    width: 224px;
+    background-color: transparent;
+    border-radius: 18px;
+    transition: all 0.4s ease;
+    justify-content: flex-end;
+  }
+
+  @media (min-width: ${props => props.theme.breakpoints.lg}) {
+    right: 27px;
+    /* margin-top: -5px; */
+    margin-left: auto;
+  }
+
+  #___gcse_0 {
+    flex: 1;
+  }
+
+  .gcse-search {
+    display: none;
+  }
+
+  .gsc-input-box {
+    border: 0;
+    padding: 0;
+    background: none;
+  }
+
+  input.gsc-input {
+    background: transparent !important;
+
+    text-indent: 0 !important;
+
+    &,
+    &::placeholder {
+      ${inputFontReset}
+      ${sharedTextStyles}
+      font-size: 1rem !important;
+    }
+
+    &::placeholder {
+      text-indent: 50px !important;
+    }
+
+    @media (min-width: ${props => props.theme.breakpoints.sm}) {
+      & {
+        text-indent: 15px !important;
+      }
+      &::placeholder {
+        text-indent: 0 !important;
+      }
+    }
+  }
+
+  .gsib_a {
+    padding: 0;
+
+    @media (min-width: ${props => props.theme.breakpoints.sm}) {
+      padding: 4px 0 0 0;
+      vertical-align: top;
+    }
+  }
+
+  form.gsc-search-box,
+  table.gsc-search-box {
+    margin-bottom: 0 !important;
+  }
+
+  td.gsc-search-button {
+    vertical-align: top;
+  }
+
+  button.gsc-search-button {
+    ${sharedButtonStyles}
+
+    /*resets*/
+    pointer-events: auto;
+    padding: 0;
+    border: 0;
+    outline: none;
+    border-radius: 0;
+
+    & > svg {
+      /* doesn't need shared styles */
+      width: 18px;
+      height: 18px;
+    }
+  }
+`
 
 const AutocompleteStyle = createGlobalStyle`
   table.gstl_50.gssb_c{
@@ -98,204 +282,5 @@ const AutocompleteStyle = createGlobalStyle`
       ${inputFontReset}
       white-space: normal !important;
     }
-  }
-`
-
-const SearchForm = styled.div`
-  #___gcse_0,
-  & > div {
-    flex: 1;
-  }
-
-  .gcse-search {
-    display: none;
-  }
-
-  .gsc-input-box {
-    border: 0;
-    background: none;
-  }
-
-  .gsc-control-cse {
-    background-color: white;
-    border: 0;
-    padding: 0;
-    z-index: 20;
-  }
-
-  input.gsc-input {
-    background: transparent !important;
-
-    text-indent: 0 !important;
-
-    &, &::placeholder {
-      font-size: 1rem !important;
-      ${inputFontReset}
-      font-weight: bold;
-      color: ${props => props.theme.colors.brand};
-      font-size: 1rem !important;
-    }
-
-    &::placeholder {
-      text-indent: 50px !important;
-    }
-    
-    @media (min-width: ${props => props.theme.breakpoints.sm}) {
-      &{text-indent: 15px !important;}
-    }
-
-  }
-
-  .gsib_a {
-    padding: 0;
-
-    @media (min-width: ${props => props.theme.breakpoints.sm}) {
-      padding: 2px 0 0 0;
-      vertical-align: top;
-    }
-  }
-
-  form.gsc-search-box,
-  table.gsc-search-box {
-    margin-bottom: 0 !important;
-  }
-
-  td.gsc-search-button{
-    vertical-align: top;
-  }
-
-  button.gsc-search-button, button.gsc-search-button:hover, button.gsc-search-button:focus  {
-
-    background-color: ${props => props.theme.colors.brand};
-    transition: background-color 0.2s ease-in;
-
-    color: 'white';
-    height: 40px;
-    min-width: 40px;
-    padding: 0;
-    border: 0;
-    outline: none;
-    cursor: pointer;
-    font-size: 0.8em;
-    border-radius: 0;
-
-    & > svg {
-      width: 18px;
-      height: 18px
-    }
-
-    @media (min-width: ${props => props.theme.breakpoints.sm}) {
-      border-radius: 5rem;
-      width: 35px;
-      height: 35px;
-      min-width: auto;
-      margin: 0;
-    }
-
-    &:hover, &:focus{
-      background-color: ${props => props.theme.colors.lighterblue};
-    }
-/* 
-  @media (min-width: ${props => props.theme.breakpoints.sm}) {
-    color: white;
-    min-width: 35px;
-    height: 35px;
-    border-radius: 17px;
-  } */
-  }
-
-  background-color: ${props => lighten(0.1, props.theme.colors.lighterblue)};
-  display: flex;
-  /* justify-content: center; */
-  transition: background-color 0.4s ease;
-  
-  &:focus-within {
-    background-color: ${props => lighten(0.1, props.theme.colors.lighterblue)};
-  }
-
-  @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    padding-left: 16px;
-    min-height: 38px;
-  }
-
-  @media (min-width: ${props => props.theme.breakpoints.sm}) {
-    position: absolute;
-    top: 133px;
-    right: 32px;
-    height: 35px;
-    width: 224px;
-    background-color: transparent;
-    border-radius: 18px;
-    transition: all 0.4s ease;
-    justify-content: flex-end;
-  }
-
-  @media (min-width: ${props => props.theme.breakpoints.lg}) {
-    right: 27px;
-    /* margin-top: -5px; */
-    margin-left: auto;
-  }
-`
-
-const SearchResultsWrap = styled.div`
-  .gsc-results-wrapper-overlay {
-    top: 220px;
-    padding: 0 6px 220px 6px;
-    box-shadow: none;
-  }
-
-  .gsc-modal-background-image {
-    top: 210px;
-    opacity: 1;
-  }
-
-  .gsc-control-wrapper-cse {
-    max-width: 800px;
-    margin: 0 auto;
-
-    .gsc-results-wrapper-visible::before {
-      content: 'Custom Search';
-      font-weight: bold;
-      display: block;
-      color: ${props => props.theme.colors.brand};
-      width: 100%;
-      padding: 10px 0;
-      background: url('http://www.google.com/cse/static/images/1x/googlelogo_lightgrey_46x16dp.png')
-        left center no-repeat;
-      text-indent: 50px;
-    }
-
-    .gsc-url-top,
-    div.gs-per-result-labels {
-      display: none;
-    }
-
-    div.gs-title {
-      margin-bottom: 4px;
-    }
-  }
-
-  .gsc-control-cse {
-    ${inputFontReset}
-
-    .gs-spelling,
-    .gs-result .gs-title,
-    .gs-result .gs-title * {
-      font-size: 1.125rem;
-      text-decoration: none;
-    }
-
-    &,
-    .gsc-table-result {
-      font-size: 1rem;
-    }
-  }
-
-  .gsc-webResult .gsc-result {
-    padding-bottom: 15px;
-  }
-
-  .gsc-table-cell-thumbnail.gsc-thumbnail {
-    display: none;
   }
 `
