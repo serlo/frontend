@@ -1,14 +1,11 @@
 import React from 'react'
 import styled, { createGlobalStyle, css } from 'styled-components'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { lighten } from 'polished'
 import { inputFontReset } from '../../helper/csshelper'
 import SearchIcon from '../../../public/img/search-icon.svg'
-// import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import SearchResults from './SearchResults'
 
 export default function SearchInput() {
-  const [focused, setFocused] = React.useState(false)
   const [searchLoaded, setSearchLoaded] = React.useState(false)
   const [searchActive, setSearchActive] = React.useState(false)
 
@@ -52,7 +49,7 @@ export default function SearchInput() {
   return (
     <>
       <SearchForm id="searchform" onClick={activateSearch}>
-        {!searchLoaded && (
+        {!searchActive && (
           <>
             <PlaceholderText>Suche</PlaceholderText>
             <PlaceholderButton>
