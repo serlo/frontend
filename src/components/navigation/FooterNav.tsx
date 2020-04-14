@@ -117,6 +117,8 @@ const NavLi = styled.li`
 `
 
 const NavLink = styled.a`
+  display: inline-block;
+  padding: 8px 0;
   color: ${props => lighten(0.15, props.theme.colors.dark1)};
   text-decoration: none;
 
