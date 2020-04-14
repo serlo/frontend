@@ -4,6 +4,8 @@ import { lighten } from 'polished'
 import { inputFontReset } from '../../helper/csshelper'
 import SearchIcon from '../../../public/img/search-icon.svg'
 import SearchResults from './SearchResults'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 
 export default function SearchInput() {
   const [searchLoaded, setSearchLoaded] = React.useState(false)
@@ -53,7 +55,11 @@ export default function SearchInput() {
           <>
             <PlaceholderText>Suche</PlaceholderText>
             <PlaceholderButton>
-              <PlaceholderIcon />
+              {!searchLoaded ? (
+                <PlaceholderIcon />
+              ) : (
+                <LoadingIcon icon={faSpinner} size="1x" spin />
+              )}
             </PlaceholderButton>
           </>
         )}
@@ -219,6 +225,12 @@ const PlaceholderButton = styled.div`
 
 const PlaceholderIcon = styled(SearchIcon)`
   ${sharedIconStyles}
+`
+
+const LoadingIcon = styled(FontAwesomeIcon)`
+  ${sharedIconStyles}
+  color: #fff;
+  font-size: 20px;
 `
 
 const SearchForm = styled.div`
