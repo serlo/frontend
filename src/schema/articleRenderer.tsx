@@ -177,7 +177,11 @@ const StyledHx = {
 
 export function renderH({ element, attributes = {}, children = null }) {
   const Comp = StyledHx[element.level]
-  return <Comp {...attributes}>{children}</Comp>
+  return (
+    <Comp {...attributes} id={element.id}>
+      {children}
+    </Comp>
+  )
 }
 
 export function renderImg({

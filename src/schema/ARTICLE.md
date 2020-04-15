@@ -74,7 +74,7 @@ Block
 
 ### `h`
 
-Attributes: level (1-5)
+Attributes: level (1-5), id
 
 Block
 
@@ -158,13 +158,13 @@ Block, Void
 
 ### `injection`
 
-Attributes: TODO
+Attributes: href
 
 Block, Void
 
 ### `video`
 
-Attributes: TODO
+Attributes: url
 
 Block, Void
 
@@ -284,19 +284,19 @@ No additional constraints.
 
 ### injection
 
-TODO
+No additional constraints
 
 ### video
 
-TODO
+No additional constraints.
 
 ### exercise
 
-TODO
+No additional constraints (not part of editor).
 
 ### exercise-group
 
-TODO
+No additional constraints (not part of editor).
 
 ### Root
 
