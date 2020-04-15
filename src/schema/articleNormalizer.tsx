@@ -1,6 +1,15 @@
 import { Path, Transforms, Node, Text, Element, Editor } from 'slate'
 
-const voidElements = ['math', 'img', 'inline-math', 'anchor', 'geogebra']
+const voidElements = [
+  'math',
+  'img',
+  'inline-math',
+  'anchor',
+  'geogebra',
+  'injection',
+  'video',
+  'exercise'
+]
 const inlineElements = ['inline-math', 'a']
 
 export const articleSchema = {
@@ -20,7 +29,7 @@ export const articleSchema = {
     children: ['inline-math']
   },
   'spoiler-body': {
-    children: ['p', 'img', 'math', 'ul', 'ol', 'row'],
+    children: ['p', 'img', 'math', 'ul', 'ol', 'row', 'injection', 'video'],
     wrapTextIn: { type: 'p', children: [{ text: '' }] }
   },
   ul: {
@@ -76,7 +85,9 @@ export const articleSchema = {
       'spoiler-container',
       'anchor',
       'table',
-      'geogebra'
+      'geogebra',
+      'injection',
+      'video'
     ],
     wrapTextIn: { type: 'p', children: [{ text: '' }] }
   }

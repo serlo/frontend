@@ -99,20 +99,9 @@ export function convert(node) {
   if (plugin === 'injection') {
     return [
       {
-        type: 'p',
-        children: [
-          {
-            text: '[Injection: '
-          },
-          {
-            type: 'a',
-            href: node.state,
-            children: [{ text: node.state }]
-          },
-          {
-            text: ']'
-          }
-        ]
+        type: 'injection',
+        href: node.state,
+        children: [{ text: '' }]
       }
     ]
   }
@@ -123,8 +112,8 @@ export function convert(node) {
   if (plugin === 'video') {
     return [
       {
-        type: 'p',
-        children: [{ text: '[Video]' }]
+        type: 'video',
+        children: [{ text: '' }]
       }
     ]
   }
@@ -145,6 +134,12 @@ export function convert(node) {
       id = match[1]
     }
     return [{ type: 'geogebra', id, children: [{ text: '' }] }]
+  }
+  if (plugin === 'exercise') {
+    return [{ type: '@edtr-io/exercise', state: node.state }]
+  }
+  if (plugin === 'solution') {
+    return [{ type: '@edtr-io/solution', state: node.state }]
   }
 
   const type = node.type

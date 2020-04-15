@@ -29,19 +29,24 @@ import TableWrapper from '../components/content/TableWrapper'
 import SpoilerToggle from '../components/content/SpoilerToggle'
 import ExternalLink from '../components/content/ExternalLink'
 import GeogebraWrapper from '../components/content/GeogebraWrapper'
+import ExerciseGroup from '../components/content/ExerciseGroup'
 
 import SpecialCSS from '../components/content/SpecialCSS'
 import { theme } from '../theme'
 
 const Math = dynamic(() => import('../components/content/Math'))
 const Geogebra = dynamic(() => import('../components/content/Geogebra'))
+const Injection = dynamic(() => import('../components/content/Injection'))
+const Exercise = dynamic(() => import('../components/content/Exercise'))
+const Video = dynamic(() => import('../components/content/Video'))
 
-export function renderArticle(value: Node[]) {
+export function renderArticle(value: Node[], addCSS = true) {
   if (!value) return null
   const root = { children: value }
-  return (
-    <SpecialCSS>{value.map((_, index) => render(root, [index]))}</SpecialCSS>
-  )
+  const content = value.map((_, index) => render(root, [index]))
+  if (addCSS) {
+    return <SpecialCSS>{content}</SpecialCSS>
+  } else return content
 }
 
 function getNode(value, path) {
@@ -127,7 +132,11 @@ const renderer = {
   tr: renderTR,
   th: renderTH,
   td: renderTD,
-  geogebra: renderGeogebra
+  geogebra: renderGeogebra,
+  injection: renderInjection,
+  exercise: renderExercise,
+  'exercise-group': renderExerciseGroup,
+  video: renderVideo
 }
 
 function renderElement(props) {
@@ -340,4 +349,28 @@ export function renderGeogebra({ element, attributes = {}, children = null }) {
 // output only
 function renderAnchor({ element, attributes = {} }) {
   return <a id={element.id} {...attributes} />
+}
+
+export function renderInjection({ attributes = {}, children = null, element }) {
+  return (
+    <Injection {...attributes} href={element.href}>
+      {children}
+    </Injection>
+  )
+}
+
+export function renderExercise({ attributes = {}, children = null, element }) {
+  return (
+    <Exercise {...attributes} task={element.task} solution={element.solution}>
+      {children}
+    </Exercise>
+  )
+}
+
+export function renderExerciseGroup({ attributes = {}, children = null }) {
+  return <ExerciseGroup {...attributes}>{children}</ExerciseGroup>
+}
+
+export function renderVideo({ attributes = {}, children = null, element }) {
+  return <Video {...attributes}>{children}</Video>
 }

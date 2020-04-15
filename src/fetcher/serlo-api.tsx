@@ -5,7 +5,6 @@ import { horizonData } from '../data/horizondata'
 import { convertLegacyState } from '../schema/convertLegacyState'
 import { convertEdtrioState } from '../schema/convertEdtrioState'
 import { TopicPurposes } from '../components/content/Topic'
-import { articleSchema } from '../schema/articleNormalizer'
 
 const endpoint = 'https://api.serlo.org/graphql'
 
@@ -28,6 +27,47 @@ const query = props => `
           path {
             name
             alias
+          }
+        }
+      }
+      ... on Exercise {
+        currentRevision {
+          content
+        }
+        solution {
+          currentRevision {
+            content
+          }
+        }
+      }
+      ... on GroupedExercise {
+        currentRevision {
+          content
+        }
+        solution {
+          currentRevision {
+            content
+          }
+        }
+      }
+      ... on Video {
+        currentRevision {
+          title
+          url
+        }
+      }
+      ... on ExerciseGroup {
+        currentRevision {
+          content
+        }
+        exercises {
+          currentRevision {
+            content
+          }
+          solution {
+            currentRevision {
+              content
+            }
           }
         }
       }
@@ -210,6 +250,53 @@ export default async function fetchContent(alias) {
         breadcrumbs = reqData.uuid.path.slice(0, -1)
       }
       data.children = subtopics
+    }
+
+    if (contentType === 'Exercise' || contentType === 'GroupedExercise') {
+      data.task = await buildDescription(reqData.uuid.currentRevision.content)
+      data.solution = await buildDescription(
+        reqData.uuid.solution.currentRevision.content
+      )
+      data.value = [
+        {
+          type: 'exercise',
+          task: data.task,
+          solution: data.solution,
+          children: [{ text: '' }]
+        }
+      ]
+      delete data.task
+      delete data.solution
+    }
+    if (contentType === 'Video') {
+      data.value = [
+        {
+          type: 'video',
+          children: [{ text: '' }]
+        }
+      ]
+    }
+    if (contentType === 'ExerciseGroup') {
+      const children = []
+      for (let i = 0; i < reqData.uuid.exercises.length; i++) {
+        const ex = reqData.uuid.exercises[i]
+        const task = await buildDescription(ex.currentRevision.content)
+        const solution = await buildDescription(ex.currentRevision.content)
+        children.push({
+          type: 'exercise',
+          task,
+          solution,
+          children: [{ text: '' }]
+        })
+      }
+      const task = await buildDescription(reqData.uuid.currentRevision.content)
+      data.value = [
+        {
+          type: 'exercise-group',
+          content: task,
+          children
+        }
+      ]
     }
 
     // compat: why is this entry saved as 'Mathe'?
