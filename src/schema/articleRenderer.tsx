@@ -372,5 +372,9 @@ export function renderExerciseGroup({ attributes = {}, children = null }) {
 }
 
 export function renderVideo({ attributes = {}, children = null, element }) {
-  return <Video {...attributes}>{children}</Video>
+  return (
+    <Video {...attributes} url={element.url}>
+      {children}
+    </Video>
+  )
 }

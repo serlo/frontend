@@ -8,15 +8,18 @@ export default function Injection({ href }) {
     const origin = window.location.host
     const protocol = window.location.protocol
     fetch(`${protocol}//${origin}/api${encodeURI(href)}`)
-      .then(res => res.json())
+      .then(res => {
+        if (res.headers.get('content-type').includes('json')) return res.json()
+        else return res.text()
+      })
       .then(data => {
         if (data.contentType) {
           setValue(data.data.value)
         }
       })
-  }, [])
+  }, [href])
   if (value) {
-    return <>{renderArticle(value, false)}</>
+    return <>{renderArticle(value.children, false)}</>
   }
   return <StyledP>Lade: {href}</StyledP>
 }

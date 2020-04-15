@@ -257,24 +257,30 @@ export default async function fetchContent(alias) {
       data.solution = await buildDescription(
         reqData.uuid.solution.currentRevision.content
       )
-      data.value = [
-        {
-          type: 'exercise',
-          task: data.task,
-          solution: data.solution,
-          children: [{ text: '' }]
-        }
-      ]
+      data.value = {
+        children: [
+          {
+            type: 'exercise',
+            task: data.task,
+            solution: data.solution,
+            children: [{ text: '' }]
+          }
+        ]
+      }
       delete data.task
       delete data.solution
     }
     if (contentType === 'Video') {
-      data.value = [
-        {
-          type: 'video',
-          children: [{ text: '' }]
-        }
-      ]
+      data.value = {
+        children: [
+          {
+            type: 'video',
+            url: reqData.uuid.currentRevision.url,
+            children: [{ text: '' }]
+          }
+        ]
+      }
+      data.title = reqData.uuid.currentRevision.title
     }
     if (contentType === 'ExerciseGroup') {
       const children = []
@@ -290,13 +296,15 @@ export default async function fetchContent(alias) {
         })
       }
       const task = await buildDescription(reqData.uuid.currentRevision.content)
-      data.value = [
-        {
-          type: 'exercise-group',
-          content: task,
-          children
-        }
-      ]
+      data.value = {
+        children: [
+          {
+            type: 'exercise-group',
+            content: task,
+            children
+          }
+        ]
+      }
     }
 
     // compat: why is this entry saved as 'Mathe'?

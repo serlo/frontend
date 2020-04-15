@@ -26,7 +26,21 @@ export default function ArticlePage({ data }) {
           <FontAwesomeIcon icon={faShareAlt} size="1x" /> Teilen
         </ToolLineButton>
       </ToolLine>
-      <Toolbox onShare={() => setOpen(true)} />
+      <Toolbox
+        onShare={() => setOpen(true)}
+        onEdit={() => {
+          if (!window.location.host.includes('serlo.org')) {
+            window.open(
+              window.location.protocol +
+                '//' +
+                window.location.host +
+                '/create?id=' +
+                encodeURIComponent(window.location.pathname.substring(1)),
+              '_blank'
+            )
+          }
+        }}
+      />
       <ShareModal open={open} onClose={() => setOpen(false)} />
     </>
   )

@@ -46,7 +46,9 @@ import {
   renderTH,
   renderTD,
   renderTable,
-  renderGeogebra
+  renderGeogebra,
+  renderInjection,
+  renderVideo
 } from '../schema/articleRenderer'
 import { checkArticleGuidelines } from '../schema/articleGuidelines'
 import Hints from '../components/Hints'
@@ -58,9 +60,12 @@ import SpoilerToggle from '../components/content/SpoilerToggle'
 
 const ModalContext = React.createContext<any>({})
 
-export default function Create({ value, onChange }) {
+export default function Create({ value, onChange, onNormalize = msg => {} }) {
   const editor = React.useMemo(
-    () => withPlugin(withArticle(withHistory(withReact(createEditor())))),
+    () =>
+      withPlugin(
+        withArticle(withHistory(withReact(createEditor())), onNormalize)
+      ),
     []
   )
 
@@ -170,7 +175,9 @@ function Toolbar() {
           'row',
           'anchor',
           'table',
-          'geogebra'
+          'geogebra',
+          'injection',
+          'video'
         ].forEach(key => {
           if (allowed.children.includes(key)) {
             if (key === 'ul' || key === 'ol') {
@@ -487,6 +494,16 @@ const defaultInserts = {
     type: 'geogebra',
     id: '',
     children: [{ text: '' }]
+  },
+  injection: {
+    type: 'injection',
+    href: '/',
+    children: [{ text: '' }]
+  },
+  video: {
+    type: 'video',
+    url: '',
+    children: [{ text: '' }]
   }
 }
 
@@ -536,6 +553,8 @@ function buildAdd(allowed, handler) {
       {buildButton('table', 'Tabelle')}
       {buildButton('anchor', 'Anchor')}
       {buildButton('geogebra', 'Applet')}
+      {buildButton('injection', 'Injection')}
+      {buildButton('video', 'Video')}
     </>
   )
 }
@@ -568,7 +587,9 @@ const componentRenderer = {
   'inline-math': MyInlineMath,
   math: MyMath,
   anchor: MyAnchor,
-  geogebra: MyGeogebra
+  geogebra: MyGeogebra,
+  injection: MyInjection,
+  video: MyVideo
 }
 
 function renderElement(props, editor) {
@@ -1216,10 +1237,10 @@ function MyAnchor(props) {
 }
 
 function AnchorSettings(props) {
-  const { path } = props
+  const { path, idKey = 'id' } = props
   const editor = useEditor()
   const element = Node.get(editor, path)
-  const [id, setId] = React.useState(element.id)
+  const [id, setId] = React.useState(element[idKey])
   const { setModal } = React.useContext(ModalContext)
   return (
     <>
@@ -1229,7 +1250,11 @@ function AnchorSettings(props) {
           value: id,
           onChange: e => {
             setId(e.target.value)
-            Transforms.setNodes(editor, { id: e.target.value }, { at: path })
+            Transforms.setNodes(
+              editor,
+              { [idKey]: e.target.value },
+              { at: path }
+            )
           }
         }}
       />
@@ -1255,6 +1280,56 @@ function MyGeogebra(props) {
     >
       <div contentEditable={false} style={{ userSelect: 'none' }}>
         {renderGeogebra(props)}
+      </div>
+    </TipOver>
+  )
+}
+
+function MyInjection(props) {
+  const { element, children } = props
+  const editor = useEditor()
+  const path = ReactEditor.findPath(editor, element)
+  const { setModal } = React.useContext(ModalContext)
+
+  return (
+    <TipOver
+      placement="top"
+      content={
+        <button
+          onClick={() => setModal(<AnchorSettings path={path} idKey="href" />)}
+        >
+          Injection bearbeiten
+        </button>
+      }
+    >
+      <div contentEditable={false} {...props.attributes}>
+        {renderInjection({ element })}
+        {children}
+      </div>
+    </TipOver>
+  )
+}
+
+function MyVideo(props) {
+  const { element, children } = props
+  const editor = useEditor()
+  const path = ReactEditor.findPath(editor, element)
+  const { setModal } = React.useContext(ModalContext)
+
+  return (
+    <TipOver
+      placement="top"
+      content={
+        <button
+          onClick={() => setModal(<AnchorSettings path={path} idKey="url" />)}
+        >
+          Video bearbeiten
+        </button>
+      }
+    >
+      <div contentEditable={false} {...props.attributes}>
+        {renderVideo({ element })}
+        {children}
       </div>
     </TipOver>
   )
