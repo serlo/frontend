@@ -117,21 +117,33 @@ const NavLi = styled.li`
 `
 
 const NavLink = styled.a`
-  display: inline-block;
-  padding: 8px 0;
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    display: inline-block;
+    padding: 8px 0;
+  }
   color: ${props => lighten(0.15, props.theme.colors.dark1)};
   text-decoration: none;
+  border-bottom: 2px solid transparent;
 
   &:focus {
     text-decoration: none;
     color: ${props => lighten(0.1, props.theme.colors.dark1)};
   }
-  &:hover {
-    color: ${props => props.theme.colors.darkGray};
-    border-bottom: 2px solid ${props => lighten(0.2, props.theme.colors.dark1)};
-  }
+
   &:hover,
-  &:active {
-    text-decoration: none;
+    &:active {
+      color: ${props => props.theme.colors.black};
+      text-decoration: underline;
+      border-bottom: 2px solid transparent;
+    }
+  }
+
+  @media (min-width: ${props => props.theme.breakpoints.sm}) {
+    &:hover,
+    &:active {
+      border-bottom: 2px solid ${props =>
+        lighten(0.2, props.theme.colors.black)};
+      text-decoration: none;
+    }
   }
 `
