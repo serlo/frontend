@@ -35,6 +35,7 @@ function PageView(props) {
       <Head>
         <title>{title}</title>
         <meta name="content_type" content={metaContentType} />
+        <meta property="og:title" content={title} />
       </Head>
       <Header />
       {isMeta && <MetaMenu pagealias={alias} />}

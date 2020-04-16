@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import TopicLinkList from './TopicLinkList'
 import { renderArticle } from '../../schema/articleRenderer'
+import { makeMargin } from '../../helper/csshelper'
 
 export interface LinkInterface {
   title: string
@@ -50,10 +51,10 @@ export default function Topic({ data }: TopicProps) {
         </Overview>
         {data.children &&
           data.children.map(child => (
-            <>
-              <Topic data={child} key={child.title} />
-              <hr style={{ width: '100%' }} />
-            </>
+            // <React.Fragment>
+            <Topic data={child} key={child.title} />
+            /* <hr style={{ width: '100%' }} /> */
+            // </React.Fragment>
           ))}
         <LinkList>
           <TopicLinkList
@@ -68,16 +69,24 @@ export default function Topic({ data }: TopicProps) {
 
 const Wrapper = styled.div<{ purpose: TopicPurposes }>`
   display: flex;
-  ${props =>
-    props.purpose === TopicPurposes.overview
-      ? `
+
+  border-bottom: 1px solid ${props => props.theme.colors.lightgray};
+  &:last-child{
+    border-bottom: 0;
+  }
+
+  margin-bottom: 40px;
+  padding-bottom: 10px;
+
+    ${props =>
+      props.purpose === TopicPurposes.overview
+        ? `
             flex-direction: row;
         `
-      : `
+        : `
             flex-direction: column;
         `}
-    
-  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    @media (max-width: ${props => props.theme.breakpoints.mobile}) {
     flex-direction: column;
   }
 `
@@ -85,6 +94,7 @@ const Wrapper = styled.div<{ purpose: TopicPurposes }>`
 const Headline = styled.h1`
   font-size: 2.5rem;
   font-weight: 400;
+  ${makeMargin}
 `
 
 const HeadlineLink = styled.a`
@@ -92,8 +102,10 @@ const HeadlineLink = styled.a`
   cursor: pointer;
   display: block;
   font-size: 1.6rem;
-  margin-bottom: 1rem;
   text-decoration: none;
+
+  ${makeMargin}
+  margin-bottom: 1rem;
 
   &:hover {
     text-decoration: underline;
@@ -105,6 +117,7 @@ const LinkList = styled.div`
   flex: 1 1 55%;
   flex-direction: column;
   width: 100%;
+  ${makeMargin}
 `
 
 const TopicImage = styled.img`
