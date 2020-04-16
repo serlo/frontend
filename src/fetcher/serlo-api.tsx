@@ -338,9 +338,10 @@ export default async function fetchContent(alias) {
             const ex = child.exercises[i]
             if (!ex.currentRevision) continue
             const task = await buildDescription(ex.currentRevision.content)
-            const solution = await buildDescription(
-              ex.solution.currentRevision.content
-            )
+            const solution =
+              ex.solution && ex.solution.currentRevision
+                ? await buildDescription(ex.solution.currentRevision.content)
+                : { children: [{ type: 'p', children: { text: '' } }] }
             children.push({
               type: 'exercise',
               task,
