@@ -57,6 +57,10 @@ function PageView(props) {
                 {renderArticle(data.data.value.children)}
               </>
             )}
+            {(contentType === 'Exercise' ||
+              contentType === 'ExerciseGroup') && (
+              <>{renderArticle(data.data.value.children)}</>
+            )}
           </main>
           <HSpace amount={40} />
           {horizonIndices && (

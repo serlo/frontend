@@ -7,7 +7,11 @@ export default function Injection({ href }) {
   useEffect(() => {
     const origin = window.location.host
     const protocol = window.location.protocol
-    fetch(`${protocol}//${origin}/api${encodeURI(href)}`)
+    fetch(
+      `${protocol}//${origin}/api${encodeURI(
+        href.startsWith('/') ? href : '/' + href
+      )}`
+    )
       .then(res => {
         if (res.headers.get('content-type').includes('json')) return res.json()
         else return res.text()
