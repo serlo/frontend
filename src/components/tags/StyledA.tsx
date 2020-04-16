@@ -2,13 +2,14 @@ import styled from 'styled-components'
 import { darken } from 'polished'
 
 const StyledA = styled.a`
-  color: ${props => darken(0.1, props.theme.colors.brand)};
+  color: ${props => props.theme.colors.linkColor};
   text-decoration: none;
   font-weight: normal;
   &:visited {
-    color: ${props => darken(0.15, props.theme.colors.linkColor)};
+    color: ${props => props.theme.colors.linkHoverColor};
   }
   &:hover {
+    color: ${props => props.theme.colors.linkHoverColor};
     text-decoration: underline;
   }
 `

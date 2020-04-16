@@ -77,9 +77,9 @@ const BreadcrumbWrapper = styled.nav`
 
 const Breadcrumb = styled.a`
   display: inline-block;
-  color: ${props => props.theme.colors.brand};
-
   ${makeDefaultButton}
+  
+  color: ${props => props.theme.colors.brand};
   padding-top: 2px;
   padding-bottom: 2px;
 
