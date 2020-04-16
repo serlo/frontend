@@ -177,7 +177,8 @@ const gcsInput = css`
   &::placeholder {
     ${inputFontReset}
     ${sharedTextStyles}
-      font-size: 1rem !important;
+    line-height: inherit;
+    font-size: 1rem !important;
   }
 
   &::placeholder {
@@ -283,7 +284,6 @@ const AutocompleteStyle = createGlobalStyle`
 
     @media (max-width: ${props => props.theme.breakpoints.sm}) {
       margin-top: 2px;
-      display:block !important;
       left: 5px !important;
       right: 5px !important;
       width: auto !important;
