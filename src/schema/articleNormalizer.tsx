@@ -93,7 +93,7 @@ export const articleSchema = {
   }
 }
 
-export function withArticle(editor: Editor, onNormalize = msg => {}) {
+export function withArticle(editor: Editor, onNormalize) {
   const { isVoid, isInline, normalizeNode } = editor
 
   editor.isVoid = element =>
