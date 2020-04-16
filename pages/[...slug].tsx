@@ -10,6 +10,8 @@ import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import ArticlePage from '../src/components/content/ArticlePage'
 import StyledP from '../src/components/tags/StyledP'
+import StyledH1 from '../src/components/tags/StyledH1'
+import { renderArticle } from '../src/schema/articleRenderer'
 
 const MetaMenu = dynamic(() => import('../src/components/navigation/MetaMenu'))
 const Breadcrumbs = dynamic(() =>
@@ -42,10 +44,23 @@ function PageView(props) {
             <Breadcrumbs entries={breadcrumbs} />
           )}
           <main>
-            {data && (contentType === 'Article' || contentType === 'Page') && (
-              <ArticlePage data={data.data} />
-            )}
+            {data &&
+              (contentType === 'Article' ||
+                contentType === 'Page' ||
+                contentType === 'CoursePage') && (
+                <ArticlePage data={data.data} />
+              )}
             {contentType === 'TaxonomyTerm' && <Topic data={data.data} />}
+            {(contentType === 'Video' || contentType === 'Applet') && (
+              <>
+                <StyledH1>{data.data.title}</StyledH1>
+                {renderArticle(data.data.value.children)}
+              </>
+            )}
+            {(contentType === 'Exercise' ||
+              contentType === 'ExerciseGroup') && (
+              <>{renderArticle(data.data.value.children)}</>
+            )}
           </main>
           <HSpace amount={40} />
           {horizonIndices && (
@@ -76,6 +91,18 @@ export async function getServerSideProps(props) {
     `${origin}/api/${encodeURIComponent(props.params.slug.join('/'))}`
   )
   const data = await res.json()
+
+  // compat course to first page
+  if (data.contentType === 'Course') {
+    props.res.writeHead(301, {
+      Location: data.data.redirect,
+      // Add the content-type for SEO considerations
+      'Content-Type': 'text/html; charset=utf-8'
+    })
+    props.res.end()
+    return
+  }
+
   return { props: { data } }
 }
 

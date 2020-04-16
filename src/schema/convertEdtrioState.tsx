@@ -17,6 +17,11 @@ export function convert(node) {
     return node.flatMap(convert)
   }
 
+  // compat: empty object, we ignore
+  if (Object.keys(node).length === 0) {
+    return []
+  }
+
   const plugin = node.plugin
   if (plugin === 'rows') {
     return convert(node.state)
@@ -99,20 +104,9 @@ export function convert(node) {
   if (plugin === 'injection') {
     return [
       {
-        type: 'p',
-        children: [
-          {
-            text: '[Injection: '
-          },
-          {
-            type: 'a',
-            href: node.state,
-            children: [{ text: node.state }]
-          },
-          {
-            text: ']'
-          }
-        ]
+        type: 'injection',
+        href: node.state,
+        children: [{ text: '' }]
       }
     ]
   }
@@ -121,10 +115,12 @@ export function convert(node) {
     return convertLegacyState(html).children
   }
   if (plugin === 'video') {
+    console.log(node.state)
     return [
       {
-        type: 'p',
-        children: [{ text: '[Video]' }]
+        type: 'video',
+        src: node.state.src,
+        children: [{ text: '' }]
       }
     ]
   }
@@ -145,6 +141,12 @@ export function convert(node) {
       id = match[1]
     }
     return [{ type: 'geogebra', id, children: [{ text: '' }] }]
+  }
+  if (plugin === 'exercise') {
+    return [{ type: '@edtr-io/exercise', state: node.state }]
+  }
+  if (plugin === 'solution') {
+    return [{ type: '@edtr-io/solution', state: node.state }]
   }
 
   const type = node.type

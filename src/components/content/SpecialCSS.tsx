@@ -15,11 +15,15 @@ const SpecialCSS = styled.div`
     }
     [class|='Important'],
     [class|='SpoilerBody'],
+    [class*='SolutionBox'],
     li,
     th,
     td {
       p:last-child,
-      [class|='MathWrapper'] {
+      [class|='MathWrapper']:last-child,
+      ul:last-child,
+      ol:last-child,
+      [class|='ImgCentered']:last-child {
         margin-bottom: 0;
       }
     }

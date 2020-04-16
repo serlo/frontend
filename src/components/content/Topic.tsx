@@ -29,6 +29,7 @@ interface TopicProp {
   purpose?: TopicPurposes
   links: LinksInterface
   children?: TopicProp[]
+  exercises: any
 }
 
 interface TopicProps {
@@ -50,10 +51,16 @@ export default function Topic({ data }: TopicProps) {
         </Overview>
         {data.children &&
           data.children.map(child => (
-            <>
-              <Topic data={child} key={child.title} />
+            <React.Fragment key={child.title}>
+              <Topic data={child} />
               <hr style={{ width: '100%' }} />
-            </>
+            </React.Fragment>
+          ))}
+        {data.exercises &&
+          data.exercises.map((exercise, i) => (
+            <React.Fragment key={i}>
+              {renderArticle(exercise.children)}
+            </React.Fragment>
           ))}
         <LinkList>
           <TopicLinkList
