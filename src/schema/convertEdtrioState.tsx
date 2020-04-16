@@ -17,6 +17,11 @@ export function convert(node) {
     return node.flatMap(convert)
   }
 
+  // compat: empty object, we ignore
+  if (Object.keys(node).length === 0) {
+    return []
+  }
+
   const plugin = node.plugin
   if (plugin === 'rows') {
     return convert(node.state)
@@ -110,9 +115,11 @@ export function convert(node) {
     return convertLegacyState(html).children
   }
   if (plugin === 'video') {
+    console.log(node.state)
     return [
       {
         type: 'video',
+        src: node.state.src,
         children: [{ text: '' }]
       }
     ]

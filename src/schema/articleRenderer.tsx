@@ -371,13 +371,18 @@ export function renderExercise({ attributes = {}, children = null, element }) {
   )
 }
 
-export function renderExerciseGroup({ attributes = {}, children = null }) {
-  return <ExerciseGroup {...attributes}>{children}</ExerciseGroup>
+export function renderExerciseGroup({ attributes, children = null, element }) {
+  return (
+    <React.Fragment key={attributes.key}>
+      {renderArticle(element.content, false)}
+      <ExerciseGroup {...attributes}>{children}</ExerciseGroup>
+    </React.Fragment>
+  )
 }
 
 export function renderVideo({ attributes = {}, children = null, element }) {
   return (
-    <Video {...attributes} url={element.url}>
+    <Video {...attributes} url={element.src}>
       {children}
     </Video>
   )

@@ -8,6 +8,9 @@ import ShareModal from '../navigation/ShareModal'
 import { renderArticle } from '../../schema/articleRenderer'
 import HSpace from './HSpace'
 import Toolbox from '../navigation/Toolbox'
+import dynamic from 'next/dynamic'
+
+const CourseNavigation = dynamic(() => import('../navigation/CourseNavigation'))
 
 export default function ArticlePage({ data }) {
   const [open, setOpen] = React.useState(false)
@@ -26,6 +29,7 @@ export default function ArticlePage({ data }) {
           <FontAwesomeIcon icon={faShareAlt} size="1x" /> Teilen
         </ToolLineButton>
       </ToolLine>
+      {data.pages && <CourseNavigation pages={data.pages} />}
       <Toolbox
         onShare={() => setOpen(true)}
         onEdit={() => {

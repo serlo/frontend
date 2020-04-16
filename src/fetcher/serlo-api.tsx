@@ -56,6 +56,31 @@ const query = props => `
           url
         }
       }
+      ... on Applet {
+        currentRevision {
+          title
+          url
+        }
+      }
+      ... on CoursePage {
+        currentRevision {
+          content
+          title
+        }
+        course {
+          pages {
+            alias
+            currentRevision {
+              title
+            }
+          }
+        }
+      }
+      ... on Course {
+        pages {
+          alias
+        }
+      }
       ... on ExerciseGroup {
         currentRevision {
           content
@@ -275,7 +300,20 @@ export default async function fetchContent(alias) {
         children: [
           {
             type: 'video',
-            url: reqData.uuid.currentRevision.url,
+            src: reqData.uuid.currentRevision.url,
+            children: [{ text: '' }]
+          }
+        ]
+      }
+      data.title = reqData.uuid.currentRevision.title
+    }
+    if (contentType === 'Applet') {
+      console.log(reqData.uuid)
+      data.value = {
+        children: [
+          {
+            type: 'geogebra',
+            id: reqData.uuid.currentRevision.url,
             children: [{ text: '' }]
           }
         ]
@@ -287,7 +325,9 @@ export default async function fetchContent(alias) {
       for (let i = 0; i < reqData.uuid.exercises.length; i++) {
         const ex = reqData.uuid.exercises[i]
         const task = await buildDescription(ex.currentRevision.content)
-        const solution = await buildDescription(ex.currentRevision.content)
+        const solution = await buildDescription(
+          ex.solution.currentRevision.content
+        )
         children.push({
           type: 'exercise',
           task,
@@ -300,11 +340,19 @@ export default async function fetchContent(alias) {
         children: [
           {
             type: 'exercise-group',
-            content: task,
+            content: task.children,
             children
           }
         ]
       }
+    }
+    if (contentType === 'Course') {
+      data.redirect = reqData.uuid.pages[0].alias
+    }
+    if (contentType === 'CoursePage') {
+      data.value = await buildDescription(reqData.uuid.currentRevision.content)
+      data.title = reqData.uuid.currentRevision.title
+      data.pages = reqData.uuid.course.pages
     }
 
     // compat: why is this entry saved as 'Mathe'?

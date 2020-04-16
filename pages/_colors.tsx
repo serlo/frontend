@@ -6,7 +6,7 @@ export default function ColorOverview() {
   return (
     <Wrapper>
       {Object.entries(theme.colors).map(([colorName, colorValue]) => {
-        console.log(getLuminance(colorValue))
+        //console.log(getLuminance(colorValue))
         return (
           <ColorSquare key={colorName} color={colorValue}>
             <span>{colorName}</span>
