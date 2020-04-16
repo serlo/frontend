@@ -50,12 +50,7 @@ export default function Topic({ data }: TopicProps) {
           {data.description && renderArticle(data.description)}
         </Overview>
         {data.children &&
-          data.children.map(child => (
-            // <React.Fragment>
-            <Topic data={child} key={child.title} />
-            /* <hr style={{ width: '100%' }} /> */
-            // </React.Fragment>
-          ))}
+          data.children.map(child => <Topic data={child} key={child.title} />)}
         <LinkList>
           <TopicLinkList
             links={data.links || {}}
