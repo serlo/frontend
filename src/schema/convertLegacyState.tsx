@@ -94,14 +94,12 @@ function convert(node) {
           ]
         }
         if (className === 'injection') {
+          const href = node.children[0].attribs.href
           return [
             {
-              type: 'p',
-              children: [
-                { text: '[Injection: ' },
-                ...convert(node.children),
-                { text: ']' }
-              ]
+              type: 'injection',
+              href,
+              children: [{ text: '' }]
             }
           ]
         }
@@ -294,6 +292,7 @@ function convert(node) {
         {
           type: 'h',
           level: 2,
+          id: node.attribs.id,
           children: convert(node.children)
         }
       ]
@@ -303,6 +302,7 @@ function convert(node) {
         {
           type: 'h',
           level: 3,
+          id: node.attribs.id,
           children: convert(node.children)
         }
       ]
@@ -312,6 +312,7 @@ function convert(node) {
         {
           type: 'h',
           level: 4,
+          id: node.attribs.id,
           children: convert(node.children)
         }
       ]
@@ -321,6 +322,7 @@ function convert(node) {
         {
           type: 'h',
           level: 5,
+          id: node.attribs.id,
           children: convert(node.children)
         }
       ]

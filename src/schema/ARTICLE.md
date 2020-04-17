@@ -74,7 +74,7 @@ Block
 
 ### `h`
 
-Attributes: level (1-5)
+Attributes: level (1-5), id
 
 Block
 
@@ -156,6 +156,30 @@ Attributes: id
 
 Block, Void
 
+### `injection`
+
+Attributes: href
+
+Block, Void
+
+### `video`
+
+Attributes: url
+
+Block, Void
+
+### `exercise`
+
+Attributes: TODO
+
+Block, Void
+
+### `exercise-group`
+
+Attributes: TODO
+
+Block
+
 ## Constraints
 
 A _document_ is any combination of elements and text. Not every document has a useful structure. This section describes _constraints_ that a document must fulfill to become a serlo article.
@@ -212,7 +236,7 @@ A `spoiler-title` may only contain text or `inline-math`. Other elements will be
 
 ### spoiler-body
 
-A `spoiler-body` may only contain elements of type `p`, `img`, `math`, `ul`, `ol`, `row`. Other elements will be unwrapped. Text will be wrapped in `p`.
+A `spoiler-body` may only contain elements of type `p`, `img`, `math`, `ul`, `ol`, `row`, `injection`, `video`. Other elements will be unwrapped. Text will be wrapped in `p`.
 
 ### ul / ol
 
@@ -258,9 +282,25 @@ No additional contraints.
 
 No additional constraints.
 
+### injection
+
+No additional constraints
+
+### video
+
+No additional constraints.
+
+### exercise
+
+No additional constraints (not part of editor).
+
+### exercise-group
+
+No additional constraints (not part of editor).
+
 ### Root
 
-The document root may only contain elements of type `p`, `h`, `img`, `math`, `spoiler-container`, `ul`, `ol`, `row`, `important`. Other elements will be unwrapped. Text will be wrapped in `p`. A h1 may only appear as first child of root. Otherwise, it will be unwrapped.
+The document root may only contain elements of type `p`, `h`, `img`, `math`, `spoiler-container`, `ul`, `ol`, `row`, `important`, `injection`, `video`. Other elements will be unwrapped. Text will be wrapped in `p`. A h1 may only appear as first child of root. Otherwise, it will be unwrapped.
 
 ## Guidelines
 
