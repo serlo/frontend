@@ -7,6 +7,14 @@ import SearchResults from './SearchResults'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 
+/*
+This components starts with only a placeholder that looks like a searchbar (basically a button).
+When activated (by click) it loads the Google Custom Search scrips that generate the real input button and alot of markup.
+We style this markup and use it to silenty replace the placeholder.
+From this point on it's a styled GSC that displays the results in an overlay.
+It's a bit hacky, but it's free and works quite well.
+*/
+
 export default function SearchInput() {
   const [searchLoaded, setSearchLoaded] = React.useState(false)
   const [searchActive, setSearchActive] = React.useState(false)
@@ -18,13 +26,11 @@ export default function SearchInput() {
     return document.querySelector(selector)
   }
 
-  // Experiment: "lazy load" scripts and build input on the fly when using the search for the first time
   function activateSearch() {
     if (searchActive) return
 
     if (!searchLoaded) {
       var cx = '016022363195733463411:78jhtkzhbhc'
-      //var cx = '017461339636837994840:ifahsiurxu4' //current serlo search
       var gcse = document.createElement('script')
       gcse.type = 'text/javascript'
       gcse.async = true
@@ -84,10 +90,8 @@ const smHeight = 35
 const smHeightPx = smHeight + 'px'
 
 /*
-beware, a bit of improvised styled component use ahead.
 this is kind of a pattern for lack of better solutions:
 https://github.com/styled-components/styled-components/issues/1209#issue-263146426
-still nicer than repeating all styles later imho.
 */
 
 const sharedTextStyles = css`
@@ -276,7 +280,7 @@ const SearchForm = styled.div`
   }
 `
 
-/* needs to be global style because it's just added as last body element */
+/* needs to be global style because the autocomplete markup is just added as last body element */
 const AutocompleteStyle = createGlobalStyle`
   table.gstl_50.gssb_c{
 
