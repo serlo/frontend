@@ -539,7 +539,9 @@ export default async function fetchContent(alias) {
     if (contentType === 'CoursePage') {
       data.value = await buildDescription(reqData.uuid.currentRevision.content)
       data.title = reqData.uuid.currentRevision.title
-      data.pages = reqData.uuid.course.pages
+      data.pages = reqData.uuid.course.pages.filter(
+        page => page.currentRevision !== null
+      )
     }
 
     // compat: why is this entry saved as 'Mathe'?
