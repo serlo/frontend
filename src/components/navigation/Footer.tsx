@@ -167,6 +167,7 @@ const ImageLink = styled.a`
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-decoration: none;
   > img {
     width: 60px;
   }
