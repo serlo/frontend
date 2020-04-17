@@ -33,7 +33,7 @@ function About() {
       <InfoContainer>
         <Summary>
           <SummaryHeading>
-            <SerloLink href="#">Serlo.org</SerloLink> ist die Wikipedia fürs
+            <SerloLink href="/">Serlo.org</SerloLink> ist die Wikipedia fürs
             Lernen
           </SummaryHeading>
           <SummaryText>
@@ -41,18 +41,18 @@ function About() {
             hochwertige Bildung weltweit frei verfügbar zu machen.
           </SummaryText>
           <SummaryButtonBox>
-            <SummaryButton>
+            <SummaryButton href="/serlo">
               <FontAwesomeIcon icon={faChevronCircleRight} size="sm" /> Mehr
               Erfahren
             </SummaryButton>
           </SummaryButtonBox>
         </Summary>
         <Support>
-          <ImageLink>
+          <ImageLink href="/spenden">
             <img alt="Icon: Participate" src={'/img/footer_participate.svg'} />
             <SupportButton>Mitmachen</SupportButton>
           </ImageLink>
-          <ImageLink>
+          <ImageLink href="/mitmachen">
             <img alt="Icon: Spenden" src={'/img/footer_donate.svg'} />
             <SupportButton>Spenden</SupportButton>
           </ImageLink>
@@ -88,12 +88,6 @@ const Subline = styled.p`
   &:hover {
     color: white;
   }
-`
-
-const Image = styled.img`
-  width: 144px;
-  padding-left: 12px;
-  padding-top: 32px;
 `
 
 const TopButton = styled.div`
