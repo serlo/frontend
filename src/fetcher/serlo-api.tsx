@@ -559,6 +559,11 @@ export default async function fetchContent(alias) {
       breadcrumbs.length >= 1 &&
       (contentType === 'Article' ||
         contentType === 'Page' ||
+        contentType === 'Video' ||
+        contentType === 'Applet' ||
+        contentType === 'Exercise' ||
+        contentType === 'ExerciseGroup' ||
+        contentType === 'GroupedExercise' ||
         contentType === 'TaxonomyTerm')
 
     // horizon

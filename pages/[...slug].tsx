@@ -31,17 +31,6 @@ function PageView(props) {
     title
   } = data
 
-  // Artikel -> more:pagemap:metatags-content_type:article
-  // Applets -> more:p:metatags-content_type:applet
-  // Videos -> more:p:metatags-content_type:video
-  // Kurse -> more:p:metatags-content_type:course,course*page
-  // Themenbereiche -> more:p:metatags-content_type:topic,curriculum*topic -more:p:metatags-content_type:topic*folder
-  // Aufgaben -> more:p:metatags-content_type:topic*folder,text*exercise*group,text*exercise,curriculum*topic*folder
-
-  /* TODO:
-    Collection of Exercises as extra contentType if possible
-  */
-
   function buildMetaContentType() {
     if (contentType === undefined) return ''
     if (contentType === 'Exercise') return 'text-exercise'
