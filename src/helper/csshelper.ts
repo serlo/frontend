@@ -40,7 +40,7 @@ export const makeDefaultButton = props =>
     cursor: pointer;
     border: none;
     background-color: transparent;
-    color: ${props => props.theme.colors.darkerblue};
+    color: ${props => props.theme.colors.brand};
     &:hover {
       color: #fff;
       background-color: ${props => props.theme.colors.brand};

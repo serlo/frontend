@@ -9,13 +9,12 @@ let colors = {} as Color
 //tint mixes with white
 
 //blues
-colors.brand = '#007cbf' //was #007ec1 but this way we get AA accessiblity at 16px regular on white. TODO: decide and communicate change
+colors.brand = '#007ec1'
 colors.lightblue = tint(0.3, colors.brand) //#4ca4d3
 colors.lighterblue = tint(0.55, colors.brand) //#8cc4e3
 colors.lightBlueBackground = tint(0.85, colors.brand) //#d8ebf5
 colors.bluewhite = tint(0.94, colors.brand) //#f0f7fb
 colors.lightBackground = tint(0.96, colors.brand) //#f3f9fb
-colors.darkerblue = shade(0.125, colors.brand) //#006ca7
 
 //black, gray, white
 colors.black = '#000'
@@ -34,7 +33,7 @@ colors.green = '#469a40'
 //content
 colors.h23 = colors.darkgray
 colors.linkColor = colors.brand //was '#337AB7'
-colors.linkHoverColor = colors.darkerblue // was '#23527c'
+colors.linkHoverColor = shade(0.3, colors.linkColor) // was '#23527c'
 
 export const theme = {
   spacing: {
