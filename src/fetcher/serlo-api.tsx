@@ -455,6 +455,7 @@ export default async function fetchContent(alias) {
       let description = await buildDescription(reqData.uuid.description || '')
       data.description = description.children
       data.title = reqData.uuid.name
+      data.type = reqData.uuid.type
       data.purpose = TopicPurposes.detail
       data.links = links
       if (Array.isArray(reqData.uuid.path)) {

@@ -32,12 +32,14 @@ function PageView(props) {
   } = data
 
   function buildMetaContentType() {
+    //match legacy content types that are used by google custom search
     if (contentType === undefined) return ''
     if (contentType === 'Exercise') return 'text-exercise'
     if (contentType === 'CoursePage') return 'course-page'
+    if (data.data.type === 'topicFolder') return 'topic-folder'
     if (contentType === 'TaxonomyTerm') return 'topic'
     //Article, Video, Applet
-    else return contentType.toLowerCase()
+    return contentType.toLowerCase()
   }
 
   return (
