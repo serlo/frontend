@@ -36,7 +36,10 @@ export default class MyDocument extends Document {
   render() {
     return (
       <Html lang="de">
-        <Head />
+        <Head>
+          <meta property="og:site_name" content="Serlo" />
+          <meta property="og:type" content="website" />
+        </Head>
         <body style={bodyStyles}>
           <Main />
           <NextScript />

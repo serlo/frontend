@@ -30,10 +30,14 @@ function PageView(props) {
     contentType,
     title
   } = data
+
+  const metaContentType = contentType.toLowerCase()
   return (
     <>
       <Head>
         <title>{title}</title>
+        <meta name="content_type" content={metaContentType} />
+        <meta property="og:title" content={title} />
       </Head>
       <Header />
       {isMeta && <MetaMenu pagealias={alias} />}
