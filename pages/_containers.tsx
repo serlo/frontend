@@ -57,20 +57,28 @@ export default function Containers() {
             nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
             erat, sed diam voluptua.
           </StyledP>
-          <StyledTable>
-            <tbody>
-              <StyledTR>
-                <StyledTD>Lorem ipsum dolor sit amet</StyledTD>
-                <StyledTD>consetetur sadipscing elitr</StyledTD>
-                <StyledTD>sed diam nonumy eirmod tempor invidunt</StyledTD>
-              </StyledTR>
-              <StyledTR>
-                <StyledTD>Lorem ipsum dolor sit amet</StyledTD>
-                <StyledTD>consetetur sadipscing elitr</StyledTD>
-                <StyledTD>sed diam nonumy eirmod tempor invidunt</StyledTD>
-              </StyledTR>
-            </tbody>
-          </StyledTable>
+          <div style={{ overflowX: 'auto' }}>
+            <StyledTable>
+              <tbody>
+                <StyledTR>
+                  <StyledTD>Lorem ipsum dolor sit amet</StyledTD>
+                  <StyledTD>consetetur sadipscing elitr</StyledTD>
+                  <StyledTD>sed diam nonumy eirmod tempor invidunt</StyledTD>
+                  <StyledTD>Lorem ipsum dolor sit amet</StyledTD>
+                  <StyledTD>consetetur sadipscing elitr</StyledTD>
+                  <StyledTD>sed diam nonumy eirmod tempor invidunt</StyledTD>
+                </StyledTR>
+                <StyledTR>
+                  <StyledTD>Lorem ipsum dolor sit amet</StyledTD>
+                  <StyledTD>consetetur sadipscing elitr</StyledTD>
+                  <StyledTD>sed diam nonumy eirmod tempor invidunt</StyledTD>
+                  <StyledTD>Lorem ipsum dolor sit amet</StyledTD>
+                  <StyledTD>consetetur sadipscing elitr</StyledTD>
+                  <StyledTD>sed diam nonumy eirmod tempor invidunt</StyledTD>
+                </StyledTR>
+              </tbody>
+            </StyledTable>
+          </div>
         </ContentContainer>
       </ContentWrapper>
       <StyledH2>Image Container</StyledH2>
