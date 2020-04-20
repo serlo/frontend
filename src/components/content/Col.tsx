@@ -10,7 +10,7 @@ const Col = styled.div<ColProps>`
     flex-grow: ${props => props.cSize};
     flex-basis: 0;
     flex-shrink: 1;
-    width: 0;
+    overflow-x: auto;
   }
 `
 
