@@ -1,11 +1,20 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
+import * as Sentry from '@sentry/browser'
 
 const bodyStyles = {
   margin: 0,
   fontFamily: 'Karmilla, sans-serif',
   letterSpacing: '-0.007em'
 }
+
+process.on('unhandledRejection', err => {
+  Sentry.captureException(err)
+})
+
+process.on('uncaughtException', err => {
+  Sentry.captureException(err)
+})
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx) {
