@@ -12,6 +12,7 @@ import ArticlePage from '../src/components/content/ArticlePage'
 import StyledP from '../src/components/tags/StyledP'
 import StyledH1 from '../src/components/tags/StyledH1'
 import { renderArticle } from '../src/schema/articleRenderer'
+import CookieBar from '../src/components/content/CookieBar'
 
 const MetaMenu = dynamic(() => import('../src/components/navigation/MetaMenu'))
 const Breadcrumbs = dynamic(() =>
@@ -85,6 +86,7 @@ function PageView(props) {
         </MaxWidthDiv>
       </RelatveContainer>
       <Footer />
+      <CookieBar />
     </>
   )
 }

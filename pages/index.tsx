@@ -16,6 +16,7 @@ import {
 import PrinciplesSVG from '../public/img/landing_principles_graphic.svg'
 import DonateSVG from '../public/img/footer_donate.svg'
 import ParticipateSVG from '../public/img/footer_participate.svg'
+import CookieBar from '../src/components/content/CookieBar'
 
 export default function Landing() {
   return (
@@ -92,6 +93,7 @@ export default function Landing() {
         </Col>
       </Section>
       <Footer />
+      <CookieBar />
     </>
   )
 }
