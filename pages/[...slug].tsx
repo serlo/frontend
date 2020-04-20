@@ -118,6 +118,10 @@ export async function getServerSideProps(props) {
     return
   }
 
+  if (data.error) {
+    props.res.statusCode = 404
+  }
+
   return { props: { data } }
 }
 
