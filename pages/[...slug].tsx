@@ -31,12 +31,22 @@ function PageView(props) {
     title
   } = data
 
-  const metaContentType = contentType.toLowerCase()
+  function buildMetaContentType() {
+    //match legacy content types that are used by google custom search
+    if (contentType === undefined) return ''
+    if (contentType === 'Exercise') return 'text-exercise'
+    if (contentType === 'CoursePage') return 'course-page'
+    if (data.data.type === 'topicFolder') return 'topic-folder'
+    if (contentType === 'TaxonomyTerm') return 'topic'
+    //Article, Video, Applet
+    return contentType.toLowerCase()
+  }
+
   return (
     <>
       <Head>
         <title>{title}</title>
-        <meta name="content_type" content={metaContentType} />
+        <meta name="content_type" content={buildMetaContentType()} />
         <meta property="og:title" content={title} />
       </Head>
       <Header />

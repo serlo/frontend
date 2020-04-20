@@ -455,6 +455,7 @@ export default async function fetchContent(alias) {
       let description = await buildDescription(reqData.uuid.description || '')
       data.description = description.children
       data.title = reqData.uuid.name
+      data.type = reqData.uuid.type
       data.purpose = TopicPurposes.detail
       data.links = links
       if (Array.isArray(reqData.uuid.path)) {
@@ -539,7 +540,9 @@ export default async function fetchContent(alias) {
     if (contentType === 'CoursePage') {
       data.value = await buildDescription(reqData.uuid.currentRevision.content)
       data.title = reqData.uuid.currentRevision.title
-      data.pages = reqData.uuid.course.pages
+      data.pages = reqData.uuid.course.pages.filter(
+        page => page.currentRevision !== null
+      )
     }
 
     // compat: why is this entry saved as 'Mathe'?
@@ -557,6 +560,11 @@ export default async function fetchContent(alias) {
       breadcrumbs.length >= 1 &&
       (contentType === 'Article' ||
         contentType === 'Page' ||
+        contentType === 'Video' ||
+        contentType === 'Applet' ||
+        contentType === 'Exercise' ||
+        contentType === 'ExerciseGroup' ||
+        contentType === 'GroupedExercise' ||
         contentType === 'TaxonomyTerm')
 
     // horizon
