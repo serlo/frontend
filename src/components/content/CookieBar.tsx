@@ -13,7 +13,9 @@ export default function CookieBar() {
     )
       .then(res => res.json())
       .then(data => {
-        if (localStorage.getItem('consent_revision') !== data[0]) {
+        const localInfo = localStorage.getItem('consent')
+        const json = localInfo ? JSON.parse(localInfo) : {}
+        if (json.revision !== data[0]) {
           setLoaded(true)
           setRevision(data[0])
         }
@@ -34,7 +36,10 @@ export default function CookieBar() {
       einverstanden.
       <CookieButton
         onClick={() => {
-          localStorage.setItem('consent_revision', revision)
+          localStorage.setItem(
+            'consent',
+            JSON.stringify({ revision, showEvent: true, consentEvent: true })
+          )
           setLoaded(false)
         }}
       >
