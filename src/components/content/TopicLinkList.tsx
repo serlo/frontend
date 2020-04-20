@@ -120,6 +120,9 @@ const LinkSection = styled.div<{ purpose: TopicPurposes }>`
       : `
       margin-top: 3rem;
         `}
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    flex-direction: column;
+  }
 `
 
 const LinkSectionHeadline = styled.h4`

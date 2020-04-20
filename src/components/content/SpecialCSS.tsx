@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 const SpecialCSS = styled.div`
+  word-wrap: break-word;
   & {
     p + ul {
       margin-top: -14px;
