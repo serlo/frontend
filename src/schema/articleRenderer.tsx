@@ -33,6 +33,8 @@ import ExerciseGroup from '../components/content/ExerciseGroup'
 
 import SpecialCSS from '../components/content/SpecialCSS'
 import { theme } from '../theme'
+import ImageLink from '../components/content/ImageLink'
+import MaxWidthDiv from '../components/content/MaxWidthDiv'
 
 const Math = dynamic(() => import('../components/content/Math'))
 const Geogebra = dynamic(() => import('../components/content/Geogebra'))
@@ -193,25 +195,23 @@ export function renderImg({
   function wrapInA(comp) {
     if (element.href) {
       // needs investigation if this could be simplified
-      return (
-        <a href={element.href} style={{ maxWidth: '100%', display: 'block' }}>
-          {comp}
-        </a>
-      )
+      return <ImageLink href={element.href}>{comp}</ImageLink>
     }
     return comp
   }
   return (
     <ImgCentered {...attributes}>
       {wrapImg(
-        wrapInA(
-          <StyledImg
-            src={element.src}
-            alt={element.alt || 'Bild'}
-            maxWidth={element.maxWidth ? element.maxWidth : 0}
-          ></StyledImg>
-        )
+        <MaxWidthDiv maxWidth={element.maxWidth ? element.maxWidth : 0}>
+          {wrapInA(
+            <StyledImg
+              src={element.src}
+              alt={element.alt || 'Bild'}
+            ></StyledImg>
+          )}
+        </MaxWidthDiv>
       )}
+
       {children}
     </ImgCentered>
   )
