@@ -5,7 +5,8 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 module.exports = withBundleAnalyzer({
   env: {
     SENTRY_DSN:
-      'https://b7a5f46510b945b7a3a78c47c6a6048a@o115070.ingest.sentry.io/5206333'
+      'https://b7a5f46510b945b7a3a78c47c6a6048a@o115070.ingest.sentry.io/5206333',
+    GA_TRACKING_ID: 'UA-20283862-5'
   },
   webpack(config) {
     config.module.rules.push({
