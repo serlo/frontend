@@ -79,13 +79,13 @@ function PageView(props) {
   )
 }
 
-const RelatveContainer = styled.div`
+export const RelatveContainer = styled.div`
   position: relative;
   display: flex;
   justify-content: center;
 `
 
-const MaxWidthDiv = styled.div`
+export const MaxWidthDiv = styled.div`
   max-width: 800px;
 `
 

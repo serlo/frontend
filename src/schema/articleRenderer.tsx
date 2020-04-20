@@ -33,6 +33,7 @@ import ExerciseGroup from '../components/content/ExerciseGroup'
 
 import SpecialCSS from '../components/content/SpecialCSS'
 import { theme } from '../theme'
+import styled from 'styled-components'
 
 const Math = dynamic(() => import('../components/content/Math'))
 const Geogebra = dynamic(() => import('../components/content/Geogebra'))
@@ -184,6 +185,11 @@ export function renderH({ element, attributes = {}, children = null }) {
   )
 }
 
+export const ImageLink = styled.a`
+  max-width: 100%;
+  display: block;
+`
+
 export function renderImg({
   element,
   attributes = {},
@@ -193,11 +199,7 @@ export function renderImg({
   function wrapInA(comp) {
     if (element.href) {
       // needs investigation if this could be simplified
-      return (
-        <a href={element.href} style={{ maxWidth: '100%', display: 'block' }}>
-          {comp}
-        </a>
-      )
+      return <ImageLink href={element.href}>{comp}</ImageLink>
     }
     return comp
   }
