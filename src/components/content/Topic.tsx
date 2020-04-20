@@ -123,7 +123,6 @@ const LinkList = styled.div`
   display: flex;
   flex: 1 1 55%;
   flex-direction: column;
-  width: 100%;
   ${makeMargin}
 `
 
