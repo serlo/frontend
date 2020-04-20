@@ -81,12 +81,11 @@ function PageView(props) {
 
 export const RelatveContainer = styled.div`
   position: relative;
-  display: flex;
-  justify-content: center;
 `
 
 export const MaxWidthDiv = styled.div`
   max-width: 800px;
+  margin: 0 auto;
 `
 
 export async function getServerSideProps(props) {
