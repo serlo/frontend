@@ -89,43 +89,46 @@ export default function Containers() {
       </StyledP>
       <StyledH3>Test 1: Simple Image</StyledH3>
       <ImgCentered>
-        <StyledImg src="https://loremflickr.com/500/200"></StyledImg>
+        <div>
+          <StyledImg src="https://loremflickr.com/500/200"></StyledImg>
+        </div>
       </ImgCentered>
       <StyledH3>Test 2: Large Image</StyledH3>
       <ImgCentered>
-        <StyledImg src="https://loremflickr.com/1500/200"></StyledImg>
+        <div>
+          <StyledImg src="https://loremflickr.com/1500/200"></StyledImg>
+        </div>
       </ImgCentered>
       <StyledH3>Test 3: Large Image with max-width</StyledH3>
       <ImgCentered>
-        <StyledImg
-          src="https://loremflickr.com/1500/400"
-          maxWidth={500}
-        ></StyledImg>
+        <div style={{ maxWidth: 500 }}>
+          <StyledImg src="https://loremflickr.com/1500/400"></StyledImg>
+        </div>
       </ImgCentered>
       <StyledH3>Test 4: Small Image with max-width that is too big</StyledH3>
       <ImgCentered>
-        <StyledImg
-          src="https://loremflickr.com/300/300"
-          maxWidth={500}
-        ></StyledImg>
+        <div style={{ maxWidth: 500 }}>
+          <StyledImg src="https://loremflickr.com/300/300"></StyledImg>
+        </div>
       </ImgCentered>
       <StyledH3>Test 5: Simple Image with Link without max-width</StyledH3>
       <ImgCentered>
-        <ImageLink href="#">
-          <StyledImg
-            src="https://loremflickr.com/300/300"
-            maxWidth={500}
-          ></StyledImg>
-        </ImageLink>
+        <div>
+          <ImageLink href="#">
+            <StyledImg
+              src="https://loremflickr.com/300/300"
+              maxWidth={500}
+            ></StyledImg>
+          </ImageLink>
+        </div>
       </ImgCentered>
       <StyledH3>Test 6: Bigger Image with Link and max-width</StyledH3>
       <ImgCentered>
-        <ImageLink href="#">
-          <StyledImg
-            src="https://loremflickr.com/800/300"
-            maxWidth={500}
-          ></StyledImg>
-        </ImageLink>
+        <div style={{ maxWidth: 400 }}>
+          <ImageLink href="#">
+            <StyledImg src="https://loremflickr.com/600/300"></StyledImg>
+          </ImageLink>
+        </div>
       </ImgCentered>
       <StyledH2>Responsive Columns</StyledH2>
       <StyledP>
@@ -192,20 +195,28 @@ export default function Containers() {
           </StyledP>
         </Col>
         <Col cSize={1}>
-          <StyledTable>
-            <tbody>
-              <StyledTR>
-                <StyledTD>Lorem ipsum dolor sit amet</StyledTD>
-                <StyledTD>consetetur sadipscing elitr</StyledTD>
-                <StyledTD>sed diam nonumy eirmod tempor invidunt</StyledTD>
-              </StyledTR>
-              <StyledTR>
-                <StyledTD>Lorem ipsum dolor sit amet</StyledTD>
-                <StyledTD>consetetur sadipscing elitr</StyledTD>
-                <StyledTD>sed diam nonumy eirmod tempor invidunt</StyledTD>
-              </StyledTR>
-            </tbody>
-          </StyledTable>
+          <div style={{ overflowX: 'auto' }}>
+            <StyledTable>
+              <tbody>
+                <StyledTR>
+                  <StyledTD>Lorem ipsum dolor sit amet</StyledTD>
+                  <StyledTD>consetetur sadipscing elitr</StyledTD>
+                  <StyledTD>sed diam nonumy eirmod tempor invidunt</StyledTD>
+                  <StyledTD>Lorem ipsum dolor sit amet</StyledTD>
+                  <StyledTD>consetetur sadipscing elitr</StyledTD>
+                  <StyledTD>sed diam nonumy eirmod tempor invidunt</StyledTD>
+                </StyledTR>
+                <StyledTR>
+                  <StyledTD>Lorem ipsum dolor sit amet</StyledTD>
+                  <StyledTD>consetetur sadipscing elitr</StyledTD>
+                  <StyledTD>sed diam nonumy eirmod tempor invidunt</StyledTD>
+                  <StyledTD>Lorem ipsum dolor sit amet</StyledTD>
+                  <StyledTD>consetetur sadipscing elitr</StyledTD>
+                  <StyledTD>sed diam nonumy eirmod tempor invidunt</StyledTD>
+                </StyledTR>
+              </tbody>
+            </StyledTable>
+          </div>
         </Col>
       </LayoutRow>
       <HSpace amount={500} />

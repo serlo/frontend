@@ -6,17 +6,7 @@ interface StyledImgProps {
 }
 
 const StyledImg = styled.img<StyledImgProps>`
-  align-self: center;
-  max-width: 100%;
-  max-width: ${props => (props.maxWidth > 0 ? props.maxWidth + 'px' : '')};
-  ${props =>
-    props.inline
-      ? `
-        max-width: 100%;
-        margin-left: auto;
-        margin-right: auto;
-      `
-      : ''}
+  width: 100%;
 `
 
 export default StyledImg
