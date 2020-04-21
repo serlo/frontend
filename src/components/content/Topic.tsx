@@ -54,7 +54,6 @@ export default function Topic({ data }: TopicProps) {
           data.children.map(child => (
             <React.Fragment key={child.title}>
               <Topic data={child} />
-              <hr style={{ width: '100%' }} />
             </React.Fragment>
           ))}
         {data.exercises &&
