@@ -55,11 +55,23 @@ const query = props => `
           title
           url
         }
+        taxonomyTerms {
+          path {
+            name
+            alias
+          }
+        }
       }
       ... on Applet {
         currentRevision {
           title
           url
+        }
+        taxonomyTerms {
+          path {
+            name
+            alias
+          }
         }
       }
       ... on CoursePage {
@@ -72,6 +84,12 @@ const query = props => `
             alias
             currentRevision {
               title
+            }
+          }
+          taxonomyTerms {
+            path {
+              name
+              alias
             }
           }
         }
@@ -250,14 +268,18 @@ export default async function fetchContent(alias) {
         data.value = convertEdtrioState(data.edtrio)
         delete data.edtrio
       }
+    }
 
-      if (reqData.uuid.taxonomyTerms) {
-        reqData.uuid.taxonomyTerms.forEach(({ path }) => {
-          if (breadcrumbs.length === 0 || breadcrumbs.length > path.length) {
-            breadcrumbs = path
-          }
-        })
-      }
+    const breadcrumbsData =
+      reqData.uuid.taxonomyTerms ||
+      (reqData.uuid.course && reqData.uuid.course.taxonomyTerms)
+
+    if (breadcrumbsData) {
+      breadcrumbsData.forEach(({ path }) => {
+        if (breadcrumbs.length === 0 || breadcrumbs.length > path.length) {
+          breadcrumbs = path
+        }
+      })
     }
 
     if (contentType === 'TaxonomyTerm') {
@@ -565,6 +587,7 @@ export default async function fetchContent(alias) {
         contentType === 'Exercise' ||
         contentType === 'ExerciseGroup' ||
         contentType === 'GroupedExercise' ||
+        contentType === 'CoursePage' ||
         contentType === 'TaxonomyTerm')
 
     // horizon
