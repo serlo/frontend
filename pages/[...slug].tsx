@@ -54,7 +54,13 @@ function PageView(props) {
       {isMeta && <MetaMenu pagealias={alias} />}
       <RelatveContainer>
         <MaxWidthDiv>
-          {data.error ? <StyledP>{data.error}</StyledP> : null}
+          {data.error ? (
+            <>
+              <HSpace amount={100} />
+              <StyledH1>404</StyledH1>
+              <StyledP>Diese Seite konnte nicht geladen werden.</StyledP>
+            </>
+          ) : null}
           {showBreadcrumbs && breadcrumbs && (
             <Breadcrumbs entries={breadcrumbs} />
           )}
@@ -116,6 +122,10 @@ export async function getServerSideProps(props) {
     })
     props.res.end()
     return
+  }
+
+  if (data.error) {
+    props.res.statusCode = 404
   }
 
   return { props: { data } }
