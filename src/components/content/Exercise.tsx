@@ -5,9 +5,10 @@ import { makeMargin } from '../../helper/csshelper'
 import { convertEdtrioState } from '../../schema/convertEdtrioState'
 import ScMcExercise from './ScMcExercise'
 import InputExercise from './InputExercise'
+import LicenseNotice from './LicenseNotice'
 
 export default function Exercise(props) {
-  const { task, solution } = props
+  const { task, solution, taskLicense, solutionLicense } = props
   const [solutionVisible, setVisible] = React.useState(false)
 
   let taskValue = task.children
@@ -57,6 +58,7 @@ export default function Exercise(props) {
     <>
       {renderArticle(taskValue, false)}
       {interactiveComp}
+      {taskLicense && <LicenseNotice data={taskLicense} />}
       <SolutionToggle
         onClick={() => {
           setVisible(!solutionVisible)
@@ -66,6 +68,7 @@ export default function Exercise(props) {
       </SolutionToggle>
       <SolutionBox visible={solutionVisible}>
         {renderArticle(solutionValue, false)}
+        {solutionLicense && <LicenseNotice data={solutionLicense} />}
       </SolutionBox>
     </>
   )

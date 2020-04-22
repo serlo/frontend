@@ -29,6 +29,11 @@ const query = props => `
             alias
           }
         }
+        license {
+          id
+          url
+          title
+        }
       }
       ... on Exercise {
         currentRevision {
@@ -38,6 +43,16 @@ const query = props => `
           currentRevision {
             content
           }
+          license {
+            id
+            url
+            title
+          }
+        }
+        license {
+          id
+          url
+          title
         }
       }
       ... on GroupedExercise {
@@ -48,6 +63,16 @@ const query = props => `
           currentRevision {
             content
           }
+          license {
+            id
+            url
+            title
+          }
+        }
+        license {
+          id
+          url
+          title
         }
       }
       ... on Video {
@@ -61,6 +86,11 @@ const query = props => `
             alias
           }
         }
+        license {
+          id
+          url
+          title
+        }
       }
       ... on Applet {
         currentRevision {
@@ -72,6 +102,11 @@ const query = props => `
             name
             alias
           }
+        }
+        license {
+          id
+          url
+          title
         }
       }
       ... on CoursePage {
@@ -93,6 +128,11 @@ const query = props => `
             }
           }
         }
+        license {
+          id
+          url
+          title
+        }
       }
       ... on Course {
         pages {
@@ -111,7 +151,22 @@ const query = props => `
             currentRevision {
               content
             }
+            license {
+              id
+              url
+              title
+            }
           }
+          license {
+            id
+            url
+            title
+          }
+        }
+        license {
+          id
+          url
+          title
         }
       }
       ... on TaxonomyTerm {
@@ -157,6 +212,16 @@ const query = props => `
               currentRevision {
                 content
               }
+              license {
+                id
+                url
+                title
+              }
+            }
+            license {
+              id
+              url
+              title
             }
           }
           ... on ExerciseGroup {
@@ -171,7 +236,22 @@ const query = props => `
                 currentRevision {
                   content
                 }
+                license {
+                  id
+                  url
+                  title
+                }
               }
+              license {
+                id
+                url
+                title
+              }
+            }
+            license {
+              id
+              url
+              title
             }
           }
           ... on TaxonomyTerm {
@@ -340,15 +420,17 @@ export default async function fetchContent(alias) {
         }
         if (child.__typename === 'Exercise' && child.currentRevision) {
           const task = await buildDescription(child.currentRevision.content)
-          const solution = await buildDescription(
-            child.solution.currentRevision.content
-          )
+          const solution = child.solution
+            ? await buildDescription(child.solution.currentRevision.content)
+            : { type: 'p', children: [{ text: '' }] }
           exercises.push({
             children: [
               {
                 type: 'exercise',
                 task,
                 solution,
+                taskLicense: child.license,
+                solutionLicense: child.solution && child.solution.license,
                 children: [{ text: '' }]
               }
             ]
@@ -368,6 +450,8 @@ export default async function fetchContent(alias) {
               type: 'exercise',
               task,
               solution,
+              taskLicense: ex.license,
+              solutionLicense: ex.solution && ex.solution.license,
               children: [{ text: '' }]
             })
           }
@@ -377,6 +461,7 @@ export default async function fetchContent(alias) {
               {
                 type: 'exercise-group',
                 content: task.children,
+                license: child.license,
                 children
               }
             ]
@@ -498,6 +583,8 @@ export default async function fetchContent(alias) {
             type: 'exercise',
             task: data.task,
             solution: data.solution,
+            taskLicense: reqData.uuid.license,
+            solutionLicense: reqData.uuid.solution.license,
             children: [{ text: '' }]
           }
         ]
@@ -535,13 +622,15 @@ export default async function fetchContent(alias) {
         const ex = reqData.uuid.exercises[i]
         if (!ex.currentRevision) continue
         const task = await buildDescription(ex.currentRevision.content)
-        const solution = await buildDescription(
-          ex.solution.currentRevision.content
-        )
+        const solution = ex.solution
+          ? await buildDescription(ex.solution.currentRevision.content)
+          : { type: 'p', children: [{ text: '' }] }
         children.push({
           type: 'exercise',
           task,
           solution,
+          taskLicense: ex.license,
+          solutionLicense: ex.solution?.license,
           children: [{ text: '' }]
         })
       }
@@ -551,6 +640,7 @@ export default async function fetchContent(alias) {
           {
             type: 'exercise-group',
             content: task.children,
+            license: task.license,
             children
           }
         ]
@@ -565,6 +655,16 @@ export default async function fetchContent(alias) {
       data.pages = reqData.uuid.course.pages.filter(
         page => page.currentRevision !== null
       )
+    }
+
+    // license
+    if (
+      reqData.uuid.license &&
+      contentType !== 'Exercise' &&
+      contentType !== 'GroupedExercise' &&
+      contentType !== 'ExerciseGroup'
+    ) {
+      data.license = reqData.uuid.license
     }
 
     // compat: why is this entry saved as 'Mathe'?
