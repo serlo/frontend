@@ -43,6 +43,16 @@ const query = props => `
           currentRevision {
             content
           }
+          license {
+            id
+            url
+            title
+          }
+        }
+        license {
+          id
+          url
+          title
         }
       }
       ... on GroupedExercise {
@@ -53,6 +63,16 @@ const query = props => `
           currentRevision {
             content
           }
+          license {
+            id
+            url
+            title
+          }
+        }
+        license {
+          id
+          url
+          title
         }
       }
       ... on Video {
@@ -131,7 +151,22 @@ const query = props => `
             currentRevision {
               content
             }
+            license {
+              id
+              url
+              title
+            }
           }
+          license {
+            id
+            url
+            title
+          }
+        }
+        license {
+          id
+          url
+          title
         }
       }
       ... on TaxonomyTerm {
@@ -177,6 +212,16 @@ const query = props => `
               currentRevision {
                 content
               }
+              license {
+                id
+                url
+                title
+              }
+            }
+            license {
+              id
+              url
+              title
             }
           }
           ... on ExerciseGroup {
@@ -191,7 +236,22 @@ const query = props => `
                 currentRevision {
                   content
                 }
+                license {
+                  id
+                  url
+                  title
+                }
               }
+              license {
+                id
+                url
+                title
+              }
+            }
+            license {
+              id
+              url
+              title
             }
           }
           ... on TaxonomyTerm {
@@ -360,15 +420,17 @@ export default async function fetchContent(alias) {
         }
         if (child.__typename === 'Exercise' && child.currentRevision) {
           const task = await buildDescription(child.currentRevision.content)
-          const solution = await buildDescription(
-            child.solution.currentRevision.content
-          )
+          const solution = child.solution
+            ? await buildDescription(child.solution.currentRevision.content)
+            : { type: 'p', children: [{ text: '' }] }
           exercises.push({
             children: [
               {
                 type: 'exercise',
                 task,
                 solution,
+                taskLicense: child.license,
+                solutionLicense: child.solution && child.solution.license,
                 children: [{ text: '' }]
               }
             ]
@@ -388,6 +450,8 @@ export default async function fetchContent(alias) {
               type: 'exercise',
               task,
               solution,
+              taskLicense: ex.license,
+              solutionLicense: ex.solution && ex.solution.license,
               children: [{ text: '' }]
             })
           }
@@ -397,6 +461,7 @@ export default async function fetchContent(alias) {
               {
                 type: 'exercise-group',
                 content: task.children,
+                license: child.license,
                 children
               }
             ]
@@ -518,6 +583,8 @@ export default async function fetchContent(alias) {
             type: 'exercise',
             task: data.task,
             solution: data.solution,
+            taskLicense: reqData.uuid.license,
+            solutionLicense: reqData.uuid.solution.license,
             children: [{ text: '' }]
           }
         ]
@@ -555,13 +622,15 @@ export default async function fetchContent(alias) {
         const ex = reqData.uuid.exercises[i]
         if (!ex.currentRevision) continue
         const task = await buildDescription(ex.currentRevision.content)
-        const solution = await buildDescription(
-          ex.solution.currentRevision.content
-        )
+        const solution = ex.solution
+          ? await buildDescription(ex.solution.currentRevision.content)
+          : { type: 'p', children: [{ text: '' }] }
         children.push({
           type: 'exercise',
           task,
           solution,
+          taskLicense: ex.license,
+          solutionLicense: ex.solution?.license,
           children: [{ text: '' }]
         })
       }
@@ -571,6 +640,7 @@ export default async function fetchContent(alias) {
           {
             type: 'exercise-group',
             content: task.children,
+            license: task.license,
             children
           }
         ]
@@ -588,7 +658,12 @@ export default async function fetchContent(alias) {
     }
 
     // license
-    if (reqData.uuid.license) {
+    if (
+      reqData.uuid.license &&
+      contentType !== 'Exercise' &&
+      contentType !== 'GroupedExercise' &&
+      contentType !== 'ExerciseGroup'
+    ) {
       data.license = reqData.uuid.license
     }
 

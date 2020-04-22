@@ -35,6 +35,7 @@ import SpecialCSS from '../components/content/SpecialCSS'
 import { theme } from '../theme'
 import ImageLink from '../components/content/ImageLink'
 import MaxWidthDiv from '../components/content/MaxWidthDiv'
+import LicenseNotice from '../components/content/LicenseNotice'
 
 const Math = dynamic(() => import('../components/content/Math'))
 const Geogebra = dynamic(() => import('../components/content/Geogebra'))
@@ -365,7 +366,13 @@ export function renderInjection({ attributes = {}, children = null, element }) {
 
 export function renderExercise({ attributes = {}, children = null, element }) {
   return (
-    <Exercise {...attributes} task={element.task} solution={element.solution}>
+    <Exercise
+      {...attributes}
+      task={element.task}
+      solution={element.solution}
+      taskLicense={element.taskLicense}
+      solutionLicense={element.solutionLicense}
+    >
       {children}
     </Exercise>
   )
@@ -375,6 +382,7 @@ export function renderExerciseGroup({ attributes, children = null, element }) {
   return (
     <React.Fragment key={attributes.key}>
       {renderArticle(element.content, false)}
+      {element.license && <LicenseNotice data={element.license} />}
       <ExerciseGroup {...attributes}>{children}</ExerciseGroup>
     </React.Fragment>
   )
