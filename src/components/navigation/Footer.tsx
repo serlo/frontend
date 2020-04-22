@@ -49,11 +49,14 @@ function About() {
         </Summary>
         <Support>
           <ImageLink href="/spenden">
-            <img alt="Icon: Participate" src={'/img/footer_participate.svg'} />
+            <img
+              alt="Icon: Participate"
+              src={'/_assets/img/footer_participate.svg'}
+            />
             <SupportButton>Mitmachen</SupportButton>
           </ImageLink>
           <ImageLink href="/mitmachen">
-            <img alt="Icon: Spenden" src={'/img/footer_donate.svg'} />
+            <img alt="Icon: Spenden" src={'/_assets/img/footer_donate.svg'} />
             <SupportButton>Spenden</SupportButton>
           </ImageLink>
         </Support>
