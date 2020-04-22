@@ -29,6 +29,11 @@ const query = props => `
             alias
           }
         }
+        license {
+          id
+          url
+          title
+        }
       }
       ... on Exercise {
         currentRevision {
@@ -565,6 +570,11 @@ export default async function fetchContent(alias) {
       data.pages = reqData.uuid.course.pages.filter(
         page => page.currentRevision !== null
       )
+    }
+
+    // license
+    if (reqData.uuid.license) {
+      data.license = reqData.uuid.license
     }
 
     // compat: why is this entry saved as 'Mathe'?
