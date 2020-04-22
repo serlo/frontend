@@ -66,6 +66,11 @@ const query = props => `
             alias
           }
         }
+        license {
+          id
+          url
+          title
+        }
       }
       ... on Applet {
         currentRevision {
@@ -77,6 +82,11 @@ const query = props => `
             name
             alias
           }
+        }
+        license {
+          id
+          url
+          title
         }
       }
       ... on CoursePage {
@@ -97,6 +107,11 @@ const query = props => `
               alias
             }
           }
+        }
+        license {
+          id
+          url
+          title
         }
       }
       ... on Course {

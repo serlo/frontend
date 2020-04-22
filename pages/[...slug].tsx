@@ -13,6 +13,7 @@ import StyledP from '../src/components/tags/StyledP'
 import StyledH1 from '../src/components/tags/StyledH1'
 import { renderArticle } from '../src/schema/articleRenderer'
 import CookieBar from '../src/components/content/CookieBar'
+import LicenseNotice from '../src/components/content/LicenseNotice'
 
 const MetaMenu = dynamic(() => import('../src/components/navigation/MetaMenu'))
 const Breadcrumbs = dynamic(() =>
@@ -82,6 +83,7 @@ function PageView(props) {
               contentType === 'ExerciseGroup') && (
               <>{renderArticle(data.data.value.children)}</>
             )}
+            {data.data.license && <LicenseNotice data={data.data.license} />}
           </main>
           <HSpace amount={40} />
           {horizonIndices && (
