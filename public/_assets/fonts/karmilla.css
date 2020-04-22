@@ -1,0 +1,16 @@
+@font-face {
+  font-family: 'Karmilla';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/_assets/fonts/karmilla-regular.woff2') format('woff2'),
+    url('/_assets/fonts/karmilla-regular.woff') format('woff');
+  font-display: fallback;
+}
+@font-face {
+  font-family: 'Karmilla';
+  font-style: normal;
+  font-weight: 700;
+  src: url('/_assets/fonts/karmilla-bold.woff2') format('woff2'),
+    url('/_assets/fonts/karmilla-bold.woff') format('woff');
+  font-display: fallback;
+}

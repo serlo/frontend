@@ -225,7 +225,7 @@ export default HelloWorld
 
 #### Colors
 
-Visit `localhost:3000/_colors` to see all the colors predefined in the theme. 
+Visit `localhost:3000/_colors` to see all the colors predefined in the theme.
 
 ### Units
 
@@ -328,15 +328,15 @@ Import your helper from polished and use it in interpolations.
 
 ### Assets
 
-Put static content like images or documents into the `public` folder.
+Put static content like images or documents into the `public/_assets` folder.
 
-Example: The file `public/img/placeholder.png` is accessible via `localhost:3000/img/placeholder.png`
+Example: The file `public/_assets/img/placeholder.png` is accessible via `localhost:3000/_assets/img/placeholder.png`
 
 You can use assets in your components:
 
 ```tsx
 function HelloWorld() {
-  return <img src="/img/placeholder.png" alt="placeholder" />
+  return <img src="/_assets/img/placeholder.png" alt="placeholder" />
 }
 
 export default HelloWorld
@@ -347,7 +347,7 @@ export default HelloWorld
 You can import a svg directly. They are inlined and usable as component:
 
 ```tsx
-import SerloLogo from '../public/img/serlo-logo.svg'
+import SerloLogo from '../public/_assets/img/serlo-logo.svg'
 
 function HelloWorld() {
   return <SerloLogo />

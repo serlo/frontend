@@ -110,14 +110,14 @@ const AboutCol = styled.div`
     background-repeat: no-repeat;
     background-position-y: 100%;
     background-size: cover;
-    background-image: url('/img/serlo_learning_md.jpg');
+    background-image: url('/_assets/img/serlo_learning_md.jpg');
     color: #fff;
     ${makeResponsivePadding}
     display: flex;
   }
 
   @media (min-width: ${props => props.theme.breakpoints.md}) {
-    background-image: url('/img/serlo_learning_lg.jpg');
+    background-image: url('/_assets/img/serlo_learning_lg.jpg');
   }
 `
 

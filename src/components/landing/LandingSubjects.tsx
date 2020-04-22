@@ -7,11 +7,11 @@ import {
   makeDefaultButton
 } from '../../helper/csshelper'
 
-import MathSVG from '../../../public/img/subjects-math.svg'
-import AbcSVG from '../../../public/img/subjects-abc.svg'
-import SustainabilitySVG from '../../../public/img/subjects-sustainability.svg'
-import BiologySVG from '../../../public/img/subjects-biology.svg'
-import BlankSVG from '../../../public/img/subjects-blank.svg'
+import MathSVG from '../../../public/_assets/img/subjects-math.svg'
+import AbcSVG from '../../../public/_assets/img/subjects-abc.svg'
+import SustainabilitySVG from '../../../public/_assets/img/subjects-sustainability.svg'
+import BiologySVG from '../../../public/_assets/img/subjects-biology.svg'
+import BlankSVG from '../../../public/_assets/img/subjects-blank.svg'
 
 export default function LandingSubjects() {
   return (

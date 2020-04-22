@@ -13,9 +13,9 @@ import {
   makeResponsivePadding
 } from '../src/helper/csshelper'
 
-import PrinciplesSVG from '../public/img/landing_principles_graphic.svg'
-import DonateSVG from '../public/img/footer_donate.svg'
-import ParticipateSVG from '../public/img/footer_participate.svg'
+import PrinciplesSVG from '../public/_assets/img/landing_principles_graphic.svg'
+import DonateSVG from '../public/_assets/img/footer_donate.svg'
+import ParticipateSVG from '../public/_assets/img/footer_participate.svg'
 import CookieBar from '../src/components/content/CookieBar'
 
 export default function Landing() {

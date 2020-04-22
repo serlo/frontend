@@ -14,7 +14,7 @@ export default function Logo({ subline }: LogoProps) {
         <a href="/">
           <Image
             alt="Serlo"
-            src={'/img/serlo-logo.svg'}
+            src={'/_assets/img/serlo-logo.svg'}
             width={logoTargetWidth}
             height="80"
           />
