@@ -258,6 +258,7 @@ const query = props => `
             type
             name
             alias
+            id
             description
             children {
               trashed
@@ -471,7 +472,7 @@ export default async function fetchContent(alias) {
           if (child.type === 'topicFolder') {
             links.exercises.push({
               title: child.name,
-              url: child.alias
+              url: child.alias || '/' + child.id
             })
           } else {
             const description = await buildDescription(child.description || '')
