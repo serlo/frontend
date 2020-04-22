@@ -53,7 +53,7 @@ export default class MyDocument extends Document {
         <body style={bodyStyles}>
           <Main />
           <NextScript />
-          {process.env.NODE_ENV === 'production' && <GoogleAnalytics />}
+          {process.env.GA_TRACKING_ID !== undefined && <GoogleAnalytics />}
         </body>
       </Html>
     )
