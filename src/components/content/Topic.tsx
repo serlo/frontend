@@ -51,7 +51,9 @@ export default function Topic({ data }: TopicProps) {
       {data.purpose === TopicPurposes.detail ? (
         <Headline>{data.title}</Headline>
       ) : (
-        <HeadlineLink href={data.url}>{data.title}</HeadlineLink>
+        <h2>
+          <HeadlineLink href={data.url}>{data.title}</HeadlineLink>
+        </h2>
       )}
 
       <Wrapper purpose={data.purpose}>
@@ -89,7 +91,7 @@ const Wrapper = styled.div<{ purpose: TopicPurposes }>`
     border-bottom: 0;
   }
 
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   padding-bottom: 10px;
 
     ${props =>
@@ -107,20 +109,19 @@ const Wrapper = styled.div<{ purpose: TopicPurposes }>`
 
 const Headline = styled.h1`
   font-size: 2rem;
-  /* font-weight: 400; */
   ${makeMargin}
   margin-top: 32px;
 `
 
 const HeadlineLink = styled.a`
   color: ${props => props.theme.colors.brand};
-  cursor: pointer;
+  /* cursor: pointer; */
   display: block;
   font-size: 1.65rem;
   text-decoration: none;
 
   ${makeMargin}
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
 
   &:hover {
     text-decoration: underline;

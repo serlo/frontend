@@ -112,27 +112,28 @@ export default function TopicLinkList({ links, purpose }: LinksProps) {
 const LinkSection = styled.div<{ purpose: TopicPurposes }>`
   align-items: flex-start;
   display: flex;
-  ${props =>
-    props.purpose === TopicPurposes.overview
-      ? `
-      margin-bottom: 1.5rem;
-        `
-      : `
-      margin-top: 3rem;
-        `}
+
+  margin-bottom: ${props =>
+    props.purpose === TopicPurposes.overview && '1.5rem'};
+
+  margin-top: ${props => props.purpose !== TopicPurposes.overview && '20px'};
+  @media (min-width: ${props => props.theme.breakpoints.mobile}) {
+    margin-top: ${props =>
+      props.purpose !== TopicPurposes.overview ? '20px' : '8px'};
+  }
+
+  &:first-child {
+    margin-top: 0;
+  }
+
   @media (max-width: ${props => props.theme.breakpoints.mobile}) {
     flex-direction: column;
   }
-  @media (min-width: ${props => props.theme.breakpoints.mobile}) {
-    margin-top: 8px;  
-  }
-  
 `
 
 const LinkSectionHeadline = styled.h4`
   color: ${props => props.theme.colors.dark1};
-  font-size: 2rem;
-  font-weight: 400;
+  font-size: 1.65rem;
   margin: 0 0 0.5rem;
 `
 
@@ -161,6 +162,6 @@ const IconWrapper = styled.span<{ purpose: TopicPurposes }>`
           min-width: 4rem;
         `
       : css`
-          min-width: 8rem;
+          min-width: 6rem;
         `}
 `
