@@ -115,6 +115,9 @@ const query = props => `
           title
         }
         course {
+          currentRevision {
+            title
+          }
           pages {
             alias
             currentRevision {
@@ -656,6 +659,7 @@ export default async function fetchContent(alias) {
       data.pages = reqData.uuid.course.pages.filter(
         page => page.currentRevision !== null
       )
+      data.courseTitle = reqData.uuid.course.currentRevision?.title
     }
 
     // license

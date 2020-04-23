@@ -28,7 +28,7 @@ export default function ArticlePage({ data }) {
     1 + data.pages.findIndex(page => page.currentRevision.title === data.title)
   const nextCoursePageHref =
     isCoursePage &&
-    (nextIndex > data.pages.length ? '' : data.pages[nextIndex].alias)
+    (nextIndex >= data.pages.length ? '' : data.pages[nextIndex].alias)
 
   return (
     <>
@@ -36,7 +36,7 @@ export default function ArticlePage({ data }) {
         <CourseNavigation
           open={courseNavOpen}
           opener={openCourseNav}
-          courseTitle="The Course Title"
+          courseTitle={data.courseTitle}
           pageTitle={data.title}
           pages={data.pages}
         />
