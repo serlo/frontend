@@ -5,7 +5,7 @@ const StyledOl = styled.ol`
   ${makeMargin}
   margin-bottom: ${props => props.theme.spacing.mb.block};
   margin-top: 0;
-  padding-left: 25px;
+  padding-left: 29px;
   list-style-type: none;
   counter-reset: list-counter;
 
@@ -20,8 +20,8 @@ const StyledOl = styled.ol`
       vertical-align: top;
       display: inline-block;
       border-radius: 2em;
-      margin-left: -24px;
-      margin-top: 4px;
+      margin-left: -28px;
+      margin-top: 2px;
       background-color: ${props => props.theme.colors.lightBlueBackground};
       width: 17px;
       height: 17px;

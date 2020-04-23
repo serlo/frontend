@@ -11,11 +11,36 @@ import Toolbox from '../navigation/Toolbox'
 import dynamic from 'next/dynamic'
 
 const CourseNavigation = dynamic(() => import('../navigation/CourseNavigation'))
+const CourseFooter = dynamic(() => import('../navigation/CourseFooter'))
 
 export default function ArticlePage({ data }) {
   const [open, setOpen] = React.useState(false)
+
+  const [courseNavOpen, setCourseNavOpen] = React.useState(false)
+  const openCourseNav = e => {
+    e.preventDefault()
+    setCourseNavOpen(true)
+  }
+  const isCoursePage = !!data.pages
+
+  const nextIndex =
+    isCoursePage &&
+    1 + data.pages.findIndex(page => page.currentRevision.title === data.title)
+  const nextCoursePageHref =
+    isCoursePage &&
+    (nextIndex > data.pages.length ? '' : data.pages[nextIndex].alias)
+
   return (
     <>
+      {isCoursePage && (
+        <CourseNavigation
+          open={courseNavOpen}
+          opener={openCourseNav}
+          courseTitle="The Course Title"
+          pageTitle={data.title}
+          pages={data.pages}
+        />
+      )}
       <StyledH1 displayMode>{data.title}</StyledH1>
       <ToolLine>
         <ToolLineButton onClick={() => setOpen(true)}>
@@ -23,13 +48,18 @@ export default function ArticlePage({ data }) {
         </ToolLineButton>
       </ToolLine>
       {data.value && renderArticle(data.value.children)}
+      {isCoursePage && (
+        <CourseFooter opener={openCourseNav} nextHref={nextCoursePageHref} />
+      )}
       <HSpace amount={20} />
-      <ToolLine>
-        <ToolLineButton onClick={() => setOpen(true)}>
-          <FontAwesomeIcon icon={faShareAlt} size="1x" /> Teilen
-        </ToolLineButton>
-      </ToolLine>
-      {data.pages && <CourseNavigation pages={data.pages} />}
+      {!isCoursePage && (
+        <ToolLine>
+          <ToolLineButton onClick={() => setOpen(true)}>
+            <FontAwesomeIcon icon={faShareAlt} size="1x" /> Teilen
+          </ToolLineButton>
+        </ToolLine>
+      )}
+
       <Toolbox
         onShare={() => setOpen(true)}
         onEdit={() => {

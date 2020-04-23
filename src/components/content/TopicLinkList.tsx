@@ -1,13 +1,15 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faGraduationCap } from '@fortawesome/free-solid-svg-icons'
-import { faNewspaper } from '@fortawesome/free-solid-svg-icons'
-import { faPlayCircle } from '@fortawesome/free-solid-svg-icons'
-import { faCubes } from '@fortawesome/free-solid-svg-icons'
-import { faFile } from '@fortawesome/free-solid-svg-icons'
-import { faCircle } from '@fortawesome/free-solid-svg-icons'
-import { faFolderOpen } from '@fortawesome/free-solid-svg-icons'
+import {
+  faGraduationCap,
+  faNewspaper,
+  faPlayCircle,
+  faCubes,
+  faFile,
+  faCircle,
+  faFolderOpen
+} from '@fortawesome/free-solid-svg-icons'
 import { LinksInterface, TopicPurposes } from './Topic'
 
 interface LinksProps {
@@ -21,6 +23,7 @@ interface IconProps {
 }
 
 enum IconSizeEnum {
+  one = '1x',
   two = '2x',
   three = '3x'
 }
@@ -30,66 +33,44 @@ enum HeadlineEnum {
   articles = 'Artikel',
   videos = 'Videos',
   applets = 'Applets',
-  excercises = 'Aufgaben'
+  exercises = 'Aufgaben'
+}
+
+const iconObjects = {
+  courses: faGraduationCap,
+  articles: faNewspaper,
+  videos: faPlayCircle,
+  applets: faCubes,
+  exercises: faFile,
+  subfolders: faFolderOpen
 }
 
 function RenderIcon(props: IconProps) {
-  switch (props.icon) {
-    case 'courses':
-      return (
-        <FontAwesomeIcon
-          icon={faGraduationCap}
-          size={props.size}
-          color="#333333"
-        />
-      )
-    case 'articles':
-      return (
-        <FontAwesomeIcon icon={faNewspaper} size={props.size} color="#333333" />
-      )
-    case 'videos':
-      return (
-        <FontAwesomeIcon
-          icon={faPlayCircle}
-          size={props.size}
-          color="#333333"
-        />
-      )
-    case 'applets':
-      return (
-        <FontAwesomeIcon icon={faCubes} size={props.size} color="#333333" />
-      )
-    case 'excercises':
-      return <FontAwesomeIcon icon={faFile} size={props.size} color="#333333" />
-    case 'subfolders':
-      return (
-        <FontAwesomeIcon
-          icon={faFolderOpen}
-          size={props.size}
-          color="#333333"
-        />
-      )
-    default:
-      return (
-        <FontAwesomeIcon icon={faCircle} size={props.size} color="#333333" />
-      )
-  }
+  return (
+    <FontAwesomeIcon
+      icon={iconObjects[props.icon] || faCircle}
+      size={props.size}
+    />
+  )
 }
 
 export default function TopicLinkList({ links, purpose }: LinksProps) {
-  const IconsSize =
-    purpose === TopicPurposes.detail ? IconSizeEnum.three : IconSizeEnum.two
+  const IconsSize = IconSizeEnum.two
+  // purpose === TopicPurposes.detail ? IconSizeEnum.three : IconSizeEnum.two
   return (
     <>
       {Object.keys(links).map(link => {
         return links[link] && links[link].length > 0 ? (
           <LinkSection purpose={purpose} key={link}>
-            <IconWrapper purpose={purpose}>
+            <IconWrapper purpose={purpose} title={HeadlineEnum[link]}>
               <RenderIcon icon={link} size={IconsSize}></RenderIcon>
             </IconWrapper>
             <div>
               {purpose === TopicPurposes.detail && (
-                <LinkSectionHeadline>{HeadlineEnum[link]}</LinkSectionHeadline>
+                <LinkSectionHeadline>
+                  <RenderIcon icon={link} size={IconSizeEnum.one}></RenderIcon>{' '}
+                  {HeadlineEnum[link]}
+                </LinkSectionHeadline>
               )}
               {links[link].map(article => {
                 return (
@@ -112,14 +93,20 @@ export default function TopicLinkList({ links, purpose }: LinksProps) {
 const LinkSection = styled.div<{ purpose: TopicPurposes }>`
   align-items: flex-start;
   display: flex;
-  ${props =>
-    props.purpose === TopicPurposes.overview
-      ? `
-      margin-bottom: 1.5rem;
-        `
-      : `
-      margin-top: 3rem;
-        `}
+
+  margin-bottom: ${props =>
+    props.purpose === TopicPurposes.overview && '1.5rem'};
+
+  margin-top: ${props => props.purpose !== TopicPurposes.overview && '20px'};
+  @media (min-width: ${props => props.theme.breakpoints.mobile}) {
+    margin-top: ${props =>
+      props.purpose !== TopicPurposes.overview ? '20px' : '8px'};
+  }
+
+  &:first-child {
+    margin-top: 0;
+  }
+
   @media (max-width: ${props => props.theme.breakpoints.mobile}) {
     flex-direction: column;
   }
@@ -127,9 +114,18 @@ const LinkSection = styled.div<{ purpose: TopicPurposes }>`
 
 const LinkSectionHeadline = styled.h4`
   color: ${props => props.theme.colors.dark1};
-  font-size: 2rem;
-  font-weight: 400;
+  font-size: 1.65rem;
   margin: 0 0 0.5rem;
+  font-weight: 400;
+
+  > svg {
+    color: ${props => props.theme.colors.brand};
+  }
+  @media (min-width: ${props => props.theme.breakpoints.mobile}) {
+    > svg {
+      display: none;
+    }
+  }
 `
 
 const Link = styled.a`
@@ -146,12 +142,22 @@ const Link = styled.a`
 `
 
 const IconWrapper = styled.span<{ purpose: TopicPurposes }>`
+  margin-top: 6px;
+  color: ${props => props.theme.colors.brand};
+
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    margin-bottom: 8px;
+    margin-top: 16px;
+    display: ${props =>
+      props.purpose === TopicPurposes.overview ? 'inline-block' : 'none'};
+  }
+
   ${props =>
     props.purpose === TopicPurposes.overview
-      ? `
-        min-width: 4rem;
+      ? css`
+          min-width: 4rem;
         `
-      : `
-            min-width: 8rem;
+      : css`
+          min-width: 6rem;
         `}
 `

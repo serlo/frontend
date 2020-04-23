@@ -75,7 +75,7 @@ function PageView(props) {
             {contentType === 'TaxonomyTerm' && <Topic data={data.data} />}
             {(contentType === 'Video' || contentType === 'Applet') && (
               <>
-                <StyledH1>{data.data.title}</StyledH1>
+                <StyledH1 displayMode>{data.data.title}</StyledH1>
                 {renderArticle(data.data.value.children)}
               </>
             )}
@@ -83,7 +83,9 @@ function PageView(props) {
               contentType === 'ExerciseGroup') && (
               <>{renderArticle(data.data.value.children)}</>
             )}
-            {data.data.license && <LicenseNotice data={data.data.license} />}
+            {data.data && data.data.license && (
+              <LicenseNotice data={data.data.license} />
+            )}
           </main>
           <HSpace amount={40} />
           {horizonIndices && (

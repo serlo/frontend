@@ -38,18 +38,28 @@ interface TopicProps {
 }
 
 export default function Topic({ data }: TopicProps) {
+  //only show when description actually has content. probably better to filter upstream
+
+  const showDescription = !(
+    data.description.length === 1 &&
+    data.description[0].type === 'p' &&
+    data.description[0].children[0].text === ''
+  )
+
   return (
     <>
       {data.purpose === TopicPurposes.detail ? (
         <Headline>{data.title}</Headline>
       ) : (
-        <HeadlineLink href={data.url}>{data.title}</HeadlineLink>
+        <h2>
+          <HeadlineLink href={data.url}>{data.title}</HeadlineLink>
+        </h2>
       )}
 
       <Wrapper purpose={data.purpose}>
-        <Overview>
-          {data.description && renderArticle(data.description)}
-        </Overview>
+        {showDescription && (
+          <Overview>{renderArticle(data.description)}</Overview>
+        )}
         {data.children &&
           data.children.map(child => (
             <React.Fragment key={child.title}>
@@ -81,7 +91,7 @@ const Wrapper = styled.div<{ purpose: TopicPurposes }>`
     border-bottom: 0;
   }
 
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   padding-bottom: 10px;
 
     ${props =>
@@ -98,20 +108,18 @@ const Wrapper = styled.div<{ purpose: TopicPurposes }>`
 `
 
 const Headline = styled.h1`
-  font-size: 2.5rem;
-  font-weight: 400;
+  font-size: 2rem;
   ${makeMargin}
+  margin-top: 32px;
 `
 
 const HeadlineLink = styled.a`
   color: ${props => props.theme.colors.brand};
-  cursor: pointer;
   display: block;
-  font-size: 1.6rem;
+  font-size: 1.65rem;
   text-decoration: none;
-
   ${makeMargin}
-  margin-bottom: 1rem;
+  hyphens: auto;
 
   &:hover {
     text-decoration: underline;
@@ -123,6 +131,7 @@ const LinkList = styled.div`
   flex: 1 1 55%;
   flex-direction: column;
   ${makeMargin}
+  margin-top: 6px;
 `
 
 const TopicImage = styled.img`
@@ -137,4 +146,10 @@ const Description = styled.p`
 
 const Overview = styled.div`
   flex: 1 1 40%;
+  img {
+    margin-top: 22px;
+    @media (min-width: ${props => props.theme.breakpoints.sm}) {
+      margin-bottom: 20px;
+    }
+  }
 `
