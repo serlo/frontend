@@ -96,7 +96,7 @@ const Breadcrumb = styled.a`
 
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
     display: none;
-    font-size: 1.25rem;
+    font-size: 1.125rem;
   }
 
   @media (min-width: ${props => props.theme.breakpoints.sm}) {

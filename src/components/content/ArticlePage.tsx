@@ -16,6 +16,13 @@ export default function ArticlePage({ data }) {
   const [open, setOpen] = React.useState(false)
   return (
     <>
+      {data.pages && (
+        <CourseNavigation
+          courseTitle="The Course Title"
+          pageTitle={data.title}
+          pages={data.pages}
+        />
+      )}
       <StyledH1 displayMode>{data.title}</StyledH1>
       <ToolLine>
         <ToolLineButton onClick={() => setOpen(true)}>
@@ -29,7 +36,6 @@ export default function ArticlePage({ data }) {
           <FontAwesomeIcon icon={faShareAlt} size="1x" /> Teilen
         </ToolLineButton>
       </ToolLine>
-      {data.pages && <CourseNavigation pages={data.pages} />}
       <Toolbox
         onShare={() => setOpen(true)}
         onEdit={() => {
