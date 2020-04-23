@@ -38,6 +38,14 @@ interface TopicProps {
 }
 
 export default function Topic({ data }: TopicProps) {
+  //only show when description actually has content. probably better to filter upstream
+
+  const showDescription = !(
+    data.description.length === 1 &&
+    data.description[0].type === 'p' &&
+    data.description[0].children[0].text === ''
+  )
+
   return (
     <>
       {data.purpose === TopicPurposes.detail ? (
@@ -47,9 +55,9 @@ export default function Topic({ data }: TopicProps) {
       )}
 
       <Wrapper purpose={data.purpose}>
-        <Overview>
-          {data.description && renderArticle(data.description)}
-        </Overview>
+        {showDescription && (
+          <Overview>{renderArticle(data.description)}</Overview>
+        )}
         {data.children &&
           data.children.map(child => (
             <React.Fragment key={child.title}>
@@ -98,20 +106,21 @@ const Wrapper = styled.div<{ purpose: TopicPurposes }>`
 `
 
 const Headline = styled.h1`
-  font-size: 2.5rem;
-  font-weight: 400;
+  font-size: 2rem;
+  /* font-weight: 400; */
   ${makeMargin}
+  margin-top: 32px;
 `
 
 const HeadlineLink = styled.a`
   color: ${props => props.theme.colors.brand};
   cursor: pointer;
   display: block;
-  font-size: 1.6rem;
+  font-size: 1.65rem;
   text-decoration: none;
 
   ${makeMargin}
-  margin-bottom: 1rem;
+  margin-bottom: 10px;
 
   &:hover {
     text-decoration: underline;
@@ -137,4 +146,5 @@ const Description = styled.p`
 
 const Overview = styled.div`
   flex: 1 1 40%;
+  /* display: none; */
 `

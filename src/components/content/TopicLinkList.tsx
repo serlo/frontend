@@ -123,6 +123,10 @@ const LinkSection = styled.div<{ purpose: TopicPurposes }>`
   @media (max-width: ${props => props.theme.breakpoints.mobile}) {
     flex-direction: column;
   }
+  @media (min-width: ${props => props.theme.breakpoints.mobile}) {
+    margin-top: 8px;  
+  }
+  
 `
 
 const LinkSectionHeadline = styled.h4`
@@ -146,6 +150,7 @@ const Link = styled.a`
 `
 
 const IconWrapper = styled.span<{ purpose: TopicPurposes }>`
+  margin-top: 6px;
   ${props =>
     props.purpose === TopicPurposes.overview
       ? `
