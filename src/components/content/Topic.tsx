@@ -146,5 +146,10 @@ const Description = styled.p`
 
 const Overview = styled.div`
   flex: 1 1 40%;
-  /* display: none; */
+  img {
+    margin-top: 22px;
+    @media (min-width: ${props => props.theme.breakpoints.sm}) {
+      margin-bottom: 20px;
+    }
+  }
 `
