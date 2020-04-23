@@ -114,6 +114,7 @@ const LinkSectionHeadline = styled.h4`
   color: ${props => props.theme.colors.dark1};
   font-size: 1.65rem;
   margin: 0 0 0.5rem;
+  font-weight: 400;
 
   > svg {
     color: ${props => props.theme.colors.brand};
