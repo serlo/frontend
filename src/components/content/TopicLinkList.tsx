@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGraduationCap } from '@fortawesome/free-solid-svg-icons'
 import { faNewspaper } from '@fortawesome/free-solid-svg-icons'
@@ -151,12 +151,16 @@ const Link = styled.a`
 
 const IconWrapper = styled.span<{ purpose: TopicPurposes }>`
   margin-top: 6px;
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    margin-bottom: 8px;
+    margin-top: 16px;
+  }
   ${props =>
     props.purpose === TopicPurposes.overview
-      ? `
-        min-width: 4rem;
+      ? css`
+          min-width: 4rem;
         `
-      : `
-            min-width: 8rem;
+      : css`
+          min-width: 8rem;
         `}
 `
