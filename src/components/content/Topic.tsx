@@ -115,13 +115,11 @@ const Headline = styled.h1`
 
 const HeadlineLink = styled.a`
   color: ${props => props.theme.colors.brand};
-  /* cursor: pointer; */
   display: block;
   font-size: 1.65rem;
   text-decoration: none;
-
   ${makeMargin}
-  /* margin-bottom: 10px; */
+  hyphens: auto;
 
   &:hover {
     text-decoration: underline;
@@ -133,6 +131,7 @@ const LinkList = styled.div`
   flex: 1 1 55%;
   flex-direction: column;
   ${makeMargin}
+  margin-top: 6px;
 `
 
 const TopicImage = styled.img`

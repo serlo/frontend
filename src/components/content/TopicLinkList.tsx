@@ -21,6 +21,7 @@ interface IconProps {
 }
 
 enum IconSizeEnum {
+  one = '1x',
   two = '2x',
   three = '3x'
 }
@@ -84,12 +85,15 @@ export default function TopicLinkList({ links, purpose }: LinksProps) {
       {Object.keys(links).map(link => {
         return links[link] && links[link].length > 0 ? (
           <LinkSection purpose={purpose} key={link}>
-            <IconWrapper purpose={purpose}>
+            <IconWrapper purpose={purpose} title={HeadlineEnum[link]}>
               <RenderIcon icon={link} size={IconsSize}></RenderIcon>
             </IconWrapper>
             <div>
               {purpose === TopicPurposes.detail && (
-                <LinkSectionHeadline>{HeadlineEnum[link]}</LinkSectionHeadline>
+                <LinkSectionHeadline>
+                  <RenderIcon size={IconSizeEnum.one} icon={link}></RenderIcon>{' '}
+                  {HeadlineEnum[link]}
+                </LinkSectionHeadline>
               )}
               {links[link].map(article => {
                 return (
@@ -135,6 +139,12 @@ const LinkSectionHeadline = styled.h4`
   color: ${props => props.theme.colors.dark1};
   font-size: 1.65rem;
   margin: 0 0 0.5rem;
+
+  @media (min-width: ${props => props.theme.breakpoints.mobile}) {
+    > svg {
+      display: none;
+    }
+  }
 `
 
 const Link = styled.a`
@@ -152,10 +162,14 @@ const Link = styled.a`
 
 const IconWrapper = styled.span<{ purpose: TopicPurposes }>`
   margin-top: 6px;
+
   @media (max-width: ${props => props.theme.breakpoints.mobile}) {
     margin-bottom: 8px;
     margin-top: 16px;
+    display: ${props =>
+      props.purpose === TopicPurposes.overview ? 'inline-block' : 'none'};
   }
+
   ${props =>
     props.purpose === TopicPurposes.overview
       ? css`
