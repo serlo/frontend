@@ -1,13 +1,15 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faGraduationCap } from '@fortawesome/free-solid-svg-icons'
-import { faNewspaper } from '@fortawesome/free-solid-svg-icons'
-import { faPlayCircle } from '@fortawesome/free-solid-svg-icons'
-import { faCubes } from '@fortawesome/free-solid-svg-icons'
-import { faFile } from '@fortawesome/free-solid-svg-icons'
-import { faCircle } from '@fortawesome/free-solid-svg-icons'
-import { faFolderOpen } from '@fortawesome/free-solid-svg-icons'
+import {
+  faGraduationCap,
+  faNewspaper,
+  faPlayCircle,
+  faCubes,
+  faFile,
+  faCircle,
+  faFolderOpen
+} from '@fortawesome/free-solid-svg-icons'
 import { LinksInterface, TopicPurposes } from './Topic'
 
 interface LinksProps {

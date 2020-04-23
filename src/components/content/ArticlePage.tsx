@@ -11,13 +11,31 @@ import Toolbox from '../navigation/Toolbox'
 import dynamic from 'next/dynamic'
 
 const CourseNavigation = dynamic(() => import('../navigation/CourseNavigation'))
+const CourseFooter = dynamic(() => import('../navigation/CourseFooter'))
 
 export default function ArticlePage({ data }) {
   const [open, setOpen] = React.useState(false)
+
+  const [courseNavOpen, setCourseNavOpen] = React.useState(false)
+  const openCourseNav = e => {
+    e.preventDefault()
+    setCourseNavOpen(true)
+  }
+  const isCoursePage = !!data.pages
+
+  const nextIndex =
+    isCoursePage &&
+    1 + data.pages.findIndex(page => page.currentRevision.title === data.title)
+  const nextCoursePageHref =
+    isCoursePage &&
+    (nextIndex > data.pages.length ? '' : data.pages[nextIndex].alias)
+
   return (
     <>
-      {data.pages && (
+      {isCoursePage && (
         <CourseNavigation
+          open={courseNavOpen}
+          opener={openCourseNav}
           courseTitle="The Course Title"
           pageTitle={data.title}
           pages={data.pages}
@@ -30,12 +48,18 @@ export default function ArticlePage({ data }) {
         </ToolLineButton>
       </ToolLine>
       {data.value && renderArticle(data.value.children)}
+      {isCoursePage && (
+        <CourseFooter opener={openCourseNav} nextHref={nextCoursePageHref} />
+      )}
       <HSpace amount={20} />
-      <ToolLine>
-        <ToolLineButton onClick={() => setOpen(true)}>
-          <FontAwesomeIcon icon={faShareAlt} size="1x" /> Teilen
-        </ToolLineButton>
-      </ToolLine>
+      {!isCoursePage && (
+        <ToolLine>
+          <ToolLineButton onClick={() => setOpen(true)}>
+            <FontAwesomeIcon icon={faShareAlt} size="1x" /> Teilen
+          </ToolLineButton>
+        </ToolLine>
+      )}
+
       <Toolbox
         onShare={() => setOpen(true)}
         onEdit={() => {
