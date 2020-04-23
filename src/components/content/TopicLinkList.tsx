@@ -34,58 +34,30 @@ enum HeadlineEnum {
   exercises = 'Aufgaben'
 }
 
+const iconObjects = {
+  courses: faGraduationCap,
+  articles: faNewspaper,
+  videos: faPlayCircle,
+  applets: faCubes,
+  exercises: faFile,
+  subfolders: faFolderOpen
+}
+
 function RenderIcon(props: IconProps) {
-  switch (props.icon) {
-    case 'courses':
-      return (
-        <FontAwesomeIcon
-          icon={faGraduationCap}
-          size={props.size}
-          color="#333333"
-        />
-      )
-    case 'articles':
-      return (
-        <FontAwesomeIcon icon={faNewspaper} size={props.size} color="#333333" />
-      )
-    case 'videos':
-      return (
-        <FontAwesomeIcon
-          icon={faPlayCircle}
-          size={props.size}
-          color="#333333"
-        />
-      )
-    case 'applets':
-      return (
-        <FontAwesomeIcon icon={faCubes} size={props.size} color="#333333" />
-      )
-    case 'exercises':
-      return <FontAwesomeIcon icon={faFile} size={props.size} color="#333333" />
-    case 'subfolders':
-      return (
-        <FontAwesomeIcon
-          icon={faFolderOpen}
-          size={props.size}
-          color="#333333"
-        />
-      )
-    default:
-      return (
-        <FontAwesomeIcon icon={faCircle} size={props.size} color="#333333" />
-      )
-  }
+  return (
+    <FontAwesomeIcon
+      icon={iconObjects[props.icon] || faCircle}
+      size={props.size}
+    />
+  )
 }
 
 export default function TopicLinkList({ links, purpose }: LinksProps) {
-  const IconsSize =
-    purpose === TopicPurposes.detail ? IconSizeEnum.three : IconSizeEnum.two
+  const IconsSize = IconSizeEnum.two
+  // purpose === TopicPurposes.detail ? IconSizeEnum.three : IconSizeEnum.two
   return (
     <>
       {Object.keys(links).map(link => {
-        // console.log(HeadlineEnum[link])
-        console.log(link)
-
         return links[link] && links[link].length > 0 ? (
           <LinkSection purpose={purpose} key={link}>
             <IconWrapper purpose={purpose} title={HeadlineEnum[link]}>
@@ -94,7 +66,7 @@ export default function TopicLinkList({ links, purpose }: LinksProps) {
             <div>
               {purpose === TopicPurposes.detail && (
                 <LinkSectionHeadline>
-                  <RenderIcon size={IconSizeEnum.one} icon={link}></RenderIcon>{' '}
+                  <RenderIcon icon={link} size={IconSizeEnum.one}></RenderIcon>{' '}
                   {HeadlineEnum[link]}
                 </LinkSectionHeadline>
               )}
@@ -143,6 +115,9 @@ const LinkSectionHeadline = styled.h4`
   font-size: 1.65rem;
   margin: 0 0 0.5rem;
 
+  > svg {
+    color: ${props => props.theme.colors.brand};
+  }
   @media (min-width: ${props => props.theme.breakpoints.mobile}) {
     > svg {
       display: none;
@@ -165,6 +140,7 @@ const Link = styled.a`
 
 const IconWrapper = styled.span<{ purpose: TopicPurposes }>`
   margin-top: 6px;
+  color: ${props => props.theme.colors.brand};
 
   @media (max-width: ${props => props.theme.breakpoints.mobile}) {
     margin-bottom: 8px;
