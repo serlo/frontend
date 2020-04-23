@@ -69,9 +69,11 @@ function BreadcrumbEntries(props) {
 }
 
 const BreadcrumbWrapper = styled.nav`
-  margin: 25px 0 0 10px;
+  margin: 25px 0 0 ${props => props.theme.defaults.sideSpacingMobile};
+
   @media (min-width: ${props => props.theme.breakpoints.sm}) {
     margin-bottom: 45px;
+    margin-left: 10px;
   }
 `
 
