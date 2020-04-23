@@ -31,7 +31,7 @@ enum HeadlineEnum {
   articles = 'Artikel',
   videos = 'Videos',
   applets = 'Applets',
-  excercises = 'Aufgaben'
+  exercises = 'Aufgaben'
 }
 
 function RenderIcon(props: IconProps) {
@@ -60,7 +60,7 @@ function RenderIcon(props: IconProps) {
       return (
         <FontAwesomeIcon icon={faCubes} size={props.size} color="#333333" />
       )
-    case 'excercises':
+    case 'exercises':
       return <FontAwesomeIcon icon={faFile} size={props.size} color="#333333" />
     case 'subfolders':
       return (
@@ -83,6 +83,9 @@ export default function TopicLinkList({ links, purpose }: LinksProps) {
   return (
     <>
       {Object.keys(links).map(link => {
+        // console.log(HeadlineEnum[link])
+        console.log(link)
+
         return links[link] && links[link].length > 0 ? (
           <LinkSection purpose={purpose} key={link}>
             <IconWrapper purpose={purpose} title={HeadlineEnum[link]}>
