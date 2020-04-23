@@ -19,9 +19,11 @@ export default function CourseFooter({ opener, nextHref }) {
       <OverviewButton onClick={onOverviewClick}>
         <FontAwesomeIcon icon={faListUl} /> Kursübersicht
       </OverviewButton>
-      <Button href={nextHref}>
-        <FontAwesomeIcon icon={faArrowCircleRight} /> Weiter
-      </Button>
+      {nextHref && (
+        <Button href={nextHref}>
+          <FontAwesomeIcon icon={faArrowCircleRight} /> Weiter
+        </Button>
+      )}
     </Wrapper>
   )
 }
