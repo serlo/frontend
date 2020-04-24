@@ -1,10 +1,13 @@
-import styled from 'styled-components'
-import { makeMargin } from '../../helper/csshelper'
+import styled, { css } from 'styled-components'
+import { makeMargin, makeDefaultButton } from '../../helper/csshelper'
 import React from 'react'
 import { renderArticle } from '../../schema/articleRenderer'
 import { convertEdtrioState } from '../../schema/convertEdtrioState'
 import { getServerSideProps } from '../../../pages/[...slug]'
 import StyledP from '../tags/StyledP'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCircle } from '@fortawesome/free-solid-svg-icons'
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 
 export default function ScMcExercise({ state }) {
   if (state.isSingleChoice) return <SingleChoice state={state} />
@@ -16,31 +19,62 @@ function SingleChoice({ state }) {
   const [selected, setSelected] = React.useState(undefined)
   const [showFeedback, setShowFeedback] = React.useState(false)
 
+  console.log(state.answers[selected])
   return (
     <Container>
       <Choices>
-        {state.answers.map((answer, i) => (
-          <label key={i}>
-            <input
-              type="radio"
-              checked={selected === i}
-              onChange={() => {
-                setShowFeedback(false)
-                setSelected(i)
-              }}
-            />
-            {renderArticle(convertEdtrioState(answer.content).children)}
-          </label>
-        ))}
+        {state.answers.map((answer, i) => {
+          console.log(answer)
+          const unique =
+            Math.random()
+              .toString(20)
+              .substr(2, 8) +
+            '-' +
+            i
+          return (
+            <>
+              <ChoiceWrapper>
+                <StyledInput
+                  id={unique}
+                  type="radio"
+                  checked={selected === i}
+                  onChange={() => {
+                    setShowFeedback(false)
+                    setSelected(i)
+                  }}
+                />
+                <StyledLabel
+                  selected={selected === i}
+                  key={unique}
+                  htmlFor={unique}
+                >
+                  <FontAwesomeIcon
+                    icon={selected === i ? faCheckCircle : faCircle}
+                  />
+                  {renderArticle(convertEdtrioState(answer.content).children)}
+                </StyledLabel>
+              </ChoiceWrapper>
+              {showFeedback &&
+                state.answers[selected] &&
+                state.answers[selected] === answer && (
+                  <Feedback right={state.answers[selected].isCorrect}>
+                    {renderArticle(
+                      convertEdtrioState(state.answers[selected].feedback)
+                        .children
+                    )}
+                  </Feedback>
+                )}
+            </>
+          )
+        })}
       </Choices>
-      {showFeedback && state.answers[selected] && (
-        <Feedback right={state.answers[selected].isCorrect}>
-          {renderArticle(
-            convertEdtrioState(state.answers[selected].feedback).children
-          )}
-        </Feedback>
-      )}
-      <button onClick={() => setShowFeedback(true)}>Stimmt's?</button>
+
+      <CheckButton
+        selectable={selected !== undefined}
+        onClick={() => setShowFeedback(true)}
+      >
+        Stimmt's?
+      </CheckButton>
     </Container>
   )
 }
@@ -83,13 +117,64 @@ function MultipleChoice({ state }) {
   )
 }
 
-const Choices = styled.div`
+const CheckButton = styled.a<{ selectable: boolean }>`
+  ${makeDefaultButton}
+  margin-top: 16px;
+
+  color: #fff;
+  background-color: ${props => props.theme.colors.brand};
+
+  ${props =>
+    !props.selectable &&
+    css`
+      opacity: 0;
+      pointer-events: none;
+    `}
+`
+
+const Choices = styled.ul`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+`
+
+const ChoiceWrapper = styled.li`
+  display: flex;
+  margin-bottom: 8px;
+`
+
+const StyledInput = styled.input`
+  &[type='radio'] {
+    width: 1px;
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+  }
+`
+
+const StyledLabel = styled.label<{ selected: boolean }>`
+  display: flex;
+  cursor: pointer;
+
+  > svg {
+    font-size: 1.33rem;
+    margin-top: 2px;
+    color: ${props =>
+      props.selected
+        ? props.theme.colors.brand
+        : props.theme.colors.lightBlueBackground};
+  }
+
+  > div > * {
+    margin-left: 8px;
+  }
 `
 
 const Feedback = styled.div<{ right?: boolean }>`
+  margin-left: 14px;
   color: ${props => (props.right ? 'green' : 'red')};
 `
 
