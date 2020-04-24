@@ -9,13 +9,15 @@ const bodyStyles = {
   letterSpacing: '-0.007em'
 }
 
-process.on('unhandledRejection', err => {
-  Sentry.captureException(err)
-})
+if (process.env.SENTRY_DSN !== undefined) {
+  process.on('unhandledRejection', err => {
+    Sentry.captureException(err)
+  })
 
-process.on('uncaughtException', err => {
-  Sentry.captureException(err)
-})
+  process.on('uncaughtException', err => {
+    Sentry.captureException(err)
+  })
+}
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx) {
