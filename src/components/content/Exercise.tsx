@@ -53,12 +53,13 @@ export default function Exercise(props) {
     const steps = convertEdtrioState(state.steps).children
     solutionValue = [...prereq, ...strategy, ...steps]
   }
+  console.log(taskLicense)
 
   return (
     <>
       {renderArticle(taskValue, false)}
       {interactiveComp}
-      {taskLicense && <LicenseNotice data={taskLicense} />}
+      {taskLicense && <LicenseNotice minimal data={taskLicense} />}
       <SolutionToggle
         onClick={() => {
           setVisible(!solutionVisible)
@@ -68,7 +69,7 @@ export default function Exercise(props) {
       </SolutionToggle>
       <SolutionBox visible={solutionVisible}>
         {renderArticle(solutionValue, false)}
-        {solutionLicense && <LicenseNotice data={solutionLicense} />}
+        {solutionLicense && <LicenseNotice minimal data={solutionLicense} />}
       </SolutionBox>
     </>
   )
