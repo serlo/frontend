@@ -1,7 +1,7 @@
 import { renderArticle } from '../../schema/articleRenderer'
 import styled from 'styled-components'
 import React from 'react'
-import { makeMargin } from '../../helper/csshelper'
+import { makeMargin, makeDefaultButton } from '../../helper/csshelper'
 import { convertEdtrioState } from '../../schema/convertEdtrioState'
 import ScMcExercise from './ScMcExercise'
 import InputExercise from './InputExercise'
@@ -56,7 +56,7 @@ export default function Exercise(props) {
   console.log(taskLicense)
 
   return (
-    <>
+    <Wrapper>
       {renderArticle(taskValue, false)}
       {interactiveComp}
       {taskLicense && <LicenseNotice minimal data={taskLicense} />}
@@ -71,17 +71,29 @@ export default function Exercise(props) {
         {renderArticle(solutionValue, false)}
         {solutionLicense && <LicenseNotice minimal data={solutionLicense} />}
       </SolutionBox>
-    </>
+    </Wrapper>
   )
 }
 
-const SolutionToggle = styled.div`
+const Wrapper = styled.div`
+  border-bottom: 2px solid ${props => props.theme.colors.lightBlueBackground};
+  margin-bottom: 30px;
+`
+
+const SolutionToggle = styled.a`
   ${makeMargin}
-  font-size: 1.125rem;
-  cursor: pointer;
+  ${makeDefaultButton}
+  margin-left: 10px;
+  /* background-color: ${props => props.theme.colors.bluewhite}; */
   text-decoration: underline;
-  color: ${props => props.theme.colors.brand};
-  margin-bottom: ${props => props.theme.spacing.mb.block};
+  font-size: 1rem;
+  display: inline-block;
+  cursor: pointer;
+  margin-bottom: 16px;
+
+  &:hover {
+    text-decoration: none;
+  }
 `
 
 const SolutionBox = styled.div<{ visible: boolean }>`
