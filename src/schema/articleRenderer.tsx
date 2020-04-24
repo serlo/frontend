@@ -261,18 +261,22 @@ function SpoilerForEndUser(props) {
   return renderSpoilerContainer({
     children: (
       <>
-        {renderSpoilerTitle({
+        <SpoilerTitle onClick={() => setOpen(!open)} open={open}>
+          <SpoilerToggle open={open} />
+          {title}
+        </SpoilerTitle>
+        {/* {renderSpoilerTitle({
           attributes: {
-            onClick: () => setOpen(!open),
-            role: 'button'
+            onClick: ,
+            role: 'button',
+            open: { open }
           },
           children: (
             <>
-              <SpoilerToggle open={open} />
-              {title}
+              
             </>
           )
-        })}
+        })} */}
         {open && body}
       </>
     )
@@ -283,9 +287,9 @@ export function renderSpoilerContainer({ attributes = {}, children = null }) {
   return <SpoilerContainer {...attributes}>{children}</SpoilerContainer>
 }
 
-export function renderSpoilerTitle({ attributes = {}, children = null }) {
-  return <SpoilerTitle {...attributes}>{children}</SpoilerTitle>
-}
+// export function renderSpoilerTitle({ attributes = {}, children = null }) {
+//   return <SpoilerTitle {...attributes}>{children}</SpoilerTitle>
+// }
 
 export function renderSpoilerBody({ attributes = {}, children = null }) {
   return <SpoilerBody {...attributes}>{children}</SpoilerBody>
