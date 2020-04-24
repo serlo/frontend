@@ -24,8 +24,8 @@ export default function LicenseNotice(props: LicenseNoticeProps) {
   if (minimal)
     return (
       <MinimalWrapper>
-        <MinimalLink href={data.url} title="Lizenz">
-          {licenseName}
+        <MinimalLink href={data.url} title={data.title}>
+          <FontAwesomeIcon icon={faCreativeCommons} />
         </MinimalLink>
       </MinimalWrapper>
     )
@@ -51,14 +51,18 @@ export default function LicenseNotice(props: LicenseNoticeProps) {
 }
 
 const MinimalWrapper = styled.div`
-  text-align: right;
+  float: right;
   ${makePadding};
 `
 const MinimalLink = styled.a`
   ${makeDefaultButton}
+  text-align: center;
   color: ${props => props.theme.colors.dark1};
   background-color: ${props => props.theme.colors.lightBackground};
-  font-size: 0.8rem;
+  font-size: 1.3rem;
+  line-height: 2rem;
+  width: 2rem;
+  padding: 0;
 `
 
 const StyledSmall = styled.span`
