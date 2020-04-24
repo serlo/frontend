@@ -47,7 +47,7 @@ const StyledSpoilerTitle = styled.a<{ open: boolean; interactive: boolean }>`
   ${props =>
     !props.interactive &&
     css`
-      color: ${props => props.theme.colors.brand};
+      color: ${props => props.theme.colors.dark1};
       background-color: ${props =>
         props.theme.colors.lightBlueBackground} !important;
     `}
