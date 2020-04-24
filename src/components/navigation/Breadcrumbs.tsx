@@ -4,9 +4,10 @@ import { transparentize } from 'polished'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons'
 import { makeDefaultButton, makeMargin } from '../../helper/csshelper'
+import StyledP from '../tags/StyledP'
 
 interface BreadcrumbProps {
-  entries?: BreadcrumbEntry[]
+  entriesRaw?: BreadcrumbEntry[]
 }
 
 interface BreadcrumbEntry {
@@ -15,10 +16,13 @@ interface BreadcrumbEntry {
 }
 
 export default function Breadcrumbs(props: BreadcrumbProps) {
-  const { entries } = props
+  const { entriesRaw } = props
+  const entries = [...entriesRaw]
   if (!entries || entries.length < 1) {
     return null
   }
+
+  const last = entries.pop()
 
   /*
   should probably happen on server side, last entry of Breadcrumbs should link to overview
@@ -26,18 +30,29 @@ export default function Breadcrumbs(props: BreadcrumbProps) {
   */
 
   return (
-    <BreadcrumbWrapper>
-      {entries.map((bcEntry, i, l) => {
-        return (
-          <BreadcrumbEntries
-            bcEntry={bcEntry}
-            i={i}
-            l={l}
-            key={i}
-          ></BreadcrumbEntries>
-        )
-      })}
-    </BreadcrumbWrapper>
+    <>
+      <BreadcrumbWrapper>
+        {entries.map((bcEntry, i, l) => {
+          return (
+            <BreadcrumbEntries
+              bcEntry={bcEntry}
+              i={i}
+              l={l}
+              key={i}
+            ></BreadcrumbEntries>
+          )
+        })}
+      </BreadcrumbWrapper>
+      <TopicOverview>
+        Zur Themenübersicht:{' '}
+        <BreadcrumbLast href={last.url}>
+          <Icon>
+            <FontAwesomeIcon icon={faArrowCircleLeft} size="1x" />
+          </Icon>
+          {last.label}
+        </BreadcrumbLast>
+      </TopicOverview>
+    </>
   )
 }
 
@@ -73,7 +88,20 @@ const BreadcrumbWrapper = styled.nav`
   margin-top: 25px;
 
   @media (min-width: ${props => props.theme.breakpoints.sm}) {
-    margin: 25px 0 45px 10px;
+    margin: 25px 0 20px 10px;
+  }
+`
+
+const TopicOverview = styled.div`
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    display: none;
+  }
+  font-size: 1.125rem;
+  margin-bottom: 20px;
+  ${makeMargin}
+  a {
+    background: ${props => props.theme.colors.brand};
+    color: #fff;
   }
 `
 
