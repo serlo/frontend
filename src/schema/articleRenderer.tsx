@@ -370,8 +370,14 @@ export function renderExerciseGroup({ attributes, children = null, element }) {
   return (
     <React.Fragment key={attributes.key}>
       {renderArticle(element.content, false)}
-      {element.license && <LicenseNotice data={element.license} />}
-      <ExerciseGroup {...attributes}>{children}</ExerciseGroup>
+      <ExerciseGroup
+        {...attributes}
+        license={
+          element.license && <LicenseNotice minimal data={element.license} />
+        }
+      >
+        {children}
+      </ExerciseGroup>
     </React.Fragment>
   )
 }

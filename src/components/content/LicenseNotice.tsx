@@ -77,6 +77,7 @@ const Wrapper = styled.div`
   padding-bottom: 10px;
   font-size: 0.9rem;
   margin-top: 40px;
+  margin-bottom: 40px;
   border-top: 2px solid ${props => props.theme.colors.lightBlueBackground};
   color: ${props => props.theme.colors.dark1};
   > svg {

@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { makePadding } from '../../helper/csshelper'
 
 const SpoilerBody = styled.div`
   padding-top: 24px;
