@@ -53,8 +53,6 @@ export default function Exercise(props) {
     const steps = convertEdtrioState(state.steps).children
     solutionValue = [...prereq, ...strategy, ...steps]
   }
-  console.log(taskLicense)
-
   return (
     <Wrapper>
       {renderArticle(taskValue, false)}
