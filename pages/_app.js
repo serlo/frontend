@@ -15,22 +15,11 @@ import * as Sentry from '@sentry/browser'
 
 const { version } = require('../package.json')
 
-Sentry.init({
-  dsn: process.env.SENTRY_DSN, //process.env.NODE_ENV === 'production' ?  : undefined,
-  release: `serlo-org-client@${version}`
-})
-
-/*
-docs say it's not available for js anyway:
-,
-  whitelistUrls: [
-    'serlo.org',
-    'serlo-development.dev',
-    'serlo-staging.dev',
-    'frontend-sooty-ten.now.sh',
-    'frontend.dal123.now.sh'
-  ]
-*/
+if (process.env.SENTRY_DSN !== undefined)
+  Sentry.init({
+    dsn: process.env.SENTRY_DSN,
+    release: `serlo-org-client@${version}`
+  })
 
 class MyApp extends App {
   render() {
