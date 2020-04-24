@@ -3,11 +3,11 @@ import styled from 'styled-components'
 import SpoilerContainer from './SpoilerContainer'
 import SpoilerTitle from './SpoilerTitle'
 
-export default function ExerciseGroup({ children, license }) {
+export default function ExerciseGroup({ children, license, groupIntro }) {
   return (
     <Container>
       <SpoilerTitle open disabled>
-        <Label>Aufgabengruppe</Label>
+        <Label>{groupIntro}</Label>
       </SpoilerTitle>
       <Content>{children}</Content>
       <div>{license}</div>
@@ -28,7 +28,13 @@ const Content = styled.div`
 `
 
 const Label = styled.small`
-  font-size: 0.9rem;
-  margin-left: 7px;
-  text-align: right;
+  margin-top: 16px;
+  margin-left: -6px;
+  display: block;
+  > p:last-child {
+    margin-bottom: 16px;
+  }
+  /* font-size: 0.9rem; */
+  /* margin-left: 7px; */
+  /* text-align: right; */
 `

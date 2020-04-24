@@ -15,6 +15,7 @@ export default function ScMcExercise({ state }) {
 function SingleChoice({ state }) {
   const [selected, setSelected] = React.useState(undefined)
   const [showFeedback, setShowFeedback] = React.useState(false)
+
   return (
     <Container>
       <Choices>
