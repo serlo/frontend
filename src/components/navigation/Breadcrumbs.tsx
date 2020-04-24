@@ -2,12 +2,14 @@ import React from 'react'
 import styled from 'styled-components'
 import { transparentize } from 'polished'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons'
+import {
+  faArrowCircleLeft,
+  faArrowCircleRight
+} from '@fortawesome/free-solid-svg-icons'
 import { makeDefaultButton, makeMargin } from '../../helper/csshelper'
-import StyledP from '../tags/StyledP'
 
 interface BreadcrumbProps {
-  entriesRaw?: BreadcrumbEntry[]
+  entries?: BreadcrumbEntry[]
 }
 
 interface BreadcrumbEntry {
@@ -16,13 +18,10 @@ interface BreadcrumbEntry {
 }
 
 export default function Breadcrumbs(props: BreadcrumbProps) {
-  const { entriesRaw } = props
-  const entries = [...entriesRaw]
+  const { entries } = props
   if (!entries || entries.length < 1) {
     return null
   }
-
-  const last = entries.pop()
 
   /*
   should probably happen on server side, last entry of Breadcrumbs should link to overview
@@ -30,29 +29,18 @@ export default function Breadcrumbs(props: BreadcrumbProps) {
   */
 
   return (
-    <>
-      <BreadcrumbWrapper>
-        {entries.map((bcEntry, i, l) => {
-          return (
-            <BreadcrumbEntries
-              bcEntry={bcEntry}
-              i={i}
-              l={l}
-              key={i}
-            ></BreadcrumbEntries>
-          )
-        })}
-      </BreadcrumbWrapper>
-      <TopicOverview>
-        Zur Themenübersicht:{' '}
-        <BreadcrumbLast href={last.url}>
-          <Icon>
-            <FontAwesomeIcon icon={faArrowCircleLeft} size="1x" />
-          </Icon>
-          {last.label}
-        </BreadcrumbLast>
-      </TopicOverview>
-    </>
+    <BreadcrumbWrapper>
+      {entries.map((bcEntry, i, l) => {
+        return (
+          <BreadcrumbEntries
+            bcEntry={bcEntry}
+            i={i}
+            l={l}
+            key={i}
+          ></BreadcrumbEntries>
+        )
+      })}
+    </BreadcrumbWrapper>
   )
 }
 
@@ -79,6 +67,9 @@ function BreadcrumbEntries(props) {
         <FontAwesomeIcon icon={faArrowCircleLeft} size="1x" />
       </Icon>
       {bcEntry.label}
+      <Icon2>
+        <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
+      </Icon2>
     </BreadcrumbLast>
   )
 }
@@ -88,20 +79,7 @@ const BreadcrumbWrapper = styled.nav`
   margin-top: 25px;
 
   @media (min-width: ${props => props.theme.breakpoints.sm}) {
-    margin: 25px 0 20px 10px;
-  }
-`
-
-const TopicOverview = styled.div`
-  @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    display: none;
-  }
-  font-size: 1.125rem;
-  margin-bottom: 20px;
-  ${makeMargin}
-  a {
-    background: ${props => props.theme.colors.brand};
-    color: #fff;
+    margin: 25px 0 45px 10px;
   }
 `
 
@@ -145,6 +123,10 @@ const BreadcrumbLast = styled(Breadcrumb)`
     display: none;
   }
 
+  background: ${props => props.theme.colors.bluewhite};
+  color: ${props => props.theme.colors.brand};
+  font-weight: bold;
+
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
     display: inline-flex;
     background: ${props =>
@@ -164,4 +146,11 @@ const Icon = styled.span`
     display: none;
   }
   margin-right: 10px;
+`
+
+const Icon2 = styled.span`
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    display: none;
+  }
+  margin-left: 10px;
 `

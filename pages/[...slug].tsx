@@ -63,7 +63,7 @@ function PageView(props) {
             </>
           ) : null}
           {showBreadcrumbs && breadcrumbs && (
-            <Breadcrumbs entriesRaw={breadcrumbs} />
+            <Breadcrumbs entries={breadcrumbs} />
           )}
           <main>
             {data &&
