@@ -6,14 +6,29 @@ import {
   faCreativeCommonsBy,
   faCreativeCommonsSa
 } from '@fortawesome/free-brands-svg-icons'
-import { makePadding } from '../../helper/csshelper'
+import { makePadding, makeDefaultButton } from '../../helper/csshelper'
 
-export default function LicenseNotice({ data }) {
+interface LicenseNoticeProps {
+  data: any
+  minimal?: boolean
+}
+
+export default function LicenseNotice(props: LicenseNoticeProps) {
+  const { data, minimal } = props
   //only link license
   let titleParts = data.title.split('CC')
   const text = titleParts.length === 2 ? titleParts[0] : ''
   const licenseName =
     titleParts.length === 2 ? 'CC' + titleParts[1] : data.title
+
+  if (minimal)
+    return (
+      <MinimalWrapper>
+        <MinimalLink href={data.url} title="Lizenz">
+          {licenseName}
+        </MinimalLink>
+      </MinimalWrapper>
+    )
 
   return (
     <Wrapper>
@@ -34,6 +49,17 @@ export default function LicenseNotice({ data }) {
     </Wrapper>
   )
 }
+
+const MinimalWrapper = styled.div`
+  text-align: right;
+  ${makePadding};
+`
+const MinimalLink = styled.a`
+  ${makeDefaultButton}
+  color: ${props => props.theme.colors.dark1};
+  background-color: ${props => props.theme.colors.lightBackground};
+  font-size: 0.8rem;
+`
 
 const StyledSmall = styled.span`
   @media (min-width: ${props => props.theme.breakpoints.mobile}) {

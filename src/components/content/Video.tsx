@@ -51,7 +51,7 @@ export default function Video(props) {
   )
 }
 
-const VideoWrapper = styled.div`
+const VideoWrapper = styled.figure`
   ${makeMargin}
   padding: 0;
   /* Player ratio: 100 / (1280 / 720) */
