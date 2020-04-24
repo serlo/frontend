@@ -1,5 +1,5 @@
 import { renderArticle } from '../../schema/articleRenderer'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import React from 'react'
 import { makeMargin, makeDefaultButton } from '../../helper/csshelper'
 import { convertEdtrioState } from '../../schema/convertEdtrioState'
@@ -64,8 +64,9 @@ export default function Exercise(props) {
         onClick={() => {
           setVisible(!solutionVisible)
         }}
+        active={solutionVisible}
       >
-        Lösung anzeigen
+        <StyledSpan>{solutionVisible ? '▾ ' : '▸ '}</StyledSpan>Lösung
       </SolutionToggle>
       <SolutionBox visible={solutionVisible}>
         {renderArticle(solutionValue, false)}
@@ -75,24 +76,38 @@ export default function Exercise(props) {
   )
 }
 
+const StyledSpan = styled.span`
+  display: inline-block;
+  width: 0.9rem;
+`
+
 const Wrapper = styled.div`
   border-bottom: 2px solid ${props => props.theme.colors.lightBlueBackground};
   margin-bottom: 30px;
 `
 
-const SolutionToggle = styled.a`
+const SolutionToggle = styled.a<{ active: boolean }>`
   ${makeMargin}
   ${makeDefaultButton}
+  padding-right: 9px;
   margin-left: 10px;
-  /* background-color: ${props => props.theme.colors.bluewhite}; */
-  text-decoration: underline;
   font-size: 1rem;
   display: inline-block;
   cursor: pointer;
   margin-bottom: 16px;
 
-  &:hover {
-    text-decoration: none;
+  ${props =>
+    props.active &&
+    css`
+      background-color: ${props => props.theme.colors.brand} !important;
+      color: #fff !important;
+    `}
+
+  @media (hover: none) {
+    &:hover {
+      background-color: transparent;
+      color: ${props => props.theme.colors.brand};
+    }
   }
 `
 
@@ -101,6 +116,6 @@ const SolutionBox = styled.div<{ visible: boolean }>`
   padding-bottom: 10px;
   display: ${props => (props.visible ? 'block' : 'none')};
   ${makeMargin}
-  border: 1px solid black;
   margin-bottom: ${props => props.theme.spacing.mb.block};
+  border-left: 4px solid ${props => props.theme.colors.lightBlueBackground};;
 `
