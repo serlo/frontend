@@ -19,12 +19,10 @@ function SingleChoice({ state }) {
   const [selected, setSelected] = React.useState(undefined)
   const [showFeedback, setShowFeedback] = React.useState(false)
 
-  console.log(state.answers[selected])
   return (
     <Container>
       <Choices>
         {state.answers.map((answer, i) => {
-          console.log(answer)
           const unique =
             Math.random()
               .toString(20)
@@ -33,7 +31,7 @@ function SingleChoice({ state }) {
             i
           return (
             <>
-              <ChoiceWrapper>
+              <ChoiceWrapper key={unique}>
                 <StyledInput
                   id={unique}
                   type="radio"

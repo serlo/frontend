@@ -1,7 +1,6 @@
 import React from 'react'
 import {
   renderSpoilerContainer,
-  renderSpoilerTitle,
   renderSpoilerBody,
   renderMath,
   renderInlineMath,
@@ -22,6 +21,7 @@ import { hsl } from 'polished'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAnchor } from '@fortawesome/free-solid-svg-icons'
 import styled from 'styled-components'
+import SpoilerTitle from '../components/content/SpoilerTitle'
 
 function SettingsInput(props) {
   const { innerProps, title } = props
@@ -56,22 +56,19 @@ export function MySpoiler(props) {
 export function MySpoilerTitle(props) {
   const { attributes, children } = props
   const context = React.useContext(SpoilerContext)
-  return renderSpoilerTitle({
-    attributes: { ...attributes, style: { cursor: 'inherit' } },
-    children: (
-      <>
-        <VoidSpan
-          onClick={() => {
-            context.toggleOpen()
-          }}
-          role="button"
-        >
-          <SpoilerToggle open={context.open} />
-        </VoidSpan>
-        {children}
-      </>
-    )
-  })
+  return (
+    <SpoilerTitle {...attributes}>
+      <VoidSpan
+        onClick={() => {
+          context.toggleOpen()
+        }}
+        role="button"
+      >
+        <SpoilerToggle open={context.open} />
+      </VoidSpan>
+      {children}
+    </SpoilerTitle>
+  )
 }
 
 export function MySpoilerBody(props) {
