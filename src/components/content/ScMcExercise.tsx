@@ -141,7 +141,7 @@ const Choices = styled.ul`
 
 const ChoiceWrapper = styled.li`
   display: flex;
-  margin-bottom: 8px;
+  margin-bottom: 15px;
 `
 
 const StyledInput = styled.input`
@@ -160,10 +160,12 @@ const StyledLabel = styled.label<{ selected: boolean }>`
   > svg {
     font-size: 1.33rem;
     margin-top: 2px;
-    color: ${props =>
+    color: ${props => props.theme.colors.brand}
+    
+    /* ${props =>
       props.selected
         ? props.theme.colors.brand
-        : props.theme.colors.lightBlueBackground};
+        : props.theme.colors.lightBlueBackground}; */
   }
 
   > div > * {
