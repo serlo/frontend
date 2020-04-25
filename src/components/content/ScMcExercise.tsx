@@ -6,13 +6,14 @@ import { convertEdtrioState } from '../../schema/convertEdtrioState'
 import { getServerSideProps } from '../../../pages/[...slug]'
 import StyledP from '../tags/StyledP'
 
-export default function ScMcExercise({ state }) {
-  if (state.isSingleChoice) return <SingleChoice state={state} />
+export default function ScMcExercise({ state, passThrough = false }) {
+  if (state.isSingleChoice)
+    return <SingleChoice state={state} passThrough={passThrough} />
 
-  return <MultipleChoice state={state} />
+  return <MultipleChoice state={state} passThrough={passThrough} />
 }
 
-function SingleChoice({ state }) {
+function SingleChoice({ state, passThrough }) {
   const [selected, setSelected] = React.useState(undefined)
   const [showFeedback, setShowFeedback] = React.useState(false)
   return (
@@ -28,14 +29,20 @@ function SingleChoice({ state }) {
                 setSelected(i)
               }}
             />
-            {renderArticle(convertEdtrioState(answer.content).children)}
+            {renderArticle(
+              passThrough
+                ? answer.content
+                : convertEdtrioState(answer.content).children
+            )}
           </label>
         ))}
       </Choices>
       {showFeedback && state.answers[selected] && (
         <Feedback right={state.answers[selected].isCorrect}>
           {renderArticle(
-            convertEdtrioState(state.answers[selected].feedback).children
+            passThrough
+              ? state.answers[selected].feedback
+              : convertEdtrioState(state.answers[selected].feedback).children
           )}
         </Feedback>
       )}
@@ -44,7 +51,7 @@ function SingleChoice({ state }) {
   )
 }
 
-function MultipleChoice({ state }) {
+function MultipleChoice({ state, passThrough }) {
   const [selected, setSelected] = React.useState(state.answers.map(_ => false))
   const [showFeedback, setShowFeedback] = React.useState(false)
   const right = state.answers.every(
@@ -57,7 +64,7 @@ function MultipleChoice({ state }) {
           <label key={i}>
             <input
               type="checkbox"
-              checked={selected[i]}
+              checked={selected[i] || false}
               onChange={() => {
                 setShowFeedback(false)
                 const newArr = selected.slice(0)
@@ -65,10 +72,18 @@ function MultipleChoice({ state }) {
                 setSelected(newArr)
               }}
             />
-            {renderArticle(convertEdtrioState(answer.content).children)}
+            {renderArticle(
+              passThrough
+                ? answer.content
+                : convertEdtrioState(answer.content).children
+            )}
             {showFeedback &&
               selected[i] &&
-              renderArticle(convertEdtrioState(answer.feedback).children)}
+              renderArticle(
+                passThrough
+                  ? answer.feedback
+                  : convertEdtrioState(answer.feedback).children
+              )}
           </label>
         ))}
       </Choices>

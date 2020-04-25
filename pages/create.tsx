@@ -16,7 +16,28 @@ const initialValue = [
     level: 1,
     children: [{ text: 'Titel' }]
   },
-  { type: 'p', children: [{ text: 'Schreibe etwas ...' }] },
+
+  {
+    type: 'scmc-exercise',
+    choiceType: 'MC',
+    children: [
+      {
+        type: 'scmc-choice',
+        isCorrect: true,
+        children: [
+          {
+            type: 'scmc-choice-answer',
+            children: [{ type: 'p', children: [{ text: 'A1' }] }]
+          },
+          {
+            type: 'scmc-choice-feedback',
+            children: [{ type: 'p', children: [{ text: 'Suuper!' }] }]
+          }
+        ]
+      }
+    ]
+  },
+
   { type: 'p', children: [{ text: '' }] }
 ]
 

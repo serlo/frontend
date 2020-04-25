@@ -602,7 +602,7 @@ const StyledIconWrapper = styled.div`
   bottom: -4px;
 `
 
-const VoidSpan = styled.span.attrs({ contentEditable: false })`
+export const VoidSpan = styled.span.attrs({ contentEditable: false })`
   user-select: none;
 `
 

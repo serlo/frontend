@@ -72,6 +72,20 @@ export const articleSchema = {
     children: ['p', 'img', 'math', 'ul', 'ol', 'row'],
     wrapTextIn: { type: 'p', children: [{ text: '' }] }
   },
+  'scmc-exercise': {
+    children: ['scmc-choice']
+  },
+  'scmc-choice': {
+    children: ['scmc-choice-answer', 'scmc-choice-feedback']
+  },
+  'scmc-choice-answer': {
+    children: ['p', 'math', 'img'],
+    wrapTextIn: { type: 'p', children: [{ text: '' }] }
+  },
+  'scmc-choice-feedback': {
+    children: ['p'],
+    wrapTextIn: { type: 'p', children: [{ text: '' }] }
+  },
   '#root': {
     children: [
       'p',
@@ -87,7 +101,8 @@ export const articleSchema = {
       'table',
       'geogebra',
       'injection',
-      'video'
+      'video',
+      'scmc-exercise'
     ],
     wrapTextIn: { type: 'p', children: [{ text: '' }] }
   }
