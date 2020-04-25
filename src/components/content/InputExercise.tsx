@@ -1,4 +1,10 @@
 import StyledP from '../tags/StyledP'
+import styled, { css } from 'styled-components'
+import {
+  makeMargin,
+  makeDefaultButton,
+  inputFontReset
+} from '../../helper/csshelper'
 import React from 'react'
 
 export default function InputExercise({ state }) {
@@ -6,18 +12,21 @@ export default function InputExercise({ state }) {
   const [value, setValue] = React.useState('')
   return (
     <StyledP>
-      <input
+      <StyledInput
         type="text"
         value={value}
         onChange={e => setValue(e.target.value)}
+        placeholder={'Deine Antwort…'}
       />{' '}
       {state.unit}
       <br />
-      {feedback}
-      <br />
-      <button onClick={() => setFeedback(checkAnswer(value, state))}>
+      <Feedback>{feedback}</Feedback>
+      <CheckButton
+        selectable={value !== ''}
+        onClick={() => setFeedback(checkAnswer(value, state))}
+      >
         Stimmt's?
-      </button>
+      </CheckButton>
     </StyledP>
   )
 }
@@ -30,3 +39,48 @@ function checkAnswer(val, state) {
     return <span>Richtig</span>
   }
 }
+
+const Feedback = styled(StyledP)`
+  margin-top: 10px;
+  margin-bottom: 10px;
+`
+
+const CheckButton = styled.a<{ selectable: boolean }>`
+  ${makeDefaultButton}
+  margin-top: 16px;
+
+  color: #fff;
+  background-color: ${props => props.theme.colors.brand};
+
+  ${props =>
+    !props.selectable &&
+    css`
+      opacity: 0;
+      pointer-events: none;
+    `}
+`
+
+const StyledInput = styled.input`
+  ${inputFontReset}
+  border-radius: 2em;
+  padding: 9px 12px;
+  font-weight: bold;
+  color: #fff;
+  border: 3px solid ${props => props.theme.colors.brand};
+  background-color: ${props => props.theme.colors.brand};
+
+  &:focus {
+    outline: none;
+    background-color: #fff;
+    color: ${props => props.theme.colors.brand};
+    border: 3px solid ${props => props.theme.colors.brand};
+    &::placeholder {
+      opacity: 0;
+    }
+  }
+
+  &::placeholder {
+    color: #fff;
+    font-weight: 400;
+  }
+`
