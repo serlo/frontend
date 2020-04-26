@@ -42,11 +42,12 @@ import withCreate from './withCreate'
 import { ModalProvider } from './ModalContext'
 import { makeMargin } from '../helper/csshelper'
 import ScMcExercise from '../components/content/ScMcExercise'
+import withDebug from './withDebug'
 
 export default function Create({ value, onChange, onNormalize }) {
   const editor = React.useMemo(() => {
     // slate functionality
-    const baseEditor = withHistory(withReact(createEditor()))
+    const baseEditor = withDebug(withHistory(withReact(createEditor())))
     // custom behaviour
     return withCreate(withArticle(baseEditor, onNormalize))
   }, [])
@@ -63,7 +64,11 @@ export default function Create({ value, onChange, onNormalize }) {
         <Toolbar />
         <Container>
           <SpecialCSS>
-            <Editable renderElement={renderElement} renderLeaf={renderLeaf} />
+            <Editable
+              renderElement={renderElement}
+              renderLeaf={renderLeaf}
+              onKeyDown={e => console.log('keydown', e.key)}
+            />
           </SpecialCSS>
         </Container>
       </ModalProvider>
