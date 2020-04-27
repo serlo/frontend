@@ -6,6 +6,12 @@ import { convertLegacyState } from '../schema/convertLegacyState'
 import { convertEdtrioState } from '../schema/convertEdtrioState'
 import { TopicPurposes } from '../components/content/Topic'
 
+/*
+
+THIS FILE NEEDS A COMPLETE REFACTOR!
+
+*/
+
 const endpoint = 'https://api.serlo.org/graphql'
 
 const query = props => `
