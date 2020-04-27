@@ -2,10 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { transparentize } from 'polished'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faArrowCircleLeft,
-  faArrowCircleRight
-} from '@fortawesome/free-solid-svg-icons'
+import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons'
 import { makeDefaultButton, makeMargin } from '../../helper/csshelper'
 
 interface BreadcrumbProps {
@@ -67,9 +64,6 @@ function BreadcrumbEntries(props) {
         <FontAwesomeIcon icon={faArrowCircleLeft} size="1x" />
       </Icon>
       {bcEntry.label}
-      <Icon2>
-        <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
-      </Icon2>
     </BreadcrumbLast>
   )
 }
@@ -107,7 +101,7 @@ const Breadcrumb = styled.a`
 
   @media (min-width: ${props => props.theme.breakpoints.sm}) {
     white-space: nowrap;
-    margin: 0 19px 0 0;
+    margin: 0 19px 5px 0;
 
     &:after {
       content: '>';
@@ -146,11 +140,4 @@ const Icon = styled.span`
     display: none;
   }
   margin-right: 10px;
-`
-
-const Icon2 = styled.span`
-  @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    display: none;
-  }
-  margin-left: 10px;
 `
