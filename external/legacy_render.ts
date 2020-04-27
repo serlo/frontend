@@ -21,7 +21,7 @@
  */
 import { converter } from './markdown'
 
-export async function render(state: string): Promise<string> {
+export function render(state: string): string {
   if (state === undefined) {
     throw new Error('No input given')
   }

@@ -7,17 +7,17 @@ import { makeGreenButton } from '../../helper/csshelper'
 import ShareModal from './ShareModal'
 
 interface ToolboxProps {
-  onEdit?: () => void
+  editHref?: string
   onShare?: () => void
 }
 
-export default function Toolbox({ onEdit, onShare }: ToolboxProps) {
+export default function Toolbox({ editHref, onShare }: ToolboxProps) {
   const [open, setOpen] = React.useState(false)
 
   return (
     <AbsoluteWrapper>
       <BoxWrapper>
-        <IconButton onClick={onEdit}>
+        <IconButton href={editHref}>
           <FontAwesomeIcon icon={faPencilAlt} size="1x" /> Inhalt überarbeiten
         </IconButton>
         <IconButton onClick={onShare}>

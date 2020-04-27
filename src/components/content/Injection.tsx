@@ -19,7 +19,7 @@ export default function Injection({ href }) {
         else return res.text()
       })
       .then(data => {
-        if (data.contentType) {
+        if (data.contentType && data.data) {
           setValue(data.data.value)
           if (data.data.license) {
             setLicense(data.data.license)
