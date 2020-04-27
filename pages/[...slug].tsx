@@ -112,14 +112,14 @@ const MaxWidthDiv = styled.div`
 export async function getServerSideProps(props) {
   const { origin } = absoluteUrl(props.req)
   const res = await fetch(
-    `${origin}/api/${encodeURIComponent(props.params.slug.join('/'))}`
+    `${origin}/api/${encodeURIComponent(props.params.slug.join('/'))}?redirect`
   )
   const data = await res.json()
 
   // compat course to first page
   if (data.redirect) {
     props.res.writeHead(301, {
-      Location: data.redirect,
+      Location: encodeURI(data.redirect),
       // Add the content-type for SEO considerations
       'Content-Type': 'text/html; charset=utf-8'
     })

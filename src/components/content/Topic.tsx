@@ -38,14 +38,6 @@ interface TopicProps {
 }
 
 export default function Topic({ data }: TopicProps) {
-  //only show when description actually has content. probably better to filter upstream
-
-  const showDescription = !(
-    data.description.length === 1 &&
-    data.description[0].type === 'p' &&
-    data.description[0].children[0].text === ''
-  )
-
   return (
     <>
       {data.purpose === TopicPurposes.detail ? (
@@ -57,7 +49,7 @@ export default function Topic({ data }: TopicProps) {
       )}
 
       <Wrapper purpose={data.purpose}>
-        {showDescription && (
+        {data.description && (
           <Overview>{renderArticle(data.description)}</Overview>
         )}
         {data.children &&

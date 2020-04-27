@@ -6,7 +6,6 @@ export function createBreadcrumbs(uuid) {
     if (taxonomyPaths) {
       for (const child of taxonomyPaths) {
         const { path } = child.navigation
-        console.log(path)
         if (!breadcrumbs || breadcrumbs.length > path.length) {
           // compat: some paths are short-circuited, ignore them
           if (

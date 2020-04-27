@@ -1,6 +1,7 @@
 import { render } from '../../external/legacy_render'
 import { convertLegacyState } from '../schema/convertLegacyState'
 import { convertEdtrioState } from '../schema/convertEdtrioState'
+import { TopicPurposes } from '../components/content/Topic'
 
 export function createData(uuid) {
   const type = uuid.__typename
@@ -10,6 +11,27 @@ export function createData(uuid) {
   }
   if (type === 'Article' && uuid.currentRevision) {
     return createArticle(uuid)
+  }
+  if (type === 'Applet' && uuid.currentRevision) {
+    return createApplet(uuid)
+  }
+  if (type === 'Video' && uuid.currentRevision) {
+    return createVideo(uuid)
+  }
+  if (
+    (type === 'Exercise' || type === 'GroupedExercise') &&
+    uuid.currentRevision
+  ) {
+    return createExercise(uuid)
+  }
+  if (type === 'ExerciseGroup' && uuid.currentRevision) {
+    return createExerciseGroup(uuid)
+  }
+  if (type === 'CoursePage' && uuid.currentRevision) {
+    return createCoursePage(uuid)
+  }
+  if (type === 'TaxonomyTerm') {
+    return createTaxonomyTerm(uuid)
   }
 }
 
@@ -23,7 +45,96 @@ function createPage(uuid) {
 function createArticle(uuid) {
   return {
     title: uuid.currentRevision.title,
-    value: convertState(uuid.currentRevision.content)
+    value: convertState(uuid.currentRevision.content),
+    metaTitle: uuid.currentRevision.metaTitle,
+    metaDescription: uuid.currentRevision.metaDescription
+  }
+}
+
+function createVideo(uuid) {
+  return {
+    title: uuid.currentRevision.title,
+    value: {
+      children: [
+        {
+          type: 'video',
+          src: uuid.currentRevision.url,
+          children: [{ text: '' }]
+        },
+        ...convertState(uuid.currentRevision.content).children
+      ]
+    }
+  }
+}
+
+function createExercise(uuid) {
+  return {
+    value: {
+      children: [
+        {
+          type: 'exercise',
+          task: convertState(uuid.currentRevision.content),
+          taskLicense: uuid.license,
+          solution: convertState(uuid.solution?.currentRevision?.content),
+          solutionLicense: uuid.solution?.license,
+          children: [{ text: '' }]
+        }
+      ]
+    }
+  }
+}
+
+function createApplet(uuid) {
+  return {
+    value: {
+      children: [
+        {
+          type: 'geogebra',
+          id: uuid.currentRevision.url,
+          children: [{ text: '' }]
+        }
+      ]
+    },
+    metaTitle: uuid.currentRevision.metaTitle,
+    metaDescription: uuid.currentRevision.metaDescription
+  }
+}
+
+function createExerciseGroup(uuid) {
+  const children = []
+  if (uuid.exercises?.length > 0) {
+    for (const exercise of uuid.exercises) {
+      if (!exercise.currentRevision) continue
+      children.push({
+        type: 'exercise',
+        task: convertState(exercise.currentRevision.content),
+        taskLicense: exercise.license,
+        solution: convertState(exercise.solution?.currentRevision?.content),
+        solutionLicense: exercise.solution?.license,
+        children: [{ text: '' }]
+      })
+    }
+  }
+  return {
+    value: {
+      children: [
+        {
+          type: 'exercise-group',
+          content: convertState(uuid.currentRevision.content).children,
+          license: uuid.license,
+          children
+        }
+      ]
+    }
+  }
+}
+
+function createCoursePage(uuid) {
+  return {
+    value: convertState(uuid.currentRevision.content),
+    title: uuid.currentRevision.title,
+    pages: uuid.course?.pages?.filter(page => page.currentRevision !== null),
+    courseTitle: uuid.course?.currentRevision?.title
   }
 }
 
@@ -37,310 +148,109 @@ function convertState(raw) {
     return convertEdtrioState(JSON.parse(raw))
   } else {
     // raw as text
-    return { type: 'p', children: { text: raw } }
+    return { children: [{ type: 'p', children: { text: raw ?? '' } }] }
   }
 }
 
-/*
+function createTaxonomyTerm(uuid) {
+  const children = uuid.children?.filter(isActive)
 
+  return {
+    description: uuid.description && convertState(uuid.description),
+    title: uuid.name,
+    type: uuid.type,
+    purpose: TopicPurposes.detail,
+    links: {
+      articles: collectType(children, 'Article'),
+      exercises: collectTopicFolders(children),
+      videos: collectType(children, 'Video'),
+      applets: collectType(children, 'Applet'),
+      courses: collectType(children, 'Course')
+    },
+    exercises: collectExercises(children),
+    children: collectNestedTaxonomyTerms(children) // nested taxonomy terms
+  }
+}
 
+function isActive(child) {
+  return child.trashed === false && child.__typename !== 'UnsupportedUuid'
+}
 
-    
+function collectType(children, typename) {
+  return children
+    .filter(
+      child =>
+        child.__typename === typename && child.alias && child.currentRevision
+    )
+    .map(child => {
+      return { title: child.currentRevision.title, url: child.alias }
+    })
+}
 
-    if (contentType === 'TaxonomyTerm') {
-      const children = reqData.uuid.children.filter(
-        child =>
-          child.trashed === false && child.__typename !== 'UnsupportedUuid'
-      )
-      let links = {
-        articles: [],
-        exercises: [],
-        videos: [],
-        applets: [],
-        courses: [],
-        subfolders: []
-      }
-      let subtopics = []
-      let exercises = []
-      for (const child of children) {
-        if (
-          child.__typename === 'Article' &&
-          child.alias &&
-          child.currentRevision
-        ) {
-          links.articles.push({
-            title: child.currentRevision.title,
-            url: child.alias
-          })
-        }
-        if (
-          child.__typename === 'Video' &&
-          child.alias &&
-          child.currentRevision
-        ) {
-          links.videos.push({
-            title: child.currentRevision.title,
-            url: child.alias
-          })
-        }
-        if (
-          child.__typename === 'Applet' &&
-          child.alias &&
-          child.currentRevision
-        ) {
-          links.applets.push({
-            title: child.currentRevision.title,
-            url: child.alias
-          })
-        }
-        if (
-          child.__typename === 'Course' &&
-          child.alias &&
-          child.currentRevision
-        ) {
-          links.courses.push({
-            title: child.currentRevision.title,
-            url: child.alias
-          })
-        }
-        if (child.__typename === 'Exercise' && child.currentRevision) {
-          const task = await buildDescription(child.currentRevision.content)
-          const solution = child.solution
-            ? await buildDescription(child.solution.currentRevision.content)
-            : { type: 'p', children: [{ text: '' }] }
-          exercises.push({
-            children: [
-              {
-                type: 'exercise',
-                task,
-                solution,
-                taskLicense: child.license,
-                solutionLicense: child.solution && child.solution.license,
-                children: [{ text: '' }]
-              }
-            ]
-          })
-        }
-        if (child.__typename === 'ExerciseGroup' && child.currentRevision) {
-          const children = []
-          for (let i = 0; i < child.exercises.length; i++) {
-            const ex = child.exercises[i]
-            if (!ex.currentRevision) continue
-            const task = await buildDescription(ex.currentRevision.content)
-            const solution =
-              ex.solution && ex.solution.currentRevision
-                ? await buildDescription(ex.solution.currentRevision.content)
-                : { children: [{ type: 'p', children: { text: '' } }] }
-            children.push({
-              type: 'exercise',
-              task,
-              solution,
-              taskLicense: ex.license,
-              solutionLicense: ex.solution && ex.solution.license,
-              children: [{ text: '' }]
-            })
-          }
-          const task = await buildDescription(child.currentRevision.content)
-          exercises.push({
-            children: [
-              {
-                type: 'exercise-group',
-                content: task.children,
-                license: child.license,
-                children
-              }
-            ]
-          })
-        }
-        if (child.__typename === 'TaxonomyTerm') {
-          if (child.type === 'topicFolder') {
-            links.exercises.push({
-              title: child.name,
-              url: child.alias || '/' + child.id
-            })
-          } else {
-            const description = await buildDescription(child.description || '')
-            const sublinks = {
-              articles: [],
-              exercises: [],
-              subfolders: [],
-              videos: [],
-              applets: [],
-              courses: []
-            }
-            for (const subchild of child.children.filter(
-              child =>
-                child.trashed === false &&
-                child.__typename !== 'UnsupportedUuid'
-            )) {
-              if (
-                subchild.__typename === 'Article' &&
-                subchild.alias &&
-                subchild.currentRevision
-              ) {
-                sublinks.articles.push({
-                  title: subchild.currentRevision.title,
-                  url: subchild.alias
-                })
-              }
-              if (
-                subchild.__typename === 'Video' &&
-                subchild.alias &&
-                subchild.currentRevision
-              ) {
-                sublinks.videos.push({
-                  title: subchild.currentRevision.title,
-                  url: subchild.alias
-                })
-              }
-              if (
-                subchild.__typename === 'Applet' &&
-                subchild.alias &&
-                subchild.currentRevision
-              ) {
-                sublinks.applets.push({
-                  title: subchild.currentRevision.title,
-                  url: subchild.alias
-                })
-              }
-              if (
-                subchild.__typename === 'Course' &&
-                subchild.alias &&
-                subchild.currentRevision
-              ) {
-                sublinks.courses.push({
-                  title: subchild.currentRevision.title,
-                  url: subchild.alias
-                })
-              }
-              if (subchild.__typename === 'TaxonomyTerm') {
-                if (subchild.type === 'topicFolder') {
-                  sublinks.exercises.push({
-                    title: subchild.name,
-                    url: subchild.alias
-                  })
-                }
-                if (
-                  subchild.type === 'topic' ||
-                  subchild.type === 'curriculum' ||
-                  subchild.type === 'locale' ||
-                  subchild.type === 'curriculumTopic' ||
-                  subchild.type === 'curriculumTopicFolder'
-                ) {
-                  sublinks.subfolders.push({
-                    title: subchild.name,
-                    url: subchild.alias
-                  })
-                }
-              }
-            }
-            subtopics.push({
-              title: child.name,
-              url: child.alias,
-              description: description.children,
-              purpose: TopicPurposes.overview,
-              links: sublinks
-            })
-          }
-        }
-      }
-      let description = await buildDescription(reqData.uuid.description || '')
-      data.description = description.children
-      data.title = reqData.uuid.name
-      data.type = reqData.uuid.type
-      data.purpose = TopicPurposes.detail
-      data.links = links
-      if (Array.isArray(reqData.uuid.navigation.path)) {
-        breadcrumbs = reqData.uuid.navigation.path.slice(0, -1)
-      }
-      data.children = subtopics
-      data.exercises = exercises
-    }
+function collectTopicFolders(children) {
+  return children
+    .filter(
+      child =>
+        child.__typename === 'TaxonomyTerm' && child.type === 'topicFolder'
+    )
+    .map(child => {
+      return { title: child.name, url: child.alias ?? '/' + child.id }
+    })
+}
 
-    if (contentType === 'Exercise' || contentType === 'GroupedExercise') {
-      data.task = await buildDescription(reqData.uuid.currentRevision.content)
-      data.solution = await buildDescription(
-        reqData.uuid.solution.currentRevision.content
-      )
-      data.value = {
-        children: [
-          {
-            type: 'exercise',
-            task: data.task,
-            solution: data.solution,
-            taskLicense: reqData.uuid.license,
-            solutionLicense: reqData.uuid.solution.license,
-            children: [{ text: '' }]
-          }
-        ]
+function collectExercises(children) {
+  return children
+    .filter(
+      child =>
+        ['Exercise', 'ExerciseGroup', 'GroupedExercise'].includes(
+          child.__typename
+        ) && child.currentRevision
+    )
+    .map(child => {
+      if (
+        child.__typename === 'Exercise' ||
+        child.__typename === 'GroupedExercise'
+      ) {
+        return createExercise(child)
       }
-      delete data.task
-      delete data.solution
-    }
-    if (contentType === 'Video') {
-      data.value = {
-        children: [
-          {
-            type: 'video',
-            src: reqData.uuid.currentRevision.url,
-            children: [{ text: '' }]
-          }
-        ]
+      if (child.__typename === 'ExerciseGroup') {
+        return createExerciseGroup(child)
       }
-      data.title = reqData.uuid.currentRevision.title
-    }
-    if (contentType === 'Applet') {
-      data.value = {
-        children: [
-          {
-            type: 'geogebra',
-            id: reqData.uuid.currentRevision.url,
-            children: [{ text: '' }]
-          }
-        ]
-      }
-      data.title = reqData.uuid.currentRevision.title
-    }
-    if (contentType === 'ExerciseGroup') {
-      const children = []
-      for (let i = 0; i < reqData.uuid.exercises.length; i++) {
-        const ex = reqData.uuid.exercises[i]
-        if (!ex.currentRevision) continue
-        const task = await buildDescription(ex.currentRevision.content)
-        const solution = ex.solution
-          ? await buildDescription(ex.solution.currentRevision.content)
-          : { type: 'p', children: [{ text: '' }] }
-        children.push({
-          type: 'exercise',
-          task,
-          solution,
-          taskLicense: ex.license,
-          solutionLicense: ex.solution?.license,
-          children: [{ text: '' }]
-        })
-      }
-      const task = await buildDescription(reqData.uuid.currentRevision.content)
-      data.value = {
-        children: [
-          {
-            type: 'exercise-group',
-            content: task.children,
-            license: task.license,
-            children
-          }
-        ]
-      }
-    }
-    if (contentType === 'Course') {
-      data.redirect = reqData.uuid.pages[0].alias
-    }
-    if (contentType === 'CoursePage') {
-      data.value = await buildDescription(reqData.uuid.currentRevision.content)
-      data.title = reqData.uuid.currentRevision.title
-      data.pages = reqData.uuid.course.pages.filter(
-        page => page.currentRevision !== null
-      )
-      data.courseTitle = reqData.uuid.course.currentRevision?.title
-    }
+    })
+}
 
-*/
+function collectNestedTaxonomyTerms(children) {
+  return children
+    .filter(
+      child =>
+        child.__typename === 'TaxonomyTerm' && child.type !== 'topicFolder'
+    )
+    .map(child => {
+      const subchildren = child.children?.filter(isActive)
+      return {
+        title: child.name,
+        url: child.alias,
+        description: child.description && convertState(child.description),
+        purpose: TopicPurposes.overview,
+        links: {
+          articles: collectType(subchildren, 'Article'),
+          exercises: collectTopicFolders(subchildren),
+          videos: collectType(subchildren, 'Video'),
+          applets: collectType(subchildren, 'Applet'),
+          courses: collectType(subchildren, 'Course'),
+          subfolders: collectSubfolders(children)
+        }
+      }
+    })
+}
+
+function collectSubfolders(children) {
+  return children
+    .filter(
+      child =>
+        child.__typename === 'TaxonomyTerm' && child.type !== 'topicFolder'
+    )
+    .map(child => {
+      return { title: child.name, url: child.alias ?? '/' + child.id }
+    })
+}
