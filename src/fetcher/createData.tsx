@@ -1,67 +1,51 @@
-export function createData(uuid) {}
+import { render } from '../../external/legacy_render'
+import { convertLegacyState } from '../schema/convertLegacyState'
+import { convertEdtrioState } from '../schema/convertEdtrioState'
+
+export function createData(uuid) {
+  const type = uuid.__typename
+
+  if (type === 'Page' && uuid.currentRevision) {
+    return createPage(uuid)
+  }
+  if (type === 'Article' && uuid.currentRevision) {
+    return createArticle(uuid)
+  }
+}
+
+function createPage(uuid) {
+  return {
+    title: uuid.currentRevision.title,
+    value: convertState(uuid.currentRevision.content)
+  }
+}
+
+function createArticle(uuid) {
+  return {
+    title: uuid.currentRevision.title,
+    value: convertState(uuid.currentRevision.content)
+  }
+}
+
+function convertState(raw) {
+  if (raw.startsWith('[')) {
+    // legacy
+    const legacyHTML = render(raw)
+    return convertLegacyState(legacyHTML)
+  } else if (raw.startsWith('{')) {
+    // edtrio
+    return convertEdtrioState(JSON.parse(raw))
+  } else {
+    // raw as text
+    return { type: 'p', children: { text: raw } }
+  }
+}
 
 /*
 
 
-import { render } from '../../external/legacy_render'
-import { metamenudata } from '../data/metamenudata'
-import { horizonData } from '../data/horizondata'
-import { convertLegacyState } from '../schema/convertLegacyState'
-import { convertEdtrioState } from '../schema/convertEdtrioState'
-import { TopicPurposes } from '../components/content/Topic'
 
-async function buildDescription(description) {
-  if (description.startsWith('[')) {
-    description = await render(description)
-    description = convertLegacyState(description)
-  } else if (description.startsWith('{')) {
-    description = convertEdtrioState(JSON.parse(description))
-  } else {
-    description = {
-      children: [{ type: 'p', children: [{ text: description }] }]
-    }
-  }
-  return description
-}
-
-const data: any = {}
-    let contentType = 'unknown'
-    let title = 'Serlo'
-    let breadcrumbs = []
-
-    contentType = reqData.uuid.__typename
-
-    if (contentType === 'Page' || contentType === 'Article') {
-      let value = reqData.uuid.currentRevision.content
-      data.title = reqData.uuid.currentRevision.title
-      if (data.title) title = data.title + ' - lernen mit Serlo!'
-      if (value.startsWith('[')) {
-        // legacy
-        data.legacy = await render(value)
-      } else {
-        data.edtrio = JSON.parse(value)
-      }
-      if (data.legacy) {
-        data.value = convertLegacyState(data.legacy)
-        delete data.legacy
-      } else if (data.edtrio) {
-        data.value = convertEdtrioState(data.edtrio)
-        delete data.edtrio
-      }
-    }
-
-    const breadcrumbsData =
-      reqData.uuid.taxonomyTerms ||
-      (reqData.uuid.course && reqData.uuid.course.taxonomyTerms)
-
-    if (breadcrumbsData) {
-      breadcrumbsData.forEach(({ navigation }) => {
-        const { path } = navigation
-        if (breadcrumbs.length === 0 || breadcrumbs.length > path.length) {
-          breadcrumbs = path
-        }
-      })
-    }
+    
 
     if (contentType === 'TaxonomyTerm') {
       const children = reqData.uuid.children.filter(
@@ -357,46 +341,6 @@ const data: any = {}
         page => page.currentRevision !== null
       )
       data.courseTitle = reqData.uuid.course.currentRevision?.title
-    }
-
-    // license
-    if (
-      reqData.uuid.license &&
-      contentType !== 'Exercise' &&
-      contentType !== 'GroupedExercise' &&
-      contentType !== 'ExerciseGroup'
-    ) {
-      data.license = reqData.uuid.license
-    }
-
-    // do some more post-processing here!!
-    const isMeta =
-      alias == '/serlo' || metamenudata.some(entry => alias == entry.url)
-    const showBreadcrumbs =
-      !isMeta &&
-      breadcrumbs.length >= 1 &&
-      (contentType === 'Article' ||
-        contentType === 'Page' ||
-        contentType === 'Video' ||
-        contentType === 'Applet' ||
-        contentType === 'Exercise' ||
-        contentType === 'ExerciseGroup' ||
-        contentType === 'GroupedExercise' ||
-        contentType === 'CoursePage' ||
-        contentType === 'TaxonomyTerm')
-
-    // horizon
-    const horizonIndices = shuffle(Object.keys(horizonData))
-
-    return {
-      alias,
-      contentType,
-      data,
-      isMeta,
-      showBreadcrumbs,
-      horizonIndices,
-      breadcrumbs,
-      title
     }
 
 */

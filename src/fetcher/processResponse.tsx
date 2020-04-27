@@ -3,6 +3,7 @@ import { createTitle } from './createTitle'
 import { createBreadcrumbs } from './createBreadcrumbs'
 import { createNavigation } from './createNavigation'
 import { createData } from './createData'
+import { createLicense } from './createLicense'
 
 export function processResponse(reqData) {
   return {
@@ -11,6 +12,7 @@ export function processResponse(reqData) {
     breadcrumbs: createBreadcrumbs(reqData.uuid),
     navigation: createNavigation(reqData.uuid),
     data: createData(reqData.uuid),
+    license: createLicense(reqData.uuid),
     horizonIndices: shuffle(Object.keys(horizonData))
   }
 }

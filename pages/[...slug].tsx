@@ -25,13 +25,12 @@ function PageView(props) {
   const { data } = props
   const {
     alias,
-    isMeta,
-    showBreadcrumbs,
     horizonIndices,
     breadcrumbs,
     contentType,
     title,
-    navigation
+    navigation,
+    license
   } = data
 
   function buildMetaContentType() {
@@ -63,9 +62,7 @@ function PageView(props) {
               <StyledP>Diese Seite konnte nicht geladen werden.</StyledP>
             </>
           ) : null}
-          {showBreadcrumbs && breadcrumbs && (
-            <Breadcrumbs entries={breadcrumbs} />
-          )}
+          {breadcrumbs && <Breadcrumbs entries={breadcrumbs} />}
           <main>
             {data &&
               data.data &&
@@ -74,7 +71,9 @@ function PageView(props) {
                 contentType === 'CoursePage') && (
                 <ArticlePage data={data.data} />
               )}
-            {contentType === 'TaxonomyTerm' && <Topic data={data.data} />}
+            {contentType === 'TaxonomyTerm' && data.data && (
+              <Topic data={data.data} />
+            )}
             {(contentType === 'Video' || contentType === 'Applet') && (
               <>
                 <StyledH1 displayMode>{data.data.title}</StyledH1>
@@ -85,9 +84,7 @@ function PageView(props) {
               contentType === 'ExerciseGroup') && (
               <>{renderArticle(data.data.value.children)}</>
             )}
-            {data.data && data.data.license && (
-              <LicenseNotice data={data.data.license} />
-            )}
+            {license && <LicenseNotice data={license} />}
           </main>
           <HSpace amount={40} />
           {horizonIndices && (

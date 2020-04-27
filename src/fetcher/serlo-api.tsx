@@ -9,12 +9,14 @@ export default async function fetchContent(alias: string) {
     if (/^\/[\d]+$/.test(alias)) {
       // redirect id to alias
       const response = await request(endpoint, idQuery(alias.substring(1)))
+
+      console.log('fetch id', response)
       const redirect = response.uuid.alias
-      return { redirect }
+      if (redirect) {
+        return { redirect }
+      }
     }
-  } catch (e) {
-    // fail silently and proceed as usual
-  }
+  } catch (e) {}
 
   try {
     const QUERY = dataQuery(

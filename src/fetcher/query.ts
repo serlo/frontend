@@ -7,6 +7,9 @@ export const idQuery = id => `
       ... on Page {
         alias
       }
+      ... on TaxonomyTerm {
+        alias
+      }
     }
   }
 `
