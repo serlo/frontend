@@ -38,7 +38,8 @@ export function createData(uuid) {
 function createPage(uuid) {
   return {
     title: uuid.currentRevision.title,
-    value: convertState(uuid.currentRevision.content)
+    value: convertState(uuid.currentRevision.content),
+    id: uuid.id
   }
 }
 
@@ -47,7 +48,8 @@ function createArticle(uuid) {
     title: uuid.currentRevision.title,
     value: convertState(uuid.currentRevision.content),
     metaTitle: uuid.currentRevision.metaTitle,
-    metaDescription: uuid.currentRevision.metaDescription
+    metaDescription: uuid.currentRevision.metaDescription,
+    id: uuid.id
   }
 }
 
@@ -156,7 +158,7 @@ function createTaxonomyTerm(uuid) {
   const children = uuid.children?.filter(isActive)
 
   return {
-    description: uuid.description && convertState(uuid.description),
+    description: buildDescription(uuid.description),
     title: uuid.name,
     type: uuid.type,
     purpose: TopicPurposes.detail,
@@ -174,6 +176,20 @@ function createTaxonomyTerm(uuid) {
 
 function isActive(child) {
   return child.trashed === false && child.__typename !== 'UnsupportedUuid'
+}
+
+function buildDescription(description) {
+  const state = description ? convertState(description) : undefined
+  if (state) {
+    if (
+      state.children?.length !== 1 ||
+      state.children[0].children?.length !== 1 ||
+      state.children[0].children[0].text !== '' ||
+      state.children[0].children[0].type !== 'p'
+    ) {
+      return state
+    }
+  }
 }
 
 function collectType(children, typename) {
@@ -211,10 +227,10 @@ function collectExercises(children) {
         child.__typename === 'Exercise' ||
         child.__typename === 'GroupedExercise'
       ) {
-        return createExercise(child)
+        return createExercise(child).value
       }
       if (child.__typename === 'ExerciseGroup') {
-        return createExerciseGroup(child)
+        return createExerciseGroup(child).value
       }
     })
 }
@@ -230,7 +246,7 @@ function collectNestedTaxonomyTerms(children) {
       return {
         title: child.name,
         url: child.alias,
-        description: child.description && convertState(child.description),
+        description: buildDescription(child.description),
         purpose: TopicPurposes.overview,
         links: {
           articles: collectType(subchildren, 'Article'),
@@ -238,7 +254,7 @@ function collectNestedTaxonomyTerms(children) {
           videos: collectType(subchildren, 'Video'),
           applets: collectType(subchildren, 'Applet'),
           courses: collectType(subchildren, 'Course'),
-          subfolders: collectSubfolders(children)
+          subfolders: collectSubfolders(subchildren)
         }
       }
     })

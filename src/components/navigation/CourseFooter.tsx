@@ -7,8 +7,6 @@ import { faArrowCircleRight, faListUl } from '@fortawesome/free-solid-svg-icons'
 import { makeMargin, makeDefaultButton } from '../../helper/csshelper'
 
 export default function CourseFooter({ opener, nextHref }) {
-  console.log(nextHref)
-
   const onOverviewClick = e => {
     location.href = '#course-overview'
     opener(e)

@@ -24,7 +24,6 @@ const Topic = dynamic(() => import('../src/components/content/Topic'))
 function PageView(props) {
   const { data } = props
   const {
-    alias,
     horizonIndices,
     breadcrumbs,
     contentType,
@@ -52,7 +51,9 @@ function PageView(props) {
         <meta property="og:title" content={title} />
       </Head>
       <Header />
-      {navigation && <MetaMenu pagealias={alias} navigation={navigation} />}
+      {navigation && (
+        <MetaMenu pagealias={'/' + data.data.id} navigation={navigation} />
+      )}
       <RelatveContainer>
         <MaxWidthDiv>
           {data.error ? (
@@ -62,7 +63,9 @@ function PageView(props) {
               <StyledP>Diese Seite konnte nicht geladen werden.</StyledP>
             </>
           ) : null}
-          {breadcrumbs && <Breadcrumbs entries={breadcrumbs} />}
+          {breadcrumbs && !(contentType === 'Page' && navigation) && (
+            <Breadcrumbs entries={breadcrumbs} />
+          )}
           <main>
             {data &&
               data.data &&

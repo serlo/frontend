@@ -49,9 +49,9 @@ export default function Topic({ data }: TopicProps) {
       )}
 
       <Wrapper purpose={data.purpose}>
-        {data.description && (
-          <Overview>{renderArticle(data.description)}</Overview>
-        )}
+        <Overview>
+          {data.description && renderArticle(data.description.children)}
+        </Overview>
         {data.children &&
           data.children.map(child => (
             <React.Fragment key={child.title}>

@@ -20,6 +20,7 @@ export const dataQuery = selector => `
       __typename
 
       ... on Page {
+        id
         currentRevision {
           title
           content
@@ -34,6 +35,7 @@ export const dataQuery = selector => `
       }
 
       ... on Article {
+        id
         currentRevision {
           title
           content

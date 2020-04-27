@@ -24,8 +24,14 @@ export default async function fetchContent(alias: string, redirect) {
     )
     const reqData = await request(endpoint, QUERY)
     // compat: redirect first page of course
-    if (reqData.uuid.__typename === 'Course' && reqData.uuid.pages[0]?.alias) {
-      return { redirect: reqData.uuid.pages[0].alias }
+    if (
+      reqData.uuid.__typename === 'Course' &&
+      Array.isArray(reqData.uuid.pages)
+    ) {
+      const filtered = reqData.uuid.pages.filter(page => page.alias !== null)
+      if (filtered.length > 0) {
+        return { redirect: filtered[0].alias }
+      }
     }
     return { alias, ...processResponse(reqData) }
   } catch (e) {

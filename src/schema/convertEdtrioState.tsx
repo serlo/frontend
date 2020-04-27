@@ -115,7 +115,6 @@ export function convert(node) {
     return convertLegacyState(html).children
   }
   if (plugin === 'video') {
-    console.log(node.state)
     return [
       {
         type: 'video',
