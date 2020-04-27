@@ -24,9 +24,11 @@ const query = props => `
           content
         }
         taxonomyTerms {
-          path {
-            name
-            alias
+          navigation {
+            path {
+              label
+              url
+            }
           }
         }
         license {
@@ -81,9 +83,11 @@ const query = props => `
           url
         }
         taxonomyTerms {
-          path {
-            name
-            alias
+          navigation {
+            path {
+              label
+              url
+            }
           }
         }
         license {
@@ -98,9 +102,11 @@ const query = props => `
           url
         }
         taxonomyTerms {
-          path {
-            name
-            alias
+          navigation {
+            path {
+              label
+              url
+            }
           }
         }
         license {
@@ -125,9 +131,11 @@ const query = props => `
             }
           }
           taxonomyTerms {
-            path {
-              name
-              alias
+            navigation {
+              path {
+                label
+                url
+              }
             }
           }
         }
@@ -176,9 +184,11 @@ const query = props => `
         type
         name
         description
-        path {
-          name
-          alias
+        navigation {
+          path {
+            label
+            url
+          }
         }
         children {
           trashed
@@ -359,7 +369,8 @@ export default async function fetchContent(alias) {
       (reqData.uuid.course && reqData.uuid.course.taxonomyTerms)
 
     if (breadcrumbsData) {
-      breadcrumbsData.forEach(({ path }) => {
+      breadcrumbsData.forEach(({ navigation }) => {
+        const { path } = navigation
         if (breadcrumbs.length === 0 || breadcrumbs.length > path.length) {
           breadcrumbs = path
         }
@@ -569,8 +580,8 @@ export default async function fetchContent(alias) {
       data.type = reqData.uuid.type
       data.purpose = TopicPurposes.detail
       data.links = links
-      if (Array.isArray(reqData.uuid.path)) {
-        breadcrumbs = reqData.uuid.path.slice(0, -1)
+      if (Array.isArray(reqData.uuid.navigation.path)) {
+        breadcrumbs = reqData.uuid.navigation.path.slice(0, -1)
       }
       data.children = subtopics
       data.exercises = exercises
@@ -671,13 +682,6 @@ export default async function fetchContent(alias) {
     ) {
       data.license = reqData.uuid.license
     }
-
-    // compat: why is this entry saved as 'Mathe'?
-    breadcrumbs = breadcrumbs.filter(entry => entry.alias)
-    breadcrumbs = breadcrumbs.map(({ name, alias }) => ({
-      url: alias,
-      label: name == 'Mathe' ? 'Mathematik' : name
-    }))
 
     // do some more post-processing here!!
     const isMeta =

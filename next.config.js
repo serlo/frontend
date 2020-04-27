@@ -1,12 +1,9 @@
+const withSourceMaps = require('@zeit/next-source-maps')()
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true'
 })
 
-module.exports = withBundleAnalyzer({
-  env: {
-    SENTRY_DSN:
-      'https://b7a5f46510b945b7a3a78c47c6a6048a@o115070.ingest.sentry.io/5206333'
-  },
+module.exports = withSourceMaps(withBundleAnalyzer({
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
@@ -20,9 +17,16 @@ module.exports = withBundleAnalyzer({
       ]
     })
 
+    for (const plugin of config.plugins) {
+      if (plugin.constructor.name === 'UglifyJsPlugin') {
+        plugin.options.sourceMap = true
+        break
+      }
+    }
+
     return config
   },
   devIndicators: {
     autoPrerender: false
   }
-})
+}))

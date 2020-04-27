@@ -1,6 +1,7 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
 import * as Sentry from '@sentry/browser'
+import GoogleAnalytics from '../src/components/GoogleAnalytics'
 
 const bodyStyles = {
   margin: 0,
@@ -8,13 +9,15 @@ const bodyStyles = {
   letterSpacing: '-0.007em'
 }
 
-process.on('unhandledRejection', err => {
-  Sentry.captureException(err)
-})
+if (process.env.SENTRY_DSN !== undefined) {
+  process.on('unhandledRejection', err => {
+    Sentry.captureException(err)
+  })
 
-process.on('uncaughtException', err => {
-  Sentry.captureException(err)
-})
+  process.on('uncaughtException', err => {
+    Sentry.captureException(err)
+  })
+}
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx) {
@@ -52,6 +55,7 @@ export default class MyDocument extends Document {
         <body style={bodyStyles}>
           <Main />
           <NextScript />
+          {process.env.GA_TRACKING_ID !== undefined && <GoogleAnalytics />}
         </body>
       </Html>
     )
