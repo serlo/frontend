@@ -30,7 +30,8 @@ function PageView(props) {
     horizonIndices,
     breadcrumbs,
     contentType,
-    title
+    title,
+    navigation
   } = data
 
   function buildMetaContentType() {
@@ -38,7 +39,7 @@ function PageView(props) {
     if (contentType === undefined) return ''
     if (contentType === 'Exercise') return 'text-exercise'
     if (contentType === 'CoursePage') return 'course-page'
-    if (data.data.type === 'topicFolder') return 'topic-folder'
+    if (data.data?.type === 'topicFolder') return 'topic-folder'
     if (contentType === 'TaxonomyTerm') return 'topic'
     //Article, Video, Applet
     return contentType.toLowerCase()
@@ -52,7 +53,7 @@ function PageView(props) {
         <meta property="og:title" content={title} />
       </Head>
       <Header />
-      {isMeta && <MetaMenu pagealias={alias} />}
+      {navigation && <MetaMenu pagealias={alias} navigation={navigation} />}
       <RelatveContainer>
         <MaxWidthDiv>
           {data.error ? (
@@ -67,6 +68,7 @@ function PageView(props) {
           )}
           <main>
             {data &&
+              data.data &&
               (contentType === 'Article' ||
                 contentType === 'Page' ||
                 contentType === 'CoursePage') && (
@@ -118,9 +120,9 @@ export async function getServerSideProps(props) {
   const data = await res.json()
 
   // compat course to first page
-  if (data.contentType === 'Course') {
+  if (data.redirect) {
     props.res.writeHead(301, {
-      Location: data.data.redirect,
+      Location: data.redirect,
       // Add the content-type for SEO considerations
       'Content-Type': 'text/html; charset=utf-8'
     })
