@@ -9,9 +9,7 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "docker-compose up --build --detach",
-    "start:next": "next start",
-    "stop": "docker-compose down",
+    "start": "next start",
     "typecheck": "yarn tsc --noEmit",
     "prettify": "yarn prettier --write \"{src,pages}/**/*.{js,tsx,ts}\"",
     "analyze": "cross-env ANALYZE=true yarn build"
@@ -35,9 +33,6 @@
     "react-horizontal-scrolling-menu": "^0.7.7",
     "react-modal": "^3.11.0",
     "showdown": "^1.9.0",
-    "slate": "^0.57.2",
-    "slate-history": "^0.57.2",
-    "slate-react": "^0.57.2",
     "styled-components": "^5.0.0"
   },
   "devDependencies": {
