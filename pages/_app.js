@@ -15,11 +15,12 @@ import * as Sentry from '@sentry/browser'
 
 const { version } = require('../package.json')
 
-if (process.env.SENTRY_DSN !== undefined)
+if (process.env.SENTRY_DSN !== undefined) {
   Sentry.init({
     dsn: process.env.SENTRY_DSN,
-    release: `serlo-org-client@${version}`
+    release: `serlo-org-client@${version}-${process.env.VERCEL_GITHUB_COMMIT_SHA}`
   })
+}
 
 class MyApp extends App {
   render() {
