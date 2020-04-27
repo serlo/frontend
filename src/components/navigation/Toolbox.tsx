@@ -18,7 +18,7 @@ export default function Toolbox({ onEdit, onShare }: ToolboxProps) {
     <AbsoluteWrapper>
       <BoxWrapper>
         <IconButton onClick={onEdit}>
-          <FontAwesomeIcon icon={faPencilAlt} size="1x" /> Inhalt bearbeiten
+          <FontAwesomeIcon icon={faPencilAlt} size="1x" /> Inhalt überarbeiten
         </IconButton>
         <IconButton onClick={onShare}>
           <FontAwesomeIcon icon={faShareAlt} size="1x" /> Teilen!
