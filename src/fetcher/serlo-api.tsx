@@ -35,6 +35,6 @@ export default async function fetchContent(alias: string, redirect) {
     }
     return { alias, ...processResponse(reqData) }
   } catch (e) {
-    return { error: 'Error while fetching data: ' + (e.message ?? e) }
+    return { error: 'Error while fetching data: ' + (e.message ?? e), alias }
   }
 }
