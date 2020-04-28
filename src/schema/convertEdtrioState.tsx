@@ -177,11 +177,11 @@ export function convert(node) {
         return child
       })
       let current = []
-      let result = []
+      const result = []
       if (splitted[0] === '##break##') splitted.shift()
       if (splitted[splitted.length - 1] !== '##break##')
         splitted.push('##break##')
-      splitted.forEach((el, i) => {
+      splitted.forEach(el => {
         if (el === '##break##') {
           result.push({
             type: 'p',

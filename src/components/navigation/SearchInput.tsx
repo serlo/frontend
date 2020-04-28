@@ -30,12 +30,12 @@ export default function SearchInput() {
     if (searchActive) return
 
     if (!searchLoaded) {
-      var cx = '016022363195733463411:78jhtkzhbhc'
-      var gcse = document.createElement('script')
+      const cx = '016022363195733463411:78jhtkzhbhc'
+      const gcse = document.createElement('script')
       gcse.type = 'text/javascript'
       gcse.async = true
       gcse.src = 'https://cse.google.com/cse.js?cx=' + cx
-      var s = document.getElementsByTagName('script')[0]
+      const s = document.getElementsByTagName('script')[0]
       s.parentNode.insertBefore(gcse, s)
 
       setSearchLoaded(true)

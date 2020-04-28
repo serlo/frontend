@@ -8,7 +8,9 @@ export function createNavigation(uuid) {
         }
         return convertEntry(child)
       })
-    } catch (e) {}
+    } catch (e) {
+      // ignore
+    }
   }
 }
 

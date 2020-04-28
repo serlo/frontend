@@ -3,7 +3,6 @@ import { makeMargin } from '../../helper/csshelper'
 import React from 'react'
 import { renderArticle } from '../../schema/articleRenderer'
 import { convertEdtrioState } from '../../schema/convertEdtrioState'
-import { getServerSideProps } from '../../../pages/[...slug]'
 import StyledP from '../tags/StyledP'
 
 export default function ScMcExercise({ state }) {
@@ -39,13 +38,13 @@ function SingleChoice({ state }) {
           )}
         </Feedback>
       )}
-      <button onClick={() => setShowFeedback(true)}>Stimmt's?</button>
+      <button onClick={() => setShowFeedback(true)}>Stimmt&apos;s?</button>
     </Container>
   )
 }
 
 function MultipleChoice({ state }) {
-  const [selected, setSelected] = React.useState(state.answers.map(_ => false))
+  const [selected, setSelected] = React.useState(state.answers.map(() => false))
   const [showFeedback, setShowFeedback] = React.useState(false)
   const right = state.answers.every(
     (answer, i) => answer.isCorrect === selected[i]
@@ -77,7 +76,7 @@ function MultipleChoice({ state }) {
           <StyledP>{right ? 'Richtig' : 'Falsch'}</StyledP>
         </Feedback>
       )}
-      <button onClick={() => setShowFeedback(true)}>Stimmt's?</button>
+      <button onClick={() => setShowFeedback(true)}>Stimmt&apos;s?</button>
     </Container>
   )
 }

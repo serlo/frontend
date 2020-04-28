@@ -126,16 +126,6 @@ const LinkList = styled.div`
   margin-top: 6px;
 `
 
-const TopicImage = styled.img`
-  margin: 0 auto 1rem;
-  max-width: 90%;
-`
-
-const Description = styled.p`
-  font-size: 1.2rem;
-  margin: 0;
-`
-
 const Overview = styled.div`
   flex: 1 1 40%;
   img {

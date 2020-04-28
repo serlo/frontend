@@ -131,18 +131,17 @@ const NavLink = styled.a`
   }
 
   &:hover,
-    &:active {
-      color: ${props => props.theme.colors.black};
-      text-decoration: underline;
-      border-bottom: 2px solid transparent;
-    }
+  &:active {
+    color: ${props => props.theme.colors.black};
+    text-decoration: underline;
+    border-bottom: 2px solid transparent;
   }
 
   @media (min-width: ${props => props.theme.breakpoints.sm}) {
     &:hover,
     &:active {
-      border-bottom: 2px solid ${props =>
-        lighten(0.2, props.theme.colors.black)};
+      border-bottom: 2px solid
+        ${props => lighten(0.2, props.theme.colors.black)};
       text-decoration: none;
     }
   }

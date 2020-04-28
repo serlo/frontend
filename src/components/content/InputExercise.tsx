@@ -16,7 +16,7 @@ export default function InputExercise({ state }) {
       {feedback}
       <br />
       <button onClick={() => setFeedback(checkAnswer(value, state))}>
-        Stimmt's?
+        Stimmt&apos;s?
       </button>
     </StyledP>
   )

@@ -30,7 +30,7 @@ export const makeResponsivePadding = props =>
   }
   `
 
-export const makeDefaultButton = props =>
+export const makeDefaultButton = () =>
   css`
     display: inline-block;
     transition: all 0.2s ease-in-out 0s;
@@ -48,7 +48,7 @@ export const makeDefaultButton = props =>
     cursor: pointer;
   `
 
-export const makeGreenButton = props =>
+export const makeGreenButton = () =>
   css`
   ${makeDefaultButton}
   color: ${props => props.theme.colors.brandGreen};
@@ -58,7 +58,7 @@ export const makeGreenButton = props =>
   }
 `
 
-export const inputFontReset = props =>
+export const inputFontReset = () =>
   css`
     font-size: 1rem;
     font-family: Karmilla, sans-serif;
