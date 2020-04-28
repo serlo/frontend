@@ -95,6 +95,16 @@ function convert(node) {
         }
         if (className === 'injection') {
           const href = node.children[0].attribs.href
+          const match = /^\/ggt\/(.+)/.exec(href)
+          if (match) {
+            return [
+              {
+                type: 'geogebra',
+                id: match[1],
+                children: [{ text: '' }]
+              }
+            ]
+          }
           return [
             {
               type: 'injection',
