@@ -14,6 +14,7 @@ import StyledH1 from '../src/components/tags/StyledH1'
 import { renderArticle } from '../src/schema/articleRenderer'
 import CookieBar from '../src/components/content/CookieBar'
 import LicenseNotice from '../src/components/content/LicenseNotice'
+import StyledA from '../src/components/tags/StyledA'
 
 const MetaMenu = dynamic(() => import('../src/components/navigation/MetaMenu'))
 const Breadcrumbs = dynamic(() =>
@@ -24,6 +25,7 @@ const Topic = dynamic(() => import('../src/components/content/Topic'))
 function PageView(props) {
   const { data } = props
   const {
+    alias,
     horizonIndices,
     breadcrumbs,
     contentType,
@@ -61,6 +63,11 @@ function PageView(props) {
               <HSpace amount={100} />
               <StyledH1>404</StyledH1>
               <StyledP>Diese Seite konnte nicht geladen werden.</StyledP>
+              {process.env.NODE_ENV !== 'production' && (
+                <StyledP>
+                  Details: <StyledA href={'/api' + alias}>/api{alias}</StyledA>
+                </StyledP>
+              )}
             </>
           ) : null}
           {breadcrumbs && !(contentType === 'Page' && navigation) && (
