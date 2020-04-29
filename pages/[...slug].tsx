@@ -14,6 +14,7 @@ import StyledH1 from '../src/components/tags/StyledH1'
 import { renderArticle } from '../src/schema/articleRenderer'
 import CookieBar from '../src/components/content/CookieBar'
 import LicenseNotice from '../src/components/content/LicenseNotice'
+import StyledA from '../src/components/tags/StyledA'
 
 const MetaMenu = dynamic(() => import('../src/components/navigation/MetaMenu'))
 const Breadcrumbs = dynamic(() =>
@@ -25,12 +26,12 @@ function PageView(props) {
   const { data } = props
   const {
     alias,
-    isMeta,
-    showBreadcrumbs,
     horizonIndices,
     breadcrumbs,
     contentType,
-    title
+    title,
+    navigation,
+    license
   } = data
 
   function buildMetaContentType() {
@@ -38,7 +39,7 @@ function PageView(props) {
     if (contentType === undefined) return ''
     if (contentType === 'Exercise') return 'text-exercise'
     if (contentType === 'CoursePage') return 'course-page'
-    if (data.data.type === 'topicFolder') return 'topic-folder'
+    if (data.data?.type === 'topicFolder') return 'topic-folder'
     if (contentType === 'TaxonomyTerm') return 'topic'
     //Article, Video, Applet
     return contentType.toLowerCase()
@@ -52,7 +53,9 @@ function PageView(props) {
         <meta property="og:title" content={title} />
       </Head>
       <Header />
-      {isMeta && <MetaMenu pagealias={alias} />}
+      {navigation && (
+        <MetaMenu pagealias={'/' + data.data.id} navigation={navigation} />
+      )}
       <RelatveContainer>
         <MaxWidthDiv>
           {data.error ? (
@@ -60,19 +63,27 @@ function PageView(props) {
               <HSpace amount={100} />
               <StyledH1>404</StyledH1>
               <StyledP>Diese Seite konnte nicht geladen werden.</StyledP>
+              {process.env.NODE_ENV !== 'production' && (
+                <StyledP>
+                  Details: <StyledA href={'/api' + alias}>/api{alias}</StyledA>
+                </StyledP>
+              )}
             </>
           ) : null}
-          {showBreadcrumbs && breadcrumbs && (
+          {breadcrumbs && !(contentType === 'Page' && navigation) && (
             <Breadcrumbs entries={breadcrumbs} />
           )}
           <main>
             {data &&
+              data.data &&
               (contentType === 'Article' ||
                 contentType === 'Page' ||
                 contentType === 'CoursePage') && (
                 <ArticlePage data={data.data} />
               )}
-            {contentType === 'TaxonomyTerm' && <Topic data={data.data} />}
+            {contentType === 'TaxonomyTerm' && data.data && (
+              <Topic data={data.data} />
+            )}
             {(contentType === 'Video' || contentType === 'Applet') && (
               <>
                 <StyledH1 displayMode>{data.data.title}</StyledH1>
@@ -83,9 +94,7 @@ function PageView(props) {
               contentType === 'ExerciseGroup') && (
               <>{renderArticle(data.data.value.children)}</>
             )}
-            {data.data && data.data.license && (
-              <LicenseNotice data={data.data.license} />
-            )}
+            {license && <LicenseNotice data={license} />}
           </main>
           <HSpace amount={40} />
           {horizonIndices && (
@@ -113,14 +122,14 @@ const MaxWidthDiv = styled.div`
 export async function getServerSideProps(props) {
   const { origin } = absoluteUrl(props.req)
   const res = await fetch(
-    `${origin}/api/${encodeURIComponent(props.params.slug.join('/'))}`
+    `${origin}/api/${encodeURIComponent(props.params.slug.join('/'))}?redirect`
   )
   const data = await res.json()
 
   // compat course to first page
-  if (data.contentType === 'Course') {
+  if (data.redirect) {
     props.res.writeHead(301, {
-      Location: data.data.redirect,
+      Location: encodeURI(data.redirect),
       // Add the content-type for SEO considerations
       'Content-Type': 'text/html; charset=utf-8'
     })

@@ -62,18 +62,7 @@ export default function ArticlePage({ data }) {
 
       <Toolbox
         onShare={() => setOpen(true)}
-        onEdit={() => {
-          if (!window.location.host.includes('serlo.org')) {
-            window.open(
-              window.location.protocol +
-                '//' +
-                window.location.host +
-                '/create?id=' +
-                encodeURIComponent(window.location.pathname.substring(1)),
-              '_blank'
-            )
-          }
-        }}
+        editHref={'/entity/repository/add-revision/' + data.id}
       />
       <ShareModal open={open} onClose={() => setOpen(false)} />
     </>

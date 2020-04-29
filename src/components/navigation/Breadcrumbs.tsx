@@ -101,7 +101,7 @@ const Breadcrumb = styled.a`
 
   @media (min-width: ${props => props.theme.breakpoints.sm}) {
     white-space: nowrap;
-    margin: 0 19px 0 0;
+    margin: 0 19px 5px 0;
 
     &:after {
       content: '>';
@@ -116,6 +116,10 @@ const BreadcrumbLast = styled(Breadcrumb)`
   &:after {
     display: none;
   }
+
+  background: ${props => props.theme.colors.bluewhite};
+  color: ${props => props.theme.colors.brand};
+  font-weight: bold;
 
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
     display: inline-flex;

@@ -6,6 +6,7 @@ import MobileMetaMenu from './MobileMetaMenu'
 
 interface MetaMenuProps {
   pagealias: string
+  navigation: any
 }
 
 interface MetaMenuLink {
@@ -14,12 +15,12 @@ interface MetaMenuLink {
 }
 
 export default function MetaMenu(props: MetaMenuProps) {
-  const { pagealias } = props
-  const links = metamenudata
+  const { navigation, pagealias } = props
+  const links = navigation
 
   return (
     <>
-      <MobileMetaMenu links={metamenudata} pagealias={pagealias} />
+      <MobileMetaMenu links={navigation} pagealias={pagealias} />
       <MetaMenuWrapper>
         <List>
           {links.map((entry, i) => (
