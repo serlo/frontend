@@ -39,7 +39,7 @@ function SingleChoice({ state }) {
         {state.answers.map((answer, i) => {
           const unique = randomIdentifier(i)
           return (
-            <div key={unique}>
+            <React.Fragment key={unique}>
               <ChoiceWrapper>
                 <StyledInput
                   id={unique}
@@ -71,7 +71,7 @@ function SingleChoice({ state }) {
                     )}
                   </Feedback>
                 )}
-            </div>
+            </React.Fragment>
           )
         })}
       </Choices>
@@ -98,7 +98,7 @@ function MultipleChoice({ state }) {
         {state.answers.map((answer, i) => {
           const unique = randomIdentifier(i)
           return (
-            <>
+            <React.Fragment key={unique}>
               <ChoiceWrapper key={unique}>
                 <StyledInput
                   id={unique}
@@ -125,7 +125,7 @@ function MultipleChoice({ state }) {
               {showFeedback &&
                 selected[i] &&
                 renderArticle(convertEdtrioState(answer.feedback).children)}
-            </>
+            </React.Fragment>
           )
         })}
       </Choices>
