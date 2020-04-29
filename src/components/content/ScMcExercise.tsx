@@ -134,7 +134,7 @@ function MultipleChoice({ state }) {
         </Feedback>
       )}
       <CheckButton selectable={true} onClick={() => setShowFeedback(true)}>
-        Stimmt's?
+        Stimmt&apos;s?
       </CheckButton>
     </Container>
   )

@@ -25,7 +25,7 @@ export default function InputExercise({ state }) {
         selectable={value !== ''}
         onClick={() => setFeedback(checkAnswer(value, state))}
       >
-        Stimmt's?
+        Stimmt&apos;s?
       </CheckButton>
     </Wrapper>
   )
