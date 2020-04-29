@@ -261,18 +261,10 @@ function SpoilerForEndUser(props) {
   return renderSpoilerContainer({
     children: (
       <>
-        {renderSpoilerTitle({
-          attributes: {
-            onClick: () => setOpen(!open),
-            role: 'button'
-          },
-          children: (
-            <>
-              <SpoilerToggle open={open} />
-              {title}
-            </>
-          )
-        })}
+        <SpoilerTitle onClick={() => setOpen(!open)} open={open}>
+          <SpoilerToggle open={open} />
+          {title}
+        </SpoilerTitle>
         {open && body}
       </>
     )
@@ -281,10 +273,6 @@ function SpoilerForEndUser(props) {
 
 export function renderSpoilerContainer({ attributes = {}, children = null }) {
   return <SpoilerContainer {...attributes}>{children}</SpoilerContainer>
-}
-
-export function renderSpoilerTitle({ attributes = {}, children = null }) {
-  return <SpoilerTitle {...attributes}>{children}</SpoilerTitle>
 }
 
 export function renderSpoilerBody({ attributes = {}, children = null }) {
@@ -381,9 +369,15 @@ export function renderExercise({ attributes = {}, children = null, element }) {
 export function renderExerciseGroup({ attributes, children = null, element }) {
   return (
     <React.Fragment key={attributes.key}>
-      {renderArticle(element.content, false)}
-      {element.license && <LicenseNotice data={element.license} />}
-      <ExerciseGroup {...attributes}>{children}</ExerciseGroup>
+      <ExerciseGroup
+        {...attributes}
+        license={
+          element.license && <LicenseNotice minimal data={element.license} />
+        }
+        groupIntro={renderArticle(element.content, false)}
+      >
+        {children}
+      </ExerciseGroup>
     </React.Fragment>
   )
 }
