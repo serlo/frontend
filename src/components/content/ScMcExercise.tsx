@@ -6,13 +6,27 @@ import { convertEdtrioState } from '../../schema/convertEdtrioState'
 import { getServerSideProps } from '../../../pages/[...slug]'
 import StyledP from '../tags/StyledP'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircle } from '@fortawesome/free-solid-svg-icons'
-import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
+import {
+  faCircle,
+  faCheckCircle,
+  faCheckSquare,
+  faSquare
+} from '@fortawesome/free-solid-svg-icons'
 
 export default function ScMcExercise({ state }) {
   if (state.isSingleChoice) return <SingleChoice state={state} />
 
   return <MultipleChoice state={state} />
+}
+
+function randomIdentifier(i) {
+  return (
+    Math.random()
+      .toString(20)
+      .substr(2, 8) +
+    '-' +
+    i
+  )
 }
 
 function SingleChoice({ state }) {
@@ -23,12 +37,7 @@ function SingleChoice({ state }) {
     <Container>
       <Choices>
         {state.answers.map((answer, i) => {
-          const unique =
-            Math.random()
-              .toString(20)
-              .substr(2, 8) +
-            '-' +
-            i
+          const unique = randomIdentifier(i)
           return (
             <>
               <ChoiceWrapper key={unique}>
@@ -71,7 +80,7 @@ function SingleChoice({ state }) {
         selectable={selected !== undefined}
         onClick={() => setShowFeedback(true)}
       >
-        Stimmt's?
+        {selected !== undefined ? "Stimmt's?" : 'Klicke auf eine der Optionen'}
       </CheckButton>
     </Container>
   )
@@ -86,31 +95,48 @@ function MultipleChoice({ state }) {
   return (
     <Container>
       <Choices>
-        {state.answers.map((answer, i) => (
-          <label key={i}>
-            <input
-              type="checkbox"
-              checked={selected[i]}
-              onChange={() => {
-                setShowFeedback(false)
-                const newArr = selected.slice(0)
-                newArr[i] = !newArr[i]
-                setSelected(newArr)
-              }}
-            />
-            {renderArticle(convertEdtrioState(answer.content).children)}
-            {showFeedback &&
-              selected[i] &&
-              renderArticle(convertEdtrioState(answer.feedback).children)}
-          </label>
-        ))}
+        {state.answers.map((answer, i) => {
+          const unique = randomIdentifier(i)
+          return (
+            <>
+              <ChoiceWrapper key={unique}>
+                <StyledInput
+                  id={unique}
+                  type="checkbox"
+                  checked={selected[i]}
+                  onChange={() => {
+                    setShowFeedback(false)
+                    const newArr = selected.slice(0)
+                    newArr[i] = !newArr[i]
+                    setSelected(newArr)
+                  }}
+                />
+                <StyledLabel
+                  selected={selected[i]}
+                  key={unique}
+                  htmlFor={unique}
+                >
+                  <FontAwesomeIcon
+                    icon={selected[i] ? faCheckSquare : faSquare}
+                  />
+                  {renderArticle(convertEdtrioState(answer.content).children)}
+                </StyledLabel>
+              </ChoiceWrapper>
+              {showFeedback &&
+                selected[i] &&
+                renderArticle(convertEdtrioState(answer.feedback).children)}
+            </>
+          )
+        })}
       </Choices>
       {showFeedback && (
         <Feedback right={right}>
           <StyledP>{right ? 'Richtig' : 'Falsch'}</StyledP>
         </Feedback>
       )}
-      <button onClick={() => setShowFeedback(true)}>Stimmt's?</button>
+      <CheckButton selectable={true} onClick={() => setShowFeedback(true)}>
+        Stimmt's?
+      </CheckButton>
     </Container>
   )
 }
@@ -125,7 +151,9 @@ const CheckButton = styled.a<{ selectable: boolean }>`
   ${props =>
     !props.selectable &&
     css`
-      opacity: 0;
+      opacity: 1;
+      background-color: transparent;
+      color: ${props => props.theme.colors.gray};
       pointer-events: none;
     `}
 `
@@ -145,7 +173,8 @@ const ChoiceWrapper = styled.li`
 `
 
 const StyledInput = styled.input`
-  &[type='radio'] {
+  &[type='radio'],
+  &[type='checkbox'] {
     width: 1px;
     margin: 0;
     padding: 0;
