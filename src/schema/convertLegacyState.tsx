@@ -167,7 +167,7 @@ function convert(node) {
       const maths = children.filter(child => child.type === 'math')
       if (maths.length >= 1) {
         let current = []
-        let result = []
+        const result = []
         children.forEach(child => {
           if (child.type === 'math') {
             if (current.length > 0) {

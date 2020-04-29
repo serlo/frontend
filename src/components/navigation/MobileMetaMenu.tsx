@@ -18,7 +18,7 @@ export default function MobileMetaMenu(props: MobileMetaMenuProps) {
     <StyledScrollMenu>
       <ScrollMenu
         alignCenter={false}
-        data={props.links.map((entry, i) => {
+        data={props.links.map(entry => {
           return (
             <div
               key={entry.title}

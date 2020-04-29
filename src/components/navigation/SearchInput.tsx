@@ -6,6 +6,7 @@ import SearchIcon from '../../../public/_assets/img/search-icon.svg'
 import SearchResults from './SearchResults'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { theme } from '../../theme'
 
 /*
 This components starts with only a placeholder that looks like a searchbar (basically a button).
@@ -30,12 +31,12 @@ export default function SearchInput() {
     if (searchActive) return
 
     if (!searchLoaded) {
-      var cx = '016022363195733463411:78jhtkzhbhc'
-      var gcse = document.createElement('script')
+      const cx = '016022363195733463411:78jhtkzhbhc'
+      const gcse = document.createElement('script')
       gcse.type = 'text/javascript'
       gcse.async = true
       gcse.src = 'https://cse.google.com/cse.js?cx=' + cx
-      var s = document.getElementsByTagName('script')[0]
+      const s = document.getElementsByTagName('script')[0]
       s.parentNode.insertBefore(gcse, s)
 
       setSearchLoaded(true)
@@ -286,14 +287,14 @@ const AutocompleteStyle = createGlobalStyle`
 
     z-index: 100010;
 
-    @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    @media (max-width: ${theme.breakpoints.sm}) {
       margin-top: 2px;
       left: 5px !important;
       right: 5px !important;
       width: auto !important;
     }
 
-    @media (min-width: ${props => props.theme.breakpoints.sm}) {
+    @media (min-width: ${theme.breakpoints.sm}) {
       margin-left: 10px;
       margin-top: 2px;
       width: auto;

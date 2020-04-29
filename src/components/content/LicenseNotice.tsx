@@ -16,7 +16,7 @@ interface LicenseNoticeProps {
 export default function LicenseNotice(props: LicenseNoticeProps) {
   const { data, minimal } = props
   //only link license
-  let titleParts = data.title.split('CC')
+  const titleParts = data.title.split('CC')
   const text = titleParts.length === 2 ? titleParts[0] : ''
   const licenseName =
     titleParts.length === 2 ? 'CC' + titleParts[1] : data.title

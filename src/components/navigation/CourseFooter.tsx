@@ -1,7 +1,4 @@
-import styled, { css } from 'styled-components'
-import StyledOl from '../tags/StyledOl'
-import StyledLi from '../tags/StyledLi'
-import StyledA from '../tags/StyledA'
+import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowCircleRight, faListUl } from '@fortawesome/free-solid-svg-icons'
 import { makeMargin, makeDefaultButton } from '../../helper/csshelper'

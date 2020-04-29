@@ -53,9 +53,12 @@ function PageView(props) {
         <meta property="og:title" content={title} />
       </Head>
       <Header />
-      {navigation && (
-        <MetaMenu pagealias={'/' + data.data.id} navigation={navigation} />
-      )}
+      {navigation &&
+        !(
+          contentType === 'TaxonomyTerm' && data.data?.type === 'topicFolder'
+        ) && (
+          <MetaMenu pagealias={'/' + data.data.id} navigation={navigation} />
+        )}
       <RelatveContainer>
         <MaxWidthDiv>
           {data.error ? (

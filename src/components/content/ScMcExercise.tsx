@@ -3,7 +3,6 @@ import { makeMargin, makeDefaultButton } from '../../helper/csshelper'
 import React from 'react'
 import { renderArticle } from '../../schema/articleRenderer'
 import { convertEdtrioState } from '../../schema/convertEdtrioState'
-import { getServerSideProps } from '../../../pages/[...slug]'
 import StyledP from '../tags/StyledP'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
@@ -87,7 +86,7 @@ function SingleChoice({ state }) {
 }
 
 function MultipleChoice({ state }) {
-  const [selected, setSelected] = React.useState(state.answers.map(_ => false))
+  const [selected, setSelected] = React.useState(state.answers.map(() => false))
   const [showFeedback, setShowFeedback] = React.useState(false)
   const right = state.answers.every(
     (answer, i) => answer.isCorrect === selected[i]
@@ -135,7 +134,7 @@ function MultipleChoice({ state }) {
         </Feedback>
       )}
       <CheckButton selectable={true} onClick={() => setShowFeedback(true)}>
-        Stimmt's?
+        Stimmt&apos;s?
       </CheckButton>
     </Container>
   )

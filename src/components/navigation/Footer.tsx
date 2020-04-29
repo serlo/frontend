@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { transparentize } from 'polished'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faChevronUp,
@@ -78,19 +77,6 @@ const LogoContainer = styled.div`
   position: relative;
   min-height: 54px;
   width: 100%;
-`
-
-const Subline = styled.p`
-  margin-left: 55px;
-  color: ${transparentize(0.6, 'white')};
-  font-size: 1.66rem;
-  a {
-    color: inherit;
-    text-decoration: none;
-  }
-  &:hover {
-    color: white;
-  }
 `
 
 const TopButton = styled.div`
