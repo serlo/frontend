@@ -1,10 +1,17 @@
-import styled from 'styled-components'
-import { makeMargin } from '../../helper/csshelper'
+import styled, { css } from 'styled-components'
+import { makeMargin, makeDefaultButton } from '../../helper/csshelper'
 import React from 'react'
 import { renderArticle } from '../../schema/articleRenderer'
 import { convertEdtrioState } from '../../schema/convertEdtrioState'
 import { getServerSideProps } from '../../../pages/[...slug]'
 import StyledP from '../tags/StyledP'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  faCircle,
+  faCheckCircle,
+  faCheckSquare,
+  faSquare
+} from '@fortawesome/free-solid-svg-icons'
 
 export default function ScMcExercise({ state }) {
   if (state.isSingleChoice) return <SingleChoice state={state} />
@@ -12,34 +19,69 @@ export default function ScMcExercise({ state }) {
   return <MultipleChoice state={state} />
 }
 
+function randomIdentifier(i) {
+  return (
+    Math.random()
+      .toString(20)
+      .substr(2, 8) +
+    '-' +
+    i
+  )
+}
+
 function SingleChoice({ state }) {
   const [selected, setSelected] = React.useState(undefined)
   const [showFeedback, setShowFeedback] = React.useState(false)
+
   return (
     <Container>
       <Choices>
-        {state.answers.map((answer, i) => (
-          <label key={i}>
-            <input
-              type="radio"
-              checked={selected === i}
-              onChange={() => {
-                setShowFeedback(false)
-                setSelected(i)
-              }}
-            />
-            {renderArticle(convertEdtrioState(answer.content).children)}
-          </label>
-        ))}
+        {state.answers.map((answer, i) => {
+          const unique = randomIdentifier(i)
+          return (
+            <React.Fragment key={unique}>
+              <ChoiceWrapper>
+                <StyledInput
+                  id={unique}
+                  type="radio"
+                  checked={selected === i}
+                  onChange={() => {
+                    setShowFeedback(false)
+                    setSelected(i)
+                  }}
+                />
+                <StyledLabel
+                  selected={selected === i}
+                  key={unique}
+                  htmlFor={unique}
+                >
+                  <FontAwesomeIcon
+                    icon={selected === i ? faCheckCircle : faCircle}
+                  />
+                  {renderArticle(convertEdtrioState(answer.content).children)}
+                </StyledLabel>
+              </ChoiceWrapper>
+              {showFeedback &&
+                state.answers[selected] &&
+                state.answers[selected] === answer && (
+                  <Feedback right={state.answers[selected].isCorrect}>
+                    {renderArticle(
+                      convertEdtrioState(state.answers[selected].feedback)
+                        .children
+                    )}
+                  </Feedback>
+                )}
+            </React.Fragment>
+          )
+        })}
       </Choices>
-      {showFeedback && state.answers[selected] && (
-        <Feedback right={state.answers[selected].isCorrect}>
-          {renderArticle(
-            convertEdtrioState(state.answers[selected].feedback).children
-          )}
-        </Feedback>
-      )}
-      <button onClick={() => setShowFeedback(true)}>Stimmt's?</button>
+
+      <CheckButton
+        selectable={selected !== undefined}
+        onClick={() => setShowFeedback(true)}
+      >
+        {selected !== undefined ? "Stimmt's?" : 'Klicke auf eine der Optionen'}
+      </CheckButton>
     </Container>
   )
 }
@@ -53,42 +95,115 @@ function MultipleChoice({ state }) {
   return (
     <Container>
       <Choices>
-        {state.answers.map((answer, i) => (
-          <label key={i}>
-            <input
-              type="checkbox"
-              checked={selected[i]}
-              onChange={() => {
-                setShowFeedback(false)
-                const newArr = selected.slice(0)
-                newArr[i] = !newArr[i]
-                setSelected(newArr)
-              }}
-            />
-            {renderArticle(convertEdtrioState(answer.content).children)}
-            {showFeedback &&
-              selected[i] &&
-              renderArticle(convertEdtrioState(answer.feedback).children)}
-          </label>
-        ))}
+        {state.answers.map((answer, i) => {
+          const unique = randomIdentifier(i)
+          return (
+            <React.Fragment key={unique}>
+              <ChoiceWrapper key={unique}>
+                <StyledInput
+                  id={unique}
+                  type="checkbox"
+                  checked={selected[i]}
+                  onChange={() => {
+                    setShowFeedback(false)
+                    const newArr = selected.slice(0)
+                    newArr[i] = !newArr[i]
+                    setSelected(newArr)
+                  }}
+                />
+                <StyledLabel
+                  selected={selected[i]}
+                  key={unique}
+                  htmlFor={unique}
+                >
+                  <FontAwesomeIcon
+                    icon={selected[i] ? faCheckSquare : faSquare}
+                  />
+                  {renderArticle(convertEdtrioState(answer.content).children)}
+                </StyledLabel>
+              </ChoiceWrapper>
+              {showFeedback &&
+                selected[i] &&
+                renderArticle(convertEdtrioState(answer.feedback).children)}
+            </React.Fragment>
+          )
+        })}
       </Choices>
       {showFeedback && (
         <Feedback right={right}>
           <StyledP>{right ? 'Richtig' : 'Falsch'}</StyledP>
         </Feedback>
       )}
-      <button onClick={() => setShowFeedback(true)}>Stimmt's?</button>
+      <CheckButton selectable={true} onClick={() => setShowFeedback(true)}>
+        Stimmt's?
+      </CheckButton>
     </Container>
   )
 }
 
-const Choices = styled.div`
+const CheckButton = styled.a<{ selectable: boolean }>`
+  ${makeDefaultButton}
+  margin-top: 16px;
+
+  color: #fff;
+  background-color: ${props => props.theme.colors.brand};
+
+  ${props =>
+    !props.selectable &&
+    css`
+      opacity: 1;
+      background-color: transparent;
+      color: ${props => props.theme.colors.gray};
+      pointer-events: none;
+    `}
+`
+
+const Choices = styled.ul`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+`
+
+const ChoiceWrapper = styled.li`
+  display: flex;
+  margin-bottom: 15px;
+`
+
+const StyledInput = styled.input`
+  &[type='radio'],
+  &[type='checkbox'] {
+    width: 1px;
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+  }
+`
+
+const StyledLabel = styled.label<{ selected: boolean }>`
+  display: flex;
+  cursor: pointer;
+
+  > svg {
+    font-size: 1.33rem;
+    margin-top: 2px;
+    color: ${props => props.theme.colors.brand}
+    
+    /* ${props =>
+      props.selected
+        ? props.theme.colors.brand
+        : props.theme.colors.lightBlueBackground}; */
+  }
+
+  > div > * {
+    margin-left: 8px;
+  }
 `
 
 const Feedback = styled.div<{ right?: boolean }>`
+  margin-left: 14px;
   color: ${props => (props.right ? 'green' : 'red')};
 `
 
