@@ -39,8 +39,8 @@ function SingleChoice({ state }) {
         {state.answers.map((answer, i) => {
           const unique = randomIdentifier(i)
           return (
-            <>
-              <ChoiceWrapper key={unique}>
+            <div key={unique}>
+              <ChoiceWrapper>
                 <StyledInput
                   id={unique}
                   type="radio"
@@ -71,7 +71,7 @@ function SingleChoice({ state }) {
                     )}
                   </Feedback>
                 )}
-            </>
+            </div>
           )
         })}
       </Choices>

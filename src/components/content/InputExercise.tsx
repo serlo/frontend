@@ -11,7 +11,7 @@ export default function InputExercise({ state }) {
   const [feedback, setFeedback] = React.useState(null)
   const [value, setValue] = React.useState('')
   return (
-    <StyledP>
+    <Wrapper>
       <StyledInput
         type="text"
         value={value}
@@ -27,7 +27,7 @@ export default function InputExercise({ state }) {
       >
         Stimmt's?
       </CheckButton>
-    </StyledP>
+    </Wrapper>
   )
 }
 
@@ -39,6 +39,10 @@ function checkAnswer(val, state) {
     return <span>Richtig</span>
   }
 }
+
+const Wrapper = styled.div`
+  ${makeMargin}
+`
 
 const Feedback = styled(StyledP)`
   margin-top: 10px;
