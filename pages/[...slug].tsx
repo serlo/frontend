@@ -61,11 +61,43 @@ function PageView(props) {
     return props.origin + '/_assets/img/' + imageSrc
   }
 
+  function getMetaDescription() {
+    const hasDescription =
+      data.data.metaDescription && data.data.metaDescription.length > 10
+    if (hasDescription) return data.data.metaDescription
+
+    if (data.data.value === undefined || data.data.value.children === undefined)
+      return false
+
+    const slice = data.data.value.children.slice(0, 10)
+    const stringified = JSON.stringify(slice)
+    const regexp = /\"text\":\"(.)*?\"/g
+    const longFallback = stringified
+      .match(regexp)
+      .map(str => str.substring(8, str.length - 1))
+      .join('')
+    if (longFallback.length < 50) return false
+
+    const softCutoff = 135
+    const fallback =
+      longFallback.substr(
+        0,
+        softCutoff + longFallback.substr(softCutoff).indexOf(' ')
+      ) + ' …'
+    const description = hasDescription ? data.data.metaDescription : fallback
+    return description
+  }
+  const metaDescription = getMetaDescription()
+  console.log(metaDescription)
+
   return (
     <>
       <Head>
         <title>{title}</title>
         <meta name="content_type" content={getMetaContentType()} />
+        {metaDescription && (
+          <meta name="description" content={metaDescription} />
+        )}
         <meta property="og:title" content={title} />
         <meta property="og:image" content={getMetaImage()} />
       </Head>
