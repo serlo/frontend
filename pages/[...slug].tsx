@@ -22,6 +22,13 @@ const Breadcrumbs = dynamic(() =>
 )
 const Topic = dynamic(() => import('../src/components/content/Topic'))
 
+enum MetaImageEnum {
+  default = 'meta/serlo.jpg',
+  mathe = 'meta/mathematik.jpg',
+  nachhaltigkeit = 'meta/nachhaltigkeit.jpg',
+  biologie = 'meta/biologie.jpg'
+}
+
 function PageView(props) {
   const { data } = props
   const {
@@ -34,7 +41,7 @@ function PageView(props) {
     license
   } = data
 
-  function buildMetaContentType() {
+  function getMetaContentType() {
     //match legacy content types that are used by google custom search
     if (contentType === undefined) return ''
     if (contentType === 'Exercise') return 'text-exercise'
@@ -45,12 +52,22 @@ function PageView(props) {
     return contentType.toLowerCase()
   }
 
+  function getMetaImage() {
+    const subject = data.alias ? data.alias.split('/')[1] : 'default'
+    const imageSrc = MetaImageEnum[subject]
+      ? MetaImageEnum[subject]
+      : MetaImageEnum['default']
+    //might replace with default asset/cdn url
+    return props.origin + '/_assets/img/' + imageSrc
+  }
+
   return (
     <>
       <Head>
         <title>{title}</title>
-        <meta name="content_type" content={buildMetaContentType()} />
+        <meta name="content_type" content={getMetaContentType()} />
         <meta property="og:title" content={title} />
+        <meta property="og:image" content={getMetaImage()} />
       </Head>
       <Header />
       {navigation && (
@@ -119,6 +136,15 @@ const MaxWidthDiv = styled.div`
   margin: 0 auto;
 `
 
+// PageView.getInitialProps = async ({ req, res }) => {
+//   const { origin } = absoluteUrl(req)
+//   //const resp = await fetch(`${origin}/api/users`)
+//   //const users = await resp.json()
+//   console.log(origin)
+// }
+
+// -> You can not use getInitialProps with getServerSideProps. Please remove getInitialProps. /[...slug]
+
 export async function getServerSideProps(props) {
   const { origin } = absoluteUrl(props.req)
   const res = await fetch(
@@ -141,7 +167,7 @@ export async function getServerSideProps(props) {
     props.res.statusCode = 404
   }
 
-  return { props: { data } }
+  return { props: { data, origin } }
 }
 
 export default PageView
