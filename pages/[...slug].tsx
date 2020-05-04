@@ -72,10 +72,10 @@ function PageView(props) {
     const slice = data.data.value.children.slice(0, 10)
     const stringified = JSON.stringify(slice)
     const regexp = /"text":"(.)*?"/g
-    const longFallback = stringified
-      .match(regexp)
-      .map(str => str.substring(8, str.length - 1))
-      .join('')
+    const matches = stringified.match(regexp)
+    const longFallback = matches
+      ? matches.map(str => str.substring(8, str.length - 1)).join('')
+      : ''
     if (longFallback.length < 50) return false
 
     const softCutoff = 135
@@ -130,7 +130,7 @@ function PageView(props) {
               (contentType === 'Article' ||
                 contentType === 'Page' ||
                 contentType === 'CoursePage') && (
-                <ArticlePage data={data.data} />
+                <ArticlePage data={data.data} contentType={contentType} />
               )}
             {contentType === 'TaxonomyTerm' && data.data && (
               <Topic data={data.data} />

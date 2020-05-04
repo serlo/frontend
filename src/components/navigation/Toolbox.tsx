@@ -7,15 +7,18 @@ import { makeGreenButton } from '../../helper/csshelper'
 interface ToolboxProps {
   editHref?: string
   onShare?: () => void
+  hideEdit: boolean
 }
 
-export default function Toolbox({ editHref, onShare }: ToolboxProps) {
+export default function Toolbox({ editHref, onShare, hideEdit }: ToolboxProps) {
   return (
     <AbsoluteWrapper>
       <BoxWrapper>
-        <IconButton href={editHref}>
-          <FontAwesomeIcon icon={faPencilAlt} size="1x" /> Inhalt überarbeiten
-        </IconButton>
+        {!hideEdit && (
+          <IconButton href={editHref}>
+            <FontAwesomeIcon icon={faPencilAlt} size="1x" /> Inhalt überarbeiten
+          </IconButton>
+        )}
         <IconButton onClick={onShare}>
           <FontAwesomeIcon icon={faShareAlt} size="1x" /> Teilen!
         </IconButton>
