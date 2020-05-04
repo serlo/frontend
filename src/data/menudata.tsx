@@ -35,7 +35,7 @@ export const menudata = [
         url: '/community/veranstaltungen/veranstaltungsübersicht',
         title: 'Veranstaltungen für Autor*innen'
       },
-      { url: '#', title: 'Ungeprüfte Bearbeitungen' }
+      { url: '/entity/unrevised', title: 'Ungeprüfte Bearbeitungen' }
     ]
   },
   { url: '/spenden', title: 'Spenden', icon: faHandHoldingHeart },
