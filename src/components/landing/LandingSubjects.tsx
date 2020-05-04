@@ -148,10 +148,17 @@ const SubjectLink = styled.a`
     width: auto;
   }
 
+  @media (max-width: 400px) {
+    & svg.blank {
+      display: none;
+    }
+  }
+
   & svg.bio,
   & svg.math,
   & svg.abc,
-  & svg.sus {
+  & svg.sus,
+  & svg.blank {
     .blue {
       fill: ${props => props.theme.colors.lighterblue};
       transition: all 0.2s ease-in-out;
