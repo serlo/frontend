@@ -22,6 +22,13 @@ const Breadcrumbs = dynamic(() =>
 )
 const Topic = dynamic(() => import('../src/components/content/Topic'))
 
+enum MetaImageEnum {
+  default = 'meta/serlo.jpg',
+  mathe = 'meta/mathematik.jpg',
+  nachhaltigkeit = 'meta/nachhaltigkeit.jpg',
+  biologie = 'meta/biologie.jpg'
+}
+
 function PageView(props) {
   const { data } = props
   const {
@@ -34,7 +41,7 @@ function PageView(props) {
     license
   } = data
 
-  function buildMetaContentType() {
+  function getMetaContentType() {
     //match legacy content types that are used by google custom search
     if (contentType === undefined) return ''
     if (contentType === 'Exercise') return 'text-exercise'
@@ -45,12 +52,53 @@ function PageView(props) {
     return contentType.toLowerCase()
   }
 
+  function getMetaImage() {
+    const subject = data.alias ? data.alias.split('/')[1] : 'default'
+    const imageSrc = MetaImageEnum[subject]
+      ? MetaImageEnum[subject]
+      : MetaImageEnum['default']
+    //might replace with default asset/cdn url
+    return props.origin + '/_assets/img/' + imageSrc
+  }
+
+  function getMetaDescription() {
+    const hasDescription =
+      data.data.metaDescription && data.data.metaDescription.length > 10
+    if (hasDescription) return data.data.metaDescription
+
+    if (data.data.value === undefined || data.data.value.children === undefined)
+      return false
+
+    const slice = data.data.value.children.slice(0, 10)
+    const stringified = JSON.stringify(slice)
+    const regexp = /"text":"(.)*?"/g
+    const longFallback = stringified
+      .match(regexp)
+      .map(str => str.substring(8, str.length - 1))
+      .join('')
+    if (longFallback.length < 50) return false
+
+    const softCutoff = 135
+    const fallback =
+      longFallback.substr(
+        0,
+        softCutoff + longFallback.substr(softCutoff).indexOf(' ')
+      ) + ' …'
+    const description = hasDescription ? data.data.metaDescription : fallback
+    return description
+  }
+  const metaDescription = getMetaDescription()
+
   return (
     <>
       <Head>
         <title>{title}</title>
-        <meta name="content_type" content={buildMetaContentType()} />
+        <meta name="content_type" content={getMetaContentType()} />
+        {metaDescription && (
+          <meta name="description" content={metaDescription} />
+        )}
         <meta property="og:title" content={title} />
+        <meta property="og:image" content={getMetaImage()} />
       </Head>
       <Header />
       {navigation &&
@@ -122,6 +170,15 @@ const MaxWidthDiv = styled.div`
   margin: 0 auto;
 `
 
+// PageView.getInitialProps = async ({ req, res }) => {
+//   const { origin } = absoluteUrl(req)
+//   //const resp = await fetch(`${origin}/api/users`)
+//   //const users = await resp.json()
+//   console.log(origin)
+// }
+
+// -> You can not use getInitialProps with getServerSideProps. Please remove getInitialProps. /[...slug]
+
 export async function getServerSideProps(props) {
   const { origin } = absoluteUrl(props.req)
   const res = await fetch(
@@ -144,7 +201,7 @@ export async function getServerSideProps(props) {
     props.res.statusCode = 404
   }
 
-  return { props: { data } }
+  return { props: { data, origin } }
 }
 
 export default PageView
