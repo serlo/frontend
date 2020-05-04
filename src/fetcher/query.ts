@@ -21,6 +21,7 @@ export const dataQuery = selector => `
 
       ... on Page {
         id
+        alias
         currentRevision {
           title
           content
@@ -36,6 +37,7 @@ export const dataQuery = selector => `
 
       ... on Article {
         id
+        alias
         currentRevision {
           title
           content
@@ -135,6 +137,7 @@ export const dataQuery = selector => `
       }
 
       ... on Video {
+        alias
         currentRevision {
           title
           url
@@ -157,6 +160,7 @@ export const dataQuery = selector => `
       }
 
       ... on Applet {
+        alias
         currentRevision {
           title
           url
@@ -179,6 +183,7 @@ export const dataQuery = selector => `
       }
 
       ... on CoursePage {
+        alias
         currentRevision {
           content
           title
@@ -218,6 +223,7 @@ export const dataQuery = selector => `
       }
 
       ... on TaxonomyTerm {
+        alias
         type
         name
         description

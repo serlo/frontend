@@ -13,7 +13,7 @@ import dynamic from 'next/dynamic'
 const CourseNavigation = dynamic(() => import('../navigation/CourseNavigation'))
 const CourseFooter = dynamic(() => import('../navigation/CourseFooter'))
 
-export default function ArticlePage({ data }) {
+export default function ArticlePage({ data, contentType }) {
   const [open, setOpen] = React.useState(false)
 
   const [courseNavOpen, setCourseNavOpen] = React.useState(false)
@@ -63,6 +63,7 @@ export default function ArticlePage({ data }) {
       <Toolbox
         onShare={() => setOpen(true)}
         editHref={'/entity/repository/add-revision/' + data.id}
+        hideEdit={contentType === 'Page'}
       />
       <ShareModal open={open} onClose={() => setOpen(false)} />
     </>
