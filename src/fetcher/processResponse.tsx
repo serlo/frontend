@@ -18,7 +18,7 @@ export function processResponse(reqData) {
 }
 
 function shuffle(a) {
-  var j, x, i
+  let j, x, i
   for (i = a.length - 1; i > 0; i--) {
     const r = Math.random()
     j = Math.floor(r * (i + 1))

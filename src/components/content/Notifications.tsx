@@ -20,9 +20,9 @@ interface NotificationEntry {
 export default function Notifications({ entries }: NotificationsProps) {
   return (
     <Wrapper>
-      {entries.map(entry => {
+      {entries.map((entry, i) => {
         return (
-          <Item readed={entry.readed}>
+          <Item readed={entry.readed} key={i}>
             <Link href={`https://serlo.org/${entry.author.id}`}>
               {entry.author.username}
             </Link>

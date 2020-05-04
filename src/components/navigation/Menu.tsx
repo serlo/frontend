@@ -47,7 +47,7 @@ function Entry(props) {
     <Li>
       {hasChildren ? (
         <Tippy
-          content={<SubMenuInner children={link.children} />}
+          content={<SubMenuInner>{link.children}</SubMenuInner>}
           singleton={target}
         >
           <Link /*active={true}*/>

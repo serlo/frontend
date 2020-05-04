@@ -14,7 +14,9 @@ export default async function fetchContent(alias: string, redirect) {
         return { redirect }
       }
     }
-  } catch (e) {}
+  } catch (e) {
+    // on error: continue with data
+  }
 
   try {
     const QUERY = dataQuery(

@@ -13,7 +13,7 @@ import { theme } from '../src/theme'
 
 import * as Sentry from '@sentry/browser'
 
-const { version } = require('../package.json')
+import { version } from '../package.json'
 
 if (process.env.SENTRY_DSN !== undefined) {
   Sentry.init({

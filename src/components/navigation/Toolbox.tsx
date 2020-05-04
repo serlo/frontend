@@ -4,16 +4,12 @@ import { faPencilAlt, faShareAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { makeGreenButton } from '../../helper/csshelper'
 
-import ShareModal from './ShareModal'
-
 interface ToolboxProps {
   editHref?: string
   onShare?: () => void
 }
 
 export default function Toolbox({ editHref, onShare }: ToolboxProps) {
-  const [open, setOpen] = React.useState(false)
-
   return (
     <AbsoluteWrapper>
       <BoxWrapper>

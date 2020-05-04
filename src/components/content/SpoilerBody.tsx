@@ -1,9 +1,9 @@
 import styled from 'styled-components'
 
 const SpoilerBody = styled.div`
-  margin-top: 15px;
-  margin-left: 10px;
-  margin-right: 0;
+  padding-top: 24px;
+  padding-bottom: 14px;
+  border-left: 4px solid ${props => props.theme.colors.brand};
 `
 
 export default SpoilerBody

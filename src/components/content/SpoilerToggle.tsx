@@ -1,18 +1,14 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCaretDown, faCaretRight } from '@fortawesome/free-solid-svg-icons'
+import styled from 'styled-components'
 
 interface SpoilerToggleProps {
   open: boolean
 }
 
 export default function SpoilerToggle({ open }: SpoilerToggleProps) {
-  return (
-    <>
-      {open ? (
-        <FontAwesomeIcon icon={faCaretDown} />
-      ) : (
-        <FontAwesomeIcon icon={faCaretRight} />
-      )}{' '}
-    </>
-  )
+  return <StyledSpan>{open ? '▾ ' : '▸ '} </StyledSpan>
 }
+
+const StyledSpan = styled.span`
+  display: inline-block;
+  width: 1rem;
+`

@@ -38,7 +38,9 @@ export default function Geogebra({ id }: GeogebraProps) {
           if (data) {
             setData({ ratio: data.width / data.height })
           }
-        } catch (e) {}
+        } catch (e) {
+          // ignore
+        }
       })
   }, [id])
   if (!data) {

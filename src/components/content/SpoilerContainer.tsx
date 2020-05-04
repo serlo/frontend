@@ -7,7 +7,6 @@ const SpoilerContainer = styled.div<{ hide?: boolean }>`
   }
   display: flex;
   flex-direction: column;
-  border-left: 4px solid ${props => props.theme.colors.brand};
   box-sizing: border-box;
   margin-bottom: ${props => props.theme.spacing.mb.block};
 `

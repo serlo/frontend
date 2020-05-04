@@ -101,9 +101,12 @@ function PageView(props) {
         <meta property="og:image" content={getMetaImage()} />
       </Head>
       <Header />
-      {navigation && (
-        <MetaMenu pagealias={'/' + data.data.id} navigation={navigation} />
-      )}
+      {navigation &&
+        !(
+          contentType === 'TaxonomyTerm' && data.data?.type === 'topicFolder'
+        ) && (
+          <MetaMenu pagealias={'/' + data.data.id} navigation={navigation} />
+        )}
       <RelatveContainer>
         <MaxWidthDiv>
           {data.error ? (

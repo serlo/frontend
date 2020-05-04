@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { transparentize, darken, lighten } from 'polished'
+import { transparentize } from 'polished'
 import { makeMargin } from '../../helper/csshelper'
 
 const StyledH2 = styled.h2`

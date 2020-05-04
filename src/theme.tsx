@@ -4,7 +4,7 @@ type Color = {
   [key: string]: string
 }
 
-let colors = {} as Color
+const colors = {} as Color
 
 //tint mixes with white
 
