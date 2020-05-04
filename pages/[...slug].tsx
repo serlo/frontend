@@ -88,7 +88,6 @@ function PageView(props) {
     return description
   }
   const metaDescription = getMetaDescription()
-  console.log(metaDescription)
 
   return (
     <>
