@@ -71,7 +71,7 @@ function PageView(props) {
 
     const slice = data.data.value.children.slice(0, 10)
     const stringified = JSON.stringify(slice)
-    const regexp = /\"text\":\"(.)*?\"/g
+    const regexp = /"text":"(.)*?"/g
     const longFallback = stringified
       .match(regexp)
       .map(str => str.substring(8, str.length - 1))
