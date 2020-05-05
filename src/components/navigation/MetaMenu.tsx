@@ -1,7 +1,7 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 import { makeDefaultButton } from '../../helper/csshelper'
-import MobileMetaMenu from './MobileMetaMenu'
+import MobileMetaMenu from './MobileMetaMenuAlternative'
 
 interface MetaMenuProps {
   pagealias: string
