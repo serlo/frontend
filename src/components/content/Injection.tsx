@@ -10,7 +10,7 @@ export default function Injection({ href }) {
     const origin = window.location.host
     const protocol = window.location.protocol
     fetch(
-      `${protocol}//${origin}/api${encodeURI(
+      `${protocol}//${origin}/api/frontend${encodeURI(
         href.startsWith('/') ? href : '/' + href
       )}`
     )

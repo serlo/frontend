@@ -116,7 +116,10 @@ function PageView(props) {
               <StyledP>Diese Seite konnte nicht geladen werden.</StyledP>
               {process.env.NODE_ENV !== 'production' && (
                 <StyledP>
-                  Details: <StyledA href={'/api' + alias}>/api{alias}</StyledA>
+                  Details:{' '}
+                  <StyledA href={'/api/frontend' + alias}>
+                    /api/frontend{alias}
+                  </StyledA>
                 </StyledP>
               )}
             </>
@@ -182,7 +185,9 @@ const MaxWidthDiv = styled.div`
 export async function getServerSideProps(props) {
   const { origin } = absoluteUrl(props.req)
   const res = await fetch(
-    `${origin}/api/${encodeURIComponent(props.params.slug.join('/'))}?redirect`
+    `${origin}/api/frontend/${encodeURIComponent(
+      props.params.slug.join('/')
+    )}?redirect`
   )
   const data = await res.json()
 
