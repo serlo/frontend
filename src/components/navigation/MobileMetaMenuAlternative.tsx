@@ -16,7 +16,9 @@ export default function MobileMetaMenu(props: MobileMetaMenuProps) {
   const containerRef = useRef(null)
 
   useEffect(() => {
-    containerRef.current.scrollLeft = activeRef.current.offsetLeft - 8
+    if (containerRef.current && activeRef.current) {
+      containerRef.current.scrollLeft = activeRef.current.offsetLeft - 8
+    }
   })
 
   return (
