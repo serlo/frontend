@@ -62,6 +62,7 @@ function PageView(props) {
   }
 
   function getMetaDescription() {
+    if (!data.data) return false
     const hasDescription =
       data.data.metaDescription && data.data.metaDescription.length > 10
     if (hasDescription) return data.data.metaDescription
