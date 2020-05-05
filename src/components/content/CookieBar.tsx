@@ -9,7 +9,10 @@ export default function CookieBar() {
   React.useEffect(() => {
     // load revision, check localStorage
     fetch(
-      window.location.protocol + '//' + window.location.host + '/api/privacy'
+      window.location.protocol +
+        '//' +
+        window.location.host +
+        '/api/frontend/privacy'
     )
       .then(res => res.json())
       .then(data => {
