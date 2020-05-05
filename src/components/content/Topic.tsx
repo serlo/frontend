@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import TopicLinkList from './TopicLinkList'
 import { renderArticle } from '../../schema/articleRenderer'
 import { makeMargin } from '../../helper/csshelper'
@@ -49,7 +49,7 @@ export default function Topic({ data }: TopicProps) {
       )}
 
       <Wrapper purpose={data.purpose}>
-        <Overview>
+        <Overview purpose={data.purpose}>
           {data.description && renderArticle(data.description.children)}
         </Overview>
         {data.children &&
@@ -76,24 +76,20 @@ export default function Topic({ data }: TopicProps) {
 }
 
 const Wrapper = styled.div<{ purpose: TopicPurposes }>`
-  display: flex;
-
-  border-bottom: 1px solid ${props => props.theme.colors.lightgray};
-  &:last-child{
-    border-bottom: 0;
-  }
 
   margin-bottom: 20px;
   padding-bottom: 10px;
 
     ${props =>
-      props.purpose === TopicPurposes.overview
-        ? `
-            flex-direction: row;
-        `
-        : `
-            flex-direction: column;
-        `}
+      props.purpose === TopicPurposes.overview &&
+      css`
+        display: flex;
+        flex-direction: row;
+        border-bottom: 1px solid ${props => props.theme.colors.lightgray};
+        &:last-child {
+          border-bottom: 0;
+        }
+      `}
     @media (max-width: ${props => props.theme.breakpoints.mobile}) {
     flex-direction: column;
   }
@@ -126,12 +122,17 @@ const LinkList = styled.div`
   margin-top: 6px;
 `
 
-const Overview = styled.div`
-  flex: 1 1 40%;
+const Overview = styled.div<{ purpose: TopicPurposes }>`
   img {
     margin-top: 22px;
     @media (min-width: ${props => props.theme.breakpoints.sm}) {
       margin-bottom: 20px;
     }
   }
+
+  ${props =>
+    props.purpose === TopicPurposes.overview &&
+    css`
+      flex: 1 1 40%;
+    `}
 `

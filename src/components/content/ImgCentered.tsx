@@ -4,10 +4,7 @@ import { makePadding } from '../../helper/csshelper'
 const ImgCentered = styled.div`
   ${makePadding}
   margin-bottom: ${props => props.theme.spacing.mb.block};
-  box-sizing: border-box;
-  width: 100%;
-  display: flex;
-  justify-content: center;
+  text-align: center;
 `
 
 export default ImgCentered
