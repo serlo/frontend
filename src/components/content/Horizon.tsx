@@ -44,8 +44,7 @@ const Wrapper = styled.div`
 
 const Item = styled.a`
   color: ${props => props.theme.colors.brand};
-  display: flex;
-  flex-direction: column;
+  display: block;
   line-height: 1.2;
   text-decoration: none;
   max-width: 400px;
@@ -70,10 +69,9 @@ const Item = styled.a`
 `
 
 const Image = styled.img`
-  align-self: center;
   margin-bottom: 10px;
-  max-width: 400px;
-  width: 98%;
+  max-width: 98%;
+  height: auto;
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
     max-width: 400px;
   }
