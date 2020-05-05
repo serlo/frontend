@@ -154,6 +154,7 @@ export function renderA({
   children = null,
   wrapExtInd = nowrap
 }) {
+  if (!element.href) return <>{children}</>
   return (
     <StyledA href={element.href} {...attributes}>
       {children}
