@@ -55,6 +55,8 @@ export const theme = {
   },
   defaults: {
     sideSpacingMobile: '16px',
-    sideSpacingLg: '40px'
+    sideSpacingLg: '40px',
+    regularLetterSpacing: '-0.006em',
+    boldLetterSpacing: '-0.022em'
   }
 }
