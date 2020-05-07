@@ -82,14 +82,18 @@ const StyledSpan = styled.span`
 
 const Wrapper = styled.div<{ inGroup?: boolean }>`
   margin-bottom: 30px;
-  border-bottom: 8px solid ${props => props.theme.colors.lightBlueBackground};
+  border-top: 2px solid ${props => props.theme.colors.brand};
+  padding: 25px 0;
 
   ${props =>
     !props.inGroup &&
     css`
     ${makeMargin}
+    /* border-top: 30px solid ${props =>
+      props.theme.colors.lightBlueBackground}; */
     border-left: 8px solid ${props => props.theme.colors.lightBlueBackground};
-    border-bottom: 0;
+    border-top: 0;
+  
   `};
 `
 
@@ -123,5 +127,5 @@ const SolutionBox = styled.div<{ visible: boolean }>`
   display: ${props => (props.visible ? 'block' : 'none')};
   ${makeMargin}
   margin-bottom: ${props => props.theme.spacing.mb.block};
-  border-left: 4px solid ${props => props.theme.colors.brand};;
+  border-left: 8px solid ${props => props.theme.colors.brand};;
 `
