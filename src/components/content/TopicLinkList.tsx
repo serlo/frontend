@@ -132,7 +132,7 @@ const Link = styled.a`
   color: ${props => props.theme.colors.brand};
   cursor: pointer;
   font-size: 1.2rem;
-  line-height: 1.6;
+  margin-bottom: 12px;
   display: block;
   text-decoration: none;
 
