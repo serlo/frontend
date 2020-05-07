@@ -135,7 +135,11 @@ function PageView(props) {
               (contentType === 'Article' ||
                 contentType === 'Page' ||
                 contentType === 'CoursePage') && (
-                <ArticlePage data={data.data} contentType={contentType} />
+                <ArticlePage
+                  data={data.data}
+                  contentId={contentId}
+                  contentType={contentType}
+                />
               )}
             {contentType === 'TaxonomyTerm' && data.data && (
               <Topic data={data.data} />

@@ -25,10 +25,11 @@ import Modal from '../Modal'
 interface ShareModalProps {
   open: boolean
   onClose: () => void
+  contentId: number
 }
 
 export default function ShareModal(props: ShareModalProps) {
-  const { open, onClose } = props
+  const { open, onClose, contentId } = props
   if (!open) return null
   const shareInputRef = React.useRef(null)
   const [copySuccess, setCopySuccess] = React.useState('')
@@ -40,7 +41,9 @@ export default function ShareModal(props: ShareModalProps) {
     setCopySuccess('In Zwischenablage kopiert!')
   }
 
-  const url = window.location.href
+  const url = contentId
+    ? `https://${window.location.hostname}/${contentId}`
+    : window.location.href
   const urlEncoded = encodeURIComponent(url)
   const titleEncoded = encodeURIComponent(document.title)
 
