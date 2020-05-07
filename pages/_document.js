@@ -5,8 +5,7 @@ import GoogleAnalytics from '../src/components/GoogleAnalytics'
 
 const bodyStyles = {
   margin: 0,
-  fontFamily: 'Karmilla, sans-serif',
-  letterSpacing: '-0.007em'
+  fontFamily: 'Karmilla, sans-serif'
 }
 
 if (process.env.SENTRY_DSN !== undefined) {
