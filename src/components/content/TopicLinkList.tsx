@@ -62,16 +62,16 @@ export default function TopicLinkList({ links, purpose }: LinksProps) {
       {Object.keys(links).map(link => {
         return links[link] && links[link].length > 0 ? (
           <LinkSection purpose={purpose} key={link}>
-            <IconWrapper purpose={purpose} title={HeadlineEnum[link]}>
-              <RenderIcon icon={link} size={IconsSize}></RenderIcon>
-            </IconWrapper>
+            {/* <IconWrapper purpose={purpose} title={HeadlineEnum[link]}>
+              <RenderIcon icon={link} size={IconsSize} />
+            </IconWrapper> */}
             <div>
-              {purpose === TopicPurposes.detail && (
-                <LinkSectionHeadline>
-                  <RenderIcon icon={link} size={IconSizeEnum.one}></RenderIcon>{' '}
-                  {HeadlineEnum[link]}
-                </LinkSectionHeadline>
-              )}
+              {/* {purpose === TopicPurposes.detail && ( */}
+              <LinkSectionHeadline>
+                <RenderIcon icon={link} size={IconSizeEnum.one} />{' '}
+                {HeadlineEnum[link]}
+              </LinkSectionHeadline>
+              {/* )} */}
               {links[link].map(article => {
                 return (
                   <Link
@@ -114,18 +114,9 @@ const LinkSection = styled.div<{ purpose: TopicPurposes }>`
 
 const LinkSectionHeadline = styled.h4`
   color: ${props => props.theme.colors.dark1};
-  font-size: 1.65rem;
-  margin: 0 0 0.5rem;
-  font-weight: 400;
-
-  > svg {
-    color: ${props => props.theme.colors.brand};
-  }
-  @media (min-width: ${props => props.theme.breakpoints.mobile}) {
-    > svg {
-      display: none;
-    }
-  }
+  font-size: 1.125rem;
+  margin: 0 0 13px;
+  font-weight: 600;
 `
 
 const Link = styled.a`
