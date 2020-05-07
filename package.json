@@ -31,7 +31,6 @@
     "polished": "^3.0.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-horizontal-scrolling-menu": "^0.7.7",
     "react-modal": "^3.11.0",
     "showdown": "^1.9.0",
     "styled-components": "^5.0.0"
