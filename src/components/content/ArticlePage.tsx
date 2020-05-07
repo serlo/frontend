@@ -43,7 +43,7 @@ export default function ArticlePage({ data, contentId, contentType }) {
       )}
       <StyledH1 displayMode>{data.title}</StyledH1>
       <ToolLine>
-        <ToolLineButton onClick={() => setOpen(true)}>
+        <ToolLineButton top onClick={() => setOpen(true)}>
           <FontAwesomeIcon icon={faShareAlt} size="1x" /> Teilen
         </ToolLineButton>
       </ToolLine>
