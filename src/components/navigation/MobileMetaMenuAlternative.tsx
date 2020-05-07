@@ -79,7 +79,7 @@ const StyledLink = styled.a<{
 
 const StyledScrollMenu = styled.ul`
   font-size: 0.9rem;
-  @media (min-width: ${props => props.theme.breakpoints.lg}) {
+  @media (min-width: ${props => props.theme.breakpoints.md}) {
     display: none;
   }
 

@@ -48,7 +48,7 @@ export default function MobileMetaMenu(props: MobileMetaMenuProps) {
 }
 
 const StyledScrollMenu = styled.div`
-  @media (min-width: ${props => props.theme.breakpoints.lg}) {
+  @media (min-width: ${props => props.theme.breakpoints.md}) {
     display: none;
   }
   & h3 {

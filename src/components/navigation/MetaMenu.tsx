@@ -40,7 +40,7 @@ export default function MetaMenu(props: MetaMenuProps) {
 const MetaMenuWrapper = styled.nav`
   display: none;
 
-  @media (min-width: ${props => props.theme.breakpoints.lg}) {
+  @media (min-width: ${props => props.theme.breakpoints.md}) {
     position: absolute;
     z-index: 2;
     display: block;
