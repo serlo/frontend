@@ -1,6 +1,6 @@
 import Header from '../src/components/navigation/Header'
 import Footer from '../src/components/navigation/Footer'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import HSpace from '../src/components/content/HSpace'
 import Horizon from '../src/components/content/Horizon'
 import { horizonData } from '../src/data/horizondata'
@@ -89,7 +89,9 @@ function PageView(props) {
     return description
   }
   const metaDescription = getMetaDescription()
-
+  const showNav =
+    navigation &&
+    !(contentType === 'TaxonomyTerm' && data.data?.type === 'topicFolder')
   return (
     <>
       <Head>
@@ -102,14 +104,11 @@ function PageView(props) {
         <meta property="og:image" content={getMetaImage()} />
       </Head>
       <Header />
-      {navigation &&
-        !(
-          contentType === 'TaxonomyTerm' && data.data?.type === 'topicFolder'
-        ) && (
-          <MetaMenu pagealias={'/' + data.data.id} navigation={navigation} />
-        )}
+      {showNav && (
+        <MetaMenu pagealias={'/' + data.data.id} navigation={navigation} />
+      )}
       <RelatveContainer>
-        <MaxWidthDiv>
+        <MaxWidthDiv showNav={showNav}>
           {data.error ? (
             <>
               <HSpace amount={100} />
@@ -169,9 +168,25 @@ const RelatveContainer = styled.div`
   position: relative;
 `
 
-const MaxWidthDiv = styled.div`
+const MaxWidthDiv = styled.div<{ showNav?: boolean }>`
   max-width: 800px;
   margin: 0 auto;
+
+  @media (min-width: ${props =>
+      props.theme.breakpoints.sm}) AND (max-width: ${props =>
+      props.theme.breakpoints.md}) {
+    margin: 0 0 0 51px;
+  }
+
+  ${props =>
+    props.showNav &&
+    css`
+      @media (min-width: ${props =>
+          props.theme.breakpoints.md}) AND (max-width: ${props =>
+          props.theme.breakpoints.lg}) {
+        margin: 0 0 0 200px;
+      }
+    `}
 `
 
 // PageView.getInitialProps = async ({ req, res }) => {
