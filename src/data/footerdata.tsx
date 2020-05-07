@@ -23,8 +23,8 @@ export const footerNavEntries = [
         icon: faEnvelope
       },
       {
-        title: 'Github',
-        url: 'https://github.com/',
+        title: 'GitHub',
+        url: 'https://github.com/serlo',
         icon: faGithubSquare
       }
     ]

@@ -43,7 +43,8 @@ export default function SearchInput() {
     }
 
     checkElement('#gsc-i-id1').then(input => {
-      const placeholder = input.getAttribute('placeholder')
+      // const placeholder = input.getAttribute('placeholder') stopped working
+      const placeholder = 'Custom Search'
       input.setAttribute('placeholder', 'Suche')
       document
         .querySelector('#___gcse_1 .gsc-results-wrapper-overlay')

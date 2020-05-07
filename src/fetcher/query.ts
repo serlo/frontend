@@ -184,6 +184,7 @@ export const dataQuery = selector => `
 
       ... on CoursePage {
         alias
+        id
         currentRevision {
           content
           title

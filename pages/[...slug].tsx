@@ -32,6 +32,7 @@ enum MetaImageEnum {
 function PageView(props) {
   const { data } = props
   const {
+    contentId,
     alias,
     horizonIndices,
     breadcrumbs,
@@ -133,7 +134,11 @@ function PageView(props) {
               (contentType === 'Article' ||
                 contentType === 'Page' ||
                 contentType === 'CoursePage') && (
-                <ArticlePage data={data.data} contentType={contentType} />
+                <ArticlePage
+                  data={data.data}
+                  contentId={contentId}
+                  contentType={contentType}
+                />
               )}
             {contentType === 'TaxonomyTerm' && data.data && (
               <Topic data={data.data} />
@@ -215,7 +220,8 @@ export async function getServerSideProps(props) {
       'Content-Type': 'text/html; charset=utf-8'
     })
     props.res.end()
-    return
+    // compat: return empty props
+    return { props: {} }
   }
 
   if (data.error) {

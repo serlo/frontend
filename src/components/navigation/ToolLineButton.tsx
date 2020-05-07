@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { makeGreenButton } from '../../helper/csshelper'
 
-const ToolLineButton = styled.a`
+const ToolLineButton = styled.a<{ top?: boolean }>`
   ${makeGreenButton}
   font-weight: bold;
   font-size: 0.9rem;
@@ -15,6 +15,12 @@ const ToolLineButton = styled.a`
   &:hover {
     color: white;
     background-color: ${props => props.theme.colors.brandGreen};
+  }
+
+  @media (min-width: ${props => props.theme.breakpoints.md}) {
+    position: absolute;
+    margin-left: 90px;
+    margin-top: ${props => (props.top ? '-34px' : '-15px')};
   }
 `
 

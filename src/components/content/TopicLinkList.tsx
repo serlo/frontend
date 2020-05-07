@@ -1,5 +1,5 @@
 import React from 'react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faGraduationCap,
@@ -55,23 +55,22 @@ function RenderIcon(props: IconProps) {
 }
 
 export default function TopicLinkList({ links, purpose }: LinksProps) {
-  const IconsSize = IconSizeEnum.two
   // purpose === TopicPurposes.detail ? IconSizeEnum.three : IconSizeEnum.two
   return (
     <>
       {Object.keys(links).map(link => {
         return links[link] && links[link].length > 0 ? (
           <LinkSection purpose={purpose} key={link}>
-            <IconWrapper purpose={purpose} title={HeadlineEnum[link]}>
-              <RenderIcon icon={link} size={IconsSize}></RenderIcon>
-            </IconWrapper>
+            {/* <IconWrapper purpose={purpose} title={HeadlineEnum[link]}>
+              <RenderIcon icon={link} size={IconsSize} />
+            </IconWrapper> */}
             <div>
-              {purpose === TopicPurposes.detail && (
-                <LinkSectionHeadline>
-                  <RenderIcon icon={link} size={IconSizeEnum.one}></RenderIcon>{' '}
-                  {HeadlineEnum[link]}
-                </LinkSectionHeadline>
-              )}
+              {/* {purpose === TopicPurposes.detail && ( */}
+              <LinkSectionHeadline>
+                <RenderIcon icon={link} size={IconSizeEnum.one} />{' '}
+                {HeadlineEnum[link]}
+              </LinkSectionHeadline>
+              {/* )} */}
               {links[link].map(article => {
                 return (
                   <Link
@@ -114,50 +113,20 @@ const LinkSection = styled.div<{ purpose: TopicPurposes }>`
 
 const LinkSectionHeadline = styled.h4`
   color: ${props => props.theme.colors.dark1};
-  font-size: 1.65rem;
-  margin: 0 0 0.5rem;
-  font-weight: 400;
-
-  > svg {
-    color: ${props => props.theme.colors.brand};
-  }
-  @media (min-width: ${props => props.theme.breakpoints.mobile}) {
-    > svg {
-      display: none;
-    }
-  }
+  font-size: 1.125rem;
+  margin: 0 0 13px;
+  font-weight: 600;
 `
 
 const Link = styled.a`
   color: ${props => props.theme.colors.brand};
   cursor: pointer;
   font-size: 1.2rem;
-  line-height: 1.6;
+  margin-bottom: 12px;
   display: block;
   text-decoration: none;
 
   &:hover {
     text-decoration: underline;
   }
-`
-
-const IconWrapper = styled.span<{ purpose: TopicPurposes }>`
-  margin-top: 6px;
-  color: ${props => props.theme.colors.brand};
-
-  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
-    margin-bottom: 8px;
-    margin-top: 16px;
-    display: ${props =>
-      props.purpose === TopicPurposes.overview ? 'inline-block' : 'none'};
-  }
-
-  ${props =>
-    props.purpose === TopicPurposes.overview
-      ? css`
-          min-width: 4rem;
-        `
-      : css`
-          min-width: 6rem;
-        `}
 `
