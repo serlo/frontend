@@ -20,7 +20,7 @@ const ToolLineButton = styled.a<{ top?: boolean }>`
   @media (min-width: ${props => props.theme.breakpoints.md}) {
     position: absolute;
     margin-left: 90px;
-    margin-top: ${props => (props.top ? '-43px' : '-15px')};
+    margin-top: ${props => (props.top ? '-34px' : '-15px')};
   }
 `
 
