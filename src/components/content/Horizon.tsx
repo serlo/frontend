@@ -72,9 +72,6 @@ const Image = styled.img`
   margin-bottom: 10px;
   max-width: 98%;
   height: auto;
-  @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    max-width: 400px;
-  }
 `
 
 const Headline = styled.h4`
