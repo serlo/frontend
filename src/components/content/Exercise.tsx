@@ -8,7 +8,7 @@ import InputExercise from './InputExercise'
 import LicenseNotice from './LicenseNotice'
 
 export default function Exercise(props) {
-  const { task, solution, taskLicense, solutionLicense } = props
+  const { task, solution, taskLicense, solutionLicense, inGroup } = props
   const [solutionVisible, setVisible] = React.useState(false)
 
   let taskValue = task.children
@@ -54,7 +54,7 @@ export default function Exercise(props) {
     solutionValue = [...prereq, ...strategy, ...steps]
   }
   return (
-    <Wrapper>
+    <Wrapper inGroup={inGroup}>
       {renderArticle(taskValue, false)}
       {interactiveComp}
       {taskLicense && <LicenseNotice minimal data={taskLicense} />}
@@ -64,7 +64,8 @@ export default function Exercise(props) {
         }}
         active={solutionVisible}
       >
-        <StyledSpan>{solutionVisible ? '▾ ' : '▸ '}</StyledSpan>Lösung
+        <StyledSpan>{solutionVisible ? '▾ ' : '▸ '}</StyledSpan>Lösung{' '}
+        {solutionVisible ? 'ausblenden' : 'anzeigen'}
       </SolutionToggle>
       <SolutionBox visible={solutionVisible}>
         {renderArticle(solutionValue, false)}
@@ -79,16 +80,23 @@ const StyledSpan = styled.span`
   width: 0.9rem;
 `
 
-const Wrapper = styled.div`
-  border-bottom: 2px solid ${props => props.theme.colors.lightBlueBackground};
+const Wrapper = styled.div<{ inGroup?: boolean }>`
   margin-bottom: 30px;
+  border-bottom: 8px solid ${props => props.theme.colors.lightBlueBackground};
+
+  ${props =>
+    !props.inGroup &&
+    css`
+    ${makeMargin}
+    border-left: 8px solid ${props => props.theme.colors.lightBlueBackground};
+    border-bottom: 0;
+  `};
 `
 
 const SolutionToggle = styled.a<{ active: boolean }>`
   ${makeMargin}
   ${makeDefaultButton}
   padding-right: 9px;
-  margin-left: 10px;
   font-size: 1rem;
   display: inline-block;
   cursor: pointer;
@@ -115,5 +123,5 @@ const SolutionBox = styled.div<{ visible: boolean }>`
   display: ${props => (props.visible ? 'block' : 'none')};
   ${makeMargin}
   margin-bottom: ${props => props.theme.spacing.mb.block};
-  border-left: 4px solid ${props => props.theme.colors.lightBlueBackground};;
+  border-left: 4px solid ${props => props.theme.colors.brand};;
 `
