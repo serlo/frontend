@@ -104,7 +104,6 @@ export function renderLeaf({ leaf, attributes, children, readonly = false }) {
   const LeafTag = leaf.strong ? 'b' : leaf.em ? 'i' : 'span'
   const outputStyles = !(Object.keys(styles).length === 1 && LeafTag !== 'span')
 
-  console.log(styles)
   return (
     <LeafTag {...attributes} style={outputStyles ? styles : {}}>
       {children}

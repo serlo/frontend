@@ -205,7 +205,8 @@ export async function getServerSideProps(props) {
       'Content-Type': 'text/html; charset=utf-8'
     })
     props.res.end()
-    return
+    // compat: return empty props
+    return { props: {} }
   }
 
   if (data.error) {

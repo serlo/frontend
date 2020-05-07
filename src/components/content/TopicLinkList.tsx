@@ -1,5 +1,5 @@
 import React from 'react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faGraduationCap,
@@ -55,7 +55,6 @@ function RenderIcon(props: IconProps) {
 }
 
 export default function TopicLinkList({ links, purpose }: LinksProps) {
-  const IconsSize = IconSizeEnum.two
   // purpose === TopicPurposes.detail ? IconSizeEnum.three : IconSizeEnum.two
   return (
     <>
@@ -130,25 +129,4 @@ const Link = styled.a`
   &:hover {
     text-decoration: underline;
   }
-`
-
-const IconWrapper = styled.span<{ purpose: TopicPurposes }>`
-  margin-top: 6px;
-  color: ${props => props.theme.colors.brand};
-
-  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
-    margin-bottom: 8px;
-    margin-top: 16px;
-    display: ${props =>
-      props.purpose === TopicPurposes.overview ? 'inline-block' : 'none'};
-  }
-
-  ${props =>
-    props.purpose === TopicPurposes.overview
-      ? css`
-          min-width: 4rem;
-        `
-      : css`
-          min-width: 6rem;
-        `}
 `
