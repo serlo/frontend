@@ -38,7 +38,8 @@ export default async function fetchContent(alias: string, redirect) {
     if (redirect && reqData.uuid.alias && reqData.uuid.alias !== alias) {
       return { redirect: reqData.uuid.alias }
     }
-    return { alias, ...processResponse(reqData) }
+    const contentId = reqData.uuid.id
+    return { contentId, alias, ...processResponse(reqData) }
   } catch (e) {
     return { error: 'Error while fetching data: ' + (e.message ?? e), alias }
   }

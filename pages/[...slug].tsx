@@ -32,6 +32,7 @@ enum MetaImageEnum {
 function PageView(props) {
   const { data } = props
   const {
+    contentId,
     alias,
     horizonIndices,
     breadcrumbs,
