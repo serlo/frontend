@@ -30,7 +30,7 @@ const SearchResultsWrap = styled.div`
 
   .gsc-modal-background-image {
     opacity: 1;
-    top: 210px;
+    top: 195px;
     @media (min-width: ${props => props.theme.breakpoints.sm}) {
       top: 190px;
     }
