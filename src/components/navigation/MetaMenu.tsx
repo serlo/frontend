@@ -7,16 +7,17 @@ interface MetaMenuProps {
   navigation: any
 }
 
-interface MetaMenuLink {
-  title: string
-  url: string
-}
-
 export default function MetaMenu(props: MetaMenuProps) {
   const { navigation, pagealias } = props
 
   const activeRef = useRef(null)
   const containerRef = useRef(null)
+
+  useEffect(() => {
+    if (containerRef.current && activeRef.current) {
+      containerRef.current.scrollLeft = activeRef.current.offsetLeft - 8
+    }
+  })
 
   return (
     <>
@@ -110,11 +111,6 @@ const Link = styled.a<LinkProps>`
         padding: 15px 0;
         padding-right: ${props.lastChild ? '20px' : '0'};
       `};
-    ${props =>
-      props.active &&
-      css`
-        color: #333;
-      `};
   }
   @media (min-width: ${props => props.theme.breakpoints.md}) {
     display: ${props => (props.spacer ? 'none' : 'block')};
@@ -123,6 +119,19 @@ const Link = styled.a<LinkProps>`
 `
 
 const ButtonStyle = styled.span<{ active?: boolean }>`
+  ${props =>
+    props.active &&
+    css`
+      &,
+      &:hover,
+      ${Link}:hover & {
+        color: #333;
+        @media (min-width: ${props => props.theme.breakpoints.md}) {
+          background-color: ${props => props.theme.colors.lightBlueBackground};
+        }
+      }
+    `};
+
   @media (min-width: ${props => props.theme.breakpoints.md}) {
     ${makeDefaultButton}
     font-weight: bold;
@@ -132,17 +141,6 @@ const ButtonStyle = styled.span<{ active?: boolean }>`
       color: #fff;
       background-color: ${props => props.theme.colors.brand};
     }
-
-    ${props =>
-      props.active &&
-      css`
-        &,
-        &:hover,
-        ${Link}:hover & {
-          color: #333;
-          background-color: ${props => props.theme.colors.lightBlueBackground};
-        }
-      `};
   }
 `
 
