@@ -94,23 +94,21 @@ export const articleColors = {
 
 export function renderLeaf({ leaf, attributes, children, readonly = false }) {
   const styles: any = {}
-  if (leaf.color) {
-    styles.color = articleColors[leaf.color]
-  }
-  if (leaf.strong) {
-    styles.fontWeight = 'bold'
-  }
-  if (leaf.em) {
-    styles.fontStyle = 'italic'
-  }
-  // avoid rendering spans without styles, assume that children is text
-  if (readonly && Object.keys(styles).length === 0) {
-    return children
-  }
+
+  if (leaf.color) styles.color = articleColors[leaf.color]
+  if (leaf.em) styles.fontStyle = 'italic'
+  if (leaf.strong) styles.fontWeight = 'bold'
+
+  if (readonly && Object.keys(styles).length === 0) return children
+
+  const LeafTag = leaf.strong ? 'b' : leaf.em ? 'i' : 'span'
+  const outputStyles = !(Object.keys(styles).length === 1 && LeafTag !== 'span')
+
+  console.log(styles)
   return (
-    <span {...attributes} style={styles}>
+    <LeafTag {...attributes} style={outputStyles ? styles : {}}>
       {children}
-    </span>
+    </LeafTag>
   )
 }
 

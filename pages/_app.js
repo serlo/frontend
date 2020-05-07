@@ -8,7 +8,7 @@ config.autoAddCss = false
 import '../public/_assets/fonts/karmilla.css'
 import '../public/_assets/fonts/katex/katex.css'
 
-import { ThemeProvider } from 'styled-components'
+import { ThemeProvider, createGlobalStyle } from 'styled-components'
 import { theme } from '../src/theme'
 
 import * as Sentry from '@sentry/browser'
@@ -22,11 +22,21 @@ if (process.env.SENTRY_DSN !== undefined) {
   })
 }
 
+const FontFix = createGlobalStyle`
+  h1,h2, main b {
+    letter-spacing: ${props => props.theme.defaults.boldLetterSpacing};
+  }
+  body {
+    letter-spacing: ${props => props.theme.defaults.regularLetterSpacing};
+  }
+`
+
 class MyApp extends App {
   render() {
     const { Component, pageProps } = this.props
     return (
       <ThemeProvider theme={theme}>
+        <FontFix />
         <Component {...pageProps} />
       </ThemeProvider>
     )
