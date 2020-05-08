@@ -6,9 +6,10 @@ import { convertEdtrioState } from '../../schema/convertEdtrioState'
 import ScMcExercise from './ScMcExercise'
 import InputExercise from './InputExercise'
 import LicenseNotice from './LicenseNotice'
+import ExerciseNumbering from './ExerciseNumbering'
 
 export default function Exercise(props) {
-  const { task, solution, taskLicense, solutionLicense, inGroup } = props
+  const { task, solution, taskLicense, solutionLicense, grouped } = props
   const [solutionVisible, setVisible] = React.useState(false)
 
   let taskValue = task.children
@@ -54,7 +55,9 @@ export default function Exercise(props) {
     solutionValue = [...prereq, ...strategy, ...steps]
   }
   return (
-    <Wrapper inGroup={inGroup}>
+    <Wrapper grouped={grouped}>
+      {!grouped && <ExerciseNumbering index={props.positionOnPage} />}
+
       {renderArticle(taskValue, false)}
       {interactiveComp}
       {taskLicense && <LicenseNotice minimal data={taskLicense} />}
@@ -80,21 +83,23 @@ const StyledSpan = styled.span`
   width: 0.9rem;
 `
 
-const Wrapper = styled.div<{ inGroup?: boolean }>`
-  margin-bottom: 30px;
+const Wrapper = styled.div<{ grouped?: boolean }>`
   border-top: 2px solid ${props => props.theme.colors.brand};
-  padding: 25px 0;
+  padding-top: 30px;
+  padding-bottom: 10px;
 
   ${props =>
-    !props.inGroup &&
+    !props.grouped &&
     css`
-    ${makeMargin}
-    /* border-top: 30px solid ${props =>
-      props.theme.colors.lightBlueBackground}; */
-    border-left: 8px solid ${props => props.theme.colors.lightBlueBackground};
-    border-top: 0;
-  
-  `};
+      border-left: 8px solid ${props => props.theme.colors.lightBlueBackground};
+      border-top: 0;
+
+      @media (min-width: ${props => props.theme.breakpoints.mobile}) {
+        ${makeMargin}
+      }
+      margin-bottom: 40px;
+      padding-top: 7px;
+    `};
 `
 
 const SolutionToggle = styled.a<{ active: boolean }>`

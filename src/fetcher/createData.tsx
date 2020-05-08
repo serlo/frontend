@@ -69,12 +69,14 @@ function createVideo(uuid) {
   }
 }
 
-function createExercise(uuid) {
+function createExercise(uuid, index) {
   return {
     value: {
       children: [
         {
           type: 'exercise',
+          grouped: false,
+          positionOnPage: index,
           task: convertState(uuid.currentRevision.content),
           taskLicense: uuid.license,
           solution: convertState(uuid.solution?.currentRevision?.content),
@@ -102,20 +104,25 @@ function createApplet(uuid) {
   }
 }
 
-function createExerciseGroup(uuid) {
+function createExerciseGroup(uuid, pageIndex) {
   const children = []
   if (uuid.exercises?.length > 0) {
-    for (const exercise of uuid.exercises) {
-      if (!exercise.currentRevision) continue
+    uuid.exercises.forEach(function(exercise, groupIndex) {
+      if (!exercise.currentRevision) return
       children.push({
         type: 'exercise',
+        grouped: true,
+        positionInGroup: groupIndex,
         task: convertState(exercise.currentRevision.content),
         taskLicense: exercise.license,
         solution: convertState(exercise.solution?.currentRevision?.content),
         solutionLicense: exercise.solution?.license,
         children: [{ text: '' }]
       })
-    }
+    })
+    // for (const exercise of uuid.exercises) {
+
+    // }
   }
   return {
     value: {
@@ -123,6 +130,7 @@ function createExerciseGroup(uuid) {
         {
           type: 'exercise-group',
           content: convertState(uuid.currentRevision.content).children,
+          positionOnPage: pageIndex,
           license: uuid.license,
           children
         }
@@ -222,15 +230,15 @@ function collectExercises(children) {
           child.__typename
         ) && child.currentRevision
     )
-    .map(child => {
+    .map((child, index) => {
       if (
         child.__typename === 'Exercise' ||
         child.__typename === 'GroupedExercise'
       ) {
-        return createExercise(child).value
+        return createExercise(child, index).value
       }
       if (child.__typename === 'ExerciseGroup') {
-        return createExerciseGroup(child).value
+        return createExerciseGroup(child, index).value
       }
     })
 }

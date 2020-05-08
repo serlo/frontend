@@ -356,6 +356,9 @@ export function renderExercise({ attributes = {}, children = null, element }) {
     <Exercise
       {...attributes}
       task={element.task}
+      grouped={element.grouped}
+      positionInGroup={element.positionInGroup}
+      positionOnPage={element.positionOnPage}
       solution={element.solution}
       taskLicense={element.taskLicense}
       solutionLicense={element.solutionLicense}
@@ -374,6 +377,7 @@ export function renderExerciseGroup({ attributes, children = null, element }) {
           element.license && <LicenseNotice minimal data={element.license} />
         }
         groupIntro={renderArticle(element.content, false)}
+        positionOnPage={element.positionOnPage}
       >
         {children}
       </ExerciseGroup>
