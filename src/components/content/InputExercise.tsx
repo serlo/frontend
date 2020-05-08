@@ -78,6 +78,7 @@ const StyledInput = styled.input`
     background-color: #fff;
     color: ${props => props.theme.colors.brand};
     border: 3px solid ${props => props.theme.colors.brand};
+    opacity: 1 !important;
     &::placeholder {
       opacity: 0;
     }

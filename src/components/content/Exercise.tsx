@@ -6,9 +6,10 @@ import { convertEdtrioState } from '../../schema/convertEdtrioState'
 import ScMcExercise from './ScMcExercise'
 import InputExercise from './InputExercise'
 import LicenseNotice from './LicenseNotice'
+import ExerciseNumbering from './ExerciseNumbering'
 
 export default function Exercise(props) {
-  const { task, solution, taskLicense, solutionLicense } = props
+  const { task, solution, taskLicense, solutionLicense, grouped } = props
   const [solutionVisible, setVisible] = React.useState(false)
 
   let taskValue = task.children
@@ -54,7 +55,9 @@ export default function Exercise(props) {
     solutionValue = [...prereq, ...strategy, ...steps]
   }
   return (
-    <Wrapper>
+    <Wrapper grouped={grouped}>
+      {!grouped && <ExerciseNumbering index={props.positionOnPage} />}
+
       {renderArticle(taskValue, false)}
       {interactiveComp}
       {taskLicense && <LicenseNotice minimal data={taskLicense} />}
@@ -64,7 +67,8 @@ export default function Exercise(props) {
         }}
         active={solutionVisible}
       >
-        <StyledSpan>{solutionVisible ? '▾ ' : '▸ '}</StyledSpan>Lösung
+        <StyledSpan>{solutionVisible ? '▾ ' : '▸ '}</StyledSpan>Lösung{' '}
+        {solutionVisible ? 'ausblenden' : 'anzeigen'}
       </SolutionToggle>
       <SolutionBox visible={solutionVisible}>
         {renderArticle(solutionValue, false)}
@@ -79,16 +83,42 @@ const StyledSpan = styled.span`
   width: 0.9rem;
 `
 
-const Wrapper = styled.div`
-  border-bottom: 2px solid ${props => props.theme.colors.lightBlueBackground};
-  margin-bottom: 30px;
+const Wrapper = styled.div<{ grouped?: boolean }>`
+  border-top: 2px solid ${props => props.theme.colors.brand};
+  padding-top: 30px;
+  padding-bottom: 10px;
+
+  ${props =>
+    !props.grouped &&
+    css`
+      border-left: 8px solid ${props => props.theme.colors.lightBlueBackground};
+      border-top: 0;
+
+      @media (min-width: ${props => props.theme.breakpoints.mobile}) {
+        ${makeMargin}
+      }
+      margin-bottom: 40px;
+      padding-top: 7px;
+    `};
+
+  @media (hover: hover) {
+    input {
+      opacity: 0.2;
+      transition: opacity 0.2s ease-in;
+    }
+
+    &:hover {
+      input {
+        opacity: 1;
+      }
+    }
+  }
 `
 
 const SolutionToggle = styled.a<{ active: boolean }>`
   ${makeMargin}
   ${makeDefaultButton}
   padding-right: 9px;
-  margin-left: 10px;
   font-size: 1rem;
   display: inline-block;
   cursor: pointer;
@@ -115,5 +145,5 @@ const SolutionBox = styled.div<{ visible: boolean }>`
   display: ${props => (props.visible ? 'block' : 'none')};
   ${makeMargin}
   margin-bottom: ${props => props.theme.spacing.mb.block};
-  border-left: 4px solid ${props => props.theme.colors.lightBlueBackground};;
+  border-left: 8px solid ${props => props.theme.colors.brand};;
 `

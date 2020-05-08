@@ -5,12 +5,8 @@ import { renderArticle } from '../../schema/articleRenderer'
 import { convertEdtrioState } from '../../schema/convertEdtrioState'
 import StyledP from '../tags/StyledP'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faCircle,
-  faCheckCircle,
-  faCheckSquare,
-  faSquare
-} from '@fortawesome/free-solid-svg-icons'
+import { faCheckCircle, faCheckSquare } from '@fortawesome/free-solid-svg-icons'
+import { faCircle, faSquare } from '@fortawesome/free-regular-svg-icons'
 
 export default function ScMcExercise({ state }) {
   if (state.isSingleChoice) return <SingleChoice state={state} />
@@ -177,7 +173,7 @@ const StyledInput = styled.input`
     width: 1px;
     margin: 0;
     padding: 0;
-    opacity: 0;
+    opacity: 0 !important;
   }
 `
 
@@ -208,5 +204,9 @@ const Feedback = styled.div<{ right?: boolean }>`
 
 const Container = styled.div`
   ${makeMargin}
-  margin-bottom: ${props => props.theme.spacing.mb.block}
+  margin-bottom: ${props => props.theme.spacing.mb.block};
+  
+  &:hover {
+
+  }
 `
