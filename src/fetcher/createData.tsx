@@ -149,11 +149,11 @@ function createCoursePage(uuid) {
 }
 
 function convertState(raw) {
-  if (raw.startsWith('[')) {
+  if (raw?.startsWith('[')) {
     // legacy
     const legacyHTML = render(raw)
     return convertLegacyState(legacyHTML)
-  } else if (raw.startsWith('{')) {
+  } else if (raw?.startsWith('{')) {
     // edtrio
     return convertEdtrioState(JSON.parse(raw))
   } else {
