@@ -69,7 +69,7 @@ function createVideo(uuid) {
   }
 }
 
-function createExercise(uuid, index) {
+function createExercise(uuid, index?) {
   return {
     value: {
       children: [
@@ -104,7 +104,7 @@ function createApplet(uuid) {
   }
 }
 
-function createExerciseGroup(uuid, pageIndex) {
+function createExerciseGroup(uuid, pageIndex?) {
   const children = []
   if (uuid.exercises?.length > 0) {
     uuid.exercises.forEach(function(exercise, groupIndex) {
