@@ -12,13 +12,17 @@ export default function ExerciseNumbering({ index }: ExerciseNumberingProps) {
 }
 
 const StyledNumber = styled.span`
-  display: block;
-  position: absolute;
-  margin-top: 2px;
-  margin-left: -4.5rem;
-  width: 3rem;
-  font-size: 2rem;
-  text-align: right;
-  font-weight: bold;
-  color: ${props => props.theme.colors.brand};
+  display: none;
+
+  @media (min-width: ${props => props.theme.breakpoints.md}) {
+    display: block;
+    position: absolute;
+    margin-top: 2px;
+    margin-left: -4.5rem;
+    width: 3rem;
+    font-size: 2rem;
+    text-align: right;
+    font-weight: bold;
+    color: ${props => props.theme.colors.brand};
+  }
 `
