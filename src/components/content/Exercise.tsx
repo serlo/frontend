@@ -100,6 +100,19 @@ const Wrapper = styled.div<{ grouped?: boolean }>`
       margin-bottom: 40px;
       padding-top: 7px;
     `};
+
+  @media (hover: hover) {
+    input {
+      opacity: 0.2;
+      transition: opacity 0.2s ease-in;
+    }
+
+    &:hover {
+      input {
+        opacity: 1;
+      }
+    }
+  }
 `
 
 const SolutionToggle = styled.a<{ active: boolean }>`

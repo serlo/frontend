@@ -173,7 +173,7 @@ const StyledInput = styled.input`
     width: 1px;
     margin: 0;
     padding: 0;
-    opacity: 0;
+    opacity: 0 !important;
   }
 `
 
@@ -204,5 +204,9 @@ const Feedback = styled.div<{ right?: boolean }>`
 
 const Container = styled.div`
   ${makeMargin}
-  margin-bottom: ${props => props.theme.spacing.mb.block}
+  margin-bottom: ${props => props.theme.spacing.mb.block};
+  
+  &:hover {
+
+  }
 `
