@@ -19,6 +19,10 @@ function convert(node) {
     if (node.name === 'div') {
       if (node.attribs) {
         const className = node.attribs.class
+        // compat: legacy injections wrapped in empty div
+        if (className === undefined) {
+          return convert(node.children)
+        }
         if (className === 'r') {
           const children = convert(node.children)
           // compat: avoid single column layout
@@ -101,6 +105,16 @@ function convert(node) {
               {
                 type: 'geogebra',
                 id: match[1],
+                children: [{ text: '' }]
+              }
+            ]
+          }
+          if (href.includes('assets.serlo.org')) {
+            return [
+              {
+                type: 'img',
+                src: href,
+                alt: 'Bild',
                 children: [{ text: '' }]
               }
             ]
