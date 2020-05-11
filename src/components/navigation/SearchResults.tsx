@@ -47,7 +47,7 @@ const SearchResultsWrap = styled.div`
       color: ${props => props.theme.colors.brand};
       width: 100%;
       padding: 10px 0;
-      background: url('http://www.google.com/cse/static/images/1x/googlelogo_lightgrey_46x16dp.png')
+      background: url('//www.google.com/cse/static/images/1x/googlelogo_lightgrey_46x16dp.png')
         left center no-repeat;
       text-indent: 50px;
 
