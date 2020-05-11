@@ -2,7 +2,6 @@ import styled, { css } from 'styled-components'
 import { makeMargin, makeDefaultButton } from '../../helper/csshelper'
 import React from 'react'
 import { renderArticle } from '../../schema/articleRenderer'
-import { convertEdtrioState } from '../../schema/convertEdtrioState'
 import StyledP from '../tags/StyledP'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckCircle, faCheckSquare } from '@fortawesome/free-solid-svg-icons'
@@ -53,17 +52,14 @@ function SingleChoice({ state }) {
                   <FontAwesomeIcon
                     icon={selected === i ? faCheckCircle : faCircle}
                   />
-                  {renderArticle(convertEdtrioState(answer.content).children)}
+                  {renderArticle(answer.content)}
                 </StyledLabel>
               </ChoiceWrapper>
               {showFeedback &&
                 state.answers[selected] &&
                 state.answers[selected] === answer && (
                   <Feedback right={state.answers[selected].isCorrect}>
-                    {renderArticle(
-                      convertEdtrioState(state.answers[selected].feedback)
-                        .children
-                    )}
+                    {renderArticle(state.answers[selected].feedback)}
                   </Feedback>
                 )}
             </React.Fragment>
@@ -114,12 +110,10 @@ function MultipleChoice({ state }) {
                   <FontAwesomeIcon
                     icon={selected[i] ? faCheckSquare : faSquare}
                   />
-                  {renderArticle(convertEdtrioState(answer.content).children)}
+                  {renderArticle(answer.content)}
                 </StyledLabel>
               </ChoiceWrapper>
-              {showFeedback &&
-                selected[i] &&
-                renderArticle(convertEdtrioState(answer.feedback).children)}
+              {showFeedback && selected[i] && renderArticle(answer.feedback)}
             </React.Fragment>
           )
         })}

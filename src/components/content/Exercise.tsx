@@ -2,7 +2,6 @@ import { renderArticle } from '../../schema/articleRenderer'
 import styled, { css } from 'styled-components'
 import React from 'react'
 import { makeMargin, makeDefaultButton } from '../../helper/csshelper'
-import { convertEdtrioState } from '../../schema/convertEdtrioState'
 import ScMcExercise from './ScMcExercise'
 import InputExercise from './InputExercise'
 import LicenseNotice from './LicenseNotice'
@@ -18,7 +17,7 @@ export default function Exercise(props) {
 
   if (taskValue.length === 1 && taskValue[0].type === '@edtr-io/exercise') {
     const state = taskValue[0].state
-    taskValue = convertEdtrioState(state.content).children
+    taskValue = state.content
     if (state.interactive) {
       if (state.interactive.plugin === 'scMcExercise') {
         interactiveComp = <ScMcExercise state={state.interactive.state} />
@@ -50,8 +49,8 @@ export default function Exercise(props) {
         ]
       })
     }
-    const strategy = convertEdtrioState(state.strategy).children
-    const steps = convertEdtrioState(state.steps).children
+    const strategy = state.strategy
+    const steps = state.steps
     solutionValue = [...prereq, ...strategy, ...steps]
   }
   return (
