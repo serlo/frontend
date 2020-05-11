@@ -71,8 +71,7 @@ function HelloWorld() {
   return <ClickMeTitle title="Welcome to the frontend!" />
 }
 
-function ClickMeTitle(props) {
-  const { title } = props
+function ClickMeTitle({ title }) {
   const [clicked, setClicked] = React.useState(false)
   const smiley = clicked ? ' :)' : ''
   return (
@@ -144,8 +143,6 @@ export default function Greeter({ title, subline }: GreeterProps) {
   )
 }
 ```
-
-Visit `localhost:3000/__gallery` for a quick overview of all components. Consider adding your new component into the gallery.
 
 ### Responsive Design
 
@@ -222,10 +219,6 @@ const GrowingParagraph = styled.p`
 
 export default HelloWorld
 ```
-
-#### Colors
-
-Visit `localhost:3000/_colors` to see all the colors predefined in the theme.
 
 ### Units
 
@@ -366,6 +359,17 @@ yarn prettify
 
 Make sure your code is properly formatted before every commit.
 
+### Linter & Typechecker
+
+There are two commands to lint you code and run the typechecker:
+
+```
+yarn lint
+yarn typecheck
+```
+
+Ensure in each PR that both commands show no warnings or errors.
+
 ### Tooltips, Dropdowns & Menus
 
 You can add elements that [pop out](https://atomiks.github.io/tippyjs/) of the page with [Tippy](https://github.com/atomiks/tippyjs-react). A basic drop button looks like this:
@@ -411,7 +415,7 @@ Show information to the user with modals. [react-modal](https://github.com/react
 
 ```tsx
 import React from 'react'
-import Modal from '../components/Modal' // our wrapper
+import Modal from '../src/components/Modal' // our wrapper
 
 const centeredModal = {
   overlay: {
@@ -451,7 +455,7 @@ You can use [KaTeX](https://github.com/KaTeX/KaTeX) to render formulas:
 
 ```tsx
 import styled from 'styled-components'
-import Math from '../src/math'
+import Math from '../src/components/content/Math'
 
 function HelloWorld() {
   return (
@@ -487,21 +491,18 @@ Our math component takes two props: `formula` is the LaTeX string, `inline` is o
 
 ### Data Fetching
 
-Data fetching is handled by our GraphQL data fetcher. Look at `src/fetcher/README.md` for a detailed explanation.
+Data fetching is handled by our GraphQL data fetcher. Look at `src/fetcher/` for the source code.
 
 ### Deployment
 
 Build and run the frontend with these commands:
 
 ```
+yarn build
 yarn start
 ```
 
-This will trigger a production build (`docker` and `docker-compose` need to be installed). To stop the created docker image, run:
-
-```
-yarn stop
-```
+This will trigger a production build and start the next.js server.
 
 To get detailed information about bundle size and a summarize of all output artifacts, run this:
 
@@ -516,7 +517,7 @@ Results are saved to `.next/analyze/client.html` and `.next/analyze/server.html`
 If some part of a page is heavy and only relevant for a smaller fraction of users, import it dynamically. Write your component as usual:
 
 ```tsx
-// src/fancycomponent.tsx
+// src/components/FancyComponent.tsx
 
 function FancyComponent() {
   return <p>This is some heavy component</p>
@@ -533,7 +534,7 @@ Use a [dynamic import](https://nextjs.org/docs/advanced-features/dynamic-import)
 import React from 'react'
 import dynamic from 'next/dynamic'
 
-const FancyComponent = dynamic(() => import('../src/fancycomponent'))
+const FancyComponent = dynamic(() => import('../src/components/FancyComponent'))
 
 function HelloWorld() {
   const [visible, setVisible] = React.useState(false)
@@ -614,50 +615,6 @@ Your pages get wrapped in two components, [\_document.js](https://nextjs.org/doc
 
 The app is the entrypoint of your page and is rendered client-side as well. You can add global providers or import css files here.
 
-### Listening to Scroll & Resize
-
-It is possible to listen to scroll and resize events as a very very (!!) last resort for responsive design, e.g. if media queries are insufficient. Use `useEffect` to accomplish this task:
-
-```tsx
-import React from 'react'
-import styled from 'styled-components'
-
-function HelloWorld() {
-  const [gray, setGray] = React.useState(false)
-
-  React.useEffect(() => {
-    function handleScroll() {
-      const scrollY = window.pageYOffset
-      setGray(scrollY > 250)
-    }
-
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
-  return (
-    <BigDiv>
-      <Par gray={gray}>Please scroll down a little bit ...</Par>
-    </BigDiv>
-  )
-}
-
-const BigDiv = styled.div`
-  height: 4000px;
-`
-
-const Par = styled.p<{ gray: boolean }>`
-  font-size: 3rem;
-  text-align: center;
-  margin-top: 500px;
-  ${props => (props.gray ? 'color:lightgray;' : '')}
-`
-
-export default HelloWorld
-```
-
-This text will gray out if you scroll down. `useEffect` with an empty dependency array is called once on mount. The return value is called when the component unmounts and will remove the event listener. Set the state directly within the event handler.
-
 ### Peer dependencies
 
 Here is a list of included peer dependencies:
@@ -716,28 +673,7 @@ if (typeof window === 'undefined') {
 }
 ```
 
-A bigger example:
-
-```tsx
-function HelloWorld(props) {
-  return <>{JSON.stringify(props.data)}</>
-}
-
-HelloWorld.getInitialProps = async () => {
-  if (typeof window === 'undefined') {
-    const fs = await import('fs')
-    const util = await import('util')
-    const data = await util.promisify(fs.readFile)('package.json', 'utf-8')
-    console.log(data)
-    return { data: JSON.parse(data) }
-  }
-  return {}
-}
-
-export default HelloWorld
-```
-
-The `fs` module is only available in nodejs, but it's ok to use it when you check that you are serverside and load it with a [dynamic import](https://javascript.info/modules-dynamic-imports). There is also some [async/await](https://javascript.info/async-await) syntax shown here.
+Attention: Make sure that the result of SSR and client side rendering is the same! Making a difference between environments can cause inconsistencies and will lead to react warnings.
 
 ### How can I focus an element?
 
