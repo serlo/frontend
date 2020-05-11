@@ -142,10 +142,57 @@ export function convert(node) {
     return [{ type: 'geogebra', id, children: [{ text: '' }] }]
   }
   if (plugin === 'exercise') {
-    return [{ type: '@edtr-io/exercise', state: node.state }]
+    return [
+      {
+        type: '@edtr-io/exercise',
+        state: {
+          content: convert(node.state.content),
+          interactive: convert(node.state.interactive)[0]
+        }
+      }
+    ]
   }
   if (plugin === 'solution') {
-    return [{ type: '@edtr-io/solution', state: node.state }]
+    return [
+      {
+        type: '@edtr-io/solution',
+        state: {
+          prerequisite: node.state.prerequisite,
+          strategy: convert(node.state.strategy),
+          steps: convert(node.state.steps)
+        }
+      }
+    ]
+  }
+  if (plugin === 'scMcExercise') {
+    return [
+      {
+        plugin: 'scMcExercise',
+        state: {
+          isSingleChoice: node.state.isSingleChoice,
+          answers: node.state.answers.map(answer => {
+            return {
+              isCorrect: answer.isCorrect,
+              content: convert(answer.content),
+              feedback: convert(answer.content)
+            }
+          })
+        }
+      }
+    ]
+  }
+  if (plugin === 'inputExercise') {
+    console.log('input-ex', node.state.answers)
+    return [
+      {
+        plugin: 'inputExercise',
+        state: {
+          type: node.state.type,
+          unit: node.state.unit,
+          answers: node.state.answers
+        }
+      }
+    ]
   }
 
   const type = node.type
