@@ -29,6 +29,11 @@ const StyledOl = styled.ol`
       text-align: center;
       line-height: 1.6em;
     }
+
+    > ul, > ol {
+      margin-top: 8px;
+      margin-bottom: 16px !important;
+    }
   }
 `
 

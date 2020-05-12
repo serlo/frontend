@@ -15,7 +15,7 @@ export default function ExerciseGroup({
     <Container>
       <ExerciseIntro>
         <ExerciseNumbering index={positionOnPage} />
-        <Label>Aufgabengruppe:</Label>
+        <Label>Aufgabengruppe</Label>
         {groupIntro}
       </ExerciseIntro>
       <Content>{children}</Content>

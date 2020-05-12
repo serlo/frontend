@@ -53,6 +53,8 @@ export default function Exercise(props) {
     const steps = state.steps
     solutionValue = [...prereq, ...strategy, ...steps]
   }
+  const hasSolution = solution && solution.children[0].children?.text !== ''
+
   return (
     <Wrapper grouped={grouped}>
       {!grouped && <ExerciseNumbering index={props.positionOnPage} />}
@@ -60,15 +62,17 @@ export default function Exercise(props) {
       {renderArticle(taskValue, false)}
       {interactiveComp}
       {taskLicense && <LicenseNotice minimal data={taskLicense} />}
-      <SolutionToggle
-        onClick={() => {
-          setVisible(!solutionVisible)
-        }}
-        active={solutionVisible}
-      >
-        <StyledSpan>{solutionVisible ? '▾ ' : '▸ '}</StyledSpan>Lösung{' '}
-        {solutionVisible ? 'ausblenden' : 'anzeigen'}
-      </SolutionToggle>
+      {hasSolution && (
+        <SolutionToggle
+          onClick={() => {
+            setVisible(!solutionVisible)
+          }}
+          active={solutionVisible}
+        >
+          <StyledSpan>{solutionVisible ? '▾ ' : '▸ '}</StyledSpan>Lösung{' '}
+          {solutionVisible ? 'ausblenden' : 'anzeigen'}
+        </SolutionToggle>
+      )}
       <SolutionBox visible={solutionVisible}>
         {renderArticle(solutionValue, false)}
         {solutionLicense && <LicenseNotice minimal data={solutionLicense} />}
