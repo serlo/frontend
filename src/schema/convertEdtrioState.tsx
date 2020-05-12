@@ -182,7 +182,6 @@ export function convert(node) {
     ]
   }
   if (plugin === 'inputExercise') {
-    console.log('input-ex', node.state.answers)
     return [
       {
         plugin: 'inputExercise',
