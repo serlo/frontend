@@ -223,6 +223,12 @@ export const dataQuery = selector => `
         }
       }
 
+      ... on Event {
+        currentRevision {
+          content
+        }
+      }
+
       ... on TaxonomyTerm {
         alias
         type

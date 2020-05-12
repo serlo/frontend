@@ -33,6 +33,9 @@ export function createData(uuid) {
   if (type === 'TaxonomyTerm') {
     return createTaxonomyTerm(uuid)
   }
+  if (type === 'Event') {
+    return createEvent(uuid)
+  }
 }
 
 function createPage(uuid) {
@@ -145,6 +148,12 @@ function createCoursePage(uuid) {
     title: uuid.currentRevision.title,
     pages: uuid.course?.pages?.filter(page => page.currentRevision !== null),
     courseTitle: uuid.course?.currentRevision?.title
+  }
+}
+
+function createEvent(uuid) {
+  return {
+    value: convertState(uuid.currentRevision.content)
   }
 }
 
