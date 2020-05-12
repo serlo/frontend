@@ -23,7 +23,14 @@ const StyledUl = styled.ul<StyledUlProps>`
         margin-left: -19px;
         margin-top: 7px;
       }
-    }        
+
+      > ul, > ol {
+      margin-top: 8px;
+      margin-bottom: 16px !important;
+    }
+  }   
+  
+  
 `
 
 export default StyledUl
