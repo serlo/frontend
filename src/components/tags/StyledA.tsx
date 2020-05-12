@@ -4,7 +4,6 @@ import { darken } from 'polished'
 const StyledA = styled.a`
   color: ${props => props.theme.colors.linkColor};
   text-decoration: none;
-  font-weight: normal;
   word-break: break-word;
 
   &:visited {
