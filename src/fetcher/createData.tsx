@@ -224,7 +224,7 @@ function collectTopicFolders(children) {
   return children
     .filter(
       child =>
-        child.__typename === 'TaxonomyTerm' && child.type === 'topicFolder'
+        child.__typename === 'TaxonomyTerm' && child.type.includes('opicFolder')
     )
     .map(child => {
       return { title: child.name, url: child.alias ?? '/' + child.id }
@@ -256,7 +256,8 @@ function collectNestedTaxonomyTerms(children) {
   return children
     .filter(
       child =>
-        child.__typename === 'TaxonomyTerm' && child.type !== 'topicFolder'
+        child.__typename === 'TaxonomyTerm' &&
+        !child.type.includes('opicFolder')
     )
     .map(child => {
       const subchildren = child.children?.filter(isActive)
