@@ -421,6 +421,8 @@ function convert(node) {
       .join('')
       .split('&lt;')
       .join('<')
+      .split('&amp;')
+      .join('&')
     // compat: remove empty text
     if (!text) return []
     return [{ text }]
