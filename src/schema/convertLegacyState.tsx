@@ -423,6 +423,9 @@ function convert(node) {
       .join('<')
       .split('&amp;')
       .join('&')
+      .replace(/&#(\d+);/g, function(match, dec) {
+        return String.fromCharCode(dec)
+      })
     // compat: remove empty text
     if (!text) return []
     return [{ text }]
