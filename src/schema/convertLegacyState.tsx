@@ -416,7 +416,7 @@ function convert(node) {
     // compat: remove entities and newlines
     const text = node.data
       .split('&nbsp;')
-      .join('')
+      .join(' ')
       .split('\n')
       .join('')
       .split('&lt;')
