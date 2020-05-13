@@ -7,23 +7,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckCircle, faCheckSquare } from '@fortawesome/free-solid-svg-icons'
 import { faCircle, faSquare } from '@fortawesome/free-regular-svg-icons'
 
-export default function ScMcExercise({ state }) {
-  if (state.isSingleChoice) return <SingleChoice state={state} />
+export default function ScMcExercise({
+  state,
+  positionOnPage,
+  positionInGroup
+}) {
+  const keyBase = `ex-${positionOnPage}-${positionInGroup}-`
+  if (state.isSingleChoice)
+    return <SingleChoice state={state} keyBase={keyBase} />
 
-  return <MultipleChoice state={state} />
+  return <MultipleChoice state={state} keyBase={keyBase} />
 }
 
-function randomIdentifier(i) {
-  return (
-    Math.random()
-      .toString(20)
-      .substr(2, 8) +
-    '-' +
-    i
-  )
-}
-
-function SingleChoice({ state }) {
+function SingleChoice({ state, keyBase }) {
   const [selected, setSelected] = React.useState(undefined)
   const [showFeedback, setShowFeedback] = React.useState(false)
 
@@ -31,12 +27,12 @@ function SingleChoice({ state }) {
     <Container>
       <Choices>
         {state.answers.map((answer, i) => {
-          const unique = randomIdentifier(i)
+          const key = keyBase + i
           return (
-            <React.Fragment key={unique}>
+            <React.Fragment key={key}>
               <ChoiceWrapper>
                 <StyledInput
-                  id={unique}
+                  id={key}
                   type="radio"
                   checked={selected === i}
                   onChange={() => {
@@ -44,11 +40,7 @@ function SingleChoice({ state }) {
                     setSelected(i)
                   }}
                 />
-                <StyledLabel
-                  selected={selected === i}
-                  key={unique}
-                  htmlFor={unique}
-                >
+                <StyledLabel selected={selected === i} key={key} htmlFor={key}>
                   <FontAwesomeIcon
                     icon={selected === i ? faCheckCircle : faCircle}
                   />
@@ -77,7 +69,7 @@ function SingleChoice({ state }) {
   )
 }
 
-function MultipleChoice({ state }) {
+function MultipleChoice({ state, keyBase }) {
   const [selected, setSelected] = React.useState(state.answers.map(() => false))
   const [showFeedback, setShowFeedback] = React.useState(false)
   const right = state.answers.every(
@@ -87,12 +79,12 @@ function MultipleChoice({ state }) {
     <Container>
       <Choices>
         {state.answers.map((answer, i) => {
-          const unique = randomIdentifier(i)
+          const key = keyBase + i
           return (
-            <React.Fragment key={unique}>
-              <ChoiceWrapper key={unique}>
+            <React.Fragment key={key}>
+              <ChoiceWrapper key={key}>
                 <StyledInput
-                  id={unique}
+                  id={key}
                   type="checkbox"
                   checked={selected[i]}
                   onChange={() => {
@@ -102,11 +94,7 @@ function MultipleChoice({ state }) {
                     setSelected(newArr)
                   }}
                 />
-                <StyledLabel
-                  selected={selected[i]}
-                  key={unique}
-                  htmlFor={unique}
-                >
+                <StyledLabel selected={selected[i]} key={key} htmlFor={key}>
                   <FontAwesomeIcon
                     icon={selected[i] ? faCheckSquare : faSquare}
                   />

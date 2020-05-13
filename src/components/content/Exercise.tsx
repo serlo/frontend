@@ -8,7 +8,15 @@ import LicenseNotice from './LicenseNotice'
 import ExerciseNumbering from './ExerciseNumbering'
 
 export default function Exercise(props) {
-  const { task, solution, taskLicense, solutionLicense, grouped } = props
+  const {
+    task,
+    solution,
+    taskLicense,
+    solutionLicense,
+    grouped,
+    positionInGroup,
+    positionOnPage
+  } = props
   const [solutionVisible, setVisible] = React.useState(false)
 
   let taskValue = task.children
@@ -20,7 +28,13 @@ export default function Exercise(props) {
     taskValue = state.content
     if (state.interactive) {
       if (state.interactive.plugin === 'scMcExercise') {
-        interactiveComp = <ScMcExercise state={state.interactive.state} />
+        interactiveComp = (
+          <ScMcExercise
+            state={state.interactive.state}
+            positionInGroup={positionInGroup}
+            positionOnPage={positionOnPage}
+          />
+        )
       }
       if (state.interactive.plugin === 'inputExercise') {
         interactiveComp = <InputExercise state={state.interactive.state} />
@@ -57,7 +71,7 @@ export default function Exercise(props) {
 
   return (
     <Wrapper grouped={grouped}>
-      {!grouped && <ExerciseNumbering index={props.positionOnPage} />}
+      {!grouped && <ExerciseNumbering index={positionOnPage} />}
 
       {renderArticle(taskValue, false)}
       {interactiveComp}
