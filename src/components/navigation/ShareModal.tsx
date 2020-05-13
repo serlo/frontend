@@ -2,12 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { lighten } from 'polished'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faCopy,
-  faTimes,
-  faEnvelope,
-  faCompass
-} from '@fortawesome/free-solid-svg-icons'
+import { faCopy, faTimes, faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import {
   faFacebookSquare,
   faWhatsappSquare,
@@ -74,12 +69,12 @@ export default function ShareModal(props: ShareModalProps) {
       title: 'Google Classroom',
       icon: faGoogle,
       href: `https://classroom.google.com/u/0/share?url=${urlEncoded}&title=${titleEncoded}&body=`
-    },
-    {
+    }
+    /*{
       title: 'Mebis',
       icon: faCompass,
       href: 'https://www.facebook.com/sharer.php?u={url}'
-    }
+    }*/
   ]
 
   return (
