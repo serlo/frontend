@@ -282,7 +282,8 @@ function collectSubfolders(children) {
   return children
     .filter(
       child =>
-        child.__typename === 'TaxonomyTerm' && child.type !== 'topicFolder'
+        child.__typename === 'TaxonomyTerm' &&
+        !child.type.includes('opicFolder')
     )
     .map(child => {
       return { title: child.name, url: child.alias ?? '/' + child.id }
