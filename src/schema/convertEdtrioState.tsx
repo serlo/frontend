@@ -240,10 +240,11 @@ export function convert(node) {
       })
       return result
     }
+    // compat: extract math formulas
     const math = children.filter(
       child => child.type === 'math' || child.type === 'inline-math'
     )
-    if (math.length === 1) {
+    if (math.length >= 1) {
       if (
         children.every(
           child =>
@@ -252,14 +253,18 @@ export function convert(node) {
             child.text === ''
         )
       ) {
-        return [
-          {
-            type: 'math',
-            formula: math[0].formula,
-            alignLeft: true,
-            children: [{ text: '' }]
-          }
-        ]
+        return children
+          .filter(
+            child => child.type === 'math' || child.type === 'inline-math'
+          )
+          .map(mathChild => {
+            return {
+              type: 'math',
+              formula: mathChild.formula,
+              alignLeft: true, // caveat: this differs from existing presentation
+              children: [{ text: '' }]
+            }
+          })
       }
     }
     return [
