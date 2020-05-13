@@ -88,11 +88,11 @@ export default function ShareModal(props: ShareModalProps) {
         />{' '}
         {document.queryCommandSupported('copy') && (
           <>
+            <Button onClick={copyToClipboard}>
+              <FontAwesomeIcon icon={faCopy} /> Link kopieren
+            </Button>
             {copySuccess !== '' && <Gray>{copySuccess}&nbsp;</Gray>}
             <br />
-            <Button onClick={copyToClipboard}>
-              <FontAwesomeIcon icon={faCopy} /> Kopieren
-            </Button>
           </>
         )}{' '}
         <CloseButton onClick={onClose} title="Close">
@@ -150,6 +150,7 @@ const ShareInput = styled.input`
 
   ${makeMargin}
   margin-bottom: 8px;
+  margin-right: 0;
 
   background-color: ${props => lighten(0.45, props.theme.colors.brandGreen)};
 
@@ -163,13 +164,12 @@ const Button = styled.a`
   ${makeGreenButton}
   font-weight: bold;
   margin-left: 20px;
+  display: inline;
 
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
     ${makeMargin}
     margin-top: 6px;
-    display: inline;
-    /* background-color: ${props =>
-      lighten(0.45, props.theme.colors.brandGreen)}; */
+    display: block;
   }
 `
 
