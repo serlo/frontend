@@ -2,7 +2,12 @@ import React from 'react'
 import styled from 'styled-components'
 import { lighten } from 'polished'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCopy, faTimes, faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import {
+  faCopy,
+  faTimes,
+  faEnvelope,
+  faCompass
+} from '@fortawesome/free-solid-svg-icons'
 import {
   faFacebookSquare,
   faWhatsappSquare,
@@ -29,11 +34,11 @@ export default function ShareModal(props: ShareModalProps) {
   const shareInputRef = React.useRef(null)
   const [copySuccess, setCopySuccess] = React.useState('')
 
-  function copyToClipboard(e) {
+  function copyToClipboard(e, text?) {
     shareInputRef.current.select()
     document.execCommand('copy')
     e.target.focus()
-    setCopySuccess('In Zwischenablage kopiert!')
+    setCopySuccess(text ? text : 'In Zwischenablage kopiert!')
   }
 
   const url = contentId
@@ -69,12 +74,14 @@ export default function ShareModal(props: ShareModalProps) {
       title: 'Google Classroom',
       icon: faGoogle,
       href: `https://classroom.google.com/u/0/share?url=${urlEncoded}&title=${titleEncoded}&body=`
-    }
-    /*{
+    },
+    {
       title: 'Mebis',
       icon: faCompass,
-      href: 'https://www.facebook.com/sharer.php?u={url}'
-    }*/
+      href: 'copy',
+      text:
+        'Link in die Zwischenablage kopiert. Einfach auf <a href="https://www.mebis.bayern.de/">mebis</a> einfügen!'
+    }
   ]
 
   return (
@@ -88,26 +95,42 @@ export default function ShareModal(props: ShareModalProps) {
         />{' '}
         {document.queryCommandSupported('copy') && (
           <>
-            {copySuccess !== '' && <Gray>{copySuccess}&nbsp;</Gray>}
-            <br />
             <Button onClick={copyToClipboard}>
-              <FontAwesomeIcon icon={faCopy} /> Kopieren
+              <FontAwesomeIcon icon={faCopy} /> Link kopieren
             </Button>
+            {copySuccess !== '' && (
+              <Gray
+                dangerouslySetInnerHTML={{ __html: copySuccess + '&nbsp;' }}
+              />
+            )}
+            <br />
           </>
         )}{' '}
         <CloseButton onClick={onClose} title="Close">
           <FontAwesomeIcon icon={faTimes} size="lg" />
         </CloseButton>
-        <ButtonWrapper>{buildButtons(socialShare)}</ButtonWrapper>
-        <ButtonWrapper>{buildButtons(lmsShare)}</ButtonWrapper>
+        <ButtonWrapper>
+          {buildButtons(socialShare, copyToClipboard)}
+        </ButtonWrapper>
+        <ButtonWrapper>{buildButtons(lmsShare, copyToClipboard)}</ButtonWrapper>
       </div>
     </StyledModal>
   )
 }
 
-function buildButtons(list) {
+function buildButtons(list, copyToClipboard) {
   return list.map(entry => (
-    <Button href={entry.href} key={entry.title}>
+    <Button
+      href={entry.href !== 'copy' ? entry.href : null}
+      onClick={
+        entry.href === 'copy'
+          ? e => {
+              copyToClipboard(e, entry.text)
+            }
+          : null
+      }
+      key={entry.title}
+    >
       <FontAwesomeIcon icon={entry.icon} /> {entry.title}
     </Button>
   ))
@@ -150,6 +173,7 @@ const ShareInput = styled.input`
 
   ${makeMargin}
   margin-bottom: 8px;
+  margin-right: 0;
 
   background-color: ${props => lighten(0.45, props.theme.colors.brandGreen)};
 
@@ -163,13 +187,12 @@ const Button = styled.a`
   ${makeGreenButton}
   font-weight: bold;
   margin-left: 20px;
+  display: inline;
 
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
     ${makeMargin}
     margin-top: 6px;
-    display: inline;
-    /* background-color: ${props =>
-      lighten(0.45, props.theme.colors.brandGreen)}; */
+    display: block;
   }
 `
 
@@ -180,6 +203,11 @@ const Gray = styled.small`
   margin-bottom: 5px;
   padding-left: 10px;
   display: block;
+
+  > a {
+    color: ${props => props.theme.colors.brand};
+    font-weight: bold;
+  }
 `
 const CloseButton = styled.button`
   position: absolute;

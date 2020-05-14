@@ -42,6 +42,7 @@ function checkAnswer(val, state) {
 
 const Wrapper = styled.div`
   ${makeMargin}
+  margin-bottom: 30px;
 `
 
 const Feedback = styled(StyledP)`
