@@ -9,7 +9,14 @@ export const footerNavEntries = [
       { title: 'Partner & Förderer', url: '/partner' },
       { title: 'Presse', url: '/presse' },
       { title: 'Kontakt', url: '/kontakt' },
-      { title: 'Serlo in anderen Sprachen', url: '/93321' },
+      {
+        title: 'Serlo in anderen Sprachen',
+        url: 'https://en.serlo.org/global'
+      },
+      {
+        title: 'Ins alte Design zurück',
+        url: 'https://de.serlo.org/disable-frontend'
+      },
       { title: 'API', url: '/105250' }
     ]
   },
