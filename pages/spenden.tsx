@@ -112,7 +112,7 @@ export default function Landing() {
           </p>
           <br />
           <p>
-            <b>Adresse für Fragen:</b>
+            <b>Bei Fragen gern melden über:</b>
             <br />
             <StyledA href="mailto:spenden@serlo.org">spenden@serlo.org</StyledA>
           </p>
