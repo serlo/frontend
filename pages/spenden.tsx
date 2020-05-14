@@ -64,10 +64,10 @@ export default function Landing() {
 
       <Section>
         <DonationCol>
-          <StyledH1>Deine Spende für freie Bildung.</StyledH1>
+          <StyledH1>Deine Spende für freie Bildung</StyledH1>
           <StyledImg
             id="main-image"
-            src="https://assets.serlo.org/59f762922f93d_c1bea0db3a614ccd33887e6f615b4b60a84e642e.jpg"
+            src="/_assets/img/donations-image.jpg"
             alt="test"
             title=""
           />
@@ -80,7 +80,7 @@ export default function Landing() {
           <div id={`twingle-public-embed-${twingleID}`} />
           <noscript>Bitte Javascript aktivieren</noscript>
 
-          <StyledH2>Ohne Angabe von Daten spenden</StyledH2>
+          <StyledH2 id="no-formular">Ohne Angabe von Daten spenden</StyledH2>
           <h3 id="spendenkonto">Spendenkonto</h3>
 
           <p>
@@ -100,7 +100,7 @@ export default function Landing() {
           <h3>Dein Ansprechpartner</h3>
           <p>
             <RoundedImage
-              src="https://assets.serlo.org/5e3ad5c74232f_9659bfa15d1cdc1b270640577a2b555031264566.jpg"
+              src="/_assets/img/donations-contact.jpg"
               alt="Wolfgang Schmid"
               title=""
             />
@@ -129,10 +129,11 @@ export default function Landing() {
             Eine genaue Aufstellung unserer Finanzen findest du unter
             www.serlo.org/transparenz
             <ITZImg
-              src="https://assets.serlo.org/legacy/546b4f8aab7a2_8ec64f4823d62c6b857c781ab2dd403d6ce597e4.jpg"
+              src="/_assets/img/donations-itz.png"
               alt="Initiative Transparente Zivilgesellschaft"
             />
           </p>
+          <br />
           <p>
             <b>Steuerliche Begünstigungen</b>
           </p>
@@ -146,8 +147,8 @@ export default function Landing() {
           </p>
           <p>
             Du kannst auch via{' '}
-            <StyledA href="#spendenkonto">Überweisung</StyledA> oder{' '}
-            <StyledA href="#paypal">Paypal</StyledA> spenden.
+            <StyledA href="#no-formular">Überweisung oder PayPal</StyledA>{' '}
+            spenden.
           </p>
           <br />
         </ContactCol>
@@ -280,7 +281,10 @@ const BlueContainer = styled.div`
 `
 
 const ITZImg = styled(StyledImg)`
-  @media (max-width: ${props => props.theme.breakpoints.md}) {
-    max-width: 340px;
-  }
+  margin: 18px 0;
+  display: block;
+  width: 220px;
+  /* @media (max-width: ${props => props.theme.breakpoints.md}) {
+    max-width: 280px;
+  } */
 `
