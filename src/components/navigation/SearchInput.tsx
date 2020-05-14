@@ -7,6 +7,7 @@ import SearchResults from './SearchResults'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { theme } from '../../theme'
+import i18next from 'i18next'
 
 /*
 This components starts with only a placeholder that looks like a searchbar (basically a button).
@@ -60,7 +61,7 @@ export default function SearchInput() {
       <SearchForm id="searchform" onClick={activateSearch}>
         {!searchActive && (
           <>
-            <PlaceholderText>Suche</PlaceholderText>
+            <PlaceholderText>{i18next.t('Search')}</PlaceholderText>
             <PlaceholderButton>
               {!searchLoaded ? (
                 <PlaceholderIcon />

@@ -11,6 +11,7 @@ import {
   makeResponsivePadding,
   makeDefaultButton
 } from '../../helper/csshelper'
+import i18next from 'i18next'
 
 export default function Footer() {
   return (
@@ -52,11 +53,11 @@ function About() {
               alt="Icon: Participate"
               src={'/_assets/img/footer_participate.svg'}
             />
-            <SupportButton>Mitmachen</SupportButton>
+            <SupportButton>{i18next.t('Join the cause')}</SupportButton>
           </ImageLink>
           <ImageLink href="/spenden">
             <img alt="Icon: Spenden" src={'/_assets/img/footer_donate.svg'} />
-            <SupportButton>Spenden</SupportButton>
+            <SupportButton>{i18next.t('Donate')}</SupportButton>
           </ImageLink>
         </Support>
       </InfoContainer>

@@ -1,5 +1,6 @@
 import React from 'react'
 import App from 'next/app'
+import i18next from 'i18next'
 
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
@@ -14,6 +15,8 @@ import { theme } from '../src/theme'
 import * as Sentry from '@sentry/browser'
 
 import { version } from '../package.json'
+
+import de from '../translations/de.json'
 
 if (process.env.SENTRY_DSN !== undefined) {
   Sentry.init({
@@ -30,6 +33,11 @@ const FontFix = createGlobalStyle`
     letter-spacing: ${props => props.theme.defaults.regularLetterSpacing};
   }
 `
+
+i18next.init({
+  lng: 'de',
+  resources: { de: { translation: de } }
+})
 
 class MyApp extends App {
   render() {

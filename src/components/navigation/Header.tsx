@@ -8,6 +8,7 @@ import SearchInput from './SearchInput'
 import MobileMenuButton from './MobileMenuButton'
 import MobileMenu from './MobileMenu'
 import { makeResponsivePadding } from '../../helper/csshelper'
+import i18next from 'i18next'
 
 export default function Header() {
   const [isOpen, setOpen] = React.useState(false)
@@ -17,7 +18,7 @@ export default function Header() {
       <MobileMenuButton onClick={() => setOpen(!isOpen)} open={isOpen} />
       <PaddedDiv>
         <Menu links={menudata}></Menu>
-        <Logo subline={'Die freie Lernplattform'} />
+        <Logo subline={i18next.t('The Open Learning Platform')} />
       </PaddedDiv>
       <SearchInput />
       {isOpen && <MobileMenu links={menudata} />}
