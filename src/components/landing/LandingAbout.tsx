@@ -4,6 +4,7 @@ import {
   makeDefaultButton
 } from '../../helper/csshelper'
 import StyledUl from '../tags/StyledUl'
+import PartnerList from './PartnerList'
 import StyledLi from '../tags/StyledLi'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
@@ -12,47 +13,7 @@ export default function LandingAbout() {
   return (
     <>
       <AboutCol>
-        <PartnerWrap>
-          <StyledH2>Partner und Förderer</StyledH2>
-          <PartnerLogos>
-            <PartnerLogo
-              src="https://packages.serlo.org/serlo-org-static-assets@1/de/home/logo-beisheim.png"
-              alt="Beisheim Stiftung"
-              title="Beisheim Stiftung"
-            />
-            <PartnerLogo
-              src="https://packages.serlo.org/serlo-org-static-assets@1/de/home/logo-lmu.svg"
-              alt="Ludwig-Maximilians-Universität München"
-              title="Ludwig-Maximilians-Universität München"
-            />
-            <PartnerLogo
-              src="https://packages.serlo.org/serlo-org-static-assets@1/de/home/logo-tum.svg"
-              alt="Technische Universität München"
-              title="Technische Universität München"
-            />
-            <PartnerLogo
-              src="https://packages.serlo.org/serlo-org-static-assets@1/de/home/logo-wikimedia.svg"
-              alt="Wikimedia Deutschland"
-              title="Wikimedia Deutschland"
-            />
-            <PartnerLogo
-              src="https://packages.serlo.org/serlo-org-static-assets@1/de/home/logo-eu.svg"
-              alt="Europäische Kommission"
-              title="Europäische Kommission"
-              // style={maxHeight: 60px}
-            />
-            <PartnerLogo
-              src="https://packages.serlo.org/serlo-org-static-assets@1/de/home/logo-ashoka.png"
-              alt="Ashoka Deutschland"
-              title="Ashoka Deutschland"
-            />
-            <PartnerLogo
-              src="https://packages.serlo.org/serlo-org-static-assets@1/de/home/logo-hpi.png"
-              alt="Hasso-Plattner-Institut"
-              title="Hasso-Plattner-Institut"
-            />
-          </PartnerLogos>
-        </PartnerWrap>
+        <PartnerList />
       </AboutCol>
       <TextCol>
         <p>
