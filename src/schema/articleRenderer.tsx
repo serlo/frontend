@@ -1,5 +1,4 @@
 import React from 'react'
-//import { Node, Element } from 'slate'
 import dynamic from 'next/dynamic'
 
 import ImgCentered from '../components/content/ImgCentered'
@@ -151,7 +150,8 @@ export function renderA({
   children = null,
   wrapExtInd = nowrap
 }) {
-  if (!element.href) return <>{children}</>
+  if (!element.href)
+    return <React.Fragment {...attributes}>{children}</React.Fragment>
   return (
     <StyledA href={element.href} {...attributes}>
       {children}
