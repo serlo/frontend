@@ -15,6 +15,8 @@ import { renderArticle } from '../src/schema/articleRenderer'
 import CookieBar from '../src/components/content/CookieBar'
 import LicenseNotice from '../src/components/content/LicenseNotice'
 import StyledA from '../src/components/tags/StyledA'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCubes, faPlayCircle } from '@fortawesome/free-solid-svg-icons'
 
 const MetaMenu = dynamic(() => import('../src/components/navigation/MetaMenu'))
 const Breadcrumbs = dynamic(() =>
@@ -145,7 +147,13 @@ function PageView(props) {
             )}
             {(contentType === 'Video' || contentType === 'Applet') && (
               <>
-                <StyledH1 displayMode>{data.data.title}</StyledH1>
+                <StyledH1 displayMode>
+                  <StyledIcon
+                    icon={contentType === 'Video' ? faPlayCircle : faCubes}
+                    title={contentType}
+                  />{' '}
+                  {data.data.title}
+                </StyledH1>
                 {renderArticle(data.data.value.children)}
               </>
             )}
@@ -192,6 +200,10 @@ const MaxWidthDiv = styled.div<{ showNav?: boolean }>`
         margin: 0 0 0 200px;
       }
     `}
+`
+
+const StyledIcon = styled(FontAwesomeIcon)`
+  color: ${props => props.theme.colors.lighterblue};
 `
 
 // PageView.getInitialProps = async ({ req, res }) => {

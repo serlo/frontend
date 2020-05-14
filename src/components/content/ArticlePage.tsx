@@ -3,12 +3,17 @@ import StyledH1 from '../tags/StyledH1'
 import ToolLine from '../navigation/ToolLine'
 import ToolLineButton from '../navigation/ToolLineButton'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faShareAlt } from '@fortawesome/free-solid-svg-icons'
+import {
+  faShareAlt,
+  faNewspaper,
+  faGraduationCap
+} from '@fortawesome/free-solid-svg-icons'
 import ShareModal from '../navigation/ShareModal'
 import { renderArticle } from '../../schema/articleRenderer'
 import HSpace from './HSpace'
 import Toolbox from '../navigation/Toolbox'
 import dynamic from 'next/dynamic'
+import styled from 'styled-components'
 
 const CourseNavigation = dynamic(() => import('../navigation/CourseNavigation'))
 const CourseFooter = dynamic(() => import('../navigation/CourseFooter'))
@@ -41,7 +46,14 @@ export default function ArticlePage({ data, contentId, contentType }) {
           pages={data.pages}
         />
       )}
-      <StyledH1 displayMode>{data.title}</StyledH1>
+      <StyledH1 displayMode>
+        {contentType === 'Article' && (
+          <>
+            <StyledIcon icon={faNewspaper} title={'Artikel'} />{' '}
+          </>
+        )}
+        {data.title}
+      </StyledH1>
       <ToolLine>
         <ToolLineButton top onClick={() => setOpen(true)}>
           <FontAwesomeIcon icon={faShareAlt} size="1x" /> Teilen
@@ -73,3 +85,7 @@ export default function ArticlePage({ data, contentId, contentType }) {
     </>
   )
 }
+
+const StyledIcon = styled(FontAwesomeIcon)`
+  color: ${props => props.theme.colors.lighterblue};
+`

@@ -3,6 +3,8 @@ import styled, { css } from 'styled-components'
 import TopicLinkList from './TopicLinkList'
 import { renderArticle } from '../../schema/articleRenderer'
 import { makeMargin } from '../../helper/csshelper'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFile } from '@fortawesome/free-solid-svg-icons'
 
 export interface LinkInterface {
   title: string
@@ -41,7 +43,14 @@ export default function Topic({ data }: TopicProps) {
   return (
     <>
       {data.purpose === TopicPurposes.detail ? (
-        <Headline>{data.title}</Headline>
+        <Headline>
+          {data.exercises && (
+            <>
+              <StyledIcon icon={faFile} title={'Aufgabensammlung'} />{' '}
+            </>
+          )}
+          {data.title}
+        </Headline>
       ) : (
         <h2>
           <HeadlineLink href={data.url}>{data.title}</HeadlineLink>
@@ -135,4 +144,8 @@ const Overview = styled.div<{ purpose: TopicPurposes }>`
     css`
       flex: 1 1 40%;
     `}
+`
+
+const StyledIcon = styled(FontAwesomeIcon)`
+  color: ${props => props.theme.colors.lighterblue};
 `
