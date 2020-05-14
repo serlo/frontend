@@ -190,7 +190,6 @@ const Section = styled.section`
 
   @media (min-width: ${props => props.theme.breakpoints.lg}) {
     display: block;
-    /* max-width: 1050px; */
   }
 `
 
@@ -204,7 +203,7 @@ const ContactCol = styled.div`
     max-width: 300px;
     position: absolute;
     right: 0;
-    top: 190px;
+    top: 197px;
     padding-right: 15px;
   }
 `
@@ -222,9 +221,6 @@ const DonationCol = styled.div`
 
   iframe {
     margin-left: -20px;
-  }
-  img {
-    /* max-width: 600px; */
   }
   p {
     font-size: 1.125rem;
@@ -284,7 +280,4 @@ const ITZImg = styled(StyledImg)`
   margin: 18px 0;
   display: block;
   width: 220px;
-  /* @media (max-width: ${props => props.theme.breakpoints.md}) {
-    max-width: 280px;
-  } */
 `
