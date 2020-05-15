@@ -97,27 +97,3 @@ const AboutButton = styled.a`
     background-color: #fff;
   }
 `
-
-const PartnerWrap = styled.div`
-  margin-top: auto;
-  margin-bottom: 30px;
-  width: 100%;
-`
-
-const StyledH2 = styled.h2`
-  font-weight: 400;
-  font-size: 1.125rem;
-  margin-bottom: 20px;
-`
-
-const PartnerLogos = styled.div`
-  color: #fff;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  flex-wrap: wrap;
-`
-
-const PartnerLogo = styled.img`
-  max-height: 40px;
-`

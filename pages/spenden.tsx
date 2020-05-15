@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPaypal } from '@fortawesome/free-brands-svg-icons'
@@ -30,10 +30,9 @@ const footerEntries = [
 ]
 
 export default function Landing() {
-  const twingleRef = useRef(null)
   const twingleID = '0001'
 
-  useEffect(() => {
+  React.useEffect(() => {
     const script = document.createElement('script')
 
     script.src =
