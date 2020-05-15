@@ -95,7 +95,11 @@ export default function Topic({ data, contentId }: TopicProps) {
             </ToolLineButton>
           </ToolLine>
           <Toolbox onShare={() => setOpen(true)} hideEdit={true} />
-          <ShareModal open={open} onClose={() => setOpen(false)} />
+          <ShareModal
+            open={open}
+            onClose={() => setOpen(false)}
+            contentId={contentId}
+          />
         </>
       )}
     </>

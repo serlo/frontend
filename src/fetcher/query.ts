@@ -233,6 +233,7 @@ export const dataQuery = selector => `
         alias
         type
         name
+        id
         description
         navigation {
           data
