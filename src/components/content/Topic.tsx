@@ -3,6 +3,12 @@ import styled, { css } from 'styled-components'
 import TopicLinkList from './TopicLinkList'
 import { renderArticle } from '../../schema/articleRenderer'
 import { makeMargin } from '../../helper/csshelper'
+import ToolLine from '../navigation/ToolLine'
+import ToolLineButton from '../navigation/ToolLineButton'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faShareAlt } from '@fortawesome/free-solid-svg-icons'
+import ShareModal from '../navigation/ShareModal'
+import Toolbox from '../navigation/Toolbox'
 
 export interface LinkInterface {
   title: string
@@ -31,23 +37,32 @@ interface TopicProp {
   links: LinksInterface
   children?: TopicProp[]
   exercises: any
+  contentId: number
 }
 
 interface TopicProps {
   data: TopicProp
+  contentId?: number
 }
 
-export default function Topic({ data }: TopicProps) {
+export default function Topic({ data, contentId }: TopicProps) {
+  const [open, setOpen] = React.useState(false)
   return (
     <>
       {data.purpose === TopicPurposes.detail ? (
-        <Headline>{data.title}</Headline>
+        <>
+          <Headline>{data.title}</Headline>
+          <ToolLine>
+            <ToolLineButton top onClick={() => setOpen(true)}>
+              <FontAwesomeIcon icon={faShareAlt} size="1x" /> Teilen
+            </ToolLineButton>
+          </ToolLine>
+        </>
       ) : (
         <h2>
           <HeadlineLink href={data.url}>{data.title}</HeadlineLink>
         </h2>
       )}
-
       <Wrapper purpose={data.purpose}>
         <Overview purpose={data.purpose}>
           {data.description && renderArticle(data.description.children)}
@@ -71,6 +86,18 @@ export default function Topic({ data }: TopicProps) {
           ></TopicLinkList>
         </LinkList>
       </Wrapper>
+
+      {data.purpose === TopicPurposes.detail && (
+        <>
+          <ToolLine>
+            <ToolLineButton onClick={() => setOpen(true)}>
+              <FontAwesomeIcon icon={faShareAlt} size="1x" /> Teilen
+            </ToolLineButton>
+          </ToolLine>
+          <Toolbox onShare={() => setOpen(true)} hideEdit={true} />
+          <ShareModal open={open} onClose={() => setOpen(false)} />
+        </>
+      )}
     </>
   )
 }
