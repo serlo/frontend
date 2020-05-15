@@ -20,11 +20,6 @@ export default function Breadcrumbs(props: BreadcrumbProps) {
     return null
   }
 
-  /*
-  should probably happen on server side, last entry of Breadcrumbs should link to overview
-  at least on mobile but probably on larger screens too.
-  */
-
   return (
     <BreadcrumbWrapper>
       {entries.map((bcEntry, i, l) => {
@@ -43,12 +38,13 @@ export default function Breadcrumbs(props: BreadcrumbProps) {
 
 function BreadcrumbEntries(props) {
   const { bcEntry, i, l } = props
-
-  const overflow = l.length > 5
-  const itemsToRemove = l.length - 5
+  const maxItems = 4
+  const overflow = l.length > maxItems
+  const itemsToRemove = l.length - maxItems
   const ellipsesItem = overflow && i == 2
 
   if (overflow && i > 2 && i < 1 + itemsToRemove) return null
+  if (l.length - itemsToRemove > 4 && i === 1) return null
 
   return l.length !== i + 1 ? (
     <>
@@ -89,9 +85,11 @@ const Breadcrumb = styled.a`
   font-size: 1.125rem;
   align-items: center;
 
-  &[href]:hover {
-    background: ${props => props.theme.colors.brand};
-    color: #fff;
+  &:not([href]),
+  &:not([href]):hover {
+    background: transparent;
+    color: ${props => props.theme.colors.dark1};
+    cursor: default;
   }
 
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
