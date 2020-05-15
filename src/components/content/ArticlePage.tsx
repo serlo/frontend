@@ -48,9 +48,9 @@ export default function ArticlePage({ data, contentId, contentType }) {
       )}
       <StyledH1 displayMode>
         {contentType === 'Article' && (
-          <>
-            <StyledIcon icon={faNewspaper} title={'Artikel'} />{' '}
-          </>
+          <span title={'Artikel'}>
+            <StyledIcon icon={faNewspaper} />{' '}
+          </span>
         )}
         {data.title}
       </StyledH1>

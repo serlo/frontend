@@ -45,9 +45,9 @@ export default function Topic({ data }: TopicProps) {
       {data.purpose === TopicPurposes.detail ? (
         <Headline>
           {data.exercises && (
-            <>
-              <StyledIcon icon={faFile} title={'Aufgabensammlung'} />{' '}
-            </>
+            <span title={'Aufgabensammlung'}>
+              <StyledIcon icon={faFile} />{' '}
+            </span>
           )}
           {data.title}
         </Headline>
