@@ -6,7 +6,7 @@ import { makeMargin } from '../../helper/csshelper'
 import ToolLine from '../navigation/ToolLine'
 import ToolLineButton from '../navigation/ToolLineButton'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faShareAlt } from '@fortawesome/free-solid-svg-icons'
+import { faShareAlt, faFile } from '@fortawesome/free-solid-svg-icons'
 import ShareModal from '../navigation/ShareModal'
 import Toolbox from '../navigation/Toolbox'
 
@@ -51,7 +51,14 @@ export default function Topic({ data, contentId }: TopicProps) {
     <>
       {data.purpose === TopicPurposes.detail ? (
         <>
-          <Headline>{data.title}</Headline>
+          <Headline>
+            {data.exercises && (
+              <span title={'Aufgabensammlung'}>
+                <StyledIcon icon={faFile} />{' '}
+              </span>
+            )}
+            {data.title}
+          </Headline>
           <ToolLine>
             <ToolLineButton top onClick={() => setOpen(true)}>
               <FontAwesomeIcon icon={faShareAlt} size="1x" /> Teilen
@@ -166,4 +173,8 @@ const Overview = styled.div<{ purpose: TopicPurposes }>`
     css`
       flex: 1 1 40%;
     `}
+`
+
+const StyledIcon = styled(FontAwesomeIcon)`
+  color: ${props => props.theme.colors.lighterblue};
 `
