@@ -33,7 +33,8 @@ enum HeadlineEnum {
   articles = 'Artikel',
   videos = 'Videos',
   applets = 'Applets',
-  exercises = 'Aufgaben'
+  exercises = 'Aufgaben',
+  subfolders = 'Bereiche'
 }
 
 const iconObjects = {

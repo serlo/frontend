@@ -10,12 +10,20 @@ import React from 'react'
 export default function InputExercise({ state }) {
   const [feedback, setFeedback] = React.useState(null)
   const [value, setValue] = React.useState('')
+
+  function keyPress(e) {
+    if (e.keyCode == 13) {
+      setFeedback(checkAnswer(value, state))
+    }
+  }
+
   return (
     <Wrapper>
       <StyledInput
         type="text"
         value={value}
         onChange={e => setValue(e.target.value)}
+        onKeyDown={keyPress}
         placeholder={'Deine Antwort…'}
       />{' '}
       {state.unit}

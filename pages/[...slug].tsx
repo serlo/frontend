@@ -141,7 +141,7 @@ function PageView(props) {
                 />
               )}
             {contentType === 'TaxonomyTerm' && data.data && (
-              <Topic data={data.data} />
+              <Topic data={data.data} contentId={contentId} />
             )}
             {(contentType === 'Video' || contentType === 'Applet') && (
               <>
