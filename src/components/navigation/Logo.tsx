@@ -5,13 +5,14 @@ const logoTargetWidth = 160
 
 interface LogoProps {
   subline: string
+  noLink?: boolean
 }
 
-export default function Logo({ subline }: LogoProps) {
+export default function Logo({ subline, noLink }: LogoProps) {
   return (
     <>
       <div>
-        <a href="/">
+        <a href={noLink ? null : '/'}>
           <Image
             alt="Serlo"
             src={'/_assets/img/serlo-logo.svg'}
@@ -22,7 +23,7 @@ export default function Logo({ subline }: LogoProps) {
       </div>
       {subline && (
         <SublineWrap>
-          <SublineLink className="subline icon" href="/">
+          <SublineLink className="subline icon" href={noLink ? null : '/'}>
             {subline}
           </SublineLink>
         </SublineWrap>

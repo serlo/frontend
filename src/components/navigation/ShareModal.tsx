@@ -25,7 +25,7 @@ import Modal from '../Modal'
 interface ShareModalProps {
   open: boolean
   onClose: () => void
-  contentId: number
+  contentId?: number
 }
 
 export default function ShareModal(props: ShareModalProps) {
