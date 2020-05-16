@@ -3,11 +3,7 @@ import StyledH1 from '../tags/StyledH1'
 import ToolLine from '../navigation/ToolLine'
 import ToolLineButton from '../navigation/ToolLineButton'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faShareAlt,
-  faNewspaper,
-  faGraduationCap
-} from '@fortawesome/free-solid-svg-icons'
+import { faShareAlt, faNewspaper } from '@fortawesome/free-solid-svg-icons'
 import ShareModal from '../navigation/ShareModal'
 import { renderArticle } from '../../schema/articleRenderer'
 import HSpace from './HSpace'
