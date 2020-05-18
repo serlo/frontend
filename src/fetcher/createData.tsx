@@ -102,6 +102,7 @@ function createApplet(uuid) {
         }
       ]
     },
+    title: uuid.currentRevision.title,
     metaTitle: uuid.currentRevision.metaTitle,
     metaDescription: uuid.currentRevision.metaDescription
   }
