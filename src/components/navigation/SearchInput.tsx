@@ -77,8 +77,8 @@ export default function SearchInput() {
         <div
           className={isSearchPage ? 'gcse-searchbox' : 'gcse-searchbox-only'}
           data-autocompletemaxcompletions="7"
-          data-resultsUrl="/search"
-          data-enableHistory="true"
+          data-resultsurl="/search"
+          data-enablehistory="true"
         ></div>
       </SearchForm>
 
