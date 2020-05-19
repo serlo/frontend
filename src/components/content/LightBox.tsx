@@ -50,6 +50,7 @@ const _StyledImg = styled.img`
   max-width: 100%;
   height: auto;
   max-height: 86vh;
+  cursor: zoom-out;
 `
 
 // const CloseButton = styled.button`
