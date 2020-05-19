@@ -1,7 +1,7 @@
 import React from 'react'
 import dynamic from 'next/dynamic'
 
-import ImgCentered from '../components/content/ImgCentered'
+import ImgWrapper from '../components/content/ImgWrapper'
 import MathWrapper from '../components/content/MathWrapper'
 import LayoutRow from '../components/content/LayoutRow'
 import Col from '../components/content/Col'
@@ -199,7 +199,7 @@ export function renderImg({
     return comp
   }
   return (
-    <ImgCentered {...attributes}>
+    <ImgWrapper {...attributes} image={element} linked={element.href}>
       {wrapImg(
         <MaxWidthDiv maxWidth={element.maxWidth ? element.maxWidth : 0}>
           {wrapInA(
@@ -212,7 +212,7 @@ export function renderImg({
       )}
 
       {children}
-    </ImgCentered>
+    </ImgWrapper>
   )
 }
 

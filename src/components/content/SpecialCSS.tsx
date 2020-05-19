@@ -24,7 +24,7 @@ const SpecialCSS = styled.div`
       [class|='MathWrapper']:last-child,
       ul:last-child,
       ol:last-child,
-      [class|='ImgCentered']:last-child {
+      [class|='ImgWrapper']:last-child {
         margin-bottom: 0;
       }
     }
