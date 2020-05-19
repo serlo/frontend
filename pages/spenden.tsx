@@ -29,7 +29,7 @@ const footerEntries = [
   }
 ]
 
-export default function Landing() {
+export default function DonationPage() {
   const twingleID = '0001'
 
   React.useEffect(() => {
