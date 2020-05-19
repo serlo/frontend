@@ -177,4 +177,6 @@ const Overview = styled.div<{ purpose: TopicPurposes }>`
 
 const StyledIcon = styled(FontAwesomeIcon)`
   color: ${props => props.theme.colors.lighterblue};
+  font-size: 1.43rem;
+  vertical-align: initial;
 `

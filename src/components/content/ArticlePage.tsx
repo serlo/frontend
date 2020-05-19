@@ -84,4 +84,5 @@ export default function ArticlePage({ data, contentId, contentType }) {
 
 const StyledIcon = styled(FontAwesomeIcon)`
   color: ${props => props.theme.colors.lighterblue};
+  font-size: 1.73rem;
 `

@@ -216,6 +216,7 @@ const MaxWidthDiv = styled.div<{ showNav?: boolean }>`
 
 const StyledIcon = styled(FontAwesomeIcon)`
   color: ${props => props.theme.colors.lighterblue};
+  font-size: 1.73rem;
 `
 
 // PageView.getInitialProps = async ({ req, res }) => {
