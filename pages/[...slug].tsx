@@ -23,6 +23,9 @@ const Breadcrumbs = dynamic(() =>
   import('../src/components/navigation/Breadcrumbs')
 )
 const Topic = dynamic(() => import('../src/components/content/Topic'))
+const NewsletterPopup = dynamic(() =>
+  import('../src/components/NewsletterPopup')
+)
 
 enum MetaImageEnum {
   default = 'meta/serlo.jpg',
@@ -51,7 +54,7 @@ function PageView(props) {
     if (contentType === 'CoursePage') return 'course-page'
     if (data.data?.type === 'topicFolder') return 'topic-folder'
     if (contentType === 'TaxonomyTerm') return 'topic'
-    //Article, Video, Applet
+    //Article, Video, Applet, Page
     return contentType.toLowerCase()
   }
 
@@ -173,6 +176,7 @@ function PageView(props) {
         </MaxWidthDiv>
       </RelatveContainer>
       <Footer />
+      {contentType === 'Page' && data.data && <NewsletterPopup />}
       <CookieBar />
     </>
   )
