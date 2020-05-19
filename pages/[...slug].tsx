@@ -23,8 +23,10 @@ const Breadcrumbs = dynamic(() =>
   import('../src/components/navigation/Breadcrumbs')
 )
 const Topic = dynamic(() => import('../src/components/content/Topic'))
-const NewsletterPopup = dynamic(() =>
-  import('../src/components/NewsletterPopup')
+
+const NewsletterPopup = dynamic(
+  () => import('../src/components/NewsletterPopup'),
+  { ssr: false }
 )
 
 enum MetaImageEnum {
