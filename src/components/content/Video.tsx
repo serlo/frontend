@@ -66,13 +66,13 @@ export default function Video(props) {
 
 interface LiteYouTubeEmbedProps {
   id: string
-  playlist: boolean
-  poster: string
-  title: string
-  activatedClass: string
-  iframeClass: string
-  playerClass: string
-  wrapperClass: string
+  playlist?: boolean
+  poster?: string
+  title?: string
+  activatedClass?: string
+  iframeClass?: string
+  playerClass?: string
+  wrapperClass?: string
 }
 
 const LiteYouTubeEmbed = ({
@@ -84,7 +84,7 @@ const LiteYouTubeEmbed = ({
   iframeClass = '',
   playerClass = 'lty-playbtn',
   wrapperClass = 'yt-lite'
-}) => {
+}: LiteYouTubeEmbedProps) => {
   const [preconnected, setPreconnected] = React.useState(false)
   const [iframe, setIframe] = React.useState(false)
   const videoId = encodeURIComponent(id)
