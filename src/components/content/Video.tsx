@@ -27,7 +27,8 @@ export default function Video(props) {
     return (
       <YouTubeWrapper>
         <StyledLiteYouTubeEmbed
-          id={yt[4]}
+          // id={yt[4]}
+          id={'aAKYUUr8Xjc'}
           poster="sddefault" // "default","mqdefault",  "hqdefault", "sddefault" and "maxresdefault".
           title={`YouTube Video: ${iframeUrl}`}
         />
@@ -87,9 +88,12 @@ const LiteYouTubeEmbed = ({
 }: LiteYouTubeEmbedProps) => {
   const [preconnected, setPreconnected] = React.useState(false)
   const [iframe, setIframe] = React.useState(false)
+  const [fallback, setUseFallback] = React.useState(false)
+
   const videoId = encodeURIComponent(id)
   const videoTitle = title
   const posterUrl = `https://i.ytimg.com/vi/${videoId}/${poster}.jpg`
+  const posterUrlFallback = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`
   const iframeSrc = !playlist
     ? `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&html5=1`
     : `https://www.youtube-nocookie.com.com/embed/videoseries?list=${videoId}`
@@ -107,7 +111,20 @@ const LiteYouTubeEmbed = ({
   React.useEffect(() => {
     const { current } = refVideo
 
-    current.style.backgroundImage = `url('${posterUrl}')`
+    if (!fallback) {
+      let img = new Image()
+      img.onload = () => {
+        if (img.width === 120) {
+          //default image width
+          setUseFallback(true)
+        }
+      }
+      img.src = posterUrl
+    }
+
+    current.style.backgroundImage = `url('${
+      fallback ? posterUrlFallback : posterUrl
+    }')`
     current.addEventListener('pointerover', warmConnections, true)
     current.addEventListener('click', addIframe, true)
 
@@ -115,7 +132,7 @@ const LiteYouTubeEmbed = ({
       current.removeEventListener('pointerover', warmConnections)
       current.removeEventListener('click', addIframe)
     }
-  })
+  }, [fallback])
 
   return (
     <>
