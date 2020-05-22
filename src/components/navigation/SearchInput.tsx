@@ -3,11 +3,9 @@ import styled, { createGlobalStyle, css } from 'styled-components'
 import { lighten } from 'polished'
 import { inputFontReset } from '../../helper/csshelper'
 import SearchIcon from '../../../public/_assets/img/search-icon.svg'
-import SearchResults from './SearchResults'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { theme } from '../../theme'
-import Modal from '../Modal'
 
 /*
 This components starts with only a placeholder that looks like a searchbar (basically a button).
