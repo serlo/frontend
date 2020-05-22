@@ -11,6 +11,7 @@ export default function Code({ content }) {
 
 const Pre = styled.pre`
   ${makeMargin}
+  margin-top: 5px;
   margin-bottom: ${props => props.theme.spacing.mb.block};
   padding: 16px;
 
@@ -18,6 +19,7 @@ const Pre = styled.pre`
   border-left: 8px solid ${props => props.theme.colors.lighterblue};
 
   > code {
-    font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace;
+    font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier,
+      monospace;
   }
 `
