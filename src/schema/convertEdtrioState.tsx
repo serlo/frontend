@@ -193,6 +193,17 @@ export function convert(node) {
       }
     ]
   }
+  if (plugin === 'equations') {
+    const steps = node.state.steps.map(step => {
+      return {
+        left: convert(step.left),
+        sign: step.sign,
+        right: convert(step.right),
+        transform: convert(step.transform)
+      }
+    })
+    return [{ type: 'equations', steps, children: [{ text: '' }] }]
+  }
 
   const type = node.type
   if (type === 'p') {
