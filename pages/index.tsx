@@ -22,7 +22,7 @@ export default function Landing() {
   return (
     <>
       <Head>
-        <title>Serlo - Die freie Lernplattform</title>
+        <title>Serlo.org - Die freie Lernplattform</title>
       </Head>
       <Header />
       <SubjectsSection>

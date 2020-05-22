@@ -50,6 +50,12 @@ export default class MyDocument extends Document {
         <Head>
           <meta property="og:site_name" content="Serlo" />
           <meta property="og:type" content="website" />
+          <link
+            href="/opensearch.de.xml"
+            rel="search"
+            type="application/opensearchdescription+xml"
+            title="Serlo (de)"
+          />
         </Head>
         <body style={bodyStyles}>
           <Main />
