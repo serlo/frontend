@@ -163,6 +163,7 @@ export const dataQuery = selector => `
         alias
         currentRevision {
           title
+          content
           url
           metaTitle
           metaDescription

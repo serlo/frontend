@@ -99,9 +99,11 @@ function createApplet(uuid) {
           type: 'geogebra',
           id: uuid.currentRevision.url,
           children: [{ text: '' }]
-        }
+        },
+        ...convertState(uuid.currentRevision.content).children
       ]
     },
+    title: uuid.currentRevision.title,
     metaTitle: uuid.currentRevision.metaTitle,
     metaDescription: uuid.currentRevision.metaDescription
   }
