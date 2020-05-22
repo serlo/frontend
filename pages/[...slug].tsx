@@ -218,10 +218,16 @@ const StyledIcon = styled(FontAwesomeIcon)`
 
 export async function getServerSideProps(props) {
   const { origin } = absoluteUrl(props.req)
+  const endpoint = props.req.headers['x-serlo-api']
   const res = await fetch(
     `${origin}/api/frontend/${encodeURIComponent(
       props.params.slug.join('/')
-    )}?redirect`
+    )}?redirect`,
+    {
+      headers: {
+        'X-SERLO-API': endpoint
+      }
+    }
   )
   const data = await res.json()
 

@@ -2,9 +2,20 @@ import { request } from 'graphql-request'
 import { dataQuery, idQuery } from './query'
 import { processResponse } from './processResponse'
 
-const endpoint = 'https://api.serlo.org/graphql'
+const availableEndpoints = [
+  'https://api.serlo-development.dev/graphql',
+  'https://api.serlo-staging.dev/graphql',
+  'https://api.serlo.org/graphql'
+]
 
-export default async function fetchContent(alias: string, redirect) {
+export default async function fetchContent(
+  alias: string,
+  redirect,
+  forwardedEndpoint = ''
+) {
+  const endpoint = availableEndpoints.includes(forwardedEndpoint)
+    ? forwardedEndpoint
+    : availableEndpoints[2]
   try {
     if (redirect && /^\/[\d]+$/.test(alias)) {
       // redirect id to alias
