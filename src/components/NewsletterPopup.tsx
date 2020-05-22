@@ -45,7 +45,7 @@ export default function NewsletterPopup() {
       (tenant === 'de' || tenant === 'localhost') &&
       pages.indexOf(window.location.pathname) > -1
     ) {
-      let mcscriptTag = document.createElement('script')
+      const mcscriptTag = document.createElement('script')
       mcscriptTag.src =
         '//s3.amazonaws.com/downloads.mailchimp.com/js/signup-forms/popup/embed.js'
       mcscriptTag.setAttribute(
@@ -54,8 +54,8 @@ export default function NewsletterPopup() {
       )
       document.body.appendChild(mcscriptTag)
       mcscriptTag.onload = () => {
-        let customScriptTag = document.createElement('script')
-        let inlineScript = document.createTextNode(`
+        const customScriptTag = document.createElement('script')
+        const inlineScript = document.createTextNode(`
         require(['mojo/signup-forms/Loader'], function(L) {
           L.start({
               baseUrl: 'mc.us7.list-manage.com',
