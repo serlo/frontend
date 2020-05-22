@@ -110,6 +110,15 @@ export function convert(node) {
       }
     ]
   }
+  if (plugin === 'highlight') {
+    return [
+      {
+        type: 'code',
+        content: node.state.code,
+        children: [{ text: '' }]
+      }
+    ]
+  }
   if (plugin === 'table') {
     const html = converter.makeHtml(node.state)
     return convertLegacyState(html).children
