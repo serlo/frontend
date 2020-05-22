@@ -201,6 +201,13 @@ export function convert(node) {
     if (children.length === 1 && children[0].type === 'math') {
       return children
     }
+    // compat: unwrap ul/ol from p
+    if (
+      children.length === 1 &&
+      (children[0].type === 'ul' || children[0].type === 'ol')
+    ) {
+      return children
+    }
     // compat handle newlines
     if (
       children.some(
