@@ -1,8 +1,10 @@
+import React from 'react'
 import StyledP from '../tags/StyledP'
 import styled from 'styled-components'
 import { makeMargin } from '../../helper/csshelper'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFilm } from '@fortawesome/free-solid-svg-icons'
+import LiteYouTubeEmbed from '../../../external/LiteYouTubeEmbed'
 
 export default function Video(props) {
   const { url } = props
@@ -23,6 +25,13 @@ export default function Video(props) {
   )
   if (yt) {
     iframeUrl = `https://www.youtube-nocookie.com/embed/${yt[4]}?html5=1`
+    return (
+      <LiteYouTubeEmbed
+        id={yt[4]}
+        poster="sddefault" // "default","mqdefault",  "hqdefault", "sddefault" and "maxresdefault".
+        title={`YouTube Video: ${iframeUrl}`}
+      />
+    )
   }
 
   const vimeo = /^(https?:\/\/)?(.*?vimeo\.com\/)(.+)/.exec(url)
@@ -38,7 +47,7 @@ export default function Video(props) {
   if (iframeUrl) {
     return (
       <VideoWrapper>
-        <iframe src={iframeUrl} allowFullScreen />
+        <iframe src={iframeUrl} />
       </VideoWrapper>
     )
   }

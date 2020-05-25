@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { inputFontReset } from '../../helper/csshelper'
 
 export default function SearchResults(props) {
-  return <SearchResultsWrap>{props.children}</SearchResultsWrap>
+  return <SearchResultsWrap {...props}>{props.children}</SearchResultsWrap>
 }
 
 const SearchResultsWrap = styled.div`
@@ -41,7 +41,8 @@ const SearchResultsWrap = styled.div`
     margin: 0 auto;
 
     .gsc-results-wrapper-visible::before {
-      content: attr(data-customsearch);
+      /* content: attr(data-customsearch); */
+      content: 'Custom Search';
       font-weight: bold;
       display: block;
       color: ${props => props.theme.colors.brand};

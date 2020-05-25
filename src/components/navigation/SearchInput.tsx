@@ -3,7 +3,6 @@ import styled, { createGlobalStyle, css } from 'styled-components'
 import { lighten } from 'polished'
 import { inputFontReset } from '../../helper/csshelper'
 import SearchIcon from '../../../public/_assets/img/search-icon.svg'
-import SearchResults from './SearchResults'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { theme } from '../../theme'
@@ -12,13 +11,21 @@ import { theme } from '../../theme'
 This components starts with only a placeholder that looks like a searchbar (basically a button).
 When activated (by click) it loads the Google Custom Search scrips that generate the real input button and alot of markup.
 We style this markup and use it to silenty replace the placeholder.
-From this point on it's a styled GSC that displays the results in an overlay.
+From this point on it's a styled GSC that loads /search to display the results.
 It's a bit hacky, but it's free and works quite well.
 */
 
 export default function SearchInput() {
   const [searchLoaded, setSearchLoaded] = React.useState(false)
   const [searchActive, setSearchActive] = React.useState(false)
+  const [isSearchPage, setIsSearchPage] = React.useState(false)
+
+  React.useEffect(() => {
+    if (window.location.pathname === '/search') {
+      setIsSearchPage(true)
+      activateSearch()
+    }
+  }, [])
 
   const checkElement = async selector => {
     while (document.querySelector(selector) === null) {
@@ -31,7 +38,8 @@ export default function SearchInput() {
     if (searchActive) return
 
     if (!searchLoaded) {
-      const cx = '016022363195733463411:78jhtkzhbhc'
+      // const cx = '016022363195733463411:78jhtkzhbhc'
+      const cx = '017461339636837994840:ifahsiurxu4' //"old version" with better autocomplete
       const gcse = document.createElement('script')
       gcse.type = 'text/javascript'
       gcse.async = true
@@ -43,13 +51,7 @@ export default function SearchInput() {
     }
 
     checkElement('#gsc-i-id1').then(input => {
-      // const placeholder = input.getAttribute('placeholder') stopped working
-      const placeholder = 'Custom Search'
       input.setAttribute('placeholder', 'Suche')
-      document
-        .querySelector('#___gcse_1 .gsc-results-wrapper-overlay')
-        .setAttribute('data-customsearch', placeholder)
-
       input.focus()
       setSearchActive(true)
     })
@@ -71,16 +73,14 @@ export default function SearchInput() {
           </>
         )}
         <div
-          className="gcse-searchbox"
-          data-autocompletemaxcompletions="5"
+          className={isSearchPage ? 'gcse-searchbox' : 'gcse-searchbox-only'}
+          data-autocompletemaxcompletions="7"
+          data-resultsurl="/search"
+          data-enablehistory="true"
         ></div>
       </SearchForm>
 
       <AutocompleteStyle />
-
-      <SearchResults>
-        <div className="gcse-searchresults"></div>
-      </SearchResults>
     </>
   )
 }
@@ -117,6 +117,7 @@ const sharedButtonStyles = css`
   transition: background-color 0.2s ease-in;
   text-align: center;
   pointer-events: none;
+  cursor: pointer;
 
   @media (min-width: ${props => props.theme.breakpoints.sm}) {
     border-radius: 5rem;
@@ -259,7 +260,7 @@ const SearchForm = styled.div`
     top: 133px;
     right: 32px;
     height: ${smHeightPx};
-    width: 200px;
+    width: 300px;
     background-color: transparent;
     border-radius: 18px;
     transition: all 0.4s ease;

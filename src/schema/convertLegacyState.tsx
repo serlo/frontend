@@ -418,7 +418,7 @@ function convert(node) {
       .split('&nbsp;')
       .join(' ')
       .split('\n')
-      .join('')
+      .join(' ')
       .split('&lt;')
       .join('<')
       .split('&amp;')

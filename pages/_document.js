@@ -50,7 +50,6 @@ export default class MyDocument extends Document {
         <Head>
           <meta property="og:site_name" content="Serlo" />
           <meta property="og:type" content="website" />
-
           <link
             rel="apple-touch-icon"
             sizes="180x180"
@@ -74,6 +73,12 @@ export default class MyDocument extends Document {
           <meta name="msapplication-TileColor" content="#0b7ec2" />
           <meta name="msapplication-config" content="/browserconfig.xml" />
           <meta name="theme-color" content="#ff0000"></meta>
+          <link
+            href="/opensearch.de.xml"
+            rel="search"
+            type="application/opensearchdescription+xml"
+            title="Serlo (de)"
+          />
         </Head>
         <body style={bodyStyles}>
           <Main />
