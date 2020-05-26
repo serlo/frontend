@@ -15,19 +15,17 @@ export default function Link({
 }) {
   const [prettyHref, setPrettyHref] = React.useState('')
 
+  if (!element.href)
+    return <React.Fragment {...attributes}>{children}</React.Fragment>
+
   const isExternal = element.href.indexOf('//') > -1
   const isId = /^\/[\d]+$/.test(element.href)
 
-  React.useEffect(() => {
-    if (!isId) return
-
+  if (isId) {
     request(endpoint, idQuery(element.href.substring(1))).then(res => {
       if (res && res.uuid && res.uuid.alias) setPrettyHref(res.uuid.alias)
     })
-  }, [])
-
-  if (!element.href)
-    return <React.Fragment {...attributes}>{children}</React.Fragment>
+  }
 
   return (
     <StyledA href={prettyHref ? prettyHref : element.href} {...attributes}>
