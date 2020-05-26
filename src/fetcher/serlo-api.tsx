@@ -2,7 +2,7 @@ import { request } from 'graphql-request'
 import { dataQuery, idQuery } from './query'
 import { processResponse } from './processResponse'
 
-const endpoint = 'https://api.serlo.org/graphql'
+export const endpoint = 'https://api.serlo.org/graphql'
 
 export default async function fetchContent(alias: string, redirect) {
   try {
