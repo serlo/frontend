@@ -143,11 +143,7 @@ function renderElement(props) {
 
 const nowrap = comp => comp
 
-export function renderA({
-  element,
-  attributes = {},
-  children = null
-}) {
+export function renderA({ element, attributes = {}, children = null }) {
   return (
     <Link element={element} {...attributes}>
       {children}
