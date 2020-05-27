@@ -412,16 +412,21 @@ function convert(node) {
       ]
     }
     if (node.name === 'pre') {
-      return convert(node.children)
+      const content = node.children[0]?.children[0]?.data
+      if (content) {
+        return [
+          {
+            type: 'code',
+            content,
+            children: [{ text: '' }]
+          }
+        ]
+      } else {
+        return []
+      }
     }
     if (node.name === 'code') {
-      return [
-        {
-          type: 'code',
-          content: node.children[0].data,
-          children: [{ text: '' }]
-        }
-      ]
+      return convert(node.children)
     }
   }
   if (node.type === 'text') {
