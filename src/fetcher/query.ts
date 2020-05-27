@@ -1,7 +1,7 @@
 // TODO: needs type declaration
 export const idQuery = (id: any) => `
   {
-    uuid(id:${id}) {
+    uuid(id:${id as string}) {
       ... on Entity {
         alias
       }
@@ -18,7 +18,7 @@ export const idQuery = (id: any) => `
 // TODO: needs type declaration
 export const dataQuery = (selector: any) => `
   {
-    uuid(${selector}) {
+    uuid(${selector as string}) {
       __typename
 
       ... on Page {

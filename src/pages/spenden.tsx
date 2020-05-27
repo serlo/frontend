@@ -1,23 +1,22 @@
+import { faPaypal } from '@fortawesome/free-brands-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Head from 'next/head'
 import React from 'react'
 import styled from 'styled-components'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPaypal } from '@fortawesome/free-brands-svg-icons'
-import Head from 'next/head'
+
+import { CookieBar } from '@/components/content/cookie-bar'
+import { PartnerList } from '@/components/landing/partner-list'
+import { FooterNav } from '@/components/navigation/footer-nav'
+import { Logo } from '@/components/navigation/logo'
+import { StyledA } from '@/components/tags/styled-a'
+import { StyledImg } from '@/components/tags/styled-img'
+import { StyledLi } from '@/components/tags/styled-li'
+import { StyledUl } from '@/components/tags/styled-ul'
 import {
   makeGreenButton,
   makeResponsivePadding,
   makePadding,
-} from '../helper/csshelper'
-
-import PartnerList from '@/components/landing/PartnerList'
-import CookieBar from '@/components/content/CookieBar'
-import Logo from '@/components/navigation/Logo'
-import StyledImg from '@/components/tags/StyledImg'
-import StyledA from '@/components/tags/StyledA'
-import StyledUl from '@/components/tags/StyledUl'
-import StyledLi from '@/components/tags/StyledLi'
-
-import FooterNav from '../components/navigation/FooterNav'
+} from '@/helper/css'
 
 const footerEntries = [
   {
@@ -57,7 +56,7 @@ export default function DonationPage() {
 
       <BlueHeader>
         <PaddedDiv>
-          <Logo subline="" noLink={true} />
+          <Logo subline="" noLink />
         </PaddedDiv>
       </BlueHeader>
 

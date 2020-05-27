@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/browser'
 import Document, {
   Html,
   Head,
@@ -6,8 +7,8 @@ import Document, {
   DocumentContext,
 } from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
-import * as Sentry from '@sentry/browser'
-import GoogleAnalytics from '@/components/GoogleAnalytics'
+
+import { GoogleAnalytics } from '@/components/google-analytics'
 
 const bodyStyles = {
   margin: 0,
