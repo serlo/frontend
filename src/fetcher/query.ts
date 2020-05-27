@@ -1,4 +1,4 @@
-export const idQuery = id => `
+export const idQuery = (id) => `
   {
     uuid(id:${id}) {
       ... on Entity {
@@ -14,7 +14,7 @@ export const idQuery = id => `
   }
 `
 
-export const dataQuery = selector => `
+export const dataQuery = (selector) => `
   {
     uuid(${selector}) {
       __typename

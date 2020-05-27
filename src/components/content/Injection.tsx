@@ -14,11 +14,11 @@ export default function Injection({ href }) {
         href.startsWith('/') ? href : '/' + href
       )}`
     )
-      .then(res => {
+      .then((res) => {
         if (res.headers.get('content-type').includes('json')) return res.json()
         else return res.text()
       })
-      .then(data => {
+      .then((data) => {
         if (data.contentType && data.data) {
           setValue(data.data.value)
           if (data.data.license) {

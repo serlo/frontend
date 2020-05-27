@@ -42,7 +42,7 @@ const BoxWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.lg}) {
     display: none;
   }
 `

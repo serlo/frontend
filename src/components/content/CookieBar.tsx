@@ -14,8 +14,8 @@ export default function CookieBar() {
         window.location.host +
         '/api/frontend/privacy'
     )
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         const localInfo = localStorage.getItem('consent')
         const json = localInfo ? JSON.parse(localInfo) : {}
         if (json.revision !== data[0]) {
@@ -53,7 +53,7 @@ export default function CookieBar() {
 }
 
 const CookieWrapper = styled.div`
-  background: ${props => props.theme.colors.brand};
+  background: ${(props) => props.theme.colors.brand};
   box-sizing: border-box;
   color: white;
   bottom: 0;
@@ -65,7 +65,7 @@ const CookieWrapper = styled.div`
 `
 
 const CookieButton = styled.button`
-  background: ${props => props.theme.colors.brandGreen};
+  background: ${(props) => props.theme.colors.brandGreen};
   font-size: 1.125rem;
   color: white;
   cursor: pointer;
@@ -75,7 +75,7 @@ const CookieButton = styled.button`
   outline: none;
 
   &:hover {
-    background: ${props => props.theme.colors.linkHoverColor};
+    background: ${(props) => props.theme.colors.linkHoverColor};
   }
 
   @media (max-width: 1091px) {
@@ -88,6 +88,6 @@ const CookieLink = styled.a`
   color: white;
 
   &:hover {
-    color: ${props => props.theme.colors.lighterblue};
+    color: ${(props) => props.theme.colors.lighterblue};
   }
 `

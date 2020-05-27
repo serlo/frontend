@@ -13,7 +13,7 @@ export function processResponse(reqData) {
     navigation: createNavigation(reqData.uuid),
     data: createData(reqData.uuid),
     license: createLicense(reqData.uuid),
-    horizonIndices: shuffle(Object.keys(horizonData))
+    horizonIndices: shuffle(Object.keys(horizonData)),
   }
 }
 

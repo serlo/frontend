@@ -5,11 +5,11 @@ const StyledH3 = styled.h3`
   ${makeMargin}
   margin-top: 0;
   padding-top: 12px;
-  margin-bottom: ${props => props.theme.spacing.mb.h3};
+  margin-bottom: ${(props) => props.theme.spacing.mb.h3};
   font-size: 1.3125rem;
   font-weight: bold;
   line-height: 1.22;
-  color: ${props => props.theme.colors.h23};
+  color: ${(props) => props.theme.colors.h23};
 `
 
 export default StyledH3

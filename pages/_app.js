@@ -18,16 +18,16 @@ import { version } from '../package.json'
 if (process.env.SENTRY_DSN !== undefined) {
   Sentry.init({
     dsn: process.env.SENTRY_DSN,
-    release: `frontend@${version}-${process.env.VERCEL_GITHUB_COMMIT_SHA}`
+    release: `frontend@${version}-${process.env.VERCEL_GITHUB_COMMIT_SHA}`,
   })
 }
 
 const FontFix = createGlobalStyle`
   h1,h2, main b {
-    letter-spacing: ${props => props.theme.defaults.boldLetterSpacing};
+    letter-spacing: ${(props) => props.theme.defaults.boldLetterSpacing};
   }
   body {
-    letter-spacing: ${props => props.theme.defaults.regularLetterSpacing};
+    letter-spacing: ${(props) => props.theme.defaults.regularLetterSpacing};
   }
 `
 

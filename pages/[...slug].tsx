@@ -33,7 +33,7 @@ enum MetaImageEnum {
   default = 'meta/serlo.jpg',
   mathe = 'meta/mathematik.jpg',
   nachhaltigkeit = 'meta/nachhaltigkeit.jpg',
-  biologie = 'meta/biologie.jpg'
+  biologie = 'meta/biologie.jpg',
 }
 
 function PageView(props) {
@@ -46,7 +46,7 @@ function PageView(props) {
     contentType,
     title,
     navigation,
-    license
+    license,
   } = data
 
   function getMetaContentType() {
@@ -83,7 +83,7 @@ function PageView(props) {
     const regexp = /"text":"(.)*?"/g
     const matches = stringified.match(regexp)
     const longFallback = matches
-      ? matches.map(str => str.substring(8, str.length - 1)).join('')
+      ? matches.map((str) => str.substring(8, str.length - 1)).join('')
       : ''
     if (longFallback.length < 50) return false
 
@@ -172,7 +172,7 @@ function PageView(props) {
           <HSpace amount={40} />
           {horizonIndices && (
             <Horizon
-              entries={horizonIndices.map(index => horizonData[index])}
+              entries={horizonIndices.map((index) => horizonData[index])}
             />
           )}
         </MaxWidthDiv>
@@ -192,17 +192,17 @@ const MaxWidthDiv = styled.div<{ showNav?: boolean }>`
   max-width: 800px;
   margin: 0 auto;
 
-  @media (min-width: ${props =>
-      props.theme.breakpoints.sm}) AND (max-width: ${props =>
+  @media (min-width: ${(props) =>
+      props.theme.breakpoints.sm}) AND (max-width: ${(props) =>
       props.theme.breakpoints.md}) {
     margin: 0 0 0 51px;
   }
 
-  ${props =>
+  ${(props) =>
     props.showNav &&
     css`
-      @media (min-width: ${props =>
-          props.theme.breakpoints.md}) AND (max-width: ${props =>
+      @media (min-width: ${(props) =>
+          props.theme.breakpoints.md}) AND (max-width: ${(props) =>
           props.theme.breakpoints.lg}) {
         margin: 0 0 0 200px;
       }
@@ -210,7 +210,7 @@ const MaxWidthDiv = styled.div<{ showNav?: boolean }>`
 `
 
 const StyledIcon = styled(FontAwesomeIcon)`
-  color: ${props => props.theme.colors.lighterblue};
+  color: ${(props) => props.theme.colors.lighterblue};
 `
 
 // PageView.getInitialProps = async ({ req, res }) => {
@@ -236,7 +236,7 @@ export async function getServerSideProps(props) {
     props.res.writeHead(301, {
       Location: encodeURI(data.redirect),
       // Add the content-type for SEO considerations
-      'Content-Type': 'text/html; charset=utf-8'
+      'Content-Type': 'text/html; charset=utf-8',
     })
     props.res.end()
     // compat: return empty props

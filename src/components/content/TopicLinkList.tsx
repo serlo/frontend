@@ -8,7 +8,7 @@ import {
   faCubes,
   faFile,
   faCircle,
-  faFolderOpen
+  faFolderOpen,
 } from '@fortawesome/free-solid-svg-icons'
 import { LinksInterface, TopicPurposes } from './Topic'
 
@@ -25,7 +25,7 @@ interface IconProps {
 enum IconSizeEnum {
   one = '1x',
   two = '2x',
-  three = '3x'
+  three = '3x',
 }
 
 enum HeadlineEnum {
@@ -34,7 +34,7 @@ enum HeadlineEnum {
   videos = 'Videos',
   applets = 'Applets',
   exercises = 'Aufgaben',
-  subfolders = 'Bereiche'
+  subfolders = 'Bereiche',
 }
 
 const iconObjects = {
@@ -43,7 +43,7 @@ const iconObjects = {
   videos: faPlayCircle,
   applets: faCubes,
   exercises: faFile,
-  subfolders: faFolderOpen
+  subfolders: faFolderOpen,
 }
 
 function RenderIcon(props: IconProps) {
@@ -59,7 +59,7 @@ export default function TopicLinkList({ links, purpose }: LinksProps) {
   // purpose === TopicPurposes.detail ? IconSizeEnum.three : IconSizeEnum.two
   return (
     <>
-      {Object.keys(links).map(link => {
+      {Object.keys(links).map((link) => {
         return links[link] && links[link].length > 0 ? (
           <LinkSection purpose={purpose} key={link}>
             {/* <IconWrapper purpose={purpose} title={HeadlineEnum[link]}>
@@ -72,7 +72,7 @@ export default function TopicLinkList({ links, purpose }: LinksProps) {
                 {HeadlineEnum[link]}
               </LinkSectionHeadline>
               {/* )} */}
-              {links[link].map(article => {
+              {links[link].map((article) => {
                 return (
                   <Link
                     href={article.url}
@@ -94,12 +94,12 @@ const LinkSection = styled.div<{ purpose: TopicPurposes }>`
   align-items: flex-start;
   display: flex;
 
-  margin-bottom: ${props =>
+  margin-bottom: ${(props) =>
     props.purpose === TopicPurposes.overview && '1.5rem'};
 
-  margin-top: ${props => props.purpose !== TopicPurposes.overview && '20px'};
-  @media (min-width: ${props => props.theme.breakpoints.mobile}) {
-    margin-top: ${props =>
+  margin-top: ${(props) => props.purpose !== TopicPurposes.overview && '20px'};
+  @media (min-width: ${(props) => props.theme.breakpoints.mobile}) {
+    margin-top: ${(props) =>
       props.purpose !== TopicPurposes.overview ? '20px' : '8px'};
   }
 
@@ -107,20 +107,20 @@ const LinkSection = styled.div<{ purpose: TopicPurposes }>`
     margin-top: 0;
   }
 
-  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     flex-direction: column;
   }
 `
 
 const LinkSectionHeadline = styled.h4`
-  color: ${props => props.theme.colors.dark1};
+  color: ${(props) => props.theme.colors.dark1};
   font-size: 1.125rem;
   margin: 0 0 13px;
   font-weight: 600;
 `
 
 const Link = styled.a`
-  color: ${props => props.theme.colors.brand};
+  color: ${(props) => props.theme.colors.brand};
   cursor: pointer;
   font-size: 1.2rem;
   margin-bottom: 12px;

@@ -36,7 +36,7 @@ export default function NewsletterPopup() {
     '/software',
     '/team',
     '/transparenz',
-    '/wirkung'
+    '/wirkung',
   ]
 
   React.useEffect(() => {

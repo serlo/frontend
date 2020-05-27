@@ -12,7 +12,7 @@ export default function CourseNavigation({
   pageTitle,
   pages,
   open,
-  opener
+  opener,
 }) {
   return (
     <Wrapper id="course-overview">
@@ -21,7 +21,7 @@ export default function CourseNavigation({
       </CourseH1>
       {open ? (
         <StyledOl>
-          {pages.map(page => (
+          {pages.map((page) => (
             <StyledLi key={page.alias}>
               <CourseA
                 active={pageTitle === page.currentRevision.title}
@@ -46,8 +46,8 @@ export default function CourseNavigation({
 const Wrapper = styled.nav`
   margin-top: 25px;
 
-  @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    background-color: ${props => props.theme.colors.lightBackground};
+  @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
+    background-color: ${(props) => props.theme.colors.lightBackground};
   }
   padding: 5px 0 22px 0;
 
@@ -59,17 +59,17 @@ const Wrapper = styled.nav`
 const CourseH1 = styled.h1`
   font-size: 1.25rem;
   ${makeMargin}
-  color: ${props => props.theme.colors.brand};
+  color: ${(props) => props.theme.colors.brand};
 `
 
 const CourseA = styled(StyledA)<{ active: boolean }>`
   font-size: 1.125rem;
 
-  ${props =>
+  ${(props) =>
     props.active &&
     css`
       font-weight: 600;
-      color: ${props => props.theme.colors.darkgray};
+      color: ${(props) => props.theme.colors.darkgray};
       &:hover {
         text-decoration: none;
       }
@@ -81,9 +81,9 @@ const Button = styled.a`
   ${makeDefaultButton}
   padding: 3px 8px;
   ${makeMargin}
-  background-color: ${props => props.theme.colors.brand};
+  background-color: ${(props) => props.theme.colors.brand};
   &:hover{
-    background-color: ${props => props.theme.colors.lightblue};
+    background-color: ${(props) => props.theme.colors.lightblue};
   }
   color: #fff;
   font-weight: bold;

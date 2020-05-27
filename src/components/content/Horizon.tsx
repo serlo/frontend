@@ -37,13 +37,13 @@ const Wrapper = styled.div`
   padding-top: 32px;
   padding-bottom: 24px;
   margin-left: -10px;
-  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
     flex-direction: column;
   }
 `
 
 const Item = styled.a`
-  color: ${props => props.theme.colors.brand};
+  color: ${(props) => props.theme.colors.brand};
   display: block;
   line-height: 1.2;
   text-decoration: none;
@@ -54,10 +54,10 @@ const Item = styled.a`
 
   &:hover {
     box-shadow: 0px 0px 10px 0px rgba(170, 170, 170, 0.25);
-    color: ${props => props.theme.colors.darkgray};
+    color: ${(props) => props.theme.colors.darkgray};
   }
 
-  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
     /* quickfix: slider or not loading them at all would be better */
     display: none;
     &:first-child {

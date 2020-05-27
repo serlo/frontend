@@ -1,11 +1,11 @@
 import { css } from 'styled-components'
 
-export const makeMargin = props => `
+export const makeMargin = (props) => `
   margin-left:${props.theme.defaults.sideSpacingMobile};
   margin-right:${props.theme.defaults.sideSpacingMobile};
 `
 
-export const makeResponsiveMargin = props =>
+export const makeResponsiveMargin = (props) =>
   `
   margin-left:${props.theme.defaults.sideSpacingMobile};
   margin-right:${props.theme.defaults.sideSpacingMobile};
@@ -15,12 +15,12 @@ export const makeResponsiveMargin = props =>
   }
   `
 
-export const makePadding = props => `
+export const makePadding = (props) => `
   padding-left:${props.theme.defaults.sideSpacingMobile};
   padding-right:${props.theme.defaults.sideSpacingMobile};
 `
 
-export const makeResponsivePadding = props =>
+export const makeResponsivePadding = (props) =>
   `
   padding-left:${props.theme.defaults.sideSpacingMobile};
   padding-right:${props.theme.defaults.sideSpacingMobile};
@@ -40,10 +40,10 @@ export const makeDefaultButton = () =>
     cursor: pointer;
     border: none;
     background-color: transparent;
-    color: ${props => props.theme.colors.brand};
+    color: ${(props) => props.theme.colors.brand};
     &:hover {
       color: #fff;
-      background-color: ${props => props.theme.colors.brand};
+      background-color: ${(props) => props.theme.colors.brand};
     }
     cursor: pointer;
   `
@@ -51,10 +51,10 @@ export const makeDefaultButton = () =>
 export const makeGreenButton = () =>
   css`
   ${makeDefaultButton}
-  color: ${props => props.theme.colors.brandGreen};
+  color: ${(props) => props.theme.colors.brandGreen};
   &:hover {
     color: #fff;
-    background-color: ${props => props.theme.colors.brandGreen};
+    background-color: ${(props) => props.theme.colors.brandGreen};
   }
 `
 

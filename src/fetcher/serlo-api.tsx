@@ -30,7 +30,7 @@ export default async function fetchContent(alias: string, redirect) {
       reqData.uuid.__typename === 'Course' &&
       Array.isArray(reqData.uuid.pages)
     ) {
-      const filtered = reqData.uuid.pages.filter(page => page.alias !== null)
+      const filtered = reqData.uuid.pages.filter((page) => page.alias !== null)
       if (filtered.length > 0) {
         return { redirect: filtered[0].alias }
       }

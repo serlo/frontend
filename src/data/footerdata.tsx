@@ -11,14 +11,14 @@ export const footerNavEntries = [
       { title: 'Kontakt', url: '/kontakt' },
       {
         title: 'Serlo in anderen Sprachen',
-        url: 'https://en.serlo.org/global'
+        url: 'https://en.serlo.org/global',
       },
       {
         title: 'Ins alte Design zurück',
-        url: 'https://de.serlo.org/disable-frontend'
+        url: 'https://de.serlo.org/disable-frontend',
       },
-      { title: 'API', url: '/105250' }
-    ]
+      { title: 'API', url: '/105250' },
+    ],
   },
   {
     title: 'Dabei bleiben',
@@ -27,14 +27,14 @@ export const footerNavEntries = [
         title: 'Newsletter',
         url:
           'https://serlo.us7.list-manage.com/subscribe?u=23f4b04bf70ea485a766e532d&amp;id=a7bb2bbc4f',
-        icon: faEnvelope
+        icon: faEnvelope,
       },
       {
         title: 'GitHub',
         url: 'https://github.com/serlo',
-        icon: faGithubSquare
-      }
-    ]
+        icon: faGithubSquare,
+      },
+    ],
   },
   {
     title: 'Rechtlich',
@@ -42,13 +42,13 @@ export const footerNavEntries = [
       { title: 'Datenschutz', url: '/datenschutz' },
       {
         title: 'Nutzungsbedingungen und Urheberrecht',
-        url: '/nutzungsbedingungen'
+        url: '/nutzungsbedingungen',
       },
       { title: 'Impressum', url: '/impressum' },
       {
         title: 'Diese Plattform basiert auf Open Source Technologie von ORY.',
-        url: 'https://www.ory.am/'
-      }
-    ]
-  }
+        url: 'https://www.ory.am/',
+      },
+    ],
+  },
 ]

@@ -10,7 +10,7 @@ import { faCircle, faSquare } from '@fortawesome/free-regular-svg-icons'
 export default function ScMcExercise({
   state,
   positionOnPage,
-  positionInGroup
+  positionInGroup,
 }) {
   const keyBase = `ex-${positionOnPage}-${positionInGroup}-`
   if (state.isSingleChoice)
@@ -123,14 +123,14 @@ const CheckButton = styled.a<{ selectable: boolean }>`
   margin-top: 16px;
 
   color: #fff;
-  background-color: ${props => props.theme.colors.brand};
+  background-color: ${(props) => props.theme.colors.brand};
 
-  ${props =>
+  ${(props) =>
     !props.selectable &&
     css`
       opacity: 1;
       background-color: transparent;
-      color: ${props => props.theme.colors.gray};
+      color: ${(props) => props.theme.colors.gray};
       pointer-events: none;
     `}
 `
@@ -166,9 +166,9 @@ const StyledLabel = styled.label<{ selected: boolean }>`
   > svg {
     font-size: 1.33rem;
     margin-top: 2px;
-    color: ${props => props.theme.colors.brand}
+    color: ${(props) => props.theme.colors.brand}
     
-    /* ${props =>
+    /* ${(props) =>
       props.selected
         ? props.theme.colors.brand
         : props.theme.colors.lightBlueBackground}; */
@@ -181,12 +181,12 @@ const StyledLabel = styled.label<{ selected: boolean }>`
 
 const Feedback = styled.div<{ right?: boolean }>`
   margin-left: 14px;
-  color: ${props => (props.right ? 'green' : 'red')};
+  color: ${(props) => (props.right ? 'green' : 'red')};
 `
 
 const Container = styled.div`
   ${makeMargin}
-  margin-bottom: ${props => props.theme.spacing.mb.block};
+  margin-bottom: ${(props) => props.theme.spacing.mb.block};
   
   &:hover {
 

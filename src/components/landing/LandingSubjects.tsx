@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
 import {
   makeResponsivePadding,
-  makeDefaultButton
+  makeDefaultButton,
 } from '../../helper/csshelper'
 
 import MathSVG from '../../../public/_assets/img/subjects-math.svg'
@@ -79,7 +79,7 @@ const SubjectsWrapper = styled.div<{ extraLinks?: boolean }>`
   justify-content: center;
   flex-direction: column;
 
-  @media (min-width: ${props => props.theme.breakpoints.sm}) {
+  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
     ${makeResponsivePadding}
     margin-left: 35px;
     flex-direction: row;
@@ -87,12 +87,12 @@ const SubjectsWrapper = styled.div<{ extraLinks?: boolean }>`
     justify-content: start;
   }
 
-  @media (min-width: ${props => props.theme.breakpoints.lg}) {
+  @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
     justify-content: space-between;
     margin-top: 40px;
 
     /* bit hacky, but way easier */
-    ${props =>
+    ${(props) =>
       props.extraLinks &&
       css`
         justify-content: start;
@@ -127,13 +127,13 @@ const jump = keyframes`
 
 const SubjectLink = styled.a`
   display: block;
-  border-bottom: 1px solid ${props => props.theme.colors.lightblue};
+  border-bottom: 1px solid ${(props) => props.theme.colors.lightblue};
   padding-left: 0.5rem;
   &:hover {
-    background-color: ${props => lighten(0.5, props.theme.colors.brand)};
+    background-color: ${(props) => lighten(0.5, props.theme.colors.brand)};
     cursor: pointer;
   }
-  @media (min-width: ${props => props.theme.breakpoints.sm}) {
+  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
     border-bottom: 0;
     min-width: 430px;
     width: 43%;
@@ -142,7 +142,7 @@ const SubjectLink = styled.a`
       background: transparent;
     }
   }
-  @media (min-width: ${props => props.theme.breakpoints.lg}) {
+  @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
     text-align: center;
     min-width: auto;
     width: auto;
@@ -160,16 +160,16 @@ const SubjectLink = styled.a`
   & svg.sus,
   & svg.blank {
     .blue {
-      fill: ${props => props.theme.colors.lighterblue};
+      fill: ${(props) => props.theme.colors.lighterblue};
       transition: all 0.2s ease-in-out;
     }
     .green {
       fill: #becd2b;
       transition: all 0.2s ease-in-out;
     }
-    @media (min-width: ${props => props.theme.breakpoints.sm}) {
+    @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
       .blue {
-        fill: ${props => lighten(0.07, props.theme.colors.lighterblue)};
+        fill: ${(props) => lighten(0.07, props.theme.colors.lighterblue)};
       }
     }
 
@@ -182,7 +182,7 @@ const SubjectLink = styled.a`
     box-shadow: 0 0 1px rgba(0, 0, 0, 0);
     animation-play-state: paused;
 
-    @media (min-width: ${props => props.theme.breakpoints.lg}) {
+    @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
       display: block;
       margin: 0 auto;
       width: auto;
@@ -223,7 +223,7 @@ const SubjectLink = styled.a`
       transform: scale(1.08);
     }
     && .blue {
-      fill: ${props => props.theme.colors.brand};
+      fill: ${(props) => props.theme.colors.brand};
     } /* TODO: Helperblue */
     && .green {
       fill: #becd2b;
@@ -238,26 +238,26 @@ const Header = styled.h2`
   vertical-align: top;
   margin-top: 1rem;
 
-  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
     &:hover {
-      color: ${props => props.theme.colors.brand};
+      color: ${(props) => props.theme.colors.brand};
       background-color: transparent;
     }
   }
 
-  @media (min-width: ${props => props.theme.breakpoints.sm}) {
+  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
     font-size: 1.5rem;
     line-height: inherit;
     width: auto;
     margin-top: 2.5rem;
     transition: color 0.4s ease, background-color 0.4s ease;
     ${SubjectLink}:hover & {
-      background-color: ${props => lighten(0, props.theme.colors.brand)};
+      background-color: ${(props) => lighten(0, props.theme.colors.brand)};
       color: #fff;
     }
   }
 
-  @media (min-width: ${props => props.theme.breakpoints.lg}) {
+  @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
     margin-top: 10px;
   }
 `
@@ -266,10 +266,10 @@ const StyledIcon = styled.span<{ alwaysShow?: boolean }>`
   margin-left: 0.4rem;
   vertical-align: middle;
 
-  ${props =>
+  ${(props) =>
     !props.alwaysShow &&
     css`
-      @media (min-width: ${props => props.theme.breakpoints.sm}) {
+      @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
         display: none;
       }
     `}

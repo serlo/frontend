@@ -6,18 +6,18 @@ import {
   faCopy,
   faTimes,
   faEnvelope,
-  faCompass
+  faCompass,
 } from '@fortawesome/free-solid-svg-icons'
 import {
   faFacebookSquare,
   faWhatsappSquare,
-  faGoogle
+  faGoogle,
 } from '@fortawesome/free-brands-svg-icons'
 import StyledH2 from '../tags/StyledH2'
 import {
   makeMargin,
   makeGreenButton,
-  inputFontReset
+  inputFontReset,
 } from '../../helper/csshelper'
 
 import Modal from '../Modal'
@@ -53,35 +53,35 @@ export default function ShareModal(props: ShareModalProps) {
       icon: faEnvelope,
       href: `mailto:?subject=${titleEncoded}&body=${encodeURIComponent(
         document.title + '\n' + url
-      )}`
+      )}`,
     },
     {
       title: 'Facebook',
       icon: faFacebookSquare,
-      href: `https://www.facebook.com/sharer.php?u=${urlEncoded}`
+      href: `https://www.facebook.com/sharer.php?u=${urlEncoded}`,
     },
     {
       title: 'Whatsapp',
       icon: faWhatsappSquare,
       href: `whatsapp://send?text=${encodeURIComponent(
         document.title + ': ' + url
-      )}`
-    }
+      )}`,
+    },
   ]
 
   const lmsShare = [
     {
       title: 'Google Classroom',
       icon: faGoogle,
-      href: `https://classroom.google.com/u/0/share?url=${urlEncoded}&title=${titleEncoded}&body=`
+      href: `https://classroom.google.com/u/0/share?url=${urlEncoded}&title=${titleEncoded}&body=`,
     },
     {
       title: 'Mebis',
       icon: faCompass,
       href: 'copy',
       text:
-        'Link in die Zwischenablage kopiert. Einfach auf <a href="https://www.mebis.bayern.de/">mebis</a> einfügen!'
-    }
+        'Link in die Zwischenablage kopiert. Einfach auf <a href="https://www.mebis.bayern.de/">mebis</a> einfügen!',
+    },
   ]
 
   return (
@@ -90,7 +90,7 @@ export default function ShareModal(props: ShareModalProps) {
       <div>
         <ShareInput
           ref={shareInputRef}
-          onFocus={e => e.target.select()}
+          onFocus={(e) => e.target.select()}
           defaultValue={url}
         />{' '}
         {document.queryCommandSupported('copy') && (
@@ -119,12 +119,12 @@ export default function ShareModal(props: ShareModalProps) {
 }
 
 function buildButtons(list, copyToClipboard) {
-  return list.map(entry => (
+  return list.map((entry) => (
     <Button
       href={entry.href !== 'copy' ? entry.href : null}
       onClick={
         entry.href === 'copy'
-          ? e => {
+          ? (e) => {
               copyToClipboard(e, entry.text)
             }
           : null
@@ -158,7 +158,7 @@ const ButtonWrapper = styled.div`
   display: flex;
   align-items: flex-start;
   flex-direction: column;
-  @media (min-width: ${props => props.theme.breakpoints.sm}) {
+  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
     flex-direction: row;
   }
 `
@@ -175,11 +175,11 @@ const ShareInput = styled.input`
   margin-bottom: 8px;
   margin-right: 0;
 
-  background-color: ${props => lighten(0.45, props.theme.colors.brandGreen)};
+  background-color: ${(props) => lighten(0.45, props.theme.colors.brandGreen)};
 
   &:focus {
     outline: none;
-    box-shadow: 0 0 4px 0 ${props => props.theme.colors.brand};
+    box-shadow: 0 0 4px 0 ${(props) => props.theme.colors.brand};
   }
 `
 
@@ -189,7 +189,7 @@ const Button = styled.a`
   margin-left: 20px;
   display: inline;
 
-  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
     ${makeMargin}
     margin-top: 6px;
     display: block;
@@ -197,7 +197,7 @@ const Button = styled.a`
 `
 
 const Gray = styled.small`
-  color: ${props => props.theme.colors.brand};
+  color: ${(props) => props.theme.colors.brand};
   ${makeMargin}
   margin-top: 5px;
   margin-bottom: 5px;
@@ -205,7 +205,7 @@ const Gray = styled.small`
   display: block;
 
   > a {
-    color: ${props => props.theme.colors.brand};
+    color: ${(props) => props.theme.colors.brand};
     font-weight: bold;
   }
 `
@@ -217,9 +217,9 @@ const CloseButton = styled.button`
   border: none;
   cursor: pointer;
   display: inline-block;
-  color: ${props => props.theme.colors.dark1};
+  color: ${(props) => props.theme.colors.dark1};
   &:hover {
-    background-color: ${props => props.theme.colors.brand};
+    background-color: ${(props) => props.theme.colors.brand};
     color: white;
   }
   width: 35px;

@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faCreativeCommons,
   faCreativeCommonsBy,
-  faCreativeCommonsSa
+  faCreativeCommonsSa,
 } from '@fortawesome/free-brands-svg-icons'
 import { makePadding, makeDefaultButton } from '../../helper/csshelper'
 
@@ -57,8 +57,8 @@ const MinimalWrapper = styled.div`
 const MinimalLink = styled.a`
   ${makeDefaultButton}
   text-align: center;
-  color: ${props => props.theme.colors.dark1};
-  background-color: ${props => props.theme.colors.lightBackground};
+  color: ${(props) => props.theme.colors.dark1};
+  background-color: ${(props) => props.theme.colors.lightBackground};
   font-size: 1.3rem;
   line-height: 2rem;
   width: 2rem;
@@ -66,7 +66,7 @@ const MinimalLink = styled.a`
 `
 
 const StyledSmall = styled.span`
-  @media (min-width: ${props => props.theme.breakpoints.mobile}) {
+  @media (min-width: ${(props) => props.theme.breakpoints.mobile}) {
     margin-left: 12px;
   }
 `
@@ -78,15 +78,15 @@ const Wrapper = styled.div`
   font-size: 0.9rem;
   margin-top: 40px;
   margin-bottom: 40px;
-  border-top: 2px solid ${props => props.theme.colors.lightBlueBackground};
-  color: ${props => props.theme.colors.dark1};
+  border-top: 2px solid ${(props) => props.theme.colors.lightBlueBackground};
+  color: ${(props) => props.theme.colors.dark1};
   > svg {
-    color: ${props => props.theme.colors.lighterblue};
+    color: ${(props) => props.theme.colors.lighterblue};
     width: 1.4rem !important;
     margin-bottom: 1px;
   }
 
-  @media (min-width: ${props => props.theme.breakpoints.mobile}) {
+  @media (min-width: ${(props) => props.theme.breakpoints.mobile}) {
     display: flex;
 
     > svg {

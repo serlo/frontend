@@ -26,7 +26,7 @@ export interface LinksInterface {
 
 export enum TopicPurposes {
   overview,
-  detail
+  detail,
 }
 
 interface TopicProp {
@@ -75,7 +75,7 @@ export default function Topic({ data, contentId }: TopicProps) {
           {data.description && renderArticle(data.description.children)}
         </Overview>
         {data.children &&
-          data.children.map(child => (
+          data.children.map((child) => (
             <React.Fragment key={child.title}>
               <Topic data={child} />
             </React.Fragment>
@@ -118,17 +118,17 @@ const Wrapper = styled.div<{ purpose: TopicPurposes }>`
   margin-bottom: 20px;
   padding-bottom: 10px;
 
-    ${props =>
+    ${(props) =>
       props.purpose === TopicPurposes.overview &&
       css`
         display: flex;
         flex-direction: row;
-        border-bottom: 1px solid ${props => props.theme.colors.lightgray};
+        border-bottom: 1px solid ${(props) => props.theme.colors.lightgray};
         &:last-child {
           border-bottom: 0;
         }
       `}
-    @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     flex-direction: column;
   }
 `
@@ -140,7 +140,7 @@ const Headline = styled.h1`
 `
 
 const HeadlineLink = styled.a`
-  color: ${props => props.theme.colors.brand};
+  color: ${(props) => props.theme.colors.brand};
   display: block;
   font-size: 1.65rem;
   text-decoration: none;
@@ -163,12 +163,12 @@ const LinkList = styled.div`
 const Overview = styled.div<{ purpose: TopicPurposes }>`
   img {
     margin-top: 22px;
-    @media (min-width: ${props => props.theme.breakpoints.sm}) {
+    @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
       margin-bottom: 20px;
     }
   }
 
-  ${props =>
+  ${(props) =>
     props.purpose === TopicPurposes.overview &&
     css`
       flex: 1 1 40%;
@@ -176,5 +176,5 @@ const Overview = styled.div<{ purpose: TopicPurposes }>`
 `
 
 const StyledIcon = styled(FontAwesomeIcon)`
-  color: ${props => props.theme.colors.lighterblue};
+  color: ${(props) => props.theme.colors.lighterblue};
 `
