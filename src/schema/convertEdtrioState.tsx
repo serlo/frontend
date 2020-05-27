@@ -202,12 +202,30 @@ export function convert(node) {
       }
     ]
   }
+  if (plugin === 'equations') {
+    const steps = node.state.steps.map(step => {
+      return {
+        left: convert(step.left),
+        sign: step.sign,
+        right: convert(step.right),
+        transform: convert(step.transform)
+      }
+    })
+    return [{ type: 'equations', steps, children: [{ text: '' }] }]
+  }
 
   const type = node.type
   if (type === 'p') {
     // compat unwrap math from p
     const children = convert(node.children)
     if (children.length === 1 && children[0].type === 'math') {
+      return children
+    }
+    // compat: unwrap ul/ol from p
+    if (
+      children.length === 1 &&
+      (children[0].type === 'ul' || children[0].type === 'ol')
+    ) {
       return children
     }
     // compat handle newlines
