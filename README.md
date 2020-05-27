@@ -359,16 +359,15 @@ yarn format
 
 Make sure your code is properly formatted before every commit.
 
-### Linter & Typechecker
+### Linter
 
-There are two commands to lint you code and run the typechecker:
+Check common problem in your code by running
 
 ```
 yarn lint
-yarn typecheck
 ```
 
-Ensure in each PR that both commands show no warnings or errors.
+Ensure in each PR that this command shows no warnings or errors.
 
 ### Tooltips, Dropdowns & Menus
 

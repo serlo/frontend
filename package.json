@@ -1,11 +1,13 @@
 {
   "name": "@serlo/frontend",
   "version": "0.0.1",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/serlo/frontend.git"
+  "private": true,
+  "bugs": {
+    "url": "https://github.com/serlo/frontend/issues"
   },
-  "license": "MIT",
+  "repository": "serlo/frontend",
+  "license": "Apache-2.0",
+  "author": "Serlo Education e.V.",
   "scripts": {
     "_eslint": "eslint \"{src,pages}/**/*.{js,jsx,ts,tsx}\"",
     "_prettier": "prettier .",
