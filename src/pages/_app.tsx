@@ -35,10 +35,12 @@ const FontFix = createGlobalStyle`
 
 function App({ Component, pageProps }: AppProps) {
   return (
-    <ThemeProvider theme={theme}>
-      <FontFix />
-      <Component {...pageProps} />
-    </ThemeProvider>
+    <React.StrictMode>
+      <ThemeProvider theme={theme}>
+        <FontFix />
+        <Component {...pageProps} />
+      </ThemeProvider>
+    </React.StrictMode>
   )
 }
 
