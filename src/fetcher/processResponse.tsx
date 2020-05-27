@@ -5,7 +5,8 @@ import { createNavigation } from './createNavigation'
 import { createData } from './createData'
 import { createLicense } from './createLicense'
 
-export function processResponse(reqData) {
+// TODO: needs type declaration
+export function processResponse(reqData: any) {
   return {
     contentType: reqData.uuid.__typename,
     title: createTitle(reqData.uuid) ?? 'Serlo',
@@ -17,7 +18,8 @@ export function processResponse(reqData) {
   }
 }
 
-function shuffle(a) {
+// TODO: needs type declaration
+function shuffle(a: any) {
   let j, x, i
   for (i = a.length - 1; i > 0; i--) {
     const r = Math.random()

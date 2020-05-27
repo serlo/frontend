@@ -10,8 +10,8 @@ interface MetaMenuProps {
 export default function MetaMenu(props: MetaMenuProps) {
   const { navigation, pagealias } = props
 
-  const activeRef = useRef(null)
-  const containerRef = useRef(null)
+  const activeRef = useRef<HTMLLIElement>(null)
+  const containerRef = useRef<HTMLUListElement>(null)
 
   useEffect(() => {
     if (containerRef.current && activeRef.current) {
@@ -24,7 +24,8 @@ export default function MetaMenu(props: MetaMenuProps) {
       <MetaMenuWrapper>
         <StyledGradient />
         <List ref={containerRef}>
-          {navigation.map((entry, i) => {
+          {/* TODO: needs type declaration */}
+          {navigation.map((entry: any, i: any) => {
             const active = entry.url === pagealias
             return (
               <Li key={entry.url} ref={active ? activeRef : null}>

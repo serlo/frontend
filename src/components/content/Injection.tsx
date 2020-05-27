@@ -3,8 +3,12 @@ import StyledP from '../tags/StyledP'
 import { renderArticle } from '../../schema/articleRenderer'
 import LicenseNotice from './LicenseNotice'
 
-export default function Injection({ href }) {
-  const [value, setValue] = React.useState(undefined)
+// TODO: needs type declaration
+type InjectionProps = any
+
+export default function Injection({ href }: InjectionProps) {
+  // TODO: needs type declaration
+  const [value, setValue] = React.useState<any>(undefined)
   const [license, setLicense] = React.useState(undefined)
   useEffect(() => {
     const origin = window.location.host
@@ -15,7 +19,7 @@ export default function Injection({ href }) {
       )}`
     )
       .then((res) => {
-        if (res.headers.get('content-type').includes('json')) return res.json()
+        if (res.headers.get('content-type')!.includes('json')) return res.json()
         else return res.text()
       })
       .then((data) => {

@@ -7,11 +7,15 @@ import {
 } from '../../helper/csshelper'
 import React from 'react'
 
-export default function InputExercise({ state }) {
-  const [feedback, setFeedback] = React.useState(null)
+// TODO: needs type declaration
+type InputExerciseProps = any
+
+export default function InputExercise({ state }: InputExerciseProps) {
+  // TODO: needs type declaration
+  const [feedback, setFeedback] = React.useState<any>(null)
   const [value, setValue] = React.useState('')
 
-  function keyPress(e) {
+  function keyPress(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.keyCode == 13) {
       setFeedback(checkAnswer(value, state))
     }
@@ -39,8 +43,10 @@ export default function InputExercise({ state }) {
   )
 }
 
-function checkAnswer(val, state) {
-  const answers = state.answers.filter((answer) => answer.value === val)
+// TODO: needs type declaration
+function checkAnswer(val: any, state: any) {
+  // TODO: needs type declaration
+  const answers = state.answers.filter((answer: any) => answer.value === val)
   if (answers.length !== 1 || !answers[0].isCorrect) {
     return <span>Falsch</span>
   } else {

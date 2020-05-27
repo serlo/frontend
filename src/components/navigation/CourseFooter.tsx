@@ -1,10 +1,14 @@
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowCircleRight, faListUl } from '@fortawesome/free-solid-svg-icons'
+import React from 'react'
 import { makeMargin, makeDefaultButton } from '../../helper/csshelper'
 
-export default function CourseFooter({ opener, nextHref }) {
-  const onOverviewClick = (e) => {
+// TODO: needs type declaration
+type CourseFooterProps = any
+
+export default function CourseFooter({ opener, nextHref }: CourseFooterProps) {
+  const onOverviewClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     location.href = '#course-overview'
     opener(e)
   }

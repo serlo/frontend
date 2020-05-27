@@ -7,11 +7,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckCircle, faCheckSquare } from '@fortawesome/free-solid-svg-icons'
 import { faCircle, faSquare } from '@fortawesome/free-regular-svg-icons'
 
+// TODO: needs type declaration
+type ScMcExerciseProps = any
+
 export default function ScMcExercise({
   state,
   positionOnPage,
   positionInGroup,
-}) {
+}: ScMcExerciseProps) {
   const keyBase = `ex-${positionOnPage}-${positionInGroup}-`
   if (state.isSingleChoice)
     return <SingleChoice state={state} keyBase={keyBase} />
@@ -19,14 +22,19 @@ export default function ScMcExercise({
   return <MultipleChoice state={state} keyBase={keyBase} />
 }
 
-function SingleChoice({ state, keyBase }) {
-  const [selected, setSelected] = React.useState(undefined)
+// TODO: needs type declaration
+type SingleChoiceProps = any
+
+function SingleChoice({ state, keyBase }: SingleChoiceProps) {
+  // TODO: needs type declaration
+  const [selected, setSelected] = React.useState<any>(undefined)
   const [showFeedback, setShowFeedback] = React.useState(false)
 
   return (
     <Container>
       <Choices>
-        {state.answers.map((answer, i) => {
+        {/* TODO: needs type declaration */}
+        {state.answers.map((answer: any, i: any) => {
           const key = keyBase + i
           return (
             <React.Fragment key={key}>
@@ -69,16 +77,21 @@ function SingleChoice({ state, keyBase }) {
   )
 }
 
-function MultipleChoice({ state, keyBase }) {
+// TODO: needs type declaration
+type MultipleChoiceProps = any
+
+function MultipleChoice({ state, keyBase }: MultipleChoiceProps) {
   const [selected, setSelected] = React.useState(state.answers.map(() => false))
   const [showFeedback, setShowFeedback] = React.useState(false)
   const right = state.answers.every(
-    (answer, i) => answer.isCorrect === selected[i]
+    // TODO: needs type declaration
+    (answer: any, i: any) => answer.isCorrect === selected[i]
   )
   return (
     <Container>
       <Choices>
-        {state.answers.map((answer, i) => {
+        {/* TODO: needs type declaration */}
+        {state.answers.map((answer: any, i: any) => {
           const key = keyBase + i
           return (
             <React.Fragment key={key}>

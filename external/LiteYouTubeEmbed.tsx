@@ -2,8 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import { makeMargin } from '../src/helper/csshelper'
 
-//fixed and modified version of https://github.com/ibrahimcesar/react-lite-youtube-embed
-//embeded here for faster developement and tracking of changes
+// fixed and modified version of https://github.com/ibrahimcesar/react-lite-youtube-embed
+// embedded here for faster development and tracking of changes
 
 interface LiteYouTubeEmbedProps {
   id: string
@@ -62,15 +62,15 @@ const LiteYouTubeEmbed = ({
       img.src = posterUrl
     }
 
-    current.style.backgroundImage = `url('${
+    current!.style.backgroundImage = `url('${
       fallback ? posterUrlFallback : posterUrl
     }')`
-    current.addEventListener('pointerover', warmConnections, true)
-    current.addEventListener('click', addIframe, true)
+    current!.addEventListener('pointerover', warmConnections, true)
+    current!.addEventListener('click', addIframe, true)
 
     return () => {
-      current.removeEventListener('pointerover', warmConnections)
-      current.removeEventListener('click', addIframe)
+      current!.removeEventListener('pointerover', warmConnections)
+      current!.removeEventListener('click', addIframe)
     }
   }, [fallback])
 

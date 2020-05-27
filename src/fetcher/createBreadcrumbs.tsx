@@ -1,4 +1,5 @@
-export function createBreadcrumbs(uuid) {
+// TODO: needs type declaration
+export function createBreadcrumbs(uuid: any) {
   let breadcrumbs = uuid.navigation?.path
 
   if (!breadcrumbs) {
@@ -9,8 +10,10 @@ export function createBreadcrumbs(uuid) {
         if (!breadcrumbs || breadcrumbs.length > path.length) {
           // compat: some paths are short-circuited, ignore them
           if (
-            path.some((x) => x.label === 'Mathematik') &&
-            !path.some((x) => x.label === 'Alle Themen')
+            // TODO: needs type declaration
+            path.some((x: any) => x.label === 'Mathematik') &&
+            // TODO: needs type declaration
+            !path.some((x: any) => x.label === 'Alle Themen')
           ) {
             continue
           }
@@ -22,8 +25,11 @@ export function createBreadcrumbs(uuid) {
   }
 
   if (breadcrumbs) {
-    return breadcrumbs
-      .slice(0, -1) // compat: remove last entry because it is the entry itself
-      .filter((entry) => entry.url && entry.label) // compat: remove empty entries
+    return (
+      breadcrumbs
+        .slice(0, -1) // compat: remove last entry because it is the entry itself
+        // TODO: needs type declaration
+        .filter((entry: any) => entry.url && entry.label)
+    ) // compat: remove empty entries
   }
 }

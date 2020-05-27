@@ -4,11 +4,15 @@ import { processResponse } from './processResponse'
 
 const endpoint = 'https://api.serlo.org/graphql'
 
-export default async function fetchContent(alias: string, redirect) {
+// TODO: needs type declaration
+export default async function fetchContent(alias: string, redirect: any) {
   try {
     if (redirect && /^\/[\d]+$/.test(alias)) {
       // redirect id to alias
-      const response = await request(endpoint, idQuery(alias.substring(1)))
+      const response = await request<{ uuid: any }>(
+        endpoint,
+        idQuery(alias.substring(1))
+      )
       const redirect = response.uuid.alias
       if (redirect) {
         return { redirect }
@@ -24,13 +28,16 @@ export default async function fetchContent(alias: string, redirect) {
         ? 'id: ' + alias.substring(1)
         : `alias: { instance: de, path: "${alias}"}`
     )
-    const reqData = await request(endpoint, QUERY)
+    const reqData = await request<{ uuid: any }>(endpoint, QUERY)
     // compat: redirect first page of course
     if (
       reqData.uuid.__typename === 'Course' &&
       Array.isArray(reqData.uuid.pages)
     ) {
-      const filtered = reqData.uuid.pages.filter((page) => page.alias !== null)
+      // TODO: needs type declaration
+      const filtered = reqData.uuid.pages.filter(
+        (page: any) => page.alias !== null
+      )
       if (filtered.length > 0) {
         return { redirect: filtered[0].alias }
       }

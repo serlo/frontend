@@ -17,6 +17,7 @@ import LicenseNotice from '@/components/content/LicenseNotice'
 import StyledA from '@/components/tags/StyledA'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCubes, faPlayCircle } from '@fortawesome/free-solid-svg-icons'
+import { GetServerSideProps } from 'next'
 
 const MetaMenu = dynamic(() => import('@/components/navigation/MetaMenu'))
 const Breadcrumbs = dynamic(() => import('@/components/navigation/Breadcrumbs'))
@@ -33,7 +34,10 @@ enum MetaImageEnum {
   biologie = 'meta/biologie.jpg',
 }
 
-function PageView(props) {
+// TODO: needs type declaration
+type PageViewProps = any
+
+function PageView(props: PageViewProps) {
   const { data } = props
   const {
     contentId,
@@ -59,8 +63,11 @@ function PageView(props) {
 
   function getMetaImage() {
     const subject = data.alias ? data.alias.split('/')[1] : 'default'
+    // TODO: MetaImageEnum should probably not be an enum since we actually use the key
+    // @ts-ignore
     const imageSrc = MetaImageEnum[subject]
-      ? MetaImageEnum[subject]
+      ? // @ts-ignore
+        MetaImageEnum[subject]
       : MetaImageEnum['default']
     //might replace with default asset/cdn url
     return props.origin + '/_assets/img/' + imageSrc
@@ -169,7 +176,8 @@ function PageView(props) {
           <HSpace amount={40} />
           {horizonIndices && (
             <Horizon
-              entries={horizonIndices.map((index) => horizonData[index])}
+              // TODO: needs type declaration
+              entries={horizonIndices.map((index: any) => horizonData[index])}
             />
           )}
         </MaxWidthDiv>
@@ -219,7 +227,10 @@ const StyledIcon = styled(FontAwesomeIcon)`
 
 // -> You can not use getInitialProps with getServerSideProps. Please remove getInitialProps. /[...slug]
 
-export async function getServerSideProps(props) {
+// TODO: needs type declaration
+export const getServerSideProps: GetServerSideProps<any, any> = async (
+  props
+) => {
   const { origin } = absoluteUrl(props.req)
   const res = await fetch(
     `${origin}/api/frontend/${encodeURIComponent(

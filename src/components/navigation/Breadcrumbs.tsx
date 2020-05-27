@@ -36,7 +36,10 @@ export default function Breadcrumbs(props: BreadcrumbProps) {
   )
 }
 
-function BreadcrumbEntries(props) {
+// TODO: needs type declaration
+type BradcrumbEntriesProps = any
+
+function BreadcrumbEntries(props: BradcrumbEntriesProps) {
   const { bcEntry, i, l } = props
   const maxItems = 4
   const overflow = l.length > maxItems

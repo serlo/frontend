@@ -14,11 +14,18 @@ import styled from 'styled-components'
 const CourseNavigation = dynamic(() => import('../navigation/CourseNavigation'))
 const CourseFooter = dynamic(() => import('../navigation/CourseFooter'))
 
-export default function ArticlePage({ data, contentId, contentType }) {
+// TODO: needs type declaration
+type ArticlePageProps = any
+
+export default function ArticlePage({
+  data,
+  contentId,
+  contentType,
+}: ArticlePageProps) {
   const [open, setOpen] = React.useState(false)
 
   const [courseNavOpen, setCourseNavOpen] = React.useState(false)
-  const openCourseNav = (e) => {
+  const openCourseNav = (e: Event) => {
     e.preventDefault()
     setCourseNavOpen(true)
   }
@@ -27,7 +34,10 @@ export default function ArticlePage({ data, contentId, contentType }) {
   const nextIndex =
     isCoursePage &&
     1 +
-      data.pages.findIndex((page) => page.currentRevision.title === data.title)
+      // TODO: any type annotation not needed anymore after we defined ArticlePageProps
+      data.pages.findIndex(
+        (page: any) => page.currentRevision.title === data.title
+      )
   const nextCoursePageHref =
     isCoursePage &&
     (nextIndex >= data.pages.length ? '' : data.pages[nextIndex].alias)

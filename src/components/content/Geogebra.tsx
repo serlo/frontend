@@ -7,7 +7,9 @@ interface GeogebraProps {
 }
 
 export default function Geogebra({ id }: GeogebraProps) {
-  const [data, setData] = React.useState(undefined)
+  const [data, setData] = React.useState<{ ratio: number } | undefined>(
+    undefined
+  )
   React.useEffect(() => {
     fetch('https://www.geogebra.org/api/json.php', {
       method: 'POST',

@@ -47,11 +47,10 @@ const iconObjects = {
 }
 
 function RenderIcon(props: IconProps) {
+  // TODO: this should be checked in IconProps instead
+  const icon = props.icon as keyof typeof iconObjects
   return (
-    <FontAwesomeIcon
-      icon={iconObjects[props.icon] || faCircle}
-      size={props.size}
-    />
+    <FontAwesomeIcon icon={iconObjects[icon] || faCircle} size={props.size} />
   )
 }
 
@@ -60,7 +59,9 @@ export default function TopicLinkList({ links, purpose }: LinksProps) {
   return (
     <>
       {Object.keys(links).map((link) => {
-        return links[link] && links[link].length > 0 ? (
+        // TODO: are we sure this is correct? There seems to be no semantic connection between LinksProps and HeadlineEnum.
+        const key = link as keyof LinksProps['links']
+        return links[key] && links[key]!.length > 0 ? (
           <LinkSection purpose={purpose} key={link}>
             {/* <IconWrapper purpose={purpose} title={HeadlineEnum[link]}>
               <RenderIcon icon={link} size={IconsSize} />
@@ -69,10 +70,12 @@ export default function TopicLinkList({ links, purpose }: LinksProps) {
               {/* {purpose === TopicPurposes.detail && ( */}
               <LinkSectionHeadline>
                 <RenderIcon icon={link} size={IconSizeEnum.one} />{' '}
-                {HeadlineEnum[link]}
+                {/* TODO: the potential relation between LinkProps and HeadlineEnum should be explicit in code */}
+                {/* @ts-ignore */}
+                {HeadlineEnum[key]}
               </LinkSectionHeadline>
-              {/* )} */}
-              {links[link].map((article) => {
+              {/* TODO: semantic error since this could be undefined */}
+              {links[key]!.map((article) => {
                 return (
                   <Link
                     href={article.url}

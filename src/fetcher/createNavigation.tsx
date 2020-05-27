@@ -1,8 +1,10 @@
-export function createNavigation(uuid) {
+// TODO: needs type declaration
+export function createNavigation(uuid: any) {
   if (uuid.navigation?.data) {
     try {
       const data = JSON.parse(uuid.navigation.data)
-      return data.children.flatMap((child) => {
+      // TODO: needs type declaration
+      return data.children.flatMap((child: any) => {
         if (child.children) {
           return child.children.map(convertEntry)
         }
@@ -14,7 +16,8 @@ export function createNavigation(uuid) {
   }
 }
 
-function convertEntry(entry) {
+// TODO: needs type declaration
+function convertEntry(entry: any) {
   return {
     title: entry.label,
     url: entry.url ?? '/' + entry.id,

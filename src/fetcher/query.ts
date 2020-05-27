@@ -1,4 +1,5 @@
-export const idQuery = (id) => `
+// TODO: needs type declaration
+export const idQuery = (id: any) => `
   {
     uuid(id:${id}) {
       ... on Entity {
@@ -14,7 +15,8 @@ export const idQuery = (id) => `
   }
 `
 
-export const dataQuery = (selector) => `
+// TODO: needs type declaration
+export const dataQuery = (selector: any) => `
   {
     uuid(${selector}) {
       __typename

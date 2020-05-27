@@ -31,13 +31,17 @@ interface ShareModalProps {
 export default function ShareModal(props: ShareModalProps) {
   const { open, onClose, contentId } = props
   if (!open) return null
-  const shareInputRef = React.useRef(null)
+  const shareInputRef = React.useRef<HTMLInputElement>(null)
   const [copySuccess, setCopySuccess] = React.useState('')
 
-  function copyToClipboard(e, text?) {
-    shareInputRef.current.select()
+  function copyToClipboard(
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+    text?: string
+  ) {
+    const target = e.target as HTMLAnchorElement
+    shareInputRef.current!.select()
     document.execCommand('copy')
-    e.target.focus()
+    target.focus()
     setCopySuccess(text ? text : 'In Zwischenablage kopiert!')
   }
 
@@ -118,8 +122,10 @@ export default function ShareModal(props: ShareModalProps) {
   )
 }
 
-function buildButtons(list, copyToClipboard) {
-  return list.map((entry) => (
+// TODO: needs type declaration
+function buildButtons(list: any, copyToClipboard: any) {
+  // TODO: needs type declaration
+  return list.map((entry: any) => (
     <Button
       href={entry.href !== 'copy' ? entry.href : null}
       onClick={
@@ -127,7 +133,7 @@ function buildButtons(list, copyToClipboard) {
           ? (e) => {
               copyToClipboard(e, entry.text)
             }
-          : null
+          : undefined
       }
       key={entry.title}
     >

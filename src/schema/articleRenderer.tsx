@@ -51,7 +51,8 @@ export function renderArticle(value: Node[], addCSS = true) {
   } else return content
 }
 
-function getNode(value, path) {
+// TODO: needs type declaration
+function getNode(value: any, path: any): any {
   if (path.length === 0) {
     return value
   } else {
@@ -59,11 +60,13 @@ function getNode(value, path) {
   }
 }
 
-function render(value, path = []) {
+// TODO: needs type declaration
+function render(value: any, path: any[] = []) {
   const currentNode = getNode(value, path)
   const key = path[path.length - 1]
   if (currentNode && Array.isArray(currentNode.children)) {
-    const children = currentNode.children.map((_, index) =>
+    // TODO: needs type declaration
+    const children = currentNode.children.map((_: any, index: any) =>
       render(value, path.concat(index))
     )
     return renderElement({
@@ -91,9 +94,17 @@ export const articleColors = {
   orange: theme.colors.orange,
 }
 
-export function renderLeaf({ leaf, attributes, children, readonly = false }) {
+// TODO: needs type declaration
+export function renderLeaf({
+  leaf,
+  attributes,
+  children,
+  readonly = false,
+}: any) {
   const styles: any = {}
 
+  // TODO: fixed by typing leaf properly
+  // @ts-ignore
   if (leaf.color) styles.color = articleColors[leaf.color]
   if (leaf.em) styles.fontStyle = 'italic'
   if (leaf.strong) styles.fontWeight = 'bold'
@@ -118,7 +129,8 @@ const renderer = {
   img: renderImg,
   math: renderMath,
   'spoiler-container': renderSpoilerForEndUser,
-  'spoiler-title': ({ children }) => children,
+  // TODO: needs type declaration
+  'spoiler-title': ({ children }: any) => children,
   'spoiler-body': renderSpoilerBody,
   ul: renderUl,
   ol: renderOl,
@@ -138,18 +150,23 @@ const renderer = {
   video: renderVideo,
 }
 
-function renderElement(props) {
+// TODO: needs type declaration
+function renderElement(props: any) {
+  // TODO: needs type declaration
+  // @ts-ignore
   return renderer[props.element.type](props)
 }
 
-const nowrap = (comp) => comp
+// TODO: needs type declaration
+const nowrap = (comp: any) => comp
 
+// TODO: needs type declaration
 export function renderA({
   element,
   attributes = {},
   children = null,
   wrapExtInd = nowrap,
-}) {
+}: any) {
   if (!element.href)
     return <React.Fragment {...attributes}>{children}</React.Fragment>
   return (
@@ -160,11 +177,13 @@ export function renderA({
   )
 }
 
-export function renderInlineMath({ element, attributes = {} }) {
+// TODO: needs type declaration
+export function renderInlineMath({ element, attributes = {} }: any) {
   return <Math formula={element.formula} inline {...attributes} />
 }
 
-export function renderP({ attributes = {}, children = null }) {
+// TODO: needs type declaration
+export function renderP({ attributes = {}, children = null }: any) {
   return <StyledP {...attributes}>{children}</StyledP>
 }
 
@@ -176,7 +195,10 @@ const StyledHx = {
   5: StyledH5,
 }
 
-export function renderH({ element, attributes = {}, children = null }) {
+// TODO: needs type declaration
+export function renderH({ element, attributes = {}, children = null }: any) {
+  // TODO: needs type declaration
+  // @ts-ignore
   const Comp = StyledHx[element.level] ?? StyledH5
   return (
     <Comp {...attributes} id={element.id}>
@@ -185,13 +207,15 @@ export function renderH({ element, attributes = {}, children = null }) {
   )
 }
 
+// TODO: needs type declaration
 export function renderImg({
   element,
   attributes = {},
   children = null,
   wrapImg = nowrap,
-}) {
-  function wrapInA(comp) {
+}: any) {
+  // TODO: needs type declaration
+  function wrapInA(comp: any) {
     if (element.href) {
       // needs investigation if this could be simplified
       return <ImageLink href={element.href}>{comp}</ImageLink>
@@ -216,12 +240,13 @@ export function renderImg({
   )
 }
 
+// TODO: needs type declaration
 export function renderMath({
   element,
   attributes = {},
   children = null,
   wrapFormula = nowrap,
-}) {
+}: any) {
   let formula = element.formula
   let bigger = false
   if (
@@ -247,13 +272,15 @@ export function renderMath({
 }
 
 // output only
-function renderSpoilerForEndUser({ attributes = {}, children }) {
+// TODO: needs type declaration
+function renderSpoilerForEndUser({ attributes = {}, children }: any) {
   return (
     <SpoilerForEndUser {...attributes} title={children[0]} body={children[1]} />
   )
 }
 
-function SpoilerForEndUser(props) {
+// TODO: needs type declaration
+function SpoilerForEndUser(props: any) {
   const { body, title } = props
   const [open, setOpen] = React.useState(false)
   return renderSpoilerContainer({
@@ -269,27 +296,35 @@ function SpoilerForEndUser(props) {
   })
 }
 
-export function renderSpoilerContainer({ attributes = {}, children = null }) {
+// TODO: needs type declaration
+export function renderSpoilerContainer({
+  attributes = {},
+  children = null,
+}: any) {
   return <SpoilerContainer {...attributes}>{children}</SpoilerContainer>
 }
 
-export function renderSpoilerBody({ attributes = {}, children = null }) {
+// TODO: needs type declaration
+export function renderSpoilerBody({ attributes = {}, children = null }: any) {
   return <SpoilerBody {...attributes}>{children}</SpoilerBody>
 }
 
-export function renderUl({ attributes = {}, children = null }) {
+// TODO: needs type declaration
+export function renderUl({ attributes = {}, children = null }: any) {
   return <StyledUl {...attributes}>{children}</StyledUl>
 }
 
-export function renderOl({ attributes = {}, children = null }) {
+// TODO: needs type declaration
+export function renderOl({ attributes = {}, children = null }: any) {
   return <StyledOl {...attributes}>{children}</StyledOl>
 }
-
-export function renderLi({ attributes = {}, children = null }) {
+// TODO: needs type declaration
+export function renderLi({ attributes = {}, children = null }: any) {
   return <StyledLi {...attributes}>{children}</StyledLi>
 }
 
-export function renderTable({ attributes = {}, children = null }) {
+// TODO: needs type declaration
+export function renderTable({ attributes = {}, children = null }: any) {
   const { key, ...otherAttribs } = attributes as any
   return (
     <TableWrapper key={key}>
@@ -300,23 +335,28 @@ export function renderTable({ attributes = {}, children = null }) {
   )
 }
 
-export function renderTR({ attributes = {}, children = null }) {
+// TODO: needs type declaration
+export function renderTR({ attributes = {}, children = null }: any) {
   return <StyledTR {...attributes}>{children}</StyledTR>
 }
 
-export function renderTH({ attributes = {}, children = null }) {
+// TODO: needs type declaration
+export function renderTH({ attributes = {}, children = null }: any) {
   return <StyledTH {...attributes}>{children}</StyledTH>
 }
 
-export function renderTD({ attributes = {}, children = null }) {
+// TODO: needs type declaration
+export function renderTD({ attributes = {}, children = null }: any) {
   return <StyledTD {...attributes}>{children}</StyledTD>
 }
 
-export function renderRow({ attributes = {}, children = null }) {
+// TODO: needs type declaration
+export function renderRow({ attributes = {}, children = null }: any) {
   return <LayoutRow {...attributes}>{children}</LayoutRow>
 }
 
-export function renderCol({ element, attributes = {}, children = null }) {
+// TODO: needs type declaration
+export function renderCol({ element, attributes = {}, children = null }: any) {
   return (
     <Col {...attributes} cSize={element.size}>
       {children}
@@ -324,11 +364,17 @@ export function renderCol({ element, attributes = {}, children = null }) {
   )
 }
 
-export function renderImportant({ attributes = {}, children = null }) {
+// TODO: needs type declaration
+export function renderImportant({ attributes = {}, children = null }: any) {
   return <Important {...attributes}>{children}</Important>
 }
 
-export function renderGeogebra({ element, attributes = {}, children = null }) {
+// TODO: needs type declaration
+export function renderGeogebra({
+  element,
+  attributes = {},
+  children = null,
+}: any) {
   return (
     <GeogebraWrapper {...attributes}>
       <Geogebra id={element.id} />
@@ -338,11 +384,17 @@ export function renderGeogebra({ element, attributes = {}, children = null }) {
 }
 
 // output only
-function renderAnchor({ element, attributes = {} }) {
+// TODO: needs type declaration
+function renderAnchor({ element, attributes = {} }: any) {
   return <a id={element.id} {...attributes} />
 }
 
-export function renderInjection({ attributes = {}, children = null, element }) {
+// TODO: needs type declaration
+export function renderInjection({
+  attributes = {},
+  children = null,
+  element,
+}: any) {
   return (
     <Injection {...attributes} href={element.href}>
       {children}
@@ -350,7 +402,12 @@ export function renderInjection({ attributes = {}, children = null, element }) {
   )
 }
 
-export function renderExercise({ attributes = {}, children = null, element }) {
+// TODO: needs type declaration
+export function renderExercise({
+  attributes = {},
+  children = null,
+  element,
+}: any) {
   return (
     <Exercise
       {...attributes}
@@ -367,7 +424,12 @@ export function renderExercise({ attributes = {}, children = null, element }) {
   )
 }
 
-export function renderExerciseGroup({ attributes, children = null, element }) {
+// TODO: needs type declaration
+export function renderExerciseGroup({
+  attributes,
+  children = null,
+  element,
+}: any) {
   return (
     <React.Fragment key={attributes.key}>
       <ExerciseGroup
@@ -384,7 +446,12 @@ export function renderExerciseGroup({ attributes, children = null, element }) {
   )
 }
 
-export function renderVideo({ attributes = {}, children = null, element }) {
+// TODO: needs type declaration
+export function renderVideo({
+  attributes = {},
+  children = null,
+  element,
+}: any) {
   return (
     <Video {...attributes} url={element.src}>
       {children}

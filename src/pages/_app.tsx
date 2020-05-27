@@ -1,5 +1,5 @@
 import React from 'react'
-import App from 'next/app'
+import { AppProps } from 'next/app'
 
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
@@ -33,16 +33,13 @@ const FontFix = createGlobalStyle`
   }
 `
 
-class MyApp extends App {
-  render() {
-    const { Component, pageProps } = this.props
-    return (
-      <ThemeProvider theme={theme}>
-        <FontFix />
-        <Component {...pageProps} />
-      </ThemeProvider>
-    )
-  }
+function App({ Component, pageProps }: AppProps) {
+  return (
+    <ThemeProvider theme={theme}>
+      <FontFix />
+      <Component {...pageProps} />
+    </ThemeProvider>
+  )
 }
 
-export default MyApp
+export default App
