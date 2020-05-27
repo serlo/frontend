@@ -7,14 +7,19 @@
   },
   "license": "MIT",
   "scripts": {
+    "_eslint": "eslint \"{src,pages}/**/*.{js,jsx,ts,tsx}\"",
     "_prettier": "prettier .",
     "analyze": "cross-env ANALYZE=true yarn build",
     "build": "next build",
     "dev": "next",
-    "format": "yarn _prettier --write",
-    "lint": "yarn eslint \"{src,pages}/**/*.{js,tsx,ts}\"",
-    "start": "next start",
-    "typecheck": "yarn tsc --noEmit"
+    "format": "npm-run-all --continue-on-error format:*",
+    "format:eslint": "yarn _eslint --fix",
+    "format:prettier": "yarn _prettier --write",
+    "lint": "npm-run-all lint:tsc lint:prettier lint:eslint",
+    "lint:eslint": "eslint \"{src,pages}/**/*.{js,jsx,ts,tsx}\"",
+    "lint:prettier": "yarn _prettier --check",
+    "lint:tsc": "tsc --noEmit",
+    "start": "next start"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.0.0",
@@ -50,6 +55,7 @@
     "cross-env": "^7.0.0",
     "eslint": "^6.8.0",
     "eslint-plugin-react": "^7.19.0",
+    "npm-run-all": "^4.0.0",
     "prettier": "^2.0.0",
     "prettier-plugin-packagejson": "^2.0.0",
     "react-is": "^16.7.0",
