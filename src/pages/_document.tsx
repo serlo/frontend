@@ -1,7 +1,7 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
 import * as Sentry from '@sentry/browser'
-import GoogleAnalytics from '../src/components/GoogleAnalytics'
+import GoogleAnalytics from '@/components/GoogleAnalytics'
 
 const bodyStyles = {
   margin: 0,

@@ -9,7 +9,7 @@
   "license": "Apache-2.0",
   "author": "Serlo Education e.V.",
   "scripts": {
-    "_eslint": "eslint \"{src,pages}/**/*.{js,jsx,ts,tsx}\"",
+    "_eslint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
     "_prettier": "prettier .",
     "analyze": "cross-env ANALYZE=true yarn build",
     "build": "next build",
@@ -18,7 +18,7 @@
     "format:eslint": "yarn _eslint --fix",
     "format:prettier": "yarn _prettier --write",
     "lint": "npm-run-all lint:tsc lint:prettier lint:eslint",
-    "lint:eslint": "eslint \"{src,pages}/**/*.{js,jsx,ts,tsx}\"",
+    "lint:eslint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
     "lint:prettier": "yarn _prettier --check",
     "lint:tsc": "tsc --noEmit",
     "start": "next start"
@@ -35,7 +35,7 @@
     "htmlparser2": "^4.1.0",
     "isomorphic-unfetch": "^3.0.0",
     "katex": "0.11.1",
-    "next": "^9.3.2",
+    "next": "^9.4.0",
     "next-absolute-url": "^1.0.0",
     "polished": "^3.0.0",
     "react": "^16.12.0",

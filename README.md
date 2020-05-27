@@ -608,9 +608,9 @@ const AnotherChatParagraph = styled.p<SideProps>`
 `
 ```
 
-### \_document.js and \_app.js
+### \_document.tsx and \_app.tsx
 
-Your pages get wrapped in two components, [\_document.js](https://nextjs.org/docs/advanced-features/custom-document) and [\_app.js](https://nextjs.org/docs/advanced-features/custom-app). You can override both files. The document contains everything that is outside of your react app, especially the html and body tag. This is a good place to set styles on these or to define the language. The document is rendered on the server only.
+Your pages get wrapped in two components, [\_document.tsx](https://nextjs.org/docs/advanced-features/custom-document) and [\_app.tsx](https://nextjs.org/docs/advanced-features/custom-app). You can override both files. The document contains everything that is outside of your react app, especially the html and body tag. This is a good place to set styles on these or to define the language. The document is rendered on the server only.
 
 The app is the entrypoint of your page and is rendered client-side as well. You can add global providers or import css files here.
 
@@ -632,7 +632,7 @@ No, styled components [takes care](https://styled-components.com/docs/basics#mot
 
 ### Can I add external css?
 
-Only if it is absolutely necessary. You are able to import external `.css` files in `pages/_app.js`. These stylesheets are always global and included in every page. If possible, use a package that supports styled components.
+Only if it is absolutely necessary. You are able to import external `.css` files in `pages/_app.tsx`. These stylesheets are always global and included in every page. If possible, use a package that supports styled components.
 
 ### Some client specific objects (window, document) are causing trouble with server side rendering. What can I do?
 
