@@ -41,6 +41,7 @@ const Geogebra = dynamic(() => import('../components/content/Geogebra'))
 const Injection = dynamic(() => import('../components/content/Injection'))
 const Exercise = dynamic(() => import('../components/content/Exercise'))
 const Video = dynamic(() => import('../components/content/Video'))
+const Equations = dynamic(() => import('../components/content/Equations'))
 
 export function renderArticle(value: Node[], addCSS = true) {
   if (!value) return null
@@ -135,7 +136,8 @@ const renderer = {
   injection: renderInjection,
   exercise: renderExercise,
   'exercise-group': renderExerciseGroup,
-  video: renderVideo
+  video: renderVideo,
+  equations: renderEquations
 }
 
 function renderElement(props) {
@@ -390,4 +392,8 @@ export function renderVideo({ attributes = {}, children = null, element }) {
       {children}
     </Video>
   )
+}
+
+export function renderEquations({ attributes = {}, element }) {
+  return <Equations {...attributes} steps={element.steps} />
 }
