@@ -42,6 +42,7 @@ const Injection = dynamic(() => import('../components/content/Injection'))
 const Exercise = dynamic(() => import('../components/content/Exercise'))
 const Video = dynamic(() => import('../components/content/Video'))
 const Equations = dynamic(() => import('../components/content/Equations'))
+const Code = dynamic(() => import('../components/content/Code'))
 
 export function renderArticle(value: Node[], addCSS = true) {
   if (!value) return null
@@ -137,7 +138,8 @@ const renderer = {
   exercise: renderExercise,
   'exercise-group': renderExerciseGroup,
   video: renderVideo,
-  equations: renderEquations
+  equations: renderEquations,
+  code: renderCode
 }
 
 function renderElement(props) {
@@ -396,4 +398,8 @@ export function renderVideo({ attributes = {}, children = null, element }) {
 
 export function renderEquations({ attributes = {}, element }) {
   return <Equations {...attributes} steps={element.steps} />
+}
+
+export function renderCode({ attributes = {}, element }) {
+  return <Code content={element.content} {...attributes} />
 }

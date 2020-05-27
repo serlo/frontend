@@ -411,6 +411,23 @@ function convert(node) {
         }
       ]
     }
+    if (node.name === 'pre') {
+      const content = node.children[0]?.children[0]?.data
+      if (content) {
+        return [
+          {
+            type: 'code',
+            content,
+            children: [{ text: '' }]
+          }
+        ]
+      } else {
+        return []
+      }
+    }
+    if (node.name === 'code') {
+      return convert(node.children)
+    }
   }
   if (node.type === 'text') {
     // compat: remove entities and newlines
