@@ -14,7 +14,12 @@ import styled from 'styled-components'
 const CourseNavigation = dynamic(() => import('../navigation/CourseNavigation'))
 const CourseFooter = dynamic(() => import('../navigation/CourseFooter'))
 
-export default function ArticlePage({ data, contentId, contentType }) {
+export default function ArticlePage({
+  data,
+  contentId,
+  contentType,
+  prettyLinks
+}) {
   const [open, setOpen] = React.useState(false)
 
   const [courseNavOpen, setCourseNavOpen] = React.useState(false)
@@ -55,7 +60,7 @@ export default function ArticlePage({ data, contentId, contentType }) {
           <FontAwesomeIcon icon={faShareAlt} size="1x" /> Teilen
         </ToolLineButton>
       </ToolLine>
-      {data.value && renderArticle(data.value.children)}
+      {data.value && renderArticle(data.value.children, false, prettyLinks)}
       {isCoursePage && (
         <CourseFooter opener={openCourseNav} nextHref={nextCoursePageHref} />
       )}

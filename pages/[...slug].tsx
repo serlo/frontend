@@ -46,7 +46,8 @@ function PageView(props) {
     contentType,
     title,
     navigation,
-    license
+    license,
+    prettyLinks
   } = data
 
   function getMetaContentType() {
@@ -145,6 +146,7 @@ function PageView(props) {
                   data={data.data}
                   contentId={contentId}
                   contentType={contentType}
+                  prettyLinks={prettyLinks}
                 />
               )}
             {contentType === 'TaxonomyTerm' && data.data && (
@@ -230,7 +232,6 @@ export async function getServerSideProps(props) {
     )}?redirect`
   )
   const data = await res.json()
-
   // compat course to first page
   if (data.redirect) {
     props.res.writeHead(301, {

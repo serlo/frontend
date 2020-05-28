@@ -41,10 +41,10 @@ const Injection = dynamic(() => import('../components/content/Injection'))
 const Exercise = dynamic(() => import('../components/content/Exercise'))
 const Video = dynamic(() => import('../components/content/Video'))
 
-export function renderArticle(value: Node[], addCSS = true) {
+export function renderArticle(value: Node[], addCSS = true, prettyLinks = []) {
   if (!value) return null
   const root = { children: value }
-  const content = value.map((_, index) => render(root, [index]))
+  const content = value.map((_, index) => render(root, [index], prettyLinks))
   if (addCSS) {
     return <SpecialCSS>{content}</SpecialCSS>
   } else return content
@@ -58,28 +58,30 @@ function getNode(value, path) {
   }
 }
 
-function render(value, path = []) {
+function render(value, path = [], prettyLinks) {
   const currentNode = getNode(value, path)
   const key = path[path.length - 1]
   if (currentNode && Array.isArray(currentNode.children)) {
     const children = currentNode.children.map((_, index) =>
-      render(value, path.concat(index))
+      render(value, path.concat(index), prettyLinks)
     )
     return renderElement({
       element: currentNode,
       attributes: { key },
       children,
       value,
-      path
+      path,
+      prettyLinks
     })
   }
-  if (currentNode.text === '') {
+  if (!currentNode) return null
+  if (currentNode?.text === '') {
     return null // avoid rendering empty spans
   }
   return renderLeaf({
     leaf: currentNode,
     attributes: { key },
-    children: currentNode.text,
+    children: currentNode?.text,
     readonly: true
   })
 }
@@ -143,9 +145,14 @@ function renderElement(props) {
 
 const nowrap = comp => comp
 
-export function renderA({ element, attributes = {}, children = null }) {
+export function renderA({
+  element,
+  attributes = {},
+  children = null,
+  prettyLinks = []
+}) {
   return (
-    <Link element={element} {...attributes}>
+    <Link element={element} {...attributes} prettyLinks={prettyLinks}>
       {children}
     </Link>
   )

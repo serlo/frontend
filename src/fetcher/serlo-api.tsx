@@ -1,6 +1,7 @@
 import { request } from 'graphql-request'
-import { dataQuery, idQuery } from './query'
+import { dataQuery, idQuery, idsQuery } from './query'
 import { processResponse } from './processResponse'
+import { extractLinks } from './extractLinks'
 
 export const endpoint = 'https://api.serlo.org/graphql'
 
@@ -39,7 +40,14 @@ export default async function fetchContent(alias: string, redirect) {
       return { redirect: reqData.uuid.alias }
     }
     const contentId = reqData.uuid.id
-    return { contentId, alias, ...processResponse(reqData) }
+
+    const processed = processResponse(reqData)
+    const allLinks = extractLinks(processed.data.value.children, [])
+
+    const linkQuery = idsQuery(allLinks)
+    const prettyLinks = await request(endpoint, linkQuery)
+
+    return { contentId, alias, ...processed, prettyLinks }
   } catch (e) {
     return { error: 'Error while fetching data: ' + (e.message ?? e), alias }
   }
