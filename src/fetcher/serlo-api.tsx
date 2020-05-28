@@ -43,10 +43,10 @@ export default async function fetchContent(alias: string, redirect) {
 
     const processed = processResponse(reqData)
     const processedData = processed.data as any
-    const allLinks = extractLinks(processedData.value.children, [])
+    const allLinks = extractLinks(processedData.value?.children, [])
 
-    const linkQuery = idsQuery(allLinks)
-    const prettyLinks = await request(endpoint, linkQuery)
+    const prettyLinks =
+      allLinks.length < 1 ? {} : await request(endpoint, idsQuery(allLinks))
 
     return { contentId, alias, ...processed, prettyLinks }
   } catch (e) {

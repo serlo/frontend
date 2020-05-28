@@ -15,7 +15,7 @@ export default function Link({
     return <React.Fragment {...attributes}>{children}</React.Fragment>
 
   const isExternal = element.href.indexOf('//') > -1
-  const prettyLink = prettyLinks[element.href.replace('/', 'uuid')].alias
+  const prettyLink = prettyLinks[element.href.replace('/', 'uuid')]?.alias
 
   return (
     <StyledA href={prettyLink ? prettyLink : element.href} {...attributes}>
