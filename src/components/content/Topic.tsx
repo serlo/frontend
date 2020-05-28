@@ -53,12 +53,13 @@ export default function Topic({ data, contentId }: TopicProps) {
       {data.purpose === TopicPurposes.detail ? (
         <>
           <Headline>
+            {data.title}
             {data.exercises.length > 0 && (
               <span title={'Aufgabensammlung'}>
+                {' '}
                 <StyledIcon icon={faFile} />{' '}
               </span>
             )}
-            {data.title}
           </Headline>
           <ToolLine>
             <ToolLineButton top onClick={() => setOpen(true)}>
