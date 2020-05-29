@@ -42,8 +42,7 @@ export default async function fetchContent(alias: string, redirect) {
     const contentId = reqData.uuid.id
 
     const processed = processResponse(reqData)
-    const processedData = processed.data as any
-    const allLinks = extractLinks(processedData.value?.children, [])
+    const allLinks = extractLinks(processed.data.value?.children, [])
 
     const prettyLinks =
       allLinks.length < 1 ? {} : await request(endpoint, idsQuery(allLinks))
