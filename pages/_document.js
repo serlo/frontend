@@ -48,6 +48,7 @@ export default class MyDocument extends Document {
     return (
       <Html lang="de">
         <Head>
+          <link rel="preconnect" href="//www.google-analytics.com" />
           <meta property="og:site_name" content="Serlo" />
           <meta property="og:type" content="website" />
           <link
