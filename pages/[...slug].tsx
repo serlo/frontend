@@ -50,27 +50,6 @@ function PageView(props) {
     prettyLinks
   } = data
 
-  // const extractLinks = (arr, links) => {
-  //   arr.forEach(obj => {
-  //     if (obj.type === 'a') {
-  //       if (!/^\/[\d]+$/.test(obj.href)) return
-  //       console.log('t: ' + obj.href.substring(1))
-  //       const id = parseInt(obj.href.substring(1))
-  //       if (links.includes(id) === false)
-  //         console.log('t: ' + obj.href.substring(1))
-  //       // links.push(id)
-  //       // }
-  //     }
-  //     // console.log(obj)
-  //     // console.log(obj.children)
-  //     // console.log(obj.children?.length)
-  //     if (obj.children?.length > 0) extractLinks(obj.children, links)
-  //   })
-  //   return links
-  // }
-
-  // console.log(extractLinks(data.data.value.children, []))
-
   function getMetaContentType() {
     //match legacy content types that are used by google custom search
     if (contentType === undefined) return ''
