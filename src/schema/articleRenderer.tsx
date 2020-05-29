@@ -41,10 +41,10 @@ const Injection = dynamic(() => import('../components/content/Injection'))
 const Exercise = dynamic(() => import('../components/content/Exercise'))
 const Video = dynamic(() => import('../components/content/Video'))
 
-export function renderArticle(value: Node[], addCSS = true, prettyLinks = []) {
+export function renderArticle(value: Node[], addCSS = true) {
   if (!value) return null
   const root = { children: value }
-  const content = value.map((_, index) => render(root, [index], prettyLinks))
+  const content = value.map((_, index) => render(root, [index]))
   if (addCSS) {
     return <SpecialCSS>{content}</SpecialCSS>
   } else return content
@@ -58,20 +58,19 @@ function getNode(value, path) {
   }
 }
 
-function render(value, path = [], prettyLinks) {
+function render(value, path = []) {
   const currentNode = getNode(value, path)
   const key = path[path.length - 1]
   if (currentNode && Array.isArray(currentNode.children)) {
     const children = currentNode.children.map((_, index) =>
-      render(value, path.concat(index), prettyLinks)
+      render(value, path.concat(index))
     )
     return renderElement({
       element: currentNode,
       attributes: { key },
       children,
       value,
-      path,
-      prettyLinks
+      path
     })
   }
   if (!currentNode) return null
@@ -145,14 +144,9 @@ function renderElement(props) {
 
 const nowrap = comp => comp
 
-export function renderA({
-  element,
-  attributes = {},
-  children = null,
-  prettyLinks = []
-}) {
+export function renderA({ element, attributes = {}, children = null }) {
   return (
-    <Link element={element} {...attributes} prettyLinks={prettyLinks}>
+    <Link element={element} {...attributes}>
       {children}
     </Link>
   )
