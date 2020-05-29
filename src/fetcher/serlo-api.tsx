@@ -11,7 +11,8 @@ export default async function fetchContent(alias: string, redirect) {
   try {
     if (redirect && /^\/[\d]+$/.test(alias)) {
       // redirect id to alias
-      const response = await request(endpoint, idQuery(alias.substring(1)))
+      // TODO: needs better types
+      const response = await request<any>(endpoint, idQuery(alias.substring(1)))
       const redirect = response.uuid.alias
       if (redirect) {
         return { redirect }
@@ -27,7 +28,8 @@ export default async function fetchContent(alias: string, redirect) {
         ? 'id: ' + alias.substring(1)
         : `alias: { instance: de, path: "${alias}"}`
     )
-    const reqData = await request(endpoint, QUERY)
+    // TODO: needs better types
+    const reqData = await request<any>(endpoint, QUERY)
     // compat: redirect first page of course
     if (
       reqData.uuid.__typename === 'Course' &&
