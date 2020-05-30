@@ -5,7 +5,26 @@ import { createNavigation } from './createNavigation'
 import { createData } from './createData'
 import { createLicense } from './createLicense'
 
-export function processResponse(reqData) {
+interface reqDataProps {
+  uuid: uuidProps
+}
+interface uuidProps {
+  __typename: string
+}
+
+interface processResponseReturnProps {
+  contentType: string
+  title: string
+  breadcrumbs
+  navigation: object
+  data: any //todo
+  license: string
+  horizonIndices: Array<object>
+}
+
+export function processResponse(
+  reqData: reqDataProps
+): processResponseReturnProps {
   return {
     contentType: reqData.uuid.__typename,
     title: createTitle(reqData.uuid) ?? 'Serlo',

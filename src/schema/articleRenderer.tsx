@@ -6,7 +6,6 @@ import MathWrapper from '../components/content/MathWrapper'
 import LayoutRow from '../components/content/LayoutRow'
 import Col from '../components/content/Col'
 import Important from '../components/content/Important'
-import StyledA from '../components/tags/StyledA'
 import StyledH1 from '../components/tags/StyledH1'
 import StyledH2 from '../components/tags/StyledH2'
 import StyledH3 from '../components/tags/StyledH3'
@@ -26,9 +25,9 @@ import StyledTH from '../components/tags/StyledTH'
 import StyledTD from '../components/tags/StyledTD'
 import TableWrapper from '../components/content/TableWrapper'
 import SpoilerToggle from '../components/content/SpoilerToggle'
-import ExternalLink from '../components/content/ExternalLink'
 import GeogebraWrapper from '../components/content/GeogebraWrapper'
 import ExerciseGroup from '../components/content/ExerciseGroup'
+import Link from '../components/content/Link'
 
 import SpecialCSS from '../components/content/SpecialCSS'
 import { theme } from '../theme'
@@ -76,13 +75,14 @@ function render(value, path = []) {
       path
     })
   }
-  if (currentNode.text === '') {
+  if (!currentNode) return null
+  if (currentNode?.text === '') {
     return null // avoid rendering empty spans
   }
   return renderLeaf({
     leaf: currentNode,
     attributes: { key },
-    children: currentNode.text,
+    children: currentNode?.text,
     readonly: true
   })
 }
@@ -148,19 +148,11 @@ function renderElement(props) {
 
 const nowrap = comp => comp
 
-export function renderA({
-  element,
-  attributes = {},
-  children = null,
-  wrapExtInd = nowrap
-}) {
-  if (!element.href)
-    return <React.Fragment {...attributes}>{children}</React.Fragment>
+export function renderA({ element, attributes = {}, children = null }) {
   return (
-    <StyledA href={element.href} {...attributes}>
+    <Link element={element} {...attributes}>
       {children}
-      {element.href.startsWith('http') && wrapExtInd(<ExternalLink />)}
-    </StyledA>
+    </Link>
   )
 }
 

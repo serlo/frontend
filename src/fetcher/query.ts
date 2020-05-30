@@ -1,3 +1,20 @@
+export const idsQuery = ids => {
+  const query = ids.map(id => `
+    uuid${id}: uuid(id:${id}) {
+        ... on Entity {
+          alias
+        }
+        ... on Page {
+          alias
+        }
+        ... on TaxonomyTerm {
+          alias
+        }
+      } 
+  `)
+  return `{${query}}`
+}
+
 export const idQuery = id => `
   {
     uuid(id:${id}) {

@@ -1,3 +1,4 @@
+import React from 'react'
 import Header from '../src/components/navigation/Header'
 import Footer from '../src/components/navigation/Footer'
 import styled, { css } from 'styled-components'
@@ -17,6 +18,7 @@ import LicenseNotice from '../src/components/content/LicenseNotice'
 import StyledA from '../src/components/tags/StyledA'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCubes, faPlayCircle } from '@fortawesome/free-solid-svg-icons'
+import { PrettyLinksProvider } from '../src/components/PrettyLinksContext'
 
 const MetaMenu = dynamic(() => import('../src/components/navigation/MetaMenu'))
 const Breadcrumbs = dynamic(() =>
@@ -46,7 +48,8 @@ function PageView(props) {
     contentType,
     title,
     navigation,
-    license
+    license,
+    prettyLinks
   } = data
 
   function getMetaContentType() {
@@ -103,7 +106,7 @@ function PageView(props) {
   return (
     <>
       <Head>
-        <title>{title}</title>
+        <title>{title ? title : 'Serlo.org'}</title>
         <meta name="content_type" content={getMetaContentType()} />
         {metaDescription && (
           <meta name="description" content={metaDescription} />
@@ -117,64 +120,66 @@ function PageView(props) {
       )}
       <RelatveContainer>
         <MaxWidthDiv showNav={showNav}>
-          {data.error ? (
-            <>
-              <HSpace amount={100} />
-              <StyledH1>404</StyledH1>
-              <StyledP>Diese Seite konnte nicht geladen werden.</StyledP>
-              {process.env.NODE_ENV !== 'production' && (
-                <StyledP>
-                  Details:{' '}
-                  <StyledA href={'/api/frontend' + alias}>
-                    /api/frontend{alias}
-                  </StyledA>
-                </StyledP>
-              )}
-            </>
-          ) : null}
-          {breadcrumbs && !(contentType === 'Page' && navigation) && (
-            <Breadcrumbs entries={breadcrumbs} />
-          )}
-          <main>
-            {data &&
-              data.data &&
-              (contentType === 'Article' ||
-                contentType === 'Page' ||
-                contentType === 'CoursePage') && (
-                <ArticlePage
-                  data={data.data}
-                  contentId={contentId}
-                  contentType={contentType}
-                />
-              )}
-            {contentType === 'TaxonomyTerm' && data.data && (
-              <Topic data={data.data} contentId={contentId} />
-            )}
-            {(contentType === 'Video' || contentType === 'Applet') && (
+          <PrettyLinksProvider value={prettyLinks}>
+            {data.error ? (
               <>
-                <StyledH1 displayMode>
-                  <span title={contentType}>
-                    <StyledIcon
-                      icon={contentType === 'Video' ? faPlayCircle : faCubes}
-                    />
-                  </span>{' '}
-                  {data.data.title}
-                </StyledH1>
-                {renderArticle(data.data.value.children)}
+                <HSpace amount={100} />
+                <StyledH1>404</StyledH1>
+                <StyledP>Diese Seite konnte nicht geladen werden.</StyledP>
+                {process.env.NODE_ENV !== 'production' && (
+                  <StyledP>
+                    Details:{' '}
+                    <StyledA href={'/api/frontend' + alias}>
+                      /api/frontend{alias}
+                    </StyledA>
+                  </StyledP>
+                )}
               </>
+            ) : null}
+            {breadcrumbs && !(contentType === 'Page' && navigation) && (
+              <Breadcrumbs entries={breadcrumbs} />
             )}
-            {(contentType === 'Exercise' ||
-              contentType === 'ExerciseGroup') && (
-              <>{renderArticle(data.data.value.children)}</>
+            <main>
+              {data &&
+                data.data &&
+                (contentType === 'Article' ||
+                  contentType === 'Page' ||
+                  contentType === 'CoursePage') && (
+                  <ArticlePage
+                    data={data.data}
+                    contentId={contentId}
+                    contentType={contentType}
+                  />
+                )}
+              {contentType === 'TaxonomyTerm' && data.data && (
+                <Topic data={data.data} contentId={contentId} />
+              )}
+              {(contentType === 'Video' || contentType === 'Applet') && (
+                <>
+                  <StyledH1 displayMode>
+                    <span title={contentType}>
+                      <StyledIcon
+                        icon={contentType === 'Video' ? faPlayCircle : faCubes}
+                      />
+                    </span>{' '}
+                    {data.data.title}
+                  </StyledH1>
+                  {renderArticle(data.data.value.children)}
+                </>
+              )}
+              {(contentType === 'Exercise' ||
+                contentType === 'ExerciseGroup') && (
+                <>{renderArticle(data.data.value.children)}</>
+              )}
+              {license && <LicenseNotice data={license} />}
+            </main>
+            <HSpace amount={40} />
+            {horizonIndices && (
+              <Horizon
+                entries={horizonIndices.map(index => horizonData[index])}
+              />
             )}
-            {license && <LicenseNotice data={license} />}
-          </main>
-          <HSpace amount={40} />
-          {horizonIndices && (
-            <Horizon
-              entries={horizonIndices.map(index => horizonData[index])}
-            />
-          )}
+          </PrettyLinksProvider>
         </MaxWidthDiv>
       </RelatveContainer>
       <Footer />
@@ -230,7 +235,6 @@ export async function getServerSideProps(props) {
     )}?redirect`
   )
   const data = await res.json()
-
   // compat course to first page
   if (data.redirect) {
     props.res.writeHead(301, {
