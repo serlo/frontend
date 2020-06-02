@@ -15,9 +15,9 @@ import * as Sentry from '@sentry/browser'
 
 import { version } from '../package.json'
 
-if (process.env.SENTRY_DSN !== undefined) {
+if (process.env.NEXT_PUBLIC_SENTRY_DSN !== undefined) {
   Sentry.init({
-    dsn: process.env.SENTRY_DSN,
+    dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
     release: `frontend@${version}-${process.env.VERCEL_GITHUB_COMMIT_SHA}`
   })
 }

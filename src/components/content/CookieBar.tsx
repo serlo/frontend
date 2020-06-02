@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import fetch from 'isomorphic-unfetch'
+import { serloDomain } from '../../serlo-domain'
 
 export default function CookieBar() {
   const [loaded, setLoaded] = React.useState(false)
@@ -29,11 +29,11 @@ export default function CookieBar() {
   return (
     <CookieWrapper>
       Mit der Nutzung dieser Webseite erklärst du dich mit unserer{' '}
-      <CookieLink href="https://de.serlo.org/privacy" target="_blank">
+      <CookieLink href={`https://de.${serloDomain}/privacy`} target="_blank">
         Datenschutzerklärung
       </CookieLink>{' '}
       und{' '}
-      <CookieLink href="https://de.serlo.org/terms" target="_blank">
+      <CookieLink href={`https://de.${serloDomain}/terms`} target="_blank">
         Nutzungsbedingungen
       </CookieLink>{' '}
       einverstanden.

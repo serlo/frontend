@@ -8,7 +8,7 @@ const bodyStyles = {
   fontFamily: 'Karmilla, sans-serif'
 }
 
-if (process.env.SENTRY_DSN !== undefined) {
+if (process.env.NEXT_PUBLIC_SENTRY_DSN !== undefined) {
   process.on('unhandledRejection', err => {
     Sentry.captureException(err)
   })
@@ -91,7 +91,9 @@ export default class MyDocument extends Document {
         <body style={bodyStyles}>
           <Main />
           <NextScript />
-          {process.env.GA_TRACKING_ID !== undefined && <GoogleAnalytics />}
+          {process.env.NEXT_PUBLIC_GA_TRACKING_ID !== undefined ? (
+            <GoogleAnalytics />
+          ) : null}
         </body>
       </Html>
     )

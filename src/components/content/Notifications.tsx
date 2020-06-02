@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { serloDomain } from '../../serlo-domain'
 
 interface NotificationsProps {
   entries: NotificationEntry[]
@@ -23,7 +24,7 @@ export default function Notifications({ entries }: NotificationsProps) {
       {entries.map((entry, i) => {
         return (
           <Item readed={entry.readed} key={i}>
-            <Link href={`https://serlo.org/${entry.author.id}`}>
+            <Link href={`https://${serloDomain}/${entry.author.id}`}>
               {entry.author.username}
             </Link>
             <Body dangerouslySetInnerHTML={{ __html: entry.body }}></Body>
