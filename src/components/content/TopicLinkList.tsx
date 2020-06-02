@@ -68,8 +68,8 @@ export default function TopicLinkList({ links, purpose }: LinksProps) {
             <div>
               {/* {purpose === TopicPurposes.detail && ( */}
               <LinkSectionHeadline>
-                <RenderIcon icon={link} size={IconSizeEnum.one} />{' '}
-                {HeadlineEnum[link]}
+                {HeadlineEnum[link]}{' '}
+                <RenderIcon icon={link} size={IconSizeEnum.one} />
               </LinkSectionHeadline>
               {/* )} */}
               {links[link].map(article => {

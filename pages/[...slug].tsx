@@ -157,12 +157,13 @@ function PageView(props) {
               {(contentType === 'Video' || contentType === 'Applet') && (
                 <>
                   <StyledH1 displayMode>
+                    {data.data.title}
                     <span title={contentType}>
+                      {' '}
                       <StyledIcon
                         icon={contentType === 'Video' ? faPlayCircle : faCubes}
                       />
-                    </span>{' '}
-                    {data.data.title}
+                    </span>
                   </StyledH1>
                   {renderArticle(data.data.value.children)}
                 </>
