@@ -5,14 +5,13 @@ import { createNavigation } from './createNavigation'
 import { createData } from './createData'
 import { createLicense } from './createLicense'
 
-interface reqDataProps {
-  uuid: uuidProps
-}
-interface uuidProps {
-  __typename: string
+interface ReqData {
+  uuid: {
+    __typename: string
+  }
 }
 
-interface processResponseReturnProps {
+interface ProcessedResponse {
   contentType: string
   title: string
   breadcrumbs
@@ -22,9 +21,7 @@ interface processResponseReturnProps {
   horizonIndices: Array<object>
 }
 
-export function processResponse(
-  reqData: reqDataProps
-): processResponseReturnProps {
+export function processResponse(reqData: ReqData): ProcessedResponse {
   return {
     contentType: reqData.uuid.__typename,
     title: createTitle(reqData.uuid) ?? 'Serlo',
