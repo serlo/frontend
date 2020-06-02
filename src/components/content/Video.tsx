@@ -68,7 +68,7 @@ const VideoWrapper = styled.figure`
   height: 0;
   overflow: hidden;
   position: relative;
-  margin-bottom: ${props => props.theme.spacing.mb.block};
+  margin-bottom: ${(props) => props.theme.spacing.mb.block};
 
   & > video,
   & > iframe,

@@ -14,7 +14,7 @@ export default function ExerciseNumbering({ index }: ExerciseNumberingProps) {
 const StyledNumber = styled.span`
   display: none;
 
-  @media (min-width: ${props => props.theme.breakpoints.md}) {
+  @media (min-width: ${(props) => props.theme.breakpoints.md}) {
     display: block;
     position: absolute;
     margin-top: 2px;
@@ -23,6 +23,6 @@ const StyledNumber = styled.span`
     font-size: 2rem;
     text-align: right;
     font-weight: bold;
-    color: ${props => props.theme.colors.brand};
+    color: ${(props) => props.theme.colors.brand};
   }
 `

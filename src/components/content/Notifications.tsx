@@ -41,16 +41,16 @@ const Wrapper = styled.div`
 `
 
 const Link = styled.a`
-  color: ${props => props.theme.colors.brand};
+  color: ${(props) => props.theme.colors.brand};
   text-decoration: none;
   margin-right: 5px;
   &:hover {
-    color: ${props => props.theme.colors.lightblue};
+    color: ${(props) => props.theme.colors.lightblue};
   }
 `
 
 const TimestampText = styled.span`
-  color: ${props => props.theme.colors.gray};
+  color: ${(props) => props.theme.colors.gray};
   margin-left: 5px;
 `
 
@@ -58,9 +58,9 @@ const Item = styled.div<{ readed: boolean; theme: any }>`
   margin: 10px 0;
   padding: 24px;
   &:nth-child(even) {
-    background: ${props => props.theme.colors.bluewhite};
+    background: ${(props) => props.theme.colors.bluewhite};
   }
-  ${props =>
+  ${(props) =>
     props.readed
       ? ''
       : `
@@ -79,10 +79,10 @@ const Item = styled.div<{ readed: boolean; theme: any }>`
 
 const Body = styled.span`
   a {
-    color: ${props => props.theme.colors.brand};
+    color: ${(props) => props.theme.colors.brand};
     text-decoration: none;
   }
   a:hover {
-    color: ${props => props.theme.colors.lightblue};
+    color: ${(props) => props.theme.colors.lightblue};
   }
 `

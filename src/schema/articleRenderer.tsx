@@ -72,7 +72,7 @@ function render(value, path = []) {
       attributes: { key },
       children,
       value,
-      path
+      path,
     })
   }
   if (!currentNode) return null
@@ -83,14 +83,14 @@ function render(value, path = []) {
     leaf: currentNode,
     attributes: { key },
     children: currentNode?.text,
-    readonly: true
+    readonly: true,
   })
 }
 
 export const articleColors = {
   blue: theme.colors.blue,
   green: theme.colors.green,
-  orange: theme.colors.orange
+  orange: theme.colors.orange,
 }
 
 export function renderLeaf({ leaf, attributes, children, readonly = false }) {
@@ -139,14 +139,14 @@ const renderer = {
   'exercise-group': renderExerciseGroup,
   video: renderVideo,
   equations: renderEquations,
-  code: renderCode
+  code: renderCode,
 }
 
 function renderElement(props) {
   return renderer[props.element.type](props)
 }
 
-const nowrap = comp => comp
+const nowrap = (comp) => comp
 
 export function renderA({ element, attributes = {}, children = null }) {
   return (
@@ -169,7 +169,7 @@ const StyledHx = {
   2: StyledH2,
   3: StyledH3,
   4: StyledH4,
-  5: StyledH5
+  5: StyledH5,
 }
 
 export function renderH({ element, attributes = {}, children = null }) {
@@ -185,7 +185,7 @@ export function renderImg({
   element,
   attributes = {},
   children = null,
-  wrapImg = nowrap
+  wrapImg = nowrap,
 }) {
   function wrapInA(comp) {
     if (element.href) {
@@ -216,7 +216,7 @@ export function renderMath({
   element,
   attributes = {},
   children = null,
-  wrapFormula = nowrap
+  wrapFormula = nowrap,
 }) {
   let formula = element.formula
   let bigger = false
@@ -261,7 +261,7 @@ function SpoilerForEndUser(props) {
         </SpoilerTitle>
         {open && body}
       </>
-    )
+    ),
   })
 }
 

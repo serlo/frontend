@@ -15,7 +15,7 @@ export default function Exercise(props) {
     solutionLicense,
     grouped,
     positionInGroup,
-    positionOnPage
+    positionOnPage,
   } = props
   const [solutionVisible, setVisible] = React.useState(false)
 
@@ -53,14 +53,14 @@ export default function Exercise(props) {
         type: 'p',
         children: [
           {
-            text: 'Für diese Aufgabe benötigst Du folgendes Grundwissen: '
+            text: 'Für diese Aufgabe benötigst Du folgendes Grundwissen: ',
           },
           {
             type: 'a',
             href: '/' + state.prerequisite.id,
-            children: [{ text: state.prerequisite.title }]
-          }
-        ]
+            children: [{ text: state.prerequisite.title }],
+          },
+        ],
       })
     }
     const strategy = state.strategy
@@ -101,17 +101,18 @@ const StyledSpan = styled.span`
 `
 
 const Wrapper = styled.div<{ grouped?: boolean }>`
-  border-top: 2px solid ${props => props.theme.colors.brand};
+  border-top: 2px solid ${(props) => props.theme.colors.brand};
   padding-top: 30px;
   padding-bottom: 10px;
 
-  ${props =>
+  ${(props) =>
     !props.grouped &&
     css`
-      border-left: 8px solid ${props => props.theme.colors.lightBlueBackground};
+      border-left: 8px solid
+        ${(props) => props.theme.colors.lightBlueBackground};
       border-top: 0;
 
-      @media (min-width: ${props => props.theme.breakpoints.mobile}) {
+      @media (min-width: ${(props) => props.theme.breakpoints.mobile}) {
         ${makeMargin}
       }
       margin-bottom: 40px;
@@ -141,17 +142,17 @@ const SolutionToggle = styled.a<{ active: boolean }>`
   cursor: pointer;
   margin-bottom: 16px;
 
-  ${props =>
+  ${(props) =>
     props.active &&
     css`
-      background-color: ${props => props.theme.colors.brand} !important;
+      background-color: ${(props) => props.theme.colors.brand} !important;
       color: #fff !important;
     `}
 
   @media (hover: none) {
     &:hover {
       background-color: transparent;
-      color: ${props => props.theme.colors.brand};
+      color: ${(props) => props.theme.colors.brand};
     }
   }
 `
@@ -159,8 +160,8 @@ const SolutionToggle = styled.a<{ active: boolean }>`
 const SolutionBox = styled.div<{ visible: boolean }>`
   padding-top: 10px;
   padding-bottom: 10px;
-  display: ${props => (props.visible ? 'block' : 'none')};
+  display: ${(props) => (props.visible ? 'block' : 'none')};
   ${makeMargin}
-  margin-bottom: ${props => props.theme.spacing.mb.block};
-  border-left: 8px solid ${props => props.theme.colors.brand};;
+  margin-bottom: ${(props) => props.theme.spacing.mb.block};
+  border-left: 8px solid ${(props) => props.theme.colors.brand};;
 `

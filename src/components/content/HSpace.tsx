@@ -5,7 +5,7 @@ export interface HSpaceProps {
 }
 
 const HSpace = styled.div<HSpaceProps>`
-  height: ${props => (props.amount ? props.amount : 30)}px;
+  height: ${(props) => (props.amount ? props.amount : 30)}px;
 `
 
 export default HSpace

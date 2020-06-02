@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components'
 import {
   makeMargin,
   makeDefaultButton,
-  inputFontReset
+  inputFontReset,
 } from '../../helper/csshelper'
 import React from 'react'
 
@@ -22,7 +22,7 @@ export default function InputExercise({ state }) {
       <StyledInput
         type="text"
         value={value}
-        onChange={e => setValue(e.target.value)}
+        onChange={(e) => setValue(e.target.value)}
         onKeyDown={keyPress}
         placeholder={'Deine Antwort…'}
       />{' '}
@@ -40,7 +40,7 @@ export default function InputExercise({ state }) {
 }
 
 function checkAnswer(val, state) {
-  const answers = state.answers.filter(answer => answer.value === val)
+  const answers = state.answers.filter((answer) => answer.value === val)
   if (answers.length !== 1 || !answers[0].isCorrect) {
     return <span>Falsch</span>
   } else {
@@ -63,9 +63,9 @@ const CheckButton = styled.a<{ selectable: boolean }>`
   margin-top: 16px;
 
   color: #fff;
-  background-color: ${props => props.theme.colors.brand};
+  background-color: ${(props) => props.theme.colors.brand};
 
-  ${props =>
+  ${(props) =>
     !props.selectable &&
     css`
       opacity: 0;
@@ -79,14 +79,14 @@ const StyledInput = styled.input`
   padding: 9px 12px;
   font-weight: bold;
   color: #fff;
-  border: 3px solid ${props => props.theme.colors.brand};
-  background-color: ${props => props.theme.colors.brand};
+  border: 3px solid ${(props) => props.theme.colors.brand};
+  background-color: ${(props) => props.theme.colors.brand};
 
   &:focus {
     outline: none;
     background-color: #fff;
-    color: ${props => props.theme.colors.brand};
-    border: 3px solid ${props => props.theme.colors.brand};
+    color: ${(props) => props.theme.colors.brand};
+    border: 3px solid ${(props) => props.theme.colors.brand};
     opacity: 1 !important;
     &::placeholder {
       opacity: 0;

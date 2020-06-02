@@ -19,19 +19,19 @@ export default function Geogebra({ id }: GeogebraProps) {
               field: [
                 { '-name': 'width' },
                 { '-name': 'height' },
-                { '-name': 'preview_url' }
-              ]
+                { '-name': 'preview_url' },
+              ],
             },
             filters: {
-              field: [{ '-name': 'id', '#text': id }]
+              field: [{ '-name': 'id', '#text': id }],
             },
-            limit: { '-num': '1' }
-          }
-        }
-      })
+            limit: { '-num': '1' },
+          },
+        },
+      }),
     })
-      .then(res => res.json())
-      .then(res => {
+      .then((res) => res.json())
+      .then((res) => {
         try {
           const data = res.responses.response.item
           if (data) {
@@ -67,7 +67,7 @@ const Placeholder = styled.div`
   display: flex;
   justify-content: center;
   box-sizing: border-box;
-  border: 2px ${props => props.theme.colors.lightgray} solid;
+  border: 2px ${(props) => props.theme.colors.lightgray} solid;
   border-radius: 4px;
   padding: 10px;
 `
@@ -84,7 +84,7 @@ const GeogebraFrame = styled.iframe`
 const GeogebraContainer = styled.div<{ ratio: number }>`
   position: relative;
   padding: 0;
-  padding-top: ${props => 100 / props.ratio}%;
+  padding-top: ${(props) => 100 / props.ratio}%;
   display: block;
   height: 0;
   overflow: hidden;

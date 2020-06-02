@@ -18,7 +18,7 @@ export default function ArticlePage({ data, contentId, contentType }) {
   const [open, setOpen] = React.useState(false)
 
   const [courseNavOpen, setCourseNavOpen] = React.useState(false)
-  const openCourseNav = e => {
+  const openCourseNav = (e) => {
     e.preventDefault()
     setCourseNavOpen(true)
   }
@@ -26,7 +26,8 @@ export default function ArticlePage({ data, contentId, contentType }) {
 
   const nextIndex =
     isCoursePage &&
-    1 + data.pages.findIndex(page => page.currentRevision.title === data.title)
+    1 +
+      data.pages.findIndex((page) => page.currentRevision.title === data.title)
   const nextCoursePageHref =
     isCoursePage &&
     (nextIndex >= data.pages.length ? '' : data.pages[nextIndex].alias)
@@ -84,6 +85,6 @@ export default function ArticlePage({ data, contentId, contentType }) {
 }
 
 const StyledIcon = styled(FontAwesomeIcon)`
-  color: ${props => props.theme.colors.lighterblue};
+  color: ${(props) => props.theme.colors.lighterblue};
   font-size: 1.73rem;
 `

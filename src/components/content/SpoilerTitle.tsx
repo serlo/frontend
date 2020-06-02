@@ -11,7 +11,7 @@ export default function SpoilerTitle({
   open,
   children,
   onClick,
-  disabled
+  disabled,
 }: SpoilerTitleProps) {
   return (
     <StyledSpoilerTitle
@@ -31,24 +31,24 @@ const StyledSpoilerTitle = styled.a<{ open: boolean; interactive: boolean }>`
   font-size: 1.125rem;
   line-height: 1.3;
   padding: 10px 15px;
-  cursor: ${props => (props.interactive ? 'pointer' : 'auto')};
+  cursor: ${(props) => (props.interactive ? 'pointer' : 'auto')};
   text-align: left;
-  color: ${props => (props.open ? '#fff' : props.theme.colors.dark1)};
-  background-color: ${props =>
+  color: ${(props) => (props.open ? '#fff' : props.theme.colors.dark1)};
+  background-color: ${(props) =>
     props.open ? props.theme.colors.brand : props.theme.colors.bluewhite};
 
   &:hover {
-    background-color: ${props =>
+    background-color: ${(props) =>
       props.open
         ? props.theme.colors.brand
         : props.theme.colors.lightBlueBackground};
   }
 
-  ${props =>
+  ${(props) =>
     !props.interactive &&
     css`
-      color: ${props => props.theme.colors.dark1};
-      background-color: ${props =>
+      color: ${(props) => props.theme.colors.dark1};
+      background-color: ${(props) =>
         props.theme.colors.lightBlueBackground} !important;
     `}
 `

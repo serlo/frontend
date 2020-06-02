@@ -36,16 +36,16 @@ export function convert(node) {
         src: node.state.src,
         alt: node.state.alt,
         maxWidth: node.state.maxWidth,
-        children: [{ text: '' }]
-      }
+        children: [{ text: '' }],
+      },
     ]
   }
   if (plugin === 'important') {
     return [
       {
         type: 'important',
-        children: convert(node.state)
-      }
+        children: convert(node.state),
+      },
     ]
   }
   if (plugin === 'spoiler') {
@@ -55,14 +55,14 @@ export function convert(node) {
         children: [
           {
             type: 'spoiler-title',
-            children: [{ text: node.state.title }]
+            children: [{ text: node.state.title }],
           },
           {
             type: 'spoiler-body',
-            children: convert(node.state.content)
-          }
-        ]
-      }
+            children: convert(node.state.content),
+          },
+        ],
+      },
     ]
   }
   if (plugin === 'multimedia') {
@@ -74,20 +74,20 @@ export function convert(node) {
           {
             type: 'col',
             size: 1,
-            children: convert(node.state.multimedia)
-          }
-        ]
-      }
+            children: convert(node.state.multimedia),
+          },
+        ],
+      },
     ]
   }
   if (plugin === 'layout') {
     return [
       {
         type: 'row',
-        children: node.state.map(child => {
+        children: node.state.map((child) => {
           const children = convert(child.child)
           // compat: math align left
-          children.forEach(child => {
+          children.forEach((child) => {
             if (child.type === 'math') {
               child.alignLeft = true
             }
@@ -95,10 +95,10 @@ export function convert(node) {
           return {
             type: 'col',
             size: child.width,
-            children
+            children,
           }
-        })
-      }
+        }),
+      },
     ]
   }
   if (plugin === 'injection') {
@@ -106,8 +106,8 @@ export function convert(node) {
       {
         type: 'injection',
         href: node.state,
-        children: [{ text: '' }]
-      }
+        children: [{ text: '' }],
+      },
     ]
   }
   if (plugin === 'highlight') {
@@ -115,8 +115,8 @@ export function convert(node) {
       {
         type: 'code',
         content: node.state.code,
-        children: [{ text: '' }]
-      }
+        children: [{ text: '' }],
+      },
     ]
   }
   if (plugin === 'table') {
@@ -128,8 +128,8 @@ export function convert(node) {
       {
         type: 'video',
         src: node.state.src,
-        children: [{ text: '' }]
-      }
+        children: [{ text: '' }],
+      },
     ]
   }
   if (plugin === 'anchor') {
@@ -137,8 +137,8 @@ export function convert(node) {
       {
         type: 'anchor',
         id: node.state,
-        children: [{ text: '' }]
-      }
+        children: [{ text: '' }],
+      },
     ]
   }
   if (plugin === 'geogebra') {
@@ -156,9 +156,9 @@ export function convert(node) {
         type: '@edtr-io/exercise',
         state: {
           content: convert(node.state.content),
-          interactive: convert(node.state.interactive)[0]
-        }
-      }
+          interactive: convert(node.state.interactive)[0],
+        },
+      },
     ]
   }
   if (plugin === 'solution') {
@@ -168,9 +168,9 @@ export function convert(node) {
         state: {
           prerequisite: node.state.prerequisite,
           strategy: convert(node.state.strategy),
-          steps: convert(node.state.steps)
-        }
-      }
+          steps: convert(node.state.steps),
+        },
+      },
     ]
   }
   if (plugin === 'scMcExercise') {
@@ -179,15 +179,15 @@ export function convert(node) {
         plugin: 'scMcExercise',
         state: {
           isSingleChoice: node.state.isSingleChoice,
-          answers: node.state.answers.map(answer => {
+          answers: node.state.answers.map((answer) => {
             return {
               isCorrect: answer.isCorrect,
               content: convert(answer.content),
-              feedback: convert(answer.content)
+              feedback: convert(answer.content),
             }
-          })
-        }
-      }
+          }),
+        },
+      },
     ]
   }
   if (plugin === 'inputExercise') {
@@ -197,18 +197,18 @@ export function convert(node) {
         state: {
           type: node.state.type,
           unit: node.state.unit,
-          answers: node.state.answers
-        }
-      }
+          answers: node.state.answers,
+        },
+      },
     ]
   }
   if (plugin === 'equations') {
-    const steps = node.state.steps.map(step => {
+    const steps = node.state.steps.map((step) => {
       return {
         left: convert(step.left),
         sign: step.sign,
         right: convert(step.right),
-        transform: convert(step.transform)
+        transform: convert(step.transform),
       }
     })
     return [{ type: 'equations', steps, children: [{ text: '' }] }]
@@ -231,18 +231,18 @@ export function convert(node) {
     // compat handle newlines
     if (
       children.some(
-        child =>
+        (child) =>
           (child.text && child.text.includes('\n')) ||
           child.type === 'inline-math'
       )
     ) {
-      const splitted = children.flatMap(child => {
+      const splitted = children.flatMap((child) => {
         if (child.text && child.text.includes('\n')) {
-          const parts = child.text.split('\n').flatMap(text => [
+          const parts = child.text.split('\n').flatMap((text) => [
             {
-              text
+              text,
             },
-            '##break##'
+            '##break##',
           ])
           parts.pop()
           return parts
@@ -254,11 +254,11 @@ export function convert(node) {
       if (splitted[0] === '##break##') splitted.shift()
       if (splitted[splitted.length - 1] !== '##break##')
         splitted.push('##break##')
-      splitted.forEach(el => {
+      splitted.forEach((el) => {
         if (el === '##break##') {
           result.push({
             type: 'p',
-            children: current
+            children: current,
           })
           current = []
         } else {
@@ -269,12 +269,12 @@ export function convert(node) {
     }
     // compat: extract math formulas
     const math = children.filter(
-      child => child.type === 'math' || child.type === 'inline-math'
+      (child) => child.type === 'math' || child.type === 'inline-math'
     )
     if (math.length >= 1) {
       if (
         children.every(
-          child =>
+          (child) =>
             child.type === 'math' ||
             child.type === 'inline-math' ||
             child.text === ''
@@ -282,14 +282,14 @@ export function convert(node) {
       ) {
         return children
           .filter(
-            child => child.type === 'math' || child.type === 'inline-math'
+            (child) => child.type === 'math' || child.type === 'inline-math'
           )
-          .map(mathChild => {
+          .map((mathChild) => {
             return {
               type: 'math',
               formula: mathChild.formula,
               alignLeft: true, // caveat: this differs from existing presentation
-              children: [{ text: '' }]
+              children: [{ text: '' }],
             }
           })
       }
@@ -297,8 +297,8 @@ export function convert(node) {
     return [
       {
         type: 'p',
-        children
-      }
+        children,
+      },
     ]
   }
   if (type === 'a') {
@@ -306,8 +306,8 @@ export function convert(node) {
       {
         type: 'a',
         href: node.href,
-        children: convert(node.children)
-      }
+        children: convert(node.children),
+      },
     ]
   }
   if (type === 'h') {
@@ -315,8 +315,8 @@ export function convert(node) {
       {
         type: 'h',
         level: node.level,
-        children: convert(node.children)
-      }
+        children: convert(node.children),
+      },
     ]
   }
   if (type === 'math' && !node.inline) {
@@ -324,8 +324,8 @@ export function convert(node) {
       {
         type: 'math',
         formula: node.src,
-        children: [{ text: '' }]
-      }
+        children: [{ text: '' }],
+      },
     ]
   }
   if (type === 'math' && node.inline) {
@@ -333,32 +333,32 @@ export function convert(node) {
       {
         type: 'inline-math',
         formula: node.src,
-        children: [{ text: '' }]
-      }
+        children: [{ text: '' }],
+      },
     ]
   }
   if (type === 'unordered-list') {
     return [
       {
         type: 'ul',
-        children: convert(node.children)
-      }
+        children: convert(node.children),
+      },
     ]
   }
   if (type === 'ordered-list') {
     return [
       {
         type: 'ol',
-        children: convert(node.children)
-      }
+        children: convert(node.children),
+      },
     ]
   }
   if (type === 'list-item') {
     return [
       {
         type: 'li',
-        children: convert(node.children)
-      }
+        children: convert(node.children),
+      },
     ]
   }
   if (type === 'list-item-child') {
@@ -366,7 +366,7 @@ export function convert(node) {
     const children = convert(node.children)
     if (
       children.filter(
-        child =>
+        (child) =>
           child.type === 'inline-math' ||
           child.type === 'a' ||
           child.text !== undefined

@@ -10,7 +10,7 @@ import Footer from '../src/components/navigation/Footer'
 
 import {
   makeDefaultButton,
-  makeResponsivePadding
+  makeResponsivePadding,
 } from '../src/helper/csshelper'
 
 import PrinciplesSVG from '../public/_assets/img/landing-principles-graphic.svg'
@@ -105,13 +105,13 @@ const Section = styled.section`
   margin-bottom: 60px;
   ${makeResponsivePadding}
 
-  @media (min-width: ${props => props.theme.breakpoints.sm}) {
+  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
   }
 
-  @media (min-width: ${props => props.theme.breakpoints.lg}) {
+  @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
     max-width: 900px;
     margin-left: auto;
     margin-right: auto;
@@ -121,7 +121,7 @@ const Section = styled.section`
 const Col = styled.div`
   margin-top: 40px;
 
-  @media (min-width: ${props => props.theme.breakpoints.sm}) {
+  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
     margin-top: 0;
     margin-right: 30px;
     flex: 1;
@@ -135,7 +135,7 @@ const Col = styled.div`
     }
   }
 
-  @media (min-width: ${props => props.theme.breakpoints.lg}) {
+  @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
     margin-right: 50px;
   }
 `
@@ -145,16 +145,16 @@ const AboutSection = styled.section`
   display: flex;
   flex-direction: column;
 
-  @media (min-width: ${props => props.theme.breakpoints.sm}) {
+  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
     flex-direction: row;
   }
 `
 
 const StyledH2 = styled.h2`
   font-size: 1.66rem;
-  color: ${props => props.theme.colors.brand};
+  color: ${(props) => props.theme.colors.brand};
   border: 0;
-  @media (min-width: ${props => props.theme.breakpoints.sm}) {
+  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
     width: 100%;
   }
 `
@@ -165,11 +165,11 @@ const Button = styled.a`
   font-weight: bold;
   padding-top: 3px;
   padding-top: 3px;
-  background-color: ${props => props.theme.colors.lightBlueBackground};
+  background-color: ${(props) => props.theme.colors.lightBlueBackground};
 `
 
 const PrinciplesSection = styled.section`
-  background-color: ${props => props.theme.colors.brand};
+  background-color: ${(props) => props.theme.colors.brand};
   text-align: center;
   ${makeResponsivePadding}
   padding-top: 70px;
@@ -185,11 +185,11 @@ const PrinciplesSection = styled.section`
 const IconStyle = styled.div`
   & > path,
   & .st0 {
-    fill: ${props => props.theme.colors.brandGreen};
+    fill: ${(props) => props.theme.colors.brandGreen};
   }
   width: 100px;
   margin-right: 30px;
-  @media (min-width: ${props => props.theme.breakpoints.lg}) {
+  @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
     margin-right: 50px;
     width: 120px;
   }

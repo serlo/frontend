@@ -12,11 +12,11 @@ export default function Code({ content }) {
 const Pre = styled.pre`
   ${makeMargin}
   margin-top: 5px;
-  margin-bottom: ${props => props.theme.spacing.mb.block};
+  margin-bottom: ${(props) => props.theme.spacing.mb.block};
   padding: 16px;
 
-  background-color: ${props => props.theme.colors.bluewhite};
-  border-left: 8px solid ${props => props.theme.colors.lighterblue};
+  background-color: ${(props) => props.theme.colors.bluewhite};
+  border-left: 8px solid ${(props) => props.theme.colors.lighterblue};
 
   > code {
     font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier,

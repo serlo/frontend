@@ -22,16 +22,16 @@ const MenuButton = styled.button`
   position: absolute;
   top: 16px;
   right: 16px;
-  @media (min-width: ${props => props.theme.breakpoints.sm}) {
+  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
     display: none;
   }
 
-  background-color: ${props => lighten(0.18, props.theme.colors.lighterblue)};
+  background-color: ${(props) => lighten(0.18, props.theme.colors.lighterblue)};
   border-radius: 80px;
   width: 48px;
   height: 48px;
   padding: 0;
-  color: ${props => props.theme.colors.brand};
+  color: ${(props) => props.theme.colors.brand};
 
   outline: none;
   border: 0;

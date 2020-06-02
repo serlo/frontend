@@ -42,7 +42,7 @@ function createPage(uuid) {
   return {
     title: uuid.currentRevision.title,
     value: convertState(uuid.currentRevision.content),
-    id: uuid.id
+    id: uuid.id,
   }
 }
 
@@ -52,7 +52,7 @@ function createArticle(uuid) {
     value: convertState(uuid.currentRevision.content),
     metaTitle: uuid.currentRevision.metaTitle,
     metaDescription: uuid.currentRevision.metaDescription,
-    id: uuid.id
+    id: uuid.id,
   }
 }
 
@@ -64,11 +64,11 @@ function createVideo(uuid) {
         {
           type: 'video',
           src: uuid.currentRevision.url,
-          children: [{ text: '' }]
+          children: [{ text: '' }],
         },
-        ...convertState(uuid.currentRevision.content).children
-      ]
-    }
+        ...convertState(uuid.currentRevision.content).children,
+      ],
+    },
   }
 }
 
@@ -84,10 +84,10 @@ function createExercise(uuid, index?) {
           taskLicense: uuid.license,
           solution: convertState(uuid.solution?.currentRevision?.content),
           solutionLicense: uuid.solution?.license,
-          children: [{ text: '' }]
-        }
-      ]
-    }
+          children: [{ text: '' }],
+        },
+      ],
+    },
   }
 }
 
@@ -98,21 +98,21 @@ function createApplet(uuid) {
         {
           type: 'geogebra',
           id: uuid.currentRevision.url,
-          children: [{ text: '' }]
+          children: [{ text: '' }],
         },
-        ...convertState(uuid.currentRevision.content).children
-      ]
+        ...convertState(uuid.currentRevision.content).children,
+      ],
     },
     title: uuid.currentRevision.title,
     metaTitle: uuid.currentRevision.metaTitle,
-    metaDescription: uuid.currentRevision.metaDescription
+    metaDescription: uuid.currentRevision.metaDescription,
   }
 }
 
 function createExerciseGroup(uuid, pageIndex?) {
   const children = []
   if (uuid.exercises?.length > 0) {
-    uuid.exercises.forEach(function(exercise, groupIndex) {
+    uuid.exercises.forEach(function (exercise, groupIndex) {
       if (!exercise.currentRevision) return
       children.push({
         type: 'exercise',
@@ -122,7 +122,7 @@ function createExerciseGroup(uuid, pageIndex?) {
         taskLicense: exercise.license,
         solution: convertState(exercise.solution?.currentRevision?.content),
         solutionLicense: exercise.solution?.license,
-        children: [{ text: '' }]
+        children: [{ text: '' }],
       })
     })
     // for (const exercise of uuid.exercises) {
@@ -137,10 +137,10 @@ function createExerciseGroup(uuid, pageIndex?) {
           content: convertState(uuid.currentRevision.content).children,
           positionOnPage: pageIndex,
           license: uuid.license,
-          children
-        }
-      ]
-    }
+          children,
+        },
+      ],
+    },
   }
 }
 
@@ -148,14 +148,14 @@ function createCoursePage(uuid) {
   return {
     value: convertState(uuid.currentRevision.content),
     title: uuid.currentRevision.title,
-    pages: uuid.course?.pages?.filter(page => page.currentRevision !== null),
-    courseTitle: uuid.course?.currentRevision?.title
+    pages: uuid.course?.pages?.filter((page) => page.currentRevision !== null),
+    courseTitle: uuid.course?.currentRevision?.title,
   }
 }
 
 function createEvent(uuid) {
   return {
-    value: convertState(uuid.currentRevision.content)
+    value: convertState(uuid.currentRevision.content),
   }
 }
 
@@ -186,10 +186,10 @@ function createTaxonomyTerm(uuid) {
       exercises: collectTopicFolders(children),
       videos: collectType(children, 'Video'),
       applets: collectType(children, 'Applet'),
-      courses: collectType(children, 'Course')
+      courses: collectType(children, 'Course'),
     },
     exercises: collectExercises(children),
-    children: collectNestedTaxonomyTerms(children) // nested taxonomy terms
+    children: collectNestedTaxonomyTerms(children), // nested taxonomy terms
   }
 }
 
@@ -214,10 +214,10 @@ function buildDescription(description) {
 function collectType(children, typename) {
   return children
     .filter(
-      child =>
+      (child) =>
         child.__typename === typename && child.alias && child.currentRevision
     )
-    .map(child => {
+    .map((child) => {
       return { title: child.currentRevision.title, url: child.alias }
     })
 }
@@ -225,10 +225,10 @@ function collectType(children, typename) {
 function collectTopicFolders(children) {
   return children
     .filter(
-      child =>
+      (child) =>
         child.__typename === 'TaxonomyTerm' && child.type.includes('opicFolder')
     )
-    .map(child => {
+    .map((child) => {
       return { title: child.name, url: child.alias ?? '/' + child.id }
     })
 }
@@ -236,7 +236,7 @@ function collectTopicFolders(children) {
 function collectExercises(children) {
   return children
     .filter(
-      child =>
+      (child) =>
         ['Exercise', 'ExerciseGroup', 'GroupedExercise'].includes(
           child.__typename
         ) && child.currentRevision
@@ -257,11 +257,11 @@ function collectExercises(children) {
 function collectNestedTaxonomyTerms(children) {
   return children
     .filter(
-      child =>
+      (child) =>
         child.__typename === 'TaxonomyTerm' &&
         !child.type.includes('opicFolder')
     )
-    .map(child => {
+    .map((child) => {
       const subchildren = child.children?.filter(isActive)
       return {
         title: child.name,
@@ -274,8 +274,8 @@ function collectNestedTaxonomyTerms(children) {
           videos: collectType(subchildren, 'Video'),
           applets: collectType(subchildren, 'Applet'),
           courses: collectType(subchildren, 'Course'),
-          subfolders: collectSubfolders(subchildren)
-        }
+          subfolders: collectSubfolders(subchildren),
+        },
       }
     })
 }
@@ -283,11 +283,11 @@ function collectNestedTaxonomyTerms(children) {
 function collectSubfolders(children) {
   return children
     .filter(
-      child =>
+      (child) =>
         child.__typename === 'TaxonomyTerm' &&
         !child.type.includes('opicFolder')
     )
-    .map(child => {
+    .map((child) => {
       return { title: child.name, url: child.alias ?? '/' + child.id }
     })
 }

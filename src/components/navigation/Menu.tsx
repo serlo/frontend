@@ -31,7 +31,7 @@ export default function Menu(props: MenuProps) {
         animation="fade"
       />
       <List>
-        {links.map(link => (
+        {links.map((link) => (
           <Entry link={link} key={link.title} target={target} />
         ))}
       </List>
@@ -65,7 +65,7 @@ function SubMenuInner(props) {
   const { children } = props
   return (
     <SubList>
-      {children.map(entry => {
+      {children.map((entry) => {
         return (
           <li key={entry.title}>
             <SubLink href={entry.url}>
@@ -79,7 +79,7 @@ function SubMenuInner(props) {
 }
 
 const ResponsiveNav = styled.nav`
-  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
     display: none;
   }
 `
@@ -101,7 +101,7 @@ const linkStyle = css`
   &:hover,
   &[aria-expanded='true'] {
     color: #fff;
-    background-color: ${props => props.theme.colors.brand};
+    background-color: ${(props) => props.theme.colors.brand};
   }
   text-decoration: none;
 `
@@ -109,10 +109,10 @@ const linkStyle = css`
 const Link = styled.a<{ active?: boolean }>`
   ${makeDefaultButton}
   ${linkStyle}
-  color: ${props =>
+  color: ${(props) =>
     props.theme.colors[props.active ? 'darkgray' : 'lightblue']};
 
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.theme.colors[props.active ? 'lighterblue' : 'inherit']};
 
   font-weight: bold;
@@ -141,7 +141,7 @@ const SubLink = styled.a`
   text-decoration: none;
   &:hover span {
     color: #fff;
-    background-color: ${props => props.theme.colors.brand};
+    background-color: ${(props) => props.theme.colors.brand};
   }
 `
 
@@ -149,5 +149,5 @@ const _Button = styled.span`
   text-decoration: none;
   ${linkStyle}
   ${makeDefaultButton}
-  color: ${props => props.theme.colors.brand};
+  color: ${(props) => props.theme.colors.brand};
 `

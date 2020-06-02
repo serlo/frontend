@@ -24,7 +24,7 @@ export default function Math(props: MathProps) {
   const html = KaTeX.renderToString(formula, {
     displayMode: false,
     throwOnError: false,
-    strict: false
+    strict: false,
   })
 
   return <KaTeXSpan dangerouslySetInnerHTML={{ __html: html }} />

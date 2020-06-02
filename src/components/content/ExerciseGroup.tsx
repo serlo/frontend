@@ -9,7 +9,7 @@ export default function ExerciseGroup({
   children,
   license,
   groupIntro,
-  positionOnPage
+  positionOnPage,
 }) {
   return (
     <Container>
@@ -26,7 +26,7 @@ export default function ExerciseGroup({
 
 const Container = styled(SpoilerContainer)`
   padding-top: 4px;
-  border-left: 8px solid ${props => props.theme.colors.lightBlueBackground};
+  border-left: 8px solid ${(props) => props.theme.colors.lightBlueBackground};
 
   margin: 40px 0;
 `
@@ -49,5 +49,5 @@ const Label = styled.small`
   ${makeMargin}
   display: block;
   margin-bottom: 7px;
-  color: ${props => props.theme.colors.brand};
+  color: ${(props) => props.theme.colors.brand};
 `

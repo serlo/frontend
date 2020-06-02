@@ -68,14 +68,14 @@ const BreadcrumbWrapper = styled.nav`
   ${makeMargin}
   margin-top: 25px;
 
-  @media (min-width: ${props => props.theme.breakpoints.sm}) {
+  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
     margin: 25px 0 45px 10px;
   }
 `
 
 const Breadcrumb = styled.a`
   display: inline-block;
-  color: ${props => props.theme.colors.brand};
+  color: ${(props) => props.theme.colors.brand};
 
   ${makeDefaultButton}
   padding-top: 2px;
@@ -88,22 +88,22 @@ const Breadcrumb = styled.a`
   &:not([href]),
   &:not([href]):hover {
     background: transparent;
-    color: ${props => props.theme.colors.dark1};
+    color: ${(props) => props.theme.colors.dark1};
     cursor: default;
   }
 
-  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
     display: none;
     font-size: 1.125rem;
   }
 
-  @media (min-width: ${props => props.theme.breakpoints.sm}) {
+  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
     white-space: nowrap;
     margin: 0 19px 5px 0;
 
     &:after {
       content: '>';
-      color: ${props => props.theme.colors.lightgray};
+      color: ${(props) => props.theme.colors.lightgray};
       position: absolute;
       margin-left: 12px;
     }
@@ -115,26 +115,26 @@ const BreadcrumbLast = styled(Breadcrumb)`
     display: none;
   }
 
-  background: ${props => props.theme.colors.bluewhite};
-  color: ${props => props.theme.colors.brand};
+  background: ${(props) => props.theme.colors.bluewhite};
+  color: ${(props) => props.theme.colors.brand};
   font-weight: bold;
 
-  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
     display: inline-flex;
-    background: ${props =>
+    background: ${(props) =>
       transparentize(0.35, props.theme.colors.lightBlueBackground)};
     border-radius: 12px;
     padding-left: 4px;
 
     &:hover {
-      background: ${props => transparentize(0.35, props.theme.colors.brand)};
-      color: ${props => props.theme.colors.bluewhite};
+      background: ${(props) => transparentize(0.35, props.theme.colors.brand)};
+      color: ${(props) => props.theme.colors.bluewhite};
     }
   }
 `
 
 const Icon = styled.span`
-  @media (min-width: ${props => props.theme.breakpoints.sm}) {
+  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
     display: none;
   }
   margin-right: 10px;

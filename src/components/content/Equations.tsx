@@ -22,7 +22,7 @@ export default function Equations({ steps }) {
 }
 
 const Wrapper = styled.div`
-  margin-bottom: ${props => props.theme.spacing.mb.block};
+  margin-bottom: ${(props) => props.theme.spacing.mb.block};
   ${makeMargin}
 `
 

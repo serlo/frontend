@@ -62,7 +62,7 @@ export default function GoogleAnalytics() {
    window.addEventListener
      ? window.addEventListener("scroll", testScroll, false)
      : window.attachEvent("onScroll", testScroll);
-`
+`,
       }}
     />
   )

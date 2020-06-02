@@ -32,8 +32,8 @@ function convert(node) {
           return [
             {
               type: 'row',
-              children
-            }
+              children,
+            },
           ]
         }
         if (/^c[\d]+$/.test(className)) {
@@ -69,32 +69,32 @@ function convert(node) {
             {
               type: 'col',
               size: parseInt(className.substring(1)),
-              children
-            }
+              children,
+            },
           ]
         }
         if (className === 'spoiler panel panel-default') {
           return [
             {
               type: 'spoiler-container',
-              children: convert(node.children)
-            }
+              children: convert(node.children),
+            },
           ]
         }
         if (className === 'spoiler-teaser panel-heading') {
           return [
             {
               type: 'spoiler-title',
-              children: convert(node.children.slice(1))
-            }
+              children: convert(node.children.slice(1)),
+            },
           ]
         }
         if (className === 'spoiler-content panel-body') {
           return [
             {
               type: 'spoiler-body',
-              children: convert(node.children)
-            }
+              children: convert(node.children),
+            },
           ]
         }
         if (className === 'injection') {
@@ -105,8 +105,8 @@ function convert(node) {
               {
                 type: 'geogebra',
                 id: match[1],
-                children: [{ text: '' }]
-              }
+                children: [{ text: '' }],
+              },
             ]
           }
           if (href.includes('assets.serlo.org')) {
@@ -115,16 +115,16 @@ function convert(node) {
                 type: 'img',
                 src: href,
                 alt: 'Bild',
-                children: [{ text: '' }]
-              }
+                children: [{ text: '' }],
+              },
             ]
           }
           return [
             {
               type: 'injection',
               href,
-              children: [{ text: '' }]
-            }
+              children: [{ text: '' }],
+            },
           ]
         }
         if (className === 'table-responsive') {
@@ -150,8 +150,8 @@ function convert(node) {
             {
               type: 'inline-math',
               formula,
-              children: [{ text: '' }]
-            }
+              children: [{ text: '' }],
+            },
           ]
         }
         if (className === 'math') {
@@ -162,7 +162,12 @@ function convert(node) {
             .split('&nbsp;')
             .join(' ')
           return [
-            { type: 'math', formula, alignLeft: true, children: [{ text: '' }] }
+            {
+              type: 'math',
+              formula,
+              alignLeft: true,
+              children: [{ text: '' }],
+            },
           ]
         }
       }
@@ -174,20 +179,20 @@ function convert(node) {
         return []
       }
       // compat: unwrap images from p
-      if (children.some(child => child.type === 'img')) {
+      if (children.some((child) => child.type === 'img')) {
         return children
       }
       // compat: unwrap formulas from p
-      const maths = children.filter(child => child.type === 'math')
+      const maths = children.filter((child) => child.type === 'math')
       if (maths.length >= 1) {
         let current = []
         const result = []
-        children.forEach(child => {
+        children.forEach((child) => {
           if (child.type === 'math') {
             if (current.length > 0) {
               result.push({
                 type: 'p',
-                children: current
+                children: current,
               })
               current = []
             }
@@ -199,17 +204,19 @@ function convert(node) {
         if (current.length > 0) {
           result.push({
             type: 'p',
-            children: current
+            children: current,
           })
         }
         return result
       }
       // compat: convert single inline-math in paragraph to block formula
-      const inlineMaths = children.filter(child => child.type === 'inline-math')
+      const inlineMaths = children.filter(
+        (child) => child.type === 'inline-math'
+      )
       if (inlineMaths.length === 1) {
         if (
           children.every(
-            child =>
+            (child) =>
               child.type === 'inline-math' ||
               (child.text !== undefined && child.text.trim() == '')
           )
@@ -219,8 +226,8 @@ function convert(node) {
               type: 'math',
               alignLeft: true,
               formula: inlineMaths[0].formula,
-              children: [{ text: '' }]
-            }
+              children: [{ text: '' }],
+            },
           ]
         }
       }
@@ -228,8 +235,8 @@ function convert(node) {
       return [
         {
           type: 'p',
-          children
-        }
+          children,
+        },
       ]
     }
     if (node.name === 'img') {
@@ -238,14 +245,14 @@ function convert(node) {
           type: 'img',
           src: node.attribs.src,
           alt: node.attribs.alt,
-          children: [{ text: '' }]
-        }
+          children: [{ text: '' }],
+        },
       ]
     }
     if (node.name === 'ul' || node.name == 'ol') {
       let children = convert(node.children)
       // compat: remove whitespace around list items
-      children = children.filter(child => {
+      children = children.filter((child) => {
         if (child.text && child.text.trim() === '') {
           return false
         }
@@ -254,8 +261,8 @@ function convert(node) {
       return [
         {
           type: node.name,
-          children
-        }
+          children,
+        },
       ]
     }
     if (node.name === 'li') {
@@ -263,7 +270,7 @@ function convert(node) {
       let children = convert(node.children)
       if (
         children.filter(
-          child =>
+          (child) =>
             child.text === undefined &&
             child.type !== 'a' &&
             child.type !== 'inline-math'
@@ -274,8 +281,8 @@ function convert(node) {
       return [
         {
           type: 'li',
-          children
-        }
+          children,
+        },
       ]
     }
     if (node.name === 'table') {
@@ -291,24 +298,24 @@ function convert(node) {
       return [
         {
           type: 'tr',
-          children: convert(node.children)
-        }
+          children: convert(node.children),
+        },
       ]
     }
     if (node.name === 'th') {
       return [
         {
           type: 'th',
-          children: convert(node.children)
-        }
+          children: convert(node.children),
+        },
       ]
     }
     if (node.name === 'td') {
       return [
         {
           type: 'td',
-          children: convert(node.children)
-        }
+          children: convert(node.children),
+        },
       ]
     }
     if (node.name === 'h2') {
@@ -317,8 +324,8 @@ function convert(node) {
           type: 'h',
           level: 2,
           id: node.attribs.id,
-          children: convert(node.children)
-        }
+          children: convert(node.children),
+        },
       ]
     }
     if (node.name === 'h3') {
@@ -327,8 +334,8 @@ function convert(node) {
           type: 'h',
           level: 3,
           id: node.attribs.id,
-          children: convert(node.children)
-        }
+          children: convert(node.children),
+        },
       ]
     }
     if (node.name === 'h4') {
@@ -337,8 +344,8 @@ function convert(node) {
           type: 'h',
           level: 4,
           id: node.attribs.id,
-          children: convert(node.children)
-        }
+          children: convert(node.children),
+        },
       ]
     }
     if (node.name === 'h5') {
@@ -347,8 +354,8 @@ function convert(node) {
           type: 'h',
           level: 5,
           id: node.attribs.id,
-          children: convert(node.children)
-        }
+          children: convert(node.children),
+        },
       ]
     }
     // compat: h1 as h2
@@ -357,8 +364,8 @@ function convert(node) {
         {
           type: 'h',
           level: 2,
-          children: convert(node.children)
-        }
+          children: convert(node.children),
+        },
       ]
     }
     if (node.name === 'a') {
@@ -379,19 +386,19 @@ function convert(node) {
         {
           type: 'a',
           href: node.attribs.href,
-          children
-        }
+          children,
+        },
       ]
     }
     if (node.name === 'strong') {
       const children = convert(node.children)
-      return makeFormat(children, child => {
+      return makeFormat(children, (child) => {
         child.strong = true
       })
     }
     if (node.name === 'em') {
       const children = convert(node.children)
-      return makeFormat(children, child => {
+      return makeFormat(children, (child) => {
         child.em = true
       })
     }
@@ -407,8 +414,8 @@ function convert(node) {
       return [
         {
           type: 'important',
-          children: convert(node.children)
-        }
+          children: convert(node.children),
+        },
       ]
     }
     if (node.name === 'pre') {
@@ -418,8 +425,8 @@ function convert(node) {
           {
             type: 'code',
             content,
-            children: [{ text: '' }]
-          }
+            children: [{ text: '' }],
+          },
         ]
       } else {
         return []
@@ -440,7 +447,7 @@ function convert(node) {
       .join('<')
       .split('&amp;')
       .join('&')
-      .replace(/&#(\d+);/g, function(match, dec) {
+      .replace(/&#(\d+);/g, function (match, dec) {
         return String.fromCharCode(dec)
       })
     // compat: remove empty text
@@ -453,7 +460,7 @@ function convert(node) {
 }
 
 function makeFormat(array, fn) {
-  return array.map(child => {
+  return array.map((child) => {
     if (child.text !== undefined) {
       fn(child)
     }

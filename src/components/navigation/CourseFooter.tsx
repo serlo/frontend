@@ -4,7 +4,7 @@ import { faArrowCircleRight, faListUl } from '@fortawesome/free-solid-svg-icons'
 import { makeMargin, makeDefaultButton } from '../../helper/csshelper'
 
 export default function CourseFooter({ opener, nextHref }) {
-  const onOverviewClick = e => {
+  const onOverviewClick = (e) => {
     location.href = '#course-overview'
     opener(e)
   }
@@ -25,8 +25,8 @@ export default function CourseFooter({ opener, nextHref }) {
 
 const Wrapper = styled.nav`
   margin: 40px 0 30px 0;
-  @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    background-color: ${props => props.theme.colors.lightBackground};
+  @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
+    background-color: ${(props) => props.theme.colors.lightBackground};
   }
   padding: 20px 0;
   display: flex;
@@ -38,18 +38,18 @@ const Button = styled.a`
   ${makeDefaultButton}
   padding: 3px 8px;
   ${makeMargin}
-  background-color: ${props => props.theme.colors.brand};
+  background-color: ${(props) => props.theme.colors.brand};
   &:hover{
-    background-color: ${props => props.theme.colors.lightblue};
+    background-color: ${(props) => props.theme.colors.lightblue};
   }
   color: #fff;
   font-weight: bold;
 `
 
 const OverviewButton = styled(Button)`
-  background-color: ${props => props.theme.colors.lightblue};
+  background-color: ${(props) => props.theme.colors.lightblue};
   &:hover {
-    background-color: ${props => props.theme.colors.brand};
+    background-color: ${(props) => props.theme.colors.brand};
   }
   color: #fff;
 `

@@ -2,7 +2,7 @@ export function createNavigation(uuid) {
   if (uuid.navigation?.data) {
     try {
       const data = JSON.parse(uuid.navigation.data)
-      return data.children.flatMap(child => {
+      return data.children.flatMap((child) => {
         if (child.children) {
           return child.children.map(convertEntry)
         }
@@ -17,6 +17,6 @@ export function createNavigation(uuid) {
 function convertEntry(entry) {
   return {
     title: entry.label,
-    url: entry.url ?? '/' + entry.id
+    url: entry.url ?? '/' + entry.id,
   }
 }

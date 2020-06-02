@@ -204,7 +204,7 @@ function HelloWorld() {
 
 const ResponsiveBox = styled.div`
   display: flex;
-  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
     flex-direction: column;
   }
 `
@@ -214,7 +214,7 @@ const GrowingParagraph = styled.p`
   text-align: center;
   font-size: 2rem;
   padding: 16px;
-  background-color: ${props => props.theme.colors.brand};
+  background-color: ${(props) => props.theme.colors.brand};
 `
 
 export default HelloWorld
@@ -275,7 +275,7 @@ function HelloWorld() {
 const BigIcon = styled.div<{ iconColor: string }>`
   text-align: center;
   font-size: 3rem;
-  color: ${props => props.iconColor};
+  color: ${(props) => props.iconColor};
   margin: 30px;
 `
 
@@ -310,7 +310,7 @@ function HelloWorld() {
 const BigIcon = styled.div<{ lighter: number }>`
   text-align: center;
   font-size: 3rem;
-  color: ${props => lighten(props.lighter, 'pink')};
+  color: ${(props) => lighten(props.lighter, 'pink')};
   margin: 30px;
 `
 
@@ -421,11 +421,11 @@ const centeredModal = {
   overlay: {
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   content: {
-    position: 'static'
-  }
+    position: 'static',
+  },
 }
 
 function HelloWorld() {

@@ -6,7 +6,7 @@ import Head from 'next/head'
 import {
   makeGreenButton,
   makeResponsivePadding,
-  makePadding
+  makePadding,
 } from '../src/helper/csshelper'
 
 import PartnerList from '../src/components/landing/PartnerList'
@@ -24,9 +24,9 @@ const footerEntries = [
     title: '',
     children: [
       { title: 'Datenschutz', url: '/datenschutz' },
-      { title: 'Impressum', url: '/impressum' }
-    ]
-  }
+      { title: 'Impressum', url: '/impressum' },
+    ],
+  },
 ]
 
 export default function DonationPage() {
@@ -165,9 +165,9 @@ export default function DonationPage() {
 const BlueHeader = styled.header`
   ${makePadding}
   padding-top: 46px;
-  background-color: ${props => props.theme.colors.bluewhite};
+  background-color: ${(props) => props.theme.colors.bluewhite};
 
-  @media (min-width: ${props => props.theme.breakpoints.sm}) {
+  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
     text-align: center;
   }
 `
@@ -181,24 +181,24 @@ const Section = styled.section`
   margin-bottom: 60px;
   ${makeResponsivePadding}
 
-  @media (min-width: ${props => props.theme.breakpoints.md}) {
+  @media (min-width: ${(props) => props.theme.breakpoints.md}) {
     margin-top: 50px;
     padding-left: 32px;
     padding-right: 32px;
   }
 
-  @media (min-width: ${props => props.theme.breakpoints.lg}) {
+  @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
     display: block;
   }
 `
 
 const ContactCol = styled.div`
-  @media (max-width: ${props => props.theme.breakpoints.md}) {
-    border-top: 8px solid ${props => props.theme.colors.lightBlueBackground};
+  @media (max-width: ${(props) => props.theme.breakpoints.md}) {
+    border-top: 8px solid ${(props) => props.theme.colors.lightBlueBackground};
     padding-top: 30px;
     margin-top: 45px;
   }
-  @media (min-width: ${props => props.theme.breakpoints.md}) {
+  @media (min-width: ${(props) => props.theme.breakpoints.md}) {
     max-width: 300px;
     position: absolute;
     right: 0;
@@ -213,7 +213,7 @@ const DonationCol = styled.div`
   margin-right: auto;
   margin-left: auto;
 
-  @media (min-width: ${props =>
+  @media (min-width: ${(props) =>
       props.theme.breakpoints.md}) AND (max-width: 1320px) {
     margin-left: inherit;
   }
@@ -228,19 +228,19 @@ const DonationCol = styled.div`
 
 const StyledH1 = styled.h1`
   font-size: 2rem;
-  color: ${props => props.theme.colors.brand};
+  color: ${(props) => props.theme.colors.brand};
   border: 0;
-  @media (min-width: ${props => props.theme.breakpoints.sm}) {
+  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
     width: 100%;
   }
 `
 
 const StyledH2 = styled.h2`
   font-size: 1.66rem;
-  color: ${props => props.theme.colors.brand};
+  color: ${(props) => props.theme.colors.brand};
   border: 0;
   margin-top: 45px;
-  @media (min-width: ${props => props.theme.breakpoints.sm}) {
+  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
     width: 100%;
   }
 `
@@ -262,13 +262,13 @@ const RoundedImage = styled.img`
 `
 
 const BlueContainer = styled.div`
-  background-color: ${props => props.theme.colors.brand};
+  background-color: ${(props) => props.theme.colors.brand};
   color: #fff;
   margin-top: 100px;
   ${makeResponsivePadding}
   padding: 30px;
 
-  @media (min-width: ${props => props.theme.breakpoints.lg}) {
+  @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
     img {
       max-height: 60px !important;
     }

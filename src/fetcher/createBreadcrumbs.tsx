@@ -9,8 +9,8 @@ export function createBreadcrumbs(uuid) {
         if (!breadcrumbs || breadcrumbs.length > path.length) {
           // compat: some paths are short-circuited, ignore them
           if (
-            path.some(x => x.label === 'Mathematik') &&
-            !path.some(x => x.label === 'Alle Themen')
+            path.some((x) => x.label === 'Mathematik') &&
+            !path.some((x) => x.label === 'Alle Themen')
           ) {
             continue
           }
@@ -24,6 +24,6 @@ export function createBreadcrumbs(uuid) {
   if (breadcrumbs) {
     return breadcrumbs
       .slice(0, -1) // compat: remove last entry because it is the entry itself
-      .filter(entry => entry.url && entry.label) // compat: remove empty entries
+      .filter((entry) => entry.url && entry.label) // compat: remove empty entries
   }
 }
