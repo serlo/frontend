@@ -157,12 +157,13 @@ function PageView(props) {
               {(contentType === 'Video' || contentType === 'Applet') && (
                 <>
                   <StyledH1 displayMode>
+                    {data.data.title}
                     <span title={contentType}>
+                      {' '}
                       <StyledIcon
                         icon={contentType === 'Video' ? faPlayCircle : faCubes}
                       />
-                    </span>{' '}
-                    {data.data.title}
+                    </span>
                   </StyledH1>
                   {renderArticle(data.data.value.children)}
                 </>
@@ -216,6 +217,7 @@ const MaxWidthDiv = styled.div<{ showNav?: boolean }>`
 
 const StyledIcon = styled(FontAwesomeIcon)`
   color: ${props => props.theme.colors.lighterblue};
+  font-size: 1.73rem;
 `
 
 // PageView.getInitialProps = async ({ req, res }) => {

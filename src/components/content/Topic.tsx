@@ -47,17 +47,19 @@ interface TopicProps {
 
 export default function Topic({ data, contentId }: TopicProps) {
   const [open, setOpen] = React.useState(false)
+
   return (
     <>
       {data.purpose === TopicPurposes.detail ? (
         <>
           <Headline>
-            {data.exercises && (
+            {data.title}
+            {data.exercises.length > 0 && (
               <span title={'Aufgabensammlung'}>
+                {' '}
                 <StyledIcon icon={faFile} />{' '}
               </span>
             )}
-            {data.title}
           </Headline>
           <ToolLine>
             <ToolLineButton top onClick={() => setOpen(true)}>
@@ -137,6 +139,7 @@ const Headline = styled.h1`
   font-size: 2rem;
   ${makeMargin}
   margin-top: 32px;
+  margin-bottom: 40px;
 `
 
 const HeadlineLink = styled.a`
@@ -177,4 +180,6 @@ const Overview = styled.div<{ purpose: TopicPurposes }>`
 
 const StyledIcon = styled(FontAwesomeIcon)`
   color: ${props => props.theme.colors.lighterblue};
+  font-size: 1.43rem;
+  vertical-align: initial;
 `

@@ -43,12 +43,13 @@ export default function ArticlePage({ data, contentId, contentType }) {
         />
       )}
       <StyledH1 displayMode>
+        {data.title}
         {contentType === 'Article' && (
           <span title={'Artikel'}>
+            {' '}
             <StyledIcon icon={faNewspaper} />{' '}
           </span>
         )}
-        {data.title}
       </StyledH1>
       <ToolLine>
         <ToolLineButton top onClick={() => setOpen(true)}>
@@ -84,4 +85,5 @@ export default function ArticlePage({ data, contentId, contentType }) {
 
 const StyledIcon = styled(FontAwesomeIcon)`
   color: ${props => props.theme.colors.lighterblue};
+  font-size: 1.73rem;
 `
