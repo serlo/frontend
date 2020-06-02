@@ -1,9 +1,11 @@
 import { request } from 'graphql-request'
+
+import { serloDomain } from '../serlo-domain'
 import { dataQuery, idQuery, idsQuery } from './query'
 import { processResponse } from './processResponse'
 import { extractLinks } from './extractLinks'
 
-export const endpoint = 'https://api.serlo.org/graphql'
+export const endpoint = `https://api.${serloDomain}/graphql`
 
 export default async function fetchContent(alias: string, redirect) {
   try {

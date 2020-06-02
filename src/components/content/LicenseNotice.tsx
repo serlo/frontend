@@ -7,6 +7,7 @@ import {
   faCreativeCommonsSa
 } from '@fortawesome/free-brands-svg-icons'
 import { makePadding, makeDefaultButton } from '../../helper/csshelper'
+import { serloDomain } from '../../serlo-domain'
 
 interface LicenseNoticeProps {
   data: any
@@ -42,7 +43,7 @@ export default function LicenseNotice(props: LicenseNoticeProps) {
         <br />
         <StyledA href={data.url}>{licenseName}</StyledA>
         {' → '}
-        <StyledA href={`https://de.serlo.org/license/detail/${data.id}`}>
+        <StyledA href={`https://de.${serloDomain}/license/detail/${data.id}`}>
           <b>Was bedeutet das?</b>
         </StyledA>
       </StyledSmall>

@@ -1,6 +1,8 @@
 import { faGithubSquare } from '@fortawesome/free-brands-svg-icons'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 
+import { serloDomain } from '../serlo-domain'
+
 export const footerNavEntries = [
   {
     title: 'Allgemein',
@@ -11,11 +13,11 @@ export const footerNavEntries = [
       { title: 'Kontakt', url: '/kontakt' },
       {
         title: 'Serlo in anderen Sprachen',
-        url: 'https://en.serlo.org/global'
+        url: `https://en.${serloDomain}.org/global`
       },
       {
         title: 'Ins alte Design zurück',
-        url: 'https://de.serlo.org/disable-frontend'
+        url: `https://de.${serloDomain}/disable-frontend`
       },
       { title: 'API', url: '/105250' }
     ]
@@ -39,16 +41,12 @@ export const footerNavEntries = [
   {
     title: 'Rechtlich',
     children: [
-      { title: 'Datenschutz', url: '/datenschutz' },
+      { title: 'Datenschutz', url: `https://de.${serloDomain}/privacy` },
       {
         title: 'Nutzungsbedingungen und Urheberrecht',
-        url: '/nutzungsbedingungen'
+        url: `https://de.${serloDomain}/terms`
       },
-      { title: 'Impressum', url: '/impressum' },
-      {
-        title: 'Diese Plattform basiert auf Open Source Technologie von ORY.',
-        url: 'https://www.ory.am/'
-      }
+      { title: 'Impressum', url: `https://de.${serloDomain}/imprint` }
     ]
   }
 ]
