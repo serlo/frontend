@@ -6,7 +6,7 @@ Welcome to the new serlo.org frontend.
 
 ### Installation
 
-Install [Node.js](https://nodejs.org/en/) (>=10) and [yarn](https://classic.yarnpkg.com/en/docs/install) on your system.
+Install [Node.js](https://nodejs.org/en/) (current LTS) and [yarn](https://classic.yarnpkg.com/en/docs/install) on your system.
 
 Clone this repo, install dependencies and start the dev server:
 
