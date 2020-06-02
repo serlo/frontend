@@ -1,4 +1,4 @@
-import { serloDomain } from '../../../src/serlo-domain'
+import { serloDomain } from '@/serlo-domain'
 
 // need this to bypass CORS and cache responses
 export default async function privacy(req, res) {

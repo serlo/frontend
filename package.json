@@ -9,7 +9,7 @@
   "license": "Apache-2.0",
   "author": "Serlo Education e.V.",
   "scripts": {
-    "_eslint": "eslint \"{src,pages}/**/*.{js,jsx,ts,tsx}\"",
+    "_eslint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
     "_prettier": "prettier .",
     "analyze": "cross-env ANALYZE=true yarn build",
     "build": "next build",
@@ -18,7 +18,7 @@
     "format:eslint": "yarn _eslint --fix",
     "format:prettier": "yarn _prettier --write",
     "lint": "npm-run-all lint:tsc lint:prettier lint:eslint",
-    "lint:eslint": "eslint \"{src,pages}/**/*.{js,jsx,ts,tsx}\"",
+    "lint:eslint": "yarn _eslint",
     "lint:prettier": "yarn _prettier --check",
     "lint:tsc": "tsc --noEmit",
     "start": "next start"

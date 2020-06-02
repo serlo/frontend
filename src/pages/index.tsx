@@ -3,20 +3,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
 import Head from 'next/head'
 
-import Header from '../src/components/navigation/Header'
-import LandingSubjects from '../src/components/landing/LandingSubjects'
-import LandingAbout from '../src/components/landing/LandingAbout'
-import Footer from '../src/components/navigation/Footer'
+import Header from '@/components/navigation/Header'
+import LandingSubjects from '@/components/landing/LandingSubjects'
+import LandingAbout from '@/components/landing/LandingAbout'
+import Footer from '@/components/navigation/Footer'
 
-import {
-  makeDefaultButton,
-  makeResponsivePadding,
-} from '../src/helper/csshelper'
+import { makeDefaultButton, makeResponsivePadding } from '@/helper/csshelper'
 
 import PrinciplesSVG from '../public/_assets/img/landing-principles-graphic.svg'
 import DonateSVG from '../public/_assets/img/footer-donate.svg'
 import ParticipateSVG from '../public/_assets/img/footer-participate.svg'
-import CookieBar from '../src/components/content/CookieBar'
+import CookieBar from '@/components/content/CookieBar'
 
 export default function Landing() {
   return (

@@ -1,34 +1,31 @@
 import React from 'react'
-import Header from '../src/components/navigation/Header'
-import Footer from '../src/components/navigation/Footer'
+import Header from '@/components/navigation/Header'
+import Footer from '@/components/navigation/Footer'
 import styled, { css } from 'styled-components'
-import HSpace from '../src/components/content/HSpace'
-import Horizon from '../src/components/content/Horizon'
-import { horizonData } from '../src/data/horizondata'
+import HSpace from '@/components/content/HSpace'
+import Horizon from '@/components/content/Horizon'
+import { horizonData } from '@/data/horizondata'
 import absoluteUrl from 'next-absolute-url'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
-import ArticlePage from '../src/components/content/ArticlePage'
-import StyledP from '../src/components/tags/StyledP'
-import StyledH1 from '../src/components/tags/StyledH1'
-import { renderArticle } from '../src/schema/articleRenderer'
-import CookieBar from '../src/components/content/CookieBar'
-import LicenseNotice from '../src/components/content/LicenseNotice'
-import StyledA from '../src/components/tags/StyledA'
+import ArticlePage from '@/components/content/ArticlePage'
+import StyledP from '@/components/tags/StyledP'
+import StyledH1 from '@/components/tags/StyledH1'
+import { renderArticle } from '@/schema/articleRenderer'
+import CookieBar from '@/components/content/CookieBar'
+import LicenseNotice from '@/components/content/LicenseNotice'
+import StyledA from '@/components/tags/StyledA'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCubes, faPlayCircle } from '@fortawesome/free-solid-svg-icons'
-import { PrettyLinksProvider } from '../src/components/PrettyLinksContext'
+import { PrettyLinksProvider } from '@/components/PrettyLinksContext'
 
-const MetaMenu = dynamic(() => import('../src/components/navigation/MetaMenu'))
-const Breadcrumbs = dynamic(() =>
-  import('../src/components/navigation/Breadcrumbs')
-)
-const Topic = dynamic(() => import('../src/components/content/Topic'))
+const MetaMenu = dynamic(() => import('@/components/navigation/MetaMenu'))
+const Breadcrumbs = dynamic(() => import('@/components/navigation/Breadcrumbs'))
+const Topic = dynamic(() => import('@/components/content/Topic'))
 
-const NewsletterPopup = dynamic(
-  () => import('../src/components/NewsletterPopup'),
-  { ssr: false }
-)
+const NewsletterPopup = dynamic(() => import('@/components/NewsletterPopup'), {
+  ssr: false,
+})
 
 enum MetaImageEnum {
   default = 'meta/serlo.jpg',

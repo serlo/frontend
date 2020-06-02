@@ -7,17 +7,17 @@ import {
   makeGreenButton,
   makeResponsivePadding,
   makePadding,
-} from '../src/helper/csshelper'
+} from '@/helper/csshelper'
 
-import PartnerList from '../src/components/landing/PartnerList'
-import CookieBar from '../src/components/content/CookieBar'
-import Logo from '../src/components/navigation/Logo'
-import StyledImg from '../src/components/tags/StyledImg'
-import StyledA from '../src/components/tags/StyledA'
-import StyledUl from '../src/components/tags/StyledUl'
-import StyledLi from '../src/components/tags/StyledLi'
+import PartnerList from '@/components/landing/PartnerList'
+import CookieBar from '@/components/content/CookieBar'
+import Logo from '@/components/navigation/Logo'
+import StyledImg from '@/components/tags/StyledImg'
+import StyledA from '@/components/tags/StyledA'
+import StyledUl from '@/components/tags/StyledUl'
+import StyledLi from '@/components/tags/StyledLi'
 
-import FooterNav from '../src/components/navigation/FooterNav'
+import FooterNav from '@/components/navigation/FooterNav'
 
 const footerEntries = [
   {
