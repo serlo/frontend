@@ -3,12 +3,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import styled from 'styled-components'
 
-import LiteYouTubeEmbed from '../../../external/LiteYouTubeEmbed'
+import { LiteYouTubeEmbed } from '../../../external/LiteYouTubeEmbed'
 import { makeMargin } from '../../helper/css'
 import { StyledP } from '../tags/styled-p'
 
-// TODO: needs type declaration
-export type VideoProps = any
+export interface VideoProps {
+  url: string
+}
 
 export function Video(props: VideoProps) {
   const { url } = props

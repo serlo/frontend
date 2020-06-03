@@ -8,40 +8,41 @@ import { makeMargin, makeDefaultButton } from '../../helper/css'
 import { renderArticle } from '../../schema/article-renderer'
 import { StyledP } from '../tags/styled-p'
 
-// TODO: needs type declaration
-type ScMcExerciseProps = any
-
-export function ScMcExercise({
-  state,
-  positionOnPage,
-  positionInGroup,
-}: ScMcExerciseProps) {
-  const keyBase = `ex-${positionOnPage}-${positionInGroup}-`
-  if (state.isSingleChoice)
-    return <SingleChoice state={state} keyBase={keyBase} />
-
-  return <MultipleChoice state={state} keyBase={keyBase} />
+export interface ScMcExerciseProps {
+  // TODO: should be typed in convert-edtr-io-state
+  state: {
+    answers: {
+      isCorrect: boolean
+      // TODO: schema-internal type. Should be typed somewhere ^^
+      feedback: any[]
+      content: any[]
+    }[]
+    isSingleChoice: boolean
+  }
+  idBase: string
 }
 
-// TODO: needs type declaration
-type SingleChoiceProps = any
+export function ScMcExercise({ state, idBase }: ScMcExerciseProps) {
+  if (state.isSingleChoice)
+    return <SingleChoice state={state} idBase={idBase} />
 
-function SingleChoice({ state, keyBase }: SingleChoiceProps) {
-  // TODO: needs type declaration
-  const [selected, setSelected] = React.useState<any>(undefined)
+  return <MultipleChoice state={state} idBase={idBase} />
+}
+
+function SingleChoice({ state, idBase }: ScMcExerciseProps) {
+  const [selected, setSelected] = React.useState<number | undefined>(undefined)
   const [showFeedback, setShowFeedback] = React.useState(false)
 
   return (
     <Container>
       <Choices>
-        {/* TODO: needs type declaration */}
-        {state.answers.map((answer: any, i: any) => {
-          const key = `${keyBase}${i}`
+        {state.answers.map((answer, i) => {
+          const id = `${idBase}${i}`
           return (
-            <React.Fragment key={key}>
+            <React.Fragment key={i}>
               <ChoiceWrapper>
                 <StyledInput
-                  id={key}
+                  id={id}
                   type="radio"
                   checked={selected === i}
                   onChange={() => {
@@ -49,7 +50,7 @@ function SingleChoice({ state, keyBase }: SingleChoiceProps) {
                     setSelected(i)
                   }}
                 />
-                <StyledLabel selected={selected === i} key={key} htmlFor={key}>
+                <StyledLabel selected={selected === i} htmlFor={id}>
                   <FontAwesomeIcon
                     icon={selected === i ? faCheckCircle : faCircle}
                   />
@@ -57,6 +58,7 @@ function SingleChoice({ state, keyBase }: SingleChoiceProps) {
                 </StyledLabel>
               </ChoiceWrapper>
               {showFeedback &&
+                selected !== undefined &&
                 state.answers[selected] &&
                 state.answers[selected] === answer && (
                   <Feedback right={state.answers[selected].isCorrect}>
@@ -78,27 +80,22 @@ function SingleChoice({ state, keyBase }: SingleChoiceProps) {
   )
 }
 
-// TODO: needs type declaration
-type MultipleChoiceProps = any
-
-function MultipleChoice({ state, keyBase }: MultipleChoiceProps) {
+function MultipleChoice({ state, idBase }: ScMcExerciseProps) {
   const [selected, setSelected] = React.useState(state.answers.map(() => false))
   const [showFeedback, setShowFeedback] = React.useState(false)
   const right = state.answers.every(
-    // TODO: needs type declaration
-    (answer: any, i: any) => answer.isCorrect === selected[i]
+    (answer, i) => answer.isCorrect === selected[i]
   )
   return (
     <Container>
       <Choices>
-        {/* TODO: needs type declaration */}
-        {state.answers.map((answer: any, i: any) => {
-          const key = `${keyBase}${i}`
+        {state.answers.map((answer, i) => {
+          const id = `${idBase}${i}`
           return (
-            <React.Fragment key={key}>
-              <ChoiceWrapper key={key}>
+            <React.Fragment key={i}>
+              <ChoiceWrapper>
                 <StyledInput
-                  id={key}
+                  id={id}
                   type="checkbox"
                   checked={selected[i]}
                   onChange={() => {
@@ -108,7 +105,7 @@ function MultipleChoice({ state, keyBase }: MultipleChoiceProps) {
                     setSelected(newArr)
                   }}
                 />
-                <StyledLabel selected={selected[i]} key={key} htmlFor={key}>
+                <StyledLabel selected={selected[i]} htmlFor={id}>
                   <FontAwesomeIcon
                     icon={selected[i] ? faCheckSquare : faSquare}
                   />

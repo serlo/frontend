@@ -23,12 +23,12 @@ export function Breadcrumbs(props: BreadcrumbsProps) {
 
   return (
     <BreadcrumbWrapper>
-      {entries.map((bcEntry, i, l) => {
+      {entries.map((bcEntry, i, completeArray) => {
         return (
           <BreadcrumbEntries
             bcEntry={bcEntry}
             i={i}
-            l={l}
+            arrayLength={completeArray.length}
             key={i}
           ></BreadcrumbEntries>
         )
@@ -37,20 +37,23 @@ export function Breadcrumbs(props: BreadcrumbsProps) {
   )
 }
 
-// TODO: needs type declaration
-type BradcrumbEntriesProps = any
+interface BradcrumbEntriesProps {
+  bcEntry: BreadcrumbEntry
+  i: number
+  arrayLength: number
+}
 
 function BreadcrumbEntries(props: BradcrumbEntriesProps) {
-  const { bcEntry, i, l } = props
+  const { bcEntry, i, arrayLength } = props
   const maxItems = 4
-  const overflow = l.length > maxItems
-  const itemsToRemove = l.length - maxItems
+  const overflow = arrayLength > maxItems
+  const itemsToRemove = arrayLength - maxItems
   const ellipsesItem = overflow && i == 2
 
   if (overflow && i > 2 && i < 1 + itemsToRemove) return null
-  if (l.length - itemsToRemove > 4 && i === 1) return null
+  if (arrayLength - itemsToRemove > 4 && i === 1) return null
 
-  return l.length !== (i as number) + 1 ? (
+  return arrayLength !== i + 1 ? (
     <>
       {ellipsesItem ? (
         <Breadcrumb>…</Breadcrumb>

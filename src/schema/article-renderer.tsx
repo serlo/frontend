@@ -63,6 +63,7 @@ const Code = dynamic<CodeProps>(() =>
   import('../components/content/code').then((mod) => mod.Code)
 )
 
+// TODO: this is definitely not the correct type.
 export function renderArticle(value: Node[], addCSS = true) {
   if (!value) return null
   const root = { children: value }
