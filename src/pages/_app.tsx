@@ -1,24 +1,24 @@
-import React from 'react'
-import { AppProps } from 'next/app'
-
 import { config } from '@fortawesome/fontawesome-svg-core'
+// eslint-disable-next-line import/no-unassigned-import
 import '@fortawesome/fontawesome-svg-core/styles.css'
-config.autoAddCss = false
-
-import '../../public/_assets/fonts/karmilla.css'
-import '../../public/_assets/fonts/katex/katex.css'
-
-import { ThemeProvider, createGlobalStyle } from 'styled-components'
-import { theme, Theme } from '@/theme'
-
 import * as Sentry from '@sentry/browser'
+import { AppProps } from 'next/app'
+import React from 'react'
+import { ThemeProvider, createGlobalStyle } from 'styled-components'
 
 import { version } from '../../package.json'
+import { theme, Theme } from '@/theme'
+// eslint-disable-next-line import/no-unassigned-import
+import '../../public/_assets/fonts/karmilla.css'
+// eslint-disable-next-line import/no-unassigned-import
+import '../../public/_assets/fonts/katex/katex.css'
+
+config.autoAddCss = false
 
 if (process.env.NEXT_PUBLIC_SENTRY_DSN !== undefined) {
   Sentry.init({
     dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
-    release: `frontend@${version}-${process.env.VERCEL_GITHUB_COMMIT_SHA}`,
+    release: `frontend@${version}-${process.env.VERCEL_GITHUB_COMMIT_SHA!}`,
   })
 }
 

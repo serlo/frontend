@@ -1,14 +1,14 @@
 import { request } from 'graphql-request'
 
 import { serloDomain } from '../serlo-domain'
+import { extractLinks } from './extract-links'
+import { processResponse } from './process-response'
 import { dataQuery, idQuery, idsQuery } from './query'
-import { processResponse } from './processResponse'
-import { extractLinks } from './extractLinks'
 
 export const endpoint = `https://api.${serloDomain}/graphql`
 
 // TODO: needs type declaration
-export default async function fetchContent(alias: string, redirect: any) {
+export async function fetchContent(alias: string, redirect: any) {
   try {
     if (redirect && /^\/[\d]+$/.test(alias)) {
       // redirect id to alias
@@ -59,6 +59,6 @@ export default async function fetchContent(alias: string, redirect: any) {
 
     return { contentId, alias, ...processed, prettyLinks }
   } catch (e) {
-    return { error: 'Error while fetching data: ' + (e.message ?? e), alias }
+    return { error: `Error while fetching data: ${e.message ?? e}`, alias }
   }
 }

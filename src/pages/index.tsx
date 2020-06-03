@@ -1,19 +1,17 @@
-import styled from 'styled-components'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Head from 'next/head'
+import styled from 'styled-components'
 
-import Header from '@/components/navigation/Header'
-import LandingSubjects from '@/components/landing/LandingSubjects'
-import LandingAbout from '@/components/landing/LandingAbout'
-import Footer from '@/components/navigation/Footer'
-
-import { makeDefaultButton, makeResponsivePadding } from '@/helper/csshelper'
-
-import PrinciplesSVG from '../public/_assets/img/landing-principles-graphic.svg'
-import DonateSVG from '../public/_assets/img/footer-donate.svg'
-import ParticipateSVG from '../public/_assets/img/footer-participate.svg'
-import CookieBar from '@/components/content/CookieBar'
+import DonateSVG from '../../public/_assets/img/footer-donate.svg'
+import ParticipateSVG from '../../public/_assets/img/footer-participate.svg'
+import PrinciplesSVG from '../../public/_assets/img/landing-principles-graphic.svg'
+import { CookieBar } from '@/components/content/cookie-bar'
+import { LandingAbout } from '@/components/landing/landing-about'
+import { LandingSubjects } from '@/components/landing/landing-subjects'
+import { Footer } from '@/components/navigation/footer'
+import { Header } from '@/components/navigation/header'
+import { makeDefaultButton, makeResponsivePadding } from '@/helper/css'
 
 export default function Landing() {
   return (

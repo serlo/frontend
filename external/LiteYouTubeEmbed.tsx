@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { makeMargin } from '../src/helper/csshelper'
+import { makeMargin } from '@/helper/css'
 
 // fixed and modified version of https://github.com/ibrahimcesar/react-lite-youtube-embed
 // embeded here for faster developement and tracking of changes

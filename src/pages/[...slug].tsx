@@ -1,32 +1,46 @@
-import React from 'react'
-import Header from '@/components/navigation/Header'
-import Footer from '@/components/navigation/Footer'
-import styled, { css } from 'styled-components'
-import HSpace from '@/components/content/HSpace'
-import Horizon from '@/components/content/Horizon'
-import { horizonData } from '@/data/horizondata'
+import { faCubes, faPlayCircle } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { GetServerSideProps } from 'next'
 import absoluteUrl from 'next-absolute-url'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
-import ArticlePage from '@/components/content/ArticlePage'
-import StyledP from '@/components/tags/StyledP'
-import StyledH1 from '@/components/tags/StyledH1'
-import { renderArticle } from '@/schema/articleRenderer'
-import CookieBar from '@/components/content/CookieBar'
-import LicenseNotice from '@/components/content/LicenseNotice'
-import StyledA from '@/components/tags/StyledA'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCubes, faPlayCircle } from '@fortawesome/free-solid-svg-icons'
-import { PrettyLinksProvider } from '@/components/PrettyLinksContext'
-import { GetServerSideProps } from 'next'
+import React from 'react'
+import styled, { css } from 'styled-components'
 
-const MetaMenu = dynamic(() => import('@/components/navigation/MetaMenu'))
-const Breadcrumbs = dynamic(() => import('@/components/navigation/Breadcrumbs'))
-const Topic = dynamic(() => import('@/components/content/Topic'))
+import { ArticlePage } from '@/components/content/article-page'
+import { CookieBar } from '@/components/content/cookie-bar'
+import { HSpace } from '@/components/content/h-space'
+import { Horizon } from '@/components/content/horizon'
+import { LicenseNotice } from '@/components/content/license-notice'
+import type { TopicProps } from '@/components/content/topic'
+import type { BreadcrumbsProps } from '@/components/navigation/breadcrumbs'
+import { Footer } from '@/components/navigation/footer'
+import { Header } from '@/components/navigation/header'
+import type { MetaMenuProps } from '@/components/navigation/meta-menu'
+import { PrettyLinksProvider } from '@/components/pretty-links-context'
+import { StyledA } from '@/components/tags/styled-a'
+import { StyledH1 } from '@/components/tags/styled-h1'
+import { StyledP } from '@/components/tags/styled-p'
+import { horizonData } from '@/data/horizon'
+import { renderArticle } from '@/schema/article-renderer'
 
-const NewsletterPopup = dynamic(() => import('@/components/NewsletterPopup'), {
-  ssr: false,
-})
+const MetaMenu = dynamic<MetaMenuProps>(() =>
+  import('@/components/navigation/meta-menu').then((mod) => mod.MetaMenu)
+)
+const Breadcrumbs = dynamic<BreadcrumbsProps>(() =>
+  import('@/components/navigation/breadcrumbs').then((mod) => mod.Breadcrumbs)
+)
+const Topic = dynamic<TopicProps>(() =>
+  import('@/components/content/topic').then((mod) => mod.Topic)
+)
+
+const NewsletterPopup = dynamic<{}>(
+  () =>
+    import('@/components/newsletter-popup').then((mod) => mod.NewsletterPopup),
+  {
+    ssr: false,
+  }
+)
 
 enum MetaImageEnum {
   default = 'meta/serlo.jpg',
@@ -66,13 +80,13 @@ function PageView(props: PageViewProps) {
   function getMetaImage() {
     const subject = data.alias ? data.alias.split('/')[1] : 'default'
     // TODO: MetaImageEnum should probably not be an enum since we actually use the key
-    // @ts-ignore
+    // @ts-expect-error
     const imageSrc = MetaImageEnum[subject]
-      ? // @ts-ignore
+      ? // @ts-expect-error
         MetaImageEnum[subject]
       : MetaImageEnum['default']
     //might replace with default asset/cdn url
-    return props.origin + '/_assets/img/' + imageSrc
+    return `${props.origin}/_assets/img/${imageSrc}`
   }
 
   function getMetaDescription() {
@@ -119,7 +133,7 @@ function PageView(props: PageViewProps) {
       </Head>
       <Header />
       {showNav && (
-        <MetaMenu pagealias={'/' + data.data.id} navigation={navigation} />
+        <MetaMenu pagealias={`/${data.data.id}`} navigation={navigation} />
       )}
       <RelatveContainer>
         <MaxWidthDiv showNav={showNav}>
@@ -132,7 +146,7 @@ function PageView(props: PageViewProps) {
                 {process.env.NODE_ENV !== 'production' && (
                   <StyledP>
                     Details:{' '}
-                    <StyledA href={'/api/frontend' + alias}>
+                    <StyledA href={`/api/frontend${alias}`}>
                       /api/frontend{alias}
                     </StyledA>
                   </StyledP>

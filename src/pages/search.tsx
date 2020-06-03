@@ -1,10 +1,11 @@
+import Head from 'next/head'
 import React from 'react'
 import styled from 'styled-components'
-import Head from 'next/head'
-import Header from '@/components/navigation/Header'
-import SearchResults from '@/components/navigation/SearchResults'
-import CookieBar from '@/components/content/CookieBar'
-import Footer from '@/components/navigation/Footer'
+
+import { CookieBar } from '@/components/content/cookie-bar'
+import { Footer } from '@/components/navigation/footer'
+import { Header } from '@/components/navigation/header'
+import { SearchResults } from '@/components/navigation/search-results'
 
 export default function SearchPage() {
   return (

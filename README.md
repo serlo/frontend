@@ -24,13 +24,11 @@ The server is now running on `localhost:3000`.
 Routes are mapped to individual files in the `pages`-folder. Create a [page](https://nextjs.org/docs/basic-features/pages) by adding following file:
 
 ```tsx
-// pages/helloworld.tsx
+// src/pages/hello-world.tsx
 
-function HelloWorld() {
+export default function HelloWorld() {
   return <p>Welcome to the frontend!</p>
 }
-
-export default HelloWorld
 ```
 
 Visit `localhost:3000/helloworld` to view this page.
@@ -40,11 +38,11 @@ Visit `localhost:3000/helloworld` to view this page.
 You can attach [styles](https://styled-components.com/docs/basics#getting-started) to html elements and use them in your component:
 
 ```tsx
-// pages/helloworld.tsx
+// src/pages/hello-world.tsx
 
 import styled from 'styled-components'
 
-function HelloWorld() {
+export default function HelloWorld() {
   return <BigParagraph>Welcome to the frontend!</BigParagraph>
 }
 
@@ -53,8 +51,6 @@ const BigParagraph = styled.p`
   font-size: 3rem;
   color: lightgreen;
 `
-
-export default HelloWorld
 ```
 
 ### Building components
@@ -62,12 +58,12 @@ export default HelloWorld
 Use functional components and [hooks](https://reactjs.org/docs/hooks-overview.html) to split your code into reusable pieces. Some basic features are shown in this example:
 
 ```tsx
-// pages/helloworld.tsx
+// src/pages/hello-world.tsx
 
 import React from 'react'
 import styled from 'styled-components'
 
-function HelloWorld() {
+export default function HelloWorld() {
   return <ClickMeTitle title="Welcome to the frontend!" />
 }
 
@@ -86,11 +82,9 @@ const BigParagraph = styled.p`
   font-size: 3rem;
   color: lightgreen;
 `
-
-export default HelloWorld
 ```
 
-Visit `localhost:3000/helloworld`. Click on the text. Every click should toggle a smiley face:
+Visit `localhost:3000/hello-world`. Click on the text. Every click should toggle a smiley face:
 
 ![grafik](https://user-images.githubusercontent.com/13507950/76195662-1a048700-61e9-11ea-8abb-e98cf1bf3e32.png)
 
@@ -101,7 +95,7 @@ Visit `localhost:3000/helloworld`. Click on the text. Every click should toggle 
 We love types. They help us to maintain code and keep the codebase consistent. We also love rapid development and prototyping. You decide: Add your type declarations immediately as you code or later when the codebase stabilizes. The choice is up to you:
 
 ```tsx
-function HelloWorld() {
+export default function HelloWorld() {
   return <Greeter title="Hello" subline="Welcome to the frontend!" />
 }
 
@@ -118,23 +112,21 @@ function Greeter({ title, subline }: GreeterProps) {
     </>
   )
 }
-
-export default HelloWorld
 ```
 
 ### Components
 
-The frontend is a growing collection of components. Package every part of the UI as a component, save them in `src/components` and let the file name match the components name. Export the component as a default and type the props. A complete component file would look like this:
+The frontend is a growing collection of components. Package every part of the UI as a component, save them in `src/components` and let the file name match the components name in kebab-case. Export the component and type the props. A complete component file would look like this:
 
 ```tsx
-// src/components/Greeter.tsx
+// src/components/greeter.tsx
 
 interface GreeterProps {
   title: string
   subline?: string
 }
 
-export default function Greeter({ title, subline }: GreeterProps) {
+export function Greeter({ title, subline }: GreeterProps) {
   return (
     <>
       <h1>{title}</h1>
@@ -151,7 +143,7 @@ Users will come to the frontend using very different devices, from narrow smartp
 ```tsx
 import styled from 'styled-components'
 
-function HelloWorld() {
+export function HelloWorld() {
   return (
     <ResponsiveBox>
       <GrowingParagraph>Hallo</GrowingParagraph>
@@ -174,8 +166,6 @@ const GrowingParagraph = styled.p`
   padding: 16px;
   background-color: lightgreen;
 `
-
-export default HelloWorld
 ```
 
 This example makes use of [flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/). On wide screens, both paragraphs are shown next to each other:
@@ -193,7 +183,7 @@ We can improve the previous example by extracting commenly used constants like b
 ```tsx
 import styled from 'styled-components'
 
-function HelloWorld() {
+export function HelloWorld() {
   return (
     <ResponsiveBox>
       <GrowingParagraph>Hallo</GrowingParagraph>
@@ -216,8 +206,6 @@ const GrowingParagraph = styled.p`
   padding: 16px;
   background-color: ${(props) => props.theme.colors.brand};
 `
-
-export default HelloWorld
 ```
 
 ### Units
@@ -237,7 +225,7 @@ import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 
-function HelloWorld() {
+export function HelloWorld() {
   return (
     <BigIcon>
       <FontAwesomeIcon icon={faCoffee} size="1x" />
@@ -251,8 +239,6 @@ const BigIcon = styled.div`
   color: brown;
   margin: 30px;
 `
-
-export default HelloWorld
 ```
 
 ### Style Adaption
@@ -264,7 +250,7 @@ import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCandyCane } from '@fortawesome/free-solid-svg-icons'
 
-function HelloWorld() {
+export function HelloWorld() {
   return (
     <BigIcon iconColor="pink">
       <FontAwesomeIcon icon={faCandyCane} size="1x" />
@@ -278,8 +264,6 @@ const BigIcon = styled.div<{ iconColor: string }>`
   color: ${(props) => props.iconColor};
   margin: 30px;
 `
-
-export default HelloWorld
 ```
 
 This is one of the rare places where types are mandatory.
@@ -295,7 +279,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCandyCane } from '@fortawesome/free-solid-svg-icons'
 import { lighten } from 'polished'
 
-function HelloWorld() {
+export function HelloWorld() {
   const [lighter, setLighter] = React.useState(0)
   return (
     <>
@@ -313,8 +297,6 @@ const BigIcon = styled.div<{ lighter: number }>`
   color: ${(props) => lighten(props.lighter, 'pink')};
   margin: 30px;
 `
-
-export default HelloWorld
 ```
 
 Import your helper from polished and use it in interpolations.
@@ -328,11 +310,9 @@ Example: The file `public/_assets/img/placeholder.png` is accessible via `localh
 You can use assets in your components:
 
 ```tsx
-function HelloWorld() {
+export function HelloWorld() {
   return <img src="/_assets/img/placeholder.png" alt="placeholder" />
 }
-
-export default HelloWorld
 ```
 
 ### SVG
@@ -342,11 +322,9 @@ You can import a svg directly. They are inlined and usable as component:
 ```tsx
 import SerloLogo from '../public/_assets/img/serlo-logo.svg'
 
-function HelloWorld() {
+export function HelloWorld() {
   return <SerloLogo />
 }
-
-export default HelloWorld
 ```
 
 ### Code Formatting
@@ -377,7 +355,7 @@ You can add elements that [pop out](https://atomiks.github.io/tippyjs/) of the p
 import styled from 'styled-components'
 import Tippy from '@tippyjs/react'
 
-function HelloWorld() {
+export function HelloWorld() {
   return (
     <Wall>
       <Tippy
@@ -402,8 +380,6 @@ const Drop = styled.div`
   padding: 5px;
   box-shadow: 8px 8px 2px 1px rgba(0, 255, 0, 0.2);
 `
-
-export default HelloWorld
 ```
 
 Surround the target element with the `Tippy` component and pass the content to it. There are many more [props](https://atomiks.github.io/tippyjs/v6/all-props/) to explore.
@@ -414,7 +390,7 @@ Show information to the user with modals. [react-modal](https://github.com/react
 
 ```tsx
 import React from 'react'
-import Modal from '../src/components/Modal' // our wrapper
+import { Modal } from '@/components/Modal' // our wrapper
 
 const centeredModal = {
   overlay: {
@@ -427,7 +403,7 @@ const centeredModal = {
   },
 }
 
-function HelloWorld() {
+export function HelloWorld() {
   const [open, setOpen] = React.useState(false)
   return (
     <>
@@ -442,8 +418,6 @@ function HelloWorld() {
     </>
   )
 }
-
-export default HelloWorld
 ```
 
 You handle the state by yourself. The `Modal` component has [many options](http://reactcommunity.org/react-modal/) available. Import the modal from `src/reactmodal.tsx`. This takes care of the app element.
@@ -454,9 +428,9 @@ You can use [KaTeX](https://github.com/KaTeX/KaTeX) to render formulas:
 
 ```tsx
 import styled from 'styled-components'
-import Math from '../src/components/content/Math'
+import { Math } from '@/components/content/Math'
 
-function HelloWorld() {
+export function HelloWorld() {
   return (
     <>
       <Paragraph>
@@ -480,8 +454,6 @@ const CenteredParagraph = styled.p`
   text-align: center;
   font-size: 18px;
 `
-
-export default HelloWorld
 ```
 
 Our math component takes two props: `formula` is the LaTeX string, `inline` is optional and will make the formula a bit smaller. The rendered formula is a `span` that can be placed anywhere.
@@ -516,26 +488,26 @@ Results are saved to `.next/analyze/client.html` and `.next/analyze/server.html`
 If some part of a page is heavy and only relevant for a smaller fraction of users, import it dynamically. Write your component as usual:
 
 ```tsx
-// src/components/FancyComponent.tsx
+// src/components/fancy-component.tsx
 
-function FancyComponent() {
+export function FancyComponent() {
   return <p>This is some heavy component</p>
 }
-
-export default FancyComponent
 ```
 
 Use a [dynamic import](https://nextjs.org/docs/advanced-features/dynamic-import) to load the component:
 
 ```tsx
-// pages/helloworld.tsx
+// src/pages/hello-world.tsx
 
 import React from 'react'
 import dynamic from 'next/dynamic'
 
-const FancyComponent = dynamic(() => import('../src/components/FancyComponent'))
+const FancyComponent = dynamic(() =>
+  import('@/components/fancy-component').then((mod) => mod.FancyComponent)
+)
 
-function HelloWorld() {
+export default function HelloWorld() {
   const [visible, setVisible] = React.useState(false)
   return (
     <>
@@ -546,8 +518,6 @@ function HelloWorld() {
     </>
   )
 }
-
-export default HelloWorld
 ```
 
 The source code of `FancyComponent` is splitting into a separate chunk and is only loaded when users click the button.
@@ -559,7 +529,7 @@ You can extend components by adding style snippets. These snippets are functions
 ```tsx
 import styled from 'styled-components'
 
-function HelloWorld() {
+export function HelloWorld() {
   return (
     <>
       <ChatParagraph side="left">Hey, how are you?</ChatParagraph>
@@ -592,8 +562,6 @@ const ChatParagraph = styled.p<SideProps>`
   ${withSide}
   margin: 20px;
 `
-
-export default HelloWorld
 ```
 
 This example adds the `side` prop to the `ChatParagraph` and allows users to change the appearance of the component.
@@ -632,7 +600,7 @@ No, styled components [takes care](https://styled-components.com/docs/basics#mot
 
 ### Can I add external css?
 
-Only if it is absolutely necessary. You are able to import external `.css` files in `pages/_app.tsx`. These stylesheets are always global and included in every page. If possible, use a package that supports styled components.
+Only if it is absolutely necessary. You are able to import external `.css` files in `src/pages/_app.tsx`. These stylesheets are always global and included in every page. If possible, use a package that supports styled components.
 
 ### Some client specific objects (window, document) are causing trouble with server side rendering. What can I do?
 
@@ -756,8 +724,6 @@ function Sister(props) {
   const { msg } = props
   return <p>{msg}</p>
 }
-
-export default HelloWorld
 ```
 
 The brother can pass a message to its sister by declaring the state in the parent. React takes care of updating and rendering.

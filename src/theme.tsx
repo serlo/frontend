@@ -1,6 +1,6 @@
 import { tint, shade } from 'polished'
 
-type Color = {
+interface Color {
   [key: string]: string
 }
 
