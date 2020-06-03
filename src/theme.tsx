@@ -1,6 +1,6 @@
 import { tint, shade } from 'polished'
 
-type Color = {
+interface Color {
   [key: string]: string
 }
 
@@ -43,20 +43,22 @@ export const theme = {
       h2: '22px',
       h3: '20px',
       h4: '18px',
-      h5: '16px'
-    }
+      h5: '16px',
+    },
   },
   colors: colors,
   breakpoints: {
     mobile: '500px',
     sm: '800px',
     md: '1024px',
-    lg: '1216px'
+    lg: '1216px',
   },
   defaults: {
     sideSpacingMobile: '16px',
     sideSpacingLg: '40px',
     regularLetterSpacing: '-0.006em',
-    boldLetterSpacing: '-0.012em'
-  }
+    boldLetterSpacing: '-0.012em',
+  },
 }
+
+export type Theme = typeof theme

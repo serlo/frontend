@@ -1,18 +1,21 @@
 import { request } from 'graphql-request'
 
 import { serloDomain } from '../serlo-domain'
+import { extractLinks } from './extract-links'
+import { processResponse } from './process-response'
 import { dataQuery, idQuery, idsQuery } from './query'
-import { processResponse } from './processResponse'
-import { extractLinks } from './extractLinks'
 
 export const endpoint = `https://api.${serloDomain}/graphql`
 
-export default async function fetchContent(alias: string, redirect) {
+// TODO: needs type declaration
+export async function fetchContent(alias: string, redirect: any) {
   try {
     if (redirect && /^\/[\d]+$/.test(alias)) {
       // redirect id to alias
-      // TODO: needs better types
-      const response = await request<any>(endpoint, idQuery(alias.substring(1)))
+      const response = await request<{ uuid: any }>(
+        endpoint,
+        idQuery(alias.substring(1))
+      )
       const redirect = response.uuid.alias
       if (redirect) {
         return { redirect }
@@ -29,13 +32,16 @@ export default async function fetchContent(alias: string, redirect) {
         : `alias: { instance: de, path: "${alias}"}`
     )
     // TODO: needs better types
-    const reqData = await request<any>(endpoint, QUERY)
+    const reqData = await request<{ uuid: any }>(endpoint, QUERY)
     // compat: redirect first page of course
     if (
       reqData.uuid.__typename === 'Course' &&
       Array.isArray(reqData.uuid.pages)
     ) {
-      const filtered = reqData.uuid.pages.filter(page => page.alias !== null)
+      // TODO: needs type declaration
+      const filtered = reqData.uuid.pages.filter(
+        (page: any) => page.alias !== null
+      )
       if (filtered.length > 0) {
         return { redirect: filtered[0].alias }
       }
@@ -53,6 +59,6 @@ export default async function fetchContent(alias: string, redirect) {
 
     return { contentId, alias, ...processed, prettyLinks }
   } catch (e) {
-    return { error: 'Error while fetching data: ' + (e.message ?? e), alias }
+    return { error: `Error while fetching data: ${e.message ?? e}`, alias }
   }
 }

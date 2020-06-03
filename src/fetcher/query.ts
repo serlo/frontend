@@ -1,5 +1,7 @@
-export const idsQuery = ids => {
-  const query = ids.map(id => `
+// TODO: needs type declaration
+export const idsQuery = (ids: any[]) => {
+  const query = ids.map(
+    (id) => `
     uuid${id}: uuid(id:${id}) {
         ... on Entity {
           alias
@@ -10,12 +12,14 @@ export const idsQuery = ids => {
         ... on TaxonomyTerm {
           alias
         }
-      } 
-  `)
+      }
+  `
+  )
   return `{${query}}`
 }
 
-export const idQuery = id => `
+// TODO: needs type declaration
+export const idQuery = (id: any) => `
   {
     uuid(id:${id}) {
       ... on Entity {
@@ -31,7 +35,8 @@ export const idQuery = id => `
   }
 `
 
-export const dataQuery = selector => `
+// TODO: needs type declaration
+export const dataQuery = (selector: any) => `
   {
     uuid(${selector}) {
       __typename

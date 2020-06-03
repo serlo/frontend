@@ -22,4 +22,5 @@ yarn-error.log*
 .env.build
 
 .now
-/.vscode/
+.vercel
+/.vscode
