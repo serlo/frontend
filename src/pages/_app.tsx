@@ -33,13 +33,13 @@ const FontFix = createGlobalStyle`
   }
 `
 
-function App({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps }: AppProps) {
   return (
-    <ThemeProvider theme={theme}>
-      <FontFix />
-      <Component {...pageProps} />
-    </ThemeProvider>
+    <React.StrictMode>
+      <ThemeProvider theme={theme}>
+        <FontFix />
+        <Component {...pageProps} />
+      </ThemeProvider>
+    </React.StrictMode>
   )
 }
-
-export default App
