@@ -35,12 +35,12 @@ export default function Landing() {
         </IconStyle>
         <Col>
           <p>
-            Wir suchen LehrerInnen mit Begeisterung für ihr Fach. Werden Sie
+            Wir suchen Lehrkräfte mit Begeisterung für ihr Fach. Werden Sie
             AutorIn auf serlo.org, erstellen Sie <b>neue Inhalte</b> und helfen
             Sie uns, die <b>Qualität</b> der Lernplattform zu sichern.
           </p>
           <Button href="/community">
-            Zur Startseite für AutorInnen{' '}
+            Zur Startseite für Autor*innen{' '}
             <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
           </Button>
         </Col>
