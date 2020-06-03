@@ -7,7 +7,10 @@ import InputExercise from './InputExercise'
 import LicenseNotice from './LicenseNotice'
 import ExerciseNumbering from './ExerciseNumbering'
 
-export default function Exercise(props) {
+// TODO: needs type declaration
+type ExerciseProps = any
+
+export default function Exercise(props: ExerciseProps) {
   const {
     task,
     solution,

@@ -2,10 +2,14 @@ import styled from 'styled-components'
 import { makeMargin } from '../../helper/csshelper'
 import { renderArticle } from '../../schema/articleRenderer'
 
-export default function Equations({ steps }) {
+// TODO: needs type declaration
+type EquationProps = any
+
+export default function Equations({ steps }: EquationProps) {
   return (
     <Wrapper>
-      {steps.map((step, i) => (
+      {/* TODO: needs type declaration */}
+      {steps.map((step: any, i: any) => (
         <LayoutContainer key={i}>
           <LeftSide>{renderArticle(step.left, false)}</LeftSide>
           <RightSide>
@@ -68,7 +72,8 @@ export const Transformation = styled.div`
   }
 `
 
-export function renderSignToString(sign): string {
+// TODO: needs type declaration
+export function renderSignToString(sign: any) {
   switch (sign) {
     case 'equals':
       return '='

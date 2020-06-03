@@ -2,7 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 import { inputFontReset } from '../../helper/csshelper'
 
-export default function SearchResults(props) {
+// TODO: needs type declaration
+type SearchResultProps = any
+
+export default function SearchResults(props: SearchResultProps) {
   return <SearchResultsWrap {...props}>{props.children}</SearchResultsWrap>
 }
 

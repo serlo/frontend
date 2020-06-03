@@ -57,7 +57,10 @@ export default function LandingSubjects() {
   )
 }
 
-function Subject(props) {
+// TODO: needs type declaration
+type SubjectProps = any
+
+function Subject(props: SubjectProps) {
   const { url, title, SubjectSVG } = props
 
   return (

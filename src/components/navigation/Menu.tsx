@@ -39,7 +39,10 @@ export default function Menu(props: MenuProps) {
   )
 }
 
-function Entry(props) {
+// TODO: needs type declaration
+type EntryProps = any
+
+function Entry(props: EntryProps) {
   const { link, target } = props
   const hasChildren = link.children !== undefined
 
@@ -61,11 +64,15 @@ function Entry(props) {
   )
 }
 
-function SubMenuInner(props) {
+// TODO: needs type declaration
+type SubMenuInnerProps = any
+
+function SubMenuInner(props: SubMenuInnerProps) {
   const { children } = props
   return (
     <SubList>
-      {children.map((entry) => {
+      {/* TODO: needs type declaration */}
+      {children.map((entry: any) => {
         return (
           <li key={entry.title}>
             <SubLink href={entry.url}>

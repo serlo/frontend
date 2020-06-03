@@ -1,4 +1,5 @@
-export function createTitle(uuid) {
+// TODO: needs type declaration
+export function createTitle(uuid: any) {
   const type = uuid.__typename
 
   const suffix = ' - lernen mit Serlo!'

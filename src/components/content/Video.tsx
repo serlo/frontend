@@ -6,7 +6,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFilm } from '@fortawesome/free-solid-svg-icons'
 import LiteYouTubeEmbed from '../../../external/LiteYouTubeEmbed'
 
-export default function Video(props) {
+// TODO: needs type declaration
+type VideoProps = any
+
+export default function Video(props: VideoProps) {
   const { url } = props
 
   if (/^(https?:\/\/)?(.*?upload\.wikimedia\.org\/)(.+)/.exec(url)) {

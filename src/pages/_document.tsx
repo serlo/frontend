@@ -1,4 +1,10 @@
-import Document, { Html, Head, Main, NextScript } from 'next/document'
+import Document, {
+  Html,
+  Head,
+  Main,
+  NextScript,
+  DocumentContext,
+} from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
 import * as Sentry from '@sentry/browser'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
@@ -19,7 +25,7 @@ if (process.env.NEXT_PUBLIC_SENTRY_DSN !== undefined) {
 }
 
 export default class MyDocument extends Document {
-  static async getInitialProps(ctx) {
+  static async getInitialProps(ctx: DocumentContext) {
     const sheet = new ServerStyleSheet()
     const originalRenderPage = ctx.renderPage
 

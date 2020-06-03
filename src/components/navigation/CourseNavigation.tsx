@@ -7,13 +7,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGraduationCap, faListUl } from '@fortawesome/free-solid-svg-icons'
 import { makeMargin, makeDefaultButton } from '../../helper/csshelper'
 
+// TODO: needs type declaration
+type CourseNavigationProps = any
+
 export default function CourseNavigation({
   courseTitle,
   pageTitle,
   pages,
   open,
   opener,
-}) {
+}: CourseNavigationProps) {
   return (
     <Wrapper id="course-overview">
       <CourseH1>
@@ -21,7 +24,8 @@ export default function CourseNavigation({
       </CourseH1>
       {open ? (
         <StyledOl>
-          {pages.map((page) => (
+          {/* TODO: needs type declaration */}
+          {pages.map((page: any) => (
             <StyledLi key={page.alias}>
               <CourseA
                 active={pageTitle === page.currentRevision.title}

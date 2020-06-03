@@ -7,7 +7,9 @@ interface StyledImgProps {
 
 const StyledImg = styled.img<StyledImgProps>`
   max-width: ${(props) =>
-    props.maxWidth > 0 ? props.maxWidth + 'px' : '100%'};
+    props.maxWidth !== undefined && props.maxWidth > 0
+      ? props.maxWidth + 'px'
+      : '100%'};
   height: auto;
   ${(props) =>
     props.inline

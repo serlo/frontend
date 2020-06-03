@@ -25,6 +25,9 @@ export default function MobileMenu(props: MobileMenuProps) {
   )
 }
 
+// TODO: needs type declaration
+type EntryProps = any
+
 function Entry({
   url,
   title,
@@ -32,7 +35,7 @@ function Entry({
   icon = null,
   isChild = false,
   children = undefined,
-}) {
+}: EntryProps) {
   const [open, setOpen] = React.useState(false)
   return (
     <>
@@ -74,7 +77,8 @@ function Entry({
       </li>
       {open && children ? (
         <>
-          {children.map((entry, index) => (
+          {/* TODO: needs type declaration */}
+          {children.map((entry: any, index: any) => (
             <Entry {...entry} isChild={true} key={index + '--' + childKey} />
           ))}{' '}
           <Seperator />

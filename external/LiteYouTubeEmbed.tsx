@@ -2,8 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import { makeMargin } from '../src/helper/csshelper'
 
-//fixed and modified version of https://github.com/ibrahimcesar/react-lite-youtube-embed
-//embeded here for faster developement and tracking of changes
+// fixed and modified version of https://github.com/ibrahimcesar/react-lite-youtube-embed
+// embeded here for faster developement and tracking of changes
 
 interface LiteYouTubeEmbedProps {
   id: string
@@ -51,8 +51,10 @@ const LiteYouTubeEmbed = ({
   React.useEffect(() => {
     const { current } = refVideo
 
+    if (!current) return
+
     if (!fallback) {
-      let img = new Image()
+      const img = new Image()
       img.onload = () => {
         if (img.width === 120) {
           //default image width

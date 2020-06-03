@@ -27,7 +27,7 @@ export default function SearchInput() {
     }
   }, [])
 
-  const checkElement = async (selector) => {
+  const checkElement = async (selector: string) => {
     while (document.querySelector(selector) === null) {
       await new Promise((resolve) => requestAnimationFrame(resolve))
     }
@@ -45,12 +45,13 @@ export default function SearchInput() {
       gcse.async = true
       gcse.src = 'https://cse.google.com/cse.js?cx=' + cx
       const s = document.getElementsByTagName('script')[0]
-      s.parentNode.insertBefore(gcse, s)
+      s.parentNode!.insertBefore(gcse, s)
 
       setSearchLoaded(true)
     }
 
-    checkElement('#gsc-i-id1').then((input) => {
+    checkElement('#gsc-i-id1').then((element) => {
+      const input = element as HTMLInputElement
       input.setAttribute('placeholder', 'Suche')
       input.focus()
       setSearchActive(true)

@@ -5,12 +5,15 @@ import SpoilerContainer from './SpoilerContainer'
 import ExerciseNumbering from './ExerciseNumbering'
 import { makeMargin } from '../../helper/csshelper'
 
+// TODO: needs type declaration
+type ExerciseGroupProps = any
+
 export default function ExerciseGroup({
   children,
   license,
   groupIntro,
   positionOnPage,
-}) {
+}: ExerciseGroupProps) {
   return (
     <Container>
       <ExerciseIntro>

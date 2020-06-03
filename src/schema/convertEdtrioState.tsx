@@ -3,11 +3,13 @@ import { convertLegacyState } from './convertLegacyState'
 
 const colors = ['blue', 'green', 'orange']
 
-export function convertEdtrioState(state) {
+// TODO: needs type declaration
+export function convertEdtrioState(state: any) {
   return { children: convert(state) }
 }
 
-export function convert(node) {
+// TODO: needs type declaration
+export function convert(node: any): any {
   if (!node) {
     console.log('e: empty node encountered')
     return []
@@ -84,10 +86,12 @@ export function convert(node) {
     return [
       {
         type: 'row',
-        children: node.state.map((child) => {
+        // TODO: needs type declaration
+        children: node.state.map((child: any) => {
           const children = convert(child.child)
           // compat: math align left
-          children.forEach((child) => {
+          // TODO: needs type declaration
+          children.forEach((child: any) => {
             if (child.type === 'math') {
               child.alignLeft = true
             }
@@ -179,7 +183,8 @@ export function convert(node) {
         plugin: 'scMcExercise',
         state: {
           isSingleChoice: node.state.isSingleChoice,
-          answers: node.state.answers.map((answer) => {
+          // TODO: needs type declaration
+          answers: node.state.answers.map((answer: any) => {
             return {
               isCorrect: answer.isCorrect,
               content: convert(answer.content),
@@ -203,7 +208,8 @@ export function convert(node) {
     ]
   }
   if (plugin === 'equations') {
-    const steps = node.state.steps.map((step) => {
+    // TODO: needs type declaration
+    const steps = node.state.steps.map((step: any) => {
       return {
         left: convert(step.left),
         sign: step.sign,
@@ -231,14 +237,17 @@ export function convert(node) {
     // compat handle newlines
     if (
       children.some(
-        (child) =>
+        // TODO: needs type declaration
+        (child: any) =>
           (child.text && child.text.includes('\n')) ||
           child.type === 'inline-math'
       )
     ) {
-      const splitted = children.flatMap((child) => {
+      // TODO: needs type declaration
+      const splitted = children.flatMap((child: any) => {
         if (child.text && child.text.includes('\n')) {
-          const parts = child.text.split('\n').flatMap((text) => [
+          // TODO: needs type declaration
+          const parts = child.text.split('\n').flatMap((text: any) => [
             {
               text,
             },
@@ -249,12 +258,15 @@ export function convert(node) {
         }
         return child
       })
-      let current = []
-      const result = []
+      // TODO: needs type declaration
+      let current: any[] = []
+      // TODO: needs type declaration
+      const result: any[] = []
       if (splitted[0] === '##break##') splitted.shift()
       if (splitted[splitted.length - 1] !== '##break##')
         splitted.push('##break##')
-      splitted.forEach((el) => {
+      // TODO: needs type declaration
+      splitted.forEach((el: any) => {
         if (el === '##break##') {
           result.push({
             type: 'p',
@@ -269,29 +281,36 @@ export function convert(node) {
     }
     // compat: extract math formulas
     const math = children.filter(
-      (child) => child.type === 'math' || child.type === 'inline-math'
+      // TODO: needs type declaration
+      (child: any) => child.type === 'math' || child.type === 'inline-math'
     )
     if (math.length >= 1) {
       if (
         children.every(
-          (child) =>
+          // TODO: needs type declaration
+          (child: any) =>
             child.type === 'math' ||
             child.type === 'inline-math' ||
             child.text === ''
         )
       ) {
-        return children
-          .filter(
-            (child) => child.type === 'math' || child.type === 'inline-math'
-          )
-          .map((mathChild) => {
-            return {
-              type: 'math',
-              formula: mathChild.formula,
-              alignLeft: true, // caveat: this differs from existing presentation
-              children: [{ text: '' }],
-            }
-          })
+        return (
+          children
+            .filter(
+              // TODO: needs type declaration
+              (child: any) =>
+                child.type === 'math' || child.type === 'inline-math'
+            )
+            // TODO: needs type declaration
+            .map((mathChild: any) => {
+              return {
+                type: 'math',
+                formula: mathChild.formula,
+                alignLeft: true, // caveat: this differs from existing presentation
+                children: [{ text: '' }],
+              }
+            })
+        )
       }
     }
     return [
@@ -366,7 +385,8 @@ export function convert(node) {
     const children = convert(node.children)
     if (
       children.filter(
-        (child) =>
+        // TODO: needs type declaration
+        (child: any) =>
           child.type === 'inline-math' ||
           child.type === 'a' ||
           child.text !== undefined

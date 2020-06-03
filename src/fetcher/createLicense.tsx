@@ -1,6 +1,7 @@
 const excludeLicense = ['Exercise', 'GroupedExercise', 'ExerciseGroup']
 
-export function createLicense(uuid) {
+// TODO: needs type declaration
+export function createLicense(uuid: any) {
   if (!excludeLicense.includes(uuid.__typename) && uuid.license) {
     return uuid.license
   }

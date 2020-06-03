@@ -1,6 +1,8 @@
-export const extractLinks = (arr, links) => {
+// TODO: needs type declaration
+export const extractLinks = (arr: any, links: any) => {
   if (!arr) return []
-  arr.forEach((obj) => {
+  // TODO: needs type declaration
+  arr.forEach((obj: any) => {
     if (obj.type === 'a') {
       if (!/^\/[\d]+$/.test(obj.href)) return
       const id = parseInt(obj.href.substring(1))

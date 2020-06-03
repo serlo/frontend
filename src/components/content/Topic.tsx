@@ -72,8 +72,10 @@ export default function Topic({ data, contentId }: TopicProps) {
           <HeadlineLink href={data.url}>{data.title}</HeadlineLink>
         </h2>
       )}
-      <Wrapper purpose={data.purpose}>
-        <Overview purpose={data.purpose}>
+      {/* TODO: semantic error since purpose could be undefined */}
+      <Wrapper purpose={data.purpose!}>
+        {/* TODO: semantic error since purpose could be undefined */}
+        <Overview purpose={data.purpose!}>
           {data.description && renderArticle(data.description.children)}
         </Overview>
         {data.children &&
@@ -83,7 +85,8 @@ export default function Topic({ data, contentId }: TopicProps) {
             </React.Fragment>
           ))}
         {data.exercises &&
-          data.exercises.map((exercise, i) => (
+          // TODO: needs type declaration
+          data.exercises.map((exercise: any, i: any) => (
             <React.Fragment key={i}>
               {renderArticle(exercise.children)}
             </React.Fragment>

@@ -3,7 +3,8 @@ import { convertLegacyState } from '../schema/convertLegacyState'
 import { convertEdtrioState } from '../schema/convertEdtrioState'
 import { TopicPurposes } from '../components/content/Topic'
 
-export function createData(uuid) {
+// TODO: needs type declaration
+export function createData(uuid: any) {
   const type = uuid.__typename
 
   if (type === 'Page' && uuid.currentRevision) {
@@ -38,7 +39,8 @@ export function createData(uuid) {
   }
 }
 
-function createPage(uuid) {
+// TODO: needs type declaration
+function createPage(uuid: any) {
   return {
     title: uuid.currentRevision.title,
     value: convertState(uuid.currentRevision.content),
@@ -46,7 +48,8 @@ function createPage(uuid) {
   }
 }
 
-function createArticle(uuid) {
+// TODO: needs type declaration
+function createArticle(uuid: any) {
   return {
     title: uuid.currentRevision.title,
     value: convertState(uuid.currentRevision.content),
@@ -56,7 +59,8 @@ function createArticle(uuid) {
   }
 }
 
-function createVideo(uuid) {
+// TODO: needs type declaration
+function createVideo(uuid: any) {
   return {
     title: uuid.currentRevision.title,
     value: {
@@ -72,7 +76,8 @@ function createVideo(uuid) {
   }
 }
 
-function createExercise(uuid, index?) {
+// TODO: needs type declaration
+function createExercise(uuid: any, index?: any) {
   return {
     value: {
       children: [
@@ -91,7 +96,8 @@ function createExercise(uuid, index?) {
   }
 }
 
-function createApplet(uuid) {
+// TODO: needs type declaration
+function createApplet(uuid: any) {
   return {
     value: {
       children: [
@@ -109,10 +115,13 @@ function createApplet(uuid) {
   }
 }
 
-function createExerciseGroup(uuid, pageIndex?) {
-  const children = []
+// TODO: needs type declaration
+function createExerciseGroup(uuid: any, pageIndex?: any) {
+  // TODO: needs type declaration
+  const children: any[] = []
   if (uuid.exercises?.length > 0) {
-    uuid.exercises.forEach(function (exercise, groupIndex) {
+    // TODO: needs type declaration
+    uuid.exercises.forEach(function (exercise: any, groupIndex: any) {
       if (!exercise.currentRevision) return
       children.push({
         type: 'exercise',
@@ -144,22 +153,28 @@ function createExerciseGroup(uuid, pageIndex?) {
   }
 }
 
-function createCoursePage(uuid) {
+// TODO: needs type declaration
+function createCoursePage(uuid: any) {
   return {
     value: convertState(uuid.currentRevision.content),
     title: uuid.currentRevision.title,
-    pages: uuid.course?.pages?.filter((page) => page.currentRevision !== null),
+    // TODO: needs type declaration
+    pages: uuid.course?.pages?.filter(
+      (page: any) => page.currentRevision !== null
+    ),
     courseTitle: uuid.course?.currentRevision?.title,
   }
 }
 
-function createEvent(uuid) {
+// TODO: needs type declaration
+function createEvent(uuid: any) {
   return {
     value: convertState(uuid.currentRevision.content),
   }
 }
 
-function convertState(raw) {
+// TODO: needs type declaration
+function convertState(raw: any) {
   if (raw?.startsWith('[')) {
     // legacy
     const legacyHTML = render(raw)
@@ -173,7 +188,8 @@ function convertState(raw) {
   }
 }
 
-function createTaxonomyTerm(uuid) {
+// TODO: needs type declaration
+function createTaxonomyTerm(uuid: any) {
   const children = uuid.children?.filter(isActive)
 
   return {
@@ -193,11 +209,13 @@ function createTaxonomyTerm(uuid) {
   }
 }
 
-function isActive(child) {
+// TODO: needs type declaration
+function isActive(child: any) {
   return child.trashed === false && child.__typename !== 'UnsupportedUuid'
 }
 
-function buildDescription(description) {
+// TODO: needs type declaration
+function buildDescription(description: any) {
   const state = description ? convertState(description) : undefined
   if (state) {
     if (
@@ -211,83 +229,109 @@ function buildDescription(description) {
   }
 }
 
-function collectType(children, typename) {
-  return children
-    .filter(
-      (child) =>
-        child.__typename === typename && child.alias && child.currentRevision
-    )
-    .map((child) => {
-      return { title: child.currentRevision.title, url: child.alias }
-    })
+// TODO: needs type declaration
+function collectType(children: any, typename: any) {
+  return (
+    children
+      .filter(
+        // TODO: needs type declaration
+        (child: any) =>
+          child.__typename === typename && child.alias && child.currentRevision
+      )
+      // TODO: needs type declaration
+      .map((child: any) => {
+        return { title: child.currentRevision.title, url: child.alias }
+      })
+  )
 }
 
-function collectTopicFolders(children) {
-  return children
-    .filter(
-      (child) =>
-        child.__typename === 'TaxonomyTerm' && child.type.includes('opicFolder')
-    )
-    .map((child) => {
-      return { title: child.name, url: child.alias ?? '/' + child.id }
-    })
+// TODO: needs type declaration
+function collectTopicFolders(children: any) {
+  return (
+    children
+      .filter(
+        // TODO: needs type declaration
+        (child: any) =>
+          child.__typename === 'TaxonomyTerm' &&
+          child.type.includes('opicFolder')
+      )
+      // TODO: needs type declaration
+      .map((child: any) => {
+        return { title: child.name, url: child.alias ?? '/' + child.id }
+      })
+  )
 }
 
-function collectExercises(children) {
-  return children
-    .filter(
-      (child) =>
-        ['Exercise', 'ExerciseGroup', 'GroupedExercise'].includes(
-          child.__typename
-        ) && child.currentRevision
-    )
-    .map((child, index) => {
-      if (
-        child.__typename === 'Exercise' ||
-        child.__typename === 'GroupedExercise'
-      ) {
-        return createExercise(child, index).value
-      }
-      if (child.__typename === 'ExerciseGroup') {
-        return createExerciseGroup(child, index).value
-      }
-    })
+// TODO: needs type declaration
+function collectExercises(children: any) {
+  return (
+    children
+      .filter(
+        // TODO: needs type declaration
+        (child: any) =>
+          ['Exercise', 'ExerciseGroup', 'GroupedExercise'].includes(
+            child.__typename
+          ) && child.currentRevision
+      )
+      // TODO: needs type declaration
+      .map((child: any, index: any) => {
+        if (
+          child.__typename === 'Exercise' ||
+          child.__typename === 'GroupedExercise'
+        ) {
+          return createExercise(child, index).value
+        }
+        if (child.__typename === 'ExerciseGroup') {
+          return createExerciseGroup(child, index).value
+        }
+      })
+  )
 }
 
-function collectNestedTaxonomyTerms(children) {
-  return children
-    .filter(
-      (child) =>
-        child.__typename === 'TaxonomyTerm' &&
-        !child.type.includes('opicFolder')
-    )
-    .map((child) => {
-      const subchildren = child.children?.filter(isActive)
-      return {
-        title: child.name,
-        url: child.alias,
-        description: buildDescription(child.description),
-        purpose: TopicPurposes.overview,
-        links: {
-          articles: collectType(subchildren, 'Article'),
-          exercises: collectTopicFolders(subchildren),
-          videos: collectType(subchildren, 'Video'),
-          applets: collectType(subchildren, 'Applet'),
-          courses: collectType(subchildren, 'Course'),
-          subfolders: collectSubfolders(subchildren),
-        },
-      }
-    })
+// TODO: needs type declaration
+function collectNestedTaxonomyTerms(children: any) {
+  return (
+    children
+      .filter(
+        // TODO: needs type declaration
+        (child: any) =>
+          child.__typename === 'TaxonomyTerm' &&
+          !child.type.includes('opicFolder')
+      )
+      // TODO: needs type declaration
+      .map((child: any) => {
+        const subchildren = child.children?.filter(isActive)
+        return {
+          title: child.name,
+          url: child.alias,
+          description: buildDescription(child.description),
+          purpose: TopicPurposes.overview,
+          links: {
+            articles: collectType(subchildren, 'Article'),
+            exercises: collectTopicFolders(subchildren),
+            videos: collectType(subchildren, 'Video'),
+            applets: collectType(subchildren, 'Applet'),
+            courses: collectType(subchildren, 'Course'),
+            subfolders: collectSubfolders(subchildren),
+          },
+        }
+      })
+  )
 }
 
-function collectSubfolders(children) {
-  return children
-    .filter(
-      (child) =>
-        child.__typename === 'TaxonomyTerm' &&
-        !child.type.includes('opicFolder')
-    )
-    .map((child) => {
-      return { title: child.name, url: child.alias ?? '/' + child.id }
-    })
+// TODO: needs type declaration
+function collectSubfolders(children: any) {
+  return (
+    children
+      .filter(
+        // TODO: needs type declaration
+        (child: any) =>
+          child.__typename === 'TaxonomyTerm' &&
+          !child.type.includes('opicFolder')
+      )
+      // TODO: needs type declaration
+      .map((child: any) => {
+        return { title: child.name, url: child.alias ?? '/' + child.id }
+      })
+  )
 }

@@ -5,7 +5,8 @@ export function convertLegacyState(html: string) {
   return { children: convert(dom) }
 }
 
-function convert(node) {
+// TODO: needs type declaration
+function convert(node: any): any {
   if (!node) {
     console.log('l: empty node, ignoring')
     return []
@@ -39,10 +40,16 @@ function convert(node) {
         if (/^c[\d]+$/.test(className)) {
           let children = convert(node.children)
           if (children.length === 0) {
-            children = [{ type: 'p', children: [{ text: '' }] }]
+            children = [
+              {
+                type: 'p',
+                children: [{ text: '' }],
+              },
+            ]
           }
           // compat: wrap every inline child in p, grouped
-          children = children.reduce((acc, val) => {
+          // TODO: needs type declaration
+          children = children.reduce((acc: any, val: any) => {
             if (
               val.type === 'inline-math' ||
               val.type === 'a' ||
@@ -56,7 +63,10 @@ function convert(node) {
                 last.children.push(val)
                 return acc
               } else {
-                acc.push({ type: 'p', children: [val] })
+                acc.push({
+                  type: 'p',
+                  children: [val],
+                })
                 return acc
               }
             } else {
@@ -179,15 +189,20 @@ function convert(node) {
         return []
       }
       // compat: unwrap images from p
-      if (children.some((child) => child.type === 'img')) {
+      // TODO: needs type declaration
+      if (children.some((child: any) => child.type === 'img')) {
         return children
       }
       // compat: unwrap formulas from p
-      const maths = children.filter((child) => child.type === 'math')
+      // TODO: needs type declaration
+      const maths = children.filter((child: any) => child.type === 'math')
       if (maths.length >= 1) {
-        let current = []
-        const result = []
-        children.forEach((child) => {
+        // TODO: needs type declaration
+        let current: any[] = []
+        // TODO: needs type declaration
+        const result: any[] = []
+        // TODO: needs type declaration
+        children.forEach((child: any) => {
           if (child.type === 'math') {
             if (current.length > 0) {
               result.push({
@@ -211,12 +226,14 @@ function convert(node) {
       }
       // compat: convert single inline-math in paragraph to block formula
       const inlineMaths = children.filter(
-        (child) => child.type === 'inline-math'
+        // TODO: needs type declaration
+        (child: any) => child.type === 'inline-math'
       )
       if (inlineMaths.length === 1) {
         if (
           children.every(
-            (child) =>
+            // TODO: needs type declaration
+            (child: any) =>
               child.type === 'inline-math' ||
               (child.text !== undefined && child.text.trim() == '')
           )
@@ -252,7 +269,8 @@ function convert(node) {
     if (node.name === 'ul' || node.name == 'ol') {
       let children = convert(node.children)
       // compat: remove whitespace around list items
-      children = children.filter((child) => {
+      // TODO: needs type declaration
+      children = children.filter((child: any) => {
         if (child.text && child.text.trim() === '') {
           return false
         }
@@ -270,7 +288,8 @@ function convert(node) {
       let children = convert(node.children)
       if (
         children.filter(
-          (child) =>
+          // TODO: needs type declaration
+          (child: any) =>
             child.text === undefined &&
             child.type !== 'a' &&
             child.type !== 'inline-math'
@@ -392,13 +411,15 @@ function convert(node) {
     }
     if (node.name === 'strong') {
       const children = convert(node.children)
-      return makeFormat(children, (child) => {
+      // TODO: needs type declaration
+      return makeFormat(children, (child: any) => {
         child.strong = true
       })
     }
     if (node.name === 'em') {
       const children = convert(node.children)
-      return makeFormat(children, (child) => {
+      // TODO: needs type declaration
+      return makeFormat(children, (child: any) => {
         child.em = true
       })
     }
@@ -447,7 +468,8 @@ function convert(node) {
       .join('<')
       .split('&amp;')
       .join('&')
-      .replace(/&#(\d+);/g, function (match, dec) {
+      // TODO: needs type declaration
+      .replace(/&#(\d+);/g, function (match: any, dec: any) {
         return String.fromCharCode(dec)
       })
     // compat: remove empty text
@@ -459,8 +481,10 @@ function convert(node) {
   return []
 }
 
-function makeFormat(array, fn) {
-  return array.map((child) => {
+// TODO: needs type declaration
+function makeFormat(array: any, fn: any) {
+  // TODO: needs type declaration
+  return array.map((child: any) => {
     if (child.text !== undefined) {
       fn(child)
     }

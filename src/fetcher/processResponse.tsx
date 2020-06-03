@@ -14,9 +14,9 @@ interface ReqData {
 interface ProcessedResponse {
   contentType: string
   title: string
-  breadcrumbs
+  breadcrumbs: any // TODO:
   navigation: object
-  data: any //todo
+  data: any // TODO:
   license: string
   horizonIndices: Array<object>
 }
@@ -33,7 +33,8 @@ export function processResponse(reqData: ReqData): ProcessedResponse {
   }
 }
 
-function shuffle(a) {
+// TODO:
+function shuffle(a: any[]) {
   let j, x, i
   for (i = a.length - 1; i > 0; i--) {
     const r = Math.random()

@@ -1,7 +1,10 @@
 import styled from 'styled-components'
 import { makeMargin } from '../../helper/csshelper'
 
-export default function Code({ content }) {
+// TODO: needs type declaration
+type CodeProps = any
+
+export default function Code({ content }: CodeProps) {
   return (
     <Pre>
       <code>{content}</code>

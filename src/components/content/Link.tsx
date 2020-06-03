@@ -3,14 +3,18 @@ import StyledA from '../tags/StyledA'
 import ExternalLink from './ExternalLink'
 import PrettyLinksContext from '../PrettyLinksContext'
 
-const nowrap = (comp) => comp
+// TODO: needs type declaration
+const nowrap = (comp: any) => comp
+
+// TODO: needs type declaration
+type LinkProps = any
 
 export default function Link({
   element,
   attributes = {},
   children = null,
   wrapExtInd = nowrap,
-}) {
+}: LinkProps) {
   if (!element.href)
     return <React.Fragment {...attributes}>{children}</React.Fragment>
 
