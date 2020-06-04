@@ -25,22 +25,22 @@ import { horizonData } from '@/data/horizon'
 import { renderArticle } from '@/schema/article-renderer'
 
 const MetaMenu = dynamic<MetaMenuProps>(() =>
-  import('@/components/navigation/meta-menu').then(mod => mod.MetaMenu)
+  import('@/components/navigation/meta-menu').then((mod) => mod.MetaMenu)
 )
 const Breadcrumbs = dynamic<BreadcrumbsProps>(() =>
-  import('@/components/navigation/breadcrumbs').then(mod => mod.Breadcrumbs)
+  import('@/components/navigation/breadcrumbs').then((mod) => mod.Breadcrumbs)
 )
 const Topic = dynamic<TopicProps>(() =>
-  import('@/components/content/topic').then(mod => mod.Topic)
+  import('@/components/content/topic').then((mod) => mod.Topic)
 )
 
 const NewsletterPopup = dynamic<{}>(
   () =>
     import('@/components/scripts/newsletter-popup').then(
-      mod => mod.NewsletterPopup
+      (mod) => mod.NewsletterPopup
     ),
   {
-    ssr: false
+    ssr: false,
   }
 )
 
@@ -58,7 +58,7 @@ function PageView(props: PageViewProps) {
     title,
     navigation,
     license,
-    prettyLinks
+    prettyLinks,
   } = data
 
   const showNav =
@@ -157,17 +157,17 @@ const MaxWidthDiv = styled.div<{ showNav?: boolean }>`
   max-width: 800px;
   margin: 0 auto;
 
-  @media (min-width: ${props =>
-      props.theme.breakpoints.sm}) AND (max-width: ${props =>
+  @media (min-width: ${(props) =>
+      props.theme.breakpoints.sm}) AND (max-width: ${(props) =>
       props.theme.breakpoints.md}) {
     margin: 0 0 0 51px;
   }
 
-  ${props =>
+  ${(props) =>
     props.showNav &&
     css`
-      @media (min-width: ${props =>
-          props.theme.breakpoints.md}) AND (max-width: ${props =>
+      @media (min-width: ${(props) =>
+          props.theme.breakpoints.md}) AND (max-width: ${(props) =>
           props.theme.breakpoints.lg}) {
         margin: 0 0 0 200px;
       }
@@ -175,7 +175,7 @@ const MaxWidthDiv = styled.div<{ showNav?: boolean }>`
 `
 
 const StyledIcon = styled(FontAwesomeIcon)`
-  color: ${props => props.theme.colors.lighterblue};
+  color: ${(props) => props.theme.colors.lighterblue};
   font-size: 1.73rem;
 `
 
@@ -189,7 +189,9 @@ const StyledIcon = styled(FontAwesomeIcon)`
 // -> You can not use getInitialProps with getServerSideProps. Please remove getInitialProps. /[...slug]
 
 // TODO: needs type declaration
-export const getServerSideProps: GetServerSideProps<any, any> = async props => {
+export const getServerSideProps: GetServerSideProps<any, any> = async (
+  props
+) => {
   const { origin } = absoluteUrl(props.req)
   const res = await fetch(
     `${origin}/api/frontend/${encodeURIComponent(
@@ -202,7 +204,7 @@ export const getServerSideProps: GetServerSideProps<any, any> = async props => {
     props.res.writeHead(301, {
       Location: encodeURI(data.redirect),
       // Add the content-type for SEO considerations
-      'Content-Type': 'text/html; charset=utf-8'
+      'Content-Type': 'text/html; charset=utf-8',
     })
     props.res.end()
     // compat: return empty props

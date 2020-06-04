@@ -16,11 +16,13 @@ import { renderArticle } from '@/schema/article-renderer'
 
 const CourseNavigation = dynamic<CourseNavigationProps>(() =>
   import('@/components/navigation/course-navigation').then(
-    mod => mod.CourseNavigation
+    (mod) => mod.CourseNavigation
   )
 )
 const CourseFooter = dynamic<CourseFooterProps>(() =>
-  import('@/components/navigation/course-footer').then(mod => mod.CourseFooter)
+  import('@/components/navigation/course-footer').then(
+    (mod) => mod.CourseFooter
+  )
 )
 
 // TODO: needs type declaration
@@ -29,7 +31,7 @@ type ArticlePageProps = any
 export function ArticlePage({
   data,
   contentId,
-  contentType
+  contentType,
 }: ArticlePageProps) {
   const [open, setOpen] = React.useState(false)
 
@@ -47,7 +49,7 @@ export function ArticlePage({
     1 +
       // TODO: any type annotation not needed anymore after we defined ArticlePageProps
       (data.pages as any[]).findIndex(
-        page => page.currentRevision.title === data.title
+        (page) => page.currentRevision.title === data.title
       )!
   const nextCoursePageHref =
     isCoursePage &&
@@ -108,6 +110,6 @@ export function ArticlePage({
 }
 
 const StyledIcon = styled(FontAwesomeIcon)`
-  color: ${props => props.theme.colors.lighterblue};
+  color: ${(props) => props.theme.colors.lighterblue};
   font-size: 1.73rem;
 `

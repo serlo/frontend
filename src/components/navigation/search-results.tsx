@@ -24,9 +24,9 @@ const SearchResultsWrap = styled.div`
     box-shadow: none;
 
     width: 96%;
-    left: ${props => props.theme.defaults.sideSpacingMobile};
+    left: ${(props) => props.theme.defaults.sideSpacingMobile};
 
-    @media (min-width: ${props => props.theme.breakpoints.sm}) {
+    @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
       > div {
         max-width: 800px;
         margin: 0 auto;
@@ -37,7 +37,7 @@ const SearchResultsWrap = styled.div`
   .gsc-modal-background-image {
     opacity: 1;
     top: 195px;
-    @media (min-width: ${props => props.theme.breakpoints.sm}) {
+    @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
       top: 190px;
     }
   }
@@ -51,14 +51,14 @@ const SearchResultsWrap = styled.div`
       content: 'Custom Search';
       font-weight: bold;
       display: block;
-      color: ${props => props.theme.colors.brand};
+      color: ${(props) => props.theme.colors.brand};
       width: 100%;
       padding: 10px 0;
       background: url('//www.google.com/cse/static/images/1x/googlelogo_lightgrey_46x16dp.png')
         left center no-repeat;
       text-indent: 50px;
 
-      @media (min-width: ${props => props.theme.breakpoints.sm}) {
+      @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
         max-width: 800px;
         margin: 0 auto;
       }

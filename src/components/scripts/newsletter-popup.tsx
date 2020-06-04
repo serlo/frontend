@@ -35,7 +35,7 @@ const pages = [
   '/software',
   '/team',
   '/transparenz',
-  '/wirkung'
+  '/wirkung',
 ]
 
 export function NewsletterPopup() {

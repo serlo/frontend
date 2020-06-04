@@ -19,7 +19,7 @@ export function Link({
   element,
   attributes = {},
   children = null,
-  wrapExtInd = nowrap
+  wrapExtInd = nowrap,
 }: LinkProps) {
   const prettyLinks = React.useContext(PrettyLinksContext)
 

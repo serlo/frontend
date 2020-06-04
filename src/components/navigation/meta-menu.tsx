@@ -53,10 +53,10 @@ export function MetaMenu(props: MetaMenuProps) {
 }
 
 const MetaMenuWrapper = styled.nav`
-  @media (min-width: ${props => props.theme.breakpoints.md}) {
+  @media (min-width: ${(props) => props.theme.breakpoints.md}) {
     position: absolute;
     z-index: 2;
-    left: ${props => props.theme.defaults.sideSpacingMobile};
+    left: ${(props) => props.theme.defaults.sideSpacingMobile};
 
     width: 170px;
     margin-right: 30px;
@@ -65,7 +65,7 @@ const MetaMenuWrapper = styled.nav`
 
   @media (min-width: 1300px) {
     width: 200px;
-    left: ${props => props.theme.defaults.sideSpacingLg};
+    left: ${(props) => props.theme.defaults.sideSpacingLg};
   }
 `
 
@@ -73,7 +73,7 @@ const List = styled.ul`
   list-style-type: none;
   padding: 0;
 
-  @media (max-width: ${props => props.theme.breakpoints.md}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.md}) {
     font-size: 0.9rem;
 
     margin: 20px 8px;
@@ -88,7 +88,7 @@ const List = styled.ul`
       display: inline-block;
     }
 
-    border: 1px solid ${props => props.theme.colors.lightBlueBackground};
+    border: 1px solid ${(props) => props.theme.colors.lightBlueBackground};
   }
 `
 
@@ -99,14 +99,14 @@ interface LinkProps {
 }
 
 const Link = styled.a<LinkProps>`
-  @media (max-width: ${props => props.theme.breakpoints.md}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.md}) {
     text-decoration: none;
     padding: 18px 7px;
     display: inline-block;
     font-weight: bold;
-    color: ${props => props.theme.colors.brand};
+    color: ${(props) => props.theme.colors.brand};
 
-    ${props =>
+    ${(props) =>
       props.spacer &&
       css`
         border-right: ${props.lastChild
@@ -117,40 +117,41 @@ const Link = styled.a<LinkProps>`
         padding-right: ${props.lastChild ? '20px' : '0'};
       `};
   }
-  @media (min-width: ${props => props.theme.breakpoints.md}) {
-    display: ${props => (props.spacer ? 'none' : 'block')};
+  @media (min-width: ${(props) => props.theme.breakpoints.md}) {
+    display: ${(props) => (props.spacer ? 'none' : 'block')};
     padding-bottom: 14px;
   }
 `
 
 const ButtonStyle = styled.span<{ active?: boolean }>`
-  ${props =>
+  ${(props) =>
     props.active &&
     css`
       &,
       &:hover,
       ${Link}:hover & {
         color: #333;
-        @media (min-width: ${props => props.theme.breakpoints.md}) {
-          background-color: ${props => props.theme.colors.lightBlueBackground};
+        @media (min-width: ${(props) => props.theme.breakpoints.md}) {
+          background-color: ${(props) =>
+            props.theme.colors.lightBlueBackground};
         }
       }
     `};
 
-  @media (min-width: ${props => props.theme.breakpoints.md}) {
+  @media (min-width: ${(props) => props.theme.breakpoints.md}) {
     ${makeDefaultButton}
     font-weight: bold;
     padding: 3px 7px;
     border-radius: 12px;
     ${Link}:hover & {
       color: #fff;
-      background-color: ${props => props.theme.colors.brand};
+      background-color: ${(props) => props.theme.colors.brand};
     }
   }
 `
 
 const StyledGradient = styled.div`
-  @media (max-width: ${props => props.theme.breakpoints.md}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.md}) {
     position: absolute;
     pointer-events: none;
     right: 9px;

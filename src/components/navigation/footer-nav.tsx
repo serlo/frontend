@@ -54,7 +54,7 @@ export function FooterNav(props: NavProps) {
 
 const FooterNavGrid = styled.div`
   padding: 8px 0 40px;
-  background-color: ${props => props.theme.colors.lightBackground};
+  background-color: ${(props) => props.theme.colors.lightBackground};
 `
 
 const FooterNavContainer = styled.div`
@@ -67,17 +67,17 @@ const ColWithPadding = styled.div`
   padding: 0;
   ${makeResponsivePadding}
   box-sizing: border-box;
-  @media (min-width: ${props => props.theme.breakpoints.md}) {
+  @media (min-width: ${(props) => props.theme.breakpoints.md}) {
     flex-grow: 1;
     flex-basis: 0;
   }
-  @media (max-width: ${props =>
-      props.theme.breakpoints.md}) and (min-width: ${props =>
+  @media (max-width: ${(props) =>
+      props.theme.breakpoints.md}) and (min-width: ${(props) =>
       props.theme.breakpoints.sm}) {
     flex-basis: 50%;
     max-width: 50%;
   }
-  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
     flex-basis: 100%;
     max-width: 100%;
   }
@@ -86,7 +86,7 @@ const ColWithPadding = styled.div`
 const CategoryHeader = styled.h3`
   font-size: 1rem;
   margin-bottom: 8px;
-  color: ${props => lighten(0.05, props.theme.colors.dark1)};
+  color: ${(props) => lighten(0.05, props.theme.colors.dark1)};
 `
 
 const NavList = styled.ul`
@@ -101,14 +101,14 @@ const NavLi = styled.li`
 
   &:after {
     content: ' • ';
-    color: ${props => lighten(0.2, props.theme.colors.dark1)};
+    color: ${(props) => lighten(0.2, props.theme.colors.dark1)};
     margin-right: 6px;
   }
   &:last-child:after {
     content: '';
   }
 
-  @media (min-width: ${props => props.theme.breakpoints.sm}) {
+  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
     display: block;
     margin-top: 2px;
 
@@ -120,31 +120,31 @@ const NavLi = styled.li`
 `
 
 const NavLink = styled.a`
-  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
     display: inline-block;
     padding: 8px 0;
   }
-  color: ${props => lighten(0.15, props.theme.colors.dark1)};
+  color: ${(props) => lighten(0.15, props.theme.colors.dark1)};
   text-decoration: none;
   border-bottom: 2px solid transparent;
 
   &:focus {
     text-decoration: none;
-    color: ${props => lighten(0.1, props.theme.colors.dark1)};
+    color: ${(props) => lighten(0.1, props.theme.colors.dark1)};
   }
 
   &:hover,
   &:active {
-    color: ${props => props.theme.colors.black};
+    color: ${(props) => props.theme.colors.black};
     text-decoration: underline;
     border-bottom: 2px solid transparent;
   }
 
-  @media (min-width: ${props => props.theme.breakpoints.sm}) {
+  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
     &:hover,
     &:active {
       border-bottom: 2px solid
-        ${props => lighten(0.2, props.theme.colors.black)};
+        ${(props) => lighten(0.2, props.theme.colors.black)};
       text-decoration: none;
     }
   }

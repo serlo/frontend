@@ -43,14 +43,14 @@ export function LandingAbout() {
 
 const TextCol = styled.div`
   min-height: 35vw;
-  background-color: ${props => props.theme.colors.brand};
+  background-color: ${(props) => props.theme.colors.brand};
   font-size: 1.125rem;
   color: #fff;
   ${makeResponsivePadding}
   padding-top: 30px;
   padding-bottom: 45px;
 
-  @media (min-width: ${props => props.theme.breakpoints.md}) {
+  @media (min-width: ${(props) => props.theme.breakpoints.md}) {
     /* should be same ratio as footer, for some reason that's not working as expected, so this is good enough for now: */
     width: 100%;
     ${makeResponsivePadding}
@@ -63,7 +63,7 @@ const TextCol = styled.div`
 const AboutCol = styled.div`
   display: none;
 
-  @media (min-width: ${props => props.theme.breakpoints.md}) {
+  @media (min-width: ${(props) => props.theme.breakpoints.md}) {
     min-height: 450px;
     width: 100%;
     background-repeat: no-repeat;
@@ -75,7 +75,7 @@ const AboutCol = styled.div`
     display: flex;
   }
 
-  @media (min-width: ${props => props.theme.breakpoints.md}) {
+  @media (min-width: ${(props) => props.theme.breakpoints.md}) {
     background-image: url('/_assets/img/serlo-learning-lg.jpg');
   }
 `
@@ -88,10 +88,10 @@ const AboutButton = styled.a`
   padding-bottom: 3px;
   color: #fff;
   font-weight: bold;
-  background-color: ${props => props.theme.colors.lightblue};
+  background-color: ${(props) => props.theme.colors.lightblue};
 
   &:hover {
-    color: ${props => props.theme.colors.brand};
+    color: ${(props) => props.theme.colors.brand};
     background-color: #fff;
   }
 `

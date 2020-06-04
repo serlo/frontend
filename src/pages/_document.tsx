@@ -4,7 +4,7 @@ import Document, {
   Head,
   Main,
   NextScript,
-  DocumentContext
+  DocumentContext,
 } from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
 
@@ -12,15 +12,15 @@ import { GoogleAnalytics } from '@/components/scripts/google-analytics'
 
 const bodyStyles = {
   margin: 0,
-  fontFamily: 'Karmilla, sans-serif'
+  fontFamily: 'Karmilla, sans-serif',
 }
 
 if (process.env.NEXT_PUBLIC_SENTRY_DSN !== undefined) {
-  process.on('unhandledRejection', err => {
+  process.on('unhandledRejection', (err) => {
     Sentry.captureException(err)
   })
 
-  process.on('uncaughtException', err => {
+  process.on('uncaughtException', (err) => {
     Sentry.captureException(err)
   })
 }
@@ -33,7 +33,8 @@ export default class MyDocument extends Document {
     try {
       ctx.renderPage = () =>
         originalRenderPage({
-          enhanceApp: App => props => sheet.collectStyles(<App {...props} />)
+          enhanceApp: (App) => (props) =>
+            sheet.collectStyles(<App {...props} />),
         })
 
       const initialProps = await Document.getInitialProps(ctx)
@@ -44,7 +45,7 @@ export default class MyDocument extends Document {
             {initialProps.styles}
             {sheet.getStyleElement()}
           </>
-        )
+        ),
       }
     } finally {
       sheet.seal()
