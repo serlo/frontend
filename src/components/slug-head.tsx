@@ -1,5 +1,6 @@
 import Head from 'next/head'
 
+//TODO: define and export data types somewhere
 interface SlugHeadProps {
   contentType: string
   data: {
@@ -55,7 +56,7 @@ export function SlugHead({ contentType, data, title, origin }: SlugHeadProps) {
     const regexp = /"text":"(.)*?"/g
     const matches = stringified.match(regexp)
     const longFallback = matches
-      ? matches.map((str) => str.substring(8, str.length - 1)).join('')
+      ? matches.map(str => str.substring(8, str.length - 1)).join('')
       : ''
     if (longFallback.length < 50) return false
 
