@@ -85,11 +85,7 @@ function Entry({
       {open && children ? (
         <>
           {children.map((entry, index) => (
-            <Entry
-              {...entry}
-              isChild
-              key={`${index}--${childKey !== undefined ? childKey : ''}`}
-            />
+            <Entry {...entry} isChild key={`${index}--${childKey}`} />
           ))}{' '}
           <Seperator />
         </>
