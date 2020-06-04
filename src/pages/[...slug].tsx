@@ -114,7 +114,7 @@ function PageView(props: PageViewProps) {
               )}
               {(contentType === 'Video' || contentType === 'Applet') && (
                 <>
-                  <StyledH1 displayMode>
+                  <StyledH1 extraMarginTop>
                     {data.data.title}
                     <span title={contentType}>
                       {' '}

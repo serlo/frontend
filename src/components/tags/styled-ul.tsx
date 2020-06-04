@@ -7,8 +7,8 @@ interface StyledUlProps {
 }
 
 export const StyledUl = styled.ul<StyledUlProps>`
-  ${(props) => (props.fullWidth ? '' : makeMargin(props))}
-  margin-bottom: ${(props) => props.theme.spacing.mb.block};
+  ${props => (props.fullWidth ? '' : makeMargin(props))}
+  margin-bottom: ${props => props.theme.spacing.mb.block};
   margin-top: 0;
   padding-left: 20px;
   list-style-type: none;
@@ -16,7 +16,7 @@ export const StyledUl = styled.ul<StyledUlProps>`
   > li {
       &:before {
         position: absolute;
-        background-color: ${(props) => props.theme.colors.lighterblue};
+        background-color: ${props => props.theme.colors.lighterblue};
         width: 10px;
         height: 10px;
         content: ' ';
