@@ -36,7 +36,7 @@ export function NewsletterPopup() {
     '/software',
     '/team',
     '/transparenz',
-    '/wirkung',
+    '/wirkung'
   ]
 
   React.useEffect(() => {
@@ -66,7 +66,7 @@ export function NewsletterPopup() {
         document.body.appendChild(customScriptTag)
       }
     }
-  }, [])
+  }, [pages])
 
   return null
 }
