@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+
 import { makeMargin } from '@/helper/css'
 
 // fixed and modified version of https://github.com/ibrahimcesar/react-lite-youtube-embed
@@ -16,8 +17,8 @@ interface LiteYouTubeEmbedProps {
   wrapperClass?: string
 }
 
-const LiteYouTubeEmbed = ({
-  id = '',
+export const LiteYouTubeEmbed = ({
+  id,
   playlist = false,
   poster = 'hqdefault',
   title = 'YouTube Embed',
@@ -74,6 +75,8 @@ const LiteYouTubeEmbed = ({
       current.removeEventListener('pointerover', warmConnections)
       current.removeEventListener('click', addIframe)
     }
+  // Doesn't work correctly when videoId changes
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fallback])
 
   return (
@@ -110,8 +113,6 @@ const LiteYouTubeEmbed = ({
     </YouTubeWrapper>
   )
 }
-
-export default LiteYouTubeEmbed
 
 //moved static css to styledcomponents
 const YouTubeWrapper = styled.figure`
