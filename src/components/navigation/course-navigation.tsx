@@ -20,7 +20,7 @@ export interface CourseNavigationProps {
   pageTitle: string
   pages: CourseNavigationPagesProps[]
   open: boolean
-  opener: (e: React.MouseEvent<HTMLAnchorElement>) => void
+  onOverviewButtonClick: (e: React.MouseEvent<HTMLAnchorElement>) => void
 }
 
 export function CourseNavigation({
@@ -28,7 +28,7 @@ export function CourseNavigation({
   pageTitle,
   pages,
   open,
-  opener,
+  onOverviewButtonClick,
 }: CourseNavigationProps) {
   return (
     <Wrapper id="course-overview">
@@ -37,7 +37,6 @@ export function CourseNavigation({
       </CourseH1>
       {open ? (
         <StyledOl>
-          {/* TODO: needs type declaration */}
           {pages.map((page) => (
             <StyledLi key={page.alias}>
               <CourseA
@@ -54,7 +53,7 @@ export function CourseNavigation({
           ))}
         </StyledOl>
       ) : (
-        <Button onClick={opener}>
+        <Button onClick={onOverviewButtonClick}>
           <FontAwesomeIcon icon={faListUl} /> Kursübersicht anzeigen
         </Button>
       )}

@@ -120,7 +120,7 @@ export function ShareModal(props: ShareModalProps) {
   )
 }
 
-interface EntryProps {
+interface EntryData {
   title: string
   icon: IconDefinition
   href: string
@@ -128,13 +128,13 @@ interface EntryProps {
 }
 
 function buildButtons(
-  list: EntryProps[],
+  list: EntryData[],
   copyToClipboard: (
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
     text?: string
   ) => void
 ) {
-  return list.map((entry: EntryProps) => (
+  return list.map((entry: EntryData) => (
     <Button
       href={entry.href !== 'copy' ? entry.href : undefined}
       onClick={

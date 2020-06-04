@@ -30,7 +30,7 @@ export function MobileMenu(props: MobileMenuProps) {
   )
 }
 
-interface MobileMenuLink {
+interface EntryProps extends MobileMenuLink {
   childKey?: string
   isChild?: boolean
 }
@@ -38,11 +38,11 @@ interface MobileMenuLink {
 function Entry({
   url,
   title,
-  icon = undefined,
-  children = undefined,
-  childKey = undefined,
+  icon,
+  children,
+  childKey,
   isChild = false,
-}: MobileMenuLink) {
+}: EntryProps) {
   const [open, setOpen] = React.useState(false)
   return (
     <>
@@ -84,8 +84,7 @@ function Entry({
       </li>
       {open && children ? (
         <>
-          {/* TODO: needs type declaration */}
-          {children.map((entry: any, index: any) => (
+          {children.map((entry, index) => (
             <Entry {...entry} isChild key={`${index}--${childKey}`} />
           ))}{' '}
           <Seperator />

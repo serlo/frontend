@@ -63,8 +63,8 @@ const Code = dynamic<CodeProps>(() =>
   import('../components/content/code').then((mod) => mod.Code)
 )
 
-// TODO: this is definitely not the correct type.
-export function renderArticle(value: Node[], addCSS = true) {
+// TODO: this is probably not the correct type.
+export function renderArticle(value: React.ReactNodeArray, addCSS = true) {
   if (!value) return null
   const root = { children: value }
   const content = value.map((_, index) => render(root, [index]))
@@ -128,7 +128,7 @@ interface RenderLeafProps {
     strong?: boolean
   }
   attributes: any
-  children: any
+  children: React.ReactNode
   readonly?: boolean
 }
 

@@ -25,8 +25,12 @@ const CourseFooter = dynamic<CourseFooterProps>(() =>
   )
 )
 
-// TODO: needs type declaration
-type ArticlePageProps = any
+//TODO: define and export data types somewhere
+interface ArticlePageProps {
+  data: any
+  contentId: number
+  contentType: string
+}
 
 export function ArticlePage({
   data,
@@ -62,7 +66,7 @@ export function ArticlePage({
       {isCoursePage && (
         <CourseNavigation
           open={courseNavOpen}
-          opener={openCourseNav}
+          onOverviewButtonClick={openCourseNav}
           courseTitle={data.courseTitle}
           pageTitle={data.title}
           pages={data.pages}
@@ -84,7 +88,10 @@ export function ArticlePage({
       </ToolLine>
       {data.value && renderArticle(data.value.children)}
       {isCoursePage && (
-        <CourseFooter opener={openCourseNav} nextHref={nextCoursePageHref} />
+        <CourseFooter
+          onOverviewButtonClick={openCourseNav}
+          nextHref={nextCoursePageHref}
+        />
       )}
       <HSpace amount={20} />
       {!isCoursePage && (

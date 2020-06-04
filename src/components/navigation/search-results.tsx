@@ -1,18 +1,8 @@
-import React from 'react'
 import styled from 'styled-components'
 
 import { inputFontReset } from '../../helper/css'
 
-interface SearchResultProps {
-  className?: string
-  children: React.ReactNode
-}
-
-export function SearchResults({ className, children }: SearchResultProps) {
-  return <SearchResultsWrap className={className}>{children}</SearchResultsWrap>
-}
-
-const SearchResultsWrap = styled.div`
+export const SearchResults = styled.div`
   .gsc-control-cse {
     border: 0;
     padding: 0;

@@ -4,17 +4,25 @@ import styled, { css } from 'styled-components'
 import { makeMargin, makeDefaultButton, inputFontReset } from '../../helper/css'
 import { StyledP } from '../tags/styled-p'
 
-// TODO: needs type declaration
-type InputExerciseProps = any
+interface AnswerData {
+  value: any
+  isCorrect: boolean
+}
 
-export function InputExercise({ state }: InputExerciseProps) {
-  // TODO: needs type declaration
-  const [feedback, setFeedback] = React.useState<any>(null)
+export interface InputExerciseProps {
+  data: {
+    answers: AnswerData[]
+    unit: string
+  }
+}
+
+export function InputExercise({ data }: InputExerciseProps) {
+  const [feedback, setFeedback] = React.useState<React.ReactNode>(null)
   const [value, setValue] = React.useState('')
 
   function keyPress(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.keyCode == 13) {
-      setFeedback(checkAnswer(value, state))
+      setFeedback(checkAnswer(value, data.answers))
     }
   }
 
@@ -27,12 +35,12 @@ export function InputExercise({ state }: InputExerciseProps) {
         onKeyDown={keyPress}
         placeholder="Deine Antwort…"
       />{' '}
-      {state.unit}
+      {data.unit}
       <br />
       <Feedback>{feedback}</Feedback>
       <CheckButton
         selectable={value !== ''}
-        onClick={() => setFeedback(checkAnswer(value, state))}
+        onClick={() => setFeedback(checkAnswer(value, data.answers))}
       >
         Stimmt&apos;s?
       </CheckButton>
@@ -40,11 +48,9 @@ export function InputExercise({ state }: InputExerciseProps) {
   )
 }
 
-// TODO: needs type declaration
-function checkAnswer(val: any, state: any) {
-  // TODO: needs type declaration
-  const answers = state.answers.filter((answer: any) => answer.value === val)
-  if (answers.length !== 1 || !answers[0].isCorrect) {
+function checkAnswer(val: string, answers: AnswerData[]) {
+  const filteredAnswers = answers.filter((answer) => answer.value === val)
+  if (filteredAnswers.length !== 1 || !filteredAnswers[0].isCorrect) {
     return <span>Falsch</span>
   } else {
     return <span>Richtig</span>

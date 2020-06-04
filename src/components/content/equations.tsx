@@ -3,14 +3,31 @@ import styled from 'styled-components'
 import { makeMargin } from '../../helper/css'
 import { renderArticle } from '../../schema/article-renderer'
 
-// TODO: needs type declaration
-export type EquationProps = any
+type SignType =
+  | 'equals'
+  | '='
+  | 'greater-than'
+  | 'greater-than-or-equal'
+  | 'less-than'
+  | 'less-than-or-equal'
+  | 'almost-equal-to'
+
+//TODO: define and export data types somewhere
+interface StepProps {
+  left: any
+  sign: SignType
+  right: any
+  transform: any
+}
+
+export interface EquationProps {
+  steps: StepProps[]
+}
 
 export function Equations({ steps }: EquationProps) {
   return (
     <Wrapper>
-      {/* TODO: needs type declaration */}
-      {steps.map((step: any, i: any) => (
+      {steps.map((step, i) => (
         <LayoutContainer key={i}>
           <LeftSide>{renderArticle(step.left, false)}</LeftSide>
           <RightSide>
@@ -73,8 +90,7 @@ export const Transformation = styled.div`
   }
 `
 
-// TODO: needs type declaration
-export function renderSignToString(sign: any) {
+export function renderSignToString(sign: SignType): string {
   switch (sign) {
     case 'equals':
       return '='
@@ -89,4 +105,5 @@ export function renderSignToString(sign: any) {
     case 'almost-equal-to':
       return '≈'
   }
+  return ''
 }

@@ -30,7 +30,6 @@ export function MetaMenu(props: MetaMenuProps) {
       <MetaMenuWrapper>
         <StyledGradient />
         <List ref={containerRef}>
-          {/* TODO: needs type declaration */}
           {navigation.map((entry, i) => {
             const active = entry.url === pagealias
             return (

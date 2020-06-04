@@ -1,9 +1,11 @@
+import React from 'react'
 import styled from 'styled-components'
 
 import { makeMargin } from '../../helper/css'
 
-// TODO: needs type declaration
-export type CodeProps = any
+export interface CodeProps {
+  content: React.ReactNode
+}
 
 export function Code({ content }: CodeProps) {
   return (

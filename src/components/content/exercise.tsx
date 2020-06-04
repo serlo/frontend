@@ -8,8 +8,16 @@ import { InputExercise } from './input-exercise'
 import { LicenseNotice } from './license-notice'
 import { ScMcExercise } from './sc-mc-exercise'
 
-// TODO: needs type declaration
-export type ExerciseProps = any
+//TODO: define and export data types somewhere
+export interface ExerciseProps {
+  task: any
+  solution: any
+  taskLicense: any
+  solutionLicense: any
+  grouped: boolean
+  positionInGroup: number
+  positionOnPage: number
+}
 
 export function Exercise(props: ExerciseProps) {
   const {
@@ -40,7 +48,7 @@ export function Exercise(props: ExerciseProps) {
         )
       }
       if (state.interactive.plugin === 'inputExercise') {
-        interactiveComp = <InputExercise state={state.interactive.state} />
+        interactiveComp = <InputExercise data={state.interactive.state} />
       }
     }
   }

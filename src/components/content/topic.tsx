@@ -37,7 +37,7 @@ interface TopicProp {
   purpose?: TopicPurposes
   links: LinksInterface
   children?: TopicProp[]
-  exercises: any
+  exercises: any[]
   contentId: number
 }
 
@@ -86,8 +86,7 @@ export function Topic({ data, contentId }: TopicProps) {
             </React.Fragment>
           ))}
         {data.exercises &&
-          // TODO: needs type declaration
-          data.exercises.map((exercise: any, i: number) => (
+          data.exercises.map((exercise, i) => (
             <React.Fragment key={i}>
               {renderArticle(exercise.children)}
             </React.Fragment>
