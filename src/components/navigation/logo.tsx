@@ -40,16 +40,16 @@ const SublineWrap = styled.div`
 `
 
 const SublineLink = styled.a`
-  color: ${(props) => lighten(0.25, props.theme.colors.darkgray)};
+  color: ${props => lighten(0.25, props.theme.colors.darkgray)};
   font-weight: 500;
   font-size: 1.55rem;
   text-decoration: none;
 
   &:hover {
-    color: ${(props) => props.theme.colors.brand};
+    color: ${props => props.theme.colors.brand};
   }
 
-  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
+  @media (min-width: ${props => props.theme.breakpoints.sm}) {
     font-size: 1.65rem;
     letter-spacing: 0.008em;
   }

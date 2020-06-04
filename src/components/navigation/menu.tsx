@@ -32,7 +32,7 @@ export function Menu(props: MenuProps) {
         animation="fade"
       />
       <List>
-        {links.map((link) => (
+        {links.map(link => (
           <Entry link={link} key={link.title} target={target} />
         ))}
       </List>
@@ -40,18 +40,20 @@ export function Menu(props: MenuProps) {
   )
 }
 
-// TODO: needs type declaration
-type EntryProps = any
+interface EntryProps {
+  link: MenuLink
+  // TODO: SingletonObject not exported from Tippy?
+  target: any
+}
 
-function Entry(props: EntryProps) {
-  const { link, target } = props
+function Entry({ link, target }: EntryProps) {
   const hasChildren = link.children !== undefined
 
   return (
     <Li>
       {hasChildren ? (
         <Tippy
-          content={<SubMenuInner>{link.children}</SubMenuInner>}
+          content={<SubMenuInner subEntries={link.children}></SubMenuInner>}
           singleton={target}
         >
           <Link /*active={true}*/>
@@ -65,29 +67,29 @@ function Entry(props: EntryProps) {
   )
 }
 
-// TODO: needs type declaration
-type SubMenuInnerProps = any
+interface SubMenuInnerProps {
+  subEntries: MenuLink[] | undefined
+}
 
-function SubMenuInner(props: SubMenuInnerProps) {
-  const { children } = props
+function SubMenuInner({ subEntries }: SubMenuInnerProps) {
   return (
     <SubList>
-      {/* TODO: needs type declaration */}
-      {children.map((entry: any) => {
-        return (
-          <li key={entry.title}>
-            <SubLink href={entry.url}>
-              <_Button>{entry.title}</_Button>
-            </SubLink>
-          </li>
-        )
-      })}
+      {subEntries !== undefined &&
+        subEntries.map(entry => {
+          return (
+            <li key={entry.title}>
+              <SubLink href={entry.url}>
+                <_Button>{entry.title}</_Button>
+              </SubLink>
+            </li>
+          )
+        })}
     </SubList>
   )
 }
 
 const ResponsiveNav = styled.nav`
-  @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
     display: none;
   }
 `
@@ -109,7 +111,7 @@ const linkStyle = css`
   &:hover,
   &[aria-expanded='true'] {
     color: #fff;
-    background-color: ${(props) => props.theme.colors.brand};
+    background-color: ${props => props.theme.colors.brand};
   }
   text-decoration: none;
 `
@@ -117,10 +119,10 @@ const linkStyle = css`
 const Link = styled.a<{ active?: boolean }>`
   ${makeDefaultButton}
   ${linkStyle}
-  color: ${(props) =>
+  color: ${props =>
     props.theme.colors[props.active ? 'darkgray' : 'lightblue']};
 
-  background-color: ${(props) =>
+  background-color: ${props =>
     props.theme.colors[props.active ? 'lighterblue' : 'inherit']};
 
   font-weight: bold;
@@ -149,7 +151,7 @@ const SubLink = styled.a`
   text-decoration: none;
   &:hover span {
     color: #fff;
-    background-color: ${(props) => props.theme.colors.brand};
+    background-color: ${props => props.theme.colors.brand};
   }
 `
 
@@ -157,5 +159,5 @@ const _Button = styled.span`
   text-decoration: none;
   ${linkStyle}
   ${makeDefaultButton}
-  color: ${(props) => props.theme.colors.brand};
+  color: ${props => props.theme.colors.brand};
 `

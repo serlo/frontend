@@ -34,7 +34,9 @@ export function ArticlePage({
   const [open, setOpen] = React.useState(false)
 
   const [courseNavOpen, setCourseNavOpen] = React.useState(false)
-  const openCourseNav = (e: Event) => {
+  const openCourseNav = (
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) => {
     e.preventDefault()
     setCourseNavOpen(true)
   }
@@ -74,7 +76,7 @@ export function ArticlePage({
         )}
       </StyledH1>
       <ToolLine>
-        <ToolLineButton top onClick={() => setOpen(true)}>
+        <ToolLineButton isOnTop onClick={() => setOpen(true)}>
           <FontAwesomeIcon icon={faShareAlt} size="1x" /> Teilen
         </ToolLineButton>
       </ToolLine>

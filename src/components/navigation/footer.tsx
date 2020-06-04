@@ -1,6 +1,6 @@
 import {
   faChevronUp,
-  faChevronCircleRight,
+  faChevronCircleRight
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styled from 'styled-components'
@@ -64,13 +64,13 @@ function About() {
 const AboutContainer = styled.div`
   margin-top: 32px;
   display: flex;
-  @media (max-width: ${(props) => props.theme.breakpoints.md}) {
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
     flex-direction: column;
   }
 `
 
 const LogoContainer = styled.div`
-  background-color: ${(props) => props.theme.colors.brand};
+  background-color: ${props => props.theme.colors.brand};
   position: relative;
   min-height: 54px;
   width: 100%;
@@ -84,7 +84,7 @@ const TopButton = styled.div`
   position: absolute;
   color: white;
   &:hover {
-    background-color: ${(props) => props.theme.colors.lightblue};
+    background-color: ${props => props.theme.colors.lightblue};
   }
   display: flex;
   align-items: center;
@@ -100,7 +100,7 @@ const InfoContainer = styled.div`
 `
 
 const Summary = styled.div`
-  background-color: ${(props) => props.theme.colors.lightblue};
+  background-color: ${props => props.theme.colors.lightblue};
   padding-top: 32px;
   padding-bottom: 16px;
   ${makeResponsivePadding}
@@ -137,14 +137,14 @@ const SummaryButton = styled.a`
 `
 
 const Support = styled.div`
-  background-color: ${(props) => props.theme.colors.brandGreen};
+  background-color: ${props => props.theme.colors.brandGreen};
   display: flex;
   justify-content: space-around;
   padding-top: 16px;
   padding-bottom: 16px;
   color: white;
 
-  @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
+  @media (min-width: ${props => props.theme.breakpoints.lg}) {
     justify-content: start;
   }
 `
@@ -159,7 +159,7 @@ const ImageLink = styled.a`
   }
   cursor: pointer;
 
-  @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
+  @media (min-width: ${props => props.theme.breakpoints.lg}) {
     &:first-child {
       ${makeResponsivePadding}
       margin-left: -6px;
@@ -172,7 +172,7 @@ const SupportButton = styled.div`
   ${makeDefaultButton}
   color: #fff;
   ${ImageLink}:hover & {
-    background-color: ${(props) => props.theme.colors.brand};
+    background-color: ${props => props.theme.colors.brand};
   }
   transition: background-color 0.2s;
 `

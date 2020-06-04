@@ -1,4 +1,8 @@
-import { faCaretDown, faBars } from '@fortawesome/free-solid-svg-icons'
+import {
+  faCaretDown,
+  faBars,
+  IconDefinition
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { transparentize, lighten } from 'polished'
 import React from 'react'
@@ -11,6 +15,7 @@ interface MobileMenuProps {
 interface MobileMenuLink {
   title: string
   url: string
+  icon?: IconDefinition
   children?: MobileMenuLink[]
 }
 
@@ -25,17 +30,19 @@ export function MobileMenu(props: MobileMenuProps) {
   )
 }
 
-// TODO: needs type declaration
-type EntryProps = any
+interface MobileMenuLink {
+  childKey?: string
+  isChild?: boolean
+}
 
 function Entry({
   url,
   title,
-  childKey = undefined,
-  icon = null,
-  isChild = false,
+  icon = undefined,
   children = undefined,
-}: EntryProps) {
+  childKey = undefined,
+  isChild = false
+}: MobileMenuLink) {
   const [open, setOpen] = React.useState(false)
   return (
     <>
@@ -45,7 +52,7 @@ function Entry({
           href={url}
           onClick={
             children
-              ? (e) => {
+              ? e => {
                   //TODO: Also close open siblings
                   setOpen(!open)
                   e.preventDefault()
@@ -58,7 +65,7 @@ function Entry({
           {!isChild ? (
             <IconWrapper>
               <FontAwesomeIcon
-                icon={icon ? icon : faBars}
+                icon={icon !== undefined ? icon : faBars}
                 size="1x"
                 style={{ fontSize: '23px' }}
               />
@@ -91,7 +98,7 @@ function Entry({
 const EntryLinkText = styled.span<{ isChild?: boolean }>`
   display: inline-block;
   vertical-align: middle;
-  margin-top: ${(props) => (props.isChild ? '0' : '0.45rem')};
+  margin-top: ${props => (props.isChild ? '0' : '0.45rem')};
 `
 
 const List = styled.ul`
@@ -100,40 +107,40 @@ const List = styled.ul`
   padding: 0;
 
   .Collapsible__trigger.is-open li a {
-    background: ${(props) => transparentize(0.8, props.theme.colors.brand)};
+    background: ${props => transparentize(0.8, props.theme.colors.brand)};
   }
 `
 
 const Seperator = styled.li`
   height: 28px;
   background-color: #fff;
-  border-bottom: 1px solid ${(props) => props.theme.colors.lighterblue};
+  border-bottom: 1px solid ${props => props.theme.colors.lighterblue};
 `
 
 const EntryLink = styled.a<{ isChild?: boolean; open?: boolean }>`
   display: flex;
   align-items: start;
   padding: 16px;
-  color: ${(props) => props.theme.colors.brand};
+  color: ${props => props.theme.colors.brand};
   border-bottom: 1px solid;
-  border-color: ${(props) => props.theme.colors.lighterblue};
+  border-color: ${props => props.theme.colors.lighterblue};
   font-weight: bold;
   text-decoration: none;
-  font-size: ${(props) => (props.isChild ? '1rem' : '1.33rem')};
+  font-size: ${props => (props.isChild ? '1rem' : '1.33rem')};
 
-  background-color: ${(props) =>
+  background-color: ${props =>
     props.open
       ? transparentize(0.8, props.theme.colors.brand)
       : props.theme.colors.bluewhite};
 
-  ${(props) => (props.isChild ? 'background-color: #fff;' : '')}
+  ${props => (props.isChild ? 'background-color: #fff;' : '')}
 
   &:active {
-    background: ${(props) => transparentize(0.8, props.theme.colors.brand)};
+    background: ${props => transparentize(0.8, props.theme.colors.brand)};
   }
   @media (hover: hover) {
     &:hover {
-      background: ${(props) => transparentize(0.8, props.theme.colors.brand)};
+      background: ${props => transparentize(0.8, props.theme.colors.brand)};
     }
   }
 `
@@ -141,12 +148,12 @@ const EntryLink = styled.a<{ isChild?: boolean; open?: boolean }>`
 const IconWrapper = styled.div`
   width: 40px;
   height: 40px;
-  background-color: ${(props) => lighten(0.3, props.theme.colors.lightblue)};
+  background-color: ${props => lighten(0.3, props.theme.colors.lightblue)};
   border-radius: 160px;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: ${(props) => props.theme.colors.lightblue};
+  color: ${props => props.theme.colors.lightblue};
   text-align: center;
   margin-right: 10px;
 `

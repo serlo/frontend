@@ -8,15 +8,27 @@ import { StyledA } from '../tags/styled-a'
 import { StyledLi } from '../tags/styled-li'
 import { StyledOl } from '../tags/styled-ol'
 
-// TODO: needs type declaration
-export type CourseNavigationProps = any
+interface CourseNavigationPagesProps {
+  alias: string
+  currentRevision: {
+    title: string
+  }
+}
+
+export interface CourseNavigationProps {
+  courseTitle: string
+  pageTitle: string
+  pages: CourseNavigationPagesProps[]
+  open: boolean
+  opener: (e: React.MouseEvent<HTMLAnchorElement>) => void
+}
 
 export function CourseNavigation({
   courseTitle,
   pageTitle,
   pages,
   open,
-  opener,
+  opener
 }: CourseNavigationProps) {
   return (
     <Wrapper id="course-overview">
@@ -26,12 +38,14 @@ export function CourseNavigation({
       {open ? (
         <StyledOl>
           {/* TODO: needs type declaration */}
-          {pages.map((page: any) => (
+          {pages.map(page => (
             <StyledLi key={page.alias}>
               <CourseA
                 active={pageTitle === page.currentRevision.title}
                 href={
-                  pageTitle === page.currentRevision.title ? null : page.alias
+                  pageTitle === page.currentRevision.title
+                    ? undefined
+                    : page.alias
                 }
               >
                 {page.currentRevision.title}
@@ -51,8 +65,8 @@ export function CourseNavigation({
 const Wrapper = styled.nav`
   margin-top: 25px;
 
-  @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
-    background-color: ${(props) => props.theme.colors.lightBackground};
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    background-color: ${props => props.theme.colors.lightBackground};
   }
   padding: 5px 0 22px 0;
 
@@ -64,17 +78,17 @@ const Wrapper = styled.nav`
 const CourseH1 = styled.h1`
   font-size: 1.25rem;
   ${makeMargin}
-  color: ${(props) => props.theme.colors.brand};
+  color: ${props => props.theme.colors.brand};
 `
 
 const CourseA = styled(StyledA)<{ active: boolean }>`
   font-size: 1.125rem;
 
-  ${(props) =>
+  ${props =>
     props.active &&
     css`
       font-weight: 600;
-      color: ${(props) => props.theme.colors.darkgray};
+      color: ${props => props.theme.colors.darkgray};
       &:hover {
         text-decoration: none;
       }
@@ -86,9 +100,9 @@ const Button = styled.a`
   ${makeDefaultButton}
   padding: 3px 8px;
   ${makeMargin}
-  background-color: ${(props) => props.theme.colors.brand};
+  background-color: ${props => props.theme.colors.brand};
   &:hover{
-    background-color: ${(props) => props.theme.colors.lightblue};
+    background-color: ${props => props.theme.colors.lightblue};
   }
   color: #fff;
   font-weight: bold;

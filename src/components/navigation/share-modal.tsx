@@ -1,13 +1,14 @@
 import {
   faFacebookSquare,
   faWhatsappSquare,
-  faGoogle,
+  faGoogle
 } from '@fortawesome/free-brands-svg-icons'
 import {
   faCopy,
   faTimes,
   faEnvelope,
   faCompass,
+  IconDefinition
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { lighten } from 'polished'
@@ -32,10 +33,10 @@ export function ShareModal(props: ShareModalProps) {
   if (!open) return null
 
   function copyToClipboard(
-    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
     text?: string
   ) {
-    const target = e.target as HTMLAnchorElement
+    const target = event.target as HTMLAnchorElement
     shareInputRef.current!.select()
     document.execCommand('copy')
     target.focus()
@@ -54,35 +55,35 @@ export function ShareModal(props: ShareModalProps) {
       icon: faEnvelope,
       href: `mailto:?subject=${titleEncoded}&body=${encodeURIComponent(
         document.title + '\n' + url
-      )}`,
+      )}`
     },
     {
       title: 'Facebook',
       icon: faFacebookSquare,
-      href: `https://www.facebook.com/sharer.php?u=${urlEncoded}`,
+      href: `https://www.facebook.com/sharer.php?u=${urlEncoded}`
     },
     {
       title: 'Whatsapp',
       icon: faWhatsappSquare,
       href: `whatsapp://send?text=${encodeURIComponent(
         document.title + ': ' + url
-      )}`,
-    },
+      )}`
+    }
   ]
 
   const lmsShare = [
     {
       title: 'Google Classroom',
       icon: faGoogle,
-      href: `https://classroom.google.com/u/0/share?url=${urlEncoded}&title=${titleEncoded}&body=`,
+      href: `https://classroom.google.com/u/0/share?url=${urlEncoded}&title=${titleEncoded}&body=`
     },
     {
       title: 'Mebis',
       icon: faCompass,
       href: 'copy',
       text:
-        'Link in die Zwischenablage kopiert. Einfach auf <a href="https://www.mebis.bayern.de/">mebis</a> einfügen!',
-    },
+        'Link in die Zwischenablage kopiert. Einfach auf <a href="https://www.mebis.bayern.de/">mebis</a> einfügen!'
+    }
   ]
 
   return (
@@ -91,7 +92,7 @@ export function ShareModal(props: ShareModalProps) {
       <div>
         <ShareInput
           ref={shareInputRef}
-          onFocus={(e) => e.target.select()}
+          onFocus={e => e.target.select()}
           defaultValue={url}
         />{' '}
         {document.queryCommandSupported('copy') && (
@@ -119,15 +120,26 @@ export function ShareModal(props: ShareModalProps) {
   )
 }
 
-// TODO: needs type declaration
-function buildButtons(list: any, copyToClipboard: any) {
-  // TODO: needs type declaration
-  return list.map((entry: any) => (
+interface EntryProps {
+  title: string
+  icon: IconDefinition
+  href: string
+  text?: string
+}
+
+function buildButtons(
+  list: EntryProps[],
+  copyToClipboard: (
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+    text?: string
+  ) => void
+) {
+  return list.map((entry: EntryProps) => (
     <Button
-      href={entry.href !== 'copy' ? entry.href : null}
+      href={entry.href !== 'copy' ? entry.href : undefined}
       onClick={
         entry.href === 'copy'
-          ? (e) => {
+          ? e => {
               copyToClipboard(e, entry.text)
             }
           : undefined
@@ -161,7 +173,7 @@ const ButtonWrapper = styled.div`
   display: flex;
   align-items: flex-start;
   flex-direction: column;
-  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
+  @media (min-width: ${props => props.theme.breakpoints.sm}) {
     flex-direction: row;
   }
 `
@@ -178,11 +190,11 @@ const ShareInput = styled.input`
   margin-bottom: 8px;
   margin-right: 0;
 
-  background-color: ${(props) => lighten(0.45, props.theme.colors.brandGreen)};
+  background-color: ${props => lighten(0.45, props.theme.colors.brandGreen)};
 
   &:focus {
     outline: none;
-    box-shadow: 0 0 4px 0 ${(props) => props.theme.colors.brand};
+    box-shadow: 0 0 4px 0 ${props => props.theme.colors.brand};
   }
 `
 
@@ -192,7 +204,7 @@ const Button = styled.a`
   margin-left: 20px;
   display: inline;
 
-  @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
     ${makeMargin}
     margin-top: 6px;
     display: block;
@@ -200,7 +212,7 @@ const Button = styled.a`
 `
 
 const Gray = styled.small`
-  color: ${(props) => props.theme.colors.brand};
+  color: ${props => props.theme.colors.brand};
   ${makeMargin}
   margin-top: 5px;
   margin-bottom: 5px;
@@ -208,7 +220,7 @@ const Gray = styled.small`
   display: block;
 
   > a {
-    color: ${(props) => props.theme.colors.brand};
+    color: ${props => props.theme.colors.brand};
     font-weight: bold;
   }
 `
@@ -220,9 +232,9 @@ const CloseButton = styled.button`
   border: none;
   cursor: pointer;
   display: inline-block;
-  color: ${(props) => props.theme.colors.dark1};
+  color: ${props => props.theme.colors.dark1};
   &:hover {
-    background-color: ${(props) => props.theme.colors.brand};
+    background-color: ${props => props.theme.colors.brand};
     color: white;
   }
   width: 35px;
