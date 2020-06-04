@@ -8,6 +8,7 @@ import {
   faFolderOpen,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Link from 'next/link'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -80,10 +81,11 @@ export function TopicLinkList({ links, purpose }: LinksProps) {
               {links[key]!.map((article) => {
                 return (
                   <Link
-                    href={article.url}
                     key={article.url + '_' + article.title}
+                    href="/[...slug]"
+                    as={article.url}
                   >
-                    {article.title}
+                    <StyledLink>{article.title}</StyledLink>
                   </Link>
                 )
               })}
@@ -124,7 +126,7 @@ const LinkSectionHeadline = styled.h4`
   font-weight: 600;
 `
 
-const Link = styled.a`
+const StyledLink = styled.a`
   color: ${(props) => props.theme.colors.brand};
   cursor: pointer;
   font-size: 1.2rem;
