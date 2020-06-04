@@ -68,14 +68,19 @@ export function convert(node: any): any {
     ]
   }
   if (plugin === 'multimedia') {
+    const width = node.state.width ?? 50
     return [
       {
         type: 'row',
         children: [
-          { type: 'col', size: 3, children: convert(node.state.explanation) },
           {
             type: 'col',
-            size: 1,
+            size: 100 - width,
+            children: convert(node.state.explanation),
+          },
+          {
+            type: 'col',
+            size: width,
             children: convert(node.state.multimedia),
           },
         ],
