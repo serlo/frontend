@@ -60,5 +60,3 @@ export const theme = {
     boldLetterSpacing: '-0.012em',
   },
 }
-
-export type Theme = typeof theme
