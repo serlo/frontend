@@ -8,13 +8,18 @@ import { ExternalLink } from './external-link'
 const nowrap = (comp: any) => comp
 
 // TODO: needs type declaration
-type LinkProps = any
+interface LinkProps {
+  element: any
+  attributes: any
+  children: any | null
+  wrapExtInd: any
+}
 
 export function Link({
   element,
   attributes = {},
   children = null,
-  wrapExtInd = nowrap,
+  wrapExtInd = nowrap
 }: LinkProps) {
   const prettyLinks = React.useContext(PrettyLinksContext)
 

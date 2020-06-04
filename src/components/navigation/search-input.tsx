@@ -26,11 +26,13 @@ export function SearchInput() {
       setIsSearchPage(true)
       activateSearch()
     }
+    // I only want to run this the first time the page loads
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const checkElement = async (selector: string) => {
     while (document.querySelector(selector) === null) {
-      await new Promise((resolve) => requestAnimationFrame(resolve))
+      await new Promise(resolve => requestAnimationFrame(resolve))
     }
     return document.querySelector(selector)
   }
@@ -51,7 +53,7 @@ export function SearchInput() {
       setSearchLoaded(true)
     }
 
-    void checkElement('#gsc-i-id1').then((element) => {
+    void checkElement('#gsc-i-id1').then(element => {
       const input = element as HTMLInputElement
       input.setAttribute('placeholder', 'Suche')
       input.focus()
@@ -104,9 +106,9 @@ const sharedTextStyles = css`
   line-height: ${heightPx};
   font-size: 1rem;
   font-weight: bold;
-  color: ${(props) => props.theme.colors.brand};
+  color: ${props => props.theme.colors.brand};
 
-  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
+  @media (min-width: ${props => props.theme.breakpoints.sm}) {
     margin-left: 15px;
   }
 `
@@ -115,13 +117,13 @@ const sharedButtonStyles = css`
   height: ${heightPx};
   width: ${heightPx};
 
-  background-color: ${(props) => props.theme.colors.brand};
+  background-color: ${props => props.theme.colors.brand};
   transition: background-color 0.2s ease-in;
   text-align: center;
   pointer-events: none;
   cursor: pointer;
 
-  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
+  @media (min-width: ${props => props.theme.breakpoints.sm}) {
     border-radius: 5rem;
     width: 35px;
     height: 35px;
@@ -130,7 +132,7 @@ const sharedButtonStyles = css`
 
   &:hover,
   &:focus {
-    background-color: ${(props) => props.theme.colors.lighterblue};
+    background-color: ${props => props.theme.colors.lighterblue};
   }
 `
 
@@ -139,7 +141,7 @@ const sharedIconStyles = css`
   height: 18px;
   fill: #fff;
   margin-top: ${(height - 19) / 2}px;
-  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
+  @media (min-width: ${props => props.theme.breakpoints.sm}) {
     margin-top: ${(smHeight - 18) / 2}px;
   }
 `
@@ -162,7 +164,7 @@ const gscMiscResets = css`
   .gsib_a {
     padding: 0;
 
-    @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
+    @media (min-width: ${props => props.theme.breakpoints.sm}) {
       padding: 4px 0 0 0;
       vertical-align: top;
     }
@@ -198,7 +200,7 @@ const gcsInput = css`
     text-indent: 50px !important;
   }
 
-  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
+  @media (min-width: ${props => props.theme.breakpoints.sm}) {
     text-indent: 15px !important;
 
     &::placeholder {
@@ -243,22 +245,21 @@ const LoadingIcon = styled(FontAwesomeIcon)`
 `
 
 const SearchForm = styled.div`
-  background-color: ${(props) => lighten(0.1, props.theme.colors.lighterblue)};
+  background-color: ${props => lighten(0.1, props.theme.colors.lighterblue)};
   display: flex;
   transition: background-color 0.4s ease;
   cursor: pointer;
 
   &:focus-within {
-    background-color: ${(props) =>
-      lighten(0.1, props.theme.colors.lighterblue)};
+    background-color: ${props => lighten(0.1, props.theme.colors.lighterblue)};
   }
 
-  @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
     padding-left: 16px;
     min-height: 38px;
   }
 
-  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
+  @media (min-width: ${props => props.theme.breakpoints.sm}) {
     position: absolute;
     top: 133px;
     right: 32px;
@@ -270,7 +271,7 @@ const SearchForm = styled.div`
     justify-content: flex-end;
   }
 
-  @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
+  @media (min-width: ${props => props.theme.breakpoints.lg}) {
     right: 27px;
     margin-left: auto;
   }

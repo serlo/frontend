@@ -22,7 +22,7 @@ export interface LinksInterface {
   articles?: LinkInterface[]
   videos?: LinkInterface[]
   applets?: LinkInterface[]
-  excercises?: LinkInterface[]
+  exercises?: LinkInterface[]
 }
 
 export enum TopicPurposes {
@@ -87,7 +87,7 @@ export function Topic({ data, contentId }: TopicProps) {
           ))}
         {data.exercises &&
           // TODO: needs type declaration
-          data.exercises.map((exercise: any, i: any) => (
+          data.exercises.map((exercise: any, i: number) => (
             <React.Fragment key={i}>
               {renderArticle(exercise.children)}
             </React.Fragment>
