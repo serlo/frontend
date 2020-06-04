@@ -40,18 +40,20 @@ export function Menu(props: MenuProps) {
   )
 }
 
-// TODO: needs type declaration
-type EntryProps = any
+interface EntryProps {
+  link: MenuLink
+  // TODO: SingletonObject not exported from Tippy?
+  target: any
+}
 
-function Entry(props: EntryProps) {
-  const { link, target } = props
+function Entry({ link, target }: EntryProps) {
   const hasChildren = link.children !== undefined
 
   return (
     <Li>
       {hasChildren ? (
         <Tippy
-          content={<SubMenuInner>{link.children}</SubMenuInner>}
+          content={<SubMenuInner subEntries={link.children}></SubMenuInner>}
           singleton={target}
         >
           <Link /*active={true}*/>
@@ -65,23 +67,23 @@ function Entry(props: EntryProps) {
   )
 }
 
-// TODO: needs type declaration
-type SubMenuInnerProps = any
+interface SubMenuInnerProps {
+  subEntries: MenuLink[] | undefined
+}
 
-function SubMenuInner(props: SubMenuInnerProps) {
-  const { children } = props
+function SubMenuInner({ subEntries }: SubMenuInnerProps) {
   return (
     <SubList>
-      {/* TODO: needs type declaration */}
-      {children.map((entry: any) => {
-        return (
-          <li key={entry.title}>
-            <SubLink href={entry.url}>
-              <_Button>{entry.title}</_Button>
-            </SubLink>
-          </li>
-        )
-      })}
+      {subEntries !== undefined &&
+        subEntries.map((entry) => {
+          return (
+            <li key={entry.title}>
+              <SubLink href={entry.url}>
+                <_Button>{entry.title}</_Button>
+              </SubLink>
+            </li>
+          )
+        })}
     </SubList>
   )
 }

@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { GetServerSideProps } from 'next'
 import absoluteUrl from 'next-absolute-url'
 import dynamic from 'next/dynamic'
-import Head from 'next/head'
 import React from 'react'
 import styled, { css } from 'styled-components'
 
@@ -18,6 +17,7 @@ import { Footer } from '@/components/navigation/footer'
 import { Header } from '@/components/navigation/header'
 import type { MetaMenuProps } from '@/components/navigation/meta-menu'
 import { PrettyLinksProvider } from '@/components/pretty-links-context'
+import { SlugHead } from '@/components/slug-head'
 import { StyledA } from '@/components/tags/styled-a'
 import { StyledH1 } from '@/components/tags/styled-h1'
 import { StyledP } from '@/components/tags/styled-p'
@@ -36,18 +36,13 @@ const Topic = dynamic<TopicProps>(() =>
 
 const NewsletterPopup = dynamic<{}>(
   () =>
-    import('@/components/newsletter-popup').then((mod) => mod.NewsletterPopup),
+    import('@/components/scripts/newsletter-popup').then(
+      (mod) => mod.NewsletterPopup
+    ),
   {
     ssr: false,
   }
 )
-
-enum MetaImageEnum {
-  default = 'meta/serlo.jpg',
-  mathe = 'meta/mathematik.jpg',
-  nachhaltigkeit = 'meta/nachhaltigkeit.jpg',
-  biologie = 'meta/biologie.jpg',
-}
 
 // TODO: needs type declaration
 type PageViewProps = any
@@ -66,71 +61,17 @@ function PageView(props: PageViewProps) {
     prettyLinks,
   } = data
 
-  function getMetaContentType() {
-    //match legacy content types that are used by google custom search
-    if (contentType === undefined) return ''
-    if (contentType === 'Exercise') return 'text-exercise'
-    if (contentType === 'CoursePage') return 'course-page'
-    if (data.data?.type === 'topicFolder') return 'topic-folder'
-    if (contentType === 'TaxonomyTerm') return 'topic'
-    //Article, Video, Applet, Page
-    return contentType.toLowerCase()
-  }
-
-  function getMetaImage() {
-    const subject = data.alias ? data.alias.split('/')[1] : 'default'
-    // TODO: MetaImageEnum should probably not be an enum since we actually use the key
-    // @ts-expect-error
-    const imageSrc = MetaImageEnum[subject]
-      ? // @ts-expect-error
-        MetaImageEnum[subject]
-      : MetaImageEnum['default']
-    //might replace with default asset/cdn url
-    return `${props.origin}/_assets/img/${imageSrc}`
-  }
-
-  function getMetaDescription() {
-    if (!data.data) return false
-    const hasDescription =
-      data.data.metaDescription && data.data.metaDescription.length > 10
-    if (hasDescription) return data.data.metaDescription
-
-    if (data.data.value === undefined || data.data.value.children === undefined)
-      return false
-
-    const slice = data.data.value.children.slice(0, 10)
-    const stringified = JSON.stringify(slice)
-    const regexp = /"text":"(.)*?"/g
-    const matches = stringified.match(regexp)
-    const longFallback = matches
-      ? matches.map((str) => str.substring(8, str.length - 1)).join('')
-      : ''
-    if (longFallback.length < 50) return false
-
-    const softCutoff = 135
-    const fallback =
-      longFallback.substr(
-        0,
-        softCutoff + longFallback.substr(softCutoff).indexOf(' ')
-      ) + ' …'
-    const description = hasDescription ? data.data.metaDescription : fallback
-    return description
-  }
-  const metaDescription = getMetaDescription()
   const showNav =
     navigation &&
     !(contentType === 'TaxonomyTerm' && data.data?.type === 'topicFolder')
   return (
     <>
-      <Head>
-        <title>{title ? title : 'Serlo.org'}</title>
-        <meta name="content_type" content={getMetaContentType()} />
-        {metaDescription && (
-          <meta name="description" content={metaDescription} />
-        )}
-        <meta property="og:title" content={title} />
-        <meta property="og:image" content={getMetaImage()} />
-      </Head>
+      <SlugHead
+        title={title}
+        data={data}
+        contentType={contentType}
+        origin={props.origin}
+      />
       <Header />
       {showNav && (
         <MetaMenu pagealias={`/${data.data.id}`} navigation={navigation} />
@@ -173,7 +114,7 @@ function PageView(props: PageViewProps) {
               )}
               {(contentType === 'Video' || contentType === 'Applet') && (
                 <>
-                  <StyledH1 displayMode>
+                  <StyledH1 extraMarginTop>
                     {data.data.title}
                     <span title={contentType}>
                       {' '}

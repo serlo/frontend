@@ -4,18 +4,20 @@ import { PrettyLinksContext } from '../pretty-links-context'
 import { StyledA } from '../tags/styled-a'
 import { ExternalLink } from './external-link'
 
-// TODO: needs type declaration
-const nowrap = (comp: any) => comp
-
-// TODO: needs type declaration
-type LinkProps = any
+export interface LinkProps {
+  element: {
+    href: string
+  }
+  attributes: any
+  children: React.ReactNode
+}
 
 export function Link({
   element,
   attributes = {},
   children = null,
-  wrapExtInd = nowrap,
-}: LinkProps) {
+}: // wrapExtInd = nowrap
+LinkProps) {
   const prettyLinks = React.useContext(PrettyLinksContext)
 
   if (!element.href)
@@ -27,7 +29,11 @@ export function Link({
   return (
     <StyledA href={prettyLink ? prettyLink : element.href} {...attributes}>
       {children}
-      {isExternal && wrapExtInd(<ExternalLink />)}
+      {isExternal && <ExternalLink />}
+      {/* {isExternal && wrapExtInd(<ExternalLink />)} */}
     </StyledA>
   )
 }
+
+// not used currently?
+// const nowrap = (comp: any) => comp

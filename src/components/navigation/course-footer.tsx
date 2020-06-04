@@ -5,13 +5,18 @@ import styled from 'styled-components'
 
 import { makeMargin, makeDefaultButton } from '../../helper/css'
 
-// TODO: needs type declaration
-export type CourseFooterProps = any
+export interface CourseFooterProps {
+  onOverviewButtonClick: (e: React.MouseEvent<HTMLAnchorElement>) => void
+  nextHref: string
+}
 
-export function CourseFooter({ opener, nextHref }: CourseFooterProps) {
+export function CourseFooter({
+  onOverviewButtonClick,
+  nextHref,
+}: CourseFooterProps) {
   const onOverviewClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     location.href = '#course-overview'
-    opener(e)
+    onOverviewButtonClick(e)
   }
 
   return (

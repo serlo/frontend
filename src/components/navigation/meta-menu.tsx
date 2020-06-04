@@ -3,9 +3,14 @@ import styled, { css } from 'styled-components'
 
 import { makeDefaultButton } from '../../helper/css'
 
+interface MetaMenuEntry {
+  url: string
+  title: string
+}
+
 export interface MetaMenuProps {
   pagealias: string
-  navigation: any
+  navigation: MetaMenuEntry[]
 }
 
 export function MetaMenu(props: MetaMenuProps) {
@@ -25,11 +30,10 @@ export function MetaMenu(props: MetaMenuProps) {
       <MetaMenuWrapper>
         <StyledGradient />
         <List ref={containerRef}>
-          {/* TODO: needs type declaration */}
-          {navigation.map((entry: any, i: any) => {
+          {navigation.map((entry, i) => {
             const active = entry.url === pagealias
             return (
-              <Li key={entry.url} ref={active ? activeRef : null}>
+              <li key={entry.url} ref={active ? activeRef : null}>
                 <Link href={entry.url}>
                   <ButtonStyle active={active}>{entry.title}</ButtonStyle>
                 </Link>
@@ -38,7 +42,7 @@ export function MetaMenu(props: MetaMenuProps) {
                   spacer
                   lastChild={i === navigation.length - 1}
                 ></Link>
-              </Li>
+              </li>
             )
           })}
         </List>
@@ -86,8 +90,6 @@ const List = styled.ul`
     border: 1px solid ${(props) => props.theme.colors.lightBlueBackground};
   }
 `
-
-const Li = styled.li``
 
 interface LinkProps {
   spacer?: boolean

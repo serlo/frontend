@@ -1,4 +1,8 @@
-import { faCaretDown, faBars } from '@fortawesome/free-solid-svg-icons'
+import {
+  faCaretDown,
+  faBars,
+  IconDefinition,
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { transparentize, lighten } from 'polished'
 import React from 'react'
@@ -11,6 +15,7 @@ interface MobileMenuProps {
 interface MobileMenuLink {
   title: string
   url: string
+  icon?: IconDefinition
   children?: MobileMenuLink[]
 }
 
@@ -25,16 +30,18 @@ export function MobileMenu(props: MobileMenuProps) {
   )
 }
 
-// TODO: needs type declaration
-type EntryProps = any
+interface EntryProps extends MobileMenuLink {
+  childKey?: string
+  isChild?: boolean
+}
 
 function Entry({
   url,
   title,
-  childKey = undefined,
-  icon = null,
+  icon,
+  children,
+  childKey,
   isChild = false,
-  children = undefined,
 }: EntryProps) {
   const [open, setOpen] = React.useState(false)
   return (
@@ -58,7 +65,7 @@ function Entry({
           {!isChild ? (
             <IconWrapper>
               <FontAwesomeIcon
-                icon={icon ? icon : faBars}
+                icon={icon !== undefined ? icon : faBars}
                 size="1x"
                 style={{ fontSize: '23px' }}
               />
@@ -77,8 +84,7 @@ function Entry({
       </li>
       {open && children ? (
         <>
-          {/* TODO: needs type declaration */}
-          {children.map((entry: any, index: any) => (
+          {children.map((entry, index) => (
             <Entry {...entry} isChild key={`${index}--${childKey}`} />
           ))}{' '}
           <Seperator />

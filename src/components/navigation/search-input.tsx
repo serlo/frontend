@@ -26,6 +26,8 @@ export function SearchInput() {
       setIsSearchPage(true)
       activateSearch()
     }
+    // I only want to run this the first time the page loads
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const checkElement = async (selector: string) => {

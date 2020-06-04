@@ -8,6 +8,7 @@ import {
   faTimes,
   faEnvelope,
   faCompass,
+  IconDefinition,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { lighten } from 'polished'
@@ -32,10 +33,10 @@ export function ShareModal(props: ShareModalProps) {
   if (!open) return null
 
   function copyToClipboard(
-    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
     text?: string
   ) {
-    const target = e.target as HTMLAnchorElement
+    const target = event.target as HTMLAnchorElement
     shareInputRef.current!.select()
     document.execCommand('copy')
     target.focus()
@@ -119,12 +120,23 @@ export function ShareModal(props: ShareModalProps) {
   )
 }
 
-// TODO: needs type declaration
-function buildButtons(list: any, copyToClipboard: any) {
-  // TODO: needs type declaration
-  return list.map((entry: any) => (
+interface EntryData {
+  title: string
+  icon: IconDefinition
+  href: string
+  text?: string
+}
+
+function buildButtons(
+  list: EntryData[],
+  copyToClipboard: (
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+    text?: string
+  ) => void
+) {
+  return list.map((entry: EntryData) => (
     <Button
-      href={entry.href !== 'copy' ? entry.href : null}
+      href={entry.href !== 'copy' ? entry.href : undefined}
       onClick={
         entry.href === 'copy'
           ? (e) => {

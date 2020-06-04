@@ -5,8 +5,12 @@ import { makeMargin } from '../../helper/css'
 import { ExerciseNumbering } from './exercise-numbering'
 import { SpoilerContainer } from './spoiler-container'
 
-// TODO: needs type declaration
-type ExerciseGroupProps = any
+export interface ExerciseGroupProps {
+  children: React.ReactNode
+  license: React.ReactNode
+  groupIntro: React.ReactNode
+  positionOnPage: number
+}
 
 export function ExerciseGroup({
   children,

@@ -1,3 +1,4 @@
+import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { lighten } from 'polished'
 import React from 'react'
@@ -8,8 +9,9 @@ import { makeResponsivePadding } from '../../helper/css'
 interface NavChild {
   title: string
   url: string
-  icon?: any
+  icon?: IconProp
 }
+
 interface NavEntry {
   title: string
   children: NavChild[]

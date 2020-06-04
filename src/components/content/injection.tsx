@@ -4,11 +4,12 @@ import { renderArticle } from '../../schema/article-renderer'
 import { StyledP } from '../tags/styled-p'
 import { LicenseNotice } from './license-notice'
 
-// TODO: needs type declaration
-export type InjectionProps = any
+export interface InjectionProps {
+  href: string
+}
 
 export function Injection({ href }: InjectionProps) {
-  // TODO: needs type declaration
+  //TODO: define and export data types somewhere
   const [value, setValue] = React.useState<any>(undefined)
   const [license, setLicense] = React.useState(undefined)
   useEffect(() => {

@@ -63,8 +63,8 @@ const Code = dynamic<CodeProps>(() =>
   import('../components/content/code').then((mod) => mod.Code)
 )
 
-// TODO: this is definitely not the correct type.
-export function renderArticle(value: Node[], addCSS = true) {
+// TODO: this is probably not the correct type.
+export function renderArticle(value: React.ReactNodeArray, addCSS = true) {
   if (!value) return null
   const root = { children: value }
   const content = value.map((_, index) => render(root, [index]))
@@ -120,15 +120,25 @@ export const articleColors = {
 }
 
 // TODO: needs type declaration
+
+interface RenderLeafProps {
+  leaf: {
+    color?: 'blue' | 'green' | 'orange'
+    em?: boolean
+    strong?: boolean
+  }
+  attributes: any
+  children: React.ReactNode
+  readonly?: boolean
+}
+
 export function renderLeaf({
   leaf,
   attributes,
   children,
   readonly = false,
-}: any) {
+}: RenderLeafProps) {
   const styles: any = {}
-  // TODO: fixed by typing leaf properly
-  // @ts-expect-error
   if (leaf.color) styles.color = articleColors[leaf.color]
   if (leaf.em) styles.fontStyle = 'italic'
   if (leaf.strong) styles.fontWeight = 'bold'
@@ -178,9 +188,8 @@ const renderer = {
 
 // TODO: needs type declaration
 function renderElement(props: any) {
-  // TODO: needs type declaration
-  // @ts-expect-error
-  return renderer[props.element.type](props)
+  const type = props.element.type as keyof typeof renderer
+  return renderer[type](props)
 }
 
 // TODO: needs type declaration
@@ -213,10 +222,21 @@ const StyledHx = {
   5: StyledH5,
 }
 
+interface RenderHProps {
+  element: {
+    level: 1 | 2 | 3 | 4 | 5
+    id: number
+  }
+  attributes: any
+  children: any
+}
+
 // TODO: needs type declaration
-export function renderH({ element, attributes = {}, children = null }: any) {
-  // TODO: needs type declaration
-  // @ts-expect-error
+export function renderH({
+  element,
+  attributes = {},
+  children = null,
+}: RenderHProps) {
   const Comp = StyledHx[element.level] ?? StyledH5
   return (
     <Comp {...attributes} id={element.id}>

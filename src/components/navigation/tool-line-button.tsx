@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 import { makeGreenButton } from '../../helper/css'
 
-export const ToolLineButton = styled.a<{ top?: boolean }>`
+export const ToolLineButton = styled.a<{ isOnTop?: boolean }>`
   ${makeGreenButton}
   font-weight: bold;
   font-size: 0.9rem;
@@ -21,6 +21,6 @@ export const ToolLineButton = styled.a<{ top?: boolean }>`
   @media (min-width: ${(props) => props.theme.breakpoints.md}) {
     position: absolute;
     margin-left: 90px;
-    margin-top: ${(props) => (props.top ? '-34px' : '-15px')};
+    margin-top: ${(props) => (props.isOnTop ? '-34px' : '-15px')};
   }
 `

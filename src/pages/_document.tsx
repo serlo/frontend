@@ -8,7 +8,7 @@ import Document, {
 } from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
 
-import { GoogleAnalytics } from '@/components/google-analytics'
+import { GoogleAnalytics } from '@/components/scripts/google-analytics'
 
 const bodyStyles = {
   margin: 0,

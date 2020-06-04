@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 interface StyledImgProps {
   maxWidth?: number
@@ -12,11 +12,10 @@ export const StyledImg = styled.img<StyledImgProps>`
       : '100%'};
   height: auto;
   ${(props) =>
-    props.inline
-      ? `
-        max-width: 100%;
-        margin-left: auto;
-        margin-right: auto;
-      `
-      : ''}
+    props.inline &&
+    css`
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    `}
 `

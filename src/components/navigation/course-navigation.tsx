@@ -8,15 +8,27 @@ import { StyledA } from '../tags/styled-a'
 import { StyledLi } from '../tags/styled-li'
 import { StyledOl } from '../tags/styled-ol'
 
-// TODO: needs type declaration
-export type CourseNavigationProps = any
+interface CourseNavigationPagesProps {
+  alias: string
+  currentRevision: {
+    title: string
+  }
+}
+
+export interface CourseNavigationProps {
+  courseTitle: string
+  pageTitle: string
+  pages: CourseNavigationPagesProps[]
+  open: boolean
+  onOverviewButtonClick: (e: React.MouseEvent<HTMLAnchorElement>) => void
+}
 
 export function CourseNavigation({
   courseTitle,
   pageTitle,
   pages,
   open,
-  opener,
+  onOverviewButtonClick,
 }: CourseNavigationProps) {
   return (
     <Wrapper id="course-overview">
@@ -25,13 +37,14 @@ export function CourseNavigation({
       </CourseH1>
       {open ? (
         <StyledOl>
-          {/* TODO: needs type declaration */}
-          {pages.map((page: any) => (
+          {pages.map((page) => (
             <StyledLi key={page.alias}>
               <CourseA
                 active={pageTitle === page.currentRevision.title}
                 href={
-                  pageTitle === page.currentRevision.title ? null : page.alias
+                  pageTitle === page.currentRevision.title
+                    ? undefined
+                    : page.alias
                 }
               >
                 {page.currentRevision.title}
@@ -40,7 +53,7 @@ export function CourseNavigation({
           ))}
         </StyledOl>
       ) : (
-        <Button onClick={opener}>
+        <Button onClick={onOverviewButtonClick}>
           <FontAwesomeIcon icon={faListUl} /> Kursübersicht anzeigen
         </Button>
       )}

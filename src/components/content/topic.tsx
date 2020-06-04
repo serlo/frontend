@@ -22,7 +22,7 @@ export interface LinksInterface {
   articles?: LinkInterface[]
   videos?: LinkInterface[]
   applets?: LinkInterface[]
-  excercises?: LinkInterface[]
+  exercises?: LinkInterface[]
 }
 
 export enum TopicPurposes {
@@ -37,7 +37,7 @@ interface TopicProp {
   purpose?: TopicPurposes
   links: LinksInterface
   children?: TopicProp[]
-  exercises: any
+  exercises: any[]
   contentId: number
 }
 
@@ -63,7 +63,7 @@ export function Topic({ data, contentId }: TopicProps) {
             )}
           </Headline>
           <ToolLine>
-            <ToolLineButton top onClick={() => setOpen(true)}>
+            <ToolLineButton isOnTop onClick={() => setOpen(true)}>
               <FontAwesomeIcon icon={faShareAlt} size="1x" /> Teilen
             </ToolLineButton>
           </ToolLine>
@@ -86,8 +86,7 @@ export function Topic({ data, contentId }: TopicProps) {
             </React.Fragment>
           ))}
         {data.exercises &&
-          // TODO: needs type declaration
-          data.exercises.map((exercise: any, i: any) => (
+          data.exercises.map((exercise, i) => (
             <React.Fragment key={i}>
               {renderArticle(exercise.children)}
             </React.Fragment>

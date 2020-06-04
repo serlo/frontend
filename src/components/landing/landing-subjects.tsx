@@ -17,22 +17,22 @@ export function LandingSubjects() {
         <Subject
           url="/mathe"
           title="Mathematik lernen"
-          SubjectSVG={<MathSVG className="math" />}
+          subjectSVG={<MathSVG className="math" />}
         />
         <Subject
           url="/abc"
           title="Alphabetisierung"
-          SubjectSVG={<AbcSVG className="abc" />}
+          subjectSVG={<AbcSVG className="abc" />}
         />
         <Subject
           url="/nachhaltigkeit"
           title="Nachhaltigkeit lernen"
-          SubjectSVG={<SustainabilitySVG className="sus" />}
+          subjectSVG={<SustainabilitySVG className="sus" />}
         />
         <Subject
           url="/biologie"
           title="Biologie lernen"
-          SubjectSVG={<BiologySVG className="bio" />}
+          subjectSVG={<BiologySVG className="bio" />}
         />
       </SubjectsWrapper>
 
@@ -40,13 +40,13 @@ export function LandingSubjects() {
         <Subject
           url="/eltern"
           title="Einstieg für Eltern"
-          SubjectSVG={<BlankSVG />}
+          subjectSVG={<BlankSVG />}
           alwaysShowArrow
         />
         <Subject
           url="/lehrkraefte"
           title="Einstieg für LehrerInnen"
-          SubjectSVG={<BlankSVG />}
+          subjectSVG={<BlankSVG />}
           alwaysShowArrow
         />
       </SubjectsWrapper>
@@ -54,19 +54,21 @@ export function LandingSubjects() {
   )
 }
 
-// TODO: needs type declaration
-type SubjectProps = any
+interface SubjectProps {
+  url: string
+  title: string
+  subjectSVG: React.ReactNode
+  alwaysShowArrow?: boolean
+}
 
-function Subject(props: SubjectProps) {
-  const { url, title, SubjectSVG } = props
-
+function Subject({ url, title, subjectSVG, alwaysShowArrow }: SubjectProps) {
   return (
     <SubjectLink href={url}>
       {' '}
-      {SubjectSVG}
+      {subjectSVG}
       <Header>
         {title}
-        <StyledIcon alwaysShow={props.alwaysShowArrow}>
+        <StyledIcon alwaysShow={alwaysShowArrow}>
           <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
         </StyledIcon>
       </Header>
