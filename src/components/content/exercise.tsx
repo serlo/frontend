@@ -94,7 +94,7 @@ export function Exercise(props: ExerciseProps) {
           }}
           active={solutionVisible}
         >
-          <StyledSpan>{solutionVisible ? '▾ ' : '▸ '}</StyledSpan>Lösung{' '}
+          <StyledSpan>{solutionVisible ? '▾' : '▸'}&nbsp;</StyledSpan>Lösung{' '}
           {solutionVisible ? 'ausblenden' : 'anzeigen'}
         </SolutionToggle>
       )}
@@ -152,6 +152,7 @@ const SolutionToggle = styled.a<{ active: boolean }>`
   display: inline-block;
   cursor: pointer;
   margin-bottom: 16px;
+  word-wrap: normal;
 
   ${(props) =>
     props.active &&
