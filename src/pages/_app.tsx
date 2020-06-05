@@ -7,7 +7,7 @@ import React from 'react'
 import { ThemeProvider, createGlobalStyle } from 'styled-components'
 
 import { version } from '../../package.json'
-import { theme, Theme } from '@/theme'
+import { theme } from '@/theme'
 // eslint-disable-next-line import/no-unassigned-import
 import '../../public/_assets/fonts/karmilla.css'
 // eslint-disable-next-line import/no-unassigned-import
@@ -24,15 +24,14 @@ if (process.env.NEXT_PUBLIC_SENTRY_DSN !== undefined) {
 
 const FontFix = createGlobalStyle`
   h1,h2, main b {
-    letter-spacing: ${(props) =>
-      (props.theme as Theme).defaults.boldLetterSpacing};
+    letter-spacing: ${(props) => props.theme.defaults.boldLetterSpacing};
   }
   body {
-    letter-spacing: ${(props) =>
-      (props.theme as Theme).defaults.regularLetterSpacing};
+    letter-spacing: ${(props) => props.theme.defaults.regularLetterSpacing};
   }
 `
 
+// eslint-disable-next-line import/no-default-export
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <React.StrictMode>
