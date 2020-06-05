@@ -1,3 +1,4 @@
+import { default as NextLink } from 'next/link'
 import React from 'react'
 
 import { PrettyLinksContext } from '../pretty-links-context'
@@ -26,13 +27,22 @@ LinkProps) {
   const isExternal = element.href.indexOf('//') > -1
   const prettyLink = prettyLinks[element.href.replace('/', 'uuid')]?.alias
 
-  return (
-    <StyledA href={prettyLink ? prettyLink : element.href} {...attributes}>
-      {children}
-      {isExternal && <ExternalLink />}
-      {/* {isExternal && wrapExtInd(<ExternalLink />)} */}
-    </StyledA>
-  )
+  if (isExternal || !prettyLink) {
+    return (
+      <StyledA href={prettyLink ? prettyLink : element.href} {...attributes}>
+        {children}
+        <ExternalLink />
+      </StyledA>
+    )
+  } else {
+    return (
+      <NextLink href="/[...slug]" as={prettyLink}>
+        <StyledA href={prettyLink} {...attributes}>
+          {children}
+        </StyledA>
+      </NextLink>
+    )
+  }
 }
 
 // not used currently?

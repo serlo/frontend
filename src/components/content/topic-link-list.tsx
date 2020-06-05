@@ -85,7 +85,7 @@ export function TopicLinkList({ links, purpose }: LinksProps) {
                     href="/[...slug]"
                     as={article.url}
                   >
-                    <StyledLink>{article.title}</StyledLink>
+                    <StyledLink href={article.url}>{article.title}</StyledLink>
                   </Link>
                 )
               })}
