@@ -257,7 +257,7 @@ function collectTopicFolders(children: any) {
       )
       // TODO: needs type declaration
       .map((child: any) => {
-        return { title: child.name, url: `${child.alias ?? '/'}${child.id}` }
+        return { title: child.name, url: `${child.alias ?? `/${child.id}`}` }
       })
   )
 }
@@ -331,7 +331,7 @@ function collectSubfolders(children: any) {
       )
       // TODO: needs type declaration
       .map((child: any) => {
-        return { title: child.name, url: `${child.alias ?? '/'}${child.id}` }
+        return { title: child.name, url: `${child.alias ?? `/${child.id}`}` }
       })
   )
 }
