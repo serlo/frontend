@@ -193,7 +193,7 @@ export function convert(node: any): any {
             return {
               isCorrect: answer.isCorrect,
               content: convert(answer.content),
-              feedback: convert(answer.content),
+              feedback: convert(answer.feedback),
             }
           }),
         },
