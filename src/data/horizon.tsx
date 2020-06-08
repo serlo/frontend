@@ -7,7 +7,7 @@ export const horizonData = [
       'Wenn serlo.org deine Lieblingslernplattform ist freuen wir uns von dir zu erfahren, wieso! Klicke hier um uns eine Nachricht zu hinterlassen. ',
     url:
       'https://docs.google.com/forms/d/e/1FAIpQLSd0UO6KI_Q81zCP7i8qwNiA8QZZtofN7L1DWr1TqZ0gqC_l7g/viewform',
-    frequency: 3,
+    frequency: 1,
   },
   {
     title: 'Mitmachen bei Serlo',
@@ -16,7 +16,7 @@ export const horizonData = [
     text:
       'Hinter serlo.org stehen viele engagierte Menschen, die Bildung besser und gerechter machen wollen. Auch du kannst mitmachen! Klicke hier, um zu erfahren, wie du Teil der Serlo Community werden kannst.',
     url: '/mitmachen',
-    frequency: 3,
+    frequency: 1,
   },
   {
     title: 'Was heißt eigentlich “Serlo”?',
@@ -25,7 +25,7 @@ export const horizonData = [
     text:
       'Wusstest du schon, dass serlo.org nach einem Kloster in Nepal benannt ist? Dort hatte der Gründer von serlo.org die Idee für eine freie Lernplattform. Klick hier, um mehr über unsere Geschichte zu erfahren!',
     url: '/serlo-geschichte',
-    frequency: 3,
+    frequency: 1,
   },
 
   {
@@ -35,7 +35,7 @@ export const horizonData = [
     text:
       'Wie kann freie Bildung die Welt in der wir leben verändern? In diesem Video erzählt Serlo-Gründer Simon Köhl, warum alle Inhalte auf serlo.org kostenlos zur Verfügung stehen und von allen mitgestaltet werden können.',
     url: 'https://www.youtube.com/watch?v=2OjVWmAr5gE&feature=youtu.be&t=9',
-    frequency: 3,
+    frequency: 1,
   },
   {
     title: 'Serlo.org richtig nutzen',
@@ -44,7 +44,7 @@ export const horizonData = [
     text:
       'Serlo.org hat viele Features, die dir beim Lernen helfen. Klick hier für eine Übersicht der unterschiedlichen Lernfunktionen und erfahre in 3 Minuten, wie du mit serlo.org erfolgreich lernen kannst!',
     url: 'https://de.serlo.org/features',
-    frequency: 3,
+    frequency: 1,
   },
   {
     title: 'Bleib auf dem Laufenden!',
@@ -54,7 +54,7 @@ export const horizonData = [
       'Für Updates über neue Fächer, Lernfunktionen und Prüfungsaufgaben kannst du unseren Newsletter abonnieren. Einfach hier klicken und informiert bleiben!',
     url:
       'https://serlo.us7.list-manage.com/subscribe?u=23f4b04bf70ea485a766e532d&id=a7bb2bbc4f',
-    frequency: 3,
+    frequency: 1,
   },
   {
     title: 'Selbstständig lernen',
@@ -63,7 +63,7 @@ export const horizonData = [
     text:
       'Auf Serlo sind Themen so aufbereitet, dass du sie besonders leicht selbstständig lernen kannst. Klick hier, um mehr über unser pädagogisches Konzept zu erfahren!',
     url: 'https://de.serlo.org/paedagogik-konzept',
-    frequency: 3,
+    frequency: 1,
   },
   {
     title: 'Serlo Informatik im Aufbau',
@@ -72,7 +72,7 @@ export const horizonData = [
     text:
       'Hilf mit! Der Fachbereich Informatik auf serlo.org befindet sich im Aufbau und freut sich über deine Mitarbeit. Schau dir doch mal die bestehenden Inhalte an und melde dich bei uns! :-)',
     url: 'https://de.serlo.org/informatik',
-    frequency: 3,
+    frequency: 1,
   },
   {
     title: 'Vögel - Meister der Lüfte',
@@ -82,7 +82,7 @@ export const horizonData = [
       'Achtung - Wortwitz: Vögel sind solche Überflieger. ;-) Aber wieso können sie eigentlich fliegen? Die Antwort dazu und noch vieles mehr findest du hier, bei Serlo Biologie',
     url:
       'https://de.serlo.org/biologie/vielfalt-lebewesen/wirbeltiere/voegel-koennen-voegel-fliegen',
-    frequency: 2,
+    frequency: 0.3,
   },
   {
     title: 'Präsentieren wie ein Profi',
@@ -91,7 +91,7 @@ export const horizonData = [
     text:
       'Du hast bald eine wichtige Präsentation und möchtest dich eigentlich nur auf den Inhalt konzentrieren? Hier zeigt dir Serlo Informatik, wie du ganz einfach ein schönes und übersichtliches Layout hin bekommst.',
     url: 'https://de.serlo.org/64855',
-    frequency: 2,
+    frequency: 0.3,
   },
   {
     title: 'Plant Buddies',
@@ -100,7 +100,7 @@ export const horizonData = [
     text:
       'Du wolltest schon immer mal deine Pflanzen verkuppeln? Klingt komisch? Ist aber ganz einfach, mit dem Online-Dating-Tool für Pflanzen von Serlo Nachhaltigkeit: Plant-Buddies.',
     url: 'https://plantbuddies.serlo.org/',
-    frequency: 2,
+    frequency: 0.3,
   },
   {
     title: 'Salatturm zum selbst bauen',
@@ -109,7 +109,7 @@ export const horizonData = [
     text:
       'Wenig Platz zu Hause, aber total Lust auf frischen, selbst angebauten Salat? Kein Problem mit dieser Anleitung von Serlo Nachhaltigkeit zum Bau eines Salatturms.',
     url: 'https://de.serlo.org/36733',
-    frequency: 2,
+    frequency: 0.3,
   },
 ]
 

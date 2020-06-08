@@ -1,3 +1,4 @@
+import { HorizonEntry } from '../components/content/horizon'
 import { horizonData } from '../data/horizon'
 import { createBreadcrumbs } from './create-breadcrumbs'
 import { createData } from './create-data'
@@ -18,7 +19,7 @@ interface ProcessedResponse {
   navigation: object
   data: any // TODO:
   license: string
-  horizonIndices: Array<object>
+  horizonIndices: Array<number>
 }
 
 export function processResponse(reqData: ReqData): ProcessedResponse {
@@ -29,19 +30,19 @@ export function processResponse(reqData: ReqData): ProcessedResponse {
     navigation: createNavigation(reqData.uuid),
     data: createData(reqData.uuid),
     license: createLicense(reqData.uuid),
-    horizonIndices: shuffle(Object.keys(horizonData)),
+    horizonIndices: chooseHorizonEntries(
+      Object.keys(horizonData as HorizonEntry[])
+    ),
   }
 }
 
-// TODO:
-function shuffle(a: any[]) {
-  let j, x, i
-  for (i = a.length - 1; i > 0; i--) {
-    const r = Math.random()
-    j = Math.floor(r * (i + 1))
-    x = a[i]
-    a[i] = a[j]
-    a[j] = x
+function chooseHorizonEntries(entries: string[]) {
+  const selected = []
+
+  while (selected.length < 3) {
+    const index = parseInt(entries[Math.floor(Math.random() * entries.length)])
+    if (Math.random() > horizonData[index].frequency) continue
+    if (selected.indexOf(index) === -1) selected.push(index)
   }
-  return a
+  return selected
 }

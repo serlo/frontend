@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import { makePadding } from '../../helper/css'
 
-interface HorizonEntry {
+export interface HorizonEntry {
   title: string
   imageUrl: string
   text: string
@@ -11,7 +11,7 @@ interface HorizonEntry {
   frequency: number
 }
 
-interface HorizonProps {
+export interface HorizonProps {
   entries: HorizonEntry[]
 }
 
