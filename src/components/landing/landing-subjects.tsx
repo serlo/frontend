@@ -45,7 +45,7 @@ export function LandingSubjects() {
         />
         <Subject
           url="/lehrkraefte"
-          title="Einstieg für LehrerInnen"
+          title="Einstieg für Lehrer*innen"
           subjectSVG={<BlankSVG />}
           alwaysShowArrow
         />

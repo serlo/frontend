@@ -120,7 +120,7 @@ export default function DonationPage() {
           </p>
           <StyledUl>
             <StyledLi>Serverkosten</StyledLi>
-            <StyledLi>Betreuung ehrenamtlicher AutorInnen</StyledLi>
+            <StyledLi>Betreuung ehrenamtlicher Autor*innen</StyledLi>
             <StyledLi>Weiterentwicklung der Plattform</StyledLi>
           </StyledUl>
           <p>
