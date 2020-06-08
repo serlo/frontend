@@ -58,7 +58,9 @@ const NProgressStyles = createGlobalStyle`
     right: 0px;
     width: 100px;
     height: 100%;
-    box-shadow: 0 0 10px ${(props) => props.theme.colors.brand}, 0 0 5px ${(props) => props.theme.colors.brand};
+    box-shadow: 0 0 10px ${(props) => props.theme.colors.brand}, 0 0 5px ${(
+  props
+) => props.theme.colors.brand};
     opacity: 1.0;
 
     -webkit-transform: rotate(3deg) translate(0px, -4px);
@@ -117,7 +119,6 @@ Router.events.on('routeChangeError', () => NProgress.done())
 
 // eslint-disable-next-line import/no-default-export
 export default function App({ Component, pageProps }: AppProps) {
-
   return (
     <React.StrictMode>
       <ThemeProvider theme={theme}>
