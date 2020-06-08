@@ -13,12 +13,7 @@ export interface LinkProps {
   children: React.ReactNode
 }
 
-export function Link({
-  element,
-  attributes = {},
-  children = null,
-}: // wrapExtInd = nowrap
-LinkProps) {
+export function Link({ element, attributes = {}, children = null }: LinkProps) {
   const prettyLinks = React.useContext(PrettyLinksContext)
 
   if (!element.href)
@@ -31,7 +26,7 @@ LinkProps) {
     return (
       <StyledA href={prettyLink ? prettyLink : element.href} {...attributes}>
         {children}
-        <ExternalLink />
+        {isExternal && <ExternalLink />}
       </StyledA>
     )
   } else {
@@ -44,6 +39,3 @@ LinkProps) {
     )
   }
 }
-
-// not used currently?
-// const nowrap = (comp: any) => comp
