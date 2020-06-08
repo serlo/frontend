@@ -4,10 +4,11 @@ import styled from 'styled-components'
 import { makePadding } from '../../helper/css'
 
 interface HorizonEntry {
-  imageUrl: string
   title: string
+  imageUrl: string
   text: string
   url: string
+  frequency: number
 }
 
 interface HorizonProps {
@@ -17,7 +18,7 @@ interface HorizonProps {
 export function Horizon({ entries }: HorizonProps) {
   return (
     <Wrapper>
-      {entries.map((horizonEntry, index) => {
+      {entries.slice(0, 3).map((horizonEntry, index) => {
         return (
           <Item href={horizonEntry.url} key={index}>
             <Image alt={horizonEntry.title} src={horizonEntry.imageUrl} />
