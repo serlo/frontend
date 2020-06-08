@@ -10,12 +10,14 @@ import { makePadding, makeDefaultButton } from '../../helper/css'
 import { serloDomain } from '../../serlo-domain'
 import { StyledA } from '../tags/styled-a'
 
+export interface LicenseNoticeData {
+  title: string
+  url: string
+  id: number
+}
+
 interface LicenseNoticeProps {
-  data: {
-    title: string
-    url: string
-    id: number
-  }
+  data: LicenseNoticeData
   minimal?: boolean
 }
 

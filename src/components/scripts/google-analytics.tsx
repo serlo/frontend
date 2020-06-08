@@ -1,5 +1,5 @@
 export function GoogleAnalytics() {
-  if (process.env.GA_TRACKING_ID === undefined) return ''
+  if (process.env.GA_TRACKING_ID === undefined) return null
   return (
     <script
       dangerouslySetInnerHTML={{
