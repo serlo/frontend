@@ -36,7 +36,7 @@ export default function Landing() {
         <Col>
           <p>
             Wir suchen Lehrkräfte mit Begeisterung für ihr Fach. Werden Sie
-            AutorIn auf serlo.org, erstellen Sie <b>neue Inhalte</b> und helfen
+            Autor*in auf serlo.org, erstellen Sie <b>neue Inhalte</b> und helfen
             Sie uns, die <b>Qualität</b> der Lernplattform zu sichern.
           </p>
           <Button href="/community">
@@ -69,7 +69,7 @@ export default function Landing() {
         <Col>
           <p>
             Bildung gehört uns allen! Werden Sie Mitglied in unserer
-            Organisation Serlo Education e.V. und so zu MitherausgeberIn der
+            Organisation Serlo Education e.V. und so zu Mitherausgeber*in der
             freien Lernplattform.
           </p>
           <Button href="/beitreten">
