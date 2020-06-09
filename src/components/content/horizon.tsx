@@ -18,7 +18,7 @@ export interface HorizonProps {
 export function Horizon({ entries }: HorizonProps) {
   return (
     <Wrapper>
-      {entries.slice(0, 3).map((horizonEntry, index) => {
+      {entries.map((horizonEntry, index) => {
         return (
           <Item href={horizonEntry.url} key={index}>
             <Image alt={horizonEntry.title} src={horizonEntry.imageUrl} />
