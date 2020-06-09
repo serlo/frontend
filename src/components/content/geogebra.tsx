@@ -5,7 +5,7 @@ export interface GeogebraProps {
   id: string
 }
 
-interface responseData {
+interface ResponseData {
   responses: {
     response: {
       item: {
@@ -15,7 +15,6 @@ interface responseData {
     }
   }
 }
-type testData = Response | PromiseLike<Response>
 
 export function Geogebra({ id }: GeogebraProps) {
   const [data, setData] = React.useState<{ ratio: number } | undefined>(
@@ -45,10 +44,9 @@ export function Geogebra({ id }: GeogebraProps) {
       }),
     })
       .then((res) => res.json())
-      .then((res) => {
+      .then((res: ResponseData) => {
         try {
-          const _res = res as responseData
-          const data = _res.responses.response.item
+          const data = res.responses.response.item
 
           if (data) {
             setData({ ratio: data.width / data.height })
