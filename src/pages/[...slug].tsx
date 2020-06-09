@@ -47,11 +47,12 @@ const NewsletterPopup = dynamic<{}>(
 // TODO: needs type declaration
 type PageViewProps = any
 
-// TODO: needs type declaration
-const cache: any = {}
-
 const PageView: NextPage<PageViewProps> = (props) => {
-  cache[props.data.alias] = JSON.stringify(props)
+  try {
+    sessionStorage.setItem(props.data.alias, JSON.stringify(props))
+  } catch (e) {
+    //
+  }
   const { data } = props
   const {
     contentId,
@@ -212,9 +213,13 @@ PageView.getInitialProps = async (props: any) => {
     return { data, origin }
   } else {
     const url: string = props.query.slug.join('/')
-    const fromCache = cache['/' + url]
-    if (fromCache) {
-      return JSON.parse(fromCache)
+    try {
+      const fromCache = sessionStorage.getItem('/' + url)
+      if (fromCache) {
+        return JSON.parse(fromCache)
+      }
+    } catch (e) {
+      //
     }
     const origin = window.location.host
     const protocol = window.location.protocol
