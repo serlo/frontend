@@ -213,8 +213,7 @@ PageView.getInitialProps = async (props: any) => {
     return { data, origin }
   } else {
     const url = '/' + (props.query.slug.join('/') as string)
-    // @ts-expect-error
-    const googleAnalytics = window.ga
+    const googleAnalytics = (window as any).ga
     if (googleAnalytics) {
       googleAnalytics('set', 'page', url)
       googleAnalytics('send', 'pageview')
