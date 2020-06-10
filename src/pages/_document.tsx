@@ -99,9 +99,7 @@ export default class MyDocument extends Document {
         <body style={bodyStyles}>
           <Main />
           <NextScript />
-          {process.env.NEXT_PUBLIC_GA_TRACKING_ID !== undefined ? (
-            <GoogleAnalytics />
-          ) : null}
+          <GoogleAnalytics />
         </body>
       </Html>
     )

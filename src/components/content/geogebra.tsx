@@ -5,6 +5,17 @@ export interface GeogebraProps {
   id: string
 }
 
+interface ResponseData {
+  responses: {
+    response: {
+      item: {
+        width: number
+        height: number
+      }
+    }
+  }
+}
+
 export function Geogebra({ id }: GeogebraProps) {
   const [data, setData] = React.useState<{ ratio: number } | undefined>(
     undefined
@@ -33,9 +44,10 @@ export function Geogebra({ id }: GeogebraProps) {
       }),
     })
       .then((res) => res.json())
-      .then((res) => {
+      .then((res: ResponseData) => {
         try {
           const data = res.responses.response.item
+
           if (data) {
             setData({ ratio: data.width / data.height })
           }

@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import { serloDomain } from '../../serlo-domain'
 
@@ -55,7 +55,7 @@ const TimestampText = styled.span`
   margin-left: 5px;
 `
 
-const Item = styled.div<{ readed: boolean; theme: any }>`
+const Item = styled.div<{ readed: boolean }>`
   margin: 10px 0;
   padding: 24px;
   &:nth-child(even) {
@@ -64,18 +64,18 @@ const Item = styled.div<{ readed: boolean; theme: any }>`
   ${(props) =>
     props.readed
       ? ''
-      : `
-    font-weight: 600;
-    &:before {
-      content: '';
-      display: inline-block;
-      background: ${props.theme.colors.brand};
-      border-radius: 50%;
-      width: 10px;
-      height: 10px;
-      margin-right: 7px;
-    }
-  `}
+      : css`
+          font-weight: 600;
+          &:before {
+            content: '';
+            display: inline-block;
+            background: ${props.theme.colors.brand};
+            border-radius: 50%;
+            width: 10px;
+            height: 10px;
+            margin-right: 7px;
+          }
+        `}
 `
 
 const Body = styled.span`

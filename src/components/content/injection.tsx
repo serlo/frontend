@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 
 import { renderArticle } from '../../schema/article-renderer'
 import { StyledP } from '../tags/styled-p'
-import { LicenseNotice } from './license-notice'
+import { LicenseNotice, LicenseNoticeData } from './license-notice'
 
 export interface InjectionProps {
   href: string
@@ -11,7 +11,9 @@ export interface InjectionProps {
 export function Injection({ href }: InjectionProps) {
   //TODO: define and export data types somewhere
   const [value, setValue] = React.useState<any>(undefined)
-  const [license, setLicense] = React.useState(undefined)
+  const [license, setLicense] = React.useState<undefined | LicenseNoticeData>(
+    undefined
+  )
   useEffect(() => {
     const origin = window.location.host
     const protocol = window.location.protocol
@@ -37,7 +39,7 @@ export function Injection({ href }: InjectionProps) {
     return (
       <>
         {renderArticle(value.children, false)}
-        {license && <LicenseNotice data={license} />}
+        {license !== undefined && <LicenseNotice data={license} />}
       </>
     )
   }
