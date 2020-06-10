@@ -230,7 +230,7 @@ PageView.getInitialProps = async (props: any) => {
     const origin = window.location.host
     const protocol = window.location.protocol
     const res = await fetch(
-      `${protocol}//${origin}/api/frontend${encodeURIComponent(url)}`
+      `${protocol}//${origin}/api/frontend${encodeURI(url)}`
     )
     const data = await res.json()
     return { data, origin }
