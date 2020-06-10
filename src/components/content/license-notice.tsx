@@ -11,12 +11,16 @@ import { serloDomain } from '../../serlo-domain'
 import { StyledA } from '../tags/styled-a'
 
 interface LicenseNoticeProps {
-  data: any
+  data: {
+    title: string
+    url: string
+    id: number
+  }
   minimal?: boolean
 }
 
-export function LicenseNotice(props: LicenseNoticeProps) {
-  const { data, minimal } = props
+export function LicenseNotice({ data, minimal }: LicenseNoticeProps) {
+
   // only link license
   const titleParts = data.title.split('CC')
   const text = titleParts.length === 2 ? titleParts[0] : ''

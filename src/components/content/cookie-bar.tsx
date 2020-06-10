@@ -3,9 +3,16 @@ import styled from 'styled-components'
 
 import { serloDomain } from '../../serlo-domain'
 
+
+interface localStorageData {
+  revision: string
+  showEvent: boolean
+  consentEvent: boolean
+}
+
 export function CookieBar() {
   const [loaded, setLoaded] = React.useState(false)
-  const [revision, setRevision] = React.useState(undefined)
+  const [revision, setRevision] = React.useState<undefined | string>(undefined)
 
   React.useEffect(() => {
     // load revision, check localStorage
@@ -15,14 +22,15 @@ export function CookieBar() {
         window.location.host +
         '/api/frontend/privacy'
     )
-      .then((res) => res.json())
+      .then((res) => res.json() )
       .then((data) => {
         try {
+          const revisionsArray = data as string[]
           const localInfo = localStorage.getItem('consent')
-          const json = localInfo ? JSON.parse(localInfo) : {}
-          if (json.revision !== data[0]) {
+          const json = localInfo ? JSON.parse(localInfo) as localStorageData : null
+          if (json && json.revision !== revisionsArray[0]) {
             setLoaded(true)
-            setRevision(data[0])
+            setRevision(revisionsArray[0])
           }
         } catch (e) {
           //
@@ -44,14 +52,10 @@ export function CookieBar() {
       einverstanden.
       <CookieButton
         onClick={() => {
-          try {
-            localStorage.setItem(
-              'consent',
-              JSON.stringify({ revision, showEvent: true, consentEvent: true })
-            )
-          } catch (e) {
-            //
-          }
+          localStorage.setItem(
+            'consent',
+            JSON.stringify({ revision, showEvent: true, consentEvent: true })
+          )
           setLoaded(false)
         }}
       >
