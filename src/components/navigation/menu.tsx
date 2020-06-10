@@ -1,6 +1,6 @@
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Tippy, { useSingleton } from '@tippyjs/react'
+import Tippy, { TippyProps, useSingleton } from '@tippyjs/react'
 import React from 'react'
 import styled, { css } from 'styled-components'
 
@@ -42,8 +42,7 @@ export function Menu(props: MenuProps) {
 
 interface EntryProps {
   link: MenuLink
-  // TODO: SingletonObject not exported from Tippy?
-  target: any
+  target: TippyProps['singleton']
 }
 
 function Entry({ link, target }: EntryProps) {
