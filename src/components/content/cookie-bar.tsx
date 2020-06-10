@@ -26,9 +26,9 @@ export function CookieBar() {
         try {
           const revisionsArray = data as string[]
           const localInfo = localStorage.getItem('consent')
-        const json = localInfo
-          ? (JSON.parse(localInfo) as LocalStorageData)
-          : null
+          const json = localInfo
+            ? (JSON.parse(localInfo) as LocalStorageData)
+            : null
           if (json && json.revision !== revisionsArray[0]) {
             setLoaded(true)
             setRevision(revisionsArray[0])
