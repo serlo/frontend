@@ -364,11 +364,10 @@ export function renderLi({ attributes = {}, children = null }: any) {
 
 // TODO: needs type declaration
 export function renderTable({ attributes = {}, children = null }: any) {
-  const { key, ...otherAttribs } = attributes
   return (
-    <TableWrapper key={key}>
+    <TableWrapper {...attributes}>
       <StyledTable>
-        <tbody {...otherAttribs}>{children}</tbody>
+        <tbody>{children}</tbody>
       </StyledTable>
     </TableWrapper>
   )

@@ -3,9 +3,15 @@ import styled from 'styled-components'
 
 import { serloDomain } from '../../serlo-domain'
 
+interface LocalStorageData {
+  revision: string
+  showEvent: boolean
+  consentEvent: boolean
+}
+
 export function CookieBar() {
   const [loaded, setLoaded] = React.useState(false)
-  const [revision, setRevision] = React.useState(undefined)
+  const [revision, setRevision] = React.useState<undefined | string>(undefined)
 
   React.useEffect(() => {
     // load revision, check localStorage
@@ -17,11 +23,18 @@ export function CookieBar() {
     )
       .then((res) => res.json())
       .then((data) => {
-        const localInfo = localStorage.getItem('consent')
-        const json = localInfo ? JSON.parse(localInfo) : {}
-        if (json.revision !== data[0]) {
-          setLoaded(true)
-          setRevision(data[0])
+        try {
+          const revisionsArray = data as string[]
+          const localInfo = localStorage.getItem('consent')
+          const json = localInfo
+            ? (JSON.parse(localInfo) as LocalStorageData)
+            : null
+          if (json && json.revision !== revisionsArray[0]) {
+            setLoaded(true)
+            setRevision(revisionsArray[0])
+          }
+        } catch (e) {
+          //
         }
       })
   }, [loaded])

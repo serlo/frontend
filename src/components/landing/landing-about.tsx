@@ -24,7 +24,7 @@ export function LandingAbout() {
           <StyledLi>tausende Übungsaufgaben mit Musterlösungen</StyledLi>
         </StyledUl>
         <p>
-          Wir ermöglichen SchülerInnen und Studierenden selbständig und im
+          Wir ermöglichen Schüler*innen und Studierenden selbständig und im
           eigenen Tempo zu lernen – unabhängig von den finanziellen
           Möglichkeiten ihrer Eltern, denn serlo.org ist und bleibt{' '}
           <b>komplett kostenlos</b>.

@@ -10,13 +10,18 @@ import { makePadding, makeDefaultButton } from '../../helper/css'
 import { serloDomain } from '../../serlo-domain'
 import { StyledA } from '../tags/styled-a'
 
+export interface LicenseNoticeData {
+  title: string
+  url: string
+  id: number
+}
+
 interface LicenseNoticeProps {
-  data: any
+  data: LicenseNoticeData
   minimal?: boolean
 }
 
-export function LicenseNotice(props: LicenseNoticeProps) {
-  const { data, minimal } = props
+export function LicenseNotice({ data, minimal }: LicenseNoticeProps) {
   // only link license
   const titleParts = data.title.split('CC')
   const text = titleParts.length === 2 ? titleParts[0] : ''
