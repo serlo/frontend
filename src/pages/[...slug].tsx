@@ -212,9 +212,15 @@ PageView.getInitialProps = async (props: any) => {
 
     return { data, origin }
   } else {
-    const url: string = props.query.slug.join('/')
+    const url = '/' + (props.query.slug.join('/') as string)
+    // @ts-expect-error
+    const googleAnalytics = window.ga
+    if (googleAnalytics) {
+      googleAnalytics('set', 'page', 'url')
+      googleAnalytics('send', 'pageview')
+    }
     try {
-      const fromCache = sessionStorage.getItem('/' + url)
+      const fromCache = sessionStorage.getItem(url)
       if (fromCache) {
         return JSON.parse(fromCache)
       }
@@ -224,7 +230,7 @@ PageView.getInitialProps = async (props: any) => {
     const origin = window.location.host
     const protocol = window.location.protocol
     const res = await fetch(
-      `${protocol}//${origin}/api/frontend/${encodeURIComponent(url)}`
+      `${protocol}//${origin}/api/frontend${encodeURIComponent(url)}`
     )
     const data = await res.json()
     return { data, origin }
