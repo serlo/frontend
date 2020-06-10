@@ -17,11 +17,15 @@ export function CookieBar() {
     )
       .then((res) => res.json())
       .then((data) => {
-        const localInfo = localStorage.getItem('consent')
-        const json = localInfo ? JSON.parse(localInfo) : {}
-        if (json.revision !== data[0]) {
-          setLoaded(true)
-          setRevision(data[0])
+        try {
+          const localInfo = localStorage.getItem('consent')
+          const json = localInfo ? JSON.parse(localInfo) : {}
+          if (json.revision !== data[0]) {
+            setLoaded(true)
+            setRevision(data[0])
+          }
+        } catch (e) {
+          //
         }
       })
   }, [loaded])
@@ -40,10 +44,14 @@ export function CookieBar() {
       einverstanden.
       <CookieButton
         onClick={() => {
-          localStorage.setItem(
-            'consent',
-            JSON.stringify({ revision, showEvent: true, consentEvent: true })
-          )
+          try {
+            localStorage.setItem(
+              'consent',
+              JSON.stringify({ revision, showEvent: true, consentEvent: true })
+            )
+          } catch (e) {
+            //
+          }
           setLoaded(false)
         }}
       >
