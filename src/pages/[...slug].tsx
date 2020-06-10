@@ -216,7 +216,7 @@ PageView.getInitialProps = async (props: any) => {
     // @ts-expect-error
     const googleAnalytics = window.ga
     if (googleAnalytics) {
-      googleAnalytics('set', 'page', 'url')
+      googleAnalytics('set', 'page', url)
       googleAnalytics('send', 'pageview')
     }
     try {
