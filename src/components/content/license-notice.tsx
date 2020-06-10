@@ -20,7 +20,6 @@ interface LicenseNoticeProps {
 }
 
 export function LicenseNotice({ data, minimal }: LicenseNoticeProps) {
-
   // only link license
   const titleParts = data.title.split('CC')
   const text = titleParts.length === 2 ? titleParts[0] : ''

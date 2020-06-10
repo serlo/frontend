@@ -3,7 +3,6 @@ import styled from 'styled-components'
 
 import { serloDomain } from '../../serlo-domain'
 
-
 interface localStorageData {
   revision: string
   showEvent: boolean
@@ -22,12 +21,14 @@ export function CookieBar() {
         window.location.host +
         '/api/frontend/privacy'
     )
-      .then((res) => res.json() )
+      .then((res) => res.json())
       .then((data) => {
         try {
           const revisionsArray = data as string[]
           const localInfo = localStorage.getItem('consent')
-          const json = localInfo ? JSON.parse(localInfo) as localStorageData : null
+        const json = localInfo
+          ? (JSON.parse(localInfo) as localStorageData)
+          : null
           if (json && json.revision !== revisionsArray[0]) {
             setLoaded(true)
             setRevision(revisionsArray[0])

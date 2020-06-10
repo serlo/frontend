@@ -55,7 +55,7 @@ const TimestampText = styled.span`
   margin-left: 5px;
 `
 
-const Item = styled.div<{ readed: boolean}>`
+const Item = styled.div<{ readed: boolean }>`
   margin: 10px 0;
   padding: 24px;
   &:nth-child(even) {
@@ -65,17 +65,17 @@ const Item = styled.div<{ readed: boolean}>`
     props.readed
       ? ''
       : css`
-    font-weight: 600;
-    &:before {
-      content: '';
-      display: inline-block;
-      background: ${props.theme.colors.brand};
-      border-radius: 50%;
-      width: 10px;
-      height: 10px;
-      margin-right: 7px;
-    }
-  `}
+          font-weight: 600;
+          &:before {
+            content: '';
+            display: inline-block;
+            background: ${props.theme.colors.brand};
+            border-radius: 50%;
+            width: 10px;
+            height: 10px;
+            margin-right: 7px;
+          }
+        `}
 `
 
 const Body = styled.span`

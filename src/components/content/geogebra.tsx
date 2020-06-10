@@ -49,7 +49,7 @@ export function Geogebra({ id }: GeogebraProps) {
         try {
           const _res = res as responseData
           const data = _res.responses.response.item
-          
+
           if (data) {
             setData({ ratio: data.width / data.height })
           }
