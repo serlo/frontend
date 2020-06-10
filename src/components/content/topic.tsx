@@ -6,9 +6,9 @@ import styled, { css } from 'styled-components'
 import { makeMargin } from '../../helper/css'
 import { renderArticle } from '../../schema/article-renderer'
 import { ShareModal } from '../navigation/share-modal'
-import { ToolLine } from '../navigation/tool-line'
-import { ToolLineButton } from '../navigation/tool-line-button'
-import { Toolbox } from '../navigation/toolbox'
+import { UserToolsMobileButton } from '../navigation/tool-line-button'
+import { UserTools } from '../navigation/user-tools'
+import { UserToolsMobile } from '../navigation/user-tools-mobile'
 import { TopicLinkList } from './topic-link-list'
 
 export interface LinkInterface {
@@ -30,7 +30,7 @@ export enum TopicPurposes {
   detail,
 }
 
-interface TopicProp {
+export interface TopicProp {
   title: string
   url?: string
   description: any
@@ -38,7 +38,7 @@ interface TopicProp {
   links: LinksInterface
   children?: TopicProp[]
   exercises: any[]
-  contentId: number
+  id: number
 }
 
 export interface TopicProps {
@@ -62,11 +62,11 @@ export function Topic({ data, contentId }: TopicProps) {
               </span>
             )}
           </Headline>
-          <ToolLine>
-            <ToolLineButton isOnTop onClick={() => setOpen(true)}>
+          <UserToolsMobile>
+            <UserToolsMobileButton isOnTop onClick={() => setOpen(true)}>
               <FontAwesomeIcon icon={faShareAlt} size="1x" /> Teilen
-            </ToolLineButton>
-          </ToolLine>
+            </UserToolsMobileButton>
+          </UserToolsMobile>
         </>
       ) : (
         <h2>
@@ -101,12 +101,12 @@ export function Topic({ data, contentId }: TopicProps) {
 
       {data.purpose === TopicPurposes.detail && (
         <>
-          <ToolLine>
-            <ToolLineButton onClick={() => setOpen(true)}>
+          <UserToolsMobile>
+            <UserToolsMobileButton onClick={() => setOpen(true)}>
               <FontAwesomeIcon icon={faShareAlt} size="1x" /> Teilen
-            </ToolLineButton>
-          </ToolLine>
-          <Toolbox onShare={() => setOpen(true)} hideEdit />
+            </UserToolsMobileButton>
+          </UserToolsMobile>
+          <UserTools onShare={() => setOpen(true)} hideEdit />
           <ShareModal
             open={open}
             onClose={() => setOpen(false)}

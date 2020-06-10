@@ -1,19 +1,32 @@
-import { faShareAlt, faNewspaper } from '@fortawesome/free-solid-svg-icons'
+import {
+  faGraduationCap,
+  faNewspaper,
+  faPlayCircle,
+  faCubes,
+  faCircle,
+  faFolderOpen,
+  faShareAlt,
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import dynamic from 'next/dynamic'
 import React from 'react'
 import styled from 'styled-components'
 
 import { HSpace } from './h-space'
+import { Topic, TopicProp } from './topic'
+import {
+  LicenseNotice,
+  LicenseNoticeData,
+} from '@/components/content/license-notice'
 import type { CourseFooterProps } from '@/components/navigation/course-footer'
 import type {
   CourseNavigationProps,
   CourseNavigationPagesProps,
 } from '@/components/navigation/course-navigation'
 import { ShareModal } from '@/components/navigation/share-modal'
-import { ToolLine } from '@/components/navigation/tool-line'
-import { ToolLineButton } from '@/components/navigation/tool-line-button'
-import { Toolbox } from '@/components/navigation/toolbox'
+import { UserToolsMobileButton } from '@/components/navigation/tool-line-button'
+import { UserTools } from '@/components/navigation/user-tools'
+import { UserToolsMobile } from '@/components/navigation/user-tools-mobile'
 import { StyledH1 } from '@/components/tags/styled-h1'
 import { renderArticle } from '@/schema/article-renderer'
 
@@ -28,19 +41,23 @@ const CourseFooter = dynamic<CourseFooterProps>(() =>
   )
 )
 
-interface ArticlePageProps {
-  data: EntityData | CourseData
+interface EntityProps {
+  data: EntityData | CourseData | TopicProp
   contentId: number
-  contentType: 'Article' | 'Page' | 'CoursePage'
+  contentType:
+    | 'Article'
+    | 'Page'
+    | 'CoursePage'
+    | 'Video'
+    | 'Applet'
+    | 'Exercise'
+    | 'ExerciseGroup'
+    | 'TaxonomyTerm'
+  license: LicenseNoticeData
 }
 
 interface EditorState {
   children: unknown[]
-}
-
-interface CourseData extends EntityData {
-  courseTitle: string
-  pages: CourseNavigationPagesProps[]
 }
 
 interface EntityData {
@@ -49,15 +66,23 @@ interface EntityData {
   value: EditorState
 }
 
-function isCourse(data: ArticlePageProps['data']): data is CourseData {
+interface CourseData extends EntityData {
+  courseTitle: string
+  pages: CourseNavigationPagesProps[]
+}
+
+function isCourse(data: EntityProps['data']): data is CourseData {
   return (data as CourseData).pages !== undefined
 }
 
-export function ArticlePage({
-  data,
-  contentId,
-  contentType,
-}: ArticlePageProps) {
+function isTaxonomyTerm(
+  contentType: EntityProps['contentType'],
+  data: EntityProps['data']
+): data is TopicProp {
+  return (data as TopicProp) && contentType === 'TaxonomyTerm'
+}
+
+export function Entity({ data, contentId, contentType, license }: EntityProps) {
   const [open, setOpen] = React.useState(false)
 
   const [courseNavOpen, setCourseNavOpen] = React.useState(false)
@@ -68,81 +93,47 @@ export function ArticlePage({
     setCourseNavOpen(true)
   }
 
-  if (isCourse(data)) {
-    const nextIndex =
-      1 +
-      data.pages.findIndex((page) => page.currentRevision.title === data.title)!
-    const nextCoursePageHref =
-      nextIndex >= data.pages.length ? '' : data.pages[nextIndex].alias
-
+  if (isTaxonomyTerm(contentType, data)) {
     return (
-      <>
-        <CourseNavigation
-          open={courseNavOpen}
-          onOverviewButtonClick={openCourseNav}
-          courseTitle={data.courseTitle}
-          pageTitle={data.title}
-          pages={data.pages}
-        />
-        {renderTitle()}
-        {renderToolLine()}
-        {/* @ts-expect-error */}
-        {renderArticle(data.value.children)}
-
-        <CourseFooter
-          onOverviewButtonClick={openCourseNav}
-          nextHref={nextCoursePageHref}
-        />
-        <HSpace amount={20} />
-
-        {renderToolbox()}
-        {renderShareModal()}
-      </>
-    )
-  } else {
-    return (
-      <>
-        {renderTitle()}
-        {renderToolLine()}
-        {/* @ts-expect-error */}
-        {renderArticle(data.value.children)}
-        <HSpace amount={20} />
-
-        {renderToolLine()}
-
-        {renderToolbox()}
-        {renderShareModal()}
-      </>
+      <main>
+        <Topic data={data} contentId={contentId} />
+      </main>
     )
   }
 
-  function renderTitle() {
-    return (
-      <StyledH1 extraMarginTop>
-        {data.title}
-        {contentType === 'Article' && (
-          <span title="Artikel">
-            {' '}
-            <StyledIcon icon={faNewspaper} />{' '}
-          </span>
-        )}
-      </StyledH1>
-    )
-  }
+  return (
+    <main>
+      {renderCourseNavigation()}
 
-  function renderToolLine() {
+      {renderStyledH1()}
+      {renderUserToolsMobile()}
+      {/* @ts-expect-error */}
+      {renderArticle(data.value.children)}
+
+      {renderCourseFooter()}
+
+      <HSpace amount={20} />
+      {renderUserToolsMobile()}
+      {renderUserTools()}
+      {renderShareModal()}
+
+      {license && <LicenseNotice data={license} />}
+    </main>
+  )
+
+  function renderUserToolsMobile() {
     return (
-      <ToolLine>
-        <ToolLineButton isOnTop onClick={() => setOpen(true)}>
+      <UserToolsMobile>
+        <UserToolsMobileButton isOnTop onClick={() => setOpen(true)}>
           <FontAwesomeIcon icon={faShareAlt} size="1x" /> Teilen
-        </ToolLineButton>
-      </ToolLine>
+        </UserToolsMobileButton>
+      </UserToolsMobile>
     )
   }
 
-  function renderToolbox() {
+  function renderUserTools() {
     return (
-      <Toolbox
+      <UserTools
         onShare={() => setOpen(true)}
         editHref={`/entity/repository/add-revision/${data.id}`}
         hideEdit={contentType === 'Page'}
@@ -157,6 +148,84 @@ export function ArticlePage({
         onClose={() => setOpen(false)}
         contentId={contentId}
       />
+    )
+  }
+
+  function renderCourseNavigation() {
+    if (isCourse(data)) {
+      return (
+        <CourseNavigation
+          open={courseNavOpen}
+          onOverviewButtonClick={openCourseNav}
+          courseTitle={data.courseTitle}
+          pageTitle={data.title}
+          pages={data.pages}
+        />
+      )
+    } else return null
+  }
+
+  function renderCourseFooter() {
+    if (isCourse(data)) {
+      const nextIndex = () =>
+        1 +
+        data.pages.findIndex(
+          (page) => page.currentRevision.title === data.title
+        )!
+
+      const nextCoursePageHref = () =>
+        nextIndex() >= data.pages.length ? '' : data.pages[nextIndex()].alias
+
+      return (
+        <CourseFooter
+          onOverviewButtonClick={openCourseNav}
+          nextHref={nextCoursePageHref()}
+        />
+      )
+    } else return null
+  }
+
+  function renderStyledH1() {
+    if (contentType === 'Exercise' || contentType === 'ExerciseGroup')
+      return null
+
+    /* TODO: Maybe merge with icon logic in topic-link-list */
+
+    let icon = faCircle
+    let iconTitle = ''
+
+    switch (contentType) {
+      case 'Article':
+        icon = faNewspaper
+        iconTitle = 'Artikel'
+        break
+      case 'CoursePage':
+        icon = faGraduationCap
+        iconTitle = 'Kurs'
+        break
+      case 'Video':
+        icon = faPlayCircle
+        iconTitle = 'Video'
+        break
+      case 'Applet':
+        icon = faCubes
+        iconTitle = 'Applet'
+        break
+      case 'TaxonomyTerm':
+        icon = faFolderOpen
+        iconTitle = 'Bereich'
+    }
+
+    return (
+      <StyledH1 extraMarginTop>
+        {data.title}
+        {(contentType === 'Article' || contentType === 'Video') && (
+          <span title={iconTitle}>
+            {' '}
+            <StyledIcon icon={icon} />{' '}
+          </span>
+        )}
+      </StyledH1>
     )
   }
 }
