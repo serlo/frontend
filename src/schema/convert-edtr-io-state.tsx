@@ -11,7 +11,7 @@ export function convertEdtrIoState(state: any) {
 // TODO: needs type declaration
 export function convert(node: any): any {
   if (!node) {
-    console.log('e: empty node encountered')
+    console.log('e: node EMPTY')
     return []
   }
 
@@ -38,7 +38,6 @@ export function convert(node: any): any {
         src: node.state.src,
         alt: node.state.alt,
         maxWidth: node.state.maxWidth,
-        children: [{ text: '' }],
       },
     ]
   }
@@ -115,7 +114,6 @@ export function convert(node: any): any {
       {
         type: 'injection',
         href: node.state,
-        children: [{ text: '' }],
       },
     ]
   }
@@ -124,7 +122,6 @@ export function convert(node: any): any {
       {
         type: 'code',
         content: node.state.code,
-        children: [{ text: '' }],
       },
     ]
   }
@@ -137,7 +134,6 @@ export function convert(node: any): any {
       {
         type: 'video',
         src: node.state.src,
-        children: [{ text: '' }],
       },
     ]
   }
@@ -146,7 +142,6 @@ export function convert(node: any): any {
       {
         type: 'anchor',
         id: node.state,
-        children: [{ text: '' }],
       },
     ]
   }
@@ -157,7 +152,7 @@ export function convert(node: any): any {
     if (match) {
       id = match[1]
     }
-    return [{ type: 'geogebra', id, children: [{ text: '' }] }]
+    return [{ type: 'geogebra', id }]
   }
   if (plugin === 'exercise') {
     return [
@@ -222,7 +217,7 @@ export function convert(node: any): any {
         transform: convert(step.transform),
       }
     })
-    return [{ type: 'equations', steps, children: [{ text: '' }] }]
+    return [{ type: 'equations', steps }]
   }
 
   const type = node.type
@@ -312,7 +307,6 @@ export function convert(node: any): any {
                 type: 'math',
                 formula: mathChild.formula,
                 alignLeft: true, // caveat: this differs from existing presentation
-                children: [{ text: '' }],
               }
             })
         )
@@ -348,7 +342,6 @@ export function convert(node: any): any {
       {
         type: 'math',
         formula: node.src,
-        children: [{ text: '' }],
       },
     ]
   }
@@ -357,7 +350,6 @@ export function convert(node: any): any {
       {
         type: 'inline-math',
         formula: node.src,
-        children: [{ text: '' }],
       },
     ]
   }
@@ -406,6 +398,8 @@ export function convert(node: any): any {
     if (node.color) {
       node.color = colors[node.color]
     }
+    // ignore empty spans
+    if (node.text === '') return []
     return [node]
   }
 
