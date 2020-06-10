@@ -328,6 +328,29 @@ function Renderer1({ state }: { state: EquationsPluginState }) {
   }
 }
 
+function Renderer2({ state }: { state: EquationsPluginState }) {
+  return (
+    <MathWrapper>
+      <Math formula={toLatex(state)} />
+    </MathWrapper>
+  )
+
+  function toLatex(state: EquationsPluginState) {
+    const lines = state.map(({ left, sign, right, transform }) => {
+      return `
+      ${left} &${sign} ${right}&
+      ${transform ? `\\\\&\\text{↓}\\ ${transform}` : ''}
+    `
+    })
+
+    return `
+  \\begin{aligned}
+    ${lines.join('\\\\')}
+  \\end{aligned}
+  `
+  }
+}
+
 function Renderer3({ state }: { state: EquationsPluginState }) {
   return (
     <MathWrapper2>
@@ -350,30 +373,7 @@ function Renderer3({ state }: { state: EquationsPluginState }) {
   }
 }
 
-function Renderer2({ state }: { state: EquationsPluginState }) {
-  return (
-    <MathWrapper>
-      <Math formula={toLatex(state)} />
-    </MathWrapper>
-  )
-
-  function toLatex(state: EquationsPluginState) {
-    const lines = state.map(({ left, sign, right, transform }) => {
-      return `
-      ${left} &${sign} ${right}\\\\
-      \\noindent ${transform}
-    `
-    })
-
-    return `
-  \\begin{aligned}
-    ${lines.join('\\\\')}
-  \\end{aligned}
-  `
-  }
-}
-
-function Content() {
+function Content({ R }: any) {
   const examples = [
     example14871a,
     example14871b,
@@ -385,7 +385,7 @@ function Content() {
   return (
     <>
       {examples.map((state, index) => {
-        return <Renderer1 key={index} state={state} />
+        return <R key={index} state={state} />
       })}
     </>
   )
@@ -520,7 +520,8 @@ function PageView(props: PageViewProps) {
             )}
             <main>
               <StyledH1 extraMarginTop>{data.title}</StyledH1>
-              <Content />
+              <Content R={Renderer1} />
+              <Content R={Renderer2} />
               <Tour />
             </main>
             <HSpace amount={40} />
