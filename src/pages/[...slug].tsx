@@ -5,10 +5,11 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 
 import { CookieBar } from '@/components/content/cookie-bar'
-import { Entity } from '@/components/content/entity'
+import { Entity, EntityProps } from '@/components/content/entity'
 import { ErrorPage } from '@/components/content/error-page'
 import { HSpace } from '@/components/content/h-space'
 import { Horizon } from '@/components/content/horizon'
+import { LicenseNoticeData } from '@/components/content/license-notice'
 import type { BreadcrumbsProps } from '@/components/navigation/breadcrumbs'
 import { Footer } from '@/components/navigation/footer'
 import { Header } from '@/components/navigation/header'
@@ -41,13 +42,13 @@ export interface PageViewProps {
     title: string
     horizonIndices: number[]
     breadcrumbs: BreadcrumbsProps['entries']
-    contentType: string
+    contentType: EntityProps['contentType']
     navigation: MetaMenuProps['navigation']
-    license: string
+    license: LicenseNoticeData
     prettyLinks: Record<string, { alias: string }>
     error: boolean
     type?: string
-    data: EditorState
+    data: EntityProps['data']
   }
   origin: string
 }
@@ -158,16 +159,25 @@ const MaxWidthDiv = styled.div<{ showNav?: boolean }>`
 // -> You can not use getInitialProps with getServerSideProps. Please remove getInitialProps. /[...slug]
 
 // TODO: needs type declaration
-export const getServerSideProps: GetServerSideProps<any, any> = async (
-  props
-) => {
+export const getServerSideProps: GetServerSideProps = async (props) => {
   const { origin } = absoluteUrl(props.req)
+
+  if (props.params === undefined) {
+    props.res.statusCode = 404
+    return { props: {} }
+  }
+
+  const slug = Array.isArray(props.params.slug)
+    ? props.params.slug.join('/')
+    : props.params.slug
+
   const res = await fetch(
-    `${origin}/api/frontend/${encodeURIComponent(
-      props.params.slug.join('/')
-    )}?redirect`
+    `${origin}/api/frontend/${encodeURIComponent(slug)}?redirect`
   )
-  const fetchedData = await res.json()
+
+  const fetchedData = (await res.json()) as PageViewProps['fetchedData'] & {
+    redirect: string
+  }
   // compat course to first page
   if (fetchedData.redirect) {
     props.res.writeHead(301, {
@@ -187,4 +197,5 @@ export const getServerSideProps: GetServerSideProps<any, any> = async (
   return { props: { fetchedData, origin } }
 }
 
+// eslint-disable-next-line import/no-default-export
 export default PageView

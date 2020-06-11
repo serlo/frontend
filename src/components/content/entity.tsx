@@ -41,9 +41,9 @@ const CourseFooter = dynamic<CourseFooterProps>(() =>
   )
 )
 
-interface EntityProps {
+export interface EntityProps {
   data: EntityData | CourseData | TopicProp
-  contentId: number
+  contentId: string
   contentType:
     | 'Article'
     | 'Page'
@@ -64,6 +64,7 @@ interface EntityData {
   title: string
   id: number
   value: EditorState
+  metaDescription: string
 }
 
 interface CourseData extends EntityData {

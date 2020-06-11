@@ -1,11 +1,11 @@
 import Head from 'next/head'
 
-import { EditorState } from '@/pages/[...slug]'
+import { EntityProps } from './content/entity'
 
 //TODO: define and export data types somewhere
 interface SlugHeadProps {
   contentType: string
-  data: EditorState
+  data: EntityProps['data']
   title: string
   origin: string
   alias?: string
