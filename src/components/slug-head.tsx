@@ -1,30 +1,36 @@
 import Head from 'next/head'
 
+import { EditorState } from '@/pages/[...slug]'
+
 //TODO: define and export data types somewhere
 interface SlugHeadProps {
   contentType: string
-  data: {
-    alias: string
-    data: any
-  }
+  data: EditorState
   title: string
   origin: string
+  alias?: string
 }
 
-export function SlugHead({ contentType, data, title, origin }: SlugHeadProps) {
+export function SlugHead({
+  contentType,
+  data,
+  title,
+  origin,
+  alias,
+}: SlugHeadProps) {
   function getMetaContentType() {
     //match legacy content types that are used by google custom search
     if (contentType === undefined) return ''
     if (contentType === 'Exercise') return 'text-exercise'
     if (contentType === 'CoursePage') return 'course-page'
-    if (data.data?.type === 'topicFolder') return 'topic-folder'
+    if (data.type === 'topicFolder') return 'topic-folder'
     if (contentType === 'TaxonomyTerm') return 'topic'
     //Article, Video, Applet, Page
     return contentType.toLowerCase()
   }
 
   function getMetaImage() {
-    const subject = data.alias ? data.alias.split('/')[1] : 'default'
+    const subject = alias ? alias.split('/')[1] : 'default'
     let imageSrc = 'serlo.jpg'
 
     switch (subject) {
@@ -43,15 +49,15 @@ export function SlugHead({ contentType, data, title, origin }: SlugHeadProps) {
   }
 
   function getMetaDescription() {
-    if (!data.data) return false
+    if (!data) return false
     const hasDescription =
-      data.data.metaDescription && data.data.metaDescription.length > 10
-    if (hasDescription) return data.data.metaDescription
+      data.metaDescription && data.metaDescription.length > 10
+    if (hasDescription) return data.metaDescription
 
-    if (data.data.value === undefined || data.data.value.children === undefined)
+    if (data.value === undefined || data.value.children === undefined)
       return false
 
-    const slice = data.data.value.children.slice(0, 10)
+    const slice = data.value.children.slice(0, 10)
     const stringified = JSON.stringify(slice)
     const regexp = /"text":"(.)*?"/g
     const matches = stringified.match(regexp)
@@ -66,7 +72,7 @@ export function SlugHead({ contentType, data, title, origin }: SlugHeadProps) {
         0,
         softCutoff + longFallback.substr(softCutoff).indexOf(' ')
       ) + ' …'
-    const description = hasDescription ? data.data.metaDescription : fallback
+    const description = hasDescription ? data.metaDescription : fallback
     return description
   }
   const metaDescription = getMetaDescription()

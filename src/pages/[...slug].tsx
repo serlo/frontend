@@ -35,7 +35,7 @@ const NewsletterPopup = dynamic<{}>(
 )
 
 export interface PageViewProps {
-  data: {
+  fetchedData: {
     contentId: string
     alias: string
     title: string
@@ -47,12 +47,18 @@ export interface PageViewProps {
     prettyLinks: Record<string, { alias: string }>
     error: boolean
     type?: string
+    data: EditorState
   }
   origin: string
 }
 
+export interface EditorState {
+  children: unknown[]
+  type?: string
+}
+
 function PageView(props: PageViewProps) {
-  const { data } = props
+  const { fetchedData, origin } = props
   const {
     contentId,
     alias,
@@ -65,7 +71,8 @@ function PageView(props: PageViewProps) {
     prettyLinks,
     error,
     type,
-  } = data
+    data,
+  } = fetchedData
 
   const showNav =
     navigation && !(contentType === 'TaxonomyTerm' && type === 'topicFolder')
@@ -75,12 +82,13 @@ function PageView(props: PageViewProps) {
       <SlugHead
         title={title}
         data={data}
+        alias={alias}
         contentType={contentType}
-        origin={props.origin}
+        origin={origin}
       />
       <Header />
       {showNav && (
-        <MetaMenu pagealias={`/${data.data.id}`} navigation={navigation} />
+        <MetaMenu pagealias={`/${data.id}`} navigation={navigation} />
       )}
       <RelatveContainer>
         <MaxWidthDiv showNav={!!showNav}>
@@ -93,7 +101,7 @@ function PageView(props: PageViewProps) {
             {/* TODO: put this part into entity.tsx */}
 
             <Entity
-              data={data.data}
+              data={data}
               contentId={contentId}
               contentType={contentType}
               license={license}
@@ -109,7 +117,7 @@ function PageView(props: PageViewProps) {
         </MaxWidthDiv>
       </RelatveContainer>
       <Footer />
-      {contentType === 'Page' && data.data && <NewsletterPopup />}
+      {contentType === 'Page' && data && <NewsletterPopup />}
       <CookieBar />
     </>
   )
@@ -159,11 +167,11 @@ export const getServerSideProps: GetServerSideProps<any, any> = async (
       props.params.slug.join('/')
     )}?redirect`
   )
-  const data = await res.json()
+  const fetchedData = await res.json()
   // compat course to first page
-  if (data.redirect) {
+  if (fetchedData.redirect) {
     props.res.writeHead(301, {
-      Location: encodeURI(data.redirect),
+      Location: encodeURI(fetchedData.redirect),
       // Add the content-type for SEO considerations
       'Content-Type': 'text/html; charset=utf-8',
     })
@@ -172,11 +180,11 @@ export const getServerSideProps: GetServerSideProps<any, any> = async (
     return { props: {} }
   }
 
-  if (data.error) {
+  if (fetchedData.error) {
     props.res.statusCode = 404
   }
 
-  return { props: { data, origin } }
+  return { props: { fetchedData, origin } }
 }
 
 export default PageView
