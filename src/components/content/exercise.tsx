@@ -4,19 +4,55 @@ import styled, { css } from 'styled-components'
 import { makeMargin, makeDefaultButton } from '../../helper/css'
 import { renderArticle } from '../../schema/article-renderer'
 import { ExerciseNumbering } from './exercise-numbering'
-import { InputExercise } from './input-exercise'
-import { LicenseNotice } from './license-notice'
-import { ScMcExercise } from './sc-mc-exercise'
+import { InputExercise, InputExerciseProps } from './input-exercise'
+import { LicenseNotice, LicenseNoticeData } from './license-notice'
+import { ScMcExercise, ScMcExerciseProps } from './sc-mc-exercise'
 
 //TODO: define and export data types somewhere
 export interface ExerciseProps {
-  task: any
-  solution: any
-  taskLicense: any
-  solutionLicense: any
+  task: TaskData
+  solution: SolutionData
+  taskLicense: LicenseNoticeData
+  solutionLicense: LicenseNoticeData
   grouped: boolean
   positionInGroup: number
   positionOnPage: number
+}
+
+/* Experiment to type out the EditorState */
+
+interface TaskData {
+  children: [
+    {
+      type: string
+      state: {
+        content: TaskData
+        interactive: {
+          plugin: string
+          state: ScMcExerciseProps['state'] | InputExerciseProps['data']
+        }
+      }
+    }
+  ]
+}
+
+interface SolutionData {
+  children: [
+    {
+      type: string
+      state: {
+        prerequisite: {
+          id: string
+          title: string
+        }
+        strategy: unknown[]
+        steps: unknown[]
+      }
+      children: {
+        text?: string
+      }
+    }
+  ]
 }
 
 export function Exercise(props: ExerciseProps) {
@@ -31,12 +67,15 @@ export function Exercise(props: ExerciseProps) {
   } = props
   const [solutionVisible, setVisible] = React.useState(false)
 
-  let taskValue = task.children
+  let taskValue = {}
   let solutionValue = solution.children
   let interactiveComp = null
 
-  if (taskValue.length === 1 && taskValue[0].type === '@edtr-io/exercise') {
-    const state = taskValue[0].state
+  if (
+    task.children.length === 1 &&
+    task.children[0].type === '@edtr-io/exercise'
+  ) {
+    const state = task.children[0].state
     taskValue = state.content
     if (state.interactive) {
       if (state.interactive.plugin === 'scMcExercise') {
@@ -84,6 +123,7 @@ export function Exercise(props: ExerciseProps) {
     <Wrapper grouped={grouped}>
       {!grouped && <ExerciseNumbering index={positionOnPage} />}
 
+      {/* @ts-expect-error */}
       {renderArticle(taskValue, false)}
       {interactiveComp}
       {taskLicense && <LicenseNotice minimal data={taskLicense} />}
@@ -99,6 +139,7 @@ export function Exercise(props: ExerciseProps) {
         </SolutionToggle>
       )}
       <SolutionBox visible={solutionVisible}>
+        {/* @ts-expect-error */}
         {renderArticle(solutionValue, false)}
         {solutionLicense && <LicenseNotice minimal data={solutionLicense} />}
       </SolutionBox>
