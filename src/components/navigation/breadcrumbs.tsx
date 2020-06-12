@@ -1,5 +1,6 @@
 import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Link from 'next/link'
 import { transparentize } from 'polished'
 import React from 'react'
 import styled from 'styled-components'
@@ -58,16 +59,20 @@ function BreadcrumbEntries(props: BradcrumbEntriesProps) {
       {ellipsesItem ? (
         <Breadcrumb>…</Breadcrumb>
       ) : (
-        <Breadcrumb href={bcEntry.url}>{bcEntry.label}</Breadcrumb>
+        <Link href="/[...slug]" as={decodeURIComponent(bcEntry.url)}>
+          <Breadcrumb href={bcEntry.url}>{bcEntry.label}</Breadcrumb>
+        </Link>
       )}
     </>
   ) : (
-    <BreadcrumbLast href={bcEntry.url}>
-      <Icon>
-        <FontAwesomeIcon icon={faArrowCircleLeft} size="1x" />
-      </Icon>
-      {bcEntry.label}
-    </BreadcrumbLast>
+    <Link href="/[...slug]" as={decodeURIComponent(bcEntry.url)}>
+      <BreadcrumbLast href={bcEntry.url}>
+        <Icon>
+          <FontAwesomeIcon icon={faArrowCircleLeft} size="1x" />
+        </Icon>
+        {bcEntry.label}
+      </BreadcrumbLast>
+    </Link>
   )
 }
 

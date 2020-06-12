@@ -1,3 +1,4 @@
+import { default as NextLink } from 'next/link'
 import React from 'react'
 
 import { PrettyLinksContext } from '../pretty-links-context'
@@ -12,12 +13,7 @@ export interface LinkProps {
   children: React.ReactNode
 }
 
-export function Link({
-  element,
-  attributes = {},
-  children = null,
-}: // wrapExtInd = nowrap
-LinkProps) {
+export function Link({ element, attributes = {}, children = null }: LinkProps) {
   const prettyLinks = React.useContext(PrettyLinksContext)
 
   if (!element.href)
@@ -26,14 +22,20 @@ LinkProps) {
   const isExternal = element.href.indexOf('//') > -1
   const prettyLink = prettyLinks[element.href.replace('/', 'uuid')]?.alias
 
-  return (
-    <StyledA href={prettyLink ? prettyLink : element.href} {...attributes}>
-      {children}
-      {isExternal && <ExternalLink />}
-      {/* {isExternal && wrapExtInd(<ExternalLink />)} */}
-    </StyledA>
-  )
+  if (isExternal || !prettyLink) {
+    return (
+      <StyledA href={prettyLink ? prettyLink : element.href} {...attributes}>
+        {children}
+        {isExternal && <ExternalLink />}
+      </StyledA>
+    )
+  } else {
+    return (
+      <NextLink href="/[...slug]" as={decodeURIComponent(prettyLink)}>
+        <StyledA href={prettyLink} {...attributes}>
+          {children}
+        </StyledA>
+      </NextLink>
+    )
+  }
 }
-
-// not used currently?
-// const nowrap = (comp: any) => comp
