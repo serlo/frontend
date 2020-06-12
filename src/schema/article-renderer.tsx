@@ -198,12 +198,7 @@ function renderElement(props: any) {
 
 // TODO: needs type declaration
 export function renderA({ element, children = null }: any) {
-  // TODO: not touching this because of pending PR
-  return (
-    <Link element={element} attributes={{}}>
-      {children}
-    </Link>
-  )
+  return <Link element={element}>{children}</Link>
 }
 
 // TODO: needs type declaration

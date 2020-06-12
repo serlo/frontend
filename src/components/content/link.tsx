@@ -9,22 +9,20 @@ export interface LinkProps {
   element: {
     href: string
   }
-  attributes: any
   children: React.ReactNode
 }
 
-export function Link({ element, attributes = {}, children = null }: LinkProps) {
+export function Link({ element, children = null }: LinkProps) {
   const prettyLinks = React.useContext(PrettyLinksContext)
 
-  if (!element.href)
-    return <React.Fragment {...attributes}>{children}</React.Fragment>
+  if (!element.href) return <>{children}</>
 
   const isExternal = element.href.indexOf('//') > -1
   const prettyLink = prettyLinks[element.href.replace('/', 'uuid')]?.alias
 
   if (isExternal || !prettyLink) {
     return (
-      <StyledA href={prettyLink ? prettyLink : element.href} {...attributes}>
+      <StyledA href={prettyLink ? prettyLink : element.href}>
         {children}
         {isExternal && <ExternalLink />}
       </StyledA>
@@ -32,9 +30,7 @@ export function Link({ element, attributes = {}, children = null }: LinkProps) {
   } else {
     return (
       <NextLink href="/[...slug]" as={decodeURIComponent(prettyLink)}>
-        <StyledA href={prettyLink} {...attributes}>
-          {children}
-        </StyledA>
+        <StyledA href={prettyLink}>{children}</StyledA>
       </NextLink>
     )
   }
