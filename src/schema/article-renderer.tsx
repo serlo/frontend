@@ -70,7 +70,7 @@ const Code = dynamic<CodeProps>(() =>
 )
 
 // TODO: this is probably not the correct type.
-export function renderArticle(value: EditorState, addCSS = true) {
+export function renderArticle(value: EditorState['children'], addCSS = true) {
   if (!value) return null
   const root = { children: value }
   const content = value.map((_, index) => render(root, [index]))

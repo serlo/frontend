@@ -17,7 +17,7 @@ export interface ScMcExerciseProps {
       feedback: any[]
       content: any[]
     }[]
-    isSingleChoice: boolean
+    isSingleChoice?: boolean
   }
   idBase: string
 }

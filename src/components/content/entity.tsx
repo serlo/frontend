@@ -86,8 +86,8 @@ function isCourse(data: EntityProps['data']): data is CourseData {
 
 function isTaxonomyTerm(
   contentType: EntityProps['contentType'],
-  data: TopicProp
-): data is TopicProp {
+  data: EntityProps['data']
+) {
   //   return (data as TopicProp) && contentType === 'TaxonomyTerm'
   return data && contentType === 'TaxonomyTerm'
 }
@@ -107,6 +107,7 @@ export function Entity({ data, contentId, contentType, license }: EntityProps) {
   if (isTaxonomyTerm(contentType, data)) {
     return (
       <main>
+        {/* @ts-expect-error */}
         <Topic data={data} contentId={contentId} />
       </main>
     )
@@ -118,7 +119,6 @@ export function Entity({ data, contentId, contentType, license }: EntityProps) {
 
       {renderStyledH1()}
       {renderUserToolsMobile()}
-      {/* @ts-expect-error */}
       {renderArticle(data.value.children)}
 
       {renderCourseFooter()}

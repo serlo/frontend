@@ -68,7 +68,7 @@ export function Exercise(props: ExerciseProps) {
   const [solutionVisible, setVisible] = React.useState(false)
 
   let taskValue = {}
-  let solutionValue = solution.children
+  let solutionValue: unknown[] = []
   let interactiveComp = null
 
   if (
@@ -81,22 +81,26 @@ export function Exercise(props: ExerciseProps) {
       if (state.interactive.plugin === 'scMcExercise') {
         interactiveComp = (
           <ScMcExercise
-            state={state.interactive.state}
+            state={state.interactive.state as ScMcExerciseProps['state']}
             idBase={`ex-${positionOnPage}-${positionInGroup}-`}
           />
         )
       }
       if (state.interactive.plugin === 'inputExercise') {
-        interactiveComp = <InputExercise data={state.interactive.state} />
+        interactiveComp = (
+          <InputExercise
+            data={state.interactive.state as InputExerciseProps['data']}
+          />
+        )
       }
     }
   }
 
   if (
-    solutionValue.length === 1 &&
-    solutionValue[0].type === '@edtr-io/solution'
+    solution.children.length === 1 &&
+    solution.children[0].type === '@edtr-io/solution'
   ) {
-    const state = solutionValue[0].state
+    const state = solution.children[0].state
     const prereq = []
     if (state.prerequisite) {
       prereq.push({
@@ -139,7 +143,6 @@ export function Exercise(props: ExerciseProps) {
         </SolutionToggle>
       )}
       <SolutionBox visible={solutionVisible}>
-        {/* @ts-expect-error */}
         {renderArticle(solutionValue, false)}
         {solutionLicense && <LicenseNotice minimal data={solutionLicense} />}
       </SolutionBox>

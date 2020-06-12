@@ -10,7 +10,7 @@ export interface InjectionProps {
 }
 
 export function Injection({ href }: InjectionProps) {
-  const [value, setValue] = React.useState<EditorState>(undefined)
+  const [value, setValue] = React.useState<EditorState | undefined>(undefined)
   const [license, setLicense] = React.useState<undefined | LicenseNoticeData>(
     undefined
   )
@@ -39,7 +39,6 @@ export function Injection({ href }: InjectionProps) {
   if (value) {
     return (
       <>
-        {/* @ts-expect-error */}
         {renderArticle(value.children, false)}
         {license !== undefined && <LicenseNotice data={license} />}
       </>
