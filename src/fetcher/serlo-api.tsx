@@ -33,7 +33,6 @@ export async function fetchContent(alias: string, redirect: any) {
     )
     // TODO: needs better types
     const reqData = await request<{ uuid: any }>(endpoint, QUERY)
-    console.log(reqData)
     // compat: redirect first page of course
     if (
       reqData.uuid.__typename === 'Course' &&
