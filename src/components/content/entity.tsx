@@ -42,7 +42,7 @@ const CourseFooter = dynamic<CourseFooterProps>(() =>
 )
 
 export interface EntityProps {
-  data: EntityData | CourseData | TopicProp
+  data: EntityData | CourseData
   contentId: string
   contentType:
     | 'Article'
@@ -56,8 +56,15 @@ export interface EntityProps {
   license: LicenseNoticeData
 }
 
-interface EditorState {
-  children: unknown[]
+export interface EditorState {
+  children: EditorChildren[]
+}
+
+interface EditorChildren {
+  type: string
+  state: {
+    content: unknown
+  }
 }
 
 interface EntityData {
@@ -65,6 +72,7 @@ interface EntityData {
   id: number
   value: EditorState
   metaDescription: string
+  license: LicenseNoticeData
 }
 
 interface CourseData extends EntityData {
@@ -78,9 +86,10 @@ function isCourse(data: EntityProps['data']): data is CourseData {
 
 function isTaxonomyTerm(
   contentType: EntityProps['contentType'],
-  data: EntityProps['data']
+  data: TopicProp
 ): data is TopicProp {
-  return (data as TopicProp) && contentType === 'TaxonomyTerm'
+  //   return (data as TopicProp) && contentType === 'TaxonomyTerm'
+  return data && contentType === 'TaxonomyTerm'
 }
 
 export function Entity({ data, contentId, contentType, license }: EntityProps) {
@@ -94,6 +103,7 @@ export function Entity({ data, contentId, contentType, license }: EntityProps) {
     setCourseNavOpen(true)
   }
 
+  // TODO: Should Taxonomy and other content really share a type?
   if (isTaxonomyTerm(contentType, data)) {
     return (
       <main>
