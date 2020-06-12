@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 import dynamic from 'next/dynamic'
 import React from 'react'
 
@@ -40,6 +45,7 @@ import type { GeogebraProps } from '@/components/content/geogebra'
 import type { InjectionProps } from '@/components/content/injection'
 import type { MathProps } from '@/components/content/math'
 import type { VideoProps } from '@/components/content/video'
+import { EditorState } from '@/pages/[...slug]'
 
 const Math = dynamic<MathProps>(() =>
   import('../components/content/math').then((mod) => mod.Math)
@@ -64,7 +70,7 @@ const Code = dynamic<CodeProps>(() =>
 )
 
 // TODO: this is probably not the correct type.
-export function renderArticle(value: React.ReactNodeArray, addCSS = true) {
+export function renderArticle(value: EditorState, addCSS = true) {
   if (!value) return null
   const root = { children: value }
   const content = value.map((_, index) => render(root, [index]))

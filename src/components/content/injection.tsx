@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 
 import { renderArticle } from '../../schema/article-renderer'
 import { StyledP } from '../tags/styled-p'
+import { EntityProps, EditorState } from './entity'
 import { LicenseNotice, LicenseNoticeData } from './license-notice'
 
 export interface InjectionProps {
@@ -9,8 +10,7 @@ export interface InjectionProps {
 }
 
 export function Injection({ href }: InjectionProps) {
-  //TODO: define and export data types somewhere
-  const [value, setValue] = React.useState<any>(undefined)
+  const [value, setValue] = React.useState<EditorState>(undefined)
   const [license, setLicense] = React.useState<undefined | LicenseNoticeData>(
     undefined
   )
@@ -27,10 +27,11 @@ export function Injection({ href }: InjectionProps) {
         else return res.text()
       })
       .then((data) => {
-        if (data.contentType && data.data) {
-          setValue(data.data.value)
-          if (data.data.license) {
-            setLicense(data.data.license)
+        const returnData = data as EntityProps
+        if (returnData.contentType && returnData.data) {
+          setValue(returnData.data.value)
+          if (returnData.data.license) {
+            setLicense(returnData.data.license)
           }
         }
       })
@@ -38,6 +39,7 @@ export function Injection({ href }: InjectionProps) {
   if (value) {
     return (
       <>
+        {/* @ts-expect-error */}
         {renderArticle(value.children, false)}
         {license !== undefined && <LicenseNotice data={license} />}
       </>
