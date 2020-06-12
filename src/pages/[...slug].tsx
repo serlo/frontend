@@ -48,11 +48,14 @@ const NewsletterPopup = dynamic<{}>(
 type PageViewProps = any
 
 const PageView: NextPage<PageViewProps> = (props) => {
-  try {
-    sessionStorage.setItem(props.data.alias, JSON.stringify(props))
-  } catch (e) {
-    //
-  }
+  React.useEffect(() => {
+    try {
+      sessionStorage.setItem(props.data.alias, JSON.stringify(props))
+    } catch (e) {
+      //
+    }
+  }, [props])
+  if (!props.data) return null
   const { data } = props
   const {
     contentId,
@@ -232,6 +235,14 @@ PageView.getInitialProps = async (props: any) => {
       `${protocol}//${origin}/api/frontend${encodeURI(url)}`
     )
     const data = await res.json()
+    // compat: redirect of courses
+    if (data.redirect) {
+      const res = await fetch(
+        `${protocol}//${origin}/api/frontend${data.redirect}`
+      )
+      const data2 = await res.json()
+      return { data: data2, origin }
+    }
     return { data, origin }
   }
 }

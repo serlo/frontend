@@ -59,13 +59,13 @@ function BreadcrumbEntries(props: BradcrumbEntriesProps) {
       {ellipsesItem ? (
         <Breadcrumb>…</Breadcrumb>
       ) : (
-        <Link href="/[...slug]" as={bcEntry.url}>
+        <Link href="/[...slug]" as={decodeURIComponent(bcEntry.url)}>
           <Breadcrumb href={bcEntry.url}>{bcEntry.label}</Breadcrumb>
         </Link>
       )}
     </>
   ) : (
-    <Link href="/[...slug]" as={bcEntry.url}>
+    <Link href="/[...slug]" as={decodeURIComponent(bcEntry.url)}>
       <BreadcrumbLast href={bcEntry.url}>
         <Icon>
           <FontAwesomeIcon icon={faArrowCircleLeft} size="1x" />

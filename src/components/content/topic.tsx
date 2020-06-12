@@ -71,7 +71,7 @@ export function Topic({ data, contentId }: TopicProps) {
         </>
       ) : (
         <h2>
-          <Link as={data.url} href="/[...slug]">
+          <Link as={decodeURIComponent(data.url!)} href="/[...slug]">
             <HeadlineLink href={data.url}>{data.title}</HeadlineLink>
           </Link>
         </h2>

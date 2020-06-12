@@ -31,7 +31,7 @@ export function Link({ element, attributes = {}, children = null }: LinkProps) {
     )
   } else {
     return (
-      <NextLink href="/[...slug]" as={prettyLink}>
+      <NextLink href="/[...slug]" as={decodeURIComponent(prettyLink)}>
         <StyledA href={prettyLink} {...attributes}>
           {children}
         </StyledA>
