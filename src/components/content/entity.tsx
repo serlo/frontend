@@ -13,7 +13,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { HSpace } from './h-space'
-import { Topic, TopicProp } from './topic'
+import { Topic } from './topic'
 import {
   LicenseNotice,
   LicenseNoticeData,
