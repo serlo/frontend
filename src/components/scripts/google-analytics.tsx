@@ -1,9 +1,10 @@
 export function GoogleAnalytics() {
+  if (process.env.NEXT_PUBLIC_GA_TRACKING_ID === undefined) return null
   return (
     <script
       dangerouslySetInnerHTML={{
         __html: `
-   var disableStr = "ga-disable-${process.env.GA_TRACKING_ID}";
+   var disableStr = "ga-disable-${process.env.NEXT_PUBLIC_GA_TRACKING_ID}";
    if (document.cookie.indexOf(disableStr + "=true") > -1) {
      window[disableStr] = true;
    }
@@ -25,7 +26,7 @@ export function GoogleAnalytics() {
        a.src = g;
        m.parentNode.insertBefore(a, m);
      })(window, document, "script", "//www.google-analytics.com/analytics.js", "ga");
-   ga("create", "${process.env.GA_TRACKING_ID}", "auto");
+   ga("create", "${process.env.NEXT_PUBLIC_GA_TRACKING_ID}", "auto");
    ga("require", "displayfeatures");
    ga("require", "linkid", "linkid.js");
    ga("set", "anonymizeIp", true);

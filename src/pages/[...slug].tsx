@@ -1,6 +1,6 @@
 import { faCubes, faPlayCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { GetServerSideProps } from 'next'
+import { NextPage } from 'next'
 import absoluteUrl from 'next-absolute-url'
 import dynamic from 'next/dynamic'
 import React from 'react'
@@ -47,7 +47,15 @@ const NewsletterPopup = dynamic<{}>(
 // TODO: needs type declaration
 type PageViewProps = any
 
-function PageView(props: PageViewProps) {
+const PageView: NextPage<PageViewProps> = (props) => {
+  React.useEffect(() => {
+    try {
+      sessionStorage.setItem(props.data.alias, JSON.stringify(props))
+    } catch (e) {
+      //
+    }
+  }, [props])
+  if (!props.data) return null
   const { data } = props
   const {
     contentId,
@@ -179,43 +187,64 @@ const StyledIcon = styled(FontAwesomeIcon)`
   font-size: 1.73rem;
 `
 
-// PageView.getInitialProps = async ({ req, res }) => {
-//   const { origin } = absoluteUrl(req)
-//   //const resp = await fetch(`${origin}/api/users`)
-//   //const users = await resp.json()
-//   console.log(origin)
-// }
-
-// -> You can not use getInitialProps with getServerSideProps. Please remove getInitialProps. /[...slug]
-
 // TODO: needs type declaration
-export const getServerSideProps: GetServerSideProps<any, any> = async (
-  props
-) => {
-  const { origin } = absoluteUrl(props.req)
-  const res = await fetch(
-    `${origin}/api/frontend/${encodeURIComponent(
-      props.params.slug.join('/')
-    )}?redirect`
-  )
-  const data = await res.json()
-  // compat course to first page
-  if (data.redirect) {
-    props.res.writeHead(301, {
-      Location: encodeURI(data.redirect),
-      // Add the content-type for SEO considerations
-      'Content-Type': 'text/html; charset=utf-8',
-    })
-    props.res.end()
-    // compat: return empty props
-    return { props: {} }
-  }
+PageView.getInitialProps = async (props: any) => {
+  if (typeof window === 'undefined') {
+    const { origin } = absoluteUrl(props.req)
+    const res = await fetch(
+      `${origin}/api/frontend/${encodeURIComponent(
+        props.query.slug.join('/')
+      )}?redirect`
+    )
+    const data = await res.json()
+    // compat course to first page
+    if (data.redirect) {
+      props.res.writeHead(301, {
+        Location: encodeURI(data.redirect),
+        // Add the content-type for SEO considerations
+        'Content-Type': 'text/html; charset=utf-8',
+      })
+      props.res.end()
+      // compat: return empty props
+      return { props: {} }
+    }
 
-  if (data.error) {
-    props.res.statusCode = 404
-  }
+    if (data.error) {
+      props.res.statusCode = 404
+    }
 
-  return { props: { data, origin } }
+    return { data, origin }
+  } else {
+    const url = '/' + (props.query.slug.join('/') as string)
+    const googleAnalytics = (window as any).ga
+    if (googleAnalytics) {
+      googleAnalytics('set', 'page', url)
+      googleAnalytics('send', 'pageview')
+    }
+    try {
+      const fromCache = sessionStorage.getItem(url)
+      if (fromCache) {
+        return JSON.parse(fromCache)
+      }
+    } catch (e) {
+      //
+    }
+    const origin = window.location.host
+    const protocol = window.location.protocol
+    const res = await fetch(
+      `${protocol}//${origin}/api/frontend${encodeURI(url)}`
+    )
+    const data = await res.json()
+    // compat: redirect of courses
+    if (data.redirect) {
+      const res = await fetch(
+        `${protocol}//${origin}/api/frontend${data.redirect}`
+      )
+      const data2 = await res.json()
+      return { data: data2, origin }
+    }
+    return { data, origin }
+  }
 }
 
 export default PageView

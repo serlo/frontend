@@ -1,5 +1,6 @@
 import { faShareAlt, faFile } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Link from 'next/link'
 import React from 'react'
 import styled, { css } from 'styled-components'
 
@@ -70,7 +71,9 @@ export function Topic({ data, contentId }: TopicProps) {
         </>
       ) : (
         <h2>
-          <HeadlineLink href={data.url}>{data.title}</HeadlineLink>
+          <Link as={decodeURIComponent(data.url!)} href="/[...slug]">
+            <HeadlineLink href={data.url}>{data.title}</HeadlineLink>
+          </Link>
         </h2>
       )}
       {/* TODO: semantic error since purpose could be undefined */}
