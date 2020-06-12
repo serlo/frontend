@@ -68,7 +68,6 @@ function createVideo(uuid: any) {
         {
           type: 'video',
           src: uuid.currentRevision.url,
-          children: [{ text: '' }],
         },
         ...convertState(uuid.currentRevision.content).children,
       ],
@@ -89,7 +88,6 @@ function createExercise(uuid: any, index?: any) {
           taskLicense: uuid.license,
           solution: convertState(uuid.solution?.currentRevision?.content),
           solutionLicense: uuid.solution?.license,
-          children: [{ text: '' }],
         },
       ],
     },
@@ -104,7 +102,6 @@ function createApplet(uuid: any) {
         {
           type: 'geogebra',
           id: uuid.currentRevision.url,
-          children: [{ text: '' }],
         },
         ...convertState(uuid.currentRevision.content).children,
       ],
@@ -131,7 +128,6 @@ function createExerciseGroup(uuid: any, pageIndex?: any) {
         taskLicense: exercise.license,
         solution: convertState(exercise.solution?.currentRevision?.content),
         solutionLicense: exercise.solution?.license,
-        children: [{ text: '' }],
       })
     })
     // for (const exercise of uuid.exercises) {

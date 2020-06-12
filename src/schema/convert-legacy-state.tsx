@@ -43,7 +43,6 @@ function convert(node: any): any {
             children = [
               {
                 type: 'p',
-                children: [{ text: '' }],
               },
             ]
           }
@@ -115,7 +114,6 @@ function convert(node: any): any {
               {
                 type: 'geogebra',
                 id: match[1],
-                children: [{ text: '' }],
               },
             ]
           }
@@ -125,7 +123,6 @@ function convert(node: any): any {
                 type: 'img',
                 src: href,
                 alt: 'Bild',
-                children: [{ text: '' }],
               },
             ]
           }
@@ -133,7 +130,6 @@ function convert(node: any): any {
             {
               type: 'injection',
               href,
-              children: [{ text: '' }],
             },
           ]
         }
@@ -160,7 +156,6 @@ function convert(node: any): any {
             {
               type: 'inline-math',
               formula,
-              children: [{ text: '' }],
             },
           ]
         }
@@ -176,7 +171,6 @@ function convert(node: any): any {
               type: 'math',
               formula,
               alignLeft: true,
-              children: [{ text: '' }],
             },
           ]
         }
@@ -243,7 +237,6 @@ function convert(node: any): any {
               type: 'math',
               alignLeft: true,
               formula: inlineMaths[0].formula,
-              children: [{ text: '' }],
             },
           ]
         }
@@ -262,7 +255,6 @@ function convert(node: any): any {
           type: 'img',
           src: node.attribs.src,
           alt: node.attribs.alt,
-          children: [{ text: '' }],
         },
       ]
     }
@@ -446,7 +438,6 @@ function convert(node: any): any {
           {
             type: 'code',
             content,
-            children: [{ text: '' }],
           },
         ]
       } else {
