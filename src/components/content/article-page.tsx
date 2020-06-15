@@ -72,21 +72,25 @@ export function ArticlePage({
           pages={data.pages}
         />
       )}
-      <StyledH1 extraMarginTop>
-        {data.title}
-        {contentType === 'Article' && (
-          <span title="Artikel">
-            {' '}
-            <StyledIcon icon={faNewspaper} />{' '}
-          </span>
-        )}
-      </StyledH1>
-      <ToolLine>
-        <ToolLineButton isOnTop onClick={() => setOpen(true)}>
-          <FontAwesomeIcon icon={faShareAlt} size="1x" /> Teilen
-        </ToolLineButton>
-      </ToolLine>
-      {data.value && renderArticle(data.value.children)}
+      <article itemScope itemType="http://schema.org/Article">
+        <StyledH1 extraMarginTop itemProp="name">
+          {data.title}
+          {contentType === 'Article' && (
+            <span title="Artikel">
+              {' '}
+              <StyledIcon icon={faNewspaper} />{' '}
+            </span>
+          )}
+        </StyledH1>
+        <ToolLine>
+          <ToolLineButton isOnTop onClick={() => setOpen(true)}>
+            <FontAwesomeIcon icon={faShareAlt} size="1x" /> Teilen
+          </ToolLineButton>
+        </ToolLine>
+        <section itemProp="articleBody">
+          {data.value && renderArticle(data.value.children)}
+        </section>
+      </article>
       {isCoursePage && (
         <CourseFooter
           onOverviewButtonClick={openCourseNav}
