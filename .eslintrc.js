@@ -61,7 +61,7 @@ module.exports = {
     'import/no-absolute-path': 'error',
     'import/no-commonjs': 'error',
     'import/no-cycle': 'error',
-    'import/no-default-export': ['error'],
+    'import/no-default-export': 'error',
     'import/prefer-default-export': 'off',
     'import/no-deprecated': 'error',
     'import/no-extraneous-dependencies': ['error'],
@@ -122,7 +122,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['src/pages/*'],
+      files: ['src/pages/**/*'],
       rules: {
         'import/no-default-export': 'off',
       },
