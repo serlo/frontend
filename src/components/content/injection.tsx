@@ -18,7 +18,7 @@ export interface InjectionProps {
 export function Injection({ href }: InjectionProps) {
   //TODO: define and export data types somewhere
   const [value, setValue] = React.useState<any>(undefined)
-  const [license, setLicense] = React.useState<undefined | LicenseNoticeData>(
+  const [license, setLicense] = React.useState<LicenseNoticeData | undefined>(
     undefined
   )
   const [prettyLinks, setPrettyLinks] = React.useState<PrettyLinksContextProps>(
