@@ -1,6 +1,13 @@
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useEffect } from 'react'
+import styled from 'styled-components'
 
 import { renderArticle } from '../../schema/article-renderer'
+import {
+  PrettyLinksProvider,
+  PrettyLinksContextProps,
+} from '../pretty-links-context'
 import { StyledP } from '../tags/styled-p'
 import { LicenseNotice, LicenseNoticeData } from './license-notice'
 
@@ -14,9 +21,18 @@ export function Injection({ href }: InjectionProps) {
   const [license, setLicense] = React.useState<undefined | LicenseNoticeData>(
     undefined
   )
+  const [prettyLinks, setPrettyLinks] = React.useState<PrettyLinksContextProps>(
+    undefined
+  )
+
   useEffect(() => {
     const origin = window.location.host
     const protocol = window.location.protocol
+    console.log(
+      `${protocol}//${origin}/api/frontend${encodeURI(
+        href.startsWith('/') ? href : `/${href}`
+      )}`
+    )
     void fetch(
       `${protocol}//${origin}/api/frontend${encodeURI(
         href.startsWith('/') ? href : `/${href}`
@@ -32,16 +48,30 @@ export function Injection({ href }: InjectionProps) {
           if (data.data.license) {
             setLicense(data.data.license)
           }
+          if (data.prettyLinks) {
+            setPrettyLinks(data.prettyLinks)
+          }
         }
       })
   }, [href])
   if (value) {
     return (
-      <>
+      <PrettyLinksProvider value={prettyLinks}>
         {renderArticle(value.children, false)}
         {license !== undefined && <LicenseNotice data={license} />}
-      </>
+      </PrettyLinksProvider>
     )
   }
-  return <StyledP>Lade: {href}</StyledP>
+  return (
+    <StyledP>
+      <ColoredIcon>
+        <FontAwesomeIcon icon={faSpinner} spin size="1x" />
+      </ColoredIcon>{' '}
+      Lade: {href}
+    </StyledP>
+  )
 }
+
+const ColoredIcon = styled.span`
+  color: ${(props) => props.theme.colors.brand};
+`
