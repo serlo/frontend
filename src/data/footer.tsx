@@ -19,7 +19,10 @@ export const footerNavEntries = [
         title: 'Ins alte Design zurück',
         url: `https://de.${serloDomain}/disable-frontend`,
       },
-      { title: 'API', url: '/105250' },
+      {
+        title: 'API',
+        url: `https://en.${serloDomain}/community/technology-and-development/content-api`,
+      },
     ],
   },
   {
