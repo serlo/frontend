@@ -89,7 +89,7 @@ function render(value: any, path: any[] = []) {
   // elements must have a type, children are optional
   if (currentNode && currentNode.type) {
     // TODO: needs type declaration
-    const children = currentNode.children
+    const children = Array.isArray(currentNode.children)
       ? currentNode.children.map((_: any, index: any) =>
           render(value, path.concat(index))
         )
