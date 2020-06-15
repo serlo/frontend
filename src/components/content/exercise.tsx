@@ -127,7 +127,6 @@ export function Exercise(props: ExerciseProps) {
     <Wrapper grouped={grouped}>
       {!grouped && <ExerciseNumbering index={positionOnPage} />}
 
-      {/* @ts-expect-error */}
       {renderArticle(taskValue, false)}
       {interactiveComp}
       {taskLicense && <LicenseNotice minimal data={taskLicense} />}

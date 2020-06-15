@@ -1,11 +1,12 @@
 import Head from 'next/head'
 
-import { EntityProps } from './content/entity'
+// import { EntityProps } from './content/entity'
+// import { TopicProps } from './content/topic'
 
-//TODO: define and export data types somewhere
+/* TODO: Type data correctly as EntityProps['data'] | TopicProps with type predicates*/
 interface SlugHeadProps {
   contentType: string
-  data: EntityProps['data']
+  data: any
   title: string
   origin: string
   alias?: string
@@ -23,7 +24,6 @@ export function SlugHead({
     if (contentType === undefined) return ''
     if (contentType === 'Exercise') return 'text-exercise'
     if (contentType === 'CoursePage') return 'course-page'
-    /* @ts-expect-error */
     if (data.type === 'topicFolder') return 'topic-folder'
     if (contentType === 'TaxonomyTerm') return 'topic'
     //Article, Video, Applet, Page
@@ -51,6 +51,7 @@ export function SlugHead({
 
   function getMetaDescription() {
     if (!data) return false
+
     const hasDescription =
       data.metaDescription && data.metaDescription.length > 10
     if (hasDescription) return data.metaDescription

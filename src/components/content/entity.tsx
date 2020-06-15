@@ -13,7 +13,6 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { HSpace } from './h-space'
-import { Topic } from './topic'
 import {
   LicenseNotice,
   LicenseNoticeData,
@@ -84,14 +83,6 @@ function isCourse(data: EntityProps['data']): data is CourseData {
   return (data as CourseData).pages !== undefined
 }
 
-function isTaxonomyTerm(
-  contentType: EntityProps['contentType'],
-  data: EntityProps['data']
-) {
-  //   return (data as TopicProp) && contentType === 'TaxonomyTerm'
-  return data && contentType === 'TaxonomyTerm'
-}
-
 export function Entity({ data, contentId, contentType, license }: EntityProps) {
   const [open, setOpen] = React.useState(false)
 
@@ -103,18 +94,8 @@ export function Entity({ data, contentId, contentType, license }: EntityProps) {
     setCourseNavOpen(true)
   }
 
-  // TODO: Should Taxonomy and other content really share a type?
-  if (isTaxonomyTerm(contentType, data)) {
-    return (
-      <main>
-        {/* @ts-expect-error */}
-        <Topic data={data} contentId={contentId} />
-      </main>
-    )
-  }
-
   return (
-    <main>
+    <>
       {renderCourseNavigation()}
 
       {renderStyledH1()}
@@ -129,7 +110,7 @@ export function Entity({ data, contentId, contentType, license }: EntityProps) {
       {renderShareModal()}
 
       {license && <LicenseNotice data={license} />}
-    </main>
+    </>
   )
 
   function renderUserToolsMobile() {

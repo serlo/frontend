@@ -22,15 +22,17 @@ interface MobileMenuLink {
 export function MobileMenu(props: MobileMenuProps) {
   const { links } = props
 
-  const [openEntry, setOpenEntry] = React.useState(-1)
+  const [openEntryIndex, setOpenEntryIndex] = React.useState<null | number>(
+    null
+  )
 
   function toggle(
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
     index: number
   ) {
     e.preventDefault()
-    if (index === openEntry) setOpenEntry(-1)
-    else setOpenEntry(index)
+    if (index === openEntryIndex) setOpenEntryIndex(null)
+    else setOpenEntryIndex(index)
   }
 
   return (
@@ -40,7 +42,7 @@ export function MobileMenu(props: MobileMenuProps) {
           onToggle={toggle}
           key={index}
           {...entry}
-          open={openEntry === index}
+          open={openEntryIndex === index}
           index={index}
         />
       ))}
@@ -49,7 +51,6 @@ export function MobileMenu(props: MobileMenuProps) {
 }
 
 interface EntryProps extends MobileMenuLink {
-  // childKey?: string
   isChild?: boolean
   open?: boolean
   index?: number
@@ -64,7 +65,6 @@ function Entry({
   title,
   icon,
   children,
-  // childKey,
   isChild = false,
   open,
   onToggle,
@@ -74,7 +74,6 @@ function Entry({
     <>
       <li>
         <EntryLink
-          // key={childKey}
           href={url}
           onClick={(e) =>
             children && onToggle !== undefined && index !== undefined
@@ -107,7 +106,7 @@ function Entry({
       {open && children ? (
         <>
           {children.map((entry, index) => (
-            <Entry {...entry} isChild key={`${index}`} />
+            <Entry {...entry} isChild key={index} />
           ))}{' '}
           <Seperator />
         </>

@@ -26,12 +26,11 @@ export function Injection({ href }: InjectionProps) {
         if (res.headers.get('content-type')!.includes('json')) return res.json()
         else return res.text()
       })
-      .then((data) => {
-        const returnData = data as EntityProps
-        if (returnData.contentType && returnData.data) {
-          setValue(returnData.data.value)
-          if (returnData.data.license) {
-            setLicense(returnData.data.license)
+      .then((data: EntityProps) => {
+        if (data.contentType && data.data) {
+          setValue(data.data.value)
+          if (data.data.license) {
+            setLicense(data.data.license)
           }
         }
       })

@@ -10,6 +10,7 @@ import { ErrorPage } from '@/components/content/error-page'
 import { HSpace } from '@/components/content/h-space'
 import { Horizon } from '@/components/content/horizon'
 import { LicenseNoticeData } from '@/components/content/license-notice'
+import { Topic, TopicProp } from '@/components/content/topic'
 import type { BreadcrumbsProps } from '@/components/navigation/breadcrumbs'
 import { Footer } from '@/components/navigation/footer'
 import { Header } from '@/components/navigation/header'
@@ -53,8 +54,9 @@ export interface PageViewProps {
   origin: string
 }
 
+// TODO: The quest for the correct type continues here
 export interface EditorState {
-  children: unknown[]
+  children: unknown[] | {}
   type?: string
 }
 
@@ -78,6 +80,38 @@ function PageView(props: PageViewProps) {
   const showNav =
     navigation && !(contentType === 'TaxonomyTerm' && type === 'topicFolder')
 
+  // function isCourse(data: EntityProps['data']): data is CourseData {
+  //   return (data as CourseData).pages !== undefined
+  // }
+
+  // {
+  //   contentType: 'TaxonomyTerm: data: TopicProp } | { contentType: 'Course', data: EntityProps['data']
+  // }
+
+  // { contentType: 'TaxonomyTerm: data: TopicProp } | { contentType: 'Course', data: EntityProps['data'] }
+
+  interface IsTaxonomyTermData {
+    contentType: 'TaxonomyTerm'
+    data: TopicProp
+  }
+
+  interface IsNotTaxonomyTermData {
+    contentType: string
+    data: EntityProps['data']
+  }
+
+  function isTaxonomyTerm(
+    obj: IsTaxonomyTermData | IsNotTaxonomyTermData
+  ): obj is IsTaxonomyTermData {
+    const { contentType } = obj
+    return contentType === 'TaxonomyTerm'
+    // if (contentType === 'TaxonomyTerm') {
+    //   return true && (data as TopicProp)
+    // } else {
+    //   return data as EntityProps['data']
+    // }
+  }
+
   return (
     <>
       <SlugHead
@@ -99,14 +133,22 @@ function PageView(props: PageViewProps) {
             {breadcrumbs && !(contentType === 'Page' && navigation) && (
               <Breadcrumbs entries={breadcrumbs} />
             )}
-            {/* TODO: put this part into entity.tsx */}
 
-            <Entity
-              data={data}
-              contentId={contentId}
-              contentType={contentType}
-              license={license}
-            />
+            <main>
+              {isTaxonomyTerm({ contentType, data }) ? (
+                <>
+                  {/* @ts-expect-error */}
+                  <Topic data={data} contentId={contentId} />
+                </>
+              ) : (
+                <Entity
+                  data={data}
+                  contentId={contentId}
+                  contentType={contentType}
+                  license={license}
+                />
+              )}
+            </main>
 
             <HSpace amount={40} />
             {horizonIndices && (
@@ -158,7 +200,7 @@ const MaxWidthDiv = styled.div<{ showNav?: boolean }>`
 
 // -> You can not use getInitialProps with getServerSideProps. Please remove getInitialProps. /[...slug]
 
-// TODO: needs type declaration
+// TODO: needs type declaration?
 export const getServerSideProps: GetServerSideProps = async (props) => {
   const { origin } = absoluteUrl(props.req)
 

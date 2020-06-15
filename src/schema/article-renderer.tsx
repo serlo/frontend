@@ -65,9 +65,8 @@ const Code = dynamic<CodeProps>(() =>
   import('../components/content/code').then((mod) => mod.Code)
 )
 
-// TODO: this is probably not the correct type.
 export function renderArticle(value: EditorState['children'], addCSS = true) {
-  if (!value) return null
+  if (!value || !Array.isArray(value)) return null
   const root = { children: value }
   const content = value.map((_, index) => render(root, [index]))
   if (addCSS) {
