@@ -18,7 +18,10 @@ export function Link({ element, children = null }: LinkProps) {
   if (!element.href) return <>{children}</>
 
   const isExternal = element.href.indexOf('//') > -1
-  const prettyLink = prettyLinks[element.href.replace('/', 'uuid')]?.alias
+  const prettyLink =
+    prettyLinks !== undefined
+      ? prettyLinks[element.href.replace('/', 'uuid')]?.alias
+      : undefined
 
   if (isExternal || !prettyLink) {
     return (
