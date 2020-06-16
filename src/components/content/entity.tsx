@@ -12,6 +12,7 @@ import dynamic from 'next/dynamic'
 import React from 'react'
 import styled from 'styled-components'
 
+import { PrettyLinksContextValue } from '../pretty-links-context'
 import { HSpace } from './h-space'
 import {
   LicenseNotice,
@@ -28,7 +29,6 @@ import { UserTools } from '@/components/navigation/user-tools'
 import { UserToolsMobile } from '@/components/navigation/user-tools-mobile'
 import { StyledH1 } from '@/components/tags/styled-h1'
 import { renderArticle } from '@/schema/article-renderer'
-import { PrettyLinksContextValue } from '../pretty-links-context'
 
 const CourseNavigation = dynamic<CourseNavigationProps>(() =>
   import('@/components/navigation/course-navigation').then(
