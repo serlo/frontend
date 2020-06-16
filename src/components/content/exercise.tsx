@@ -8,7 +8,6 @@ import { InputExercise, InputExerciseProps } from './input-exercise'
 import { LicenseNotice, LicenseNoticeData } from './license-notice'
 import { ScMcExercise, ScMcExerciseProps } from './sc-mc-exercise'
 
-//TODO: define and export data types somewhere
 export interface ExerciseProps {
   task: TaskData
   solution: SolutionData
@@ -67,39 +66,57 @@ export function Exercise(props: ExerciseProps) {
   } = props
   const [solutionVisible, setVisible] = React.useState(false)
 
-  let taskValue = {}
-  let solutionValue: unknown[] = []
-  let interactiveComp = null
+  const isEditorTask =
+    task.children.length === 1 && task.children[0].type === '@edtr-io/exercise'
 
-  if (
-    task.children.length === 1 &&
-    task.children[0].type === '@edtr-io/exercise'
-  ) {
-    const state = task.children[0].state
-    taskValue = state.content
-    if (state.interactive) {
-      if (state.interactive.plugin === 'scMcExercise') {
-        interactiveComp = (
-          <ScMcExercise
-            state={state.interactive.state as ScMcExerciseProps['state']}
-            idBase={`ex-${positionOnPage}-${positionInGroup}-`}
-          />
-        )
-      }
-      if (state.interactive.plugin === 'inputExercise') {
-        interactiveComp = (
-          <InputExercise
-            data={state.interactive.state as InputExerciseProps['data']}
-          />
-        )
-      }
-    }
-  }
-
-  if (
+  const isEditorSolution =
     solution.children.length === 1 &&
     solution.children[0].type === '@edtr-io/solution'
-  ) {
+
+  return (
+    <Wrapper grouped={grouped}>
+      {!grouped && <ExerciseNumbering index={positionOnPage} />}
+
+      {renderExerciseTask()}
+      {renderInteractive()}
+
+      {taskLicense && <LicenseNotice minimal data={taskLicense} />}
+
+      {renderSolutionToggle()}
+
+      {renderSolutionBox()}
+    </Wrapper>
+  )
+
+  function renderSolutionToggle() {
+    if (solution.children[0].children?.text === '') return null
+    return (
+      <SolutionToggle
+        onClick={() => {
+          setVisible(!solutionVisible)
+        }}
+        active={solutionVisible}
+      >
+        <StyledSpan>{solutionVisible ? '▾' : '▸'}&nbsp;</StyledSpan>Lösung{' '}
+        {solutionVisible ? 'ausblenden' : 'anzeigen'}
+      </SolutionToggle>
+    )
+  }
+
+  function renderSolutionBox() {
+    return (
+      <SolutionBox visible={solutionVisible}>
+        {renderArticle(getSolutionContent(), false)}
+        {solutionLicense && <LicenseNotice minimal data={solutionLicense} />}
+      </SolutionBox>
+    )
+  }
+
+  function getSolutionContent() {
+    if (!isEditorSolution) {
+      return solution.children
+    }
+
     const state = solution.children[0].state
     const prereq = []
     if (state.prerequisite) {
@@ -119,34 +136,41 @@ export function Exercise(props: ExerciseProps) {
     }
     const strategy = state.strategy
     const steps = state.steps
-    solutionValue = [...prereq, ...strategy, ...steps]
+    return [...prereq, ...strategy, ...steps]
   }
-  const hasSolution = solution && solution.children[0].children?.text !== ''
 
-  return (
-    <Wrapper grouped={grouped}>
-      {!grouped && <ExerciseNumbering index={positionOnPage} />}
+  function renderExerciseTask() {
+    const children = isEditorTask
+      ? task.children[0].state.content
+      : task.children
 
-      {renderArticle(taskValue, false)}
-      {interactiveComp}
-      {taskLicense && <LicenseNotice minimal data={taskLicense} />}
-      {hasSolution && (
-        <SolutionToggle
-          onClick={() => {
-            setVisible(!solutionVisible)
-          }}
-          active={solutionVisible}
-        >
-          <StyledSpan>{solutionVisible ? '▾' : '▸'}&nbsp;</StyledSpan>Lösung{' '}
-          {solutionVisible ? 'ausblenden' : 'anzeigen'}
-        </SolutionToggle>
-      )}
-      <SolutionBox visible={solutionVisible}>
-        {renderArticle(solutionValue, false)}
-        {solutionLicense && <LicenseNotice minimal data={solutionLicense} />}
-      </SolutionBox>
-    </Wrapper>
-  )
+    return renderArticle(children, false)
+  }
+
+  function renderInteractive() {
+    if (!isEditorTask) return null
+
+    const state = task.children[0].state
+
+    if (state.interactive) {
+      /* TODO: Move check to type guard */
+      if (state.interactive.plugin === 'scMcExercise') {
+        return (
+          <ScMcExercise
+            state={state.interactive.state as ScMcExerciseProps['state']}
+            idBase={`ex-${positionOnPage}-${positionInGroup}-`}
+          />
+        )
+      }
+      if (state.interactive.plugin === 'inputExercise') {
+        return (
+          <InputExercise
+            data={state.interactive.state as InputExerciseProps['data']}
+          />
+        )
+      }
+    }
+  }
 }
 
 const StyledSpan = styled.span`
