@@ -1,10 +1,8 @@
 import React from 'react'
 
-export type PrettyLinksContextProps =
-  | Record<string, { alias: string }>
-  | undefined
+export type PrettyLinksContextValue = Record<string, { alias: string }>
 
-export const PrettyLinksContext = React.createContext<PrettyLinksContextProps>(
+export const PrettyLinksContext = React.createContext<PrettyLinksContextValue>(
   {}
 )
 export const PrettyLinksProvider = PrettyLinksContext.Provider

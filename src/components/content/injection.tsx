@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import { renderArticle } from '../../schema/article-renderer'
 import {
   PrettyLinksProvider,
-  PrettyLinksContextProps,
+  PrettyLinksContextValue,
 } from '../pretty-links-context'
 import { StyledP } from '../tags/styled-p'
 import { LicenseNotice, LicenseNoticeData } from './license-notice'
@@ -21,18 +21,13 @@ export function Injection({ href }: InjectionProps) {
   const [license, setLicense] = React.useState<LicenseNoticeData | undefined>(
     undefined
   )
-  const [prettyLinks, setPrettyLinks] = React.useState<PrettyLinksContextProps>(
-    undefined
+  const [prettyLinks, setPrettyLinks] = React.useState<PrettyLinksContextValue>(
+    {}
   )
 
   useEffect(() => {
     const origin = window.location.host
     const protocol = window.location.protocol
-    console.log(
-      `${protocol}//${origin}/api/frontend${encodeURI(
-        href.startsWith('/') ? href : `/${href}`
-      )}`
-    )
     void fetch(
       `${protocol}//${origin}/api/frontend${encodeURI(
         href.startsWith('/') ? href : `/${href}`
