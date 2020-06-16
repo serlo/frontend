@@ -46,13 +46,19 @@ export async function fetchContent(alias: string, redirect: any) {
         return { redirect: filtered[0].alias }
       }
     }
-    if (redirect && reqData.uuid.alias && reqData.uuid.alias !== alias) {
-      return { redirect: reqData.uuid.alias }
+    if (redirect && reqData.uuid.alias) {
+      const canonicalPath = decodeURIComponent(reqData.uuid.alias)
+      if (alias !== canonicalPath) {
+        return { redirect: canonicalPath }
+      }
     }
     const contentId = reqData.uuid.id
 
     const processed = processResponse(reqData)
-    const allLinks = extractLinks(processed.data.value?.children, [])
+    const contentLinks = extractLinks(processed.data.value?.children, [])
+    const exerciseLinks = extractLinks(processed.data.exercises, [])
+
+    const allLinks = [...contentLinks, ...exerciseLinks]
 
     const prettyLinks =
       allLinks.length < 1 ? {} : await request(endpoint, idsQuery(allLinks))

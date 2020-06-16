@@ -1,3 +1,4 @@
+import { default as NextLink } from 'next/link'
 import React from 'react'
 
 import { PrettyLinksContext } from '../pretty-links-context'
@@ -8,32 +9,32 @@ export interface LinkProps {
   element: {
     href: string
   }
-  attributes: any
   children: React.ReactNode
 }
 
-export function Link({
-  element,
-  attributes = {},
-  children = null,
-}: // wrapExtInd = nowrap
-LinkProps) {
+export function Link({ element, children = null }: LinkProps) {
   const prettyLinks = React.useContext(PrettyLinksContext)
 
-  if (!element.href)
-    return <React.Fragment {...attributes}>{children}</React.Fragment>
+  if (!element.href) return <>{children}</>
 
   const isExternal = element.href.indexOf('//') > -1
-  const prettyLink = prettyLinks[element.href.replace('/', 'uuid')]?.alias
+  const prettyLink =
+    prettyLinks !== undefined
+      ? prettyLinks[element.href.replace('/', 'uuid')]?.alias
+      : undefined
 
-  return (
-    <StyledA href={prettyLink ? prettyLink : element.href} {...attributes}>
-      {children}
-      {isExternal && <ExternalLink />}
-      {/* {isExternal && wrapExtInd(<ExternalLink />)} */}
-    </StyledA>
-  )
+  if (isExternal || !prettyLink) {
+    return (
+      <StyledA href={prettyLink ? prettyLink : element.href}>
+        {children}
+        {isExternal && <ExternalLink />}
+      </StyledA>
+    )
+  } else {
+    return (
+      <NextLink href="/[...slug]" as={decodeURIComponent(prettyLink)}>
+        <StyledA href={prettyLink}>{children}</StyledA>
+      </NextLink>
+    )
+  }
 }
-
-// not used currently?
-// const nowrap = (comp: any) => comp

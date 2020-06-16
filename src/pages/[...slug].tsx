@@ -1,4 +1,4 @@
-import { GetServerSideProps } from 'next'
+import { NextPage } from 'next'
 import absoluteUrl from 'next-absolute-url'
 import dynamic from 'next/dynamic'
 import React from 'react'
@@ -60,7 +60,15 @@ export interface EditorState {
   type?: string
 }
 
-function PageView(props: PageViewProps) {
+const PageView: NextPage<PageViewProps> = (props) => {
+  React.useEffect(() => {
+    try {
+      sessionStorage.setItem(props.fetchedData.alias, JSON.stringify(props))
+    } catch (e) {
+      //
+    }
+  }, [props])
+  if (!props.fetchedData) return null
   const { fetchedData, origin } = props
   const {
     contentId,
@@ -191,53 +199,69 @@ const MaxWidthDiv = styled.div<{ showNav?: boolean }>`
     `}
 `
 
-// PageView.getInitialProps = async ({ req, res }) => {
-//   const { origin } = absoluteUrl(req)
-//   //const resp = await fetch(`${origin}/api/users`)
-//   //const users = await resp.json()
-//   console.log(origin)
-// }
+// TODO: needs type declaration
+PageView.getInitialProps = async (props: any) => {
+  if (typeof window === 'undefined') {
+    const { origin } = absoluteUrl(props.req)
+    const res = await fetch(
+      `${origin}/api/frontend/${encodeURIComponent(
+        props.query.slug.join('/')
+      )}?redirect`
+    )
+    const fetchedData = await res.json()
+    // compat course to first page
+    if (fetchedData.redirect) {
+      props.res.writeHead(301, {
+        Location: encodeURI(fetchedData.redirect),
+        // Add the content-type for SEO considerations
+        'Content-Type': 'text/html; charset=utf-8',
+      })
+      props.res.end()
+      // compat: return empty props
+      return { props: {} }
+    }
 
-// -> You can not use getInitialProps with getServerSideProps. Please remove getInitialProps. /[...slug]
+    if (fetchedData.error) {
+      props.res.statusCode = 404
+    }
 
-// TODO: needs type declaration?
-export const getServerSideProps: GetServerSideProps = async (props) => {
-  const { origin } = absoluteUrl(props.req)
-
-  if (props.params === undefined) {
-    props.res.statusCode = 404
-    return { props: {} }
+    return { fetchedData, origin }
+  } else {
+    const url = '/' + (props.query.slug.join('/') as string)
+    const googleAnalytics = (window as any).ga
+    if (googleAnalytics) {
+      googleAnalytics('set', 'page', url)
+      googleAnalytics('send', 'pageview')
+    }
+    try {
+      const fromCache = sessionStorage.getItem(url)
+      if (fromCache) {
+        return JSON.parse(fromCache)
+      }
+    } catch (e) {
+      //
+    }
+    const origin = window.location.host
+    const protocol = window.location.protocol
+    const res = await fetch(
+      `${protocol}//${origin}/api/frontend${encodeURI(url)}`
+    )
+    const fetchedData = await res.json()
+    // compat: redirect of courses
+    if (fetchedData.redirect) {
+      const res = await fetch(
+        `${protocol}//${origin}/api/frontend${data.redirect}`
+      )
+      const fetchedData2 = await res.json()
+      return { data: fetchedData2, origin }
+    }
+    return { fetchedData, origin }
   }
-
-  const slug = Array.isArray(props.params.slug)
-    ? props.params.slug.join('/')
-    : props.params.slug
-
-  const res = await fetch(
-    `${origin}/api/frontend/${encodeURIComponent(slug)}?redirect`
-  )
-
-  const fetchedData = (await res.json()) as PageViewProps['fetchedData'] & {
-    redirect: string
-  }
-  // compat course to first page
-  if (fetchedData.redirect) {
-    props.res.writeHead(301, {
-      Location: encodeURI(fetchedData.redirect),
-      // Add the content-type for SEO considerations
-      'Content-Type': 'text/html; charset=utf-8',
-    })
-    props.res.end()
-    // compat: return empty props
-    return { props: {} }
-  }
-
-  if (fetchedData.error) {
-    props.res.statusCode = 404
-  }
-
-  return { props: { fetchedData, origin } }
 }
 
 // eslint-disable-next-line import/no-default-export
 export default PageView
+
+// const fetchedData = (await res.json()) as PageViewProps['fetchedData'] & {
+//   redirect: string
+// }

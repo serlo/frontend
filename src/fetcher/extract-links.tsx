@@ -1,5 +1,4 @@
-// TODO: needs type declaration
-export const extractLinks = (arr: any, links: any) => {
+export const extractLinks = (arr: unknown[], links: number[]) => {
   if (!arr) return []
   // TODO: needs type declaration
   arr.forEach((obj: any) => {
@@ -9,6 +8,12 @@ export const extractLinks = (arr: any, links: any) => {
       if (links.includes(id) === false) links.push(id)
     }
     if (obj.children?.length > 0) extractLinks(obj.children, links)
+
+    if (obj.type === 'exercise') {
+      if (obj.solution.children.length > 0)
+        extractLinks(obj.solution.children, links)
+      if (obj.task.children.length > 0) extractLinks(obj.task.children, links)
+    }
   })
   return links
 }
