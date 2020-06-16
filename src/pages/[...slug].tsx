@@ -250,10 +250,10 @@ PageView.getInitialProps = async (props: any) => {
     // compat: redirect of courses
     if (fetchedData.redirect) {
       const res = await fetch(
-        `${protocol}//${origin}/api/frontend${data.redirect}`
+        `${protocol}//${origin}/api/frontend${fetchedData.redirect}`
       )
       const fetchedData2 = await res.json()
-      return { data: fetchedData2, origin }
+      return { fetchedData: fetchedData2, origin }
     }
     return { fetchedData, origin }
   }

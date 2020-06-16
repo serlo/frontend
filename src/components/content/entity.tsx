@@ -28,6 +28,7 @@ import { UserTools } from '@/components/navigation/user-tools'
 import { UserToolsMobile } from '@/components/navigation/user-tools-mobile'
 import { StyledH1 } from '@/components/tags/styled-h1'
 import { renderArticle } from '@/schema/article-renderer'
+import { PrettyLinksContextValue } from '../pretty-links-context'
 
 const CourseNavigation = dynamic<CourseNavigationProps>(() =>
   import('@/components/navigation/course-navigation').then(
@@ -53,6 +54,7 @@ export interface EntityProps {
     | 'ExerciseGroup'
     | 'TaxonomyTerm'
   license: LicenseNoticeData
+  prettyLinks?: PrettyLinksContextValue
 }
 
 export interface EditorState {
@@ -181,7 +183,7 @@ export function Entity({ data, contentId, contentType, license }: EntityProps) {
     if (contentType === 'Exercise' || contentType === 'ExerciseGroup')
       return null
 
-    /* TODO: Maybe merge with icon logic in topic-link-list */
+    /* TODO: Maybe merge with icon logic in topic-link-list, Might expose a component `PageTitle` */
 
     let icon = faCircle
     let iconTitle = ''
