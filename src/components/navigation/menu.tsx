@@ -1,6 +1,7 @@
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Tippy, { useSingleton } from '@tippyjs/react'
+import { default as NextLink } from 'next/link'
 import React from 'react'
 import styled, { css } from 'styled-components'
 
@@ -14,6 +15,7 @@ interface MenuLink {
   title: string
   url: string
   children?: MenuLink[]
+  clientside?: boolean
 }
 
 export function Menu(props: MenuProps) {
@@ -60,6 +62,10 @@ function Entry({ link, target }: EntryProps) {
             {link.title} <FontAwesomeIcon icon={faCaretDown} />
           </Link>
         </Tippy>
+      ) : link.clientside ? (
+        <NextLink href="/[...slug]" as={decodeURIComponent(link.url)}>
+          <Link /*active={true}*/ href={link.url}>{link.title}</Link>
+        </NextLink>
       ) : (
         <Link /*active={true}*/ href={link.url}>{link.title}</Link>
       )}
@@ -78,9 +84,17 @@ function SubMenuInner({ subEntries }: SubMenuInnerProps) {
         subEntries.map((entry) => {
           return (
             <li key={entry.title}>
-              <SubLink href={entry.url}>
-                <_Button>{entry.title}</_Button>
-              </SubLink>
+              {entry.clientside ? (
+                <NextLink href="/[...slug]" as={decodeURIComponent(entry.url)}>
+                  <SubLink href={entry.url}>
+                    <_Button>{entry.title}</_Button>
+                  </SubLink>
+                </NextLink>
+              ) : (
+                <SubLink href={entry.url}>
+                  <_Button>{entry.title}</_Button>
+                </SubLink>
+              )}
             </li>
           )
         })}
