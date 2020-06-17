@@ -36,28 +36,33 @@ const NewsletterPopup = dynamic<{}>(
   }
 )
 
-export interface PageViewProps {
-  fetchedData: {
-    contentId: string
-    alias: string
-    title: string
-    horizonIndices: number[]
-    breadcrumbs: BreadcrumbsProps['entries']
-    contentType: EntityProps['contentType']
-    navigation: MetaMenuProps['navigation']
-    license: LicenseNoticeData
-    prettyLinks: Record<string, { alias: string }>
-    error: boolean
-    type?: string
-    data: EntityProps['data']
-  }
-  origin: string
+interface FetchedData {
+  contentId: number
+  alias: string
+  title: string
+  horizonIndices: number[]
+  breadcrumbs: BreadcrumbsProps['entries']
+  navigation: MetaMenuProps['navigation']
+  license: LicenseNoticeData
+  prettyLinks: Record<string, { alias: string }>
+  error: boolean
+  type?: string
+  redirect?: string
 }
 
-// TODO: The quest for the correct type continues here
-export interface EditorState {
-  children: unknown[] | {}
-  type?: string
+interface TaxonomyTermFetchedData extends FetchedData {
+  contentType: 'TaxonomyTerm'
+  data: TopicProp
+}
+
+interface IsNotTaxonomyTermFetchedData extends FetchedData {
+  contentType: Exclude<EntityProps['contentType'], 'TaxonomyTerm'>
+  data: EntityProps['data']
+}
+
+export interface PageViewProps {
+  fetchedData: TaxonomyTermFetchedData | IsNotTaxonomyTermFetchedData
+  origin: string
 }
 
 const PageView: NextPage<PageViewProps> = (props) => {
@@ -88,45 +93,12 @@ const PageView: NextPage<PageViewProps> = (props) => {
   const showNav =
     navigation && !(contentType === 'TaxonomyTerm' && type === 'topicFolder')
 
-  // function isCourse(data: EntityProps['data']): data is CourseData {
-  //   return (data as CourseData).pages !== undefined
-  // }
-
-  // {
-  //   contentType: 'TaxonomyTerm: data: TopicProp } | { contentType: 'Course', data: EntityProps['data']
-  // }
-
-  // { contentType: 'TaxonomyTerm: data: TopicProp } | { contentType: 'Course', data: EntityProps['data'] }
-
-  interface IsTaxonomyTermData {
-    contentType: 'TaxonomyTerm'
-    data: TopicProp
-  }
-
-  interface IsNotTaxonomyTermData {
-    contentType: string
-    data: EntityProps['data']
-  }
-
-  function isTaxonomyTerm(
-    obj: IsTaxonomyTermData | IsNotTaxonomyTermData
-  ): obj is IsTaxonomyTermData {
-    const { contentType } = obj
-    return contentType === 'TaxonomyTerm'
-    // if (contentType === 'TaxonomyTerm') {
-    //   return true && (data as TopicProp)
-    // } else {
-    //   return data as EntityProps['data']
-    // }
-  }
-
   return (
     <>
       <SlugHead
         title={title}
-        data={data}
+        fetchedData={fetchedData}
         alias={alias}
-        contentType={contentType}
         origin={origin}
       />
       <Header />
@@ -143,14 +115,11 @@ const PageView: NextPage<PageViewProps> = (props) => {
             )}
 
             <main>
-              {isTaxonomyTerm({ contentType, data }) ? (
-                <>
-                  {/* @ts-expect-error */}
-                  <Topic data={data} contentId={contentId} />
-                </>
+              {fetchedData.contentType === 'TaxonomyTerm' ? (
+                <Topic data={fetchedData.data} contentId={contentId} />
               ) : (
                 <Entity
-                  data={data}
+                  data={fetchedData.data}
                   contentId={contentId}
                   contentType={contentType}
                   license={license}
@@ -199,44 +168,42 @@ const MaxWidthDiv = styled.div<{ showNav?: boolean }>`
     `}
 `
 
-// TODO: needs type declaration
-PageView.getInitialProps = async (props: any) => {
+PageView.getInitialProps = async (props) => {
+  const slug = props.query.slug as string[]
+
   if (typeof window === 'undefined') {
     const { origin } = absoluteUrl(props.req)
     const res = await fetch(
-      `${origin}/api/frontend/${encodeURIComponent(
-        props.query.slug.join('/')
-      )}?redirect`
+      `${origin}/api/frontend/${encodeURIComponent(slug.join('/'))}?redirect`
     )
-    const fetchedData = await res.json()
+
+    const fetchedData = (await res.json()) as PageViewProps['fetchedData']
     // compat course to first page
     if (fetchedData.redirect) {
-      props.res.writeHead(301, {
+      props.res?.writeHead(301, {
         Location: encodeURI(fetchedData.redirect),
         // Add the content-type for SEO considerations
         'Content-Type': 'text/html; charset=utf-8',
       })
-      props.res.end()
-      // compat: return empty props
-      return { props: {} }
+      props.res?.end()
+      // We redirect here so the component won't be actually rendered
+      return ({} as unknown) as PageViewProps
     }
 
     if (fetchedData.error) {
-      props.res.statusCode = 404
+      props.res!.statusCode = 404
     }
 
     return { fetchedData, origin }
   } else {
-    const url = '/' + (props.query.slug.join('/') as string)
-    const googleAnalytics = (window as any).ga
-    if (googleAnalytics) {
-      googleAnalytics('set', 'page', url)
-      googleAnalytics('send', 'pageview')
-    }
+    const url = '/' + slug.join('/')
+
+    getGa()('set', 'page', url)
+    getGa()('send', 'pageview')
     try {
       const fromCache = sessionStorage.getItem(url)
       if (fromCache) {
-        return JSON.parse(fromCache)
+        return JSON.parse(fromCache) as PageViewProps
       }
     } catch (e) {
       //
@@ -246,22 +213,26 @@ PageView.getInitialProps = async (props: any) => {
     const res = await fetch(
       `${protocol}//${origin}/api/frontend${encodeURI(url)}`
     )
-    const fetchedData = await res.json()
+    const fetchedData = (await res.json()) as PageViewProps['fetchedData']
     // compat: redirect of courses
     if (fetchedData.redirect) {
       const res = await fetch(
         `${protocol}//${origin}/api/frontend${fetchedData.redirect}`
       )
-      const fetchedData2 = await res.json()
+      const fetchedData2 = (await res.json()) as PageViewProps['fetchedData']
       return { fetchedData: fetchedData2, origin }
     }
     return { fetchedData, origin }
   }
 }
 
-// eslint-disable-next-line import/no-default-export
 export default PageView
 
-// const fetchedData = (await res.json()) as PageViewProps['fetchedData'] & {
-//   redirect: string
-// }
+/* eslint-disable */
+// Safe access to Google Analytics globals
+function getGa(): (...args: any[]) => void {
+  const w = (window as unknown) as any
+  const ga = w[w['GoogleAnalyticsObject'] || 'ga']
+  return ga || (() => {})
+}
+/* eslint-enable */

@@ -28,7 +28,7 @@ import { UserToolsMobileButton } from '@/components/navigation/tool-line-button'
 import { UserTools } from '@/components/navigation/user-tools'
 import { UserToolsMobile } from '@/components/navigation/user-tools-mobile'
 import { StyledH1 } from '@/components/tags/styled-h1'
-import { renderArticle } from '@/schema/article-renderer'
+import { renderArticle, EditorState } from '@/schema/article-renderer'
 
 const CourseNavigation = dynamic<CourseNavigationProps>(() =>
   import('@/components/navigation/course-navigation').then(
@@ -43,7 +43,7 @@ const CourseFooter = dynamic<CourseFooterProps>(() =>
 
 export interface EntityProps {
   data: EntityData | CourseData
-  contentId: string
+  contentId: number
   contentType:
     | 'Article'
     | 'Page'
@@ -55,17 +55,6 @@ export interface EntityProps {
     | 'TaxonomyTerm'
   license: LicenseNoticeData
   prettyLinks?: PrettyLinksContextValue
-}
-
-export interface EditorState {
-  children: EditorChildren[]
-}
-
-interface EditorChildren {
-  type: string
-  state: {
-    content: unknown
-  }
 }
 
 interface EntityData {

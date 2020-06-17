@@ -26,10 +26,15 @@ interface TaskData {
       type: string
       state: {
         content: TaskData
-        interactive: {
-          plugin: string
-          state: ScMcExerciseProps['state'] | InputExerciseProps['data']
-        }
+        interactive:
+          | {
+              plugin: 'scMcExercise'
+              state: ScMcExerciseProps['state']
+            }
+          | {
+              plugin: 'inputExercise'
+              state: InputExerciseProps['data']
+            }
       }
     }
   ]
@@ -116,7 +121,6 @@ export function Exercise(props: ExerciseProps) {
     if (!isEditorSolution) {
       return solution.children
     }
-
     const state = solution.children[0].state
     const prereq = []
     if (state.prerequisite) {
@@ -153,21 +157,16 @@ export function Exercise(props: ExerciseProps) {
     const state = task.children[0].state
 
     if (state.interactive) {
-      /* TODO: Move check to type guard */
       if (state.interactive.plugin === 'scMcExercise') {
         return (
           <ScMcExercise
-            state={state.interactive.state as ScMcExerciseProps['state']}
+            state={state.interactive.state}
             idBase={`ex-${positionOnPage}-${positionInGroup}-`}
           />
         )
       }
       if (state.interactive.plugin === 'inputExercise') {
-        return (
-          <InputExercise
-            data={state.interactive.state as InputExerciseProps['data']}
-          />
-        )
+        return <InputExercise data={state.interactive.state} />
       }
     }
   }

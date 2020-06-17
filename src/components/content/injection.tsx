@@ -3,13 +3,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
 
-import { renderArticle } from '../../schema/article-renderer'
+import { renderArticle, EditorState } from '../../schema/article-renderer'
 import {
   PrettyLinksProvider,
   PrettyLinksContextValue,
 } from '../pretty-links-context'
 import { StyledP } from '../tags/styled-p'
-import { EntityProps, EditorState } from './entity'
+import { EntityProps } from './entity'
 import { LicenseNotice, LicenseNoticeData } from './license-notice'
 
 export interface InjectionProps {

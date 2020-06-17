@@ -22,7 +22,7 @@ import { StyledH2 } from '../tags/styled-h2'
 interface ShareModalProps {
   open: boolean
   onClose: () => void
-  contentId?: string
+  contentId?: number
 }
 
 export function ShareModal(props: ShareModalProps) {

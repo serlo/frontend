@@ -44,7 +44,7 @@ export interface TopicProp {
 
 export interface TopicProps {
   data: TopicProp
-  contentId?: string
+  contentId?: number
 }
 
 export function Topic({ data, contentId }: TopicProps) {

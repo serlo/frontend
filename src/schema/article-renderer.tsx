@@ -40,8 +40,19 @@ import type { GeogebraProps } from '@/components/content/geogebra'
 import type { InjectionProps } from '@/components/content/injection'
 import type { MathProps } from '@/components/content/math'
 import type { VideoProps } from '@/components/content/video'
-// eslint-disable-next-line import/extensions
-import { EditorState } from '@/pages/[...slug]'
+
+// TODO: The quest for the correct type continues here
+export interface EditorState {
+  children: EditorChildren[] | any
+  type?: string
+}
+
+interface EditorChildren {
+  type: string
+  state: {
+    content: unknown
+  }
+}
 
 const Math = dynamic<MathProps>(() =>
   import('../components/content/math').then((mod) => mod.Math)

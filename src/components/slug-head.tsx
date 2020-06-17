@@ -1,30 +1,23 @@
 import Head from 'next/head'
 
-// import { EntityProps } from './content/entity'
-// import { TopicProps } from './content/topic'
+// eslint-disable-next-line import/extensions
+import { PageViewProps } from '@/pages/[...slug]'
 
-/* TODO: Type data correctly as EntityProps['data'] | TopicProps with type predicates*/
 interface SlugHeadProps {
-  contentType: string
-  data: any
+  fetchedData: PageViewProps['fetchedData']
   title: string
   origin: string
   alias?: string
 }
 
-export function SlugHead({
-  contentType,
-  data,
-  title,
-  origin,
-  alias,
-}: SlugHeadProps) {
+export function SlugHead({ fetchedData, title, origin, alias }: SlugHeadProps) {
   function getMetaContentType() {
+    const { contentType } = fetchedData
     //match legacy content types that are used by google custom search
     if (contentType === undefined) return ''
     if (contentType === 'Exercise') return 'text-exercise'
     if (contentType === 'CoursePage') return 'course-page'
-    if (data.type === 'topicFolder') return 'topic-folder'
+    if (fetchedData.type === 'topicFolder') return 'topic-folder'
     if (contentType === 'TaxonomyTerm') return 'topic'
     //Article, Video, Applet, Page
     return contentType.toLowerCase()
@@ -50,6 +43,9 @@ export function SlugHead({
   }
 
   function getMetaDescription() {
+    if (fetchedData.contentType === 'TaxonomyTerm') return
+    const { data } = fetchedData
+
     if (!data) return false
 
     const hasDescription =
