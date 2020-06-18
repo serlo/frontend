@@ -20,6 +20,6 @@ export function createNavigation(uuid: any) {
 function convertEntry(entry: any) {
   return {
     title: entry.label,
-    url: `${entry.url ?? '/'}${entry.id}`,
+    url: `${entry.url ?? '/'}${entry.id ?? ''}`,
   }
 }
