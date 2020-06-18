@@ -121,8 +121,8 @@ const PageView: NextPage<PageViewProps> = (props) => {
                 <Topic data={data.data} contentId={contentId} />
               )}
               {(contentType === 'Video' || contentType === 'Applet') && (
-                <>
-                  <StyledH1 extraMarginTop>
+                <div itemScope itemType="http://schema.org/VideoObject">
+                  <StyledH1 itemProp="name" extraMarginTop>
                     {data.data.title}
                     <span title={contentType}>
                       {' '}
@@ -132,7 +132,7 @@ const PageView: NextPage<PageViewProps> = (props) => {
                     </span>
                   </StyledH1>
                   {renderArticle(data.data.value.children)}
-                </>
+                </div>
               )}
               {(contentType === 'Exercise' ||
                 contentType === 'ExerciseGroup') && (
