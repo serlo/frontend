@@ -322,6 +322,10 @@ function convert(node: any): any {
       ]
     }
     if (node.name === 'td') {
+      // compat: skip empty entries (resulting from newlines)
+      if (node.children.text?.trim() === '') {
+        return []
+      }
       return [
         {
           type: 'td',
