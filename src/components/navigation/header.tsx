@@ -1,3 +1,4 @@
+import Router from 'next/router'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -11,7 +12,9 @@ import { SearchInput } from './search-input'
 
 export function Header() {
   const [isOpen, setOpen] = React.useState(false)
-
+  Router.events.on('routeChangeStart', () => {
+    setOpen(false)
+  })
   return (
     <BlueHeader>
       <MobileMenuButton onClick={() => setOpen(!isOpen)} open={isOpen} />
