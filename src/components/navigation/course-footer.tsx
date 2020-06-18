@@ -1,5 +1,6 @@
 import { faArrowCircleRight, faListUl } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { default as NextLink } from 'next/link'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -25,9 +26,11 @@ export function CourseFooter({
         <FontAwesomeIcon icon={faListUl} /> Kursübersicht
       </OverviewButton>
       {nextHref && (
-        <Button href={nextHref}>
-          <FontAwesomeIcon icon={faArrowCircleRight} /> Weiter
-        </Button>
+        <NextLink href="/[...slug]" as={decodeURIComponent(nextHref)}>
+          <Button href={nextHref}>
+            <FontAwesomeIcon icon={faArrowCircleRight} /> Weiter
+          </Button>
+        </NextLink>
       )}
     </Wrapper>
   )

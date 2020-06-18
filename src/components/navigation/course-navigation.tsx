@@ -1,5 +1,6 @@
 import { faGraduationCap, faListUl } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { default as NextLink } from 'next/link'
 import React from 'react'
 import styled, { css } from 'styled-components'
 
@@ -39,16 +40,18 @@ export function CourseNavigation({
         <StyledOl>
           {pages.map((page) => (
             <StyledLi key={page.alias}>
-              <CourseA
-                active={pageTitle === page.currentRevision.title}
-                href={
-                  pageTitle === page.currentRevision.title
-                    ? undefined
-                    : page.alias
-                }
-              >
-                {page.currentRevision.title}
-              </CourseA>
+              <NextLink href="/[...slug]" as={decodeURIComponent(page.alias)}>
+                <CourseA
+                  active={pageTitle === page.currentRevision.title}
+                  href={
+                    pageTitle === page.currentRevision.title
+                      ? undefined
+                      : page.alias
+                  }
+                >
+                  {page.currentRevision.title}
+                </CourseA>
+              </NextLink>
             </StyledLi>
           ))}
         </StyledOl>
