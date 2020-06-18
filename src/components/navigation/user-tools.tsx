@@ -5,13 +5,13 @@ import styled from 'styled-components'
 
 import { makeGreenButton } from '../../helper/css'
 
-interface ToolboxProps {
+interface UserToolsProps {
   editHref?: string
   onShare?: () => void
   hideEdit: boolean
 }
 
-export function Toolbox({ editHref, onShare, hideEdit }: ToolboxProps) {
+export function UserTools({ editHref, onShare, hideEdit }: UserToolsProps) {
   return (
     <AbsoluteWrapper>
       <BoxWrapper>

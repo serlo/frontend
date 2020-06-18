@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 import { makeGreenButton } from '../../helper/css'
 
-export const ToolLineButton = styled.a<{ isOnTop?: boolean }>`
+export const UserToolsMobileButton = styled.a<{ isOnTop?: boolean }>`
   ${makeGreenButton}
   font-weight: bold;
   font-size: 0.9rem;

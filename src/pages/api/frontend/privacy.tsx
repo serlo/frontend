@@ -8,6 +8,6 @@ export default async function privacy(
   res: NextApiResponse
 ) {
   const data = await fetch(`https://de.${serloDomain}/privacy/json`)
-  const json = await data.json()
+  const json = (await data.json()) as string[]
   res.json(json)
 }
