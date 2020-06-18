@@ -82,18 +82,19 @@ function SubMenuInner({ subEntries }: SubMenuInnerProps) {
     <SubList>
       {subEntries !== undefined &&
         subEntries.map((entry) => {
+          const linkComp = (
+            <SubLink href={entry.url}>
+              <_Button>{entry.title}</_Button>
+            </SubLink>
+          )
           return (
             <li key={entry.title}>
               {entry.clientside ? (
                 <NextLink href="/[...slug]" as={decodeURIComponent(entry.url)}>
-                  <SubLink href={entry.url}>
-                    <_Button>{entry.title}</_Button>
-                  </SubLink>
+                  {linkComp}
                 </NextLink>
               ) : (
-                <SubLink href={entry.url}>
-                  <_Button>{entry.title}</_Button>
-                </SubLink>
+                linkComp
               )}
             </li>
           )

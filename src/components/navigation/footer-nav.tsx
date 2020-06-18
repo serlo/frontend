@@ -30,6 +30,12 @@ export function FooterNav(props: NavProps) {
         <FooterNavContainer>
           {props.navEntries.map((category, index) => {
             const children = category.children.map((link, childindex) => {
+              const linkComp = (
+                <NavLink href={link.url}>
+                  {link.icon && <FontAwesomeIcon icon={link.icon} size="1x" />}{' '}
+                  {link.title}
+                </NavLink>
+              )
               return (
                 <NavLi key={index + childindex}>
                   {link.clientside ? (
@@ -37,20 +43,10 @@ export function FooterNav(props: NavProps) {
                       href="/[...slug]"
                       as={decodeURIComponent(link.url)}
                     >
-                      <NavLink href={link.url}>
-                        {link.icon && (
-                          <FontAwesomeIcon icon={link.icon} size="1x" />
-                        )}{' '}
-                        {link.title}
-                      </NavLink>
+                      {linkComp}
                     </NextLink>
                   ) : (
-                    <NavLink href={link.url}>
-                      {link.icon && (
-                        <FontAwesomeIcon icon={link.icon} size="1x" />
-                      )}{' '}
-                      {link.title}
-                    </NavLink>
+                    linkComp
                   )}
                 </NavLi>
               )
