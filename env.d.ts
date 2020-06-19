@@ -7,7 +7,7 @@ declare namespace NodeJS {
     // Google Analytics Tracking ID (defined in production)
     NEXT_PUBLIC_GA_TRACKING_ID: string | undefined
     // The GitHub SHA of the commit the deployment was triggered by (defined in preview & production)
-    VERCEL_GITHUB_COMMIT_SHA: string | undefined
+    NEXT_PUBLIC_COMMIT_SHA: string | undefined
 
     // Hydra client id (defined in preview & production, only exposed to server)
     HYDRA_CLIENT_ID: string | undefined
