@@ -34,6 +34,7 @@
     "@sentry/browser": "^5.15.4",
     "@tippyjs/react": "^4.0.0-alpha.0",
     "@types/nprogress": "^0.2.0",
+    "@types/react-notify-toast": "^0.5.2",
     "cookie": "^0.4.0",
     "graphql-request": "^2.0.0",
     "htmlparser2": "^4.1.0",
@@ -46,6 +47,7 @@
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
     "react-modal": "^3.0.0",
+    "react-notify-toast": "^0.5.1",
     "showdown": "^1.9.0",
     "simple-oauth2": "^4.0.0",
     "styled-components": "^5.0.0"
