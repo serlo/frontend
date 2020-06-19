@@ -7,7 +7,7 @@ import styled, { css } from 'styled-components'
 
 import { makeDefaultButton } from '../../helper/css'
 
-interface MenuProps {
+export interface MenuProps {
   links: MenuLink[]
 }
 

@@ -13,5 +13,7 @@ declare namespace NodeJS {
     HYDRA_CLIENT_ID: string | undefined
     // Hydra client secret (defined in preview & production, only exposed to server)
     HYDRA_CLIENT_SECRET: string | undefined
+    // Hydra host (defined in preview & production, only exposed to server)
+    HYDRA_HOST: string | undefined
   }
 }
