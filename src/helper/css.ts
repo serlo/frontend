@@ -1,13 +1,15 @@
-import { css } from 'styled-components'
+import { css, ThemeProps } from 'styled-components'
 
-// TODO: needs type declaration
-export const makeMargin = (props: any) => `
+import { theme } from '@/theme'
+
+type Theme = typeof theme
+
+export const makeMargin = (props: ThemeProps<Theme>) => `
   margin-left:${props.theme.defaults.sideSpacingMobile};
   margin-right:${props.theme.defaults.sideSpacingMobile};
 `
 
-// TODO: needs type declaration
-export const makeResponsiveMargin = (props: any) =>
+export const makeResponsiveMargin = (props: ThemeProps<Theme>) =>
   `
   margin-left:${props.theme.defaults.sideSpacingMobile};
   margin-right:${props.theme.defaults.sideSpacingMobile};
@@ -17,14 +19,12 @@ export const makeResponsiveMargin = (props: any) =>
   }
   `
 
-// TODO: needs type declaration
-export const makePadding = (props: any) => `
+export const makePadding = (props: ThemeProps<Theme>) => `
   padding-left:${props.theme.defaults.sideSpacingMobile};
   padding-right:${props.theme.defaults.sideSpacingMobile};
 `
 
-// TODO: needs type declaration
-export const makeResponsivePadding = (props: any) =>
+export const makeResponsivePadding = (props: ThemeProps<Theme>) =>
   `
   padding-left:${props.theme.defaults.sideSpacingMobile};
   padding-right:${props.theme.defaults.sideSpacingMobile};

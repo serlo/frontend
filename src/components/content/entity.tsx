@@ -1,12 +1,4 @@
-import {
-  faGraduationCap,
-  faNewspaper,
-  faPlayCircle,
-  faCubes,
-  faCircle,
-  faFolderOpen,
-  faShareAlt,
-} from '@fortawesome/free-solid-svg-icons'
+import { faShareAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import dynamic from 'next/dynamic'
 import { Router } from 'next/router'
@@ -29,6 +21,7 @@ import { UserToolsMobileButton } from '@/components/navigation/tool-line-button'
 import { UserTools } from '@/components/navigation/user-tools'
 import { UserToolsMobile } from '@/components/navigation/user-tools-mobile'
 import { StyledH1 } from '@/components/tags/styled-h1'
+import { getIconAndTitleByContentType } from '@/helper/header-by-content-type'
 import { renderArticle, EditorState } from '@/schema/article-renderer'
 
 const CourseNavigation = dynamic<CourseNavigationProps>(() =>
@@ -202,40 +195,15 @@ export function Entity({ data, contentId, contentType, license }: EntityProps) {
     if (contentType === 'Exercise' || contentType === 'ExerciseGroup')
       return null
 
-    /* TODO: Maybe merge with icon logic in topic-link-list, Might expose a component `PageTitle` */
-
-    let icon = faCircle
-    let iconTitle = ''
-
-    switch (contentType) {
-      case 'Article':
-        icon = faNewspaper
-        iconTitle = 'Artikel'
-        break
-      case 'CoursePage':
-        icon = faGraduationCap
-        iconTitle = 'Kurs'
-        break
-      case 'Video':
-        icon = faPlayCircle
-        iconTitle = 'Video'
-        break
-      case 'Applet':
-        icon = faCubes
-        iconTitle = 'Applet'
-        break
-      case 'TaxonomyTerm':
-        icon = faFolderOpen
-        iconTitle = 'Bereich'
-    }
+    const iconAndTitle = getIconAndTitleByContentType(contentType)
 
     return (
       <StyledH1 extraMarginTop itemProp="name">
         {data.title}
         {(contentType === 'Article' || contentType === 'Video') && (
-          <span title={iconTitle}>
+          <span title={iconAndTitle.title}>
             {' '}
-            <StyledIcon icon={icon} />{' '}
+            <StyledIcon icon={iconAndTitle.icon} />{' '}
           </span>
         )}
       </StyledH1>

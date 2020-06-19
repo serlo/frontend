@@ -5,7 +5,7 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 
 import { makeMargin } from '../../helper/css'
-import { renderArticle } from '../../schema/article-renderer'
+import { renderArticle, EditorState } from '../../schema/article-renderer'
 import { ShareModal } from '../navigation/share-modal'
 import { UserToolsMobileButton } from '../navigation/tool-line-button'
 import { UserTools } from '../navigation/user-tools'
@@ -34,11 +34,11 @@ export enum TopicPurposes {
 export interface TopicProp {
   title: string
   url?: string
-  description: any
+  description: EditorState
   purpose?: TopicPurposes
   links: LinksInterface
   children?: TopicProp[]
-  exercises: any[]
+  exercises: EditorState[]
   id: number
 }
 
@@ -76,10 +76,8 @@ export function Topic({ data, contentId }: TopicProps) {
           </Link>
         </h2>
       )}
-      {/* TODO: semantic error since purpose could be undefined */}
-      <Wrapper purpose={data.purpose!}>
-        {/* TODO: semantic error since purpose could be undefined */}
-        <Overview purpose={data.purpose!}>
+      <Wrapper purpose={data.purpose}>
+        <Overview purpose={data.purpose}>
           {data.description && renderArticle(data.description.children)}
         </Overview>
         {data.children &&
@@ -121,7 +119,7 @@ export function Topic({ data, contentId }: TopicProps) {
   )
 }
 
-const Wrapper = styled.div<{ purpose: TopicPurposes }>`
+const Wrapper = styled.div<{ purpose: TopicPurposes | undefined }>`
 
   margin-bottom: 20px;
   padding-bottom: 10px;
@@ -169,7 +167,7 @@ const LinkList = styled.div`
   margin-top: 6px;
 `
 
-const Overview = styled.div<{ purpose: TopicPurposes }>`
+const Overview = styled.div<{ purpose: TopicPurposes | undefined }>`
   img {
     margin-top: 22px;
     @media (min-width: ${(props) => props.theme.breakpoints.sm}) {

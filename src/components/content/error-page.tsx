@@ -7,7 +7,7 @@ interface ErrorPageProps {
   alias: string
 }
 
-//TODO: Differentiate Errors Types
+//TODO: Differentiate errors types, always 404 is missleading for users and search engines
 
 export function ErrorPage({ alias }: ErrorPageProps) {
   return (

@@ -43,15 +43,17 @@ import type { VideoProps } from '@/components/content/video'
 
 // TODO: The quest for the correct type continues here
 export interface EditorState {
-  children: EditorChildren[] | any
+  children?: EditorChildren[]
   type?: string
 }
 
-interface EditorChildren {
+export interface EditorChildren {
   type: string
-  state: {
-    content: unknown
+  state?: {
+    content?: unknown
   }
+  children?: EditorChildren[]
+  text?: string
 }
 
 const Math = dynamic<MathProps>(() =>

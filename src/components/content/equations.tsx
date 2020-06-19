@@ -12,7 +12,6 @@ type SignType =
   | 'less-than-or-equal'
   | 'almost-equal-to'
 
-//TODO: define and export data types somewhere
 interface StepProps {
   left: EditorState['children']
   sign: SignType
