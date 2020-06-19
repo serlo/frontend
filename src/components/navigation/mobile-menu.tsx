@@ -124,13 +124,7 @@ function Entry({
       {open && children ? (
         <>
           {children.map((entry, index) => (
-            <React.Fragment key={index}>
-              {wrapInNextLink(
-                <Entry {...entry} isChild />,
-                entry.url,
-                entry.clientside
-              )}
-            </React.Fragment>
+            <Entry {...entry} isChild key={index} />
           ))}{' '}
           <Seperator />
         </>
