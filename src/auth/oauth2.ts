@@ -50,5 +50,5 @@ export function getClientCredentials(): {
   createToken(token: Token): Token
 } | null {
   if (config === null) return null
-  return new ClientCredentials(config).token
+  return new ClientCredentials(config)
 }
