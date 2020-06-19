@@ -85,13 +85,13 @@ export function Entity({ data, contentId, contentType, license }: EntityProps) {
     setCourseNavOpen(true)
   }
 
-  return (
+  return wrapWithSchema(
     <>
       {renderCourseNavigation()}
 
       {renderStyledH1()}
       {renderUserToolsMobile()}
-      {renderArticle(data.value.children)}
+      {renderContent(data.value.children)}
 
       {renderCourseFooter()}
 
@@ -103,6 +103,24 @@ export function Entity({ data, contentId, contentType, license }: EntityProps) {
       {license && <LicenseNotice data={license} />}
     </>
   )
+
+  function wrapWithSchema(comp: JSX.Element) {
+    if (contentType === 'Article') {
+      return (
+        <article itemScope itemType="http://schema.org/Article">
+          {comp}
+        </article>
+      )
+    }
+    if (contentType === 'Video' || contentType === 'Applet') {
+      return (
+        <div itemScope itemType="http://schema.org/VideoObject">
+          {comp}
+        </div>
+      )
+    }
+    return comp
+  }
 
   function renderUserToolsMobile() {
     return (
@@ -146,6 +164,13 @@ export function Entity({ data, contentId, contentType, license }: EntityProps) {
         />
       )
     } else return null
+  }
+
+  function renderContent(value: EditorState['children']) {
+    if (contentType === 'Article') {
+      return <section itemProp="articleBody">{renderArticle(value)}</section>
+    }
+    return renderArticle(value)
   }
 
   function renderCourseFooter() {
@@ -200,7 +225,7 @@ export function Entity({ data, contentId, contentType, license }: EntityProps) {
     }
 
     return (
-      <StyledH1 extraMarginTop>
+      <StyledH1 extraMarginTop itemProp="name">
         {data.title}
         {(contentType === 'Article' || contentType === 'Video') && (
           <span title={iconTitle}>
