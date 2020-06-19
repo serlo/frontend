@@ -2,7 +2,7 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 
 import { makeMargin, makeDefaultButton } from '../../helper/css'
-import { renderArticle } from '../../schema/article-renderer'
+import { renderArticle, EditorState } from '../../schema/article-renderer'
 import { ExerciseNumbering } from './exercise-numbering'
 import { InputExercise, InputExerciseProps } from './input-exercise'
 import { LicenseNotice, LicenseNoticeData } from './license-notice'
@@ -49,8 +49,8 @@ interface SolutionData {
           id: string
           title: string
         }
-        strategy: unknown[]
-        steps: unknown[]
+        strategy: EditorState['children']
+        steps: EditorState['children']
       }
       children: {
         text?: string
@@ -117,8 +117,9 @@ export function Exercise(props: ExerciseProps) {
     )
   }
 
-  function getSolutionContent() {
+  function getSolutionContent(): EditorState['children'] {
     if (!isEditorSolution) {
+      // @ts-expect-error
       return solution.children
     }
     const state = solution.children[0].state
@@ -140,7 +141,7 @@ export function Exercise(props: ExerciseProps) {
     }
     const strategy = state.strategy
     const steps = state.steps
-    return [...prereq, ...strategy, ...steps]
+    return [...prereq, ...strategy, ...steps] as EditorState['children']
   }
 
   function renderExerciseTask() {
@@ -148,6 +149,7 @@ export function Exercise(props: ExerciseProps) {
       ? task.children[0].state.content
       : task.children
 
+    // @ts-expect-error
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return renderArticle(children, false)
   }
