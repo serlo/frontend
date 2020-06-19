@@ -31,7 +31,7 @@ export default async function callback(
     res.setHeader(
       'Set-Cookie',
       `auth-token=${JSON.stringify(
-        token
+        token.token
       )}; Path=/; SameSite=Lax; Max-Age=2592000;`
     )
   }
