@@ -48,5 +48,5 @@ export const getIconAndTitleByContentType = (
       title = 'Aufgaben'
   }
 
-  return { icon: icon, title: title }
+  return { icon, title }
 }
