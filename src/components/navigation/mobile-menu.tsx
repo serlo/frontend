@@ -4,6 +4,7 @@ import {
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { default as NextLink } from 'next/link'
 import { transparentize, lighten } from 'polished'
 import React from 'react'
 import styled from 'styled-components'
@@ -17,6 +18,7 @@ interface MobileMenuLink {
   url: string
   icon?: IconDefinition
   children?: MobileMenuLink[]
+  clientside?: boolean
 }
 
 export function MobileMenu(props: MobileMenuProps) {
@@ -60,6 +62,17 @@ interface EntryProps extends MobileMenuLink {
   ) => void
 }
 
+function wrapInNextLink(comp: JSX.Element, url: string, active?: boolean) {
+  if (!active) return comp
+  else {
+    return (
+      <NextLink href="/[...slug]" as={decodeURIComponent(url)}>
+        {comp}
+      </NextLink>
+    )
+  }
+}
+
 function Entry({
   url,
   title,
@@ -68,40 +81,45 @@ function Entry({
   isChild = false,
   open,
   onToggle,
+  clientside,
   index,
 }: EntryProps) {
   return (
     <>
       <li>
-        <EntryLink
-          href={url}
-          onClick={(e) =>
-            children && onToggle !== undefined && index !== undefined
-              ? onToggle(e, index)
-              : undefined
-          }
-          isChild={isChild}
-          open={open}
-        >
-          {!isChild ? (
-            <IconWrapper>
-              <FontAwesomeIcon
-                icon={icon !== undefined ? icon : faBars}
-                size="1x"
-                style={{ fontSize: '23px' }}
-              />
-            </IconWrapper>
-          ) : null}
-          <EntryLinkText isChild={isChild}>
-            {title}
-            {children ? (
-              <span>
-                {' '}
-                <FontAwesomeIcon icon={faCaretDown} />
-              </span>
+        {wrapInNextLink(
+          <EntryLink
+            href={url}
+            onClick={(e) =>
+              children && onToggle !== undefined && index !== undefined
+                ? onToggle(e, index)
+                : undefined
+            }
+            isChild={isChild}
+            open={open}
+          >
+            {!isChild ? (
+              <IconWrapper>
+                <FontAwesomeIcon
+                  icon={icon !== undefined ? icon : faBars}
+                  size="1x"
+                  style={{ fontSize: '23px' }}
+                />
+              </IconWrapper>
             ) : null}
-          </EntryLinkText>
-        </EntryLink>
+            <EntryLinkText isChild={isChild}>
+              {title}
+              {children ? (
+                <span>
+                  {' '}
+                  <FontAwesomeIcon icon={faCaretDown} />
+                </span>
+              ) : null}
+            </EntryLinkText>
+          </EntryLink>,
+          url,
+          clientside
+        )}
       </li>
       {open && children ? (
         <>

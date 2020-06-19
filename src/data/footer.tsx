@@ -7,10 +7,10 @@ export const footerNavEntries = [
   {
     title: 'Allgemein',
     children: [
-      { title: 'Über Serlo', url: '/serlo' },
-      { title: 'Partner & Förderer', url: '/partner' },
-      { title: 'Presse', url: '/presse' },
-      { title: 'Kontakt', url: '/kontakt' },
+      { title: 'Über Serlo', url: '/serlo', clientside: true },
+      { title: 'Partner & Förderer', url: '/partner', clientside: true },
+      { title: 'Presse', url: '/presse', clientside: true },
+      { title: 'Kontakt', url: '/kontakt', clientside: true },
       {
         title: 'Serlo in anderen Sprachen',
         url: `https://en.${serloDomain}.org/global`,

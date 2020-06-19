@@ -1,5 +1,6 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { default as NextLink } from 'next/link'
 import { lighten } from 'polished'
 import React from 'react'
 import styled from 'styled-components'
@@ -10,6 +11,7 @@ interface NavChild {
   title: string
   url: string
   icon?: IconProp
+  clientside?: boolean
 }
 
 interface NavEntry {
@@ -28,14 +30,24 @@ export function FooterNav(props: NavProps) {
         <FooterNavContainer>
           {props.navEntries.map((category, index) => {
             const children = category.children.map((link, childindex) => {
+              const linkComp = (
+                <NavLink href={link.url}>
+                  {link.icon && <FontAwesomeIcon icon={link.icon} size="1x" />}{' '}
+                  {link.title}
+                </NavLink>
+              )
               return (
                 <NavLi key={index + childindex}>
-                  <NavLink href={link.url}>
-                    {link.icon && (
-                      <FontAwesomeIcon icon={link.icon} size="1x" />
-                    )}{' '}
-                    {link.title}
-                  </NavLink>
+                  {link.clientside ? (
+                    <NextLink
+                      href="/[...slug]"
+                      as={decodeURIComponent(link.url)}
+                    >
+                      {linkComp}
+                    </NextLink>
+                  ) : (
+                    linkComp
+                  )}
                 </NavLi>
               )
             })
