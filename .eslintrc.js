@@ -62,6 +62,7 @@ module.exports = {
     'import/no-commonjs': 'error',
     'import/no-cycle': 'error',
     'import/no-default-export': 'error',
+    'import/prefer-default-export': 'off',
     'import/no-deprecated': 'error',
     'import/no-extraneous-dependencies': ['error'],
     'import/no-internal-modules': [
@@ -119,4 +120,12 @@ module.exports = {
       version: 'detect',
     },
   },
+  overrides: [
+    {
+      files: ['src/pages/**/*'],
+      rules: {
+        'import/no-default-export': 'off',
+      },
+    },
+  ],
 }

@@ -41,6 +41,19 @@ import type { InjectionProps } from '@/components/content/injection'
 import type { MathProps } from '@/components/content/math'
 import type { VideoProps } from '@/components/content/video'
 
+// TODO: The quest for the correct type continues here
+export interface EditorState {
+  children: EditorChildren[] | any
+  type?: string
+}
+
+interface EditorChildren {
+  type: string
+  state: {
+    content: unknown
+  }
+}
+
 const Math = dynamic<MathProps>(() =>
   import('../components/content/math').then((mod) => mod.Math)
 )
@@ -63,9 +76,8 @@ const Code = dynamic<CodeProps>(() =>
   import('../components/content/code').then((mod) => mod.Code)
 )
 
-// TODO: this is probably not the correct type.
-export function renderArticle(value: React.ReactNodeArray, addCSS = true) {
-  if (!value) return null
+export function renderArticle(value: EditorState['children'], addCSS = true) {
+  if (!value || !Array.isArray(value)) return null
   const root = { children: value }
   const content = value.map((_, index) => render(root, [index]))
   if (addCSS) {

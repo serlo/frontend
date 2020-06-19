@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 import { makeMargin } from '../../helper/css'
-import { renderArticle } from '../../schema/article-renderer'
+import { renderArticle, EditorState } from '../../schema/article-renderer'
 
 type SignType =
   | 'equals'
@@ -14,10 +14,10 @@ type SignType =
 
 //TODO: define and export data types somewhere
 interface StepProps {
-  left: any
+  left: EditorState['children']
   sign: SignType
-  right: any
-  transform: any
+  right: EditorState['children']
+  transform: EditorState['children']
 }
 
 export interface EquationProps {

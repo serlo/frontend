@@ -23,18 +23,43 @@ interface MobileMenuLink {
 
 export function MobileMenu(props: MobileMenuProps) {
   const { links } = props
+
+  const [openEntryIndex, setOpenEntryIndex] = React.useState<null | number>(
+    null
+  )
+
+  function toggle(
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+    index: number
+  ) {
+    e.preventDefault()
+    if (index === openEntryIndex) setOpenEntryIndex(null)
+    else setOpenEntryIndex(index)
+  }
+
   return (
     <List>
       {links.map((entry, index) => (
-        <Entry key={index} {...entry} />
+        <Entry
+          onToggle={toggle}
+          key={index}
+          {...entry}
+          open={openEntryIndex === index}
+          index={index}
+        />
       ))}
     </List>
   )
 }
 
 interface EntryProps extends MobileMenuLink {
-  childKey?: string
   isChild?: boolean
+  open?: boolean
+  index?: number
+  onToggle?: (
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+    index: number
+  ) => void
 }
 
 function wrapInNextLink(comp: JSX.Element, url: string, active?: boolean) {
@@ -53,25 +78,21 @@ function Entry({
   title,
   icon,
   children,
-  clientside,
-  childKey,
   isChild = false,
+  open,
+  onToggle,
+  clientside,
+  index,
 }: EntryProps) {
-  const [open, setOpen] = React.useState(false)
   return (
     <>
       <li>
         {wrapInNextLink(
           <EntryLink
-            key={childKey}
             href={url}
-            onClick={
-              children
-                ? (e) => {
-                    //TODO: Also close open siblings
-                    setOpen(!open)
-                    e.preventDefault()
-                  }
+            onClick={(e) =>
+              children && onToggle !== undefined && index !== undefined
+                ? onToggle(e, index)
                 : undefined
             }
             isChild={isChild}
@@ -102,13 +123,15 @@ function Entry({
       </li>
       {open && children ? (
         <>
-          {children.map((entry, index) =>
-            wrapInNextLink(
-              <Entry {...entry} isChild key={`${index}--${childKey}`} />,
-              entry.url,
-              entry.clientside
-            )
-          )}{' '}
+          {children.map((entry, index) => (
+            <React.Fragment key={index}>
+              {wrapInNextLink(
+                <Entry {...entry} isChild />,
+                entry.url,
+                entry.clientside
+              )}
+            </React.Fragment>
+          ))}{' '}
           <Seperator />
         </>
       ) : null}

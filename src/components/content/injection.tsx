@@ -3,12 +3,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
 
-import { renderArticle } from '../../schema/article-renderer'
+import { renderArticle, EditorState } from '../../schema/article-renderer'
 import {
   PrettyLinksProvider,
   PrettyLinksContextValue,
 } from '../pretty-links-context'
 import { StyledP } from '../tags/styled-p'
+import { EntityProps } from './entity'
 import { LicenseNotice, LicenseNoticeData } from './license-notice'
 
 export interface InjectionProps {
@@ -16,9 +17,8 @@ export interface InjectionProps {
 }
 
 export function Injection({ href }: InjectionProps) {
-  //TODO: define and export data types somewhere
-  const [value, setValue] = React.useState<any>(undefined)
-  const [license, setLicense] = React.useState<LicenseNoticeData | undefined>(
+  const [value, setValue] = React.useState<EditorState | undefined>(undefined)
+  const [license, setLicense] = React.useState<undefined | LicenseNoticeData>(
     undefined
   )
   const [prettyLinks, setPrettyLinks] = React.useState<PrettyLinksContextValue>(
@@ -37,7 +37,7 @@ export function Injection({ href }: InjectionProps) {
         if (res.headers.get('content-type')!.includes('json')) return res.json()
         else return res.text()
       })
-      .then((data) => {
+      .then((data: EntityProps) => {
         if (data.contentType && data.data) {
           setValue(data.data.value)
           if (data.data.license) {

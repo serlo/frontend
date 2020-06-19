@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components'
 interface SpoilerTitleProps {
   open: boolean
   children: {}
-  onClick?: any
+  onClick?: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void
   disabled?: boolean
 }
 
@@ -15,7 +15,7 @@ export function SpoilerTitle({
 }: SpoilerTitleProps) {
   return (
     <StyledSpoilerTitle
-      onClick={!disabled ? onClick : null}
+      onClick={!disabled ? onClick : undefined}
       open={open}
       role="button"
       interactive={!disabled}
