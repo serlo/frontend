@@ -9,7 +9,7 @@ import { StyledA } from '../tags/styled-a'
 import { StyledLi } from '../tags/styled-li'
 import { StyledOl } from '../tags/styled-ol'
 
-interface CourseNavigationPagesProps {
+export interface CourseNavigationPagesProps {
   alias: string
   currentRevision: {
     title: string
