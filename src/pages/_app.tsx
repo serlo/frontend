@@ -20,7 +20,10 @@ config.autoAddCss = false
 if (process.env.NEXT_PUBLIC_SENTRY_DSN !== undefined) {
   Sentry.init({
     dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
-    release: `frontend@${version}-${process.env.VERCEL_GITHUB_COMMIT_SHA!}`,
+    release: `frontend@${version}-${process.env.NEXT_PUBLIC_COMMIT_SHA?.substr(
+      0,
+      7
+    )}`,
   })
 }
 
