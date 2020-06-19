@@ -89,7 +89,7 @@ export function Entity({ data, contentId, contentType, license }: EntityProps) {
   Router.events.on('routeChangeComplete', () => {
     setCourseNavOpen(false)
   })
-  
+
   return wrapWithSchema(
     <>
       {renderCourseNavigation()}
