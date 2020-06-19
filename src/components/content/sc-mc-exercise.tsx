@@ -5,7 +5,7 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 
 import { makeMargin, makeDefaultButton } from '../../helper/css'
-import { renderArticle } from '../../schema/article-renderer'
+import { renderArticle, EditorState } from '../../schema/article-renderer'
 import { StyledP } from '../tags/styled-p'
 
 export interface ScMcExerciseProps {
@@ -13,9 +13,8 @@ export interface ScMcExerciseProps {
   state: {
     answers: {
       isCorrect: boolean
-      // TODO: schema-internal type. Should be typed somewhere ^^
-      feedback: any[]
-      content: any[]
+      feedback: EditorState['children']
+      content: EditorState['children']
     }[]
     isSingleChoice?: boolean
   }

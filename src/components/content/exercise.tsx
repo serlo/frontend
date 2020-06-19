@@ -148,6 +148,7 @@ export function Exercise(props: ExerciseProps) {
       ? task.children[0].state.content
       : task.children
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return renderArticle(children, false)
   }
 
