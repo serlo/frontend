@@ -1,83 +1,35 @@
-import {
-  faGraduationCap,
-  faNewspaper,
-  faPlayCircle,
-  faCubes,
-  faFile,
-  faCircle,
-  faFolderOpen,
-} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 import React from 'react'
 import styled from 'styled-components'
 
 import { LinksInterface, TopicPurposes } from './topic'
+import { getIconAndTitleByContentType } from '@/helper/header-by-content-type'
 
 interface LinksProps {
   links: LinksInterface
   purpose: TopicPurposes
 }
 
-interface IconProps {
-  icon: string
-  size: IconSizeEnum
-}
-
-enum IconSizeEnum {
-  one = '1x',
-  two = '2x',
-  three = '3x',
-}
-
-enum HeadlineEnum {
-  courses = 'Kurse',
-  articles = 'Artikel',
-  videos = 'Videos',
-  applets = 'Applets',
-  exercises = 'Aufgaben',
-  subfolders = 'Bereiche',
-}
-
-const iconObjects = {
-  courses: faGraduationCap,
-  articles: faNewspaper,
-  videos: faPlayCircle,
-  applets: faCubes,
-  exercises: faFile,
-  subfolders: faFolderOpen,
-}
-
-function RenderIcon(props: IconProps) {
-  // TODO: this should be checked in IconProps instead
-  const icon = props.icon as keyof typeof iconObjects
-  return (
-    <FontAwesomeIcon icon={iconObjects[icon] || faCircle} size={props.size} />
-  )
-}
+export type LinkInterfaceKeys = keyof LinksProps['links']
 
 export function TopicLinkList({ links, purpose }: LinksProps) {
-  // purpose === TopicPurposes.detail ? IconSizeEnum.three : IconSizeEnum.two
   return (
     <>
       {Object.keys(links).map((link) => {
-        // TODO: are we sure this is correct? There seems to be no semantic connection between LinksProps and HeadlineEnum.
-        const key = link as keyof LinksProps['links']
-        return links[key] && links[key]!.length > 0 ? (
+        const key = link as LinkInterfaceKeys
+        const iconAndTitle = getIconAndTitleByContentType(key)
+
+        if (links[key] === undefined || links[key]!.length < 1) return null
+
+        return (
           <LinkSection purpose={purpose} key={link}>
-            {/* <IconWrapper purpose={purpose} title={HeadlineEnum[link]}>
-              <RenderIcon icon={link} size={IconsSize} />
-            </IconWrapper> */}
             <div>
-              {/* {purpose === TopicPurposes.detail && ( */}
               <LinkSectionHeadline>
-                {/* TODO: the potential relation between LinkProps and HeadlineEnum should be explicit in code */}
-                {/* @ts-ignore */}
-                {HeadlineEnum[key]}{' '}
-                <RenderIcon icon={link} size={IconSizeEnum.one} />
+                {iconAndTitle.title}{' '}
+                <FontAwesomeIcon icon={iconAndTitle.icon} />
               </LinkSectionHeadline>
-              {/* )} */}
-              {/* TODO: semantic error since this could be undefined */}
+
               {links[key]!.map((article) => {
                 return (
                   <Link
@@ -91,7 +43,7 @@ export function TopicLinkList({ links, purpose }: LinksProps) {
               })}
             </div>
           </LinkSection>
-        ) : null
+        )
       })}
     </>
   )
