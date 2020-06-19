@@ -6,6 +6,7 @@ import KaTeXSpan from '../../../external/katexstyles'
 export interface MathProps {
   formula: string
   inline?: boolean
+  alignLeft?: boolean
 }
 
 export function Math(props: MathProps) {
