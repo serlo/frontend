@@ -15,8 +15,8 @@ import type { BreadcrumbsProps } from '@/components/navigation/breadcrumbs'
 import { Footer } from '@/components/navigation/footer'
 import { Header } from '@/components/navigation/header'
 import type { MetaMenuProps } from '@/components/navigation/meta-menu'
-import { PrettyLinksProvider } from '@/components/pretty-links-context'
 import { SlugHead } from '@/components/slug-head'
+import { PrettyLinksProvider } from '@/contexts/pretty-links-context'
 import { horizonData } from '@/data/horizon'
 
 const MetaMenu = dynamic<MetaMenuProps>(() =>

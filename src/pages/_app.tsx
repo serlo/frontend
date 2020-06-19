@@ -6,9 +6,15 @@ import { AppProps } from 'next/app'
 import Router from 'next/router'
 import NProgress from 'nprogress'
 import React from 'react'
+import Notification, { notify } from 'react-notify-toast'
 import { ThemeProvider, createGlobalStyle } from 'styled-components'
 
 import { version } from '../../package.json'
+import {
+  ToastProvider,
+  ToastContext,
+  ToastContextValue,
+} from '@/contexts/toast-context'
 import { theme } from '@/theme'
 // eslint-disable-next-line import/no-unassigned-import
 import '../../public/_assets/fonts/karmilla.css'
@@ -122,13 +128,50 @@ Router.events.on('routeChangeError', () => NProgress.done())
 
 // eslint-disable-next-line import/no-default-export
 export default function App({ Component, pageProps }: AppProps) {
+  const [toastContext, setToastContext] = React.useState<ToastContextValue>([])
+
+  React.useEffect(() => {
+    const persistentToast = sessionStorage.getItem('serlo-toast')
+    if (persistentToast) {
+      setToastContext([...toastContext, { text: persistentToast }])
+      sessionStorage.removeItem('serlo-toast')
+    }
+  }, [toastContext])
+
   return (
     <React.StrictMode>
       <ThemeProvider theme={theme}>
-        <FontFix />
-        <NProgressStyles />
-        <Component {...pageProps} />
+        <ToastProvider value={toastContext}>
+          <FontFix />
+          <NProgressStyles />
+          <Component {...pageProps} />
+          <Notification />
+          <ToastNotifications />
+        </ToastProvider>
       </ThemeProvider>
     </React.StrictMode>
   )
+}
+
+function ToastNotifications() {
+  const toastContext = React.useContext(ToastContext)
+
+  const notifyColor = {
+    background: theme.colors.brand,
+    text: '#fff',
+  }
+  const queue = notify.createShowQueue()
+  const showTime = 2000
+
+  React.useEffect(() => {
+    if (toastContext !== undefined) {
+      for (let i = 0; i < toastContext.length; i++) {
+        toastContext[i].text
+        // @ts-expect-error
+        queue(toastContext[i].text, 'custom', showTime, notifyColor)
+      }
+    }
+  })
+
+  return null
 }

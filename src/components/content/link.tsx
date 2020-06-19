@@ -1,7 +1,7 @@
 import { default as NextLink } from 'next/link'
 import React from 'react'
 
-import { PrettyLinksContext } from '../pretty-links-context'
+import { PrettyLinksContext } from '../../contexts/pretty-links-context'
 import { StyledA } from '../tags/styled-a'
 import { ExternalLink } from './external-link'
 

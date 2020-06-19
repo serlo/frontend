@@ -1600,6 +1600,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-notify-toast@^0.5.2":
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/@types/react-notify-toast/-/react-notify-toast-0.5.2.tgz#9eff2a17000b89e44cb3f1bd1ca96b499904dbff"
+  integrity sha512-GQ0VDVPLnB4ORec1uwUDKhqJNoErtFVPt0sHd4TKyWK/Q1vrM3ZC4OSrwewAijm3R1egqwqt7RWgk7sCFlaUSQ==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react@*", "@types/react@^16.8.0":
   version "16.9.38"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.38.tgz#868405dace93a4095d3e054f4c4a1de7a1ac0680"
@@ -5523,7 +5530,7 @@ nth-check@^1.0.2:
   dependencies:
     boolbase "~1.0.0"
 
-object-assign@^4.0.1, object-assign@^4.1.0, object-assign@^4.1.1:
+object-assign@^4.0.0, object-assign@^4.0.1, object-assign@^4.1.0, object-assign@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
   integrity sha1-IQmtx5ZYh8/AXLvUQsrIv7s2CGM=
@@ -6331,7 +6338,7 @@ prop-types-exact@1.2.0:
     object.assign "^4.1.0"
     reflect.ownkeys "^0.2.0"
 
-prop-types@15.7.2, prop-types@^15.5.10, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@15.7.2, prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -6492,6 +6499,14 @@ react-modal@^3.0.0:
     prop-types "^15.5.10"
     react-lifecycles-compat "^3.0.0"
     warning "^4.0.3"
+
+react-notify-toast@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/react-notify-toast/-/react-notify-toast-0.5.1.tgz#53e0f143fbbb38b3470f1454a2f4b98a58e0d549"
+  integrity sha512-VCTuvykAj3IBVX1ecVRxpo8csBJVGhKdJF4qk8c59nxbE4FPWmNpSAzyAMNNd0Mnxfwk8DA6Z0x8C/S0wCbbqg==
+  dependencies:
+    object-assign "^4.0.0"
+    prop-types "^15.5.8"
 
 react-refresh@0.8.3:
   version "0.8.3"

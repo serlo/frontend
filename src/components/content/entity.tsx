@@ -5,7 +5,7 @@ import { Router } from 'next/router'
 import React from 'react'
 import styled from 'styled-components'
 
-import { PrettyLinksContextValue } from '../pretty-links-context'
+import { PrettyLinksContextValue } from '../../contexts/pretty-links-context'
 import { HSpace } from './h-space'
 import {
   LicenseNotice,
@@ -83,6 +83,7 @@ export function Entity({ data, contentId, contentType, license }: EntityProps) {
     setCourseNavOpen(false)
   })
 
+  if (data === undefined) return null
   return wrapWithSchema(
     <>
       {renderCourseNavigation()}

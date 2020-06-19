@@ -2,14 +2,12 @@ import {
   faInfoCircle,
   faUserEdit,
   faGraduationCap,
-  faUserCircle,
+  // faUserCircle,
   faHandHoldingHeart,
   faUserFriends,
 } from '@fortawesome/free-solid-svg-icons'
 
-import { AuthPayload } from '@/auth/use-auth'
-
-export function getMenuData(auth: AuthPayload) {
+export function getMenuData() {
   return [
     {
       url: '#',
@@ -65,8 +63,5 @@ export function getMenuData(auth: AuthPayload) {
       ],
     },
     { url: '/spenden', title: 'Spenden', icon: faHandHoldingHeart },
-    auth
-      ? { url: '/api/auth/logout', title: 'Abmelden', icon: faUserCircle }
-      : { url: '/api/auth/login', title: 'Anmelden', icon: faUserCircle },
   ]
 }

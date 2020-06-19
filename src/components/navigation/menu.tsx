@@ -6,9 +6,11 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 
 import { makeDefaultButton } from '../../helper/css'
+import { AuthPayload } from '@/auth/use-auth'
 
 export interface MenuProps {
   links: MenuLink[]
+  auth: AuthPayload
 }
 
 interface MenuLink {
@@ -19,8 +21,13 @@ interface MenuLink {
 }
 
 export function Menu(props: MenuProps) {
-  const { links } = props
+  const { links, auth } = props
   const [source, target] = useSingleton()
+  const [mounted, setMounted] = React.useState(false)
+
+  React.useEffect(() => {
+    setMounted(true)
+  }, [])
 
   return (
     <ResponsiveNav>
@@ -37,21 +44,38 @@ export function Menu(props: MenuProps) {
         {links.map((link) => (
           <Entry link={link} key={link.title} target={target} />
         ))}
+        {renderAuthMenu()}
       </List>
     </ResponsiveNav>
   )
+
+  function renderAuthMenu() {
+    const authLink = {
+      url: '/api/auth/logout',
+      title: 'Abmelden',
+    }
+    const noAuthLink = {
+      url: '/api/auth/login',
+      title: 'Anmelden',
+    }
+
+    const link = mounted ? (auth ? authLink : noAuthLink) : noAuthLink
+
+    return <Entry link={link} target={target} authMenuMounted={mounted} />
+  }
 }
 
 interface EntryProps {
   link: MenuLink
   target: TippyProps['singleton']
+  authMenuMounted?: boolean
 }
 
-function Entry({ link, target }: EntryProps) {
+function Entry({ link, target, authMenuMounted }: EntryProps) {
   const hasChildren = link.children !== undefined
 
   return (
-    <Li>
+    <Li show={authMenuMounted === undefined ? true : authMenuMounted}>
       {hasChildren ? (
         <Tippy
           content={<SubMenuInner subEntries={link.children}></SubMenuInner>}
@@ -116,8 +140,10 @@ const List = styled.ul`
   padding: 0;
 `
 
-const Li = styled.li`
+const Li = styled.li<{ show: boolean }>`
   display: inline-block;
+  opacity: ${(props) => (props.show ? 1 : 0)};
+  transition: 0.7s linear;
 `
 
 const linkStyle = css`
