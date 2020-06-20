@@ -11,10 +11,11 @@ interface MetaMenuEntry {
 export interface MetaMenuProps {
   pagealias: string
   navigation: MetaMenuEntry[]
+  prettyLinks: Record<string, { alias: string }>
 }
 
 export function MetaMenu(props: MetaMenuProps) {
-  const { navigation, pagealias } = props
+  const { navigation, pagealias, prettyLinks } = props
 
   const activeRef = useRef<HTMLLIElement>(null)
   const containerRef = useRef<HTMLUListElement>(null)
@@ -34,14 +35,7 @@ export function MetaMenu(props: MetaMenuProps) {
             const active = entry.url === pagealias
             return (
               <li key={entry.url} ref={active ? activeRef : null}>
-                <Link href={entry.url}>
-                  <ButtonStyle active={active}>{entry.title}</ButtonStyle>
-                </Link>
-                <Link
-                  aria-hidden="true"
-                  spacer
-                  lastChild={i === navigation.length - 1}
-                ></Link>
+                {renderLink(entry, active, i)}
               </li>
             )
           })}
@@ -49,6 +43,26 @@ export function MetaMenu(props: MetaMenuProps) {
       </MetaMenuWrapper>
     </>
   )
+
+  function renderLink(entry: MetaMenuEntry, active: boolean, i: number) {
+    const prettyLink =
+      prettyLinks !== undefined
+        ? prettyLinks[entry.url.replace('/', 'uuid')]?.alias
+        : undefined
+
+    return (
+      <>
+        <StyledLink href={prettyLink ? prettyLink : entry.url}>
+          <ButtonStyle active={active}>{entry.title}</ButtonStyle>
+        </StyledLink>
+        <StyledLink
+          aria-hidden="true"
+          spacer
+          lastChild={i === navigation.length - 1}
+        ></StyledLink>
+      </>
+    )
+  }
 }
 
 const MetaMenuWrapper = styled.nav`
@@ -97,7 +111,7 @@ interface LinkProps {
   lastChild?: boolean
 }
 
-const Link = styled.a<LinkProps>`
+const StyledLink = styled.a<LinkProps>`
   @media (max-width: ${(props) => props.theme.breakpoints.md}) {
     text-decoration: none;
     padding: 18px 7px;
@@ -128,7 +142,7 @@ const ButtonStyle = styled.span<{ active?: boolean }>`
     css`
       &,
       &:hover,
-      ${Link}:hover & {
+      ${StyledLink}:hover & {
         color: #333;
         @media (min-width: ${(props) => props.theme.breakpoints.md}) {
           background-color: ${(props) =>
@@ -142,7 +156,7 @@ const ButtonStyle = styled.span<{ active?: boolean }>`
     font-weight: bold;
     padding: 3px 7px;
     border-radius: 12px;
-    ${Link}:hover & {
+    ${StyledLink}:hover & {
       color: #fff;
       background-color: ${(props) => props.theme.colors.brand};
     }
