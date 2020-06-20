@@ -7,6 +7,11 @@ import { dataQuery, idQuery, idsQuery } from './query'
 
 export const endpoint = `https://api.${serloDomain}/graphql`
 
+interface MenuData {
+  title: string
+  url: string
+}
+
 // TODO: needs type declaration
 export async function fetchContent(alias: string, redirect: any) {
   try {
@@ -58,7 +63,7 @@ export async function fetchContent(alias: string, redirect: any) {
 
     const contentLinks = extractLinks(processed.data.value?.children, [])
     const exerciseLinks = extractLinks(processed.data.exercises, [])
-    const metaNavLinks = extractLinksFromNav(processed.navigation)
+    const metaNavLinks = extractLinksFromNav(processed.navigation as MenuData[])
 
     const allLinks = [...contentLinks, ...exerciseLinks, ...metaNavLinks]
 
