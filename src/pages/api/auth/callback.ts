@@ -2,6 +2,8 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import absoluteUrl from 'next-absolute-url'
 
 import { getAuthorizationCode, getClientCredentials } from '@/auth/oauth2'
+import { Instance } from '@/instance'
+import { serloDomain } from '@/serlo-domain'
 
 export default async function callback(
   req: NextApiRequest,
@@ -23,7 +25,7 @@ export default async function callback(
   }
   const { csrf, referer } = JSON.parse(state)
   if (csrf === req.cookies['auth-csrf']) {
-    const { origin } = absoluteUrl(req)
+    const origin = getOrigin(req)
     const result = await oauth2AuthorizationCode.getToken({
       code,
       redirect_uri: `${origin}/api/auth/callback`,
@@ -41,4 +43,19 @@ export default async function callback(
     Location: `/auth/login?referer=${referer ?? '/'}`,
   })
   res.end()
+}
+
+function getOrigin(req: NextApiRequest) {
+  const { origin, protocol, host } = absoluteUrl(req)
+
+  const instance = Object.values(Instance).find((instance) => {
+    return host.startsWith(`${instance}.`)
+  })
+
+  if (instance === undefined) {
+    // local development
+    return origin
+  }
+
+  return `${protocol}//${instance}.${serloDomain}`
 }
