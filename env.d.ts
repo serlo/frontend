@@ -1,11 +1,11 @@
 declare namespace NodeJS {
   interface ProcessEnv {
-    // Environment to use (defined in preview & production)
-    NEXT_PUBLIC_ENV: 'production' | 'staging' | undefined
-    // Serlo domain for production environment (defined in preview & production)
-    NEXT_PUBLIC_SERLO_DOMAIN_PRODUCTION: string | undefined
-    // Serlo domain to be used in staging environment (defined in preview & production)
-    NEXT_PUBLIC_SERLO_DOMAIN_STAGING: string | undefined
+    // Environment to use
+    NEXT_PUBLIC_ENV: 'production' | 'staging'
+    // Serlo domain for production environment
+    NEXT_PUBLIC_SERLO_DOMAIN_PRODUCTION: string
+    // Serlo domain to be used in staging environment
+    NEXT_PUBLIC_SERLO_DOMAIN_STAGING: string
     // Sentry DSN (defined in preview & production)
     NEXT_PUBLIC_SENTRY_DSN: string | undefined
     // Google Analytics Tracking ID (defined in production)
