@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
+import absoluteUrl from 'next-absolute-url'
 
 import { getAuthorizationCode, getClientCredentials } from '@/auth/oauth2'
 
@@ -22,9 +23,10 @@ export default async function callback(
   }
   const { csrf, referer } = JSON.parse(state)
   if (csrf === req.cookies['auth-csrf']) {
+    const { origin } = absoluteUrl(req)
     const result = await oauth2AuthorizationCode.getToken({
       code,
-      redirect_uri: 'http://localhost:3000/api/auth/callback',
+      redirect_uri: `${origin}/api/auth/callback`,
       scope,
     })
     const { token } = oauth2ClientCredentials.createToken(result)
