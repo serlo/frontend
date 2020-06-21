@@ -1,6 +1,5 @@
 import { randomBytes } from 'crypto'
 import { NextApiRequest, NextApiResponse } from 'next'
-import absoluteUrl from 'next-absolute-url'
 import * as util from 'util'
 
 import { getAuthorizationCode } from '@/auth/oauth2'
@@ -19,8 +18,8 @@ export default async function login(req: NextApiRequest, res: NextApiResponse) {
   const referer = req.headers.referer
   const buffer = await generateCsrf(32)
   const csrf = buffer.toString('hex')
-  const { origin } = absoluteUrl(req)
 
+  const { origin } = new URL(referer!)
   const authorizationUri = oauth2AuthorizationCode.authorizeURL({
     redirect_uri: `${origin}/api/auth/callback`,
     scope: ['offline_access', 'openid'],
