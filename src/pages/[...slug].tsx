@@ -103,7 +103,11 @@ const PageView: NextPage<PageViewProps> = (props) => {
       />
       <Header />
       {showNav && (
-        <MetaMenu pagealias={`/${data.id}`} navigation={navigation} />
+        <MetaMenu
+          pagealias={`/${data.id}`}
+          navigation={navigation}
+          prettyLinks={prettyLinks}
+        />
       )}
       <RelatveContainer>
         <MaxWidthDiv showNav={!!showNav}>

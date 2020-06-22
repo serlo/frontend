@@ -17,3 +17,13 @@ export const extractLinks = (arr: unknown[], links: number[]) => {
   })
   return links
 }
+
+interface MenuData {
+  title: string
+  url: string
+}
+
+export const extractLinksFromNav = (arr: MenuData[]) => {
+  if (arr === undefined || arr.length === 0) return []
+  return arr.map((obj) => parseInt(obj.url.substring(1)))
+}
