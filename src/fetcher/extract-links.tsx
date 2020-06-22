@@ -25,5 +25,10 @@ interface MenuData {
 
 export const extractLinksFromNav = (arr: MenuData[]) => {
   if (arr === undefined || arr.length === 0) return []
-  return arr.map((obj) => parseInt(obj.url.substring(1)))
+  return arr.reduce(function (res: number[], obj) {
+    if (/^\/[\d]+$/.test(obj.url)) {
+      res.push(parseInt(obj.url.substring(1)))
+    }
+    return res
+  }, [])
 }
