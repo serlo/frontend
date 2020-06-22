@@ -22,29 +22,30 @@ export function Link({
 }: LinkProps) {
   const prettyLinks = React.useContext(PrettyLinksContext)
 
-  // if (debug) {
-  //   console.log(prettyLinks)
-  //   console.log(href.replace('/', 'uuid'))
-  //   console.log(clientside)
-  // }
-
   if (!href || href === undefined || href === '') return <>{children}</>
 
   const isExternal =
-    href.indexOf('//') > -1 && href.indexOf('//de.serlo.org') === -1
+    href.indexOf('//') > -1 && href.indexOf('.serlo.org') === -1
 
-  const prettyLink =
-    prettyLinks !== undefined
-      ? prettyLinks[href.replace('/', 'uuid')]?.alias
-      : undefined
+  const prettyLink = getPrettyLink(href)
 
   const displayHref = prettyLink ? prettyLink : href
 
   if (isExternal) return renderLink()
   if (clientside || prettyLink) return renderClientSide()
 
-  //for legacy links
+  //fallback
   return renderLink()
+
+  function getPrettyLink(href: string): string | undefined {
+    if (prettyLinks === undefined || prettyLinks === {}) return undefined
+
+    const prettyLink = prettyLinks[href.replace('/', 'uuid')]?.alias
+    if (prettyLink !== undefined) return prettyLink
+
+    //fallback for wrong absolute links
+    return prettyLinks['uuid' + href.split('de.serlo.org/')[1]]?.alias
+  }
 
   function renderClientSide() {
     return (
