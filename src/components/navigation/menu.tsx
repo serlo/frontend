@@ -15,7 +15,6 @@ interface MenuLink {
   title: string
   url: string
   children?: MenuLink[]
-  clientside?: boolean
 }
 
 export function Menu(props: MenuProps) {
@@ -62,10 +61,7 @@ function Entry({ link, target }: EntryProps) {
           </StyledLink>
         </Tippy>
       ) : (
-        <StyledLink
-          /*active={true}*/ href={link.url}
-          clientside={link.clientside}
-        >
+        <StyledLink /*active={true}*/ href={link.url} clientside>
           {link.title}
         </StyledLink>
       )}
@@ -84,7 +80,7 @@ function SubMenuInner({ subEntries }: SubMenuInnerProps) {
         subEntries.map((entry) => {
           return (
             <li key={entry.title}>
-              <SubLink href={entry.url} clientside={entry.clientside}>
+              <SubLink href={entry.url} clientside>
                 <_Button>{entry.title}</_Button>
               </SubLink>
             </li>

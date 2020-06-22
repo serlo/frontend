@@ -13,6 +13,18 @@ export interface LinkProps {
   noExternalIcon?: boolean
 }
 
+//TODO: Should come from cloudflare worker
+const legacyLinks = [
+  '/entity/unrevised',
+  '/auth/login',
+  '/auth/logout',
+  '/privacy',
+  '/imprint',
+  '/terms',
+  '/disable-frontend',
+  '/enable-frontend',
+]
+
 export function Link({
   href,
   clientside,
@@ -24,15 +36,18 @@ export function Link({
 
   if (!href || href === undefined || href === '') return <>{children}</>
 
-  const isExternal =
-    href.indexOf('//') > -1 && href.indexOf('.serlo.org') === -1
+  const isAbsolute = href.indexOf('//') > -1
+  const isExternal = isAbsolute && href.indexOf('.serlo.org') === -1
 
   const prettyLink = getPrettyLink(href)
 
   const displayHref = prettyLink ? prettyLink : href
 
-  if (isExternal) return renderLink()
-  if (clientside || prettyLink) return renderClientSide()
+  const isLegacyLink = legacyLinks.indexOf(displayHref) > -1
+
+  if (isExternal || (isAbsolute && prettyLink === undefined))
+    return renderLink()
+  if ((clientside && !isLegacyLink) || prettyLink) return renderClientSide()
 
   //fallback
   return renderLink()
@@ -49,7 +64,7 @@ export function Link({
 
   function renderClientSide() {
     return (
-      <NextLink href="/[...slug]" as={decodeURIComponent(displayHref)}>
+      <NextLink href="/[[...slug]]" as={decodeURIComponent(displayHref)}>
         {renderLink()}
       </NextLink>
     )

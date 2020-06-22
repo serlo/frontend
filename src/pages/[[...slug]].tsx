@@ -36,6 +36,16 @@ const NewsletterPopup = dynamic<{}>(
   }
 )
 
+const Landing = dynamic<{}>(() =>
+  import('@/components/pages/landing').then((mod) => mod.Landing)
+)
+const Search = dynamic<{}>(() =>
+  import('@/components/pages/search').then((mod) => mod.Search)
+)
+const Donations = dynamic<{}>(() =>
+  import('@/components/pages/donations').then((mod) => mod.Donations)
+)
+
 interface FetchedData {
   contentId: number
   alias: string
@@ -63,6 +73,7 @@ interface IsNotTaxonomyTermFetchedData extends FetchedData {
 export interface PageViewProps {
   fetchedData: TaxonomyTermFetchedData | IsNotTaxonomyTermFetchedData
   origin: string
+  page?: string
 }
 
 const PageView: NextPage<PageViewProps> = (props) => {
@@ -74,7 +85,7 @@ const PageView: NextPage<PageViewProps> = (props) => {
     }
   }, [props])
   if (!props.fetchedData) return null
-  const { fetchedData, origin } = props
+  const { fetchedData, origin, page } = props
   const {
     contentId,
     alias,
@@ -93,6 +104,8 @@ const PageView: NextPage<PageViewProps> = (props) => {
   const showNav =
     navigation && !(contentType === 'TaxonomyTerm' && type === 'topicFolder')
 
+  if (page === 'spenden') return <Donations />
+
   return (
     <>
       <SlugHead
@@ -106,35 +119,7 @@ const PageView: NextPage<PageViewProps> = (props) => {
         {showNav && (
           <MetaMenu pagealias={`/${data.id}`} navigation={navigation} />
         )}
-        <RelatveContainer>
-          <MaxWidthDiv showNav={!!showNav}>
-            {error && <ErrorPage alias={alias} />}
-
-            {breadcrumbs && !(contentType === 'Page' && navigation) && (
-              <Breadcrumbs entries={breadcrumbs} />
-            )}
-
-            <main>
-              {fetchedData.contentType === 'TaxonomyTerm' ? (
-                <Topic data={fetchedData.data} contentId={contentId} />
-              ) : (
-                <Entity
-                  data={fetchedData.data}
-                  contentId={contentId}
-                  contentType={contentType}
-                  license={license}
-                />
-              )}
-            </main>
-
-            <HSpace amount={40} />
-            {horizonIndices && (
-              <Horizon
-                entries={horizonIndices.map((index) => horizonData[index])}
-              />
-            )}
-          </MaxWidthDiv>
-        </RelatveContainer>
+        {renderContent()}
         <Footer />
       </PrettyLinksProvider>
 
@@ -142,6 +127,45 @@ const PageView: NextPage<PageViewProps> = (props) => {
       <CookieBar />
     </>
   )
+
+  function renderContent() {
+    if (page !== undefined) {
+      if (page === 'landing') return <Landing />
+      if (page === 'search') return <Search />
+    }
+
+    return (
+      <RelatveContainer>
+        <MaxWidthDiv showNav={!!showNav}>
+          {error && <ErrorPage alias={alias} />}
+
+          {breadcrumbs && !(contentType === 'Page' && navigation) && (
+            <Breadcrumbs entries={breadcrumbs} />
+          )}
+
+          <main>
+            {fetchedData.contentType === 'TaxonomyTerm' ? (
+              <Topic data={fetchedData.data} contentId={contentId} />
+            ) : (
+              <Entity
+                data={fetchedData.data}
+                contentId={contentId}
+                contentType={contentType}
+                license={license}
+              />
+            )}
+          </main>
+
+          <HSpace amount={40} />
+          {horizonIndices && (
+            <Horizon
+              entries={horizonIndices.map((index) => horizonData[index])}
+            />
+          )}
+        </MaxWidthDiv>
+      </RelatveContainer>
+    )
+  }
 }
 
 const RelatveContainer = styled.div`
@@ -170,12 +194,30 @@ const MaxWidthDiv = styled.div<{ showNav?: boolean }>`
 `
 
 PageView.getInitialProps = async (props) => {
-  const slug = props.query.slug as string[]
+  const slug =
+    props.query.slug === undefined ? [] : (props.query.slug as string[])
+  const joinedSlug = slug.join('/')
+  const { origin } = absoluteUrl(props.req)
+
+  if (
+    joinedSlug === '' ||
+    joinedSlug === 'search' ||
+    joinedSlug === 'spenden'
+  ) {
+    return {
+      fetchedData: {},
+      page: joinedSlug === '' ? 'landing' : joinedSlug,
+      origin: origin,
+    }
+  }
+  //TODO: also add api pages
+  // if (joinedSlug === 'api/frontend') {
+  //   return { fetchedData: { alias: 'search-page' }, origin: origin }
+  // }
 
   if (typeof window === 'undefined') {
-    const { origin } = absoluteUrl(props.req)
     const res = await fetch(
-      `${origin}/api/frontend/${encodeURIComponent(slug.join('/'))}?redirect`
+      `${origin}/api/frontend/${encodeURIComponent(joinedSlug)}?redirect`
     )
 
     const fetchedData = (await res.json()) as PageViewProps['fetchedData']
@@ -197,7 +239,9 @@ PageView.getInitialProps = async (props) => {
 
     return { fetchedData, origin }
   } else {
-    const url = '/' + slug.join('/')
+    //client
+
+    const url = '/' + joinedSlug
 
     getGa()('set', 'page', url)
     getGa()('send', 'pageview')

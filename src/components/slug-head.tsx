@@ -1,7 +1,7 @@
 import Head from 'next/head'
 
 // eslint-disable-next-line import/extensions
-import { PageViewProps } from '@/pages/[...slug]'
+import { PageViewProps } from '@/pages/[[...slug]]'
 
 interface SlugHeadProps {
   fetchedData: PageViewProps['fetchedData']
