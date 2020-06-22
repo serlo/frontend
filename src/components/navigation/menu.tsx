@@ -61,9 +61,7 @@ function Entry({ link, target }: EntryProps) {
           </StyledLink>
         </Tippy>
       ) : (
-        <StyledLink /*active={true}*/ href={link.url} clientside>
-          {link.title}
-        </StyledLink>
+        <StyledLink /*active={true}*/ href={link.url}>{link.title}</StyledLink>
       )}
     </Li>
   )
@@ -80,7 +78,7 @@ function SubMenuInner({ subEntries }: SubMenuInnerProps) {
         subEntries.map((entry) => {
           return (
             <li key={entry.title}>
-              <SubLink href={entry.url} clientside>
+              <SubLink href={entry.url}>
                 <_Button>{entry.title}</_Button>
               </SubLink>
             </li>

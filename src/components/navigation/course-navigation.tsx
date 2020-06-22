@@ -46,7 +46,6 @@ export function CourseNavigation({
                     ? undefined
                     : page.alias
                 }
-                clientside
               >
                 {page.currentRevision.title}
               </CourseLink>

@@ -59,15 +59,13 @@ function BreadcrumbEntries({ bcEntry, i, arrayLength }: BradcrumbEntriesProps) {
         {ellipsesItem ? (
           <BreadcrumbLink as="span">…</BreadcrumbLink>
         ) : (
-          <BreadcrumbLink href={bcEntry.url} clientside>
-            {bcEntry.label}
-          </BreadcrumbLink>
+          <BreadcrumbLink href={bcEntry.url}>{bcEntry.label}</BreadcrumbLink>
         )}
       </>
     )
   } else
     return (
-      <BreadcrumbLinkLast href={bcEntry.url} clientside>
+      <BreadcrumbLinkLast href={bcEntry.url}>
         <Icon>
           <FontAwesomeIcon icon={faArrowCircleLeft} size="1x" />
         </Icon>

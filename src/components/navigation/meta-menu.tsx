@@ -45,7 +45,7 @@ export function MetaMenu({ navigation, pagealias }: MetaMenuProps) {
 
   function renderLink(entry: MetaMenuEntry, active: boolean) {
     return (
-      <StyledLink href={entry.url} clientside>
+      <StyledLink href={entry.url}>
         <ButtonStyle active={active}>{entry.title}</ButtonStyle>
       </StyledLink>
     )

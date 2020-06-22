@@ -13,7 +13,7 @@ export function Logo({ subline, noLink }: LogoProps) {
   return (
     <>
       <div>
-        <Link href={noLink ? undefined : '/'} clientside>
+        <Link href={noLink ? undefined : '/'}>
           <Image
             alt="Serlo"
             src="/_assets/img/serlo-logo.svg"
@@ -24,11 +24,7 @@ export function Logo({ subline, noLink }: LogoProps) {
       </div>
       {subline && (
         <SublineWrap>
-          <SublineLink
-            className="subline icon"
-            href={noLink ? undefined : '/'}
-            clientside
-          >
+          <SublineLink className="subline icon" href={noLink ? undefined : '/'}>
             {subline}
           </SublineLink>
         </SublineWrap>

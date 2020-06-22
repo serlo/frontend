@@ -26,7 +26,7 @@ export function CourseFooter({
         <FontAwesomeIcon icon={faListUl} /> Kursübersicht
       </OverviewButton>
       {nextHref && (
-        <ButtonLink href={nextHref} clientside>
+        <ButtonLink href={nextHref}>
           <FontAwesomeIcon icon={faArrowCircleRight} /> Weiter
         </ButtonLink>
       )}

@@ -35,7 +35,6 @@ export function TopicLinkList({ links, purpose }: LinksProps) {
                   <StyledLink
                     href={article.url}
                     key={article.url + '_' + article.title}
-                    clientside
                   >
                     {article.title}
                   </StyledLink>

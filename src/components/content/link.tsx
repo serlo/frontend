@@ -8,7 +8,6 @@ import { ExternalLink } from './external-link'
 export interface LinkProps {
   href?: string
   children: React.ReactNode
-  clientside?: boolean
   className?: string
   noExternalIcon?: boolean
 }
@@ -27,7 +26,6 @@ const legacyLinks = [
 
 export function Link({
   href,
-  clientside,
   children = null,
   className,
   noExternalIcon,
@@ -36,18 +34,16 @@ export function Link({
 
   if (!href || href === undefined || href === '') return <>{children}</>
 
-  const isAbsolute = href.indexOf('//') > -1
-  const isExternal = isAbsolute && href.indexOf('.serlo.org') === -1
-
   const prettyLink = getPrettyLink(href)
-
   const displayHref = prettyLink ? prettyLink : href
 
+  const isAbsolute = href.indexOf('//') > -1
+  const isExternal = isAbsolute && href.indexOf('.serlo.org') === -1
   const isLegacyLink = legacyLinks.indexOf(displayHref) > -1
 
   if (isExternal || (isAbsolute && prettyLink === undefined))
     return renderLink()
-  if ((clientside && !isLegacyLink) || prettyLink) return renderClientSide()
+  if (!isLegacyLink || prettyLink) return renderClientSide()
 
   //fallback
   return renderLink()

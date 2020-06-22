@@ -31,7 +31,7 @@ export function FooterNav(props: NavProps) {
             const children = category.children.map((link, childindex) => {
               return (
                 <NavLi key={index + childindex}>
-                  <NavLink href={link.url} clientside noExternalIcon>
+                  <NavLink href={link.url} noExternalIcon>
                     {link.icon && (
                       <FontAwesomeIcon icon={link.icon} size="1x" />
                     )}{' '}

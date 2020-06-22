@@ -19,7 +19,6 @@ interface MobileMenuLink {
   url: string
   icon?: IconDefinition
   children?: MobileMenuLink[]
-  clientside?: boolean
 }
 
 export function MobileMenu(props: MobileMenuProps) {
@@ -71,7 +70,6 @@ function Entry({
   isChild = false,
   open,
   onToggle,
-  clientside,
   index,
 }: EntryProps) {
   return (
@@ -83,12 +81,7 @@ function Entry({
             : undefined
         }
       >
-        <EntryLink
-          href={url}
-          isChild={isChild}
-          open={open}
-          clientside={clientside}
-        >
+        <EntryLink href={url} isChild={isChild} open={open}>
           {!isChild ? (
             <IconWrapper>
               <FontAwesomeIcon

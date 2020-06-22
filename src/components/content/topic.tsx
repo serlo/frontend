@@ -71,9 +71,7 @@ export function Topic({ data, contentId }: TopicProps) {
         </>
       ) : (
         <h2>
-          <StyledLink href={data.url} clientside>
-            {data.title}
-          </StyledLink>
+          <StyledLink href={data.url}>{data.title}</StyledLink>
         </h2>
       )}
       <Wrapper purpose={data.purpose}>
