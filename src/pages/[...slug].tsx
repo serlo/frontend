@@ -101,17 +101,13 @@ const PageView: NextPage<PageViewProps> = (props) => {
         alias={alias}
         origin={origin}
       />
-      <Header />
-      {showNav && (
-        <MetaMenu
-          pagealias={`/${data.id}`}
-          navigation={navigation}
-          prettyLinks={prettyLinks}
-        />
-      )}
-      <RelatveContainer>
-        <MaxWidthDiv showNav={!!showNav}>
-          <PrettyLinksProvider value={prettyLinks}>
+      <PrettyLinksProvider value={prettyLinks}>
+        <Header />
+        {showNav && (
+          <MetaMenu pagealias={`/${data.id}`} navigation={navigation} />
+        )}
+        <RelatveContainer>
+          <MaxWidthDiv showNav={!!showNav}>
             {error && <ErrorPage alias={alias} />}
 
             {breadcrumbs && !(contentType === 'Page' && navigation) && (
@@ -137,10 +133,11 @@ const PageView: NextPage<PageViewProps> = (props) => {
                 entries={horizonIndices.map((index) => horizonData[index])}
               />
             )}
-          </PrettyLinksProvider>
-        </MaxWidthDiv>
-      </RelatveContainer>
-      <Footer />
+          </MaxWidthDiv>
+        </RelatveContainer>
+        <Footer />
+      </PrettyLinksProvider>
+
       {contentType === 'Page' && data && <NewsletterPopup />}
       <CookieBar />
     </>

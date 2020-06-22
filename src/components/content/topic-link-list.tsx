@@ -1,8 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { default as NextLink } from 'next/link'
 import React from 'react'
 import styled from 'styled-components'
 
+import { Link } from './link'
 import { LinksInterface, TopicPurposes } from './topic'
 import { getIconAndTitleByContentType } from '@/helper/header-by-content-type'
 
@@ -32,13 +32,13 @@ export function TopicLinkList({ links, purpose }: LinksProps) {
 
               {links[key]!.map((article) => {
                 return (
-                  <NextLink
+                  <StyledLink
+                    href={article.url}
                     key={article.url + '_' + article.title}
-                    href="/[...slug]"
-                    as={decodeURIComponent(article.url)}
+                    clientside
                   >
-                    <StyledLink href={article.url}>{article.title}</StyledLink>
-                  </NextLink>
+                    {article.title}
+                  </StyledLink>
                 )
               })}
             </div>
@@ -78,7 +78,7 @@ const LinkSectionHeadline = styled.h4`
   font-weight: 600;
 `
 
-const StyledLink = styled.a`
+const StyledLink = styled(Link)`
   color: ${(props) => props.theme.colors.brand};
   cursor: pointer;
   font-size: 1.2rem;

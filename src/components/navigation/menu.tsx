@@ -1,11 +1,11 @@
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Tippy, { TippyProps, useSingleton } from '@tippyjs/react'
-import { default as NextLink } from 'next/link'
 import React from 'react'
 import styled, { css } from 'styled-components'
 
 import { makeDefaultButton } from '../../helper/css'
+import { Link } from '../content/link'
 
 interface MenuProps {
   links: MenuLink[]
@@ -57,16 +57,17 @@ function Entry({ link, target }: EntryProps) {
           content={<SubMenuInner subEntries={link.children}></SubMenuInner>}
           singleton={target}
         >
-          <Link /*active={true}*/>
+          <StyledLink as="a" /*active={true}*/>
             {link.title} <FontAwesomeIcon icon={faCaretDown} />
-          </Link>
+          </StyledLink>
         </Tippy>
-      ) : link.clientside ? (
-        <NextLink href="/[...slug]" as={decodeURIComponent(link.url)}>
-          <Link /*active={true}*/ href={link.url}>{link.title}</Link>
-        </NextLink>
       ) : (
-        <Link /*active={true}*/ href={link.url}>{link.title}</Link>
+        <StyledLink
+          /*active={true}*/ href={link.url}
+          clientside={link.clientside}
+        >
+          {link.title}
+        </StyledLink>
       )}
     </Li>
   )
@@ -81,20 +82,11 @@ function SubMenuInner({ subEntries }: SubMenuInnerProps) {
     <SubList>
       {subEntries !== undefined &&
         subEntries.map((entry) => {
-          const linkComp = (
-            <SubLink href={entry.url}>
-              <_Button>{entry.title}</_Button>
-            </SubLink>
-          )
           return (
             <li key={entry.title}>
-              {entry.clientside ? (
-                <NextLink href="/[...slug]" as={decodeURIComponent(entry.url)}>
-                  {linkComp}
-                </NextLink>
-              ) : (
-                linkComp
-              )}
+              <SubLink href={entry.url} clientside={entry.clientside}>
+                <_Button>{entry.title}</_Button>
+              </SubLink>
             </li>
           )
         })}
@@ -127,10 +119,10 @@ const linkStyle = css`
     color: #fff;
     background-color: ${(props) => props.theme.colors.brand};
   }
-  text-decoration: none;
+  text-decoration: none !important;
 `
 
-const Link = styled.a<{ active?: boolean }>`
+const StyledLink = styled(Link)<{ active?: boolean }>`
   ${makeDefaultButton}
   ${linkStyle}
   color: ${(props) =>
@@ -158,7 +150,7 @@ const SubList = styled.ul`
   border-radius: 10px;
 `
 
-const SubLink = styled.a`
+const SubLink = styled(Link)`
   padding-top: 3px;
   padding-bottom: 3px;
   display: block;

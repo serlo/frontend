@@ -6,35 +6,60 @@ import { StyledA } from '../tags/styled-a'
 import { ExternalLink } from './external-link'
 
 export interface LinkProps {
-  element: {
-    href: string
-  }
+  href?: string
   children: React.ReactNode
+  clientside?: boolean
+  className?: string
+  noExternalIcon?: boolean
 }
 
-export function Link({ element, children = null }: LinkProps) {
+export function Link({
+  href,
+  clientside,
+  children = null,
+  className,
+  noExternalIcon,
+}: LinkProps) {
   const prettyLinks = React.useContext(PrettyLinksContext)
 
-  if (!element.href) return <>{children}</>
+  // if (debug) {
+  //   console.log(prettyLinks)
+  //   console.log(href.replace('/', 'uuid'))
+  //   console.log(clientside)
+  // }
 
-  const isExternal = element.href.indexOf('//') > -1
+  if (!href || href === undefined || href === '') return <>{children}</>
+
+  const isExternal =
+    href.indexOf('//') > -1 && href.indexOf('//de.serlo.org') === -1
+
   const prettyLink =
     prettyLinks !== undefined
-      ? prettyLinks[element.href.replace('/', 'uuid')]?.alias
+      ? prettyLinks[href.replace('/', 'uuid')]?.alias
       : undefined
 
-  if (isExternal || !prettyLink) {
+  const displayHref = prettyLink ? prettyLink : href
+
+  if (isExternal) return renderLink()
+  if (clientside || prettyLink) return renderClientSide()
+
+  //for legacy links
+  return renderLink()
+
+  function renderClientSide() {
     return (
-      <StyledA href={prettyLink ? prettyLink : element.href}>
-        {children}
-        {isExternal && <ExternalLink />}
-      </StyledA>
-    )
-  } else {
-    return (
-      <NextLink href="/[...slug]" as={decodeURIComponent(prettyLink)}>
-        <StyledA href={prettyLink}>{children}</StyledA>
+      <NextLink href="/[...slug]" as={decodeURIComponent(displayHref)}>
+        {renderLink()}
       </NextLink>
+    )
+  }
+
+  function renderLink() {
+    return (
+      <StyledA href={displayHref} className={className}>
+        {children}
+        {isExternal && !noExternalIcon && <ExternalLink />}
+      </StyledA>
     )
   }
 }

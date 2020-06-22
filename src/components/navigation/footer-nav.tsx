@@ -1,11 +1,11 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { default as NextLink } from 'next/link'
 import { lighten } from 'polished'
 import React from 'react'
 import styled from 'styled-components'
 
 import { makeResponsivePadding } from '../../helper/css'
+import { Link } from '../content/link'
 
 interface NavChild {
   title: string
@@ -30,24 +30,18 @@ export function FooterNav(props: NavProps) {
         <FooterNavContainer>
           {props.navEntries.map((category, index) => {
             const children = category.children.map((link, childindex) => {
-              const linkComp = (
-                <NavLink href={link.url}>
-                  {link.icon && <FontAwesomeIcon icon={link.icon} size="1x" />}{' '}
-                  {link.title}
-                </NavLink>
-              )
               return (
                 <NavLi key={index + childindex}>
-                  {link.clientside ? (
-                    <NextLink
-                      href="/[...slug]"
-                      as={decodeURIComponent(link.url)}
-                    >
-                      {linkComp}
-                    </NextLink>
-                  ) : (
-                    linkComp
-                  )}
+                  <NavLink
+                    href={link.url}
+                    clientside={link.clientside}
+                    noExternalIcon
+                  >
+                    {link.icon && (
+                      <FontAwesomeIcon icon={link.icon} size="1x" />
+                    )}{' '}
+                    {link.title}
+                  </NavLink>
                 </NavLi>
               )
             })
@@ -131,23 +125,23 @@ const NavLi = styled.li`
   }
 `
 
-const NavLink = styled.a`
+const NavLink = styled(Link)`
   @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
     display: inline-block;
     padding: 8px 0;
   }
-  color: ${(props) => lighten(0.15, props.theme.colors.dark1)};
-  text-decoration: none;
+  color: ${(props) => lighten(0.15, props.theme.colors.dark1)} !important;
+  text-decoration: none !important;
   border-bottom: 2px solid transparent;
 
   &:focus {
     text-decoration: none;
-    color: ${(props) => lighten(0.1, props.theme.colors.dark1)};
+    color: ${(props) => lighten(0.1, props.theme.colors.dark1)} !important;
   }
 
   &:hover,
   &:active {
-    color: ${(props) => props.theme.colors.black};
+    color: ${(props) => props.theme.colors.black} !important;
     text-decoration: underline;
     border-bottom: 2px solid transparent;
   }
