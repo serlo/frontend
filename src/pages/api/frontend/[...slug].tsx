@@ -11,6 +11,7 @@ export default async function fetch(req: NextApiRequest, res: NextApiResponse) {
     req.query.redirect !== undefined
   )
   if (data.error) {
+    console.log(data.error)
     res.statusCode = 500
   }
   res.setHeader('Cache-Control', 's-maxage=1, stale-while-revalidate')
