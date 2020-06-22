@@ -1,6 +1,6 @@
 import { faShareAlt, faFile } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Link from 'next/link'
+import { default as NextLink } from 'next/link'
 import React from 'react'
 import styled, { css } from 'styled-components'
 
@@ -71,9 +71,9 @@ export function Topic({ data, contentId }: TopicProps) {
         </>
       ) : (
         <h2>
-          <Link as={decodeURIComponent(data.url!)} href="/[...slug]">
+          <NextLink as={decodeURIComponent(data.url!)} href="/[...slug]">
             <HeadlineLink href={data.url}>{data.title}</HeadlineLink>
-          </Link>
+          </NextLink>
         </h2>
       )}
       <Wrapper purpose={data.purpose}>

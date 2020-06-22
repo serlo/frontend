@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Link from 'next/link'
+import { default as NextLink } from 'next/link'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -32,13 +32,13 @@ export function TopicLinkList({ links, purpose }: LinksProps) {
 
               {links[key]!.map((article) => {
                 return (
-                  <Link
+                  <NextLink
                     key={article.url + '_' + article.title}
                     href="/[...slug]"
                     as={decodeURIComponent(article.url)}
                   >
                     <StyledLink href={article.url}>{article.title}</StyledLink>
-                  </Link>
+                  </NextLink>
                 )
               })}
             </div>
