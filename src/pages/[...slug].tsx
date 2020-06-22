@@ -182,7 +182,7 @@ PageView.getInitialProps = async (props) => {
     // compat course to first page
     if (fetchedData.redirect) {
       props.res?.writeHead(301, {
-        Location: encodeURI(fetchedData.redirect),
+        Location: fetchedData.redirect,
         // Add the content-type for SEO considerations
         'Content-Type': 'text/html; charset=utf-8',
       })
@@ -211,9 +211,7 @@ PageView.getInitialProps = async (props) => {
     }
     const origin = window.location.host
     const protocol = window.location.protocol
-    const res = await fetch(
-      `${protocol}//${origin}/api/frontend${encodeURI(url)}`
-    )
+    const res = await fetch(`${protocol}//${origin}/api/frontend${url}`)
     const fetchedData = (await res.json()) as PageViewProps['fetchedData']
     // compat: redirect of courses
     if (fetchedData.redirect) {
