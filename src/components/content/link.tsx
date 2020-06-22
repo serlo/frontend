@@ -10,6 +10,7 @@ export interface LinkProps {
   children: React.ReactNode
   className?: string
   noExternalIcon?: boolean
+  title?: string
 }
 
 //TODO: Should come from cloudflare worker
@@ -26,9 +27,10 @@ const legacyLinks = [
 
 export function Link({
   href,
-  children = null,
+  children,
   className,
   noExternalIcon,
+  title,
 }: LinkProps) {
   const prettyLinks = React.useContext(PrettyLinksContext)
 
@@ -68,7 +70,7 @@ export function Link({
 
   function renderLink() {
     return (
-      <StyledA href={displayHref} className={className}>
+      <StyledA href={displayHref} className={className} title={title}>
         {children}
         {isExternal && !noExternalIcon && <ExternalLink />}
       </StyledA>

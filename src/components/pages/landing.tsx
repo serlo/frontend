@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import DonateSVG from '../../../public/_assets/img/footer-donate.svg'
 import ParticipateSVG from '../../../public/_assets/img/footer-participate.svg'
 import PrinciplesSVG from '../../../public/_assets/img/landing-principles-graphic.svg'
+import { Link } from '../content/link'
 import { LandingAbout } from '@/components/landing/landing-about'
 import { LandingSubjects } from '@/components/landing/landing-subjects'
 import { makeDefaultButton, makeResponsivePadding } from '@/helper/css'
@@ -149,8 +150,9 @@ const StyledH2 = styled.h2`
   }
 `
 
-const Button = styled.a`
+const Button = styled(Link)`
   ${makeDefaultButton}
+  text-decoration: none !important;
   margin-left: -3px;
   font-weight: bold;
   padding-top: 3px;

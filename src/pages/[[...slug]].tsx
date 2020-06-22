@@ -204,16 +204,15 @@ PageView.getInitialProps = async (props) => {
     joinedSlug === 'search' ||
     joinedSlug === 'spenden'
   ) {
-    return {
+    //TODO: Probaby add another type for FetchedData pages
+    // also check what values we might actually need to feed slug-head
+    return ({
       fetchedData: {},
       page: joinedSlug === '' ? 'landing' : joinedSlug,
       origin: origin,
-    }
+    } as unknown) as PageViewProps
   }
-  //TODO: also add api pages
-  // if (joinedSlug === 'api/frontend') {
-  //   return { fetchedData: { alias: 'search-page' }, origin: origin }
-  // }
+  //TODO: maybe also add api pages?
 
   if (typeof window === 'undefined') {
     const res = await fetch(

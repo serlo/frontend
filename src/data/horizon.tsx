@@ -43,7 +43,7 @@ export const horizonData = [
       'https://assets.serlo.org/599c475e437f9_4e9e7964bdd022ee53969c92e4f03cae1dea84aa.jpg',
     text:
       'Serlo.org hat viele Features, die dir beim Lernen helfen. Klick hier für eine Übersicht der unterschiedlichen Lernfunktionen und erfahre in 3 Minuten, wie du mit serlo.org erfolgreich lernen kannst!',
-    url: 'https://de.serlo.org/features',
+    url: '/features',
     frequency: 1,
   },
   {
@@ -62,7 +62,7 @@ export const horizonData = [
       'https://assets.serlo.org/59e6162cd8541_273c6d05fed88f39cbf2cb378288c38b38cb2dfc.png',
     text:
       'Auf Serlo sind Themen so aufbereitet, dass du sie besonders leicht selbstständig lernen kannst. Klick hier, um mehr über unser pädagogisches Konzept zu erfahren!',
-    url: 'https://de.serlo.org/paedagogik-konzept',
+    url: '/paedagogik-konzept',
     frequency: 1,
   },
   {
@@ -71,7 +71,7 @@ export const horizonData = [
       'https://assets.serlo.org/5c17b5c3b65a8_5d5e215534711afb7aeb2140897adae369b08e27.jpg',
     text:
       'Hilf mit! Der Fachbereich Informatik auf serlo.org befindet sich im Aufbau und freut sich über deine Mitarbeit. Schau dir doch mal die bestehenden Inhalte an und melde dich bei uns! :-)',
-    url: 'https://de.serlo.org/informatik',
+    url: '/informatik',
     frequency: 1,
   },
   {
@@ -81,7 +81,7 @@ export const horizonData = [
     text:
       'Achtung - Wortwitz: Vögel sind solche Überflieger. ;-) Aber wieso können sie eigentlich fliegen? Die Antwort dazu und noch vieles mehr findest du hier, bei Serlo Biologie',
     url:
-      'https://de.serlo.org/biologie/vielfalt-lebewesen/wirbeltiere/voegel-koennen-voegel-fliegen',
+      '/biologie/vielfalt-lebewesen/wirbeltiere/voegel-koennen-voegel-fliegen',
     frequency: 0.3,
   },
   {
@@ -90,7 +90,7 @@ export const horizonData = [
       'https://assets.serlo.org/legacy/58f0908e2e3d9_373c2a6f377634958f874bef3ab112e320dc0bc0.png',
     text:
       'Du hast bald eine wichtige Präsentation und möchtest dich eigentlich nur auf den Inhalt konzentrieren? Hier zeigt dir Serlo Informatik, wie du ganz einfach ein schönes und übersichtliches Layout hin bekommst.',
-    url: 'https://de.serlo.org/64855',
+    url: '/64855',
     frequency: 0.3,
   },
   {
@@ -108,7 +108,7 @@ export const horizonData = [
       'https://assets.serlo.org/legacy/58f090745b909_16a4cba82bd1cb09434b7f582e555b9ac7531922.png',
     text:
       'Wenig Platz zu Hause, aber total Lust auf frischen, selbst angebauten Salat? Kein Problem mit dieser Anleitung von Serlo Nachhaltigkeit zum Bau eines Salatturms.',
-    url: 'https://de.serlo.org/36733',
+    url: '/36733',
     frequency: 0.3,
   },
 ]

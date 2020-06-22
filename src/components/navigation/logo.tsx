@@ -1,5 +1,6 @@
 import { lighten } from 'polished'
 import styled from 'styled-components'
+
 import { Link } from '../content/link'
 
 const logoTargetWidth = 160
