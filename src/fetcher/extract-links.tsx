@@ -14,7 +14,7 @@ export const extractLinks = (arr: unknown[], links: number[]) => {
   if (!arr) return []
   // TODO: needs type declaration
   arr.forEach((obj: any) => {
-    if (obj.type === 'a') {
+    if (obj.type === 'a' || obj.type === 'img') {
       const id = getId(obj.href)
       if (!id) return
       if (links.includes(id) === false) links.push(id)
