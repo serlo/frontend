@@ -21,20 +21,34 @@ export function Menu(props: MenuProps) {
   const { links } = props
   const [source, target] = useSingleton()
 
+  /* TODO: Is is possible to get the argument part of TippyProps['onCreate'] ? */
+  const [tippyRoot, setTippyRoot] = React.useState<unknown>(null)
+
+  function onSubMenuInnerClick() {
+    if (tippyRoot && tippyRoot !== undefined) tippyRoot.hide()
+  }
+
   return (
     <ResponsiveNav>
       <Tippy
         singleton={source}
         placement="bottom-start"
-        trigger="mouseenter focus click"
+        trigger="click"
+        hideOnClick
         interactive
         delay={[50, 0]}
         duration={[300, 100]}
         animation="fade"
+        onCreate={(tip) => setTippyRoot(tip)}
       />
       <List>
         {links.map((link) => (
-          <Entry link={link} key={link.title} target={target} />
+          <Entry
+            link={link}
+            key={link.title}
+            target={target}
+            onSubMenuInnerClick={onSubMenuInnerClick}
+          />
         ))}
       </List>
     </ResponsiveNav>
@@ -44,16 +58,22 @@ export function Menu(props: MenuProps) {
 interface EntryProps {
   link: MenuLink
   target: TippyProps['singleton']
+  onSubMenuInnerClick: () => void
 }
 
-function Entry({ link, target }: EntryProps) {
+function Entry({ link, target, onSubMenuInnerClick }: EntryProps) {
   const hasChildren = link.children !== undefined
 
   return (
     <Li>
       {hasChildren ? (
         <Tippy
-          content={<SubMenuInner subEntries={link.children}></SubMenuInner>}
+          content={
+            <SubMenuInner
+              onSubMenuInnerClick={onSubMenuInnerClick}
+              subEntries={link.children}
+            ></SubMenuInner>
+          }
           singleton={target}
         >
           <StyledLink as="a" /*active={true}*/>
@@ -69,15 +89,16 @@ function Entry({ link, target }: EntryProps) {
 
 interface SubMenuInnerProps {
   subEntries: MenuLink[] | undefined
+  onSubMenuInnerClick: () => void
 }
 
-function SubMenuInner({ subEntries }: SubMenuInnerProps) {
+function SubMenuInner({ subEntries, onSubMenuInnerClick }: SubMenuInnerProps) {
   return (
     <SubList>
       {subEntries !== undefined &&
         subEntries.map((entry) => {
           return (
-            <li key={entry.title}>
+            <li key={entry.title} onClick={onSubMenuInnerClick}>
               <SubLink href={entry.url}>
                 <_Button>{entry.title}</_Button>
               </SubLink>
