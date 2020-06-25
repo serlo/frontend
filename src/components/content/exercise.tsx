@@ -119,8 +119,7 @@ export function Exercise(props: ExerciseProps) {
 
   function getSolutionContent(): EditorState['children'] {
     if (!isEditorSolution) {
-      // @ts-expect-error
-      return solution.children
+      return solution.children as any
     }
     const state = solution.children[0].state
     const prereq = []
@@ -149,9 +148,7 @@ export function Exercise(props: ExerciseProps) {
       ? task.children[0].state.content
       : task.children
 
-    // @ts-expect-error
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return renderArticle(children, false)
+    return renderArticle(children as any, false)
   }
 
   function renderInteractive() {
