@@ -81,7 +81,11 @@ function Entry({
             : undefined
         }
       >
-        <EntryLink href={url} isChild={isChild} open={open}>
+        <EntryLink
+          href={url === '' ? undefined : url}
+          isChild={isChild}
+          open={open}
+        >
           {!isChild ? (
             <IconWrapper>
               <FontAwesomeIcon

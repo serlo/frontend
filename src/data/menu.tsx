@@ -9,7 +9,7 @@ import {
 
 export const menuData = [
   {
-    url: '#',
+    url: '',
     title: 'Fächer',
     icon: faGraduationCap,
     children: [
@@ -31,7 +31,7 @@ export const menuData = [
   { url: '/serlo', title: 'Über Serlo', icon: faInfoCircle },
   { url: '/mitmachen', title: 'Mitmachen', icon: faUserEdit },
   {
-    url: '#',
+    url: '',
     title: 'Community',
     icon: faUserFriends,
     children: [

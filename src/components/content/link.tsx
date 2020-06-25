@@ -35,7 +35,12 @@ export function Link({
 }: LinkProps) {
   const prettyLinks = React.useContext(PrettyLinksContext)
 
-  if (!href || href === undefined || href === '') return <>{children}</>
+  if (!href || href === undefined || href === '')
+    return (
+      <a className={className} title={title}>
+        {children}
+      </a>
+    )
 
   const prettyLink = getPrettyLink(href)
   const displayHref = prettyLink ? prettyLink : href
