@@ -25,6 +25,7 @@ export function Menu(props: MenuProps) {
   const [tippyRoot, setTippyRoot] = React.useState<unknown>(null)
 
   function onSubMenuInnerClick() {
+    // @ts-expect-error
     if (tippyRoot && tippyRoot !== undefined) tippyRoot.hide()
   }
 
