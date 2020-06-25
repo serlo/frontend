@@ -13,7 +13,7 @@ export const footerNavEntries = [
       { title: 'Kontakt', url: '/kontakt' },
       {
         title: 'Serlo in anderen Sprachen',
-        url: `https://en.${serloDomain}.org/global`,
+        url: `https://en.${serloDomain}/global`,
       },
       {
         title: 'Ins alte Design zurück',

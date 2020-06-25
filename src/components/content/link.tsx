@@ -19,6 +19,7 @@ const legacyLinks = [
   '/auth/login',
   '/auth/logout',
   '/privacy',
+  '/datenschutz',
   '/imprint',
   '/terms',
   '/disable-frontend',
