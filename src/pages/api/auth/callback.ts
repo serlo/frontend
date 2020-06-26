@@ -22,9 +22,16 @@ export default async function callback(
   }
   const { csrf, referer } = JSON.parse(state)
   if (csrf === req.cookies['auth-csrf']) {
+<<<<<<< HEAD
     const result = await oauth2AuthorizationCode.getToken({
       code,
       redirect_uri: 'http://localhost:3000/api/auth/callback',
+=======
+    const { origin } = new URL(referer)
+    const result = await oauth2AuthorizationCode.getToken({
+      code,
+      redirect_uri: `${origin}/api/auth/callback`,
+>>>>>>> 9a9ddbe4cfe352780e6e4befdfb3e094d9e74170
       scope,
     })
     const { token } = oauth2ClientCredentials.createToken(result)
