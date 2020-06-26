@@ -6,18 +6,6 @@ import {
   Token,
 } from 'simple-oauth2'
 
-<<<<<<< HEAD
-const config =
-  process.env.HYDRA_HOST === undefined
-    ? null
-    : {
-        client: {
-          id: process.env.HYDRA_CLIENT_ID!,
-          secret: process.env.HYDRA_CLIENT_SECRET!,
-        },
-        auth: {
-          tokenHost: process.env.HYDRA_HOST,
-=======
 const HYDRA_HOST =
   process.env.NEXT_PUBLIC_ENV === 'production'
     ? process.env.HYDRA_HOST_PRODUCTION
@@ -43,7 +31,6 @@ const config =
         },
         auth: {
           tokenHost: HYDRA_HOST,
->>>>>>> 9a9ddbe4cfe352780e6e4befdfb3e094d9e74170
           tokenPath: '/oauth2/token',
           revokePath: '/oauth2/revoke',
           authorizePath: '/oauth2/auth',

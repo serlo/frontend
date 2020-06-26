@@ -28,7 +28,7 @@ export default async function logout(
     `auth-token=; Path=/; Expires=${new Date(0).toUTCString()};`
   )
   res.writeHead(302, {
-    Location: `/auth/logout?referer=${referer ?? '/'}`,
+    Location: `${referer ?? '/'}#auth`,
   })
   res.end()
 }
