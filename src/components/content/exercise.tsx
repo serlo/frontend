@@ -52,9 +52,11 @@ interface SolutionData {
         strategy: EditorState['children']
         steps: EditorState['children']
       }
-      children: {
-        text?: string
-      }
+      children: [
+        {
+          text?: string
+        }
+      ]
     }
   ]
 }
@@ -94,7 +96,7 @@ export function Exercise(props: ExerciseProps) {
   )
 
   function renderSolutionToggle() {
-    if (solution.children[0].children?.text === '') return null
+    if (!Array.isArray(solution.children[0].children)) return null
     return (
       <SolutionToggle
         onClick={() => {
@@ -119,7 +121,7 @@ export function Exercise(props: ExerciseProps) {
 
   function getSolutionContent(): EditorState['children'] {
     if (!isEditorSolution) {
-      return solution.children as any
+      return solution.children
     }
     const state = solution.children[0].state
     const prereq = []
@@ -145,10 +147,10 @@ export function Exercise(props: ExerciseProps) {
 
   function renderExerciseTask() {
     const children = isEditorTask
-      ? task.children[0].state.content
+      ? task.children[0].state.content.children
       : task.children
 
-    return renderArticle(children as any, false)
+    return renderArticle(children, false)
   }
 
   function renderInteractive() {

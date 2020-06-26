@@ -48,10 +48,8 @@ export interface EditorState {
 }
 
 export interface EditorChildren {
-  type: string
-  state?: {
-    content?: unknown
-  }
+  type?: string
+  state?: unknown
   children?: EditorChildren[]
   text?: string
 }
