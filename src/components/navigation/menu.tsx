@@ -22,10 +22,12 @@ export function Menu(props: MenuProps) {
   const [source, target] = useSingleton()
 
   /* TODO: Is is possible to get the argument part of TippyProps['onCreate'] ? */
-  const [tippyRoot, setTippyRoot] = React.useState<unknown>(null)
+  // COMMENT: probably "Instance<>", but how?
+  const [tippyRoot, setTippyRoot] = React.useState<{ hide: () => void } | null>(
+    null
+  )
 
   function onSubMenuInnerClick() {
-    // @ts-expect-error
     if (tippyRoot && tippyRoot !== undefined) tippyRoot.hide()
   }
 
