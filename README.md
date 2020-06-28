@@ -23,19 +23,21 @@ The server is now running on `localhost:3000`. You can visit it in the browser.
 
 ![grafik](https://user-images.githubusercontent.com/13507950/85958632-2595dc80-b997-11ea-937c-38169b514fe7.png)
 
-You can request a page by alias (e.g. `/` or `/mathe/zahlen-größen`). The frontend then asks the backend for more information about the alias and fetches the data. The frontend processes the data and returns a prerendered HTML response.
+You can request a page by alias (e.g. `/` or `/mathe/zahlen-größen`). The frontend decides how to handle the alias, and if necessary, fetches data from the backend. The frontend then processes the data and returns a prerendered HTML response.
 
 ### Routes
 
-Requests to the frontend are handled by different files. There are currently three files involved and checked in this order:
+An alias will be handled by a specific route:
 
-- Privacy-Route: `/api/frontend/privacy` -> `src/pages/api/frontend/privacy.tsx`
+1. `/api/frontend/privacy`: Internal route for loading privacy revisions (proxies the request to the legacy system).
 
-- API-Route: `/api/frontend/<dynamic>` -> `src/pages/api/frontend/[...slug].tsx`
+2. `/api/frontend/<slug>`: Internal route for data fetching from the backend API.
 
-- Public-Route: `<dynamic>` -> `src/pages/[[...slug]].tsx`
+3. `/`, `/spenden`, `/search`: Custom built pages.
 
-All public request are handled by the last entry. The first two entries are used by the frontend privately. The `privacy`-route fetches the revision from the backend server and is needed to bypass CORS. The API-Route is taking care of fetching data from the backend server. This route is needed to make use of caching.
+4. `/<slug>`: Entity route, the default case for almost every alias. Fetches data from backend with (2.) and renders page.
+
+Notes: We need (1.) because of CORS-Issues. We use (2.) to enable caching for the frontend deployment, because requesting (2.) can be slow, in the range of 0.5-1.5s, depending on the complexity of the entity. Most entities have a default alias, if (4.) encounters an alias that is not the default (old version, access with id: `/1885`), it will redirect to the default alias by 301.
 
 ---
 
