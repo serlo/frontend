@@ -400,7 +400,8 @@ function convert(node: any): any {
       return [
         {
           type: 'a',
-          href: node.attribs.href,
+          // compat: replace absolute urls in german language version
+          href: node.attribs.href.replace('https://de.serlo.org', ''),
           children,
         },
       ]
