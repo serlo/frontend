@@ -7,6 +7,7 @@ import styled from 'styled-components'
 
 import { footerNavEntries } from '../../data/footer'
 import { makeResponsivePadding, makeDefaultButton } from '../../helper/css'
+import { Link } from '../content/link'
 import { FooterNav } from './footer-nav'
 
 export function Footer() {
@@ -115,7 +116,7 @@ const SummaryHeading = styled.div`
   margin-bottom: 6px;
 `
 
-const SerloLink = styled.a`
+const SerloLink = styled(Link)`
   &:hover {
     text-decoration: underline;
   }
@@ -131,8 +132,9 @@ const SummaryButtonBox = styled.div`
   margin-bottom: 10px;
 `
 
-const SummaryButton = styled.a`
+const SummaryButton = styled(Link)`
   ${makeDefaultButton}
+  text-decoration: none !important;
   color: #fff;
 `
 
@@ -149,11 +151,11 @@ const Support = styled.div`
   }
 `
 
-const ImageLink = styled.a`
+const ImageLink = styled(Link)`
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-decoration: none;
+  text-decoration: none !important;
   > img {
     width: 60px;
   }

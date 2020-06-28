@@ -1,6 +1,5 @@
 import { faShareAlt, faFile } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Link from 'next/link'
 import React from 'react'
 import styled, { css } from 'styled-components'
 
@@ -10,6 +9,7 @@ import { ShareModal } from '../navigation/share-modal'
 import { UserToolsMobileButton } from '../navigation/tool-line-button'
 import { UserTools } from '../navigation/user-tools'
 import { UserToolsMobile } from '../navigation/user-tools-mobile'
+import { Link } from './link'
 import { TopicLinkList } from './topic-link-list'
 
 export interface LinkInterface {
@@ -71,9 +71,7 @@ export function Topic({ data, contentId }: TopicProps) {
         </>
       ) : (
         <h2>
-          <Link as={decodeURIComponent(data.url!)} href="/[...slug]">
-            <HeadlineLink href={data.url}>{data.title}</HeadlineLink>
-          </Link>
+          <StyledLink href={data.url}>{data.title}</StyledLink>
         </h2>
       )}
       <Wrapper purpose={data.purpose}>
@@ -146,7 +144,7 @@ const Headline = styled.h1`
   margin-bottom: 40px;
 `
 
-const HeadlineLink = styled.a`
+const StyledLink = styled(Link)`
   color: ${(props) => props.theme.colors.brand};
   display: block;
   font-size: 1.65rem;

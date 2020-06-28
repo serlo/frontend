@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { makePadding } from '../../helper/css'
+import { Link } from './link'
 
 export interface HorizonEntry {
   title: string
@@ -20,7 +21,7 @@ export function Horizon({ entries }: HorizonProps) {
     <Wrapper>
       {entries.map((horizonEntry, index) => {
         return (
-          <Item href={horizonEntry.url} key={index}>
+          <Item href={horizonEntry.url} key={index} noExternalIcon>
             <Image alt={horizonEntry.title} src={horizonEntry.imageUrl} />
             <Headline>{horizonEntry.title}</Headline>
             <Text>{horizonEntry.text}</Text>
@@ -44,11 +45,11 @@ const Wrapper = styled.div`
   }
 `
 
-const Item = styled.a`
+const Item = styled(Link)`
   color: ${(props) => props.theme.colors.brand};
   display: block;
   line-height: 1.2;
-  text-decoration: none;
+  text-decoration: none !important;
   max-width: 400px;
   width: 29.3%;
   padding: 15px 10px;

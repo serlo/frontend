@@ -212,7 +212,7 @@ function renderElement(props: any) {
 
 // TODO: needs type declaration
 export function renderA({ element, children = null }: any) {
-  return <Link element={element}>{children}</Link>
+  return <Link href={element.href}>{children}</Link>
 }
 
 // TODO: needs type declaration

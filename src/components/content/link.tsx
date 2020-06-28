@@ -6,35 +6,80 @@ import { StyledA } from '../tags/styled-a'
 import { ExternalLink } from './external-link'
 
 export interface LinkProps {
-  element: {
-    href: string
-  }
+  href?: string
   children: React.ReactNode
+  className?: string
+  noExternalIcon?: boolean
+  title?: string
 }
 
-export function Link({ element, children = null }: LinkProps) {
+//TODO: Should come from cloudflare worker
+const legacyLinks = [
+  '/entity/unrevised',
+  '/auth/login',
+  '/auth/logout',
+  '/privacy',
+  '/datenschutz',
+  '/imprint',
+  '/terms',
+  '/disable-frontend',
+  '/enable-frontend',
+]
+
+export function Link({
+  href,
+  children,
+  className,
+  noExternalIcon,
+  title,
+}: LinkProps) {
   const prettyLinks = React.useContext(PrettyLinksContext)
 
-  if (!element.href) return <>{children}</>
-
-  const isExternal = element.href.indexOf('//') > -1
-  const prettyLink =
-    prettyLinks !== undefined
-      ? prettyLinks[element.href.replace('/', 'uuid')]?.alias
-      : undefined
-
-  if (isExternal || !prettyLink) {
+  if (!href || href === undefined || href === '')
     return (
-      <StyledA href={prettyLink ? prettyLink : element.href}>
+      <a className={className} title={title}>
         {children}
-        {isExternal && <ExternalLink />}
-      </StyledA>
+      </a>
     )
-  } else {
+
+  const prettyLink = getPrettyLink(href)
+  const displayHref = prettyLink ? prettyLink : href
+
+  const isAbsolute = href.indexOf('//') > -1
+  const isExternal = isAbsolute && href.indexOf('.serlo.org') === -1
+  const isLegacyLink = legacyLinks.indexOf(displayHref) > -1
+
+  if (isExternal || (isAbsolute && prettyLink === undefined))
+    return renderLink()
+  if (!isLegacyLink || prettyLink) return renderClientSide()
+
+  //fallback
+  return renderLink()
+
+  function getPrettyLink(href: string): string | undefined {
+    if (prettyLinks === undefined || prettyLinks === {}) return undefined
+
+    const prettyLink = prettyLinks[href.replace('/', 'uuid')]?.alias
+    if (prettyLink !== undefined) return prettyLink
+
+    //fallback for wrong absolute links
+    return prettyLinks['uuid' + href.split('de.serlo.org/')[1]]?.alias
+  }
+
+  function renderClientSide() {
     return (
-      <NextLink href="/[...slug]" as={decodeURIComponent(prettyLink)}>
-        <StyledA href={prettyLink}>{children}</StyledA>
+      <NextLink href="/[[...slug]]" as={decodeURIComponent(displayHref)}>
+        {renderLink()}
       </NextLink>
+    )
+  }
+
+  function renderLink() {
+    return (
+      <StyledA href={displayHref} className={className} title={title}>
+        {children}
+        {isExternal && !noExternalIcon && <ExternalLink />}
+      </StyledA>
     )
   }
 }

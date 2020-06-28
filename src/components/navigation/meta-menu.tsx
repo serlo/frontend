@@ -1,8 +1,8 @@
-import { default as NextLink } from 'next/link'
 import React, { useRef, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 
 import { makeDefaultButton } from '../../helper/css'
+import { Link } from '../content/link'
 
 interface MetaMenuEntry {
   url: string
@@ -12,12 +12,9 @@ interface MetaMenuEntry {
 export interface MetaMenuProps {
   pagealias: string
   navigation: MetaMenuEntry[]
-  prettyLinks: Record<string, { alias: string }>
 }
 
-export function MetaMenu(props: MetaMenuProps) {
-  const { navigation, pagealias, prettyLinks } = props
-
+export function MetaMenu({ navigation, pagealias }: MetaMenuProps) {
   const activeRef = useRef<HTMLLIElement>(null)
   const containerRef = useRef<HTMLUListElement>(null)
 
@@ -47,19 +44,6 @@ export function MetaMenu(props: MetaMenuProps) {
   )
 
   function renderLink(entry: MetaMenuEntry, active: boolean) {
-    const prettyLink =
-      prettyLinks !== undefined
-        ? prettyLinks[entry.url.replace('/', 'uuid')]?.alias
-        : undefined
-    if (prettyLink)
-      return (
-        <NextLink href="/[...slug]" as={decodeURIComponent(prettyLink)}>
-          <StyledLink href={prettyLink}>
-            <ButtonStyle active={active}>{entry.title}</ButtonStyle>
-          </StyledLink>
-        </NextLink>
-      )
-
     return (
       <StyledLink href={entry.url}>
         <ButtonStyle active={active}>{entry.title}</ButtonStyle>
@@ -73,6 +57,7 @@ export function MetaMenu(props: MetaMenuProps) {
         aria-hidden="true"
         spacer
         lastChild={i === navigation.length - 1}
+        as="span"
       ></StyledLink>
     )
   }
@@ -124,7 +109,7 @@ interface LinkProps {
   lastChild?: boolean
 }
 
-const StyledLink = styled.a<LinkProps>`
+const StyledLink = styled(Link)<LinkProps>`
   @media (max-width: ${(props) => props.theme.breakpoints.md}) {
     text-decoration: none;
     padding: 18px 7px;
