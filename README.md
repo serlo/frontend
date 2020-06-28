@@ -1,4 +1,4 @@
-# How To Frontend
+# Serlo / Frontend
 
 Welcome to the new serlo.org frontend.
 
@@ -17,7 +17,42 @@ yarn
 yarn dev
 ```
 
-The server is now running on `localhost:3000`.
+The server is now running on `localhost:3000`. You can visit it in the browser.
+
+### Overview
+
+![grafik](https://user-images.githubusercontent.com/13507950/85958632-2595dc80-b997-11ea-937c-38169b514fe7.png)
+
+You can request a page by alias (e.g. `/` or `/mathe/zahlen-größen`). The frontend then asks the backend for more information about the alias and fetches the data. The frontend processes the data and returns a prerendered HTML response.
+
+### Routes
+
+Requests to the frontend are handled by different files. There are currently three files involved and checked in this order:
+
+- Privacy-Route: `/api/frontend/privacy` -> `src/pages/api/frontend/privacy.tsx`
+
+- API-Route: `/api/frontend/<dynamic>` -> `src/pages/api/frontend/[...slug].tsx`
+
+- Public-Route: `<dynamic>` -> `src/pages/[[...slug]].tsx`
+
+All public request are handled by the last entry. The first two entries are used by the frontend privately. The `privacy`-route fetches the revision from the backend server and is needed to bypass CORS. The API-Route is taking care of fetching data from the backend server. This route is needed to make use of caching.
+
+---
+
+OLD
+OLD
+OLD
+OLD
+OLD
+OLD
+OLD
+OLD
+OLD
+OLD
+OLD
+OLD
+OLD
+OLD
 
 ### Creating pages
 
