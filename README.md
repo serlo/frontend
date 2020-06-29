@@ -48,8 +48,8 @@ Every entity belongs to a content type. These are the supported types:
 | `Page`            | A single page of static content.                                                                                             | `/serlo`  |
 | `Article`         | A single page of learning content.                                                                                           | `/27801`  |
 | `CoursePage`      | A single page of learning content that is part of a course.                                                                  | `/52020`  |
-| `Video`           | A single video, embedded from Youtube, Vimeo, Wikimedia or BR (Bayerischer Rundfunk), with a description.                    | `/40744`  |
-| `Applet`          | A single Geogebra-Applet, embedded from GeogebraTube.                                                                        | `/138114` |
+| `Video`           | A single video element with a description.                                                                                   | `/40744`  |
+| `Applet`          | A single Geogebra applet.                                                                                                    | `/138114` |
 | `TaxonomyTerm`    | Index page with links to descendant entities. Some entities are shown directly in the taxonomy (e.g. subterms or exercises). | `/5`      |
 | `Exercise`        | A single exercise with solution, possibly with interactive element.                                                          | `/54210`  |
 | `ExerciseGroup`   | A list of exercises in a group with a shared description in the beginning.                                                   | `/53205`  |
@@ -149,30 +149,53 @@ More complex nodes have a type and may have other nodes as children. Here is an 
 | `injection`         | href                                                                                  | Loads another entity on the client and injects it.                                                                                              |
 | `exercise`          | task, solution, taskLicense, solutionLicense, grouped, positionInGroup,positionOnPage | An exercise with a task and a solution. The task and the solution have a separate license notice. This type includes grouped exercises as well. |
 | `exercise-group`    | content, license, positionOnPage, children: exercise                                  | Intro of an exercise group, also with a separate license.                                                                                       |
-| `video`             | src                                                                                   | An embedded video.                                                                                                                              |
+| `video`             | src                                                                                   | An embedded video from Youtube, Vimeo, Wikimedia or BR (Bayerischer Rundfunk).                                                                  |
 | `code`              | content                                                                               | A block of monospaced code.                                                                                                                     |
 | `equations`         | steps                                                                                 | A lists of steps for an equation (work in progress).                                                                                            |
 
-###Notes
+### Notes
 
-Not every com
+Not every composition of elements is valid, e.g. a paragraph may only contain inline elements or some elements should not be nested. The frontend performs little checks! It expects the converter to produce valid outputs, and the converters (for legacy state and edtr-io state) expect the data from the backend to be meaningful.
+
+Don't rely on attributes to be present. The frontend tries to handle edge cases as gracefully as possible.
+
+Some attributes are quite complex, notable the task and solution of an exercise, which contains nested subdocuments and interactive elements. This functionality is therefore bound to this one type.
+
+## Navigation
+
+The frontend provides several means of navigation from one page to another.
+
+### Header and Footer
+
+Header and footer are present on every page (only exception: donation page). The entries are hard-coded in `/src/data`, changing them needs a new deployment.
+
+### Secondary Navigation
+
+Some pages have a secondary navigation associated with them. This show up as a horizontal scrolling menu or on the left side. The data is fetched from the backend.
+
+### Breadcrumbs
+
+If no secondary navigation is present, most entities have a path within the taxonomy that is shown as breadcrumbs.
+
+### Horizon
+
+One or three entries are shown at the bottom of an entity in the horizon. The data is also hard-coded.
+
+### Client-Side Navigation and Pretty Links
+
+All links within entities and the navigation should use the default alias. The frontend looks up links that are using ids and use this information to render all links as pretty links.
+
+Clicking a link in the frontend will trigger a backend request instead of a browser navigation, the page switches without a full reload. The request is cached for the duration of the session.
 
 ---
 
-OLD
-OLD
-OLD
-OLD
-OLD
-OLD
-OLD
-OLD
-OLD
-OLD
-OLD
-OLD
-OLD
-OLD
+---
+
+---
+
+Previous documentation below here, pretty much still valid.
+
+<br><br><br>
 
 ### Creating pages
 
