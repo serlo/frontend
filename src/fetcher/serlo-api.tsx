@@ -21,7 +21,10 @@ export async function fetchContent(alias: string, redirect: any) {
         endpoint,
         idQuery(alias.substring(1))
       )
-      const redirect = response.uuid.alias
+      let redirect = response.uuid.alias
+      if (response.uuid.instance !== 'de') {
+        redirect = `/${response.uuid.instance}${redirect}`
+      }
       if (redirect) {
         return { redirect }
       }
@@ -31,10 +34,21 @@ export async function fetchContent(alias: string, redirect: any) {
   }
 
   try {
+    let instance = 'de'
+    if (
+      alias.startsWith('/en/') ||
+      alias.startsWith('/fr/') ||
+      alias.startsWith('/hi/') ||
+      alias.startsWith('/ta/')
+    ) {
+      instance = alias.substring(1, 3)
+      alias = alias.substring(3)
+    }
+
     const QUERY = dataQuery(
       /^\/[\d]+$/.test(alias)
         ? 'id: ' + alias.substring(1)
-        : `alias: { instance: de, path: "${alias}"}`
+        : `alias: { instance: ${instance}, path: "${alias}"}`
     )
     // TODO: needs better types
     const reqData = await request<{ uuid: any }>(endpoint, QUERY)

@@ -24,12 +24,15 @@ export const idQuery = (id: any) => `
     uuid(id:${id}) {
       ... on Entity {
         alias
+        instance
       }
       ... on Page {
         alias
+        instance
       }
       ... on TaxonomyTerm {
         alias
+        instance
       }
     }
   }
