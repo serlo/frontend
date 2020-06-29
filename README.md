@@ -101,7 +101,61 @@ yarn analyze
 
 Creates a build of the frontend, shows summary of build artefacts and creates in-depth analysis of the bundles.
 
-All files are named with kebab-case. Use `@/` to import files from `src/` instead of relative paths.
+All files are named with kebab-case. You can use `@/` to import files from `src/` instead of relative paths.
+
+## Schema
+
+Entities may contain a wide range of different elements. The elements are organized in a tree.
+
+### Text
+
+The most basic node type is text. A text node contain these attributes:
+
+- `text`: The text content of this node.
+
+- `color`: blue, green or orange
+
+- `em`: true/undefined
+
+- `strong`: true/undefined
+
+### Elements
+
+More complex nodes have a type and may have other nodes as children. Here is an overview of available elements:
+
+| Type                | Attributes                                                                            | Description                                                                                                                                     |
+| ------------------- | ------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `a`                 | href, children                                                                        | A link.                                                                                                                                         |
+| `inline-math`       | formula                                                                               | A latex formula rendered with KaTeX, displayed inline.                                                                                          |
+| `p`                 | children                                                                              | A paragraph.                                                                                                                                    |
+| `h`                 | level, id, children                                                                   | A heading of given level, can have an id for anchoring.                                                                                         |
+| `math`              | formula, alignLeft                                                                    | A latex formula, displayed on a separate line.                                                                                                  |
+| `img`               | src, href, alt, maxWidth                                                              | An image, with optional link, alternative text and a maximal width.                                                                             |
+| `spoiler-container` | children: spoiler-title, spoiler-body                                                 | The outer container for a collapsible spoiler. Has one spoiler-title and one spoiler-body as children.                                          |
+| `spoiler-title`     | children                                                                              | The title of the spoiler.                                                                                                                       |
+| `spoiler-body`      | children                                                                              | The content of the spoiler.                                                                                                                     |
+| `ul`                | children: li                                                                          | An unordered list.                                                                                                                              |
+| `ol`                | children: li                                                                          | An ordered list.                                                                                                                                |
+| `li`                | children                                                                              | A list item of an unorderd or ordered list.                                                                                                     |
+| `row`               | children: col                                                                         | A responsive row with multiple columns.                                                                                                         |
+| `col`               | size, children                                                                        | A column. The size is relative to the other sizes.                                                                                              |
+| `important`         | children                                                                              | Highlights an element.                                                                                                                          |
+| `anchor`            | id                                                                                    | An anchor tag with an id.                                                                                                                       |
+| `table`             | children: tr                                                                          | A table.                                                                                                                                        |
+| `tr`                | children: th, td                                                                      | A row in a table.                                                                                                                               |
+| `th`                | children                                                                              | A heading cell.                                                                                                                                 |
+| `td`                | children                                                                              | A content cell.                                                                                                                                 |
+| `geogebra`          | id                                                                                    | A geogebra applet from GeogebraTube.                                                                                                            |
+| `injection`         | href                                                                                  | Loads another entity on the client and injects it.                                                                                              |
+| `exercise`          | task, solution, taskLicense, solutionLicense, grouped, positionInGroup,positionOnPage | An exercise with a task and a solution. The task and the solution have a separate license notice. This type includes grouped exercises as well. |
+| `exercise-group`    | content, license, positionOnPage, children: exercise                                  | Intro of an exercise group, also with a separate license.                                                                                       |
+| `video`             | src                                                                                   | An embedded video.                                                                                                                              |
+| `code`              | content                                                                               | A block of monospaced code.                                                                                                                     |
+| `equations`         | steps                                                                                 | A lists of steps for an equation (work in progress).                                                                                            |
+
+###Notes
+
+Not every com
 
 ---
 
@@ -428,26 +482,6 @@ export function HelloWorld() {
 }
 ```
 
-### Code Formatting
-
-Format your code in a consistent way by running
-
-```
-yarn prettify
-```
-
-Make sure your code is properly formatted before every commit.
-
-### Linter
-
-Check for common problem in your code by running
-
-```
-yarn lint
-```
-
-Ensure in each PR that this command shows no warnings or errors.
-
 ### Tooltips, Dropdowns & Menus
 
 You can add elements that [pop out](https://atomiks.github.io/tippyjs/) of the page with [Tippy](https://github.com/atomiks/tippyjs-react). A basic drop button looks like this:
@@ -560,29 +594,6 @@ const CenteredParagraph = styled.p`
 Our math component takes two props: `formula` is the LaTeX string, `inline` is optional and will make the formula a bit smaller. The rendered formula is a `span` that can be placed anywhere.
 
 ## Advanced Topics
-
-### Data Fetching
-
-Data fetching is handled by our GraphQL data fetcher. Look at `src/fetcher/` for the source code.
-
-### Deployment
-
-Build and run the frontend with these commands:
-
-```
-yarn build
-yarn start
-```
-
-This will trigger a production build and start the next.js server.
-
-To get detailed information about bundle size and a summarize of all output artifacts, run this:
-
-```
-yarn analyze
-```
-
-Results are saved to `.next/analyze/client.html` and `.next/analyze/server.html`.
 
 ### Importing Component dynamically
 
