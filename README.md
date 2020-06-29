@@ -37,7 +37,71 @@ An alias will be handled by a specific route:
 
 4. `/<slug>`: Entity route, the default case for almost every alias. Fetches data from backend with (2.) and renders page.
 
-Notes: We need (1.) because of CORS-Issues. We use (2.) to enable caching for the frontend deployment, because requesting (2.) can be slow, in the range of 0.5-1.5s, depending on the complexity of the entity. Most entities have a default alias, if (4.) encounters an alias that is not the default (old version, access with id: `/1885`), it will redirect to the default alias by 301.
+Notes: We need (1.) because of CORS-Issues. We use (2.) to enable caching for the frontend deployment, because requesting (2.) can be slow, in the range of 0.5-1.5s, depending on the complexity of the entity. Most entities have a default alias, if (4.) encounters an alias that is not the default (old alias: `/mathe-startseite`, access with id: `/1885`), it will redirect to the default alias by 301.
+
+### Entities
+
+Every entity belongs to a content type. These are the supported types:
+
+| Content Type      | Description                                                                                                                  | Example   |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------- | --------- |
+| `Page`            | A single page of static content.                                                                                             | `/serlo`  |
+| `Article`         | A single page of learning content.                                                                                           | `/27801`  |
+| `CoursePage`      | A single page of learning content that is part of a course.                                                                  | `/52020`  |
+| `Video`           | A single video, embedded from Youtube, Vimeo, Wikimedia or BR (Bayerischer Rundfunk), with a description.                    | `/40744`  |
+| `Applet`          | A single Geogebra-Applet, embedded from GeogebraTube.                                                                        | `/138114` |
+| `TaxonomyTerm`    | Index page with links to descendant entities. Some entities are shown directly in the taxonomy (e.g. subterms or exercises). | `/5`      |
+| `Exercise`        | A single exercise with solution, possibly with interactive element.                                                          | `/54210`  |
+| `ExerciseGroup`   | A list of exercises in a group with a shared description in the beginning.                                                   | `/53205`  |
+| `GroupedExercise` | A single exercise that is part of a exercise group.                                                                          | `/53209`  |
+| `Course`          | Meta-entity of a course, redirects to first page.                                                                            | `/51979`  |
+| `Event`           | Information about an upcoming event.                                                                                         | `/145590` |
+
+### Repository
+
+Here are some useful places to get started:
+
+- `/src/pages`: Incoming requests are mapped to files by next.js, all routes are defined in this folder.
+
+- `/src/components`: Collection of react components for the frontend.
+
+- `/src/fetcher`: Requesting data from the GraphQL backend and process it.
+
+- `/src/schema`: Definition of the frontend content format, with renderer, and converter for edtr-io and legacy.
+
+- `/src/data`: Entries for main menu, footer and horizon.
+
+- `/public/_assets`: A place for public assets, served as static files under the path `/_assets/`.
+
+- `/external`: Third-party code that is not maintained by the frontend.
+
+Some useful commands:
+
+```
+yarn dev
+```
+
+Starts the development server. This enables hot reloading and development warnings. Create a PR in this repository to get a preview deployment that uses production settings.
+
+```
+yarn format
+```
+
+Runs eslint and prettier, fixes issues automatically if possible.
+
+```
+yarn lint
+```
+
+Runs tsc, eslint and prettier. This command needs to pass before merging into master.
+
+```
+yarn analyze
+```
+
+Creates a build of the frontend, shows summary of build artefacts and creates in-depth analysis of the bundles.
+
+All files are named with kebab-case. Use `@/` to import files from `src/` instead of relative paths.
 
 ---
 
