@@ -46,7 +46,7 @@ export function Link({
   const displayHref = prettyLink ? prettyLink : href
 
   const isAbsolute = href.indexOf('//') > -1
-  const isExternal = isAbsolute && href.indexOf('.serlo.org') === -1
+  const isExternal = isAbsolute && !href.includes('.serlo.org')
   const isLegacyLink = legacyLinks.indexOf(displayHref) > -1
 
   if (isExternal || (isAbsolute && prettyLink === undefined))
