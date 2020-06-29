@@ -76,19 +76,19 @@ export default class MyDocument extends Document {
             sizes="16x16"
             href="/_assets/favicon-16x16.png"
           />
-          <link rel="manifest" href="/_assets/site.webmanifest" />
+          <link rel="manifest" href="/_assets/site.webmanifest?v=1" />
           <link
             rel="mask-icon"
             href="/_assets/safari-pinned-tab.svg"
-            color="#0b7ec2"
+            color="#007ec1"
           />
           <link rel="shortcut icon" href="/_assets/favicon.ico" />
-          <meta name="msapplication-TileColor" content="#0b7ec2" />
+          <meta name="msapplication-TileColor" content="#007ec1" />
           <meta
             name="msapplication-config"
             content="/_assets/browserconfig.xml"
           />
-          <meta name="theme-color" content="#ff0000"></meta>
+          <meta name="theme-color" content="#007ec1"></meta>
           <link
             href="/_assets/opensearch.de.xml"
             rel="search"
