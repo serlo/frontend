@@ -34,6 +34,7 @@ export function Injection({ href }: InjectionProps) {
       const cachedData = sessionStorage.getItem(encodedHref)
       if (cachedData) {
         dataToState(JSON.parse(cachedData))
+        return
       }
     } catch (e) {
       //
