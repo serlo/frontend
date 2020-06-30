@@ -16,8 +16,8 @@ export function ToastNotifications() {
 
   React.useEffect(() => {
     if (window.location.hash === '#auth') {
-      //leave no trace
-      history.pushState(null, '', window.location.href.split('#')[0])
+      // Remove auth URI fragment
+      history.replaceState(null, '', window.location.href.split('#')[0])
       const toastText = auth
         ? `👋 Willkommen ${auth.username}!`
         : `👋 Bis bald!`
