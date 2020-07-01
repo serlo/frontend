@@ -29,7 +29,7 @@ export function Header() {
         <Logo subline="Die freie Lernplattform" />
       </PaddedDiv>
       <SearchInput />
-      {isOpen && <MobileMenu links={links} />}
+      {isOpen && <MobileMenu links={links} auth={auth} />}
     </BlueHeader>
   )
 }

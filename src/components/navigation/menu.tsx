@@ -20,8 +20,7 @@ interface MenuLink {
   clientside?: boolean
 }
 
-export function Menu(props: MenuProps) {
-  const { links, auth } = props
+export function Menu({ links, auth }: MenuProps) {
   const [source, target] = useSingleton()
   const [mounted, setMounted] = React.useState(false)
 

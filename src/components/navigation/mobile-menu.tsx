@@ -1,6 +1,7 @@
 import {
   faCaretDown,
   faBars,
+  faUser,
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -9,8 +10,11 @@ import { transparentize, lighten } from 'polished'
 import React from 'react'
 import styled from 'styled-components'
 
+import { AuthPayload } from '@/auth/use-auth'
+
 interface MobileMenuProps {
   links: MobileMenuLink[]
+  auth: AuthPayload
 }
 
 interface MobileMenuLink {
@@ -21,9 +25,7 @@ interface MobileMenuLink {
   clientside?: boolean
 }
 
-export function MobileMenu(props: MobileMenuProps) {
-  const { links } = props
-
+export function MobileMenu({ links, auth }: MobileMenuProps) {
   const [openEntryIndex, setOpenEntryIndex] = React.useState<null | number>(
     null
   )
@@ -48,8 +50,26 @@ export function MobileMenu(props: MobileMenuProps) {
           index={index}
         />
       ))}
+      {renderAuthMenu()}
     </List>
   )
+
+  function renderAuthMenu() {
+    const authLink = {
+      url: '/api/auth/logout',
+      title: 'Abmelden',
+      icon: faUser,
+    }
+    const noAuthLink = {
+      url: '/api/auth/login',
+      title: 'Anmelden',
+      icon: faUser,
+    }
+
+    const link = auth ? authLink : noAuthLink
+
+    return <Entry url={link.url} title={link.title} icon={link.icon} />
+  }
 }
 
 interface EntryProps extends MobileMenuLink {
