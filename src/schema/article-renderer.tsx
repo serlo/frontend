@@ -38,6 +38,7 @@ import type { EquationProps } from '@/components/content/equations'
 import type { ExerciseProps } from '@/components/content/exercise'
 import type { GeogebraProps } from '@/components/content/geogebra'
 import type { InjectionProps } from '@/components/content/injection'
+import { Lazy } from '@/components/content/lazy'
 import type { MathProps } from '@/components/content/math'
 import type { VideoProps } from '@/components/content/video'
 
@@ -260,7 +261,12 @@ export function renderImg({ element }: any) {
     <ImgCentered>
       <MaxWidthDiv maxWidth={element.maxWidth ? element.maxWidth : 0}>
         {wrapInA(
-          <StyledImg src={element.src} alt={element.alt || 'Bild'}></StyledImg>
+          <Lazy>
+            <StyledImg
+              src={element.src}
+              alt={element.alt || 'Bild'}
+            ></StyledImg>
+          </Lazy>
         )}
       </MaxWidthDiv>
     </ImgCentered>
@@ -286,9 +292,11 @@ export function renderMath({ element }: any) {
   }
 
   return (
-    <MathWrapper centered={!element.alignLeft} bigger={bigger}>
-      <Math formula={formula} />
-    </MathWrapper>
+    <Lazy slim>
+      <MathWrapper centered={!element.alignLeft} bigger={bigger}>
+        <Math formula={formula} />
+      </MathWrapper>
+    </Lazy>
   )
 }
 
@@ -376,9 +384,11 @@ export function renderImportant({ children = null }: any) {
 // TODO: needs type declaration
 export function renderGeogebra({ element }: any) {
   return (
-    <GeogebraWrapper>
-      <Geogebra id={element.id} />
-    </GeogebraWrapper>
+    <Lazy>
+      <GeogebraWrapper>
+        <Geogebra id={element.id} />
+      </GeogebraWrapper>
+    </Lazy>
   )
 }
 
@@ -424,7 +434,11 @@ export function renderExerciseGroup({ children = null, element }: any) {
 
 // TODO: needs type declaration
 export function renderVideo({ element }: any) {
-  return <Video url={element.src} />
+  return (
+    <Lazy>
+      <Video url={element.src} />
+    </Lazy>
+  )
 }
 
 // TODO: needs type declaration
