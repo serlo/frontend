@@ -36,7 +36,7 @@ export function Menu(props: MenuProps) {
       <Tippy
         singleton={source}
         placement="bottom-start"
-        trigger="click"
+        trigger="click mouseenter focus"
         hideOnClick
         interactive
         delay={[50, 0]}
