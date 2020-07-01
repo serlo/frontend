@@ -28,27 +28,48 @@ export function Injection({ href }: InjectionProps) {
   useEffect(() => {
     const origin = window.location.host
     const protocol = window.location.protocol
-    void fetch(
-      `${protocol}//${origin}/api/frontend${encodeURI(
-        href.startsWith('/') ? href : `/${href}`
-      )}`
-    )
+    const encodedHref = encodeURI(href.startsWith('/') ? href : `/${href}`)
+
+    try {
+      const cachedData = sessionStorage.getItem(encodedHref)
+      if (cachedData) {
+        dataToState(JSON.parse(cachedData))
+        return
+      }
+    } catch (e) {
+      //
+    }
+
+    void fetch(`${protocol}//${origin}/api/frontend${encodedHref}`)
       .then((res) => {
         if (res.headers.get('content-type')!.includes('json')) return res.json()
         else return res.text()
       })
-      .then((data: EntityProps) => {
-        if (data.contentType && data.data) {
-          setValue(data.data.value)
-          if (data.data.license) {
-            setLicense(data.data.license)
-          }
-          if (data.prettyLinks) {
-            setPrettyLinks(data.prettyLinks)
+      .then((fetchedData: EntityProps) => {
+        dataToState(fetchedData)
+
+        if (fetchedData.contentType && fetchedData.data) {
+          try {
+            sessionStorage.setItem(encodedHref, JSON.stringify(fetchedData))
+          } catch (e) {
+            //
           }
         }
       })
   }, [href])
+
+  function dataToState(fetchedData: EntityProps) {
+    if (fetchedData.contentType && fetchedData.data) {
+      setValue(fetchedData.data.value)
+      if (fetchedData.data.license) {
+        setLicense(fetchedData.data.license)
+      }
+      if (fetchedData.prettyLinks) {
+        setPrettyLinks(fetchedData.prettyLinks)
+      }
+    }
+  }
+
   if (value) {
     return (
       <PrettyLinksProvider value={prettyLinks}>
