@@ -4,22 +4,19 @@ import * as util from 'util'
 
 import { getAuthorizationCode } from '@/auth/oauth2'
 
-const generateCsrf = util.promisify(randomBytes)
+const generateSecret = util.promisify(randomBytes)
 
-// need this to bypass CORS and cache responses
-export default async function login(req: NextApiRequest, res: NextApiResponse) {
+async function login(req: NextApiRequest, res: NextApiResponse) {
   const oauth2AuthorizationCode = getAuthorizationCode()
   if (oauth2AuthorizationCode === null) {
-    res.status(500)
-    res.send('Auth not configured correctly')
-    return
+    return fail('Auth not configured correctly')
   }
 
   const referer = req.headers.referer
-  const buffer = await generateCsrf(32)
-  const csrf = buffer.toString('hex')
+  if (referer === undefined) return fail('Missing referer header')
+  const { origin } = new URL(referer)
 
-  const { origin } = new URL(referer!)
+  const csrf = await generateCsrf()
   const authorizationUri = oauth2AuthorizationCode.authorizeURL({
     redirect_uri: `${origin}/api/auth/callback`,
     scope: ['offline_access', 'openid'],
@@ -33,4 +30,16 @@ export default async function login(req: NextApiRequest, res: NextApiResponse) {
     Location: authorizationUri,
   })
   res.end()
+
+  function fail(message: string) {
+    res.status(500)
+    res.send(message)
+  }
 }
+
+async function generateCsrf(): Promise<string> {
+  const buffer = await generateSecret(32)
+  return buffer.toString('hex')
+}
+
+export default login
