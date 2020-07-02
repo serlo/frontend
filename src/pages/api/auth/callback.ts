@@ -7,53 +7,88 @@ async function callback(req: NextApiRequest, res: NextApiResponse) {
   const oauth2AuthorizationCode = getAuthorizationCode()
 
   if (oauth2ClientCredentials === null || oauth2AuthorizationCode === null) {
-    return fail()
+    return fail('Auth not configured correctly')
   }
 
-  const { code, scope, state } = req.query as {
+  const result = parseQuery(req.query)
+  if (isError(result)) return fail(result.error)
+
+  const { code, scope, state } = result
+  const { csrf, referer } = state
+
+  if (csrf !== req.cookies['auth-csrf']) return fail('CSRF validation failed')
+
+  const { origin } = new URL(referer)
+  const tokenResult = await oauth2AuthorizationCode.getToken({
+    code,
+    redirect_uri: `${origin}/api/auth/callback`,
+    scope,
+  })
+  const { token } = oauth2ClientCredentials.createToken(tokenResult)
+  res.setHeader(
+    'Set-Cookie',
+    `auth-token=${JSON.stringify(
+      token.token
+    )}; Path=/; SameSite=Lax; Max-Age=2592000;`
+  )
+  res.writeHead(302, {
+    Location: `${referer ?? '/'}#auth`,
+  })
+  res.end()
+
+  function fail(message: string) {
+    res.status(500)
+    res.send(message)
+  }
+}
+
+interface QueryParseSuccess {
+  code: string
+  scope: string
+  state: {
+    csrf: string
+    referer: string
+  }
+}
+
+interface QueryParseError {
+  error: string
+}
+
+function parseQuery(
+  query: NextApiRequest['query']
+): QueryParseSuccess | QueryParseError {
+  if (Object.keys(query).length === 0) {
+    return { error: 'Missing query string' }
+  }
+
+  const { code, scope, state } = query as {
     code: string
     scope: string
     state: string
   }
 
-  try {
-    const { csrf, referer } = JSON.parse(state)
-    if (csrf === req.cookies['auth-csrf']) {
-      const { origin } = new URL(referer)
-      const result = await oauth2AuthorizationCode.getToken({
-        code,
-        redirect_uri: `${origin}/api/auth/callback`,
-        scope,
-      })
-      try {
-        const { token } = oauth2ClientCredentials.createToken(result)
-        res.setHeader(
-          'Set-Cookie',
-          `auth-token=${JSON.stringify(
-            token.token
-          )}; Path=/; SameSite=Lax; Max-Age=2592000;`
-        )
-      } catch (e) {
-        console.log(e)
-        console.log('Failed to create token from result', result)
-        return fail()
-      }
-    }
-    res.writeHead(302, {
-      Location: `${referer ?? '/'}#auth`,
-    })
-    res.end()
-  } catch (e) {
-    console.log(e)
-    console.log('Failed to parse state', state)
-    console.log('Query', req.query)
-    return fail()
-  }
+  if (!code) return { error: 'Query string is missing `code`' }
+  if (!scope) return { error: 'Query string is missing `scope`' }
+  if (!state) return { error: 'Query string is missing `state`' }
 
-  function fail() {
-    res.status(500)
-    res.send('Auth not configured correctly')
+  try {
+    return {
+      code,
+      scope,
+      state: JSON.parse(state),
+    }
+  } catch (e) {
+    return {
+      error: 'Failed to parse `state`',
+    }
   }
+}
+
+function isError(
+  result: QueryParseSuccess | QueryParseError
+): result is QueryParseError {
+  return (result as QueryParseError).error !== undefined
 }
 
 export default callback
