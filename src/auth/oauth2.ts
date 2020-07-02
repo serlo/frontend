@@ -36,6 +36,9 @@ const config =
           authorizePath: '/oauth2/auth',
         },
         http: { json: 'force' },
+        options: {
+          authorizationMethod: 'body',
+        },
       }
 
 export function getAuthorizationCode():
