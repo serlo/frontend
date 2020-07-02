@@ -7,9 +7,11 @@ import { makeMargin, makeDefaultButton } from '../../helper/css'
 import { Link } from '../content/link'
 import { StyledLi } from '../tags/styled-li'
 import { StyledOl } from '../tags/styled-ol'
+import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
 
 export interface CourseNavigationPagesProps {
   alias: string
+  id: string
   currentRevision: {
     title: string
   }
@@ -44,6 +46,8 @@ export function CourseNavigation({
                 href={
                   pageTitle === page.currentRevision.title
                     ? undefined
+                    : hasSpecialUrlChars(page.alias)
+                    ? `/${page.id}`
                     : page.alias
                 }
               >

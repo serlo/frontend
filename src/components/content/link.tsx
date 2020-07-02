@@ -4,6 +4,7 @@ import React from 'react'
 import { PrettyLinksContext } from '../pretty-links-context'
 import { StyledA } from '../tags/styled-a'
 import { ExternalLink } from './external-link'
+import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
 
 export interface LinkProps {
   href?: string
@@ -60,6 +61,9 @@ export function Link({
     if (prettyLinks === undefined || prettyLinks === {}) return undefined
 
     const prettyLink = prettyLinks[href.replace('/', 'uuid')]?.alias
+    if (hasSpecialUrlChars(prettyLink)) {
+      return undefined
+    }
     if (prettyLink !== undefined) return prettyLink
 
     //fallback for wrong absolute links
