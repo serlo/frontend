@@ -41,7 +41,6 @@ import type { InjectionProps } from '@/components/content/injection'
 import { Lazy } from '@/components/content/lazy'
 import type { MathProps } from '@/components/content/math'
 import type { VideoProps } from '@/components/content/video'
-import { serloDomain } from '@/serlo-domain'
 
 // TODO: The quest for the correct type continues here
 export interface EditorState {
