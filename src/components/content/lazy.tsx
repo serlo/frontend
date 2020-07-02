@@ -6,9 +6,21 @@ type LazyProps = React.Props<React.ReactNode> & PlaceholderProps
 
 export function Lazy(props: LazyProps) {
   return (
-    <LazyLoad once offset={150} placeholder={<Placeholder slim={props.slim} />}>
-      {props.children}
-    </LazyLoad>
+    <>
+      <LazyLoad
+        once
+        offset={150}
+        placeholder={
+          <Placeholder className="lazyload-placeholder" slim={props.slim} />
+        }
+      >
+        {props.children}
+      </LazyLoad>
+      <noscript>
+        <style>{`.lazyload-placeholder { display: none; }`}</style>
+        {props.children}
+      </noscript>
+    </>
   )
 }
 
