@@ -15,11 +15,15 @@ declare namespace NodeJS {
 
     // Hydra client id for production environment (defined in preview & production, only exposed to server)
     HYDRA_CLIENT_ID_PRODUCTION: string | undefined
-    // Hydra client id for staging environment (defined in preview & production, only exposed to server)
-    HYDRA_CLIENT_ID_STAGING: string | undefined
+    // Hydra client id for staging environment (only exposed to server)
+    HYDRA_CLIENT_ID_STAGING: string
     // Hydra client secret for production environment (defined in preview & production, only exposed to server)
     HYDRA_CLIENT_SECRET_PRODUCTION: string | undefined
-    // Hydra client secret for staging environment (defined in preview & production, only exposed to server)
-    HYDRA_CLIENT_SECRET_STAGING: string | undefined
+    // Hydra client secret for staging environment (only exposed to server)
+    HYDRA_CLIENT_SECRET_STAGING: string
+    // Hydra host for production environment (defined in preview & production, only exposed to server)
+    HYDRA_HOST_PRODUCTION: string | undefined
+    // Hydra host for staging environment (only exposed to server)
+    HYDRA_HOST_STAGING: string
   }
 }

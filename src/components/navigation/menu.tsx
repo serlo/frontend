@@ -6,9 +6,12 @@ import styled, { css } from 'styled-components'
 
 import { makeDefaultButton } from '../../helper/css'
 import { Link } from '../content/link'
+import { AuthPayload } from '@/auth/use-auth'
+import { getAuthLink, shouldUseNewAuth } from '@/helper/feature-auth'
 
-interface MenuProps {
+export interface MenuProps {
   links: MenuLink[]
+  auth: AuthPayload
 }
 
 interface MenuLink {
@@ -17,9 +20,13 @@ interface MenuLink {
   children?: MenuLink[]
 }
 
-export function Menu(props: MenuProps) {
-  const { links } = props
+export function Menu({ links, auth }: MenuProps) {
   const [source, target] = useSingleton()
+  const [mounted, setMounted] = React.useState(!shouldUseNewAuth())
+
+  React.useEffect(() => {
+    setMounted(true)
+  }, [])
 
   /* TODO: Is is possible to get the argument part of TippyProps['onCreate'] ? */
   // COMMENT: probably "Instance<>", but how?
@@ -53,22 +60,42 @@ export function Menu(props: MenuProps) {
             onSubMenuInnerClick={onSubMenuInnerClick}
           />
         ))}
+        {renderAuthMenu()}
       </List>
     </ResponsiveNav>
   )
+
+  function renderAuthMenu() {
+    const link = getAuthLink(mounted && auth !== null)
+
+    return (
+      <Entry
+        link={link}
+        target={target}
+        authMenuMounted={mounted}
+        onSubMenuInnerClick={onSubMenuInnerClick}
+      />
+    )
+  }
 }
 
 interface EntryProps {
   link: MenuLink
   target: TippyProps['singleton']
+  authMenuMounted?: boolean
   onSubMenuInnerClick: () => void
 }
 
-function Entry({ link, target, onSubMenuInnerClick }: EntryProps) {
+function Entry({
+  link,
+  target,
+  onSubMenuInnerClick,
+  authMenuMounted,
+}: EntryProps) {
   const hasChildren = link.children !== undefined
 
   return (
-    <Li>
+    <Li show={authMenuMounted === undefined ? true : authMenuMounted}>
       {hasChildren ? (
         <Tippy
           content={
@@ -126,8 +153,10 @@ const List = styled.ul`
   padding: 0;
 `
 
-const Li = styled.li`
+const Li = styled.li<{ show: boolean }>`
   display: inline-block;
+  opacity: ${(props) => (props.show ? 1 : 0)};
+  transition: 0.7s linear;
 `
 
 const linkStyle = css`

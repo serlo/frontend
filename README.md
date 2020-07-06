@@ -93,7 +93,7 @@ Runs eslint and prettier, fixes issues automatically if possible.
 yarn lint
 ```
 
-Runs tsc, eslint and prettier. This command needs to pass before merging into master.
+Runs tsc, eslint and prettier. This command needs to pass before merging into staging.
 
 ```
 yarn analyze

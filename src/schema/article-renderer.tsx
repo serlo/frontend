@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic'
 import React from 'react'
+import { CSSProperties } from 'styled-components'
 
 import { Col } from '../components/content/col'
 import { ExerciseGroup } from '../components/content/exercise-group'
@@ -8,7 +9,10 @@ import { ImageLink } from '../components/content/image-link'
 import { ImgCentered } from '../components/content/img-centered'
 import { Important } from '../components/content/important'
 import { LayoutRow } from '../components/content/layout-row'
-import { LicenseNotice } from '../components/content/license-notice'
+import {
+  LicenseNotice,
+  LicenseNoticeData,
+} from '../components/content/license-notice'
 import { Link } from '../components/content/link'
 import { MathWrapper } from '../components/content/math-wrapper'
 import { MaxWidthDiv } from '../components/content/max-width-div'
@@ -42,16 +46,59 @@ import { Lazy } from '@/components/content/lazy'
 import type { MathProps } from '@/components/content/math'
 import type { VideoProps } from '@/components/content/video'
 
-// TODO: The quest for the correct type continues here
-export interface EditorState {
-  children?: EditorChildren[]
-  type?: string
+const renderer = {
+  root: () => null,
+  a: renderA,
+  'inline-math': renderInlineMath,
+  p: renderP,
+  h: renderH,
+  img: renderImg,
+  math: renderMath,
+  'spoiler-container': renderSpoilerForEndUser,
+  'spoiler-title': ({ children }: ReactChildrenData) => children,
+  'spoiler-body': renderSpoilerBody,
+  ul: renderUl,
+  ol: renderOl,
+  li: renderLi,
+  row: renderRow,
+  col: renderCol,
+  important: renderImportant,
+  anchor: renderAnchor,
+  table: renderTable,
+  tr: renderTR,
+  th: renderTH,
+  td: renderTD,
+  geogebra: renderGeogebra,
+  injection: renderInjection,
+  exercise: renderExercise,
+  'exercise-group': renderExerciseGroup,
+  video: renderVideo,
+  equations: renderEquations,
+  code: renderCode,
 }
 
-export interface EditorChildren {
+type renderElementData = keyof typeof renderer
+
+interface ReactChildrenData {
+  children: React.ReactNode
+}
+
+interface RenderElementProps {
+  element: EditorChild
+  children: React.ReactNode
+  value: EditorChild
+  path: number[]
+}
+// TODO: The quest for the correct type continues here
+export interface EditorState {
+  children?: EditorChild[]
+  type: renderElementData
+}
+
+export interface EditorChild {
   type?: string
   state?: unknown
-  children?: EditorChildren[]
+  children?: EditorChild[]
   text?: string
 }
 
@@ -79,31 +126,28 @@ const Code = dynamic<CodeProps>(() =>
 
 export function renderArticle(value: EditorState['children'], addCSS = true) {
   if (!value || !Array.isArray(value)) return null
-  const root = { children: value }
+  const root = { children: value, type: 'root' as renderElementData }
   const content = value.map((_, index) => render(root, [index]))
   if (addCSS) {
     return <SpecialCss>{content}</SpecialCss>
   } else return content
 }
 
-// TODO: needs type declaration
-function getNode(value: any, path: any): any {
-  if (path.length === 0) {
+function getNode(value: EditorChild, path: number[]): EditorChild {
+  if (path.length === 0 || value.children === undefined) {
     return value
   } else {
     return getNode(value.children[path[0]], path.slice(1))
   }
 }
 
-// TODO: needs type declaration
-function render(value: any, path: any[] = []) {
+function render(value: EditorChild, path: number[] = []) {
   const currentNode = getNode(value, path)
   const key = path[path.length - 1]
-  // elements must have a type, children are optional
+
   if (currentNode && currentNode.type) {
-    // TODO: needs type declaration
     const children = Array.isArray(currentNode.children)
-      ? currentNode.children.map((_: any, index: any) =>
+      ? currentNode.children.map((_: EditorChild, index: number) =>
           render(value, path.concat(index))
         )
       : null
@@ -111,7 +155,7 @@ function render(value: any, path: any[] = []) {
       <React.Fragment key={key}>
         {renderElement({
           element: currentNode,
-          children,
+          children: children,
           value,
           path,
         })}
@@ -136,15 +180,13 @@ export const articleColors = {
   orange: theme.colors.orange,
 }
 
-// TODO: needs type declaration
-
 interface RenderLeafProps {
-  leaf: {
+  leaf: EditorChild & {
     color?: 'blue' | 'green' | 'orange'
     em?: boolean
     strong?: boolean
   }
-  key: string
+  key: number
   children: React.ReactNode
   readonly?: boolean
 }
@@ -155,7 +197,7 @@ export function renderLeaf({
   children,
   readonly = false,
 }: RenderLeafProps) {
-  const styles: any = {}
+  const styles: CSSProperties = {}
   if (leaf.color) styles.color = articleColors[leaf.color]
   if (leaf.em) styles.fontStyle = 'italic'
   if (leaf.strong) styles.fontWeight = 'bold'
@@ -172,41 +214,15 @@ export function renderLeaf({
   )
 }
 
-const renderer = {
-  a: renderA,
-  'inline-math': renderInlineMath,
-  p: renderP,
-  h: renderH,
-  img: renderImg,
-  math: renderMath,
-  'spoiler-container': renderSpoilerForEndUser,
-  // TODO: needs type declaration
-  'spoiler-title': ({ children }: any) => children,
-  'spoiler-body': renderSpoilerBody,
-  ul: renderUl,
-  ol: renderOl,
-  li: renderLi,
-  row: renderRow,
-  col: renderCol,
-  important: renderImportant,
-  anchor: renderAnchor,
-  table: renderTable,
-  tr: renderTR,
-  th: renderTH,
-  td: renderTD,
-  geogebra: renderGeogebra,
-  injection: renderInjection,
-  exercise: renderExercise,
-  'exercise-group': renderExerciseGroup,
-  video: renderVideo,
-  equations: renderEquations,
-  code: renderCode,
+function renderElement(props: RenderElementProps) {
+  //TODO: Check with Jonas
+  // @ts-expect-error
+  return renderer[props.element.type](props)
 }
 
-// TODO: needs type declaration
-function renderElement(props: any) {
-  const type = props.element.type as keyof typeof renderer
-  return renderer[type](props)
+interface RenderAData {
+  element: { href: string }
+  children: React.ReactNode
 }
 
 // TODO: needs type declaration
@@ -214,68 +230,15 @@ export function renderA({ element, children = null }: any) {
   return <Link href={element.href}>{children}</Link>
 }
 
-// TODO: needs type declaration
-export function renderInlineMath({ element }: any) {
+interface RenderInlineMathData {
+  element: MathProps
+  children: React.ReactNode
+}
+export function renderInlineMath({ element }: RenderInlineMathData) {
   return <Math formula={element.formula} inline />
 }
 
-// TODO: needs type declaration
-export function renderP({ children = null }: any) {
-  return <StyledP>{children}</StyledP>
-}
-
-const StyledHx = {
-  1: StyledH1,
-  2: StyledH2,
-  3: StyledH3,
-  4: StyledH4,
-  5: StyledH5,
-}
-
-interface RenderHProps {
-  element: {
-    level: 1 | 2 | 3 | 4 | 5
-    id: string
-  }
-  key: string
-  children: any
-}
-
-// TODO: needs type declaration
-export function renderH({ element, children = null }: RenderHProps) {
-  const Comp = StyledHx[element.level] ?? StyledH5
-  return <Comp id={element.id}>{children}</Comp>
-}
-
-// TODO: needs type declaration
-export function renderImg({ element }: any) {
-  // TODO: needs type declaration
-  function wrapInA(comp: any) {
-    if (element.href) {
-      // needs investigation if this could be simplified
-      return <ImageLink href={element.href}>{comp}</ImageLink>
-    }
-    return comp
-  }
-  return (
-    <ImgCentered itemScope itemType="http://schema.org/ImageObject">
-      <MaxWidthDiv maxWidth={element.maxWidth ? element.maxWidth : 0}>
-        {wrapInA(
-          <Lazy>
-            <StyledImg
-              src={element.src}
-              alt={element.alt || 'Bild'}
-              itemProp="contentUrl"
-            ></StyledImg>
-          </Lazy>
-        )}
-      </MaxWidthDiv>
-    </ImgCentered>
-  )
-}
-
-// TODO: needs type declaration
-export function renderMath({ element }: any) {
+export function renderMath({ element }: RenderInlineMathData) {
   let formula = element.formula
   let bigger = false
   if (
@@ -301,14 +264,83 @@ export function renderMath({ element }: any) {
   )
 }
 
-// TODO: needs type declaration
-function renderSpoilerForEndUser({ children }: any) {
+export function renderP({ children = null }) {
+  return <StyledP>{children}</StyledP>
+}
+
+const StyledHx = {
+  1: StyledH1,
+  2: StyledH2,
+  3: StyledH3,
+  4: StyledH4,
+  5: StyledH5,
+}
+
+interface RenderHData {
+  element: {
+    level: 1 | 2 | 3 | 4 | 5
+    id: string
+  }
+  key: string
+  children: any
+}
+
+export function renderH({ element, children = null }: RenderHData) {
+  const Comp = StyledHx[element.level] ?? StyledH5
+  return <Comp id={element.id}>{children}</Comp>
+}
+
+interface RenderImgData {
+  element: {
+    href: string
+    maxWidth?: number
+    src: string
+    alt: string
+  }
+  children: React.ReactNode
+}
+
+export function renderImg({ element }: RenderImgData) {
+  function wrapInA(comp: React.ReactNode) {
+    if (element.href) {
+      // needs investigation if this could be simplified
+      return <ImageLink href={element.href}>{comp}</ImageLink>
+    }
+    return comp
+  }
+  return (
+    <ImgCentered itemScope itemType="http://schema.org/ImageObject">
+      <MaxWidthDiv maxWidth={element.maxWidth ? element.maxWidth : 0}>
+        {wrapInA(
+          <Lazy>
+            <StyledImg
+              src={element.src}
+              alt={element.alt || 'Bild'}
+              itemProp="contentUrl"
+            ></StyledImg>
+          </Lazy>
+        )}
+      </MaxWidthDiv>
+    </ImgCentered>
+  )
+}
+
+interface RenderSpoilerForEndUserData {
+  children: React.ReactNode
+  body: React.ReactNode
+}
+
+function renderSpoilerForEndUser({ children }: RenderSpoilerForEndUserData) {
+  if (!Array.isArray(children)) return null
   return <SpoilerForEndUser title={children[0]} body={children[1]} />
 }
 
-// TODO: needs type declaration
-function SpoilerForEndUser(props: any) {
-  const { body, title } = props
+interface SpoilerForEndUserProps {
+  body: React.ReactNode
+  title: React.ReactNode
+}
+
+function SpoilerForEndUser({ body, title }: SpoilerForEndUserProps) {
   const [open, setOpen] = React.useState(false)
   return (
     <SpoilerContainer>
@@ -321,28 +353,23 @@ function SpoilerForEndUser(props: any) {
   )
 }
 
-// TODO: needs type declaration
-export function renderSpoilerBody({ children = null }: any) {
+export function renderSpoilerBody({ children = null }) {
   return <SpoilerBody>{children}</SpoilerBody>
 }
 
-// TODO: needs type declaration
-export function renderUl({ children = null }: any) {
+export function renderUl({ children = null }) {
   return <StyledUl>{children}</StyledUl>
 }
 
-// TODO: needs type declaration
-export function renderOl({ children = null }: any) {
+export function renderOl({ children = null }) {
   return <StyledOl>{children}</StyledOl>
 }
 
-// TODO: needs type declaration
-export function renderLi({ children = null }: any) {
+export function renderLi({ children = null }) {
   return <StyledLi>{children}</StyledLi>
 }
 
-// TODO: needs type declaration
-export function renderTable({ children = null }: any) {
+export function renderTable({ children = null }) {
   return (
     <TableWrapper>
       <StyledTable>
@@ -352,38 +379,44 @@ export function renderTable({ children = null }: any) {
   )
 }
 
-// TODO: needs type declaration
-export function renderTR({ children = null }: any) {
+export function renderTR({ children = null }) {
   return <StyledTr>{children}</StyledTr>
 }
 
-// TODO: needs type declaration
-export function renderTH({ children = null }: any) {
+export function renderTH({ children = null }) {
   return <StyledTh>{children}</StyledTh>
 }
 
-// TODO: needs type declaration
-export function renderTD({ children = null }: any) {
+export function renderTD({ children = null }) {
   return <StyledTd>{children}</StyledTd>
 }
 
-// TODO: needs type declaration
-export function renderRow({ children = null }: any) {
+export function renderRow({ children = null }) {
   return <LayoutRow>{children}</LayoutRow>
 }
 
-// TODO: needs type declaration
-export function renderCol({ element, children = null }: any) {
+interface RenderColData {
+  children: React.ReactNode
+  element: {
+    size: number
+  }
+}
+
+export function renderCol({ element, children = null }: RenderColData) {
   return <Col cSize={element.size}>{children}</Col>
 }
 
-// TODO: needs type declaration
-export function renderImportant({ children = null }: any) {
+export function renderImportant({ children = null }) {
   return <Important>{children}</Important>
 }
 
-// TODO: needs type declaration
-export function renderGeogebra({ element }: any) {
+interface RenderGeogebraData {
+  children: React.ReactNode
+  element: {
+    id: string
+  }
+}
+export function renderGeogebra({ element }: RenderGeogebraData) {
   return (
     <Lazy>
       <GeogebraWrapper>
@@ -393,18 +426,30 @@ export function renderGeogebra({ element }: any) {
   )
 }
 
-// TODO: needs type declaration
-function renderAnchor({ element }: any) {
-  return <a id={element.id} />
+interface RenderAnchorData {
+  children: React.ReactNode
+  element: {
+    id: number
+  }
+}
+function renderAnchor({ element }: RenderAnchorData) {
+  return <a id={element.id.toString()} />
 }
 
-// TODO: needs type declaration
-export function renderInjection({ element }: any) {
+interface RenderInjectionData {
+  children: React.ReactNode
+  element: InjectionProps
+}
+
+export function renderInjection({ element }: RenderInjectionData) {
   return <Injection href={element.href} />
 }
 
-// TODO: needs type declaration
-export function renderExercise({ element }: any) {
+interface RenderExerciseData {
+  element: ExerciseProps
+}
+
+export function renderExercise({ element }: RenderExerciseData) {
   return (
     <Exercise
       task={element.task}
@@ -418,8 +463,19 @@ export function renderExercise({ element }: any) {
   )
 }
 
-// TODO: needs type declaration
-export function renderExerciseGroup({ children = null, element }: any) {
+interface RenderExerciseGroupData {
+  element: {
+    content: EditorChild[]
+    license: LicenseNoticeData
+    positionOnPage: number
+  }
+  children: React.ReactNode
+}
+
+export function renderExerciseGroup({
+  children = null,
+  element,
+}: RenderExerciseGroupData) {
   return (
     <ExerciseGroup
       license={
@@ -433,8 +489,13 @@ export function renderExerciseGroup({ children = null, element }: any) {
   )
 }
 
-// TODO: needs type declaration
-export function renderVideo({ element }: any) {
+interface RenderVideoData {
+  element: {
+    src: string
+  }
+}
+
+export function renderVideo({ element }: RenderVideoData) {
   return (
     <Lazy>
       <Video url={element.src} />
@@ -442,12 +503,19 @@ export function renderVideo({ element }: any) {
   )
 }
 
-// TODO: needs type declaration
-export function renderEquations({ element }: any) {
+interface RenderEquationsData {
+  element: EquationProps
+}
+export function renderEquations({ element }: RenderEquationsData) {
   return <Equations steps={element.steps} />
 }
 
-// TODO: needs type declaration
-export function renderCode({ element }: any) {
+interface RenderCodeData {
+  element: {
+    content: EditorChild[]
+  }
+}
+
+export function renderCode({ element }: RenderCodeData) {
   return <Code content={element.content} />
 }

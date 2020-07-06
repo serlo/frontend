@@ -9,6 +9,7 @@ import React from 'react'
 import { ThemeProvider, createGlobalStyle } from 'styled-components'
 
 import { version } from '../../package.json'
+import { ToastNotifications } from '@/components/toast-notifications'
 import { theme } from '@/theme'
 // eslint-disable-next-line import/no-unassigned-import
 import '../../public/_assets/fonts/karmilla.css'
@@ -128,6 +129,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <FontFix />
         <NProgressStyles />
         <Component {...pageProps} />
+        <ToastNotifications />
       </ThemeProvider>
     </React.StrictMode>
   )
