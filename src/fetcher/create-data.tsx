@@ -2,6 +2,7 @@ import { render } from '../../external/legacy_render'
 import { TopicPurposes } from '../components/content/topic'
 import { convertEdtrIoState } from '../schema/convert-edtr-io-state'
 import { convertLegacyState } from '../schema/convert-legacy-state'
+import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
 
 // TODO: needs type declaration
 export function createData(uuid: any) {
@@ -236,7 +237,10 @@ function collectType(children: any, typename: any) {
       )
       // TODO: needs type declaration
       .map((child: any) => {
-        return { title: child.currentRevision.title, url: child.alias }
+        return {
+          title: child.currentRevision.title,
+          url: getAlias(child),
+        }
       })
   )
 }
@@ -253,7 +257,10 @@ function collectTopicFolders(children: any) {
       )
       // TODO: needs type declaration
       .map((child: any) => {
-        return { title: child.name, url: `${child.alias ?? `/${child.id}`}` }
+        return {
+          title: child.name,
+          url: getAlias(child),
+        }
       })
   )
 }
@@ -299,7 +306,7 @@ function collectNestedTaxonomyTerms(children: any) {
         const subchildren = child.children?.filter(isActive)
         return {
           title: child.name,
-          url: child.alias,
+          url: getAlias(child),
           description: buildDescription(child.description),
           purpose: TopicPurposes.overview,
           links: {
@@ -327,7 +334,13 @@ function collectSubfolders(children: any) {
       )
       // TODO: needs type declaration
       .map((child: any) => {
-        return { title: child.name, url: `${child.alias ?? `/${child.id}`}` }
+        return { title: child.name, url: getAlias(child) }
       })
   )
+}
+
+// TODO: needs type declaration
+function getAlias(child: any) {
+  if (!child.alias || hasSpecialUrlChars(child.alias)) return `/${child.id}`
+  else return child.alias
 }

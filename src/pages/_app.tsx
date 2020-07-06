@@ -9,6 +9,7 @@ import React from 'react'
 import { ThemeProvider, createGlobalStyle } from 'styled-components'
 
 import { version } from '../../package.json'
+import { ToastNotifications } from '@/components/toast-notifications'
 import { theme } from '@/theme'
 // eslint-disable-next-line import/no-unassigned-import
 import '../../public/_assets/fonts/karmilla.css'
@@ -128,7 +129,35 @@ export default function App({ Component, pageProps }: AppProps) {
         <FontFix />
         <NProgressStyles />
         <Component {...pageProps} />
+        <ToastNotifications />
       </ThemeProvider>
     </React.StrictMode>
   )
+}
+
+interface ReportWebVitalsData {
+  id: string
+  name: string
+  label: string
+  value: number
+}
+
+interface Window {
+  ga?: (command: string, fields: any[] | string, fieldsObject: object) => void
+}
+
+export function reportWebVitals({
+  id,
+  name,
+  label,
+  value,
+}: ReportWebVitalsData) {
+  if (typeof (window as Window).ga === 'undefined') return
+  ;(window as Window).ga!('send', 'event', {
+    eventCategory: `Next.js ${label} metric`,
+    eventAction: name,
+    eventValue: Math.round(name === 'CLS' ? value * 1000 : value), // values must be integers
+    eventLabel: id, // id unique to current page load
+    nonInteraction: true, // avoids affecting bounce rate.
+  })
 }
