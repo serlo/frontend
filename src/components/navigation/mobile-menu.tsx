@@ -9,9 +9,12 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { Link } from '../content/link'
+import { AuthPayload } from '@/auth/use-auth'
+import { getAuthLink } from '@/helper/feature-auth'
 
 interface MobileMenuProps {
   links: MobileMenuLink[]
+  auth: AuthPayload
 }
 
 interface MobileMenuLink {
@@ -21,9 +24,7 @@ interface MobileMenuLink {
   children?: MobileMenuLink[]
 }
 
-export function MobileMenu(props: MobileMenuProps) {
-  const { links } = props
-
+export function MobileMenu({ links, auth }: MobileMenuProps) {
   const [openEntryIndex, setOpenEntryIndex] = React.useState<null | number>(
     null
   )
@@ -48,8 +49,15 @@ export function MobileMenu(props: MobileMenuProps) {
           index={index}
         />
       ))}
+      {renderAuthMenu()}
     </List>
   )
+
+  function renderAuthMenu() {
+    const link = getAuthLink(auth !== null)
+
+    return <Entry url={link.url} title={link.title} icon={link.icon} />
+  }
 }
 
 interface EntryProps extends MobileMenuLink {

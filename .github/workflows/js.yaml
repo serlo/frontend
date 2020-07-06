@@ -2,7 +2,8 @@ name: JavaScript
 on:
   push:
     branches:
-      - master
+      - staging
+      - production
   pull_request:
 jobs:
   build:
