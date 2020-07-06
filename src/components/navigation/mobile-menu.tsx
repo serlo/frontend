@@ -1,7 +1,6 @@
 import {
   faCaretDown,
   faBars,
-  faUser,
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -11,6 +10,7 @@ import styled from 'styled-components'
 
 import { Link } from '../content/link'
 import { AuthPayload } from '@/auth/use-auth'
+import { getAuthLink } from '@/helper/featureAuth'
 
 interface MobileMenuProps {
   links: MobileMenuLink[]
@@ -54,18 +54,7 @@ export function MobileMenu({ links, auth }: MobileMenuProps) {
   )
 
   function renderAuthMenu() {
-    const authLink = {
-      url: '/api/auth/logout',
-      title: 'Abmelden',
-      icon: faUser,
-    }
-    const noAuthLink = {
-      url: '/api/auth/login',
-      title: 'Anmelden',
-      icon: faUser,
-    }
-
-    const link = auth ? authLink : noAuthLink
+    const link = getAuthLink(auth !== null)
 
     return <Entry url={link.url} title={link.title} icon={link.icon} />
   }

@@ -7,6 +7,7 @@ import styled, { css } from 'styled-components'
 import { makeDefaultButton } from '../../helper/css'
 import { Link } from '../content/link'
 import { AuthPayload } from '@/auth/use-auth'
+import { getAuthLink, shouldUseNewAuth } from '@/helper/featureAuth'
 
 export interface MenuProps {
   links: MenuLink[]
@@ -21,7 +22,7 @@ interface MenuLink {
 
 export function Menu({ links, auth }: MenuProps) {
   const [source, target] = useSingleton()
-  const [mounted, setMounted] = React.useState(false)
+  const [mounted, setMounted] = React.useState(!shouldUseNewAuth())
 
   React.useEffect(() => {
     setMounted(true)
@@ -65,16 +66,7 @@ export function Menu({ links, auth }: MenuProps) {
   )
 
   function renderAuthMenu() {
-    const authLink = {
-      url: '/api/auth/logout',
-      title: 'Abmelden',
-    }
-    const noAuthLink = {
-      url: '/api/auth/login',
-      title: 'Anmelden',
-    }
-
-    const link = mounted ? (auth ? authLink : noAuthLink) : noAuthLink
+    const link = getAuthLink(mounted && auth !== null)
 
     return (
       <Entry
