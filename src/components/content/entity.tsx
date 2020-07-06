@@ -21,6 +21,7 @@ import { UserTools } from '@/components/navigation/user-tools'
 import { UserToolsMobile } from '@/components/navigation/user-tools-mobile'
 import { StyledH1 } from '@/components/tags/styled-h1'
 import { PrettyLinksContextValue } from '@/contexts/pretty-links-context'
+import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
 import { getIconAndTitleByContentType } from '@/helper/header-by-content-type'
 import { renderArticle, EditorState } from '@/schema/article-renderer'
 
@@ -182,7 +183,11 @@ export function Entity({ data, contentId, contentType, license }: EntityProps) {
         )!
 
       const nextCoursePageHref = () =>
-        nextIndex() >= data.pages.length ? '' : data.pages[nextIndex()].alias
+        nextIndex() >= data.pages.length
+          ? ''
+          : hasSpecialUrlChars(data.pages[nextIndex()].alias)
+          ? `/${data.pages[nextIndex()].id}`
+          : data.pages[nextIndex()].alias
 
       return (
         <CourseFooter
