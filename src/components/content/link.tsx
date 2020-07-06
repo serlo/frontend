@@ -24,6 +24,8 @@ const legacyLinks = [
   '/terms',
   '/disable-frontend',
   '/enable-frontend',
+  '/api/auth/login',
+  '/api/auth/logout',
 ]
 
 export function Link({
