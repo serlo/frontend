@@ -10,7 +10,7 @@ import styled from 'styled-components'
 
 import { Link } from '../content/link'
 import { AuthPayload } from '@/auth/use-auth'
-import { getAuthLink } from '@/helper/featureAuth'
+import { getAuthLink } from '@/helper/feature-auth'
 
 interface MobileMenuProps {
   links: MobileMenuLink[]

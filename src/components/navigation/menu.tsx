@@ -7,7 +7,7 @@ import styled, { css } from 'styled-components'
 import { makeDefaultButton } from '../../helper/css'
 import { Link } from '../content/link'
 import { AuthPayload } from '@/auth/use-auth'
-import { getAuthLink, shouldUseNewAuth } from '@/helper/featureAuth'
+import { getAuthLink, shouldUseNewAuth } from '@/helper/feature-auth'
 
 export interface MenuProps {
   links: MenuLink[]
