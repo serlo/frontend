@@ -1,9 +1,9 @@
 import { default as NextLink } from 'next/link'
 import React from 'react'
 
-import { PrettyLinksContext } from '../pretty-links-context'
 import { StyledA } from '../tags/styled-a'
 import { ExternalLink } from './external-link'
+import { PrettyLinksContext } from '@/contexts/pretty-links-context'
 
 export interface LinkProps {
   href?: string
@@ -24,6 +24,8 @@ const legacyLinks = [
   '/terms',
   '/disable-frontend',
   '/enable-frontend',
+  '/api/auth/login',
+  '/api/auth/logout',
 ]
 
 export function Link({

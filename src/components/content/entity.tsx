@@ -5,7 +5,6 @@ import { Router } from 'next/router'
 import React from 'react'
 import styled from 'styled-components'
 
-import { PrettyLinksContextValue } from '../pretty-links-context'
 import { HSpace } from './h-space'
 import {
   LicenseNotice,
@@ -21,6 +20,7 @@ import { UserToolsMobileButton } from '@/components/navigation/tool-line-button'
 import { UserTools } from '@/components/navigation/user-tools'
 import { UserToolsMobile } from '@/components/navigation/user-tools-mobile'
 import { StyledH1 } from '@/components/tags/styled-h1'
+import { PrettyLinksContextValue } from '@/contexts/pretty-links-context'
 import { getIconAndTitleByContentType } from '@/helper/header-by-content-type'
 import { renderArticle, EditorState } from '@/schema/article-renderer'
 
