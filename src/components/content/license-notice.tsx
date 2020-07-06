@@ -8,6 +8,7 @@ import styled from 'styled-components'
 
 import { makePadding, makeDefaultButton } from '../../helper/css'
 import { serloDomain } from '../../serlo-domain'
+import { StyledA } from '../tags/styled-a'
 import { Link } from './link'
 
 export interface LicenseNoticeData {
@@ -47,7 +48,9 @@ export function LicenseNotice({ data, minimal }: LicenseNoticeProps) {
         {' '}
         {text}
         <br />
-        <Link href={data.url}>{licenseName}</Link>
+        <StyledA href={data.url} rel="license">
+          {licenseName}
+        </StyledA>
         {' → '}
         <Link
           href={`https://de.${serloDomain}/license/detail/${data.id}`}

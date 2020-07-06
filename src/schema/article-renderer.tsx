@@ -42,6 +42,7 @@ import type { EquationProps } from '@/components/content/equations'
 import type { ExerciseProps } from '@/components/content/exercise'
 import type { GeogebraProps } from '@/components/content/geogebra'
 import type { InjectionProps } from '@/components/content/injection'
+import { Lazy } from '@/components/content/lazy'
 import type { MathProps } from '@/components/content/math'
 import type { VideoProps } from '@/components/content/video'
 
@@ -255,9 +256,11 @@ export function renderMath({ element }: RenderInlineMathData) {
   }
 
   return (
-    <MathWrapper centered={!element.alignLeft} bigger={bigger}>
-      <Math formula={formula} />
-    </MathWrapper>
+    <Lazy slim>
+      <MathWrapper centered={!element.alignLeft} bigger={bigger}>
+        <Math formula={formula} />
+      </MathWrapper>
+    </Lazy>
   )
 }
 
@@ -306,10 +309,16 @@ export function renderImg({ element }: RenderImgData) {
     return comp
   }
   return (
-    <ImgCentered>
+    <ImgCentered itemScope itemType="http://schema.org/ImageObject">
       <MaxWidthDiv maxWidth={element.maxWidth ? element.maxWidth : 0}>
         {wrapInA(
-          <StyledImg src={element.src} alt={element.alt || 'Bild'}></StyledImg>
+          <Lazy>
+            <StyledImg
+              src={element.src}
+              alt={element.alt || 'Bild'}
+              itemProp="contentUrl"
+            ></StyledImg>
+          </Lazy>
         )}
       </MaxWidthDiv>
     </ImgCentered>
@@ -409,9 +418,11 @@ interface RenderGeogebraData {
 }
 export function renderGeogebra({ element }: RenderGeogebraData) {
   return (
-    <GeogebraWrapper>
-      <Geogebra id={element.id} />
-    </GeogebraWrapper>
+    <Lazy>
+      <GeogebraWrapper>
+        <Geogebra id={element.id} />
+      </GeogebraWrapper>
+    </Lazy>
   )
 }
 
@@ -485,7 +496,11 @@ interface RenderVideoData {
 }
 
 export function renderVideo({ element }: RenderVideoData) {
-  return <Video url={element.src} />
+  return (
+    <Lazy>
+      <Video url={element.src} />
+    </Lazy>
+  )
 }
 
 interface RenderEquationsData {

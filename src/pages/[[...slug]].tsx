@@ -9,6 +9,7 @@ import { Entity, EntityProps } from '@/components/content/entity'
 import { ErrorPage } from '@/components/content/error-page'
 import { HSpace } from '@/components/content/h-space'
 import { Horizon } from '@/components/content/horizon'
+import { Lazy } from '@/components/content/lazy'
 import { LicenseNoticeData } from '@/components/content/license-notice'
 import { Topic, TopicProp } from '@/components/content/topic'
 import type { BreadcrumbsProps } from '@/components/navigation/breadcrumbs'
@@ -158,9 +159,11 @@ const PageView: NextPage<PageViewProps> = (props) => {
 
           <HSpace amount={40} />
           {horizonIndices && (
-            <Horizon
-              entries={horizonIndices.map((index) => horizonData[index])}
-            />
+            <Lazy>
+              <Horizon
+                entries={horizonIndices.map((index) => horizonData[index])}
+              />
+            </Lazy>
           )}
         </MaxWidthDiv>
       </RelatveContainer>
