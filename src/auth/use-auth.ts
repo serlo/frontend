@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken'
+import jwt_decode from 'jwt-decode'
 
 import { useCookie } from '@/cookie'
 
@@ -6,7 +6,7 @@ export function useAuth(): AuthPayload {
   const cookies = useCookie()
   try {
     const { id_token } = JSON.parse(cookies['auth-token'])
-    const { username } = jwt.decode(id_token) as { username: string }
+    const { username } = jwt_decode(id_token) as { username: string }
     return { username }
   } catch {
     return null
