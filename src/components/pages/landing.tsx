@@ -3,23 +3,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Head from 'next/head'
 import styled from 'styled-components'
 
-import DonateSVG from '../../public/_assets/img/footer-donate.svg'
-import ParticipateSVG from '../../public/_assets/img/footer-participate.svg'
-import PrinciplesSVG from '../../public/_assets/img/landing-principles-graphic.svg'
-import { CookieBar } from '@/components/content/cookie-bar'
+import DonateSVG from '../../../public/_assets/img/footer-donate.svg'
+import ParticipateSVG from '../../../public/_assets/img/footer-participate.svg'
+import PrinciplesSVG from '../../../public/_assets/img/landing-principles-graphic.svg'
+import { Link } from '../content/link'
 import { LandingAbout } from '@/components/landing/landing-about'
 import { LandingSubjects } from '@/components/landing/landing-subjects'
-import { Footer } from '@/components/navigation/footer'
-import { Header } from '@/components/navigation/header'
 import { makeDefaultButton, makeResponsivePadding } from '@/helper/css'
 
-export default function Landing() {
+export function Landing() {
   return (
     <>
       <Head>
         <title>Serlo.org - Die freie Lernplattform</title>
       </Head>
-      <Header />
+      {/* <Header /> */}
       <SubjectsSection>
         <LandingSubjects />
       </SubjectsSection>
@@ -87,8 +85,6 @@ export default function Landing() {
           </Button>
         </Col>
       </Section>
-      <Footer />
-      <CookieBar />
     </>
   )
 }
@@ -154,8 +150,9 @@ const StyledH2 = styled.h2`
   }
 `
 
-const Button = styled.a`
+const Button = styled(Link)`
   ${makeDefaultButton}
+  text-decoration: none !important;
   margin-left: -3px;
   font-weight: bold;
   padding-top: 3px;

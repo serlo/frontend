@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styled from 'styled-components'
 
 import { makeResponsivePadding, makeDefaultButton } from '../../helper/css'
+import { Link } from '../content/link'
 import { StyledLi } from '../tags/styled-li'
 import { StyledUl } from '../tags/styled-ul'
 import { PartnerList } from './partner-list'
@@ -34,7 +35,10 @@ export function LandingAbout() {
           <b>hochwertige Bildung weltweit frei verfügbar</b> zu machen.
         </p>
         <AboutButton href="/serlo">
-          Mehr erfahren <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
+          <>
+            Mehr erfahren{' '}
+            <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
+          </>
         </AboutButton>
       </TextCol>
     </>
@@ -80,7 +84,7 @@ const AboutCol = styled.div`
   }
 `
 
-const AboutButton = styled.a`
+const AboutButton = styled(Link)`
   ${makeDefaultButton}
   margin-left: -7px;
   margin-top: 10px;

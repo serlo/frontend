@@ -1,11 +1,10 @@
 import { faGraduationCap, faListUl } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { default as NextLink } from 'next/link'
 import React from 'react'
 import styled, { css } from 'styled-components'
 
 import { makeMargin, makeDefaultButton } from '../../helper/css'
-import { StyledA } from '../tags/styled-a'
+import { Link } from '../content/link'
 import { StyledLi } from '../tags/styled-li'
 import { StyledOl } from '../tags/styled-ol'
 
@@ -40,18 +39,16 @@ export function CourseNavigation({
         <StyledOl>
           {pages.map((page) => (
             <StyledLi key={page.alias}>
-              <NextLink href="/[...slug]" as={decodeURIComponent(page.alias)}>
-                <CourseA
-                  active={pageTitle === page.currentRevision.title}
-                  href={
-                    pageTitle === page.currentRevision.title
-                      ? undefined
-                      : page.alias
-                  }
-                >
-                  {page.currentRevision.title}
-                </CourseA>
-              </NextLink>
+              <CourseLink
+                active={pageTitle === page.currentRevision.title}
+                href={
+                  pageTitle === page.currentRevision.title
+                    ? undefined
+                    : page.alias
+                }
+              >
+                {page.currentRevision.title}
+              </CourseLink>
             </StyledLi>
           ))}
         </StyledOl>
@@ -83,7 +80,7 @@ const CourseH1 = styled.h1`
   color: ${(props) => props.theme.colors.brand};
 `
 
-const CourseA = styled(StyledA)<{ active: boolean }>`
+const CourseLink = styled(Link)<{ active: boolean }>`
   font-size: 1.125rem;
 
   ${(props) =>

@@ -84,6 +84,7 @@ export function Entity({ data, contentId, contentType, license }: EntityProps) {
   })
 
   if (data === undefined) return null
+
   return wrapWithSchema(
     <>
       {renderCourseNavigation()}

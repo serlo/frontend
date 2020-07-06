@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 
 import { makeDefaultButton } from '../../helper/css'
+import { Link } from '../content/link'
 
 interface MetaMenuEntry {
   url: string
@@ -13,9 +14,7 @@ export interface MetaMenuProps {
   navigation: MetaMenuEntry[]
 }
 
-export function MetaMenu(props: MetaMenuProps) {
-  const { navigation, pagealias } = props
-
+export function MetaMenu({ navigation, pagealias }: MetaMenuProps) {
   const activeRef = useRef<HTMLLIElement>(null)
   const containerRef = useRef<HTMLUListElement>(null)
 
@@ -34,14 +33,8 @@ export function MetaMenu(props: MetaMenuProps) {
             const active = entry.url === pagealias
             return (
               <li key={entry.url} ref={active ? activeRef : null}>
-                <Link href={entry.url}>
-                  <ButtonStyle active={active}>{entry.title}</ButtonStyle>
-                </Link>
-                <Link
-                  aria-hidden="true"
-                  spacer
-                  lastChild={i === navigation.length - 1}
-                ></Link>
+                {renderLink(entry, active)}
+                {renderSpacer(i)}
               </li>
             )
           })}
@@ -49,6 +42,25 @@ export function MetaMenu(props: MetaMenuProps) {
       </MetaMenuWrapper>
     </>
   )
+
+  function renderLink(entry: MetaMenuEntry, active: boolean) {
+    return (
+      <StyledLink href={entry.url}>
+        <ButtonStyle active={active}>{entry.title}</ButtonStyle>
+      </StyledLink>
+    )
+  }
+
+  function renderSpacer(i: number) {
+    return (
+      <StyledLink
+        aria-hidden="true"
+        spacer
+        lastChild={i === navigation.length - 1}
+        as="span"
+      ></StyledLink>
+    )
+  }
 }
 
 const MetaMenuWrapper = styled.nav`
@@ -97,7 +109,7 @@ interface LinkProps {
   lastChild?: boolean
 }
 
-const Link = styled.a<LinkProps>`
+const StyledLink = styled(Link)<LinkProps>`
   @media (max-width: ${(props) => props.theme.breakpoints.md}) {
     text-decoration: none;
     padding: 18px 7px;
@@ -128,7 +140,7 @@ const ButtonStyle = styled.span<{ active?: boolean }>`
     css`
       &,
       &:hover,
-      ${Link}:hover & {
+      ${StyledLink}:hover & {
         color: #333;
         @media (min-width: ${(props) => props.theme.breakpoints.md}) {
           background-color: ${(props) =>
@@ -142,7 +154,7 @@ const ButtonStyle = styled.span<{ active?: boolean }>`
     font-weight: bold;
     padding: 3px 7px;
     border-radius: 12px;
-    ${Link}:hover & {
+    ${StyledLink}:hover & {
       color: #fff;
       background-color: ${(props) => props.theme.colors.brand};
     }

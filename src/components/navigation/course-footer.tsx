@@ -1,10 +1,10 @@
 import { faArrowCircleRight, faListUl } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { default as NextLink } from 'next/link'
 import React from 'react'
 import styled from 'styled-components'
 
 import { makeMargin, makeDefaultButton } from '../../helper/css'
+import { Link } from '../content/link'
 
 export interface CourseFooterProps {
   onOverviewButtonClick: (e: React.MouseEvent<HTMLAnchorElement>) => void
@@ -22,15 +22,13 @@ export function CourseFooter({
 
   return (
     <Wrapper>
-      <OverviewButton onClick={onOverviewClick}>
+      <OverviewButton onClick={onOverviewClick} as="a">
         <FontAwesomeIcon icon={faListUl} /> Kursübersicht
       </OverviewButton>
       {nextHref && (
-        <NextLink href="/[...slug]" as={decodeURIComponent(nextHref)}>
-          <Button href={nextHref}>
-            <FontAwesomeIcon icon={faArrowCircleRight} /> Weiter
-          </Button>
-        </NextLink>
+        <ButtonLink href={nextHref}>
+          <FontAwesomeIcon icon={faArrowCircleRight} /> Weiter
+        </ButtonLink>
       )}
     </Wrapper>
   )
@@ -46,9 +44,10 @@ const Wrapper = styled.nav`
   justify-content: space-between;
 `
 
-const Button = styled.a`
+const ButtonLink = styled(Link)`
   font-size: 1.125rem;
   ${makeDefaultButton}
+  text-decoration: none !important;
   padding: 3px 8px;
   ${makeMargin}
   background-color: ${(props) => props.theme.colors.brand};
@@ -59,7 +58,7 @@ const Button = styled.a`
   font-weight: bold;
 `
 
-const OverviewButton = styled(Button)`
+const OverviewButton = styled(ButtonLink)`
   background-color: ${(props) => props.theme.colors.lightblue};
   &:hover {
     background-color: ${(props) => props.theme.colors.brand};

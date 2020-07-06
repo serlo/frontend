@@ -48,10 +48,8 @@ export interface EditorState {
 }
 
 export interface EditorChildren {
-  type: string
-  state?: {
-    content?: unknown
-  }
+  type?: string
+  state?: unknown
   children?: EditorChildren[]
   text?: string
 }
@@ -212,7 +210,7 @@ function renderElement(props: any) {
 
 // TODO: needs type declaration
 export function renderA({ element, children = null }: any) {
-  return <Link element={element}>{children}</Link>
+  return <Link href={element.href}>{children}</Link>
 }
 
 // TODO: needs type declaration

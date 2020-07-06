@@ -1,11 +1,16 @@
 import { request } from 'graphql-request'
 
 import { serloDomain } from '../serlo-domain'
-import { extractLinks } from './extract-links'
+import { extractLinks, extractLinksFromNav } from './extract-links'
 import { processResponse } from './process-response'
 import { dataQuery, idQuery, idsQuery } from './query'
 
 export const endpoint = `https://api.${serloDomain}/graphql`
+
+interface MenuData {
+  title: string
+  url: string
+}
 
 // TODO: needs type declaration
 export async function fetchContent(alias: string, redirect: any) {
@@ -55,10 +60,12 @@ export async function fetchContent(alias: string, redirect: any) {
     const contentId = reqData.uuid.id
 
     const processed = processResponse(reqData)
+
     const contentLinks = extractLinks(processed.data.value?.children, [])
     const exerciseLinks = extractLinks(processed.data.exercises, [])
+    const metaNavLinks = extractLinksFromNav(processed.navigation as MenuData[])
 
-    const allLinks = [...contentLinks, ...exerciseLinks]
+    const allLinks = [...contentLinks, ...exerciseLinks, ...metaNavLinks]
 
     const prettyLinks =
       allLinks.length < 1 ? {} : await request(endpoint, idsQuery(allLinks))

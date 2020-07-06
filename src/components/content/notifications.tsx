@@ -25,9 +25,10 @@ export function Notifications({ entries }: NotificationsProps) {
       {entries.map((entry, i) => {
         return (
           <Item readed={entry.readed} key={i}>
-            <Link href={`https://${serloDomain}/${entry.author.id}`}>
+            {/* TODO: Maybe also use Link component here */}
+            <StyledLink href={`https://${serloDomain}/${entry.author.id}`}>
               {entry.author.username}
-            </Link>
+            </StyledLink>
             <Body dangerouslySetInnerHTML={{ __html: entry.body }}></Body>
             <TimestampText>{entry.timestamp}</TimestampText>
           </Item>
@@ -41,7 +42,7 @@ const Wrapper = styled.div`
   margin: 50px 0;
 `
 
-const Link = styled.a`
+const StyledLink = styled.a`
   color: ${(props) => props.theme.colors.brand};
   text-decoration: none;
   margin-right: 5px;

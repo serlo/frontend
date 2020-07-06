@@ -25,7 +25,7 @@ interface TaskData {
     {
       type: string
       state: {
-        content: TaskData
+        content: EditorState['children']
         interactive:
           | {
               plugin: 'scMcExercise'
@@ -52,9 +52,7 @@ interface SolutionData {
         strategy: EditorState['children']
         steps: EditorState['children']
       }
-      children: {
-        text?: string
-      }
+      children: EditorState['children']
     }
   ]
 }
@@ -94,7 +92,8 @@ export function Exercise(props: ExerciseProps) {
   )
 
   function renderSolutionToggle() {
-    if (solution.children[0].children?.text === '') return null
+    if (solution.children[0].children?.length === 0) return null
+
     return (
       <SolutionToggle
         onClick={() => {
@@ -119,7 +118,6 @@ export function Exercise(props: ExerciseProps) {
 
   function getSolutionContent(): EditorState['children'] {
     if (!isEditorSolution) {
-      // @ts-expect-error
       return solution.children
     }
     const state = solution.children[0].state
@@ -149,8 +147,6 @@ export function Exercise(props: ExerciseProps) {
       ? task.children[0].state.content
       : task.children
 
-    // @ts-expect-error
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return renderArticle(children, false)
   }
 
