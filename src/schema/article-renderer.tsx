@@ -13,7 +13,7 @@ import {
   LicenseNotice,
   LicenseNoticeData,
 } from '../components/content/license-notice'
-import { Link, LinkProps } from '../components/content/link'
+import { Link } from '../components/content/link'
 import { MathWrapper } from '../components/content/math-wrapper'
 import { MaxWidthDiv } from '../components/content/max-width-div'
 import { SpecialCss } from '../components/content/special-css'
@@ -95,10 +95,8 @@ export interface EditorState {
 }
 
 export interface EditorChild {
-  type: renderElementData
-  state?: {
-    content?: unknown
-  }
+  type?: string
+  state?: unknown
   children?: EditorChild[]
   text?: string
 }
@@ -222,12 +220,13 @@ function renderElement(props: RenderElementProps) {
 }
 
 interface RenderAData {
-  element: LinkProps['element']
+  element: { href: string }
   children: React.ReactNode
 }
 
-export function renderA({ element, children = null }: RenderAData) {
-  return <Link element={element}>{children}</Link>
+// TODO: needs type declaration
+export function renderA({ element, children = null }: any) {
+  return <Link href={element.href}>{children}</Link>
 }
 
 interface RenderInlineMathData {

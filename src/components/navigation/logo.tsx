@@ -1,6 +1,8 @@
 import { lighten } from 'polished'
 import styled from 'styled-components'
 
+import { Link } from '../content/link'
+
 const logoTargetWidth = 160
 
 interface LogoProps {
@@ -12,14 +14,14 @@ export function Logo({ subline, noLink }: LogoProps) {
   return (
     <>
       <div>
-        <a href={noLink ? undefined : '/'}>
+        <Link href={noLink ? undefined : '/'}>
           <Image
             alt="Serlo"
             src="/_assets/img/serlo-logo.svg"
             width={logoTargetWidth}
             height="80"
           />
-        </a>
+        </Link>
       </div>
       {subline && (
         <SublineWrap>
@@ -39,11 +41,11 @@ const SublineWrap = styled.div`
   padding-top: 5px;
 `
 
-const SublineLink = styled.a`
+const SublineLink = styled(Link)`
   color: ${(props) => lighten(0.25, props.theme.colors.darkgray)};
   font-weight: 500;
   font-size: 1.55rem;
-  text-decoration: none;
+  text-decoration: none !important;
 
   &:hover {
     color: ${(props) => props.theme.colors.brand};

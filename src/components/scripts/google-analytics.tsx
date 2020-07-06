@@ -1,3 +1,5 @@
+/* TODO: Move to a modern implementation officially supported by Next*/
+
 export function GoogleAnalytics() {
   if (process.env.NEXT_PUBLIC_GA_TRACKING_ID === undefined) return null
   return (

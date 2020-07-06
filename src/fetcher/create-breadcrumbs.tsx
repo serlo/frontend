@@ -1,5 +1,6 @@
 // TODO: needs type declaration
 export function createBreadcrumbs(uuid: any) {
+  if (!uuid || !uuid.navigation || !uuid.navigation === undefined) return []
   let breadcrumbs = uuid.navigation?.path
 
   if (!breadcrumbs) {

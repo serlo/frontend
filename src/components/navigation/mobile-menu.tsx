@@ -4,13 +4,17 @@ import {
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { default as NextLink } from 'next/link'
 import { transparentize, lighten } from 'polished'
 import React from 'react'
 import styled from 'styled-components'
 
+import { Link } from '../content/link'
+import { AuthPayload } from '@/auth/use-auth'
+import { getAuthLink } from '@/helper/feature-auth'
+
 interface MobileMenuProps {
   links: MobileMenuLink[]
+  auth: AuthPayload
 }
 
 interface MobileMenuLink {
@@ -18,18 +22,15 @@ interface MobileMenuLink {
   url: string
   icon?: IconDefinition
   children?: MobileMenuLink[]
-  clientside?: boolean
 }
 
-export function MobileMenu(props: MobileMenuProps) {
-  const { links } = props
-
+export function MobileMenu({ links, auth }: MobileMenuProps) {
   const [openEntryIndex, setOpenEntryIndex] = React.useState<null | number>(
     null
   )
 
   function toggle(
-    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+    e: React.MouseEvent<HTMLLIElement, MouseEvent>,
     index: number
   ) {
     e.preventDefault()
@@ -48,8 +49,15 @@ export function MobileMenu(props: MobileMenuProps) {
           index={index}
         />
       ))}
+      {renderAuthMenu()}
     </List>
   )
+
+  function renderAuthMenu() {
+    const link = getAuthLink(auth !== null)
+
+    return <Entry url={link.url} title={link.title} icon={link.icon} />
+  }
 }
 
 interface EntryProps extends MobileMenuLink {
@@ -57,20 +65,9 @@ interface EntryProps extends MobileMenuLink {
   open?: boolean
   index?: number
   onToggle?: (
-    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+    e: React.MouseEvent<HTMLLIElement, MouseEvent>,
     index: number
   ) => void
-}
-
-function wrapInNextLink(comp: JSX.Element, url: string, active?: boolean) {
-  if (!active) return comp
-  else {
-    return (
-      <NextLink href="/[...slug]" as={decodeURIComponent(url)}>
-        {comp}
-      </NextLink>
-    )
-  }
 }
 
 function Entry({
@@ -81,45 +78,41 @@ function Entry({
   isChild = false,
   open,
   onToggle,
-  clientside,
   index,
 }: EntryProps) {
   return (
     <>
-      <li>
-        {wrapInNextLink(
-          <EntryLink
-            href={url}
-            onClick={(e) =>
-              children && onToggle !== undefined && index !== undefined
-                ? onToggle(e, index)
-                : undefined
-            }
-            isChild={isChild}
-            open={open}
-          >
-            {!isChild ? (
-              <IconWrapper>
-                <FontAwesomeIcon
-                  icon={icon !== undefined ? icon : faBars}
-                  size="1x"
-                  style={{ fontSize: '23px' }}
-                />
-              </IconWrapper>
+      <li
+        onClick={(e) =>
+          children && onToggle !== undefined && index !== undefined
+            ? onToggle(e, index)
+            : undefined
+        }
+      >
+        <EntryLink
+          href={url === '' ? undefined : url}
+          isChild={isChild}
+          open={open}
+        >
+          {!isChild ? (
+            <IconWrapper>
+              <FontAwesomeIcon
+                icon={icon !== undefined ? icon : faBars}
+                size="1x"
+                style={{ fontSize: '23px' }}
+              />
+            </IconWrapper>
+          ) : null}
+          <EntryLinkText isChild={isChild}>
+            {title}
+            {children ? (
+              <span>
+                {' '}
+                <FontAwesomeIcon icon={faCaretDown} />
+              </span>
             ) : null}
-            <EntryLinkText isChild={isChild}>
-              {title}
-              {children ? (
-                <span>
-                  {' '}
-                  <FontAwesomeIcon icon={faCaretDown} />
-                </span>
-              ) : null}
-            </EntryLinkText>
-          </EntryLink>,
-          url,
-          clientside
-        )}
+          </EntryLinkText>
+        </EntryLink>
       </li>
       {open && children ? (
         <>
@@ -155,7 +148,7 @@ const Seperator = styled.li`
   border-bottom: 1px solid ${(props) => props.theme.colors.lighterblue};
 `
 
-const EntryLink = styled.a<{ isChild?: boolean; open?: boolean }>`
+const EntryLink = styled(Link)<{ isChild?: boolean; open?: boolean }>`
   display: flex;
   align-items: start;
   padding: 16px;
@@ -163,7 +156,7 @@ const EntryLink = styled.a<{ isChild?: boolean; open?: boolean }>`
   border-bottom: 1px solid;
   border-color: ${(props) => props.theme.colors.lighterblue};
   font-weight: bold;
-  text-decoration: none;
+  text-decoration: none !important;
   font-size: ${(props) => (props.isChild ? '1rem' : '1.33rem')};
 
   background-color: ${(props) =>

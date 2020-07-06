@@ -1,11 +1,11 @@
 import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Link from 'next/link'
 import { transparentize } from 'polished'
 import React from 'react'
 import styled from 'styled-components'
 
 import { makeDefaultButton, makeMargin } from '../../helper/css'
+import { Link } from '../content/link'
 
 export interface BreadcrumbsProps {
   entries?: BreadcrumbEntry[]
@@ -44,8 +44,7 @@ interface BradcrumbEntriesProps {
   arrayLength: number
 }
 
-function BreadcrumbEntries(props: BradcrumbEntriesProps) {
-  const { bcEntry, i, arrayLength } = props
+function BreadcrumbEntries({ bcEntry, i, arrayLength }: BradcrumbEntriesProps) {
   const maxItems = 4
   const overflow = arrayLength > maxItems
   const itemsToRemove = arrayLength - maxItems
@@ -54,26 +53,25 @@ function BreadcrumbEntries(props: BradcrumbEntriesProps) {
   if (overflow && i > 2 && i < 1 + itemsToRemove) return null
   if (arrayLength - itemsToRemove > 4 && i === 1) return null
 
-  return arrayLength !== i + 1 ? (
-    <>
-      {ellipsesItem ? (
-        <Breadcrumb>…</Breadcrumb>
-      ) : (
-        <Link href="/[...slug]" as={decodeURIComponent(bcEntry.url)}>
-          <Breadcrumb href={bcEntry.url}>{bcEntry.label}</Breadcrumb>
-        </Link>
-      )}
-    </>
-  ) : (
-    <Link href="/[...slug]" as={decodeURIComponent(bcEntry.url)}>
-      <BreadcrumbLast href={bcEntry.url}>
+  if (arrayLength !== i + 1) {
+    return (
+      <>
+        {ellipsesItem ? (
+          <BreadcrumbLink as="span">…</BreadcrumbLink>
+        ) : (
+          <BreadcrumbLink href={bcEntry.url}>{bcEntry.label}</BreadcrumbLink>
+        )}
+      </>
+    )
+  } else
+    return (
+      <BreadcrumbLinkLast href={bcEntry.url}>
         <Icon>
           <FontAwesomeIcon icon={faArrowCircleLeft} size="1x" />
         </Icon>
         {bcEntry.label}
-      </BreadcrumbLast>
-    </Link>
-  )
+      </BreadcrumbLinkLast>
+    )
 }
 
 const BreadcrumbWrapper = styled.nav`
@@ -85,7 +83,7 @@ const BreadcrumbWrapper = styled.nav`
   }
 `
 
-const Breadcrumb = styled.a`
+const BreadcrumbLink = styled(Link)`
   display: inline-block;
   color: ${(props) => props.theme.colors.brand};
 
@@ -96,6 +94,7 @@ const Breadcrumb = styled.a`
   font-weight: normal;
   font-size: 1.125rem;
   align-items: center;
+  text-decoration: none !important;
 
   &:not([href]),
   &:not([href]):hover {
@@ -122,7 +121,7 @@ const Breadcrumb = styled.a`
   }
 `
 
-const BreadcrumbLast = styled(Breadcrumb)`
+const BreadcrumbLinkLast = styled(BreadcrumbLink)`
   &:after {
     display: none;
   }

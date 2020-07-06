@@ -8,7 +8,7 @@ import styled from 'styled-components'
 
 import { makePadding, makeDefaultButton } from '../../helper/css'
 import { serloDomain } from '../../serlo-domain'
-import { StyledA } from '../tags/styled-a'
+import { Link } from './link'
 
 export interface LicenseNoticeData {
   title: string
@@ -31,7 +31,7 @@ export function LicenseNotice({ data, minimal }: LicenseNoticeProps) {
   if (minimal)
     return (
       <MinimalWrapper>
-        <MinimalLink href={data.url} title={data.title}>
+        <MinimalLink href={data.url} title={data.title} noExternalIcon>
           <FontAwesomeIcon icon={faCreativeCommons} />
         </MinimalLink>
       </MinimalWrapper>
@@ -47,11 +47,14 @@ export function LicenseNotice({ data, minimal }: LicenseNoticeProps) {
         {' '}
         {text}
         <br />
-        <StyledA href={data.url}>{licenseName}</StyledA>
+        <Link href={data.url}>{licenseName}</Link>
         {' → '}
-        <StyledA href={`https://de.${serloDomain}/license/detail/${data.id}`}>
+        <Link
+          href={`https://de.${serloDomain}/license/detail/${data.id}`}
+          noExternalIcon
+        >
           <b>Was bedeutet das?</b>
-        </StyledA>
+        </Link>
       </StyledSmall>
     </Wrapper>
   )
@@ -61,7 +64,7 @@ const MinimalWrapper = styled.div`
   float: right;
   ${makePadding};
 `
-const MinimalLink = styled.a`
+const MinimalLink = styled(Link)`
   ${makeDefaultButton}
   text-align: center;
   color: ${(props) => props.theme.colors.dark1};

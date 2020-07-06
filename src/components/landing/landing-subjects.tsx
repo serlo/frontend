@@ -9,6 +9,7 @@ import BlankSVG from '../../../public/_assets/img/subjects-blank.svg'
 import MathSVG from '../../../public/_assets/img/subjects-math.svg'
 import SustainabilitySVG from '../../../public/_assets/img/subjects-sustainability.svg'
 import { makeResponsivePadding, makeDefaultButton } from '../../helper/css'
+import { Link } from '../content/link'
 
 export function LandingSubjects() {
   return (
@@ -62,16 +63,19 @@ interface SubjectProps {
 }
 
 function Subject({ url, title, subjectSVG, alwaysShowArrow }: SubjectProps) {
+  // TODO: Use Link component, currently breaks styles
   return (
     <SubjectLink href={url}>
-      {' '}
-      {subjectSVG}
-      <Header>
-        {title}
-        <StyledIcon alwaysShow={alwaysShowArrow}>
-          <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
-        </StyledIcon>
-      </Header>
+      <>
+        {' '}
+        {subjectSVG}
+        <Header>
+          {title}
+          <StyledIcon alwaysShow={alwaysShowArrow}>
+            <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
+          </StyledIcon>
+        </Header>
+      </>
     </SubjectLink>
   )
 }
@@ -127,7 +131,7 @@ const jump = keyframes`
   }
 `
 
-const SubjectLink = styled.a`
+const SubjectLink = styled(Link)`
   display: block;
   border-bottom: 1px solid ${(props) => props.theme.colors.lightblue};
   padding-left: 0.5rem;
