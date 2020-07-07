@@ -19,7 +19,7 @@ export async function fetchContent(alias: string, redirect: any) {
       // redirect id to alias
       const response = await request<{ uuid: any }>(
         endpoint,
-        idQuery(alias.substring(1))
+        idQuery(parseInt(alias.substring(1)))
       )
       const redirect = response.uuid.alias
       if (redirect) {
