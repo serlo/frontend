@@ -11,14 +11,14 @@ import { serloDomain } from '../../serlo-domain'
 import { StyledA } from '../tags/styled-a'
 import { Link } from './link'
 
-export interface LicenseNoticeData {
+export interface LicenseData {
   title: string
   url: string
   id: number
 }
 
 interface LicenseNoticeProps {
-  data: LicenseNoticeData
+  data: LicenseData
   minimal?: boolean
 }
 

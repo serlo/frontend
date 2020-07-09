@@ -6,8 +6,12 @@ import styled from 'styled-components'
 import { makeMargin, makeDefaultButton } from '../../helper/css'
 import { Link } from '../content/link'
 
-export interface CourseFooterProps {
+export interface CourseFooterProps extends CourseFooterData {
   onOverviewButtonClick: (e: React.MouseEvent<HTMLAnchorElement>) => void
+  nextHref: string
+}
+
+export interface CourseFooterData {
   nextHref: string
 }
 

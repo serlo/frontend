@@ -11,7 +11,7 @@ import { Important } from '../components/content/important'
 import { LayoutRow } from '../components/content/layout-row'
 import {
   LicenseNotice,
-  LicenseNoticeData,
+  LicenseData,
 } from '../components/content/license-notice'
 import { Link } from '../components/content/link'
 import { MathWrapper } from '../components/content/math-wrapper'
@@ -466,7 +466,7 @@ export function renderExercise({ element }: RenderExerciseData) {
 interface RenderExerciseGroupData {
   element: {
     content: EditorChild[]
-    license: LicenseNoticeData
+    license: LicenseData
     positionOnPage: number
   }
   children: React.ReactNode

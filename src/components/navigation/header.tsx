@@ -25,11 +25,11 @@ export function Header() {
     <BlueHeader>
       <MobileMenuButton onClick={() => setOpen(!isOpen)} open={isOpen} />
       <PaddedDiv>
-        <Menu links={links} auth={auth} />
+        <Menu data={links} auth={auth} />
         <Logo subline="Die freie Lernplattform" />
       </PaddedDiv>
       <SearchInput />
-      {isOpen && <MobileMenu links={links} auth={auth} />}
+      {isOpen && <MobileMenu data={links} auth={auth} />}
     </BlueHeader>
   )
 }

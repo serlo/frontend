@@ -9,12 +9,13 @@ export interface HorizonEntry {
   imageUrl: string
   text: string
   url: string
-  frequency: number
 }
 
 export interface HorizonProps {
-  entries: HorizonEntry[]
+  entries: HorizonData
 }
+
+export type HorizonData = HorizonEntry[]
 
 export function Horizon({ entries }: HorizonProps) {
   return (

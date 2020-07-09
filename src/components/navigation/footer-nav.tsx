@@ -1,4 +1,5 @@
-import { IconProp } from '@fortawesome/fontawesome-svg-core'
+import { faGithubSquare } from '@fortawesome/free-brands-svg-icons'
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { lighten } from 'polished'
 import React from 'react'
@@ -10,7 +11,12 @@ import { Link } from '../content/link'
 interface NavChild {
   title: string
   url: string
-  icon?: IconProp
+  icon?: 'newsletter' | 'github'
+}
+
+const iconMapping = {
+  newsletter: faEnvelope,
+  github: faGithubSquare,
 }
 
 interface NavEntry {
@@ -19,8 +25,10 @@ interface NavEntry {
 }
 
 interface NavProps {
-  navEntries: NavEntry[]
+  navEntries: FooterData
 }
+
+export type FooterData = NavEntry[]
 
 export function FooterNav(props: NavProps) {
   return (
@@ -33,7 +41,10 @@ export function FooterNav(props: NavProps) {
                 <NavLi key={index + childindex}>
                   <NavLink href={link.url} noExternalIcon>
                     {link.icon && (
-                      <FontAwesomeIcon icon={link.icon} size="1x" />
+                      <FontAwesomeIcon
+                        icon={iconMapping[link.icon]}
+                        size="1x"
+                      />
                     )}{' '}
                     {link.title}
                   </NavLink>

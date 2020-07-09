@@ -8,12 +8,15 @@ import { makeDefaultButton, makeMargin } from '../../helper/css'
 import { Link } from '../content/link'
 
 export interface BreadcrumbsProps {
-  entries?: BreadcrumbEntry[]
+  entries?: BreadcrumbsData
 }
+
+export type BreadcrumbsData = BreadcrumbEntry[]
 
 interface BreadcrumbEntry {
   label: string
   url: string
+  ellipsis?: boolean
 }
 
 export function Breadcrumbs(props: BreadcrumbsProps) {

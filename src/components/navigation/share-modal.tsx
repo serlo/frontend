@@ -25,6 +25,10 @@ interface ShareModalProps {
   contentId?: number
 }
 
+export interface ShareData {
+  contentId: number
+}
+
 export function ShareModal(props: ShareModalProps) {
   const { open, onClose, contentId } = props
   const shareInputRef = React.useRef<HTMLInputElement>(null)

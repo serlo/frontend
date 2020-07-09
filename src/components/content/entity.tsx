@@ -6,10 +6,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { HSpace } from './h-space'
-import {
-  LicenseNotice,
-  LicenseNoticeData,
-} from '@/components/content/license-notice'
+import { LicenseNotice, LicenseData } from '@/components/content/license-notice'
 import type { CourseFooterProps } from '@/components/navigation/course-footer'
 import type {
   CourseNavigationProps,
@@ -48,7 +45,7 @@ export interface EntityProps {
     | 'Exercise'
     | 'ExerciseGroup'
     | 'TaxonomyTerm'
-  license: LicenseNoticeData
+  license: LicenseData
   prettyLinks?: PrettyLinksContextValue
 }
 
@@ -57,7 +54,7 @@ interface EntityData {
   id: number
   value: EditorState
   metaDescription: string
-  license: LicenseNoticeData
+  license: LicenseData
 }
 
 interface CourseData extends EntityData {

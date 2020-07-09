@@ -6,11 +6,12 @@ import styled, { css } from 'styled-components'
 
 import { makeDefaultButton } from '../../helper/css'
 import { Link } from '../content/link'
+import { HeaderData } from './mobile-menu'
 import { AuthPayload } from '@/auth/use-auth'
 import { getAuthLink, shouldUseNewAuth } from '@/helper/feature-auth'
 
 export interface MenuProps {
-  links: MenuLink[]
+  data: HeaderData
   auth: AuthPayload
 }
 
@@ -20,7 +21,7 @@ interface MenuLink {
   children?: MenuLink[]
 }
 
-export function Menu({ links, auth }: MenuProps) {
+export function Menu({ data, auth }: MenuProps) {
   const [source, target] = useSingleton()
   const [mounted, setMounted] = React.useState(!shouldUseNewAuth())
 
@@ -52,7 +53,7 @@ export function Menu({ links, auth }: MenuProps) {
         onCreate={(tip) => setTippyRoot(tip)}
       />
       <List>
-        {links.map((link) => (
+        {data.map((link) => (
           <Entry
             link={link}
             key={link.title}

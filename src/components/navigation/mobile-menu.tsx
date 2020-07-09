@@ -1,7 +1,12 @@
 import {
   faCaretDown,
   faBars,
-  IconDefinition,
+  faUser,
+  faInfoCircle,
+  faUserEdit,
+  faGraduationCap,
+  faHandHoldingHeart,
+  faUserFriends,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { transparentize, lighten } from 'polished'
@@ -13,18 +18,37 @@ import { AuthPayload } from '@/auth/use-auth'
 import { getAuthLink } from '@/helper/feature-auth'
 
 interface MobileMenuProps {
-  links: MobileMenuLink[]
+  data: HeaderData
   auth: AuthPayload
 }
+
+type MenuIcon =
+  | 'subject'
+  | 'about'
+  | 'participate'
+  | 'community'
+  | 'donate'
+  | 'user'
+
+const menuIconMapping = {
+  subject: faGraduationCap,
+  about: faInfoCircle,
+  participate: faUserEdit,
+  community: faUserFriends,
+  donate: faHandHoldingHeart,
+  user: faUser,
+}
+
+export type HeaderData = MobileMenuLink[]
 
 interface MobileMenuLink {
   title: string
   url: string
-  icon?: IconDefinition
+  icon?: MenuIcon
   children?: MobileMenuLink[]
 }
 
-export function MobileMenu({ links, auth }: MobileMenuProps) {
+export function MobileMenu({ data, auth }: MobileMenuProps) {
   const [openEntryIndex, setOpenEntryIndex] = React.useState<null | number>(
     null
   )
@@ -40,7 +64,7 @@ export function MobileMenu({ links, auth }: MobileMenuProps) {
 
   return (
     <List>
-      {links.map((entry, index) => (
+      {data.map((entry, index) => (
         <Entry
           onToggle={toggle}
           key={index}
@@ -56,7 +80,7 @@ export function MobileMenu({ links, auth }: MobileMenuProps) {
   function renderAuthMenu() {
     const link = getAuthLink(auth !== null)
 
-    return <Entry url={link.url} title={link.title} icon={link.icon} />
+    return <Entry url={link.url} title={link.title} icon="user" />
   }
 }
 
@@ -97,7 +121,7 @@ function Entry({
           {!isChild ? (
             <IconWrapper>
               <FontAwesomeIcon
-                icon={icon !== undefined ? icon : faBars}
+                icon={icon !== undefined ? menuIconMapping[icon] : faBars}
                 size="1x"
                 style={{ fontSize: '23px' }}
               />

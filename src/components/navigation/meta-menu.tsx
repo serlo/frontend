@@ -4,14 +4,17 @@ import styled, { css } from 'styled-components'
 import { makeDefaultButton } from '../../helper/css'
 import { Link } from '../content/link'
 
+export type SecondaryNavigationData = MetaMenuEntry[]
+
 interface MetaMenuEntry {
   url: string
   title: string
+  active?: boolean
 }
 
 export interface MetaMenuProps {
   pagealias: string
-  navigation: MetaMenuEntry[]
+  navigation: SecondaryNavigationData
 }
 
 export function MetaMenu({ navigation, pagealias }: MetaMenuProps) {

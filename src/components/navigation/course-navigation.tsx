@@ -25,6 +25,8 @@ export interface CourseNavigationProps {
   onOverviewButtonClick: (e: React.MouseEvent<HTMLAnchorElement>) => void
 }
 
+export type CourseNavigationData = CourseNavigationPagesProps[]
+
 export function CourseNavigation({
   courseTitle,
   pageTitle,

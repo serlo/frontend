@@ -19,7 +19,7 @@ export interface License {
   title: string
 }
 
-// This is one breadcrumb path. Why is only url optional?
+// This is one breadcrumb path.
 
 const path = `
   path {

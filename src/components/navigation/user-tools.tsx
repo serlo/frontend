@@ -11,6 +11,10 @@ interface UserToolsProps {
   hideEdit: boolean
 }
 
+export interface UserToolsData {
+  editHref: string
+}
+
 export function UserTools({ editHref, onShare, hideEdit }: UserToolsProps) {
   return (
     <AbsoluteWrapper>

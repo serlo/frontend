@@ -11,6 +11,14 @@ import {
 import { EntityProps } from '@/components/content/entity'
 import { LinkInterfaceKeys } from '@/components/content/topic-link-list'
 
+export type EntityTitleIcon =
+  | 'article'
+  | 'course'
+  | 'video'
+  | 'applet'
+  | 'folder'
+  | 'exercise'
+
 export const getIconAndTitleByContentType = (
   contentType: EntityProps['contentType'] | LinkInterfaceKeys
 ) => {

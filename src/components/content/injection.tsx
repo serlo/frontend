@@ -5,7 +5,7 @@ import styled from 'styled-components'
 
 import { StyledP } from '../tags/styled-p'
 import { EntityProps } from './entity'
-import { LicenseNotice, LicenseNoticeData } from './license-notice'
+import { LicenseNotice, LicenseData } from './license-notice'
 import {
   PrettyLinksProvider,
   PrettyLinksContextValue,
@@ -18,7 +18,7 @@ export interface InjectionProps {
 
 export function Injection({ href }: InjectionProps) {
   const [value, setValue] = React.useState<EditorState | undefined>(undefined)
-  const [license, setLicense] = React.useState<undefined | LicenseNoticeData>(
+  const [license, setLicense] = React.useState<undefined | LicenseData>(
     undefined
   )
   const [prettyLinks, setPrettyLinks] = React.useState<PrettyLinksContextValue>(

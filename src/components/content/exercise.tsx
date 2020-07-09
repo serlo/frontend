@@ -5,14 +5,14 @@ import { makeMargin, makeDefaultButton } from '../../helper/css'
 import { renderArticle, EditorState } from '../../schema/article-renderer'
 import { ExerciseNumbering } from './exercise-numbering'
 import { InputExercise, InputExerciseProps } from './input-exercise'
-import { LicenseNotice, LicenseNoticeData } from './license-notice'
+import { LicenseNotice, LicenseData } from './license-notice'
 import { ScMcExercise, ScMcExerciseProps } from './sc-mc-exercise'
 
 export interface ExerciseProps {
   task: TaskData
   solution: SolutionData
-  taskLicense: LicenseNoticeData
-  solutionLicense: LicenseNoticeData
+  taskLicense: LicenseData
+  solutionLicense: LicenseData
   grouped: boolean
   positionInGroup: number
   positionOnPage: number
