@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
-import { serloDomain } from '@/serlo-domain'
+import { serloDomain } from '@/helper/serlo-domain'
 
 // need this to bypass CORS and cache responses
 export default async function privacy(

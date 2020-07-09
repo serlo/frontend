@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styled from 'styled-components'
 
 import { makePadding, makeDefaultButton } from '../../helper/css'
-import { serloDomain } from '../../serlo-domain'
+import { serloDomain } from '../../helper/serlo-domain'
 import { StyledA } from '../tags/styled-a'
 import { Link } from './link'
 

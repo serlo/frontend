@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { serloDomain } from '../../serlo-domain'
+import { serloDomain } from '../../helper/serlo-domain'
 
 interface LocalStorageData {
   revision: string
