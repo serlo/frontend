@@ -3,58 +3,61 @@ import {
   faChevronCircleRight,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React from 'react'
 import styled from 'styled-components'
 
-import { footerNavEntries } from '../../data/footer'
 import { makeResponsivePadding, makeDefaultButton } from '../../helper/css'
 import { Link } from '../content/link'
 import { FooterNav } from './footer-nav'
+import { useInstanceData } from '@/contexts/instance-context'
 
 export function Footer() {
+  const { footerData } = useInstanceData()
   return (
     <>
       <About />
-      <FooterNav navEntries={footerNavEntries} />
+      <FooterNav data={footerData.footerNavigation} />
     </>
   )
 }
 
 function About() {
+  const { footerData, strings } = useInstanceData()
   return (
     <AboutContainer>
       <LogoContainer>
-        <TopButton onClick={() => window.scrollTo(0, 0)} title="Nach oben">
+        <TopButton
+          onClick={() => window.scrollTo(0, 0)}
+          title={strings.footer.toTop}
+        >
           <FontAwesomeIcon icon={faChevronUp} size="lg" />
         </TopButton>
       </LogoContainer>
       <InfoContainer>
         <Summary>
-          <SummaryHeading>
-            <SerloLink href="/">Serlo.org</SerloLink> ist die Wikipedia fürs
-            Lernen
-          </SummaryHeading>
-          <SummaryText>
-            Wir sind eine engagierte Gemeinschaft, die daran arbeitet,
-            hochwertige Bildung weltweit frei verfügbar zu machen.
-          </SummaryText>
+          <SummaryHeading>{strings.footer.summaryHeading}</SummaryHeading>
+          <SummaryText>{strings.footer.summaryText}</SummaryText>
           <SummaryButtonBox>
-            <SummaryButton href="/serlo">
-              <FontAwesomeIcon icon={faChevronCircleRight} size="sm" /> Mehr
-              Erfahren
+            <SummaryButton href={footerData.aboutHref}>
+              <FontAwesomeIcon icon={faChevronCircleRight} size="sm" />{' '}
+              {strings.footer.learnMore}
             </SummaryButton>
           </SummaryButtonBox>
         </Summary>
         <Support>
-          <ImageLink href="/mitmachen">
+          <ImageLink href={footerData.participationHref}>
             <img
-              alt="Icon: Participate"
+              alt={`Icon: ${strings.footer.participate}`}
               src="/_assets/img/footer-participate.svg"
             />
-            <SupportButton>Mitmachen</SupportButton>
+            <SupportButton>{strings.footer.participate}</SupportButton>
           </ImageLink>
-          <ImageLink href="/spenden">
-            <img alt="Icon: Spenden" src="/_assets/img/footer-donate.svg" />
-            <SupportButton>Spenden</SupportButton>
+          <ImageLink href={footerData.donationHref}>
+            <img
+              alt={`Icon: ${strings.footer.donate}`}
+              src="/_assets/img/footer-donate.svg"
+            />
+            <SupportButton>{strings.footer.donate}</SupportButton>
           </ImageLink>
         </Support>
       </InfoContainer>
@@ -116,13 +119,13 @@ const SummaryHeading = styled.div`
   margin-bottom: 6px;
 `
 
-const SerloLink = styled(Link)`
+/*const SerloLink = styled(Link)`
   &:hover {
     text-decoration: underline;
   }
   color: white;
   text-decoration: none;
-`
+`*/
 
 const SummaryText = styled.div`
   margin: 16px 0;

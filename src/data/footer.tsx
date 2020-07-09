@@ -1,7 +1,7 @@
-import { serloDomain } from '../serlo-domain'
-import { FooterData } from '@/components/navigation/footer-nav'
+import { serloDomain } from '../helper/serlo-domain'
+import { FooterNavigation } from '@/data-types'
 
-export const footerNavEntries: FooterData = [
+export const footerNavEntries: FooterNavigation = [
   {
     title: 'Allgemein',
     children: [

@@ -6,8 +6,8 @@ import styled, { css } from 'styled-components'
 
 import { makeDefaultButton } from '../../helper/css'
 import { Link } from '../content/link'
-import { HeaderData } from './mobile-menu'
 import { AuthPayload } from '@/auth/use-auth'
+import { HeaderData } from '@/data-types'
 import { getAuthLink, shouldUseNewAuth } from '@/helper/feature-auth'
 
 export interface MenuProps {

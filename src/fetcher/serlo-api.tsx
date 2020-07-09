@@ -1,6 +1,6 @@
 import { request } from 'graphql-request'
 
-import { serloDomain } from '../serlo-domain'
+import { serloDomain } from '../helper/serlo-domain'
 import { extractLinks, extractLinksFromNav } from './extract-links'
 import { processResponse } from './process-response'
 import { dataQuery, idQuery, idsQuery } from './query'

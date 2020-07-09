@@ -1,4 +1,4 @@
-import { serloDomain } from '@/serlo-domain'
+import { serloDomain } from '@/helper/serlo-domain'
 
 export function getAuthLink(loggedIn: boolean) {
   if (shouldUseNewAuth()) {

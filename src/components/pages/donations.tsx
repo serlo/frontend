@@ -155,7 +155,7 @@ export function Donations() {
       <BlueContainer>
         <PartnerList />
       </BlueContainer>
-      <FooterNav navEntries={footerEntries} />
+      <FooterNav data={footerEntries} />
       <CookieBar />
     </>
   )

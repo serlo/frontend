@@ -9,13 +9,13 @@ import { MobileMenu } from './mobile-menu'
 import { MobileMenuButton } from './mobile-menu-button'
 import { SearchInput } from './search-input'
 import { useAuth } from '@/auth/use-auth'
-import { getMenuData } from '@/data/menu'
+import { useInstanceData } from '@/contexts/instance-context'
 import { makeResponsivePadding } from '@/helper/css'
 
 export function Header() {
   const [isOpen, setOpen] = React.useState(false)
   const auth = useAuth()
-  const links = getMenuData()
+  const { headerData, strings } = useInstanceData()
 
   Router.events.on('routeChangeStart', () => {
     setOpen(false)
@@ -25,11 +25,11 @@ export function Header() {
     <BlueHeader>
       <MobileMenuButton onClick={() => setOpen(!isOpen)} open={isOpen} />
       <PaddedDiv>
-        <Menu data={links} auth={auth} />
-        <Logo subline="Die freie Lernplattform" />
+        <Menu data={headerData} auth={auth} />
+        <Logo subline={strings.header.slogan} />
       </PaddedDiv>
       <SearchInput />
-      {isOpen && <MobileMenu data={links} auth={auth} />}
+      {isOpen && <MobileMenu data={headerData} auth={auth} />}
     </BlueHeader>
   )
 }

@@ -16,7 +16,9 @@ import { Footer } from '@/components/navigation/footer'
 import { Header } from '@/components/navigation/header'
 import type { MetaMenuProps } from '@/components/navigation/meta-menu'
 import { SlugHead } from '@/components/slug-head'
+import { InstanceDataProvider } from '@/contexts/instance-context'
 import { PrettyLinksProvider } from '@/contexts/pretty-links-context'
+import { deInstanceData } from '@/data/de'
 import { horizonData } from '@/data/horizon'
 import { getInitialProps } from '@/fetcher/get-initial-props'
 
@@ -108,7 +110,7 @@ const PageView: NextPage<PageViewProps> = (props) => {
   if (page === 'spenden') return <Donations />
 
   return (
-    <>
+    <InstanceDataProvider value={deInstanceData}>
       <SlugHead
         title={title}
         fetchedData={fetchedData}
@@ -126,7 +128,7 @@ const PageView: NextPage<PageViewProps> = (props) => {
 
       {contentType === 'Page' && data && <NewsletterPopup />}
       <CookieBar />
-    </>
+    </InstanceDataProvider>
   )
 
   function renderContent() {

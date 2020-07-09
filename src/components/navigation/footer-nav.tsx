@@ -7,35 +7,23 @@ import styled from 'styled-components'
 
 import { makeResponsivePadding } from '../../helper/css'
 import { Link } from '../content/link'
-
-interface NavChild {
-  title: string
-  url: string
-  icon?: 'newsletter' | 'github'
-}
+import { FooterNavigation } from '@/data-types'
 
 const iconMapping = {
   newsletter: faEnvelope,
   github: faGithubSquare,
 }
 
-interface NavEntry {
-  title: string
-  children: NavChild[]
-}
-
 interface NavProps {
-  navEntries: FooterData
+  data: FooterNavigation
 }
 
-export type FooterData = NavEntry[]
-
-export function FooterNav(props: NavProps) {
+export function FooterNav({ data }: NavProps) {
   return (
     <FooterNavGrid>
       <nav>
         <FooterNavContainer>
-          {props.navEntries.map((category, index) => {
+          {data.map((category, index) => {
             const children = category.children.map((link, childindex) => {
               return (
                 <NavLi key={index + childindex}>

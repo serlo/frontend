@@ -15,20 +15,13 @@ import styled from 'styled-components'
 
 import { Link } from '../content/link'
 import { AuthPayload } from '@/auth/use-auth'
+import { HeaderData, HeaderLink } from '@/data-types'
 import { getAuthLink } from '@/helper/feature-auth'
 
 interface MobileMenuProps {
   data: HeaderData
   auth: AuthPayload
 }
-
-type MenuIcon =
-  | 'subject'
-  | 'about'
-  | 'participate'
-  | 'community'
-  | 'donate'
-  | 'user'
 
 const menuIconMapping = {
   subject: faGraduationCap,
@@ -37,15 +30,6 @@ const menuIconMapping = {
   community: faUserFriends,
   donate: faHandHoldingHeart,
   user: faUser,
-}
-
-export type HeaderData = MobileMenuLink[]
-
-interface MobileMenuLink {
-  title: string
-  url: string
-  icon?: MenuIcon
-  children?: MobileMenuLink[]
 }
 
 export function MobileMenu({ data, auth }: MobileMenuProps) {
@@ -84,7 +68,7 @@ export function MobileMenu({ data, auth }: MobileMenuProps) {
   }
 }
 
-interface EntryProps extends MobileMenuLink {
+interface EntryProps extends HeaderLink {
   isChild?: boolean
   open?: boolean
   index?: number
@@ -113,11 +97,7 @@ function Entry({
             : undefined
         }
       >
-        <EntryLink
-          href={url === '' ? undefined : url}
-          isChild={isChild}
-          open={open}
-        >
+        <EntryLink href={url} isChild={isChild} open={open}>
           {!isChild ? (
             <IconWrapper>
               <FontAwesomeIcon

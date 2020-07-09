@@ -1,4 +1,4 @@
-import { HeaderData } from '@/components/navigation/mobile-menu'
+import { HeaderData } from '@/data-types'
 
 export function getMenuData(): HeaderData {
   return [
