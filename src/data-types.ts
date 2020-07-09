@@ -14,13 +14,7 @@ import { Instance } from './fetcher/query'
 
 export interface InitialProps {
   instanceData: InstanceData
-  pageData:
-    | LandingPage
-    | DonationPage
-    | SearchPage
-    | SingleEntityPage
-    | TaxonomyPage
-    | ErrorPage
+  pageData: PageData
 }
 
 // Instance data consists of the language, translation strings, header menu and footer menu.
@@ -91,6 +85,16 @@ export interface FooterStrings {
   donate: string
   toTop: string
 }
+
+// We have different types of pages, each with its own set of data:
+
+export type PageData =
+  | LandingPage
+  | DonationPage
+  | SearchPage
+  | SingleEntityPage
+  | TaxonomyPage
+  | ErrorPage
 
 /*
 
@@ -164,23 +168,4 @@ interface TaxonomyPage extends EntityPageBase {
   //taxonomyData: unknown
 }
 
-/*import { HorizonData } from './components/content/horizon'
-import { LicenseData } from './components/content/license-notice'
-import { BreadcrumbsData } from './components/navigation/breadcrumbs'
-import { CourseFooterData } from './components/navigation/course-footer'
-import { CourseNavigationData } from './components/navigation/course-navigation'
-import { SecondaryNavigationData } from './components/navigation/meta-menu'
-import { UserToolsData } from './components/navigation/user-tools'
-import { EntityTitleIcon } from './helper/header-by-content-type'
-import { EditorState } from './schema/article-renderer'
-
-// STATE_0 untouched
-
-// Every page is tied to an instance, and this instance has some specific (langauge-local) data
-
-// Depending on the type of the page we fetching different props
-
-
-
-*/
 //---------------------------------------------------------------
