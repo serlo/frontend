@@ -1,6 +1,7 @@
 import { NextPageContext } from 'next'
 import absoluteUrl from 'next-absolute-url'
 
+import { InitialProps } from '@/data-types'
 import { deInstanceData } from '@/data/de'
 // eslint-disable-next-line import/extensions
 import { PageViewProps } from '@/pages/[[...slug]]'
@@ -72,7 +73,11 @@ export async function getInitialProps(
       } as PageViewProps
     }
 
-    return { fetchedData, origin }
+    return {
+      fetchedData,
+      origin,
+      newInitialProps: buildInitialProps(fetchedData, origin),
+    }
   } else {
     //client
 
@@ -98,10 +103,29 @@ export async function getInitialProps(
         `${fetcherAdditionalData.origin}/api/frontend${fetchedData.redirect}`
       )
       const fetchedData2 = (await res.json()) as PageViewProps['fetchedData']
-      return { fetchedData: fetchedData2, origin: fetcherAdditionalData.origin }
+      return {
+        fetchedData: fetchedData2,
+        origin: fetcherAdditionalData.origin,
+        newInitialProps: buildInitialProps(
+          fetchedData2,
+          fetcherAdditionalData.origin
+        ),
+      }
     }
-    return { fetchedData, origin: fetcherAdditionalData.origin }
+    return {
+      fetchedData,
+      origin: fetcherAdditionalData.origin,
+      newInitialProps: buildInitialProps(
+        fetchedData,
+        fetcherAdditionalData.origin
+      ),
+    }
   }
+}
+
+function buildInitialProps(fetchedData: any, origin: string): InitialProps {
+  // temporary transform fetched data to frontend model ...
+  return { origin, instanceData: deInstanceData, pageData: { kind: 'error' } }
 }
 
 /* eslint-disable */

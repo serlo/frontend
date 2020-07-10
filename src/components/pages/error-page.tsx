@@ -16,9 +16,9 @@ export function ErrorPage() {
   }, [])
   return (
     <>
-      <HSpace amount={100} />
       <RelativeContainer>
         <MaxWidthDiv>
+          <HSpace amount={100} />
           <StyledH1>404</StyledH1>
           <StyledP>Diese Seite konnte nicht geladen werden.</StyledP>
           {process.env.NODE_ENV !== 'production' && (
@@ -30,6 +30,7 @@ export function ErrorPage() {
               </StyledA>
             </StyledP>
           )}
+          <HSpace amount={100} />
         </MaxWidthDiv>
       </RelativeContainer>
     </>

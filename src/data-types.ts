@@ -97,9 +97,9 @@ export type PageData =
   | LandingPage
   | DonationPage
   | SearchPage
+  | ErrorPage
   | SingleEntityPage
   | TaxonomyPage
-  | ErrorPage
 
 // The landing page is custom built and takes no additional data
 
@@ -121,6 +121,19 @@ export interface ErrorPage {
   kind: 'error'
 }
 
+// ---------------------------------------------------
+
+// ---------------------------------------------------
+
+// I should continue to work here ...
+
+export interface EntityPageBase {
+  /*secondaryNavigationData?: SecondaryNavigationData
+  breadcrumbsData?: BreadcrumbsData
+  horizonData?: HorizonData
+  metaData?: HeadData
+  newsletterPopup?: boolean*/
+}
 /*
 
 
@@ -150,14 +163,6 @@ export interface HeadData {
   contentType?: string
   metaDescription?: string
   metaImage?: string
-}
-
-interface EntityPageBase {
-  /*secondaryNavigationData?: SecondaryNavigationData
-  breadcrumbsData?: BreadcrumbsData
-  horizonData?: HorizonData
-  metaData?: unknown
-  newsletterPopup?: boolean*/
 }
 
 interface EntityData {
