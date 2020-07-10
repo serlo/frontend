@@ -98,9 +98,9 @@ export async function getInitialProps(
         `${fetcherAdditionalData.origin}/api/frontend${fetchedData.redirect}`
       )
       const fetchedData2 = (await res.json()) as PageViewProps['fetchedData']
-      return { fetchedData: fetchedData2, origin }
+      return { fetchedData: fetchedData2, origin: fetcherAdditionalData.origin }
     }
-    return { fetchedData, origin }
+    return { fetchedData, origin: fetcherAdditionalData.origin }
   }
 }
 
