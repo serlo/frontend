@@ -51,8 +51,10 @@ export type HeaderIcon =
   | 'user'
 
 export interface HeaderStrings {
-  slogan: string // "Die freie Lernplattform"
-  search: string // "Suche"
+  slogan: string
+  search: string
+  login: string
+  logout: string
 }
 
 // The footer is split into different categories and has three separate links.
@@ -96,6 +98,12 @@ export type PageData =
   | TaxonomyPage
   | ErrorPage
 
+// The landing page is custom built and takes no additional data
+
+interface LandingPage {
+  kind: 'landing'
+}
+
 /*
 
 
@@ -119,10 +127,6 @@ export type PageData =
 */
 
 // -------------- Existing
-
-interface LandingPage {
-  kind: 'landing'
-}
 
 interface DonationPage {
   kind: 'donation'

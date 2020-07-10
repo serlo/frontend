@@ -5,47 +5,44 @@ import { lighten } from 'polished'
 import React from 'react'
 import styled from 'styled-components'
 
-import { makeResponsivePadding } from '../../helper/css'
-import { Link } from '../content/link'
+import { Link } from '@/components/content/link'
 import { FooterNavigation } from '@/data-types'
+import { makeResponsivePadding } from '@/helper/css'
 
 const iconMapping = {
   newsletter: faEnvelope,
   github: faGithubSquare,
 }
 
-interface NavProps {
+interface FooterNavProps {
   data: FooterNavigation
 }
 
-export function FooterNav({ data }: NavProps) {
+export function FooterNav({ data }: FooterNavProps) {
   return (
     <FooterNavGrid>
       <nav>
         <FooterNavContainer>
-          {data.map((category, index) => {
-            const children = category.children.map((link, childindex) => {
-              return (
-                <NavLi key={index + childindex}>
-                  <NavLink href={link.url} noExternalIcon>
-                    {link.icon && (
-                      <FontAwesomeIcon
-                        icon={iconMapping[link.icon]}
-                        size="1x"
-                      />
-                    )}{' '}
-                    {link.title}
-                  </NavLink>
-                </NavLi>
-              )
-            })
-            return (
-              <ColWithPadding key={index}>
-                <CategoryHeader>{category.title}</CategoryHeader>
-                <NavList>{children}</NavList>
-              </ColWithPadding>
-            )
-          })}
+          {data.map((category, index) => (
+            <ColWithPadding key={index}>
+              <CategoryHeader>{category.title}</CategoryHeader>
+              <NavList>
+                {category.children.map((link, childindex) => (
+                  <NavLi key={index + childindex}>
+                    <NavLink href={link.url} noExternalIcon>
+                      {link.icon && (
+                        <FontAwesomeIcon
+                          icon={iconMapping[link.icon]}
+                          size="1x"
+                        />
+                      )}{' '}
+                      {link.title}
+                    </NavLink>
+                  </NavLi>
+                ))}
+              </NavList>
+            </ColWithPadding>
+          ))}
         </FooterNavContainer>
       </nav>
     </FooterNavGrid>

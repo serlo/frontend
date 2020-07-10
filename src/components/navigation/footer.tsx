@@ -6,10 +6,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import styled from 'styled-components'
 
-import { makeResponsivePadding, makeDefaultButton } from '../../helper/css'
-import { Link } from '../content/link'
-import { FooterNav } from './footer-nav'
+import { Link } from '@/components/content/link'
+import { FooterNav } from '@/components/navigation/footer-nav'
 import { useInstanceData } from '@/contexts/instance-context'
+import { makeResponsivePadding, makeDefaultButton } from '@/helper/css'
 
 export function Footer() {
   const { footerData } = useInstanceData()

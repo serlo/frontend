@@ -1,5 +1,4 @@
-// import dynamic from 'next/dynamic'
-import Router from 'next/router'
+import { Router } from 'next/router'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -17,6 +16,7 @@ export function Header() {
   const auth = useAuth()
   const { headerData, strings } = useInstanceData()
 
+  // compat: close mobile menu on client side navigation, we need the global Router instance
   Router.events.on('routeChangeStart', () => {
     setOpen(false)
   })
