@@ -3,18 +3,38 @@ import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import * as Sentry from '@sentry/browser'
 import { AppProps } from 'next/app'
+import dynamic from 'next/dynamic'
 import Router from 'next/router'
 import NProgress from 'nprogress'
 import React from 'react'
 import { ThemeProvider, createGlobalStyle } from 'styled-components'
 
 import { version } from '../../package.json'
+import { CookieBar } from '@/components/content/cookie-bar'
+import { Footer } from '@/components/navigation/footer'
+import { Header } from '@/components/navigation/header'
+import { NProgressStyles } from '@/components/navigation/n-progress-styles'
+import { ErrorPage } from '@/components/pages/error-page'
 import { ToastNotifications } from '@/components/toast-notifications'
+import { InstanceDataProvider } from '@/contexts/instance-context'
+import { OriginProvider } from '@/contexts/origin-context'
+import { InitialProps, InstanceData, PageData } from '@/data-types'
+import { fetcherAdditionalData } from '@/fetcher/get-initial-props'
 import { theme } from '@/theme'
 // eslint-disable-next-line import/no-unassigned-import
 import '../../public/_assets/fonts/karmilla.css'
 // eslint-disable-next-line import/no-unassigned-import
 import '../../public/_assets/fonts/katex/katex.css'
+
+const Landing = dynamic<{}>(() =>
+  import('@/components/pages/landing').then((mod) => mod.Landing)
+)
+const Search = dynamic<{}>(() =>
+  import('@/components/pages/search').then((mod) => mod.Search)
+)
+const Donations = dynamic<{}>(() =>
+  import('@/components/pages/donations').then((mod) => mod.Donations)
+)
 
 config.autoAddCss = false
 
@@ -37,84 +57,6 @@ const FontFix = createGlobalStyle`
   }
 `
 
-const NProgressStyles = createGlobalStyle`
-  /* Make clicks pass-through */
-  #nprogress {
-    pointer-events: none;
-  }
-
-  #nprogress .bar {
-    background-color: ${(props) => props.theme.colors.brand};
-
-    position: fixed;
-    z-index: 1031;
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 4px;
-  }
-
-  /* Fancy blur effect */
-  #nprogress .peg {
-    display: block;
-    position: absolute;
-    right: 0px;
-    width: 100px;
-    height: 100%;
-    box-shadow: 0 0 10px ${(props) => props.theme.colors.brand}, 0 0 5px ${(
-  props
-) => props.theme.colors.brand};
-    opacity: 1.0;
-
-    -webkit-transform: rotate(3deg) translate(0px, -4px);
-        -ms-transform: rotate(3deg) translate(0px, -4px);
-            transform: rotate(3deg) translate(0px, -4px);
-  }
-
-  /* Remove these to get rid of the spinner */
-  #nprogress .spinner {
-    display: block;
-    position: fixed;
-    z-index: 1031;
-    top: 15px;
-    right: 15px;
-  }
-
-  #nprogress .spinner-icon {
-    width: 25px;
-    height: 25px;
-    box-sizing: border-box;
-
-    border: solid 3px transparent;
-    border-top-color: ${(props) => props.theme.colors.brand};
-    border-left-color: ${(props) => props.theme.colors.brand};
-    border-radius: 50%;
-
-    -webkit-animation: nprogress-spinner 400ms linear infinite;
-            animation: nprogress-spinner 400ms linear infinite;
-  }
-
-  .nprogress-custom-parent {
-    overflow: hidden;
-    position: relative;
-  }
-
-  .nprogress-custom-parent #nprogress .spinner,
-  .nprogress-custom-parent #nprogress .bar {
-    position: absolute;
-  }
-
-  @-webkit-keyframes nprogress-spinner {
-    0%   { -webkit-transform: rotate(0deg); }
-    100% { -webkit-transform: rotate(360deg); }
-  }
-  @keyframes nprogress-spinner {
-    0%   { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-`
-
 Router.events.on('routeChangeStart', () => {
   NProgress.start()
 })
@@ -123,16 +65,70 @@ Router.events.on('routeChangeError', () => NProgress.done())
 
 // eslint-disable-next-line import/no-default-export
 export default function App({ Component, pageProps }: AppProps) {
+  const initialProps: InitialProps = pageProps.newInitialProps
+
+  // note: we assume that instance data is passing in the first time this components renders
+  // subsequent render calls should be client-side-navigation
+  const [instanceData] = React.useState<InstanceData>(
+    initialProps?.instanceData!
+  )
+
   return (
     <React.StrictMode>
       <ThemeProvider theme={theme}>
         <FontFix />
         <NProgressStyles />
-        <Component {...pageProps} />
+        {(() => {
+          if (pageProps.newInitialProps) {
+            // new render path
+            fetcherAdditionalData.origin = initialProps.origin
+            fetcherAdditionalData.instance = instanceData.lang
+
+            return (
+              <OriginProvider value={initialProps.origin}>
+                <InstanceDataProvider value={instanceData}>
+                  {renderPage(initialProps.pageData)}
+                </InstanceDataProvider>
+              </OriginProvider>
+            )
+          } else {
+            // compat: this is the old render and will deprecate soon
+            console.log('render app with old render path')
+            return <Component {...pageProps} />
+          }
+        })()}
         <ToastNotifications />
       </ThemeProvider>
     </React.StrictMode>
   )
+}
+
+function renderPage(page: PageData) {
+  if (page.kind === 'donation') {
+    return <Donations />
+  } else {
+    // all other kinds are using basic layout
+    // render it together to avoid remounting
+    return (
+      <>
+        <Header onSearchPage={page.kind === 'search'} />
+        {(() => {
+          if (page.kind === 'landing') {
+            return <Landing />
+          }
+          if (page.kind === 'search') {
+            return <Search />
+          }
+          if (page.kind === 'error') {
+            return <ErrorPage />
+          }
+          // TODO: single-entity + taxonomy
+        })()}
+        <Footer />
+        <CookieBar />
+      </>
+    )
+  }
 }
 
 interface ReportWebVitalsData {

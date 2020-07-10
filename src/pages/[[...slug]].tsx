@@ -15,18 +15,14 @@ import { Header } from '@/components/navigation/header'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import type { MetaMenuProps } from '@/components/navigation/meta-menu'
 import { RelativeContainer } from '@/components/navigation/relative-container'
-import { ErrorPage } from '@/components/pages/error-page'
 import { SlugHead } from '@/components/slug-head'
 import { InstanceDataProvider } from '@/contexts/instance-context'
 import { OriginProvider } from '@/contexts/origin-context'
 import { PrettyLinksProvider } from '@/contexts/pretty-links-context'
-import { InitialProps, InstanceData, PageData } from '@/data-types'
+import { InitialProps } from '@/data-types'
 import { deInstanceData } from '@/data/de'
 import { horizonData } from '@/data/horizon'
-import {
-  getInitialProps,
-  fetcherAdditionalData,
-} from '@/fetcher/get-initial-props'
+import { getInitialProps } from '@/fetcher/get-initial-props'
 
 const MetaMenu = dynamic<MetaMenuProps>(() =>
   import('@/components/navigation/meta-menu').then((mod) => mod.MetaMenu)
@@ -45,33 +41,8 @@ const NewsletterPopup = dynamic<{}>(
   }
 )
 
-const Landing = dynamic<{}>(() =>
-  import('@/components/pages/landing').then((mod) => mod.Landing)
-)
-const Search = dynamic<{}>(() =>
-  import('@/components/pages/search').then((mod) => mod.Search)
-)
-const Donations = dynamic<{}>(() =>
-  import('@/components/pages/donations').then((mod) => mod.Donations)
-)
-
-function renderPage(page: PageData) {
-  if (page.kind === 'landing') {
-    return <Landing />
-  }
-  if (page.kind === 'donation') {
-    return <Donations />
-  }
-  if (page.kind === 'search') {
-    return <Search />
-  }
-  if (page.kind === 'error') {
-    return <ErrorPage />
-  }
-}
-
 const PageView: NextPage<PageViewProps> = (props) => {
-  // bad code, should be moved somewhere else
+  // This is old code and should be removed little by little
   React.useEffect(() => {
     try {
       sessionStorage.setItem(props.fetchedData.alias, JSON.stringify(props))
@@ -80,75 +51,6 @@ const PageView: NextPage<PageViewProps> = (props) => {
     }
   }, [props])
 
-  /*
-
-
-
-
-
-
-  old code above
-
-
-
-
-
-
-
-
-
-
-
-  */
-
-  // compat: bridge to existing system,
-  const initialProps = props.newInitialProps
-
-  // note: we assume that instance data is passing in the first time this components renders
-  // subsequent render calls should be client-side-navigation
-  const [instanceData] = React.useState<InstanceData>(
-    initialProps?.instanceData!
-  )
-
-  if (initialProps) {
-    // new code starts here
-
-    // The fetcher can't access react context, so we have to provide the data
-    fetcherAdditionalData.origin = initialProps.origin
-    fetcherAdditionalData.instance = instanceData.lang
-
-    return (
-      <OriginProvider value={initialProps.origin}>
-        <InstanceDataProvider value={instanceData}>
-          {renderPage(initialProps.pageData)}
-        </InstanceDataProvider>
-      </OriginProvider>
-    )
-
-    // end of new code
-  }
-
-  /*
-
-
-
-
-
-
-
-
-
-  old code below
-
-
-
-
-
-
-
-  
-
-  */
   if (!props.fetchedData) return null
   const { fetchedData, origin } = props
   const {

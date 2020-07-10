@@ -6,7 +6,6 @@ import { HSpace } from '@/components/content/h-space'
 import { StyledA } from '@/components/tags/styled-a'
 import { StyledH1 } from '@/components/tags/styled-h1'
 import { StyledP } from '@/components/tags/styled-p'
-import { addLayout } from '@/helper/add-layout'
 
 //TODO: Differentiate errors types, always 404 is missleading for users and search engines
 
@@ -15,7 +14,7 @@ export function ErrorPage() {
   React.useEffect(() => {
     setPath(window.location.pathname)
   }, [])
-  return addLayout(
+  return (
     <>
       <HSpace amount={100} />
       <RelativeContainer>

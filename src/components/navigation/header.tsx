@@ -25,6 +25,13 @@ export function Header({ onSearchPage }: HeaderProps) {
     setOpen(false)
   })
 
+  React.useEffect(() => {
+    console.log('header mounted')
+    return () => {
+      console.log('header unmounted')
+    }
+  }, [])
+
   return (
     <BlueHeader>
       <MobileMenuButton onClick={() => setOpen(!isOpen)} open={isOpen} />

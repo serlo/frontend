@@ -9,11 +9,10 @@ import { Link } from '../content/link'
 import { HeadTags } from '../head-tags'
 import { LandingAbout } from '@/components/landing/landing-about'
 import { LandingSubjects } from '@/components/landing/landing-subjects'
-import { addLayout } from '@/helper/add-layout'
 import { makeDefaultButton, makeResponsivePadding } from '@/helper/css'
 
 export function Landing() {
-  return addLayout(
+  return (
     <>
       <HeadTags data={{ title: 'Serlo – Die freie Lernplattform' }} />
       <SubjectsSection>
