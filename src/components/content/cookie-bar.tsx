@@ -15,25 +15,37 @@ export function CookieBar() {
   const [revision, setRevision] = React.useState<undefined | string>(undefined)
   const origin = useOrigin()
 
+  // TODO This code is not beautiful and needs some love...
+  function checkRevision(data: any, localInfo: any) {
+    const revisionsArray = data as string[]
+    const json = localInfo ? (JSON.parse(localInfo) as LocalStorageData) : null
+    if (!json || json.revision !== revisionsArray[0]) {
+      setLoaded(true)
+      setRevision(revisionsArray[0])
+    }
+  }
+
   React.useEffect(() => {
-    // load revision, check localStorage
-    void fetch(origin + '/api/frontend/privacy')
-      .then((res) => res.json())
-      .then((data) => {
-        try {
-          const revisionsArray = data as string[]
-          const localInfo = localStorage.getItem('consent')
-          const json = localInfo
-            ? (JSON.parse(localInfo) as LocalStorageData)
-            : null
-          if (json && json.revision !== revisionsArray[0]) {
-            setLoaded(true)
-            setRevision(revisionsArray[0])
-          }
-        } catch (e) {
-          //
-        }
-      })
+    try {
+      const localInfo = localStorage.getItem('consent')
+      const fetchedCache = sessionStorage.getItem('privacy_already_fetched')
+      if (fetchedCache) {
+        checkRevision(fetchedCache, localInfo)
+        return
+      }
+      // load revision, check localStorage
+      void fetch(origin + '/api/frontend/privacy')
+        .then((res) => res.json())
+        .then((data) => {
+          sessionStorage.setItem(
+            'privacy_already_fetched',
+            JSON.stringify(data)
+          )
+          checkRevision(data, localInfo)
+        })
+    } catch (e) {
+      //
+    }
   }, [loaded, origin])
 
   if (!loaded) return null
