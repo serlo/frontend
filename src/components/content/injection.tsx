@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import { StyledP } from '../tags/styled-p'
 import { EntityProps } from './entity'
 import { LicenseNotice, LicenseData } from './license-notice'
+import { useOrigin } from '@/contexts/origin-context'
 import {
   PrettyLinksProvider,
   PrettyLinksContextValue,
@@ -25,9 +26,9 @@ export function Injection({ href }: InjectionProps) {
     {}
   )
 
+  const origin = useOrigin()
+
   useEffect(() => {
-    const origin = window.location.host
-    const protocol = window.location.protocol
     const encodedHref = encodeURI(href.startsWith('/') ? href : `/${href}`)
 
     try {
@@ -40,7 +41,7 @@ export function Injection({ href }: InjectionProps) {
       //
     }
 
-    void fetch(`${protocol}//${origin}/api/frontend${encodedHref}`)
+    void fetch(`${origin}/api/frontend${encodedHref}`)
       .then((res) => {
         if (res.headers.get('content-type')!.includes('json')) return res.json()
         else return res.text()
