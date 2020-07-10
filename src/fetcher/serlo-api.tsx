@@ -10,6 +10,7 @@ import {
   BreadcrumbLinkEntry,
   SecondaryNavigationData,
 } from '@/data-types'
+import { horizonData } from '@/data/horizon'
 
 export const endpoint = `https://api.${serloDomain}/graphql`
 
@@ -19,7 +20,11 @@ interface MenuData {
 }
 
 // TODO: needs type declaration
-export async function fetchContent(alias: string, redirect: any) {
+export async function fetchContent(
+  alias: string,
+  redirect: any,
+  origin: string
+) {
   try {
     if (redirect && /^\/[\d]+$/.test(alias)) {
       // redirect id to alias
@@ -109,7 +114,14 @@ export async function fetchContent(alias: string, redirect: any) {
         | SecondaryNavigationData
         | undefined = undefined
 
-      if (processed.navigation) {
+      if (
+        processed.navigation &&
+        !(
+          processed.contentType === 'TaxonomyTerm' &&
+          (processed.data.type === 'topicFolder' ||
+            processed.data.type === 'curriculumTopicFolder')
+        )
+      ) {
         secondaryNavigationData = (processed.navigation as any[]).map(
           (entry: any) => {
             const id = entry.url.substring(1)
@@ -123,6 +135,73 @@ export async function fetchContent(alias: string, redirect: any) {
         )
       }
 
+      function getMetaContentType() {
+        const { contentType } = processed
+        //match legacy content types that are used by google custom search
+        if (contentType === undefined) return ''
+        if (contentType === 'Exercise') return 'text-exercise'
+        if (contentType === 'CoursePage') return 'course-page'
+        if (
+          processed.data.type === 'topicFolder' ||
+          processed.data.type === 'curriculumTopicFolder'
+        )
+          return 'topic-folder'
+        if (contentType === 'TaxonomyTerm') return 'topic'
+        //Article, Video, Applet, Page
+        return contentType.toLowerCase()
+      }
+
+      function getMetaImage() {
+        const subject = alias ? alias.split('/')[1] : 'default'
+        let imageSrc = 'serlo.jpg'
+
+        switch (subject) {
+          case 'mathe':
+            imageSrc = 'mathematik.jpg'
+            break
+          case 'nachhaltigkeit':
+            imageSrc = 'nachhaltigkeit.jpg'
+            break
+          case 'biologie':
+            imageSrc = 'biologie.jpg'
+            break
+        }
+
+        return `${origin}/_assets/img/meta/${imageSrc}`
+      }
+
+      function getMetaDescription() {
+        if (processed.contentType === 'TaxonomyTerm') return
+        const { data } = processed
+
+        if (!data) return
+
+        const hasDescription =
+          data.metaDescription && data.metaDescription.length > 10
+        if (hasDescription) return data.metaDescription as string
+
+        if (data.value === undefined || data.value.children === undefined)
+          return
+
+        const slice = data.value.children.slice(0, 10)
+        const stringified = JSON.stringify(slice)
+        const regexp = /"text":"(.)*?"/g
+        const matches = stringified.match(regexp)
+        const longFallback = matches
+          ? matches.map((str) => str.substring(8, str.length - 1)).join('')
+          : ''
+        if (longFallback.length < 50) return
+
+        const softCutoff = 135
+        const fallback =
+          longFallback.substr(
+            0,
+            softCutoff + longFallback.substr(softCutoff).indexOf(' ')
+          ) + ' …'
+        const description = hasDescription ? data.metaDescription : fallback
+        return description as string
+      }
+
       return {
         kind:
           processed.contentType === 'TaxonomyTerm'
@@ -130,6 +209,16 @@ export async function fetchContent(alias: string, redirect: any) {
             : 'single-entity',
         breadcrumbsData,
         secondaryNavigationData,
+        metaData: {
+          title: processed.title,
+          contentType: getMetaContentType(),
+          metaDescription: getMetaDescription(),
+          metaImage: getMetaImage(),
+        },
+        horizonData: processed.horizonIndices.map(
+          (index) => horizonData[index]
+        ),
+        newsletterPopup: processed.data && processed.contentType === 'Page',
       }
     }
 

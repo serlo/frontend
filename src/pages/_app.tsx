@@ -17,6 +17,9 @@ import '../../public/_assets/fonts/katex/katex.css'
 import { version } from '../../package.json'
 import { CookieBar } from '@/components/content/cookie-bar'
 import { HSpace } from '@/components/content/h-space'
+import { Horizon } from '@/components/content/horizon'
+import { Lazy } from '@/components/content/lazy'
+import { HeadTags } from '@/components/head-tags'
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
 import { Footer } from '@/components/navigation/footer'
 import { Header } from '@/components/navigation/header'
@@ -40,6 +43,16 @@ const Search = dynamic<{}>(() =>
 )
 const Donations = dynamic<{}>(() =>
   import('@/components/pages/donations').then((mod) => mod.Donations)
+)
+
+const NewsletterPopup = dynamic<{}>(
+  () =>
+    import('@/components/scripts/newsletter-popup').then(
+      (mod) => mod.NewsletterPopup
+    ),
+  {
+    ssr: false,
+  }
 )
 
 config.autoAddCss = false
@@ -133,12 +146,22 @@ function renderPage(page: PageData) {
               {page.secondaryNavigationData && (
                 <MetaMenu data={page.secondaryNavigationData} />
               )}
+              {page.metaData && <HeadTags data={page.metaData} />}
+              {page.newsletterPopup && <NewsletterPopup />}
               <RelativeContainer>
                 <MaxWidthDiv showNav={!!page.secondaryNavigationData}>
                   {page.breadcrumbsData && (
                     <Breadcrumbs data={page.breadcrumbsData} />
                   )}
+
                   <HSpace amount={500} />
+
+                  <HSpace amount={40} />
+                  {page.horizonData && (
+                    <Lazy>
+                      <Horizon data={page.horizonData} />
+                    </Lazy>
+                  )}
                 </MaxWidthDiv>
               </RelativeContainer>
             </>

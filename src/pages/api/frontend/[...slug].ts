@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
+import absoluteUrl from 'next-absolute-url'
 
 import { fetchContent } from '@/fetcher/serlo-api'
 
@@ -6,9 +7,11 @@ import { fetchContent } from '@/fetcher/serlo-api'
 // We use stale-while-revalidate for that, see also https://zeit.co/docs/v2/network/caching#stale-while-revalidate
 export default async function fetch(req: NextApiRequest, res: NextApiResponse) {
   const slug = req.query.slug as string[]
+  const { origin } = absoluteUrl(req)
   const data = await fetchContent(
     '/' + slug.join('/'),
-    req.query.redirect !== undefined
+    req.query.redirect !== undefined,
+    origin
   )
   if (data.error) {
     console.log(data.error)

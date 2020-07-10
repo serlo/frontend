@@ -1,40 +1,13 @@
 import { NextPage } from 'next'
-import dynamic from 'next/dynamic'
 import React from 'react'
 
-import { CookieBar } from '@/components/content/cookie-bar'
 import { Entity, EntityProps } from '@/components/content/entity'
-import { HSpace } from '@/components/content/h-space'
-import { Horizon } from '@/components/content/horizon'
-import { Lazy } from '@/components/content/lazy'
 import { LicenseData } from '@/components/content/license-notice'
 import { Topic, TopicProp } from '@/components/content/topic'
-import type { BreadcrumbsProps } from '@/components/navigation/breadcrumbs'
-import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import type { MetaMenuProps } from '@/components/navigation/meta-menu'
-import { RelativeContainer } from '@/components/navigation/relative-container'
-import { SlugHead } from '@/components/slug-head'
-import { InstanceDataProvider } from '@/contexts/instance-context'
-import { OriginProvider } from '@/contexts/origin-context'
 import { PrettyLinksProvider } from '@/contexts/pretty-links-context'
 import { InitialProps, PageData } from '@/data-types'
-import { deInstanceData } from '@/data/de'
-import { horizonData } from '@/data/horizon'
 import { getInitialProps } from '@/fetcher/get-initial-props'
-
-const Breadcrumbs = dynamic<BreadcrumbsProps>(() =>
-  import('@/components/navigation/breadcrumbs').then((mod) => mod.Breadcrumbs)
-)
-
-const NewsletterPopup = dynamic<{}>(
-  () =>
-    import('@/components/scripts/newsletter-popup').then(
-      (mod) => mod.NewsletterPopup
-    ),
-  {
-    ssr: false,
-  }
-)
 
 const PageView: NextPage<PageViewProps> = (props) => {
   // This is old code and should be removed little by little
@@ -47,74 +20,29 @@ const PageView: NextPage<PageViewProps> = (props) => {
   }, [props])
 
   if (!props.fetchedData) return null
-  const { fetchedData, origin } = props
-  const {
-    contentId,
-    alias,
-    horizonIndices,
-    breadcrumbs,
-    contentType,
-    title,
-    navigation,
-    license,
-    prettyLinks,
-    type,
-    data,
-  } = fetchedData
-
-  const showNav =
-    navigation && !(contentType === 'TaxonomyTerm' && type === 'topicFolder')
+  const { fetchedData } = props
+  const { contentId, contentType, license, prettyLinks } = fetchedData
 
   return (
-    <InstanceDataProvider value={deInstanceData}>
-      <OriginProvider value={origin}>
-        <SlugHead
-          title={title}
-          fetchedData={fetchedData}
-          alias={alias}
-          origin={origin}
-        />
-        <PrettyLinksProvider value={prettyLinks}>
-          {renderContent()}
-        </PrettyLinksProvider>
-
-        {contentType === 'Page' && data && <NewsletterPopup />}
-        <CookieBar />
-      </OriginProvider>
-    </InstanceDataProvider>
+    <PrettyLinksProvider value={prettyLinks}>
+      {renderContent()}
+    </PrettyLinksProvider>
   )
 
   function renderContent() {
     return (
-      <RelativeContainer>
-        <MaxWidthDiv showNav={!!showNav}>
-          {breadcrumbs && !(contentType === 'Page' && navigation) && (
-            <Breadcrumbs data={breadcrumbs} />
-          )}
-
-          <main>
-            {fetchedData.contentType === 'TaxonomyTerm' ? (
-              <Topic data={fetchedData.data} contentId={contentId} />
-            ) : (
-              <Entity
-                data={fetchedData.data}
-                contentId={contentId}
-                contentType={contentType}
-                license={license}
-              />
-            )}
-          </main>
-
-          <HSpace amount={40} />
-          {horizonIndices && (
-            <Lazy>
-              <Horizon
-                entries={horizonIndices.map((index) => horizonData[index])}
-              />
-            </Lazy>
-          )}
-        </MaxWidthDiv>
-      </RelativeContainer>
+      <main>
+        {fetchedData.contentType === 'TaxonomyTerm' ? (
+          <Topic data={fetchedData.data} contentId={contentId} />
+        ) : (
+          <Entity
+            data={fetchedData.data}
+            contentId={contentId}
+            contentType={contentType}
+            license={license}
+          />
+        )}
+      </main>
     )
   }
 }

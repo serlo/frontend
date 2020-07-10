@@ -126,9 +126,9 @@ export interface ErrorPage {
 export interface EntityPageBase {
   breadcrumbsData?: BreadcrumbsData
   secondaryNavigationData?: SecondaryNavigationData
-  /*horizonData?: HorizonData
   metaData?: HeadData
-  newsletterPopup?: boolean*/
+  horizonData?: HorizonData
+  newsletterPopup?: boolean
 }
 
 // Breadcrumb entries are shown nexts to each other, with possible ellipsis in between
@@ -159,6 +159,26 @@ export interface SecondaryNavigationEntry {
   active?: boolean
 }
 
+// Populate some head tags (e.g. open graph)
+
+export interface HeadData {
+  title: string
+  contentType?: string
+  metaDescription?: string
+  metaImage?: string
+}
+
+// The data that fills the horizon (desktop, below content)
+
+export type HorizonData = HorizonEntry[]
+
+export interface HorizonEntry {
+  title: string
+  imageUrl: string
+  text: string
+  url: string
+}
+
 /*
 
 
@@ -180,13 +200,6 @@ export interface SecondaryNavigationEntry {
 */
 
 // -------------- Existing
-
-export interface HeadData {
-  title: string
-  contentType?: string
-  metaDescription?: string
-  metaImage?: string
-}
 
 interface EntityData {
   /*title?: string
@@ -211,5 +224,7 @@ interface TaxonomyPage extends EntityPageBase {
   kind: 'taxonomy'
   //taxonomyData: unknown
 }
+
+// Another TODO: Types for Injections
 
 //---------------------------------------------------------------

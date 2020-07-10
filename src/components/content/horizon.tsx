@@ -3,24 +3,16 @@ import styled from 'styled-components'
 
 import { makePadding } from '../../helper/css'
 import { Link } from './link'
-
-export interface HorizonEntry {
-  title: string
-  imageUrl: string
-  text: string
-  url: string
-}
+import { HorizonData } from '@/data-types'
 
 export interface HorizonProps {
-  entries: HorizonData
+  data: HorizonData
 }
 
-export type HorizonData = HorizonEntry[]
-
-export function Horizon({ entries }: HorizonProps) {
+export function Horizon({ data }: HorizonProps) {
   return (
     <Wrapper>
-      {entries.map((horizonEntry, index) => {
+      {data.map((horizonEntry, index) => {
         return (
           <Item href={horizonEntry.url} key={index} noExternalIcon>
             <Image alt={horizonEntry.title} src={horizonEntry.imageUrl} />
