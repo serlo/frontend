@@ -121,22 +121,45 @@ export interface ErrorPage {
   kind: 'error'
 }
 
-// ---------------------------------------------------
-
-// ---------------------------------------------------
-
-// I should continue to work here ...
+// There are several page elements that are common for entities:
 
 export interface EntityPageBase {
-  /*secondaryNavigationData?: SecondaryNavigationData
   breadcrumbsData?: BreadcrumbsData
-  horizonData?: HorizonData
+  secondaryNavigationData?: SecondaryNavigationData
+  /*horizonData?: HorizonData
   metaData?: HeadData
   newsletterPopup?: boolean*/
 }
+
+// Breadcrumb entries are shown nexts to each other, with possible ellipsis in between
+// (Another example of discrimination data types ...)
+
+export type BreadcrumbsData = BreadcrumbEntry[]
+
+export type BreadcrumbEntry = BreadcrumbLinkEntry | BreadcrumbEllipsis
+
+export interface BreadcrumbLinkEntry {
+  label: string
+  url?: string
+  ellipsis: undefined
+}
+
+export interface BreadcrumbEllipsis {
+  ellipsis: true
+}
+
+// Menu shown on the left (desktop) or between header and content (mobile)
+// Links can be active, urls are already prettified.
+
+export type SecondaryNavigationData = SecondaryNavigationEntry[]
+
+export interface SecondaryNavigationEntry {
+  url: string
+  title: string
+  active?: boolean
+}
+
 /*
-
-
 
 
 

@@ -10,8 +10,6 @@ import { Lazy } from '@/components/content/lazy'
 import { LicenseData } from '@/components/content/license-notice'
 import { Topic, TopicProp } from '@/components/content/topic'
 import type { BreadcrumbsProps } from '@/components/navigation/breadcrumbs'
-import { Footer } from '@/components/navigation/footer'
-import { Header } from '@/components/navigation/header'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import type { MetaMenuProps } from '@/components/navigation/meta-menu'
 import { RelativeContainer } from '@/components/navigation/relative-container'
@@ -19,14 +17,11 @@ import { SlugHead } from '@/components/slug-head'
 import { InstanceDataProvider } from '@/contexts/instance-context'
 import { OriginProvider } from '@/contexts/origin-context'
 import { PrettyLinksProvider } from '@/contexts/pretty-links-context'
-import { InitialProps } from '@/data-types'
+import { InitialProps, PageData } from '@/data-types'
 import { deInstanceData } from '@/data/de'
 import { horizonData } from '@/data/horizon'
 import { getInitialProps } from '@/fetcher/get-initial-props'
 
-const MetaMenu = dynamic<MetaMenuProps>(() =>
-  import('@/components/navigation/meta-menu').then((mod) => mod.MetaMenu)
-)
 const Breadcrumbs = dynamic<BreadcrumbsProps>(() =>
   import('@/components/navigation/breadcrumbs').then((mod) => mod.Breadcrumbs)
 )
@@ -80,12 +75,7 @@ const PageView: NextPage<PageViewProps> = (props) => {
           origin={origin}
         />
         <PrettyLinksProvider value={prettyLinks}>
-          <Header />
-          {showNav && (
-            <MetaMenu pagealias={`/${data.id}`} navigation={navigation} />
-          )}
           {renderContent()}
-          <Footer />
         </PrettyLinksProvider>
 
         {contentType === 'Page' && data && <NewsletterPopup />}
@@ -99,7 +89,7 @@ const PageView: NextPage<PageViewProps> = (props) => {
       <RelativeContainer>
         <MaxWidthDiv showNav={!!showNav}>
           {breadcrumbs && !(contentType === 'Page' && navigation) && (
-            <Breadcrumbs entries={breadcrumbs} />
+            <Breadcrumbs data={breadcrumbs} />
           )}
 
           <main>
@@ -136,13 +126,14 @@ interface FetchedData {
   alias: string
   title: string
   horizonIndices: number[]
-  breadcrumbs: BreadcrumbsProps['entries']
-  navigation: MetaMenuProps['navigation']
+  breadcrumbs: any
+  navigation: MetaMenuProps['data']
   license: LicenseData
   prettyLinks: Record<string, { alias: string }>
   error: boolean
   type?: string
   redirect?: string
+  pageData: PageData
 }
 
 interface TaxonomyTermFetchedData extends FetchedData {

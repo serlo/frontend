@@ -3,21 +3,13 @@ import styled, { css } from 'styled-components'
 
 import { makeDefaultButton } from '../../helper/css'
 import { Link } from '../content/link'
-
-export type SecondaryNavigationData = MetaMenuEntry[]
-
-interface MetaMenuEntry {
-  url: string
-  title: string
-  active?: boolean
-}
+import { SecondaryNavigationData, SecondaryNavigationEntry } from '@/data-types'
 
 export interface MetaMenuProps {
-  pagealias: string
-  navigation: SecondaryNavigationData
+  data: SecondaryNavigationData
 }
 
-export function MetaMenu({ navigation, pagealias }: MetaMenuProps) {
+export function MetaMenu({ data }: MetaMenuProps) {
   const activeRef = useRef<HTMLLIElement>(null)
   const containerRef = useRef<HTMLUListElement>(null)
 
@@ -32,11 +24,10 @@ export function MetaMenu({ navigation, pagealias }: MetaMenuProps) {
       <MetaMenuWrapper>
         <StyledGradient />
         <List ref={containerRef}>
-          {navigation.map((entry, i) => {
-            const active = entry.url === pagealias
+          {data.map((entry, i) => {
             return (
-              <li key={entry.url} ref={active ? activeRef : null}>
-                {renderLink(entry, active)}
+              <li key={entry.url} ref={entry.active ? activeRef : null}>
+                {renderLink(entry, !!entry.active)}
                 {renderSpacer(i)}
               </li>
             )
@@ -46,7 +37,7 @@ export function MetaMenu({ navigation, pagealias }: MetaMenuProps) {
     </>
   )
 
-  function renderLink(entry: MetaMenuEntry, active: boolean) {
+  function renderLink(entry: SecondaryNavigationEntry, active: boolean) {
     return (
       <StyledLink href={entry.url}>
         <ButtonStyle active={active}>{entry.title}</ButtonStyle>
@@ -59,7 +50,7 @@ export function MetaMenu({ navigation, pagealias }: MetaMenuProps) {
       <StyledLink
         aria-hidden="true"
         spacer
-        lastChild={i === navigation.length - 1}
+        lastChild={i === data.length - 1}
         as="span"
       ></StyledLink>
     )
@@ -138,6 +129,16 @@ const StyledLink = styled(Link)<LinkProps>`
 `
 
 const ButtonStyle = styled.span<{ active?: boolean }>`
+  @media (min-width: ${(props) => props.theme.breakpoints.md}) {
+    ${makeDefaultButton}
+    font-weight: bold;
+    padding: 3px 7px;
+    border-radius: 12px;
+    ${StyledLink}:hover & {
+      color: #fff;
+      background-color: ${(props) => props.theme.colors.brand};
+    }
+  }
   ${(props) =>
     props.active &&
     css`
@@ -151,17 +152,6 @@ const ButtonStyle = styled.span<{ active?: boolean }>`
         }
       }
     `};
-
-  @media (min-width: ${(props) => props.theme.breakpoints.md}) {
-    ${makeDefaultButton}
-    font-weight: bold;
-    padding: 3px 7px;
-    border-radius: 12px;
-    ${StyledLink}:hover & {
-      color: #fff;
-      background-color: ${(props) => props.theme.colors.brand};
-    }
-  }
 `
 
 const StyledGradient = styled.div`

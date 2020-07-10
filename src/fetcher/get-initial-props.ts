@@ -123,9 +123,15 @@ export async function getInitialProps(
   }
 }
 
-function buildInitialProps(fetchedData: any, origin: string): InitialProps {
-  // temporary transform fetched data to frontend model ...
-  return { origin, instanceData: deInstanceData, pageData: { kind: 'error' } }
+function buildInitialProps(
+  fetchedData: PageViewProps['fetchedData'],
+  origin: string
+): InitialProps {
+  return {
+    origin,
+    instanceData: deInstanceData,
+    pageData: fetchedData.pageData,
+  }
 }
 
 /* eslint-disable */

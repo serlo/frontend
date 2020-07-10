@@ -9,11 +9,21 @@ import NProgress from 'nprogress'
 import React from 'react'
 import { ThemeProvider, createGlobalStyle } from 'styled-components'
 
+// eslint-disable-next-line import/no-unassigned-import
+import '../../public/_assets/fonts/karmilla.css'
+// eslint-disable-next-line import/no-unassigned-import
+import '../../public/_assets/fonts/katex/katex.css'
+
 import { version } from '../../package.json'
 import { CookieBar } from '@/components/content/cookie-bar'
+import { HSpace } from '@/components/content/h-space'
+import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
 import { Footer } from '@/components/navigation/footer'
 import { Header } from '@/components/navigation/header'
+import { MaxWidthDiv } from '@/components/navigation/max-width-div'
+import { MetaMenu } from '@/components/navigation/meta-menu'
 import { NProgressStyles } from '@/components/navigation/n-progress-styles'
+import { RelativeContainer } from '@/components/navigation/relative-container'
 import { ErrorPage } from '@/components/pages/error-page'
 import { ToastNotifications } from '@/components/toast-notifications'
 import { InstanceDataProvider } from '@/contexts/instance-context'
@@ -21,10 +31,6 @@ import { OriginProvider } from '@/contexts/origin-context'
 import { InitialProps, InstanceData, PageData } from '@/data-types'
 import { fetcherAdditionalData } from '@/fetcher/get-initial-props'
 import { theme } from '@/theme'
-// eslint-disable-next-line import/no-unassigned-import
-import '../../public/_assets/fonts/karmilla.css'
-// eslint-disable-next-line import/no-unassigned-import
-import '../../public/_assets/fonts/katex/katex.css'
 
 const Landing = dynamic<{}>(() =>
   import('@/components/pages/landing').then((mod) => mod.Landing)
@@ -122,7 +128,21 @@ function renderPage(page: PageData) {
           if (page.kind === 'error') {
             return <ErrorPage />
           }
-          // TODO: single-entity + taxonomy
+          return (
+            <>
+              {page.secondaryNavigationData && (
+                <MetaMenu data={page.secondaryNavigationData} />
+              )}
+              <RelativeContainer>
+                <MaxWidthDiv showNav={!!page.secondaryNavigationData}>
+                  {page.breadcrumbsData && (
+                    <Breadcrumbs data={page.breadcrumbsData} />
+                  )}
+                  <HSpace amount={500} />
+                </MaxWidthDiv>
+              </RelativeContainer>
+            </>
+          )
         })()}
         <Footer />
         <CookieBar />

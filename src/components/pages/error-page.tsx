@@ -15,24 +15,22 @@ export function ErrorPage() {
     setPath(window.location.pathname)
   }, [])
   return (
-    <>
-      <RelativeContainer>
-        <MaxWidthDiv>
-          <HSpace amount={100} />
-          <StyledH1>404</StyledH1>
-          <StyledP>Diese Seite konnte nicht geladen werden.</StyledP>
-          {process.env.NODE_ENV !== 'production' && (
-            <StyledP>
-              Details:{' '}
-              <StyledA href={`/api/frontend${path}`}>
-                /api/frontend
-                {path}
-              </StyledA>
-            </StyledP>
-          )}
-          <HSpace amount={100} />
-        </MaxWidthDiv>
-      </RelativeContainer>
-    </>
+    <RelativeContainer>
+      <MaxWidthDiv>
+        <HSpace amount={100} />
+        <StyledH1>404</StyledH1>
+        <StyledP>Diese Seite konnte nicht geladen werden.</StyledP>
+        {process.env.NODE_ENV !== 'production' && (
+          <StyledP>
+            Details:{' '}
+            <StyledA href={`/api/frontend${path}`}>
+              /api/frontend
+              {path}
+            </StyledA>
+          </StyledP>
+        )}
+        <HSpace amount={100} />
+      </MaxWidthDiv>
+    </RelativeContainer>
   )
 }

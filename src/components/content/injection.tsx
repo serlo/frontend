@@ -57,7 +57,7 @@ export function Injection({ href }: InjectionProps) {
           }
         }
       })
-  }, [href])
+  }, [href, origin])
 
   function dataToState(fetchedData: EntityProps) {
     if (fetchedData.contentType && fetchedData.data) {

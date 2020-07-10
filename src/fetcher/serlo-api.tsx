@@ -4,6 +4,12 @@ import { serloDomain } from '../helper/serlo-domain'
 import { extractLinks, extractLinksFromNav } from './extract-links'
 import { processResponse } from './process-response'
 import { dataQuery, idQuery, idsQuery } from './query'
+import {
+  PageData,
+  BreadcrumbsData,
+  BreadcrumbLinkEntry,
+  SecondaryNavigationData,
+} from '@/data-types'
 
 export const endpoint = `https://api.${serloDomain}/graphql`
 
@@ -70,7 +76,70 @@ export async function fetchContent(alias: string, redirect: any) {
     const prettyLinks =
       allLinks.length < 1 ? {} : await request(endpoint, idsQuery(allLinks))
 
-    return { contentId, alias, ...processed, prettyLinks }
+    const buildPageData: () => PageData = () => {
+      let breadcrumbsData: BreadcrumbsData | undefined = undefined
+
+      if (
+        processed.breadcrumbs &&
+        !(processed.contentType === 'Page' && processed.navigation)
+      ) {
+        // Shorten breadcrumbs
+        const shortened: BreadcrumbsData = []
+        processed.breadcrumbs.map(
+          (entry: BreadcrumbLinkEntry, i: number, arr: any) => {
+            const maxItems = 4
+            const overflow = arr.length > maxItems
+            const itemsToRemove = arr.length - maxItems
+            const ellipsesItem = overflow && i == 2
+
+            if (overflow && i > 2 && i < 1 + itemsToRemove) return
+            // special case
+            if (arr.length - itemsToRemove > 4 && i === 1) return
+            if (ellipsesItem) {
+              shortened.push({ ellipsis: true })
+            } else {
+              shortened.push(entry)
+            }
+          }
+        )
+        breadcrumbsData = shortened
+      }
+
+      let secondaryNavigationData:
+        | SecondaryNavigationData
+        | undefined = undefined
+
+      if (processed.navigation) {
+        secondaryNavigationData = (processed.navigation as any[]).map(
+          (entry: any) => {
+            const id = entry.url.substring(1)
+            const prettyLink = prettyLinks[`uuid${id}`]
+            return {
+              title: entry.title as string,
+              url: prettyLink ? prettyLink.alias : entry.url,
+              active: parseInt(id) === parseInt(contentId),
+            }
+          }
+        )
+      }
+
+      return {
+        kind:
+          processed.contentType === 'TaxonomyTerm'
+            ? 'taxonomy'
+            : 'single-entity',
+        breadcrumbsData,
+        secondaryNavigationData,
+      }
+    }
+
+    return {
+      contentId,
+      alias,
+      ...processed,
+      prettyLinks,
+      pageData: buildPageData(),
+    }
   } catch (e) {
     return { error: `Error while fetching data: ${e.message ?? e}`, alias }
   }
