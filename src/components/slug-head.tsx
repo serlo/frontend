@@ -1,5 +1,4 @@
-import Head from 'next/head'
-
+import { HeadTags } from './head-tags'
 // eslint-disable-next-line import/extensions
 import { PageViewProps } from '@/pages/[[...slug]]'
 
@@ -9,6 +8,8 @@ interface SlugHeadProps {
   origin: string
   alias?: string
 }
+
+// TODO: Move this logic out of the component into the fetcher
 
 export function SlugHead({ fetchedData, title, origin, alias }: SlugHeadProps) {
   function getMetaContentType() {
@@ -46,14 +47,13 @@ export function SlugHead({ fetchedData, title, origin, alias }: SlugHeadProps) {
     if (fetchedData.contentType === 'TaxonomyTerm') return
     const { data } = fetchedData
 
-    if (!data) return false
+    if (!data) return
 
     const hasDescription =
       data.metaDescription && data.metaDescription.length > 10
     if (hasDescription) return data.metaDescription
 
-    if (data.value === undefined || data.value.children === undefined)
-      return false
+    if (data.value === undefined || data.value.children === undefined) return
 
     const slice = data.value.children.slice(0, 10)
     const stringified = JSON.stringify(slice)
@@ -62,7 +62,7 @@ export function SlugHead({ fetchedData, title, origin, alias }: SlugHeadProps) {
     const longFallback = matches
       ? matches.map((str) => str.substring(8, str.length - 1)).join('')
       : ''
-    if (longFallback.length < 50) return false
+    if (longFallback.length < 50) return
 
     const softCutoff = 135
     const fallback =
@@ -73,14 +73,15 @@ export function SlugHead({ fetchedData, title, origin, alias }: SlugHeadProps) {
     const description = hasDescription ? data.metaDescription : fallback
     return description
   }
-  const metaDescription = getMetaDescription()
+
   return (
-    <Head>
-      <title>{title ? title : 'Serlo.org'}</title>
-      <meta name="content_type" content={getMetaContentType()} />
-      {metaDescription && <meta name="description" content={metaDescription} />}
-      <meta property="og:title" content={title} />
-      <meta property="og:image" content={getMetaImage()} />
-    </Head>
+    <HeadTags
+      data={{
+        title: title ? title : 'Serlo.org',
+        contentType: getMetaContentType(),
+        metaDescription: getMetaDescription(),
+        metaImage: getMetaImage(),
+      }}
+    />
   )
 }

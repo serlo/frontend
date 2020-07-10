@@ -9,6 +9,10 @@ import { inputFontReset } from '../../helper/css'
 import { theme } from '../../theme'
 import { useInstanceData } from '@/contexts/instance-context'
 
+interface SearchInputProps {
+  onSearchPage?: boolean
+}
+
 /*
 This components starts with only a placeholder that looks like a searchbar (basically a button).
 When activated (by click) it loads the Google Custom Search scrips that generate the real input button and alot of markup.
@@ -17,14 +21,15 @@ From this point on it's a styled GSC that loads /search to display the results.
 It's a bit hacky, but it's free and works quite well.
 */
 
-export function SearchInput() {
+export function SearchInput({ onSearchPage }: SearchInputProps) {
   const [searchLoaded, setSearchLoaded] = React.useState(false)
   const [searchActive, setSearchActive] = React.useState(false)
   const [isSearchPage, setIsSearchPage] = React.useState(false)
   const { strings } = useInstanceData()
 
   React.useEffect(() => {
-    if (window.location.pathname === '/search') {
+    // note: find a better way to tell search input that it should activate itself
+    if (onSearchPage) {
       setIsSearchPage(true)
       activateSearch()
     }

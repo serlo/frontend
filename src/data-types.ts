@@ -12,9 +12,12 @@ import { Instance } from './fetcher/query'
 
 // If your data is static across all pages and languages, don't add it here, but add it directly to the component.
 
+// The origin points to the frontend deployment.
+
 export interface InitialProps {
-  instanceData: InstanceData
+  instanceData?: InstanceData
   pageData: PageData
+  origin: string
 }
 
 // Instance data consists of the language, translation strings, header menu and footer menu.
@@ -100,8 +103,22 @@ export type PageData =
 
 // The landing page is custom built and takes no additional data
 
-interface LandingPage {
+export interface LandingPage {
   kind: 'landing'
+}
+
+// The same for donation, search and error page:
+
+export interface DonationPage {
+  kind: 'donation'
+}
+
+export interface SearchPage {
+  kind: 'search'
+}
+
+export interface ErrorPage {
+  kind: 'error'
 }
 
 /*
@@ -128,16 +145,11 @@ interface LandingPage {
 
 // -------------- Existing
 
-interface DonationPage {
-  kind: 'donation'
-}
-
-interface SearchPage {
-  kind: 'search'
-}
-
-interface ErrorPage {
-  kind: 'error'
+export interface HeadData {
+  title: string
+  contentType?: string
+  metaDescription?: string
+  metaImage?: string
 }
 
 interface EntityPageBase {

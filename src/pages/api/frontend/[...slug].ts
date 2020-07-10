@@ -15,5 +15,6 @@ export default async function fetch(req: NextApiRequest, res: NextApiResponse) {
     res.statusCode = 500
   }
   res.setHeader('Cache-Control', 's-maxage=1, stale-while-revalidate')
+  res.setHeader('Access-Control-Allow-Origin', '*')
   res.json(data)
 }

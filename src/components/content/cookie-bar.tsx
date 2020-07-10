@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { serloDomain } from '../../helper/serlo-domain'
+import { useOrigin } from '@/contexts/origin-context'
 
 interface LocalStorageData {
   revision: string
@@ -12,15 +13,11 @@ interface LocalStorageData {
 export function CookieBar() {
   const [loaded, setLoaded] = React.useState(false)
   const [revision, setRevision] = React.useState<undefined | string>(undefined)
+  const origin = useOrigin()
 
   React.useEffect(() => {
     // load revision, check localStorage
-    void fetch(
-      window.location.protocol +
-        '//' +
-        window.location.host +
-        '/api/frontend/privacy'
-    )
+    void fetch(origin + '/api/frontend/privacy')
       .then((res) => res.json())
       .then((data) => {
         try {
@@ -37,7 +34,7 @@ export function CookieBar() {
           //
         }
       })
-  }, [loaded])
+  }, [loaded, origin])
 
   if (!loaded) return null
   return (

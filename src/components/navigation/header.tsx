@@ -11,7 +11,11 @@ import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
 import { makeResponsivePadding } from '@/helper/css'
 
-export function Header() {
+interface HeaderProps {
+  onSearchPage?: boolean
+}
+
+export function Header({ onSearchPage }: HeaderProps) {
   const [isOpen, setOpen] = React.useState(false)
   const auth = useAuth()
   const { headerData, strings } = useInstanceData()
@@ -28,7 +32,7 @@ export function Header() {
         <Menu data={headerData} auth={auth} />
         <Logo subline={strings.header.slogan} />
       </PaddedDiv>
-      <SearchInput />
+      <SearchInput onSearchPage={onSearchPage} />
       {isOpen && <MobileMenu data={headerData} auth={auth} />}
     </BlueHeader>
   )

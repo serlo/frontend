@@ -1,10 +1,18 @@
 import { NextPageContext } from 'next'
 import absoluteUrl from 'next-absolute-url'
 
+import { deInstanceData } from '@/data/de'
 // eslint-disable-next-line import/extensions
 import { PageViewProps } from '@/pages/[[...slug]]'
 
-export const getInitialProps = async (props: NextPageContext) => {
+export const fetcherAdditionalData = {
+  origin: '',
+  instance: 'de',
+}
+
+export async function getInitialProps(
+  props: NextPageContext
+): Promise<PageViewProps> {
   const slug =
     props.query.slug === undefined ? [] : (props.query.slug as string[])
   const joinedSlug = slug.join('/')
@@ -18,9 +26,18 @@ export const getInitialProps = async (props: NextPageContext) => {
     //TODO: Probaby add another type for FetchedData pages
     // also check what values we might actually need to feed slug-head
     return ({
-      fetchedData: {},
-      page: joinedSlug === '' ? 'landing' : joinedSlug,
-      origin: origin,
+      newInitialProps: {
+        pageData: {
+          kind:
+            joinedSlug === ''
+              ? 'landing'
+              : joinedSlug === 'spenden'
+              ? 'donation'
+              : joinedSlug,
+        },
+        instanceData: deInstanceData,
+        origin,
+      },
     } as unknown) as PageViewProps
   }
   //TODO: maybe also add api pages?
@@ -45,6 +62,14 @@ export const getInitialProps = async (props: NextPageContext) => {
 
     if (fetchedData.error) {
       props.res!.statusCode = 404
+
+      return {
+        newInitialProps: {
+          instanceData: deInstanceData,
+          pageData: { kind: 'error' },
+          origin,
+        },
+      } as PageViewProps
     }
 
     return { fetchedData, origin }
@@ -63,14 +88,14 @@ export const getInitialProps = async (props: NextPageContext) => {
     } catch (e) {
       //
     }
-    const origin = window.location.host
-    const protocol = window.location.protocol
-    const res = await fetch(`${protocol}//${origin}/api/frontend${url}`)
+    const res = await fetch(
+      `${fetcherAdditionalData.origin}/api/frontend${url}`
+    )
     const fetchedData = (await res.json()) as PageViewProps['fetchedData']
     // compat: redirect of courses
     if (fetchedData.redirect) {
       const res = await fetch(
-        `${protocol}//${origin}/api/frontend${fetchedData.redirect}`
+        `${fetcherAdditionalData.origin}/api/frontend${fetchedData.redirect}`
       )
       const fetchedData2 = (await res.json()) as PageViewProps['fetchedData']
       return { fetchedData: fetchedData2, origin }

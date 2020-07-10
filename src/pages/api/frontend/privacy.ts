@@ -9,5 +9,6 @@ export default async function privacy(
 ) {
   const data = await fetch(`https://de.${serloDomain}/privacy/json`)
   const json = (await data.json()) as string[]
+  res.setHeader('Access-Control-Allow-Origin', '*')
   res.json(json)
 }
