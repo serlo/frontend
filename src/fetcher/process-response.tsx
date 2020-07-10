@@ -1,4 +1,3 @@
-import { HorizonEntry } from '../components/content/horizon'
 import { horizonData } from '../data/horizon'
 import { createBreadcrumbs } from './create-breadcrumbs'
 import { createData } from './create-data'
@@ -30,9 +29,7 @@ export function processResponse(reqData: ReqData): ProcessedResponse {
     navigation: createNavigation(reqData.uuid),
     data: createData(reqData.uuid),
     license: createLicense(reqData.uuid),
-    horizonIndices: chooseHorizonEntries(
-      Object.keys(horizonData as HorizonEntry[])
-    ),
+    horizonIndices: chooseHorizonEntries(Object.keys(horizonData)),
   }
 }
 
