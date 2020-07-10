@@ -55,3 +55,21 @@ export function getClientCredentials(): {
   if (config === null) return null
   return new ClientCredentials(config)
 }
+
+export function getLogoutUrl({
+  idToken,
+  state,
+  callback,
+}: {
+  idToken: string
+  state: string
+  callback: string
+}) {
+  if (config === null) return null
+  const query = new URLSearchParams({
+    id_token_hint: idToken,
+    state: state,
+    post_logout_redirect_uri: callback,
+  })
+  return `${HYDRA_HOST}/oauth2/sessions/logout?${query.toString()}`
+}
