@@ -56,5 +56,25 @@ export const deInstanceData: InstanceData = {
     taxonomy: {
       topicFolder: 'Aufgabensammlung',
     },
+    content: {
+      show: 'anzeigen',
+      hide: 'ausblenden',
+      prerequisite: 'Für diese Aufgabe benötigst Du folgendes Grundwissen:',
+      solution: 'Lösung',
+      exerciseGroup: 'Aufgabengruppe',
+      right: 'Richtig',
+      wrong: 'Falsch',
+      check: "Stimmt's?",
+      yourAnswer: 'Deine Antwort…',
+      chooseOption: 'Klicke auf eine der Optionen',
+    },
+    cookie: {
+      part1: 'Mit der Nutzung dieser Webseite erklärst du dich mit unserer',
+      part2: 'und',
+      part3: 'einverstanden.',
+      link1: 'Datenschutzerklärung',
+      link2: 'Nutzungsbedingungen',
+      button: 'Verstanden',
+    },
   },
 }

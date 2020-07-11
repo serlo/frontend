@@ -7,6 +7,7 @@ import { ExerciseNumbering } from './exercise-numbering'
 import { InputExercise, InputExerciseProps } from './input-exercise'
 import { LicenseNotice } from './license-notice'
 import { ScMcExercise, ScMcExerciseProps } from './sc-mc-exercise'
+import { useInstanceData } from '@/contexts/instance-context'
 import { LicenseData, FrontendContentNode } from '@/data-types'
 
 export interface ExerciseProps {
@@ -59,6 +60,7 @@ interface SolutionData {
 }
 
 export function Exercise(props: ExerciseProps) {
+  const { strings } = useInstanceData()
   const {
     task,
     solution,
@@ -102,8 +104,9 @@ export function Exercise(props: ExerciseProps) {
         }}
         active={solutionVisible}
       >
-        <StyledSpan>{solutionVisible ? '▾' : '▸'}&nbsp;</StyledSpan>Lösung{' '}
-        {solutionVisible ? 'ausblenden' : 'anzeigen'}
+        <StyledSpan>{solutionVisible ? '▾' : '▸'}&nbsp;</StyledSpan>
+        {strings.content.solution}{' '}
+        {solutionVisible ? strings.content.hide : strings.content.show}
       </SolutionToggle>
     )
   }
@@ -128,7 +131,7 @@ export function Exercise(props: ExerciseProps) {
         type: 'p',
         children: [
           {
-            text: 'Für diese Aufgabe benötigst Du folgendes Grundwissen: ',
+            text: `${strings.content.prerequisite} `,
           },
           {
             type: 'a',

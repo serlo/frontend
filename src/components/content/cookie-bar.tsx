@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { serloDomain } from '../../helper/serlo-domain'
+import { useInstanceData } from '@/contexts/instance-context'
 import { useOrigin } from '@/contexts/origin-context'
 
 interface LocalStorageData {
@@ -14,6 +15,7 @@ export function CookieBar() {
   const [loaded, setLoaded] = React.useState(false)
   const [revision, setRevision] = React.useState<undefined | string>(undefined)
   const origin = useOrigin()
+  const { strings } = useInstanceData()
 
   // TODO This code is not beautiful and needs some love...
   function checkRevision(data: any, localInfo: any) {
@@ -51,15 +53,15 @@ export function CookieBar() {
   if (!loaded) return null
   return (
     <CookieWrapper>
-      Mit der Nutzung dieser Webseite erklärst du dich mit unserer{' '}
+      {strings.cookie.part1}{' '}
       <CookieLink href={`https://de.${serloDomain}/privacy`} target="_blank">
-        Datenschutzerklärung
+        {strings.cookie.link1}
       </CookieLink>{' '}
-      und{' '}
+      {strings.cookie.part2}{' '}
       <CookieLink href={`https://de.${serloDomain}/terms`} target="_blank">
-        Nutzungsbedingungen
+        {strings.cookie.link2}
       </CookieLink>{' '}
-      einverstanden.
+      {strings.cookie.part3}
       <CookieButton
         onClick={() => {
           localStorage.setItem(
@@ -69,7 +71,7 @@ export function CookieBar() {
           setLoaded(false)
         }}
       >
-        Verstanden
+        {strings.cookie.button}
       </CookieButton>
     </CookieWrapper>
   )

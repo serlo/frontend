@@ -7,6 +7,7 @@ import styled, { css } from 'styled-components'
 import { makeMargin, makeDefaultButton } from '../../helper/css'
 import { renderArticle } from '../../schema/article-renderer'
 import { StyledP } from '../tags/styled-p'
+import { useInstanceData } from '@/contexts/instance-context'
 import { FrontendContentNode } from '@/data-types'
 
 export interface ScMcExerciseProps {
@@ -32,6 +33,7 @@ export function ScMcExercise({ state, idBase }: ScMcExerciseProps) {
 function SingleChoice({ state, idBase }: ScMcExerciseProps) {
   const [selected, setSelected] = React.useState<number | undefined>(undefined)
   const [showFeedback, setShowFeedback] = React.useState(false)
+  const { strings } = useInstanceData()
 
   return (
     <Container>
@@ -74,7 +76,9 @@ function SingleChoice({ state, idBase }: ScMcExerciseProps) {
         selectable={selected !== undefined}
         onClick={() => setShowFeedback(true)}
       >
-        {selected !== undefined ? "Stimmt's?" : 'Klicke auf eine der Optionen'}
+        {selected !== undefined
+          ? strings.content.check
+          : strings.content.chooseOption}
       </CheckButton>
     </Container>
   )
@@ -83,6 +87,7 @@ function SingleChoice({ state, idBase }: ScMcExerciseProps) {
 function MultipleChoice({ state, idBase }: ScMcExerciseProps) {
   const [selected, setSelected] = React.useState(state.answers.map(() => false))
   const [showFeedback, setShowFeedback] = React.useState(false)
+  const { strings } = useInstanceData()
   const right = state.answers.every(
     (answer, i) => answer.isCorrect === selected[i]
   )
@@ -119,11 +124,13 @@ function MultipleChoice({ state, idBase }: ScMcExerciseProps) {
       </Choices>
       {showFeedback && (
         <Feedback right={right}>
-          <StyledP>{right ? 'Richtig' : 'Falsch'}</StyledP>
+          <StyledP>
+            {right ? strings.content.right : strings.content.wrong}
+          </StyledP>
         </Feedback>
       )}
       <CheckButton selectable onClick={() => setShowFeedback(true)}>
-        Stimmt&apos;s?
+        {strings.content.check}
       </CheckButton>
     </Container>
   )

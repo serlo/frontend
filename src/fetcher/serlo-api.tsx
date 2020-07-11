@@ -333,10 +333,6 @@ export async function fetchContent(
     }
 
     return {
-      contentId,
-      alias,
-      ...processed,
-      prettyLinks,
       pageData: buildPageData(),
     }
   } catch (e) {

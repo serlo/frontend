@@ -35,6 +35,8 @@ export interface InstanceData {
     license: LicenseStrings
     course: CourseStrings
     taxonomy: TaxonomyStrings
+    content: ContentStrings
+    cookie: CookieStrings
   }
   headerData: HeaderData
   footerData: FooterData
@@ -329,4 +331,28 @@ export interface TaxonomyData extends TaxonomyTermBase {
 
 export interface TaxonomyStrings {
   topicFolder: string
+}
+
+// And some translations for content
+
+export interface ContentStrings {
+  hide: string
+  show: string
+  prerequisite: string
+  solution: string
+  exerciseGroup: string
+  right: string
+  wrong: string
+  check: string
+  yourAnswer: string
+  chooseOption: string
+}
+
+export interface CookieStrings {
+  part1: string
+  part2: string
+  part3: string
+  link1: string
+  link2: string
+  button: string
 }

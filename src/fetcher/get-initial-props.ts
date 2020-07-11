@@ -1,10 +1,8 @@
 import { NextPageContext } from 'next'
 import absoluteUrl from 'next-absolute-url'
 
-import { InitialProps } from '@/data-types'
+import { InitialProps, PageData } from '@/data-types'
 import { deInstanceData } from '@/data/de'
-// eslint-disable-next-line import/extensions
-import { PageViewProps } from '@/pages/[[...slug]]'
 
 export const fetcherAdditionalData = {
   origin: '',
@@ -13,7 +11,7 @@ export const fetcherAdditionalData = {
 
 export async function getInitialProps(
   props: NextPageContext
-): Promise<PageViewProps> {
+): Promise<InitialProps> {
   const slug =
     props.query.slug === undefined ? [] : (props.query.slug as string[])
   const joinedSlug = slug.join('/')
@@ -26,20 +24,18 @@ export async function getInitialProps(
   ) {
     //TODO: Probaby add another type for FetchedData pages
     // also check what values we might actually need to feed slug-head
-    return ({
-      newInitialProps: {
-        pageData: {
-          kind:
-            joinedSlug === ''
-              ? 'landing'
-              : joinedSlug === 'spenden'
-              ? 'donation'
-              : joinedSlug,
-        },
-        instanceData: deInstanceData,
-        origin,
+    return {
+      pageData: {
+        kind:
+          joinedSlug === ''
+            ? 'landing'
+            : joinedSlug === 'spenden'
+            ? 'donation'
+            : joinedSlug,
       },
-    } as unknown) as PageViewProps
+      instanceData: deInstanceData,
+      origin,
+    }
   }
   //TODO: maybe also add api pages?
 
@@ -58,26 +54,20 @@ export async function getInitialProps(
       })
       props.res?.end()
       // We redirect here so the component won't be actually rendered
-      return ({} as unknown) as PageViewProps
+      return { origin: '', pageData: { kind: 'error' } }
     }
 
     if (fetchedData.error) {
       props.res!.statusCode = 404
 
       return {
-        newInitialProps: {
-          instanceData: deInstanceData,
-          pageData: { kind: 'error' },
-          origin,
-        },
-      } as PageViewProps
+        instanceData: deInstanceData,
+        pageData: { kind: 'error' },
+        origin,
+      }
     }
 
-    return {
-      fetchedData,
-      origin,
-      newInitialProps: buildInitialProps(fetchedData, origin),
-    }
+    return buildInitialProps(fetchedData, origin)
   } else {
     //client
 
@@ -90,11 +80,8 @@ export async function getInitialProps(
       if (fromCache) {
         return {
           origin: fetcherAdditionalData.origin,
-          newInitialProps: {
-            origin: fetcherAdditionalData.origin,
-            pageData: JSON.parse(fromCache),
-          },
-        } as any
+          pageData: JSON.parse(fromCache) as PageData,
+        }
       }
     } catch (e) {
       //
@@ -109,28 +96,14 @@ export async function getInitialProps(
         `${fetcherAdditionalData.origin}/api/frontend${fetchedData.redirect}`
       )
       const fetchedData2 = await res.json()
-      return {
-        fetchedData: fetchedData2,
-        origin: fetcherAdditionalData.origin,
-        newInitialProps: buildInitialProps(
-          fetchedData2,
-          fetcherAdditionalData.origin
-        ),
-      }
+      return buildInitialProps(fetchedData2, fetcherAdditionalData.origin)
     }
-    return {
-      fetchedData,
-      origin: fetcherAdditionalData.origin,
-      newInitialProps: buildInitialProps(
-        fetchedData,
-        fetcherAdditionalData.origin
-      ),
-    }
+    return buildInitialProps(fetchedData, fetcherAdditionalData.origin)
   }
 }
 
 function buildInitialProps(
-  fetchedData: PageViewProps['fetchedData'],
+  fetchedData: { pageData: PageData },
   origin: string
 ): InitialProps {
   return {
