@@ -48,5 +48,10 @@ export const deInstanceData: InstanceData = {
     license: {
       readMore: 'Was bedeutet das?',
     },
+    course: {
+      showPages: 'Kursübersicht anzeigen',
+      pages: 'Kursübersicht',
+      next: 'Weiter',
+    },
   },
 }

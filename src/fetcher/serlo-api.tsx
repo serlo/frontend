@@ -91,13 +91,17 @@ export async function fetchContent(
     const prettyLinks =
       allLinks.length < 1 ? {} : await request(endpoint, idsQuery(allLinks))
 
-    const resolveIdToAlias = (id: number) => {
-      const prettyLink = prettyLinks[`uuid${id}`]
-      if (prettyLink && !hasSpecialUrlChars(prettyLink.alias)) {
-        return prettyLink.alias
-      } else {
+    const checkForSpecialUrls = (alias: string, id: number) => {
+      if (!alias || hasSpecialUrlChars(alias)) {
         return `/${id}`
+      } else {
+        return alias
       }
+    }
+
+    const resolveIdToAlias = (id: number) => {
+      const prettyLink = prettyLinks[`uuid${id}`]?.alias
+      return checkForSpecialUrls(prettyLink, id)
     }
 
     const buildPageData: () => PageData = () => {
@@ -253,6 +257,25 @@ export async function fetchContent(
         })
       }
       entityData.licenseData = processed.license
+      if (processed.contentType === 'CoursePage') {
+        let currentPageIndex = -1
+        const pages = processed.data.pages.map((page: any, i: number) => {
+          const active = page.id === contentId
+          if (active) {
+            currentPageIndex = i + 1
+          }
+          return {
+            title: page.currentRevision?.title ?? '',
+            url: checkForSpecialUrls(page.alias, page.id),
+            active,
+          }
+        })
+        entityData.courseData = {
+          title: processed.data.courseTitle,
+          pages,
+          nextPageUrl: pages[currentPageIndex]?.url,
+        }
+      }
 
       return {
         kind:

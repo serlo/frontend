@@ -1,58 +1,68 @@
 import { faShareAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-//import dynamic from 'next/dynamic'
-//import { Router } from 'next/router'
+import dynamic from 'next/dynamic'
+import { Router } from 'next/router'
 import React from 'react'
 import styled from 'styled-components'
 
 import { HSpace } from './h-space'
 import { LicenseNotice } from '@/components/content/license-notice'
-// import type { CourseFooterProps } from '@/components/navigation/course-footer'
-// import type { CourseNavigationProps } from '@/components/navigation/course-navigation'
+import type { CourseFooterProps } from '@/components/navigation/course-footer'
+import type { CourseNavigationProps } from '@/components/navigation/course-navigation'
 import { ShareModal } from '@/components/navigation/share-modal'
 import { UserToolsMobileButton } from '@/components/navigation/tool-line-button'
 import { UserTools } from '@/components/navigation/user-tools'
 import { UserToolsMobile } from '@/components/navigation/user-tools-mobile'
 import { StyledH1 } from '@/components/tags/styled-h1'
-//import { PrettyLinksContextValue } from '@/contexts/pretty-links-context'
-//import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EntityData, FrontendContentNode } from '@/data-types'
 import { categoryIconMapping } from '@/helper/header-by-content-type'
 import { renderArticle } from '@/schema/article-renderer'
 
-/*const CourseNavigation = dynamic<CourseNavigationProps>(() =>
+const CourseNavigation = dynamic<CourseNavigationProps>(() =>
   import('@/components/navigation/course-navigation').then(
     (mod) => mod.CourseNavigation
   )
 )
+
 const CourseFooter = dynamic<CourseFooterProps>(() =>
   import('@/components/navigation/course-footer').then(
     (mod) => mod.CourseFooter
   )
-)*/
-
-/*function isCourse(data: EntityProps['data']): data is CourseData {
-  return (data as CourseData).pages !== undefined
-}*/
+)
 
 interface EntityProps {
   data: EntityData
 }
 
 export function Entity({ data }: EntityProps) {
-  // state of the share
+  // state of the share modal
   const [open, setOpen] = React.useState(false)
-  const { strings } = useInstanceData()
 
-  //console.log(data)
+  // course
+  const [courseNavOpen, setCourseNavOpen] = React.useState(false)
+  const openCourseNav = (
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) => {
+    e.preventDefault()
+    setCourseNavOpen(true)
+  }
+
+  Router.events.on('routeChangeComplete', () => {
+    setCourseNavOpen(false)
+  })
+
+  const { strings } = useInstanceData()
 
   return wrapWithSchema(
     <>
+      {renderCourseNavigation()}
       {renderStyledH1()}
       {renderUserToolsMobile()}
 
       {data.content && renderContent(data.content)}
+
+      {renderCourseFooter()}
 
       <HSpace amount={20} />
       {renderUserToolsMobile()}
@@ -142,76 +152,28 @@ export function Entity({ data }: EntityProps) {
     )
   }
 
-  /*
-
-  const [courseNavOpen, setCourseNavOpen] = React.useState(false)
-  const openCourseNav = (
-    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
-  ) => {
-    e.preventDefault()
-    setCourseNavOpen(true)
-  }
-
-  Router.events.on('routeChangeComplete', () => {
-    setCourseNavOpen(false)
-  })
-
-  if (data === undefined) return null
-
-  return wrapWithSchema(
-    <>
-      {renderCourseNavigation()}
-
-      {renderStyledH1()}
-      
-
-      {renderCourseFooter()}
-
-
-    </>
-  )
-
-  
-
-
   function renderCourseNavigation() {
-    if (isCourse(data)) {
+    if (data.courseData) {
       return (
         <CourseNavigation
           open={courseNavOpen}
           onOverviewButtonClick={openCourseNav}
-          courseTitle={data.courseTitle}
-          pageTitle={data.title}
-          pages={data.pages}
+          data={data.courseData}
         />
       )
     } else return null
   }
 
   function renderCourseFooter() {
-    if (isCourse(data)) {
-      const nextIndex = () =>
-        1 +
-        data.pages.findIndex(
-          (page) => page.currentRevision.title === data.title
-        )!
-
-      const nextCoursePageHref = () =>
-        nextIndex() >= data.pages.length
-          ? ''
-          : hasSpecialUrlChars(data.pages[nextIndex()].alias)
-          ? `/${data.pages[nextIndex()].id}`
-          : data.pages[nextIndex()].alias
-
+    if (data.courseData) {
       return (
         <CourseFooter
           onOverviewButtonClick={openCourseNav}
-          nextHref={nextCoursePageHref()}
+          nextHref={data.courseData.nextPageUrl ?? ''}
         />
       )
     } else return null
   }
-  */
 }
 
 const StyledIcon = styled(FontAwesomeIcon)`

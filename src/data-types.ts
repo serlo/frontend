@@ -33,6 +33,7 @@ export interface InstanceData {
     share: ShareStrings
     edit: EditStrings
     license: LicenseStrings
+    course: CourseStrings
   }
   headerData: HeaderData
   footerData: FooterData
@@ -198,10 +199,7 @@ export interface EntityData {
   content?: FrontendContentNode[]
   inviteToEdit?: boolean
   licenseData?: LicenseData
-  /*courseNavigationData?: CourseNavigationData
-  courseTitle?: string
-  courseFooterData?: CourseFooterData
-  */
+  courseData?: CourseData
 }
 
 // Entities can belong to a category. Each has a translated string.
@@ -263,6 +261,28 @@ export interface LicenseData {
 
 export interface LicenseStrings {
   readMore: string
+}
+
+// Data for a course page.
+
+export interface CourseData {
+  title: string
+  pages: CoursePagesData
+  nextPageUrl?: string
+}
+
+export type CoursePagesData = CoursePageEntry[]
+
+export interface CoursePageEntry {
+  title: string
+  url: string
+  active?: boolean
+}
+
+export interface CourseStrings {
+  showPages: string
+  pages: string
+  next: string
 }
 
 /*
