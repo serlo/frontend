@@ -10,6 +10,8 @@ import {
   BreadcrumbLinkEntry,
   SecondaryNavigationData,
   EntityData,
+  EntityPageBase,
+  TaxonomyData,
 } from '@/data-types'
 import { horizonData } from '@/data/horizon'
 import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
@@ -224,6 +226,52 @@ export async function fetchContent(
         return description as string
       }
 
+      const basePage: EntityPageBase = {
+        breadcrumbsData,
+        secondaryNavigationData,
+        metaData: {
+          title: processed.title,
+          contentType: getMetaContentType(),
+          metaDescription: getMetaDescription(),
+          metaImage: getMetaImage(),
+        },
+        horizonData: processed.horizonIndices.map(
+          (index) => horizonData[index]
+        ),
+        cacheKey: alias,
+        newsletterPopup: processed.data && processed.contentType === 'Page',
+      }
+
+      if (processed.contentType === 'TaxonomyTerm') {
+        const taxonomyData: TaxonomyData = {
+          id: contentId,
+          title: processed.data.title,
+          description: processed.data.description?.children,
+          subterms: processed.data.children.map((child: any) => {
+            return {
+              title: child.title,
+              url: child.url,
+              description: child.description?.children,
+              articles: child.links.articles,
+              exercises: child.links.exercises,
+              videos: child.links.videos,
+              courses: child.links.courses,
+              applets: child.links.applets,
+              folders: child.links.subfolders,
+            }
+          }),
+          exercisesContent: processed.data.exercises?.map(
+            (exercise: any) => exercise.children
+          ),
+          articles: processed.data.links.articles,
+          exercises: processed.data.links.exercises,
+          videos: processed.data.links.videos,
+          courses: processed.data.links.courses,
+          applets: processed.data.links.applets,
+        }
+        return { ...basePage, kind: 'taxonomy', taxonomyData }
+      }
+
       const entityData: EntityData = { id: contentId }
       entityData.title = processed.data?.title
       if (processed.contentType === 'Article') {
@@ -278,22 +326,8 @@ export async function fetchContent(
       }
 
       return {
-        kind:
-          processed.contentType === 'TaxonomyTerm'
-            ? 'taxonomy'
-            : 'single-entity',
-        breadcrumbsData,
-        secondaryNavigationData,
-        metaData: {
-          title: processed.title,
-          contentType: getMetaContentType(),
-          metaDescription: getMetaDescription(),
-          metaImage: getMetaImage(),
-        },
-        horizonData: processed.horizonIndices.map(
-          (index) => horizonData[index]
-        ),
-        newsletterPopup: processed.data && processed.contentType === 'Page',
+        ...basePage,
+        kind: 'single-entity',
         entityData,
       }
     }

@@ -34,6 +34,7 @@ export interface InstanceData {
     edit: EditStrings
     license: LicenseStrings
     course: CourseStrings
+    taxonomy: TaxonomyStrings
   }
   headerData: HeaderData
   footerData: FooterData
@@ -134,6 +135,7 @@ export interface EntityPageBase {
   metaData?: HeadData
   horizonData?: HorizonData
   newsletterPopup?: boolean
+  cacheKey?: string // save page data to session storage
 }
 
 // Breadcrumb entries are shown nexts to each other, with possible ellipsis in between
@@ -285,20 +287,46 @@ export interface CourseStrings {
   next: string
 }
 
-/*
+// Taxonomy: Folders with other entities, sorted by category, first level of subfolders and exercises are shown directly
 
-
-
-
-*/
-
-// -------------- Existing
-
-interface TaxonomyPage extends EntityPageBase {
+export interface TaxonomyPage extends EntityPageBase {
   kind: 'taxonomy'
-  //taxonomyData: unknown
+  taxonomyData: TaxonomyData
 }
 
-// Another TODO: Types for Injections
+// Shared attributes for first and second level.
 
-//---------------------------------------------------------------
+export interface TaxonomyTermBase {
+  articles: TaxonomyLink[]
+  courses: TaxonomyLink[]
+  videos: TaxonomyLink[]
+  applets: TaxonomyLink[]
+  exercises: TaxonomyLink[]
+  description?: FrontendContentNode[]
+}
+
+export interface TaxonomyLink {
+  title: string
+  url: string
+}
+
+// Second level has folders and exercises as links
+
+export interface TaxonomySubTerm extends TaxonomyTermBase, TaxonomyLink {
+  folders: TaxonomyLink[]
+}
+
+// First level loads second level elements and exercises as content.
+
+export interface TaxonomyData extends TaxonomyTermBase {
+  id: number
+  title: string
+  subterms: TaxonomySubTerm[]
+  exercisesContent: FrontendContentNode[][]
+}
+
+// Some translations for the taxonomy.
+
+export interface TaxonomyStrings {
+  topicFolder: string
+}

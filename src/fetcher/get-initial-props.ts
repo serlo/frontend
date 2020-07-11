@@ -48,7 +48,7 @@ export async function getInitialProps(
       `${origin}/api/frontend/${encodeURIComponent(joinedSlug)}?redirect`
     )
 
-    const fetchedData = (await res.json()) as PageViewProps['fetchedData']
+    const fetchedData = await res.json()
     // compat course to first page
     if (fetchedData.redirect) {
       props.res?.writeHead(301, {
@@ -88,7 +88,13 @@ export async function getInitialProps(
     try {
       const fromCache = sessionStorage.getItem(url)
       if (fromCache) {
-        return JSON.parse(fromCache) as PageViewProps
+        return {
+          origin: fetcherAdditionalData.origin,
+          newInitialProps: {
+            origin: fetcherAdditionalData.origin,
+            pageData: JSON.parse(fromCache),
+          },
+        } as any
       }
     } catch (e) {
       //
@@ -96,13 +102,13 @@ export async function getInitialProps(
     const res = await fetch(
       `${fetcherAdditionalData.origin}/api/frontend${url}`
     )
-    const fetchedData = (await res.json()) as PageViewProps['fetchedData']
+    const fetchedData = await res.json()
     // compat: redirect of courses
     if (fetchedData.redirect) {
       const res = await fetch(
         `${fetcherAdditionalData.origin}/api/frontend${fetchedData.redirect}`
       )
-      const fetchedData2 = (await res.json()) as PageViewProps['fetchedData']
+      const fetchedData2 = await res.json()
       return {
         fetchedData: fetchedData2,
         origin: fetcherAdditionalData.origin,

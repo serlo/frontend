@@ -31,7 +31,7 @@ const CourseFooter = dynamic<CourseFooterProps>(() =>
   )
 )
 
-interface EntityProps {
+export interface EntityProps {
   data: EntityData
 }
 

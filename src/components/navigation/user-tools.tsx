@@ -29,6 +29,7 @@ export function UserTools({ editHref, onShare, hideEdit }: UserToolsProps) {
         )}
         <IconButton onClick={onShare}>
           <FontAwesomeIcon icon={faShareAlt} size="1x" /> {strings.share.button}
+          !
         </IconButton>
       </BoxWrapper>
     </AbsoluteWrapper>

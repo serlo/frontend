@@ -36,7 +36,7 @@ export const deInstanceData: InstanceData = {
       exercises: 'Aufgaben',
     },
     share: {
-      button: 'Teilen!',
+      button: 'Teilen',
       title: 'Weitergeben!',
       copyLink: 'Link kopieren',
       copySuccess: 'In Zwischenablage kopiert! ',
@@ -52,6 +52,9 @@ export const deInstanceData: InstanceData = {
       showPages: 'Kursübersicht anzeigen',
       pages: 'Kursübersicht',
       next: 'Weiter',
+    },
+    taxonomy: {
+      topicFolder: 'Aufgabensammlung',
     },
   },
 }

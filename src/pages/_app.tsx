@@ -16,10 +16,11 @@ import '../../public/_assets/fonts/katex/katex.css'
 
 import { version } from '../../package.json'
 import { CookieBar } from '@/components/content/cookie-bar'
-import { Entity } from '@/components/content/entity'
+import { EntityProps } from '@/components/content/entity'
 import { HSpace } from '@/components/content/h-space'
 import { Horizon } from '@/components/content/horizon'
 import { Lazy } from '@/components/content/lazy'
+import { TopicProps } from '@/components/content/topic'
 import { HeadTags } from '@/components/head-tags'
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
 import { Footer } from '@/components/navigation/footer'
@@ -28,7 +29,6 @@ import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { MetaMenu } from '@/components/navigation/meta-menu'
 import { NProgressStyles } from '@/components/navigation/n-progress-styles'
 import { RelativeContainer } from '@/components/navigation/relative-container'
-import { ErrorPage } from '@/components/pages/error-page'
 import { ToastNotifications } from '@/components/toast-notifications'
 import { InstanceDataProvider } from '@/contexts/instance-context'
 import { OriginProvider } from '@/contexts/origin-context'
@@ -45,6 +45,9 @@ const Search = dynamic<{}>(() =>
 const Donations = dynamic<{}>(() =>
   import('@/components/pages/donations').then((mod) => mod.Donations)
 )
+const ErrorPage = dynamic<{}>(() =>
+  import('@/components/pages/error-page').then((mod) => mod.ErrorPage)
+)
 
 const NewsletterPopup = dynamic<{}>(
   () =>
@@ -54,6 +57,14 @@ const NewsletterPopup = dynamic<{}>(
   {
     ssr: false,
   }
+)
+
+const Topic = dynamic<TopicProps>(() =>
+  import('@/components/content/topic').then((mod) => mod.Topic)
+)
+
+const Entity = dynamic<EntityProps>(() =>
+  import('@/components/content/entity').then((mod) => mod.Entity)
 )
 
 config.autoAddCss = false
@@ -92,6 +103,20 @@ export default function App({ Component, pageProps }: AppProps) {
   const [instanceData] = React.useState<InstanceData>(
     initialProps?.instanceData!
   )
+
+  React.useEffect(() => {
+    try {
+      const pageData = initialProps?.pageData
+      if (pageData) {
+        if (pageData.kind === 'single-entity' || pageData.kind === 'taxonomy') {
+          if (pageData.cacheKey)
+            sessionStorage.setItem(pageData.cacheKey, JSON.stringify(pageData))
+        }
+      }
+    } catch (e) {
+      //
+    }
+  }, [initialProps])
 
   return (
     <React.StrictMode>
@@ -159,7 +184,7 @@ function renderPage(page: PageData) {
                       if (page.kind === 'single-entity') {
                         return <Entity data={page.entityData} />
                       } /* taxonomy */ else {
-                        return <HSpace amount={500} />
+                        return <Topic data={page.taxonomyData} />
                       }
                     })()}
                   </main>
