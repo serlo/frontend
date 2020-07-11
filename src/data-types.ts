@@ -29,6 +29,10 @@ export interface InstanceData {
   strings: {
     header: HeaderStrings
     footer: FooterStrings
+    categories: CategoryStrings
+    share: ShareStrings
+    edit: EditStrings
+    license: LicenseStrings
   }
   headerData: HeaderData
   footerData: FooterData
@@ -179,20 +183,89 @@ export interface HorizonEntry {
   url: string
 }
 
+// All entities (except taxonomy) have a shared data structure.
+
+export interface SingleEntityPage extends EntityPageBase {
+  kind: 'single-entity'
+  entityData: EntityData
+}
+
+export interface EntityData {
+  id: number
+  title?: string
+  categoryIcon?: CategoryType
+  schemaData?: SchemaData
+  content?: FrontendContentNode[]
+  inviteToEdit?: boolean
+  licenseData?: LicenseData
+  /*courseNavigationData?: CourseNavigationData
+  courseTitle?: string
+  courseFooterData?: CourseFooterData
+  */
+}
+
+// Entities can belong to a category. Each has a translated string.
+
+export type CategoryType =
+  | 'article'
+  | 'course'
+  | 'video'
+  | 'applet'
+  | 'folder'
+  | 'exercises'
+
+export type CategoryStrings = {
+  [K in CategoryType]: string
+}
+
+// Some flags to control schema.org behaviour. Not very well done yet.
+
+export interface SchemaData {
+  wrapWithItemType?: string
+  useArticleTag?: boolean
+  setContentAsSection?: boolean
+}
+
+// The actual content of the page.
+
+// The frontend defines it's own content format that bridges the gap between legacy and edtr-io state.
+// Will switch to edtr-io state one day.
+// Until then, this is the basic tree structure:
+
+export interface FrontendContentNode {
+  type?: string
+  state?: unknown
+  children?: FrontendContentNode[]
+  text?: string
+}
+
+// Some translations
+
+export interface ShareStrings {
+  button: string
+  title: string
+  copyLink: string
+  copySuccess: string
+  close: string
+}
+
+export interface EditStrings {
+  button: string
+}
+
+// A license notice.
+
+export interface LicenseData {
+  title: string
+  url: string // to to license
+  id: number // of the license
+}
+
+export interface LicenseStrings {
+  readMore: string
+}
+
 /*
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -200,25 +273,6 @@ export interface HorizonEntry {
 */
 
 // -------------- Existing
-
-interface EntityData {
-  /*title?: string
-  icon?: EntityTitleIcon
-  content: EditorState['children']
-  wrapWithSchema?: string
-  setContentAsSection?: boolean
-  courseNavigationData?: CourseNavigationData
-  courseTitle?: string
-  courseFooterData?: CourseFooterData
-  shareData?: ShareData
-  userToolsData?: UserToolsData
-  licenseData?: LicenseData*/
-}
-
-interface SingleEntityPage extends EntityPageBase {
-  kind: 'single-entity'
-  //entity: EntityData
-}
 
 interface TaxonomyPage extends EntityPageBase {
   kind: 'taxonomy'

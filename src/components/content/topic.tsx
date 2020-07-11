@@ -4,7 +4,10 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 
 import { makeMargin } from '../../helper/css'
-import { renderArticle, EditorState } from '../../schema/article-renderer'
+import {
+  renderArticle,
+  FrontendContentValue,
+} from '../../schema/article-renderer'
 import { ShareModal } from '../navigation/share-modal'
 import { UserToolsMobileButton } from '../navigation/tool-line-button'
 import { UserTools } from '../navigation/user-tools'
@@ -34,11 +37,11 @@ export enum TopicPurposes {
 export interface TopicProp {
   title: string
   url?: string
-  description: EditorState
+  description: FrontendContentValue
   purpose?: TopicPurposes
   links: LinksInterface
   children?: TopicProp[]
-  exercises: EditorState[]
+  exercises: FrontendContentValue[]
   id: number
 }
 

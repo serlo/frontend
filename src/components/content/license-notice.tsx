@@ -10,12 +10,8 @@ import { makePadding, makeDefaultButton } from '../../helper/css'
 import { serloDomain } from '../../helper/serlo-domain'
 import { StyledA } from '../tags/styled-a'
 import { Link } from './link'
-
-export interface LicenseData {
-  title: string
-  url: string
-  id: number
-}
+import { useInstanceData } from '@/contexts/instance-context'
+import { LicenseData } from '@/data-types'
 
 interface LicenseNoticeProps {
   data: LicenseData
@@ -23,6 +19,7 @@ interface LicenseNoticeProps {
 }
 
 export function LicenseNotice({ data, minimal }: LicenseNoticeProps) {
+  const { strings } = useInstanceData()
   // only link license
   const titleParts = data.title.split('CC')
   const text = titleParts.length === 2 ? titleParts[0] : ''
@@ -56,7 +53,7 @@ export function LicenseNotice({ data, minimal }: LicenseNoticeProps) {
           href={`https://de.${serloDomain}/license/detail/${data.id}`}
           noExternalIcon
         >
-          <b>Was bedeutet das?</b>
+          <b>{strings.license.readMore}</b>
         </Link>
       </StyledSmall>
     </Wrapper>

@@ -1,8 +1,6 @@
 import { NextPage } from 'next'
 import React from 'react'
 
-import { Entity, EntityProps } from '@/components/content/entity'
-import { LicenseData } from '@/components/content/license-notice'
 import { Topic, TopicProp } from '@/components/content/topic'
 import type { MetaMenuProps } from '@/components/navigation/meta-menu'
 import { PrettyLinksProvider } from '@/contexts/pretty-links-context'
@@ -21,7 +19,7 @@ const PageView: NextPage<PageViewProps> = (props) => {
 
   if (!props.fetchedData) return null
   const { fetchedData } = props
-  const { contentId, contentType, license, prettyLinks } = fetchedData
+  const { contentId, prettyLinks } = fetchedData
 
   return (
     <PrettyLinksProvider value={prettyLinks}>
@@ -34,14 +32,7 @@ const PageView: NextPage<PageViewProps> = (props) => {
       <main>
         {fetchedData.contentType === 'TaxonomyTerm' ? (
           <Topic data={fetchedData.data} contentId={contentId} />
-        ) : (
-          <Entity
-            data={fetchedData.data}
-            contentId={contentId}
-            contentType={contentType}
-            license={license}
-          />
-        )}
+        ) : null}
       </main>
     )
   }
@@ -49,14 +40,14 @@ const PageView: NextPage<PageViewProps> = (props) => {
 
 PageView.getInitialProps = getInitialProps
 
-interface FetchedData {
+export interface FetchedData {
   contentId: number
   alias: string
   title: string
   horizonIndices: number[]
   breadcrumbs: any
   navigation: MetaMenuProps['data']
-  license: LicenseData
+  license: any
   prettyLinks: Record<string, { alias: string }>
   error: boolean
   type?: string
@@ -69,13 +60,8 @@ interface TaxonomyTermFetchedData extends FetchedData {
   data: TopicProp
 }
 
-interface IsNotTaxonomyTermFetchedData extends FetchedData {
-  contentType: Exclude<EntityProps['contentType'], 'TaxonomyTerm'>
-  data: EntityProps['data']
-}
-
 export interface PageViewProps {
-  fetchedData: TaxonomyTermFetchedData | IsNotTaxonomyTermFetchedData
+  fetchedData: TaxonomyTermFetchedData
   origin: string
   page?: string
   newInitialProps?: InitialProps

@@ -6,22 +6,34 @@ import {
   faCubes,
   faFolderOpen,
   faFile,
+  IconDefinition,
 } from '@fortawesome/free-solid-svg-icons'
 
-import { EntityProps } from '@/components/content/entity'
-import { LinkInterfaceKeys } from '@/components/content/topic-link-list'
+import { CategoryType } from '@/data-types'
 
-export type EntityTitleIcon =
-  | 'article'
-  | 'course'
-  | 'video'
-  | 'applet'
-  | 'folder'
-  | 'exercise'
+export const categoryIconMapping: { [K in CategoryType]: IconDefinition } = {
+  article: faNewspaper,
+  course: faGraduationCap,
+  video: faPlayCircle,
+  applet: faCubes,
+  folder: faFolderOpen,
+  exercises: faFile,
+}
 
-export const getIconAndTitleByContentType = (
-  contentType: EntityProps['contentType'] | LinkInterfaceKeys
-) => {
+/*
+
+
+
+
+
+
+
+
+*/
+
+// Das kann dann woanders hin ...
+
+export const getIconAndTitleByContentType = (contentType: any) => {
   let icon = faCircle
   let title = ''
 

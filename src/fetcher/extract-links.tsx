@@ -1,3 +1,5 @@
+import { FrontendContentNode } from '@/data-types'
+
 function getId(url: string): number | false {
   //e.g. /1565
   if (/^\/[\d]+$/.test(url)) return parseInt(url.substring(1))
@@ -8,6 +10,39 @@ function getId(url: string): number | false {
   }
 
   return false
+}
+
+export function walkIdNodes(
+  content: FrontendContentNode[],
+  callback: (node: FrontendContentNode, id: number) => void
+) {
+  content.forEach((obj) => {
+    if (obj.type === 'a' || obj.type === 'img') {
+      // We know that href might exists
+      const href = (obj as { href?: string }).href
+      if (href) {
+        if (/^\/[\d]+$/.test(href)) {
+          // hit
+          const id = parseInt(href.substring(1))
+          callback(obj, id)
+        }
+      }
+    }
+    // recursion
+    if (obj.children) {
+      walkIdNodes(obj.children, callback)
+    }
+    if (obj.type === 'exercise') {
+      // domain knowledge
+      const exercise = obj as any
+      if (exercise.solution?.children) {
+        walkIdNodes(exercise.solution.children, callback)
+      }
+      if (exercise.task.children) {
+        walkIdNodes(exercise.task.children, callback)
+      }
+    }
+  })
 }
 
 export const extractLinks = (arr: unknown[], links: number[]) => {

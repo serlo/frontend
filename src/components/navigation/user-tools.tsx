@@ -4,6 +4,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { makeGreenButton } from '../../helper/css'
+import { useInstanceData } from '@/contexts/instance-context'
 
 interface UserToolsProps {
   editHref?: string
@@ -16,16 +17,18 @@ export interface UserToolsData {
 }
 
 export function UserTools({ editHref, onShare, hideEdit }: UserToolsProps) {
+  const { strings } = useInstanceData()
   return (
     <AbsoluteWrapper>
       <BoxWrapper>
         {!hideEdit && (
           <IconButton href={editHref}>
-            <FontAwesomeIcon icon={faPencilAlt} size="1x" /> Inhalt überarbeiten
+            <FontAwesomeIcon icon={faPencilAlt} size="1x" />{' '}
+            {strings.edit.button}
           </IconButton>
         )}
         <IconButton onClick={onShare}>
-          <FontAwesomeIcon icon={faShareAlt} size="1x" /> Teilen!
+          <FontAwesomeIcon icon={faShareAlt} size="1x" /> {strings.share.button}
         </IconButton>
       </BoxWrapper>
     </AbsoluteWrapper>

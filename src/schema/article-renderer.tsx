@@ -9,10 +9,7 @@ import { ImageLink } from '../components/content/image-link'
 import { ImgCentered } from '../components/content/img-centered'
 import { Important } from '../components/content/important'
 import { LayoutRow } from '../components/content/layout-row'
-import {
-  LicenseNotice,
-  LicenseData,
-} from '../components/content/license-notice'
+import { LicenseNotice } from '../components/content/license-notice'
 import { Link } from '../components/content/link'
 import { MathWrapper } from '../components/content/math-wrapper'
 import { MaxWidthDiv } from '../components/content/max-width-div'
@@ -45,6 +42,7 @@ import type { InjectionProps } from '@/components/content/injection'
 import { Lazy } from '@/components/content/lazy'
 import type { MathProps } from '@/components/content/math'
 import type { VideoProps } from '@/components/content/video'
+import { FrontendContentNode, LicenseData } from '@/data-types'
 
 const renderer = {
   root: () => null,
@@ -75,7 +73,7 @@ const renderer = {
   video: renderVideo,
   equations: renderEquations,
   code: renderCode,
-}
+} as { [key: string]: (props: any) => JSX.Element | null } // continue here to add proper types
 
 type renderElementData = keyof typeof renderer
 
@@ -84,22 +82,15 @@ interface ReactChildrenData {
 }
 
 interface RenderElementProps {
-  element: EditorChild
+  element: FrontendContentNode
   children: React.ReactNode
-  value: EditorChild
+  value: FrontendContentNode
   path: number[]
 }
-// TODO: The quest for the correct type continues here
-export interface EditorState {
-  children?: EditorChild[]
-  type: renderElementData
-}
 
-export interface EditorChild {
-  type?: string
-  state?: unknown
-  children?: EditorChild[]
-  text?: string
+// useless wrapping, remove it one day
+export interface FrontendContentValue {
+  children: FrontendContentNode[]
 }
 
 const Math = dynamic<MathProps>(() =>
@@ -124,7 +115,7 @@ const Code = dynamic<CodeProps>(() =>
   import('../components/content/code').then((mod) => mod.Code)
 )
 
-export function renderArticle(value: EditorState['children'], addCSS = true) {
+export function renderArticle(value: FrontendContentNode[], addCSS = true) {
   if (!value || !Array.isArray(value)) return null
   const root = { children: value, type: 'root' as renderElementData }
   const content = value.map((_, index) => render(root, [index]))
@@ -133,7 +124,10 @@ export function renderArticle(value: EditorState['children'], addCSS = true) {
   } else return content
 }
 
-function getNode(value: EditorChild, path: number[]): EditorChild {
+function getNode(
+  value: FrontendContentNode,
+  path: number[]
+): FrontendContentNode {
   if (path.length === 0 || value.children === undefined) {
     return value
   } else {
@@ -141,13 +135,13 @@ function getNode(value: EditorChild, path: number[]): EditorChild {
   }
 }
 
-function render(value: EditorChild, path: number[] = []) {
+function render(value: FrontendContentValue, path: number[] = []) {
   const currentNode = getNode(value, path)
   const key = path[path.length - 1]
 
   if (currentNode && currentNode.type) {
     const children = Array.isArray(currentNode.children)
-      ? currentNode.children.map((_: EditorChild, index: number) =>
+      ? currentNode.children.map((_: FrontendContentNode, index: number) =>
           render(value, path.concat(index))
         )
       : null
@@ -181,7 +175,7 @@ export const articleColors = {
 }
 
 interface RenderLeafProps {
-  leaf: EditorChild & {
+  leaf: FrontendContentNode & {
     color?: 'blue' | 'green' | 'orange'
     em?: boolean
     strong?: boolean
@@ -216,8 +210,7 @@ export function renderLeaf({
 
 function renderElement(props: RenderElementProps) {
   //TODO: Check with Jonas
-  // @ts-expect-error
-  return renderer[props.element.type](props)
+  return renderer[props.element.type!](props)
 }
 
 interface RenderAData {
@@ -465,7 +458,7 @@ export function renderExercise({ element }: RenderExerciseData) {
 
 interface RenderExerciseGroupData {
   element: {
-    content: EditorChild[]
+    content: FrontendContentNode[]
     license: LicenseData
     positionOnPage: number
   }
@@ -512,7 +505,7 @@ export function renderEquations({ element }: RenderEquationsData) {
 
 interface RenderCodeData {
   element: {
-    content: EditorChild[]
+    content: FrontendContentNode[]
   }
 }
 

@@ -1,7 +1,7 @@
 import { request } from 'graphql-request'
 
 import { serloDomain } from '../helper/serlo-domain'
-import { extractLinks, extractLinksFromNav } from './extract-links'
+import { extractLinks, extractLinksFromNav, walkIdNodes } from './extract-links'
 import { processResponse } from './process-response'
 import { dataQuery, idQuery, idsQuery } from './query'
 import {
@@ -9,8 +9,10 @@ import {
   BreadcrumbsData,
   BreadcrumbLinkEntry,
   SecondaryNavigationData,
+  EntityData,
 } from '@/data-types'
 import { horizonData } from '@/data/horizon'
+import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
 
 export const endpoint = `https://api.${serloDomain}/graphql`
 
@@ -72,14 +74,31 @@ export async function fetchContent(
 
     const processed = processResponse(reqData)
 
-    const contentLinks = extractLinks(processed.data.value?.children, [])
+    const contentLinks: number[] = []
+    if (processed.data.value) {
+      walkIdNodes(processed.data.value.children, (node, id) => {
+        contentLinks.push(id)
+      })
+    }
+
+    // todo: rewrite this extractor as well
     const exerciseLinks = extractLinks(processed.data.exercises, [])
+
     const metaNavLinks = extractLinksFromNav(processed.navigation as MenuData[])
 
     const allLinks = [...contentLinks, ...exerciseLinks, ...metaNavLinks]
 
     const prettyLinks =
       allLinks.length < 1 ? {} : await request(endpoint, idsQuery(allLinks))
+
+    const resolveIdToAlias = (id: number) => {
+      const prettyLink = prettyLinks[`uuid${id}`]
+      if (prettyLink && !hasSpecialUrlChars(prettyLink.alias)) {
+        return prettyLink.alias
+      } else {
+        return `/${id}`
+      }
+    }
 
     const buildPageData: () => PageData = () => {
       let breadcrumbsData: BreadcrumbsData | undefined = undefined
@@ -124,12 +143,11 @@ export async function fetchContent(
       ) {
         secondaryNavigationData = (processed.navigation as any[]).map(
           (entry: any) => {
-            const id = entry.url.substring(1)
-            const prettyLink = prettyLinks[`uuid${id}`]
+            const id = parseInt(entry.url.substring(1))
             return {
               title: entry.title as string,
-              url: prettyLink ? prettyLink.alias : entry.url,
-              active: parseInt(id) === parseInt(contentId),
+              url: resolveIdToAlias(id),
+              active: id === parseInt(contentId),
             }
           }
         )
@@ -202,6 +220,40 @@ export async function fetchContent(
         return description as string
       }
 
+      const entityData: EntityData = { id: contentId }
+      entityData.title = processed.data?.title
+      if (processed.contentType === 'Article') {
+        entityData.categoryIcon = 'article'
+        entityData.schemaData = {
+          wrapWithItemType: 'http://schema.org/Article',
+          useArticleTag: true,
+          setContentAsSection: true,
+        }
+      }
+      if (processed.contentType === 'Video') {
+        entityData.categoryIcon = 'video'
+      }
+      if (
+        processed.contentType === 'Video' ||
+        processed.contentType === 'Applet'
+      ) {
+        entityData.schemaData = {
+          wrapWithItemType: 'http://schema.org/VideoObject',
+        }
+      }
+      entityData.content = processed.data?.value?.children
+      if (processed.contentType !== 'Page') {
+        entityData.inviteToEdit = true
+      }
+      if (entityData.content) {
+        // resolve prettylinks
+        // walk through content and replace links with prettyfied version
+        walkIdNodes(entityData.content, (node, id) => {
+          ;(node as any).href = resolveIdToAlias(id)
+        })
+      }
+      entityData.licenseData = processed.license
+
       return {
         kind:
           processed.contentType === 'TaxonomyTerm'
@@ -219,6 +271,7 @@ export async function fetchContent(
           (index) => horizonData[index]
         ),
         newsletterPopup: processed.data && processed.contentType === 'Page',
+        entityData,
       }
     }
 

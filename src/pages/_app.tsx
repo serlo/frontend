@@ -16,6 +16,7 @@ import '../../public/_assets/fonts/katex/katex.css'
 
 import { version } from '../../package.json'
 import { CookieBar } from '@/components/content/cookie-bar'
+import { Entity } from '@/components/content/entity'
 import { HSpace } from '@/components/content/h-space'
 import { Horizon } from '@/components/content/horizon'
 import { Lazy } from '@/components/content/lazy'
@@ -153,9 +154,15 @@ function renderPage(page: PageData) {
                   {page.breadcrumbsData && (
                     <Breadcrumbs data={page.breadcrumbsData} />
                   )}
-
-                  <HSpace amount={500} />
-
+                  <main>
+                    {(() => {
+                      if (page.kind === 'single-entity') {
+                        return <Entity data={page.entityData} />
+                      } /* taxonomy */ else {
+                        return <HSpace amount={500} />
+                      }
+                    })()}
+                  </main>
                   <HSpace amount={40} />
                   {page.horizonData && (
                     <Lazy>

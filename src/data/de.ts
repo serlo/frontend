@@ -27,5 +27,26 @@ export const deInstanceData: InstanceData = {
       donate: 'Spenden',
       toTop: 'Nach oben',
     },
+    categories: {
+      article: 'Artikel',
+      course: 'Kurs',
+      video: 'Video',
+      applet: 'Applet',
+      folder: 'Bereich',
+      exercises: 'Aufgaben',
+    },
+    share: {
+      button: 'Teilen!',
+      title: 'Weitergeben!',
+      copyLink: 'Link kopieren',
+      copySuccess: 'In Zwischenablage kopiert! ',
+      close: 'Schließen',
+    },
+    edit: {
+      button: 'Inhalt überarbeiten',
+    },
+    license: {
+      readMore: 'Was bedeutet das?',
+    },
   },
 }

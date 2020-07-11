@@ -4,21 +4,25 @@ import React, { useEffect } from 'react'
 import styled from 'styled-components'
 
 import { StyledP } from '../tags/styled-p'
-import { EntityProps } from './entity'
-import { LicenseNotice, LicenseData } from './license-notice'
+import { LicenseNotice } from './license-notice'
 import { useOrigin } from '@/contexts/origin-context'
 import {
   PrettyLinksProvider,
   PrettyLinksContextValue,
 } from '@/contexts/pretty-links-context'
-import { renderArticle, EditorState } from '@/schema/article-renderer'
+import { LicenseData } from '@/data-types'
+import { renderArticle, FrontendContentValue } from '@/schema/article-renderer'
 
 export interface InjectionProps {
   href: string
 }
 
+// TODO: Give injection a separate fetched data type
+
 export function Injection({ href }: InjectionProps) {
-  const [value, setValue] = React.useState<EditorState | undefined>(undefined)
+  const [value, setValue] = React.useState<FrontendContentValue | undefined>(
+    undefined
+  )
   const [license, setLicense] = React.useState<undefined | LicenseData>(
     undefined
   )
@@ -46,7 +50,7 @@ export function Injection({ href }: InjectionProps) {
         if (res.headers.get('content-type')!.includes('json')) return res.json()
         else return res.text()
       })
-      .then((fetchedData: EntityProps) => {
+      .then((fetchedData: any) => {
         dataToState(fetchedData)
 
         if (fetchedData.contentType && fetchedData.data) {
@@ -59,7 +63,7 @@ export function Injection({ href }: InjectionProps) {
       })
   }, [href, origin])
 
-  function dataToState(fetchedData: EntityProps) {
+  function dataToState(fetchedData: any) {
     if (fetchedData.contentType && fetchedData.data) {
       setValue(fetchedData.data.value)
       if (fetchedData.data.license) {

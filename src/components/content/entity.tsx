@@ -1,28 +1,27 @@
 import { faShareAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import dynamic from 'next/dynamic'
-import { Router } from 'next/router'
+//import dynamic from 'next/dynamic'
+//import { Router } from 'next/router'
 import React from 'react'
 import styled from 'styled-components'
 
 import { HSpace } from './h-space'
-import { LicenseNotice, LicenseData } from '@/components/content/license-notice'
-import type { CourseFooterProps } from '@/components/navigation/course-footer'
-import type {
-  CourseNavigationProps,
-  CourseNavigationPagesProps,
-} from '@/components/navigation/course-navigation'
+import { LicenseNotice } from '@/components/content/license-notice'
+// import type { CourseFooterProps } from '@/components/navigation/course-footer'
+// import type { CourseNavigationProps } from '@/components/navigation/course-navigation'
 import { ShareModal } from '@/components/navigation/share-modal'
 import { UserToolsMobileButton } from '@/components/navigation/tool-line-button'
 import { UserTools } from '@/components/navigation/user-tools'
 import { UserToolsMobile } from '@/components/navigation/user-tools-mobile'
 import { StyledH1 } from '@/components/tags/styled-h1'
-import { PrettyLinksContextValue } from '@/contexts/pretty-links-context'
-import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
-import { getIconAndTitleByContentType } from '@/helper/header-by-content-type'
-import { renderArticle, EditorState } from '@/schema/article-renderer'
+//import { PrettyLinksContextValue } from '@/contexts/pretty-links-context'
+//import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
+import { useInstanceData } from '@/contexts/instance-context'
+import { EntityData, FrontendContentNode } from '@/data-types'
+import { categoryIconMapping } from '@/helper/header-by-content-type'
+import { renderArticle } from '@/schema/article-renderer'
 
-const CourseNavigation = dynamic<CourseNavigationProps>(() =>
+/*const CourseNavigation = dynamic<CourseNavigationProps>(() =>
   import('@/components/navigation/course-navigation').then(
     (mod) => mod.CourseNavigation
   )
@@ -31,43 +30,119 @@ const CourseFooter = dynamic<CourseFooterProps>(() =>
   import('@/components/navigation/course-footer').then(
     (mod) => mod.CourseFooter
   )
-)
+)*/
 
-export interface EntityProps {
-  data: EntityData | CourseData
-  contentId: number
-  contentType:
-    | 'Article'
-    | 'Page'
-    | 'CoursePage'
-    | 'Video'
-    | 'Applet'
-    | 'Exercise'
-    | 'ExerciseGroup'
-    | 'TaxonomyTerm'
-  license: LicenseData
-  prettyLinks?: PrettyLinksContextValue
-}
-
-interface EntityData {
-  title: string
-  id: number
-  value: EditorState
-  metaDescription: string
-  license: LicenseData
-}
-
-interface CourseData extends EntityData {
-  courseTitle: string
-  pages: CourseNavigationPagesProps[]
-}
-
-function isCourse(data: EntityProps['data']): data is CourseData {
+/*function isCourse(data: EntityProps['data']): data is CourseData {
   return (data as CourseData).pages !== undefined
+}*/
+
+interface EntityProps {
+  data: EntityData
 }
 
-export function Entity({ data, contentId, contentType, license }: EntityProps) {
+export function Entity({ data }: EntityProps) {
+  // state of the share
   const [open, setOpen] = React.useState(false)
+  const { strings } = useInstanceData()
+
+  //console.log(data)
+
+  return wrapWithSchema(
+    <>
+      {renderStyledH1()}
+      {renderUserToolsMobile()}
+
+      {data.content && renderContent(data.content)}
+
+      <HSpace amount={20} />
+      {renderUserToolsMobile()}
+      {renderUserTools()}
+      {renderShareModal()}
+
+      {data.licenseData && <LicenseNotice data={data.licenseData} />}
+    </>
+  )
+
+  function renderStyledH1() {
+    if (!data.title) return null
+
+    return (
+      <StyledH1 extraMarginTop itemProp="name">
+        {data.title}
+        {renderCategoryIcon()}
+      </StyledH1>
+    )
+  }
+
+  function renderCategoryIcon() {
+    if (!data.categoryIcon) return null
+    return (
+      <span title={strings.categories[data.categoryIcon]}>
+        {' '}
+        <StyledIcon icon={categoryIconMapping[data.categoryIcon]} />{' '}
+      </span>
+    )
+  }
+
+  function wrapWithSchema(comp: JSX.Element) {
+    if (data.schemaData) {
+      if (data.schemaData.wrapWithItemType) {
+        if (data.schemaData.useArticleTag) {
+          return (
+            <article itemScope itemType={data.schemaData.wrapWithItemType}>
+              {comp}
+            </article>
+          )
+        } else {
+          return (
+            <div itemScope itemType={data.schemaData.wrapWithItemType}>
+              {comp}
+            </div>
+          )
+        }
+      }
+    }
+    return comp
+  }
+
+  function renderContent(value: FrontendContentNode[]) {
+    if (data.schemaData?.setContentAsSection) {
+      return <section itemProp="articleBody">{renderArticle(value)}</section>
+    }
+    return renderArticle(value)
+  }
+
+  function renderUserToolsMobile() {
+    return (
+      <UserToolsMobile>
+        <UserToolsMobileButton isOnTop onClick={() => setOpen(true)}>
+          <FontAwesomeIcon icon={faShareAlt} size="1x" /> {strings.share.button}
+        </UserToolsMobileButton>
+      </UserToolsMobile>
+    )
+  }
+
+  function renderUserTools() {
+    return (
+      <UserTools
+        onShare={() => setOpen(true)}
+        editHref={`/entity/repository/add-revision/${data.id}`}
+        hideEdit={!data.inviteToEdit}
+      />
+    )
+  }
+
+  function renderShareModal() {
+    return (
+      <ShareModal
+        open={open}
+        onClose={() => setOpen(false)}
+        contentId={data.id}
+      />
+    )
+  }
+
+  /*
 
   const [courseNavOpen, setCourseNavOpen] = React.useState(false)
   const openCourseNav = (
@@ -88,67 +163,16 @@ export function Entity({ data, contentId, contentType, license }: EntityProps) {
       {renderCourseNavigation()}
 
       {renderStyledH1()}
-      {renderUserToolsMobile()}
-      {renderContent(data.value.children)}
+      
 
       {renderCourseFooter()}
 
-      <HSpace amount={20} />
-      {renderUserToolsMobile()}
-      {renderUserTools()}
-      {renderShareModal()}
 
-      {license && <LicenseNotice data={license} />}
     </>
   )
 
-  function wrapWithSchema(comp: JSX.Element) {
-    if (contentType === 'Article') {
-      return (
-        <article itemScope itemType="http://schema.org/Article">
-          {comp}
-        </article>
-      )
-    }
-    if (contentType === 'Video' || contentType === 'Applet') {
-      return (
-        <div itemScope itemType="http://schema.org/VideoObject">
-          {comp}
-        </div>
-      )
-    }
-    return comp
-  }
+  
 
-  function renderUserToolsMobile() {
-    return (
-      <UserToolsMobile>
-        <UserToolsMobileButton isOnTop onClick={() => setOpen(true)}>
-          <FontAwesomeIcon icon={faShareAlt} size="1x" /> Teilen
-        </UserToolsMobileButton>
-      </UserToolsMobile>
-    )
-  }
-
-  function renderUserTools() {
-    return (
-      <UserTools
-        onShare={() => setOpen(true)}
-        editHref={`/entity/repository/add-revision/${data.id}`}
-        hideEdit={contentType === 'Page'}
-      />
-    )
-  }
-
-  function renderShareModal() {
-    return (
-      <ShareModal
-        open={open}
-        onClose={() => setOpen(false)}
-        contentId={contentId}
-      />
-    )
-  }
 
   function renderCourseNavigation() {
     if (isCourse(data)) {
@@ -162,13 +186,6 @@ export function Entity({ data, contentId, contentType, license }: EntityProps) {
         />
       )
     } else return null
-  }
-
-  function renderContent(value: EditorState['children']) {
-    if (contentType === 'Article') {
-      return <section itemProp="articleBody">{renderArticle(value)}</section>
-    }
-    return renderArticle(value)
   }
 
   function renderCourseFooter() {
@@ -194,25 +211,7 @@ export function Entity({ data, contentId, contentType, license }: EntityProps) {
       )
     } else return null
   }
-
-  function renderStyledH1() {
-    if (contentType === 'Exercise' || contentType === 'ExerciseGroup')
-      return null
-
-    const iconAndTitle = getIconAndTitleByContentType(contentType)
-
-    return (
-      <StyledH1 extraMarginTop itemProp="name">
-        {data.title}
-        {(contentType === 'Article' || contentType === 'Video') && (
-          <span title={iconAndTitle.title}>
-            {' '}
-            <StyledIcon icon={iconAndTitle.icon} />{' '}
-          </span>
-        )}
-      </StyledH1>
-    )
-  }
+  */
 }
 
 const StyledIcon = styled(FontAwesomeIcon)`

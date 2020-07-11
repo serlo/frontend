@@ -17,7 +17,7 @@ interface ProcessedResponse {
   breadcrumbs: any // TODO:
   navigation: object
   data: any // TODO:
-  license: string
+  license: any // TODO
   horizonIndices: Array<number>
 }
 

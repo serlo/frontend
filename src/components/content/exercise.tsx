@@ -2,11 +2,12 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 
 import { makeMargin, makeDefaultButton } from '../../helper/css'
-import { renderArticle, EditorState } from '../../schema/article-renderer'
+import { renderArticle } from '../../schema/article-renderer'
 import { ExerciseNumbering } from './exercise-numbering'
 import { InputExercise, InputExerciseProps } from './input-exercise'
-import { LicenseNotice, LicenseData } from './license-notice'
+import { LicenseNotice } from './license-notice'
 import { ScMcExercise, ScMcExerciseProps } from './sc-mc-exercise'
+import { LicenseData, FrontendContentNode } from '@/data-types'
 
 export interface ExerciseProps {
   task: TaskData
@@ -25,7 +26,7 @@ interface TaskData {
     {
       type: string
       state: {
-        content: EditorState['children']
+        content: FrontendContentNode[]
         interactive:
           | {
               plugin: 'scMcExercise'
@@ -49,10 +50,10 @@ interface SolutionData {
           id: string
           title: string
         }
-        strategy: EditorState['children']
-        steps: EditorState['children']
+        strategy: FrontendContentNode[]
+        steps: FrontendContentNode[]
       }
-      children: EditorState['children']
+      children: FrontendContentNode[]
     }
   ]
 }
@@ -116,7 +117,7 @@ export function Exercise(props: ExerciseProps) {
     )
   }
 
-  function getSolutionContent(): EditorState['children'] {
+  function getSolutionContent(): FrontendContentNode[] {
     if (!isEditorSolution) {
       return solution.children
     }
@@ -139,7 +140,7 @@ export function Exercise(props: ExerciseProps) {
     }
     const strategy = state.strategy
     const steps = state.steps
-    return [...prereq, ...strategy, ...steps] as EditorState['children']
+    return [...prereq, ...strategy, ...steps] as FrontendContentNode[]
   }
 
   function renderExerciseTask() {

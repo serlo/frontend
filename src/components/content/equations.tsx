@@ -1,7 +1,8 @@
 import styled from 'styled-components'
 
 import { makeMargin } from '../../helper/css'
-import { renderArticle, EditorState } from '../../schema/article-renderer'
+import { renderArticle } from '../../schema/article-renderer'
+import { FrontendContentNode } from '@/data-types'
 
 type SignType =
   | 'equals'
@@ -13,10 +14,10 @@ type SignType =
   | 'almost-equal-to'
 
 interface StepProps {
-  left: EditorState['children']
+  left: FrontendContentNode[]
   sign: SignType
-  right: EditorState['children']
-  transform: EditorState['children']
+  right: FrontendContentNode[]
+  transform: FrontendContentNode[]
 }
 
 export interface EquationProps {
