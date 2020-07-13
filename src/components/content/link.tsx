@@ -55,8 +55,9 @@ export function Link({
     displayHref.startsWith('/user/profile/') ||
     displayHref.startsWith('user/profile/')
 
-  if (isExternal || (isAbsolute && prettyLink === undefined))
+  if (!displayHref || isExternal || (isAbsolute && prettyLink === undefined))
     return renderLink()
+
   if (!isLegacyLink || prettyLink) return renderClientSide()
 
   //fallback
