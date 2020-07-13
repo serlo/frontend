@@ -24,13 +24,13 @@ It's a bit hacky, but it's free and works quite well.
 export function SearchInput({ onSearchPage }: SearchInputProps) {
   const [searchLoaded, setSearchLoaded] = React.useState(false)
   const [searchActive, setSearchActive] = React.useState(false)
-  const [isSearchPage, setIsSearchPage] = React.useState(false)
+  // const [isSearchPage, setIsSearchPage] = React.useState(false)
   const { strings } = useInstanceData()
 
   React.useEffect(() => {
     // note: find a better way to tell search input that it should activate itself
     if (onSearchPage) {
-      setIsSearchPage(true)
+      // setIsSearchPage(true)
       activateSearch()
     }
     // I only want to run this the first time the page loads
@@ -65,6 +65,32 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
       input.setAttribute('placeholder', strings.header.search)
       input.focus()
       setSearchActive(true)
+
+      const script = document.createElement('script')
+      script.innerHTML = `
+    var resultsContainer = document.getElementById('gcs-results');
+    setupLinkCatcher(resultsContainer);
+
+    function setupLinkCatcher(container){
+      if(!container || container === undefined) return;
+      var className = 'gs-title';
+      
+      document.addEventListener('click', function (e) {
+        
+        var link = null;
+        if( e.target.parentElement.classList.contains(className) ) link = e.target.parentElement;
+        if( e.target.classList.contains(className) ) link = e.target;
+
+        if(link){
+          e.preventDefault();
+          next.router.push('/[[...slug]]', link.dataset.ctorig.replace('https://de.serlo.org','')).then(() => window.scrollTo(0, 0))
+        }
+        
+      }, false);
+    }
+    
+    `
+      document.body.appendChild(script)
     })
   }
 
@@ -84,7 +110,7 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
           </>
         )}
         <div
-          className={isSearchPage ? 'gcse-searchbox' : 'gcse-searchbox-only'}
+          className="gcse-searchbox-only"
           data-autocompletemaxcompletions="7"
           data-resultsurl="/search"
           data-enablehistory="true"
