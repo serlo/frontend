@@ -1,5 +1,6 @@
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useRouter } from 'next/router'
 import { lighten } from 'polished'
 import React from 'react'
 import styled, { createGlobalStyle, css } from 'styled-components'
@@ -26,6 +27,7 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
   const [searchActive, setSearchActive] = React.useState(false)
   // const [isSearchPage, setIsSearchPage] = React.useState(false)
   const { strings } = useInstanceData()
+  const router = useRouter()
 
   React.useEffect(() => {
     // note: find a better way to tell search input that it should activate itself
@@ -36,6 +38,11 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
     // I only want to run this the first time the page loads
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  React.useEffect(() => {
+    const resultsContainer = document.getElementById('gcs-results')
+    setupLinkCatcher(resultsContainer)
+  })
 
   const checkElement = async (selector: string) => {
     while (document.querySelector(selector) === null) {
@@ -66,32 +73,39 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
       input.focus()
       setSearchActive(true)
 
-      const script = document.createElement('script')
-      script.innerHTML = `
-    var resultsContainer = document.getElementById('gcs-results');
-    setupLinkCatcher(resultsContainer);
-
-    function setupLinkCatcher(container){
-      if(!container || container === undefined) return;
-      var className = 'gs-title';
-      
-      container.addEventListener('click', function (e) {
-        
-        var link = null;
-        if( e.target.parentElement.classList.contains(className) ) link = e.target.parentElement;
-        if( e.target.classList.contains(className) ) link = e.target;
-
-        if(link){
-          e.preventDefault();
-          next.router.push('/[[...slug]]', link.dataset.ctorig.replace('https://de.serlo.org','')).then(() => window.scrollTo(0, 0))
-        }
-        
-      }, false);
-    }
-    
-    `
-      document.body.appendChild(script)
+      const resultsContainer = document.getElementById('gcs-results')
+      setupLinkCatcher(resultsContainer)
     })
+  }
+
+  function setupLinkCatcher(container: HTMLElement | null) {
+    if (!container || container === undefined) return
+    const className = 'gs-title'
+
+    container.addEventListener(
+      'click',
+      function (e) {
+        const target = e.target as HTMLElement
+        const link = target.classList.contains(className)
+          ? target
+          : target.parentElement
+
+        if (
+          link &&
+          link.classList.contains(className) &&
+          typeof link.dataset.ctorig !== 'undefined'
+        ) {
+          e.preventDefault()
+          void router
+            .push(
+              '/[[...slug]]',
+              link.dataset.ctorig.replace('https://de.serlo.org', '')
+            )
+            .then(() => window.scrollTo(0, 0))
+        }
+      },
+      false
+    )
   }
 
   return (
