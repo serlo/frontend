@@ -6,12 +6,8 @@ import styled from 'styled-components'
 import { StyledP } from '../tags/styled-p'
 import { LicenseNotice } from './license-notice'
 import { useOrigin } from '@/contexts/origin-context'
-import {
-  PrettyLinksProvider,
-  PrettyLinksContextValue,
-} from '@/contexts/pretty-links-context'
-import { LicenseData } from '@/data-types'
-import { renderArticle, FrontendContentValue } from '@/schema/article-renderer'
+import { LicenseData, PageData, FrontendContentNode } from '@/data-types'
+import { renderArticle } from '@/schema/article-renderer'
 
 export interface InjectionProps {
   href: string
@@ -20,14 +16,11 @@ export interface InjectionProps {
 // TODO: Give injection a separate fetched data type
 
 export function Injection({ href }: InjectionProps) {
-  const [value, setValue] = React.useState<FrontendContentValue | undefined>(
+  const [value, setValue] = React.useState<FrontendContentNode[] | undefined>(
     undefined
   )
   const [license, setLicense] = React.useState<undefined | LicenseData>(
     undefined
-  )
-  const [prettyLinks, setPrettyLinks] = React.useState<PrettyLinksContextValue>(
-    {}
   )
 
   const origin = useOrigin()
@@ -50,10 +43,10 @@ export function Injection({ href }: InjectionProps) {
         if (res.headers.get('content-type')!.includes('json')) return res.json()
         else return res.text()
       })
-      .then((fetchedData: any) => {
+      .then((fetchedData: { pageData: PageData }) => {
         dataToState(fetchedData)
 
-        if (fetchedData.contentType && fetchedData.data) {
+        if (fetchedData.pageData.kind === 'single-entity') {
           try {
             sessionStorage.setItem(encodedHref, JSON.stringify(fetchedData))
           } catch (e) {
@@ -63,24 +56,21 @@ export function Injection({ href }: InjectionProps) {
       })
   }, [href, origin])
 
-  function dataToState(fetchedData: any) {
-    if (fetchedData.contentType && fetchedData.data) {
-      setValue(fetchedData.data.value)
-      if (fetchedData.data.license) {
-        setLicense(fetchedData.data.license)
-      }
-      if (fetchedData.prettyLinks) {
-        setPrettyLinks(fetchedData.prettyLinks)
+  function dataToState(fetchedData: { pageData: PageData }) {
+    if (fetchedData.pageData.kind === 'single-entity') {
+      setValue(fetchedData.pageData.entityData.content)
+      if (fetchedData.pageData.entityData.licenseData) {
+        setLicense(fetchedData.pageData.entityData.licenseData)
       }
     }
   }
 
   if (value) {
     return (
-      <PrettyLinksProvider value={prettyLinks}>
-        {renderArticle(value.children, false)}
-        {license !== undefined && <LicenseNotice data={license} />}
-      </PrettyLinksProvider>
+      <>
+        {renderArticle(value, false)}
+        {license && <LicenseNotice data={license} />}
+      </>
     )
   }
   return (
