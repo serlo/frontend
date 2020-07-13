@@ -50,7 +50,10 @@ export function Link({
 
   const isAbsolute = href.indexOf('//') > -1
   const isExternal = isAbsolute && !href.includes('.serlo.org')
-  const isLegacyLink = legacyLinks.indexOf(displayHref) > -1
+  const isLegacyLink =
+    legacyLinks.indexOf(displayHref) > -1 ||
+    displayHref.startsWith('/user/profile/') ||
+    displayHref.startsWith('user/profile/')
 
   if (isExternal || (isAbsolute && prettyLink === undefined))
     return renderLink()
