@@ -9,14 +9,15 @@ import { Entity, EntityProps } from '@/components/content/entity'
 import { ErrorPage } from '@/components/content/error-page'
 import { HSpace } from '@/components/content/h-space'
 import { Horizon } from '@/components/content/horizon'
+import { Lazy } from '@/components/content/lazy'
 import { LicenseNoticeData } from '@/components/content/license-notice'
 import { Topic, TopicProp } from '@/components/content/topic'
 import type { BreadcrumbsProps } from '@/components/navigation/breadcrumbs'
 import { Footer } from '@/components/navigation/footer'
 import { Header } from '@/components/navigation/header'
 import type { MetaMenuProps } from '@/components/navigation/meta-menu'
-import { PrettyLinksProvider } from '@/components/pretty-links-context'
 import { SlugHead } from '@/components/slug-head'
+import { PrettyLinksProvider } from '@/contexts/pretty-links-context'
 import { horizonData } from '@/data/horizon'
 
 const MetaMenu = dynamic<MetaMenuProps>(() =>
@@ -158,9 +159,11 @@ const PageView: NextPage<PageViewProps> = (props) => {
 
           <HSpace amount={40} />
           {horizonIndices && (
-            <Horizon
-              entries={horizonIndices.map((index) => horizonData[index])}
-            />
+            <Lazy>
+              <Horizon
+                entries={horizonIndices.map((index) => horizonData[index])}
+              />
+            </Lazy>
           )}
         </MaxWidthDiv>
       </RelatveContainer>

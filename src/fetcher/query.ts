@@ -219,6 +219,7 @@ export const dataQuery = (selector: any) => `
           }
           pages {
             alias
+            id
             currentRevision {
               title
             }
@@ -270,24 +271,28 @@ export const dataQuery = (selector: any) => `
           __typename
           ... on Article {
             alias
+            id
             currentRevision {
               title
             }
           }
           ... on Video {
             alias
+            id
             currentRevision {
               title
             }
           }
           ... on Applet {
             alias
+            id
             currentRevision {
               title
             }
           }
           ... on Course {
             alias
+            id
             currentRevision {
               title
             }
@@ -360,24 +365,28 @@ export const dataQuery = (selector: any) => `
               }
               ... on Article {
                 alias
+                id
                 currentRevision {
                   title
                 }
               }
               ... on Video {
                 alias
+                id
                 currentRevision {
                   title
                 }
               }
               ... on Course {
                 alias
+                id
                 currentRevision {
                   title
                 }
               }
               ... on Applet {
                 alias
+                id
                 currentRevision {
                   title
                 }
