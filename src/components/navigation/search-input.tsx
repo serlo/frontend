@@ -75,7 +75,7 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
       if(!container || container === undefined) return;
       var className = 'gs-title';
       
-      document.addEventListener('click', function (e) {
+      container.addEventListener('click', function (e) {
         
         var link = null;
         if( e.target.parentElement.classList.contains(className) ) link = e.target.parentElement;
