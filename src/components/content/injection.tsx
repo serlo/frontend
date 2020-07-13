@@ -4,30 +4,35 @@ import React, { useEffect } from 'react'
 import styled from 'styled-components'
 
 import { StyledP } from '../tags/styled-p'
-import { EntityProps } from './entity'
-import { LicenseNotice, LicenseNoticeData } from './license-notice'
+import { LicenseNotice } from './license-notice'
+import { useOrigin } from '@/contexts/origin-context'
 import {
   PrettyLinksProvider,
   PrettyLinksContextValue,
 } from '@/contexts/pretty-links-context'
-import { renderArticle, EditorState } from '@/schema/article-renderer'
+import { LicenseData } from '@/data-types'
+import { renderArticle, FrontendContentValue } from '@/schema/article-renderer'
 
 export interface InjectionProps {
   href: string
 }
 
+// TODO: Give injection a separate fetched data type
+
 export function Injection({ href }: InjectionProps) {
-  const [value, setValue] = React.useState<EditorState | undefined>(undefined)
-  const [license, setLicense] = React.useState<undefined | LicenseNoticeData>(
+  const [value, setValue] = React.useState<FrontendContentValue | undefined>(
+    undefined
+  )
+  const [license, setLicense] = React.useState<undefined | LicenseData>(
     undefined
   )
   const [prettyLinks, setPrettyLinks] = React.useState<PrettyLinksContextValue>(
     {}
   )
 
+  const origin = useOrigin()
+
   useEffect(() => {
-    const origin = window.location.host
-    const protocol = window.location.protocol
     const encodedHref = encodeURI(href.startsWith('/') ? href : `/${href}`)
 
     try {
@@ -40,12 +45,12 @@ export function Injection({ href }: InjectionProps) {
       //
     }
 
-    void fetch(`${protocol}//${origin}/api/frontend${encodedHref}`)
+    void fetch(`${origin}/api/frontend${encodedHref}`)
       .then((res) => {
         if (res.headers.get('content-type')!.includes('json')) return res.json()
         else return res.text()
       })
-      .then((fetchedData: EntityProps) => {
+      .then((fetchedData: any) => {
         dataToState(fetchedData)
 
         if (fetchedData.contentType && fetchedData.data) {
@@ -56,9 +61,9 @@ export function Injection({ href }: InjectionProps) {
           }
         }
       })
-  }, [href])
+  }, [href, origin])
 
-  function dataToState(fetchedData: EntityProps) {
+  function dataToState(fetchedData: any) {
     if (fetchedData.contentType && fetchedData.data) {
       setValue(fetchedData.data.value)
       if (fetchedData.data.license) {

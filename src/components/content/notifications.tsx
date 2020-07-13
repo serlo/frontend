@@ -1,7 +1,7 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 
-import { serloDomain } from '../../serlo-domain'
+import { serloDomain } from '../../helper/serlo-domain'
 
 interface NotificationsProps {
   entries: NotificationEntry[]

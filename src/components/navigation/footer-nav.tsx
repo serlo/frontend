@@ -1,52 +1,48 @@
-import { IconProp } from '@fortawesome/fontawesome-svg-core'
+import { faGithubSquare } from '@fortawesome/free-brands-svg-icons'
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { lighten } from 'polished'
 import React from 'react'
 import styled from 'styled-components'
 
-import { makeResponsivePadding } from '../../helper/css'
-import { Link } from '../content/link'
+import { Link } from '@/components/content/link'
+import { FooterNavigation } from '@/data-types'
+import { makeResponsivePadding } from '@/helper/css'
 
-interface NavChild {
-  title: string
-  url: string
-  icon?: IconProp
+const iconMapping = {
+  newsletter: faEnvelope,
+  github: faGithubSquare,
 }
 
-interface NavEntry {
-  title: string
-  children: NavChild[]
+interface FooterNavProps {
+  data: FooterNavigation
 }
 
-interface NavProps {
-  navEntries: NavEntry[]
-}
-
-export function FooterNav(props: NavProps) {
+export function FooterNav({ data }: FooterNavProps) {
   return (
     <FooterNavGrid>
       <nav>
         <FooterNavContainer>
-          {props.navEntries.map((category, index) => {
-            const children = category.children.map((link, childindex) => {
-              return (
-                <NavLi key={index + childindex}>
-                  <NavLink href={link.url} noExternalIcon>
-                    {link.icon && (
-                      <FontAwesomeIcon icon={link.icon} size="1x" />
-                    )}{' '}
-                    {link.title}
-                  </NavLink>
-                </NavLi>
-              )
-            })
-            return (
-              <ColWithPadding key={index}>
-                <CategoryHeader>{category.title}</CategoryHeader>
-                <NavList>{children}</NavList>
-              </ColWithPadding>
-            )
-          })}
+          {data.map((category, index) => (
+            <ColWithPadding key={index}>
+              <CategoryHeader>{category.title}</CategoryHeader>
+              <NavList>
+                {category.children.map((link, childindex) => (
+                  <NavLi key={index + childindex}>
+                    <NavLink href={link.url} noExternalIcon>
+                      {link.icon && (
+                        <FontAwesomeIcon
+                          icon={iconMapping[link.icon]}
+                          size="1x"
+                        />
+                      )}{' '}
+                      {link.title}
+                    </NavLink>
+                  </NavLi>
+                ))}
+              </NavList>
+            </ColWithPadding>
+          ))}
         </FooterNavContainer>
       </nav>
     </FooterNavGrid>

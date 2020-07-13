@@ -7,58 +7,42 @@ import { makeMargin, makeDefaultButton } from '../../helper/css'
 import { Link } from '../content/link'
 import { StyledLi } from '../tags/styled-li'
 import { StyledOl } from '../tags/styled-ol'
-import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
-
-export interface CourseNavigationPagesProps {
-  alias: string
-  id: string
-  currentRevision: {
-    title: string
-  }
-}
+import { useInstanceData } from '@/contexts/instance-context'
+import { CourseData } from '@/data-types'
 
 export interface CourseNavigationProps {
-  courseTitle: string
-  pageTitle: string
-  pages: CourseNavigationPagesProps[]
   open: boolean
   onOverviewButtonClick: (e: React.MouseEvent<HTMLAnchorElement>) => void
+  data: CourseData
 }
 
 export function CourseNavigation({
-  courseTitle,
-  pageTitle,
-  pages,
+  data,
   open,
   onOverviewButtonClick,
 }: CourseNavigationProps) {
+  const { strings } = useInstanceData()
   return (
     <Wrapper id="course-overview">
       <CourseH1>
-        <FontAwesomeIcon icon={faGraduationCap} /> {courseTitle}
+        <FontAwesomeIcon icon={faGraduationCap} /> {data.title}
       </CourseH1>
       {open ? (
         <StyledOl>
-          {pages.map((page) => (
-            <StyledLi key={page.alias}>
+          {data.pages.map((page) => (
+            <StyledLi key={page.url}>
               <CourseLink
-                active={pageTitle === page.currentRevision.title}
-                href={
-                  pageTitle === page.currentRevision.title
-                    ? undefined
-                    : hasSpecialUrlChars(page.alias)
-                    ? `/${page.id}`
-                    : page.alias
-                }
+                active={!!page.active}
+                href={page.active ? undefined : page.url}
               >
-                {page.currentRevision.title}
+                {page.title}
               </CourseLink>
             </StyledLi>
           ))}
         </StyledOl>
       ) : (
         <Button onClick={onOverviewButtonClick}>
-          <FontAwesomeIcon icon={faListUl} /> Kursübersicht anzeigen
+          <FontAwesomeIcon icon={faListUl} /> {strings.course.showPages}
         </Button>
       )}
     </Wrapper>

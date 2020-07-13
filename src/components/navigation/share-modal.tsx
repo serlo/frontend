@@ -18,6 +18,7 @@ import styled from 'styled-components'
 import { makeMargin, makeGreenButton, inputFontReset } from '../../helper/css'
 import { Modal } from '../modal'
 import { StyledH2 } from '../tags/styled-h2'
+import { useInstanceData } from '@/contexts/instance-context'
 
 interface ShareModalProps {
   open: boolean
@@ -25,10 +26,15 @@ interface ShareModalProps {
   contentId?: number
 }
 
+export interface ShareData {
+  contentId: number
+}
+
 export function ShareModal(props: ShareModalProps) {
   const { open, onClose, contentId } = props
   const shareInputRef = React.useRef<HTMLInputElement>(null)
   const [copySuccess, setCopySuccess] = React.useState('')
+  const { strings } = useInstanceData()
 
   if (!open) return null
 
@@ -40,7 +46,7 @@ export function ShareModal(props: ShareModalProps) {
     shareInputRef.current!.select()
     document.execCommand('copy')
     target.focus()
-    setCopySuccess(text ? text : 'In Zwischenablage kopiert!')
+    setCopySuccess(text ? text : strings.share.copySuccess)
   }
 
   const url = contentId
@@ -88,7 +94,7 @@ export function ShareModal(props: ShareModalProps) {
 
   return (
     <StyledModal isOpen={open} onRequestClose={onClose}>
-      <StyledH2>Weitergeben!</StyledH2>
+      <StyledH2>{strings.share.title}</StyledH2>
       <div>
         <ShareInput
           ref={shareInputRef}
@@ -98,7 +104,7 @@ export function ShareModal(props: ShareModalProps) {
         {document.queryCommandSupported('copy') && (
           <>
             <Button onClick={copyToClipboard}>
-              <FontAwesomeIcon icon={faCopy} /> Link kopieren
+              <FontAwesomeIcon icon={faCopy} /> {strings.share.copyLink}
             </Button>
             {copySuccess !== '' && (
               <Gray
@@ -108,7 +114,7 @@ export function ShareModal(props: ShareModalProps) {
             <br />
           </>
         )}{' '}
-        <CloseButton onClick={onClose} title="Close">
+        <CloseButton onClick={onClose} title={strings.share.close}>
           <FontAwesomeIcon icon={faTimes} size="lg" />
         </CloseButton>
         <ButtonWrapper>

@@ -1,7 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { serloDomain } from '../../serlo-domain'
+import { serloDomain } from '../../helper/serlo-domain'
+import { useInstanceData } from '@/contexts/instance-context'
+import { useOrigin } from '@/contexts/origin-context'
 
 interface LocalStorageData {
   revision: string
@@ -12,45 +14,54 @@ interface LocalStorageData {
 export function CookieBar() {
   const [loaded, setLoaded] = React.useState(false)
   const [revision, setRevision] = React.useState<undefined | string>(undefined)
+  const origin = useOrigin()
+  const { strings } = useInstanceData()
+
+  // TODO This code is not beautiful and needs some love...
+  function checkRevision(data: any, localInfo: any) {
+    const revisionsArray = data as string[]
+    const json = localInfo ? (JSON.parse(localInfo) as LocalStorageData) : null
+    if (!json || json.revision !== revisionsArray[0]) {
+      setLoaded(true)
+      setRevision(revisionsArray[0])
+    }
+  }
 
   React.useEffect(() => {
-    // load revision, check localStorage
-    void fetch(
-      window.location.protocol +
-        '//' +
-        window.location.host +
-        '/api/frontend/privacy'
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        try {
-          const revisionsArray = data as string[]
-          const localInfo = localStorage.getItem('consent')
-          const json = localInfo
-            ? (JSON.parse(localInfo) as LocalStorageData)
-            : null
-          if (json && json.revision !== revisionsArray[0]) {
-            setLoaded(true)
-            setRevision(revisionsArray[0])
-          }
-        } catch (e) {
-          //
-        }
-      })
-  }, [loaded])
+    try {
+      const localInfo = localStorage.getItem('consent')
+      const fetchedCache = sessionStorage.getItem('privacy_already_fetched')
+      if (fetchedCache) {
+        checkRevision(fetchedCache, localInfo)
+        return
+      }
+      // load revision, check localStorage
+      void fetch(origin + '/api/frontend/privacy')
+        .then((res) => res.json())
+        .then((data) => {
+          sessionStorage.setItem(
+            'privacy_already_fetched',
+            JSON.stringify(data)
+          )
+          checkRevision(data, localInfo)
+        })
+    } catch (e) {
+      //
+    }
+  }, [loaded, origin])
 
   if (!loaded) return null
   return (
     <CookieWrapper>
-      Mit der Nutzung dieser Webseite erklärst du dich mit unserer{' '}
+      {strings.cookie.part1}{' '}
       <CookieLink href={`https://de.${serloDomain}/privacy`} target="_blank">
-        Datenschutzerklärung
+        {strings.cookie.link1}
       </CookieLink>{' '}
-      und{' '}
+      {strings.cookie.part2}{' '}
       <CookieLink href={`https://de.${serloDomain}/terms`} target="_blank">
-        Nutzungsbedingungen
+        {strings.cookie.link2}
       </CookieLink>{' '}
-      einverstanden.
+      {strings.cookie.part3}
       <CookieButton
         onClick={() => {
           localStorage.setItem(
@@ -60,7 +71,7 @@ export function CookieBar() {
           setLoaded(false)
         }}
       >
-        Verstanden
+        {strings.cookie.button}
       </CookieButton>
     </CookieWrapper>
   )

@@ -1,30 +1,39 @@
 import { NextPage } from 'next'
-import absoluteUrl from 'next-absolute-url'
 import dynamic from 'next/dynamic'
 import React from 'react'
-import styled, { css } from 'styled-components'
 
 import { CookieBar } from '@/components/content/cookie-bar'
-import { Entity, EntityProps } from '@/components/content/entity'
-import { ErrorPage } from '@/components/content/error-page'
+import { EntityProps } from '@/components/content/entity'
 import { HSpace } from '@/components/content/h-space'
 import { Horizon } from '@/components/content/horizon'
 import { Lazy } from '@/components/content/lazy'
-import { LicenseNoticeData } from '@/components/content/license-notice'
-import { Topic, TopicProp } from '@/components/content/topic'
-import type { BreadcrumbsProps } from '@/components/navigation/breadcrumbs'
+import { TopicProps } from '@/components/content/topic'
+import { HeadTags } from '@/components/head-tags'
+import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
 import { Footer } from '@/components/navigation/footer'
 import { Header } from '@/components/navigation/header'
-import type { MetaMenuProps } from '@/components/navigation/meta-menu'
-import { SlugHead } from '@/components/slug-head'
-import { PrettyLinksProvider } from '@/contexts/pretty-links-context'
-import { horizonData } from '@/data/horizon'
+import { MaxWidthDiv } from '@/components/navigation/max-width-div'
+import { MetaMenu } from '@/components/navigation/meta-menu'
+import { RelativeContainer } from '@/components/navigation/relative-container'
+import { InstanceDataProvider } from '@/contexts/instance-context'
+import { OriginProvider } from '@/contexts/origin-context'
+import { InitialProps, InstanceData, PageData } from '@/data-types'
+import {
+  fetcherAdditionalData,
+  getInitialProps,
+} from '@/fetcher/get-initial-props'
 
-const MetaMenu = dynamic<MetaMenuProps>(() =>
-  import('@/components/navigation/meta-menu').then((mod) => mod.MetaMenu)
+const Landing = dynamic<{}>(() =>
+  import('@/components/pages/landing').then((mod) => mod.Landing)
 )
-const Breadcrumbs = dynamic<BreadcrumbsProps>(() =>
-  import('@/components/navigation/breadcrumbs').then((mod) => mod.Breadcrumbs)
+const Search = dynamic<{}>(() =>
+  import('@/components/pages/search').then((mod) => mod.Search)
+)
+const Donations = dynamic<{}>(() =>
+  import('@/components/pages/donations').then((mod) => mod.Donations)
+)
+const ErrorPage = dynamic<{}>(() =>
+  import('@/components/pages/error-page').then((mod) => mod.ErrorPage)
 )
 
 const NewsletterPopup = dynamic<{}>(
@@ -37,247 +46,105 @@ const NewsletterPopup = dynamic<{}>(
   }
 )
 
-const Landing = dynamic<{}>(() =>
-  import('@/components/pages/landing').then((mod) => mod.Landing)
-)
-const Search = dynamic<{}>(() =>
-  import('@/components/pages/search').then((mod) => mod.Search)
-)
-const Donations = dynamic<{}>(() =>
-  import('@/components/pages/donations').then((mod) => mod.Donations)
+const Topic = dynamic<TopicProps>(() =>
+  import('@/components/content/topic').then((mod) => mod.Topic)
 )
 
-interface FetchedData {
-  contentId: number
-  alias: string
-  title: string
-  horizonIndices: number[]
-  breadcrumbs: BreadcrumbsProps['entries']
-  navigation: MetaMenuProps['navigation']
-  license: LicenseNoticeData
-  prettyLinks: Record<string, { alias: string }>
-  error: boolean
-  type?: string
-  redirect?: string
-}
+const Entity = dynamic<EntityProps>(() =>
+  import('@/components/content/entity').then((mod) => mod.Entity)
+)
 
-interface TaxonomyTermFetchedData extends FetchedData {
-  contentType: 'TaxonomyTerm'
-  data: TopicProp
-}
-
-interface IsNotTaxonomyTermFetchedData extends FetchedData {
-  contentType: Exclude<EntityProps['contentType'], 'TaxonomyTerm'>
-  data: EntityProps['data']
-}
-
-export interface PageViewProps {
-  fetchedData: TaxonomyTermFetchedData | IsNotTaxonomyTermFetchedData
-  origin: string
-  page?: string
-}
-
-const PageView: NextPage<PageViewProps> = (props) => {
-  React.useEffect(() => {
-    try {
-      sessionStorage.setItem(props.fetchedData.alias, JSON.stringify(props))
-    } catch (e) {
-      //
-    }
-  }, [props])
-  if (!props.fetchedData) return null
-  const { fetchedData, origin, page } = props
-  const {
-    contentId,
-    alias,
-    horizonIndices,
-    breadcrumbs,
-    contentType,
-    title,
-    navigation,
-    license,
-    prettyLinks,
-    error,
-    type,
-    data,
-  } = fetchedData
-
-  const showNav =
-    navigation && !(contentType === 'TaxonomyTerm' && type === 'topicFolder')
-
-  if (page === 'spenden') return <Donations />
-
-  return (
-    <>
-      <SlugHead
-        title={title}
-        fetchedData={fetchedData}
-        alias={alias}
-        origin={origin}
-      />
-      <PrettyLinksProvider value={prettyLinks}>
-        <Header />
-        {showNav && (
-          <MetaMenu pagealias={`/${data.id}`} navigation={navigation} />
-        )}
-        {renderContent()}
-        <Footer />
-      </PrettyLinksProvider>
-
-      {contentType === 'Page' && data && <NewsletterPopup />}
-      <CookieBar />
-    </>
+const PageView: NextPage<InitialProps> = (initialProps) => {
+  // note: we assume that instance data is passing in the first time this components renders
+  // subsequent render calls should be client-side-navigation
+  const [instanceData] = React.useState<InstanceData>(
+    initialProps?.instanceData!
   )
 
-  function renderContent() {
-    if (page !== undefined) {
-      if (page === 'landing') return <Landing />
-      if (page === 'search') return <Search />
-    }
-
-    return (
-      <RelatveContainer>
-        <MaxWidthDiv showNav={!!showNav}>
-          {error && <ErrorPage alias={alias} />}
-
-          {breadcrumbs && !(contentType === 'Page' && navigation) && (
-            <Breadcrumbs entries={breadcrumbs} />
-          )}
-
-          <main>
-            {fetchedData.contentType === 'TaxonomyTerm' ? (
-              <Topic data={fetchedData.data} contentId={contentId} />
-            ) : (
-              <Entity
-                data={fetchedData.data}
-                contentId={contentId}
-                contentType={contentType}
-                license={license}
-              />
-            )}
-          </main>
-
-          <HSpace amount={40} />
-          {horizonIndices && (
-            <Lazy>
-              <Horizon
-                entries={horizonIndices.map((index) => horizonData[index])}
-              />
-            </Lazy>
-          )}
-        </MaxWidthDiv>
-      </RelatveContainer>
-    )
-  }
-}
-
-const RelatveContainer = styled.div`
-  position: relative;
-`
-
-const MaxWidthDiv = styled.div<{ showNav?: boolean }>`
-  max-width: 800px;
-  margin: 0 auto;
-
-  @media (min-width: ${(props) =>
-      props.theme.breakpoints.sm}) AND (max-width: ${(props) =>
-      props.theme.breakpoints.md}) {
-    margin: 0 0 0 51px;
-  }
-
-  ${(props) =>
-    props.showNav &&
-    css`
-      @media (min-width: ${(props) =>
-          props.theme.breakpoints.md}) AND (max-width: ${(props) =>
-          props.theme.breakpoints.lg}) {
-        margin: 0 0 0 200px;
-      }
-    `}
-`
-
-PageView.getInitialProps = async (props) => {
-  const slug =
-    props.query.slug === undefined ? [] : (props.query.slug as string[])
-  const joinedSlug = slug.join('/')
-  const { origin } = absoluteUrl(props.req)
-
-  if (
-    joinedSlug === '' ||
-    joinedSlug === 'search' ||
-    joinedSlug === 'spenden'
-  ) {
-    //TODO: Probaby add another type for FetchedData pages
-    // also check what values we might actually need to feed slug-head
-    return ({
-      fetchedData: {},
-      page: joinedSlug === '' ? 'landing' : joinedSlug,
-      origin: origin,
-    } as unknown) as PageViewProps
-  }
-  //TODO: maybe also add api pages?
-
-  if (typeof window === 'undefined') {
-    const res = await fetch(
-      `${origin}/api/frontend/${encodeURIComponent(joinedSlug)}?redirect`
-    )
-
-    const fetchedData = (await res.json()) as PageViewProps['fetchedData']
-    // compat course to first page
-    if (fetchedData.redirect) {
-      props.res?.writeHead(301, {
-        Location: fetchedData.redirect,
-        // Add the content-type for SEO considerations
-        'Content-Type': 'text/html; charset=utf-8',
-      })
-      props.res?.end()
-      // We redirect here so the component won't be actually rendered
-      return ({} as unknown) as PageViewProps
-    }
-
-    if (fetchedData.error) {
-      props.res!.statusCode = 404
-    }
-
-    return { fetchedData, origin }
-  } else {
-    //client
-
-    const url = '/' + joinedSlug
-
-    getGa()('set', 'page', url)
-    getGa()('send', 'pageview')
+  React.useEffect(() => {
     try {
-      const fromCache = sessionStorage.getItem(url)
-      if (fromCache) {
-        return JSON.parse(fromCache) as PageViewProps
+      const pageData = initialProps?.pageData
+      if (pageData) {
+        if (pageData.kind === 'single-entity' || pageData.kind === 'taxonomy') {
+          if (pageData.cacheKey)
+            sessionStorage.setItem(pageData.cacheKey, JSON.stringify(pageData))
+        }
       }
     } catch (e) {
       //
     }
-    const origin = window.location.host
-    const protocol = window.location.protocol
-    const res = await fetch(`${protocol}//${origin}/api/frontend${url}`)
-    const fetchedData = (await res.json()) as PageViewProps['fetchedData']
-    // compat: redirect of courses
-    if (fetchedData.redirect) {
-      const res = await fetch(
-        `${protocol}//${origin}/api/frontend${fetchedData.redirect}`
-      )
-      const fetchedData2 = (await res.json()) as PageViewProps['fetchedData']
-      return { fetchedData: fetchedData2, origin }
-    }
-    return { fetchedData, origin }
+  }, [initialProps])
+
+  fetcherAdditionalData.origin = initialProps.origin
+  fetcherAdditionalData.instance = instanceData.lang
+
+  return (
+    <OriginProvider value={initialProps.origin}>
+      <InstanceDataProvider value={instanceData}>
+        {renderPage(initialProps.pageData)}
+      </InstanceDataProvider>
+    </OriginProvider>
+  )
+}
+
+function renderPage(page: PageData) {
+  if (page.kind === 'donation') {
+    return <Donations />
+  } else {
+    // all other kinds are using basic layout
+    // render it together to avoid remounting
+    return (
+      <>
+        <Header onSearchPage={page.kind === 'search'} />
+        {(() => {
+          if (page.kind === 'landing') {
+            return <Landing />
+          }
+          if (page.kind === 'search') {
+            return <Search />
+          }
+          if (page.kind === 'error') {
+            return <ErrorPage />
+          }
+          return (
+            <>
+              {page.secondaryNavigationData && (
+                <MetaMenu data={page.secondaryNavigationData} />
+              )}
+              {page.metaData && <HeadTags data={page.metaData} />}
+              {page.newsletterPopup && <NewsletterPopup />}
+              <RelativeContainer>
+                <MaxWidthDiv showNav={!!page.secondaryNavigationData}>
+                  {page.breadcrumbsData && (
+                    <Breadcrumbs data={page.breadcrumbsData} />
+                  )}
+                  <main>
+                    {(() => {
+                      if (page.kind === 'single-entity') {
+                        return <Entity data={page.entityData} />
+                      } /* taxonomy */ else {
+                        return <Topic data={page.taxonomyData} />
+                      }
+                    })()}
+                  </main>
+                  <HSpace amount={40} />
+                  {page.horizonData && (
+                    <Lazy>
+                      <Horizon data={page.horizonData} />
+                    </Lazy>
+                  )}
+                </MaxWidthDiv>
+              </RelativeContainer>
+            </>
+          )
+        })()}
+        <Footer />
+        <CookieBar />
+      </>
+    )
   }
 }
 
-export default PageView
+PageView.getInitialProps = getInitialProps
 
-/* eslint-disable */
-// Safe access to Google Analytics globals
-function getGa(): (...args: any[]) => void {
-  const w = (window as unknown) as any
-  const ga = w[w['GoogleAnalyticsObject'] || 'ga']
-  return ga || (() => {})
-}
-/* eslint-enable */
+export default PageView

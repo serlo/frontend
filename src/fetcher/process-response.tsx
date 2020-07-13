@@ -1,4 +1,3 @@
-import { HorizonEntry } from '../components/content/horizon'
 import { horizonData } from '../data/horizon'
 import { createBreadcrumbs } from './create-breadcrumbs'
 import { createData } from './create-data'
@@ -18,7 +17,7 @@ interface ProcessedResponse {
   breadcrumbs: any // TODO:
   navigation: object
   data: any // TODO:
-  license: string
+  license: any // TODO
   horizonIndices: Array<number>
 }
 
@@ -30,9 +29,7 @@ export function processResponse(reqData: ReqData): ProcessedResponse {
     navigation: createNavigation(reqData.uuid),
     data: createData(reqData.uuid),
     license: createLicense(reqData.uuid),
-    horizonIndices: chooseHorizonEntries(
-      Object.keys(horizonData as HorizonEntry[])
-    ),
+    horizonIndices: chooseHorizonEntries(Object.keys(horizonData)),
   }
 }
 

@@ -1,15 +1,15 @@
-import Head from 'next/head'
 import React from 'react'
 import styled from 'styled-components'
 
+import { HeadTags } from '../head-tags'
 import { SearchResults } from '@/components/navigation/search-results'
+import { useInstanceData } from '@/contexts/instance-context'
 
 export function Search() {
+  const { strings } = useInstanceData()
   return (
     <>
-      <Head>
-        <title>Serlo.org - Suche</title>
-      </Head>
+      <HeadTags data={{ title: `Serlo.org - ${strings.header.search}` }} />
       <StyledSearchResults>
         <div className="gcse-searchresults"></div>
       </StyledSearchResults>

@@ -1,17 +1,11 @@
-import {
-  faInfoCircle,
-  faUserEdit,
-  faGraduationCap,
-  faHandHoldingHeart,
-  faUserFriends,
-} from '@fortawesome/free-solid-svg-icons'
+import { HeaderData } from '@/data-types'
 
-export function getMenuData() {
+export function getMenuData(): HeaderData {
   return [
     {
       url: '',
       title: 'Fächer',
-      icon: faGraduationCap,
+      icon: 'subject',
       children: [
         { url: '/mathe', title: 'Mathematik' },
         { url: '/biologie', title: 'Biologie' },
@@ -28,12 +22,12 @@ export function getMenuData() {
         },
       ],
     },
-    { url: '/serlo', title: 'Über Serlo', icon: faInfoCircle },
-    { url: '/mitmachen', title: 'Mitmachen', icon: faUserEdit },
+    { url: '/serlo', title: 'Über Serlo', icon: 'about' },
+    { url: '/mitmachen', title: 'Mitmachen', icon: 'participate' },
     {
       url: '',
       title: 'Community',
-      icon: faUserFriends,
+      icon: 'community',
       children: [
         {
           url: '/community',
@@ -47,6 +41,6 @@ export function getMenuData() {
         { url: '/entity/unrevised', title: 'Ungeprüfte Bearbeitungen' },
       ],
     },
-    { url: '/spenden', title: 'Spenden', icon: faHandHoldingHeart },
+    { url: '/spenden', title: 'Spenden', icon: 'donate' },
   ]
 }

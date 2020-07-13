@@ -1,25 +1,24 @@
-import { faUser } from '@fortawesome/free-solid-svg-icons'
+import { serloDomain } from '@/helper/serlo-domain'
 
-import { serloDomain } from '@/serlo-domain'
-
-export function getAuthLink(loggedIn: boolean) {
+export function getAuthLink(
+  loggedIn: boolean,
+  loginTitle: string,
+  logoutTitle: string
+) {
   if (shouldUseNewAuth()) {
     const authLink = {
       url: '/api/auth/logout',
-      title: 'Abmelden',
-      icon: faUser,
+      title: logoutTitle,
     }
     const noAuthLink = {
       url: '/api/auth/login',
-      title: 'Anmelden',
-      icon: faUser,
+      title: loginTitle,
     }
     return loggedIn ? authLink : noAuthLink
   } else {
     return {
       url: '/auth/login',
-      title: 'Anmelden',
-      icon: faUser,
+      title: loginTitle,
     }
   }
 }

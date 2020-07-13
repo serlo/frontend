@@ -1,7 +1,12 @@
 import {
   faCaretDown,
   faBars,
-  IconDefinition,
+  faUser,
+  faInfoCircle,
+  faUserEdit,
+  faGraduationCap,
+  faHandHoldingHeart,
+  faUserFriends,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { transparentize, lighten } from 'polished'
@@ -10,24 +15,29 @@ import styled from 'styled-components'
 
 import { Link } from '../content/link'
 import { AuthPayload } from '@/auth/use-auth'
+import { useInstanceData } from '@/contexts/instance-context'
+import { HeaderData, HeaderLink } from '@/data-types'
 import { getAuthLink } from '@/helper/feature-auth'
 
 interface MobileMenuProps {
-  links: MobileMenuLink[]
+  data: HeaderData
   auth: AuthPayload
 }
 
-interface MobileMenuLink {
-  title: string
-  url: string
-  icon?: IconDefinition
-  children?: MobileMenuLink[]
+const menuIconMapping = {
+  subject: faGraduationCap,
+  about: faInfoCircle,
+  participate: faUserEdit,
+  community: faUserFriends,
+  donate: faHandHoldingHeart,
+  user: faUser,
 }
 
-export function MobileMenu({ links, auth }: MobileMenuProps) {
+export function MobileMenu({ data, auth }: MobileMenuProps) {
   const [openEntryIndex, setOpenEntryIndex] = React.useState<null | number>(
     null
   )
+  const { strings } = useInstanceData()
 
   function toggle(
     e: React.MouseEvent<HTMLLIElement, MouseEvent>,
@@ -40,7 +50,7 @@ export function MobileMenu({ links, auth }: MobileMenuProps) {
 
   return (
     <List>
-      {links.map((entry, index) => (
+      {data.map((entry, index) => (
         <Entry
           onToggle={toggle}
           key={index}
@@ -54,13 +64,17 @@ export function MobileMenu({ links, auth }: MobileMenuProps) {
   )
 
   function renderAuthMenu() {
-    const link = getAuthLink(auth !== null)
+    const link = getAuthLink(
+      auth !== null,
+      strings.header.login,
+      strings.header.logout
+    )
 
-    return <Entry url={link.url} title={link.title} icon={link.icon} />
+    return <Entry url={link.url} title={link.title} icon="user" />
   }
 }
 
-interface EntryProps extends MobileMenuLink {
+interface EntryProps extends HeaderLink {
   isChild?: boolean
   open?: boolean
   index?: number
@@ -89,15 +103,11 @@ function Entry({
             : undefined
         }
       >
-        <EntryLink
-          href={url === '' ? undefined : url}
-          isChild={isChild}
-          open={open}
-        >
+        <EntryLink href={url} isChild={isChild} open={open}>
           {!isChild ? (
             <IconWrapper>
               <FontAwesomeIcon
-                icon={icon !== undefined ? icon : faBars}
+                icon={icon !== undefined ? menuIconMapping[icon] : faBars}
                 size="1x"
                 style={{ fontSize: '23px' }}
               />

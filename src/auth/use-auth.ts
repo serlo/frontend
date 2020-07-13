@@ -1,6 +1,6 @@
 import jwt_decode from 'jwt-decode'
 
-import { useCookie } from '@/cookie'
+import { useCookie } from '@/helper/cookie'
 
 export function useAuth(): AuthPayload {
   const cookies = useCookie()

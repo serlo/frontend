@@ -7,6 +7,11 @@ import styled, { createGlobalStyle, css } from 'styled-components'
 import SearchIcon from '../../../public/_assets/img/search-icon.svg'
 import { inputFontReset } from '../../helper/css'
 import { theme } from '../../theme'
+import { useInstanceData } from '@/contexts/instance-context'
+
+interface SearchInputProps {
+  onSearchPage?: boolean
+}
 
 /*
 This components starts with only a placeholder that looks like a searchbar (basically a button).
@@ -16,13 +21,15 @@ From this point on it's a styled GSC that loads /search to display the results.
 It's a bit hacky, but it's free and works quite well.
 */
 
-export function SearchInput() {
+export function SearchInput({ onSearchPage }: SearchInputProps) {
   const [searchLoaded, setSearchLoaded] = React.useState(false)
   const [searchActive, setSearchActive] = React.useState(false)
   const [isSearchPage, setIsSearchPage] = React.useState(false)
+  const { strings } = useInstanceData()
 
   React.useEffect(() => {
-    if (window.location.pathname === '/search') {
+    // note: find a better way to tell search input that it should activate itself
+    if (onSearchPage) {
       setIsSearchPage(true)
       activateSearch()
     }
@@ -55,7 +62,7 @@ export function SearchInput() {
 
     void checkElement('#gsc-i-id1').then((element) => {
       const input = element as HTMLInputElement
-      input.setAttribute('placeholder', 'Suche')
+      input.setAttribute('placeholder', strings.header.search)
       input.focus()
       setSearchActive(true)
     })
@@ -66,7 +73,7 @@ export function SearchInput() {
       <SearchForm id="searchform" onClick={activateSearch}>
         {!searchActive && (
           <>
-            <PlaceholderText>Suche</PlaceholderText>
+            <PlaceholderText>{strings.header.search}</PlaceholderText>
             <PlaceholderButton>
               {!searchLoaded ? (
                 <PlaceholderIcon />

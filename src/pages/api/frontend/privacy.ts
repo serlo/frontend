@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
-import { serloDomain } from '@/serlo-domain'
+import { serloDomain } from '@/helper/serlo-domain'
 
 // need this to bypass CORS and cache responses
 export default async function privacy(
@@ -9,5 +9,6 @@ export default async function privacy(
 ) {
   const data = await fetch(`https://de.${serloDomain}/privacy/json`)
   const json = (await data.json()) as string[]
+  res.setHeader('Access-Control-Allow-Origin', '*')
   res.json(json)
 }

@@ -60,7 +60,7 @@ export function Video(props: VideoProps) {
   return (
     <VideoPlaceholder>
       <FontAwesomeIcon icon={faFilm} size="5x" />
-      <StyledP>Es gab ein Problem mit dem Video: {url}</StyledP>
+      <StyledP>Loading video failed: {url}</StyledP>
     </VideoPlaceholder>
   )
 }

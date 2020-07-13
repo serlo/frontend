@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components'
 
 import { makeMargin, makeDefaultButton, inputFontReset } from '../../helper/css'
 import { StyledP } from '../tags/styled-p'
+import { useInstanceData } from '@/contexts/instance-context'
 
 interface AnswerData {
   value: any
@@ -19,6 +20,7 @@ export interface InputExerciseProps {
 export function InputExercise({ data }: InputExerciseProps) {
   const [feedback, setFeedback] = React.useState<React.ReactNode>(null)
   const [value, setValue] = React.useState('')
+  const { strings } = useInstanceData()
 
   function keyPress(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.keyCode == 13) {
@@ -33,7 +35,7 @@ export function InputExercise({ data }: InputExerciseProps) {
         value={value}
         onChange={(e) => setValue(e.target.value)}
         onKeyDown={keyPress}
-        placeholder="Deine Antwort…"
+        placeholder={strings.content.yourAnswer}
       />{' '}
       {data.unit}
       <br />
@@ -42,18 +44,18 @@ export function InputExercise({ data }: InputExerciseProps) {
         selectable={value !== ''}
         onClick={() => setFeedback(checkAnswer(value, data.answers))}
       >
-        Stimmt&apos;s?
+        {strings.content.check}
       </CheckButton>
     </Wrapper>
   )
-}
 
-function checkAnswer(val: string, answers: AnswerData[]) {
-  const filteredAnswers = answers.filter((answer) => answer.value === val)
-  if (filteredAnswers.length !== 1 || !filteredAnswers[0].isCorrect) {
-    return <span>Falsch</span>
-  } else {
-    return <span>Richtig</span>
+  function checkAnswer(val: string, answers: AnswerData[]) {
+    const filteredAnswers = answers.filter((answer) => answer.value === val)
+    if (filteredAnswers.length !== 1 || !filteredAnswers[0].isCorrect) {
+      return <span>{strings.content.wrong}</span>
+    } else {
+      return <span>{strings.content.right}</span>
+    }
   }
 }
 
