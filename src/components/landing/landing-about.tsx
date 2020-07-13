@@ -86,6 +86,7 @@ const AboutCol = styled.div`
 
 const AboutButton = styled(Link)`
   ${makeDefaultButton}
+  text-decoration: none !important;
   margin-left: -7px;
   margin-top: 10px;
   padding-top: 3px;
