@@ -96,9 +96,15 @@ export async function getInitialProps(
         `${fetcherAdditionalData.origin}/api/frontend${fetchedData.redirect}`
       )
       const fetchedData2 = await res.json()
-      return buildInitialProps(fetchedData2, fetcherAdditionalData.origin)
+      return {
+        origin: fetcherAdditionalData.origin,
+        pageData: fetchedData2.pageData,
+      }
     }
-    return buildInitialProps(fetchedData, fetcherAdditionalData.origin)
+    return {
+      origin: fetcherAdditionalData.origin,
+      pageData: fetchedData.pageData,
+    }
   }
 }
 
