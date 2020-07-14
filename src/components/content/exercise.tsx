@@ -90,7 +90,7 @@ export function Exercise(props: ExerciseProps) {
 
       {renderSolutionToggle()}
 
-      {renderSolutionBox()}
+      {solutionVisible && renderSolutionBox()}
     </Wrapper>
   )
 
@@ -113,7 +113,7 @@ export function Exercise(props: ExerciseProps) {
 
   function renderSolutionBox() {
     return (
-      <SolutionBox visible={solutionVisible}>
+      <SolutionBox>
         {renderArticle(getSolutionContent(), false)}
         {solutionLicense && <LicenseNotice minimal data={solutionLicense} />}
       </SolutionBox>
@@ -238,10 +238,9 @@ const SolutionToggle = styled.a<{ active: boolean }>`
   }
 `
 
-const SolutionBox = styled.div<{ visible: boolean }>`
+const SolutionBox = styled.div`
   padding-top: 10px;
   padding-bottom: 10px;
-  display: ${(props) => (props.visible ? 'block' : 'none')};
   ${makeMargin}
   margin-bottom: ${(props) => props.theme.spacing.mb.block};
   border-left: 8px solid ${(props) => props.theme.colors.brand};;
