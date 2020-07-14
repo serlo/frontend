@@ -67,6 +67,8 @@ export async function getInitialProps(
       }
     }
 
+    props.res!.setHeader('Cache-Control', 's-maxage=1, stale-while-revalidate')
+
     return buildInitialProps(fetchedData, origin)
   } else {
     //client
