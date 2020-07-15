@@ -106,6 +106,7 @@ export type PageData =
   | DonationPage
   | SearchPage
   | ErrorPage
+  | NotificationsPage
   | SingleEntityPage
   | TaxonomyPage
 
@@ -115,7 +116,7 @@ export interface LandingPage {
   kind: 'landing'
 }
 
-// The same for donation, search and error page:
+// The same for donation, search and error and notifications page:
 
 export interface DonationPage {
   kind: 'donation'
@@ -127,6 +128,10 @@ export interface SearchPage {
 
 export interface ErrorPage {
   kind: 'error'
+}
+
+export interface NotificationsPage {
+  kind: 'user/notifications'
 }
 
 // There are several page elements that are common for entities:

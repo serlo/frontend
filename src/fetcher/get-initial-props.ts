@@ -20,7 +20,8 @@ export async function getInitialProps(
   if (
     joinedSlug === '' ||
     joinedSlug === 'search' ||
-    joinedSlug === 'spenden'
+    joinedSlug === 'spenden' ||
+    joinedSlug === 'user/notifications'
   ) {
     //TODO: Probaby add another type for FetchedData pages
     // also check what values we might actually need to feed slug-head

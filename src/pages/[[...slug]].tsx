@@ -35,6 +35,11 @@ const Donations = dynamic<{}>(() =>
 const ErrorPage = dynamic<{}>(() =>
   import('@/components/pages/error-page').then((mod) => mod.ErrorPage)
 )
+const Notifications = dynamic<{}>(() =>
+  import('@/components/pages/user/notifications').then(
+    (mod) => mod.Notifications
+  )
+)
 
 const NewsletterPopup = dynamic<{}>(
   () =>
@@ -93,6 +98,7 @@ function renderPage(page: PageData) {
   } else {
     // all other kinds are using basic layout
     // render it together to avoid remounting
+
     return (
       <>
         <Header onSearchPage={page.kind === 'search'} />
@@ -102,6 +108,9 @@ function renderPage(page: PageData) {
           }
           if (page.kind === 'search') {
             return <Search />
+          }
+          if (page.kind === 'user/notifications') {
+            return <Notifications />
           }
           if (page.kind === 'error') {
             return <ErrorPage />
