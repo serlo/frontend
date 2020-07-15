@@ -22,10 +22,15 @@ export interface AbstractNotificationEvent {
   date: Date
 }
 
+export interface NotificationUser {
+  id: number
+  username: string
+}
+
 export interface SetThreadStateEvent extends AbstractNotificationEvent {
   type: NotificationEventType.SetThreadState
   archived: boolean
-  actor: { id: number }
+  actor: NotificationUser
   thread: { id: number }
 }
 
@@ -33,47 +38,47 @@ export interface CreateCommentEvent extends AbstractNotificationEvent {
   type: NotificationEventType.CreateComment
   thread: { id: number }
   comment: { id: number }
-  author: { id: number }
+  author: NotificationUser
 }
 
 export interface CreateThreadEvent extends AbstractNotificationEvent {
   type: NotificationEventType.CreateThread
   uuid: { id: number }
   thread: { id: number }
-  author: { id: number }
+  author: NotificationUser
 }
 
 export interface CreateEntityEvent extends AbstractNotificationEvent {
   type: NotificationEventType.CreateEntity
   entity: { id: number }
-  author: { id: number }
+  author: NotificationUser
 }
 
 export interface SetLicenseEvent extends AbstractNotificationEvent {
   type: NotificationEventType.SetLicense
   entity: { id: number }
-  actor: { id: number }
+  actor: NotificationUser
 }
 
 export interface CreateLinkEvent extends AbstractNotificationEvent {
   type: NotificationEventType.CreateLink
   parent: { id: number }
   entity: { id: number }
-  actor: { id: number }
+  actor: NotificationUser
 }
 
 export interface RemoveLinkEvent extends AbstractNotificationEvent {
   type: NotificationEventType.RemoveLink
   parent: { id: number }
   entity: { id: number }
-  actor: { id: number }
+  actor: NotificationUser
 }
 
 export interface CreateEntityRevisionEvent extends AbstractNotificationEvent {
   type: NotificationEventType.CreateEntityRevision
   repository: { id: number }
   revision: { id: number }
-  author: { id: number }
+  author: NotificationUser
 }
 
 export interface CheckoutRevisionEvent extends AbstractNotificationEvent {
@@ -81,7 +86,7 @@ export interface CheckoutRevisionEvent extends AbstractNotificationEvent {
   repository: { id: number }
   revision: { id: number }
   reason: string
-  reviewer: { id: number }
+  reviewer: NotificationUser
 }
 
 export interface RejectRevisionEvent extends AbstractNotificationEvent {
@@ -89,39 +94,39 @@ export interface RejectRevisionEvent extends AbstractNotificationEvent {
   repository: { id: number }
   revision: { id: number }
   reason: string
-  reviewer: { id: number }
+  reviewer: NotificationUser
 }
 
 export interface CreateTaxonomyAssociation extends AbstractNotificationEvent {
   type: NotificationEventType.CreateTaxonomyAssociation
   taxonomyTerm: { id: number }
   entity: { id: number }
-  actor: { id: number }
+  actor: NotificationUser
 }
 
 export interface RemoveTaxonomyAssociation extends AbstractNotificationEvent {
   type: NotificationEventType.RemoveTaxonomyAssociation
   taxonomyTerm: { id: number }
   entity: { id: number }
-  actor: { id: number }
+  actor: NotificationUser
 }
 
 export interface CreateTaxonomyTerm extends AbstractNotificationEvent {
   type: NotificationEventType.CreateTaxonomyTerm
   taxonomyTerm: { id: number }
-  actor: { id: number }
+  actor: NotificationUser
 }
 
 export interface SetTaxonomyTerm extends AbstractNotificationEvent {
   type: NotificationEventType.SetTaxonomyTerm
   taxonomyTerm: { id: number }
-  actor: { id: number }
+  actor: NotificationUser
 }
 
 export interface SetTaxonomyParent extends AbstractNotificationEvent {
   type: NotificationEventType.SetTaxonomyParent
   taxonomyTerm: { id: number }
-  actor: { id: number }
+  actor: NotificationUser
   previousParent: { id: number }
   parent: { id: number }
 }
@@ -129,7 +134,7 @@ export interface SetTaxonomyParent extends AbstractNotificationEvent {
 export interface SetUuidState extends AbstractNotificationEvent {
   type: NotificationEventType.SetUuidState
   uuid: { id: number }
-  actor: { id: number }
+  actor: NotificationUser
   trashed: boolean
 }
 
@@ -156,6 +161,7 @@ export interface NotificationEventPayload {
   date: string
   actor: {
     id: number
+    username: string
   }
   object: {
     id: number

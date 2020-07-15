@@ -1,10 +1,19 @@
+import styled, { css } from 'styled-components'
+import TimeAgo from 'timeago-react'
+import * as timeago from 'timeago.js'
+//TODO: investigate
+// eslint-disable-next-line import/no-internal-modules
+import de from 'timeago.js/lib/lang/de'
+
+import { Notification } from './notification'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import {
-  NotificationEvent,
   NotificationEventPayload,
-  NotificationEventType,
   parseNotificationEvent,
 } from '@/events/event'
+
+// register it.
+timeago.register('de', de)
 
 export function NotificationsList() {
   const { data } = useGraphqlSwr<{
@@ -45,163 +54,74 @@ export function NotificationsList() {
       unread: undefined,
     },
   })
+
   return (
-    <ul>
+    <Wrapper>
       {data?.notifications.nodes.map((node) => {
         const props = {
           ...node,
           event: parseNotificationEvent(node.event),
         }
+
+        const eventDate = new Date(node.event.date)
+
         return (
-          <li key={node.id}>
-            {node.unread ? 'ungelesen' : 'gelesen'}, {node.event.date}
-            <br />
-            <Notification {...props} />
-          </li>
+          <Item read={!node.unread} key={node.id}>
+            <Body>
+              <Notification {...props} />
+            </Body>
+            <span title={eventDate.toLocaleString('de-DE')}>
+              <StyledTimeAgo
+                datetime={eventDate}
+                locale="de"
+                opts={{ minInterval: 60 }}
+              />
+            </span>
+          </Item>
         )
       })}
-    </ul>
+    </Wrapper>
   )
 }
 
-function Notification({
-  event,
-}: {
-  id: number
-  unread: boolean
-  event: NotificationEvent
-}) {
-  switch (event.type) {
-    case NotificationEventType.SetThreadState:
-      // TODO:
-      return (
-        <>
-          User {event.actor.id} hat Thread {event.thread.id}
-          {event.archived ? 'archiviert' : 'unarchiviert'}
-        </>
-      )
-    case NotificationEventType.CreateComment:
-      // TODO:
-      return (
-        <>
-          User {event.author.id} hat Kommentar {event.comment.id} im Thread{' '}
-          {event.thread.id} erstellt.
-        </>
-      )
-    case NotificationEventType.CreateThread:
-      // TODO:
-      return (
-        <>
-          User {event.author.id} hat Thread {event.thread.id} in UUID{' '}
-          {event.uuid.id} erstellt.
-        </>
-      )
-    case NotificationEventType.CreateEntity:
-      // TODO:
-      return (
-        <>
-          User {event.author.id} hat Entity {event.entity.id} erstellt.
-        </>
-      )
-    case NotificationEventType.SetLicense:
-      // TODO:
-      return (
-        <>
-          User {event.actor.id} hat die Lizenz von Entity {event.entity.id}{' '}
-          geändert.
-        </>
-      )
-    case NotificationEventType.CreateLink:
-      // TODO:
-      return (
-        <>
-          User {event.actor.id} hat Entity {event.entity.id} mit UUID{' '}
-          {event.parent.id} verknüpft.
-        </>
-      )
-    case NotificationEventType.RemoveLink:
-      // TODO:
-      return (
-        <>
-          User {event.actor.id} hat die Verknüpfung von {event.entity.id} mit{' '}
-          UUID {event.parent.id} entfernt.
-        </>
-      )
-    case NotificationEventType.CreateEntityRevision:
-      // TODO:
-      return (
-        <>
-          User {event.author.id} hat die Revision {event.revision.id} für{' '}
-          Entity/Page {event.repository.id} erstellt.
-        </>
-      )
-    case NotificationEventType.CheckoutRevision:
-      // TODO:
-      return (
-        <>
-          Reviewer {event.reviewer.id} hat die Revision {event.revision.id} für{' '}
-          Entity/Page {event.repository.id} übernommen (Grund: {event.reason}).
-        </>
-      )
-    case NotificationEventType.RejectRevision:
-      // TODO:
-      return (
-        <>
-          Reviewer {event.reviewer.id} hat die Revision {event.revision.id} für{' '}
-          Entity/Page {event.repository.id} verworfen (Grund: {event.reason}).
-        </>
-      )
-    case NotificationEventType.CreateTaxonomyAssociation:
-      // TODO:
-      return (
-        <>
-          User {event.actor.id} hat die Entity {event.entity.id} in Taxonomy{' '}
-          Term {event.taxonomyTerm.id} eingeordnet.
-        </>
-      )
-    case NotificationEventType.RemoveTaxonomyAssociation:
-      // TODO:
-      return (
-        <>
-          User {event.actor.id} hat die Entity {event.entity.id} aus Taxonomy{' '}
-          Term {event.taxonomyTerm.id} entfernt.
-        </>
-      )
-    case NotificationEventType.CreateTaxonomyTerm:
-      // TODO:
-      return (
-        <>
-          User {event.actor.id} hat den Taxonomy Term {event.taxonomyTerm.id}{' '}
-          erstellt.
-        </>
-      )
-    case NotificationEventType.SetTaxonomyTerm:
-      // TODO:
-      return (
-        <>
-          User {event.actor.id} hat den Taxonomy Term {event.taxonomyTerm.id}{' '}
-          geändert.
-        </>
-      )
-    case NotificationEventType.SetTaxonomyParent:
-      // TODO:
-      return (
-        <>
-          User {event.actor.id} hat den Elternknoten des Terms{' '}
-          {event.taxonomyTerm.id} von ${event.previousParent.id} auf{' '}
-          {event.parent.id} geändert.
-        </>
-      )
-    case NotificationEventType.SetUuidState:
-      // TODO:
-      return (
-        <>
-          User {event.actor.id} hat den Uuid {event.uuid.id}{' '}
-          {event.trashed
-            ? 'in den Papierkorb verschoben'
-            : 'aus dem Papierkorb wieder hergestellt'}
-          .
-        </>
-      )
+const Wrapper = styled.div`
+  margin: 50px 0;
+`
+
+const StyledTimeAgo = styled(TimeAgo)`
+  color: ${(props) => props.theme.colors.gray};
+  margin-left: 5px;
+`
+
+const Item = styled.div<{ read: boolean }>`
+  margin: 10px 0;
+  padding: 24px;
+  &:nth-child(even) {
+    background: ${(props) => props.theme.colors.bluewhite};
   }
-}
+  ${(props) =>
+    props.read
+      ? ''
+      : css`
+          font-weight: 600;
+          &:before {
+            content: '';
+            display: inline-block;
+            background: ${props.theme.colors.brand};
+            border-radius: 50%;
+            width: 10px;
+            height: 10px;
+            margin-right: 7px;
+          }
+        `}
+`
+
+const Body = styled.span`
+  a {
+    color: ${(props) => props.theme.colors.brand};
+    text-decoration: none;
+  }
+  a:hover {
+    color: ${(props) => props.theme.colors.lightblue};
+  }
+`
