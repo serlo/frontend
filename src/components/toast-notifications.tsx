@@ -18,8 +18,8 @@ export function ToastNotifications() {
     if (window.location.hash === '#auth') {
       // Remove auth URI fragment
       history.replaceState(null, '', window.location.href.split('#')[0])
-      const toastText = auth
-        ? `👋 Willkommen ${auth.username}!`
+      const toastText = auth.current
+        ? `👋 Willkommen ${auth.current.username}!`
         : `👋 Bis bald!`
       notify.show(toastText, 'custom', showTime, notifyColor)
     }
