@@ -4,11 +4,12 @@ import Tippy, { TippyProps, useSingleton } from '@tippyjs/react'
 import React from 'react'
 import styled, { css } from 'styled-components'
 
-import { makeDefaultButton } from '../../helper/css'
 import { Link } from '../content/link'
+import { UnreadNotifications } from './unread-notifications'
 import { AuthPayload } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
 import { HeaderData, HeaderLink } from '@/data-types'
+import { makeDefaultButton } from '@/helper/css'
 import { getAuthLink, shouldUseNewAuth } from '@/helper/feature-auth'
 
 export interface MenuProps {
@@ -70,12 +71,15 @@ export function Menu({ data, auth }: MenuProps) {
     )
 
     return (
-      <Entry
-        link={link}
-        target={target}
-        authMenuMounted={mounted}
-        onSubMenuInnerClick={onSubMenuInnerClick}
-      />
+      <>
+        {mounted ? <UnreadNotifications /> : null}
+        <Entry
+          link={link}
+          target={target}
+          authMenuMounted={mounted}
+          onSubMenuInnerClick={onSubMenuInnerClick}
+        />
+      </>
     )
   }
 }
