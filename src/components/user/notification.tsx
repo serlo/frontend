@@ -1,3 +1,6 @@
+import { faVolumeMute } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Tippy from '@tippyjs/react'
 import styled, { css } from 'styled-components'
 import TimeAgo from 'timeago-react'
 import * as timeago from 'timeago.js'
@@ -34,8 +37,61 @@ export function Notification({
       </span>
       <Title unread={unread}>{renderTitle()}</Title>
       {renderExtraContent()}
+      {renderMuteButton()}
     </Item>
   )
+
+  function renderMuteButton() {
+    const subscriptionId = getSubscriptionId()
+    return subscriptionId !== undefined ? (
+      <Tippy
+        duration={[300, 250]}
+        animation="fade"
+        placement="bottom"
+        content={
+          <Tooltip>
+            Benachrichtigungen für diesen Inhalt nicht mehr anzeigen.
+          </Tooltip>
+        }
+      >
+        <MuteButton href={`/unsubscribe/${subscriptionId.toString()}`}>
+          <FontAwesomeIcon icon={faVolumeMute} />
+        </MuteButton>
+      </Tippy>
+    ) : null
+  }
+
+  function getSubscriptionId() {
+    switch (event.type) {
+      case NotificationEventType.SetThreadState:
+      case NotificationEventType.CreateThread:
+        return event.thread
+
+      case NotificationEventType.CreateComment:
+        return event.thread.id
+
+      case NotificationEventType.CreateEntity:
+      case NotificationEventType.SetLicense:
+      case NotificationEventType.CreateLink:
+      case NotificationEventType.RemoveLink:
+        return event.entity
+
+      case NotificationEventType.CreateEntityRevision:
+      case NotificationEventType.CheckoutRevision:
+      case NotificationEventType.RejectRevision:
+        return event.repository.id
+
+      case NotificationEventType.CreateTaxonomyAssociation:
+      case NotificationEventType.RemoveTaxonomyAssociation:
+        return event.entity.id
+
+      case NotificationEventType.SetUuidState:
+        return event.uuid
+
+      default:
+        return undefined
+    }
+  }
 
   function renderTitle() {
     switch (event.type) {
@@ -200,12 +256,45 @@ const StyledTimeAgo = styled(TimeAgo)`
   color: ${(props) => props.theme.colors.gray};
 `
 
+const MuteButton = styled.a`
+  position: absolute;
+  opacity: 0;
+  display: flex;
+  justify-content: center;
+  right: 20px;
+  top: 30px;
+  padding: 10px;
+  border-radius: 2rem;
+  transition: all 0.2s ease-in;
+  color: ${(props) => props.theme.colors.brand};
+
+  &:hover {
+    background-color: ${(props) => props.theme.colors.brand};
+    color: #fff;
+  }
+`
+
+const Tooltip = styled.span`
+  font-size: 0.8rem;
+  line-height: 1.2rem;
+  display: block;
+  background-color: ${(props) => props.theme.colors.darkgray};
+  color: #fff;
+  border-radius: 4px;
+  padding: 9px;
+  max-width: 200px;
+`
+
 const Item = styled.div`
   position: relative;
   margin: 10px 0;
   padding: 24px;
   &:nth-child(even) {
     background: ${(props) => props.theme.colors.bluewhite};
+  }
+
+  &:hover ${MuteButton} {
+    opacity: 1;
   }
 `
 
