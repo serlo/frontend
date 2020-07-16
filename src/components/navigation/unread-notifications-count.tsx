@@ -35,7 +35,7 @@ export function UnreadNotificationsCount({
     <StyledFaLayer active={count > 0} className="fa-layers fa-fw">
       <FontAwesomeIcon
         icon={icon}
-        style={{ height: '1.45rem', width: '1.3rem', paddingTop: '0' }}
+        style={{ height: '1.45rem', width: '1.25rem', paddingTop: '0' }}
       />
       <NotificationsNumber className="number">
         {displayCount}
@@ -56,5 +56,5 @@ const NotificationsNumber = styled.span`
   color: #fff;
   z-index: 200;
   text-align: center;
-  width: 22px;
+  width: 21px;
 `

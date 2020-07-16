@@ -178,7 +178,6 @@ function SubMenuInner({ subEntries, onSubMenuInnerClick }: SubMenuInnerProps) {
 
 const ResponsiveNav = styled.nav`
   min-height: 50px;
-  margin-top: -10px;
   @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
     display: none;
   }
@@ -228,9 +227,11 @@ const StyledLink = styled(Link)<{ active?: boolean; hasIcon?: boolean }>`
   font-weight: bold;
   transition: all 0.3s ease-in-out 0s;
   display: block;
-  margin: 11px 3px 0 3px;
-
+  
+  margin: 0 3px;
+  margin-top: ${(props) => (props.hasIcon ? '-5px' : '11px')};
   padding: ${(props) => (props.hasIcon ? '7px' : '2px 7px')};
+  
 
 `
 
