@@ -56,10 +56,19 @@ export const authMenuData: HeaderData = [
     title: 'Benutzer',
     icon: 'user',
     children: [
-      { url: '/user/profile', title: 'Öffentliches Profil' },
-      { url: '/user/profile', title: 'Profil bearbeiten' },
-      { url: '/user/profile', title: 'Passwort aktualisieren' },
-      { url: '/user/profile', title: 'Meine Aktivitäten' },
+      { url: '/user/public', title: 'Öffentliches Profil' },
+      {
+        url: '/user/settings',
+        title: 'Profil bearbeiten',
+      },
+      {
+        url: '/auth/password/change',
+        title: 'Passwort aktualisieren',
+      },
+      {
+        url: '/event/history/user/me',
+        title: 'Meine Aktivitäten',
+      },
       {
         url: '/api/auth/logout',
         title: 'Ausloggen',
