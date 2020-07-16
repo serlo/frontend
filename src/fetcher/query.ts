@@ -511,7 +511,7 @@ export type QueryResponse =
   | TaxonomyTerm
 
 export const idsQuery = (ids: number[]) => {
-  return `{${ids.map(
+  const map = ids.map(
     (id) => `
     uuid${id}: uuid(id:${id}) {
         ... on Entity {
@@ -528,7 +528,8 @@ export const idsQuery = (ids: number[]) => {
         }
       }
     `
-  )}}`
+  )
+  return `{${map.join()}}`
 }
 
 // Note: This query will soon be removed from the fetcher (cloudflare takes this job)

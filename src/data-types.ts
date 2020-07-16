@@ -109,6 +109,12 @@ export type PageData =
   | SingleEntityPage
   | TaxonomyPage
 
+export type FetchedData = PageData & {
+  redirect?: string
+  error?: string
+  pageData: PageData
+}
+
 // The landing page is custom built and takes no additional data
 
 export interface LandingPage {
