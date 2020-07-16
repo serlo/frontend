@@ -520,6 +520,22 @@ export type QueryResponseWithCurrentRevision =
   | Applet
   | CoursePage
 
+export type QueryResponseWithLicense =
+  | Article
+  | Video
+  | Applet
+  | CoursePage
+  | Exercise
+  | GroupedExercise
+  | ExerciseGroup
+
+export type QueryResponseWithTaxonomyTerms =
+  | Article
+  | Video
+  | Applet
+  | Exercise
+  | ExerciseGroup
+
 export const idsQuery = (ids: number[]) => {
   const map = ids.map(
     (id) => `

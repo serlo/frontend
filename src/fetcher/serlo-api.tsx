@@ -126,7 +126,7 @@ export async function fetchContent(
             // special case
             if (arr.length - itemsToRemove > 4 && i === 1) return
             if (ellipsesItem) {
-              shortened.push({ ellipsis: true })
+              shortened.push({ label: '', ellipsis: true })
             } else {
               shortened.push(entry)
             }

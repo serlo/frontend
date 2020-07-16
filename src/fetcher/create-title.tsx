@@ -1,16 +1,10 @@
-import {
-  QueryResponse,
-  TaxonomyTerm,
-  QueryResponseWithCurrentRevision,
-} from './query'
+import { QueryResponse } from './query'
 
 export function createTitle(uuid: QueryResponse) {
-  const type = uuid.__typename
-
   const suffix = ' - lernen mit Serlo!'
 
-  if (type === 'TaxonomyTerm') {
-    const term = uuid as TaxonomyTerm
+  if (uuid.__typename === 'TaxonomyTerm') {
+    const term = uuid
     if (term.type === 'topic') {
       return `${term.name} (Thema)${suffix}`
     }
@@ -23,15 +17,14 @@ export function createTitle(uuid: QueryResponse) {
 
   // default: show revision title
   if (
-    type === 'Page' ||
-    type === 'Article' ||
-    type === 'Video' ||
-    type === 'Applet' ||
-    type === 'CoursePage'
+    uuid.__typename === 'Page' ||
+    uuid.__typename === 'Article' ||
+    uuid.__typename === 'Video' ||
+    uuid.__typename === 'Applet' ||
+    uuid.__typename === 'CoursePage'
   ) {
-    const _uuid = uuid as QueryResponseWithCurrentRevision
-    if (_uuid.currentRevision?.title) {
-      return `${_uuid.currentRevision.title}${suffix}`
+    if (uuid.currentRevision?.title) {
+      return `${uuid.currentRevision.title}${suffix}`
     }
   }
 }

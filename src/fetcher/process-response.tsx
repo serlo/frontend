@@ -4,7 +4,8 @@ import { createData } from './create-data'
 import { createLicense } from './create-license'
 import { createNavigation } from './create-navigation'
 import { createTitle } from './create-title'
-import { QueryResponse } from './query'
+import { QueryResponse, License } from './query'
+import { HeaderLink, BreadcrumbsData } from '@/data-types'
 
 interface ReqData {
   uuid: QueryResponse
@@ -13,10 +14,10 @@ interface ReqData {
 interface ProcessedResponse {
   contentType: string
   title: string
-  breadcrumbs: any // TODO:
-  navigation: object
+  breadcrumbs?: BreadcrumbsData
+  navigation?: HeaderLink[]
   data: any // TODO:
-  license: any // TODO
+  license?: License
   horizonIndices: Array<number>
 }
 

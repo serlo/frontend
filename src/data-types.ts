@@ -156,10 +156,11 @@ export type BreadcrumbEntry = BreadcrumbLinkEntry | BreadcrumbEllipsis
 export interface BreadcrumbLinkEntry {
   label: string
   url?: string
-  ellipsis: undefined
+  ellipsis?: boolean | false
 }
 
-export interface BreadcrumbEllipsis {
+export interface BreadcrumbEllipsis extends BreadcrumbLinkEntry {
+  label: ''
   ellipsis: true
 }
 
