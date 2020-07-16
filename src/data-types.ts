@@ -245,6 +245,7 @@ export interface FrontendContentNode {
   state?: unknown
   children?: FrontendContentNode[]
   text?: string
+  href?: string
 }
 
 // Some translations

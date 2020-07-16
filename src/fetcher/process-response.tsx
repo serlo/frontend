@@ -4,11 +4,10 @@ import { createData } from './create-data'
 import { createLicense } from './create-license'
 import { createNavigation } from './create-navigation'
 import { createTitle } from './create-title'
+import { QueryResponse } from './query'
 
 interface ReqData {
-  uuid: {
-    __typename: string
-  }
+  uuid: QueryResponse
 }
 
 interface ProcessedResponse {

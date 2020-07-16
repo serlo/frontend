@@ -22,7 +22,7 @@ export interface ExerciseProps {
 
 /* Experiment to type out the EditorState */
 
-interface TaskData {
+export interface TaskData {
   children: [
     {
       type: string

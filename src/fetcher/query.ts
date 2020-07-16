@@ -309,6 +309,7 @@ const onEvent = `
 `
 
 export interface Event {
+  __typename: 'Event'
   currentRevision?: {
     content: string
   }
@@ -325,6 +326,7 @@ const onCourse = `
 `
 
 export interface Course {
+  __typename: 'Course'
   pages: {
     alias?: string
   }[]
@@ -454,6 +456,7 @@ interface SubTaxonomyTermChildTaxonomyTerm extends TaxonomyTermChild {
 }
 
 export interface TaxonomyTerm extends Entity {
+  __typename: 'TaxonomyTerm'
   type: TaxonomyTermType
   name: string
   description?: string
@@ -509,6 +512,13 @@ export type QueryResponse =
   | Event
   | Course
   | TaxonomyTerm
+
+export type QueryResponseWithCurrentRevision =
+  | Page
+  | Article
+  | Video
+  | Applet
+  | CoursePage
 
 export const idsQuery = (ids: number[]) => {
   const map = ids.map(
