@@ -1,82 +1,99 @@
 import { render } from '../../external/legacy_render'
 import { convertEdtrIoState } from '../schema/convert-edtr-io-state'
 import { convertLegacyState } from '../schema/convert-legacy-state'
+import {
+  QueryResponse,
+  Page,
+  Article,
+  Video,
+  Applet,
+  ExerciseGroup,
+  BareExercise,
+  CoursePage,
+  TaxonomyTerm,
+  TaxonomyTermChild,
+  TaxonomyTermChildOnX,
+  TaxonomyTermChildTaxonomyTerm,
+  TaxonomyTermChildExercise,
+  TaxonomyTermChildExerciseGroup,
+  Event,
+  ExerciseMaybeGrouped,
+  Exercise,
+  SubTaxonomyTermChildTaxonomyTerm,
+} from './query'
+import { ExerciseProps } from '@/components/content/exercise'
+import { FrontendContentNode } from '@/data-types'
 import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
 
-// TODO: needs type declaration
-export function createData(uuid: any) {
-  const type = uuid.__typename
-
-  if (type === 'Page' && uuid.currentRevision) {
+export function createData(uuid: QueryResponse) {
+  if (uuid.__typename === 'Page' && uuid.currentRevision) {
     return createPage(uuid)
   }
-  if (type === 'Article' && uuid.currentRevision) {
+  if (uuid.__typename === 'Article' && uuid.currentRevision) {
     return createArticle(uuid)
   }
-  if (type === 'Applet' && uuid.currentRevision) {
+  if (uuid.__typename === 'Applet' && uuid.currentRevision) {
     return createApplet(uuid)
   }
-  if (type === 'Video' && uuid.currentRevision) {
+  if (uuid.__typename === 'Video' && uuid.currentRevision) {
     return createVideo(uuid)
   }
   if (
-    (type === 'Exercise' || type === 'GroupedExercise') &&
+    (uuid.__typename === 'Exercise' || uuid.__typename === 'GroupedExercise') &&
     uuid.currentRevision
   ) {
-    return createExercise(uuid)
+    return createExercise(uuid as ExerciseMaybeGrouped)
   }
-  if (type === 'ExerciseGroup' && uuid.currentRevision) {
+  if (uuid.__typename === 'ExerciseGroup' && uuid.currentRevision) {
     return createExerciseGroup(uuid)
   }
-  if (type === 'CoursePage' && uuid.currentRevision) {
+  if (uuid.__typename === 'CoursePage' && uuid.currentRevision) {
     return createCoursePage(uuid)
   }
-  if (type === 'TaxonomyTerm') {
+  if (uuid.__typename === 'TaxonomyTerm') {
     return createTaxonomyTerm(uuid)
   }
-  if (type === 'Event') {
+  if (uuid.__typename === 'Event') {
     return createEvent(uuid)
   }
 }
 
-// TODO: needs type declaration
-function createPage(uuid: any) {
+/*TODO: currently we return partially if there is no currentRevision, would it be better not to return at all? */
+
+function createPage(uuid: Page) {
   return {
-    title: uuid.currentRevision.title,
-    value: convertState(uuid.currentRevision.content),
+    title: uuid.currentRevision?.title,
+    value: convertState(uuid.currentRevision?.content),
     id: uuid.id,
   }
 }
 
-// TODO: needs type declaration
-function createArticle(uuid: any) {
+function createArticle(uuid: Article) {
   return {
-    title: uuid.currentRevision.title,
-    value: convertState(uuid.currentRevision.content),
-    metaTitle: uuid.currentRevision.metaTitle,
-    metaDescription: uuid.currentRevision.metaDescription,
+    title: uuid.currentRevision?.title,
+    value: convertState(uuid.currentRevision?.content),
+    metaTitle: uuid.currentRevision?.metaTitle,
+    metaDescription: uuid.currentRevision?.metaDescription,
     id: uuid.id,
   }
 }
 
-// TODO: needs type declaration
-function createVideo(uuid: any) {
+function createVideo(uuid: Video) {
   return {
-    title: uuid.currentRevision.title,
+    title: uuid.currentRevision?.title,
     value: {
       children: [
         {
           type: 'video',
-          src: uuid.currentRevision.url,
+          src: uuid.currentRevision?.url,
         },
-        ...convertState(uuid.currentRevision.content).children,
+        ...convertState(uuid.currentRevision?.content).children,
       ],
     },
   }
 }
 
-// TODO: needs type declaration
-function createExercise(uuid: any, index?: any) {
+function createExercise(uuid: ExerciseMaybeGrouped, index?: number) {
   return {
     value: {
       children: [
@@ -84,7 +101,7 @@ function createExercise(uuid: any, index?: any) {
           type: 'exercise',
           grouped: false,
           positionOnPage: index,
-          task: convertState(uuid.currentRevision.content),
+          task: convertState(uuid.currentRevision?.content),
           taskLicense: uuid.license,
           solution: convertState(uuid.solution?.currentRevision?.content),
           solutionLicense: uuid.solution?.license,
@@ -94,40 +111,45 @@ function createExercise(uuid: any, index?: any) {
   }
 }
 
-// TODO: needs type declaration
-function createApplet(uuid: any) {
+function createApplet(uuid: Applet) {
   return {
     value: {
       children: [
         {
           type: 'geogebra',
-          id: uuid.currentRevision.url,
+          id: uuid.currentRevision?.url,
         },
-        ...convertState(uuid.currentRevision.content).children,
+        ...convertState(uuid.currentRevision?.content).children,
       ],
     },
-    title: uuid.currentRevision.title,
-    metaTitle: uuid.currentRevision.metaTitle,
-    metaDescription: uuid.currentRevision.metaDescription,
+    title: uuid.currentRevision?.title,
+    metaTitle: uuid.currentRevision?.metaTitle,
+    metaDescription: uuid.currentRevision?.metaDescription,
   }
 }
 
-// TODO: needs type declaration
-function createExerciseGroup(uuid: any, pageIndex?: any) {
-  // TODO: needs type declaration
-  const children: any[] = []
+function createExerciseGroup(uuid: ExerciseGroup, pageIndex?: number) {
+  const children: ExerciseProps[] = []
   if (uuid.exercises?.length > 0) {
-    // TODO: needs type declaration
-    uuid.exercises.forEach(function (exercise: any, groupIndex: any) {
+    uuid.exercises.forEach(function (
+      exercise: BareExercise,
+      groupIndex: number
+    ) {
       if (!exercise.currentRevision) return
       children.push({
         type: 'exercise',
         grouped: true,
         positionInGroup: groupIndex,
-        task: convertState(exercise.currentRevision.content),
+        positionOnPage: undefined,
+        task: convertState(
+          exercise.currentRevision.content
+        ) as ExerciseProps['task'],
         taskLicense: exercise.license,
-        solution: convertState(exercise.solution?.currentRevision?.content),
-        solutionLicense: exercise.solution?.license,
+        solution: convertState(
+          exercise.solution?.currentRevision?.content
+        ) as ExerciseProps['solution'],
+        solutionLicense: exercise.solution
+          ?.license as ExerciseProps['solutionLicense'],
       })
     })
     // for (const exercise of uuid.exercises) {
@@ -139,7 +161,7 @@ function createExerciseGroup(uuid: any, pageIndex?: any) {
       children: [
         {
           type: 'exercise-group',
-          content: convertState(uuid.currentRevision.content).children,
+          content: convertState(uuid.currentRevision?.content).children,
           positionOnPage: pageIndex,
           license: uuid.license,
           children,
@@ -149,28 +171,24 @@ function createExerciseGroup(uuid: any, pageIndex?: any) {
   }
 }
 
-// TODO: needs type declaration
-function createCoursePage(uuid: any) {
+function createCoursePage(uuid: CoursePage) {
   return {
-    value: convertState(uuid.currentRevision.content),
-    title: uuid.currentRevision.title,
-    // TODO: needs type declaration
-    pages: uuid.course?.pages?.filter(
-      (page: any) => page.currentRevision !== null
-    ),
+    value: convertState(uuid.currentRevision?.content),
+    title: uuid.currentRevision?.title,
+    pages: uuid.course?.pages?.filter((page) => page.currentRevision !== null),
     courseTitle: uuid.course?.currentRevision?.title,
   }
 }
 
-// TODO: needs type declaration
-function createEvent(uuid: any) {
+function createEvent(uuid: Event) {
   return {
-    value: convertState(uuid.currentRevision.content),
+    value: convertState(uuid.currentRevision?.content),
   }
 }
 
-// TODO: needs type declaration
-function convertState(raw: any) {
+function convertState(raw: string | undefined): FrontendContentNode {
+  if (raw === undefined) return {}
+
   if (raw?.startsWith('[')) {
     // legacy
     const legacyHTML = render(raw)
@@ -180,12 +198,11 @@ function convertState(raw: any) {
     return convertEdtrIoState(JSON.parse(raw))
   } else {
     // raw as text
-    return { children: [{ type: 'p', children: { text: raw ?? '' } }] }
+    return { children: [{ type: 'p', children: [{ text: raw ?? {} }] }] }
   }
 }
 
-// TODO: needs type declaration
-function createTaxonomyTerm(uuid: any) {
+function createTaxonomyTerm(uuid: TaxonomyTerm) {
   const children = uuid.children?.filter(isActive)
 
   return {
@@ -205,13 +222,11 @@ function createTaxonomyTerm(uuid: any) {
   }
 }
 
-// TODO: needs type declaration
-function isActive(child: any) {
+function isActive(child: TaxonomyTermChild) {
   return child.trashed === false && child.__typename !== 'UnsupportedUuid'
 }
 
-// TODO: needs type declaration
-function buildDescription(description: any) {
+function buildDescription(description?: string) {
   const state = description ? convertState(description) : undefined
   if (state) {
     if (
@@ -225,121 +240,135 @@ function buildDescription(description: any) {
   }
 }
 
-// TODO: needs type declaration
-function collectType(children: any, typename: any) {
-  return (
-    children
-      .filter(
-        // TODO: needs type declaration
-        (child: any) =>
-          child.__typename === typename && child.alias && child.currentRevision
-      )
-      // TODO: needs type declaration
-      .map((child: any) => {
+function collectType(
+  children: (
+    | SubTaxonomyTermChildTaxonomyTerm
+    | TaxonomyTermChildTaxonomyTerm
+    | TaxonomyTermChildOnX
+    | TaxonomyTermChildExercise
+    | TaxonomyTermChildExerciseGroup
+  )[],
+  typename: TaxonomyTermChildOnX['__typename']
+) {
+  return children
+    .filter(
+      (child) =>
+        child.__typename === typename && child.alias && child.currentRevision
+    )
+    .map((child) => {
+      //redundant but makes TS happy:
+      if (child.__typename === typename && child.alias && child.currentRevision)
         return {
           title: child.currentRevision.title,
           url: getAlias(child),
         }
-      })
-  )
+    })
 }
 
-// TODO: needs type declaration
-function collectTopicFolders(children: any) {
-  return (
-    children
-      .filter(
-        // TODO: needs type declaration
-        (child: any) =>
-          child.__typename === 'TaxonomyTerm' &&
-          child.type.includes('opicFolder')
-      )
-      // TODO: needs type declaration
-      .map((child: any) => {
+function collectTopicFolders(
+  children: (
+    | SubTaxonomyTermChildTaxonomyTerm
+    | TaxonomyTermChildTaxonomyTerm
+    | TaxonomyTermChildOnX
+    | TaxonomyTermChildExercise
+    | TaxonomyTermChildExerciseGroup
+  )[]
+) {
+  return children
+    .filter(
+      (child) =>
+        child.__typename === 'TaxonomyTerm' && child.type.includes('opicFolder')
+    )
+    .map((child) => {
+      if (child.__typename === 'TaxonomyTerm')
         return {
           title: child.name,
           url: getAlias(child),
         }
-      })
-  )
+    })
 }
 
-// TODO: needs type declaration
-function collectExercises(children: any) {
-  return (
-    children
-      .filter(
-        // TODO: needs type declaration
-        (child: any) =>
-          ['Exercise', 'ExerciseGroup', 'GroupedExercise'].includes(
-            child.__typename
-          ) && child.currentRevision
+function collectExercises(children: TaxonomyTerm['children']) {
+  return children
+    .filter((child) => {
+      if (
+        child.__typename !== 'Exercise' &&
+        child.__typename !== 'ExerciseGroup'
       )
-      // TODO: needs type declaration
-      .map((child: any, index: any) => {
-        if (
-          child.__typename === 'Exercise' ||
-          child.__typename === 'GroupedExercise'
-        ) {
-          return createExercise(child, index).value
-        }
-        if (child.__typename === 'ExerciseGroup') {
-          return createExerciseGroup(child, index).value
-        }
-      })
-  )
+        return false
+      if (child.currentRevision) {
+        return true
+      }
+    })
+    .map((child, index: number) => {
+      if (child.__typename === 'Exercise') {
+        return createExercise((child as unknown) as Exercise, index).value
+      }
+      if (child.__typename === 'ExerciseGroup') {
+        return createExerciseGroup((child as unknown) as ExerciseGroup, index)
+          .value
+      }
+    })
 }
 
-// TODO: needs type declaration
-function collectNestedTaxonomyTerms(children: any) {
-  return (
-    children
-      .filter(
-        // TODO: needs type declaration
-        (child: any) =>
-          child.__typename === 'TaxonomyTerm' &&
-          !child.type.includes('opicFolder')
-      )
-      // TODO: needs type declaration
-      .map((child: any) => {
-        const subchildren = child.children?.filter(isActive)
-        return {
-          title: child.name,
-          url: getAlias(child),
-          description: buildDescription(child.description),
-          purpose: 1, //TopicPurposes.overview,
-          links: {
-            articles: collectType(subchildren, 'Article'),
-            exercises: collectTopicFolders(subchildren),
-            videos: collectType(subchildren, 'Video'),
-            applets: collectType(subchildren, 'Applet'),
-            courses: collectType(subchildren, 'Course'),
-            subfolders: collectSubfolders(subchildren),
-          },
-        }
-      })
-  )
+function collectNestedTaxonomyTerms(children: TaxonomyTerm['children']) {
+  return children
+    .filter(
+      (child) =>
+        child.__typename === 'TaxonomyTerm' &&
+        !child.type.includes('opicFolder')
+    )
+
+    .map((child) => {
+      //redundant but makes TS happy:
+      if (child.__typename !== 'TaxonomyTerm') return null
+
+      const subchildren = child.children?.filter(isActive)
+      return {
+        title: child.name,
+        url: getAlias(child),
+        description: buildDescription(child.description),
+        purpose: 1, //TopicPurposes.overview,
+        links: {
+          articles: collectType(subchildren, 'Article'),
+          exercises: collectTopicFolders(subchildren),
+          videos: collectType(subchildren, 'Video'),
+          applets: collectType(subchildren, 'Applet'),
+          courses: collectType(subchildren, 'Course'),
+          subfolders: collectSubfolders(subchildren),
+        },
+      }
+    })
 }
 
-// TODO: needs type declaration
-function collectSubfolders(children: any) {
-  return (
-    children
-      .filter(
-        // TODO: needs type declaration
-        (child: any) =>
-          child.__typename === 'TaxonomyTerm' &&
-          !child.type.includes('opicFolder')
-      )
-      // TODO: needs type declaration
-      .map((child: any) => {
+function collectSubfolders(
+  children: (
+    | SubTaxonomyTermChildTaxonomyTerm
+    | TaxonomyTermChildTaxonomyTerm
+    | TaxonomyTermChildOnX
+    | TaxonomyTermChildExercise
+    | TaxonomyTermChildExerciseGroup
+  )[]
+) {
+  return children
+    .filter(
+      (child) =>
+        child.__typename === 'TaxonomyTerm' &&
+        !child.type.includes('opicFolder')
+    )
+    .map((child) => {
+      //redundant but makes TS happy:
+      if (child.__typename === 'TaxonomyTerm')
         return { title: child.name, url: getAlias(child) }
-      })
-  )
+    })
 }
 
-// TODO: needs type declaration
-function getAlias(child: any) {
+function getAlias(
+  child:
+    | TaxonomyTermChildOnX
+    | TaxonomyTermChildTaxonomyTerm
+    | SubTaxonomyTermChildTaxonomyTerm
+) {
   if (!child.alias || hasSpecialUrlChars(child.alias)) return `/${child.id}`
   else return child.alias
 }

@@ -11,13 +11,14 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { LicenseData, FrontendContentNode } from '@/data-types'
 
 export interface ExerciseProps {
+  type?: 'exercise'
   task: TaskData
   solution: SolutionData
   taskLicense: LicenseData
   solutionLicense: LicenseData
   grouped: boolean
   positionInGroup: number
-  positionOnPage: number
+  positionOnPage?: number
 }
 
 /* Experiment to type out the EditorState */
@@ -81,7 +82,7 @@ export function Exercise(props: ExerciseProps) {
 
   return (
     <Wrapper grouped={grouped}>
-      {!grouped && <ExerciseNumbering index={positionOnPage} />}
+      {!grouped && <ExerciseNumbering index={positionOnPage!} />}
 
       {renderExerciseTask()}
       {renderInteractive()}
