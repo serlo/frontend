@@ -281,7 +281,7 @@ const Tooltip = styled.span`
   background-color: ${(props) => props.theme.colors.darkgray};
   color: #fff;
   border-radius: 4px;
-  padding: 9px;
+  padding: 8px 10px;
   max-width: 200px;
 `
 

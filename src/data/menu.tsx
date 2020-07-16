@@ -44,3 +44,34 @@ export function getMenuData(): HeaderData {
     { url: '/spenden', title: 'Spenden', icon: 'donate' },
   ]
 }
+
+export const authMenuData: HeaderData = [
+  {
+    url: '/user/notifications',
+    title: 'Benachrichtigungen',
+    icon: 'notifications',
+  },
+  {
+    url: '',
+    title: 'Benutzer',
+    icon: 'user',
+    children: [
+      { url: '/user/profile', title: 'Öffentliches Profil' },
+      { url: '/user/profile', title: 'Profil bearbeiten' },
+      { url: '/user/profile', title: 'Passwort aktualisieren' },
+      { url: '/user/profile', title: 'Meine Aktivitäten' },
+      {
+        url: '/api/auth/logout',
+        title: 'Ausloggen',
+      },
+    ],
+  },
+]
+
+export const noAuthMenuData: HeaderData = [
+  {
+    url: '/api/auth/login',
+    title: 'Anmelden',
+    icon: 'login',
+  },
+]

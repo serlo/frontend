@@ -1,16 +1,28 @@
-import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
+import { faCaretDown, faUser, faBell } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Tippy, { TippyProps, useSingleton } from '@tippyjs/react'
 import React from 'react'
 import styled, { css } from 'styled-components'
 
 import { Link } from '../content/link'
-import { UnreadNotifications } from './unread-notifications'
+import { UnreadNotificationsCount } from './unread-notifications-count'
 import { AuthPayload } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
 import { HeaderData, HeaderLink } from '@/data-types'
 import { makeDefaultButton } from '@/helper/css'
-import { getAuthLink, shouldUseNewAuth } from '@/helper/feature-auth'
+import { getAuthData, shouldUseNewAuth } from '@/helper/feature-auth'
+
+// Only show some icons on full menu
+const menuIconMapping = {
+  subject: undefined,
+  about: undefined,
+  participate: undefined,
+  community: undefined,
+  donate: undefined,
+  login: undefined,
+  user: faUser,
+  notifications: faBell,
+}
 
 export interface MenuProps {
   data: HeaderData
@@ -64,23 +76,19 @@ export function Menu({ data, auth }: MenuProps) {
   )
 
   function renderAuthMenu() {
-    const link = getAuthLink(
-      mounted && auth !== null,
-      strings.header.login,
-      strings.header.logout
-    )
+    const data = getAuthData(mounted && auth !== null, strings.header.login)
 
-    return (
-      <>
-        {mounted ? <UnreadNotifications /> : null}
+    return data.map((link, i) => {
+      return (
         <Entry
+          key={i}
           link={link}
           target={target}
           authMenuMounted={mounted}
           onSubMenuInnerClick={onSubMenuInnerClick}
         />
-      </>
-    )
+      )
+    })
   }
 }
 
@@ -98,6 +106,10 @@ function Entry({
   authMenuMounted,
 }: EntryProps) {
   const hasChildren = link.children !== undefined
+  const hasIcon =
+    link.icon &&
+    link.icon !== undefined &&
+    menuIconMapping[link.icon] !== undefined
 
   return (
     <Li show={authMenuMounted === undefined ? true : authMenuMounted}>
@@ -111,15 +123,35 @@ function Entry({
           }
           singleton={target}
         >
-          <StyledLink as="a" /*active={true}*/>
-            {link.title} <FontAwesomeIcon icon={faCaretDown} />
+          <StyledLink hasIcon={hasIcon} as="a" /*active={true}*/>
+            {renderIcon()}
+            {!hasIcon && link.title} <FontAwesomeIcon icon={faCaretDown} />
           </StyledLink>
         </Tippy>
       ) : (
-        <StyledLink /*active={true}*/ href={link.url}>{link.title}</StyledLink>
+        <StyledLink hasIcon={hasIcon} /*active={true}*/ href={link.url}>
+          {renderIcon()} {!hasIcon && link.title}
+        </StyledLink>
       )}
     </Li>
   )
+
+  function renderIcon() {
+    if (!hasIcon) return null
+
+    if (link.icon === 'notifications')
+      return <UnreadNotificationsCount icon={menuIconMapping[link.icon]} />
+
+    return (
+      <span className="fa-layers fa-fw">
+        <FontAwesomeIcon
+          // checking for undefined this in hasIcon
+          icon={menuIconMapping[link.icon!]!}
+          style={{ height: '1.4rem', width: '1.4rem', paddingTop: '0' }}
+        />
+      </span>
+    )
+  }
 }
 
 interface SubMenuInnerProps {
@@ -145,6 +177,8 @@ function SubMenuInner({ subEntries, onSubMenuInnerClick }: SubMenuInnerProps) {
 }
 
 const ResponsiveNav = styled.nav`
+  min-height: 50px;
+  margin-top: -10px;
   @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
     display: none;
   }
@@ -170,11 +204,19 @@ const linkStyle = css`
   &[aria-expanded='true'] {
     color: #fff;
     background-color: ${(props) => props.theme.colors.brand};
+
+    /*just for notifications count*/
+    & span.number {
+      color: ${(props) => props.theme.colors.brand};
+    }
+    & span.fa-layers {
+      color: #fff;
+    }
   }
   text-decoration: none !important;
 `
 
-const StyledLink = styled(Link)<{ active?: boolean }>`
+const StyledLink = styled(Link)<{ active?: boolean; hasIcon?: boolean }>`
   ${makeDefaultButton}
   ${linkStyle}
   color: ${(props) =>
@@ -187,6 +229,9 @@ const StyledLink = styled(Link)<{ active?: boolean }>`
   transition: all 0.3s ease-in-out 0s;
   display: block;
   margin: 11px 3px 0 3px;
+
+  padding: ${(props) => (props.hasIcon ? '7px' : '2px 7px')};
+
 `
 
 const SubList = styled.ul`

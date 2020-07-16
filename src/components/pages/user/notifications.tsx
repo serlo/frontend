@@ -3,9 +3,11 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
+import { Link } from '@/components/content/link'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { RelativeContainer } from '@/components/navigation/relative-container'
 import { StyledH1 } from '@/components/tags/styled-h1'
+import { StyledP } from '@/components/tags/styled-p'
 import { Notification } from '@/components/user/notification'
 import {
   NotificationEventPayload,
@@ -59,27 +61,36 @@ export const Notifications: NextPage = () => {
     setMounted(true)
   }, [])
 
-  return mounted ? (
+  if (!mounted) return null
+
+  return (
     <RelativeContainer>
       <MaxWidthDiv showNav>
         <main>
           <StyledH1 extraMarginTop>Benachrichtigungen</StyledH1>
           <Wrapper>
-            {data?.notifications.nodes.map((node) => {
-              const event = parseNotificationEvent(node.event)
-              return (
-                <Notification
-                  key={node.id}
-                  event={event}
-                  unread={node.unread}
-                />
-              )
-            })}
+            {data ? (
+              data.notifications.nodes.map((node) => {
+                const event = parseNotificationEvent(node.event)
+                return (
+                  <Notification
+                    key={node.id}
+                    event={event}
+                    unread={node.unread}
+                  />
+                )
+              })
+            ) : (
+              <StyledP>
+                Bitte <Link href="/api/auth/login">melde dich an</Link> um deine
+                Benachrichtigungen zu sehen
+              </StyledP>
+            )}
           </Wrapper>
         </main>
       </MaxWidthDiv>
     </RelativeContainer>
-  ) : null
+  )
 }
 
 const Wrapper = styled.div`

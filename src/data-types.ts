@@ -60,12 +60,13 @@ export type HeaderIcon =
   | 'community'
   | 'donate'
   | 'user'
+  | 'login'
+  | 'notifications'
 
 export interface HeaderStrings {
   slogan: string
   search: string
   login: string
-  logout: string
 }
 
 // The footer is split into different categories and has three separate links.

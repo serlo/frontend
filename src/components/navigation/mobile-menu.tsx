@@ -7,6 +7,7 @@ import {
   faGraduationCap,
   faHandHoldingHeart,
   faUserFriends,
+  faBell,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { transparentize, lighten } from 'polished'
@@ -17,7 +18,7 @@ import { Link } from '../content/link'
 import { AuthPayload } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
 import { HeaderData, HeaderLink } from '@/data-types'
-import { getAuthLink } from '@/helper/feature-auth'
+import { getAuthData } from '@/helper/feature-auth'
 
 interface MobileMenuProps {
   data: HeaderData
@@ -31,6 +32,8 @@ const menuIconMapping = {
   community: faUserFriends,
   donate: faHandHoldingHeart,
   user: faUser,
+  login: faUser,
+  notifications: faBell,
 }
 
 export function MobileMenu({ data, auth }: MobileMenuProps) {
@@ -64,13 +67,22 @@ export function MobileMenu({ data, auth }: MobileMenuProps) {
   )
 
   function renderAuthMenu() {
-    const link = getAuthLink(
-      auth !== null,
-      strings.header.login,
-      strings.header.logout
-    )
-
-    return <Entry url={link.url} title={link.title} icon="user" />
+    const authData = getAuthData(auth !== null, strings.header.login)
+    return authData.map((link, i) => {
+      return (
+        <Entry
+          key={i}
+          url={link.url}
+          onToggle={toggle}
+          open={openEntryIndex === data.length + i}
+          index={data.length + i}
+          title={link.title}
+          // eslint-disable-next-line react/no-children-prop
+          children={link.children}
+          icon={link.icon}
+        />
+      )
+    })
   }
 }
 
