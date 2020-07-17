@@ -1,12 +1,30 @@
 import * as htmlparser2 from 'htmlparser2'
 
+import { FrontendContentNode } from '@/data-types'
+
 export function convertLegacyState(html: string) {
-  const dom = htmlparser2.parseDOM(html)
+  const dom = (htmlparser2.parseDOM(html) as unknown) as LegacyNode
   return { children: convert(dom) }
 }
 
-// TODO: needs type declaration
-function convert(node: any): any {
+interface LegacyNode {
+  type: string
+  name: string
+  attribs: {
+    class?: string
+    href?: string
+    src?: string
+    alt?: string
+    id?: number | string
+  }
+  children: LegacyNode[]
+  text?: string
+  data?: string
+}
+
+type ConvertData = LegacyNode[] | LegacyNode
+
+function convert(node: ConvertData): FrontendContentNode[] {
   if (!node) {
     console.log('l: empty node, ignoring')
     return []
@@ -28,7 +46,7 @@ function convert(node: any): any {
           const children = convert(node.children)
           // compat: avoid single column layout
           if (children.length === 1) {
-            return children[0].children
+            return children[0].children ? children[0].children : []
           }
           return [
             {
@@ -47,7 +65,7 @@ function convert(node: any): any {
             ]
           }
           // compat: wrap every inline child in p, grouped
-          // TODO: needs type declaration
+          //TODO: investigate why acc is never[]
           children = children.reduce((acc: any, val: any) => {
             if (
               val.type === 'inline-math' ||
@@ -108,6 +126,7 @@ function convert(node: any): any {
         }
         if (className === 'injection') {
           const href = node.children[0].attribs.href
+          if (href === undefined) return []
           const match = /^\/ggt\/(.+)/.exec(href)
           if (match) {
             return [
@@ -160,8 +179,10 @@ function convert(node: any): any {
           ]
         }
         if (className === 'math') {
-          const formula = node.children[0].data
-            .substring(2, node.children[0].data.length - 2)
+          const mathData = node.children[0].data
+          if (mathData === undefined) return []
+          const formula = mathData
+            .substring(2, mathData.length - 2)
             .split('&lt;')
             .join('<')
             .split('&nbsp;')
@@ -169,7 +190,7 @@ function convert(node: any): any {
           return [
             {
               type: 'math',
-              formula,
+              formula: formula,
               alignLeft: true,
             },
           ]
@@ -183,20 +204,16 @@ function convert(node: any): any {
         return []
       }
       // compat: unwrap images from p
-      // TODO: needs type declaration
-      if (children.some((child: any) => child.type === 'img')) {
+      if (children.some((child) => child.type === 'img')) {
         return children
       }
       // compat: unwrap formulas from p
-      // TODO: needs type declaration
-      const maths = children.filter((child: any) => child.type === 'math')
+      const maths = children.filter((child) => child.type === 'math')
       if (maths.length >= 1) {
-        // TODO: needs type declaration
-        let current: any[] = []
-        // TODO: needs type declaration
-        const result: any[] = []
-        // TODO: needs type declaration
-        children.forEach((child: any) => {
+        let current: FrontendContentNode[] = []
+        const result: FrontendContentNode[] = []
+
+        children.forEach((child) => {
           if (child.type === 'math') {
             if (current.length > 0) {
               result.push({
@@ -220,14 +237,12 @@ function convert(node: any): any {
       }
       // compat: convert single inline-math in paragraph to block formula
       const inlineMaths = children.filter(
-        // TODO: needs type declaration
-        (child: any) => child.type === 'inline-math'
+        (child) => child.type === 'inline-math'
       )
       if (inlineMaths.length === 1) {
         if (
           children.every(
-            // TODO: needs type declaration
-            (child: any) =>
+            (child) =>
               child.type === 'inline-math' ||
               (child.text !== undefined && child.text.trim() == '')
           )
@@ -261,8 +276,7 @@ function convert(node: any): any {
     if (node.name === 'ul' || node.name == 'ol') {
       let children = convert(node.children)
       // compat: remove whitespace around list items
-      // TODO: needs type declaration
-      children = children.filter((child: any) => {
+      children = children.filter((child) => {
         if (child.text && child.text.trim() === '') {
           return false
         }
@@ -280,8 +294,7 @@ function convert(node: any): any {
       let children = convert(node.children)
       if (
         children.filter(
-          // TODO: needs type declaration
-          (child: any) =>
+          (child) =>
             child.text === undefined &&
             child.type !== 'a' &&
             child.type !== 'inline-math'
@@ -323,7 +336,8 @@ function convert(node: any): any {
     }
     if (node.name === 'td') {
       // compat: skip empty entries (resulting from newlines)
-      if (node.children.text?.trim() === '') {
+      //TODO: investigate when non array is valid
+      if (((node.children as unknown) as LegacyNode).text?.trim() === '') {
         return []
       }
       return [
@@ -401,22 +415,20 @@ function convert(node: any): any {
         {
           type: 'a',
           // compat: replace absolute urls in german language version
-          href: node.attribs.href.replace('https://de.serlo.org', ''),
+          href: node.attribs.href?.replace('https://de.serlo.org', ''),
           children,
         },
       ]
     }
     if (node.name === 'strong') {
       const children = convert(node.children)
-      // TODO: needs type declaration
-      return makeFormat(children, (child: any) => {
+      return makeFormat(children, (child) => {
         child.strong = true
       })
     }
     if (node.name === 'em') {
       const children = convert(node.children)
-      // TODO: needs type declaration
-      return makeFormat(children, (child: any) => {
+      return makeFormat(children, (child) => {
         child.em = true
       })
     }
@@ -455,6 +467,7 @@ function convert(node: any): any {
   }
   if (node.type === 'text') {
     // compat: remove entities and newlines
+    if (node.data === undefined) return []
     const text = node.data
       .split('&nbsp;')
       .join(' ')
@@ -465,7 +478,7 @@ function convert(node: any): any {
       .split('&amp;')
       .join('&')
       // TODO: needs type declaration
-      .replace(/&#(\d+);/g, function (match: any, dec: any) {
+      .replace(/&#(\d+);/g, function (match, dec: any) {
         return String.fromCharCode(dec)
       })
     // compat: remove empty text
@@ -477,10 +490,11 @@ function convert(node: any): any {
   return []
 }
 
-// TODO: needs type declaration
-function makeFormat(array: any, fn: any) {
-  // TODO: needs type declaration
-  return array.map((child: any) => {
+function makeFormat(
+  array: FrontendContentNode[],
+  fn: (child: FrontendContentNode) => void
+): FrontendContentNode[] {
+  return array.map((child) => {
     if (child.text !== undefined) {
       fn(child)
     }

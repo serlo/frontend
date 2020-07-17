@@ -156,7 +156,7 @@ function createVideo(uuid: Video): VideoEntity {
   }
 }
 
-interface ExerciseEntity {
+export interface ExerciseEntity {
   value: {
     children: {
       type: 'exercise'
@@ -216,7 +216,7 @@ function createApplet(uuid: Applet): AppletEntity {
   }
 }
 
-interface ExerciseGroupEntity {
+export interface ExerciseGroupEntity {
   value: {
     children: {
       type: 'exercise' | 'exercise-group'

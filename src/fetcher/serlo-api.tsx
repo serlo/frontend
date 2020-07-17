@@ -1,7 +1,11 @@
 import { request } from 'graphql-request'
 
 import { serloDomain } from '../helper/serlo-domain'
-import { EntityTypeWithTitle, EntityTypeWithValue } from './create-data'
+import {
+  EntityTypeWithTitle,
+  EntityTypeWithValue,
+  TaxonomyTermEntity,
+} from './create-data'
 import { extractLinks, extractLinksFromNav, walkIdNodes } from './extract-links'
 import { getMetaDescription } from './get-meta-description'
 import { processResponse, ResponseDataQuickFix } from './process-response'
@@ -14,6 +18,7 @@ import {
   EntityData,
   EntityPageBase,
   ProcessedResponseTaxonomy,
+  FrontendContentNode,
 } from '@/data-types'
 import { horizonData } from '@/data/horizon'
 import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
@@ -80,13 +85,18 @@ export async function fetchContent(
     const contentLinks: number[] = []
     const dataWithValue = (processed.data as unknown) as EntityTypeWithValue
     if (dataWithValue?.value) {
+      //TODO: investigate
+      // @ts-expect-error
       walkIdNodes(dataWithValue.value.children, (node, id) => {
         contentLinks.push(id)
       })
     }
 
+    //TODO: investigate this mess
+    const dataEx = (processed.data as unknown) as TaxonomyTermEntity
+
     const exerciseLinks = extractLinks(
-      ((processed.data as unknown) as ResponseDataQuickFix).exercises,
+      dataEx.exercises as FrontendContentNode[],
       []
     )
 
@@ -280,6 +290,7 @@ export async function fetchContent(
 
       //TODO: Should not be nessesary
       entityData.content = ((processed.data as unknown) as EntityTypeWithValue)?.value?.children
+
       if (processed.contentType !== 'Page') {
         entityData.inviteToEdit = true
       }

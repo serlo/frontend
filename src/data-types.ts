@@ -208,7 +208,7 @@ export interface EntityData {
   title?: string
   categoryIcon?: CategoryType
   schemaData?: SchemaData
-  content?: FrontendContentNode[]
+  content?: FrontendContentNode[] | any[]
   inviteToEdit?: boolean
   licenseData?: LicenseData
   courseData?: CourseData
@@ -248,6 +248,17 @@ export interface FrontendContentNode {
   children?: FrontendContentNode[]
   text?: string
   href?: string
+  size?: number
+  formula?: string
+  inline?: boolean
+  alignLeft?: boolean
+  src?: string
+  alt?: string
+  id?: number | string
+  level?: number
+  content?: string
+  strong?: boolean
+  em?: boolean
 }
 
 // Some translations
