@@ -11,7 +11,8 @@ interface ReqData {
   uuid: QueryResponse
 }
 
-//mystery type so far.
+//TODO: resque type to bypass a lot of type guarding in serlo-api, check again
+
 export interface ResponseDataQuickFix {
   title?: string
   value?: FrontendContentNode
