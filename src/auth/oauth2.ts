@@ -65,7 +65,7 @@ export function getLogoutUrl({
   state: string
   callback: string
 }) {
-  if (config === null) return null
+  if (config === null || HYDRA_HOST === undefined) return null
   const query = new URLSearchParams({
     id_token_hint: idToken,
     state: state,

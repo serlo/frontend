@@ -259,6 +259,10 @@ export interface FrontendContentNode {
   content?: string
   strong?: boolean
   em?: boolean
+  maxWidth?: number
+  steps?: any
+  plugin?: string
+  isCorrect?: boolean
 }
 
 // Some translations
