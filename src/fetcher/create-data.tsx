@@ -22,10 +22,42 @@ import {
   SubTaxonomyTermChildTaxonomyTerm,
 } from './query'
 import { ExerciseProps } from '@/components/content/exercise'
-import { FrontendContentNode } from '@/data-types'
+import { FrontendContentNode, LicenseData } from '@/data-types'
+import { TaxonomyTermType } from '@/fetcher/query'
 import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
 
-export function createData(uuid: QueryResponse) {
+/* Made all the types exlicit here, let's see if that was usefull :) */
+
+export type EntityTypeData =
+  | PageEntity
+  | ArticleEntity
+  | AppletEntity
+  | VideoEntity
+  | ExerciseEntity
+  | ExerciseGroupEntity
+  | CoursePageEntity
+  | TaxonomyTermEntity
+  | EventEntity
+  | null
+
+export type EntityTypeWithTitle =
+  | PageEntity
+  | ArticleEntity
+  | AppletEntity
+  | VideoEntity
+  | CoursePageEntity
+
+export type EntityTypeWithValue =
+  | PageEntity
+  | ArticleEntity
+  | AppletEntity
+  | VideoEntity
+  | ExerciseEntity
+  | ExerciseGroupEntity
+  | CoursePageEntity
+  | EventEntity
+
+export function createData(uuid: QueryResponse): EntityTypeData {
   if (uuid.__typename === 'Page' && uuid.currentRevision) {
     return createPage(uuid)
   }
@@ -56,11 +88,21 @@ export function createData(uuid: QueryResponse) {
   if (uuid.__typename === 'Event') {
     return createEvent(uuid)
   }
+
+  //TODO: Better way to make sure this triggers 404?
+  //fallback
+  return null
 }
 
 /*TODO: currently we return partially if there is no currentRevision, would it be better not to return at all? */
 
-function createPage(uuid: Page) {
+interface PageEntity {
+  title?: string
+  value: FrontendContentNode
+  id: number
+}
+
+function createPage(uuid: Page): PageEntity {
   return {
     title: uuid.currentRevision?.title,
     value: convertState(uuid.currentRevision?.content),
@@ -68,7 +110,15 @@ function createPage(uuid: Page) {
   }
 }
 
-function createArticle(uuid: Article) {
+interface ArticleEntity {
+  title?: string
+  value: FrontendContentNode
+  id: number
+  metaTitle?: string
+  metaDescription?: string
+}
+
+function createArticle(uuid: Article): ArticleEntity {
   return {
     title: uuid.currentRevision?.title,
     value: convertState(uuid.currentRevision?.content),
@@ -78,7 +128,20 @@ function createArticle(uuid: Article) {
   }
 }
 
-function createVideo(uuid: Video) {
+interface VideoEntity {
+  title: string | undefined
+  value: {
+    children: (
+      | FrontendContentNode
+      | {
+          type: 'video'
+          src: string
+        }
+    )[]
+  }
+}
+
+function createVideo(uuid: Video): VideoEntity {
   return {
     title: uuid.currentRevision?.title,
     value: {
@@ -93,7 +156,24 @@ function createVideo(uuid: Video) {
   }
 }
 
-function createExercise(uuid: ExerciseMaybeGrouped, index?: number) {
+interface ExerciseEntity {
+  value: {
+    children: {
+      type: 'exercise'
+      grouped: boolean
+      positionOnPage?: number
+      task: FrontendContentNode
+      taskLicense: LicenseData
+      solution: FrontendContentNode
+      solutionLicense?: LicenseData
+    }[]
+  }
+}
+
+function createExercise(
+  uuid: ExerciseMaybeGrouped,
+  index?: number
+): ExerciseEntity {
   return {
     value: {
       children: [
@@ -111,7 +191,15 @@ function createExercise(uuid: ExerciseMaybeGrouped, index?: number) {
   }
 }
 
-function createApplet(uuid: Applet) {
+interface AppletEntity {
+  value: {
+    children: [{ type: 'geogebra'; id?: string }, ...FrontendContentNode[]]
+  }
+  title?: string
+  metaTitle?: string
+  metaDescription?: string
+}
+function createApplet(uuid: Applet): AppletEntity {
   return {
     value: {
       children: [
@@ -128,7 +216,22 @@ function createApplet(uuid: Applet) {
   }
 }
 
-function createExerciseGroup(uuid: ExerciseGroup, pageIndex?: number) {
+interface ExerciseGroupEntity {
+  value: {
+    children: {
+      type: 'exercise' | 'exercise-group'
+      content: FrontendContentNode[] | undefined
+      positionOnPage: number | undefined
+      license: LicenseData
+      children: ExerciseProps[]
+    }[]
+  }
+}
+
+function createExerciseGroup(
+  uuid: ExerciseGroup,
+  pageIndex?: number
+): ExerciseGroupEntity {
   const children: ExerciseProps[] = []
   if (uuid.exercises?.length > 0) {
     uuid.exercises.forEach(function (
@@ -171,7 +274,20 @@ function createExerciseGroup(uuid: ExerciseGroup, pageIndex?: number) {
   }
 }
 
-function createCoursePage(uuid: CoursePage) {
+interface CoursePageEntity {
+  value: FrontendContentNode
+  title?: string
+  pages: {
+    alias?: string
+    id: number
+    currentRevision?: {
+      title: string
+    }
+  }[]
+  courseTitle?: string
+}
+
+function createCoursePage(uuid: CoursePage): CoursePageEntity {
   return {
     value: convertState(uuid.currentRevision?.content),
     title: uuid.currentRevision?.title,
@@ -180,29 +296,35 @@ function createCoursePage(uuid: CoursePage) {
   }
 }
 
-function createEvent(uuid: Event) {
+interface EventEntity {
+  value: FrontendContentNode
+}
+
+function createEvent(uuid: Event): EventEntity {
   return {
     value: convertState(uuid.currentRevision?.content),
   }
 }
 
-function convertState(raw: string | undefined): FrontendContentNode {
-  if (raw === undefined) return {}
+type LinkArray = ({ title: string; url: string } | undefined)[]
 
-  if (raw?.startsWith('[')) {
-    // legacy
-    const legacyHTML = render(raw)
-    return convertLegacyState(legacyHTML)
-  } else if (raw?.startsWith('{')) {
-    // edtrio
-    return convertEdtrIoState(JSON.parse(raw))
-  } else {
-    // raw as text
-    return { children: [{ type: 'p', children: [{ text: raw ?? {} }] }] }
+export interface TaxonomyTermEntity {
+  description?: FrontendContentNode
+  title?: string
+  type: TaxonomyTermType
+  purpose: 0
+  links: {
+    articles: LinkArray
+    exercises: LinkArray
+    videos: LinkArray
+    applets: LinkArray
+    courses: LinkArray
   }
+  exercises: CollectExercises
+  children: CollectNestedTaxonomyTerms
 }
 
-function createTaxonomyTerm(uuid: TaxonomyTerm) {
+function createTaxonomyTerm(uuid: TaxonomyTerm): TaxonomyTermEntity {
   const children = uuid.children?.filter(isActive)
 
   return {
@@ -219,6 +341,22 @@ function createTaxonomyTerm(uuid: TaxonomyTerm) {
     },
     exercises: collectExercises(children),
     children: collectNestedTaxonomyTerms(children), // nested taxonomy terms
+  }
+}
+
+function convertState(raw: string | undefined): FrontendContentNode {
+  if (raw === undefined) return {}
+
+  if (raw?.startsWith('[')) {
+    // legacy
+    const legacyHTML = render(raw)
+    return convertLegacyState(legacyHTML)
+  } else if (raw?.startsWith('{')) {
+    // edtrio
+    return convertEdtrIoState(JSON.parse(raw))
+  } else {
+    // raw as text
+    return { children: [{ type: 'p', children: [{ text: raw ?? {} }] }] }
   }
 }
 
@@ -240,14 +378,15 @@ function buildDescription(description?: string) {
   }
 }
 
+type CollectTypeChild =
+  | SubTaxonomyTermChildTaxonomyTerm
+  | TaxonomyTermChildTaxonomyTerm
+  | TaxonomyTermChildOnX
+  | TaxonomyTermChildExercise
+  | TaxonomyTermChildExerciseGroup
+
 function collectType(
-  children: (
-    | SubTaxonomyTermChildTaxonomyTerm
-    | TaxonomyTermChildTaxonomyTerm
-    | TaxonomyTermChildOnX
-    | TaxonomyTermChildExercise
-    | TaxonomyTermChildExerciseGroup
-  )[],
+  children: CollectTypeChild[],
   typename: TaxonomyTermChildOnX['__typename']
 ) {
   return children
@@ -288,7 +427,15 @@ function collectTopicFolders(
     })
 }
 
-function collectExercises(children: TaxonomyTerm['children']) {
+type CollectExercises = (
+  | ExerciseEntity['value']
+  | ExerciseGroupEntity['value']
+  | undefined
+)[]
+
+function collectExercises(
+  children: TaxonomyTerm['children']
+): CollectExercises {
   return children
     .filter((child) => {
       if (
@@ -311,7 +458,26 @@ function collectExercises(children: TaxonomyTerm['children']) {
     })
 }
 
-function collectNestedTaxonomyTerms(children: TaxonomyTerm['children']) {
+interface _CollectNestedTaxonomyTerms {
+  title: string
+  url: string
+  description?: FrontendContentNode
+  purpose: 1
+  links: {
+    articles: LinkArray
+    exercises: LinkArray
+    videos: LinkArray
+    applets: LinkArray
+    courses: LinkArray
+    subfolders: LinkArray
+  }
+}
+
+type CollectNestedTaxonomyTerms = (_CollectNestedTaxonomyTerms | null)[]
+
+function collectNestedTaxonomyTerms(
+  children: TaxonomyTerm['children']
+): CollectNestedTaxonomyTerms {
   return children
     .filter(
       (child) =>

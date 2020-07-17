@@ -524,6 +524,13 @@ export type QueryResponse =
   | Course
   | TaxonomyTerm
 
+export type QueryResponseFetched = QueryResponse & {
+  redirect?: string
+  error?: string
+  alias?: string
+  id: number
+}
+
 export type QueryResponseWithLicense =
   | Article
   | Video

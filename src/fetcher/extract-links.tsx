@@ -14,9 +14,10 @@ function getId(url: string): number | undefined {
 }
 
 export function walkIdNodes(
-  content: FrontendContentNode[],
+  content: FrontendContentNode[] | undefined,
   callback: (node: FrontendContentNode, id: number) => void
 ) {
+  if (content === undefined) return
   content.forEach((obj) => {
     if (obj.type === 'a' || obj.type === 'img') {
       // We know that href might exists
@@ -46,7 +47,10 @@ export function walkIdNodes(
   })
 }
 
-export const extractLinks = (arr: FrontendContentNode[], links: number[]) => {
+export const extractLinks = (
+  arr: FrontendContentNode[] | undefined,
+  links: number[]
+) => {
   if (!arr) return []
 
   arr.forEach((obj) => {

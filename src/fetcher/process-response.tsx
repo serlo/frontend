@@ -1,22 +1,31 @@
 import { horizonData } from '../data/horizon'
 import { createBreadcrumbs } from './create-breadcrumbs'
-import { createData } from './create-data'
+import { createData, EntityTypeData } from './create-data'
 import { createLicense } from './create-license'
 import { createNavigation } from './create-navigation'
 import { createTitle } from './create-title'
-import { QueryResponse, License } from './query'
-import { HeaderLink, BreadcrumbsData } from '@/data-types'
+import { QueryResponse, License, TaxonomyTermType } from './query'
+import { HeaderLink, BreadcrumbsData, FrontendContentNode } from '@/data-types'
 
 interface ReqData {
   uuid: QueryResponse
 }
 
-interface ProcessedResponse {
-  contentType: string
+//mystery type so far.
+export interface ResponseDataQuickFix {
+  title?: string
+  value?: FrontendContentNode
+  exercises?: FrontendContentNode[]
+  metaDescription?: string
+  type?: TaxonomyTermType
+}
+
+export interface ProcessedResponse {
+  contentType: QueryResponse['__typename']
   title: string
   breadcrumbs?: BreadcrumbsData
   navigation?: HeaderLink[]
-  data: any // TODO:
+  data: EntityTypeData
   license?: License
   horizonIndices: Array<number>
 }
