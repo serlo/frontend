@@ -15,7 +15,13 @@ export async function getInitialProps(
   const slug =
     props.query.slug === undefined ? [] : (props.query.slug as string[])
   const joinedSlug = slug.join('/')
+  const url = '/' + joinedSlug
   const { origin } = absoluteUrl(props.req)
+
+  if (typeof window !== 'undefined') {
+    getGa()('set', 'page', url)
+    getGa()('send', 'pageview')
+  }
 
   if (
     joinedSlug === '' ||
@@ -40,6 +46,7 @@ export async function getInitialProps(
   //TODO: maybe also add api pages?
 
   if (typeof window === 'undefined') {
+    //server
     const res = await fetch(
       `${origin}/api/frontend/${encodeURIComponent(joinedSlug)}?redirect`
     )
@@ -73,10 +80,6 @@ export async function getInitialProps(
   } else {
     //client
 
-    const url = '/' + joinedSlug
-
-    getGa()('set', 'page', url)
-    getGa()('send', 'pageview')
     try {
       const fromCache = sessionStorage.getItem(url)
       if (fromCache) {
