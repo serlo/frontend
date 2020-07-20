@@ -2,7 +2,7 @@ import { randomBytes } from 'crypto'
 import { NextApiRequest, NextApiResponse } from 'next'
 import * as util from 'util'
 
-import { getAuthorizationCode } from '@/auth/oauth2'
+import { getAuthorizationCode, scope } from '@/auth/oauth2'
 
 const generateSecret = util.promisify(randomBytes)
 
@@ -19,7 +19,7 @@ async function login(req: NextApiRequest, res: NextApiResponse) {
   const csrf = await generateCsrf()
   const authorizationUri = oauth2AuthorizationCode.authorizeURL({
     redirect_uri: `${origin}/api/auth/callback`,
-    scope: ['offline_access', 'openid'],
+    scope,
     state: JSON.stringify({
       csrf,
       referer,
