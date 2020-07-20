@@ -1,5 +1,6 @@
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useRouter } from 'next/router'
 import { lighten } from 'polished'
 import React from 'react'
 import styled, { createGlobalStyle, css } from 'styled-components'
@@ -7,6 +8,11 @@ import styled, { createGlobalStyle, css } from 'styled-components'
 import SearchIcon from '../../../public/_assets/img/search-icon.svg'
 import { inputFontReset } from '../../helper/css'
 import { theme } from '../../theme'
+import { useInstanceData } from '@/contexts/instance-context'
+
+interface SearchInputProps {
+  onSearchPage?: boolean
+}
 
 /*
 This components starts with only a placeholder that looks like a searchbar (basically a button).
@@ -16,19 +22,27 @@ From this point on it's a styled GSC that loads /search to display the results.
 It's a bit hacky, but it's free and works quite well.
 */
 
-export function SearchInput() {
+export function SearchInput({ onSearchPage }: SearchInputProps) {
   const [searchLoaded, setSearchLoaded] = React.useState(false)
   const [searchActive, setSearchActive] = React.useState(false)
-  const [isSearchPage, setIsSearchPage] = React.useState(false)
+  // const [isSearchPage, setIsSearchPage] = React.useState(false)
+  const { strings } = useInstanceData()
+  const router = useRouter()
 
   React.useEffect(() => {
-    if (window.location.pathname === '/search') {
-      setIsSearchPage(true)
+    // note: find a better way to tell search input that it should activate itself
+    if (onSearchPage) {
+      // setIsSearchPage(true)
       activateSearch()
     }
     // I only want to run this the first time the page loads
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  React.useEffect(() => {
+    const resultsContainer = document.getElementById('gcs-results')
+    setupLinkCatcher(resultsContainer)
+  })
 
   const checkElement = async (selector: string) => {
     while (document.querySelector(selector) === null) {
@@ -55,10 +69,43 @@ export function SearchInput() {
 
     void checkElement('#gsc-i-id1').then((element) => {
       const input = element as HTMLInputElement
-      input.setAttribute('placeholder', 'Suche')
+      input.setAttribute('placeholder', strings.header.search)
       input.focus()
       setSearchActive(true)
+
+      const resultsContainer = document.getElementById('gcs-results')
+      setupLinkCatcher(resultsContainer)
     })
+  }
+
+  function setupLinkCatcher(container: HTMLElement | null) {
+    if (!container || container === undefined) return
+    const className = 'gs-title'
+
+    container.addEventListener(
+      'click',
+      function (e) {
+        const target = e.target as HTMLElement
+        const link = target.classList.contains(className)
+          ? target
+          : target.parentElement
+
+        if (
+          link &&
+          link.classList.contains(className) &&
+          typeof link.dataset.ctorig !== 'undefined'
+        ) {
+          e.preventDefault()
+          void router
+            .push(
+              '/[[...slug]]',
+              link.dataset.ctorig.replace('https://de.serlo.org', '')
+            )
+            .then(() => window.scrollTo(0, 0))
+        }
+      },
+      false
+    )
   }
 
   return (
@@ -66,7 +113,7 @@ export function SearchInput() {
       <SearchForm id="searchform" onClick={activateSearch}>
         {!searchActive && (
           <>
-            <PlaceholderText>Suche</PlaceholderText>
+            <PlaceholderText>{strings.header.search}</PlaceholderText>
             <PlaceholderButton>
               {!searchLoaded ? (
                 <PlaceholderIcon />
@@ -77,7 +124,7 @@ export function SearchInput() {
           </>
         )}
         <div
-          className={isSearchPage ? 'gcse-searchbox' : 'gcse-searchbox-only'}
+          className="gcse-searchbox-only"
           data-autocompletemaxcompletions="7"
           data-resultsurl="/search"
           data-enablehistory="true"

@@ -2,17 +2,19 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 
 import { makeMargin, makeDefaultButton } from '../../helper/css'
-import { renderArticle, EditorState } from '../../schema/article-renderer'
+import { renderArticle } from '../../schema/article-renderer'
 import { ExerciseNumbering } from './exercise-numbering'
 import { InputExercise, InputExerciseProps } from './input-exercise'
-import { LicenseNotice, LicenseNoticeData } from './license-notice'
+import { LicenseNotice } from './license-notice'
 import { ScMcExercise, ScMcExerciseProps } from './sc-mc-exercise'
+import { useInstanceData } from '@/contexts/instance-context'
+import { LicenseData, FrontendContentNode } from '@/data-types'
 
 export interface ExerciseProps {
   task: TaskData
   solution: SolutionData
-  taskLicense: LicenseNoticeData
-  solutionLicense: LicenseNoticeData
+  taskLicense: LicenseData
+  solutionLicense: LicenseData
   grouped: boolean
   positionInGroup: number
   positionOnPage: number
@@ -25,7 +27,7 @@ interface TaskData {
     {
       type: string
       state: {
-        content: EditorState['children']
+        content: FrontendContentNode[]
         interactive:
           | {
               plugin: 'scMcExercise'
@@ -49,15 +51,16 @@ interface SolutionData {
           id: string
           title: string
         }
-        strategy: EditorState['children']
-        steps: EditorState['children']
+        strategy: FrontendContentNode[]
+        steps: FrontendContentNode[]
       }
-      children: EditorState['children']
+      children: FrontendContentNode[]
     }
   ]
 }
 
 export function Exercise(props: ExerciseProps) {
+  const { strings } = useInstanceData()
   const {
     task,
     solution,
@@ -87,7 +90,7 @@ export function Exercise(props: ExerciseProps) {
 
       {renderSolutionToggle()}
 
-      {renderSolutionBox()}
+      {solutionVisible && renderSolutionBox()}
     </Wrapper>
   )
 
@@ -101,22 +104,23 @@ export function Exercise(props: ExerciseProps) {
         }}
         active={solutionVisible}
       >
-        <StyledSpan>{solutionVisible ? '▾' : '▸'}&nbsp;</StyledSpan>Lösung{' '}
-        {solutionVisible ? 'ausblenden' : 'anzeigen'}
+        <StyledSpan>{solutionVisible ? '▾' : '▸'}&nbsp;</StyledSpan>
+        {strings.content.solution}{' '}
+        {solutionVisible ? strings.content.hide : strings.content.show}
       </SolutionToggle>
     )
   }
 
   function renderSolutionBox() {
     return (
-      <SolutionBox visible={solutionVisible}>
+      <SolutionBox>
         {renderArticle(getSolutionContent(), false)}
         {solutionLicense && <LicenseNotice minimal data={solutionLicense} />}
       </SolutionBox>
     )
   }
 
-  function getSolutionContent(): EditorState['children'] {
+  function getSolutionContent(): FrontendContentNode[] {
     if (!isEditorSolution) {
       return solution.children
     }
@@ -127,7 +131,7 @@ export function Exercise(props: ExerciseProps) {
         type: 'p',
         children: [
           {
-            text: 'Für diese Aufgabe benötigst Du folgendes Grundwissen: ',
+            text: `${strings.content.prerequisite} `,
           },
           {
             type: 'a',
@@ -139,7 +143,7 @@ export function Exercise(props: ExerciseProps) {
     }
     const strategy = state.strategy
     const steps = state.steps
-    return [...prereq, ...strategy, ...steps] as EditorState['children']
+    return [...prereq, ...strategy, ...steps] as FrontendContentNode[]
   }
 
   function renderExerciseTask() {
@@ -234,10 +238,9 @@ const SolutionToggle = styled.a<{ active: boolean }>`
   }
 `
 
-const SolutionBox = styled.div<{ visible: boolean }>`
+const SolutionBox = styled.div`
   padding-top: 10px;
   padding-bottom: 10px;
-  display: ${(props) => (props.visible ? 'block' : 'none')};
   ${makeMargin}
   margin-bottom: ${(props) => props.theme.spacing.mb.block};
   border-left: 8px solid ${(props) => props.theme.colors.brand};;

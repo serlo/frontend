@@ -1,9 +1,9 @@
 import { faPaypal } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Head from 'next/head'
 import React from 'react'
 import styled from 'styled-components'
 
+import { HeadTags } from '../head-tags'
 import { CookieBar } from '@/components/content/cookie-bar'
 import { PartnerList } from '@/components/landing/partner-list'
 import { FooterNav } from '@/components/navigation/footer-nav'
@@ -50,9 +50,7 @@ export function Donations() {
 
   return (
     <>
-      <Head>
-        <title>Spenden für freie Bildung – Serlo.org</title>
-      </Head>
+      <HeadTags data={{ title: 'Spenden für freie Bildung – Serlo.org' }} />
 
       <BlueHeader>
         <PaddedDiv>
@@ -155,7 +153,7 @@ export function Donations() {
       <BlueContainer>
         <PartnerList />
       </BlueContainer>
-      <FooterNav navEntries={footerEntries} />
+      <FooterNav data={footerEntries} />
       <CookieBar />
     </>
   )

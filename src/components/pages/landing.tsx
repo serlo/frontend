@@ -1,12 +1,12 @@
 import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Head from 'next/head'
 import styled from 'styled-components'
 
 import DonateSVG from '../../../public/_assets/img/footer-donate.svg'
 import ParticipateSVG from '../../../public/_assets/img/footer-participate.svg'
 import PrinciplesSVG from '../../../public/_assets/img/landing-principles-graphic.svg'
 import { Link } from '../content/link'
+import { HeadTags } from '../head-tags'
 import { LandingAbout } from '@/components/landing/landing-about'
 import { LandingSubjects } from '@/components/landing/landing-subjects'
 import { makeDefaultButton, makeResponsivePadding } from '@/helper/css'
@@ -14,10 +14,7 @@ import { makeDefaultButton, makeResponsivePadding } from '@/helper/css'
 export function Landing() {
   return (
     <>
-      <Head>
-        <title>Serlo.org - Die freie Lernplattform</title>
-      </Head>
-      {/* <Header /> */}
+      <HeadTags data={{ title: 'Serlo – Die freie Lernplattform' }} />
       <SubjectsSection>
         <LandingSubjects />
       </SubjectsSection>

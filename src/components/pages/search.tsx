@@ -1,17 +1,38 @@
-import Head from 'next/head'
 import React from 'react'
 import styled from 'styled-components'
 
+import { HeadTags } from '../head-tags'
 import { SearchResults } from '@/components/navigation/search-results'
+import { useInstanceData } from '@/contexts/instance-context'
 
 export function Search() {
+  const { strings } = useInstanceData()
+
+  const renderResults = () => {
+    // @ts-expect-error probably need a helper like in get-initial-props
+    if (typeof window.google === 'undefined') {
+      setTimeout(() => {
+        renderResults()
+      }, 100)
+      return false
+    }
+
+    // @ts-expect-error probably need a helper like in get-initial-props
+    window.google.search.cse.element.render({
+      div: 'gcs-results',
+      tag: 'searchresults-only',
+    })
+  }
+
+  React.useEffect(() => {
+    renderResults()
+  })
+
   return (
     <>
-      <Head>
-        <title>Serlo.org - Suche</title>
-      </Head>
+      <HeadTags data={{ title: `Serlo.org - ${strings.header.search}` }} />
       <StyledSearchResults>
-        <div className="gcse-searchresults"></div>
+        <div id="gcs-results"></div>
       </StyledSearchResults>
     </>
   )

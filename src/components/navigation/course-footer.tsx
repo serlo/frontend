@@ -5,9 +5,14 @@ import styled from 'styled-components'
 
 import { makeMargin, makeDefaultButton } from '../../helper/css'
 import { Link } from '../content/link'
+import { useInstanceData } from '@/contexts/instance-context'
 
-export interface CourseFooterProps {
+export interface CourseFooterProps extends CourseFooterData {
   onOverviewButtonClick: (e: React.MouseEvent<HTMLAnchorElement>) => void
+  nextHref: string
+}
+
+export interface CourseFooterData {
   nextHref: string
 }
 
@@ -20,14 +25,16 @@ export function CourseFooter({
     onOverviewButtonClick(e)
   }
 
+  const { strings } = useInstanceData()
+
   return (
     <Wrapper>
       <OverviewButton onClick={onOverviewClick} as="a">
-        <FontAwesomeIcon icon={faListUl} /> Kursübersicht
+        <FontAwesomeIcon icon={faListUl} /> {strings.course.pages}
       </OverviewButton>
       {nextHref && (
         <ButtonLink href={nextHref}>
-          <FontAwesomeIcon icon={faArrowCircleRight} /> Weiter
+          <FontAwesomeIcon icon={faArrowCircleRight} /> {strings.course.next}
         </ButtonLink>
       )}
     </Wrapper>

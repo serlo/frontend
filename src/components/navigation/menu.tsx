@@ -7,22 +7,19 @@ import styled, { css } from 'styled-components'
 import { makeDefaultButton } from '../../helper/css'
 import { Link } from '../content/link'
 import { AuthPayload } from '@/auth/use-auth'
+import { useInstanceData } from '@/contexts/instance-context'
+import { HeaderData, HeaderLink } from '@/data-types'
 import { getAuthLink, shouldUseNewAuth } from '@/helper/feature-auth'
 
 export interface MenuProps {
-  links: MenuLink[]
+  data: HeaderData
   auth: AuthPayload
 }
 
-interface MenuLink {
-  title: string
-  url: string
-  children?: MenuLink[]
-}
-
-export function Menu({ links, auth }: MenuProps) {
+export function Menu({ data, auth }: MenuProps) {
   const [source, target] = useSingleton()
   const [mounted, setMounted] = React.useState(!shouldUseNewAuth())
+  const { strings } = useInstanceData()
 
   React.useEffect(() => {
     setMounted(true)
@@ -52,7 +49,7 @@ export function Menu({ links, auth }: MenuProps) {
         onCreate={(tip) => setTippyRoot(tip)}
       />
       <List>
-        {links.map((link) => (
+        {data.map((link) => (
           <Entry
             link={link}
             key={link.title}
@@ -66,7 +63,11 @@ export function Menu({ links, auth }: MenuProps) {
   )
 
   function renderAuthMenu() {
-    const link = getAuthLink(mounted && auth !== null)
+    const link = getAuthLink(
+      mounted && auth !== null,
+      strings.header.login,
+      strings.header.logout
+    )
 
     return (
       <Entry
@@ -80,7 +81,7 @@ export function Menu({ links, auth }: MenuProps) {
 }
 
 interface EntryProps {
-  link: MenuLink
+  link: HeaderLink
   target: TippyProps['singleton']
   authMenuMounted?: boolean
   onSubMenuInnerClick: () => void
@@ -118,7 +119,7 @@ function Entry({
 }
 
 interface SubMenuInnerProps {
-  subEntries: MenuLink[] | undefined
+  subEntries: HeaderLink[] | undefined
   onSubMenuInnerClick: () => void
 }
 
@@ -176,7 +177,7 @@ const StyledLink = styled(Link)<{ active?: boolean }>`
     props.theme.colors[props.active ? 'darkgray' : 'lightblue']};
 
   background-color: ${(props) =>
-    props.theme.colors[props.active ? 'lighterblue' : 'inherit']};
+    props.active ? props.theme.colors.lighterblue : 'inherit'};
 
   font-weight: bold;
   transition: all 0.3s ease-in-out 0s;

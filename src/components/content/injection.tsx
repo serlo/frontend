@@ -4,30 +4,28 @@ import React, { useEffect } from 'react'
 import styled from 'styled-components'
 
 import { StyledP } from '../tags/styled-p'
-import { EntityProps } from './entity'
-import { LicenseNotice, LicenseNoticeData } from './license-notice'
-import {
-  PrettyLinksProvider,
-  PrettyLinksContextValue,
-} from '@/contexts/pretty-links-context'
-import { renderArticle, EditorState } from '@/schema/article-renderer'
+import { LicenseNotice } from './license-notice'
+import { useOrigin } from '@/contexts/origin-context'
+import { LicenseData, PageData, FrontendContentNode } from '@/data-types'
+import { renderArticle } from '@/schema/article-renderer'
 
 export interface InjectionProps {
   href: string
 }
 
+// TODO: Give injection a separate fetched data type
+
 export function Injection({ href }: InjectionProps) {
-  const [value, setValue] = React.useState<EditorState | undefined>(undefined)
-  const [license, setLicense] = React.useState<undefined | LicenseNoticeData>(
+  const [value, setValue] = React.useState<FrontendContentNode[] | undefined>(
     undefined
   )
-  const [prettyLinks, setPrettyLinks] = React.useState<PrettyLinksContextValue>(
-    {}
+  const [license, setLicense] = React.useState<undefined | LicenseData>(
+    undefined
   )
 
+  const origin = useOrigin()
+
   useEffect(() => {
-    const origin = window.location.host
-    const protocol = window.location.protocol
     const encodedHref = encodeURI(href.startsWith('/') ? href : `/${href}`)
 
     try {
@@ -40,15 +38,15 @@ export function Injection({ href }: InjectionProps) {
       //
     }
 
-    void fetch(`${protocol}//${origin}/api/frontend${encodedHref}`)
+    void fetch(`${origin}/api/frontend${encodedHref}`)
       .then((res) => {
         if (res.headers.get('content-type')!.includes('json')) return res.json()
         else return res.text()
       })
-      .then((fetchedData: EntityProps) => {
+      .then((fetchedData: { pageData: PageData }) => {
         dataToState(fetchedData)
 
-        if (fetchedData.contentType && fetchedData.data) {
+        if (fetchedData.pageData.kind === 'single-entity') {
           try {
             sessionStorage.setItem(encodedHref, JSON.stringify(fetchedData))
           } catch (e) {
@@ -56,26 +54,23 @@ export function Injection({ href }: InjectionProps) {
           }
         }
       })
-  }, [href])
+  }, [href, origin])
 
-  function dataToState(fetchedData: EntityProps) {
-    if (fetchedData.contentType && fetchedData.data) {
-      setValue(fetchedData.data.value)
-      if (fetchedData.data.license) {
-        setLicense(fetchedData.data.license)
-      }
-      if (fetchedData.prettyLinks) {
-        setPrettyLinks(fetchedData.prettyLinks)
+  function dataToState(fetchedData: { pageData: PageData }) {
+    if (fetchedData.pageData.kind === 'single-entity') {
+      setValue(fetchedData.pageData.entityData.content)
+      if (fetchedData.pageData.entityData.licenseData) {
+        setLicense(fetchedData.pageData.entityData.licenseData)
       }
     }
   }
 
   if (value) {
     return (
-      <PrettyLinksProvider value={prettyLinks}>
-        {renderArticle(value.children, false)}
-        {license !== undefined && <LicenseNotice data={license} />}
-      </PrettyLinksProvider>
+      <>
+        {renderArticle(value, false)}
+        {license && <LicenseNotice data={license} />}
+      </>
     )
   }
   return (

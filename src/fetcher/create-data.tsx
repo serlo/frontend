@@ -1,5 +1,4 @@
 import { render } from '../../external/legacy_render'
-import { TopicPurposes } from '../components/content/topic'
 import { convertEdtrIoState } from '../schema/convert-edtr-io-state'
 import { convertLegacyState } from '../schema/convert-legacy-state'
 import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
@@ -193,7 +192,7 @@ function createTaxonomyTerm(uuid: any) {
     description: buildDescription(uuid.description),
     title: uuid.name,
     type: uuid.type,
-    purpose: TopicPurposes.detail,
+    purpose: 0, //TopicPurposes.detail,
     links: {
       articles: collectType(children, 'Article'),
       exercises: collectTopicFolders(children),
@@ -308,7 +307,7 @@ function collectNestedTaxonomyTerms(children: any) {
           title: child.name,
           url: getAlias(child),
           description: buildDescription(child.description),
-          purpose: TopicPurposes.overview,
+          purpose: 1, //TopicPurposes.overview,
           links: {
             articles: collectType(subchildren, 'Article'),
             exercises: collectTopicFolders(subchildren),

@@ -6,25 +6,20 @@ import styled from 'styled-components'
 
 import { makeDefaultButton, makeMargin } from '../../helper/css'
 import { Link } from '../content/link'
+import { BreadcrumbsData, BreadcrumbEntry } from '@/data-types'
 
 export interface BreadcrumbsProps {
-  entries?: BreadcrumbEntry[]
+  data: BreadcrumbsData
 }
 
-interface BreadcrumbEntry {
-  label: string
-  url: string
-}
-
-export function Breadcrumbs(props: BreadcrumbsProps) {
-  const { entries } = props
-  if (!entries || entries.length < 1) {
+export function Breadcrumbs({ data }: BreadcrumbsProps) {
+  if (!data || data.length < 1) {
     return null
   }
 
   return (
     <BreadcrumbWrapper>
-      {entries.map((bcEntry, i, completeArray) => {
+      {data.map((bcEntry, i, completeArray) => {
         return (
           <BreadcrumbEntries
             bcEntry={bcEntry}
@@ -45,33 +40,21 @@ interface BradcrumbEntriesProps {
 }
 
 function BreadcrumbEntries({ bcEntry, i, arrayLength }: BradcrumbEntriesProps) {
-  const maxItems = 4
-  const overflow = arrayLength > maxItems
-  const itemsToRemove = arrayLength - maxItems
-  const ellipsesItem = overflow && i == 2
-
-  if (overflow && i > 2 && i < 1 + itemsToRemove) return null
-  if (arrayLength - itemsToRemove > 4 && i === 1) return null
-
-  if (arrayLength !== i + 1) {
-    return (
-      <>
-        {ellipsesItem ? (
-          <BreadcrumbLink as="span">…</BreadcrumbLink>
-        ) : (
-          <BreadcrumbLink href={bcEntry.url}>{bcEntry.label}</BreadcrumbLink>
-        )}
-      </>
-    )
-  } else
-    return (
-      <BreadcrumbLinkLast href={bcEntry.url}>
-        <Icon>
-          <FontAwesomeIcon icon={faArrowCircleLeft} size="1x" />
-        </Icon>
-        {bcEntry.label}
-      </BreadcrumbLinkLast>
-    )
+  if (bcEntry.ellipsis) {
+    return <BreadcrumbLink as="span">…</BreadcrumbLink>
+  } else {
+    if (arrayLength !== i + 1) {
+      return <BreadcrumbLink href={bcEntry.url}>{bcEntry.label}</BreadcrumbLink>
+    } else
+      return (
+        <BreadcrumbLinkLast href={bcEntry.url}>
+          <Icon>
+            <FontAwesomeIcon icon={faArrowCircleLeft} size="1x" />
+          </Icon>
+          {bcEntry.label}
+        </BreadcrumbLinkLast>
+      )
+  }
 }
 
 const BreadcrumbWrapper = styled.nav`

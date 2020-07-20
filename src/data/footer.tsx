@@ -1,9 +1,7 @@
-import { faGithubSquare } from '@fortawesome/free-brands-svg-icons'
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import { serloDomain } from '../helper/serlo-domain'
+import { FooterNavigation } from '@/data-types'
 
-import { serloDomain } from '../serlo-domain'
-
-export const footerNavEntries = [
+export const footerNavEntries: FooterNavigation = [
   {
     title: 'Allgemein',
     children: [
@@ -32,12 +30,12 @@ export const footerNavEntries = [
         title: 'Newsletter',
         url:
           'https://serlo.us7.list-manage.com/subscribe?u=23f4b04bf70ea485a766e532d&amp;id=a7bb2bbc4f',
-        icon: faEnvelope,
+        icon: 'newsletter',
       },
       {
         title: 'GitHub',
         url: 'https://github.com/serlo',
-        icon: faGithubSquare,
+        icon: 'github',
       },
     ],
   },

@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { makeMargin } from '../../helper/css'
 import { ExerciseNumbering } from './exercise-numbering'
 import { SpoilerContainer } from './spoiler-container'
+import { useInstanceData } from '@/contexts/instance-context'
 
 export interface ExerciseGroupProps {
   children: React.ReactNode
@@ -18,11 +19,12 @@ export function ExerciseGroup({
   groupIntro,
   positionOnPage,
 }: ExerciseGroupProps) {
+  const { strings } = useInstanceData()
   return (
     <Container>
       <ExerciseIntro>
         <ExerciseNumbering index={positionOnPage} />
-        <Label>Aufgabengruppe</Label>
+        <Label>{strings.content.exerciseGroup}</Label>
         {groupIntro}
       </ExerciseIntro>
       <Content>{children}</Content>

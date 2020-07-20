@@ -77,6 +77,8 @@ export const SearchResults = styled.div`
     &,
     .gsc-table-result {
       font-size: 1rem;
+      ${inputFontReset}
+      line-height: 1.33rem;
     }
   }
 

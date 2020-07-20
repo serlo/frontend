@@ -1,5 +1,4 @@
-// import dynamic from 'next/dynamic'
-import Router from 'next/router'
+import { Router } from 'next/router'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -9,14 +8,19 @@ import { MobileMenu } from './mobile-menu'
 import { MobileMenuButton } from './mobile-menu-button'
 import { SearchInput } from './search-input'
 import { useAuth } from '@/auth/use-auth'
-import { getMenuData } from '@/data/menu'
+import { useInstanceData } from '@/contexts/instance-context'
 import { makeResponsivePadding } from '@/helper/css'
 
-export function Header() {
+interface HeaderProps {
+  onSearchPage?: boolean
+}
+
+export function Header({ onSearchPage }: HeaderProps) {
   const [isOpen, setOpen] = React.useState(false)
   const auth = useAuth()
-  const links = getMenuData()
+  const { headerData, strings } = useInstanceData()
 
+  // compat: close mobile menu on client side navigation, we need the global Router instance
   Router.events.on('routeChangeStart', () => {
     setOpen(false)
   })
@@ -25,11 +29,11 @@ export function Header() {
     <BlueHeader>
       <MobileMenuButton onClick={() => setOpen(!isOpen)} open={isOpen} />
       <PaddedDiv>
-        <Menu links={links} auth={auth} />
-        <Logo subline="Die freie Lernplattform" />
+        <Menu data={headerData} auth={auth} />
+        <Logo subline={strings.header.slogan} />
       </PaddedDiv>
-      <SearchInput />
-      {isOpen && <MobileMenu links={links} auth={auth} />}
+      <SearchInput onSearchPage={onSearchPage} />
+      {isOpen && <MobileMenu data={headerData} auth={auth} />}
     </BlueHeader>
   )
 }
