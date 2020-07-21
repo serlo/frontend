@@ -1,9 +1,9 @@
 import { request } from 'graphql-request'
 
-import { serloDomain } from '../helper/serlo-domain'
 import { extractLinks, extractLinksFromNav, walkIdNodes } from './extract-links'
 import { processResponse } from './process-response'
 import { dataQuery, idQuery, idsQuery } from './query'
+import { endpoint } from '@/api/endpoint'
 import {
   PageData,
   BreadcrumbsData,
@@ -15,8 +15,6 @@ import {
 } from '@/data-types'
 import { horizonData } from '@/data/horizon'
 import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
-
-export const endpoint = `https://api.${serloDomain}/graphql`
 
 interface MenuData {
   title: string
