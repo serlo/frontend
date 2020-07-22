@@ -1,4 +1,19 @@
+import { CodeProps } from './components/content/code'
+import { EquationProps } from './components/content/equations'
+import {
+  ExerciseChildData,
+  SolutionChildData,
+  ExerciseProps,
+} from './components/content/exercise'
+import { ExerciseGroupProps } from './components/content/exercise-group'
+import { GeogebraProps } from './components/content/geogebra'
+import { InjectionProps } from './components/content/injection'
+import { MathProps } from './components/content/math'
+import { SpoilerBodyProps } from './components/content/spoiler-body'
+import { SpoilerContainerProps } from './components/content/spoiler-container'
+import { VideoProps } from './components/content/video'
 import { Instance } from './fetcher/query'
+import { RenderImgData } from './schema/article-renderer'
 
 // This file describes the data structures that controls the frontend.
 
@@ -240,30 +255,63 @@ export interface SchemaData {
 
 // The frontend defines it's own content format that bridges the gap between legacy and edtr-io state.
 // Will switch to edtr-io state one day.
-// Until then, this is the basic tree structure:
+// Until then: Here are the types the fontend expects after converting
 
-export interface FrontendContentNode {
-  type?: string
-  state?: unknown
-  children?: FrontendContentNode[]
+export interface FrontendPluginText {
+  type?: ''
+  text?: string
+  color?: 'blue' | 'green' | 'orange'
+  em?: boolean
+  strong?: boolean
+}
+
+type FrontendContentNodeNoText =
+  | ({ type: 'img' } & RenderImgData['element'])
+  | ({ type: 'math' | 'inline-math' } & MathProps)
+  | ({ type: 'code' } & CodeProps)
+  | ({ type: 'equations' } & EquationProps)
+  | ({ type: 'exercise' } & ExerciseProps) //unsure!
+  | ({ type: 'exercise-group' } & ExerciseGroupProps)
+  | ({ type: '@edtr-io/exercise' } & ExerciseChildData)
+  | ({ type: '@edtr-io/solution' } & SolutionChildData)
+  | ({ type: 'spoiler-container' } & SpoilerContainerProps)
+  | { type: 'spoiler-title'; children: FrontendContentNode[] }
+  | ({ type: 'spoiler-body' } & SpoilerBodyProps)
+  | ({ type: 'injection' } & InjectionProps)
+  | ({ type: 'video' } & VideoProps)
+  | ({ type: 'geogebra' } & GeogebraProps)
+  | { type: 'row'; children: FrontendContentNode[] }
+  | { type: 'col'; size: number; children: FrontendContentNode[] }
+  | { type: 'anchor'; id: string }
+  | { type: 'important'; children: FrontendContentNode[] }
+  | { type: 'p'; children?: FrontendContentNode[] }
+  | {
+      type: 'h'
+      id?: string | number
+      level: number
+      children: FrontendContentNode[]
+    }
+  | { type: 'a'; href?: string; children: FrontendContentNode[] }
+  | { type: 'ul'; children: FrontendContentNode[] }
+  | { type: 'ol'; children: FrontendContentNode[] }
+  | {
+      type: 'li'
+      children: FrontendContentNode[]
+    }
+  | { type: 'table'; children: FrontendContentNode[] } //TODO: make more explicit, should only contain tr,td,th
+  | { type: 'td'; children: FrontendContentNode[] } // etc.
+  | { type: 'th'; children: FrontendContentNode[] }
+  | { type: 'tr'; children: FrontendContentNode[] }
+
+export type FrontendContentNode = (
+  | FrontendContentNodeNoText
+  | FrontendPluginText
+) & {
   text?: string
   href?: string
-  size?: number
-  formula?: string
-  inline?: boolean
-  alignLeft?: boolean
-  src?: string
-  alt?: string
-  id?: number | string
-  level?: number
-  content?: string
-  strong?: boolean
-  em?: boolean
-  maxWidth?: number
-  steps?: any
-  plugin?: string
-  isCorrect?: boolean
-}
+  children?: FrontendContentNode[]
+  type?: FrontendContentNodeNoText['type']
+} //TODO: Hack, because href and children are always just checked in code not by checking/guarding types, same with text.
 
 // Some translations
 

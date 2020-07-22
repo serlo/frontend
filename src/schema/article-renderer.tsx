@@ -73,7 +73,7 @@ const renderer = {
   video: renderVideo,
   equations: renderEquations,
   code: renderCode,
-} as { [key: string]: (props: any) => JSX.Element | null } // continue here to add proper types
+} as { [key: string]: (props: any) => React.ReactNode | null } // continue here to add proper types
 
 type renderElementData = keyof typeof renderer
 
@@ -282,12 +282,12 @@ export function renderH({ element, children = null }: RenderHData) {
   return <Comp id={element.id}>{children}</Comp>
 }
 
-interface RenderImgData {
+export interface RenderImgData {
   element: {
-    href: string
+    href?: string
     maxWidth?: number
     src: string
-    alt: string
+    alt?: string
   }
   children: React.ReactNode
 }

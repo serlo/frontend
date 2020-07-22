@@ -142,15 +142,18 @@ interface VideoEntity {
 }
 
 function createVideo(uuid: Video): VideoEntity {
+  const children = convertState(uuid.currentRevision?.content).children
+  const spread = children === undefined ? [] : children
+
   return {
     title: uuid.currentRevision?.title,
     value: {
       children: [
         {
           type: 'video',
-          src: uuid.currentRevision?.url,
+          src: uuid.currentRevision?.url!,
         },
-        ...convertState(uuid.currentRevision?.content).children,
+        ...spread,
       ],
     },
   }
@@ -200,6 +203,8 @@ interface AppletEntity {
   metaDescription?: string
 }
 function createApplet(uuid: Applet): AppletEntity {
+  const children = convertState(uuid.currentRevision?.content).children
+  const spread = children === undefined ? [] : children
   return {
     value: {
       children: [
@@ -207,7 +212,7 @@ function createApplet(uuid: Applet): AppletEntity {
           type: 'geogebra',
           id: uuid.currentRevision?.url,
         },
-        ...convertState(uuid.currentRevision?.content).children,
+        ...spread,
       ],
     },
     title: uuid.currentRevision?.title,

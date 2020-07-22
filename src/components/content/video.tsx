@@ -8,7 +8,8 @@ import { makeMargin } from '../../helper/css'
 import { StyledP } from '../tags/styled-p'
 
 export interface VideoProps {
-  url: string
+  url: string //TODO: should be src according to edtr-io converter?!
+  src?: string
 }
 
 export function Video(props: VideoProps) {

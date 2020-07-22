@@ -84,7 +84,7 @@ export async function fetchContent(
     const dataWithValue = (processed.data as unknown) as EntityTypeWithValue
     if (dataWithValue?.value) {
       //TODO: investigate
-      // @ts-expect-error
+      //@ts-expect-error
       walkIdNodes(dataWithValue.value.children, (node, id) => {
         contentLinks.push(id)
       })
