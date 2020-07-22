@@ -6,7 +6,7 @@ import {
   ExerciseChildData,
 } from '@/components/content/exercise'
 import { MathProps } from '@/components/content/math'
-import { FrontendContentNode, FrontendPluginText } from '@/data-types'
+import { FrontendContentNode, FrontendContentTextNode } from '@/data-types'
 
 const colors = ['blue', 'green', 'orange']
 
@@ -296,17 +296,17 @@ export function convert(
     if (
       children.some(
         (child) =>
-          ((child as FrontendPluginText).text &&
-            (child as FrontendPluginText).text!.includes('\n')) ||
+          ((child as FrontendContentTextNode).text &&
+            (child as FrontendContentTextNode).text!.includes('\n')) ||
           child.type === 'inline-math'
       )
     ) {
       const splitted = children.flatMap((child) => {
         if (
-          (child as FrontendPluginText).text &&
-          (child as FrontendPluginText).text!.includes('\n')
+          (child as FrontendContentTextNode).text &&
+          (child as FrontendContentTextNode).text!.includes('\n')
         ) {
-          const parts = (child as FrontendPluginText)
+          const parts = (child as FrontendContentTextNode)
             .text!.split('\n')
             .flatMap((text) => [
               {
@@ -349,7 +349,7 @@ export function convert(
           (child) =>
             child.type === 'math' ||
             child.type === 'inline-math' ||
-            (child as FrontendPluginText).text === ''
+            (child as FrontendContentTextNode).text === ''
         )
       ) {
         return children
@@ -439,7 +439,7 @@ export function convert(
         (child) =>
           child.type === 'inline-math' ||
           child.type === 'a' ||
-          (child as FrontendPluginText).text !== undefined
+          (child as FrontendContentTextNode).text !== undefined
       ).length === 0
     ) {
       return children

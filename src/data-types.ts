@@ -257,8 +257,7 @@ export interface SchemaData {
 // Will switch to edtr-io state one day.
 // Until then: Here are the types the fontend expects after converting
 
-export interface FrontendPluginText {
-  type?: ''
+export interface FrontendContentTextNode {
   text?: string
   color?: 'blue' | 'green' | 'orange'
   em?: boolean
@@ -266,7 +265,7 @@ export interface FrontendPluginText {
 }
 
 type FrontendContentNodeNoText =
-  | ({ type: 'img' } & RenderImgData['element'])
+  | ({ type: 'img' } & RenderImgData['element']) //href
   | ({ type: 'math' | 'inline-math' } & MathProps)
   | ({ type: 'code' } & CodeProps)
   | ({ type: 'equations' } & EquationProps)
@@ -277,7 +276,7 @@ type FrontendContentNodeNoText =
   | ({ type: 'spoiler-container' } & SpoilerContainerProps)
   | { type: 'spoiler-title'; children: FrontendContentNode[] }
   | ({ type: 'spoiler-body' } & SpoilerBodyProps)
-  | ({ type: 'injection' } & InjectionProps)
+  | ({ type: 'injection' } & InjectionProps) //href
   | ({ type: 'video' } & VideoProps)
   | ({ type: 'geogebra' } & GeogebraProps)
   | { type: 'row'; children: FrontendContentNode[] }
@@ -305,13 +304,10 @@ type FrontendContentNodeNoText =
 
 export type FrontendContentNode = (
   | FrontendContentNodeNoText
-  | FrontendPluginText
+  | ({ type?: '' | 'text' } & FrontendContentTextNode) //usually type is not set for text nodes
 ) & {
-  text?: string
-  href?: string
   children?: FrontendContentNode[]
-  type?: FrontendContentNodeNoText['type']
-} //TODO: Hack, because href and children are always just checked in code not by checking/guarding types, same with text.
+} //TODO: Hack, because children are always just checked in code not by checking/guarding types
 
 // Some translations
 

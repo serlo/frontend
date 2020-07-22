@@ -1,7 +1,7 @@
 import * as htmlparser2 from 'htmlparser2'
 
 import { MathProps } from '@/components/content/math'
-import { FrontendContentNode, FrontendPluginText } from '@/data-types'
+import { FrontendContentNode, FrontendContentTextNode } from '@/data-types'
 
 export function convertLegacyState(html: string) {
   const dom = (htmlparser2.parseDOM(html) as unknown) as LegacyNode
@@ -72,7 +72,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
           if (
             val.type === 'inline-math' ||
             val.type === 'a' ||
-            (val as FrontendPluginText).text !== undefined
+            (val as FrontendContentTextNode).text !== undefined
           ) {
             let last = undefined
             if (acc.length > 0) {
@@ -244,8 +244,8 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
         children.every(
           (child) =>
             child.type === 'inline-math' ||
-            ((child as FrontendPluginText).text !== undefined &&
-              (child as FrontendPluginText).text!.trim() == '')
+            ((child as FrontendContentTextNode).text !== undefined &&
+              (child as FrontendContentTextNode).text!.trim() == '')
         )
       ) {
         return [
@@ -279,8 +279,8 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
     // compat: remove whitespace around list items
     children = children.filter((child) => {
       if (
-        (child as FrontendPluginText).text &&
-        (child as FrontendPluginText).text!.trim() === ''
+        (child as FrontendContentTextNode).text &&
+        (child as FrontendContentTextNode).text!.trim() === ''
       ) {
         return false
       }
@@ -299,7 +299,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
     if (
       children.filter(
         (child) =>
-          (child as FrontendPluginText).text === undefined &&
+          (child as FrontendContentTextNode).text === undefined &&
           child.type !== 'a' &&
           child.type !== 'inline-math'
       ).length == 0
@@ -411,7 +411,8 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
     // compat: handle empty tag
     if (
       children.length == 0 ||
-      (children.length == 1 && (children[0] as FrontendPluginText).text === '')
+      (children.length == 1 &&
+        (children[0] as FrontendContentTextNode).text === '')
     ) {
       children = [{ text: node.attribs.href! }]
     }
@@ -427,13 +428,13 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
   if (node.name === 'strong') {
     const children = convert(node.children)
     return makeFormat(children, (child) => {
-      ;(child as FrontendPluginText).strong = true
+      ;(child as FrontendContentTextNode).strong = true
     })
   }
   if (node.name === 'em') {
     const children = convert(node.children)
     return makeFormat(children, (child) => {
-      ;(child as FrontendPluginText).em = true
+      ;(child as FrontendContentTextNode).em = true
     })
   }
   // compat: ignore breaks
@@ -497,7 +498,7 @@ function makeFormat(
   fn: (child: FrontendContentNode) => void
 ): FrontendContentNode[] {
   return array.map((child) => {
-    if ((child as FrontendPluginText).text !== undefined) {
+    if ((child as FrontendContentTextNode).text !== undefined) {
       fn(child)
     }
     if (Array.isArray(child.children)) {

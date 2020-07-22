@@ -296,6 +296,7 @@ export async function fetchContent(
         // resolve prettylinks
         // walk through content and replace links with prettyfied version
         walkIdNodes(entityData.content, (node, id) => {
+          //@ts-expect-error
           node.href = resolveIdToAlias(id)
         })
       }

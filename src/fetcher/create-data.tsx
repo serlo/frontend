@@ -22,7 +22,11 @@ import {
   SubTaxonomyTermChildTaxonomyTerm,
 } from './query'
 import { ExerciseProps } from '@/components/content/exercise'
-import { FrontendContentNode, LicenseData } from '@/data-types'
+import {
+  FrontendContentNode,
+  LicenseData,
+  FrontendContentTextNode,
+} from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/query'
 import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
 
@@ -142,6 +146,7 @@ interface VideoEntity {
 }
 
 function createVideo(uuid: Video): VideoEntity {
+  //TODO: Investigate, what is going on here? What are the children of a video element?
   const children = convertState(uuid.currentRevision?.content).children
   const spread = children === undefined ? [] : children
 
@@ -203,6 +208,7 @@ interface AppletEntity {
   metaDescription?: string
 }
 function createApplet(uuid: Applet): AppletEntity {
+  //TODO: Investigate, what is going on here? What are the children of a applet?
   const children = convertState(uuid.currentRevision?.content).children
   const spread = children === undefined ? [] : children
   return {
@@ -375,7 +381,7 @@ function buildDescription(description?: string) {
     if (
       state.children?.length !== 1 ||
       state.children[0].children?.length !== 1 ||
-      state.children[0].children[0].text !== '' ||
+      (state.children[0].children[0] as FrontendContentTextNode).text !== '' ||
       state.children[0].children[0].type !== 'p'
     ) {
       return state
