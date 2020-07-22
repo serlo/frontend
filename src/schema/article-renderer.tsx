@@ -490,7 +490,7 @@ interface RenderVideoData {
 export function renderVideo({ element }: RenderVideoData) {
   return (
     <Lazy>
-      <Video url={element.src} />
+      <Video src={element.src} />
     </Lazy>
   )
 }

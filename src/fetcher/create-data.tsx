@@ -93,7 +93,6 @@ export function createData(uuid: QueryResponse): EntityTypeData {
     return createEvent(uuid)
   }
 
-  //TODO: Better way to make sure this triggers 404?
   //fallback
   return null
 }

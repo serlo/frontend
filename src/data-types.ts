@@ -297,7 +297,7 @@ type FrontendContentNodeNoText =
       type: 'li'
       children: FrontendContentNode[]
     }
-  | { type: 'table'; children: FrontendContentNode[] } //TODO: make more explicit, should only contain tr,td,th
+  | { type: 'table'; children: FrontendContentNode[] } //maybe make more explicit, should only contain tr,td,th
   | { type: 'td'; children: FrontendContentNode[] } // etc.
   | { type: 'th'; children: FrontendContentNode[] }
   | { type: 'tr'; children: FrontendContentNode[] }
@@ -307,7 +307,9 @@ export type FrontendContentNode = (
   | ({ type?: '' | 'text' } & FrontendContentTextNode) //usually type is not set for text nodes
 ) & {
   children?: FrontendContentNode[]
-} //TODO: Hack, because children are always just checked in code not by checking/guarding types
+} //TODO: added because children are always just checked in code not by checking/guarding types
+//changing that need quite a bit of refactoring
+//maybe that's okay for now?
 
 // Some translations
 

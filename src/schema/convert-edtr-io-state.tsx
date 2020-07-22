@@ -187,8 +187,7 @@ export function convert(
     return [
       {
         type: 'video',
-        src: (node.state as EditorStateDummy).src,
-        url: (node.state as EditorStateDummy).src!,
+        src: (node.state as EditorStateDummy).src!,
       },
     ]
   }

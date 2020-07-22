@@ -25,7 +25,6 @@ export function Notifications({ entries }: NotificationsProps) {
       {entries.map((entry, i) => {
         return (
           <Item readed={entry.readed} key={i}>
-            {/* TODO: Maybe also use Link component here */}
             <StyledLink href={`https://${serloDomain}/${entry.author.id}`}>
               {entry.author.username}
             </StyledLink>

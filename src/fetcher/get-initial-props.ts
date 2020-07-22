@@ -42,7 +42,6 @@ export async function getInitialProps(
       origin,
     }
   }
-  //TODO: maybe also add api pages?
 
   if (typeof window === 'undefined') {
     //server

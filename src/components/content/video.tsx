@@ -8,18 +8,17 @@ import { makeMargin } from '../../helper/css'
 import { StyledP } from '../tags/styled-p'
 
 export interface VideoProps {
-  url: string //TODO: should be src according to edtr-io converter?!
-  src?: string
+  src: string
 }
 
 export function Video(props: VideoProps) {
-  const { url } = props
+  const { src } = props
 
-  if (/^(https?:\/\/)?(.*?upload\.wikimedia\.org\/)(.+)/.exec(url)) {
+  if (/^(https?:\/\/)?(.*?upload\.wikimedia\.org\/)(.+)/.exec(src)) {
     // render wikimedia as video tag
     return (
       <VideoWrapper>
-        <video controls src={url} />
+        <video controls src={src} />
       </VideoWrapper>
     )
   }
@@ -27,7 +26,7 @@ export function Video(props: VideoProps) {
   let iframeUrl
 
   const yt = /^(https?:\/\/)?(.*?youtube\.com\/watch\?(.*&)?v=|.*?youtu\.be\/)(.+)/.exec(
-    url
+    src
   )
   if (yt) {
     iframeUrl = `https://www.youtube-nocookie.com/embed/${yt[4]}?html5=1`
@@ -40,12 +39,12 @@ export function Video(props: VideoProps) {
     )
   }
 
-  const vimeo = /^(https?:\/\/)?(.*?vimeo\.com\/)(.+)/.exec(url)
+  const vimeo = /^(https?:\/\/)?(.*?vimeo\.com\/)(.+)/.exec(src)
   if (vimeo) {
     iframeUrl = `https://player.vimeo.com/video/${vimeo[3]}`
   }
 
-  const br = /^(https?:\/\/)?(.*?br\.de\/)(.+)/.exec(url)
+  const br = /^(https?:\/\/)?(.*?br\.de\/)(.+)/.exec(src)
   if (br) {
     iframeUrl = `https://www.br.de/mediathek/embed/${br[3]}`
   }
@@ -61,7 +60,7 @@ export function Video(props: VideoProps) {
   return (
     <VideoPlaceholder>
       <FontAwesomeIcon icon={faFilm} size="5x" />
-      <StyledP>Loading video failed: {url}</StyledP>
+      <StyledP>Loading video failed: {src}</StyledP>
     </VideoPlaceholder>
   )
 }
