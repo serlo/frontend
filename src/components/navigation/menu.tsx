@@ -25,11 +25,8 @@ export function Menu({ data, auth }: MenuProps) {
     setMounted(true)
   }, [])
 
-  /* TODO: Is is possible to get the argument part of TippyProps['onCreate'] ? */
-  // COMMENT: probably "Instance<>", but how?
-  const [tippyRoot, setTippyRoot] = React.useState<{ hide: () => void } | null>(
-    null
-  )
+  type TippyRoot = Parameters<NonNullable<TippyProps['onCreate']>>[0]
+  const [tippyRoot, setTippyRoot] = React.useState<TippyRoot | null>(null)
 
   function onSubMenuInnerClick() {
     if (tippyRoot && tippyRoot !== undefined) tippyRoot.hide()

@@ -109,6 +109,13 @@ export type PageData =
   | SingleEntityPage
   | TaxonomyPage
 
+export type FetchedData = PageData & {
+  redirect?: string
+  error?: string
+  pageData: PageData
+  alias?: string
+}
+
 // The landing page is custom built and takes no additional data
 
 export interface LandingPage {
@@ -136,7 +143,7 @@ export interface EntityPageBase {
   secondaryNavigationData?: SecondaryNavigationData
   metaData?: HeadData
   horizonData?: HorizonData
-  newsletterPopup?: boolean
+  newsletterPopup: boolean
   cacheKey?: string // save page data to session storage
 }
 
@@ -150,10 +157,11 @@ export type BreadcrumbEntry = BreadcrumbLinkEntry | BreadcrumbEllipsis
 export interface BreadcrumbLinkEntry {
   label: string
   url?: string
-  ellipsis: undefined
+  ellipsis?: boolean | false
 }
 
-export interface BreadcrumbEllipsis {
+export interface BreadcrumbEllipsis extends BreadcrumbLinkEntry {
+  label: ''
   ellipsis: true
 }
 
@@ -163,7 +171,7 @@ export interface BreadcrumbEllipsis {
 export type SecondaryNavigationData = SecondaryNavigationEntry[]
 
 export interface SecondaryNavigationEntry {
-  url: string
+  url?: string
   title: string
   active?: boolean
 }
@@ -200,7 +208,7 @@ export interface EntityData {
   title?: string
   categoryIcon?: CategoryType
   schemaData?: SchemaData
-  content?: FrontendContentNode[]
+  content?: FrontendContentNode[] | any[]
   inviteToEdit?: boolean
   licenseData?: LicenseData
   courseData?: CourseData
@@ -239,6 +247,22 @@ export interface FrontendContentNode {
   state?: unknown
   children?: FrontendContentNode[]
   text?: string
+  href?: string
+  size?: number
+  formula?: string
+  inline?: boolean
+  alignLeft?: boolean
+  src?: string
+  alt?: string
+  id?: number | string
+  level?: number
+  content?: string
+  strong?: boolean
+  em?: boolean
+  maxWidth?: number
+  steps?: any
+  plugin?: string
+  isCorrect?: boolean
 }
 
 // Some translations
@@ -296,6 +320,21 @@ export interface TaxonomyPage extends EntityPageBase {
   taxonomyData: TaxonomyData
 }
 
+export interface ProcessedResponseTaxonomy {
+  contentType: 'TaxonomyTerm'
+  data: ProcessedResponseTaxonomyChild
+}
+
+interface ProcessedResponseTaxonomyChild {
+  title: string
+  url: string
+  purpose: 0 | 1 | 2
+  links: TaxonomyData
+  description?: FrontendContentNode
+  children?: ProcessedResponseTaxonomyChild[]
+  exercises?: FrontendContentNode[]
+}
+
 // Shared attributes for first and second level.
 
 export interface TaxonomyTermBase {
@@ -305,6 +344,7 @@ export interface TaxonomyTermBase {
   applets: TaxonomyLink[]
   exercises: TaxonomyLink[]
   description?: FrontendContentNode[]
+  subfolders: TaxonomyTermBase[]
 }
 
 export interface TaxonomyLink {
