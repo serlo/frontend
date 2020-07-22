@@ -10,6 +10,8 @@ export function convertEdtrIoState(
   return { children: convert(state) }
 }
 
+//This is incorrect, an editor node only has plugin and state
+//TODO: write tests for this converter, import edtr-io types, …
 export interface EditorStateDummy {
   plugin?: string
   state?: EditorStateDummy | string

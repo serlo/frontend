@@ -65,8 +65,7 @@ function convert(node: ConvertData): FrontendContentNode[] {
             ]
           }
           // compat: wrap every inline child in p, grouped
-          //TODO: investigate why acc is never[]
-          children = children.reduce((acc: any, val: any) => {
+          children = children.reduce((acc, val) => {
             if (
               val.type === 'inline-math' ||
               val.type === 'a' ||
@@ -76,7 +75,7 @@ function convert(node: ConvertData): FrontendContentNode[] {
               if (acc.length > 0) {
                 last = acc[acc.length - 1]
               }
-              if (last && last.type === 'p') {
+              if (last && last.type === 'p' && last.children !== undefined) {
                 last.children.push(val)
                 return acc
               } else {
@@ -91,7 +90,7 @@ function convert(node: ConvertData): FrontendContentNode[] {
               acc.push(val)
               return acc
             }
-          }, [])
+          }, [] as FrontendContentNode[])
           return [
             {
               type: 'col',
@@ -336,8 +335,8 @@ function convert(node: ConvertData): FrontendContentNode[] {
     }
     if (node.name === 'td') {
       // compat: skip empty entries (resulting from newlines)
-      //TODO: investigate when non array is valid
-      if (((node.children as unknown) as LegacyNode).text?.trim() === '') {
+      // @ts-expect-error
+      if ((node.children.text as string)?.trim() === '') {
         return []
       }
       return [
@@ -477,8 +476,7 @@ function convert(node: ConvertData): FrontendContentNode[] {
       .join('<')
       .split('&amp;')
       .join('&')
-      // TODO: needs type declaration
-      .replace(/&#(\d+);/g, function (match, dec: any) {
+      .replace(/&#(\d+);/g, function (match, dec: number) {
         return String.fromCharCode(dec)
       })
     // compat: remove empty text
