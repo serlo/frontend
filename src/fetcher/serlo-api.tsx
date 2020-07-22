@@ -1,6 +1,5 @@
 import { request } from 'graphql-request'
 
-import { serloDomain } from '../helper/serlo-domain'
 import {
   EntityTypeWithTitle,
   EntityTypeWithValue,
@@ -10,6 +9,7 @@ import { extractLinks, extractLinksFromNav, walkIdNodes } from './extract-links'
 import { getMetaDescription } from './get-meta-description'
 import { processResponse, ResponseDataQuickFix } from './process-response'
 import { dataQuery, idQuery, idsQuery, QueryResponseFetched } from './query'
+import { endpoint } from '@/api/endpoint'
 import { PrettyLinksContextValue } from '@/contexts/pretty-links-context'
 import {
   PageData,
@@ -22,8 +22,6 @@ import {
 } from '@/data-types'
 import { horizonData } from '@/data/horizon'
 import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
-
-export const endpoint = `https://api.${serloDomain}/graphql`
 
 interface MenuData {
   title: string
