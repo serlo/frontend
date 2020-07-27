@@ -19,7 +19,7 @@ export const esInstanceLandingData: InstanceLandingData = {
       'Conviértete en Parte de Nuestro Movimiento para la Educación Abierta',
     callForAuthors:
       'Estamos buscando profesores, maestros y educadores entusiastas a quienes les apasionen las materias que enseñan. ¡Conviértete en un autor en serlo.org! Tu puedes crear nuevo material de aprendizaje y ayudarnos a mejorar el contenido existente.',
-    communityLink: 'Visita la página de inicio para autores',
+    communityLink: 'Visita la página para autores',
     callForOther:
       'Nosotros ofrecemos una diversa gama de trabajo y oportunidades de voluntariado, dentro del campo del desarrollo de software, diseño, traducción, comunicación, administración de proyectos, y más.',
     getInvolved: '¡Participa!',

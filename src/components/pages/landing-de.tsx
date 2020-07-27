@@ -11,7 +11,7 @@ import { LandingAbout } from '@/components/landing/landing-about'
 import { LandingSubjects } from '@/components/landing/landing-subjects'
 import { makeDefaultButton, makeResponsivePadding } from '@/helper/css'
 
-export function Landing() {
+export function LandingDE() {
   return (
     <>
       <HeadTags data={{ title: 'Serlo – Die freie Lernplattform' }} />
