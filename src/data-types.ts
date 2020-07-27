@@ -42,6 +42,13 @@ export interface InstanceData {
   footerData: FooterData
 }
 
+// Landing pages have a different structure, because they should only load on the landing page
+
+export interface InstanceLandingData {
+  lang: Instance
+  strings: LandingStrings
+}
+
 // Menus are trees of title and urls, possibly with icons.
 
 export type HeaderData = HeaderLink[]
@@ -395,4 +402,22 @@ export interface CookieStrings {
   link1: string
   link2: string
   button: string
+}
+
+export interface LandingStrings {
+  vision: string
+  learnMore: string
+  democraticallyStructured: string
+  nonProfit: string
+  transparent: string
+  openlyLicensed: string
+  adFree: string
+  freeOfCharge: string
+  wikiTitle: string
+  wikiText: string
+  movementTitle: string
+  callForAuthors: string
+  communityLink: string
+  callForOther: string
+  getInvolved: string
 }
