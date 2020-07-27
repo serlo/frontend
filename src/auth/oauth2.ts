@@ -4,6 +4,7 @@ import {
   AuthorizationCode,
   OAuthClient,
   Token,
+  AccessToken,
 } from 'simple-oauth2'
 
 const HYDRA_HOST =
@@ -41,6 +42,8 @@ const config =
         },
       }
 
+export const scope = ['offline_access', 'openid']
+
 export function getAuthorizationCode():
   | OAuthClient['authorizationCode']
   | null {
@@ -50,7 +53,7 @@ export function getAuthorizationCode():
 }
 
 export function getClientCredentials(): {
-  createToken(token: Token): Token
+  createToken(token: Token): AccessToken
 } | null {
   if (config === null) return null
   return new ClientCredentials(config)
@@ -65,7 +68,7 @@ export function getLogoutUrl({
   state: string
   callback: string
 }) {
-  if (config === null) return null
+  if (config === null || HYDRA_HOST === undefined) return null
   const query = new URLSearchParams({
     id_token_hint: idToken,
     state: state,

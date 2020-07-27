@@ -1,23 +1,33 @@
 import { horizonData } from '../data/horizon'
 import { createBreadcrumbs } from './create-breadcrumbs'
-import { createData } from './create-data'
+import { createData, EntityTypeData } from './create-data'
 import { createLicense } from './create-license'
 import { createNavigation } from './create-navigation'
 import { createTitle } from './create-title'
+import { QueryResponse, License, TaxonomyTermType } from './query'
+import { HeaderLink, BreadcrumbsData, FrontendContentNode } from '@/data-types'
 
 interface ReqData {
-  uuid: {
-    __typename: string
-  }
+  uuid: QueryResponse
 }
 
-interface ProcessedResponse {
-  contentType: string
+//TODO: resque type to bypass a lot of type guarding in serlo-api, check again
+
+export interface ResponseDataQuickFix {
+  title?: string
+  value?: FrontendContentNode
+  exercises?: FrontendContentNode[]
+  metaDescription?: string
+  type?: TaxonomyTermType
+}
+
+export interface ProcessedResponse {
+  contentType: QueryResponse['__typename']
   title: string
-  breadcrumbs: any // TODO:
-  navigation: object
-  data: any // TODO:
-  license: any // TODO
+  breadcrumbs?: BreadcrumbsData
+  navigation?: HeaderLink[]
+  data: EntityTypeData
+  license?: License
   horizonIndices: Array<number>
 }
 

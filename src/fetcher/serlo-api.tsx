@@ -1,38 +1,42 @@
 import { request } from 'graphql-request'
 
-import { serloDomain } from '../helper/serlo-domain'
+import {
+  EntityTypeWithTitle,
+  EntityTypeWithValue,
+  TaxonomyTermEntity,
+} from './create-data'
 import { extractLinks, extractLinksFromNav, walkIdNodes } from './extract-links'
-import { processResponse } from './process-response'
-import { dataQuery, idQuery, idsQuery } from './query'
+import { getMetaDescription } from './get-meta-description'
+import { processResponse, ResponseDataQuickFix } from './process-response'
+import { dataQuery, idQuery, idsQuery, QueryResponseFetched } from './query'
+import { endpoint } from '@/api/endpoint'
+import { PrettyLinksContextValue } from '@/contexts/pretty-links-context'
 import {
   PageData,
   BreadcrumbsData,
-  BreadcrumbLinkEntry,
   SecondaryNavigationData,
   EntityData,
   EntityPageBase,
-  TaxonomyData,
+  ProcessedResponseTaxonomy,
+  FrontendContentNode,
 } from '@/data-types'
 import { horizonData } from '@/data/horizon'
 import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
-
-export const endpoint = `https://api.${serloDomain}/graphql`
 
 interface MenuData {
   title: string
   url: string
 }
 
-// TODO: needs type declaration
 export async function fetchContent(
   alias: string,
-  redirect: any,
+  redirect: boolean,
   origin: string
 ) {
   try {
     if (redirect && /^\/[\d]+$/.test(alias)) {
       // redirect id to alias
-      const response = await request<{ uuid: any }>(
+      const response = await request<{ uuid: QueryResponseFetched }>(
         endpoint,
         idQuery(parseInt(alias.substring(1)))
       )
@@ -51,17 +55,17 @@ export async function fetchContent(
         ? 'id: ' + alias.substring(1)
         : `alias: { instance: de, path: "${alias}"}`
     )
-    // TODO: needs better types
-    const reqData = await request<{ uuid: any }>(endpoint, QUERY)
+    const reqData = await request<{ uuid: QueryResponseFetched }>(
+      endpoint,
+      QUERY
+    )
+
     // compat: redirect first page of course
     if (
       reqData.uuid.__typename === 'Course' &&
       Array.isArray(reqData.uuid.pages)
     ) {
-      // TODO: needs type declaration
-      const filtered = reqData.uuid.pages.filter(
-        (page: any) => page.alias !== null
-      )
+      const filtered = reqData.uuid.pages.filter((page) => page.alias !== null)
       if (filtered.length > 0) {
         return { redirect: filtered[0].alias }
       }
@@ -77,23 +81,33 @@ export async function fetchContent(
     const processed = processResponse(reqData)
 
     const contentLinks: number[] = []
-    if (processed.data.value) {
-      walkIdNodes(processed.data.value.children, (node, id) => {
+    const dataWithValue = (processed.data as unknown) as EntityTypeWithValue
+    if (dataWithValue?.value) {
+      //TODO: investigate
+      // @ts-expect-error
+      walkIdNodes(dataWithValue.value.children, (node, id) => {
         contentLinks.push(id)
       })
     }
 
-    // todo: rewrite this extractor as well
-    const exerciseLinks = extractLinks(processed.data.exercises, [])
+    //TODO: investigate this mess
+    const dataEx = (processed.data as unknown) as TaxonomyTermEntity
+
+    const exerciseLinks = extractLinks(
+      dataEx.exercises as FrontendContentNode[],
+      []
+    )
 
     const metaNavLinks = extractLinksFromNav(processed.navigation as MenuData[])
 
     const allLinks = [...contentLinks, ...exerciseLinks, ...metaNavLinks]
 
     const prettyLinks =
-      allLinks.length < 1 ? {} : await request(endpoint, idsQuery(allLinks))
+      allLinks.length < 1
+        ? undefined
+        : await request<PrettyLinksContextValue>(endpoint, idsQuery(allLinks))
 
-    const checkForSpecialUrls = (alias: string, id: number) => {
+    const checkForSpecialUrls = (id: number, alias?: string) => {
       if (!alias || hasSpecialUrlChars(alias)) {
         return `/${id}`
       } else {
@@ -102,10 +116,14 @@ export async function fetchContent(
     }
 
     const resolveIdToAlias = (id: number) => {
+      if (prettyLinks === undefined) return undefined
+
       const prettyLink = prettyLinks[`uuid${id}`]?.alias
-      return checkForSpecialUrls(prettyLink, id)
+      return checkForSpecialUrls(id, prettyLink)
     }
 
+    //TODO: needs investigation
+    // @ts-expect-error
     const buildPageData: () => PageData = () => {
       let breadcrumbsData: BreadcrumbsData | undefined = undefined
 
@@ -115,23 +133,21 @@ export async function fetchContent(
       ) {
         // Shorten breadcrumbs
         const shortened: BreadcrumbsData = []
-        processed.breadcrumbs.map(
-          (entry: BreadcrumbLinkEntry, i: number, arr: any) => {
-            const maxItems = 4
-            const overflow = arr.length > maxItems
-            const itemsToRemove = arr.length - maxItems
-            const ellipsesItem = overflow && i == 2
+        processed.breadcrumbs.map((entry, i, arr) => {
+          const maxItems = 4
+          const overflow = arr.length > maxItems
+          const itemsToRemove = arr.length - maxItems
+          const ellipsesItem = overflow && i == 2
 
-            if (overflow && i > 2 && i < 1 + itemsToRemove) return
-            // special case
-            if (arr.length - itemsToRemove > 4 && i === 1) return
-            if (ellipsesItem) {
-              shortened.push({ ellipsis: true })
-            } else {
-              shortened.push(entry)
-            }
+          if (overflow && i > 2 && i < 1 + itemsToRemove) return
+          // special case
+          if (arr.length - itemsToRemove > 4 && i === 1) return
+          if (ellipsesItem) {
+            shortened.push({ label: '', ellipsis: true })
+          } else {
+            shortened.push(entry)
           }
-        )
+        })
         breadcrumbsData = shortened
       }
 
@@ -139,36 +155,34 @@ export async function fetchContent(
         | SecondaryNavigationData
         | undefined = undefined
 
+      const type = ((processed.data as unknown) as ResponseDataQuickFix)?.type
+
       if (
         processed.navigation &&
         !(
           processed.contentType === 'TaxonomyTerm' &&
-          (processed.data.type === 'topicFolder' ||
-            processed.data.type === 'curriculumTopicFolder')
+          (type === 'topicFolder' || type === 'curriculumTopicFolder')
         )
       ) {
-        secondaryNavigationData = (processed.navigation as any[]).map(
-          (entry: any) => {
-            const id = parseInt(entry.url.substring(1))
-            return {
-              title: entry.title as string,
-              url: resolveIdToAlias(id),
-              active: id === parseInt(contentId),
-            }
+        secondaryNavigationData = processed.navigation.map((entry) => {
+          const id = parseInt(entry.url.substring(1))
+          return {
+            title: entry.title,
+            url: resolveIdToAlias(id),
+            active: id === contentId,
           }
-        )
+        })
       }
 
       function getMetaContentType() {
         const { contentType } = processed
         //match legacy content types that are used by google custom search
-        if (contentType === undefined) return ''
-        if (contentType === 'Exercise') return 'text-exercise'
-        if (contentType === 'CoursePage') return 'course-page'
-        if (
-          processed.data.type === 'topicFolder' ||
-          processed.data.type === 'curriculumTopicFolder'
-        )
+        if (processed.contentType === undefined) return ''
+        if (processed.contentType === 'Exercise') return 'text-exercise'
+        if (processed.contentType === 'CoursePage') return 'course-page'
+
+        const type = ((processed.data as unknown) as ResponseDataQuickFix).type
+        if (type === 'topicFolder' || type === 'curriculumTopicFolder')
           return 'topic-folder'
         if (contentType === 'TaxonomyTerm') return 'topic'
         //Article, Video, Applet, Page
@@ -194,60 +208,31 @@ export async function fetchContent(
         return `${origin}/_assets/img/meta/${imageSrc}`
       }
 
-      function getMetaDescription() {
-        if (processed.contentType === 'TaxonomyTerm') return
-        const { data } = processed
-
-        if (!data) return
-
-        const hasDescription =
-          data.metaDescription && data.metaDescription.length > 10
-        if (hasDescription) return data.metaDescription as string
-
-        if (data.value === undefined || data.value.children === undefined)
-          return
-
-        const slice = data.value.children.slice(0, 10)
-        const stringified = JSON.stringify(slice)
-        const regexp = /"text":"(.)*?"/g
-        const matches = stringified.match(regexp)
-        const longFallback = matches
-          ? matches.map((str) => str.substring(8, str.length - 1)).join('')
-          : ''
-        if (longFallback.length < 50) return
-
-        const softCutoff = 135
-        const fallback =
-          longFallback.substr(
-            0,
-            softCutoff + longFallback.substr(softCutoff).indexOf(' ')
-          ) + ' …'
-        const description = hasDescription ? data.metaDescription : fallback
-        return description as string
-      }
-
       const basePage: EntityPageBase = {
         breadcrumbsData,
         secondaryNavigationData,
         metaData: {
           title: processed.title,
           contentType: getMetaContentType(),
-          metaDescription: getMetaDescription(),
+          metaDescription: getMetaDescription(processed),
           metaImage: getMetaImage(),
         },
         horizonData: processed.horizonIndices.map(
           (index) => horizonData[index]
         ),
         cacheKey: alias,
-        newsletterPopup: processed.data && processed.contentType === 'Page',
+        newsletterPopup: !!(processed.data && processed.contentType === 'Page'),
       }
 
       if (processed.contentType === 'TaxonomyTerm') {
-        const taxonomyData: TaxonomyData = {
+        //TODO: help?
+        const processedTax = (processed as unknown) as ProcessedResponseTaxonomy
+
+        const taxonomyData = {
           id: contentId,
-          title: processed.data.title,
-          description: processed.data.description?.children,
-          subterms: processed.data.children.map((child: any) => {
+          title: processedTax.data.title,
+          description: processedTax.data.description?.children,
+          subterms: processedTax.data.children?.map((child) => {
             return {
               title: child.title,
               url: child.url,
@@ -260,20 +245,27 @@ export async function fetchContent(
               folders: child.links.subfolders,
             }
           }),
-          exercisesContent: processed.data.exercises?.map(
-            (exercise: any) => exercise.children
+          exercisesContent: processedTax.data.exercises?.map(
+            (exercise) => exercise.children
           ),
-          articles: processed.data.links.articles,
-          exercises: processed.data.links.exercises,
-          videos: processed.data.links.videos,
-          courses: processed.data.links.courses,
-          applets: processed.data.links.applets,
+          articles: processedTax.data.links.articles,
+          exercises: processedTax.data.links.exercises,
+          videos: processedTax.data.links.videos,
+          courses: processedTax.data.links.courses,
+          applets: processedTax.data.links.applets,
         }
-        return { ...basePage, kind: 'taxonomy', taxonomyData }
+        return {
+          ...basePage,
+          kind: 'taxonomy',
+          taxonomyData,
+        }
       }
 
       const entityData: EntityData = { id: contentId }
-      entityData.title = processed.data?.title
+
+      //TODO: help?
+      entityData.title = ((processed.data as unknown) as EntityTypeWithTitle)?.title
+
       if (processed.contentType === 'Article') {
         entityData.categoryIcon = 'article'
         entityData.schemaData = {
@@ -293,7 +285,10 @@ export async function fetchContent(
           wrapWithItemType: 'http://schema.org/VideoObject',
         }
       }
-      entityData.content = processed.data?.value?.children
+
+      //TODO: Should not be nessesary
+      entityData.content = ((processed.data as unknown) as EntityTypeWithValue)?.value?.children
+
       if (processed.contentType !== 'Page') {
         entityData.inviteToEdit = true
       }
@@ -301,25 +296,40 @@ export async function fetchContent(
         // resolve prettylinks
         // walk through content and replace links with prettyfied version
         walkIdNodes(entityData.content, (node, id) => {
-          ;(node as any).href = resolveIdToAlias(id)
+          node.href = resolveIdToAlias(id)
         })
       }
+
       entityData.licenseData = processed.license
+
+      interface CourseData {
+        courseTitle: string
+        pages: {
+          alias: 'string'
+          id: number
+          currentRevision: {
+            title: string
+          }
+        }[]
+        nextPageUrl?: string
+      }
+
       if (processed.contentType === 'CoursePage') {
+        const processedCourseData = (processed.data as unknown) as CourseData
         let currentPageIndex = -1
-        const pages = processed.data.pages.map((page: any, i: number) => {
+        const pages = processedCourseData.pages.map((page, i) => {
           const active = page.id === contentId
           if (active) {
             currentPageIndex = i + 1
           }
           return {
             title: page.currentRevision?.title ?? '',
-            url: checkForSpecialUrls(page.alias, page.id),
+            url: checkForSpecialUrls(page.id, page.alias),
             active,
           }
         })
         entityData.courseData = {
-          title: processed.data.courseTitle,
+          title: processedCourseData.courseTitle,
           pages,
           nextPageUrl: pages[currentPageIndex]?.url,
         }
@@ -336,6 +346,9 @@ export async function fetchContent(
       pageData: buildPageData(),
     }
   } catch (e) {
-    return { error: `Error while fetching data: ${e.message ?? e}`, alias }
+    return {
+      error: `Error while fetching data: ${(e as Error).message ?? e}`,
+      alias,
+    }
   }
 }

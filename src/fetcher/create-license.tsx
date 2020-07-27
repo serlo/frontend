@@ -1,8 +1,12 @@
+import { QueryResponse, QueryResponseWithLicense } from './query'
+
 const excludeLicense = ['Exercise', 'GroupedExercise', 'ExerciseGroup']
 
-// TODO: needs type declaration
-export function createLicense(uuid: any) {
-  if (!excludeLicense.includes(uuid.__typename) && uuid.license) {
-    return uuid.license
+export function createLicense(uuid: QueryResponse) {
+  if (!excludeLicense.includes(uuid.__typename)) {
+    const _uuid = uuid as QueryResponseWithLicense
+    if (_uuid.license) {
+      return _uuid.license
+    }
   }
 }

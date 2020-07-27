@@ -1,7 +1,7 @@
 import { NextPageContext } from 'next'
 import absoluteUrl from 'next-absolute-url'
 
-import { InitialProps, PageData } from '@/data-types'
+import { InitialProps, PageData, FetchedData } from '@/data-types'
 import { deInstanceData } from '@/data/de'
 
 export const fetcherAdditionalData = {
@@ -28,8 +28,7 @@ export async function getInitialProps(
     joinedSlug === 'search' ||
     joinedSlug === 'spenden'
   ) {
-    //TODO: Probaby add another type for FetchedData pages
-    // also check what values we might actually need to feed slug-head
+    // TODO: also check what values we might actually need to feed slug-head
     return {
       pageData: {
         kind:
@@ -51,7 +50,7 @@ export async function getInitialProps(
       `${origin}/api/frontend/${encodeURIComponent(joinedSlug)}?redirect`
     )
 
-    const fetchedData = await res.json()
+    const fetchedData = (await res.json()) as FetchedData
     // compat course to first page
     if (fetchedData.redirect) {
       props.res?.writeHead(301, {
@@ -94,13 +93,13 @@ export async function getInitialProps(
     const res = await fetch(
       `${fetcherAdditionalData.origin}/api/frontend${url}`
     )
-    const fetchedData = await res.json()
+    const fetchedData = (await res.json()) as FetchedData
     // compat: redirect of courses
     if (fetchedData.redirect) {
       const res = await fetch(
         `${fetcherAdditionalData.origin}/api/frontend${fetchedData.redirect}`
       )
-      const fetchedData2 = await res.json()
+      const fetchedData2 = (await res.json()) as FetchedData
       return {
         origin: fetcherAdditionalData.origin,
         pageData: fetchedData2.pageData,

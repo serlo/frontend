@@ -29,11 +29,11 @@ export function Header({ onSearchPage }: HeaderProps) {
     <BlueHeader>
       <MobileMenuButton onClick={() => setOpen(!isOpen)} open={isOpen} />
       <PaddedDiv>
-        <Menu data={headerData} auth={auth} />
+        <Menu data={headerData} auth={auth.current} />
         <Logo subline={strings.header.slogan} />
       </PaddedDiv>
       <SearchInput onSearchPage={onSearchPage} />
-      {isOpen && <MobileMenu data={headerData} auth={auth} />}
+      {isOpen && <MobileMenu data={headerData} auth={auth.current} />}
     </BlueHeader>
   )
 }
