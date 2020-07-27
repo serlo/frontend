@@ -2,15 +2,14 @@ import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styled from 'styled-components'
 
-import DonateSVG from '../../../public/_assets/img/footer-donate.svg'
 import ParticipateSVG from '../../../public/_assets/img/footer-participate.svg'
 import { Link } from '../content/link'
 import { HeadTags } from '../head-tags'
-import { InstanceLandingData } from '@/data-types'
-import { makeDefaultButton, makeResponsivePadding } from '@/helper/css'
-import { useInstanceData } from '@/contexts/instance-context'
 import { PrinciplesGraphic } from '../landing/principles-graphic'
 import { StyledP } from '../tags/styled-p'
+import { useInstanceData } from '@/contexts/instance-context'
+import { InstanceLandingData } from '@/data-types'
+import { makeDefaultButton, makeResponsivePadding } from '@/helper/css'
 
 export interface LandingInternationalProps {
   instanceData: InstanceLandingData
@@ -20,7 +19,7 @@ export function LandingInternational({
   instanceData,
 }: LandingInternationalProps) {
   const landingStrings = instanceData.strings
-  const lang = instanceData.lang
+  // const lang = instanceData.lang
   const { strings } = useInstanceData()
 
   return (
@@ -92,8 +91,6 @@ const Section = styled.section`
   }
 `
 
-const WelcomeSection = styled(Section)``
-
 const Col = styled.div`
   margin-top: 40px;
 
@@ -116,24 +113,10 @@ const Col = styled.div`
   }
 `
 
-// const AboutSection = styled.section`
-//   margin-top: 50px;
-//   display: flex;
-//   flex-direction: column;
-
-//   @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-//     flex-direction: row;
-//   }
-// `
-
 const ImageSection = styled.section`
   background-size: contain;
   background-repeat: no-repeat;
   padding-top: 43.75%;
-
-  /* height: 0;
-  padding-top: 43.75%;
-  margin-bottom: 40px; */
 
   background-image: url('https://packages.serlo.org/serlo-org-client@13.0.4/home_img_launch_sm.570e34cd.jpg');
 
