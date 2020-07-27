@@ -1,7 +1,7 @@
 import Tippy from '@tippyjs/react'
 import styled from 'styled-components'
 
-import { Link } from '@/components/content/link'
+import { SubList, SubLink, SubButtonStyle } from './menu'
 
 export interface AuthorToolsHoverMenuProps {
   id: number
@@ -15,43 +15,54 @@ export function AuthorToolsHoverMenu({ id }: AuthorToolsHoverMenuProps) {
         placement="left-end"
         content={
           <HoverDiv>
-            <HoverEntry>
-              <Link href={`/subscribe/${id}/0`}>
-                Benachrichtigungen erhalten
-              </Link>
-            </HoverEntry>
-            <HoverEntry>
-              <Link href={`/subscribe/${id}/1`}>
-                Benachrichtigungen und E-Mail erhalten
-              </Link>
-            </HoverEntry>
+            <Li>
+              <SubLink href={`/subscribe/${id}/0`}>
+                <SubButtonStyle>Benachrichtigungen erhalten</SubButtonStyle>
+              </SubLink>
+            </Li>
+
+            <Li>
+              <SubLink href={`/subscribe/${id}/1`}>
+                <SubButtonStyle>
+                  Benachrichtigungen und E-Mail erhalten
+                </SubButtonStyle>
+              </SubLink>
+            </Li>
           </HoverDiv>
         }
       >
-        <HoverEntry>
-          <Link>Abonnieren</Link>
-        </HoverEntry>
+        <Li>
+          <SubLink as="div">
+            <SubButtonStyle>Abonnieren</SubButtonStyle>
+          </SubLink>
+        </Li>
       </Tippy>
-      <HoverEntry>
-        <Link>Konvertieren</Link>
-      </HoverEntry>
-      <HoverEntry>
-        <Link href={`/page/revision/revisions/${id}`}>Bearbeitungsverlauf</Link>
-      </HoverEntry>
-      <HoverEntry>
-        <Link href={`/event/history/${id}`}>Aktivitätenlog</Link>
-      </HoverEntry>
+
+      <Li>
+        <SubLink>
+          <SubButtonStyle>Konvertieren</SubButtonStyle>
+        </SubLink>
+      </Li>
+
+      <Li>
+        <SubLink href={`/page/revision/revisions/${id}`}>
+          <SubButtonStyle>Bearbeitungsverlauf</SubButtonStyle>
+        </SubLink>
+      </Li>
+
+      <Li>
+        <SubLink href={`/event/history/${id}`}>
+          <SubButtonStyle>Aktivitätenlog</SubButtonStyle>
+        </SubLink>
+      </Li>
     </HoverDiv>
   )
 }
 
-const HoverDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-  border: 1px solid black;
+const HoverDiv = styled(SubList)`
+  background-color: ${(props) => props.theme.colors.lightBackground};
 `
 
-const HoverEntry = styled.div`
-  margin-bottom: 10px;
+const Li = styled.li`
+  display: block;
 `

@@ -1,4 +1,8 @@
-import { faPencilAlt, faShareAlt } from '@fortawesome/free-solid-svg-icons'
+import {
+  faPencilAlt,
+  faShareAlt,
+  faTools,
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Tippy from '@tippyjs/react'
 import dynamic from 'next/dynamic'
@@ -50,7 +54,9 @@ export function UserTools({ id, onShare, hideEdit }: UserToolsProps) {
             content={<AuthorToolsHoverMenu id={id} />}
             placement="left-end"
           >
-            <IconButton>Weitere Tools</IconButton>
+            <IconButton>
+              <FontAwesomeIcon icon={faTools} size="1x" /> Weitere Tools
+            </IconButton>
           </Tippy>
         )}
       </BoxWrapper>

@@ -171,7 +171,7 @@ function SubMenuInner({ subEntries, onSubMenuInnerClick }: SubMenuInnerProps) {
           return (
             <li key={entry.title} onClick={onSubMenuInnerClick}>
               <SubLink href={entry.url}>
-                <_Button>{entry.title}</_Button>
+                <SubButtonStyle>{entry.title}</SubButtonStyle>
               </SubLink>
             </li>
           )
@@ -235,11 +235,9 @@ const StyledLink = styled(Link)<{ active?: boolean; hasIcon?: boolean }>`
   margin: 0 3px;
   margin-top: ${(props) => (props.hasIcon ? '-5px' : '11px')};
   padding: ${(props) => (props.hasIcon ? '7px' : '2px 7px')};
-
-
 `
 
-const SubList = styled.ul`
+export const SubList = styled.ul`
   background-color: white;
   padding: 12px 15px 12px 10px;
   margin: 0;
@@ -252,19 +250,21 @@ const SubList = styled.ul`
   border-radius: 10px;
 `
 
-const SubLink = styled(Link)`
+export const SubLink = styled(Link)`
   padding-top: 3px;
   padding-bottom: 3px;
   display: block;
   text-decoration: none;
+  cursor: pointer;
   &:hover span {
     color: #fff;
     background-color: ${(props) => props.theme.colors.brand};
   }
 `
 
-const _Button = styled.span`
+export const SubButtonStyle = styled.span`
   text-decoration: none;
+  display: block;
   ${linkStyle}
   ${makeDefaultButton}
   color: ${(props) => props.theme.colors.brand};
