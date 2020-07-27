@@ -27,10 +27,14 @@ export interface UserToolsData {
 export function UserTools({ id, onShare, hideEdit }: UserToolsProps) {
   const { strings } = useInstanceData()
   const auth = useAuth()
+  const [loaded, setLoaded] = React.useState(false)
+  React.useEffect(() => {
+    setLoaded(true)
+  }, [])
   return (
     <AbsoluteWrapper>
       <BoxWrapper>
-        {(!hideEdit || auth.current) && (
+        {(!hideEdit || (loaded && auth.current)) && (
           <IconButton href={`/entity/repository/add-revision/${id}`}>
             <FontAwesomeIcon icon={faPencilAlt} size="1x" />{' '}
             {strings.edit.button}
@@ -40,7 +44,7 @@ export function UserTools({ id, onShare, hideEdit }: UserToolsProps) {
           <FontAwesomeIcon icon={faShareAlt} size="1x" /> {strings.share.button}
           !
         </IconButton>
-        {auth.current && (
+        {loaded && auth.current && (
           <Tippy
             interactive
             content={<AuthorToolsHoverMenu id={id} />}

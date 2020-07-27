@@ -2,8 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { makeMargin } from '../../helper/css'
+import { AuthorTools } from './author-tools'
 import { ExerciseNumbering } from './exercise-numbering'
 import { SpoilerContainer } from './spoiler-container'
+import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
 
 export interface ExerciseGroupProps {
@@ -19,12 +21,18 @@ export function ExerciseGroup({
   groupIntro,
   positionOnPage,
 }: ExerciseGroupProps) {
+  const [loaded, setLoaded] = React.useState(false)
+  React.useEffect(() => {
+    setLoaded(true)
+  }, [])
   const { strings } = useInstanceData()
+  const auth = useAuth()
   return (
     <Container>
       <ExerciseIntro>
         <ExerciseNumbering index={positionOnPage} />
         <Label>{strings.content.exerciseGroup}</Label>
+        {loaded && auth.current && <AuthorTools />}
         {groupIntro}
       </ExerciseIntro>
       <Content>{children}</Content>

@@ -3,10 +3,12 @@ import styled, { css } from 'styled-components'
 
 import { makeMargin, makeDefaultButton } from '../../helper/css'
 import { renderArticle } from '../../schema/article-renderer'
+import { AuthorTools } from './author-tools'
 import { ExerciseNumbering } from './exercise-numbering'
 import { InputExercise, InputExerciseProps } from './input-exercise'
 import { LicenseNotice } from './license-notice'
 import { ScMcExercise, ScMcExerciseProps } from './sc-mc-exercise'
+import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
 import { LicenseData, FrontendContentNode } from '@/data-types'
 
@@ -80,10 +82,17 @@ export function Exercise(props: ExerciseProps) {
     solution.children.length === 1 &&
     solution.children[0].type === '@edtr-io/solution'
 
+  const auth = useAuth()
+  const [loaded, setLoaded] = React.useState(false)
+  React.useEffect(() => {
+    setLoaded(true)
+  }, [])
+
   return (
     <Wrapper grouped={grouped}>
       {!grouped && <ExerciseNumbering index={positionOnPage!} />}
 
+      {loaded && auth.current && <AuthorTools />}
       {renderExerciseTask()}
       {renderInteractive()}
 
@@ -115,6 +124,7 @@ export function Exercise(props: ExerciseProps) {
   function renderSolutionBox() {
     return (
       <SolutionBox>
+        {loaded && auth.current && <AuthorTools />}
         {renderArticle(getSolutionContent(), false)}
         {solutionLicense && <LicenseNotice minimal data={solutionLicense} />}
       </SolutionBox>

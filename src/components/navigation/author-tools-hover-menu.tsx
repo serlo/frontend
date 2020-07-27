@@ -48,6 +48,8 @@ export function AuthorToolsHoverMenu({ id }: AuthorToolsHoverMenuProps) {
 const HoverDiv = styled.div`
   display: flex;
   flex-direction: column;
+  background-color: white;
+  border: 1px solid black;
 `
 
 const HoverEntry = styled.div`
