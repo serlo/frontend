@@ -7,6 +7,7 @@ import ParticipateSVG from '../../../public/_assets/img/footer-participate.svg'
 import PrinciplesSVG from '../../../public/_assets/img/landing-principles-graphic.svg'
 import { Link } from '../content/link'
 import { HeadTags } from '../head-tags'
+import { StyledP } from '../tags/styled-p'
 import { LandingAbout } from '@/components/landing/landing-about'
 import { LandingSubjects } from '@/components/landing/landing-subjects'
 import { makeDefaultButton, makeResponsivePadding } from '@/helper/css'
@@ -29,22 +30,22 @@ export function LandingDE() {
           <ParticipateSVG />
         </IconStyle>
         <Col>
-          <p>
+          <LandingP>
             Wir suchen Lehrkräfte mit Begeisterung für ihr Fach. Werden Sie
             Autor*in auf serlo.org, erstellen Sie <b>neue Inhalte</b> und helfen
             Sie uns, die <b>Qualität</b> der Lernplattform zu sichern.
-          </p>
+          </LandingP>
           <Button href="/community">
             Zur Startseite für Autor*innen{' '}
             <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
           </Button>
         </Col>
         <Col>
-          <p>
+          <LandingP>
             Wir suchen neue hauptamtliche und ehrenamtliche Teammitglieder für
             die Bereiche <b>Softwareentwicklung</b>, <b>Redaktion</b> und{' '}
             <b>NGO-Management</b>.
-          </p>
+          </LandingP>
           <Button href="/jobs">
             Jobs und Engagement{' '}
             <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
@@ -62,21 +63,21 @@ export function LandingDE() {
           <DonateSVG />
         </IconStyle>
         <Col>
-          <p>
+          <LandingP>
             Bildung gehört uns allen! Werden Sie Mitglied in unserer
             Organisation Serlo Education e.V. und so zu Mitherausgeber*in der
             freien Lernplattform.
-          </p>
+          </LandingP>
           <Button href="/beitreten">
             Mitglied werden{' '}
             <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
           </Button>
         </Col>
         <Col>
-          <p>
+          <LandingP>
             Softwareentwicklung und Lerninhalte erstellen kostet Geld. Wir
             freuen uns sehr, wenn Sie Serlo mit einer Spende unterstützen.
-          </p>
+          </LandingP>
           <Button href="/spenden">
             Spenden <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
           </Button>
@@ -149,6 +150,7 @@ const StyledH2 = styled.h2`
 
 const Button = styled(Link)`
   ${makeDefaultButton}
+  font-size: 1.125rem;
   text-decoration: none !important;
   margin-left: -3px;
   font-weight: bold;
@@ -182,4 +184,8 @@ const IconStyle = styled.div`
     margin-right: 50px;
     width: 120px;
   }
+`
+
+const LandingP = styled(StyledP)`
+  margin-left: 0;
 `
