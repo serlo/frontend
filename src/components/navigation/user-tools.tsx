@@ -1,13 +1,21 @@
 import { faPencilAlt, faShareAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Tippy from '@tippyjs/react'
+import dynamic from 'next/dynamic'
 import React from 'react'
 import styled from 'styled-components'
 
 import { makeGreenButton } from '../../helper/css'
+import { AuthorToolsHoverMenuProps } from './author-tools-hover-menu'
+import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
 
+const AuthorToolsHoverMenu = dynamic<AuthorToolsHoverMenuProps>(() =>
+  import('./author-tools-hover-menu').then((mod) => mod.AuthorToolsHoverMenu)
+)
+
 interface UserToolsProps {
-  editHref?: string
+  id: number
   onShare?: () => void
   hideEdit: boolean
 }
@@ -16,13 +24,14 @@ export interface UserToolsData {
   editHref: string
 }
 
-export function UserTools({ editHref, onShare, hideEdit }: UserToolsProps) {
+export function UserTools({ id, onShare, hideEdit }: UserToolsProps) {
   const { strings } = useInstanceData()
+  const auth = useAuth()
   return (
     <AbsoluteWrapper>
       <BoxWrapper>
-        {!hideEdit && (
-          <IconButton href={editHref}>
+        {(!hideEdit || auth.current) && (
+          <IconButton href={`/entity/repository/add-revision/${id}`}>
             <FontAwesomeIcon icon={faPencilAlt} size="1x" />{' '}
             {strings.edit.button}
           </IconButton>
@@ -31,6 +40,15 @@ export function UserTools({ editHref, onShare, hideEdit }: UserToolsProps) {
           <FontAwesomeIcon icon={faShareAlt} size="1x" /> {strings.share.button}
           !
         </IconButton>
+        {auth.current && (
+          <Tippy
+            interactive
+            content={<AuthorToolsHoverMenu id={id} />}
+            placement="left-end"
+          >
+            <IconButton>Weitere Tools</IconButton>
+          </Tippy>
+        )}
       </BoxWrapper>
     </AbsoluteWrapper>
   )
