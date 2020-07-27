@@ -31,15 +31,25 @@ export function ExerciseGroup({
     <Container>
       <ExerciseIntro>
         <ExerciseNumbering index={positionOnPage} />
-        <Label>{strings.content.exerciseGroup}</Label>
-        {loaded && auth.current && <AuthorTools />}
+
+        <TopLine>
+          <Label>{strings.content.exerciseGroup}</Label>
+          <div>{license}</div>
+          {loaded && auth.current && <AuthorTools />}
+        </TopLine>
+
         {groupIntro}
       </ExerciseIntro>
       <Content>{children}</Content>
-      <div>{license}</div>
     </Container>
   )
 }
+
+const TopLine = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 3px;
+`
 
 const Container = styled(SpoilerContainer)`
   padding-top: 4px;
@@ -49,7 +59,7 @@ const Container = styled(SpoilerContainer)`
 `
 
 const ExerciseIntro = styled.div`
-  padding-top: 12px;
+  padding-top: 8px;
   margin-bottom: 12px;
 `
 
@@ -64,6 +74,7 @@ const Label = styled.small`
   font-size: 0.9rem;
   font-weight: bold;
   ${makeMargin}
+  margin-right: auto;
   display: block;
   margin-bottom: 7px;
   color: ${(props) => props.theme.colors.brand};

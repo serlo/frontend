@@ -1,7 +1,7 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 
-import { makeMargin, makeDefaultButton } from '../../helper/css'
+import { makeMargin, makeDefaultButton, makePadding } from '../../helper/css'
 import { renderArticle } from '../../schema/article-renderer'
 import { AuthorTools } from './author-tools'
 import { ExerciseNumbering } from './exercise-numbering'
@@ -92,13 +92,10 @@ export function Exercise(props: ExerciseProps) {
     <Wrapper grouped={grouped}>
       {!grouped && <ExerciseNumbering index={positionOnPage!} />}
 
-      {loaded && auth.current && <AuthorTools />}
       {renderExerciseTask()}
       {renderInteractive()}
 
-      {taskLicense && <LicenseNotice minimal data={taskLicense} />}
-
-      {renderSolutionToggle()}
+      {renderToolsAndLicense()}
 
       {solutionVisible && renderSolutionBox()}
     </Wrapper>
@@ -124,9 +121,12 @@ export function Exercise(props: ExerciseProps) {
   function renderSolutionBox() {
     return (
       <SolutionBox>
-        {loaded && auth.current && <AuthorTools />}
         {renderArticle(getSolutionContent(), false)}
-        {solutionLicense && <LicenseNotice minimal data={solutionLicense} />}
+
+        <SolutionTools>
+          {solutionLicense && <LicenseNotice minimal data={solutionLicense} />}
+          {loaded && auth.current && <AuthorTools />}
+        </SolutionTools>
       </SolutionBox>
     )
   }
@@ -184,7 +184,22 @@ export function Exercise(props: ExerciseProps) {
       }
     }
   }
+
+  function renderToolsAndLicense() {
+    return (
+      <ExerciseTools>
+        {renderSolutionToggle()}
+
+        {taskLicense && <LicenseNotice minimal data={taskLicense} />}
+        {loaded && auth.current && <AuthorTools />}
+      </ExerciseTools>
+    )
+  }
 }
+
+const ExerciseTools = styled.div`
+  display: flex;
+`
 
 const StyledSpan = styled.span`
   display: inline-block;
@@ -227,6 +242,7 @@ const Wrapper = styled.div<{ grouped?: boolean }>`
 const SolutionToggle = styled.a<{ active: boolean }>`
   ${makeMargin}
   ${makeDefaultButton}
+  margin-right: auto;
   padding-right: 9px;
   font-size: 1rem;
   display: inline-block;
@@ -255,4 +271,8 @@ const SolutionBox = styled.div`
   ${makeMargin}
   margin-bottom: ${(props) => props.theme.spacing.mb.block};
   border-left: 8px solid ${(props) => props.theme.colors.brand};;
+`
+
+const SolutionTools = styled.div`
+  ${makePadding}
 `
