@@ -11,7 +11,6 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { FrontendContentNode } from '@/data-types'
 
 export interface ScMcExerciseProps {
-  // TODO: should be typed in convert-edtr-io-state
   state: {
     answers: {
       isCorrect: boolean

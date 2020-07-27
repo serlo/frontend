@@ -7,8 +7,6 @@ import { StyledA } from '@/components/tags/styled-a'
 import { StyledH1 } from '@/components/tags/styled-h1'
 import { StyledP } from '@/components/tags/styled-p'
 
-//TODO: Differentiate errors types, always 404 is missleading for users and search engines
-
 export function ErrorPage() {
   const [path, setPath] = React.useState('')
   React.useEffect(() => {

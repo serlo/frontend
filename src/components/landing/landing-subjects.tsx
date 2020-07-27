@@ -63,7 +63,6 @@ interface SubjectProps {
 }
 
 function Subject({ url, title, subjectSVG, alwaysShowArrow }: SubjectProps) {
-  // TODO: Use Link component, currently breaks styles
   return (
     <SubjectLink href={url}>
       <>
