@@ -93,6 +93,9 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
 }
 
 function renderPage(page: PageData) {
+  //TODO: investigate why this happens sometimes.
+  if (page === undefined) return <ErrorPage />
+
   if (page.kind === 'donation') {
     return <Donations />
   } else {

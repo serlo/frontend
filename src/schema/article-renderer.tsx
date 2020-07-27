@@ -209,8 +209,8 @@ export function renderLeaf({
 }
 
 function renderElement(props: RenderElementProps) {
-  //TODO: Check with Jonas
-  return renderer[props.element.type!](props)
+  if (!props.element.type) return null
+  return renderer[props.element.type](props)
 }
 
 interface RenderAData {
@@ -218,8 +218,7 @@ interface RenderAData {
   children: React.ReactNode
 }
 
-// TODO: needs type declaration
-export function renderA({ element, children = null }: any) {
+export function renderA({ element, children = null }: RenderAData) {
   return <Link href={element.href}>{children}</Link>
 }
 

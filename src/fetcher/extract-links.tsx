@@ -1,6 +1,7 @@
+import { ExerciseProps } from '@/components/content/exercise'
 import { FrontendContentNode } from '@/data-types'
 
-function getId(url: string): number | false {
+function getId(url: string): number | undefined {
   //e.g. /1565
   if (/^\/[\d]+$/.test(url)) return parseInt(url.substring(1))
 
@@ -9,13 +10,14 @@ function getId(url: string): number | false {
     return parseInt(url.split('de.serlo.org/')[1])
   }
 
-  return false
+  return undefined
 }
 
 export function walkIdNodes(
-  content: FrontendContentNode[],
+  content: FrontendContentNode[] | undefined,
   callback: (node: FrontendContentNode, id: number) => void
 ) {
+  if (content === undefined) return
   content.forEach((obj) => {
     if (obj.type === 'a' || obj.type === 'img') {
       // We know that href might exists
@@ -34,7 +36,7 @@ export function walkIdNodes(
     }
     if (obj.type === 'exercise') {
       // domain knowledge
-      const exercise = obj as any
+      const exercise = obj as ExerciseProps
       if (exercise.solution?.children) {
         walkIdNodes(exercise.solution.children, callback)
       }
@@ -45,21 +47,28 @@ export function walkIdNodes(
   })
 }
 
-export const extractLinks = (arr: unknown[], links: number[]) => {
+export const extractLinks = (
+  arr: FrontendContentNode[] | undefined,
+  links: number[]
+) => {
   if (!arr) return []
-  // TODO: needs type declaration
-  arr.forEach((obj: any) => {
+
+  arr.forEach((obj) => {
     if (obj.type === 'a' || obj.type === 'img') {
+      if (obj.href === undefined) return
       const id = getId(obj.href)
-      if (!id) return
+      if (id === undefined) return
       if (links.includes(id) === false) links.push(id)
     }
-    if (obj.children?.length > 0) extractLinks(obj.children, links)
+    if (obj.children !== undefined && obj.children.length > 0)
+      extractLinks(obj.children, links)
 
     if (obj.type === 'exercise') {
-      if (obj.solution.children.length > 0)
-        extractLinks(obj.solution.children, links)
-      if (obj.task.children.length > 0) extractLinks(obj.task.children, links)
+      const exercise = obj as ExerciseProps
+      if (exercise.solution.children.length > 0)
+        extractLinks(exercise.solution.children, links)
+      if (exercise.task.children.length > 0)
+        extractLinks(exercise.task.children, links)
     }
   })
   return links

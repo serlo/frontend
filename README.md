@@ -722,6 +722,7 @@ The app is the entrypoint of your page and is rendered client-side as well. You 
 Here is a list of included peer dependencies:
 
 - `styled-components` depends on `react-is`
+- `graphiql` depends on `prop-types`
 
 ## FAQ
 

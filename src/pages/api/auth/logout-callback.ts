@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
+import { Token } from 'simple-oauth2'
 
 import { getAuthorizationCode, getClientCredentials } from '@/auth/oauth2'
 
@@ -19,7 +20,7 @@ async function callback(req: NextApiRequest, res: NextApiResponse) {
   if (csrf !== req.cookies['auth-csrf']) return fail('CSRF validation failed')
 
   try {
-    const token = JSON.parse(req.cookies['auth-token'])
+    const token = JSON.parse(req.cookies['auth-token']) as Token
     const accessToken = oauth2ClientCredentials.createToken(token)
     await accessToken.revokeAll()
   } catch (e) {
