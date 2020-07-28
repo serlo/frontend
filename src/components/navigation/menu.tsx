@@ -148,7 +148,7 @@ function Entry({
           }
           singleton={target}
         >
-          <StyledLink hasIcon={hasIcon} as="a" /*active={true}*/>
+          <StyledLink hasIcon={hasIcon} as="a" tabIndex={0} /*active={true}*/>
             {renderIcon()}
             {!hasIcon && link.title} <FontAwesomeIcon icon={faCaretDown} />
           </StyledLink>
