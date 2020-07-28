@@ -16,7 +16,6 @@ export const deInstanceData: InstanceData = {
       slogan: 'Die freie Lernplattform',
       search: 'Suche',
       login: 'Anmelden',
-      logout: 'Abmelden',
     },
     footer: {
       summaryHeading: 'Serlo.org ist die Wikipedia fürs Lernen',

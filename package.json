@@ -55,7 +55,10 @@
     "react-notify-toast": "^0.5.0",
     "showdown": "^1.9.0",
     "simple-oauth2": "^4.0.0",
-    "styled-components": "^5.0.0"
+    "styled-components": "^5.0.0",
+    "swr": "^0.2.0",
+    "timeago-react": "^3.0.0",
+    "timeago.js": "^4.0.2"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^9.4.0",
