@@ -1,8 +1,6 @@
 // Keep this file in sync with the graphQL schema.
 // Maybe automate this one day.
 
-import { InstanceData } from '@/data-types'
-
 export type Instance = 'de' | 'en' | 'fr' | 'es' | 'ta' | 'hi'
 
 // A license has some more attributes, but we are fine with these

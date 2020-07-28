@@ -2,7 +2,6 @@ import { NextPageContext } from 'next'
 import absoluteUrl from 'next-absolute-url'
 
 import { InitialProps, PageData, FetchedData, InstanceData } from '@/data-types'
-import { deInstanceData } from '@/data/de'
 import { enInstanceLandingData } from '@/data/landing/en'
 import {
   parseLanguageSubfolder,
