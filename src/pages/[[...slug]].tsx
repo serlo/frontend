@@ -15,17 +15,26 @@ import { Header } from '@/components/navigation/header'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { MetaMenu } from '@/components/navigation/meta-menu'
 import { RelativeContainer } from '@/components/navigation/relative-container'
+//import { LandingInternationalProps } from '@/components/pages/landing-international'
 import { InstanceDataProvider } from '@/contexts/instance-context'
 import { OriginProvider } from '@/contexts/origin-context'
 import { InitialProps, InstanceData, PageData } from '@/data-types'
+//import { esInstanceLandingData } from '@/data/landing/es'
 import {
   fetcherAdditionalData,
   getInitialProps,
 } from '@/fetcher/get-initial-props'
 
-const Landing = dynamic<{}>(() =>
-  import('@/components/pages/landing').then((mod) => mod.Landing)
+const LandingDE = dynamic<{}>(() =>
+  import('@/components/pages/landing-de').then((mod) => mod.LandingDE)
 )
+
+/*const LandingInternational = dynamic<LandingInternationalProps>(() =>
+  import('@/components/pages/landing-international').then(
+    (mod) => mod.LandingInternational
+  )
+)*/
+
 const Search = dynamic<{}>(() =>
   import('@/components/pages/search').then((mod) => mod.Search)
 )
@@ -107,7 +116,8 @@ function renderPage(page: PageData) {
         <Header onSearchPage={page.kind === 'search'} />
         {(() => {
           if (page.kind === 'landing') {
-            return <Landing />
+            //return <LandingInternational instanceData={esInstanceLandingData} />
+            return <LandingDE />
           }
           if (page.kind === 'search') {
             return <Search />
