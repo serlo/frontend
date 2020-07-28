@@ -111,6 +111,12 @@ export function Exercise(props: ExerciseProps) {
         onClick={() => {
           setVisible(!solutionVisible)
         }}
+        onKeyDown={(e) => {
+          if (e.key == 'Enter') {
+            setVisible(!solutionVisible)
+          }
+        }}
+        tabIndex={0}
         active={solutionVisible}
       >
         <StyledSpan>{solutionVisible ? '▾' : '▸'}&nbsp;</StyledSpan>

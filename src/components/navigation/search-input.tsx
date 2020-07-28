@@ -110,7 +110,16 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
 
   return (
     <>
-      <SearchForm id="searchform" onClick={activateSearch}>
+      <SearchForm
+        id="searchform"
+        onClick={activateSearch}
+        onKeyDown={(e) => {
+          if (e.key == 'Enter') {
+            activateSearch()
+          }
+        }}
+        tabIndex={searchActive ? -1 : 0}
+      >
         {!searchActive && (
           <>
             <PlaceholderText>{strings.header.search}</PlaceholderText>
