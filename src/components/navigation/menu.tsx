@@ -9,6 +9,7 @@ import { Link } from '../content/link'
 import { UnreadNotificationsCountProps } from './unread-notifications-count'
 import { AuthPayload } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { HeaderData, HeaderLink } from '@/data-types'
 import { makeDefaultButton } from '@/helper/css'
 import { getAuthData, shouldUseNewAuth } from '@/helper/feature-auth'
@@ -40,6 +41,7 @@ export function Menu({ data, auth }: MenuProps) {
   const [source, target] = useSingleton()
   const [mounted, setMounted] = React.useState(!shouldUseNewAuth())
   const { strings } = useInstanceData()
+  const loggedInData = useLoggedInData()
 
   React.useEffect(() => {
     setMounted(true)
@@ -80,7 +82,26 @@ export function Menu({ data, auth }: MenuProps) {
   )
 
   function renderAuthMenu() {
-    const data = getAuthData(mounted && auth !== null, strings.header.login)
+    const data = getAuthData(
+      mounted && auth !== null,
+      strings.header.login,
+      loggedInData?.authMenu
+    )
+
+    // render placeholder while data is loading
+    if (!data)
+      return (
+        <Entry
+          link={{
+            url: '/auth/login',
+            title: strings.header.login,
+            icon: 'user',
+          }}
+          target={target}
+          authMenuMounted={false}
+          onSubMenuInnerClick={onSubMenuInnerClick}
+        />
+      )
 
     return data.map((link, i) => {
       return (

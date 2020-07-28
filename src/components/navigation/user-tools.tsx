@@ -13,6 +13,7 @@ import { makeGreenButton } from '../../helper/css'
 import { AuthorToolsHoverMenuProps } from './author-tools-hover-menu'
 import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 const AuthorToolsHoverMenu = dynamic<AuthorToolsHoverMenuProps>(() =>
   import('./author-tools-hover-menu').then((mod) => mod.AuthorToolsHoverMenu)
@@ -35,6 +36,7 @@ export function UserTools({ id, onShare, hideEdit }: UserToolsProps) {
   React.useEffect(() => {
     setLoaded(true)
   }, [])
+  const loggedInData = useLoggedInData()
   return (
     <AbsoluteWrapper>
       <BoxWrapper>
@@ -48,14 +50,15 @@ export function UserTools({ id, onShare, hideEdit }: UserToolsProps) {
           <FontAwesomeIcon icon={faShareAlt} size="1x" /> {strings.share.button}
           !
         </IconButton>
-        {loaded && auth.current && (
+        {loaded && auth.current && loggedInData && (
           <Tippy
             interactive
             content={<AuthorToolsHoverMenu id={id} />}
             placement="left-end"
           >
             <IconButton>
-              <FontAwesomeIcon icon={faTools} size="1x" /> Weitere Tools
+              <FontAwesomeIcon icon={faTools} size="1x" />{' '}
+              {loggedInData.strings.tools}
             </IconButton>
           </Tippy>
         )}

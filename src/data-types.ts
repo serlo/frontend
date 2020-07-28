@@ -479,3 +479,12 @@ export interface LandingStrings {
   callForOther: string
   getInvolved: string
 }
+
+export interface LoggedInData {
+  authMenu: HeaderData
+  strings: LoggedInStrings
+}
+
+export interface LoggedInStrings {
+  tools: string
+}

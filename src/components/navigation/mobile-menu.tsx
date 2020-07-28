@@ -17,6 +17,7 @@ import styled from 'styled-components'
 import { Link } from '../content/link'
 import { AuthPayload } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { HeaderData, HeaderLink } from '@/data-types'
 import { getAuthData } from '@/helper/feature-auth'
 
@@ -41,6 +42,7 @@ export function MobileMenu({ data, auth }: MobileMenuProps) {
     null
   )
   const { strings } = useInstanceData()
+  const loggedInData = useLoggedInData()
 
   function toggle(
     e: React.MouseEvent<HTMLLIElement, MouseEvent>,
@@ -67,7 +69,12 @@ export function MobileMenu({ data, auth }: MobileMenuProps) {
   )
 
   function renderAuthMenu() {
-    const authData = getAuthData(auth !== null, strings.header.login)
+    const authData = getAuthData(
+      auth !== null,
+      strings.header.login,
+      loggedInData?.authMenu
+    )
+    if (!authData) return null
     return authData.map((link, i) => {
       return (
         <Entry
