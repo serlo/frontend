@@ -43,7 +43,6 @@ export async function getInitialProps(
       origin,
     }
   }
-  //TODO: maybe also add api pages?
 
   if (typeof window === 'undefined') {
     //server
@@ -61,15 +60,23 @@ export async function getInitialProps(
       })
       props.res?.end()
       // We redirect here so the component won't be actually rendered
-      return { origin: '', pageData: { kind: 'error' } }
+      return {
+        origin: '',
+        pageData: { kind: 'error', errorData: { code: 200 } },
+      }
     }
 
     if (fetchedData.error) {
-      props.res!.statusCode = 404
+      const code = fetchedData.error.includes(
+        "Cannot read property 'path' of null"
+      )
+        ? 404
+        : 500
+      props.res!.statusCode = code
 
       return {
         instanceData: deInstanceData,
-        pageData: { kind: 'error' },
+        pageData: { kind: 'error', errorData: { code } },
         origin,
       }
     }

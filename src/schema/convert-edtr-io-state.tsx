@@ -1,12 +1,18 @@
 import { converter } from '../../external/markdown'
 import { convertLegacyState } from './convert-legacy-state'
-import { FrontendContentNode } from '@/data-types'
+import { StepProps } from '@/components/content/equations'
+import {
+  SolutionChildData,
+  ExerciseChildData,
+} from '@/components/content/exercise'
+import { MathProps } from '@/components/content/math'
+import { FrontendContentNode, FrontendContentTextNode } from '@/data-types'
 
 const colors = ['blue', 'green', 'orange']
 
 export function convertEdtrIoState(
   state: EditorStateDummy
-): FrontendContentNode {
+): { children: FrontendContentNode[] } {
   return { children: convert(state) }
 }
 
@@ -48,7 +54,7 @@ export interface EditorStateDummy {
   steps: EditorStateDummy[]
   color: number | string
   left: EditorStateDummy[]
-  sign: EditorStateDummy[]
+  sign: StepProps['sign']
   right: EditorStateDummy[]
   transform: EditorStateDummy[]
   feedback: EditorStateDummy[]
@@ -83,8 +89,8 @@ export function convert(
     return [
       {
         type: 'img',
-        src: (node.state as EditorStateDummy).src,
-        alt: (node.state as EditorStateDummy).alt,
+        src: (node.state as EditorStateDummy).src!,
+        alt: (node.state as EditorStateDummy).alt!,
         maxWidth: (node.state as EditorStateDummy).maxWidth,
       },
     ]
@@ -104,7 +110,7 @@ export function convert(
         children: [
           {
             type: 'spoiler-title',
-            children: [{ text: (node.state as EditorStateDummy).title }],
+            children: [{ text: (node.state as EditorStateDummy).title! }],
           },
           {
             type: 'spoiler-body',
@@ -144,12 +150,12 @@ export function convert(
             // compat: math align left
             children.forEach((child) => {
               if (child.type === 'math') {
-                child.alignLeft = true
+                ;(child as MathProps).alignLeft = true
               }
             })
             return {
               type: 'col',
-              size: child.width,
+              size: child.width!,
               children,
             }
           }
@@ -181,7 +187,7 @@ export function convert(
     return [
       {
         type: 'video',
-        src: (node.state as EditorStateDummy).src,
+        src: (node.state as EditorStateDummy).src!,
       },
     ]
   }
@@ -189,7 +195,7 @@ export function convert(
     return [
       {
         type: 'anchor',
-        id: (node.state as unknown) as number,
+        id: (node.state as unknown) as string,
       },
     ]
   }
@@ -208,7 +214,9 @@ export function convert(
         type: '@edtr-io/exercise',
         state: {
           content: convert((node.state as EditorStateDummy).content!),
-          interactive: convert((node.state as EditorStateDummy).interactive)[0],
+          interactive: (convert(
+            (node.state as EditorStateDummy).interactive
+          )[0] as unknown) as ExerciseChildData['state']['interactive'],
         },
       },
     ]
@@ -218,7 +226,8 @@ export function convert(
       {
         type: '@edtr-io/solution',
         state: {
-          prerequisite: (node.state as EditorStateDummy).prerequisite,
+          prerequisite: ((node.state as unknown) as SolutionChildData['state'])
+            .prerequisite,
           strategy: convert((node.state as EditorStateDummy).strategy),
           steps: convert((node.state as EditorStateDummy).steps),
         },
@@ -230,6 +239,7 @@ export function convert(
       {
         plugin: 'scMcExercise',
         state: {
+          //@ts-expect-error
           isSingleChoice: (node.state as EditorStateDummy).isSingleChoice,
           answers: (node.state as EditorStateDummy).answers.map((answer) => {
             return {
@@ -247,6 +257,7 @@ export function convert(
       {
         plugin: 'inputExercise',
         state: {
+          //@ts-expect-error
           type: (node.state as EditorStateDummy).type,
           unit: (node.state as EditorStateDummy).unit,
           answers: (node.state as EditorStateDummy).answers,
@@ -284,18 +295,24 @@ export function convert(
     if (
       children.some(
         (child) =>
-          (child.text && child.text.includes('\n')) ||
+          ((child as FrontendContentTextNode).text &&
+            (child as FrontendContentTextNode).text!.includes('\n')) ||
           child.type === 'inline-math'
       )
     ) {
       const splitted = children.flatMap((child) => {
-        if (child.text && child.text.includes('\n')) {
-          const parts = child.text.split('\n').flatMap((text) => [
-            {
-              text,
-            },
-            '##break##',
-          ])
+        if (
+          (child as FrontendContentTextNode).text &&
+          (child as FrontendContentTextNode).text!.includes('\n')
+        ) {
+          const parts = (child as FrontendContentTextNode)
+            .text!.split('\n')
+            .flatMap((text) => [
+              {
+                text,
+              },
+              '##break##',
+            ])
           parts.pop()
           return (parts as unknown) as FrontendContentNode
         }
@@ -305,6 +322,7 @@ export function convert(
       const result: FrontendContentNode[] = []
       if (splitted[0] === '##break##') splitted.shift()
       if (splitted[splitted.length - 1] !== '##break##')
+        //TODO: Investigate
         //@ts-expect-error
         splitted.push('##break##')
       splitted.forEach((el: FrontendContentNode) => {
@@ -330,7 +348,7 @@ export function convert(
           (child) =>
             child.type === 'math' ||
             child.type === 'inline-math' ||
-            child.text === ''
+            (child as FrontendContentTextNode).text === ''
         )
       ) {
         return children
@@ -340,7 +358,7 @@ export function convert(
           .map((mathChild) => {
             return {
               type: 'math',
-              formula: mathChild.formula,
+              formula: (mathChild as MathProps).formula,
               alignLeft: true, // caveat: this differs from existing presentation
             }
           })
@@ -367,7 +385,7 @@ export function convert(
     return [
       {
         type: 'h',
-        level: node.level,
+        level: node.level!,
         children: convert(node.children),
       },
     ]
@@ -376,7 +394,7 @@ export function convert(
     return [
       {
         type: 'math',
-        formula: node.src,
+        formula: node.src!,
       },
     ]
   }
@@ -384,7 +402,7 @@ export function convert(
     return [
       {
         type: 'inline-math',
-        formula: node.src,
+        formula: node.src!,
       },
     ]
   }
@@ -420,7 +438,7 @@ export function convert(
         (child) =>
           child.type === 'inline-math' ||
           child.type === 'a' ||
-          child.text !== undefined
+          (child as FrontendContentTextNode).text !== undefined
       ).length === 0
     ) {
       return children

@@ -1,4 +1,19 @@
+import { CodeProps } from './components/content/code'
+import { EquationProps } from './components/content/equations'
+import {
+  ExerciseChildData,
+  SolutionChildData,
+  ExerciseProps,
+} from './components/content/exercise'
+import { ExerciseGroupProps } from './components/content/exercise-group'
+import { GeogebraProps } from './components/content/geogebra'
+import { InjectionProps } from './components/content/injection'
+import { MathProps } from './components/content/math'
+import { SpoilerBodyProps } from './components/content/spoiler-body'
+import { SpoilerContainerProps } from './components/content/spoiler-container'
+import { VideoProps } from './components/content/video'
 import { Instance } from './fetcher/query'
+import { RenderImgData } from './schema/article-renderer'
 
 // This file describes the data structures that controls the frontend.
 
@@ -40,6 +55,13 @@ export interface InstanceData {
   }
   headerData: HeaderData
   footerData: FooterData
+}
+
+// Landing pages have a different structure, because they should only load on the landing page
+
+export interface InstanceLandingData {
+  lang: Instance
+  strings: LandingStrings
 }
 
 // Menus are trees of title and urls, possibly with icons.
@@ -124,7 +146,7 @@ export interface LandingPage {
   kind: 'landing'
 }
 
-// The same for donation, search and error and notifications page:
+// The same for donation, search and notifications page:
 
 export interface DonationPage {
   kind: 'donation'
@@ -133,13 +155,19 @@ export interface DonationPage {
 export interface SearchPage {
   kind: 'search'
 }
+export interface NotificationsPage {
+  kind: 'user/notifications'
+}
+
+// Error page has some additional data
 
 export interface ErrorPage {
   kind: 'error'
+  errorData: ErrorData
 }
 
-export interface NotificationsPage {
-  kind: 'user/notifications'
+export interface ErrorData {
+  code: number
 }
 
 // There are several page elements that are common for entities:
@@ -246,30 +274,61 @@ export interface SchemaData {
 
 // The frontend defines it's own content format that bridges the gap between legacy and edtr-io state.
 // Will switch to edtr-io state one day.
-// Until then, this is the basic tree structure:
+// Until then: Here are the types the fontend expects after converting
 
-export interface FrontendContentNode {
-  type?: string
-  state?: unknown
-  children?: FrontendContentNode[]
+export interface FrontendContentTextNode {
   text?: string
-  href?: string
-  size?: number
-  formula?: string
-  inline?: boolean
-  alignLeft?: boolean
-  src?: string
-  alt?: string
-  id?: number | string
-  level?: number
-  content?: string
-  strong?: boolean
+  color?: 'blue' | 'green' | 'orange'
   em?: boolean
-  maxWidth?: number
-  steps?: any
-  plugin?: string
-  isCorrect?: boolean
+  strong?: boolean
 }
+
+type FrontendContentNodeNoText =
+  | ({ type: 'img' } & RenderImgData['element']) //href
+  | ({ type: 'math' | 'inline-math' } & MathProps)
+  | ({ type: 'code' } & CodeProps)
+  | ({ type: 'equations' } & EquationProps)
+  | ({ type: 'exercise' } & ExerciseProps) //unsure!
+  | ({ type: 'exercise-group' } & ExerciseGroupProps)
+  | ({ type: '@edtr-io/exercise' } & ExerciseChildData)
+  | ({ type: '@edtr-io/solution' } & SolutionChildData)
+  | ({ type: 'spoiler-container' } & SpoilerContainerProps)
+  | { type: 'spoiler-title'; children: FrontendContentNode[] }
+  | ({ type: 'spoiler-body' } & SpoilerBodyProps)
+  | ({ type: 'injection' } & InjectionProps) //href
+  | ({ type: 'video' } & VideoProps)
+  | ({ type: 'geogebra' } & GeogebraProps)
+  | { type: 'row'; children: FrontendContentNode[] }
+  | { type: 'col'; size: number; children: FrontendContentNode[] }
+  | { type: 'anchor'; id: string }
+  | { type: 'important'; children: FrontendContentNode[] }
+  | { type: 'p'; children?: FrontendContentNode[] }
+  | {
+      type: 'h'
+      id?: string | number
+      level: number
+      children: FrontendContentNode[]
+    }
+  | { type: 'a'; href?: string; children: FrontendContentNode[] }
+  | { type: 'ul'; children: FrontendContentNode[] }
+  | { type: 'ol'; children: FrontendContentNode[] }
+  | {
+      type: 'li'
+      children: FrontendContentNode[]
+    }
+  | { type: 'table'; children: FrontendContentNode[] } //maybe make more explicit, should only contain tr,td,th
+  | { type: 'td'; children: FrontendContentNode[] } // etc.
+  | { type: 'th'; children: FrontendContentNode[] }
+  | { type: 'tr'; children: FrontendContentNode[] }
+
+export type FrontendContentNode = (
+  | FrontendContentNodeNoText
+  | ({ type?: '' | 'text' } & FrontendContentTextNode) //usually type is not set for text nodes
+) & {
+  children?: FrontendContentNode[]
+} //TODO: added because children are always just checked in code not by checking/guarding types
+//changing that need quite a bit of refactoring
+//maybe that's okay for now?
 
 // Some translations
 
@@ -401,4 +460,22 @@ export interface CookieStrings {
   link1: string
   link2: string
   button: string
+}
+
+export interface LandingStrings {
+  vision: string
+  learnMore: string
+  democraticallyStructured: string
+  nonProfit: string
+  transparent: string
+  openlyLicensed: string
+  adFree: string
+  freeOfCharge: string
+  wikiTitle: string
+  wikiText: string
+  movementTitle: string
+  callForAuthors: string
+  communityLink: string
+  callForOther: string
+  getInvolved: string
 }

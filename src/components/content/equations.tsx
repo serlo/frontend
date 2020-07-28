@@ -13,7 +13,7 @@ type SignType =
   | 'less-than-or-equal'
   | 'almost-equal-to'
 
-interface StepProps {
+export interface StepProps {
   left: FrontendContentNode[]
   sign: SignType
   right: FrontendContentNode[]

@@ -5,20 +5,31 @@ import { HeadTags } from '../head-tags'
 import { SearchResults } from '@/components/navigation/search-results'
 import { useInstanceData } from '@/contexts/instance-context'
 
+interface GoogleSearchGlobal {
+  google: {
+    search: {
+      cse: {
+        element: {
+          render: (arg0: { div: string; tag: string }) => void
+        }
+      }
+    }
+  }
+}
+
 export function Search() {
   const { strings } = useInstanceData()
 
   const renderResults = () => {
-    // @ts-expect-error probably need a helper like in get-initial-props
-    if (typeof window.google === 'undefined') {
+    const _window = (window as unknown) as Window & GoogleSearchGlobal
+    if (typeof _window.google === 'undefined') {
       setTimeout(() => {
         renderResults()
       }, 100)
       return false
     }
 
-    // @ts-expect-error probably need a helper like in get-initial-props
-    window.google.search.cse.element.render({
+    _window.google.search.cse.element.render({
       div: 'gcs-results',
       tag: 'searchresults-only',
     })

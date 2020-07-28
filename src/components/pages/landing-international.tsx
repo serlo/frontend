@@ -2,91 +2,76 @@ import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styled from 'styled-components'
 
-import DonateSVG from '../../../public/_assets/img/footer-donate.svg'
 import ParticipateSVG from '../../../public/_assets/img/footer-participate.svg'
-import PrinciplesSVG from '../../../public/_assets/img/landing-principles-graphic.svg'
 import { Link } from '../content/link'
 import { HeadTags } from '../head-tags'
-import { LandingAbout } from '@/components/landing/landing-about'
-import { LandingSubjects } from '@/components/landing/landing-subjects'
+import { PrinciplesGraphic } from '../landing/principles-graphic'
+import { StyledP } from '../tags/styled-p'
+import { useInstanceData } from '@/contexts/instance-context'
+import { InstanceLandingData } from '@/data-types'
 import { makeDefaultButton, makeResponsivePadding } from '@/helper/css'
 
-export function Landing() {
+export interface LandingInternationalProps {
+  instanceData: InstanceLandingData
+}
+
+export function LandingInternational({
+  instanceData,
+}: LandingInternationalProps) {
+  const landingStrings = instanceData.strings
+  // const lang = instanceData.lang
+  const { strings } = useInstanceData()
+
   return (
     <>
-      <HeadTags data={{ title: 'Serlo – Die freie Lernplattform' }} />
-      <SubjectsSection>
-        <LandingSubjects />
-      </SubjectsSection>
-
-      <AboutSection>
-        <LandingAbout />
-      </AboutSection>
+      <HeadTags data={{ title: strings.header.slogan }} />
 
       <Section>
-        <StyledH2>Serlo.org ist die Wikipedia fürs Lernen</StyledH2>
-        <IconStyle>
-          <ParticipateSVG />
-        </IconStyle>
-        <Col>
-          <p>
-            Wir suchen Lehrkräfte mit Begeisterung für ihr Fach. Werden Sie
-            Autor*in auf serlo.org, erstellen Sie <b>neue Inhalte</b> und helfen
-            Sie uns, die <b>Qualität</b> der Lernplattform zu sichern.
-          </p>
-          <Button href="/community">
-            Zur Startseite für Autor*innen{' '}
-            <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
-          </Button>
-        </Col>
-        <Col>
-          <p>
-            Wir suchen neue hauptamtliche und ehrenamtliche Teammitglieder für
-            die Bereiche <b>Softwareentwicklung</b>, <b>Redaktion</b> und{' '}
-            <b>NGO-Management</b>.
-          </p>
-          <Button href="/jobs">
-            Jobs und Engagement{' '}
-            <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
-          </Button>
-        </Col>
+        <LandingP>{landingStrings.vision}</LandingP>
+        <Button href="/serlo">
+          {landingStrings.learnMore}{' '}
+          <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
+        </Button>
       </Section>
 
       <PrinciplesSection>
-        <PrinciplesSVG />
+        <PrinciplesGraphic strings={landingStrings} />
       </PrinciplesSection>
 
       <Section>
-        <StyledH2>Werden Sie Teil unserer Bewegung für freie Bildung</StyledH2>
+        <StyledH2>{landingStrings.wikiTitle}</StyledH2>
+        <LandingP>{landingStrings.wikiText}</LandingP>
+      </Section>
+
+      <ImageSection />
+
+      <Section>
+        <StyledH2>{landingStrings.movementTitle}</StyledH2>
         <IconStyle>
-          <DonateSVG />
+          <ParticipateSVG />
         </IconStyle>
-        <Col>
-          <p>
-            Bildung gehört uns allen! Werden Sie Mitglied in unserer
-            Organisation Serlo Education e.V. und so zu Mitherausgeber*in der
-            freien Lernplattform.
-          </p>
-          <Button href="/beitreten">
-            Mitglied werden{' '}
+        <FlexCol>
+          <LandingP>{landingStrings.callForAuthors}</LandingP>
+          <Button href="/community">
+            {landingStrings.communityLink}{' '}
             <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
           </Button>
-        </Col>
-        <Col>
-          <p>
-            Softwareentwicklung und Lerninhalte erstellen kostet Geld. Wir
-            freuen uns sehr, wenn Sie Serlo mit einer Spende unterstützen.
-          </p>
-          <Button href="/spenden">
-            Spenden <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
+        </FlexCol>
+        <FlexCol>
+          <LandingP>{landingStrings.callForOther}</LandingP>
+          <Button href="/get-involved">
+            {landingStrings.getInvolved}{' '}
+            <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
           </Button>
-        </Col>
+        </FlexCol>
       </Section>
     </>
   )
 }
 
-const SubjectsSection = styled.section``
+const LandingP = styled(StyledP)`
+  margin-left: 0;
+`
 
 const Section = styled.section`
   margin-top: 60px;
@@ -128,13 +113,19 @@ const Col = styled.div`
   }
 `
 
-const AboutSection = styled.section`
-  margin-top: 50px;
-  display: flex;
-  flex-direction: column;
+const ImageSection = styled.section`
+  background-size: contain;
+  background-repeat: no-repeat;
+  padding-top: 43.75%;
+
+  background-image: url('https://packages.serlo.org/serlo-org-client@13.0.4/home_img_launch_sm.570e34cd.jpg');
 
   @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-    flex-direction: row;
+    background-image: url('https://packages.serlo.org/serlo-org-client@13.0.4/home_img_launch_md.333b0782.jpg');
+  }
+
+  @media (min-width: ${(props) => props.theme.breakpoints.md}) {
+    background-image: url('https://packages.serlo.org/serlo-org-client@13.0.4/home_img_launch_lg.b46ea2e2.jpg');
   }
 `
 
@@ -149,6 +140,7 @@ const StyledH2 = styled.h2`
 
 const Button = styled(Link)`
   ${makeDefaultButton}
+  font-size: 1.125rem;
   text-decoration: none !important;
   margin-left: -3px;
   font-weight: bold;
@@ -182,4 +174,16 @@ const IconStyle = styled.div`
     margin-right: 50px;
     width: 120px;
   }
+`
+
+const FlexCol = styled(Col)`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  ${Button} {
+    margin-top: auto;
+  }
+
+  margin-bottom: 60px;
 `
