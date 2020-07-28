@@ -65,7 +65,7 @@ export const extractLinks = (
 
     if (obj.type === 'exercise') {
       const exercise = obj as ExerciseProps
-      if (exercise.solution.children.length > 0)
+      if (exercise.solution.children && exercise.solution.children.length > 0)
         extractLinks(exercise.solution.children, links)
       if (exercise.task.children.length > 0)
         extractLinks(exercise.task.children, links)

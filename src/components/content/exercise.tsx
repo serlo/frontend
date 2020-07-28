@@ -57,7 +57,7 @@ export interface SolutionChildData {
 }
 
 interface SolutionData {
-  children: SolutionChildData[]
+  children?: SolutionChildData[]
 }
 
 export function Exercise(props: ExerciseProps) {
@@ -77,6 +77,7 @@ export function Exercise(props: ExerciseProps) {
     task.children.length === 1 && task.children[0].type === '@edtr-io/exercise'
 
   const isEditorSolution =
+    solution.children &&
     solution.children.length === 1 &&
     solution.children[0].type === '@edtr-io/solution'
 
@@ -96,7 +97,8 @@ export function Exercise(props: ExerciseProps) {
   )
 
   function renderSolutionToggle() {
-    if (solution.children[0].children?.length === 0) return null
+    if (!solution.children || solution.children[0].children?.length === 0)
+      return null
 
     return (
       <SolutionToggle
@@ -122,6 +124,7 @@ export function Exercise(props: ExerciseProps) {
   }
 
   function getSolutionContent(): FrontendContentNode[] {
+    if (!solution.children) return []
     if (!isEditorSolution) {
       return solution.children
     }
