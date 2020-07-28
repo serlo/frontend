@@ -27,6 +27,10 @@ const legacyLinks = [
   '/enable-frontend',
   '/api/auth/login',
   '/api/auth/logout',
+  '/user/public',
+  '/user/settings',
+  '/auth/password/change',
+  '/event/history/user/me',
 ]
 
 export function Link({

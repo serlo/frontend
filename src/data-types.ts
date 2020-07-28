@@ -57,6 +57,13 @@ export interface InstanceData {
   footerData: FooterData
 }
 
+// Landing pages have a different structure, because they should only load on the landing page
+
+export interface InstanceLandingData {
+  lang: Instance
+  strings: LandingStrings
+}
+
 // Menus are trees of title and urls, possibly with icons.
 
 export type HeaderData = HeaderLink[]
@@ -75,12 +82,13 @@ export type HeaderIcon =
   | 'community'
   | 'donate'
   | 'user'
+  | 'login'
+  | 'notifications'
 
 export interface HeaderStrings {
   slogan: string
   search: string
   login: string
-  logout: string
 }
 
 // The footer is split into different categories and has three separate links.
@@ -121,6 +129,7 @@ export type PageData =
   | DonationPage
   | SearchPage
   | ErrorPage
+  | NotificationsPage
   | SingleEntityPage
   | TaxonomyPage
 
@@ -137,7 +146,7 @@ export interface LandingPage {
   kind: 'landing'
 }
 
-// The same for donation and search page:
+// The same for donation, search and notifications page:
 
 export interface DonationPage {
   kind: 'donation'
@@ -145,6 +154,9 @@ export interface DonationPage {
 
 export interface SearchPage {
   kind: 'search'
+}
+export interface NotificationsPage {
+  kind: 'user/notifications'
 }
 
 // Error page has some additional data
@@ -448,4 +460,22 @@ export interface CookieStrings {
   link1: string
   link2: string
   button: string
+}
+
+export interface LandingStrings {
+  vision: string
+  learnMore: string
+  democraticallyStructured: string
+  nonProfit: string
+  transparent: string
+  openlyLicensed: string
+  adFree: string
+  freeOfCharge: string
+  wikiTitle: string
+  wikiText: string
+  movementTitle: string
+  callForAuthors: string
+  communityLink: string
+  callForOther: string
+  getInvolved: string
 }
