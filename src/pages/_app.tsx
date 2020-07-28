@@ -20,7 +20,10 @@ import { theme } from '@/theme'
 
 config.autoAddCss = false
 
-if (process.env.NEXT_PUBLIC_SENTRY_DSN !== undefined) {
+if (
+  process.env.NEXT_PUBLIC_SENTRY_DSN !== undefined &&
+  process.env.NEXT_PUBLIC_COMMIT_SHA !== undefined
+) {
   Sentry.init({
     dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
     release: `frontend@${version}-${process.env.NEXT_PUBLIC_COMMIT_SHA?.substr(

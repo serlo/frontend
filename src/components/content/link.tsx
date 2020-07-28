@@ -14,7 +14,7 @@ export interface LinkProps {
   title?: string
 }
 
-//TODO: Should come from cloudflare worker
+//TODO: Should come from cloudflare worker https://github.com/serlo/frontend/issues/328
 const legacyLinks = [
   '/entity/unrevised',
   '/auth/login',
@@ -59,7 +59,7 @@ export function Link({
     displayHref.startsWith('/user/profile/') ||
     displayHref.startsWith('user/profile/')
 
-  if (!displayHref || isExternal || (isAbsolute && prettyLink === undefined))
+  if (isExternal || (isAbsolute && prettyLink === undefined))
     return renderLink()
 
   if (!isLegacyLink || prettyLink) return renderClientSide()

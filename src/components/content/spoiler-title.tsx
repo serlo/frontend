@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 
-interface SpoilerTitleProps {
+export interface SpoilerTitleProps {
   open: boolean
   children: {}
   onClick?: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void

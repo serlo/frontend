@@ -1,22 +1,30 @@
-// TODO: needs type declaration
-export function createTitle(uuid: any) {
-  const type = uuid.__typename
+import { QueryResponse } from './query'
 
+export function createTitle(uuid: QueryResponse) {
   const suffix = ' - lernen mit Serlo!'
 
-  if (type === 'TaxonomyTerm') {
-    if (uuid.type === 'topic') {
-      return `${uuid.name} (Thema)${suffix}`
+  if (uuid.__typename === 'TaxonomyTerm') {
+    const term = uuid
+    if (term.type === 'topic') {
+      return `${term.name} (Thema)${suffix}`
     }
-    if (uuid.type === 'subject') {
-      return `${uuid.name} - Fach${suffix}`
+    if (term.type === 'subject') {
+      return `${term.name} - Fach${suffix}`
     }
     // missing: special behaviour on curriculum term
-    return `${uuid.name}${suffix}`
+    return `${term.name}${suffix}`
   }
 
-  // default: show revision title, works for page, article, video, applet, course-page
-  if (uuid.currentRevision?.title) {
-    return `${uuid.currentRevision.title}${suffix}`
+  // default: show revision title
+  if (
+    uuid.__typename === 'Page' ||
+    uuid.__typename === 'Article' ||
+    uuid.__typename === 'Video' ||
+    uuid.__typename === 'Applet' ||
+    uuid.__typename === 'CoursePage'
+  ) {
+    if (uuid.currentRevision?.title) {
+      return `${uuid.currentRevision.title}${suffix}`
+    }
   }
 }

@@ -11,52 +11,53 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { LicenseData, FrontendContentNode } from '@/data-types'
 
 export interface ExerciseProps {
+  type?: 'exercise' | '@edtr-io/exercise'
   task: TaskData
   solution: SolutionData
   taskLicense: LicenseData
   solutionLicense: LicenseData
   grouped: boolean
   positionInGroup: number
-  positionOnPage: number
+  positionOnPage?: number
 }
 
 /* Experiment to type out the EditorState */
 
-interface TaskData {
-  children: [
-    {
-      type: string
-      state: {
-        content: FrontendContentNode[]
-        interactive:
-          | {
-              plugin: 'scMcExercise'
-              state: ScMcExerciseProps['state']
-            }
-          | {
-              plugin: 'inputExercise'
-              state: InputExerciseProps['data']
-            }
-      }
+export interface ExerciseChildData {
+  type?: '@edtr-io/exercise'
+  state: {
+    content: FrontendContentNode[]
+    interactive:
+      | {
+          plugin: 'scMcExercise'
+          state: ScMcExerciseProps['state']
+        }
+      | {
+          plugin: 'inputExercise'
+          state: InputExerciseProps['data']
+        }
+  }
+}
+
+export interface TaskData {
+  children: ExerciseChildData[]
+}
+
+export interface SolutionChildData {
+  type?: '@edtr-io/solution'
+  state: {
+    prerequisite: {
+      id: string
+      title: string
     }
-  ]
+    strategy: FrontendContentNode[]
+    steps: FrontendContentNode[]
+  }
+  children?: FrontendContentNode[]
 }
 
 interface SolutionData {
-  children: [
-    {
-      type: string
-      state: {
-        prerequisite: {
-          id: string
-          title: string
-        }
-        strategy: FrontendContentNode[]
-        steps: FrontendContentNode[]
-      }
-      children: FrontendContentNode[]
-    }
-  ]
+  children: SolutionChildData[]
 }
 
 export function Exercise(props: ExerciseProps) {
@@ -81,7 +82,7 @@ export function Exercise(props: ExerciseProps) {
 
   return (
     <Wrapper grouped={grouped}>
-      {!grouped && <ExerciseNumbering index={positionOnPage} />}
+      {!grouped && <ExerciseNumbering index={positionOnPage!} />}
 
       {renderExerciseTask()}
       {renderInteractive()}
@@ -164,7 +165,9 @@ export function Exercise(props: ExerciseProps) {
         return (
           <ScMcExercise
             state={state.interactive.state}
-            idBase={`ex-${positionOnPage}-${positionInGroup}-`}
+            idBase={`ex-${
+              positionOnPage ? positionOnPage : ''
+            }-${positionInGroup}-`}
           />
         )
       }

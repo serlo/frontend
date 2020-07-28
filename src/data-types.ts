@@ -1,4 +1,19 @@
+import { CodeProps } from './components/content/code'
+import { EquationProps } from './components/content/equations'
+import {
+  ExerciseChildData,
+  SolutionChildData,
+  ExerciseProps,
+} from './components/content/exercise'
+import { ExerciseGroupProps } from './components/content/exercise-group'
+import { GeogebraProps } from './components/content/geogebra'
+import { InjectionProps } from './components/content/injection'
+import { MathProps } from './components/content/math'
+import { SpoilerBodyProps } from './components/content/spoiler-body'
+import { SpoilerContainerProps } from './components/content/spoiler-container'
+import { VideoProps } from './components/content/video'
 import { Instance } from './fetcher/query'
+import { RenderImgData } from './schema/article-renderer'
 
 // This file describes the data structures that controls the frontend.
 
@@ -111,6 +126,13 @@ export type PageData =
   | SingleEntityPage
   | TaxonomyPage
 
+export type FetchedData = PageData & {
+  redirect?: string
+  error?: string
+  pageData: PageData
+  alias?: string
+}
+
 // The landing page is custom built and takes no additional data
 
 export interface LandingPage {
@@ -142,7 +164,7 @@ export interface EntityPageBase {
   secondaryNavigationData?: SecondaryNavigationData
   metaData?: HeadData
   horizonData?: HorizonData
-  newsletterPopup?: boolean
+  newsletterPopup: boolean
   cacheKey?: string // save page data to session storage
 }
 
@@ -156,10 +178,11 @@ export type BreadcrumbEntry = BreadcrumbLinkEntry | BreadcrumbEllipsis
 export interface BreadcrumbLinkEntry {
   label: string
   url?: string
-  ellipsis: undefined
+  ellipsis?: boolean | false
 }
 
-export interface BreadcrumbEllipsis {
+export interface BreadcrumbEllipsis extends BreadcrumbLinkEntry {
+  label: ''
   ellipsis: true
 }
 
@@ -169,7 +192,7 @@ export interface BreadcrumbEllipsis {
 export type SecondaryNavigationData = SecondaryNavigationEntry[]
 
 export interface SecondaryNavigationEntry {
-  url: string
+  url?: string
   title: string
   active?: boolean
 }
@@ -206,7 +229,7 @@ export interface EntityData {
   title?: string
   categoryIcon?: CategoryType
   schemaData?: SchemaData
-  content?: FrontendContentNode[]
+  content?: FrontendContentNode[] | any[]
   inviteToEdit?: boolean
   licenseData?: LicenseData
   courseData?: CourseData
@@ -238,14 +261,61 @@ export interface SchemaData {
 
 // The frontend defines it's own content format that bridges the gap between legacy and edtr-io state.
 // Will switch to edtr-io state one day.
-// Until then, this is the basic tree structure:
+// Until then: Here are the types the fontend expects after converting
 
-export interface FrontendContentNode {
-  type?: string
-  state?: unknown
-  children?: FrontendContentNode[]
+export interface FrontendContentTextNode {
   text?: string
+  color?: 'blue' | 'green' | 'orange'
+  em?: boolean
+  strong?: boolean
 }
+
+type FrontendContentNodeNoText =
+  | ({ type: 'img' } & RenderImgData['element']) //href
+  | ({ type: 'math' | 'inline-math' } & MathProps)
+  | ({ type: 'code' } & CodeProps)
+  | ({ type: 'equations' } & EquationProps)
+  | ({ type: 'exercise' } & ExerciseProps) //unsure!
+  | ({ type: 'exercise-group' } & ExerciseGroupProps)
+  | ({ type: '@edtr-io/exercise' } & ExerciseChildData)
+  | ({ type: '@edtr-io/solution' } & SolutionChildData)
+  | ({ type: 'spoiler-container' } & SpoilerContainerProps)
+  | { type: 'spoiler-title'; children: FrontendContentNode[] }
+  | ({ type: 'spoiler-body' } & SpoilerBodyProps)
+  | ({ type: 'injection' } & InjectionProps) //href
+  | ({ type: 'video' } & VideoProps)
+  | ({ type: 'geogebra' } & GeogebraProps)
+  | { type: 'row'; children: FrontendContentNode[] }
+  | { type: 'col'; size: number; children: FrontendContentNode[] }
+  | { type: 'anchor'; id: string }
+  | { type: 'important'; children: FrontendContentNode[] }
+  | { type: 'p'; children?: FrontendContentNode[] }
+  | {
+      type: 'h'
+      id?: string | number
+      level: number
+      children: FrontendContentNode[]
+    }
+  | { type: 'a'; href?: string; children: FrontendContentNode[] }
+  | { type: 'ul'; children: FrontendContentNode[] }
+  | { type: 'ol'; children: FrontendContentNode[] }
+  | {
+      type: 'li'
+      children: FrontendContentNode[]
+    }
+  | { type: 'table'; children: FrontendContentNode[] } //maybe make more explicit, should only contain tr,td,th
+  | { type: 'td'; children: FrontendContentNode[] } // etc.
+  | { type: 'th'; children: FrontendContentNode[] }
+  | { type: 'tr'; children: FrontendContentNode[] }
+
+export type FrontendContentNode = (
+  | FrontendContentNodeNoText
+  | ({ type?: '' | 'text' } & FrontendContentTextNode) //usually type is not set for text nodes
+) & {
+  children?: FrontendContentNode[]
+} //TODO: added because children are always just checked in code not by checking/guarding types
+//changing that need quite a bit of refactoring
+//maybe that's okay for now?
 
 // Some translations
 
@@ -302,6 +372,21 @@ export interface TaxonomyPage extends EntityPageBase {
   taxonomyData: TaxonomyData
 }
 
+export interface ProcessedResponseTaxonomy {
+  contentType: 'TaxonomyTerm'
+  data: ProcessedResponseTaxonomyChild
+}
+
+interface ProcessedResponseTaxonomyChild {
+  title: string
+  url: string
+  purpose: 0 | 1 | 2
+  links: TaxonomyData
+  description?: FrontendContentNode
+  children?: ProcessedResponseTaxonomyChild[]
+  exercises?: FrontendContentNode[]
+}
+
 // Shared attributes for first and second level.
 
 export interface TaxonomyTermBase {
@@ -311,6 +396,7 @@ export interface TaxonomyTermBase {
   applets: TaxonomyLink[]
   exercises: TaxonomyLink[]
   description?: FrontendContentNode[]
+  subfolders: TaxonomyTermBase[]
 }
 
 export interface TaxonomyLink {

@@ -1,35 +1,51 @@
-// TODO: needs type declaration
-export function createBreadcrumbs(uuid: any) {
-  let breadcrumbs = uuid.navigation?.path
+import { QueryResponse, Path, TaxonomyTerms } from './query'
 
-  if (!breadcrumbs) {
-    const taxonomyPaths = uuid.taxonomyTerms ?? uuid.course?.taxonomyTerms
-    if (taxonomyPaths) {
-      for (const child of taxonomyPaths) {
-        const { path } = child.navigation
-        if (!breadcrumbs || breadcrumbs.length > path.length) {
-          // compat: some paths are short-circuited, ignore them
-          if (
-            // TODO: needs type declaration
-            path.some((x: any) => x.label === 'Mathematik') &&
-            // TODO: needs type declaration
-            !path.some((x: any) => x.label === 'Alle Themen')
-          ) {
-            continue
-          }
-
-          breadcrumbs = path
-        }
-      }
+export function createBreadcrumbs(uuid: QueryResponse) {
+  if (uuid.__typename === 'TaxonomyTerm') {
+    if (uuid.navigation?.path) {
+      return compat(uuid.navigation?.path)
     }
   }
 
-  if (breadcrumbs) {
-    return (
-      breadcrumbs
-        .slice(0, -1) // compat: remove last entry because it is the entry itself
-        // TODO: needs type declaration
-        .filter((entry: any) => entry.url && entry.label)
-    ) // compat: remove empty entries
+  if (uuid.__typename === 'CoursePage') {
+    return compat(buildFromTaxTerms(uuid.course?.taxonomyTerms))
+  }
+
+  if (
+    uuid.__typename === 'Article' ||
+    uuid.__typename === 'Video' ||
+    uuid.__typename === 'Applet' ||
+    uuid.__typename === 'Exercise' ||
+    uuid.__typename === 'ExerciseGroup'
+  ) {
+    return compat(buildFromTaxTerms(uuid.taxonomyTerms))
+  }
+
+  function buildFromTaxTerms(taxonomyPaths: TaxonomyTerms | undefined) {
+    if (taxonomyPaths === undefined) return undefined
+
+    let breadcrumbs
+
+    for (const child of taxonomyPaths) {
+      const { path } = child.navigation
+      if (!breadcrumbs || breadcrumbs.length > path.length) {
+        // compat: some paths are short-circuited, ignore them
+        if (
+          path.some((x) => x.label === 'Mathematik') &&
+          !path.some((x) => x.label === 'Alle Themen')
+        ) {
+          continue
+        }
+
+        breadcrumbs = path
+      }
+    }
+    return breadcrumbs
+  }
+
+  function compat(breadcrumbs: Path | undefined) {
+    return breadcrumbs
+      ?.slice(0, -1) // compat: remove last entry because it is the entry itself
+      .filter((entry) => entry.url && entry.label) // compat: remove empty entries
   }
 }

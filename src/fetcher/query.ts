@@ -244,6 +244,7 @@ export interface BareExercise {
     }
     license: License
   }
+  license: License
 }
 
 const onExercise = `
@@ -270,6 +271,12 @@ export interface Exercise extends Entity, BareExercise {
 }
 export interface GroupedExercise extends Entity, BareExercise {
   __typename: 'GroupedExercise'
+  license: License
+}
+
+export interface ExerciseMaybeGrouped extends Entity, BareExercise {
+  __typename: 'Exercise' | 'GroupedExercise'
+  taxonomyTerms: TaxonomyTerms
   license: License
 }
 
@@ -309,6 +316,7 @@ const onEvent = `
 `
 
 export interface Event {
+  __typename: 'Event'
   currentRevision?: {
     content: string
   }
@@ -325,6 +333,7 @@ const onCourse = `
 `
 
 export interface Course {
+  __typename: 'Course'
   pages: {
     alias?: string
   }[]
@@ -410,11 +419,12 @@ const onTaxonomyTerm = `
   }
 `
 
-interface TaxonomyTermChild {
+export interface TaxonomyTermChild {
+  __typename: string
   trashed: boolean
 }
 
-interface TaxonomyTermChildOnX extends TaxonomyTermChild {
+export interface TaxonomyTermChildOnX extends TaxonomyTermChild {
   id: number
   alias?: string
   __typename: 'Article' | 'Video' | 'Applet' | 'Course'
@@ -423,11 +433,13 @@ interface TaxonomyTermChildOnX extends TaxonomyTermChild {
   }
 }
 
-interface TaxonomyTermChildExercise extends TaxonomyTermChild, BareExercise {
+export interface TaxonomyTermChildExercise
+  extends TaxonomyTermChild,
+    BareExercise {
   __typename: 'Exercise'
 }
 
-interface TaxonomyTermChildExerciseGroup extends TaxonomyTermChild {
+export interface TaxonomyTermChildExerciseGroup extends TaxonomyTermChild {
   __typename: 'ExerciseGroup'
   currentRevision?: {
     content: string
@@ -436,7 +448,7 @@ interface TaxonomyTermChildExerciseGroup extends TaxonomyTermChild {
   license: License
 }
 
-interface TaxonomyTermChildTaxonomyTerm extends TaxonomyTermChild {
+export interface TaxonomyTermChildTaxonomyTerm extends TaxonomyTermChild {
   __typename: 'TaxonomyTerm'
   type: TaxonomyTermType
   name: string
@@ -446,14 +458,16 @@ interface TaxonomyTermChildTaxonomyTerm extends TaxonomyTermChild {
   children: (TaxonomyTermChildOnX | SubTaxonomyTermChildTaxonomyTerm)[]
 }
 
-interface SubTaxonomyTermChildTaxonomyTerm extends TaxonomyTermChild {
+export interface SubTaxonomyTermChildTaxonomyTerm extends TaxonomyTermChild {
   __typename: 'TaxonomyTerm'
+  id: number
   alias?: string
   type: TaxonomyTermType
   name: string
 }
 
 export interface TaxonomyTerm extends Entity {
+  __typename: 'TaxonomyTerm'
   type: TaxonomyTermType
   name: string
   description?: string
@@ -510,8 +524,31 @@ export type QueryResponse =
   | Course
   | TaxonomyTerm
 
+export type QueryResponseFetched = QueryResponse & {
+  redirect?: string
+  error?: string
+  alias?: string
+  id: number
+}
+
+export type QueryResponseWithLicense =
+  | Article
+  | Video
+  | Applet
+  | CoursePage
+  | Exercise
+  | GroupedExercise
+  | ExerciseGroup
+
+export type QueryResponseWithTaxonomyTerms =
+  | Article
+  | Video
+  | Applet
+  | Exercise
+  | ExerciseGroup
+
 export const idsQuery = (ids: number[]) => {
-  return `{${ids.map(
+  const map = ids.map(
     (id) => `
     uuid${id}: uuid(id:${id}) {
         ... on Entity {
@@ -528,7 +565,8 @@ export const idsQuery = (ids: number[]) => {
         }
       }
     `
-  )}}`
+  )
+  return `{${map.join()}}`
 }
 
 // Note: This query will soon be removed from the fetcher (cloudflare takes this job)

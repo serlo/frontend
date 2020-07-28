@@ -73,7 +73,7 @@ const renderer = {
   video: renderVideo,
   equations: renderEquations,
   code: renderCode,
-} as { [key: string]: (props: any) => JSX.Element | null } // continue here to add proper types
+} as { [key: string]: (props: any) => React.ReactNode | null } // continue here to add proper types
 
 type renderElementData = keyof typeof renderer
 
@@ -209,8 +209,8 @@ export function renderLeaf({
 }
 
 function renderElement(props: RenderElementProps) {
-  //TODO: Check with Jonas
-  return renderer[props.element.type!](props)
+  if (!props.element.type) return null
+  return renderer[props.element.type](props)
 }
 
 interface RenderAData {
@@ -218,8 +218,7 @@ interface RenderAData {
   children: React.ReactNode
 }
 
-// TODO: needs type declaration
-export function renderA({ element, children = null }: any) {
+export function renderA({ element, children = null }: RenderAData) {
   return <Link href={element.href}>{children}</Link>
 }
 
@@ -283,12 +282,12 @@ export function renderH({ element, children = null }: RenderHData) {
   return <Comp id={element.id}>{children}</Comp>
 }
 
-interface RenderImgData {
+export interface RenderImgData {
   element: {
-    href: string
+    href?: string
     maxWidth?: number
     src: string
-    alt: string
+    alt?: string
   }
   children: React.ReactNode
 }
@@ -491,7 +490,7 @@ interface RenderVideoData {
 export function renderVideo({ element }: RenderVideoData) {
   return (
     <Lazy>
-      <Video url={element.src} />
+      <Video src={element.src} />
     </Lazy>
   )
 }
