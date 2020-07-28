@@ -1,6 +1,8 @@
 // Keep this file in sync with the graphQL schema.
 // Maybe automate this one day.
 
+import { InstanceData } from '@/data-types'
+
 export type Instance = 'de' | 'en' | 'fr' | 'es' | 'ta' | 'hi'
 
 // A license has some more attributes, but we are fine with these
@@ -309,6 +311,7 @@ export interface ExerciseGroup extends Entity {
 
 const onEvent = `
   ... on Event {
+    instance
     currentRevision {
       content
     }
@@ -317,6 +320,7 @@ const onEvent = `
 
 export interface Event {
   __typename: 'Event'
+  instance: Instance
   currentRevision?: {
     content: string
   }
@@ -326,6 +330,7 @@ export interface Event {
 
 const onCourse = `
   ... on Course {
+    instance
     pages {
       alias
     }
@@ -334,6 +339,7 @@ const onCourse = `
 
 export interface Course {
   __typename: 'Course'
+  instance: Instance
   pages: {
     alias?: string
   }[]
@@ -361,7 +367,7 @@ const onX = (type: string) => `
     currentRevision {
       title
     }
-  }  
+  }
 `
 
 const onTaxonomyTerm = `

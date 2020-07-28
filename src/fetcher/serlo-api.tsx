@@ -8,7 +8,7 @@ import {
 import { extractLinks, extractLinksFromNav, walkIdNodes } from './extract-links'
 import { getMetaDescription } from './get-meta-description'
 import { processResponse, ResponseDataQuickFix } from './process-response'
-import { dataQuery, idQuery, idsQuery, QueryResponseFetched } from './query'
+import { dataQuery, idsQuery, QueryResponseFetched } from './query'
 import { endpoint } from '@/api/endpoint'
 import { PrettyLinksContextValue } from '@/contexts/pretty-links-context'
 import {
@@ -19,9 +19,11 @@ import {
   EntityPageBase,
   ProcessedResponseTaxonomy,
   FrontendContentNode,
+  FetchedData,
 } from '@/data-types'
-import { horizonData } from '@/data/horizon'
+import { horizonData } from '@/data/horizon_de'
 import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
+import { parseLanguageSubfolder } from '@/helper/feature-i18n'
 
 interface MenuData {
   title: string
@@ -29,11 +31,10 @@ interface MenuData {
 }
 
 export async function fetchContent(
-  alias: string,
-  redirect: boolean,
+  raw_alias: string,
   origin: string
-) {
-  try {
+): Promise<FetchedData> {
+  /*try {
     if (redirect && /^\/[\d]+$/.test(alias)) {
       // redirect id to alias
       const response = await request<{ uuid: QueryResponseFetched }>(
@@ -47,13 +48,15 @@ export async function fetchContent(
     }
   } catch (e) {
     // on error: continue with data
-  }
+  }*/
 
   try {
+    const { alias, instance } = parseLanguageSubfolder(raw_alias)
+    console.log('fetch data', instance, alias)
     const QUERY = dataQuery(
       /^\/[\d]+$/.test(alias)
         ? 'id: ' + alias.substring(1)
-        : `alias: { instance: de, path: "${alias}"}`
+        : `alias: { instance: ${instance}, path: "${alias}"}`
     )
     const reqData = await request<{ uuid: QueryResponseFetched }>(
       endpoint,
@@ -67,15 +70,15 @@ export async function fetchContent(
     ) {
       const filtered = reqData.uuid.pages.filter((page) => page.alias !== null)
       if (filtered.length > 0) {
-        return { redirect: filtered[0].alias }
+        return await fetchContent(`/${instance}${filtered[0].alias}`, origin)
       }
     }
-    if (redirect && reqData.uuid.alias) {
+    /*if (redirect && reqData.uuid.alias) {
       const canonicalPath = decodeURIComponent(reqData.uuid.alias)
       if (alias !== canonicalPath) {
         return { redirect: canonicalPath }
       }
-    }
+    }*/
     const contentId = reqData.uuid.id
 
     const processed = processResponse(reqData)
@@ -85,7 +88,7 @@ export async function fetchContent(
     if (dataWithValue?.value) {
       //TODO: investigate
       //@ts-expect-error
-      walkIdNodes(dataWithValue.value.children, (node, id) => {
+      walkIdNodes(dataWithValue.value.children, (_node, id) => {
         contentLinks.push(id)
       })
     }
@@ -217,9 +220,10 @@ export async function fetchContent(
           metaDescription: getMetaDescription(processed),
           metaImage: getMetaImage(),
         },
-        horizonData: processed.horizonIndices.map(
-          (index) => horizonData[index]
-        ),
+        horizonData:
+          instance == 'de'
+            ? processed.horizonIndices.map((index) => horizonData[index])
+            : undefined,
         cacheKey: alias,
         newsletterPopup: !!(processed.data && processed.contentType === 'Page'),
       }
@@ -349,7 +353,7 @@ export async function fetchContent(
   } catch (e) {
     return {
       error: `Error while fetching data: ${(e as Error).message ?? e}`,
-      alias,
+      alias: raw_alias,
     }
   }
 }

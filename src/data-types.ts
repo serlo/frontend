@@ -89,6 +89,7 @@ export interface HeaderStrings {
   slogan: string
   search: string
   login: string
+  title: string
 }
 
 // The footer is split into different categories and has three separate links.
@@ -133,17 +134,19 @@ export type PageData =
   | SingleEntityPage
   | TaxonomyPage
 
-export type FetchedData = PageData & {
+export interface FetchedData {
   redirect?: string
   error?: string
-  pageData: PageData
+  pageData?: PageData
   alias?: string
+  instance?: string
 }
 
 // The landing page is custom built and takes no additional data
 
 export interface LandingPage {
   kind: 'landing'
+  data?: InstanceLandingData
 }
 
 // The same for donation, search and notifications page:

@@ -1,4 +1,4 @@
-import { horizonData } from '../data/horizon'
+import { horizonData } from '../data/horizon_de'
 import { createBreadcrumbs } from './create-breadcrumbs'
 import { createData, EntityTypeData } from './create-data'
 import { createLicense } from './create-license'

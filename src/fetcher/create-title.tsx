@@ -1,7 +1,9 @@
 import { QueryResponse } from './query'
+import { getInstanceDataByLang } from '@/helper/feature-i18n'
 
 export function createTitle(uuid: QueryResponse) {
-  const suffix = ' - lernen mit Serlo!'
+  const instanceData = getInstanceDataByLang(uuid.instance)
+  const suffix = ' - ' + instanceData.strings.header.title
 
   if (uuid.__typename === 'TaxonomyTerm') {
     const term = uuid

@@ -1,0 +1,35 @@
+import { deInstanceData } from '@/data/de'
+import { enInstanceData } from '@/data/en'
+import { Instance } from '@/fetcher/query'
+
+export const languages: Instance[] = ['de', 'en', 'es', 'fr', 'hi', 'ta']
+
+export function parseLanguageSubfolder(alias: string) {
+  for (const lang of languages) {
+    if (alias.startsWith(`/${lang}/`) || alias == `/${lang}`) {
+      const subalias = alias.substring(3)
+      return { alias: subalias === '' ? '/' : subalias, instance: lang }
+    }
+  }
+  return { alias, instance: 'de' }
+}
+
+export function isOnLanguageSubdomain() {
+  if (typeof window === 'undefined') return false
+  else {
+    for (const lang of languages) {
+      if (window.location.host.startsWith(`${lang}.`)) return true
+    }
+  }
+  return false
+}
+
+export function getInstanceDataByLang(lang: string) {
+  console.log('load instance data', lang)
+  let data = enInstanceData
+  if (lang == 'de') {
+    console.log('load de instance data')
+    data = deInstanceData
+  }
+  return data
+}
