@@ -18,7 +18,7 @@ import { RelativeContainer } from '@/components/navigation/relative-container'
 //import { LandingInternationalProps } from '@/components/pages/landing-international'
 import { InstanceDataProvider } from '@/contexts/instance-context'
 import { OriginProvider } from '@/contexts/origin-context'
-import { InitialProps, InstanceData, PageData } from '@/data-types'
+import { InitialProps, InstanceData, PageData, ErrorData } from '@/data-types'
 //import { esInstanceLandingData } from '@/data/landing/es'
 import {
   fetcherAdditionalData,
@@ -41,7 +41,7 @@ const Search = dynamic<{}>(() =>
 const Donations = dynamic<{}>(() =>
   import('@/components/pages/donations').then((mod) => mod.Donations)
 )
-const ErrorPage = dynamic<{}>(() =>
+const ErrorPage = dynamic<ErrorData>(() =>
   import('@/components/pages/error-page').then((mod) => mod.ErrorPage)
 )
 const Notifications = dynamic<{}>(() =>
@@ -103,7 +103,7 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
 
 function renderPage(page: PageData) {
   //TODO: investigate why this happens sometimes.
-  if (page === undefined) return <ErrorPage />
+  if (page === undefined) return <ErrorPage code={500} />
 
   if (page.kind === 'donation') {
     return <Donations />
@@ -126,7 +126,7 @@ function renderPage(page: PageData) {
             return <Notifications />
           }
           if (page.kind === 'error') {
-            return <ErrorPage />
+            return <ErrorPage code={page.errorData.code} />
           }
           return (
             <>

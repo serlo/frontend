@@ -146,7 +146,7 @@ export interface LandingPage {
   kind: 'landing'
 }
 
-// The same for donation, search and error and notifications page:
+// The same for donation, search and notifications page:
 
 export interface DonationPage {
   kind: 'donation'
@@ -155,13 +155,19 @@ export interface DonationPage {
 export interface SearchPage {
   kind: 'search'
 }
+export interface NotificationsPage {
+  kind: 'user/notifications'
+}
+
+// Error page has some additional data
 
 export interface ErrorPage {
   kind: 'error'
+  errorData: ErrorData
 }
 
-export interface NotificationsPage {
-  kind: 'user/notifications'
+export interface ErrorData {
+  code: number
 }
 
 // There are several page elements that are common for entities:
