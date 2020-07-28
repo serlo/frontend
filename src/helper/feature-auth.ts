@@ -1,10 +1,14 @@
 import { HeaderData } from '@/data-types'
-import { authMenuData, noAuthMenuData } from '@/data/menu'
+import { noAuthMenuData } from '@/data/menu'
 import { serloDomain } from '@/helper/serlo-domain'
 
-export function getAuthData(loggedIn: boolean, loginTitle: string): HeaderData {
+export function getAuthData(
+  loggedIn: boolean,
+  loginTitle: string,
+  authMenu?: HeaderData
+): HeaderData | undefined {
   if (shouldUseNewAuth()) {
-    return loggedIn ? authMenuData : noAuthMenuData
+    return loggedIn ? authMenu : noAuthMenuData
   } else {
     return [
       {

@@ -1,12 +1,14 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 
-import { makeMargin, makeDefaultButton } from '../../helper/css'
+import { makeMargin, makeDefaultButton, makePadding } from '../../helper/css'
 import { renderArticle } from '../../schema/article-renderer'
+import { AuthorTools } from './author-tools'
 import { ExerciseNumbering } from './exercise-numbering'
 import { InputExercise, InputExerciseProps } from './input-exercise'
 import { LicenseNotice } from './license-notice'
 import { ScMcExercise, ScMcExerciseProps } from './sc-mc-exercise'
+import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
 import { LicenseData, FrontendContentNode } from '@/data-types'
 
@@ -81,6 +83,12 @@ export function Exercise(props: ExerciseProps) {
     solution.children.length === 1 &&
     solution.children[0].type === '@edtr-io/solution'
 
+  const auth = useAuth()
+  const [loaded, setLoaded] = React.useState(false)
+  React.useEffect(() => {
+    setLoaded(true)
+  }, [])
+
   return (
     <Wrapper grouped={grouped}>
       {!grouped && <ExerciseNumbering index={positionOnPage!} />}
@@ -88,9 +96,7 @@ export function Exercise(props: ExerciseProps) {
       {renderExerciseTask()}
       {renderInteractive()}
 
-      {taskLicense && <LicenseNotice minimal data={taskLicense} />}
-
-      {renderSolutionToggle()}
+      {renderToolsAndLicense()}
 
       {solutionVisible && renderSolutionBox()}
     </Wrapper>
@@ -118,7 +124,11 @@ export function Exercise(props: ExerciseProps) {
     return (
       <SolutionBox>
         {renderArticle(getSolutionContent(), false)}
-        {solutionLicense && <LicenseNotice minimal data={solutionLicense} />}
+
+        <SolutionTools>
+          {solutionLicense && <LicenseNotice minimal data={solutionLicense} />}
+          {loaded && auth.current && <AuthorTools />}
+        </SolutionTools>
       </SolutionBox>
     )
   }
@@ -179,7 +189,22 @@ export function Exercise(props: ExerciseProps) {
       }
     }
   }
+
+  function renderToolsAndLicense() {
+    return (
+      <ExerciseTools>
+        {renderSolutionToggle()}
+
+        {taskLicense && <LicenseNotice minimal data={taskLicense} />}
+        {loaded && auth.current && <AuthorTools />}
+      </ExerciseTools>
+    )
+  }
 }
+
+const ExerciseTools = styled.div`
+  display: flex;
+`
 
 const StyledSpan = styled.span`
   display: inline-block;
@@ -222,6 +247,7 @@ const Wrapper = styled.div<{ grouped?: boolean }>`
 const SolutionToggle = styled.a<{ active: boolean }>`
   ${makeMargin}
   ${makeDefaultButton}
+  margin-right: auto;
   padding-right: 9px;
   font-size: 1rem;
   display: inline-block;
@@ -250,4 +276,8 @@ const SolutionBox = styled.div`
   ${makeMargin}
   margin-bottom: ${(props) => props.theme.spacing.mb.block};
   border-left: 8px solid ${(props) => props.theme.colors.brand};;
+`
+
+const SolutionTools = styled.div`
+  ${makePadding}
 `

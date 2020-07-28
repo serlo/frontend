@@ -136,7 +136,7 @@ export function Entity({ data }: EntityProps) {
     return (
       <UserTools
         onShare={() => setOpen(true)}
-        editHref={`/entity/repository/add-revision/${data.id}`}
+        id={data.id}
         hideEdit={!data.inviteToEdit}
       />
     )

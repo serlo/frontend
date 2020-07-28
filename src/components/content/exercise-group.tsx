@@ -2,8 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { makeMargin } from '../../helper/css'
+import { AuthorTools } from './author-tools'
 import { ExerciseNumbering } from './exercise-numbering'
 import { SpoilerContainer } from './spoiler-container'
+import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
 
 export interface ExerciseGroupProps {
@@ -19,19 +21,35 @@ export function ExerciseGroup({
   groupIntro,
   positionOnPage,
 }: ExerciseGroupProps) {
+  const [loaded, setLoaded] = React.useState(false)
+  React.useEffect(() => {
+    setLoaded(true)
+  }, [])
   const { strings } = useInstanceData()
+  const auth = useAuth()
   return (
     <Container>
       <ExerciseIntro>
         <ExerciseNumbering index={positionOnPage} />
-        <Label>{strings.content.exerciseGroup}</Label>
+
+        <TopLine>
+          <Label>{strings.content.exerciseGroup}</Label>
+          <div>{license}</div>
+          {loaded && auth.current && <AuthorTools />}
+        </TopLine>
+
         {groupIntro}
       </ExerciseIntro>
       <Content>{children}</Content>
-      <div>{license}</div>
     </Container>
   )
 }
+
+const TopLine = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 3px;
+`
 
 const Container = styled(SpoilerContainer)`
   padding-top: 4px;
@@ -41,7 +59,7 @@ const Container = styled(SpoilerContainer)`
 `
 
 const ExerciseIntro = styled.div`
-  padding-top: 12px;
+  padding-top: 8px;
   margin-bottom: 12px;
 `
 
@@ -56,6 +74,7 @@ const Label = styled.small`
   font-size: 0.9rem;
   font-weight: bold;
   ${makeMargin}
+  margin-right: auto;
   display: block;
   margin-bottom: 7px;
   color: ${(props) => props.theme.colors.brand};

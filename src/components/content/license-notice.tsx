@@ -28,11 +28,11 @@ export function LicenseNotice({ data, minimal }: LicenseNoticeProps) {
 
   if (minimal)
     return (
-      <MinimalWrapper>
+      <>
         <MinimalLink href={data.url} title={data.title} noExternalIcon>
           <FontAwesomeIcon icon={faCreativeCommons} />
         </MinimalLink>
-      </MinimalWrapper>
+      </>
     )
 
   return (
@@ -60,10 +60,6 @@ export function LicenseNotice({ data, minimal }: LicenseNoticeProps) {
   )
 }
 
-const MinimalWrapper = styled.div`
-  float: right;
-  ${makePadding};
-`
 const MinimalLink = styled(Link)`
   ${makeDefaultButton}
   text-align: center;
@@ -72,6 +68,7 @@ const MinimalLink = styled(Link)`
   font-size: 1.3rem;
   line-height: 2rem;
   width: 2rem;
+  height: 2rem;
   padding: 0;
 `
 

@@ -1,16 +1,24 @@
 import { faCaretDown, faUser, faBell } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Tippy, { TippyProps, useSingleton } from '@tippyjs/react'
+import dynamic from 'next/dynamic'
 import React from 'react'
 import styled, { css } from 'styled-components'
 
 import { Link } from '../content/link'
-import { UnreadNotificationsCount } from './unread-notifications-count'
+import { UnreadNotificationsCountProps } from './unread-notifications-count'
 import { AuthPayload } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { HeaderData, HeaderLink } from '@/data-types'
 import { makeDefaultButton } from '@/helper/css'
 import { getAuthData, shouldUseNewAuth } from '@/helper/feature-auth'
+
+const UnreadNotificationsCount = dynamic<UnreadNotificationsCountProps>(() =>
+  import('./unread-notifications-count').then(
+    (mod) => mod.UnreadNotificationsCount
+  )
+)
 
 // Only show some icons on full menu
 const menuIconMapping = {
@@ -33,6 +41,7 @@ export function Menu({ data, auth }: MenuProps) {
   const [source, target] = useSingleton()
   const [mounted, setMounted] = React.useState(!shouldUseNewAuth())
   const { strings } = useInstanceData()
+  const loggedInData = useLoggedInData()
 
   React.useEffect(() => {
     setMounted(true)
@@ -73,7 +82,26 @@ export function Menu({ data, auth }: MenuProps) {
   )
 
   function renderAuthMenu() {
-    const data = getAuthData(mounted && auth !== null, strings.header.login)
+    const data = getAuthData(
+      mounted && auth !== null,
+      strings.header.login,
+      loggedInData?.authMenu
+    )
+
+    // render placeholder while data is loading
+    if (!data)
+      return (
+        <Entry
+          link={{
+            url: '/auth/login',
+            title: strings.header.login,
+            icon: 'user',
+          }}
+          target={target}
+          authMenuMounted={false}
+          onSubMenuInnerClick={onSubMenuInnerClick}
+        />
+      )
 
     return data.map((link, i) => {
       return (
@@ -164,7 +192,7 @@ function SubMenuInner({ subEntries, onSubMenuInnerClick }: SubMenuInnerProps) {
           return (
             <li key={entry.title} onClick={onSubMenuInnerClick}>
               <SubLink href={entry.url}>
-                <_Button>{entry.title}</_Button>
+                <SubButtonStyle>{entry.title}</SubButtonStyle>
               </SubLink>
             </li>
           )
@@ -224,15 +252,13 @@ const StyledLink = styled(Link)<{ active?: boolean; hasIcon?: boolean }>`
   font-weight: bold;
   transition: all 0.3s ease-in-out 0s;
   display: block;
-  
+
   margin: 0 3px;
   margin-top: ${(props) => (props.hasIcon ? '-5px' : '11px')};
   padding: ${(props) => (props.hasIcon ? '7px' : '2px 7px')};
-  
-
 `
 
-const SubList = styled.ul`
+export const SubList = styled.ul`
   background-color: white;
   padding: 12px 15px 12px 10px;
   margin: 0;
@@ -245,19 +271,21 @@ const SubList = styled.ul`
   border-radius: 10px;
 `
 
-const SubLink = styled(Link)`
+export const SubLink = styled(Link)`
   padding-top: 3px;
   padding-bottom: 3px;
   display: block;
   text-decoration: none;
+  cursor: pointer;
   &:hover span {
     color: #fff;
     background-color: ${(props) => props.theme.colors.brand};
   }
 `
 
-const _Button = styled.span`
+export const SubButtonStyle = styled.span`
   text-decoration: none;
+  display: block;
   ${linkStyle}
   ${makeDefaultButton}
   color: ${(props) => props.theme.colors.brand};

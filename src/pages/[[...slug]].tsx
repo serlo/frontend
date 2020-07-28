@@ -2,6 +2,7 @@ import { NextPage } from 'next'
 import dynamic from 'next/dynamic'
 import React from 'react'
 
+import { useAuth } from '@/auth/use-auth'
 import { CookieBar } from '@/components/content/cookie-bar'
 import { EntityProps } from '@/components/content/entity'
 import { HSpace } from '@/components/content/h-space'
@@ -17,8 +18,15 @@ import { MetaMenu } from '@/components/navigation/meta-menu'
 import { RelativeContainer } from '@/components/navigation/relative-container'
 //import { LandingInternationalProps } from '@/components/pages/landing-international'
 import { InstanceDataProvider } from '@/contexts/instance-context'
+import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
 import { OriginProvider } from '@/contexts/origin-context'
-import { InitialProps, InstanceData, PageData, ErrorData } from '@/data-types'
+import {
+  InitialProps,
+  InstanceData,
+  PageData,
+  ErrorData,
+  LoggedInData,
+} from '@/data-types'
 //import { esInstanceLandingData } from '@/data/landing/es'
 import {
   fetcherAdditionalData,
@@ -92,10 +100,36 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
   fetcherAdditionalData.origin = initialProps.origin
   fetcherAdditionalData.instance = instanceData.lang
 
+  const cachedLoggedInData =
+    typeof window !== 'undefined'
+      ? sessionStorage.getItem('loggedInData___')
+      : null
+
+  const [loggedInData, setLoggedInData] = React.useState<LoggedInData | null>(
+    cachedLoggedInData ? JSON.parse(cachedLoggedInData) : null
+  )
+
+  const auth = useAuth()
+
+  React.useEffect(() => {
+    if (auth.current && !loggedInData) {
+      void (async () => {
+        const res = await fetch(initialProps.origin + '/api/locale/de')
+        const json = await res.json()
+        sessionStorage.setItem('loggedInData___', JSON.stringify(json))
+        setLoggedInData(json)
+      })()
+    }
+  }, [auth, initialProps.origin, loggedInData])
+
+  console.log('render page')
+
   return (
     <OriginProvider value={initialProps.origin}>
       <InstanceDataProvider value={instanceData}>
-        {renderPage(initialProps.pageData)}
+        <LoggedInDataProvider value={loggedInData}>
+          {renderPage(initialProps.pageData)}
+        </LoggedInDataProvider>
       </InstanceDataProvider>
     </OriginProvider>
   )
