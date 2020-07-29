@@ -189,7 +189,7 @@ export const enLoggedInData: LoggedInData = {
     },
     {
       url: '',
-      title: 'Benutzer',
+      title: 'user',
       icon: 'user',
       children: [
         { url: '/user/public', title: 'Öffentliches Profil' },

@@ -34,18 +34,14 @@ export const esInstanceData: InstanceData = {
   footerData: {
     footerNavigation: [
       {
-        title: 'General',
+        title: 'Configuración General',
         children: [
-          { title: 'About Serlo', url: '/serlo' },
-          { title: 'Get involved!', url: '/27469' },
-          { title: 'Contact', url: '/41043' },
+          { title: 'A cerca de Serlo', url: '/serlo' },
+          { title: '¡Participa!', url: '/27469' },
+          { title: 'Contactanos', url: '/41043' },
           {
-            title: 'Serlo in other languages',
+            title: 'Serlo en otros idiomas',
             url: `https://en.${serloDomain}/global`,
-          },
-          {
-            title: 'Back into the old design',
-            url: `https://de.${serloDomain}/disable-frontend`,
           },
           {
             title: 'API',
@@ -54,14 +50,8 @@ export const esInstanceData: InstanceData = {
         ],
       },
       {
-        title: 'Stay in touch',
+        title: 'Mantente en contacto',
         children: [
-          {
-            title: 'Newsletter',
-            url:
-              'https://serlo.us7.list-manage.com/subscribe?u=23f4b04bf70ea485a766e532d&amp;id=a7bb2bbc4f',
-            icon: 'newsletter',
-          },
           {
             title: 'GitHub',
             url: 'https://github.com/serlo',
@@ -70,11 +60,11 @@ export const esInstanceData: InstanceData = {
         ],
       },
       {
-        title: 'Legal terms',
+        title: 'Términos legales',
         children: [
-          { title: 'Privacy Policy', url: `https://de.${serloDomain}/privacy` },
+          { title: 'Politica de privacidad', url: `https://de.${serloDomain}/privacy` },
           {
-            title: 'Terms of use',
+            title: 'Términos legales',
             url: `https://de.${serloDomain}/terms`,
           },
           { title: 'Imprint', url: `https://de.${serloDomain}/imprint` },
