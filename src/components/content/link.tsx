@@ -3,6 +3,7 @@ import React from 'react'
 
 import { StyledA } from '../tags/styled-a'
 import { ExternalLink } from './external-link'
+import { useInstanceData } from '@/contexts/instance-context'
 
 export interface LinkProps {
   href?: string
@@ -39,6 +40,7 @@ export function Link({
   title,
 }: LinkProps) {
   //const prettyLinks = {}
+  const { lang } = useInstanceData()
 
   if (!href || href === undefined || href === '')
     return (
@@ -48,7 +50,10 @@ export function Link({
     )
 
   //const prettyLink = getPrettyLink(href)
-  const displayHref = href //prettyLink ? prettyLink : href
+  let displayHref = href //prettyLink ? prettyLink : href
+  if (displayHref.startsWith(`https://${lang}.serlo.org/`)) {
+    displayHref = displayHref.replace(`https://${lang}.serlo.org`, '')
+  }
 
   const isAbsolute = href.indexOf('//') > -1
   const isExternal = isAbsolute && !href.includes('.serlo.org')

@@ -1,5 +1,5 @@
 import { serloDomain } from '../helper/serlo-domain'
-import { InstanceData, ServerSideStrings } from '@/data-types'
+import { InstanceData, ServerSideStrings, LoggedInData } from '@/data-types'
 
 export const deInstanceData: InstanceData = {
   lang: 'de',
@@ -169,4 +169,41 @@ export const deInstanceData: InstanceData = {
 
 export const deServerSideStrings: ServerSideStrings = {
   title: 'lernen mit Serlo!',
+}
+
+export const deLoggedInData: LoggedInData = {
+  authMenu: [
+    {
+      url: '/user/notifications',
+      title: 'Benachrichtigungen',
+      icon: 'notifications',
+    },
+    {
+      url: '',
+      title: 'Benutzer',
+      icon: 'user',
+      children: [
+        { url: '/user/public', title: 'Öffentliches Profil' },
+        {
+          url: '/user/settings',
+          title: 'Profil bearbeiten',
+        },
+        {
+          url: '/auth/password/change',
+          title: 'Passwort aktualisieren',
+        },
+        {
+          url: '/event/history/user/me',
+          title: 'Meine Aktivitäten',
+        },
+        {
+          url: '/api/auth/logout',
+          title: 'Ausloggen',
+        },
+      ],
+    },
+  ],
+  strings: {
+    tools: 'Weitere Tools',
+  },
 }

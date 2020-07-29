@@ -26,7 +26,7 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
   const [searchLoaded, setSearchLoaded] = React.useState(false)
   const [searchActive, setSearchActive] = React.useState(false)
   // const [isSearchPage, setIsSearchPage] = React.useState(false)
-  const { strings } = useInstanceData()
+  const { lang, strings } = useInstanceData()
   const router = useRouter()
 
   React.useEffect(() => {
@@ -85,6 +85,7 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
     container.addEventListener(
       'click',
       function (e) {
+        const langDomain = `https://${lang}.serlo.org`
         const target = e.target as HTMLElement
         const link = target.classList.contains(className)
           ? target
@@ -93,14 +94,12 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
         if (
           link &&
           link.classList.contains(className) &&
-          typeof link.dataset.ctorig !== 'undefined'
+          typeof link.dataset.ctorig !== 'undefined' &&
+          link.dataset.ctorig.startsWith(langDomain)
         ) {
           e.preventDefault()
           void router
-            .push(
-              '/[[...slug]]',
-              link.dataset.ctorig.replace('https://de.serlo.org', '')
-            )
+            .push('/[[...slug]]', link.dataset.ctorig.replace(langDomain, ''))
             .then(() => window.scrollTo(0, 0))
         }
       },

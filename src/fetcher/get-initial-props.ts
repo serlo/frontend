@@ -10,7 +10,7 @@ import {
 
 export const fetcherAdditionalData = {
   origin: '',
-  instance: 'de',
+  instance: '',
 }
 
 export async function getInitialProps(
@@ -29,7 +29,12 @@ export async function getInitialProps(
 
   console.log('url:', url)
 
-  const { instance, alias } = parseLanguageSubfolder(url)
+  console.log('additional data', fetcherAdditionalData)
+
+  const { instance: instance_path, alias } = parseLanguageSubfolder(url)
+  const instance = fetcherAdditionalData.instance
+    ? fetcherAdditionalData.instance
+    : instance_path
 
   console.log('get initial props', instance, alias)
 

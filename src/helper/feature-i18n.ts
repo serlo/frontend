@@ -1,4 +1,4 @@
-import { deInstanceData, deServerSideStrings } from '@/data/de'
+import { deInstanceData, deServerSideStrings, deLoggedInData } from '@/data/de'
 import {
   enInstanceData,
   enServerSideStrings,
@@ -49,4 +49,8 @@ export function getServerSideStrings(lang: string) {
 
 export function getLandingData(_lang: string) {
   return enInstanceLandingData
+}
+
+export function getLoggedInData(_lang: string) {
+  return deLoggedInData
 }
