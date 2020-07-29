@@ -120,14 +120,6 @@ export type PageData =
   | SingleEntityPage
   | TaxonomyPage
 
-export interface FetchedData {
-  redirect?: string
-  error?: string
-  pageData?: PageData
-  alias?: string
-  instance?: string
-}
-
 // The landing page is custom built and takes no additional data
 
 export interface LandingPage {
@@ -404,12 +396,13 @@ export interface FrontendExerciseNode {
 }
 
 export interface TaskEdtrState {
-  content: FrontendContentNode[]
+  content: FrontendContentNode[] // edtr-io plugin "exercise"
   interactive: EdtrPluginScMcExercise | EdtrPluginInputExercise
 }
 
 export interface SolutionEdtrState {
   prerequisite: {
+    // edtr-io plugin "solution"
     id: string
     title: string
   }
@@ -418,7 +411,7 @@ export interface SolutionEdtrState {
 }
 
 export interface EdtrPluginScMcExercise {
-  plugin: 'scMcExercise' // we reuse edtr-io states here
+  plugin: 'scMcExercise' // edtr-io plugin
   state: {
     answers: {
       isCorrect: boolean
@@ -430,7 +423,7 @@ export interface EdtrPluginScMcExercise {
 }
 
 export interface EdtrPluginInputExercise {
-  plugin: 'inputExercise'
+  plugin: 'inputExercise' // edtr-io plugin
   state: {
     type:
       | 'input-number-exact-match-challenge'
@@ -477,7 +470,7 @@ export type SignType =
   | 'less-than-or-equal'
   | 'almost-equal-to'
 
-type FrontendVoidNode =
+export type FrontendVoidNode =
   | FrontendInlineMathNode
   | FrontendMathNode
   | FrontendImgNode
@@ -489,7 +482,7 @@ type FrontendVoidNode =
   | FrontendCodeNode
   | FrontendEquationsNode
 
-type FrontendElementNode =
+export type FrontendElementNode =
   | FrontendANode
   | FrontendPNode
   | FrontendHNode
@@ -501,7 +494,7 @@ type FrontendElementNode =
   | FrontendThNode
   | FrontendTdNode
 
-type FrontendRestrictedElementNode =
+export type FrontendRestrictedElementNode =
   | FrontendSpoilerContainerNode
   | FrontendTableNode
   | FrontendSpoilerContainerNode
@@ -512,7 +505,7 @@ type FrontendRestrictedElementNode =
   | FrontendTrNode
   | FrontendExerciseGroupNode
 
-type FrontendContentNode =
+export type FrontendContentNode =
   | FrontendTextNode
   | FrontendVoidNode
   | FrontendElementNode
@@ -571,21 +564,6 @@ export interface CourseStrings {
 export interface TaxonomyPage extends EntityPageBase {
   kind: 'taxonomy'
   taxonomyData: TaxonomyData
-}
-
-export interface ProcessedResponseTaxonomy {
-  contentType: 'TaxonomyTerm'
-  data: ProcessedResponseTaxonomyChild
-}
-
-interface ProcessedResponseTaxonomyChild {
-  title: string
-  url: string
-  purpose: 0 | 1 | 2
-  links: TaxonomyData
-  description?: FrontendContentNode
-  children?: ProcessedResponseTaxonomyChild[]
-  exercises?: FrontendContentNode[]
 }
 
 // Shared attributes for first and second level.

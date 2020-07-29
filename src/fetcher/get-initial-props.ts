@@ -1,7 +1,7 @@
 import { NextPageContext } from 'next'
 import absoluteUrl from 'next-absolute-url'
 
-import { InitialProps, PageData, FetchedData, InstanceData } from '@/data-types'
+import { InitialProps, PageData, InstanceData } from '@/data-types'
 import {
   parseLanguageSubfolder,
   getInstanceDataByLang,
