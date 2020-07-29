@@ -3,7 +3,32 @@ import {
   enInstanceData,
   enServerSideStrings,
   enInstanceLandingData,
+  enLoggedInData,
 } from '@/data/en'
+import {
+  esInstanceData,
+  esInstanceLandingData,
+  esServerSideStrings,
+  esLoggedInData,
+} from '@/data/es'
+import {
+  frInstanceData,
+  frServerSideStrings,
+  frInstanceLandingData,
+  frLoggedInData,
+} from '@/data/fr'
+import {
+  hiInstanceData,
+  hiServerSideStrings,
+  hiInstanceLandingData,
+  hiLoggedInData,
+} from '@/data/hi'
+import {
+  taInstanceData,
+  taServerSideStrings,
+  taLoggedInData,
+  taInstanceLandingData,
+} from '@/data/ta'
 import { Instance } from '@/fetcher/query'
 
 export const languages: Instance[] = ['de', 'en', 'es', 'fr', 'hi', 'ta']
@@ -29,11 +54,21 @@ export function isOnLanguageSubdomain() {
 }
 
 export function getInstanceDataByLang(lang: string) {
-  console.log('load instance data', lang)
   let data = enInstanceData
   if (lang == 'de') {
-    console.log('load de instance data')
     data = deInstanceData
+  }
+  if (lang == 'es') {
+    data = esInstanceData
+  }
+  if (lang == 'fr') {
+    data = frInstanceData
+  }
+  if (lang == 'ta') {
+    data = taInstanceData
+  }
+  if (lang == 'hi') {
+    data = hiInstanceData
   }
   return data
 }
@@ -41,16 +76,57 @@ export function getInstanceDataByLang(lang: string) {
 export function getServerSideStrings(lang: string) {
   let data = enServerSideStrings
   if (lang == 'de') {
-    console.log('load de instance data')
     data = deServerSideStrings
+  }
+  if (lang == 'es') {
+    data = esServerSideStrings
+  }
+  if (lang == 'fr') {
+    data = frServerSideStrings
+  }
+  if (lang == 'ta') {
+    data = taServerSideStrings
+  }
+  if (lang == 'hi') {
+    data = hiServerSideStrings
   }
   return data
 }
 
-export function getLandingData(_lang: string) {
-  return enInstanceLandingData
+export function getLandingData(lang: string) {
+  let data = enInstanceLandingData
+  // no de
+  if (lang == 'es') {
+    data = esInstanceLandingData
+  }
+  if (lang == 'fr') {
+    data = frInstanceLandingData
+  }
+  if (lang == 'ta') {
+    data = taInstanceLandingData
+  }
+  if (lang == 'hi') {
+    data = hiInstanceLandingData
+  }
+  return data
 }
 
-export function getLoggedInData(_lang: string) {
-  return deLoggedInData
+export function getLoggedInData(lang: string) {
+  let data = deLoggedInData
+  if (lang == 'en') {
+    data = enLoggedInData
+  }
+  if (lang == 'en') {
+    data = esLoggedInData
+  }
+  if (lang == 'fr') {
+    data = frLoggedInData
+  }
+  if (lang == 'ta') {
+    data = taLoggedInData
+  }
+  if (lang == 'hi') {
+    data = hiLoggedInData
+  }
+  return data
 }

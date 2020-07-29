@@ -6,7 +6,7 @@ import {
 } from '@/data-types'
 import { serloDomain } from '@/helper/serlo-domain'
 
-export const enInstanceData: InstanceData = {
+export const taInstanceData: InstanceData = {
   lang: 'en',
   headerData: [
     {
@@ -152,35 +152,36 @@ export const enInstanceData: InstanceData = {
   },
 }
 
-export const enInstanceLandingData: InstanceLandingData = {
-  lang: 'en',
+export const taInstanceLandingData: InstanceLandingData = {
+  lang: 'ta',
   strings: {
     vision:
-      'It is our vision to enable personalized learning and provide high quality educational resources worldwide – completely free of charge. Serlo is a grassroots organization inspired by Wikipedia. We already provide thousands of articles, videos and solved exercises for five million German students every year. Now it’s time to go international.',
-    learnMore: 'Learn more',
-    democraticallyStructured: 'democratically structured',
-    nonProfit: 'non-profit',
-    transparent: 'transparent',
-    openlyLicensed: 'openly licensed',
-    adFree: 'ad-free',
-    freeOfCharge: 'free of charge',
-    wikiTitle: 'Serlo is the Wikipedia for Learning',
-    wikiText: '', //TODO: Missing, contacted Jakob.
-    movementTitle: 'Become a Part of Our Movement for Open Education',
+      'நாம் சமமான கல்வி வாய்ப்புகளை நோக்கி இணைந்து பணிபுரியும் ஒரு குழு. இந்த இணையத்தளத்தில் எண்ணற்ற விவரக் கட்டுரைகள், பயிற்சிகள் மற்றும் ஒலிப் பேழைகள் அனைத்துப் பாடங்களுக்கும் வழங்கப்பட்டுவருகின்றன. இவை அனைத்தும் இலவசமாக உலகம் முழுவதும் உள்ள மாணவர்களுக்காக உருவாக்கப்பட்டுவருகின்றன. இனி வரும் காலங்களில், தமிழ்மொழியிலும் இவ்வாறான இலவசப் பாடத்திட்டங்களை உருவாக்க நீங்களும் எம்முடன் இணைந்து பணியாற்றலாம்.',
+    learnMore: 'மேலும் அறிக',
+    democraticallyStructured: 'ஜனநாயக ரீதியாக',
+    nonProfit: 'இலாப நோக்கற்றது',
+    transparent: 'ஒளி புகும்',
+    openlyLicensed: 'திறந்த உரிமம்',
+    adFree: 'விளம்பரமின்றி',
+    freeOfCharge: 'இலவசம்',
+    wikiTitle: 'Serlo ஓர் கற்றலுக்கான விக்கிபீடியா',
+    wikiText:
+      'Serlo.org விக்கிபீடியாபோல திறந்த உரிமம் கொண்ட ஓர் இணையத்தளம். இது எம் எழுத்தாளர் குழுவால் உருவாக்கப்படுகின்றது.',
+    movementTitle: 'நீங்களும் இதில் பணியாற்றலாம்',
     callForAuthors:
-      'We are looking for teachers and enthusiastic educators who are passionate about their subject. Become part of our community to create new learning material and help us improve existing content.',
-    communityLink: 'Visit the landing page for authors',
+      'ஆசிரியர்களும் ஆர்வமுள்ள எழுத்தாளர்களும் பாடங்களை உருவாக்க பல வழிகளில் உதவலாம். புதுப் பயிற்சிகளை உருவாக்குவதற்கும் இந்தத் தளத்தின் சில உள்ளடக்கங்களை இன்னும் மேம்படுத்துவதற்கும் நீங்கள் உதவலாம். அதற்கு கீழுள்ள இணையத்திற்குச் செல்லவும்.',
+    communityLink: 'எழுத்தாளருக்கான பக்கத்தைப் பார்வையிடவும்',
     callForOther:
-      'Serlo is being developed by highly motivated volunteers and employees worldwide. We offer a diverse range of jobs and volunteering opportunities in the fields of software development, content editing and NGO management.', //TODO: Placeholder, contacted Jakob.
-    getInvolved: 'Mach mit!', //TODO: Placeholder, contacted Jakob.
+      'நாங்கள் பல வகையான வேலைவாய்ப்புகளையும் பொதுச்சேவையாகப் பணியாற்றும் வாய்ப்புகளையும் வழங்குகின்றோம். இந்த இணையத்தளதிற்கு மொழிபெயர்ப்பாளர்கள், வடிவமைப்பாளர்கள், தொலைத்தொடர்பாளர்கள் போன்ற துறை சார்ந்தவர்களை நாங்கள் தேடி நிற்கின்றோம். இணைந்து கொள்ளுங்கள்.',
+    getInvolved: 'நீங்களும் ஈடுபடுங்கள்!',
   },
 }
 
-export const enServerSideStrings: ServerSideStrings = {
+export const taServerSideStrings: ServerSideStrings = {
   title: 'learn with Serlo!',
 }
 
-export const enLoggedInData: LoggedInData = {
+export const taLoggedInData: LoggedInData = {
   authMenu: [
     {
       url: '/user/notifications',
