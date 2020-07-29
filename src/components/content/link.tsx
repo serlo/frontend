@@ -3,8 +3,6 @@ import React from 'react'
 
 import { StyledA } from '../tags/styled-a'
 import { ExternalLink } from './external-link'
-import { PrettyLinksContext } from '@/contexts/pretty-links-context'
-import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
 
 export interface LinkProps {
   href?: string
@@ -40,7 +38,7 @@ export function Link({
   noExternalIcon,
   title,
 }: LinkProps) {
-  const prettyLinks = React.useContext(PrettyLinksContext)
+  //const prettyLinks = {}
 
   if (!href || href === undefined || href === '')
     return (
@@ -49,8 +47,8 @@ export function Link({
       </a>
     )
 
-  const prettyLink = getPrettyLink(href)
-  const displayHref = prettyLink ? prettyLink : href
+  //const prettyLink = getPrettyLink(href)
+  const displayHref = href //prettyLink ? prettyLink : href
 
   const isAbsolute = href.indexOf('//') > -1
   const isExternal = isAbsolute && !href.includes('.serlo.org')
@@ -59,15 +57,15 @@ export function Link({
     displayHref.startsWith('/user/profile/') ||
     displayHref.startsWith('user/profile/')
 
-  if (isExternal || (isAbsolute && prettyLink === undefined))
+  if (isExternal /* || (isAbsolute && prettyLink === undefined)*/)
     return renderLink()
 
-  if (!isLegacyLink || prettyLink) return renderClientSide()
+  if (!isLegacyLink /* || prettyLink*/) return renderClientSide()
 
   //fallback
   return renderLink()
 
-  function getPrettyLink(href: string): string | undefined {
+  /*function getPrettyLink(href: string): string | undefined {
     if (prettyLinks === undefined || prettyLinks === {}) return undefined
 
     const prettyLink = prettyLinks[href.replace('/', 'uuid')]?.alias
@@ -78,7 +76,7 @@ export function Link({
 
     //fallback for wrong absolute links
     return prettyLinks['uuid' + href.split('de.serlo.org/')[1]]?.alias
-  }
+  }*/
 
   function renderClientSide() {
     return (

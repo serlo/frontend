@@ -2,10 +2,10 @@ import { NextPageContext } from 'next'
 import absoluteUrl from 'next-absolute-url'
 
 import { InitialProps, PageData, FetchedData, InstanceData } from '@/data-types'
-import { enInstanceLandingData } from '@/data/landing/en'
 import {
   parseLanguageSubfolder,
   getInstanceDataByLang,
+  getLandingData,
 } from '@/helper/feature-i18n'
 
 export const fetcherAdditionalData = {
@@ -73,13 +73,13 @@ export async function getInitialProps(
   }
 
   if (typeof window === 'undefined') {
-    if (alias === '/' && instance == 'en') {
+    if (alias === '/') {
       return {
         origin,
         instanceData,
         pageData: {
           kind: 'landing',
-          data: enInstanceLandingData,
+          data: getLandingData(instance),
         },
       }
     }

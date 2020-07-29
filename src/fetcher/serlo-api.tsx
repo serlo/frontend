@@ -10,7 +10,6 @@ import { getMetaDescription } from './get-meta-description'
 import { processResponse, ResponseDataQuickFix } from './process-response'
 import { dataQuery, idsQuery, QueryResponseFetched } from './query'
 import { endpoint } from '@/api/endpoint'
-import { PrettyLinksContextValue } from '@/contexts/pretty-links-context'
 import {
   PageData,
   BreadcrumbsData,
@@ -23,7 +22,7 @@ import {
 } from '@/data-types'
 import { horizonData } from '@/data/horizon_de'
 import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
-import { parseLanguageSubfolder } from '@/helper/feature-i18n'
+import { parseLanguageSubfolder, getLandingData } from '@/helper/feature-i18n'
 
 interface MenuData {
   title: string
@@ -52,7 +51,13 @@ export async function fetchContent(
 
   try {
     const { alias, instance } = parseLanguageSubfolder(raw_alias)
+
     console.log('fetch data', instance, alias)
+
+    if (alias == '/') {
+      return { pageData: { kind: 'landing', data: getLandingData(instance) } }
+    }
+
     const QUERY = dataQuery(
       /^\/[\d]+$/.test(alias)
         ? 'id: ' + alias.substring(1)
@@ -96,10 +101,21 @@ export async function fetchContent(
     //TODO: investigate this mess
     const dataEx = (processed.data as unknown) as TaxonomyTermEntity
 
-    const exerciseLinks = extractLinks(
-      dataEx.exercises as FrontendContentNode[],
-      []
-    )
+    const exerciseLinks: number[] = []
+    if (dataEx.exercises) {
+      for (const exercise of dataEx.exercises) {
+        if (exercise) {
+          walkIdNodes(
+            exercise.children as FrontendContentNode[],
+            (_node, id) => {
+              exerciseLinks.push(id)
+            }
+          )
+        }
+      }
+    }
+
+    extractLinks(dataEx.exercises as FrontendContentNode[], [])
 
     const metaNavLinks = extractLinksFromNav(processed.navigation as MenuData[])
 
@@ -108,7 +124,12 @@ export async function fetchContent(
     const prettyLinks =
       allLinks.length < 1
         ? undefined
-        : await request<PrettyLinksContextValue>(endpoint, idsQuery(allLinks))
+        : await request<{
+            [key: string]: {
+              alias: string
+              instance: string
+            }
+          }>(endpoint, idsQuery(allLinks))
 
     const checkForSpecialUrls = (id: number, alias?: string) => {
       if (!alias || hasSpecialUrlChars(alias)) {
@@ -258,6 +279,16 @@ export async function fetchContent(
           courses: processedTax.data.links.courses,
           applets: processedTax.data.links.applets,
         }
+        if (taxonomyData.exercisesContent) {
+          for (const exercise of taxonomyData.exercisesContent) {
+            walkIdNodes(exercise, (node, id) => {
+              console.log(id, resolveIdToAlias(id))
+              //@ts-expect-error
+              node.href = resolveIdToAlias(id)
+            })
+          }
+        }
+
         return {
           ...basePage,
           kind: 'taxonomy',

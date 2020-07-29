@@ -1,9 +1,9 @@
 import { QueryResponse } from './query'
-import { getInstanceDataByLang } from '@/helper/feature-i18n'
+import { getServerSideStrings } from '@/helper/feature-i18n'
 
 export function createTitle(uuid: QueryResponse) {
-  const instanceData = getInstanceDataByLang(uuid.instance)
-  const suffix = ' - ' + instanceData.strings.header.title
+  const instanceData = getServerSideStrings(uuid.instance)
+  const suffix = ' - ' + instanceData.title
 
   if (uuid.__typename === 'TaxonomyTerm') {
     const term = uuid

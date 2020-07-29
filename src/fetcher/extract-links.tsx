@@ -44,6 +44,13 @@ export function walkIdNodes(
         walkIdNodes(exercise.task.children, callback)
       }
     }
+    if (obj.type === '@edtr-io/exercise') {
+      walkIdNodes(obj.state.content, callback)
+    }
+    if (obj.type === '@edtr-io/solution') {
+      walkIdNodes(obj.state.strategy, callback)
+      walkIdNodes(obj.state.steps, callback)
+    }
   })
 }
 

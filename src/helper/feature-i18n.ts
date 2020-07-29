@@ -1,5 +1,9 @@
-import { deInstanceData } from '@/data/de'
-import { enInstanceData } from '@/data/en'
+import { deInstanceData, deServerSideStrings } from '@/data/de'
+import {
+  enInstanceData,
+  enServerSideStrings,
+  enInstanceLandingData,
+} from '@/data/en'
 import { Instance } from '@/fetcher/query'
 
 export const languages: Instance[] = ['de', 'en', 'es', 'fr', 'hi', 'ta']
@@ -32,4 +36,17 @@ export function getInstanceDataByLang(lang: string) {
     data = deInstanceData
   }
   return data
+}
+
+export function getServerSideStrings(lang: string) {
+  let data = enServerSideStrings
+  if (lang == 'de') {
+    console.log('load de instance data')
+    data = deServerSideStrings
+  }
+  return data
+}
+
+export function getLandingData(_lang: string) {
+  return enInstanceLandingData
 }

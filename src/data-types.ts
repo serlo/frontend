@@ -89,7 +89,6 @@ export interface HeaderStrings {
   slogan: string
   search: string
   login: string
-  title: string
 }
 
 // The footer is split into different categories and has three separate links.
@@ -490,4 +489,8 @@ export interface LoggedInData {
 
 export interface LoggedInStrings {
   tools: string
+}
+
+export interface ServerSideStrings {
+  title: string
 }

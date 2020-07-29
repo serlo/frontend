@@ -1,5 +1,5 @@
 import { serloDomain } from '../helper/serlo-domain'
-import { InstanceData } from '@/data-types'
+import { InstanceData, ServerSideStrings } from '@/data-types'
 
 export const deInstanceData: InstanceData = {
   lang: 'de',
@@ -105,7 +105,6 @@ export const deInstanceData: InstanceData = {
       slogan: 'Die freie Lernplattform',
       search: 'Suche',
       login: 'Anmelden',
-      title: 'lernen mit Serlo!',
     },
     footer: {
       summaryHeading: 'Serlo.org ist die Wikipedia fürs Lernen',
@@ -128,7 +127,7 @@ export const deInstanceData: InstanceData = {
       button: 'Teilen',
       title: 'Weitergeben!',
       copyLink: 'Link kopieren',
-      copySuccess: 'In Zwischenablage kopiert! ',
+      copySuccess: 'In Zwischenablage kopiert!',
       close: 'Schließen',
     },
     edit: {
@@ -166,4 +165,8 @@ export const deInstanceData: InstanceData = {
       button: 'Verstanden',
     },
   },
+}
+
+export const deServerSideStrings: ServerSideStrings = {
+  title: 'lernen mit Serlo!',
 }
