@@ -205,6 +205,6 @@ export const esLoggedInData: LoggedInData = {
     },
   ],
   strings: {
-    tools: 'Weitere Tools',
+    tools: 'otras herramientas', //TODO: Wird nicht aktualisiert
   },
 }

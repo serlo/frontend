@@ -44,10 +44,6 @@ export const enInstanceData: InstanceData = {
             url: `https://en.${serloDomain}/global`,
           },
           {
-            title: 'Back into the old design',
-            url: `https://de.${serloDomain}/disable-frontend`,
-          },
-          {
             title: 'API',
             url: `https://en.${serloDomain}/community/technology-and-development/content-api`,
           },
@@ -95,7 +91,7 @@ export const enInstanceData: InstanceData = {
       summaryHeading: 'Serlo.org is the Wikipedia for learning.',
       summaryText:
         'We are a community of visionaries working tirelessly to make great education freely available to everyone.',
-      learnMore: 'Mehr Erfahren',
+      learnMore: 'Learn more',
       participate: 'Join the cause',
       donate: 'Donate',
       toTop: 'To Top',
