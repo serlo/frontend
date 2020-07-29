@@ -1,19 +1,4 @@
-import { CodeProps } from './components/content/code'
-import { EquationProps } from './components/content/equations'
-import {
-  ExerciseChildData,
-  SolutionChildData,
-  ExerciseProps,
-} from './components/content/exercise'
-import { ExerciseGroupProps } from './components/content/exercise-group'
-import { GeogebraProps } from './components/content/geogebra'
-import { InjectionProps } from './components/content/injection'
-import { MathProps } from './components/content/math'
-import { SpoilerBodyProps } from './components/content/spoiler-body'
-import { SpoilerContainerProps } from './components/content/spoiler-container'
-import { VideoProps } from './components/content/video'
 import { Instance } from './fetcher/query'
-import { RenderImgData } from './schema/article-renderer'
 
 // This file describes the data structures that controls the frontend.
 
@@ -110,8 +95,10 @@ export interface FooterCategory {
 export interface FooterLink {
   title: string
   url: string
-  icon?: 'newsletter' | 'github'
+  icon?: FooterIcon
 }
+
+export type FooterIcon = 'newsletter' | 'github'
 
 export interface FooterStrings {
   summaryHeading: string
@@ -276,61 +263,260 @@ export interface SchemaData {
 
 // The frontend defines it's own content format that bridges the gap between legacy and edtr-io state.
 // Will switch to edtr-io state one day.
-// Until then: Here are the types the fontend expects after converting
+// Until then: Here are the types the frontend expects after converting
 
-export interface FrontendContentTextNode {
-  text?: string
+export interface FrontendTextNode {
+  text: string
   color?: 'blue' | 'green' | 'orange'
   em?: boolean
   strong?: boolean
 }
 
-type FrontendContentNodeNoText =
-  | ({ type: 'img' } & RenderImgData['element']) //href
-  | ({ type: 'math' | 'inline-math' } & MathProps)
-  | ({ type: 'code' } & CodeProps)
-  | ({ type: 'equations' } & EquationProps)
-  | ({ type: 'exercise' } & ExerciseProps) //unsure!
-  | ({ type: 'exercise-group' } & ExerciseGroupProps)
-  | ({ type: '@edtr-io/exercise' } & ExerciseChildData)
-  | ({ type: '@edtr-io/solution' } & SolutionChildData)
-  | ({ type: 'spoiler-container' } & SpoilerContainerProps)
-  | { type: 'spoiler-title'; children: FrontendContentNode[] }
-  | ({ type: 'spoiler-body' } & SpoilerBodyProps)
-  | ({ type: 'injection' } & InjectionProps) //href
-  | ({ type: 'video' } & VideoProps)
-  | ({ type: 'geogebra' } & GeogebraProps)
-  | { type: 'row'; children: FrontendContentNode[] }
-  | { type: 'col'; size: number; children: FrontendContentNode[] }
-  | { type: 'anchor'; id: string }
-  | { type: 'important'; children: FrontendContentNode[] }
-  | { type: 'p'; children?: FrontendContentNode[] }
-  | {
-      type: 'h'
-      id?: string | number
-      level: number
-      children: FrontendContentNode[]
-    }
-  | { type: 'a'; href?: string; children: FrontendContentNode[] }
-  | { type: 'ul'; children: FrontendContentNode[] }
-  | { type: 'ol'; children: FrontendContentNode[] }
-  | {
-      type: 'li'
-      children: FrontendContentNode[]
-    }
-  | { type: 'table'; children: FrontendContentNode[] } //maybe make more explicit, should only contain tr,td,th
-  | { type: 'td'; children: FrontendContentNode[] } // etc.
-  | { type: 'th'; children: FrontendContentNode[] }
-  | { type: 'tr'; children: FrontendContentNode[] }
-
-export type FrontendContentNode = (
-  | FrontendContentNodeNoText
-  | ({ type?: '' | 'text' } & FrontendContentTextNode) //usually type is not set for text nodes
-) & {
+export interface FrontendANode {
+  type: 'a'
+  href: string
   children?: FrontendContentNode[]
-} //TODO: added because children are always just checked in code not by checking/guarding types
-//changing that need quite a bit of refactoring
-//maybe that's okay for now?
+}
+
+export interface FrontendInlineMathNode {
+  type: 'inline-math'
+  formula: string
+}
+
+export interface FrontendPNode {
+  type: 'p'
+  children?: FrontendContentNode[]
+}
+
+export interface FrontendHNode {
+  type: 'h'
+  level: 1 | 2 | 3 | 4 | 5
+  id?: string
+  children?: FrontendContentNode[]
+}
+
+export interface FrontendMathNode {
+  type: 'math'
+  formula: string
+  alignLeft?: boolean
+}
+
+export interface FrontendImgNode {
+  type: 'img'
+  src: string
+  href?: string
+  alt: string
+  maxWidth?: number
+}
+
+export interface FrontendSpoilerContainerNode {
+  type: 'spoiler-container'
+  children: [FrontendSpoilerTitleNode, FrontendSpoilerBodyNode]
+}
+
+export interface FrontendSpoilerTitleNode {
+  type: 'spoiler-title'
+  children?: FrontendContentNode[]
+}
+
+export interface FrontendSpoilerBodyNode {
+  type: 'spoiler-body'
+  children?: FrontendContentNode[]
+}
+
+export interface FrontendUlNode {
+  type: 'ul'
+  children?: FrontendLiNode
+}
+
+export interface FrontendOlNode {
+  type: 'ol'
+  children?: FrontendLiNode
+}
+
+export interface FrontendLiNode {
+  type: 'li'
+  children?: FrontendContentNode[]
+}
+
+export interface FrontendRowNode {
+  type: 'row'
+  children?: FrontendColNode
+}
+
+export interface FrontendColNode {
+  type: 'col'
+  size: number
+  children?: FrontendContentNode[]
+}
+
+export interface FrontendImportantNode {
+  type: 'important'
+  children?: FrontendContentNode[]
+}
+
+export interface FrontendAnchorNode {
+  type: 'anchor'
+  id: string
+}
+
+export interface FrontendTableNode {
+  type: 'table'
+  children?: FrontendTrNode[]
+}
+
+export interface FrontendTrNode {
+  type: 'tr'
+  children?: (FrontendThNode | FrontendTdNode)[]
+}
+
+export interface FrontendThNode {
+  type: 'th'
+  children?: FrontendContentNode[]
+}
+
+export interface FrontendTdNode {
+  type: 'td'
+  children?: FrontendContentNode[]
+}
+
+export interface FrontendGeogebraNode {
+  type: 'geogebra'
+  id: string
+}
+
+export interface FrontendInjectionNode {
+  type: 'injection'
+  href: string
+}
+
+export interface FrontendExerciseNode {
+  type: 'exercise'
+  taskLegacy?: FrontendContentNode[]
+  taskEdtrState: TaskEdtrState
+  solutionLegacy?: FrontendContentNode[]
+  solutionEdtrState?: SolutionEdtrState
+  taskLicense?: LicenseData
+  solutionLicense?: LicenseData
+  grouped?: boolean
+  positionInGroup?: number
+  positionOnPage?: number
+}
+
+export interface TaskEdtrState {
+  content: FrontendContentNode[]
+  interactive: EdtrPluginScMcExercise | EdtrPluginInputExercise
+}
+
+export interface SolutionEdtrState {
+  prerequisite: {
+    id: string
+    title: string
+  }
+  strategy: FrontendContentNode[]
+  steps: FrontendContentNode[]
+}
+
+export interface EdtrPluginScMcExercise {
+  plugin: 'scMcExercise' // we reuse edtr-io states here
+  state: {
+    answers: {
+      isCorrect: boolean
+      feedback: FrontendContentNode[]
+      content: FrontendContentNode[]
+    }[]
+    isSingleChoice?: boolean
+  }
+}
+
+export interface EdtrPluginInputExercise {
+  plugin: 'inputExercise'
+  state: {
+    type:
+      | 'input-number-exact-match-challenge'
+      | 'input-string-normalized-match-challenge'
+      | 'input-expression-equal-match-challenge'
+    answers: {
+      value: string
+      isCorrect: boolean
+    }[]
+    unit: string
+  }
+}
+
+export interface FrontendExerciseGroupNode {
+  type: 'exercise-group'
+  license?: LicenseData
+  positionOnPage?: number
+  children?: FrontendExerciseNode[]
+}
+
+export interface FrontendVideoNode {
+  src: string
+}
+
+export interface FrontendCodeNode {
+  code: string
+}
+
+export interface FrontendEquationsNode {
+  steps: {
+    left: FrontendContentNode[]
+    sign: SignType
+    right: FrontendContentNode[]
+    transform: FrontendContentNode[]
+  }[]
+}
+
+export type SignType =
+  | 'equals'
+  | '='
+  | 'greater-than'
+  | 'greater-than-or-equal'
+  | 'less-than'
+  | 'less-than-or-equal'
+  | 'almost-equal-to'
+
+type FrontendVoidNode =
+  | FrontendInlineMathNode
+  | FrontendMathNode
+  | FrontendImgNode
+  | FrontendAnchorNode
+  | FrontendGeogebraNode
+  | FrontendInjectionNode
+  | FrontendExerciseNode
+  | FrontendVideoNode
+  | FrontendCodeNode
+  | FrontendEquationsNode
+
+type FrontendElementNode =
+  | FrontendANode
+  | FrontendPNode
+  | FrontendHNode
+  | FrontendSpoilerTitleNode
+  | FrontendSpoilerBodyNode
+  | FrontendLiNode
+  | FrontendColNode
+  | FrontendImportantNode
+  | FrontendThNode
+  | FrontendTdNode
+
+type FrontendRestrictedElementNode =
+  | FrontendSpoilerContainerNode
+  | FrontendTableNode
+  | FrontendSpoilerContainerNode
+  | FrontendUlNode
+  | FrontendOlNode
+  | FrontendRowNode
+  | FrontendTableNode
+  | FrontendTrNode
+  | FrontendExerciseGroupNode
+
+type FrontendContentNode =
+  | FrontendTextNode
+  | FrontendVoidNode
+  | FrontendElementNode
+  | FrontendRestrictedElementNode
 
 // Some translations
 
