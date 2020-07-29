@@ -30,6 +30,7 @@ const legacyLinks = [
   '/user/settings',
   '/auth/password/change',
   '/event/history/user/me',
+  '/beitreten',
 ]
 
 export function Link({

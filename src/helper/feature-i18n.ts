@@ -116,7 +116,7 @@ export function getLoggedInData(lang: string) {
   if (lang == 'en') {
     data = enLoggedInData
   }
-  if (lang == 'en') {
+  if (lang == 'es') {
     data = esLoggedInData
   }
   if (lang == 'fr') {
