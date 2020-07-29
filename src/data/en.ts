@@ -165,7 +165,8 @@ export const enInstanceLandingData: InstanceLandingData = {
     adFree: 'ad-free',
     freeOfCharge: 'free of charge',
     wikiTitle: 'Serlo is the Wikipedia for Learning',
-    wikiText: 'Just like Wikipedia, this platform is created by an engaged community of authors. Serlo Education is run and owned by decentralized teams of volunteers and professionals all over the world.',
+    wikiText:
+      'Just like Wikipedia, this platform is created by an engaged community of authors. Serlo Education is run and owned by decentralized teams of volunteers and professionals all over the world.',
     movementTitle: 'Become a Part of Our Movement for Open Education',
     callForAuthors:
       'We are looking for teachers and enthusiastic educators who are passionate about their subject. Become part of our community to create new learning material and help us improve existing content.',
