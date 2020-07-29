@@ -188,27 +188,27 @@ export const enLoggedInData: LoggedInData = {
       title: 'user',
       icon: 'user',
       children: [
-        { url: '/user/public', title: 'Öffentliches Profil' },
+        { url: '/user/public', title: 'Public profile' },
         {
           url: '/user/settings',
-          title: 'Profil bearbeiten',
+          title: 'Edit profile',
         },
         {
           url: '/auth/password/change',
-          title: 'Passwort aktualisieren',
+          title: 'Change password',
         },
         {
           url: '/event/history/user/me',
-          title: 'Meine Aktivitäten',
+          title: 'Recent activities',
         },
         {
           url: '/api/auth/logout',
-          title: 'Ausloggen',
+          title: 'Log out',
         },
       ],
     },
   ],
   strings: {
-    tools: 'Weitere Tools',
+    tools: 'Other Tools',
   },
 }

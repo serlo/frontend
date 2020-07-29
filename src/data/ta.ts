@@ -7,7 +7,7 @@ import {
 import { serloDomain } from '@/helper/serlo-domain'
 
 export const taInstanceData: InstanceData = {
-  lang: 'en',
+  lang: 'ta',
   headerData: [
     {
       url: '',

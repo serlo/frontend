@@ -62,7 +62,10 @@ export const esInstanceData: InstanceData = {
       {
         title: 'Términos legales',
         children: [
-          { title: 'Politica de privacidad', url: `https://de.${serloDomain}/privacy` },
+          {
+            title: 'Politica de privacidad',
+            url: `https://de.${serloDomain}/privacy`,
+          },
           {
             title: 'Términos legales',
             url: `https://de.${serloDomain}/terms`,
@@ -106,7 +109,7 @@ export const esInstanceData: InstanceData = {
       close: 'Cerca',
     },
     edit: {
-      button: 'Edit',
+      button: 'Editar',
     },
     license: {
       readMore: 'Información',
@@ -205,6 +208,6 @@ export const esLoggedInData: LoggedInData = {
     },
   ],
   strings: {
-    tools: 'otras herramientas', //TODO: Wird nicht aktualisiert
+    tools: 'Otras herramientas',
   },
 }
