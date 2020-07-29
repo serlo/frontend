@@ -113,7 +113,9 @@ const cachedLoggedInData = null
   React.useEffect(() => {
     if (auth.current && !loggedInData) {
       void (async () => {
-        const res = await fetch(initialProps.origin + '/api/locale/de')
+        const res = await fetch(
+          initialProps.origin + '/api/locale/' + instanceData.lang
+        )
         const json = await res.json()
         sessionStorage.setItem('loggedInData___', JSON.stringify(json))
         setLoggedInData(json)
