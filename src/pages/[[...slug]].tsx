@@ -16,7 +16,7 @@ import { Header } from '@/components/navigation/header'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { MetaMenu } from '@/components/navigation/meta-menu'
 import { RelativeContainer } from '@/components/navigation/relative-container'
-//import { LandingInternationalProps } from '@/components/pages/landing-international'
+import { LandingInternationalProps } from '@/components/pages/landing-international'
 import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
 import { OriginProvider } from '@/contexts/origin-context'
@@ -27,7 +27,6 @@ import {
   ErrorData,
   LoggedInData,
 } from '@/data-types'
-//import { esInstanceLandingData } from '@/data/landing/es'
 import {
   fetcherAdditionalData,
   getInitialProps,
@@ -37,11 +36,11 @@ const LandingDE = dynamic<{}>(() =>
   import('@/components/pages/landing-de').then((mod) => mod.LandingDE)
 )
 
-/*const LandingInternational = dynamic<LandingInternationalProps>(() =>
+const LandingInternational = dynamic<LandingInternationalProps>(() =>
   import('@/components/pages/landing-international').then(
     (mod) => mod.LandingInternational
   )
-)*/
+)
 
 const Search = dynamic<{}>(() =>
   import('@/components/pages/search').then((mod) => mod.Search)
@@ -122,8 +121,6 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
     }
   }, [auth, initialProps.origin, loggedInData])
 
-  console.log('render page')
-
   return (
     <OriginProvider value={initialProps.origin}>
       <InstanceDataProvider value={instanceData}>
@@ -151,6 +148,9 @@ function renderPage(page: PageData) {
         {(() => {
           if (page.kind === 'landing') {
             //return <LandingInternational instanceData={esInstanceLandingData} />
+            if (page.data) {
+              return <LandingInternational instanceData={page.data} />
+            }
             return <LandingDE />
           }
           if (page.kind === 'search') {

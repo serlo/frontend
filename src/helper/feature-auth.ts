@@ -1,5 +1,4 @@
 import { HeaderData } from '@/data-types'
-import { noAuthMenuData } from '@/data/menu'
 import { serloDomain } from '@/helper/serlo-domain'
 
 export function getAuthData(
@@ -8,7 +7,15 @@ export function getAuthData(
   authMenu?: HeaderData
 ): HeaderData | undefined {
   if (shouldUseNewAuth()) {
-    return loggedIn ? authMenu : noAuthMenuData
+    return loggedIn
+      ? authMenu
+      : [
+          {
+            url: '/api/auth/login',
+            title: loginTitle,
+            icon: 'login',
+          },
+        ]
   } else {
     return [
       {

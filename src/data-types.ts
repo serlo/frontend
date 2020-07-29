@@ -133,17 +133,19 @@ export type PageData =
   | SingleEntityPage
   | TaxonomyPage
 
-export type FetchedData = PageData & {
+export interface FetchedData {
   redirect?: string
   error?: string
-  pageData: PageData
+  pageData?: PageData
   alias?: string
+  instance?: string
 }
 
 // The landing page is custom built and takes no additional data
 
 export interface LandingPage {
   kind: 'landing'
+  data?: InstanceLandingData
 }
 
 // The same for donation, search and notifications page:
@@ -487,4 +489,8 @@ export interface LoggedInData {
 
 export interface LoggedInStrings {
   tools: string
+}
+
+export interface ServerSideStrings {
+  title: string
 }

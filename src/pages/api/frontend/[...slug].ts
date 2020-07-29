@@ -8,11 +8,7 @@ import { fetchContent } from '@/fetcher/serlo-api'
 export default async function fetch(req: NextApiRequest, res: NextApiResponse) {
   const slug = req.query.slug as string[]
   const { origin } = absoluteUrl(req)
-  const data = await fetchContent(
-    '/' + slug.join('/'),
-    req.query.redirect !== undefined,
-    origin
-  )
+  const data = await fetchContent('/' + slug.join('/'), origin)
   if (data.error) {
     console.log(data.error)
     res.statusCode = 500

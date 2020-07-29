@@ -309,6 +309,7 @@ export interface ExerciseGroup extends Entity {
 
 const onEvent = `
   ... on Event {
+    instance
     currentRevision {
       content
     }
@@ -317,6 +318,7 @@ const onEvent = `
 
 export interface Event {
   __typename: 'Event'
+  instance: Instance
   currentRevision?: {
     content: string
   }
@@ -326,6 +328,7 @@ export interface Event {
 
 const onCourse = `
   ... on Course {
+    instance
     pages {
       alias
     }
@@ -334,6 +337,7 @@ const onCourse = `
 
 export interface Course {
   __typename: 'Course'
+  instance: Instance
   pages: {
     alias?: string
   }[]
@@ -361,7 +365,7 @@ const onX = (type: string) => `
     currentRevision {
       title
     }
-  }  
+  }
 `
 
 const onTaxonomyTerm = `

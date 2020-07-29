@@ -375,8 +375,7 @@ export function convert(
     return [
       {
         type: 'a',
-        // compat: replace absolute urls in german language version
-        href: node.href?.replace('https://de.serlo.org', ''),
+        href: node.href,
         children: convert(node.children),
       },
     ]

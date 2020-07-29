@@ -1,7 +1,9 @@
 import { QueryResponse } from './query'
+import { getServerSideStrings } from '@/helper/feature-i18n'
 
 export function createTitle(uuid: QueryResponse) {
-  const suffix = ' - lernen mit Serlo!'
+  const instanceData = getServerSideStrings(uuid.instance)
+  const suffix = ` - ${instanceData.title}`
 
   if (uuid.__typename === 'TaxonomyTerm') {
     const term = uuid
