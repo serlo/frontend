@@ -83,7 +83,7 @@ export const frInstanceData: InstanceData = {
   },
   strings: {
     header: {
-      slogan: 'The Open Learning Platform',
+      slogan: "La plateforme d'apprentissage libre",
       search: 'Recherche',
       login: 'Login',
     },
@@ -174,7 +174,7 @@ export const frInstanceLandingData: InstanceLandingData = {
 }
 
 export const frServerSideStrings: ServerSideStrings = {
-  title: 'learn with Serlo!',
+  title: 'Apprendre avec Serlo!',
 }
 
 export const frLoggedInData: LoggedInData = {

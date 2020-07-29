@@ -172,7 +172,7 @@ export const esInstanceLandingData: InstanceLandingData = {
 }
 
 export const esServerSideStrings: ServerSideStrings = {
-  title: 'learn with Serlo!',
+  title: 'Aprende con Serlo!',
 }
 
 export const esLoggedInData: LoggedInData = {

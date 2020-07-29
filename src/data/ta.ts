@@ -11,7 +11,7 @@ export const taInstanceData: InstanceData = {
   headerData: [
     {
       url: '',
-      title: 'Subjects',
+      title: 'படங்கள்',
       icon: 'subject',
       children: [{ url: '/106103', title: 'Subjects under construction' }],
     },
