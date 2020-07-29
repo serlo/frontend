@@ -11,23 +11,23 @@ export const esInstanceData: InstanceData = {
   headerData: [
     {
       url: '',
-      title: 'Subjects',
+      title: 'Temas',
       icon: 'subject',
-      children: [{ url: '/106103', title: 'Subjects under construction' }],
+      children: [{ url: '/106103', title: 'Temas en construcción' }],
     },
-    { url: '/23727', title: 'About Serlo', icon: 'about' },
-    { url: '/27469', title: 'Get involved!', icon: 'participate' },
+    { url: '/23727', title: 'Sobre Serlo', icon: 'about' },
+    { url: '/27469', title: '¡Participa!', icon: 'participate' },
     {
       url: '',
-      title: 'Community',
+      title: 'Comunidad',
       icon: 'community',
       children: [
         {
           url: '/35587',
-          title: 'Starting page for authors',
+          title: 'Página de inicio para autores',
         },
-        { url: 'https://community.serlo.org/', title: 'Chat for authors' },
-        { url: '/entity/unrevised', title: 'Unrevised changes' },
+        { url: 'https://community.serlo.org/', title: 'Chat para autores' },
+        { url: '/entity/unrevised', title: 'Cambios no verificados' },
       ],
     },
   ],
@@ -77,18 +77,18 @@ export const esInstanceData: InstanceData = {
   },
   strings: {
     header: {
-      slogan: 'The Open Learning Platform',
-      search: 'Search',
+      slogan: 'La Plataforma para el Aprendizaje Abierto',
+      search: 'Buscar',
       login: 'Login',
     },
     footer: {
-      summaryHeading: 'Serlo.org is the Wikipedia for learning.',
+      summaryHeading: 'Serlo.org es la Wikipedia para el aprendizaje.',
       summaryText:
-        'We are a community of visionaries working tirelessly to make great education freely available to everyone.',
-      learnMore: 'Mehr Erfahren',
-      participate: 'Join the cause',
-      donate: 'Donate',
-      toTop: 'To Top',
+        'Somos una comunidad de visionarios que trabajan sin descanso para que todo el mundo tenga acceso gratuito a una educación excelente.',
+      learnMore: 'Aprende más',
+      participate: 'Únete a la causa',
+      donate: 'Donaciones',
+      toTop: 'a la cima',
     },
     categories: {
       article: 'Article',
@@ -99,17 +99,17 @@ export const esInstanceData: InstanceData = {
       exercises: 'Exercises',
     },
     share: {
-      button: 'Share',
-      title: 'Share!',
-      copyLink: 'Copy link',
-      copySuccess: 'Link copied! ',
-      close: 'Close',
+      button: 'Compartir',
+      title: 'Compartir',
+      copyLink: 'Copiar link',
+      copySuccess: 'Enlace copiado',
+      close: 'Cerca',
     },
     edit: {
       button: 'Edit',
     },
     license: {
-      readMore: 'Info',
+      readMore: 'Información',
     },
     course: {
       showPages: 'Show course overview',
@@ -132,12 +132,12 @@ export const esInstanceData: InstanceData = {
       chooseOption: 'Click on one of the options.',
     },
     cookie: {
-      part1: 'By using this website you declare that you agree with our',
-      part2: 'and',
+      part1: 'Al utilizar este sitio web, declara que acepta nuestra',
+      part2: 'y',
       part3: '.',
-      link1: 'Privacy Policy',
-      link2: 'Terms of use',
-      button: 'Agree',
+      link1: 'Política de privacidad',
+      link2: 'Términos de uso',
+      button: 'Aceptar',
     },
   },
 }
@@ -184,22 +184,22 @@ export const esLoggedInData: LoggedInData = {
       title: 'Benutzer',
       icon: 'user',
       children: [
-        { url: '/user/public', title: 'Öffentliches Profil' },
+        { url: '/user/public', title: 'Perfil público' },
         {
           url: '/user/settings',
-          title: 'Profil bearbeiten',
+          title: 'Editar perfil',
         },
         {
           url: '/auth/password/change',
-          title: 'Passwort aktualisieren',
+          title: 'Actualizar contraseña',
         },
         {
           url: '/event/history/user/me',
-          title: 'Meine Aktivitäten',
+          title: 'Actividades recientes',
         },
         {
           url: '/api/auth/logout',
-          title: 'Ausloggen',
+          title: 'Cerrar sesión',
         },
       ],
     },
