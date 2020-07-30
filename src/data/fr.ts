@@ -13,7 +13,9 @@ export const frInstanceData: InstanceData = {
       url: '',
       title: 'Matières',
       icon: 'subject',
-      children: [{ url: '/106103', title: 'Sujets en construction' }],
+      children: [{ url: '/141585', title: 'Mathématiques'},
+				{url: '/148617', title: 'Boîte à méthodes'},
+				{url: '/141604', title: 'Nouvelle matières'}],
     },
     { url: '/23727', title: 'À propos de serlo', icon: 'about' },
     { url: '/27469', title: 'Participe!', icon: 'participate' },
@@ -37,7 +39,7 @@ export const frInstanceData: InstanceData = {
         title: 'Général',
         children: [
           { title: 'À propos de serlo', url: '/serlo' },
-          { title: 'Participe!', url: '/27469' },
+          { title: 'Participes!', url: '/141581' },
           { title: 'Contact', url: '/41043' },
           {
             title: "Serlo dans d'autres langues",
@@ -52,12 +54,6 @@ export const frInstanceData: InstanceData = {
       {
         title: 'Restez en contact',
         children: [
-          {
-            title: 'Bulletin',
-            url:
-              'https://serlo.us7.list-manage.com/subscribe?u=23f4b04bf70ea485a766e532d&amp;id=a7bb2bbc4f',
-            icon: 'newsletter',
-          },
           {
             title: 'GitHub',
             url: 'https://github.com/serlo',
