@@ -169,10 +169,21 @@ export interface NotificationEventPayload {
   payload: string
 }
 
+interface ExtraData {
+  archived: boolean
+  threadId: number
+  objectId: number
+  repositoryId: number
+  reason: string
+  parentId: number
+  previousParentId: number
+  trashed: boolean
+}
+
 export function parseNotificationEvent(
   payload: NotificationEventPayload
 ): NotificationEvent {
-  const extra = JSON.parse(payload.payload)
+  const extra = JSON.parse(payload.payload) as ExtraData
 
   switch (payload.type) {
     case NotificationEventType.SetThreadState:

@@ -12,27 +12,22 @@ interface LocalStorageData {
 }
 
 export function CookieBar() {
-  const [loaded, setLoaded] = React.useState(false)
+  const [show, setShow] = React.useState(false)
   const [revision, setRevision] = React.useState<undefined | string>(undefined)
   const origin = useOrigin()
   const { strings } = useInstanceData()
 
-  // TODO This code is not beautiful and needs some love...
-  function checkRevision(data: any, localInfo: any) {
-    const revisionsArray = data as string[]
-    const json = localInfo ? (JSON.parse(localInfo) as LocalStorageData) : null
-    if (!json || json.revision !== revisionsArray[0]) {
-      setLoaded(true)
-      setRevision(revisionsArray[0])
-    }
-  }
-
   React.useEffect(() => {
     try {
-      const localInfo = localStorage.getItem('consent')
-      const fetchedCache = sessionStorage.getItem('privacy_already_fetched')
-      if (fetchedCache) {
-        checkRevision(fetchedCache, localInfo)
+      const localInfoString = localStorage.getItem('consent')
+      const localInfo = localInfoString
+        ? (JSON.parse(localInfoString) as LocalStorageData)
+        : null
+      const sessionCacheString = sessionStorage.getItem(
+        'privacy_already_fetched'
+      )
+      if (sessionCacheString) {
+        checkRevision(JSON.parse(sessionCacheString), localInfo)
         return
       }
       // load revision, check localStorage
@@ -48,9 +43,32 @@ export function CookieBar() {
     } catch (e) {
       //
     }
-  }, [loaded, origin])
+  }, [show, origin])
 
-  if (!loaded) return null
+  function onButtonClick() {
+    localStorage.setItem(
+      'consent',
+      JSON.stringify({
+        revision,
+        showEvent: true,
+        consentEvent: true,
+      })
+    )
+    setShow(false)
+  }
+
+  // TODO This code is not beautiful and needs some love...
+  function checkRevision(
+    revisionsArray: string[],
+    localInfo: LocalStorageData | null
+  ) {
+    if (!localInfo || localInfo.revision !== revisionsArray[0]) {
+      setShow(true)
+      setRevision(revisionsArray[0])
+    }
+  }
+
+  if (!show) return null
   return (
     <CookieWrapper>
       {strings.cookie.part1}{' '}
@@ -62,15 +80,7 @@ export function CookieBar() {
         {strings.cookie.link2}
       </CookieLink>{' '}
       {strings.cookie.part3}
-      <CookieButton
-        onClick={() => {
-          localStorage.setItem(
-            'consent',
-            JSON.stringify({ revision, showEvent: true, consentEvent: true })
-          )
-          setLoaded(false)
-        }}
-      >
+      <CookieButton onClick={() => onButtonClick()}>
         {strings.cookie.button}
       </CookieButton>
     </CookieWrapper>
