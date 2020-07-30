@@ -1,6 +1,6 @@
 import {
   InstanceData,
-  InstanceLandingData,
+  LandingData,
   ServerSideStrings,
   LoggedInData,
 } from '@/data-types'
@@ -152,8 +152,7 @@ export const frInstanceData: InstanceData = {
   },
 }
 
-export const frInstanceLandingData: InstanceLandingData = {
-  lang: 'fr',
+export const frInstanceLandingData: LandingData = {
   strings: {
     vision:
       "Nous sommes une organisation communautaire à but non lucratif supportant l'apprentissage personnalisé et travaillant à la réalisation d'opportunités éducatives égales. Cette plateforme propose des milliers d'articles d'instruction, des vidéos pédagogiques et des exercices pratiques aux millions d'étudiant(e)s et d'élèves dans le monde entier - complètement gratuit. Maintenant, vous êtes invité de joindre l'équipe Serlo francophone.",

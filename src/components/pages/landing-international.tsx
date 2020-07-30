@@ -8,18 +8,15 @@ import { HeadTags } from '../head-tags'
 import { PrinciplesGraphic } from '../landing/principles-graphic'
 import { StyledP } from '../tags/styled-p'
 import { useInstanceData } from '@/contexts/instance-context'
-import { InstanceLandingData } from '@/data-types'
+import { LandingData } from '@/data-types'
 import { makeDefaultButton, makeResponsivePadding } from '@/helper/css'
 
 export interface LandingInternationalProps {
-  instanceData: InstanceLandingData
+  data: LandingData
 }
 
-export function LandingInternational({
-  instanceData,
-}: LandingInternationalProps) {
-  const landingStrings = instanceData.strings
-  // const lang = instanceData.lang
+export function LandingInternational({ data }: LandingInternationalProps) {
+  const landingStrings = data.strings
   const { strings } = useInstanceData()
 
   return (

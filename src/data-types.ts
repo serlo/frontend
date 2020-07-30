@@ -42,13 +42,6 @@ export interface InstanceData {
   footerData: FooterData
 }
 
-// Landing pages have a different structure, because they should only load on the landing page
-
-export interface InstanceLandingData {
-  lang: Instance
-  strings: LandingStrings
-}
-
 // Menus are trees of title and urls, possibly with icons.
 
 export type HeaderData = HeaderLink[]
@@ -124,7 +117,13 @@ export type PageData =
 
 export interface LandingPage {
   kind: 'landing'
-  data?: InstanceLandingData
+  landingData?: LandingData
+}
+
+// Landing pages have a different structure, because they should only load on the landing page
+
+export interface LandingData {
+  strings: LandingStrings
 }
 
 // The same for donation, search and notifications page:
@@ -149,6 +148,7 @@ export interface ErrorPage {
 
 export interface ErrorData {
   code: number
+  message?: string
 }
 
 // There are several page elements that are common for entities:
@@ -223,7 +223,7 @@ export interface EntityData {
   title?: string
   categoryIcon?: CategoryType
   schemaData?: SchemaData
-  content?: FrontendContentNode[] | any[]
+  content?: FrontendContentNode[]
   inviteToEdit?: boolean
   licenseData?: LicenseData
   courseData?: CourseData
@@ -258,11 +258,15 @@ export interface SchemaData {
 // Until then: Here are the types the frontend expects after converting
 
 export interface FrontendTextNode {
+  type: 'text'
   text: string
-  color?: 'blue' | 'green' | 'orange'
+  color?: FrontendTextColor
   em?: boolean
   strong?: boolean
+  children?: undefined
 }
+
+export type FrontendTextColor = 'blue' | 'green' | 'orange'
 
 export interface FrontendANode {
   type: 'a'
@@ -273,6 +277,7 @@ export interface FrontendANode {
 export interface FrontendInlineMathNode {
   type: 'inline-math'
   formula: string
+  children?: undefined
 }
 
 export interface FrontendPNode {
@@ -291,6 +296,7 @@ export interface FrontendMathNode {
   type: 'math'
   formula: string
   alignLeft?: boolean
+  children?: undefined
 }
 
 export interface FrontendImgNode {
@@ -299,6 +305,7 @@ export interface FrontendImgNode {
   href?: string
   alt: string
   maxWidth?: number
+  children?: undefined
 }
 
 export interface FrontendSpoilerContainerNode {
@@ -318,12 +325,12 @@ export interface FrontendSpoilerBodyNode {
 
 export interface FrontendUlNode {
   type: 'ul'
-  children?: FrontendLiNode
+  children?: FrontendLiNode[]
 }
 
 export interface FrontendOlNode {
   type: 'ol'
-  children?: FrontendLiNode
+  children?: FrontendLiNode[]
 }
 
 export interface FrontendLiNode {
@@ -333,7 +340,7 @@ export interface FrontendLiNode {
 
 export interface FrontendRowNode {
   type: 'row'
-  children?: FrontendColNode
+  children?: FrontendColNode[]
 }
 
 export interface FrontendColNode {
@@ -350,6 +357,7 @@ export interface FrontendImportantNode {
 export interface FrontendAnchorNode {
   type: 'anchor'
   id: string
+  children?: undefined
 }
 
 export interface FrontendTableNode {
@@ -375,11 +383,13 @@ export interface FrontendTdNode {
 export interface FrontendGeogebraNode {
   type: 'geogebra'
   id: string
+  children?: undefined
 }
 
 export interface FrontendInjectionNode {
   type: 'injection'
   href: string
+  children?: undefined
 }
 
 export interface FrontendExerciseNode {
@@ -393,6 +403,11 @@ export interface FrontendExerciseNode {
   grouped?: boolean
   positionInGroup?: number
   positionOnPage?: number
+  context?: {
+    id?: number
+    parent?: number
+  }
+  children?: undefined
 }
 
 export interface TaskEdtrState {
@@ -445,20 +460,26 @@ export interface FrontendExerciseGroupNode {
 }
 
 export interface FrontendVideoNode {
+  type: 'video'
   src: string
+  children?: undefined
 }
 
 export interface FrontendCodeNode {
+  type: 'code'
   code: string
+  children?: undefined
 }
 
 export interface FrontendEquationsNode {
+  type: 'equations'
   steps: {
     left: FrontendContentNode[]
     sign: SignType
     right: FrontendContentNode[]
     transform: FrontendContentNode[]
   }[]
+  children?: undefined
 }
 
 export type SignType =

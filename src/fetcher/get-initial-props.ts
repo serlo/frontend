@@ -27,22 +27,15 @@ export async function getInitialProps(
     getGa()('send', 'pageview')
   }
 
-  console.log('url:', url)
-
-  console.log('additional data', fetcherAdditionalData)
-
   const { instance: instance_path, alias } = parseLanguageSubfolder(url)
   const instance = fetcherAdditionalData.instance
     ? fetcherAdditionalData.instance
     : instance_path
 
-  console.log('get initial props', instance, alias)
-
   let instanceData: InstanceData | undefined = undefined
 
   if (typeof window === 'undefined') {
     // only load instanceData serverside
-    console.log('hi')
     instanceData = getInstanceDataByLang(instance)
   }
 
@@ -84,7 +77,7 @@ export async function getInitialProps(
         instanceData,
         pageData: {
           kind: 'landing',
-          data: getLandingData(instance),
+          landingData: getLandingData(instance),
         },
       }
     }
@@ -94,7 +87,7 @@ export async function getInitialProps(
       `${origin}/api/frontend/${encodeURIComponent(joinedSlug)}`
     )
 
-    const fetchedData = (await res.json()) as FetchedData
+    const fetchedData = (await res.json()) as PageData
     // compat course to first page
     /*if (fetchedData.redirect) {
       props.res?.writeHead(301, {
@@ -110,27 +103,19 @@ export async function getInitialProps(
       }
     }*/
 
-    if (fetchedData.error) {
-      const code = fetchedData.error.includes(
-        "Cannot read property 'path' of null"
+    if (fetchedData.kind === 'error') {
+      props.res!.statusCode = fetchedData.errorData.code
+    } else {
+      props.res!.setHeader(
+        'Cache-Control',
+        's-maxage=1, stale-while-revalidate'
       )
-        ? 404
-        : 500
-      props.res!.statusCode = code
-
-      return {
-        instanceData,
-        pageData: { kind: 'error', errorData: { code } },
-        origin,
-      }
     }
-
-    props.res!.setHeader('Cache-Control', 's-maxage=1, stale-while-revalidate')
 
     return {
       origin,
       instanceData,
-      pageData: fetchedData.pageData!,
+      pageData: fetchedData,
     }
   } else {
     //client
@@ -147,14 +132,10 @@ export async function getInitialProps(
       //
     }
 
-    if (url === '/') {
-      console.log('landing page')
-    }
-
     const res = await fetch(
       `${fetcherAdditionalData.origin}/api/frontend/${fetcherAdditionalData.instance}${url}`
     )
-    const fetchedData = (await res.json()) as FetchedData
+    const fetchedData = (await res.json()) as PageData
     // compat: redirect of courses
     /*if (fetchedData.redirect) {
       const res = await fetch(
@@ -168,7 +149,7 @@ export async function getInitialProps(
     }*/
     return {
       origin: fetcherAdditionalData.origin,
-      pageData: fetchedData.pageData!,
+      pageData: fetchedData,
     }
   }
 }

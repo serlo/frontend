@@ -1,6 +1,6 @@
 import {
   InstanceData,
-  InstanceLandingData,
+  LandingData,
   ServerSideStrings,
   LoggedInData,
 } from '@/data-types'
@@ -152,8 +152,7 @@ export const enInstanceData: InstanceData = {
   },
 }
 
-export const enInstanceLandingData: InstanceLandingData = {
-  lang: 'en',
+export const enInstanceLandingData: LandingData = {
   strings: {
     vision:
       'It is our vision to enable personalized learning and provide high quality educational resources worldwide – completely free of charge. Serlo is a grassroots organization inspired by Wikipedia. We already provide thousands of articles, videos and solved exercises for five million German students every year. Now it’s time to go international.',

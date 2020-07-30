@@ -1,5 +1,5 @@
 import { QueryResponse } from './query'
-import { HeaderLink } from '@/data-types'
+import { SecondaryNavigationData, SecondaryNavigationEntry } from '@/data-types'
 
 interface NavigationData {
   label: string
@@ -8,10 +8,18 @@ interface NavigationData {
   children?: NavigationData[]
 }
 
-export function createNavigation(uuid: QueryResponse) {
+export function createNavigation(
+  uuid: QueryResponse
+): SecondaryNavigationData | undefined {
   if (uuid.__typename !== 'Page' && uuid.__typename !== 'TaxonomyTerm')
     return undefined
 
+  if (
+    uuid.__typename === 'TaxonomyTerm' &&
+    (uuid.type === 'topicFolder' || uuid.type === 'curriculumTopicFolder')
+  ) {
+    return undefined
+  }
   if (uuid.navigation?.data) {
     try {
       const data = JSON.parse(uuid.navigation.data) as NavigationData
@@ -27,7 +35,7 @@ export function createNavigation(uuid: QueryResponse) {
   }
 }
 
-function convertEntry(entry: NavigationData): HeaderLink {
+function convertEntry(entry: NavigationData): SecondaryNavigationEntry {
   return {
     title: entry.label,
     url: getUrl(),

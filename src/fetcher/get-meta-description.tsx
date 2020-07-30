@@ -3,7 +3,7 @@ import {
   ResponseDataQuickFix,
 } from '@/fetcher/process-response'
 
-export function getMetaDescription(processed: ProcessedResponse) {
+export function getMetaDescription(reqData) {
   if (processed.contentType === 'TaxonomyTerm') return
 
   if (!processed.data) return
@@ -39,4 +39,38 @@ export function getMetaDescription(processed: ProcessedResponse) {
     ) + ' …'
   const description = fallback
   return description
+}
+
+function getMetaContentType() {
+  const { contentType } = processed
+  //match legacy content types that are used by google custom search
+  if (processed.contentType === undefined) return ''
+  if (processed.contentType === 'Exercise') return 'text-exercise'
+  if (processed.contentType === 'CoursePage') return 'course-page'
+
+  const type = ((processed.data as unknown) as ResponseDataQuickFix).type
+  if (type === 'topicFolder' || type === 'curriculumTopicFolder')
+    return 'topic-folder'
+  if (contentType === 'TaxonomyTerm') return 'topic'
+  //Article, Video, Applet, Page
+  return contentType.toLowerCase()
+}
+
+function getMetaImage() {
+  const subject = alias ? alias.split('/')[1] : 'default'
+  let imageSrc = 'serlo.jpg'
+
+  switch (subject) {
+    case 'mathe':
+      imageSrc = 'mathematik.jpg'
+      break
+    case 'nachhaltigkeit':
+      imageSrc = 'nachhaltigkeit.jpg'
+      break
+    case 'biologie':
+      imageSrc = 'biologie.jpg'
+      break
+  }
+
+  return `${origin}/_assets/img/meta/${imageSrc}`
 }

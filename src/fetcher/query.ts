@@ -309,6 +309,8 @@ export interface ExerciseGroup extends Entity {
 
 const onEvent = `
   ... on Event {
+    id
+    alias
     instance
     currentRevision {
       content
@@ -316,9 +318,8 @@ const onEvent = `
   }
 `
 
-export interface Event {
+export interface Event extends Entity {
   __typename: 'Event'
-  instance: Instance
   currentRevision?: {
     content: string
   }
@@ -328,6 +329,8 @@ export interface Event {
 
 const onCourse = `
   ... on Course {
+    id
+    alias
     instance
     pages {
       alias
@@ -335,9 +338,8 @@ const onCourse = `
   }
 `
 
-export interface Course {
+export interface Course extends Entity {
   __typename: 'Course'
-  instance: Instance
   pages: {
     alias?: string
   }[]
@@ -527,12 +529,6 @@ export type QueryResponse =
   | Event
   | Course
   | TaxonomyTerm
-
-export type QueryResponseFetched = QueryResponse & {
-  redirect?: string
-  error?: string
-  alias?: string
-  id: number
 }
 
 export type QueryResponseWithLicense =
