@@ -38,10 +38,7 @@ export function ShareModal(props: ShareModalProps) {
 
   if (!open) return null
 
-  function copyToClipboard(
-    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
-    text?: string
-  ) {
+  function copyToClipboard(event: React.MouseEvent, text?: string) {
     const target = event.target as HTMLAnchorElement
     shareInputRef.current!.select()
     document.execCommand('copy')
@@ -87,6 +84,7 @@ export function ShareModal(props: ShareModalProps) {
       title: 'Mebis',
       icon: faCompass,
       href: 'copy',
+      //TODO: Translate
       text:
         'Link in die Zwischenablage kopiert. Einfach auf <a href="https://www.mebis.bayern.de/">mebis</a> einfügen!',
     },
@@ -103,7 +101,7 @@ export function ShareModal(props: ShareModalProps) {
         />{' '}
         {document.queryCommandSupported('copy') && (
           <>
-            <Button onClick={copyToClipboard}>
+            <Button onClick={copyToClipboard} as="button">
               <FontAwesomeIcon icon={faCopy} /> {strings.share.copyLink}
             </Button>
             {copySuccess !== '' && (
@@ -114,13 +112,13 @@ export function ShareModal(props: ShareModalProps) {
             <br />
           </>
         )}{' '}
-        <CloseButton onClick={onClose} title={strings.share.close}>
-          <FontAwesomeIcon icon={faTimes} size="lg" />
-        </CloseButton>
         <ButtonWrapper>
           {buildButtons(socialShare, copyToClipboard)}
         </ButtonWrapper>
         <ButtonWrapper>{buildButtons(lmsShare, copyToClipboard)}</ButtonWrapper>
+        <CloseButton onClick={onClose} title={strings.share.close}>
+          <FontAwesomeIcon icon={faTimes} size="lg" />
+        </CloseButton>
       </div>
     </StyledModal>
   )
@@ -136,25 +134,34 @@ interface EntryData {
 function buildButtons(
   list: EntryData[],
   copyToClipboard: (
-    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     text?: string
   ) => void
 ) {
-  return list.map((entry: EntryData) => (
-    <Button
-      href={entry.href !== 'copy' ? entry.href : undefined}
-      onClick={
-        entry.href === 'copy'
-          ? (e) => {
-              copyToClipboard(e, entry.text)
-            }
-          : undefined
-      }
-      key={entry.title}
-    >
-      <FontAwesomeIcon icon={entry.icon} /> {entry.title}
-    </Button>
-  ))
+  //
+
+  return list.map((entry: EntryData) => {
+    const isCopyLink = entry.href === 'copy' //for mebis
+
+    if (isCopyLink)
+      return (
+        <Button
+          as="button"
+          onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+            copyToClipboard(event, entry.text)
+          }}
+          key={entry.title}
+        >
+          <FontAwesomeIcon icon={entry.icon} /> {entry.title}
+        </Button>
+      )
+    else
+      return (
+        <Button href={entry.href} key={entry.title}>
+          <FontAwesomeIcon icon={entry.icon} /> {entry.title}
+        </Button>
+      )
+  })
 }
 
 //this is overriding the styles of the modal-content only. see doc to change overlay etc.
@@ -206,6 +213,7 @@ const ShareInput = styled.input`
 
 const Button = styled.a`
   ${makeGreenButton}
+  ${inputFontReset}
   font-weight: bold;
   margin-left: 20px;
   display: inline;
