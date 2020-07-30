@@ -125,7 +125,11 @@ export function Entity({ data }: EntityProps) {
   function renderUserToolsMobile() {
     return (
       <UserToolsMobile>
-        <UserToolsMobileButton isOnTop onClick={() => setOpen(true)}>
+        <UserToolsMobileButton
+          isOnTop
+          tabIndex={0}
+          onClick={() => setOpen(true)}
+        >
           <FontAwesomeIcon icon={faShareAlt} size="1x" /> {strings.share.button}
         </UserToolsMobileButton>
       </UserToolsMobile>

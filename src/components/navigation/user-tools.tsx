@@ -56,7 +56,7 @@ export function UserTools({ id, onShare, hideEdit }: UserToolsProps) {
             content={<AuthorToolsHoverMenu id={id} />}
             placement="left-end"
           >
-            <IconButton>
+            <IconButton tabIndex={0}>
               <FontAwesomeIcon icon={faTools} size="1x" />{' '}
               {loggedInData.strings.tools}
             </IconButton>
