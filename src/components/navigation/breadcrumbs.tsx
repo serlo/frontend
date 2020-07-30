@@ -1,4 +1,4 @@
-import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons'
+import { faArrowCircleLeft, faList } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { transparentize } from 'polished'
 import React from 'react'
@@ -47,12 +47,17 @@ function BreadcrumbEntries({ bcEntry, i, arrayLength }: BradcrumbEntriesProps) {
       return <BreadcrumbLink href={bcEntry.url}>{bcEntry.label}</BreadcrumbLink>
     } else
       return (
-        <BreadcrumbLinkLast href={bcEntry.url}>
-          <Icon>
-            <FontAwesomeIcon icon={faArrowCircleLeft} size="1x" />
-          </Icon>
-          {bcEntry.label}
-        </BreadcrumbLinkLast>
+        <>
+          <BreadcrumbLinkLast href={bcEntry.url}>
+            <MobileIcon>
+              <FontAwesomeIcon icon={faArrowCircleLeft} size="1x" />
+            </MobileIcon>
+            <DesktopIcon>
+              <FontAwesomeIcon icon={faList} size="1x" />
+            </DesktopIcon>
+            {bcEntry.label}
+          </BreadcrumbLinkLast>
+        </>
       )
   }
 }
@@ -128,8 +133,21 @@ const BreadcrumbLinkLast = styled(BreadcrumbLink)`
 `
 
 const Icon = styled.span`
+  display: inline-block;
+  margin-right: 4px;
+  padding-top: 1px;
+`
+
+const MobileIcon = styled(Icon)`
   @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
     display: none;
   }
-  margin-right: 10px;
+`
+
+const DesktopIcon = styled(Icon)`
+  display: none;
+  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
+    display: inline-block;
+    font-size: 1rem;
+  }
 `
