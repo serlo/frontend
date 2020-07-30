@@ -41,11 +41,11 @@ export const enInstanceData: InstanceData = {
           { title: 'Contact', url: '/41043' },
           {
             title: 'Serlo in other languages',
-            url: `https://en.${serloDomain}/global`,
+            url: `/global`,
           },
           {
             title: 'API',
-            url: `https://en.${serloDomain}/community/technology-and-development/content-api`,
+            url: `/105250`,
           },
         ],
       },
@@ -73,7 +73,7 @@ export const enInstanceData: InstanceData = {
             title: 'Terms of use',
             url: `https://de.${serloDomain}/terms`,
           },
-          { title: 'Imprint', url: `https://de.${serloDomain}/imprint` },
+          { title: 'Imprint', url: `/imprint` },
         ],
       },
     ],
@@ -185,7 +185,7 @@ export const enLoggedInData: LoggedInData = {
     },
     {
       url: '',
-      title: 'user',
+      title: 'User',
       icon: 'user',
       children: [
         { url: '/user/public', title: 'Public profile' },

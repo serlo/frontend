@@ -15,7 +15,7 @@ export const taInstanceData: InstanceData = {
       icon: 'subject',
       children: [{ url: '/106103', title: 'கட்டுமானத்தில் உள்ள பாடங்கள்' }],
     },
-    { url: '/23727', title: 'Serlo பற்றி' , icon: 'about' },
+    { url: '/23727', title: 'Serlo பற்றி', icon: 'about' },
     { url: '/27469', title: 'நீங்களும் ஈடுபடுங்கள்!', icon: 'participate' },
     {
       url: '',
@@ -26,7 +26,10 @@ export const taInstanceData: InstanceData = {
           url: '/35587',
           title: 'ஆசிரியர்களுக்கான தொடக்க பக்கம்',
         },
-        { url: 'https://community.serlo.org/', title: 'ஆசிரியர்களுக்கான அரட்டை' },
+        {
+          url: 'https://community.serlo.org/',
+          title: 'ஆசிரியர்களுக்கான அரட்டை',
+        },
         { url: '/entity/unrevised', title: 'சரிபார்க்கப்படாத மாற்றங்கள்' },
       ],
     },
@@ -68,7 +71,10 @@ export const taInstanceData: InstanceData = {
       {
         title: 'சட்ட விதிமுறைகள்',
         children: [
-          { title: 'தனியுரிமைக் கொள்கை', url: `https://de.${serloDomain}/privacy` },
+          {
+            title: 'தனியுரிமைக் கொள்கை',
+            url: `https://de.${serloDomain}/privacy`,
+          },
           {
             title: 'பயன்பாட்டு விதிமுறைகளை',
             url: `https://de.${serloDomain}/terms`,
@@ -138,7 +144,8 @@ export const taInstanceData: InstanceData = {
       chooseOption: 'Click on one of the options.',
     },
     cookie: {
-      part1: 'இந்த வலைத்தளத்தைப் பயன்படுத்துவதன் மூலம் நீங்கள் எங்களுடன் உடன்படுகிறீர்கள் என்று அறிவிக்கிறீர்கள்',
+      part1:
+        'இந்த வலைத்தளத்தைப் பயன்படுத்துவதன் மூலம் நீங்கள் எங்களுடன் உடன்படுகிறீர்கள் என்று அறிவிக்கிறீர்கள்',
       part2: 'மற்றும்',
       part3: '.',
       link1: 'தனியுரிமைக் கொள்கை',

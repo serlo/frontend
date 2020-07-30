@@ -13,21 +13,24 @@ export const esInstanceData: InstanceData = {
       url: '',
       title: 'Temas',
       icon: 'subject',
-      children: [{ url: '/106103', title: 'Temas en construcción' }],
+      children: [
+        { url: '/169578', title: 'Matemáticas' },
+        { url: '/community/sandbox', title: 'Sandbox' },
+      ],
     },
-    { url: '/23727', title: 'Sobre Serlo', icon: 'about' },
-    { url: '/27469', title: '¡Participa!', icon: 'participate' },
+    { url: '/serlo', title: 'Sobre Serlo', icon: 'about' },
+    { url: '/participa', title: '¡Participa!', icon: 'participate' },
     {
       url: '',
       title: 'Comunidad',
       icon: 'community',
       children: [
         {
-          url: '/35587',
-          title: 'Página de inicio para autores',
+          url: '/community',
+          title: 'Página para autores',
         },
         { url: 'https://community.serlo.org/', title: 'Chat para autores' },
-        { url: '/entity/unrevised', title: 'Cambios no verificados' },
+        { url: '/entity/unrevised', title: 'Cambios en revisión' },
       ],
     },
   ],
@@ -37,7 +40,7 @@ export const esInstanceData: InstanceData = {
         title: 'Configuración General',
         children: [
           { title: 'A cerca de Serlo', url: '/serlo' },
-          { title: '¡Participa!', url: '/27469' },
+          { title: '¡Participa!', url: '/participa' },
           { title: 'Contactanos', url: '/41043' },
           {
             title: 'Serlo en otros idiomas',
@@ -64,13 +67,13 @@ export const esInstanceData: InstanceData = {
         children: [
           {
             title: 'Politica de privacidad',
-            url: `https://de.${serloDomain}/privacy`,
+            url: `https://es.${serloDomain}/privacy`,
           },
           {
             title: 'Términos legales',
-            url: `https://de.${serloDomain}/terms`,
+            url: `https://es.${serloDomain}/terms`,
           },
-          { title: 'Imprint', url: `https://de.${serloDomain}/imprint` },
+          { title: 'Imprint', url: `https://es.${serloDomain}/imprint` },
         ],
       },
     ],
