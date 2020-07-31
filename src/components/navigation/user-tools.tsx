@@ -9,7 +9,7 @@ import dynamic from 'next/dynamic'
 import React from 'react'
 import styled from 'styled-components'
 
-import { makeGreenButton } from '../../helper/css'
+import { makeGreenButton, inputFontReset } from '../../helper/css'
 import { AuthorToolsHoverMenuProps } from './author-tools-hover-menu'
 import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -46,7 +46,7 @@ export function UserTools({ id, onShare, hideEdit }: UserToolsProps) {
             {strings.edit.button}
           </IconButton>
         )}
-        <IconButton onClick={onShare}>
+        <IconButton onClick={onShare} as="button">
           <FontAwesomeIcon icon={faShareAlt} size="1x" /> {strings.share.button}
           !
         </IconButton>
@@ -56,7 +56,7 @@ export function UserTools({ id, onShare, hideEdit }: UserToolsProps) {
             content={<AuthorToolsHoverMenu id={id} />}
             placement="left-end"
           >
-            <IconButton>
+            <IconButton as="button">
               <FontAwesomeIcon icon={faTools} size="1x" />{' '}
               {loggedInData.strings.tools}
             </IconButton>
@@ -89,6 +89,7 @@ const BoxWrapper = styled.div`
 
 const IconButton = styled.a`
   ${makeGreenButton}
+  ${inputFontReset}
   font-weight: bold;
   padding-top: 4px;
   padding-bottom: 4px;

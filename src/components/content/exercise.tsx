@@ -1,7 +1,12 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 
-import { makeMargin, makeDefaultButton, makePadding } from '../../helper/css'
+import {
+  makeMargin,
+  makeDefaultButton,
+  makePadding,
+  inputFontReset,
+} from '../../helper/css'
 import { renderArticle } from '../../schema/article-renderer'
 import { AuthorTools } from './author-tools'
 import { ExerciseNumbering } from './exercise-numbering'
@@ -47,12 +52,7 @@ export function Exercise({ node }: ExerciseProps) {
         onClick={() => {
           setVisible(!solutionVisible)
         }}
-        onKeyDown={(e) => {
-          if (e.key == 'Enter') {
-            setVisible(!solutionVisible)
-          }
-        }}
-        tabIndex={0}
+        onPointerUp={(e) => e.currentTarget.blur()} //hack, use https://caniuse.com/#feat=css-focus-visible when supported
         active={solutionVisible}
       >
         <StyledSpan>{solutionVisible ? '▾' : '▸'}&nbsp;</StyledSpan>
@@ -187,8 +187,9 @@ const Wrapper = styled.div<{ grouped?: boolean }>`
   }
 `
 
-const SolutionToggle = styled.a<{ active: boolean }>`
+const SolutionToggle = styled.button<{ active: boolean }>`
   ${makeMargin}
+  ${inputFontReset}
   ${makeDefaultButton}
   margin-right: auto;
   padding-right: 9px;

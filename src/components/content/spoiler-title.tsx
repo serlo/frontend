@@ -1,9 +1,11 @@
 import styled, { css } from 'styled-components'
 
+import { inputFontReset } from '@/helper/css'
+
 export interface SpoilerTitleProps {
   open: boolean
   children: {}
-  onClick?: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void
+  onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
   disabled?: boolean
 }
 
@@ -16,8 +18,8 @@ export function SpoilerTitle({
   return (
     <StyledSpoilerTitle
       onClick={!disabled ? onClick : undefined}
+      onPointerUp={(e) => e.currentTarget.blur()} //hack, use https://caniuse.com/#feat=css-focus-visible when supported
       open={open}
-      role="button"
       interactive={!disabled}
     >
       {children}
@@ -25,7 +27,12 @@ export function SpoilerTitle({
   )
 }
 
-const StyledSpoilerTitle = styled.a<{ open: boolean; interactive: boolean }>`
+const StyledSpoilerTitle = styled.button<{
+  open: boolean
+  interactive: boolean
+}>`
+  ${inputFontReset}
+  border: none;
   margin: 0;
   padding: 0;
   font-size: 1.125rem;

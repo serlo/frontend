@@ -11,12 +11,20 @@ export const taInstanceData: InstanceData = {
   headerData: [
     {
       url: '',
-      title: 'படங்கள்',
+      title: 'பாடங்கள்',
       icon: 'subject',
-      children: [{ url: '/106103', title: 'கட்டுமானத்தில் உள்ள பாடங்கள்' }],
+      children: [
+        { url: '/140522', title: 'இலக்கணம்' },
+        { url: '/140524', title: 'வரலாறு' },
+        { url: '/148667', title: 'அகராதி' },
+      ],
     },
     { url: '/23727', title: 'Serlo பற்றி', icon: 'about' },
-    { url: '/27469', title: 'நீங்களும் ஈடுபடுங்கள்!', icon: 'participate' },
+    {
+      url: '/get-involved',
+      title: 'நீங்களும் ஈடுபடுங்கள்!',
+      icon: 'participate',
+    },
     {
       url: '',
       title: 'சமூகC',
@@ -40,7 +48,7 @@ export const taInstanceData: InstanceData = {
         title: 'பொதுவாக',
         children: [
           { title: 'Serlo பற்றி', url: '/serlo' },
-          { title: 'நீங்களும் ஈடுபடுங்கள்!', url: '/27469' },
+          { title: 'நீங்களும் ஈடுபடுங்கள்!', url: '/get-involved' },
           { title: 'தொடர்பு', url: '/41043' },
           {
             title: 'பிற மொழிகளில் Serlo',
@@ -55,12 +63,6 @@ export const taInstanceData: InstanceData = {
       {
         title: 'தொடர்பில் இருக்கவும்',
         children: [
-          {
-            title: 'செய்திமடல்',
-            url:
-              'https://serlo.us7.list-manage.com/subscribe?u=23f4b04bf70ea485a766e532d&amp;id=a7bb2bbc4f',
-            icon: 'newsletter',
-          },
           {
             title: 'GitHub',
             url: 'https://github.com/serlo',
@@ -94,7 +96,7 @@ export const taInstanceData: InstanceData = {
       login: 'உள்நுழை',
     },
     footer: {
-      summaryHeading: 'Serlo.org is the Wikipedia for learning.',
+      summaryHeading: 'கற்பதற்கு விக்கிபீடியா போன்றது Serlo.org.',
       summaryText:
         'நாங்கள் கல்வியை அனைவருக்கும் இலவசமாகக் கிடைக்கச் செய்ய அயராது உழைக்கிறோம்',
       learnMore: 'மேலும் அறிக',
@@ -111,7 +113,7 @@ export const taInstanceData: InstanceData = {
       exercises: 'Exercises',
     },
     share: {
-      button: 'Share',
+      button: 'பகிர்க',
       title: 'பகிர்!',
       copyLink: 'இணைப்பை நகலெடுக்கவும்',
       copySuccess: 'இணைப்பு நகலெடுக்கப்பட்டது!',

@@ -141,13 +141,13 @@ const SubjectLink = styled(Link)`
   @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
     border-bottom: 0;
     min-width: 430px;
-    width: 43%;
     padding-left: 0;
     &:hover {
       background: transparent;
     }
   }
   @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
+    width: 43%;
     text-align: center;
     min-width: auto;
     width: auto;
