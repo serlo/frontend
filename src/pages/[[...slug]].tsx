@@ -99,10 +99,10 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
   fetcherAdditionalData.origin = initialProps.origin
   fetcherAdditionalData.instance = instanceData.lang
 
-  const cachedLoggedInData =
-    typeof window !== 'undefined'
-      ? sessionStorage.getItem('loggedInData___')
-      : null
+  const cachedLoggedInData = null
+  //    typeof window !== 'undefined'
+  //      ? sessionStorage.getItem('loggedInData___')
+  //      : null
 
   const [loggedInData, setLoggedInData] = React.useState<LoggedInData | null>(
     cachedLoggedInData ? JSON.parse(cachedLoggedInData) : null

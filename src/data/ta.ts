@@ -7,45 +7,52 @@ import {
 import { serloDomain } from '@/helper/serlo-domain'
 
 export const taInstanceData: InstanceData = {
-  lang: 'en',
+  lang: 'ta',
   headerData: [
     {
       url: '',
-      title: 'Subjects',
+      title: 'பாடங்கள்',
       icon: 'subject',
-      children: [{ url: '/106103', title: 'Subjects under construction' }],
+      children: [
+        { url: '/140522', title: 'இலக்கணம்' },
+        { url: '/140524', title: 'வரலாறு' },
+        { url: '/148667', title: 'அகராதி' },
+      ],
     },
-    { url: '/23727', title: 'About Serlo', icon: 'about' },
-    { url: '/27469', title: 'Get involved!', icon: 'participate' },
+    { url: '/23727', title: 'Serlo பற்றி', icon: 'about' },
+    {
+      url: '/get-involved',
+      title: 'நீங்களும் ஈடுபடுங்கள்!',
+      icon: 'participate',
+    },
     {
       url: '',
-      title: 'Community',
+      title: 'சமூகC',
       icon: 'community',
       children: [
         {
           url: '/35587',
-          title: 'Starting page for authors',
+          title: 'ஆசிரியர்களுக்கான தொடக்க பக்கம்',
         },
-        { url: 'https://community.serlo.org/', title: 'Chat for authors' },
-        { url: '/entity/unrevised', title: 'Unrevised changes' },
+        {
+          url: 'https://community.serlo.org/',
+          title: 'ஆசிரியர்களுக்கான அரட்டை',
+        },
+        { url: '/entity/unrevised', title: 'சரிபார்க்கப்படாத மாற்றங்கள்' },
       ],
     },
   ],
   footerData: {
     footerNavigation: [
       {
-        title: 'General',
+        title: 'பொதுவாக',
         children: [
-          { title: 'About Serlo', url: '/serlo' },
-          { title: 'Get involved!', url: '/27469' },
-          { title: 'Contact', url: '/41043' },
+          { title: 'Serlo பற்றி', url: '/serlo' },
+          { title: 'நீங்களும் ஈடுபடுங்கள்!', url: '/get-involved' },
+          { title: 'தொடர்பு', url: '/41043' },
           {
-            title: 'Serlo in other languages',
+            title: 'பிற மொழிகளில் Serlo',
             url: `https://en.${serloDomain}/global`,
-          },
-          {
-            title: 'Back into the old design',
-            url: `https://de.${serloDomain}/disable-frontend`,
           },
           {
             title: 'API',
@@ -54,14 +61,8 @@ export const taInstanceData: InstanceData = {
         ],
       },
       {
-        title: 'Stay in touch',
+        title: 'தொடர்பில் இருக்கவும்',
         children: [
-          {
-            title: 'Newsletter',
-            url:
-              'https://serlo.us7.list-manage.com/subscribe?u=23f4b04bf70ea485a766e532d&amp;id=a7bb2bbc4f',
-            icon: 'newsletter',
-          },
           {
             title: 'GitHub',
             url: 'https://github.com/serlo',
@@ -70,14 +71,17 @@ export const taInstanceData: InstanceData = {
         ],
       },
       {
-        title: 'Legal terms',
+        title: 'சட்ட விதிமுறைகள்',
         children: [
-          { title: 'Privacy Policy', url: `https://de.${serloDomain}/privacy` },
           {
-            title: 'Terms of use',
+            title: 'தனியுரிமைக் கொள்கை',
+            url: `https://de.${serloDomain}/privacy`,
+          },
+          {
+            title: 'பயன்பாட்டு விதிமுறைகளை',
             url: `https://de.${serloDomain}/terms`,
           },
-          { title: 'Imprint', url: `https://de.${serloDomain}/imprint` },
+          { title: 'முத்திரை', url: `https://de.${serloDomain}/imprint` },
         ],
       },
     ],
@@ -87,18 +91,18 @@ export const taInstanceData: InstanceData = {
   },
   strings: {
     header: {
-      slogan: 'The Open Learning Platform',
-      search: 'Search',
-      login: 'Login',
+      slogan: 'அனைவருக்கும் திறந்த உரிமம் உள்ள ஓர் இணையத்தளம்',
+      search: 'தேடுக',
+      login: 'உள்நுழை',
     },
     footer: {
-      summaryHeading: 'Serlo.org is the Wikipedia for learning.',
+      summaryHeading: 'கற்பதற்கு விக்கிபீடியா போன்றது Serlo.org.',
       summaryText:
-        'We are a community of visionaries working tirelessly to make great education freely available to everyone.',
-      learnMore: 'Mehr Erfahren',
-      participate: 'Join the cause',
-      donate: 'Donate',
-      toTop: 'To Top',
+        'நாங்கள் கல்வியை அனைவருக்கும் இலவசமாகக் கிடைக்கச் செய்ய அயராது உழைக்கிறோம்',
+      learnMore: 'மேலும் அறிக',
+      participate: 'சேருங்கள்',
+      donate: 'தானம் செய்',
+      toTop: 'மேல் நோக்கி',
     },
     categories: {
       article: 'Article',
@@ -109,17 +113,17 @@ export const taInstanceData: InstanceData = {
       exercises: 'Exercises',
     },
     share: {
-      button: 'Share',
-      title: 'Share!',
-      copyLink: 'Copy link',
-      copySuccess: 'Link copied! ',
-      close: 'Close',
+      button: 'பகிர்க',
+      title: 'பகிர்!',
+      copyLink: 'இணைப்பை நகலெடுக்கவும்',
+      copySuccess: 'இணைப்பு நகலெடுக்கப்பட்டது!',
+      close: 'நெருக்கமான',
     },
     edit: {
-      button: 'Edit',
+      button: 'தொகு',
     },
     license: {
-      readMore: 'Info',
+      readMore: 'தகவல்',
     },
     course: {
       showPages: 'Show course overview',
@@ -142,15 +146,16 @@ export const taInstanceData: InstanceData = {
       chooseOption: 'Click on one of the options.',
     },
     cookie: {
-      part1: 'By using this website you declare that you agree with our',
-      part2: 'and',
+      part1:
+        'இந்த வலைத்தளத்தைப் பயன்படுத்துவதன் மூலம் நீங்கள் எங்களுடன் உடன்படுகிறீர்கள் என்று அறிவிக்கிறீர்கள்',
+      part2: 'மற்றும்',
       part3: '.',
-      link1: 'Privacy Policy',
-      link2: 'Terms of use',
-      button: 'Agree',
+      link1: 'தனியுரிமைக் கொள்கை',
+      link2: 'பயன்பாட்டு விதிமுறைகளை',
+      button: 'ஒப்புக்கொள்கிறேன்',
     },
   },
-}
+} //TODO check displayed sentence order; probably wrong
 
 export const taInstanceLandingData: InstanceLandingData = {
   lang: 'ta',
@@ -178,37 +183,37 @@ export const taInstanceLandingData: InstanceLandingData = {
 }
 
 export const taServerSideStrings: ServerSideStrings = {
-  title: 'learn with Serlo!',
+  title: 'Serlo உடன் கற்றுக்கொள்ளுங்கள்!',
 }
 
 export const taLoggedInData: LoggedInData = {
   authMenu: [
     {
       url: '/user/notifications',
-      title: 'Benachrichtigungen',
+      title: 'அறிவிப்புகள்',
       icon: 'notifications',
     },
     {
       url: '',
-      title: 'Benutzer',
+      title: 'பயனர்',
       icon: 'user',
       children: [
-        { url: '/user/public', title: 'Öffentliches Profil' },
+        { url: '/user/public', title: 'பொதுவான சுயவிவரம்' },
         {
           url: '/user/settings',
-          title: 'Profil bearbeiten',
+          title: 'சுயவிவர திருத்தம்',
         },
         {
           url: '/auth/password/change',
-          title: 'Passwort aktualisieren',
+          title: 'கடவுச்சொல்லைப் புதுப்பிக்கவும்',
         },
         {
           url: '/event/history/user/me',
-          title: 'Meine Aktivitäten',
+          title: 'சமீபத்திய செய்தவை',
         },
         {
           url: '/api/auth/logout',
-          title: 'Ausloggen',
+          title: 'வெளியேறு',
         },
       ],
     },

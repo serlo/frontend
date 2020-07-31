@@ -41,15 +41,11 @@ export const enInstanceData: InstanceData = {
           { title: 'Contact', url: '/41043' },
           {
             title: 'Serlo in other languages',
-            url: `https://en.${serloDomain}/global`,
-          },
-          {
-            title: 'Back into the old design',
-            url: `https://de.${serloDomain}/disable-frontend`,
+            url: `/global`,
           },
           {
             title: 'API',
-            url: `https://en.${serloDomain}/community/technology-and-development/content-api`,
+            url: `/105250`,
           },
         ],
       },
@@ -77,7 +73,7 @@ export const enInstanceData: InstanceData = {
             title: 'Terms of use',
             url: `https://de.${serloDomain}/terms`,
           },
-          { title: 'Imprint', url: `https://de.${serloDomain}/imprint` },
+          { title: 'Imprint', url: `/imprint` },
         ],
       },
     ],
@@ -95,7 +91,7 @@ export const enInstanceData: InstanceData = {
       summaryHeading: 'Serlo.org is the Wikipedia for learning.',
       summaryText:
         'We are a community of visionaries working tirelessly to make great education freely available to everyone.',
-      learnMore: 'Mehr Erfahren',
+      learnMore: 'Learn more',
       participate: 'Join the cause',
       donate: 'Donate',
       toTop: 'To Top',
@@ -190,30 +186,30 @@ export const enLoggedInData: LoggedInData = {
     },
     {
       url: '',
-      title: 'Benutzer',
+      title: 'User',
       icon: 'user',
       children: [
-        { url: '/user/public', title: 'Öffentliches Profil' },
+        { url: '/user/public', title: 'Public profile' },
         {
           url: '/user/settings',
-          title: 'Profil bearbeiten',
+          title: 'Edit profile',
         },
         {
           url: '/auth/password/change',
-          title: 'Passwort aktualisieren',
+          title: 'Change password',
         },
         {
           url: '/event/history/user/me',
-          title: 'Meine Aktivitäten',
+          title: 'Recent activities',
         },
         {
           url: '/api/auth/logout',
-          title: 'Ausloggen',
+          title: 'Log out',
         },
       ],
     },
   ],
   strings: {
-    tools: 'Weitere Tools',
+    tools: 'Other Tools',
   },
 }

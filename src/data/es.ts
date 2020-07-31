@@ -11,41 +11,40 @@ export const esInstanceData: InstanceData = {
   headerData: [
     {
       url: '',
-      title: 'Subjects',
+      title: 'Temas',
       icon: 'subject',
-      children: [{ url: '/106103', title: 'Subjects under construction' }],
+      children: [
+        { url: '/169578', title: 'Matemáticas' },
+        { url: '/community/sandbox', title: 'Sandbox' },
+      ],
     },
-    { url: '/23727', title: 'About Serlo', icon: 'about' },
-    { url: '/27469', title: 'Get involved!', icon: 'participate' },
+    { url: '/serlo', title: 'Sobre Serlo', icon: 'about' },
+    { url: '/participa', title: '¡Participa!', icon: 'participate' },
     {
       url: '',
-      title: 'Community',
+      title: 'Comunidad',
       icon: 'community',
       children: [
         {
-          url: '/35587',
-          title: 'Starting page for authors',
+          url: '/community',
+          title: 'Página para autores',
         },
-        { url: 'https://community.serlo.org/', title: 'Chat for authors' },
-        { url: '/entity/unrevised', title: 'Unrevised changes' },
+        { url: 'https://community.serlo.org/', title: 'Chat para autores' },
+        { url: '/entity/unrevised', title: 'Cambios en revisión' },
       ],
     },
   ],
   footerData: {
     footerNavigation: [
       {
-        title: 'General',
+        title: 'Configuración General',
         children: [
-          { title: 'About Serlo', url: '/serlo' },
-          { title: 'Get involved!', url: '/27469' },
-          { title: 'Contact', url: '/41043' },
+          { title: 'A cerca de Serlo', url: '/serlo' },
+          { title: '¡Participa!', url: '/participa' },
+          { title: 'Contactanos', url: '/41043' },
           {
-            title: 'Serlo in other languages',
+            title: 'Serlo en otros idiomas',
             url: `https://en.${serloDomain}/global`,
-          },
-          {
-            title: 'Back into the old design',
-            url: `https://de.${serloDomain}/disable-frontend`,
           },
           {
             title: 'API',
@@ -54,14 +53,8 @@ export const esInstanceData: InstanceData = {
         ],
       },
       {
-        title: 'Stay in touch',
+        title: 'Mantente en contacto',
         children: [
-          {
-            title: 'Newsletter',
-            url:
-              'https://serlo.us7.list-manage.com/subscribe?u=23f4b04bf70ea485a766e532d&amp;id=a7bb2bbc4f',
-            icon: 'newsletter',
-          },
           {
             title: 'GitHub',
             url: 'https://github.com/serlo',
@@ -70,14 +63,17 @@ export const esInstanceData: InstanceData = {
         ],
       },
       {
-        title: 'Legal terms',
+        title: 'Términos legales',
         children: [
-          { title: 'Privacy Policy', url: `https://de.${serloDomain}/privacy` },
           {
-            title: 'Terms of use',
-            url: `https://de.${serloDomain}/terms`,
+            title: 'Politica de privacidad',
+            url: `https://es.${serloDomain}/privacy`,
           },
-          { title: 'Imprint', url: `https://de.${serloDomain}/imprint` },
+          {
+            title: 'Términos legales',
+            url: `https://es.${serloDomain}/terms`,
+          },
+          { title: 'Imprint', url: `https://es.${serloDomain}/imprint` },
         ],
       },
     ],
@@ -87,18 +83,18 @@ export const esInstanceData: InstanceData = {
   },
   strings: {
     header: {
-      slogan: 'The Open Learning Platform',
-      search: 'Search',
+      slogan: 'La Plataforma para el Aprendizaje Abierto',
+      search: 'Buscar',
       login: 'Login',
     },
     footer: {
-      summaryHeading: 'Serlo.org is the Wikipedia for learning.',
+      summaryHeading: 'Serlo.org es la Wikipedia para el aprendizaje.',
       summaryText:
-        'We are a community of visionaries working tirelessly to make great education freely available to everyone.',
-      learnMore: 'Mehr Erfahren',
-      participate: 'Join the cause',
-      donate: 'Donate',
-      toTop: 'To Top',
+        'Somos una comunidad de visionarios que trabajan sin descanso para que todo el mundo tenga acceso gratuito a una educación excelente.',
+      learnMore: 'Aprende más',
+      participate: 'Únete a la causa',
+      donate: 'Donaciones',
+      toTop: 'a la cima',
     },
     categories: {
       article: 'Article',
@@ -109,17 +105,17 @@ export const esInstanceData: InstanceData = {
       exercises: 'Exercises',
     },
     share: {
-      button: 'Share',
-      title: 'Share!',
-      copyLink: 'Copy link',
-      copySuccess: 'Link copied! ',
-      close: 'Close',
+      button: 'Compartir',
+      title: 'Compartir',
+      copyLink: 'Copiar link',
+      copySuccess: 'Enlace copiado',
+      close: 'Cerca',
     },
     edit: {
-      button: 'Edit',
+      button: 'Editar',
     },
     license: {
-      readMore: 'Info',
+      readMore: 'Información',
     },
     course: {
       showPages: 'Show course overview',
@@ -142,12 +138,12 @@ export const esInstanceData: InstanceData = {
       chooseOption: 'Click on one of the options.',
     },
     cookie: {
-      part1: 'By using this website you declare that you agree with our',
-      part2: 'and',
+      part1: 'Al utilizar este sitio web, declara que acepta nuestra',
+      part2: 'y',
       part3: '.',
-      link1: 'Privacy Policy',
-      link2: 'Terms of use',
-      button: 'Agree',
+      link1: 'Política de privacidad',
+      link2: 'Términos de uso',
+      button: 'Aceptar',
     },
   },
 }
@@ -179,7 +175,7 @@ export const esInstanceLandingData: InstanceLandingData = {
 }
 
 export const esServerSideStrings: ServerSideStrings = {
-  title: 'learn with Serlo!',
+  title: 'Aprende con Serlo!',
 }
 
 export const esLoggedInData: LoggedInData = {
@@ -194,27 +190,27 @@ export const esLoggedInData: LoggedInData = {
       title: 'Benutzer',
       icon: 'user',
       children: [
-        { url: '/user/public', title: 'Öffentliches Profil' },
+        { url: '/user/public', title: 'Perfil público' },
         {
           url: '/user/settings',
-          title: 'Profil bearbeiten',
+          title: 'Editar perfil',
         },
         {
           url: '/auth/password/change',
-          title: 'Passwort aktualisieren',
+          title: 'Actualizar contraseña',
         },
         {
           url: '/event/history/user/me',
-          title: 'Meine Aktivitäten',
+          title: 'Actividades recientes',
         },
         {
           url: '/api/auth/logout',
-          title: 'Ausloggen',
+          title: 'Cerrar sesión',
         },
       ],
     },
   ],
   strings: {
-    tools: 'Weitere Tools',
+    tools: 'Otras herramientas',
   },
 }
