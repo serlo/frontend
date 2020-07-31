@@ -1,4 +1,6 @@
-import {
+export const dummy = 123
+
+/*import {
   ProcessedResponse,
   ResponseDataQuickFix,
 } from '@/fetcher/process-response'
@@ -74,3 +76,4 @@ function getMetaImage() {
 
   return `${origin}/_assets/img/meta/${imageSrc}`
 }
+*/

@@ -1,4 +1,6 @@
-import { render } from '../../external/legacy_render'
+export const dummy = 123
+
+/*import { render } from '../../external/legacy_render'
 import { convertEdtrIoState } from '../schema/convert-edtr-io-state'
 import { convertLegacyState } from '../schema/convert-legacy-state'
 import {
@@ -30,7 +32,7 @@ import {
 import { TaxonomyTermType } from '@/fetcher/query'
 import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
 
-/* Made all the types exlicit here, let's see if that was usefull :) */
+// Made all the types exlicit here, let's see if that was usefull :)
 
 export type EntityTypeData =
   | PageEntity
@@ -97,7 +99,7 @@ export function createData(uuid: QueryResponse): EntityTypeData {
   return null
 }
 
-/*TODO: currently we return partially if there is no currentRevision, would it be better not to return at all? */
+// TODO: currently we return partially if there is no currentRevision, would it be better not to return at all?
 
 interface PageEntity {
   title?: string
@@ -548,3 +550,4 @@ function getAlias(
   if (!child.alias || hasSpecialUrlChars(child.alias)) return `/${child.id}`
   else return child.alias
 }
+*/

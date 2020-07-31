@@ -529,7 +529,6 @@ export type QueryResponse =
   | Event
   | Course
   | TaxonomyTerm
-}
 
 export type QueryResponseWithLicense =
   | Article

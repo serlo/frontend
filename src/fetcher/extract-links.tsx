@@ -1,4 +1,6 @@
-import { ExerciseProps } from '@/components/content/exercise'
+export const dummy = 123
+
+/*import { ExerciseProps } from '@/components/content/exercise'
 import { FrontendContentNode } from '@/data-types'
 
 export function walkIdNodes(
@@ -41,3 +43,4 @@ export function walkIdNodes(
     }
   })
 }
+*/

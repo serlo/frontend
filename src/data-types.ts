@@ -456,6 +456,7 @@ export interface FrontendExerciseGroupNode {
   type: 'exercise-group'
   license?: LicenseData
   positionOnPage?: number
+  content: FrontendContentNode[]
   children?: FrontendExerciseNode[]
 }
 

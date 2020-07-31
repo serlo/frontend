@@ -1,4 +1,6 @@
-import { QueryResponse, TaxonomyTerms } from './query'
+export const dummy = 123
+
+/*import { QueryResponse, TaxonomyTerms } from './query'
 import { BreadcrumbsData } from '@/data-types'
 
 export function createBreadcrumbs(uuid: QueryResponse) {
@@ -74,3 +76,4 @@ export function createBreadcrumbs(uuid: QueryResponse) {
     return shortened
   }
 }
+*/

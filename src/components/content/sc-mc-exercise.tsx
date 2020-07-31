@@ -8,17 +8,10 @@ import { makeMargin, makeDefaultButton } from '../../helper/css'
 import { renderArticle } from '../../schema/article-renderer'
 import { StyledP } from '../tags/styled-p'
 import { useInstanceData } from '@/contexts/instance-context'
-import { FrontendContentNode } from '@/data-types'
+import { EdtrPluginScMcExercise } from '@/data-types'
 
 export interface ScMcExerciseProps {
-  state: {
-    answers: {
-      isCorrect: boolean
-      feedback: FrontendContentNode[]
-      content: FrontendContentNode[]
-    }[]
-    isSingleChoice?: boolean
-  }
+  state: EdtrPluginScMcExercise['state']
   idBase: string
 }
 

@@ -1,4 +1,6 @@
-import { request } from 'graphql-request'
+export const dummy = 123
+
+/*import { request } from 'graphql-request'
 
 import { createBreadcrumbs } from './create-breadcrumbs'
 import {
@@ -87,7 +89,7 @@ export async function fetchPageData(
     /*
 
 
-    */
+
 
     const prettyLinks =
       links.length < 1
@@ -170,7 +172,7 @@ export async function fetchPageData(
 
 
 
-    */
+
 
     const contentLinks: number[] = []
     const dataWithValue = (processed.data as unknown) as EntityTypeWithValue
@@ -335,3 +337,4 @@ export async function fetchPageData(
     return { kind: 'error', errorData: { code, message } }
   }
 }
+*/

@@ -1,4 +1,6 @@
-import { horizonData } from '../data/horizon_de'
+export const dummy = 123
+
+/*import { horizonData } from '../data/horizon_de'
 import { createBreadcrumbs } from './create-breadcrumbs'
 import { createData, EntityTypeData } from './create-data'
 import { createLicense } from './create-license'
@@ -53,3 +55,4 @@ function chooseHorizonEntries(entries: string[]) {
   }
   return selected
 }
+*/

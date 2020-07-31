@@ -1,4 +1,6 @@
-import { QueryResponse, QueryResponseWithLicense } from './query'
+export const dummy = 123
+
+/* import { QueryResponse, QueryResponseWithLicense } from './query'
 
 const excludeLicense = ['Exercise', 'GroupedExercise', 'ExerciseGroup']
 
@@ -10,3 +12,4 @@ export function createLicense(uuid: QueryResponse) {
     }
   }
 }
+*/

@@ -4,6 +4,7 @@ import styled, { css } from 'styled-components'
 import { makeMargin, makeDefaultButton, inputFontReset } from '../../helper/css'
 import { StyledP } from '../tags/styled-p'
 import { useInstanceData } from '@/contexts/instance-context'
+import { EdtrPluginInputExercise } from '@/data-types'
 
 interface AnswerData {
   value: any
@@ -11,10 +12,7 @@ interface AnswerData {
 }
 
 export interface InputExerciseProps {
-  data: {
-    answers: AnswerData[]
-    unit: string
-  }
+  data: EdtrPluginInputExercise['state']
 }
 
 export function InputExercise({ data }: InputExerciseProps) {

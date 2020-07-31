@@ -42,40 +42,7 @@ import type { InjectionProps } from '@/components/content/injection'
 import { Lazy } from '@/components/content/lazy'
 import type { MathProps } from '@/components/content/math'
 import type { VideoProps } from '@/components/content/video'
-import { FrontendContentNode, LicenseData } from '@/data-types'
-
-const renderer = {
-  root: () => null,
-  a: renderA,
-  'inline-math': renderInlineMath,
-  p: renderP,
-  h: renderH,
-  img: renderImg,
-  math: renderMath,
-  'spoiler-container': renderSpoilerForEndUser,
-  'spoiler-title': ({ children }: ReactChildrenData) => children,
-  'spoiler-body': renderSpoilerBody,
-  ul: renderUl,
-  ol: renderOl,
-  li: renderLi,
-  row: renderRow,
-  col: renderCol,
-  important: renderImportant,
-  anchor: renderAnchor,
-  table: renderTable,
-  tr: renderTR,
-  th: renderTH,
-  td: renderTD,
-  geogebra: renderGeogebra,
-  injection: renderInjection,
-  exercise: renderExercise,
-  'exercise-group': renderExerciseGroup,
-  video: renderVideo,
-  equations: renderEquations,
-  code: renderCode,
-} as { [key: string]: (props: any) => React.ReactNode | null } // continue here to add proper types
-
-type renderElementData = keyof typeof renderer
+import { FrontendContentNode } from '@/data-types'
 
 interface ReactChildrenData {
   children: React.ReactNode
@@ -86,11 +53,6 @@ interface RenderElementProps {
   children: React.ReactNode
   value: FrontendContentNode
   path: number[]
-}
-
-// useless wrapping, remove it one day
-export interface FrontendContentValue {
-  children: FrontendContentNode[]
 }
 
 const Math = dynamic<MathProps>(() =>
@@ -117,7 +79,7 @@ const Code = dynamic<CodeProps>(() =>
 
 export function renderArticle(value: FrontendContentNode[], addCSS = true) {
   if (!value || !Array.isArray(value)) return null
-  const root = { children: value, type: 'root' as renderElementData }
+  const root = { children: value } as FrontendContentNode
   const content = value.map((_, index) => render(root, [index]))
   if (addCSS) {
     return <SpecialCss>{content}</SpecialCss>
@@ -135,29 +97,33 @@ function getNode(
   }
 }
 
-function render(value: FrontendContentValue, path: number[] = []) {
+function render(
+  value: FrontendContentNode,
+  path: number[] = []
+): React.ReactNode {
   const currentNode = getNode(value, path)
   const key = path[path.length - 1]
 
-  if (currentNode && currentNode.type) {
-    const children = Array.isArray(currentNode.children)
-      ? currentNode.children.map((_: FrontendContentNode, index: number) =>
-          render(value, path.concat(index))
-        )
-      : null
+  if (currentNode.type !== 'text') {
+    const children: React.ReactNode[] = []
+    if (currentNode.children) {
+      currentNode.children.forEach((child, index) => {
+        children.push(render(child, path.concat(index)))
+      })
+    }
     return (
       <React.Fragment key={key}>
         {renderElement({
           element: currentNode,
-          children: children,
+          children: children.length === 0 ? null : children,
           value,
           path,
         })}
       </React.Fragment>
     )
   }
-  if (!currentNode) return null
-  if (currentNode?.text === '') {
+  //if (!currentNode) return null
+  if (currentNode.text === '') {
     return null // avoid rendering empty spans
   }
   return renderLeaf({
@@ -172,6 +138,14 @@ export const articleColors = {
   blue: theme.colors.blue,
   green: theme.colors.green,
   orange: theme.colors.orange,
+}
+
+const StyledHx = {
+  1: StyledH1,
+  2: StyledH2,
+  3: StyledH3,
+  4: StyledH4,
+  5: StyledH5,
 }
 
 interface RenderLeafProps {
@@ -208,123 +182,161 @@ export function renderLeaf({
   )
 }
 
-function renderElement(props: RenderElementProps) {
-  if (!props.element.type) return null
-  return renderer[props.element.type](props)
-}
-
-interface RenderAData {
-  element: { href: string }
-  children: React.ReactNode
-}
-
-export function renderA({ element, children = null }: RenderAData) {
-  return <Link href={element.href}>{children}</Link>
-}
-
-interface RenderInlineMathData {
-  element: MathProps
-  children: React.ReactNode
-}
-export function renderInlineMath({ element }: RenderInlineMathData) {
-  return <Math formula={element.formula} inline />
-}
-
-export function renderMath({ element }: RenderInlineMathData) {
-  let formula = element.formula
-  let bigger = false
-  if (
-    element.formula.includes('\\int') ||
-    element.formula.includes('frac') ||
-    element.formula.includes('^')
-  ) {
-    bigger = true
+function renderElement(props: RenderElementProps): React.ReactNode {
+  const { element, children } = props
+  if (element.type === 'a') {
+    return <Link href={element.href}>{children}</Link>
   }
-  if (
-    formula.includes('\\begin{aligned}') ||
-    formula.includes('\\begin{array}')
-  ) {
-    formula = `\\def\\arraystretch{1.6} ${formula}`
+  if (element.type === 'inline-math') {
+    return <Math formula={element.formula} inline />
   }
-
-  return (
-    <Lazy slim>
-      <MathWrapper centered={!element.alignLeft} bigger={bigger}>
-        <Math formula={formula} />
-      </MathWrapper>
-    </Lazy>
-  )
-}
-
-export function renderP({ children = null }) {
-  return <StyledP>{children}</StyledP>
-}
-
-const StyledHx = {
-  1: StyledH1,
-  2: StyledH2,
-  3: StyledH3,
-  4: StyledH4,
-  5: StyledH5,
-}
-
-interface RenderHData {
-  element: {
-    level: 1 | 2 | 3 | 4 | 5
-    id: string
-  }
-  key: string
-  children: any
-}
-
-export function renderH({ element, children = null }: RenderHData) {
-  const Comp = StyledHx[element.level] ?? StyledH5
-  return <Comp id={element.id}>{children}</Comp>
-}
-
-export interface RenderImgData {
-  element: {
-    href?: string
-    maxWidth?: number
-    src: string
-    alt?: string
-  }
-  children: React.ReactNode
-}
-
-export function renderImg({ element }: RenderImgData) {
-  function wrapInA(comp: React.ReactNode) {
-    if (element.href) {
-      // needs investigation if this could be simplified
-      return <ImageLink href={element.href}>{comp}</ImageLink>
+  if (element.type === 'math') {
+    let formula = element.formula
+    let bigger = false
+    if (
+      element.formula.includes('\\int') ||
+      element.formula.includes('frac') ||
+      element.formula.includes('^')
+    ) {
+      bigger = true
     }
-    return comp
+    if (
+      formula.includes('\\begin{aligned}') ||
+      formula.includes('\\begin{array}')
+    ) {
+      formula = `\\def\\arraystretch{1.6} ${formula}`
+    }
+
+    return (
+      <Lazy slim>
+        <MathWrapper centered={!element.alignLeft} bigger={bigger}>
+          <Math formula={formula} />
+        </MathWrapper>
+      </Lazy>
+    )
   }
-  return (
-    <ImgCentered itemScope itemType="http://schema.org/ImageObject">
-      <MaxWidthDiv maxWidth={element.maxWidth ? element.maxWidth : 0}>
-        {wrapInA(
-          <Lazy>
-            <StyledImg
-              src={element.src}
-              alt={element.alt || 'Bild'}
-              itemProp="contentUrl"
-            ></StyledImg>
-          </Lazy>
-        )}
-      </MaxWidthDiv>
-    </ImgCentered>
-  )
-}
-
-interface RenderSpoilerForEndUserData {
-  children: React.ReactNode
-  body: React.ReactNode
-}
-
-function renderSpoilerForEndUser({ children }: RenderSpoilerForEndUserData) {
-  if (!Array.isArray(children)) return null
-  return <SpoilerForEndUser title={children[0]} body={children[1]} />
+  if (element.type === 'p') {
+    return <StyledP>{children}</StyledP>
+  }
+  if (element.type === 'h') {
+    const Comp = StyledHx[element.level]
+    return <Comp id={element.id}>{children}</Comp>
+  }
+  if (element.type === 'img') {
+    const wrapInA = (comp: React.ReactNode) => {
+      if (element.href) {
+        // needs investigation if this could be simplified
+        return <ImageLink href={element.href}>{comp}</ImageLink>
+      }
+      return comp
+    }
+    return (
+      <ImgCentered itemScope itemType="http://schema.org/ImageObject">
+        <MaxWidthDiv maxWidth={element.maxWidth ? element.maxWidth : 0}>
+          {wrapInA(
+            <Lazy>
+              <StyledImg
+                src={element.src}
+                alt={element.alt || 'Bild'}
+                itemProp="contentUrl"
+              ></StyledImg>
+            </Lazy>
+          )}
+        </MaxWidthDiv>
+      </ImgCentered>
+    )
+  }
+  if (element.type === 'spoiler-container') {
+    if (!Array.isArray(children)) return null
+    return <SpoilerForEndUser title={children[0]} body={children[1]} />
+  }
+  if (element.type === 'spoiler-body') {
+    return <SpoilerBody>{children}</SpoilerBody>
+  }
+  if (element.type === 'spoiler-title') {
+    return children
+  }
+  if (element.type === 'ul') {
+    return <StyledUl>{children}</StyledUl>
+  }
+  if (element.type === 'ol') {
+    return <StyledOl>{children}</StyledOl>
+  }
+  if (element.type === 'li') {
+    return <StyledLi>{children}</StyledLi>
+  }
+  if (element.type === 'table') {
+    return (
+      <TableWrapper>
+        <StyledTable>
+          <tbody>{children}</tbody>
+        </StyledTable>
+      </TableWrapper>
+    )
+  }
+  if (element.type === 'tr') {
+    return <StyledTr>{children}</StyledTr>
+  }
+  if (element.type === 'th') {
+    return <StyledTh>{children}</StyledTh>
+  }
+  if (element.type === 'td') {
+    return <StyledTd>{children}</StyledTd>
+  }
+  if (element.type === 'row') {
+    return <LayoutRow>{children}</LayoutRow>
+  }
+  if (element.type === 'col') {
+    return <Col cSize={element.size}>{children}</Col>
+  }
+  if (element.type === 'important') {
+    return <Important>{children}</Important>
+  }
+  if (element.type === 'geogebra') {
+    return (
+      <Lazy>
+        <GeogebraWrapper>
+          <Geogebra id={element.id} />
+        </GeogebraWrapper>
+      </Lazy>
+    )
+  }
+  if (element.type === 'anchor') {
+    return <a id={element.id.toString()} />
+  }
+  if (element.type === 'injection') {
+    return <Injection href={element.href} />
+  }
+  if (element.type === 'exercise') {
+    return <Exercise node={element} />
+  }
+  if (element.type === 'exercise-group') {
+    return (
+      <ExerciseGroup
+        license={
+          element.license && <LicenseNotice minimal data={element.license} />
+        }
+        groupIntro={renderArticle(element.content, false)}
+        positionOnPage={element.positionOnPage ?? 0}
+      >
+        {children}
+      </ExerciseGroup>
+    )
+  }
+  if (element.type === 'video') {
+    return (
+      <Lazy>
+        <Video src={element.src} />
+      </Lazy>
+    )
+  }
+  if (element.type === 'equations') {
+    return <Equations steps={element.steps} />
+  }
+  if (element.type === 'code') {
+    return <Code content={element.code} />
+  }
+  return null
 }
 
 interface SpoilerForEndUserProps {
@@ -343,171 +355,4 @@ function SpoilerForEndUser({ body, title }: SpoilerForEndUserProps) {
       {open && body}
     </SpoilerContainer>
   )
-}
-
-export function renderSpoilerBody({ children = null }) {
-  return <SpoilerBody>{children}</SpoilerBody>
-}
-
-export function renderUl({ children = null }) {
-  return <StyledUl>{children}</StyledUl>
-}
-
-export function renderOl({ children = null }) {
-  return <StyledOl>{children}</StyledOl>
-}
-
-export function renderLi({ children = null }) {
-  return <StyledLi>{children}</StyledLi>
-}
-
-export function renderTable({ children = null }) {
-  return (
-    <TableWrapper>
-      <StyledTable>
-        <tbody>{children}</tbody>
-      </StyledTable>
-    </TableWrapper>
-  )
-}
-
-export function renderTR({ children = null }) {
-  return <StyledTr>{children}</StyledTr>
-}
-
-export function renderTH({ children = null }) {
-  return <StyledTh>{children}</StyledTh>
-}
-
-export function renderTD({ children = null }) {
-  return <StyledTd>{children}</StyledTd>
-}
-
-export function renderRow({ children = null }) {
-  return <LayoutRow>{children}</LayoutRow>
-}
-
-interface RenderColData {
-  children: React.ReactNode
-  element: {
-    size: number
-  }
-}
-
-export function renderCol({ element, children = null }: RenderColData) {
-  return <Col cSize={element.size}>{children}</Col>
-}
-
-export function renderImportant({ children = null }) {
-  return <Important>{children}</Important>
-}
-
-interface RenderGeogebraData {
-  children: React.ReactNode
-  element: {
-    id: string
-  }
-}
-export function renderGeogebra({ element }: RenderGeogebraData) {
-  return (
-    <Lazy>
-      <GeogebraWrapper>
-        <Geogebra id={element.id} />
-      </GeogebraWrapper>
-    </Lazy>
-  )
-}
-
-interface RenderAnchorData {
-  children: React.ReactNode
-  element: {
-    id: number
-  }
-}
-function renderAnchor({ element }: RenderAnchorData) {
-  return <a id={element.id.toString()} />
-}
-
-interface RenderInjectionData {
-  children: React.ReactNode
-  element: InjectionProps
-}
-
-export function renderInjection({ element }: RenderInjectionData) {
-  return <Injection href={element.href} />
-}
-
-interface RenderExerciseData {
-  element: ExerciseProps
-}
-
-export function renderExercise({ element }: RenderExerciseData) {
-  return (
-    <Exercise
-      task={element.task}
-      grouped={element.grouped}
-      positionInGroup={element.positionInGroup}
-      positionOnPage={element.positionOnPage}
-      solution={element.solution}
-      taskLicense={element.taskLicense}
-      solutionLicense={element.solutionLicense}
-    />
-  )
-}
-
-interface RenderExerciseGroupData {
-  element: {
-    content: FrontendContentNode[]
-    license: LicenseData
-    positionOnPage: number
-  }
-  children: React.ReactNode
-}
-
-export function renderExerciseGroup({
-  children = null,
-  element,
-}: RenderExerciseGroupData) {
-  return (
-    <ExerciseGroup
-      license={
-        element.license && <LicenseNotice minimal data={element.license} />
-      }
-      groupIntro={renderArticle(element.content, false)}
-      positionOnPage={element.positionOnPage}
-    >
-      {children}
-    </ExerciseGroup>
-  )
-}
-
-interface RenderVideoData {
-  element: {
-    src: string
-  }
-}
-
-export function renderVideo({ element }: RenderVideoData) {
-  return (
-    <Lazy>
-      <Video src={element.src} />
-    </Lazy>
-  )
-}
-
-interface RenderEquationsData {
-  element: EquationProps
-}
-export function renderEquations({ element }: RenderEquationsData) {
-  return <Equations steps={element.steps} />
-}
-
-interface RenderCodeData {
-  element: {
-    content: FrontendContentNode[]
-  }
-}
-
-export function renderCode({ element }: RenderCodeData) {
-  return <Code content={element.content} />
 }

@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import absoluteUrl from 'next-absolute-url'
 
-import { fetchPageData } from '@/fetcher/serlo-api'
+import { fetchPageData } from '@/fetcher/fetch-page-data'
 
 // Proxy the API Call as GET request to the frontend so that the ZEIT Now CDN is able to cache this
 // We use stale-while-revalidate for that, see also https://zeit.co/docs/v2/network/caching#stale-while-revalidate

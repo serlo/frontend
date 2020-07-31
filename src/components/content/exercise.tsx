@@ -5,83 +5,20 @@ import { makeMargin, makeDefaultButton, makePadding } from '../../helper/css'
 import { renderArticle } from '../../schema/article-renderer'
 import { AuthorTools } from './author-tools'
 import { ExerciseNumbering } from './exercise-numbering'
-import { InputExercise, InputExerciseProps } from './input-exercise'
+import { InputExercise } from './input-exercise'
 import { LicenseNotice } from './license-notice'
-import { ScMcExercise, ScMcExerciseProps } from './sc-mc-exercise'
+import { ScMcExercise } from './sc-mc-exercise'
 import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
-import { LicenseData, FrontendContentNode } from '@/data-types'
+import { FrontendContentNode, FrontendExerciseNode } from '@/data-types'
 
 export interface ExerciseProps {
-  type?: 'exercise' | '@edtr-io/exercise'
-  task: TaskData
-  solution: SolutionData
-  taskLicense: LicenseData
-  solutionLicense: LicenseData
-  grouped: boolean
-  positionInGroup: number
-  positionOnPage?: number
+  node: FrontendExerciseNode
 }
 
-/* Experiment to type out the EditorState */
-
-export interface ExerciseChildData {
-  type?: '@edtr-io/exercise'
-  state: {
-    content: FrontendContentNode[]
-    interactive:
-      | {
-          plugin: 'scMcExercise'
-          state: ScMcExerciseProps['state']
-        }
-      | {
-          plugin: 'inputExercise'
-          state: InputExerciseProps['data']
-        }
-  }
-}
-
-export interface TaskData {
-  children: ExerciseChildData[]
-}
-
-export interface SolutionChildData {
-  type?: '@edtr-io/solution'
-  state: {
-    prerequisite: {
-      id: string
-      title: string
-    }
-    strategy: FrontendContentNode[]
-    steps: FrontendContentNode[]
-  }
-  children?: FrontendContentNode[]
-}
-
-interface SolutionData {
-  children?: SolutionChildData[]
-}
-
-export function Exercise(props: ExerciseProps) {
+export function Exercise({ node }: ExerciseProps) {
   const { strings } = useInstanceData()
-  const {
-    task,
-    solution,
-    taskLicense,
-    solutionLicense,
-    grouped,
-    positionInGroup,
-    positionOnPage,
-  } = props
   const [solutionVisible, setVisible] = React.useState(false)
-
-  const isEditorTask =
-    task.children.length === 1 && task.children[0].type === '@edtr-io/exercise'
-
-  const isEditorSolution =
-    solution.children &&
-    solution.children.length === 1 &&
-    solution.children[0].type === '@edtr-io/solution'
 
   const auth = useAuth()
   const [loaded, setLoaded] = React.useState(false)
@@ -90,8 +27,8 @@ export function Exercise(props: ExerciseProps) {
   }, [])
 
   return (
-    <Wrapper grouped={grouped}>
-      {!grouped && <ExerciseNumbering index={positionOnPage!} />}
+    <Wrapper grouped={node.grouped}>
+      {!node.grouped && <ExerciseNumbering index={node.positionOnPage!} />}
 
       {renderExerciseTask()}
       {renderInteractive()}
@@ -103,8 +40,7 @@ export function Exercise(props: ExerciseProps) {
   )
 
   function renderSolutionToggle() {
-    if (!solution.children || solution.children[0].children?.length === 0)
-      return null
+    if (!node.solutionEdtrState || !node.solutionLegacy) return null
 
     return (
       <SolutionToggle
@@ -132,7 +68,9 @@ export function Exercise(props: ExerciseProps) {
         {renderArticle(getSolutionContent(), false)}
 
         <SolutionTools>
-          {solutionLicense && <LicenseNotice minimal data={solutionLicense} />}
+          {node.solutionLicense && (
+            <LicenseNotice minimal data={node.solutionLicense} />
+          )}
           {loaded && auth.current && <AuthorTools />}
         </SolutionTools>
       </SolutionBox>
@@ -140,53 +78,52 @@ export function Exercise(props: ExerciseProps) {
   }
 
   function getSolutionContent(): FrontendContentNode[] {
-    if (!solution.children) return []
-    if (!isEditorSolution) {
-      return solution.children
+    if (node.solutionLegacy) {
+      return node.solutionLegacy
     }
-    const state = solution.children[0].state
-    const prereq = []
+    if (!node.solutionEdtrState) return []
+    const state = node.solutionEdtrState
+    const prereq: FrontendContentNode[] = []
     if (state.prerequisite) {
       prereq.push({
         type: 'p',
         children: [
-          {
-            text: `${strings.content.prerequisite} `,
-          },
+          { type: 'text', text: `${strings.content.prerequisite} ` },
           {
             type: 'a',
             href: `/${state.prerequisite.id}`,
-            children: [{ text: state.prerequisite.title }],
+            children: [{ type: 'text', text: state.prerequisite.title }],
           },
         ],
       })
     }
     const strategy = state.strategy
     const steps = state.steps
-    return [...prereq, ...strategy, ...steps] as FrontendContentNode[]
+    return [...prereq, ...strategy, ...steps]
   }
 
   function renderExerciseTask() {
-    const children = isEditorTask
-      ? task.children[0].state.content
-      : task.children
-
-    return renderArticle(children, false)
+    if (node.taskLegacy) {
+      return renderArticle(node.taskLegacy, false)
+    } else if (node.taskEdtrState) {
+      return renderArticle(node.taskEdtrState.content, false)
+    }
+    return null
   }
 
   function renderInteractive() {
-    if (!isEditorTask) return null
+    if (!node.taskEdtrState) return null
 
-    const state = task.children[0].state
+    const state = node.taskEdtrState
 
     if (state.interactive) {
       if (state.interactive.plugin === 'scMcExercise') {
         return (
           <ScMcExercise
             state={state.interactive.state}
-            idBase={`ex-${
-              positionOnPage ? positionOnPage : ''
-            }-${positionInGroup}-`}
+            idBase={`ex-${node.positionOnPage ? node.positionOnPage : ''}-${
+              node.positionInGroup
+            }-`}
           />
         )
       }
@@ -201,7 +138,7 @@ export function Exercise(props: ExerciseProps) {
       <ExerciseTools>
         {renderSolutionToggle()}
 
-        {taskLicense && <LicenseNotice minimal data={taskLicense} />}
+        {node.taskLicense && <LicenseNotice minimal data={node.taskLicense} />}
         {loaded && auth.current && <AuthorTools />}
       </ExerciseTools>
     )

@@ -1,4 +1,6 @@
-import { QueryResponse } from './query'
+export const dummy = 123
+
+/*import { QueryResponse } from './query'
 import { SecondaryNavigationData, SecondaryNavigationEntry } from '@/data-types'
 
 interface NavigationData {
@@ -53,3 +55,4 @@ function convertEntry(entry: NavigationData): SecondaryNavigationEntry {
     return '#'
   }
 }
+*/
