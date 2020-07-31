@@ -41,15 +41,11 @@ export const enInstanceData: InstanceData = {
           { title: 'Contact', url: '/41043' },
           {
             title: 'Serlo in other languages',
-            url: `https://en.${serloDomain}/global`,
-          },
-          {
-            title: 'Back into the old design',
-            url: `https://de.${serloDomain}/disable-frontend`,
+            url: `/global`,
           },
           {
             title: 'API',
-            url: `https://en.${serloDomain}/community/technology-and-development/content-api`,
+            url: `/105250`,
           },
         ],
       },
@@ -77,7 +73,7 @@ export const enInstanceData: InstanceData = {
             title: 'Terms of use',
             url: `https://de.${serloDomain}/terms`,
           },
-          { title: 'Imprint', url: `https://de.${serloDomain}/imprint` },
+          { title: 'Imprint', url: `/imprint` },
         ],
       },
     ],
@@ -95,7 +91,7 @@ export const enInstanceData: InstanceData = {
       summaryHeading: 'Serlo.org is the Wikipedia for learning.',
       summaryText:
         'We are a community of visionaries working tirelessly to make great education freely available to everyone.',
-      learnMore: 'Mehr Erfahren',
+      learnMore: 'Learn more',
       participate: 'Join the cause',
       donate: 'Donate',
       toTop: 'To Top',
@@ -164,14 +160,15 @@ export const enInstanceLandingData: LandingData = {
     adFree: 'ad-free',
     freeOfCharge: 'free of charge',
     wikiTitle: 'Serlo is the Wikipedia for Learning',
-    wikiText: '', //TODO: Missing, contacted Jakob.
+    wikiText:
+      'Just like Wikipedia, this platform is created by an engaged community of authors. Serlo Education is run and owned by decentralized teams of volunteers and professionals all over the world.',
     movementTitle: 'Become a Part of Our Movement for Open Education',
     callForAuthors:
       'We are looking for teachers and enthusiastic educators who are passionate about their subject. Become part of our community to create new learning material and help us improve existing content.',
     communityLink: 'Visit the landing page for authors',
     callForOther:
-      'Serlo is being developed by highly motivated volunteers and employees worldwide. We offer a diverse range of jobs and volunteering opportunities in the fields of software development, content editing and NGO management.', //TODO: Placeholder, contacted Jakob.
-    getInvolved: 'Mach mit!', //TODO: Placeholder, contacted Jakob.
+      'We offer a diverse range of jobs and volunteering opportunities in the fields of software development, design, translation, communications, project management and more.',
+    getInvolved: 'Get involved!',
   },
 }
 
@@ -188,30 +185,30 @@ export const enLoggedInData: LoggedInData = {
     },
     {
       url: '',
-      title: 'Benutzer',
+      title: 'User',
       icon: 'user',
       children: [
-        { url: '/user/public', title: 'Öffentliches Profil' },
+        { url: '/user/public', title: 'Public profile' },
         {
           url: '/user/settings',
-          title: 'Profil bearbeiten',
+          title: 'Edit profile',
         },
         {
           url: '/auth/password/change',
-          title: 'Passwort aktualisieren',
+          title: 'Change password',
         },
         {
           url: '/event/history/user/me',
-          title: 'Meine Aktivitäten',
+          title: 'Recent activities',
         },
         {
           url: '/api/auth/logout',
-          title: 'Ausloggen',
+          title: 'Log out',
         },
       ],
     },
   ],
   strings: {
-    tools: 'Weitere Tools',
+    tools: 'Other Tools',
   },
 }

@@ -7,45 +7,43 @@ import {
 import { serloDomain } from '@/helper/serlo-domain'
 
 export const frInstanceData: InstanceData = {
-  lang: 'en',
+  lang: 'fr',
   headerData: [
     {
       url: '',
-      title: 'Subjects',
+      title: 'Matières',
       icon: 'subject',
-      children: [{ url: '/106103', title: 'Subjects under construction' }],
+      children: [{ url: '/141585', title: 'Mathématiques'},
+				{url: '/148617', title: 'Boîte à méthodes'},
+				{url: '/141604', title: 'Nouvelle matières'}],
     },
-    { url: '/23727', title: 'About Serlo', icon: 'about' },
-    { url: '/27469', title: 'Get involved!', icon: 'participate' },
+    { url: '/23727', title: 'À propos de serlo', icon: 'about' },
+    { url: '/27469', title: 'Participe!', icon: 'participate' },
     {
       url: '',
-      title: 'Community',
+      title: 'Communauté',
       icon: 'community',
       children: [
         {
           url: '/35587',
-          title: 'Starting page for authors',
+          title: 'Page de démarrage pour les auteurs',
         },
-        { url: 'https://community.serlo.org/', title: 'Chat for authors' },
-        { url: '/entity/unrevised', title: 'Unrevised changes' },
+        { url: 'https://community.serlo.org/', title: 'Chat pour les auteurs' },
+        { url: '/entity/unrevised', title: 'Modifications non révisées' },
       ],
     },
   ],
   footerData: {
     footerNavigation: [
       {
-        title: 'General',
+        title: 'Général',
         children: [
-          { title: 'About Serlo', url: '/serlo' },
-          { title: 'Get involved!', url: '/27469' },
+          { title: 'À propos de serlo', url: '/serlo' },
+          { title: 'Participes!', url: '/141581' },
           { title: 'Contact', url: '/41043' },
           {
-            title: 'Serlo in other languages',
+            title: "Serlo dans d'autres langues",
             url: `https://en.${serloDomain}/global`,
-          },
-          {
-            title: 'Back into the old design',
-            url: `https://de.${serloDomain}/disable-frontend`,
           },
           {
             title: 'API',
@@ -54,14 +52,8 @@ export const frInstanceData: InstanceData = {
         ],
       },
       {
-        title: 'Stay in touch',
+        title: 'Restez en contact',
         children: [
-          {
-            title: 'Newsletter',
-            url:
-              'https://serlo.us7.list-manage.com/subscribe?u=23f4b04bf70ea485a766e532d&amp;id=a7bb2bbc4f',
-            icon: 'newsletter',
-          },
           {
             title: 'GitHub',
             url: 'https://github.com/serlo',
@@ -70,14 +62,14 @@ export const frInstanceData: InstanceData = {
         ],
       },
       {
-        title: 'Legal terms',
+        title: 'Termes légaux',
         children: [
           { title: 'Privacy Policy', url: `https://de.${serloDomain}/privacy` },
           {
-            title: 'Terms of use',
+            title: "Conditions d'utilisation",
             url: `https://de.${serloDomain}/terms`,
           },
-          { title: 'Imprint', url: `https://de.${serloDomain}/imprint` },
+          { title: 'Imprimer', url: `https://de.${serloDomain}/imprint` },
         ],
       },
     ],
@@ -87,18 +79,18 @@ export const frInstanceData: InstanceData = {
   },
   strings: {
     header: {
-      slogan: 'The Open Learning Platform',
-      search: 'Search',
+      slogan: "La plateforme d'apprentissage libre",
+      search: 'Recherche',
       login: 'Login',
     },
     footer: {
       summaryHeading: 'Serlo.org is the Wikipedia for learning.',
       summaryText:
         'We are a community of visionaries working tirelessly to make great education freely available to everyone.',
-      learnMore: 'Mehr Erfahren',
-      participate: 'Join the cause',
-      donate: 'Donate',
-      toTop: 'To Top',
+      learnMore: 'En savoir plus',
+      participate: 'Rejoignez-nous',
+      donate: 'Faire un don',
+      toTop: 'En haut',
     },
     categories: {
       article: 'Article',
@@ -109,14 +101,14 @@ export const frInstanceData: InstanceData = {
       exercises: 'Exercises',
     },
     share: {
-      button: 'Share',
-      title: 'Share!',
-      copyLink: 'Copy link',
-      copySuccess: 'Link copied! ',
-      close: 'Close',
+      button: 'Partager',
+      title: 'Share',
+      copyLink: 'Copier le lien',
+      copySuccess: 'Lien copié!',
+      close: 'Fermer',
     },
     edit: {
-      button: 'Edit',
+      button: 'Modifier',
     },
     license: {
       readMore: 'Info',
@@ -142,12 +134,12 @@ export const frInstanceData: InstanceData = {
       chooseOption: 'Click on one of the options.',
     },
     cookie: {
-      part1: 'By using this website you declare that you agree with our',
-      part2: 'and',
+      part1: 'En utilisant ce site Web, vous déclarez que vous acceptez',
+      part2: 'et',
       part3: '.',
-      link1: 'Privacy Policy',
-      link2: 'Terms of use',
-      button: 'Agree',
+      link1: 'notre politique de confidentialitéPrivacy Policy',
+      link2: "nos conditions d'utilisation.",
+      button: "Je suis d'accord",
     },
   },
 }
@@ -177,7 +169,7 @@ export const frInstanceLandingData: LandingData = {
 }
 
 export const frServerSideStrings: ServerSideStrings = {
-  title: 'learn with Serlo!',
+  title: 'Apprendre avec Serlo!',
 }
 
 export const frLoggedInData: LoggedInData = {
@@ -192,27 +184,27 @@ export const frLoggedInData: LoggedInData = {
       title: 'Benutzer',
       icon: 'user',
       children: [
-        { url: '/user/public', title: 'Öffentliches Profil' },
+        { url: '/user/public', title: 'Profil public' },
         {
           url: '/user/settings',
-          title: 'Profil bearbeiten',
+          title: 'Éditer profil',
         },
         {
           url: '/auth/password/change',
-          title: 'Passwort aktualisieren',
+          title: 'mettre à jour le mot de passe',
         },
         {
           url: '/event/history/user/me',
-          title: 'Meine Aktivitäten',
+          title: 'Activités récentes',
         },
         {
           url: '/api/auth/logout',
-          title: 'Ausloggen',
+          title: 'Se déconnecter',
         },
       ],
     },
   ],
   strings: {
-    tools: 'Weitere Tools',
+    tools: 'Autres outils',
   },
 }
