@@ -5,10 +5,11 @@ import styled from 'styled-components'
 
 import { makeMargin, makeDefaultButton } from '../../helper/css'
 import { Link } from '../content/link'
+import { Button } from './course-navigation'
 import { useInstanceData } from '@/contexts/instance-context'
 
 export interface CourseFooterProps extends CourseFooterData {
-  onOverviewButtonClick: (e: React.MouseEvent<HTMLAnchorElement>) => void
+  onOverviewButtonClick: (e: React.MouseEvent<HTMLButtonElement>) => void
   nextHref: string
 }
 
@@ -20,7 +21,7 @@ export function CourseFooter({
   onOverviewButtonClick,
   nextHref,
 }: CourseFooterProps) {
-  const onOverviewClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const onOverviewClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     location.href = '#course-overview'
     onOverviewButtonClick(e)
   }
@@ -34,7 +35,7 @@ export function CourseFooter({
           <FontAwesomeIcon icon={faArrowCircleRight} /> {strings.course.next}
         </ButtonLink>
       )}
-      <OverviewButton onClick={onOverviewClick} as="a">
+      <OverviewButton onClick={onOverviewClick}>
         <FontAwesomeIcon icon={faListUl} /> {strings.course.pages}
       </OverviewButton>
     </Wrapper>
@@ -65,7 +66,7 @@ const ButtonLink = styled(Link)`
   font-weight: bold;
 `
 
-const OverviewButton = styled(ButtonLink)`
+const OverviewButton = styled(Button)`
   background-color: ${(props) => props.theme.colors.lightblue};
   &:hover {
     background-color: ${(props) => props.theme.colors.brand};

@@ -90,8 +90,9 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
         const link = target.classList.contains(className)
           ? target
           : target.parentElement
-
         if (
+          !e.metaKey &&
+          !e.ctrlKey &&
           link &&
           link.classList.contains(className) &&
           typeof link.dataset.ctorig !== 'undefined' &&

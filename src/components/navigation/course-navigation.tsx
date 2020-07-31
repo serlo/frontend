@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import styled, { css } from 'styled-components'
 
-import { makeMargin, makeDefaultButton } from '../../helper/css'
+import { makeMargin, makeDefaultButton, inputFontReset } from '../../helper/css'
 import { Link } from '../content/link'
 import { StyledLi } from '../tags/styled-li'
 import { StyledOl } from '../tags/styled-ol'
@@ -12,7 +12,7 @@ import { CourseData } from '@/data-types'
 
 export interface CourseNavigationProps {
   open: boolean
-  onOverviewButtonClick: (e: React.MouseEvent<HTMLAnchorElement>) => void
+  onOverviewButtonClick: (e: React.MouseEvent<HTMLButtonElement>) => void
   data: CourseData
 }
 
@@ -82,9 +82,10 @@ const CourseLink = styled(Link)<{ active: boolean }>`
     `}
 `
 
-const Button = styled.a`
+export const Button = styled.button`
   font-size: 1.125rem;
   ${makeDefaultButton}
+  ${inputFontReset}
   padding: 3px 8px;
   ${makeMargin}
   background-color: ${(props) => props.theme.colors.brand};
