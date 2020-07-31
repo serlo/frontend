@@ -9,7 +9,7 @@ import { Button } from './course-navigation'
 import { useInstanceData } from '@/contexts/instance-context'
 
 export interface CourseFooterProps extends CourseFooterData {
-  onOverviewButtonClick: (e: React.MouseEvent<HTMLAnchorElement>) => void
+  onOverviewButtonClick: (e: React.MouseEvent<HTMLButtonElement>) => void
   nextHref: string
 }
 
@@ -21,7 +21,7 @@ export function CourseFooter({
   onOverviewButtonClick,
   nextHref,
 }: CourseFooterProps) {
-  const onOverviewClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const onOverviewClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     location.href = '#course-overview'
     onOverviewButtonClick(e)
   }

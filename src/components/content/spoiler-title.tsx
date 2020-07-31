@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components'
+
 import { inputFontReset } from '@/helper/css'
 
 export interface SpoilerTitleProps {

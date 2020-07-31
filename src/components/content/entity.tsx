@@ -42,7 +42,7 @@ export function Entity({ data }: EntityProps) {
   // course
   const [courseNavOpen, setCourseNavOpen] = React.useState(false)
   const openCourseNav = (
-    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault()
     setCourseNavOpen(true)
