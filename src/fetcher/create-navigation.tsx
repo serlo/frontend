@@ -1,6 +1,4 @@
-export const dummy = 123
-
-/*import { QueryResponse } from './query'
+import { QueryResponse } from './query'
 import { SecondaryNavigationData, SecondaryNavigationEntry } from '@/data-types'
 
 interface NavigationData {
@@ -35,24 +33,24 @@ export function createNavigation(
       // ignore
     }
   }
-}
 
-function convertEntry(entry: NavigationData): SecondaryNavigationEntry {
-  return {
-    title: entry.label,
-    url: getUrl(),
-  }
-
-  function getUrl(): string {
-    if (entry.url) {
-      return entry.url
+  function convertEntry(entry: NavigationData): SecondaryNavigationEntry {
+    return {
+      title: entry.label,
+      url: getUrl(),
+      active: entry.id === uuid.id,
     }
 
-    if (entry.id) {
-      return `/${entry.id}`
-    }
+    function getUrl(): string {
+      if (entry.url) {
+        return entry.url
+      }
 
-    return '#'
+      if (entry.id) {
+        return `/${entry.id}`
+      }
+
+      return '#'
+    }
   }
 }
-*/

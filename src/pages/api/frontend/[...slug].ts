@@ -1,5 +1,4 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import absoluteUrl from 'next-absolute-url'
 
 import { fetchPageData } from '@/fetcher/fetch-page-data'
 
@@ -7,10 +6,8 @@ import { fetchPageData } from '@/fetcher/fetch-page-data'
 // We use stale-while-revalidate for that, see also https://zeit.co/docs/v2/network/caching#stale-while-revalidate
 export default async function fetch(req: NextApiRequest, res: NextApiResponse) {
   const slug = req.query.slug as string[]
-  const { origin } = absoluteUrl(req)
-  const data = await fetchPageData('/' + slug.join('/'), origin)
+  const data = await fetchPageData('/' + slug.join('/'))
   if (data.kind === 'error') {
-    console.log(data.errorData.message)
     res.statusCode = data.errorData.code
   }
   res.setHeader('Cache-Control', 's-maxage=1, stale-while-revalidate')

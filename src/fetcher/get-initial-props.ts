@@ -28,9 +28,12 @@ export async function getInitialProps(
   }
 
   const { instance: instance_path, alias } = parseLanguageSubfolder(url)
-  const instance = fetcherAdditionalData.instance
-    ? fetcherAdditionalData.instance
-    : instance_path
+  const instance =
+    fetcherAdditionalData.instance && typeof window !== 'undefined'
+      ? fetcherAdditionalData.instance
+      : instance_path
+
+  console.log(instance, url, fetcherAdditionalData.instance)
 
   let instanceData: InstanceData | undefined = undefined
 
@@ -39,10 +42,12 @@ export async function getInitialProps(
     instanceData = getInstanceDataByLang(instance)
   }
 
-  if (joinedSlug === 'search' || joinedSlug === 'user/notifications') {
+  const rawAlias = alias.substring(1)
+
+  if (rawAlias === 'search' || rawAlias === 'user/notifications') {
     return {
       pageData: {
-        kind: joinedSlug,
+        kind: rawAlias,
       },
       instanceData,
       origin,
@@ -50,7 +55,6 @@ export async function getInitialProps(
   }
 
   if (alias === '/' && instance == 'de') {
-    console.log('de landing')
     return {
       origin,
       instanceData,
@@ -121,7 +125,7 @@ export async function getInitialProps(
     //client
 
     try {
-      const fromCache = sessionStorage.getItem(url)
+      const fromCache = sessionStorage.getItem(`${instance}${url}`)
       if (fromCache) {
         return {
           origin: fetcherAdditionalData.origin,

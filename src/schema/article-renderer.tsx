@@ -108,7 +108,7 @@ function render(
     const children: React.ReactNode[] = []
     if (currentNode.children) {
       currentNode.children.forEach((child, index) => {
-        children.push(render(child, path.concat(index)))
+        children.push(render(value, path.concat(index)))
       })
     }
     return (

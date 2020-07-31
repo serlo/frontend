@@ -1,9 +1,7 @@
-export const dummy = 123
-
-/*import { QueryResponse } from './query'
+import { QueryResponse } from './query'
 import { getServerSideStrings } from '@/helper/feature-i18n'
 
-export function createTitle(uuid: QueryResponse) {
+export function createTitle(uuid: QueryResponse): string {
   const instanceData = getServerSideStrings(uuid.instance)
   const suffix = ` - ${instanceData.title}`
 
@@ -31,5 +29,6 @@ export function createTitle(uuid: QueryResponse) {
       return `${uuid.currentRevision.title}${suffix}`
     }
   }
+
+  return 'Serlo'
 }
-*/

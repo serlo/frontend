@@ -356,21 +356,6 @@ function createTaxonomyTerm(uuid: TaxonomyTerm): TaxonomyTermEntity {
   }
 }
 
-function convertState(raw: string | undefined): FrontendContentNode {
-  if (raw === undefined) return {}
-
-  if (raw?.startsWith('[')) {
-    // legacy
-    const legacyHTML = render(raw)
-    return convertLegacyState(legacyHTML)
-  } else if (raw?.startsWith('{')) {
-    // edtrio
-    return convertEdtrIoState(JSON.parse(raw))
-  } else {
-    // raw as text
-    return { children: [{ type: 'p', children: [{ text: raw ?? {} }] }] }
-  }
-}
 
 function isActive(child: TaxonomyTermChild) {
   return child.trashed === false && child.__typename !== 'UnsupportedUuid'

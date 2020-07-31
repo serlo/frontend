@@ -43,12 +43,15 @@ export function Injection({ href }: InjectionProps) {
         if (res.headers.get('content-type')!.includes('json')) return res.json()
         else return res.text()
       })
-      .then((fetchedData: { pageData: PageData }) => {
-        dataToState(fetchedData)
+      .then((pageData: PageData) => {
+        dataToState(pageData)
 
-        if (fetchedData.pageData.kind === 'single-entity') {
+        if (pageData.kind === 'single-entity') {
           try {
-            sessionStorage.setItem(encodedHref, JSON.stringify(fetchedData))
+            sessionStorage.setItem(
+              'injection' + encodedHref,
+              JSON.stringify(pageData)
+            )
           } catch (e) {
             //
           }
@@ -56,11 +59,11 @@ export function Injection({ href }: InjectionProps) {
       })
   }, [href, origin])
 
-  function dataToState(fetchedData: { pageData: PageData }) {
-    if (fetchedData.pageData.kind === 'single-entity') {
-      setValue(fetchedData.pageData.entityData.content)
-      if (fetchedData.pageData.entityData.licenseData) {
-        setLicense(fetchedData.pageData.entityData.licenseData)
+  function dataToState(pageData: PageData) {
+    if (pageData.kind === 'single-entity') {
+      setValue(pageData.entityData.content)
+      if (pageData.entityData.licenseData) {
+        setLicense(pageData.entityData.licenseData)
       }
     }
   }

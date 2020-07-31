@@ -59,7 +59,7 @@ export const taInstanceData: InstanceData = {
             title: 'செய்திமடல்',
             url:
               'https://serlo.us7.list-manage.com/subscribe?u=23f4b04bf70ea485a766e532d&amp;id=a7bb2bbc4f',
-            icon: 'செய்திமடல்',
+            icon: 'newsletter',
           },
           {
             title: 'GitHub',
