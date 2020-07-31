@@ -30,14 +30,14 @@ export function CourseFooter({
 
   return (
     <Wrapper>
-      <OverviewButton onClick={onOverviewClick}>
-        <FontAwesomeIcon icon={faListUl} /> {strings.course.pages}
-      </OverviewButton>
       {nextHref && (
         <ButtonLink href={nextHref}>
           <FontAwesomeIcon icon={faArrowCircleRight} /> {strings.course.next}
         </ButtonLink>
       )}
+      <OverviewButton onClick={onOverviewClick}>
+        <FontAwesomeIcon icon={faListUl} /> {strings.course.pages}
+      </OverviewButton>
     </Wrapper>
   )
 }

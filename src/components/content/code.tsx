@@ -24,6 +24,8 @@ const Pre = styled.pre`
   background-color: ${(props) => props.theme.colors.bluewhite};
   border-left: 8px solid ${(props) => props.theme.colors.lighterblue};
 
+  overflow-x: auto;
+
   > code {
     font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier,
       monospace;

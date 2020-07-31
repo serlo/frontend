@@ -23,7 +23,6 @@ export function createBreadcrumbs(uuid: QueryResponse) {
 
   function buildFromTaxTerms(taxonomyPaths: TaxonomyTerms | undefined) {
     if (taxonomyPaths === undefined) return undefined
-
     let breadcrumbs
 
     for (const child of taxonomyPaths) {
@@ -40,6 +39,7 @@ export function createBreadcrumbs(uuid: QueryResponse) {
         breadcrumbs = path
       }
     }
+
     return breadcrumbs
   }
 
@@ -47,5 +47,6 @@ export function createBreadcrumbs(uuid: QueryResponse) {
     return breadcrumbs
       ?.slice(0, -1) // compat: remove last entry because it is the entry itself
       .filter((entry) => entry.url && entry.label) // compat: remove empty entries
+      .filter((entry) => entry.label !== 'Alle Themen') // compat/test: remove "Alle Themen" because landing pages offer a similar overview
   }
 }
