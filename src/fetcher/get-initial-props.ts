@@ -32,9 +32,10 @@ export async function getInitialProps(
   console.log('additional data', fetcherAdditionalData)
 
   const { instance: instance_path, alias } = parseLanguageSubfolder(url)
-  const instance = fetcherAdditionalData.instance
-    ? fetcherAdditionalData.instance
-    : instance_path
+  const instance =
+    fetcherAdditionalData.instance && typeof window !== 'undefined'
+      ? fetcherAdditionalData.instance
+      : instance_path
 
   console.log('get initial props', instance, alias)
 
