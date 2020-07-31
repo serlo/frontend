@@ -5,6 +5,7 @@ import styled from 'styled-components'
 
 import { makeMargin, makeDefaultButton } from '../../helper/css'
 import { Link } from '../content/link'
+import { Button } from './course-navigation'
 import { useInstanceData } from '@/contexts/instance-context'
 
 export interface CourseFooterProps extends CourseFooterData {
@@ -29,7 +30,7 @@ export function CourseFooter({
 
   return (
     <Wrapper>
-      <OverviewButton onClick={onOverviewClick} as="a">
+      <OverviewButton onClick={onOverviewClick}>
         <FontAwesomeIcon icon={faListUl} /> {strings.course.pages}
       </OverviewButton>
       {nextHref && (
@@ -65,7 +66,7 @@ const ButtonLink = styled(Link)`
   font-weight: bold;
 `
 
-const OverviewButton = styled(ButtonLink)`
+const OverviewButton = styled(Button)`
   background-color: ${(props) => props.theme.colors.lightblue};
   &:hover {
     background-color: ${(props) => props.theme.colors.brand};

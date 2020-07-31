@@ -28,7 +28,7 @@ export const LiteYouTubeEmbed = ({
   wrapperClass = 'yt-lite'
 }: LiteYouTubeEmbedProps) => {
   const [preconnected, setPreconnected] = React.useState(false)
-  const [iframe, setIframe] = React.useState(false)
+  const [showIframe, setShowIframe] = React.useState(false)
   const [fallback, setUseFallback] = React.useState(false)
 
   const videoId = encodeURIComponent(id)
@@ -45,8 +45,8 @@ export const LiteYouTubeEmbed = ({
     setPreconnected(true)
   }
   const addIframe = () => {
-    if (iframe) return
-    setIframe(true)
+    if (showIframe) return
+    setShowIframe(true)
   }
 
   React.useEffect(() => {
@@ -68,16 +68,17 @@ export const LiteYouTubeEmbed = ({
     current.style.backgroundImage = `url('${
       fallback ? posterUrlFallback : posterUrl
     }')`
-    current.addEventListener('pointerover', warmConnections, true)
-    current.addEventListener('click', addIframe, true)
 
-    return () => {
-      current.removeEventListener('pointerover', warmConnections)
-      current.removeEventListener('click', addIframe)
-    }
-  // Doesn't work correctly when videoId changes
+    // Doesn't work correctly when videoId changes
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fallback])
+
+  function onKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
+    if (!showIframe && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault()  
+      addIframe()
+    }
+  }
 
   return (
     <YouTubeWrapper>
@@ -92,12 +93,17 @@ export const LiteYouTubeEmbed = ({
         )}
       </>
       <div
-        className={`${wrapperClass} ${iframe && activatedClass}`}
+        className={`${wrapperClass} ${showIframe && activatedClass}`}
         data-title={videoTitle}
         ref={refVideo}
+        tabIndex={0}
+        onClick={addIframe}
+        onPointerOver={warmConnections}
+        onFocus={warmConnections}
+        onKeyDown={onKeyDown}
       >
         <div className={playerClass}></div>
-        {iframe && (
+        {showIframe && (
           <iframe
             className={iframeClass}
             title={videoTitle}
