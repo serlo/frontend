@@ -1,8 +1,8 @@
-import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons'
+import { faArrowCircleLeft, faList } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { transparentize } from 'polished'
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import { makeDefaultButton, makeMargin } from '../../helper/css'
 import { Link } from '../content/link'
@@ -10,9 +10,10 @@ import { BreadcrumbsData, BreadcrumbEntry } from '@/data-types'
 
 export interface BreadcrumbsProps {
   data: BreadcrumbsData
+  isTaxonomy: boolean
 }
 
-export function Breadcrumbs({ data }: BreadcrumbsProps) {
+export function Breadcrumbs({ data, isTaxonomy }: BreadcrumbsProps) {
   if (!data || data.length < 1) {
     return null
   }
@@ -26,6 +27,7 @@ export function Breadcrumbs({ data }: BreadcrumbsProps) {
             i={i}
             arrayLength={completeArray.length}
             key={i}
+            isTaxonomy={isTaxonomy}
           ></BreadcrumbEntries>
         )
       })}
@@ -37,9 +39,15 @@ interface BradcrumbEntriesProps {
   bcEntry: BreadcrumbEntry
   i: number
   arrayLength: number
+  isTaxonomy: boolean
 }
 
-function BreadcrumbEntries({ bcEntry, i, arrayLength }: BradcrumbEntriesProps) {
+function BreadcrumbEntries({
+  bcEntry,
+  i,
+  arrayLength,
+  isTaxonomy,
+}: BradcrumbEntriesProps) {
   if (bcEntry.ellipsis) {
     return <BreadcrumbLink as="span">…</BreadcrumbLink>
   } else {
@@ -47,12 +55,19 @@ function BreadcrumbEntries({ bcEntry, i, arrayLength }: BradcrumbEntriesProps) {
       return <BreadcrumbLink href={bcEntry.url}>{bcEntry.label}</BreadcrumbLink>
     } else
       return (
-        <BreadcrumbLinkLast href={bcEntry.url}>
-          <Icon>
-            <FontAwesomeIcon icon={faArrowCircleLeft} size="1x" />
-          </Icon>
-          {bcEntry.label}
-        </BreadcrumbLinkLast>
+        <>
+          <BreadcrumbLinkLast href={bcEntry.url} isTaxonomy={isTaxonomy}>
+            <MobileIcon>
+              <FontAwesomeIcon icon={faArrowCircleLeft} size="1x" />
+            </MobileIcon>
+            {!isTaxonomy && (
+              <DesktopIcon>
+                <FontAwesomeIcon icon={faList} size="1x" />
+              </DesktopIcon>
+            )}
+            {bcEntry.label}
+          </BreadcrumbLinkLast>
+        </>
       )
   }
 }
@@ -104,14 +119,19 @@ const BreadcrumbLink = styled(Link)`
   }
 `
 
-const BreadcrumbLinkLast = styled(BreadcrumbLink)`
+const BreadcrumbLinkLast = styled(BreadcrumbLink)<{ isTaxonomy: boolean }>`
   &:after {
     display: none;
   }
 
-  background: ${(props) => props.theme.colors.bluewhite};
+  ${(props) =>
+    !props.isTaxonomy &&
+    css`
+      background: ${(props) => props.theme.colors.bluewhite};
+      font-weight: bold;
+    `}
+
   color: ${(props) => props.theme.colors.brand};
-  font-weight: bold;
 
   @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
     display: inline-flex;
@@ -128,8 +148,21 @@ const BreadcrumbLinkLast = styled(BreadcrumbLink)`
 `
 
 const Icon = styled.span`
+  display: inline-block;
+  margin-right: 4px;
+  padding-top: 1px;
+`
+
+const MobileIcon = styled(Icon)`
   @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
     display: none;
   }
-  margin-right: 10px;
+`
+
+const DesktopIcon = styled(Icon)`
+  display: none;
+  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
+    display: inline-block;
+    font-size: 1rem;
+  }
 `

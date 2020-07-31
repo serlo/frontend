@@ -174,7 +174,10 @@ function renderPage(page: PageData) {
               <RelativeContainer>
                 <MaxWidthDiv showNav={!!page.secondaryNavigationData}>
                   {page.breadcrumbsData && (
-                    <Breadcrumbs data={page.breadcrumbsData} />
+                    <Breadcrumbs
+                      data={page.breadcrumbsData}
+                      isTaxonomy={page.kind !== 'single-entity'}
+                    />
                   )}
                   <main>
                     {(() => {
