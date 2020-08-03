@@ -130,7 +130,7 @@ module.exports = {
       },
     },
     {
-      files: ['src/data/[a-z][a-z].ts'],
+      files: ['src/data/*/index.ts'],
       rules: {
         'import/newline-after-import': 'off',
         'import/order': 'off',

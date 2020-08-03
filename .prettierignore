@@ -11,4 +11,4 @@ external
 *.html
 
 # Crowdin generated files
-src/data/[a-z][a-z].ts
+src/data/*/index.ts
