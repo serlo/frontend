@@ -99,6 +99,9 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
     loggedInData,
   ])
 
+  // dev
+  console.dir(initialProps)
+
   return (
     <OriginProvider value={initialProps.origin}>
       <InstanceDataProvider value={instanceData}>

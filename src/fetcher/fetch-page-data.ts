@@ -1,10 +1,12 @@
 import { render } from 'external/legacy_render'
 import { request } from 'graphql-request'
 
+import { createLicense } from './__create-license'
 import { createBreadcrumbs } from './create-breadcrumbs'
+import { getMetaImage, getMetaDescription } from './create-meta-data'
 import { createNavigation } from './create-navigation'
+import { buildTaxonomyData } from './create-taxonomy'
 import { createTitle } from './create-title'
-import { getMetaImage, getMetaDescription } from './get-meta-description'
 import { dataQuery, QueryResponse } from './query'
 import { endpoint } from '@/api/endpoint'
 import { PageData, FrontendContentNode } from '@/data-types'
@@ -14,14 +16,15 @@ import { convert } from '@/schema/convert-edtr-io-state'
 import { convertLegacyState } from '@/schema/convert-legacy-state'
 
 export async function fetchPageData(raw_alias: string): Promise<PageData> {
-  const { alias, instance } = parseLanguageSubfolder(raw_alias)
-
-  if (alias == '/') {
-    return { kind: 'landing', landingData: getLandingData(instance) }
-  }
-
   try {
-    return await apiRequest(alias, instance)
+    const { alias, instance } = parseLanguageSubfolder(raw_alias)
+
+    if (alias == '/') {
+      return { kind: 'landing', landingData: getLandingData(instance) }
+    }
+    const pageData = await apiRequest(alias, instance)
+    // await prettifyLinks(pageData)
+    return pageData
   } catch (e) {
     const message = `Error while fetching data: ${(e as Error).message ?? e}`
     const code = message.includes("Cannot read property 'path' of null")
@@ -40,9 +43,50 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
 
   const { uuid } = await request<{ uuid: QueryResponse }>(endpoint, QUERY)
 
-  const secondaryNavigationData = createNavigation(uuid)
+  if (uuid.__typename === 'Course') {
+    const firstPage = uuid.pages[0]?.alias
+    if (firstPage) {
+      return await apiRequest(firstPage, instance)
+    } else {
+      return { kind: 'error', errorData: { code: 404 } }
+    }
+  }
 
+  const secondaryNavigationData = createNavigation(uuid)
   const breadcrumbsData = createBreadcrumbs(uuid)
+  const horizonData = instance == 'de' ? buildHorizonData() : undefined
+  const cacheKey = `/${instance}${alias}`
+  const title = createTitle(uuid)
+  const metaImage = getMetaImage(alias)
+
+  if (uuid.__typename === 'TaxonomyTerm') {
+    return {
+      kind: 'taxonomy',
+      newsletterPopup: false,
+      metaData: {
+        title,
+        metaImage,
+        contentType:
+          uuid.type === 'topicFolder' || uuid.type === 'curriculumTopicFolder'
+            ? 'topic-folder'
+            : 'topic',
+      },
+      cacheKey,
+      breadcrumbsData,
+      secondaryNavigationData,
+      taxonomyData: buildTaxonomyData(uuid),
+    }
+  }
+
+  /*
+  
+
+
+
+
+  */
+
+  const licenseData = createLicense(uuid)
 
   if (uuid.__typename === 'Page') {
     const content = convertState(uuid.currentRevision?.content)
@@ -55,15 +99,103 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
         content,
       },
       metaData: {
-        title: createTitle(uuid),
+        title,
         contentType: 'page',
-        metaImage: getMetaImage(alias),
+        metaImage,
         metaDescription: getMetaDescription(content),
       },
-      horizonData: instance == 'de' ? buildHorizonData() : undefined,
-      cacheKey: `/${instance}${alias}`,
+      horizonData,
+      cacheKey,
       secondaryNavigationData,
       breadcrumbsData: secondaryNavigationData ? undefined : breadcrumbsData,
+    }
+  }
+
+  if (uuid.__typename === 'Article') {
+    const content = convertState(uuid.currentRevision?.content)
+    return {
+      kind: 'single-entity',
+      newsletterPopup: false,
+      entityData: {
+        id: uuid.id,
+        title: uuid.currentRevision?.title ?? '',
+        content,
+        licenseData,
+        schemaData: {
+          wrapWithItemType: 'http://schema.org/Article',
+          useArticleTag: true,
+          setContentAsSection: true,
+        },
+        categoryIcon: 'article',
+        inviteToEdit: true,
+      },
+      metaData: {
+        title,
+        contentType: 'article',
+        metaImage,
+        metaDescription:
+          uuid.currentRevision?.metaDescription ?? getMetaDescription(content),
+      },
+      horizonData,
+      cacheKey,
+      breadcrumbsData,
+    }
+  }
+
+  if (uuid.__typename === 'Video') {
+    const content = convertState(uuid.currentRevision?.content)
+    return {
+      kind: 'single-entity',
+      newsletterPopup: false,
+      entityData: {
+        id: uuid.id,
+        title: uuid.currentRevision?.title ?? '',
+        content,
+        categoryIcon: 'video',
+        inviteToEdit: true,
+        schemaData: {
+          wrapWithItemType: 'http://schema.org/VideoObject',
+        },
+        licenseData,
+      },
+      metaData: {
+        title,
+        contentType: 'video',
+        metaImage,
+        metaDescription: getMetaDescription(content),
+      },
+      horizonData,
+      cacheKey,
+      breadcrumbsData,
+    }
+  }
+
+  if (uuid.__typename === 'Applet') {
+    const content = convertState(uuid.currentRevision?.content)
+    return {
+      kind: 'single-entity',
+      newsletterPopup: false,
+      entityData: {
+        id: uuid.id,
+        title: uuid.currentRevision?.title ?? '',
+        content,
+        categoryIcon: 'applet',
+        inviteToEdit: true,
+        schemaData: {
+          wrapWithItemType: 'http://schema.org/VideoObject',
+        },
+        licenseData,
+      },
+      metaData: {
+        title,
+        contentType: 'applet',
+        metaImage,
+        metaDescription:
+          uuid.currentRevision?.metaDescription ?? getMetaDescription(content),
+      },
+      horizonData,
+      cacheKey,
+      breadcrumbsData,
     }
   }
 
@@ -83,7 +215,7 @@ function buildHorizonData() {
   return selected
 }
 
-function convertState(raw: string | undefined): FrontendContentNode[] {
+export function convertState(raw: string | undefined): FrontendContentNode[] {
   if (raw === undefined) return []
 
   if (raw?.startsWith('[')) {
