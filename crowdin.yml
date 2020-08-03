@@ -1,3 +1,9 @@
-files:
-  - source: /src/data/en/index.ts
-    translation: /src/data/%two_letters_code%/index.ts
+'preserve_hierarchy': false
+
+'files':
+  [
+    {
+      'source': '/src/data/en/index.ts',
+      'translation': '/src/data/%two_letters_code%/index.ts',
+    },
+  ]
