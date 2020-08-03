@@ -129,5 +129,12 @@ module.exports = {
         'import/no-default-export': 'off',
       },
     },
+    {
+      files: ['src/data/[a-z][a-z].ts'],
+      rules: {
+        'import/newline-after-import': 'off',
+        'import/order': 'off',
+      },
+    },
   ],
 }

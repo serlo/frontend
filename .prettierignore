@@ -9,3 +9,6 @@ external
 
 # HTML files
 *.html
+
+# Crowdin generated files
+src/data/[a-z][a-z].ts
