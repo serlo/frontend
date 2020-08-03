@@ -1,33 +1,37 @@
-import { deInstanceData, deServerSideStrings, deLoggedInData } from '@/data/de'
 import {
-  enInstanceData,
-  enServerSideStrings,
-  enInstanceLandingData,
-  enLoggedInData,
+  instanceData as deInstanceData,
+  serverSideStrings as deServerSideStrings,
+  loggedInData as deLoggedInData,
+} from '@/data/de'
+import {
+  instanceData as enInstanceData,
+  serverSideStrings as enServerSideStrings,
+  instanceLandingData as enInstanceLandingData,
+  loggedInData as enLoggedInData,
 } from '@/data/en'
 import {
-  esInstanceData,
-  esInstanceLandingData,
-  esServerSideStrings,
-  esLoggedInData,
+  instanceData as esInstanceData,
+  instanceLandingData as esInstanceLandingData,
+  serverSideStrings as esServerSideStrings,
+  loggedInData as esLoggedInData,
 } from '@/data/es'
 import {
-  frInstanceData,
-  frServerSideStrings,
-  frInstanceLandingData,
-  frLoggedInData,
+  instanceData as frInstanceData,
+  serverSideStrings as frServerSideStrings,
+  instanceLandingData as frInstanceLandingData,
+  loggedInData as frLoggedInData,
 } from '@/data/fr'
 import {
-  hiInstanceData,
-  hiServerSideStrings,
-  hiInstanceLandingData,
-  hiLoggedInData,
+  instanceData as hiInstanceData,
+  serverSideStrings as hiServerSideStrings,
+  instanceLandingData as hiInstanceLandingData,
+  loggedInData as hiLoggedInData,
 } from '@/data/hi'
 import {
-  taInstanceData,
-  taServerSideStrings,
-  taLoggedInData,
-  taInstanceLandingData,
+  instanceData as taInstanceData,
+  serverSideStrings as taServerSideStrings,
+  loggedInData as taLoggedInData,
+  instanceLandingData as taInstanceLandingData,
 } from '@/data/ta'
 import { Instance } from '@/fetcher/query'
 
