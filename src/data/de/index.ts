@@ -1,7 +1,7 @@
 import { headerData, footerData } from './menu-data';
 import { InstanceData, ServerSideStrings, LoggedInData, InstanceLandingData } from '@/data-types';
 export const instanceData: InstanceData = {
-  lang: 'en',
+  lang: "de",
   headerData: headerData,
   footerData: footerData,
   strings: {
@@ -13,7 +13,7 @@ export const instanceData: InstanceData = {
     footer: {
       summaryHeading: "Serlo.org ist die Wikipedia fürs Lernen",
       summaryText: "Wir sind eine engagierte Gemeinschaft, die daran arbeitet, hochwertige Bildung weltweit frei verfügbar zu machen.",
-      learnMore: 'Learn more',
+      learnMore: "Mehr Erfahren",
       participate: "Mitmachen",
       donate: "Spenden",
       toTop: "Nach oben"
