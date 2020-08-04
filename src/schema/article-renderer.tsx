@@ -130,7 +130,6 @@ function render(
     leaf: currentNode,
     key,
     children: currentNode?.text,
-    readonly: true,
   })
 }
 
@@ -156,21 +155,15 @@ interface RenderLeafProps {
   }
   key: number
   children: React.ReactNode
-  readonly?: boolean
 }
 
-export function renderLeaf({
-  leaf,
-  key,
-  children,
-  readonly = false,
-}: RenderLeafProps) {
+export function renderLeaf({ leaf, key, children }: RenderLeafProps) {
   const styles: CSSProperties = {}
   if (leaf.color) styles.color = articleColors[leaf.color]
   if (leaf.em) styles.fontStyle = 'italic'
   if (leaf.strong) styles.fontWeight = 'bold'
 
-  if (readonly && Object.keys(styles).length === 0) return children
+  if (Object.keys(styles).length === 0) return children
 
   const LeafTag = leaf.strong ? 'b' : leaf.em ? 'i' : 'span'
   const outputStyles = !(Object.keys(styles).length === 1 && LeafTag !== 'span')

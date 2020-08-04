@@ -149,6 +149,7 @@ export const esInstanceData: InstanceData = {
 }
 
 export const esInstanceLandingData: LandingData = {
+  lang: 'es',
   strings: {
     vision:
       'Somos una organización de base comunitaria sin ánimo de lucro que apoya el aprendizaje personalizado y trabajando por la igualdad de oportunidades educativas. Esta plataforma de aprendizaje ofrece miles de artículos de instrucción, videos de aprendizaje y ejercicios de práctica para millones de estudiantes en todo el mundo - completamente gratis. Ahora es el momento de unirse a nosotros en tu idioma.',

@@ -1,46 +1,121 @@
-export const dummy = 123
+import { request } from 'graphql-request'
 
-/*import { ExerciseProps } from '@/components/content/exercise'
-import { FrontendContentNode } from '@/data-types'
+import { idsQuery } from './query'
+import { endpoint } from '@/api/endpoint'
+import { PageData, FrontendContentNode } from '@/data-types'
+import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
 
-export function walkIdNodes(
-  content: FrontendContentNode[] | undefined,
-  callback: (node: FrontendContentNode, id: number) => void
-) {
-  if (content === undefined) return
-  content.forEach((obj) => {
-    if (obj.type === 'a' || obj.type === 'img') {
-      // We know that href might exists
-      const href = (obj as { href?: string }).href
-      if (href) {
-        if (/^\/[\d]+$/.test(href)) {
-          // hit
-          const id = parseInt(href.substring(1))
-          callback(obj, id)
+export async function prettifyLinks(pageData: PageData) {
+  const ids: number[] = []
+  const callbacks: { id: number; callback: (alias: string) => void }[] = []
+
+  if (pageData.kind === 'single-entity' || pageData.kind === 'taxonomy') {
+    if (pageData.secondaryNavigationData) {
+      pageData.secondaryNavigationData.forEach((entry) => {
+        if (entry.url) {
+          if (isId(entry.url)) {
+            const id = getId(entry.url)
+            ids.push(id)
+            callbacks.push({
+              id,
+              callback: (alias) => {
+                entry.url = alias
+              },
+            })
+          }
+        }
+      })
+    }
+  }
+
+  if (pageData.kind === 'single-entity' && pageData.entityData.content) {
+    walk(pageData.entityData.content)
+  }
+
+  if (pageData.kind === 'taxonomy') {
+    walk(pageData.taxonomyData.exercisesContent)
+  }
+
+  function walk(nodes: FrontendContentNode[] | undefined) {
+    if (!nodes) return
+    nodes.forEach((node) => {
+      if (node.type === 'a' || node.type === 'img') {
+        const href = node.href
+        if (href) {
+          if (isId(href)) {
+            // hit
+            const id = getId(href)
+            ids.push(id)
+            callbacks.push({
+              id,
+              callback: (alias) => {
+                node.href = alias
+              },
+            })
+          }
         }
       }
-    }
-    // recursion
-    if (obj.children) {
-      walkIdNodes(obj.children, callback)
-    }
-    if (obj.type === 'exercise') {
-      // domain knowledge
-      const exercise = obj as ExerciseProps
-      if (exercise.solution?.children) {
-        walkIdNodes(exercise.solution.children, callback)
+      // recursion
+      if (node.children) {
+        walk(node.children)
       }
-      if (exercise.task.children) {
-        walkIdNodes(exercise.task.children, callback)
+      if (node.type === 'exercise') {
+        if (node.solutionLegacy) {
+          walk(node.solutionLegacy)
+        }
+        if (node.taskLegacy) {
+          walk(node.taskLegacy)
+        }
+        if (node.solutionEdtrState) {
+          const prereq = node.solutionEdtrState.prerequisite
+          if (prereq) {
+            const id = prereq.id
+            ids.push(id)
+            callbacks.push({
+              id,
+              callback: (alias) => {
+                prereq.href = alias
+              },
+            })
+          }
+          walk(node.solutionEdtrState.steps)
+          walk(node.solutionEdtrState.strategy)
+        }
+        if (node.taskEdtrState) {
+          walk(node.taskEdtrState.content)
+        }
       }
-    }
-    if (obj.type === '@edtr-io/exercise') {
-      walkIdNodes(obj.state.content, callback)
-    }
-    if (obj.type === '@edtr-io/solution') {
-      walkIdNodes(obj.state.strategy, callback)
-      walkIdNodes(obj.state.steps, callback)
-    }
+    })
+  }
+
+  const prettyLinks =
+    ids.length < 1
+      ? undefined
+      : await request<{
+          [key: string]: {
+            alias: string
+            instance: string
+          }
+        }>(endpoint, idsQuery(ids))
+
+  //console.log('prettylinks', prettyLinks)
+
+  callbacks.forEach((x) => {
+    if (prettyLinks === undefined) return
+
+    const prettyLink = prettyLinks[`uuid${x.id}`]?.alias
+
+    const alias =
+      !prettyLink || hasSpecialUrlChars(prettyLink) ? `/${x.id}` : prettyLink
+
+    x.callback(alias)
   })
 }
-*/
+
+function isId(href: string): boolean {
+  return /^\/[\d]+$/.test(href)
+}
+
+function getId(href: string): number {
+  return parseInt(href.substring(1))
+}

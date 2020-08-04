@@ -25,7 +25,7 @@ export function buildTaxonomyData(uuid: TaxonomyTerm): TaxonomyData {
   const children = uuid.children?.filter(isActive)
 
   return {
-    description: convertState(uuid.description),
+    description: uuid.description ? convertState(uuid.description) : undefined,
     title: uuid.name,
     id: uuid.id,
 
@@ -46,13 +46,13 @@ function isActive(child: TaxonomyTermChild) {
 
 function collectExercises(children: TaxonomyTerm['children']) {
   let index = 0
-  const result: FrontendContentNode[][] = []
+  const result: (FrontendExerciseNode | FrontendExerciseGroupNode)[] = []
   children.forEach((child) => {
     if (child.__typename === 'Exercise' && child.currentRevision) {
-      result.push([createExercise(child, index++)])
+      result.push(createExercise(child, index++))
     }
     if (child.__typename === 'ExerciseGroup' && child.currentRevision) {
-      result.push([createExerciseGroup(child, index++)])
+      result.push(createExerciseGroup(child, index++))
     }
   })
   return result
@@ -72,9 +72,9 @@ export function createExercise(
       // TODO import types from edtr-io
       const taskState = JSON.parse(content).state
       taskState.content = convert(taskState.content)
-      if (taskState.interactive?.type == 'scMcExercise') {
+      if (taskState.interactive?.plugin == 'scMcExercise') {
         taskState.interactive.state.answers.forEach((answer: any) => {
-          answer.feedback = convert(answer.feeedback)
+          answer.feedback = convert(answer.feedback)
           answer.content = convert(answer.content)
         })
       }
@@ -187,7 +187,9 @@ function collectNestedTaxonomyTerms(
       result.push({
         title: child.name,
         url: getAlias(child),
-        description: convertState(child.description),
+        description: child.description
+          ? convertState(child.description)
+          : undefined,
         articles: collectType(subchildren, 'Article'),
         exercises: collectTopicFolders(subchildren),
         videos: collectType(subchildren, 'Video'),
@@ -203,7 +205,11 @@ function collectNestedTaxonomyTerms(
 function collectSubfolders(children: TaxonomyTermChildrenLevel2[]) {
   const result: TaxonomyLink[] = []
   children.forEach((child) => {
-    if (child.__typename === 'TaxonomyTerm')
+    if (
+      child.__typename === 'TaxonomyTerm' &&
+      child.type !== 'topicFolder' &&
+      child.type !== 'curriculumTopicFolder'
+    )
       result.push({ title: child.name, url: getAlias(child) })
   })
   return result

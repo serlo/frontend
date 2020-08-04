@@ -45,7 +45,7 @@ export function Exercise({ node }: ExerciseProps) {
   )
 
   function renderSolutionToggle() {
-    if (!node.solutionEdtrState || !node.solutionLegacy) return null
+    if (!node.solutionEdtrState && !node.solutionLegacy) return null
 
     return (
       <SolutionToggle
@@ -91,7 +91,7 @@ export function Exercise({ node }: ExerciseProps) {
           { type: 'text', text: `${strings.content.prerequisite} ` },
           {
             type: 'a',
-            href: `/${state.prerequisite.id}`,
+            href: state.prerequisite.href,
             children: [{ type: 'text', text: state.prerequisite.title }],
           },
         ],

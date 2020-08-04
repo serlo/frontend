@@ -6,11 +6,6 @@ import { StyledP } from '../tags/styled-p'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EdtrPluginInputExercise } from '@/data-types'
 
-interface AnswerData {
-  value: any
-  isCorrect: boolean
-}
-
 export interface InputExerciseProps {
   data: EdtrPluginInputExercise['state']
 }
@@ -47,7 +42,10 @@ export function InputExercise({ data }: InputExerciseProps) {
     </Wrapper>
   )
 
-  function checkAnswer(val: string, answers: AnswerData[]) {
+  function checkAnswer(
+    val: string,
+    answers: EdtrPluginInputExercise['state']['answers']
+  ) {
     const filteredAnswers = answers.filter((answer) => answer.value === val)
     if (filteredAnswers.length !== 1 || !filteredAnswers[0].isCorrect) {
       return <span>{strings.content.wrong}</span>

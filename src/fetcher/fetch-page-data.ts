@@ -1,16 +1,21 @@
 import { render } from 'external/legacy_render'
 import { request } from 'graphql-request'
 
-import { createLicense } from './__create-license'
 import { createBreadcrumbs } from './create-breadcrumbs'
 import { getMetaImage, getMetaDescription } from './create-meta-data'
 import { createNavigation } from './create-navigation'
-import { buildTaxonomyData } from './create-taxonomy'
+import {
+  buildTaxonomyData,
+  createExercise,
+  createExerciseGroup,
+} from './create-taxonomy'
 import { createTitle } from './create-title'
+import { prettifyLinks } from './prettify-links'
 import { dataQuery, QueryResponse } from './query'
 import { endpoint } from '@/api/endpoint'
 import { PageData, FrontendContentNode } from '@/data-types'
 import { horizonData } from '@/data/horizon_de'
+import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
 import { parseLanguageSubfolder, getLandingData } from '@/helper/feature-i18n'
 import { convert } from '@/schema/convert-edtr-io-state'
 import { convertLegacyState } from '@/schema/convert-legacy-state'
@@ -23,7 +28,7 @@ export async function fetchPageData(raw_alias: string): Promise<PageData> {
       return { kind: 'landing', landingData: getLandingData(instance) }
     }
     const pageData = await apiRequest(alias, instance)
-    // await prettifyLinks(pageData)
+    await prettifyLinks(pageData)
     return pageData
   } catch (e) {
     const message = `Error while fetching data: ${(e as Error).message ?? e}`
@@ -78,18 +83,66 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
     }
   }
 
-  /*
-  
+  if (uuid.__typename === 'Exercise' || uuid.__typename === 'GroupedExercise') {
+    const exercise = [createExercise(uuid)]
+    return {
+      kind: 'single-entity',
+      entityData: {
+        id: uuid.id,
+        content: exercise,
+        inviteToEdit: true,
+      },
+      newsletterPopup: false,
+      breadcrumbsData,
+      metaData: {
+        title,
+        contentType:
+          uuid.__typename === 'Exercise' ? 'text-exercise' : 'groupedexercise',
+        metaImage,
+        metaDescription: getMetaDescription(exercise),
+      },
+      horizonData,
+      cacheKey,
+    }
+  }
 
+  if (uuid.__typename === 'ExerciseGroup') {
+    const exercise = [createExerciseGroup(uuid)]
+    return {
+      kind: 'single-entity',
+      entityData: {
+        id: uuid.id,
+        content: exercise,
+        inviteToEdit: true,
+      },
+      newsletterPopup: false,
+      breadcrumbsData,
+      metaData: {
+        title,
+        contentType: 'exercisegroup',
+        metaImage,
+        metaDescription: getMetaDescription(exercise),
+      },
+      horizonData,
+      cacheKey,
+    }
+  }
 
+  const content = convertState(uuid.currentRevision?.content)
 
-
-  */
-
-  const licenseData = createLicense(uuid)
+  if (uuid.__typename === 'Event') {
+    // events are only loaded in injections, therefore not passing much data
+    return {
+      kind: 'single-entity',
+      entityData: {
+        id: uuid.id,
+        content,
+      },
+      newsletterPopup: false,
+    }
+  }
 
   if (uuid.__typename === 'Page') {
-    const content = convertState(uuid.currentRevision?.content)
     return {
       kind: 'single-entity',
       newsletterPopup: true,
@@ -111,8 +164,9 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
     }
   }
 
+  const licenseData = uuid.license
+
   if (uuid.__typename === 'Article') {
-    const content = convertState(uuid.currentRevision?.content)
     return {
       kind: 'single-entity',
       newsletterPopup: false,
@@ -133,8 +187,9 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
         title,
         contentType: 'article',
         metaImage,
-        metaDescription:
-          uuid.currentRevision?.metaDescription ?? getMetaDescription(content),
+        metaDescription: uuid.currentRevision?.metaDescription
+          ? uuid.currentRevision?.metaDescription
+          : getMetaDescription(content),
       },
       horizonData,
       cacheKey,
@@ -143,14 +198,19 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
   }
 
   if (uuid.__typename === 'Video') {
-    const content = convertState(uuid.currentRevision?.content)
     return {
       kind: 'single-entity',
       newsletterPopup: false,
       entityData: {
         id: uuid.id,
         title: uuid.currentRevision?.title ?? '',
-        content,
+        content: [
+          {
+            type: 'video',
+            src: uuid.currentRevision?.url!,
+          },
+          ...content,
+        ],
         categoryIcon: 'video',
         inviteToEdit: true,
         schemaData: {
@@ -171,15 +231,19 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
   }
 
   if (uuid.__typename === 'Applet') {
-    const content = convertState(uuid.currentRevision?.content)
     return {
       kind: 'single-entity',
       newsletterPopup: false,
       entityData: {
         id: uuid.id,
         title: uuid.currentRevision?.title ?? '',
-        content,
-        categoryIcon: 'applet',
+        content: [
+          {
+            type: 'geogebra',
+            id: uuid.currentRevision?.url ?? '',
+          },
+          ...content,
+        ],
         inviteToEdit: true,
         schemaData: {
           wrapWithItemType: 'http://schema.org/VideoObject',
@@ -190,8 +254,60 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
         title,
         contentType: 'applet',
         metaImage,
-        metaDescription:
-          uuid.currentRevision?.metaDescription ?? getMetaDescription(content),
+        metaDescription: uuid.currentRevision?.metaDescription
+          ? uuid.currentRevision?.metaDescription
+          : getMetaDescription(content),
+      },
+      horizonData,
+      cacheKey,
+      breadcrumbsData,
+    }
+  }
+
+  if (uuid.__typename === 'CoursePage') {
+    let currentPageIndex = -1
+    const pages = uuid.course.pages.flatMap((page, i) => {
+      const active = page.id === uuid.id
+      if (active) {
+        currentPageIndex = i + 1
+      }
+      if (!page.alias) {
+        return []
+      }
+      return [
+        {
+          title: page.currentRevision?.title ?? '',
+          url: !hasSpecialUrlChars(page.alias) ? page.alias : `/${page.id}`,
+          active,
+        },
+      ]
+    })
+    return {
+      kind: 'single-entity',
+      newsletterPopup: false,
+      entityData: {
+        id: uuid.id,
+        title: uuid.currentRevision?.title ?? '',
+        content,
+        licenseData,
+        schemaData: {
+          wrapWithItemType: 'http://schema.org/Article',
+          useArticleTag: true,
+          setContentAsSection: true,
+        },
+        categoryIcon: 'article',
+        inviteToEdit: true,
+        courseData: {
+          title: uuid.course.currentRevision?.title ?? '',
+          pages,
+          nextPageUrl: pages[currentPageIndex]?.url,
+        },
+      },
+      metaData: {
+        title,
+        contentType: 'article',
+        metaImage,
+        metaDescription: getMetaDescription(content),
       },
       horizonData,
       cacheKey,
@@ -216,7 +332,7 @@ function buildHorizonData() {
 }
 
 export function convertState(raw: string | undefined): FrontendContentNode[] {
-  if (raw === undefined) return []
+  if (!raw) return []
 
   if (raw?.startsWith('[')) {
     // legacy
@@ -227,6 +343,6 @@ export function convertState(raw: string | undefined): FrontendContentNode[] {
     return convert(JSON.parse(raw))
   } else {
     // raw as text
-    return [{ type: 'p', children: [{ type: 'text', text: raw ?? {} }] }]
+    return [{ type: 'p', children: [{ type: 'text', text: raw ?? '' }] }]
   }
 }

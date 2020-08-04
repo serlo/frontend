@@ -123,6 +123,7 @@ export interface LandingPage {
 // Landing pages have a different structure, because they should only load on the landing page
 
 export interface LandingData {
+  lang: string
   strings: LandingStrings
 }
 
@@ -416,9 +417,10 @@ export interface TaskEdtrState {
 }
 
 export interface SolutionEdtrState {
-  prerequisite: {
+  prerequisite?: {
     // edtr-io plugin "solution"
-    id: string
+    id: number
+    href: string // added, the resolved alias
     title: string
   }
   strategy: FrontendContentNode[]
@@ -616,7 +618,7 @@ export interface TaxonomyData extends TaxonomyTermBase {
   id: number
   title: string
   subterms: TaxonomySubTerm[]
-  exercisesContent: FrontendContentNode[][]
+  exercisesContent: (FrontendExerciseNode | FrontendExerciseGroupNode)[]
 }
 
 // Some translations for the taxonomy.

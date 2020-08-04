@@ -33,7 +33,7 @@ export async function getInitialProps(
       ? fetcherAdditionalData.instance
       : instance_path
 
-  console.log(instance, url, fetcherAdditionalData.instance)
+  //console.log(instance, url, fetcherAdditionalData.instance)
 
   let instanceData: InstanceData | undefined = undefined
 
