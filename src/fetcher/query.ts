@@ -295,14 +295,17 @@ const onExerciseGroup = `
     ${license}
   }
 `
-export interface ExerciseGroup extends Entity {
+export interface BareExerciseGroup {
   __typename: 'ExerciseGroup'
   currentRevision?: {
     content: string
   }
   exercises: BareExercise[]
-  taxonomyTerms: TaxonomyTerms
   license: License
+}
+
+export interface ExerciseGroup extends BareExerciseGroup, Entity {
+  taxonomyTerms: TaxonomyTerms
 }
 
 // Events are only used in injections, no support for full page view
@@ -445,13 +448,10 @@ export interface TaxonomyTermChildExercise
   __typename: 'Exercise'
 }
 
-export interface TaxonomyTermChildExerciseGroup extends TaxonomyTermChild {
+export interface TaxonomyTermChildExerciseGroup
+  extends BareExerciseGroup,
+    TaxonomyTermChild {
   __typename: 'ExerciseGroup'
-  currentRevision?: {
-    content: string
-  }
-  exercises: BareExercise[]
-  license: License
 }
 
 export interface TaxonomyTermChildTaxonomyTerm extends TaxonomyTermChild {
@@ -461,7 +461,7 @@ export interface TaxonomyTermChildTaxonomyTerm extends TaxonomyTermChild {
   alias?: string
   id: number
   description?: string
-  children: (TaxonomyTermChildOnX | SubTaxonomyTermChildTaxonomyTerm)[]
+  children: TaxonomyTermChildrenLevel2[]
 }
 
 export interface SubTaxonomyTermChildTaxonomyTerm extends TaxonomyTermChild {
@@ -470,6 +470,7 @@ export interface SubTaxonomyTermChildTaxonomyTerm extends TaxonomyTermChild {
   alias?: string
   type: TaxonomyTermType
   name: string
+  children?: undefined
 }
 
 export interface TaxonomyTerm extends Entity {
@@ -481,13 +482,18 @@ export interface TaxonomyTerm extends Entity {
     data: string
     path: Path
   }
-  children: (
-    | TaxonomyTermChildOnX
-    | TaxonomyTermChildExercise
-    | TaxonomyTermChildExerciseGroup
-    | TaxonomyTermChildTaxonomyTerm
-  )[]
+  children: TaxonomyTermChildrenLevel1[]
 }
+
+export type TaxonomyTermChildrenLevel1 =
+  | TaxonomyTermChildOnX
+  | TaxonomyTermChildExercise
+  | TaxonomyTermChildExerciseGroup
+  | TaxonomyTermChildTaxonomyTerm
+
+export type TaxonomyTermChildrenLevel2 =
+  | TaxonomyTermChildOnX
+  | SubTaxonomyTermChildTaxonomyTerm
 
 export const dataQuery = (selector: string) => `
   {

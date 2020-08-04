@@ -395,7 +395,7 @@ export interface FrontendInjectionNode {
 export interface FrontendExerciseNode {
   type: 'exercise'
   taskLegacy?: FrontendContentNode[]
-  taskEdtrState: TaskEdtrState
+  taskEdtrState?: TaskEdtrState
   solutionLegacy?: FrontendContentNode[]
   solutionEdtrState?: SolutionEdtrState
   taskLicense?: LicenseData
@@ -412,7 +412,7 @@ export interface FrontendExerciseNode {
 
 export interface TaskEdtrState {
   content: FrontendContentNode[] // edtr-io plugin "exercise"
-  interactive: EdtrPluginScMcExercise | EdtrPluginInputExercise
+  interactive?: EdtrPluginScMcExercise | EdtrPluginInputExercise
 }
 
 export interface SolutionEdtrState {
@@ -597,7 +597,6 @@ export interface TaxonomyTermBase {
   applets: TaxonomyLink[]
   exercises: TaxonomyLink[]
   description?: FrontendContentNode[]
-  subfolders: TaxonomyTermBase[]
 }
 
 export interface TaxonomyLink {
