@@ -30,7 +30,7 @@ export const instanceData: InstanceData = {
       button: "Teilen",
       title: "Weitergeben!",
       copyLink: "Link kopieren",
-      copySuccess: "In Zwischenablage kopiert!",
+      copySuccess: "In die Zwischenablage kopiert!",
       close: "Schließen"
     },
     edit: {
