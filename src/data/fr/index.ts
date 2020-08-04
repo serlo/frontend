@@ -99,7 +99,7 @@ export const loggedInData: LoggedInData = {
     icon: 'notifications'
   }, {
     url: '',
-    title: "Benutzer",
+    title: 'User',
     icon: 'user',
     children: [{
       url: '/user/public',
