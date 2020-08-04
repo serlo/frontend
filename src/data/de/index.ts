@@ -72,21 +72,21 @@ export const instanceData: InstanceData = {
 export const instanceLandingData: InstanceLandingData = {
   lang: "de",
   strings: {
-    vision: 'It is our vision to enable personalized learning and provide high quality educational resources worldwide – completely free of charge. Serlo is a grassroots organization inspired by Wikipedia. We already provide thousands of articles, videos and solved exercises for five million German students every year. Now it’s time to go international.',
-    learnMore: 'Learn more',
-    democraticallyStructured: 'democratically structured',
+    vision: "Wir ermöglichen Schüler*innen und Studierenden selbständig und im eigenen Tempo zu lernen – unabhängig von den finanziellen Möglichkeiten ihrer Eltern, denn serlo.org ist und bleibt komplett kostenlos.\n\nUnsere Vision ist es, hochwertige Bildung weltweit frei verfügbar zu machen.",
+    learnMore: "Mehr erfahren",
+    democraticallyStructured: "demokratisch organisiert",
     nonProfit: 'non-profit',
     transparent: 'transparent',
-    openlyLicensed: 'openly licensed',
-    adFree: 'ad-free',
-    freeOfCharge: 'free of charge',
+    openlyLicensed: "frei lizensiert",
+    adFree: "werbefrei",
+    freeOfCharge: "kostenlos",
     wikiTitle: "Serlo.org ist die Wikipedia fürs Lernen",
-    wikiText: 'Just like Wikipedia, this platform is created by an engaged community of authors. Serlo Education is run and owned by decentralized teams of volunteers and professionals all over the world.',
-    movementTitle: 'Become a Part of Our Movement for Open Education',
-    callForAuthors: 'We are looking for teachers and enthusiastic educators who are passionate about their subject. Become part of our community to create new learning material and help us improve existing content.',
-    communityLink: 'Visit the landing page for authors',
-    callForOther: 'We offer a diverse range of jobs and volunteering opportunities in the fields of software development, design, translation, communications, project management and more.',
-    getInvolved: 'Get involved!'
+    wikiText: "Genau die Wikipedia wird diese Plattform von einer engagierten Autor*innen Community erstellt. Serlo Education wird betrieben von einem dezentralisierten Team Ehrenamtlicher und Professioneller überall auf der Welt.",
+    movementTitle: "Werden Sie Teil unserer Bewegung für freie Bildung",
+    callForAuthors: "Wir suchen Lehrkräfte mit Begeisterung für ihr Fach. Werden Sie Autor*in auf serlo.org, erstellen Sie neue Inhalte und helfen Sie uns, die Qualität der Lernplattform zu sichern.",
+    communityLink: "Zur Startseite für Autor*innen",
+    callForOther: "Wir suchen neue hauptamtliche und ehrenamtliche Teammitglieder für die Bereiche Softwareentwicklung, Redaktion und NGO-Management.",
+    getInvolved: "Mach mit!"
   }
 };
 export const serverSideStrings: ServerSideStrings = {
