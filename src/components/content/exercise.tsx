@@ -116,8 +116,6 @@ export function Exercise({ node }: ExerciseProps) {
 
     const state = node.taskEdtrState
 
-    console.log('render interactive', node)
-
     if (state.interactive) {
       if (state.interactive.plugin === 'scMcExercise') {
         return (

@@ -16,7 +16,6 @@ export interface ScMcExerciseProps {
 }
 
 export function ScMcExercise({ state, idBase }: ScMcExerciseProps) {
-  console.log(idBase)
   if (state.isSingleChoice)
     return <SingleChoice state={state} idBase={idBase} />
 
