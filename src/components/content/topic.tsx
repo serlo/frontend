@@ -57,7 +57,7 @@ export function Topic({ data }: TopicProps) {
 
       {data.exercisesContent &&
         data.exercisesContent.map((exercise, i) => (
-          <React.Fragment key={i}>{renderArticle(exercise)}</React.Fragment>
+          <React.Fragment key={i}>{renderArticle([exercise])}</React.Fragment>
         ))}
 
       <LinkList>

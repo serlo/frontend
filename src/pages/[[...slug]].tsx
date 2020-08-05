@@ -82,7 +82,37 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
     initialProps?.instanceData!
   )
 
-  React.useEffect(() => {
+  React.useEffect(storePageData, [initialProps])
+
+  fetcherAdditionalData.origin = initialProps.origin
+  fetcherAdditionalData.instance = instanceData.lang
+
+  const auth = useAuth()
+  const [loggedInData, setLoggedInData] = React.useState<LoggedInData | null>(
+    getCachedLoggedInData()
+  )
+
+  React.useEffect(fetchLoggedInData, [
+    auth,
+    initialProps.origin,
+    instanceData.lang,
+    loggedInData,
+  ])
+
+  // dev
+  console.dir(initialProps)
+
+  return (
+    <OriginProvider value={initialProps.origin}>
+      <InstanceDataProvider value={instanceData}>
+        <LoggedInDataProvider value={loggedInData}>
+          {renderPage(initialProps.pageData)}
+        </LoggedInDataProvider>
+      </InstanceDataProvider>
+    </OriginProvider>
+  )
+
+  function storePageData() {
     try {
       const pageData = initialProps?.pageData
       if (pageData) {
@@ -94,64 +124,47 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
     } catch (e) {
       //
     }
-  }, [initialProps])
+  }
 
-  fetcherAdditionalData.origin = initialProps.origin
-  fetcherAdditionalData.instance = instanceData.lang
+  function getCachedLoggedInData() {
+    if (typeof window === 'undefined') return null
+    const cacheValue = sessionStorage.getItem(
+      `___loggedInData_${instanceData.lang}`
+    )
+    if (!cacheValue) return null
+    return JSON.parse(cacheValue)
+  }
 
-  const cachedLoggedInData = null
-  //    typeof window !== 'undefined'
-  //      ? sessionStorage.getItem('loggedInData___')
-  //      : null
-
-  const [loggedInData, setLoggedInData] = React.useState<LoggedInData | null>(
-    cachedLoggedInData ? JSON.parse(cachedLoggedInData) : null
-  )
-
-  const auth = useAuth()
-
-  React.useEffect(() => {
+  function fetchLoggedInData() {
     if (auth.current && !loggedInData) {
       void (async () => {
         const res = await fetch(
           initialProps.origin + '/api/locale/' + instanceData.lang
         )
         const json = await res.json()
-        sessionStorage.setItem('loggedInData___', JSON.stringify(json))
+        sessionStorage.setItem(`___loggedInData_${instanceData.lang}`, json)
         setLoggedInData(json)
       })()
     }
-  }, [auth, initialProps.origin, loggedInData])
-
-  return (
-    <OriginProvider value={initialProps.origin}>
-      <InstanceDataProvider value={instanceData}>
-        <LoggedInDataProvider value={loggedInData}>
-          {renderPage(initialProps.pageData)}
-        </LoggedInDataProvider>
-      </InstanceDataProvider>
-    </OriginProvider>
-  )
+  }
 }
 
 function renderPage(page: PageData) {
   //TODO: investigate why this happens sometimes.
-  if (page === undefined) return <ErrorPage code={500} />
+  if (page === undefined) return <ErrorPage code={1234567890} />
 
   if (page.kind === 'donation') {
     return <Donations />
   } else {
     // all other kinds are using basic layout
     // render it together to avoid remounting
-
     return (
       <>
         <Header onSearchPage={page.kind === 'search'} />
         {(() => {
           if (page.kind === 'landing') {
-            //return <LandingInternational instanceData={esInstanceLandingData} />
-            if (page.data) {
-              return <LandingInternational instanceData={page.data} />
+            if (page.landingData) {
+              return <LandingInternational data={page.landingData} />
             }
             return <LandingDE />
           }

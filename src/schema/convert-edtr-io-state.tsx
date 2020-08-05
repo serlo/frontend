@@ -1,20 +1,14 @@
 import { converter } from '../../external/markdown'
 import { convertLegacyState } from './convert-legacy-state'
 import { StepProps } from '@/components/content/equations'
-import {
-  SolutionChildData,
-  ExerciseChildData,
-} from '@/components/content/exercise'
 import { MathProps } from '@/components/content/math'
-import { FrontendContentNode, FrontendContentTextNode } from '@/data-types'
+import {
+  FrontendContentNode,
+  FrontendLiNode,
+  FrontendTextColor,
+} from '@/data-types'
 
-const colors = ['blue', 'green', 'orange']
-
-export function convertEdtrIoState(
-  state: EditorStateDummy
-): { children: FrontendContentNode[] } {
-  return { children: convert(state) }
-}
+const colors: FrontendTextColor[] = ['blue', 'green', 'orange']
 
 //This is incorrect, an editor node only has plugin and state
 //TODO: write tests for this converter, import edtr-io types, …
@@ -110,7 +104,9 @@ export function convert(
         children: [
           {
             type: 'spoiler-title',
-            children: [{ text: (node.state as EditorStateDummy).title! }],
+            children: [
+              { type: 'text', text: (node.state as EditorStateDummy).title! },
+            ],
           },
           {
             type: 'spoiler-body',
@@ -150,7 +146,7 @@ export function convert(
             // compat: math align left
             children.forEach((child) => {
               if (child.type === 'math') {
-                ;(child as MathProps).alignLeft = true
+                child.alignLeft = true
               }
             })
             return {
@@ -175,7 +171,7 @@ export function convert(
     return [
       {
         type: 'code',
-        content: (node.state as EditorStateDummy).code,
+        code: (node.state as EditorStateDummy).code,
       },
     ]
   }
@@ -208,7 +204,8 @@ export function convert(
     }
     return [{ type: 'geogebra', id }]
   }
-  if (plugin === 'exercise') {
+  // TODO handle this manually in the fetcher!
+  /*if (plugin === 'exercise') {
     return [
       {
         type: '@edtr-io/exercise',
@@ -220,8 +217,9 @@ export function convert(
         },
       },
     ]
-  }
-  if (plugin === 'solution') {
+  }*/
+  // TODO handle this manually in the fetcher!
+  /*if (plugin === 'solution') {
     return [
       {
         type: '@edtr-io/solution',
@@ -264,7 +262,7 @@ export function convert(
         },
       },
     ]
-  }
+  }*/
   if (plugin === 'equations') {
     const steps = (node.state as EditorStateDummy).steps.map((step) => {
       return {
@@ -295,37 +293,35 @@ export function convert(
     if (
       children.some(
         (child) =>
-          ((child as FrontendContentTextNode).text &&
-            (child as FrontendContentTextNode).text!.includes('\n')) ||
+          (child.type === 'text' && child.text.includes('\n')) ||
           child.type === 'inline-math'
       )
     ) {
-      const splitted = children.flatMap((child) => {
-        if (
-          (child as FrontendContentTextNode).text &&
-          (child as FrontendContentTextNode).text!.includes('\n')
-        ) {
-          const parts = (child as FrontendContentTextNode)
-            .text!.split('\n')
-            .flatMap((text) => [
+      const splitted: (FrontendContentNode | '##break##')[] = children.flatMap(
+        (child) => {
+          if (child.type === 'text' && child.text.includes('\n')) {
+            const parts: (
+              | FrontendContentNode
+              | '##break##'
+            )[] = child.text.split('\n').flatMap((text) => [
               {
+                type: 'text',
                 text,
               },
               '##break##',
             ])
-          parts.pop()
-          return (parts as unknown) as FrontendContentNode
+            parts.pop()
+            return parts
+          }
+          return [child]
         }
-        return child
-      })
+      )
       let current: FrontendContentNode[] = []
       const result: FrontendContentNode[] = []
       if (splitted[0] === '##break##') splitted.shift()
       if (splitted[splitted.length - 1] !== '##break##')
-        //TODO: Investigate
-        //@ts-expect-error
         splitted.push('##break##')
-      splitted.forEach((el: FrontendContentNode) => {
+      splitted.forEach((el) => {
         if (el === '##break##') {
           result.push({
             type: 'p',
@@ -348,7 +344,7 @@ export function convert(
           (child) =>
             child.type === 'math' ||
             child.type === 'inline-math' ||
-            (child as FrontendContentTextNode).text === ''
+            (child.type === 'text' && child.text === '')
         )
       ) {
         return children
@@ -375,19 +371,35 @@ export function convert(
     return [
       {
         type: 'a',
-        href: node.href,
+        href: node.href ?? '',
         children: convert(node.children),
       },
     ]
   }
   if (type === 'h') {
-    return [
-      {
-        type: 'h',
-        level: node.level!,
-        children: convert(node.children),
-      },
-    ]
+    if (
+      node.level === 1 ||
+      node.level === 2 ||
+      node.level == 3 ||
+      node.level === 4 ||
+      node.level === 5
+    ) {
+      return [
+        {
+          type: 'h',
+          level: node.level,
+          children: convert(node.children),
+        },
+      ]
+    } else {
+      return [
+        {
+          type: 'h',
+          level: 5,
+          children: convert(node.children),
+        },
+      ]
+    }
   }
   if (type === 'math' && !node.inline) {
     return [
@@ -406,18 +418,30 @@ export function convert(
     ]
   }
   if (type === 'unordered-list') {
+    const children: FrontendLiNode[] = []
+    convert(node.children).forEach((child) => {
+      if (child.type === 'li') {
+        children.push(child)
+      }
+    })
     return [
       {
         type: 'ul',
-        children: convert(node.children),
+        children,
       },
     ]
   }
   if (type === 'ordered-list') {
+    const children: FrontendLiNode[] = []
+    convert(node.children).forEach((child) => {
+      if (child.type === 'li') {
+        children.push(child)
+      }
+    })
     return [
       {
         type: 'ol',
-        children: convert(node.children),
+        children,
       },
     ]
   }
@@ -437,7 +461,7 @@ export function convert(
         (child) =>
           child.type === 'inline-math' ||
           child.type === 'a' ||
-          (child as FrontendContentTextNode).text !== undefined
+          child.type !== undefined
       ).length === 0
     ) {
       return children
@@ -446,12 +470,16 @@ export function convert(
   }
 
   if (node.text !== undefined) {
-    if (node.color) {
-      node.color = colors[node.color as number]
-    }
-    // ignore empty spans
     if (node.text === '') return []
-    return [(node as unknown) as FrontendContentNode]
+    return [
+      {
+        type: 'text',
+        text: node.text,
+        em: node.em,
+        strong: node.strong,
+        color: colors[node.color as number],
+      },
+    ]
   }
 
   console.log('-> ', node)

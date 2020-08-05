@@ -7,7 +7,7 @@ import {
 import { serloDomain } from '@/helper/serlo-domain'
 
 export const hiInstanceData: InstanceData = {
-  lang: 'en',
+  lang: 'hi',
   headerData: [
     {
       url: '',

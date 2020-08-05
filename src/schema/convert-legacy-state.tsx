@@ -1,13 +1,17 @@
 import * as htmlparser2 from 'htmlparser2'
 
 import { MathProps } from '@/components/content/math'
-import { FrontendContentNode, FrontendContentTextNode } from '@/data-types'
+import {
+  FrontendContentNode,
+  FrontendColNode,
+  FrontendLiNode,
+  FrontendTrNode,
+  FrontendTdNode,
+  FrontendThNode,
+  FrontendTextNode,
+} from '@/data-types'
 
-export function convertLegacyState(html: string) {
-  const dom = (htmlparser2.parseDOM(html) as unknown) as LegacyNode
-  return { children: convert(dom) }
-}
-
+// Result of the htmlparser
 interface LegacyNode {
   type: string
   name: string
@@ -16,11 +20,16 @@ interface LegacyNode {
     href?: string
     src?: string
     alt?: string
-    id?: number | string
+    id?: string
   }
   children: LegacyNode[]
   text?: string
   data?: string
+}
+
+export function convertLegacyState(html: string) {
+  const dom = (htmlparser2.parseDOM(html) as unknown) as LegacyNode
+  return { children: convert(dom) }
 }
 
 function convert(node: LegacyNode[] | LegacyNode): FrontendContentNode[] {
@@ -51,10 +60,16 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
         if (children.length === 1) {
           return children[0].children ? children[0].children : []
         }
+        const colChildren: FrontendColNode[] = []
+        children.forEach((child) => {
+          if (child.type === 'col') {
+            colChildren.push(child)
+          }
+        })
         return [
           {
             type: 'row',
-            children,
+            children: colChildren,
           },
         ]
       }
@@ -72,9 +87,9 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
           if (
             val.type === 'inline-math' ||
             val.type === 'a' ||
-            (val as FrontendContentTextNode).text !== undefined
+            (val.type === 'text' && val.text !== undefined)
           ) {
-            let last = undefined
+            let last: FrontendContentNode | undefined = undefined
             if (acc.length > 0) {
               last = acc[acc.length - 1]
             }
@@ -103,12 +118,17 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
         ]
       }
       if (className === 'spoiler panel panel-default') {
-        return [
-          {
-            type: 'spoiler-container',
-            children: convert(node.children),
-          },
-        ]
+        const children = convert(node.children)
+        if (
+          children[0].type === 'spoiler-title' &&
+          children[1].type === 'spoiler-body'
+        )
+          return [
+            {
+              type: 'spoiler-container',
+              children: [children[0], children[1]],
+            },
+          ]
       }
       if (className === 'spoiler-teaser panel-heading') {
         return [
@@ -244,8 +264,9 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
         children.every(
           (child) =>
             child.type === 'inline-math' ||
-            ((child as FrontendContentTextNode).text !== undefined &&
-              (child as FrontendContentTextNode).text!.trim() == '')
+            (child.type === 'text' &&
+              child.text !== undefined &&
+              child.text.trim() == '')
         )
       ) {
         return [
@@ -275,21 +296,20 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
     ]
   }
   if (node.name === 'ul' || node.name == 'ol') {
-    let children = convert(node.children)
+    const liChildren: FrontendLiNode[] = []
     // compat: remove whitespace around list items
-    children = children.filter((child) => {
-      if (
-        (child as FrontendContentTextNode).text &&
-        (child as FrontendContentTextNode).text!.trim() === ''
-      ) {
-        return false
+    convert(node.children).forEach((child) => {
+      if (child.type === 'text' && child.text && child.text.trim() === '') {
+        return
       }
-      return true
+      if (child.type === 'li') {
+        liChildren.push(child)
+      }
     })
     return [
       {
         type: node.name,
-        children,
+        children: liChildren,
       },
     ]
   }
@@ -299,7 +319,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
     if (
       children.filter(
         (child) =>
-          (child as FrontendContentTextNode).text === undefined &&
+          child.type !== 'text' &&
           child.type !== 'a' &&
           child.type !== 'inline-math'
       ).length == 0
@@ -314,7 +334,13 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
     ]
   }
   if (node.name === 'table') {
-    return [{ type: 'table', children: convert(node.children) }]
+    const trChildren: FrontendTrNode[] = []
+    convert(node.children).forEach((child) => {
+      if (child.type === 'tr') {
+        trChildren.push(child)
+      }
+    })
+    return [{ type: 'table', children: trChildren }]
   }
   if (node.name === 'thead') {
     return convert(node.children)
@@ -323,10 +349,16 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
     return convert(node.children)
   }
   if (node.name === 'tr') {
+    const tdthChildren: (FrontendTdNode | FrontendThNode)[] = []
+    convert(node.children).forEach((child) => {
+      if (child.type === 'td' || child.type === 'th') {
+        tdthChildren.push(child)
+      }
+    })
     return [
       {
         type: 'tr',
-        children: convert(node.children),
+        children: tdthChildren,
       },
     ]
   }
@@ -340,8 +372,8 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
   }
   if (node.name === 'td') {
     // compat: skip empty entries (resulting from newlines)
-    // @ts-expect-error
-    if ((node.children.text as string)?.trim() === '') {
+    // CHECK is this still working?
+    if (node.children[0].text?.trim() === '') {
       return []
     }
     return [
@@ -412,15 +444,16 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
     if (
       children.length == 0 ||
       (children.length == 1 &&
-        (children[0] as FrontendContentTextNode).text === '')
+        children[0].type === 'text' &&
+        children[0].text === '')
     ) {
-      children = [{ text: node.attribs.href! }]
+      children = [{ type: 'text', text: node.attribs.href! }]
     }
     return [
       {
         type: 'a',
         // compat: replace absolute urls in german language version
-        href: node.attribs.href?.replace('https://de.serlo.org', ''),
+        href: node.attribs.href ?? '',
         children,
       },
     ]
@@ -428,18 +461,18 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
   if (node.name === 'strong') {
     const children = convert(node.children)
     return makeFormat(children, (child) => {
-      ;(child as FrontendContentTextNode).strong = true
+      child.strong = true
     })
   }
   if (node.name === 'em') {
     const children = convert(node.children)
     return makeFormat(children, (child) => {
-      ;(child as FrontendContentTextNode).em = true
+      child.em = true
     })
   }
   // compat: ignore breaks
   if (node.name === 'br') {
-    return [{ text: ' ' }]
+    return [{ type: 'text', text: ' ' }]
   }
   // compat: ignore horizontal lines
   if (node.name === 'hr') {
@@ -454,12 +487,12 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
     ]
   }
   if (node.name === 'pre') {
-    const content = node.children[0]?.children[0]?.data
-    if (content) {
+    const code = node.children[0]?.children[0]?.data
+    if (code) {
       return [
         {
           type: 'code',
-          content,
+          code,
         },
       ]
     } else {
@@ -490,15 +523,15 @@ function convertText(node: LegacyNode): FrontendContentNode[] {
     })
   // compat: remove empty text
   if (!text) return []
-  return [{ text }]
+  return [{ type: 'text', text }]
 }
 
 function makeFormat(
   array: FrontendContentNode[],
-  fn: (child: FrontendContentNode) => void
+  fn: (child: FrontendTextNode) => void
 ): FrontendContentNode[] {
   return array.map((child) => {
-    if ((child as FrontendContentTextNode).text !== undefined) {
+    if (child.type === 'text' && child.text !== undefined) {
       fn(child)
     }
     if (Array.isArray(child.children)) {
