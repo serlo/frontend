@@ -142,7 +142,10 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
           initialProps.origin + '/api/locale/' + instanceData.lang
         )
         const json = await res.json()
-        sessionStorage.setItem(`___loggedInData_${instanceData.lang}`, json)
+        sessionStorage.setItem(
+          `___loggedInData_${instanceData.lang}`,
+          JSON.stringify(json)
+        )
         setLoggedInData(json)
       })()
     }
