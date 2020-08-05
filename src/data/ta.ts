@@ -1,6 +1,6 @@
 import {
   InstanceData,
-  LandingData,
+  InstanceLandingData,
   ServerSideStrings,
   LoggedInData,
 } from '@/data-types'
@@ -157,7 +157,7 @@ export const taInstanceData: InstanceData = {
   },
 } //TODO check displayed sentence order; probably wrong
 
-export const taInstanceLandingData: LandingData = {
+export const taInstanceLandingData: InstanceLandingData = {
   lang: 'ta',
   strings: {
     vision:

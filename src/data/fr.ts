@@ -1,6 +1,6 @@
 import {
   InstanceData,
-  LandingData,
+  InstanceLandingData,
   ServerSideStrings,
   LoggedInData,
 } from '@/data-types'
@@ -146,7 +146,7 @@ export const frInstanceData: InstanceData = {
   },
 }
 
-export const frInstanceLandingData: LandingData = {
+export const frInstanceLandingData: InstanceLandingData = {
   lang: 'fr',
   strings: {
     vision:

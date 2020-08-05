@@ -125,7 +125,7 @@ export async function getInitialProps(
     //client
 
     try {
-      const fromCache = sessionStorage.getItem(`${instance}${url}`)
+      const fromCache = sessionStorage.getItem(`/${instance}${url}`)
       if (fromCache) {
         return {
           origin: fetcherAdditionalData.origin,

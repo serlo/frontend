@@ -2,13 +2,10 @@ import { render } from 'external/legacy_render'
 import { request } from 'graphql-request'
 
 import { createBreadcrumbs } from './create-breadcrumbs'
+import { createExercise, createExerciseGroup } from './create-exercises'
 import { getMetaImage, getMetaDescription } from './create-meta-data'
 import { createNavigation } from './create-navigation'
-import {
-  buildTaxonomyData,
-  createExercise,
-  createExerciseGroup,
-} from './create-taxonomy'
+import { buildTaxonomyData } from './create-taxonomy'
 import { createTitle } from './create-title'
 import { prettifyLinks } from './prettify-links'
 import { dataQuery, QueryResponse } from './query'
@@ -131,7 +128,6 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
   const content = convertState(uuid.currentRevision?.content)
 
   if (uuid.__typename === 'Event') {
-    // events are only loaded in injections, therefore not passing much data
     return {
       kind: 'single-entity',
       entityData: {
@@ -139,6 +135,14 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
         content,
       },
       newsletterPopup: false,
+      horizonData,
+      metaData: {
+        title,
+        contentType: 'event',
+        metaImage,
+        metaDescription: getMetaDescription(content),
+      },
+      cacheKey,
     }
   }
 
@@ -305,7 +309,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
       },
       metaData: {
         title,
-        contentType: 'article',
+        contentType: 'course-page',
         metaImage,
         metaDescription: getMetaDescription(content),
       },

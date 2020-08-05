@@ -117,12 +117,12 @@ export type PageData =
 
 export interface LandingPage {
   kind: 'landing'
-  landingData?: LandingData
+  landingData?: InstanceLandingData
 }
 
 // Landing pages have a different structure, because they should only load on the landing page
 
-export interface LandingData {
+export interface InstanceLandingData {
   lang: string
   strings: LandingStrings
 }
