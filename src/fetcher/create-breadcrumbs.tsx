@@ -27,6 +27,7 @@ export function createBreadcrumbs(uuid: QueryResponse) {
     let breadcrumbs
 
     for (const child of taxonomyPaths) {
+      if (!child.navigation) continue
       const { path } = child.navigation
       if (!breadcrumbs || breadcrumbs.length > path.length) {
         // compat: some paths are short-circuited, ignore them

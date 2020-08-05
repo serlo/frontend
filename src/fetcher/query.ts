@@ -1,3 +1,6 @@
+// These types are auto-generated from the GraphQL schema
+import * as GraphQL from '@serlo/api'
+
 // Keep this file in sync with the graphQL schema.
 // Maybe automate this one day.
 
@@ -13,11 +16,7 @@ const license = `
   }
 `
 
-export interface License {
-  id: number
-  url: string
-  title: string
-}
+export type License = Pick<GraphQL.License, 'id' | 'url' | 'title'>
 
 // This is one breadcrumb path.
 
@@ -28,10 +27,7 @@ const path = `
   }
 `
 
-export type Path = {
-  label: string
-  url?: string
-}[]
+export type Path = Pick<GraphQL.NavigationNode, 'label' | 'url'>[]
 
 // Entities can belong to multiple taxonomy terms, so we load all possible paths.
 
@@ -44,18 +40,11 @@ const taxonomyTerms = `
 `
 
 export type TaxonomyTerms = {
-  navigation: {
-    path: Path
-  }
+  navigation?: GraphQL.Maybe<{ path: Path }>
 }[]
 
 // Basic information about any entity.
-
-interface Entity {
-  id: number
-  alias?: string
-  instance: string
-}
+type Entity = Pick<GraphQL.AbstractRepository, 'id' | 'alias' | 'instance'>
 
 // A page, navigation.data is the secondary menu.
 
@@ -77,14 +66,10 @@ const onPage = `
 
 export interface Page extends Entity {
   __typename: 'Page'
-  currentRevision?: {
-    title: string
-    content: string
-  }
-  navigation?: {
-    data: string
-    path: Path
-  }
+  currentRevision?: GraphQL.Maybe<
+    Pick<GraphQL.PageRevision, 'title' | 'content'>
+  >
+  navigation?: GraphQL.Maybe<Pick<GraphQL.Navigation, 'data' | 'path'>>
 }
 
 const onArticle = `
@@ -103,6 +88,7 @@ const onArticle = `
   }
 `
 
+// TODO:
 export interface Article extends Entity {
   __typename: 'Article'
   currentRevision?: {
@@ -130,6 +116,7 @@ const onVideo = `
   }
 `
 
+// TODO:
 export interface Video extends Entity {
   __typename: 'Video'
   currentRevision?: {
@@ -158,6 +145,7 @@ const onApplet = `
   }
 `
 
+// TODO:
 export interface Applet extends Entity {
   __typename: 'Applet'
   currentRevision?: {
@@ -197,6 +185,7 @@ const onCoursePage = `
   }
 `
 
+// TODO:
 export interface CoursePage extends Entity {
   __typename: 'CoursePage'
   currentRevision?: {
@@ -234,6 +223,7 @@ const bareExercise = `
   ${license}
 `
 
+// TODO:
 export interface BareExercise {
   currentRevision?: {
     content: string
@@ -247,6 +237,7 @@ export interface BareExercise {
   license: License
 }
 
+// TODO: Can be simplified now
 const onExercise = `
   ... on Exercise {
     id
@@ -264,16 +255,18 @@ const onExercise = `
   }
 `
 
+// TODO:
 export interface Exercise extends Entity, BareExercise {
   __typename: 'Exercise'
   taxonomyTerms: TaxonomyTerms
   license: License
 }
+// TODO:
 export interface GroupedExercise extends Entity, BareExercise {
   __typename: 'GroupedExercise'
   license: License
 }
-
+// TODO:
 export interface ExerciseMaybeGrouped extends Entity, BareExercise {
   __typename: 'Exercise' | 'GroupedExercise'
   taxonomyTerms: TaxonomyTerms
@@ -295,6 +288,8 @@ const onExerciseGroup = `
     ${license}
   }
 `
+
+// TODO:
 export interface BareExerciseGroup {
   __typename: 'ExerciseGroup'
   currentRevision?: {
@@ -304,6 +299,7 @@ export interface BareExerciseGroup {
   license: License
 }
 
+// TODO:
 export interface ExerciseGroup extends BareExerciseGroup, Entity {
   taxonomyTerms: TaxonomyTerms
 }
@@ -321,6 +317,7 @@ const onEvent = `
   }
 `
 
+// TODO:
 export interface Event extends Entity {
   __typename: 'Event'
   currentRevision?: {
@@ -328,7 +325,7 @@ export interface Event extends Entity {
   }
 }
 
-// If a course is encoutered, the first page will get loaded
+// If a course is encountered, the first page will get loaded
 
 const onCourse = `
   ... on Course {
@@ -341,6 +338,7 @@ const onCourse = `
   }
 `
 
+// TODO:
 export interface Course extends Entity {
   __typename: 'Course'
   pages: {
@@ -350,6 +348,7 @@ export interface Course extends Entity {
 
 // This one is a beast!
 
+// TODO:
 export type TaxonomyTermType =
   | 'blog'
   | 'curriculum'
@@ -363,6 +362,10 @@ export type TaxonomyTermType =
   | 'topic'
   | 'topicFolder'
 
+
+// TODO:
+// I don't like this. We can probably simplify that
+// Also: we should specify the allowed types since not every type has a title
 const onX = (type: string) => `
   ... on ${type} {
     alias
@@ -428,11 +431,13 @@ const onTaxonomyTerm = `
   }
 `
 
+// TODO:
 export interface TaxonomyTermChild {
   __typename: string
   trashed: boolean
 }
 
+// TODO:
 export interface TaxonomyTermChildOnX extends TaxonomyTermChild {
   id: number
   alias?: string
@@ -442,18 +447,21 @@ export interface TaxonomyTermChildOnX extends TaxonomyTermChild {
   }
 }
 
+// TODO:
 export interface TaxonomyTermChildExercise
   extends TaxonomyTermChild,
     BareExercise {
   __typename: 'Exercise'
 }
 
+// TODO:
 export interface TaxonomyTermChildExerciseGroup
   extends BareExerciseGroup,
     TaxonomyTermChild {
   __typename: 'ExerciseGroup'
 }
 
+// TODO:
 export interface TaxonomyTermChildTaxonomyTerm extends TaxonomyTermChild {
   __typename: 'TaxonomyTerm'
   type: TaxonomyTermType
@@ -464,6 +472,7 @@ export interface TaxonomyTermChildTaxonomyTerm extends TaxonomyTermChild {
   children: TaxonomyTermChildrenLevel2[]
 }
 
+// TODO:
 export interface SubTaxonomyTermChildTaxonomyTerm extends TaxonomyTermChild {
   __typename: 'TaxonomyTerm'
   id: number
@@ -473,28 +482,29 @@ export interface SubTaxonomyTermChildTaxonomyTerm extends TaxonomyTermChild {
   children?: undefined
 }
 
+// TODO:
 export interface TaxonomyTerm extends Entity {
   __typename: 'TaxonomyTerm'
   type: TaxonomyTermType
   name: string
   description?: string
-  navigation: {
-    data: string
-    path: Path
-  }
+  navigation?: GraphQL.Maybe<Pick<GraphQL.Navigation, 'data' | 'path'>>
   children: TaxonomyTermChildrenLevel1[]
 }
 
+// TODO:
 export type TaxonomyTermChildrenLevel1 =
   | TaxonomyTermChildOnX
   | TaxonomyTermChildExercise
   | TaxonomyTermChildExerciseGroup
   | TaxonomyTermChildTaxonomyTerm
 
+// TODO:
 export type TaxonomyTermChildrenLevel2 =
   | TaxonomyTermChildOnX
   | SubTaxonomyTermChildTaxonomyTerm
 
+// TODO: Simplify that, especially use variables
 export const dataQuery = (selector: string) => `
   {
     uuid(${selector}) {
@@ -523,6 +533,7 @@ export const dataQuery = (selector: string) => `
   }
 `
 
+// TODO:
 export type QueryResponse =
   | Page
   | Article
@@ -536,6 +547,7 @@ export type QueryResponse =
   | Course
   | TaxonomyTerm
 
+// TODO:
 export type QueryResponseWithLicense =
   | Article
   | Video
@@ -545,6 +557,7 @@ export type QueryResponseWithLicense =
   | GroupedExercise
   | ExerciseGroup
 
+// TODO:
 export type QueryResponseWithTaxonomyTerms =
   | Article
   | Video
@@ -556,7 +569,7 @@ export const idsQuery = (ids: number[]) => {
   const map = ids.map(
     (id) => `
     uuid${id}: uuid(id:${id}) {
-        ... on Entity {
+        ... on AbstractEntity {
           alias
           instance
         }
@@ -571,6 +584,7 @@ export const idsQuery = (ids: number[]) => {
       }
     `
   )
+  // TODO: this looks weird tbh
   return `{${map.join()}}`
 }
 
@@ -578,7 +592,7 @@ export const idsQuery = (ids: number[]) => {
 export const idQuery = (id: number) => `
   {
     uuid(id:${id}) {
-      ... on Entity {
+      ... on AbstractEntity {
         alias
       }
       ... on Page {

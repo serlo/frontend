@@ -3,7 +3,7 @@ import { SecondaryNavigationData, SecondaryNavigationEntry } from '@/data-types'
 
 interface NavigationData {
   label: string
-  id: number
+  id?: number
   url?: string
   children?: NavigationData[]
 }
@@ -20,18 +20,15 @@ export function createNavigation(
   ) {
     return undefined
   }
+
   if (uuid.navigation?.data) {
-    try {
-      const data = JSON.parse(uuid.navigation.data) as NavigationData
-      return data.children?.flatMap((child) => {
-        if (child.children) {
-          return child.children.map(convertEntry)
-        }
-        return convertEntry(child)
-      })
-    } catch (e) {
-      // ignore
-    }
+    const data = uuid.navigation?.data as NavigationData
+    return data.children?.flatMap((child) => {
+      if (child.children) {
+        return child.children.map(convertEntry)
+      }
+      return convertEntry(child)
+    })
   }
 
   function convertEntry(entry: NavigationData): SecondaryNavigationEntry {
