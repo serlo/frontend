@@ -100,7 +100,7 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
   ])
 
   // dev
-  console.dir(initialProps)
+  //console.dir(initialProps)
 
   return (
     <OriginProvider value={initialProps.origin}>
