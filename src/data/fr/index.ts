@@ -11,8 +11,8 @@ export const instanceData: InstanceData = {
       login: 'Login'
     },
     footer: {
-      summaryHeading: 'Serlo.org is the Wikipedia for learning.',
-      summaryText: 'We are a community of visionaries working tirelessly to make great education freely available to everyone.',
+      summaryHeading: "Serlo.org est le Wikipedia pour l'apprentissage.",
+      summaryText: "Nous sommes une communauté de visionnaires qui travaille sans relâche pour offrir une éducation gratuite et accessible à tous.",
       learnMore: "En savoir plus",
       participate: "Rejoignez-nous",
       donate: "Faire un don",
@@ -99,7 +99,7 @@ export const loggedInData: LoggedInData = {
     icon: 'notifications'
   }, {
     url: '',
-    title: "Benutzer",
+    title: 'User',
     icon: 'user',
     children: [{
       url: '/user/public',
