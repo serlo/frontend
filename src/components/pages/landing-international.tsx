@@ -12,14 +12,11 @@ import { InstanceLandingData } from '@/data-types'
 import { makeDefaultButton, makeResponsivePadding } from '@/helper/css'
 
 export interface LandingInternationalProps {
-  instanceData: InstanceLandingData
+  data: InstanceLandingData
 }
 
-export function LandingInternational({
-  instanceData,
-}: LandingInternationalProps) {
-  const landingStrings = instanceData.strings
-  // const lang = instanceData.lang
+export function LandingInternational({ data }: LandingInternationalProps) {
+  const landingStrings = data.strings
   const { strings } = useInstanceData()
 
   return (

@@ -1,4 +1,5 @@
-import { QueryResponse, Path, TaxonomyTerms } from './query'
+import { QueryResponse, TaxonomyTerms } from './query'
+import { BreadcrumbsData } from '@/data-types'
 
 export function createBreadcrumbs(uuid: QueryResponse) {
   if (uuid.__typename === 'TaxonomyTerm') {
@@ -43,10 +44,34 @@ export function createBreadcrumbs(uuid: QueryResponse) {
     return breadcrumbs
   }
 
-  function compat(breadcrumbs: Path | undefined) {
-    return breadcrumbs
-      ?.slice(0, -1) // compat: remove last entry because it is the entry itself
-      .filter((entry) => entry.url && entry.label) // compat: remove empty entries
-      .filter((entry) => entry.label !== 'Alle Themen') // compat/test: remove "Alle Themen" because landing pages offer a similar overview
+  function compat(breadcrumbs: BreadcrumbsData | undefined) {
+    if (!breadcrumbs) return breadcrumbs
+    if (
+      !(
+        uuid.__typename == 'TaxonomyTerm' &&
+        (uuid.type == 'topicFolder' || uuid.type == 'curriculumTopicFolder')
+      )
+    ) {
+      breadcrumbs = breadcrumbs.slice(0, -1) // compat: remove last entry because it is the entry itself
+    }
+    breadcrumbs = breadcrumbs.filter((entry) => entry.url && entry.label) // compat: remove empty entries
+    breadcrumbs = breadcrumbs.filter((entry) => entry.label !== 'Alle Themen') // compat/test: remove "Alle Themen" because landing pages offer a similar overview
+    const shortened: BreadcrumbsData = []
+    breadcrumbs.map((entry, i, arr) => {
+      const maxItems = 4
+      const overflow = arr.length > maxItems
+      const itemsToRemove = arr.length - maxItems
+      const ellipsesItem = overflow && i == 2
+
+      if (overflow && i > 2 && i < 1 + itemsToRemove) return
+      // special case
+      if (arr.length - itemsToRemove > 4 && i === 1) return
+      if (ellipsesItem) {
+        shortened.push({ label: '', ellipsis: true })
+      } else {
+        shortened.push(entry)
+      }
+    })
+    return shortened
   }
 }

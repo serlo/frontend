@@ -5,6 +5,7 @@ import styled from 'styled-components'
 
 import { StyledP } from '../tags/styled-p'
 import { LicenseNotice } from './license-notice'
+import { useInstanceData } from '@/contexts/instance-context'
 import { useOrigin } from '@/contexts/origin-context'
 import { LicenseData, PageData, FrontendContentNode } from '@/data-types'
 import { renderArticle } from '@/schema/article-renderer'
@@ -25,11 +26,15 @@ export function Injection({ href }: InjectionProps) {
 
   const origin = useOrigin()
 
+  const { lang } = useInstanceData()
+
   useEffect(() => {
     const encodedHref = encodeURI(href.startsWith('/') ? href : `/${href}`)
 
     try {
-      const cachedData = sessionStorage.getItem(encodedHref)
+      const cachedData = sessionStorage.getItem(
+        'injection' + lang + encodedHref
+      )
       if (cachedData) {
         dataToState(JSON.parse(cachedData))
         return
@@ -38,29 +43,32 @@ export function Injection({ href }: InjectionProps) {
       //
     }
 
-    void fetch(`${origin}/api/frontend${encodedHref}`)
+    void fetch(`${origin}/api/frontend/${lang}${encodedHref}`)
       .then((res) => {
         if (res.headers.get('content-type')!.includes('json')) return res.json()
         else return res.text()
       })
-      .then((fetchedData: { pageData: PageData }) => {
-        dataToState(fetchedData)
+      .then((pageData: PageData) => {
+        dataToState(pageData)
 
-        if (fetchedData.pageData.kind === 'single-entity') {
+        if (pageData.kind === 'single-entity') {
           try {
-            sessionStorage.setItem(encodedHref, JSON.stringify(fetchedData))
+            sessionStorage.setItem(
+              'injection' + lang + encodedHref,
+              JSON.stringify(pageData)
+            )
           } catch (e) {
             //
           }
         }
       })
-  }, [href, origin])
+  }, [href, origin, lang])
 
-  function dataToState(fetchedData: { pageData: PageData }) {
-    if (fetchedData.pageData.kind === 'single-entity') {
-      setValue(fetchedData.pageData.entityData.content)
-      if (fetchedData.pageData.entityData.licenseData) {
-        setLicense(fetchedData.pageData.entityData.licenseData)
+  function dataToState(pageData: PageData) {
+    if (pageData.kind === 'single-entity') {
+      setValue(pageData.entityData.content)
+      if (pageData.entityData.licenseData) {
+        setLicense(pageData.entityData.licenseData)
       }
     }
   }
