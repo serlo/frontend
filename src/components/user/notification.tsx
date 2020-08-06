@@ -1,5 +1,23 @@
 import { faVolumeMute } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  CheckoutRevisionNotificationEvent,
+  CreateCommentNotificationEvent,
+  CreateEntityNotificationEvent,
+  CreateEntityLinkNotificationEvent,
+  CreateEntityRevisionNotificationEvent,
+  CreateTaxonomyTermNotificationEvent,
+  CreateTaxonomyLinkNotificationEvent,
+  CreateThreadNotificationEvent,
+  RejectRevisionNotificationEvent,
+  RemoveEntityLinkNotificationEvent,
+  RemoveTaxonomyLinkNotificationEvent,
+  SetLicenseNotificationEvent,
+  SetTaxonomyParentNotificationEvent,
+  SetTaxonomyTermNotificationEvent,
+  SetThreadStateNotificationEvent,
+  SetUuidStateNotificationEvent,
+} from '@serlo/api'
 import Tippy from '@tippyjs/react'
 import styled, { css } from 'styled-components'
 import TimeAgo from 'timeago-react'
@@ -8,14 +26,28 @@ import * as timeago from 'timeago.js'
 // eslint-disable-next-line import/no-internal-modules
 import de from 'timeago.js/lib/lang/de'
 
-import {
-  NotificationEvent,
-  NotificationEventType,
-  NotificationUser,
-} from '@/events/event'
+import { NotificationEventType, NotificationUser } from '@/events/event'
 
 // register it.
 timeago.register('de', de)
+
+type NotificationEvent =
+  | CheckoutRevisionNotificationEvent
+  | CreateCommentNotificationEvent
+  | CreateEntityNotificationEvent
+  | CreateEntityLinkNotificationEvent
+  | CreateEntityRevisionNotificationEvent
+  | CreateTaxonomyTermNotificationEvent
+  | CreateTaxonomyLinkNotificationEvent
+  | CreateThreadNotificationEvent
+  | RejectRevisionNotificationEvent
+  | RemoveEntityLinkNotificationEvent
+  | RemoveTaxonomyLinkNotificationEvent
+  | SetLicenseNotificationEvent
+  | SetTaxonomyParentNotificationEvent
+  | SetTaxonomyTermNotificationEvent
+  | SetThreadStateNotificationEvent
+  | SetUuidStateNotificationEvent
 
 export function Notification({
   event,
@@ -36,8 +68,8 @@ export function Notification({
         />
       </span>
       <Title unread={unread}>{renderTitle()}</Title>
-      {renderExtraContent()}
-      {renderMuteButton()}
+      {/* {renderExtraContent()} */}
+      {/* {renderMuteButton()} */}
     </Item>
   )
 
@@ -94,73 +126,78 @@ export function Notification({
   }
 
   function renderTitle() {
-    switch (event.type) {
-      case NotificationEventType.SetThreadState:
+    switch (event.__typename) {
+      case 'SetThreadStateNotificationEvent':
         return (
           <>
             <UserLink user={event.actor} /> hat Thread {event.thread.id}
             {event.archived ? 'archiviert' : 'unarchiviert'}
           </>
         )
-      case NotificationEventType.CreateComment:
+      case 'CreateCommentNotificationEvent':
         return (
           <>
             <UserLink user={event.author} /> hat Kommentar {event.comment.id} im
             Thread {event.thread.id} erstellt.
           </>
         )
-      case NotificationEventType.CreateThread:
+      case 'CreateThreadNotificationEvent':
         return (
           <>
             <UserLink user={event.author} /> hat Thread {event.thread.id} in
-            UUID {event.uuid.id} erstellt.
-          </>
-        )
-      case NotificationEventType.CreateEntity:
-        return (
-          <>
-            <UserLink user={event.author} /> hat Entity {event.entity.id}{' '}
+            {/* UUID {event.object.id}{' '} TODO: get alias */}
             erstellt.
           </>
         )
-      case NotificationEventType.SetLicense:
+      case 'CreateEntityNotificationEvent':
+        return (
+          <>
+            <UserLink user={event.author} /> hat Entity {event.entity.id}{' '}
+            {event.entity.alias} erstellt.
+          </>
+        )
+      case 'SetLicenseNotificationEvent':
         return (
           <>
             <UserLink user={event.actor} /> hat die Lizenz von Entity{' '}
-            {event.entity.id} geändert.
+            {event.repository.id} geändert.
           </>
         )
-      case NotificationEventType.CreateLink:
+      case 'CreateEntityLinkNotificationEvent':
         return (
           <>
-            <UserLink user={event.actor} /> hat Entity {event.entity.id} mit
-            UUID {event.parent.id} verknüpft.
+            <UserLink user={event.actor} /> hat Entity {event.child.id} mit UUID{' '}
+            {event.parent.id} verknüpft.
           </>
         )
-      case NotificationEventType.RemoveLink:
+      case 'RemoveEntityLinkNotificationEvent':
         return (
           <>
             <UserLink user={event.actor} /> hat die Verknüpfung von{' '}
-            {event.entity.id} mit UUID {event.parent.id} entfernt.
+            {event.child.id} mit UUID {event.parent.id} entfernt.
           </>
         )
-      case NotificationEventType.CreateEntityRevision:
+      case 'CreateEntityRevisionNotificationEvent':
         return (
           <>
             <UserLink user={event.author} /> hat die{' '}
-            <ContentLink id={event.revision.id}>Bearbeitung</ContentLink> für
-            Entity/Page {event.repository.id} erstellt.
+            <ContentLink id={event.entityRevision.id}>Bearbeitung</ContentLink>{' '}
+            für Entity/Page {event.entity.id} erstellt.
           </>
         )
-      case NotificationEventType.CheckoutRevision:
+      case 'CheckoutRevisionNotificationEvent':
         return (
           <>
             <UserLink user={event.reviewer} /> hat die{' '}
             <ContentLink id={event.revision.id}>Bearbeitung</ContentLink> für
-            Entity/Page {event.repository.id} übernommen
+            Entity/Page {event.repository.alias}{' '}
+            <ContentLink id={event.repository.id}>
+              {event.repository.currentRevision?.title}
+            </ContentLink>{' '}
+            übernommen
           </>
         )
-      case NotificationEventType.RejectRevision:
+      case 'RejectRevisionNotificationEvent':
         return (
           <>
             <UserLink user={event.reviewer} /> hat die{' '}
@@ -168,46 +205,46 @@ export function Notification({
             Entity/Page {event.repository.id} verworfen
           </>
         )
-      case NotificationEventType.CreateTaxonomyAssociation:
+      case 'CreateTaxonomyLinkNotificationEvent':
         return (
           <>
-            <UserLink user={event.actor} /> hat die Entity {event.entity.id} in
-            Taxonomy Term {event.taxonomyTerm.id} eingeordnet.
+            <UserLink user={event.actor} /> hat die Entity {event.child.id} in
+            Taxonomy Term {event.parent.id} eingeordnet.
           </>
         )
-      case NotificationEventType.RemoveTaxonomyAssociation:
+      case 'RemoveTaxonomyLinkNotificationEvent':
         return (
           <>
-            <UserLink user={event.actor} /> hat die Entity {event.entity.id} aus
-            Taxonomy Term {event.taxonomyTerm.id} entfernt.
+            <UserLink user={event.actor} /> hat die Entity {event.child.id} aus
+            Taxonomy Term {event.parent.id} entfernt.
           </>
         )
-      case NotificationEventType.CreateTaxonomyTerm:
+      case 'CreateTaxonomyTermNotificationEvent':
         return (
           <>
-            <UserLink user={event.actor} /> hat den Taxonomy Term{' '}
+            <UserLink user={event.author} /> hat den Taxonomy Term{' '}
             {event.taxonomyTerm.id} erstellt.
           </>
         )
-      case NotificationEventType.SetTaxonomyTerm:
+      case 'SetTaxonomyTermNotificationEvent':
         return (
           <>
-            <UserLink user={event.actor} /> hat den Taxonomy Term{' '}
+            <UserLink user={event.author} /> hat den Taxonomy Term{' '}
             {event.taxonomyTerm.id} geändert.
           </>
         )
-      case NotificationEventType.SetTaxonomyParent:
+      case 'SetTaxonomyParentNotificationEvent':
         return (
           <>
             <UserLink user={event.actor} /> hat den Elternknoten des Terms{' '}
-            {event.taxonomyTerm.id} von ${event.previousParent.id} auf{' '}
-            {event.parent.id} geändert.
+            {event.child.id} von ${event.previousParent?.id} auf{' '}
+            {event.parent?.id} geändert.
           </>
         )
-      case NotificationEventType.SetUuidState:
+      case 'SetUuidStateNotificationEvent':
         return (
           <>
-            <UserLink user={event.actor} /> hat den Uuid {event.uuid.id}{' '}
+            <UserLink user={event.actor} /> hat den Uuid {event.object.id}{' '}
             {event.trashed
               ? 'in den Papierkorb verschoben'
               : 'aus dem Papierkorb wieder hergestellt'}
@@ -219,8 +256,8 @@ export function Notification({
 
   function renderExtraContent() {
     if (
-      event.type === NotificationEventType.RejectRevision ||
-      event.type === NotificationEventType.CheckoutRevision
+      event.__typename === 'RejectRevisionNotificationEvent' ||
+      event.__typename === 'CheckoutRevisionNotificationEvent'
     ) {
       return <Content>{event.reason}</Content>
     }
