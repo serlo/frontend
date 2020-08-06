@@ -9,8 +9,7 @@ import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { RelativeContainer } from '@/components/navigation/relative-container'
 import { StyledH1 } from '@/components/tags/styled-h1'
 import { StyledP } from '@/components/tags/styled-p'
-import { Notification } from '@/components/user/notification'
-import { NotificationEvent } from '@/events/event'
+import { Notification, NotificationEvent } from '@/components/user/notification'
 import { shouldUseNewAuth } from '@/helper/feature-auth'
 
 const titleHelperNoPage = `
