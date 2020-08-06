@@ -257,7 +257,7 @@ export const Notifications: NextPage = () => {
     `,
     variables: {
       // TODO: set number of items to show. We could add pagination in a later iteration
-      count: 60,
+      count: 20,
       // TODO: can be true | false | undefined. If defined, it will only return notifications that have the corresponding unread state.
       unread: undefined,
     },

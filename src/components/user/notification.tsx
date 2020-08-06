@@ -17,9 +17,8 @@ import {
   SetTaxonomyTermNotificationEvent,
   SetThreadStateNotificationEvent,
   SetUuidStateNotificationEvent,
-  AbstractEntity,
-  AbstractRevision,
   TaxonomyTerm,
+  User,
 } from '@serlo/api'
 import Tippy from '@tippyjs/react'
 import styled, { css } from 'styled-components'
@@ -28,8 +27,6 @@ import * as timeago from 'timeago.js'
 //TODO: investigate
 // eslint-disable-next-line import/no-internal-modules
 import de from 'timeago.js/lib/lang/de'
-
-import { NotificationEventType, NotificationUser } from '@/events/event'
 
 // register it.
 timeago.register('de', de)
@@ -71,8 +68,8 @@ export function Notification({
         />
       </span>
       <Title unread={unread}>{renderText()}</Title>
-      {/* {renderExtraContent()} */}
-      {/* {renderMuteButton()} */}
+      {renderExtraContent()}
+      {renderMuteButton()}
     </Item>
   )
 
@@ -97,31 +94,30 @@ export function Notification({
   }
 
   function getSubscriptionId() {
-    switch (event.type) {
-      case NotificationEventType.SetThreadState:
-      case NotificationEventType.CreateThread:
-        return event.thread
-
-      case NotificationEventType.CreateComment:
+    switch (event.__typename) {
+      case 'SetThreadStateNotificationEvent':
+      case 'CreateThreadNotificationEvent':
+      case 'CreateCommentNotificationEvent':
         return event.thread.id
 
-      case NotificationEventType.CreateEntity:
-      case NotificationEventType.SetLicense:
-      case NotificationEventType.CreateLink:
-      case NotificationEventType.RemoveLink:
-        return event.entity
+      //TODO: Check if it's linked to the child
+      case 'CreateEntityLinkNotificationEvent':
+      case 'RemoveEntityLinkNotificationEvent':
+      case 'CreateTaxonomyLinkNotificationEvent':
+      case 'RemoveTaxonomyLinkNotificationEvent':
+        return event.child.id
 
-      case NotificationEventType.CreateEntityRevision:
-      case NotificationEventType.CheckoutRevision:
-      case NotificationEventType.RejectRevision:
-        return event.repository.id
-
-      case NotificationEventType.CreateTaxonomyAssociation:
-      case NotificationEventType.RemoveTaxonomyAssociation:
+      case 'CreateEntityNotificationEvent':
+      case 'CreateEntityRevisionNotificationEvent':
         return event.entity.id
 
-      case NotificationEventType.SetUuidState:
-        return event.uuid
+      case 'SetLicenseNotificationEvent':
+      case 'CheckoutRevisionNotificationEvent':
+      case 'RejectRevisionNotificationEvent':
+        return event.repository.id
+
+      case 'SetUuidStateNotificationEvent':
+        return event.object.id
 
       default:
         return undefined
@@ -267,7 +263,7 @@ export function Notification({
     }
   }
 
-  function renderUser(user: NotificationUser) {
+  function renderUser(user: User) {
     return (
       <StyledLink href={`/user/profile/${user.id}`}>{user.username}</StyledLink>
     )
