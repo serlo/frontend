@@ -17,6 +17,9 @@ import {
   SetTaxonomyTermNotificationEvent,
   SetThreadStateNotificationEvent,
   SetUuidStateNotificationEvent,
+  AbstractEntity,
+  AbstractRevision,
+  TaxonomyTerm,
 } from '@serlo/api'
 import Tippy from '@tippyjs/react'
 import styled, { css } from 'styled-components'
@@ -31,7 +34,7 @@ import { NotificationEventType, NotificationUser } from '@/events/event'
 // register it.
 timeago.register('de', de)
 
-type NotificationEvent =
+export type NotificationEvent =
   | CheckoutRevisionNotificationEvent
   | CreateCommentNotificationEvent
   | CreateEntityNotificationEvent
@@ -67,7 +70,7 @@ export function Notification({
           opts={{ minInterval: 60 }}
         />
       </span>
-      <Title unread={unread}>{renderTitle()}</Title>
+      <Title unread={unread}>{renderText()}</Title>
       {/* {renderExtraContent()} */}
       {/* {renderMuteButton()} */}
     </Item>
@@ -125,126 +128,127 @@ export function Notification({
     }
   }
 
-  function renderTitle() {
+  function renderText() {
     switch (event.__typename) {
       case 'SetThreadStateNotificationEvent':
         return (
           <>
-            <UserLink user={event.actor} /> hat Thread {event.thread.id}
+            {renderUser(event.actor)} hat einen {renderThread(event.thread.id)}{' '}
             {event.archived ? 'archiviert' : 'unarchiviert'}
           </>
         )
       case 'CreateCommentNotificationEvent':
         return (
           <>
-            <UserLink user={event.author} /> hat Kommentar {event.comment.id} im
-            Thread {event.thread.id} erstellt.
+            {renderUser(event.author)} hat einen{' '}
+            <StyledLink href={`/${event.comment.id}`}>Kommentar</StyledLink> in{' '}
+            einem {renderThread(event.thread.id)} erstellt.
           </>
         )
       case 'CreateThreadNotificationEvent':
         return (
           <>
-            <UserLink user={event.author} /> hat Thread {event.thread.id} in
-            {/* UUID {event.object.id}{' '} TODO: get alias */}
-            erstellt.
+            {renderUser(event.author)} hat einen {renderThread(event.thread.id)}{' '}
+            in {renderObject(event.object)} erstellt.
           </>
         )
       case 'CreateEntityNotificationEvent':
         return (
           <>
-            <UserLink user={event.author} /> hat Entity {event.entity.id}{' '}
-            {event.entity.alias} erstellt.
+            {renderUser(event.author)} hat {renderObject(event.entity)}{' '}
+            erstellt.
           </>
         )
       case 'SetLicenseNotificationEvent':
         return (
           <>
-            <UserLink user={event.actor} /> hat die Lizenz von Entity{' '}
-            {event.repository.id} geändert.
+            {renderUser(event.actor)} hat die Lizenz von{' '}
+            {renderObject(event.repository)} geändert.
           </>
         )
       case 'CreateEntityLinkNotificationEvent':
         return (
           <>
-            <UserLink user={event.actor} /> hat Entity {event.child.id} mit UUID{' '}
-            {event.parent.id} verknüpft.
+            {renderUser(event.actor)} hat {renderObject(event.child)} mit{' '}
+            {renderObject(event.parent)} verknüpft.
           </>
         )
       case 'RemoveEntityLinkNotificationEvent':
         return (
           <>
-            <UserLink user={event.actor} /> hat die Verknüpfung von{' '}
-            {event.child.id} mit UUID {event.parent.id} entfernt.
+            {renderUser(event.actor)} hat die Verknüpfung von{' '}
+            {renderObject(event.child)}
+            mit {renderObject(event.parent)} entfernt.
           </>
         )
       case 'CreateEntityRevisionNotificationEvent':
         return (
           <>
-            <UserLink user={event.author} /> hat die{' '}
-            <ContentLink id={event.entityRevision.id}>Bearbeitung</ContentLink>{' '}
-            für Entity/Page {event.entity.id} erstellt.
+            {renderUser(event.author)} hat eine{' '}
+            {renderRevision(event.entityRevision.id)} von{' '}
+            {renderObject(event.entity)} erstellt.
           </>
         )
       case 'CheckoutRevisionNotificationEvent':
         return (
           <>
-            <UserLink user={event.reviewer} /> hat die{' '}
-            <ContentLink id={event.revision.id}>Bearbeitung</ContentLink> für
-            Entity/Page {event.repository.alias}{' '}
-            <ContentLink id={event.repository.id}>
-              {event.repository.currentRevision?.title}
-            </ContentLink>{' '}
-            übernommen
+            {renderUser(event.reviewer)} hat eine{' '}
+            {renderRevision(event.revision.id)} von{' '}
+            {renderObject(event.repository)} übernommen
           </>
         )
       case 'RejectRevisionNotificationEvent':
         return (
           <>
-            <UserLink user={event.reviewer} /> hat die{' '}
-            <ContentLink id={event.revision.id}>Bearbeitung</ContentLink> für
-            Entity/Page {event.repository.id} verworfen
+            {renderUser(event.reviewer)} hat die{' '}
+            {renderRevision(event.revision.id)} für
+            {renderObject(event.repository)}
           </>
         )
       case 'CreateTaxonomyLinkNotificationEvent':
         return (
           <>
-            <UserLink user={event.actor} /> hat die Entity {event.child.id} in
-            Taxonomy Term {event.parent.id} eingeordnet.
+            {renderUser(event.actor)} hat {renderObject(event.child)} in{' '}
+            {renderTax(event.parent)} eingeordnet.
           </>
         )
       case 'RemoveTaxonomyLinkNotificationEvent':
         return (
           <>
-            <UserLink user={event.actor} /> hat die Entity {event.child.id} aus
-            Taxonomy Term {event.parent.id} entfernt.
+            {renderUser(event.actor)} hat {renderObject(event.child)} aus{' '}
+            {renderTax(event.parent)} entfernt.
           </>
         )
       case 'CreateTaxonomyTermNotificationEvent':
         return (
           <>
-            <UserLink user={event.author} /> hat den Taxonomy Term{' '}
-            {event.taxonomyTerm.id} erstellt.
+            {renderUser(event.author)} hat den {renderTax(event.taxonomyTerm)}{' '}
+            erstellt.
           </>
         )
       case 'SetTaxonomyTermNotificationEvent':
         return (
           <>
-            <UserLink user={event.author} /> hat den Taxonomy Term{' '}
-            {event.taxonomyTerm.id} geändert.
+            {renderUser(event.author)} hat den {renderTax(event.taxonomyTerm)}{' '}
+            geändert.
           </>
         )
       case 'SetTaxonomyParentNotificationEvent':
         return (
           <>
-            <UserLink user={event.actor} /> hat den Elternknoten des Terms{' '}
-            {event.child.id} von ${event.previousParent?.id} auf{' '}
-            {event.parent?.id} geändert.
+            {renderUser(event.actor)} hat den Elternknoten von{' '}
+            {renderTax(event.child)} von geändert.
           </>
+          /*
+          TODO: previousParent and parent can be null, hide event or build cases for that 
+          {renderTax(event.previousParent!)} auf{' '}
+            {renderTax(event.parent!)} geändert.
+          */
         )
       case 'SetUuidStateNotificationEvent':
         return (
           <>
-            <UserLink user={event.actor} /> hat den Uuid {event.object.id}{' '}
+            {renderUser(event.actor)} hat {renderObject(event.object)}{' '}
             {event.trashed
               ? 'in den Papierkorb verschoben'
               : 'aus dem Papierkorb wieder hergestellt'}
@@ -262,21 +266,37 @@ export function Notification({
       return <Content>{event.reason}</Content>
     }
   }
-}
 
-function UserLink({ user }: { user: NotificationUser }) {
-  return (
-    <StyledLink href={`/user/profile/${user.id}`}>{user.username}</StyledLink>
-  )
-}
+  function renderUser(user: NotificationUser) {
+    return (
+      <StyledLink href={`/user/profile/${user.id}`}>{user.username}</StyledLink>
+    )
+  }
 
-interface ContentLink {
-  id: number
-  children: string
-}
+  function renderObject(object: {
+    id: number
+    currentRevision?: {
+      title?: string
+    }
+  }) {
+    const title = object.currentRevision?.title
+    //TODO: Fall back to type if no title
+    return (
+      <StyledLink href={`/${object.id}`}>{title ? title : 'Entity'}</StyledLink>
+    )
+  }
 
-function ContentLink(props: ContentLink) {
-  return <StyledLink href={`/${props.id}`}>{props.children}</StyledLink>
+  function renderTax(taxonomy: TaxonomyTerm) {
+    return <StyledLink href={`/${taxonomy.id}`}>{taxonomy.name}</StyledLink>
+  }
+
+  function renderRevision(id: number) {
+    return <StyledLink href={`/${id}`}>Bearbeitung</StyledLink>
+  }
+
+  function renderThread(id: number) {
+    return <StyledLink href={`/${id}`}>Thread</StyledLink>
+  }
 }
 
 const StyledLink = styled.a`

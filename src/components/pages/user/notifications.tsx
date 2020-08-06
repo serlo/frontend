@@ -10,9 +10,10 @@ import { RelativeContainer } from '@/components/navigation/relative-container'
 import { StyledH1 } from '@/components/tags/styled-h1'
 import { StyledP } from '@/components/tags/styled-p'
 import { Notification } from '@/components/user/notification'
+import { NotificationEvent } from '@/events/event'
 import { shouldUseNewAuth } from '@/helper/feature-auth'
 
-const titleHelper = `
+const titleHelperNoPage = `
 ... on Applet {
   currentRevision {
     title
@@ -33,12 +34,16 @@ const titleHelper = `
     title
   }
 }
-... on Page {
+... on Video {
   currentRevision {
     title
   }
 }
-... on Video {
+`
+const titleHelper =
+  titleHelperNoPage +
+  `
+... on Page {
   currentRevision {
     title
   }
@@ -84,14 +89,12 @@ export const Notifications: NextPage = () => {
                 }
               }
               ... on CreateEntityNotificationEvent {
-                date
                 author {
                   id
                   username
                 }
                 entity {
                   id
-                  alias
                 }
               }
               ... on CreateEntityLinkNotificationEvent {
@@ -116,6 +119,7 @@ export const Notifications: NextPage = () => {
                 }
                 entity {
                   id
+                  ${titleHelperNoPage}
                 }
               }
               ... on CreateTaxonomyTermNotificationEvent {
@@ -134,9 +138,11 @@ export const Notifications: NextPage = () => {
                 }
                 child {
                   id
+                  ${titleHelper}
                 }
                 parent {
                   id
+                  name
                 }
               }
               ... on CreateThreadNotificationEvent {
@@ -150,6 +156,7 @@ export const Notifications: NextPage = () => {
                 }
                 object {
                   id
+                  ${titleHelper}
                 }
               }
               ... on RejectRevisionNotificationEvent {
@@ -184,20 +191,21 @@ export const Notifications: NextPage = () => {
                 }
                 child {
                   id
+                  ${titleHelper}
                 }
                 parent {
                   id
+                  name
                 }
               }
               ... on SetLicenseNotificationEvent {
-                date
                 actor {
                   id
                   username
                 }
                 repository {
                   id
-                  alias
+                  ${titleHelper}
                 }
               }
               ... on SetTaxonomyParentNotificationEvent {
@@ -238,6 +246,7 @@ export const Notifications: NextPage = () => {
                 }
                 object {
                   id
+                  ${titleHelper}
                 }
                 trashed
               }
@@ -248,7 +257,7 @@ export const Notifications: NextPage = () => {
     `,
     variables: {
       // TODO: set number of items to show. We could add pagination in a later iteration
-      count: 20,
+      count: 60,
       // TODO: can be true | false | undefined. If defined, it will only return notifications that have the corresponding unread state.
       unread: undefined,
     },
@@ -271,7 +280,7 @@ export const Notifications: NextPage = () => {
                 return (
                   <Notification
                     key={node.id}
-                    event={node.event}
+                    event={node.event as NotificationEvent}
                     unread={node.unread}
                   />
                 )
