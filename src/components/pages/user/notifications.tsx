@@ -34,16 +34,7 @@ export const Notifications: NextPage = () => {
             id
             unread
             event {
-              type
-              date
-              actor {
-                id
-                username
-              }
-              object {
-                id
-              }
-              payload
+              __typename
             }
           }
         }
@@ -62,6 +53,9 @@ export const Notifications: NextPage = () => {
   }, [])
 
   if (!mounted) return null
+
+  console.log(data)
+  return null
 
   return (
     <RelativeContainer>

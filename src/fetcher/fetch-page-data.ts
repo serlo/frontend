@@ -37,13 +37,20 @@ export async function fetchPageData(raw_alias: string): Promise<PageData> {
 }
 
 async function apiRequest(alias: string, instance: string): Promise<PageData> {
-  const QUERY = dataQuery(
+  const { uuid } = await request<{ uuid: QueryResponse }>(
+    endpoint,
+    dataQuery,
     /^\/[\d]+$/.test(alias)
-      ? 'id: ' + alias.substring(1)
-      : `alias: { instance: ${instance}, path: "${alias}"}`
+      ? {
+          id: parseInt(alias.substring(1), 10),
+        }
+      : {
+          alias: {
+            instance,
+            path: alias,
+          },
+        }
   )
-
-  const { uuid } = await request<{ uuid: QueryResponse }>(endpoint, QUERY)
 
   if (uuid.__typename === 'Course') {
     const firstPage = uuid.pages[0]?.alias
