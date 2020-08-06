@@ -73,6 +73,7 @@ export const Notifications: NextPage = () => {
                 repository {
                   id
                   ${titleHelper}
+                  __typename
                 }
                 reason
               }
@@ -120,6 +121,7 @@ export const Notifications: NextPage = () => {
                 entity {
                   id
                   ${titleHelperNoPage}
+                  __typename
                 }
               }
               ... on CreateTaxonomyTermNotificationEvent {
@@ -139,6 +141,7 @@ export const Notifications: NextPage = () => {
                 child {
                   id
                   ${titleHelper}
+                  __typename
                 }
                 parent {
                   id
@@ -157,6 +160,7 @@ export const Notifications: NextPage = () => {
                 object {
                   id
                   ${titleHelper}
+                  __typename
                 }
               }
               ... on RejectRevisionNotificationEvent {
@@ -192,6 +196,7 @@ export const Notifications: NextPage = () => {
                 child {
                   id
                   ${titleHelper}
+                  __typename
                 }
                 parent {
                   id
@@ -206,6 +211,7 @@ export const Notifications: NextPage = () => {
                 repository {
                   id
                   ${titleHelper}
+                  __typename
                 }
               }
               ... on SetTaxonomyParentNotificationEvent {
@@ -247,6 +253,7 @@ export const Notifications: NextPage = () => {
                 object {
                   id
                   ${titleHelper}
+                  __typename
                 }
                 trashed
               }

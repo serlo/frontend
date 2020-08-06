@@ -230,16 +230,26 @@ export function Notification({
           </>
         )
       case 'SetTaxonomyParentNotificationEvent':
+        if (!event.parent) {
+          //deleted
+          return (
+            <>
+              {renderUser(event.actor)} hat den Elternknoten von{' '}
+              {renderTax(event.child)} entfernt.
+            </>
+          )
+        }
         return (
           <>
             {renderUser(event.actor)} hat den Elternknoten von{' '}
-            {renderTax(event.child)} von geändert.
+            {renderTax(event.child)}
+            {event.previousParent ? (
+              <>von {renderTax(event.previousParent)}</>
+            ) : (
+              ''
+            )}{' '}
+            auf {renderTax(event.parent)} geändert.
           </>
-          /*
-          TODO: previousParent and parent can be null, hide event or build cases for that 
-          {renderTax(event.previousParent!)} auf{' '}
-            {renderTax(event.parent!)} geändert.
-          */
         )
       case 'SetUuidStateNotificationEvent':
         return (
@@ -274,11 +284,13 @@ export function Notification({
     currentRevision?: {
       title?: string
     }
+    __typename?: string
   }) {
     const title = object.currentRevision?.title
-    //TODO: Fall back to type if no title
     return (
-      <StyledLink href={`/${object.id}`}>{title ? title : 'Entity'}</StyledLink>
+      <StyledLink href={`/${object.id}`}>
+        {title ? title : `[${object.__typename || 'Entity'}]`}
+      </StyledLink>
     )
   }
 
