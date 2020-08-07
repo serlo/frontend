@@ -9,10 +9,11 @@ import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { RelativeContainer } from '@/components/navigation/relative-container'
 import { StyledH1 } from '@/components/tags/styled-h1'
 import { StyledP } from '@/components/tags/styled-p'
-import { Notification, NotificationEvent } from '@/components/user/notification'
+import { NotificationEvent, Notification } from '@/components/user/notification'
+import { inputFontReset, makeDefaultButton } from '@/helper/css'
 import { shouldUseNewAuth } from '@/helper/feature-auth'
 
-const titleHelperNoPage = `
+const titleNoPageQueryPart = /* GraphQL */ `
 ... on Applet {
   currentRevision {
     title
@@ -39,22 +40,49 @@ const titleHelperNoPage = `
   }
 }
 `
-const titleHelper =
-  titleHelperNoPage +
-  `
+const titleQueryPart =
+  titleNoPageQueryPart +
+  /* GraphQL */ `
 ... on Page {
   currentRevision {
     title
   }
 }`
 
+const authorQueryPart = /* GraphQL */ `
+author {
+    id
+    username
+}`
+
+const actorQueryPart = /* GraphQL */ `
+actor {
+    id
+    username
+}`
+
+interface PreviousNotificationsData {
+  notifications: JSX.Element[]
+  offset: string | undefined | null
+}
+
 export const Notifications: NextPage = () => {
   const [mounted, setMounted] = React.useState(!shouldUseNewAuth())
+  const [previousNotifications, setPreviousNotifications] = React.useState<
+    PreviousNotificationsData
+  >({
+    notifications: [],
+    offset: undefined,
+  })
 
   const { data } = useGraphqlSwr<Query>({
-    query: `
-      query notifications($count: Int!, $unread: Boolean){
-        notifications(first: $count, unread: $unread) {
+    query: /* GraphQL */ `
+      query notifications($count: Int!, $unread: Boolean, $after: String){
+        notifications(first: $count, unread: $unread, after: $after) {
+          pageInfo {
+            hasNextPage
+            endCursor
+          }
           nodes {
             id
             unread
@@ -71,16 +99,13 @@ export const Notifications: NextPage = () => {
                 }
                 repository {
                   id
-                  ${titleHelper}
+                  ${titleQueryPart}
                   __typename
                 }
                 reason
               }
               ... on CreateCommentNotificationEvent {
-                author {
-                  id
-                  username
-                }
+                ${authorQueryPart}
                 comment {
                   id
                 }
@@ -89,19 +114,13 @@ export const Notifications: NextPage = () => {
                 }
               }
               ... on CreateEntityNotificationEvent {
-                author {
-                  id
-                  username
-                }
+                ${authorQueryPart}
                 entity {
                   id
                 }
               }
               ... on CreateEntityLinkNotificationEvent {
-                actor {
-                  id
-                  username
-                }
+                ${actorQueryPart}
                 parent {
                   id
                 }
@@ -110,36 +129,27 @@ export const Notifications: NextPage = () => {
                 }
               }
               ... on CreateEntityRevisionNotificationEvent {
-                author {
-                  id
-                  username
-                }
+                ${authorQueryPart}
                 entityRevision {
                   id
                 }
                 entity {
                   id
-                  ${titleHelperNoPage}
+                  ${titleNoPageQueryPart}
                   __typename
                 }
               }
               ... on CreateTaxonomyTermNotificationEvent {
-                author {
-                  id
-                  username
-                }
+                ${authorQueryPart}
                 taxonomyTerm {
                   id
                 }
               }
               ... on CreateTaxonomyLinkNotificationEvent {
-                actor {
-                  id
-                  username
-                }
+                ${actorQueryPart}
                 child {
                   id
-                  ${titleHelper}
+                  ${titleQueryPart}
                   __typename
                 }
                 parent {
@@ -149,16 +159,13 @@ export const Notifications: NextPage = () => {
               }
               ... on CreateThreadNotificationEvent {
                 date
-                author {
-                  id
-                  username
-                }
+                ${authorQueryPart}
                 thread {
                   id
                 }
                 object {
                   id
-                  ${titleHelper}
+                  ${titleQueryPart}
                   __typename
                 }
               }
@@ -176,10 +183,7 @@ export const Notifications: NextPage = () => {
                 reason
               }
               ... on RemoveEntityLinkNotificationEvent {
-                actor {
-                  id
-                  username
-                }
+                ${actorQueryPart}
                 parent {
                   id
                 }
@@ -188,13 +192,10 @@ export const Notifications: NextPage = () => {
                 }
               }
               ... on RemoveTaxonomyLinkNotificationEvent {
-                actor {
-                  id
-                  username
-                }
+                ${actorQueryPart}
                 child {
                   id
-                  ${titleHelper}
+                  ${titleQueryPart}
                   __typename
                 }
                 parent {
@@ -203,21 +204,15 @@ export const Notifications: NextPage = () => {
                 }
               }
               ... on SetLicenseNotificationEvent {
-                actor {
-                  id
-                  username
-                }
+                ${actorQueryPart}
                 repository {
                   id
-                  ${titleHelper}
+                  ${titleQueryPart}
                   __typename
                 }
               }
               ... on SetTaxonomyParentNotificationEvent {
-                actor {
-                  id
-                  username
-                }
+                ${actorQueryPart}
                 child {
                   id
                 }
@@ -226,32 +221,23 @@ export const Notifications: NextPage = () => {
                 }
               }
               ... on SetTaxonomyTermNotificationEvent {
-                author {
-                  id
-                  username
-                }
+                ${authorQueryPart}
                 taxonomyTerm {
                   id
                 }
               }
               ... on SetThreadStateNotificationEvent {
-                actor {
-                  id
-                  username
-                }
+                ${actorQueryPart}
                 archived
                 thread {
                   id
                 }
               }
               ... on SetUuidStateNotificationEvent {
-                actor {
-                  id
-                  username
-                }
+                ${actorQueryPart}
                 object {
                   id
-                  ${titleHelper}
+                  ${titleQueryPart}
                   __typename
                 }
                 trashed
@@ -262,10 +248,9 @@ export const Notifications: NextPage = () => {
       }
     `,
     variables: {
-      // TODO: set number of items to show. We could add pagination in a later iteration
-      count: 20,
-      // TODO: can be true | false | undefined. If defined, it will only return notifications that have the corresponding unread state.
+      count: 10,
       unread: undefined,
+      after: previousNotifications.offset,
     },
   })
 
@@ -275,27 +260,45 @@ export const Notifications: NextPage = () => {
 
   if (!mounted) return null
 
+  const notifications =
+    data &&
+    data.notifications.nodes.map((node) => {
+      return (
+        <Notification
+          key={node.id}
+          event={node.event as NotificationEvent}
+          unread={node.unread}
+        />
+      )
+    })
+
+  const allNotifications = notifications
+    ? previousNotifications.notifications.concat(notifications)
+    : previousNotifications.notifications
+
+  function loadMore() {
+    setPreviousNotifications({
+      notifications: allNotifications,
+      offset: data!.notifications.pageInfo.endCursor,
+    })
+  }
+
   return (
     <RelativeContainer>
       <MaxWidthDiv showNav>
         <main>
           <StyledH1 extraMarginTop>Benachrichtigungen</StyledH1>
           <Wrapper>
-            {data ? (
-              data.notifications.nodes.map((node) => {
-                return (
-                  <Notification
-                    key={node.id}
-                    event={node.event as NotificationEvent}
-                    unread={node.unread}
-                  />
-                )
-              })
+            {allNotifications ? (
+              allNotifications
             ) : (
               <StyledP>
                 Bitte <Link href="/api/auth/login">melde dich an</Link> um deine
                 Benachrichtigungen zu sehen
               </StyledP>
+            )}
+            {data?.notifications.pageInfo.hasNextPage && (
+              <Button onClick={loadMore}>Weitere Laden</Button>
             )}
           </Wrapper>
         </main>
@@ -306,4 +309,16 @@ export const Notifications: NextPage = () => {
 
 const Wrapper = styled.div`
   margin-bottom: 80px;
+`
+
+const Button = styled.button`
+  ${inputFontReset}
+  ${makeDefaultButton}
+  margin-top: 40px;
+  font-weight: bold;
+  background-color: ${(props) => props.theme.colors.brand};
+  color: #fff;
+  &:hover {
+    background-color: ${(props) => props.theme.colors.lightblue};
+  }
 `
