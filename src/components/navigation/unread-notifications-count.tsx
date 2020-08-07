@@ -58,5 +58,5 @@ const NotificationsNumber = styled.span`
   color: #fff;
   z-index: 200;
   text-align: center;
-  width: 21px;
+  width: 20px;
 `

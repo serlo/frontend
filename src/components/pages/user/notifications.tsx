@@ -158,7 +158,6 @@ export const Notifications: NextPage = () => {
                 }
               }
               ... on CreateThreadNotificationEvent {
-                date
                 ${authorQueryPart}
                 thread {
                   id
@@ -298,7 +297,7 @@ export const Notifications: NextPage = () => {
               </StyledP>
             )}
             {data?.notifications.pageInfo.hasNextPage && (
-              <Button onClick={loadMore}>Weitere Laden</Button>
+              <Button onClick={loadMore}>Weitere laden</Button>
             )}
           </Wrapper>
         </main>
