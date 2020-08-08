@@ -3,6 +3,7 @@ import {
   faCreativeCommonsBy,
   faCreativeCommonsSa,
 } from '@fortawesome/free-brands-svg-icons'
+import { faSlash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styled from 'styled-components'
 
@@ -26,20 +27,46 @@ export function LicenseNotice({ data, minimal }: LicenseNoticeProps) {
   const licenseName =
     titleParts.length === 2 ? `CC${titleParts[1]}` : data.title
 
+  const isDefault = licenseName.indexOf('BY-SA') > -1
+
   if (minimal)
     return (
       <>
         <MinimalLink href={data.url} title={data.title} noExternalIcon>
-          <FontAwesomeIcon icon={faCreativeCommons} />
+          {isDefault ? (
+            <FontAwesomeIcon icon={faCreativeCommons} />
+          ) : (
+            <span className="fa-layers fa-fw">
+              <FontAwesomeIcon icon={faCreativeCommons} />
+              <FontAwesomeIcon
+                icon={faSlash}
+                flip="horizontal"
+                transform="shrink-6"
+              />
+            </span>
+          )}
         </MinimalLink>
       </>
     )
 
   return (
     <Wrapper>
-      <FontAwesomeIcon icon={faCreativeCommons} size="2x" />{' '}
-      <FontAwesomeIcon icon={faCreativeCommonsBy} size="2x" />{' '}
-      <FontAwesomeIcon icon={faCreativeCommonsSa} size="2x" />
+      {isDefault ? (
+        <>
+          <FontAwesomeIcon icon={faCreativeCommons} size="2x" />{' '}
+          <FontAwesomeIcon icon={faCreativeCommonsBy} size="2x" />{' '}
+          <FontAwesomeIcon icon={faCreativeCommonsSa} size="2x" />
+        </>
+      ) : (
+        <span className="fa-layers fa-fw fa-2x">
+          <FontAwesomeIcon icon={faCreativeCommons} />
+          <FontAwesomeIcon
+            icon={faSlash}
+            flip="horizontal"
+            transform="shrink-6"
+          />
+        </span>
+      )}
       <br />
       <StyledSmall>
         {' '}
