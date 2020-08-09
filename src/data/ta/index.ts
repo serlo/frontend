@@ -19,7 +19,7 @@ export const instanceData: InstanceData = {
       toTop: "மேல் நோக்கி"
     },
     categories: {
-      article: 'Article',
+      article: "கட்டுரை",
       course: 'Course',
       video: 'Video',
       applet: 'Applet',
