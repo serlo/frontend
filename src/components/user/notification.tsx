@@ -136,7 +136,7 @@ export function Notification({
       case 'CreateCommentNotificationEvent':
         return (
           <>
-            {renderUser(event.author)} hat einen{' '}
+            {renderUser(event.actor)} hat einen{' '}
             <StyledLink href={`/${event.comment.id}`}>Kommentar</StyledLink> in{' '}
             einem {renderThread(event.thread.id)} erstellt.
           </>
@@ -144,14 +144,14 @@ export function Notification({
       case 'CreateThreadNotificationEvent':
         return (
           <>
-            {renderUser(event.author)} hat einen {renderThread(event.thread.id)}{' '}
+            {renderUser(event.actor)} hat einen {renderThread(event.thread.id)}{' '}
             in {renderObject(event.object)} erstellt.
           </>
         )
       case 'CreateEntityNotificationEvent':
         return (
           <>
-            {renderUser(event.author)} hat {renderObject(event.entity)}{' '}
+            {renderUser(event.actor)} hat {renderObject(event.entity)}{' '}
             erstellt.
           </>
         )
@@ -180,7 +180,7 @@ export function Notification({
       case 'CreateEntityRevisionNotificationEvent':
         return (
           <>
-            {renderUser(event.author)} hat eine{' '}
+            {renderUser(event.actor)} hat eine{' '}
             {renderRevision(event.entityRevision.id)} von{' '}
             {renderObject(event.entity)} erstellt.
           </>
@@ -188,7 +188,7 @@ export function Notification({
       case 'CheckoutRevisionNotificationEvent':
         return (
           <>
-            {renderUser(event.reviewer)} hat eine{' '}
+            {renderUser(event.actor)} hat eine{' '}
             {renderRevision(event.revision.id)} von{' '}
             {renderObject(event.repository)} übernommen
           </>
@@ -196,7 +196,7 @@ export function Notification({
       case 'RejectRevisionNotificationEvent':
         return (
           <>
-            {renderUser(event.reviewer)} hat die{' '}
+            {renderUser(event.actor)} hat die{' '}
             {renderRevision(event.revision.id)} für
             {renderObject(event.repository)}
           </>
@@ -218,14 +218,14 @@ export function Notification({
       case 'CreateTaxonomyTermNotificationEvent':
         return (
           <>
-            {renderUser(event.author)} hat den {renderTax(event.taxonomyTerm)}{' '}
+            {renderUser(event.actor)} hat den {renderTax(event.taxonomyTerm)}{' '}
             erstellt.
           </>
         )
       case 'SetTaxonomyTermNotificationEvent':
         return (
           <>
-            {renderUser(event.author)} hat den {renderTax(event.taxonomyTerm)}{' '}
+            {renderUser(event.actor)} hat den {renderTax(event.taxonomyTerm)}{' '}
             geändert.
           </>
         )
@@ -382,9 +382,9 @@ const Title = styled.span<{ unread: boolean }>`
         height: 10px;
         margin-right: 7px;
       }
-    `}
+    `};
 
-  display:block;
+  display: block;
   margin-bottom: 9px;
   margin-top: 1px;
 

@@ -1467,10 +1467,10 @@
     "@sentry/types" "5.19.2"
     tslib "^1.9.3"
 
-"@serlo/api@^0.7.0":
-  version "0.7.3"
-  resolved "https://registry.yarnpkg.com/@serlo/api/-/api-0.7.3.tgz#74152301b50044f5c25906b2689513a7a5948831"
-  integrity sha512-KYVqHrUTsKrLhCbD9ZM7FGZzrrycaUsxQMYXJAJ3As80orCKqsr47ztz7Vv0bkSxikYhVe8WDt9s0t+B6Rjvfw==
+"@serlo/api@^0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@serlo/api/-/api-0.8.0.tgz#cc49c4a46adae4ba6519eef5ad1cb7b6da4cbc2d"
+  integrity sha512-3JhYTusE0MVUoak8dk84SMJ5bKhe6aagCzVR1Z8o9QD/o4IHhlJA/mS+ppSNLG0gQZTi1vBJuQS3tE2ubvH/+w==
 
 "@styled-system/background@^5.1.2":
   version "5.1.2"

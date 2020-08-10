@@ -89,11 +89,11 @@ export const Notifications: NextPage = () => {
             event {
               date
               __typename
+              actor {
+                id
+                username
+              }
               ... on CheckoutRevisionNotificationEvent {
-                reviewer {
-                  id
-                  username
-                }
                 revision {
                   id
                 }
@@ -105,7 +105,6 @@ export const Notifications: NextPage = () => {
                 reason
               }
               ... on CreateCommentNotificationEvent {
-                ${authorQueryPart}
                 comment {
                   id
                 }
@@ -114,13 +113,11 @@ export const Notifications: NextPage = () => {
                 }
               }
               ... on CreateEntityNotificationEvent {
-                ${authorQueryPart}
                 entity {
                   id
                 }
               }
               ... on CreateEntityLinkNotificationEvent {
-                ${actorQueryPart}
                 parent {
                   id
                 }
@@ -129,7 +126,6 @@ export const Notifications: NextPage = () => {
                 }
               }
               ... on CreateEntityRevisionNotificationEvent {
-                ${authorQueryPart}
                 entityRevision {
                   id
                 }
@@ -140,13 +136,11 @@ export const Notifications: NextPage = () => {
                 }
               }
               ... on CreateTaxonomyTermNotificationEvent {
-                ${authorQueryPart}
                 taxonomyTerm {
                   id
                 }
               }
               ... on CreateTaxonomyLinkNotificationEvent {
-                ${actorQueryPart}
                 child {
                   id
                   ${titleQueryPart}
@@ -158,7 +152,6 @@ export const Notifications: NextPage = () => {
                 }
               }
               ... on CreateThreadNotificationEvent {
-                ${authorQueryPart}
                 thread {
                   id
                 }
@@ -169,10 +162,6 @@ export const Notifications: NextPage = () => {
                 }
               }
               ... on RejectRevisionNotificationEvent {
-                reviewer {
-                  id
-                  username
-                }
                 repository {
                   id
                 }
@@ -182,7 +171,6 @@ export const Notifications: NextPage = () => {
                 reason
               }
               ... on RemoveEntityLinkNotificationEvent {
-                ${actorQueryPart}
                 parent {
                   id
                 }
@@ -191,7 +179,6 @@ export const Notifications: NextPage = () => {
                 }
               }
               ... on RemoveTaxonomyLinkNotificationEvent {
-                ${actorQueryPart}
                 child {
                   id
                   ${titleQueryPart}
@@ -203,7 +190,6 @@ export const Notifications: NextPage = () => {
                 }
               }
               ... on SetLicenseNotificationEvent {
-                ${actorQueryPart}
                 repository {
                   id
                   ${titleQueryPart}
@@ -211,7 +197,6 @@ export const Notifications: NextPage = () => {
                 }
               }
               ... on SetTaxonomyParentNotificationEvent {
-                ${actorQueryPart}
                 child {
                   id
                 }
@@ -220,20 +205,17 @@ export const Notifications: NextPage = () => {
                 }
               }
               ... on SetTaxonomyTermNotificationEvent {
-                ${authorQueryPart}
                 taxonomyTerm {
                   id
                 }
               }
               ... on SetThreadStateNotificationEvent {
-                ${actorQueryPart}
                 archived
                 thread {
                   id
                 }
               }
               ... on SetUuidStateNotificationEvent {
-                ${actorQueryPart}
                 object {
                   id
                   ${titleQueryPart}
