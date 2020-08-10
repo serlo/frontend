@@ -1,5 +1,6 @@
 import { headerData, footerData } from './menu-data';
 import { InstanceData, ServerSideStrings, LoggedInData, InstanceLandingData } from '@/data-types';
+
 export const instanceData: InstanceData = {
   lang: 'en',
   headerData: headerData,
@@ -26,6 +27,12 @@ export const instanceData: InstanceData = {
       folder: 'Folder',
       exercises: 'Exercises'
     },
+    entities: {
+      topicFolder: 'Exercise folder',
+      comment: 'Comment',
+      revision: 'Revision',
+      thread: 'Thread',
+    },
     share: {
       button: 'Share',
       title: 'Share!',
@@ -43,9 +50,6 @@ export const instanceData: InstanceData = {
       showPages: 'Show course overview',
       pages: 'Course overview',
       next: 'Next'
-    },
-    taxonomy: {
-      topicFolder: 'Exercise folder'
     },
     content: {
       show: 'show',
@@ -66,6 +70,11 @@ export const instanceData: InstanceData = {
       link1: 'Privacy Policy',
       link2: 'Terms of use',
       button: 'Agree'
+    },
+    notifications: {
+      notifications: 'Notifications',
+      pleaseLogInLink: 'Bitte melde dich an',
+      pleaseLogInText: 'um deine Benachrichtigungen zu sehen.',
     }
   }
 };
@@ -119,6 +128,44 @@ export const loggedInData: LoggedInData = {
     }]
   }],
   strings: {
-    tools: 'Other Tools'
+    tools: 'Other Tools',
+    notifications: {
+      loadMore: 'Weitere laden',
+      unknownProblem: 'Es gibt ein Problem beim laden der Benachrichtigungen, bitte versuche es später noch einmal.',
+      loading: 'Benachrichtigungen werden geladen',
+      hide: 'Benachrichtigungen für diesen Inhalt nicht mehr anzeigen.',
+      setThreadStateArchived: '%actor% hat einen %thread% archiviert.',
+      setThreadStateUnarchived: '%actor% hat einen %thread% unarchiviert.',
+      createComment: '%actor% hat einen %comment% in einem %thread% erstellt.',
+      createThread: '%actor% hat einen %thread% in einem %object% erstellt.',
+      createEntity: '%actor% hat %object% erstellt.',
+      setLicense: '%actor% hat die Lizenz von %repository% geändert.',
+      createEntityLink: '%actor% hat %child% mit %parent% verknüpft.',
+      removeEntityLink: '%actor% hat die Verknüpfung von %child% mit %parent% entfernt.',
+      createEntityRevision: '%actor% hat eine %revision% von %entity% erstellt.',
+      checkoutRevision: '%actor% hat eine %revision% von %repository% übernommen.',
+      rejectRevision: '%actor% hat %revision% für %repository% abgelehnt.',
+      createTaxonomyLink: '%actor% hat %child% in %parent% eingeordnet.',
+      removeTaxonomyLink: '%actor% hat %child% aus %parent% entfernt.',
+      createTaxonomyTerm: '%actor% hat den %term% erstellt.',
+      setTaxonomyTerm: '%actor% hat den %term% geändert.',
+      setTaxonomyParentDeleted: '%actor% hat den Elternknoten von %child% entfernt.',
+      setTaxonomyParentChangedFrom: '%actor% hat den Elternknoten von %child% von %previousparent% auf %parent% geändert.',
+      setTaxonomyParentChanged: '%actor% hat den Elternknoten von %child% auf %parent% geändert.',
+      setUuidStateTrashed: '%actor% hat %object% in den Papierkorb verschoben.',
+      setUuidStateRestored: '%actor% hat %object% aus dem Papierkorb wieder hergestellt.',
+      entityPlaceholderPage: 'Seite',
+      entityPlaceholderArticle: 'Artikel',
+      entityPlaceholderVideo: 'Video',
+      entityPlaceholderApplet: 'Applet',
+      entityPlaceholderCoursePage: 'Kursseite',
+      entityPlaceholderExercise: 'Aufgabe',
+      entityPlaceholderGroupedExercise: 'gruppierte Aufgabe',
+      entityPlaceholderExerciseGroup: 'Aufgabengruppe',
+      entityPlaceholderEvent: 'Event',
+      entityPlaceholderCourse: 'Kurs',
+      entityPlaceholderTaxonomyTerm: 'Begriff',
+      entityPlaceholderFallback: 'Inhalt',
+    }
   }
-};
+}

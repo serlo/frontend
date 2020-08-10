@@ -32,7 +32,7 @@ export function Topic({ data }: TopicProps) {
       <Headline>
         {data.title}
         {data.exercisesContent.length > 0 && (
-          <span title={strings.taxonomy.topicFolder}>
+          <span title={strings.entities.topicFolder}>
             {' '}
             <StyledIcon icon={faFile} />{' '}
           </span>

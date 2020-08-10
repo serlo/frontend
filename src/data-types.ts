@@ -30,13 +30,14 @@ export interface InstanceData {
     header: HeaderStrings
     footer: FooterStrings
     categories: CategoryStrings
+    entities: EntitiesStrings
     share: ShareStrings
     edit: EditStrings
     license: LicenseStrings
     course: CourseStrings
-    taxonomy: TaxonomyStrings
     content: ContentStrings
     cookie: CookieStrings
+    notifications: NotificationsStrings
   }
   headerData: HeaderData
   footerData: FooterData
@@ -621,10 +622,13 @@ export interface TaxonomyData extends TaxonomyTermBase {
   exercisesContent: (FrontendExerciseNode | FrontendExerciseGroupNode)[]
 }
 
-// Some translations for the taxonomy.
+// Entity types translations.
 
-export interface TaxonomyStrings {
+export interface EntitiesStrings {
   topicFolder: string
+  comment: string
+  revision: string
+  thread: string
 }
 
 // And some translations for content
@@ -649,6 +653,12 @@ export interface CookieStrings {
   link1: string
   link2: string
   button: string
+}
+
+export interface NotificationsStrings {
+  notifications: string
+  pleaseLogInLink: string
+  pleaseLogInText: string
 }
 
 export interface LandingStrings {
@@ -676,6 +686,44 @@ export interface LoggedInData {
 
 export interface LoggedInStrings {
   tools: string
+  notifications: {
+    loadMore: string
+    unknownProblem: string
+    loading: string
+    hide: string
+    setThreadStateArchived: string
+    setThreadStateUnarchived: string
+    createComment: string
+    createThread: string
+    createEntity: string
+    setLicense: string
+    createEntityLink: string
+    removeEntityLink: string
+    createEntityRevision: string
+    checkoutRevision: string
+    rejectRevision: string
+    createTaxonomyLink: string
+    removeTaxonomyLink: string
+    createTaxonomyTerm: string
+    setTaxonomyTerm: string
+    setTaxonomyParentDeleted: string
+    setTaxonomyParentChangedFrom: string
+    setTaxonomyParentChanged: string
+    setUuidStateTrashed: string
+    setUuidStateRestored: string
+    entityPlaceholderPage: string
+    entityPlaceholderArticle: string
+    entityPlaceholderVideo: string
+    entityPlaceholderApplet: string
+    entityPlaceholderCoursePage: string
+    entityPlaceholderExercise: string
+    entityPlaceholderGroupedExercise: string
+    entityPlaceholderExerciseGroup: string
+    entityPlaceholderEvent: string
+    entityPlaceholderCourse: string
+    entityPlaceholderTaxonomyTerm: string
+    entityPlaceholderFallback: string
+  }
 }
 
 export interface ServerSideStrings {

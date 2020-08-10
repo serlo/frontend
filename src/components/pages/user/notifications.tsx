@@ -12,6 +12,8 @@ import { RelativeContainer } from '@/components/navigation/relative-container'
 import { StyledH1 } from '@/components/tags/styled-h1'
 import { StyledP } from '@/components/tags/styled-p'
 import { NotificationEvent, Notification } from '@/components/user/notification'
+import { useInstanceData } from '@/contexts/instance-context'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { inputFontReset, makeDefaultButton } from '@/helper/css'
 import { shouldUseNewAuth } from '@/helper/feature-auth'
 
@@ -68,6 +70,9 @@ export const Notifications: NextPage = () => {
   React.useEffect(() => {
     setMounted(true)
   }, [])
+
+  const loggedInData = useLoggedInData()
+  const { strings } = useInstanceData()
 
   const response = useGraphqlSwr<Query>({
     query: /* GraphQL */ `
@@ -232,8 +237,13 @@ export const Notifications: NextPage = () => {
 
   if (!mounted) return null
 
-  if (response.error && (response.error as Error).message === 'unauthorized')
+  if (
+    !loggedInData ||
+    (response.error && (response.error as Error).message === 'unauthorized')
+  )
     return renderUnauthorized()
+
+  const loggedInStrings = loggedInData.strings.notifications
 
   const notifications =
     data &&
@@ -243,6 +253,7 @@ export const Notifications: NextPage = () => {
           key={node.id}
           event={node.event as NotificationEvent}
           unread={node.unread}
+          loggedInStrings={loggedInStrings}
         />
       )
     })
@@ -268,7 +279,7 @@ export const Notifications: NextPage = () => {
       {response.error && renderUnknownError()}
       {isLoading && renderLoading()}
       {data?.notifications.pageInfo.hasNextPage && (
-        <Button onClick={loadMore}>Weitere laden</Button>
+        <Button onClick={loadMore}>{loggedInStrings.loadMore}</Button>
       )}
     </>
   )
@@ -278,7 +289,9 @@ export const Notifications: NextPage = () => {
       <RelativeContainer>
         <MaxWidthDiv showNav>
           <main>
-            <StyledH1 extraMarginTop>Benachrichtigungen</StyledH1>
+            <StyledH1 extraMarginTop>
+              {strings.notifications.notifications}
+            </StyledH1>
             <Wrapper>{children}</Wrapper>
           </main>
         </MaxWidthDiv>
@@ -288,11 +301,14 @@ export const Notifications: NextPage = () => {
 
   function renderUnauthorized() {
     console.log(response.error)
+
     return wrapInContainer(
       <>
         <StyledP>
-          Bitte <Link href="/api/auth/login">melde dich an</Link> um deine
-          Benachrichtigungen zu sehen
+          <Link href="/api/auth/login">
+            {strings.notifications.pleaseLogInLink}
+          </Link>{' '}
+          {strings.notifications.pleaseLogInText}
         </StyledP>
       </>
     )
@@ -302,10 +318,7 @@ export const Notifications: NextPage = () => {
     console.log(response.error)
     return wrapInContainer(
       <>
-        <StyledP>
-          Es gibt ein Problem beim laden der Benachrichtigungen, bitte versuche
-          es später noch einmal.
-        </StyledP>
+        <StyledP>{loggedInStrings.unknownProblem}</StyledP>
       </>
     )
   }
@@ -316,7 +329,7 @@ export const Notifications: NextPage = () => {
         <ColoredIcon>
           <FontAwesomeIcon icon={faSpinner} spin size="1x" />
         </ColoredIcon>{' '}
-        Benachrichtigungen werden geladen
+        {loggedInStrings.loading}
       </StyledP>
     )
   }
