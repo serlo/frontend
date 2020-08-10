@@ -3,7 +3,7 @@ import { setupServer } from 'msw/node'
 import fetch from 'node-fetch'
 
 import { endpoint } from '@/api/endpoint'
-import {SingleEntityPage, TaxonomyPage} from '@/data-types'
+import { SingleEntityPage, TaxonomyPage } from '@/data-types'
 import { fetchContent } from '@/fetcher/serlo-api'
 
 const server = setupServer()
@@ -2088,7 +2088,6 @@ test('TaxonomyTerm', async () => {
   const response = await fetchContent('/5', origin)
   const pageData = response.pageData! as TaxonomyPage
 
-
   expect(pageData.breadcrumbsData).toEqual([
     {
       label: 'Mathematik',
@@ -2098,45 +2097,45 @@ test('TaxonomyTerm', async () => {
 
   expect(pageData.secondaryNavigationData).toEqual([
     {
-      "title": "Alle Themen",
-      "url": "/5",
-      "active": true
+      title: 'Alle Themen',
+      url: '/5',
+      active: true,
     },
     {
-      "title": "Gymnasium",
-      "url": "/16042",
-      "active": false
+      title: 'Gymnasium',
+      url: '/16042',
+      active: false,
     },
     {
-      "title": "Realschule",
-      "url": "/16157",
-      "active": false
+      title: 'Realschule',
+      url: '/16157',
+      active: false,
     },
     {
-      "title": "Mittelschule (Hauptschule)",
-      "url": "/16259",
-      "active": false
+      title: 'Mittelschule (Hauptschule)',
+      url: '/16259',
+      active: false,
     },
     {
-      "title": "FOS & BOS",
-      "url": "/16033",
-      "active": false
+      title: 'FOS & BOS',
+      url: '/16033',
+      active: false,
     },
     {
-      "title": "Hochschule",
-      "url": "/44323",
-      "active": false
+      title: 'Hochschule',
+      url: '/44323',
+      active: false,
     },
     {
-      "title": "Prüfungen",
-      "url": "/83249",
-      "active": false
+      title: 'Prüfungen',
+      url: '/83249',
+      active: false,
     },
     {
-      "title": "Inhalte bearbeiten und neue Inhalte hinzufügen",
-      "url": "/19880",
-      "active": false
-    }
+      title: 'Inhalte bearbeiten und neue Inhalte hinzufügen',
+      url: '/19880',
+      active: false,
+    },
   ])
 
   expect(pageData.metaData?.title).toEqual('Mathe - Fach - lernen mit Serlo!')
@@ -2151,7 +2150,6 @@ test('TaxonomyTerm', async () => {
   expect(pageData.taxonomyData.id).toEqual(5)
   expect(pageData.taxonomyData.title).toEqual('Mathe')
   expect(Array.isArray(pageData.taxonomyData.subterms)).toEqual(true)
-
 })
 
 test('Exercise', async () => {
@@ -2159,128 +2157,141 @@ test('Exercise', async () => {
     rest.post(endpoint, (req, res, ctx) => {
       return res(
         ctx.json({
-          "data": {
-            "uuid": {
-              "__typename": "Exercise",
-              "id": 54210,
-              "alias": "/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen/aufgaben-verschieben-strecken-trigonometrischer-funktionen/54210",
-              "instance": "de",
-              "currentRevision": {
-                "content": "{\"plugin\":\"exercise\",\"state\":{\"content\":{\"plugin\":\"rows\",\"state\":[{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Ordne folgendem Graphen die richtige Funktionsgleichung zu:\"}]}]},{\"plugin\":\"image\",\"state\":{\"src\":\"https://assets.serlo.org/legacy/56e92eda3e891_00804a4cae5eaff522ae3b59cf859b06ca6a47b0.png\",\"alt\":\"Graph\"}}]},\"interactive\":{\"plugin\":\"scMcExercise\",\"state\":{\"isSingleChoice\":true,\"answers\":[{\"content\":{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"type\":\"math\",\"src\":\"f(x)=4\\\\cdot\\\\sin(x)\",\"inline\":true,\"children\":[{\"text\":\"f(x)=4\\\\cdot\\\\sin(x)\"}]}]}]},\"isCorrect\":true,\"feedback\":{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Richtig! Der Nobelpreis ist ganz nah ;-)\"}]}]}},{\"content\":{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"type\":\"math\",\"src\":\"f(x)=4\\\\cdot\\\\cos(x)\",\"inline\":true,\"children\":[{\"text\":\"f(x)=4\\\\cdot\\\\cos(x)\"}]}]}]},\"isCorrect\":false,\"feedback\":{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Leider falsch! Du denkst wahrscheinlich schon in die richtige Richtung, aber schaue dir noch einmal die Unterschiede der \"},{\"type\":\"a\",\"href\":\"/1909\",\"children\":[{\"text\":\"trigonometrischen Funktionen\"}]},{\"text\":\" an.\"}]}]}},{\"content\":{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"type\":\"math\",\"src\":\"f(x)=5\\\\cdot\\\\cos(x)\",\"inline\":true,\"children\":[{\"text\":\"f(x)=5\\\\cdot\\\\cos(x)\"}]}]}]},\"isCorrect\":false,\"feedback\":{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Da solltest du noch einmal nachdenken. Die Funktionsgleichung hat leider so gar  nichts mit dem Graphen zu tun!\"}]}]}},{\"content\":{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"type\":\"math\",\"src\":\"f(x)=12\\\\cdot\\\\sin(x)\",\"inline\":true,\"children\":[{\"text\":\"f(x)=12\\\\cdot\\\\sin(x)\"}]}]}]},\"isCorrect\":false,\"feedback\":{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Leider falsch! Du hast mit der Sinus-Funktion schon den richtigen Riecher. Allerdings ist mal \"},{\"type\":\"math\",\"src\":\"12\",\"inline\":true,\"children\":[{\"text\":\"12\"}]},{\"text\":\" falsch. Schau mal, wie weit die Kurve auf der y-Achse ausschlägt.\"}]}]}}]}}}}"
+          data: {
+            uuid: {
+              __typename: 'Exercise',
+              id: 54210,
+              alias:
+                '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen/aufgaben-verschieben-strecken-trigonometrischer-funktionen/54210',
+              instance: 'de',
+              currentRevision: {
+                content:
+                  '{"plugin":"exercise","state":{"content":{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Ordne folgendem Graphen die richtige Funktionsgleichung zu:"}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e92eda3e891_00804a4cae5eaff522ae3b59cf859b06ca6a47b0.png","alt":"Graph"}}]},"interactive":{"plugin":"scMcExercise","state":{"isSingleChoice":true,"answers":[{"content":{"plugin":"text","state":[{"type":"p","children":[{"type":"math","src":"f(x)=4\\\\cdot\\\\sin(x)","inline":true,"children":[{"text":"f(x)=4\\\\cdot\\\\sin(x)"}]}]}]},"isCorrect":true,"feedback":{"plugin":"text","state":[{"type":"p","children":[{"text":"Richtig! Der Nobelpreis ist ganz nah ;-)"}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"type":"math","src":"f(x)=4\\\\cdot\\\\cos(x)","inline":true,"children":[{"text":"f(x)=4\\\\cdot\\\\cos(x)"}]}]}]},"isCorrect":false,"feedback":{"plugin":"text","state":[{"type":"p","children":[{"text":"Leider falsch! Du denkst wahrscheinlich schon in die richtige Richtung, aber schaue dir noch einmal die Unterschiede der "},{"type":"a","href":"/1909","children":[{"text":"trigonometrischen Funktionen"}]},{"text":" an."}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"type":"math","src":"f(x)=5\\\\cdot\\\\cos(x)","inline":true,"children":[{"text":"f(x)=5\\\\cdot\\\\cos(x)"}]}]}]},"isCorrect":false,"feedback":{"plugin":"text","state":[{"type":"p","children":[{"text":"Da solltest du noch einmal nachdenken. Die Funktionsgleichung hat leider so gar  nichts mit dem Graphen zu tun!"}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"type":"math","src":"f(x)=12\\\\cdot\\\\sin(x)","inline":true,"children":[{"text":"f(x)=12\\\\cdot\\\\sin(x)"}]}]}]},"isCorrect":false,"feedback":{"plugin":"text","state":[{"type":"p","children":[{"text":"Leider falsch! Du hast mit der Sinus-Funktion schon den richtigen Riecher. Allerdings ist mal "},{"type":"math","src":"12","inline":true,"children":[{"text":"12"}]},{"text":" falsch. Schau mal, wie weit die Kurve auf der y-Achse ausschlägt."}]}]}}]}}}}',
               },
-              "solution": {
-                "currentRevision": {
-                  "content": "{\"plugin\":\"solution\",\"state\":{\"prerequisite\":{\"id\":\"1450\",\"title\":\"Sinus- und Kosinusfunktion\"},\"strategy\":{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{}]}]},\"steps\":{\"plugin\":\"rows\",\"state\":[{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Betrachtest du den Graphen der Funktion, siehst du gleich, dass es sich nicht um eine Kosinus-Funktion handeln kann, da die Kosinus-Funktion achsensymmetrisch bezüglich der y-Achse ist und der Graph der gesuchten Funktion ist punktsymmetrisch bezüglich des Ursprungs. Deshalb kannst du direkt die Funktionen \"},{\"type\":\"math\",\"src\":\"4\\\\cdot\\\\cos(x)\",\"inline\":true,\"children\":[{\"text\":\"4\\\\cdot\\\\cos(x)\"}]},{\"text\":\" und \"},{\"type\":\"math\",\"src\":\"5\\\\cdot\\\\cos(x)\",\"inline\":true,\"children\":[{\"text\":\"5\\\\cdot\\\\cos(x)\"}]},{\"text\":\"ausschließen.\"}]}]},{\"plugin\":\"image\",\"state\":{\"src\":\"https://assets.serlo.org/legacy/56e92a7c4bb94_0c7f36a564b59a1c9b6f796ab968c4075def3a16.png\",\"alt\":\"Graph\"}},{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Bleiben also noch die beiden Sinus-Funktionen zur Auswahl. Betrachtest du die Funktion \"},{\"type\":\"math\",\"src\":\"12\\\\cdot\\\\sin(x)\",\"inline\":true,\"children\":[{\"text\":\"12\\\\cdot\\\\sin(x)\"}]},{\"text\":\", sollte dir auffallen, dass die Amplitude dieser Funktion sehr viel größer ist als die der gesuchten Funktion.Die Amplitude der Funktion \"},{\"type\":\"math\",\"src\":\"12\\\\cdot\\\\sin(x)\",\"inline\":true,\"children\":[{\"text\":\"12\\\\cdot\\\\sin(x)\"}]},{\"text\":\" beträgt 12, da sie \"},{\"type\":\"math\",\"src\":\"12\",\"inline\":true,\"children\":[{\"text\":\"12\"}]},{\"text\":\" mal so groß ist wie die der normalen Sinus-Funktion \"},{\"type\":\"math\",\"src\":\"\\\\sin(x)\",\"inline\":true,\"children\":[{\"text\":\"\\\\sin(x)\"}]},{\"text\":\".\"}]}]},{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Die Amplitude des Graphen der gesuchten Funktion, beträgt \"},{\"type\":\"math\",\"src\":\"4\",\"inline\":true,\"children\":[{\"text\":\"4\"}]},{\"text\":\", also \"},{\"type\":\"math\",\"src\":\"4\",\"inline\":true,\"children\":[{\"text\":\"4\"}]},{\"text\":\" mal so groß wie die der normalen Sinus-Funktion \"},{\"type\":\"math\",\"src\":\"\\\\sin(x)\",\"inline\":true,\"children\":[{\"text\":\"\\\\sin(x)\"}]},{\"text\":\". Deshalb ist die gesuchte Funktion \"},{\"type\":\"math\",\"src\":\"4\\\\cdot\\\\sin(x)\",\"inline\":true,\"children\":[{\"text\":\"4\\\\cdot\\\\sin(x)\"}]},{\"text\":\"\"}]}]},{\"plugin\":\"image\",\"state\":{\"src\":\"https://assets.serlo.org/legacy/56e9301252d07_a7c78c78c1228a9912b93723ce39bfaf46b136ec.png\",\"alt\":\"Graph\"}}]}}}"
+              solution: {
+                currentRevision: {
+                  content:
+                    '{"plugin":"solution","state":{"prerequisite":{"id":"1450","title":"Sinus- und Kosinusfunktion"},"strategy":{"plugin":"text","state":[{"type":"p","children":[{}]}]},"steps":{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Betrachtest du den Graphen der Funktion, siehst du gleich, dass es sich nicht um eine Kosinus-Funktion handeln kann, da die Kosinus-Funktion achsensymmetrisch bezüglich der y-Achse ist und der Graph der gesuchten Funktion ist punktsymmetrisch bezüglich des Ursprungs. Deshalb kannst du direkt die Funktionen "},{"type":"math","src":"4\\\\cdot\\\\cos(x)","inline":true,"children":[{"text":"4\\\\cdot\\\\cos(x)"}]},{"text":" und "},{"type":"math","src":"5\\\\cdot\\\\cos(x)","inline":true,"children":[{"text":"5\\\\cdot\\\\cos(x)"}]},{"text":"ausschließen."}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e92a7c4bb94_0c7f36a564b59a1c9b6f796ab968c4075def3a16.png","alt":"Graph"}},{"plugin":"text","state":[{"type":"p","children":[{"text":"Bleiben also noch die beiden Sinus-Funktionen zur Auswahl. Betrachtest du die Funktion "},{"type":"math","src":"12\\\\cdot\\\\sin(x)","inline":true,"children":[{"text":"12\\\\cdot\\\\sin(x)"}]},{"text":", sollte dir auffallen, dass die Amplitude dieser Funktion sehr viel größer ist als die der gesuchten Funktion.Die Amplitude der Funktion "},{"type":"math","src":"12\\\\cdot\\\\sin(x)","inline":true,"children":[{"text":"12\\\\cdot\\\\sin(x)"}]},{"text":" beträgt 12, da sie "},{"type":"math","src":"12","inline":true,"children":[{"text":"12"}]},{"text":" mal so groß ist wie die der normalen Sinus-Funktion "},{"type":"math","src":"\\\\sin(x)","inline":true,"children":[{"text":"\\\\sin(x)"}]},{"text":"."}]}]},{"plugin":"text","state":[{"type":"p","children":[{"text":"Die Amplitude des Graphen der gesuchten Funktion, beträgt "},{"type":"math","src":"4","inline":true,"children":[{"text":"4"}]},{"text":", also "},{"type":"math","src":"4","inline":true,"children":[{"text":"4"}]},{"text":" mal so groß wie die der normalen Sinus-Funktion "},{"type":"math","src":"\\\\sin(x)","inline":true,"children":[{"text":"\\\\sin(x)"}]},{"text":". Deshalb ist die gesuchte Funktion "},{"type":"math","src":"4\\\\cdot\\\\sin(x)","inline":true,"children":[{"text":"4\\\\cdot\\\\sin(x)"}]},{"text":""}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e9301252d07_a7c78c78c1228a9912b93723ce39bfaf46b136ec.png","alt":"Graph"}}]}}}',
                 },
-                "license": {
-                  "id": 1,
-                  "url": "https://creativecommons.org/licenses/by-sa/4.0/deed.de",
-                  "title": "Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0"
-                }
-              },
-              "license": {
-                "id": 1,
-                "url": "https://creativecommons.org/licenses/by-sa/4.0/deed.de",
-                "title": "Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0"
-              },
-              "taxonomyTerms": [
-                {
-                  "navigation": {
-                    "path": [
-                      {
-                        "label": "Mathematik",
-                        "url": "/mathe"
-                      },
-                      {
-                        "label": "Alle Themen",
-                        "url": "/mathe/5"
-                      },
-                      {
-                        "label": "Funktionen",
-                        "url": "/mathe/funktionen"
-                      },
-                      {
-                        "label": "Wichtige Funktionstypen und ihre Eigenschaften",
-                        "url": "/mathe/funktionen/wichtige-funktionstypen-eigenschaften"
-                      },
-                      {
-                        "label": "Trigonometrische Funktionen",
-                        "url": "/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen"
-                      },
-                      {
-                        "label": "Aufgaben zum Verschieben und Strecken trigonometrischer Funktionen",
-                        "url": "/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen/aufgaben-verschieben-strecken-trigonometrischer-funktionen"
-                      }
-                    ]
-                  }
+                license: {
+                  id: 1,
+                  url: 'https://creativecommons.org/licenses/by-sa/4.0/deed.de',
+                  title:
+                    'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0',
                 },
+              },
+              license: {
+                id: 1,
+                url: 'https://creativecommons.org/licenses/by-sa/4.0/deed.de',
+                title: 'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0',
+              },
+              taxonomyTerms: [
                 {
-                  "navigation": {
-                    "path": [
+                  navigation: {
+                    path: [
                       {
-                        "label": "Mathematik",
-                        "url": "/mathe"
+                        label: 'Mathematik',
+                        url: '/mathe',
                       },
                       {
-                        "label": "Alle Themen",
-                        "url": "/mathe/5"
+                        label: 'Alle Themen',
+                        url: '/mathe/5',
                       },
                       {
-                        "label": "Deutschland",
-                        "url": "/mathe/deutschland"
+                        label: 'Funktionen',
+                        url: '/mathe/funktionen',
                       },
                       {
-                        "label": "Bayern",
-                        "url": "/mathe/deutschland/bayern"
+                        label: 'Wichtige Funktionstypen und ihre Eigenschaften',
+                        url:
+                          '/mathe/funktionen/wichtige-funktionstypen-eigenschaften',
                       },
                       {
-                        "label": "FOS Technik",
-                        "url": "/mathe/deutschland/bayern/fos-technik"
+                        label: 'Trigonometrische Funktionen',
+                        url:
+                          '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen',
                       },
                       {
-                        "label": "Klasse 12",
-                        "url": "/mathe/deutschland/bayern/fos-technik/klasse-12"
+                        label:
+                          'Aufgaben zum Verschieben und Strecken trigonometrischer Funktionen',
+                        url:
+                          '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen/aufgaben-verschieben-strecken-trigonometrischer-funktionen',
                       },
-                      {
-                        "label": "Trigonometrische Funktionen",
-                        "url": "/mathe/deutschland/bayern/fos-technik/klasse-12/trigonometrische-funktionen"
-                      },
-                      {
-                        "label": "Aufgaben zum Verschieben und Strecken trigonometrischer Funktionen",
-                        "url": "/mathe/deutschland/bayern/fos-technik/klasse-12/trigonometrische-funktionen/aufgaben-verschieben-strecken-trigonometrischer-funktionen"
-                      }
-                    ]
-                  }
+                    ],
+                  },
                 },
                 {
-                  "navigation": {
-                    "path": [
+                  navigation: {
+                    path: [
                       {
-                        "label": "Mathematik",
-                        "url": "/mathe"
+                        label: 'Mathematik',
+                        url: '/mathe',
                       },
                       {
-                        "label": "Gymnasium",
-                        "url": "/mathe/deutschland/bayern/gymnasium"
+                        label: 'Alle Themen',
+                        url: '/mathe/5',
                       },
                       {
-                        "label": "Klasse 10",
-                        "url": "/mathe/deutschland/bayern/gymnasium/klasse-10"
+                        label: 'Deutschland',
+                        url: '/mathe/deutschland',
                       },
                       {
-                        "label": "Trigonometrie",
-                        "url": "/mathe/deutschland/bayern/gymnasium/klasse-10/trigonometrie"
+                        label: 'Bayern',
+                        url: '/mathe/deutschland/bayern',
                       },
                       {
-                        "label": "Aufgaben zur allgemeinen Sinusfunktion",
-                        "url": "/mathe/deutschland/bayern/gymnasium/klasse-10/trigonometrie/aufgaben-allgemeinen-sinusfunktion"
-                      }
-                    ]
-                  }
-                }
-              ]
-            }
-          }
+                        label: 'FOS Technik',
+                        url: '/mathe/deutschland/bayern/fos-technik',
+                      },
+                      {
+                        label: 'Klasse 12',
+                        url: '/mathe/deutschland/bayern/fos-technik/klasse-12',
+                      },
+                      {
+                        label: 'Trigonometrische Funktionen',
+                        url:
+                          '/mathe/deutschland/bayern/fos-technik/klasse-12/trigonometrische-funktionen',
+                      },
+                      {
+                        label:
+                          'Aufgaben zum Verschieben und Strecken trigonometrischer Funktionen',
+                        url:
+                          '/mathe/deutschland/bayern/fos-technik/klasse-12/trigonometrische-funktionen/aufgaben-verschieben-strecken-trigonometrischer-funktionen',
+                      },
+                    ],
+                  },
+                },
+                {
+                  navigation: {
+                    path: [
+                      {
+                        label: 'Mathematik',
+                        url: '/mathe',
+                      },
+                      {
+                        label: 'Gymnasium',
+                        url: '/mathe/deutschland/bayern/gymnasium',
+                      },
+                      {
+                        label: 'Klasse 10',
+                        url: '/mathe/deutschland/bayern/gymnasium/klasse-10',
+                      },
+                      {
+                        label: 'Trigonometrie',
+                        url:
+                          '/mathe/deutschland/bayern/gymnasium/klasse-10/trigonometrie',
+                      },
+                      {
+                        label: 'Aufgaben zur allgemeinen Sinusfunktion',
+                        url:
+                          '/mathe/deutschland/bayern/gymnasium/klasse-10/trigonometrie/aufgaben-allgemeinen-sinusfunktion',
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
         })
       )
     })
@@ -2291,23 +2302,23 @@ test('Exercise', async () => {
 
   expect(pageData.breadcrumbsData).toEqual([
     {
-      "label": "Mathematik",
-      "url": "/mathe"
+      label: 'Mathematik',
+      url: '/mathe',
     },
     {
-      "label": "Funktionen",
-      "url": "/mathe/funktionen"
+      label: 'Funktionen',
+      url: '/mathe/funktionen',
     },
     {
-      "label": "Wichtige Funktionstypen und ihre Eigenschaften",
-      "url": "/mathe/funktionen/wichtige-funktionstypen-eigenschaften"
+      label: 'Wichtige Funktionstypen und ihre Eigenschaften',
+      url: '/mathe/funktionen/wichtige-funktionstypen-eigenschaften',
     },
     {
-      "label": "Trigonometrische Funktionen",
-      "url": "/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen"
-    }
+      label: 'Trigonometrische Funktionen',
+      url:
+        '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen',
+    },
   ])
-
 
   expect(pageData.metaData?.title).toEqual('Serlo')
   expect(pageData.metaData?.contentType).toEqual('text-exercise')
@@ -2330,200 +2341,235 @@ test('ExerciseGroup', async () => {
     rest.post(endpoint, (req, res, ctx) => {
       return res(
         ctx.json({
-          "data": {
-            "uuid": {
-              "__typename": "ExerciseGroup",
-              "id": 53205,
-              "alias": "/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen/aufgaben-verschieben-strecken-trigonometrischer-funktionen/53205",
-              "instance": "de",
-              "currentRevision": {
-                "content": "{\"plugin\":\"rows\",\"state\":[{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Finde die passenden Gleichungen zu den Funktionsgraphen:\"}]}]}]}"
+          data: {
+            uuid: {
+              __typename: 'ExerciseGroup',
+              id: 53205,
+              alias:
+                '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen/aufgaben-verschieben-strecken-trigonometrischer-funktionen/53205',
+              instance: 'de',
+              currentRevision: {
+                content:
+                  '{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Finde die passenden Gleichungen zu den Funktionsgraphen:"}]}]}]}',
               },
-              "exercises": [
+              exercises: [
                 {
-                  "currentRevision": {
-                    "content": "{\"plugin\":\"exercise\",\"state\":{\"content\":{\"plugin\":\"rows\",\"state\":[{\"plugin\":\"image\",\"state\":{\"src\":\"https://assets.serlo.org/legacy/56e021a8c95ce_de1b6de2a64aebbb6030e31fff0f5e353b784a48.png\",\"alt\":\"Graph1\"}}]}}}"
+                  currentRevision: {
+                    content:
+                      '{"plugin":"exercise","state":{"content":{"plugin":"rows","state":[{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e021a8c95ce_de1b6de2a64aebbb6030e31fff0f5e353b784a48.png","alt":"Graph1"}}]}}}',
                   },
-                  "solution": {
-                    "currentRevision": {
-                      "content": "{\"plugin\":\"solution\",\"state\":{\"prerequisite\":{\"id\":\"1450\",\"title\":\"Sinus- und Kosinusfunktion\"},\"strategy\":{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{}]}]},\"steps\":{\"plugin\":\"rows\",\"state\":[{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Die \"},{\"type\":\"a\",\"href\":\"/1569\",\"children\":[{\"text\":\"Ruhelage\"}]},{\"text\":\" der Funktion liegt auf der \"},{\"type\":\"math\",\"src\":\"x\",\"inline\":true,\"children\":[{\"text\":\"x\"}]},{\"text\":\"-Achse.\"}]}]},{\"plugin\":\"image\",\"state\":{\"src\":\"https://assets.serlo.org/legacy/56e134ad11931_7a29c372db1fb46847913c95ea3e63c78d107366.png\",\"alt\":\"Lösungsteil1\"}},{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Der Graph schneidet das Koordinatensystem im Nullpunkt, also handelt es sich um eine Sinusfunktion (beziehungsweise einen verschobenen Kosinus).\"}]}]},{\"plugin\":\"image\",\"state\":{\"src\":\"https://assets.serlo.org/legacy/56e1347fd9dc1_338b31d48a89340e131d3dd1edbdddafce1725fb.png\",\"alt\":\"Lösungsteil2\"}},{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Da es leichter ist, verwendest du in den weiteren Schritten die Sinusfunktion.\"}]},{\"type\":\"p\",\"children\":[{\"text\":\"Im nächsten Schritt suchst du nach der \"},{\"type\":\"a\",\"href\":\"/1569\",\"children\":[{\"text\":\"Amplitude\"}]},{\"text\":\" der Funktion.\"}]}]},{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Die Amplitude der Funktion ist \"},{\"type\":\"math\",\"src\":\"3\",\"inline\":true,\"children\":[{\"text\":\"3\"}]},{\"text\":\". Das heißt, dass die Funktion vorerst von der Form \"},{\"type\":\"math\",\"src\":\"f(x)=3\\\\cdot\\\\sin(x)\",\"inline\":true,\"children\":[{\"text\":\"f(x)=3\\\\cdot\\\\sin(x)\"}]},{\"text\":\" ist.\"}]}]},{\"plugin\":\"image\",\"state\":{\"src\":\"https://assets.serlo.org/legacy/56e1346338a3e_542af962ee94cb2e532d473c629508001b2d6790.png\",\"alt\":\"Lösungsteil3\"}},{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Jetzt fehlt dir nur noch die \"},{\"type\":\"a\",\"href\":\"/2113\",\"children\":[{\"text\":\"Periode\"}]},{\"text\":\" der Funktion. Am Graphen kannst du ablesen, dass diese \"},{\"type\":\"math\",\"src\":\"2\\\\pi\",\"inline\":true,\"children\":[{\"text\":\"2\\\\pi\"}]},{\"text\":\" beträgt. Das ist die normale Periode von der Sinusfunktion.\"}]}]},{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Da die Periode der Sinusfunktion nicht verändert wurde, lautet die Funktion:\"}]},{\"type\":\"p\",\"children\":[{\"type\":\"math\",\"src\":\"f(x)=3\\\\cdot\\\\sin(x).\",\"inline\":false,\"children\":[{\"text\":\"f(x)=3\\\\cdot\\\\sin(x).\"}]}]}]},{\"plugin\":\"image\",\"state\":{\"src\":\"https://assets.serlo.org/legacy/56e1345199b59_b5c08794fb0621d80c980488ebfc535883be0f8c.png\",\"alt\":\"Lösungsteil4\"}}]}}}"
+                  solution: {
+                    currentRevision: {
+                      content:
+                        '{"plugin":"solution","state":{"prerequisite":{"id":"1450","title":"Sinus- und Kosinusfunktion"},"strategy":{"plugin":"text","state":[{"type":"p","children":[{}]}]},"steps":{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Die "},{"type":"a","href":"/1569","children":[{"text":"Ruhelage"}]},{"text":" der Funktion liegt auf der "},{"type":"math","src":"x","inline":true,"children":[{"text":"x"}]},{"text":"-Achse."}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e134ad11931_7a29c372db1fb46847913c95ea3e63c78d107366.png","alt":"Lösungsteil1"}},{"plugin":"text","state":[{"type":"p","children":[{"text":"Der Graph schneidet das Koordinatensystem im Nullpunkt, also handelt es sich um eine Sinusfunktion (beziehungsweise einen verschobenen Kosinus)."}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e1347fd9dc1_338b31d48a89340e131d3dd1edbdddafce1725fb.png","alt":"Lösungsteil2"}},{"plugin":"text","state":[{"type":"p","children":[{"text":"Da es leichter ist, verwendest du in den weiteren Schritten die Sinusfunktion."}]},{"type":"p","children":[{"text":"Im nächsten Schritt suchst du nach der "},{"type":"a","href":"/1569","children":[{"text":"Amplitude"}]},{"text":" der Funktion."}]}]},{"plugin":"text","state":[{"type":"p","children":[{"text":"Die Amplitude der Funktion ist "},{"type":"math","src":"3","inline":true,"children":[{"text":"3"}]},{"text":". Das heißt, dass die Funktion vorerst von der Form "},{"type":"math","src":"f(x)=3\\\\cdot\\\\sin(x)","inline":true,"children":[{"text":"f(x)=3\\\\cdot\\\\sin(x)"}]},{"text":" ist."}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e1346338a3e_542af962ee94cb2e532d473c629508001b2d6790.png","alt":"Lösungsteil3"}},{"plugin":"text","state":[{"type":"p","children":[{"text":"Jetzt fehlt dir nur noch die "},{"type":"a","href":"/2113","children":[{"text":"Periode"}]},{"text":" der Funktion. Am Graphen kannst du ablesen, dass diese "},{"type":"math","src":"2\\\\pi","inline":true,"children":[{"text":"2\\\\pi"}]},{"text":" beträgt. Das ist die normale Periode von der Sinusfunktion."}]}]},{"plugin":"text","state":[{"type":"p","children":[{"text":"Da die Periode der Sinusfunktion nicht verändert wurde, lautet die Funktion:"}]},{"type":"p","children":[{"type":"math","src":"f(x)=3\\\\cdot\\\\sin(x).","inline":false,"children":[{"text":"f(x)=3\\\\cdot\\\\sin(x)."}]}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e1345199b59_b5c08794fb0621d80c980488ebfc535883be0f8c.png","alt":"Lösungsteil4"}}]}}}',
                     },
-                    "license": {
-                      "id": 1,
-                      "url": "https://creativecommons.org/licenses/by-sa/4.0/deed.de",
-                      "title": "Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0"
-                    }
+                    license: {
+                      id: 1,
+                      url:
+                        'https://creativecommons.org/licenses/by-sa/4.0/deed.de',
+                      title:
+                        'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0',
+                    },
                   },
-                  "license": {
-                    "id": 1,
-                    "url": "https://creativecommons.org/licenses/by-sa/4.0/deed.de",
-                    "title": "Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0"
-                  }
+                  license: {
+                    id: 1,
+                    url:
+                      'https://creativecommons.org/licenses/by-sa/4.0/deed.de',
+                    title:
+                      'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0',
+                  },
                 },
                 {
-                  "currentRevision": {
-                    "content": "{\"plugin\":\"exercise\",\"state\":{\"content\":{\"plugin\":\"rows\",\"state\":[{\"plugin\":\"image\",\"state\":{\"src\":\"https://assets.serlo.org/legacy/56e6df0bc7338_33ac3a380268df5758d8eb63f9aa78e63eee4b9e.png\",\"alt\":\"Graph2\"}}]}}}"
+                  currentRevision: {
+                    content:
+                      '{"plugin":"exercise","state":{"content":{"plugin":"rows","state":[{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e6df0bc7338_33ac3a380268df5758d8eb63f9aa78e63eee4b9e.png","alt":"Graph2"}}]}}}',
                   },
-                  "solution": {
-                    "currentRevision": {
-                      "content": "{\"plugin\":\"solution\",\"state\":{\"prerequisite\":{\"id\":\"1450\",\"title\":\"Sinus- und Kosinusfunktion\"},\"strategy\":{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{}]}]},\"steps\":{\"plugin\":\"rows\",\"state\":[{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Bestimme zunächst die Ruhelage der Funktion.\"}]}]},{\"plugin\":\"text\",\"state\":[{\"type\":\"h\",\"level\":3,\"children\":[{\"text\":\"Ruhelage bestimmen\"}]}]},{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Die \"},{\"type\":\"a\",\"href\":\"/1569\",\"children\":[{\"text\":\"Ruhelage\"}]},{\"text\":\" der Funktion liegt \"},{\"type\":\"math\",\"src\":\"3\",\"inline\":true,\"children\":[{\"text\":\"3\"}]},{\"text\":\" Einheiten über der \"},{\"type\":\"math\",\"src\":\"x\",\"inline\":true,\"children\":[{\"text\":\"x\"}]},{\"text\":\"-Achse.\"}]}]},{\"plugin\":\"image\",\"state\":{\"src\":\"https://assets.serlo.org/legacy/56e13afaf39f9_7a29c372db1fb46847913c95ea3e63c78d107366.png\",\"alt\":\"Lösungsteil1\"}},{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Der Graph hat ein \"},{\"type\":\"a\",\"href\":\"/1579\",\"children\":[{\"text\":\"Extremum\"}]},{\"text\":\" (E) auf der \"},{\"type\":\"math\",\"src\":\"y\",\"inline\":true,\"children\":[{\"text\":\"y\"}]},{\"text\":\"-Achse. Das heißt, es handelt sich um eine Kosinusfunktion (beziehungsweise eine verschobene Sinusfunktion). \"}]},{\"type\":\"p\",\"children\":[{\"text\":\"Da es leichter ist, beschränken wir uns hier auf die Kosinusfunktion.\"}]}]},{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Aufgrund der bisherigen Erkenntnisse gehen wir zunächst von folgender Form aus:\"}]},{\"type\":\"math\",\"src\":\"g(x)=\\\\cos(x)+3\",\"inline\":false,\"children\":[{\"text\":\"g(x)=\\\\cos(x)+3\"}]}]},{\"plugin\":\"image\",\"state\":{\"src\":\"https://assets.serlo.org/legacy/56e13b0f00356_338b31d48a89340e131d3dd1edbdddafce1725fb.png\",\"alt\":\"Lösungsteil2\"}},{\"plugin\":\"text\",\"state\":[{\"type\":\"h\",\"level\":3,\"children\":[{\"text\":\"Amplitude ermitteln\"}]}]},{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Als nächsten Schritt betrachten wir die \"},{\"type\":\"a\",\"href\":\"/1569\",\"children\":[{\"text\":\"Amplitude\"}]},{\"text\":\" der gegeben Kosinusfunktion. Dazu müssen wir den Abstand eines Extremums zu der Ruhelage herausfinden.\"}]}]},{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Die Amplitude der Funktion hat den Wert \"},{\"type\":\"math\",\"src\":\"2\",\"inline\":true,\"children\":[{\"text\":\"2\"}]},{\"text\":\". Das heißt, sie ist doppelt so groß wie bei der normalen Sinusfunktion. Daraus ergibt sich die vorläufige Form der Funktion:\"}]},{\"type\":\"math\",\"src\":\"g(x)=2\\\\cdot\\\\cos(x)+3\",\"inline\":false,\"children\":[{\"text\":\"g(x)=2\\\\cdot\\\\cos(x)+3\"}]}]},{\"plugin\":\"image\",\"state\":{\"src\":\"https://assets.serlo.org/legacy/56e13d0b3f8e3_542af962ee94cb2e532d473c629508001b2d6790.png\",\"alt\":\"Lösungsteil3\"}},{\"plugin\":\"text\",\"state\":[{\"type\":\"h\",\"level\":3,\"children\":[{\"text\":\"Untersuchung der Periode\"}]}]},{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Als nächstes untersuchst du die \"},{\"type\":\"a\",\"href\":\"/2113\",\"children\":[{\"text\":\"Periode\"}]},{\"text\":\" der Funktion. Dazu untersuchst du, wie viele Perioden der gegebenen Funktion in dem \"},{\"type\":\"a\",\"href\":\"/1947\",\"children\":[{\"text\":\"Intervall\"}]},{\"text\":\" \"},{\"type\":\"math\",\"src\":\"[0,2\\\\pi]\",\"inline\":true,\"children\":[{\"text\":\"[0,2\\\\pi]\"}]},{\"text\":\" liegen. Bei der normalen Kosinusfunktion liegt in diesem Intervall genau eine Periode. Hier sind es genau zwei Perioden, da im halben Intervall \"},{\"type\":\"math\",\"src\":\"[0,\\\\pi]\",\"inline\":true,\"children\":[{\"text\":\"[0,\\\\pi]\"}]},{\"text\":\" eine Periode liegt. Also ist die Funktion um den Faktor \"},{\"type\":\"math\",\"src\":\"2\",\"inline\":true,\"children\":[{\"text\":\"2\"}]},{\"text\":\" gestaucht.\"}]}]},{\"plugin\":\"text\",\"state\":[{\"type\":\"h\",\"level\":3,\"children\":[{\"text\":\"Ergebnis\"}]}]},{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Da die Funktion um den \"},{\"type\":\"a\",\"href\":\"/1639\",\"children\":[{\"text\":\"Faktor\"}]},{\"text\":\" \"},{\"type\":\"math\",\"src\":\"2\",\"inline\":true,\"children\":[{\"text\":\"2\"}]},{\"text\":\" gestaucht ist, lautet die Funktion:\"}]},{\"type\":\"math\",\"src\":\"g(x)=2\\\\cdot\\\\cos(2x)+3\",\"inline\":false,\"children\":[{\"text\":\"g(x)=2\\\\cdot\\\\cos(2x)+3\"}]}]},{\"plugin\":\"image\",\"state\":{\"src\":\"https://assets.serlo.org/legacy/56e13b3362350_b5c08794fb0621d80c980488ebfc535883be0f8c.png\",\"alt\":\"Lösungsteil4\"}}]}}}"
+                  solution: {
+                    currentRevision: {
+                      content:
+                        '{"plugin":"solution","state":{"prerequisite":{"id":"1450","title":"Sinus- und Kosinusfunktion"},"strategy":{"plugin":"text","state":[{"type":"p","children":[{}]}]},"steps":{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Bestimme zunächst die Ruhelage der Funktion."}]}]},{"plugin":"text","state":[{"type":"h","level":3,"children":[{"text":"Ruhelage bestimmen"}]}]},{"plugin":"text","state":[{"type":"p","children":[{"text":"Die "},{"type":"a","href":"/1569","children":[{"text":"Ruhelage"}]},{"text":" der Funktion liegt "},{"type":"math","src":"3","inline":true,"children":[{"text":"3"}]},{"text":" Einheiten über der "},{"type":"math","src":"x","inline":true,"children":[{"text":"x"}]},{"text":"-Achse."}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e13afaf39f9_7a29c372db1fb46847913c95ea3e63c78d107366.png","alt":"Lösungsteil1"}},{"plugin":"text","state":[{"type":"p","children":[{"text":"Der Graph hat ein "},{"type":"a","href":"/1579","children":[{"text":"Extremum"}]},{"text":" (E) auf der "},{"type":"math","src":"y","inline":true,"children":[{"text":"y"}]},{"text":"-Achse. Das heißt, es handelt sich um eine Kosinusfunktion (beziehungsweise eine verschobene Sinusfunktion). "}]},{"type":"p","children":[{"text":"Da es leichter ist, beschränken wir uns hier auf die Kosinusfunktion."}]}]},{"plugin":"text","state":[{"type":"p","children":[{"text":"Aufgrund der bisherigen Erkenntnisse gehen wir zunächst von folgender Form aus:"}]},{"type":"math","src":"g(x)=\\\\cos(x)+3","inline":false,"children":[{"text":"g(x)=\\\\cos(x)+3"}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e13b0f00356_338b31d48a89340e131d3dd1edbdddafce1725fb.png","alt":"Lösungsteil2"}},{"plugin":"text","state":[{"type":"h","level":3,"children":[{"text":"Amplitude ermitteln"}]}]},{"plugin":"text","state":[{"type":"p","children":[{"text":"Als nächsten Schritt betrachten wir die "},{"type":"a","href":"/1569","children":[{"text":"Amplitude"}]},{"text":" der gegeben Kosinusfunktion. Dazu müssen wir den Abstand eines Extremums zu der Ruhelage herausfinden."}]}]},{"plugin":"text","state":[{"type":"p","children":[{"text":"Die Amplitude der Funktion hat den Wert "},{"type":"math","src":"2","inline":true,"children":[{"text":"2"}]},{"text":". Das heißt, sie ist doppelt so groß wie bei der normalen Sinusfunktion. Daraus ergibt sich die vorläufige Form der Funktion:"}]},{"type":"math","src":"g(x)=2\\\\cdot\\\\cos(x)+3","inline":false,"children":[{"text":"g(x)=2\\\\cdot\\\\cos(x)+3"}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e13d0b3f8e3_542af962ee94cb2e532d473c629508001b2d6790.png","alt":"Lösungsteil3"}},{"plugin":"text","state":[{"type":"h","level":3,"children":[{"text":"Untersuchung der Periode"}]}]},{"plugin":"text","state":[{"type":"p","children":[{"text":"Als nächstes untersuchst du die "},{"type":"a","href":"/2113","children":[{"text":"Periode"}]},{"text":" der Funktion. Dazu untersuchst du, wie viele Perioden der gegebenen Funktion in dem "},{"type":"a","href":"/1947","children":[{"text":"Intervall"}]},{"text":" "},{"type":"math","src":"[0,2\\\\pi]","inline":true,"children":[{"text":"[0,2\\\\pi]"}]},{"text":" liegen. Bei der normalen Kosinusfunktion liegt in diesem Intervall genau eine Periode. Hier sind es genau zwei Perioden, da im halben Intervall "},{"type":"math","src":"[0,\\\\pi]","inline":true,"children":[{"text":"[0,\\\\pi]"}]},{"text":" eine Periode liegt. Also ist die Funktion um den Faktor "},{"type":"math","src":"2","inline":true,"children":[{"text":"2"}]},{"text":" gestaucht."}]}]},{"plugin":"text","state":[{"type":"h","level":3,"children":[{"text":"Ergebnis"}]}]},{"plugin":"text","state":[{"type":"p","children":[{"text":"Da die Funktion um den "},{"type":"a","href":"/1639","children":[{"text":"Faktor"}]},{"text":" "},{"type":"math","src":"2","inline":true,"children":[{"text":"2"}]},{"text":" gestaucht ist, lautet die Funktion:"}]},{"type":"math","src":"g(x)=2\\\\cdot\\\\cos(2x)+3","inline":false,"children":[{"text":"g(x)=2\\\\cdot\\\\cos(2x)+3"}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e13b3362350_b5c08794fb0621d80c980488ebfc535883be0f8c.png","alt":"Lösungsteil4"}}]}}}',
                     },
-                    "license": {
-                      "id": 1,
-                      "url": "https://creativecommons.org/licenses/by-sa/4.0/deed.de",
-                      "title": "Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0"
-                    }
+                    license: {
+                      id: 1,
+                      url:
+                        'https://creativecommons.org/licenses/by-sa/4.0/deed.de',
+                      title:
+                        'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0',
+                    },
                   },
-                  "license": {
-                    "id": 1,
-                    "url": "https://creativecommons.org/licenses/by-sa/4.0/deed.de",
-                    "title": "Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0"
-                  }
+                  license: {
+                    id: 1,
+                    url:
+                      'https://creativecommons.org/licenses/by-sa/4.0/deed.de',
+                    title:
+                      'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0',
+                  },
                 },
                 {
-                  "currentRevision": {
-                    "content": "{\"plugin\":\"exercise\",\"state\":{\"content\":{\"plugin\":\"rows\",\"state\":[{\"plugin\":\"image\",\"state\":{\"src\":\"https://assets.serlo.org/legacy/56e022719985b_75abdcf67bb65527808fcc0afa8d5285ed02ca68.png\",\"alt\":\"Graph3\"}}]}}}"
+                  currentRevision: {
+                    content:
+                      '{"plugin":"exercise","state":{"content":{"plugin":"rows","state":[{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e022719985b_75abdcf67bb65527808fcc0afa8d5285ed02ca68.png","alt":"Graph3"}}]}}}',
                   },
-                  "solution": {
-                    "currentRevision": {
-                      "content": "{\"plugin\":\"solution\",\"state\":{\"prerequisite\":{\"id\":\"1450\",\"title\":\"Sinus- und Kosinusfunktion\"},\"strategy\":{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{}]}]},\"steps\":{\"plugin\":\"rows\",\"state\":[{\"plugin\":\"rows\",\"state\":[{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Die \"},{\"type\":\"a\",\"href\":\"/1569\",\"children\":[{\"text\":\"Ruhelage\"}]},{\"text\":\" der Funktion liegt bei \"},{\"type\":\"math\",\"src\":\"y=2\",\"inline\":true,\"children\":[{\"text\":\"y=2\"}]},{\"text\":\".\"}]}]},{\"plugin\":\"image\",\"state\":{\"src\":\"https://assets.serlo.org/legacy/56e28fc697b40_7a29c372db1fb46847913c95ea3e63c78d107366.png\",\"alt\":\"Lösungsteil1\"}},{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Als nächstes findest du die Art der Funktion heraus. Handelt es sich bei der Funktion um einen Kosinus oder um einen Sinus?\"}]},{\"type\":\"p\",\"children\":[{\"text\":\"Da die Funktion die \"},{\"type\":\"math\",\"src\":\"y\",\"inline\":true,\"children\":[{\"text\":\"y\"}]},{\"text\":\"-Achse im selben Punkt schneidet wie die Ruhelage, also in \"},{\"type\":\"math\",\"src\":\"S(0\\\\mid 2),\",\"inline\":true,\"children\":[{\"text\":\"S(0\\\\mid 2),\"}]},{\"text\":\" handelt es sich um eine Sinusfunktion (beziehungsweise um eine verschobene Kosinusfunktion). Da es die folgenden Schritte erleichtert nehmen wir an, dass es sich um eine Sinusfunktion handelt.\"}]}]}]},{\"plugin\":\"rows\",\"state\":[{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Die Funktion ist fürs Erste von der Form:\"}]}]},{\"plugin\":\"image\",\"state\":{\"src\":\"https://assets.serlo.org/legacy/56e28fd6293cd_338b31d48a89340e131d3dd1edbdddafce1725fb.png\",\"alt\":\"Lösungsteil2\"}},{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Der nächste Schritt, den du machst, ist die Bestimmung der \"},{\"type\":\"a\",\"href\":\"/1569\",\"children\":[{\"text\":\"Amplitude\"}]},{\"text\":\".\"}]},{\"type\":\"p\",\"children\":[{\"text\":\"Da die \"},{\"type\":\"a\",\"href\":\"/1579\",\"children\":[{\"text\":\"Extrema\"}]},{\"text\":\" jeweils eine Einheit in \"},{\"type\":\"math\",\"src\":\"y\",\"inline\":true,\"children\":[{\"text\":\"y\"}]},{\"text\":\"-Richtung von der Ruhelage entfernt sind, handelt es sich um die Standard-Sinus-Amplitude.\"}]}]}]},{\"plugin\":\"rows\",\"state\":[{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Da die Amplitude der normalen Amplitude der Sinusfunktion entspricht, bleibt es zunächst bei der Form der Funktion:\"}]}]},{\"plugin\":\"image\",\"state\":{\"src\":\"https://assets.serlo.org/legacy/56e28f7de1bd2_542af962ee94cb2e532d473c629508001b2d6790.png\",\"alt\":\"Lösungsteil3\"}},{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Jetzt fehlt dir nur noch die Periode der Funktion.\"}]},{\"type\":\"p\",\"children\":[{\"text\":\"Betrachte dazu zum Beispiel den \"},{\"type\":\"math\",\"src\":\"x\",\"inline\":true,\"children\":[{\"text\":\"x\"}]},{\"text\":\"-Achsenabschnitt von \"},{\"type\":\"math\",\"src\":\"0\",\"inline\":true,\"children\":[{\"text\":\"0\"}]},{\"text\":\" bis \"},{\"type\":\"math\",\"src\":\"\\\\pi\",\"inline\":true,\"children\":[{\"text\":\"\\\\pi\"}]},{\"text\":\". In diesem Abschnitt befinden sich \"},{\"type\":\"math\",\"src\":\"2,5\",\"inline\":true,\"children\":[{\"text\":\"2,5\"}]},{\"text\":\" Perioden der Funktion. Da eine Periode der Standard-Sinus-Funktion von \"},{\"type\":\"math\",\"src\":\"0\",\"inline\":true,\"children\":[{\"text\":\"0\"}]},{\"text\":\" bis \"},{\"type\":\"math\",\"src\":\"2\\\\pi\",\"inline\":true,\"children\":[{\"text\":\"2\\\\pi\"}]},{\"text\":\" geht, multiplizieren wir den Wert \"},{\"type\":\"math\",\"src\":\"2,5\",\"inline\":true,\"children\":[{\"text\":\"2,5\"}]},{\"text\":\" mit \"},{\"type\":\"math\",\"src\":\"2\",\"inline\":true,\"children\":[{\"text\":\"2\"}]},{\"text\":\". Damit kommen wir auf den Stauchungsfaktor \"},{\"type\":\"math\",\"src\":\"5\",\"inline\":true,\"children\":[{\"text\":\"5\"}]},{\"text\":\".\"}]}]}]},{\"plugin\":\"rows\",\"state\":[{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Da die Funktion um den Faktor \"},{\"type\":\"math\",\"src\":\"5\",\"inline\":true,\"children\":[{\"text\":\"5\"}]},{\"text\":\" gestaucht ist, lautet die passende Funktion zu dem Bild:\"}]},{\"type\":\"p\",\"children\":[{\"type\":\"math\",\"src\":\"h(x)=\\\\sin(5x)+2.\",\"inline\":false,\"children\":[{\"text\":\"h(x)=\\\\sin(5x)+2.\"}]}]}]},{\"plugin\":\"image\",\"state\":{\"src\":\"https://assets.serlo.org/legacy/56e28f94bba72_b5c08794fb0621d80c980488ebfc535883be0f8c.png\",\"alt\":\"Lösungsteil4\"}}]}]}}}"
+                  solution: {
+                    currentRevision: {
+                      content:
+                        '{"plugin":"solution","state":{"prerequisite":{"id":"1450","title":"Sinus- und Kosinusfunktion"},"strategy":{"plugin":"text","state":[{"type":"p","children":[{}]}]},"steps":{"plugin":"rows","state":[{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Die "},{"type":"a","href":"/1569","children":[{"text":"Ruhelage"}]},{"text":" der Funktion liegt bei "},{"type":"math","src":"y=2","inline":true,"children":[{"text":"y=2"}]},{"text":"."}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e28fc697b40_7a29c372db1fb46847913c95ea3e63c78d107366.png","alt":"Lösungsteil1"}},{"plugin":"text","state":[{"type":"p","children":[{"text":"Als nächstes findest du die Art der Funktion heraus. Handelt es sich bei der Funktion um einen Kosinus oder um einen Sinus?"}]},{"type":"p","children":[{"text":"Da die Funktion die "},{"type":"math","src":"y","inline":true,"children":[{"text":"y"}]},{"text":"-Achse im selben Punkt schneidet wie die Ruhelage, also in "},{"type":"math","src":"S(0\\\\mid 2),","inline":true,"children":[{"text":"S(0\\\\mid 2),"}]},{"text":" handelt es sich um eine Sinusfunktion (beziehungsweise um eine verschobene Kosinusfunktion). Da es die folgenden Schritte erleichtert nehmen wir an, dass es sich um eine Sinusfunktion handelt."}]}]}]},{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Die Funktion ist fürs Erste von der Form:"}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e28fd6293cd_338b31d48a89340e131d3dd1edbdddafce1725fb.png","alt":"Lösungsteil2"}},{"plugin":"text","state":[{"type":"p","children":[{"text":"Der nächste Schritt, den du machst, ist die Bestimmung der "},{"type":"a","href":"/1569","children":[{"text":"Amplitude"}]},{"text":"."}]},{"type":"p","children":[{"text":"Da die "},{"type":"a","href":"/1579","children":[{"text":"Extrema"}]},{"text":" jeweils eine Einheit in "},{"type":"math","src":"y","inline":true,"children":[{"text":"y"}]},{"text":"-Richtung von der Ruhelage entfernt sind, handelt es sich um die Standard-Sinus-Amplitude."}]}]}]},{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Da die Amplitude der normalen Amplitude der Sinusfunktion entspricht, bleibt es zunächst bei der Form der Funktion:"}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e28f7de1bd2_542af962ee94cb2e532d473c629508001b2d6790.png","alt":"Lösungsteil3"}},{"plugin":"text","state":[{"type":"p","children":[{"text":"Jetzt fehlt dir nur noch die Periode der Funktion."}]},{"type":"p","children":[{"text":"Betrachte dazu zum Beispiel den "},{"type":"math","src":"x","inline":true,"children":[{"text":"x"}]},{"text":"-Achsenabschnitt von "},{"type":"math","src":"0","inline":true,"children":[{"text":"0"}]},{"text":" bis "},{"type":"math","src":"\\\\pi","inline":true,"children":[{"text":"\\\\pi"}]},{"text":". In diesem Abschnitt befinden sich "},{"type":"math","src":"2,5","inline":true,"children":[{"text":"2,5"}]},{"text":" Perioden der Funktion. Da eine Periode der Standard-Sinus-Funktion von "},{"type":"math","src":"0","inline":true,"children":[{"text":"0"}]},{"text":" bis "},{"type":"math","src":"2\\\\pi","inline":true,"children":[{"text":"2\\\\pi"}]},{"text":" geht, multiplizieren wir den Wert "},{"type":"math","src":"2,5","inline":true,"children":[{"text":"2,5"}]},{"text":" mit "},{"type":"math","src":"2","inline":true,"children":[{"text":"2"}]},{"text":". Damit kommen wir auf den Stauchungsfaktor "},{"type":"math","src":"5","inline":true,"children":[{"text":"5"}]},{"text":"."}]}]}]},{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Da die Funktion um den Faktor "},{"type":"math","src":"5","inline":true,"children":[{"text":"5"}]},{"text":" gestaucht ist, lautet die passende Funktion zu dem Bild:"}]},{"type":"p","children":[{"type":"math","src":"h(x)=\\\\sin(5x)+2.","inline":false,"children":[{"text":"h(x)=\\\\sin(5x)+2."}]}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e28f94bba72_b5c08794fb0621d80c980488ebfc535883be0f8c.png","alt":"Lösungsteil4"}}]}]}}}',
                     },
-                    "license": {
-                      "id": 1,
-                      "url": "https://creativecommons.org/licenses/by-sa/4.0/deed.de",
-                      "title": "Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0"
-                    }
+                    license: {
+                      id: 1,
+                      url:
+                        'https://creativecommons.org/licenses/by-sa/4.0/deed.de',
+                      title:
+                        'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0',
+                    },
                   },
-                  "license": {
-                    "id": 1,
-                    "url": "https://creativecommons.org/licenses/by-sa/4.0/deed.de",
-                    "title": "Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0"
-                  }
+                  license: {
+                    id: 1,
+                    url:
+                      'https://creativecommons.org/licenses/by-sa/4.0/deed.de',
+                    title:
+                      'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0',
+                  },
                 },
                 {
-                  "currentRevision": {
-                    "content": "{\"plugin\":\"exercise\",\"state\":{\"content\":{\"plugin\":\"rows\",\"state\":[{\"plugin\":\"image\",\"state\":{\"src\":\"https://assets.serlo.org/legacy/56e022ab6fcf2_e8d856c4f94af067b2dcbfd4545e68149d1e6a4c.png\",\"alt\":\"Graph4\"}}]}}}"
+                  currentRevision: {
+                    content:
+                      '{"plugin":"exercise","state":{"content":{"plugin":"rows","state":[{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e022ab6fcf2_e8d856c4f94af067b2dcbfd4545e68149d1e6a4c.png","alt":"Graph4"}}]}}}',
                   },
-                  "solution": {
-                    "currentRevision": {
-                      "content": "{\"plugin\":\"solution\",\"state\":{\"prerequisite\":{\"id\":\"1450\",\"title\":\"Sinus- und Kosinusfunktion\"},\"strategy\":{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{}]}]},\"steps\":{\"plugin\":\"rows\",\"state\":[{\"plugin\":\"rows\",\"state\":[{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Die \"},{\"type\":\"a\",\"href\":\"/1569\",\"children\":[{\"text\":\"Ruhelage\"}]},{\"text\":\" der Funktion entspricht der \"},{\"type\":\"math\",\"src\":\"x\",\"inline\":true,\"children\":[{\"text\":\"x\"}]},{\"text\":\"-Achse.\"}]}]},{\"plugin\":\"image\",\"state\":{\"src\":\"https://assets.serlo.org/legacy/56e298f8dfdfa_7a29c372db1fb46847913c95ea3e63c78d107366.png\",\"alt\":\"Lösungsteil1\"}},{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Als erstes findest du heraus, ob es sich um eine Sinusfunktion oder eine Kosinusfunktion handelt. \"}]},{\"type\":\"p\",\"children\":[{\"text\":\"Die Funktion schneidet die \"},{\"type\":\"math\",\"src\":\"y\",\"inline\":true,\"children\":[{\"text\":\"y\"}]},{\"text\":\"-Achse weder in einem \"},{\"type\":\"a\",\"href\":\"/1579\",\"children\":[{\"text\":\"Extrempunkt\"}]},{\"text\":\", noch im Nullpunkt. Betrachtest du aber die \"},{\"type\":\"a\",\"href\":\"/27781\",\"children\":[{\"text\":\"Parallele\"}]},{\"text\":\" zur \"},{\"type\":\"math\",\"src\":\"y\",\"inline\":true,\"children\":[{\"text\":\"y\"}]},{\"text\":\"-Achse durch die Stelle \"},{\"type\":\"math\",\"src\":\"-1\",\"inline\":true,\"children\":[{\"text\":\"-1\"}]},{\"text\":\" auf der \"},{\"type\":\"math\",\"src\":\"x\",\"inline\":true,\"children\":[{\"text\":\"x\"}]},{\"text\":\"-Achse. Die Funktion schneidet in einem Maximum diese Parallele. Deshalb nehmen wir an, dass es sich um eine verschobene Kosinusfunktion handelt.\"}]}]}]},{\"plugin\":\"rows\",\"state\":[{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Da die Kosinusfunktion um eine Einheit nach links verschoben ist, lautet die vorläufige Funktion:\"}]},{\"type\":\"p\",\"children\":[{\"type\":\"math\",\"src\":\"i(x)=\\\\cos(x+1).\",\"inline\":false,\"children\":[{\"text\":\"i(x)=\\\\cos(x+1).\"}]}]}]},{\"plugin\":\"image\",\"state\":{\"src\":\"https://assets.serlo.org/legacy/56e29907303e2_338b31d48a89340e131d3dd1edbdddafce1725fb.png\",\"alt\":\"Lösungsteil2\"}},{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Jetzt ermittelst du die \"},{\"type\":\"a\",\"href\":\"/1569\",\"children\":[{\"text\":\"Amplitude\"}]},{\"text\":\" der Funktion.\"}]},{\"type\":\"p\",\"children\":[{\"text\":\"Der Abstand der Extrema zu der Ruhelage hat den Wert \"},{\"type\":\"math\",\"src\":\"1\",\"inline\":true,\"children\":[{\"text\":\"1\"}]},{\"text\":\", also wird an der Amplitude der Funktion nichts geändert.\"}]}]}]},{\"plugin\":\"rows\",\"state\":[{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Die Amplitude in bei der Funktion nicht manipuliert.\"}]}]},{\"plugin\":\"image\",\"state\":{\"src\":\"https://assets.serlo.org/legacy/56e299192a532_542af962ee94cb2e532d473c629508001b2d6790.png\",\"alt\":\"Lösungsteil3\"}},{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Als letztes fehlt dir nur noch die Periode der Funktion.\"}]},{\"type\":\"p\",\"children\":[{\"text\":\"Dazu betrachten wir ein \"},{\"type\":\"a\",\"href\":\"/1947\",\"children\":[{\"text\":\"Intervall\"}]},{\"text\":\" der Länge \"},{\"type\":\"math\",\"src\":\"\\\\pi\",\"inline\":true,\"children\":[{\"text\":\"\\\\pi\"}]},{\"text\":\" das von \"},{\"type\":\"math\",\"src\":\"-1\",\"inline\":true,\"children\":[{\"text\":\"-1\"}]},{\"text\":\" nach rechts verläuft. In diesem Intervall befinden sich \"},{\"type\":\"math\",\"src\":\"1,5\",\"inline\":true,\"children\":[{\"text\":\"1,5\"}]},{\"text\":\" Perioden der Funktion, also \"},{\"type\":\"math\",\"src\":\"3\",\"inline\":true,\"children\":[{\"text\":\"3\"}]},{\"text\":\" in einem Intervall von \"},{\"type\":\"math\",\"src\":\"2\\\\pi\",\"inline\":true,\"children\":[{\"text\":\"2\\\\pi\"}]},{\"text\":\". Da \"},{\"type\":\"math\",\"src\":\"2\\\\pi\",\"inline\":true,\"children\":[{\"text\":\"2\\\\pi\"}]},{\"text\":\" die Periode der Standard-Kosinus-Funktion ist, ist die Funktion um den Faktor \"},{\"type\":\"math\",\"src\":\"3\",\"inline\":true,\"children\":[{\"text\":\"3\"}]},{\"text\":\" gestaucht.\"}]}]}]},{\"plugin\":\"rows\",\"state\":[{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Da die Funktion um den Faktor \"},{\"type\":\"math\",\"src\":\"3\",\"inline\":true,\"children\":[{\"text\":\"3\"}]},{\"text\":\" gestaucht ist, lautet sie:\"}]}]},{\"plugin\":\"image\",\"state\":{\"src\":\"https://assets.serlo.org/legacy/56e29930b1d78_b5c08794fb0621d80c980488ebfc535883be0f8c.png\",\"alt\":\"Lösungsteil4\"}}]}]}}}"
+                  solution: {
+                    currentRevision: {
+                      content:
+                        '{"plugin":"solution","state":{"prerequisite":{"id":"1450","title":"Sinus- und Kosinusfunktion"},"strategy":{"plugin":"text","state":[{"type":"p","children":[{}]}]},"steps":{"plugin":"rows","state":[{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Die "},{"type":"a","href":"/1569","children":[{"text":"Ruhelage"}]},{"text":" der Funktion entspricht der "},{"type":"math","src":"x","inline":true,"children":[{"text":"x"}]},{"text":"-Achse."}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e298f8dfdfa_7a29c372db1fb46847913c95ea3e63c78d107366.png","alt":"Lösungsteil1"}},{"plugin":"text","state":[{"type":"p","children":[{"text":"Als erstes findest du heraus, ob es sich um eine Sinusfunktion oder eine Kosinusfunktion handelt. "}]},{"type":"p","children":[{"text":"Die Funktion schneidet die "},{"type":"math","src":"y","inline":true,"children":[{"text":"y"}]},{"text":"-Achse weder in einem "},{"type":"a","href":"/1579","children":[{"text":"Extrempunkt"}]},{"text":", noch im Nullpunkt. Betrachtest du aber die "},{"type":"a","href":"/27781","children":[{"text":"Parallele"}]},{"text":" zur "},{"type":"math","src":"y","inline":true,"children":[{"text":"y"}]},{"text":"-Achse durch die Stelle "},{"type":"math","src":"-1","inline":true,"children":[{"text":"-1"}]},{"text":" auf der "},{"type":"math","src":"x","inline":true,"children":[{"text":"x"}]},{"text":"-Achse. Die Funktion schneidet in einem Maximum diese Parallele. Deshalb nehmen wir an, dass es sich um eine verschobene Kosinusfunktion handelt."}]}]}]},{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Da die Kosinusfunktion um eine Einheit nach links verschoben ist, lautet die vorläufige Funktion:"}]},{"type":"p","children":[{"type":"math","src":"i(x)=\\\\cos(x+1).","inline":false,"children":[{"text":"i(x)=\\\\cos(x+1)."}]}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e29907303e2_338b31d48a89340e131d3dd1edbdddafce1725fb.png","alt":"Lösungsteil2"}},{"plugin":"text","state":[{"type":"p","children":[{"text":"Jetzt ermittelst du die "},{"type":"a","href":"/1569","children":[{"text":"Amplitude"}]},{"text":" der Funktion."}]},{"type":"p","children":[{"text":"Der Abstand der Extrema zu der Ruhelage hat den Wert "},{"type":"math","src":"1","inline":true,"children":[{"text":"1"}]},{"text":", also wird an der Amplitude der Funktion nichts geändert."}]}]}]},{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Die Amplitude in bei der Funktion nicht manipuliert."}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e299192a532_542af962ee94cb2e532d473c629508001b2d6790.png","alt":"Lösungsteil3"}},{"plugin":"text","state":[{"type":"p","children":[{"text":"Als letztes fehlt dir nur noch die Periode der Funktion."}]},{"type":"p","children":[{"text":"Dazu betrachten wir ein "},{"type":"a","href":"/1947","children":[{"text":"Intervall"}]},{"text":" der Länge "},{"type":"math","src":"\\\\pi","inline":true,"children":[{"text":"\\\\pi"}]},{"text":" das von "},{"type":"math","src":"-1","inline":true,"children":[{"text":"-1"}]},{"text":" nach rechts verläuft. In diesem Intervall befinden sich "},{"type":"math","src":"1,5","inline":true,"children":[{"text":"1,5"}]},{"text":" Perioden der Funktion, also "},{"type":"math","src":"3","inline":true,"children":[{"text":"3"}]},{"text":" in einem Intervall von "},{"type":"math","src":"2\\\\pi","inline":true,"children":[{"text":"2\\\\pi"}]},{"text":". Da "},{"type":"math","src":"2\\\\pi","inline":true,"children":[{"text":"2\\\\pi"}]},{"text":" die Periode der Standard-Kosinus-Funktion ist, ist die Funktion um den Faktor "},{"type":"math","src":"3","inline":true,"children":[{"text":"3"}]},{"text":" gestaucht."}]}]}]},{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Da die Funktion um den Faktor "},{"type":"math","src":"3","inline":true,"children":[{"text":"3"}]},{"text":" gestaucht ist, lautet sie:"}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e29930b1d78_b5c08794fb0621d80c980488ebfc535883be0f8c.png","alt":"Lösungsteil4"}}]}]}}}',
                     },
-                    "license": {
-                      "id": 1,
-                      "url": "https://creativecommons.org/licenses/by-sa/4.0/deed.de",
-                      "title": "Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0"
-                    }
+                    license: {
+                      id: 1,
+                      url:
+                        'https://creativecommons.org/licenses/by-sa/4.0/deed.de',
+                      title:
+                        'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0',
+                    },
                   },
-                  "license": {
-                    "id": 1,
-                    "url": "https://creativecommons.org/licenses/by-sa/4.0/deed.de",
-                    "title": "Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0"
-                  }
-                }
+                  license: {
+                    id: 1,
+                    url:
+                      'https://creativecommons.org/licenses/by-sa/4.0/deed.de',
+                    title:
+                      'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0',
+                  },
+                },
               ],
-              "taxonomyTerms": [
+              taxonomyTerms: [
                 {
-                  "navigation": {
-                    "path": [
+                  navigation: {
+                    path: [
                       {
-                        "label": "Mathematik",
-                        "url": "/mathe"
+                        label: 'Mathematik',
+                        url: '/mathe',
                       },
                       {
-                        "label": "Alle Themen",
-                        "url": "/mathe/5"
+                        label: 'Alle Themen',
+                        url: '/mathe/5',
                       },
                       {
-                        "label": "Funktionen",
-                        "url": "/mathe/funktionen"
+                        label: 'Funktionen',
+                        url: '/mathe/funktionen',
                       },
                       {
-                        "label": "Wichtige Funktionstypen und ihre Eigenschaften",
-                        "url": "/mathe/funktionen/wichtige-funktionstypen-eigenschaften"
+                        label: 'Wichtige Funktionstypen und ihre Eigenschaften',
+                        url:
+                          '/mathe/funktionen/wichtige-funktionstypen-eigenschaften',
                       },
                       {
-                        "label": "Trigonometrische Funktionen",
-                        "url": "/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen"
+                        label: 'Trigonometrische Funktionen',
+                        url:
+                          '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen',
                       },
                       {
-                        "label": "Aufgaben zum Verschieben und Strecken trigonometrischer Funktionen",
-                        "url": "/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen/aufgaben-verschieben-strecken-trigonometrischer-funktionen"
-                      }
-                    ]
-                  }
+                        label:
+                          'Aufgaben zum Verschieben und Strecken trigonometrischer Funktionen',
+                        url:
+                          '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen/aufgaben-verschieben-strecken-trigonometrischer-funktionen',
+                      },
+                    ],
+                  },
                 },
                 {
-                  "navigation": {
-                    "path": [
+                  navigation: {
+                    path: [
                       {
-                        "label": "Mathematik",
-                        "url": "/mathe"
+                        label: 'Mathematik',
+                        url: '/mathe',
                       },
                       {
-                        "label": "Alle Themen",
-                        "url": "/mathe/5"
+                        label: 'Alle Themen',
+                        url: '/mathe/5',
                       },
                       {
-                        "label": "Deutschland",
-                        "url": "/mathe/deutschland"
+                        label: 'Deutschland',
+                        url: '/mathe/deutschland',
                       },
                       {
-                        "label": "Bayern",
-                        "url": "/mathe/deutschland/bayern"
+                        label: 'Bayern',
+                        url: '/mathe/deutschland/bayern',
                       },
                       {
-                        "label": "FOS Technik",
-                        "url": "/mathe/deutschland/bayern/fos-technik"
+                        label: 'FOS Technik',
+                        url: '/mathe/deutschland/bayern/fos-technik',
                       },
                       {
-                        "label": "Klasse 12",
-                        "url": "/mathe/deutschland/bayern/fos-technik/klasse-12"
+                        label: 'Klasse 12',
+                        url: '/mathe/deutschland/bayern/fos-technik/klasse-12',
                       },
                       {
-                        "label": "Trigonometrische Funktionen",
-                        "url": "/mathe/deutschland/bayern/fos-technik/klasse-12/trigonometrische-funktionen"
+                        label: 'Trigonometrische Funktionen',
+                        url:
+                          '/mathe/deutschland/bayern/fos-technik/klasse-12/trigonometrische-funktionen',
                       },
                       {
-                        "label": "Aufgaben zum Verschieben und Strecken trigonometrischer Funktionen",
-                        "url": "/mathe/deutschland/bayern/fos-technik/klasse-12/trigonometrische-funktionen/aufgaben-verschieben-strecken-trigonometrischer-funktionen"
-                      }
-                    ]
-                  }
+                        label:
+                          'Aufgaben zum Verschieben und Strecken trigonometrischer Funktionen',
+                        url:
+                          '/mathe/deutschland/bayern/fos-technik/klasse-12/trigonometrische-funktionen/aufgaben-verschieben-strecken-trigonometrischer-funktionen',
+                      },
+                    ],
+                  },
                 },
                 {
-                  "navigation": {
-                    "path": [
+                  navigation: {
+                    path: [
                       {
-                        "label": "Mathematik",
-                        "url": "/mathe"
+                        label: 'Mathematik',
+                        url: '/mathe',
                       },
                       {
-                        "label": "Gymnasium",
-                        "url": "/mathe/deutschland/bayern/gymnasium"
+                        label: 'Gymnasium',
+                        url: '/mathe/deutschland/bayern/gymnasium',
                       },
                       {
-                        "label": "Klasse 10",
-                        "url": "/mathe/deutschland/bayern/gymnasium/klasse-10"
+                        label: 'Klasse 10',
+                        url: '/mathe/deutschland/bayern/gymnasium/klasse-10',
                       },
                       {
-                        "label": "Trigonometrie",
-                        "url": "/mathe/deutschland/bayern/gymnasium/klasse-10/trigonometrie"
+                        label: 'Trigonometrie',
+                        url:
+                          '/mathe/deutschland/bayern/gymnasium/klasse-10/trigonometrie',
                       },
                       {
-                        "label": "Aufgaben zur allgemeinen Sinusfunktion",
-                        "url": "/mathe/deutschland/bayern/gymnasium/klasse-10/trigonometrie/aufgaben-allgemeinen-sinusfunktion"
-                      }
-                    ]
-                  }
-                }
+                        label: 'Aufgaben zur allgemeinen Sinusfunktion',
+                        url:
+                          '/mathe/deutschland/bayern/gymnasium/klasse-10/trigonometrie/aufgaben-allgemeinen-sinusfunktion',
+                      },
+                    ],
+                  },
+                },
               ],
-              "license": {
-                "id": 1,
-                "url": "https://creativecommons.org/licenses/by-sa/4.0/deed.de",
-                "title": "Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0"
-              }
-            }
-          }
+              license: {
+                id: 1,
+                url: 'https://creativecommons.org/licenses/by-sa/4.0/deed.de',
+                title: 'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0',
+              },
+            },
+          },
         })
       )
     })
@@ -2534,26 +2580,25 @@ test('ExerciseGroup', async () => {
 
   expect(pageData.breadcrumbsData).toEqual([
     {
-      "label": "Mathematik",
-      "url": "/mathe"
+      label: 'Mathematik',
+      url: '/mathe',
     },
     {
-      "label": "Funktionen",
-      "url": "/mathe/funktionen"
+      label: 'Funktionen',
+      url: '/mathe/funktionen',
     },
     {
-      "label": "Wichtige Funktionstypen und ihre Eigenschaften",
-      "url": "/mathe/funktionen/wichtige-funktionstypen-eigenschaften"
+      label: 'Wichtige Funktionstypen und ihre Eigenschaften',
+      url: '/mathe/funktionen/wichtige-funktionstypen-eigenschaften',
     },
     {
-      "label": "Trigonometrische Funktionen",
-      "url": "/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen"
-    }
+      label: 'Trigonometrische Funktionen',
+      url:
+        '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen',
+    },
   ])
 
-  expect(pageData.metaData?.title).toEqual(
-    'Serlo'
-  )
+  expect(pageData.metaData?.title).toEqual('Serlo')
   expect(pageData.metaData?.contentType).toEqual('exercisegroup')
   expect(pageData.metaData?.metaDescription).toEqual(
     'Finde die passenden Gleichungen zu den Funktionsgraphen:Die Ruhelage der Funktion liegt auf der -Achse.Der Graph schneidet das Koordinatensystem …'
@@ -2574,33 +2619,37 @@ test('GroupedExercise', async () => {
     rest.post(endpoint, (req, res, ctx) => {
       return res(
         ctx.json({
-        "data": {
-          "uuid": {
-            "__typename": "GroupedExercise",
-              "id": 53209,
-              "alias": "/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen/aufgaben-verschieben-strecken-trigonometrischer-funktionen/53205/53209",
-              "instance": "de",
-              "currentRevision": {
-              "content": "{\"plugin\":\"exercise\",\"state\":{\"content\":{\"plugin\":\"rows\",\"state\":[{\"plugin\":\"image\",\"state\":{\"src\":\"https://assets.serlo.org/legacy/56e021a8c95ce_de1b6de2a64aebbb6030e31fff0f5e353b784a48.png\",\"alt\":\"Graph1\"}}]}}}"
-            },
-            "solution": {
-              "currentRevision": {
-                "content": "{\"plugin\":\"solution\",\"state\":{\"prerequisite\":{\"id\":\"1450\",\"title\":\"Sinus- und Kosinusfunktion\"},\"strategy\":{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{}]}]},\"steps\":{\"plugin\":\"rows\",\"state\":[{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Die \"},{\"type\":\"a\",\"href\":\"/1569\",\"children\":[{\"text\":\"Ruhelage\"}]},{\"text\":\" der Funktion liegt auf der \"},{\"type\":\"math\",\"src\":\"x\",\"inline\":true,\"children\":[{\"text\":\"x\"}]},{\"text\":\"-Achse.\"}]}]},{\"plugin\":\"image\",\"state\":{\"src\":\"https://assets.serlo.org/legacy/56e134ad11931_7a29c372db1fb46847913c95ea3e63c78d107366.png\",\"alt\":\"Lösungsteil1\"}},{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Der Graph schneidet das Koordinatensystem im Nullpunkt, also handelt es sich um eine Sinusfunktion (beziehungsweise einen verschobenen Kosinus).\"}]}]},{\"plugin\":\"image\",\"state\":{\"src\":\"https://assets.serlo.org/legacy/56e1347fd9dc1_338b31d48a89340e131d3dd1edbdddafce1725fb.png\",\"alt\":\"Lösungsteil2\"}},{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Da es leichter ist, verwendest du in den weiteren Schritten die Sinusfunktion.\"}]},{\"type\":\"p\",\"children\":[{\"text\":\"Im nächsten Schritt suchst du nach der \"},{\"type\":\"a\",\"href\":\"/1569\",\"children\":[{\"text\":\"Amplitude\"}]},{\"text\":\" der Funktion.\"}]}]},{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Die Amplitude der Funktion ist \"},{\"type\":\"math\",\"src\":\"3\",\"inline\":true,\"children\":[{\"text\":\"3\"}]},{\"text\":\". Das heißt, dass die Funktion vorerst von der Form \"},{\"type\":\"math\",\"src\":\"f(x)=3\\\\cdot\\\\sin(x)\",\"inline\":true,\"children\":[{\"text\":\"f(x)=3\\\\cdot\\\\sin(x)\"}]},{\"text\":\" ist.\"}]}]},{\"plugin\":\"image\",\"state\":{\"src\":\"https://assets.serlo.org/legacy/56e1346338a3e_542af962ee94cb2e532d473c629508001b2d6790.png\",\"alt\":\"Lösungsteil3\"}},{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Jetzt fehlt dir nur noch die \"},{\"type\":\"a\",\"href\":\"/2113\",\"children\":[{\"text\":\"Periode\"}]},{\"text\":\" der Funktion. Am Graphen kannst du ablesen, dass diese \"},{\"type\":\"math\",\"src\":\"2\\\\pi\",\"inline\":true,\"children\":[{\"text\":\"2\\\\pi\"}]},{\"text\":\" beträgt. Das ist die normale Periode von der Sinusfunktion.\"}]}]},{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Da die Periode der Sinusfunktion nicht verändert wurde, lautet die Funktion:\"}]},{\"type\":\"p\",\"children\":[{\"type\":\"math\",\"src\":\"f(x)=3\\\\cdot\\\\sin(x).\",\"inline\":false,\"children\":[{\"text\":\"f(x)=3\\\\cdot\\\\sin(x).\"}]}]}]},{\"plugin\":\"image\",\"state\":{\"src\":\"https://assets.serlo.org/legacy/56e1345199b59_b5c08794fb0621d80c980488ebfc535883be0f8c.png\",\"alt\":\"Lösungsteil4\"}}]}}}"
+          data: {
+            uuid: {
+              __typename: 'GroupedExercise',
+              id: 53209,
+              alias:
+                '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen/aufgaben-verschieben-strecken-trigonometrischer-funktionen/53205/53209',
+              instance: 'de',
+              currentRevision: {
+                content:
+                  '{"plugin":"exercise","state":{"content":{"plugin":"rows","state":[{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e021a8c95ce_de1b6de2a64aebbb6030e31fff0f5e353b784a48.png","alt":"Graph1"}}]}}}',
               },
-              "license": {
-                "id": 1,
-                  "url": "https://creativecommons.org/licenses/by-sa/4.0/deed.de",
-                  "title": "Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0"
-              }
+              solution: {
+                currentRevision: {
+                  content:
+                    '{"plugin":"solution","state":{"prerequisite":{"id":"1450","title":"Sinus- und Kosinusfunktion"},"strategy":{"plugin":"text","state":[{"type":"p","children":[{}]}]},"steps":{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Die "},{"type":"a","href":"/1569","children":[{"text":"Ruhelage"}]},{"text":" der Funktion liegt auf der "},{"type":"math","src":"x","inline":true,"children":[{"text":"x"}]},{"text":"-Achse."}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e134ad11931_7a29c372db1fb46847913c95ea3e63c78d107366.png","alt":"Lösungsteil1"}},{"plugin":"text","state":[{"type":"p","children":[{"text":"Der Graph schneidet das Koordinatensystem im Nullpunkt, also handelt es sich um eine Sinusfunktion (beziehungsweise einen verschobenen Kosinus)."}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e1347fd9dc1_338b31d48a89340e131d3dd1edbdddafce1725fb.png","alt":"Lösungsteil2"}},{"plugin":"text","state":[{"type":"p","children":[{"text":"Da es leichter ist, verwendest du in den weiteren Schritten die Sinusfunktion."}]},{"type":"p","children":[{"text":"Im nächsten Schritt suchst du nach der "},{"type":"a","href":"/1569","children":[{"text":"Amplitude"}]},{"text":" der Funktion."}]}]},{"plugin":"text","state":[{"type":"p","children":[{"text":"Die Amplitude der Funktion ist "},{"type":"math","src":"3","inline":true,"children":[{"text":"3"}]},{"text":". Das heißt, dass die Funktion vorerst von der Form "},{"type":"math","src":"f(x)=3\\\\cdot\\\\sin(x)","inline":true,"children":[{"text":"f(x)=3\\\\cdot\\\\sin(x)"}]},{"text":" ist."}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e1346338a3e_542af962ee94cb2e532d473c629508001b2d6790.png","alt":"Lösungsteil3"}},{"plugin":"text","state":[{"type":"p","children":[{"text":"Jetzt fehlt dir nur noch die "},{"type":"a","href":"/2113","children":[{"text":"Periode"}]},{"text":" der Funktion. Am Graphen kannst du ablesen, dass diese "},{"type":"math","src":"2\\\\pi","inline":true,"children":[{"text":"2\\\\pi"}]},{"text":" beträgt. Das ist die normale Periode von der Sinusfunktion."}]}]},{"plugin":"text","state":[{"type":"p","children":[{"text":"Da die Periode der Sinusfunktion nicht verändert wurde, lautet die Funktion:"}]},{"type":"p","children":[{"type":"math","src":"f(x)=3\\\\cdot\\\\sin(x).","inline":false,"children":[{"text":"f(x)=3\\\\cdot\\\\sin(x)."}]}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e1345199b59_b5c08794fb0621d80c980488ebfc535883be0f8c.png","alt":"Lösungsteil4"}}]}}}',
+                },
+                license: {
+                  id: 1,
+                  url: 'https://creativecommons.org/licenses/by-sa/4.0/deed.de',
+                  title:
+                    'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0',
+                },
+              },
+              license: {
+                id: 1,
+                url: 'https://creativecommons.org/licenses/by-sa/4.0/deed.de',
+                title: 'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0',
+              },
             },
-            "license": {
-              "id": 1,
-                "url": "https://creativecommons.org/licenses/by-sa/4.0/deed.de",
-                "title": "Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0"
-            }
-          }
-        }
-      })
+          },
+        })
       )
     })
   )
@@ -2608,9 +2657,7 @@ test('GroupedExercise', async () => {
   const response = await fetchContent('/53209', origin)
   const pageData = response.pageData! as SingleEntityPage
 
-  expect(pageData.metaData?.title).toEqual(
-    'Serlo'
-  )
+  expect(pageData.metaData?.title).toEqual('Serlo')
   expect(pageData.metaData?.contentType).toEqual('groupedexercise')
   expect(pageData.metaData?.metaDescription).toEqual(
     'Die Ruhelage der Funktion liegt auf der -Achse.Der Graph schneidet das Koordinatensystem im Nullpunkt, also handelt es sich um eine Sinusfunktion …'
@@ -2631,369 +2678,415 @@ test('Course', async () => {
       const body = req.body! as { query: string }
       const match = body.query.match(/uuid\((.+)\)/)
       switch (match?.[1]) {
-        case "id: 51979":
-      return res(
-        ctx.json({
-          "data": {
-            "uuid": {
-              "__typename": "Course",
-              "instance": "de",
-              "pages": [
-                {
-                  "alias": "/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/uebersicht"
-                },
-                {
-                  "alias": "/51522/nullstellen"
-                },
-                {
-                  "alias": "/51551/aufgaben-nullstellen-evtl-geloescht"
-                },
-                {
-                  "alias": "/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/linearfaktordarstellung-1-3"
-                },
-                {
-                  "alias": "/52035/linearfaktordarstellung-2-3"
-                },
-                {
-                  "alias": "/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/linearfaktordarstellung-3-3"
-                },
-                {
-                  "alias": "/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/uebersicht-berechnungsmethoden"
-                },
-                {
-                  "alias": "/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/0-hilfestellungen"
-                },
-                {
-                  "alias": "/52338/1-termumformungen"
-                },
-                {
-                  "alias": "/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/2-ausklammern-faktoren-1-2"
-                },
-                {
-                  "alias": "/52448/2-ausklammern-faktoren-2-2"
-                },
-                {
-                  "alias": "/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/3-loesen-mithilfe-polynomdivision-1-2"
-                },
-                {
-                  "alias": "/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/3-loesen-mithilfe-polynomdivision-2-2"
-                },
-                {
-                  "alias": "/52032/3-loesen-substitution-1"
-                },
-                {
-                  "alias": "/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/4-loesen-substitution-1-2"
-                },
-                {
-                  "alias": "/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/4-loesen-substitution-2-2"
-                },
-                {
-                  "alias": "/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/schema-nullstellenberechnung"
-                },
-                {
-                  "alias": "/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/aufgaben-nullstellenberechnung"
-                },
-                {
-                  "alias": "/52336/zusammenfassung"
-                },
-                {
-                  "alias": null
-                },
-                {
-                  "alias": null
-                }
-              ]
-            }
-          }
-        })
-      )
-        case "alias: { instance: de, path: \"/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/uebersicht\"}":
-          return res(ctx.json({
-            "data": {
-              "uuid": {
-                "__typename": "CoursePage",
-                "id": 52020,
-                "alias": "/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/uebersicht",
-                "instance": "de",
-                "currentRevision": {
-                  "content": "[[{\"col\":24,\"content\":\"Ziel dieses Kurses ist es, einen Überblick zur möglichen Vorgehensweise beim Finden von Nullstellen von Polynomfunktionen zu geben.\\n\\nInhalte\\n\\n- Erarbeitung der Linearfaktordarstellung\\n\\n- Methoden der Nullstellenberechnung\\n\\n\\t- Termumformungen\\n \\n\\t- Ausklammern von Faktoren\\n \\n\\t- Lösen mithilfe der Polynomdivision\\n \\n\\t- Lösen durch Substitution\\n \\n \\nVorwissen\\n\\n- Funktionsbegriff\\n\\n- Polynomfunktion\\n\\n- Definition einer Nullstelle\\n\\n- Berechnung von Nullstellen bei linearen und quadratischen Funktionen\"}]]",
-                  "title": "Übersicht"
-                },
-                "course": {
-                  "currentRevision": {
-                    "title": "Berechnungsmethoden - Nullstellen von Polynomfunktionen"
-                  },
-                  "pages": [
+        case 'id: 51979':
+          return res(
+            ctx.json({
+              data: {
+                uuid: {
+                  __typename: 'Course',
+                  instance: 'de',
+                  pages: [
                     {
-                      "alias": "/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/uebersicht",
-                      "id": 52020,
-                      "currentRevision": {
-                        "title": "Übersicht"
-                      }
+                      alias:
+                        '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/uebersicht',
                     },
                     {
-                      "alias": "/51522/nullstellen",
-                      "id": 51522,
-                      "currentRevision": {
-                        "title": "Nullstellen"
-                      }
+                      alias: '/51522/nullstellen',
                     },
                     {
-                      "alias": "/51551/aufgaben-nullstellen-evtl-geloescht",
-                      "id": 51551,
-                      "currentRevision": {
-                        "title": "Aufgaben zu Nullstellen (wird evtl. gelöscht)"
-                      }
+                      alias: '/51551/aufgaben-nullstellen-evtl-geloescht',
                     },
                     {
-                      "alias": "/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/linearfaktordarstellung-1-3",
-                      "id": 51553,
-                      "currentRevision": {
-                        "title": "Linearfaktordarstellung (1|3)"
-                      }
+                      alias:
+                        '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/linearfaktordarstellung-1-3',
                     },
                     {
-                      "alias": "/52035/linearfaktordarstellung-2-3",
-                      "id": 52035,
-                      "currentRevision": {
-                        "title": "Linearfaktordarstellung (2|3)"
-                      }
+                      alias: '/52035/linearfaktordarstellung-2-3',
                     },
                     {
-                      "alias": "/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/linearfaktordarstellung-3-3",
-                      "id": 52365,
-                      "currentRevision": {
-                        "title": "Linearfaktordarstellung (3|3)"
-                      }
+                      alias:
+                        '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/linearfaktordarstellung-3-3',
                     },
                     {
-                      "alias": "/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/uebersicht-berechnungsmethoden",
-                      "id": 51555,
-                      "currentRevision": {
-                        "title": "Übersicht - Berechnungsmethoden"
-                      }
+                      alias:
+                        '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/uebersicht-berechnungsmethoden',
                     },
                     {
-                      "alias": "/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/0-hilfestellungen",
-                      "id": 52344,
-                      "currentRevision": {
-                        "title": "0. Hilfestellungen"
-                      }
+                      alias:
+                        '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/0-hilfestellungen',
                     },
                     {
-                      "alias": "/52338/1-termumformungen",
-                      "id": 52338,
-                      "currentRevision": {
-                        "title": "1. Termumformungen"
-                      }
+                      alias: '/52338/1-termumformungen',
                     },
                     {
-                      "alias": "/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/2-ausklammern-faktoren-1-2",
-                      "id": 52342,
-                      "currentRevision": {
-                        "title": "2. Ausklammern von Faktoren (1|2)"
-                      }
+                      alias:
+                        '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/2-ausklammern-faktoren-1-2',
                     },
                     {
-                      "alias": "/52448/2-ausklammern-faktoren-2-2",
-                      "id": 52448,
-                      "currentRevision": {
-                        "title": "2. Ausklammern von Faktoren (2|2)"
-                      }
+                      alias: '/52448/2-ausklammern-faktoren-2-2',
                     },
                     {
-                      "alias": "/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/3-loesen-mithilfe-polynomdivision-1-2",
-                      "id": 123826,
-                      "currentRevision": {
-                        "title": "3. Lösen mithilfe der Polynomdivision (1|2)"
-                      }
+                      alias:
+                        '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/3-loesen-mithilfe-polynomdivision-1-2',
                     },
                     {
-                      "alias": "/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/3-loesen-mithilfe-polynomdivision-2-2",
-                      "id": 123982,
-                      "currentRevision": {
-                        "title": "3. Lösen mithilfe der Polynomdivision (2|2)"
-                      }
+                      alias:
+                        '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/3-loesen-mithilfe-polynomdivision-2-2',
                     },
                     {
-                      "alias": "/52032/3-loesen-substitution-1",
-                      "id": 52032,
-                      "currentRevision": {
-                        "title": "3. Lösen durch Substitution (1| )"
-                      }
+                      alias: '/52032/3-loesen-substitution-1',
                     },
                     {
-                      "alias": "/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/4-loesen-substitution-1-2",
-                      "id": 52256,
-                      "currentRevision": {
-                        "title": "4. Lösen durch Substitution (1|2)"
-                      }
+                      alias:
+                        '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/4-loesen-substitution-1-2',
                     },
                     {
-                      "alias": "/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/4-loesen-substitution-2-2",
-                      "id": 52411,
-                      "currentRevision": {
-                        "title": "4. Lösen durch Substitution (2|2)"
-                      }
+                      alias:
+                        '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/4-loesen-substitution-2-2',
                     },
                     {
-                      "alias": "/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/schema-nullstellenberechnung",
-                      "id": 52340,
-                      "currentRevision": {
-                        "title": "Schema zur Nullstellenberechnung"
-                      }
+                      alias:
+                        '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/schema-nullstellenberechnung',
                     },
                     {
-                      "alias": "/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/aufgaben-nullstellenberechnung",
-                      "id": 51557,
-                      "currentRevision": {
-                        "title": "Aufgaben zur Nullstellenberechnung"
-                      }
+                      alias:
+                        '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/aufgaben-nullstellenberechnung',
                     },
                     {
-                      "alias": "/52336/zusammenfassung",
-                      "id": 52336,
-                      "currentRevision": {
-                        "title": "Zusammenfassung"
-                      }
+                      alias: '/52336/zusammenfassung',
                     },
                     {
-                      "alias": null,
-                      "id": 52371,
-                      "currentRevision": null
+                      alias: null,
                     },
                     {
-                      "alias": null,
-                      "id": 123981,
-                      "currentRevision": null
-                    }
+                      alias: null,
+                    },
                   ],
-                  "taxonomyTerms": [
-                    {
-                      "navigation": {
-                        "path": [
-                          {
-                            "label": "Mathematik",
-                            "url": "/mathe"
-                          },
-                          {
-                            "label": "Alle Themen",
-                            "url": "/mathe/5"
-                          },
-                          {
-                            "label": "Funktionen",
-                            "url": "/mathe/funktionen"
-                          },
-                          {
-                            "label": "Wichtige Funktionstypen und ihre Eigenschaften",
-                            "url": "/mathe/funktionen/wichtige-funktionstypen-eigenschaften"
-                          },
-                          {
-                            "label": "Polynomfunktionen beliebigen Grades",
-                            "url": "/mathe/funktionen/wichtige-funktionstypen-eigenschaften/polynomfunktionen-beliebigen-grades"
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "navigation": {
-                        "path": [
-                          {
-                            "label": "Mathematik",
-                            "url": "/mathe"
-                          },
-                          {
-                            "label": "Gymnasium",
-                            "url": "/mathe/deutschland/bayern/gymnasium"
-                          },
-                          {
-                            "label": "Klasse 10",
-                            "url": "/mathe/deutschland/bayern/gymnasium/klasse-10"
-                          },
-                          {
-                            "label": "Graphen ganzrationaler Funktionen",
-                            "url": "/mathe/deutschland/bayern/gymnasium/klasse-10/graphen-ganzrationaler-funktionen"
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "navigation": {
-                        "path": [
-                          {
-                            "label": "Mathematik",
-                            "url": "/mathe"
-                          },
-                          {
-                            "label": "Alle Themen",
-                            "url": "/mathe/5"
-                          },
-                          {
-                            "label": "Deutschland",
-                            "url": "/mathe/deutschland"
-                          },
-                          {
-                            "label": "Bayern",
-                            "url": "/mathe/deutschland/bayern"
-                          },
-                          {
-                            "label": "FOS Technik",
-                            "url": "/mathe/deutschland/bayern/fos-technik"
-                          },
-                          {
-                            "label": "Klasse 11",
-                            "url": "/mathe/deutschland/bayern/fos-technik/klasse-11"
-                          },
-                          {
-                            "label": "Ganzrationale Funktionen ",
-                            "url": "/mathe/deutschland/bayern/fos-technik/klasse-11/ganzrationale-funktionen"
-                          },
-                          {
-                            "label": "Nullstellen ganzrationaler Funktionen berechnen",
-                            "url": "/mathe/deutschland/bayern/fos-technik/klasse-11/ganzrationale-funktionen/nullstellen-ganzrationaler-funktionen-berechnen"
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "navigation": {
-                        "path": [
-                          {
-                            "label": "Mathematik",
-                            "url": "/mathe"
-                          },
-                          {
-                            "label": "FOS & BOS",
-                            "url": "/mathe/deutschland/bayern/fos-bos---technisch"
-                          },
-                          {
-                            "label": "Klasse 11",
-                            "url": "/mathe/deutschland/bayern/fos-bos---technisch/klasse-11"
-                          },
-                          {
-                            "label": "Ganzrationale Funktionen ",
-                            "url": "/mathe/deutschland/bayern/fos-bos---technisch/klasse-11/ganzrationale-funktionen"
-                          },
-                          {
-                            "label": "Nullstellen ganzrationaler Funktionen berechnen",
-                            "url": "/mathe/deutschland/bayern/fos-bos---technisch/klasse-11/ganzrationale-funktionen/nullstellen-ganzrationaler-funktionen-berechnen"
-                          }
-                        ]
-                      }
-                    }
-                  ]
                 },
-                "license": {
-                  "id": 1,
-                  "url": "https://creativecommons.org/licenses/by-sa/4.0/deed.de",
-                  "title": "Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0"
-                }
-              }
-            }
-          }))
-          default:
-        return res(ctx.status(500))
-    }
+              },
+            })
+          )
+        case 'alias: { instance: de, path: "/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/uebersicht"}':
+          return res(
+            ctx.json({
+              data: {
+                uuid: {
+                  __typename: 'CoursePage',
+                  id: 52020,
+                  alias:
+                    '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/uebersicht',
+                  instance: 'de',
+                  currentRevision: {
+                    content:
+                      '[[{"col":24,"content":"Ziel dieses Kurses ist es, einen Überblick zur möglichen Vorgehensweise beim Finden von Nullstellen von Polynomfunktionen zu geben.\\n\\nInhalte\\n\\n- Erarbeitung der Linearfaktordarstellung\\n\\n- Methoden der Nullstellenberechnung\\n\\n\\t- Termumformungen\\n \\n\\t- Ausklammern von Faktoren\\n \\n\\t- Lösen mithilfe der Polynomdivision\\n \\n\\t- Lösen durch Substitution\\n \\n \\nVorwissen\\n\\n- Funktionsbegriff\\n\\n- Polynomfunktion\\n\\n- Definition einer Nullstelle\\n\\n- Berechnung von Nullstellen bei linearen und quadratischen Funktionen"}]]',
+                    title: 'Übersicht',
+                  },
+                  course: {
+                    currentRevision: {
+                      title:
+                        'Berechnungsmethoden - Nullstellen von Polynomfunktionen',
+                    },
+                    pages: [
+                      {
+                        alias:
+                          '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/uebersicht',
+                        id: 52020,
+                        currentRevision: {
+                          title: 'Übersicht',
+                        },
+                      },
+                      {
+                        alias: '/51522/nullstellen',
+                        id: 51522,
+                        currentRevision: {
+                          title: 'Nullstellen',
+                        },
+                      },
+                      {
+                        alias: '/51551/aufgaben-nullstellen-evtl-geloescht',
+                        id: 51551,
+                        currentRevision: {
+                          title:
+                            'Aufgaben zu Nullstellen (wird evtl. gelöscht)',
+                        },
+                      },
+                      {
+                        alias:
+                          '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/linearfaktordarstellung-1-3',
+                        id: 51553,
+                        currentRevision: {
+                          title: 'Linearfaktordarstellung (1|3)',
+                        },
+                      },
+                      {
+                        alias: '/52035/linearfaktordarstellung-2-3',
+                        id: 52035,
+                        currentRevision: {
+                          title: 'Linearfaktordarstellung (2|3)',
+                        },
+                      },
+                      {
+                        alias:
+                          '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/linearfaktordarstellung-3-3',
+                        id: 52365,
+                        currentRevision: {
+                          title: 'Linearfaktordarstellung (3|3)',
+                        },
+                      },
+                      {
+                        alias:
+                          '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/uebersicht-berechnungsmethoden',
+                        id: 51555,
+                        currentRevision: {
+                          title: 'Übersicht - Berechnungsmethoden',
+                        },
+                      },
+                      {
+                        alias:
+                          '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/0-hilfestellungen',
+                        id: 52344,
+                        currentRevision: {
+                          title: '0. Hilfestellungen',
+                        },
+                      },
+                      {
+                        alias: '/52338/1-termumformungen',
+                        id: 52338,
+                        currentRevision: {
+                          title: '1. Termumformungen',
+                        },
+                      },
+                      {
+                        alias:
+                          '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/2-ausklammern-faktoren-1-2',
+                        id: 52342,
+                        currentRevision: {
+                          title: '2. Ausklammern von Faktoren (1|2)',
+                        },
+                      },
+                      {
+                        alias: '/52448/2-ausklammern-faktoren-2-2',
+                        id: 52448,
+                        currentRevision: {
+                          title: '2. Ausklammern von Faktoren (2|2)',
+                        },
+                      },
+                      {
+                        alias:
+                          '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/3-loesen-mithilfe-polynomdivision-1-2',
+                        id: 123826,
+                        currentRevision: {
+                          title: '3. Lösen mithilfe der Polynomdivision (1|2)',
+                        },
+                      },
+                      {
+                        alias:
+                          '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/3-loesen-mithilfe-polynomdivision-2-2',
+                        id: 123982,
+                        currentRevision: {
+                          title: '3. Lösen mithilfe der Polynomdivision (2|2)',
+                        },
+                      },
+                      {
+                        alias: '/52032/3-loesen-substitution-1',
+                        id: 52032,
+                        currentRevision: {
+                          title: '3. Lösen durch Substitution (1| )',
+                        },
+                      },
+                      {
+                        alias:
+                          '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/4-loesen-substitution-1-2',
+                        id: 52256,
+                        currentRevision: {
+                          title: '4. Lösen durch Substitution (1|2)',
+                        },
+                      },
+                      {
+                        alias:
+                          '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/4-loesen-substitution-2-2',
+                        id: 52411,
+                        currentRevision: {
+                          title: '4. Lösen durch Substitution (2|2)',
+                        },
+                      },
+                      {
+                        alias:
+                          '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/schema-nullstellenberechnung',
+                        id: 52340,
+                        currentRevision: {
+                          title: 'Schema zur Nullstellenberechnung',
+                        },
+                      },
+                      {
+                        alias:
+                          '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/aufgaben-nullstellenberechnung',
+                        id: 51557,
+                        currentRevision: {
+                          title: 'Aufgaben zur Nullstellenberechnung',
+                        },
+                      },
+                      {
+                        alias: '/52336/zusammenfassung',
+                        id: 52336,
+                        currentRevision: {
+                          title: 'Zusammenfassung',
+                        },
+                      },
+                      {
+                        alias: null,
+                        id: 52371,
+                        currentRevision: null,
+                      },
+                      {
+                        alias: null,
+                        id: 123981,
+                        currentRevision: null,
+                      },
+                    ],
+                    taxonomyTerms: [
+                      {
+                        navigation: {
+                          path: [
+                            {
+                              label: 'Mathematik',
+                              url: '/mathe',
+                            },
+                            {
+                              label: 'Alle Themen',
+                              url: '/mathe/5',
+                            },
+                            {
+                              label: 'Funktionen',
+                              url: '/mathe/funktionen',
+                            },
+                            {
+                              label:
+                                'Wichtige Funktionstypen und ihre Eigenschaften',
+                              url:
+                                '/mathe/funktionen/wichtige-funktionstypen-eigenschaften',
+                            },
+                            {
+                              label: 'Polynomfunktionen beliebigen Grades',
+                              url:
+                                '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/polynomfunktionen-beliebigen-grades',
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        navigation: {
+                          path: [
+                            {
+                              label: 'Mathematik',
+                              url: '/mathe',
+                            },
+                            {
+                              label: 'Gymnasium',
+                              url: '/mathe/deutschland/bayern/gymnasium',
+                            },
+                            {
+                              label: 'Klasse 10',
+                              url:
+                                '/mathe/deutschland/bayern/gymnasium/klasse-10',
+                            },
+                            {
+                              label: 'Graphen ganzrationaler Funktionen',
+                              url:
+                                '/mathe/deutschland/bayern/gymnasium/klasse-10/graphen-ganzrationaler-funktionen',
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        navigation: {
+                          path: [
+                            {
+                              label: 'Mathematik',
+                              url: '/mathe',
+                            },
+                            {
+                              label: 'Alle Themen',
+                              url: '/mathe/5',
+                            },
+                            {
+                              label: 'Deutschland',
+                              url: '/mathe/deutschland',
+                            },
+                            {
+                              label: 'Bayern',
+                              url: '/mathe/deutschland/bayern',
+                            },
+                            {
+                              label: 'FOS Technik',
+                              url: '/mathe/deutschland/bayern/fos-technik',
+                            },
+                            {
+                              label: 'Klasse 11',
+                              url:
+                                '/mathe/deutschland/bayern/fos-technik/klasse-11',
+                            },
+                            {
+                              label: 'Ganzrationale Funktionen ',
+                              url:
+                                '/mathe/deutschland/bayern/fos-technik/klasse-11/ganzrationale-funktionen',
+                            },
+                            {
+                              label:
+                                'Nullstellen ganzrationaler Funktionen berechnen',
+                              url:
+                                '/mathe/deutschland/bayern/fos-technik/klasse-11/ganzrationale-funktionen/nullstellen-ganzrationaler-funktionen-berechnen',
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        navigation: {
+                          path: [
+                            {
+                              label: 'Mathematik',
+                              url: '/mathe',
+                            },
+                            {
+                              label: 'FOS & BOS',
+                              url:
+                                '/mathe/deutschland/bayern/fos-bos---technisch',
+                            },
+                            {
+                              label: 'Klasse 11',
+                              url:
+                                '/mathe/deutschland/bayern/fos-bos---technisch/klasse-11',
+                            },
+                            {
+                              label: 'Ganzrationale Funktionen ',
+                              url:
+                                '/mathe/deutschland/bayern/fos-bos---technisch/klasse-11/ganzrationale-funktionen',
+                            },
+                            {
+                              label:
+                                'Nullstellen ganzrationaler Funktionen berechnen',
+                              url:
+                                '/mathe/deutschland/bayern/fos-bos---technisch/klasse-11/ganzrationale-funktionen/nullstellen-ganzrationaler-funktionen-berechnen',
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                  license: {
+                    id: 1,
+                    url:
+                      'https://creativecommons.org/licenses/by-sa/4.0/deed.de',
+                    title:
+                      'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0',
+                  },
+                },
+              },
+            })
+          )
+        default:
+          return res(ctx.status(500))
+      }
     })
   )
 
@@ -3002,42 +3095,38 @@ test('Course', async () => {
 
   expect(pageData.breadcrumbsData).toEqual([
     {
-      "label": "Mathematik",
-      "url": "/mathe"
+      label: 'Mathematik',
+      url: '/mathe',
     },
     {
-      "label": "Funktionen",
-      "url": "/mathe/funktionen"
+      label: 'Funktionen',
+      url: '/mathe/funktionen',
     },
     {
-      "label": "Wichtige Funktionstypen und ihre Eigenschaften",
-      "url": "/mathe/funktionen/wichtige-funktionstypen-eigenschaften"
-    }
+      label: 'Wichtige Funktionstypen und ihre Eigenschaften',
+      url: '/mathe/funktionen/wichtige-funktionstypen-eigenschaften',
+    },
   ])
 
-  expect(pageData.metaData?.title).toEqual(
-    'Übersicht - lernen mit Serlo!'
-  )
+  expect(pageData.metaData?.title).toEqual('Übersicht - lernen mit Serlo!')
   expect(pageData.metaData?.contentType).toEqual('course-page')
   expect(pageData.metaData?.metaDescription).toEqual(
     'Ziel dieses Kurses ist es, einen Überblick zur möglichen Vorgehensweise beim Finden von Nullstellen von Polynomfunktionen zu geben. Inhalte …'
   )
   expect(pageData.metaData?.metaImage).toEqual(
-    "https://frontend.serlo.org/_assets/img/meta/mathematik.jpg"
-
+    'https://frontend.serlo.org/_assets/img/meta/mathematik.jpg'
   )
 
   assertCorrectHorizonDataFormat(pageData)
 
-  expect(pageData.cacheKey).toEqual('/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/uebersicht')
+  expect(pageData.cacheKey).toEqual(
+    '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/uebersicht'
+  )
   expect(pageData.newsletterPopup).toEqual(false)
   expect(pageData.kind).toEqual('single-entity')
   expect(pageData.entityData.id).toEqual(52020)
-  expect(pageData.entityData.title).toEqual(
-    'Übersicht'
-  )
+  expect(pageData.entityData.title).toEqual('Übersicht')
   expect(Array.isArray(pageData.entityData.content)).toEqual(true)
-
 })
 
 test('Event', async () => {
@@ -3045,16 +3134,17 @@ test('Event', async () => {
     rest.post(endpoint, (req, res, ctx) => {
       return res(
         ctx.json({
-        "data": {
-          "uuid": {
-            "__typename": "Event",
-              "instance": "de",
-              "currentRevision": {
-              "content": "{\"plugin\":\"rows\",\"state\":[{\"plugin\":\"multimedia\",\"state\":{\"explanation\":{\"plugin\":\"rows\",\"state\":[{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"31.08.20 - 25.09.2020, Mo-Fr \",\"strong\":true}]},{\"type\":\"h\",\"level\":3,\"children\":[{\"text\":\"Digital Learning Academy in München\"}]},{\"type\":\"p\",\"children\":[{\"text\":\"online\"}]},{\"type\":\"p\",\"children\":[{\"text\":\"\"}]},{\"type\":\"p\",\"children\":[{\"text\":\"Gemeinsame Arbeit an Lerninhalten, Workshops zu verschiedenen Themen und viel Teambuilding\"}]}]}]},\"multimedia\":{\"plugin\":\"image\",\"state\":{\"src\":\"https://assets.serlo.org/5e1dd1af01cbb_3f55069f153bbb4d59cd357a0ed28bb6104638d7.jpg\"}},\"illustrating\":true,\"width\":50}},{\"plugin\":\"spoiler\",\"state\":{\"title\":\"Mehr Infos\",\"content\":{\"plugin\":\"rows\",\"state\":[{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Während der Academy kommen Autor*innen zusammen, um gemeinsam Lerninhalte zu erstellen, neue Leute kennenzulernen und die Plattform weiterzuentwickeln.\"}]},{\"type\":\"p\",\"children\":[{\"text\":\"\"}]},{\"type\":\"p\",\"children\":[{\"text\":\"Als Teilnehmer*in hast du die Möglichkeit, an einer Vielzahl von Weiterbildungsmöglichkeiten teilzunehmen, beispielsweise zu Lizenzen & Urheberrecht, LaTeX oder Bildbearbeitung.\"}]},{\"type\":\"p\",\"children\":[{\"text\":\"\"}]},{\"type\":\"p\",\"children\":[{\"text\":\"In Aktivitäten wie Energizern und gemeinsamen Spieleabenden machen wir den Kopf frei für neue Ideen.\"}]},{\"type\":\"p\",\"children\":[{\"text\":\"\"}]},{\"type\":\"p\",\"children\":[{\"text\":\"Aber nicht nur ehrenamtliche Autor*innen können an der Academy teilnehmen, sondern auch (Lehramts-)Studierende auf der Suche nach einem Praktikum. Genauere Infos zum Praktikum findest du auf unserer\"},{\"type\":\"a\",\"href\":\"/jobs\",\"children\":[{\"text\":\" Jobseite\"}]},{\"text\":\".\"}]}]},{\"plugin\":\"image\",\"state\":{\"src\":\"https://assets.serlo.org/5dfb4b0660834_e4712fccb288acb775300cfbf32ced90d41a8799.jpg\"}},{\"plugin\":\"text\",\"state\":[{\"type\":\"h\",\"level\":3,\"children\":[{\"text\":\"Programm\"}]},{\"type\":\"p\",\"children\":[{\"text\":\"In den ersten beiden Wochen bekommst du einen umfassenden Einstieg als Autor*in auf \"},{\"type\":\"a\",\"href\":\"https://serlo.org.\",\"children\":[{\"text\":\"serlo.org.\"}]},{\"text\":\" Basierend auf diesen Erfahrungen kannst du anschließend im Projektmanagement der Redaktion mitwirken.\"}]},{\"type\":\"p\",\"children\":[{\"text\":\"\"}]},{\"type\":\"p\",\"children\":[{\"text\":\"Da Workshops und Vorträge je nach Bedarf der Teilnehmer*innen organisiert werden, werden entsprechende Termine im \"},{\"type\":\"a\",\"href\":\"https://community.serlo.org\",\"children\":[{\"text\":\"Communitychat\"}]},{\"text\":\" in #general angekündigt. So können auch spontane Besucher*innen via Videokonferenz teilnehmen.\"}]},{\"type\":\"p\",\"children\":[{\"text\":\"\"}]},{\"type\":\"p\",\"children\":[{\"text\":\"Das Programm findet von \"},{\"text\":\"Montag bis Freitag von 9 Uhr bis 17 Uhr\",\"strong\":true},{\"text\":\" statt. \"}]}]},{\"plugin\":\"table\",\"state\":\"|||\\n|||\\n|Woche 1|Einstieg in die redaktionelle Arbeit|\\n|Woche 2|Vertiefung der redaktionellen Arbeit|\\n|Woche 3|Mitarbeit im Projektmanagement der Redaktion|\\n|Woche 4|vertiefte Mitarbeit im Projektmanagement der Redaktion|\"},{\"plugin\":\"text\",\"state\":[{\"type\":\"h\",\"level\":3,\"children\":[{\"text\":\"Ort\"}]},{\"type\":\"p\",\"children\":[{\"text\":\"Aufgrund der aktuellen Pandemie planen wir eine online Teilnahme. Unsere Erfahrungen mit intensiven Online Meetings machen dies möglich.\"}]}]},{\"plugin\":\"image\",\"state\":{\"src\":\"https://assets.serlo.org/5ee086fe2a24f_74cbf8c83d2725943c75b41ab64148f7e7dce752.jpg\"}},{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"Sollte sich die aktuelle Situation bessern, sind vereinzelte Aktivitäten im Münchner Serlo Büro (Daiserstr. 15) denkbar. Deren Teilnahme ist jedoch nicht verpflichtend und die Integration der online Teilnehmenden steht an erster Stelle. \"}]}]},{\"plugin\":\"text\",\"state\":[{\"type\":\"h\",\"level\":3,\"children\":[{\"text\":\"Anmeldung\"}]},{\"type\":\"p\",\"children\":[{\"text\":\"Eine Anmeldung ist im Vorfeld nicht nötig. \"}]},{\"type\":\"p\",\"children\":[{\"text\":\"\"}]},{\"type\":\"p\",\"children\":[{\"text\":\"Als Praktikant*in muss zuvor eine Bewerbung via Mail an \"},{\"type\":\"a\",\"href\":\"mailto:kathi@serlo.org\",\"children\":[{\"text\":\"kathi@serlo.org\"}]},{\"text\":\" erfolgen.\"}]}]},{\"plugin\":\"text\",\"state\":[{\"type\":\"h\",\"level\":3,\"children\":[{\"text\":\"Ansprechpartnerin\"}]},{\"type\":\"p\",\"children\":[{\"text\":\"Katharina Radstorfer\"}]},{\"type\":\"p\",\"children\":[{\"text\":\"\"},{\"type\":\"a\",\"href\":\"mailto:kathi@serlo.org\",\"children\":[{\"text\":\"kathi@serlo.org\"}]},{\"text\":\"\"}]}]},{\"plugin\":\"important\",\"state\":{\"plugin\":\"text\",\"state\":[{\"type\":\"p\",\"children\":[{\"text\":\"\",\"strong\":true},{\"type\":\"a\",\"href\":\"https://calendar.google.com/event?action=TEMPLATE&tmeid=MGY4OXBmdjM2MmNqZGxnc2MxYXR1aHNlZHQgc2VybG8ub3JnX2I0bmE3bnU2OW50cDRqZWpwN2o3ZGJpOGVvQGc&tmsrc=serlo.org_b4na7nu69ntp4jejp7j7dbi8eo%40group.calendar.google.com\",\"children\":[{\"text\":\"Termin zum Kalender hinzufügen\",\"strong\":true}]},{\"text\":\"\",\"strong\":true}]}]}}]}}}]}"
-            }
-          }
-        }
-      })
+          data: {
+            uuid: {
+              __typename: 'Event',
+              instance: 'de',
+              currentRevision: {
+                content:
+                  '{"plugin":"rows","state":[{"plugin":"multimedia","state":{"explanation":{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"31.08.20 - 25.09.2020, Mo-Fr ","strong":true}]},{"type":"h","level":3,"children":[{"text":"Digital Learning Academy in München"}]},{"type":"p","children":[{"text":"online"}]},{"type":"p","children":[{"text":""}]},{"type":"p","children":[{"text":"Gemeinsame Arbeit an Lerninhalten, Workshops zu verschiedenen Themen und viel Teambuilding"}]}]}]},"multimedia":{"plugin":"image","state":{"src":"https://assets.serlo.org/5e1dd1af01cbb_3f55069f153bbb4d59cd357a0ed28bb6104638d7.jpg"}},"illustrating":true,"width":50}},{"plugin":"spoiler","state":{"title":"Mehr Infos","content":{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Während der Academy kommen Autor*innen zusammen, um gemeinsam Lerninhalte zu erstellen, neue Leute kennenzulernen und die Plattform weiterzuentwickeln."}]},{"type":"p","children":[{"text":""}]},{"type":"p","children":[{"text":"Als Teilnehmer*in hast du die Möglichkeit, an einer Vielzahl von Weiterbildungsmöglichkeiten teilzunehmen, beispielsweise zu Lizenzen & Urheberrecht, LaTeX oder Bildbearbeitung."}]},{"type":"p","children":[{"text":""}]},{"type":"p","children":[{"text":"In Aktivitäten wie Energizern und gemeinsamen Spieleabenden machen wir den Kopf frei für neue Ideen."}]},{"type":"p","children":[{"text":""}]},{"type":"p","children":[{"text":"Aber nicht nur ehrenamtliche Autor*innen können an der Academy teilnehmen, sondern auch (Lehramts-)Studierende auf der Suche nach einem Praktikum. Genauere Infos zum Praktikum findest du auf unserer"},{"type":"a","href":"/jobs","children":[{"text":" Jobseite"}]},{"text":"."}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/5dfb4b0660834_e4712fccb288acb775300cfbf32ced90d41a8799.jpg"}},{"plugin":"text","state":[{"type":"h","level":3,"children":[{"text":"Programm"}]},{"type":"p","children":[{"text":"In den ersten beiden Wochen bekommst du einen umfassenden Einstieg als Autor*in auf "},{"type":"a","href":"https://serlo.org.","children":[{"text":"serlo.org."}]},{"text":" Basierend auf diesen Erfahrungen kannst du anschließend im Projektmanagement der Redaktion mitwirken."}]},{"type":"p","children":[{"text":""}]},{"type":"p","children":[{"text":"Da Workshops und Vorträge je nach Bedarf der Teilnehmer*innen organisiert werden, werden entsprechende Termine im "},{"type":"a","href":"https://community.serlo.org","children":[{"text":"Communitychat"}]},{"text":" in #general angekündigt. So können auch spontane Besucher*innen via Videokonferenz teilnehmen."}]},{"type":"p","children":[{"text":""}]},{"type":"p","children":[{"text":"Das Programm findet von "},{"text":"Montag bis Freitag von 9 Uhr bis 17 Uhr","strong":true},{"text":" statt. "}]}]},{"plugin":"table","state":"|||\\n|||\\n|Woche 1|Einstieg in die redaktionelle Arbeit|\\n|Woche 2|Vertiefung der redaktionellen Arbeit|\\n|Woche 3|Mitarbeit im Projektmanagement der Redaktion|\\n|Woche 4|vertiefte Mitarbeit im Projektmanagement der Redaktion|"},{"plugin":"text","state":[{"type":"h","level":3,"children":[{"text":"Ort"}]},{"type":"p","children":[{"text":"Aufgrund der aktuellen Pandemie planen wir eine online Teilnahme. Unsere Erfahrungen mit intensiven Online Meetings machen dies möglich."}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/5ee086fe2a24f_74cbf8c83d2725943c75b41ab64148f7e7dce752.jpg"}},{"plugin":"text","state":[{"type":"p","children":[{"text":"Sollte sich die aktuelle Situation bessern, sind vereinzelte Aktivitäten im Münchner Serlo Büro (Daiserstr. 15) denkbar. Deren Teilnahme ist jedoch nicht verpflichtend und die Integration der online Teilnehmenden steht an erster Stelle. "}]}]},{"plugin":"text","state":[{"type":"h","level":3,"children":[{"text":"Anmeldung"}]},{"type":"p","children":[{"text":"Eine Anmeldung ist im Vorfeld nicht nötig. "}]},{"type":"p","children":[{"text":""}]},{"type":"p","children":[{"text":"Als Praktikant*in muss zuvor eine Bewerbung via Mail an "},{"type":"a","href":"mailto:kathi@serlo.org","children":[{"text":"kathi@serlo.org"}]},{"text":" erfolgen."}]}]},{"plugin":"text","state":[{"type":"h","level":3,"children":[{"text":"Ansprechpartnerin"}]},{"type":"p","children":[{"text":"Katharina Radstorfer"}]},{"type":"p","children":[{"text":""},{"type":"a","href":"mailto:kathi@serlo.org","children":[{"text":"kathi@serlo.org"}]},{"text":""}]}]},{"plugin":"important","state":{"plugin":"text","state":[{"type":"p","children":[{"text":"","strong":true},{"type":"a","href":"https://calendar.google.com/event?action=TEMPLATE&tmeid=MGY4OXBmdjM2MmNqZGxnc2MxYXR1aHNlZHQgc2VybG8ub3JnX2I0bmE3bnU2OW50cDRqZWpwN2o3ZGJpOGVvQGc&tmsrc=serlo.org_b4na7nu69ntp4jejp7j7dbi8eo%40group.calendar.google.com","children":[{"text":"Termin zum Kalender hinzufügen","strong":true}]},{"text":"","strong":true}]}]}}]}}}]}',
+              },
+            },
+          },
+        })
       )
     })
   )
@@ -3062,9 +3152,7 @@ test('Event', async () => {
   const response = await fetchContent('/145590', origin)
   const pageData = response.pageData! as SingleEntityPage
 
-  expect(pageData.metaData?.title).toEqual(
-    'Serlo'
-  )
+  expect(pageData.metaData?.title).toEqual('Serlo')
   expect(pageData.metaData?.contentType).toEqual('event')
   expect(pageData.metaData?.metaDescription).toEqual(
     '31.08.20 - 25.09.2020, Mo-Fr Digital Learning Academy in MünchenonlineGemeinsame Arbeit an Lerninhalten, Workshops zu verschiedenen Themen …'
@@ -3079,8 +3167,9 @@ test('Event', async () => {
   expect(Array.isArray(pageData.entityData.content)).toEqual(true)
 })
 
-
-function assertCorrectHorizonDataFormat(pageData: SingleEntityPage | TaxonomyPage) {
+function assertCorrectHorizonDataFormat(
+  pageData: SingleEntityPage | TaxonomyPage
+) {
   expect(
     pageData.horizonData?.every((entry) => {
       return (
