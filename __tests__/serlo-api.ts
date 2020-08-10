@@ -1,16 +1,15 @@
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
-import fetch from 'node-fetch'
+import nodeFetch from 'node-fetch'
 
 import { endpoint } from '@/api/endpoint'
-import { SingleEntityPage, TaxonomyPage } from '@/data-types'
-import { fetchContent } from '@/fetcher/serlo-api'
+import { ErrorPage, SingleEntityPage, TaxonomyPage } from '@/data-types'
+import { fetchPageData } from '@/fetcher/fetch-page-data'
+import { serloDomain } from '@/helper/serlo-domain'
 
 const server = setupServer()
-// @ts-expect-error
-global.fetch = fetch
 
-const origin = 'https://frontend.serlo.org'
+global.fetch = (nodeFetch as unknown) as typeof global.fetch
 
 beforeAll(() => {
   server.listen()
@@ -38,9 +37,9 @@ test('User', async () => {
       )
     })
   )
-  const response = await fetchContent('/1', origin)
-  expect(response.error).toBeDefined()
-  expect(response.alias).toEqual('/1')
+  const response = (await fetchPageData('/de/1')) as ErrorPage
+  expect(response.kind).toEqual('error')
+  expect(response.errorData.code).toEqual(200)
 })
 
 test('Page', async () => {
@@ -60,8 +59,36 @@ test('Page', async () => {
                   '[[{"col":24,"content":"Serlo.org bietet einfache Erklärungen, Kurse, Lernvideos, Übungen und Musterlösungen mit denen Schüler\\\\*innen und Studierende nach ihrem eigenen Bedarf und in ihrem eigenen Tempo lernen können. Die Lernplattform ist komplett kostenlos und werbefrei. \\n\\nSerlo.org wird von dem gemeinnützigen Verein Serlo Education e.V. betrieben. Wir sind Autor\\\\*innen, Softwareentwickler\\\\*innen und Projektmanager\\\\*innen mit der Vision hochwertige Bildung weltweit frei verfügbar zu machen. Gemeinsam bauen wir eine **Wikipedia fürs Lernen**."}],[{"col":24,"content":"![Lernen mit Serlo](https://assets.serlo.org/legacy/573a12d3a07fa_8279eaedfe19a52b5fa133962ea4902c4e0da24d.png)"}],[{"col":24,"content":"## Mit Serlo lernen"}],[{"col":12,"content":"![Schüler lernen mit serlo.org](https://assets.serlo.org/legacy/58de620cc81f5_3a32032a78442ac70f769077482f4209378a3396.jpg)"},{"col":12,"content":"Mit serlo.org helfen wir Dir, selbständig und im eigenen Tempo zu lernen ([So funktioniert die Lernplattform](/81862)).  Dafür findest Du 15.000 einfache Erklärungen, Aufgaben mit Musterlösungen, Lernvideos und Kurse für [Mathematik](/19767) und [weitere Schulfächer](/19863).\\n\\nAlle Inhalte sind nach Themen sortiert, Lehrplänen zugeordnet und in unser [pädagogisches Konzept](/21423) integriert.\\n\\nAktuell lernen **eine Million Personen pro Monat** mit Serlo. ([Details zur Nutzung](/21406))\\n\\n"}],[{"col":12,"content":"![Creative Commons](https://assets.serlo.org/legacy/58e14d95c33e9_6b9472b330a800a91151aa15d565d8c37c9a4b2b.png)"},{"col":12,"content":"\\n\\nSerlo.org ist komplett kostenlos und werbefrei. Unsere Inhalte stehen unter einer\\n[freien Lizenz](https://creativecommons.org/licenses/by-sa/4.0/) - sie dürfen kopiert, verändert und verbreitet werden."}],[{"col":24,"content":"## Serlo in der Schule\\n\\n\\n\\n"}],[{"col":24,"content":"Seit 2016 sind wir mit den [Serlo Lab Schools](/labschool) in das Nachmittagsangebot von Schulen integriert und begleiten Schüler\\\\*innen direkt vor Ort beim selbstständigen Lernen mit serlo.org.\\n\\nWie Du als Lehrkraft serlo.org gewinnbringend für Deinen Unterricht einsetzen kannst, erfährst Du bei unseren [Ressourcen für Pädagog\\\\*innen](/88061).\\n\\n>[Lernen mit Serlo Video](/120011)"}],[{"col":24,"content":"## Inhalte erstellen\\n\\n"}],[{"col":12,"content":"\\n\\n![Serlo Editor](https://assets.serlo.org/legacy/56d9f1fc85966_f629c642ea0cd1e1e7877f48f600d28222a3bd86.png)"},{"col":12,"content":"Wir sind eine [Autor\\\\*innen-Community](/19869) nach dem Vorbild der Wikipedia. Die Community erstellt, verlinkt, sortiert und übersetzt alle Inhalte auf serlo.org.\\n\\nDie Überprüfung durch erfahrene Mitglieder der Community und das Feedback der Nutzer\\\\*innen sorgen für die Qualitätssicherung."}],[{"col":24,"content":"## Weitere Projekte von Serlo"}],[{"col":24,"content":"* **Serlo Hochschulmathematik**: Die freie [Lehrbuchreihe für Hochschulmathematik](https://de.wikibooks.org/wiki/Mathe_f%C3%BCr_Nicht-Freaks) verzeichnet über 2 Million Seitenaufrufe pro Jahr. Das Projekt hat sich 2016 Serlo Education angeschlossen."}],[{"col":16,"content":"* **Serlo ABC:** Mit der neuen Sprach-Lernapplikation [Serlo ABC](/abc) lernen Geflüchtete intuitiv und selbständig das lateinische Alphabet. Die Entwicklung von *Serlo ABC* begann 2015."},{"col":8,"content":"![Serlo abc Logo](https://assets.serlo.org/legacy/5836d099e4c37_ea9b78edb8bcab7acf6ea79509914cc6408a7d0a.png)"}],[{"col":24,"content":"* **Serlo Nachhaltigkeit:** Ziel von [Serlo Nachhaltigkeit](/nachhaltigkeit) ist es, ökologisches Bewusstsein sowie Wissen und Fähigkeiten rund um eine nachhaltige Lebensführung mithilfe digitaler Technologie in die Breite zu tragen. Serlo Nachhaltigkeit startete 2014."}],[{"col":24,"content":"## Auszeichnungen\\n"}],[{"col":12,"content":"- **Bundesverdienstkreuz** für Serlo-Gründer Simon und Aeneas\\n\\n- Gewinner des **SWM Bildungsstiftung Förderpreis 2019**\\n\\n- **Ashoka Fellowship** für Serlo-Gründer Simon ab 2018 \\n\\n- Gewinner des **Pädagogischen Medienpreis 2017**\\n\\n- Gewinner des **OER Award 2016** in den Kategorien \\"Bestes Hochschulprojekt\\" und \\"Größter Impact\\"\\n\\n- **LMU Forscherpreis für exzellente Studierende** an Serlo-Mitgründer Aeneas für seine Arbeit an der Software von Serlo\\n"},{"col":12,"content":"\\n![Simon Köhl, Aeneas Rekkas, Bundesverdienstkreuz](https://assets.serlo.org/5e821f7496857_b3df4108c4c549f4e318d1433bfd30e4ccab08dc.JPG)"}],[{"col":24,"content":"## Die Geschichte"}],[{"col":12,"content":"![Klosterschüler in Serlo](https://assets.serlo.org/legacy/56d9f598ebea2_1581a51d8fbbce8e4abac1cb6793c714febe5a48.png)"},{"col":12,"content":"Serlo Education wurde von den Schülern Simon und Aeneas gegründet um Schule zu verändern und die Welt gerechter zu machen. Alles begann 2009 mit einem Besuch in Nepal. [Lies unsere einzigartige Geschichte](/21413)."}],[{"col":24,"content":"## Das Team"}],[{"col":12,"content":"Serlo Education wird von ehrenamtlichen [Autor\\\\*innen](/19882) und dem haupt- und ehrenamtlichen [Team](/21439) aufgebaut. Wir sind Studierende, Lehrer\\\\*innen, Softwareentwickler\\\\*innen und viele weitere Menschen, die einen Beitrag zu mehr Bildungsgerechtigkeit leisten wollen."},{"col":12,"content":"\\n\\n![Demokratische Organisation](https://assets.serlo.org/legacy/58e14f0ab5075_a536c62f74b70c2f6a3cee393993037fb0e174d2.jpg)\\n\\n"}],[{"col":24,"content":"## Vortrag von Serlo-Gründer Simon\\n\\n>[Ansatz und Vision von Serlo](/94680)"}],[{"col":24,"content":"## Finanzierung\\n\\n"}],[{"col":16,"content":"Serlo Education wird durch die großzügige Unterstützung unserer [Partner und Förderer](/21456) ermöglicht. Details zu unseren Einnahmen mit denen wir die Softwareentwicklung, die Betreuung der Ehrenamtlichen und den Aufbau der Organisation bezahlen, sind [hier transparent dargestellt](/transparenz#7angabenzurmittelherkunft).\\n\\nWir freuen uns sehr, wenn Du uns mit einer [Spende](/spenden) unterstützt. "},{"col":8,"content":"![Serlo Partner](https://assets.serlo.org/legacy/576bf8ebb9a1c_0d19b7c4804172fd6c8ac4c8a8eb178514aded40.PNG)"}],[{"col":24,"content":"## Presse"}],[{"col":24,"content":"![](https://assets.serlo.org/legacy/5750330b9dc38_6b82d89481b0a7e1eb0ef2efb596c02198c9b724.png)\\n\\n- **Norddeutscher Rundfunk:** [Radiobeitrag anhören](https://soundcloud.com/serlo/ndr-radiointerview)\\n\\n- **TheChanger:** [Interview mit Serlo-Gründer und Vorstand Simon Köhl](http://www.thechanger.org/de/blog-de/lernplattform-serlo-interview-simon-kohl/)\\n\\n- **Bertelsmann Stiftung**: [\\"Mehr Bildungsgerechtigkeit durch freie Bildungsmaterialien\\"](http://blog.aus-und-weiterbildung.eu/mehr-bildungsgerechtigkeit-durch-freie-bildungsmaterialien-lernplattform-serlo-legt-in-ersten-wirkungsbericht-beeindruckenden-zahlen/)\\n\\n- **Ashoka Deutschland und McKinsey Company**: [\\"Wenn aus klein systemisch wird. Das Milliardenpotenzial sozialer Innovationen\\"](https://www.mckinsey.de/~/media/mckinsey/locations/europe%20and%20middle%20east/deutschland/news/presse/2019/2019-03-15%20ashoka-studie%20-%20wenn%20aus%20klein%20systemisch%20wird/2019_ashoka_mckinsey_studie_wenn%20aus%20klein%20systemisch%20wird.ashx) "}],[{"col":24,"content":"## Mehr Infos\\n\\n\\n[Abonnieren Sie unseren Newsletter](http://serlo.us7.list-manage2.com/subscribe?u=23f4b04bf70ea485a766e532d&id=a7bb2bbc4f)\\n\\n[Detaillierte Information zu unseren Zielgruppen, was wir bewirken wollen und was wir bereits erreicht haben.](/wirkung)"}]]',
               },
               navigation: {
-                data:
-                  '{"children":[{"label":"So funktioniert die Lernplattform","id":81862},{"label":"Wirkung","id":21406},{"label":"Team","id":21439},{"label":"Die Geschichte von Serlo","id":21413},{"label":"Partner und Förderer","id":21456},{"label":"Spenden","id":21565}],"label":"Über Serlo","id":18922}',
+                data: {
+                  children: [
+                    {
+                      label: 'So funktioniert die Lernplattform',
+                      id: 81862,
+                    },
+                    {
+                      label: 'Wirkung',
+                      id: 21406,
+                    },
+                    {
+                      label: 'Team',
+                      id: 21439,
+                    },
+                    {
+                      label: 'Die Geschichte von Serlo',
+                      id: 21413,
+                    },
+                    {
+                      label: 'Partner und Förderer',
+                      id: 21456,
+                    },
+                    {
+                      label: 'Spenden',
+                      id: 21565,
+                    },
+                  ],
+                  label: 'Über Serlo',
+                  id: 18922,
+                },
                 path: [
                   {
                     label: 'Über Serlo',
@@ -75,10 +102,8 @@ test('Page', async () => {
       )
     })
   )
-  const response = await fetchContent('/serlo', origin)
-  const pageData = response.pageData! as SingleEntityPage
-
-  expect(pageData.secondaryNavigationData).toEqual([
+  const response = (await fetchPageData('/de/serlo')) as SingleEntityPage
+  expect(response.secondaryNavigationData).toEqual([
     {
       title: 'So funktioniert die Lernplattform',
       url: '/81862',
@@ -111,21 +136,21 @@ test('Page', async () => {
     },
   ])
 
-  expect(pageData.metaData?.title).toEqual('Über Serlo - lernen mit Serlo!')
+  expect(response.metaData?.title).toEqual('Über Serlo - lernen mit Serlo!')
 
-  expect(pageData.metaData?.contentType).toEqual('page')
-  expect(pageData.metaData?.metaDescription).toEqual(
+  expect(response.metaData?.contentType).toEqual('page')
+  expect(response.metaData?.metaDescription).toEqual(
     'Serlo.org bietet einfache Erklärungen, Kurse, Lernvideos, Übungen und Musterlösungen mit denen Schüler*innen und Studierende nach ihrem …'
   )
-  assertCorrectMetaImageLink(pageData)
-  assertCorrectHorizonDataFormat(pageData)
+  assertCorrectMetaImageLink(response)
+  assertCorrectHorizonDataFormat(response)
 
-  expect(pageData.cacheKey).toEqual('/serlo')
-  expect(pageData.newsletterPopup).toEqual(true)
-  expect(pageData.kind).toEqual('single-entity')
-  expect(pageData.entityData.id).toEqual(18922)
-  expect(pageData.entityData.title).toEqual('Über Serlo')
-  expect(Array.isArray(pageData.entityData.content)).toEqual(true)
+  expect(response.cacheKey).toEqual('/de/serlo')
+  expect(response.newsletterPopup).toEqual(true)
+  expect(response.kind).toEqual('single-entity')
+  expect(response.entityData.id).toEqual(18922)
+  expect(response.entityData.title).toEqual('Über Serlo')
+  expect(Array.isArray(response.entityData.content)).toEqual(true)
 })
 
 test('Article', async () => {
@@ -256,13 +281,13 @@ test('Article', async () => {
                         url: '/mathe/deutschland/bayern/mittelschule',
                       },
                       {
-                        label: 'Klasse 8',
-                        url: '/mathe/deutschland/bayern/mittelschule/klasse-8',
+                        label: 'Klasse 7',
+                        url: '/mathe/deutschland/bayern/mittelschule/klasse-7',
                       },
                       {
                         label: 'Rationale Zahlen ',
                         url:
-                          '/mathe/deutschland/bayern/mittelschule/klasse-8/rationale-zahlen',
+                          '/mathe/deutschland/bayern/mittelschule/klasse-7/proportionalität/rationale-zahlen',
                       },
                     ],
                   },
@@ -353,10 +378,9 @@ test('Article', async () => {
     })
   )
 
-  const response = await fetchContent('/27801', origin)
-  const pageData = response.pageData! as SingleEntityPage
+  const response = (await fetchPageData('/de/27801')) as SingleEntityPage
 
-  expect(pageData.breadcrumbsData).toEqual([
+  expect(response.breadcrumbsData).toEqual([
     {
       label: 'Mathematik',
       url: '/mathe',
@@ -371,24 +395,24 @@ test('Article', async () => {
     },
   ])
 
-  expect(pageData.metaData?.title).toEqual(
+  expect(response.metaData?.title).toEqual(
     'Addition und Subtraktion von Dezimalbrüchen - lernen mit Serlo!'
   )
-  expect(pageData.metaData?.contentType).toEqual('article')
-  expect(pageData.metaData?.metaDescription).toEqual(
+  expect(response.metaData?.contentType).toEqual('article')
+  expect(response.metaData?.metaDescription).toEqual(
     'Um Dezimalbrüche zu addieren oder zu subtrahieren, geht man ähnlich vor wie bei der schriftlichen Addition bzw. Subtraktion.Addition Es …'
   )
-  assertCorrectMetaImageLink(pageData)
-  assertCorrectHorizonDataFormat(pageData)
+  assertCorrectMetaImageLink(response)
+  assertCorrectHorizonDataFormat(response)
 
-  expect(pageData.cacheKey).toEqual('/27801')
-  expect(pageData.newsletterPopup).toEqual(false)
-  expect(pageData.kind).toEqual('single-entity')
-  expect(pageData.entityData.id).toEqual(27801)
-  expect(pageData.entityData.title).toEqual(
+  expect(response.cacheKey).toEqual('/de/27801')
+  expect(response.newsletterPopup).toEqual(false)
+  expect(response.kind).toEqual('single-entity')
+  expect(response.entityData.id).toEqual(27801)
+  expect(response.entityData.title).toEqual(
     'Addition und Subtraktion von Dezimalbrüchen'
   )
-  expect(Array.isArray(pageData.entityData.content)).toEqual(true)
+  expect(Array.isArray(response.entityData.content)).toEqual(true)
 })
 
 test('CoursePage', async () => {
@@ -708,10 +732,9 @@ test('CoursePage', async () => {
       )
     })
   )
-  const response = await fetchContent('/52020', origin)
-  const pageData = response.pageData! as SingleEntityPage
+  const response = (await fetchPageData('/de/52020')) as SingleEntityPage
 
-  expect(pageData.breadcrumbsData).toEqual([
+  expect(response.breadcrumbsData).toEqual([
     {
       label: 'Mathematik',
       url: '/mathe',
@@ -726,20 +749,20 @@ test('CoursePage', async () => {
     },
   ])
 
-  expect(pageData.metaData?.title).toEqual('Übersicht - lernen mit Serlo!')
-  expect(pageData.metaData?.contentType).toEqual('course-page')
-  expect(pageData.metaData?.metaDescription).toEqual(
+  expect(response.metaData?.title).toEqual('Übersicht - lernen mit Serlo!')
+  expect(response.metaData?.contentType).toEqual('course-page')
+  expect(response.metaData?.metaDescription).toEqual(
     'Ziel dieses Kurses ist es, einen Überblick zur möglichen Vorgehensweise beim Finden von Nullstellen von Polynomfunktionen zu geben. Inhalte …'
   )
-  assertCorrectMetaImageLink(pageData)
-  assertCorrectHorizonDataFormat(pageData)
+  assertCorrectMetaImageLink(response)
+  assertCorrectHorizonDataFormat(response)
 
-  expect(pageData.cacheKey).toEqual('/52020')
-  expect(pageData.newsletterPopup).toEqual(false)
-  expect(pageData.kind).toEqual('single-entity')
-  expect(pageData.entityData.id).toEqual(52020)
-  expect(pageData.entityData.title).toEqual('Übersicht')
-  expect(Array.isArray(pageData.entityData.content)).toEqual(true)
+  expect(response.cacheKey).toEqual('/de/52020')
+  expect(response.newsletterPopup).toEqual(false)
+  expect(response.kind).toEqual('single-entity')
+  expect(response.entityData.id).toEqual(52020)
+  expect(response.entityData.title).toEqual('Übersicht')
+  expect(Array.isArray(response.entityData.content)).toEqual(true)
 })
 
 test('Video', async () => {
@@ -756,7 +779,7 @@ test('Video', async () => {
               instance: 'de',
               currentRevision: {
                 title: 'Winkel konstruieren',
-                url: 'https://www.youtube.com/watch?v=bq_7eAWYDOA',
+                url: '',
                 content:
                   '{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Inhalt:"}]},{"type":"unordered-list","children":[{"type":"list-item","children":[{"type":"list-item-child","children":[{"type":"p","children":[{"text":"Konstruktion der Winkel "},{"type":"math","src":"360^\\\\circ","inline":true,"children":[{"text":"360^\\\\circ"}]},{"text":" und "},{"type":"math","src":"180^\\\\circ","inline":true,"children":[{"text":"180^\\\\circ"}]},{"text":"."}]}]}]},{"type":"list-item","children":[{"type":"list-item-child","children":[{"type":"p","children":[{"text":"Konstruktion der Winkel "},{"type":"math","src":"90^\\\\circ","inline":true,"children":[{"text":"90^\\\\circ"}]},{"text":" und "},{"type":"math","src":"60^\\\\circ","inline":true,"children":[{"text":"60^\\\\circ"}]},{"text":" mit detailliertem Konstruktionsplan."}]}]}]},{"type":"list-item","children":[{"type":"list-item-child","children":[{"type":"p","children":[{"text":"Konstruktion der Winkelhalbierenden eines beliebigen Winkels mit detailliertem Konstruktionsplan."}]}]}]}]}]}]}',
               },
@@ -797,10 +820,9 @@ test('Video', async () => {
     })
   )
 
-  const response = await fetchContent('/40744', origin)
-  const pageData = response.pageData! as SingleEntityPage
+  const response = (await fetchPageData('/de/40744')) as SingleEntityPage
 
-  expect(pageData.breadcrumbsData).toEqual([
+  expect(response.breadcrumbsData).toEqual([
     {
       label: 'Mathematik',
       url: '/mathe',
@@ -811,22 +833,22 @@ test('Video', async () => {
     },
   ])
 
-  expect(pageData.metaData?.title).toEqual(
+  expect(response.metaData?.title).toEqual(
     'Winkel konstruieren - lernen mit Serlo!'
   )
-  expect(pageData.metaData?.contentType).toEqual('video')
-  expect(pageData.metaData?.metaDescription).toEqual(
+  expect(response.metaData?.contentType).toEqual('video')
+  expect(response.metaData?.metaDescription).toEqual(
     'Inhalt:Konstruktion der Winkel  und .Konstruktion der Winkel  und  mit detailliertem Konstruktionsplan.Konstruktion der Winkelhalbierenden …'
   )
-  assertCorrectMetaImageLink(pageData)
-  assertCorrectHorizonDataFormat(pageData)
+  assertCorrectMetaImageLink(response)
+  assertCorrectHorizonDataFormat(response)
 
-  expect(pageData.cacheKey).toEqual('/40744')
-  expect(pageData.newsletterPopup).toEqual(false)
-  expect(pageData.kind).toEqual('single-entity')
-  expect(pageData.entityData.id).toEqual(40744)
-  expect(pageData.entityData.title).toEqual('Winkel konstruieren')
-  expect(Array.isArray(pageData.entityData.content)).toEqual(true)
+  expect(response.cacheKey).toEqual('/de/40744')
+  expect(response.newsletterPopup).toEqual(false)
+  expect(response.kind).toEqual('single-entity')
+  expect(response.entityData.id).toEqual(40744)
+  expect(response.entityData.title).toEqual('Winkel konstruieren')
+  expect(Array.isArray(response.entityData.content)).toEqual(true)
 })
 
 test('Applet', async () => {
@@ -839,7 +861,7 @@ test('Applet', async () => {
               __typename: 'Applet',
               id: 138114,
               alias:
-                '/mathe/zahlen-gr%C3%B6%C3%9Fen/bruchrechnen-dezimalzahlen/rechnen-br%C3%BCchen/br%C3%BCche-multiplizieren-138114',
+                '/mathe/zahlen-größen/bruchrechnen-dezimalzahlen/rechnen-brüchen/brüche-multiplizieren-138114',
               instance: 'de',
               currentRevision: {
                 title: 'Brüche Multiplizieren',
@@ -890,10 +912,9 @@ test('Applet', async () => {
     })
   )
 
-  const response = await fetchContent('/138114', origin)
-  const pageData = response.pageData! as SingleEntityPage
+  const response = (await fetchPageData('/de/138114')) as SingleEntityPage
 
-  expect(pageData.breadcrumbsData).toEqual([
+  expect(response.breadcrumbsData).toEqual([
     {
       label: 'Mathematik',
       url: '/mathe',
@@ -908,23 +929,23 @@ test('Applet', async () => {
     },
   ])
 
-  expect(pageData.metaData?.title).toEqual(
+  expect(response.metaData?.title).toEqual(
     'Brüche Multiplizieren - lernen mit Serlo!'
   )
-  expect(pageData.metaData?.contentType).toEqual('applet')
-  expect(pageData.metaData?.metaDescription).toEqual(
+  expect(response.metaData?.contentType).toEqual('applet')
+  expect(response.metaData?.metaDescription).toEqual(
     'Stelle mit den Schiebereglern die Brüche ein, die du multiplizieren möchtest. Die Bruchteile werden dann in den Rechtecken farbig markiert. …'
   )
 
-  assertCorrectMetaImageLink(pageData)
-  assertCorrectHorizonDataFormat(pageData)
+  assertCorrectMetaImageLink(response)
+  assertCorrectHorizonDataFormat(response)
 
-  expect(pageData.cacheKey).toEqual('/138114')
-  expect(pageData.newsletterPopup).toEqual(false)
-  expect(pageData.kind).toEqual('single-entity')
-  expect(pageData.entityData.id).toEqual(138114)
-  expect(pageData.entityData.title).toEqual('Brüche Multiplizieren')
-  expect(Array.isArray(pageData.entityData.content)).toEqual(true)
+  expect(response.cacheKey).toEqual('/de/138114')
+  expect(response.newsletterPopup).toEqual(false)
+  expect(response.kind).toEqual('single-entity')
+  expect(response.entityData.id).toEqual(138114)
+  expect(response.entityData.title).toEqual('Brüche Multiplizieren')
+  expect(Array.isArray(response.entityData.content)).toEqual(true)
 })
 
 test('TaxonomyTerm', async () => {
@@ -942,8 +963,44 @@ test('TaxonomyTerm', async () => {
               name: 'Mathe',
               description: '',
               navigation: {
-                data:
-                  '{"children":[{"label":"Alle Themen","id":5},{"label":"Gymnasium","id":16042},{"label":"Realschule","id":16157},{"label":"Mittelschule (Hauptschule)","id":16259},{"label":"FOS & BOS","id":16033},{"label":"Hochschule","id":44323},{"label":"Prüfungen","id":83249},{"label":"Inhalte bearbeiten und neue Inhalte hinzufügen","id":19880}],"label":"Mathematik","id":19767}',
+                data: {
+                  children: [
+                    {
+                      label: 'Alle Themen',
+                      id: 5,
+                    },
+                    {
+                      label: 'Gymnasium',
+                      id: 16042,
+                    },
+                    {
+                      label: 'Realschule',
+                      id: 16157,
+                    },
+                    {
+                      label: 'Mittelschule (Hauptschule)',
+                      id: 16259,
+                    },
+                    {
+                      label: 'FOS & BOS',
+                      id: 16033,
+                    },
+                    {
+                      label: 'Hochschule',
+                      id: 44323,
+                    },
+                    {
+                      label: 'Prüfungen',
+                      id: 83249,
+                    },
+                    {
+                      label: 'Inhalte bearbeiten und neue Inhalte hinzufügen',
+                      id: 19880,
+                    },
+                  ],
+                  label: 'Mathematik',
+                  id: 19767,
+                },
                 path: [
                   {
                     label: 'Mathematik',
@@ -1353,10 +1410,6 @@ test('TaxonomyTerm', async () => {
                   description:
                     '[[{"col":24,"content":"![Funktionen Graph](https://assets.serlo.org/legacy/56fea7de3bd00_06b8dfb93b45b964a5f5a136129c9e4ecc04f46f.png)"}]]',
                   children: [
-                    {
-                      trashed: false,
-                      __typename: 'UnsupportedUuid',
-                    },
                     {
                       trashed: true,
                       __typename: 'TaxonomyTerm',
@@ -2085,17 +2138,16 @@ test('TaxonomyTerm', async () => {
     })
   )
 
-  const response = await fetchContent('/5', origin)
-  const pageData = response.pageData! as TaxonomyPage
+  const response = (await fetchPageData('/de/5')) as TaxonomyPage
 
-  expect(pageData.breadcrumbsData).toEqual([
+  expect(response.breadcrumbsData).toEqual([
     {
       label: 'Mathematik',
       url: '/mathe',
     },
   ])
 
-  expect(pageData.secondaryNavigationData).toEqual([
+  expect(response.secondaryNavigationData).toEqual([
     {
       title: 'Alle Themen',
       url: '/5',
@@ -2138,18 +2190,17 @@ test('TaxonomyTerm', async () => {
     },
   ])
 
-  expect(pageData.metaData?.title).toEqual('Mathe - Fach - lernen mit Serlo!')
-  expect(pageData.metaData?.contentType).toEqual('topic')
+  expect(response.metaData?.title).toEqual('Mathe - Fach - lernen mit Serlo!')
+  expect(response.metaData?.contentType).toEqual('topic')
 
-  assertCorrectMetaImageLink(pageData)
-  assertCorrectHorizonDataFormat(pageData)
+  assertCorrectMetaImageLink(response)
 
-  expect(pageData.cacheKey).toEqual('/5')
-  expect(pageData.newsletterPopup).toEqual(false)
-  expect(pageData.kind).toEqual('taxonomy')
-  expect(pageData.taxonomyData.id).toEqual(5)
-  expect(pageData.taxonomyData.title).toEqual('Mathe')
-  expect(Array.isArray(pageData.taxonomyData.subterms)).toEqual(true)
+  expect(response.cacheKey).toEqual('/de/5')
+  expect(response.newsletterPopup).toEqual(false)
+  expect(response.kind).toEqual('taxonomy')
+  expect(response.taxonomyData.id).toEqual(5)
+  expect(response.taxonomyData.title).toEqual('Mathe')
+  expect(Array.isArray(response.taxonomyData.subterms)).toEqual(true)
 })
 
 test('Exercise', async () => {
@@ -2297,10 +2348,9 @@ test('Exercise', async () => {
     })
   )
 
-  const response = await fetchContent('/54210', origin)
-  const pageData = response.pageData! as SingleEntityPage
+  const response = (await fetchPageData('/de/54210')) as SingleEntityPage
 
-  expect(pageData.breadcrumbsData).toEqual([
+  expect(response.breadcrumbsData).toEqual([
     {
       label: 'Mathematik',
       url: '/mathe',
@@ -2320,20 +2370,20 @@ test('Exercise', async () => {
     },
   ])
 
-  expect(pageData.metaData?.title).toEqual('Serlo')
-  expect(pageData.metaData?.contentType).toEqual('text-exercise')
-  expect(pageData.metaData?.metaDescription).toEqual(
+  expect(response.metaData?.title).toEqual('Serlo')
+  expect(response.metaData?.contentType).toEqual('text-exercise')
+  expect(response.metaData?.metaDescription).toEqual(
     'Ordne folgendem Graphen die richtige Funktionsgleichung zu:Richtig! Der Nobelpreis ist ganz nah ;-)Leider falsch! Du denkst wahrscheinlich …'
   )
 
-  assertCorrectMetaImageLink(pageData)
-  assertCorrectHorizonDataFormat(pageData)
+  assertCorrectMetaImageLink(response)
+  assertCorrectHorizonDataFormat(response)
 
-  expect(pageData.cacheKey).toEqual('/54210')
-  expect(pageData.newsletterPopup).toEqual(false)
-  expect(pageData.kind).toEqual('single-entity')
-  expect(pageData.entityData.id).toEqual(54210)
-  expect(Array.isArray(pageData.entityData.content)).toEqual(true)
+  expect(response.cacheKey).toEqual('/de/54210')
+  expect(response.newsletterPopup).toEqual(false)
+  expect(response.kind).toEqual('single-entity')
+  expect(response.entityData.id).toEqual(54210)
+  expect(Array.isArray(response.entityData.content)).toEqual(true)
 })
 
 test('ExerciseGroup', async () => {
@@ -2575,10 +2625,9 @@ test('ExerciseGroup', async () => {
     })
   )
 
-  const response = await fetchContent('/53205', origin)
-  const pageData = response.pageData! as SingleEntityPage
+  const response = (await fetchPageData('/de/53205')) as SingleEntityPage
 
-  expect(pageData.breadcrumbsData).toEqual([
+  expect(response.breadcrumbsData).toEqual([
     {
       label: 'Mathematik',
       url: '/mathe',
@@ -2598,20 +2647,20 @@ test('ExerciseGroup', async () => {
     },
   ])
 
-  expect(pageData.metaData?.title).toEqual('Serlo')
-  expect(pageData.metaData?.contentType).toEqual('exercisegroup')
-  expect(pageData.metaData?.metaDescription).toEqual(
+  expect(response.metaData?.title).toEqual('Serlo')
+  expect(response.metaData?.contentType).toEqual('exercisegroup')
+  expect(response.metaData?.metaDescription).toEqual(
     'Finde die passenden Gleichungen zu den Funktionsgraphen:Die Ruhelage der Funktion liegt auf der -Achse.Der Graph schneidet das Koordinatensystem …'
   )
 
-  assertCorrectMetaImageLink(pageData)
-  assertCorrectHorizonDataFormat(pageData)
+  assertCorrectMetaImageLink(response)
+  assertCorrectHorizonDataFormat(response)
 
-  expect(pageData.cacheKey).toEqual('/53205')
-  expect(pageData.newsletterPopup).toEqual(false)
-  expect(pageData.kind).toEqual('single-entity')
-  expect(pageData.entityData.id).toEqual(53205)
-  expect(Array.isArray(pageData.entityData.content)).toEqual(true)
+  expect(response.cacheKey).toEqual('/de/53205')
+  expect(response.newsletterPopup).toEqual(false)
+  expect(response.kind).toEqual('single-entity')
+  expect(response.entityData.id).toEqual(53205)
+  expect(Array.isArray(response.entityData.content)).toEqual(true)
 })
 
 test('GroupedExercise', async () => {
@@ -2654,446 +2703,452 @@ test('GroupedExercise', async () => {
     })
   )
 
-  const response = await fetchContent('/53209', origin)
-  const pageData = response.pageData! as SingleEntityPage
+  const response = (await fetchPageData('/de/53209')) as SingleEntityPage
 
-  expect(pageData.metaData?.title).toEqual('Serlo')
-  expect(pageData.metaData?.contentType).toEqual('groupedexercise')
-  expect(pageData.metaData?.metaDescription).toEqual(
+  expect(response.metaData?.title).toEqual('Serlo')
+  expect(response.metaData?.contentType).toEqual('groupedexercise')
+  expect(response.metaData?.metaDescription).toEqual(
     'Die Ruhelage der Funktion liegt auf der -Achse.Der Graph schneidet das Koordinatensystem im Nullpunkt, also handelt es sich um eine Sinusfunktion …'
   )
-  assertCorrectMetaImageLink(pageData)
-  assertCorrectHorizonDataFormat(pageData)
+  assertCorrectMetaImageLink(response)
+  assertCorrectHorizonDataFormat(response)
 
-  expect(pageData.cacheKey).toEqual('/53209')
-  expect(pageData.newsletterPopup).toEqual(false)
-  expect(pageData.kind).toEqual('single-entity')
-  expect(pageData.entityData.id).toEqual(53209)
-  expect(Array.isArray(pageData.entityData.content)).toEqual(true)
+  expect(response.cacheKey).toEqual('/de/53209')
+  expect(response.newsletterPopup).toEqual(false)
+  expect(response.kind).toEqual('single-entity')
+  expect(response.entityData.id).toEqual(53209)
+  expect(Array.isArray(response.entityData.content)).toEqual(true)
 })
 
 test('Course', async () => {
   server.use(
     rest.post(endpoint, (req, res, ctx) => {
-      const body = req.body! as { query: string }
-      const match = body.query.match(/uuid\((.+)\)/)
-      switch (match?.[1]) {
-        case 'id: 51979':
-          return res(
-            ctx.json({
-              data: {
-                uuid: {
-                  __typename: 'Course',
-                  instance: 'de',
+      const body = req.body! as {
+        query: string
+        variables: { id?: number; alias?: { path: string; instance: 'de' } }
+      }
+
+      if (body.variables.id === 51979) {
+        return res(
+          ctx.json({
+            data: {
+              uuid: {
+                __typename: 'Course',
+                id: 51979,
+                alias:
+                  '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen',
+                instance: 'de',
+                pages: [
+                  {
+                    alias:
+                      '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/uebersicht',
+                  },
+                  {
+                    alias: '/51522/nullstellen',
+                  },
+                  {
+                    alias: '/51551/aufgaben-nullstellen-evtl-geloescht',
+                  },
+                  {
+                    alias:
+                      '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/linearfaktordarstellung-1-3',
+                  },
+                  {
+                    alias: '/52035/linearfaktordarstellung-2-3',
+                  },
+                  {
+                    alias:
+                      '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/linearfaktordarstellung-3-3',
+                  },
+                  {
+                    alias:
+                      '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/uebersicht-berechnungsmethoden',
+                  },
+                  {
+                    alias:
+                      '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/0-hilfestellungen',
+                  },
+                  {
+                    alias: '/52338/1-termumformungen',
+                  },
+                  {
+                    alias:
+                      '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/2-ausklammern-faktoren-1-2',
+                  },
+                  {
+                    alias: '/52448/2-ausklammern-faktoren-2-2',
+                  },
+                  {
+                    alias:
+                      '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/3-loesen-mithilfe-polynomdivision-1-2',
+                  },
+                  {
+                    alias:
+                      '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/3-loesen-mithilfe-polynomdivision-2-2',
+                  },
+                  {
+                    alias: '/52032/3-loesen-substitution-1',
+                  },
+                  {
+                    alias:
+                      '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/4-loesen-substitution-1-2',
+                  },
+                  {
+                    alias:
+                      '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/4-loesen-substitution-2-2',
+                  },
+                  {
+                    alias:
+                      '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/schema-nullstellenberechnung',
+                  },
+                  {
+                    alias:
+                      '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/aufgaben-nullstellenberechnung',
+                  },
+                  {
+                    alias: '/52336/zusammenfassung',
+                  },
+                  {
+                    alias: null,
+                  },
+                  {
+                    alias: null,
+                  },
+                ],
+              },
+            },
+          })
+        )
+      }
+
+      if (
+        body.variables.alias?.path ===
+        '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/uebersicht'
+      ) {
+        return res(
+          ctx.json({
+            data: {
+              uuid: {
+                __typename: 'CoursePage',
+                id: 52020,
+                alias:
+                  '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/uebersicht',
+                instance: 'de',
+                currentRevision: {
+                  content:
+                    '[[{"col":24,"content":"Ziel dieses Kurses ist es, einen Überblick zur möglichen Vorgehensweise beim Finden von Nullstellen von Polynomfunktionen zu geben.\\n\\nInhalte\\n\\n- Erarbeitung der Linearfaktordarstellung\\n\\n- Methoden der Nullstellenberechnung\\n\\n\\t- Termumformungen\\n \\n\\t- Ausklammern von Faktoren\\n \\n\\t- Lösen mithilfe der Polynomdivision\\n \\n\\t- Lösen durch Substitution\\n \\n \\nVorwissen\\n\\n- Funktionsbegriff\\n\\n- Polynomfunktion\\n\\n- Definition einer Nullstelle\\n\\n- Berechnung von Nullstellen bei linearen und quadratischen Funktionen"}]]',
+                  title: 'Übersicht',
+                },
+                course: {
+                  currentRevision: {
+                    title:
+                      'Berechnungsmethoden - Nullstellen von Polynomfunktionen',
+                  },
                   pages: [
                     {
                       alias:
                         '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/uebersicht',
+                      id: 52020,
+                      currentRevision: {
+                        title: 'Übersicht',
+                      },
                     },
                     {
                       alias: '/51522/nullstellen',
+                      id: 51522,
+                      currentRevision: {
+                        title: 'Nullstellen',
+                      },
                     },
                     {
                       alias: '/51551/aufgaben-nullstellen-evtl-geloescht',
+                      id: 51551,
+                      currentRevision: {
+                        title: 'Aufgaben zu Nullstellen (wird evtl. gelöscht)',
+                      },
                     },
                     {
                       alias:
                         '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/linearfaktordarstellung-1-3',
+                      id: 51553,
+                      currentRevision: {
+                        title: 'Linearfaktordarstellung (1|3)',
+                      },
                     },
                     {
                       alias: '/52035/linearfaktordarstellung-2-3',
+                      id: 52035,
+                      currentRevision: {
+                        title: 'Linearfaktordarstellung (2|3)',
+                      },
                     },
                     {
                       alias:
                         '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/linearfaktordarstellung-3-3',
+                      id: 52365,
+                      currentRevision: {
+                        title: 'Linearfaktordarstellung (3|3)',
+                      },
                     },
                     {
                       alias:
                         '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/uebersicht-berechnungsmethoden',
+                      id: 51555,
+                      currentRevision: {
+                        title: 'Übersicht - Berechnungsmethoden',
+                      },
                     },
                     {
                       alias:
                         '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/0-hilfestellungen',
+                      id: 52344,
+                      currentRevision: {
+                        title: '0. Hilfestellungen',
+                      },
                     },
                     {
                       alias: '/52338/1-termumformungen',
+                      id: 52338,
+                      currentRevision: {
+                        title: '1. Termumformungen',
+                      },
                     },
                     {
                       alias:
                         '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/2-ausklammern-faktoren-1-2',
+                      id: 52342,
+                      currentRevision: {
+                        title: '2. Ausklammern von Faktoren (1|2)',
+                      },
                     },
                     {
                       alias: '/52448/2-ausklammern-faktoren-2-2',
+                      id: 52448,
+                      currentRevision: {
+                        title: '2. Ausklammern von Faktoren (2|2)',
+                      },
                     },
                     {
                       alias:
                         '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/3-loesen-mithilfe-polynomdivision-1-2',
+                      id: 123826,
+                      currentRevision: {
+                        title: '3. Lösen mithilfe der Polynomdivision (1|2)',
+                      },
                     },
                     {
                       alias:
                         '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/3-loesen-mithilfe-polynomdivision-2-2',
+                      id: 123982,
+                      currentRevision: {
+                        title: '3. Lösen mithilfe der Polynomdivision (2|2)',
+                      },
                     },
                     {
                       alias: '/52032/3-loesen-substitution-1',
+                      id: 52032,
+                      currentRevision: {
+                        title: '3. Lösen durch Substitution (1| )',
+                      },
                     },
                     {
                       alias:
                         '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/4-loesen-substitution-1-2',
+                      id: 52256,
+                      currentRevision: {
+                        title: '4. Lösen durch Substitution (1|2)',
+                      },
                     },
                     {
                       alias:
                         '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/4-loesen-substitution-2-2',
+                      id: 52411,
+                      currentRevision: {
+                        title: '4. Lösen durch Substitution (2|2)',
+                      },
                     },
                     {
                       alias:
                         '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/schema-nullstellenberechnung',
+                      id: 52340,
+                      currentRevision: {
+                        title: 'Schema zur Nullstellenberechnung',
+                      },
                     },
                     {
                       alias:
                         '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/aufgaben-nullstellenberechnung',
+                      id: 51557,
+                      currentRevision: {
+                        title: 'Aufgaben zur Nullstellenberechnung',
+                      },
                     },
                     {
                       alias: '/52336/zusammenfassung',
+                      id: 52336,
+                      currentRevision: {
+                        title: 'Zusammenfassung',
+                      },
                     },
                     {
                       alias: null,
+                      id: 52371,
+                      currentRevision: null,
                     },
                     {
                       alias: null,
+                      id: 123981,
+                      currentRevision: null,
+                    },
+                  ],
+                  taxonomyTerms: [
+                    {
+                      navigation: {
+                        path: [
+                          {
+                            label: 'Mathematik',
+                            url: '/mathe',
+                          },
+                          {
+                            label: 'Alle Themen',
+                            url: '/mathe/5',
+                          },
+                          {
+                            label: 'Funktionen',
+                            url: '/mathe/funktionen',
+                          },
+                          {
+                            label:
+                              'Wichtige Funktionstypen und ihre Eigenschaften',
+                            url:
+                              '/mathe/funktionen/wichtige-funktionstypen-eigenschaften',
+                          },
+                          {
+                            label: 'Polynomfunktionen beliebigen Grades',
+                            url:
+                              '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/polynomfunktionen-beliebigen-grades',
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      navigation: {
+                        path: [
+                          {
+                            label: 'Mathematik',
+                            url: '/mathe',
+                          },
+                          {
+                            label: 'Gymnasium',
+                            url: '/mathe/deutschland/bayern/gymnasium',
+                          },
+                          {
+                            label: 'Klasse 10',
+                            url:
+                              '/mathe/deutschland/bayern/gymnasium/klasse-10',
+                          },
+                          {
+                            label: 'Graphen ganzrationaler Funktionen',
+                            url:
+                              '/mathe/deutschland/bayern/gymnasium/klasse-10/graphen-ganzrationaler-funktionen',
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      navigation: {
+                        path: [
+                          {
+                            label: 'Mathematik',
+                            url: '/mathe',
+                          },
+                          {
+                            label: 'Alle Themen',
+                            url: '/mathe/5',
+                          },
+                          {
+                            label: 'Deutschland',
+                            url: '/mathe/deutschland',
+                          },
+                          {
+                            label: 'Bayern',
+                            url: '/mathe/deutschland/bayern',
+                          },
+                          {
+                            label: 'FOS Technik',
+                            url: '/mathe/deutschland/bayern/fos-technik',
+                          },
+                          {
+                            label: 'Klasse 11',
+                            url:
+                              '/mathe/deutschland/bayern/fos-technik/klasse-11',
+                          },
+                          {
+                            label: 'Ganzrationale Funktionen ',
+                            url:
+                              '/mathe/deutschland/bayern/fos-technik/klasse-11/ganzrationale-funktionen',
+                          },
+                          {
+                            label:
+                              'Nullstellen ganzrationaler Funktionen berechnen',
+                            url:
+                              '/mathe/deutschland/bayern/fos-technik/klasse-11/ganzrationale-funktionen/nullstellen-ganzrationaler-funktionen-berechnen',
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      navigation: {
+                        path: [
+                          {
+                            label: 'Mathematik',
+                            url: '/mathe',
+                          },
+                          {
+                            label: 'FOS & BOS',
+                            url:
+                              '/mathe/deutschland/bayern/fos-bos---technisch',
+                          },
+                          {
+                            label: 'Klasse 11',
+                            url:
+                              '/mathe/deutschland/bayern/fos-bos---technisch/klasse-11',
+                          },
+                          {
+                            label: 'Ganzrationale Funktionen ',
+                            url:
+                              '/mathe/deutschland/bayern/fos-bos---technisch/klasse-11/ganzrationale-funktionen',
+                          },
+                          {
+                            label:
+                              'Nullstellen ganzrationaler Funktionen berechnen',
+                            url:
+                              '/mathe/deutschland/bayern/fos-bos---technisch/klasse-11/ganzrationale-funktionen/nullstellen-ganzrationaler-funktionen-berechnen',
+                          },
+                        ],
+                      },
                     },
                   ],
                 },
-              },
-            })
-          )
-        case 'alias: { instance: de, path: "/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/uebersicht"}':
-          return res(
-            ctx.json({
-              data: {
-                uuid: {
-                  __typename: 'CoursePage',
-                  id: 52020,
-                  alias:
-                    '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/uebersicht',
-                  instance: 'de',
-                  currentRevision: {
-                    content:
-                      '[[{"col":24,"content":"Ziel dieses Kurses ist es, einen Überblick zur möglichen Vorgehensweise beim Finden von Nullstellen von Polynomfunktionen zu geben.\\n\\nInhalte\\n\\n- Erarbeitung der Linearfaktordarstellung\\n\\n- Methoden der Nullstellenberechnung\\n\\n\\t- Termumformungen\\n \\n\\t- Ausklammern von Faktoren\\n \\n\\t- Lösen mithilfe der Polynomdivision\\n \\n\\t- Lösen durch Substitution\\n \\n \\nVorwissen\\n\\n- Funktionsbegriff\\n\\n- Polynomfunktion\\n\\n- Definition einer Nullstelle\\n\\n- Berechnung von Nullstellen bei linearen und quadratischen Funktionen"}]]',
-                    title: 'Übersicht',
-                  },
-                  course: {
-                    currentRevision: {
-                      title:
-                        'Berechnungsmethoden - Nullstellen von Polynomfunktionen',
-                    },
-                    pages: [
-                      {
-                        alias:
-                          '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/uebersicht',
-                        id: 52020,
-                        currentRevision: {
-                          title: 'Übersicht',
-                        },
-                      },
-                      {
-                        alias: '/51522/nullstellen',
-                        id: 51522,
-                        currentRevision: {
-                          title: 'Nullstellen',
-                        },
-                      },
-                      {
-                        alias: '/51551/aufgaben-nullstellen-evtl-geloescht',
-                        id: 51551,
-                        currentRevision: {
-                          title:
-                            'Aufgaben zu Nullstellen (wird evtl. gelöscht)',
-                        },
-                      },
-                      {
-                        alias:
-                          '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/linearfaktordarstellung-1-3',
-                        id: 51553,
-                        currentRevision: {
-                          title: 'Linearfaktordarstellung (1|3)',
-                        },
-                      },
-                      {
-                        alias: '/52035/linearfaktordarstellung-2-3',
-                        id: 52035,
-                        currentRevision: {
-                          title: 'Linearfaktordarstellung (2|3)',
-                        },
-                      },
-                      {
-                        alias:
-                          '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/linearfaktordarstellung-3-3',
-                        id: 52365,
-                        currentRevision: {
-                          title: 'Linearfaktordarstellung (3|3)',
-                        },
-                      },
-                      {
-                        alias:
-                          '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/uebersicht-berechnungsmethoden',
-                        id: 51555,
-                        currentRevision: {
-                          title: 'Übersicht - Berechnungsmethoden',
-                        },
-                      },
-                      {
-                        alias:
-                          '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/0-hilfestellungen',
-                        id: 52344,
-                        currentRevision: {
-                          title: '0. Hilfestellungen',
-                        },
-                      },
-                      {
-                        alias: '/52338/1-termumformungen',
-                        id: 52338,
-                        currentRevision: {
-                          title: '1. Termumformungen',
-                        },
-                      },
-                      {
-                        alias:
-                          '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/2-ausklammern-faktoren-1-2',
-                        id: 52342,
-                        currentRevision: {
-                          title: '2. Ausklammern von Faktoren (1|2)',
-                        },
-                      },
-                      {
-                        alias: '/52448/2-ausklammern-faktoren-2-2',
-                        id: 52448,
-                        currentRevision: {
-                          title: '2. Ausklammern von Faktoren (2|2)',
-                        },
-                      },
-                      {
-                        alias:
-                          '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/3-loesen-mithilfe-polynomdivision-1-2',
-                        id: 123826,
-                        currentRevision: {
-                          title: '3. Lösen mithilfe der Polynomdivision (1|2)',
-                        },
-                      },
-                      {
-                        alias:
-                          '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/3-loesen-mithilfe-polynomdivision-2-2',
-                        id: 123982,
-                        currentRevision: {
-                          title: '3. Lösen mithilfe der Polynomdivision (2|2)',
-                        },
-                      },
-                      {
-                        alias: '/52032/3-loesen-substitution-1',
-                        id: 52032,
-                        currentRevision: {
-                          title: '3. Lösen durch Substitution (1| )',
-                        },
-                      },
-                      {
-                        alias:
-                          '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/4-loesen-substitution-1-2',
-                        id: 52256,
-                        currentRevision: {
-                          title: '4. Lösen durch Substitution (1|2)',
-                        },
-                      },
-                      {
-                        alias:
-                          '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/4-loesen-substitution-2-2',
-                        id: 52411,
-                        currentRevision: {
-                          title: '4. Lösen durch Substitution (2|2)',
-                        },
-                      },
-                      {
-                        alias:
-                          '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/schema-nullstellenberechnung',
-                        id: 52340,
-                        currentRevision: {
-                          title: 'Schema zur Nullstellenberechnung',
-                        },
-                      },
-                      {
-                        alias:
-                          '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/aufgaben-nullstellenberechnung',
-                        id: 51557,
-                        currentRevision: {
-                          title: 'Aufgaben zur Nullstellenberechnung',
-                        },
-                      },
-                      {
-                        alias: '/52336/zusammenfassung',
-                        id: 52336,
-                        currentRevision: {
-                          title: 'Zusammenfassung',
-                        },
-                      },
-                      {
-                        alias: null,
-                        id: 52371,
-                        currentRevision: null,
-                      },
-                      {
-                        alias: null,
-                        id: 123981,
-                        currentRevision: null,
-                      },
-                    ],
-                    taxonomyTerms: [
-                      {
-                        navigation: {
-                          path: [
-                            {
-                              label: 'Mathematik',
-                              url: '/mathe',
-                            },
-                            {
-                              label: 'Alle Themen',
-                              url: '/mathe/5',
-                            },
-                            {
-                              label: 'Funktionen',
-                              url: '/mathe/funktionen',
-                            },
-                            {
-                              label:
-                                'Wichtige Funktionstypen und ihre Eigenschaften',
-                              url:
-                                '/mathe/funktionen/wichtige-funktionstypen-eigenschaften',
-                            },
-                            {
-                              label: 'Polynomfunktionen beliebigen Grades',
-                              url:
-                                '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/polynomfunktionen-beliebigen-grades',
-                            },
-                          ],
-                        },
-                      },
-                      {
-                        navigation: {
-                          path: [
-                            {
-                              label: 'Mathematik',
-                              url: '/mathe',
-                            },
-                            {
-                              label: 'Gymnasium',
-                              url: '/mathe/deutschland/bayern/gymnasium',
-                            },
-                            {
-                              label: 'Klasse 10',
-                              url:
-                                '/mathe/deutschland/bayern/gymnasium/klasse-10',
-                            },
-                            {
-                              label: 'Graphen ganzrationaler Funktionen',
-                              url:
-                                '/mathe/deutschland/bayern/gymnasium/klasse-10/graphen-ganzrationaler-funktionen',
-                            },
-                          ],
-                        },
-                      },
-                      {
-                        navigation: {
-                          path: [
-                            {
-                              label: 'Mathematik',
-                              url: '/mathe',
-                            },
-                            {
-                              label: 'Alle Themen',
-                              url: '/mathe/5',
-                            },
-                            {
-                              label: 'Deutschland',
-                              url: '/mathe/deutschland',
-                            },
-                            {
-                              label: 'Bayern',
-                              url: '/mathe/deutschland/bayern',
-                            },
-                            {
-                              label: 'FOS Technik',
-                              url: '/mathe/deutschland/bayern/fos-technik',
-                            },
-                            {
-                              label: 'Klasse 11',
-                              url:
-                                '/mathe/deutschland/bayern/fos-technik/klasse-11',
-                            },
-                            {
-                              label: 'Ganzrationale Funktionen ',
-                              url:
-                                '/mathe/deutschland/bayern/fos-technik/klasse-11/ganzrationale-funktionen',
-                            },
-                            {
-                              label:
-                                'Nullstellen ganzrationaler Funktionen berechnen',
-                              url:
-                                '/mathe/deutschland/bayern/fos-technik/klasse-11/ganzrationale-funktionen/nullstellen-ganzrationaler-funktionen-berechnen',
-                            },
-                          ],
-                        },
-                      },
-                      {
-                        navigation: {
-                          path: [
-                            {
-                              label: 'Mathematik',
-                              url: '/mathe',
-                            },
-                            {
-                              label: 'FOS & BOS',
-                              url:
-                                '/mathe/deutschland/bayern/fos-bos---technisch',
-                            },
-                            {
-                              label: 'Klasse 11',
-                              url:
-                                '/mathe/deutschland/bayern/fos-bos---technisch/klasse-11',
-                            },
-                            {
-                              label: 'Ganzrationale Funktionen ',
-                              url:
-                                '/mathe/deutschland/bayern/fos-bos---technisch/klasse-11/ganzrationale-funktionen',
-                            },
-                            {
-                              label:
-                                'Nullstellen ganzrationaler Funktionen berechnen',
-                              url:
-                                '/mathe/deutschland/bayern/fos-bos---technisch/klasse-11/ganzrationale-funktionen/nullstellen-ganzrationaler-funktionen-berechnen',
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                  license: {
-                    id: 1,
-                    url:
-                      'https://creativecommons.org/licenses/by-sa/4.0/deed.de',
-                    title:
-                      'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0',
-                  },
+                license: {
+                  id: 1,
+                  url: 'https://creativecommons.org/licenses/by-sa/4.0/deed.de',
+                  title:
+                    'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0',
                 },
               },
-            })
-          )
-        default:
-          return res(ctx.status(500))
+            },
+          })
+        )
       }
+
+      return res(ctx.status(500))
     })
   )
 
-  const response = await fetchContent('/51979', origin)
-  const pageData = response.pageData! as SingleEntityPage
+  const response = (await fetchPageData('/de/51979')) as SingleEntityPage
 
-  expect(pageData.breadcrumbsData).toEqual([
+  expect(response.breadcrumbsData).toEqual([
     {
       label: 'Mathematik',
       url: '/mathe',
@@ -3108,25 +3163,25 @@ test('Course', async () => {
     },
   ])
 
-  expect(pageData.metaData?.title).toEqual('Übersicht - lernen mit Serlo!')
-  expect(pageData.metaData?.contentType).toEqual('course-page')
-  expect(pageData.metaData?.metaDescription).toEqual(
+  expect(response.metaData?.title).toEqual('Übersicht - lernen mit Serlo!')
+  expect(response.metaData?.contentType).toEqual('course-page')
+  expect(response.metaData?.metaDescription).toEqual(
     'Ziel dieses Kurses ist es, einen Überblick zur möglichen Vorgehensweise beim Finden von Nullstellen von Polynomfunktionen zu geben. Inhalte …'
   )
-  expect(pageData.metaData?.metaImage).toEqual(
-    'https://frontend.serlo.org/_assets/img/meta/mathematik.jpg'
+  expect(response.metaData?.metaImage).toEqual(
+    `https://de.${serloDomain}/_assets/img/meta/mathematik.jpg`
   )
 
-  assertCorrectHorizonDataFormat(pageData)
+  assertCorrectHorizonDataFormat(response)
 
-  expect(pageData.cacheKey).toEqual(
-    '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/uebersicht'
+  expect(response.cacheKey).toEqual(
+    '/de/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/uebersicht'
   )
-  expect(pageData.newsletterPopup).toEqual(false)
-  expect(pageData.kind).toEqual('single-entity')
-  expect(pageData.entityData.id).toEqual(52020)
-  expect(pageData.entityData.title).toEqual('Übersicht')
-  expect(Array.isArray(pageData.entityData.content)).toEqual(true)
+  expect(response.newsletterPopup).toEqual(false)
+  expect(response.kind).toEqual('single-entity')
+  expect(response.entityData.id).toEqual(52020)
+  expect(response.entityData.title).toEqual('Übersicht')
+  expect(Array.isArray(response.entityData.content)).toEqual(true)
 })
 
 test('Event', async () => {
@@ -3137,6 +3192,9 @@ test('Event', async () => {
           data: {
             uuid: {
               __typename: 'Event',
+              id: 145590,
+              alias:
+                '/community/veranstaltungen/digital-learning-summer-academy-2020',
               instance: 'de',
               currentRevision: {
                 content:
@@ -3149,27 +3207,24 @@ test('Event', async () => {
     })
   )
 
-  const response = await fetchContent('/145590', origin)
-  const pageData = response.pageData! as SingleEntityPage
+  const response = (await fetchPageData('/de/145590')) as SingleEntityPage
 
-  expect(pageData.metaData?.title).toEqual('Serlo')
-  expect(pageData.metaData?.contentType).toEqual('event')
-  expect(pageData.metaData?.metaDescription).toEqual(
+  expect(response.metaData?.title).toEqual('Serlo')
+  expect(response.metaData?.contentType).toEqual('event')
+  expect(response.metaData?.metaDescription).toEqual(
     '31.08.20 - 25.09.2020, Mo-Fr Digital Learning Academy in MünchenonlineGemeinsame Arbeit an Lerninhalten, Workshops zu verschiedenen Themen …'
   )
 
-  assertCorrectMetaImageLink(pageData)
-  assertCorrectHorizonDataFormat(pageData)
+  assertCorrectMetaImageLink(response)
+  assertCorrectHorizonDataFormat(response)
 
-  expect(pageData.cacheKey).toEqual('/145590')
-  expect(pageData.newsletterPopup).toEqual(false)
-  expect(pageData.kind).toEqual('single-entity')
-  expect(Array.isArray(pageData.entityData.content)).toEqual(true)
+  expect(response.cacheKey).toEqual('/de/145590')
+  expect(response.newsletterPopup).toEqual(false)
+  expect(response.kind).toEqual('single-entity')
+  expect(Array.isArray(response.entityData.content)).toEqual(true)
 })
 
-function assertCorrectHorizonDataFormat(
-  pageData: SingleEntityPage | TaxonomyPage
-) {
+function assertCorrectHorizonDataFormat(pageData: SingleEntityPage) {
   expect(
     pageData.horizonData?.every((entry) => {
       return (
@@ -3187,6 +3242,6 @@ function assertCorrectHorizonDataFormat(
 
 function assertCorrectMetaImageLink(pageData: SingleEntityPage | TaxonomyPage) {
   expect(pageData.metaData?.metaImage).toEqual(
-    'https://frontend.serlo.org/_assets/img/meta/serlo.jpg'
+    `https://de.${serloDomain}/_assets/img/meta/serlo.jpg`
   )
 }
