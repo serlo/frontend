@@ -1,6 +1,7 @@
 import cookie from 'cookie'
 import jwt_decode from 'jwt-decode'
 import React from 'react'
+import { Token } from 'simple-oauth2'
 
 export function useAuth(): React.RefObject<AuthPayload> {
   // This has to be a ref since token changes when calling `refreshToken`.
@@ -13,9 +14,16 @@ export function useAuth(): React.RefObject<AuthPayload> {
       const cookies = cookie.parse(
         typeof window === 'undefined' ? '' : document.cookie
       )
-      const { access_token, id_token } = JSON.parse(cookies['auth-token'])
-      const { username } = jwt_decode(id_token)
-      return { username, token: access_token, refreshToken }
+      const { access_token, id_token } = JSON.parse(
+        cookies['auth-token']
+      ) as Token
+      const decoded = jwt_decode(id_token)
+
+      return {
+        username: (decoded as { username: string }).username,
+        token: access_token as string,
+        refreshToken,
+      }
     } catch {
       return null
     }

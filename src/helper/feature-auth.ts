@@ -1,25 +1,29 @@
+import { HeaderData } from '@/data-types'
 import { serloDomain } from '@/helper/serlo-domain'
 
-export function getAuthLink(
+export function getAuthData(
   loggedIn: boolean,
   loginTitle: string,
-  logoutTitle: string
-) {
+  authMenu?: HeaderData
+): HeaderData | undefined {
   if (shouldUseNewAuth()) {
-    const authLink = {
-      url: '/api/auth/logout',
-      title: logoutTitle,
-    }
-    const noAuthLink = {
-      url: '/api/auth/login',
-      title: loginTitle,
-    }
-    return loggedIn ? authLink : noAuthLink
+    return loggedIn
+      ? authMenu
+      : [
+          {
+            url: '/api/auth/login',
+            title: loginTitle,
+            icon: 'login',
+          },
+        ]
   } else {
-    return {
-      url: '/auth/login',
-      title: loginTitle,
-    }
+    return [
+      {
+        url: '/auth/login',
+        title: loginTitle,
+        icon: 'user',
+      },
+    ]
   }
 }
 

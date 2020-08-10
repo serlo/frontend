@@ -6,10 +6,9 @@ import { HSpace } from '@/components/content/h-space'
 import { StyledA } from '@/components/tags/styled-a'
 import { StyledH1 } from '@/components/tags/styled-h1'
 import { StyledP } from '@/components/tags/styled-p'
+import { ErrorData } from '@/data-types'
 
-//TODO: Differentiate errors types, always 404 is missleading for users and search engines
-
-export function ErrorPage() {
+export function ErrorPage({ code }: ErrorData) {
   const [path, setPath] = React.useState('')
   React.useEffect(() => {
     setPath(window.location.pathname)
@@ -18,7 +17,7 @@ export function ErrorPage() {
     <RelativeContainer>
       <MaxWidthDiv>
         <HSpace amount={100} />
-        <StyledH1>404</StyledH1>
+        <StyledH1>{code}</StyledH1>
         <StyledP>Diese Seite konnte nicht geladen werden.</StyledP>
         {process.env.NODE_ENV !== 'production' && (
           <StyledP>

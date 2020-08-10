@@ -30,8 +30,5 @@ module.exports = withSourceMaps(
     devIndicators: {
       autoPrerender: false,
     },
-    experimental: {
-      optionalCatchAll: true,
-    },
   })
 )

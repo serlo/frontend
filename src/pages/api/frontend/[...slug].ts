@@ -1,21 +1,15 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import absoluteUrl from 'next-absolute-url'
 
-import { fetchContent } from '@/fetcher/serlo-api'
+import { fetchPageData } from '@/fetcher/fetch-page-data'
 
 // Proxy the API Call as GET request to the frontend so that the ZEIT Now CDN is able to cache this
 // We use stale-while-revalidate for that, see also https://zeit.co/docs/v2/network/caching#stale-while-revalidate
 export default async function fetch(req: NextApiRequest, res: NextApiResponse) {
   const slug = req.query.slug as string[]
-  const { origin } = absoluteUrl(req)
-  const data = await fetchContent(
-    '/' + slug.join('/'),
-    req.query.redirect !== undefined,
-    origin
-  )
-  if (data.error) {
-    console.log(data.error)
-    res.statusCode = 500
+  const data = await fetchPageData('/' + slug.join('/'))
+  if (data.kind === 'error') {
+    console.log(data.errorData.message)
+    res.statusCode = data.errorData.code
   }
   res.setHeader('Cache-Control', 's-maxage=1, stale-while-revalidate')
   res.setHeader('Access-Control-Allow-Origin', '*')

@@ -1,4 +1,6 @@
 import type { GraphiQLProps } from 'graphiql/esm/components/GraphiQL'
+import { GraphQLError } from 'graphql'
+import { GraphQLResponse } from 'graphql-request/dist/src/types'
 import { NextPage } from 'next'
 import dynamic from 'next/dynamic'
 import { createGlobalStyle } from 'styled-components'
@@ -1733,9 +1735,15 @@ const GraphQL: NextPage = () => {
       <GraphiQL
         fetcher={async function fetcher(params) {
           const data = await executeQuery()
+          const error = data.errors?.[0] as
+            | (GraphQLError & {
+                extensions: {
+                  code: 'UNAUTHENTICATED'
+                }
+              })
+            | undefined
           if (
-            data.errors &&
-            data.errors[0].extensions.code === 'UNAUTHENTICATED' &&
+            error?.extensions.code === 'UNAUTHENTICATED' &&
             auth.current !== null
           ) {
             await auth.current.refreshToken()
@@ -1756,7 +1764,9 @@ const GraphQL: NextPage = () => {
               body: JSON.stringify(params),
               credentials: 'same-origin',
             })
-            return await response.json()
+            return (await response.json()) as GraphQLResponse & {
+              data: unknown
+            }
           }
         }}
       />

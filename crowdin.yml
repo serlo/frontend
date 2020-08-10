@@ -1,0 +1,10 @@
+'preserve_hierarchy': false
+'export_languages': ['de', 'en', 'fr', 'es', 'ta', 'hi']
+
+'files':
+  [
+    {
+      'source': '/src/data/en/index.ts',
+      'translation': '/src/data/%two_letters_code%/index.ts',
+    },
+  ]

@@ -76,7 +76,7 @@ function parseQuery(
     return {
       code,
       scope,
-      state: JSON.parse(state),
+      state: JSON.parse(state) as QueryParseSuccess['state'],
     }
   } catch (e) {
     return {

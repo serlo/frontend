@@ -68,7 +68,7 @@ function parseQuery(
 
   try {
     return {
-      state: JSON.parse(state),
+      state: JSON.parse(state) as QueryParseSuccess['state'],
     }
   } catch (e) {
     return {

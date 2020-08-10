@@ -295,27 +295,33 @@ const onExerciseGroup = `
     ${license}
   }
 `
-export interface ExerciseGroup extends Entity {
+export interface BareExerciseGroup {
   __typename: 'ExerciseGroup'
   currentRevision?: {
     content: string
   }
   exercises: BareExercise[]
-  taxonomyTerms: TaxonomyTerms
   license: License
+}
+
+export interface ExerciseGroup extends BareExerciseGroup, Entity {
+  taxonomyTerms: TaxonomyTerms
 }
 
 // Events are only used in injections, no support for full page view
 
 const onEvent = `
   ... on Event {
+    id
+    alias
+    instance
     currentRevision {
       content
     }
   }
 `
 
-export interface Event {
+export interface Event extends Entity {
   __typename: 'Event'
   currentRevision?: {
     content: string
@@ -326,13 +332,16 @@ export interface Event {
 
 const onCourse = `
   ... on Course {
+    id
+    alias
+    instance
     pages {
       alias
     }
   }
 `
 
-export interface Course {
+export interface Course extends Entity {
   __typename: 'Course'
   pages: {
     alias?: string
@@ -361,7 +370,7 @@ const onX = (type: string) => `
     currentRevision {
       title
     }
-  }  
+  }
 `
 
 const onTaxonomyTerm = `
@@ -439,13 +448,10 @@ export interface TaxonomyTermChildExercise
   __typename: 'Exercise'
 }
 
-export interface TaxonomyTermChildExerciseGroup extends TaxonomyTermChild {
+export interface TaxonomyTermChildExerciseGroup
+  extends BareExerciseGroup,
+    TaxonomyTermChild {
   __typename: 'ExerciseGroup'
-  currentRevision?: {
-    content: string
-  }
-  exercises: BareExercise[]
-  license: License
 }
 
 export interface TaxonomyTermChildTaxonomyTerm extends TaxonomyTermChild {
@@ -455,7 +461,7 @@ export interface TaxonomyTermChildTaxonomyTerm extends TaxonomyTermChild {
   alias?: string
   id: number
   description?: string
-  children: (TaxonomyTermChildOnX | SubTaxonomyTermChildTaxonomyTerm)[]
+  children: TaxonomyTermChildrenLevel2[]
 }
 
 export interface SubTaxonomyTermChildTaxonomyTerm extends TaxonomyTermChild {
@@ -464,6 +470,7 @@ export interface SubTaxonomyTermChildTaxonomyTerm extends TaxonomyTermChild {
   alias?: string
   type: TaxonomyTermType
   name: string
+  children?: undefined
 }
 
 export interface TaxonomyTerm extends Entity {
@@ -475,13 +482,18 @@ export interface TaxonomyTerm extends Entity {
     data: string
     path: Path
   }
-  children: (
-    | TaxonomyTermChildOnX
-    | TaxonomyTermChildExercise
-    | TaxonomyTermChildExerciseGroup
-    | TaxonomyTermChildTaxonomyTerm
-  )[]
+  children: TaxonomyTermChildrenLevel1[]
 }
+
+export type TaxonomyTermChildrenLevel1 =
+  | TaxonomyTermChildOnX
+  | TaxonomyTermChildExercise
+  | TaxonomyTermChildExerciseGroup
+  | TaxonomyTermChildTaxonomyTerm
+
+export type TaxonomyTermChildrenLevel2 =
+  | TaxonomyTermChildOnX
+  | SubTaxonomyTermChildTaxonomyTerm
 
 export const dataQuery = (selector: string) => `
   {
@@ -523,13 +535,6 @@ export type QueryResponse =
   | Event
   | Course
   | TaxonomyTerm
-
-export type QueryResponseFetched = QueryResponse & {
-  redirect?: string
-  error?: string
-  alias?: string
-  id: number
-}
 
 export type QueryResponseWithLicense =
   | Article

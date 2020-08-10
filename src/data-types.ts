@@ -60,12 +60,13 @@ export type HeaderIcon =
   | 'community'
   | 'donate'
   | 'user'
+  | 'login'
+  | 'notifications'
 
 export interface HeaderStrings {
   slogan: string
   search: string
   login: string
-  logout: string
 }
 
 // The footer is split into different categories and has three separate links.
@@ -87,8 +88,10 @@ export interface FooterCategory {
 export interface FooterLink {
   title: string
   url: string
-  icon?: 'newsletter' | 'github'
+  icon?: FooterIcon
 }
+
+export type FooterIcon = 'newsletter' | 'github'
 
 export interface FooterStrings {
   summaryHeading: string
@@ -106,23 +109,25 @@ export type PageData =
   | DonationPage
   | SearchPage
   | ErrorPage
+  | NotificationsPage
   | SingleEntityPage
   | TaxonomyPage
-
-export type FetchedData = PageData & {
-  redirect?: string
-  error?: string
-  pageData: PageData
-  alias?: string
-}
 
 // The landing page is custom built and takes no additional data
 
 export interface LandingPage {
   kind: 'landing'
+  landingData?: InstanceLandingData
 }
 
-// The same for donation, search and error page:
+// Landing pages have a different structure, because they should only load on the landing page
+
+export interface InstanceLandingData {
+  lang: string
+  strings: LandingStrings
+}
+
+// The same for donation, search and notifications page:
 
 export interface DonationPage {
   kind: 'donation'
@@ -131,9 +136,20 @@ export interface DonationPage {
 export interface SearchPage {
   kind: 'search'
 }
+export interface NotificationsPage {
+  kind: 'user/notifications'
+}
+
+// Error page has some additional data
 
 export interface ErrorPage {
   kind: 'error'
+  errorData: ErrorData
+}
+
+export interface ErrorData {
+  code: number
+  message?: string
 }
 
 // There are several page elements that are common for entities:
@@ -208,7 +224,7 @@ export interface EntityData {
   title?: string
   categoryIcon?: CategoryType
   schemaData?: SchemaData
-  content?: FrontendContentNode[] | any[]
+  content?: FrontendContentNode[]
   inviteToEdit?: boolean
   licenseData?: LicenseData
   courseData?: CourseData
@@ -240,30 +256,284 @@ export interface SchemaData {
 
 // The frontend defines it's own content format that bridges the gap between legacy and edtr-io state.
 // Will switch to edtr-io state one day.
-// Until then, this is the basic tree structure:
+// Until then: Here are the types the frontend expects after converting
 
-export interface FrontendContentNode {
-  type?: string
-  state?: unknown
-  children?: FrontendContentNode[]
-  text?: string
-  href?: string
-  size?: number
-  formula?: string
-  inline?: boolean
-  alignLeft?: boolean
-  src?: string
-  alt?: string
-  id?: number | string
-  level?: number
-  content?: string
-  strong?: boolean
+export interface FrontendTextNode {
+  type: 'text'
+  text: string
+  color?: FrontendTextColor
   em?: boolean
-  maxWidth?: number
-  steps?: any
-  plugin?: string
-  isCorrect?: boolean
+  strong?: boolean
+  children?: undefined
 }
+
+export type FrontendTextColor = 'blue' | 'green' | 'orange'
+
+export interface FrontendANode {
+  type: 'a'
+  href: string
+  children?: FrontendContentNode[]
+}
+
+export interface FrontendInlineMathNode {
+  type: 'inline-math'
+  formula: string
+  children?: undefined
+}
+
+export interface FrontendPNode {
+  type: 'p'
+  children?: FrontendContentNode[]
+}
+
+export interface FrontendHNode {
+  type: 'h'
+  level: 1 | 2 | 3 | 4 | 5
+  id?: string
+  children?: FrontendContentNode[]
+}
+
+export interface FrontendMathNode {
+  type: 'math'
+  formula: string
+  alignLeft?: boolean
+  children?: undefined
+}
+
+export interface FrontendImgNode {
+  type: 'img'
+  src: string
+  href?: string
+  alt: string
+  maxWidth?: number
+  children?: undefined
+}
+
+export interface FrontendSpoilerContainerNode {
+  type: 'spoiler-container'
+  children: [FrontendSpoilerTitleNode, FrontendSpoilerBodyNode]
+}
+
+export interface FrontendSpoilerTitleNode {
+  type: 'spoiler-title'
+  children?: FrontendContentNode[]
+}
+
+export interface FrontendSpoilerBodyNode {
+  type: 'spoiler-body'
+  children?: FrontendContentNode[]
+}
+
+export interface FrontendUlNode {
+  type: 'ul'
+  children?: FrontendLiNode[]
+}
+
+export interface FrontendOlNode {
+  type: 'ol'
+  children?: FrontendLiNode[]
+}
+
+export interface FrontendLiNode {
+  type: 'li'
+  children?: FrontendContentNode[]
+}
+
+export interface FrontendRowNode {
+  type: 'row'
+  children?: FrontendColNode[]
+}
+
+export interface FrontendColNode {
+  type: 'col'
+  size: number
+  children?: FrontendContentNode[]
+}
+
+export interface FrontendImportantNode {
+  type: 'important'
+  children?: FrontendContentNode[]
+}
+
+export interface FrontendAnchorNode {
+  type: 'anchor'
+  id: string
+  children?: undefined
+}
+
+export interface FrontendTableNode {
+  type: 'table'
+  children?: FrontendTrNode[]
+}
+
+export interface FrontendTrNode {
+  type: 'tr'
+  children?: (FrontendThNode | FrontendTdNode)[]
+}
+
+export interface FrontendThNode {
+  type: 'th'
+  children?: FrontendContentNode[]
+}
+
+export interface FrontendTdNode {
+  type: 'td'
+  children?: FrontendContentNode[]
+}
+
+export interface FrontendGeogebraNode {
+  type: 'geogebra'
+  id: string
+  children?: undefined
+}
+
+export interface FrontendInjectionNode {
+  type: 'injection'
+  href: string
+  children?: undefined
+}
+
+export interface FrontendExerciseNode {
+  type: 'exercise'
+  taskLegacy?: FrontendContentNode[]
+  taskEdtrState?: TaskEdtrState
+  solutionLegacy?: FrontendContentNode[]
+  solutionEdtrState?: SolutionEdtrState
+  taskLicense?: LicenseData
+  solutionLicense?: LicenseData
+  grouped?: boolean
+  positionInGroup?: number
+  positionOnPage?: number
+  context?: {
+    id?: number
+    parent?: number
+  }
+  children?: undefined
+}
+
+export interface TaskEdtrState {
+  content: FrontendContentNode[] // edtr-io plugin "exercise"
+  interactive?: EdtrPluginScMcExercise | EdtrPluginInputExercise
+}
+
+export interface SolutionEdtrState {
+  prerequisite?: {
+    // edtr-io plugin "solution"
+    id: number
+    href: string // added, the resolved alias
+    title: string
+  }
+  strategy: FrontendContentNode[]
+  steps: FrontendContentNode[]
+}
+
+export interface EdtrPluginScMcExercise {
+  plugin: 'scMcExercise' // edtr-io plugin
+  state: {
+    answers: {
+      isCorrect: boolean
+      feedback: FrontendContentNode[]
+      content: FrontendContentNode[]
+    }[]
+    isSingleChoice?: boolean
+  }
+}
+
+export interface EdtrPluginInputExercise {
+  plugin: 'inputExercise' // edtr-io plugin
+  state: {
+    type:
+      | 'input-number-exact-match-challenge'
+      | 'input-string-normalized-match-challenge'
+      | 'input-expression-equal-match-challenge'
+    answers: {
+      value: string
+      isCorrect: boolean
+    }[]
+    unit: string
+  }
+}
+
+export interface FrontendExerciseGroupNode {
+  type: 'exercise-group'
+  license?: LicenseData
+  positionOnPage?: number
+  content: FrontendContentNode[]
+  children?: FrontendExerciseNode[]
+}
+
+export interface FrontendVideoNode {
+  type: 'video'
+  src: string
+  children?: undefined
+}
+
+export interface FrontendCodeNode {
+  type: 'code'
+  code: string
+  children?: undefined
+}
+
+export interface FrontendEquationsNode {
+  type: 'equations'
+  steps: {
+    left: FrontendContentNode[]
+    sign: SignType
+    right: FrontendContentNode[]
+    transform: FrontendContentNode[]
+  }[]
+  children?: undefined
+}
+
+export type SignType =
+  | 'equals'
+  | '='
+  | 'greater-than'
+  | 'greater-than-or-equal'
+  | 'less-than'
+  | 'less-than-or-equal'
+  | 'almost-equal-to'
+
+export type FrontendVoidNode =
+  | FrontendInlineMathNode
+  | FrontendMathNode
+  | FrontendImgNode
+  | FrontendAnchorNode
+  | FrontendGeogebraNode
+  | FrontendInjectionNode
+  | FrontendExerciseNode
+  | FrontendVideoNode
+  | FrontendCodeNode
+  | FrontendEquationsNode
+
+export type FrontendElementNode =
+  | FrontendANode
+  | FrontendPNode
+  | FrontendHNode
+  | FrontendSpoilerTitleNode
+  | FrontendSpoilerBodyNode
+  | FrontendLiNode
+  | FrontendColNode
+  | FrontendImportantNode
+  | FrontendThNode
+  | FrontendTdNode
+
+export type FrontendRestrictedElementNode =
+  | FrontendSpoilerContainerNode
+  | FrontendTableNode
+  | FrontendSpoilerContainerNode
+  | FrontendUlNode
+  | FrontendOlNode
+  | FrontendRowNode
+  | FrontendTableNode
+  | FrontendTrNode
+  | FrontendExerciseGroupNode
+
+export type FrontendContentNode =
+  | FrontendTextNode
+  | FrontendVoidNode
+  | FrontendElementNode
+  | FrontendRestrictedElementNode
 
 // Some translations
 
@@ -320,21 +590,6 @@ export interface TaxonomyPage extends EntityPageBase {
   taxonomyData: TaxonomyData
 }
 
-export interface ProcessedResponseTaxonomy {
-  contentType: 'TaxonomyTerm'
-  data: ProcessedResponseTaxonomyChild
-}
-
-interface ProcessedResponseTaxonomyChild {
-  title: string
-  url: string
-  purpose: 0 | 1 | 2
-  links: TaxonomyData
-  description?: FrontendContentNode
-  children?: ProcessedResponseTaxonomyChild[]
-  exercises?: FrontendContentNode[]
-}
-
 // Shared attributes for first and second level.
 
 export interface TaxonomyTermBase {
@@ -344,7 +599,6 @@ export interface TaxonomyTermBase {
   applets: TaxonomyLink[]
   exercises: TaxonomyLink[]
   description?: FrontendContentNode[]
-  subfolders: TaxonomyTermBase[]
 }
 
 export interface TaxonomyLink {
@@ -364,7 +618,7 @@ export interface TaxonomyData extends TaxonomyTermBase {
   id: number
   title: string
   subterms: TaxonomySubTerm[]
-  exercisesContent: FrontendContentNode[][]
+  exercisesContent: (FrontendExerciseNode | FrontendExerciseGroupNode)[]
 }
 
 // Some translations for the taxonomy.
@@ -395,4 +649,35 @@ export interface CookieStrings {
   link1: string
   link2: string
   button: string
+}
+
+export interface LandingStrings {
+  vision: string
+  learnMore: string
+  democraticallyStructured: string
+  nonProfit: string
+  transparent: string
+  openlyLicensed: string
+  adFree: string
+  freeOfCharge: string
+  wikiTitle: string
+  wikiText: string
+  movementTitle: string
+  callForAuthors: string
+  communityLink: string
+  callForOther: string
+  getInvolved: string
+}
+
+export interface LoggedInData {
+  authMenu: HeaderData
+  strings: LoggedInStrings
+}
+
+export interface LoggedInStrings {
+  tools: string
+}
+
+export interface ServerSideStrings {
+  title: string
 }

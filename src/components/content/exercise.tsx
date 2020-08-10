@@ -1,108 +1,58 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 
-import { makeMargin, makeDefaultButton } from '../../helper/css'
+import {
+  makeMargin,
+  makeDefaultButton,
+  makePadding,
+  inputFontReset,
+} from '../../helper/css'
 import { renderArticle } from '../../schema/article-renderer'
+import { AuthorTools } from './author-tools'
 import { ExerciseNumbering } from './exercise-numbering'
-import { InputExercise, InputExerciseProps } from './input-exercise'
+import { InputExercise } from './input-exercise'
 import { LicenseNotice } from './license-notice'
-import { ScMcExercise, ScMcExerciseProps } from './sc-mc-exercise'
+import { ScMcExercise } from './sc-mc-exercise'
+import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
-import { LicenseData, FrontendContentNode } from '@/data-types'
+import { FrontendContentNode, FrontendExerciseNode } from '@/data-types'
 
 export interface ExerciseProps {
-  type?: 'exercise'
-  task: TaskData
-  solution: SolutionData
-  taskLicense: LicenseData
-  solutionLicense: LicenseData
-  grouped: boolean
-  positionInGroup: number
-  positionOnPage?: number
+  node: FrontendExerciseNode
 }
 
-/* Experiment to type out the EditorState */
-
-export interface TaskData {
-  children: [
-    {
-      type: string
-      state: {
-        content: FrontendContentNode[]
-        interactive:
-          | {
-              plugin: 'scMcExercise'
-              state: ScMcExerciseProps['state']
-            }
-          | {
-              plugin: 'inputExercise'
-              state: InputExerciseProps['data']
-            }
-      }
-    }
-  ]
-}
-
-interface SolutionData {
-  children: [
-    {
-      type: string
-      state: {
-        prerequisite: {
-          id: string
-          title: string
-        }
-        strategy: FrontendContentNode[]
-        steps: FrontendContentNode[]
-      }
-      children: FrontendContentNode[]
-    }
-  ]
-}
-
-export function Exercise(props: ExerciseProps) {
+export function Exercise({ node }: ExerciseProps) {
   const { strings } = useInstanceData()
-  const {
-    task,
-    solution,
-    taskLicense,
-    solutionLicense,
-    grouped,
-    positionInGroup,
-    positionOnPage,
-  } = props
   const [solutionVisible, setVisible] = React.useState(false)
 
-  const isEditorTask =
-    task.children.length === 1 && task.children[0].type === '@edtr-io/exercise'
-
-  const isEditorSolution =
-    solution.children.length === 1 &&
-    solution.children[0].type === '@edtr-io/solution'
+  const auth = useAuth()
+  const [loaded, setLoaded] = React.useState(false)
+  React.useEffect(() => {
+    setLoaded(true)
+  }, [])
 
   return (
-    <Wrapper grouped={grouped}>
-      {!grouped && <ExerciseNumbering index={positionOnPage!} />}
+    <Wrapper grouped={node.grouped}>
+      {!node.grouped && <ExerciseNumbering index={node.positionOnPage!} />}
 
       {renderExerciseTask()}
       {renderInteractive()}
 
-      {taskLicense && <LicenseNotice minimal data={taskLicense} />}
-
-      {renderSolutionToggle()}
+      {renderToolsAndLicense()}
 
       {solutionVisible && renderSolutionBox()}
     </Wrapper>
   )
 
   function renderSolutionToggle() {
-    if (solution.children[0].children?.length === 0) return null
+    if (!node.solutionEdtrState && !node.solutionLegacy) return null
 
     return (
       <SolutionToggle
         onClick={() => {
           setVisible(!solutionVisible)
         }}
+        onPointerUp={(e) => e.currentTarget.blur()} //hack, use https://caniuse.com/#feat=css-focus-visible when supported
         active={solutionVisible}
       >
         <StyledSpan>{solutionVisible ? '▾' : '▸'}&nbsp;</StyledSpan>
@@ -116,56 +66,64 @@ export function Exercise(props: ExerciseProps) {
     return (
       <SolutionBox>
         {renderArticle(getSolutionContent(), false)}
-        {solutionLicense && <LicenseNotice minimal data={solutionLicense} />}
+
+        <SolutionTools>
+          {node.solutionLicense && (
+            <LicenseNotice minimal data={node.solutionLicense} />
+          )}
+          {loaded && auth.current && <AuthorTools />}
+        </SolutionTools>
       </SolutionBox>
     )
   }
 
   function getSolutionContent(): FrontendContentNode[] {
-    if (!isEditorSolution) {
-      return solution.children
+    if (node.solutionLegacy) {
+      return node.solutionLegacy
     }
-    const state = solution.children[0].state
-    const prereq = []
+    if (!node.solutionEdtrState) return []
+    const state = node.solutionEdtrState
+    const prereq: FrontendContentNode[] = []
     if (state.prerequisite) {
       prereq.push({
         type: 'p',
         children: [
-          {
-            text: `${strings.content.prerequisite} `,
-          },
+          { type: 'text', text: `${strings.content.prerequisite} ` },
           {
             type: 'a',
-            href: `/${state.prerequisite.id}`,
-            children: [{ text: state.prerequisite.title }],
+            href: state.prerequisite.href,
+            children: [{ type: 'text', text: state.prerequisite.title }],
           },
         ],
       })
     }
     const strategy = state.strategy
     const steps = state.steps
-    return [...prereq, ...strategy, ...steps] as FrontendContentNode[]
+    return [...prereq, ...strategy, ...steps]
   }
 
   function renderExerciseTask() {
-    const children = isEditorTask
-      ? task.children[0].state.content
-      : task.children
-
-    return renderArticle(children, false)
+    if (node.taskLegacy) {
+      return renderArticle(node.taskLegacy, false)
+    } else if (node.taskEdtrState) {
+      return renderArticle(node.taskEdtrState.content, false)
+    }
+    return null
   }
 
   function renderInteractive() {
-    if (!isEditorTask) return null
+    if (!node.taskEdtrState) return null
 
-    const state = task.children[0].state
+    const state = node.taskEdtrState
 
     if (state.interactive) {
       if (state.interactive.plugin === 'scMcExercise') {
         return (
           <ScMcExercise
             state={state.interactive.state}
-            idBase={`ex-${positionOnPage}-${positionInGroup}-`}
+            idBase={`ex-${node.positionOnPage ? node.positionOnPage : ''}-${
+              node.positionInGroup ? node.positionInGroup : ''
+            }-`}
           />
         )
       }
@@ -174,7 +132,22 @@ export function Exercise(props: ExerciseProps) {
       }
     }
   }
+
+  function renderToolsAndLicense() {
+    return (
+      <ExerciseTools>
+        {renderSolutionToggle()}
+
+        {node.taskLicense && <LicenseNotice minimal data={node.taskLicense} />}
+        {loaded && auth.current && <AuthorTools />}
+      </ExerciseTools>
+    )
+  }
 }
+
+const ExerciseTools = styled.div`
+  display: flex;
+`
 
 const StyledSpan = styled.span`
   display: inline-block;
@@ -214,9 +187,11 @@ const Wrapper = styled.div<{ grouped?: boolean }>`
   }
 `
 
-const SolutionToggle = styled.a<{ active: boolean }>`
+const SolutionToggle = styled.button<{ active: boolean }>`
   ${makeMargin}
+  ${inputFontReset}
   ${makeDefaultButton}
+  margin-right: auto;
   padding-right: 9px;
   font-size: 1rem;
   display: inline-block;
@@ -245,4 +220,8 @@ const SolutionBox = styled.div`
   ${makeMargin}
   margin-bottom: ${(props) => props.theme.spacing.mb.block};
   border-left: 8px solid ${(props) => props.theme.colors.brand};;
+`
+
+const SolutionTools = styled.div`
+  ${makePadding}
 `

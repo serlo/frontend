@@ -71,6 +71,7 @@ module.exports = {
         allow: [
           '@fortawesome/fontawesome-svg-core/styles.css',
           'graphiql/esm/components/GraphiQL',
+          'graphql-request/dist/src/types',
           'next/*',
           'public/_assets/**/*',
         ],
@@ -126,6 +127,13 @@ module.exports = {
       files: ['src/pages/**/*'],
       rules: {
         'import/no-default-export': 'off',
+      },
+    },
+    {
+      files: ['src/data/*/index.ts'],
+      rules: {
+        'import/newline-after-import': 'off',
+        'import/order': 'off',
       },
     },
   ],

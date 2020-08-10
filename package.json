@@ -44,7 +44,7 @@
     "htmlparser2": "^4.1.0",
     "jwt-decode": "^2.0.0",
     "katex": "^0.11.0",
-    "next": "^9.4.0",
+    "next": "^9.5.0",
     "next-absolute-url": "^1.0.0",
     "nprogress": "^0.2.0",
     "polished": "^3.0.0",
@@ -55,7 +55,10 @@
     "react-notify-toast": "^0.5.0",
     "showdown": "^1.9.0",
     "simple-oauth2": "^4.0.0",
-    "styled-components": "^5.0.0"
+    "styled-components": "^5.0.0",
+    "swr": "^0.2.0",
+    "timeago-react": "^3.0.0",
+    "timeago.js": "^4.0.0"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^9.4.0",
@@ -81,7 +84,7 @@
     "npm-run-all": "^4.0.0",
     "prettier": "^2.0.0",
     "prettier-plugin-packagejson": "^2.0.0",
-    "prop-types": "^15.7.2",
+    "prop-types": "^15.7.0",
     "react-is": "^16.7.0",
     "typescript": "^3.9.0"
   }

@@ -2,6 +2,7 @@ import { NextPage } from 'next'
 import dynamic from 'next/dynamic'
 import React from 'react'
 
+import { useAuth } from '@/auth/use-auth'
 import { CookieBar } from '@/components/content/cookie-bar'
 import { EntityProps } from '@/components/content/entity'
 import { HSpace } from '@/components/content/h-space'
@@ -15,25 +16,45 @@ import { Header } from '@/components/navigation/header'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { MetaMenu } from '@/components/navigation/meta-menu'
 import { RelativeContainer } from '@/components/navigation/relative-container'
+import { LandingInternationalProps } from '@/components/pages/landing-international'
 import { InstanceDataProvider } from '@/contexts/instance-context'
+import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
 import { OriginProvider } from '@/contexts/origin-context'
-import { InitialProps, InstanceData, PageData } from '@/data-types'
+import {
+  InitialProps,
+  InstanceData,
+  PageData,
+  ErrorData,
+  LoggedInData,
+} from '@/data-types'
 import {
   fetcherAdditionalData,
   getInitialProps,
 } from '@/fetcher/get-initial-props'
 
-const Landing = dynamic<{}>(() =>
-  import('@/components/pages/landing').then((mod) => mod.Landing)
+const LandingDE = dynamic<{}>(() =>
+  import('@/components/pages/landing-de').then((mod) => mod.LandingDE)
 )
+
+const LandingInternational = dynamic<LandingInternationalProps>(() =>
+  import('@/components/pages/landing-international').then(
+    (mod) => mod.LandingInternational
+  )
+)
+
 const Search = dynamic<{}>(() =>
   import('@/components/pages/search').then((mod) => mod.Search)
 )
 const Donations = dynamic<{}>(() =>
   import('@/components/pages/donations').then((mod) => mod.Donations)
 )
-const ErrorPage = dynamic<{}>(() =>
+const ErrorPage = dynamic<ErrorData>(() =>
   import('@/components/pages/error-page').then((mod) => mod.ErrorPage)
+)
+const Notifications = dynamic<{}>(() =>
+  import('@/components/pages/user/notifications').then(
+    (mod) => mod.Notifications
+  )
 )
 
 const NewsletterPopup = dynamic<{}>(
@@ -61,7 +82,37 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
     initialProps?.instanceData!
   )
 
-  React.useEffect(() => {
+  React.useEffect(storePageData, [initialProps])
+
+  fetcherAdditionalData.origin = initialProps.origin
+  fetcherAdditionalData.instance = instanceData.lang
+
+  const auth = useAuth()
+  const [loggedInData, setLoggedInData] = React.useState<LoggedInData | null>(
+    getCachedLoggedInData()
+  )
+
+  React.useEffect(fetchLoggedInData, [
+    auth,
+    initialProps.origin,
+    instanceData.lang,
+    loggedInData,
+  ])
+
+  // dev
+  //console.dir(initialProps)
+
+  return (
+    <OriginProvider value={initialProps.origin}>
+      <InstanceDataProvider value={instanceData}>
+        <LoggedInDataProvider value={loggedInData}>
+          {renderPage(initialProps.pageData)}
+        </LoggedInDataProvider>
+      </InstanceDataProvider>
+    </OriginProvider>
+  )
+
+  function storePageData() {
     try {
       const pageData = initialProps?.pageData
       if (pageData) {
@@ -73,23 +124,37 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
     } catch (e) {
       //
     }
-  }, [initialProps])
+  }
 
-  fetcherAdditionalData.origin = initialProps.origin
-  fetcherAdditionalData.instance = instanceData.lang
+  function getCachedLoggedInData() {
+    if (typeof window === 'undefined') return null
+    const cacheValue = sessionStorage.getItem(
+      `___loggedInData_${instanceData.lang}`
+    )
+    if (!cacheValue) return null
+    return JSON.parse(cacheValue)
+  }
 
-  return (
-    <OriginProvider value={initialProps.origin}>
-      <InstanceDataProvider value={instanceData}>
-        {renderPage(initialProps.pageData)}
-      </InstanceDataProvider>
-    </OriginProvider>
-  )
+  function fetchLoggedInData() {
+    if (auth.current && !loggedInData) {
+      void (async () => {
+        const res = await fetch(
+          initialProps.origin + '/api/locale/' + instanceData.lang
+        )
+        const json = await res.json()
+        sessionStorage.setItem(
+          `___loggedInData_${instanceData.lang}`,
+          JSON.stringify(json)
+        )
+        setLoggedInData(json)
+      })()
+    }
+  }
 }
 
 function renderPage(page: PageData) {
   //TODO: investigate why this happens sometimes.
-  if (page === undefined) return <ErrorPage />
+  if (page === undefined) return <ErrorPage code={1234567890} />
 
   if (page.kind === 'donation') {
     return <Donations />
@@ -101,13 +166,19 @@ function renderPage(page: PageData) {
         <Header onSearchPage={page.kind === 'search'} />
         {(() => {
           if (page.kind === 'landing') {
-            return <Landing />
+            if (page.landingData) {
+              return <LandingInternational data={page.landingData} />
+            }
+            return <LandingDE />
           }
           if (page.kind === 'search') {
             return <Search />
           }
+          if (page.kind === 'user/notifications') {
+            return <Notifications />
+          }
           if (page.kind === 'error') {
-            return <ErrorPage />
+            return <ErrorPage code={page.errorData.code} />
           }
           return (
             <>
@@ -119,7 +190,10 @@ function renderPage(page: PageData) {
               <RelativeContainer>
                 <MaxWidthDiv showNav={!!page.secondaryNavigationData}>
                   {page.breadcrumbsData && (
-                    <Breadcrumbs data={page.breadcrumbsData} />
+                    <Breadcrumbs
+                      data={page.breadcrumbsData}
+                      isTaxonomy={page.kind !== 'single-entity'}
+                    />
                   )}
                   <main>
                     {(() => {

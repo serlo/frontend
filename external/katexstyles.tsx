@@ -31,8 +31,7 @@ const KaTeXSpan = styled.span`
   .katex .base {
     position: relative;
     display: inline-block;
-    white-space: nowrap;
-    width: min-content;
+    width: auto;
   }
   .katex .strut {
     display: inline-block;

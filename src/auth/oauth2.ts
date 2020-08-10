@@ -44,19 +44,19 @@ const config =
 
 export const scope = ['offline_access', 'openid']
 
-export function getAuthorizationCode():
-  | OAuthClient['authorizationCode']
-  | null {
+export function getAuthorizationCode() {
   if (config === null) return null
   // @ts-expect-error outdated types
-  return new AuthorizationCode(config)
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+  return new AuthorizationCode(config) as OAuthClient['authorizationCode']
 }
 
-export function getClientCredentials(): {
-  createToken(token: Token): AccessToken
-} | null {
+export function getClientCredentials() {
   if (config === null) return null
-  return new ClientCredentials(config)
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+  return new ClientCredentials(config) as {
+    createToken(token: Token): AccessToken
+  }
 }
 
 export function getLogoutUrl({

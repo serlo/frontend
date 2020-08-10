@@ -57,7 +57,7 @@ export function Topic({ data }: TopicProps) {
 
       {data.exercisesContent &&
         data.exercisesContent.map((exercise, i) => (
-          <React.Fragment key={i}>{renderArticle(exercise)}</React.Fragment>
+          <React.Fragment key={i}>{renderArticle([exercise])}</React.Fragment>
         ))}
 
       <LinkList>
@@ -73,7 +73,7 @@ export function Topic({ data }: TopicProps) {
           <FontAwesomeIcon icon={faShareAlt} size="1x" /> {strings.share.button}
         </UserToolsMobileButton>
       </UserToolsMobile>
-      <UserTools onShare={() => setOpen(true)} hideEdit />
+      <UserTools onShare={() => setOpen(true)} hideEdit id={data.id} />
       <ShareModal
         open={open}
         onClose={() => setOpen(false)}
