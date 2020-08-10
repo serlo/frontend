@@ -59,7 +59,6 @@ export function Link({
   const isAbsolute = href.indexOf('//') > -1
   const isExternal = isAbsolute && !href.includes('.serlo.org')
 
-  console.log(displayHref)
   const isLegacyLink =
     legacyLinks.indexOf(displayHref) > -1 ||
     displayHref.startsWith('/user/profile/') ||
