@@ -1,3 +1,6 @@
+// These types are auto-generated from the GraphQL schema
+import * as GraphQL from '@serlo/api'
+
 // Keep this file in sync with the graphQL schema.
 // Maybe automate this one day.
 
@@ -13,11 +16,7 @@ const license = `
   }
 `
 
-export interface License {
-  id: number
-  url: string
-  title: string
-}
+export type License = Pick<GraphQL.License, 'id' | 'url' | 'title'>
 
 // This is one breadcrumb path.
 
@@ -28,10 +27,7 @@ const path = `
   }
 `
 
-export type Path = {
-  label: string
-  url?: string
-}[]
+export type Path = Pick<GraphQL.NavigationNode, 'label' | 'url'>[]
 
 // Entities can belong to multiple taxonomy terms, so we load all possible paths.
 
@@ -44,17 +40,16 @@ const taxonomyTerms = `
 `
 
 export type TaxonomyTerms = {
-  navigation: {
-    path: Path
-  }
+  navigation?: GraphQL.Maybe<{ path: Path }>
 }[]
 
 // Basic information about any entity.
-
-interface Entity {
-  id: number
-  alias?: string
-  instance: string
+type Repository = Pick<GraphQL.AbstractRepository, 'id' | 'alias' | 'instance'>
+export interface Entity extends Repository {
+  license: License
+}
+export interface EntityWithTaxonomyTerms extends Entity {
+  taxonomyTerms: TaxonomyTerms
 }
 
 // A page, navigation.data is the secondary menu.
@@ -75,16 +70,12 @@ const onPage = `
   }
 `
 
-export interface Page extends Entity {
+export interface Page extends Repository {
   __typename: 'Page'
-  currentRevision?: {
-    title: string
-    content: string
-  }
-  navigation?: {
-    data: string
-    path: Path
-  }
+  currentRevision?: GraphQL.Maybe<
+    Pick<GraphQL.PageRevision, 'title' | 'content'>
+  >
+  navigation?: GraphQL.Maybe<Pick<GraphQL.Navigation, 'data' | 'path'>>
 }
 
 const onArticle = `
@@ -103,16 +94,14 @@ const onArticle = `
   }
 `
 
-export interface Article extends Entity {
+export interface Article extends EntityWithTaxonomyTerms {
   __typename: 'Article'
-  currentRevision?: {
-    title: string
-    content: string
-    metaTitle: string
-    metaDescription: string
-  }
-  taxonomyTerms: TaxonomyTerms
-  license: License
+  currentRevision?: GraphQL.Maybe<
+    Pick<
+      GraphQL.ArticleRevision,
+      'title' | 'content' | 'metaTitle' | 'metaDescription'
+    >
+  >
 }
 
 const onVideo = `
@@ -130,15 +119,11 @@ const onVideo = `
   }
 `
 
-export interface Video extends Entity {
+export interface Video extends EntityWithTaxonomyTerms {
   __typename: 'Video'
-  currentRevision?: {
-    title: string
-    url: string
-    content: string
-  }
-  taxonomyTerms: TaxonomyTerms
-  license: License
+  currentRevision?: GraphQL.Maybe<
+    Pick<GraphQL.VideoRevision, 'title' | 'url' | 'content'>
+  >
 }
 
 const onApplet = `
@@ -158,17 +143,14 @@ const onApplet = `
   }
 `
 
-export interface Applet extends Entity {
+export interface Applet extends EntityWithTaxonomyTerms {
   __typename: 'Applet'
-  currentRevision?: {
-    title: string
-    content: string
-    url: string
-    metaTitle: string
-    metaDescription: string
-  }
-  taxonomyTerms: TaxonomyTerms
-  license: License
+  currentRevision?: GraphQL.Maybe<
+    Pick<
+      GraphQL.AppletRevision,
+      'title' | 'content' | 'url' | 'metaTitle' | 'metaDescription'
+    >
+  >
 }
 
 const onCoursePage = `
@@ -199,24 +181,18 @@ const onCoursePage = `
 
 export interface CoursePage extends Entity {
   __typename: 'CoursePage'
-  currentRevision?: {
-    content: string
-    title: string
-  }
+  currentRevision?: GraphQL.Maybe<
+    Pick<GraphQL.CoursePageRevision, 'content' | 'title'>
+  >
   course: {
-    currentRevision?: {
-      title: string
-    }
+    currentRevision?: GraphQL.Maybe<Pick<GraphQL.CourseRevision, 'title'>>
     pages: {
       alias?: string
       id: number
-      currentRevision?: {
-        title: string
-      }
+      currentRevision?: Pick<GraphQL.CoursePageRevision, 'title'>
     }[]
     taxonomyTerms: TaxonomyTerms
   }
-  license: License
 }
 
 // We treat a grouped exercise just as a normal exercise.
@@ -235,49 +211,34 @@ const bareExercise = `
 `
 
 export interface BareExercise {
-  currentRevision?: {
-    content: string
-  }
+  currentRevision?: GraphQL.Maybe<
+    Pick<GraphQL.AbstractExerciseRevision, 'content'>
+  >
   solution?: {
-    currentRevision?: {
-      content: string
-    }
+    currentRevision?: GraphQL.Maybe<Pick<GraphQL.SolutionRevision, 'content'>>
     license: License
   }
   license: License
 }
 
 const onExercise = `
-  ... on Exercise {
+  ... on AbstractExercise {
     id
     alias
     instance
     ${bareExercise}
-    ${taxonomyTerms}
   }
-
-  ... on GroupedExercise {
-    id
-    alias
-    instance
-    ${bareExercise}
+  ... on Exercise {
+    ${taxonomyTerms}
   }
 `
 
-export interface Exercise extends Entity, BareExercise {
+export interface Exercise extends EntityWithTaxonomyTerms, BareExercise {
   __typename: 'Exercise'
   taxonomyTerms: TaxonomyTerms
-  license: License
 }
 export interface GroupedExercise extends Entity, BareExercise {
   __typename: 'GroupedExercise'
-  license: License
-}
-
-export interface ExerciseMaybeGrouped extends Entity, BareExercise {
-  __typename: 'Exercise' | 'GroupedExercise'
-  taxonomyTerms: TaxonomyTerms
-  license: License
 }
 
 const onExerciseGroup = `
@@ -295,18 +256,16 @@ const onExerciseGroup = `
     ${license}
   }
 `
-export interface BareExerciseGroup {
+
+export interface BareExerciseGroup extends Entity {
   __typename: 'ExerciseGroup'
-  currentRevision?: {
-    content: string
-  }
+  currentRevision?: GraphQL.Maybe<
+    Pick<GraphQL.ExerciseGroupRevision, 'content'>
+  >
   exercises: BareExercise[]
-  license: License
 }
 
-export interface ExerciseGroup extends BareExerciseGroup, Entity {
-  taxonomyTerms: TaxonomyTerms
-}
+export type ExerciseGroup = BareExerciseGroup & EntityWithTaxonomyTerms
 
 // Events are only used in injections, no support for full page view
 
@@ -321,14 +280,12 @@ const onEvent = `
   }
 `
 
-export interface Event extends Entity {
+export interface Event extends Repository {
   __typename: 'Event'
-  currentRevision?: {
-    content: string
-  }
+  currentRevision?: GraphQL.Maybe<Pick<GraphQL.EventRevision, 'content'>>
 }
 
-// If a course is encoutered, the first page will get loaded
+// If a course is encountered, the first page will get loaded
 
 const onCourse = `
   ... on Course {
@@ -341,29 +298,16 @@ const onCourse = `
   }
 `
 
-export interface Course extends Entity {
+export interface Course extends Repository {
   __typename: 'Course'
   pages: {
     alias?: string
   }[]
 }
 
-// This one is a beast!
+export type TaxonomyTermType = GraphQL.TaxonomyTermType
 
-export type TaxonomyTermType =
-  | 'blog'
-  | 'curriculum'
-  | 'curriculumTopic'
-  | 'curriculumTopicFolder'
-  | 'forum'
-  | 'forumCategory'
-  | 'locale'
-  | 'root'
-  | 'subject'
-  | 'topic'
-  | 'topicFolder'
-
-const onX = (type: string) => `
+const onX = (type: TaxonomyTermChildOnX['__typename']) => `
   ... on ${type} {
     alias
     id
@@ -454,34 +398,28 @@ export interface TaxonomyTermChildExerciseGroup
   __typename: 'ExerciseGroup'
 }
 
-export interface TaxonomyTermChildTaxonomyTerm extends TaxonomyTermChild {
+export interface TaxonomyTermChildTaxonomyTerm
+  extends TaxonomyTermChild,
+    Pick<
+      GraphQL.TaxonomyTerm,
+      'type' | 'name' | 'alias' | 'id' | 'description'
+    > {
   __typename: 'TaxonomyTerm'
-  type: TaxonomyTermType
-  name: string
-  alias?: string
-  id: number
-  description?: string
   children: TaxonomyTermChildrenLevel2[]
 }
 
-export interface SubTaxonomyTermChildTaxonomyTerm extends TaxonomyTermChild {
+export interface SubTaxonomyTermChildTaxonomyTerm
+  extends TaxonomyTermChild,
+    Pick<GraphQL.TaxonomyTerm, 'type' | 'alias' | 'id' | 'name'> {
   __typename: 'TaxonomyTerm'
-  id: number
-  alias?: string
-  type: TaxonomyTermType
-  name: string
   children?: undefined
 }
 
-export interface TaxonomyTerm extends Entity {
+export interface TaxonomyTerm
+  extends Repository,
+    Pick<GraphQL.TaxonomyTerm, 'type' | 'name' | 'description'> {
   __typename: 'TaxonomyTerm'
-  type: TaxonomyTermType
-  name: string
-  description?: string
-  navigation: {
-    data: string
-    path: Path
-  }
+  navigation?: GraphQL.Maybe<Pick<GraphQL.Navigation, 'data' | 'path'>>
   children: TaxonomyTermChildrenLevel1[]
 }
 
@@ -495,9 +433,9 @@ export type TaxonomyTermChildrenLevel2 =
   | TaxonomyTermChildOnX
   | SubTaxonomyTermChildTaxonomyTerm
 
-export const dataQuery = (selector: string) => `
-  {
-    uuid(${selector}) {
+export const dataQuery = `
+  query uuid($id: Int, $alias: AliasInput) {
+    uuid(id: $id, alias: $alias) {
       __typename
 
       ${onPage}
@@ -536,27 +474,11 @@ export type QueryResponse =
   | Course
   | TaxonomyTerm
 
-export type QueryResponseWithLicense =
-  | Article
-  | Video
-  | Applet
-  | CoursePage
-  | Exercise
-  | GroupedExercise
-  | ExerciseGroup
-
-export type QueryResponseWithTaxonomyTerms =
-  | Article
-  | Video
-  | Applet
-  | Exercise
-  | ExerciseGroup
-
 export const idsQuery = (ids: number[]) => {
   const map = ids.map(
     (id) => `
     uuid${id}: uuid(id:${id}) {
-        ... on Entity {
+        ... on AbstractEntity {
           alias
           instance
         }
@@ -578,7 +500,7 @@ export const idsQuery = (ids: number[]) => {
 export const idQuery = (id: number) => `
   {
     uuid(id:${id}) {
-      ... on Entity {
+      ... on AbstractEntity {
         alias
       }
       ... on Page {

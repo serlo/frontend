@@ -68,7 +68,7 @@ function collectType(
   return result
 }
 
-function getAlias(child: { alias?: string; id: number }) {
+function getAlias(child: { alias?: string | null; id: number }) {
   if (!child.alias || hasSpecialUrlChars(child.alias)) return `/${child.id}`
   else return child.alias
 }
