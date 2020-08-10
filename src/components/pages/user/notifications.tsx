@@ -1,3 +1,5 @@
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Query } from '@serlo/api'
 import { NextPage } from 'next'
 import React from 'react'
@@ -12,8 +14,6 @@ import { StyledP } from '@/components/tags/styled-p'
 import { NotificationEvent, Notification } from '@/components/user/notification'
 import { inputFontReset, makeDefaultButton } from '@/helper/css'
 import { shouldUseNewAuth } from '@/helper/feature-auth'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 
 const titleNoPageQueryPart = /* GraphQL */ `
 ... on Applet {

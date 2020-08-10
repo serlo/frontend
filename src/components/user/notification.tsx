@@ -151,8 +151,7 @@ export function Notification({
       case 'CreateEntityNotificationEvent':
         return (
           <>
-            {renderUser(event.actor)} hat {renderObject(event.entity)}{' '}
-            erstellt.
+            {renderUser(event.actor)} hat {renderObject(event.entity)} erstellt.
           </>
         )
       case 'SetLicenseNotificationEvent':
@@ -289,7 +288,7 @@ export function Notification({
     const title = object.currentRevision?.title
     return (
       <StyledLink href={`/${object.id}`}>
-        {title ? title : `[${object.__typename || 'Entity'}]`}
+        {title ? title : renderEntityTypePlaceholder(object.__typename)}
       </StyledLink>
     )
   }
@@ -304,6 +303,48 @@ export function Notification({
 
   function renderThread(id: number) {
     return <StyledLink href={`/${id}`}>Thread</StyledLink>
+  }
+
+  function renderEntityTypePlaceholder(typename: string | undefined) {
+    switch (typename) {
+      case 'Page':
+        return 'einer Seite'
+        break
+      case 'Article':
+        return 'einem Artikel'
+        break
+      case 'Video':
+        return 'einem Video'
+        break
+      case 'Applet':
+        return 'einem Applet '
+        break
+      case 'CoursePage':
+        return 'einer Kursseite'
+        break
+      case 'Exercise':
+        return 'einer Aufgabe'
+        break
+      case 'GroupedExercise':
+        return 'einer gruppierten Aufgabe'
+        break
+      case 'ExerciseGroup':
+        return 'einer Aufgabengruppe'
+        break
+      case 'Event':
+        return 'einem Event'
+        break
+      case 'Course':
+        return 'einem Kurs'
+        break
+      case 'TaxonomyTerm':
+        return 'einem Begriff'
+        break
+
+      default:
+        return 'einem Inhalt'
+        break
+    }
   }
 }
 
