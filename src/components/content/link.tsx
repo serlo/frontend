@@ -58,10 +58,13 @@ export function Link({
 
   const isAbsolute = href.indexOf('//') > -1
   const isExternal = isAbsolute && !href.includes('.serlo.org')
+
+  console.log(displayHref)
   const isLegacyLink =
     legacyLinks.indexOf(displayHref) > -1 ||
     displayHref.startsWith('/user/profile/') ||
-    displayHref.startsWith('user/profile/')
+    displayHref.startsWith('user/profile/') ||
+    displayHref.indexOf('.serlo.org') > -1 //e.g. community.serlo.org or different language
 
   if (isExternal /* || (isAbsolute && prettyLink === undefined)*/)
     return renderLink()
