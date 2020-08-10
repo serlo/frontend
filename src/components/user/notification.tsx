@@ -21,6 +21,7 @@ import {
   User,
 } from '@serlo/api'
 import Tippy from '@tippyjs/react'
+import React from 'react'
 import styled, { css } from 'styled-components'
 import TimeAgo from 'timeago-react'
 import * as timeago from 'timeago.js'
@@ -124,141 +125,174 @@ export function Notification({
     }
   }
 
+  function parseString(
+    string: string,
+    replaceables: { [key: string]: JSX.Element | string }
+  ) {
+    const parts = string.split('%')
+    const actor = renderUser(event.actor)
+    const keys = Object.keys(replaceables)
+
+    return parts.map((part, index) => {
+      if (part === '') return null
+      if (part === 'actor') {
+        return <React.Fragment key={index}>{actor}</React.Fragment>
+      }
+      if (keys.indexOf(part) > -1) {
+        return <React.Fragment key={index}>{replaceables[part]}</React.Fragment>
+      }
+      return part
+    })
+  }
+
   function renderText() {
+    const actor = renderUser(event.actor)
+
     switch (event.__typename) {
       case 'SetThreadStateNotificationEvent':
-        return (
-          <>
-            {renderUser(event.actor)} hat einen {renderThread(event.thread.id)}{' '}
-            {event.archived ? 'archiviert' : 'unarchiviert'}
-          </>
+        return parseString(
+          event.archived
+            ? '%actor% hat einen %thread% archiviert.'
+            : '%actor% hat einen %thread% unarchiviert.',
+          {
+            thread: renderThread(event.thread.id),
+          }
         )
+
       case 'CreateCommentNotificationEvent':
-        return (
-          <>
-            {renderUser(event.actor)} hat einen{' '}
-            <StyledLink href={`/${event.comment.id}`}>Kommentar</StyledLink> in{' '}
-            einem {renderThread(event.thread.id)} erstellt.
-          </>
+        return parseString(
+          '%actor% hat einen %comment% in einem %thread% erstellt.',
+          {
+            thread: renderThread(event.thread.id),
+            comment: (
+              <StyledLink href={`/${event.comment.id}`}>Kommentar</StyledLink>
+            ),
+          }
         )
+
       case 'CreateThreadNotificationEvent':
-        return (
-          <>
-            {renderUser(event.actor)} hat einen {renderThread(event.thread.id)}{' '}
-            in {renderObject(event.object)} erstellt.
-          </>
+        return parseString(
+          '%actor% hat einen %thread% in einem %object% erstellt.',
+          {
+            thread: renderThread(event.thread.id),
+            object: renderObject(event.object),
+          }
         )
+
       case 'CreateEntityNotificationEvent':
-        return (
-          <>
-            {renderUser(event.actor)} hat {renderObject(event.entity)} erstellt.
-          </>
-        )
+        return parseString('%actor% hat %object% erstellt.', {
+          object: renderObject(event.entity),
+        })
+
       case 'SetLicenseNotificationEvent':
-        return (
-          <>
-            {renderUser(event.actor)} hat die Lizenz von{' '}
-            {renderObject(event.repository)} geändert.
-          </>
+        return parseString(
+          '%actor% hat die Lizenz von %repository% geändert.',
+          {
+            repository: renderObject(event.repository),
+          }
         )
+
       case 'CreateEntityLinkNotificationEvent':
-        return (
-          <>
-            {renderUser(event.actor)} hat {renderObject(event.child)} mit{' '}
-            {renderObject(event.parent)} verknüpft.
-          </>
-        )
+        return parseString('%actor% hat %child% mit %parent% verknüpft.', {
+          child: renderObject(event.child),
+          parent: renderObject(event.parent),
+        })
+
       case 'RemoveEntityLinkNotificationEvent':
-        return (
-          <>
-            {renderUser(event.actor)} hat die Verknüpfung von{' '}
-            {renderObject(event.child)}
-            mit {renderObject(event.parent)} entfernt.
-          </>
+        return parseString(
+          '%actor% hat die Verknüpfung von %child% mit %parent% entfernt.',
+          {
+            child: renderObject(event.child),
+            parent: renderObject(event.parent),
+          }
         )
+
       case 'CreateEntityRevisionNotificationEvent':
-        return (
-          <>
-            {renderUser(event.actor)} hat eine{' '}
-            {renderRevision(event.entityRevision.id)} von{' '}
-            {renderObject(event.entity)} erstellt.
-          </>
+        return parseString(
+          '%actor% hat eine %revision% von %entity% erstellt.',
+          {
+            revision: renderRevision(event.entityRevision.id),
+            entity: renderObject(event.entity),
+          }
         )
+
       case 'CheckoutRevisionNotificationEvent':
-        return (
-          <>
-            {renderUser(event.actor)} hat eine{' '}
-            {renderRevision(event.revision.id)} von{' '}
-            {renderObject(event.repository)} übernommen
-          </>
+        return parseString(
+          '%actor% hat eine %revision% von %repository% übernommen',
+          {
+            actor: actor,
+            revision: renderRevision(event.revision.id),
+            repository: renderObject(event.repository),
+          }
         )
+
       case 'RejectRevisionNotificationEvent':
-        return (
-          <>
-            {renderUser(event.actor)} hat die{' '}
-            {renderRevision(event.revision.id)} für
-            {renderObject(event.repository)}
-          </>
+        return parseString(
+          '%actor% hat %revision% für %repository% abgelehnt.',
+          {
+            revision: renderRevision(event.revision.id),
+            repository: renderObject(event.repository),
+          }
         )
+
       case 'CreateTaxonomyLinkNotificationEvent':
-        return (
-          <>
-            {renderUser(event.actor)} hat {renderObject(event.child)} in{' '}
-            {renderTax(event.parent)} eingeordnet.
-          </>
-        )
+        return parseString('%actor% hat %child% in %parent% eingeordnet.', {
+          child: renderObject(event.child),
+          parent: renderObject(event.parent),
+        })
+
       case 'RemoveTaxonomyLinkNotificationEvent':
-        return (
-          <>
-            {renderUser(event.actor)} hat {renderObject(event.child)} aus{' '}
-            {renderTax(event.parent)} entfernt.
-          </>
-        )
+        return parseString('%actor% hat %child% aus %parent% entfernt.', {
+          child: renderObject(event.child),
+          parent: renderObject(event.parent),
+        })
+
       case 'CreateTaxonomyTermNotificationEvent':
-        return (
-          <>
-            {renderUser(event.actor)} hat den {renderTax(event.taxonomyTerm)}{' '}
-            erstellt.
-          </>
-        )
+        return parseString('%actor% hat den %term% erstellt.', {
+          term: renderTax(event.taxonomyTerm),
+        })
+
       case 'SetTaxonomyTermNotificationEvent':
-        return (
-          <>
-            {renderUser(event.actor)} hat den {renderTax(event.taxonomyTerm)}{' '}
-            geändert.
-          </>
-        )
+        return parseString('%actor% hat den %term% geändert.', {
+          term: renderTax(event.taxonomyTerm),
+        })
+
       case 'SetTaxonomyParentNotificationEvent':
         if (!event.parent) {
           //deleted
-          return (
-            <>
-              {renderUser(event.actor)} hat den Elternknoten von{' '}
-              {renderTax(event.child)} entfernt.
-            </>
+          return parseString(
+            '%actor% hat den Elternknoten von %child% entfernt.',
+            {
+              child: renderTax(event.child),
+            }
           )
         }
-        return (
-          <>
-            {renderUser(event.actor)} hat den Elternknoten von{' '}
-            {renderTax(event.child)}
-            {event.previousParent ? (
-              <>von {renderTax(event.previousParent)}</>
-            ) : (
-              ''
-            )}{' '}
-            auf {renderTax(event.parent)} geändert.
-          </>
+        if (event.previousParent) {
+          return parseString(
+            '%actor% hat den Elternknoten von %child% von %previousparent% auf %parent% geändert.',
+            {
+              child: renderTax(event.child),
+              previousparent: renderTax(event.previousParent),
+              parent: renderTax(event.parent),
+            }
+          )
+        }
+        return parseString(
+          '%actor% hat den Elternknoten von %child% auf %parent% geändert.',
+          {
+            child: renderTax(event.child),
+            parent: renderTax(event.parent),
+          }
         )
+
       case 'SetUuidStateNotificationEvent':
-        return (
-          <>
-            {renderUser(event.actor)} hat {renderObject(event.object)}{' '}
-            {event.trashed
-              ? 'in den Papierkorb verschoben'
-              : 'aus dem Papierkorb wieder hergestellt'}
-            .
-          </>
+        return parseString(
+          event.trashed
+            ? '%actor% hat %object% in den Papierkorb verschoben.'
+            : '%actor% hat %object% aus dem Papierkorb wieder hergestellt.',
+          {
+            object: renderObject(event.object),
+          }
         )
     }
   }
