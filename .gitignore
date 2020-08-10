@@ -23,4 +23,5 @@ yarn-error.log*
 
 .now
 .vercel
+/.idea
 /.vscode
