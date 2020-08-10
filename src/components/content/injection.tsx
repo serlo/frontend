@@ -74,10 +74,13 @@ export function Injection({ href }: InjectionProps) {
   }
 
   if (value) {
+    //Show only video without description when injecting
+    const renderValue = value[0].type === 'video' ? [value[0]] : value
+
     return (
       <>
-        {renderArticle(value, false)}
-        {license && <LicenseNotice data={license} />}
+        {renderArticle(renderValue, false)}
+        <StyledP>{license && <LicenseNotice minimal data={license} />}</StyledP>
       </>
     )
   }

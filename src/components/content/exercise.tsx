@@ -122,7 +122,7 @@ export function Exercise({ node }: ExerciseProps) {
           <ScMcExercise
             state={state.interactive.state}
             idBase={`ex-${node.positionOnPage ? node.positionOnPage : ''}-${
-              node.positionInGroup
+              node.positionInGroup ? node.positionInGroup : ''
             }-`}
           />
         )

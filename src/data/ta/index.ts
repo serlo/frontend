@@ -19,12 +19,12 @@ export const instanceData: InstanceData = {
       toTop: "மேல் நோக்கி"
     },
     categories: {
-      article: 'Article',
-      course: 'Course',
-      video: 'Video',
-      applet: 'Applet',
-      folder: 'Folder',
-      exercises: 'Exercises'
+      article: "கட்டுரை",
+      course: "வகுப்பு",
+      video: "காணொளி",
+      applet: "ஆப்லெட்",
+      folder: "அடைவு",
+      exercises: "பயிற்சிகள்"
     },
     share: {
       button: "பகிர்க",
@@ -42,21 +42,21 @@ export const instanceData: InstanceData = {
     course: {
       showPages: 'Show course overview',
       pages: 'Course overview',
-      next: 'Next'
+      next: "அடுத்து"
     },
     taxonomy: {
       topicFolder: 'Exercise folder'
     },
     content: {
-      show: 'show',
-      hide: 'hide',
+      show: "காட்டு",
+      hide: "மறை",
       prerequisite: 'For this task you need the following basic knowledge:',
-      solution: 'Solution',
-      exerciseGroup: 'Exercise group',
-      right: 'Right',
-      wrong: 'Wrong',
-      check: 'Check',
-      yourAnswer: 'Your answer…',
+      solution: "தீர்வு",
+      exerciseGroup: "பயிற்சிப் பதிவுகள்",
+      right: "சரி",
+      wrong: "பிழை",
+      check: "சரிபார்க்கவும்",
+      yourAnswer: "உங்கள் பதில்:",
       chooseOption: 'Click on one of the options.'
     },
     cookie: {
@@ -95,7 +95,7 @@ export const serverSideStrings: ServerSideStrings = {
 export const loggedInData: LoggedInData = {
   authMenu: [{
     url: '/user/notifications',
-    title: 'Benachrichtigungen',
+    title: "Notifications",
     icon: 'notifications'
   }, {
     url: '',

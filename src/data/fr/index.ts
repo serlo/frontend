@@ -20,14 +20,14 @@ export const instanceData: InstanceData = {
     },
     categories: {
       article: 'Article',
-      course: 'Course',
-      video: 'Video',
+      course: "Cours",
+      video: "Vidéo",
       applet: 'Applet',
-      folder: 'Folder',
-      exercises: 'Exercises'
+      folder: "Dossier",
+      exercises: "Exercices"
     },
     share: {
-      button: 'Share',
+      button: "Partager",
       title: "Partager",
       copyLink: "Copier le lien",
       copySuccess: "Lien copié!",
@@ -37,27 +37,27 @@ export const instanceData: InstanceData = {
       button: "Modifier"
     },
     license: {
-      readMore: 'Info'
+      readMore: "Information"
     },
     course: {
-      showPages: 'Show course overview',
-      pages: 'Course overview',
-      next: 'Next'
+      showPages: "Afficher la vue globale du cours",
+      pages: "Vue globale du cours",
+      next: "Suivant"
     },
     taxonomy: {
-      topicFolder: 'Exercise folder'
+      topicFolder: "Dossie d'éxercices"
     },
     content: {
-      show: 'show',
-      hide: 'hide',
-      prerequisite: 'For this task you need the following basic knowledge:',
+      show: "montrer",
+      hide: "cacher",
+      prerequisite: "Pour cet éxercice tu as besoin des connaissances de base suivantes:",
       solution: 'Solution',
-      exerciseGroup: 'Exercise group',
-      right: 'Right',
-      wrong: 'Wrong',
-      check: 'Check',
-      yourAnswer: 'Your answer…',
-      chooseOption: 'Click on one of the options.'
+      exerciseGroup: "Groupe d'exercices",
+      right: "Correct",
+      wrong: "Incorrect",
+      check: "Vérifier",
+      yourAnswer: "Votre réponse...",
+      chooseOption: "Sélectionnez une des options :"
     },
     cookie: {
       part1: "En utilisant ce site Web, vous déclarez que vous acceptez",
@@ -95,11 +95,11 @@ export const serverSideStrings: ServerSideStrings = {
 export const loggedInData: LoggedInData = {
   authMenu: [{
     url: '/user/notifications',
-    title: 'Benachrichtigungen',
+    title: "Notifications",
     icon: 'notifications'
   }, {
     url: '',
-    title: 'User',
+    title: "Utilisateur",
     icon: 'user',
     children: [{
       url: '/user/public',

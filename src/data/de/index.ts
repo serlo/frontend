@@ -103,7 +103,7 @@ export const serverSideStrings: ServerSideStrings = {
 export const loggedInData: LoggedInData = {
   authMenu: [{
     url: '/user/notifications',
-    title: 'Benachrichtigungen',
+    title: "Notifications",
     icon: 'notifications'
   }, {
     url: '',
