@@ -1,4 +1,5 @@
 import {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error outdated types
   ClientCredentials,
   AuthorizationCode,
@@ -46,6 +47,7 @@ export const scope = ['offline_access', 'openid']
 
 export function getAuthorizationCode() {
   if (config === null) return null
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error outdated types
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   return new AuthorizationCode(config) as OAuthClient['authorizationCode']
