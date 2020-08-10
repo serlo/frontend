@@ -12,6 +12,8 @@ import { StyledP } from '@/components/tags/styled-p'
 import { NotificationEvent, Notification } from '@/components/user/notification'
 import { inputFontReset, makeDefaultButton } from '@/helper/css'
 import { shouldUseNewAuth } from '@/helper/feature-auth'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 
 const titleNoPageQueryPart = /* GraphQL */ `
 ... on Applet {
@@ -49,18 +51,6 @@ const titleQueryPart =
   }
 }`
 
-const authorQueryPart = /* GraphQL */ `
-author {
-    id
-    username
-}`
-
-const actorQueryPart = /* GraphQL */ `
-actor {
-    id
-    username
-}`
-
 interface PreviousNotificationsData {
   notifications: JSX.Element[]
   offset: string | undefined | null
@@ -75,7 +65,11 @@ export const Notifications: NextPage = () => {
     offset: undefined,
   })
 
-  const { data } = useGraphqlSwr<Query>({
+  React.useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  const response = useGraphqlSwr<Query>({
     query: /* GraphQL */ `
       query notifications($count: Int!, $unread: Boolean, $after: String){
         notifications(first: $count, unread: $unread, after: $after) {
@@ -234,12 +228,12 @@ export const Notifications: NextPage = () => {
       after: previousNotifications.offset,
     },
   })
-
-  React.useEffect(() => {
-    setMounted(true)
-  }, [])
+  const { data } = response
 
   if (!mounted) return null
+
+  if (response.error && (response.error as Error).message === 'unauthorized')
+    return renderUnauthorized()
 
   const notifications =
     data &&
@@ -264,29 +258,73 @@ export const Notifications: NextPage = () => {
     })
   }
 
-  return (
-    <RelativeContainer>
-      <MaxWidthDiv showNav>
-        <main>
-          <StyledH1 extraMarginTop>Benachrichtigungen</StyledH1>
-          <Wrapper>
-            {allNotifications ? (
-              allNotifications
-            ) : (
-              <StyledP>
-                Bitte <Link href="/api/auth/login">melde dich an</Link> um deine
-                Benachrichtigungen zu sehen
-              </StyledP>
-            )}
-            {data?.notifications.pageInfo.hasNextPage && (
-              <Button onClick={loadMore}>Weitere laden</Button>
-            )}
-          </Wrapper>
-        </main>
-      </MaxWidthDiv>
-    </RelativeContainer>
+  const isLoading =
+    allNotifications.length === 0 ||
+    allNotifications.length === previousNotifications.notifications.length
+
+  return wrapInContainer(
+    <>
+      {allNotifications}
+      {response.error && renderUnknownError()}
+      {isLoading && renderLoading()}
+      {data?.notifications.pageInfo.hasNextPage && (
+        <Button onClick={loadMore}>Weitere laden</Button>
+      )}
+    </>
   )
+
+  function wrapInContainer(children: JSX.Element) {
+    return (
+      <RelativeContainer>
+        <MaxWidthDiv showNav>
+          <main>
+            <StyledH1 extraMarginTop>Benachrichtigungen</StyledH1>
+            <Wrapper>{children}</Wrapper>
+          </main>
+        </MaxWidthDiv>
+      </RelativeContainer>
+    )
+  }
+
+  function renderUnauthorized() {
+    console.log(response.error)
+    return wrapInContainer(
+      <>
+        <StyledP>
+          Bitte <Link href="/api/auth/login">melde dich an</Link> um deine
+          Benachrichtigungen zu sehen
+        </StyledP>
+      </>
+    )
+  }
+
+  function renderUnknownError() {
+    console.log(response.error)
+    return wrapInContainer(
+      <>
+        <StyledP>
+          Es gibt ein Problem beim laden der Benachrichtigungen, bitte versuche
+          es später noch einmal.
+        </StyledP>
+      </>
+    )
+  }
+
+  function renderLoading() {
+    return (
+      <StyledP style={{ marginTop: '50px' }}>
+        <ColoredIcon>
+          <FontAwesomeIcon icon={faSpinner} spin size="1x" />
+        </ColoredIcon>{' '}
+        Benachrichtigungen werden geladen
+      </StyledP>
+    )
+  }
 }
+
+const ColoredIcon = styled.span`
+  color: ${(props) => props.theme.colors.brand};
+`
 
 const Wrapper = styled.div`
   margin-bottom: 80px;
