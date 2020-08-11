@@ -1,6 +1,6 @@
-import { render } from 'external/legacy_render'
 import { request } from 'graphql-request'
 
+import { render } from '../../external/legacy_render'
 import { createBreadcrumbs } from './create-breadcrumbs'
 import { createExercise, createExerciseGroup } from './create-exercises'
 import { getMetaImage, getMetaDescription } from './create-meta-data'
