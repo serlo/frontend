@@ -60,6 +60,7 @@ const onPage = `
     alias
     instance
     currentRevision {
+      id
       title
       content
     }
@@ -73,7 +74,7 @@ const onPage = `
 export interface Page extends Repository {
   __typename: 'Page'
   currentRevision?: GraphQL.Maybe<
-    Pick<GraphQL.PageRevision, 'title' | 'content'>
+    Pick<GraphQL.PageRevision, 'title' | 'content' | 'id'>
   >
   navigation?: GraphQL.Maybe<Pick<GraphQL.Navigation, 'data' | 'path'>>
 }
@@ -163,6 +164,7 @@ const onCoursePage = `
       title
     }
     course {
+      id
       currentRevision {
         title
       }
@@ -185,6 +187,7 @@ export interface CoursePage extends Entity {
     Pick<GraphQL.CoursePageRevision, 'content' | 'title'>
   >
   course: {
+    id: number
     currentRevision?: GraphQL.Maybe<Pick<GraphQL.CourseRevision, 'title'>>
     pages: {
       alias?: string
@@ -198,10 +201,12 @@ export interface CoursePage extends Entity {
 // We treat a grouped exercise just as a normal exercise.
 
 const bareExercise = `
+  id
   currentRevision {
     content
   }
   solution {
+    id
     currentRevision {
       content
     }
@@ -211,10 +216,12 @@ const bareExercise = `
 `
 
 export interface BareExercise {
+  id: number
   currentRevision?: GraphQL.Maybe<
     Pick<GraphQL.AbstractExerciseRevision, 'content'>
   >
   solution?: {
+    id: number
     currentRevision?: GraphQL.Maybe<Pick<GraphQL.SolutionRevision, 'content'>>
     license: License
   }
@@ -223,7 +230,6 @@ export interface BareExercise {
 
 const onExercise = `
   ... on AbstractExercise {
-    id
     alias
     instance
     ${bareExercise}

@@ -10,7 +10,10 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { makeGreenButton, inputFontReset } from '../../helper/css'
-import { AuthorToolsHoverMenuProps } from './author-tools-hover-menu'
+import {
+  AuthorToolsHoverMenuProps,
+  AuthorToolsData,
+} from './author-tools-hover-menu'
 import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -23,13 +26,14 @@ interface UserToolsProps {
   id: number
   onShare?: () => void
   hideEdit: boolean
+  data: AuthorToolsData
 }
 
 export interface UserToolsData {
   editHref: string
 }
 
-export function UserTools({ id, onShare, hideEdit }: UserToolsProps) {
+export function UserTools({ id, onShare, hideEdit, data }: UserToolsProps) {
   const { strings } = useInstanceData()
   const auth = useAuth()
   const [loaded, setLoaded] = React.useState(false)
@@ -37,11 +41,19 @@ export function UserTools({ id, onShare, hideEdit }: UserToolsProps) {
     setLoaded(true)
   }, [])
   const loggedInData = useLoggedInData()
+
+  const editHref =
+    data.type == 'Page'
+      ? `/page/revision/create-old/${data.id}/${data.revisionId}`
+      : data.type == 'Taxonomy'
+      ? `/taxonomy/term/update/${id}`
+      : `/entity/repository/add-revision/${id}`
+
   return (
     <AbsoluteWrapper>
       <BoxWrapper>
         {(!hideEdit || (loaded && auth.current)) && (
-          <IconButton href={`/entity/repository/add-revision/${id}`}>
+          <IconButton href={editHref}>
             <FontAwesomeIcon icon={faPencilAlt} size="1x" />{' '}
             {strings.edit.button}
           </IconButton>
@@ -50,10 +62,10 @@ export function UserTools({ id, onShare, hideEdit }: UserToolsProps) {
           <FontAwesomeIcon icon={faShareAlt} size="1x" /> {strings.share.button}
           !
         </IconButton>
-        {loaded && auth.current && loggedInData && (
+        {loaded && auth.current && loggedInData && data && (
           <Tippy
             interactive
-            content={<AuthorToolsHoverMenu id={id} />}
+            content={<AuthorToolsHoverMenu data={data} />}
             placement="left-end"
           >
             <IconButton as="button">

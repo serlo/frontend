@@ -59,6 +59,10 @@ export function createExercise(
     solutionLegacy,
     taskLicense: uuid.license,
     solutionLicense: uuid.solution?.license,
+    context: {
+      id: uuid.id,
+      solutionId: uuid.solution?.id,
+    },
   }
 }
 
@@ -76,6 +80,7 @@ export function createExerciseGroup(
       exerciseNode.grouped = true
       exerciseNode.positionInGroup = groupIndex
       exerciseNode.positionOnPage = pageIndex // compat: page page index also to grouped exercise for id generation
+      exerciseNode.context.parent = uuid.id
       children.push(exerciseNode)
     })
   }
@@ -85,5 +90,8 @@ export function createExerciseGroup(
     positionOnPage: pageIndex,
     license: uuid.license,
     children,
+    context: {
+      id: uuid.id,
+    },
   }
 }

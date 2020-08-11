@@ -95,6 +95,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
       kind: 'single-entity',
       entityData: {
         id: uuid.id,
+        typename: uuid.__typename,
         content: exercise,
         inviteToEdit: true,
       },
@@ -118,6 +119,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
       kind: 'single-entity',
       entityData: {
         id: uuid.id,
+        typename: uuid.__typename,
         content: exercise,
         inviteToEdit: true,
       },
@@ -141,6 +143,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
       kind: 'single-entity',
       entityData: {
         id: uuid.id,
+        typename: uuid.__typename,
         content,
       },
       newsletterPopup: false,
@@ -161,6 +164,8 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
       newsletterPopup: true,
       entityData: {
         id: uuid.id,
+        typename: uuid.__typename,
+        revisionId: uuid.currentRevision?.id,
         title: uuid.currentRevision?.title ?? '',
         content,
       },
@@ -185,6 +190,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
       newsletterPopup: false,
       entityData: {
         id: uuid.id,
+        typename: uuid.__typename,
         title: uuid.currentRevision?.title ?? '',
         content,
         licenseData,
@@ -216,6 +222,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
       newsletterPopup: false,
       entityData: {
         id: uuid.id,
+        typename: uuid.__typename,
         title: uuid.currentRevision?.title ?? '',
         content: [
           {
@@ -249,6 +256,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
       newsletterPopup: false,
       entityData: {
         id: uuid.id,
+        typename: uuid.__typename,
         title: uuid.currentRevision?.title ?? '',
         content: [
           {
@@ -300,6 +308,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
       newsletterPopup: false,
       entityData: {
         id: uuid.id,
+        typename: uuid.__typename,
         title: uuid.currentRevision?.title ?? '',
         content,
         licenseData,
@@ -311,6 +320,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
         categoryIcon: 'article',
         inviteToEdit: true,
         courseData: {
+          id: uuid.course.id,
           title: uuid.course.currentRevision?.title ?? '',
           pages,
           nextPageUrl: pages[currentPageIndex]?.url,

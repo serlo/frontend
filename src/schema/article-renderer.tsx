@@ -311,6 +311,7 @@ function renderElement(props: RenderElementProps): React.ReactNode {
         }
         groupIntro={renderArticle(element.content, false)}
         positionOnPage={element.positionOnPage ?? 0}
+        id={element.context.id}
       >
         {children}
       </ExerciseGroup>
