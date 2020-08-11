@@ -1,44 +1,18 @@
 // These types are auto-generated from the GraphQL schema
 import * as GraphQL from '@serlo/api'
+import { gql } from 'graphql-request'
 
 // Keep this file in sync with the graphQL schema.
 // Maybe automate this one day.
-
 export type Instance = 'de' | 'en' | 'fr' | 'es' | 'ta' | 'hi'
 
 // A license has some more attributes, but we are fine with these
-
-const license = `
-  license {
-    id
-    url
-    title
-  }
-`
-
 export type License = Pick<GraphQL.License, 'id' | 'url' | 'title'>
 
 // This is one breadcrumb path.
-
-const path = `
-  path {
-    label
-    url
-  }
-`
-
 export type Path = Pick<GraphQL.NavigationNode, 'label' | 'url'>[]
 
 // Entities can belong to multiple taxonomy terms, so we load all possible paths.
-
-const taxonomyTerms = `
-  taxonomyTerms {
-    navigation {
-      ${path}
-    }
-  }
-`
-
 export type TaxonomyTerms = {
   navigation?: GraphQL.Maybe<{ path: Path }>
 }[]
@@ -53,23 +27,6 @@ export interface EntityWithTaxonomyTerms extends Entity {
 }
 
 // A page, navigation.data is the secondary menu.
-
-const onPage = `
-  ... on Page {
-    id
-    alias
-    instance
-    currentRevision {
-      title
-      content
-    }
-    navigation {
-      data
-      ${path}
-    }
-  }
-`
-
 export interface Page extends Repository {
   __typename: 'Page'
   currentRevision?: GraphQL.Maybe<
@@ -77,22 +34,6 @@ export interface Page extends Repository {
   >
   navigation?: GraphQL.Maybe<Pick<GraphQL.Navigation, 'data' | 'path'>>
 }
-
-const onArticle = `
-  ... on Article {
-    id
-    alias
-    instance
-    currentRevision {
-      title
-      content
-      metaTitle
-      metaDescription
-    }
-    ${taxonomyTerms}
-    ${license}
-  }
-`
 
 export interface Article extends EntityWithTaxonomyTerms {
   __typename: 'Article'
@@ -104,44 +45,12 @@ export interface Article extends EntityWithTaxonomyTerms {
   >
 }
 
-const onVideo = `
-  ... on Video {
-    id
-    alias
-    instance
-    currentRevision {
-      title
-      url
-      content
-    }
-    ${taxonomyTerms}
-    ${license}
-  }
-`
-
 export interface Video extends EntityWithTaxonomyTerms {
   __typename: 'Video'
   currentRevision?: GraphQL.Maybe<
     Pick<GraphQL.VideoRevision, 'title' | 'url' | 'content'>
   >
 }
-
-const onApplet = `
-  ... on Applet {
-    id
-    alias
-    instance
-    currentRevision {
-      title
-      content
-      url
-      metaTitle
-      metaDescription
-    }
-    ${taxonomyTerms}
-    ${license}
-  }
-`
 
 export interface Applet extends EntityWithTaxonomyTerms {
   __typename: 'Applet'
@@ -152,32 +61,6 @@ export interface Applet extends EntityWithTaxonomyTerms {
     >
   >
 }
-
-const onCoursePage = `
-  ... on CoursePage {
-    id
-    alias
-    instance
-    currentRevision {
-      content
-      title
-    }
-    course {
-      currentRevision {
-        title
-      }
-      pages {
-        alias
-        id
-        currentRevision {
-          title
-        }
-      }
-      ${taxonomyTerms}
-    }
-    ${license}
-  }
-`
 
 export interface CoursePage extends Entity {
   __typename: 'CoursePage'
@@ -196,20 +79,6 @@ export interface CoursePage extends Entity {
 }
 
 // We treat a grouped exercise just as a normal exercise.
-
-const bareExercise = `
-  currentRevision {
-    content
-  }
-  solution {
-    currentRevision {
-      content
-    }
-    ${license}
-  }
-  ${license}
-`
-
 export interface BareExercise {
   currentRevision?: GraphQL.Maybe<
     Pick<GraphQL.AbstractExerciseRevision, 'content'>
@@ -221,18 +90,6 @@ export interface BareExercise {
   license: License
 }
 
-const onExercise = `
-  ... on AbstractExercise {
-    id
-    alias
-    instance
-    ${bareExercise}
-  }
-  ... on Exercise {
-    ${taxonomyTerms}
-  }
-`
-
 export interface Exercise extends EntityWithTaxonomyTerms, BareExercise {
   __typename: 'Exercise'
   taxonomyTerms: TaxonomyTerms
@@ -241,23 +98,6 @@ export interface GroupedExercise extends Entity, BareExercise {
   __typename: 'GroupedExercise'
 }
 
-const onExerciseGroup = `
-  ... on ExerciseGroup {
-    id
-    alias
-    instance
-    currentRevision {
-      content
-    }
-    exercises {
-      ${bareExercise}
-    }
-    ${taxonomyTerms}
-    ${license}
-  }
-`
-
-// TODO: is this extra type even needed? Usually, we should have a complete exercise group, right?
 export interface BareExerciseGroup extends Entity {
   __typename: 'ExerciseGroup'
   currentRevision?: GraphQL.Maybe<
@@ -269,18 +109,6 @@ export interface BareExerciseGroup extends Entity {
 export type ExerciseGroup = BareExerciseGroup & EntityWithTaxonomyTerms
 
 // Events are only used in injections, no support for full page view
-
-const onEvent = `
-  ... on Event {
-    id
-    alias
-    instance
-    currentRevision {
-      content
-    }
-  }
-`
-
 export interface Event extends Repository {
   __typename: 'Event'
   currentRevision?: GraphQL.Maybe<Pick<GraphQL.EventRevision, 'content'>>
@@ -288,90 +116,12 @@ export interface Event extends Repository {
 
 // If a course is encountered, the first page will get loaded
 
-const onCourse = `
-  ... on Course {
-    id
-    alias
-    instance
-    pages {
-      alias
-    }
-  }
-`
-
 export interface Course extends Repository {
   __typename: 'Course'
   pages: {
     alias?: string
   }[]
 }
-
-export type TaxonomyTermType = GraphQL.TaxonomyTermType
-
-const onX = (type: TaxonomyTermChildOnX['__typename']) => `
-  ... on ${type} {
-    alias
-    id
-    currentRevision {
-      title
-    }
-  }
-`
-
-const onTaxonomyTerm = `
-  ... on TaxonomyTerm {
-    id
-    alias
-    instance
-    type
-    name
-    description
-    navigation {
-      data
-      ${path}
-    }
-    children {
-      trashed
-      __typename
-      ${onX('Article')}
-      ${onX('Video')}
-      ${onX('Applet')}
-      ${onX('Course')}
-      ... on Exercise {
-        ${bareExercise}
-      }
-      ... on ExerciseGroup {
-        currentRevision {
-          content
-        }
-        exercises {
-          ${bareExercise}
-        }
-        ${license}
-      }
-      ... on TaxonomyTerm {
-        type
-        name
-        alias
-        id
-        description
-        children {
-          trashed
-          __typename
-          ... on TaxonomyTerm {
-            alias
-            type
-            name
-          }
-          ${onX('Article')}
-          ${onX('Video')}
-          ${onX('Applet')}
-          ${onX('Course')}
-        }
-      }
-    }
-  }
-`
 
 export interface TaxonomyTermChild {
   __typename: string
@@ -434,32 +184,214 @@ export type TaxonomyTermChildrenLevel2 =
   | TaxonomyTermChildOnX
   | SubTaxonomyTermChildTaxonomyTerm
 
-// TODO: Simplify that, especially use variables
-export const dataQuery = `
+export const dataQuery = gql`
   query uuid($id: Int, $alias: AliasInput) {
     uuid(id: $id, alias: $alias) {
       __typename
+      id
 
-      ${onPage}
+      ... on AbstractRepository {
+        alias
+        instance
+        ...license
+      }
 
-      ${onArticle}
+      ... on AbstractTaxonomyTermChild {
+        taxonomyTerms {
+          navigation {
+            ...path
+          }
+        }
+      }
 
-      ${onVideo}
+      ... on Page {
+        currentRevision {
+          title
+          content
+        }
+        navigation {
+          data
+          ...path
+        }
+      }
 
-      ${onApplet}
+      ... on Article {
+        currentRevision {
+          title
+          content
+          metaTitle
+          metaDescription
+        }
+      }
 
-      ${onCoursePage}
+      ... on Video {
+        currentRevision {
+          title
+          url
+          content
+        }
+      }
 
-      ${onExercise}
+      ... on Applet {
+        currentRevision {
+          title
+          content
+          url
+          metaTitle
+          metaDescription
+        }
+      }
 
-      ${onExerciseGroup}
+      ... on CoursePage {
+        currentRevision {
+          content
+          title
+        }
+        course {
+          currentRevision {
+            title
+          }
+          pages {
+            alias
+            id
+            currentRevision {
+              title
+            }
+          }
+        }
+      }
 
-      ${onEvent}
+      ... on AbstractExercise {
+        ...exercise
+      }
 
-      ${onCourse}
+      ... on ExerciseGroup {
+        currentRevision {
+          content
+        }
+        exercises {
+          ...exercise
+        }
+      }
 
-      ${onTaxonomyTerm}
+      ... on Event {
+        currentRevision {
+          content
+        }
+      }
+
+      ... on Course {
+        pages {
+          alias
+        }
+      }
+
+      ... on TaxonomyTerm {
+        type
+        name
+        description
+        navigation {
+          data
+          ...path
+        }
+        children {
+          trashed
+          __typename
+          ...taxonomyTermChild
+          ... on Exercise {
+            ...exercise
+          }
+          ... on ExerciseGroup {
+            currentRevision {
+              content
+            }
+            exercises {
+              ...exercise
+            }
+            ...license
+          }
+          ... on TaxonomyTerm {
+            type
+            name
+            alias
+            id
+            description
+            children {
+              trashed
+              __typename
+              ... on TaxonomyTerm {
+                alias
+                type
+                name
+              }
+              ...taxonomyTermChild
+            }
+          }
+        }
+      }
     }
+  }
+
+  fragment path on Navigation {
+    path {
+      label
+      url
+    }
+  }
+
+  fragment license on AbstractRepository {
+    license {
+      id
+      url
+      title
+    }
+  }
+
+  fragment taxonomyTermChild on AbstractRepository {
+    ... on Article {
+      alias
+      id
+      currentRevision {
+        title
+      }
+    }
+
+    ... on Video {
+      alias
+      id
+      currentRevision {
+        title
+      }
+    }
+
+    ... on Applet {
+      alias
+      id
+      currentRevision {
+        title
+      }
+    }
+
+    ... on Course {
+      alias
+      id
+      currentRevision {
+        title
+      }
+    }
+  }
+
+  fragment exercise on AbstractExercise {
+    currentRevision {
+      content
+    }
+    solution {
+      currentRevision {
+        content
+      }
+      ...license
+    }
+    ...license
   }
 `
 

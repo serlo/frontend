@@ -1,0 +1,642 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+interface AbstractEntity {
+    alias: String
+    date: DateTime!
+    "extends AbstractRepository"
+    id: Int!
+    instance: Instance!
+    license: License!
+    trashed: Boolean!
+}
+
+interface AbstractEntityRevision {
+    author: User!
+    date: DateTime!
+    "extends AbstractRevision"
+    id: Int!
+    trashed: Boolean!
+}
+
+interface AbstractExercise {
+    alias: String
+    currentRevision: AbstractExerciseRevision
+    date: DateTime!
+    "extends AbstractEntity"
+    id: Int!
+    instance: Instance!
+    license: License!
+    solution: Solution
+    trashed: Boolean!
+}
+
+interface AbstractExerciseRevision {
+    author: User!
+    changes: String!
+    content: String!
+    date: DateTime!
+    "extends AbstractEntityRevision"
+    id: Int!
+    trashed: Boolean!
+}
+
+interface AbstractNavigationChild {
+    navigation: Navigation
+}
+
+interface AbstractNotificationEvent {
+    actor: User!
+    date: DateTime!
+    id: Int!
+    instance: Instance!
+}
+
+interface AbstractRepository {
+    alias: String
+    date: DateTime!
+    "extends AbstractUuid"
+    id: Int!
+    instance: Instance!
+    license: License!
+    trashed: Boolean!
+}
+
+interface AbstractRevision {
+    """
+
+    Implicitly has the following field
+    repository: AbstractRepository!
+    """
+    author: User!
+    date: DateTime!
+    "extends AbstractUuid"
+    id: Int!
+    trashed: Boolean!
+}
+
+interface AbstractTaxonomyTermChild {
+    alias: String
+    date: DateTime!
+    "extends AbstractEntity"
+    id: Int!
+    instance: Instance!
+    license: License!
+    taxonomyTerms: [TaxonomyTerm!]!
+    trashed: Boolean!
+}
+
+interface AbstractUuid {
+    id: Int!
+    trashed: Boolean!
+}
+
+type Applet implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid {
+    alias: String
+    currentRevision: AppletRevision
+    date: DateTime!
+    id: Int!
+    instance: Instance!
+    license: License!
+    taxonomyTerms: [TaxonomyTerm!]!
+    trashed: Boolean!
+}
+
+type AppletRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid {
+    author: User!
+    changes: String!
+    content: String!
+    date: DateTime!
+    id: Int!
+    metaDescription: String!
+    metaTitle: String!
+    repository: Applet!
+    title: String!
+    trashed: Boolean!
+    url: String!
+}
+
+type Article implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid {
+    alias: String
+    currentRevision: ArticleRevision
+    date: DateTime!
+    id: Int!
+    instance: Instance!
+    license: License!
+    taxonomyTerms: [TaxonomyTerm!]!
+    trashed: Boolean!
+}
+
+type ArticleRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid {
+    author: User!
+    changes: String!
+    content: String!
+    date: DateTime!
+    id: Int!
+    metaDescription: String!
+    metaTitle: String!
+    repository: Article!
+    title: String!
+    trashed: Boolean!
+}
+
+type CacheKeyCursor {
+    cursor: String!
+    node: String!
+}
+
+type CheckoutRevisionNotificationEvent implements AbstractNotificationEvent {
+    actor: User!
+    date: DateTime!
+    id: Int!
+    instance: Instance!
+    reason: String!
+    repository: AbstractRepository!
+    revision: AbstractRevision!
+}
+
+type Course implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid {
+    alias: String
+    currentRevision: CourseRevision
+    date: DateTime!
+    id: Int!
+    instance: Instance!
+    license: License!
+    pages: [CoursePage!]!
+    taxonomyTerms: [TaxonomyTerm!]!
+    trashed: Boolean!
+}
+
+type CoursePage implements AbstractEntity & AbstractRepository & AbstractUuid {
+    alias: String
+    course: Course!
+    currentRevision: CoursePageRevision
+    date: DateTime!
+    id: Int!
+    instance: Instance!
+    license: License!
+    trashed: Boolean!
+}
+
+type CoursePageRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid {
+    author: User!
+    changes: String!
+    content: String!
+    date: DateTime!
+    id: Int!
+    repository: CoursePage!
+    title: String!
+    trashed: Boolean!
+}
+
+type CourseRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid {
+    author: User!
+    changes: String!
+    content: String!
+    date: DateTime!
+    id: Int!
+    metaDescription: String!
+    repository: Course!
+    title: String!
+    trashed: Boolean!
+}
+
+type CreateCommentNotificationEvent implements AbstractNotificationEvent {
+    actor: User!
+    comment: UnsupportedComment!
+    date: DateTime!
+    id: Int!
+    instance: Instance!
+    thread: UnsupportedThread!
+}
+
+type CreateEntityLinkNotificationEvent implements AbstractNotificationEvent {
+    actor: User!
+    child: AbstractEntity!
+    date: DateTime!
+    id: Int!
+    instance: Instance!
+    parent: AbstractEntity!
+}
+
+type CreateEntityNotificationEvent implements AbstractNotificationEvent {
+    actor: User!
+    date: DateTime!
+    entity: AbstractEntity!
+    id: Int!
+    instance: Instance!
+}
+
+type CreateEntityRevisionNotificationEvent implements AbstractNotificationEvent {
+    actor: User!
+    date: DateTime!
+    entity: AbstractEntity!
+    entityRevision: AbstractEntityRevision!
+    id: Int!
+    instance: Instance!
+}
+
+type CreateTaxonomyLinkNotificationEvent implements AbstractNotificationEvent {
+    actor: User!
+    child: AbstractUuid!
+    date: DateTime!
+    id: Int!
+    instance: Instance!
+    parent: TaxonomyTerm!
+}
+
+type CreateTaxonomyTermNotificationEvent implements AbstractNotificationEvent {
+    actor: User!
+    date: DateTime!
+    id: Int!
+    instance: Instance!
+    taxonomyTerm: TaxonomyTerm!
+}
+
+type CreateThreadNotificationEvent implements AbstractNotificationEvent {
+    actor: User!
+    date: DateTime!
+    id: Int!
+    instance: Instance!
+    object: AbstractUuid!
+    thread: UnsupportedThread!
+}
+
+type Event implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid {
+    alias: String
+    currentRevision: EventRevision
+    date: DateTime!
+    id: Int!
+    instance: Instance!
+    license: License!
+    taxonomyTerms: [TaxonomyTerm!]!
+    trashed: Boolean!
+}
+
+type EventRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid {
+    author: User!
+    changes: String!
+    content: String!
+    date: DateTime!
+    id: Int!
+    metaDescription: String!
+    metaTitle: String!
+    repository: Event!
+    title: String!
+    trashed: Boolean!
+}
+
+type Exercise implements AbstractEntity & AbstractExercise & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid {
+    alias: String
+    currentRevision: ExerciseRevision
+    date: DateTime!
+    id: Int!
+    instance: Instance!
+    license: License!
+    solution: Solution
+    taxonomyTerms: [TaxonomyTerm!]!
+    trashed: Boolean!
+}
+
+type ExerciseGroup implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid {
+    alias: String
+    currentRevision: ExerciseGroupRevision
+    date: DateTime!
+    exercises: [GroupedExercise!]!
+    id: Int!
+    instance: Instance!
+    license: License!
+    taxonomyTerms: [TaxonomyTerm!]!
+    trashed: Boolean!
+}
+
+type ExerciseGroupRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid {
+    author: User!
+    changes: String!
+    content: String!
+    date: DateTime!
+    id: Int!
+    repository: ExerciseGroup!
+    trashed: Boolean!
+}
+
+type ExerciseRevision implements AbstractEntityRevision & AbstractExerciseRevision & AbstractRevision & AbstractUuid {
+    author: User!
+    changes: String!
+    content: String!
+    date: DateTime!
+    id: Int!
+    repository: Exercise!
+    trashed: Boolean!
+}
+
+type GroupedExercise implements AbstractEntity & AbstractExercise & AbstractRepository & AbstractUuid {
+    alias: String
+    currentRevision: GroupedExerciseRevision
+    date: DateTime!
+    exerciseGroup: ExerciseGroup!
+    id: Int!
+    instance: Instance!
+    license: License!
+    solution: Solution
+    trashed: Boolean!
+}
+
+type GroupedExerciseRevision implements AbstractEntityRevision & AbstractExerciseRevision & AbstractRevision & AbstractUuid {
+    author: User!
+    changes: String!
+    content: String!
+    date: DateTime!
+    id: Int!
+    repository: GroupedExercise!
+    trashed: Boolean!
+}
+
+type License {
+    agreement: String!
+    content: String!
+    default: Boolean!
+    iconHref: String!
+    id: Int!
+    instance: Instance!
+    title: String!
+    url: String!
+}
+
+type Mutation {
+    _removeCache(key: String!): Boolean
+    _setCache(key: String!, value: JSON!): Boolean
+    setNotificationState(id: Int!, unread: Boolean!): Boolean
+}
+
+type Navigation {
+    data: JSON!
+    path: [NavigationNode!]!
+}
+
+type NavigationNode {
+    id: Int
+    label: String!
+    url: String
+}
+
+type Notification {
+    event: AbstractNotificationEvent!
+    id: Int!
+    unread: Boolean!
+}
+
+type NotificationCursor {
+    cursor: String!
+    node: Notification!
+}
+
+type Page implements AbstractNavigationChild & AbstractRepository & AbstractUuid {
+    alias: String
+    currentRevision: PageRevision
+    date: DateTime!
+    id: Int!
+    instance: Instance!
+    license: License!
+    navigation: Navigation
+    trashed: Boolean!
+}
+
+type PageInfo {
+    endCursor: String
+    hasNextPage: Boolean!
+    hasPreviousPage: Boolean!
+    startCursor: String
+}
+
+type PageRevision implements AbstractRevision & AbstractUuid {
+    author: User!
+    content: String!
+    date: DateTime!
+    id: Int!
+    repository: Page!
+    title: String!
+    trashed: Boolean!
+}
+
+type Query {
+    _cacheKeys(after: String, before: String, first: Int, last: Int): Query_CacheKeysResult!
+    activeDonors: [User!]!
+    license(id: Int!): License
+    notificationEvent(id: Int!): AbstractNotificationEvent
+    notifications(after: String, before: String, first: Int, last: Int, unread: Boolean): QueryNotificationsResult!
+    uuid(alias: AliasInput, id: Int): AbstractUuid
+}
+
+type QueryNotificationsResult {
+    edges: [NotificationCursor!]!
+    nodes: [Notification!]!
+    pageInfo: PageInfo!
+    totalCount: Int!
+}
+
+type Query_CacheKeysResult {
+    edges: [CacheKeyCursor!]!
+    nodes: [String!]!
+    pageInfo: PageInfo!
+    totalCount: Int!
+}
+
+type RejectRevisionNotificationEvent implements AbstractNotificationEvent {
+    actor: User!
+    date: DateTime!
+    id: Int!
+    instance: Instance!
+    reason: String!
+    repository: AbstractRepository!
+    revision: AbstractRevision!
+}
+
+type RemoveEntityLinkNotificationEvent implements AbstractNotificationEvent {
+    actor: User!
+    child: AbstractEntity!
+    date: DateTime!
+    id: Int!
+    instance: Instance!
+    parent: AbstractEntity!
+}
+
+type RemoveTaxonomyLinkNotificationEvent implements AbstractNotificationEvent {
+    actor: User!
+    child: AbstractUuid!
+    date: DateTime!
+    id: Int!
+    instance: Instance!
+    parent: TaxonomyTerm!
+}
+
+type SetLicenseNotificationEvent implements AbstractNotificationEvent {
+    actor: User!
+    date: DateTime!
+    id: Int!
+    instance: Instance!
+    repository: AbstractRepository!
+}
+
+type SetTaxonomyParentNotificationEvent implements AbstractNotificationEvent {
+    actor: User!
+    child: TaxonomyTerm!
+    date: DateTime!
+    id: Int!
+    instance: Instance!
+    parent: TaxonomyTerm
+    previousParent: TaxonomyTerm
+}
+
+type SetTaxonomyTermNotificationEvent implements AbstractNotificationEvent {
+    actor: User!
+    date: DateTime!
+    id: Int!
+    instance: Instance!
+    taxonomyTerm: TaxonomyTerm!
+}
+
+type SetThreadStateNotificationEvent implements AbstractNotificationEvent {
+    actor: User!
+    archived: Boolean!
+    date: DateTime!
+    id: Int!
+    instance: Instance!
+    thread: UnsupportedThread!
+}
+
+type SetUuidStateNotificationEvent implements AbstractNotificationEvent {
+    actor: User!
+    date: DateTime!
+    id: Int!
+    instance: Instance!
+    object: AbstractUuid!
+    trashed: Boolean!
+}
+
+type Solution implements AbstractEntity & AbstractRepository & AbstractUuid {
+    alias: String
+    currentRevision: SolutionRevision
+    date: DateTime!
+    exercise: AbstractExercise!
+    id: Int!
+    instance: Instance!
+    license: License!
+    trashed: Boolean!
+}
+
+type SolutionRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid {
+    author: User!
+    changes: String!
+    content: String!
+    date: DateTime!
+    id: Int!
+    repository: Solution!
+    trashed: Boolean!
+}
+
+type TaxonomyTerm implements AbstractNavigationChild & AbstractUuid {
+    alias: String
+    children: [AbstractUuid!]!
+    description: String
+    id: Int!
+    instance: Instance!
+    name: String!
+    navigation: Navigation
+    parent: TaxonomyTerm
+    trashed: Boolean!
+    type: TaxonomyTermType!
+    weight: Int!
+}
+
+"TODO: this should be a real comment in the future"
+type UnsupportedComment {
+    id: Int!
+}
+
+"TODO: this should be a real thread in the future"
+type UnsupportedThread {
+    id: Int!
+}
+
+type User implements AbstractUuid {
+    activeDonor: Boolean!
+    date: DateTime!
+    description: String
+    id: Int!
+    lastLogin: DateTime
+    trashed: Boolean!
+    username: String!
+}
+
+type Video implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid {
+    alias: String
+    currentRevision: VideoRevision
+    date: DateTime!
+    id: Int!
+    instance: Instance!
+    license: License!
+    taxonomyTerms: [TaxonomyTerm!]!
+    trashed: Boolean!
+}
+
+type VideoRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid {
+    author: User!
+    changes: String!
+    content: String!
+    date: DateTime!
+    id: Int!
+    repository: Video!
+    title: String!
+    trashed: Boolean!
+    url: String!
+}
+
+enum CacheControlScope {
+    PRIVATE
+    PUBLIC
+}
+
+enum Instance {
+    de
+    en
+    es
+    fr
+    hi
+    ta
+}
+
+enum TaxonomyTermType {
+    blog
+    curriculum
+    curriculumTopic
+    curriculumTopicFolder
+    forum
+    forumCategory
+    locale
+    root
+    subject
+    topic
+    topicFolder
+}
+
+input AliasInput {
+    instance: Instance!
+    path: String!
+}
+
+
+scalar DateTime
+
+"The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf)."
+scalar JSON
+
+"The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf)."
+scalar JSONObject
+
+"The `Upload` scalar type represents a file upload."
+scalar Upload

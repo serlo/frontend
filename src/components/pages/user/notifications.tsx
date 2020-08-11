@@ -1,6 +1,7 @@
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Query } from '@serlo/api'
+import { gql } from 'graphql-request'
 import { NextPage } from 'next'
 import React from 'react'
 import styled from 'styled-components'
@@ -16,42 +17,6 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { inputFontReset, makeDefaultButton } from '@/helper/css'
 import { shouldUseNewAuth } from '@/helper/feature-auth'
-
-const titleNoPageQueryPart = /* GraphQL */ `
-... on Applet {
-  currentRevision {
-    title
-  }
-}
-... on Article {
-  currentRevision {
-    title
-  }
-}
-... on Course {
-  currentRevision {
-    title
-  }
-}
-... on CoursePage {
-  currentRevision {
-    title
-  }
-}
-... on Video {
-  currentRevision {
-    title
-  }
-}
-`
-const titleQueryPart =
-  titleNoPageQueryPart +
-  /* GraphQL */ `
-... on Page {
-  currentRevision {
-    title
-  }
-}`
 
 interface PreviousNotificationsData {
   notifications: JSX.Element[]
@@ -75,8 +40,8 @@ export const Notifications: NextPage = () => {
   const { strings } = useInstanceData()
 
   const response = useGraphqlSwr<Query>({
-    query: /* GraphQL */ `
-      query notifications($count: Int!, $unread: Boolean, $after: String){
+    query: gql`
+      query notifications($count: Int!, $unread: Boolean, $after: String) {
         notifications(first: $count, unread: $unread, after: $after) {
           pageInfo {
             hasNextPage
@@ -97,9 +62,7 @@ export const Notifications: NextPage = () => {
                   id
                 }
                 repository {
-                  id
-                  ${titleQueryPart}
-                  __typename
+                  ...withTitle
                 }
                 reason
               }
@@ -129,9 +92,7 @@ export const Notifications: NextPage = () => {
                   id
                 }
                 entity {
-                  id
-                  ${titleNoPageQueryPart}
-                  __typename
+                  ...withTitle
                 }
               }
               ... on CreateTaxonomyTermNotificationEvent {
@@ -141,9 +102,7 @@ export const Notifications: NextPage = () => {
               }
               ... on CreateTaxonomyLinkNotificationEvent {
                 child {
-                  id
-                  ${titleQueryPart}
-                  __typename
+                  ...withTitle
                 }
                 parent {
                   id
@@ -155,9 +114,7 @@ export const Notifications: NextPage = () => {
                   id
                 }
                 object {
-                  id
-                  ${titleQueryPart}
-                  __typename
+                  ...withTitle
                 }
               }
               ... on RejectRevisionNotificationEvent {
@@ -179,9 +136,7 @@ export const Notifications: NextPage = () => {
               }
               ... on RemoveTaxonomyLinkNotificationEvent {
                 child {
-                  id
-                  ${titleQueryPart}
-                  __typename
+                  ...withTitle
                 }
                 parent {
                   id
@@ -190,9 +145,7 @@ export const Notifications: NextPage = () => {
               }
               ... on SetLicenseNotificationEvent {
                 repository {
-                  id
-                  ${titleQueryPart}
-                  __typename
+                  ...withTitle
                 }
               }
               ... on SetTaxonomyParentNotificationEvent {
@@ -216,13 +169,47 @@ export const Notifications: NextPage = () => {
               }
               ... on SetUuidStateNotificationEvent {
                 object {
-                  id
-                  ${titleQueryPart}
-                  __typename
+                  ...withTitle
                 }
                 trashed
               }
             }
+          }
+        }
+      }
+
+      fragment withTitle on AbstractUuid {
+        __typename
+        id
+
+        ... on Applet {
+          currentRevision {
+            title
+          }
+        }
+        ... on Article {
+          currentRevision {
+            title
+          }
+        }
+        ... on Course {
+          currentRevision {
+            title
+          }
+        }
+        ... on CoursePage {
+          currentRevision {
+            title
+          }
+        }
+        ... on Video {
+          currentRevision {
+            title
+          }
+        }
+        ... on Page {
+          currentRevision {
+            title
           }
         }
       }

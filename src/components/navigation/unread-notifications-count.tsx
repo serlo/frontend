@@ -2,6 +2,7 @@ import {
   FontAwesomeIcon,
   FontAwesomeIconProps,
 } from '@fortawesome/react-fontawesome'
+import { gql } from 'graphql-request'
 import styled from 'styled-components'
 
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
@@ -18,7 +19,7 @@ export function UnreadNotificationsCount({
       totalCount: number
     }
   }>({
-    query: `
+    query: gql`
       {
         notifications(unread: true) {
           totalCount
