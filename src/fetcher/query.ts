@@ -427,7 +427,6 @@ export const idsQuery = (ids: number[]) => {
       }
     `
   )
-  // TODO: this looks weird tbh
   return `{${map.join()}}`
 }
 
