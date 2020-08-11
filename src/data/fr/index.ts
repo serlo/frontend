@@ -8,7 +8,7 @@ export const instanceData: InstanceData = {
     header: {
       slogan: "La plateforme d'apprentissage libre",
       search: "Recherche",
-      login: 'Login'
+      login: "Se connecter"
     },
     footer: {
       summaryHeading: "Serlo.org est le Wikipedia pour l'apprentissage.",
