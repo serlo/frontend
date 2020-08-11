@@ -1,6 +1,5 @@
 import type { GraphiQLProps } from 'graphiql/esm/components/GraphiQL'
 import { GraphQLError } from 'graphql'
-import { GraphQLResponse } from 'graphql-request/dist/src/types'
 import { NextPage } from 'next'
 import dynamic from 'next/dynamic'
 import { createGlobalStyle } from 'styled-components'
@@ -1735,6 +1734,7 @@ const GraphQL: NextPage = () => {
       <GraphiQL
         fetcher={async function fetcher(params) {
           const data = await executeQuery()
+          //@ts-expect-error
           const error = data.errors?.[0] as
             | (GraphQLError & {
                 extensions: {
@@ -1758,13 +1758,16 @@ const GraphQL: NextPage = () => {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
                 ...(auth.current
-                  ? { Authorization: `Bearer ${auth.current.token}` }
+                  ? {
+                      Authorization: `Bearer ${auth.current.token}`,
+                    }
                   : {}),
               },
               body: JSON.stringify(params),
               credentials: 'same-origin',
             })
-            return (await response.json()) as GraphQLResponse & {
+            //TODO: Import GraphQLResponse
+            return (await response.json()) as unknown & {
               data: unknown
             }
           }

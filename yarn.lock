@@ -2202,6 +2202,13 @@
   resolved "https://registry.yarnpkg.com/@types/q/-/q-1.5.4.tgz#15925414e0ad2cd765bfef58842f7e26a7accb24"
   integrity sha512-1HcDas8SEj4z1Wc696tH56G8OlRaH/sqZOynNNB+HF0WOeXPaxTtbYzJY2oEfiUxjSKjhCKr+MvR7dCHcEelug==
 
+"@types/ramda@^0.27.14":
+  version "0.27.14"
+  resolved "https://registry.yarnpkg.com/@types/ramda/-/ramda-0.27.14.tgz#95f5f676ebdff89cbc7ded8cd011911fa6854daf"
+  integrity sha512-vbw/VAtEJeSJ6Z61QT+epirlnBeJiJIO7ndK1BJ0fKswnfbiTNga/jBG6R3OnBaFYx+UJv6Iv7ZfWDFSsSzNqA==
+  dependencies:
+    ts-toolbelt "^6.3.3"
+
 "@types/react-lazyload@^2.6.0":
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/@types/react-lazyload/-/react-lazyload-2.6.0.tgz#41cd9cbb2c03dd810377518d4837794469a521d1"
@@ -7845,6 +7852,11 @@ querystring@0.2.0, querystring@^0.2.0:
   resolved "https://registry.yarnpkg.com/querystring/-/querystring-0.2.0.tgz#b209849203bb25df820da756e747005878521620"
   integrity sha1-sgmEkgO7Jd+CDadW50cAWHhSFiA=
 
+ramda@^0.27.1:
+  version "0.27.1"
+  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.27.1.tgz#66fc2df3ef873874ffc2da6aa8984658abacf5c9"
+  integrity sha512-PgIdVpn5y5Yns8vqb8FzBUEYn98V3xcPgawAkkgj0YJ0qDsnHCiNmZYfOGMgOvoB0eWFLpYbhxUR3mxfDIMvpw==
+
 randombytes@^2.0.0, randombytes@^2.0.1, randombytes@^2.0.5, randombytes@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/randombytes/-/randombytes-2.1.0.tgz#df6f84372f0270dc65cdf6291349ab7a473d4f2a"
@@ -9289,6 +9301,11 @@ ts-pnp@^1.1.6:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/ts-pnp/-/ts-pnp-1.2.0.tgz#a500ad084b0798f1c3071af391e65912c86bca92"
   integrity sha512-csd+vJOb/gkzvcCHgTGSChYpy5f1/XKNsmvBGO4JXS+z1v2HobugDz4s1IeFXM3wZB44uczs+eazB5Q/ccdhQw==
+
+ts-toolbelt@^6.3.3:
+  version "6.15.3"
+  resolved "https://registry.yarnpkg.com/ts-toolbelt/-/ts-toolbelt-6.15.3.tgz#d9fdf5cc8f08e21c459671386f4e4e0d0d4d624d"
+  integrity sha512-enrjNgrlb7IVc8FTtE6LicR+tw+pmhKXljl67BJ+UYfPGqZtJWkLn5S5eV2Vh8affwLJvkKdRb1wilu4DG7YEQ==
 
 tsconfig-paths@^3.9.0:
   version "3.9.0"

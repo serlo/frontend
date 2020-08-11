@@ -1,4 +1,5 @@
 import { Instance } from './fetcher/query'
+import { instanceData, instanceLandingData, loggedInData } from '@/data/en'
 
 // This file describes the data structures that controls the frontend.
 
@@ -25,20 +26,22 @@ export interface InitialProps {
 // The frontend supports all languages that the backend supports.
 
 export interface InstanceData {
-  lang: Instance
-  strings: {
-    header: HeaderStrings
-    footer: FooterStrings
-    categories: CategoryStrings
-    entities: EntitiesStrings
-    share: ShareStrings
-    edit: EditStrings
-    license: LicenseStrings
-    course: CourseStrings
-    content: ContentStrings
-    cookie: CookieStrings
-    notifications: NotificationsStrings
-  }
+  lang: Instance | string
+  strings: typeof instanceData['strings']
+  // infere from english language file instead for convenience
+  // {
+  //   header: HeaderStrings
+  //   footer: FooterStrings
+  //   categories: CategoryStrings
+  //   entities: EntitiesStrings
+  //   share: ShareStrings
+  //   edit: EditStrings
+  //   license: LicenseStrings
+  //   course: CourseStrings
+  //   content: ContentStrings
+  //   cookie: CookieStrings
+  //   notifications: NotificationsStrings
+  // }
   headerData: HeaderData
   footerData: FooterData
 }
@@ -125,7 +128,7 @@ export interface LandingPage {
 
 export interface InstanceLandingData {
   lang: string
-  strings: LandingStrings
+  strings: typeof instanceLandingData['strings']
 }
 
 // The same for donation, search and notifications page:
@@ -661,71 +664,70 @@ export interface NotificationsStrings {
   pleaseLogInText: string
 }
 
-export interface LandingStrings {
-  vision: string
-  learnMore: string
-  democraticallyStructured: string
-  nonProfit: string
-  transparent: string
-  openlyLicensed: string
-  adFree: string
-  freeOfCharge: string
-  wikiTitle: string
-  wikiText: string
-  movementTitle: string
-  callForAuthors: string
-  communityLink: string
-  callForOther: string
-  getInvolved: string
-}
+// export interface LandingStrings {
+//   vision: string
+//   learnMore: string
+//   democraticallyStructured: string
+//   nonProfit: string
+//   transparent: string
+//   openlyLicensed: string
+//   adFree: string
+//   freeOfCharge: string
+//   wikiTitle: string
+//   wikiText: string
+//   movementTitle: string
+//   callForAuthors: string
+//   communityLink: string
+//   callForOther: string
+//   getInvolved: string
+// }
 
 export interface LoggedInData {
   authMenu: HeaderData
-  strings: LoggedInStrings
+  strings: typeof loggedInData['strings']
 }
 
-export interface LoggedInStrings {
-  tools: string
-  notifications: {
-    loadMore: string
-    unknownProblem: string
-    loading: string
-    hide: string
-    setThreadStateArchived: string
-    setThreadStateUnarchived: string
-    createComment: string
-    createThread: string
-    createEntity: string
-    setLicense: string
-    createEntityLink: string
-    removeEntityLink: string
-    createEntityRevision: string
-    checkoutRevision: string
-    rejectRevision: string
-    createTaxonomyLink: string
-    removeTaxonomyLink: string
-    createTaxonomyTerm: string
-    setTaxonomyTerm: string
-    setTaxonomyParentDeleted: string
-    setTaxonomyParentChangedFrom: string
-    setTaxonomyParentChanged: string
-    setUuidStateTrashed: string
-    setUuidStateRestored: string
-    entityPlaceholderPage: string
-    entityPlaceholderArticle: string
-    entityPlaceholderVideo: string
-    entityPlaceholderApplet: string
-    entityPlaceholderCoursePage: string
-    entityPlaceholderExercise: string
-    entityPlaceholderGroupedExercise: string
-    entityPlaceholderExerciseGroup: string
-    entityPlaceholderEvent: string
-    entityPlaceholderCourse: string
-    entityPlaceholderTaxonomyTerm: string
-    entityPlaceholderFallback: string
-  }
-}
+// export interface LoggedInStrings {
+//   tools: string
+//   notifications: {
+//     loadMore: string
+//     unknownProblem: string
+//     loading: string
+//     hide: string
+//     setThreadStateArchived: string
+//     setThreadStateUnarchived: string
+//     createComment: string
+//     createThread: string
+//     createEntity: string
+//     setLicense: string
+//     createEntityLink: string
+//     removeEntityLink: string
+//     createEntityRevision: string
+//     checkoutRevision: string
+//     rejectRevision: string
+//     createTaxonomyLink: string
+//     removeTaxonomyLink: string
+//     createTaxonomyTerm: string
+//     setTaxonomyTerm: string
+//     setTaxonomyParentDeleted: string
+//     setTaxonomyParentChangedFrom: string
+//     setTaxonomyParentChanged: string
+//     setUuidStateTrashed: string
+//     setUuidStateRestored: string
+//     entityPlaceholderPage: string
+//     entityPlaceholderArticle: string
+//     entityPlaceholderVideo: string
+//     entityPlaceholderApplet: string
+//     entityPlaceholderCoursePage: string
+//     entityPlaceholderExercise: string
+//     entityPlaceholderGroupedExercise: string
+//     entityPlaceholderExerciseGroup: string
+//     entityPlaceholderEvent: string
+//     entityPlaceholderCourse: string
+//     entityPlaceholderTaxonomyTerm: string
+//     entityPlaceholderFallback: string
+//   }
+// }
 
-export interface ServerSideStrings {
-  title: string
-}
+// unused so far
+// export type ServerSideStrings = typeof serverSideStrings
