@@ -221,6 +221,8 @@ export interface SingleEntityPage extends EntityPageBase {
 
 export interface EntityData {
   id: number
+  typename: string
+  revisionId?: number
   title?: string
   categoryIcon?: CategoryType
   schemaData?: SchemaData
@@ -404,9 +406,10 @@ export interface FrontendExerciseNode {
   grouped?: boolean
   positionInGroup?: number
   positionOnPage?: number
-  context?: {
-    id?: number
+  context: {
+    id: number
     parent?: number
+    solutionId?: number
   }
   children?: undefined
 }
@@ -460,6 +463,9 @@ export interface FrontendExerciseGroupNode {
   positionOnPage?: number
   content: FrontendContentNode[]
   children?: FrontendExerciseNode[]
+  context: {
+    id: number
+  }
 }
 
 export interface FrontendVideoNode {
@@ -564,6 +570,7 @@ export interface LicenseStrings {
 // Data for a course page.
 
 export interface CourseData {
+  id: number
   title: string
   pages: CoursePagesData
   nextPageUrl?: string

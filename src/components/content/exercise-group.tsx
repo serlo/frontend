@@ -13,6 +13,7 @@ export interface ExerciseGroupProps {
   license: React.ReactNode
   groupIntro: React.ReactNode
   positionOnPage: number
+  id: number
 }
 
 export function ExerciseGroup({
@@ -20,6 +21,7 @@ export function ExerciseGroup({
   license,
   groupIntro,
   positionOnPage,
+  id,
 }: ExerciseGroupProps) {
   const [loaded, setLoaded] = React.useState(false)
   React.useEffect(() => {
@@ -35,7 +37,9 @@ export function ExerciseGroup({
         <TopLine>
           <Label>{strings.content.exerciseGroup}</Label>
           <div>{license}</div>
-          {loaded && auth.current && <AuthorTools />}
+          {loaded && auth.current && (
+            <AuthorTools data={{ type: '_ExerciseGroupInline', id }} />
+          )}
         </TopLine>
 
         {groupIntro}
