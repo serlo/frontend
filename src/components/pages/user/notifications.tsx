@@ -1,36 +1,24 @@
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Query } from '@serlo/api'
 import { gql } from 'graphql-request'
 import { NextPage } from 'next'
 import React from 'react'
 import styled from 'styled-components'
 
-import { useGraphqlSwr } from '@/api/use-graphql-swr'
+import { useGraphqlSwrPagination } from '@/api/use-graphql-swr'
 import { Link } from '@/components/content/link'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { RelativeContainer } from '@/components/navigation/relative-container'
 import { StyledH1 } from '@/components/tags/styled-h1'
 import { StyledP } from '@/components/tags/styled-p'
-import { NotificationEvent, Notification } from '@/components/user/notification'
+import { Notification, NotificationEvent } from '@/components/user/notification'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { inputFontReset, makeDefaultButton } from '@/helper/css'
 import { shouldUseNewAuth } from '@/helper/feature-auth'
 
-interface PreviousNotificationsData {
-  notifications: JSX.Element[]
-  offset: string | undefined | null
-}
-
 export const Notifications: NextPage = () => {
   const [mounted, setMounted] = React.useState(!shouldUseNewAuth())
-  const [previousNotifications, setPreviousNotifications] = React.useState<
-    PreviousNotificationsData
-  >({
-    notifications: [],
-    offset: undefined,
-  })
 
   React.useEffect(() => {
     setMounted(true)
@@ -39,10 +27,14 @@ export const Notifications: NextPage = () => {
   const loggedInData = useLoggedInData()
   const { strings } = useInstanceData()
 
-  const response = useGraphqlSwr<Query>({
+  const response = useGraphqlSwrPagination<{
+    id: number
+    event: NotificationEvent
+    unread: boolean
+  }>({
     query: gql`
-      query notifications($count: Int!, $unread: Boolean, $after: String) {
-        notifications(first: $count, unread: $unread, after: $after) {
+      query notifications($first: Int!, $unread: Boolean, $after: String) {
+        notifications(first: $first, unread: $unread, after: $after) {
           pageInfo {
             hasNextPage
             endCursor
@@ -215,59 +207,48 @@ export const Notifications: NextPage = () => {
       }
     `,
     variables: {
-      count: 10,
+      first: 10,
       unread: undefined,
-      after: previousNotifications.offset,
+    },
+    getConnection(data) {
+      return data.notifications
     },
   })
-  const { data } = response
 
   if (!mounted) return null
 
-  if (
-    !loggedInData ||
-    (response.error && (response.error as Error).message === 'unauthorized')
-  )
+  if (!loggedInData || response.error?.message === 'unauthorized')
     return renderUnauthorized()
 
   const loggedInStrings = loggedInData.strings.notifications
 
-  const notifications =
-    data &&
-    data.notifications.nodes.map((node) => {
-      return (
-        <Notification
-          key={node.id}
-          event={node.event as NotificationEvent}
-          unread={node.unread}
-          loggedInStrings={loggedInStrings}
-        />
-      )
-    })
+  const notifications = response.data?.nodes.map((node) => {
+    return (
+      <Notification
+        key={node.id}
+        event={node.event}
+        unread={node.unread}
+        loggedInStrings={loggedInStrings}
+      />
+    )
+  })
 
-  const allNotifications = notifications
-    ? previousNotifications.notifications.concat(notifications)
-    : previousNotifications.notifications
-
-  function loadMore() {
-    setPreviousNotifications({
-      notifications: allNotifications,
-      offset: data!.notifications.pageInfo.endCursor,
-    })
-  }
-
-  const isLoading =
-    allNotifications.length === 0 ||
-    allNotifications.length === previousNotifications.notifications.length
+  const isLoading = response.loading
 
   return wrapInContainer(
     <>
-      {allNotifications}
+      {notifications}
       {response.error && renderUnknownError()}
       {isLoading && renderLoading()}
-      {data?.notifications.pageInfo.hasNextPage && (
-        <Button onClick={loadMore}>{loggedInStrings.loadMore}</Button>
-      )}
+      {response.data?.pageInfo.hasNextPage && !isLoading ? (
+        <Button
+          onClick={() => {
+            response.loadMore()
+          }}
+        >
+          {loggedInStrings.loadMore}
+        </Button>
+      ) : null}
     </>
   )
 
