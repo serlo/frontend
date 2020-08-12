@@ -142,7 +142,9 @@ test('Page', async () => {
   expect(response.metaData?.metaDescription).toEqual(
     'Serlo.org bietet einfache Erklärungen, Kurse, Lernvideos, Übungen und Musterlösungen mit denen Schüler*innen und Studierende nach ihrem …'
   )
-  assertCorrectMetaImageLink(response)
+  expect(response.metaData?.metaImage).toEqual(
+    `https://de.${serloDomain}/_assets/img/meta/serlo.jpg`
+  )
   assertCorrectHorizonDataFormat(response)
 
   expect(response.cacheKey).toEqual('/de/serlo')
@@ -3215,7 +3217,9 @@ test('Event', async () => {
     '31.08.20 - 25.09.2020, Mo-Fr Digital Learning Academy in MünchenonlineGemeinsame Arbeit an Lerninhalten, Workshops zu verschiedenen Themen …'
   )
 
-  assertCorrectMetaImageLink(response)
+  expect(response.metaData?.metaImage).toEqual(
+    `https://de.${serloDomain}/_assets/img/meta/serlo.jpg`
+  )
   assertCorrectHorizonDataFormat(response)
 
   expect(response.cacheKey).toEqual('/de/145590')
@@ -3242,6 +3246,6 @@ function assertCorrectHorizonDataFormat(pageData: SingleEntityPage) {
 
 function assertCorrectMetaImageLink(pageData: SingleEntityPage | TaxonomyPage) {
   expect(pageData.metaData?.metaImage).toEqual(
-    `https://de.${serloDomain}/_assets/img/meta/serlo.jpg`
+    `https://de.${serloDomain}/_assets/img/meta/mathematik.jpg`
   )
 }
