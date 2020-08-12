@@ -68,7 +68,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
   const horizonData = instance == 'de' ? buildHorizonData() : undefined
   const cacheKey = `/${instance}${alias}`
   const title = createTitle(uuid)
-  const metaImage = getMetaImage(alias)
+  const metaImage = getMetaImage(uuid.alias ? uuid.alias : undefined)
 
   if (uuid.__typename === 'TaxonomyTerm') {
     return {
