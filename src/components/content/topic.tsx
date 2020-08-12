@@ -9,6 +9,8 @@ import { ShareModal } from '../navigation/share-modal'
 import { UserToolsMobileButton } from '../navigation/tool-line-button'
 import { UserTools } from '../navigation/user-tools'
 import { UserToolsMobile } from '../navigation/user-tools-mobile'
+import { Comments } from './comments'
+import { Lazy } from './lazy'
 import { Link } from './link'
 import { useInstanceData } from '@/contexts/instance-context'
 import {
@@ -84,6 +86,10 @@ export function Topic({ data }: TopicProps) {
         onClose={() => setOpen(false)}
         contentId={data.id}
       />
+
+      <Lazy>
+        <Comments id={data.id} />
+      </Lazy>
     </>
   )
 }
