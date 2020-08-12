@@ -77,6 +77,7 @@ export function Exercise({ node }: ExerciseProps) {
                 type: '_SolutionInline',
                 id: node.context.solutionId!,
                 parentId: node.context.id,
+                grouped: node.grouped,
               }}
             />
           )}

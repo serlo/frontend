@@ -9,6 +9,7 @@ export interface AuthorToolsData {
   revisionId?: number
   parentId?: number
   courseId?: number
+  grouped?: boolean
 }
 
 export interface AuthorToolsHoverMenuProps {
@@ -176,7 +177,9 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
               noCSR
             >
               <SubButtonStyle>
-                Diesen Inhalt zu einem anderen Überelement verschieben
+                Diesen Inhalt zu einem anderen Überelement (
+                {data.grouped ? 'grouped-text-exercise' : 'text-exercise'})
+                verschieben
               </SubButtonStyle>
             </SubLink>
           </Li>
@@ -217,7 +220,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
       >
         <Li>
           <SubLink as="div">
-            <SubButtonStyle>Abonnieren</SubButtonStyle>
+            <SubButtonStyle>Abonnieren (?)</SubButtonStyle>
           </SubLink>
         </Li>
       </Tippy>
