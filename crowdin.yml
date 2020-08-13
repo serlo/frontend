@@ -1,5 +1,5 @@
 'preserve_hierarchy': false
-'export_languages': ['de', 'en', 'fr', 'es', 'ta', 'hi']
+'export_languages': ['de', 'en', 'fr', 'es-ES', 'ta', 'hi']
 
 'files':
   [
