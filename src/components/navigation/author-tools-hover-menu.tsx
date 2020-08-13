@@ -28,6 +28,11 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
           </SubLink>
         </Li>
         {log()}
+        <Li>
+          <SubLink href={`/page/update/${data.id}`} noCSR>
+            <SubButtonStyle>Einstellungen</SubButtonStyle>
+          </SubLink>
+        </Li>
       </HoverDiv>
     )
   }
