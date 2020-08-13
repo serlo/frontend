@@ -88,7 +88,7 @@ export function Comments({ id: _id }: CommentsProps) {
   if (!data) return null
 
   /* TODO: calculate amount of comments (+children) or get from server */
-  const commentCount = 2
+  const commentCount = 1
 
   return (
     <div>
@@ -107,7 +107,7 @@ export function Comments({ id: _id }: CommentsProps) {
           <CustomH2>
             {/* i18n Note: Pluralisation hack */}
             <StyledIcon icon={faComments} /> {commentCount}{' '}
-            {commentCount === 2
+            {commentCount === 1
               ? strings.comments.commentsOne
               : strings.comments.commentsMany}
           </CustomH2>
