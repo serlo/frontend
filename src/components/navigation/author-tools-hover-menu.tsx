@@ -22,7 +22,11 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
       <HoverDiv>
         {abo()}
         {convert()}
-        {history()}
+        <Li>
+          <SubLink href={`/page/revision/revisions/${data.id}`} noCSR>
+            <SubButtonStyle>Bearbeitungsverlauf</SubButtonStyle>
+          </SubLink>
+        </Li>
         {log()}
       </HoverDiv>
     )
@@ -240,7 +244,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
   function history(id = data.id) {
     return (
       <Li>
-        <SubLink href={`/page/revision/revisions/${id}`} noCSR>
+        <SubLink href={`/entity/repository/history/${id}`} noCSR>
           <SubButtonStyle>Bearbeitungsverlauf</SubButtonStyle>
         </SubLink>
       </Li>
