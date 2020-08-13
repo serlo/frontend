@@ -6,7 +6,7 @@ import { SendProps } from './comment-form'
 import { MetaBar } from './meta-bar'
 
 interface CommentProps extends Comment {
-  leaf?: boolean
+  isParent?: boolean
   onSendComment?: (props: SendProps) => void
 }
 
@@ -35,20 +35,20 @@ export function Comment({
   body,
   children,
   timestamp,
-  leaf,
+  isParent,
   onSendComment,
 }: CommentProps) {
   return (
-    <Wrapper leaf={leaf}>
-      <MetaBar user={user} timestamp={timestamp} />
+    <Wrapper isParent={isParent}>
+      <MetaBar user={user} timestamp={timestamp} isParent={isParent} />
       <StyledP>{body}</StyledP>
     </Wrapper>
   )
 }
 
-const Wrapper = styled.div<{ leaf?: boolean }>`
+const Wrapper = styled.div<{ isParent?: boolean }>`
   ${(props) =>
-    props.leaf &&
+    !props.isParent &&
     css`
       border-left: 7px solid
         ${(props) => props.theme.colors.lightBlueBackground};

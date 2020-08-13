@@ -1,10 +1,4 @@
-import {
-  faUser,
-  faCaretDown,
-  faCheck,
-  faFlag,
-  faTrash,
-} from '@fortawesome/free-solid-svg-icons'
+import { faUser, faCaretDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Tippy from '@tippyjs/react'
 import * as React from 'react'
@@ -15,33 +9,18 @@ import * as timeago from 'timeago.js'
 // eslint-disable-next-line import/no-internal-modules
 import de from 'timeago.js/lib/lang/de'
 
+import { DropdownMenu } from './dropdown-menu'
 import { makeDefaultButton, makeMargin, inputFontReset } from '@/helper/css'
 
 // register it.
 timeago.register('de', de)
 
-const renderItems = (leaf: boolean | undefined, eventDate: Date) => (
-  <DropContent>
-    <DropContentButton>
-      <FontAwesomeIcon icon={faFlag} /> Diskussion melden
-    </DropContentButton>
-    {leaf ? null : (
-      <DropContentButton>
-        <FontAwesomeIcon icon={faCheck} /> Diskussion archivieren
-      </DropContentButton>
-    )}
-    <DropContentButton>
-      <FontAwesomeIcon icon={faTrash} /> Diskussion löschen
-    </DropContentButton>
-    {/* TODO: i18n */}
-    <Time>Gepostet am {eventDate.toLocaleString('de-DE')}</Time>
-  </DropContent>
-)
-
 export function MetaBar({
+  isParent,
   user,
   timestamp,
 }: {
+  isParent?: boolean
   user: { username: string; id: number }
   timestamp: number
 }) {
@@ -55,7 +34,7 @@ export function MetaBar({
 
       <Tippy
         interactive
-        content={renderItems(false, eventDate)}
+        content={<DropdownMenu isParent={isParent} eventDate={eventDate} />}
         placement="bottom-end"
       >
         <TimeAgoButton title={eventDate.toLocaleString('de-DE')}>

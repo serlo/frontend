@@ -6,6 +6,7 @@ import TextareaAutosize from 'react-textarea-autosize'
 import styled from 'styled-components'
 
 import { makeDefaultButton, inputFontReset, makeMargin } from '@/helper/css'
+import { useInstanceData } from '@/contexts/instance-context'
 
 export interface SendProps {
   entity_id: string
@@ -29,6 +30,7 @@ export function CommentForm({
   reply,
 }: CommentFormProps) {
   const [commentValue, setCommentValue] = React.useState('')
+  const { strings } = useInstanceData()
 
   return (
     <StyledBox>
@@ -40,7 +42,7 @@ export function CommentForm({
         placeholder={placeholder}
       />
       <SendButton
-        title="Abschicken"
+        title={strings.comments.submit}
         // onClick={
         //   onSendComment
         //     ? () =>

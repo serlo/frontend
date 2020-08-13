@@ -7,6 +7,7 @@ import { Comment } from './comment'
 import { CommentForm } from './comment-form'
 import { Lazy } from '@/components/content/lazy'
 import { StyledH2 } from '@/components/tags/styled-h2'
+import { useInstanceData } from '@/contexts/instance-context'
 
 export interface CommentsProps {
   id: number
@@ -37,6 +38,8 @@ export interface CommentData {
 
 export function Comments({ id: _id }: CommentsProps) {
   const [data, setData] = React.useState<CommentsData | null>(null)
+  const { strings } = useInstanceData()
+
   React.useEffect(() => {
     // todo: fetch data
     setData([
@@ -52,20 +55,29 @@ export function Comments({ id: _id }: CommentsProps) {
         question: {
           id: 6666,
           timestamp: 1597314547,
-          user: { username: 'Markus', id: 123 },
+          user: {
+            username: 'Markus',
+            id: 123,
+          },
           text: 'hey, Ich habe da so eine Frage',
         },
         replies: [
           {
             id: 7777,
             timestamp: 1597314547,
-            user: { username: 'Thomas', id: 124 },
+            user: {
+              username: 'Thomas',
+              id: 124,
+            },
             text: 'Schieß los',
           },
           {
             id: 7778,
             timestamp: 1597344547,
-            user: { username: 'Jürgen', id: 125 },
+            user: {
+              username: 'Anita',
+              id: 125,
+            },
             text: 'Ja das stimmt so!',
           },
         ],
@@ -75,24 +87,34 @@ export function Comments({ id: _id }: CommentsProps) {
 
   if (!data) return null
 
+  /* TODO: calculate amount of comments (+children) or get from server */
+  const commentCount = 2
+
   return (
     <div>
       <CustomH2>
-        <StyledIcon icon={faQuestionCircle} /> Hast du eine Frage?
+        <StyledIcon icon={faQuestionCircle} /> {strings.comments.question}
       </CustomH2>
 
       <CommentForm
-        placeholder="Deine Frage oder Anregung …"
+        placeholder={strings.comments.placeholder}
         parent_id={123123}
         // onSendComment={}
       />
 
-      {/* TODO: calculate amount of comments (and children) or get from server */}
-      <CustomH2>
-        <StyledIcon icon={faComments} /> 12 Kommentare
-      </CustomH2>
+      {commentCount > 0 && (
+        <>
+          <CustomH2>
+            {/* i18n Note: Pluralisation hack */}
+            <StyledIcon icon={faComments} /> {commentCount}{' '}
+            {commentCount === 2
+              ? strings.comments.commentsOne
+              : strings.comments.commentsMany}
+          </CustomH2>
 
-      <Lazy>{data.map(buildDisussion)}</Lazy>
+          <Lazy>{data.map(buildDisussion)}</Lazy>
+        </>
+      )}
     </div>
   )
 
@@ -107,7 +129,13 @@ export function Comments({ id: _id }: CommentsProps) {
           Status: {discussion.status}, Upvotes: {discussion.upvotes}
         </p>
         <p>hier Link zu upvoten</p> */}
-        {buildComment(discussion.question)}
+        <Comment
+          id={discussion.question.id}
+          timestamp={discussion.question.timestamp}
+          user={discussion.question.user}
+          body={discussion.question.text}
+          isParent
+        />
         <div>
           {discussion.replies.map((comment) => (
             <Comment
@@ -116,27 +144,15 @@ export function Comments({ id: _id }: CommentsProps) {
               timestamp={comment.timestamp}
               user={comment.user}
               body={comment.text}
-              leaf
             />
           ))}
           <CommentForm
-            placeholder="Deine Frage oder Anregung …"
+            placeholder={strings.comments.placeholderReply}
             parent_id={123123}
             reply
           />
         </div>
       </div>
-    )
-  }
-
-  function buildComment(comment: CommentData) {
-    return (
-      <Comment
-        id={comment.id}
-        timestamp={comment.timestamp}
-        user={comment.user}
-        body={comment.text}
-      />
     )
   }
 }
