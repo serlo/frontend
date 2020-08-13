@@ -196,6 +196,12 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
           curriculum()
         )}
 
+        <Li>
+          <SubLink href={`/entity/license/update/${data.id}`} noCSR>
+            <SubButtonStyle>Lizenz auswählen</SubButtonStyle>
+          </SubLink>
+        </Li>
+
         {flag()}
         {log()}
         {trash()}
