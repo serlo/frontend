@@ -1,6 +1,5 @@
 import { headerData, footerData } from './menu-data';
-import { InstanceData, ServerSideStrings, LoggedInData, InstanceLandingData } from '@/data-types';
-export const instanceData: InstanceData = {
+export const instanceData = {
   lang: 'en',
   headerData: headerData,
   footerData: footerData,
@@ -13,7 +12,7 @@ export const instanceData: InstanceData = {
     footer: {
       summaryHeading: 'Serlo.org is the Wikipedia for learning.',
       summaryText: 'We are a community of visionaries working tirelessly to make great education freely available to everyone.',
-      learnMore: "Mehr Erfahren",
+      learnMore: 'Learn more',
       participate: 'Join the cause',
       donate: 'Donate',
       toTop: 'To Top'
@@ -25,6 +24,12 @@ export const instanceData: InstanceData = {
       applet: 'Applet',
       folder: 'Folder',
       exercises: 'Exercises'
+    },
+    entities: {
+      topicFolder: 'Exercise folder',
+      comment: 'Comment',
+      revision: 'Revision',
+      thread: 'Thread'
     },
     share: {
       button: 'Share',
@@ -43,9 +48,6 @@ export const instanceData: InstanceData = {
       showPages: 'Show course overview',
       pages: 'Course overview',
       next: 'Next'
-    },
-    taxonomy: {
-      topicFolder: 'Exercise folder'
     },
     content: {
       show: 'show',
@@ -66,36 +68,41 @@ export const instanceData: InstanceData = {
       link1: 'Privacy Policy',
       link2: 'Terms of use',
       button: 'Agree'
+    },
+    notifications: {
+      notifications: 'Notifications',
+      pleaseLogInLink: 'Bitte melde dich an',
+      pleaseLogInText: 'um deine Benachrichtigungen zu sehen.'
     }
   }
 };
-export const instanceLandingData: InstanceLandingData = {
+export const instanceLandingData = {
   lang: 'en',
   strings: {
-    vision: "हम नॉनप्रॉफिट आर्गेनाइजेशन संगठन हैं जो व्यक्तिगत शिक्षा का समर्थन करते हैं और समान शैक्षणिक अवसरों के लिए काम करते हैं। यह सीखने का मंच दुनिया भर के लाखों छात्रों के लिए हजारों निर्देशक लेख, वीडियो के माध्यम से सीखना और अभ्यास प्रदान करता है - पूरी तरह से नि: शुल्क। अब हिंदी में हमसे जुड़ने का समय है।",
-    learnMore: "और जानो",
-    democraticallyStructured: "लोकतांत्रिक",
-    nonProfit: "नॉनप्रॉफिट",
-    transparent: "पारदर्शक",
-    openlyLicensed: "खुले तौर पर लाइसेंस प्राप्त",
-    adFree: "विज्ञापन मुक्त",
-    freeOfCharge: "निःशुल्क",
-    wikiTitle: "सेर्लो सीखने के लिए विकिपीडिया है।",
-    wikiText: "विकिपीडिया की तरह, यह मंच लेखकों के एक व्यस्त समुदाय द्वारा बनाया गया है। सेर्लो शिक्षा पूरी दुनिया में स्वयंसेवकों और पेशेवरों की विकेन्द्रीकृत टीमों द्वारा संचालित और स्वामित्व में है।",
-    movementTitle: "ओपन एजुकेशन के लिए हमारे आंदोलन का एक हिस्सा बनें",
-    callForAuthors: "हम उत्साही शिक्षकों की तलाश में हैं जो अपने विषय के बारे में भावुक हैं। Serlo.org पर एक लेखक बनें! आप नई सीखने की सामग्री बना सकते हैं और मौजूदा सामग्री को बेहतर बनाने में हमारी सहायता कर सकते हैं।",
-    communityLink: "लेखकों के लिए लैंडिंग पृष्ठ पर जाएं",
-    callForOther: "हम सॉफ्टवेयर विकास, डिजाइन, अनुवाद, संचार, परियोजना प्रबंधन और अन्य क्षेत्रों के क्षेत्र में नौकरियों और स्वयंसेवी अवसरों की विविध श्रेणी प्रदान करते हैं।",
-    getInvolved: "सेर्लो में शामिल हो जाएं"
+    vision: 'It is our vision to enable personalized learning and provide high quality educational resources worldwide – completely free of charge. Serlo is a grassroots organization inspired by Wikipedia. We already provide thousands of articles, videos and solved exercises for five million German students every year. Now it’s time to go international.',
+    learnMore: 'Learn more',
+    democraticallyStructured: 'democratically structured',
+    nonProfit: 'non-profit',
+    transparent: 'transparent',
+    openlyLicensed: 'openly licensed',
+    adFree: 'ad-free',
+    freeOfCharge: 'free of charge',
+    wikiTitle: 'Serlo is the Wikipedia for Learning',
+    wikiText: 'Just like Wikipedia, this platform is created by an engaged community of authors. Serlo Education is run and owned by decentralized teams of volunteers and professionals all over the world.',
+    movementTitle: 'Become a Part of Our Movement for Open Education',
+    callForAuthors: 'We are looking for teachers and enthusiastic educators who are passionate about their subject. Become part of our community to create new learning material and help us improve existing content.',
+    communityLink: 'Visit the landing page for authors',
+    callForOther: 'We offer a diverse range of jobs and volunteering opportunities in the fields of software development, design, translation, communications, project management and more.',
+    getInvolved: 'Get involved!'
   }
 };
-export const serverSideStrings: ServerSideStrings = {
+export const serverSideStrings = {
   title: 'learn with Serlo!'
 };
-export const loggedInData: LoggedInData = {
+export const loggedInData = {
   authMenu: [{
     url: '/user/notifications',
-    title: "Notifications",
+    title: 'Notifications',
     icon: 'notifications'
   }, {
     url: '',
@@ -119,6 +126,44 @@ export const loggedInData: LoggedInData = {
     }]
   }],
   strings: {
-    tools: "Weitere Tools"
+    tools: 'Other Tools',
+    notifications: {
+      loadMore: 'Weitere laden',
+      unknownProblem: 'Es gibt ein Problem beim laden der Benachrichtigungen, bitte versuche es später noch einmal.',
+      loading: 'Benachrichtigungen werden geladen',
+      hide: 'Benachrichtigungen für diesen Inhalt nicht mehr anzeigen.',
+      setThreadStateArchived: '%actor% hat einen %thread% archiviert.',
+      setThreadStateUnarchived: '%actor% hat einen %thread% unarchiviert.',
+      createComment: '%actor% hat einen %comment% in einem %thread% erstellt.',
+      createThread: '%actor% hat einen %thread% in einem %object% erstellt.',
+      createEntity: '%actor% hat %object% erstellt.',
+      setLicense: '%actor% hat die Lizenz von %repository% geändert.',
+      createEntityLink: '%actor% hat %child% mit %parent% verknüpft.',
+      removeEntityLink: '%actor% hat die Verknüpfung von %child% mit %parent% entfernt.',
+      createEntityRevision: '%actor% hat eine %revision% von %entity% erstellt.',
+      checkoutRevision: '%actor% hat eine %revision% von %repository% übernommen.',
+      rejectRevision: '%actor% hat %revision% für %repository% abgelehnt.',
+      createTaxonomyLink: '%actor% hat %child% in %parent% eingeordnet.',
+      removeTaxonomyLink: '%actor% hat %child% aus %parent% entfernt.',
+      createTaxonomyTerm: '%actor% hat den %term% erstellt.',
+      setTaxonomyTerm: '%actor% hat den %term% geändert.',
+      setTaxonomyParentDeleted: '%actor% hat den Elternknoten von %child% entfernt.',
+      setTaxonomyParentChangedFrom: '%actor% hat den Elternknoten von %child% von %previousparent% auf %parent% geändert.',
+      setTaxonomyParentChanged: '%actor% hat den Elternknoten von %child% auf %parent% geändert.',
+      setUuidStateTrashed: '%actor% hat %object% in den Papierkorb verschoben.',
+      setUuidStateRestored: '%actor% hat %object% aus dem Papierkorb wieder hergestellt.',
+      entityPlaceholderPage: 'Seite',
+      entityPlaceholderArticle: 'Artikel',
+      entityPlaceholderVideo: 'Video',
+      entityPlaceholderApplet: 'Applet',
+      entityPlaceholderCoursePage: 'Kursseite',
+      entityPlaceholderExercise: 'Aufgabe',
+      entityPlaceholderGroupedExercise: 'gruppierte Aufgabe',
+      entityPlaceholderExerciseGroup: 'Aufgabengruppe',
+      entityPlaceholderEvent: 'Event',
+      entityPlaceholderCourse: 'Kurs',
+      entityPlaceholderTaxonomyTerm: 'Begriff',
+      entityPlaceholderFallback: 'Inhalt'
+    }
   }
 };
