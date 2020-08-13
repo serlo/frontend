@@ -1,5 +1,9 @@
-import type { GraphiQLProps } from 'graphiql/esm/components/GraphiQL'
+import type {
+  FetcherResult,
+  GraphiQLProps,
+} from 'graphiql/esm/components/GraphiQL'
 import { GraphQLError } from 'graphql'
+import { GraphQLResponse } from 'graphql-request/dist/types'
 import { NextPage } from 'next'
 import dynamic from 'next/dynamic'
 import { createGlobalStyle } from 'styled-components'
@@ -1734,7 +1738,6 @@ const GraphQL: NextPage = () => {
       <GraphiQL
         fetcher={async function fetcher(params) {
           const data = await executeQuery()
-          //@ts-expect-error
           const error = data.errors?.[0] as
             | (GraphQLError & {
                 extensions: {
@@ -1766,10 +1769,7 @@ const GraphQL: NextPage = () => {
               body: JSON.stringify(params),
               credentials: 'same-origin',
             })
-            //TODO: Import GraphQLResponse
-            return (await response.json()) as unknown & {
-              data: unknown
-            }
+            return (await response.json()) as FetcherResult & GraphQLResponse
           }
         }}
       />
