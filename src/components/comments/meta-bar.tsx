@@ -64,21 +64,6 @@ const UserLink = styled.a`
   font-weight: bold;
 `
 
-const DropContent = styled.div`
-  text-align: right;
-  background-color: ${(props) => props.theme.colors.lightBackground};
-  padding: 12px 15px 12px 10px;
-  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px;
-  max-width: 250px;
-  border-radius: 10px;
-`
-
-const DropContentButton = styled.button`
-  ${makeDefaultButton}
-  ${inputFontReset}
-  margin-bottom: 0.2rem;
-`
-
 const MetaBarBox = styled.div`
   ${makeMargin}
   color: #222;
@@ -86,11 +71,4 @@ const MetaBarBox = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-`
-
-const Time = styled.span`
-  display: block;
-  font-size: 0.8rem;
-  margin-top: 15px;
-  color: ${(props) => props.theme.colors.gray};
 `

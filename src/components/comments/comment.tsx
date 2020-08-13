@@ -30,14 +30,14 @@ interface Entity {
 }
 
 export function Comment({
-  id,
+  // id,
   user,
   body,
-  children,
+  // children,
   timestamp,
   isParent,
-  onSendComment,
-}: CommentProps) {
+}: // onSendComment,
+CommentProps) {
   return (
     <Wrapper isParent={isParent}>
       <MetaBar user={user} timestamp={timestamp} isParent={isParent} />

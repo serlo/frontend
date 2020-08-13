@@ -5,8 +5,8 @@ import * as React from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
 import styled from 'styled-components'
 
-import { makeDefaultButton, inputFontReset, makeMargin } from '@/helper/css'
 import { useInstanceData } from '@/contexts/instance-context'
+import { makeDefaultButton, inputFontReset, makeMargin } from '@/helper/css'
 
 export interface SendProps {
   entity_id: string
@@ -25,8 +25,8 @@ interface CommentFormProps {
 
 export function CommentForm({
   placeholder,
-  parent_id,
-  onSendComment,
+  // parent_id,
+  // onSendComment,
   reply,
 }: CommentFormProps) {
   const [commentValue, setCommentValue] = React.useState('')
