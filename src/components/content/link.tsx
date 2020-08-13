@@ -33,6 +33,7 @@ const legacyLinks = [
   '/event/history/user/me',
   '/beitreten',
   '/event/history',
+  '/discussions',
 ]
 
 export function Link({
