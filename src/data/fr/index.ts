@@ -1,124 +1,169 @@
 import { headerData, footerData } from './menu-data';
-import { InstanceData, ServerSideStrings, LoggedInData, InstanceLandingData } from '@/data-types';
-export const instanceData: InstanceData = {
-  lang: "fr",
+export const instanceData = {
+  lang: 'en',
   headerData: headerData,
   footerData: footerData,
   strings: {
     header: {
-      slogan: "La plateforme d'apprentissage libre",
-      search: "Recherche",
-      login: "Se connecter"
+      slogan: 'The Open Learning Platform',
+      search: 'Search',
+      login: 'Login'
     },
     footer: {
-      summaryHeading: "Serlo.org est le Wikipedia pour l'apprentissage.",
-      summaryText: "Nous sommes une communauté de visionnaires qui travaille sans relâche pour offrir une éducation gratuite et accessible à tous.",
-      learnMore: "En savoir plus",
-      participate: "Rejoignez-nous",
-      donate: "Faire un don",
-      toTop: "En haut"
+      summaryHeading: 'Serlo.org is the Wikipedia for learning.',
+      summaryText: 'We are a community of visionaries working tirelessly to make great education freely available to everyone.',
+      learnMore: 'Learn more',
+      participate: 'Join the cause',
+      donate: 'Donate',
+      toTop: 'To Top'
     },
     categories: {
       article: 'Article',
-      course: "Cours",
-      video: "Vidéo",
+      course: 'Course',
+      video: 'Video',
       applet: 'Applet',
-      folder: "Dossier",
-      exercises: "Exercices"
+      folder: 'Folder',
+      exercises: 'Exercises'
+    },
+    entities: {
+      topicFolder: 'Exercise folder',
+      comment: 'Comment',
+      revision: 'Revision',
+      thread: 'Thread'
     },
     share: {
-      button: "Partager",
-      title: "Partager",
-      copyLink: "Copier le lien",
-      copySuccess: "Lien copié!",
-      close: "Fermer"
+      button: 'Share',
+      title: 'Share!',
+      copyLink: 'Copy link',
+      copySuccess: 'Link copied! ',
+      close: 'Close'
     },
     edit: {
-      button: "Modifier"
+      button: 'Edit'
     },
     license: {
-      readMore: "Information"
+      readMore: 'Info'
     },
     course: {
-      showPages: "Afficher la vue globale du cours",
-      pages: "Vue globale du cours",
-      next: "Suivant"
-    },
-    taxonomy: {
-      topicFolder: "Dossie d'éxercices"
+      showPages: 'Show course overview',
+      pages: 'Course overview',
+      next: 'Next'
     },
     content: {
-      show: "montrer",
-      hide: "cacher",
-      prerequisite: "Pour cet éxercice tu as besoin des connaissances de base suivantes:",
+      show: 'show',
+      hide: 'hide',
+      prerequisite: 'For this task you need the following basic knowledge:',
       solution: 'Solution',
-      exerciseGroup: "Groupe d'exercices",
-      right: "Correct",
-      wrong: "Incorrect",
-      check: "Vérifier",
-      yourAnswer: "Votre réponse...",
-      chooseOption: "Sélectionnez une des options :"
+      exerciseGroup: 'Exercise group',
+      right: 'Right',
+      wrong: 'Wrong',
+      check: 'Check',
+      yourAnswer: 'Your answer…',
+      chooseOption: 'Click on one of the options.'
     },
     cookie: {
-      part1: "En utilisant ce site Web, vous déclarez que vous acceptez",
-      part2: "et",
+      part1: 'By using this website you declare that you agree with our',
+      part2: 'and',
       part3: '.',
-      link1: "notre politique de confidentialitéPrivacy Policy",
-      link2: "nos conditions d'utilisation.",
-      button: "Je suis d'accord"
+      link1: 'Privacy Policy',
+      link2: 'Terms of use',
+      button: 'Agree'
+    },
+    notifications: {
+      notifications: 'Notifications',
+      pleaseLogInLink: 'Bitte melde dich an',
+      pleaseLogInText: 'um deine Benachrichtigungen zu sehen.'
     }
   }
 };
-export const instanceLandingData: InstanceLandingData = {
+export const instanceLandingData = {
   lang: "fr",
   strings: {
-    vision: "Nous sommes une organisation communautaire à but non lucratif supportant l'apprentissage personnalisé et travaillant à la réalisation d'opportunités éducatives égales. Cette plateforme propose des milliers d'articles d'instruction, des vidéos pédagogiques et des exercices pratiques aux millions d'étudiant(e)s et d'élèves dans le monde entier - complètement gratuit. Maintenant, vous êtes invité de joindre l'équipe Serlo francophone.",
-    learnMore: "En savoir plus",
-    democraticallyStructured: "structure démocratique",
-    nonProfit: "non-lucratif",
+    vision: 'It is our vision to enable personalized learning and provide high quality educational resources worldwide – completely free of charge. Serlo is a grassroots organization inspired by Wikipedia. We already provide thousands of articles, videos and solved exercises for five million German students every year. Now it’s time to go international.',
+    learnMore: 'Learn more',
+    democraticallyStructured: 'democratically structured',
+    nonProfit: 'non-profit',
     transparent: 'transparent',
-    openlyLicensed: "licence libre",
-    adFree: "sans publicité",
-    freeOfCharge: "gratuit",
-    wikiTitle: "Serlo est le Wikipédia pour l'apprentissage",
-    wikiText: "Tout comme Wikipédia, cette plateforme est créée par une communauté d'auteurs engagé(e)s. Serlo Education est gérée et détenue par des équipes décentralisées de bénévoles et de professionnels dans le monde entier.",
-    movementTitle: "Rejoignez notre mouvement pour l'éducation libre",
-    callForAuthors: "Nous cherchons des enseignant(e)s et des éducateur(e)s enthousiastes et passionné(e)s de leur matière. Devenez un(e) auteur sur serlo.org ! Vous pouvez créer du nouveau matériel pédagogique et nous aider à améliorer le contenu existant.",
-    communityLink: "Visitez la page d'accueil d'auteurs",
-    callForOther: "Nous offrons une variété d'emplois et de possibilités de bénévolat dans les domaines du développement de logiciel, de la conception, la traduction, la communication, la gestion de projet et d'autres.",
-    getInvolved: "Participe!"
+    openlyLicensed: 'openly licensed',
+    adFree: 'ad-free',
+    freeOfCharge: 'free of charge',
+    wikiTitle: 'Serlo is the Wikipedia for Learning',
+    wikiText: 'Just like Wikipedia, this platform is created by an engaged community of authors. Serlo Education is run and owned by decentralized teams of volunteers and professionals all over the world.',
+    movementTitle: 'Become a Part of Our Movement for Open Education',
+    callForAuthors: 'We are looking for teachers and enthusiastic educators who are passionate about their subject. Become part of our community to create new learning material and help us improve existing content.',
+    communityLink: 'Visit the landing page for authors',
+    callForOther: 'We offer a diverse range of jobs and volunteering opportunities in the fields of software development, design, translation, communications, project management and more.',
+    getInvolved: 'Get involved!'
   }
 };
-export const serverSideStrings: ServerSideStrings = {
-  title: "Apprendre avec Serlo!"
+export const serverSideStrings = {
+  title: 'learn with Serlo!'
 };
-export const loggedInData: LoggedInData = {
+export const loggedInData = {
   authMenu: [{
     url: '/user/notifications',
-    title: "Notifications",
+    title: 'Notifications',
     icon: 'notifications'
   }, {
     url: '',
-    title: "Utilisateur",
+    title: 'User',
     icon: 'user',
     children: [{
       url: '/user/public',
-      title: "Profil public"
+      title: 'Public profile'
     }, {
       url: '/user/settings',
-      title: "Éditer profil"
+      title: 'Edit profile'
     }, {
       url: '/auth/password/change',
-      title: "mettre à jour le mot de passe"
+      title: 'Change password'
     }, {
       url: '/event/history/user/me',
-      title: "Activités récentes"
+      title: 'Recent activities'
     }, {
       url: '/api/auth/logout',
-      title: "Se déconnecter"
+      title: 'Log out'
     }]
   }],
   strings: {
-    tools: "Autres outils"
+    tools: 'Other Tools',
+    notifications: {
+      loadMore: 'Weitere laden',
+      unknownProblem: 'Es gibt ein Problem beim laden der Benachrichtigungen, bitte versuche es später noch einmal.',
+      loading: 'Benachrichtigungen werden geladen',
+      hide: 'Benachrichtigungen für diesen Inhalt nicht mehr anzeigen.',
+      setThreadStateArchived: '%actor% hat einen %thread% archiviert.',
+      setThreadStateUnarchived: '%actor% hat einen %thread% unarchiviert.',
+      createComment: '%actor% hat einen %comment% in einem %thread% erstellt.',
+      createThread: '%actor% hat einen %thread% in einem %object% erstellt.',
+      createEntity: '%actor% hat %object% erstellt.',
+      setLicense: '%actor% hat die Lizenz von %repository% geändert.',
+      createEntityLink: '%actor% hat %child% mit %parent% verknüpft.',
+      removeEntityLink: '%actor% hat die Verknüpfung von %child% mit %parent% entfernt.',
+      createEntityRevision: '%actor% hat eine %revision% von %entity% erstellt.',
+      checkoutRevision: '%actor% hat eine %revision% von %repository% übernommen.',
+      rejectRevision: '%actor% hat %revision% für %repository% abgelehnt.',
+      createTaxonomyLink: '%actor% hat %child% in %parent% eingeordnet.',
+      removeTaxonomyLink: '%actor% hat %child% aus %parent% entfernt.',
+      createTaxonomyTerm: '%actor% hat den %term% erstellt.',
+      setTaxonomyTerm: '%actor% hat den %term% geändert.',
+      setTaxonomyParentDeleted: '%actor% hat den Elternknoten von %child% entfernt.',
+      setTaxonomyParentChangedFrom: '%actor% hat den Elternknoten von %child% von %previousparent% auf %parent% geändert.',
+      setTaxonomyParentChanged: '%actor% hat den Elternknoten von %child% auf %parent% geändert.',
+      setUuidStateTrashed: '%actor% hat %object% in den Papierkorb verschoben.',
+      setUuidStateRestored: '%actor% hat %object% aus dem Papierkorb wieder hergestellt.',
+      entityPlaceholderPage: 'Seite',
+      entityPlaceholderArticle: 'Artikel',
+      entityPlaceholderVideo: 'Video',
+      entityPlaceholderApplet: 'Applet',
+      entityPlaceholderCoursePage: 'Kursseite',
+      entityPlaceholderExercise: 'Aufgabe',
+      entityPlaceholderGroupedExercise: 'gruppierte Aufgabe',
+      entityPlaceholderExerciseGroup: 'Aufgabengruppe',
+      entityPlaceholderEvent: 'Event',
+      entityPlaceholderCourse: 'Kurs',
+      entityPlaceholderTaxonomyTerm: 'Begriff',
+      entityPlaceholderFallback: 'Inhalt'
+    }
   }
 };
