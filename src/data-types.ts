@@ -27,21 +27,7 @@ export interface InitialProps {
 
 export interface InstanceData {
   lang: Instance | string
-  strings: typeof instanceData['strings']
-  // infere from english language file instead for convenience
-  // {
-  //   header: HeaderStrings
-  //   footer: FooterStrings
-  //   categories: CategoryStrings
-  //   entities: EntitiesStrings
-  //   share: ShareStrings
-  //   edit: EditStrings
-  //   license: LicenseStrings
-  //   course: CourseStrings
-  //   content: ContentStrings
-  //   cookie: CookieStrings
-  //   notifications: NotificationsStrings
-  // }
+  strings: typeof instanceData['strings'] //infer types from english language file
   headerData: HeaderData
   footerData: FooterData
 }
@@ -96,15 +82,6 @@ export interface FooterLink {
 }
 
 export type FooterIcon = 'newsletter' | 'github'
-
-export interface FooterStrings {
-  summaryHeading: string
-  summaryText: string
-  learnMore: string
-  participate: string
-  donate: string
-  toTop: string
-}
 
 // We have different types of pages, each with its own set of data:
 
@@ -545,30 +522,12 @@ export type FrontendContentNode =
   | FrontendElementNode
   | FrontendRestrictedElementNode
 
-// Some translations
-
-export interface ShareStrings {
-  button: string
-  title: string
-  copyLink: string
-  copySuccess: string
-  close: string
-}
-
-export interface EditStrings {
-  button: string
-}
-
 // A license notice.
 
 export interface LicenseData {
   title: string
   url: string // to to license
   id: number // of the license
-}
-
-export interface LicenseStrings {
-  readMore: string
 }
 
 // Data for a course page.
@@ -586,12 +545,6 @@ export interface CoursePageEntry {
   title: string
   url: string
   active?: boolean
-}
-
-export interface CourseStrings {
-  showPages: string
-  pages: string
-  next: string
 }
 
 // Taxonomy: Folders with other entities, sorted by category, first level of subfolders and exercises are shown directly
@@ -632,109 +585,7 @@ export interface TaxonomyData extends TaxonomyTermBase {
   exercisesContent: (FrontendExerciseNode | FrontendExerciseGroupNode)[]
 }
 
-// Entity types translations.
-
-export interface EntitiesStrings {
-  topicFolder: string
-  comment: string
-  revision: string
-  thread: string
-}
-
-// And some translations for content
-
-export interface ContentStrings {
-  hide: string
-  show: string
-  prerequisite: string
-  solution: string
-  exerciseGroup: string
-  right: string
-  wrong: string
-  check: string
-  yourAnswer: string
-  chooseOption: string
-}
-
-export interface CookieStrings {
-  part1: string
-  part2: string
-  part3: string
-  link1: string
-  link2: string
-  button: string
-}
-
-export interface NotificationsStrings {
-  notifications: string
-  pleaseLogInLink: string
-  pleaseLogInText: string
-}
-
-// export interface LandingStrings {
-//   vision: string
-//   learnMore: string
-//   democraticallyStructured: string
-//   nonProfit: string
-//   transparent: string
-//   openlyLicensed: string
-//   adFree: string
-//   freeOfCharge: string
-//   wikiTitle: string
-//   wikiText: string
-//   movementTitle: string
-//   callForAuthors: string
-//   communityLink: string
-//   callForOther: string
-//   getInvolved: string
-// }
-
 export interface LoggedInData {
   authMenu: HeaderData
   strings: typeof loggedInData['strings']
 }
-
-// export interface LoggedInStrings {
-//   tools: string
-//   notifications: {
-//     loadMore: string
-//     unknownProblem: string
-//     loading: string
-//     hide: string
-//     setThreadStateArchived: string
-//     setThreadStateUnarchived: string
-//     createComment: string
-//     createThread: string
-//     createEntity: string
-//     setLicense: string
-//     createEntityLink: string
-//     removeEntityLink: string
-//     createEntityRevision: string
-//     checkoutRevision: string
-//     rejectRevision: string
-//     createTaxonomyLink: string
-//     removeTaxonomyLink: string
-//     createTaxonomyTerm: string
-//     setTaxonomyTerm: string
-//     setTaxonomyParentDeleted: string
-//     setTaxonomyParentChangedFrom: string
-//     setTaxonomyParentChanged: string
-//     setUuidStateTrashed: string
-//     setUuidStateRestored: string
-//     entityPlaceholderPage: string
-//     entityPlaceholderArticle: string
-//     entityPlaceholderVideo: string
-//     entityPlaceholderApplet: string
-//     entityPlaceholderCoursePage: string
-//     entityPlaceholderExercise: string
-//     entityPlaceholderGroupedExercise: string
-//     entityPlaceholderExerciseGroup: string
-//     entityPlaceholderEvent: string
-//     entityPlaceholderCourse: string
-//     entityPlaceholderTaxonomyTerm: string
-//     entityPlaceholderFallback: string
-//   }
-// }
-
-// unused so far
-// export type ServerSideStrings = typeof serverSideStrings
