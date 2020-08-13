@@ -1,3 +1,6 @@
+// eslint-disable-next-line import/no-internal-modules
+import mergeDeepRight from 'ramda/src/mergeDeepRight'
+
 import {
   instanceData as deInstanceData,
   serverSideStrings as deServerSideStrings,
@@ -58,79 +61,76 @@ export function isOnLanguageSubdomain() {
 }
 
 export function getInstanceDataByLang(lang: string) {
-  let data = enInstanceData
-  if (lang == 'de') {
-    data = deInstanceData
-  }
-  if (lang == 'es') {
-    data = esInstanceData
-  }
-  if (lang == 'fr') {
-    data = frInstanceData
-  }
-  if (lang == 'ta') {
-    data = taInstanceData
-  }
-  if (lang == 'hi') {
-    data = hiInstanceData
-  }
-  return data
+  const enData = enInstanceData
+
+  const data =
+    lang == 'de'
+      ? deInstanceData
+      : lang == 'es'
+      ? esInstanceData
+      : lang == 'fr'
+      ? frInstanceData
+      : lang == 'ta'
+      ? taInstanceData
+      : lang == 'hi'
+      ? hiInstanceData
+      : enInstanceData
+
+  return mergeDeepRight(enData, data) as typeof enInstanceData
 }
 
 export function getServerSideStrings(lang: string) {
-  let data = enServerSideStrings
-  if (lang == 'de') {
-    data = deServerSideStrings
-  }
-  if (lang == 'es') {
-    data = esServerSideStrings
-  }
-  if (lang == 'fr') {
-    data = frServerSideStrings
-  }
-  if (lang == 'ta') {
-    data = taServerSideStrings
-  }
-  if (lang == 'hi') {
-    data = hiServerSideStrings
-  }
-  return data
+  const enData = enServerSideStrings
+
+  const data =
+    lang == 'de'
+      ? deServerSideStrings
+      : lang == 'es'
+      ? esServerSideStrings
+      : lang == 'fr'
+      ? frServerSideStrings
+      : lang == 'ta'
+      ? taServerSideStrings
+      : lang == 'hi'
+      ? hiServerSideStrings
+      : enServerSideStrings
+
+  return mergeDeepRight(enData, data) as typeof enServerSideStrings
 }
 
 export function getLandingData(lang: string) {
-  let data = enInstanceLandingData
-  // no de
-  if (lang == 'es') {
-    data = esInstanceLandingData
-  }
-  if (lang == 'fr') {
-    data = frInstanceLandingData
-  }
-  if (lang == 'ta') {
-    data = taInstanceLandingData
-  }
-  if (lang == 'hi') {
-    data = hiInstanceLandingData
-  }
-  return data
+  const enData = enInstanceLandingData
+
+  //no de, has custom landing page
+  const data =
+    lang == 'es'
+      ? esInstanceLandingData
+      : lang == 'fr'
+      ? frInstanceLandingData
+      : lang == 'ta'
+      ? taInstanceLandingData
+      : lang == 'hi'
+      ? hiInstanceLandingData
+      : enInstanceLandingData
+
+  return mergeDeepRight(enData, data) as typeof enInstanceLandingData
 }
 
 export function getLoggedInData(lang: string) {
-  let data = deLoggedInData
-  if (lang == 'en') {
-    data = enLoggedInData
-  }
-  if (lang == 'es') {
-    data = esLoggedInData
-  }
-  if (lang == 'fr') {
-    data = frLoggedInData
-  }
-  if (lang == 'ta') {
-    data = taLoggedInData
-  }
-  if (lang == 'hi') {
-    data = hiLoggedInData
-  }
-  return data
+  const enData = enLoggedInData
+
+  const data =
+    lang == 'de'
+      ? deLoggedInData
+      : lang == 'es'
+      ? esLoggedInData
+      : lang == 'fr'
+      ? frLoggedInData
+      : lang == 'ta'
+      ? taLoggedInData
+      : lang == 'hi'
+      ? hiLoggedInData
+      : enLoggedInData
+
+  return mergeDeepRight(enData, data) as typeof enLoggedInData
 }

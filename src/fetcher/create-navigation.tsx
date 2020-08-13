@@ -20,6 +20,7 @@ export function createNavigation(
   ) {
     return undefined
   }
+
   if (uuid.navigation?.data) {
     const data = uuid.navigation?.data as NavigationData
     return data.children?.flatMap((child) => {

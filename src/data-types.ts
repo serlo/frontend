@@ -1,4 +1,5 @@
 import { Instance } from './fetcher/query'
+import { instanceData, instanceLandingData, loggedInData } from '@/data/en'
 
 // This file describes the data structures that controls the frontend.
 
@@ -25,19 +26,8 @@ export interface InitialProps {
 // The frontend supports all languages that the backend supports.
 
 export interface InstanceData {
-  lang: Instance
-  strings: {
-    header: HeaderStrings
-    footer: FooterStrings
-    categories: CategoryStrings
-    share: ShareStrings
-    edit: EditStrings
-    license: LicenseStrings
-    course: CourseStrings
-    taxonomy: TaxonomyStrings
-    content: ContentStrings
-    cookie: CookieStrings
-  }
+  lang: Instance | string
+  strings: typeof instanceData['strings'] //infer types from english language file
   headerData: HeaderData
   footerData: FooterData
 }
@@ -93,15 +83,6 @@ export interface FooterLink {
 
 export type FooterIcon = 'newsletter' | 'github'
 
-export interface FooterStrings {
-  summaryHeading: string
-  summaryText: string
-  learnMore: string
-  participate: string
-  donate: string
-  toTop: string
-}
-
 // We have different types of pages, each with its own set of data:
 
 export type PageData =
@@ -124,7 +105,7 @@ export interface LandingPage {
 
 export interface InstanceLandingData {
   lang: string
-  strings: LandingStrings
+  strings: typeof instanceLandingData['strings']
 }
 
 // The same for donation, search and notifications page:
@@ -541,30 +522,12 @@ export type FrontendContentNode =
   | FrontendElementNode
   | FrontendRestrictedElementNode
 
-// Some translations
-
-export interface ShareStrings {
-  button: string
-  title: string
-  copyLink: string
-  copySuccess: string
-  close: string
-}
-
-export interface EditStrings {
-  button: string
-}
-
 // A license notice.
 
 export interface LicenseData {
   title: string
   url: string // to to license
   id: number // of the license
-}
-
-export interface LicenseStrings {
-  readMore: string
 }
 
 // Data for a course page.
@@ -582,12 +545,6 @@ export interface CoursePageEntry {
   title: string
   url: string
   active?: boolean
-}
-
-export interface CourseStrings {
-  showPages: string
-  pages: string
-  next: string
 }
 
 // Taxonomy: Folders with other entities, sorted by category, first level of subfolders and exercises are shown directly
@@ -628,63 +585,7 @@ export interface TaxonomyData extends TaxonomyTermBase {
   exercisesContent: (FrontendExerciseNode | FrontendExerciseGroupNode)[]
 }
 
-// Some translations for the taxonomy.
-
-export interface TaxonomyStrings {
-  topicFolder: string
-}
-
-// And some translations for content
-
-export interface ContentStrings {
-  hide: string
-  show: string
-  prerequisite: string
-  solution: string
-  exerciseGroup: string
-  right: string
-  wrong: string
-  check: string
-  yourAnswer: string
-  chooseOption: string
-}
-
-export interface CookieStrings {
-  part1: string
-  part2: string
-  part3: string
-  link1: string
-  link2: string
-  button: string
-}
-
-export interface LandingStrings {
-  vision: string
-  learnMore: string
-  democraticallyStructured: string
-  nonProfit: string
-  transparent: string
-  openlyLicensed: string
-  adFree: string
-  freeOfCharge: string
-  wikiTitle: string
-  wikiText: string
-  movementTitle: string
-  callForAuthors: string
-  communityLink: string
-  callForOther: string
-  getInvolved: string
-}
-
 export interface LoggedInData {
   authMenu: HeaderData
-  strings: LoggedInStrings
-}
-
-export interface LoggedInStrings {
-  tools: string
-}
-
-export interface ServerSideStrings {
-  title: string
+  strings: typeof loggedInData['strings']
 }

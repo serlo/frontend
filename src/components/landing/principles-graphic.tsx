@@ -1,7 +1,7 @@
-import { LandingStrings } from '@/data-types'
+import { InstanceLandingData } from '@/data-types'
 
 interface PrinciplesGraphicProps {
-  strings: LandingStrings
+  strings: InstanceLandingData['strings']
 }
 
 export function PrinciplesGraphic({ strings }: PrinciplesGraphicProps) {

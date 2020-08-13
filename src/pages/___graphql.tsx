@@ -1,6 +1,9 @@
-import type { GraphiQLProps } from 'graphiql/esm/components/GraphiQL'
+import type {
+  FetcherResult,
+  GraphiQLProps,
+} from 'graphiql/esm/components/GraphiQL'
 import { GraphQLError } from 'graphql'
-import { GraphQLResponse } from 'graphql-request/dist/src/types'
+import { GraphQLResponse } from 'graphql-request/dist/types'
 import { NextPage } from 'next'
 import dynamic from 'next/dynamic'
 import { createGlobalStyle } from 'styled-components'
@@ -1758,15 +1761,15 @@ const GraphQL: NextPage = () => {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
                 ...(auth.current
-                  ? { Authorization: `Bearer ${auth.current.token}` }
+                  ? {
+                      Authorization: `Bearer ${auth.current.token}`,
+                    }
                   : {}),
               },
               body: JSON.stringify(params),
               credentials: 'same-origin',
             })
-            return (await response.json()) as GraphQLResponse & {
-              data: unknown
-            }
+            return (await response.json()) as FetcherResult & GraphQLResponse
           }
         }}
       />
