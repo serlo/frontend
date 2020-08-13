@@ -1,65 +1,49 @@
-import { faUser } from '@fortawesome/free-solid-svg-icons'
+import {
+  faUser,
+  faCaretDown,
+  faCheck,
+  faFlag,
+  faTrash,
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Tippy from '@tippyjs/react'
 import * as React from 'react'
 import styled from 'styled-components'
-// import { Box } from 'grommet'
-// import { Button, DropButton } from '../button.component'
-// import * as moment from 'moment'
-// import { getColor } from '../provider.component'
 import TimeAgo from 'timeago-react'
 import * as timeago from 'timeago.js'
 //TODO: investigate, also move implementation to helper (used in notif) that loads languages when needed
 // eslint-disable-next-line import/no-internal-modules
 import de from 'timeago.js/lib/lang/de'
 
-import { makeDefaultButton, makeMargin } from '@/helper/css'
+import { makeDefaultButton, makeMargin, inputFontReset } from '@/helper/css'
+
 // register it.
 timeago.register('de', de)
 
-/*
-const renderItems = (leaf: boolean | undefined, timestamp: Date) => (
+const renderItems = (leaf: boolean | undefined, eventDate: Date) => (
   <DropContent>
+    <DropContentButton>
+      <FontAwesomeIcon icon={faFlag} /> Diskussion melden
+    </DropContentButton>
     {leaf ? null : (
-      <DropContentButton
-        label="Diskussion archivieren"
-        iconName="faCheck"
-        backgroundColor="transparent"
-        activeBackgroundColor={getColor('lightblue')}
-        fontColor={getColor('darkGray')}
-      />
+      <DropContentButton>
+        <FontAwesomeIcon icon={faCheck} /> Diskussion archivieren
+      </DropContentButton>
     )}
-    <DropContentButton
-      label="Diskussion melden"
-      iconName="faFlag"
-      backgroundColor="transparent"
-      activeBackgroundColor={getColor('lightblue')}
-      fontColor={getColor('darkGray')}
-    />
-    <DropContentButton
-      label="Diskussion löschen"
-      iconName="faTrash"
-      backgroundColor="transparent"
-      activeBackgroundColor={getColor('lightblue')}
-      fontColor={getColor('darkGray')}
-    />
-    <Time>
-      Gepostet am{' '}
-      {'' +
-        // @ts-ignore
-        moment(timestamp).locale('de').format('DD.MM.YYYY, HH:mm:ss ')}
-    </Time>
+    <DropContentButton>
+      <FontAwesomeIcon icon={faTrash} /> Diskussion löschen
+    </DropContentButton>
+    {/* TODO: i18n */}
+    <Time>Gepostet am {eventDate.toLocaleString('de-DE')}</Time>
   </DropContent>
 )
-*/
 
 export function MetaBar({
   user,
   timestamp,
-  leaf,
 }: {
   user: { username: string; id: number }
   timestamp: number
-  leaf: boolean | undefined
 }) {
   const eventDate = new Date(timestamp)
 
@@ -68,59 +52,53 @@ export function MetaBar({
       <UserLink href={`https://serlo.org/${user.id}`}>
         <FontAwesomeIcon icon={faUser} /> {user.username}
       </UserLink>
-      <span>
-        {/* <StyledDropButton
-          dropAlign={{ top: 'bottom', right: 'right' }}
-          dropContent={renderItems(leaf, timestamp)}
-          iconName="faCaretDown"
-          fontColor={getColor('lighterblue')}
-          activeFontColor={'#fff'}
-          backgroundColor="transparent"
-          activeBackgroundColor={getColor('lightblue')}
-          reverse
-          label={
-            '' +
-            // @ts-ignore
-            moment(timestamp).locale('de').startOf().fromNow()
-          }
-        /> */}
-        <span title={eventDate.toLocaleString('de-DE')}>
+
+      <Tippy
+        interactive
+        content={renderItems(false, eventDate)}
+        placement="bottom-end"
+      >
+        <TimeAgoButton title={eventDate.toLocaleString('de-DE')}>
           <StyledTimeAgo
             datetime={eventDate}
             locale="de"
             opts={{ minInterval: 60 }}
-          />
-        </span>
-      </span>
+          />{' '}
+          <FontAwesomeIcon icon={faCaretDown} />
+        </TimeAgoButton>
+      </Tippy>
     </MetaBarBox>
   )
 }
 
-// const Time = styled.span`
-//   font-size: 0.65rem;
-//   text-align: center;
-//   color: ${(props) => props.theme.colors.lighterblue};
-//   margin-top: 1rem;
-// `
+const StyledTimeAgo = styled(TimeAgo)``
 
-const StyledTimeAgo = styled(TimeAgo)`
-  font-size: 0.8rem;
-  color: ${(props) => props.theme.colors.gray};
+const TimeAgoButton = styled.button`
+  ${makeDefaultButton}
+  ${inputFontReset}
+  color: ${(props) => props.theme.colors.lightblue};
 `
 
 const UserLink = styled.a`
   ${makeDefaultButton}
+  font-size: 1.125rem;
   font-weight: bold;
 `
 
-// const DropContent = styled(Box)`
-//   background-color: ${(props) => props.theme.colors};
-//   padding: 1rem 0.5rem 0.5rem 0.5rem;
-// `
+const DropContent = styled.div`
+  text-align: right;
+  background-color: ${(props) => props.theme.colors.lightBackground};
+  padding: 12px 15px 12px 10px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px;
+  max-width: 250px;
+  border-radius: 10px;
+`
 
-// const DropContentButton = styled(Button)`
-//   margin-bottom: 0.2rem;
-// `
+const DropContentButton = styled.button`
+  ${makeDefaultButton}
+  ${inputFontReset}
+  margin-bottom: 0.2rem;
+`
 
 const MetaBarBox = styled.div`
   ${makeMargin}
@@ -129,12 +107,11 @@ const MetaBarBox = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  /* direction="row" justify="between" */
 `
 
-// const StyledDropButton = styled(DropButton)`
-//   > svg {
-//     width: 1.3rem;
-//     height: 1.3rem;
-//   }
-// `
+const Time = styled.span`
+  display: block;
+  font-size: 0.8rem;
+  margin-top: 15px;
+  color: ${(props) => props.theme.colors.gray};
+`
