@@ -11,6 +11,7 @@ export interface LinkProps {
   className?: string
   noExternalIcon?: boolean
   title?: string
+  noCSR?: boolean
 }
 
 //TODO: Should come from cloudflare worker https://github.com/serlo/frontend/issues/328
@@ -31,6 +32,8 @@ const legacyLinks = [
   '/auth/password/change',
   '/event/history/user/me',
   '/beitreten',
+  '/event/history',
+  '/discussions',
 ]
 
 export function Link({
@@ -39,6 +42,7 @@ export function Link({
   className,
   noExternalIcon,
   title,
+  noCSR,
 }: LinkProps) {
   //const prettyLinks = {}
   const { lang } = useInstanceData()
@@ -65,8 +69,7 @@ export function Link({
     displayHref.startsWith('user/profile/') ||
     displayHref.indexOf('.serlo.org') > -1 //e.g. community.serlo.org or different language
 
-  if (isExternal /* || (isAbsolute && prettyLink === undefined)*/)
-    return renderLink()
+  if (isExternal || noCSR) return renderLink()
 
   if (!isLegacyLink /* || prettyLink*/) return renderClientSide()
 

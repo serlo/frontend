@@ -30,7 +30,7 @@ export interface EntityWithTaxonomyTerms extends Entity {
 export interface Page extends Repository {
   __typename: 'Page'
   currentRevision?: GraphQL.Maybe<
-    Pick<GraphQL.PageRevision, 'title' | 'content'>
+    Pick<GraphQL.PageRevision, 'title' | 'content' | 'id'>
   >
   navigation?: GraphQL.Maybe<Pick<GraphQL.Navigation, 'data' | 'path'>>
 }
@@ -68,6 +68,7 @@ export interface CoursePage extends Entity {
     Pick<GraphQL.CoursePageRevision, 'content' | 'title'>
   >
   course: {
+    id: number
     currentRevision?: GraphQL.Maybe<Pick<GraphQL.CourseRevision, 'title'>>
     pages: {
       alias?: string
@@ -80,10 +81,12 @@ export interface CoursePage extends Entity {
 
 // We treat a grouped exercise just as a normal exercise.
 export interface BareExercise {
+  id: number
   currentRevision?: GraphQL.Maybe<
     Pick<GraphQL.AbstractExerciseRevision, 'content'>
   >
   solution?: {
+    id: number
     currentRevision?: GraphQL.Maybe<Pick<GraphQL.SolutionRevision, 'content'>>
     license: License
   }
@@ -206,6 +209,7 @@ export const dataQuery = gql`
 
       ... on Page {
         currentRevision {
+          id
           title
           content
         }
@@ -248,6 +252,7 @@ export const dataQuery = gql`
           title
         }
         course {
+          id
           currentRevision {
             title
           }
@@ -302,6 +307,7 @@ export const dataQuery = gql`
             ...exercise
           }
           ... on ExerciseGroup {
+            id
             currentRevision {
               content
             }
@@ -382,10 +388,12 @@ export const dataQuery = gql`
   }
 
   fragment exercise on AbstractExercise {
+    id
     currentRevision {
       content
     }
     solution {
+      id
       currentRevision {
         content
       }

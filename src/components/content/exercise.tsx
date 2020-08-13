@@ -71,7 +71,16 @@ export function Exercise({ node }: ExerciseProps) {
           {node.solutionLicense && (
             <LicenseNotice minimal data={node.solutionLicense} />
           )}
-          {loaded && auth.current && <AuthorTools />}
+          {loaded && auth.current && (
+            <AuthorTools
+              data={{
+                type: '_SolutionInline',
+                id: node.context.solutionId!,
+                parentId: node.context.id,
+                grouped: node.grouped,
+              }}
+            />
+          )}
         </SolutionTools>
       </SolutionBox>
     )
@@ -84,7 +93,7 @@ export function Exercise({ node }: ExerciseProps) {
     if (!node.solutionEdtrState) return []
     const state = node.solutionEdtrState
     const prereq: FrontendContentNode[] = []
-    if (state.prerequisite) {
+    if (state.prerequisite && state.prerequisite.href) {
       prereq.push({
         type: 'p',
         children: [
@@ -139,7 +148,11 @@ export function Exercise({ node }: ExerciseProps) {
         {renderSolutionToggle()}
 
         {node.taskLicense && <LicenseNotice minimal data={node.taskLicense} />}
-        {loaded && auth.current && <AuthorTools />}
+        {loaded && auth.current && (
+          <AuthorTools
+            data={{ type: '_ExerciseInline', id: node.context.id }}
+          />
+        )}
       </ExerciseTools>
     )
   }
