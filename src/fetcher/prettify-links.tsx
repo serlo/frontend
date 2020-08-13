@@ -70,13 +70,15 @@ export async function prettifyLinks(pageData: PageData) {
           const prereq = node.solutionEdtrState.prerequisite
           if (prereq) {
             const id = prereq.id
-            ids.push(id)
-            callbacks.push({
-              id,
-              callback: (alias) => {
-                prereq.href = alias
-              },
-            })
+            if (id) {
+              ids.push(id)
+              callbacks.push({
+                id,
+                callback: (alias) => {
+                  prereq.href = alias
+                },
+              })
+            }
           }
           walk(node.solutionEdtrState.steps)
           walk(node.solutionEdtrState.strategy)
