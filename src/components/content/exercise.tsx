@@ -93,7 +93,7 @@ export function Exercise({ node }: ExerciseProps) {
     if (!node.solutionEdtrState) return []
     const state = node.solutionEdtrState
     const prereq: FrontendContentNode[] = []
-    if (state.prerequisite) {
+    if (state.prerequisite && state.prerequisite.href) {
       prereq.push({
         type: 'p',
         children: [

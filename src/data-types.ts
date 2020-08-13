@@ -422,8 +422,8 @@ export interface TaskEdtrState {
 export interface SolutionEdtrState {
   prerequisite?: {
     // edtr-io plugin "solution"
-    id: number
-    href: string // added, the resolved alias
+    id?: number
+    href?: string // added, the resolved alias
     title: string
   }
   strategy: FrontendContentNode[]
