@@ -1,76 +1,76 @@
 import { headerData, footerData } from './menu-data';
 export const instanceData = {
-  lang: 'en',
+  lang: "de",
   headerData: headerData,
   footerData: footerData,
   strings: {
     header: {
-      slogan: 'The Open Learning Platform',
-      search: 'Search',
-      login: 'Login'
+      slogan: "Die freie Lernplattform",
+      search: "Suche",
+      login: "Anmelden"
     },
     footer: {
-      summaryHeading: 'Serlo.org is the Wikipedia for learning.',
-      summaryText: 'We are a community of visionaries working tirelessly to make great education freely available to everyone.',
-      learnMore: 'Learn more',
-      participate: 'Join the cause',
-      donate: 'Donate',
-      toTop: 'To Top'
+      summaryHeading: "Serlo.org ist die Wikipedia fürs Lernen",
+      summaryText: "Wir sind eine engagierte Gemeinschaft, die daran arbeitet, hochwertige Bildung weltweit frei verfügbar zu machen.",
+      learnMore: "Mehr Erfahren",
+      participate: "Mitmachen",
+      donate: "Spenden",
+      toTop: "Nach oben"
     },
     categories: {
-      article: 'Article',
-      course: 'Course',
+      article: "Artikel",
+      course: "Kurs",
       video: 'Video',
       applet: 'Applet',
-      folder: 'Folder',
-      exercises: 'Exercises'
+      folder: "Bereich",
+      exercises: "Aufgaben"
     },
     entities: {
-      topicFolder: 'Exercise folder',
-      comment: 'Comment',
-      revision: 'Revision',
+      topicFolder: "Aufgabensammlung",
+      comment: "Kommentar",
+      revision: "Bearbeitung",
       thread: 'Thread'
     },
     share: {
-      button: 'Share',
-      title: 'Share!',
-      copyLink: 'Copy link',
-      copySuccess: 'Link copied! ',
-      close: 'Close'
+      button: "Teilen",
+      title: "Weitergeben!",
+      copyLink: "Link kopieren",
+      copySuccess: "In die Zwischenablage kopiert!",
+      close: "Schließen"
     },
     edit: {
-      button: 'Edit'
+      button: "Inhalt überarbeiten"
     },
     license: {
-      readMore: 'Info'
+      readMore: "Was bedeutet das?"
     },
     course: {
-      showPages: 'Show course overview',
-      pages: 'Course overview',
-      next: 'Next'
+      showPages: "Kursübersicht anzeigen",
+      pages: "Kursübersicht",
+      next: "Weiter"
     },
     content: {
-      show: 'show',
-      hide: 'hide',
-      prerequisite: 'For this task you need the following basic knowledge:',
-      solution: 'Solution',
-      exerciseGroup: 'Exercise group',
-      right: 'Right',
-      wrong: 'Wrong',
-      check: 'Check',
-      yourAnswer: 'Your answer…',
-      chooseOption: 'Click on one of the options.'
+      show: "anzeigen",
+      hide: "ausblenden",
+      prerequisite: "Für diese Aufgabe benötigst Du folgendes Grundwissen:",
+      solution: "Lösung",
+      exerciseGroup: "Aufgabengruppe",
+      right: "Richtig",
+      wrong: "Falsch",
+      check: "Stimmt's?",
+      yourAnswer: "Deine Antwort…",
+      chooseOption: "Klicke auf eine der Optionen"
     },
     cookie: {
-      part1: 'By using this website you declare that you agree with our',
-      part2: 'and',
-      part3: '.',
-      link1: 'Privacy Policy',
-      link2: 'Terms of use',
-      button: 'Agree'
+      part1: "Mit der Nutzung dieser Webseite erklärst du dich mit unserer",
+      part2: "und",
+      part3: "einverstanden.",
+      link1: "Datenschutzerklärung",
+      link2: "Nutzungsbedingungen",
+      button: "Verstanden"
     },
     notifications: {
-      notifications: 'Notifications',
+      notifications: "Benachrichtigungen",
       pleaseLogInLink: 'Bitte melde dich an',
       pleaseLogInText: 'um deine Benachrichtigungen zu sehen.'
     }
@@ -79,54 +79,54 @@ export const instanceData = {
 export const instanceLandingData = {
   lang: "de",
   strings: {
-    vision: 'It is our vision to enable personalized learning and provide high quality educational resources worldwide – completely free of charge. Serlo is a grassroots organization inspired by Wikipedia. We already provide thousands of articles, videos and solved exercises for five million German students every year. Now it’s time to go international.',
-    learnMore: 'Learn more',
-    democraticallyStructured: 'democratically structured',
+    vision: "Wir ermöglichen Schüler*innen und Studierenden selbständig und im eigenen Tempo zu lernen – unabhängig von den finanziellen Möglichkeiten ihrer Eltern, denn serlo.org ist und bleibt komplett kostenlos.\n\nUnsere Vision ist es, hochwertige Bildung weltweit frei verfügbar zu machen.",
+    learnMore: "Mehr erfahren",
+    democraticallyStructured: "demokratisch organisiert",
     nonProfit: 'non-profit',
     transparent: 'transparent',
-    openlyLicensed: 'openly licensed',
-    adFree: 'ad-free',
-    freeOfCharge: 'free of charge',
-    wikiTitle: 'Serlo is the Wikipedia for Learning',
-    wikiText: 'Just like Wikipedia, this platform is created by an engaged community of authors. Serlo Education is run and owned by decentralized teams of volunteers and professionals all over the world.',
-    movementTitle: 'Become a Part of Our Movement for Open Education',
-    callForAuthors: 'We are looking for teachers and enthusiastic educators who are passionate about their subject. Become part of our community to create new learning material and help us improve existing content.',
-    communityLink: 'Visit the landing page for authors',
-    callForOther: 'We offer a diverse range of jobs and volunteering opportunities in the fields of software development, design, translation, communications, project management and more.',
-    getInvolved: 'Get involved!'
+    openlyLicensed: "frei lizensiert",
+    adFree: "werbefrei",
+    freeOfCharge: "kostenlos",
+    wikiTitle: "Serlo.org ist die Wikipedia fürs Lernen",
+    wikiText: "Genau die Wikipedia wird diese Plattform von einer engagierten Autor*innen Community erstellt. Serlo Education wird betrieben von einem dezentralisierten Team Ehrenamtlicher und Professioneller überall auf der Welt.",
+    movementTitle: "Werden Sie Teil unserer Bewegung für freie Bildung",
+    callForAuthors: "Wir suchen Lehrkräfte mit Begeisterung für ihr Fach. Werden Sie Autor*in auf serlo.org, erstellen Sie neue Inhalte und helfen Sie uns, die Qualität der Lernplattform zu sichern.",
+    communityLink: "Zur Startseite für Autor*innen",
+    callForOther: "Wir suchen neue hauptamtliche und ehrenamtliche Teammitglieder für die Bereiche Softwareentwicklung, Redaktion und NGO-Management.",
+    getInvolved: "Mach mit!"
   }
 };
 export const serverSideStrings = {
-  title: 'learn with Serlo!'
+  title: "lernen mit Serlo!"
 };
 export const loggedInData = {
   authMenu: [{
     url: '/user/notifications',
-    title: 'Notifications',
+    title: "Benachrichtigungen",
     icon: 'notifications'
   }, {
     url: '',
-    title: 'User',
+    title: "Benutzer",
     icon: 'user',
     children: [{
       url: '/user/public',
-      title: 'Public profile'
+      title: "Öffentliches Profil"
     }, {
       url: '/user/settings',
-      title: 'Edit profile'
+      title: "Profil bearbeiten"
     }, {
       url: '/auth/password/change',
-      title: 'Change password'
+      title: "Passwort aktualisieren"
     }, {
       url: '/event/history/user/me',
-      title: 'Recent activities'
+      title: "Meine Aktivitäten"
     }, {
       url: '/api/auth/logout',
-      title: 'Log out'
+      title: "Ausloggen"
     }]
   }],
   strings: {
-    tools: 'Other Tools',
+    tools: "Weitere Tools",
     notifications: {
       loadMore: 'Weitere laden',
       unknownProblem: 'Es gibt ein Problem beim laden der Benachrichtigungen, bitte versuche es später noch einmal.',
