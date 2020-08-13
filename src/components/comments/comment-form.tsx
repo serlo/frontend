@@ -5,7 +5,7 @@ import * as React from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
 import styled from 'styled-components'
 
-import { makeDefaultButton, inputFontReset } from '@/helper/css'
+import { makeDefaultButton, inputFontReset, makeMargin } from '@/helper/css'
 
 export interface SendProps {
   entity_id: string
@@ -62,18 +62,19 @@ export function CommentForm({
 
 const StyledBox = styled.div`
   position: relative;
+  ${makeMargin}
 `
 
 const StyledTextarea = styled(TextareaAutosize)`
   ${inputFontReset}
   font-size: 1.125rem;
   background-color: ${(props) => lighten(0.45, props.theme.colors.brandGreen)};
-  width: 80%;
   width: 100%;
   color: #000;
   border: none;
   border-radius: 1.8rem;
-  padding: 1.25rem 1rem;
+  padding: 1.25rem 3.5rem 1.25rem 1rem;
+  box-sizing: border-box;
   outline: none;
   overflow: hidden;
   resize: none;
@@ -92,7 +93,7 @@ const StyledTextarea = styled(TextareaAutosize)`
 
 const SendButton = styled.button`
   position: absolute;
-  right: -23px;
+  right: 7px;
   bottom: 13px;
 
   ${inputFontReset}
