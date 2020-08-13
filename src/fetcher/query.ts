@@ -263,12 +263,14 @@ const onExerciseGroup = `
   }
 `
 
-export interface BareExerciseGroup extends Entity {
+export interface BareExerciseGroup {
+  id: number
   __typename: 'ExerciseGroup'
   currentRevision?: GraphQL.Maybe<
     Pick<GraphQL.ExerciseGroupRevision, 'content'>
   >
   exercises: BareExercise[]
+  license: License
 }
 
 export type ExerciseGroup = BareExerciseGroup & EntityWithTaxonomyTerms
@@ -346,6 +348,7 @@ const onTaxonomyTerm = `
         ${bareExercise}
       }
       ... on ExerciseGroup {
+        id
         currentRevision {
           content
         }
