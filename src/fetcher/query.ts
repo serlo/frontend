@@ -117,6 +117,12 @@ export interface Event extends Repository {
   currentRevision?: GraphQL.Maybe<Pick<GraphQL.EventRevision, 'content'>>
 }
 
+// User profiles
+export interface User extends Repository {
+  __typename: 'User'
+  userData: Pick<GraphQL.User, 'id' | 'username'>
+}
+
 // If a course is encountered, the first page will get loaded
 
 export interface Course extends Repository {
@@ -226,6 +232,15 @@ export const dataQuery = gql`
           metaTitle
           metaDescription
         }
+      }
+
+      ... on User {
+        username
+        trashed
+        date
+        lastLogin
+        description
+        activeDonor
       }
 
       ... on Video {
@@ -415,10 +430,11 @@ export type QueryResponse =
   | Event
   | Course
   | TaxonomyTerm
+  | User
 
 export const idsQuery = (ids: number[]) => {
   const map = ids.map(
-    (id) => `
+    (id) => gql` 
     uuid${id}: uuid(id:${id}) {
         ... on AbstractEntity {
           alias
@@ -439,7 +455,7 @@ export const idsQuery = (ids: number[]) => {
 }
 
 // Note: This query will soon be removed from the fetcher (cloudflare takes this job)
-export const idQuery = (id: number) => `
+export const idQuery = (id: number) => gql`
   {
     uuid(id:${id}) {
       ... on AbstractEntity {

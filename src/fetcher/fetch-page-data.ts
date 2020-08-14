@@ -39,20 +39,35 @@ export async function fetchPageData(raw_alias: string): Promise<PageData> {
 }
 
 async function apiRequest(alias: string, instance: string): Promise<PageData> {
-  const { uuid } = await request<{ uuid: QueryResponse }>(
-    endpoint,
-    dataQuery,
-    /^\/[\d]+$/.test(alias)
+  const { uuid } =
+    alias.indexOf('user/profile') > -1
       ? {
-          id: parseInt(alias.substring(1), 10),
-        }
-      : {
-          alias: {
-            instance,
-            path: alias,
+          uuid: {
+            __typename: 'User',
+            id: 18981,
+            trashed: false,
+            username: 'wolfgang',
+            alias: 'wolfgang',
+            date: '2014-03-18T08:52:44+01:00',
+            lastLogin: '2020-08-04T12:02:15+02:00',
+            description: 'NULL',
+            activeDonor: false,
           },
         }
-  )
+      : await request<{ uuid: QueryResponse }>(
+          endpoint,
+          dataQuery,
+          /^\/[\d]+$/.test(alias)
+            ? {
+                id: parseInt(alias.substring(1), 10),
+              }
+            : {
+                alias: {
+                  instance,
+                  path: alias,
+                },
+              }
+        )
 
   if (uuid.__typename === 'Course') {
     const firstPage = uuid.pages[0]?.alias
@@ -69,6 +84,18 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
   const cacheKey = `/${instance}${alias}`
   const title = createTitle(uuid)
   const metaImage = getMetaImage(uuid.alias ? uuid.alias : undefined)
+
+  if (uuid.__typename === 'User') {
+    return {
+      kind: 'user/profile',
+      newsletterPopup: false,
+      userData: {
+        username: uuid.username,
+        description: uuid.description,
+        lastLogin: uuid.lastLogin,
+      },
+    }
+  }
 
   if (uuid.__typename === 'TaxonomyTerm') {
     return {

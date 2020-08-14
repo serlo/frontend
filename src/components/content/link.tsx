@@ -65,8 +65,8 @@ export function Link({
 
   const isLegacyLink =
     legacyLinks.indexOf(displayHref) > -1 ||
-    displayHref.startsWith('/user/profile/') ||
-    displayHref.startsWith('user/profile/') ||
+    // displayHref.startsWith('/user/profile/') ||
+    // displayHref.startsWith('user/profile/') ||
     displayHref.indexOf('.serlo.org') > -1 //e.g. community.serlo.org or different language
 
   if (isExternal || noCSR) return renderLink()
