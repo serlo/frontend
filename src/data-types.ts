@@ -1,4 +1,5 @@
 import { TaxonomyTermType } from '@serlo/api'
+import { User } from '@serlo/api'
 
 import { Instance } from './fetcher/query'
 import { instanceData, instanceLandingData, loggedInData } from '@/data/en'
@@ -97,6 +98,7 @@ export type PageData =
   | SingleEntityPage
   | RevisionPage
   | TaxonomyPage
+  | UserPage
 
 // The landing page is custom built and takes i18n strings
 
@@ -690,6 +692,11 @@ export interface TaxonomyPage extends EntityPageBase {
   taxonomyData: TaxonomyData
 }
 
+export interface UserPage extends EntityPageBase {
+  kind: 'user/profile'
+  userData: UserData
+}
+
 // Shared attributes for first and second level.
 
 export interface TaxonomyTermBase {
@@ -727,4 +734,10 @@ export interface TaxonomyData extends TaxonomyTermBase {
 export interface LoggedInData {
   authMenu: HeaderData
   strings: typeof loggedInData['strings']
+}
+
+export interface UserData {
+  username: string
+  description: string
+  lastLogin: Date
 }

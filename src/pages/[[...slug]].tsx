@@ -62,6 +62,10 @@ const Notifications = dynamic<{}>(() =>
   )
 )
 
+const Profile = dynamic<{}>(() =>
+  import('@/components/pages/user/profile').then((mod) => mod.Profile)
+)
+
 const NewsletterPopup = dynamic<{}>(
   () =>
     import('@/components/scripts/newsletter-popup').then(
@@ -196,6 +200,9 @@ function renderPage(page: PageData) {
           }
           if (page.kind === 'user/notifications') {
             return <Notifications />
+          }
+          if (page.kind === 'user/profile') {
+            return <Profile userData={page.userData} />
           }
           if (page.kind === 'error') {
             return (

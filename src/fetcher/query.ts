@@ -150,6 +150,12 @@ export interface Event extends Repository {
   >
 }
 
+// User profiles
+export interface User extends Repository {
+  __typename: 'User'
+  userData: Pick<GraphQL.User, 'id' | 'username'>
+}
+
 // If a course is encountered, the first page will get loaded
 
 export interface Course extends Repository {
@@ -455,6 +461,15 @@ export const dataQuery = gql`
         }
       }
 
+      ... on User {
+        username
+        trashed
+        date
+        lastLogin
+        description
+        activeDonor
+      }
+
       ... on Video {
         currentRevision {
           ...videoRevision
@@ -751,12 +766,13 @@ export type QueryResponseNoRevision =
   | Event
   | Course
   | TaxonomyTerm
+  | User
 
 export type QueryResponse = QueryResponseNoRevision | QueryResponseRevision
 
 export const idsQuery = (ids: number[]) => {
   const map = ids.map(
-    (id) => `
+    (id) => gql` 
     uuid${id}: uuid(id:${id}) {
         ... on AbstractEntity {
           alias
@@ -777,7 +793,7 @@ export const idsQuery = (ids: number[]) => {
 }
 
 // Note: This query will soon be removed from the fetcher (cloudflare takes this job)
-export const idQuery = (id: number) => `
+export const idQuery = (id: number) => gql`
   {
     uuid(id:${id}) {
       ... on AbstractEntity {
