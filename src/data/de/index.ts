@@ -128,7 +128,7 @@ export const loggedInData = {
   strings: {
     tools: "Weitere Tools",
     notifications: {
-      loadMore: "Mehr laden",
+      loadMore: "Weitere laden",
       unknownProblem: "Es gibt ein Problem beim laden der Benachrichtigungen, bitte versuche es später noch einmal.",
       loading: "Benachrichtigungen werden geladen",
       hide: "Benachrichtigungen für diesen Inhalt nicht mehr anzeigen.",
