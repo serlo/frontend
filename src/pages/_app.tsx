@@ -26,10 +26,8 @@ if (
 ) {
   Sentry.init({
     dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
-    release: `frontend@${version}-${process.env.NEXT_PUBLIC_COMMIT_SHA?.substr(
-      0,
-      7
-    )}`,
+    environment: process.env.NEXT_PUBLIC_ENV,
+    release: `frontend@${process.env.NEXT_PUBLIC_COMMIT_SHA?.substr(0, 7)}`,
   })
 }
 
