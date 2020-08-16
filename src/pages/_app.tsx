@@ -13,7 +13,6 @@ import '../../public/_assets/fonts/karmilla.css'
 // eslint-disable-next-line import/no-unassigned-import
 import '../../public/_assets/fonts/katex/katex.css'
 
-import { version } from '../../package.json'
 import { NProgressStyles } from '@/components/navigation/n-progress-styles'
 import { ToastNotifications } from '@/components/toast-notifications'
 import { theme } from '@/theme'
