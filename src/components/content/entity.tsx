@@ -7,7 +7,6 @@ import styled from 'styled-components'
 
 import { Comments } from '../comments/comments'
 import { HSpace } from './h-space'
-import { Lazy } from './lazy'
 import { LicenseNotice } from '@/components/content/license-notice'
 import type { CourseFooterProps } from '@/components/navigation/course-footer'
 import type { CourseNavigationProps } from '@/components/navigation/course-navigation'
@@ -72,9 +71,8 @@ export function Entity({ data }: EntityProps) {
       {renderShareModal()}
 
       {data.licenseData && <LicenseNotice data={data.licenseData} />}
-      <Lazy>
-        <Comments id={123} />
-      </Lazy>
+
+      <Comments id={123} />
     </>
   )
 
