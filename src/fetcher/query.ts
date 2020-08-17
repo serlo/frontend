@@ -151,9 +151,13 @@ export interface Event extends Repository {
 }
 
 // User profiles
-export interface User extends Repository {
+// export interface User extends Repository {
+//   __typename: 'User'
+
+// }
+
+export interface User extends Repository, GraphQL.User {
   __typename: 'User'
-  userData: Pick<GraphQL.User, 'id' | 'username'>
 }
 
 // If a course is encountered, the first page will get loaded
