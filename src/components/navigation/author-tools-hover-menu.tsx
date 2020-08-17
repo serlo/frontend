@@ -2,6 +2,7 @@ import Tippy from '@tippyjs/react'
 import styled from 'styled-components'
 
 import { SubList, SubLink, SubButtonStyle } from './menu'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export interface AuthorToolsData {
   type: string
@@ -17,6 +18,10 @@ export interface AuthorToolsHoverMenuProps {
 }
 
 export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return null
+  const { strings } = loggedInData
+
   if (data.type == 'Page') {
     return (
       <HoverDiv>
@@ -24,13 +29,13 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
         {convert()}
         <Li>
           <SubLink href={`/page/revision/revisions/${data.id}`} noCSR>
-            <SubButtonStyle>Bearbeitungsverlauf</SubButtonStyle>
+            <SubButtonStyle>{strings.authorMenu.log}</SubButtonStyle>
           </SubLink>
         </Li>
         {log()}
         <Li>
           <SubLink href={`/page/update/${data.id}`} noCSR>
-            <SubButtonStyle>Einstellungen</SubButtonStyle>
+            <SubButtonStyle>{strings.authorMenu.settings}</SubButtonStyle>
           </SubLink>
         </Li>
       </HoverDiv>
@@ -72,8 +77,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
                   noCSR
                 >
                   <SubButtonStyle>
-                    Diesen Inhalt zu einem anderen Überelement (course)
-                    verschieben
+                    {strings.authorMenu.moveCoursePage}
                   </SubButtonStyle>
                 </SubLink>
               </Li>
@@ -86,7 +90,9 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
         >
           <Li>
             <SubLink as="div">
-              <SubButtonStyle>Diese Kursseite</SubButtonStyle>
+              <SubButtonStyle>
+                {strings.authorMenu.thisCoursePage}
+              </SubButtonStyle>
             </SubLink>
           </Li>
         </Tippy>
@@ -103,7 +109,9 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
                   href={`/entity/create/course-page?link%5Btype%5D=link&link%5Bchild%5D=${data.courseId}`}
                   noCSR
                 >
-                  <SubButtonStyle>Kursseite hinzufügen</SubButtonStyle>
+                  <SubButtonStyle>
+                    {strings.authorMenu.addCoursePage}
+                  </SubButtonStyle>
                 </SubLink>
               </Li>
 
@@ -117,7 +125,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
         >
           <Li>
             <SubLink as="div">
-              <SubButtonStyle>Gesamter Kurs</SubButtonStyle>
+              <SubButtonStyle>{strings.authorMenu.wholeCourse}</SubButtonStyle>
             </SubLink>
           </Li>
         </Tippy>
@@ -132,7 +140,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
 
         <Li>
           <SubLink href={`/taxonomy/term/organize/${data.id}`} noCSR>
-            <SubButtonStyle>Baumstruktur bearbeiten</SubButtonStyle>
+            <SubButtonStyle>{strings.authorMenu.organize}</SubButtonStyle>
           </SubLink>
         </Li>
 
@@ -141,13 +149,13 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
 
         <Li>
           <SubLink href={`/taxonomy/term/copy/batch/${data.id}`} noCSR>
-            <SubButtonStyle>Elemente kopieren</SubButtonStyle>
+            <SubButtonStyle>{strings.authorMenu.copyItems}</SubButtonStyle>
           </SubLink>
         </Li>
 
         <Li>
           <SubLink href={`/taxonomy/term/move/batch/${data.id}`} noCSR>
-            <SubButtonStyle>Elemente verschieben</SubButtonStyle>
+            <SubButtonStyle>{strings.authorMenu.moveItems}</SubButtonStyle>
           </SubLink>
         </Li>
       </HoverDiv>
@@ -172,7 +180,9 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
               href={`/entity/create/grouped-text-exercise?link%5Btype%5D=link&link%5Bchild%5D=${data.id}`}
               noCSR
             >
-              <SubButtonStyle>grouped-text-exercise hinzufügen</SubButtonStyle>
+              <SubButtonStyle>
+                {strings.authorMenu.addGroupedTextExercise}
+              </SubButtonStyle>
             </SubLink>
           </Li>
         )}
@@ -186,9 +196,9 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
               noCSR
             >
               <SubButtonStyle>
-                Diesen Inhalt zu einem anderen Überelement (
-                {data.grouped ? 'grouped-text-exercise' : 'text-exercise'})
-                verschieben
+                {data.grouped
+                  ? strings.authorMenu.moveToGroupedTextExercise
+                  : strings.authorMenu.moveToTextExercise}
               </SubButtonStyle>
             </SubLink>
           </Li>
@@ -198,7 +208,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
 
         <Li>
           <SubLink href={`/entity/license/update/${data.id}`} noCSR>
-            <SubButtonStyle>Lizenz auswählen</SubButtonStyle>
+            <SubButtonStyle>{strings.authorMenu.changeLicense}</SubButtonStyle>
           </SubLink>
         </Li>
 
@@ -219,14 +229,16 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
           <HoverDiv>
             <Li>
               <SubLink href={`/subscribe/${id}/0`} noCSR>
-                <SubButtonStyle>Benachrichtigungen erhalten</SubButtonStyle>
+                <SubButtonStyle>
+                  {strings.authorMenu.subscribeNotifications}
+                </SubButtonStyle>
               </SubLink>
             </Li>
 
             <Li>
               <SubLink href={`/subscribe/${id}/1`} noCSR>
                 <SubButtonStyle>
-                  Benachrichtigungen und E-Mail erhalten
+                  {strings.authorMenu.subscribeNotificationsAndMail}
                 </SubButtonStyle>
               </SubLink>
             </Li>
@@ -235,7 +247,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
       >
         <Li>
           <SubLink as="div">
-            <SubButtonStyle>Abonnieren (?)</SubButtonStyle>
+            <SubButtonStyle>{strings.authorMenu.subscribe}</SubButtonStyle>
           </SubLink>
         </Li>
       </Tippy>
@@ -246,7 +258,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
     return (
       <Li>
         <SubLink href={`/page/revision/create/${id}/${rev}`} noCSR>
-          <SubButtonStyle>Konvertieren (beta)</SubButtonStyle>
+          <SubButtonStyle>{strings.authorMenu.convert}</SubButtonStyle>
         </SubLink>
       </Li>
     )
@@ -256,7 +268,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
     return (
       <Li>
         <SubLink href={`/entity/repository/history/${id}`} noCSR>
-          <SubButtonStyle>Bearbeitungsverlauf</SubButtonStyle>
+          <SubButtonStyle>{strings.authorMenu.history}</SubButtonStyle>
         </SubLink>
       </Li>
     )
@@ -266,7 +278,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
     return (
       <Li>
         <SubLink href={`/event/history/${id}`} noCSR>
-          <SubButtonStyle>Aktivitätenlog</SubButtonStyle>
+          <SubButtonStyle>{strings.authorMenu.log}</SubButtonStyle>
         </SubLink>
       </Li>
     )
@@ -276,9 +288,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
     return (
       <Li>
         <SubLink href={`/entity/taxonomy/update/${id}`} noCSR>
-          <SubButtonStyle>
-            Zuweisung zu Themen und Lehrplänen bearbeiten
-          </SubButtonStyle>
+          <SubButtonStyle>{strings.authorMenu.editAssignments}</SubButtonStyle>
         </SubLink>
       </Li>
     )
@@ -288,7 +298,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
     return (
       <Li>
         <SubLink href={`/flag/add/${id}`} noCSR>
-          <SubButtonStyle>Inhalt melden</SubButtonStyle>
+          <SubButtonStyle>{strings.authorMenu.flagContent}</SubButtonStyle>
         </SubLink>
       </Li>
     )
@@ -299,7 +309,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
     return (
       <Li>
         <SubLink href={`/uuid/trash/${id}`} noCSR>
-          <SubButtonStyle>In den Papierkorb verschieben (?)</SubButtonStyle>
+          <SubButtonStyle>{strings.authorMenu.moveToTrash}</SubButtonStyle>
         </SubLink>
       </Li>
     )
@@ -309,7 +319,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
     return (
       <Li>
         <SubLink href={`/entity/link/order/${id}/link`} noCSR>
-          <SubButtonStyle>Unterelemente sortieren</SubButtonStyle>
+          <SubButtonStyle>{strings.authorMenu.sort}</SubButtonStyle>
         </SubLink>
       </Li>
     )
@@ -319,7 +329,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
     return (
       <Li>
         <SubLink href={`/entity/repository/add-revision/${id}`} noCSR>
-          <SubButtonStyle>Bearbeiten</SubButtonStyle>
+          <SubButtonStyle>{strings.authorMenu.edit}</SubButtonStyle>
         </SubLink>
       </Li>
     )
