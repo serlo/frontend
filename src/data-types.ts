@@ -1,5 +1,3 @@
-import { User } from '@serlo/api'
-
 import { Instance } from './fetcher/query'
 import { instanceData, instanceLandingData, loggedInData } from '@/data/en'
 
@@ -600,6 +598,6 @@ export interface LoggedInData {
 
 export interface UserData {
   username: string
-  description: string
-  lastLogin: Date
+  description?: FrontendContentNode[]
+  lastLogin?: string | null
 }
