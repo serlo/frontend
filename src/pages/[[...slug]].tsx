@@ -31,6 +31,7 @@ import {
   fetcherAdditionalData,
   getInitialProps,
 } from '@/fetcher/get-initial-props'
+import { Equations } from '@/components/pages/equations'
 
 const LandingDE = dynamic<{}>(() =>
   import('@/components/pages/landing-de').then((mod) => mod.LandingDE)
@@ -156,6 +157,8 @@ function renderPage(page: PageData) {
   //TODO: investigate why this happens sometimes.
   if (page === undefined) return <ErrorPage code={1234567890} />
 
+  // Just to work on equations
+
   if (page.kind === 'donation') {
     return <Donations />
   } else {
@@ -180,6 +183,8 @@ function renderPage(page: PageData) {
           if (page.kind === 'error') {
             return <ErrorPage code={page.errorData.code} />
           }
+          return <Equations />
+
           return (
             <>
               {page.secondaryNavigationData && (

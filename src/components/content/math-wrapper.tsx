@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 import { makePadding } from '../../helper/css'
 
-interface MathWrapperProps {
+export interface MathWrapperProps {
   centered?: boolean
   bigger?: boolean
 }
