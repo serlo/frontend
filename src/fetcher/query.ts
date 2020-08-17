@@ -10,7 +10,9 @@ export type Instance = 'de' | 'en' | 'fr' | 'es' | 'ta' | 'hi'
 export type License = Pick<GraphQL.License, 'id' | 'url' | 'title'>
 
 // This is one breadcrumb path.
-export type Path = Pick<GraphQL.NavigationNode, 'label' | 'url'>[]
+export interface Path {
+  nodes: Pick<GraphQL.NavigationNode, 'label' | 'url'>[]
+}
 
 // Entities can belong to multiple taxonomy terms, so we load all possible paths.
 export type TaxonomyTerms = {
@@ -23,7 +25,7 @@ export interface Entity extends Repository {
   license: License
 }
 export interface EntityWithTaxonomyTerms extends Entity {
-  taxonomyTerms: TaxonomyTerms
+  taxonomyTerms: { nodes: TaxonomyTerms }
 }
 
 // A page, navigation.data is the secondary menu.
@@ -75,7 +77,7 @@ export interface CoursePage extends Entity {
       id: number
       currentRevision?: Pick<GraphQL.CoursePageRevision, 'title'>
     }[]
-    taxonomyTerms: TaxonomyTerms
+    taxonomyTerms: { nodes: TaxonomyTerms }
   }
 }
 
@@ -95,7 +97,6 @@ export interface BareExercise {
 
 export interface Exercise extends EntityWithTaxonomyTerms, BareExercise {
   __typename: 'Exercise'
-  taxonomyTerms: TaxonomyTerms
 }
 export interface GroupedExercise extends Entity, BareExercise {
   __typename: 'GroupedExercise'
@@ -165,7 +166,7 @@ export interface TaxonomyTermChildTaxonomyTerm
       'type' | 'name' | 'alias' | 'id' | 'description'
     > {
   __typename: 'TaxonomyTerm'
-  children: TaxonomyTermChildrenLevel2[]
+  children: { nodes: TaxonomyTermChildrenLevel2[] }
 }
 
 export interface SubTaxonomyTermChildTaxonomyTerm
@@ -176,11 +177,13 @@ export interface SubTaxonomyTermChildTaxonomyTerm
 }
 
 export interface TaxonomyTerm
-  extends Repository,
-    Pick<GraphQL.TaxonomyTerm, 'type' | 'name' | 'description'> {
+  extends Pick<
+    GraphQL.TaxonomyTerm,
+    'id' | 'alias' | 'instance' | 'type' | 'name' | 'description'
+  > {
   __typename: 'TaxonomyTerm'
   navigation?: GraphQL.Maybe<Pick<GraphQL.Navigation, 'data' | 'path'>>
-  children: TaxonomyTermChildrenLevel1[]
+  children: { nodes: TaxonomyTermChildrenLevel1[] }
 }
 
 export type TaxonomyTermChildrenLevel1 =
@@ -206,11 +209,7 @@ export const dataQuery = gql`
       }
 
       ... on AbstractTaxonomyTermChild {
-        taxonomyTerms {
-          navigation {
-            ...path
-          }
-        }
+        ...taxonomyTerms
       }
 
       ... on Page {
@@ -278,6 +277,7 @@ export const dataQuery = gql`
               title
             }
           }
+          ...taxonomyTerms
         }
       }
 
@@ -307,6 +307,8 @@ export const dataQuery = gql`
       }
 
       ... on TaxonomyTerm {
+        alias
+        instance
         type
         name
         description
@@ -315,37 +317,41 @@ export const dataQuery = gql`
           ...path
         }
         children {
-          trashed
-          __typename
-          ...taxonomyTermChild
-          ... on Exercise {
-            ...exercise
-          }
-          ... on ExerciseGroup {
-            id
-            currentRevision {
-              content
-            }
-            exercises {
+          nodes {
+            trashed
+            __typename
+            ...taxonomyTermChild
+            ... on Exercise {
               ...exercise
             }
-            ...license
-          }
-          ... on TaxonomyTerm {
-            type
-            name
-            alias
-            id
-            description
-            children {
-              trashed
-              __typename
-              ... on TaxonomyTerm {
-                alias
-                type
-                name
+            ... on ExerciseGroup {
+              id
+              currentRevision {
+                content
               }
-              ...taxonomyTermChild
+              exercises {
+                ...exercise
+              }
+              ...license
+            }
+            ... on TaxonomyTerm {
+              type
+              name
+              alias
+              id
+              description
+              children {
+                nodes {
+                  trashed
+                  __typename
+                  ... on TaxonomyTerm {
+                    alias
+                    type
+                    name
+                  }
+                  ...taxonomyTermChild
+                }
+              }
             }
           }
         }
@@ -355,8 +361,20 @@ export const dataQuery = gql`
 
   fragment path on Navigation {
     path {
-      label
-      url
+      nodes {
+        label
+        url
+      }
+    }
+  }
+
+  fragment taxonomyTerms on AbstractTaxonomyTermChild {
+    taxonomyTerms {
+      nodes {
+        navigation {
+          ...path
+        }
+      }
     }
   }
 
