@@ -16,6 +16,7 @@ import { Header } from '@/components/navigation/header'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { MetaMenu } from '@/components/navigation/meta-menu'
 import { RelativeContainer } from '@/components/navigation/relative-container'
+import { Equations } from '@/components/pages/equations'
 import { LandingInternationalProps } from '@/components/pages/landing-international'
 import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
@@ -31,7 +32,6 @@ import {
   fetcherAdditionalData,
   getInitialProps,
 } from '@/fetcher/get-initial-props'
-import { Equations } from '@/components/pages/equations'
 
 const LandingDE = dynamic<{}>(() =>
   import('@/components/pages/landing-de').then((mod) => mod.LandingDE)
@@ -43,9 +43,9 @@ const LandingInternational = dynamic<LandingInternationalProps>(() =>
   )
 )
 
-const Search = dynamic<{}>(() =>
-  import('@/components/pages/search').then((mod) => mod.Search)
-)
+// const Search = dynamic<{}>(() =>
+//   import('@/components/pages/search').then((mod) => mod.Search)
+// )
 const Donations = dynamic<{}>(() =>
   import('@/components/pages/donations').then((mod) => mod.Donations)
 )
@@ -175,7 +175,9 @@ function renderPage(page: PageData) {
             return <LandingDE />
           }
           if (page.kind === 'search') {
-            return <Search />
+            // return <Search />
+            //TODO: Sorry, takeover for the sake of testing this
+            return <Equations />
           }
           if (page.kind === 'user/notifications') {
             return <Notifications />
@@ -183,7 +185,6 @@ function renderPage(page: PageData) {
           if (page.kind === 'error') {
             return <ErrorPage code={page.errorData.code} />
           }
-          return <Equations />
 
           return (
             <>
