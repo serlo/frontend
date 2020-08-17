@@ -48,11 +48,11 @@ function About() {
         </Summary>
         <Support>
           <ImageLink href={footerData.participationHref}>
-            <ParticipateIcon alt={`Icon: ${strings.footer.participate}`} />
+            <ParticipateIcon />
             <SupportButton>{strings.footer.participate}</SupportButton>
           </ImageLink>
           <ImageLink href={footerData.donationHref}>
-            <DonateIcon alt={`Icon: ${strings.footer.donate}`} />
+            <DonateIcon />
             <SupportButton>{strings.footer.donate}</SupportButton>
           </ImageLink>
         </Support>
