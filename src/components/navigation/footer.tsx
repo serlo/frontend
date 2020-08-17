@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import styled from 'styled-components'
 
+import DonateIcon from '@/assets-webkit/img/footer-donate.svg'
+import ParticipateIcon from '@/assets-webkit/img/footer-participate.svg'
 import { Link } from '@/components/content/link'
 import { FooterNav } from '@/components/navigation/footer-nav'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -46,17 +48,11 @@ function About() {
         </Summary>
         <Support>
           <ImageLink href={footerData.participationHref}>
-            <img
-              alt={`Icon: ${strings.footer.participate}`}
-              src="/_assets/img/footer-participate.svg"
-            />
+            <ParticipateIcon alt={`Icon: ${strings.footer.participate}`} />
             <SupportButton>{strings.footer.participate}</SupportButton>
           </ImageLink>
           <ImageLink href={footerData.donationHref}>
-            <img
-              alt={`Icon: ${strings.footer.donate}`}
-              src="/_assets/img/footer-donate.svg"
-            />
+            <DonateIcon alt={`Icon: ${strings.footer.donate}`} />
             <SupportButton>{strings.footer.donate}</SupportButton>
           </ImageLink>
         </Support>
@@ -159,7 +155,7 @@ const ImageLink = styled(Link)`
   flex-direction: column;
   align-items: center;
   text-decoration: none !important;
-  > img {
+  > svg {
     width: 60px;
   }
   cursor: pointer;

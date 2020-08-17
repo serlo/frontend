@@ -71,7 +71,7 @@ Here are some useful places to get started:
 
 - `/src/data`: Entries for main menu, footer and horizon.
 
-- `/public/_assets`: A place for public assets, served as static files under the path `/_assets/`.
+- `/public/_assets`: A place for public assets, served as static files under the path `/_assets/`. Don't use `import` from here, see [Assets](#assets).
 
 - `/external`: Third-party code that is not maintained by the frontend.
 

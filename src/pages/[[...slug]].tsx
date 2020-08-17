@@ -32,7 +32,7 @@ import {
   getInitialProps,
 } from '@/fetcher/get-initial-props'
 
-const LandingDE = dynamic<{}>(() =>
+const LandingDE = dynamic<LandingInternationalProps>(() =>
   import('@/components/pages/landing-de').then((mod) => mod.LandingDE)
 )
 
@@ -166,10 +166,10 @@ function renderPage(page: PageData) {
         <Header onSearchPage={page.kind === 'search'} />
         {(() => {
           if (page.kind === 'landing') {
-            if (page.landingData) {
-              return <LandingInternational data={page.landingData} />
+            if (page.landingData.lang === 'de') {
+              return <LandingDE data={page.landingData} />
             }
-            return <LandingDE />
+            return <LandingInternational data={page.landingData} />
           }
           if (page.kind === 'search') {
             return <Search />

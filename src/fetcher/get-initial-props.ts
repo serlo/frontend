@@ -54,16 +54,6 @@ export async function getInitialProps(
     }
   }
 
-  if (alias === '/' && instance == 'de') {
-    return {
-      origin,
-      instanceData,
-      pageData: {
-        kind: 'landing',
-      },
-    }
-  }
-
   if (alias === '/spenden' && instance == 'de') {
     return {
       origin,

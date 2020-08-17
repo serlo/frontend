@@ -3,6 +3,7 @@ import mergeDeepRight from 'ramda/src/mergeDeepRight'
 
 import {
   instanceData as deInstanceData,
+  instanceLandingData as deInstanceLandingData,
   serverSideStrings as deServerSideStrings,
   loggedInData as deLoggedInData,
 } from '@/data/de'
@@ -101,9 +102,10 @@ export function getServerSideStrings(lang: string) {
 export function getLandingData(lang: string) {
   const enData = enInstanceLandingData
 
-  //no de, has custom landing page
   const data =
-    lang == 'es'
+    lang == 'de'
+      ? deInstanceLandingData
+      : lang == 'es'
       ? esInstanceLandingData
       : lang == 'fr'
       ? frInstanceLandingData

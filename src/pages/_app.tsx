@@ -8,10 +8,8 @@ import NProgress from 'nprogress'
 import React from 'react'
 import { ThemeProvider, createGlobalStyle } from 'styled-components'
 
-// eslint-disable-next-line import/no-unassigned-import
-import '../../public/_assets/fonts/karmilla.css'
-// eslint-disable-next-line import/no-unassigned-import
-import '../../public/_assets/fonts/katex/katex.css'
+import '@/assets-webkit/fonts/karmilla.css'
+import '@/assets-webkit/fonts/katex/katex.css'
 
 import { NProgressStyles } from '@/components/navigation/n-progress-styles'
 import { ToastNotifications } from '@/components/toast-notifications'
