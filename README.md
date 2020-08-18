@@ -61,15 +61,17 @@ Every entity belongs to a content type. These are the supported types:
 
 Here are some useful places to get started:
 
-- `/src/pages`: Incoming requests are mapped to files by next.js, all routes are defined in this folder.
+- `/src/pages/[[...slug]].js` currently we handle pages manually with a [catch all route](https://nextjs.org/docs/routing/dynamic-routes#optional-catch-all-routes). This is a good place to start.
 
 - `/src/components`: Collection of react components for the frontend.
+
+- `/src/components/pages`: Components that `[[...slug.js]]` calls as pages.
 
 - `/src/fetcher`: Requesting data from the GraphQL backend and process it.
 
 - `/src/schema`: Definition of the frontend content format, with renderer, and converter for edtr-io and legacy.
 
-- `/src/data`: Entries for main menu, footer and horizon.
+- `/src/data`: Translations, entries navigation
 
 - `/public/_assets`: A place for public assets, served as static files under the path `/_assets/`. Don't use `import` from here, see [Assets](#assets).
 
@@ -101,7 +103,13 @@ yarn analyze
 
 Creates a build of the frontend, shows summary of build artefacts and creates in-depth analysis of the bundles.
 
-All files are named with kebab-case. You can use `@/` to import files from `src/` instead of relative paths.
+```
+yarn test
+```
+
+Runs jest tests.
+
+All files are named with kebab-case. You should use `@/` to import files from `src/` instead of relative paths.
 
 ## Schema
 
@@ -186,6 +194,34 @@ One or three entries are shown at the bottom of an entity in the horizon. The da
 All links within entities and the navigation should use the default alias. The frontend looks up links that are using ids and use this information to render all links as pretty links.
 
 Clicking a link in the frontend will trigger a backend request instead of a browser navigation, the page switches without a full reload. The request is cached for the duration of the session.
+
+## Internationalization
+
+Currently the frontend supports six instances: de, en, es, fr, hi, ta
+
+In `src/data` you can find all the translations and the menu data for the instances.
+The `index.ts` files are seperated into four variables.
+
+- `instanceData`: Strings for every page of the instance
+- `instanceLandingData`: Strings the landing page only
+- `serverSideStrings`: Strings for the server only
+- `loggedInData`: Strings for logged in users only
+
+To add a new string, add it to the right variable inside the main language file `src/data/en/index.ts`.
+To access the strings in your components use the relevant hook (`useInstanceData`,`useLoggedInData`, …).
+When new strings (in en/index.ts) get merged into `staging` they automatically get uploaded to crowdin and can then be translated there.
+
+### Example
+
+```ts
+import { useInstanceData } from '@/contexts/instance-context'
+
+export function SerloBird() {
+  const { strings } = useInstanceData()
+  render (
+    <h1>{strings.header.slogan}</h1>
+  )
+```
 
 ---
 
