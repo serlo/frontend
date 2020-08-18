@@ -244,8 +244,8 @@ function Equation({ state }: { state: EquationsPluginState }) {
 }
 
 const Transform = styled.p`
-  margin-top: 10px;
-  margin-bottom: 18px;
+  margin-top: 15px;
+  margin-bottom: 23px;
   font-size: 1rem;
   color: ${(props) => props.theme.colors.brand};
 `
