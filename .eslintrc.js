@@ -55,7 +55,11 @@ module.exports = {
 
     // eslint-plugin-import
     'import/export': 'error',
-    'import/extensions': ['error', 'never', { json: 'always' }],
+    'import/extensions': [
+      'error',
+      'never',
+      { css: 'always', svg: 'always', json: 'always' },
+    ],
     'import/first': 'error',
     'import/newline-after-import': 'error',
     'import/no-absolute-path': 'error',
@@ -80,7 +84,10 @@ module.exports = {
     ],
     'import/no-mutable-exports': 'error',
     'import/no-self-import': 'error',
-    'import/no-unassigned-import': 'error',
+    'import/no-unassigned-import': [
+      'error',
+      { allow: ['@/assets-webkit/fonts/**/*.css'] },
+    ],
     'import/no-useless-path-segments': [
       'error',
       {

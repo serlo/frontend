@@ -94,11 +94,11 @@ export type PageData =
   | SingleEntityPage
   | TaxonomyPage
 
-// The landing page is custom built and takes no additional data
+// The landing page is custom built and takes i18n strings
 
 export interface LandingPage {
   kind: 'landing'
-  landingData?: InstanceLandingData
+  landingData: InstanceLandingData
 }
 
 // Landing pages have a different structure, because they should only load on the landing page
