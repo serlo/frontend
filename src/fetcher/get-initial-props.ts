@@ -127,7 +127,9 @@ export async function getInitialProps(
     }
 
     const res = await fetch(
-      `${fetcherAdditionalData.origin}/api/frontend/${fetcherAdditionalData.instance}${url}`
+      `${fetcherAdditionalData.origin}/api/frontend/${
+        fetcherAdditionalData.instance
+      }${url.replace(/\/$/, '')}`
     )
     const fetchedData = (await res.json()) as PageData
     // compat: redirect of courses
