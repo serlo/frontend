@@ -759,6 +759,7 @@ Here is a list of included peer dependencies:
 
 - `styled-components` depends on `react-is`
 - `graphiql` depends on `prop-types`
+- `babel-jest` depends on `@babel/core`
 
 ## FAQ
 

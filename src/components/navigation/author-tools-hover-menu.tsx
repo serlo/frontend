@@ -29,7 +29,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
         {convert()}
         <Li>
           <SubLink href={`/page/revision/revisions/${data.id}`} noCSR>
-            <SubButtonStyle>{strings.authorMenu.log}</SubButtonStyle>
+            <SubButtonStyle>{strings.authorMenu.history}</SubButtonStyle>
           </SubLink>
         </Li>
         {log()}
