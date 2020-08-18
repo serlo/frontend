@@ -150,7 +150,7 @@ export const loggedInData = {
       edit: 'Edit',
       organize: 'Organize',
       moveToGroupedTextExercise: 'Move content to other grouped-text-exercise',
-      moveToTextExercise: 'Move content to other text-exercise'
+      moveToTextExercise: 'Move content to other text-exercise',
     },
     notifications: {
       loadMore: "Load more",
