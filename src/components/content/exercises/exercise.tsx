@@ -36,7 +36,7 @@ export function Exercise({ node }: ExerciseProps) {
       <ExerciseNumbering
         isChild={node.grouped}
         index={node.grouped ? node.positionInGroup! : node.positionOnPage!}
-        href={`/${node.context.id}`}
+        href={node.href ? node.href : `/${node.context.id}`}
       />
 
       {renderExerciseTask()}

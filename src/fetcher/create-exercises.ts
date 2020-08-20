@@ -63,6 +63,7 @@ export function createExercise(
       id: uuid.id,
       solutionId: uuid.solution?.id,
     },
+    href: uuid.alias ? uuid.alias : undefined,
   }
 }
 
