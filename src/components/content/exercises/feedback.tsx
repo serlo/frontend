@@ -25,8 +25,6 @@ const FeedbackWrapper = styled.div<{ correct?: boolean }>`
   }
   > span {
     color: ${(props) =>
-      props.correct
-        ? props.theme.colors.brandGreen
-        : props.theme.colors.orange};
+      props.correct ? props.theme.colors.brandGreen : '#cc1500'};
   }
 `

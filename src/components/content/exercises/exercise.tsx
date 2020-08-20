@@ -172,20 +172,12 @@ const StyledSpan = styled.span`
 `
 
 const Wrapper = styled.div<{ grouped?: boolean }>`
-  /* border-top: 2px solid ${(props) => props.theme.colors.brand}; */
   margin-top: 40px;
   margin-bottom: 10px;
 
   ${(props) =>
     !props.grouped &&
     css`
-      /* border-left: 8px solid
-        ${(props) => props.theme.colors.lightBlueBackground};
-      border-top: 0; */
-
-      @media (min-width: ${(props) => props.theme.breakpoints.mobile}) {
-        ${makeMargin}
-      }
       margin-bottom: 40px;
       padding-top: 7px;
     `};
