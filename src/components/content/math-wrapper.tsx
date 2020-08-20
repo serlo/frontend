@@ -11,7 +11,8 @@ export const MathWrapper = styled.div<MathWrapperProps>`
   ${makePadding}
   width:100%;
   box-sizing: border-box;
-  text-align: ${(props) => (props.centered ? 'center' : 'left')};
+  /* text-align: ${(props) => (props.centered ? 'center' : 'left')}; */
+  text-align: left;
   margin-bottom: ${(props) => props.theme.spacing.mb.block};
   font-size: 1.3125rem;
   padding-top: 10px;

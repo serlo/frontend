@@ -82,7 +82,7 @@ export interface CoursePage extends Entity {
 }
 
 // We treat a grouped exercise just as a normal exercise.
-export interface BareExercise {
+export interface BareExercise extends Entity {
   id: number
   currentRevision?: GraphQL.Maybe<
     Pick<GraphQL.AbstractExerciseRevision, 'content'>
@@ -98,7 +98,7 @@ export interface BareExercise {
 export interface Exercise extends EntityWithTaxonomyTerms, BareExercise {
   __typename: 'Exercise'
 }
-export interface GroupedExercise extends Entity, BareExercise {
+export interface GroupedExercise extends BareExercise {
   __typename: 'GroupedExercise'
 }
 
@@ -311,6 +311,8 @@ export const dataQuery = gql`
             }
             ... on ExerciseGroup {
               id
+              alias
+              instance
               currentRevision {
                 content
               }
@@ -407,6 +409,8 @@ export const dataQuery = gql`
 
   fragment exercise on AbstractExercise {
     id
+    alias
+    instance
     currentRevision {
       content
     }

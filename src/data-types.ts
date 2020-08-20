@@ -393,6 +393,7 @@ export interface FrontendExerciseNode {
     solutionId?: number
   }
   children?: undefined
+  href?: string
 }
 
 export interface TaskEdtrState {
@@ -447,6 +448,7 @@ export interface FrontendExerciseGroupNode {
   context: {
     id: number
   }
+  href?: string
 }
 
 export interface FrontendVideoNode {

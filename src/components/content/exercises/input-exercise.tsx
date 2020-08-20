@@ -2,24 +2,27 @@ import A from 'algebra.js'
 import React from 'react'
 import styled, { css } from 'styled-components'
 
-import { makeMargin, makeDefaultButton, inputFontReset } from '../../helper/css'
-import { StyledP } from '../tags/styled-p'
+import { Feedback } from './feedback'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EdtrPluginInputExercise } from '@/data-types'
+import { makeMargin, makeDefaultButton, inputFontReset } from '@/helper/css'
 
 export interface InputExerciseProps {
   data: EdtrPluginInputExercise['state']
 }
 
+interface FeedbackData {
+  correct: boolean
+  message: string
+}
+
 export function InputExercise({ data }: InputExerciseProps) {
-  const [feedback, setFeedback] = React.useState<React.ReactNode>(null)
+  const [feedback, setFeedback] = React.useState<FeedbackData | null>(null)
   const [value, setValue] = React.useState('')
   const { strings } = useInstanceData()
 
-  function keyPress(e: React.KeyboardEvent<HTMLInputElement>) {
-    if (e.keyCode == 13) {
-      setFeedback(checkAnswer())
-    }
+  function evaluate() {
+    setFeedback(checkAnswer())
   }
 
   return (
@@ -28,16 +31,17 @@ export function InputExercise({ data }: InputExerciseProps) {
         type="text"
         value={value}
         onChange={(e) => setValue(e.target.value)}
-        onKeyDown={keyPress}
+        onKeyDown={(e) => {
+          if (e.keyCode == 13) evaluate()
+        }}
         placeholder={strings.content.yourAnswer}
       />{' '}
       {data.unit}
       <br />
-      <Feedback>{feedback}</Feedback>
-      <CheckButton
-        selectable={value !== ''}
-        onClick={() => setFeedback(checkAnswer())}
-      >
+      {feedback && (
+        <Feedback correct={feedback.correct}>{feedback.message}</Feedback>
+      )}
+      <CheckButton selectable={value !== ''} onClick={evaluate}>
         {strings.content.check}
       </CheckButton>
     </Wrapper>
@@ -63,9 +67,9 @@ export function InputExercise({ data }: InputExerciseProps) {
       }
     })
     if (filteredAnswers.length !== 1 || !filteredAnswers[0].isCorrect) {
-      return <span>{strings.content.wrong}</span>
+      return { correct: false, message: strings.content.wrong }
     } else {
-      return <span>{strings.content.right}</span>
+      return { correct: true, message: strings.content.right }
     }
   }
 
@@ -95,11 +99,6 @@ const Wrapper = styled.div`
   margin-bottom: 30px;
 `
 
-const Feedback = styled(StyledP)`
-  margin-top: 10px;
-  margin-bottom: 10px;
-`
-
 const CheckButton = styled.a<{ selectable: boolean }>`
   ${makeDefaultButton}
   margin-top: 16px;
@@ -123,6 +122,7 @@ const StyledInput = styled.input`
   color: #fff;
   border: 3px solid ${(props) => props.theme.colors.brand};
   background-color: ${(props) => props.theme.colors.brand};
+  margin-bottom: 20px;
 
   &:focus {
     outline: none;

@@ -1,19 +1,17 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { makeMargin } from '../../helper/css'
-import { AuthorTools } from './author-tools'
+import { AuthorTools } from '../author-tools'
 import { ExerciseNumbering } from './exercise-numbering'
-import { SpoilerContainer } from './spoiler-container'
 import { useAuth } from '@/auth/use-auth'
-import { useInstanceData } from '@/contexts/instance-context'
 
 export interface ExerciseGroupProps {
   children: React.ReactNode
   license: React.ReactNode
   groupIntro: React.ReactNode
-  positionOnPage: number
+  positionOnPage?: number
   id: number
+  href?: string
 }
 
 export function ExerciseGroup({
@@ -22,27 +20,29 @@ export function ExerciseGroup({
   groupIntro,
   positionOnPage,
   id,
+  href,
 }: ExerciseGroupProps) {
   const [loaded, setLoaded] = React.useState(false)
   React.useEffect(() => {
     setLoaded(true)
   }, [])
-  const { strings } = useInstanceData()
   const auth = useAuth()
   return (
     <Container>
       <ExerciseIntro>
-        <ExerciseNumbering index={positionOnPage} />
-
+        {positionOnPage !== undefined && (
+          <ExerciseNumbering
+            index={positionOnPage}
+            href={href ? href : `/${id}`}
+          />
+        )}
         <TopLine>
-          <Label>{strings.content.exerciseGroup}</Label>
+          <IntroWrapper>{groupIntro}</IntroWrapper>
           <div>{license}</div>
           {loaded && auth.current && (
             <AuthorTools data={{ type: '_ExerciseGroupInline', id }} />
           )}
         </TopLine>
-
-        {groupIntro}
       </ExerciseIntro>
       <Content>{children}</Content>
     </Container>
@@ -51,15 +51,15 @@ export function ExerciseGroup({
 
 const TopLine = styled.div`
   display: flex;
-  align-items: center;
   margin-bottom: 3px;
 `
 
-const Container = styled(SpoilerContainer)`
-  padding-top: 4px;
-  border-left: 8px solid ${(props) => props.theme.colors.lightBlueBackground};
+const IntroWrapper = styled.div`
+  flex-grow: 1;
+`
 
-  margin: 40px 0;
+const Container = styled.div`
+  padding-top: 4px;
 `
 
 const ExerciseIntro = styled.div`
@@ -71,15 +71,8 @@ const Content = styled.div`
   padding-bottom: 14px;
   background-color: #fff;
   margin: 0 8px 10px 8px;
-  padding-left: 8px;
-`
 
-const Label = styled.small`
-  font-size: 0.9rem;
-  font-weight: bold;
-  ${makeMargin}
-  margin-right: auto;
-  display: block;
-  margin-bottom: 7px;
-  color: ${(props) => props.theme.colors.brand};
+  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
+    padding-left: 50px;
+  }
 `

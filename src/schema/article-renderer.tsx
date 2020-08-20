@@ -3,7 +3,7 @@ import React from 'react'
 import { CSSProperties } from 'styled-components'
 
 import { Col } from '../components/content/col'
-import { ExerciseGroup } from '../components/content/exercise-group'
+import { ExerciseGroup } from '../components/content/exercises/exercise-group'
 import { GeogebraWrapper } from '../components/content/geogebra-wrapper'
 import { ImageLink } from '../components/content/image-link'
 import { ImgCentered } from '../components/content/img-centered'
@@ -36,7 +36,7 @@ import { StyledUl } from '../components/tags/styled-ul'
 import { theme } from '../theme'
 import type { CodeProps } from '@/components/content/code'
 import type { EquationProps } from '@/components/content/equations'
-import type { ExerciseProps } from '@/components/content/exercise'
+import type { ExerciseProps } from '@/components/content/exercises/exercise'
 import type { GeogebraProps } from '@/components/content/geogebra'
 import type { InjectionProps } from '@/components/content/injection'
 import { Lazy } from '@/components/content/lazy'
@@ -65,7 +65,7 @@ const Injection = dynamic<InjectionProps>(() =>
   import('../components/content/injection').then((mod) => mod.Injection)
 )
 const Exercise = dynamic<ExerciseProps>(() =>
-  import('../components/content/exercise').then((mod) => mod.Exercise)
+  import('../components/content/exercises/exercise').then((mod) => mod.Exercise)
 )
 const Video = dynamic<VideoProps>(() =>
   import('../components/content/video').then((mod) => mod.Video)
@@ -310,8 +310,9 @@ function renderElement(props: RenderElementProps): React.ReactNode {
           element.license && <LicenseNotice minimal data={element.license} />
         }
         groupIntro={renderArticle(element.content, false)}
-        positionOnPage={element.positionOnPage ?? 0}
+        positionOnPage={element.positionOnPage}
         id={element.context.id}
+        href={element.href}
       >
         {children}
       </ExerciseGroup>
