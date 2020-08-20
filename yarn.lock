@@ -2051,6 +2051,11 @@
   dependencies:
     tippy.js "^6.2.0"
 
+"@types/algebra.js@^0.2.0":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@types/algebra.js/-/algebra.js-0.2.1.tgz#e7a8c55818363bbc02e4983cd6d01f1519061deb"
+  integrity sha1-56jFWBg2O7wC5Jg81tAfFRkGHes=
+
 "@types/aria-query@^4.2.0":
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/@types/aria-query/-/aria-query-4.2.0.tgz#14264692a9d6e2fa4db3df5e56e94b5e25647ac0"
@@ -2644,6 +2649,11 @@ ajv@^6.1.0, ajv@^6.10.0, ajv@^6.10.2, ajv@^6.12.0, ajv@^6.12.2, ajv@^6.12.3:
     fast-json-stable-stringify "^2.0.0"
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
+
+algebra.js@^0.2.0:
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/algebra.js/-/algebra.js-0.2.6.tgz#23aacc86f8634e4c206d56c8077ef220a6221c74"
+  integrity sha1-I6rMhvhjTkwgbVbIB37yIKYiHHQ=
 
 ally.js@1.4.1:
   version "1.4.1"

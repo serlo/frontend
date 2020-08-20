@@ -1,3 +1,4 @@
+import A from 'algebra.js'
 import React from 'react'
 import styled, { css } from 'styled-components'
 
@@ -17,7 +18,7 @@ export function InputExercise({ data }: InputExerciseProps) {
 
   function keyPress(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.keyCode == 13) {
-      setFeedback(checkAnswer(value, data.answers))
+      setFeedback(checkAnswer())
     }
   }
 
@@ -35,24 +36,58 @@ export function InputExercise({ data }: InputExerciseProps) {
       <Feedback>{feedback}</Feedback>
       <CheckButton
         selectable={value !== ''}
-        onClick={() => setFeedback(checkAnswer(value, data.answers))}
+        onClick={() => setFeedback(checkAnswer())}
       >
         {strings.content.check}
       </CheckButton>
     </Wrapper>
   )
 
-  function checkAnswer(
-    val: string,
-    answers: EdtrPluginInputExercise['state']['answers']
-  ) {
-    const filteredAnswers = answers.filter((answer) => answer.value === val)
+  function checkAnswer() {
+    const answers = data.answers
+    const filteredAnswers = answers.filter((answer) => {
+      try {
+        const solution = normalize(answer.value)
+        const submission = normalize(value)
+
+        if (data.type === 'input-expression-equal-match-challenge') {
+          return (
+            (solution as A.Expression)
+              .subtract(submission as A.Expression)
+              .toString() === '0'
+          )
+        }
+        return solution === submission
+      } catch (e) {
+        return false
+      }
+    })
     if (filteredAnswers.length !== 1 || !filteredAnswers[0].isCorrect) {
       return <span>{strings.content.wrong}</span>
     } else {
       return <span>{strings.content.right}</span>
     }
   }
+
+  function normalize(value: string) {
+    const _value = collapseWhitespace(value)
+    switch (data.type) {
+      case 'input-number-exact-match-challenge':
+        return normalizeNumber(_value).replace(/( )?\/( )?/g, '/')
+      case 'input-expression-equal-match-challenge':
+        return A.parse(normalizeNumber(_value))
+      case 'input-string-normalized-match-challenge':
+        return _value.toUpperCase()
+    }
+  }
+}
+
+function collapseWhitespace(val: string): string {
+  return val.replace(/\s+/g, ' ')
+}
+
+function normalizeNumber(val: string) {
+  return val.replace(/,/g, '.')
 }
 
 const Wrapper = styled.div`
