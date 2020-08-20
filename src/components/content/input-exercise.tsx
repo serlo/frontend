@@ -46,17 +46,21 @@ export function InputExercise({ data }: InputExerciseProps) {
   function checkAnswer() {
     const answers = data.answers
     const filteredAnswers = answers.filter((answer) => {
-      const solution = normalize(answer.value)
-      const submission = normalize(value)
+      try {
+        const solution = normalize(answer.value)
+        const submission = normalize(value)
 
-      if (data.type === 'input-expression-equal-match-challenge') {
-        return (
-          (solution as A.Expression)
-            .subtract(submission as A.Expression)
-            .toString() === '0'
-        )
+        if (data.type === 'input-expression-equal-match-challenge') {
+          return (
+            (solution as A.Expression)
+              .subtract(submission as A.Expression)
+              .toString() === '0'
+          )
+        }
+        return solution === submission
+      } catch (e) {
+        return false
       }
-      return solution === submission
     })
     if (filteredAnswers.length !== 1 || !filteredAnswers[0].isCorrect) {
       return <span>{strings.content.wrong}</span>
