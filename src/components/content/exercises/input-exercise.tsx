@@ -22,7 +22,7 @@ export function InputExercise({ data }: InputExerciseProps) {
   const { strings } = useInstanceData()
 
   function evaluate() {
-    setFeedback(checkAnswer(value, data.answers))
+    setFeedback(checkAnswer())
   }
 
   return (
