@@ -33,9 +33,11 @@ export function Exercise({ node }: ExerciseProps) {
 
   return (
     <Wrapper grouped={node.grouped}>
-      {node.grouped && (
-        <ExerciseNumbering isChild index={node.positionInGroup!} />
-      )}
+      <ExerciseNumbering
+        isChild={node.grouped}
+        index={node.grouped ? node.positionInGroup! : node.positionOnPage!}
+        entityId={node.context.id}
+      />
 
       {renderExerciseTask()}
       {renderInteractive()}

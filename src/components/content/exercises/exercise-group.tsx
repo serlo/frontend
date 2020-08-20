@@ -28,7 +28,7 @@ export function ExerciseGroup({
   return (
     <Container>
       <ExerciseIntro>
-        <ExerciseNumbering index={positionOnPage} />
+        <ExerciseNumbering index={positionOnPage} entityId={id} />
         <TopLine>
           {loaded && auth.current && (
             <AuthorTools data={{ type: '_ExerciseGroupInline', id }} />

@@ -1,25 +1,33 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { Link } from '../link'
 import { makeMargin } from '@/helper/css'
 
 interface ExerciseNumberingProps {
   index: number
   isChild?: boolean
+  entityId: number
 }
 
-export function ExerciseNumbering({ index, isChild }: ExerciseNumberingProps) {
+export function ExerciseNumbering({
+  index,
+  isChild,
+  entityId,
+}: ExerciseNumberingProps) {
   if (!Number.isInteger(index)) return null
+
+  const url = `/${entityId}`
 
   if (isChild) {
     const char = String.fromCharCode(97 + index)
-    return <StyledNumberChild>{char}</StyledNumberChild>
+    return <StyledNumberChild href={url}>{char}</StyledNumberChild>
   }
 
-  return <StyledNumberParent>{index + 1}</StyledNumberParent>
+  return <StyledNumberParent href={url}>{index + 1}</StyledNumberParent>
 }
 
-const StyledNumberParent = styled.span`
+const StyledNumberParent = styled(Link)`
   display: block;
   width: 3rem;
   height: 3rem;
@@ -43,12 +51,17 @@ const StyledNumberParent = styled.span`
     margin-left: -40px;
   }
 
-    @media (min-width: ${(props) => props.theme.breakpoints.md}) {
-      margin-left: -3.5rem;
-    }
+  @media (min-width: ${(props) => props.theme.breakpoints.md}) {
+    margin-left: -3.5rem;
+  }
+
+  &:hover {
+    text-decoration: none;
+    background-color: ${(props) => props.theme.colors.lighterblue};
+  }
 `
 
-const StyledNumberChild = styled.span`
+const StyledNumberChild = styled(Link)`
   display: block;
   width: 1.9rem;
   height: 1.9rem;
@@ -65,9 +78,15 @@ const StyledNumberChild = styled.span`
   ${makeMargin}
   margin-bottom: 10px;
 
+  &:hover {
+    text-decoration: none;
+    background-color: ${(props) => props.theme.colors.brand};
+    color: #fff;
+  }
+
   @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
     position: absolute;
-    margin-top: 22px;
+    margin-top: -4px;
     margin-left: -42px;
   }
 `
