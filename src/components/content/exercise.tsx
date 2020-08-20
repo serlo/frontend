@@ -25,6 +25,8 @@ export function Exercise({ node }: ExerciseProps) {
   const { strings } = useInstanceData()
   const [solutionVisible, setVisible] = React.useState(false)
 
+  console.log(node)
+
   const auth = useAuth()
   const [loaded, setLoaded] = React.useState(false)
   React.useEffect(() => {
@@ -33,7 +35,9 @@ export function Exercise({ node }: ExerciseProps) {
 
   return (
     <Wrapper grouped={node.grouped}>
-      {!node.grouped && <ExerciseNumbering index={node.positionOnPage!} />}
+      {node.grouped && (
+        <ExerciseNumbering isChild index={node.positionInGroup!} />
+      )}
 
       {renderExerciseTask()}
       {renderInteractive()}
@@ -168,16 +172,16 @@ const StyledSpan = styled.span`
 `
 
 const Wrapper = styled.div<{ grouped?: boolean }>`
-  border-top: 2px solid ${(props) => props.theme.colors.brand};
-  padding-top: 30px;
-  padding-bottom: 10px;
+  /* border-top: 2px solid ${(props) => props.theme.colors.brand}; */
+  margin-top: 40px;
+  margin-bottom: 10px;
 
   ${(props) =>
     !props.grouped &&
     css`
-      border-left: 8px solid
+      /* border-left: 8px solid
         ${(props) => props.theme.colors.lightBlueBackground};
-      border-top: 0;
+      border-top: 0; */
 
       @media (min-width: ${(props) => props.theme.breakpoints.mobile}) {
         ${makeMargin}

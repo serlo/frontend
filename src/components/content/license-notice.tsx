@@ -97,6 +97,11 @@ const MinimalLink = styled(Link)`
   width: 2rem;
   height: 2rem;
   padding: 0;
+
+  > svg {
+    vertical-align: -0.168em;
+    margin-left: 0.009em;
+  }
 `
 
 const StyledSmall = styled.span`
