@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { AuthorTools } from './author-tools'
+import { AuthorTools } from '../author-tools'
 import { ExerciseNumbering } from './exercise-numbering'
 import { useAuth } from '@/auth/use-auth'
 

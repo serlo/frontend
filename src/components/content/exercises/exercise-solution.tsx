@@ -1,21 +1,21 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 
+import { AuthorTools } from '../author-tools'
+import { LicenseNotice } from '../license-notice'
+import { ExerciseNumbering } from './exercise-numbering'
+import { InputExercise } from './input-exercise'
+import { ScMcExercise } from './sc-mc-exercise'
+import { useAuth } from '@/auth/use-auth'
+import { useInstanceData } from '@/contexts/instance-context'
+import { FrontendContentNode, FrontendExerciseNode } from '@/data-types'
 import {
   makeMargin,
   makeDefaultButton,
   makePadding,
   inputFontReset,
-} from '../../helper/css'
-import { renderArticle } from '../../schema/article-renderer'
-import { AuthorTools } from './author-tools'
-import { ExerciseNumbering } from './exercise-numbering'
-import { InputExercise } from './input-exercise'
-import { LicenseNotice } from './license-notice'
-import { ScMcExercise } from './sc-mc-exercise'
-import { useAuth } from '@/auth/use-auth'
-import { useInstanceData } from '@/contexts/instance-context'
-import { FrontendContentNode, FrontendExerciseNode } from '@/data-types'
+} from '@/helper/css'
+import { renderArticle } from '@/schema/article-renderer'
 
 export interface ExerciseProps {
   node: FrontendExerciseNode
@@ -24,8 +24,6 @@ export interface ExerciseProps {
 export function Exercise({ node }: ExerciseProps) {
   const { strings } = useInstanceData()
   const [solutionVisible, setVisible] = React.useState(false)
-
-  console.log(node)
 
   const auth = useAuth()
   const [loaded, setLoaded] = React.useState(false)
@@ -236,7 +234,7 @@ const SolutionBox = styled.div`
   padding-bottom: 10px;
   ${makeMargin}
   margin-bottom: ${(props) => props.theme.spacing.mb.block};
-  border-left: 8px solid ${(props) => props.theme.colors.brand};;
+  border-left: 8px solid ${(props) => props.theme.colors.lightBlueBackground};;
 `
 
 const SolutionTools = styled.div`
