@@ -20,10 +20,8 @@ export function InputExercise({ data }: InputExerciseProps) {
   const [value, setValue] = React.useState('')
   const { strings } = useInstanceData()
 
-  function keyPress(e: React.KeyboardEvent<HTMLInputElement>) {
-    if (e.keyCode == 13) {
-      setFeedback(checkAnswer(value, data.answers))
-    }
+  function evaluate() {
+    setFeedback(checkAnswer(value, data.answers))
   }
 
   return (
@@ -32,7 +30,9 @@ export function InputExercise({ data }: InputExerciseProps) {
         type="text"
         value={value}
         onChange={(e) => setValue(e.target.value)}
-        onKeyDown={keyPress}
+        onKeyDown={(e) => {
+          if (e.keyCode == 13) evaluate()
+        }}
         placeholder={strings.content.yourAnswer}
       />{' '}
       {data.unit}
@@ -40,10 +40,7 @@ export function InputExercise({ data }: InputExerciseProps) {
       {feedback && (
         <Feedback correct={feedback.correct}>{feedback.message}</Feedback>
       )}
-      <CheckButton
-        selectable={value !== ''}
-        onClick={() => setFeedback(checkAnswer(value, data.answers))}
-      >
+      <CheckButton selectable={value !== ''} onClick={evaluate}>
         {strings.content.check}
       </CheckButton>
     </Wrapper>
@@ -66,11 +63,6 @@ const Wrapper = styled.div`
   ${makeMargin}
   margin-bottom: 30px;
 `
-
-// const Feedback = styled(StyledP)`
-//   margin-top: 10px;
-//   margin-bottom: 10px;
-// `
 
 const CheckButton = styled.a<{ selectable: boolean }>`
   ${makeDefaultButton}
