@@ -33,6 +33,7 @@ export async function prettifyLinks(pageData: PageData) {
   }
 
   if (pageData.kind === 'taxonomy') {
+    console.log(pageData.taxonomyData.exercisesContent)
     walk(pageData.taxonomyData.exercisesContent)
   }
 
@@ -85,6 +86,18 @@ export async function prettifyLinks(pageData: PageData) {
         }
         if (node.taskEdtrState) {
           walk(node.taskEdtrState.content)
+        }
+      }
+      if (node.type === 'exercise-group') {
+        const id = node.context.id
+        if (id) {
+          ids.push(id)
+          callbacks.push({
+            id,
+            callback: (alias) => {
+              node.href = alias
+            },
+          })
         }
       }
     })

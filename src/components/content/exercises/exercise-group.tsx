@@ -9,8 +9,9 @@ export interface ExerciseGroupProps {
   children: React.ReactNode
   license: React.ReactNode
   groupIntro: React.ReactNode
-  positionOnPage: number
+  positionOnPage?: number
   id: number
+  href?: string
 }
 
 export function ExerciseGroup({
@@ -19,6 +20,7 @@ export function ExerciseGroup({
   groupIntro,
   positionOnPage,
   id,
+  href,
 }: ExerciseGroupProps) {
   const [loaded, setLoaded] = React.useState(false)
   React.useEffect(() => {
@@ -28,7 +30,12 @@ export function ExerciseGroup({
   return (
     <Container>
       <ExerciseIntro>
-        <ExerciseNumbering index={positionOnPage} entityId={id} />
+        {positionOnPage !== undefined && (
+          <ExerciseNumbering
+            index={positionOnPage}
+            href={href ? href : `/${id}`}
+          />
+        )}
         <TopLine>
           {loaded && auth.current && (
             <AuthorTools data={{ type: '_ExerciseGroupInline', id }} />
@@ -50,10 +57,6 @@ const TopLine = styled.div`
 
 const Container = styled.div`
   padding-top: 4px;
-  /* border-left: 8px solid ${(props) =>
-    props.theme.colors.lightBlueBackground}; */
-
-  /* margin: 40px 0; */
 `
 
 const ExerciseIntro = styled.div`

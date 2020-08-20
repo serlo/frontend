@@ -310,8 +310,9 @@ function renderElement(props: RenderElementProps): React.ReactNode {
           element.license && <LicenseNotice minimal data={element.license} />
         }
         groupIntro={renderArticle(element.content, false)}
-        positionOnPage={element.positionOnPage ?? 0}
+        positionOnPage={element.positionOnPage}
         id={element.context.id}
+        href={element.href}
       >
         {children}
       </ExerciseGroup>

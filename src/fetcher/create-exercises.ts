@@ -79,11 +79,12 @@ export function createExerciseGroup(
       const exerciseNode = createExercise(exercise)
       exerciseNode.grouped = true
       exerciseNode.positionInGroup = groupIndex
-      exerciseNode.positionOnPage = pageIndex // compat: page page index also to grouped exercise for id generation
+      exerciseNode.positionOnPage = pageIndex // compat: page index also to grouped exercise for id generation
       exerciseNode.context.parent = uuid.id
       children.push(exerciseNode)
     })
   }
+
   return {
     type: 'exercise-group',
     content: convertState(uuid.currentRevision?.content),
@@ -93,5 +94,6 @@ export function createExerciseGroup(
     context: {
       id: uuid.id,
     },
+    href: uuid.alias ? uuid.alias : undefined,
   }
 }

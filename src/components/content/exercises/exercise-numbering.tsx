@@ -7,24 +7,21 @@ import { makeMargin } from '@/helper/css'
 interface ExerciseNumberingProps {
   index: number
   isChild?: boolean
-  entityId: number
+  href: string
 }
 
 export function ExerciseNumbering({
   index,
   isChild,
-  entityId,
+  href,
 }: ExerciseNumberingProps) {
   if (!Number.isInteger(index)) return null
 
-  const url = `/${entityId}`
-
   if (isChild) {
     const char = String.fromCharCode(97 + index)
-    return <StyledNumberChild href={url}>{char}</StyledNumberChild>
+    return <StyledNumberChild>{char}</StyledNumberChild>
   }
-
-  return <StyledNumberParent href={url}>{index + 1}</StyledNumberParent>
+  return <StyledNumberParent href={href}>{index + 1}</StyledNumberParent>
 }
 
 const StyledNumberParent = styled(Link)`
@@ -61,7 +58,7 @@ const StyledNumberParent = styled(Link)`
   }
 `
 
-const StyledNumberChild = styled(Link)`
+const StyledNumberChild = styled.span`
   display: block;
   width: 1.9rem;
   height: 1.9rem;
