@@ -1,3 +1,4 @@
+import A from 'algebra.js'
 import React from 'react'
 import styled, { css } from 'styled-components'
 
@@ -46,17 +47,51 @@ export function InputExercise({ data }: InputExerciseProps) {
     </Wrapper>
   )
 
-  function checkAnswer(
-    val: string,
-    answers: EdtrPluginInputExercise['state']['answers']
-  ) {
-    const filteredAnswers = answers.filter((answer) => answer.value === val)
+  function checkAnswer() {
+    const answers = data.answers
+    const filteredAnswers = answers.filter((answer) => {
+      try {
+        const solution = normalize(answer.value)
+        const submission = normalize(value)
+
+        if (data.type === 'input-expression-equal-match-challenge') {
+          return (
+            (solution as A.Expression)
+              .subtract(submission as A.Expression)
+              .toString() === '0'
+          )
+        }
+        return solution === submission
+      } catch (e) {
+        return false
+      }
+    })
     if (filteredAnswers.length !== 1 || !filteredAnswers[0].isCorrect) {
       return { correct: false, message: strings.content.wrong }
     } else {
       return { correct: true, message: strings.content.right }
     }
   }
+
+  function normalize(value: string) {
+    const _value = collapseWhitespace(value)
+    switch (data.type) {
+      case 'input-number-exact-match-challenge':
+        return normalizeNumber(_value).replace(/( )?\/( )?/g, '/')
+      case 'input-expression-equal-match-challenge':
+        return A.parse(normalizeNumber(_value))
+      case 'input-string-normalized-match-challenge':
+        return _value.toUpperCase()
+    }
+  }
+}
+
+function collapseWhitespace(val: string): string {
+  return val.replace(/\s+/g, ' ')
+}
+
+function normalizeNumber(val: string) {
+  return val.replace(/,/g, '.')
 }
 
 const Wrapper = styled.div`
