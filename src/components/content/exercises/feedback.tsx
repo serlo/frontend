@@ -29,5 +29,4 @@ const FeedbackWrapper = styled.div<{ correct?: boolean }>`
         ? props.theme.colors.brandGreen
         : props.theme.colors.orange};
   }
-}
 `
