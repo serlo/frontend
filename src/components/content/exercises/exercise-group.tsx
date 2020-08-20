@@ -37,11 +37,11 @@ export function ExerciseGroup({
           />
         )}
         <TopLine>
+          <IntroWrapper>{groupIntro}</IntroWrapper>
+          <div>{license}</div>
           {loaded && auth.current && (
             <AuthorTools data={{ type: '_ExerciseGroupInline', id }} />
           )}
-          {groupIntro}
-          <div>{license}</div>
         </TopLine>
       </ExerciseIntro>
       <Content>{children}</Content>
@@ -51,8 +51,11 @@ export function ExerciseGroup({
 
 const TopLine = styled.div`
   display: flex;
-  justify-content: space-between;
   margin-bottom: 3px;
+`
+
+const IntroWrapper = styled.div`
+  flex-grow: 1;
 `
 
 const Container = styled.div`
