@@ -2477,13 +2477,19 @@ test('Exercise', async () => {
       url: '/mathe/funktionen',
     },
     {
-      label: 'Wichtige Funktionstypen und ihre Eigenschaften',
-      url: '/mathe/funktionen/wichtige-funktionstypen-eigenschaften',
+      ellipsis: true,
+      label: '',
     },
     {
       label: 'Trigonometrische Funktionen',
       url:
         '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen',
+    },
+    {
+      label:
+        'Aufgaben zum Verschieben und Strecken trigonometrischer Funktionen',
+      url:
+        '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen/aufgaben-verschieben-strecken-trigonometrischer-funktionen',
     },
   ])
 
@@ -2773,13 +2779,19 @@ test('ExerciseGroup', async () => {
       url: '/mathe/funktionen',
     },
     {
-      label: 'Wichtige Funktionstypen und ihre Eigenschaften',
-      url: '/mathe/funktionen/wichtige-funktionstypen-eigenschaften',
+      ellipsis: true,
+      label: '',
     },
     {
       label: 'Trigonometrische Funktionen',
       url:
         '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen',
+    },
+    {
+      label:
+        'Aufgaben zum Verschieben und Strecken trigonometrischer Funktionen',
+      url:
+        '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen/aufgaben-verschieben-strecken-trigonometrischer-funktionen',
     },
   ])
 
