@@ -83,7 +83,7 @@ export interface CoursePage extends Entity {
 
 // We treat a grouped exercise just as a normal exercise.
 export interface BareExercise extends Entity {
-  id: number
+  trashed: boolean
   currentRevision?: GraphQL.Maybe<
     Pick<GraphQL.AbstractExerciseRevision, 'content'>
   >
@@ -411,6 +411,7 @@ export const dataQuery = gql`
     id
     alias
     instance
+    trashed
     currentRevision {
       content
     }
