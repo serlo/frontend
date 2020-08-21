@@ -77,6 +77,8 @@ export function createExerciseGroup(
       exercise: BareExercise,
       groupIndex: number
     ) {
+      if (!exercise.currentRevision) return
+      if (exercise.trashed) return
       const exerciseNode = createExercise(exercise)
       exerciseNode.grouped = true
       exerciseNode.positionInGroup = groupIndex
