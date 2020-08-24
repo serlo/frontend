@@ -1,8 +1,12 @@
 <img src="https://assets.serlo.org/meta/logo.png" alt="Serlo logo" title="Serlo" align="right" height="60" />
 
-# Frontend
+# serlo/frontend
 
-Welcome to the new serlo.org frontend.
+Welcome to the new frontend of [Serlo](https://de.serlo.org).
+
+Production deployment: [frontend.serlo.org](https://frontend.serlo.org)
+
+Staging deployment: [frontend-git-staging.serlo.vercel.app](https://frontend-git-staging.serlo.vercel.app)
 
 ## Getting started
 
