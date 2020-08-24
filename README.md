@@ -27,7 +27,7 @@ Enable frontend in staging environment: [de.serlo-staging.dev/enable-frontend](h
 Staging deployment: [frontend-git-staging.serlo.vercel.app](https://frontend-git-staging.serlo.vercel.app)
 
 
-### Installation
+### Local installation
 
 You can run the frontend on your local system. You need to install [Node.js](https://nodejs.org/en/) (current LTS) and [yarn](https://classic.yarnpkg.com/en/docs/install).
 
