@@ -27,8 +27,8 @@ export const instanceData = {
     },
     entities: {
       topicFolder: 'Exercise folder',
-      comment: 'Comment',
-      revision: 'Revision',
+      comment: "கருத்து",
+      revision: "மீட்டல்",
       thread: 'Thread'
     },
     share: {
@@ -45,7 +45,7 @@ export const instanceData = {
       readMore: "தகவல்"
     },
     course: {
-      showPages: 'Show course overview',
+      showPages: "வகுப்பு மேலோட்டத்தைக் காட்டவும்",
       pages: 'Course overview',
       next: "அடுத்து"
     },
