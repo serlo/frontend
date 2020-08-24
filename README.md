@@ -4,6 +4,10 @@
 
 Welcome to the new frontend of [Serlo](https://de.serlo.org).
 
+Enable new frontend in production: de.serlo.org/enable-frontend
+
+Enable new frontend in staging: de.serlo-staging.dev/enable-frontend
+
 Production deployment: [frontend.serlo.org](https://frontend.serlo.org)
 
 Staging deployment: [frontend-git-staging.serlo.vercel.app](https://frontend-git-staging.serlo.vercel.app)
