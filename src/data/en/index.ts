@@ -151,6 +151,11 @@ export const loggedInData = {
       organize: 'Organize',
       moveToGroupedTextExercise: 'Move content to other grouped-text-exercise',
       moveToTextExercise: 'Move content to other text-exercise',
+      sortEntities: 'Sort content',
+      newEntity: 'New Entity',
+      exercise: 'Exercise',
+      exerciseGroup: 'Exercise Group',
+      event: 'Event'
     },
     notifications: {
       loadMore: "Load more",

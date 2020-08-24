@@ -2,6 +2,7 @@ import Tippy from '@tippyjs/react'
 import styled from 'styled-components'
 
 import { SubList, SubLink, SubButtonStyle } from './menu'
+import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export interface AuthorToolsData {
@@ -19,8 +20,10 @@ export interface AuthorToolsHoverMenuProps {
 
 export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
   const loggedInData = useLoggedInData()
+  const instanceData = useInstanceData()
   if (!loggedInData) return null
   const { strings } = loggedInData
+  const categories = instanceData.strings.categories
 
   if (data.type == 'Page') {
     return (
@@ -137,22 +140,111 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
     return (
       <HoverDiv>
         {abo()}
-
         <Li>
           <SubLink href={`/taxonomy/term/organize/${data.id}`} noCSR>
             <SubButtonStyle>{strings.authorMenu.organize}</SubButtonStyle>
           </SubLink>
         </Li>
-
         {log()}
-        {sort()}
 
+        <Tippy
+          interactive
+          placement="left-end"
+          content={
+            <HoverDiv>
+              <Li>
+                <SubLink
+                  href={`/entity/create/article?taxonomy%5Bterm%5D=${data.id}`}
+                  noCSR
+                >
+                  <SubButtonStyle>{categories.article}</SubButtonStyle>
+                </SubLink>
+              </Li>
+
+              <Li>
+                <SubLink
+                  href={`/entity/create/text-exercise?taxonomy%5Bterm%5D=${data.id}`}
+                  noCSR
+                >
+                  <SubButtonStyle>{strings.authorMenu.exercise}</SubButtonStyle>
+                </SubLink>
+              </Li>
+
+              <Li>
+                <SubLink
+                  href={`/entity/create/video?taxonomy%5Bterm%5D=${data.id}`}
+                  noCSR
+                >
+                  <SubButtonStyle>{categories.video}</SubButtonStyle>
+                </SubLink>
+              </Li>
+
+              <Li>
+                <SubLink
+                  href={`/entity/create/course?taxonomy%5Bterm%5D=${data.id}`}
+                  noCSR
+                >
+                  <SubButtonStyle>{categories.course}</SubButtonStyle>
+                </SubLink>
+              </Li>
+
+              <Li>
+                <SubLink
+                  href={`/entity/create/text-exercise-group?taxonomy%5Bterm%5D=${data.id}`}
+                  noCSR
+                >
+                  <SubButtonStyle>
+                    {strings.authorMenu.exerciseGroup}
+                  </SubButtonStyle>
+                </SubLink>
+              </Li>
+
+              <Li>
+                <SubLink
+                  href={`/entity/create/applet?taxonomy%5Bterm%5D=${data.id}`}
+                  noCSR
+                >
+                  <SubButtonStyle>{categories.applet}</SubButtonStyle>
+                </SubLink>
+              </Li>
+
+              <Li>
+                <SubLink
+                  href={`/entity/create/applet?taxonomy%5Bterm%5D=${data.id}`}
+                  noCSR
+                >
+                  <SubButtonStyle>{categories.applet}</SubButtonStyle>
+                </SubLink>
+              </Li>
+
+              <Li>
+                <SubLink
+                  href={`/entity/create/event?taxonomy%5Bterm%5D=${data.id}`}
+                  noCSR
+                >
+                  <SubButtonStyle>{strings.authorMenu.event}</SubButtonStyle>
+                </SubLink>
+              </Li>
+            </HoverDiv>
+          }
+        >
+          <Li>
+            <SubLink as="div">
+              <SubButtonStyle>{strings.authorMenu.newEntity}</SubButtonStyle>
+            </SubLink>
+          </Li>
+        </Tippy>
+
+        <Li>
+          <SubLink href={`/taxonomy/term/sort/entities/${data.id}`} noCSR>
+            <SubButtonStyle>{strings.authorMenu.sortEntities}</SubButtonStyle>
+          </SubLink>
+        </Li>
         <Li>
           <SubLink href={`/taxonomy/term/copy/batch/${data.id}`} noCSR>
             <SubButtonStyle>{strings.authorMenu.copyItems}</SubButtonStyle>
           </SubLink>
         </Li>
-
         <Li>
           <SubLink href={`/taxonomy/term/move/batch/${data.id}`} noCSR>
             <SubButtonStyle>{strings.authorMenu.moveItems}</SubButtonStyle>
