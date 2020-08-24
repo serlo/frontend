@@ -66,7 +66,7 @@ In addition, these features are available in the staging environment and on loca
 
 If you have a cloudflare worker, these features become available:
 
-- **Redirection of id to alias**.
+- **Redirection**. E.g. id to alias.
 
 - **Rewrite language subdomain to subfolder**. Adds full support for language versions.
 
