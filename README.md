@@ -4,17 +4,32 @@
 
 Welcome to the new frontend of [Serlo](https://de.serlo.org).
 
-Enable frontend in production: [de.serlo.org/enable-frontend](https://de.serlo.org/enable-frontend) / Production deployment: [frontend.serlo.org](https://frontend.serlo.org)
+## Overview
 
-Enable frontend in staging: [de.serlo-staging.dev/enable-frontend](https://de.serlo-staging.dev/enable-frontend) / Staging deployment: [frontend-git-staging.serlo.vercel.app](https://frontend-git-staging.serlo.vercel.app)
+The frontend fetches data from the [API server](https://github.com/serlo/api.serlo.org) and renders it to a web page. A standalone deployment of the frontend is already enough to view most parts of Serlo.
+
+In a more complete environment, the frontend sits behind a [cloudflare worker](https://github.com/serlo/serlo.org-cloudflare-worker) that handles routing and redirections. Many editing features are still handled by our [legacy server](https://github.com/serlo/serlo.org).
+
+We have multiple environments. Development is happening most of the time in the *staging environment*, which is up-to-date, but safe for edits. If you run the frontend on your local system, it will access the staging api server.
+
+Finished features can be deployed to the *production environment*. All services have a separate deployment in each environment.
 
 ## Getting started
 
+### Enable frontend
+
+To use the new frontend, you still need to opt-in.
+
+Enable frontend in production environment: [de.serlo.org/enable-frontend](https://de.serlo.org/enable-frontend) / Production deployment: [frontend.serlo.org](https://frontend.serlo.org)
+
+Enable frontend in staging environment: [de.serlo-staging.dev/enable-frontend](https://de.serlo-staging.dev/enable-frontend) / Staging deployment: [frontend-git-staging.serlo.vercel.app](https://frontend-git-staging.serlo.vercel.app)
+
+
 ### Installation
 
-Install [Node.js](https://nodejs.org/en/) (current LTS) and [yarn](https://classic.yarnpkg.com/en/docs/install) on your system.
+You can run the frontend on your local system. You need to install [Node.js](https://nodejs.org/en/) (current LTS) and [yarn](https://classic.yarnpkg.com/en/docs/install).
 
-Clone this repo, install dependencies and start the dev server:
+Then, clone this repo, install dependencies and start the dev server:
 
 ```sh
 git clone https://github.com/serlo/frontend.git
@@ -25,12 +40,7 @@ yarn dev
 
 The server is now running on [localhost:3000](http://localhost:3000).
 
-### Overview
-
-The frontend fetches data from the [API server](https://github.com/serlo/api.serlo.org) and renders it to a web page. A single deployment of the frontend is enough to view most parts of Serlo.
-
-The frontend deployment sits behind a [cloudflare worker](https://github.com/serlo/serlo.org-cloudflare-worker) that handles routing and redirections. Most editing features are still relying on our [legacy system](https://github.com/serlo/serlo.org).
-
+## Features
 
 <br><br><br>
 <br><br><br>
