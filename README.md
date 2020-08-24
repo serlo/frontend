@@ -62,6 +62,14 @@ In addition, these features are available in the staging environment and on loca
 
 - **Logout**. self-explaining
 
+### Redirection
+
+If you have a cloudflare worker, these features become available:
+
+- **Redirection of id to alias**.
+
+- **Rewrite language subdomain to subfolder**. Adds full support for language versions.
+
 ### Edit
 
 This set of features are interacting with the legacy server and are currently only available in the staging environment:
