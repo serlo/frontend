@@ -4,9 +4,9 @@
 
 Welcome to the new frontend of [Serlo](https://de.serlo.org).
 
-Enable new frontend in production: de.serlo.org/enable-frontend
+Enable frontend in production: [de.serlo.org/enable-frontend](https://de.serlo.org/enable-frontend)
 
-Enable new frontend in staging: de.serlo-staging.dev/enable-frontend
+Enable frontend in staging: [de.serlo-staging.dev/enable-frontend](https://de.serlo-staging.dev/enable-frontend)
 
 Production deployment: [frontend.serlo.org](https://frontend.serlo.org)
 
@@ -27,7 +27,24 @@ yarn
 yarn dev
 ```
 
-The server is now running on `localhost:3000`. You can visit it in the browser.
+The server is now running on [localhost:3000](http://localhost:3000).
+
+
+
+
+<br><br><br>
+<br><br><br>
+<br><br><br>
+
+
+
+
+
+
+
+
+
+
 
 ### Overview
 
