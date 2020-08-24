@@ -6,13 +6,13 @@ Welcome to the new frontend of [Serlo](https://de.serlo.org).
 
 ## Overview
 
-The frontend fetches data from the [API server](https://github.com/serlo/api.serlo.org) and renders it to a web page. A standalone deployment of the frontend is already enough to view most parts of Serlo.
+The frontend fetches data from the [API server](https://github.com/serlo/api.serlo.org) and renders it to a web page. A standalone deployment of the frontend is enough to view most parts of Serlo.
 
 In a more complete environment, the frontend sits behind a [cloudflare worker](https://github.com/serlo/serlo.org-cloudflare-worker) that handles routing and redirections. Many editing features are still handled by our [legacy server](https://github.com/serlo/serlo.org).
 
-We have multiple environments. Development is happening most of the time in the *staging environment*, which is up-to-date, but safe for edits. If you run the frontend on your local system, it will access the staging api server.
+We have multiple environments. Development is happening most of the time in the *staging environment*, which is up-to-date, but safe for edits. This is also the environment for the default branch of this repository.
 
-Finished features can be deployed to the *production environment*. All services have a separate deployment in each environment.
+Finished features can be deployed to the *production environment* by merging them into the `production` branch.
 
 ## Getting started
 
@@ -20,9 +20,11 @@ Finished features can be deployed to the *production environment*. All services 
 
 To use the new frontend, you still need to opt-in.
 
-Enable frontend in production environment: [de.serlo.org/enable-frontend](https://de.serlo.org/enable-frontend) / Production deployment: [frontend.serlo.org](https://frontend.serlo.org)
+Enable frontend in production environment: [de.serlo.org/enable-frontend](https://de.serlo.org/enable-frontend)<br>
+Production deployment: [frontend.serlo.org](https://frontend.serlo.org)
 
-Enable frontend in staging environment: [de.serlo-staging.dev/enable-frontend](https://de.serlo-staging.dev/enable-frontend) / Staging deployment: [frontend-git-staging.serlo.vercel.app](https://frontend-git-staging.serlo.vercel.app)
+Enable frontend in staging environment: [de.serlo-staging.dev/enable-frontend](https://de.serlo-staging.dev/enable-frontend)<br>
+Staging deployment: [frontend-git-staging.serlo.vercel.app](https://frontend-git-staging.serlo.vercel.app)
 
 
 ### Installation
