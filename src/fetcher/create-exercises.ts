@@ -1,11 +1,12 @@
 import { convertState } from './fetch-page-data'
-import { BareExercise, BareExerciseGroup } from './query'
+import { Solution, BareExercise, BareExerciseGroup } from './query'
 import {
   FrontendExerciseNode,
   FrontendContentNode,
   TaskEdtrState,
   SolutionEdtrState,
   FrontendExerciseGroupNode,
+  FrontendSolutionNode,
 } from '@/data-types'
 import { convert } from '@/schema/convert-edtr-io-state'
 
@@ -62,6 +63,34 @@ export function createExercise(
     context: {
       id: uuid.id,
       solutionId: uuid.solution?.id,
+    },
+    href: uuid.alias ? uuid.alias : undefined,
+  }
+}
+
+export function createSolution(uuid: Solution): FrontendSolutionNode {
+  let solutionLegacy: FrontendContentNode[] | undefined = undefined
+  let solutionEdtrState: SolutionEdtrState | undefined = undefined
+  const solution = uuid.currentRevision?.content
+  if (solution) {
+    if (solution.startsWith('{')) {
+      // special case here: we know it's a edtr-io solution
+      // TODO import types from edtr-io
+      const solutionState = JSON.parse(solution).state
+      solutionState.strategy = convert(solutionState.strategy)
+      solutionState.steps = convert(solutionState.steps)
+      solutionEdtrState = solutionState
+    } else {
+      solutionLegacy = convertState(solution)
+    }
+  }
+  return {
+    type: 'solution',
+    solutionEdtrState,
+    solutionLegacy,
+    license: uuid.license,
+    context: {
+      id: uuid.id,
     },
     href: uuid.alias ? uuid.alias : undefined,
   }

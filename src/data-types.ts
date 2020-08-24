@@ -396,6 +396,18 @@ export interface FrontendExerciseNode {
   href?: string
 }
 
+export interface FrontendSolutionNode {
+  type: 'solution'
+  solutionLegacy?: FrontendContentNode[]
+  solutionEdtrState?: SolutionEdtrState
+  license?: LicenseData
+  context: {
+    id: number
+  }
+  href?: string
+  children?: undefined
+}
+
 export interface TaskEdtrState {
   content: FrontendContentNode[] // edtr-io plugin "exercise"
   interactive?: EdtrPluginScMcExercise | EdtrPluginInputExercise
@@ -491,6 +503,7 @@ export type FrontendVoidNode =
   | FrontendGeogebraNode
   | FrontendInjectionNode
   | FrontendExerciseNode
+  | FrontendSolutionNode
   | FrontendVideoNode
   | FrontendCodeNode
   | FrontendEquationsNode

@@ -112,6 +112,13 @@ export interface BareExerciseGroup extends Entity {
 
 export type ExerciseGroup = BareExerciseGroup & EntityWithTaxonomyTerms
 
+export interface Solution extends Entity {
+  __typename: 'Solution'
+  trashed: boolean
+  currentRevision?: GraphQL.Maybe<Pick<GraphQL.SolutionRevision, 'content'>>
+  license: License
+}
+
 // Events are only used in injections, no support for full page view
 export interface Event extends Repository {
   __typename: 'Event'
@@ -279,6 +286,17 @@ export const dataQuery = gql`
         }
       }
 
+      ... on Solution {
+        id
+        alias
+        instance
+        trashed
+        currentRevision {
+          content
+        }
+        ...license
+      }
+
       ... on Event {
         currentRevision {
           content
@@ -435,6 +453,7 @@ export type QueryResponse =
   | Exercise
   | GroupedExercise
   | ExerciseGroup
+  | Solution
   | Event
   | Course
   | TaxonomyTerm

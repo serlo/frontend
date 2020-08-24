@@ -36,7 +36,10 @@ import { StyledUl } from '../components/tags/styled-ul'
 import { theme } from '../theme'
 import type { CodeProps } from '@/components/content/code'
 import type { EquationProps } from '@/components/content/equations'
-import type { ExerciseProps } from '@/components/content/exercises/exercise'
+import {
+  ExerciseProps,
+  Solution,
+} from '@/components/content/exercises/exercise'
 import type { GeogebraProps } from '@/components/content/geogebra'
 import type { InjectionProps } from '@/components/content/injection'
 import { Lazy } from '@/components/content/lazy'
@@ -316,6 +319,15 @@ function renderElement(props: RenderElementProps): React.ReactNode {
       >
         {children}
       </ExerciseGroup>
+    )
+  }
+  if (element.type === 'solution') {
+    return (
+      <Solution
+        solutionEdtrState={element.solutionEdtrState}
+        solutionLegacy={element.solutionLegacy}
+        license={element.license}
+      />
     )
   }
   if (element.type === 'video') {

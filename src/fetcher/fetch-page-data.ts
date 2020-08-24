@@ -2,7 +2,11 @@ import { request } from 'graphql-request'
 
 import { render } from '../../external/legacy_render'
 import { createBreadcrumbs } from './create-breadcrumbs'
-import { createExercise, createExerciseGroup } from './create-exercises'
+import {
+  createExercise,
+  createExerciseGroup,
+  createSolution,
+} from './create-exercises'
 import { getMetaImage, getMetaDescription } from './create-meta-data'
 import { createNavigation } from './create-navigation'
 import { buildTaxonomyData } from './create-taxonomy'
@@ -130,6 +134,29 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
         contentType: 'exercisegroup',
         metaImage,
         metaDescription: getMetaDescription(exercise),
+      },
+      horizonData,
+      cacheKey,
+    }
+  }
+
+  if (uuid.__typename === 'Solution') {
+    const solution = [createSolution(uuid)]
+    return {
+      kind: 'single-entity',
+      entityData: {
+        id: uuid.id,
+        typename: uuid.__typename,
+        content: solution,
+        inviteToEdit: false,
+      },
+      newsletterPopup: false,
+      breadcrumbsData,
+      metaData: {
+        title,
+        contentType: 'solution',
+        metaImage,
+        metaDescription: '',
       },
       horizonData,
       cacheKey,

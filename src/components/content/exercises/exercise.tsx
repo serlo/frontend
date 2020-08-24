@@ -15,7 +15,12 @@ import { InputExercise } from './input-exercise'
 import { ScMcExercise } from './sc-mc-exercise'
 import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
-import { FrontendContentNode, FrontendExerciseNode } from '@/data-types'
+import {
+  FrontendContentNode,
+  FrontendExerciseNode,
+  LicenseData,
+  SolutionEdtrState,
+} from '@/data-types'
 
 export interface ExerciseProps {
   node: FrontendExerciseNode
@@ -44,9 +49,32 @@ export function Exercise({ node }: ExerciseProps) {
 
       {renderToolsAndLicense()}
 
-      {solutionVisible && renderSolutionBox()}
+      {solutionVisible && renderSolution()}
     </Wrapper>
   )
+
+  function renderSolution() {
+    return (
+      <Solution
+        solutionEdtrState={node.solutionEdtrState}
+        solutionLegacy={node.solutionLegacy}
+        license={node.solutionLicense}
+        authorTools={
+          loaded &&
+          auth.current && (
+            <AuthorTools
+              data={{
+                type: '_SolutionInline',
+                id: node.context.solutionId!,
+                parentId: node.context.id,
+                grouped: node.grouped,
+              }}
+            />
+          )
+        }
+      />
+    )
+  }
 
   function renderSolutionToggle() {
     if (!node.solutionEdtrState && !node.solutionLegacy) return null
@@ -64,55 +92,6 @@ export function Exercise({ node }: ExerciseProps) {
         {solutionVisible ? strings.content.hide : strings.content.show}
       </SolutionToggle>
     )
-  }
-
-  function renderSolutionBox() {
-    return (
-      <SolutionBox>
-        {renderArticle(getSolutionContent(), false)}
-
-        <SolutionTools>
-          {node.solutionLicense && (
-            <LicenseNotice minimal data={node.solutionLicense} />
-          )}
-          {loaded && auth.current && (
-            <AuthorTools
-              data={{
-                type: '_SolutionInline',
-                id: node.context.solutionId!,
-                parentId: node.context.id,
-                grouped: node.grouped,
-              }}
-            />
-          )}
-        </SolutionTools>
-      </SolutionBox>
-    )
-  }
-
-  function getSolutionContent(): FrontendContentNode[] {
-    if (node.solutionLegacy) {
-      return node.solutionLegacy
-    }
-    if (!node.solutionEdtrState) return []
-    const state = node.solutionEdtrState
-    const prereq: FrontendContentNode[] = []
-    if (state.prerequisite && state.prerequisite.href) {
-      prereq.push({
-        type: 'p',
-        children: [
-          { type: 'text', text: `${strings.content.prerequisite} ` },
-          {
-            type: 'a',
-            href: state.prerequisite.href,
-            children: [{ type: 'text', text: state.prerequisite.title }],
-          },
-        ],
-      })
-    }
-    const strategy = state.strategy
-    const steps = state.steps
-    return [...prereq, ...strategy, ...steps]
   }
 
   function renderExerciseTask() {
@@ -159,6 +138,62 @@ export function Exercise({ node }: ExerciseProps) {
         )}
       </ExerciseTools>
     )
+  }
+}
+
+export interface SolutionProps {
+  license?: LicenseData
+  authorTools?: React.ReactNode
+  solutionEdtrState?: SolutionEdtrState
+  solutionLegacy?: FrontendContentNode[]
+}
+
+export function Solution({
+  license,
+  authorTools,
+  solutionEdtrState,
+  solutionLegacy,
+}: SolutionProps) {
+  const { strings } = useInstanceData()
+
+  return renderSolutionBox()
+
+  function renderSolutionBox() {
+    return (
+      <SolutionBox>
+        {renderArticle(getSolutionContent(), false)}
+
+        <SolutionTools>
+          {license && <LicenseNotice minimal data={license} />}
+          {authorTools}
+        </SolutionTools>
+      </SolutionBox>
+    )
+  }
+
+  function getSolutionContent(): FrontendContentNode[] {
+    if (solutionLegacy) {
+      return solutionLegacy
+    }
+    if (!solutionEdtrState) return []
+    const state = solutionEdtrState
+    const prereq: FrontendContentNode[] = []
+    if (state.prerequisite && state.prerequisite.href) {
+      prereq.push({
+        type: 'p',
+        children: [
+          { type: 'text', text: `${strings.content.prerequisite} ` },
+          {
+            type: 'a',
+            href: state.prerequisite.href,
+            children: [{ type: 'text', text: state.prerequisite.title }],
+          },
+        ],
+      })
+    }
+    const strategy = state.strategy
+    const steps = state.steps
+    return [...prereq, ...strategy, ...steps]
   }
 }
 
