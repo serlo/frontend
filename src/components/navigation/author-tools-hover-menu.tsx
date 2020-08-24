@@ -210,15 +210,6 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
 
               <Li>
                 <SubLink
-                  href={`/entity/create/applet?taxonomy%5Bterm%5D=${data.id}`}
-                  noCSR
-                >
-                  <SubButtonStyle>{categories.applet}</SubButtonStyle>
-                </SubLink>
-              </Li>
-
-              <Li>
-                <SubLink
                   href={`/entity/create/event?taxonomy%5Bterm%5D=${data.id}`}
                   noCSR
                 >
