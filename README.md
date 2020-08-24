@@ -4,13 +4,9 @@
 
 Welcome to the new frontend of [Serlo](https://de.serlo.org).
 
-Enable frontend in production: [de.serlo.org/enable-frontend](https://de.serlo.org/enable-frontend)
+Enable frontend in production: [de.serlo.org/enable-frontend](https://de.serlo.org/enable-frontend) / Production deployment: [frontend.serlo.org](https://frontend.serlo.org)
 
-Enable frontend in staging: [de.serlo-staging.dev/enable-frontend](https://de.serlo-staging.dev/enable-frontend)
-
-Production deployment: [frontend.serlo.org](https://frontend.serlo.org)
-
-Staging deployment: [frontend-git-staging.serlo.vercel.app](https://frontend-git-staging.serlo.vercel.app)
+Enable frontend in staging: [de.serlo-staging.dev/enable-frontend](https://de.serlo-staging.dev/enable-frontend) / Staging deployment: [frontend-git-staging.serlo.vercel.app](https://frontend-git-staging.serlo.vercel.app)
 
 ## Getting started
 
@@ -29,7 +25,11 @@ yarn dev
 
 The server is now running on [localhost:3000](http://localhost:3000).
 
+### Overview
 
+The frontend fetches data from the [API server](https://github.com/serlo/api.serlo.org) and renders it to a web page. A single deployment of the frontend is enough to view most parts of Serlo.
+
+The frontend deployment sits behind a [cloudflare worker](https://github.com/serlo/serlo.org-cloudflare-worker) that handles routing and redirections. Most editing features are still relying on our [legacy system](https://github.com/serlo/serlo.org).
 
 
 <br><br><br>
