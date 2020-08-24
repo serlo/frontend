@@ -10,10 +10,6 @@ The frontend fetches data from the [API server](https://github.com/serlo/api.ser
 
 In a more complete environment, the frontend sits behind a [cloudflare worker](https://github.com/serlo/serlo.org-cloudflare-worker) that handles routing and redirections. Many editing features are still handled by our [legacy server](https://github.com/serlo/serlo.org).
 
-We have multiple environments. Development is happening most of the time in the *staging environment*, which is up-to-date, but safe for edits. This is also the environment for the default branch of this repository.
-
-Finished features can be deployed to the *production environment* by merging them into the `production` branch.
-
 ## Getting started
 
 ### Enable frontend
@@ -43,6 +39,37 @@ yarn dev
 The server is now running on [localhost:3000](http://localhost:3000).
 
 ## Features
+
+### Core
+
+These features work across all deployments, including local and preview deployments.
+
+- **View entites**. Serlo consists of different entities like articles, videos or taxonomy terms. You can access an entity by alias (e.g. https://frontend.serlo.org/mathe) or by id (e.g. https://frontend.serlo.org/54210). Look further down for a complete list of supported entity types.
+
+- **View custom pages**. Some pages are built separately in the frontend, like the landing page or the german donation page (https://frontend.serlo.org/spenden).
+
+- **Search with Google Custom Search**. Search with the built-in search input or by visiting the search page: https://frontend.serlo.org/search?q=hypotenuse
+
+- **Access language versions (limited)**. The core contains basic support for internationalization. You can access entities of other language by id or by prefixing the alias with a language subfolder. Here is an example: https://frontend.serlo.org/en/serlo.
+
+### Login
+
+In addition, these features are available in the staging environment and on localhost:
+
+- **Login**. You can login to your account with your username (not e-mail) and the password `123456`.
+
+- **View notifications**. You can view your notifications by clicking on the notification icon in the top menu.
+
+- **Logout**. self-explaining
+
+### Edit
+
+This set of features are interacting with the legacy server and are currently only available in the staging environment:
+
+- **Author Menus**. Access tools for editing and organizing content. Links to the legacy server.
+
+- **User profiles, activity log, subscriptions, ...**. Work in progress.
+
 
 <br><br><br>
 <br><br><br>
