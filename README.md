@@ -14,7 +14,7 @@ In a more complete environment, the frontend sits behind a [cloudflare worker](h
 
 ### Enable frontend
 
-To use the new frontend, you still need to opt-in.
+To use the new frontend, you need to opt-in.
 
 Enable frontend in production environment: [de.serlo.org/enable-frontend](https://de.serlo.org/enable-frontend)<br>
 Production deployment: [frontend.serlo.org](https://frontend.serlo.org)
@@ -49,9 +49,9 @@ The server is now running on [localhost:3000](http://localhost:3000).
 
 - **Login**. You can login to your account with your username (not e-mail) and the password `123456` (currently only available on staging and localhost).
 
-- **View notifications**. After login, you can view your notifications by clicking on the notification icon in the top menu.
+- **Notifications**. After login, you can view your notifications by clicking on the notification icon in the top menu.
 
-- **Edit tools**. After login, you can view several menus that allows you to edit the content. The links are pointing to the legacy server and are not handled by the frontend.
+- **Menus for editing**. After login, you can view several menus that allows you to edit the content. The links are pointing to the legacy server and are not handled by the frontend.
 
 ## Entities
 
@@ -70,10 +70,6 @@ Every entity belongs to a content type. These are the supported types:
 | `GroupedExercise` | A single exercise that is part of a exercise group.                                                                          | `/53209`  |
 | `Course`          | Meta-entity of a course, redirects to first page.                                                                            | `/51979`  |
 | `Event`           | Information about an upcoming event.                                                                                         | `/145590` |
-
-## Troubleshoot Guide
-
-TODO
 
 ## Navigation
 
