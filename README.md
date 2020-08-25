@@ -44,9 +44,9 @@ The server is now running on [localhost:3000](http://localhost:3000).
 
 - **Language versions**. The UI changes language if you are viewing an entity of another language instance. You can access them by using the id or by prefixing the alias with a language subfolder (e.g. https://frontend.serlo.org/en/serlo).
 
-- **View custom pages**. Some pages are built separately in the frontend, like the landing page or the german donation page (https://frontend.serlo.org/spenden).
+- **Custom pages**. Some pages are built separately in the frontend, like the landing page or the german donation page (https://frontend.serlo.org/spenden).
 
-- **Search with Google Custom Search**. Search with the built-in search input or by visiting the search page: https://frontend.serlo.org/search?q=hypotenuse
+- **Google Custom Search**. Search with the built-in search input or by visiting the search page: https://frontend.serlo.org/search?q=hypotenuse
 
 - **Login**. You can login to your account with your username (not e-mail) and the password `123456` (currently only available on staging and localhost).
 
@@ -54,42 +54,7 @@ The server is now running on [localhost:3000](http://localhost:3000).
 
 - **Edit tools**. After login, you can view several menus that allows you to edit the content. This feature is currently only working on staging.
 
-
-<br><br><br>
-<br><br><br>
-<br><br><br>
-
-
-
-
-
-
-
-
-
-
-
-### Overview
-
-![grafik](https://user-images.githubusercontent.com/13507950/85958632-2595dc80-b997-11ea-937c-38169b514fe7.png)
-
-You can request a page by alias (e.g. `/` or `/mathe/zahlen-größen`). The frontend decides how to handle the alias, and if necessary, fetches data from the backend. The frontend then processes the data and returns a prerendered HTML response.
-
-### Routes
-
-An alias will be handled by a specific route:
-
-1. `/api/frontend/privacy`: Internal route for loading privacy revisions (proxies the request to the legacy system).
-
-2. `/api/frontend/<slug>`: Internal route for data fetching from the backend API.
-
-3. `/`, `/spenden`, `/search`: Custom built pages.
-
-4. `/<slug>`: Entity route, the default case for almost every alias. Fetches data from backend with (2.) and renders page.
-
-Notes: We need (1.) because of CORS-Issues. We use (2.) to enable caching for the frontend deployment, because requesting (2.) can be slow, in the range of 0.5-1.5s, depending on the complexity of the entity. Most entities have a default alias, if (4.) encounters an alias that is not the default (old alias: `/mathe-startseite`, access with id: `/1885`), it will redirect to the default alias by 301.
-
-### Entities
+## Entities
 
 Every entity belongs to a content type. These are the supported types:
 
@@ -107,117 +72,9 @@ Every entity belongs to a content type. These are the supported types:
 | `Course`          | Meta-entity of a course, redirects to first page.                                                                            | `/51979`  |
 | `Event`           | Information about an upcoming event.                                                                                         | `/145590` |
 
-### Repository
+## Troubleshoot Guide
 
-Here are some useful places to get started:
-
-- `/src/pages/[[...slug]].js` currently we handle pages manually with a [catch all route](https://nextjs.org/docs/routing/dynamic-routes#optional-catch-all-routes). This is a good place to start.
-
-- `/src/components`: Collection of react components for the frontend.
-
-- `/src/components/pages`: Components that `[[...slug.js]]` calls as pages.
-
-- `/src/fetcher`: Requesting data from the GraphQL backend and process it.
-
-- `/src/schema`: Definition of the frontend content format, with renderer, and converter for edtr-io and legacy.
-
-- `/src/data`: Translations, entries navigation
-
-- `/public/_assets`: A place for public assets, served as static files under the path `/_assets/`. Don't use `import` from here, see [Assets](#assets).
-
-- `/external`: Third-party code that is not maintained by the frontend.
-
-Some useful commands:
-
-```
-yarn dev
-```
-
-Starts the development server. This enables hot reloading and development warnings. Create a PR in this repository to get a preview deployment that uses production settings.
-
-```
-yarn format
-```
-
-Runs eslint and prettier, fixes issues automatically if possible.
-
-```
-yarn lint
-```
-
-Runs tsc, eslint and prettier. This command needs to pass before merging into staging.
-
-```
-yarn analyze
-```
-
-Creates a build of the frontend, shows summary of build artefacts and creates in-depth analysis of the bundles.
-
-```
-yarn test
-```
-
-Runs jest tests.
-
-All files are named with kebab-case. You should use `@/` to import files from `src/` instead of relative paths.
-
-## Schema
-
-Entities may contain a wide range of different elements. The elements are organized in a tree.
-
-### Text
-
-The most basic node type is text. A text node contain these attributes:
-
-- `text`: The text content of this node.
-
-- `color`: blue, green or orange
-
-- `em`: true/undefined
-
-- `strong`: true/undefined
-
-### Elements
-
-More complex nodes have a type and may have other nodes as children. Here is an overview of available elements:
-
-| Type                | Attributes                                                                            | Description                                                                                                                                     |
-| ------------------- | ------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| `a`                 | href, children                                                                        | A link.                                                                                                                                         |
-| `inline-math`       | formula                                                                               | A latex formula rendered with KaTeX, displayed inline.                                                                                          |
-| `p`                 | children                                                                              | A paragraph.                                                                                                                                    |
-| `h`                 | level, id, children                                                                   | A heading of given level, can have an id for anchoring.                                                                                         |
-| `math`              | formula, alignLeft                                                                    | A latex formula, displayed on a separate line.                                                                                                  |
-| `img`               | src, href, alt, maxWidth                                                              | An image, with optional link, alternative text and a maximal width.                                                                             |
-| `spoiler-container` | children: spoiler-title, spoiler-body                                                 | The outer container for a collapsible spoiler. Has one spoiler-title and one spoiler-body as children.                                          |
-| `spoiler-title`     | children                                                                              | The title of the spoiler.                                                                                                                       |
-| `spoiler-body`      | children                                                                              | The content of the spoiler.                                                                                                                     |
-| `ul`                | children: li                                                                          | An unordered list.                                                                                                                              |
-| `ol`                | children: li                                                                          | An ordered list.                                                                                                                                |
-| `li`                | children                                                                              | A list item of an unorderd or ordered list.                                                                                                     |
-| `row`               | children: col                                                                         | A responsive row with multiple columns.                                                                                                         |
-| `col`               | size, children                                                                        | A column. The size is relative to the other sizes.                                                                                              |
-| `important`         | children                                                                              | Highlights an element.                                                                                                                          |
-| `anchor`            | id                                                                                    | An anchor tag with an id.                                                                                                                       |
-| `table`             | children: tr                                                                          | A table.                                                                                                                                        |
-| `tr`                | children: th, td                                                                      | A row in a table.                                                                                                                               |
-| `th`                | children                                                                              | A heading cell.                                                                                                                                 |
-| `td`                | children                                                                              | A content cell.                                                                                                                                 |
-| `geogebra`          | id                                                                                    | A geogebra applet from GeogebraTube.                                                                                                            |
-| `injection`         | href                                                                                  | Loads another entity on the client and injects it.                                                                                              |
-| `exercise`          | task, solution, taskLicense, solutionLicense, grouped, positionInGroup,positionOnPage | An exercise with a task and a solution. The task and the solution have a separate license notice. This type includes grouped exercises as well. |
-| `exercise-group`    | content, license, positionOnPage, children: exercise                                  | Intro of an exercise group, also with a separate license.                                                                                       |
-| `video`             | src                                                                                   | An embedded video from Youtube, Vimeo, Wikimedia or BR (Bayerischer Rundfunk).                                                                  |
-| `code`              | content                                                                               | A block of monospaced code.                                                                                                                     |
-| `equations`         | steps                                                                                 | A lists of steps for an equation (work in progress).                                                                                            |
-
-### Notes
-
-Not every composition of elements is valid, e.g. a paragraph may only contain inline elements or some elements should not be nested. The frontend performs little checks! It expects the converter to produce valid outputs, and the converters (for legacy state and edtr-io state) expect the data from the backend to be meaningful.
-
-Don't rely on attributes to be present. The frontend tries to handle edge cases as gracefully as possible.
-
-Some attributes are quite complex, notable the task and solution of an exercise, which contains nested subdocuments and interactive elements. This functionality is therefore bound to this one type.
+TODO
 
 ## Navigation
 
@@ -272,6 +129,125 @@ export function SerloBird() {
     <h1>{strings.header.slogan}</h1>
   )
 ```
+
+## Repository
+
+Here are some useful places to get started:
+
+- `/src/pages/[[...slug]].js` currently we handle pages manually with a [catch all route](https://nextjs.org/docs/routing/dynamic-routes#optional-catch-all-routes). This is a good place to start.
+
+- `/src/components`: Collection of react components for the frontend.
+
+- `/src/components/pages`: Components that `[[...slug.js]]` calls as pages.
+
+- `/src/fetcher`: Requesting data from the GraphQL backend and process it.
+
+- `/src/schema`: Definition of the frontend content format, with renderer, and converter for edtr-io and legacy.
+
+- `/src/data`: Translations, entries navigation
+
+- `/public/_assets`: A place for public assets, served as static files under the path `/_assets/`. Don't use `import` from here, see [Assets](#assets).
+
+- `/external`: Third-party code that is not maintained by the frontend.
+
+Some useful commands:
+
+```
+yarn dev
+```
+
+Starts the development server. This enables hot reloading and development warnings. Create a PR in this repository to get a preview deployment that uses production settings.
+
+```
+yarn format
+```
+
+Runs eslint and prettier, fixes issues automatically if possible.
+
+```
+yarn lint
+```
+
+Runs tsc, eslint and prettier. This command needs to pass before merging into staging.
+
+```
+yarn analyze
+```
+
+Creates a build of the frontend, shows summary of build artefacts and creates in-depth analysis of the bundles.
+
+```
+yarn test
+```
+
+Runs jest tests.
+
+All files are named with kebab-case. You should use `@/` to import files from `src/` instead of relative paths.
+<br><br><br>
+<br><br><br>
+<br><br><br>
+
+## Schema
+
+Entities may contain a wide range of different elements. The elements are organized in a tree.
+
+### Text
+
+The most basic node type is text. A text node contain these attributes:
+
+- `text`: The text content of this node.
+
+- `color`: blue, green or orange
+
+- `em`: true/undefined
+
+- `strong`: true/undefined
+
+### Elements
+
+TODO: NOT UP-TO-DATE
+
+More complex nodes have a type and may have other nodes as children. Here is an overview of available elements:
+
+| Type                | Attributes                                                                            | Description                                                                                                                                     |
+| ------------------- | ------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `a`                 | href, children                                                                        | A link.                                                                                                                                         |
+| `inline-math`       | formula                                                                               | A latex formula rendered with KaTeX, displayed inline.                                                                                          |
+| `p`                 | children                                                                              | A paragraph.                                                                                                                                    |
+| `h`                 | level, id, children                                                                   | A heading of given level, can have an id for anchoring.                                                                                         |
+| `math`              | formula, alignLeft                                                                    | A latex formula, displayed on a separate line.                                                                                                  |
+| `img`               | src, href, alt, maxWidth                                                              | An image, with optional link, alternative text and a maximal width.                                                                             |
+| `spoiler-container` | children: spoiler-title, spoiler-body                                                 | The outer container for a collapsible spoiler. Has one spoiler-title and one spoiler-body as children.                                          |
+| `spoiler-title`     | children                                                                              | The title of the spoiler.                                                                                                                       |
+| `spoiler-body`      | children                                                                              | The content of the spoiler.                                                                                                                     |
+| `ul`                | children: li                                                                          | An unordered list.                                                                                                                              |
+| `ol`                | children: li                                                                          | An ordered list.                                                                                                                                |
+| `li`                | children                                                                              | A list item of an unorderd or ordered list.                                                                                                     |
+| `row`               | children: col                                                                         | A responsive row with multiple columns.                                                                                                         |
+| `col`               | size, children                                                                        | A column. The size is relative to the other sizes.                                                                                              |
+| `important`         | children                                                                              | Highlights an element.                                                                                                                          |
+| `anchor`            | id                                                                                    | An anchor tag with an id.                                                                                                                       |
+| `table`             | children: tr                                                                          | A table.                                                                                                                                        |
+| `tr`                | children: th, td                                                                      | A row in a table.                                                                                                                               |
+| `th`                | children                                                                              | A heading cell.                                                                                                                                 |
+| `td`                | children                                                                              | A content cell.                                                                                                                                 |
+| `geogebra`          | id                                                                                    | A geogebra applet from GeogebraTube.                                                                                                            |
+| `injection`         | href                                                                                  | Loads another entity on the client and injects it.                                                                                              |
+| `exercise`          | task, solution, taskLicense, solutionLicense, grouped, positionInGroup,positionOnPage | An exercise with a task and a solution. The task and the solution have a separate license notice. This type includes grouped exercises as well. |
+| `exercise-group`    | content, license, positionOnPage, children: exercise                                  | Intro of an exercise group, also with a separate license.                                                                                       |
+| `video`             | src                                                                                   | An embedded video from Youtube, Vimeo, Wikimedia or BR (Bayerischer Rundfunk).                                                                  |
+| `code`              | content                                                                               | A block of monospaced code.                                                                                                                     |
+| `equations`         | steps                                                                                 | A lists of steps for an equation (work in progress).                                                                                            |
+
+### Notes
+
+Not every composition of elements is valid, e.g. a paragraph may only contain inline elements or some elements should not be nested. The frontend performs little checks! It expects the converter to produce valid outputs, and the converters (for legacy state and edtr-io state) expect the data from the backend to be meaningful.
+
+Don't rely on attributes to be present. The frontend tries to handle edge cases as gracefully as possible.
+
+Some attributes are quite complex, notable the task and solution of an exercise, which contains nested subdocuments and interactive elements. This functionality is therefore bound to this one type.
+
+
 
 ---
 
