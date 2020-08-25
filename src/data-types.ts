@@ -376,14 +376,20 @@ export interface FrontendInjectionNode {
   children?: undefined
 }
 
+interface BareSolution {
+  legacy?: FrontendContentNode[]
+  edtrState?: SolutionEdtrState
+  license?: LicenseData
+}
+
 export interface FrontendExerciseNode {
   type: 'exercise'
-  taskLegacy?: FrontendContentNode[]
-  taskEdtrState?: TaskEdtrState
-  solutionLegacy?: FrontendContentNode[]
-  solutionEdtrState?: SolutionEdtrState
-  taskLicense?: LicenseData
-  solutionLicense?: LicenseData
+  task: {
+    legacy?: FrontendContentNode[]
+    edtrState?: TaskEdtrState
+    license?: LicenseData
+  }
+  solution: BareSolution
   grouped?: boolean
   positionInGroup?: number
   positionOnPage?: number
@@ -398,9 +404,8 @@ export interface FrontendExerciseNode {
 
 export interface FrontendSolutionNode {
   type: 'solution'
-  solutionLegacy?: FrontendContentNode[]
-  solutionEdtrState?: SolutionEdtrState
-  license?: LicenseData
+  solution: BareSolution
+
   context: {
     id: number
   }

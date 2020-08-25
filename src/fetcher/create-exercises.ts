@@ -35,31 +35,17 @@ export function createExercise(
       taskLegacy = convertState(content)
     }
   }
-  let solutionLegacy: FrontendContentNode[] | undefined = undefined
-  let solutionEdtrState: SolutionEdtrState | undefined = undefined
-  const solution = uuid.solution?.currentRevision?.content
-  if (solution) {
-    if (solution.startsWith('{')) {
-      // special case here: we know it's a edtr-io solution
-      // TODO import types from edtr-io
-      const solutionState = JSON.parse(solution).state
-      solutionState.strategy = convert(solutionState.strategy)
-      solutionState.steps = convert(solutionState.steps)
-      solutionEdtrState = solutionState
-    } else {
-      solutionLegacy = convertState(solution)
-    }
-  }
+
   return {
     type: 'exercise',
     grouped: false,
     positionOnPage: index,
-    taskLegacy,
-    taskEdtrState,
-    solutionEdtrState,
-    solutionLegacy,
-    taskLicense: uuid.license,
-    solutionLicense: uuid.solution?.license,
+    task: {
+      legacy: taskLegacy,
+      edtrState: taskEdtrState,
+      license: uuid.license,
+    },
+    solution: createSolutionData(uuid.solution),
     context: {
       id: uuid.id,
       solutionId: uuid.solution?.id,
@@ -68,27 +54,33 @@ export function createExercise(
   }
 }
 
-export function createSolution(uuid: Solution): FrontendSolutionNode {
+function createSolutionData(solution: BareExercise['solution']) {
   let solutionLegacy: FrontendContentNode[] | undefined = undefined
   let solutionEdtrState: SolutionEdtrState | undefined = undefined
-  const solution = uuid.currentRevision?.content
-  if (solution) {
-    if (solution.startsWith('{')) {
+  const content = solution?.currentRevision?.content
+  if (content) {
+    if (content.startsWith('{')) {
       // special case here: we know it's a edtr-io solution
       // TODO import types from edtr-io
-      const solutionState = JSON.parse(solution).state
+      const solutionState = JSON.parse(content).state
       solutionState.strategy = convert(solutionState.strategy)
       solutionState.steps = convert(solutionState.steps)
       solutionEdtrState = solutionState
     } else {
-      solutionLegacy = convertState(solution)
+      solutionLegacy = convertState(content)
     }
   }
   return {
+    legacy: solutionLegacy,
+    edtrState: solutionEdtrState,
+    license: solution?.license,
+  }
+}
+
+export function createSolution(uuid: Solution): FrontendSolutionNode {
+  return {
     type: 'solution',
-    solutionEdtrState,
-    solutionLegacy,
-    license: uuid.license,
+    solution: createSolutionData(uuid),
     context: {
       id: uuid.id,
     },

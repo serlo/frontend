@@ -112,7 +112,8 @@ export interface BareExerciseGroup extends Entity {
 
 export type ExerciseGroup = BareExerciseGroup & EntityWithTaxonomyTerms
 
-export interface Solution extends Entity {
+// Solutions are only used in injections, no support for full page view
+export interface Solution extends Repository {
   __typename: 'Solution'
   trashed: boolean
   currentRevision?: GraphQL.Maybe<Pick<GraphQL.SolutionRevision, 'content'>>
@@ -287,14 +288,7 @@ export const dataQuery = gql`
       }
 
       ... on Solution {
-        id
-        alias
-        instance
-        trashed
-        currentRevision {
-          content
-        }
-        ...license
+        ...solution
       }
 
       ... on Event {
@@ -434,11 +428,15 @@ export const dataQuery = gql`
       content
     }
     solution {
-      id
-      currentRevision {
-        content
-      }
-      ...license
+      ...solution
+    }
+    ...license
+  }
+
+  fragment solution on Solution {
+    id
+    currentRevision {
+      content
     }
     ...license
   }
