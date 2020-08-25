@@ -530,6 +530,7 @@ export interface LicenseData {
   title: string
   url: string // to to license
   id: number // of the license
+  default: boolean
 }
 
 // Data for a course page.
@@ -585,6 +586,7 @@ export interface TaxonomyData extends TaxonomyTermBase {
   title: string
   subterms: TaxonomySubTerm[]
   exercisesContent: (FrontendExerciseNode | FrontendExerciseGroupNode)[]
+  licenseData?: LicenseData
 }
 
 export interface LoggedInData {

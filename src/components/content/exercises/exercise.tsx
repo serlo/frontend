@@ -73,7 +73,11 @@ export function Exercise({ node }: ExerciseProps) {
 
         <SolutionTools>
           {node.solutionLicense && (
-            <LicenseNotice minimal data={node.solutionLicense} />
+            <LicenseNotice
+              minimal
+              data={node.solutionLicense}
+              type="solution"
+            />
           )}
           {loaded && auth.current && (
             <AuthorTools
@@ -151,7 +155,9 @@ export function Exercise({ node }: ExerciseProps) {
       <ExerciseTools>
         {renderSolutionToggle()}
 
-        {node.taskLicense && <LicenseNotice minimal data={node.taskLicense} />}
+        {node.taskLicense && (
+          <LicenseNotice minimal data={node.taskLicense} type="task" />
+        )}
         {loaded && auth.current && (
           <AuthorTools
             data={{ type: '_ExerciseInline', id: node.context.id }}
