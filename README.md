@@ -40,43 +40,19 @@ The server is now running on [localhost:3000](http://localhost:3000).
 
 ## Features
 
-### Core
-
-These features work across all deployments, including local and preview deployments.
-
 - **View entites**. Serlo consists of different entities like articles, videos or taxonomy terms. You can access an entity by alias (e.g. https://frontend.serlo.org/mathe) or by id (e.g. https://frontend.serlo.org/54210). Look further down for a complete list of supported entity types.
+
+- **Language versions**. The UI changes language if you are viewing an entity of another language instance. You can access them by using the id or by prefixing the alias with a language subfolder (e.g. https://frontend.serlo.org/en/serlo).
 
 - **View custom pages**. Some pages are built separately in the frontend, like the landing page or the german donation page (https://frontend.serlo.org/spenden).
 
 - **Search with Google Custom Search**. Search with the built-in search input or by visiting the search page: https://frontend.serlo.org/search?q=hypotenuse
 
-- **Access language versions (limited)**. The core contains basic support for internationalization. You can access entities of other language by id or by prefixing the alias with a language subfolder. Here is an example: https://frontend.serlo.org/en/serlo.
+- **Login**. You can login to your account with your username (not e-mail) and the password `123456` (currently only available on staging and localhost).
 
-### Login
+- **View notifications**. After login, you can view your notifications by clicking on the notification icon in the top menu.
 
-In addition, these features are available in the staging environment and on localhost:
-
-- **Login**. You can login to your account with your username (not e-mail) and the password `123456`.
-
-- **View notifications**. You can view your notifications by clicking on the notification icon in the top menu.
-
-- **Logout**. self-explaining
-
-### Redirection
-
-If you have a cloudflare worker, these features become available:
-
-- **Redirection**. E.g. id to alias.
-
-- **Rewrite language subdomain to subfolder**. Adds full support for language versions.
-
-### Edit
-
-This set of features are interacting with the legacy server and are currently only available in the staging environment:
-
-- **Author Menus**. Access tools for editing and organizing content. Links to the legacy server.
-
-- **User profiles, activity log, subscriptions, ...**. Work in progress.
+- **Edit tools**. After login, you can view several menus that allows you to edit the content. This feature is currently only working on staging.
 
 
 <br><br><br>
