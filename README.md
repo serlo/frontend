@@ -52,7 +52,7 @@ The server is now running on [localhost:3000](http://localhost:3000).
 
 - **View notifications**. After login, you can view your notifications by clicking on the notification icon in the top menu.
 
-- **Edit tools**. After login, you can view several menus that allows you to edit the content. This feature is currently only working on staging.
+- **Edit tools**. After login, you can view several menus that allows you to edit the content. The links are pointing to the legacy server and are not handled by the frontend.
 
 ## Entities
 
@@ -183,11 +183,10 @@ yarn test
 Runs jest tests.
 
 All files are named with kebab-case. You should use `@/` to import files from `src/` instead of relative paths.
-<br><br><br>
-<br><br><br>
-<br><br><br>
 
 ## Schema
+
+TODO: NOT UP-TO-DATE
 
 Entities may contain a wide range of different elements. The elements are organized in a tree.
 
@@ -204,8 +203,6 @@ The most basic node type is text. A text node contain these attributes:
 - `strong`: true/undefined
 
 ### Elements
-
-TODO: NOT UP-TO-DATE
 
 More complex nodes have a type and may have other nodes as children. Here is an overview of available elements:
 
@@ -246,8 +243,6 @@ Not every composition of elements is valid, e.g. a paragraph may only contain in
 Don't rely on attributes to be present. The frontend tries to handle edge cases as gracefully as possible.
 
 Some attributes are quite complex, notable the task and solution of an exercise, which contains nested subdocuments and interactive elements. This functionality is therefore bound to this one type.
-
-
 
 ---
 
