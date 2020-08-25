@@ -9,7 +9,6 @@ export interface SolutionProps {
 }
 
 export function Solution({ node }: SolutionProps) {
-  console.log('solution here.')
   const { strings } = useInstanceData()
 
   return <>{renderArticle(getSolutionContent(), false)}</>
