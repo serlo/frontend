@@ -1,8 +1,8 @@
-<img src="https://assets.serlo.org/meta/logo.png" alt="Serlo logo" title="Serlo" align="right" height="60" />
+<a href="https://de.serlo.org" target="_blank"><img src="https://assets.serlo.org/meta/logo.png" alt="Serlo logo" title="Serlo" align="right" height="60" /></a>
 
 # serlo/frontend
 
-Welcome to the new frontend of [Serlo](https://de.serlo.org).
+Welcome to the new frontend.
 
 ## Overview
 
@@ -14,19 +14,19 @@ In a more complete environment, the frontend sits behind a [cloudflare worker](h
 
 ### Enable frontend
 
-To use the new frontend, you need to opt-in.
+You need to opt-in to see the frontend:
 
-Enable frontend in production environment: [de.serlo.org/enable-frontend](https://de.serlo.org/enable-frontend)<br>
+Enable frontend in *production environment*: [de.serlo.org/enable-frontend](https://de.serlo.org/enable-frontend)<br>
 Production deployment: [frontend.serlo.org](https://frontend.serlo.org)
 
-Enable frontend in staging environment: [de.serlo-staging.dev/enable-frontend](https://de.serlo-staging.dev/enable-frontend)<br>
+Enable frontend in *staging environment*: [de.serlo-staging.dev/enable-frontend](https://de.serlo-staging.dev/enable-frontend)<br>
 Staging deployment: [frontend-git-staging.serlo.vercel.app](https://frontend-git-staging.serlo.vercel.app)
 
 ### Local installation
 
-You can run the frontend on your local system. You need to install [Node.js](https://nodejs.org/en/) (current LTS) and [yarn](https://classic.yarnpkg.com/en/docs/install).
+You can run the frontend on your local system. For that, install [Node.js](https://nodejs.org/en/) (current LTS) and [yarn](https://classic.yarnpkg.com/en/docs/install).
 
-Then, clone this repo, install dependencies and start the dev server:
+Then, run following commands:
 
 ```sh
 git clone https://github.com/serlo/frontend.git
@@ -39,11 +39,17 @@ The server is now running on [localhost:3000](http://localhost:3000).
 
 ## Features
 
-- **View entites**. Serlo consists of different entities like articles, videos or taxonomy terms. You can access an entity by alias (e.g. https://frontend.serlo.org/mathe) or by id (e.g. https://frontend.serlo.org/54210). Look further down for a complete list of supported entity types.
+At the moment, the frontend implements following features:
+
+- **Entities**. Serlo consists of different entities like articles, videos or taxonomy terms. The frontend uses the data from the API to render them. You can access an entity by alias (e.g. https://frontend.serlo.org/mathe) or by id (e.g. https://frontend.serlo.org/54210). Look further down for a complete list of supported entity types.
+
+- **Navigation**. The frontend adds a header, breadcrumbs, secondary navigation and a footer to every page (where applicable).
 
 - **Language versions**. The UI changes language if you are viewing an entity of another language instance. You can access them by using the id or by prefixing the alias with a language subfolder (e.g. https://frontend.serlo.org/en/serlo).
 
 - **Custom pages**. Some pages are built separately in the frontend, like the landing page or the german donation page (https://frontend.serlo.org/spenden).
+
+- **Horizon**. The german version contains a horizon that features selected items.
 
 - **Google Custom Search**. Search with the built-in search input or by visiting the search page: https://frontend.serlo.org/search?q=hypotenuse
 
@@ -111,7 +117,7 @@ The `index.ts` files are seperated into four variables.
 
 To add a new string, add it to the right variable inside the main language file `src/data/en/index.ts`.
 To access the strings in your components use the relevant hook (`useInstanceData`,`useLoggedInData`, …).
-When new strings (in en/index.ts) get merged into `staging` they automatically get uploaded to crowdin and can then be translated there.
+When new strings (in en/index.ts) get merged into `staging`, they automatically get uploaded to our [crowdin project](https://crowdin.com/project/serlo) and can then be translated there.
 
 ### Example
 
@@ -181,73 +187,44 @@ All files are named with kebab-case. You should use `@/` to import files from `s
 
 ## Schema
 
-TODO: NOT UP-TO-DATE
+Entities may contain a wide range of different elements. See `@/data-types.ts` for a detailed description.
 
-Entities may contain a wide range of different elements. The elements are organized in a tree.
+Here is the list of supported element types:
 
-### Text
+- text
+- a
+- inline-math
+- p
+- h
+- math
+- img
+- spoiler-container
+- spoiler-title
+- spoiler-body
+- ul
+- ol
+- li
+- row
+- col
+- important
+- anchor
+- table
+- tr
+- th
+- td
+- geogebra
+- injection
+- exercise
+- exercise-group
+- video
+- code
+- equations
 
-The most basic node type is text. A text node contain these attributes:
-
-- `text`: The text content of this node.
-
-- `color`: blue, green or orange
-
-- `em`: true/undefined
-
-- `strong`: true/undefined
-
-### Elements
-
-More complex nodes have a type and may have other nodes as children. Here is an overview of available elements:
-
-| Type                | Attributes                                                                            | Description                                                                                                                                     |
-| ------------------- | ------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| `a`                 | href, children                                                                        | A link.                                                                                                                                         |
-| `inline-math`       | formula                                                                               | A latex formula rendered with KaTeX, displayed inline.                                                                                          |
-| `p`                 | children                                                                              | A paragraph.                                                                                                                                    |
-| `h`                 | level, id, children                                                                   | A heading of given level, can have an id for anchoring.                                                                                         |
-| `math`              | formula, alignLeft                                                                    | A latex formula, displayed on a separate line.                                                                                                  |
-| `img`               | src, href, alt, maxWidth                                                              | An image, with optional link, alternative text and a maximal width.                                                                             |
-| `spoiler-container` | children: spoiler-title, spoiler-body                                                 | The outer container for a collapsible spoiler. Has one spoiler-title and one spoiler-body as children.                                          |
-| `spoiler-title`     | children                                                                              | The title of the spoiler.                                                                                                                       |
-| `spoiler-body`      | children                                                                              | The content of the spoiler.                                                                                                                     |
-| `ul`                | children: li                                                                          | An unordered list.                                                                                                                              |
-| `ol`                | children: li                                                                          | An ordered list.                                                                                                                                |
-| `li`                | children                                                                              | A list item of an unorderd or ordered list.                                                                                                     |
-| `row`               | children: col                                                                         | A responsive row with multiple columns.                                                                                                         |
-| `col`               | size, children                                                                        | A column. The size is relative to the other sizes.                                                                                              |
-| `important`         | children                                                                              | Highlights an element.                                                                                                                          |
-| `anchor`            | id                                                                                    | An anchor tag with an id.                                                                                                                       |
-| `table`             | children: tr                                                                          | A table.                                                                                                                                        |
-| `tr`                | children: th, td                                                                      | A row in a table.                                                                                                                               |
-| `th`                | children                                                                              | A heading cell.                                                                                                                                 |
-| `td`                | children                                                                              | A content cell.                                                                                                                                 |
-| `geogebra`          | id                                                                                    | A geogebra applet from GeogebraTube.                                                                                                            |
-| `injection`         | href                                                                                  | Loads another entity on the client and injects it.                                                                                              |
-| `exercise`          | task, solution, taskLicense, solutionLicense, grouped, positionInGroup,positionOnPage | An exercise with a task and a solution. The task and the solution have a separate license notice. This type includes grouped exercises as well. |
-| `exercise-group`    | content, license, positionOnPage, children: exercise                                  | Intro of an exercise group, also with a separate license.                                                                                       |
-| `video`             | src                                                                                   | An embedded video from Youtube, Vimeo, Wikimedia or BR (Bayerischer Rundfunk).                                                                  |
-| `code`              | content                                                                               | A block of monospaced code.                                                                                                                     |
-| `equations`         | steps                                                                                 | A lists of steps for an equation (work in progress).                                                                                            |
-
-### Notes
-
-Not every composition of elements is valid, e.g. a paragraph may only contain inline elements or some elements should not be nested. The frontend performs little checks! It expects the converter to produce valid outputs, and the converters (for legacy state and edtr-io state) expect the data from the backend to be meaningful.
-
-Don't rely on attributes to be present. The frontend tries to handle edge cases as gracefully as possible.
-
-Some attributes are quite complex, notable the task and solution of an exercise, which contains nested subdocuments and interactive elements. This functionality is therefore bound to this one type.
-
----
-
----
+<br><br><br><br><br>
 
 ---
 
 Previous documentation below here, pretty much still valid.
-
-<br><br><br>
 
 ### Creating pages
 
