@@ -16,10 +16,10 @@ In a more complete environment, the frontend sits behind a [cloudflare worker](h
 
 You need to opt-in to see the frontend:
 
-Enable frontend in *production environment*: [de.serlo.org/enable-frontend](https://de.serlo.org/enable-frontend)<br>
+Enable frontend in _production environment_: [de.serlo.org/enable-frontend](https://de.serlo.org/enable-frontend)<br>
 Production deployment: [frontend.serlo.org](https://frontend.serlo.org)
 
-Enable frontend in *staging environment*: [de.serlo-staging.dev/enable-frontend](https://de.serlo-staging.dev/enable-frontend)<br>
+Enable frontend in _staging environment_: [de.serlo-staging.dev/enable-frontend](https://de.serlo-staging.dev/enable-frontend)<br>
 Staging deployment: [frontend-git-staging.serlo.vercel.app](https://frontend-git-staging.serlo.vercel.app)
 
 ### Local installation
@@ -39,7 +39,7 @@ The server is now running on [localhost:3000](http://localhost:3000).
 
 ## Features
 
-At the moment, the frontend implements following features:
+At the moment, the frontend implements these features:
 
 - **Entities**. Serlo consists of different entities like articles, videos or taxonomy terms. The frontend uses the data from the API to render them. You can access an entity by alias (e.g. https://frontend.serlo.org/mathe) or by id (e.g. https://frontend.serlo.org/54210). Look further down for a complete list of supported entity types.
 
