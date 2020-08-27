@@ -6,12 +6,12 @@ import {
   makeDefaultButton,
   makePadding,
   inputFontReset,
-} from '../../helper/css'
-import { renderArticle } from '../../schema/article-renderer'
-import { AuthorTools } from './author-tools'
+} from '../../../helper/css'
+import { renderArticle } from '../../../schema/article-renderer'
+import { AuthorTools } from '../author-tools'
+import { LicenseNotice } from '../license-notice'
 import { ExerciseNumbering } from './exercise-numbering'
 import { InputExercise } from './input-exercise'
-import { LicenseNotice } from './license-notice'
 import { ScMcExercise } from './sc-mc-exercise'
 import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -33,7 +33,11 @@ export function Exercise({ node }: ExerciseProps) {
 
   return (
     <Wrapper grouped={node.grouped}>
-      {!node.grouped && <ExerciseNumbering index={node.positionOnPage!} />}
+      <ExerciseNumbering
+        isChild={node.grouped}
+        index={node.grouped ? node.positionInGroup! : node.positionOnPage!}
+        href={node.href ? node.href : `/${node.context.id}`}
+      />
 
       {renderExerciseTask()}
       {renderInteractive()}
@@ -71,7 +75,16 @@ export function Exercise({ node }: ExerciseProps) {
           {node.solutionLicense && (
             <LicenseNotice minimal data={node.solutionLicense} />
           )}
-          {loaded && auth.current && <AuthorTools />}
+          {loaded && auth.current && (
+            <AuthorTools
+              data={{
+                type: '_SolutionInline',
+                id: node.context.solutionId!,
+                parentId: node.context.id,
+                grouped: node.grouped,
+              }}
+            />
+          )}
         </SolutionTools>
       </SolutionBox>
     )
@@ -84,7 +97,7 @@ export function Exercise({ node }: ExerciseProps) {
     if (!node.solutionEdtrState) return []
     const state = node.solutionEdtrState
     const prereq: FrontendContentNode[] = []
-    if (state.prerequisite) {
+    if (state.prerequisite && state.prerequisite.href) {
       prereq.push({
         type: 'p',
         children: [
@@ -139,7 +152,11 @@ export function Exercise({ node }: ExerciseProps) {
         {renderSolutionToggle()}
 
         {node.taskLicense && <LicenseNotice minimal data={node.taskLicense} />}
-        {loaded && auth.current && <AuthorTools />}
+        {loaded && auth.current && (
+          <AuthorTools
+            data={{ type: '_ExerciseInline', id: node.context.id }}
+          />
+        )}
       </ExerciseTools>
     )
   }
@@ -155,20 +172,12 @@ const StyledSpan = styled.span`
 `
 
 const Wrapper = styled.div<{ grouped?: boolean }>`
-  border-top: 2px solid ${(props) => props.theme.colors.brand};
-  padding-top: 30px;
-  padding-bottom: 10px;
+  margin-top: 40px;
+  margin-bottom: 10px;
 
   ${(props) =>
     !props.grouped &&
     css`
-      border-left: 8px solid
-        ${(props) => props.theme.colors.lightBlueBackground};
-      border-top: 0;
-
-      @media (min-width: ${(props) => props.theme.breakpoints.mobile}) {
-        ${makeMargin}
-      }
       margin-bottom: 40px;
       padding-top: 7px;
     `};
@@ -219,7 +228,7 @@ const SolutionBox = styled.div`
   padding-bottom: 10px;
   ${makeMargin}
   margin-bottom: ${(props) => props.theme.spacing.mb.block};
-  border-left: 8px solid ${(props) => props.theme.colors.brand};;
+  border-left: 8px solid ${(props) => props.theme.colors.lightBlueBackground};;
 `
 
 const SolutionTools = styled.div`

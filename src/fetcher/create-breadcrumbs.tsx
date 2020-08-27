@@ -3,13 +3,13 @@ import { BreadcrumbsData } from '@/data-types'
 
 export function createBreadcrumbs(uuid: QueryResponse) {
   if (uuid.__typename === 'TaxonomyTerm') {
-    if (uuid.navigation?.path) {
-      return compat(uuid.navigation?.path)
+    if (uuid.navigation?.path.nodes) {
+      return compat(uuid.navigation?.path.nodes)
     }
   }
 
   if (uuid.__typename === 'CoursePage') {
-    return compat(buildFromTaxTerms(uuid.course?.taxonomyTerms))
+    return compat(buildFromTaxTerms(uuid.course?.taxonomyTerms.nodes))
   }
 
   if (
@@ -19,7 +19,7 @@ export function createBreadcrumbs(uuid: QueryResponse) {
     uuid.__typename === 'Exercise' ||
     uuid.__typename === 'ExerciseGroup'
   ) {
-    return compat(buildFromTaxTerms(uuid.taxonomyTerms))
+    return compat(buildFromTaxTerms(uuid.taxonomyTerms.nodes))
   }
 
   function buildFromTaxTerms(taxonomyPaths: TaxonomyTerms | undefined) {
@@ -27,7 +27,8 @@ export function createBreadcrumbs(uuid: QueryResponse) {
     let breadcrumbs
 
     for (const child of taxonomyPaths) {
-      const { path } = child.navigation
+      if (!child.navigation) continue
+      const path = child.navigation.path.nodes
       if (!breadcrumbs || breadcrumbs.length > path.length) {
         // compat: some paths are short-circuited, ignore them
         if (
@@ -47,10 +48,7 @@ export function createBreadcrumbs(uuid: QueryResponse) {
   function compat(breadcrumbs: BreadcrumbsData | undefined) {
     if (!breadcrumbs) return breadcrumbs
     if (
-      !(
-        uuid.__typename == 'TaxonomyTerm' &&
-        (uuid.type == 'topicFolder' || uuid.type == 'curriculumTopicFolder')
-      )
+      !(uuid.__typename == 'Exercise' || uuid.__typename == 'ExerciseGroup')
     ) {
       breadcrumbs = breadcrumbs.slice(0, -1) // compat: remove last entry because it is the entry itself
     }

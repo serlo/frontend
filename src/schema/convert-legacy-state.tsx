@@ -373,7 +373,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
   if (node.name === 'td') {
     // compat: skip empty entries (resulting from newlines)
     // CHECK is this still working?
-    if (node.children[0].text?.trim() === '') {
+    if (node.children[0]?.text?.trim() === '') {
       return []
     }
     return [

@@ -4,9 +4,9 @@ import { transparentize } from 'polished'
 import React from 'react'
 import styled, { css } from 'styled-components'
 
-import { makeDefaultButton, makeMargin } from '../../helper/css'
 import { Link } from '../content/link'
 import { BreadcrumbsData, BreadcrumbEntry } from '@/data-types'
+import { makeDefaultButton, makeMargin } from '@/helper/css'
 
 export interface BreadcrumbsProps {
   data: BreadcrumbsData
@@ -28,7 +28,7 @@ export function Breadcrumbs({ data, isTaxonomy }: BreadcrumbsProps) {
             arrayLength={completeArray.length}
             key={i}
             isTaxonomy={isTaxonomy}
-          ></BreadcrumbEntries>
+          />
         )
       })}
     </BreadcrumbWrapper>
@@ -52,11 +52,18 @@ function BreadcrumbEntries({
     return <BreadcrumbLink as="span">…</BreadcrumbLink>
   } else {
     if (arrayLength !== i + 1) {
-      return <BreadcrumbLink href={bcEntry.url}>{bcEntry.label}</BreadcrumbLink>
+      return (
+        <BreadcrumbLink href={bcEntry.url ?? undefined}>
+          {bcEntry.label}
+        </BreadcrumbLink>
+      )
     } else
       return (
         <>
-          <BreadcrumbLinkLast href={bcEntry.url} isTaxonomy={isTaxonomy}>
+          <BreadcrumbLinkLast
+            href={bcEntry.url ?? undefined}
+            isTaxonomy={isTaxonomy}
+          >
             <MobileIcon>
               <FontAwesomeIcon icon={faArrowCircleLeft} size="1x" />
             </MobileIcon>
@@ -73,7 +80,7 @@ function BreadcrumbEntries({
 }
 
 const BreadcrumbWrapper = styled.nav`
-  ${makeMargin}
+  ${makeMargin};
   margin-top: 25px;
 
   @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
@@ -85,7 +92,7 @@ const BreadcrumbLink = styled(Link)`
   display: inline-block;
   color: ${(props) => props.theme.colors.brand};
 
-  ${makeDefaultButton}
+  ${makeDefaultButton};
   padding-top: 2px;
   padding-bottom: 2px;
 
@@ -129,7 +136,7 @@ const BreadcrumbLinkLast = styled(BreadcrumbLink)<{ isTaxonomy: boolean }>`
     css`
       background: ${(props) => props.theme.colors.bluewhite};
       font-weight: bold;
-    `}
+    `};
 
   color: ${(props) => props.theme.colors.brand};
 

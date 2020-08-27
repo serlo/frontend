@@ -1,41 +1,95 @@
 import { faVolumeMute } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  CheckoutRevisionNotificationEvent,
+  CreateCommentNotificationEvent,
+  CreateEntityNotificationEvent,
+  CreateEntityLinkNotificationEvent,
+  CreateEntityRevisionNotificationEvent,
+  CreateTaxonomyTermNotificationEvent,
+  CreateTaxonomyLinkNotificationEvent,
+  CreateThreadNotificationEvent,
+  RejectRevisionNotificationEvent,
+  RemoveEntityLinkNotificationEvent,
+  RemoveTaxonomyLinkNotificationEvent,
+  SetLicenseNotificationEvent,
+  SetTaxonomyParentNotificationEvent,
+  SetTaxonomyTermNotificationEvent,
+  SetThreadStateNotificationEvent,
+  SetUuidStateNotificationEvent,
+  TaxonomyTerm,
+  User,
+} from '@serlo/api'
 import Tippy from '@tippyjs/react'
+import React from 'react'
 import styled, { css } from 'styled-components'
 import TimeAgo from 'timeago-react'
 import * as timeago from 'timeago.js'
-//TODO: investigate
+//TODO: investigate, also move to helper, this needs to be dynamic
 // eslint-disable-next-line import/no-internal-modules
 import de from 'timeago.js/lib/lang/de'
 
-import {
-  NotificationEvent,
-  NotificationEventType,
-  NotificationUser,
-} from '@/events/event'
+import { useInstanceData } from '@/contexts/instance-context'
+import { LoggedInData } from '@/data-types'
 
 // register it.
 timeago.register('de', de)
 
+export type NotificationEvent =
+  | CheckoutRevisionNotificationEvent
+  | CreateCommentNotificationEvent
+  | CreateEntityNotificationEvent
+  | CreateEntityLinkNotificationEvent
+  | CreateEntityRevisionNotificationEvent
+  | CreateTaxonomyTermNotificationEvent
+  | CreateTaxonomyLinkNotificationEvent
+  | CreateThreadNotificationEvent
+  | RejectRevisionNotificationEvent
+  | RemoveEntityLinkNotificationEvent
+  | RemoveTaxonomyLinkNotificationEvent
+  | SetLicenseNotificationEvent
+  | SetTaxonomyParentNotificationEvent
+  | SetTaxonomyTermNotificationEvent
+  | SetThreadStateNotificationEvent
+  | SetUuidStateNotificationEvent
+
 export function Notification({
   event,
   unread,
+  loggedInStrings,
 }: {
   unread: boolean
   event: NotificationEvent
+  loggedInStrings: LoggedInData['strings']['notifications']
 }) {
   const eventDate = new Date(event.date)
+  const { strings, lang } = useInstanceData()
+
+  const placeholderLookup = {
+    Page: loggedInStrings.entityPlaceholderPage,
+    Article: loggedInStrings.entityPlaceholderArticle,
+    Video: loggedInStrings.entityPlaceholderVideo,
+    Applet: loggedInStrings.entityPlaceholderApplet,
+    CoursePage: loggedInStrings.entityPlaceholderCoursePage,
+    Exercise: loggedInStrings.entityPlaceholderExercise,
+    GroupedExercise: loggedInStrings.entityPlaceholderGroupedExercise,
+    ExerciseGroup: loggedInStrings.entityPlaceholderExerciseGroup,
+    Event: loggedInStrings.entityPlaceholderEvent,
+    Course: loggedInStrings.entityPlaceholderCourse,
+    TaxonomyTerm: loggedInStrings.entityPlaceholderTaxonomyTerm,
+    fallback: loggedInStrings.entityPlaceholderFallback,
+  }
 
   return (
     <Item>
-      <span title={eventDate.toLocaleString('de-DE')}>
+      <span title={eventDate.toLocaleString(lang)}>
         <StyledTimeAgo
           datetime={eventDate}
-          locale="de"
+          locale={lang}
           opts={{ minInterval: 60 }}
         />
       </span>
-      <Title unread={unread}>{renderTitle()}</Title>
+      <Title unread={unread}>{renderText()}</Title>
       {renderExtraContent()}
       {renderMuteButton()}
     </Item>
@@ -48,11 +102,7 @@ export function Notification({
         duration={[300, 250]}
         animation="fade"
         placement="bottom"
-        content={
-          <Tooltip>
-            Benachrichtigungen für diesen Inhalt nicht mehr anzeigen.
-          </Tooltip>
-        }
+        content={<Tooltip>{loggedInStrings.hide}</Tooltip>}
       >
         <MuteButton href={`/unsubscribe/${subscriptionId.toString()}`}>
           <FontAwesomeIcon icon={faVolumeMute} />
@@ -62,184 +112,235 @@ export function Notification({
   }
 
   function getSubscriptionId() {
-    switch (event.type) {
-      case NotificationEventType.SetThreadState:
-      case NotificationEventType.CreateThread:
-        return event.thread
-
-      case NotificationEventType.CreateComment:
+    switch (event.__typename) {
+      case 'SetThreadStateNotificationEvent':
+      case 'CreateThreadNotificationEvent':
+      case 'CreateCommentNotificationEvent':
         return event.thread.id
 
-      case NotificationEventType.CreateEntity:
-      case NotificationEventType.SetLicense:
-      case NotificationEventType.CreateLink:
-      case NotificationEventType.RemoveLink:
-        return event.entity
+      //TODO: Check if Subscription is linked to the child
+      case 'CreateEntityLinkNotificationEvent':
+      case 'RemoveEntityLinkNotificationEvent':
+      case 'CreateTaxonomyLinkNotificationEvent':
+      case 'RemoveTaxonomyLinkNotificationEvent':
+        return event.child.id
 
-      case NotificationEventType.CreateEntityRevision:
-      case NotificationEventType.CheckoutRevision:
-      case NotificationEventType.RejectRevision:
-        return event.repository.id
-
-      case NotificationEventType.CreateTaxonomyAssociation:
-      case NotificationEventType.RemoveTaxonomyAssociation:
+      case 'CreateEntityNotificationEvent':
+      case 'CreateEntityRevisionNotificationEvent':
         return event.entity.id
 
-      case NotificationEventType.SetUuidState:
-        return event.uuid
+      case 'SetLicenseNotificationEvent':
+      case 'CheckoutRevisionNotificationEvent':
+      case 'RejectRevisionNotificationEvent':
+        return event.repository.id
+
+      case 'SetUuidStateNotificationEvent':
+        return event.object.id
 
       default:
         return undefined
     }
   }
 
-  function renderTitle() {
-    switch (event.type) {
-      case NotificationEventType.SetThreadState:
-        return (
-          <>
-            <UserLink user={event.actor} /> hat Thread {event.thread.id}
-            {event.archived ? 'archiviert' : 'unarchiviert'}
-          </>
+  function parseString(
+    string: string,
+    replaceables: { [key: string]: JSX.Element | string }
+  ) {
+    const parts = string.split('%')
+    const actor = renderUser(event.actor)
+    const keys = Object.keys(replaceables)
+
+    return parts.map((part, index) => {
+      if (part === '') return null
+      if (part === 'actor') {
+        return <React.Fragment key={index}>{actor}</React.Fragment>
+      }
+      if (keys.indexOf(part) > -1) {
+        return <React.Fragment key={index}>{replaceables[part]}</React.Fragment>
+      }
+      return part
+    })
+  }
+
+  function renderText() {
+    const actor = renderUser(event.actor)
+
+    switch (event.__typename) {
+      case 'SetThreadStateNotificationEvent':
+        return parseString(
+          event.archived
+            ? loggedInStrings.setThreadStateArchived
+            : loggedInStrings.setThreadStateUnarchived,
+          {
+            thread: renderThread(event.thread.id),
+          }
         )
-      case NotificationEventType.CreateComment:
-        return (
-          <>
-            <UserLink user={event.author} /> hat Kommentar {event.comment.id} im
-            Thread {event.thread.id} erstellt.
-          </>
-        )
-      case NotificationEventType.CreateThread:
-        return (
-          <>
-            <UserLink user={event.author} /> hat Thread {event.thread.id} in
-            UUID {event.uuid.id} erstellt.
-          </>
-        )
-      case NotificationEventType.CreateEntity:
-        return (
-          <>
-            <UserLink user={event.author} /> hat Entity {event.entity.id}{' '}
-            erstellt.
-          </>
-        )
-      case NotificationEventType.SetLicense:
-        return (
-          <>
-            <UserLink user={event.actor} /> hat die Lizenz von Entity{' '}
-            {event.entity.id} geändert.
-          </>
-        )
-      case NotificationEventType.CreateLink:
-        return (
-          <>
-            <UserLink user={event.actor} /> hat Entity {event.entity.id} mit
-            UUID {event.parent.id} verknüpft.
-          </>
-        )
-      case NotificationEventType.RemoveLink:
-        return (
-          <>
-            <UserLink user={event.actor} /> hat die Verknüpfung von{' '}
-            {event.entity.id} mit UUID {event.parent.id} entfernt.
-          </>
-        )
-      case NotificationEventType.CreateEntityRevision:
-        return (
-          <>
-            <UserLink user={event.author} /> hat die{' '}
-            <ContentLink id={event.revision.id}>Bearbeitung</ContentLink> für
-            Entity/Page {event.repository.id} erstellt.
-          </>
-        )
-      case NotificationEventType.CheckoutRevision:
-        return (
-          <>
-            <UserLink user={event.reviewer} /> hat die{' '}
-            <ContentLink id={event.revision.id}>Bearbeitung</ContentLink> für
-            Entity/Page {event.repository.id} übernommen
-          </>
-        )
-      case NotificationEventType.RejectRevision:
-        return (
-          <>
-            <UserLink user={event.reviewer} /> hat die{' '}
-            <ContentLink id={event.revision.id}>Bearbeitung</ContentLink> für
-            Entity/Page {event.repository.id} verworfen
-          </>
-        )
-      case NotificationEventType.CreateTaxonomyAssociation:
-        return (
-          <>
-            <UserLink user={event.actor} /> hat die Entity {event.entity.id} in
-            Taxonomy Term {event.taxonomyTerm.id} eingeordnet.
-          </>
-        )
-      case NotificationEventType.RemoveTaxonomyAssociation:
-        return (
-          <>
-            <UserLink user={event.actor} /> hat die Entity {event.entity.id} aus
-            Taxonomy Term {event.taxonomyTerm.id} entfernt.
-          </>
-        )
-      case NotificationEventType.CreateTaxonomyTerm:
-        return (
-          <>
-            <UserLink user={event.actor} /> hat den Taxonomy Term{' '}
-            {event.taxonomyTerm.id} erstellt.
-          </>
-        )
-      case NotificationEventType.SetTaxonomyTerm:
-        return (
-          <>
-            <UserLink user={event.actor} /> hat den Taxonomy Term{' '}
-            {event.taxonomyTerm.id} geändert.
-          </>
-        )
-      case NotificationEventType.SetTaxonomyParent:
-        return (
-          <>
-            <UserLink user={event.actor} /> hat den Elternknoten des Terms{' '}
-            {event.taxonomyTerm.id} von ${event.previousParent.id} auf{' '}
-            {event.parent.id} geändert.
-          </>
-        )
-      case NotificationEventType.SetUuidState:
-        return (
-          <>
-            <UserLink user={event.actor} /> hat den Uuid {event.uuid.id}{' '}
-            {event.trashed
-              ? 'in den Papierkorb verschoben'
-              : 'aus dem Papierkorb wieder hergestellt'}
-            .
-          </>
+
+      case 'CreateCommentNotificationEvent':
+        return parseString(loggedInStrings.createComment, {
+          thread: renderThread(event.thread.id),
+          comment: (
+            <StyledLink href={`/${event.comment.id}`}>
+              {strings.entities.comment}
+            </StyledLink>
+          ),
+        })
+
+      case 'CreateThreadNotificationEvent':
+        return parseString(loggedInStrings.createThread, {
+          thread: renderThread(event.thread.id),
+          object: renderObject(event.object),
+        })
+
+      case 'CreateEntityNotificationEvent':
+        return parseString(loggedInStrings.createEntity, {
+          object: renderObject(event.entity),
+        })
+
+      case 'SetLicenseNotificationEvent':
+        return parseString(loggedInStrings.setLicense, {
+          repository: renderObject(event.repository),
+        })
+
+      case 'CreateEntityLinkNotificationEvent':
+        return parseString(loggedInStrings.createEntityLink, {
+          child: renderObject(event.child),
+          parent: renderObject(event.parent),
+        })
+
+      case 'RemoveEntityLinkNotificationEvent':
+        return parseString(loggedInStrings.removeEntityLink, {
+          child: renderObject(event.child),
+          parent: renderObject(event.parent),
+        })
+
+      case 'CreateEntityRevisionNotificationEvent':
+        return parseString(loggedInStrings.createEntityRevision, {
+          revision: renderRevision(event.entityRevision.id),
+          entity: renderObject(event.entity),
+        })
+
+      case 'CheckoutRevisionNotificationEvent':
+        return parseString(loggedInStrings.checkoutRevision, {
+          actor: actor,
+          revision: renderRevision(event.revision.id),
+          repository: renderObject(event.repository),
+        })
+
+      case 'RejectRevisionNotificationEvent':
+        return parseString(loggedInStrings.rejectRevision, {
+          revision: renderRevision(event.revision.id),
+          repository: renderObject(event.repository),
+        })
+
+      case 'CreateTaxonomyLinkNotificationEvent':
+        return parseString(loggedInStrings.createTaxonomyLink, {
+          child: renderObject(event.child),
+          parent: renderObject(event.parent),
+        })
+
+      case 'RemoveTaxonomyLinkNotificationEvent':
+        return parseString(loggedInStrings.removeTaxonomyLink, {
+          child: renderObject(event.child),
+          parent: renderTax(event.parent),
+        })
+
+      case 'CreateTaxonomyTermNotificationEvent':
+        return parseString(loggedInStrings.createTaxonomyTerm, {
+          term: renderTax(event.taxonomyTerm),
+        })
+
+      case 'SetTaxonomyTermNotificationEvent':
+        return parseString(loggedInStrings.setTaxonomyTerm, {
+          term: renderTax(event.taxonomyTerm),
+        })
+
+      case 'SetTaxonomyParentNotificationEvent':
+        if (!event.parent) {
+          //deleted
+          return parseString(loggedInStrings.setTaxonomyParentDeleted, {
+            child: renderTax(event.child),
+          })
+        }
+        if (event.previousParent) {
+          return parseString(loggedInStrings.setTaxonomyParentChangedFrom, {
+            child: renderTax(event.child),
+            previousparent: renderTax(event.previousParent),
+            parent: renderTax(event.parent),
+          })
+        }
+        return parseString(loggedInStrings.setTaxonomyParentChanged, {
+          child: renderTax(event.child),
+          parent: renderTax(event.parent),
+        })
+
+      case 'SetUuidStateNotificationEvent':
+        return parseString(
+          event.trashed
+            ? loggedInStrings.setUuidStateTrashed
+            : loggedInStrings.setUuidStateRestored,
+          {
+            object: renderObject(event.object),
+          }
         )
     }
   }
 
   function renderExtraContent() {
     if (
-      event.type === NotificationEventType.RejectRevision ||
-      event.type === NotificationEventType.CheckoutRevision
+      event.__typename === 'RejectRevisionNotificationEvent' ||
+      event.__typename === 'CheckoutRevisionNotificationEvent'
     ) {
       return <Content>{event.reason}</Content>
     }
   }
-}
 
-function UserLink({ user }: { user: NotificationUser }) {
-  return (
-    <StyledLink href={`/user/profile/${user.id}`}>{user.username}</StyledLink>
-  )
-}
+  function renderUser(user: User) {
+    return (
+      <StyledLink href={`/user/profile/${user.id}`}>{user.username}</StyledLink>
+    )
+  }
 
-interface ContentLink {
-  id: number
-  children: string
-}
+  function renderObject(object: {
+    id: number
+    currentRevision?: {
+      title?: string
+    }
+    __typename?: string
+  }) {
+    const title = object.currentRevision?.title
+    return (
+      <StyledLink href={`/${object.id}`}>
+        {title ? title : renderEntityTypePlaceholder(object.__typename)}
+      </StyledLink>
+    )
+  }
 
-function ContentLink(props: ContentLink) {
-  return <StyledLink href={`/${props.id}`}>{props.children}</StyledLink>
+  function renderTax(taxonomy: TaxonomyTerm) {
+    return <StyledLink href={`/${taxonomy.id}`}>{taxonomy.name}</StyledLink>
+  }
+
+  //TODO: also check logged out error
+
+  function renderRevision(id: number) {
+    return <StyledLink href={`/${id}`}>{strings.entities.revision}</StyledLink>
+  }
+
+  function renderThread(id: number) {
+    return <StyledLink href={`/${id}`}>{strings.entities.thread}</StyledLink>
+  }
+
+  function renderEntityTypePlaceholder(typename: string | undefined) {
+    console.log(typename)
+
+    if (typename && typename in placeholderLookup) {
+      //TODO: find a way to translate grammatically correct placeholders
+      //@ts-expect-error
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      return placeholderLookup[typename]
+    }
+    return placeholderLookup.fallback
+  }
 }
 
 const StyledLink = styled.a`
@@ -317,9 +418,9 @@ const Title = styled.span<{ unread: boolean }>`
         height: 10px;
         margin-right: 7px;
       }
-    `}
+    `};
 
-  display:block;
+  display: block;
   margin-bottom: 9px;
   margin-top: 1px;
 

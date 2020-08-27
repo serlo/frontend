@@ -54,16 +54,6 @@ export async function getInitialProps(
     }
   }
 
-  if (alias === '/' && instance == 'de') {
-    return {
-      origin,
-      instanceData,
-      pageData: {
-        kind: 'landing',
-      },
-    }
-  }
-
   if (alias === '/spenden' && instance == 'de') {
     return {
       origin,
@@ -137,7 +127,9 @@ export async function getInitialProps(
     }
 
     const res = await fetch(
-      `${fetcherAdditionalData.origin}/api/frontend/${fetcherAdditionalData.instance}${url}`
+      `${fetcherAdditionalData.origin}/api/frontend/${
+        fetcherAdditionalData.instance
+      }${url.replace(/\/$/, '')}`
     )
     const fetchedData = (await res.json()) as PageData
     // compat: redirect of courses

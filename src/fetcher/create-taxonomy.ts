@@ -17,7 +17,7 @@ import {
 import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
 
 export function buildTaxonomyData(uuid: TaxonomyTerm): TaxonomyData {
-  const children = uuid.children?.filter(isActive)
+  const children = uuid.children.nodes.filter(isActive)
 
   return {
     description: uuid.description ? convertState(uuid.description) : undefined,
@@ -39,7 +39,7 @@ function isActive(child: TaxonomyTermChild) {
   return child.trashed === false && child.__typename !== 'UnsupportedUuid'
 }
 
-function collectExercises(children: TaxonomyTerm['children']) {
+function collectExercises(children: TaxonomyTermChildrenLevel1[]) {
   let index = 0
   const result: (FrontendExerciseNode | FrontendExerciseGroupNode)[] = []
   children.forEach((child) => {
@@ -47,7 +47,8 @@ function collectExercises(children: TaxonomyTerm['children']) {
       result.push(createExercise(child, index++))
     }
     if (child.__typename === 'ExerciseGroup' && child.currentRevision) {
-      result.push(createExerciseGroup(child, index++))
+      if (children.length === 1) result.push(createExerciseGroup(child))
+      else result.push(createExerciseGroup(child, index++))
     }
   })
   return result
@@ -68,7 +69,7 @@ function collectType(
   return result
 }
 
-function getAlias(child: { alias?: string; id: number }) {
+function getAlias(child: { alias?: string | null; id: number }) {
   if (!child.alias || hasSpecialUrlChars(child.alias)) return `/${child.id}`
   else return child.alias
 }
@@ -91,7 +92,7 @@ function collectTopicFolders(
 }
 
 function collectNestedTaxonomyTerms(
-  children: TaxonomyTerm['children']
+  children: TaxonomyTermChildrenLevel1[]
 ): TaxonomySubTerm[] {
   const result: TaxonomySubTerm[] = []
   children.forEach((child) => {
@@ -100,19 +101,19 @@ function collectNestedTaxonomyTerms(
       child.type !== 'topicFolder' &&
       child.type !== 'curriculumTopicFolder'
     ) {
-      const subchildren = child.children?.filter(isActive)
+      const subChildren = child.children.nodes.filter(isActive)
       result.push({
         title: child.name,
         url: getAlias(child),
         description: child.description
           ? convertState(child.description)
           : undefined,
-        articles: collectType(subchildren, 'Article'),
-        exercises: collectTopicFolders(subchildren),
-        videos: collectType(subchildren, 'Video'),
-        applets: collectType(subchildren, 'Applet'),
-        courses: collectType(subchildren, 'Course'),
-        folders: collectSubfolders(subchildren),
+        articles: collectType(subChildren, 'Article'),
+        exercises: collectTopicFolders(subChildren),
+        videos: collectType(subChildren, 'Video'),
+        applets: collectType(subChildren, 'Applet'),
+        courses: collectType(subChildren, 'Course'),
+        folders: collectSubfolders(subChildren),
       })
     }
   })

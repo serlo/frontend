@@ -10,5 +10,6 @@ external
 # HTML files
 *.html
 
-# Crowdin generated files
+# Generated files
 src/data/*/index.ts
+schema.graphql

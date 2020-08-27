@@ -1,6 +1,5 @@
 import { headerData, footerData } from './menu-data';
-import { InstanceData, ServerSideStrings, LoggedInData, InstanceLandingData } from '@/data-types';
-export const instanceData: InstanceData = {
+export const instanceData = {
   lang: "fr",
   headerData: headerData,
   footerData: footerData,
@@ -8,7 +7,7 @@ export const instanceData: InstanceData = {
     header: {
       slogan: "La plateforme d'apprentissage libre",
       search: "Recherche",
-      login: 'Login'
+      login: "Se connecter"
     },
     footer: {
       summaryHeading: "Serlo.org est le Wikipedia pour l'apprentissage.",
@@ -25,6 +24,12 @@ export const instanceData: InstanceData = {
       applet: 'Applet',
       folder: "Dossier",
       exercises: "Exercices"
+    },
+    entities: {
+      topicFolder: "Dossie d'éxercices",
+      comment: "Commentaire",
+      revision: "Révision",
+      thread: "Fil"
     },
     share: {
       button: "Partager",
@@ -43,9 +48,6 @@ export const instanceData: InstanceData = {
       showPages: "Afficher la vue globale du cours",
       pages: "Vue globale du cours",
       next: "Suivant"
-    },
-    taxonomy: {
-      topicFolder: "Dossie d'éxercices"
     },
     content: {
       show: "montrer",
@@ -66,10 +68,15 @@ export const instanceData: InstanceData = {
       link1: "notre politique de confidentialitéPrivacy Policy",
       link2: "nos conditions d'utilisation.",
       button: "Je suis d'accord"
+    },
+    notifications: {
+      notifications: 'Notifications',
+      pleaseLogInLink: 'Bitte melde dich an',
+      pleaseLogInText: 'um deine Benachrichtigungen zu sehen.'
     }
   }
 };
-export const instanceLandingData: InstanceLandingData = {
+export const instanceLandingData = {
   lang: "fr",
   strings: {
     vision: "Nous sommes une organisation communautaire à but non lucratif supportant l'apprentissage personnalisé et travaillant à la réalisation d'opportunités éducatives égales. Cette plateforme propose des milliers d'articles d'instruction, des vidéos pédagogiques et des exercices pratiques aux millions d'étudiant(e)s et d'élèves dans le monde entier - complètement gratuit. Maintenant, vous êtes invité de joindre l'équipe Serlo francophone.",
@@ -89,13 +96,13 @@ export const instanceLandingData: InstanceLandingData = {
     getInvolved: "Participe!"
   }
 };
-export const serverSideStrings: ServerSideStrings = {
+export const serverSideStrings = {
   title: "Apprendre avec Serlo!"
 };
-export const loggedInData: LoggedInData = {
+export const loggedInData = {
   authMenu: [{
     url: '/user/notifications',
-    title: "Notifications",
+    title: 'Notifications',
     icon: 'notifications'
   }, {
     url: '',
@@ -119,6 +126,69 @@ export const loggedInData: LoggedInData = {
     }]
   }],
   strings: {
-    tools: "Autres outils"
+    tools: "Autres outils",
+    authorMenu: {
+      log: 'Log',
+      settings: 'Settings',
+      moveCoursePage: 'Move this page to another course',
+      thisCoursePage: 'This course-page',
+      addCoursePage: 'Add course-page',
+      wholeCourse: 'Whole course',
+      copyItems: 'Copy items',
+      moveItems: 'Move items',
+      addGroupedTextExercise: 'Add grouped-text-exercise',
+      changeLicense: 'Change License',
+      subscribe: 'Subscribe',
+      subscribeNotifications: 'Recieve notifications',
+      subscribeNotificationsAndMail: 'Recieve notifications and emails',
+      convert: 'Convert (beta)',
+      history: 'History',
+      editAssignments: 'Edit topic and curriculum assignments',
+      flagContent: 'Flag content',
+      moveToTrash: 'Move to trash',
+      sort: 'Sort children',
+      edit: 'Edit',
+      organize: 'Organize',
+      moveToGroupedTextExercise: 'Move content to other grouped-text-exercise',
+      moveToTextExercise: 'Move content to other text-exercise'
+    },
+    notifications: {
+      loadMore: "Load more",
+      unknownProblem: "There was a problem loading the notifications, please try again later.",
+      loading: "Loading notifications",
+      hide: "Hide notifications for this content.",
+      setThreadStateArchived: "%actor% archived %thread%.",
+      setThreadStateUnarchived: "%actor% restored %thread%.",
+      createComment: "%actor% commented in %thread%: %comment%.",
+      createThread: "%actor% started %thread% on %object%.",
+      createEntity: "%actor% created %object%.",
+      setLicense: "%actor% changed the license of %repository%.",
+      createEntityLink: "%actor% associated %child% with %parent%.",
+      removeEntityLink: "%actor% dissociated %child% from %parent%.",
+      createEntityRevision: "%actor% created a %revision% of %entity%.",
+      checkoutRevision: "%actor% checked out %revision% in %repository%.",
+      rejectRevision: "%actor% rejected a %revision% in %repository%.",
+      createTaxonomyLink: "%actor% added %child% to %parent%.",
+      removeTaxonomyLink: "%actor% removed %child% from %parent%.",
+      createTaxonomyTerm: "%actor% created %term%.",
+      setTaxonomyTerm: "%actor% updated %term%.",
+      setTaxonomyParentDeleted: "%actor% removed the parent of %child%.",
+      setTaxonomyParentChangedFrom: "%actor% changed parent of %child% from %previousparent% to %parent%.",
+      setTaxonomyParentChanged: "%actor% changed parent of %child% to %parent%.",
+      setUuidStateTrashed: "%actor% trashed %object%.",
+      setUuidStateRestored: "%actor% restored %object%.",
+      entityPlaceholderPage: "Page",
+      entityPlaceholderArticle: "Article",
+      entityPlaceholderVideo: 'Video',
+      entityPlaceholderApplet: 'Applet',
+      entityPlaceholderCoursePage: "Course page",
+      entityPlaceholderExercise: "Exercise",
+      entityPlaceholderGroupedExercise: "Grouped exercise",
+      entityPlaceholderExerciseGroup: "Exercise group",
+      entityPlaceholderEvent: 'Event',
+      entityPlaceholderCourse: "Course",
+      entityPlaceholderTaxonomyTerm: "Term",
+      entityPlaceholderFallback: "Content"
+    }
   }
 };

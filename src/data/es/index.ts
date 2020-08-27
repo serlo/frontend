@@ -1,6 +1,5 @@
 import { headerData, footerData } from './menu-data';
-import { InstanceData, ServerSideStrings, LoggedInData, InstanceLandingData } from '@/data-types';
-export const instanceData: InstanceData = {
+export const instanceData = {
   lang: "es",
   headerData: headerData,
   footerData: footerData,
@@ -8,7 +7,7 @@ export const instanceData: InstanceData = {
     header: {
       slogan: "La Plataforma para el Aprendizaje Abierto",
       search: "Buscar",
-      login: 'Login'
+      login: "Ingresar"
     },
     footer: {
       summaryHeading: "Serlo.org es la Wikipedia para el aprendizaje.",
@@ -19,12 +18,18 @@ export const instanceData: InstanceData = {
       toTop: "a la cima"
     },
     categories: {
-      article: 'Article',
-      course: 'Course',
-      video: 'Video',
+      article: "Artículo",
+      course: "Curso",
+      video: "Vídeo",
       applet: 'Applet',
-      folder: 'Folder',
-      exercises: 'Exercises'
+      folder: "Carpeta",
+      exercises: "Ejercicios"
+    },
+    entities: {
+      topicFolder: "Carpeta de ejercicios",
+      comment: "Comentar",
+      revision: "Revisión",
+      thread: "Tema"
     },
     share: {
       button: "Compartir",
@@ -40,24 +45,21 @@ export const instanceData: InstanceData = {
       readMore: "Información"
     },
     course: {
-      showPages: 'Show course overview',
-      pages: 'Course overview',
-      next: 'Next'
-    },
-    taxonomy: {
-      topicFolder: 'Exercise folder'
+      showPages: "Mostrar descripción del curso",
+      pages: "Descripción del curso",
+      next: "Siguiente"
     },
     content: {
-      show: 'show',
-      hide: 'hide',
-      prerequisite: 'For this task you need the following basic knowledge:',
-      solution: 'Solution',
-      exerciseGroup: 'Exercise group',
-      right: 'Right',
-      wrong: 'Wrong',
-      check: 'Check',
-      yourAnswer: 'Your answer…',
-      chooseOption: 'Click on one of the options.'
+      show: "mostrar",
+      hide: "ocultar",
+      prerequisite: "Para este ejercicio se necesitan los siguientes conocimientos básicos:",
+      solution: "Solución",
+      exerciseGroup: "Grupo de ejercicios",
+      right: "Correcto",
+      wrong: "Incorrecto",
+      check: "Comprobar",
+      yourAnswer: "Tu respuesta...",
+      chooseOption: "Elige una de las opciones."
     },
     cookie: {
       part1: "Al utilizar este sitio web, declara que acepta nuestra",
@@ -66,10 +68,15 @@ export const instanceData: InstanceData = {
       link1: "Política de privacidad",
       link2: "Términos de uso",
       button: "Aceptar"
+    },
+    notifications: {
+      notifications: "Notificaciones",
+      pleaseLogInLink: "Por favor, regístrate.",
+      pleaseLogInText: "para ver tus notificaciones."
     }
   }
 };
-export const instanceLandingData: InstanceLandingData = {
+export const instanceLandingData = {
   lang: "es",
   strings: {
     vision: "Somos una organización de base comunitaria sin ánimo de lucro que apoya el aprendizaje personalizado y trabajando por la igualdad de oportunidades educativas. Esta plataforma de aprendizaje ofrece miles de artículos de instrucción, videos de aprendizaje y ejercicios de práctica para millones de estudiantes en todo el mundo - completamente gratis. Ahora es el momento de unirse a nosotros en tu idioma.",
@@ -89,17 +96,17 @@ export const instanceLandingData: InstanceLandingData = {
     getInvolved: "¡Participa!"
   }
 };
-export const serverSideStrings: ServerSideStrings = {
+export const serverSideStrings = {
   title: "Aprende con Serlo!"
 };
-export const loggedInData: LoggedInData = {
+export const loggedInData = {
   authMenu: [{
     url: '/user/notifications',
-    title: 'Benachrichtigungen',
+    title: "notifications",
     icon: 'notifications'
   }, {
     url: '',
-    title: "Benutzer",
+    title: "user",
     icon: 'user',
     children: [{
       url: '/user/public',
@@ -119,6 +126,69 @@ export const loggedInData: LoggedInData = {
     }]
   }],
   strings: {
-    tools: "Otras herramientas"
+    tools: "Otras herramientas",
+    authorMenu: {
+      log: 'Log',
+      settings: "Configuración",
+      moveCoursePage: "Mueve esta página a otro curso",
+      thisCoursePage: "Esta página del curso",
+      addCoursePage: "Agregar página de curso",
+      wholeCourse: "Curso completo",
+      copyItems: "Copiar elementos",
+      moveItems: "Mover elementos",
+      addGroupedTextExercise: "Añade un grupo de ejercicios de texto",
+      changeLicense: "Cambiar licencia",
+      subscribe: "Subscribir",
+      subscribeNotifications: "Recibir notificaciones",
+      subscribeNotificationsAndMail: "Recibir notificaciones y correos electrónicos",
+      convert: "Convertir (beta)",
+      history: "Historial",
+      editAssignments: "Editar el tema y las asignaciones de currículo",
+      flagContent: "Marcar contenido",
+      moveToTrash: "Mover a la papelera",
+      sort: "Ordenar los niños",
+      edit: "Modificar",
+      organize: "Organizar",
+      moveToGroupedTextExercise: "Mover contenido a otro grupo de ejercicios de texto",
+      moveToTextExercise: "Mover contenido a otro ejercicio de texto"
+    },
+    notifications: {
+      loadMore: "Cargar más",
+      unknownProblem: "Hubo un problema al cargar las notificaciones, por favor, inténtalo de nuevo más tarde.",
+      loading: "Cargando notificaciones",
+      hide: "Ocultar notificaciones para este contenido.",
+      setThreadStateArchived: "%actor% archivado %thread%",
+      setThreadStateUnarchived: "%actor% restaurado %thread%.",
+      createComment: "%actor% comentado en %thread%: %comment%.",
+      createThread: "%actor% ha iniciado %thread% en %object%.",
+      createEntity: "%actor% creó %object%.",
+      setLicense: "%actor% cambió la licencia de %repository%.",
+      createEntityLink: "%actor% vinculado %child% con %parent%.",
+      removeEntityLink: "%actor% desvinculado %child% de %parent%.",
+      createEntityRevision: "%actor% creó un %revision% de %entity%.",
+      checkoutRevision: "%actor% ha verificado %revision% en %repository%",
+      rejectRevision: "%actor% rechazó  %revision% en%repository%.",
+      createTaxonomyLink: "%actor% agregó %child% a %parent%.",
+      removeTaxonomyLink: "%actor% eliminó a %child% de %parent%.",
+      createTaxonomyTerm: "%actor% creó %term%.",
+      setTaxonomyTerm: "%actor% actualizó %term%.",
+      setTaxonomyParentDeleted: "%actor% eliminó el padre de %child%.",
+      setTaxonomyParentChangedFrom: "%actor% cambió el padre de %child% de  %previousparent% a %parent%.",
+      setTaxonomyParentChanged: "%actor% cambió el padre de %child% a %parent%.",
+      setUuidStateTrashed: "%actor% envió a la papelera %object%.",
+      setUuidStateRestored: "%actor% restauró %object%.",
+      entityPlaceholderPage: "Página",
+      entityPlaceholderArticle: "Artículo",
+      entityPlaceholderVideo: "Vídeo",
+      entityPlaceholderApplet: 'Applet',
+      entityPlaceholderCoursePage: "Página de curso",
+      entityPlaceholderExercise: "Ejercicio",
+      entityPlaceholderGroupedExercise: "Ejercicio agrupado",
+      entityPlaceholderExerciseGroup: "Grupo de ejercicios",
+      entityPlaceholderEvent: "Evento",
+      entityPlaceholderCourse: "Curso",
+      entityPlaceholderTaxonomyTerm: "Término",
+      entityPlaceholderFallback: "Contenido"
+    }
   }
 };

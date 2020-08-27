@@ -1,6 +1,6 @@
-import { render } from 'external/legacy_render'
 import { request } from 'graphql-request'
 
+import { render } from '../../external/legacy_render'
 import { createBreadcrumbs } from './create-breadcrumbs'
 import { createExercise, createExerciseGroup } from './create-exercises'
 import { getMetaImage, getMetaDescription } from './create-meta-data'
@@ -39,13 +39,20 @@ export async function fetchPageData(raw_alias: string): Promise<PageData> {
 }
 
 async function apiRequest(alias: string, instance: string): Promise<PageData> {
-  const QUERY = dataQuery(
+  const { uuid } = await request<{ uuid: QueryResponse }>(
+    endpoint,
+    dataQuery,
     /^\/[\d]+$/.test(alias)
-      ? 'id: ' + alias.substring(1)
-      : `alias: { instance: ${instance}, path: "${alias}"}`
+      ? {
+          id: parseInt(alias.substring(1), 10),
+        }
+      : {
+          alias: {
+            instance,
+            path: alias,
+          },
+        }
   )
-
-  const { uuid } = await request<{ uuid: QueryResponse }>(endpoint, QUERY)
 
   if (uuid.__typename === 'Course') {
     const firstPage = uuid.pages[0]?.alias
@@ -61,7 +68,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
   const horizonData = instance == 'de' ? buildHorizonData() : undefined
   const cacheKey = `/${instance}${alias}`
   const title = createTitle(uuid)
-  const metaImage = getMetaImage(alias)
+  const metaImage = getMetaImage(uuid.alias ? uuid.alias : undefined)
 
   if (uuid.__typename === 'TaxonomyTerm') {
     return {
@@ -88,6 +95,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
       kind: 'single-entity',
       entityData: {
         id: uuid.id,
+        typename: uuid.__typename,
         content: exercise,
         inviteToEdit: true,
       },
@@ -111,6 +119,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
       kind: 'single-entity',
       entityData: {
         id: uuid.id,
+        typename: uuid.__typename,
         content: exercise,
         inviteToEdit: true,
       },
@@ -134,6 +143,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
       kind: 'single-entity',
       entityData: {
         id: uuid.id,
+        typename: uuid.__typename,
         content,
       },
       newsletterPopup: false,
@@ -154,6 +164,8 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
       newsletterPopup: true,
       entityData: {
         id: uuid.id,
+        typename: uuid.__typename,
+        revisionId: uuid.currentRevision?.id,
         title: uuid.currentRevision?.title ?? '',
         content,
       },
@@ -178,6 +190,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
       newsletterPopup: false,
       entityData: {
         id: uuid.id,
+        typename: uuid.__typename,
         title: uuid.currentRevision?.title ?? '',
         content,
         licenseData,
@@ -209,6 +222,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
       newsletterPopup: false,
       entityData: {
         id: uuid.id,
+        typename: uuid.__typename,
         title: uuid.currentRevision?.title ?? '',
         content: [
           {
@@ -242,6 +256,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
       newsletterPopup: false,
       entityData: {
         id: uuid.id,
+        typename: uuid.__typename,
         title: uuid.currentRevision?.title ?? '',
         content: [
           {
@@ -293,6 +308,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
       newsletterPopup: false,
       entityData: {
         id: uuid.id,
+        typename: uuid.__typename,
         title: uuid.currentRevision?.title ?? '',
         content,
         licenseData,
@@ -304,6 +320,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
         categoryIcon: 'article',
         inviteToEdit: true,
         courseData: {
+          id: uuid.course.id,
           title: uuid.course.currentRevision?.title ?? '',
           pages,
           nextPageUrl: pages[currentPageIndex]?.url,

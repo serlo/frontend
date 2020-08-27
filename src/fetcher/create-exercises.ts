@@ -59,6 +59,11 @@ export function createExercise(
     solutionLegacy,
     taskLicense: uuid.license,
     solutionLicense: uuid.solution?.license,
+    context: {
+      id: uuid.id,
+      solutionId: uuid.solution?.id,
+    },
+    href: uuid.alias ? uuid.alias : undefined,
   }
 }
 
@@ -67,23 +72,29 @@ export function createExerciseGroup(
   pageIndex?: number
 ): FrontendExerciseGroupNode {
   const children: FrontendExerciseNode[] = []
+  let groupIndex = 0
   if (uuid.exercises?.length > 0) {
-    uuid.exercises.forEach(function (
-      exercise: BareExercise,
-      groupIndex: number
-    ) {
+    uuid.exercises.forEach((exercise: BareExercise) => {
+      if (!exercise.currentRevision) return
+      if (exercise.trashed) return
       const exerciseNode = createExercise(exercise)
       exerciseNode.grouped = true
-      exerciseNode.positionInGroup = groupIndex
-      exerciseNode.positionOnPage = pageIndex // compat: page page index also to grouped exercise for id generation
+      exerciseNode.positionInGroup = groupIndex++
+      exerciseNode.positionOnPage = pageIndex // compat: page index also to grouped exercise for id generation
+      exerciseNode.context.parent = uuid.id
       children.push(exerciseNode)
     })
   }
+
   return {
     type: 'exercise-group',
     content: convertState(uuid.currentRevision?.content),
     positionOnPage: pageIndex,
     license: uuid.license,
     children,
+    context: {
+      id: uuid.id,
+    },
+    href: uuid.alias ? uuid.alias : undefined,
   }
 }

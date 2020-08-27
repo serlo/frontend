@@ -8,12 +8,9 @@ import NProgress from 'nprogress'
 import React from 'react'
 import { ThemeProvider, createGlobalStyle } from 'styled-components'
 
-// eslint-disable-next-line import/no-unassigned-import
-import '../../public/_assets/fonts/karmilla.css'
-// eslint-disable-next-line import/no-unassigned-import
-import '../../public/_assets/fonts/katex/katex.css'
+import '@/assets-webkit/fonts/karmilla.css'
+import '@/assets-webkit/fonts/katex/katex.css'
 
-import { version } from '../../package.json'
 import { NProgressStyles } from '@/components/navigation/n-progress-styles'
 import { ToastNotifications } from '@/components/toast-notifications'
 import { theme } from '@/theme'
@@ -26,10 +23,8 @@ if (
 ) {
   Sentry.init({
     dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
-    release: `frontend@${version}-${process.env.NEXT_PUBLIC_COMMIT_SHA?.substr(
-      0,
-      7
-    )}`,
+    environment: process.env.NEXT_PUBLIC_ENV,
+    release: `frontend@${process.env.NEXT_PUBLIC_COMMIT_SHA?.substr(0, 7)}`,
   })
 }
 

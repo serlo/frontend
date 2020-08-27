@@ -142,6 +142,12 @@ export function Entity({ data }: EntityProps) {
         onShare={() => setOpen(true)}
         id={data.id}
         hideEdit={!data.inviteToEdit}
+        data={{
+          type: data.typename,
+          id: data.id,
+          revisionId: data.revisionId,
+          courseId: data.courseData?.id,
+        }}
       />
     )
   }

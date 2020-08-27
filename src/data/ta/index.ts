@@ -1,6 +1,5 @@
 import { headerData, footerData } from './menu-data';
-import { InstanceData, ServerSideStrings, LoggedInData, InstanceLandingData } from '@/data-types';
-export const instanceData: InstanceData = {
+export const instanceData = {
   lang: "ta",
   headerData: headerData,
   footerData: footerData,
@@ -26,6 +25,12 @@ export const instanceData: InstanceData = {
       folder: "அடைவு",
       exercises: "பயிற்சிகள்"
     },
+    entities: {
+      topicFolder: 'Exercise folder',
+      comment: "கருத்து",
+      revision: "மீட்டல்",
+      thread: 'Thread'
+    },
     share: {
       button: "பகிர்க",
       title: "பகிர்!",
@@ -40,12 +45,9 @@ export const instanceData: InstanceData = {
       readMore: "தகவல்"
     },
     course: {
-      showPages: 'Show course overview',
+      showPages: "வகுப்பு மேலோட்டத்தைக் காட்டவும்",
       pages: 'Course overview',
       next: "அடுத்து"
-    },
-    taxonomy: {
-      topicFolder: 'Exercise folder'
     },
     content: {
       show: "காட்டு",
@@ -66,10 +68,15 @@ export const instanceData: InstanceData = {
       link1: "தனியுரிமைக் கொள்கை",
       link2: "பயன்பாட்டு விதிமுறைகளை",
       button: "ஒப்புக்கொள்கிறேன்"
+    },
+    notifications: {
+      notifications: "அறிவிப்புகள்",
+      pleaseLogInLink: 'Bitte melde dich an',
+      pleaseLogInText: 'um deine Benachrichtigungen zu sehen.'
     }
   }
 };
-export const instanceLandingData: InstanceLandingData = {
+export const instanceLandingData = {
   lang: "ta",
   strings: {
     vision: "நாம் சமமான கல்வி வாய்ப்புகளை நோக்கி இணைந்து பணிபுரியும் ஒரு குழு. இந்த இணையத்தளத்தில் எண்ணற்ற விவரக் கட்டுரைகள், பயிற்சிகள் மற்றும் ஒலிப் பேழைகள் அனைத்துப் பாடங்களுக்கும் வழங்கப்பட்டுவருகின்றன. இவை அனைத்தும் இலவசமாக உலகம் முழுவதும் உள்ள மாணவர்களுக்காக உருவாக்கப்பட்டுவருகின்றன. இனி வரும் காலங்களில், தமிழ்மொழியிலும் இவ்வாறான இலவசப் பாடத்திட்டங்களை உருவாக்க நீங்களும் எம்முடன் இணைந்து பணியாற்றலாம்.",
@@ -89,17 +96,17 @@ export const instanceLandingData: InstanceLandingData = {
     getInvolved: "நீங்களும் ஈடுபடுங்கள்!"
   }
 };
-export const serverSideStrings: ServerSideStrings = {
+export const serverSideStrings = {
   title: "Serlo உடன் கற்றுக்கொள்ளுங்கள்!"
 };
-export const loggedInData: LoggedInData = {
+export const loggedInData = {
   authMenu: [{
     url: '/user/notifications',
-    title: "Notifications",
+    title: "அறிவிப்புகள்",
     icon: 'notifications'
   }, {
     url: '',
-    title: 'User',
+    title: "பயனர்",
     icon: 'user',
     children: [{
       url: '/user/public',
@@ -109,16 +116,79 @@ export const loggedInData: LoggedInData = {
       title: 'Edit profile'
     }, {
       url: '/auth/password/change',
-      title: 'Change password'
+      title: "கடவுச்சொல்லை மாற்று"
     }, {
       url: '/event/history/user/me',
       title: 'Recent activities'
     }, {
       url: '/api/auth/logout',
-      title: 'Log out'
+      title: "வெளியேறு"
     }]
   }],
   strings: {
-    tools: "Weitere Tools"
+    tools: 'Other Tools',
+    authorMenu: {
+      log: 'Log',
+      settings: 'Settings',
+      moveCoursePage: 'Move this page to another course',
+      thisCoursePage: 'This course-page',
+      addCoursePage: 'Add course-page',
+      wholeCourse: 'Whole course',
+      copyItems: 'Copy items',
+      moveItems: 'Move items',
+      addGroupedTextExercise: 'Add grouped-text-exercise',
+      changeLicense: 'Change License',
+      subscribe: 'Subscribe',
+      subscribeNotifications: 'Recieve notifications',
+      subscribeNotificationsAndMail: 'Recieve notifications and emails',
+      convert: 'Convert (beta)',
+      history: 'History',
+      editAssignments: 'Edit topic and curriculum assignments',
+      flagContent: 'Flag content',
+      moveToTrash: 'Move to trash',
+      sort: 'Sort children',
+      edit: 'Edit',
+      organize: 'Organize',
+      moveToGroupedTextExercise: 'Move content to other grouped-text-exercise',
+      moveToTextExercise: 'Move content to other text-exercise'
+    },
+    notifications: {
+      loadMore: "Load more",
+      unknownProblem: "There was a problem loading the notifications, please try again later.",
+      loading: "Loading notifications",
+      hide: "Hide notifications for this content.",
+      setThreadStateArchived: "%actor% archived %thread%.",
+      setThreadStateUnarchived: "%actor% restored %thread%.",
+      createComment: "%actor% commented in %thread%: %comment%.",
+      createThread: "%actor% started %thread% on %object%.",
+      createEntity: "%actor% created %object%.",
+      setLicense: "%actor% changed the license of %repository%.",
+      createEntityLink: "%actor% associated %child% with %parent%.",
+      removeEntityLink: "%actor% dissociated %child% from %parent%.",
+      createEntityRevision: "%actor% created a %revision% of %entity%.",
+      checkoutRevision: "%actor% checked out %revision% in %repository%.",
+      rejectRevision: "%actor% rejected a %revision% in %repository%.",
+      createTaxonomyLink: "%actor% added %child% to %parent%.",
+      removeTaxonomyLink: "%actor% removed %child% from %parent%.",
+      createTaxonomyTerm: "%actor% created %term%.",
+      setTaxonomyTerm: "%actor% updated %term%.",
+      setTaxonomyParentDeleted: "%actor% removed the parent of %child%.",
+      setTaxonomyParentChangedFrom: "%actor% changed parent of %child% from %previousparent% to %parent%.",
+      setTaxonomyParentChanged: "%actor% changed parent of %child% to %parent%.",
+      setUuidStateTrashed: "%actor% trashed %object%.",
+      setUuidStateRestored: "%actor% restored %object%.",
+      entityPlaceholderPage: "Page",
+      entityPlaceholderArticle: "Article",
+      entityPlaceholderVideo: 'Video',
+      entityPlaceholderApplet: 'Applet',
+      entityPlaceholderCoursePage: "Course page",
+      entityPlaceholderExercise: "Exercise",
+      entityPlaceholderGroupedExercise: "Grouped exercise",
+      entityPlaceholderExerciseGroup: "Exercise group",
+      entityPlaceholderEvent: 'Event',
+      entityPlaceholderCourse: "Course",
+      entityPlaceholderTaxonomyTerm: "Term",
+      entityPlaceholderFallback: "Content"
+    }
   }
 };

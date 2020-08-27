@@ -40,6 +40,9 @@ export function CookieBar() {
           )
           checkRevision(data, localInfo)
         })
+        .catch(() => {
+          // loading failed, ignore
+        })
     } catch (e) {
       //
     }

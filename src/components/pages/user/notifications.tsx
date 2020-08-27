@@ -1,98 +1,324 @@
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { gql } from 'graphql-request'
 import { NextPage } from 'next'
 import React from 'react'
 import styled from 'styled-components'
 
-import { useGraphqlSwr } from '@/api/use-graphql-swr'
+import { useGraphqlSwrPagination } from '@/api/use-graphql-swr'
 import { Link } from '@/components/content/link'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { RelativeContainer } from '@/components/navigation/relative-container'
 import { StyledH1 } from '@/components/tags/styled-h1'
 import { StyledP } from '@/components/tags/styled-p'
-import { Notification } from '@/components/user/notification'
-import {
-  NotificationEventPayload,
-  parseNotificationEvent,
-} from '@/events/event'
+import { Notification, NotificationEvent } from '@/components/user/notification'
+import { useInstanceData } from '@/contexts/instance-context'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { inputFontReset, makeDefaultButton } from '@/helper/css'
 import { shouldUseNewAuth } from '@/helper/feature-auth'
 
 export const Notifications: NextPage = () => {
   const [mounted, setMounted] = React.useState(!shouldUseNewAuth())
 
-  const { data } = useGraphqlSwr<{
-    notifications: {
-      nodes: {
-        id: number
-        unread: boolean
-        event: NotificationEventPayload
-      }[]
-    }
+  React.useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  const loggedInData = useLoggedInData()
+  const { strings } = useInstanceData()
+
+  const response = useGraphqlSwrPagination<{
+    id: number
+    event: NotificationEvent
+    unread: boolean
   }>({
-    query: `
-      query notifications($count: Int!, $unread: Boolean){
-        notifications(first: $count, unread: $unread) {
+    query: gql`
+      query notifications($first: Int!, $unread: Boolean, $after: String) {
+        notifications(first: $first, unread: $unread, after: $after) {
+          pageInfo {
+            hasNextPage
+            endCursor
+          }
           nodes {
             id
             unread
             event {
-              type
               date
+              __typename
               actor {
                 id
                 username
               }
-              object {
-                id
+              ... on CheckoutRevisionNotificationEvent {
+                revision {
+                  id
+                }
+                repository {
+                  ...withTitle
+                }
+                reason
               }
-              payload
+              ... on CreateCommentNotificationEvent {
+                comment {
+                  id
+                }
+                thread {
+                  id
+                }
+              }
+              ... on CreateEntityNotificationEvent {
+                entity {
+                  id
+                }
+              }
+              ... on CreateEntityLinkNotificationEvent {
+                parent {
+                  id
+                }
+                child {
+                  id
+                }
+              }
+              ... on CreateEntityRevisionNotificationEvent {
+                entityRevision {
+                  id
+                }
+                entity {
+                  ...withTitle
+                }
+              }
+              ... on CreateTaxonomyTermNotificationEvent {
+                taxonomyTerm {
+                  id
+                }
+              }
+              ... on CreateTaxonomyLinkNotificationEvent {
+                child {
+                  ...withTitle
+                }
+                parent {
+                  id
+                  name
+                }
+              }
+              ... on CreateThreadNotificationEvent {
+                thread {
+                  id
+                }
+                object {
+                  ...withTitle
+                }
+              }
+              ... on RejectRevisionNotificationEvent {
+                repository {
+                  id
+                }
+                revision {
+                  id
+                }
+                reason
+              }
+              ... on RemoveEntityLinkNotificationEvent {
+                parent {
+                  id
+                }
+                child {
+                  id
+                }
+              }
+              ... on RemoveTaxonomyLinkNotificationEvent {
+                child {
+                  ...withTitle
+                }
+                parent {
+                  id
+                  name
+                }
+              }
+              ... on SetLicenseNotificationEvent {
+                repository {
+                  ...withTitle
+                }
+              }
+              ... on SetTaxonomyParentNotificationEvent {
+                child {
+                  id
+                }
+                previousParent {
+                  id
+                }
+              }
+              ... on SetTaxonomyTermNotificationEvent {
+                taxonomyTerm {
+                  id
+                }
+              }
+              ... on SetThreadStateNotificationEvent {
+                archived
+                thread {
+                  id
+                }
+              }
+              ... on SetUuidStateNotificationEvent {
+                object {
+                  ...withTitle
+                }
+                trashed
+              }
             }
+          }
+        }
+      }
+
+      fragment withTitle on AbstractUuid {
+        __typename
+        id
+
+        ... on Applet {
+          currentRevision {
+            title
+          }
+        }
+        ... on Article {
+          currentRevision {
+            title
+          }
+        }
+        ... on Course {
+          currentRevision {
+            title
+          }
+        }
+        ... on CoursePage {
+          currentRevision {
+            title
+          }
+        }
+        ... on Video {
+          currentRevision {
+            title
+          }
+        }
+        ... on Page {
+          currentRevision {
+            title
           }
         }
       }
     `,
     variables: {
-      // TODO: set number of items to show. We could add pagination in a later iteration
-      count: 20,
-      // TODO: can be true | false | undefined. If defined, it will only return notifications that have the corresponding unread state.
+      first: 10,
       unread: undefined,
+    },
+    getConnection(data) {
+      return data.notifications
     },
   })
 
-  React.useEffect(() => {
-    setMounted(true)
-  }, [])
-
   if (!mounted) return null
 
-  return (
-    <RelativeContainer>
-      <MaxWidthDiv showNav>
-        <main>
-          <StyledH1 extraMarginTop>Benachrichtigungen</StyledH1>
-          <Wrapper>
-            {data ? (
-              data.notifications.nodes.map((node) => {
-                const event = parseNotificationEvent(node.event)
-                return (
-                  <Notification
-                    key={node.id}
-                    event={event}
-                    unread={node.unread}
-                  />
-                )
-              })
-            ) : (
-              <StyledP>
-                Bitte <Link href="/api/auth/login">melde dich an</Link> um deine
-                Benachrichtigungen zu sehen
-              </StyledP>
-            )}
-          </Wrapper>
-        </main>
-      </MaxWidthDiv>
-    </RelativeContainer>
+  if (!loggedInData || response.error?.message === 'unauthorized')
+    return renderUnauthorized()
+
+  const loggedInStrings = loggedInData.strings.notifications
+
+  const notifications = response.data?.nodes.map((node) => {
+    return (
+      <Notification
+        key={node.id}
+        event={node.event}
+        unread={node.unread}
+        loggedInStrings={loggedInStrings}
+      />
+    )
+  })
+
+  const isLoading = response.loading
+
+  return wrapInContainer(
+    <>
+      {notifications}
+      {response.error && renderUnknownError()}
+      {isLoading && renderLoading()}
+      {response.data?.pageInfo.hasNextPage && !isLoading ? (
+        <Button
+          onClick={() => {
+            response.loadMore()
+          }}
+        >
+          {loggedInStrings.loadMore}
+        </Button>
+      ) : null}
+    </>
   )
+
+  function wrapInContainer(children: JSX.Element) {
+    return (
+      <RelativeContainer>
+        <MaxWidthDiv showNav>
+          <main>
+            <StyledH1 extraMarginTop>
+              {strings.notifications.notifications}
+            </StyledH1>
+            <Wrapper>{children}</Wrapper>
+          </main>
+        </MaxWidthDiv>
+      </RelativeContainer>
+    )
+  }
+
+  function renderUnauthorized() {
+    console.log(response.error)
+
+    return wrapInContainer(
+      <>
+        <StyledP>
+          <Link href="/api/auth/login">
+            {strings.notifications.pleaseLogInLink}
+          </Link>{' '}
+          {strings.notifications.pleaseLogInText}
+        </StyledP>
+      </>
+    )
+  }
+
+  function renderUnknownError() {
+    console.log(response.error)
+    return wrapInContainer(
+      <>
+        <StyledP>{loggedInStrings.unknownProblem}</StyledP>
+      </>
+    )
+  }
+
+  function renderLoading() {
+    return (
+      <StyledP style={{ marginTop: '50px' }}>
+        <ColoredIcon>
+          <FontAwesomeIcon icon={faSpinner} spin size="1x" />
+        </ColoredIcon>{' '}
+        {loggedInStrings.loading}
+      </StyledP>
+    )
+  }
 }
+
+const ColoredIcon = styled.span`
+  color: ${(props) => props.theme.colors.brand};
+`
 
 const Wrapper = styled.div`
   margin-bottom: 80px;
+`
+
+const Button = styled.button`
+  ${inputFontReset}
+  ${makeDefaultButton}
+  margin-top: 40px;
+  font-weight: bold;
+  background-color: ${(props) => props.theme.colors.brand};
+  color: #fff;
+  &:hover {
+    background-color: ${(props) => props.theme.colors.lightblue};
+  }
 `

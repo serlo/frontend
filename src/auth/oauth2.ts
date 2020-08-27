@@ -1,10 +1,9 @@
 import {
-  // @ts-expect-error outdated types
   ClientCredentials,
   AuthorizationCode,
-  OAuthClient,
   Token,
   AccessToken,
+  ModuleOptions,
 } from 'simple-oauth2'
 
 const HYDRA_HOST =
@@ -25,7 +24,7 @@ const HYDRA_CLIENT_SECRET =
 const config =
   HYDRA_HOST === undefined
     ? null
-    : {
+    : ({
         client: {
           id: HYDRA_CLIENT_ID!,
           secret: HYDRA_CLIENT_SECRET!,
@@ -40,20 +39,17 @@ const config =
         options: {
           authorizationMethod: 'body',
         },
-      }
+      } as ModuleOptions<string>)
 
 export const scope = ['offline_access', 'openid']
 
 export function getAuthorizationCode() {
   if (config === null) return null
-  // @ts-expect-error outdated types
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-  return new AuthorizationCode(config) as OAuthClient['authorizationCode']
+  return new AuthorizationCode(config)
 }
 
 export function getClientCredentials() {
   if (config === null) return null
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   return new ClientCredentials(config) as {
     createToken(token: Token): AccessToken
   }

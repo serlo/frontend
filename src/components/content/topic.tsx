@@ -32,7 +32,7 @@ export function Topic({ data }: TopicProps) {
       <Headline>
         {data.title}
         {data.exercisesContent.length > 0 && (
-          <span title={strings.taxonomy.topicFolder}>
+          <span title={strings.entities.topicFolder}>
             {' '}
             <StyledIcon icon={faFile} />{' '}
           </span>
@@ -73,7 +73,12 @@ export function Topic({ data }: TopicProps) {
           <FontAwesomeIcon icon={faShareAlt} size="1x" /> {strings.share.button}
         </UserToolsMobileButton>
       </UserToolsMobile>
-      <UserTools onShare={() => setOpen(true)} hideEdit id={data.id} />
+      <UserTools
+        onShare={() => setOpen(true)}
+        hideEdit
+        data={{ type: 'Taxonomy', id: data.id }}
+        id={data.id}
+      />
       <ShareModal
         open={open}
         onClose={() => setOpen(false)}
