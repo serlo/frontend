@@ -1,3 +1,4 @@
+import * as GraphQL from '@serlo/api'
 import { request } from 'graphql-request'
 
 import { render } from '../../external/legacy_render'
@@ -8,7 +9,7 @@ import { createNavigation } from './create-navigation'
 import { buildTaxonomyData } from './create-taxonomy'
 import { createTitle } from './create-title'
 import { prettifyLinks } from './prettify-links'
-import { dataQuery, QueryResponse } from './query'
+import { dataQuery, QueryResponse, licenseDetailsQuery } from './query'
 import { endpoint } from '@/api/endpoint'
 import { PageData, FrontendContentNode } from '@/data-types'
 import { horizonData } from '@/data/horizon_de'
@@ -24,6 +25,11 @@ export async function fetchPageData(raw_alias: string): Promise<PageData> {
     if (alias == '/') {
       return { kind: 'landing', landingData: getLandingData(instance) }
     }
+    if (alias.startsWith('/license/detail/')) {
+      const id = parseInt(alias.split('license/detail/')[1])
+      return await apiLicensePageRequest(id, instance)
+    }
+
     const pageData = await apiRequest(alias, instance)
     await prettifyLinks(pageData)
     return pageData
@@ -35,6 +41,32 @@ export async function fetchPageData(raw_alias: string): Promise<PageData> {
       ? 503
       : 500
     return { kind: 'error', errorData: { code, message } }
+  }
+}
+
+async function apiLicensePageRequest(
+  id: number,
+  instance: string
+): Promise<PageData> {
+  const { license } = await request<{ license: GraphQL.License }>(
+    endpoint,
+    licenseDetailsQuery(id)
+  )
+  const horizonData = instance == 'de' ? buildHorizonData() : undefined
+
+  return {
+    kind: 'license-detail',
+    licenseData: {
+      content: convertState(license.content),
+      title: license.title,
+      iconHref: license.iconHref,
+    },
+    newsletterPopup: false,
+    horizonData,
+    metaData: {
+      title: license.title,
+      contentType: 'page',
+    },
   }
 }
 

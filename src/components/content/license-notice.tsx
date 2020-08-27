@@ -8,7 +8,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styled from 'styled-components'
 
 import { makePadding, makeDefaultButton } from '../../helper/css'
-import { serloDomain } from '../../helper/serlo-domain'
 import { StyledA } from '../tags/styled-a'
 import { Link } from './link'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -64,10 +63,7 @@ export function LicenseNotice({ data, minimal, type }: LicenseNoticeProps) {
             {licenseName}
           </StyledA>
           {' → '}
-          <Link
-            href={`https://de.${serloDomain}/license/detail/${data.id}`}
-            noExternalIcon
-          >
+          <Link href={`/license/detail/${data.id}`}>
             <b>{strings.license.readMore}</b>
           </Link>
         </StyledSmall>
