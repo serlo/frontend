@@ -16,9 +16,12 @@ export const fetcherAdditionalData = {
 export async function getInitialProps(
   props: NextPageContext
 ): Promise<InitialProps> {
-  console.log('query', props.query)
   const slug =
-    props.query.slug === undefined ? [] : (props.query.slug as string[])
+    props.query.slug === undefined
+      ? []
+      : typeof props.query.slug === 'string'
+      ? [props.query.slug]
+      : props.query.slug
   const joinedSlug = slug.join('/')
   const url = '/' + joinedSlug
   const { origin } = absoluteUrl(props.req)
