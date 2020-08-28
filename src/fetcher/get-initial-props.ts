@@ -16,6 +16,7 @@ export const fetcherAdditionalData = {
 export async function getInitialProps(
   props: NextPageContext
 ): Promise<InitialProps> {
+  console.log('query', props.query)
   const slug =
     props.query.slug === undefined
       ? []
@@ -37,7 +38,13 @@ export async function getInitialProps(
       ? fetcherAdditionalData.instance
       : instance_path
 
-  //console.log(instance, url, fetcherAdditionalData.instance)
+  console.log(
+    instance,
+    url,
+    fetcherAdditionalData.instance,
+    instance_path,
+    alias
+  )
 
   let instanceData: InstanceData | undefined = undefined
 
