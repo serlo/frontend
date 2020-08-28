@@ -54,12 +54,13 @@ export const instanceData = {
       hide: "ausblenden",
       prerequisite: "Für diese Aufgabe benötigst Du folgendes Grundwissen:",
       solution: "Lösung",
-      exerciseGroup: "Aufgabengruppe",
-      right: "Richtig",
-      wrong: "Falsch",
-      check: "Stimmt's?",
-      yourAnswer: "Deine Antwort…",
-      chooseOption: "Klicke auf eine der Optionen"
+      task: 'Task',
+      exerciseGroup: 'Exercise group',
+      right: 'Right',
+      wrong: 'Wrong',
+      check: 'Check',
+      yourAnswer: 'Your answer…',
+      chooseOption: 'Click on one of the options.'
     },
     cookie: {
       part1: "Mit der Nutzung dieser Webseite erklärst du dich mit unserer",
@@ -71,8 +72,21 @@ export const instanceData = {
     },
     notifications: {
       notifications: "Benachrichtigungen",
-      pleaseLogInLink: 'Bitte melde dich an',
-      pleaseLogInText: 'um deine Benachrichtigungen zu sehen.'
+      pleaseLogInLink: 'Please log in',
+      pleaseLogInText: 'to see your notifications.'
+    },
+    comments: {
+      question: 'Do you have a question?',
+      commentsOne: 'Comment',
+      commentsMany: 'Comments',
+      submit: 'Submit',
+      reportComment: 'Report comment',
+      archiveThread: 'Archive thread',
+      deleteThread: 'Delete thread',
+      deleteComment: 'Delete comment',
+      postedOn: 'Posted on',
+      placeholder: "Your question or suggestion…",
+      placeholderReply: "Your answer…"
     }
   }
 };
@@ -151,11 +165,11 @@ export const loggedInData = {
       organize: "Baumstruktur bearbeiten",
       moveToGroupedTextExercise: "Inhalt zu anderer Gruppe verschieben",
       moveToTextExercise: "Inhalt zu anderer Textaufgabe verschieben",
-      sortEntities: 'Sort content',
-      newEntity: 'New Entity',
-      exercise: 'Exercise',
-      exerciseGroup: 'Exercise Group',
-      event: 'Event'
+      sortEntities: "Inhalt sortieren",
+      newEntity: "Neuer Inhalt",
+      exercise: "Aufgabe",
+      exerciseGroup: "Aufgabengruppe",
+      event: "Ereignis"
     },
     notifications: {
       loadMore: "Weitere laden",
