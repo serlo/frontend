@@ -71,6 +71,16 @@ export function Injection({ href }: InjectionProps) {
         setLicense(pageData.entityData.licenseData)
       }
     }
+    if (pageData.kind === 'error') {
+      if (pageData.errorData.message) {
+        setValue([
+          {
+            type: 'p',
+            children: [{ type: 'text', text: pageData.errorData.message }],
+          },
+        ])
+      }
+    }
   }
 
   if (value) {

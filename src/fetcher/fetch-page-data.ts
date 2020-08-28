@@ -136,6 +136,30 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
     }
   }
 
+  /* Solutions should always be shown alongside the exercise
+  if (uuid.__typename === 'Solution') {
+    const solution = [createSolution(uuid)]
+    return {
+      kind: 'single-entity',
+      entityData: {
+        id: uuid.id,
+        typename: uuid.__typename,
+        content: solution,
+        inviteToEdit: false,
+      },
+      newsletterPopup: false,
+      breadcrumbsData,
+      metaData: {
+        title,
+        contentType: 'solution',
+        metaImage,
+        metaDescription: '',
+      },
+      horizonData,
+      cacheKey,
+    }
+  }*/
+
   const content = convertState(uuid.currentRevision?.content)
 
   if (uuid.__typename === 'Event') {
@@ -338,7 +362,13 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
     }
   }
 
-  return { kind: 'error', errorData: { code: 200 } }
+  return {
+    kind: 'error',
+    errorData: {
+      code: 404,
+      message: 'Content type not supported: ' + uuid.__typename,
+    },
+  }
 }
 
 function buildHorizonData() {
