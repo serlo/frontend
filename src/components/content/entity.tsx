@@ -5,7 +5,6 @@ import { Router } from 'next/router'
 import React from 'react'
 import styled from 'styled-components'
 
-import { Comments } from '../comments/comments'
 import { HSpace } from './h-space'
 import { LicenseNotice } from '@/components/content/license-notice'
 import type { CourseFooterProps } from '@/components/navigation/course-footer'
@@ -71,8 +70,6 @@ export function Entity({ data }: EntityProps) {
       {renderShareModal()}
 
       {data.licenseData && <LicenseNotice data={data.licenseData} />}
-
-      <Comments id={123} />
     </>
   )
 
