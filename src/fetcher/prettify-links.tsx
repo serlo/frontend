@@ -70,7 +70,7 @@ export async function prettifyLinks(pageData: PageData) {
           const prereq = node.solution.edtrState.prerequisite
           if (prereq) {
             const id = prereq.id
-            if (id) {
+            if (id && Number.isInteger(id)) {
               ids.push(id)
               callbacks.push({
                 id,
@@ -98,7 +98,7 @@ export async function prettifyLinks(pageData: PageData) {
             alias: string
             instance: string
           }
-        }>(endpoint, idsQuery(ids))
+        }>(endpoint, idsQuery([...new Set(ids)]))
 
   //console.log('prettylinks', prettyLinks)
 
