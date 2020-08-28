@@ -27,15 +27,22 @@ export interface TopicProps {
 export function Topic({ data }: TopicProps) {
   const [open, setOpen] = React.useState(false)
   const { strings } = useInstanceData()
-  const isExerciseFolder = data.exercisesContent.length > 0
 
-  const defaultLicense = isExerciseFolder ? getDefaultLicense() : undefined
+  const isFolder =
+    data.taxonomyType === 'topicFolder' ||
+    data.taxonomyType === 'curriculumTopicFolder'
+
+  const isTopic =
+    data.taxonomyType === 'topic' || data.taxonomyType === 'curriculumTopic'
+
+  const hasExercises = data.exercisesContent.length > 0
+  const defaultLicense = hasExercises ? getDefaultLicense() : undefined
 
   return (
     <>
       <Headline>
         {data.title}
-        {isExerciseFolder && (
+        {isFolder && (
           <span title={strings.entities.topicFolder}>
             {' '}
             <StyledIcon icon={faFile} />{' '}
@@ -80,7 +87,12 @@ export function Topic({ data }: TopicProps) {
       <UserTools
         onShare={() => setOpen(true)}
         hideEdit
-        data={{ type: 'Taxonomy', id: data.id }}
+        data={{
+          type: 'Taxonomy',
+          id: data.id,
+          taxonomyFolder: isFolder,
+          taxonomyTopic: isTopic,
+        }}
         id={data.id}
       />
       <ShareModal

@@ -105,6 +105,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
   if (uuid.__typename === 'TaxonomyTerm') {
     return {
       kind: 'taxonomy',
+      taxonomyData: buildTaxonomyData(uuid),
       newsletterPopup: false,
       metaData: {
         title,
@@ -117,7 +118,6 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
       cacheKey,
       breadcrumbsData,
       secondaryNavigationData,
-      taxonomyData: buildTaxonomyData(uuid),
     }
   }
 
