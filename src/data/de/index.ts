@@ -150,7 +150,12 @@ export const loggedInData = {
       edit: "Bearbeiten",
       organize: "Baumstruktur bearbeiten",
       moveToGroupedTextExercise: "Inhalt zu anderer Gruppe verschieben",
-      moveToTextExercise: "Inhalt zu anderer Textaufgabe verschieben"
+      moveToTextExercise: "Inhalt zu anderer Textaufgabe verschieben",
+      sortEntities: 'Sort content',
+      newEntity: 'New Entity',
+      exercise: 'Exercise',
+      exerciseGroup: 'Exercise Group',
+      event: 'Event'
     },
     notifications: {
       loadMore: "Weitere laden",
