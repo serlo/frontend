@@ -26,6 +26,7 @@ import {
   PageData,
   ErrorData,
   LoggedInData,
+  LicenseDetailData,
 } from '@/data-types'
 import {
   fetcherAdditionalData,
@@ -47,6 +48,9 @@ const Search = dynamic<{}>(() =>
 )
 const Donations = dynamic<{}>(() =>
   import('@/components/pages/donations').then((mod) => mod.Donations)
+)
+const LicenseDetail = dynamic<LicenseDetailData>(() =>
+  import('@/components/pages/license-detail').then((mod) => mod.LicenseDetail)
 )
 const ErrorPage = dynamic<ErrorData>(() =>
   import('@/components/pages/error-page').then((mod) => mod.ErrorPage)
@@ -197,6 +201,9 @@ function renderPage(page: PageData) {
                   )}
                   <main>
                     {(() => {
+                      if (page.kind === 'license-detail') {
+                        return <LicenseDetail {...page.licenseData} />
+                      }
                       if (page.kind === 'single-entity') {
                         return <Entity data={page.entityData} />
                       } /* taxonomy */ else {

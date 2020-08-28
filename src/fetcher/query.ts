@@ -495,3 +495,13 @@ export const idQuery = (id: number) => `
     }
   }
 `
+
+export const licenseDetailsQuery = (id: number) => `
+  query {
+    license(id: ${id}) {
+      title
+      content
+      iconHref
+    }
+  }
+`

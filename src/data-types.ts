@@ -90,6 +90,7 @@ export type PageData =
   | DonationPage
   | SearchPage
   | ErrorPage
+  | LicenseDetailPage
   | NotificationsPage
   | SingleEntityPage
   | TaxonomyPage
@@ -117,6 +118,7 @@ export interface DonationPage {
 export interface SearchPage {
   kind: 'search'
 }
+
 export interface NotificationsPage {
   kind: 'user/notifications'
 }
@@ -131,6 +133,19 @@ export interface ErrorPage {
 export interface ErrorData {
   code: number
   message?: string
+}
+
+// License detail page has some additional data
+
+export interface LicenseDetailPage extends EntityPageBase {
+  kind: 'license-detail'
+  licenseData: LicenseDetailData
+}
+
+export interface LicenseDetailData {
+  title: string
+  content: FrontendContentNode[]
+  iconHref: string
 }
 
 // There are several page elements that are common for entities:
