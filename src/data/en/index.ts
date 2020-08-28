@@ -29,7 +29,7 @@ export const instanceData = {
       topicFolder: 'Exercise folder',
       comment: 'Comment',
       revision: 'Revision',
-      thread: 'Thread'
+      thread: 'Thread',
     },
     share: {
       button: 'Share',
@@ -54,6 +54,7 @@ export const instanceData = {
       hide: 'hide',
       prerequisite: 'For this task you need the following basic knowledge:',
       solution: 'Solution',
+      task: 'Task',
       exerciseGroup: 'Exercise group',
       right: 'Right',
       wrong: 'Wrong',

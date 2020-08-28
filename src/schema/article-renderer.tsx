@@ -308,7 +308,9 @@ function renderElement(props: RenderElementProps): React.ReactNode {
     return (
       <ExerciseGroup
         license={
-          element.license && <LicenseNotice minimal data={element.license} />
+          element.license && (
+            <LicenseNotice minimal data={element.license} type={element.type} />
+          )
         }
         groupIntro={renderArticle(element.content, false)}
         positionOnPage={element.positionOnPage}

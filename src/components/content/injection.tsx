@@ -90,7 +90,9 @@ export function Injection({ href }: InjectionProps) {
     return (
       <>
         {renderArticle(renderValue, false)}
-        <StyledP>{license && <LicenseNotice minimal data={license} />}</StyledP>
+        <StyledP>
+          {license && <LicenseNotice minimal data={license} type="video" />}
+        </StyledP>
       </>
     )
   }

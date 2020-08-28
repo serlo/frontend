@@ -17,9 +17,10 @@ import { LicenseData } from '@/data-types'
 interface LicenseNoticeProps {
   data: LicenseData
   minimal?: boolean
+  type?: string
 }
 
-export function LicenseNotice({ data, minimal }: LicenseNoticeProps) {
+export function LicenseNotice({ data, minimal, type }: LicenseNoticeProps) {
   const { strings } = useInstanceData()
   // only link license
   const titleParts = data.title.split('CC')
@@ -27,64 +28,90 @@ export function LicenseNotice({ data, minimal }: LicenseNoticeProps) {
   const licenseName =
     titleParts.length === 2 ? `CC${titleParts[1]}` : data.title
 
-  const isDefault = licenseName.indexOf('BY-SA') > -1
+  const isCreativeCommons = licenseName.indexOf('CC') > -1
 
-  if (minimal)
+  if (data.default && minimal) return null
+  if (minimal) return renderMinimalNotice()
+  return renderFullNotice()
+
+  function renderFullNotice() {
     return (
-      <>
-        <MinimalLink href={data.url} title={data.title} noExternalIcon>
-          {isDefault ? (
-            <FontAwesomeIcon icon={faCreativeCommons} />
-          ) : (
-            <span className="fa-layers fa-fw">
-              <FontAwesomeIcon icon={faCreativeCommons} />
-              <FontAwesomeIcon
-                icon={faSlash}
-                flip="horizontal"
-                transform="shrink-6"
-              />
-            </span>
-          )}
-        </MinimalLink>
-      </>
-    )
-
-  return (
-    <Wrapper>
-      {isDefault ? (
-        <>
-          <FontAwesomeIcon icon={faCreativeCommons} size="2x" />{' '}
-          <FontAwesomeIcon icon={faCreativeCommonsBy} size="2x" />{' '}
-          <FontAwesomeIcon icon={faCreativeCommonsSa} size="2x" />
-        </>
-      ) : (
-        <span className="fa-layers fa-fw fa-2x">
+      <Wrapper>
+        {data.default ? (
+          <>
+            <FontAwesomeIcon icon={faCreativeCommons} size="2x" />{' '}
+            <FontAwesomeIcon icon={faCreativeCommonsBy} size="2x" />{' '}
+            <FontAwesomeIcon icon={faCreativeCommonsSa} size="2x" />
+          </>
+        ) : isCreativeCommons ? (
           <FontAwesomeIcon icon={faCreativeCommons} />
-          <FontAwesomeIcon
-            icon={faSlash}
-            flip="horizontal"
-            transform="shrink-6"
-          />
-        </span>
-      )}
-      <br />
-      <StyledSmall>
-        {' '}
-        {text}
+        ) : (
+          <span className="fa-layers fa-fw fa-2x">
+            <FontAwesomeIcon icon={faCreativeCommons} />
+            <FontAwesomeIcon
+              icon={faSlash}
+              flip="horizontal"
+              transform="shrink-6"
+            />
+          </span>
+        )}
         <br />
-        <StyledA href={data.url} rel="license">
-          {licenseName}
-        </StyledA>
-        {' → '}
-        <Link
-          href={`https://de.${serloDomain}/license/detail/${data.id}`}
-          noExternalIcon
-        >
-          <b>{strings.license.readMore}</b>
-        </Link>
-      </StyledSmall>
-    </Wrapper>
-  )
+        <StyledSmall>
+          {' '}
+          {text}
+          <br />
+          <StyledA href={data.url} rel="license">
+            {licenseName}
+          </StyledA>
+          {' → '}
+          <Link
+            href={`https://de.${serloDomain}/license/detail/${data.id}`}
+            noExternalIcon
+          >
+            <b>{strings.license.readMore}</b>
+          </Link>
+        </StyledSmall>
+      </Wrapper>
+    )
+  }
+
+  function renderMinimalNotice() {
+    const typeString = translateTypeString()
+
+    return (
+      <MinimalLink
+        href={data.url}
+        title={typeString ? typeString + ': ' + data.title : data.title}
+        noExternalIcon
+      >
+        {isCreativeCommons ? (
+          <FontAwesomeIcon icon={faCreativeCommons} />
+        ) : (
+          <span className="fa-layers fa-fw">
+            <FontAwesomeIcon icon={faCreativeCommons} />
+            <FontAwesomeIcon
+              icon={faSlash}
+              flip="horizontal"
+              transform="shrink-6"
+            />
+          </span>
+        )}
+      </MinimalLink>
+    )
+  }
+
+  function translateTypeString() {
+    switch (type) {
+      case 'video':
+        return strings.categories.video
+      case 'task':
+      case 'exercise-group':
+        return strings.content.task
+      case 'solution':
+        return strings.content.solution
+    }
+    return type
+  }
 }
 
 const MinimalLink = styled(Link)`

@@ -7,7 +7,7 @@ import { gql } from 'graphql-request'
 export type Instance = 'de' | 'en' | 'fr' | 'es' | 'ta' | 'hi'
 
 // A license has some more attributes, but we are fine with these
-export type License = Pick<GraphQL.License, 'id' | 'url' | 'title'>
+export type License = Pick<GraphQL.License, 'id' | 'url' | 'title' | 'default'>
 
 // This is one breadcrumb path.
 export interface Path {
@@ -382,6 +382,7 @@ export const dataQuery = gql`
       id
       url
       title
+      default
     }
   }
 
