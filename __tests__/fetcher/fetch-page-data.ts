@@ -43,11 +43,11 @@ test('typename User', async () => {
     id: 1,
   })
   const response = (await fetchPageData('/de/1')) as ErrorPage
-  expect(response.kind).toEqual('error')
-  expect(response.errorData.code).toEqual(404)
+  expect(response.kind).toBe('error')
+  expect(response.errorData.code).toBe(404)
 })
 
-test('Page', async () => {
+test('typename Page', async () => {
   serverPostUuid({
     __typename: 'Page',
     id: 18922,
@@ -74,22 +74,6 @@ test('Page', async () => {
           {
             label: 'Wirkung',
             id: 21406,
-          },
-          {
-            label: 'Team',
-            id: 21439,
-          },
-          {
-            label: 'Die Geschichte von Serlo',
-            id: 21413,
-          },
-          {
-            label: 'Partner und Förderer',
-            id: 21456,
-          },
-          {
-            label: 'Spenden',
-            id: 21565,
           },
         ],
         label: 'Über Serlo',
@@ -118,45 +102,25 @@ test('Page', async () => {
       url: '/21406',
       active: false,
     },
-    {
-      title: 'Team',
-      url: '/21439',
-      active: false,
-    },
-    {
-      title: 'Die Geschichte von Serlo',
-      url: '/21413',
-      active: false,
-    },
-    {
-      title: 'Partner und Förderer',
-      url: '/21456',
-      active: false,
-    },
-    {
-      title: 'Spenden',
-      url: '/21565',
-      active: false,
-    },
   ])
 
-  expect(response.metaData?.title).toEqual('Über Serlo - lernen mit Serlo!')
+  expect(response.metaData?.title).toBe('Über Serlo - lernen mit Serlo!')
 
-  expect(response.metaData?.contentType).toEqual('page')
-  expect(response.metaData?.metaDescription).toEqual(
+  expect(response.metaData?.contentType).toBe('page')
+  expect(response.metaData?.metaDescription).toBe(
     'Serlo.org bietet einfache Erklärungen, Kurse, Lernvideos, Übungen und Musterlösungen mit denen Schüler*innen und Studierende nach ihrem …'
   )
-  expect(response.metaData?.metaImage).toEqual(
+  expect(response.metaData?.metaImage).toBe(
     `https://de.${serloDomain}/_assets/img/meta/serlo.jpg`
   )
   assertCorrectHorizonDataFormat(response)
 
-  expect(response.cacheKey).toEqual('/de/serlo')
-  expect(response.newsletterPopup).toEqual(true)
-  expect(response.kind).toEqual('single-entity')
-  expect(response.entityData.id).toEqual(18922)
-  expect(response.entityData.title).toEqual('Über Serlo')
-  expect(Array.isArray(response.entityData.content)).toEqual(true)
+  expect(response.cacheKey).toBe('/de/serlo')
+  expect(response.newsletterPopup).toBe(true)
+  expect(response.kind).toBe('single-entity')
+  expect(response.entityData.id).toBe(18922)
+  expect(response.entityData.title).toBe('Über Serlo')
+  expect(Array.isArray(response.entityData.content)).toBe(true)
 })
 
 test('typename Article', async () => {
@@ -405,24 +369,24 @@ test('typename Article', async () => {
     },
   ])
 
-  expect(response.metaData?.title).toEqual(
+  expect(response.metaData?.title).toBe(
     'Addition und Subtraktion von Dezimalbrüchen - lernen mit Serlo!'
   )
-  expect(response.metaData?.contentType).toEqual('article')
-  expect(response.metaData?.metaDescription).toEqual(
+  expect(response.metaData?.contentType).toBe('article')
+  expect(response.metaData?.metaDescription).toBe(
     'Um Dezimalbrüche zu addieren oder zu subtrahieren, geht man ähnlich vor wie bei der schriftlichen Addition bzw. Subtraktion.Addition Es …'
   )
   assertCorrectMetaImageLink(response)
   assertCorrectHorizonDataFormat(response)
 
-  expect(response.cacheKey).toEqual('/de/27801')
-  expect(response.newsletterPopup).toEqual(false)
-  expect(response.kind).toEqual('single-entity')
-  expect(response.entityData.id).toEqual(27801)
-  expect(response.entityData.title).toEqual(
+  expect(response.cacheKey).toBe('/de/27801')
+  expect(response.newsletterPopup).toBe(false)
+  expect(response.kind).toBe('single-entity')
+  expect(response.entityData.id).toBe(27801)
+  expect(response.entityData.title).toBe(
     'Addition und Subtraktion von Dezimalbrüchen'
   )
-  expect(Array.isArray(response.entityData.content)).toEqual(true)
+  expect(Array.isArray(response.entityData.content)).toBe(true)
 })
 
 test('typename CoursePage', async () => {
@@ -756,20 +720,20 @@ test('typename CoursePage', async () => {
     },
   ])
 
-  expect(response.metaData?.title).toEqual('Übersicht - lernen mit Serlo!')
-  expect(response.metaData?.contentType).toEqual('course-page')
-  expect(response.metaData?.metaDescription).toEqual(
+  expect(response.metaData?.title).toBe('Übersicht - lernen mit Serlo!')
+  expect(response.metaData?.contentType).toBe('course-page')
+  expect(response.metaData?.metaDescription).toBe(
     'Ziel dieses Kurses ist es, einen Überblick zur möglichen Vorgehensweise beim Finden von Nullstellen von Polynomfunktionen zu geben. Inhalte …'
   )
   assertCorrectMetaImageLink(response)
   assertCorrectHorizonDataFormat(response)
 
-  expect(response.cacheKey).toEqual('/de/52020')
-  expect(response.newsletterPopup).toEqual(false)
-  expect(response.kind).toEqual('single-entity')
-  expect(response.entityData.id).toEqual(52020)
-  expect(response.entityData.title).toEqual('Übersicht')
-  expect(Array.isArray(response.entityData.content)).toEqual(true)
+  expect(response.cacheKey).toBe('/de/52020')
+  expect(response.newsletterPopup).toBe(false)
+  expect(response.kind).toBe('single-entity')
+  expect(response.entityData.id).toBe(52020)
+  expect(response.entityData.title).toBe('Übersicht')
+  expect(Array.isArray(response.entityData.content)).toBe(true)
 })
 
 test('typename Video', async () => {
@@ -833,22 +797,22 @@ test('typename Video', async () => {
     },
   ])
 
-  expect(response.metaData?.title).toEqual(
+  expect(response.metaData?.title).toBe(
     'Winkel konstruieren - lernen mit Serlo!'
   )
-  expect(response.metaData?.contentType).toEqual('video')
-  expect(response.metaData?.metaDescription).toEqual(
+  expect(response.metaData?.contentType).toBe('video')
+  expect(response.metaData?.metaDescription).toBe(
     'Inhalt:Konstruktion der Winkel  und .Konstruktion der Winkel  und  mit detailliertem Konstruktionsplan.Konstruktion der Winkelhalbierenden …'
   )
   assertCorrectMetaImageLink(response)
   assertCorrectHorizonDataFormat(response)
 
-  expect(response.cacheKey).toEqual('/de/40744')
-  expect(response.newsletterPopup).toEqual(false)
-  expect(response.kind).toEqual('single-entity')
-  expect(response.entityData.id).toEqual(40744)
-  expect(response.entityData.title).toEqual('Winkel konstruieren')
-  expect(Array.isArray(response.entityData.content)).toEqual(true)
+  expect(response.cacheKey).toBe('/de/40744')
+  expect(response.newsletterPopup).toBe(false)
+  expect(response.kind).toBe('single-entity')
+  expect(response.entityData.id).toBe(40744)
+  expect(response.entityData.title).toBe('Winkel konstruieren')
+  expect(Array.isArray(response.entityData.content)).toBe(true)
 })
 
 test('typename Applet', async () => {
@@ -923,23 +887,23 @@ test('typename Applet', async () => {
     },
   ])
 
-  expect(response.metaData?.title).toEqual(
+  expect(response.metaData?.title).toBe(
     'Brüche Multiplizieren - lernen mit Serlo!'
   )
-  expect(response.metaData?.contentType).toEqual('applet')
-  expect(response.metaData?.metaDescription).toEqual(
+  expect(response.metaData?.contentType).toBe('applet')
+  expect(response.metaData?.metaDescription).toBe(
     'Stelle mit den Schiebereglern die Brüche ein, die du multiplizieren möchtest. Die Bruchteile werden dann in den Rechtecken farbig markiert. …'
   )
 
   assertCorrectMetaImageLink(response)
   assertCorrectHorizonDataFormat(response)
 
-  expect(response.cacheKey).toEqual('/de/138114')
-  expect(response.newsletterPopup).toEqual(false)
-  expect(response.kind).toEqual('single-entity')
-  expect(response.entityData.id).toEqual(138114)
-  expect(response.entityData.title).toEqual('Brüche Multiplizieren')
-  expect(Array.isArray(response.entityData.content)).toEqual(true)
+  expect(response.cacheKey).toBe('/de/138114')
+  expect(response.newsletterPopup).toBe(false)
+  expect(response.kind).toBe('single-entity')
+  expect(response.entityData.id).toBe(138114)
+  expect(response.entityData.title).toBe('Brüche Multiplizieren')
+  expect(Array.isArray(response.entityData.content)).toBe(true)
 })
 
 test('typename TaxonomyTerm', async () => {
@@ -2196,17 +2160,17 @@ test('typename TaxonomyTerm', async () => {
     },
   ])
 
-  expect(response.metaData?.title).toEqual('Mathe - Fach - lernen mit Serlo!')
-  expect(response.metaData?.contentType).toEqual('topic')
+  expect(response.metaData?.title).toBe('Mathe - Fach - lernen mit Serlo!')
+  expect(response.metaData?.contentType).toBe('topic')
 
   assertCorrectMetaImageLink(response)
 
-  expect(response.cacheKey).toEqual('/de/5')
-  expect(response.newsletterPopup).toEqual(false)
-  expect(response.kind).toEqual('taxonomy')
-  expect(response.taxonomyData.id).toEqual(5)
-  expect(response.taxonomyData.title).toEqual('Mathe')
-  expect(Array.isArray(response.taxonomyData.subterms)).toEqual(true)
+  expect(response.cacheKey).toBe('/de/5')
+  expect(response.newsletterPopup).toBe(false)
+  expect(response.kind).toBe('taxonomy')
+  expect(response.taxonomyData.id).toBe(5)
+  expect(response.taxonomyData.title).toBe('Mathe')
+  expect(Array.isArray(response.taxonomyData.subterms)).toBe(true)
 })
 
 test('typename Exercise', async () => {
@@ -2380,20 +2344,20 @@ test('typename Exercise', async () => {
     },
   ])
 
-  expect(response.metaData?.title).toEqual('Serlo')
-  expect(response.metaData?.contentType).toEqual('text-exercise')
-  expect(response.metaData?.metaDescription).toEqual(
+  expect(response.metaData?.title).toBe('Serlo')
+  expect(response.metaData?.contentType).toBe('text-exercise')
+  expect(response.metaData?.metaDescription).toBe(
     'Ordne folgendem Graphen die richtige Funktionsgleichung zu:Richtig! Der Nobelpreis ist ganz nah ;-)Leider falsch! Du denkst wahrscheinlich …'
   )
 
   assertCorrectMetaImageLink(response)
   assertCorrectHorizonDataFormat(response)
 
-  expect(response.cacheKey).toEqual('/de/54210')
-  expect(response.newsletterPopup).toEqual(false)
-  expect(response.kind).toEqual('single-entity')
-  expect(response.entityData.id).toEqual(54210)
-  expect(Array.isArray(response.entityData.content)).toEqual(true)
+  expect(response.cacheKey).toBe('/de/54210')
+  expect(response.newsletterPopup).toBe(false)
+  expect(response.kind).toBe('single-entity')
+  expect(response.entityData.id).toBe(54210)
+  expect(Array.isArray(response.entityData.content)).toBe(true)
 })
 
 test('typename ExerciseGroup', async () => {
@@ -2653,20 +2617,20 @@ test('typename ExerciseGroup', async () => {
     },
   ])
 
-  expect(response.metaData?.title).toEqual('Serlo')
-  expect(response.metaData?.contentType).toEqual('exercisegroup')
-  expect(response.metaData?.metaDescription).toEqual(
+  expect(response.metaData?.title).toBe('Serlo')
+  expect(response.metaData?.contentType).toBe('exercisegroup')
+  expect(response.metaData?.metaDescription).toBe(
     'Finde die passenden Gleichungen zu den Funktionsgraphen:Die Ruhelage der Funktion liegt auf der -Achse.Der Graph schneidet das Koordinatensystem …'
   )
 
   assertCorrectMetaImageLink(response)
   assertCorrectHorizonDataFormat(response)
 
-  expect(response.cacheKey).toEqual('/de/53205')
-  expect(response.newsletterPopup).toEqual(false)
-  expect(response.kind).toEqual('single-entity')
-  expect(response.entityData.id).toEqual(53205)
-  expect(Array.isArray(response.entityData.content)).toEqual(true)
+  expect(response.cacheKey).toBe('/de/53205')
+  expect(response.newsletterPopup).toBe(false)
+  expect(response.kind).toBe('single-entity')
+  expect(response.entityData.id).toBe(53205)
+  expect(Array.isArray(response.entityData.content)).toBe(true)
 })
 
 test('typename GroupedExercise', async () => {
@@ -2701,19 +2665,19 @@ test('typename GroupedExercise', async () => {
 
   const response = (await fetchPageData('/de/53209')) as SingleEntityPage
 
-  expect(response.metaData?.title).toEqual('Serlo')
-  expect(response.metaData?.contentType).toEqual('groupedexercise')
-  expect(response.metaData?.metaDescription).toEqual(
+  expect(response.metaData?.title).toBe('Serlo')
+  expect(response.metaData?.contentType).toBe('groupedexercise')
+  expect(response.metaData?.metaDescription).toBe(
     'Die Ruhelage der Funktion liegt auf der -Achse.Der Graph schneidet das Koordinatensystem im Nullpunkt, also handelt es sich um eine Sinusfunktion …'
   )
   assertCorrectMetaImageLink(response)
   assertCorrectHorizonDataFormat(response)
 
-  expect(response.cacheKey).toEqual('/de/53209')
-  expect(response.newsletterPopup).toEqual(false)
-  expect(response.kind).toEqual('single-entity')
-  expect(response.entityData.id).toEqual(53209)
-  expect(Array.isArray(response.entityData.content)).toEqual(true)
+  expect(response.cacheKey).toBe('/de/53209')
+  expect(response.newsletterPopup).toBe(false)
+  expect(response.kind).toBe('single-entity')
+  expect(response.entityData.id).toBe(53209)
+  expect(Array.isArray(response.entityData.content)).toBe(true)
 })
 
 test('typename Course', async () => {
@@ -3314,25 +3278,25 @@ test('typename Course', async () => {
     },
   ])
 
-  expect(response.metaData?.title).toEqual('Übersicht - lernen mit Serlo!')
-  expect(response.metaData?.contentType).toEqual('course-page')
-  expect(response.metaData?.metaDescription).toEqual(
+  expect(response.metaData?.title).toBe('Übersicht - lernen mit Serlo!')
+  expect(response.metaData?.contentType).toBe('course-page')
+  expect(response.metaData?.metaDescription).toBe(
     'Ziel dieses Kurses ist es, einen Überblick zur möglichen Vorgehensweise beim Finden von Nullstellen von Polynomfunktionen zu geben. Inhalte …'
   )
-  expect(response.metaData?.metaImage).toEqual(
+  expect(response.metaData?.metaImage).toBe(
     `https://de.${serloDomain}/_assets/img/meta/mathematik.jpg`
   )
 
   assertCorrectHorizonDataFormat(response)
 
-  expect(response.cacheKey).toEqual(
+  expect(response.cacheKey).toBe(
     '/de/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/uebersicht'
   )
-  expect(response.newsletterPopup).toEqual(false)
-  expect(response.kind).toEqual('single-entity')
-  expect(response.entityData.id).toEqual(52020)
-  expect(response.entityData.title).toEqual('Übersicht')
-  expect(Array.isArray(response.entityData.content)).toEqual(true)
+  expect(response.newsletterPopup).toBe(false)
+  expect(response.kind).toBe('single-entity')
+  expect(response.entityData.id).toBe(52020)
+  expect(response.entityData.title).toBe('Übersicht')
+  expect(Array.isArray(response.entityData.content)).toBe(true)
 })
 
 test('typename Event', async () => {
@@ -3377,21 +3341,21 @@ test('typename Event', async () => {
   })
   const response = (await fetchPageData('/de/145590')) as SingleEntityPage
 
-  expect(response.metaData?.title).toEqual('Serlo')
-  expect(response.metaData?.contentType).toEqual('event')
-  expect(response.metaData?.metaDescription).toEqual(
+  expect(response.metaData?.title).toBe('Serlo')
+  expect(response.metaData?.contentType).toBe('event')
+  expect(response.metaData?.metaDescription).toBe(
     '31.08.20 - 25.09.2020, Mo-Fr Digital Learning Academy in MünchenonlineGemeinsame Arbeit an Lerninhalten, Workshops zu verschiedenen Themen …'
   )
 
-  expect(response.metaData?.metaImage).toEqual(
+  expect(response.metaData?.metaImage).toBe(
     `https://de.${serloDomain}/_assets/img/meta/serlo.jpg`
   )
   assertCorrectHorizonDataFormat(response)
 
-  expect(response.cacheKey).toEqual('/de/145590')
-  expect(response.newsletterPopup).toEqual(false)
-  expect(response.kind).toEqual('single-entity')
-  expect(Array.isArray(response.entityData.content)).toEqual(true)
+  expect(response.cacheKey).toBe('/de/145590')
+  expect(response.newsletterPopup).toBe(false)
+  expect(response.kind).toBe('single-entity')
+  expect(Array.isArray(response.entityData.content)).toBe(true)
 })
 
 function assertCorrectHorizonDataFormat(pageData: SingleEntityPage) {
@@ -3407,11 +3371,11 @@ function assertCorrectHorizonDataFormat(pageData: SingleEntityPage) {
         typeof entry.frequency === 'number'
       )
     })
-  ).toEqual(true)
+  ).toBe(true)
 }
 
 function assertCorrectMetaImageLink(pageData: SingleEntityPage | TaxonomyPage) {
-  expect(pageData.metaData?.metaImage).toEqual(
+  expect(pageData.metaData?.metaImage).toBe(
     `https://de.${serloDomain}/_assets/img/meta/mathematik.jpg`
   )
 }
