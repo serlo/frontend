@@ -2,11 +2,7 @@ import { request } from 'graphql-request'
 
 import { render } from '../../external/legacy_render'
 import { createBreadcrumbs } from './create-breadcrumbs'
-import {
-  createExercise,
-  createExerciseGroup,
-  createSolution,
-} from './create-exercises'
+import { createExercise, createExerciseGroup } from './create-exercises'
 import { getMetaImage, getMetaDescription } from './create-meta-data'
 import { createNavigation } from './create-navigation'
 import { buildTaxonomyData } from './create-taxonomy'
@@ -140,6 +136,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
     }
   }
 
+  /* Solutions should always be shown alongside the exercise
   if (uuid.__typename === 'Solution') {
     const solution = [createSolution(uuid)]
     return {
@@ -161,7 +158,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
       horizonData,
       cacheKey,
     }
-  }
+  }*/
 
   const content = convertState(uuid.currentRevision?.content)
 
@@ -365,7 +362,13 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
     }
   }
 
-  return { kind: 'error', errorData: { code: 200 } }
+  return {
+    kind: 'error',
+    errorData: {
+      code: 404,
+      message: 'Content type not supported: ' + uuid.__typename,
+    },
+  }
 }
 
 function buildHorizonData() {
