@@ -29,7 +29,7 @@ export const instanceData = {
       topicFolder: 'Exercise folder',
       comment: 'Comment',
       revision: 'Revision',
-      thread: 'Thread',
+      thread: 'Thread'
     },
     share: {
       button: 'Share',
