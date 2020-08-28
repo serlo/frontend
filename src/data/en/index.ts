@@ -72,8 +72,21 @@ export const instanceData = {
     },
     notifications: {
       notifications: 'Notifications',
-      pleaseLogInLink: 'Bitte melde dich an',
-      pleaseLogInText: 'um deine Benachrichtigungen zu sehen.'
+      pleaseLogInLink: 'Please log in',
+      pleaseLogInText: 'to see your notifications.'
+    },
+    comments: {
+      question: 'Do you have a question?',
+      commentsOne: 'Comment',
+      commentsMany: 'Comments',
+      submit: 'Submit',
+      reportComment: 'Report comment',
+      archiveThread: 'Archive thread',
+      deleteThread: 'Delete thread',
+      deleteComment: 'Delete comment',
+      postedOn: 'Posted on',
+      placeholder: "Your question or suggestion…",
+      placeholderReply: "Your answer…"
     }
   }
 };
@@ -152,6 +165,11 @@ export const loggedInData = {
       organize: 'Organize',
       moveToGroupedTextExercise: 'Move content to other grouped-text-exercise',
       moveToTextExercise: 'Move content to other text-exercise',
+      sortEntities: 'Sort content',
+      newEntity: 'New Entity',
+      exercise: 'Exercise',
+      exerciseGroup: 'Exercise Group',
+      event: 'Event'
     },
     notifications: {
       loadMore: "Load more",

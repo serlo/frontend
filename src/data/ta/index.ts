@@ -27,8 +27,8 @@ export const instanceData = {
     },
     entities: {
       topicFolder: 'Exercise folder',
-      comment: 'Comment',
-      revision: 'Revision',
+      comment: "கருத்து",
+      revision: "மீட்டல்",
       thread: 'Thread'
     },
     share: {
@@ -45,7 +45,7 @@ export const instanceData = {
       readMore: "தகவல்"
     },
     course: {
-      showPages: 'Show course overview',
+      showPages: "வகுப்பு மேலோட்டத்தைக் காட்டவும்",
       pages: 'Course overview',
       next: "அடுத்து"
     },
@@ -70,7 +70,7 @@ export const instanceData = {
       button: "ஒப்புக்கொள்கிறேன்"
     },
     notifications: {
-      notifications: 'Notifications',
+      notifications: "அறிவிப்புகள்",
       pleaseLogInLink: 'Bitte melde dich an',
       pleaseLogInText: 'um deine Benachrichtigungen zu sehen.'
     }
@@ -102,11 +102,11 @@ export const serverSideStrings = {
 export const loggedInData = {
   authMenu: [{
     url: '/user/notifications',
-    title: 'Notifications',
+    title: "அறிவிப்புகள்",
     icon: 'notifications'
   }, {
     url: '',
-    title: 'User',
+    title: "பயனர்",
     icon: 'user',
     children: [{
       url: '/user/public',
@@ -116,13 +116,13 @@ export const loggedInData = {
       title: 'Edit profile'
     }, {
       url: '/auth/password/change',
-      title: 'Change password'
+      title: "கடவுச்சொல்லை மாற்று"
     }, {
       url: '/event/history/user/me',
       title: 'Recent activities'
     }, {
       url: '/api/auth/logout',
-      title: 'Log out'
+      title: "வெளியேறு"
     }]
   }],
   strings: {
