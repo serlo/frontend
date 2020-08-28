@@ -391,14 +391,20 @@ export interface FrontendInjectionNode {
   children?: undefined
 }
 
+interface BareSolution {
+  legacy?: FrontendContentNode[]
+  edtrState?: SolutionEdtrState
+  license?: LicenseData
+}
+
 export interface FrontendExerciseNode {
   type: 'exercise'
-  taskLegacy?: FrontendContentNode[]
-  taskEdtrState?: TaskEdtrState
-  solutionLegacy?: FrontendContentNode[]
-  solutionEdtrState?: SolutionEdtrState
-  taskLicense?: LicenseData
-  solutionLicense?: LicenseData
+  task: {
+    legacy?: FrontendContentNode[]
+    edtrState?: TaskEdtrState
+    license?: LicenseData
+  }
+  solution: BareSolution
   grouped?: boolean
   positionInGroup?: number
   positionOnPage?: number
@@ -409,6 +415,17 @@ export interface FrontendExerciseNode {
   }
   children?: undefined
   href?: string
+}
+
+export interface FrontendSolutionNode {
+  type: 'solution'
+  solution: BareSolution
+
+  context: {
+    id: number
+  }
+  href?: string
+  children?: undefined
 }
 
 export interface TaskEdtrState {
@@ -506,6 +523,7 @@ export type FrontendVoidNode =
   | FrontendGeogebraNode
   | FrontendInjectionNode
   | FrontendExerciseNode
+  | FrontendSolutionNode
   | FrontendVideoNode
   | FrontendCodeNode
   | FrontendEquationsNode

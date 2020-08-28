@@ -98,8 +98,8 @@ export function Topic({ data }: TopicProps) {
       if (content.type === 'exercise-group') {
         if (content.license?.default) return content.license
       } else {
-        if (content.taskLicense?.default) return content.taskLicense
-        if (content.solutionLicense?.default) return content.solutionLicense
+        if (content.task?.license?.default) return content.task.license
+        if (content.solution?.license?.default) return content.solution.license
       }
     }
     //no part of collection has default license so don't show default notice.

@@ -1,14 +1,32 @@
-# Serlo / Frontend
+<a href="https://de.serlo.org" target="_blank"><img src="https://assets.serlo.org/meta/logo.png" alt="Serlo logo" title="Serlo" align="right" height="60" /></a>
 
-Welcome to the new serlo.org frontend.
+# serlo/frontend
+
+Welcome to the new frontend.
+
+## Overview
+
+The frontend fetches data from the [API server](https://github.com/serlo/api.serlo.org) and renders it to a web page. A standalone deployment of the frontend is enough to view most parts of Serlo.
+
+In a more complete environment, the frontend sits behind a [cloudflare worker](https://github.com/serlo/serlo.org-cloudflare-worker) that handles routing and redirections. Many editing features are still handled by our [legacy server](https://github.com/serlo/serlo.org).
 
 ## Getting started
 
-### Installation
+### Enable frontend
 
-Install [Node.js](https://nodejs.org/en/) (current LTS) and [yarn](https://classic.yarnpkg.com/en/docs/install) on your system.
+You need to opt-in to see the frontend:
 
-Clone this repo, install dependencies and start the dev server:
+Enable frontend in _production environment_: [de.serlo.org/enable-frontend](https://de.serlo.org/enable-frontend)<br>
+Production deployment: [frontend.serlo.org](https://frontend.serlo.org)
+
+Enable frontend in _staging environment_: [de.serlo-staging.dev/enable-frontend](https://de.serlo-staging.dev/enable-frontend)<br>
+Staging deployment: [frontend-git-staging.serlo.vercel.app](https://frontend-git-staging.serlo.vercel.app)
+
+### Local installation
+
+You can run the frontend on your local system. For that, install [Node.js](https://nodejs.org/en/) (current LTS) and [yarn](https://classic.yarnpkg.com/en/docs/install).
+
+Then, run following commands:
 
 ```sh
 git clone https://github.com/serlo/frontend.git
@@ -17,29 +35,31 @@ yarn
 yarn dev
 ```
 
-The server is now running on `localhost:3000`. You can visit it in the browser.
+The server is now running on [localhost:3000](http://localhost:3000).
 
-### Overview
+## Features
 
-![grafik](https://user-images.githubusercontent.com/13507950/85958632-2595dc80-b997-11ea-937c-38169b514fe7.png)
+At the moment, the frontend implements these features:
 
-You can request a page by alias (e.g. `/` or `/mathe/zahlen-größen`). The frontend decides how to handle the alias, and if necessary, fetches data from the backend. The frontend then processes the data and returns a prerendered HTML response.
+- **Entities**. Serlo consists of different entities like articles, videos or taxonomy terms. The frontend uses the data from the API to render them. You can access an entity by alias (e.g. https://frontend.serlo.org/mathe) or by id (e.g. https://frontend.serlo.org/54210). Look further down for a complete list of supported entity types.
 
-### Routes
+- **Navigation**. The frontend adds a header, breadcrumbs, secondary navigation and a footer to every page (where applicable).
 
-An alias will be handled by a specific route:
+- **Language versions**. The UI changes language if you are viewing an entity of another language instance. You can access them by using the id or by prefixing the alias with a language subfolder (e.g. https://frontend.serlo.org/en/serlo).
 
-1. `/api/frontend/privacy`: Internal route for loading privacy revisions (proxies the request to the legacy system).
+- **Custom pages**. Some pages are built separately in the frontend, like the landing page or the german donation page (https://frontend.serlo.org/spenden).
 
-2. `/api/frontend/<slug>`: Internal route for data fetching from the backend API.
+- **Horizon**. The german version contains a horizon that features selected items.
 
-3. `/`, `/spenden`, `/search`: Custom built pages.
+- **Google Custom Search**. Search with the built-in search input or by visiting the search page: https://frontend.serlo.org/search?q=hypotenuse
 
-4. `/<slug>`: Entity route, the default case for almost every alias. Fetches data from backend with (2.) and renders page.
+- **Login**. You can login to your account with your username (not e-mail) and the password `123456` (currently only available on staging and localhost).
 
-Notes: We need (1.) because of CORS-Issues. We use (2.) to enable caching for the frontend deployment, because requesting (2.) can be slow, in the range of 0.5-1.5s, depending on the complexity of the entity. Most entities have a default alias, if (4.) encounters an alias that is not the default (old alias: `/mathe-startseite`, access with id: `/1885`), it will redirect to the default alias by 301.
+- **Notifications**. After login, you can view your notifications by clicking on the notification icon in the top menu.
 
-### Entities
+- **Menus for editing**. After login, you can view several menus that allows you to edit the content. The links are pointing to the legacy server and are not handled by the frontend.
+
+## Entities
 
 Every entity belongs to a content type. These are the supported types:
 
@@ -57,7 +77,61 @@ Every entity belongs to a content type. These are the supported types:
 | `Course`          | Meta-entity of a course, redirects to first page.                                                                            | `/51979`  |
 | `Event`           | Information about an upcoming event.                                                                                         | `/145590` |
 
-### Repository
+## Navigation
+
+The frontend provides several means of navigation from one page to another.
+
+### Header and Footer
+
+Header and footer are present on every page (only exception: donation page). The entries are hard-coded in `/src/data`, changing them needs a new deployment.
+
+### Secondary Navigation
+
+Some pages have a secondary navigation associated with them. This show up as a horizontal scrolling menu or on the left side. The data is fetched from the backend.
+
+### Breadcrumbs
+
+If no secondary navigation is present, most entities have a path within the taxonomy that is shown as breadcrumbs.
+
+### Horizon
+
+One or three entries are shown at the bottom of an entity in the horizon. The data is also hard-coded.
+
+### Client-Side Navigation and Pretty Links
+
+All links within entities and the navigation should use the default alias. The frontend looks up links that are using ids and use this information to render all links as pretty links.
+
+Clicking a link in the frontend will trigger a backend request instead of a browser navigation, the page switches without a full reload. The request is cached for the duration of the session.
+
+## Internationalization
+
+Currently the frontend supports six instances: de, en, es, fr, hi, ta
+
+In `src/data` you can find all the translations and the menu data for the instances.
+The `index.ts` files are seperated into four variables.
+
+- `instanceData`: Strings for every page of the instance
+- `instanceLandingData`: Strings the landing page only
+- `serverSideStrings`: Strings for the server only
+- `loggedInData`: Strings for logged in users only
+
+To add a new string, add it to the right variable inside the main language file `src/data/en/index.ts`.
+To access the strings in your components use the relevant hook (`useInstanceData`,`useLoggedInData`, …).
+When new strings (in en/index.ts) get merged into `staging`, they automatically get uploaded to our [crowdin project](https://crowdin.com/project/serlo) and can then be translated there.
+
+### Example
+
+```ts
+import { useInstanceData } from '@/contexts/instance-context'
+
+export function SerloBird() {
+  const { strings } = useInstanceData()
+  render (
+    <h1>{strings.header.slogan}</h1>
+  )
+```
+
+## Repository
 
 Here are some useful places to get started:
 
@@ -113,125 +187,44 @@ All files are named with kebab-case. You should use `@/` to import files from `s
 
 ## Schema
 
-Entities may contain a wide range of different elements. The elements are organized in a tree.
+Entities may contain a wide range of different elements. See `@/data-types.ts` for a detailed description.
 
-### Text
+Here is the list of supported element types:
 
-The most basic node type is text. A text node contain these attributes:
+- text
+- a
+- inline-math
+- p
+- h
+- math
+- img
+- spoiler-container
+- spoiler-title
+- spoiler-body
+- ul
+- ol
+- li
+- row
+- col
+- important
+- anchor
+- table
+- tr
+- th
+- td
+- geogebra
+- injection
+- exercise
+- exercise-group
+- video
+- code
+- equations
 
-- `text`: The text content of this node.
-
-- `color`: blue, green or orange
-
-- `em`: true/undefined
-
-- `strong`: true/undefined
-
-### Elements
-
-More complex nodes have a type and may have other nodes as children. Here is an overview of available elements:
-
-| Type                | Attributes                                                                            | Description                                                                                                                                     |
-| ------------------- | ------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| `a`                 | href, children                                                                        | A link.                                                                                                                                         |
-| `inline-math`       | formula                                                                               | A latex formula rendered with KaTeX, displayed inline.                                                                                          |
-| `p`                 | children                                                                              | A paragraph.                                                                                                                                    |
-| `h`                 | level, id, children                                                                   | A heading of given level, can have an id for anchoring.                                                                                         |
-| `math`              | formula, alignLeft                                                                    | A latex formula, displayed on a separate line.                                                                                                  |
-| `img`               | src, href, alt, maxWidth                                                              | An image, with optional link, alternative text and a maximal width.                                                                             |
-| `spoiler-container` | children: spoiler-title, spoiler-body                                                 | The outer container for a collapsible spoiler. Has one spoiler-title and one spoiler-body as children.                                          |
-| `spoiler-title`     | children                                                                              | The title of the spoiler.                                                                                                                       |
-| `spoiler-body`      | children                                                                              | The content of the spoiler.                                                                                                                     |
-| `ul`                | children: li                                                                          | An unordered list.                                                                                                                              |
-| `ol`                | children: li                                                                          | An ordered list.                                                                                                                                |
-| `li`                | children                                                                              | A list item of an unorderd or ordered list.                                                                                                     |
-| `row`               | children: col                                                                         | A responsive row with multiple columns.                                                                                                         |
-| `col`               | size, children                                                                        | A column. The size is relative to the other sizes.                                                                                              |
-| `important`         | children                                                                              | Highlights an element.                                                                                                                          |
-| `anchor`            | id                                                                                    | An anchor tag with an id.                                                                                                                       |
-| `table`             | children: tr                                                                          | A table.                                                                                                                                        |
-| `tr`                | children: th, td                                                                      | A row in a table.                                                                                                                               |
-| `th`                | children                                                                              | A heading cell.                                                                                                                                 |
-| `td`                | children                                                                              | A content cell.                                                                                                                                 |
-| `geogebra`          | id                                                                                    | A geogebra applet from GeogebraTube.                                                                                                            |
-| `injection`         | href                                                                                  | Loads another entity on the client and injects it.                                                                                              |
-| `exercise`          | task, solution, taskLicense, solutionLicense, grouped, positionInGroup,positionOnPage | An exercise with a task and a solution. The task and the solution have a separate license notice. This type includes grouped exercises as well. |
-| `exercise-group`    | content, license, positionOnPage, children: exercise                                  | Intro of an exercise group, also with a separate license.                                                                                       |
-| `video`             | src                                                                                   | An embedded video from Youtube, Vimeo, Wikimedia or BR (Bayerischer Rundfunk).                                                                  |
-| `code`              | content                                                                               | A block of monospaced code.                                                                                                                     |
-| `equations`         | steps                                                                                 | A lists of steps for an equation (work in progress).                                                                                            |
-
-### Notes
-
-Not every composition of elements is valid, e.g. a paragraph may only contain inline elements or some elements should not be nested. The frontend performs little checks! It expects the converter to produce valid outputs, and the converters (for legacy state and edtr-io state) expect the data from the backend to be meaningful.
-
-Don't rely on attributes to be present. The frontend tries to handle edge cases as gracefully as possible.
-
-Some attributes are quite complex, notable the task and solution of an exercise, which contains nested subdocuments and interactive elements. This functionality is therefore bound to this one type.
-
-## Navigation
-
-The frontend provides several means of navigation from one page to another.
-
-### Header and Footer
-
-Header and footer are present on every page (only exception: donation page). The entries are hard-coded in `/src/data`, changing them needs a new deployment.
-
-### Secondary Navigation
-
-Some pages have a secondary navigation associated with them. This show up as a horizontal scrolling menu or on the left side. The data is fetched from the backend.
-
-### Breadcrumbs
-
-If no secondary navigation is present, most entities have a path within the taxonomy that is shown as breadcrumbs.
-
-### Horizon
-
-One or three entries are shown at the bottom of an entity in the horizon. The data is also hard-coded.
-
-### Client-Side Navigation and Pretty Links
-
-All links within entities and the navigation should use the default alias. The frontend looks up links that are using ids and use this information to render all links as pretty links.
-
-Clicking a link in the frontend will trigger a backend request instead of a browser navigation, the page switches without a full reload. The request is cached for the duration of the session.
-
-## Internationalization
-
-Currently the frontend supports six instances: de, en, es, fr, hi, ta
-
-In `src/data` you can find all the translations and the menu data for the instances.
-The `index.ts` files are seperated into four variables.
-
-- `instanceData`: Strings for every page of the instance
-- `instanceLandingData`: Strings the landing page only
-- `serverSideStrings`: Strings for the server only
-- `loggedInData`: Strings for logged in users only
-
-To add a new string, add it to the right variable inside the main language file `src/data/en/index.ts`.
-To access the strings in your components use the relevant hook (`useInstanceData`,`useLoggedInData`, …).
-When new strings (in en/index.ts) get merged into `staging` they automatically get uploaded to crowdin and can then be translated there.
-
-### Example
-
-```ts
-import { useInstanceData } from '@/contexts/instance-context'
-
-export function SerloBird() {
-  const { strings } = useInstanceData()
-  render (
-    <h1>{strings.header.slogan}</h1>
-  )
-```
-
----
-
----
+<br><br><br><br><br>
 
 ---
 
 Previous documentation below here, pretty much still valid.
-
-<br><br><br>
 
 ### Creating pages
 

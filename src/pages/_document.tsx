@@ -100,6 +100,10 @@ export default class MyDocument extends Document {
           <Main />
           <NextScript />
           <GoogleAnalytics />
+          <script async defer src="https://sa.serlo.org/latest.js" />
+          <noscript>
+            <img src="https://sa.serlo.org/noscript.gif" alt="" />
+          </noscript>
         </body>
       </Html>
     )
