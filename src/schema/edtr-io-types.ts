@@ -9,69 +9,68 @@ import { SerloInjectionPluginState } from '@edtr-io/plugin-serlo-injection/src/i
 import { SpoilerPluginState } from '@edtr-io/plugin-spoiler/src/index'
 import { TablePluginState } from '@edtr-io/plugin-table/src/index'
 // import { TextPluginState } from '@edtr-io/plugin-text/src/index'
+import { createHeadingNode } from '@edtr-io/plugin-text/src/model/schema'
 import { VideoPluginState } from '@edtr-io/plugin-video/src/index'
 
-type MockChild = EdtrState | SlateBlockMock | TextNodeMock
+export type PossibleChildren = EdtrState | SlateBlockMock | TextNodeMock
+export type PossibleChildOrChildren = PossibleChildren[]
 
-export interface SlateBlockMock {
-  type:
-    | 'a'
-    | 'h'
-    | 'p'
-    | 'unordered-list'
-    | 'ordered-list'
-    | 'list-item'
-    | 'list-item-child'
-    | 'math'
-  child?: MockChild
-  children?: MockChild
-  content?: MockChild[]
-  href?: string
-  level?: 1 | 2 | 3 | 4 | 5
-  inline?: boolean
-  src?: string
+//TODO: mocked, import edtr types if possible
+export type SlateBlockMock =
+  | TextBlockP
+  | TextBlockH
+  | TextBlockA
+  | TextBlockMath
+  | TextBlockListItemChild
+  | TextBlockListItem
+  | TextBlockUnorderedList
+  | TextBlockOrderedList
+
+interface TextBlockP {
+  type: 'p'
+  children: SlateBlockMock[]
 }
 
-/*
-export interface EditorStateDummy {
-  title?: string
-  class?: string
-  href?: string
-  src?: string
-  alt?: string
-  id?: number | string
-  maxWidth?: number
-  text?: string
-  size?: number
-  formula?: string
-  inline?: boolean
-  alignLeft?: boolean
-  level?: number
-  strong?: boolean
-  em?: boolean
-  width?: number
-  explanation: EditorStateDummy
-  multimedia: EditorStateDummy
-  interactive: EditorStateDummy[]
-  code: string
-  prerequisite: EditorStateDummy[]
-  strategy: EditorStateDummy[]
-  isSingleChoice: boolean
-  type: string
-  unit: string
-  answers: EditorStateDummy[]
-  steps: EditorStateDummy[]
-  color: number | string
-  left: EditorStateDummy[]
-  // sign: StepProps['sign']
-  right: EditorStateDummy[]
-  transform: EditorStateDummy[]
-  feedback: EditorStateDummy[]
-  isCorrect: boolean
+interface TextBlockH {
+  type: 'h'
+  level: Parameters<typeof createHeadingNode>[0]
+  children: SlateBlockMock[]
 }
-*/
 
-//mocked
+interface TextBlockA {
+  type: 'a'
+  href: string
+  children: TextNodeMock[]
+}
+
+interface TextBlockMath {
+  type: 'math'
+  src: string
+  inline?: boolean
+  children: TextNodeMock[]
+}
+
+interface TextBlockListItemChild {
+  type: 'list-item-child'
+  children: SlateBlockMock[]
+}
+
+interface TextBlockListItem {
+  type: 'list-item'
+  children: TextBlockListItemChild[]
+}
+
+interface TextBlockUnorderedList {
+  type: 'unordered-list'
+  children: TextBlockListItem[]
+}
+
+interface TextBlockOrderedList {
+  type: 'ordered-list'
+  children: TextBlockListItem[]
+}
+
+//TODO: mocked, import edtr types if possible
 export interface TextNodeMock {
   text: string
   strong?: boolean
