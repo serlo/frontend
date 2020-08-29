@@ -1,14 +1,15 @@
-// import { AnchorPluginState } from '@edtr-io/plugin-anchor/src/index'
-// import { GeogebraPluginState } from '@edtr-io/plugin-geogebra/src/index'
+import { StateTypeValueType } from '@edtr-io/plugin'
+import { AnchorPluginState } from '@edtr-io/plugin-anchor/src/index'
+import { GeogebraPluginState } from '@edtr-io/plugin-geogebra/src/index'
 // import { HighlightPluginState } from '@edtr-io/plugin-highlight/src/index'
-// import { ImagePluginState } from '@edtr-io/plugin-image/src/index'
-// import { SerloInjectionPluginState } from '@edtr-io/plugin-serlo-injection/src/index'
-// import { MultimediaExplanationPluginState } from '@edtr-io/plugin-multimedia-explanation/src/index'
-// import { RowsPluginState } from '@edtr-io/plugin-rows/src/index'
-//  import { SpoilerPluginState } from '@edtr-io/plugin-spoiler/src/index'
-// import { TablePluginState } from '@edtr-io/plugin-table/src/index'
+import { ImagePluginState } from '@edtr-io/plugin-image/src/index'
+import { MultimediaExplanationPluginState } from '@edtr-io/plugin-multimedia-explanation/src/index'
+import { RowsPluginState } from '@edtr-io/plugin-rows/src/index'
+import { SerloInjectionPluginState } from '@edtr-io/plugin-serlo-injection/src/index'
+import { SpoilerPluginState } from '@edtr-io/plugin-spoiler/src/index'
+import { TablePluginState } from '@edtr-io/plugin-table/src/index'
 // import { TextPluginState } from '@edtr-io/plugin-text/src/index'
-// import { VideoPluginState } from '@edtr-io/plugin-video/src/index'
+import { VideoPluginState } from '@edtr-io/plugin-video/src/index'
 
 type MockChild = EdtrState | SlateBlockMock | TextNodeMock
 
@@ -80,36 +81,30 @@ export interface TextNodeMock {
 
 // types for all supported @edtr-io plugins
 
-//TODO: find a way to actually export the relevant type from the PluginState types...
-
 export interface EdtrPluginGeogebra {
   plugin: 'geogebra'
-  state: string //GeogebraPluginState
+  state: StateTypeValueType<GeogebraPluginState>
 }
 
 export interface EdtrPluginAnchor {
   plugin: 'anchor'
-  state: string //AnchorPluginState
+  state: StateTypeValueType<AnchorPluginState>
 }
 
 export interface EdtrPluginVideo {
   plugin: 'video'
-  state: {
-    //VideoPluginState
-    src: string
-    alt: string
-  }
+  state: StateTypeValueType<VideoPluginState>
 }
 
 export interface EdtrPluginTable {
   plugin: 'table'
-  // state: TablePluginState
-  state: string
+  state: StateTypeValueType<TablePluginState>
 }
 
 export interface EdtrPluginHighlight {
   plugin: 'highlight'
-  // state: HighlightPluginState
+  //TODO: Use import, but it currently triggers TS error
+  // state: StateTypeValueType<HighlightPluginState>
   state: {
     code: string
     language: string
@@ -119,8 +114,7 @@ export interface EdtrPluginHighlight {
 
 interface EdtrPluginSerloInjection {
   plugin: 'injection'
-  // state: SerloInjectionPluginState
-  state: string
+  state: StateTypeValueType<SerloInjectionPluginState>
 }
 
 //TODO: This is mocked, get real types
@@ -128,26 +122,19 @@ interface LayoutChild {
   child: EdtrState
   width: number
 }
-interface EdtrPluginLayout {
+export interface EdtrPluginLayout {
   plugin: 'layout'
   state: LayoutChild[]
 }
 
 interface EdtrPluginMultimediaExplanation {
   plugin: 'multimedia'
-  // state:MultimediaExplanationPluginState
-  state: {
-    explanation: EdtrState
-    multimedia: EdtrState
-    illustrating: boolean
-    width: number
-  }
+  state: StateTypeValueType<MultimediaExplanationPluginState>
 }
 
 export interface EdtrPluginSpoiler {
   plugin: 'spoiler'
-  // state: SpoilerPluginState
-  state: { title: string; content: EdtrState }
+  state: StateTypeValueType<SpoilerPluginState>
 }
 
 //Compat: Unsupported Type
@@ -158,33 +145,25 @@ export interface EdtrPluginImportant {
 
 export interface EdtrPluginImage {
   plugin: 'image'
-  // state: ImagePluginState
-  state: {
-    src: string
-    link?: {
-      href: string
-      openInNewTab: boolean
-    }
-    alt?: string
-    maxWidth?: number
-  }
+  state: StateTypeValueType<ImagePluginState>
 }
 
 export interface EdtrPluginText {
   plugin: 'text'
-  // state: TextPluginState
   state: any
+  //TODO: Import real state
+  // state: StateTypeValueType<TextPluginState>
 }
 
 export interface EdtrPluginRows {
   plugin: 'rows'
-  // state: RowsPluginState
-  state: EdtrState
+  state: StateTypeValueType<RowsPluginState>
 }
 
-//TODO: This is mocked, get real types
+//TODO: This is mocked, get real types when npm package is public
 export interface EdtrPluginEquations {
   plugin: 'equations'
+  // state: StateTypeValueType<EquationsPluginState>
   state: {
     steps: [
       {
@@ -206,7 +185,7 @@ export interface EdtrPluginEquations {
   }
 }
 
-export type EdtrState =
+export type EdtrState = { plugin: string } & (
   | EdtrPluginGeogebra
   | EdtrPluginAnchor
   | EdtrPluginVideo
@@ -221,3 +200,4 @@ export type EdtrState =
   | EdtrPluginText
   | EdtrPluginRows
   | EdtrPluginEquations
+)
