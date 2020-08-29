@@ -10,10 +10,26 @@ import {
 
 const colors: FrontendTextColor[] = ['blue', 'green', 'orange']
 
-//TODO: write tests for this converter, import edtr-io types, …
+function isEdtrState(
+  node: EdtrState | SlateBlockMock | TextNodeMock
+): node is EdtrState {
+  return (node as EdtrState).plugin !== undefined
+}
+
+function isSlateBlock(
+  node: EdtrState | SlateBlockMock | TextNodeMock
+): node is SlateBlockMock {
+  return (node as SlateBlockMock).type !== undefined
+}
+
+function isTextNode(
+  node: EdtrState | SlateBlockMock | TextNodeMock
+): node is TextNodeMock {
+  return (node as TextNodeMock).text !== undefined
+}
 
 export function convert(
-  node?: EdtrState | EdtrState[] | SlateBlockMock | TextNodeMock
+  node?: EdtrState | SlateBlockMock | TextNodeMock
 ): FrontendContentNode[] {
   // compat: no or empty node, we ignore
   if (!node || Object.keys(node).length === 0) {
@@ -25,16 +41,17 @@ export function convert(
     return node.flatMap(convert)
   }
 
-  //TODO: use type guard
+  if (isEdtrState(node)) {
+    return convertPlugin(node) as FrontendContentNode[]
+  }
 
-  if ((node as EdtrState).plugin !== undefined)
-    return convertPlugin(node as EdtrState) as FrontendContentNode[]
+  if (isSlateBlock(node)) {
+    return convertSlate(node) as FrontendContentNode[]
+  }
 
-  if ((node as SlateBlockMock).type !== undefined)
-    return convertSlate(node as SlateBlockMock) as FrontendContentNode[]
-
-  if ((node as TextNodeMock).text !== undefined)
-    return convertText(node as TextNodeMock) as FrontendContentNode[]
+  if (isTextNode(node)) {
+    return convertText(node) as FrontendContentNode[]
+  }
 
   console.log('unsupported -> ', node)
   return []
