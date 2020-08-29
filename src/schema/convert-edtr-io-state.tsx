@@ -279,19 +279,23 @@ export function convert(
 
   const type = node.type
   if (type === 'p') {
-    // compat unwrap math from p
     const children = convert(node.children)
+
+    // compat unwrap math from p
     if (children.length === 1 && children[0].type === 'math') {
       return children
     }
     // compat: unwrap ul/ol from p
+    //TODO: can not reproduce, does not seem to happen, check again or delete
     if (
       children.length === 1 &&
       (children[0].type === 'ul' || children[0].type === 'ol')
     ) {
       return children
     }
+
     // compat handle newlines
+    //TODO: can not reproduce, what is expected behaviour here?
     if (
       children.some(
         (child) =>
@@ -336,7 +340,9 @@ export function convert(
       })
       return result
     }
+
     // compat: extract math formulas
+    //TODO: can not reproduce, happens elsewhere now, right? can be deleted?
     const math = children.filter(
       (child) => child.type === 'math' || child.type === 'inline-math'
     )
