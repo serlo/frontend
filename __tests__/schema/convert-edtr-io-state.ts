@@ -231,7 +231,6 @@ describe('edtr io plugins', () => {
         plugin: 'geogebra',
         state: 'https://www.github.com',
       })
-      console.log(result)
       expect(result).toEqual([
         { type: 'geogebra', id: 'https://www.github.com' },
       ])
@@ -546,71 +545,178 @@ describe('edtr io plugins', () => {
 })
 
 describe('text types', () => {
-  test('plain text', () => {
-    const input = { text: ' auf die Straße. äÖü"' }
-    const result = convert(input)
+  describe('just text', () => {
+    test('default with umlauts', () => {
+      const result = convert({ text: ' auf die Straße. äÖü"' })
 
-    expect(result).toEqual([
-      {
-        type: 'text',
-        text: ' auf die Straße. äÖü"',
-        em: undefined,
-        strong: undefined,
-        color: undefined,
-      },
-    ])
-  })
-
-  test('text-type: p', () => {
-    const input = {
-      type: 'p',
-      children: [{ text: 'test' }, { text: 'test2' }],
-    }
-    const result = convert(input)
-
-    expect(result.length).toBe(1)
-    expect(result[0].type).toBe('p')
-    expect(result[0]?.children?.length).toBe(2)
-  })
-
-  test('text-type: a (anchor)', () => {
-    const result = convert({
-      type: 'a',
-      href: '#top',
-      children: [{ text: 'anchor link' }],
+      expect(result).toEqual([
+        {
+          type: 'text',
+          text: ' auf die Straße. äÖü"',
+          em: undefined,
+          strong: undefined,
+          color: undefined,
+        },
+      ])
     })
-    expect(result).toEqual([
-      {
+    test('empty sting', () => {
+      const result = convert({ text: '' })
+      expect(result).toEqual([])
+    })
+    test('with color', () => {
+      const result = convert({ text: 'colored', color: 0 })
+      expect(result).toEqual([{ type: 'text', text: 'colored', color: 'blue' }])
+    })
+    test('strong', () => {
+      const result = convert({ text: 'bold text', strong: true })
+      expect(result).toEqual([
+        { type: 'text', text: 'bold text', strong: true },
+      ])
+    })
+    test('italic', () => {
+      const result = convert({ text: 'italic text', em: true })
+      expect(result).toEqual([{ type: 'text', text: 'italic text', em: true }])
+    })
+    test('all together now', () => {
+      const result = convert({
+        text: 'wow text',
+        strong: true,
+        em: true,
+        color: 2,
+      })
+      expect(result).toEqual([
+        {
+          type: 'text',
+          text: 'wow text',
+          em: true,
+          strong: true,
+          color: 'orange',
+        },
+      ])
+    })
+  })
+
+  describe('text-type: p', () => {
+    test('default', () => {
+      const result = convert({
+        type: 'p',
+        children: [{ text: 'test' }, { text: 'test2' }],
+      })
+      expect(result).toEqual([
+        {
+          type: 'p',
+          children: [
+            { type: 'text', text: 'test' },
+            { type: 'text', text: 'test2' },
+          ],
+        },
+      ])
+    })
+    describe('compat: unwrap math from p if math is only child', () => {
+      test('is only child', () => {
+        const result = convert({
+          type: 'p',
+          children: [{ type: 'math' }],
+        })
+        expect(result).toEqual([{ type: 'math' }])
+      })
+      test('has sibling', () => {
+        const result = convert({
+          type: 'p',
+          children: [{ type: 'math' }, { text: 'brother' }],
+        })
+        expect(result).toEqual([
+          {
+            type: 'p',
+            children: [{ type: 'math' }, { type: 'text', text: 'brother' }],
+          },
+        ])
+      })
+    })
+    //compat: unwrap ul/ol from p if only child -> can't reproduce, does not seem to happen
+
+    describe('compat: handle newlines in text and math', () => {
+      //TODO: this test works, but can't reproduce any of this with actual editor output. so we need to define the expected behaviours first
+      test('text with breaks', () => {
+        const result = convert({
+          type: 'p',
+          children: [{ text: 'line1\nline2' }],
+        })
+        expect(result).toEqual([
+          { type: 'p', children: [{ type: 'text', text: 'line1' }] },
+          { type: 'p', children: [{ type: 'text', text: 'line2' }] },
+        ])
+      })
+    })
+
+    //compat: extract math formulas, cant reproduce, see comment in file
+  })
+
+  describe('text-type: a', () => {
+    test('anchor link', () => {
+      const result = convert({
         type: 'a',
         href: '#top',
-        children: [{ type: 'text', text: 'anchor link' }],
-      },
-    ])
-  })
-
-  test('text-type: a (no href)', () => {
-    const result = convert({
-      type: 'a',
-      children: [{ text: 'link' }],
+        children: [{ text: 'anchor link' }],
+      })
+      expect(result).toEqual([
+        {
+          type: 'a',
+          href: '#top',
+          children: [{ type: 'text', text: 'anchor link' }],
+        },
+      ])
     })
-    expect(result).toEqual([
-      {
+
+    test('no href set', () => {
+      const result = convert({
         type: 'a',
-        href: '',
-        children: [{ type: 'text', text: 'link' }],
-      },
-    ])
+        children: [{ text: 'link' }],
+      })
+      expect(result).toEqual([
+        {
+          type: 'a',
+          href: '',
+          children: [{ type: 'text', text: 'link' }],
+        },
+      ])
+    })
   })
 
-  test('text-type: h', () => {
-    const result = convert({
-      type: 'h',
-      level: 1,
-      children: [{ text: 'H1' }],
+  describe('text-type: h', () => {
+    test('default h2', () => {
+      const result = convert({
+        type: 'h',
+        level: 1,
+        children: [{ text: 'H1' }],
+      })
+      expect(result).toEqual([
+        { type: 'h', level: 1, children: [{ type: 'text', text: 'H1' }] },
+      ])
     })
-    expect(result).toEqual([
-      { type: 'h', level: 1, children: [{ type: 'text', text: 'H1' }] },
-    ])
+    test('level higher than 5', () => {
+      const result = convert({
+        type: 'h',
+        level: 6,
+        children: [{ text: 'H6 maybe' }],
+      })
+      expect(result).toEqual([
+        { type: 'h', level: 5, children: [{ type: 'text', text: 'H6 maybe' }] },
+      ])
+    })
+    test('no level set', () => {
+      const result = convert({
+        type: 'h',
+        children: [{ text: 'Hwhatever' }],
+      })
+      expect(result).toEqual([
+        {
+          type: 'h',
+          level: 5,
+          children: [{ type: 'text', text: 'Hwhatever' }],
+        },
+      ])
+    })
   })
 
   test('text-type: math (inline)', () => {
@@ -713,13 +819,53 @@ describe('text types', () => {
     ])
   })
 
-  test('text-type: list-item-child', () => {
-    const result = convert({
-      type: 'list-item-child',
-      children: [{ text: 'item-child' }],
+  describe('text-type: list-item-child', () => {
+    test('default', () => {
+      const result = convert({
+        type: 'list-item-child',
+        children: [{ text: 'item-child' }],
+      })
+      expect(result).toEqual([
+        { type: 'p', children: [{ type: 'text', text: 'item-child' }] },
+      ])
     })
-    expect(result).toEqual([
-      { type: 'p', children: [{ type: 'text', text: 'item-child' }] },
-    ])
+
+    //TODO: This is probably a bug! Check again
+    test('compat: inline-math returns empty', () => {
+      const result = convert({
+        type: 'list-item-child',
+        children: [
+          {
+            type: 'inline-math',
+            formula: '\\tan^{-1}',
+          },
+        ],
+      })
+      expect(result).toEqual([])
+    })
+
+    test('compat: a gets wrapped in p', () => {
+      const result = convert({
+        type: 'list-item-child',
+        children: [
+          {
+            type: 'a',
+            children: [{ text: 'log text' }],
+          },
+        ],
+      })
+      expect(result).toEqual([
+        {
+          type: 'p',
+          children: [
+            {
+              type: 'a',
+              href: '',
+              children: [{ type: 'text', text: 'log text' }],
+            },
+          ],
+        },
+      ])
+    })
   })
 })
