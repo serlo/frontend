@@ -10,8 +10,9 @@ import {
 
 const colors: FrontendTextColor[] = ['blue', 'green', 'orange']
 
-//This is incorrect, an editor node only has plugin and state
 //TODO: write tests for this converter, import edtr-io types, …
+
+//This is incorrect, an editor node only has plugin and state
 export interface EditorStateDummy {
   plugin?: string
   state?: EditorStateDummy | string
@@ -58,18 +59,14 @@ export interface EditorStateDummy {
 export function convert(
   node: EditorStateDummy | EditorStateDummy[]
 ): FrontendContentNode[] {
-  if (!node) {
+  // compat: no or empty node, we ignore
+  if (!node || Object.keys(node).length === 0) {
     console.log('e: node EMPTY')
     return []
   }
 
   if (Array.isArray(node)) {
     return node.flatMap(convert)
-  }
-
-  // compat: empty object, we ignore
-  if (Object.keys(node).length === 0) {
-    return []
   }
 
   const plugin = node.plugin
@@ -105,7 +102,10 @@ export function convert(
           {
             type: 'spoiler-title',
             children: [
-              { type: 'text', text: (node.state as EditorStateDummy).title! },
+              {
+                type: 'text',
+                text: (node.state as EditorStateDummy).title!,
+              },
             ],
           },
           {
@@ -204,6 +204,7 @@ export function convert(
     }
     return [{ type: 'geogebra', id }]
   }
+
   // TODO handle this manually in the fetcher!
   /*if (plugin === 'exercise') {
     return [
@@ -263,6 +264,7 @@ export function convert(
       },
     ]
   }*/
+
   if (plugin === 'equations') {
     const steps = (node.state as EditorStateDummy).steps.map((step) => {
       return {
@@ -482,6 +484,6 @@ export function convert(
     ]
   }
 
-  console.log('-> ', node)
+  console.log('unsupported -> ', node)
   return []
 }
