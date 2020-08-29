@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import { convert } from '@/schema/convert-edtr-io-state'
 
 function log(result) {
@@ -8,13 +10,11 @@ function log(result) {
 
 describe('general compat cases / sanity checks', () => {
   test('undefined node, return empty array', () => {
-    //@ts-expect-error not covered by type, should not happen, but might?
     const result = convert(undefined)
     expect(result).toEqual([])
   })
 
   test('node is empty object, return empty array', () => {
-    //@ts-expect-error not covered by type, should not happen, but might?
     const result = convert({})
     expect(result).toEqual([])
   })
@@ -25,7 +25,6 @@ describe('general compat cases / sanity checks', () => {
   })
 
   test('unsupported text type, return empty array', () => {
-    //@ts-expect-error not covered by type, should not happen, but might?
     const result = convert({ type: 'super-bold', children: [] })
     expect(result).toEqual([])
   })
@@ -38,24 +37,63 @@ describe('edtr io plugins', () => {
 
   //TODO: Add test for Equations
 
-  test('plugin: image', () => {
-    const result = convert({
-      plugin: 'image',
-      state: {
-        src:
-          'https://assets.serlo.org/5c77cd8b27d83_b56b69f307447a110a5ae915e517c73e385c37e8.jpg',
-        alt: 'Lernen im eigenen Tempo mit serlo.org',
-      },
+  describe('plugin: image', () => {
+    test('default', () => {
+      const result = convert({
+        plugin: 'image',
+        state: {
+          src:
+            'https://assets.serlo.org/5c77cd8b27d83_b56b69f307447a110a5ae915e517c73e385c37e8.jpg',
+          alt: 'Lernen im eigenen Tempo mit serlo.org',
+        },
+      })
+      expect(result).toEqual([
+        {
+          type: 'img',
+          src:
+            'https://assets.serlo.org/5c77cd8b27d83_b56b69f307447a110a5ae915e517c73e385c37e8.jpg',
+          alt: 'Lernen im eigenen Tempo mit serlo.org',
+          maxWidth: undefined,
+        },
+      ])
     })
-    expect(result).toEqual([
-      {
-        type: 'img',
-        src:
-          'https://assets.serlo.org/5c77cd8b27d83_b56b69f307447a110a5ae915e517c73e385c37e8.jpg',
-        alt: 'Lernen im eigenen Tempo mit serlo.org',
-        maxWidth: undefined,
-      },
-    ])
+    test('with maxWidth', () => {
+      const result = convert({
+        plugin: 'image',
+        state: {
+          src:
+            'https://assets.serlo.org/5c77cd8b27d83_b56b69f307447a110a5ae915e517c73e385c37e8.jpg',
+          alt: 'Lernen im eigenen Tempo mit serlo.org',
+          maxWidth: true,
+        },
+      })
+      expect(result).toEqual([
+        {
+          type: 'img',
+          src:
+            'https://assets.serlo.org/5c77cd8b27d83_b56b69f307447a110a5ae915e517c73e385c37e8.jpg',
+          alt: 'Lernen im eigenen Tempo mit serlo.org',
+          maxWidth: true,
+        },
+      ])
+    })
+    test('alt missing', () => {
+      const result = convert({
+        plugin: 'image',
+        state: {
+          src:
+            'https://assets.serlo.org/5c77cd8b27d83_b56b69f307447a110a5ae915e517c73e385c37e8.jpg',
+        },
+      })
+      expect(result).toEqual([
+        {
+          type: 'img',
+          src:
+            'https://assets.serlo.org/5c77cd8b27d83_b56b69f307447a110a5ae915e517c73e385c37e8.jpg',
+          alt: undefined,
+        },
+      ])
+    })
   })
 
   test('plugin: important?', () => {
@@ -77,45 +115,87 @@ describe('edtr io plugins', () => {
   })
 
   //TODO: is this a regular plugin?
-  test('plugin: layout?', () => {
-    const result = convert({
-      plugin: 'layout',
-      state: [
-        {
-          child: {
-            plugin: 'rows',
-            state: [
-              {
-                plugin: 'text',
-                state: [],
-              },
-            ],
+  describe('plugin: layout?', () => {
+    test('default', () => {
+      const result = convert({
+        plugin: 'layout',
+        state: [
+          {
+            child: {
+              plugin: 'rows',
+              state: [
+                {
+                  plugin: 'text',
+                  state: [],
+                },
+              ],
+            },
+            width: 6,
           },
-          width: 6,
-        },
-        {
-          child: {
-            plugin: 'rows',
-            state: [
-              {
-                plugin: 'text',
-                state: [],
-              },
-            ],
+          {
+            child: {
+              plugin: 'rows',
+              state: [
+                {
+                  plugin: 'text',
+                  state: [],
+                },
+              ],
+            },
+            width: 6,
           },
-          width: 6,
-        },
-      ],
-    })
-    expect(result).toEqual([
-      {
-        type: 'row',
-        children: [
-          { type: 'col', size: 6, children: [] },
-          { type: 'col', size: 6, children: [] },
         ],
-      },
-    ])
+      })
+      expect(result).toEqual([
+        {
+          type: 'row',
+          children: [
+            { type: 'col', size: 6, children: [] },
+            { type: 'col', size: 6, children: [] },
+          ],
+        },
+      ])
+    })
+
+    test('compat: align math children left', () => {
+      const result = convert({
+        plugin: 'layout',
+        state: [
+          {
+            child: {
+              plugin: 'rows',
+              state: [
+                {
+                  plugin: 'text',
+                  state: [{ type: 'math' }],
+                },
+              ],
+            },
+            width: 6,
+          },
+          {
+            child: {
+              plugin: 'rows',
+              state: [],
+            },
+            width: 6,
+          },
+        ],
+      })
+      expect(result).toEqual([
+        {
+          type: 'row',
+          children: [
+            {
+              type: 'col',
+              size: 6,
+              children: [{ type: 'math', alignLeft: true }],
+            },
+            { type: 'col', size: 6, children: [] },
+          ],
+        },
+      ])
+    })
   })
 
   test('plugin: anchor', () => {
@@ -132,9 +212,30 @@ describe('edtr io plugins', () => {
     expect(result).toEqual([])
   })
 
-  test('plugin: geogebra', () => {
-    const result = convert({ plugin: 'geogebra', state: 'jybewqhg' })
-    expect(result).toEqual([{ type: 'geogebra', id: 'jybewqhg' }])
+  describe('plugin: geogebra', () => {
+    test('default', () => {
+      const result = convert({ plugin: 'geogebra', state: 'jybewqhg' })
+      expect(result).toEqual([{ type: 'geogebra', id: 'jybewqhg' }])
+    })
+    test('compat: full url', () => {
+      const result = convert({
+        plugin: 'geogebra',
+        state: 'https://www.geogebra.org/m/jybewqhg',
+      })
+      expect(result).toEqual([{ type: 'geogebra', id: 'jybewqhg' }])
+    })
+
+    //TODO: return empty instead of faulty url? should probably be checkd in edtr
+    test('no geogebra url', () => {
+      const result = convert({
+        plugin: 'geogebra',
+        state: 'https://www.github.com',
+      })
+      console.log(result)
+      expect(result).toEqual([
+        { type: 'geogebra', id: 'https://www.github.com' },
+      ])
+    })
   })
 
   test('plugin: highlight', () => {
@@ -149,42 +250,74 @@ describe('edtr io plugins', () => {
     expect(result).toEqual([{ type: 'code', code: '\n<html>Code</html>' }])
   })
 
-  test('plugin: multimediaExplanation', () => {
-    const result = convert({
-      plugin: 'multimedia',
-      state: {
-        explanation: {
-          plugin: 'rows',
-          state: [
+  describe('plugin: multimediaExplanation', () => {
+    test('manual width', () => {
+      const result = convert({
+        plugin: 'multimedia',
+        state: {
+          explanation: {
+            plugin: 'rows',
+            state: [
+              {
+                plugin: 'text',
+                state: [],
+              },
+            ],
+          },
+          multimedia: {
+            plugin: 'image',
+            state: {
+              src: 'test.jpg',
+            },
+          },
+          illustrating: true,
+          width: 20,
+        },
+      })
+      expect(result).toEqual([
+        {
+          type: 'row',
+          children: [
+            { type: 'col', size: 80, children: [] },
             {
-              plugin: 'text',
-              state: [],
+              type: 'col',
+              size: 20,
+              children: [{ type: 'img', src: 'test.jpg' }],
             },
           ],
         },
-        multimedia: {
-          plugin: 'image',
-          state: {
-            src: 'test.jpg',
+      ])
+    })
+    test('no width', () => {
+      const result = convert({
+        plugin: 'multimedia',
+        state: {
+          explanation: {
+            plugin: 'rows',
+            state: [],
+          },
+          multimedia: {
+            plugin: 'image',
+            state: {
+              src: 'test.jpg',
+            },
           },
         },
-        illustrating: true,
-        width: 50,
-      },
+      })
+      expect(result).toEqual([
+        {
+          type: 'row',
+          children: [
+            { type: 'col', size: 50, children: [] },
+            {
+              type: 'col',
+              size: 50,
+              children: [{ type: 'img', src: 'test.jpg' }],
+            },
+          ],
+        },
+      ])
     })
-    expect(result).toEqual([
-      {
-        type: 'row',
-        children: [
-          { type: 'col', size: 50, children: [] },
-          {
-            type: 'col',
-            size: 50,
-            children: [{ type: 'img', src: 'test.jpg' }],
-          },
-        ],
-      },
-    ])
   })
 
   test('plugin: rows', () => {
