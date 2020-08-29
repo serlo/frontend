@@ -6,6 +6,7 @@ import {
   TextNodeMock,
   EdtrPluginEquations,
   EdtrPluginLayout,
+  PossibleChildOrChildren,
 } from './edtr-io-types'
 import { MathProps } from '@/components/content/math'
 import {
@@ -35,7 +36,13 @@ function isTextNode(
 }
 
 export function convert(
-  node?: EdtrState | SlateBlockMock | TextNodeMock
+  node?:
+    | EdtrState
+    | SlateBlockMock
+    | TextNodeMock
+    | EdtrState[]
+    | SlateBlockMock[]
+    | TextNodeMock[]
 ): FrontendContentNode[] {
   // compat: no or empty node, we ignore
   if (!node || Object.keys(node).length === 0) {
@@ -44,6 +51,9 @@ export function convert(
   }
 
   if (Array.isArray(node)) {
+    // TODO: investigate
+    // @ts-expect-error
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return node.flatMap(convert)
   }
 
@@ -415,7 +425,7 @@ function convertSlate(node: SlateBlockMock) {
     return [
       {
         type: 'math',
-        formula: node.src!,
+        formula: node.src,
       },
     ]
   }
@@ -423,7 +433,7 @@ function convertSlate(node: SlateBlockMock) {
     return [
       {
         type: 'inline-math',
-        formula: node.src!,
+        formula: node.src,
       },
     ]
   }
