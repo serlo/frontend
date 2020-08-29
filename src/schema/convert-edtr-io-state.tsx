@@ -1,6 +1,6 @@
 import { converter } from '../../external/markdown'
 import { convertLegacyState } from './convert-legacy-state'
-import { StepProps } from '@/components/content/equations'
+import { EdtrState, SlateBlockMock, TextNodeMock } from './edtr-io-types'
 import { MathProps } from '@/components/content/math'
 import {
   FrontendContentNode,
@@ -12,52 +12,8 @@ const colors: FrontendTextColor[] = ['blue', 'green', 'orange']
 
 //TODO: write tests for this converter, import edtr-io types, …
 
-//This is incorrect, an editor node only has plugin and state
-export interface EditorStateDummy {
-  plugin?: string
-  state?: EditorStateDummy | string
-  child: EditorStateDummy
-  children: EditorStateDummy[]
-  content?: EditorStateDummy[]
-
-  title?: string
-  class?: string
-  href?: string
-  src?: string
-  alt?: string
-  id?: number | string
-  maxWidth?: number
-  text?: string
-  size?: number
-  formula?: string
-  inline?: boolean
-  alignLeft?: boolean
-  level?: number
-  strong?: boolean
-  em?: boolean
-  width?: number
-  explanation: EditorStateDummy
-  multimedia: EditorStateDummy
-  interactive: EditorStateDummy[]
-  code: string
-  prerequisite: EditorStateDummy[]
-  strategy: EditorStateDummy[]
-  isSingleChoice: boolean
-  type: string
-  unit: string
-  answers: EditorStateDummy[]
-  steps: EditorStateDummy[]
-  color: number | string
-  left: EditorStateDummy[]
-  sign: StepProps['sign']
-  right: EditorStateDummy[]
-  transform: EditorStateDummy[]
-  feedback: EditorStateDummy[]
-  isCorrect: boolean
-}
-
 export function convert(
-  node: EditorStateDummy | EditorStateDummy[]
+  node?: EdtrState | EdtrState[] | SlateBlockMock | TextNodeMock
 ): FrontendContentNode[] {
   // compat: no or empty node, we ignore
   if (!node || Object.keys(node).length === 0) {
@@ -69,32 +25,48 @@ export function convert(
     return node.flatMap(convert)
   }
 
-  const plugin = node.plugin
-  if (plugin === 'rows') {
-    return convert(node.state as EditorStateDummy)
+  //TODO: use type guard
+
+  if ((node as EdtrState).plugin !== undefined)
+    return convertPlugin(node as EdtrState) as FrontendContentNode[]
+
+  if ((node as SlateBlockMock).type !== undefined)
+    return convertSlate(node as SlateBlockMock) as FrontendContentNode[]
+
+  if ((node as TextNodeMock).text !== undefined)
+    return convertText(node as TextNodeMock) as FrontendContentNode[]
+
+  console.log('unsupported -> ', node)
+  return []
+}
+
+function convertPlugin(node: EdtrState) {
+  if (node.plugin === 'rows') {
+    return convert(node.state)
   }
-  if (plugin === 'text') {
-    return convert(node.state as EditorStateDummy)
+  if (node.plugin === 'text') {
+    return convert(node.state)
   }
-  if (plugin === 'image') {
+  if (node.plugin === 'image') {
     return [
       {
         type: 'img',
-        src: (node.state as EditorStateDummy).src!,
-        alt: (node.state as EditorStateDummy).alt!,
-        maxWidth: (node.state as EditorStateDummy).maxWidth,
+        src: node.state.src,
+        alt: node.state.alt!,
+        maxWidth: node.state.maxWidth,
       },
     ]
   }
-  if (plugin === 'important') {
+  //Note: Not supported any more in edtr
+  if (node.plugin === 'important') {
     return [
       {
         type: 'important',
-        children: convert(node.state as EditorStateDummy),
+        children: convert(node.state),
       },
     ]
   }
-  if (plugin === 'spoiler') {
+  if (node.plugin === 'spoiler') {
     return [
       {
         type: 'spoiler-container',
@@ -104,20 +76,21 @@ export function convert(
             children: [
               {
                 type: 'text',
-                text: (node.state as EditorStateDummy).title!,
+                text: node.state.title,
               },
             ],
           },
           {
             type: 'spoiler-body',
-            children: convert((node.state as EditorStateDummy).content!),
+            children: convert(node.state.content),
           },
         ],
       },
     ]
   }
-  if (plugin === 'multimedia') {
-    const width = (node.state as EditorStateDummy).width ?? 50
+
+  if (node.plugin === 'multimedia') {
+    const width = node.state.width ?? 50
     return [
       {
         type: 'row',
@@ -125,41 +98,39 @@ export function convert(
           {
             type: 'col',
             size: 100 - width,
-            children: convert((node.state as EditorStateDummy).explanation),
+            children: convert(node.state.explanation),
           },
           {
             type: 'col',
             size: width,
-            children: convert((node.state as EditorStateDummy).multimedia),
+            children: convert(node.state.multimedia),
           },
         ],
       },
     ]
   }
-  if (plugin === 'layout') {
+  if (node.plugin === 'layout') {
     return [
       {
         type: 'row',
-        children: ((node.state as unknown) as EditorStateDummy[]).map(
-          (child) => {
-            const children = convert(child.child)
-            // compat: math align left
-            children.forEach((child) => {
-              if (child.type === 'math') {
-                child.alignLeft = true
-              }
-            })
-            return {
-              type: 'col',
-              size: child.width!,
-              children,
+        children: node.state.map((child) => {
+          const children = convert(child.child)
+          // compat: math align left
+          children.forEach((child) => {
+            if (child.type === 'math') {
+              child.alignLeft = true
             }
+          })
+          return {
+            type: 'col',
+            size: child.width,
+            children,
           }
-        ),
+        }),
       },
     ]
   }
-  if (plugin === 'injection') {
+  if (node.plugin === 'injection') {
     return [
       {
         type: 'injection',
@@ -167,37 +138,37 @@ export function convert(
       },
     ]
   }
-  if (plugin === 'highlight') {
+  if (node.plugin === 'highlight') {
     return [
       {
         type: 'code',
-        code: (node.state as EditorStateDummy).code,
+        code: node.state.code,
       },
     ]
   }
-  if (plugin === 'table') {
-    const html = converter.makeHtml(node.state as string)
+  if (node.plugin === 'table') {
+    const html = converter.makeHtml(node.state)
     return convertLegacyState(html).children
   }
-  if (plugin === 'video') {
+  if (node.plugin === 'video') {
     return [
       {
         type: 'video',
-        src: (node.state as EditorStateDummy).src!,
+        src: node.state.src,
       },
     ]
   }
-  if (plugin === 'anchor') {
+  if (node.plugin === 'anchor') {
     return [
       {
         type: 'anchor',
-        id: (node.state as unknown) as string,
+        id: node.state,
       },
     ]
   }
-  if (plugin === 'geogebra') {
+  if (node.plugin === 'geogebra') {
     // compat: full url given
-    let id = node.state as string
+    let id = node.state
     const match = /geogebra\.org\/m\/(.+)/.exec(id)
     if (match) {
       id = match[1]
@@ -206,7 +177,7 @@ export function convert(
   }
 
   // TODO handle this manually in the fetcher!
-  /*if (plugin === 'exercise') {
+  /*if (node.plugin === 'exercise') {
     return [
       {
         type: '@edtr-io/exercise',
@@ -220,7 +191,7 @@ export function convert(
     ]
   }*/
   // TODO handle this manually in the fetcher!
-  /*if (plugin === 'solution') {
+  /*if (node.plugin === 'solution') {
     return [
       {
         type: '@edtr-io/solution',
@@ -233,7 +204,7 @@ export function convert(
       },
     ]
   }
-  if (plugin === 'scMcExercise') {
+  if (node.plugin === 'scMcExercise') {
     return [
       {
         plugin: 'scMcExercise',
@@ -251,7 +222,7 @@ export function convert(
       },
     ]
   }
-  if (plugin === 'inputExercise') {
+  if (node.plugin === 'inputExercise') {
     return [
       {
         plugin: 'inputExercise',
@@ -265,11 +236,13 @@ export function convert(
     ]
   }*/
 
-  if (plugin === 'equations') {
-    const steps = (node.state as EditorStateDummy).steps.map((step) => {
+  if (node.plugin === 'equations') {
+    const steps = node.state.steps.map((step) => {
       return {
         left: convert(step.left),
-        sign: step.sign,
+        //@ts-expect-error
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        sign: step.sign, //TODO: probably a bug
         right: convert(step.right),
         transform: convert(step.transform),
       }
@@ -277,8 +250,11 @@ export function convert(
     return [{ type: 'equations', steps }]
   }
 
-  const type = node.type
-  if (type === 'p') {
+  return []
+}
+
+function convertSlate(node: SlateBlockMock) {
+  if (node.type === 'p') {
     const children = convert(node.children)
 
     // compat unwrap math from p
@@ -375,7 +351,7 @@ export function convert(
       },
     ]
   }
-  if (type === 'a') {
+  if (node.type === 'a') {
     return [
       {
         type: 'a',
@@ -384,7 +360,7 @@ export function convert(
       },
     ]
   }
-  if (type === 'h') {
+  if (node.type === 'h') {
     if (
       node.level === 1 ||
       node.level === 2 ||
@@ -409,7 +385,7 @@ export function convert(
       ]
     }
   }
-  if (type === 'math' && !node.inline) {
+  if (node.type === 'math' && !node.inline) {
     return [
       {
         type: 'math',
@@ -417,7 +393,7 @@ export function convert(
       },
     ]
   }
-  if (type === 'math' && node.inline) {
+  if (node.type === 'math' && node.inline) {
     return [
       {
         type: 'inline-math',
@@ -425,7 +401,7 @@ export function convert(
       },
     ]
   }
-  if (type === 'unordered-list') {
+  if (node.type === 'unordered-list') {
     const children: FrontendLiNode[] = []
     convert(node.children).forEach((child) => {
       if (child.type === 'li') {
@@ -439,7 +415,7 @@ export function convert(
       },
     ]
   }
-  if (type === 'ordered-list') {
+  if (node.type === 'ordered-list') {
     const children: FrontendLiNode[] = []
     convert(node.children).forEach((child) => {
       if (child.type === 'li') {
@@ -453,7 +429,7 @@ export function convert(
       },
     ]
   }
-  if (type === 'list-item') {
+  if (node.type === 'list-item') {
     return [
       {
         type: 'li',
@@ -461,7 +437,7 @@ export function convert(
       },
     ]
   }
-  if (type === 'list-item-child') {
+  if (node.type === 'list-item-child') {
     // compat: don't wrap ps
     const children = convert(node.children)
     if (
@@ -477,19 +453,18 @@ export function convert(
     return [{ type: 'p', children }]
   }
 
-  if (node.text !== undefined) {
-    if (node.text === '') return []
-    return [
-      {
-        type: 'text',
-        text: node.text,
-        em: node.em,
-        strong: node.strong,
-        color: colors[node.color as number],
-      },
-    ]
-  }
-
-  console.log('unsupported -> ', node)
   return []
+}
+
+function convertText(node: TextNodeMock) {
+  if (node.text === '') return []
+  return [
+    {
+      type: 'text',
+      text: node.text,
+      em: node.em,
+      strong: node.strong,
+      color: colors[node.color as number],
+    },
+  ]
 }
