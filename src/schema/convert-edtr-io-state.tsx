@@ -6,7 +6,6 @@ import {
   TextNodeMock,
   EdtrPluginEquations,
   EdtrPluginLayout,
-  PossibleChildOrChildren,
 } from './edtr-io-types'
 import { MathProps } from '@/components/content/math'
 import {
