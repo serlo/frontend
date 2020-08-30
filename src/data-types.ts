@@ -93,6 +93,7 @@ export type PageData =
   | LicenseDetailPage
   | NotificationsPage
   | SingleEntityPage
+  | RevisionPage
   | TaxonomyPage
 
 // The landing page is custom built and takes i18n strings
@@ -226,6 +227,36 @@ export interface EntityData {
   inviteToEdit?: boolean
   licenseData?: LicenseData
   courseData?: CourseData
+}
+
+export interface RevisionPage extends EntityPageBase {
+  kind: 'revision'
+  revisionData: RevisionData
+}
+
+export interface RevisionData {
+  id: number
+  typename: string
+  repositoryId: number
+  thisRevision: {
+    title: string
+    metaTitle?: string
+    metaDescription?: string
+    content?: FrontendContentNode[]
+  }
+  currentRevision: {
+    title: string
+    metaTitle?: string
+    metaDescription?: string
+    content?: FrontendContentNode[]
+  }
+  categoryIcon?: CategoryType
+  changes: string
+  date: string
+  user: {
+    id: number
+    username: string
+  }
 }
 
 // Entities can belong to a category. Each has a translated string.

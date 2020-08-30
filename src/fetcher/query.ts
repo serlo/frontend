@@ -47,6 +47,12 @@ export interface Article extends EntityWithTaxonomyTerms {
   >
 }
 
+export interface ArticleRevision
+  extends EntityWithTaxonomyTerms,
+    GraphQL.ArticleRevision {
+  __typename: 'ArticleRevision'
+}
+
 export interface Video extends EntityWithTaxonomyTerms {
   __typename: 'Video'
   currentRevision?: GraphQL.Maybe<
@@ -232,6 +238,28 @@ export const dataQuery = gql`
           content
           metaTitle
           metaDescription
+        }
+      }
+
+      ... on ArticleRevision {
+        title
+        content
+        metaTitle
+        metaDescription
+        changes
+        date
+        author {
+          id
+          username
+        }
+        repository {
+          id
+          currentRevision {
+            title
+            content
+            metaTitle
+            metaDescription
+          }
         }
       }
 
@@ -446,6 +474,7 @@ export const dataQuery = gql`
 export type QueryResponse =
   | Page
   | Article
+  | ArticleRevision
   | Video
   | Applet
   | CoursePage

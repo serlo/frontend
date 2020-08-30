@@ -44,32 +44,6 @@ export async function fetchPageData(raw_alias: string): Promise<PageData> {
   }
 }
 
-async function apiLicensePageRequest(
-  id: number,
-  instance: string
-): Promise<PageData> {
-  const { license } = await request<{ license: GraphQL.License }>(
-    endpoint,
-    licenseDetailsQuery(id)
-  )
-  const horizonData = instance == 'de' ? buildHorizonData() : undefined
-
-  return {
-    kind: 'license-detail',
-    licenseData: {
-      content: convertState(license.content),
-      title: license.title,
-      iconHref: license.iconHref,
-    },
-    newsletterPopup: false,
-    horizonData,
-    metaData: {
-      title: license.title,
-      contentType: 'page',
-    },
-  }
-}
-
 async function apiRequest(alias: string, instance: string): Promise<PageData> {
   const { uuid } = await request<{ uuid: QueryResponse }>(
     endpoint,
@@ -191,6 +165,45 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
       cacheKey,
     }
   }*/
+
+  if (uuid.__typename === 'ArticleRevision') {
+    return {
+      kind: 'revision',
+      newsletterPopup: false,
+      revisionData: {
+        id: uuid.id,
+        repositoryId: uuid.repository.id,
+        typename: uuid.__typename,
+        thisRevision: {
+          title: uuid.title ?? '',
+          metaTitle: uuid.metaTitle,
+          metaDescription: uuid.metaDescription,
+          content: convertState(uuid.content),
+        },
+        currentRevision: {
+          title: uuid.repository.currentRevision?.title ?? '',
+          metaTitle: uuid.repository.currentRevision?.metaTitle,
+          metaDescription: uuid.repository.currentRevision?.metaDescription,
+          content: convertState(uuid.repository.currentRevision?.content),
+        },
+        changes: uuid.changes,
+        categoryIcon: 'article',
+        user: {
+          id: uuid.author.id,
+          username: uuid.author.username,
+        },
+        date: uuid.date,
+      },
+      metaData: {
+        title,
+        contentType: 'article-revision',
+        metaImage,
+        metaDescription: '',
+      },
+      cacheKey,
+      breadcrumbsData,
+    }
+  }
 
   const content = convertState(uuid.currentRevision?.content)
 
@@ -399,6 +412,32 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
     errorData: {
       code: 404,
       message: 'Content type not supported: ' + uuid.__typename,
+    },
+  }
+}
+
+async function apiLicensePageRequest(
+  id: number,
+  instance: string
+): Promise<PageData> {
+  const { license } = await request<{ license: GraphQL.License }>(
+    endpoint,
+    licenseDetailsQuery(id)
+  )
+  const horizonData = instance == 'de' ? buildHorizonData() : undefined
+
+  return {
+    kind: 'license-detail',
+    licenseData: {
+      content: convertState(license.content),
+      title: license.title,
+      iconHref: license.iconHref,
+    },
+    newsletterPopup: false,
+    horizonData,
+    metaData: {
+      title: license.title,
+      contentType: 'page',
     },
   }
 }
