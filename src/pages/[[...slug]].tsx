@@ -95,7 +95,6 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
       sessionStorage.getItem('currentPathname') || ''
     )
     sessionStorage.setItem('currentPathname', window.location.pathname)
-    console.log('set history.')
   })
 
   fetcherAdditionalData.origin = initialProps.origin
