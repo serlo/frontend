@@ -1,6 +1,7 @@
 import { faList } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
+import ReactDiffViewer from 'react-diff-viewer'
 import styled, { css } from 'styled-components'
 
 import { Link } from '../content/link'
@@ -27,17 +28,18 @@ export function Revision({ data }: RevisionProps) {
   // TODO: should display comparison to previous version. needs revision list from api
   //maybe the comparision to the currently online version also makes sense. will ask the authors
 
-  const contentData =
-    displayMode === 'current'
-      ? data.thisRevision
-      : displayMode === 'previous'
-      ? data.currentRevision
-      : data.currentRevision //compare not supported
+  const dataSet =
+    displayMode === 'current' ? data.thisRevision : data.currentRevision
+
+  const hasData = displayMode !== 'compare'
 
   return (
     <>
       <MetaBar>
-        <BackButton href={`/entity/repository/history/${data.repositoryId}`}>
+        <BackButton
+          as="a"
+          href={`/entity/repository/history/${data.repositoryId}`}
+        >
           <FontAwesomeIcon icon={faList} /> Back to overview
         </BackButton>
         <div>{renderButtons()}</div>
@@ -58,17 +60,26 @@ export function Revision({ data }: RevisionProps) {
 
       {renderBoxheader('Title:')}
       <Box>
-        <StyledH1>{contentData.title}</StyledH1>
+        {hasData && <StyledH1>{dataSet.title}</StyledH1>}
+        {renderDiffViewer('title')}
       </Box>
 
       {renderBoxheader('Content:')}
-      <Box>{contentData.content && renderArticle(contentData.content)}</Box>
+      <Box>
+        {hasData && renderArticle(dataSet.content || [])}
+        {renderDiffViewer('content')}
+      </Box>
 
       {renderBoxheader('Meta Title:')}
-      <Box withPadding>{contentData.metaTitle}</Box>
+      <Box withPadding={hasData}>
+        {hasData && dataSet.metaTitle} {renderDiffViewer('metaTitle')}
+      </Box>
 
-      {renderBoxheader('Meta Description::')}
-      <Box withPadding>{contentData.metaDescription}</Box>
+      {renderBoxheader('Meta Description:')}
+      <Box withPadding={hasData}>
+        {hasData && dataSet.metaDescription}{' '}
+        {renderDiffViewer('metaDescription')}
+      </Box>
       <HSpace amount={20} />
     </>
   )
@@ -119,6 +130,34 @@ export function Revision({ data }: RevisionProps) {
       </span>
     )
   }
+
+  type DiffViewerOptions = 'content' | 'title' | 'metaTitle' | 'metaDescription'
+
+  function renderDiffViewer(type: DiffViewerOptions) {
+    if (hasData) return null
+
+    if (type === 'content') {
+      return (
+        <ReactDiffViewer
+          oldValue={JSON.stringify(data.thisRevision.content, null, 2)}
+          newValue={JSON.stringify(data.currentRevision.content, null, 2)}
+          splitView
+          hideLineNumbers
+        />
+      )
+    }
+    return (
+      <DiffViewerWrapper>
+        <ReactDiffViewer
+          oldValue={data.thisRevision[type]}
+          newValue={data.currentRevision[type]}
+          splitView={false}
+          hideLineNumbers
+          showDiffOnly={false}
+        />
+      </DiffViewerWrapper>
+    )
+  }
 }
 
 const StyledIcon = styled(FontAwesomeIcon)`
@@ -127,6 +166,7 @@ const StyledIcon = styled(FontAwesomeIcon)`
 `
 const Box = styled.div<{ withPadding?: boolean }>`
   ${(props) => props.withPadding && makePadding}
+  font-size: 1.125rem;
   padding-top: 30px;
   padding-bottom: 30px;
   border: 1px solid ${(props) => props.theme.colors.lighterblue};
@@ -165,15 +205,12 @@ const Button = styled.button<{ current?: boolean }>`
     `}
 `
 
-const BackButton = styled.a`
-  ${makeDefaultButton}
-  ${inputFontReset}
-  font-size: 1.125rem;
-  padding-top: 2px;
-  padding-bottom: 2px;
-  align-items: center;
-  font-weight: bold;
+const BackButton = styled(Button)`
   background-color: ${(props) => props.theme.colors.bluewhite};
+  &:hover {
+    background-color: ${(props) => props.theme.colors.brand};
+  }
+  color: ${(props) => props.theme.colors.brand};
 
   > svg {
     font-size: 1rem;
@@ -194,4 +231,11 @@ const MetaBar = styled.div`
   margin-bottom: 20px;
   top: 0;
   background-color: #fff;
+`
+
+const DiffViewerWrapper = styled.div`
+  pre {
+    ${inputFontReset}
+    font-size: 1.125rem !important;
+  }
 `
