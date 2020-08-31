@@ -92,18 +92,7 @@ describe('check all supported typenames with stored api-data', () => {
     const pageData = (await fetchPageData('/de/27801')) as SingleEntityPage
 
     expect(pageData.breadcrumbsData).toEqual([
-      {
-        label: 'Mathematik',
-        url: '/mathe',
-      },
-      {
-        label: 'Zahlen und Größen',
-        url: '/mathe/zahlen-größen',
-      },
-      {
-        label: 'Bruchrechnen und Dezimalzahlen',
-        url: '/mathe/zahlen-größen/bruchrechnen-dezimalzahlen',
-      },
+      { label: 'Mathematics', url: '/math' },
     ])
 
     expect(pageData.metaData?.title).toBe(
