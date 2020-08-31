@@ -24,11 +24,10 @@ export function MetaMenu({ data }: MetaMenuProps) {
       <MetaMenuWrapper>
         <StyledGradient />
         <List ref={containerRef}>
-          {data.map((entry, i) => {
+          {data.map((entry) => {
             return (
               <li key={entry.url} ref={entry.active ? activeRef : null}>
                 {renderLink(entry, !!entry.active)}
-                {/* {renderSpacer(i)} */}
               </li>
             )
           })}
@@ -83,9 +82,6 @@ const List = styled.ul`
     & li {
       display: inline-block;
     }
-
-    /* border: 3px solid ${(props) =>
-      props.theme.colors.lightBlueBackground}; */
   }
 `
 
