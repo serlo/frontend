@@ -88,6 +88,15 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
 
   React.useEffect(storePageData, [initialProps])
 
+  React.useEffect(() => {
+    //tiny history
+    sessionStorage.setItem(
+      'previousPathname',
+      sessionStorage.getItem('currentPathname') || ''
+    )
+    sessionStorage.setItem('currentPathname', window.location.pathname)
+  })
+
   fetcherAdditionalData.origin = initialProps.origin
   fetcherAdditionalData.instance = instanceData.lang
 
@@ -182,7 +191,12 @@ function renderPage(page: PageData) {
             return <Notifications />
           }
           if (page.kind === 'error') {
-            return <ErrorPage code={page.errorData.code} />
+            return (
+              <ErrorPage
+                code={page.errorData.code}
+                message={page.errorData.message}
+              />
+            )
           }
           return (
             <>
