@@ -12,9 +12,6 @@ import { TablePluginState } from '@edtr-io/plugin-table/src/index'
 import { createHeadingNode } from '@edtr-io/plugin-text/src/model/schema'
 import { VideoPluginState } from '@edtr-io/plugin-video/src/index'
 
-export type PossibleChildren = EdtrState | SlateBlockMock | TextNodeMock
-export type PossibleChildOrChildren = PossibleChildren[]
-
 //TODO: mocked, import edtr types if possible
 export type SlateBlockMock =
   | TextBlockP
@@ -79,6 +76,9 @@ export interface TextNodeMock {
 }
 
 // types for all supported @edtr-io plugins
+
+//TODO: StateTypeValueType<> returns State as string, so we have to do some type assertions in the converter
+// see: https://github.com/edtr-io/edtr-io/issues/317
 
 export interface EdtrPluginGeogebra {
   plugin: 'geogebra'
@@ -184,7 +184,7 @@ export interface EdtrPluginEquations {
   }
 }
 
-export type EdtrState = { plugin: string } & (
+export type EdtrState =
   | EdtrPluginGeogebra
   | EdtrPluginAnchor
   | EdtrPluginVideo
@@ -199,4 +199,8 @@ export type EdtrState = { plugin: string } & (
   | EdtrPluginText
   | EdtrPluginRows
   | EdtrPluginEquations
-)
+
+export interface UnsupportedEdtrState {
+  plugin: string
+  state: any
+}
