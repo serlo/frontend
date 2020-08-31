@@ -7,7 +7,7 @@ import { gql } from 'graphql-request'
 export type Instance = 'de' | 'en' | 'fr' | 'es' | 'ta' | 'hi'
 
 // A license has some more attributes, but we are fine with these
-export type License = Pick<GraphQL.License, 'id' | 'url' | 'title'>
+export type License = Pick<GraphQL.License, 'id' | 'url' | 'title' | 'default'>
 
 // This is one breadcrumb path.
 export interface Path {
@@ -111,6 +111,14 @@ export interface BareExerciseGroup extends Entity {
 }
 
 export type ExerciseGroup = BareExerciseGroup & EntityWithTaxonomyTerms
+
+// Solutions are only used in injections, no support for full page view
+export interface Solution extends Repository {
+  __typename: 'Solution'
+  trashed: boolean
+  currentRevision?: GraphQL.Maybe<Pick<GraphQL.SolutionRevision, 'content'>>
+  license: License
+}
 
 // Events are only used in injections, no support for full page view
 export interface Event extends Repository {
@@ -279,6 +287,10 @@ export const dataQuery = gql`
         }
       }
 
+      ... on Solution {
+        ...solution
+      }
+
       ... on Event {
         currentRevision {
           content
@@ -370,6 +382,7 @@ export const dataQuery = gql`
       id
       url
       title
+      default
     }
   }
 
@@ -416,11 +429,15 @@ export const dataQuery = gql`
       content
     }
     solution {
-      id
-      currentRevision {
-        content
-      }
-      ...license
+      ...solution
+    }
+    ...license
+  }
+
+  fragment solution on Solution {
+    id
+    currentRevision {
+      content
     }
     ...license
   }
@@ -435,6 +452,7 @@ export type QueryResponse =
   | Exercise
   | GroupedExercise
   | ExerciseGroup
+  | Solution
   | Event
   | Course
   | TaxonomyTerm
@@ -474,6 +492,16 @@ export const idQuery = (id: number) => `
       ... on TaxonomyTerm {
         alias
       }
+    }
+  }
+`
+
+export const licenseDetailsQuery = (id: number) => `
+  query {
+    license(id: ${id}) {
+      title
+      content
+      iconHref
     }
   }
 `

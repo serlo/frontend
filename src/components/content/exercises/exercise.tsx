@@ -1,13 +1,6 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 
-import {
-  makeMargin,
-  makeDefaultButton,
-  makePadding,
-  inputFontReset,
-} from '../../../helper/css'
-import { renderArticle } from '../../../schema/article-renderer'
 import { AuthorTools } from '../author-tools'
 import { LicenseNotice } from '../license-notice'
 import { ExerciseNumbering } from './exercise-numbering'
@@ -15,7 +8,14 @@ import { InputExercise } from './input-exercise'
 import { ScMcExercise } from './sc-mc-exercise'
 import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
-import { FrontendContentNode, FrontendExerciseNode } from '@/data-types'
+import { FrontendExerciseNode } from '@/data-types'
+import {
+  makeMargin,
+  makeDefaultButton,
+  inputFontReset,
+  makePadding,
+} from '@/helper/css'
+import { renderArticle } from '@/schema/article-renderer'
 
 export interface ExerciseProps {
   node: FrontendExerciseNode
@@ -44,36 +44,30 @@ export function Exercise({ node }: ExerciseProps) {
 
       {renderToolsAndLicense()}
 
-      {solutionVisible && renderSolutionBox()}
+      {solutionVisible && renderSolution()}
     </Wrapper>
   )
 
-  function renderSolutionToggle() {
-    if (!node.solutionEdtrState && !node.solutionLegacy) return null
-
-    return (
-      <SolutionToggle
-        onClick={() => {
-          setVisible(!solutionVisible)
-        }}
-        onPointerUp={(e) => e.currentTarget.blur()} //hack, use https://caniuse.com/#feat=css-focus-visible when supported
-        active={solutionVisible}
-      >
-        <StyledSpan>{solutionVisible ? '▾' : '▸'}&nbsp;</StyledSpan>
-        {strings.content.solution}{' '}
-        {solutionVisible ? strings.content.hide : strings.content.show}
-      </SolutionToggle>
-    )
-  }
-
-  function renderSolutionBox() {
+  function renderSolution() {
     return (
       <SolutionBox>
-        {renderArticle(getSolutionContent(), false)}
-
+        {renderArticle(
+          [
+            {
+              type: 'solution',
+              solution: node.solution,
+              context: { id: node.context.solutionId! },
+            },
+          ],
+          false
+        )}
         <SolutionTools>
-          {node.solutionLicense && (
-            <LicenseNotice minimal data={node.solutionLicense} />
+          {node.solution.license && (
+            <LicenseNotice
+              minimal
+              data={node.solution.license}
+              type="solution"
+            />
           )}
           {loaded && auth.current && (
             <AuthorTools
@@ -90,44 +84,37 @@ export function Exercise({ node }: ExerciseProps) {
     )
   }
 
-  function getSolutionContent(): FrontendContentNode[] {
-    if (node.solutionLegacy) {
-      return node.solutionLegacy
-    }
-    if (!node.solutionEdtrState) return []
-    const state = node.solutionEdtrState
-    const prereq: FrontendContentNode[] = []
-    if (state.prerequisite && state.prerequisite.href) {
-      prereq.push({
-        type: 'p',
-        children: [
-          { type: 'text', text: `${strings.content.prerequisite} ` },
-          {
-            type: 'a',
-            href: state.prerequisite.href,
-            children: [{ type: 'text', text: state.prerequisite.title }],
-          },
-        ],
-      })
-    }
-    const strategy = state.strategy
-    const steps = state.steps
-    return [...prereq, ...strategy, ...steps]
+  function renderSolutionToggle() {
+    if (!node.solution.edtrState && !node.solution.legacy) return null
+
+    return (
+      <SolutionToggle
+        onClick={() => {
+          setVisible(!solutionVisible)
+        }}
+        onPointerUp={(e) => e.currentTarget.blur()} //hack, use https://caniuse.com/#feat=css-focus-visible when supported
+        active={solutionVisible}
+      >
+        <StyledSpan>{solutionVisible ? '▾' : '▸'}&nbsp;</StyledSpan>
+        {strings.content.solution}{' '}
+        {solutionVisible ? strings.content.hide : strings.content.show}
+      </SolutionToggle>
+    )
   }
 
   function renderExerciseTask() {
-    if (node.taskLegacy) {
-      return renderArticle(node.taskLegacy, false)
-    } else if (node.taskEdtrState) {
-      return renderArticle(node.taskEdtrState.content, false)
+    if (node.task.legacy) {
+      return renderArticle(node.task.legacy, false)
+    } else if (node.task.edtrState) {
+      return renderArticle(node.task.edtrState.content, false)
     }
     return null
   }
 
   function renderInteractive() {
-    if (!node.taskEdtrState) return null
+    if (!node.task.edtrState) return null
 
-    const state = node.taskEdtrState
+    const state = node.task.edtrState
 
     if (state.interactive) {
       if (state.interactive.plugin === 'scMcExercise') {
@@ -151,7 +138,9 @@ export function Exercise({ node }: ExerciseProps) {
       <ExerciseTools>
         {renderSolutionToggle()}
 
-        {node.taskLicense && <LicenseNotice minimal data={node.taskLicense} />}
+        {node.task.license && (
+          <LicenseNotice minimal data={node.task.license} type="task" />
+        )}
         {loaded && auth.current && (
           <AuthorTools
             data={{ type: '_ExerciseInline', id: node.context.id }}
@@ -228,7 +217,7 @@ const SolutionBox = styled.div`
   padding-bottom: 10px;
   ${makeMargin}
   margin-bottom: ${(props) => props.theme.spacing.mb.block};
-  border-left: 8px solid ${(props) => props.theme.colors.lightBlueBackground};;
+  border-left: 8px solid ${(props) => props.theme.colors.lightBlueBackground};
 `
 
 const SolutionTools = styled.div`

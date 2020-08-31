@@ -26,6 +26,7 @@ import {
   PageData,
   ErrorData,
   LoggedInData,
+  LicenseDetailData,
 } from '@/data-types'
 import {
   fetcherAdditionalData,
@@ -47,6 +48,9 @@ const Search = dynamic<{}>(() =>
 )
 const Donations = dynamic<{}>(() =>
   import('@/components/pages/donations').then((mod) => mod.Donations)
+)
+const LicenseDetail = dynamic<LicenseDetailData>(() =>
+  import('@/components/pages/license-detail').then((mod) => mod.LicenseDetail)
 )
 const ErrorPage = dynamic<ErrorData>(() =>
   import('@/components/pages/error-page').then((mod) => mod.ErrorPage)
@@ -83,6 +87,15 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
   )
 
   React.useEffect(storePageData, [initialProps])
+
+  React.useEffect(() => {
+    //tiny history
+    sessionStorage.setItem(
+      'previousPathname',
+      sessionStorage.getItem('currentPathname') || ''
+    )
+    sessionStorage.setItem('currentPathname', window.location.pathname)
+  })
 
   fetcherAdditionalData.origin = initialProps.origin
   fetcherAdditionalData.instance = instanceData.lang
@@ -178,7 +191,12 @@ function renderPage(page: PageData) {
             return <Notifications />
           }
           if (page.kind === 'error') {
-            return <ErrorPage code={page.errorData.code} />
+            return (
+              <ErrorPage
+                code={page.errorData.code}
+                message={page.errorData.message}
+              />
+            )
           }
           return (
             <>
@@ -197,6 +215,9 @@ function renderPage(page: PageData) {
                   )}
                   <main>
                     {(() => {
+                      if (page.kind === 'license-detail') {
+                        return <LicenseDetail {...page.licenseData} />
+                      }
                       if (page.kind === 'single-entity') {
                         return <Entity data={page.entityData} />
                       } /* taxonomy */ else {

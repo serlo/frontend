@@ -90,6 +90,7 @@ export type PageData =
   | DonationPage
   | SearchPage
   | ErrorPage
+  | LicenseDetailPage
   | NotificationsPage
   | SingleEntityPage
   | TaxonomyPage
@@ -117,6 +118,7 @@ export interface DonationPage {
 export interface SearchPage {
   kind: 'search'
 }
+
 export interface NotificationsPage {
   kind: 'user/notifications'
 }
@@ -131,6 +133,19 @@ export interface ErrorPage {
 export interface ErrorData {
   code: number
   message?: string
+}
+
+// License detail page has some additional data
+
+export interface LicenseDetailPage extends EntityPageBase {
+  kind: 'license-detail'
+  licenseData: LicenseDetailData
+}
+
+export interface LicenseDetailData {
+  title: string
+  content: FrontendContentNode[]
+  iconHref: string
 }
 
 // There are several page elements that are common for entities:
@@ -376,14 +391,20 @@ export interface FrontendInjectionNode {
   children?: undefined
 }
 
+interface BareSolution {
+  legacy?: FrontendContentNode[]
+  edtrState?: SolutionEdtrState
+  license?: LicenseData
+}
+
 export interface FrontendExerciseNode {
   type: 'exercise'
-  taskLegacy?: FrontendContentNode[]
-  taskEdtrState?: TaskEdtrState
-  solutionLegacy?: FrontendContentNode[]
-  solutionEdtrState?: SolutionEdtrState
-  taskLicense?: LicenseData
-  solutionLicense?: LicenseData
+  task: {
+    legacy?: FrontendContentNode[]
+    edtrState?: TaskEdtrState
+    license?: LicenseData
+  }
+  solution: BareSolution
   grouped?: boolean
   positionInGroup?: number
   positionOnPage?: number
@@ -394,6 +415,17 @@ export interface FrontendExerciseNode {
   }
   children?: undefined
   href?: string
+}
+
+export interface FrontendSolutionNode {
+  type: 'solution'
+  solution: BareSolution
+
+  context: {
+    id: number
+  }
+  href?: string
+  children?: undefined
 }
 
 export interface TaskEdtrState {
@@ -491,6 +523,7 @@ export type FrontendVoidNode =
   | FrontendGeogebraNode
   | FrontendInjectionNode
   | FrontendExerciseNode
+  | FrontendSolutionNode
   | FrontendVideoNode
   | FrontendCodeNode
   | FrontendEquationsNode
@@ -530,6 +563,7 @@ export interface LicenseData {
   title: string
   url: string // to to license
   id: number // of the license
+  default: boolean
 }
 
 // Data for a course page.
@@ -585,6 +619,7 @@ export interface TaxonomyData extends TaxonomyTermBase {
   title: string
   subterms: TaxonomySubTerm[]
   exercisesContent: (FrontendExerciseNode | FrontendExerciseGroupNode)[]
+  licenseData?: LicenseData
 }
 
 export interface LoggedInData {

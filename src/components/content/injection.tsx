@@ -71,6 +71,16 @@ export function Injection({ href }: InjectionProps) {
         setLicense(pageData.entityData.licenseData)
       }
     }
+    if (pageData.kind === 'error') {
+      if (pageData.errorData.message) {
+        setValue([
+          {
+            type: 'p',
+            children: [{ type: 'text', text: pageData.errorData.message }],
+          },
+        ])
+      }
+    }
   }
 
   if (value) {
@@ -80,7 +90,9 @@ export function Injection({ href }: InjectionProps) {
     return (
       <>
         {renderArticle(renderValue, false)}
-        <StyledP>{license && <LicenseNotice minimal data={license} />}</StyledP>
+        <StyledP>
+          {license && <LicenseNotice minimal data={license} type="video" />}
+        </StyledP>
       </>
     )
   }

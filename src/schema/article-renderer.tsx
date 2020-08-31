@@ -36,7 +36,8 @@ import { StyledUl } from '../components/tags/styled-ul'
 import { theme } from '../theme'
 import type { CodeProps } from '@/components/content/code'
 import type { EquationProps } from '@/components/content/equations'
-import type { ExerciseProps } from '@/components/content/exercises/exercise'
+import { ExerciseProps } from '@/components/content/exercises/exercise'
+import { Solution } from '@/components/content/exercises/solution'
 import type { GeogebraProps } from '@/components/content/geogebra'
 import type { InjectionProps } from '@/components/content/injection'
 import { Lazy } from '@/components/content/lazy'
@@ -307,7 +308,9 @@ function renderElement(props: RenderElementProps): React.ReactNode {
     return (
       <ExerciseGroup
         license={
-          element.license && <LicenseNotice minimal data={element.license} />
+          element.license && (
+            <LicenseNotice minimal data={element.license} type={element.type} />
+          )
         }
         groupIntro={renderArticle(element.content, false)}
         positionOnPage={element.positionOnPage}
@@ -317,6 +320,9 @@ function renderElement(props: RenderElementProps): React.ReactNode {
         {children}
       </ExerciseGroup>
     )
+  }
+  if (element.type === 'solution') {
+    return <Solution node={element.solution} />
   }
   if (element.type === 'video') {
     return (

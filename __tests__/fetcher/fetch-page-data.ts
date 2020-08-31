@@ -40,7 +40,7 @@ test('User', async () => {
   )
   const response = (await fetchPageData('/de/1')) as ErrorPage
   expect(response.kind).toEqual('error')
-  expect(response.errorData.code).toEqual(200)
+  expect(response.errorData.code).toEqual(404)
 })
 
 test('Page', async () => {
