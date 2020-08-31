@@ -4,8 +4,7 @@ import {
   EdtrState,
   SlateBlockMock,
   TextNodeMock,
-  EdtrPluginEquations,
-  EdtrPluginLayout,
+  UnsupportedEdtrState,
 } from './edtr-io-types'
 import { MathProps } from '@/components/content/math'
 import {
@@ -16,43 +15,34 @@ import {
 
 const colors: FrontendTextColor[] = ['blue', 'green', 'orange']
 
-function isEdtrState(
-  node: EdtrState | SlateBlockMock | TextNodeMock
-): node is EdtrState {
+function isEdtrState(node: ConvertData): node is EdtrState {
   return (node as EdtrState).plugin !== undefined
 }
 
-function isSlateBlock(
-  node: EdtrState | SlateBlockMock | TextNodeMock
-): node is SlateBlockMock {
+function isSlateBlock(node: ConvertData): node is SlateBlockMock {
   return (node as SlateBlockMock).type !== undefined
 }
 
-function isTextNode(
-  node: EdtrState | SlateBlockMock | TextNodeMock
-): node is TextNodeMock {
+function isTextNode(node: ConvertData): node is TextNodeMock {
   return (node as TextNodeMock).text !== undefined
 }
 
+type ConvertData =
+  | EdtrState
+  | SlateBlockMock
+  | TextNodeMock
+  | UnsupportedEdtrState
+
 export function convert(
-  node?:
-    | EdtrState
-    | SlateBlockMock
-    | TextNodeMock
-    | EdtrState[]
-    | SlateBlockMock[]
-    | TextNodeMock[]
+  node?: ConvertData | ConvertData[]
 ): FrontendContentNode[] {
   // compat: no or empty node, we ignore
-  if (!node || Object.keys(node).length === 0) {
+  if (node === undefined || Object.keys(node).length === 0) {
     // console.log('e: node EMPTY')
     return []
   }
 
   if (Array.isArray(node)) {
-    // TODO: investigate
-    // @ts-expect-error
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return node.flatMap(convert)
   }
 
@@ -114,8 +104,7 @@ function convertPlugin(node: EdtrState) {
           },
           {
             type: 'spoiler-body',
-            //TODO: investigate why registering as string
-            children: convert((node.state.content as unknown) as EdtrState),
+            children: convert((node.state.content as unknown) as EdtrState), //see edtr-io-types.ts
           },
         ],
       },
@@ -131,14 +120,12 @@ function convertPlugin(node: EdtrState) {
           {
             type: 'col',
             size: 100 - width,
-            //TODO: investigate why registering as string
-            children: convert((node.state.explanation as unknown) as EdtrState),
+            children: convert((node.state.explanation as unknown) as EdtrState), //see edtr-io-types.ts
           },
           {
             type: 'col',
             size: width,
-            //TODO: investigate why registering as string
-            children: convert((node.state.multimedia as unknown) as EdtrState),
+            children: convert((node.state.multimedia as unknown) as EdtrState), //see edtr-io-types.ts
           },
         ],
       },
@@ -148,7 +135,7 @@ function convertPlugin(node: EdtrState) {
     return [
       {
         type: 'row',
-        children: (node as EdtrPluginLayout).state.map((child) => {
+        children: node.state.map((child) => {
           const children = convert(child.child)
           // compat: math align left
           children.forEach((child) => {
@@ -169,7 +156,7 @@ function convertPlugin(node: EdtrState) {
     return [
       {
         type: 'injection',
-        href: (node.state as unknown) as string,
+        href: node.state,
       },
     ]
   }
@@ -210,74 +197,13 @@ function convertPlugin(node: EdtrState) {
     }
     return [{ type: 'geogebra', id }]
   }
-
-  // TODO handle this manually in the fetcher!
-  /*if (node.plugin === 'exercise') {
-    return [
-      {
-        type: '@edtr-io/exercise',
-        state: {
-          content: convert((node.state as EditorStateDummy).content!),
-          interactive: (convert(
-            (node.state as EditorStateDummy).interactive
-          )[0] as unknown) as ExerciseChildData['state']['interactive'],
-        },
-      },
-    ]
-  }*/
-  // TODO handle this manually in the fetcher!
-  /*if (node.plugin === 'solution') {
-    return [
-      {
-        type: '@edtr-io/solution',
-        state: {
-          prerequisite: ((node.state as unknown) as SolutionChildData['state'])
-            .prerequisite,
-          strategy: convert((node.state as EditorStateDummy).strategy),
-          steps: convert((node.state as EditorStateDummy).steps),
-        },
-      },
-    ]
-  }
-  if (node.plugin === 'scMcExercise') {
-    return [
-      {
-        plugin: 'scMcExercise',
-        state: {
-          //@ts-expect-error
-          isSingleChoice: (node.state as EditorStateDummy).isSingleChoice,
-          answers: (node.state as EditorStateDummy).answers.map((answer) => {
-            return {
-              isCorrect: answer.isCorrect,
-              content: convert(answer.content!),
-              feedback: convert(answer.feedback),
-            }
-          }),
-        },
-      },
-    ]
-  }
-  if (node.plugin === 'inputExercise') {
-    return [
-      {
-        plugin: 'inputExercise',
-        state: {
-          //@ts-expect-error
-          type: (node.state as EditorStateDummy).type,
-          unit: (node.state as EditorStateDummy).unit,
-          answers: (node.state as EditorStateDummy).answers,
-        },
-      },
-    ]
-  }*/
-
   if (node.plugin === 'equations') {
-    const steps = (node as EdtrPluginEquations).state.steps.map((step) => {
+    const steps = node.state.steps.map((step) => {
       return {
         left: convert(step.left),
         // @ts-expect-error
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        sign: step.sign, //TODO: probably a bug
+        sign: step.sign, //TODO: Investigate, probably a bug
         right: convert(step.right),
         transform: convert(step.transform),
       }
