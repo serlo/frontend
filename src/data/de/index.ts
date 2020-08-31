@@ -54,13 +54,13 @@ export const instanceData = {
       hide: "ausblenden",
       prerequisite: "Für diese Aufgabe benötigst Du folgendes Grundwissen:",
       solution: "Lösung",
-      task: 'Task',
-      exerciseGroup: 'Exercise group',
-      right: 'Right',
-      wrong: 'Wrong',
-      check: 'Check',
-      yourAnswer: 'Your answer…',
-      chooseOption: 'Click on one of the options.'
+      task: "Aufgabe",
+      exerciseGroup: "Aufgabengruppe",
+      right: "Richtig",
+      wrong: "Falsch",
+      check: "Stimmt's?",
+      yourAnswer: "Deine Antwort…",
+      chooseOption: "Klicke auf eine der Optionen."
     },
     cookie: {
       part1: "Mit der Nutzung dieser Webseite erklärst du dich mit unserer",
@@ -89,14 +89,14 @@ export const instanceData = {
       placeholderReply: "Deine Antwort…"
     },
     errors: {
-      title: '😬 Websites make mistakes sometimes…',
-      defaultMessage: 'So sorry, we ran into a problem loading this content.',
-      temporary: 'The good news? The problem seems to be temporary, so please try again later.',
-      permanent: 'We will see what we can do about that… ',
-      typeNotSupported: 'Please try reloading this page.',
-      refreshNow: 'Refresh now',
-      backToPrevious: 'Back to previous page',
-      backToHome: 'To our home page'
+      title: "😬 Auch Webseiten machen mal Fehler…",
+      defaultMessage: "Es tut uns leid, beim Laden dieses Inhalts ging was schief.",
+      temporary: "Die gute Nachricht? Das Problem scheint temporär zu sein, bitte versuch es später noch einmal.",
+      permanent: "Wir werden sehen, was wir da machen können…",
+      typeNotSupported: "Bitte versuche diese Seite noch einmal zu laden.",
+      refreshNow: "Jetzt aktualisieren",
+      backToPrevious: "Zurück zur vorherigen Seite",
+      backToHome: "Zur Startseite"
     }
   }
 };
