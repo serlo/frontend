@@ -1,3 +1,7 @@
+import { rest } from 'msw'
+import { setupServer } from 'msw/node'
+import nodeFetch from 'node-fetch'
+
 import {
   articleUuidMock,
   taxonomyTermUuidMock,
@@ -11,11 +15,7 @@ import {
   pageUuidMock,
   exerciseUuidMock,
   coursePageUuidMock,
-} from '__fixtures__/api_mockdata'
-import { rest } from 'msw'
-import { setupServer } from 'msw/node'
-import nodeFetch from 'node-fetch'
-
+} from '../../__fixtures__/api_mockdata'
 import { endpoint } from '@/api/endpoint'
 import { ErrorPage, SingleEntityPage, TaxonomyPage } from '@/data-types'
 import { fetchPageData } from '@/fetcher/fetch-page-data'
