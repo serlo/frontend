@@ -1,3 +1,6 @@
+//TODO: Prefer manually crafted data over long API answers for tests
+// e.g. JSON.stringify([[{ col: 24, content: "## Hello World"}]])
+
 export const articleUuidMock = {
   __typename: 'Article',
   id: 27801,
@@ -15,27 +18,8 @@ export const articleUuidMock = {
         navigation: {
           path: {
             nodes: [
-              {
-                label: 'Mathematik',
-                url: '/mathe',
-              },
-              {
-                label: 'Alle Themen',
-                url: '/mathe/5',
-              },
-              {
-                label: 'Zahlen und Größen',
-                url: '/mathe/zahlen-größen',
-              },
-              {
-                label: 'Bruchrechnen und Dezimalzahlen',
-                url: '/mathe/zahlen-größen/bruchrechnen-dezimalzahlen',
-              },
-              {
-                label: 'Dezimalbrüche',
-                url:
-                  '/mathe/zahlen-größen/bruchrechnen-dezimalzahlen/dezimalbrüche',
-              },
+              { label: 'Mathematics', url: '/math' },
+              { label: 'All topics', url: '/math/1' },
             ],
           },
         },
@@ -44,173 +28,8 @@ export const articleUuidMock = {
         navigation: {
           path: {
             nodes: [
-              {
-                label: 'Mathematik',
-                url: '/mathe',
-              },
-              {
-                label: 'Realschule',
-                url: '/mathe/deutschland/bayern/realschule',
-              },
-              {
-                label: 'Klasse 6',
-                url: '/mathe/deutschland/bayern/realschule/klasse-6',
-              },
-              {
-                label: 'Dezimalbrüche',
-                url:
-                  '/mathe/deutschland/bayern/realschule/klasse-6/dezimalbrüche',
-              },
-            ],
-          },
-        },
-      },
-      {
-        navigation: {
-          path: {
-            nodes: [
-              {
-                label: 'Mathematik',
-                url: '/mathe',
-              },
-              {
-                label: 'Mittelschule (Hauptschule)',
-                url: '/mathe/deutschland/bayern/mittelschule',
-              },
-              {
-                label: 'Klasse 6',
-                url: '/mathe/deutschland/bayern/mittelschule/klasse-6',
-              },
-              {
-                label: 'Dezimalbrüche',
-                url:
-                  '/mathe/deutschland/bayern/mittelschule/klasse-6/dezimalbrüche',
-              },
-            ],
-          },
-        },
-      },
-      {
-        navigation: {
-          path: {
-            nodes: [
-              {
-                label: 'Mathematik',
-                url: '/mathe',
-              },
-              {
-                label: 'Mittelschule (Hauptschule)',
-                url: '/mathe/deutschland/bayern/mittelschule',
-              },
-              {
-                label: 'Klasse 7',
-                url: '/mathe/deutschland/bayern/mittelschule/klasse-7',
-              },
-              {
-                label: 'Dezimalbrüche',
-                url:
-                  '/mathe/deutschland/bayern/mittelschule/klasse-7/dezimalbrüche',
-              },
-            ],
-          },
-        },
-      },
-      {
-        navigation: {
-          path: {
-            nodes: [
-              {
-                label: 'Mathematik',
-                url: '/mathe',
-              },
-              {
-                label: 'Mittelschule (Hauptschule)',
-                url: '/mathe/deutschland/bayern/mittelschule',
-              },
-              {
-                label: 'Klasse 7',
-                url: '/mathe/deutschland/bayern/mittelschule/klasse-7',
-              },
-              {
-                label: 'Rationale Zahlen ',
-                url:
-                  '/mathe/deutschland/bayern/mittelschule/klasse-7/proportionalität/rationale-zahlen',
-              },
-            ],
-          },
-        },
-      },
-      {
-        navigation: {
-          path: {
-            nodes: [
-              {
-                label: 'Mathematik',
-                url: '/mathe',
-              },
-              {
-                label: 'Alle Themen',
-                url: '/mathe/5',
-              },
-              {
-                label: 'Deutschland',
-                url: '/mathe/deutschland',
-              },
-              {
-                label: 'Bayern',
-                url: '/mathe/deutschland/bayern',
-              },
-              {
-                label: 'Mittelschule M-Zug',
-                url: '/mathe/deutschland/bayern/mittelschule-m-zug',
-              },
-              {
-                label: 'Klasse 7',
-                url: '/mathe/deutschland/bayern/mittelschule-m-zug/klasse-7',
-              },
-              {
-                label: 'Dezimalbrüche',
-                url:
-                  '/mathe/deutschland/bayern/mittelschule-m-zug/klasse-7/dezimalbrüche',
-              },
-            ],
-          },
-        },
-      },
-      {
-        navigation: {
-          path: {
-            nodes: [
-              {
-                label: 'Mathematik',
-                url: '/mathe',
-              },
-              {
-                label: 'Alle Themen',
-                url: '/mathe/5',
-              },
-              {
-                label: 'Deutschland',
-                url: '/mathe/deutschland',
-              },
-              {
-                label: 'Schleswig-Holstein',
-                url: '/mathe/deutschland/schleswig-holstein',
-              },
-              {
-                label: 'Gymnasium G9',
-                url: '/mathe/deutschland/schleswig-holstein/gymnasium-g9',
-              },
-              {
-                label: '6. Klasse',
-                url:
-                  '/mathe/deutschland/schleswig-holstein/gymnasium-g9/6.-klasse',
-              },
-              {
-                label: 'Dezimalzahlen',
-                url:
-                  '/mathe/deutschland/schleswig-holstein/gymnasium-g9/6.-klasse/dezimalzahlen',
-              },
+              { label: 'Mathematics', url: '/math' },
+              { label: 'Class 6', url: '/math/class-6' },
             ],
           },
         },

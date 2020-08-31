@@ -31,47 +31,39 @@ describe('edtr io plugins', () => {
   //TODO: Add test for equations in equations PR
 
   describe('plugin: image', () => {
-    test('default, with "src" and "alt" ', () => {
+    test('default, return with "src" set', () => {
       const result = convert({
         plugin: 'image',
         state: {
           src: 'https://assets.serlo.org/logo.jpg',
-          alt: 'Lernen im eigenen Tempo mit serlo.org',
         },
       })
       expect(result).toEqual([
         {
           type: 'img',
           src: 'https://assets.serlo.org/logo.jpg',
-          alt: 'Lernen im eigenen Tempo mit serlo.org',
         },
       ])
     })
-    test('with maxWidth', () => {
+    test('with "maxWidth"', () => {
       const result = convert({
         plugin: 'image',
         state: {
           src: 'https://assets.serlo.org/logo.jpg',
-          alt: 'Lernen im eigenen Tempo mit serlo.org',
           maxWidth: true,
         },
       })
       expect(result[0].maxWidth).toBe(true)
     })
-    test('alt missing', () => {
+    test('with alt attribute', () => {
       const result = convert({
         plugin: 'image',
         state: {
           src: 'https://assets.serlo.org/logo.jpg',
+          alt: 'Description',
         },
       })
-      expect(result).toEqual([
-        {
-          type: 'img',
-          src: 'https://assets.serlo.org/logo.jpg',
-          alt: undefined,
-        },
-      ])
+      expect(result[0].alt).toBe('Description')
     })
   })
 
@@ -112,27 +104,12 @@ describe('edtr io plugins', () => {
             },
             width: 6,
           },
-          {
-            child: {
-              plugin: 'rows',
-              state: [
-                {
-                  plugin: 'text',
-                  state: [],
-                },
-              ],
-            },
-            width: 6,
-          },
         ],
       })
       expect(result).toEqual([
         {
           type: 'row',
-          children: [
-            { type: 'col', size: 6, children: [] },
-            { type: 'col', size: 6, children: [] },
-          ],
+          children: [{ type: 'col', size: 6, children: [] }],
         },
       ])
     })
@@ -153,28 +130,9 @@ describe('edtr io plugins', () => {
             },
             width: 6,
           },
-          {
-            child: {
-              plugin: 'rows',
-              state: [],
-            },
-            width: 6,
-          },
         ],
       })
-      expect(result).toEqual([
-        {
-          type: 'row',
-          children: [
-            {
-              type: 'col',
-              size: 6,
-              children: [{ type: 'math', alignLeft: true }],
-            },
-            { type: 'col', size: 6, children: [] },
-          ],
-        },
-      ])
+      expect(result[0].children[0].children[0].alignLeft).toBe(true)
     })
   })
 
@@ -197,6 +155,7 @@ describe('edtr io plugins', () => {
       const result = convert({ plugin: 'geogebra', state: 'jybewqhg' })
       expect(result).toEqual([{ type: 'geogebra', id: 'jybewqhg' }])
     })
+
     test('compat: full url', () => {
       const result = convert({
         plugin: 'geogebra',
@@ -205,7 +164,7 @@ describe('edtr io plugins', () => {
       expect(result).toEqual([{ type: 'geogebra', id: 'jybewqhg' }])
     })
 
-    //TODO: return empty instead of faulty url? should probably be checkd in edtr
+    //TODO: return empty instead of faulty url? should probably be checked in edtr
     test('no geogebra url', () => {
       const result = convert({
         plugin: 'geogebra',
@@ -230,7 +189,7 @@ describe('edtr io plugins', () => {
   })
 
   describe('plugin: multimediaExplanation', () => {
-    test('manual width', () => {
+    test('with width value: returns calulated sizes', () => {
       const result = convert({
         plugin: 'multimedia',
         state: {
@@ -267,7 +226,7 @@ describe('edtr io plugins', () => {
         },
       ])
     })
-    test('no width', () => {
+    test('no width value provided: returns 50 / 50 size', () => {
       const result = convert({
         plugin: 'multimedia',
         state: {
@@ -299,7 +258,7 @@ describe('edtr io plugins', () => {
     })
   })
 
-  test('plugin: rows', () => {
+  test('plugin: rows just returns children', () => {
     const result = convert({
       plugin: 'rows',
       state: [
@@ -340,7 +299,7 @@ describe('edtr io plugins', () => {
     const result = convert({
       plugin: 'spoiler',
       state: {
-        title: 'Mehr Infos',
+        title: 'More info',
         content: { plugin: 'rows', state: [] },
       },
     })
@@ -350,7 +309,7 @@ describe('edtr io plugins', () => {
         children: [
           {
             type: 'spoiler-title',
-            children: [{ type: 'text', text: 'Mehr Infos' }],
+            children: [{ type: 'text', text: 'More info' }],
           },
           { type: 'spoiler-body', children: [] },
         ],
@@ -361,13 +320,7 @@ describe('edtr io plugins', () => {
   test('plugin: table', () => {
     const result = convert({
       plugin: 'table',
-      state:
-        '|||\n' +
-        '|||\n' +
-        '|Woche 1|Einstieg in die redaktionelle Arbeit|\n' +
-        '|Woche 2|Vertiefung der redaktionellen Arbeit|\n' +
-        '|Woche 3|Mitarbeit im Projektmanagement der Redaktion|\n' +
-        '|Woche 4|vertiefte Mitarbeit im Projektmanagement der Redaktion|',
+      state: '|||\n|||\n|Week 1|Intro into something|\n',
     })
 
     expect(result).toEqual([
@@ -388,7 +341,7 @@ describe('edtr io plugins', () => {
               {
                 type: 'td',
                 children: [
-                  { type: 'p', children: [{ type: 'text', text: 'Woche 1' }] },
+                  { type: 'p', children: [{ type: 'text', text: 'Week 1' }] },
                 ],
               },
               {
@@ -399,83 +352,7 @@ describe('edtr io plugins', () => {
                     children: [
                       {
                         type: 'text',
-                        text: 'Einstieg in die redaktionelle Arbeit',
-                      },
-                    ],
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            type: 'tr',
-            children: [
-              {
-                type: 'td',
-                children: [
-                  { type: 'p', children: [{ type: 'text', text: 'Woche 2' }] },
-                ],
-              },
-              {
-                type: 'td',
-                children: [
-                  {
-                    type: 'p',
-                    children: [
-                      {
-                        type: 'text',
-                        text: 'Vertiefung der redaktionellen Arbeit',
-                      },
-                    ],
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            type: 'tr',
-            children: [
-              {
-                type: 'td',
-                children: [
-                  { type: 'p', children: [{ type: 'text', text: 'Woche 3' }] },
-                ],
-              },
-              {
-                type: 'td',
-                children: [
-                  {
-                    type: 'p',
-                    children: [
-                      {
-                        type: 'text',
-                        text: 'Mitarbeit im Projektmanagement der Redaktion',
-                      },
-                    ],
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            type: 'tr',
-            children: [
-              {
-                type: 'td',
-                children: [
-                  { type: 'p', children: [{ type: 'text', text: 'Woche 4' }] },
-                ],
-              },
-              {
-                type: 'td',
-                children: [
-                  {
-                    type: 'p',
-                    children: [
-                      {
-                        type: 'text',
-                        text:
-                          'vertiefte Mitarbeit im Projektmanagement der Redaktion',
+                        text: 'Intro into something',
                       },
                     ],
                   },
@@ -500,14 +377,10 @@ describe('edtr io plugins', () => {
             level: 2,
             children: [],
           },
-          { type: 'p', children: [] },
         ],
       },
     })
-    expect(result).toEqual([
-      { type: 'h', level: 2, children: [] },
-      { type: 'p', children: [] },
-    ])
+    expect(result).toEqual([{ type: 'h', level: 2, children: [] }])
   })
 
   test('plugin: video', () => {
@@ -526,38 +399,43 @@ describe('edtr io plugins', () => {
 
 describe('text types', () => {
   describe('just text', () => {
-    test('default with umlauts', () => {
-      const result = convert({ text: ' auf die Straße. äÖü"' })
+    test('default', () => {
+      const result = convert({ text: 'onto the street' })
 
       expect(result).toEqual([
         {
           type: 'text',
-          text: ' auf die Straße. äÖü"',
-          em: undefined,
-          strong: undefined,
-          color: undefined,
+          text: 'onto the street',
         },
       ])
     })
-    test('empty sting', () => {
+    test('with umlauts and special chars', () => {
+      const result = convert({ text: 'Rösängärtüß>"&´' })
+
+      expect(result).toEqual([
+        {
+          type: 'text',
+          text: 'Rösängärtüß>"&´',
+        },
+      ])
+    })
+    test('returns [] on empty string', () => {
       const result = convert({ text: '' })
       expect(result).toEqual([])
     })
     test('with color', () => {
       const result = convert({ text: 'colored', color: 0 })
-      expect(result).toEqual([{ type: 'text', text: 'colored', color: 'blue' }])
+      expect(result[0].color).toBe('blue')
     })
     test('strong', () => {
       const result = convert({ text: 'bold text', strong: true })
-      expect(result).toEqual([
-        { type: 'text', text: 'bold text', strong: true },
-      ])
+      expect(result[0].strong).toBe(true)
     })
     test('italic', () => {
       const result = convert({ text: 'italic text', em: true })
-      expect(result).toEqual([{ type: 'text', text: 'italic text', em: true }])
+      expect(result[0].em).toBe(true)
     })
-    test('all together now', () => {
+    test('strong, em and colored, woohoo', () => {
       const result = convert({
         text: 'wow text',
         strong: true,
@@ -580,15 +458,12 @@ describe('text types', () => {
     test('default', () => {
       const result = convert({
         type: 'p',
-        children: [{ text: 'test' }, { text: 'test2' }],
+        children: [{ text: 'test' }],
       })
       expect(result).toEqual([
         {
           type: 'p',
-          children: [
-            { type: 'text', text: 'test' },
-            { type: 'text', text: 'test2' },
-          ],
+          children: [{ type: 'text', text: 'test' }],
         },
       ])
     })
@@ -613,6 +488,7 @@ describe('text types', () => {
         ])
       })
     })
+
     //compat: unwrap ul/ol from p if only child -> can't reproduce, does not seem to happen
 
     describe('compat: handle newlines in text and math', () => {
@@ -664,7 +540,7 @@ describe('text types', () => {
   })
 
   describe('text-type: h', () => {
-    test('default h2', () => {
+    test('default h1', () => {
       const result = convert({
         type: 'h',
         level: 1,
@@ -674,28 +550,20 @@ describe('text types', () => {
         { type: 'h', level: 1, children: [{ type: 'text', text: 'H1' }] },
       ])
     })
-    test('level higher than 5', () => {
+    test('level higher than 5: returns level 5', () => {
       const result = convert({
         type: 'h',
         level: 6,
         children: [{ text: 'H6 maybe' }],
       })
-      expect(result).toEqual([
-        { type: 'h', level: 5, children: [{ type: 'text', text: 'H6 maybe' }] },
-      ])
+      expect(result[0].level).toBe(5)
     })
-    test('no level set', () => {
+    test('no level set: returns level 5', () => {
       const result = convert({
         type: 'h',
         children: [{ text: 'Hwhatever' }],
       })
-      expect(result).toEqual([
-        {
-          type: 'h',
-          level: 5,
-          children: [{ type: 'text', text: 'Hwhatever' }],
-        },
-      ])
+      expect(result[0].level).toBe(5)
     })
   })
 
