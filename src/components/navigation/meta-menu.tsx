@@ -28,7 +28,7 @@ export function MetaMenu({ data }: MetaMenuProps) {
             return (
               <li key={entry.url} ref={entry.active ? activeRef : null}>
                 {renderLink(entry, !!entry.active)}
-                {renderSpacer(i)}
+                {/* {renderSpacer(i)} */}
               </li>
             )
           })}
@@ -39,25 +39,20 @@ export function MetaMenu({ data }: MetaMenuProps) {
 
   function renderLink(entry: SecondaryNavigationEntry, active: boolean) {
     return (
-      <StyledLink href={entry.url}>
+      <StyledLink href={entry.url} active={active}>
         <ButtonStyle active={active}>{entry.title}</ButtonStyle>
       </StyledLink>
-    )
-  }
-
-  function renderSpacer(i: number) {
-    return (
-      <StyledLink
-        aria-hidden="true"
-        spacer
-        lastChild={i === data.length - 1}
-        as="span"
-      ></StyledLink>
     )
   }
 }
 
 const MetaMenuWrapper = styled.nav`
+  @media (max-width: ${(props) => props.theme.breakpoints.md}) {
+    overflow-x: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
   @media (min-width: ${(props) => props.theme.breakpoints.md}) {
     position: absolute;
     z-index: 2;
@@ -81,19 +76,16 @@ const List = styled.ul`
   @media (max-width: ${(props) => props.theme.breakpoints.md}) {
     font-size: 0.9rem;
 
-    margin: 20px 8px;
-
-    overflow-x: auto;
-    overflow-y: hidden;
+    padding: 12px 16px 0 16px;
+    display: inline-block;
     white-space: nowrap;
-
-    border-radius: 10px;
 
     & li {
       display: inline-block;
     }
 
-    border: 1px solid ${(props) => props.theme.colors.lightBlueBackground};
+    /* border: 3px solid ${(props) =>
+      props.theme.colors.lightBlueBackground}; */
   }
 `
 
@@ -105,22 +97,17 @@ interface LinkProps {
 
 const StyledLink = styled(Link)<LinkProps>`
   @media (max-width: ${(props) => props.theme.breakpoints.md}) {
-    text-decoration: none;
-    padding: 18px 7px;
+    text-decoration: none !important;
+    padding: 3px 0;
+    margin-right: 1rem;
     display: inline-block;
     font-weight: bold;
     color: ${(props) => props.theme.colors.brand};
-
-    ${(props) =>
-      props.spacer &&
-      css`
-        border-right: ${props.lastChild
-          ? 'none'
-          : `1px solid ${props.theme.colors.lightgray}`};
-        vertical-align: middle;
-        padding: 15px 0;
-        padding-right: ${props.lastChild ? '20px' : '0'};
-      `};
+    border-bottom: 2px solid
+      ${(props) =>
+        props.active
+          ? props.theme.colors.brand
+          : props.theme.colors.lightBlueBackground};
   }
   @media (min-width: ${(props) => props.theme.breakpoints.md}) {
     display: ${(props) => (props.spacer ? 'none' : 'block')};
@@ -138,31 +125,30 @@ const ButtonStyle = styled.span<{ active?: boolean }>`
       color: #fff;
       background-color: ${(props) => props.theme.colors.brand};
     }
-  }
-  ${(props) =>
-    props.active &&
-    css`
-      &,
-      &:hover,
-      ${StyledLink}:hover & {
-        color: #333;
-        @media (min-width: ${(props) => props.theme.breakpoints.md}) {
-          background-color: ${(props) =>
-            props.theme.colors.lightBlueBackground};
+    ${(props) =>
+      props.active &&
+      css`
+        &,
+        &:hover,
+        ${StyledLink}:hover & {
+          color: #333;
+          @media (min-width: ${(props) => props.theme.breakpoints.md}) {
+            background-color: ${(props) =>
+              props.theme.colors.lightBlueBackground};
+          }
         }
-      }
-    `};
+      `}
+  }
 `
 
 const StyledGradient = styled.div`
   @media (max-width: ${(props) => props.theme.breakpoints.md}) {
     position: absolute;
     pointer-events: none;
-    right: 9px;
-    margin-top: 6px;
+    right: 0;
     z-index: 1;
-    height: 44px;
-    width: 65px;
+    height: 58px;
+    width: 60px;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
     background: linear-gradient(
