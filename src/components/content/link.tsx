@@ -68,8 +68,9 @@ export function Link({
   const isAbsolute = href.indexOf('//') > -1
   const isExternal = isAbsolute && !href.includes('.serlo.org')
   const isAnchor = href.startsWith('#') || href.startsWith('/#')
+  const isMailto = href.startsWith('mailto:')
 
-  if (isExternal || noCSR || isAnchor) return renderLink(href)
+  if (isExternal || noCSR || isAnchor || isMailto) return renderLink(href)
 
   //at this point only internal links should be left
 
