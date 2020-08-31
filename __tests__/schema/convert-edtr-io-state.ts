@@ -2,29 +2,23 @@
 
 import { convert } from '@/schema/convert-edtr-io-state'
 
-function log(result) {
-  console.log('-------------------------')
-  console.log(JSON.stringify(result))
-  console.log('-------------------------')
-}
-
-describe('general compat cases / sanity checks', () => {
-  test('undefined node, return empty array', () => {
+describe('returns an empty array when unsupported values are given', () => {
+  test('argument is undefined', () => {
     const result = convert(undefined)
     expect(result).toEqual([])
   })
 
-  test('node is empty object, return empty array', () => {
+  test('argument is empty object', () => {
     const result = convert({})
     expect(result).toEqual([])
   })
 
-  test('unsupported plugin, return empty array', () => {
+  test('argument is unsupported plugin', () => {
     const result = convert({ plugin: 'woah-nice-plugin', state: [] })
     expect(result).toEqual([])
   })
 
-  test('unsupported text type, return empty array', () => {
+  test('argument is unsupported text type', () => {
     const result = convert({ type: 'super-bold', children: [] })
     expect(result).toEqual([])
   })
@@ -34,26 +28,22 @@ describe('edtr io plugins', () => {
   // plugin: files currently not supported in editor or frontend
   // plugin: inputExercise not handled in converter
   // plugin: scMcExercise not handled in converter
-
-  //TODO: Add test for Equations
+  //TODO: Add test for equations in equations PR
 
   describe('plugin: image', () => {
-    test('default', () => {
+    test('default, with "src" and "alt" ', () => {
       const result = convert({
         plugin: 'image',
         state: {
-          src:
-            'https://assets.serlo.org/5c77cd8b27d83_b56b69f307447a110a5ae915e517c73e385c37e8.jpg',
+          src: 'https://assets.serlo.org/logo.jpg',
           alt: 'Lernen im eigenen Tempo mit serlo.org',
         },
       })
       expect(result).toEqual([
         {
           type: 'img',
-          src:
-            'https://assets.serlo.org/5c77cd8b27d83_b56b69f307447a110a5ae915e517c73e385c37e8.jpg',
+          src: 'https://assets.serlo.org/logo.jpg',
           alt: 'Lernen im eigenen Tempo mit serlo.org',
-          maxWidth: undefined,
         },
       ])
     })
@@ -61,35 +51,24 @@ describe('edtr io plugins', () => {
       const result = convert({
         plugin: 'image',
         state: {
-          src:
-            'https://assets.serlo.org/5c77cd8b27d83_b56b69f307447a110a5ae915e517c73e385c37e8.jpg',
+          src: 'https://assets.serlo.org/logo.jpg',
           alt: 'Lernen im eigenen Tempo mit serlo.org',
           maxWidth: true,
         },
       })
-      expect(result).toEqual([
-        {
-          type: 'img',
-          src:
-            'https://assets.serlo.org/5c77cd8b27d83_b56b69f307447a110a5ae915e517c73e385c37e8.jpg',
-          alt: 'Lernen im eigenen Tempo mit serlo.org',
-          maxWidth: true,
-        },
-      ])
+      expect(result[0].maxWidth).toBe(true)
     })
     test('alt missing', () => {
       const result = convert({
         plugin: 'image',
         state: {
-          src:
-            'https://assets.serlo.org/5c77cd8b27d83_b56b69f307447a110a5ae915e517c73e385c37e8.jpg',
+          src: 'https://assets.serlo.org/logo.jpg',
         },
       })
       expect(result).toEqual([
         {
           type: 'img',
-          src:
-            'https://assets.serlo.org/5c77cd8b27d83_b56b69f307447a110a5ae915e517c73e385c37e8.jpg',
+          src: 'https://assets.serlo.org/logo.jpg',
           alt: undefined,
         },
       ])

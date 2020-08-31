@@ -1,7 +1,3 @@
-import { rest } from 'msw'
-import { setupServer } from 'msw/node'
-import nodeFetch from 'node-fetch'
-
 import {
   articleUuidMock,
   taxonomyTermUuidMock,
@@ -15,7 +11,11 @@ import {
   pageUuidMock,
   exerciseUuidMock,
   coursePageUuidMock,
-} from './api_mockdata'
+} from '__fixtures__/api_mockdata'
+import { rest } from 'msw'
+import { setupServer } from 'msw/node'
+import nodeFetch from 'node-fetch'
+
 import { endpoint } from '@/api/endpoint'
 import { ErrorPage, SingleEntityPage, TaxonomyPage } from '@/data-types'
 import { fetchPageData } from '@/fetcher/fetch-page-data'
@@ -37,36 +37,24 @@ afterAll(() => {
   server.close()
 })
 
-function serverPostUuid(uuid: object) {
-  server.use(
-    rest.post(endpoint, (req, res, ctx) => {
-      return res(
-        ctx.json({
-          data: {
-            uuid: uuid,
-          },
-        })
-      )
-    })
-  )
-}
-
-describe('fetcher: check examples for all supported typenames', () => {
-  test('typename: User', async () => {
-    serverPostUuid({
+describe('return an error for unsupported types', () => {
+  test('typename: User should return error because its not currently supported by the frontend', async () => {
+    givenApiReturnsUuid({
       __typename: 'User',
       id: 1,
     })
-    const response = (await fetchPageData('/de/1')) as ErrorPage
-    expect(response.kind).toBe('error')
-    expect(response.errorData.code).toBe(404)
+    const pageData = (await fetchPageData('/de/1')) as ErrorPage
+    expect(pageData.kind).toBe('error')
+    expect(pageData.errorData.code).toBe(404)
   })
+})
 
+describe('check all supported typenames with stored api-data', () => {
   test('typename: Page', async () => {
-    serverPostUuid(pageUuidMock)
-    const response = (await fetchPageData('/de/serlo')) as SingleEntityPage
+    givenApiReturnsUuid(pageUuidMock)
+    const pageData = (await fetchPageData('/de/serlo')) as SingleEntityPage
 
-    expect(response.secondaryNavigationData).toEqual([
+    expect(pageData.secondaryNavigationData).toEqual([
       {
         title: 'So funktioniert die Lernplattform',
         url: '/81862',
@@ -79,31 +67,31 @@ describe('fetcher: check examples for all supported typenames', () => {
       },
     ])
 
-    expect(response.metaData?.title).toBe('Über Serlo - lernen mit Serlo!')
+    expect(pageData.metaData?.title).toBe('Über Serlo - lernen mit Serlo!')
 
-    expect(response.metaData?.contentType).toBe('page')
-    expect(response.metaData?.metaDescription).toBe(
+    expect(pageData.metaData?.contentType).toBe('page')
+    expect(pageData.metaData?.metaDescription).toBe(
       'Serlo.org bietet einfache Erklärungen, Kurse, Lernvideos, Übungen und Musterlösungen mit denen Schüler*innen und Studierende nach ihrem …'
     )
-    expect(response.metaData?.metaImage).toBe(
+    expect(pageData.metaData?.metaImage).toBe(
       `https://de.${serloDomain}/_assets/img/meta/serlo.jpg`
     )
-    assertCorrectHorizonDataFormat(response)
+    assertCorrectHorizonDataFormat(pageData)
 
-    expect(response.cacheKey).toBe('/de/serlo')
-    expect(response.newsletterPopup).toBe(true)
-    expect(response.kind).toBe('single-entity')
-    expect(response.entityData.id).toBe(18922)
-    expect(response.entityData.title).toBe('Über Serlo')
-    expect(Array.isArray(response.entityData.content)).toBe(true)
+    expect(pageData.cacheKey).toBe('/de/serlo')
+    expect(pageData.newsletterPopup).toBe(true)
+    expect(pageData.kind).toBe('single-entity')
+    expect(pageData.entityData.id).toBe(18922)
+    expect(pageData.entityData.title).toBe('Über Serlo')
+    expect(Array.isArray(pageData.entityData.content)).toBe(true)
   })
 
   test('typename: Article', async () => {
-    serverPostUuid(articleUuidMock)
+    givenApiReturnsUuid(articleUuidMock)
 
-    const response = (await fetchPageData('/de/27801')) as SingleEntityPage
+    const pageData = (await fetchPageData('/de/27801')) as SingleEntityPage
 
-    expect(response.breadcrumbsData).toEqual([
+    expect(pageData.breadcrumbsData).toEqual([
       {
         label: 'Mathematik',
         url: '/mathe',
@@ -118,32 +106,32 @@ describe('fetcher: check examples for all supported typenames', () => {
       },
     ])
 
-    expect(response.metaData?.title).toBe(
+    expect(pageData.metaData?.title).toBe(
       'Addition und Subtraktion von Dezimalbrüchen - lernen mit Serlo!'
     )
-    expect(response.metaData?.contentType).toBe('article')
-    expect(response.metaData?.metaDescription).toBe(
+    expect(pageData.metaData?.contentType).toBe('article')
+    expect(pageData.metaData?.metaDescription).toBe(
       'Um Dezimalbrüche zu addieren oder zu subtrahieren, geht man ähnlich vor wie bei der schriftlichen Addition bzw. Subtraktion.Addition Es …'
     )
-    assertCorrectMetaImageLink(response)
-    assertCorrectHorizonDataFormat(response)
+    assertCorrectMetaImageLink(pageData)
+    assertCorrectHorizonDataFormat(pageData)
 
-    expect(response.cacheKey).toBe('/de/27801')
-    expect(response.newsletterPopup).toBe(false)
-    expect(response.kind).toBe('single-entity')
-    expect(response.entityData.id).toBe(27801)
-    expect(response.entityData.title).toBe(
+    expect(pageData.cacheKey).toBe('/de/27801')
+    expect(pageData.newsletterPopup).toBe(false)
+    expect(pageData.kind).toBe('single-entity')
+    expect(pageData.entityData.id).toBe(27801)
+    expect(pageData.entityData.title).toBe(
       'Addition und Subtraktion von Dezimalbrüchen'
     )
-    expect(Array.isArray(response.entityData.content)).toBe(true)
+    expect(Array.isArray(pageData.entityData.content)).toBe(true)
   })
 
   test('typename: CoursePage', async () => {
-    serverPostUuid(coursePageUuidMock)
+    givenApiReturnsUuid(coursePageUuidMock)
 
-    const response = (await fetchPageData('/de/52020')) as SingleEntityPage
+    const pageData = (await fetchPageData('/de/52020')) as SingleEntityPage
 
-    expect(response.breadcrumbsData).toEqual([
+    expect(pageData.breadcrumbsData).toEqual([
       {
         label: 'Mathematik',
         url: '/mathe',
@@ -158,28 +146,28 @@ describe('fetcher: check examples for all supported typenames', () => {
       },
     ])
 
-    expect(response.metaData?.title).toBe('Übersicht - lernen mit Serlo!')
-    expect(response.metaData?.contentType).toBe('course-page')
-    expect(response.metaData?.metaDescription).toBe(
+    expect(pageData.metaData?.title).toBe('Übersicht - lernen mit Serlo!')
+    expect(pageData.metaData?.contentType).toBe('course-page')
+    expect(pageData.metaData?.metaDescription).toBe(
       'Ziel dieses Kurses ist es, einen Überblick zur möglichen Vorgehensweise beim Finden von Nullstellen von Polynomfunktionen zu geben. Inhalte …'
     )
-    assertCorrectMetaImageLink(response)
-    assertCorrectHorizonDataFormat(response)
+    assertCorrectMetaImageLink(pageData)
+    assertCorrectHorizonDataFormat(pageData)
 
-    expect(response.cacheKey).toBe('/de/52020')
-    expect(response.newsletterPopup).toBe(false)
-    expect(response.kind).toBe('single-entity')
-    expect(response.entityData.id).toBe(52020)
-    expect(response.entityData.title).toBe('Übersicht')
-    expect(Array.isArray(response.entityData.content)).toBe(true)
+    expect(pageData.cacheKey).toBe('/de/52020')
+    expect(pageData.newsletterPopup).toBe(false)
+    expect(pageData.kind).toBe('single-entity')
+    expect(pageData.entityData.id).toBe(52020)
+    expect(pageData.entityData.title).toBe('Übersicht')
+    expect(Array.isArray(pageData.entityData.content)).toBe(true)
   })
 
   test('typename: Video', async () => {
-    serverPostUuid(videoUuidMock)
+    givenApiReturnsUuid(videoUuidMock)
 
-    const response = (await fetchPageData('/de/40744')) as SingleEntityPage
+    const pageData = (await fetchPageData('/de/40744')) as SingleEntityPage
 
-    expect(response.breadcrumbsData).toEqual([
+    expect(pageData.breadcrumbsData).toEqual([
       {
         label: 'Mathematik',
         url: '/mathe',
@@ -190,30 +178,30 @@ describe('fetcher: check examples for all supported typenames', () => {
       },
     ])
 
-    expect(response.metaData?.title).toBe(
+    expect(pageData.metaData?.title).toBe(
       'Winkel konstruieren - lernen mit Serlo!'
     )
-    expect(response.metaData?.contentType).toBe('video')
-    expect(response.metaData?.metaDescription).toBe(
+    expect(pageData.metaData?.contentType).toBe('video')
+    expect(pageData.metaData?.metaDescription).toBe(
       'Inhalt:Konstruktion der Winkel  und .Konstruktion der Winkel  und  mit detailliertem Konstruktionsplan.Konstruktion der Winkelhalbierenden …'
     )
-    assertCorrectMetaImageLink(response)
-    assertCorrectHorizonDataFormat(response)
+    assertCorrectMetaImageLink(pageData)
+    assertCorrectHorizonDataFormat(pageData)
 
-    expect(response.cacheKey).toBe('/de/40744')
-    expect(response.newsletterPopup).toBe(false)
-    expect(response.kind).toBe('single-entity')
-    expect(response.entityData.id).toBe(40744)
-    expect(response.entityData.title).toBe('Winkel konstruieren')
-    expect(Array.isArray(response.entityData.content)).toBe(true)
+    expect(pageData.cacheKey).toBe('/de/40744')
+    expect(pageData.newsletterPopup).toBe(false)
+    expect(pageData.kind).toBe('single-entity')
+    expect(pageData.entityData.id).toBe(40744)
+    expect(pageData.entityData.title).toBe('Winkel konstruieren')
+    expect(Array.isArray(pageData.entityData.content)).toBe(true)
   })
 
   test('typename: Applet', async () => {
-    serverPostUuid(appletUuidMock)
+    givenApiReturnsUuid(appletUuidMock)
 
-    const response = (await fetchPageData('/de/138114')) as SingleEntityPage
+    const pageData = (await fetchPageData('/de/138114')) as SingleEntityPage
 
-    expect(response.breadcrumbsData).toEqual([
+    expect(pageData.breadcrumbsData).toEqual([
       {
         label: 'Mathematik',
         url: '/mathe',
@@ -228,38 +216,38 @@ describe('fetcher: check examples for all supported typenames', () => {
       },
     ])
 
-    expect(response.metaData?.title).toBe(
+    expect(pageData.metaData?.title).toBe(
       'Brüche Multiplizieren - lernen mit Serlo!'
     )
-    expect(response.metaData?.contentType).toBe('applet')
-    expect(response.metaData?.metaDescription).toBe(
+    expect(pageData.metaData?.contentType).toBe('applet')
+    expect(pageData.metaData?.metaDescription).toBe(
       'Stelle mit den Schiebereglern die Brüche ein, die du multiplizieren möchtest. Die Bruchteile werden dann in den Rechtecken farbig markiert. …'
     )
 
-    assertCorrectMetaImageLink(response)
-    assertCorrectHorizonDataFormat(response)
+    assertCorrectMetaImageLink(pageData)
+    assertCorrectHorizonDataFormat(pageData)
 
-    expect(response.cacheKey).toBe('/de/138114')
-    expect(response.newsletterPopup).toBe(false)
-    expect(response.kind).toBe('single-entity')
-    expect(response.entityData.id).toBe(138114)
-    expect(response.entityData.title).toBe('Brüche Multiplizieren')
-    expect(Array.isArray(response.entityData.content)).toBe(true)
+    expect(pageData.cacheKey).toBe('/de/138114')
+    expect(pageData.newsletterPopup).toBe(false)
+    expect(pageData.kind).toBe('single-entity')
+    expect(pageData.entityData.id).toBe(138114)
+    expect(pageData.entityData.title).toBe('Brüche Multiplizieren')
+    expect(Array.isArray(pageData.entityData.content)).toBe(true)
   })
 
   test('typename: TaxonomyTerm', async () => {
-    serverPostUuid(taxonomyTermUuidMock)
+    givenApiReturnsUuid(taxonomyTermUuidMock)
 
-    const response = (await fetchPageData('/de/5')) as TaxonomyPage
+    const pageData = (await fetchPageData('/de/5')) as TaxonomyPage
 
-    expect(response.breadcrumbsData).toEqual([
+    expect(pageData.breadcrumbsData).toEqual([
       {
         label: 'Mathematik',
         url: '/mathe',
       },
     ])
 
-    expect(response.secondaryNavigationData).toEqual([
+    expect(pageData.secondaryNavigationData).toEqual([
       {
         title: 'Alle Themen',
         url: '/5',
@@ -302,25 +290,25 @@ describe('fetcher: check examples for all supported typenames', () => {
       },
     ])
 
-    expect(response.metaData?.title).toBe('Mathe - Fach - lernen mit Serlo!')
-    expect(response.metaData?.contentType).toBe('topic')
+    expect(pageData.metaData?.title).toBe('Mathe - Fach - lernen mit Serlo!')
+    expect(pageData.metaData?.contentType).toBe('topic')
 
-    assertCorrectMetaImageLink(response)
+    assertCorrectMetaImageLink(pageData)
 
-    expect(response.cacheKey).toBe('/de/5')
-    expect(response.newsletterPopup).toBe(false)
-    expect(response.kind).toBe('taxonomy')
-    expect(response.taxonomyData.id).toBe(5)
-    expect(response.taxonomyData.title).toBe('Mathe')
-    expect(Array.isArray(response.taxonomyData.subterms)).toBe(true)
+    expect(pageData.cacheKey).toBe('/de/5')
+    expect(pageData.newsletterPopup).toBe(false)
+    expect(pageData.kind).toBe('taxonomy')
+    expect(pageData.taxonomyData.id).toBe(5)
+    expect(pageData.taxonomyData.title).toBe('Mathe')
+    expect(Array.isArray(pageData.taxonomyData.subterms)).toBe(true)
   })
 
   test('typename: Exercise', async () => {
-    serverPostUuid(exerciseUuidMock)
+    givenApiReturnsUuid(exerciseUuidMock)
 
-    const response = (await fetchPageData('/de/54210')) as SingleEntityPage
+    const pageData = (await fetchPageData('/de/54210')) as SingleEntityPage
 
-    expect(response.breadcrumbsData).toEqual([
+    expect(pageData.breadcrumbsData).toEqual([
       {
         label: 'Mathematik',
         url: '/mathe',
@@ -346,28 +334,28 @@ describe('fetcher: check examples for all supported typenames', () => {
       },
     ])
 
-    expect(response.metaData?.title).toBe('Serlo')
-    expect(response.metaData?.contentType).toBe('text-exercise')
-    expect(response.metaData?.metaDescription).toBe(
+    expect(pageData.metaData?.title).toBe('Serlo')
+    expect(pageData.metaData?.contentType).toBe('text-exercise')
+    expect(pageData.metaData?.metaDescription).toBe(
       'Ordne folgendem Graphen die richtige Funktionsgleichung zu:Richtig! Der Nobelpreis ist ganz nah ;-)Leider falsch! Du denkst wahrscheinlich …'
     )
 
-    assertCorrectMetaImageLink(response)
-    assertCorrectHorizonDataFormat(response)
+    assertCorrectMetaImageLink(pageData)
+    assertCorrectHorizonDataFormat(pageData)
 
-    expect(response.cacheKey).toBe('/de/54210')
-    expect(response.newsletterPopup).toBe(false)
-    expect(response.kind).toBe('single-entity')
-    expect(response.entityData.id).toBe(54210)
-    expect(Array.isArray(response.entityData.content)).toBe(true)
+    expect(pageData.cacheKey).toBe('/de/54210')
+    expect(pageData.newsletterPopup).toBe(false)
+    expect(pageData.kind).toBe('single-entity')
+    expect(pageData.entityData.id).toBe(54210)
+    expect(Array.isArray(pageData.entityData.content)).toBe(true)
   })
 
   test('typename: ExerciseGroup', async () => {
-    serverPostUuid(exerciseGroupUuidMock)
+    givenApiReturnsUuid(exerciseGroupUuidMock)
 
-    const response = (await fetchPageData('/de/53205')) as SingleEntityPage
+    const pageData = (await fetchPageData('/de/53205')) as SingleEntityPage
 
-    expect(response.breadcrumbsData).toEqual([
+    expect(pageData.breadcrumbsData).toEqual([
       {
         label: 'Mathematik',
         url: '/mathe',
@@ -393,40 +381,40 @@ describe('fetcher: check examples for all supported typenames', () => {
       },
     ])
 
-    expect(response.metaData?.title).toBe('Serlo')
-    expect(response.metaData?.contentType).toBe('exercisegroup')
-    expect(response.metaData?.metaDescription).toBe(
+    expect(pageData.metaData?.title).toBe('Serlo')
+    expect(pageData.metaData?.contentType).toBe('exercisegroup')
+    expect(pageData.metaData?.metaDescription).toBe(
       'Finde die passenden Gleichungen zu den Funktionsgraphen:Die Ruhelage der Funktion liegt auf der -Achse.Der Graph schneidet das Koordinatensystem …'
     )
 
-    assertCorrectMetaImageLink(response)
-    assertCorrectHorizonDataFormat(response)
+    assertCorrectMetaImageLink(pageData)
+    assertCorrectHorizonDataFormat(pageData)
 
-    expect(response.cacheKey).toBe('/de/53205')
-    expect(response.newsletterPopup).toBe(false)
-    expect(response.kind).toBe('single-entity')
-    expect(response.entityData.id).toBe(53205)
-    expect(Array.isArray(response.entityData.content)).toBe(true)
+    expect(pageData.cacheKey).toBe('/de/53205')
+    expect(pageData.newsletterPopup).toBe(false)
+    expect(pageData.kind).toBe('single-entity')
+    expect(pageData.entityData.id).toBe(53205)
+    expect(Array.isArray(pageData.entityData.content)).toBe(true)
   })
 
   test('typename: GroupedExercise', async () => {
-    serverPostUuid(groupedExerciseUuidMock)
+    givenApiReturnsUuid(groupedExerciseUuidMock)
 
-    const response = (await fetchPageData('/de/53209')) as SingleEntityPage
+    const pageData = (await fetchPageData('/de/53209')) as SingleEntityPage
 
-    expect(response.metaData?.title).toBe('Serlo')
-    expect(response.metaData?.contentType).toBe('groupedexercise')
-    expect(response.metaData?.metaDescription).toBe(
+    expect(pageData.metaData?.title).toBe('Serlo')
+    expect(pageData.metaData?.contentType).toBe('groupedexercise')
+    expect(pageData.metaData?.metaDescription).toBe(
       'Die Ruhelage der Funktion liegt auf der -Achse.Der Graph schneidet das Koordinatensystem im Nullpunkt, also handelt es sich um eine Sinusfunktion …'
     )
-    assertCorrectMetaImageLink(response)
-    assertCorrectHorizonDataFormat(response)
+    assertCorrectMetaImageLink(pageData)
+    assertCorrectHorizonDataFormat(pageData)
 
-    expect(response.cacheKey).toBe('/de/53209')
-    expect(response.newsletterPopup).toBe(false)
-    expect(response.kind).toBe('single-entity')
-    expect(response.entityData.id).toBe(53209)
-    expect(Array.isArray(response.entityData.content)).toBe(true)
+    expect(pageData.cacheKey).toBe('/de/53209')
+    expect(pageData.newsletterPopup).toBe(false)
+    expect(pageData.kind).toBe('single-entity')
+    expect(pageData.entityData.id).toBe(53209)
+    expect(Array.isArray(pageData.entityData.content)).toBe(true)
   })
 
   test('typename: Course', async () => {
@@ -464,9 +452,9 @@ describe('fetcher: check examples for all supported typenames', () => {
       })
     )
 
-    const response = (await fetchPageData('/de/51979')) as SingleEntityPage
+    const pageData = (await fetchPageData('/de/51979')) as SingleEntityPage
 
-    expect(response.breadcrumbsData).toEqual([
+    expect(pageData.breadcrumbsData).toEqual([
       {
         label: 'Mathematik',
         url: '/mathe',
@@ -481,48 +469,62 @@ describe('fetcher: check examples for all supported typenames', () => {
       },
     ])
 
-    expect(response.metaData?.title).toBe('Übersicht - lernen mit Serlo!')
-    expect(response.metaData?.contentType).toBe('course-page')
-    expect(response.metaData?.metaDescription).toBe(
+    expect(pageData.metaData?.title).toBe('Übersicht - lernen mit Serlo!')
+    expect(pageData.metaData?.contentType).toBe('course-page')
+    expect(pageData.metaData?.metaDescription).toBe(
       'Ziel dieses Kurses ist es, einen Überblick zur möglichen Vorgehensweise beim Finden von Nullstellen von Polynomfunktionen zu geben. Inhalte …'
     )
-    expect(response.metaData?.metaImage).toBe(
+    expect(pageData.metaData?.metaImage).toBe(
       `https://de.${serloDomain}/_assets/img/meta/mathematik.jpg`
     )
 
-    assertCorrectHorizonDataFormat(response)
+    assertCorrectHorizonDataFormat(pageData)
 
-    expect(response.cacheKey).toBe(
+    expect(pageData.cacheKey).toBe(
       '/de/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/uebersicht'
     )
-    expect(response.newsletterPopup).toBe(false)
-    expect(response.kind).toBe('single-entity')
-    expect(response.entityData.id).toBe(52020)
-    expect(response.entityData.title).toBe('Übersicht')
-    expect(Array.isArray(response.entityData.content)).toBe(true)
+    expect(pageData.newsletterPopup).toBe(false)
+    expect(pageData.kind).toBe('single-entity')
+    expect(pageData.entityData.id).toBe(52020)
+    expect(pageData.entityData.title).toBe('Übersicht')
+    expect(Array.isArray(pageData.entityData.content)).toBe(true)
   })
 
   test('typename: Event', async () => {
-    serverPostUuid(eventUuidMock)
-    const response = (await fetchPageData('/de/145590')) as SingleEntityPage
+    givenApiReturnsUuid(eventUuidMock)
+    const pageData = (await fetchPageData('/de/145590')) as SingleEntityPage
 
-    expect(response.metaData?.title).toBe('Serlo')
-    expect(response.metaData?.contentType).toBe('event')
-    expect(response.metaData?.metaDescription).toBe(
+    expect(pageData.metaData?.title).toBe('Serlo')
+    expect(pageData.metaData?.contentType).toBe('event')
+    expect(pageData.metaData?.metaDescription).toBe(
       '31.08.20 - 25.09.2020, Mo-Fr Digital Learning Academy in MünchenonlineGemeinsame Arbeit an Lerninhalten, Workshops zu verschiedenen Themen …'
     )
 
-    expect(response.metaData?.metaImage).toBe(
+    expect(pageData.metaData?.metaImage).toBe(
       `https://de.${serloDomain}/_assets/img/meta/serlo.jpg`
     )
-    assertCorrectHorizonDataFormat(response)
+    assertCorrectHorizonDataFormat(pageData)
 
-    expect(response.cacheKey).toBe('/de/145590')
-    expect(response.newsletterPopup).toBe(false)
-    expect(response.kind).toBe('single-entity')
-    expect(Array.isArray(response.entityData.content)).toBe(true)
+    expect(pageData.cacheKey).toBe('/de/145590')
+    expect(pageData.newsletterPopup).toBe(false)
+    expect(pageData.kind).toBe('single-entity')
+    expect(Array.isArray(pageData.entityData.content)).toBe(true)
   })
 })
+
+function givenApiReturnsUuid(uuid: object) {
+  server.use(
+    rest.post(endpoint, (req, res, ctx) => {
+      return res(
+        ctx.json({
+          data: {
+            uuid: uuid,
+          },
+        })
+      )
+    })
+  )
+}
 
 function assertCorrectHorizonDataFormat(pageData: SingleEntityPage) {
   expect(

@@ -3,5 +3,4 @@ module.exports = {
   moduleNameMapper: {
     '^@/(.*)': '<rootDir>/src/$1',
   },
-  testPathIgnorePatterns: ['_mockdata.'],
 }
