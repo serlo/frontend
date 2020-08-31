@@ -72,21 +72,21 @@ export const instanceData = {
     },
     notifications: {
       notifications: "Benachrichtigungen",
-      pleaseLogInLink: 'Please log in',
-      pleaseLogInText: 'to see your notifications.'
+      pleaseLogInLink: "Bitte melde dich an",
+      pleaseLogInText: "um deine Benachrichtigungen zu sehen"
     },
     comments: {
-      question: 'Do you have a question?',
-      commentsOne: 'Comment',
-      commentsMany: 'Comments',
-      submit: 'Submit',
-      reportComment: 'Report comment',
-      archiveThread: 'Archive thread',
-      deleteThread: 'Delete thread',
-      deleteComment: 'Delete comment',
-      postedOn: 'Posted on',
-      placeholder: "Your question or suggestion…",
-      placeholderReply: "Your answer…"
+      question: "Hast du eine Frage?",
+      commentsOne: "Kommentar",
+      commentsMany: "Kommentare",
+      submit: "Abschicken",
+      reportComment: "Kommentar melden",
+      archiveThread: "Thread archivieren",
+      deleteThread: "Thread löschen",
+      deleteComment: "Kommentar löschen",
+      postedOn: "Gepostet am",
+      placeholder: "Deine Frage oder Vorschlag…",
+      placeholderReply: "Deine Antwort…"
     },
     errors: {
       title: '😬 Websites make mistakes sometimes…',
