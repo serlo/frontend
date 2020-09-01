@@ -1,3 +1,4 @@
+/* eslint-disable import/no-internal-modules */
 import ReactTimeAgo from 'timeago-react'
 import * as timeago from 'timeago.js'
 import de from 'timeago.js/lib/lang/de'
