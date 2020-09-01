@@ -14,7 +14,6 @@ import { makePadding, makeDefaultButton, inputFontReset } from '@/helper/css'
 import { categoryIconMapping } from '@/helper/header-by-content-type'
 import { renderArticle } from '@/schema/article-renderer'
 
-//TODO: Translate strings
 // TODO: add timeago
 
 export interface RevisionProps {
@@ -40,42 +39,44 @@ export function Revision({ data }: RevisionProps) {
           as="a"
           href={`/entity/repository/history/${data.repositoryId}`}
         >
-          <FontAwesomeIcon icon={faList} /> Back to overview
+          <FontAwesomeIcon icon={faList} /> {strings.revisions.toOverview}
         </BackButton>
         <div>{renderButtons()}</div>
       </MetaBar>
       <HSpace amount={5} />
-      <StyledH1>Revision {renderCategoryIcon()}</StyledH1>
+      <StyledH1>
+        {strings.revisions.revision} {renderCategoryIcon()}
+      </StyledH1>
 
       <StyledP
         style={{
           lineHeight: '1.6',
         }}
       >
-        <b>Changes:</b> {data.changes}
+        <b>{strings.revisions.changes}:</b> {data.changes}
         <br />
         {new Date(data.date).toLocaleString(lang)} by{' '}
         <Link href={`/user/profile/${data.user.id}`}>{data.user.username}</Link>
       </StyledP>
 
-      {renderBoxheader('Title:')}
+      {renderBoxheader(strings.revisions.title)}
       <Box>
         {hasData && <StyledH1>{dataSet.title}</StyledH1>}
         {renderDiffViewer('title')}
       </Box>
 
-      {renderBoxheader('Content:')}
+      {renderBoxheader(strings.revisions.content)}
       <Box>
         {hasData && renderArticle(dataSet.content || [])}
         {renderDiffViewer('content')}
       </Box>
 
-      {renderBoxheader('Meta Title:')}
+      {renderBoxheader(strings.revisions.metaTitle)}
       <Box withPadding={hasData}>
         {hasData && dataSet.metaTitle} {renderDiffViewer('metaTitle')}
       </Box>
 
-      {renderBoxheader('Meta Description:')}
+      {renderBoxheader(strings.revisions.metaDescription)}
       <Box withPadding={hasData}>
         {hasData && dataSet.metaDescription}{' '}
         {renderDiffViewer('metaDescription')}
@@ -87,7 +88,7 @@ export function Revision({ data }: RevisionProps) {
   function renderBoxheader(title: string) {
     return (
       <BoxHeader>
-        <b>{title}</b>
+        <b>{title}:</b>
       </BoxHeader>
     )
   }
@@ -101,21 +102,21 @@ export function Revision({ data }: RevisionProps) {
           onClick={() => setDisplayMode('compare')}
           current={displayMode === 'compare'}
         >
-          Compare
+          {strings.revisions.compare}
         </Button>
         <Button
           onPointerUp={(e) => e.currentTarget.blur()}
           onClick={() => setDisplayMode('previous')}
           current={displayMode === 'previous'}
         >
-          Previous Version
+          {strings.revisions.previousVersion}
         </Button>
         <Button
           onPointerUp={(e) => e.currentTarget.blur()}
           onClick={() => setDisplayMode('current')}
           current={displayMode === 'current'}
         >
-          This Version
+          {strings.revisions.thisVersion}
         </Button>
       </span>
     )

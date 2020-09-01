@@ -87,7 +87,20 @@ export const instanceData = {
       postedOn: 'Posted on',
       placeholder: "Your question or suggestion…",
       placeholderReply: "Your answer…"
+    },
+    revisions: {
+      revision: "Revision",
+      toOverview: "Back to overview",
+      changes: "Changes",
+      title: "Title",
+      content: "Content",
+      metaTitle: "Meta Title",
+      metaDescription: "Meta Description",
+      compare: "Compare",
+      previousVersion: "Previous Version",
+      thisVersion: "This Version",
     }
+
   }
 };
 export const instanceLandingData = {
