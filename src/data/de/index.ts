@@ -179,7 +179,7 @@ export const loggedInData = {
       newEntity: "Neuer Inhalt",
       exercise: "Aufgabe",
       exerciseGroup: "Aufgabengruppe",
-      event: "Ereignis"
+      event: "Veranstaltung"
     },
     notifications: {
       loadMore: "Weitere laden",
@@ -214,7 +214,7 @@ export const loggedInData = {
       entityPlaceholderExercise: "Aufgabe",
       entityPlaceholderGroupedExercise: "Gruppierte Aufgabe",
       entityPlaceholderExerciseGroup: "Aufgabengruppe",
-      entityPlaceholderEvent: 'Event',
+      entityPlaceholderEvent: "Veranstaltung",
       entityPlaceholderCourse: "Kurs",
       entityPlaceholderTaxonomyTerm: "Begriff",
       entityPlaceholderFallback: "Inhalt"
