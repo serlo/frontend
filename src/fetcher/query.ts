@@ -255,6 +255,7 @@ export const dataQuery = gql`
         repository {
           id
           currentRevision {
+            id
             title
             content
             metaTitle

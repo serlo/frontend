@@ -235,16 +235,17 @@ export interface RevisionPage extends EntityPageBase {
 }
 
 export interface RevisionData {
-  id: number
   typename: string
   repositoryId: number
   thisRevision: {
+    id: number
     title: string
     metaTitle?: string
     metaDescription?: string
     content?: FrontendContentNode[]
   }
   currentRevision: {
+    id?: number
     title: string
     metaTitle?: string
     metaDescription?: string

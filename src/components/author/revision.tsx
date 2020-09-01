@@ -20,12 +20,15 @@ export interface RevisionProps {
   data: RevisionData
 }
 
+//current is currently accepted revision
+type DisplayMode = 'this' | 'current' | 'compare'
+
 export function Revision({ data }: RevisionProps) {
   const { lang, strings } = useInstanceData()
-  const [displayMode, setDisplayMode] = React.useState('current')
-
-  // TODO: should display comparison to previous version. needs revision list from api
-  //maybe the comparision to the currently online version also makes sense. will ask the authors
+  const isCurrentRevision = data.thisRevision.id === data.currentRevision.id
+  const [displayMode, setDisplayMode] = React.useState<DisplayMode>(
+    isCurrentRevision ? 'current' : 'this'
+  )
 
   const dataSet =
     displayMode === 'current' ? data.thisRevision : data.currentRevision
@@ -47,13 +50,15 @@ export function Revision({ data }: RevisionProps) {
       <StyledH1>
         {strings.revisions.revision} {renderCategoryIcon()}
       </StyledH1>
+      {isCurrentRevision && (
+        <StyledP>
+          <i>{strings.revisions.thisIsCurrentVersion}</i>
+        </StyledP>
+      )}
 
-      <StyledP
-        style={{
-          lineHeight: '1.6',
-        }}
-      >
+      <StyledP>
         <b>{strings.revisions.changes}:</b> {data.changes}
+        <br />
         <br />
         {new Date(data.date).toLocaleString(lang)} by{' '}
         <Link href={`/user/profile/${data.user.id}`}>{data.user.username}</Link>
@@ -64,18 +69,15 @@ export function Revision({ data }: RevisionProps) {
         {hasData && <StyledH1>{dataSet.title}</StyledH1>}
         {renderDiffViewer('title')}
       </Box>
-
       {renderBoxheader(strings.revisions.content)}
       <Box>
         {hasData && renderArticle(dataSet.content || [])}
         {renderDiffViewer('content')}
       </Box>
-
       {renderBoxheader(strings.revisions.metaTitle)}
       <Box withPadding={hasData}>
         {hasData && dataSet.metaTitle} {renderDiffViewer('metaTitle')}
       </Box>
-
       {renderBoxheader(strings.revisions.metaDescription)}
       <Box withPadding={hasData}>
         {hasData && dataSet.metaDescription}{' '}
@@ -94,31 +96,27 @@ export function Revision({ data }: RevisionProps) {
   }
 
   function renderButtons() {
-    //blur-hack, use https://caniuse.com/#feat=css-focus-visible when supported
     return (
       <span>
-        <Button
-          onPointerUp={(e) => e.currentTarget.blur()}
-          onClick={() => setDisplayMode('compare')}
-          current={displayMode === 'compare'}
-        >
-          {strings.revisions.compare}
-        </Button>
-        <Button
-          onPointerUp={(e) => e.currentTarget.blur()}
-          onClick={() => setDisplayMode('previous')}
-          current={displayMode === 'previous'}
-        >
-          {strings.revisions.previousVersion}
-        </Button>
-        <Button
-          onPointerUp={(e) => e.currentTarget.blur()}
-          onClick={() => setDisplayMode('current')}
-          current={displayMode === 'current'}
-        >
-          {strings.revisions.thisVersion}
-        </Button>
+        {!isCurrentRevision &&
+          renderButton('compare', strings.revisions.compare)}
+        {renderButton('current', strings.revisions.currentVersion)}
+        {!isCurrentRevision &&
+          renderButton('this', strings.revisions.thisVersion)}
       </span>
+    )
+  }
+
+  function renderButton(mode: DisplayMode, title: string) {
+    //blur-hack, use https://caniuse.com/#feat=css-focus-visible when supported
+    return (
+      <Button
+        onPointerUp={(e) => e.currentTarget.blur()}
+        onClick={() => setDisplayMode(mode)}
+        current={displayMode === mode}
+      >
+        {title}
+      </Button>
     )
   }
 

@@ -171,16 +171,17 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
       kind: 'revision',
       newsletterPopup: false,
       revisionData: {
-        id: uuid.id,
         repositoryId: uuid.repository.id,
         typename: uuid.__typename,
         thisRevision: {
+          id: uuid.id,
           title: uuid.title ?? '',
           metaTitle: uuid.metaTitle,
           metaDescription: uuid.metaDescription,
           content: convertState(uuid.content),
         },
         currentRevision: {
+          id: uuid.repository.currentRevision?.id,
           title: uuid.repository.currentRevision?.title ?? '',
           metaTitle: uuid.repository.currentRevision?.metaTitle,
           metaDescription: uuid.repository.currentRevision?.metaDescription,

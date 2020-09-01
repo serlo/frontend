@@ -97,10 +97,10 @@ export const instanceData = {
       metaTitle: "Meta Title",
       metaDescription: "Meta Description",
       compare: "Compare",
-      previousVersion: "Previous Version",
+      currentVersion: "Current Version",
       thisVersion: "This Version",
+      thisIsCurrentVersion: "This is the currently accepted version.",
     }
-
   }
 };
 export const instanceLandingData = {
