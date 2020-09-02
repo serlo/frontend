@@ -23,13 +23,15 @@ export const instanceData = {
       video: 'Video',
       applet: 'Applet',
       folder: 'Folder',
-      exercises: 'Exercises'
+      exercises: 'Exercises',
+      event: 'Event'
     },
     entities: {
       topicFolder: 'Exercise folder',
       comment: 'Comment',
       revision: 'Revision',
-      thread: 'Thread'
+      thread: 'Thread',
+      coursePage: 'Course Page'
     },
     share: {
       button: 'Share',

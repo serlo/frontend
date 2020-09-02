@@ -1,11 +1,14 @@
 import { faList } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import dynamic from 'next/dynamic'
 import React from 'react'
 import ReactDiffViewer from 'react-diff-viewer'
 import styled, { css } from 'styled-components'
 
 import { Link } from '../content/link'
+import { GeogebraProps } from '@/components/content/geogebra'
 import { HSpace } from '@/components/content/h-space'
+import { VideoProps } from '@/components/content/video'
 import { StyledH1 } from '@/components/tags/styled-h1'
 import { StyledP } from '@/components/tags/styled-p'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -14,6 +17,12 @@ import { makePadding, makeDefaultButton, inputFontReset } from '@/helper/css'
 import { categoryIconMapping } from '@/helper/header-by-content-type'
 import { renderArticle } from '@/schema/article-renderer'
 
+const Video = dynamic<VideoProps>(() =>
+  import('../content/video').then((mod) => mod.Video)
+)
+const Geogebra = dynamic<GeogebraProps>(() =>
+  import('../content/geogebra').then((mod) => mod.Geogebra)
+)
 // TODO: add timeago
 
 export interface RevisionProps {
@@ -33,7 +42,7 @@ export function Revision({ data }: RevisionProps) {
   const dataSet =
     displayMode === 'current' ? data.thisRevision : data.currentRevision
 
-  const hasData = displayMode !== 'compare'
+  const notCompare = displayMode !== 'compare'
 
   return (
     <>
@@ -68,44 +77,32 @@ export function Revision({ data }: RevisionProps) {
         <Link href={`/user/profile/${data.user.id}`}>{data.user.username}</Link>
       </StyledP>
 
-      {renderBoxheader(strings.revisions.title)}
-      <Box>
-        {hasData && <StyledH1>{dataSet.title}</StyledH1>}
-        {renderDiffViewer('title')}
-      </Box>
-      {renderBoxheader(strings.revisions.content)}
-      <Box>
-        {hasData && renderArticle(dataSet.content || [])}
-        {renderDiffViewer('content')}
-      </Box>
+      <PreviewBox title={strings.revisions.title} diffType="title">
+        <StyledH1>{dataSet.title}</StyledH1>
+      </PreviewBox>
+
+      <PreviewBox title={strings.revisions.content} diffType="content">
+        {renderArticle(dataSet.content || [])}
+      </PreviewBox>
+
+      {renderVideoOrAppletBox()}
+
       {dataSet.metaTitle !== undefined && (
-        <>
-          {renderBoxheader(strings.revisions.metaTitle)}
-          <Box withPadding={hasData}>
-            {hasData && dataSet.metaTitle} {renderDiffViewer('metaTitle')}
-          </Box>
-        </>
+        <PreviewBox title={strings.revisions.metaTitle} diffType="metaTitle">
+          {dataSet.metaTitle}
+        </PreviewBox>
       )}
       {dataSet.metaDescription !== undefined && (
-        <>
-          {renderBoxheader(strings.revisions.metaDescription)}
-          <Box withPadding={hasData}>
-            {hasData && dataSet.metaDescription}{' '}
-            {renderDiffViewer('metaDescription')}
-          </Box>
-        </>
+        <PreviewBox
+          title={strings.revisions.metaDescription}
+          diffType="metaDescription"
+        >
+          {dataSet.metaDescription}
+        </PreviewBox>
       )}
       <HSpace amount={20} />
     </>
   )
-
-  function renderBoxheader(title: string) {
-    return (
-      <BoxHeader>
-        <b>{title}:</b>
-      </BoxHeader>
-    )
-  }
 
   function renderButtons() {
     return (
@@ -134,20 +131,52 @@ export function Revision({ data }: RevisionProps) {
 
   function renderCategoryIcon() {
     if (!data.type) return null
+
+    const title =
+      data.type === 'coursepage'
+        ? strings.entities.coursePage
+        : strings.categories[data.type]
+
+    const icon =
+      data.type === 'coursepage'
+        ? categoryIconMapping['course']
+        : categoryIconMapping[data.type]
+
     return (
-      <span title={strings.categories[data.type]}>
+      <span title={title}>
         {' '}
-        <StyledIcon icon={categoryIconMapping[data.type]} />{' '}
+        <StyledIcon icon={icon} />{' '}
       </span>
     )
   }
 
-  type DiffViewerOptions = 'content' | 'title' | 'metaTitle' | 'metaDescription'
+  function renderVideoOrAppletBox() {
+    if (dataSet.url === undefined) return null
+    const isVideo = data.type === 'video'
+    return (
+      <PreviewBox
+        title={isVideo ? strings.categories.video : strings.categories.applet}
+        diffType="url"
+      >
+        {isVideo ? <Video src={dataSet.url} /> : <Geogebra id={dataSet.url} />}
+      </PreviewBox>
+    )
+  }
 
-  function renderDiffViewer(type: DiffViewerOptions) {
-    if (hasData) return null
+  type DiffViewerTypes =
+    | 'content'
+    | 'title'
+    | 'metaTitle'
+    | 'metaDescription'
+    | 'url'
 
-    if (type === 'content') {
+  interface PreviewBoxProps {
+    title: string
+    diffType: DiffViewerTypes
+    children: React.ReactNode
+  }
+  function renderDiffViewer(diffType: DiffViewerTypes) {
+    if (diffType === 'content') {
       return (
         <ReactDiffViewer
           oldValue={JSON.stringify(data.thisRevision.content, null, 2)}
@@ -160,13 +189,29 @@ export function Revision({ data }: RevisionProps) {
     return (
       <DiffViewerWrapper>
         <ReactDiffViewer
-          oldValue={data.thisRevision[type]}
-          newValue={data.currentRevision[type]}
+          oldValue={data.thisRevision[diffType]}
+          newValue={data.currentRevision[diffType]}
           splitView={false}
           hideLineNumbers
           showDiffOnly={false}
         />
       </DiffViewerWrapper>
+    )
+  }
+
+  function PreviewBox({ title, children, diffType }: PreviewBoxProps) {
+    const withPadding =
+      notCompare && (diffType === 'metaDescription' || diffType === 'metaTitle')
+
+    return (
+      <>
+        <BoxHeader>
+          <b>{title}:</b>
+        </BoxHeader>
+        <Box withPadding={withPadding}>
+          {notCompare ? children : renderDiffViewer(diffType)}
+        </Box>
+      </>
     )
   }
 }

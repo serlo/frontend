@@ -14,6 +14,7 @@ import {
   QueryResponse,
   licenseDetailsQuery,
   ArticleRevision,
+  VideoRevision,
 } from './query'
 import { endpoint } from '@/api/endpoint'
 import { PageData, FrontendContentNode, CategoryType } from '@/data-types'
@@ -173,7 +174,11 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
 
   if (
     uuid.__typename === 'ArticleRevision' ||
-    uuid.__typename === 'PageRevision'
+    uuid.__typename === 'PageRevision' ||
+    uuid.__typename === 'CoursePageRevision' ||
+    uuid.__typename === 'VideoRevision' ||
+    uuid.__typename === 'EventRevision' ||
+    uuid.__typename === 'AppletRevision'
   ) {
     return {
       kind: 'revision',
@@ -190,6 +195,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
           metaTitle: (uuid as ArticleRevision).metaTitle,
           metaDescription: (uuid as ArticleRevision).metaDescription,
           content: convertState(uuid.content),
+          url: (uuid as VideoRevision).url,
         },
         currentRevision: {
           id: uuid.repository.currentRevision?.id,
@@ -199,6 +205,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
           metaDescription: (uuid as ArticleRevision).repository.currentRevision
             ?.metaDescription,
           content: convertState(uuid.repository.currentRevision?.content),
+          url: (uuid as VideoRevision).repository.currentRevision?.url,
         },
         changes: (uuid as ArticleRevision).changes,
         user: {
@@ -215,6 +222,22 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
       },
       cacheKey,
       breadcrumbsData,
+    }
+  }
+
+  if (
+    uuid.__typename === 'CourseRevision' ||
+    uuid.__typename === 'ExerciseRevision' ||
+    uuid.__typename === 'ExerciseGroupRevision' ||
+    uuid.__typename === 'GroupedExerciseRevision' ||
+    uuid.__typename === 'SolutionRevision'
+  ) {
+    return {
+      kind: 'error',
+      errorData: {
+        code: 404,
+        message: 'This revision type is not supported: ' + uuid.__typename,
+      },
     }
   }
 

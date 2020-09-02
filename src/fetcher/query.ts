@@ -47,18 +47,6 @@ export interface Article extends EntityWithTaxonomyTerms {
   >
 }
 
-export interface ArticleRevision
-  extends EntityWithTaxonomyTerms,
-    GraphQL.ArticleRevision {
-  __typename: 'ArticleRevision'
-}
-
-export interface PageRevision
-  extends EntityWithTaxonomyTerms,
-    GraphQL.PageRevision {
-  __typename: 'PageRevision'
-}
-
 export interface Video extends EntityWithTaxonomyTerms {
   __typename: 'Video'
   currentRevision?: GraphQL.Maybe<
@@ -210,6 +198,81 @@ export type TaxonomyTermChildrenLevel2 =
   | TaxonomyTermChildOnX
   | SubTaxonomyTermChildTaxonomyTerm
 
+// Revision types inherit all the GraphQL fields
+
+export type QueryResponseRevision =
+  | AppletRevision
+  | ArticleRevision
+  | CourseRevision
+  | CoursePageRevision
+  | EventRevision
+  | ExerciseRevision
+  | ExerciseGroupRevision
+  | GroupedExerciseRevision
+  | PageRevision
+  | SolutionRevision
+  | VideoRevision
+
+export interface AppletRevision
+  extends EntityWithTaxonomyTerms,
+    GraphQL.AppletRevision {
+  __typename: 'AppletRevision'
+}
+export interface ArticleRevision
+  extends EntityWithTaxonomyTerms,
+    GraphQL.ArticleRevision {
+  __typename: 'ArticleRevision'
+}
+export interface CourseRevision
+  extends EntityWithTaxonomyTerms,
+    GraphQL.CourseRevision {
+  __typename: 'CourseRevision'
+}
+export interface CoursePageRevision
+  extends EntityWithTaxonomyTerms,
+    GraphQL.CoursePageRevision {
+  __typename: 'CoursePageRevision'
+}
+export interface EventRevision
+  extends EntityWithTaxonomyTerms,
+    GraphQL.EventRevision {
+  __typename: 'EventRevision'
+}
+export interface ExerciseRevision
+  extends EntityWithTaxonomyTerms,
+    GraphQL.ExerciseRevision {
+  __typename: 'ExerciseRevision'
+}
+export interface ExerciseGroupRevision
+  extends EntityWithTaxonomyTerms,
+    GraphQL.ExerciseGroupRevision {
+  __typename: 'ExerciseGroupRevision'
+}
+export interface GroupedExerciseRevision
+  extends EntityWithTaxonomyTerms,
+    GraphQL.GroupedExerciseRevision {
+  __typename: 'GroupedExerciseRevision'
+}
+export interface PageRevision
+  extends EntityWithTaxonomyTerms,
+    GraphQL.PageRevision {
+  __typename: 'PageRevision'
+}
+export interface SolutionRevision
+  extends EntityWithTaxonomyTerms,
+    GraphQL.SolutionRevision {
+  __typename: 'SolutionRevision'
+}
+export interface VideoRevision
+  extends EntityWithTaxonomyTerms,
+    GraphQL.VideoRevision {
+  __typename: 'VideoRevision'
+}
+
+//TODO: Split files into query and types
+
+// query
+
 export const dataQuery = gql`
   query uuid($id: Int, $alias: AliasInput) {
     uuid(id: $id, alias: $alias) {
@@ -239,6 +302,56 @@ export const dataQuery = gql`
             id
             currentRevision {
               ...pageRevision
+            }
+          }
+        }
+        ... on AppletRevision {
+          ...appletRevision
+          changes
+          repository {
+            id
+            currentRevision {
+              ...appletRevision
+            }
+          }
+        }
+        ... on CoursePageRevision {
+          ...coursePageRevision
+          changes
+          repository {
+            id
+            currentRevision {
+              ...coursePageRevision
+            }
+          }
+        }
+        ... on EventRevision {
+          ...eventRevision
+          changes
+          repository {
+            id
+            currentRevision {
+              ...eventRevision
+            }
+          }
+        }
+        ... on ExerciseGroupRevision {
+          ...exerciseGroupRevision
+          changes
+          repository {
+            id
+            currentRevision {
+              ...exerciseGroupRevision
+            }
+          }
+        }
+        ... on VideoRevision {
+          ...videoRevision
+          changes
+          repository {
+            id
+            currentRevision {
+              ...videoRevision
             }
           }
         }
@@ -524,8 +637,7 @@ export type QueryResponse =
   | Event
   | Course
   | TaxonomyTerm
-  | ArticleRevision
-  | PageRevision
+  | QueryResponseRevision
 
 export const idsQuery = (ids: number[]) => {
   const map = ids.map(

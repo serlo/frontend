@@ -6,6 +6,7 @@ import {
   faFolderOpen,
   faFile,
   IconDefinition,
+  faCalendarAlt,
 } from '@fortawesome/free-solid-svg-icons'
 
 import { CategoryType } from '@/data-types'
@@ -17,4 +18,5 @@ export const categoryIconMapping: { [K in CategoryType]: IconDefinition } = {
   applet: faCubes,
   folder: faFolderOpen,
   exercises: faFile,
+  event: faCalendarAlt,
 }

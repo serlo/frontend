@@ -237,7 +237,7 @@ export interface RevisionPage extends EntityPageBase {
 export interface RevisionData {
   typename: string
   date: string
-  type: CategoryType
+  type: CategoryType | 'coursepage'
   user: {
     id: number
     username: string
@@ -249,6 +249,7 @@ export interface RevisionData {
     metaTitle?: string
     metaDescription?: string
     content?: FrontendContentNode[]
+    url?: string
   }
   currentRevision: {
     id?: number
@@ -256,6 +257,7 @@ export interface RevisionData {
     metaTitle?: string
     metaDescription?: string
     content?: FrontendContentNode[]
+    url?: string
   }
   changes?: string
 }
@@ -269,6 +271,7 @@ export type CategoryType =
   | 'applet'
   | 'folder'
   | 'exercises'
+  | 'event'
 
 export type CategoryStrings = {
   [K in CategoryType]: string
