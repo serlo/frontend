@@ -14,7 +14,7 @@ import { StyledP } from '@/components/tags/styled-p'
 import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionData } from '@/data-types'
 import { makePadding, makeDefaultButton, inputFontReset } from '@/helper/css'
-import { categoryIconMapping } from '@/helper/header-by-content-type'
+import { entityIconMapping } from '@/helper/icon-by-entity-type'
 import { renderArticle } from '@/schema/article-renderer'
 
 const Video = dynamic<VideoProps>(() =>
@@ -57,7 +57,7 @@ export function Revision({ data }: RevisionProps) {
       </MetaBar>
       <HSpace amount={5} />
       <StyledH1>
-        {strings.revisions.revision} {renderCategoryIcon()}
+        {strings.entities.revision} {renderEntityIcon()}
       </StyledH1>
       {isCurrentRevision && (
         <StyledP>
@@ -133,23 +133,13 @@ export function Revision({ data }: RevisionProps) {
     )
   }
 
-  function renderCategoryIcon() {
+  function renderEntityIcon() {
     if (!data.type) return null
 
-    const title =
-      data.type === 'coursepage'
-        ? strings.entities.coursePage
-        : strings.categories[data.type]
-
-    const icon =
-      data.type === 'coursepage'
-        ? categoryIconMapping['course']
-        : categoryIconMapping[data.type]
-
     return (
-      <span title={title}>
+      <span title={strings.entities[data.type]}>
         {' '}
-        <StyledIcon icon={icon} />{' '}
+        <StyledIcon icon={entityIconMapping[data.type]} />{' '}
       </span>
     )
   }
@@ -159,7 +149,7 @@ export function Revision({ data }: RevisionProps) {
     const isVideo = data.type === 'video'
     return (
       <PreviewBox
-        title={isVideo ? strings.categories.video : strings.categories.applet}
+        title={isVideo ? strings.entities.video : strings.entities.applet}
         diffType="url"
       >
         {isVideo ? <Video src={dataSet.url} /> : <Geogebra id={dataSet.url} />}

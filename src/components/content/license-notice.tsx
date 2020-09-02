@@ -99,12 +99,12 @@ export function LicenseNotice({ data, minimal, type }: LicenseNoticeProps) {
   function translateTypeString() {
     switch (type) {
       case 'video':
-        return strings.categories.video
+        return strings.entities.video
       case 'task':
       case 'exercise-group':
         return strings.content.task
       case 'solution':
-        return strings.content.solution
+        return strings.entities.solution
     }
     return type
   }

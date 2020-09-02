@@ -22,8 +22,8 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
   const loggedInData = useLoggedInData()
   const instanceData = useInstanceData()
   if (!loggedInData) return null
-  const { strings } = loggedInData
-  const categories = instanceData.strings.categories
+  const loggedInStrings = loggedInData.strings
+  const entities = instanceData.strings.entities
 
   if (data.type == 'Page') {
     return (
@@ -32,13 +32,17 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
         {convert()}
         <Li>
           <SubLink href={`/page/revision/revisions/${data.id}`} noCSR>
-            <SubButtonStyle>{strings.authorMenu.history}</SubButtonStyle>
+            <SubButtonStyle>
+              {loggedInStrings.authorMenu.history}
+            </SubButtonStyle>
           </SubLink>
         </Li>
         {log()}
         <Li>
           <SubLink href={`/page/update/${data.id}`} noCSR>
-            <SubButtonStyle>{strings.authorMenu.settings}</SubButtonStyle>
+            <SubButtonStyle>
+              {loggedInStrings.authorMenu.settings}
+            </SubButtonStyle>
           </SubLink>
         </Li>
       </HoverDiv>
@@ -80,7 +84,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
                   noCSR
                 >
                   <SubButtonStyle>
-                    {strings.authorMenu.moveCoursePage}
+                    {loggedInStrings.authorMenu.moveCoursePage}
                   </SubButtonStyle>
                 </SubLink>
               </Li>
@@ -94,7 +98,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
           <Li>
             <SubLink as="div">
               <SubButtonStyle>
-                {strings.authorMenu.thisCoursePage}
+                {loggedInStrings.authorMenu.thisCoursePage}
               </SubButtonStyle>
             </SubLink>
           </Li>
@@ -113,7 +117,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
                   noCSR
                 >
                   <SubButtonStyle>
-                    {strings.authorMenu.addCoursePage}
+                    {loggedInStrings.authorMenu.addCoursePage}
                   </SubButtonStyle>
                 </SubLink>
               </Li>
@@ -128,7 +132,9 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
         >
           <Li>
             <SubLink as="div">
-              <SubButtonStyle>{strings.authorMenu.wholeCourse}</SubButtonStyle>
+              <SubButtonStyle>
+                {loggedInStrings.authorMenu.wholeCourse}
+              </SubButtonStyle>
             </SubLink>
           </Li>
         </Tippy>
@@ -142,7 +148,9 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
         {abo()}
         <Li>
           <SubLink href={`/taxonomy/term/organize/${data.id}`} noCSR>
-            <SubButtonStyle>{strings.authorMenu.organize}</SubButtonStyle>
+            <SubButtonStyle>
+              {loggedInStrings.authorMenu.organize}
+            </SubButtonStyle>
           </SubLink>
         </Li>
         {log()}
@@ -157,7 +165,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
                   href={`/entity/create/article?taxonomy%5Bterm%5D=${data.id}`}
                   noCSR
                 >
-                  <SubButtonStyle>{categories.article}</SubButtonStyle>
+                  <SubButtonStyle>{entities.article}</SubButtonStyle>
                 </SubLink>
               </Li>
 
@@ -166,7 +174,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
                   href={`/entity/create/text-exercise?taxonomy%5Bterm%5D=${data.id}`}
                   noCSR
                 >
-                  <SubButtonStyle>{strings.authorMenu.exercise}</SubButtonStyle>
+                  <SubButtonStyle>{entities.exercise}</SubButtonStyle>
                 </SubLink>
               </Li>
 
@@ -175,7 +183,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
                   href={`/entity/create/video?taxonomy%5Bterm%5D=${data.id}`}
                   noCSR
                 >
-                  <SubButtonStyle>{categories.video}</SubButtonStyle>
+                  <SubButtonStyle>{entities.video}</SubButtonStyle>
                 </SubLink>
               </Li>
 
@@ -184,7 +192,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
                   href={`/entity/create/course?taxonomy%5Bterm%5D=${data.id}`}
                   noCSR
                 >
-                  <SubButtonStyle>{categories.course}</SubButtonStyle>
+                  <SubButtonStyle>{entities.course}</SubButtonStyle>
                 </SubLink>
               </Li>
 
@@ -193,9 +201,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
                   href={`/entity/create/text-exercise-group?taxonomy%5Bterm%5D=${data.id}`}
                   noCSR
                 >
-                  <SubButtonStyle>
-                    {strings.authorMenu.exerciseGroup}
-                  </SubButtonStyle>
+                  <SubButtonStyle>{entities.exerciseGroup}</SubButtonStyle>
                 </SubLink>
               </Li>
 
@@ -204,7 +210,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
                   href={`/entity/create/applet?taxonomy%5Bterm%5D=${data.id}`}
                   noCSR
                 >
-                  <SubButtonStyle>{categories.applet}</SubButtonStyle>
+                  <SubButtonStyle>{entities.applet}</SubButtonStyle>
                 </SubLink>
               </Li>
 
@@ -213,7 +219,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
                   href={`/entity/create/event?taxonomy%5Bterm%5D=${data.id}`}
                   noCSR
                 >
-                  <SubButtonStyle>{strings.authorMenu.event}</SubButtonStyle>
+                  <SubButtonStyle>{entities.event}</SubButtonStyle>
                 </SubLink>
               </Li>
             </HoverDiv>
@@ -221,24 +227,32 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
         >
           <Li>
             <SubLink as="div">
-              <SubButtonStyle>{strings.authorMenu.newEntity}</SubButtonStyle>
+              <SubButtonStyle>
+                {loggedInStrings.authorMenu.newEntity}
+              </SubButtonStyle>
             </SubLink>
           </Li>
         </Tippy>
 
         <Li>
           <SubLink href={`/taxonomy/term/sort/entities/${data.id}`} noCSR>
-            <SubButtonStyle>{strings.authorMenu.sortEntities}</SubButtonStyle>
+            <SubButtonStyle>
+              {loggedInStrings.authorMenu.sortEntities}
+            </SubButtonStyle>
           </SubLink>
         </Li>
         <Li>
           <SubLink href={`/taxonomy/term/copy/batch/${data.id}`} noCSR>
-            <SubButtonStyle>{strings.authorMenu.copyItems}</SubButtonStyle>
+            <SubButtonStyle>
+              {loggedInStrings.authorMenu.copyItems}
+            </SubButtonStyle>
           </SubLink>
         </Li>
         <Li>
           <SubLink href={`/taxonomy/term/move/batch/${data.id}`} noCSR>
-            <SubButtonStyle>{strings.authorMenu.moveItems}</SubButtonStyle>
+            <SubButtonStyle>
+              {loggedInStrings.authorMenu.moveItems}
+            </SubButtonStyle>
           </SubLink>
         </Li>
       </HoverDiv>
@@ -264,7 +278,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
               noCSR
             >
               <SubButtonStyle>
-                {strings.authorMenu.addGroupedTextExercise}
+                {loggedInStrings.authorMenu.addGroupedTextExercise}
               </SubButtonStyle>
             </SubLink>
           </Li>
@@ -280,8 +294,8 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
             >
               <SubButtonStyle>
                 {data.grouped
-                  ? strings.authorMenu.moveToGroupedTextExercise
-                  : strings.authorMenu.moveToTextExercise}
+                  ? loggedInStrings.authorMenu.moveToGroupedTextExercise
+                  : loggedInStrings.authorMenu.moveToTextExercise}
               </SubButtonStyle>
             </SubLink>
           </Li>
@@ -291,7 +305,9 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
 
         <Li>
           <SubLink href={`/entity/license/update/${data.id}`} noCSR>
-            <SubButtonStyle>{strings.authorMenu.changeLicense}</SubButtonStyle>
+            <SubButtonStyle>
+              {loggedInStrings.authorMenu.changeLicense}
+            </SubButtonStyle>
           </SubLink>
         </Li>
 
@@ -313,7 +329,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
             <Li>
               <SubLink href={`/subscribe/${id}/0`} noCSR>
                 <SubButtonStyle>
-                  {strings.authorMenu.subscribeNotifications}
+                  {loggedInStrings.authorMenu.subscribeNotifications}
                 </SubButtonStyle>
               </SubLink>
             </Li>
@@ -321,7 +337,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
             <Li>
               <SubLink href={`/subscribe/${id}/1`} noCSR>
                 <SubButtonStyle>
-                  {strings.authorMenu.subscribeNotificationsAndMail}
+                  {loggedInStrings.authorMenu.subscribeNotificationsAndMail}
                 </SubButtonStyle>
               </SubLink>
             </Li>
@@ -330,7 +346,9 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
       >
         <Li>
           <SubLink as="div">
-            <SubButtonStyle>{strings.authorMenu.subscribe}</SubButtonStyle>
+            <SubButtonStyle>
+              {loggedInStrings.authorMenu.subscribe}
+            </SubButtonStyle>
           </SubLink>
         </Li>
       </Tippy>
@@ -341,7 +359,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
     return (
       <Li>
         <SubLink href={`/page/revision/create/${id}/${rev}`} noCSR>
-          <SubButtonStyle>{strings.authorMenu.convert}</SubButtonStyle>
+          <SubButtonStyle>{loggedInStrings.authorMenu.convert}</SubButtonStyle>
         </SubLink>
       </Li>
     )
@@ -351,7 +369,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
     return (
       <Li>
         <SubLink href={`/entity/repository/history/${id}`} noCSR>
-          <SubButtonStyle>{strings.authorMenu.history}</SubButtonStyle>
+          <SubButtonStyle>{loggedInStrings.authorMenu.history}</SubButtonStyle>
         </SubLink>
       </Li>
     )
@@ -361,7 +379,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
     return (
       <Li>
         <SubLink href={`/event/history/${id}`} noCSR>
-          <SubButtonStyle>{strings.authorMenu.log}</SubButtonStyle>
+          <SubButtonStyle>{loggedInStrings.authorMenu.log}</SubButtonStyle>
         </SubLink>
       </Li>
     )
@@ -371,7 +389,9 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
     return (
       <Li>
         <SubLink href={`/entity/taxonomy/update/${id}`} noCSR>
-          <SubButtonStyle>{strings.authorMenu.editAssignments}</SubButtonStyle>
+          <SubButtonStyle>
+            {loggedInStrings.authorMenu.editAssignments}
+          </SubButtonStyle>
         </SubLink>
       </Li>
     )
@@ -381,7 +401,9 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
     return (
       <Li>
         <SubLink href={`/flag/add/${id}`} noCSR>
-          <SubButtonStyle>{strings.authorMenu.flagContent}</SubButtonStyle>
+          <SubButtonStyle>
+            {loggedInStrings.authorMenu.flagContent}
+          </SubButtonStyle>
         </SubLink>
       </Li>
     )
@@ -392,7 +414,9 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
     return (
       <Li>
         <SubLink href={`/uuid/trash/${id}`} noCSR>
-          <SubButtonStyle>{strings.authorMenu.moveToTrash}</SubButtonStyle>
+          <SubButtonStyle>
+            {loggedInStrings.authorMenu.moveToTrash}
+          </SubButtonStyle>
         </SubLink>
       </Li>
     )
@@ -402,7 +426,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
     return (
       <Li>
         <SubLink href={`/entity/link/order/${id}/link`} noCSR>
-          <SubButtonStyle>{strings.authorMenu.sort}</SubButtonStyle>
+          <SubButtonStyle>{loggedInStrings.authorMenu.sort}</SubButtonStyle>
         </SubLink>
       </Li>
     )
@@ -412,7 +436,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
     return (
       <Li>
         <SubLink href={`/entity/repository/add-revision/${id}`} noCSR>
-          <SubButtonStyle>{strings.authorMenu.edit}</SubButtonStyle>
+          <SubButtonStyle>{loggedInStrings.authorMenu.edit}</SubButtonStyle>
         </SubLink>
       </Li>
     )

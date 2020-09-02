@@ -17,7 +17,7 @@ import {
   VideoRevision,
 } from './query'
 import { endpoint } from '@/api/endpoint'
-import { PageData, FrontendContentNode, CategoryType } from '@/data-types'
+import { PageData, FrontendContentNode, EntityTypes } from '@/data-types'
 import { horizonData } from '@/data/horizon_de'
 import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
 import { parseLanguageSubfolder, getLandingData } from '@/helper/feature-i18n'
@@ -191,7 +191,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
       revisionData: {
         type: uuid.__typename
           .replace('Revision', '')
-          .toLowerCase() as CategoryType,
+          .toLowerCase() as EntityTypes,
         repositoryId: uuid.repository.id,
         typename: uuid.__typename,
         thisRevision: {

@@ -66,17 +66,17 @@ export function Notification({
   const { strings, lang } = useInstanceData()
 
   const placeholderLookup = {
-    Page: loggedInStrings.entityPlaceholderPage,
-    Article: loggedInStrings.entityPlaceholderArticle,
-    Video: loggedInStrings.entityPlaceholderVideo,
-    Applet: loggedInStrings.entityPlaceholderApplet,
-    CoursePage: loggedInStrings.entityPlaceholderCoursePage,
-    Exercise: loggedInStrings.entityPlaceholderExercise,
-    GroupedExercise: loggedInStrings.entityPlaceholderGroupedExercise,
-    ExerciseGroup: loggedInStrings.entityPlaceholderExerciseGroup,
-    Event: loggedInStrings.entityPlaceholderEvent,
-    Course: loggedInStrings.entityPlaceholderCourse,
-    TaxonomyTerm: loggedInStrings.entityPlaceholderTaxonomyTerm,
+    Page: strings.entities.page,
+    Article: strings.entities.article,
+    Video: strings.entities.video,
+    Applet: strings.entities.applet,
+    CoursePage: strings.entities.coursePage,
+    Exercise: strings.entities.exercise,
+    GroupedExercise: strings.entities.groupedExercise,
+    ExerciseGroup: strings.entities.exerciseGroup,
+    Event: strings.entities.event,
+    Course: strings.entities.course,
+    TaxonomyTerm: strings.entities.taxonomyTerm,
     fallback: loggedInStrings.entityPlaceholderFallback,
   }
 

@@ -221,7 +221,7 @@ export interface EntityData {
   typename: string
   revisionId?: number
   title?: string
-  categoryIcon?: CategoryType
+  categoryIcon?: EntityTypes
   schemaData?: SchemaData
   content?: FrontendContentNode[]
   inviteToEdit?: boolean
@@ -237,7 +237,7 @@ export interface RevisionPage extends EntityPageBase {
 export interface RevisionData {
   typename: string
   date: string
-  type: CategoryType | 'coursepage'
+  type: EntityTypes
   user: {
     id: number
     username: string
@@ -262,19 +262,45 @@ export interface RevisionData {
   changes?: string
 }
 
-// Entities can belong to a category. Each has a translated string.
+// Entities each should have an translated string and a corresponding icon
 
-export type CategoryType =
+export type EntityTypes =
+  | 'applet'
   | 'article'
   | 'course'
-  | 'video'
-  | 'applet'
-  | 'folder'
-  | 'exercises'
+  | 'coursePage'
   | 'event'
+  | 'exercise'
+  | 'exerciseGroup'
+  | 'groupedExercise'
+  | 'page'
+  | 'solution'
+  | 'taxonomyTerm'
+  | 'user'
+  | 'video'
+  | 'revision'
+  | 'comment'
+  | 'thread'
+  //just in case
+  | 'folder'
+
+export type EntityStrings = {
+  [K in EntityTypes]: string
+}
+
+// Entities can belong to a category that we use in the taxonomy
+
+export type CategoryTypes =
+  | 'articles'
+  | 'courses'
+  | 'videos'
+  | 'applets'
+  | 'folders'
+  | 'exercises'
+  | 'events'
 
 export type CategoryStrings = {
-  [K in CategoryType]: string
+  [K in EntityTypes]: string
 }
 
 // Some flags to control schema.org behaviour. Not very well done yet.
