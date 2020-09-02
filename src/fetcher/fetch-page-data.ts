@@ -178,7 +178,12 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
     uuid.__typename === 'CoursePageRevision' ||
     uuid.__typename === 'VideoRevision' ||
     uuid.__typename === 'EventRevision' ||
-    uuid.__typename === 'AppletRevision'
+    uuid.__typename === 'AppletRevision' ||
+    uuid.__typename === 'GroupedExerciseRevision' ||
+    uuid.__typename === 'ExerciseRevision' ||
+    uuid.__typename === 'ExerciseGroupRevision' ||
+    uuid.__typename === 'SolutionRevision' ||
+    uuid.__typename === 'CourseRevision'
   ) {
     return {
       kind: 'revision',
@@ -191,7 +196,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
         typename: uuid.__typename,
         thisRevision: {
           id: uuid.id,
-          title: uuid.title ?? '',
+          title: (uuid as ArticleRevision).title,
           metaTitle: (uuid as ArticleRevision).metaTitle,
           metaDescription: (uuid as ArticleRevision).metaDescription,
           content: convertState(uuid.content),
@@ -199,7 +204,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
         },
         currentRevision: {
           id: uuid.repository.currentRevision?.id,
-          title: uuid.repository.currentRevision?.title ?? '',
+          title: (uuid as ArticleRevision).repository.currentRevision?.title,
           metaTitle: (uuid as ArticleRevision).repository.currentRevision
             ?.metaTitle,
           metaDescription: (uuid as ArticleRevision).repository.currentRevision
@@ -222,22 +227,6 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
       },
       cacheKey,
       breadcrumbsData,
-    }
-  }
-
-  if (
-    uuid.__typename === 'CourseRevision' ||
-    uuid.__typename === 'ExerciseRevision' ||
-    uuid.__typename === 'ExerciseGroupRevision' ||
-    uuid.__typename === 'GroupedExerciseRevision' ||
-    uuid.__typename === 'SolutionRevision'
-  ) {
-    return {
-      kind: 'error',
-      errorData: {
-        code: 404,
-        message: 'This revision type is not supported: ' + uuid.__typename,
-      },
     }
   }
 

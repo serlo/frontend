@@ -40,7 +40,7 @@ export function Revision({ data }: RevisionProps) {
   )
 
   const dataSet =
-    displayMode === 'current' ? data.thisRevision : data.currentRevision
+    displayMode === 'current' ? data.currentRevision : data.thisRevision
 
   const notCompare = displayMode !== 'compare'
 
@@ -77,13 +77,17 @@ export function Revision({ data }: RevisionProps) {
         <Link href={`/user/profile/${data.user.id}`}>{data.user.username}</Link>
       </StyledP>
 
-      <PreviewBox title={strings.revisions.title} diffType="title">
-        <StyledH1>{dataSet.title}</StyledH1>
-      </PreviewBox>
+      {dataSet.title !== undefined && (
+        <PreviewBox title={strings.revisions.title} diffType="title">
+          <StyledH1>{dataSet.title}</StyledH1>
+        </PreviewBox>
+      )}
 
-      <PreviewBox title={strings.revisions.content} diffType="content">
-        {renderArticle(dataSet.content || [])}
-      </PreviewBox>
+      {dataSet.content !== undefined && (
+        <PreviewBox title={strings.revisions.content} diffType="content">
+          {renderArticle(dataSet.content || [])}
+        </PreviewBox>
+      )}
 
       {renderVideoOrAppletBox()}
 

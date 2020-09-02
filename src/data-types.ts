@@ -245,7 +245,7 @@ export interface RevisionData {
   repositoryId: number
   thisRevision: {
     id: number
-    title: string
+    title?: string
     metaTitle?: string
     metaDescription?: string
     content?: FrontendContentNode[]
@@ -253,7 +253,7 @@ export interface RevisionData {
   }
   currentRevision: {
     id?: number
-    title: string
+    title?: string
     metaTitle?: string
     metaDescription?: string
     content?: FrontendContentNode[]

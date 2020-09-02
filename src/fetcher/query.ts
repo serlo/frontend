@@ -315,6 +315,16 @@ export const dataQuery = gql`
             }
           }
         }
+        ... on CourseRevision {
+          ...courseRevision
+          changes
+          repository {
+            id
+            currentRevision {
+              ...courseRevision
+            }
+          }
+        }
         ... on CoursePageRevision {
           ...coursePageRevision
           changes
@@ -335,6 +345,26 @@ export const dataQuery = gql`
             }
           }
         }
+        ... on ExerciseRevision {
+          content
+          changes
+          repository {
+            id
+            currentRevision {
+              content
+            }
+          }
+        }
+        ... on GroupedExerciseRevision {
+          content
+          changes
+          repository {
+            id
+            currentRevision {
+              content
+            }
+          }
+        }
         ... on ExerciseGroupRevision {
           ...exerciseGroupRevision
           changes
@@ -342,6 +372,16 @@ export const dataQuery = gql`
             id
             currentRevision {
               ...exerciseGroupRevision
+            }
+          }
+        }
+        ... on SolutionRevision {
+          content
+          changes
+          repository {
+            id
+            currentRevision {
+              content
             }
           }
         }
@@ -591,6 +631,12 @@ export const dataQuery = gql`
   fragment coursePageRevision on CoursePageRevision {
     content
     title
+  }
+
+  fragment courseRevision on CourseRevision {
+    content
+    title
+    metaDescription
   }
 
   fragment exerciseGroupRevision on ExerciseGroupRevision {
