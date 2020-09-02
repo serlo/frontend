@@ -57,9 +57,13 @@ export function Revision({ data }: RevisionProps) {
       )}
 
       <StyledP>
-        <b>{strings.revisions.changes}:</b> {data.changes}
-        <br />
-        <br />
+        {data.changes !== undefined && (
+          <>
+            <b>{strings.revisions.changes}:</b> {data.changes}
+            <br />
+            <br />
+          </>
+        )}
         {new Date(data.date).toLocaleString(lang)} by{' '}
         <Link href={`/user/profile/${data.user.id}`}>{data.user.username}</Link>
       </StyledP>
@@ -74,15 +78,23 @@ export function Revision({ data }: RevisionProps) {
         {hasData && renderArticle(dataSet.content || [])}
         {renderDiffViewer('content')}
       </Box>
-      {renderBoxheader(strings.revisions.metaTitle)}
-      <Box withPadding={hasData}>
-        {hasData && dataSet.metaTitle} {renderDiffViewer('metaTitle')}
-      </Box>
-      {renderBoxheader(strings.revisions.metaDescription)}
-      <Box withPadding={hasData}>
-        {hasData && dataSet.metaDescription}{' '}
-        {renderDiffViewer('metaDescription')}
-      </Box>
+      {dataSet.metaTitle !== undefined && (
+        <>
+          {renderBoxheader(strings.revisions.metaTitle)}
+          <Box withPadding={hasData}>
+            {hasData && dataSet.metaTitle} {renderDiffViewer('metaTitle')}
+          </Box>
+        </>
+      )}
+      {dataSet.metaDescription !== undefined && (
+        <>
+          {renderBoxheader(strings.revisions.metaDescription)}
+          <Box withPadding={hasData}>
+            {hasData && dataSet.metaDescription}{' '}
+            {renderDiffViewer('metaDescription')}
+          </Box>
+        </>
+      )}
       <HSpace amount={20} />
     </>
   )
@@ -121,11 +133,11 @@ export function Revision({ data }: RevisionProps) {
   }
 
   function renderCategoryIcon() {
-    if (!data.categoryIcon) return null
+    if (!data.type) return null
     return (
-      <span title={strings.categories[data.categoryIcon]}>
+      <span title={strings.categories[data.type]}>
         {' '}
-        <StyledIcon icon={categoryIconMapping[data.categoryIcon]} />{' '}
+        <StyledIcon icon={categoryIconMapping[data.type]} />{' '}
       </span>
     )
   }

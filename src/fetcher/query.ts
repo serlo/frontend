@@ -53,6 +53,12 @@ export interface ArticleRevision
   __typename: 'ArticleRevision'
 }
 
+export interface PageRevision
+  extends EntityWithTaxonomyTerms,
+    GraphQL.PageRevision {
+  __typename: 'PageRevision'
+}
+
 export interface Video extends EntityWithTaxonomyTerms {
   __typename: 'Video'
   currentRevision?: GraphQL.Maybe<
@@ -210,6 +216,34 @@ export const dataQuery = gql`
       __typename
       id
 
+      ... on AbstractRevision {
+        date
+        author {
+          id
+          username
+        }
+        ... on ArticleRevision {
+          ...articleRevision
+          changes
+          repository {
+            id
+            currentRevision {
+              id
+              ...articleRevision
+            }
+          }
+        }
+        ... on PageRevision {
+          ...pageRevision
+          repository {
+            id
+            currentRevision {
+              ...pageRevision
+            }
+          }
+        }
+      }
+
       ... on AbstractRepository {
         alias
         instance
@@ -222,9 +256,7 @@ export const dataQuery = gql`
 
       ... on Page {
         currentRevision {
-          id
-          title
-          content
+          ...pageRevision
         }
         navigation {
           data
@@ -234,58 +266,25 @@ export const dataQuery = gql`
 
       ... on Article {
         currentRevision {
-          title
-          content
-          metaTitle
-          metaDescription
-        }
-      }
-
-      ... on ArticleRevision {
-        title
-        content
-        metaTitle
-        metaDescription
-        changes
-        date
-        author {
-          id
-          username
-        }
-        repository {
-          id
-          currentRevision {
-            id
-            title
-            content
-            metaTitle
-            metaDescription
-          }
+          ...articleRevision
         }
       }
 
       ... on Video {
         currentRevision {
-          title
-          url
-          content
+          ...videoRevision
         }
       }
 
       ... on Applet {
         currentRevision {
-          title
-          content
-          url
-          metaTitle
-          metaDescription
+          ...appletRevision
         }
       }
 
       ... on CoursePage {
         currentRevision {
-          content
-          title
+          ...coursePageRevision
         }
         course {
           id
@@ -309,7 +308,7 @@ export const dataQuery = gql`
 
       ... on ExerciseGroup {
         currentRevision {
-          content
+          ...exerciseGroupRevision
         }
         exercises {
           ...exercise
@@ -322,7 +321,7 @@ export const dataQuery = gql`
 
       ... on Event {
         currentRevision {
-          content
+          ...eventRevision
         }
       }
 
@@ -449,6 +448,46 @@ export const dataQuery = gql`
     }
   }
 
+  fragment articleRevision on ArticleRevision {
+    title
+    content
+    metaTitle
+    metaDescription
+  }
+
+  fragment pageRevision on PageRevision {
+    id
+    title
+    content
+  }
+
+  fragment videoRevision on VideoRevision {
+    title
+    url
+    content
+  }
+
+  fragment appletRevision on AppletRevision {
+    title
+    content
+    url
+    metaTitle
+    metaDescription
+  }
+
+  fragment coursePageRevision on CoursePageRevision {
+    content
+    title
+  }
+
+  fragment exerciseGroupRevision on ExerciseGroupRevision {
+    content
+  }
+
+  fragment eventRevision on EventRevision {
+    content
+  }
+
   fragment exercise on AbstractExercise {
     id
     alias
@@ -475,7 +514,6 @@ export const dataQuery = gql`
 export type QueryResponse =
   | Page
   | Article
-  | ArticleRevision
   | Video
   | Applet
   | CoursePage
@@ -486,6 +524,8 @@ export type QueryResponse =
   | Event
   | Course
   | TaxonomyTerm
+  | ArticleRevision
+  | PageRevision
 
 export const idsQuery = (ids: number[]) => {
   const map = ids.map(

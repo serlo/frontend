@@ -236,6 +236,12 @@ export interface RevisionPage extends EntityPageBase {
 
 export interface RevisionData {
   typename: string
+  date: string
+  type: CategoryType
+  user: {
+    id: number
+    username: string
+  }
   repositoryId: number
   thisRevision: {
     id: number
@@ -251,13 +257,7 @@ export interface RevisionData {
     metaDescription?: string
     content?: FrontendContentNode[]
   }
-  categoryIcon?: CategoryType
-  changes: string
-  date: string
-  user: {
-    id: number
-    username: string
-  }
+  changes?: string
 }
 
 // Entities can belong to a category. Each has a translated string.

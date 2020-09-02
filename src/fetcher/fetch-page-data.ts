@@ -9,9 +9,14 @@ import { createNavigation } from './create-navigation'
 import { buildTaxonomyData } from './create-taxonomy'
 import { createTitle } from './create-title'
 import { prettifyLinks } from './prettify-links'
-import { dataQuery, QueryResponse, licenseDetailsQuery } from './query'
+import {
+  dataQuery,
+  QueryResponse,
+  licenseDetailsQuery,
+  ArticleRevision,
+} from './query'
 import { endpoint } from '@/api/endpoint'
-import { PageData, FrontendContentNode } from '@/data-types'
+import { PageData, FrontendContentNode, CategoryType } from '@/data-types'
 import { horizonData } from '@/data/horizon_de'
 import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
 import { parseLanguageSubfolder, getLandingData } from '@/helper/feature-i18n'
@@ -166,29 +171,36 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
     }
   }*/
 
-  if (uuid.__typename === 'ArticleRevision') {
+  if (
+    uuid.__typename === 'ArticleRevision' ||
+    uuid.__typename === 'PageRevision'
+  ) {
     return {
       kind: 'revision',
       newsletterPopup: false,
       revisionData: {
+        type: uuid.__typename
+          .replace('Revision', '')
+          .toLowerCase() as CategoryType,
         repositoryId: uuid.repository.id,
         typename: uuid.__typename,
         thisRevision: {
           id: uuid.id,
           title: uuid.title ?? '',
-          metaTitle: uuid.metaTitle,
-          metaDescription: uuid.metaDescription,
+          metaTitle: (uuid as ArticleRevision).metaTitle,
+          metaDescription: (uuid as ArticleRevision).metaDescription,
           content: convertState(uuid.content),
         },
         currentRevision: {
           id: uuid.repository.currentRevision?.id,
           title: uuid.repository.currentRevision?.title ?? '',
-          metaTitle: uuid.repository.currentRevision?.metaTitle,
-          metaDescription: uuid.repository.currentRevision?.metaDescription,
+          metaTitle: (uuid as ArticleRevision).repository.currentRevision
+            ?.metaTitle,
+          metaDescription: (uuid as ArticleRevision).repository.currentRevision
+            ?.metaDescription,
           content: convertState(uuid.repository.currentRevision?.content),
         },
-        changes: uuid.changes,
-        categoryIcon: 'article',
+        changes: (uuid as ArticleRevision).changes,
         user: {
           id: uuid.author.id,
           username: uuid.author.username,
@@ -197,7 +209,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
       },
       metaData: {
         title,
-        contentType: 'article-revision',
+        contentType: 'revision',
         metaImage,
         metaDescription: '',
       },
