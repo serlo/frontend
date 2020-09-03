@@ -49,6 +49,20 @@ export function Exercise({ node }: ExerciseProps) {
   )
 
   function renderSolution() {
+    const license = node.solution.license && (
+      <LicenseNotice minimal data={node.solution.license} type="solution" />
+    )
+    const authorTools = loaded && auth.current && (
+      <AuthorTools
+        data={{
+          type: '_SolutionInline',
+          id: node.context.solutionId!,
+          parentId: node.context.id,
+          grouped: node.grouped,
+        }}
+      />
+    )
+
     return (
       <SolutionBox>
         {renderArticle(
@@ -63,25 +77,10 @@ export function Exercise({ node }: ExerciseProps) {
         )}
         {
           /* compat: hide div if empty */
-          (node.solution.license || (loaded && auth.current)) && (
+          (license || authorTools) && (
             <SolutionTools>
-              {node.solution.license && (
-                <LicenseNotice
-                  minimal
-                  data={node.solution.license}
-                  type="solution"
-                />
-              )}
-              {loaded && auth.current && (
-                <AuthorTools
-                  data={{
-                    type: '_SolutionInline',
-                    id: node.context.solutionId!,
-                    parentId: node.context.id,
-                    grouped: node.grouped,
-                  }}
-                />
-              )}
+              {license}
+              {authorTools}
             </SolutionTools>
           )
         }
