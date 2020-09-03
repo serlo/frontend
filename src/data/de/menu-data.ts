@@ -39,6 +39,7 @@ export const headerData: InstanceData['headerData'] = [
         title: 'Veranstaltungen für Autor*innen',
       },
       { url: '/entity/unrevised', title: 'Ungeprüfte Bearbeitungen' },
+      { url: '/discussions', title: 'Liste aller Kommentare' },
     ],
   },
   { url: '/spenden', title: 'Spenden', icon: 'donate' },
