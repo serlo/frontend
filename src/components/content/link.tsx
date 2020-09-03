@@ -37,6 +37,8 @@ const legacyLinks = [
 ]
 
 function isLegacyLink(_href: string) {
+  // compat: this is a special frontend route
+  if (_href == '/user/notifications') return false
   return (
     legacyLinks.indexOf(_href) > -1 ||
     _href.startsWith('/user/') ||
@@ -44,6 +46,7 @@ function isLegacyLink(_href: string) {
     _href.startsWith('/event/history') ||
     _href.startsWith('/api/auth') ||
     _href.startsWith('/entity/') ||
+    _href.startsWith('/discussions') ||
     _href.indexOf('.serlo.org') > -1 //e.g. community.serlo.org or different language
   )
 }
