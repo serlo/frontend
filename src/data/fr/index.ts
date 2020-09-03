@@ -54,12 +54,13 @@ export const instanceData = {
       hide: "cacher",
       prerequisite: "Pour cet éxercice tu as besoin des connaissances de base suivantes:",
       solution: 'Solution',
-      exerciseGroup: "Groupe d'exercices",
-      right: "Correct",
-      wrong: "Incorrect",
-      check: "Vérifier",
-      yourAnswer: "Votre réponse...",
-      chooseOption: "Sélectionnez une des options :"
+      task: 'Task',
+      exerciseGroup: 'Exercise group',
+      right: 'Right',
+      wrong: 'Wrong',
+      check: 'Check',
+      yourAnswer: 'Your answer…',
+      chooseOption: 'Click on one of the options.'
     },
     cookie: {
       part1: "En utilisant ce site Web, vous déclarez que vous acceptez",
@@ -71,8 +72,31 @@ export const instanceData = {
     },
     notifications: {
       notifications: 'Notifications',
-      pleaseLogInLink: 'Bitte melde dich an',
-      pleaseLogInText: 'um deine Benachrichtigungen zu sehen.'
+      pleaseLogInLink: 'Please log in',
+      pleaseLogInText: 'to see your notifications.'
+    },
+    comments: {
+      question: 'Do you have a question?',
+      commentsOne: 'Comment',
+      commentsMany: 'Comments',
+      submit: 'Submit',
+      reportComment: 'Report comment',
+      archiveThread: 'Archive thread',
+      deleteThread: 'Delete thread',
+      deleteComment: 'Delete comment',
+      postedOn: 'Posted on',
+      placeholder: "Your question or suggestion…",
+      placeholderReply: "Your answer…"
+    },
+    errors: {
+      title: '😬 Websites make mistakes sometimes…',
+      defaultMessage: 'So sorry, we ran into a problem loading this content.',
+      temporary: 'The good news? The problem seems to be temporary, so please try again later.',
+      permanent: 'We will see what we can do about that… ',
+      typeNotSupported: 'Please try reloading this page.',
+      refreshNow: 'Refresh now',
+      backToPrevious: 'Back to previous page',
+      backToHome: 'To our home page'
     }
   }
 };
@@ -150,7 +174,12 @@ export const loggedInData = {
       edit: 'Edit',
       organize: 'Organize',
       moveToGroupedTextExercise: 'Move content to other grouped-text-exercise',
-      moveToTextExercise: 'Move content to other text-exercise'
+      moveToTextExercise: 'Move content to other text-exercise',
+      sortEntities: 'Sort content',
+      newEntity: 'New Entity',
+      exercise: 'Exercise',
+      exerciseGroup: 'Exercise Group',
+      event: 'Event'
     },
     notifications: {
       loadMore: "Load more",

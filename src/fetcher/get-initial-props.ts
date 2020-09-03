@@ -17,7 +17,11 @@ export async function getInitialProps(
   props: NextPageContext
 ): Promise<InitialProps> {
   const slug =
-    props.query.slug === undefined ? [] : (props.query.slug as string[])
+    props.query.slug === undefined
+      ? []
+      : typeof props.query.slug === 'string'
+      ? [props.query.slug]
+      : props.query.slug
   const joinedSlug = slug.join('/')
   const url = '/' + joinedSlug
   const { origin } = absoluteUrl(props.req)
@@ -32,8 +36,6 @@ export async function getInitialProps(
     fetcherAdditionalData.instance && typeof window !== 'undefined'
       ? fetcherAdditionalData.instance
       : instance_path
-
-  //console.log(instance, url, fetcherAdditionalData.instance)
 
   let instanceData: InstanceData | undefined = undefined
 
@@ -115,7 +117,7 @@ export async function getInitialProps(
     //client
 
     try {
-      const fromCache = sessionStorage.getItem(`/${instance}${url}`)
+      const fromCache = sessionStorage.getItem(`/${instance}${alias}`)
       if (fromCache) {
         return {
           origin: fetcherAdditionalData.origin,
@@ -129,7 +131,7 @@ export async function getInitialProps(
     const res = await fetch(
       `${fetcherAdditionalData.origin}/api/frontend/${
         fetcherAdditionalData.instance
-      }${url.replace(/\/$/, '')}`
+      }${alias.replace(/\/$/, '')}`
     )
     const fetchedData = (await res.json()) as PageData
     // compat: redirect of courses

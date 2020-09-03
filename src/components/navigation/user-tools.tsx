@@ -44,7 +44,7 @@ export function UserTools({ id, onShare, hideEdit, data }: UserToolsProps) {
 
   const editHref =
     data.type == 'Page'
-      ? `/page/revision/create-old/${data.id}/${data.revisionId}`
+      ? `/page/revision/create-old/${data.id}/${data.revisionId || ''}`
       : data.type == 'Taxonomy'
       ? `/taxonomy/term/update/${id}`
       : `/entity/repository/add-revision/${id}`
