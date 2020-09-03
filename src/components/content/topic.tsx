@@ -60,7 +60,7 @@ export function Topic({ data }: TopicProps) {
         data.exercisesContent.map((exercise, i) => (
           <React.Fragment key={i}>{renderArticle([exercise])}</React.Fragment>
         ))}
-      {!data.exercisesContent && (
+      {data.exercisesContent.length == 0 && (
         <LinkList>
           <CategoryLinks full category="article" links={data.articles} />
           <CategoryLinks full category="exercises" links={data.exercises} />
