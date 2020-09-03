@@ -49,7 +49,7 @@ export function Exercise({ node }: ExerciseProps) {
   )
 
   function renderSolution() {
-    const license = node.solution.license && (
+    const license = node.solution.license && !node.solution.license.default && (
       <LicenseNotice minimal data={node.solution.license} type="solution" />
     )
     const authorTools = loaded && auth.current && (
@@ -62,6 +62,8 @@ export function Exercise({ node }: ExerciseProps) {
         }}
       />
     )
+
+    console.log('solution', license, authorTools)
 
     return (
       <SolutionBox>
