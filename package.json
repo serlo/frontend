@@ -63,6 +63,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
+    "@convertkit/slate-lists": "^0.2.11",
+    "@edtr-io/core": "^1.0.0-beta.4",
     "@edtr-io/plugin": "^1.0.0-beta.4",
     "@edtr-io/plugin-anchor": "^1.0.0-beta.4",
     "@edtr-io/plugin-blockquote": "^1.0.0-beta.4",
@@ -98,6 +100,8 @@
     "@types/react-modal": "^3.0.0",
     "@types/react-notify-toast": "^0.5.0",
     "@types/simple-oauth2": "^4.0.0",
+    "@types/slate-html-serializer": "^0.6.4",
+    "@types/slate-react": "^0.22.9",
     "@types/styled-components": "^5.0.0",
     "@typescript-eslint/eslint-plugin": "^3.0.0",
     "@typescript-eslint/parser": "^3.0.0",
@@ -118,6 +122,8 @@
     "prettier": "^2.0.0",
     "prettier-plugin-packagejson": "^2.0.0",
     "prop-types": "^15.7.0",
+    "react-dnd": "^11.1.3",
+    "react-dnd-html5-backend": "^11.1.3",
     "react-is": "^16.7.0",
     "react-test-renderer": "^16.8.0",
     "typescript": "^3.9.0"

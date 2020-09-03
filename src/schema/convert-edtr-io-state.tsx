@@ -1,6 +1,12 @@
 import { converter } from '../../external/markdown'
 import { convertLegacyState } from './convert-legacy-state'
-import { EdtrState, SlateBlockMock, TextNodeMock } from './edtr-io-types'
+import {
+  EdtrState,
+  SlateBlockMock,
+  TextNodeMock,
+  EdtrPluginEquations,
+  EdtrPluginLayout,
+} from './edtr-io-types'
 import { MathProps } from '@/components/content/math'
 import {
   FrontendContentNode,
@@ -33,7 +39,7 @@ export function convert(
 ): FrontendContentNode[] {
   // compat: no or empty node, we ignore
   if (!node || Object.keys(node).length === 0) {
-    console.log('e: node EMPTY')
+    // console.log('e: node EMPTY')
     return []
   }
 
@@ -59,7 +65,7 @@ export function convert(
 
 function convertPlugin(node: EdtrState) {
   if (node.plugin === 'rows') {
-    return convert(node.state)
+    return convert((node.state as unknown) as EdtrState)
   }
   if (node.plugin === 'text') {
     return convert(node.state)
@@ -69,7 +75,7 @@ function convertPlugin(node: EdtrState) {
       {
         type: 'img',
         src: node.state.src,
-        alt: node.state.alt!,
+        alt: node.state.alt,
         maxWidth: node.state.maxWidth,
       },
     ]
@@ -99,7 +105,8 @@ function convertPlugin(node: EdtrState) {
           },
           {
             type: 'spoiler-body',
-            children: convert(node.state.content),
+            //TODO: investigate why registering as string
+            children: convert((node.state.content as unknown) as EdtrState),
           },
         ],
       },
@@ -115,12 +122,14 @@ function convertPlugin(node: EdtrState) {
           {
             type: 'col',
             size: 100 - width,
-            children: convert(node.state.explanation),
+            //TODO: investigate why registering as string
+            children: convert((node.state.explanation as unknown) as EdtrState),
           },
           {
             type: 'col',
             size: width,
-            children: convert(node.state.multimedia),
+            //TODO: investigate why registering as string
+            children: convert((node.state.multimedia as unknown) as EdtrState),
           },
         ],
       },
@@ -130,7 +139,7 @@ function convertPlugin(node: EdtrState) {
     return [
       {
         type: 'row',
-        children: node.state.map((child) => {
+        children: (node as EdtrPluginLayout).state.map((child) => {
           const children = convert(child.child)
           // compat: math align left
           children.forEach((child) => {
@@ -254,10 +263,10 @@ function convertPlugin(node: EdtrState) {
   }*/
 
   if (node.plugin === 'equations') {
-    const steps = node.state.steps.map((step) => {
+    const steps = (node as EdtrPluginEquations).state.steps.map((step) => {
       return {
         left: convert(step.left),
-        //@ts-expect-error
+        // @ts-expect-error
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         sign: step.sign, //TODO: probably a bug
         right: convert(step.right),
