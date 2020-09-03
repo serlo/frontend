@@ -344,6 +344,7 @@ export const dataQuery = gql`
                   trashed
                   __typename
                   ... on TaxonomyTerm {
+                    id
                     alias
                     type
                     name
