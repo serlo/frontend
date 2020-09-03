@@ -1,3 +1,5 @@
+import { TaxonomyTermType } from '@serlo/api'
+
 import { Instance } from './fetcher/query'
 import { instanceData, instanceLandingData, loggedInData } from '@/data/en'
 
@@ -617,6 +619,7 @@ export interface TaxonomySubTerm extends TaxonomyTermBase, TaxonomyLink {
 export interface TaxonomyData extends TaxonomyTermBase {
   id: number
   title: string
+  taxonomyType: TaxonomyTermType
   subterms: TaxonomySubTerm[]
   exercisesContent: (FrontendExerciseNode | FrontendExerciseGroupNode)[]
   licenseData?: LicenseData
