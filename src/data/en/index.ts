@@ -112,6 +112,16 @@ export const instanceData = {
       currentVersion: "Current Version",
       thisVersion: "This Version",
       thisIsCurrentVersion: "This is the currently accepted version.",
+    },
+    errors: {
+      title: '😬 Websites make mistakes sometimes…',
+      defaultMessage: 'So sorry, we ran into a problem loading this content.',
+      temporary: 'The good news? The problem seems to be temporary, so please try again later.',
+      permanent: 'We will see what we can do about that… ',
+      typeNotSupported: 'Please try reloading this page.',
+      refreshNow: 'Refresh now',
+      backToPrevious: 'Back to previous page',
+      backToHome: 'To our home page'
     }
   }
 };

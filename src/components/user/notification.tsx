@@ -23,17 +23,10 @@ import {
 import Tippy from '@tippyjs/react'
 import React from 'react'
 import styled, { css } from 'styled-components'
-import TimeAgo from 'timeago-react'
-import * as timeago from 'timeago.js'
-//TODO: investigate, also move to helper, this needs to be dynamic
-// eslint-disable-next-line import/no-internal-modules
-import de from 'timeago.js/lib/lang/de'
 
+import { TimeAgo } from '@/components/time-ago'
 import { useInstanceData } from '@/contexts/instance-context'
 import { LoggedInData } from '@/data-types'
-
-// register it.
-timeago.register('de', de)
 
 export type NotificationEvent =
   | CheckoutRevisionNotificationEvent
@@ -83,11 +76,7 @@ export function Notification({
   return (
     <Item>
       <span title={eventDate.toLocaleString(lang)}>
-        <StyledTimeAgo
-          datetime={eventDate}
-          locale={lang}
-          opts={{ minInterval: 60 }}
-        />
+        <StyledTimeAgo datetime={eventDate} />
       </span>
       <Title unread={unread}>{renderText()}</Title>
       {renderExtraContent()}
