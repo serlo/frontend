@@ -18,17 +18,32 @@ export const instanceData = {
       toTop: "Nach oben"
     },
     categories: {
-      article: "Artikel",
-      course: "Kurs",
-      video: 'Video',
-      applet: 'Applet',
-      folder: "Bereich",
-      exercises: "Aufgaben"
+      articles: 'Articles',
+      courses: 'Courses',
+      videos: 'Videos',
+      applets: 'Applets',
+      folders: 'Folders',
+      exercises: "Aufgaben",
+      events: 'Events'
     },
     entities: {
-      topicFolder: "Aufgabensammlung",
-      comment: "Kommentar",
-      revision: "Bearbeitung",
+      applet: 'Applet',
+      article: 'Article',
+      course: 'Course',
+      coursePage: 'Course Page',
+      event: 'Event',
+      exercise: 'Exercise',
+      exerciseGroup: 'Exercise Group',
+      folder: 'Folder',
+      groupedExercise: 'Grouped Exercise',
+      page: 'Page',
+      solution: 'Solution',
+      taxonomyTerm: 'Taxonomy Term',
+      user: 'User',
+      video: 'Video',
+      topicFolder: 'Exercise folder',
+      comment: 'Comment',
+      revision: 'Revision',
       thread: 'Thread'
     },
     share: {
@@ -53,14 +68,12 @@ export const instanceData = {
       show: "anzeigen",
       hide: "ausblenden",
       prerequisite: "Für diese Aufgabe benötigst Du folgendes Grundwissen:",
-      solution: "Lösung",
-      task: "Aufgabe",
-      exerciseGroup: "Aufgabengruppe",
-      right: "Richtig",
-      wrong: "Falsch",
-      check: "Stimmt's?",
-      yourAnswer: "Deine Antwort…",
-      chooseOption: "Klicke auf eine der Optionen."
+      task: 'Task',
+      right: 'Right',
+      wrong: 'Wrong',
+      check: 'Check',
+      yourAnswer: 'Your answer…',
+      chooseOption: 'Click on one of the options.'
     },
     cookie: {
       part1: "Mit der Nutzung dieser Webseite erklärst du dich mit unserer",
@@ -88,15 +101,28 @@ export const instanceData = {
       placeholder: "Deine Frage oder Vorschlag…",
       placeholderReply: "Deine Antwort…"
     },
+    revisions: {
+      toOverview: "Back to overview",
+      changes: "Changes",
+      title: "Title",
+      content: "Content",
+      metaTitle: "Meta Title",
+      metaDescription: "Meta Description",
+      compare: "Compare",
+      currentVersion: "Current Version",
+      thisVersion: "This Version",
+      thisIsCurrentVersion: "This is the currently accepted version.",
+      by: 'By'
+    },
     errors: {
-      title: "😬 Auch Webseiten machen mal Fehler…",
-      defaultMessage: "Es tut uns leid, beim Laden dieses Inhalts ging was schief.",
-      temporary: "Die gute Nachricht? Das Problem scheint temporär zu sein, bitte versuch es später noch einmal.",
-      permanent: "Wir werden sehen, was wir da machen können…",
-      typeNotSupported: "Bitte versuche diese Seite noch einmal zu laden.",
-      refreshNow: "Jetzt aktualisieren",
-      backToPrevious: "Zurück zur vorherigen Seite",
-      backToHome: "Zur Startseite"
+      title: '😬 Websites make mistakes sometimes…',
+      defaultMessage: 'So sorry, we ran into a problem loading this content.',
+      temporary: 'The good news? The problem seems to be temporary, so please try again later.',
+      permanent: 'We will see what we can do about that… ',
+      typeNotSupported: 'Please try reloading this page.',
+      refreshNow: 'Refresh now',
+      backToPrevious: 'Back to previous page',
+      backToHome: 'To our home page'
     }
   }
 };
@@ -176,10 +202,7 @@ export const loggedInData = {
       moveToGroupedTextExercise: "Inhalt zu anderer Gruppe verschieben",
       moveToTextExercise: "Inhalt zu anderer Textaufgabe verschieben",
       sortEntities: "Inhalt sortieren",
-      newEntity: "Neuer Inhalt",
-      exercise: "Aufgabe",
-      exerciseGroup: "Aufgabengruppe",
-      event: "Veranstaltung"
+      newEntity: "Neuer Inhalt"
     },
     notifications: {
       loadMore: "Weitere laden",
@@ -206,18 +229,7 @@ export const loggedInData = {
       setTaxonomyParentChanged: "%actor% hat den Elternknoten von %child% auf %parent% geändert.",
       setUuidStateTrashed: "%actor% hat %object% in den Papierkorb verschoben.",
       setUuidStateRestored: "%actor% hat %object% aus dem Papierkorb wieder hergestellt.",
-      entityPlaceholderPage: "Seite",
-      entityPlaceholderArticle: "Artikel",
-      entityPlaceholderVideo: 'Video',
-      entityPlaceholderApplet: 'Applet',
-      entityPlaceholderCoursePage: "Kursseite",
-      entityPlaceholderExercise: "Aufgabe",
-      entityPlaceholderGroupedExercise: "Gruppierte Aufgabe",
-      entityPlaceholderExerciseGroup: "Aufgabengruppe",
-      entityPlaceholderEvent: "Veranstaltung",
-      entityPlaceholderCourse: "Kurs",
-      entityPlaceholderTaxonomyTerm: "Begriff",
-      entityPlaceholderFallback: "Inhalt"
+      entityPlaceholderFallback: "Content"
     }
   }
 };
