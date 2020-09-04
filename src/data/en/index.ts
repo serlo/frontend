@@ -112,6 +112,7 @@ export const instanceData = {
       currentVersion: "Current Version",
       thisVersion: "This Version",
       thisIsCurrentVersion: "This is the currently accepted version.",
+      by: 'By'
     },
     errors: {
       title: '😬 Websites make mistakes sometimes…',

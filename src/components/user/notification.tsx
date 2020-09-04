@@ -56,7 +56,7 @@ export function Notification({
   loggedInStrings: LoggedInData['strings']['notifications']
 }) {
   const eventDate = new Date(event.date)
-  const { strings, lang } = useInstanceData()
+  const { strings } = useInstanceData()
 
   const placeholderLookup = {
     Page: strings.entities.page,
@@ -75,9 +75,7 @@ export function Notification({
 
   return (
     <Item>
-      <span title={eventDate.toLocaleString(lang)}>
-        <StyledTimeAgo datetime={eventDate} />
-      </span>
+      <StyledTimeAgo datetime={eventDate} dateAsTitle />
       <Title unread={unread}>{renderText()}</Title>
       {renderExtraContent()}
       {renderMuteButton()}

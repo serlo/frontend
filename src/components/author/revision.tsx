@@ -11,6 +11,7 @@ import { HSpace } from '@/components/content/h-space'
 import { VideoProps } from '@/components/content/video'
 import { StyledH1 } from '@/components/tags/styled-h1'
 import { StyledP } from '@/components/tags/styled-p'
+import { TimeAgo } from '@/components/time-ago'
 import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionData } from '@/data-types'
 import { makePadding, makeDefaultButton, inputFontReset } from '@/helper/css'
@@ -23,8 +24,6 @@ const Video = dynamic<VideoProps>(() =>
 const Geogebra = dynamic<GeogebraProps>(() =>
   import('../content/geogebra').then((mod) => mod.Geogebra)
 )
-// TODO: add timeago
-
 export interface RevisionProps {
   data: RevisionData
 }
@@ -33,7 +32,7 @@ export interface RevisionProps {
 type DisplayMode = 'this' | 'current' | 'compare'
 
 export function Revision({ data }: RevisionProps) {
-  const { lang, strings } = useInstanceData()
+  const { strings } = useInstanceData()
   const isCurrentRevision = data.thisRevision.id === data.currentRevision.id
   const [displayMode, setDisplayMode] = React.useState<DisplayMode>(
     isCurrentRevision ? 'current' : 'this'
@@ -73,8 +72,9 @@ export function Revision({ data }: RevisionProps) {
             <br />
           </>
         )}
-        {new Date(data.date).toLocaleString(lang)} by{' '}
+        {strings.revisions.by}{' '}
         <Link href={`/user/profile/${data.user.id}`}>{data.user.username}</Link>
+        , <TimeAgo datetime={new Date(data.date)} dateAsTitle />
       </StyledP>
 
       {dataSet.title !== undefined && (
