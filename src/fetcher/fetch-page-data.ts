@@ -15,7 +15,6 @@ import {
   licenseDetailsQuery,
   ArticleRevision,
   VideoRevision,
-  User,
 } from './query'
 import { endpoint } from '@/api/endpoint'
 import { PageData, FrontendContentNode, EntityTypes } from '@/data-types'
@@ -36,6 +35,12 @@ export async function fetchPageData(raw_alias: string): Promise<PageData> {
       const id = parseInt(alias.split('license/detail/')[1])
       return await apiLicensePageRequest(id, instance)
     }
+    if (alias.startsWith('/user/profile/')) {
+      const idPath = alias.split('user/profile')[1]
+      const pageData = await apiRequest(idPath, instance)
+      await prettifyLinks(pageData)
+      return pageData
+    }
 
     const pageData = await apiRequest(alias, instance)
     await prettifyLinks(pageData)
@@ -48,37 +53,24 @@ export async function fetchPageData(raw_alias: string): Promise<PageData> {
 }
 
 async function apiRequest(alias: string, instance: string): Promise<PageData> {
-  const { uuid } =
-    alias.indexOf('user/profile') > -1
-      ? ({
-          uuid: {
-            __typename: 'User',
-            id: 73435,
-            trashed: false,
-            username: 'kathongi',
-            alias: 'kathongi',
-            date: '2017-04-03T08:19:03+02:00',
-            lastLogin: '2020-08-12T10:24:32+02:00',
-            description:
-              '{"plugin":"rows","state":[{"plugin":"multimedia","state":{"explanation":{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Hey! Ich heiße Kathi und bin seit April 2017 bei Serlo Education. Ich habe Mathe und Wirtschaft Gymnasiallehramt an der LMU studiert und bin über ein Praktikum zu Serlo gekommen. "}]},{"type":"p","children":[{"text":" "}]},{"type":"p","children":[{"text":"Ich bin bei Serlo für den Communityaufbau und die Begleitung unserer Teammitglieder zuständig, was mir sehr viel Spaß macht."}]}]}]},"multimedia":{"plugin":"image","state":{"src":"https://assets.serlo.org/5a5e1e26e079d_be364fe222554361fd7d233642ca03b064324206.jpg","alt":"Kathi Radstorfer"}},"illustrating":true,"width":50}},{"plugin":"text","state":[{"type":"h","level":2,"children":[{"text":"Warum ich bei Serlo bin"}]},{"type":"p","children":[{"text":"Durch meine Mitarbeit bei Serlo möchte ich dazu beitragen, das soziale Ungleichgewicht im Bildungssektor ein Stück weit auszugleichen. Während meiner Schulzeit kam es leider manchmal zu finanziellen Engpässen, die mitunter sehr belastend sein konnten. Trotzdem habe ich mein Abitur als einzige in meiner Familie meistern können. Einen erfolgreichen Schulabschluss unabhängig vom Geldbeutel der Eltern wünsche ich mir daher für noch viel mehr Schüler*innen von Herzen!"}]},{"type":"h","level":2,"children":[{"text":"Meine Lieblingsformel"}]},{"type":"p","children":[{"text":"Meine Lieblingsformel ist die Euler\'sche Identität. So viele wichtige mathematische Zeichen und ein Zusammenhang, der erst im Studium schlüßig wurde:"}]},{"type":"p","children":[{"type":"math","src":"e^{i\\\\pi}+1=0\\\\;","inline":false,"children":[{"text":"e^{i\\\\pi}+1=0\\\\;"}]}]}]},{"plugin":"text","state":[{"type":"p","children":[{"text":"Wenn du Fragen an mich hast, kannst du mir gern einen Kommentar auf meinem Profil hinterlassen oder eine E-Mail an "},{"type":"a","href":"mailto:kathi@serlo.org","children":[{"text":"kathi@serlo.org"}]},{"text":" senden."}]}]}]}',
-            activeDonor: false,
-            instance: 'de', //TODO: Check types.
-          },
-        } as { uuid: User })
-      : await request<{ uuid: QueryResponse }>(
-          endpoint,
-          dataQuery,
-          /^\/[\d]+$/.test(alias)
-            ? {
-                id: parseInt(alias.substring(1), 10),
-              }
-            : {
-                alias: {
-                  instance,
-                  path: alias,
-                },
-              }
-        )
+  const isId = /^\/[\d]+$/.test(alias) //e.g. /1565
+  const variables = isId
+    ? {
+        id: parseInt(alias.substring(1), 10),
+      }
+    : {
+        alias: {
+          instance,
+          path: alias,
+        },
+    }
+
+  
+  const { uuid } = await request<{ uuid: QueryResponse }>(
+    endpoint,
+    dataQuery,
+    variables
+  )
 
   if (uuid === null) {
     return {
@@ -107,14 +99,30 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
   const metaImage = getMetaImage(uuid.alias ? uuid.alias : undefined)
 
   if (uuid.__typename === 'User') {
+    const placeholder = JSON.stringify({
+      plugin: 'text',
+      state: [
+        {
+          type: 'p',
+          children: {
+            text:
+              'This is where we display the description on a the production server.',
+          },
+        },
+      ],
+    })
+
+    const description = uuid.description
+      ? uuid.description === 'NULL'
+        ? convertState(placeholder)
+        : convertState(uuid.description)
+      : undefined
     return {
       kind: 'user/profile',
       newsletterPopup: false,
       userData: {
         username: uuid.username,
-        description: uuid.description
-          ? convertState(uuid.description)
-          : undefined,
+        description: description,
         lastLogin: uuid.lastLogin,
       },
     }
