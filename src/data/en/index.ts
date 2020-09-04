@@ -46,7 +46,7 @@ export const instanceData = {
       revision: 'Revision',
       thread: 'Thread',
       topic: 'Topic',
-      subject: 'Subject',
+      subject: 'Subject'
     },
     share: {
       button: 'Share',
