@@ -1,7 +1,6 @@
 import { NextPage } from 'next'
 import React from 'react'
 import styled from 'styled-components'
-import TimeAgo from 'timeago-react'
 
 import { HSpace } from '@/components/content/h-space'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
@@ -9,6 +8,7 @@ import { RelativeContainer } from '@/components/navigation/relative-container'
 import { StyledH1 } from '@/components/tags/styled-h1'
 import { StyledH2 } from '@/components/tags/styled-h2'
 import { StyledP } from '@/components/tags/styled-p'
+import { TimeAgo } from '@/components/time-ago'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UserData } from '@/data-types'
 import { renderArticle } from '@/schema/article-renderer'
@@ -18,7 +18,8 @@ export interface ProfileProps {
 }
 
 export const Profile: NextPage<ProfileProps> = ({ userData }) => {
-  const { lang } = useInstanceData()
+  const { strings } = useInstanceData()
+  console.log(strings.categories)
 
   const lastLoginDate = userData.lastLogin
     ? new Date(userData.lastLogin)
@@ -44,12 +45,8 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         {lastLoginDate && (
           <Gray>
             Zuletzt eingeloggt:{' '}
-            <b title={lastLoginDate.toLocaleString(lang)}>
-              <TimeAgo
-                datetime={lastLoginDate}
-                locale={lang}
-                opts={{ minInterval: 60 }}
-              />
+            <b>
+              <TimeAgo datetime={lastLoginDate} dateAsTitle />
             </b>
           </Gray>
         )}
