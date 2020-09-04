@@ -18,17 +18,32 @@ export const instanceData = {
       toTop: "மேல் நோக்கி"
     },
     categories: {
-      article: "கட்டுரை",
-      course: "வகுப்பு",
-      video: "காணொளி",
-      applet: "ஆப்லெட்",
-      folder: "அடைவு",
-      exercises: "பயிற்சிகள்"
+      articles: 'Articles',
+      courses: 'Courses',
+      videos: 'Videos',
+      applets: 'Applets',
+      folders: 'Folders',
+      exercises: "பயிற்சிகள்",
+      events: 'Events'
     },
     entities: {
+      applet: 'Applet',
+      article: 'Article',
+      course: 'Course',
+      coursePage: 'Course Page',
+      event: 'Event',
+      exercise: 'Exercise',
+      exerciseGroup: 'Exercise Group',
+      folder: 'Folder',
+      groupedExercise: 'Grouped Exercise',
+      page: 'Page',
+      solution: 'Solution',
+      taxonomyTerm: 'Taxonomy Term',
+      user: 'User',
+      video: 'Video',
       topicFolder: 'Exercise folder',
-      comment: "கருத்து",
-      revision: "மீட்டல்",
+      comment: 'Comment',
+      revision: 'Revision',
       thread: 'Thread'
     },
     share: {
@@ -53,9 +68,7 @@ export const instanceData = {
       show: "காட்டு",
       hide: "மறை",
       prerequisite: 'For this task you need the following basic knowledge:',
-      solution: "தீர்வு",
       task: 'Task',
-      exerciseGroup: 'Exercise group',
       right: 'Right',
       wrong: 'Wrong',
       check: 'Check',
@@ -87,6 +100,19 @@ export const instanceData = {
       postedOn: 'Posted on',
       placeholder: "Your question or suggestion…",
       placeholderReply: "Your answer…"
+    },
+    revisions: {
+      toOverview: "Back to overview",
+      changes: "Changes",
+      title: "Title",
+      content: "Content",
+      metaTitle: "Meta Title",
+      metaDescription: "Meta Description",
+      compare: "Compare",
+      currentVersion: "Current Version",
+      thisVersion: "This Version",
+      thisIsCurrentVersion: "This is the currently accepted version.",
+      by: 'By'
     },
     errors: {
       title: '😬 Websites make mistakes sometimes…',
@@ -176,10 +202,7 @@ export const loggedInData = {
       moveToGroupedTextExercise: 'Move content to other grouped-text-exercise',
       moveToTextExercise: 'Move content to other text-exercise',
       sortEntities: 'Sort content',
-      newEntity: 'New Entity',
-      exercise: 'Exercise',
-      exerciseGroup: 'Exercise Group',
-      event: 'Event'
+      newEntity: 'New Entity'
     },
     notifications: {
       loadMore: "Load more",
@@ -206,17 +229,6 @@ export const loggedInData = {
       setTaxonomyParentChanged: "%actor% changed parent of %child% to %parent%.",
       setUuidStateTrashed: "%actor% trashed %object%.",
       setUuidStateRestored: "%actor% restored %object%.",
-      entityPlaceholderPage: "Page",
-      entityPlaceholderArticle: "Article",
-      entityPlaceholderVideo: 'Video',
-      entityPlaceholderApplet: 'Applet',
-      entityPlaceholderCoursePage: "Course page",
-      entityPlaceholderExercise: "Exercise",
-      entityPlaceholderGroupedExercise: "Grouped exercise",
-      entityPlaceholderExerciseGroup: "Exercise group",
-      entityPlaceholderEvent: 'Event',
-      entityPlaceholderCourse: "Course",
-      entityPlaceholderTaxonomyTerm: "Term",
       entityPlaceholderFallback: "Content"
     }
   }

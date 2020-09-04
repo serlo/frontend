@@ -45,8 +45,8 @@ export const instanceData = {
       comment: 'Comment',
       revision: 'Revision',
       thread: 'Thread',
-      subject: 'Subject',
       topic: 'Topic',
+      subject: 'Subject',
     },
     share: {
       button: 'Share',
@@ -204,7 +204,7 @@ export const loggedInData = {
       moveToGroupedTextExercise: 'Move content to other grouped-text-exercise',
       moveToTextExercise: 'Move content to other text-exercise',
       sortEntities: 'Sort content',
-      newEntity: 'New Entity',
+      newEntity: 'New Entity'
     },
     notifications: {
       loadMore: "Load more",
