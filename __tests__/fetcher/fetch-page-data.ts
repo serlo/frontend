@@ -93,6 +93,10 @@ describe('check all supported typenames with stored api-data', () => {
 
     expect(pageData.breadcrumbsData).toEqual([
       { label: 'Mathematics', url: '/math' },
+      {
+        label: 'All topics',
+        url: '/math/1',
+      },
     ])
 
     expect(pageData.metaData?.title).toBe(
@@ -133,6 +137,11 @@ describe('check all supported typenames with stored api-data', () => {
         label: 'Wichtige Funktionstypen und ihre Eigenschaften',
         url: '/mathe/funktionen/wichtige-funktionstypen-eigenschaften',
       },
+      {
+        label: 'Polynomfunktionen beliebigen Grades',
+        url:
+          '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/polynomfunktionen-beliebigen-grades',
+      },
     ])
 
     expect(pageData.metaData?.title).toBe('Übersicht - lernen mit Serlo!')
@@ -164,6 +173,10 @@ describe('check all supported typenames with stored api-data', () => {
       {
         label: 'Geometrie',
         url: '/mathe/geometrie',
+      },
+      {
+        label: 'Konstruktion von geometrischen Objekten',
+        url: '/mathe/geometrie/konstruktion-geometrischen-objekten',
       },
     ])
 
@@ -202,6 +215,10 @@ describe('check all supported typenames with stored api-data', () => {
       {
         label: 'Bruchrechnen und Dezimalzahlen',
         url: '/mathe/zahlen-größen/bruchrechnen-dezimalzahlen',
+      },
+      {
+        label: 'Rechnen mit Brüchen',
+        url: '/mathe/zahlen-größen/bruchrechnen-dezimalzahlen/rechnen-brüchen',
       },
     ])
 
@@ -455,6 +472,11 @@ describe('check all supported typenames with stored api-data', () => {
       {
         label: 'Wichtige Funktionstypen und ihre Eigenschaften',
         url: '/mathe/funktionen/wichtige-funktionstypen-eigenschaften',
+      },
+      {
+        label: 'Polynomfunktionen beliebigen Grades',
+        url:
+          '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/polynomfunktionen-beliebigen-grades',
       },
     ])
 
