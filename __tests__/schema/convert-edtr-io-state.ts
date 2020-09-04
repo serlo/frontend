@@ -488,10 +488,9 @@ describe('text types', () => {
       })
     })
 
-    //compat: unwrap ul/ol from p if only child -> can't reproduce, does not seem to happen
+    //compat: unwrap ul/ol from p if only child
 
     describe('compat: handle newlines in text and math', () => {
-      //TODO: this test works, but can't reproduce any of this with actual editor output. so we need to define the expected behaviours first
       test('text with breaks', () => {
         const result = convert({
           type: 'p',
@@ -674,6 +673,24 @@ describe('text types', () => {
       })
       expect(result).toEqual([
         { type: 'p', children: [{ type: 'text', text: 'item-child' }] },
+      ])
+    })
+
+    test('compat: p will not be wrapped in another p', () => {
+      const result = convert({
+        type: 'list-item-child',
+        children: [
+          {
+            type: 'p',
+            children: [{ text: 'text' }],
+          },
+        ],
+      })
+      expect(result).toEqual([
+        {
+          type: 'p',
+          children: [{ type: 'text', text: 'text' }],
+        },
       ])
     })
 
