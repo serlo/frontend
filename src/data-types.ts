@@ -400,6 +400,14 @@ export interface FrontendLiNode {
   children?: FrontendContentNode[]
 }
 
+export interface FrontendMultiMediaNode {
+  type: 'multimedia'
+  float?: 'left' | 'right'
+  mediaWidth: number
+  media: FrontendContentNode[]
+  children: FrontendContentNode[]
+}
+
 export interface FrontendRowNode {
   type: 'row'
   children?: FrontendColNode[]
@@ -408,6 +416,7 @@ export interface FrontendRowNode {
 export interface FrontendColNode {
   type: 'col'
   size: number
+  float?: 'left' | 'right'
   children?: FrontendContentNode[]
 }
 
@@ -610,7 +619,7 @@ export type FrontendRestrictedElementNode =
   | FrontendUlNode
   | FrontendOlNode
   | FrontendRowNode
-  | FrontendTableNode
+  | FrontendMultiMediaNode
   | FrontendTrNode
   | FrontendExerciseGroupNode
 
