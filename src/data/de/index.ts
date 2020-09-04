@@ -44,7 +44,9 @@ export const instanceData = {
       topicFolder: "Aufgabensammlung",
       comment: "Kommentar",
       revision: "Bearbeitung",
-      thread: "Diskussion"
+      thread: "Diskussion",
+      topic: 'Thema',
+      subject: 'Fach',
     },
     share: {
       button: "Teilen",
