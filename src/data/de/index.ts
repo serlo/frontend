@@ -22,7 +22,7 @@ export const instanceData = {
       courses: "Kurse",
       videos: 'Videos',
       applets: 'Applets',
-      folders: "Ordner",
+      folders: "Bereiche",
       exercises: "Aufgaben",
       events: "Veranstaltungen"
     },
