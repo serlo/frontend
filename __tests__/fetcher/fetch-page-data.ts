@@ -17,7 +17,7 @@ import {
   coursePageUuidMock,
 } from '../../__fixtures__/api_mockdata'
 import { endpoint } from '@/api/endpoint'
-import { ErrorPage, SingleEntityPage, TaxonomyPage } from '@/data-types'
+import { SingleEntityPage, TaxonomyPage, UserPage } from '@/data-types'
 import { fetchPageData } from '@/fetcher/fetch-page-data'
 import { serloDomain } from '@/helper/serlo-domain'
 
@@ -35,18 +35,6 @@ beforeEach(() => {
 
 afterAll(() => {
   server.close()
-})
-
-describe('return an error for unsupported types', () => {
-  test('typename: User should return error because its not currently supported by the frontend', async () => {
-    givenApiReturnsUuid({
-      __typename: 'User',
-      id: 1,
-    })
-    const pageData = (await fetchPageData('/de/1')) as ErrorPage
-    expect(pageData.kind).toBe('error')
-    expect(pageData.errorData.code).toBe(404)
-  })
 })
 
 describe('check all supported typenames with stored api-data', () => {
@@ -498,6 +486,31 @@ describe('check all supported typenames with stored api-data', () => {
     expect(pageData.newsletterPopup).toBe(false)
     expect(pageData.kind).toBe('single-entity')
     expect(Array.isArray(pageData.entityData.content)).toBe(true)
+  })
+
+  test('typename: User', async () => {
+    givenApiReturnsUuid({
+      __typename: 'User',
+      id: 18981,
+      username: 'BestUser111',
+      description: JSON.stringify({
+        plugin: 'text',
+        state: [
+          {
+            type: 'p',
+            children: { text: 'a long description' },
+          },
+        ],
+      }),
+    })
+    const pageData = (await fetchPageData('/de/18981')) as UserPage
+
+    expect(pageData.kind).toBe('user/profile')
+    expect(pageData.userData.username).toBe('BestUser111')
+    //@ts-expect-error
+    expect(pageData.userData.description?.[0].children?.[0].text!).toBe(
+      'a long description'
+    )
   })
 })
 
