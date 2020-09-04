@@ -44,7 +44,9 @@ export const instanceData = {
       topicFolder: 'Exercise folder',
       comment: 'Comment',
       revision: 'Revision',
-      thread: 'Thread'
+      thread: 'Thread',
+      topic: 'Topic',
+      subject: 'Subject'
     },
     share: {
       button: "Compartir",
