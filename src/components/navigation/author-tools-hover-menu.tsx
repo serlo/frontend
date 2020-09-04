@@ -26,8 +26,8 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
   const instanceData = useInstanceData()
   const router = useRouter()
   if (!loggedInData) return null
-  const { strings } = loggedInData
-  const categories = instanceData.strings.categories
+  const loggedInStrings = loggedInData.strings
+  const entities = instanceData.strings.entities
   const lang = instanceData.lang
 
   if (data.type == 'Page') {
@@ -37,10 +37,13 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
         {convert()}
         {renderLi(
           `/page/revision/revisions/${data.id}`,
-          strings.authorMenu.history
+          loggedInStrings.authorMenu.history
         )}
         {log()}
-        {renderLi(`/page/update/${data.id}`, strings.authorMenu.settings)}
+        {renderLi(
+          `/page/update/${data.id}`,
+          loggedInStrings.authorMenu.settings
+        )}
       </HoverSubList>
     )
   }
@@ -77,7 +80,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
 
                 {renderLi(
                   `/entity/link/move/link/${data.id}/${data.courseId!}`,
-                  strings.authorMenu.moveCoursePage
+                  loggedInStrings.authorMenu.moveCoursePage
                 )}
 
                 {flag()}
@@ -88,7 +91,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
           >
             <SubLink>
               <SubButtonStyle>
-                {strings.authorMenu.thisCoursePage}
+                {loggedInStrings.authorMenu.thisCoursePage}
               </SubButtonStyle>
             </SubLink>
           </Tippy>
@@ -105,7 +108,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
 
                 {renderLi(
                   `/entity/create/course-page?link%5Btype%5D=link&link%5Bchild%5D=${data.courseId!}`,
-                  strings.authorMenu.addCoursePage
+                  loggedInStrings.authorMenu.addCoursePage
                 )}
 
                 {sort(data.courseId)}
@@ -117,7 +120,9 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
             }
           >
             <SubLink>
-              <SubButtonStyle>{strings.authorMenu.wholeCourse}</SubButtonStyle>
+              <SubButtonStyle>
+                {loggedInStrings.authorMenu.wholeCourse}
+              </SubButtonStyle>
             </SubLink>
           </Tippy>
         </Li>
@@ -131,7 +136,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
         {abo()}
         {renderLi(
           `/taxonomy/term/organize/${data.id}`,
-          strings.authorMenu.organize
+          loggedInStrings.authorMenu.organize
         )}
         {log()}
 
@@ -139,15 +144,15 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
 
         {renderLi(
           `/taxonomy/term/sort/entities/${data.id}`,
-          strings.authorMenu.sortEntities
+          loggedInStrings.authorMenu.sortEntities
         )}
         {renderLi(
           `/taxonomy/term/copy/batch/${data.id}`,
-          strings.authorMenu.copyItems
+          loggedInStrings.authorMenu.copyItems
         )}
         {renderLi(
           `/taxonomy/term/move/batch/${data.id}`,
-          strings.authorMenu.moveItems
+          loggedInStrings.authorMenu.moveItems
         )}
       </HoverSubList>
     )
@@ -168,7 +173,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
         {data.type == '_ExerciseGroupInline' &&
           renderLi(
             `/entity/create/grouped-text-exercise?link%5Btype%5D=link&link%5Bchild%5D=${data.id}`,
-            strings.authorMenu.addGroupedTextExercise
+            loggedInStrings.authorMenu.addGroupedTextExercise
           )}
 
         {data.type != '_SolutionInline' && sort()}
@@ -177,14 +182,14 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
           ? renderLi(
               `/entity/link/move/link/${data.id}/${data.parentId!}`,
               data.grouped
-                ? strings.authorMenu.moveToGroupedTextExercise
-                : strings.authorMenu.moveToTextExercise
+                ? loggedInStrings.authorMenu.moveToGroupedTextExercise
+                : loggedInStrings.authorMenu.moveToTextExercise
             )
           : curriculum()}
 
         {renderLi(
           `/entity/license/update/${data.id}`,
-          strings.authorMenu.changeLicense
+          loggedInStrings.authorMenu.changeLicense
         )}
 
         {flag()}
@@ -206,18 +211,20 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
           <HoverSubList>
             {renderLi(
               `/subscribe/${id}/0`,
-              strings.authorMenu.subscribeNotifications
+              loggedInStrings.authorMenu.subscribeNotifications
             )}
             {renderLi(
               `/subscribe/${id}/1`,
-              strings.authorMenu.subscribeNotificationsAndMail
+              loggedInStrings.authorMenu.subscribeNotificationsAndMail
             )}
           </HoverSubList>
         }
       >
         <Li>
           <SubLink as="div" tabIndex={0}>
-            <SubButtonStyle>◂ {strings.authorMenu.subscribe}</SubButtonStyle>
+            <SubButtonStyle>
+              ◂ {loggedInStrings.authorMenu.subscribe}
+            </SubButtonStyle>
           </SubLink>
         </Li>
       </Tippy>
@@ -227,45 +234,48 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
   function convert(id = data.id, rev = data.revisionId) {
     return renderLi(
       `/page/revision/create/${id}/${rev || ''}`,
-      strings.authorMenu.convert
+      loggedInStrings.authorMenu.convert
     )
   }
 
   function history(id = data.id) {
     return renderLi(
       `/entity/repository/history/${id}`,
-      strings.authorMenu.history
+      loggedInStrings.authorMenu.history
     )
   }
 
   function log(id = data.id) {
-    return renderLi(`/event/history/${id}`, strings.authorMenu.log)
+    return renderLi(`/event/history/${id}`, loggedInStrings.authorMenu.log)
   }
 
   function curriculum(id = data.id) {
     return renderLi(
       `/entity/taxonomy/update/${id}`,
-      strings.authorMenu.editAssignments
+      loggedInStrings.authorMenu.editAssignments
     )
   }
 
   function flag(id = data.id) {
-    return renderLi(`/flag/add/${id}`, strings.authorMenu.flagContent)
+    return renderLi(`/flag/add/${id}`, loggedInStrings.authorMenu.flagContent)
   }
 
   function trash(id = data.id) {
     // todo: use graphql mutation
-    return renderLi(`/uuid/trash/${id}`, strings.authorMenu.moveToTrash)
+    return renderLi(`/uuid/trash/${id}`, loggedInStrings.authorMenu.moveToTrash)
   }
 
   function sort(id = data.id) {
-    return renderLi(`/entity/link/order/${id}/link`, strings.authorMenu.sort)
+    return renderLi(
+      `/entity/link/order/${id}/link`,
+      loggedInStrings.authorMenu.sort
+    )
   }
 
   function edit(id = data.id) {
     return renderLi(
       `/entity/repository/add-revision/${id}`,
-      strings.authorMenu.edit
+      loggedInStrings.authorMenu.edit
     )
   }
 
@@ -286,11 +296,11 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
                   <>
                     {renderLi(
                       `/entity/create/text-exercise?taxonomy%5Bterm%5D=${data.id}`,
-                      strings.authorMenu.exercise
+                      entities.exercise
                     )}
                     {renderLi(
                       `/entity/create/text-exercise-group?taxonomy%5Bterm%5D=${data.id}`,
-                      strings.authorMenu.exerciseGroup
+                      entities.exerciseGroup
                     )}
                   </>
                 )}
@@ -299,24 +309,24 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
                   <>
                     {renderLi(
                       `/entity/create/article?taxonomy%5Bterm%5D=${data.id}`,
-                      categories.article
+                      entities.article
                     )}
                     {renderLi(
                       `/entity/create/course?taxonomy%5Bterm%5D=${data.id}`,
-                      categories.course
+                      entities.course
                     )}
                     {renderLi(
                       `/entity/create/video?taxonomy%5Bterm%5D=${data.id}`,
-                      categories.video
+                      entities.video
                     )}
                     {renderLi(
                       `/entity/create/applet?taxonomy%5Bterm%5D=${data.id}`,
-                      categories.applet
+                      entities.applet
                     )}
                     {shouldRenderEvents &&
                       renderLi(
                         `/entity/create/event?taxonomy%5Bterm%5D=${data.id}`,
-                        strings.authorMenu.event
+                        entities.event
                       )}
                   </>
                 )}
@@ -324,7 +334,9 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
             }
           >
             <SubLink as="div" tabIndex={0}>
-              <SubButtonStyle>◂ {strings.authorMenu.newEntity}</SubButtonStyle>
+              <SubButtonStyle>
+                ◂ {loggedInStrings.authorMenu.newEntity}
+              </SubButtonStyle>
             </SubLink>
           </Tippy>
         </Li>

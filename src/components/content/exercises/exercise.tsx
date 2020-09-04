@@ -100,7 +100,7 @@ export function Exercise({ node }: ExerciseProps) {
         active={solutionVisible}
       >
         <StyledSpan>{solutionVisible ? '▾' : '▸'}&nbsp;</StyledSpan>
-        {strings.content.solution}{' '}
+        {strings.entities.solution}{' '}
         {solutionVisible ? strings.content.hide : strings.content.show}
       </SolutionToggle>
     )

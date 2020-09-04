@@ -24,20 +24,28 @@ interface TimeAgoProps {
   datetime: timeago.TDate
   opts?: timeago.Opts
   className?: string
+  dateAsTitle?: boolean
 }
 
-export function TimeAgo({ datetime, opts, className }: TimeAgoProps) {
+export function TimeAgo({
+  datetime,
+  opts,
+  className,
+  dateAsTitle,
+}: TimeAgoProps) {
   const { lang } = useInstanceData()
 
   // @ts-expect-error
   if (lang !== 'en') timeago.register(lang, languageFunctions[lang as Instance])
 
   return (
-    <ReactTimeAgo
-      className={className}
-      datetime={datetime}
-      locale={lang}
-      opts={opts || { minInterval: 60 }}
-    />
+    <span title={dateAsTitle ? datetime.toLocaleString(lang) : undefined}>
+      <ReactTimeAgo
+        className={className}
+        datetime={datetime}
+        locale={lang}
+        opts={opts || { minInterval: 60 }}
+      />
+    </span>
   )
 }

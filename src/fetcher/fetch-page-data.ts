@@ -9,9 +9,15 @@ import { createNavigation } from './create-navigation'
 import { buildTaxonomyData } from './create-taxonomy'
 import { createTitle } from './create-title'
 import { prettifyLinks } from './prettify-links'
-import { dataQuery, QueryResponse, licenseDetailsQuery } from './query'
+import {
+  dataQuery,
+  QueryResponse,
+  licenseDetailsQuery,
+  ArticleRevision,
+  VideoRevision,
+} from './query'
 import { endpoint } from '@/api/endpoint'
-import { PageData, FrontendContentNode } from '@/data-types'
+import { PageData, FrontendContentNode, EntityTypes } from '@/data-types'
 import { horizonData } from '@/data/horizon_de'
 import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
 import { parseLanguageSubfolder, getLandingData } from '@/helper/feature-i18n'
@@ -41,32 +47,6 @@ export async function fetchPageData(raw_alias: string): Promise<PageData> {
       ? 503
       : 500
     return { kind: 'error', errorData: { code, message } }
-  }
-}
-
-async function apiLicensePageRequest(
-  id: number,
-  instance: string
-): Promise<PageData> {
-  const { license } = await request<{ license: GraphQL.License }>(
-    endpoint,
-    licenseDetailsQuery(id)
-  )
-  const horizonData = instance == 'de' ? buildHorizonData() : undefined
-
-  return {
-    kind: 'license-detail',
-    licenseData: {
-      content: convertState(license.content),
-      title: license.title,
-      iconHref: license.iconHref,
-    },
-    newsletterPopup: false,
-    horizonData,
-    metaData: {
-      title: license.title,
-      contentType: 'page',
-    },
   }
 }
 
@@ -191,6 +171,64 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
       cacheKey,
     }
   }*/
+
+  if (
+    uuid.__typename === 'ArticleRevision' ||
+    uuid.__typename === 'PageRevision' ||
+    uuid.__typename === 'CoursePageRevision' ||
+    uuid.__typename === 'VideoRevision' ||
+    uuid.__typename === 'EventRevision' ||
+    uuid.__typename === 'AppletRevision' ||
+    uuid.__typename === 'GroupedExerciseRevision' ||
+    uuid.__typename === 'ExerciseRevision' ||
+    uuid.__typename === 'ExerciseGroupRevision' ||
+    uuid.__typename === 'SolutionRevision' ||
+    uuid.__typename === 'CourseRevision'
+  ) {
+    return {
+      kind: 'revision',
+      newsletterPopup: false,
+      revisionData: {
+        type: uuid.__typename
+          .replace('Revision', '')
+          .toLowerCase() as EntityTypes,
+        repositoryId: uuid.repository.id,
+        typename: uuid.__typename,
+        thisRevision: {
+          id: uuid.id,
+          title: (uuid as ArticleRevision).title,
+          metaTitle: (uuid as ArticleRevision).metaTitle,
+          metaDescription: (uuid as ArticleRevision).metaDescription,
+          content: convertState(uuid.content),
+          url: (uuid as VideoRevision).url,
+        },
+        currentRevision: {
+          id: uuid.repository.currentRevision?.id,
+          title: (uuid as ArticleRevision).repository.currentRevision?.title,
+          metaTitle: (uuid as ArticleRevision).repository.currentRevision
+            ?.metaTitle,
+          metaDescription: (uuid as ArticleRevision).repository.currentRevision
+            ?.metaDescription,
+          content: convertState(uuid.repository.currentRevision?.content),
+          url: (uuid as VideoRevision).repository.currentRevision?.url,
+        },
+        changes: (uuid as ArticleRevision).changes,
+        user: {
+          id: uuid.author.id,
+          username: uuid.author.username,
+        },
+        date: uuid.date,
+      },
+      metaData: {
+        title,
+        contentType: 'revision',
+        metaImage,
+        metaDescription: '',
+      },
+      cacheKey,
+      breadcrumbsData,
+    }
+  }
 
   const content = convertState(uuid.currentRevision?.content)
 
@@ -399,6 +437,32 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
     errorData: {
       code: 404,
       message: 'Content type not supported: ' + uuid.__typename,
+    },
+  }
+}
+
+async function apiLicensePageRequest(
+  id: number,
+  instance: string
+): Promise<PageData> {
+  const { license } = await request<{ license: GraphQL.License }>(
+    endpoint,
+    licenseDetailsQuery(id)
+  )
+  const horizonData = instance == 'de' ? buildHorizonData() : undefined
+
+  return {
+    kind: 'license-detail',
+    licenseData: {
+      content: convertState(license.content),
+      title: license.title,
+      iconHref: license.iconHref,
+    },
+    newsletterPopup: false,
+    horizonData,
+    metaData: {
+      title: license.title,
+      contentType: 'page',
     },
   }
 }
