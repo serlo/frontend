@@ -16,25 +16,39 @@ export interface LinkProps {
 
 //TODO: Should come from cloudflare worker https://github.com/serlo/frontend/issues/328
 const legacyLinks = [
-  '/entity/unrevised',
-  '/auth/login',
-  '/auth/logout',
   '/privacy',
   '/datenschutz',
   '/imprint',
   '/terms',
   '/disable-frontend',
   '/enable-frontend',
-  '/api/auth/login',
-  '/api/auth/logout',
+  '/beitreten',
+  '/discussions',
   '/user/public',
   '/user/settings',
-  '/auth/password/change',
-  '/event/history/user/me',
-  '/beitreten',
-  '/event/history',
-  '/discussions',
+  // '/entity/unrevised',
+  // '/auth/login',
+  // '/auth/logout',
+  // '/api/auth/login',
+  // '/api/auth/logout',
+  // '/auth/password/change',
+  // '/event/history/user/me',
+  // '/event/history',
 ]
+
+function isLegacyLink(_href: string) {
+  // compat: this is a special frontend route
+  if (_href == '/user/notifications') return false
+  return (
+    legacyLinks.indexOf(_href) > -1 ||
+    _href.startsWith('/auth/') ||
+    _href.startsWith('/event/history') ||
+    _href.startsWith('/api/auth') ||
+    _href.startsWith('/entity/') ||
+    _href.startsWith('/discussions') ||
+    _href.indexOf('.serlo.org') > -1 //e.g. community.serlo.org or different language
+  )
+}
 
 export function Link({
   href,
@@ -44,7 +58,6 @@ export function Link({
   title,
   noCSR,
 }: LinkProps) {
-  //const prettyLinks = {}
   const { lang } = useInstanceData()
 
   if (!href || href === undefined || href === '')
@@ -54,52 +67,41 @@ export function Link({
       </a>
     )
 
-  //const prettyLink = getPrettyLink(href)
-  let displayHref = href //prettyLink ? prettyLink : href
-  if (displayHref.startsWith(`https://${lang}.serlo.org/`)) {
-    displayHref = displayHref.replace(`https://${lang}.serlo.org`, '')
-  }
-
   const isAbsolute = href.indexOf('//') > -1
   const isExternal = isAbsolute && !href.includes('.serlo.org')
+  const isAnchor = href.startsWith('#') || href.startsWith('/#')
+  const isMailto = href.startsWith('mailto:')
 
-  const isLegacyLink =
-    legacyLinks.indexOf(displayHref) > -1 ||
-    // displayHref.startsWith('/user/profile/') ||
-    // displayHref.startsWith('user/profile/') ||
-    displayHref.indexOf('.serlo.org') > -1 //e.g. community.serlo.org or different language
+  if (isExternal || noCSR || isAnchor || isMailto) return renderLink(href)
 
-  if (isExternal || noCSR) return renderLink()
+  //at this point only internal links should be left
 
-  if (!isLegacyLink /* || prettyLink*/) return renderClientSide()
+  const internalLink = normalizeSerloLink(href)
+
+  if (!isLegacyLink(internalLink)) return renderClientSide(internalLink)
 
   //fallback
-  return renderLink()
+  return renderLink(href)
 
-  /*function getPrettyLink(href: string): string | undefined {
-    if (prettyLinks === undefined || prettyLinks === {}) return undefined
+  function normalizeSerloLink(_href: string) {
+    return _href.startsWith(`https://${lang}.serlo.org/`)
+      ? _href.replace(`https://${lang}.serlo.org`, '')
+      : _href.startsWith('/')
+      ? _href
+      : '/' + _href
+  }
 
-    const prettyLink = prettyLinks[href.replace('/', 'uuid')]?.alias
-    if (hasSpecialUrlChars(prettyLink)) {
-      return undefined
-    }
-    if (prettyLink !== undefined) return prettyLink
-
-    //fallback for wrong absolute links
-    return prettyLinks['uuid' + href.split('de.serlo.org/')[1]]?.alias
-  }*/
-
-  function renderClientSide() {
+  function renderClientSide(_href: string) {
     return (
-      <NextLink href="/[[...slug]]" as={decodeURIComponent(displayHref)}>
-        {renderLink()}
+      <NextLink href="/[[...slug]]" as={decodeURIComponent(_href)}>
+        {renderLink(_href)}
       </NextLink>
     )
   }
 
-  function renderLink() {
+  function renderLink(_href: string) {
     return (
-      <StyledA href={displayHref} className={className} title={title}>
+      <StyledA href={_href} className={className} title={title}>
         {children}
         {isExternal && !noExternalIcon && <ExternalLink />}
       </StyledA>

@@ -60,17 +60,19 @@ export async function prettifyLinks(pageData: PageData) {
         walk(node.children)
       }
       if (node.type === 'exercise') {
-        if (node.solutionLegacy) {
-          walk(node.solutionLegacy)
+        if (node.solution.legacy) {
+          walk(node.solution.legacy)
         }
-        if (node.taskLegacy) {
-          walk(node.taskLegacy)
+        if (node.task.legacy) {
+          walk(node.task.legacy)
         }
-        if (node.solutionEdtrState) {
-          const prereq = node.solutionEdtrState.prerequisite
+        if (node.solution.edtrState) {
+          const prereq = node.solution.edtrState.prerequisite
           if (prereq) {
-            const id = prereq.id
-            if (id) {
+            const id =
+              typeof prereq.id === 'string' ? parseInt(prereq.id) : prereq.id
+            prereq.href = `/${prereq.id}` //fallback
+            if (id && Number.isInteger(id)) {
               ids.push(id)
               callbacks.push({
                 id,
@@ -80,11 +82,11 @@ export async function prettifyLinks(pageData: PageData) {
               })
             }
           }
-          walk(node.solutionEdtrState.steps)
-          walk(node.solutionEdtrState.strategy)
+          walk(node.solution.edtrState.steps)
+          walk(node.solution.edtrState.strategy)
         }
-        if (node.taskEdtrState) {
-          walk(node.taskEdtrState.content)
+        if (node.task.edtrState) {
+          walk(node.task.edtrState.content)
         }
       }
     })
@@ -98,7 +100,7 @@ export async function prettifyLinks(pageData: PageData) {
             alias: string
             instance: string
           }
-        }>(endpoint, idsQuery(ids))
+        }>(endpoint, idsQuery([...new Set(ids)]))
 
   //console.log('prettylinks', prettyLinks)
 

@@ -4,11 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import styled, { css } from 'styled-components'
 
-import { makeMargin, makeDefaultButton } from '../../helper/css'
-import { renderArticle } from '../../schema/article-renderer'
-import { StyledP } from '../tags/styled-p'
+import { Feedback } from './feedback'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EdtrPluginScMcExercise } from '@/data-types'
+import { makeMargin, makeDefaultButton, inputFontReset } from '@/helper/css'
+import { renderArticle } from '@/schema/article-renderer'
 
 export interface ScMcExerciseProps {
   state: EdtrPluginScMcExercise['state']
@@ -24,6 +24,7 @@ export function ScMcExercise({ state, idBase }: ScMcExerciseProps) {
 
 function SingleChoice({ state, idBase }: ScMcExerciseProps) {
   const [selected, setSelected] = React.useState<number | undefined>(undefined)
+  const [focused, setFocused] = React.useState<number | undefined>(undefined)
   const [showFeedback, setShowFeedback] = React.useState(false)
   const { strings } = useInstanceData()
 
@@ -43,8 +44,17 @@ function SingleChoice({ state, idBase }: ScMcExerciseProps) {
                     setShowFeedback(false)
                     setSelected(i)
                   }}
+                  onFocus={() => setFocused(i)}
+                  onBlur={() => setFocused(undefined)}
+                  onKeyDown={(e) => {
+                    if (e.keyCode == 13) setShowFeedback(true)
+                  }}
                 />
-                <StyledLabel selected={selected === i} htmlFor={id}>
+                <StyledLabel
+                  selected={selected === i}
+                  htmlFor={id}
+                  focused={focused === i}
+                >
                   <FontAwesomeIcon
                     icon={selected === i ? faCheckCircle : faCircle}
                   />
@@ -55,7 +65,7 @@ function SingleChoice({ state, idBase }: ScMcExerciseProps) {
                 selected !== undefined &&
                 state.answers[selected] &&
                 state.answers[selected] === answer && (
-                  <Feedback right={state.answers[selected].isCorrect}>
+                  <Feedback correct={state.answers[selected].isCorrect}>
                     {renderArticle(state.answers[selected].feedback)}
                   </Feedback>
                 )}
@@ -78,9 +88,10 @@ function SingleChoice({ state, idBase }: ScMcExerciseProps) {
 
 function MultipleChoice({ state, idBase }: ScMcExerciseProps) {
   const [selected, setSelected] = React.useState(state.answers.map(() => false))
+  const [focused, setFocused] = React.useState<number | undefined>(undefined)
   const [showFeedback, setShowFeedback] = React.useState(false)
   const { strings } = useInstanceData()
-  const right = state.answers.every(
+  const correct = state.answers.every(
     (answer, i) => answer.isCorrect === selected[i]
   )
   return (
@@ -88,6 +99,11 @@ function MultipleChoice({ state, idBase }: ScMcExerciseProps) {
       <Choices>
         {state.answers.map((answer, i) => {
           const id = `${idBase}${i}`
+
+          const hasFeedback =
+            answer.feedback[0].children &&
+            answer.feedback[0].children.length > 0
+
           return (
             <React.Fragment key={i}>
               <ChoiceWrapper>
@@ -101,24 +117,31 @@ function MultipleChoice({ state, idBase }: ScMcExerciseProps) {
                     newArr[i] = !newArr[i]
                     setSelected(newArr)
                   }}
+                  onFocus={() => setFocused(i)}
+                  onBlur={() => setFocused(undefined)}
                 />
-                <StyledLabel selected={selected[i]} htmlFor={id}>
+                <StyledLabel
+                  selected={selected[i]}
+                  htmlFor={id}
+                  focused={focused === i}
+                >
                   <FontAwesomeIcon
                     icon={selected[i] ? faCheckSquare : faSquare}
                   />
                   {renderArticle(answer.content)}
                 </StyledLabel>
               </ChoiceWrapper>
-              {showFeedback && selected[i] && renderArticle(answer.feedback)}
+              {showFeedback &&
+                selected[i] &&
+                hasFeedback &&
+                renderArticle(answer.feedback)}
             </React.Fragment>
           )
         })}
       </Choices>
       {showFeedback && (
-        <Feedback right={right}>
-          <StyledP>
-            {right ? strings.content.right : strings.content.wrong}
-          </StyledP>
+        <Feedback correct={correct}>
+          {correct ? strings.content.right : strings.content.wrong}
         </Feedback>
       )}
       <CheckButton selectable onClick={() => setShowFeedback(true)}>
@@ -128,8 +151,9 @@ function MultipleChoice({ state, idBase }: ScMcExerciseProps) {
   )
 }
 
-const CheckButton = styled.a<{ selectable: boolean }>`
+const CheckButton = styled.button<{ selectable: boolean }>`
   ${makeDefaultButton}
+  ${inputFontReset}
   margin-top: 16px;
 
   color: #fff;
@@ -169,7 +193,7 @@ const StyledInput = styled.input`
   }
 `
 
-const StyledLabel = styled.label<{ selected: boolean }>`
+const StyledLabel = styled.label<{ selected: boolean; focused?: boolean }>`
   display: flex;
   cursor: pointer;
 
@@ -184,14 +208,17 @@ const StyledLabel = styled.label<{ selected: boolean }>`
         : props.theme.colors.lightBlueBackground}; */
   }
 
+  ${(props) =>
+    props.focused &&
+    css`
+      outline: 1px dotted #212121;
+      outline: 5px auto -webkit-focus-ring-color;
+    `}
+      
+
   > div > * {
     margin-left: 8px;
   }
-`
-
-const Feedback = styled.div<{ right?: boolean }>`
-  margin-left: 14px;
-  color: ${(props) => (props.right ? 'green' : 'red')};
 `
 
 const Container = styled.div`

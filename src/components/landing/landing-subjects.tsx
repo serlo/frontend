@@ -3,13 +3,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { lighten } from 'polished'
 import styled, { css, keyframes } from 'styled-components'
 
-import AbcSVG from '../../../public/_assets/img/subjects-abc.svg'
-import BiologySVG from '../../../public/_assets/img/subjects-biology.svg'
-import BlankSVG from '../../../public/_assets/img/subjects-blank.svg'
-import MathSVG from '../../../public/_assets/img/subjects-math.svg'
-import SustainabilitySVG from '../../../public/_assets/img/subjects-sustainability.svg'
 import { makeResponsivePadding, makeDefaultButton } from '../../helper/css'
 import { Link } from '../content/link'
+import AbcSVG from '@/assets-webkit/img/subjects-abc.svg'
+import BiologySVG from '@/assets-webkit/img/subjects-biology.svg'
+import BlankSVG from '@/assets-webkit/img/subjects-blank.svg'
+import MathSVG from '@/assets-webkit/img/subjects-math.svg'
+import SustainabilitySVG from '@/assets-webkit/img/subjects-sustainability.svg'
 
 export function LandingSubjects() {
   return (

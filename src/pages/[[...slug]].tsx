@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic'
 import React from 'react'
 
 import { useAuth } from '@/auth/use-auth'
+import { RevisionProps } from '@/components/author/revision'
 import { CookieBar } from '@/components/content/cookie-bar'
 import { EntityProps } from '@/components/content/entity'
 import { HSpace } from '@/components/content/h-space'
@@ -27,13 +28,14 @@ import {
   PageData,
   ErrorData,
   LoggedInData,
+  LicenseDetailData,
 } from '@/data-types'
 import {
   fetcherAdditionalData,
   getInitialProps,
 } from '@/fetcher/get-initial-props'
 
-const LandingDE = dynamic<{}>(() =>
+const LandingDE = dynamic<LandingInternationalProps>(() =>
   import('@/components/pages/landing-de').then((mod) => mod.LandingDE)
 )
 const LandingInternational = dynamic<LandingInternationalProps>(() =>
@@ -46,6 +48,9 @@ const Search = dynamic<{}>(() =>
 )
 const Donations = dynamic<{}>(() =>
   import('@/components/pages/donations').then((mod) => mod.Donations)
+)
+const LicenseDetail = dynamic<LicenseDetailData>(() =>
+  import('@/components/pages/license-detail').then((mod) => mod.LicenseDetail)
 )
 const ErrorPage = dynamic<ErrorData>(() =>
   import('@/components/pages/error-page').then((mod) => mod.ErrorPage)
@@ -74,6 +79,10 @@ const Entity = dynamic<EntityProps>(() =>
   import('@/components/content/entity').then((mod) => mod.Entity)
 )
 
+const Revision = dynamic<RevisionProps>(() =>
+  import('@/components/author/revision').then((mod) => mod.Revision)
+)
+
 const PageView: NextPage<InitialProps> = (initialProps) => {
   // note: we assume that instance data is passing in the first time this components renders
   // subsequent render calls should be client-side-navigation
@@ -82,6 +91,15 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
   )
 
   React.useEffect(storePageData, [initialProps])
+
+  React.useEffect(() => {
+    //tiny history
+    sessionStorage.setItem(
+      'previousPathname',
+      sessionStorage.getItem('currentPathname') || ''
+    )
+    sessionStorage.setItem('currentPathname', window.location.pathname)
+  })
 
   fetcherAdditionalData.origin = initialProps.origin
   fetcherAdditionalData.instance = instanceData.lang
@@ -165,10 +183,10 @@ function renderPage(page: PageData) {
         <Header onSearchPage={page.kind === 'search'} />
         {(() => {
           if (page.kind === 'landing') {
-            if (page.landingData) {
-              return <LandingInternational data={page.landingData} />
+            if (page.landingData.lang === 'de') {
+              return <LandingDE data={page.landingData} />
             }
-            return <LandingDE />
+            return <LandingInternational data={page.landingData} />
           }
           if (page.kind === 'search') {
             return <Search />
@@ -180,7 +198,12 @@ function renderPage(page: PageData) {
             return <Profile userData={page.userData} />
           }
           if (page.kind === 'error') {
-            return <ErrorPage code={page.errorData.code} />
+            return (
+              <ErrorPage
+                code={page.errorData.code}
+                message={page.errorData.message}
+              />
+            )
           }
           return (
             <>
@@ -199,9 +222,16 @@ function renderPage(page: PageData) {
                   )}
                   <main>
                     {(() => {
+                      if (page.kind === 'license-detail') {
+                        return <LicenseDetail {...page.licenseData} />
+                      }
                       if (page.kind === 'single-entity') {
                         return <Entity data={page.entityData} />
-                      } /* taxonomy */ else {
+                      }
+                      if (page.kind === 'revision') {
+                        return <Revision data={page.revisionData} />
+                      } else {
+                        /* taxonomy */
                         return <Topic data={page.taxonomyData} />
                       }
                     })()}

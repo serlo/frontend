@@ -16,7 +16,7 @@ import { UserToolsMobile } from '@/components/navigation/user-tools-mobile'
 import { StyledH1 } from '@/components/tags/styled-h1'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EntityData, FrontendContentNode } from '@/data-types'
-import { categoryIconMapping } from '@/helper/header-by-content-type'
+import { entityIconMapping } from '@/helper/icon-by-entity-type'
 import { renderArticle } from '@/schema/article-renderer'
 
 const CourseNavigation = dynamic<CourseNavigationProps>(() =>
@@ -79,17 +79,17 @@ export function Entity({ data }: EntityProps) {
     return (
       <StyledH1 extraMarginTop itemProp="name">
         {data.title}
-        {renderCategoryIcon()}
+        {renderEntityIcon()}
       </StyledH1>
     )
   }
 
-  function renderCategoryIcon() {
+  function renderEntityIcon() {
     if (!data.categoryIcon) return null
     return (
-      <span title={strings.categories[data.categoryIcon]}>
+      <span title={strings.entities[data.categoryIcon]}>
         {' '}
-        <StyledIcon icon={categoryIconMapping[data.categoryIcon]} />{' '}
+        <StyledIcon icon={entityIconMapping[data.categoryIcon]} />{' '}
       </span>
     )
   }

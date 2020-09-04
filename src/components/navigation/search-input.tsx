@@ -5,9 +5,9 @@ import { lighten } from 'polished'
 import React from 'react'
 import styled, { createGlobalStyle, css } from 'styled-components'
 
-import SearchIcon from '../../../public/_assets/img/search-icon.svg'
 import { inputFontReset } from '../../helper/css'
 import { theme } from '../../theme'
+import SearchIcon from '@/assets-webkit/img/search-icon.svg'
 import { useInstanceData } from '@/contexts/instance-context'
 
 interface SearchInputProps {

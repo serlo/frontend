@@ -48,10 +48,7 @@ export function createBreadcrumbs(uuid: QueryResponse) {
   function compat(breadcrumbs: BreadcrumbsData | undefined) {
     if (!breadcrumbs) return breadcrumbs
     if (
-      !(
-        uuid.__typename == 'TaxonomyTerm' &&
-        (uuid.type == 'topicFolder' || uuid.type == 'curriculumTopicFolder')
-      )
+      !(uuid.__typename == 'Exercise' || uuid.__typename == 'ExerciseGroup')
     ) {
       breadcrumbs = breadcrumbs.slice(0, -1) // compat: remove last entry because it is the entry itself
     }

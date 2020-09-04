@@ -27,8 +27,8 @@ export const instanceData = {
     },
     entities: {
       topicFolder: 'Exercise folder',
-      comment: 'Comment',
-      revision: 'Revision',
+      comment: "கருத்து",
+      revision: "மீட்டல்",
       thread: 'Thread'
     },
     share: {
@@ -45,7 +45,7 @@ export const instanceData = {
       readMore: "தகவல்"
     },
     course: {
-      showPages: 'Show course overview',
+      showPages: "வகுப்பு மேலோட்டத்தைக் காட்டவும்",
       pages: 'Course overview',
       next: "அடுத்து"
     },
@@ -54,11 +54,12 @@ export const instanceData = {
       hide: "மறை",
       prerequisite: 'For this task you need the following basic knowledge:',
       solution: "தீர்வு",
-      exerciseGroup: "பயிற்சிப் பதிவுகள்",
-      right: "சரி",
-      wrong: "பிழை",
-      check: "சரிபார்க்கவும்",
-      yourAnswer: "உங்கள் பதில்:",
+      task: 'Task',
+      exerciseGroup: 'Exercise group',
+      right: 'Right',
+      wrong: 'Wrong',
+      check: 'Check',
+      yourAnswer: 'Your answer…',
       chooseOption: 'Click on one of the options.'
     },
     cookie: {
@@ -70,9 +71,32 @@ export const instanceData = {
       button: "ஒப்புக்கொள்கிறேன்"
     },
     notifications: {
-      notifications: 'Notifications',
-      pleaseLogInLink: 'Bitte melde dich an',
-      pleaseLogInText: 'um deine Benachrichtigungen zu sehen.'
+      notifications: "அறிவிப்புகள்",
+      pleaseLogInLink: 'Please log in',
+      pleaseLogInText: 'to see your notifications.'
+    },
+    comments: {
+      question: 'Do you have a question?',
+      commentsOne: 'Comment',
+      commentsMany: 'Comments',
+      submit: 'Submit',
+      reportComment: 'Report comment',
+      archiveThread: 'Archive thread',
+      deleteThread: 'Delete thread',
+      deleteComment: 'Delete comment',
+      postedOn: 'Posted on',
+      placeholder: "Your question or suggestion…",
+      placeholderReply: "Your answer…"
+    },
+    errors: {
+      title: '😬 Websites make mistakes sometimes…',
+      defaultMessage: 'So sorry, we ran into a problem loading this content.',
+      temporary: 'The good news? The problem seems to be temporary, so please try again later.',
+      permanent: 'We will see what we can do about that… ',
+      typeNotSupported: 'Please try reloading this page.',
+      refreshNow: 'Refresh now',
+      backToPrevious: 'Back to previous page',
+      backToHome: 'To our home page'
     }
   }
 };
@@ -102,11 +126,11 @@ export const serverSideStrings = {
 export const loggedInData = {
   authMenu: [{
     url: '/user/notifications',
-    title: 'Notifications',
+    title: "அறிவிப்புகள்",
     icon: 'notifications'
   }, {
     url: '',
-    title: 'User',
+    title: "பயனர்",
     icon: 'user',
     children: [{
       url: '/user/public',
@@ -116,17 +140,47 @@ export const loggedInData = {
       title: 'Edit profile'
     }, {
       url: '/auth/password/change',
-      title: 'Change password'
+      title: "கடவுச்சொல்லை மாற்று"
     }, {
       url: '/event/history/user/me',
       title: 'Recent activities'
     }, {
       url: '/api/auth/logout',
-      title: 'Log out'
+      title: "வெளியேறு"
     }]
   }],
   strings: {
     tools: 'Other Tools',
+    authorMenu: {
+      log: 'Log',
+      settings: 'Settings',
+      moveCoursePage: 'Move this page to another course',
+      thisCoursePage: 'This course-page',
+      addCoursePage: 'Add course-page',
+      wholeCourse: 'Whole course',
+      copyItems: 'Copy items',
+      moveItems: 'Move items',
+      addGroupedTextExercise: 'Add grouped-text-exercise',
+      changeLicense: 'Change License',
+      subscribe: 'Subscribe',
+      subscribeNotifications: 'Recieve notifications',
+      subscribeNotificationsAndMail: 'Recieve notifications and emails',
+      convert: 'Convert (beta)',
+      history: 'History',
+      editAssignments: 'Edit topic and curriculum assignments',
+      flagContent: 'Flag content',
+      moveToTrash: 'Move to trash',
+      sort: 'Sort children',
+      edit: 'Edit',
+      organize: 'Organize',
+      moveToGroupedTextExercise: 'Move content to other grouped-text-exercise',
+      moveToTextExercise: 'Move content to other text-exercise',
+      sortEntities: 'Sort content',
+      newEntity: 'New Entity',
+      exercise: 'Exercise',
+      exerciseGroup: 'Exercise Group',
+      event: 'Event'
+    },
     notifications: {
       loadMore: "Load more",
       unknownProblem: "There was a problem loading the notifications, please try again later.",

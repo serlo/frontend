@@ -1,3 +1,5 @@
+import { TaxonomyTermType } from '@serlo/api'
+
 import { Instance } from './fetcher/query'
 import { instanceData, instanceLandingData, loggedInData } from '@/data/en'
 
@@ -90,16 +92,18 @@ export type PageData =
   | DonationPage
   | SearchPage
   | ErrorPage
+  | LicenseDetailPage
   | NotificationsPage
   | SingleEntityPage
+  | RevisionPage
   | TaxonomyPage
   | UserPage
 
-// The landing page is custom built and takes no additional data
+// The landing page is custom built and takes i18n strings
 
 export interface LandingPage {
   kind: 'landing'
-  landingData?: InstanceLandingData
+  landingData: InstanceLandingData
 }
 
 // Landing pages have a different structure, because they should only load on the landing page
@@ -118,6 +122,7 @@ export interface DonationPage {
 export interface SearchPage {
   kind: 'search'
 }
+
 export interface NotificationsPage {
   kind: 'user/notifications'
 }
@@ -132,6 +137,19 @@ export interface ErrorPage {
 export interface ErrorData {
   code: number
   message?: string
+}
+
+// License detail page has some additional data
+
+export interface LicenseDetailPage extends EntityPageBase {
+  kind: 'license-detail'
+  licenseData: LicenseDetailData
+}
+
+export interface LicenseDetailData {
+  title: string
+  content: FrontendContentNode[]
+  iconHref: string
 }
 
 // There are several page elements that are common for entities:
@@ -206,7 +224,7 @@ export interface EntityData {
   typename: string
   revisionId?: number
   title?: string
-  categoryIcon?: CategoryType
+  categoryIcon?: EntityTypes
   schemaData?: SchemaData
   content?: FrontendContentNode[]
   inviteToEdit?: boolean
@@ -214,18 +232,78 @@ export interface EntityData {
   courseData?: CourseData
 }
 
-// Entities can belong to a category. Each has a translated string.
+export interface RevisionPage extends EntityPageBase {
+  kind: 'revision'
+  revisionData: RevisionData
+}
 
-export type CategoryType =
+export interface RevisionData {
+  typename: string
+  date: string
+  type: EntityTypes
+  user: {
+    id: number
+    username: string
+  }
+  repositoryId: number
+  thisRevision: {
+    id: number
+    title?: string
+    metaTitle?: string
+    metaDescription?: string
+    content?: FrontendContentNode[]
+    url?: string
+  }
+  currentRevision: {
+    id?: number
+    title?: string
+    metaTitle?: string
+    metaDescription?: string
+    content?: FrontendContentNode[]
+    url?: string
+  }
+  changes?: string
+}
+
+// Entities each should have an translated string and a corresponding icon
+
+export type EntityTypes =
+  | 'applet'
   | 'article'
   | 'course'
+  | 'coursePage'
+  | 'event'
+  | 'exercise'
+  | 'exerciseGroup'
+  | 'groupedExercise'
+  | 'page'
+  | 'solution'
+  | 'taxonomyTerm'
+  | 'user'
   | 'video'
-  | 'applet'
+  | 'revision'
+  | 'comment'
+  | 'thread'
+  //just in case
   | 'folder'
+
+export type EntityStrings = {
+  [K in EntityTypes]: string
+}
+
+// Entities can belong to a category that we use in the taxonomy
+
+export type CategoryTypes =
+  | 'articles'
+  | 'courses'
+  | 'videos'
+  | 'applets'
+  | 'folders'
   | 'exercises'
+  | 'events'
 
 export type CategoryStrings = {
-  [K in CategoryType]: string
+  [K in EntityTypes]: string
 }
 
 // Some flags to control schema.org behaviour. Not very well done yet.
@@ -377,14 +455,20 @@ export interface FrontendInjectionNode {
   children?: undefined
 }
 
+interface BareSolution {
+  legacy?: FrontendContentNode[]
+  edtrState?: SolutionEdtrState
+  license?: LicenseData
+}
+
 export interface FrontendExerciseNode {
   type: 'exercise'
-  taskLegacy?: FrontendContentNode[]
-  taskEdtrState?: TaskEdtrState
-  solutionLegacy?: FrontendContentNode[]
-  solutionEdtrState?: SolutionEdtrState
-  taskLicense?: LicenseData
-  solutionLicense?: LicenseData
+  task: {
+    legacy?: FrontendContentNode[]
+    edtrState?: TaskEdtrState
+    license?: LicenseData
+  }
+  solution: BareSolution
   grouped?: boolean
   positionInGroup?: number
   positionOnPage?: number
@@ -393,6 +477,18 @@ export interface FrontendExerciseNode {
     parent?: number
     solutionId?: number
   }
+  children?: undefined
+  href?: string
+}
+
+export interface FrontendSolutionNode {
+  type: 'solution'
+  solution: BareSolution
+
+  context: {
+    id: number
+  }
+  href?: string
   children?: undefined
 }
 
@@ -448,6 +544,7 @@ export interface FrontendExerciseGroupNode {
   context: {
     id: number
   }
+  href?: string
 }
 
 export interface FrontendVideoNode {
@@ -490,6 +587,7 @@ export type FrontendVoidNode =
   | FrontendGeogebraNode
   | FrontendInjectionNode
   | FrontendExerciseNode
+  | FrontendSolutionNode
   | FrontendVideoNode
   | FrontendCodeNode
   | FrontendEquationsNode
@@ -529,6 +627,7 @@ export interface LicenseData {
   title: string
   url: string // to to license
   id: number // of the license
+  default: boolean
 }
 
 // Data for a course page.
@@ -587,8 +686,10 @@ export interface TaxonomySubTerm extends TaxonomyTermBase, TaxonomyLink {
 export interface TaxonomyData extends TaxonomyTermBase {
   id: number
   title: string
+  taxonomyType: TaxonomyTermType
   subterms: TaxonomySubTerm[]
   exercisesContent: (FrontendExerciseNode | FrontendExerciseGroupNode)[]
+  licenseData?: LicenseData
 }
 
 export interface LoggedInData {

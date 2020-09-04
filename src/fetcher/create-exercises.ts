@@ -1,11 +1,12 @@
 import { convertState } from './fetch-page-data'
-import { BareExercise, BareExerciseGroup } from './query'
+import { Solution, BareExercise, BareExerciseGroup } from './query'
 import {
   FrontendExerciseNode,
   FrontendContentNode,
   TaskEdtrState,
   SolutionEdtrState,
   FrontendExerciseGroupNode,
+  FrontendSolutionNode,
 } from '@/data-types'
 import { convert } from '@/schema/convert-edtr-io-state'
 
@@ -34,35 +35,64 @@ export function createExercise(
       taskLegacy = convertState(content)
     }
   }
-  let solutionLegacy: FrontendContentNode[] | undefined = undefined
-  let solutionEdtrState: SolutionEdtrState | undefined = undefined
-  const solution = uuid.solution?.currentRevision?.content
-  if (solution) {
-    if (solution.startsWith('{')) {
-      // special case here: we know it's a edtr-io solution
-      // TODO import types from edtr-io
-      const solutionState = JSON.parse(solution).state
-      solutionState.strategy = convert(solutionState.strategy)
-      solutionState.steps = convert(solutionState.steps)
-      solutionEdtrState = solutionState
-    } else {
-      solutionLegacy = convertState(solution)
-    }
-  }
+
   return {
     type: 'exercise',
     grouped: false,
     positionOnPage: index,
-    taskLegacy,
-    taskEdtrState,
-    solutionEdtrState,
-    solutionLegacy,
-    taskLicense: uuid.license,
-    solutionLicense: uuid.solution?.license,
+    task: {
+      legacy: taskLegacy,
+      edtrState: taskEdtrState,
+      license: uuid.license,
+    },
+    solution: createSolutionData(uuid.solution),
     context: {
       id: uuid.id,
       solutionId: uuid.solution?.id,
     },
+    href: uuid.alias ? uuid.alias : undefined,
+  }
+}
+
+function createSolutionData(solution: BareExercise['solution']) {
+  let solutionLegacy: FrontendContentNode[] | undefined = undefined
+  let solutionEdtrState: SolutionEdtrState | undefined = undefined
+  const content = solution?.currentRevision?.content
+  if (content) {
+    if (content.startsWith('{')) {
+      // special case here: we know it's a edtr-io solution
+      // TODO import types from edtr-io
+      const solutionState = JSON.parse(content).state
+      solutionState.strategy = convert(solutionState.strategy)
+      // compat: (probably quite fragile) if strategy is empty, we ignore it
+      if (
+        solutionState.strategy.length == 1 &&
+        solutionState.strategy[0].type == 'p' &&
+        solutionState.strategy[0].children.length === 0
+      ) {
+        solutionState.strategy = []
+      }
+      solutionState.steps = convert(solutionState.steps)
+      solutionEdtrState = solutionState
+    } else {
+      solutionLegacy = convertState(content)
+    }
+  }
+  return {
+    legacy: solutionLegacy,
+    edtrState: solutionEdtrState,
+    license: solution?.license,
+  }
+}
+
+export function createSolution(uuid: Solution): FrontendSolutionNode {
+  return {
+    type: 'solution',
+    solution: createSolutionData(uuid),
+    context: {
+      id: uuid.id,
+    },
+    href: uuid.alias ? uuid.alias : undefined,
   }
 }
 
@@ -71,19 +101,20 @@ export function createExerciseGroup(
   pageIndex?: number
 ): FrontendExerciseGroupNode {
   const children: FrontendExerciseNode[] = []
+  let groupIndex = 0
   if (uuid.exercises?.length > 0) {
-    uuid.exercises.forEach(function (
-      exercise: BareExercise,
-      groupIndex: number
-    ) {
+    uuid.exercises.forEach((exercise: BareExercise) => {
+      if (!exercise.currentRevision) return
+      if (exercise.trashed) return
       const exerciseNode = createExercise(exercise)
       exerciseNode.grouped = true
-      exerciseNode.positionInGroup = groupIndex
-      exerciseNode.positionOnPage = pageIndex // compat: page page index also to grouped exercise for id generation
+      exerciseNode.positionInGroup = groupIndex++
+      exerciseNode.positionOnPage = pageIndex // compat: page index also to grouped exercise for id generation
       exerciseNode.context.parent = uuid.id
       children.push(exerciseNode)
     })
   }
+
   return {
     type: 'exercise-group',
     content: convertState(uuid.currentRevision?.content),
@@ -93,5 +124,6 @@ export function createExerciseGroup(
     context: {
       id: uuid.id,
     },
+    href: uuid.alias ? uuid.alias : undefined,
   }
 }

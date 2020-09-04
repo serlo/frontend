@@ -23,6 +23,7 @@ export function buildTaxonomyData(uuid: TaxonomyTerm): TaxonomyData {
     description: uuid.description ? convertState(uuid.description) : undefined,
     title: uuid.name,
     id: uuid.id,
+    taxonomyType: uuid.type,
 
     articles: collectType(children, 'Article'),
     exercises: collectTopicFolders(children),
@@ -47,7 +48,8 @@ function collectExercises(children: TaxonomyTermChildrenLevel1[]) {
       result.push(createExercise(child, index++))
     }
     if (child.__typename === 'ExerciseGroup' && child.currentRevision) {
-      result.push(createExerciseGroup(child, index++))
+      if (children.length === 1) result.push(createExerciseGroup(child))
+      else result.push(createExerciseGroup(child, index++))
     }
   })
   return result

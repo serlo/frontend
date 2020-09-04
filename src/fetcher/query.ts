@@ -7,7 +7,7 @@ import { gql } from 'graphql-request'
 export type Instance = 'de' | 'en' | 'fr' | 'es' | 'ta' | 'hi'
 
 // A license has some more attributes, but we are fine with these
-export type License = Pick<GraphQL.License, 'id' | 'url' | 'title'>
+export type License = Pick<GraphQL.License, 'id' | 'url' | 'title' | 'default'>
 
 // This is one breadcrumb path.
 export interface Path {
@@ -82,8 +82,8 @@ export interface CoursePage extends Entity {
 }
 
 // We treat a grouped exercise just as a normal exercise.
-export interface BareExercise {
-  id: number
+export interface BareExercise extends Entity {
+  trashed: boolean
   currentRevision?: GraphQL.Maybe<
     Pick<GraphQL.AbstractExerciseRevision, 'content'>
   >
@@ -98,7 +98,7 @@ export interface BareExercise {
 export interface Exercise extends EntityWithTaxonomyTerms, BareExercise {
   __typename: 'Exercise'
 }
-export interface GroupedExercise extends Entity, BareExercise {
+export interface GroupedExercise extends BareExercise {
   __typename: 'GroupedExercise'
 }
 
@@ -111,6 +111,14 @@ export interface BareExerciseGroup extends Entity {
 }
 
 export type ExerciseGroup = BareExerciseGroup & EntityWithTaxonomyTerms
+
+// Solutions are only used in injections, no support for full page view
+export interface Solution extends Repository {
+  __typename: 'Solution'
+  trashed: boolean
+  currentRevision?: GraphQL.Maybe<Pick<GraphQL.SolutionRevision, 'content'>>
+  license: License
+}
 
 // Events are only used in injections, no support for full page view
 export interface Event extends Repository {
@@ -200,11 +208,204 @@ export type TaxonomyTermChildrenLevel2 =
   | TaxonomyTermChildOnX
   | SubTaxonomyTermChildTaxonomyTerm
 
+// Revision types inherit all the GraphQL fields
+
+export type QueryResponseRevision =
+  | AppletRevision
+  | ArticleRevision
+  | CourseRevision
+  | CoursePageRevision
+  | EventRevision
+  | ExerciseRevision
+  | ExerciseGroupRevision
+  | GroupedExerciseRevision
+  | PageRevision
+  | SolutionRevision
+  | VideoRevision
+
+export interface AppletRevision
+  extends EntityWithTaxonomyTerms,
+    GraphQL.AppletRevision {
+  __typename: 'AppletRevision'
+}
+export interface ArticleRevision
+  extends EntityWithTaxonomyTerms,
+    GraphQL.ArticleRevision {
+  __typename: 'ArticleRevision'
+}
+export interface CourseRevision
+  extends EntityWithTaxonomyTerms,
+    GraphQL.CourseRevision {
+  __typename: 'CourseRevision'
+}
+export interface CoursePageRevision
+  extends EntityWithTaxonomyTerms,
+    GraphQL.CoursePageRevision {
+  __typename: 'CoursePageRevision'
+}
+export interface EventRevision
+  extends EntityWithTaxonomyTerms,
+    GraphQL.EventRevision {
+  __typename: 'EventRevision'
+}
+export interface ExerciseRevision
+  extends EntityWithTaxonomyTerms,
+    GraphQL.ExerciseRevision {
+  __typename: 'ExerciseRevision'
+}
+export interface ExerciseGroupRevision
+  extends EntityWithTaxonomyTerms,
+    GraphQL.ExerciseGroupRevision {
+  __typename: 'ExerciseGroupRevision'
+}
+export interface GroupedExerciseRevision
+  extends EntityWithTaxonomyTerms,
+    GraphQL.GroupedExerciseRevision {
+  __typename: 'GroupedExerciseRevision'
+}
+export interface PageRevision
+  extends EntityWithTaxonomyTerms,
+    GraphQL.PageRevision {
+  __typename: 'PageRevision'
+}
+export interface SolutionRevision
+  extends EntityWithTaxonomyTerms,
+    GraphQL.SolutionRevision {
+  __typename: 'SolutionRevision'
+}
+export interface VideoRevision
+  extends EntityWithTaxonomyTerms,
+    GraphQL.VideoRevision {
+  __typename: 'VideoRevision'
+}
+
+//TODO: Split files into query and types
+
+// query
+
 export const dataQuery = gql`
   query uuid($id: Int, $alias: AliasInput) {
     uuid(id: $id, alias: $alias) {
       __typename
       id
+
+      ... on AbstractRevision {
+        date
+        author {
+          id
+          username
+        }
+        ... on ArticleRevision {
+          ...articleRevision
+          changes
+          repository {
+            id
+            currentRevision {
+              id
+              ...articleRevision
+            }
+          }
+        }
+        ... on PageRevision {
+          ...pageRevision
+          repository {
+            id
+            currentRevision {
+              ...pageRevision
+            }
+          }
+        }
+        ... on AppletRevision {
+          ...appletRevision
+          changes
+          repository {
+            id
+            currentRevision {
+              ...appletRevision
+            }
+          }
+        }
+        ... on CourseRevision {
+          ...courseRevision
+          changes
+          repository {
+            id
+            currentRevision {
+              ...courseRevision
+            }
+          }
+        }
+        ... on CoursePageRevision {
+          ...coursePageRevision
+          changes
+          repository {
+            id
+            currentRevision {
+              ...coursePageRevision
+            }
+          }
+        }
+        ... on EventRevision {
+          ...eventRevision
+          changes
+          repository {
+            id
+            currentRevision {
+              ...eventRevision
+            }
+          }
+        }
+        ... on ExerciseRevision {
+          content
+          changes
+          repository {
+            id
+            currentRevision {
+              content
+            }
+          }
+        }
+        ... on GroupedExerciseRevision {
+          content
+          changes
+          repository {
+            id
+            currentRevision {
+              content
+            }
+          }
+        }
+        ... on ExerciseGroupRevision {
+          ...exerciseGroupRevision
+          changes
+          repository {
+            id
+            currentRevision {
+              ...exerciseGroupRevision
+            }
+          }
+        }
+        ... on SolutionRevision {
+          content
+          changes
+          repository {
+            id
+            currentRevision {
+              content
+            }
+          }
+        }
+        ... on VideoRevision {
+          ...videoRevision
+          changes
+          repository {
+            id
+            currentRevision {
+              ...videoRevision
+            }
+          }
+        }
+      }
 
       ... on AbstractRepository {
         alias
@@ -218,9 +419,7 @@ export const dataQuery = gql`
 
       ... on Page {
         currentRevision {
-          id
-          title
-          content
+          ...pageRevision
         }
         navigation {
           data
@@ -230,10 +429,7 @@ export const dataQuery = gql`
 
       ... on Article {
         currentRevision {
-          title
-          content
-          metaTitle
-          metaDescription
+          ...articleRevision
         }
       }
 
@@ -248,26 +444,19 @@ export const dataQuery = gql`
 
       ... on Video {
         currentRevision {
-          title
-          url
-          content
+          ...videoRevision
         }
       }
 
       ... on Applet {
         currentRevision {
-          title
-          content
-          url
-          metaTitle
-          metaDescription
+          ...appletRevision
         }
       }
 
       ... on CoursePage {
         currentRevision {
-          content
-          title
+          ...coursePageRevision
         }
         course {
           id
@@ -291,16 +480,20 @@ export const dataQuery = gql`
 
       ... on ExerciseGroup {
         currentRevision {
-          content
+          ...exerciseGroupRevision
         }
         exercises {
           ...exercise
         }
       }
 
+      ... on Solution {
+        ...solution
+      }
+
       ... on Event {
         currentRevision {
-          content
+          ...eventRevision
         }
       }
 
@@ -330,6 +523,8 @@ export const dataQuery = gql`
             }
             ... on ExerciseGroup {
               id
+              alias
+              instance
               currentRevision {
                 content
               }
@@ -349,6 +544,7 @@ export const dataQuery = gql`
                   trashed
                   __typename
                   ... on TaxonomyTerm {
+                    id
                     alias
                     type
                     name
@@ -387,6 +583,7 @@ export const dataQuery = gql`
       id
       url
       title
+      default
     }
   }
 
@@ -424,17 +621,70 @@ export const dataQuery = gql`
     }
   }
 
+  fragment articleRevision on ArticleRevision {
+    title
+    content
+    metaTitle
+    metaDescription
+  }
+
+  fragment pageRevision on PageRevision {
+    id
+    title
+    content
+  }
+
+  fragment videoRevision on VideoRevision {
+    title
+    url
+    content
+  }
+
+  fragment appletRevision on AppletRevision {
+    title
+    content
+    url
+    metaTitle
+    metaDescription
+  }
+
+  fragment coursePageRevision on CoursePageRevision {
+    content
+    title
+  }
+
+  fragment courseRevision on CourseRevision {
+    content
+    title
+    metaDescription
+  }
+
+  fragment exerciseGroupRevision on ExerciseGroupRevision {
+    content
+  }
+
+  fragment eventRevision on EventRevision {
+    content
+  }
+
   fragment exercise on AbstractExercise {
     id
+    alias
+    instance
+    trashed
     currentRevision {
       content
     }
     solution {
-      id
-      currentRevision {
-        content
-      }
-      ...license
+      ...solution
+    }
+    ...license
+  }
+
+  fragment solution on Solution {
+    id
+    currentRevision {
+      content
     }
     ...license
   }
@@ -449,10 +699,12 @@ export type QueryResponse =
   | Exercise
   | GroupedExercise
   | ExerciseGroup
+  | Solution
   | Event
   | Course
   | TaxonomyTerm
   | User
+  | QueryResponseRevision
 
 export const idsQuery = (ids: number[]) => {
   const map = ids.map(
@@ -489,6 +741,16 @@ export const idQuery = (id: number) => gql`
       ... on TaxonomyTerm {
         alias
       }
+    }
+  }
+`
+
+export const licenseDetailsQuery = (id: number) => `
+  query {
+    license(id: ${id}) {
+      title
+      content
+      iconHref
     }
   }
 `

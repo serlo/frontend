@@ -54,12 +54,13 @@ export const instanceData = {
       hide: "ausblenden",
       prerequisite: "Für diese Aufgabe benötigst Du folgendes Grundwissen:",
       solution: "Lösung",
+      task: "Aufgabe",
       exerciseGroup: "Aufgabengruppe",
       right: "Richtig",
       wrong: "Falsch",
       check: "Stimmt's?",
       yourAnswer: "Deine Antwort…",
-      chooseOption: "Klicke auf eine der Optionen"
+      chooseOption: "Klicke auf eine der Optionen."
     },
     cookie: {
       part1: "Mit der Nutzung dieser Webseite erklärst du dich mit unserer",
@@ -71,8 +72,31 @@ export const instanceData = {
     },
     notifications: {
       notifications: "Benachrichtigungen",
-      pleaseLogInLink: 'Bitte melde dich an',
-      pleaseLogInText: 'um deine Benachrichtigungen zu sehen.'
+      pleaseLogInLink: "Bitte melde dich an",
+      pleaseLogInText: "um deine Benachrichtigungen zu sehen"
+    },
+    comments: {
+      question: "Hast du eine Frage?",
+      commentsOne: "Kommentar",
+      commentsMany: "Kommentare",
+      submit: "Abschicken",
+      reportComment: "Kommentar melden",
+      archiveThread: "Thread archivieren",
+      deleteThread: "Thread löschen",
+      deleteComment: "Kommentar löschen",
+      postedOn: "Gepostet am",
+      placeholder: "Deine Frage oder Vorschlag…",
+      placeholderReply: "Deine Antwort…"
+    },
+    errors: {
+      title: "😬 Auch Webseiten machen mal Fehler…",
+      defaultMessage: "Es tut uns leid, beim Laden dieses Inhalts ging was schief.",
+      temporary: "Die gute Nachricht? Das Problem scheint temporär zu sein, bitte versuch es später noch einmal.",
+      permanent: "Wir werden sehen, was wir da machen können…",
+      typeNotSupported: "Bitte versuche diese Seite noch einmal zu laden.",
+      refreshNow: "Jetzt aktualisieren",
+      backToPrevious: "Zurück zur vorherigen Seite",
+      backToHome: "Zur Startseite"
     }
   }
 };
@@ -127,6 +151,36 @@ export const loggedInData = {
   }],
   strings: {
     tools: "Weitere Tools",
+    authorMenu: {
+      log: "Aktivitätenlog",
+      settings: "Einstellungen",
+      moveCoursePage: "Kursseite in einen anderen Kurs verschieben",
+      thisCoursePage: "Diese Kursseite",
+      addCoursePage: "Kursseite hinzufügen",
+      wholeCourse: "Gesamter Kurs",
+      copyItems: "Element kopieren",
+      moveItems: "Elemente verschieben",
+      addGroupedTextExercise: "Gruppierte Textaufgabe hinzufügen",
+      changeLicense: "Lizenz auswählen",
+      subscribe: "Abonnieren",
+      subscribeNotifications: "Benachrichtigungen empfangen",
+      subscribeNotificationsAndMail: "Benachrichtigungen und E-Mails erhalten",
+      convert: "Umwandeln (beta)",
+      history: "Bearbeitungsverlauf",
+      editAssignments: "Zuweisung zu Themen und Lehrplänen bearbeiten",
+      flagContent: "Inhalt melden",
+      moveToTrash: "In den Papierkorb verschieben",
+      sort: "Unterelemente sortieren",
+      edit: "Bearbeiten",
+      organize: "Baumstruktur bearbeiten",
+      moveToGroupedTextExercise: "Inhalt zu anderer Gruppe verschieben",
+      moveToTextExercise: "Inhalt zu anderer Textaufgabe verschieben",
+      sortEntities: "Inhalt sortieren",
+      newEntity: "Neuer Inhalt",
+      exercise: "Aufgabe",
+      exerciseGroup: "Aufgabengruppe",
+      event: "Veranstaltung"
+    },
     notifications: {
       loadMore: "Weitere laden",
       unknownProblem: "Es gibt ein Problem beim laden der Benachrichtigungen, bitte versuche es später noch einmal.",
@@ -158,9 +212,9 @@ export const loggedInData = {
       entityPlaceholderApplet: 'Applet',
       entityPlaceholderCoursePage: "Kursseite",
       entityPlaceholderExercise: "Aufgabe",
-      entityPlaceholderGroupedExercise: "gruppierte Aufgabe",
+      entityPlaceholderGroupedExercise: "Gruppierte Aufgabe",
       entityPlaceholderExerciseGroup: "Aufgabengruppe",
-      entityPlaceholderEvent: 'Event',
+      entityPlaceholderEvent: "Veranstaltung",
       entityPlaceholderCourse: "Kurs",
       entityPlaceholderTaxonomyTerm: "Begriff",
       entityPlaceholderFallback: "Inhalt"

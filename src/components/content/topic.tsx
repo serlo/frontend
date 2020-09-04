@@ -9,15 +9,16 @@ import { ShareModal } from '../navigation/share-modal'
 import { UserToolsMobileButton } from '../navigation/tool-line-button'
 import { UserTools } from '../navigation/user-tools'
 import { UserToolsMobile } from '../navigation/user-tools-mobile'
+import { LicenseNotice } from './license-notice'
 import { Link } from './link'
 import { useInstanceData } from '@/contexts/instance-context'
 import {
   TaxonomyData,
   TaxonomySubTerm,
-  CategoryType,
   TaxonomyLink,
+  CategoryTypes,
 } from '@/data-types'
-import { categoryIconMapping } from '@/helper/header-by-content-type'
+import { categoryIconMapping } from '@/helper/icon-by-entity-type'
 
 export interface TopicProps {
   data: TaxonomyData
@@ -27,11 +28,21 @@ export function Topic({ data }: TopicProps) {
   const [open, setOpen] = React.useState(false)
   const { strings } = useInstanceData()
 
+  const isFolder =
+    data.taxonomyType === 'topicFolder' ||
+    data.taxonomyType === 'curriculumTopicFolder'
+
+  const isTopic =
+    data.taxonomyType === 'topic' || data.taxonomyType === 'curriculumTopic'
+
+  const hasExercises = data.exercisesContent.length > 0
+  const defaultLicense = hasExercises ? getDefaultLicense() : undefined
+
   return (
     <>
       <Headline>
         {data.title}
-        {data.exercisesContent.length > 0 && (
+        {isFolder && (
           <span title={strings.entities.topicFolder}>
             {' '}
             <StyledIcon icon={faFile} />{' '}
@@ -43,30 +54,30 @@ export function Topic({ data }: TopicProps) {
           <FontAwesomeIcon icon={faShareAlt} size="1x" /> {strings.share.button}
         </UserToolsMobileButton>
       </UserToolsMobile>
-
       <ImageSizer>
         {data.description && renderArticle(data.description)}
       </ImageSizer>
-
       {data.subterms &&
         data.subterms.map((child) => (
           <React.Fragment key={child.title}>
             <SubTopic data={child} />
           </React.Fragment>
         ))}
-
       {data.exercisesContent &&
         data.exercisesContent.map((exercise, i) => (
           <React.Fragment key={i}>{renderArticle([exercise])}</React.Fragment>
         ))}
+      {isTopic && (
+        <LinkList>
+          <CategoryLinks full category="articles" links={data.articles} />
+          <CategoryLinks full category="exercises" links={data.exercises} />
+          <CategoryLinks full category="videos" links={data.videos} />
+          <CategoryLinks full category="applets" links={data.applets} />
+          <CategoryLinks full category="courses" links={data.courses} />
+        </LinkList>
+      )}
 
-      <LinkList>
-        <CategoryLinks full category="article" links={data.articles} />
-        <CategoryLinks full category="exercises" links={data.exercises} />
-        <CategoryLinks full category="video" links={data.videos} />
-        <CategoryLinks full category="applet" links={data.applets} />
-        <CategoryLinks full category="course" links={data.courses} />
-      </LinkList>
+      {defaultLicense && <LicenseNotice data={defaultLicense} />}
 
       <UserToolsMobile>
         <UserToolsMobileButton onClick={() => setOpen(true)}>
@@ -76,7 +87,12 @@ export function Topic({ data }: TopicProps) {
       <UserTools
         onShare={() => setOpen(true)}
         hideEdit
-        data={{ type: 'Taxonomy', id: data.id }}
+        data={{
+          type: 'Taxonomy',
+          id: data.id,
+          taxonomyFolder: isFolder,
+          taxonomyTopic: isTopic,
+        }}
         id={data.id}
       />
       <ShareModal
@@ -86,6 +102,21 @@ export function Topic({ data }: TopicProps) {
       />
     </>
   )
+
+  function getDefaultLicense() {
+    for (let i = 0; i < data.exercisesContent.length; i++) {
+      const content = data.exercisesContent[i]
+
+      if (content.type === 'exercise-group') {
+        if (content.license?.default) return content.license
+      } else {
+        if (content.task?.license?.default) return content.task.license
+        if (content.solution?.license?.default) return content.solution.license
+      }
+    }
+    //no part of collection has default license so don't show default notice.
+    return undefined
+  }
 }
 
 function SubTopic({ data }: { data: TaxonomySubTerm }) {
@@ -104,12 +135,12 @@ function SubTopic({ data }: { data: TaxonomySubTerm }) {
         </Overview>
 
         <LinkList>
-          <CategoryLinks category="article" links={data.articles} />
+          <CategoryLinks category="articles" links={data.articles} />
           <CategoryLinks category="exercises" links={data.exercises} />
-          <CategoryLinks category="video" links={data.videos} />
-          <CategoryLinks category="applet" links={data.applets} />
-          <CategoryLinks category="course" links={data.courses} />
-          <CategoryLinks category="folder" links={data.folders} />
+          <CategoryLinks category="videos" links={data.videos} />
+          <CategoryLinks category="applets" links={data.applets} />
+          <CategoryLinks category="courses" links={data.courses} />
+          <CategoryLinks category="folders" links={data.folders} />
         </LinkList>
       </Wrapper>
     </>
@@ -119,7 +150,7 @@ function SubTopic({ data }: { data: TaxonomySubTerm }) {
 interface CategoryLinksProps {
   links: TaxonomyLink[]
   full?: boolean
-  category: CategoryType
+  category: CategoryTypes
 }
 
 function CategoryLinks({ links, full, category }: CategoryLinksProps) {
