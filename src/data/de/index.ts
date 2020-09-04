@@ -18,18 +18,33 @@ export const instanceData = {
       toTop: "Nach oben"
     },
     categories: {
-      article: "Artikel",
-      course: "Kurs",
-      video: 'Video',
-      applet: 'Applet',
-      folder: "Bereich",
-      exercises: "Aufgaben"
+      articles: "Artikel",
+      courses: "Kurse",
+      videos: 'Videos',
+      applets: 'Applets',
+      folders: "Ordner",
+      exercises: "Aufgaben",
+      events: "Veranstaltungen"
     },
     entities: {
+      applet: 'Applet',
+      article: "Artikel",
+      course: "Kurs",
+      coursePage: "Kursseite",
+      event: "Veranstaltung",
+      exercise: "Aufgabe",
+      exerciseGroup: "Aufgabengruppe",
+      folder: "Bereich",
+      groupedExercise: "Gruppierte Aufgabe",
+      page: "Seite",
+      solution: "Lösung",
+      taxonomyTerm: "Taxonomie-Begriff",
+      user: "Benutzer",
+      video: 'Video',
       topicFolder: "Aufgabensammlung",
       comment: "Kommentar",
       revision: "Bearbeitung",
-      thread: 'Thread'
+      thread: "Diskussion"
     },
     share: {
       button: "Teilen",
@@ -53,9 +68,7 @@ export const instanceData = {
       show: "anzeigen",
       hide: "ausblenden",
       prerequisite: "Für diese Aufgabe benötigst Du folgendes Grundwissen:",
-      solution: "Lösung",
       task: "Aufgabe",
-      exerciseGroup: "Aufgabengruppe",
       right: "Richtig",
       wrong: "Falsch",
       check: "Stimmt's?",
@@ -87,6 +100,19 @@ export const instanceData = {
       postedOn: "Gepostet am",
       placeholder: "Deine Frage oder Vorschlag…",
       placeholderReply: "Deine Antwort…"
+    },
+    revisions: {
+      toOverview: "Zurück zur Übersicht",
+      changes: "Änderungen",
+      title: "Titel",
+      content: "Inhalt",
+      metaTitle: "Meta-Titel",
+      metaDescription: "Meta-Beschreibung",
+      compare: "Vergleichen",
+      currentVersion: "Aktuelle Version",
+      thisVersion: "Diese Version",
+      thisIsCurrentVersion: "Das ist die aktuell akzeptierte Version.",
+      by: "Von"
     },
     errors: {
       title: "😬 Auch Webseiten machen mal Fehler…",
@@ -176,10 +202,7 @@ export const loggedInData = {
       moveToGroupedTextExercise: "Inhalt zu anderer Gruppe verschieben",
       moveToTextExercise: "Inhalt zu anderer Textaufgabe verschieben",
       sortEntities: "Inhalt sortieren",
-      newEntity: "Neuer Inhalt",
-      exercise: "Aufgabe",
-      exerciseGroup: "Aufgabengruppe",
-      event: "Veranstaltung"
+      newEntity: "Neuer Inhalt"
     },
     notifications: {
       loadMore: "Weitere laden",
@@ -206,17 +229,6 @@ export const loggedInData = {
       setTaxonomyParentChanged: "%actor% hat den Elternknoten von %child% auf %parent% geändert.",
       setUuidStateTrashed: "%actor% hat %object% in den Papierkorb verschoben.",
       setUuidStateRestored: "%actor% hat %object% aus dem Papierkorb wieder hergestellt.",
-      entityPlaceholderPage: "Seite",
-      entityPlaceholderArticle: "Artikel",
-      entityPlaceholderVideo: 'Video',
-      entityPlaceholderApplet: 'Applet',
-      entityPlaceholderCoursePage: "Kursseite",
-      entityPlaceholderExercise: "Aufgabe",
-      entityPlaceholderGroupedExercise: "Gruppierte Aufgabe",
-      entityPlaceholderExerciseGroup: "Aufgabengruppe",
-      entityPlaceholderEvent: "Veranstaltung",
-      entityPlaceholderCourse: "Kurs",
-      entityPlaceholderTaxonomyTerm: "Begriff",
       entityPlaceholderFallback: "Inhalt"
     }
   }
