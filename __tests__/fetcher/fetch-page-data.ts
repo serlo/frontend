@@ -341,7 +341,7 @@ describe('check all supported typenames with stored api-data', () => {
     ])
 
     expect(pageData.metaData?.title).toBe(
-      'Mathematik Exercise - lernen mit Serlo!'
+      'Mathematik Aufgabe - lernen mit Serlo!'
     )
     expect(pageData.metaData?.contentType).toBe('text-exercise')
     expect(pageData.metaData?.metaDescription).toBe(
