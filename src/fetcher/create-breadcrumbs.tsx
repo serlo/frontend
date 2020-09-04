@@ -47,11 +47,11 @@ export function createBreadcrumbs(uuid: QueryResponse) {
 
   function compat(breadcrumbs: BreadcrumbsData | undefined) {
     if (!breadcrumbs) return breadcrumbs
-    if (
-      !(uuid.__typename == 'Exercise' || uuid.__typename == 'ExerciseGroup')
-    ) {
+
+    if (uuid.__typename == 'TaxonomyTerm') {
       breadcrumbs = breadcrumbs.slice(0, -1) // compat: remove last entry because it is the entry itself
     }
+
     breadcrumbs = breadcrumbs.filter((entry) => entry.url && entry.label) // compat: remove empty entries
     breadcrumbs = breadcrumbs.filter((entry) => entry.label !== 'Alle Themen') // compat/test: remove "Alle Themen" because landing pages offer a similar overview
     const shortened: BreadcrumbsData = []
