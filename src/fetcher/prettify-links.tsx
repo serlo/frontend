@@ -69,7 +69,9 @@ export async function prettifyLinks(pageData: PageData) {
         if (node.solution.edtrState) {
           const prereq = node.solution.edtrState.prerequisite
           if (prereq) {
-            const id = prereq.id
+            const id =
+              typeof prereq.id === 'string' ? parseInt(prereq.id) : prereq.id
+            prereq.href = `/${prereq.id}` //fallback
             if (id && Number.isInteger(id)) {
               ids.push(id)
               callbacks.push({

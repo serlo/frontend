@@ -63,8 +63,6 @@ export function Exercise({ node }: ExerciseProps) {
       />
     )
 
-    console.log('solution', license, authorTools)
-
     return (
       <SolutionBox>
         {renderArticle(
