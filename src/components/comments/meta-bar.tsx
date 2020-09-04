@@ -3,17 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Tippy from '@tippyjs/react'
 import * as React from 'react'
 import styled from 'styled-components'
-import TimeAgo from 'timeago-react'
-import * as timeago from 'timeago.js'
-//TODO: investigate, also move implementation to helper (used in notif) that loads languages when needed
-// eslint-disable-next-line import/no-internal-modules
-import de from 'timeago.js/lib/lang/de'
 
 import { DropdownMenu } from './dropdown-menu'
+import { TimeAgo } from '@/components/time-ago'
 import { makeDefaultButton, makeMargin, inputFontReset } from '@/helper/css'
-
-// register it.
-timeago.register('de', de)
 
 export function MetaBar({
   isParent,
@@ -38,19 +31,13 @@ export function MetaBar({
         placement="bottom-end"
       >
         <TimeAgoButton title={eventDate.toLocaleString('de-DE')}>
-          <StyledTimeAgo
-            datetime={eventDate}
-            locale="de"
-            opts={{ minInterval: 60 }}
-          />{' '}
+          <TimeAgo datetime={eventDate} />{' '}
           <FontAwesomeIcon icon={faCaretDown} />
         </TimeAgoButton>
       </Tippy>
     </MetaBarBox>
   )
 }
-
-const StyledTimeAgo = styled(TimeAgo)``
 
 const TimeAgoButton = styled.button`
   ${makeDefaultButton}

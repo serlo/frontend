@@ -44,7 +44,7 @@ export const instanceData = {
       topicFolder: 'Exercise folder',
       comment: 'Comment',
       revision: 'Revision',
-      thread: 'Thread'
+      thread: 'Thread',
     },
     share: {
       button: 'Share',
@@ -202,7 +202,7 @@ export const loggedInData = {
       moveToGroupedTextExercise: 'Move content to other grouped-text-exercise',
       moveToTextExercise: 'Move content to other text-exercise',
       sortEntities: 'Sort content',
-      newEntity: 'New Entity'
+      newEntity: 'New Entity',
     },
     notifications: {
       loadMore: "Load more",

@@ -49,6 +49,20 @@ export function Exercise({ node }: ExerciseProps) {
   )
 
   function renderSolution() {
+    const license = node.solution.license && !node.solution.license.default && (
+      <LicenseNotice minimal data={node.solution.license} type="solution" />
+    )
+    const authorTools = loaded && auth.current && (
+      <AuthorTools
+        data={{
+          type: '_SolutionInline',
+          id: node.context.solutionId!,
+          parentId: node.context.id,
+          grouped: node.grouped,
+        }}
+      />
+    )
+
     return (
       <SolutionBox>
         {renderArticle(
@@ -61,25 +75,15 @@ export function Exercise({ node }: ExerciseProps) {
           ],
           false
         )}
-        <SolutionTools>
-          {node.solution.license && (
-            <LicenseNotice
-              minimal
-              data={node.solution.license}
-              type="solution"
-            />
-          )}
-          {loaded && auth.current && (
-            <AuthorTools
-              data={{
-                type: '_SolutionInline',
-                id: node.context.solutionId!,
-                parentId: node.context.id,
-                grouped: node.grouped,
-              }}
-            />
-          )}
-        </SolutionTools>
+        {
+          /* compat: hide div if empty */
+          (license || authorTools) && (
+            <SolutionTools>
+              {license}
+              {authorTools}
+            </SolutionTools>
+          )
+        }
       </SolutionBox>
     )
   }
@@ -96,7 +100,7 @@ export function Exercise({ node }: ExerciseProps) {
         active={solutionVisible}
       >
         <StyledSpan>{solutionVisible ? '▾' : '▸'}&nbsp;</StyledSpan>
-        {strings.content.solution}{' '}
+        {strings.entities.solution}{' '}
         {solutionVisible ? strings.content.hide : strings.content.show}
       </SolutionToggle>
     )

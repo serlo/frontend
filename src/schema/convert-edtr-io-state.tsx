@@ -10,8 +10,9 @@ import {
 
 const colors: FrontendTextColor[] = ['blue', 'green', 'orange']
 
-//This is incorrect, an editor node only has plugin and state
 //TODO: write tests for this converter, import edtr-io types, …
+
+//This is incorrect, an editor node only has plugin and state
 export interface EditorStateDummy {
   plugin?: string
   state?: EditorStateDummy | string
@@ -58,18 +59,14 @@ export interface EditorStateDummy {
 export function convert(
   node: EditorStateDummy | EditorStateDummy[]
 ): FrontendContentNode[] {
-  if (!node) {
+  // compat: no or empty node, we ignore
+  if (!node || Object.keys(node).length === 0) {
     console.log('e: node EMPTY')
     return []
   }
 
   if (Array.isArray(node)) {
     return node.flatMap(convert)
-  }
-
-  // compat: empty object, we ignore
-  if (Object.keys(node).length === 0) {
-    return []
   }
 
   const plugin = node.plugin
@@ -105,7 +102,10 @@ export function convert(
           {
             type: 'spoiler-title',
             children: [
-              { type: 'text', text: (node.state as EditorStateDummy).title! },
+              {
+                type: 'text',
+                text: (node.state as EditorStateDummy).title!,
+              },
             ],
           },
           {
@@ -204,6 +204,7 @@ export function convert(
     }
     return [{ type: 'geogebra', id }]
   }
+
   // TODO handle this manually in the fetcher!
   /*if (plugin === 'exercise') {
     return [
@@ -263,6 +264,7 @@ export function convert(
       },
     ]
   }*/
+
   if (plugin === 'equations') {
     const steps = (node.state as EditorStateDummy).steps.map((step) => {
       return {
@@ -277,19 +279,24 @@ export function convert(
 
   const type = node.type
   if (type === 'p') {
-    // compat unwrap math from p
     const children = convert(node.children)
+
+    // compat unwrap math from p
     if (children.length === 1 && children[0].type === 'math') {
       return children
     }
+
     // compat: unwrap ul/ol from p
+    // see https://github.com/serlo/frontend/issues/249
     if (
       children.length === 1 &&
       (children[0].type === 'ul' || children[0].type === 'ol')
     ) {
       return children
     }
+
     // compat handle newlines
+    // see https://github.com/serlo/frontend/pull/527#discussion_r482969315
     if (
       children.some(
         (child) =>
@@ -334,7 +341,8 @@ export function convert(
       })
       return result
     }
-    // compat: extract math formulas
+
+    // compat: extract math formulas, see https://github.com/serlo/frontend/issues/186 (first warning)
     const math = children.filter(
       (child) => child.type === 'math' || child.type === 'inline-math'
     )
@@ -454,8 +462,14 @@ export function convert(
     ]
   }
   if (type === 'list-item-child') {
-    // compat: don't wrap ps
     const children = convert(node.children)
+
+    // compat: don't wrap ps, see https://github.com/serlo/frontend/issues/551
+    if (children.length === 1 && children[0].type === 'p') {
+      return children
+    }
+
+    //compat: only inline-math and links get wrapped? not sure about this
     if (
       children.filter(
         (child) =>
@@ -482,6 +496,6 @@ export function convert(
     ]
   }
 
-  console.log('-> ', node)
+  console.log('unsupported -> ', node)
   return []
 }

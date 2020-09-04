@@ -15,10 +15,10 @@ import { useInstanceData } from '@/contexts/instance-context'
 import {
   TaxonomyData,
   TaxonomySubTerm,
-  CategoryType,
   TaxonomyLink,
+  CategoryTypes,
 } from '@/data-types'
-import { categoryIconMapping } from '@/helper/header-by-content-type'
+import { categoryIconMapping } from '@/helper/icon-by-entity-type'
 
 export interface TopicProps {
   data: TaxonomyData
@@ -27,15 +27,22 @@ export interface TopicProps {
 export function Topic({ data }: TopicProps) {
   const [open, setOpen] = React.useState(false)
   const { strings } = useInstanceData()
-  const isExerciseFolder = data.exercisesContent.length > 0
 
-  const defaultLicense = isExerciseFolder ? getDefaultLicense() : undefined
+  const isFolder =
+    data.taxonomyType === 'topicFolder' ||
+    data.taxonomyType === 'curriculumTopicFolder'
+
+  const isTopic =
+    data.taxonomyType === 'topic' || data.taxonomyType === 'curriculumTopic'
+
+  const hasExercises = data.exercisesContent.length > 0
+  const defaultLicense = hasExercises ? getDefaultLicense() : undefined
 
   return (
     <>
       <Headline>
         {data.title}
-        {isExerciseFolder && (
+        {isFolder && (
           <span title={strings.entities.topicFolder}>
             {' '}
             <StyledIcon icon={faFile} />{' '}
@@ -60,13 +67,13 @@ export function Topic({ data }: TopicProps) {
         data.exercisesContent.map((exercise, i) => (
           <React.Fragment key={i}>{renderArticle([exercise])}</React.Fragment>
         ))}
-      {!data.exercisesContent && (
+      {isTopic && (
         <LinkList>
-          <CategoryLinks full category="article" links={data.articles} />
+          <CategoryLinks full category="articles" links={data.articles} />
           <CategoryLinks full category="exercises" links={data.exercises} />
-          <CategoryLinks full category="video" links={data.videos} />
-          <CategoryLinks full category="applet" links={data.applets} />
-          <CategoryLinks full category="course" links={data.courses} />
+          <CategoryLinks full category="videos" links={data.videos} />
+          <CategoryLinks full category="applets" links={data.applets} />
+          <CategoryLinks full category="courses" links={data.courses} />
         </LinkList>
       )}
 
@@ -80,7 +87,12 @@ export function Topic({ data }: TopicProps) {
       <UserTools
         onShare={() => setOpen(true)}
         hideEdit
-        data={{ type: 'Taxonomy', id: data.id }}
+        data={{
+          type: 'Taxonomy',
+          id: data.id,
+          taxonomyFolder: isFolder,
+          taxonomyTopic: isTopic,
+        }}
         id={data.id}
       />
       <ShareModal
@@ -123,12 +135,12 @@ function SubTopic({ data }: { data: TaxonomySubTerm }) {
         </Overview>
 
         <LinkList>
-          <CategoryLinks category="article" links={data.articles} />
+          <CategoryLinks category="articles" links={data.articles} />
           <CategoryLinks category="exercises" links={data.exercises} />
-          <CategoryLinks category="video" links={data.videos} />
-          <CategoryLinks category="applet" links={data.applets} />
-          <CategoryLinks category="course" links={data.courses} />
-          <CategoryLinks category="folder" links={data.folders} />
+          <CategoryLinks category="videos" links={data.videos} />
+          <CategoryLinks category="applets" links={data.applets} />
+          <CategoryLinks category="courses" links={data.courses} />
+          <CategoryLinks category="folders" links={data.folders} />
         </LinkList>
       </Wrapper>
     </>
@@ -138,7 +150,7 @@ function SubTopic({ data }: { data: TaxonomySubTerm }) {
 interface CategoryLinksProps {
   links: TaxonomyLink[]
   full?: boolean
-  category: CategoryType
+  category: CategoryTypes
 }
 
 function CategoryLinks({ links, full, category }: CategoryLinksProps) {
