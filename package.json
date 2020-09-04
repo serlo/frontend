@@ -17,7 +17,7 @@
     "format": "npm-run-all --continue-on-error format:*",
     "format:eslint": "yarn _eslint --fix",
     "format:prettier": "yarn _prettier --write",
-    "lint": "npm-run-all lint:tsc lint:prettier lint:eslint",
+    "lint": "npm-run-all lint:tsc lint:eslint lint:prettier",
     "lint:eslint": "yarn _eslint",
     "lint:eslint:strict": "yarn _eslint --config .eslintrc-strict.js",
     "lint:prettier": "yarn _prettier --check",
