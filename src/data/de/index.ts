@@ -29,7 +29,11 @@ export const instanceData = {
       topicFolder: "Aufgabensammlung",
       comment: "Kommentar",
       revision: "Bearbeitung",
-      thread: 'Thread'
+      thread: 'Thread',
+      groupedExercise: 'Gruppierte Aufgabe',
+      exerciseGroup: 'Aufgabengruppe',
+      subject: 'Fach',
+      topic: 'Thema',
     },
     share: {
       button: "Teilen",

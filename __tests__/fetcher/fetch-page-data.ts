@@ -340,7 +340,9 @@ describe('check all supported typenames with stored api-data', () => {
       },
     ])
 
-    expect(pageData.metaData?.title).toBe('Serlo')
+    expect(pageData.metaData?.title).toBe(
+      'Mathematik Exercise - lernen mit Serlo!'
+    )
     expect(pageData.metaData?.contentType).toBe('text-exercise')
     expect(pageData.metaData?.metaDescription).toBe(
       'Ordne folgendem Graphen die richtige Funktionsgleichung zu:Richtig! Der Nobelpreis ist ganz nah ;-)Leider falsch! Du denkst wahrscheinlich …'
@@ -387,7 +389,9 @@ describe('check all supported typenames with stored api-data', () => {
       },
     ])
 
-    expect(pageData.metaData?.title).toBe('Serlo')
+    expect(pageData.metaData?.title).toBe(
+      'Mathematik Aufgabengruppe - lernen mit Serlo!'
+    )
     expect(pageData.metaData?.contentType).toBe('exercisegroup')
     expect(pageData.metaData?.metaDescription).toBe(
       'Finde die passenden Gleichungen zu den Funktionsgraphen:Die Ruhelage der Funktion liegt auf der -Achse.Der Graph schneidet das Koordinatensystem …'
@@ -408,7 +412,9 @@ describe('check all supported typenames with stored api-data', () => {
 
     const pageData = (await fetchPageData('/de/53209')) as SingleEntityPage
 
-    expect(pageData.metaData?.title).toBe('Serlo')
+    expect(pageData.metaData?.title).toBe(
+      'Gruppierte Aufgabe - lernen mit Serlo!'
+    )
     expect(pageData.metaData?.contentType).toBe('groupedexercise')
     expect(pageData.metaData?.metaDescription).toBe(
       'Die Ruhelage der Funktion liegt auf der -Achse.Der Graph schneidet das Koordinatensystem im Nullpunkt, also handelt es sich um eine Sinusfunktion …'
