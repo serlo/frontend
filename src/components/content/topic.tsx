@@ -77,6 +77,11 @@ export function Topic({ data }: TopicProps) {
           <CategoryLinks full category="events" links={data.events} />
         </LinkList>
       )}
+      {isFolder && data.events && (
+        <LinkList>
+          <CategoryLinks full category="events" links={data.events} />
+        </LinkList>
+      )}
 
       {defaultLicense && <LicenseNotice data={defaultLicense} />}
 
