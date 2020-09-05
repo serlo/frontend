@@ -74,6 +74,7 @@ export function Topic({ data }: TopicProps) {
           <CategoryLinks full category="videos" links={data.videos} />
           <CategoryLinks full category="applets" links={data.applets} />
           <CategoryLinks full category="courses" links={data.courses} />
+          <CategoryLinks full category="events" links={data.events} />
         </LinkList>
       )}
 
@@ -141,6 +142,7 @@ function SubTopic({ data }: { data: TaxonomySubTerm }) {
           <CategoryLinks category="applets" links={data.applets} />
           <CategoryLinks category="courses" links={data.courses} />
           <CategoryLinks category="folders" links={data.folders} />
+          <CategoryLinks category="events" links={data.events} />
         </LinkList>
       </Wrapper>
     </>
