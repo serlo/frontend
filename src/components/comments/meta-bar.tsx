@@ -6,7 +6,7 @@ import styled from 'styled-components'
 
 import { DropdownMenu } from './dropdown-menu'
 import { TimeAgo } from '@/components/time-ago'
-import { makeDefaultButton, makeMargin, inputFontReset } from '@/helper/css'
+import { makeTransparentButton, makeMargin } from '@/helper/css'
 
 export function MetaBar({
   isParent,
@@ -40,15 +40,12 @@ export function MetaBar({
 }
 
 const TimeAgoButton = styled.button`
-  ${makeDefaultButton}
-  ${inputFontReset}
+  ${makeTransparentButton}
   color: ${(props) => props.theme.colors.lightblue};
 `
 
 const UserLink = styled.a`
-  ${makeDefaultButton}
-  font-size: 1.125rem;
-  font-weight: bold;
+  ${makeTransparentButton}
 `
 
 const MetaBarBox = styled.div`

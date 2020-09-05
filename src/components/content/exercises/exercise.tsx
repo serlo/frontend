@@ -9,12 +9,7 @@ import { ScMcExercise } from './sc-mc-exercise'
 import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
 import { FrontendExerciseNode } from '@/data-types'
-import {
-  makeMargin,
-  makeDefaultButton,
-  inputFontReset,
-  makePadding,
-} from '@/helper/css'
+import { makeMargin, makeTransparentButton, makePadding } from '@/helper/css'
 import { renderArticle } from '@/schema/article-renderer'
 
 export interface ExerciseProps {
@@ -191,13 +186,10 @@ const Wrapper = styled.div<{ grouped?: boolean }>`
 
 const SolutionToggle = styled.button<{ active: boolean }>`
   ${makeMargin}
-  ${inputFontReset}
-  ${makeDefaultButton}
+  ${makeTransparentButton}
   margin-right: auto;
   padding-right: 9px;
   font-size: 1rem;
-  display: inline-block;
-  cursor: pointer;
   margin-bottom: 16px;
   word-wrap: normal;
 

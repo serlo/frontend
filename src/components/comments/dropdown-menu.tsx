@@ -4,7 +4,7 @@ import * as React from 'react'
 import styled from 'styled-components'
 
 import { useInstanceData } from '@/contexts/instance-context'
-import { makeDefaultButton, inputFontReset } from '@/helper/css'
+import { makeTransparentButton } from '@/helper/css'
 
 export function DropdownMenu({
   isParent,
@@ -48,8 +48,7 @@ const DropContent = styled.div`
 `
 
 const DropContentButton = styled.button`
-  ${makeDefaultButton}
-  ${inputFontReset}
+  ${makeTransparentButton}
   margin-bottom: 0.2rem;
 `
 

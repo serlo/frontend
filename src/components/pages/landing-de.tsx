@@ -11,7 +11,7 @@ import ParticipateSVG from '@/assets-webkit/img/footer-participate.svg'
 import { LandingAbout } from '@/components/landing/landing-about'
 import { LandingSubjects } from '@/components/landing/landing-subjects'
 import { InstanceLandingData } from '@/data-types'
-import { makeDefaultButton, makeResponsivePadding } from '@/helper/css'
+import { makeLightButton, makeResponsivePadding } from '@/helper/css'
 
 export interface LandingDEProps {
   data: InstanceLandingData
@@ -156,14 +156,8 @@ const StyledH2 = styled.h2`
 `
 
 const Button = styled(Link)`
-  ${makeDefaultButton}
-  font-size: 1.125rem;
-  text-decoration: none !important;
+  ${makeLightButton}
   margin-left: -3px;
-  font-weight: bold;
-  padding-top: 3px;
-  padding-top: 3px;
-  background-color: ${(props) => props.theme.colors.lightBlueBackground};
 `
 
 const PrinciplesSection = styled.section`

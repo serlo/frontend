@@ -9,7 +9,7 @@ import dynamic from 'next/dynamic'
 import React from 'react'
 import styled from 'styled-components'
 
-import { makeGreenButton, inputFontReset } from '../../helper/css'
+import { makeGreenTransparentButton, inputFontReset } from '../../helper/css'
 import {
   AuthorToolsHoverMenuProps,
   AuthorToolsData,
@@ -100,7 +100,7 @@ const BoxWrapper = styled.div`
 `
 
 const IconButton = styled.a`
-  ${makeGreenButton}
+  ${makeGreenTransparentButton}
   ${inputFontReset}
   font-weight: bold;
   padding-top: 4px;
