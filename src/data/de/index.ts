@@ -45,8 +45,8 @@ export const instanceData = {
       comment: "Kommentar",
       revision: "Bearbeitung",
       thread: "Diskussion",
-      topic: 'Topic',
-      subject: 'Subject'
+      topic: 'Thema',
+      subject: 'Fach',
     },
     share: {
       button: "Teilen",

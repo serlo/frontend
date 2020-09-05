@@ -30,6 +30,7 @@ export function buildTaxonomyData(uuid: TaxonomyTerm): TaxonomyData {
     videos: collectType(children, 'Video'),
     applets: collectType(children, 'Applet'),
     courses: collectType(children, 'Course'),
+    events: collectType(children, 'Event'),
 
     exercisesContent: collectExercises(children),
     subterms: collectNestedTaxonomyTerms(children), // nested taxonomy terms
@@ -114,6 +115,7 @@ function collectNestedTaxonomyTerms(
         videos: collectType(subChildren, 'Video'),
         applets: collectType(subChildren, 'Applet'),
         courses: collectType(subChildren, 'Course'),
+        events: collectType(subChildren, 'Event'),
         folders: collectSubfolders(subChildren),
       })
     }
