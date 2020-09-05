@@ -120,19 +120,11 @@ export function convert(
     const width = (node.state as EditorStateDummy).width ?? 50
     return [
       {
-        type: 'row',
-        children: [
-          {
-            type: 'col',
-            size: 100 - width,
-            children: convert((node.state as EditorStateDummy).explanation),
-          },
-          {
-            type: 'col',
-            size: width,
-            children: convert((node.state as EditorStateDummy).multimedia),
-          },
-        ],
+        type: 'multimedia',
+        mediaWidth: width,
+        float: 'right',
+        media: convert((node.state as EditorStateDummy).multimedia),
+        children: convert((node.state as EditorStateDummy).explanation),
       },
     ]
   }
