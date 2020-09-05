@@ -516,6 +516,8 @@ function convertText(node: LegacyNode): FrontendContentNode[] {
     .join(' ')
     .split('&lt;')
     .join('<')
+    .split('&gt;')
+    .join('>')
     .split('&amp;')
     .join('&')
     .replace(/&#(\d+);/g, function (match, dec: number) {
