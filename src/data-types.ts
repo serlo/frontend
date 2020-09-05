@@ -661,6 +661,7 @@ export interface TaxonomyTermBase {
   videos: TaxonomyLink[]
   applets: TaxonomyLink[]
   exercises: TaxonomyLink[]
+  events: TaxonomyLink[]
   description?: FrontendContentNode[]
 }
 

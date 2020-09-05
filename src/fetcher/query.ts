@@ -146,7 +146,7 @@ export interface TaxonomyTermChild {
 export interface TaxonomyTermChildOnX extends TaxonomyTermChild {
   id: number
   alias?: string
-  __typename: 'Article' | 'Video' | 'Applet' | 'Course'
+  __typename: 'Article' | 'Video' | 'Applet' | 'Course' | 'Event'
   currentRevision?: {
     title: string
   }
@@ -600,6 +600,14 @@ export const dataQuery = gql`
     }
 
     ... on Course {
+      alias
+      id
+      currentRevision {
+        title
+      }
+    }
+
+    ... on Event {
       alias
       id
       currentRevision {
