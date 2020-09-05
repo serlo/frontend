@@ -2,7 +2,7 @@ import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styled from 'styled-components'
 
-import { makeResponsivePadding, makeDefaultButton } from '../../helper/css'
+import { makeResponsivePadding, makeTransparentButton } from '../../helper/css'
 import { Link } from '../content/link'
 import { StyledLi } from '../tags/styled-li'
 import { StyledUl } from '../tags/styled-ul'
@@ -85,14 +85,13 @@ const AboutCol = styled.div`
 `
 
 const AboutButton = styled(Link)`
-  ${makeDefaultButton}
-  text-decoration: none !important;
+  ${makeTransparentButton}
   margin-left: -7px;
   margin-top: 10px;
   padding-top: 3px;
   padding-bottom: 3px;
+
   color: #fff;
-  font-weight: bold;
   background-color: ${(props) => props.theme.colors.lightblue};
 
   &:hover {

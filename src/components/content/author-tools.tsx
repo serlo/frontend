@@ -8,7 +8,7 @@ import {
   AuthorToolsData,
   AuthorToolsHoverMenuProps,
 } from '../navigation/author-tools-hover-menu'
-import { makeDefaultButton } from '@/helper/css'
+import { makeTransparentButton } from '@/helper/css'
 
 export interface AuthorToolsProps {
   data: AuthorToolsData
@@ -35,7 +35,7 @@ export function AuthorTools({ data }: AuthorToolsProps) {
 }
 
 const EditButton = styled.a`
-  ${makeDefaultButton}
+  ${makeTransparentButton}
 
   text-align: center;
   color: ${(props) => props.theme.colors.dark1};

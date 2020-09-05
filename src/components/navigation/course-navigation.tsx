@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import styled, { css } from 'styled-components'
 
-import { makeMargin, makeDefaultButton, inputFontReset } from '../../helper/css'
+import { makeMargin, makeTransparentButton } from '../../helper/css'
 import { Link } from '../content/link'
 import { StyledLi } from '../tags/styled-li'
 import { StyledOl } from '../tags/styled-ol'
@@ -83,9 +83,7 @@ const CourseLink = styled(Link)<{ active: boolean }>`
 `
 
 export const Button = styled.button`
-  font-size: 1.125rem;
-  ${makeDefaultButton}
-  ${inputFontReset}
+  ${makeTransparentButton}
   padding: 3px 8px;
   ${makeMargin}
   background-color: ${(props) => props.theme.colors.brand};
