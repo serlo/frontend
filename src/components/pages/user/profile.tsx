@@ -2,7 +2,7 @@ import { NextPage } from 'next'
 import React from 'react'
 import styled from 'styled-components'
 
-import { CommunityBanner } from './community-banner'
+import { ProfileCommunityBanner } from './profile-community-banner'
 import { HSpace } from '@/components/content/h-space'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { RelativeContainer } from '@/components/navigation/relative-container'
@@ -30,7 +30,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         <HSpace amount={50} />
         <StyledH1>{username}</StyledH1>
         <StyledP></StyledP>
-        {lang === 'de' && <CommunityBanner userData={userData} />}
+        {lang === 'de' && <ProfileCommunityBanner userData={userData} />}
 
         {description && (
           <>
