@@ -124,6 +124,9 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
         username: uuid.username,
         description: description,
         lastLogin: uuid.lastLogin,
+        activeReviewer: uuid.activeReviewer,
+        activeAuthor: uuid.activeAuthor,
+        activeDonor: uuid.activeDonor,
       },
     }
   }
