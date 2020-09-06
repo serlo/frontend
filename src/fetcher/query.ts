@@ -439,6 +439,8 @@ export const dataQuery = gql`
         date
         lastLogin
         description
+        activeReviewer
+        activeAuthor
         activeDonor
       }
 
