@@ -213,15 +213,11 @@ describe('edtr io plugins', () => {
       })
       expect(result).toEqual([
         {
-          type: 'row',
-          children: [
-            { type: 'col', size: 80, children: [] },
-            {
-              type: 'col',
-              size: 20,
-              children: [{ type: 'img', src: 'test.jpg' }],
-            },
-          ],
+          type: 'multimedia',
+          mediaWidth: 20,
+          float: 'right',
+          media: [{ type: 'img', src: 'test.jpg' }],
+          children: [],
         },
       ])
     })
@@ -243,15 +239,11 @@ describe('edtr io plugins', () => {
       })
       expect(result).toEqual([
         {
-          type: 'row',
-          children: [
-            { type: 'col', size: 50, children: [] },
-            {
-              type: 'col',
-              size: 50,
-              children: [{ type: 'img', src: 'test.jpg' }],
-            },
-          ],
+          type: 'multimedia',
+          mediaWidth: 50,
+          float: 'right',
+          media: [{ type: 'img', src: 'test.jpg' }],
+          children: [],
         },
       ])
     })
