@@ -323,6 +323,9 @@ export const dataQuery = gql`
         author {
           id
           username
+          activeAuthor
+          activeDonor
+          activeReviewer
         }
         ... on ArticleRevision {
           ...articleRevision

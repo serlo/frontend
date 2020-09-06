@@ -544,10 +544,10 @@ export function HelloWorld() {
 You can import a svg directly. They are inlined and usable as component:
 
 ```tsx
-import SerloLogo from '../public/_assets/img/serlo-logo.svg'
+import ParticipateSVG from '@/assets-webkit/img/footer-participate.svg'
 
 export function HelloWorld() {
-  return <SerloLogo />
+  return <ParticipateSVG />
 }
 ```
 
