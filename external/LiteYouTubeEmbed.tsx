@@ -122,7 +122,9 @@ export const LiteYouTubeEmbed = ({
 
 //moved static css to styledcomponents
 const YouTubeWrapper = styled.figure`
-  ${makeMargin}
+  ${makeMargin};
+  margin-bottom: ${(props) => props.theme.spacing.mb.block};
+
   padding: 0;
   .yt-lite {
     background-color: #000;

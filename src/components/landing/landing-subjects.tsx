@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { lighten } from 'polished'
 import styled, { css, keyframes } from 'styled-components'
 
-import { makeResponsivePadding, makeDefaultButton } from '../../helper/css'
+import { makeResponsivePadding, makeTransparentButton } from '../../helper/css'
 import { Link } from '../content/link'
 import AbcSVG from '@/assets-webkit/img/subjects-abc.svg'
 import BiologySVG from '@/assets-webkit/img/subjects-biology.svg'
@@ -237,8 +237,7 @@ const SubjectLink = styled(Link)`
 `
 
 const Header = styled.h2`
-  ${makeDefaultButton}
-  font-size: 1.2rem;
+  ${makeTransparentButton}
   line-height: 5.8rem;
   vertical-align: top;
   margin-top: 1rem;

@@ -217,7 +217,10 @@ function renderPage(page: PageData) {
                   {page.breadcrumbsData && (
                     <Breadcrumbs
                       data={page.breadcrumbsData}
-                      isTaxonomy={page.kind !== 'single-entity'}
+                      isTaxonomy={
+                        page.kind !== 'single-entity' &&
+                        !(page.metaData?.contentType == 'topic-folder')
+                      }
                     />
                   )}
                   <main>

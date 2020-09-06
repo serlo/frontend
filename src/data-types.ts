@@ -212,6 +212,16 @@ export interface HorizonEntry {
   url: string
 }
 
+// User data exept for profiles use this structure
+
+export interface FrontendUserData {
+  username: string
+  id: number
+  activeAuthor?: boolean
+  activeDonor?: boolean
+  activeReviewer?: boolean
+}
+
 // All entities (except taxonomy) have a shared data structure.
 
 export interface SingleEntityPage extends EntityPageBase {
@@ -241,10 +251,7 @@ export interface RevisionData {
   typename: string
   date: string
   type: EntityTypes
-  user: {
-    id: number
-    username: string
-  }
+  user: FrontendUserData
   repositoryId: number
   thisRevision: {
     id: number
@@ -401,6 +408,14 @@ export interface FrontendLiNode {
   children?: FrontendContentNode[]
 }
 
+export interface FrontendMultiMediaNode {
+  type: 'multimedia'
+  float?: 'left' | 'right'
+  mediaWidth: number
+  media: FrontendContentNode[]
+  children: FrontendContentNode[]
+}
+
 export interface FrontendRowNode {
   type: 'row'
   children?: FrontendColNode[]
@@ -409,6 +424,7 @@ export interface FrontendRowNode {
 export interface FrontendColNode {
   type: 'col'
   size: number
+  float?: 'left' | 'right'
   children?: FrontendContentNode[]
 }
 
@@ -611,7 +627,7 @@ export type FrontendRestrictedElementNode =
   | FrontendUlNode
   | FrontendOlNode
   | FrontendRowNode
-  | FrontendTableNode
+  | FrontendMultiMediaNode
   | FrontendTrNode
   | FrontendExerciseGroupNode
 
@@ -674,6 +690,7 @@ export interface TaxonomyTermBase {
   videos: TaxonomyLink[]
   applets: TaxonomyLink[]
   exercises: TaxonomyLink[]
+  events: TaxonomyLink[]
   description?: FrontendContentNode[]
 }
 

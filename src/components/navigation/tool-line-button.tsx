@@ -1,9 +1,9 @@
 import styled from 'styled-components'
 
-import { makeGreenButton } from '../../helper/css'
+import { makeGreenTransparentButton } from '../../helper/css'
 
 export const UserToolsMobileButton = styled.a<{ isOnTop?: boolean }>`
-  ${makeGreenButton}
+  ${makeGreenTransparentButton}
   font-weight: bold;
   font-size: 0.9rem;
   margin: 2px;

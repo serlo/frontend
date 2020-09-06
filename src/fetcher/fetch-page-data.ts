@@ -255,8 +255,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
         },
         changes: (uuid as ArticleRevision).changes,
         user: {
-          id: uuid.author.id,
-          username: uuid.author.username,
+          ...uuid.author,
         },
         date: uuid.date,
       },

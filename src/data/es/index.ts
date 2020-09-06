@@ -18,18 +18,35 @@ export const instanceData = {
       toTop: "a la cima"
     },
     categories: {
-      article: "Artículo",
-      course: "Curso",
-      video: "Vídeo",
-      applet: 'Applet',
-      folder: "Carpeta",
-      exercises: "Ejercicios"
+      articles: 'Articles',
+      courses: 'Courses',
+      videos: 'Videos',
+      applets: 'Applets',
+      folders: 'Folders',
+      exercises: "Ejercicios",
+      events: 'Events'
     },
     entities: {
-      topicFolder: "Carpeta de ejercicios",
-      comment: "Comentar",
-      revision: "Revisión",
-      thread: "Tema"
+      applet: 'Applet',
+      article: 'Article',
+      course: 'Course',
+      coursePage: 'Course Page',
+      event: 'Event',
+      exercise: 'Exercise',
+      exerciseGroup: 'Exercise Group',
+      folder: 'Folder',
+      groupedExercise: 'Grouped Exercise',
+      page: 'Page',
+      solution: 'Solution',
+      taxonomyTerm: 'Taxonomy Term',
+      user: 'User',
+      video: 'Video',
+      topicFolder: 'Exercise folder',
+      comment: 'Comment',
+      revision: 'Revision',
+      thread: 'Thread',
+      topic: 'Topic',
+      subject: 'Subject'
     },
     share: {
       button: "Compartir",
@@ -53,9 +70,7 @@ export const instanceData = {
       show: "mostrar",
       hide: "ocultar",
       prerequisite: "Para este ejercicio se necesitan los siguientes conocimientos básicos:",
-      solution: "Solución",
       task: 'Task',
-      exerciseGroup: 'Exercise group',
       right: 'Right',
       wrong: 'Wrong',
       check: 'Check',
@@ -87,6 +102,19 @@ export const instanceData = {
       postedOn: 'Posted on',
       placeholder: "Your question or suggestion…",
       placeholderReply: "Your answer…"
+    },
+    revisions: {
+      toOverview: "Back to overview",
+      changes: "Changes",
+      title: "Title",
+      content: "Content",
+      metaTitle: "Meta Title",
+      metaDescription: "Meta Description",
+      compare: "Compare",
+      currentVersion: "Current Version",
+      thisVersion: "This Version",
+      thisIsCurrentVersion: "This is the currently accepted version.",
+      by: 'By'
     },
     errors: {
       title: '😬 Websites make mistakes sometimes…',
@@ -176,10 +204,7 @@ export const loggedInData = {
       moveToGroupedTextExercise: "Mover contenido a otro grupo de ejercicios de texto",
       moveToTextExercise: "Mover contenido a otro ejercicio de texto",
       sortEntities: 'Sort content',
-      newEntity: 'New Entity',
-      exercise: 'Exercise',
-      exerciseGroup: 'Exercise Group',
-      event: 'Event'
+      newEntity: 'New Entity'
     },
     notifications: {
       loadMore: "Cargar más",
@@ -206,18 +231,7 @@ export const loggedInData = {
       setTaxonomyParentChanged: "%actor% cambió el padre de %child% a %parent%.",
       setUuidStateTrashed: "%actor% envió a la papelera %object%.",
       setUuidStateRestored: "%actor% restauró %object%.",
-      entityPlaceholderPage: "Página",
-      entityPlaceholderArticle: "Artículo",
-      entityPlaceholderVideo: "Vídeo",
-      entityPlaceholderApplet: 'Applet',
-      entityPlaceholderCoursePage: "Página de curso",
-      entityPlaceholderExercise: "Ejercicio",
-      entityPlaceholderGroupedExercise: "Ejercicio agrupado",
-      entityPlaceholderExerciseGroup: "Grupo de ejercicios",
-      entityPlaceholderEvent: "Evento",
-      entityPlaceholderCourse: "Curso",
-      entityPlaceholderTaxonomyTerm: "Término",
-      entityPlaceholderFallback: "Contenido"
+      entityPlaceholderFallback: "Content"
     }
   }
 };

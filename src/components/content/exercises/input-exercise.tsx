@@ -5,7 +5,7 @@ import styled, { css } from 'styled-components'
 import { Feedback } from './feedback'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EdtrPluginInputExercise } from '@/data-types'
-import { makeMargin, makeDefaultButton, inputFontReset } from '@/helper/css'
+import { makeMargin, makePrimaryButton, inputFontReset } from '@/helper/css'
 
 export interface InputExerciseProps {
   data: EdtrPluginInputExercise['state']
@@ -100,11 +100,8 @@ const Wrapper = styled.div`
 `
 
 const CheckButton = styled.a<{ selectable: boolean }>`
-  ${makeDefaultButton}
+  ${makePrimaryButton}
   margin-top: 16px;
-
-  color: #fff;
-  background-color: ${(props) => props.theme.colors.brand};
 
   ${(props) =>
     !props.selectable &&

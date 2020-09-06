@@ -11,7 +11,7 @@ import { AuthPayload } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { HeaderData, HeaderLink } from '@/data-types'
-import { makeDefaultButton } from '@/helper/css'
+import { makeTransparentButton } from '@/helper/css'
 import { getAuthData, shouldUseNewAuth } from '@/helper/feature-auth'
 
 const UnreadNotificationsCount = dynamic<UnreadNotificationsCountProps>(() =>
@@ -237,19 +237,18 @@ const linkStyle = css`
       color: #fff;
     }
   }
-  text-decoration: none !important;
 `
 
 const StyledLink = styled(Link)<{ active?: boolean; hasIcon?: boolean }>`
-  ${makeDefaultButton}
+  ${makeTransparentButton}
   ${linkStyle}
+  font-size: 1rem;
   color: ${(props) =>
     props.theme.colors[props.active ? 'darkgray' : 'lightblue']};
 
   background-color: ${(props) =>
     props.active ? props.theme.colors.lighterblue : 'inherit'};
 
-  font-weight: bold;
   transition: all 0.3s ease-in-out 0s;
   display: block;
 
@@ -275,8 +274,6 @@ export const SubLink = styled(Link)`
   padding-top: 3px;
   padding-bottom: 3px;
   display: block;
-  text-decoration: none;
-  cursor: pointer;
   &:hover span {
     color: #fff;
     background-color: ${(props) => props.theme.colors.brand};
@@ -284,9 +281,9 @@ export const SubLink = styled(Link)`
 `
 
 export const SubButtonStyle = styled.span`
-  text-decoration: none;
   display: block;
   ${linkStyle}
-  ${makeDefaultButton}
-  color: ${(props) => props.theme.colors.brand};
+  ${makeTransparentButton}
+  font-size: 1rem;
+  font-weight: normal;
 `
