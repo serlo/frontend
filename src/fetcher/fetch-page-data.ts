@@ -35,6 +35,12 @@ export async function fetchPageData(raw_alias: string): Promise<PageData> {
       const id = parseInt(alias.split('license/detail/')[1])
       return await apiLicensePageRequest(id, instance)
     }
+    if (alias.startsWith('/user/profile/')) {
+      const idPath = alias.split('user/profile')[1]
+      const pageData = await apiRequest(idPath, instance)
+      await prettifyLinks(pageData)
+      return pageData
+    }
 
     const pageData = await apiRequest(alias, instance)
     await prettifyLinks(pageData)
@@ -51,21 +57,23 @@ export async function fetchPageData(raw_alias: string): Promise<PageData> {
 }
 
 async function apiRequest(alias: string, instance: string): Promise<PageData> {
+  const isId = /^\/[\d]+$/.test(alias) //e.g. /1565
+  const variables = isId
+    ? {
+        id: parseInt(alias.substring(1), 10),
+      }
+    : {
+        alias: {
+          instance,
+          path: alias,
+        },
+      }
+
   const { uuid } = await request<{ uuid: QueryResponse }>(
     endpoint,
     dataQuery,
-    /^\/[\d]+$/.test(alias)
-      ? {
-          id: parseInt(alias.substring(1), 10),
-        }
-      : {
-          alias: {
-            instance,
-            path: alias,
-          },
-        }
+    variables
   )
-
   if (uuid.__typename === 'Course') {
     const firstPage = uuid.pages[0]?.alias
     if (firstPage) {
@@ -81,6 +89,36 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
   const cacheKey = `/${instance}${alias}`
   const title = createTitle(uuid)
   const metaImage = getMetaImage(uuid.alias ? uuid.alias : undefined)
+
+  if (uuid.__typename === 'User') {
+    const placeholder = JSON.stringify({
+      plugin: 'text',
+      state: [
+        {
+          type: 'p',
+          children: {
+            text:
+              'This is where we display the description on a the production server.',
+          },
+        },
+      ],
+    })
+
+    const description = uuid.description
+      ? uuid.description === 'NULL'
+        ? convertState(placeholder)
+        : convertState(uuid.description)
+      : undefined
+    return {
+      kind: 'user/profile',
+      newsletterPopup: false,
+      userData: {
+        username: uuid.username,
+        description: description,
+        lastLogin: uuid.lastLogin,
+      },
+    }
+  }
 
   if (uuid.__typename === 'TaxonomyTerm') {
     return {

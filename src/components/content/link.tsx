@@ -24,13 +24,13 @@ const legacyLinks = [
   '/enable-frontend',
   '/beitreten',
   '/discussions',
+  '/user/public',
+  '/user/settings',
   // '/entity/unrevised',
   // '/auth/login',
   // '/auth/logout',
   // '/api/auth/login',
   // '/api/auth/logout',
-  //'/user/public',
-  //'/user/settings',
   // '/auth/password/change',
   // '/event/history/user/me',
   // '/event/history',
@@ -41,7 +41,6 @@ function isLegacyLink(_href: string) {
   if (_href == '/user/notifications') return false
   return (
     legacyLinks.indexOf(_href) > -1 ||
-    _href.startsWith('/user/') ||
     _href.startsWith('/auth/') ||
     _href.startsWith('/event/history') ||
     _href.startsWith('/api/auth') ||
