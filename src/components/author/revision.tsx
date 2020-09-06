@@ -5,13 +5,13 @@ import React from 'react'
 import ReactDiffViewer from 'react-diff-viewer'
 import styled, { css } from 'styled-components'
 
-import { Link } from '../content/link'
 import { GeogebraProps } from '@/components/content/geogebra'
 import { HSpace } from '@/components/content/h-space'
 import { VideoProps } from '@/components/content/video'
 import { StyledH1 } from '@/components/tags/styled-h1'
 import { StyledP } from '@/components/tags/styled-p'
 import { TimeAgo } from '@/components/time-ago'
+import { UserLink } from '@/components/user/user-link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionData } from '@/data-types'
 import { makePadding, makeDefaultButton, inputFontReset } from '@/helper/css'
@@ -72,9 +72,8 @@ export function Revision({ data }: RevisionProps) {
             <br />
           </>
         )}
-        {strings.revisions.by}{' '}
-        <Link href={`/user/profile/${data.user.id}`}>{data.user.username}</Link>
-        , <TimeAgo datetime={new Date(data.date)} dateAsTitle />
+        {strings.revisions.by} <UserLink user={data.user} />{' '}
+        <TimeAgo datetime={new Date(data.date)} dateAsTitle />
       </StyledP>
 
       {dataSet.title !== undefined && (

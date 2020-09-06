@@ -47,6 +47,12 @@ export const instanceData = {
       thread: 'Thread',
       topic: 'Topic',
       subject: 'Subject',
+      userProfile: 'User Profile',
+    },
+    roles: {
+      donor: "Donor",
+      author: 'Author',
+      reviewer: 'Reviewer',
     },
     share: {
       button: 'Share',

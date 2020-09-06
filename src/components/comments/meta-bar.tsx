@@ -1,9 +1,10 @@
-import { faUser, faCaretDown } from '@fortawesome/free-solid-svg-icons'
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Tippy from '@tippyjs/react'
 import * as React from 'react'
 import styled from 'styled-components'
 
+import { UserLink } from '../user/user-link'
 import { DropdownMenu } from './dropdown-menu'
 import { TimeAgo } from '@/components/time-ago'
 import { makeDefaultButton, makeMargin, inputFontReset } from '@/helper/css'
@@ -21,9 +22,7 @@ export function MetaBar({
 
   return (
     <MetaBarBox>
-      <UserLink href={`https://serlo.org/${user.id}`}>
-        <FontAwesomeIcon icon={faUser} /> {user.username}
-      </UserLink>
+      <StyledUserLink user={user} withIcon />
 
       <Tippy
         interactive
@@ -45,7 +44,7 @@ const TimeAgoButton = styled.button`
   color: ${(props) => props.theme.colors.lightblue};
 `
 
-const UserLink = styled.a`
+const StyledUserLink = styled(UserLink)`
   ${makeDefaultButton}
   font-size: 1.125rem;
   font-weight: bold;

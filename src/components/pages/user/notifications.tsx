@@ -48,6 +48,9 @@ export const Notifications: NextPage = () => {
               actor {
                 id
                 username
+                activeAuthor
+                activeDonor
+                activeReviewer
               }
               ... on CheckoutRevisionNotificationEvent {
                 revision {
