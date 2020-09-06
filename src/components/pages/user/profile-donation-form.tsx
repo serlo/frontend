@@ -98,6 +98,10 @@ export const ProfileDonationForm = ({
 
 const StyledIframe = styled.iframe`
   border: 0;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
+    width: 100%;
+  }
 `
 
 const Button = styled.button`
@@ -105,5 +109,7 @@ const Button = styled.button`
 `
 
 const DonationWrapper = styled.section`
-  display: flex;
+  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
+    display: flex;
+  }
 `

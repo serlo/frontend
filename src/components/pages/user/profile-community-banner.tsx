@@ -158,7 +158,7 @@ export const ProfileCommunityBanner = ({ userData }: ProfileProps) => {
         }
       `,
       config: {
-        refreshInterval: 60 * 1000, // seconds
+        refreshInterval: 60 * 60 * 1000, // seconds
       },
     })
     return data
