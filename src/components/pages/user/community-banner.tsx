@@ -1,49 +1,55 @@
 import styled from 'styled-components'
 
 import { ProfileProps } from './profile'
+import AuthorBadge from '@/assets-webkit/img/community/badge-author.svg'
+import DonorBadge from '@/assets-webkit/img/community/badge-donor.svg'
+import ReviewerBadge from '@/assets-webkit/img/community/badge-reviewer.svg'
 import BirdAuthorSVG from '@/assets-webkit/img/community/birds-author.svg'
 import BirdDonorSVG from '@/assets-webkit/img/community/birds-donor.svg'
 import BirdReviewerSVG from '@/assets-webkit/img/community/birds-reviewer.svg'
-import { useInstanceData } from '@/contexts/instance-context'
+import { Link } from '@/components/content/link'
+import { StyledP } from '@/components/tags/styled-p'
+import { makeMargin } from '@/helper/css'
 
 const bannerContent = {
   activeAuthors: {
-    img: 'authors.png',
-    imgBig: 'big-author.png',
     otherUserProfileMessage:
       '%username% trägt als Autorin bzw. Autor dazu bei, dass immer mehr großartige Lerninhalte auf serlo.org zu finden sind.',
-    callToAction:
-      '<a style="text-decoration: underline;" href="https://de.serlo.org/mitmachen">Schon mal überlegt selbst mitzumachen?</a>.',
+    callToAction: (
+      <>
+        Schon mal überlegt <Link href="/mitmachen">selbst mitzumachen</Link>?
+      </>
+    ),
     ownProfileMessage:
       'Zusammen mit dir sind wir schon %no% Autorinnen und Autoren, die aktiv an serlo.org mitarbeiten.',
   },
   activeDonors: {
-    img: 'donors.png',
-    imgBig: 'big-donor.png',
     otherUserProfileMessage:
       '%username% trägt mit einer regelmäßigen Spende dazu bei, dass serlo.org komplett kostenlos, werbefrei und unabhängig ist.',
-    callToAction:
-      '<a style="text-decoration: underline;" href="/user/me#spenden">Kannst auch du dir vorstellen, uns mit einem kleinen Betrag zu unterstützen?</a>',
+    callToAction: (
+      <>
+        Kannst auch du dir vorstellen, uns mit einem{' '}
+        <Link href="/user/me#spenden">kleinen Betrag zu unterstützen</Link>?
+      </>
+    ),
     ownProfileMessage:
       'Wir sind die ersten %no% Pioniere beim Aufbau einer langfristigen und unabhängigen Finanzierung für serlo.org.',
   },
   activeReviewers: {
-    img: 'reviewers.png',
-    imgBig: 'big-reviewer.png',
     otherUserProfileMessage:
       'Als Reviewerin bzw. Reviewer sichert %username% die Qualität auf serlo.org und hilft unseren Autorinnen und Autoren.',
+    callToAction: null,
     ownProfileMessage:
       'Als Team von %no% Reviewerinnen und Reviewern sorgen wir für die Qualität unserer Lernplattform.',
   },
 }
 
 export const CommunityBanner = ({ userData }: ProfileProps) => {
-  const { lang, strings } = useInstanceData()
   const { activeReviewer, activeDonor, activeAuthor } = userData
 
   const isActive = activeReviewer || activeDonor || activeAuthor
 
-  if (!isActive || lang !== 'de') return null
+  if (!isActive) return null
 
   return (
     <CommunityWrapper>
@@ -60,13 +66,37 @@ export const CommunityBanner = ({ userData }: ProfileProps) => {
 
   function renderRoleExplanations() {
     return (
-      <div>
+      <ExplanationsWrapper>
         {activeReviewer && (
-          <div>{bannerContent.activeReviewers.otherUserProfileMessage}</div>
+          <Explanation>
+            <ReviewerBadge /> {renderExplanationText('activeReviewers')}
+          </Explanation>
         )}
-        {activeAuthor && 'test'}
-        {activeDonor && 'test'}
-      </div>
+        {activeAuthor && (
+          <Explanation>
+            <AuthorBadge /> {renderExplanationText('activeAuthors')}
+          </Explanation>
+        )}
+        {activeDonor && (
+          <Explanation>
+            <DonorBadge /> {renderExplanationText('activeDonors')}
+          </Explanation>
+        )}
+      </ExplanationsWrapper>
+    )
+  }
+
+  function renderExplanationText(
+    key: 'activeDonors' | 'activeAuthors' | 'activeReviewers'
+  ) {
+    return (
+      <StyledP>
+        {bannerContent[key].otherUserProfileMessage.replace(
+          '%username%',
+          userData.username
+        )}{' '}
+        {bannerContent[key].callToAction}
+      </StyledP>
     )
   }
 }
@@ -79,11 +109,19 @@ const CommunityWrapper = styled.div`
 
 const Birdcage = styled.div`
   max-width: 200px;
+  margin-bottom: 40px;
   @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-    width: 25%;
+    width: 100%;
   }
 `
 
-// const ExplanationsWrapper = styled.div`
-
-// `
+const ExplanationsWrapper = styled.div`
+  ${makeMargin}
+`
+const Explanation = styled.div`
+  display: flex;
+  > svg {
+    width: 80px;
+    margin-top: -25px;
+  }
+`
