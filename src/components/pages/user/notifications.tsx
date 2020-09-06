@@ -14,7 +14,7 @@ import { StyledP } from '@/components/tags/styled-p'
 import { Notification, NotificationEvent } from '@/components/user/notification'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { inputFontReset, makeDefaultButton } from '@/helper/css'
+import { makePrimaryButton } from '@/helper/css'
 import { shouldUseNewAuth } from '@/helper/feature-auth'
 
 export const Notifications: NextPage = () => {
@@ -48,6 +48,9 @@ export const Notifications: NextPage = () => {
               actor {
                 id
                 username
+                activeAuthor
+                activeDonor
+                activeReviewer
               }
               ... on CheckoutRevisionNotificationEvent {
                 revision {
@@ -312,13 +315,6 @@ const Wrapper = styled.div`
 `
 
 const Button = styled.button`
-  ${inputFontReset}
-  ${makeDefaultButton}
+  ${makePrimaryButton}
   margin-top: 40px;
-  font-weight: bold;
-  background-color: ${(props) => props.theme.colors.brand};
-  color: #fff;
-  &:hover {
-    background-color: ${(props) => props.theme.colors.lightblue};
-  }
 `

@@ -5,16 +5,22 @@ import React from 'react'
 import ReactDiffViewer from 'react-diff-viewer'
 import styled, { css } from 'styled-components'
 
-import { Link } from '../content/link'
 import { GeogebraProps } from '@/components/content/geogebra'
 import { HSpace } from '@/components/content/h-space'
 import { VideoProps } from '@/components/content/video'
 import { StyledH1 } from '@/components/tags/styled-h1'
 import { StyledP } from '@/components/tags/styled-p'
 import { TimeAgo } from '@/components/time-ago'
+import { UserLink } from '@/components/user/user-link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionData } from '@/data-types'
-import { makePadding, makeDefaultButton, inputFontReset } from '@/helper/css'
+import {
+  makePadding,
+  // makeTransparentButton,
+  makeTransparentButton,
+  inputFontReset,
+  makeLightButton,
+} from '@/helper/css'
 import { entityIconMapping } from '@/helper/icon-by-entity-type'
 import { renderArticle } from '@/schema/article-renderer'
 
@@ -72,9 +78,8 @@ export function Revision({ data }: RevisionProps) {
             <br />
           </>
         )}
-        {strings.revisions.by}{' '}
-        <Link href={`/user/profile/${data.user.id}`}>{data.user.username}</Link>
-        , <TimeAgo datetime={new Date(data.date)} dateAsTitle />
+        {strings.revisions.by} <UserLink user={data.user} />{' '}
+        <TimeAgo datetime={new Date(data.date)} dateAsTitle />
       </StyledP>
 
       {dataSet.title !== undefined && (
@@ -236,31 +241,22 @@ const BoxHeader = styled(StyledP)`
 `
 
 const Button = styled.button<{ current?: boolean }>`
-  ${makeDefaultButton}
-  ${inputFontReset}
+  ${makeTransparentButton}
   margin-left: 5px;
-  font-size: 1.125rem;
-  font-weight: bold;
-  &:hover {
-    background-color: ${(props) => props.theme.colors.lighterblue};
-  }
+
   ${(props) =>
     props.current &&
     css`
-      background-color: ${(props) => props.theme.colors.brand};
-      color: #fff;
+      &,
       &:hover {
         background-color: ${(props) => props.theme.colors.brand};
+        color: #fff;
       }
     `}
 `
 
 const BackButton = styled(Button)`
-  background-color: ${(props) => props.theme.colors.bluewhite};
-  &:hover {
-    background-color: ${(props) => props.theme.colors.brand};
-  }
-  color: ${(props) => props.theme.colors.brand};
+  ${makeLightButton}
 
   > svg {
     font-size: 1rem;

@@ -11,7 +11,7 @@ import ParticipateIcon from '@/assets-webkit/img/footer-participate.svg'
 import { Link } from '@/components/content/link'
 import { FooterNav } from '@/components/navigation/footer-nav'
 import { useInstanceData } from '@/contexts/instance-context'
-import { makeResponsivePadding, makeDefaultButton } from '@/helper/css'
+import { makeResponsivePadding, makeTransparentButton } from '@/helper/css'
 
 export function Footer() {
   const { footerData } = useInstanceData()
@@ -132,8 +132,7 @@ const SummaryButtonBox = styled.div`
 `
 
 const SummaryButton = styled(Link)`
-  ${makeDefaultButton}
-  text-decoration: none !important;
+  ${makeTransparentButton}
   color: #fff;
 `
 
@@ -170,7 +169,7 @@ const ImageLink = styled(Link)`
 
 const SupportButton = styled.div`
   margin-top: 3px;
-  ${makeDefaultButton}
+  ${makeTransparentButton}
   color: #fff;
   ${ImageLink}:hover & {
     background-color: ${(props) => props.theme.colors.brand};

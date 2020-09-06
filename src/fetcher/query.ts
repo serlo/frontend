@@ -123,7 +123,9 @@ export interface Solution extends Repository {
 // Events are only used in injections, no support for full page view
 export interface Event extends Repository {
   __typename: 'Event'
-  currentRevision?: GraphQL.Maybe<Pick<GraphQL.EventRevision, 'content'>>
+  currentRevision?: GraphQL.Maybe<
+    Pick<GraphQL.EventRevision, 'content' | 'title'>
+  >
 }
 
 // User profiles
@@ -143,6 +145,7 @@ export interface Course extends Repository {
   pages: {
     alias?: string
   }[]
+  currentRevision?: GraphQL.Maybe<Pick<GraphQL.CourseRevision, 'title'>>
 }
 
 export interface TaxonomyTermChild {
@@ -153,7 +156,7 @@ export interface TaxonomyTermChild {
 export interface TaxonomyTermChildOnX extends TaxonomyTermChild {
   id: number
   alias?: string
-  __typename: 'Article' | 'Video' | 'Applet' | 'Course'
+  __typename: 'Article' | 'Video' | 'Applet' | 'Course' | 'Event'
   currentRevision?: {
     title: string
   }
@@ -294,6 +297,9 @@ export const dataQuery = gql`
         author {
           id
           username
+          activeAuthor
+          activeDonor
+          activeReviewer
         }
         ... on ArticleRevision {
           ...articleRevision
@@ -501,6 +507,9 @@ export const dataQuery = gql`
         pages {
           alias
         }
+        currentRevision {
+          title
+        }
       }
 
       ... on TaxonomyTerm {
@@ -619,6 +628,14 @@ export const dataQuery = gql`
         title
       }
     }
+
+    ... on Event {
+      alias
+      id
+      currentRevision {
+        title
+      }
+    }
   }
 
   fragment articleRevision on ArticleRevision {
@@ -690,7 +707,7 @@ export const dataQuery = gql`
   }
 `
 
-export type QueryResponse =
+export type QueryResponseNoRevision =
   | Page
   | Article
   | Video
@@ -704,7 +721,8 @@ export type QueryResponse =
   | Course
   | TaxonomyTerm
   | User
-  | QueryResponseRevision
+
+export type QueryResponse = QueryResponseNoRevision | QueryResponseRevision
 
 export const idsQuery = (ids: number[]) => {
   const map = ids.map(

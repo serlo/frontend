@@ -120,19 +120,11 @@ export function convert(
     const width = (node.state as EditorStateDummy).width ?? 50
     return [
       {
-        type: 'row',
-        children: [
-          {
-            type: 'col',
-            size: 100 - width,
-            children: convert((node.state as EditorStateDummy).explanation),
-          },
-          {
-            type: 'col',
-            size: width,
-            children: convert((node.state as EditorStateDummy).multimedia),
-          },
-        ],
+        type: 'multimedia',
+        mediaWidth: width,
+        float: 'right',
+        media: convert((node.state as EditorStateDummy).multimedia),
+        children: convert((node.state as EditorStateDummy).explanation),
       },
     ]
   }
@@ -285,8 +277,9 @@ export function convert(
     if (children.length === 1 && children[0].type === 'math') {
       return children
     }
+
     // compat: unwrap ul/ol from p
-    //TODO: can not reproduce, does not seem to happen, check again or delete
+    // see https://github.com/serlo/frontend/issues/249
     if (
       children.length === 1 &&
       (children[0].type === 'ul' || children[0].type === 'ol')
@@ -295,7 +288,7 @@ export function convert(
     }
 
     // compat handle newlines
-    //TODO: can not reproduce, what is expected behaviour here?
+    // see https://github.com/serlo/frontend/pull/527#discussion_r482969315
     if (
       children.some(
         (child) =>
@@ -341,8 +334,7 @@ export function convert(
       return result
     }
 
-    // compat: extract math formulas
-    //TODO: can not reproduce, happens elsewhere now, right? can be deleted?
+    // compat: extract math formulas, see https://github.com/serlo/frontend/issues/186 (first warning)
     const math = children.filter(
       (child) => child.type === 'math' || child.type === 'inline-math'
     )
@@ -462,8 +454,14 @@ export function convert(
     ]
   }
   if (type === 'list-item-child') {
-    // compat: don't wrap ps
     const children = convert(node.children)
+
+    // compat: don't wrap ps, see https://github.com/serlo/frontend/issues/551
+    if (children.length === 1 && children[0].type === 'p') {
+      return children
+    }
+
+    //compat: only inline-math and links get wrapped? not sure about this
     if (
       children.filter(
         (child) =>

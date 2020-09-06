@@ -7,7 +7,7 @@ import styled, { css } from 'styled-components'
 import { Feedback } from './feedback'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EdtrPluginScMcExercise } from '@/data-types'
-import { makeMargin, makeDefaultButton, inputFontReset } from '@/helper/css'
+import { makeMargin, makePrimaryButton } from '@/helper/css'
 import { renderArticle } from '@/schema/article-renderer'
 
 export interface ScMcExerciseProps {
@@ -77,6 +77,7 @@ function SingleChoice({ state, idBase }: ScMcExerciseProps) {
       <CheckButton
         selectable={selected !== undefined}
         onClick={() => setShowFeedback(true)}
+        onPointerUp={(e) => e.currentTarget.blur()} //blur-hack, use https://caniuse.com/#feat=css-focus-visible when supported
       >
         {selected !== undefined
           ? strings.content.check
@@ -144,7 +145,11 @@ function MultipleChoice({ state, idBase }: ScMcExerciseProps) {
           {correct ? strings.content.right : strings.content.wrong}
         </Feedback>
       )}
-      <CheckButton selectable onClick={() => setShowFeedback(true)}>
+      <CheckButton
+        selectable
+        onClick={() => setShowFeedback(true)}
+        onPointerUp={(e) => e.currentTarget.blur()}
+      >
         {strings.content.check}
       </CheckButton>
     </Container>
@@ -152,12 +157,8 @@ function MultipleChoice({ state, idBase }: ScMcExerciseProps) {
 }
 
 const CheckButton = styled.button<{ selectable: boolean }>`
-  ${makeDefaultButton}
-  ${inputFontReset}
+  ${makePrimaryButton}
   margin-top: 16px;
-
-  color: #fff;
-  background-color: ${(props) => props.theme.colors.brand};
 
   ${(props) =>
     !props.selectable &&
