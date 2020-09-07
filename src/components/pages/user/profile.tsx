@@ -3,6 +3,8 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { ProfileCommunityBanner } from './profile-community-banner'
+import { ProfileDonationForm } from './profile-donation-form'
+import { useAuth } from '@/auth/use-auth'
 import { HSpace } from '@/components/content/h-space'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { RelativeContainer } from '@/components/navigation/relative-container'
@@ -21,6 +23,8 @@ export interface ProfileProps {
 export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   const { lang, strings } = useInstanceData()
   const { username, description, lastLogin } = userData
+  const auth = useAuth()
+  const isOwnProfile = auth.current?.username === username
 
   const lastLoginDate = lastLogin ? new Date(lastLogin) : undefined
 
@@ -30,7 +34,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         <HSpace amount={50} />
         <StyledH1>{username}</StyledH1>
         <StyledP></StyledP>
-        {lang === 'de' && <ProfileCommunityBanner userData={userData} />}
+        {lang === 'de' && renderCommunityFeatures()}
 
         {description && (
           <>
@@ -56,6 +60,27 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
       </MaxWidthDiv>
     </RelativeContainer>
   )
+
+  function renderCommunityFeatures() {
+    return (
+      <>
+        <ProfileCommunityBanner
+          userData={userData}
+          isOwnProfile={isOwnProfile}
+        />
+        {isOwnProfile && (
+          <ProfileDonationForm
+            username={username}
+            userId={userData.id}
+            activeDonor={userData.activeDonor || false}
+            isCommunity={
+              userData.activeReviewer || userData.activeAuthor || false
+            }
+          />
+        )}
+      </>
+    )
+  }
 }
 
 const Gray = styled(StyledP)`

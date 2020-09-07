@@ -121,6 +121,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
       kind: 'user/profile',
       newsletterPopup: false,
       userData: {
+        id: uuid.id,
         username: uuid.username,
         description: description,
         lastLogin: uuid.lastLogin,

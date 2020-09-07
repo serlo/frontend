@@ -702,6 +702,7 @@ export interface TaxonomyPage extends EntityPageBase {
 export interface UserPage extends EntityPageBase {
   kind: 'user/profile'
   userData: {
+    id: number
     username: string
     description?: FrontendContentNode[]
     lastLogin?: string | null

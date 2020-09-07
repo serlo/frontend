@@ -9,11 +9,13 @@ interface ProfileDonationFormProps {
   activeDonor: boolean
   username: string
   isCommunity: boolean
+  userId: number
 }
 
 export const ProfileDonationForm = ({
   activeDonor,
   username,
+  userId,
   isCommunity,
 }: ProfileDonationFormProps) => {
   const [expanded, setExpanded] = React.useState(false)
@@ -36,12 +38,9 @@ export const ProfileDonationForm = ({
 
   if (activeDonor) return null
 
-  //TODO: get user id or check if we really need it here
   const encodedCampaignId = encodeURIComponent(
-    `Spendenprofil { userId: 0, userName: ${username} }`
+    `Spendenprofil { userId: ${userId}, userName: ${username} }`
   )
-
-  // <img src="${donorPicture}" width="23"></img>
 
   return (
     <DonationWrapper>

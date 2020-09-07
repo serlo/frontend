@@ -2,7 +2,6 @@ import { gql } from 'graphql-request'
 import styled from 'styled-components'
 
 import { ProfileProps } from './profile'
-import { ProfileDonationForm } from './profile-donation-form'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import AuthorBadge from '@/assets-webkit/img/community/badge-author.svg'
 import DonorBadge from '@/assets-webkit/img/community/badge-donor.svg'
@@ -10,7 +9,6 @@ import ReviewerBadge from '@/assets-webkit/img/community/badge-reviewer.svg'
 import BirdAuthorSVG from '@/assets-webkit/img/community/birds-author.svg'
 import BirdDonorSVG from '@/assets-webkit/img/community/birds-donor.svg'
 import BirdReviewerSVG from '@/assets-webkit/img/community/birds-reviewer.svg'
-import { useAuth } from '@/auth/use-auth'
 import { Link } from '@/components/content/link'
 import { StyledP } from '@/components/tags/styled-p'
 import { makeMargin } from '@/helper/css'
@@ -48,30 +46,21 @@ const bannerContent = {
   },
 }
 
-export const ProfileCommunityBanner = ({ userData }: ProfileProps) => {
+export const ProfileCommunityBanner = ({
+  userData,
+  isOwnProfile,
+}: ProfileProps & { isOwnProfile: boolean }) => {
   const { activeReviewer, activeDonor, activeAuthor, username } = userData
 
   const isActive = activeReviewer || activeDonor || activeAuthor
 
-  const auth = useAuth()
-  const isOwnProfile = auth.current?.username === username
-
   if (!isActive) return null
 
   return (
-    <>
-      <CommunityWrapper>
-        <Birdcage>{renderBird()}</Birdcage>
-        {renderRoleExplanations()}
-      </CommunityWrapper>
-      {isOwnProfile && (
-        <ProfileDonationForm
-          username={username}
-          activeDonor={activeDonor || false}
-          isCommunity={activeReviewer || activeAuthor || false}
-        />
-      )}
-    </>
+    <CommunityWrapper>
+      <Birdcage>{renderBird()}</Birdcage>
+      {renderRoleExplanations()}
+    </CommunityWrapper>
   )
 
   function renderBird() {
