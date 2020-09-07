@@ -18,18 +18,35 @@ export const instanceData = {
       toTop: "Nach oben"
     },
     categories: {
-      article: "Artikel",
-      course: "Kurs",
-      video: 'Video',
-      applet: 'Applet',
-      folder: "Bereich",
-      exercises: "Aufgaben"
+      articles: "Artikel",
+      courses: "Kurse",
+      videos: 'Videos',
+      applets: 'Applets',
+      folders: "Bereiche",
+      exercises: "Aufgaben",
+      events: "Veranstaltungen"
     },
     entities: {
+      applet: 'Applet',
+      article: "Artikel",
+      course: "Kurs",
+      coursePage: "Kursseite",
+      event: "Veranstaltung",
+      exercise: "Aufgabe",
+      exerciseGroup: "Aufgabengruppe",
+      folder: "Bereich",
+      groupedExercise: "Gruppierte Aufgabe",
+      page: "Seite",
+      solution: "Lösung",
+      taxonomyTerm: "Taxonomie-Begriff",
+      user: "Benutzer",
+      video: 'Video',
       topicFolder: "Aufgabensammlung",
       comment: "Kommentar",
       revision: "Bearbeitung",
-      thread: 'Thread'
+      thread: "Diskussion",
+      topic: 'Thema',
+      subject: 'Fach',
     },
     share: {
       button: "Teilen",
@@ -53,14 +70,12 @@ export const instanceData = {
       show: "anzeigen",
       hide: "ausblenden",
       prerequisite: "Für diese Aufgabe benötigst Du folgendes Grundwissen:",
-      solution: "Lösung",
-      task: 'Task',
-      exerciseGroup: 'Exercise group',
-      right: 'Right',
-      wrong: 'Wrong',
-      check: 'Check',
-      yourAnswer: 'Your answer…',
-      chooseOption: 'Click on one of the options.'
+      task: "Aufgabe",
+      right: "Richtig",
+      wrong: "Falsch",
+      check: "Stimmt's?",
+      yourAnswer: "Deine Antwort…",
+      chooseOption: "Klicke auf eine der Optionen."
     },
     cookie: {
       part1: "Mit der Nutzung dieser Webseite erklärst du dich mit unserer",
@@ -72,31 +87,44 @@ export const instanceData = {
     },
     notifications: {
       notifications: "Benachrichtigungen",
-      pleaseLogInLink: 'Please log in',
-      pleaseLogInText: 'to see your notifications.'
+      pleaseLogInLink: "Bitte melde dich an",
+      pleaseLogInText: "um deine Benachrichtigungen zu sehen"
     },
     comments: {
-      question: 'Do you have a question?',
-      commentsOne: 'Comment',
-      commentsMany: 'Comments',
-      submit: 'Submit',
-      reportComment: 'Report comment',
-      archiveThread: 'Archive thread',
-      deleteThread: 'Delete thread',
-      deleteComment: 'Delete comment',
-      postedOn: 'Posted on',
-      placeholder: "Your question or suggestion…",
-      placeholderReply: "Your answer…"
+      question: "Hast du eine Frage?",
+      commentsOne: "Kommentar",
+      commentsMany: "Kommentare",
+      submit: "Abschicken",
+      reportComment: "Kommentar melden",
+      archiveThread: "Thread archivieren",
+      deleteThread: "Thread löschen",
+      deleteComment: "Kommentar löschen",
+      postedOn: "Gepostet am",
+      placeholder: "Deine Frage oder Vorschlag…",
+      placeholderReply: "Deine Antwort…"
+    },
+    revisions: {
+      toOverview: "Zurück zur Übersicht",
+      changes: "Änderungen",
+      title: "Titel",
+      content: "Inhalt",
+      metaTitle: "Meta-Titel",
+      metaDescription: "Meta-Beschreibung",
+      compare: "Vergleichen",
+      currentVersion: "Aktuelle Version",
+      thisVersion: "Diese Version",
+      thisIsCurrentVersion: "Das ist die aktuell akzeptierte Version.",
+      by: "Von"
     },
     errors: {
-      title: '😬 Websites make mistakes sometimes…',
-      defaultMessage: 'So sorry, we ran into a problem loading this content.',
-      temporary: 'The good news? The problem seems to be temporary, so please try again later.',
-      permanent: 'We will see what we can do about that… ',
-      typeNotSupported: 'Please try reloading this page.',
-      refreshNow: 'Refresh now',
-      backToPrevious: 'Back to previous page',
-      backToHome: 'To our home page'
+      title: "😬 Auch Webseiten machen mal Fehler…",
+      defaultMessage: "Es tut uns leid, beim Laden dieses Inhalts ging was schief.",
+      temporary: "Die gute Nachricht? Das Problem scheint temporär zu sein, bitte versuch es später noch einmal.",
+      permanent: "Wir werden sehen, was wir da machen können…",
+      typeNotSupported: "Bitte versuche diese Seite noch einmal zu laden.",
+      refreshNow: "Jetzt aktualisieren",
+      backToPrevious: "Zurück zur vorherigen Seite",
+      backToHome: "Zur Startseite"
     }
   }
 };
@@ -176,10 +204,7 @@ export const loggedInData = {
       moveToGroupedTextExercise: "Inhalt zu anderer Gruppe verschieben",
       moveToTextExercise: "Inhalt zu anderer Textaufgabe verschieben",
       sortEntities: "Inhalt sortieren",
-      newEntity: "Neuer Inhalt",
-      exercise: "Aufgabe",
-      exerciseGroup: "Aufgabengruppe",
-      event: "Ereignis"
+      newEntity: "Neuer Inhalt"
     },
     notifications: {
       loadMore: "Weitere laden",
@@ -206,17 +231,6 @@ export const loggedInData = {
       setTaxonomyParentChanged: "%actor% hat den Elternknoten von %child% auf %parent% geändert.",
       setUuidStateTrashed: "%actor% hat %object% in den Papierkorb verschoben.",
       setUuidStateRestored: "%actor% hat %object% aus dem Papierkorb wieder hergestellt.",
-      entityPlaceholderPage: "Seite",
-      entityPlaceholderArticle: "Artikel",
-      entityPlaceholderVideo: 'Video',
-      entityPlaceholderApplet: 'Applet',
-      entityPlaceholderCoursePage: "Kursseite",
-      entityPlaceholderExercise: "Aufgabe",
-      entityPlaceholderGroupedExercise: "Gruppierte Aufgabe",
-      entityPlaceholderExerciseGroup: "Aufgabengruppe",
-      entityPlaceholderEvent: 'Event',
-      entityPlaceholderCourse: "Kurs",
-      entityPlaceholderTaxonomyTerm: "Begriff",
       entityPlaceholderFallback: "Inhalt"
     }
   }

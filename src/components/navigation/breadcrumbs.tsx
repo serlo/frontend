@@ -6,7 +6,7 @@ import styled, { css } from 'styled-components'
 
 import { Link } from '../content/link'
 import { BreadcrumbsData, BreadcrumbEntry } from '@/data-types'
-import { makeDefaultButton, makeMargin } from '@/helper/css'
+import { makeTransparentButton, makeMargin } from '@/helper/css'
 
 export interface BreadcrumbsProps {
   data: BreadcrumbsData
@@ -92,14 +92,12 @@ const BreadcrumbLink = styled(Link)`
   display: inline-block;
   color: ${(props) => props.theme.colors.brand};
 
-  ${makeDefaultButton};
+  ${makeTransparentButton};
   padding-top: 2px;
   padding-bottom: 2px;
 
   font-weight: normal;
-  font-size: 1.125rem;
   align-items: center;
-  text-decoration: none !important;
 
   &:not([href]),
   &:not([href]):hover {
@@ -110,7 +108,6 @@ const BreadcrumbLink = styled(Link)`
 
   @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
     display: none;
-    font-size: 1.125rem;
   }
 
   @media (min-width: ${(props) => props.theme.breakpoints.sm}) {

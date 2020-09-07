@@ -23,12 +23,14 @@ export function buildTaxonomyData(uuid: TaxonomyTerm): TaxonomyData {
     description: uuid.description ? convertState(uuid.description) : undefined,
     title: uuid.name,
     id: uuid.id,
+    taxonomyType: uuid.type,
 
     articles: collectType(children, 'Article'),
     exercises: collectTopicFolders(children),
     videos: collectType(children, 'Video'),
     applets: collectType(children, 'Applet'),
     courses: collectType(children, 'Course'),
+    events: collectType(children, 'Event'),
 
     exercisesContent: collectExercises(children),
     subterms: collectNestedTaxonomyTerms(children), // nested taxonomy terms
@@ -113,6 +115,7 @@ function collectNestedTaxonomyTerms(
         videos: collectType(subChildren, 'Video'),
         applets: collectType(subChildren, 'Applet'),
         courses: collectType(subChildren, 'Course'),
+        events: collectType(subChildren, 'Event'),
         folders: collectSubfolders(subChildren),
       })
     }

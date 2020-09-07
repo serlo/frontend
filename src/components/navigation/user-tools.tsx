@@ -9,7 +9,7 @@ import dynamic from 'next/dynamic'
 import React from 'react'
 import styled from 'styled-components'
 
-import { makeGreenButton, inputFontReset } from '../../helper/css'
+import { makeGreenTransparentButton, inputFontReset } from '../../helper/css'
 import {
   AuthorToolsHoverMenuProps,
   AuthorToolsData,
@@ -44,7 +44,7 @@ export function UserTools({ id, onShare, hideEdit, data }: UserToolsProps) {
 
   const editHref =
     data.type == 'Page'
-      ? `/page/revision/create-old/${data.id}/${data.revisionId}`
+      ? `/page/revision/create-old/${data.id}/${data.revisionId || ''}`
       : data.type == 'Taxonomy'
       ? `/taxonomy/term/update/${id}`
       : `/entity/repository/add-revision/${id}`
@@ -100,7 +100,7 @@ const BoxWrapper = styled.div`
 `
 
 const IconButton = styled.a`
-  ${makeGreenButton}
+  ${makeGreenTransparentButton}
   ${inputFontReset}
   font-weight: bold;
   padding-top: 4px;

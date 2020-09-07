@@ -15,7 +15,11 @@ import { lighten } from 'polished'
 import React from 'react'
 import styled from 'styled-components'
 
-import { makeMargin, makeGreenButton, inputFontReset } from '../../helper/css'
+import {
+  makeMargin,
+  makeGreenTransparentButton,
+  inputFontReset,
+} from '../../helper/css'
 import { Modal } from '../modal'
 import { StyledH2 } from '../tags/styled-h2'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -212,7 +216,7 @@ const ShareInput = styled.input`
 `
 
 const Button = styled.a`
-  ${makeGreenButton}
+  ${makeGreenTransparentButton}
   ${inputFontReset}
   font-weight: bold;
   margin-left: 20px;

@@ -123,7 +123,9 @@ export interface Solution extends Repository {
 // Events are only used in injections, no support for full page view
 export interface Event extends Repository {
   __typename: 'Event'
-  currentRevision?: GraphQL.Maybe<Pick<GraphQL.EventRevision, 'content'>>
+  currentRevision?: GraphQL.Maybe<
+    Pick<GraphQL.EventRevision, 'content' | 'title'>
+  >
 }
 
 // If a course is encountered, the first page will get loaded
@@ -133,6 +135,7 @@ export interface Course extends Repository {
   pages: {
     alias?: string
   }[]
+  currentRevision?: GraphQL.Maybe<Pick<GraphQL.CourseRevision, 'title'>>
 }
 
 export interface TaxonomyTermChild {
@@ -143,7 +146,7 @@ export interface TaxonomyTermChild {
 export interface TaxonomyTermChildOnX extends TaxonomyTermChild {
   id: number
   alias?: string
-  __typename: 'Article' | 'Video' | 'Applet' | 'Course'
+  __typename: 'Article' | 'Video' | 'Applet' | 'Course' | 'Event'
   currentRevision?: {
     title: string
   }
@@ -198,11 +201,204 @@ export type TaxonomyTermChildrenLevel2 =
   | TaxonomyTermChildOnX
   | SubTaxonomyTermChildTaxonomyTerm
 
+// Revision types inherit all the GraphQL fields
+
+export type QueryResponseRevision =
+  | AppletRevision
+  | ArticleRevision
+  | CourseRevision
+  | CoursePageRevision
+  | EventRevision
+  | ExerciseRevision
+  | ExerciseGroupRevision
+  | GroupedExerciseRevision
+  | PageRevision
+  | SolutionRevision
+  | VideoRevision
+
+export interface AppletRevision
+  extends EntityWithTaxonomyTerms,
+    GraphQL.AppletRevision {
+  __typename: 'AppletRevision'
+}
+export interface ArticleRevision
+  extends EntityWithTaxonomyTerms,
+    GraphQL.ArticleRevision {
+  __typename: 'ArticleRevision'
+}
+export interface CourseRevision
+  extends EntityWithTaxonomyTerms,
+    GraphQL.CourseRevision {
+  __typename: 'CourseRevision'
+}
+export interface CoursePageRevision
+  extends EntityWithTaxonomyTerms,
+    GraphQL.CoursePageRevision {
+  __typename: 'CoursePageRevision'
+}
+export interface EventRevision
+  extends EntityWithTaxonomyTerms,
+    GraphQL.EventRevision {
+  __typename: 'EventRevision'
+}
+export interface ExerciseRevision
+  extends EntityWithTaxonomyTerms,
+    GraphQL.ExerciseRevision {
+  __typename: 'ExerciseRevision'
+}
+export interface ExerciseGroupRevision
+  extends EntityWithTaxonomyTerms,
+    GraphQL.ExerciseGroupRevision {
+  __typename: 'ExerciseGroupRevision'
+}
+export interface GroupedExerciseRevision
+  extends EntityWithTaxonomyTerms,
+    GraphQL.GroupedExerciseRevision {
+  __typename: 'GroupedExerciseRevision'
+}
+export interface PageRevision
+  extends EntityWithTaxonomyTerms,
+    GraphQL.PageRevision {
+  __typename: 'PageRevision'
+}
+export interface SolutionRevision
+  extends EntityWithTaxonomyTerms,
+    GraphQL.SolutionRevision {
+  __typename: 'SolutionRevision'
+}
+export interface VideoRevision
+  extends EntityWithTaxonomyTerms,
+    GraphQL.VideoRevision {
+  __typename: 'VideoRevision'
+}
+
+//TODO: Split files into query and types
+
+// query
+
 export const dataQuery = gql`
   query uuid($id: Int, $alias: AliasInput) {
     uuid(id: $id, alias: $alias) {
       __typename
       id
+
+      ... on AbstractRevision {
+        date
+        author {
+          id
+          username
+        }
+        ... on ArticleRevision {
+          ...articleRevision
+          changes
+          repository {
+            id
+            currentRevision {
+              id
+              ...articleRevision
+            }
+          }
+        }
+        ... on PageRevision {
+          ...pageRevision
+          repository {
+            id
+            currentRevision {
+              ...pageRevision
+            }
+          }
+        }
+        ... on AppletRevision {
+          ...appletRevision
+          changes
+          repository {
+            id
+            currentRevision {
+              ...appletRevision
+            }
+          }
+        }
+        ... on CourseRevision {
+          ...courseRevision
+          changes
+          repository {
+            id
+            currentRevision {
+              ...courseRevision
+            }
+          }
+        }
+        ... on CoursePageRevision {
+          ...coursePageRevision
+          changes
+          repository {
+            id
+            currentRevision {
+              ...coursePageRevision
+            }
+          }
+        }
+        ... on EventRevision {
+          ...eventRevision
+          changes
+          repository {
+            id
+            currentRevision {
+              ...eventRevision
+            }
+          }
+        }
+        ... on ExerciseRevision {
+          content
+          changes
+          repository {
+            id
+            currentRevision {
+              content
+            }
+          }
+        }
+        ... on GroupedExerciseRevision {
+          content
+          changes
+          repository {
+            id
+            currentRevision {
+              content
+            }
+          }
+        }
+        ... on ExerciseGroupRevision {
+          ...exerciseGroupRevision
+          changes
+          repository {
+            id
+            currentRevision {
+              ...exerciseGroupRevision
+            }
+          }
+        }
+        ... on SolutionRevision {
+          content
+          changes
+          repository {
+            id
+            currentRevision {
+              content
+            }
+          }
+        }
+        ... on VideoRevision {
+          ...videoRevision
+          changes
+          repository {
+            id
+            currentRevision {
+              ...videoRevision
+            }
+          }
+        }
+      }
 
       ... on AbstractRepository {
         alias
@@ -216,9 +412,7 @@ export const dataQuery = gql`
 
       ... on Page {
         currentRevision {
-          id
-          title
-          content
+          ...pageRevision
         }
         navigation {
           data
@@ -228,35 +422,25 @@ export const dataQuery = gql`
 
       ... on Article {
         currentRevision {
-          title
-          content
-          metaTitle
-          metaDescription
+          ...articleRevision
         }
       }
 
       ... on Video {
         currentRevision {
-          title
-          url
-          content
+          ...videoRevision
         }
       }
 
       ... on Applet {
         currentRevision {
-          title
-          content
-          url
-          metaTitle
-          metaDescription
+          ...appletRevision
         }
       }
 
       ... on CoursePage {
         currentRevision {
-          content
-          title
+          ...coursePageRevision
         }
         course {
           id
@@ -280,7 +464,7 @@ export const dataQuery = gql`
 
       ... on ExerciseGroup {
         currentRevision {
-          content
+          ...exerciseGroupRevision
         }
         exercises {
           ...exercise
@@ -293,13 +477,16 @@ export const dataQuery = gql`
 
       ... on Event {
         currentRevision {
-          content
+          ...eventRevision
         }
       }
 
       ... on Course {
         pages {
           alias
+        }
+        currentRevision {
+          title
         }
       }
 
@@ -344,6 +531,7 @@ export const dataQuery = gql`
                   trashed
                   __typename
                   ... on TaxonomyTerm {
+                    id
                     alias
                     type
                     name
@@ -418,6 +606,60 @@ export const dataQuery = gql`
         title
       }
     }
+
+    ... on Event {
+      alias
+      id
+      currentRevision {
+        title
+      }
+    }
+  }
+
+  fragment articleRevision on ArticleRevision {
+    title
+    content
+    metaTitle
+    metaDescription
+  }
+
+  fragment pageRevision on PageRevision {
+    id
+    title
+    content
+  }
+
+  fragment videoRevision on VideoRevision {
+    title
+    url
+    content
+  }
+
+  fragment appletRevision on AppletRevision {
+    title
+    content
+    url
+    metaTitle
+    metaDescription
+  }
+
+  fragment coursePageRevision on CoursePageRevision {
+    content
+    title
+  }
+
+  fragment courseRevision on CourseRevision {
+    content
+    title
+    metaDescription
+  }
+
+  fragment exerciseGroupRevision on ExerciseGroupRevision {
+    content
+  }
+
+  fragment eventRevision on EventRevision {
+    content
   }
 
   fragment exercise on AbstractExercise {
@@ -443,7 +685,7 @@ export const dataQuery = gql`
   }
 `
 
-export type QueryResponse =
+export type QueryResponseNoRevision =
   | Page
   | Article
   | Video
@@ -456,6 +698,8 @@ export type QueryResponse =
   | Event
   | Course
   | TaxonomyTerm
+
+export type QueryResponse = QueryResponseNoRevision | QueryResponseRevision
 
 export const idsQuery = (ids: number[]) => {
   const map = ids.map(

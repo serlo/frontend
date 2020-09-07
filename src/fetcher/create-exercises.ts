@@ -64,6 +64,14 @@ function createSolutionData(solution: BareExercise['solution']) {
       // TODO import types from edtr-io
       const solutionState = JSON.parse(content).state
       solutionState.strategy = convert(solutionState.strategy)
+      // compat: (probably quite fragile) if strategy is empty, we ignore it
+      if (
+        solutionState.strategy.length == 1 &&
+        solutionState.strategy[0].type == 'p' &&
+        solutionState.strategy[0].children.length === 0
+      ) {
+        solutionState.strategy = []
+      }
       solutionState.steps = convert(solutionState.steps)
       solutionEdtrState = solutionState
     } else {

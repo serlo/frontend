@@ -42,6 +42,7 @@ import type { GeogebraProps } from '@/components/content/geogebra'
 import type { InjectionProps } from '@/components/content/injection'
 import { Lazy } from '@/components/content/lazy'
 import type { MathProps } from '@/components/content/math'
+import { Multimedia } from '@/components/content/multimedia'
 import type { VideoProps } from '@/components/content/video'
 import { FrontendContentNode } from '@/data-types'
 
@@ -276,6 +277,9 @@ function renderElement(props: RenderElementProps): React.ReactNode {
   }
   if (element.type === 'td') {
     return <StyledTd>{children}</StyledTd>
+  }
+  if (element.type === 'multimedia') {
+    return <Multimedia {...element} />
   }
   if (element.type === 'row') {
     return <LayoutRow>{children}</LayoutRow>

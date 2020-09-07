@@ -1,6 +1,9 @@
 export function hasSpecialUrlChars(url: string) {
+  const decoded = decodeURIComponent(url)
   return (
-    decodeURIComponent(url).includes('%') ||
-    decodeURIComponent(url).includes('?')
+    decoded.includes('%') ||
+    decoded.includes('?') ||
+    decoded.includes('&') ||
+    decoded.includes('+')
   )
 }
