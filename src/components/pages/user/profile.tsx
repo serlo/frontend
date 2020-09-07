@@ -19,7 +19,7 @@ export interface ProfileProps {
 }
 
 export const Profile: NextPage<ProfileProps> = ({ userData }) => {
-  const { lang } = useInstanceData()
+  const { lang, strings } = useInstanceData()
   const { username, description, lastLogin } = userData
 
   const lastLoginDate = lastLogin ? new Date(lastLogin) : undefined
@@ -34,24 +34,24 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
 
         {description && (
           <>
-            <StyledH2>Über mich</StyledH2>
+            <StyledH2>{strings.profiles.aboutMe}</StyledH2>
             {renderArticle(description)}
           </>
         )}
 
-        {/* <StyledH2>Statistiken</StyledH2> */}
-        {/* <StyledH2>Aktuelle Aktivitäten</StyledH2> */}
+        {/* <StyledH2>{strings.profiles.recentActivities}</StyledH2> */}
 
         {lastLoginDate && (
           <Gray>
-            Zuletzt eingeloggt:{' '}
+            {strings.profiles.lastSeen}:{' '}
             <b>
               <TimeAgo datetime={lastLoginDate} dateAsTitle />
             </b>
           </Gray>
         )}
 
-        {/* <StyledH2>Rollen</StyledH2> */}
+        {/* <StyledH2>{strings.profiles.roles}</StyledH2> */}
+
         <HSpace amount={100} />
       </MaxWidthDiv>
     </RelativeContainer>
@@ -63,23 +63,3 @@ const Gray = styled(StyledP)`
   font-size: 0.9rem;
   color: #777;
 `
-
-// const ColoredIcon = styled.span`
-//   color: ${(props) => props.theme.colors.brand};
-// `
-
-// const Wrapper = styled.div`
-//   margin-bottom: 80px;
-// `
-
-// const Button = styled.button`
-//   ${inputFontReset}
-//   ${makeDefaultButton}
-//   margin-top: 40px;
-//   font-weight: bold;
-//   background-color: ${(props) => props.theme.colors.brand};
-//   color: #fff;
-//   &:hover {
-//     background-color: ${(props) => props.theme.colors.lightblue};
-//   }
-// `

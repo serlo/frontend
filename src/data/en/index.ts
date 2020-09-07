@@ -131,6 +131,13 @@ export const instanceData = {
       refreshNow: 'Refresh now',
       backToPrevious: 'Back to previous page',
       backToHome: 'To our home page'
+    },
+    profiles: {
+      aboutMe: 'About me',
+      recentActivities: 'Recent activities',
+      showAllActivities: 'Show all activities',
+      lastSeen: 'Last seen',
+      roles: 'Roles',
     }
   }
 };
