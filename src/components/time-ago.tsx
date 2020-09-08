@@ -1,24 +1,8 @@
-/* eslint-disable import/no-internal-modules */
+import React from 'react'
 import ReactTimeAgo from 'timeago-react'
 import * as timeago from 'timeago.js'
-import de from 'timeago.js/lib/lang/de'
-import es from 'timeago.js/lib/lang/es'
-import fr from 'timeago.js/lib/lang/fr'
-import hi from 'timeago.js/lib/lang/hi_IN'
-import ta from 'timeago.js/lib/lang/ta'
 
 import { useInstanceData } from '@/contexts/instance-context'
-import { Instance } from '@/fetcher/query'
-
-//TODO: dynamically import only the current language data?
-
-const languageFunctions = {
-  de: de,
-  es: es,
-  fr: fr,
-  hi: hi,
-  ta: ta,
-}
 
 interface TimeAgoProps {
   datetime: timeago.TDate
@@ -33,10 +17,22 @@ export function TimeAgo({
   className,
   dateAsTitle,
 }: TimeAgoProps) {
+  const [languageLoaded, setLanguageLoaded] = React.useState(false)
   const { lang } = useInstanceData()
 
-  // @ts-expect-error
-  if (lang !== 'en') timeago.register(lang, languageFunctions[lang as Instance])
+  if (lang !== 'en') {
+    void import(
+      /* webpackInclude: /de\.js$|en\.js$|es\.js$|fr\.js$|hi\.js$|ta\.js$/ */
+      `timeago.js/lib/lang/${lang}`
+    ).then((module) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      timeago.register(lang, module.default)
+      setLanguageLoaded(true)
+    })
+  }
+
+  if (!languageLoaded && lang !== 'en')
+    return <>datetime.toLocaleString(lang)</>
 
   return (
     <span title={dateAsTitle ? datetime.toLocaleString(lang) : undefined}>
