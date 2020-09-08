@@ -456,8 +456,8 @@ export function convert(
   if (type === 'list-item-child') {
     const children = convert(node.children)
 
-    // compat: don't wrap ps, see https://github.com/serlo/frontend/issues/551
-    if (children.length === 1 && children[0].type === 'p') {
+    // compat: don't wrap ps, see https://github.com/serlo/frontend/issues/551 and 579
+    if (children.filter((child) => child.type === 'p').length > 0) {
       return children
     }
 

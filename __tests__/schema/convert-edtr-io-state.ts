@@ -668,7 +668,7 @@ describe('text types', () => {
       ])
     })
 
-    test('compat: p will not be wrapped in another p', () => {
+    test('compat: ps will not be wrapped in another p', () => {
       const result = convert({
         type: 'list-item-child',
         children: [
@@ -676,9 +676,17 @@ describe('text types', () => {
             type: 'p',
             children: [{ text: 'text' }],
           },
+          {
+            type: 'p',
+            children: [{ text: 'text' }],
+          },
         ],
       })
       expect(result).toEqual([
+        {
+          type: 'p',
+          children: [{ type: 'text', text: 'text' }],
+        },
         {
           type: 'p',
           children: [{ type: 'text', text: 'text' }],
