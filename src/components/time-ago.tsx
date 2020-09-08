@@ -3,7 +3,6 @@ import ReactTimeAgo from 'timeago-react'
 import * as timeago from 'timeago.js'
 
 import { useInstanceData } from '@/contexts/instance-context'
-import { getTimeAgoLang } from '@/helper/feature-i18n'
 
 interface TimeAgoProps {
   datetime: timeago.TDate
@@ -45,4 +44,12 @@ export function TimeAgo({
       />
     </span>
   )
+}
+
+function getTimeAgoLang(lang: string) {
+  if (lang == 'de') return import('timeago.js/lib/lang/de')
+  if (lang == 'es') return import('timeago.js/lib/lang/es')
+  if (lang == 'fr') return import('timeago.js/lib/lang/fr')
+  if (lang == 'hi') return import('timeago.js/lib/lang/hi_IN')
+  if (lang == 'ta') return import('timeago.js/lib/lang/ta')
 }

@@ -136,11 +136,3 @@ export function getLoggedInData(lang: string) {
 
   return mergeDeepRight(enData, data) as typeof enLoggedInData
 }
-
-export function getTimeAgoLang(lang: string) {
-  if (lang == 'de') return import('timeago.js/lib/lang/de')
-  if (lang == 'es') return import('timeago.js/lib/lang/es')
-  if (lang == 'fr') return import('timeago.js/lib/lang/fr')
-  if (lang == 'hi') return import('timeago.js/lib/lang/hi_IN')
-  if (lang == 'ta') return import('timeago.js/lib/lang/ta')
-}
