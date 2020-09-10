@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/browser'
 import Document, {
   Html,
   Head,
@@ -13,16 +12,6 @@ import { GoogleAnalytics } from '@/components/scripts/google-analytics'
 const bodyStyles = {
   margin: 0,
   fontFamily: 'Karmilla, sans-serif',
-}
-
-if (process.env.NEXT_PUBLIC_SENTRY_DSN !== undefined) {
-  process.on('unhandledRejection', (err) => {
-    Sentry.captureException(err)
-  })
-
-  process.on('uncaughtException', (err) => {
-    Sentry.captureException(err)
-  })
 }
 
 export default class MyDocument extends Document {
@@ -95,6 +84,15 @@ export default class MyDocument extends Document {
             type="application/opensearchdescription+xml"
             title="Serlo (de)"
           />
+          {process.env.NEXT_PUBLIC_SENTRY_DSN !== undefined && (
+            <script
+              src={`https://js.sentry-cdn.com/${process.env.NEXT_PUBLIC_SENTRY_DSN.substring(
+                8,
+                40
+              )}.min.js`}
+              crossOrigin="anonymous"
+            ></script>
+          )}
         </Head>
         <body style={bodyStyles}>
           <Main />

@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/browser'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -21,14 +20,16 @@ export function ErrorPage({ code, message }: ErrorData) {
     console.log(message)
 
     if (process.env.NEXT_PUBLIC_SENTRY_DSN !== undefined) {
-      Sentry.captureException(new Error(`ErrorPage: Code ${code}`))
+      ;(window as any).Sentry?.captureException(
+        new Error(`ErrorPage: Code ${code}`)
+      )
     }
 
     setPath(window.location.pathname)
 
     const previousPage = sessionStorage.getItem('previousPathname')
     setHasSerloBacklink(previousPage ? previousPage.length > 0 : false)
-  }, [])
+  }, [code, message])
 
   const isProbablyTemporary = code > 500
 
