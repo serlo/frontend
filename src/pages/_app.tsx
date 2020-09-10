@@ -18,7 +18,8 @@ config.autoAddCss = false
 
 if (
   process.env.NEXT_PUBLIC_SENTRY_DSN !== undefined &&
-  process.env.NEXT_PUBLIC_COMMIT_SHA !== undefined
+  process.env.NEXT_PUBLIC_COMMIT_SHA !== undefined &&
+  typeof window !== 'undefined'
 ) {
   ;(window as any).Sentry?.init({
     environment: process.env.NEXT_PUBLIC_ENV,
