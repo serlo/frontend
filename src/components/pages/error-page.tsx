@@ -23,7 +23,7 @@ export function ErrorPage({ code, message }: ErrorData) {
       ;(window as any).Sentry?.addBreadcrumb({
         category: 'error message',
         message,
-        level: (window as any).Sentry.Severity.Info,
+        level: (window as any).Sentry?.Severity?.Info || 'info',
       })
       ;(window as any).Sentry?.captureException(
         new Error(`ErrorPage: Code ${code}`)
