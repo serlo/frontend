@@ -43,7 +43,11 @@ export default class MyDocument extends Document {
 
   render() {
     return (
-      <Html lang="de">
+      <Html
+        lang={
+          this.props.__NEXT_DATA__.props.pageProps?.instanceData?.lang ?? 'de'
+        }
+      >
         <Head>
           <link rel="preconnect" href="//www.google-analytics.com" />
           <meta property="og:site_name" content="Serlo" />
