@@ -88,7 +88,7 @@ export default class MyDocument extends Document {
             <script
               src={`https://js.sentry-cdn.com/${process.env.NEXT_PUBLIC_SENTRY_DSN.substring(
                 8,
-                42
+                40
               )}.min.js`}
               crossOrigin="anonymous"
             ></script>
