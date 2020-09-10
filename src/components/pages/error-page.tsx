@@ -20,7 +20,11 @@ export function ErrorPage({ code, message }: ErrorData) {
     console.log(message)
 
     if (process.env.NEXT_PUBLIC_SENTRY_DSN !== undefined) {
-      ;(window as any).Sentry?.captureMessage(message)
+      ;(window as any).Sentry?.addBreadcrumb({
+        category: 'error message',
+        message,
+        level: (window as any).Sentry.Severity.Info,
+      })
       ;(window as any).Sentry?.captureException(
         new Error(`ErrorPage: Code ${code}`)
       )
