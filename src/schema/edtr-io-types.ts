@@ -1,79 +1,18 @@
 import { StateTypeValueType } from '@edtr-io/plugin'
-import { AnchorPluginState } from '@edtr-io/plugin-anchor/src/index'
-import { GeogebraPluginState } from '@edtr-io/plugin-geogebra/src/index'
-// import { HighlightPluginState } from '@edtr-io/plugin-highlight/src/index'
-import { ImagePluginState } from '@edtr-io/plugin-image/src/index'
-import { MultimediaExplanationPluginState } from '@edtr-io/plugin-multimedia-explanation/src/index'
-import { RowsPluginState } from '@edtr-io/plugin-rows/src/index'
-import { SerloInjectionPluginState } from '@edtr-io/plugin-serlo-injection/src/index'
-import { SpoilerPluginState } from '@edtr-io/plugin-spoiler/src/index'
-import { TablePluginState } from '@edtr-io/plugin-table/src/index'
-// import { TextPluginState } from '@edtr-io/plugin-text/src/index'
-import { createHeadingNode } from '@edtr-io/plugin-text/src/model/schema'
-import { VideoPluginState } from '@edtr-io/plugin-video/src/index'
+import { AnchorPluginState } from '@edtr-io/plugin-anchor'
+import { GeogebraPluginState } from '@edtr-io/plugin-geogebra'
+import { HighlightPluginState } from '@edtr-io/plugin-highlight'
+import { ImagePluginState } from '@edtr-io/plugin-image'
+import { MultimediaExplanationPluginState } from '@edtr-io/plugin-multimedia-explanation'
+import { RowsPluginState } from '@edtr-io/plugin-rows'
+import { SerloInjectionPluginState } from '@edtr-io/plugin-serlo-injection'
+import { SpoilerPluginState } from '@edtr-io/plugin-spoiler'
+import { TablePluginState } from '@edtr-io/plugin-table'
+import { NewElement, NewText } from '@edtr-io/plugin-text' //TextPluginState
+import { VideoPluginState } from '@edtr-io/plugin-video'
 
-//TODO: mocked, import edtr types if possible
-export type SlateBlockMock =
-  | TextBlockP
-  | TextBlockH
-  | TextBlockA
-  | TextBlockMath
-  | TextBlockListItemChild
-  | TextBlockListItem
-  | TextBlockUnorderedList
-  | TextBlockOrderedList
-
-interface TextBlockP {
-  type: 'p'
-  children: SlateBlockMock[]
-}
-
-interface TextBlockH {
-  type: 'h'
-  level: Parameters<typeof createHeadingNode>[0]
-  children: SlateBlockMock[]
-}
-
-interface TextBlockA {
-  type: 'a'
-  href: string
-  children: TextNodeMock[]
-}
-
-interface TextBlockMath {
-  type: 'math'
-  src: string
-  inline?: boolean
-  children: TextNodeMock[]
-}
-
-interface TextBlockListItemChild {
-  type: 'list-item-child'
-  children: SlateBlockMock[]
-}
-
-interface TextBlockListItem {
-  type: 'list-item'
-  children: TextBlockListItemChild[]
-}
-
-interface TextBlockUnorderedList {
-  type: 'unordered-list'
-  children: TextBlockListItem[]
-}
-
-interface TextBlockOrderedList {
-  type: 'ordered-list'
-  children: TextBlockListItem[]
-}
-
-//TODO: mocked, import edtr types if possible
-export interface TextNodeMock {
-  text: string
-  strong?: boolean
-  em?: boolean
-  color?: 0 | 1 | 2
-}
+export type SlateBlockElement = NewElement
+export type SlateTextElement = NewText
 
 // types for all supported @edtr-io plugins
 
@@ -102,13 +41,7 @@ export interface EdtrPluginTable {
 
 export interface EdtrPluginHighlight {
   plugin: 'highlight'
-  //TODO: Use import, but it currently triggers TS error
-  // state: StateTypeValueType<HighlightPluginState>
-  state: {
-    code: string
-    language: string
-    showLineNumbers: boolean
-  }
+  state: StateTypeValueType<HighlightPluginState>
 }
 
 interface EdtrPluginSerloInjection {

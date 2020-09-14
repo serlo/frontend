@@ -1,9 +1,11 @@
+import { NewNode } from '@edtr-io/plugin-text'
+
 import { converter } from '../../external/markdown'
 import { convertLegacyState } from './convert-legacy-state'
 import {
   EdtrState,
-  SlateBlockMock,
-  TextNodeMock,
+  SlateBlockElement,
+  SlateTextElement,
   UnsupportedEdtrState,
 } from './edtr-io-types'
 import { MathProps } from '@/components/content/math'
@@ -19,19 +21,15 @@ function isEdtrState(node: ConvertData): node is EdtrState {
   return (node as EdtrState).plugin !== undefined
 }
 
-function isSlateBlock(node: ConvertData): node is SlateBlockMock {
-  return (node as SlateBlockMock).type !== undefined
+function isSlateBlock(node: ConvertData): node is SlateBlockElement {
+  return (node as SlateBlockElement).type !== undefined
 }
 
-function isTextNode(node: ConvertData): node is TextNodeMock {
-  return (node as TextNodeMock).text !== undefined
+function isTextNode(node: ConvertData): node is SlateTextElement {
+  return (node as SlateTextElement).text !== undefined
 }
 
-type ConvertData =
-  | EdtrState
-  | SlateBlockMock
-  | TextNodeMock
-  | UnsupportedEdtrState
+type ConvertData = EdtrState | NewNode | SlateTextElement | UnsupportedEdtrState
 
 export function convert(
   node?: ConvertData | ConvertData[]
@@ -214,7 +212,7 @@ function convertPlugin(node: EdtrState) {
   return []
 }
 
-function convertSlate(node: SlateBlockMock) {
+function convertSlate(node: SlateBlockElement) {
   if (node.type === 'p') {
     const children = convert(node.children)
 
@@ -417,7 +415,7 @@ function convertSlate(node: SlateBlockMock) {
   return []
 }
 
-function convertText(node: TextNodeMock) {
+function convertText(node: SlateTextElement) {
   if (node.text === '') return []
   return [
     {
