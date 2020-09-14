@@ -307,8 +307,6 @@ export function Notification({
     return <StyledLink href={`/${taxonomy.id}`}>{taxonomy.name}</StyledLink>
   }
 
-  //TODO: also check logged out error
-
   function renderRevision(id: number) {
     return <StyledLink href={`/${id}`}>{strings.entities.revision}</StyledLink>
   }
@@ -317,14 +315,11 @@ export function Notification({
     return <StyledLink href={`/${id}`}>{strings.entities.thread}</StyledLink>
   }
 
-  function renderEntityTypePlaceholder(typename: string | undefined) {
-    console.log(typename)
+  type PlaceholderKeys = keyof typeof placeholderLookup
 
+  function renderEntityTypePlaceholder(typename: string | undefined) {
     if (typename && typename in placeholderLookup) {
-      //TODO: find a way to translate grammatically correct placeholders
-      //@ts-expect-error
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return placeholderLookup[typename]
+      return placeholderLookup[typename as PlaceholderKeys]
     }
     return placeholderLookup.fallback
   }

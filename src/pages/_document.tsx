@@ -45,7 +45,9 @@ export default class MyDocument extends Document {
     return (
       <Html
         lang={
-          this.props.__NEXT_DATA__.props.pageProps?.instanceData?.lang ?? 'de'
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+          (this.props.__NEXT_DATA__.props.pageProps?.instanceData
+            ?.lang as string) ?? 'de'
         }
       >
         <Head>
