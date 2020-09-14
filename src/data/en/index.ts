@@ -46,7 +46,7 @@ export const instanceData = {
       revision: 'Revision',
       thread: 'Thread',
       topic: 'Topic',
-      subject: 'Subject',
+      subject: 'Subject'
     },
     share: {
       button: 'Share',
@@ -76,7 +76,7 @@ export const instanceData = {
       check: 'Check',
       yourAnswer: 'Your answer…',
       chooseOption: 'Click on one of the options.',
-      trashedNotice: 'This content is marked for deletion.',
+      trashedNotice: 'This content is marked for deletion.'
     },
     cookie: {
       part1: 'By using this website you declare that you agree with our',
