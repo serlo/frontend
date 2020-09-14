@@ -150,7 +150,7 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
       `___loggedInData_${instanceData.lang}`
     )
     if (!cacheValue) return null
-    return JSON.parse(cacheValue)
+    return JSON.parse(cacheValue) as LoggedInData
   }
 
   function fetchLoggedInData() {
@@ -159,7 +159,7 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
         const res = await fetch(
           initialProps.origin + '/api/locale/' + instanceData.lang
         )
-        const json = await res.json()
+        const json = (await res.json()) as LoggedInData
         sessionStorage.setItem(
           `___loggedInData_${instanceData.lang}`,
           JSON.stringify(json)
@@ -171,8 +171,7 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
 }
 
 function renderPage(page: PageData) {
-  //TODO: investigate why this happens sometimes.
-  if (page === undefined) return <ErrorPage code={1234567890} />
+  if (page === undefined) return <ErrorPage code={404} />
 
   if (page.kind === 'donation') {
     return <Donations />

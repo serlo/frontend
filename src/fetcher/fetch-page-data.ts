@@ -237,6 +237,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
       kind: 'single-entity',
       entityData: {
         id: uuid.id,
+        trashed: uuid.trashed,
         typename: uuid.__typename,
         content,
       },
@@ -258,6 +259,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
       newsletterPopup: true,
       entityData: {
         id: uuid.id,
+        trashed: uuid.trashed,
         typename: uuid.__typename,
         revisionId: uuid.currentRevision?.id,
         title: uuid.currentRevision?.title ?? '',
@@ -284,6 +286,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
       newsletterPopup: false,
       entityData: {
         id: uuid.id,
+        trashed: uuid.trashed,
         typename: uuid.__typename,
         title: uuid.currentRevision?.title ?? '',
         content,
@@ -316,6 +319,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
       newsletterPopup: false,
       entityData: {
         id: uuid.id,
+        trashed: uuid.trashed,
         typename: uuid.__typename,
         title: uuid.currentRevision?.title ?? '',
         content: [
@@ -350,6 +354,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
       newsletterPopup: false,
       entityData: {
         id: uuid.id,
+        trashed: uuid.trashed,
         typename: uuid.__typename,
         title: uuid.currentRevision?.title ?? '',
         content: [
@@ -386,7 +391,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
       if (active) {
         currentPageIndex = i + 1
       }
-      if (!page.alias) {
+      if (!page.alias || page.trashed || page.currentRevision?.trashed) {
         return []
       }
       return [
@@ -402,6 +407,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
       newsletterPopup: false,
       entityData: {
         id: uuid.id,
+        trashed: uuid.trashed,
         typename: uuid.__typename,
         title: uuid.currentRevision?.title ?? '',
         content,
