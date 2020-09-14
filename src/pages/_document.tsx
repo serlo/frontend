@@ -92,11 +92,10 @@ export default class MyDocument extends Document {
           />
           {process.env.NEXT_PUBLIC_SENTRY_DSN !== undefined && (
             <script
-              src={`https://js.sentry-cdn.com/${process.env.NEXT_PUBLIC_SENTRY_DSN.substring(
+              src={`/_assets/sentry/${process.env.NEXT_PUBLIC_SENTRY_DSN.substring(
                 8,
                 40
               )}.min.js`}
-              crossOrigin="anonymous"
             ></script>
           )}
         </Head>
