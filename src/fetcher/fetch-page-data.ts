@@ -385,22 +385,21 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
   }
 
   if (uuid.__typename === 'CoursePage') {
+    const pagesToShow = uuid.course.pages.filter(
+      (page) => page.alias && !page.trashed && !page.currentRevision?.trashed
+    )
+
     let currentPageIndex = -1
-    const pages = uuid.course.pages.flatMap((page, i) => {
+    const pages = pagesToShow.map((page, i) => {
       const active = page.id === uuid.id
       if (active) {
         currentPageIndex = i + 1
       }
-      if (!page.alias || page.trashed || page.currentRevision?.trashed) {
-        return []
+      return {
+        title: page.currentRevision?.title ?? '',
+        url: !hasSpecialUrlChars(page.alias!) ? page.alias! : `/${page.id}`,
+        active,
       }
-      return [
-        {
-          title: page.currentRevision?.title ?? '',
-          url: !hasSpecialUrlChars(page.alias) ? page.alias : `/${page.id}`,
-          active,
-        },
-      ]
     })
     return {
       kind: 'single-entity',
