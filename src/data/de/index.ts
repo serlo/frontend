@@ -45,8 +45,8 @@ export const instanceData = {
       comment: "Kommentar",
       revision: "Bearbeitung",
       thread: "Diskussion",
-      topic: 'Topic',
-      subject: 'Subject'
+      topic: "Thema",
+      subject: "Fach"
     },
     share: {
       button: "Teilen",
@@ -76,7 +76,7 @@ export const instanceData = {
       check: "Stimmt's?",
       yourAnswer: "Deine Antwort…",
       chooseOption: "Klicke auf eine der Optionen.",
-      trashedNotice: 'This content is marked for deletion.'
+      trashedNotice: "Dieser Inhalt wurde zum Löschen markiert."
     },
     cookie: {
       part1: "Mit der Nutzung dieser Webseite erklärst du dich mit unserer",
