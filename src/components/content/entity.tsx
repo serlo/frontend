@@ -1,4 +1,4 @@
-import { faShareAlt } from '@fortawesome/free-solid-svg-icons'
+import { faShareAlt, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import dynamic from 'next/dynamic'
 import { Router } from 'next/router'
@@ -57,18 +57,15 @@ export function Entity({ data }: EntityProps) {
   return wrapWithSchema(
     <>
       {renderCourseNavigation()}
+      {data.trashed && renderTrashedNotice()}
       {renderStyledH1()}
       {renderUserToolsMobile()}
-
       {data.content && renderContent(data.content)}
-
       {renderCourseFooter()}
-
       <HSpace amount={20} />
       {renderUserToolsMobile()}
       {renderUserTools()}
       {renderShareModal()}
-
       {data.licenseData && <LicenseNotice data={data.licenseData} />}
     </>
   )
@@ -184,9 +181,25 @@ export function Entity({ data }: EntityProps) {
       )
     } else return null
   }
+
+  function renderTrashedNotice() {
+    return (
+      <TrashNotice>
+        <FontAwesomeIcon icon={faTrash} /> {strings.content.trashedNotice}
+      </TrashNotice>
+    )
+  }
 }
 
 const StyledIcon = styled(FontAwesomeIcon)`
   color: ${(props) => props.theme.colors.lighterblue};
   font-size: 1.73rem;
+`
+
+const TrashNotice = styled.div`
+  margin: 50px 0;
+  padding: 16px;
+  background-color: #ddd;
+  border-radius: 20px;
+  font-weight: bold;
 `

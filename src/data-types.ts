@@ -221,6 +221,7 @@ export interface SingleEntityPage extends EntityPageBase {
 export interface EntityData {
   id: number
   typename: string
+  trashed?: boolean
   revisionId?: number
   title?: string
   categoryIcon?: EntityTypes

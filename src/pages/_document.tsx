@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/browser'
 import Document, {
   Html,
   Head,
@@ -13,16 +12,6 @@ import { GoogleAnalytics } from '@/components/scripts/google-analytics'
 const bodyStyles = {
   margin: 0,
   fontFamily: 'Karmilla, sans-serif',
-}
-
-if (process.env.NEXT_PUBLIC_SENTRY_DSN !== undefined) {
-  process.on('unhandledRejection', (err) => {
-    Sentry.captureException(err)
-  })
-
-  process.on('uncaughtException', (err) => {
-    Sentry.captureException(err)
-  })
 }
 
 export default class MyDocument extends Document {
@@ -54,7 +43,13 @@ export default class MyDocument extends Document {
 
   render() {
     return (
-      <Html lang="de">
+      <Html
+        lang={
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+          (this.props.__NEXT_DATA__.props.pageProps?.instanceData
+            ?.lang as string) ?? 'de'
+        }
+      >
         <Head>
           <link rel="preconnect" href="//www.google-analytics.com" />
           <meta property="og:site_name" content="Serlo" />
@@ -95,6 +90,14 @@ export default class MyDocument extends Document {
             type="application/opensearchdescription+xml"
             title="Serlo (de)"
           />
+          {process.env.NEXT_PUBLIC_SENTRY_DSN !== undefined && (
+            <script
+              src={`/_assets/sentry/${process.env.NEXT_PUBLIC_SENTRY_DSN.substring(
+                8,
+                40
+              )}.min.js`}
+            ></script>
+          )}
         </Head>
         <body style={bodyStyles}>
           <Main />

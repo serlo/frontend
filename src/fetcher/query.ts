@@ -23,6 +23,7 @@ export type TaxonomyTerms = {
 type Repository = Pick<GraphQL.AbstractRepository, 'id' | 'alias' | 'instance'>
 export interface Entity extends Repository {
   license: License
+  trashed: boolean
 }
 export interface EntityWithTaxonomyTerms extends Entity {
   taxonomyTerms: { nodes: TaxonomyTerms }
@@ -31,6 +32,7 @@ export interface EntityWithTaxonomyTerms extends Entity {
 // A page, navigation.data is the secondary menu.
 export interface Page extends Repository {
   __typename: 'Page'
+  trashed?: boolean
   currentRevision?: GraphQL.Maybe<
     Pick<GraphQL.PageRevision, 'title' | 'content' | 'id'>
   >
@@ -75,7 +77,8 @@ export interface CoursePage extends Entity {
     pages: {
       alias?: string
       id: number
-      currentRevision?: Pick<GraphQL.CoursePageRevision, 'title'>
+      trashed: boolean
+      currentRevision?: Pick<GraphQL.CoursePageRevision, 'title' | 'trashed'>
     }[]
     taxonomyTerms: { nodes: TaxonomyTerms }
   }
@@ -123,6 +126,7 @@ export interface Solution extends Repository {
 // Events are only used in injections, no support for full page view
 export interface Event extends Repository {
   __typename: 'Event'
+  trashed: boolean
   currentRevision?: GraphQL.Maybe<
     Pick<GraphQL.EventRevision, 'content' | 'title'>
   >
@@ -281,6 +285,7 @@ export const dataQuery = gql`
     uuid(id: $id, alias: $alias) {
       __typename
       id
+      trashed
 
       ... on AbstractRevision {
         date
@@ -450,8 +455,10 @@ export const dataQuery = gql`
           pages {
             alias
             id
+            trashed
             currentRevision {
               title
+              trashed
             }
           }
           ...taxonomyTerms

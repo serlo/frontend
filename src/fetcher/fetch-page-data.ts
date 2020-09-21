@@ -237,6 +237,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
       kind: 'single-entity',
       entityData: {
         id: uuid.id,
+        trashed: uuid.trashed,
         typename: uuid.__typename,
         content,
       },
@@ -258,6 +259,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
       newsletterPopup: true,
       entityData: {
         id: uuid.id,
+        trashed: uuid.trashed,
         typename: uuid.__typename,
         revisionId: uuid.currentRevision?.id,
         title: uuid.currentRevision?.title ?? '',
@@ -284,6 +286,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
       newsletterPopup: false,
       entityData: {
         id: uuid.id,
+        trashed: uuid.trashed,
         typename: uuid.__typename,
         title: uuid.currentRevision?.title ?? '',
         content,
@@ -316,6 +319,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
       newsletterPopup: false,
       entityData: {
         id: uuid.id,
+        trashed: uuid.trashed,
         typename: uuid.__typename,
         title: uuid.currentRevision?.title ?? '',
         content: [
@@ -350,6 +354,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
       newsletterPopup: false,
       entityData: {
         id: uuid.id,
+        trashed: uuid.trashed,
         typename: uuid.__typename,
         title: uuid.currentRevision?.title ?? '',
         content: [
@@ -380,28 +385,28 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
   }
 
   if (uuid.__typename === 'CoursePage') {
+    const pagesToShow = uuid.course.pages.filter(
+      (page) => page.alias && !page.trashed && !page.currentRevision?.trashed
+    )
+
     let currentPageIndex = -1
-    const pages = uuid.course.pages.flatMap((page, i) => {
+    const pages = pagesToShow.map((page, i) => {
       const active = page.id === uuid.id
       if (active) {
         currentPageIndex = i + 1
       }
-      if (!page.alias) {
-        return []
+      return {
+        title: page.currentRevision?.title ?? '',
+        url: !hasSpecialUrlChars(page.alias!) ? page.alias! : `/${page.id}`,
+        active,
       }
-      return [
-        {
-          title: page.currentRevision?.title ?? '',
-          url: !hasSpecialUrlChars(page.alias) ? page.alias : `/${page.id}`,
-          active,
-        },
-      ]
     })
     return {
       kind: 'single-entity',
       newsletterPopup: false,
       entityData: {
         id: uuid.id,
+        trashed: uuid.trashed,
         typename: uuid.__typename,
         title: uuid.currentRevision?.title ?? '',
         content,

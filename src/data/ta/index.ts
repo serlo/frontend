@@ -75,7 +75,8 @@ export const instanceData = {
       wrong: 'Wrong',
       check: 'Check',
       yourAnswer: 'Your answer…',
-      chooseOption: 'Click on one of the options.'
+      chooseOption: 'Click on one of the options.',
+      trashedNotice: 'This content is marked for deletion.'
     },
     cookie: {
       part1: "இந்த வலைத்தளத்தைப் பயன்படுத்துவதன் மூலம் நீங்கள் எங்களுடன் உடன்படுகிறீர்கள் என்று அறிவிக்கிறீர்கள்",
