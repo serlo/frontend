@@ -102,7 +102,7 @@ function convertPlugin(node: EdtrState) {
           },
           {
             type: 'spoiler-body',
-            children: convert((node.state.content as unknown) as EdtrState), //see edtr-io-types.ts
+            children: convert(node.state.content as EdtrState),
           },
         ],
       },
@@ -118,12 +118,12 @@ function convertPlugin(node: EdtrState) {
           {
             type: 'col',
             size: 100 - width,
-            children: convert((node.state.explanation as unknown) as EdtrState), //see edtr-io-types.ts
+            children: convert(node.state.explanation as EdtrState),
           },
           {
             type: 'col',
             size: width,
-            children: convert((node.state.multimedia as unknown) as EdtrState), //see edtr-io-types.ts
+            children: convert(node.state.multimedia as EdtrState),
           },
         ],
       },
@@ -199,9 +199,7 @@ function convertPlugin(node: EdtrState) {
     const steps = node.state.steps.map((step) => {
       return {
         left: convert(step.left),
-        // @ts-expect-error
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        sign: step.sign, //TODO: Investigate, probably a bug
+        sign: step.sign,
         right: convert(step.right),
         transform: convert(step.transform),
       }
