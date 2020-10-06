@@ -67,8 +67,8 @@ describe('edtr io plugins', () => {
     })
   })
 
-  //TODO: Not supported in editor any more, should we do something here? (like make it bold at least?)
-  test('plugin: important?', () => {
+  //TODO: Check
+  test('plugin: important', () => {
     const result = convert({
       plugin: 'important',
       state: {

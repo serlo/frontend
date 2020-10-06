@@ -77,7 +77,7 @@ function convertPlugin(node: EdtrState) {
       },
     ]
   }
-  //Note: Not supported any more in edtr
+  //TODO: Check
   if (node.plugin === 'important') {
     return [
       {
