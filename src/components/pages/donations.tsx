@@ -13,7 +13,7 @@ import { StyledImg } from '@/components/tags/styled-img'
 import { StyledLi } from '@/components/tags/styled-li'
 import { StyledUl } from '@/components/tags/styled-ul'
 import {
-  makeGreenButton,
+  makeGreenTransparentButton,
   makeResponsivePadding,
   makePadding,
 } from '@/helper/css'
@@ -243,7 +243,7 @@ const StyledH2 = styled.h2`
 `
 
 const Button = styled.a`
-  ${makeGreenButton}
+  ${makeGreenTransparentButton}
   margin-left: -3px;
   font-weight: bold;
   padding-top: 3px;

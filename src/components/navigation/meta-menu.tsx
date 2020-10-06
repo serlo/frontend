@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 
-import { makeDefaultButton } from '../../helper/css'
+import { makeTransparentButton } from '../../helper/css'
 import { Link } from '../content/link'
 import { SecondaryNavigationData, SecondaryNavigationEntry } from '@/data-types'
 
@@ -113,9 +113,7 @@ const StyledLink = styled(Link)<LinkProps>`
 
 const ButtonStyle = styled.span<{ active?: boolean }>`
   @media (min-width: ${(props) => props.theme.breakpoints.md}) {
-    ${makeDefaultButton}
-    font-weight: bold;
-    padding: 3px 7px;
+    ${makeTransparentButton}
     border-radius: 12px;
     ${StyledLink}:hover & {
       color: #fff;

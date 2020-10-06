@@ -7,7 +7,7 @@ import { faSlash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styled from 'styled-components'
 
-import { makePadding, makeDefaultButton } from '../../helper/css'
+import { makePadding, makeTransparentButton } from '../../helper/css'
 import { StyledA } from '../tags/styled-a'
 import { Link } from './link'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -99,19 +99,19 @@ export function LicenseNotice({ data, minimal, type }: LicenseNoticeProps) {
   function translateTypeString() {
     switch (type) {
       case 'video':
-        return strings.categories.video
+        return strings.entities.video
       case 'task':
       case 'exercise-group':
         return strings.content.task
       case 'solution':
-        return strings.content.solution
+        return strings.entities.solution
     }
     return type
   }
 }
 
 const MinimalLink = styled(Link)`
-  ${makeDefaultButton}
+  ${makeTransparentButton}
   text-align: center;
   color: ${(props) => props.theme.colors.dark1};
   background-color: ${(props) => props.theme.colors.lightBackground};

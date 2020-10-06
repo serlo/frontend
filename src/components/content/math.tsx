@@ -11,22 +11,19 @@ export interface MathProps {
 
 export function Math(props: MathProps) {
   const { inline = false } = props
-  let formula = props.formula
 
   // make empty formulas clickable
-  if (!formula) {
-    formula = '\\,'
-  }
-  // use displaystyle for block formulas
-  if (!inline) {
-    formula = '\\displaystyle ' + formula
-  }
+  const formula = '\\sf ' + props.formula || '\\,'
 
-  const html = KaTeX.renderToString(formula, {
-    displayMode: false,
-    throwOnError: false,
-    strict: false,
-  })
+  // block formular use displaystyle
+  const html = KaTeX.renderToString(
+    inline ? formula : '\\displaystyle' + formula,
+    {
+      displayMode: false,
+      throwOnError: false,
+      strict: false,
+    }
+  )
 
   return <KaTeXSpan dangerouslySetInnerHTML={{ __html: html }} />
 }

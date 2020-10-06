@@ -15,10 +15,10 @@ import { useInstanceData } from '@/contexts/instance-context'
 import {
   TaxonomyData,
   TaxonomySubTerm,
-  CategoryType,
   TaxonomyLink,
+  CategoryTypes,
 } from '@/data-types'
-import { categoryIconMapping } from '@/helper/header-by-content-type'
+import { categoryIconMapping } from '@/helper/icon-by-entity-type'
 
 export interface TopicProps {
   data: TaxonomyData
@@ -69,11 +69,17 @@ export function Topic({ data }: TopicProps) {
         ))}
       {isTopic && (
         <LinkList>
-          <CategoryLinks full category="article" links={data.articles} />
+          <CategoryLinks full category="articles" links={data.articles} />
           <CategoryLinks full category="exercises" links={data.exercises} />
-          <CategoryLinks full category="video" links={data.videos} />
-          <CategoryLinks full category="applet" links={data.applets} />
-          <CategoryLinks full category="course" links={data.courses} />
+          <CategoryLinks full category="videos" links={data.videos} />
+          <CategoryLinks full category="applets" links={data.applets} />
+          <CategoryLinks full category="courses" links={data.courses} />
+          <CategoryLinks full category="events" links={data.events} />
+        </LinkList>
+      )}
+      {isFolder && data.events && (
+        <LinkList>
+          <CategoryLinks full category="events" links={data.events} />
         </LinkList>
       )}
 
@@ -135,12 +141,13 @@ function SubTopic({ data }: { data: TaxonomySubTerm }) {
         </Overview>
 
         <LinkList>
-          <CategoryLinks category="article" links={data.articles} />
+          <CategoryLinks category="articles" links={data.articles} />
           <CategoryLinks category="exercises" links={data.exercises} />
-          <CategoryLinks category="video" links={data.videos} />
-          <CategoryLinks category="applet" links={data.applets} />
-          <CategoryLinks category="course" links={data.courses} />
-          <CategoryLinks category="folder" links={data.folders} />
+          <CategoryLinks category="videos" links={data.videos} />
+          <CategoryLinks category="applets" links={data.applets} />
+          <CategoryLinks category="courses" links={data.courses} />
+          <CategoryLinks category="folders" links={data.folders} />
+          <CategoryLinks category="events" links={data.events} />
         </LinkList>
       </Wrapper>
     </>
@@ -150,7 +157,7 @@ function SubTopic({ data }: { data: TaxonomySubTerm }) {
 interface CategoryLinksProps {
   links: TaxonomyLink[]
   full?: boolean
-  category: CategoryType
+  category: CategoryTypes
 }
 
 function CategoryLinks({ links, full, category }: CategoryLinksProps) {

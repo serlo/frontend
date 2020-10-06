@@ -3,13 +3,14 @@ import { css, ThemeProps } from 'styled-components'
 import { theme } from '@/theme'
 
 type Theme = typeof theme
+type _ThemeProps = ThemeProps<Theme>
 
-export const makeMargin = (props: ThemeProps<Theme>) => `
+export const makeMargin = (props: _ThemeProps) => `
   margin-left:${props.theme.defaults.sideSpacingMobile};
   margin-right:${props.theme.defaults.sideSpacingMobile};
 `
 
-export const makeResponsiveMargin = (props: ThemeProps<Theme>) =>
+export const makeResponsiveMargin = (props: _ThemeProps) =>
   `
   margin-left:${props.theme.defaults.sideSpacingMobile};
   margin-right:${props.theme.defaults.sideSpacingMobile};
@@ -19,12 +20,12 @@ export const makeResponsiveMargin = (props: ThemeProps<Theme>) =>
   }
   `
 
-export const makePadding = (props: ThemeProps<Theme>) => `
+export const makePadding = (props: _ThemeProps) => `
   padding-left:${props.theme.defaults.sideSpacingMobile};
   padding-right:${props.theme.defaults.sideSpacingMobile};
 `
 
-export const makeResponsivePadding = (props: ThemeProps<Theme>) =>
+export const makeResponsivePadding = (props: _ThemeProps) =>
   `
   padding-left:${props.theme.defaults.sideSpacingMobile};
   padding-right:${props.theme.defaults.sideSpacingMobile};
@@ -34,33 +35,86 @@ export const makeResponsivePadding = (props: ThemeProps<Theme>) =>
   }
   `
 
-export const makeDefaultButton = () =>
-  css`
+interface MakeButtonProps {
+  type?: 'transparent' | 'greenTransparent' | 'light' | 'primary' | 'greenFull'
+}
+
+function makeButton(props: _ThemeProps & MakeButtonProps) {
+  const colors = props.theme.colors
+  const type = props.type || 'transparent'
+
+  const colorsLookup = {
+    transparent: {
+      color: colors.brand,
+      background: 'transparent',
+      colorHover: colors.white,
+      backgroundHover: colors.brand,
+    },
+    greenTransparent: {
+      color: colors.brandGreen,
+      background: 'transparent',
+      colorHover: colors.white,
+      backgroundHover: colors.brandGreen,
+    },
+    light: {
+      color: colors.brand,
+      background: colors.bluewhite,
+      colorHover: colors.white,
+      backgroundHover: colors.brand,
+    },
+    primary: {
+      color: colors.white,
+      background: colors.brand,
+      colorHover: colors.white,
+      backgroundHover: colors.lightblue,
+    },
+    greenFull: {
+      color: colors.white,
+      background: colors.brandGreen,
+      colorHover: colors.white,
+      backgroundHover: colors.brand,
+    },
+  }
+
+  const colorsObject = colorsLookup[type]
+
+  return css`
     display: inline-block;
     transition: all 0.2s ease-in-out 0s;
     border-radius: 2em;
-    padding: 2px 7px;
-    text-decoration: none;
+    padding: 3px 8px;
+    font-weight: bold;
+    border: 0;
     cursor: pointer;
-    border: none;
-    background-color: transparent;
-    color: ${(props) => props.theme.colors.brand};
-    &:hover {
-      color: #fff;
-      background-color: ${(props) => props.theme.colors.brand};
-    }
-    cursor: pointer;
-  `
 
-export const makeGreenButton = () =>
-  css`
-  ${makeDefaultButton}
-  color: ${(props) => props.theme.colors.brandGreen};
-  &:hover {
-    color: #fff;
-    background-color: ${(props) => props.theme.colors.brandGreen};
-  }
-`
+    text-decoration: none !important;
+    font-size: 1.125rem;
+    font-family: Karmilla, sans-serif;
+    letter-spacing: '-0.007em';
+
+    color: ${colorsObject.color};
+    background-color: ${colorsObject.background};
+    &:hover {
+      color: ${colorsObject.colorHover};
+      background-color: ${colorsObject.backgroundHover};
+    }
+  `
+}
+
+export const makeTransparentButton = (props: _ThemeProps) =>
+  makeButton({ theme: props.theme, type: 'transparent' })
+
+export const makeGreenTransparentButton = (props: _ThemeProps) =>
+  makeButton({ theme: props.theme, type: 'greenTransparent' })
+
+export const makeGreenButton = (props: _ThemeProps) =>
+  makeButton({ theme: props.theme, type: 'greenFull' })
+
+export const makePrimaryButton = (props: _ThemeProps) =>
+  makeButton({ theme: props.theme, type: 'primary' })
+
+export const makeLightButton = (props: _ThemeProps) =>
+  makeButton({ theme: props.theme, type: 'light' })
 
 export const inputFontReset = () =>
   css`

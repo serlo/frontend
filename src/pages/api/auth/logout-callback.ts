@@ -32,7 +32,8 @@ async function callback(req: NextApiRequest, res: NextApiResponse) {
     `auth-token=; Path=/; Expires=${new Date(0).toUTCString()};`
   )
   res.writeHead(302, {
-    Location: `${referer ?? '/'}#auth`,
+    // #auth is in referer
+    Location: `${referer ?? '/'}`,
   })
   res.end()
 

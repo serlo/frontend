@@ -6,7 +6,7 @@ import TextareaAutosize from 'react-textarea-autosize'
 import styled from 'styled-components'
 
 import { useInstanceData } from '@/contexts/instance-context'
-import { makeDefaultButton, inputFontReset, makeMargin } from '@/helper/css'
+import { makeGreenButton, inputFontReset, makeMargin } from '@/helper/css'
 
 export interface SendProps {
   entity_id: string
@@ -97,22 +97,11 @@ const SendButton = styled.button`
   position: absolute;
   right: 7px;
   bottom: 13px;
-
-  ${inputFontReset}
-  ${makeDefaultButton}
-  font-weight: bold;
-
   width: 45px;
   height: 45px;
   font-size: 1.66rem;
 
-  background-color: ${(props) => props.theme.colors.brandGreen};
-  color: #fff;
-
-  &:hover,
-  &:active {
-    background-color: ${(props) => props.theme.colors.brand};
-  }
+  ${makeGreenButton}
 
   > svg {
     vertical-align: -5px;

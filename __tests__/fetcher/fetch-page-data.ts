@@ -93,6 +93,10 @@ describe('check all supported typenames with stored api-data', () => {
 
     expect(pageData.breadcrumbsData).toEqual([
       { label: 'Mathematics', url: '/math' },
+      {
+        label: 'All topics',
+        url: '/math/1',
+      },
     ])
 
     expect(pageData.metaData?.title).toBe(
@@ -133,6 +137,11 @@ describe('check all supported typenames with stored api-data', () => {
         label: 'Wichtige Funktionstypen und ihre Eigenschaften',
         url: '/mathe/funktionen/wichtige-funktionstypen-eigenschaften',
       },
+      {
+        label: 'Polynomfunktionen beliebigen Grades',
+        url:
+          '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/polynomfunktionen-beliebigen-grades',
+      },
     ])
 
     expect(pageData.metaData?.title).toBe('Übersicht - lernen mit Serlo!')
@@ -164,6 +173,10 @@ describe('check all supported typenames with stored api-data', () => {
       {
         label: 'Geometrie',
         url: '/mathe/geometrie',
+      },
+      {
+        label: 'Konstruktion von geometrischen Objekten',
+        url: '/mathe/geometrie/konstruktion-geometrischen-objekten',
       },
     ])
 
@@ -202,6 +215,10 @@ describe('check all supported typenames with stored api-data', () => {
       {
         label: 'Bruchrechnen und Dezimalzahlen',
         url: '/mathe/zahlen-größen/bruchrechnen-dezimalzahlen',
+      },
+      {
+        label: 'Rechnen mit Brüchen',
+        url: '/mathe/zahlen-größen/bruchrechnen-dezimalzahlen/rechnen-brüchen',
       },
     ])
 
@@ -323,7 +340,9 @@ describe('check all supported typenames with stored api-data', () => {
       },
     ])
 
-    expect(pageData.metaData?.title).toBe('Serlo')
+    expect(pageData.metaData?.title).toBe(
+      'Mathematik Aufgabe - lernen mit Serlo!'
+    )
     expect(pageData.metaData?.contentType).toBe('text-exercise')
     expect(pageData.metaData?.metaDescription).toBe(
       'Ordne folgendem Graphen die richtige Funktionsgleichung zu:Richtig! Der Nobelpreis ist ganz nah ;-)Leider falsch! Du denkst wahrscheinlich …'
@@ -370,7 +389,9 @@ describe('check all supported typenames with stored api-data', () => {
       },
     ])
 
-    expect(pageData.metaData?.title).toBe('Serlo')
+    expect(pageData.metaData?.title).toBe(
+      'Mathematik Aufgabengruppe - lernen mit Serlo!'
+    )
     expect(pageData.metaData?.contentType).toBe('exercisegroup')
     expect(pageData.metaData?.metaDescription).toBe(
       'Finde die passenden Gleichungen zu den Funktionsgraphen:Die Ruhelage der Funktion liegt auf der -Achse.Der Graph schneidet das Koordinatensystem …'
@@ -391,7 +412,9 @@ describe('check all supported typenames with stored api-data', () => {
 
     const pageData = (await fetchPageData('/de/53209')) as SingleEntityPage
 
-    expect(pageData.metaData?.title).toBe('Serlo')
+    expect(pageData.metaData?.title).toBe(
+      'Gruppierte Aufgabe - lernen mit Serlo!'
+    )
     expect(pageData.metaData?.contentType).toBe('groupedexercise')
     expect(pageData.metaData?.metaDescription).toBe(
       'Die Ruhelage der Funktion liegt auf der -Achse.Der Graph schneidet das Koordinatensystem im Nullpunkt, also handelt es sich um eine Sinusfunktion …'
@@ -455,6 +478,11 @@ describe('check all supported typenames with stored api-data', () => {
       {
         label: 'Wichtige Funktionstypen und ihre Eigenschaften',
         url: '/mathe/funktionen/wichtige-funktionstypen-eigenschaften',
+      },
+      {
+        label: 'Polynomfunktionen beliebigen Grades',
+        url:
+          '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/polynomfunktionen-beliebigen-grades',
       },
     ])
 

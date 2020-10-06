@@ -1,16 +1,15 @@
-import * as Sentry from '@sentry/browser'
 import React from 'react'
 import styled from 'styled-components'
 
-import { MaxWidthDiv } from '../navigation/max-width-div'
-import { RelativeContainer } from '../navigation/relative-container'
 import { HSpace } from '@/components/content/h-space'
+import { MaxWidthDiv } from '@/components/navigation/max-width-div'
+import { RelativeContainer } from '@/components/navigation/relative-container'
 import { StyledA } from '@/components/tags/styled-a'
 import { StyledH1 } from '@/components/tags/styled-h1'
 import { StyledP } from '@/components/tags/styled-p'
 import { useInstanceData } from '@/contexts/instance-context'
 import { ErrorData } from '@/data-types'
-import { makeDefaultButton, inputFontReset } from '@/helper/css'
+import { makePrimaryButton } from '@/helper/css'
 
 export function ErrorPage({ code, message }: ErrorData) {
   const [path, setPath] = React.useState('')
@@ -21,14 +20,21 @@ export function ErrorPage({ code, message }: ErrorData) {
     console.log(message)
 
     if (process.env.NEXT_PUBLIC_SENTRY_DSN !== undefined) {
-      Sentry.captureException(new Error(`ErrorPage: Code ${code}`))
+      ;(window as any).Sentry?.addBreadcrumb({
+        category: 'error message',
+        message,
+        level: (window as any).Sentry?.Severity?.Info || 'info',
+      })
+      ;(window as any).Sentry?.captureException(
+        new Error(`ErrorPage: Code ${code}`)
+      )
     }
 
     setPath(window.location.pathname)
 
     const previousPage = sessionStorage.getItem('previousPathname')
     setHasSerloBacklink(previousPage ? previousPage.length > 0 : false)
-  }, [])
+  }, [code, message])
 
   const isProbablyTemporary = code > 500
 
@@ -115,18 +121,7 @@ const _StyledP = styled(StyledP)`
 `
 
 const Button = styled.button`
-  ${makeDefaultButton}
-  ${inputFontReset}
-  font-weight: bold;
-  font-size: 1.125rem;
-  padding: 4px 9px;
+  ${makePrimaryButton}
   margin-right: 16px;
   margin-top: 16px;
-  text-decoration: none !important;
-  background-color: ${(props) => props.theme.colors.brand};
-  color: #fff;
-  &:hover {
-    background-color: ${(props) => props.theme.colors.lighterblue};
-    color: #fff;
-  }
 `

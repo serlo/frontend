@@ -13,3 +13,6 @@ external
 # Generated files
 src/data/*/index.ts
 schema.graphql
+
+# Assets
+public

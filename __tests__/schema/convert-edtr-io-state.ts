@@ -214,15 +214,11 @@ describe('edtr io plugins', () => {
       })
       expect(result).toEqual([
         {
-          type: 'row',
-          children: [
-            { type: 'col', size: 80, children: [] },
-            {
-              type: 'col',
-              size: 20,
-              children: [{ type: 'img', src: 'test.jpg' }],
-            },
-          ],
+          type: 'multimedia',
+          mediaWidth: 20,
+          float: 'right',
+          media: [{ type: 'img', src: 'test.jpg' }],
+          children: [],
         },
       ])
     })
@@ -244,15 +240,11 @@ describe('edtr io plugins', () => {
       })
       expect(result).toEqual([
         {
-          type: 'row',
-          children: [
-            { type: 'col', size: 50, children: [] },
-            {
-              type: 'col',
-              size: 50,
-              children: [{ type: 'img', src: 'test.jpg' }],
-            },
-          ],
+          type: 'multimedia',
+          mediaWidth: 50,
+          float: 'right',
+          media: [{ type: 'img', src: 'test.jpg' }],
+          children: [],
         },
       ])
     })
@@ -489,10 +481,9 @@ describe('text types', () => {
       })
     })
 
-    //compat: unwrap ul/ol from p if only child -> can't reproduce, does not seem to happen
+    //compat: unwrap ul/ol from p if only child
 
     describe('compat: handle newlines in text and math', () => {
-      //TODO: this test works, but can't reproduce any of this with actual editor output. so we need to define the expected behaviours first
       test('text with breaks', () => {
         const result = convert({
           type: 'p',
@@ -675,6 +666,32 @@ describe('text types', () => {
       })
       expect(result).toEqual([
         { type: 'p', children: [{ type: 'text', text: 'item-child' }] },
+      ])
+    })
+
+    test('compat: ps will not be wrapped in another p', () => {
+      const result = convert({
+        type: 'list-item-child',
+        children: [
+          {
+            type: 'p',
+            children: [{ text: 'text' }],
+          },
+          {
+            type: 'p',
+            children: [{ text: 'text' }],
+          },
+        ],
+      })
+      expect(result).toEqual([
+        {
+          type: 'p',
+          children: [{ type: 'text', text: 'text' }],
+        },
+        {
+          type: 'p',
+          children: [{ type: 'text', text: 'text' }],
+        },
       ])
     })
 

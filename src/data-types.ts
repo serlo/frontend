@@ -95,6 +95,7 @@ export type PageData =
   | LicenseDetailPage
   | NotificationsPage
   | SingleEntityPage
+  | RevisionPage
   | TaxonomyPage
 
 // The landing page is custom built and takes i18n strings
@@ -220,9 +221,10 @@ export interface SingleEntityPage extends EntityPageBase {
 export interface EntityData {
   id: number
   typename: string
+  trashed?: boolean
   revisionId?: number
   title?: string
-  categoryIcon?: CategoryType
+  categoryIcon?: EntityTypes
   schemaData?: SchemaData
   content?: FrontendContentNode[]
   inviteToEdit?: boolean
@@ -230,18 +232,78 @@ export interface EntityData {
   courseData?: CourseData
 }
 
-// Entities can belong to a category. Each has a translated string.
+export interface RevisionPage extends EntityPageBase {
+  kind: 'revision'
+  revisionData: RevisionData
+}
 
-export type CategoryType =
+export interface RevisionData {
+  typename: string
+  date: string
+  type: EntityTypes
+  user: {
+    id: number
+    username: string
+  }
+  repositoryId: number
+  thisRevision: {
+    id: number
+    title?: string
+    metaTitle?: string
+    metaDescription?: string
+    content?: FrontendContentNode[]
+    url?: string
+  }
+  currentRevision: {
+    id?: number
+    title?: string
+    metaTitle?: string
+    metaDescription?: string
+    content?: FrontendContentNode[]
+    url?: string
+  }
+  changes?: string
+}
+
+// Entities each should have an translated string and a corresponding icon
+
+export type EntityTypes =
+  | 'applet'
   | 'article'
   | 'course'
+  | 'coursePage'
+  | 'event'
+  | 'exercise'
+  | 'exerciseGroup'
+  | 'groupedExercise'
+  | 'page'
+  | 'solution'
+  | 'taxonomyTerm'
+  | 'user'
   | 'video'
-  | 'applet'
+  | 'revision'
+  | 'comment'
+  | 'thread'
+  //just in case
   | 'folder'
+
+export type EntityStrings = {
+  [K in EntityTypes]: string
+}
+
+// Entities can belong to a category that we use in the taxonomy
+
+export type CategoryTypes =
+  | 'articles'
+  | 'courses'
+  | 'videos'
+  | 'applets'
+  | 'folders'
   | 'exercises'
+  | 'events'
 
 export type CategoryStrings = {
-  [K in CategoryType]: string
+  [K in EntityTypes]: string
 }
 
 // Some flags to control schema.org behaviour. Not very well done yet.
@@ -339,6 +401,14 @@ export interface FrontendLiNode {
   children?: FrontendContentNode[]
 }
 
+export interface FrontendMultiMediaNode {
+  type: 'multimedia'
+  float?: 'left' | 'right'
+  mediaWidth: number
+  media: FrontendContentNode[]
+  children: FrontendContentNode[]
+}
+
 export interface FrontendRowNode {
   type: 'row'
   children?: FrontendColNode[]
@@ -347,6 +417,7 @@ export interface FrontendRowNode {
 export interface FrontendColNode {
   type: 'col'
   size: number
+  float?: 'left' | 'right'
   children?: FrontendContentNode[]
 }
 
@@ -549,7 +620,7 @@ export type FrontendRestrictedElementNode =
   | FrontendUlNode
   | FrontendOlNode
   | FrontendRowNode
-  | FrontendTableNode
+  | FrontendMultiMediaNode
   | FrontendTrNode
   | FrontendExerciseGroupNode
 
@@ -600,6 +671,7 @@ export interface TaxonomyTermBase {
   videos: TaxonomyLink[]
   applets: TaxonomyLink[]
   exercises: TaxonomyLink[]
+  events: TaxonomyLink[]
   description?: FrontendContentNode[]
 }
 
