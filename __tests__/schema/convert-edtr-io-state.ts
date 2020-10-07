@@ -67,7 +67,8 @@ describe('edtr io plugins', () => {
     })
   })
 
-  test('plugin: important?', () => {
+  //TODO: Check
+  test('plugin: important', () => {
     const result = convert({
       plugin: 'important',
       state: {
