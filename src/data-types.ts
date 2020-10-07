@@ -426,6 +426,11 @@ export interface FrontendImportantNode {
   children?: FrontendContentNode[]
 }
 
+export interface FrontendBlockquoteNode {
+  type: 'blockquote'
+  children?: FrontendContentNode[]
+}
+
 export interface FrontendAnchorNode {
   type: 'anchor'
   id: string
@@ -610,6 +615,7 @@ export type FrontendElementNode =
   | FrontendLiNode
   | FrontendColNode
   | FrontendImportantNode
+  | FrontendBlockquoteNode
   | FrontendThNode
   | FrontendTdNode
 

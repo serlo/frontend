@@ -77,12 +77,19 @@ function convertPlugin(node: EdtrState) {
       },
     ]
   }
-  //TODO: Check
   if (node.plugin === 'important') {
     return [
       {
         type: 'important',
         children: convert(node.state),
+      },
+    ]
+  }
+  if (node.plugin === 'blockquote') {
+    return [
+      {
+        type: 'blockquote',
+        children: convert(node.state as EdtrState),
       },
     ]
   }
