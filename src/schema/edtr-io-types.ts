@@ -1,5 +1,6 @@
 import { StateTypeSerializedType } from '@edtr-io/plugin'
 import { AnchorPluginState } from '@edtr-io/plugin-anchor'
+import { BlockquotePluginState } from '@edtr-io/plugin-blockquote'
 import { GeogebraPluginState } from '@edtr-io/plugin-geogebra'
 import { HighlightPluginState } from '@edtr-io/plugin-highlight'
 import { ImagePluginState } from '@edtr-io/plugin-image'
@@ -65,10 +66,14 @@ export interface EdtrPluginSpoiler {
   state: StateTypeSerializedType<SpoilerPluginState>
 }
 
-//Compat: Unsupported Type
 export interface EdtrPluginImportant {
   plugin: 'important'
-  state: EdtrState
+  state: EdtrPluginText
+}
+
+export interface EdtrPluginBlockquote {
+  plugin: 'blockquote'
+  state: StateTypeSerializedType<BlockquotePluginState>
 }
 
 export interface EdtrPluginImage {
@@ -109,6 +114,7 @@ export type EdtrState =
   | EdtrPluginMultimediaExplanation
   | EdtrPluginSpoiler
   | EdtrPluginImportant
+  | EdtrPluginBlockquote
   | EdtrPluginImage
   | EdtrPluginText
   | EdtrPluginRows

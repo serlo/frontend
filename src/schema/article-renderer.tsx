@@ -34,6 +34,7 @@ import { StyledTh } from '../components/tags/styled-th'
 import { StyledTr } from '../components/tags/styled-tr'
 import { StyledUl } from '../components/tags/styled-ul'
 import { theme } from '../theme'
+import { Blockquote } from '@/components/content/blockquote'
 import type { CodeProps } from '@/components/content/code'
 import type { EquationProps } from '@/components/content/equations'
 import { ExerciseProps } from '@/components/content/exercises/exercise'
@@ -289,6 +290,9 @@ function renderElement(props: RenderElementProps): React.ReactNode {
   }
   if (element.type === 'important') {
     return <Important>{children}</Important>
+  }
+  if (element.type === 'blockquote') {
+    return <Blockquote>{children}</Blockquote>
   }
   if (element.type === 'geogebra') {
     return (
