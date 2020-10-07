@@ -5,13 +5,14 @@ import { AppProps } from 'next/app'
 import Router from 'next/router'
 import NProgress from 'nprogress'
 import React from 'react'
-import { ThemeProvider, createGlobalStyle } from 'styled-components'
+import { ThemeProvider } from 'styled-components'
 
 import '@/assets-webkit/fonts/karmilla.css'
 import '@/assets-webkit/fonts/katex/katex.css'
 
 import { NProgressStyles } from '@/components/navigation/n-progress-styles'
 import { ToastNotifications } from '@/components/toast-notifications'
+import { FontFix } from '@/helper/css'
 import { theme } from '@/theme'
 
 config.autoAddCss = false
@@ -27,15 +28,6 @@ if (
   })
   ;(window as any).Sentry?.forceLoad()
 }
-
-const FontFix = createGlobalStyle`
-  h1,h2, main b {
-    letter-spacing: ${(props) => props.theme.defaults.boldLetterSpacing};
-  }
-  body {
-    letter-spacing: ${(props) => props.theme.defaults.regularLetterSpacing};
-  }
-`
 
 Router.events.on('routeChangeStart', () => {
   NProgress.start()

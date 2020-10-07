@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const UserToolsMobile = styled.div`
+export const UserToolsMobile = styled.nav`
   display: none;
   @media (max-width: ${(props) => props.theme.breakpoints.lg}) {
     display: block;
