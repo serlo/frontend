@@ -11,7 +11,6 @@ export const StyledOl = styled.ol`
   counter-reset: list-counter;
 
   > li {
-            
     &:before {
       position: absolute;
       content: counter(list-counter);
@@ -31,7 +30,8 @@ export const StyledOl = styled.ol`
       line-height: 1.6em;
     }
 
-    > ul, > ol {
+    > ul,
+    > ol {
       margin-top: 8px;
       margin-bottom: 16px !important;
     }
