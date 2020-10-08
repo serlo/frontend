@@ -87,7 +87,7 @@ export const Button = styled.button`
   padding: 3px 8px;
   ${makeMargin}
   background-color: ${(props) => props.theme.colors.brand};
-  &:hover{
+  &:hover {
     background-color: ${(props) => props.theme.colors.lightblue};
   }
   color: #fff;
