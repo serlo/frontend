@@ -73,7 +73,7 @@ export function CookieBar() {
 
   if (!show) return null
   return (
-    <CookieWrapper>
+    <CookieWrapper className="cookie-bar">
       {strings.cookie.part1}{' '}
       <CookieLink href={`https://de.${serloDomain}/privacy`} target="_blank">
         {strings.cookie.link1}

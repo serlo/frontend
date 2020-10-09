@@ -138,6 +138,9 @@ interface Props {
 
 export const PrintStylesheet = createGlobalStyle<Props>`
     @media print {
+      html {
+        font-size: 10pt;
+      }
       body {
         background: 0 0;
       }
@@ -146,7 +149,12 @@ export const PrintStylesheet = createGlobalStyle<Props>`
         > footer,
         #notification-wrapper,
         nav,
-        button {
+        button,
+        aside,
+        div.cookie-bar,
+        h1 > span > svg,
+        div.video, figure.video
+        {
           display: none !important;
         }
         main {
@@ -174,9 +182,6 @@ export const PrintStylesheet = createGlobalStyle<Props>`
       time {
         background: 0 0 !important;
         color: #000 !important;
-      }
-      main a:after {
-        content: ' (' attr(href) ') ';
       }
     }
   `

@@ -31,11 +31,13 @@ export function Video(props: VideoProps) {
   if (yt) {
     iframeUrl = `https://www.youtube-nocookie.com/embed/${yt[4]}?html5=1`
     return (
-      <LiteYouTubeEmbed
-        id={yt[4]}
-        poster="sddefault" // "default","mqdefault",  "hqdefault", "sddefault" and "maxresdefault".
-        title={`YouTube Video: ${iframeUrl}`}
-      />
+      <div className="video">
+        <LiteYouTubeEmbed
+          id={yt[4]}
+          poster="sddefault" // "default","mqdefault",  "hqdefault", "sddefault" and "maxresdefault".
+          title={`YouTube Video: ${iframeUrl}`}
+        />
+      </div>
     )
   }
 
@@ -51,14 +53,14 @@ export function Video(props: VideoProps) {
 
   if (iframeUrl) {
     return (
-      <VideoWrapper>
+      <VideoWrapper className="video">
         <iframe src={iframeUrl} />
       </VideoWrapper>
     )
   }
 
   return (
-    <VideoPlaceholder>
+    <VideoPlaceholder className="video">
       <FontAwesomeIcon icon={faFilm} size="5x" />
       <StyledP>Loading video failed: {src}</StyledP>
     </VideoPlaceholder>
