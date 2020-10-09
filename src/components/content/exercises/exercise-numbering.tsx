@@ -57,11 +57,11 @@ const StyledNumberParent = styled(Link)`
     background-color: ${(props) => props.theme.colors.lighterblue};
   }
 
-   @media print {
-    &::after{
+  @media print {
+    &:after{
       content: '' !important;
     }
-   }
+  }
 `
 
 const StyledNumberChild = styled.span`
