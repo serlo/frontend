@@ -58,7 +58,7 @@ const StyledNumberParent = styled(Link)`
   }
 
   @media print {
-    &:after{
+    &:after {
       content: '' !important;
     }
   }
