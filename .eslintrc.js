@@ -26,7 +26,7 @@ module.exports = {
     // @typescript-eslint/eslint-plugin
     '@typescript-eslint/ban-ts-comment': 'warn',
     '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
-    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-empty-function': 'off',
     '@typescript-eslint/no-extraneous-class': 'error',
     '@typescript-eslint/no-parameter-properties': 'off',
@@ -46,6 +46,7 @@ module.exports = {
         classes: false,
         functions: false,
         typedefs: false,
+        variables: false,
       },
     ],
     '@typescript-eslint/no-useless-constructor': 'error',
