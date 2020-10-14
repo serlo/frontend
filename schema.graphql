@@ -114,6 +114,7 @@ type Applet implements AbstractEntity & AbstractRepository & AbstractTaxonomyTer
     id: Int!
     instance: Instance!
     license: License!
+    revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): AppletRevisionConnection!
     taxonomyTerms(after: String, before: String, first: Int, last: Int): TaxonomyTermConnection!
     trashed: Boolean!
 }
@@ -132,6 +133,18 @@ type AppletRevision implements AbstractEntityRevision & AbstractRevision & Abstr
     url: String!
 }
 
+type AppletRevisionConnection {
+    edges: [AppletRevisionCursor!]!
+    nodes: [AppletRevision!]!
+    pageInfo: PageInfo!
+    totalCount: Int!
+}
+
+type AppletRevisionCursor {
+    cursor: String!
+    node: AppletRevision!
+}
+
 type Article implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid {
     alias: String
     currentRevision: ArticleRevision
@@ -139,6 +152,7 @@ type Article implements AbstractEntity & AbstractRepository & AbstractTaxonomyTe
     id: Int!
     instance: Instance!
     license: License!
+    revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): ArticleRevisionConnection!
     taxonomyTerms(after: String, before: String, first: Int, last: Int): TaxonomyTermConnection!
     trashed: Boolean!
 }
@@ -154,6 +168,18 @@ type ArticleRevision implements AbstractEntityRevision & AbstractRevision & Abst
     repository: Article!
     title: String!
     trashed: Boolean!
+}
+
+type ArticleRevisionConnection {
+    edges: [ArticleRevisionCursor!]!
+    nodes: [ArticleRevision!]!
+    pageInfo: PageInfo!
+    totalCount: Int!
+}
+
+type ArticleRevisionCursor {
+    cursor: String!
+    node: ArticleRevision!
 }
 
 type CheckoutRevisionNotificationEvent implements AbstractNotificationEvent {
@@ -174,6 +200,7 @@ type Course implements AbstractEntity & AbstractRepository & AbstractTaxonomyTer
     instance: Instance!
     license: License!
     pages: [CoursePage!]!
+    revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): CourseRevisionConnection!
     taxonomyTerms(after: String, before: String, first: Int, last: Int): TaxonomyTermConnection!
     trashed: Boolean!
 }
@@ -186,6 +213,7 @@ type CoursePage implements AbstractEntity & AbstractRepository & AbstractUuid {
     id: Int!
     instance: Instance!
     license: License!
+    revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): CoursePageRevisionConnection!
     trashed: Boolean!
 }
 
@@ -200,6 +228,18 @@ type CoursePageRevision implements AbstractEntityRevision & AbstractRevision & A
     trashed: Boolean!
 }
 
+type CoursePageRevisionConnection {
+    edges: [CoursePageRevisionCursor!]!
+    nodes: [CoursePageRevision!]!
+    pageInfo: PageInfo!
+    totalCount: Int!
+}
+
+type CoursePageRevisionCursor {
+    cursor: String!
+    node: CoursePageRevision!
+}
+
 type CourseRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid {
     author: User!
     changes: String!
@@ -210,6 +250,18 @@ type CourseRevision implements AbstractEntityRevision & AbstractRevision & Abstr
     repository: Course!
     title: String!
     trashed: Boolean!
+}
+
+type CourseRevisionConnection {
+    edges: [CourseRevisionCursor!]!
+    nodes: [CourseRevision!]!
+    pageInfo: PageInfo!
+    totalCount: Int!
+}
+
+type CourseRevisionCursor {
+    cursor: String!
+    node: CourseRevision!
 }
 
 type CreateCommentNotificationEvent implements AbstractNotificationEvent {
@@ -280,6 +332,7 @@ type Event implements AbstractEntity & AbstractRepository & AbstractTaxonomyTerm
     id: Int!
     instance: Instance!
     license: License!
+    revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): EventRevisionConnection!
     taxonomyTerms(after: String, before: String, first: Int, last: Int): TaxonomyTermConnection!
     trashed: Boolean!
 }
@@ -297,6 +350,18 @@ type EventRevision implements AbstractEntityRevision & AbstractRevision & Abstra
     trashed: Boolean!
 }
 
+type EventRevisionConnection {
+    edges: [EventRevisionCursor!]!
+    nodes: [EventRevision!]!
+    pageInfo: PageInfo!
+    totalCount: Int!
+}
+
+type EventRevisionCursor {
+    cursor: String!
+    node: EventRevision!
+}
+
 type Exercise implements AbstractEntity & AbstractExercise & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid {
     alias: String
     currentRevision: ExerciseRevision
@@ -304,6 +369,7 @@ type Exercise implements AbstractEntity & AbstractExercise & AbstractRepository 
     id: Int!
     instance: Instance!
     license: License!
+    revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): ExerciseRevisionConnection!
     solution: Solution
     taxonomyTerms(after: String, before: String, first: Int, last: Int): TaxonomyTermConnection!
     trashed: Boolean!
@@ -317,6 +383,7 @@ type ExerciseGroup implements AbstractEntity & AbstractRepository & AbstractTaxo
     id: Int!
     instance: Instance!
     license: License!
+    revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): ExerciseGroupRevisionConnection!
     taxonomyTerms(after: String, before: String, first: Int, last: Int): TaxonomyTermConnection!
     trashed: Boolean!
 }
@@ -331,6 +398,18 @@ type ExerciseGroupRevision implements AbstractEntityRevision & AbstractRevision 
     trashed: Boolean!
 }
 
+type ExerciseGroupRevisionConnection {
+    edges: [ExerciseGroupRevisionCursor!]!
+    nodes: [ExerciseGroupRevision!]!
+    pageInfo: PageInfo!
+    totalCount: Int!
+}
+
+type ExerciseGroupRevisionCursor {
+    cursor: String!
+    node: ExerciseGroupRevision!
+}
+
 type ExerciseRevision implements AbstractEntityRevision & AbstractExerciseRevision & AbstractRevision & AbstractUuid {
     author: User!
     changes: String!
@@ -341,6 +420,18 @@ type ExerciseRevision implements AbstractEntityRevision & AbstractExerciseRevisi
     trashed: Boolean!
 }
 
+type ExerciseRevisionConnection {
+    edges: [ExerciseRevisionCursor!]!
+    nodes: [ExerciseRevision!]!
+    pageInfo: PageInfo!
+    totalCount: Int!
+}
+
+type ExerciseRevisionCursor {
+    cursor: String!
+    node: ExerciseRevision!
+}
+
 type GroupedExercise implements AbstractEntity & AbstractExercise & AbstractRepository & AbstractUuid {
     alias: String
     currentRevision: GroupedExerciseRevision
@@ -349,6 +440,7 @@ type GroupedExercise implements AbstractEntity & AbstractExercise & AbstractRepo
     id: Int!
     instance: Instance!
     license: License!
+    revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): GroupedExerciseRevisionConnection!
     solution: Solution
     trashed: Boolean!
 }
@@ -361,6 +453,18 @@ type GroupedExerciseRevision implements AbstractEntityRevision & AbstractExercis
     id: Int!
     repository: GroupedExercise!
     trashed: Boolean!
+}
+
+type GroupedExerciseRevisionConnection {
+    edges: [GroupedExerciseRevisionCursor!]!
+    nodes: [GroupedExerciseRevision!]!
+    pageInfo: PageInfo!
+    totalCount: Int!
+}
+
+type GroupedExerciseRevisionCursor {
+    cursor: String!
+    node: GroupedExerciseRevision!
 }
 
 type License {
@@ -430,6 +534,7 @@ type Page implements AbstractNavigationChild & AbstractRepository & AbstractUuid
     instance: Instance!
     license: License!
     navigation: Navigation
+    revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): PageRevisionConnection!
     trashed: Boolean!
 }
 
@@ -450,6 +555,18 @@ type PageRevision implements AbstractRevision & AbstractUuid {
     trashed: Boolean!
 }
 
+type PageRevisionConnection {
+    edges: [PageRevisionCursor!]!
+    nodes: [PageRevision!]!
+    pageInfo: PageInfo!
+    totalCount: Int!
+}
+
+type PageRevisionCursor {
+    cursor: String!
+    node: PageRevision!
+}
+
 type Query {
     _cacheKeys(after: String, before: String, first: Int, last: Int): StringConnection!
     activeAuthors(after: String, before: String, first: Int, last: Int): UserConnection!
@@ -458,7 +575,15 @@ type Query {
     license(id: Int!): License
     notificationEvent(id: Int!): AbstractNotificationEvent
     notifications(after: String, before: String, first: Int, last: Int, unread: Boolean): NotificationConnection!
+    subscriptions(after: String, before: String, first: Int, last: Int): QuerySubscriptionResult!
     uuid(alias: AliasInput, id: Int): AbstractUuid
+}
+
+type QuerySubscriptionResult {
+    edges: [SubscriptionCursor!]!
+    nodes: [AbstractUuid!]!
+    pageInfo: PageInfo!
+    totalCount: Int!
 }
 
 type RejectRevisionNotificationEvent implements AbstractNotificationEvent {
@@ -541,6 +666,7 @@ type Solution implements AbstractEntity & AbstractRepository & AbstractUuid {
     id: Int!
     instance: Instance!
     license: License!
+    revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): SolutionRevisionConnection
     trashed: Boolean!
 }
 
@@ -554,6 +680,18 @@ type SolutionRevision implements AbstractEntityRevision & AbstractRevision & Abs
     trashed: Boolean!
 }
 
+type SolutionRevisionConnection {
+    edges: [SolutionRevisionCursor!]!
+    nodes: [SolutionRevision!]!
+    pageInfo: PageInfo!
+    totalCount: Int!
+}
+
+type SolutionRevisionCursor {
+    cursor: String!
+    node: SolutionRevision!
+}
+
 type StringConnection {
     edges: [StringEdge!]!
     nodes: [String!]!
@@ -564,6 +702,11 @@ type StringConnection {
 type StringEdge {
     cursor: String!
     node: String!
+}
+
+type SubscriptionCursor {
+    cursor: String!
+    node: AbstractUuid!
 }
 
 type TaxonomyTerm implements AbstractNavigationChild & AbstractUuid {
@@ -606,6 +749,7 @@ type User implements AbstractUuid {
     activeAuthor: Boolean!
     activeDonor: Boolean!
     activeReviewer: Boolean!
+    alias: String!
     date: DateTime!
     description: String
     id: Int!
@@ -633,6 +777,7 @@ type Video implements AbstractEntity & AbstractRepository & AbstractTaxonomyTerm
     id: Int!
     instance: Instance!
     license: License!
+    revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): VideoRevisionConnection!
     taxonomyTerms(after: String, before: String, first: Int, last: Int): TaxonomyTermConnection!
     trashed: Boolean!
 }
@@ -647,6 +792,18 @@ type VideoRevision implements AbstractEntityRevision & AbstractRevision & Abstra
     title: String!
     trashed: Boolean!
     url: String!
+}
+
+type VideoRevisionConnection {
+    edges: [VideoRevisionCursor!]!
+    nodes: [VideoRevision!]!
+    pageInfo: PageInfo!
+    totalCount: Int!
+}
+
+type VideoRevisionCursor {
+    cursor: String!
+    node: VideoRevision!
 }
 
 enum CacheControlScope {
