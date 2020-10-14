@@ -47,10 +47,6 @@ import { Multimedia } from '@/components/content/multimedia'
 import type { VideoProps } from '@/components/content/video'
 import { FrontendContentNode } from '@/data-types'
 
-interface ReactChildrenData {
-  children: React.ReactNode
-}
-
 interface RenderElementProps {
   element: FrontendContentNode
   children: React.ReactNode
