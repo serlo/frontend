@@ -5,16 +5,16 @@ export const instanceData = {
   footerData: footerData,
   strings: {
     header: {
-      slogan: 'The Open Learning Platform',
-      search: 'Search',
-      login: 'Login'
+      slogan: "ओपन लर्निंग प्लेटफॉर्म",
+      search: "खोजें",
+      login: "लॉग इन करें"
     },
     footer: {
-      summaryHeading: 'Serlo.org is the Wikipedia for learning.',
-      summaryText: 'We are a community of visionaries working tirelessly to make great education freely available to everyone.',
-      learnMore: 'Learn more',
-      participate: 'Join the cause',
-      donate: 'Donate',
+      summaryHeading: "Serlo.org सीखने की विकिपीडिया है",
+      summaryText: "हम महान शिक्षा को हर किसी के लिए स्वतंत्र रूप से उपलब्ध कराने के लिए अथक रूप से काम करने वाले दूरदर्शी समुदाय का एक समुदाय हैं",
+      learnMore: "और जानें",
+      participate: "कारण में शामिल हों",
+      donate: "दान करें",
       toTop: 'To Top'
     },
     categories: {
