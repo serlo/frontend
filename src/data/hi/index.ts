@@ -15,117 +15,117 @@ export const instanceData = {
       learnMore: "और जानें",
       participate: "कारण में शामिल हों",
       donate: "दान करें",
-      toTop: 'To Top'
+      toTop: "ऊपर"
     },
     categories: {
-      articles: 'Articles',
-      courses: 'Courses',
-      videos: 'Videos',
-      applets: 'Applets',
-      folders: 'Folders',
-      exercises: 'Exercises',
-      events: 'Events'
+      articles: "लेख",
+      courses: "पाठ्यक्रम",
+      videos: "वीडियो",
+      applets: "एप्लेट",
+      folders: "फ़ोल्डर्स",
+      exercises: "अभ्यास",
+      events: "कार्यक्रम"
     },
     entities: {
-      applet: 'Applet',
-      article: 'Article',
-      course: 'Course',
-      coursePage: 'Course Page',
-      event: 'Event',
-      exercise: 'Exercise',
-      exerciseGroup: 'Exercise Group',
-      folder: 'Folder',
-      groupedExercise: 'Grouped Exercise',
-      page: 'Page',
-      solution: 'Solution',
-      taxonomyTerm: 'Taxonomy Term',
-      user: 'User',
-      video: 'Video',
-      topicFolder: 'Exercise folder',
-      comment: 'Comment',
-      revision: 'Revision',
-      thread: 'Thread',
-      topic: 'Topic',
-      subject: 'Subject'
+      applet: "एप्लेट",
+      article: "लेख",
+      course: "पाठ्यक्रम",
+      coursePage: "अध्ययन पृष्ठ",
+      event: "कार्यक्रम",
+      exercise: "अभ्यास",
+      exerciseGroup: "व्यायाम समूह",
+      folder: "फोल्डर",
+      groupedExercise: "समूह व्यायाम",
+      page: "पृष्ठ",
+      solution: "हल",
+      taxonomyTerm: "टैक्सोनोमी शब्द",
+      user: "उपयोगकर्ता",
+      video: "वीडियो",
+      topicFolder: "अभ्यास फोल्डर",
+      comment: "टिप्पणियां",
+      revision: "संशोधन",
+      thread: "धागा",
+      topic: "विषय",
+      subject: "विषय"
     },
     share: {
-      button: 'Share',
-      title: 'Share!',
-      copyLink: 'Copy link',
-      copySuccess: 'Link copied! ',
-      close: 'Close'
+      button: "सांझा करें",
+      title: "सांझा करें",
+      copyLink: "लिंक कॉपी करें",
+      copySuccess: "लिंक कॉपी किया गया!",
+      close: "बंद करें"
     },
     edit: {
-      button: 'Edit'
+      button: "संपादित करें"
     },
     license: {
-      readMore: 'Info'
+      readMore: "सूचना"
     },
     course: {
-      showPages: 'Show course overview',
-      pages: 'Course overview',
-      next: 'Next'
+      showPages: "पाठ्यक्रम का अवलोकन करें",
+      pages: "पाठ्यक्रम अवलोकन",
+      next: "अगला"
     },
     content: {
-      show: 'show',
-      hide: 'hide',
-      prerequisite: 'For this task you need the following basic knowledge:',
-      task: 'Task',
-      right: 'Right',
-      wrong: 'Wrong',
-      check: 'Check',
-      yourAnswer: 'Your answer…',
-      chooseOption: 'Click on one of the options.',
-      trashedNotice: 'This content is marked for deletion.'
+      show: "दिखाएँ",
+      hide: "छिपाएं",
+      prerequisite: "इस कार्य के लिए आपको निम्नलिखित बुनियादी ज्ञान की आवश्यकता है",
+      task: "कार्य",
+      right: "सही!",
+      wrong: "गलत",
+      check: "जाँच करें",
+      yourAnswer: "आपका उत्तर",
+      chooseOption: "किसी एक विकल्प पर क्लिक करें",
+      trashedNotice: "यह सामग्री हटाने के लिए चिह्नित है"
     },
     cookie: {
-      part1: 'By using this website you declare that you agree with our',
-      part2: 'and',
+      part1: "इस वेबसाइट का उपयोग करके आप घोषणा करते हैं कि आप हमारे साथ सहमत हैं",
+      part2: "और ",
       part3: '.',
-      link1: 'Privacy Policy',
-      link2: 'Terms of use',
-      button: 'Agree'
+      link1: "गोपनीयता नीति",
+      link2: "उपयोग की शर्ते",
+      button: "सहमत"
     },
     notifications: {
-      notifications: 'Notifications',
-      pleaseLogInLink: 'Please log in',
-      pleaseLogInText: 'to see your notifications.'
+      notifications: "सूचनाएँ",
+      pleaseLogInLink: "कृपया लॉगिन करें",
+      pleaseLogInText: "अपनी सूचनाएं देखने के लिए।"
     },
     comments: {
-      question: 'Do you have a question?',
-      commentsOne: 'Comment',
-      commentsMany: 'Comments',
-      submit: 'Submit',
-      reportComment: 'Report comment',
-      archiveThread: 'Archive thread',
-      deleteThread: 'Delete thread',
-      deleteComment: 'Delete comment',
-      postedOn: 'Posted on',
-      placeholder: "Your question or suggestion…",
-      placeholderReply: "Your answer…"
+      question: "क्या आपका कोई प्रश्न है?",
+      commentsOne: "टिप्पणी:",
+      commentsMany: "टिप्पणियां",
+      submit: "जमा करें",
+      reportComment: "टिप्पणी रिपोर्ट करें",
+      archiveThread: "आर्काइव थ्रेड",
+      deleteThread: "थ्रेड मिटाएं",
+      deleteComment: "टिप्पणी हटाएँ",
+      postedOn: "इस दिन पोस्ट हुआ",
+      placeholder: "आपका प्रश्न या सुझाव",
+      placeholderReply: "आपका उत्तर"
     },
     revisions: {
-      toOverview: "Back to overview",
-      changes: "Changes",
-      title: "Title",
-      content: "Content",
-      metaTitle: "Meta Title",
-      metaDescription: "Meta Description",
-      compare: "Compare",
-      currentVersion: "Current Version",
-      thisVersion: "This Version",
-      thisIsCurrentVersion: "This is the currently accepted version.",
-      by: 'By'
+      toOverview: "अवलोकन पर वापस जाएं",
+      changes: "परिवर्तन",
+      title: "शीर्षक",
+      content: "सामग्री",
+      metaTitle: "मेटा शीर्षक",
+      metaDescription: "मेटा विवरण",
+      compare: "तुलना करें",
+      currentVersion: "वर्तमान संस्करण",
+      thisVersion: "यह संस्करण",
+      thisIsCurrentVersion: "यह वर्तमान में स्वीकृत संस्करण है।",
+      by: "द्वारा"
     },
     errors: {
-      title: '😬 Websites make mistakes sometimes…',
-      defaultMessage: 'So sorry, we ran into a problem loading this content.',
-      temporary: 'The good news? The problem seems to be temporary, so please try again later.',
-      permanent: 'We will see what we can do about that… ',
-      typeNotSupported: 'Please try reloading this page.',
-      refreshNow: 'Refresh now',
-      backToPrevious: 'Back to previous page',
-      backToHome: 'To our home page'
+      title: "😬 वेबसाइटें कभी-कभी गलतियाँ करती हैं",
+      defaultMessage: "क्षमा करें, हमें इस सामग्री को लोड करने में समस्या है।",
+      temporary: "च्छी खबर? समस्या अस्थायी लगती है, इसलिए कृपया बाद में पुनः प्रयास करें।",
+      permanent: "हम देखेंगे कि हम उसके बारे में क्या कर सकते हैं",
+      typeNotSupported: "कृपया इस पृष्ठ को पुनः लोड करने का प्रयास करें",
+      refreshNow: "अब ताज़ा करें",
+      backToPrevious: "पिछले पृष्ठ पर जाएँ",
+      backToHome: "होमपेज पर जाएं"
     }
   }
 };
@@ -150,89 +150,89 @@ export const instanceLandingData = {
   }
 };
 export const serverSideStrings = {
-  title: 'learn with Serlo!'
+  title: "सेर्लो के साथ सीखें!"
 };
 export const loggedInData = {
   authMenu: [{
     url: '/user/notifications',
-    title: 'Notifications',
+    title: "सूचनाएँ",
     icon: 'notifications'
   }, {
     url: '',
-    title: 'User',
+    title: "उपयोगकर्ता",
     icon: 'user',
     children: [{
       url: '/user/public',
-      title: 'Public profile'
+      title: "सार्वजनिक प्रोफाइल"
     }, {
       url: '/user/settings',
-      title: 'Edit profile'
+      title: "प्रोफ़ाइल संपादित करें"
     }, {
       url: '/auth/password/change',
-      title: 'Change password'
+      title: "पासवर्ड परिवर्तित करें"
     }, {
       url: '/event/history/user/me',
-      title: 'Recent activities'
+      title: "हाल की गतिविधि"
     }, {
       url: '/api/auth/logout',
-      title: 'Log out'
+      title: "लॉगआउट करें"
     }]
   }],
   strings: {
-    tools: 'Other Tools',
+    tools: "अन्य टूल",
     authorMenu: {
-      log: 'Log',
-      settings: 'Settings',
-      moveCoursePage: 'Move this page to another course',
-      thisCoursePage: 'This course-page',
-      addCoursePage: 'Add course-page',
-      wholeCourse: 'Whole course',
-      copyItems: 'Copy items',
-      moveItems: 'Move items',
-      addGroupedTextExercise: 'Add grouped-text-exercise',
-      changeLicense: 'Change License',
-      subscribe: 'Subscribe',
-      subscribeNotifications: 'Recieve notifications',
-      subscribeNotificationsAndMail: 'Recieve notifications and emails',
-      convert: 'Convert (beta)',
-      history: 'History',
-      editAssignments: 'Edit topic and curriculum assignments',
-      flagContent: 'Flag content',
-      moveToTrash: 'Move to trash',
-      sort: 'Sort children',
-      edit: 'Edit',
-      organize: 'Organize',
-      moveToGroupedTextExercise: 'Move content to other grouped-text-exercise',
-      moveToTextExercise: 'Move content to other text-exercise',
-      sortEntities: 'Sort content',
-      newEntity: 'New Entity'
+      log: "लॉग",
+      settings: "सेटिंग्स",
+      moveCoursePage: "इस पृष्ठ को दूसरे कोर्स में ले जाएं",
+      thisCoursePage: "यह कोर्स पृष्ठ",
+      addCoursePage: "कोर्स पृष्ठ जोड़ें",
+      wholeCourse: "पूरे कोर्स",
+      copyItems: "आइटम कॉपी करें",
+      moveItems: "आइटम ले जाएं",
+      addGroupedTextExercise: "समूहीकृत-पाठ-व्यायाम",
+      changeLicense: "लायसेंस परिवर्तित करें",
+      subscribe: "सदस्य बनें",
+      subscribeNotifications: "सूचनाएं प्राप्त करें",
+      subscribeNotificationsAndMail: "ईमेल के माध्यम से सूचनाएं प्राप्त करें ।",
+      convert: "धर्मांतरित (बीटा)",
+      history: "इतिहास",
+      editAssignments: "विषय और पाठ्यचर्या असाइनमेंट संपादित करें",
+      flagContent: "सामग्री फ्लैग करें",
+      moveToTrash: "रद्दी में डालें",
+      sort: "सोर्ट चिल्ड्रन",
+      edit: "संपादित",
+      organize: "आयोजन",
+      moveToGroupedTextExercise: "सामग्री को अन्य समूहीकृत-पाठ-व्यायाम में ले जाएँ",
+      moveToTextExercise: "सामग्री को अन्य पाठ-व्यायाम में ले जाएँ",
+      sortEntities: "सामग्री को क्रमबद्ध करें",
+      newEntity: "नई इकाई"
     },
     notifications: {
-      loadMore: "Load more",
-      unknownProblem: "There was a problem loading the notifications, please try again later.",
-      loading: "Loading notifications",
-      hide: "Hide notifications for this content.",
-      setThreadStateArchived: "%actor% archived %thread%.",
-      setThreadStateUnarchived: "%actor% restored %thread%.",
-      createComment: "%actor% commented in %thread%: %comment%.",
-      createThread: "%actor% started %thread% on %object%.",
-      createEntity: "%actor% created %object%.",
-      setLicense: "%actor% changed the license of %repository%.",
-      createEntityLink: "%actor% associated %child% with %parent%.",
-      removeEntityLink: "%actor% dissociated %child% from %parent%.",
-      createEntityRevision: "%actor% created a %revision% of %entity%.",
-      checkoutRevision: "%actor% checked out %revision% in %repository%.",
-      rejectRevision: "%actor% rejected a %revision% in %repository%.",
-      createTaxonomyLink: "%actor% added %child% to %parent%.",
-      removeTaxonomyLink: "%actor% removed %child% from %parent%.",
-      createTaxonomyTerm: "%actor% created %term%.",
-      setTaxonomyTerm: "%actor% updated %term%.",
-      setTaxonomyParentDeleted: "%actor% removed the parent of %child%.",
-      setTaxonomyParentChangedFrom: "%actor% changed parent of %child% from %previousparent% to %parent%.",
-      setTaxonomyParentChanged: "%actor% changed parent of %child% to %parent%.",
-      setUuidStateTrashed: "%actor% trashed %object%.",
-      setUuidStateRestored: "%actor% restored %object%.",
-      entityPlaceholderFallback: "Content"
+      loadMore: "अधिक लोड करें",
+      unknownProblem: "सूचनाएं लोड करने में समस्या थी, कृपया बाद में पुनः प्रयास करें।",
+      loading: "सूचनाएं लोड हो रही हैं...",
+      hide: "इस सामग्री के लिए सूचनाएं छिपाएँ।",
+      setThreadStateArchived: "%actor% संग्रहीत %thread%.",
+      setThreadStateUnarchived: "%actor% बहाल %thread%.",
+      createComment: "%actor% में टिप्पणी की %thread%: %comment%.",
+      createThread: "%actor% शुरू %thread% पर %object%.",
+      createEntity: "%actor% बनाया था %object%.",
+      setLicense: "%actor% का लाइसेंस बदल दिया %repository%.",
+      createEntityLink: "%actor% संबद्ध %child% साथ में %parent%.",
+      removeEntityLink: "%actor% अलग %child% से %parent%.",
+      createEntityRevision: "%actor% एक बनाया %revision% का %entity%.",
+      checkoutRevision: "%actor% चेक औट %revision% में %repository%.",
+      rejectRevision: "%actor% रद्द %revision% में %repository%।",
+      createTaxonomyLink: "%actor% जोड़ा %child% से %parent%।",
+      removeTaxonomyLink: "%actor% अलग %child% से %parent%।",
+      createTaxonomyTerm: "%actor% बनाया था %object%।",
+      setTaxonomyTerm: "%user% अद्ययावत %term%।",
+      setTaxonomyParentDeleted: "%actor% के जनक को हटा दिया %child%।",
+      setTaxonomyParentChangedFrom: "%actor% के पैरेंट को बदल दिया %child% से %previousparent% वहाँ %parent%",
+      setTaxonomyParentChanged: "%actor% के पैरेंट को बदल दिया %child% वहाँ %parent%.",
+      setUuidStateTrashed: "%actor% को खारिज किया %object%.",
+      setUuidStateRestored: "%actor% बहाल %object%.",
+      entityPlaceholderFallback: "सामग्री"
     }
   }
 };
