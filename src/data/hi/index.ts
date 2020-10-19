@@ -126,6 +126,9 @@ export const instanceData = {
       refreshNow: "अब ताज़ा करें",
       backToPrevious: "पिछले पृष्ठ पर जाएँ",
       backToHome: "होमपेज पर जाएं"
+    },
+    print: {
+      warning: 'Important: To make sure all images and formulas print, please scroll down to the end of the page once. Thank you!'
     }
   }
 };
