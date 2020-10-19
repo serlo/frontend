@@ -56,6 +56,12 @@ const StyledNumberParent = styled(Link)`
     text-decoration: none;
     background-color: ${(props) => props.theme.colors.lighterblue};
   }
+
+  @media print {
+    &:after {
+      content: '' !important;
+    }
+  }
 `
 
 const StyledNumberChild = styled.span`

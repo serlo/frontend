@@ -25,7 +25,7 @@ export function Horizon({ data }: HorizonProps) {
   )
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.aside`
   align-items: stretch;
   display: flex;
   justify-content: space-between;

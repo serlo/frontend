@@ -1,4 +1,4 @@
-import { css, ThemeProps } from 'styled-components'
+import { css, ThemeProps, createGlobalStyle } from 'styled-components'
 
 import { theme } from '@/theme'
 
@@ -121,4 +121,67 @@ export const inputFontReset = () =>
     font-size: 1rem;
     font-family: Karmilla, sans-serif;
     letter-spacing: '-0.007em';
+  `
+
+export const FontFix = createGlobalStyle`
+  h1,h2, main b {
+    letter-spacing: ${(props) => props.theme.defaults.boldLetterSpacing};
+  }
+  body {
+    letter-spacing: ${(props) => props.theme.defaults.regularLetterSpacing};
+  }
+`
+
+interface Props {
+  warning: string
+}
+
+export const PrintStylesheet = createGlobalStyle<Props>`
+    @media print {
+      html {
+        font-size: 10pt;
+      }
+      body {
+        background: 0 0;
+      }
+      #__next {
+        > header,
+        > footer,
+        #notification-wrapper,
+        nav,
+        button,
+        aside,
+        div.cookie-bar,
+        h1 > span > svg,
+        div.video, figure.video
+        {
+          display: none !important;
+        }
+        main {
+          display: block;
+          width: 100%;
+          max-width: 100%;
+          position: relative;
+        }
+        main::before {
+          content: '${(props) => props.warning}';
+          display: block;
+          border: 1px solid black;
+          font-size: 1.125rem;
+          padding: 10px;
+          margin-top: 10px;
+        }
+      }
+      .header-breadcrumbs,
+      a,
+      code,
+      code span,
+      html,
+      pre,
+      pre:before,
+      time {
+        background: 0 0 !important;
+        color: #000 !important;
+      }
+    }
   `

@@ -33,6 +33,7 @@ import {
   fetcherAdditionalData,
   getInitialProps,
 } from '@/fetcher/get-initial-props'
+import { PrintStylesheet } from '@/helper/css'
 
 const LandingDE = dynamic<LandingInternationalProps>(() =>
   import('@/components/pages/landing-de').then((mod) => mod.LandingDE)
@@ -121,13 +122,16 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
   //console.dir(initialProps)
 
   return (
-    <OriginProvider value={initialProps.origin}>
-      <InstanceDataProvider value={instanceData}>
-        <LoggedInDataProvider value={loggedInData}>
-          {renderPage(initialProps.pageData)}
-        </LoggedInDataProvider>
-      </InstanceDataProvider>
-    </OriginProvider>
+    <>
+      <PrintStylesheet warning={instanceData.strings.print.warning} />
+      <OriginProvider value={initialProps.origin}>
+        <InstanceDataProvider value={instanceData}>
+          <LoggedInDataProvider value={loggedInData}>
+            {renderPage(initialProps.pageData)}
+          </LoggedInDataProvider>
+        </InstanceDataProvider>
+      </OriginProvider>
+    </>
   )
 
   function storePageData() {
