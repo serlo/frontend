@@ -128,7 +128,7 @@ export const instanceData = {
       backToHome: "Zur Startseite"
     },
     print: {
-      warning: 'Wichtig: Damit alle Bilder und Formeln angezeigt werden vor dem Drucken bitte einmal bis zum Ende der Seite scrollen. Danke!'
+      warning: 'Important: To make sure all images and formulas print, please scroll down to the end of the page once. Thank you!'
     }
   }
 };
