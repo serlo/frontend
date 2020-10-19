@@ -14,20 +14,21 @@ export const StyledUl = styled.ul<StyledUlProps>`
   list-style-type: none;
 
   > li {
-      &:before {
-        position: absolute;
-        background-color: ${(props) => props.theme.colors.lighterblue};
-        width: 10px;
-        height: 10px;
-        content: ' ';
-        border-radius: 2em;
-        margin-left: -19px;
-        margin-top: 7px;
-      }
+    &:before {
+      position: absolute;
+      background-color: ${(props) => props.theme.colors.lighterblue};
+      width: 10px;
+      height: 10px;
+      content: ' ';
+      border-radius: 2em;
+      margin-left: -19px;
+      margin-top: 7px;
+    }
 
-      > ul, > ol {
+    > ul,
+    > ol {
       margin-top: 8px;
       margin-bottom: 16px !important;
     }
-  }   
+  }
 `

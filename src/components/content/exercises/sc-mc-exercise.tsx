@@ -201,7 +201,7 @@ const StyledLabel = styled.label<{ selected: boolean; focused?: boolean }>`
   > svg {
     font-size: 1.33rem;
     margin-top: 2px;
-    color: ${(props) => props.theme.colors.brand}
+    color: ${(props) => props.theme.colors.brand};
 
     /* ${(props) =>
       props.selected
@@ -215,7 +215,6 @@ const StyledLabel = styled.label<{ selected: boolean; focused?: boolean }>`
       outline: 1px dotted #212121;
       outline: 5px auto -webkit-focus-ring-color;
     `}
-      
 
   > div > * {
     margin-left: 8px;
@@ -227,6 +226,5 @@ const Container = styled.div`
   margin-bottom: ${(props) => props.theme.spacing.mb.block};
 
   &:hover {
-
   }
 `
