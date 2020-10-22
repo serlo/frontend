@@ -18,35 +18,35 @@ export const instanceData = {
       toTop: "a la cima"
     },
     categories: {
-      articles: 'Articles',
-      courses: 'Courses',
-      videos: 'Videos',
+      articles: "Artículos",
+      courses: "Cursos",
+      videos: "Vídeos",
       applets: 'Applets',
-      folders: 'Folders',
+      folders: "Carpetas",
       exercises: "Ejercicios",
-      events: 'Events'
+      events: "Eventos"
     },
     entities: {
       applet: 'Applet',
-      article: 'Article',
-      course: 'Course',
-      coursePage: 'Course Page',
-      event: 'Event',
-      exercise: 'Exercise',
-      exerciseGroup: 'Exercise Group',
-      folder: 'Folder',
-      groupedExercise: 'Grouped Exercise',
-      page: 'Page',
-      solution: 'Solution',
-      taxonomyTerm: 'Taxonomy Term',
-      user: 'User',
-      video: 'Video',
-      topicFolder: 'Exercise folder',
-      comment: 'Comment',
-      revision: 'Revision',
-      thread: 'Thread',
-      topic: 'Topic',
-      subject: 'Subject'
+      article: "Artículo",
+      course: "Curso",
+      coursePage: "Página del curso",
+      event: "Evento",
+      exercise: "Ejercicio",
+      exerciseGroup: "Grupo de ejercicios",
+      folder: "Carpeta",
+      groupedExercise: "Ejercicio agrupado",
+      page: "Página",
+      solution: "Solución",
+      taxonomyTerm: "Término de taxonomía",
+      user: "Usuario",
+      video: "Vídeo",
+      topicFolder: "Carpeta de ejercicios",
+      comment: "Comentario",
+      revision: "Revisión",
+      thread: "Hilo de conversación",
+      topic: "Tema",
+      subject: "Asunto"
     },
     share: {
       button: "Compartir",
@@ -70,13 +70,13 @@ export const instanceData = {
       show: "mostrar",
       hide: "ocultar",
       prerequisite: "Para este ejercicio se necesitan los siguientes conocimientos básicos:",
-      task: 'Task',
-      right: 'Right',
-      wrong: 'Wrong',
-      check: 'Check',
-      yourAnswer: 'Your answer…',
-      chooseOption: 'Click on one of the options.',
-      trashedNotice: 'This content is marked for deletion.'
+      task: "Tarea",
+      right: "Correcto",
+      wrong: "Incorrecto",
+      check: "Revisa tu respuesta",
+      yourAnswer: "Tu respuesta...",
+      chooseOption: "Elige una de las opciones.",
+      trashedNotice: "Este contenido está marcado para su eliminación."
     },
     cookie: {
       part1: "Al utilizar este sitio web, declara que acepta nuestra",
@@ -88,51 +88,54 @@ export const instanceData = {
     },
     notifications: {
       notifications: "Notificaciones",
-      pleaseLogInLink: 'Please log in',
-      pleaseLogInText: 'to see your notifications.'
+      pleaseLogInLink: "Por favor, inicia sesión",
+      pleaseLogInText: "para ver tus notificaciones."
     },
     comments: {
-      question: 'Do you have a question?',
-      commentsOne: 'Comment',
-      commentsMany: 'Comments',
-      submit: 'Submit',
-      reportComment: 'Report comment',
-      archiveThread: 'Archive thread',
-      deleteThread: 'Delete thread',
-      deleteComment: 'Delete comment',
-      postedOn: 'Posted on',
-      placeholder: "Your question or suggestion…",
-      placeholderReply: "Your answer…"
+      question: "¿Tienes una pregunta?",
+      commentsOne: "Comentario",
+      commentsMany: "Comentarios",
+      submit: "Enviar",
+      reportComment: "Denunciar comentario",
+      archiveThread: "Archivar hilo de la conversación",
+      deleteThread: "Eliminar hilo de la conversación",
+      deleteComment: "Eliminar comentario",
+      postedOn: "Publicado el",
+      placeholder: "Tus preguntas o sugerencias...",
+      placeholderReply: "Tu respuesta..."
     },
     revisions: {
-      toOverview: "Back to overview",
-      changes: "Changes",
-      title: "Title",
-      content: "Content",
-      metaTitle: "Meta Title",
-      metaDescription: "Meta Description",
-      compare: "Compare",
-      currentVersion: "Current Version",
-      thisVersion: "This Version",
-      thisIsCurrentVersion: "This is the currently accepted version.",
-      by: 'By'
+      toOverview: "Volver a Vista general",
+      changes: "Cambios",
+      title: "Título",
+      content: "Contenido",
+      metaTitle: "Meta Título",
+      metaDescription: "Meta Descripción",
+      compare: "Comparar",
+      currentVersion: "Versión Actual",
+      thisVersion: "Esta Versión",
+      thisIsCurrentVersion: "Esta es la versión aceptada actualmente.",
+      by: "Por"
     },
     errors: {
-      title: '😬 Websites make mistakes sometimes…',
-      defaultMessage: 'So sorry, we ran into a problem loading this content.',
-      temporary: 'The good news? The problem seems to be temporary, so please try again later.',
-      permanent: 'We will see what we can do about that… ',
-      typeNotSupported: 'Please try reloading this page.',
-      refreshNow: 'Refresh now',
-      backToPrevious: 'Back to previous page',
-      backToHome: 'To our home page'
+      title: "😬 Los sitios web a veces cometen errores…",
+      defaultMessage: "Lo sientimos, hemos encontrado un problema al cargar este contenido.",
+      temporary: "¿La buena noticia? El problema parece ser temporal, así que por favor inténtalo de nuevo más tarde.",
+      permanent: "Veremos qué podemos hacer al respecto… ",
+      typeNotSupported: "Por favor, intenta volver a cargar está página.",
+      refreshNow: "Actualizar ahora",
+      backToPrevious: "Volver a la página anterior",
+      backToHome: "Ir a la página de inicio"
+    },
+    print: {
+      warning: "Importante: Para asegurarse de que todas las imágenes y fórmulas se impriman, por favor, desciende hasta el final de la página una vez. ¡Gracias!"
     }
   }
 };
 export const instanceLandingData = {
   lang: "es",
   strings: {
-    vision: "Somos una organización de base comunitaria sin ánimo de lucro que apoya el aprendizaje personalizado y trabajando por la igualdad de oportunidades educativas. Esta plataforma de aprendizaje ofrece miles de artículos de instrucción, videos de aprendizaje y ejercicios de práctica para millones de estudiantes en todo el mundo - completamente gratis. Ahora es el momento de unirse a nosotros en tu idioma.",
+    vision: "Somos una organización de base comunitaria sin ánimo de lucro que apoya el aprendizaje personalizado y trabajando por la igualdad de oportunidades educativas. Esta plataforma de aprendizaje ofrece miles de artículos de instrucción, videos de aprendizaje y ejercicios de práctica para millones de estudiantes en todo el mundo - completamente gratis. Ahora es el momento de unirte a nosotros en tu idioma.",
     learnMore: "Aprende más",
     democraticallyStructured: "estructurado democráticamente",
     nonProfit: "sin ánimo de lucro",
@@ -204,8 +207,8 @@ export const loggedInData = {
       organize: "Organizar",
       moveToGroupedTextExercise: "Mover contenido a otro grupo de ejercicios de texto",
       moveToTextExercise: "Mover contenido a otro ejercicio de texto",
-      sortEntities: 'Sort content',
-      newEntity: 'New Entity'
+      sortEntities: "Ordenar contenido",
+      newEntity: "Nueva Entidad"
     },
     notifications: {
       loadMore: "Cargar más",
@@ -232,7 +235,7 @@ export const loggedInData = {
       setTaxonomyParentChanged: "%actor% cambió el padre de %child% a %parent%.",
       setUuidStateTrashed: "%actor% envió a la papelera %object%.",
       setUuidStateRestored: "%actor% restauró %object%.",
-      entityPlaceholderFallback: "Content"
+      entityPlaceholderFallback: "Contenido"
     }
   }
 };
