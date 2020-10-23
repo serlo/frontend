@@ -79,7 +79,7 @@ export function UserTools({ id, onShare, hideEdit, data }: UserToolsProps) {
   )
 }
 
-const AbsoluteWrapper = styled.nav`
+export const AbsoluteWrapper = styled.nav`
   position: absolute;
   right: 32px;
   bottom: 32px;
@@ -88,7 +88,7 @@ const AbsoluteWrapper = styled.nav`
   align-items: flex-end;
 `
 
-const BoxWrapper = styled.div`
+export const BoxWrapper = styled.div`
   position: sticky;
   bottom: 32px;
   display: flex;
@@ -99,7 +99,7 @@ const BoxWrapper = styled.div`
   }
 `
 
-const IconButton = styled.a`
+export const IconButton = styled.a`
   ${makeGreenTransparentButton}
   ${inputFontReset}
   font-weight: bold;
