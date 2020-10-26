@@ -73,10 +73,9 @@ export function LicenseNotice({ data, minimal, type }: LicenseNoticeProps) {
 
   function renderMinimalNotice() {
     const typeString = translateTypeString()
-
     return (
       <MinimalLink
-        href={data.url}
+        href={`/license/detail/${data.id}`}
         title={typeString ? typeString + ': ' + data.title : data.title}
         noExternalIcon
       >
