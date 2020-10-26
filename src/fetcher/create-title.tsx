@@ -67,9 +67,9 @@ export function createTitle(uuid: QueryResponse): string {
   return 'Serlo'
 
   function getTranslatedType(typename: string) {
-    const camelCase = typename.charAt(0).toLowerCase() + typename.slice(1)
-    //@ts-expect-error
-    return strings.entities[camelCase] as string
+    const camelCase = (typename.charAt(0).toLowerCase() +
+      typename.slice(1)) as keyof typeof strings.entities
+    return strings.entities[camelCase]
   }
 
   function isRevision(

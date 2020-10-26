@@ -67,7 +67,7 @@ describe('edtr io plugins', () => {
     })
   })
 
-  test('plugin: important?', () => {
+  test('plugin: important', () => {
     const result = convert({
       plugin: 'important',
       state: {
@@ -85,8 +85,7 @@ describe('edtr io plugins', () => {
     ])
   })
 
-  //TODO: is this a regular plugin?
-  describe('plugin: layout?', () => {
+  describe('plugin: layout', () => {
     test('default', () => {
       const result = convert({
         plugin: 'layout',
@@ -140,13 +139,22 @@ describe('edtr io plugins', () => {
     expect(result).toEqual([{ type: 'anchor', id: 'AnchorTest' }])
   })
 
-  //TODO: currently unsupported in frontend
   test('plugin: blockquote', () => {
     const result = convert({
       plugin: 'blockquote',
-      state: { plugin: 'text', state: [] },
+      state: {
+        plugin: 'text',
+        state: [{ type: 'p', children: [{ text: 'A quote' }] }],
+      },
     })
-    expect(result).toEqual([])
+    expect(result).toEqual([
+      {
+        type: 'blockquote',
+        children: [
+          { type: 'p', children: [{ type: 'text', text: 'A quote' }] },
+        ],
+      },
+    ])
   })
 
   describe('plugin: geogebra', () => {

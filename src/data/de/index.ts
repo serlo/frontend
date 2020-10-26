@@ -126,6 +126,9 @@ export const instanceData = {
       refreshNow: "Jetzt aktualisieren",
       backToPrevious: "Zurück zur vorherigen Seite",
       backToHome: "Zur Startseite"
+    },
+    print: {
+      warning: 'Important: To make sure all images and formulas print, please scroll down to the end of the page once. Thank you!'
     }
   }
 };

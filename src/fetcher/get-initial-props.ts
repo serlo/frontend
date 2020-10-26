@@ -26,11 +26,6 @@ export async function getInitialProps(
   const url = '/' + joinedSlug
   const { origin } = absoluteUrl(props.req)
 
-  if (typeof window !== 'undefined') {
-    getGa()('set', 'page', url)
-    getGa()('send', 'pageview')
-  }
-
   const { instance: instance_path, alias } = parseLanguageSubfolder(url)
   const instance =
     fetcherAdditionalData.instance && typeof window !== 'undefined'
@@ -151,12 +146,3 @@ export async function getInitialProps(
     }
   }
 }
-
-/* eslint-disable */
-// Safe access to Google Analytics globals
-function getGa(): (...args: any[]) => void {
-  const w = (window as unknown) as any
-  const ga = w[w['GoogleAnalyticsObject'] || 'ga']
-  return ga || (() => {})
-}
-/* eslint-enable */

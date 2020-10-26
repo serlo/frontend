@@ -126,6 +126,9 @@ export const instanceData = {
       refreshNow: 'Refresh now',
       backToPrevious: 'Back to previous page',
       backToHome: 'To our home page'
+    },
+    print: {
+      warning: 'Important: To make sure all images and formulas print, please scroll down to the end of the page once. Thank you!'
     }
   }
 };

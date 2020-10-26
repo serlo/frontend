@@ -7,8 +7,6 @@ import Document, {
 } from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
 
-import { GoogleAnalytics } from '@/components/scripts/google-analytics'
-
 const bodyStyles = {
   margin: 0,
   fontFamily: 'Karmilla, sans-serif',
@@ -51,7 +49,6 @@ export default class MyDocument extends Document {
         }
       >
         <Head>
-          <link rel="preconnect" href="//www.google-analytics.com" />
           <meta property="og:site_name" content="Serlo" />
           <meta property="og:type" content="website" />
           <link
@@ -102,7 +99,6 @@ export default class MyDocument extends Document {
         <body style={bodyStyles}>
           <Main />
           <NextScript />
-          <GoogleAnalytics />
           <script async defer src="https://sa.serlo.org/latest.js" />
           <noscript>
             <img src="https://sa.serlo.org/noscript.gif" alt="" />

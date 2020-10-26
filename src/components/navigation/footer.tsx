@@ -16,10 +16,10 @@ import { makeResponsivePadding, makeTransparentButton } from '@/helper/css'
 export function Footer() {
   const { footerData } = useInstanceData()
   return (
-    <>
+    <footer>
       <About />
       <FooterNav data={footerData.footerNavigation} />
-    </>
+    </footer>
   )
 }
 
