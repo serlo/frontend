@@ -20,8 +20,8 @@ interface SingleChoiceProps {
   idBase: string
 }
 
-//Durstenfeld shuffle https://stackoverflow.com/a/12646864 probably overkill, but hey it's all about the performance right?
 function shuffleArray(array: EdtrPluginScMcExercise['state']['answers']) {
+  //Durstenfeld shuffle https://stackoverflow.com/a/12646864 probably overkill, but hey it's all about the performance right?
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1))
     ;[array[i], array[j]] = [array[j], array[i]]
@@ -29,7 +29,6 @@ function shuffleArray(array: EdtrPluginScMcExercise['state']['answers']) {
 }
 
 export function ScMcExercise({ state, idBase }: ScMcExerciseProps) {
-
   const answers = state.answers.slice(0)
   shuffleArray(answers)
 
@@ -90,11 +89,11 @@ function SingleChoice({ answers, idBase }: SingleChoiceProps) {
           )
         })}
       </Choices>
-
       <CheckButton
         selectable={selected !== undefined}
         onClick={() => setShowFeedback(true)}
-        onPointerUp={(e) => e.currentTarget.blur()} //blur-hack, use https://caniuse.com/#feat=css-focus-visible when supported
+        //blur-hack, use https://caniuse.com/#feat=css-focus-visible when supported
+        onPointerUp={(e) => e.currentTarget.blur()}
       >
         {selected !== undefined
           ? strings.content.check
@@ -109,9 +108,7 @@ function MultipleChoice({ answers, idBase }: SingleChoiceProps) {
   const [focused, setFocused] = React.useState<number | undefined>(undefined)
   const [showFeedback, setShowFeedback] = React.useState(false)
   const { strings } = useInstanceData()
-  const correct = answers.every(
-    (answer, i) => answer.isCorrect === selected[i]
-  )
+  const correct = answers.every((answer, i) => answer.isCorrect === selected[i])
   return (
     <Container>
       <Choices>
