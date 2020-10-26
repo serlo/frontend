@@ -15,14 +15,31 @@ export interface ScMcExerciseProps {
   idBase: string
 }
 
-export function ScMcExercise({ state, idBase }: ScMcExerciseProps) {
-  if (state.isSingleChoice)
-    return <SingleChoice state={state} idBase={idBase} />
-
-  return <MultipleChoice state={state} idBase={idBase} />
+interface SingleChoiceProps {
+  answers: EdtrPluginScMcExercise['state']['answers']
+  idBase: string
 }
 
-function SingleChoice({ state, idBase }: ScMcExerciseProps) {
+//Durstenfeld shuffle https://stackoverflow.com/a/12646864 probably overkill, but hey it's all about the performance right?
+function shuffleArray(array: EdtrPluginScMcExercise['state']['answers']) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[array[i], array[j]] = [array[j], array[i]]
+  }
+}
+
+export function ScMcExercise({ state, idBase }: ScMcExerciseProps) {
+
+  const answers = state.answers.slice(0)
+  shuffleArray(answers)
+
+  if (state.isSingleChoice)
+    return <SingleChoice answers={answers} idBase={idBase} />
+
+  return <MultipleChoice answers={answers} idBase={idBase} />
+}
+
+function SingleChoice({ answers, idBase }: SingleChoiceProps) {
   const [selected, setSelected] = React.useState<number | undefined>(undefined)
   const [focused, setFocused] = React.useState<number | undefined>(undefined)
   const [showFeedback, setShowFeedback] = React.useState(false)
@@ -31,7 +48,7 @@ function SingleChoice({ state, idBase }: ScMcExerciseProps) {
   return (
     <Container>
       <Choices>
-        {state.answers.map((answer, i) => {
+        {answers.map((answer, i) => {
           const id = `${idBase}${i}`
           return (
             <React.Fragment key={i}>
@@ -63,10 +80,10 @@ function SingleChoice({ state, idBase }: ScMcExerciseProps) {
               </ChoiceWrapper>
               {showFeedback &&
                 selected !== undefined &&
-                state.answers[selected] &&
-                state.answers[selected] === answer && (
-                  <Feedback correct={state.answers[selected].isCorrect}>
-                    {renderArticle(state.answers[selected].feedback)}
+                answers[selected] &&
+                answers[selected] === answer && (
+                  <Feedback correct={answers[selected].isCorrect}>
+                    {renderArticle(answers[selected].feedback)}
                   </Feedback>
                 )}
             </React.Fragment>
@@ -87,18 +104,18 @@ function SingleChoice({ state, idBase }: ScMcExerciseProps) {
   )
 }
 
-function MultipleChoice({ state, idBase }: ScMcExerciseProps) {
-  const [selected, setSelected] = React.useState(state.answers.map(() => false))
+function MultipleChoice({ answers, idBase }: SingleChoiceProps) {
+  const [selected, setSelected] = React.useState(answers.map(() => false))
   const [focused, setFocused] = React.useState<number | undefined>(undefined)
   const [showFeedback, setShowFeedback] = React.useState(false)
   const { strings } = useInstanceData()
-  const correct = state.answers.every(
+  const correct = answers.every(
     (answer, i) => answer.isCorrect === selected[i]
   )
   return (
     <Container>
       <Choices>
-        {state.answers.map((answer, i) => {
+        {answers.map((answer, i) => {
           const id = `${idBase}${i}`
 
           const hasFeedback =
