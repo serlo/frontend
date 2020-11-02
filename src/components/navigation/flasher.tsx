@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { useOrigin } from '@/contexts/origin-context'
+import { serloDomain } from '@/helper/serlo-domain'
 
 export function Flasher() {
   const origin = useOrigin()
@@ -8,7 +9,9 @@ export function Flasher() {
   React.useEffect(() => {
     void (async () => {
       try {
-        const res = await fetch(origin + '/api/flash')
+        const res = await fetch(
+          'https://de.' + serloDomain + '/api/frontend/flash'
+        )
         const flasher = (await res.json()).html
         if (flasher.length > 50) setHtml(flasher)
       } catch (e) {

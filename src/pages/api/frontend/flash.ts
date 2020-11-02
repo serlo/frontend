@@ -6,7 +6,7 @@ export default async function getFlash(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  res.setHeader('Access-Control-Allow-Origin', '*')
+  //res.setHeader('Access-Control-Allow-Origin', '*')
   const legacyRes = await fetch(
     'https://de.' + serloDomain + '/auth/password/change',
     {
