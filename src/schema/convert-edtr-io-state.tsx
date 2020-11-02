@@ -197,10 +197,11 @@ function convertPlugin(node: EdtrState) {
   if (node.plugin === 'equations') {
     const steps = node.state.steps.map((step) => {
       return {
-        left: convert(step.left),
+        left: step.left,
         sign: step.sign,
-        right: convert(step.right),
-        transform: convert(step.transform),
+        right: step.right,
+        transform: step.transform,
+        explanation: convert(step.explanation),
       }
     })
     return [{ type: 'equations', steps }]

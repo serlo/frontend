@@ -95,9 +95,10 @@ export interface EdtrPluginEquations {
   plugin: 'equations'
   state: {
     steps: {
-      left: EdtrPluginText
-      right: EdtrPluginText
-      transform: EdtrPluginText
+      left: string
+      right: string
+      transform: string
+      explanation: EdtrPluginText
       sign: string
     }[]
   }
