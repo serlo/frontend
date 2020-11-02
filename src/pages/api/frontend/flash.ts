@@ -12,6 +12,7 @@ export default async function getFlash(
     {
       headers: {
         cookie: req.headers.cookie ?? '',
+        authorization: req.headers.authorization ?? '',
       },
     }
   )
