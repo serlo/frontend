@@ -573,25 +573,26 @@ export interface FrontendCodeNode {
   children?: undefined
 }
 
+export enum Sign {
+  Equals = 'equals',
+  GreaterThan = 'greater-than',
+  GreaterThanOrEqual = 'greater-than-or-equal',
+  LessThan = 'less-than',
+  LessThanOrEqual = 'less-than-or-equal',
+  AlmostEqualTo = 'almost-equal-to',
+}
+
 export interface FrontendEquationsNode {
   type: 'equations'
   steps: {
-    left: FrontendContentNode[]
-    sign: SignType
-    right: FrontendContentNode[]
-    transform: FrontendContentNode[]
+    left: string
+    sign: Sign
+    right: string
+    transform: string
+    explanation: FrontendContentNode[]
   }[]
   children?: undefined
 }
-
-export type SignType =
-  | 'equals'
-  | '='
-  | 'greater-than'
-  | 'greater-than-or-equal'
-  | 'less-than'
-  | 'less-than-or-equal'
-  | 'almost-equal-to'
 
 export type FrontendVoidNode =
   | FrontendInlineMathNode
