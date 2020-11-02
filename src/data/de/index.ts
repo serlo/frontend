@@ -140,7 +140,7 @@ export const instanceLandingData = {
     democraticallyStructured: "demokratisch organisiert",
     nonProfit: 'non-profit',
     transparent: 'transparent',
-    openlyLicensed: "frei lizensiert",
+    openlyLicensed: "frei lizenziert",
     adFree: "werbefrei",
     freeOfCharge: "kostenlos",
     wikiTitle: "Serlo.org ist die Wikipedia fürs Lernen",
