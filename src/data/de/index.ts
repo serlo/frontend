@@ -1,4 +1,4 @@
-import { headerData, footerData } from './menu-data';
+import { landingSubjectsData, headerData, footerData } from './menu-data';
 export const instanceData = {
   lang: "de",
   headerData: headerData,
@@ -134,6 +134,7 @@ export const instanceData = {
 };
 export const instanceLandingData = {
   lang: "de",
+  subjectsData: landingSubjectsData,
   strings: {
     vision: "Wir ermöglichen Schüler*innen und Studierenden selbständig und im eigenen Tempo zu lernen – unabhängig von den finanziellen Möglichkeiten ihrer Eltern, denn serlo.org ist und bleibt komplett kostenlos.\n\nUnsere Vision ist es, hochwertige Bildung weltweit frei verfügbar zu machen.",
     learnMore: "Mehr erfahren",
