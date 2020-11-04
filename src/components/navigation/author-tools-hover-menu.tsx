@@ -20,6 +20,7 @@ export interface AuthorToolsData {
   parentId?: number
   courseId?: number
   grouped?: boolean
+  trashed?: boolean
 }
 
 export interface AuthorToolsHoverMenuProps {
@@ -36,20 +37,26 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
 
   React.useEffect(() => {
     void (async () => {
-      const res = await request(
-        JSON.stringify({
-          query: gql`
-            query {
-              subscriptions {
-                nodes {
-                  id
+      try {
+        const res = await request(
+          JSON.stringify({
+            query: gql`
+              query {
+                subscriptions {
+                  nodes {
+                    id
+                  }
                 }
               }
-            }
-          `,
-        })
-      )
-      setSubscriped(res.subscriptions.nodes.some((n: any) => n.id === data.id))
+            `,
+          })
+        )
+        setSubscriped(
+          res.subscriptions.nodes.some((n: any) => n.id === data.id)
+        )
+      } catch (e) {
+        //
+      }
     })()
   }, [request, data.id])
 
@@ -297,6 +304,12 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
 
   function trash(id = data.id) {
     // todo: use graphql mutation
+    if (data.trashed) {
+      return renderLi(
+        `/uuid/restore/${id}`,
+        loggedInStrings.authorMenu.restoreContent
+      )
+    }
     const cookies = cookie.parse(
       typeof window === 'undefined' ? '' : document.cookie
     )
