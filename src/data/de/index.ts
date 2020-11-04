@@ -1,4 +1,4 @@
-import { headerData, footerData } from './menu-data';
+import { headerData, footerData, landingSubjectsData } from './menu-data';
 export const instanceData = {
   lang: "de",
   headerData: headerData,
@@ -134,22 +134,23 @@ export const instanceData = {
 };
 export const instanceLandingData = {
   lang: "de",
+  subjectsData: landingSubjectsData,
   strings: {
-    vision: "Wir ermöglichen Schüler*innen und Studierenden selbständig und im eigenen Tempo zu lernen – unabhängig von den finanziellen Möglichkeiten ihrer Eltern, denn serlo.org ist und bleibt komplett kostenlos.\n\nUnsere Vision ist es, hochwertige Bildung weltweit frei verfügbar zu machen.",
-    learnMore: "Mehr erfahren",
-    democraticallyStructured: "demokratisch organisiert",
+    vision: 'It is our vision to enable personalized learning and provide high quality educational resources worldwide – completely free of charge. Serlo is a grassroots organization inspired by Wikipedia. We already provide thousands of articles, videos and solved exercises for five million German students every year. Now it’s time to go international.',
+    learnMore: 'Learn more',
+    democraticallyStructured: 'democratically structured',
     nonProfit: 'non-profit',
     transparent: 'transparent',
-    openlyLicensed: "frei lizenziert",
-    adFree: "werbefrei",
-    freeOfCharge: "kostenlos",
-    wikiTitle: "Serlo.org ist die Wikipedia fürs Lernen",
-    wikiText: "Genau die Wikipedia wird diese Plattform von einer engagierten Autor*innen Community erstellt. Serlo Education wird betrieben von einem dezentralisierten Team Ehrenamtlicher und Professioneller überall auf der Welt.",
-    movementTitle: "Werden Sie Teil unserer Bewegung für freie Bildung",
-    callForAuthors: "Wir suchen Lehrkräfte mit Begeisterung für ihr Fach. Werden Sie Autor*in auf serlo.org, erstellen Sie neue Inhalte und helfen Sie uns, die Qualität der Lernplattform zu sichern.",
-    communityLink: "Zur Startseite für Autor*innen",
-    callForOther: "Wir suchen neue hauptamtliche und ehrenamtliche Teammitglieder für die Bereiche Softwareentwicklung, Redaktion und NGO-Management.",
-    getInvolved: "Mach mit!"
+    openlyLicensed: 'openly licensed',
+    adFree: 'ad-free',
+    freeOfCharge: 'free of charge',
+    wikiTitle: 'Serlo is the Wikipedia for Learning',
+    wikiText: 'Just like Wikipedia, this platform is created by an engaged community of authors. Serlo Education is run and owned by decentralized teams of volunteers and professionals all over the world.',
+    movementTitle: 'Become a Part of Our Movement for Open Education',
+    callForAuthors: 'We are looking for teachers and enthusiastic educators who are passionate about their subject. Become part of our community to create new learning material and help us improve existing content.',
+    communityLink: 'Visit the landing page for authors',
+    callForOther: 'We offer a diverse range of jobs and volunteering opportunities in the fields of software development, design, translation, communications, project management and more.',
+    getInvolved: 'Get involved!'
   }
 };
 export const serverSideStrings = {
@@ -197,18 +198,20 @@ export const loggedInData = {
       subscribe: "Abonnieren",
       subscribeNotifications: "Benachrichtigungen empfangen",
       subscribeNotificationsAndMail: "Benachrichtigungen und E-Mails erhalten",
-      convert: "Umwandeln (beta)",
-      history: "Bearbeitungsverlauf",
-      editAssignments: "Zuweisung zu Themen und Lehrplänen bearbeiten",
-      flagContent: "Inhalt melden",
-      moveToTrash: "In den Papierkorb verschieben",
-      sort: "Unterelemente sortieren",
-      edit: "Bearbeiten",
-      organize: "Baumstruktur bearbeiten",
-      moveToGroupedTextExercise: "Inhalt zu anderer Gruppe verschieben",
-      moveToTextExercise: "Inhalt zu anderer Textaufgabe verschieben",
-      sortEntities: "Inhalt sortieren",
-      newEntity: "Neuer Inhalt"
+      unsubscribeNotifications: 'Unsubscribe',
+      convert: 'Convert (beta)',
+      history: 'History',
+      editAssignments: 'Edit topic and curriculum assignments',
+      flagContent: 'Flag content',
+      moveToTrash: 'Move to trash',
+      restoreContent: 'Restore from trash',
+      sort: 'Sort children',
+      edit: 'Edit',
+      organize: 'Organize',
+      moveToGroupedTextExercise: 'Move content to other grouped-text-exercise',
+      moveToTextExercise: 'Move content to other text-exercise',
+      sortEntities: 'Sort content',
+      newEntity: 'New Entity'
     },
     notifications: {
       loadMore: "Weitere laden",
