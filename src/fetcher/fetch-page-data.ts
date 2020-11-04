@@ -67,7 +67,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
       kind: 'error',
       errorData: {
         code: 404,
-        message: 'Content not found.',
+        message: 'Content not found!',
       },
     }
   }
