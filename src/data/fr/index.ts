@@ -1,4 +1,4 @@
-import { headerData, footerData } from './menu-data';
+import { headerData, footerData, landingSubjectsData } from './menu-data';
 export const instanceData = {
   lang: "fr",
   headerData: headerData,
@@ -134,22 +134,23 @@ export const instanceData = {
 };
 export const instanceLandingData = {
   lang: "fr",
+  subjectsData: landingSubjectsData,
   strings: {
-    vision: "Nous sommes une organisation communautaire à but non lucratif supportant l'apprentissage personnalisé et travaillant à la réalisation d'opportunités éducatives égales. Cette plateforme propose des milliers d'articles d'instruction, des vidéos pédagogiques et des exercices pratiques aux millions d'étudiant(e)s et d'élèves dans le monde entier - complètement gratuit. Maintenant, vous êtes invité de joindre l'équipe Serlo francophone.",
-    learnMore: "En savoir plus",
-    democraticallyStructured: "structure démocratique",
-    nonProfit: "non-lucratif",
+    vision: 'It is our vision to enable personalized learning and provide high quality educational resources worldwide – completely free of charge. Serlo is a grassroots organization inspired by Wikipedia. We already provide thousands of articles, videos and solved exercises for five million German students every year. Now it’s time to go international.',
+    learnMore: 'Learn more',
+    democraticallyStructured: 'democratically structured',
+    nonProfit: 'non-profit',
     transparent: 'transparent',
-    openlyLicensed: "licence libre",
-    adFree: "sans publicité",
-    freeOfCharge: "gratuit",
-    wikiTitle: "Serlo est le Wikipédia pour l'apprentissage",
-    wikiText: "Tout comme Wikipédia, cette plateforme est créée par une communauté d'auteurs engagé(e)s. Serlo Education est gérée et détenue par des équipes décentralisées de bénévoles et de professionnels dans le monde entier.",
-    movementTitle: "Rejoignez notre mouvement pour l'éducation libre",
-    callForAuthors: "Nous cherchons des enseignant(e)s et des éducateur(e)s enthousiastes et passionné(e)s de leur matière. Devenez un(e) auteur sur serlo.org ! Vous pouvez créer du nouveau matériel pédagogique et nous aider à améliorer le contenu existant.",
-    communityLink: "Visitez la page d'accueil d'auteurs",
-    callForOther: "Nous offrons une variété d'emplois et de possibilités de bénévolat dans les domaines du développement de logiciel, de la conception, la traduction, la communication, la gestion de projet et d'autres.",
-    getInvolved: "Participe!"
+    openlyLicensed: 'openly licensed',
+    adFree: 'ad-free',
+    freeOfCharge: 'free of charge',
+    wikiTitle: 'Serlo is the Wikipedia for Learning',
+    wikiText: 'Just like Wikipedia, this platform is created by an engaged community of authors. Serlo Education is run and owned by decentralized teams of volunteers and professionals all over the world.',
+    movementTitle: 'Become a Part of Our Movement for Open Education',
+    callForAuthors: 'We are looking for teachers and enthusiastic educators who are passionate about their subject. Become part of our community to create new learning material and help us improve existing content.',
+    communityLink: 'Visit the landing page for authors',
+    callForOther: 'We offer a diverse range of jobs and volunteering opportunities in the fields of software development, design, translation, communications, project management and more.',
+    getInvolved: 'Get involved!'
   }
 };
 export const serverSideStrings = {
@@ -197,11 +198,13 @@ export const loggedInData = {
       subscribe: 'Subscribe',
       subscribeNotifications: 'Recieve notifications',
       subscribeNotificationsAndMail: 'Recieve notifications and emails',
+      unsubscribeNotifications: 'Unsubscribe',
       convert: 'Convert (beta)',
       history: 'History',
       editAssignments: 'Edit topic and curriculum assignments',
       flagContent: 'Flag content',
       moveToTrash: 'Move to trash',
+      restoreContent: 'Restore from trash',
       sort: 'Sort children',
       edit: 'Edit',
       organize: 'Organize',
