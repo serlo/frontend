@@ -197,6 +197,7 @@ export const loggedInData = {
       subscribe: 'Subscribe',
       subscribeNotifications: 'Recieve notifications',
       subscribeNotificationsAndMail: 'Recieve notifications and emails',
+      unsubscribeNotifications: 'Unsubscribe',
       convert: 'Convert (beta)',
       history: 'History',
       editAssignments: 'Edit topic and curriculum assignments',
