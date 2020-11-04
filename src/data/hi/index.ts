@@ -1,8 +1,9 @@
-import { headerData, footerData } from './menu-data';
+import { headerData, footerData, landingSubjectsData } from './menu-data';
 export const instanceData = {
   lang: "hi",
   headerData: headerData,
   footerData: footerData,
+  landingData: landingSubjectsData,
   strings: {
     header: {
       slogan: "ओपन लर्निंग प्लेटफॉर्म",

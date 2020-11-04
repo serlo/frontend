@@ -1,4 +1,4 @@
-import { headerData, footerData } from './menu-data';
+import { headerData, footerData, landingSubjectsData } from './menu-data';
 export const instanceData = {
   lang: "es",
   headerData: headerData,
@@ -134,6 +134,7 @@ export const instanceData = {
 };
 export const instanceLandingData = {
   lang: "es",
+  subjectsData: landingSubjectsData,
   strings: {
     vision: "Somos una organización de base comunitaria sin ánimo de lucro que apoya el aprendizaje personalizado y trabajando por la igualdad de oportunidades educativas. Esta plataforma de aprendizaje ofrece miles de artículos de instrucción, videos de aprendizaje y ejercicios de práctica para millones de estudiantes en todo el mundo - completamente gratis. Ahora es el momento de unirte a nosotros en tu idioma.",
     learnMore: "Aprende más",

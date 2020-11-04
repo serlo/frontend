@@ -109,8 +109,22 @@ export interface LandingPage {
 
 export interface InstanceLandingData {
   lang: string
+  subjectsData: LandingSubjectsData
   strings: typeof instanceLandingData['strings']
 }
+
+export interface LandingSubjectsData {
+  subjects: LandingSubjectLink[]
+  additionalLinks: LandingSubjectLink[]
+}
+
+export interface LandingSubjectLink {
+  title: string
+  url: string
+  icon?: LandingSubjectIcon
+}
+
+export type LandingSubjectIcon = 'math' | 'abc' | 'biology' | 'sustainability'
 
 // The same for donation, search and notifications page:
 

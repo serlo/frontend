@@ -10,49 +10,55 @@ import BiologySVG from '@/assets-webkit/img/subjects-biology.svg'
 import BlankSVG from '@/assets-webkit/img/subjects-blank.svg'
 import MathSVG from '@/assets-webkit/img/subjects-math.svg'
 import SustainabilitySVG from '@/assets-webkit/img/subjects-sustainability.svg'
+import { LandingSubjectsData } from '@/data-types'
 
-export function LandingSubjects() {
+interface LandingSubjectsProps {
+  data: LandingSubjectsData
+}
+
+export function LandingSubjects({ data }: LandingSubjectsProps) {
   return (
     <>
       <SubjectsWrapper>
-        <Subject
-          url="/mathe"
-          title="Mathematik lernen"
-          subjectSVG={<MathSVG className="math" />}
-        />
-        <Subject
-          url="/abc"
-          title="Alphabetisierung"
-          subjectSVG={<AbcSVG className="abc" />}
-        />
-        <Subject
-          url="/nachhaltigkeit"
-          title="Nachhaltigkeit lernen"
-          subjectSVG={<SustainabilitySVG className="sus" />}
-        />
-        <Subject
-          url="/biologie"
-          title="Biologie lernen"
-          subjectSVG={<BiologySVG className="bio" />}
-        />
+        {data.subjects.map((subject) => (
+          <Subject
+            title={subject.title}
+            key={subject.title}
+            url={subject.url}
+            subjectSVG={renderIcon(subject.icon)}
+          />
+        ))}
       </SubjectsWrapper>
 
-      <SubjectsWrapper extraLinks>
-        <Subject
-          url="/eltern"
-          title="Einstieg für Eltern"
-          subjectSVG={<BlankSVG />}
-          alwaysShowArrow
-        />
-        <Subject
-          url="/lehrkraefte"
-          title="Einstieg für Lehrer*innen"
-          subjectSVG={<BlankSVG />}
-          alwaysShowArrow
-        />
-      </SubjectsWrapper>
+      {renderAdditionalLinks()}
     </>
   )
+
+  function renderAdditionalLinks() {
+    if (data.additionalLinks.length === 0) return null
+    return (
+      <SubjectsWrapper extraLinks>
+        {data.additionalLinks.map((link) => (
+          <Subject
+            title={link.title}
+            key={link.title}
+            url={link.url}
+            subjectSVG={<BlankSVG />}
+            alwaysShowArrow
+          />
+        ))}
+      </SubjectsWrapper>
+    )
+  }
+
+  function renderIcon(icon?: string) {
+    if (icon === undefined) return <BlankSVG />
+    if (icon == 'math') return <MathSVG className="math" />
+    if (icon == 'abc') return <AbcSVG className="abc" />
+    if (icon == 'sustainability') return <SustainabilitySVG className="sus" />
+    if (icon == 'biology') return <BiologySVG className="bio" />
+    return <BlankSVG />
+  }
 }
 
 interface SubjectProps {
@@ -86,10 +92,9 @@ const SubjectsWrapper = styled.div<{ extraLinks?: boolean }>`
 
   @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
     ${makeResponsivePadding}
-    margin-left: 35px;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: start;
+    justify-content: center;
   }
 
   @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
@@ -100,6 +105,7 @@ const SubjectsWrapper = styled.div<{ extraLinks?: boolean }>`
     ${(props) =>
       props.extraLinks &&
       css`
+        margin-left: 16px;
         justify-content: start;
         && > a > svg {
           display: none;
@@ -107,6 +113,9 @@ const SubjectsWrapper = styled.div<{ extraLinks?: boolean }>`
         & > a > h2 {
           margin-right: 40px;
           font-size: 1.3rem;
+        }
+        & > a {
+          margin: 0;
         }
       `}
   }
@@ -147,12 +156,12 @@ const SubjectLink = styled(Link)`
     }
   }
   @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
-    width: 43%;
+    min-width: 25%;
+    /* max-width: 30%; */
     text-align: center;
-    min-width: auto;
-    width: auto;
-  }
 
+    margin: 0 auto;
+  }
   @media (max-width: 400px) {
     & svg.blank {
       display: none;

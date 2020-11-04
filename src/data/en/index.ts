@@ -1,4 +1,4 @@
-import { headerData, footerData } from './menu-data';
+import { headerData, footerData, landingSubjectsData } from './menu-data';
 export const instanceData = {
   lang: 'en',
   headerData: headerData,
@@ -134,6 +134,7 @@ export const instanceData = {
 };
 export const instanceLandingData = {
   lang: 'en',
+  subjectsData: landingSubjectsData,
   strings: {
     vision: 'It is our vision to enable personalized learning and provide high quality educational resources worldwide – completely free of charge. Serlo is a grassroots organization inspired by Wikipedia. We already provide thousands of articles, videos and solved exercises for five million German students every year. Now it’s time to go international.',
     learnMore: 'Learn more',

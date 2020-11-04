@@ -7,6 +7,7 @@ import { HeadTags } from '../head-tags'
 import { PrinciplesGraphic } from '../landing/principles-graphic'
 import { StyledP } from '../tags/styled-p'
 import ParticipateSVG from '@/assets-webkit/img/footer-participate.svg'
+import { LandingSubjects } from '@/components/landing/landing-subjects'
 import { useInstanceData } from '@/contexts/instance-context'
 import { InstanceLandingData } from '@/data-types'
 import { makeLightButton, makeResponsivePadding } from '@/helper/css'
@@ -17,12 +18,12 @@ export interface LandingInternationalProps {
 
 export function LandingInternational({ data }: LandingInternationalProps) {
   const landingStrings = data.strings
+  const subjectsData = data.subjectsData
   const { strings } = useInstanceData()
 
   return (
     <>
       <HeadTags data={{ title: strings.header.slogan }} />
-
       <Section>
         <LandingP>{landingStrings.vision}</LandingP>
         <Button href="/serlo">
@@ -30,6 +31,9 @@ export function LandingInternational({ data }: LandingInternationalProps) {
           <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
         </Button>
       </Section>
+      <SubjectsSection>
+        <LandingSubjects data={subjectsData} />
+      </SubjectsSection>
 
       <PrinciplesSection>
         <PrinciplesGraphic strings={landingStrings} />
@@ -65,6 +69,10 @@ export function LandingInternational({ data }: LandingInternationalProps) {
     </>
   )
 }
+
+const SubjectsSection = styled.section`
+  margin-bottom: 60px;
+`
 
 const LandingP = styled(StyledP)`
   margin-left: 0;
