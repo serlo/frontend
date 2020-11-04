@@ -47,6 +47,9 @@ export interface Article extends EntityWithTaxonomyTerms {
       'title' | 'content' | 'metaTitle' | 'metaDescription'
     >
   >
+  revisions: {
+    totalCount: number
+  }
 }
 
 export interface Video extends EntityWithTaxonomyTerms {
@@ -428,6 +431,9 @@ export const dataQuery = gql`
       ... on Article {
         currentRevision {
           ...articleRevision
+        }
+        revisions(unrevised: true) {
+          totalCount
         }
       }
 
