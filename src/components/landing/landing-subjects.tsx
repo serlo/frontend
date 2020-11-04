@@ -8,6 +8,7 @@ import { Link } from '../content/link'
 import AbcSVG from '@/assets-webkit/img/subjects-abc.svg'
 import BiologySVG from '@/assets-webkit/img/subjects-biology.svg'
 import BlankSVG from '@/assets-webkit/img/subjects-blank.svg'
+import ChemistrySVG from '@/assets-webkit/img/subjects-chemistry.svg'
 import MathSVG from '@/assets-webkit/img/subjects-math.svg'
 import SustainabilitySVG from '@/assets-webkit/img/subjects-sustainability.svg'
 import { LandingSubjectsData } from '@/data-types'
@@ -57,6 +58,7 @@ export function LandingSubjects({ data }: LandingSubjectsProps) {
     if (icon == 'abc') return <AbcSVG className="abc" />
     if (icon == 'sustainability') return <SustainabilitySVG className="sus" />
     if (icon == 'biology') return <BiologySVG className="bio" />
+    if (icon == 'chemistry') return <ChemistrySVG className="chem" />
     return <BlankSVG />
   }
 }
@@ -139,6 +141,21 @@ const jump = keyframes`
   }
 `
 
+const hickup = keyframes`
+  33% {
+    transform: translateY(0) rotate(0);
+  }
+  44% {
+    transform: translateY(-0.25rem) rotate(0.2deg);
+  }
+  70% {
+    transform: translateY(-0rem) rotate(-0.4deg);
+  }
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+`
+
 const SubjectLink = styled(Link)`
   display: block;
   border-bottom: 1px solid ${(props) => props.theme.colors.lightblue};
@@ -172,12 +189,15 @@ const SubjectLink = styled(Link)`
   & svg.math,
   & svg.abc,
   & svg.sus,
+  & svg.chem,
   & svg.blank {
     .blue {
       fill: ${(props) => props.theme.colors.lighterblue};
       transition: all 0.2s ease-in-out;
     }
-    .green {
+    .green,
+    .drop,
+    .pipette path {
       fill: #becd2b;
       transition: all 0.2s ease-in-out;
     }
@@ -209,6 +229,28 @@ const SubjectLink = styled(Link)`
     }
   }
 
+  .pipette path,
+  .flask path {
+    fill: none;
+    stroke: #000;
+    stroke-linecap: round;
+    stroke-width: 1.1px;
+  }
+
+  .contents {
+    transition: 0.7s ease-in all !important;
+  }
+  .pipette {
+    transform: translateY(-5px);
+    transition: 0.2s ease-in all;
+    transform-origin: 50% 50%;
+  }
+  .drop {
+    opacity: 0;
+    transition: 0.2s ease-in transform;
+    transform: scale(2) translateY(5px);
+    transform-origin: 50% 50%;
+  }
   & .math {
     transition-duration: 0.6s;
   }
@@ -241,6 +283,26 @@ const SubjectLink = styled(Link)`
     } /* TODO: Helperblue */
     && .green {
       fill: #becd2b;
+    }
+
+    & .chem {
+      .flask {
+        animation: ${hickup} 0.7s ease-in-out;
+      }
+      .contents {
+        fill: #becd2b !important;
+        animation: ${hickup} 0.7s ease-in-out;
+      }
+      .pipette {
+        transform: translateY(0) rotate(-3deg);
+      }
+      .pipette .pipette-contents {
+        opacity: 0;
+      }
+      .drop {
+        transform: scale(2) translateY(40px);
+        opacity: 1;
+      }
     }
   }
 `
