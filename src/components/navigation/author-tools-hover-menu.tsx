@@ -1,4 +1,5 @@
 import Tippy from '@tippyjs/react'
+import cookie from 'cookie'
 import { gql } from 'graphql-request'
 import { useRouter } from 'next/router'
 import React from 'react'
@@ -296,7 +297,17 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
 
   function trash(id = data.id) {
     // todo: use graphql mutation
-    return renderLi(`/uuid/trash/${id}`, loggedInStrings.authorMenu.moveToTrash)
+    const cookies = cookie.parse(
+      typeof window === 'undefined' ? '' : document.cookie
+    )
+    return (
+      <Li>
+        <form method="post" action={`/uuid/trash/${id}`}>
+          <input type="hidden" name="csrf" value={cookies['CSRF']} />
+          <button>{loggedInStrings.authorMenu.moveToTrash}</button>
+        </form>
+      </Li>
+    )
   }
 
   function sort(id = data.id) {
