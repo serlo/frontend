@@ -4,7 +4,6 @@ import { InstanceData, LandingSubjectsData } from '@/data-types'
 export const landingSubjectsData: LandingSubjectsData = {
   subjects: [
     { url: '/mathe', title: 'Mathematik lernen', icon: 'math' },
-    { url: '/abc', title: 'Alphabetisierung', icon: 'abc' },
     {
       url: '/nachhaltigkeit',
       title: 'Nachhaltigkeit lernen',
