@@ -3,6 +3,7 @@ export const instanceData = {
   lang: "ta",
   headerData: headerData,
   footerData: footerData,
+  landingData: landingSubjectsData,
   strings: {
     header: {
       slogan: "அனைவருக்கும் திறந்த உரிமம் உள்ள ஓர் இணையத்தளம்",

@@ -3,6 +3,7 @@ export const instanceData = {
   lang: "hi",
   headerData: headerData,
   footerData: footerData,
+  landingData: landingSubjectsData,
   strings: {
     header: {
       slogan: "ओपन लर्निंग प्लेटफॉर्म",
