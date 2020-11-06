@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { PrivacyWrapper } from './privacy-wrapper'
+
 export interface GeogebraProps {
   id: string
 }
@@ -67,13 +69,19 @@ export function Geogebra({ id }: GeogebraProps) {
     )
   }
   return (
-    <GeogebraContainer ratio={data.ratio}>
-      <GeogebraFrame
-        title={id}
-        scrolling="no"
-        src={'https://www.geogebra.org/material/iframe/id/' + id}
-      />
-    </GeogebraContainer>
+    // TODO: Get real applet preview image
+    <PrivacyWrapper
+      type="applet"
+      previewImageUrl="https://cdn.geogebra.org/static/img/GeoGebra-logo.png"
+    >
+      <GeogebraContainer ratio={data.ratio}>
+        <GeogebraFrame
+          title={id}
+          scrolling="no"
+          src={'https://www.geogebra.org/material/iframe/id/' + id}
+        />
+      </GeogebraContainer>
+    </PrivacyWrapper>
   )
 }
 
@@ -93,10 +101,11 @@ const GeogebraFrame = styled.iframe`
   width: 100%;
   height: 100%;
   border: none;
+  z-index: 6;
+  background-color: rgba(0, 0, 0, 0.3);
 `
 
 const GeogebraContainer = styled.div<{ ratio: number }>`
-  position: relative;
   padding: 0;
   padding-top: ${(props) => 100 / props.ratio}%;
   display: block;
