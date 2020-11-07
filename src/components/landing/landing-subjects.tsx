@@ -11,7 +11,7 @@ import BlankSVG from '@/assets-webkit/img/subjects-blank.svg'
 import ChemistrySVG from '@/assets-webkit/img/subjects-chemistry.svg'
 import MathSVG from '@/assets-webkit/img/subjects-math.svg'
 import SustainabilitySVG from '@/assets-webkit/img/subjects-sustainability.svg'
-import { LandingSubjectsData } from '@/data-types'
+import { LandingSubjectLink, LandingSubjectsData } from '@/data-types'
 
 interface LandingSubjectsProps {
   data: LandingSubjectsData
@@ -21,14 +21,7 @@ export function LandingSubjects({ data }: LandingSubjectsProps) {
   return (
     <>
       <SubjectsWrapper>
-        {data.subjects.map((subject) => (
-          <Subject
-            title={subject.title}
-            key={subject.title}
-            url={subject.url}
-            subjectSVG={renderIcon(subject.icon)}
-          />
-        ))}
+        {data.subjects.map((subject) => renderSubject(subject))}
       </SubjectsWrapper>
 
       {renderAdditionalLinks()}
@@ -39,15 +32,7 @@ export function LandingSubjects({ data }: LandingSubjectsProps) {
     if (data.additionalLinks.length === 0) return null
     return (
       <SubjectsWrapper extraLinks>
-        {data.additionalLinks.map((link) => (
-          <Subject
-            title={link.title}
-            key={link.title}
-            url={link.url}
-            subjectSVG={<BlankSVG />}
-            alwaysShowArrow
-          />
-        ))}
+        {data.additionalLinks.map((link) => renderSubject(link, true))}
       </SubjectsWrapper>
     )
   }
@@ -61,30 +46,26 @@ export function LandingSubjects({ data }: LandingSubjectsProps) {
     if (icon == 'chemistry') return <ChemistrySVG className="chem" />
     return <BlankSVG />
   }
-}
 
-interface SubjectProps {
-  url: string
-  title: string
-  subjectSVG: React.ReactNode
-  alwaysShowArrow?: boolean
-}
-
-function Subject({ url, title, subjectSVG, alwaysShowArrow }: SubjectProps) {
-  return (
-    <SubjectLink href={url}>
-      <>
-        {' '}
-        {subjectSVG}
-        <Header>
-          {title}
-          <StyledIcon alwaysShow={alwaysShowArrow}>
-            <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
-          </StyledIcon>
-        </Header>
-      </>
-    </SubjectLink>
-  )
+  function renderSubject(
+    { title, url, icon }: LandingSubjectLink,
+    alwaysShowArrow?: boolean
+  ) {
+    return (
+      <SubjectLink key={title} href={url}>
+        <>
+          {' '}
+          {renderIcon(icon)}
+          <Header>
+            {title}
+            <StyledIcon alwaysShow={alwaysShowArrow}>
+              <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
+            </StyledIcon>
+          </Header>
+        </>
+      </SubjectLink>
+    )
+  }
 }
 
 const SubjectsWrapper = styled.div<{ extraLinks?: boolean }>`
