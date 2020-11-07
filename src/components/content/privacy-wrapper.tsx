@@ -26,7 +26,6 @@ export function PrivacyWrapper({
   previewImageUrl,
 }: PrivacyWrapperProps) {
   const [showIframe, setShowIframe] = React.useState(false)
-  // const [fallback, setUseFallback] = React.useState(false)
 
   const addIframe = () => {
     if (showIframe) return
@@ -42,7 +41,6 @@ export function PrivacyWrapper({
 
   return (
     <Wrapper>
-      {/* Maybe add when URLs come from CF worker <link rel="preload" href={posterUrl} as="image" /> */}
       {renderPlaceholder()}
       {showIframe && children}
     </Wrapper>
@@ -144,14 +142,4 @@ const Wrapper = styled.div`
   background-position: center center;
   background-size: cover;
   cursor: pointer;
-
-  /* responsive iframe with a 16:9 aspect ratio
-    thanks https://css-tricks.com/responsive-iframes/
-  */
-  /* &:after {
-    content: '';
-    position: absolute;
-    display: block;
-    padding-bottom: calc(100% / (16 / 9));
-  } */
 `
