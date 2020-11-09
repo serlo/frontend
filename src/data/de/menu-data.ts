@@ -4,16 +4,13 @@ import { InstanceData, LandingSubjectsData } from '@/data-types'
 export const landingSubjectsData: LandingSubjectsData = {
   subjects: [
     { url: '/mathe', title: 'Mathematik lernen', icon: 'math' },
-
-    { url: '/abc', title: 'Alphabetisierung', icon: 'abc' },
-
     {
       url: '/nachhaltigkeit',
       title: 'Nachhaltigkeit lernen',
       icon: 'sustainability',
     },
-
     { url: '/biologie', title: 'Biologie lernen', icon: 'biology' },
+    { url: '/chemie', title: 'Chemie lernen', icon: 'chemistry' },
   ],
   additionalLinks: [
     { url: '/eltern', title: 'Einstieg für Eltern' },
