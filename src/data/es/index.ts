@@ -14,8 +14,8 @@ export const instanceData = {
       summaryText: "Somos una comunidad de visionarios que trabajan sin descanso para que todo el mundo tenga acceso gratuito a una educación excelente.",
       learnMore: "Aprende más",
       participate: "Únete a la causa",
-      donate: "Donar",
-      toTop: "Ir arriba"
+      donate: "Donaciones",
+      toTop: "a la cima"
     },
     categories: {
       articles: "Artículos",
@@ -42,7 +42,7 @@ export const instanceData = {
       user: "Usuario",
       video: "Vídeo",
       topicFolder: "Carpeta de ejercicios",
-      comment: "Comentar",
+      comment: "Comentario",
       revision: "Revisión",
       thread: "Hilo de conversación",
       topic: "Tema",
@@ -50,13 +50,13 @@ export const instanceData = {
     },
     share: {
       button: "Compartir",
-      title: "¡Comparte!",
-      copyLink: "Copiar enlace",
-      copySuccess: "¡Enlace copiado!",
+      title: "Compartir",
+      copyLink: "Copiar link",
+      copySuccess: "Enlace copiado",
       close: "Cerca"
     },
     edit: {
-      button: "Modificar"
+      button: "Editar"
     },
     license: {
       readMore: "Información"
@@ -93,7 +93,7 @@ export const instanceData = {
     },
     comments: {
       question: "¿Tienes una pregunta?",
-      commentsOne: "Comentar",
+      commentsOne: "Comentario",
       commentsMany: "Comentarios",
       submit: "Enviar",
       reportComment: "Denunciar comentario",
@@ -139,18 +139,18 @@ export const instanceLandingData = {
     vision: "Somos una organización de base comunitaria sin ánimo de lucro que apoya el aprendizaje personalizado y trabajando por la igualdad de oportunidades educativas. Esta plataforma de aprendizaje ofrece miles de artículos de instrucción, videos de aprendizaje y ejercicios de práctica para millones de estudiantes en todo el mundo - completamente gratis. Ahora es el momento de unirte a nosotros en tu idioma.",
     learnMore: "Aprende más",
     democraticallyStructured: "estructurado democráticamente",
-    nonProfit: "sin fines de lucro",
+    nonProfit: "sin ánimo de lucro",
     transparent: "transparente",
     openlyLicensed: "con licencia abierta",
-    adFree: "sin anuncios",
-    freeOfCharge: "gratuido",
+    adFree: "sin publicidad",
+    freeOfCharge: "gratuito",
     wikiTitle: "Serlo es la Wikipedia para el Aprendizaje",
-    wikiText: "Al igual que Wikipedia, esta plataforma es creada por una comunidad de autores comprometidos. \"Serlo Education\" está dirigida y es propiedad de grupos descentralizados de voluntarios y profesionales en todo el mundo.",
+    wikiText: "Al igual que Wikipedia, esta plataforma es creada por una comunidad de autores comprometidos con la educación. “Serlo Education” es propiedad de varios equipos descentralizados de voluntarios y profesionales, y manejado por ellos mismos alrededor del mundo.",
     movementTitle: "Conviértete en Parte de Nuestro Movimiento para la Educación Abierta",
     callForAuthors: "Estamos buscando profesores, maestros y educadores entusiastas a quienes les apasionen las materias que enseñan. ¡Conviértete en un autor en serlo.org! Tu puedes crear nuevo material de aprendizaje y ayudarnos a mejorar el contenido existente.",
-    communityLink: "Visita la página de inicio para autores",
-    callForOther: "Nosotros ofrecemos una diversa gama de trabajo y oportunidades de voluntariado, dentro del campo del desarrollo de software, diseño, traducción, comunicación, administración de proyectos, y mucho más.",
-    getInvolved: "Participa!"
+    communityLink: "Visita la página para autores",
+    callForOther: "Nosotros ofrecemos una diversa gama de trabajo y oportunidades de voluntariado, dentro del campo del desarrollo de software, diseño, traducción, comunicación, administración de proyectos, y más.",
+    getInvolved: "¡Participa!"
   }
 };
 export const serverSideStrings = {
@@ -163,7 +163,7 @@ export const loggedInData = {
     icon: 'notifications'
   }, {
     url: '',
-    title: "Benutzer",
+    title: "user",
     icon: 'user',
     children: [{
       url: '/user/public',
