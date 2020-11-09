@@ -1,4 +1,4 @@
-import { landingSubjectsData, headerData, footerData } from './menu-data';
+import { headerData, footerData, landingSubjectsData } from './menu-data';
 export const instanceData = {
   lang: "de",
   headerData: headerData,
@@ -10,9 +10,9 @@ export const instanceData = {
       login: "Anmelden"
     },
     footer: {
-      summaryHeading: "Serlo.org ist die Wikipedia fürs Lernen",
+      summaryHeading: "Serlo.org ist die Wikipedia fürs Lernen.",
       summaryText: "Wir sind eine engagierte Gemeinschaft, die daran arbeitet, hochwertige Bildung weltweit frei verfügbar zu machen.",
-      learnMore: "Mehr Erfahren",
+      learnMore: "Mehr erfahren",
       participate: "Mitmachen",
       donate: "Spenden",
       toTop: "Nach oben"
@@ -128,7 +128,7 @@ export const instanceData = {
       backToHome: "Zur Startseite"
     },
     print: {
-      warning: 'Important: To make sure all images and formulas print, please scroll down to the end of the page once. Thank you!'
+      warning: "Wichtig: Damit alle Bilder und Formeln gedruckt werden, scrolle bitte einmal bis zum Ende der Seite. Vielen Dank!"
     }
   }
 };
@@ -173,13 +173,13 @@ export const loggedInData = {
       title: "Profil bearbeiten"
     }, {
       url: '/auth/password/change',
-      title: "Passwort aktualisieren"
+      title: "Passwort ändern"
     }, {
       url: '/event/history/user/me',
       title: "Meine Aktivitäten"
     }, {
       url: '/api/auth/logout',
-      title: "Ausloggen"
+      title: "Abmelden"
     }]
   }],
   strings: {
@@ -198,11 +198,13 @@ export const loggedInData = {
       subscribe: "Abonnieren",
       subscribeNotifications: "Benachrichtigungen empfangen",
       subscribeNotificationsAndMail: "Benachrichtigungen und E-Mails erhalten",
+      unsubscribeNotifications: "Abbestellen",
       convert: "Umwandeln (beta)",
       history: "Bearbeitungsverlauf",
       editAssignments: "Zuweisung zu Themen und Lehrplänen bearbeiten",
       flagContent: "Inhalt melden",
       moveToTrash: "In den Papierkorb verschieben",
+      restoreContent: "Aus dem Papierkorb wiederherstellen",
       sort: "Unterelemente sortieren",
       edit: "Bearbeiten",
       organize: "Baumstruktur bearbeiten",

@@ -1,9 +1,8 @@
 import { headerData, footerData, landingSubjectsData } from './menu-data';
 export const instanceData = {
-  lang: "hi",
+  lang: 'en',
   headerData: headerData,
   footerData: footerData,
-  landingData: landingSubjectsData,
   strings: {
     header: {
       slogan: "ओपन लर्निंग प्लेटफॉर्म",
@@ -135,6 +134,7 @@ export const instanceData = {
 };
 export const instanceLandingData = {
   lang: "hi",
+  subjectsData: landingSubjectsData,
   strings: {
     vision: "हम नॉनप्रॉफिट आर्गेनाइजेशन संगठन हैं जो व्यक्तिगत शिक्षा का समर्थन करते हैं और समान शैक्षणिक अवसरों के लिए काम करते हैं। यह सीखने का मंच दुनिया भर के लाखों छात्रों के लिए हजारों निर्देशक लेख, वीडियो के माध्यम से सीखना और अभ्यास प्रदान करता है - पूरी तरह से नि: शुल्क। अब हिंदी में हमसे जुड़ने का समय है।",
     learnMore: "और जानो",
@@ -198,11 +198,13 @@ export const loggedInData = {
       subscribe: "सदस्य बनें",
       subscribeNotifications: "सूचनाएं प्राप्त करें",
       subscribeNotificationsAndMail: "ईमेल के माध्यम से सूचनाएं प्राप्त करें ।",
+      unsubscribeNotifications: "सदस्यता रद्द",
       convert: "धर्मांतरित (बीटा)",
       history: "इतिहास",
       editAssignments: "विषय और पाठ्यचर्या असाइनमेंट संपादित करें",
       flagContent: "सामग्री फ्लैग करें",
       moveToTrash: "रद्दी में डालें",
+      restoreContent: "कचरे से पुनर्स्थापित करें",
       sort: "सोर्ट चिल्ड्रन",
       edit: "संपादित",
       organize: "आयोजन",
