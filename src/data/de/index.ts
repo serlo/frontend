@@ -6,8 +6,8 @@ export const instanceData = {
   strings: {
     header: {
       slogan: "Die freie Lernplattform",
-      search: "Suchen",
-      login: 'Login'
+      search: "Suche",
+      login: "Anmelden"
     },
     footer: {
       summaryHeading: "Serlo.org ist die Wikipedia fürs Lernen.",
@@ -43,7 +43,7 @@ export const instanceData = {
       video: 'Video',
       topicFolder: "Aufgabensammlung",
       comment: "Kommentar",
-      revision: "Korrektur",
+      revision: "Bearbeitung",
       thread: "Diskussion",
       topic: "Thema",
       subject: "Fach"
@@ -67,7 +67,7 @@ export const instanceData = {
       next: "Weiter"
     },
     content: {
-      show: "Anzeigen",
+      show: "anzeigen",
       hide: "ausblenden",
       prerequisite: "Für diese Aufgabe benötigst Du folgendes Grundwissen:",
       task: "Aufgabe",
@@ -93,7 +93,7 @@ export const instanceData = {
     },
     comments: {
       question: "Hast du eine Frage?",
-      commentsOne: "Kommentieren",
+      commentsOne: "Kommentar",
       commentsMany: "Kommentare",
       submit: "Abschicken",
       reportComment: "Kommentar melden",
@@ -176,7 +176,7 @@ export const loggedInData = {
       title: "Passwort ändern"
     }, {
       url: '/event/history/user/me',
-      title: "Aktuelle Aktivitäten"
+      title: "Meine Aktivitäten"
     }, {
       url: '/api/auth/logout',
       title: "Abmelden"
@@ -185,7 +185,7 @@ export const loggedInData = {
   strings: {
     tools: "Weitere Tools",
     authorMenu: {
-      log: "Verlauf",
+      log: "Aktivitätenlog",
       settings: "Einstellungen",
       moveCoursePage: "Kursseite in einen anderen Kurs verschieben",
       thisCoursePage: "Diese Kursseite",
