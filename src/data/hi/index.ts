@@ -59,7 +59,7 @@ export const instanceData = {
       button: "संपादित करें"
     },
     license: {
-      readMore: 'Info'
+      readMore: "सूचना"
     },
     course: {
       showPages: "पाठ्यक्रम का अवलोकन करें",
@@ -67,13 +67,13 @@ export const instanceData = {
       next: "अगला"
     },
     content: {
-      show: 'show',
+      show: "दिखाएँ",
       hide: "छिपाएं",
       prerequisite: "इस कार्य के लिए आपको निम्नलिखित बुनियादी ज्ञान की आवश्यकता है",
       task: "कार्य",
       right: "सही!",
       wrong: "गलत",
-      check: 'Check',
+      check: "जाँच करें",
       yourAnswer: "आपका उत्तर",
       chooseOption: "किसी एक विकल्प पर क्लिक करें",
       trashedNotice: "यह सामग्री हटाने के लिए चिह्नित है"
