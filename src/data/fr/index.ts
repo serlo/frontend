@@ -1,18 +1,17 @@
 import { headerData, footerData, landingSubjectsData } from './menu-data';
 export const instanceData = {
-  lang: "fr",
+  lang: "et",
   headerData: headerData,
   footerData: footerData,
-  landingData: landingSubjectsData,
   strings: {
     header: {
       slogan: "La plateforme d'apprentissage libre",
-      search: "Recherche",
+      search: "Chercher",
       login: "Se connecter"
     },
     footer: {
       summaryHeading: "Serlo.org est le Wikipedia pour l'apprentissage.",
-      summaryText: "Nous sommes une communauté de visionnaires qui travaille sans relâche pour offrir une éducation gratuite et accessible à tous.",
+      summaryText: "Nous sommes une communauté de visionnaires qui travaillent sans relâche pour offrir une éducation gratuite accessible à tous.",
       learnMore: "En savoir plus",
       participate: "Rejoignez-nous",
       donate: "Faire un don",
@@ -20,32 +19,32 @@ export const instanceData = {
     },
     categories: {
       articles: 'Articles',
-      courses: 'Courses',
-      videos: 'Videos',
-      applets: 'Applets',
+      courses: "Cours",
+      videos: "Vidéos",
+      applets: "Applet",
       folders: 'Folders',
       exercises: "Exercices",
-      events: 'Events'
+      events: "Évènements"
     },
     entities: {
       applet: 'Applet',
       article: 'Article',
-      course: 'Course',
+      course: "Cours",
       coursePage: 'Course Page',
       event: 'Event',
       exercise: 'Exercise',
       exerciseGroup: 'Exercise Group',
-      folder: 'Folder',
+      folder: "Dossier",
       groupedExercise: 'Grouped Exercise',
       page: 'Page',
       solution: 'Solution',
       taxonomyTerm: 'Taxonomy Term',
-      user: 'User',
-      video: 'Video',
-      topicFolder: 'Exercise folder',
-      comment: 'Comment',
-      revision: 'Revision',
-      thread: 'Thread',
+      user: "Benutzer",
+      video: "Vidéo",
+      topicFolder: "Dossie d'éxercices",
+      comment: "Commentaire",
+      revision: "Révision",
+      thread: "Fil",
       topic: 'Topic',
       subject: 'Subject'
     },
@@ -72,12 +71,12 @@ export const instanceData = {
       hide: "cacher",
       prerequisite: "Pour cet éxercice tu as besoin des connaissances de base suivantes:",
       task: 'Task',
-      right: 'Right',
-      wrong: 'Wrong',
-      check: 'Check',
-      yourAnswer: 'Your answer…',
-      chooseOption: 'Click on one of the options.',
-      trashedNotice: 'This content is marked for deletion.'
+      right: "Correct",
+      wrong: "Incorrect",
+      check: "Vérifier",
+      yourAnswer: "Votre réponse...",
+      chooseOption: "Sélectionnez une des options :",
+      trashedNotice: "Ce contenu est marqué pour être supprimé."
     },
     cookie: {
       part1: "En utilisant ce site Web, vous déclarez que vous acceptez",
@@ -94,22 +93,22 @@ export const instanceData = {
     },
     comments: {
       question: 'Do you have a question?',
-      commentsOne: 'Comment',
-      commentsMany: 'Comments',
-      submit: 'Submit',
+      commentsOne: "Commentaire",
+      commentsMany: "Commentaires",
+      submit: "Soumettre",
       reportComment: 'Report comment',
       archiveThread: 'Archive thread',
       deleteThread: 'Delete thread',
       deleteComment: 'Delete comment',
       postedOn: 'Posted on',
       placeholder: "Your question or suggestion…",
-      placeholderReply: "Your answer…"
+      placeholderReply: "Votre réponse..."
     },
     revisions: {
       toOverview: "Back to overview",
-      changes: "Changes",
-      title: "Title",
-      content: "Content",
+      changes: "Modifications",
+      title: "Titre",
+      content: "Contenu",
       metaTitle: "Meta Title",
       metaDescription: "Meta Description",
       compare: "Compare",
@@ -134,24 +133,24 @@ export const instanceData = {
   }
 };
 export const instanceLandingData = {
-  lang: "fr",
+  lang: "et",
   subjectsData: landingSubjectsData,
   strings: {
-    vision: 'It is our vision to enable personalized learning and provide high quality educational resources worldwide – completely free of charge. Serlo is a grassroots organization inspired by Wikipedia. We already provide thousands of articles, videos and solved exercises for five million German students every year. Now it’s time to go international.',
-    learnMore: 'Learn more',
-    democraticallyStructured: 'democratically structured',
-    nonProfit: 'non-profit',
+    vision: "Nous sommes une organisation communautaire à but non lucratif supportant l'apprentissage personnalisé et travaillant à la réalisation d'opportunités éducatives égales. Cette plateforme propose des milliers d'articles d'instruction, des vidéos pédagogiques et des exercices pratiques aux millions d'étudiant(e)s et d'élèves dans le monde entier - complètement gratuit. Maintenant, vous êtes invité de joindre l'équipe Serlo francophone.",
+    learnMore: "En savoir plus",
+    democraticallyStructured: "structure démocratique",
+    nonProfit: "non-lucratif",
     transparent: 'transparent',
-    openlyLicensed: 'openly licensed',
-    adFree: 'ad-free',
-    freeOfCharge: 'free of charge',
-    wikiTitle: 'Serlo is the Wikipedia for Learning',
-    wikiText: 'Just like Wikipedia, this platform is created by an engaged community of authors. Serlo Education is run and owned by decentralized teams of volunteers and professionals all over the world.',
-    movementTitle: 'Become a Part of Our Movement for Open Education',
-    callForAuthors: 'We are looking for teachers and enthusiastic educators who are passionate about their subject. Become part of our community to create new learning material and help us improve existing content.',
-    communityLink: 'Visit the landing page for authors',
-    callForOther: 'We offer a diverse range of jobs and volunteering opportunities in the fields of software development, design, translation, communications, project management and more.',
-    getInvolved: 'Get involved!'
+    openlyLicensed: "licence libre",
+    adFree: "sans publicité",
+    freeOfCharge: "gratuit",
+    wikiTitle: "Serlo est le Wikipédia pour l'apprentissage",
+    wikiText: "Tout comme Wikipédia, cette plateforme est créée par une communauté d'auteurs engagé(e)s. Serlo Education est gérée et détenue par des équipes décentralisées de bénévoles et de professionnels dans le monde entier.",
+    movementTitle: "Devenez partie de notre mouvement pour l'éducation ouverte",
+    callForAuthors: "Nous cherchons des enseignant(e)s et des éducateur(e)s enthousiastes et passionné(e)s de leur matière. Devenez un(e) auteur sur serlo.org ! Vous pouvez créer du nouveau matériel pédagogique et nous aider à améliorer le contenu existant.",
+    communityLink: "Visitez la page d'accueil des auteurs",
+    callForOther: "Nous offrons une variété d'emplois et de possibilités de bénévolat dans les domaines du développement de logiciel, de la conception, la traduction, la communication, la gestion de projet et d'autres.",
+    getInvolved: "Participez!"
   }
 };
 export const serverSideStrings = {
@@ -164,7 +163,7 @@ export const loggedInData = {
     icon: 'notifications'
   }, {
     url: '',
-    title: "Utilisateur",
+    title: "Benutzer",
     icon: 'user',
     children: [{
       url: '/user/public',
@@ -186,8 +185,8 @@ export const loggedInData = {
   strings: {
     tools: "Autres outils",
     authorMenu: {
-      log: 'Log',
-      settings: 'Settings',
+      log: "Historique",
+      settings: "Réglages",
       moveCoursePage: 'Move this page to another course',
       thisCoursePage: 'This course-page',
       addCoursePage: 'Add course-page',
@@ -196,19 +195,19 @@ export const loggedInData = {
       moveItems: 'Move items',
       addGroupedTextExercise: 'Add grouped-text-exercise',
       changeLicense: 'Change License',
-      subscribe: 'Subscribe',
+      subscribe: "S'abonner",
       subscribeNotifications: 'Recieve notifications',
       subscribeNotificationsAndMail: 'Recieve notifications and emails',
-      unsubscribeNotifications: 'Unsubscribe',
+      unsubscribeNotifications: "Désabonner",
       convert: 'Convert (beta)',
-      history: 'History',
-      editAssignments: 'Edit topic and curriculum assignments',
-      flagContent: 'Flag content',
-      moveToTrash: 'Move to trash',
+      history: "Histoire",
+      editAssignments: "Modifier le sujet et le programme d'études",
+      flagContent: "Marquez cet élément comme inapproprié",
+      moveToTrash: "Déplacer dans la corbeille",
       restoreContent: 'Restore from trash',
       sort: 'Sort children',
-      edit: 'Edit',
-      organize: 'Organize',
+      edit: "Modifier",
+      organize: "Organiser",
       moveToGroupedTextExercise: 'Move content to other grouped-text-exercise',
       moveToTextExercise: 'Move content to other text-exercise',
       sortEntities: 'Sort content',
@@ -239,7 +238,7 @@ export const loggedInData = {
       setTaxonomyParentChanged: "%actor% changed parent of %child% to %parent%.",
       setUuidStateTrashed: "%actor% trashed %object%.",
       setUuidStateRestored: "%actor% restored %object%.",
-      entityPlaceholderFallback: "Content"
+      entityPlaceholderFallback: "Contenu"
     }
   }
 };
