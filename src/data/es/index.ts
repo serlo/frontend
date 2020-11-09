@@ -14,8 +14,8 @@ export const instanceData = {
       summaryText: "Somos una comunidad de visionarios que trabajan sin descanso para que todo el mundo tenga acceso gratuito a una educación excelente.",
       learnMore: "Aprende más",
       participate: "Únete a la causa",
-      donate: "Donaciones",
-      toTop: "a la cima"
+      donate: "Donar",
+      toTop: "Ir arriba"
     },
     categories: {
       articles: "Artículos",
@@ -42,7 +42,7 @@ export const instanceData = {
       user: "Usuario",
       video: "Vídeo",
       topicFolder: "Carpeta de ejercicios",
-      comment: "Comentario",
+      comment: "Comentar",
       revision: "Revisión",
       thread: "Hilo de conversación",
       topic: "Tema",
@@ -50,13 +50,13 @@ export const instanceData = {
     },
     share: {
       button: "Compartir",
-      title: "Compartir",
-      copyLink: "Copiar link",
-      copySuccess: "Enlace copiado",
+      title: "¡Comparte!",
+      copyLink: "Copiar enlace",
+      copySuccess: "¡Enlace copiado!",
       close: "Cerca"
     },
     edit: {
-      button: "Editar"
+      button: "Modificar"
     },
     license: {
       readMore: "Información"
@@ -93,7 +93,7 @@ export const instanceData = {
     },
     comments: {
       question: "¿Tienes una pregunta?",
-      commentsOne: "Comentario",
+      commentsOne: "Comentar",
       commentsMany: "Comentarios",
       submit: "Enviar",
       reportComment: "Denunciar comentario",
@@ -136,25 +136,25 @@ export const instanceLandingData = {
   lang: "es",
   subjectsData: landingSubjectsData,
   strings: {
-    vision: 'It is our vision to enable personalized learning and provide high quality educational resources worldwide – completely free of charge. Serlo is a grassroots organization inspired by Wikipedia. We already provide thousands of articles, videos and solved exercises for five million German students every year. Now it’s time to go international.',
-    learnMore: 'Learn more',
-    democraticallyStructured: 'democratically structured',
-    nonProfit: 'non-profit',
-    transparent: 'transparent',
-    openlyLicensed: 'openly licensed',
-    adFree: 'ad-free',
-    freeOfCharge: 'free of charge',
-    wikiTitle: 'Serlo is the Wikipedia for Learning',
-    wikiText: 'Just like Wikipedia, this platform is created by an engaged community of authors. Serlo Education is run and owned by decentralized teams of volunteers and professionals all over the world.',
-    movementTitle: 'Become a Part of Our Movement for Open Education',
-    callForAuthors: 'We are looking for teachers and enthusiastic educators who are passionate about their subject. Become part of our community to create new learning material and help us improve existing content.',
-    communityLink: 'Visit the landing page for authors',
-    callForOther: 'We offer a diverse range of jobs and volunteering opportunities in the fields of software development, design, translation, communications, project management and more.',
-    getInvolved: 'Get involved!'
+    vision: "Somos una organización de base comunitaria sin ánimo de lucro que apoya el aprendizaje personalizado y trabajando por la igualdad de oportunidades educativas. Esta plataforma de aprendizaje ofrece miles de artículos de instrucción, videos de aprendizaje y ejercicios de práctica para millones de estudiantes en todo el mundo - completamente gratis. Ahora es el momento de unirte a nosotros en tu idioma.",
+    learnMore: "Aprende más",
+    democraticallyStructured: "estructurado democráticamente",
+    nonProfit: "sin fines de lucro",
+    transparent: "transparente",
+    openlyLicensed: "con licencia abierta",
+    adFree: "sin anuncios",
+    freeOfCharge: "gratuido",
+    wikiTitle: "Serlo es la Wikipedia para el Aprendizaje",
+    wikiText: "Al igual que Wikipedia, esta plataforma es creada por una comunidad de autores comprometidos. \"Serlo Education\" está dirigida y es propiedad de grupos descentralizados de voluntarios y profesionales en todo el mundo.",
+    movementTitle: "Conviértete en Parte de Nuestro Movimiento para la Educación Abierta",
+    callForAuthors: "Estamos buscando profesores, maestros y educadores entusiastas a quienes les apasionen las materias que enseñan. ¡Conviértete en un autor en serlo.org! Tu puedes crear nuevo material de aprendizaje y ayudarnos a mejorar el contenido existente.",
+    communityLink: "Visita la página de inicio para autores",
+    callForOther: "Nosotros ofrecemos una diversa gama de trabajo y oportunidades de voluntariado, dentro del campo del desarrollo de software, diseño, traducción, comunicación, administración de proyectos, y mucho más.",
+    getInvolved: "Participa!"
   }
 };
 export const serverSideStrings = {
-  title: "Aprende con Serlo!"
+  title: "¡Aprende con Serlo!"
 };
 export const loggedInData = {
   authMenu: [{
@@ -163,7 +163,7 @@ export const loggedInData = {
     icon: 'notifications'
   }, {
     url: '',
-    title: "user",
+    title: "Benutzer",
     icon: 'user',
     children: [{
       url: '/user/public',
@@ -198,20 +198,20 @@ export const loggedInData = {
       subscribe: "Subscribir",
       subscribeNotifications: "Recibir notificaciones",
       subscribeNotificationsAndMail: "Recibir notificaciones y correos electrónicos",
-      unsubscribeNotifications: 'Unsubscribe',
-      convert: 'Convert (beta)',
-      history: 'History',
-      editAssignments: 'Edit topic and curriculum assignments',
-      flagContent: 'Flag content',
-      moveToTrash: 'Move to trash',
-      restoreContent: 'Restore from trash',
-      sort: 'Sort children',
-      edit: 'Edit',
-      organize: 'Organize',
-      moveToGroupedTextExercise: 'Move content to other grouped-text-exercise',
-      moveToTextExercise: 'Move content to other text-exercise',
-      sortEntities: 'Sort content',
-      newEntity: 'New Entity'
+      unsubscribeNotifications: "Cancelar suscripción",
+      convert: "Convertir (beta)",
+      history: "Historial",
+      editAssignments: "Editar el tema y las asignaciones de currículo",
+      flagContent: "Marcar contenido",
+      moveToTrash: "Mover a la papelera",
+      restoreContent: "Restaurar de la papelera",
+      sort: "Ordenar los niños",
+      edit: "Modificar",
+      organize: "Organizar",
+      moveToGroupedTextExercise: "Mover contenido a otro grupo de ejercicios de texto",
+      moveToTextExercise: "Mover contenido a otro ejercicio de texto",
+      sortEntities: "Ordenar contenido",
+      newEntity: "Nueva Entidad"
     },
     notifications: {
       loadMore: "Cargar más",
