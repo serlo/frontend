@@ -16,6 +16,7 @@ interface PrivacyWrapperProps {
   children: ReactChild
   placeholder?: ReactChild
   type: 'video' | 'applet'
+  provider: 'youtube' | 'wikimedia' | 'vimeo' | 'geogebra'
   previewImageUrl: string
 }
 
@@ -24,18 +25,26 @@ export function PrivacyWrapper({
   placeholder,
   type,
   previewImageUrl,
+  provider,
 }: PrivacyWrapperProps) {
   const [showIframe, setShowIframe] = React.useState(false)
+  const [alreadyConfirmed, setAlreadyConfirmed] = React.useState(false)
 
-  const addIframe = () => {
+  React.useEffect(() => {
+    if (localStorage.getItem('consent-embed-' + provider))
+      setAlreadyConfirmed(true)
+  }, [provider])
+
+  const confirmLoad = () => {
     if (showIframe) return
     setShowIframe(true)
+    localStorage.setItem('consent-embed-' + provider, 'true')
   }
 
   function onKeyDown(e: React.KeyboardEvent<HTMLButtonElement>) {
     if (!showIframe && (e.key === 'Enter' || e.key === ' ')) {
       e.preventDefault()
-      addIframe()
+      confirmLoad()
     }
   }
 
@@ -55,11 +64,13 @@ export function PrivacyWrapper({
             <PreviewImage src={previewImageUrl} />
           </PreviewImageWrapper>
         )}
-        <InfoBar>
-          This is basically the gate to hell. Wanderers, be warned.{' '}
-          <a href="/test">Testlink</a>.
-        </InfoBar>
-        <ButtonWrap onClick={addIframe}>
+        {!alreadyConfirmed && (
+          <InfoBar>
+            This is basically the gate to hell. Wanderers, be warned.{' '}
+            <a href="/test">Testlink</a>.
+          </InfoBar>
+        )}
+        <ButtonWrap onClick={confirmLoad}>
           <Playbutton onKeyDown={onKeyDown}>
             <FontAwesomeIcon
               icon={

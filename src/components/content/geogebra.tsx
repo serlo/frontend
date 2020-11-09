@@ -73,6 +73,7 @@ export function Geogebra({ id }: GeogebraProps) {
     <PrivacyWrapper
       type="applet"
       previewImageUrl="https://cdn.geogebra.org/static/img/GeoGebra-logo.png"
+      provider="geogebra"
     >
       <GeogebraContainer ratio={data.ratio}>
         <GeogebraFrame
