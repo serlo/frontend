@@ -1,17 +1,17 @@
 import { headerData, footerData, landingSubjectsData } from './menu-data';
 export const instanceData = {
-  lang: "et",
+  lang: "fr",
   headerData: headerData,
   footerData: footerData,
   strings: {
     header: {
       slogan: "La plateforme d'apprentissage libre",
-      search: "Chercher",
+      search: "Recherche",
       login: "Se connecter"
     },
     footer: {
       summaryHeading: "Serlo.org est le Wikipedia pour l'apprentissage.",
-      summaryText: "Nous sommes une communauté de visionnaires qui travaillent sans relâche pour offrir une éducation gratuite accessible à tous.",
+      summaryText: "Nous sommes une communauté de visionnaires qui travaille sans relâche pour offrir une éducation gratuite et accessible à tous.",
       learnMore: "En savoir plus",
       participate: "Rejoignez-nous",
       donate: "Faire un don",
@@ -19,32 +19,32 @@ export const instanceData = {
     },
     categories: {
       articles: 'Articles',
-      courses: "Cours",
-      videos: "Vidéos",
-      applets: "Applet",
+      courses: 'Courses',
+      videos: 'Videos',
+      applets: 'Applets',
       folders: 'Folders',
       exercises: "Exercices",
-      events: "Évènements"
+      events: 'Events'
     },
     entities: {
       applet: 'Applet',
       article: 'Article',
-      course: "Cours",
+      course: 'Course',
       coursePage: 'Course Page',
       event: 'Event',
       exercise: 'Exercise',
       exerciseGroup: 'Exercise Group',
-      folder: "Dossier",
+      folder: 'Folder',
       groupedExercise: 'Grouped Exercise',
       page: 'Page',
       solution: 'Solution',
       taxonomyTerm: 'Taxonomy Term',
-      user: "Benutzer",
-      video: "Vidéo",
-      topicFolder: "Dossie d'éxercices",
-      comment: "Commentaire",
-      revision: "Révision",
-      thread: "Fil",
+      user: 'User',
+      video: 'Video',
+      topicFolder: 'Exercise folder',
+      comment: 'Comment',
+      revision: 'Revision',
+      thread: 'Thread',
       topic: 'Topic',
       subject: 'Subject'
     },
@@ -71,9 +71,9 @@ export const instanceData = {
       hide: "cacher",
       prerequisite: "Pour cet éxercice tu as besoin des connaissances de base suivantes:",
       task: 'Task',
-      right: "Correct",
-      wrong: "Incorrect",
-      check: "Vérifier",
+      right: 'Right',
+      wrong: 'Wrong',
+      check: 'Check',
       yourAnswer: "Votre réponse...",
       chooseOption: "Sélectionnez une des options :",
       trashedNotice: "Ce contenu est marqué pour être supprimé."
@@ -106,7 +106,7 @@ export const instanceData = {
     },
     revisions: {
       toOverview: "Back to overview",
-      changes: "Modifications",
+      changes: "Changes",
       title: "Titre",
       content: "Contenu",
       metaTitle: "Meta Title",
@@ -133,7 +133,7 @@ export const instanceData = {
   }
 };
 export const instanceLandingData = {
-  lang: "et",
+  lang: "fr",
   subjectsData: landingSubjectsData,
   strings: {
     vision: "Nous sommes une organisation communautaire à but non lucratif supportant l'apprentissage personnalisé et travaillant à la réalisation d'opportunités éducatives égales. Cette plateforme propose des milliers d'articles d'instruction, des vidéos pédagogiques et des exercices pratiques aux millions d'étudiant(e)s et d'élèves dans le monde entier - complètement gratuit. Maintenant, vous êtes invité de joindre l'équipe Serlo francophone.",
@@ -146,9 +146,9 @@ export const instanceLandingData = {
     freeOfCharge: "gratuit",
     wikiTitle: "Serlo est le Wikipédia pour l'apprentissage",
     wikiText: "Tout comme Wikipédia, cette plateforme est créée par une communauté d'auteurs engagé(e)s. Serlo Education est gérée et détenue par des équipes décentralisées de bénévoles et de professionnels dans le monde entier.",
-    movementTitle: "Devenez partie de notre mouvement pour l'éducation ouverte",
+    movementTitle: "Rejoignez notre mouvement pour l'éducation libre",
     callForAuthors: "Nous cherchons des enseignant(e)s et des éducateur(e)s enthousiastes et passionné(e)s de leur matière. Devenez un(e) auteur sur serlo.org ! Vous pouvez créer du nouveau matériel pédagogique et nous aider à améliorer le contenu existant.",
-    communityLink: "Visitez la page d'accueil des auteurs",
+    communityLink: "Visitez la page d'accueil d'auteurs",
     callForOther: "Nous offrons une variété d'emplois et de possibilités de bénévolat dans les domaines du développement de logiciel, de la conception, la traduction, la communication, la gestion de projet et d'autres.",
     getInvolved: "Participez!"
   }
@@ -163,7 +163,7 @@ export const loggedInData = {
     icon: 'notifications'
   }, {
     url: '',
-    title: "Benutzer",
+    title: 'User',
     icon: 'user',
     children: [{
       url: '/user/public',
