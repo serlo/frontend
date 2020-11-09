@@ -75,11 +75,15 @@ export function Video(props: VideoProps) {
 
   function renderVideo(
     previewImageUrl: string,
-    provider: string,
+    provider: 'youtube' | 'wikimedia' | 'vimeo',
     iframeUrl?: string
   ) {
     return (
-      <PrivacyWrapper type="video" previewImageUrl={previewImageUrl}>
+      <PrivacyWrapper
+        type="video"
+        previewImageUrl={previewImageUrl}
+        provider={provider}
+      >
         <VideoWrapper className="video">
           {provider === 'wikimedia' && <video controls src={src} />}
           {(provider === 'youtube' || provider === 'vimeo') && (
