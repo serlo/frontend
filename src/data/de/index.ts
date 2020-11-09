@@ -81,7 +81,7 @@ export const instanceData = {
     cookie: {
       part1: "Mit der Nutzung dieser Webseite erklärst du dich mit unserer",
       part2: "und",
-      part3: '.',
+      part3: "einverstanden.",
       link1: "Datenschutzerklärung",
       link2: "Nutzungsbedingungen",
       button: "Verstanden"
