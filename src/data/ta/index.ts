@@ -183,7 +183,7 @@ export const loggedInData = {
     }]
   }],
   strings: {
-    tools: "Weitere Tools",
+    tools: 'Other Tools',
     authorMenu: {
       log: "பதிவு",
       settings: "அமைப்புகள்",
