@@ -41,6 +41,9 @@ export interface Page extends Repository {
 
 export interface Article extends EntityWithTaxonomyTerms {
   __typename: 'Article'
+  revisions: {
+    totalCount: number
+  }
   currentRevision?: GraphQL.Maybe<
     Pick<
       GraphQL.ArticleRevision,
@@ -426,6 +429,9 @@ export const dataQuery = gql`
       }
 
       ... on Article {
+        revisions(unrevised: true) {
+          totalCount
+        }
         currentRevision {
           ...articleRevision
         }

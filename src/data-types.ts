@@ -249,6 +249,7 @@ export interface EntityData {
   inviteToEdit?: boolean
   licenseData?: LicenseData
   courseData?: CourseData
+  unrevisedRevisions?: number
 }
 
 export interface RevisionPage extends EntityPageBase {
