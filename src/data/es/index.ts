@@ -154,7 +154,7 @@ export const instanceLandingData = {
   }
 };
 export const serverSideStrings = {
-  title: "Aprende con Serlo!"
+  title: "¡Aprende con Serlo!"
 };
 export const loggedInData = {
   authMenu: [{
@@ -198,11 +198,13 @@ export const loggedInData = {
       subscribe: "Subscribir",
       subscribeNotifications: "Recibir notificaciones",
       subscribeNotificationsAndMail: "Recibir notificaciones y correos electrónicos",
+      unsubscribeNotifications: "Cancelar suscripción",
       convert: "Convertir (beta)",
       history: "Historial",
       editAssignments: "Editar el tema y las asignaciones de currículo",
       flagContent: "Marcar contenido",
       moveToTrash: "Mover a la papelera",
+      restoreContent: "Restaurar de la papelera",
       sort: "Ordenar los niños",
       edit: "Modificar",
       organize: "Organizar",

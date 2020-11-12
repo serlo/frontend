@@ -46,7 +46,7 @@ export const instanceData = {
       revision: 'Revision',
       thread: 'Thread',
       topic: 'Topic',
-      subject: 'Subject',
+      subject: 'Subject'
     },
     share: {
       button: 'Share',
@@ -76,7 +76,7 @@ export const instanceData = {
       check: 'Check',
       yourAnswer: 'Your answer…',
       chooseOption: 'Click on one of the options.',
-      trashedNotice: 'This content is marked for deletion.',
+      trashedNotice: 'This content is marked for deletion.'
     },
     cookie: {
       part1: 'By using this website you declare that you agree with our',
@@ -85,6 +85,15 @@ export const instanceData = {
       link1: 'Privacy Policy',
       link2: 'Terms of use',
       button: 'Agree'
+    },
+    embed: {
+      part1: 'By clicking on',
+      part2: ', you agree that external content from',
+      part3: 'will be loaded. Furthermore, personal data may be transferred to',
+      part4: 'in accordance with our',
+      link: 'Privacy Policy',
+      video: 'Play Video',
+      applet: 'Load Applet',
     },
     notifications: {
       notifications: 'Notifications',

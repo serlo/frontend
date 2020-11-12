@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { PrivacyWrapper } from './privacy-wrapper'
+import { PrivacyWrapper, Provider } from './privacy-wrapper'
 
 export interface GeogebraProps {
   id: string
@@ -73,7 +73,7 @@ export function Geogebra({ id }: GeogebraProps) {
     <PrivacyWrapper
       type="applet"
       previewImageUrl="https://cdn.geogebra.org/static/img/GeoGebra-logo.png"
-      provider="geogebra"
+      provider={Provider.GeoGebra}
     >
       <GeogebraContainer ratio={data.ratio}>
         <GeogebraFrame

@@ -124,7 +124,12 @@ export interface LandingSubjectLink {
   icon?: LandingSubjectIcon
 }
 
-export type LandingSubjectIcon = 'math' | 'abc' | 'biology' | 'sustainability'
+export type LandingSubjectIcon =
+  | 'math'
+  | 'abc'
+  | 'biology'
+  | 'sustainability'
+  | 'chemistry'
 
 // The same for donation, search and notifications page:
 

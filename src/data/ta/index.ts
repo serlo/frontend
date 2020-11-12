@@ -3,7 +3,6 @@ export const instanceData = {
   lang: "ta",
   headerData: headerData,
   footerData: footerData,
-  landingData: landingSubjectsData,
   strings: {
     header: {
       slogan: "அனைவருக்கும் திறந்த உரிமம் உள்ள ஓர் இணையத்தளம்",
@@ -19,32 +18,32 @@ export const instanceData = {
       toTop: "மேல் நோக்கி"
     },
     categories: {
-      articles: 'Articles',
-      courses: 'Courses',
-      videos: 'Videos',
+      articles: "கட்டுரைகள்",
+      courses: "வகுப்புப்புகள்",
+      videos: "காணொளிகள்",
       applets: 'Applets',
       folders: 'Folders',
       exercises: "பயிற்சிகள்",
-      events: 'Events'
+      events: "நிகழ்வுகள்"
     },
     entities: {
-      applet: 'Applet',
-      article: 'Article',
-      course: 'Course',
-      coursePage: 'Course Page',
+      applet: "ஆப்லெட்",
+      article: "கட்டுரை",
+      course: "வகுப்பு",
+      coursePage: "வகுப்பு-பக்கம்",
       event: 'Event',
       exercise: 'Exercise',
-      exerciseGroup: 'Exercise Group',
-      folder: 'Folder',
+      exerciseGroup: "பயிற்சிப் பதிவுகள்",
+      folder: "அடைவு",
       groupedExercise: 'Grouped Exercise',
-      page: 'Page',
-      solution: 'Solution',
+      page: "பக்கம்",
+      solution: "தீர்வு",
       taxonomyTerm: 'Taxonomy Term',
-      user: 'User',
-      video: 'Video',
+      user: "பயனர்",
+      video: "காணொளி",
       topicFolder: 'Exercise folder',
-      comment: 'Comment',
-      revision: 'Revision',
+      comment: "கருத்து",
+      revision: "மீட்டல்",
       thread: 'Thread',
       topic: 'Topic',
       subject: 'Subject'
@@ -72,12 +71,12 @@ export const instanceData = {
       hide: "மறை",
       prerequisite: 'For this task you need the following basic knowledge:',
       task: 'Task',
-      right: 'Right',
-      wrong: 'Wrong',
-      check: 'Check',
-      yourAnswer: 'Your answer…',
+      right: "சரி",
+      wrong: "பிழை",
+      check: "சரிபார்க்கவும்",
+      yourAnswer: "உங்கள் பதில்:",
       chooseOption: 'Click on one of the options.',
-      trashedNotice: 'This content is marked for deletion.'
+      trashedNotice: "இந்த உள்ளடக்கம் குப்பையாக குறிக்கப்பட்டுள்ளது."
     },
     cookie: {
       part1: "இந்த வலைத்தளத்தைப் பயன்படுத்துவதன் மூலம் நீங்கள் எங்களுடன் உடன்படுகிறீர்கள் என்று அறிவிக்கிறீர்கள்",
@@ -94,22 +93,22 @@ export const instanceData = {
     },
     comments: {
       question: 'Do you have a question?',
-      commentsOne: 'Comment',
-      commentsMany: 'Comments',
-      submit: 'Submit',
+      commentsOne: "கருத்து",
+      commentsMany: "கருத்துகள்",
+      submit: "இணைக்க",
       reportComment: 'Report comment',
       archiveThread: 'Archive thread',
       deleteThread: 'Delete thread',
       deleteComment: 'Delete comment',
       postedOn: 'Posted on',
       placeholder: "Your question or suggestion…",
-      placeholderReply: "Your answer…"
+      placeholderReply: "உங்கள் பதில்:"
     },
     revisions: {
       toOverview: "Back to overview",
-      changes: "Changes",
-      title: "Title",
-      content: "Content",
+      changes: "மாற்றங்கள்",
+      title: "தலைப்பு",
+      content: "உட்பொருள்",
       metaTitle: "Meta Title",
       metaDescription: "Meta Description",
       compare: "Compare",
@@ -135,6 +134,7 @@ export const instanceData = {
 };
 export const instanceLandingData = {
   lang: "ta",
+  subjectsData: landingSubjectsData,
   strings: {
     vision: "நாம் சமமான கல்வி வாய்ப்புகளை நோக்கி இணைந்து பணிபுரியும் ஒரு குழு. இந்த இணையத்தளத்தில் எண்ணற்ற விவரக் கட்டுரைகள், பயிற்சிகள் மற்றும் ஒலிப் பேழைகள் அனைத்துப் பாடங்களுக்கும் வழங்கப்பட்டுவருகின்றன. இவை அனைத்தும் இலவசமாக உலகம் முழுவதும் உள்ள மாணவர்களுக்காக உருவாக்கப்பட்டுவருகின்றன. இனி வரும் காலங்களில், தமிழ்மொழியிலும் இவ்வாறான இலவசப் பாடத்திட்டங்களை உருவாக்க நீங்களும் எம்முடன் இணைந்து பணியாற்றலாம்.",
     learnMore: "மேலும் அறிக",
@@ -144,13 +144,13 @@ export const instanceLandingData = {
     openlyLicensed: "திறந்த உரிமம்",
     adFree: "விளம்பரமின்றி",
     freeOfCharge: "இலவசம்",
-    wikiTitle: "Serlo ஓர் கற்றலுக்கான விக்கிபீடியா",
+    wikiTitle: "Serlo கற்பதற்கு விக்கிபீடியா போன்றது",
     wikiText: "Serlo.org விக்கிபீடியாபோல திறந்த உரிமம் கொண்ட ஓர் இணையத்தளம். இது எம் எழுத்தாளர் குழுவால் உருவாக்கப்படுகின்றது.",
-    movementTitle: "நீங்களும் இதில் பணியாற்றலாம்",
+    movementTitle: "நீங்களும் இதில் பண்ணியாற்றலாம்",
     callForAuthors: "ஆசிரியர்களும் ஆர்வமுள்ள எழுத்தாளர்களும் பாடங்களை உருவாக்க பல வழிகளில் உதவலாம். புதுப் பயிற்சிகளை உருவாக்குவதற்கும் இந்தத் தளத்தின் சில உள்ளடக்கங்களை இன்னும் மேம்படுத்துவதற்கும் நீங்கள் உதவலாம். அதற்கு கீழுள்ள இணையத்திற்குச் செல்லவும்.",
-    communityLink: "எழுத்தாளருக்கான பக்கத்தைப் பார்வையிடவும்",
+    communityLink: "ஆசிரியர்களுக்கான பக்கத்தை  பார்வையிடுங்கள்",
     callForOther: "நாங்கள் பல வகையான வேலைவாய்ப்புகளையும் பொதுச்சேவையாகப் பணியாற்றும் வாய்ப்புகளையும் வழங்குகின்றோம். இந்த இணையத்தளதிற்கு மொழிபெயர்ப்பாளர்கள், வடிவமைப்பாளர்கள், தொலைத்தொடர்பாளர்கள் போன்ற துறை சார்ந்தவர்களை நாங்கள் தேடி நிற்கின்றோம். இணைந்து கொள்ளுங்கள்.",
-    getInvolved: "நீங்களும் ஈடுபடுங்கள்!"
+    getInvolved: "பங்கேற்கவும்!"
   }
 };
 export const serverSideStrings = {
@@ -167,16 +167,16 @@ export const loggedInData = {
     icon: 'user',
     children: [{
       url: '/user/public',
-      title: 'Public profile'
+      title: "பொதுவான சுயவிவரம்"
     }, {
       url: '/user/settings',
-      title: 'Edit profile'
+      title: "சுயவிவர திருத்தம்"
     }, {
       url: '/auth/password/change',
       title: "கடவுச்சொல்லை மாற்று"
     }, {
       url: '/event/history/user/me',
-      title: 'Recent activities'
+      title: "சமீபத்திய செய்தவை"
     }, {
       url: '/api/auth/logout',
       title: "வெளியேறு"
@@ -185,8 +185,8 @@ export const loggedInData = {
   strings: {
     tools: 'Other Tools',
     authorMenu: {
-      log: 'Log',
-      settings: 'Settings',
+      log: "பதிவு",
+      settings: "அமைப்புகள்",
       moveCoursePage: 'Move this page to another course',
       thisCoursePage: 'This course-page',
       addCoursePage: 'Add course-page',
@@ -195,17 +195,19 @@ export const loggedInData = {
       moveItems: 'Move items',
       addGroupedTextExercise: 'Add grouped-text-exercise',
       changeLicense: 'Change License',
-      subscribe: 'Subscribe',
+      subscribe: "சந்தா",
       subscribeNotifications: 'Recieve notifications',
       subscribeNotificationsAndMail: 'Recieve notifications and emails',
+      unsubscribeNotifications: "சந்தாவை நிறுத்துதல்",
       convert: 'Convert (beta)',
-      history: 'History',
-      editAssignments: 'Edit topic and curriculum assignments',
-      flagContent: 'Flag content',
-      moveToTrash: 'Move to trash',
+      history: "வரலாறு",
+      editAssignments: "தலைப்பு மற்றும் பாடத்திட்ட பணிகளை உருவாக்கவும்.",
+      flagContent: "கொடி உள்ளடக்கம்",
+      moveToTrash: "குப்பைக்கு நகர்த்தவும்",
+      restoreContent: 'Restore from trash',
       sort: 'Sort children',
-      edit: 'Edit',
-      organize: 'Organize',
+      edit: "திருத்தம்",
+      organize: "ஒழுங்குபடுத்த",
       moveToGroupedTextExercise: 'Move content to other grouped-text-exercise',
       moveToTextExercise: 'Move content to other text-exercise',
       sortEntities: 'Sort content',
@@ -236,7 +238,7 @@ export const loggedInData = {
       setTaxonomyParentChanged: "%actor% changed parent of %child% to %parent%.",
       setUuidStateTrashed: "%actor% trashed %object%.",
       setUuidStateRestored: "%actor% restored %object%.",
-      entityPlaceholderFallback: "Content"
+      entityPlaceholderFallback: "உட்பொருள்"
     }
   }
 };
