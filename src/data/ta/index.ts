@@ -86,6 +86,13 @@ export const instanceData = {
       link2: "பயன்பாட்டு விதிமுறைகளை",
       button: "ஒப்புக்கொள்கிறேன்"
     },
+    embed: {
+      part1: 'By clicking on the image or button below you agree that external content from',
+      part2: 'will be loaded. Also personal data may be transferred to this service in accordance with our',
+      link: 'Privacy Policy',
+      video: 'Play Video',
+      applet: 'Load Applet'
+    },
     notifications: {
       notifications: "அறிவிப்புகள்",
       pleaseLogInLink: 'Please log in',
