@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { ReactChild } from 'react'
 import styled from 'styled-components'
 
-import { instanceData } from '@/data/en'
+import { useInstanceData } from '@/contexts/instance-context'
 import { makeMargin, makePadding, makePrimaryButton } from '@/helper/css'
 
 // inspired by https://github.com/ibrahimcesar/react-lite-youtube-embed
@@ -28,19 +28,6 @@ interface PrivacyWrapperProps {
   previewImageUrl: string
 }
 
-function renderProvider(provider: Provider): string {
-  switch (provider) {
-    case Provider.YouTube:
-      return 'YouTube'
-    case Provider.WikimediaCommons:
-      return 'Wikimedia Commons'
-    case Provider.Vimeo:
-      return 'Vimeo'
-    case Provider.GeoGebra:
-      return 'GeoGebra'
-  }
-}
-
 export function PrivacyWrapper({
   children,
   placeholder,
@@ -49,6 +36,8 @@ export function PrivacyWrapper({
   provider,
 }: PrivacyWrapperProps) {
   const [showIframe, setShowIframe] = React.useState(false)
+
+  const { strings } = useInstanceData()
 
   const confirmLoad = () => {
     if (showIframe) return
@@ -71,7 +60,7 @@ export function PrivacyWrapper({
 
   function renderPlaceholder() {
     if (placeholder) return placeholder
-    const buttonLabel = instanceData.strings.embed[type]
+    const buttonLabel = strings.embed[type]
     const providerLabel = renderProvider(provider)
 
     return (
@@ -82,12 +71,9 @@ export function PrivacyWrapper({
           </PreviewImageWrapper>
         )}
         <InfoBar>
-          {instanceData.strings.embed.part1} &quot;{buttonLabel}&quot;
-          {instanceData.strings.embed.part2} {providerLabel}{' '}
-          {instanceData.strings.embed.part3} {providerLabel}{' '}
-          {instanceData.strings.embed.part4}{' '}
+          {strings.embed.part1} <b>{providerLabel}</b> {strings.embed.part2}{' '}
           <a href="/privacy" target="_blank">
-            {instanceData.strings.embed.link}
+            {strings.embed.link}
           </a>
           .
         </InfoBar>
@@ -108,6 +94,19 @@ export function PrivacyWrapper({
         </ButtonWrap>
       </Placeholder>
     )
+  }
+
+  function renderProvider(provider: Provider) {
+    switch (provider) {
+      case Provider.YouTube:
+        return 'YouTube'
+      case Provider.WikimediaCommons:
+        return 'Wikimedia Commons'
+      case Provider.Vimeo:
+        return 'Vimeo'
+      case Provider.GeoGebra:
+        return 'GeoGebra'
+    }
   }
 }
 
