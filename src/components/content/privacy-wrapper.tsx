@@ -7,17 +7,38 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { ReactChild } from 'react'
 import styled from 'styled-components'
 
+import { instanceData } from '@/data/en'
 import { makeMargin, makePadding, makePrimaryButton } from '@/helper/css'
 
 // inspired by https://github.com/ibrahimcesar/react-lite-youtube-embed
 // also borrowed some code
 
+enum Provider {
+  YouTube = 'youtube',
+  WikimediaCommons = 'wikimedia',
+  Vimeo = 'vimeo',
+  GeoGebra = 'geogebra',
+}
+
 interface PrivacyWrapperProps {
   children: ReactChild
   placeholder?: ReactChild
   type: 'video' | 'applet'
-  provider: 'youtube' | 'wikimedia' | 'vimeo' | 'geogebra'
+  provider: Provider
   previewImageUrl: string
+}
+
+function renderProvider(provider: Provider): string {
+  switch (provider) {
+    case Provider.YouTube:
+      return 'YouTube'
+    case Provider.WikimediaCommons:
+      return 'Wikimedia Commons'
+    case Provider.Vimeo:
+      return 'Vimeo'
+    case Provider.GeoGebra:
+      return 'GeoGebra'
+  }
 }
 
 export function PrivacyWrapper({
@@ -28,17 +49,10 @@ export function PrivacyWrapper({
   provider,
 }: PrivacyWrapperProps) {
   const [showIframe, setShowIframe] = React.useState(false)
-  const [alreadyConfirmed, setAlreadyConfirmed] = React.useState(false)
-
-  React.useEffect(() => {
-    if (localStorage.getItem('consent-embed-' + provider))
-      setAlreadyConfirmed(true)
-  }, [provider])
 
   const confirmLoad = () => {
     if (showIframe) return
     setShowIframe(true)
-    localStorage.setItem('consent-embed-' + provider, 'true')
   }
 
   function onKeyDown(e: React.KeyboardEvent<HTMLButtonElement>) {
@@ -57,6 +71,9 @@ export function PrivacyWrapper({
 
   function renderPlaceholder() {
     if (placeholder) return placeholder
+    const buttonLabel = instanceData.strings.embed[type]
+    const providerLabel = renderProvider(provider)
+
     return (
       <Placeholder>
         {previewImageUrl && (
@@ -64,12 +81,16 @@ export function PrivacyWrapper({
             <PreviewImage src={previewImageUrl} />
           </PreviewImageWrapper>
         )}
-        {!alreadyConfirmed && (
-          <InfoBar>
-            This is basically the gate to hell. Wanderers, be warned.{' '}
-            <a href="/test">Testlink</a>.
-          </InfoBar>
-        )}
+        <InfoBar>
+          {instanceData.strings.embed.part1} &quot;{buttonLabel}&quot;
+          {instanceData.strings.embed.part2} {providerLabel}{' '}
+          {instanceData.strings.embed.part3} {providerLabel}{' '}
+          {instanceData.strings.embed.part4}{' '}
+          <a href="/privacy" target="_blank">
+            {instanceData.strings.embed.link}
+          </a>
+          .
+        </InfoBar>
         <ButtonWrap onClick={confirmLoad}>
           <Playbutton onKeyDown={onKeyDown}>
             <FontAwesomeIcon
@@ -82,8 +103,7 @@ export function PrivacyWrapper({
               }
               spin={showIframe}
             />{' '}
-            {type === 'video' && 'Video abspielen'}
-            {type === 'applet' && 'Applet laden'}
+            {buttonLabel}
           </Playbutton>
         </ButtonWrap>
       </Placeholder>
@@ -99,7 +119,7 @@ const InfoBar = styled.div`
   z-index: 5;
   padding-top: 8px;
   padding-bottom: 8px;
-  ${makePadding}
+  ${makePadding};
   background-color: ${(props) => props.theme.colors.brand};
   color: #fff;
   cursor: default;
@@ -124,7 +144,7 @@ const ButtonWrap = styled.div`
 `
 
 const Playbutton = styled.button`
-  ${makePrimaryButton}
+  ${makePrimaryButton};
   font-size: 1.33rem;
   > svg {
     padding-top: 3px;
@@ -145,7 +165,7 @@ const PreviewImage = styled.img`
 `
 
 const Wrapper = styled.div`
-  ${makeMargin}
+  ${makeMargin};
   margin-bottom: ${(props) => props.theme.spacing.mb.block};
   position: relative;
   display: block;

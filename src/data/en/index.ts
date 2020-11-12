@@ -86,6 +86,15 @@ export const instanceData = {
       link2: 'Terms of use',
       button: 'Agree'
     },
+    embed: {
+      part1: 'By clicking on',
+      part2: ', you agree that external content from',
+      part3: 'will be loaded. Furthermore, personal data may be transferred to',
+      part4: 'in accordance with our',
+      link: 'Privacy Policy',
+      video: 'Play Video',
+      applet: 'Load Applet',
+    },
     notifications: {
       notifications: 'Notifications',
       pleaseLogInLink: 'Please log in',
