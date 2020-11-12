@@ -4,7 +4,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { StyledP } from '../tags/styled-p'
-import { PrivacyWrapper } from './privacy-wrapper'
+import { PrivacyWrapper, Provider } from './privacy-wrapper'
 
 export interface VideoProps {
   src: string
@@ -43,7 +43,7 @@ export function Video(props: VideoProps) {
       filenameWithPath.lastIndexOf('/') + 1
     )
     const previewImageUrl = `${baseURL}${seperator}thumb/${filenameWithPath}/800px--${filename}.jpg`
-    return renderVideo(previewImageUrl, 'wikimedia')
+    return renderVideo(previewImageUrl, Provider.WikimediaCommons)
   }
 
   function renderYoutube(id: string) {
@@ -52,14 +52,14 @@ export function Video(props: VideoProps) {
     // const previewImageFallbackUrl = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`
     const iframeUrl = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&html5=1`
 
-    return renderVideo(previewImageUrl, 'youtube', iframeUrl)
+    return renderVideo(previewImageUrl, Provider.YouTube, iframeUrl)
   }
 
   function renderVimeo(id: string) {
     const iframeUrl = `https://player.vimeo.com/video/${id}?autoplay=1`
 
     if (vimeoImg === '') return fetchVimeoInfo()
-    return renderVideo(vimeoImg, 'vimeo', iframeUrl)
+    return renderVideo(vimeoImg, Provider.Vimeo, iframeUrl)
   }
 
   function fetchVimeoInfo() {
@@ -75,7 +75,7 @@ export function Video(props: VideoProps) {
 
   function renderVideo(
     previewImageUrl: string,
-    provider: 'youtube' | 'wikimedia' | 'vimeo',
+    provider: Provider,
     iframeUrl?: string
   ) {
     return (

@@ -13,7 +13,7 @@ import { makeMargin, makePadding, makePrimaryButton } from '@/helper/css'
 // inspired by https://github.com/ibrahimcesar/react-lite-youtube-embed
 // also borrowed some code
 
-enum Provider {
+export enum Provider {
   YouTube = 'youtube',
   WikimediaCommons = 'wikimedia',
   Vimeo = 'vimeo',
