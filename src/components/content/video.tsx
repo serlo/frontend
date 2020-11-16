@@ -47,7 +47,7 @@ export function Video(props: VideoProps) {
   }
 
   function renderYoutube(id: string) {
-    const videoId = encodeURIComponent(id)
+    const videoId = encodeURIComponent(id.split('&')[0])
     const previewImageUrl = `https://i.ytimg.com/vi/${videoId}/sddefault.jpg`
     // const previewImageFallbackUrl = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`
     const iframeUrl = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&html5=1`
