@@ -86,6 +86,13 @@ export const instanceData = {
       link2: "उपयोग की शर्ते",
       button: "सहमत"
     },
+    embed: {
+      part1: 'By clicking on the image or button below you agree that external content from',
+      part2: 'will be loaded. Also personal data may be transferred to this service in accordance with our',
+      link: 'Privacy Policy',
+      video: 'Play Video',
+      applet: 'Load Applet'
+    },
     notifications: {
       notifications: "सूचनाएँ",
       pleaseLogInLink: "कृपया लॉगिन करें",
