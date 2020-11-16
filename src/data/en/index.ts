@@ -91,7 +91,7 @@ export const instanceData = {
       part2: 'will be loaded. Also personal data may be transferred to this service in accordance with our',
       link: 'Privacy Policy',
       video: 'Play Video',
-      applet: 'Load Applet',
+      applet: 'Load Applet'
     },
     notifications: {
       notifications: 'Notifications',
