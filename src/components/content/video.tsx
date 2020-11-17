@@ -5,6 +5,7 @@ import styled from 'styled-components'
 
 import { StyledP } from '../tags/styled-p'
 import { PrivacyWrapper, Provider } from './privacy-wrapper'
+import { useInstanceData } from '@/contexts/instance-context'
 
 export interface VideoProps {
   src: string
@@ -12,6 +13,7 @@ export interface VideoProps {
 
 export function Video(props: VideoProps) {
   const [vimeoImg, setVimeoImg] = React.useState('')
+  const { lang } = useInstanceData()
 
   const { src } = props
 
@@ -46,11 +48,14 @@ export function Video(props: VideoProps) {
     return renderVideo(previewImageUrl, Provider.WikimediaCommons)
   }
 
-  function renderYoutube(id: string) {
-    const videoId = encodeURIComponent(id.split('&')[0])
+  function renderYoutube(path: string) {
+    const videoId = encodeURIComponent(path.split('&', 1)[0])
+    const useSubtitles = path.indexOf('cc_load_policy=1') > 0
     const previewImageUrl = `https://i.ytimg.com/vi/${videoId}/sddefault.jpg`
     // const previewImageFallbackUrl = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`
-    const iframeUrl = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&html5=1`
+    const iframeUrl = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&html5=1${
+      useSubtitles ? `&cc_lang_pref=${lang}&cc_load_policy=1` : ''
+    }`
 
     return renderVideo(previewImageUrl, Provider.YouTube, iframeUrl)
   }
