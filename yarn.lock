@@ -2000,10 +2000,10 @@
   resolved "https://registry.yarnpkg.com/@redux-saga/types/-/types-1.1.0.tgz#0e81ce56b4883b4b2a3001ebe1ab298b84237204"
   integrity sha512-afmTuJrylUU/0OtqzaRkbyYFFNgCF73Bvel/sw90pvGrWIZ+vyoIJqA6eMSoA6+nb443kTmulmBtC9NerXboNg==
 
-"@serlo/api@^0.10.0":
-  version "0.10.1"
-  resolved "https://registry.yarnpkg.com/@serlo/api/-/api-0.10.1.tgz#d9bc449d082fb86f91f8789c1fb1d273ae4c64aa"
-  integrity sha512-nu6f0owocfjZv58kdGjk/CcC9YQpDFVqZ3IeEaom/g0DI5Xqo319IOrtLQDw0wLPIdx/xXFXvAWAroofAxcL+A==
+"@serlo/api@^0.11.0":
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/@serlo/api/-/api-0.11.0.tgz#458bdf0fdc0b6e7b9e97e1979bd8d3785f2492a3"
+  integrity sha512-C5+Kd63ulw8hqEkcr1S979WgK/sqS1YZfHAj5ZZppefwCR+mvR9tfqTcCLgh6OvNWxGdAnZE1NTPwph3SFJ4zA==
 
 "@sinonjs/commons@^1.7.0":
   version "1.8.1"
