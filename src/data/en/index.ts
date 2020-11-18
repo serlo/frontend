@@ -1,4 +1,4 @@
-import { headerData, footerData } from './menu-data';
+import { headerData, footerData, landingSubjectsData } from './menu-data';
 export const instanceData = {
   lang: 'en',
   headerData: headerData,
@@ -46,7 +46,7 @@ export const instanceData = {
       revision: 'Revision',
       thread: 'Thread',
       topic: 'Topic',
-      subject: 'Subject',
+      subject: 'Subject'
     },
     share: {
       button: 'Share',
@@ -76,7 +76,7 @@ export const instanceData = {
       check: 'Check',
       yourAnswer: 'Your answer…',
       chooseOption: 'Click on one of the options.',
-      trashedNotice: 'This content is marked for deletion.',
+      trashedNotice: 'This content is marked for deletion.'
     },
     cookie: {
       part1: 'By using this website you declare that you agree with our',
@@ -85,6 +85,13 @@ export const instanceData = {
       link1: 'Privacy Policy',
       link2: 'Terms of use',
       button: 'Agree'
+    },
+    embed: {
+      part1: 'By clicking on the image or button below you agree that external content from',
+      part2: 'will be loaded. Also personal data may be transferred to this service in accordance with our',
+      link: 'Privacy Policy',
+      video: 'Play Video',
+      applet: 'Load Applet'
     },
     notifications: {
       notifications: 'Notifications',
@@ -134,6 +141,7 @@ export const instanceData = {
 };
 export const instanceLandingData = {
   lang: 'en',
+  subjectsData: landingSubjectsData,
   strings: {
     vision: 'It is our vision to enable personalized learning and provide high quality educational resources worldwide – completely free of charge. Serlo is a grassroots organization inspired by Wikipedia. We already provide thousands of articles, videos and solved exercises for five million German students every year. Now it’s time to go international.',
     learnMore: 'Learn more',
@@ -197,11 +205,13 @@ export const loggedInData = {
       subscribe: 'Subscribe',
       subscribeNotifications: 'Recieve notifications',
       subscribeNotificationsAndMail: 'Recieve notifications and emails',
+      unsubscribeNotifications: 'Unsubscribe',
       convert: 'Convert (beta)',
       history: 'History',
       editAssignments: 'Edit topic and curriculum assignments',
       flagContent: 'Flag content',
       moveToTrash: 'Move to trash',
+      restoreContent: 'Restore from trash',
       sort: 'Sort children',
       edit: 'Edit',
       organize: 'Organize',

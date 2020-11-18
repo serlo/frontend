@@ -1,5 +1,10 @@
 import { serloDomain } from '../../helper/serlo-domain'
-import { InstanceData } from '@/data-types'
+import { InstanceData, LandingSubjectsData } from '@/data-types'
+
+export const landingSubjectsData: LandingSubjectsData = {
+  subjects: [],
+  additionalLinks: [],
+}
 
 export const headerData: InstanceData['headerData'] = [
   {

@@ -8,75 +8,64 @@ import { Link } from '../content/link'
 import AbcSVG from '@/assets-webkit/img/subjects-abc.svg'
 import BiologySVG from '@/assets-webkit/img/subjects-biology.svg'
 import BlankSVG from '@/assets-webkit/img/subjects-blank.svg'
+import ChemistrySVG from '@/assets-webkit/img/subjects-chemistry.svg'
 import MathSVG from '@/assets-webkit/img/subjects-math.svg'
 import SustainabilitySVG from '@/assets-webkit/img/subjects-sustainability.svg'
+import { LandingSubjectLink, LandingSubjectsData } from '@/data-types'
 
-export function LandingSubjects() {
+interface LandingSubjectsProps {
+  data: LandingSubjectsData
+}
+
+export function LandingSubjects({ data }: LandingSubjectsProps) {
   return (
     <>
       <SubjectsWrapper>
-        <Subject
-          url="/mathe"
-          title="Mathematik lernen"
-          subjectSVG={<MathSVG className="math" />}
-        />
-        <Subject
-          url="/abc"
-          title="Alphabetisierung"
-          subjectSVG={<AbcSVG className="abc" />}
-        />
-        <Subject
-          url="/nachhaltigkeit"
-          title="Nachhaltigkeit lernen"
-          subjectSVG={<SustainabilitySVG className="sus" />}
-        />
-        <Subject
-          url="/biologie"
-          title="Biologie lernen"
-          subjectSVG={<BiologySVG className="bio" />}
-        />
+        {data.subjects.map((subject) => renderSubject(subject))}
       </SubjectsWrapper>
 
-      <SubjectsWrapper extraLinks>
-        <Subject
-          url="/eltern"
-          title="Einstieg für Eltern"
-          subjectSVG={<BlankSVG />}
-          alwaysShowArrow
-        />
-        <Subject
-          url="/lehrkraefte"
-          title="Einstieg für Lehrer*innen"
-          subjectSVG={<BlankSVG />}
-          alwaysShowArrow
-        />
-      </SubjectsWrapper>
+      {renderAdditionalLinks()}
     </>
   )
-}
 
-interface SubjectProps {
-  url: string
-  title: string
-  subjectSVG: React.ReactNode
-  alwaysShowArrow?: boolean
-}
+  function renderAdditionalLinks() {
+    if (data.additionalLinks.length === 0) return null
+    return (
+      <SubjectsWrapper extraLinks>
+        {data.additionalLinks.map((link) => renderSubject(link, true))}
+      </SubjectsWrapper>
+    )
+  }
 
-function Subject({ url, title, subjectSVG, alwaysShowArrow }: SubjectProps) {
-  return (
-    <SubjectLink href={url}>
-      <>
-        {' '}
-        {subjectSVG}
-        <Header>
-          {title}
-          <StyledIcon alwaysShow={alwaysShowArrow}>
-            <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
-          </StyledIcon>
-        </Header>
-      </>
-    </SubjectLink>
-  )
+  function renderIcon(icon?: string) {
+    if (icon === undefined) return <BlankSVG />
+    if (icon == 'math') return <MathSVG className="math" />
+    if (icon == 'abc') return <AbcSVG className="abc" />
+    if (icon == 'sustainability') return <SustainabilitySVG className="sus" />
+    if (icon == 'biology') return <BiologySVG className="bio" />
+    if (icon == 'chemistry') return <ChemistrySVG className="chem" />
+    return <BlankSVG />
+  }
+
+  function renderSubject(
+    { title, url, icon }: LandingSubjectLink,
+    alwaysShowArrow?: boolean
+  ) {
+    return (
+      <SubjectLink key={title} href={url}>
+        <>
+          {' '}
+          {renderIcon(icon)}
+          <Header>
+            {title}
+            <StyledIcon alwaysShow={alwaysShowArrow}>
+              <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
+            </StyledIcon>
+          </Header>
+        </>
+      </SubjectLink>
+    )
+  }
 }
 
 const SubjectsWrapper = styled.div<{ extraLinks?: boolean }>`
@@ -86,10 +75,9 @@ const SubjectsWrapper = styled.div<{ extraLinks?: boolean }>`
 
   @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
     ${makeResponsivePadding}
-    margin-left: 35px;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: start;
+    justify-content: center;
   }
 
   @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
@@ -100,6 +88,7 @@ const SubjectsWrapper = styled.div<{ extraLinks?: boolean }>`
     ${(props) =>
       props.extraLinks &&
       css`
+        margin-left: 16px;
         justify-content: start;
         && > a > svg {
           display: none;
@@ -107,6 +96,9 @@ const SubjectsWrapper = styled.div<{ extraLinks?: boolean }>`
         & > a > h2 {
           margin-right: 40px;
           font-size: 1.3rem;
+        }
+        & > a {
+          margin: 0;
         }
       `}
   }
@@ -130,6 +122,21 @@ const jump = keyframes`
   }
 `
 
+const hickup = keyframes`
+  33% {
+    transform: translateY(0) rotate(0);
+  }
+  44% {
+    transform: translateY(-0.25rem) rotate(0.2deg);
+  }
+  70% {
+    transform: translateY(-0rem) rotate(-0.4deg);
+  }
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+`
+
 const SubjectLink = styled(Link)`
   display: block;
   border-bottom: 1px solid ${(props) => props.theme.colors.lightblue};
@@ -147,12 +154,11 @@ const SubjectLink = styled(Link)`
     }
   }
   @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
-    width: 43%;
+    min-width: 25%;
     text-align: center;
-    min-width: auto;
-    width: auto;
-  }
 
+    margin: 0 auto;
+  }
   @media (max-width: 400px) {
     & svg.blank {
       display: none;
@@ -163,12 +169,15 @@ const SubjectLink = styled(Link)`
   & svg.math,
   & svg.abc,
   & svg.sus,
+  & svg.chem,
   & svg.blank {
     .blue {
       fill: ${(props) => props.theme.colors.lighterblue};
       transition: all 0.2s ease-in-out;
     }
-    .green {
+    .green,
+    .drop,
+    .pipette path {
       fill: #becd2b;
       transition: all 0.2s ease-in-out;
     }
@@ -200,6 +209,28 @@ const SubjectLink = styled(Link)`
     }
   }
 
+  .pipette path,
+  .flask path {
+    fill: none;
+    stroke: #000;
+    stroke-linecap: round;
+    stroke-width: 1.1px;
+  }
+
+  .contents {
+    transition: 0.7s ease-in all !important;
+  }
+  .pipette {
+    transform: translateY(-5px);
+    transition: 0.2s ease-in all;
+    transform-origin: 50% 50%;
+  }
+  .drop {
+    opacity: 0;
+    transition: 0.2s ease-in transform;
+    transform: scale(2) translateY(5px);
+    transform-origin: 50% 50%;
+  }
   & .math {
     transition-duration: 0.6s;
   }
@@ -232,6 +263,26 @@ const SubjectLink = styled(Link)`
     } /* TODO: Helperblue */
     && .green {
       fill: #becd2b;
+    }
+
+    & .chem {
+      .flask {
+        animation: ${hickup} 0.7s ease-in-out;
+      }
+      .contents {
+        fill: #becd2b !important;
+        animation: ${hickup} 0.7s ease-in-out;
+      }
+      .pipette {
+        transform: translateY(0) rotate(-3deg);
+      }
+      .pipette .pipette-contents {
+        opacity: 0;
+      }
+      .drop {
+        transform: scale(2) translateY(40px);
+        opacity: 1;
+      }
     }
   }
 `

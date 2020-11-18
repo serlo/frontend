@@ -144,6 +144,7 @@ export function Entity({ data }: EntityProps) {
           id: data.id,
           revisionId: data.revisionId,
           courseId: data.courseData?.id,
+          trashed: data.trashed,
         }}
       />
     )

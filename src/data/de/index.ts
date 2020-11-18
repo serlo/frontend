@@ -1,4 +1,4 @@
-import { headerData, footerData } from './menu-data';
+import { headerData, footerData, landingSubjectsData } from './menu-data';
 export const instanceData = {
   lang: "de",
   headerData: headerData,
@@ -10,9 +10,9 @@ export const instanceData = {
       login: "Anmelden"
     },
     footer: {
-      summaryHeading: "Serlo.org ist die Wikipedia fürs Lernen",
+      summaryHeading: "Serlo.org ist die Wikipedia fürs Lernen.",
       summaryText: "Wir sind eine engagierte Gemeinschaft, die daran arbeitet, hochwertige Bildung weltweit frei verfügbar zu machen.",
-      learnMore: "Mehr Erfahren",
+      learnMore: "Mehr erfahren",
       participate: "Mitmachen",
       donate: "Spenden",
       toTop: "Nach oben"
@@ -86,6 +86,13 @@ export const instanceData = {
       link2: "Nutzungsbedingungen",
       button: "Verstanden"
     },
+    embed: {
+      part1: "Mit einem Klick auf das Bild oder den Button unten stimmst du zu, dass externe Inhalte von",
+      part2: "geladen werden. Dabei können persönliche Daten zu diesem Service übertragen werden – entsprechend unserer",
+      link: "Datenschutzerklärung",
+      video: "Video abspielen",
+      applet: "Applet laden"
+    },
     notifications: {
       notifications: "Benachrichtigungen",
       pleaseLogInLink: "Bitte melde dich an",
@@ -128,19 +135,20 @@ export const instanceData = {
       backToHome: "Zur Startseite"
     },
     print: {
-      warning: 'Important: To make sure all images and formulas print, please scroll down to the end of the page once. Thank you!'
+      warning: "Wichtig: Damit alle Bilder und Formeln gedruckt werden, scrolle bitte einmal bis zum Ende der Seite. Vielen Dank!"
     }
   }
 };
 export const instanceLandingData = {
   lang: "de",
+  subjectsData: landingSubjectsData,
   strings: {
     vision: "Wir ermöglichen Schüler*innen und Studierenden selbständig und im eigenen Tempo zu lernen – unabhängig von den finanziellen Möglichkeiten ihrer Eltern, denn serlo.org ist und bleibt komplett kostenlos.\n\nUnsere Vision ist es, hochwertige Bildung weltweit frei verfügbar zu machen.",
     learnMore: "Mehr erfahren",
     democraticallyStructured: "demokratisch organisiert",
     nonProfit: 'non-profit',
     transparent: 'transparent',
-    openlyLicensed: "frei lizensiert",
+    openlyLicensed: "frei lizenziert",
     adFree: "werbefrei",
     freeOfCharge: "kostenlos",
     wikiTitle: "Serlo.org ist die Wikipedia fürs Lernen",
@@ -172,13 +180,13 @@ export const loggedInData = {
       title: "Profil bearbeiten"
     }, {
       url: '/auth/password/change',
-      title: "Passwort aktualisieren"
+      title: "Passwort ändern"
     }, {
       url: '/event/history/user/me',
       title: "Meine Aktivitäten"
     }, {
       url: '/api/auth/logout',
-      title: "Ausloggen"
+      title: "Abmelden"
     }]
   }],
   strings: {
@@ -197,11 +205,13 @@ export const loggedInData = {
       subscribe: "Abonnieren",
       subscribeNotifications: "Benachrichtigungen empfangen",
       subscribeNotificationsAndMail: "Benachrichtigungen und E-Mails erhalten",
+      unsubscribeNotifications: "Abbestellen",
       convert: "Umwandeln (beta)",
       history: "Bearbeitungsverlauf",
       editAssignments: "Zuweisung zu Themen und Lehrplänen bearbeiten",
       flagContent: "Inhalt melden",
       moveToTrash: "In den Papierkorb verschieben",
+      restoreContent: "Aus dem Papierkorb wiederherstellen",
       sort: "Unterelemente sortieren",
       edit: "Bearbeiten",
       organize: "Baumstruktur bearbeiten",

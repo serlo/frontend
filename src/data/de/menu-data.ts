@@ -1,5 +1,22 @@
 import { serloDomain } from '../../helper/serlo-domain'
-import { InstanceData } from '@/data-types'
+import { InstanceData, LandingSubjectsData } from '@/data-types'
+
+export const landingSubjectsData: LandingSubjectsData = {
+  subjects: [
+    { url: '/mathe', title: 'Mathematik lernen', icon: 'math' },
+    {
+      url: '/nachhaltigkeit',
+      title: 'Nachhaltigkeit lernen',
+      icon: 'sustainability',
+    },
+    { url: '/biologie', title: 'Biologie lernen', icon: 'biology' },
+    { url: '/chemie', title: 'Chemie lernen', icon: 'chemistry' },
+  ],
+  additionalLinks: [
+    { url: '/eltern', title: 'Einstieg für Eltern' },
+    { url: '/lehrkraefte', title: 'Einstieg für Lehrer*innen' },
+  ],
+}
 
 export const headerData: InstanceData['headerData'] = [
   {

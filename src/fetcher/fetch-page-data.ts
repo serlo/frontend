@@ -41,11 +41,7 @@ export async function fetchPageData(raw_alias: string): Promise<PageData> {
     return pageData
   } catch (e) {
     const message = `Error while fetching data: ${(e as Error).message ?? e}`
-    const code = message.includes("Cannot read property 'path' of null")
-      ? 404
-      : message.includes('Code: 503')
-      ? 503
-      : 500
+    const code = message.includes('Code: 503') ? 503 : 500
     return { kind: 'error', errorData: { code, message } }
   }
 }
@@ -65,6 +61,16 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
           },
         }
   )
+
+  if (uuid === null) {
+    return {
+      kind: 'error',
+      errorData: {
+        code: 404,
+        message: 'Content not found.',
+      },
+    }
+  }
 
   if (uuid.__typename === 'Course') {
     const firstPage = uuid.pages[0]?.alias

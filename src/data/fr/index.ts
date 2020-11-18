@@ -1,4 +1,4 @@
-import { headerData, footerData } from './menu-data';
+import { headerData, footerData, landingSubjectsData } from './menu-data';
 export const instanceData = {
   lang: "fr",
   headerData: headerData,
@@ -74,9 +74,9 @@ export const instanceData = {
       right: 'Right',
       wrong: 'Wrong',
       check: 'Check',
-      yourAnswer: 'Your answer…',
-      chooseOption: 'Click on one of the options.',
-      trashedNotice: 'This content is marked for deletion.'
+      yourAnswer: "Votre réponse...",
+      chooseOption: "Sélectionnez une des options :",
+      trashedNotice: "Ce contenu est marqué pour être supprimé."
     },
     cookie: {
       part1: "En utilisant ce site Web, vous déclarez que vous acceptez",
@@ -86,6 +86,13 @@ export const instanceData = {
       link2: "nos conditions d'utilisation.",
       button: "Je suis d'accord"
     },
+    embed: {
+      part1: 'By clicking on the image or button below you agree that external content from',
+      part2: 'will be loaded. Also personal data may be transferred to this service in accordance with our',
+      link: 'Privacy Policy',
+      video: 'Play Video',
+      applet: 'Load Applet'
+    },
     notifications: {
       notifications: 'Notifications',
       pleaseLogInLink: 'Please log in',
@@ -93,22 +100,22 @@ export const instanceData = {
     },
     comments: {
       question: 'Do you have a question?',
-      commentsOne: 'Comment',
-      commentsMany: 'Comments',
-      submit: 'Submit',
+      commentsOne: "Commentaire",
+      commentsMany: "Commentaires",
+      submit: "Soumettre",
       reportComment: 'Report comment',
       archiveThread: 'Archive thread',
       deleteThread: 'Delete thread',
       deleteComment: 'Delete comment',
       postedOn: 'Posted on',
       placeholder: "Your question or suggestion…",
-      placeholderReply: "Your answer…"
+      placeholderReply: "Votre réponse..."
     },
     revisions: {
       toOverview: "Back to overview",
       changes: "Changes",
-      title: "Title",
-      content: "Content",
+      title: "Titre",
+      content: "Contenu",
       metaTitle: "Meta Title",
       metaDescription: "Meta Description",
       compare: "Compare",
@@ -134,6 +141,7 @@ export const instanceData = {
 };
 export const instanceLandingData = {
   lang: "fr",
+  subjectsData: landingSubjectsData,
   strings: {
     vision: "Nous sommes une organisation communautaire à but non lucratif supportant l'apprentissage personnalisé et travaillant à la réalisation d'opportunités éducatives égales. Cette plateforme propose des milliers d'articles d'instruction, des vidéos pédagogiques et des exercices pratiques aux millions d'étudiant(e)s et d'élèves dans le monde entier - complètement gratuit. Maintenant, vous êtes invité de joindre l'équipe Serlo francophone.",
     learnMore: "En savoir plus",
@@ -149,7 +157,7 @@ export const instanceLandingData = {
     callForAuthors: "Nous cherchons des enseignant(e)s et des éducateur(e)s enthousiastes et passionné(e)s de leur matière. Devenez un(e) auteur sur serlo.org ! Vous pouvez créer du nouveau matériel pédagogique et nous aider à améliorer le contenu existant.",
     communityLink: "Visitez la page d'accueil d'auteurs",
     callForOther: "Nous offrons une variété d'emplois et de possibilités de bénévolat dans les domaines du développement de logiciel, de la conception, la traduction, la communication, la gestion de projet et d'autres.",
-    getInvolved: "Participe!"
+    getInvolved: "Participez!"
   }
 };
 export const serverSideStrings = {
@@ -162,7 +170,7 @@ export const loggedInData = {
     icon: 'notifications'
   }, {
     url: '',
-    title: "Utilisateur",
+    title: 'User',
     icon: 'user',
     children: [{
       url: '/user/public',
@@ -184,8 +192,8 @@ export const loggedInData = {
   strings: {
     tools: "Autres outils",
     authorMenu: {
-      log: 'Log',
-      settings: 'Settings',
+      log: "Historique",
+      settings: "Réglages",
       moveCoursePage: 'Move this page to another course',
       thisCoursePage: 'This course-page',
       addCoursePage: 'Add course-page',
@@ -194,17 +202,19 @@ export const loggedInData = {
       moveItems: 'Move items',
       addGroupedTextExercise: 'Add grouped-text-exercise',
       changeLicense: 'Change License',
-      subscribe: 'Subscribe',
+      subscribe: "S'abonner",
       subscribeNotifications: 'Recieve notifications',
       subscribeNotificationsAndMail: 'Recieve notifications and emails',
+      unsubscribeNotifications: "Désabonner",
       convert: 'Convert (beta)',
-      history: 'History',
-      editAssignments: 'Edit topic and curriculum assignments',
-      flagContent: 'Flag content',
-      moveToTrash: 'Move to trash',
+      history: "Histoire",
+      editAssignments: "Modifier le sujet et le programme d'études",
+      flagContent: "Marquez cet élément comme inapproprié",
+      moveToTrash: "Déplacer dans la corbeille",
+      restoreContent: 'Restore from trash',
       sort: 'Sort children',
-      edit: 'Edit',
-      organize: 'Organize',
+      edit: "Modifier",
+      organize: "Organiser",
       moveToGroupedTextExercise: 'Move content to other grouped-text-exercise',
       moveToTextExercise: 'Move content to other text-exercise',
       sortEntities: 'Sort content',
@@ -235,7 +245,7 @@ export const loggedInData = {
       setTaxonomyParentChanged: "%actor% changed parent of %child% to %parent%.",
       setUuidStateTrashed: "%actor% trashed %object%.",
       setUuidStateRestored: "%actor% restored %object%.",
-      entityPlaceholderFallback: "Content"
+      entityPlaceholderFallback: "Contenu"
     }
   }
 };

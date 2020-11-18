@@ -1,4 +1,4 @@
-import { headerData, footerData } from './menu-data';
+import { headerData, footerData, landingSubjectsData } from './menu-data';
 export const instanceData = {
   lang: "es",
   headerData: headerData,
@@ -86,6 +86,13 @@ export const instanceData = {
       link2: "Términos de uso",
       button: "Aceptar"
     },
+    embed: {
+      part1: 'By clicking on the image or button below you agree that external content from',
+      part2: 'will be loaded. Also personal data may be transferred to this service in accordance with our',
+      link: 'Privacy Policy',
+      video: 'Play Video',
+      applet: 'Load Applet'
+    },
     notifications: {
       notifications: "Notificaciones",
       pleaseLogInLink: "Por favor, inicia sesión",
@@ -134,6 +141,7 @@ export const instanceData = {
 };
 export const instanceLandingData = {
   lang: "es",
+  subjectsData: landingSubjectsData,
   strings: {
     vision: "Somos una organización de base comunitaria sin ánimo de lucro que apoya el aprendizaje personalizado y trabajando por la igualdad de oportunidades educativas. Esta plataforma de aprendizaje ofrece miles de artículos de instrucción, videos de aprendizaje y ejercicios de práctica para millones de estudiantes en todo el mundo - completamente gratis. Ahora es el momento de unirte a nosotros en tu idioma.",
     learnMore: "Aprende más",
@@ -153,7 +161,7 @@ export const instanceLandingData = {
   }
 };
 export const serverSideStrings = {
-  title: "Aprende con Serlo!"
+  title: "¡Aprende con Serlo!"
 };
 export const loggedInData = {
   authMenu: [{
@@ -197,11 +205,13 @@ export const loggedInData = {
       subscribe: "Subscribir",
       subscribeNotifications: "Recibir notificaciones",
       subscribeNotificationsAndMail: "Recibir notificaciones y correos electrónicos",
+      unsubscribeNotifications: "Cancelar suscripción",
       convert: "Convertir (beta)",
       history: "Historial",
       editAssignments: "Editar el tema y las asignaciones de currículo",
       flagContent: "Marcar contenido",
       moveToTrash: "Mover a la papelera",
+      restoreContent: "Restaurar de la papelera",
       sort: "Ordenar los niños",
       edit: "Modificar",
       organize: "Organizar",

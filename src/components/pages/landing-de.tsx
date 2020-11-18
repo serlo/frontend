@@ -19,12 +19,13 @@ export interface LandingDEProps {
 
 export function LandingDE({ data }: LandingDEProps) {
   const landingStrings = data.strings
+  const subjectsData = data.subjectsData
 
   return (
     <>
       <HeadTags data={{ title: 'Serlo – Die freie Lernplattform' }} />
       <SubjectsSection>
-        <LandingSubjects />
+        <LandingSubjects data={subjectsData} />
       </SubjectsSection>
 
       <AboutSection>
