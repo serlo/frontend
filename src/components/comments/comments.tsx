@@ -80,7 +80,7 @@ function createComment(node: any): CommentData {
   return {
     id: node.id,
     timestamp: node.createdAt,
-    text: node.content.replaceAll('\n', '<br>'),
+    text: node.content,
     user: {
       username: node.author.alias.substring(
         (node.author.alias.lastIndexOf('/') as number) + 1

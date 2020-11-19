@@ -41,7 +41,7 @@ CommentProps) {
   return (
     <Wrapper isParent={isParent}>
       <MetaBar user={user} timestamp={timestamp} isParent={isParent} />
-      <StyledP dangerouslySetInnerHTML={{ __html: body }}></StyledP>
+      <StyledP>{body}</StyledP>
     </Wrapper>
   )
 }
@@ -59,5 +59,6 @@ const Wrapper = styled.div<{ isParent?: boolean }>`
 
   > p {
     margin-bottom: 0;
+    white-space: pre-line;
   }
 `
