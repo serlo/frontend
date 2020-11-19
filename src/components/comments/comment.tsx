@@ -41,7 +41,7 @@ CommentProps) {
   return (
     <Wrapper isParent={isParent}>
       <MetaBar user={user} timestamp={timestamp} isParent={isParent} />
-      <StyledP>{body}</StyledP>
+      <StyledP dangerouslySetInnerHTML={{ __html: body }}></StyledP>
     </Wrapper>
   )
 }

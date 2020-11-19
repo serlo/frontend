@@ -1,10 +1,12 @@
 import { faComments, faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { gql, request } from 'graphql-request'
 import React from 'react'
 import styled from 'styled-components'
 
 import { Comment } from './comment'
 import { CommentForm } from './comment-form'
+import { endpoint } from '@/api/endpoint'
 import { Lazy } from '@/components/content/lazy'
 import { StyledH2 } from '@/components/tags/styled-h2'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -18,13 +20,12 @@ export type CommentsData = Discussion[]
 
 export interface Discussion {
   status: 'open' | 'closed'
-  upvotes: number
   id: number
-  entity: {
+  /*entity: {
     title: string
     alias: string
     type: string
-  }
+  }*/
   question: CommentData
   replies: CommentData[]
 }
@@ -36,59 +37,86 @@ export interface CommentData {
   text: string
 }
 
+const query = gql`
+  query getComments($id: Int!) {
+    uuid(id: $id) {
+      ... on AbstractUuid {
+        threads {
+          nodes {
+            archived
+            trashed
+            comments {
+              nodes {
+                id
+                trashed
+                content
+                archived
+                createdAt
+                author {
+                  alias
+                  id
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`
+
+function createDiscussion(thread: any): Discussion {
+  const question = thread.comments.nodes[0]
+  const replies = thread.comments.nodes.slice(1)
+  return {
+    status: thread.archived || thread.trashed ? 'closed' : 'open',
+    id: question.id,
+    question: createComment(question),
+    replies: replies.map(createComment),
+  }
+}
+
+function createComment(node: any): CommentData {
+  return {
+    id: node.id,
+    timestamp: node.createdAt,
+    text: node.content.replaceAll('\n', '<br>'),
+    user: {
+      username: node.author.alias.substring(
+        (node.author.alias.lastIndexOf('/') as number) + 1
+      ),
+      id: node.author.id,
+    },
+  }
+}
+
 export function Comments({ id: _id }: CommentsProps) {
   const [data, setData] = React.useState<CommentsData | null>(null)
+  const [commentCount, setCommentCount] = React.useState(0)
   const { strings } = useInstanceData()
 
   React.useEffect(() => {
     // todo: fetch data
-    setData([
-      {
-        status: 'open',
-        upvotes: 2,
-        id: 5555,
-        entity: {
-          title: 'Parabeln',
-          alias: '/1234',
-          type: 'Artikel',
-        },
-        question: {
-          id: 6666,
-          timestamp: 1597314547,
-          user: {
-            username: 'Markus',
-            id: 123,
-          },
-          text: 'hey, Ich habe da so eine Frage',
-        },
-        replies: [
-          {
-            id: 7777,
-            timestamp: 1597314547,
-            user: {
-              username: 'Thomas',
-              id: 124,
-            },
-            text: 'Schieß los',
-          },
-          {
-            id: 7778,
-            timestamp: 1597344547,
-            user: {
-              username: 'Anita',
-              id: 125,
-            },
-            text: 'Ja das stimmt so!',
-          },
-        ],
-      },
-    ])
-  }, [])
+    void (async () => {
+      try {
+        const queryData = await request(endpoint, query, { id: _id })
+        if (queryData !== null) {
+          console.log(queryData)
+          const output = queryData.uuid.threads.nodes.map(createDiscussion)
+          setData(output)
+          setCommentCount(
+            output.reduce((acc: any, val: any) => {
+              return (acc as number) + (val.replies.length as number) + 1
+            }, 0)
+          )
+        }
+      } catch (e) {
+        //
+      }
+    })()
+  }, [_id])
 
   if (!data) return null
-
-  /* TODO: calculate amount of comments (+children) or get from server */
-  const commentCount = 1
 
   return (
     <div>
@@ -98,7 +126,7 @@ export function Comments({ id: _id }: CommentsProps) {
 
       <CommentForm
         placeholder={strings.comments.placeholder}
-        parent_id={123123}
+        parent_id={_id}
         // onSendComment={}
       />
 
@@ -135,6 +163,7 @@ export function Comments({ id: _id }: CommentsProps) {
           user={discussion.question.user}
           body={discussion.question.text}
           isParent
+          key={discussion.question.id}
         />
         <div>
           {discussion.replies.map((comment) => (
@@ -148,7 +177,7 @@ export function Comments({ id: _id }: CommentsProps) {
           ))}
           <CommentForm
             placeholder={strings.comments.placeholderReply}
-            parent_id={123123}
+            parent_id={discussion.id}
             reply
           />
         </div>
