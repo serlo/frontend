@@ -111,7 +111,7 @@ export function Comments({ id: _id }: CommentsProps) {
           )
         }
       } catch (e) {
-        //
+        console.log(e)
       }
     })()
   }, [_id])
