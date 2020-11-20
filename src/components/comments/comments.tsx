@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import { Comment } from './comment'
 import { CommentForm } from './comment-form'
 import { endpoint } from '@/api/endpoint'
-import { Lazy } from '@/components/content/lazy'
+import { useAuth } from '@/auth/use-auth'
 import { StyledH2 } from '@/components/tags/styled-h2'
 import { useInstanceData } from '@/contexts/instance-context'
 
@@ -94,6 +94,7 @@ export function Comments({ id: _id }: CommentsProps) {
   const [data, setData] = React.useState<CommentsData | null>(null)
   const [commentCount, setCommentCount] = React.useState(0)
   const { strings } = useInstanceData()
+  const auth = useAuth()
 
   React.useEffect(() => {
     // todo: fetch data
@@ -120,15 +121,19 @@ export function Comments({ id: _id }: CommentsProps) {
 
   return (
     <div>
-      <CustomH2>
-        <StyledIcon icon={faQuestionCircle} /> {strings.comments.question}
-      </CustomH2>
+      {auth.current && (
+        <CustomH2>
+          <StyledIcon icon={faQuestionCircle} /> {strings.comments.question}
+        </CustomH2>
+      )}
 
-      <CommentForm
-        placeholder={strings.comments.placeholder}
-        parent_id={_id}
-        // onSendComment={}
-      />
+      {auth.current && (
+        <CommentForm
+          placeholder={strings.comments.placeholder}
+          parent_id={_id}
+          // onSendComment={}
+        />
+      )}
 
       {commentCount > 0 && (
         <>
@@ -140,7 +145,7 @@ export function Comments({ id: _id }: CommentsProps) {
               : strings.comments.commentsMany}
           </CustomH2>
 
-          <Lazy>{data.map(buildDisussion)}</Lazy>
+          {data.map(buildDisussion)}
         </>
       )}
     </div>
@@ -175,11 +180,13 @@ export function Comments({ id: _id }: CommentsProps) {
               body={comment.text}
             />
           ))}
-          <CommentForm
-            placeholder={strings.comments.placeholderReply}
-            parent_id={discussion.id}
-            reply
-          />
+          {auth.current && (
+            <CommentForm
+              placeholder={strings.comments.placeholderReply}
+              parent_id={discussion.id}
+              reply
+            />
+          )}
         </div>
       </div>
     )
