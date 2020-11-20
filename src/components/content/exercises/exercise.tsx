@@ -86,9 +86,7 @@ export function Exercise({ node }: ExerciseProps) {
             </SolutionTools>
           )
         }
-        <Lazy>
-          <Comments id={node.context.solutionId!} />
-        </Lazy>
+        <Comments id={node.context.solutionId!} />
       </SolutionBox>
     )
   }
