@@ -3,9 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import * as React from 'react'
 import styled from 'styled-components'
 
+import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
 import { makeTransparentButton } from '@/helper/css'
-import { useAuth } from '@/auth/use-auth'
 
 export function DropdownMenu({
   isParent,
