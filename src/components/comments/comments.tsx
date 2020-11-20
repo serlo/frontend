@@ -4,6 +4,7 @@ import { gql, request } from 'graphql-request'
 import React from 'react'
 import styled from 'styled-components'
 
+import { Lazy } from '../content/lazy'
 import { Comment } from './comment'
 import { CommentForm } from './comment-form'
 import { endpoint } from '@/api/endpoint'
@@ -37,6 +38,8 @@ export interface CommentData {
   text: string
 }
 
+// TODO: Type the query
+
 const query = gql`
   query getComments($id: Int!) {
     uuid(id: $id) {
@@ -64,6 +67,8 @@ const query = gql`
     }
   }
 `
+
+// TODO: rework data structure
 
 function createDiscussion(thread: any): Discussion {
   const question = thread.comments.nodes[0]
@@ -145,7 +150,7 @@ export function Comments({ id: _id }: CommentsProps) {
               : strings.comments.commentsMany}
           </CustomH2>
 
-          {data.map(buildDisussion)}
+          <Lazy>{data.map(buildDisussion)}</Lazy>
         </>
       )}
     </div>

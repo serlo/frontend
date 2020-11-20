@@ -11,7 +11,6 @@ import { ShareModal } from '../navigation/share-modal'
 import { UserToolsMobileButton } from '../navigation/tool-line-button'
 import { UserTools } from '../navigation/user-tools'
 import { UserToolsMobile } from '../navigation/user-tools-mobile'
-import { Lazy } from './lazy'
 import { LicenseNotice } from './license-notice'
 import { Link } from './link'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -92,9 +91,7 @@ export function Topic({ data }: TopicProps) {
 
       {defaultLicense && <LicenseNotice data={defaultLicense} />}
 
-      <Lazy>
-        <Comments id={data.id} />
-      </Lazy>
+      <Comments id={data.id} />
 
       <UserToolsMobile>
         <UserToolsMobileButton onClick={() => setOpen(true)}>
