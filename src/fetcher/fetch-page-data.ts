@@ -287,7 +287,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
   const licenseData = uuid.license
 
   if (uuid.__typename === 'Article') {
-    console.log('total count', uuid.revisions.totalCount)
+    console.log('total count', uuid.revisions?.totalCount)
     return {
       kind: 'single-entity',
       newsletterPopup: false,
@@ -305,7 +305,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
         },
         categoryIcon: 'article',
         inviteToEdit: true,
-        unrevisedRevisions: uuid.revisions.totalCount,
+        unrevisedRevisions: uuid.revisions?.totalCount,
       },
       metaData: {
         title,
