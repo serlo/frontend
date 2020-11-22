@@ -1,4 +1,5 @@
 import {
+  faClock,
   faPencilAlt,
   faShareAlt,
   faTools,
@@ -27,13 +28,20 @@ interface UserToolsProps {
   onShare?: () => void
   hideEdit: boolean
   data: AuthorToolsData
+  unrevisedRevision?: number
 }
 
 export interface UserToolsData {
   editHref: string
 }
 
-export function UserTools({ id, onShare, hideEdit, data }: UserToolsProps) {
+export function UserTools({
+  id,
+  onShare,
+  hideEdit,
+  data,
+  unrevisedRevision,
+}: UserToolsProps) {
   const { strings } = useInstanceData()
   const auth = useAuth()
   const [loaded, setLoaded] = React.useState(false)
@@ -41,6 +49,7 @@ export function UserTools({ id, onShare, hideEdit, data }: UserToolsProps) {
     setLoaded(true)
   }, [])
   const loggedInData = useLoggedInData()
+  const showHistory = unrevisedRevision !== undefined && unrevisedRevision > 0
 
   const editHref =
     data.type == 'Page'
@@ -53,10 +62,20 @@ export function UserTools({ id, onShare, hideEdit, data }: UserToolsProps) {
     <AbsoluteWrapper>
       <BoxWrapper>
         {(!hideEdit || (loaded && auth.current)) && (
-          <IconButton href={editHref}>
-            <FontAwesomeIcon icon={faPencilAlt} size="1x" />{' '}
-            {strings.edit.button}
-          </IconButton>
+          <>
+            {!showHistory && (
+              <IconButton href={editHref}>
+                <FontAwesomeIcon icon={faPencilAlt} size="1x" />{' '}
+                {strings.edit.button}
+              </IconButton>
+            )}
+            {showHistory && (
+              <IconButton href={`/entity/repository/history/${id}`}>
+                <FontAwesomeIcon icon={faClock} size="1x" />{' '}
+                {`${strings.edit.history} (${unrevisedRevision})`}
+              </IconButton>
+            )}
+          </>
         )}
         <IconButton onClick={onShare} as="button">
           <FontAwesomeIcon icon={faShareAlt} size="1x" /> {strings.share.button}

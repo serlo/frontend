@@ -56,7 +56,8 @@ export const instanceData = {
       close: 'Close'
     },
     edit: {
-      button: 'Edit'
+      button: 'Edit',
+      history: 'Show history'
     },
     license: {
       readMore: 'Info'
