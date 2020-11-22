@@ -11,6 +11,23 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { ErrorData } from '@/data-types'
 import { makePrimaryButton } from '@/helper/css'
 
+export interface SentryGlobal {
+  Sentry?: {
+    addBreadcrumb: (arg0: {
+      type?: string
+      category?: string
+      message?: string
+      level?: string
+      timestamp?: string
+      data?: unknown
+    }) => void
+    captureException: (arg0: Error) => void
+    Severity?: {
+      Info: string
+    }
+  }
+}
+
 export function ErrorPage({ code, message }: ErrorData) {
   const [path, setPath] = React.useState('')
   const [hasSerloBacklink, setHasSerloBacklink] = React.useState(false)
@@ -20,13 +37,14 @@ export function ErrorPage({ code, message }: ErrorData) {
     console.log(message)
 
     if (process.env.NEXT_PUBLIC_SENTRY_DSN !== undefined) {
-      ;(window as any).Sentry?.addBreadcrumb({
+      const _window = (window as unknown) as Window & SentryGlobal
+      _window.Sentry?.addBreadcrumb({
         category: 'error message',
         message,
-        level: (window as any).Sentry?.Severity?.Info || 'info',
+        level: _window.Sentry?.Severity?.Info || 'info',
       })
-      ;(window as any).Sentry?.captureException(
-        new Error(`ErrorPage: Code ${code}`)
+      _window.Sentry?.captureException(
+        new Error(`${code}: ${message || 'without message'}`)
       )
     }
 

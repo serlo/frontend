@@ -86,6 +86,13 @@ export const instanceData = {
       link2: "Nutzungsbedingungen",
       button: "Verstanden"
     },
+    embed: {
+      part1: "Mit einem Klick auf das Bild oder den Button unten stimmst du zu, dass externe Inhalte von",
+      part2: "geladen werden. Dabei können persönliche Daten zu diesem Service übertragen werden – entsprechend unserer",
+      link: "Datenschutzerklärung",
+      video: "Video abspielen",
+      applet: "Applet laden"
+    },
     notifications: {
       notifications: "Benachrichtigungen",
       pleaseLogInLink: "Bitte melde dich an",
