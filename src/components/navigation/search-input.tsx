@@ -31,6 +31,8 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
     typeof window !== 'undefined' &&
     sessionStorage.GoogleSearchConsent === 'true'
 
+  const searchFormRef = React.useRef<HTMLDivElement>(null)
+
   // const [isSearchPage, setIsSearchPage] = React.useState(false)
   const { lang, strings } = useInstanceData()
   const router = useRouter()
@@ -63,7 +65,10 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
 
   function activateSearch() {
     if (searchActive) return
-    if (!consentGiven) return
+    if (!consentGiven) {
+      searchFormRef.current?.focus()
+      return
+    }
 
     if (!searchLoaded) {
       // const cx = '016022363195733463411:78jhtkzhbhc'
@@ -134,6 +139,7 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
       >
         <SearchForm
           id="searchform"
+          ref={searchFormRef}
           onClick={activateSearch}
           onKeyDown={(e) => {
             if (e.key == 'Enter') {
