@@ -49,6 +49,7 @@ export const Notifications: NextPage = () => {
                 id
                 username
               }
+              objectId
               ... on CheckoutRevisionNotificationEvent {
                 revision {
                   id
