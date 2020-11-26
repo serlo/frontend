@@ -9,6 +9,7 @@ import styled from 'styled-components'
 
 import { useInstanceData } from '@/contexts/instance-context'
 import { makeMargin, makePadding, makePrimaryButton } from '@/helper/css'
+import { reactReplaceString } from '@/helper/react-replace-string'
 
 // inspired by https://github.com/ibrahimcesar/react-lite-youtube-embed
 // also borrowed some code
@@ -71,11 +72,14 @@ export function PrivacyWrapper({
           </PreviewImageWrapper>
         )}
         <InfoBar>
-          {strings.embed.part1} <b>{providerLabel}</b> {strings.embed.part2}{' '}
-          <a href="/privacy" target="_blank">
-            {strings.embed.link}
-          </a>
-          .
+          {reactReplaceString(strings.embed.text, {
+            provider: <b>{providerLabel}</b>,
+            privacypolicy: (
+              <a href="/privacy" target="_blank">
+                {strings.embed.link}
+              </a>
+            ),
+          })}
         </InfoBar>
         <ButtonWrap onClick={confirmLoad}>
           <Playbutton onKeyDown={onKeyDown}>
