@@ -9,6 +9,10 @@ export const instanceData = {
       search: "खोजें",
       login: "लॉग इन करें"
     },
+    search: {
+      privacy: 'The search stores your data! Beware! See our %privacypolicy%.',
+      agree: 'Agree'
+    },
     footer: {
       summaryHeading: "Serlo.org सीखने की विकिपीडिया है",
       summaryText: "हम महान शिक्षा को हर किसी के लिए स्वतंत्र रूप से उपलब्ध कराने के लिए अथक रूप से काम करने वाले दूरदर्शी समुदाय का एक समुदाय हैं",
@@ -88,11 +92,11 @@ export const instanceData = {
       button: "सहमत"
     },
     embed: {
-      part1: 'By clicking on the image or button below you agree that external content from',
-      part2: 'will be loaded. Also personal data may be transferred to this service in accordance with our',
+      text: 'By clicking on the image or button below you agree that external content from %provider% will be loaded. Also personal data may be transferred to this service in accordance with our %privacypolicy%.',
       link: 'Privacy Policy',
       video: 'Play Video',
-      applet: 'Load Applet'
+      applet: 'Load Applet',
+      twingle: 'Load Donation Form'
     },
     notifications: {
       notifications: "सूचनाएँ",
