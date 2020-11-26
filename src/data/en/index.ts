@@ -57,7 +57,7 @@ export const instanceData = {
     },
     edit: {
       button: 'Edit',
-      history: 'Show history'
+      unrevised: 'Show unrevised revisions'
     },
     license: {
       readMore: 'Info'

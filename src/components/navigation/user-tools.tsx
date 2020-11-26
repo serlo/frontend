@@ -72,7 +72,7 @@ export function UserTools({
             {showHistory && (
               <IconButton href={`/entity/repository/history/${id}`}>
                 <FontAwesomeIcon icon={faClock} size="1x" />{' '}
-                {`${strings.edit.history} (${unrevisedRevision})`}
+                {`${strings.edit.unrevised} (${unrevisedRevision})`}
               </IconButton>
             )}
           </>

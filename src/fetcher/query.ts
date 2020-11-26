@@ -41,15 +41,15 @@ export interface Page extends Repository {
 
 export interface Article extends EntityWithTaxonomyTerms {
   __typename: 'Article'
-  revisions: {
-    totalCount: number
-  }
   currentRevision?: GraphQL.Maybe<
     Pick<
       GraphQL.ArticleRevision,
       'title' | 'content' | 'metaTitle' | 'metaDescription'
     >
   >
+  revisions: {
+    totalCount: number
+  }
 }
 
 export interface Video extends EntityWithTaxonomyTerms {
@@ -57,6 +57,9 @@ export interface Video extends EntityWithTaxonomyTerms {
   currentRevision?: GraphQL.Maybe<
     Pick<GraphQL.VideoRevision, 'title' | 'url' | 'content'>
   >
+  revisions: {
+    totalCount: number
+  }
 }
 
 export interface Applet extends EntityWithTaxonomyTerms {
@@ -67,6 +70,9 @@ export interface Applet extends EntityWithTaxonomyTerms {
       'title' | 'content' | 'url' | 'metaTitle' | 'metaDescription'
     >
   >
+  revisions: {
+    totalCount: number
+  }
 }
 
 export interface CoursePage extends Entity {
@@ -74,6 +80,9 @@ export interface CoursePage extends Entity {
   currentRevision?: GraphQL.Maybe<
     Pick<GraphQL.CoursePageRevision, 'content' | 'title'>
   >
+  revisions: {
+    totalCount: number
+  }
   course: {
     id: number
     currentRevision?: GraphQL.Maybe<Pick<GraphQL.CourseRevision, 'title'>>
@@ -93,6 +102,9 @@ export interface BareExercise extends Entity {
   currentRevision?: GraphQL.Maybe<
     Pick<GraphQL.AbstractExerciseRevision, 'content'>
   >
+  revisions: {
+    totalCount: number
+  }
   solution?: {
     id: number
     currentRevision?: GraphQL.Maybe<Pick<GraphQL.SolutionRevision, 'content'>>
@@ -113,6 +125,9 @@ export interface BareExerciseGroup extends Entity {
   currentRevision?: GraphQL.Maybe<
     Pick<GraphQL.ExerciseGroupRevision, 'content'>
   >
+  revisions: {
+    totalCount: number
+  }
   exercises: BareExercise[]
 }
 
@@ -143,6 +158,9 @@ export interface Course extends Repository {
     alias?: string
   }[]
   currentRevision?: GraphQL.Maybe<Pick<GraphQL.CourseRevision, 'title'>>
+  revisions: {
+    totalCount: number
+  }
 }
 
 export interface TaxonomyTermChild {
@@ -429,11 +447,11 @@ export const dataQuery = gql`
       }
 
       ... on Article {
-        revisions(unrevised: true) {
-          totalCount
-        }
         currentRevision {
           ...articleRevision
+        }
+        revisions(unrevised: true) {
+          totalCount
         }
       }
 
@@ -441,17 +459,26 @@ export const dataQuery = gql`
         currentRevision {
           ...videoRevision
         }
+        revisions(unrevised: true) {
+          totalCount
+        }
       }
 
       ... on Applet {
         currentRevision {
           ...appletRevision
         }
+        revisions(unrevised: true) {
+          totalCount
+        }
       }
 
       ... on CoursePage {
         currentRevision {
           ...coursePageRevision
+        }
+        revisions(unrevised: true) {
+          totalCount
         }
         course {
           id
@@ -471,13 +498,26 @@ export const dataQuery = gql`
         }
       }
 
-      ... on AbstractExercise {
+      ... on Exercise {
         ...exercise
+        revisions(unrevised: true) {
+          totalCount
+        }
+      }
+
+      ... on GroupedExercise {
+        ...exercise
+        revisions(unrevised: true) {
+          totalCount
+        }
       }
 
       ... on ExerciseGroup {
         currentRevision {
           ...exerciseGroupRevision
+        }
+        revisions(unrevised: true) {
+          totalCount
         }
         exercises {
           ...exercise
