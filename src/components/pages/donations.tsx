@@ -5,6 +5,7 @@ import styled from 'styled-components'
 
 import { HeadTags } from '../head-tags'
 import { CookieBar } from '@/components/content/cookie-bar'
+import { PrivacyWrapper, Provider } from '@/components/content/privacy-wrapper'
 import { PartnerList } from '@/components/landing/partner-list'
 import { FooterNav } from '@/components/navigation/footer-nav'
 import { Logo } from '@/components/navigation/logo'
@@ -31,7 +32,7 @@ const footerEntries = [
 export function Donations() {
   const twingleID = '0001'
 
-  React.useEffect(() => {
+  const loadTwingle = function () {
     const script = document.createElement('script')
 
     script.src =
@@ -42,11 +43,7 @@ export function Donations() {
     script.type = 'text/javascript'
 
     document.body.appendChild(script)
-
-    return () => {
-      document.body.removeChild(script)
-    }
-  }, [])
+  }
 
   return (
     <>
@@ -73,7 +70,15 @@ export function Donations() {
             vom Geldbeutel ihrer Eltern.
           </p>
 
-          <div id={`twingle-public-embed-${twingleID}`} />
+          <PrivacyWrapper
+            type="twingle"
+            provider={Provider.Twingle}
+            twingleCallback={loadTwingle}
+            previewImageUrl="/_assets/img/blank-preview-image.png"
+          >
+            <div id={`twingle-public-embed-${twingleID}`} />
+          </PrivacyWrapper>
+
           <noscript>Bitte Javascript aktivieren</noscript>
 
           <StyledH2 id="no-formular">Ohne Angabe von Daten spenden</StyledH2>
