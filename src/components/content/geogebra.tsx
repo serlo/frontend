@@ -8,6 +8,8 @@ export interface GeogebraProps {
 }
 
 export function Geogebra({ id }: GeogebraProps) {
+  const appletId = id.replace('https://www.geogebra.org/m/', '')
+
   return (
     <PrivacyWrapper
       type="applet"
@@ -16,9 +18,9 @@ export function Geogebra({ id }: GeogebraProps) {
     >
       <GeogebraContainer>
         <GeogebraFrame
-          title={id}
+          title={appletId}
           scrolling="no"
-          src={'https://www.geogebra.org/material/iframe/id/' + id}
+          src={'https://www.geogebra.org/material/iframe/id/' + appletId}
         />
       </GeogebraContainer>
     </PrivacyWrapper>
