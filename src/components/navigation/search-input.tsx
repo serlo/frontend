@@ -9,6 +9,7 @@ import styled, { createGlobalStyle, css } from 'styled-components'
 import SearchIcon from '@/assets-webkit/img/search-icon.svg'
 import { useInstanceData } from '@/contexts/instance-context'
 import { inputFontReset, makeLightButton, makePadding } from '@/helper/css'
+import { reactReplaceString } from '@/helper/react-replace-string'
 import { theme } from '@/theme'
 
 interface SearchInputProps {
@@ -176,7 +177,13 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
     if (searchActive || consentGiven) return null
     return (
       <ConsentPop>
-        This is a important text I dont even know how long it will be
+        {reactReplaceString(strings.search.privacy, {
+          privacypolicy: (
+            <a href="/privacy" target="_blank">
+              {strings.embed.link}
+            </a>
+          ),
+        })}
         <br />
         <ConsentButton
           onClick={giveConsent}
@@ -186,7 +193,7 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
             }
           }}
         >
-          Agree
+          {strings.search.agree}
         </ConsentButton>
       </ConsentPop>
     )

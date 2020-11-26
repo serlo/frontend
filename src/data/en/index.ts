@@ -9,6 +9,10 @@ export const instanceData = {
       search: 'Search',
       login: 'Login'
     },
+    search: {
+      privacy: 'The search stores your data! Beware! See our %privacypolicy%.',
+      agree: 'Agree'
+    },
     footer: {
       summaryHeading: 'Serlo.org is the Wikipedia for learning.',
       summaryText: 'We are a community of visionaries working tirelessly to make great education freely available to everyone.',
