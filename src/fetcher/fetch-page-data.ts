@@ -116,6 +116,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
         typename: uuid.__typename,
         content: exercise,
         inviteToEdit: true,
+        unrevisedRevisions: uuid.revisions?.totalCount,
       },
       newsletterPopup: false,
       breadcrumbsData,
@@ -140,6 +141,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
         typename: uuid.__typename,
         content: exercise,
         inviteToEdit: true,
+        unrevisedRevisions: uuid.revisions?.totalCount,
       },
       newsletterPopup: false,
       breadcrumbsData,
@@ -304,6 +306,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
         },
         categoryIcon: 'article',
         inviteToEdit: true,
+        unrevisedRevisions: uuid.revisions?.totalCount,
       },
       metaData: {
         title,
@@ -341,6 +344,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
           wrapWithItemType: 'http://schema.org/VideoObject',
         },
         licenseData,
+        unrevisedRevisions: uuid.revisions?.totalCount,
       },
       metaData: {
         title,
@@ -375,6 +379,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
           wrapWithItemType: 'http://schema.org/VideoObject',
         },
         licenseData,
+        unrevisedRevisions: uuid.revisions?.totalCount,
       },
       metaData: {
         title,
@@ -430,6 +435,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
           pages,
           nextPageUrl: pages[currentPageIndex]?.url,
         },
+        unrevisedRevisions: uuid.revisions?.totalCount,
       },
       metaData: {
         title,
