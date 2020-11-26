@@ -77,7 +77,9 @@ function createDiscussion(thread: any): Discussion {
     status: thread.archived || thread.trashed ? 'closed' : 'open',
     id: question.id,
     question: createComment(question),
-    replies: replies.map(createComment),
+    replies: replies
+      .filter((reply: any) => !reply.trashed && !reply.archived)
+      .map(createComment),
   }
 }
 
@@ -107,8 +109,10 @@ export function Comments({ id: _id }: CommentsProps) {
       try {
         const queryData = await request(endpoint, query, { id: _id })
         if (queryData !== null) {
-          console.log(queryData)
-          const output = queryData.uuid.threads.nodes.map(createDiscussion)
+          const activeThreads = queryData.uuid.threads.nodes.filter(
+            (node: any) => !node.archived && !node.trashed
+          )
+          const output = activeThreads.map(createDiscussion)
           setData(output)
           setCommentCount(
             output.reduce((acc: any, val: any) => {
