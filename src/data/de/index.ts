@@ -9,6 +9,10 @@ export const instanceData = {
       search: "Suche",
       login: "Anmelden"
     },
+    search: {
+      privacy: 'The search stores your data! Beware! See our %privacypolicy%.',
+      agree: "Zustimmen"
+    },
     footer: {
       summaryHeading: "Serlo.org ist die Wikipedia fürs Lernen.",
       summaryText: "Wir sind eine engagierte Gemeinschaft, die daran arbeitet, hochwertige Bildung weltweit frei verfügbar zu machen.",
@@ -57,7 +61,7 @@ export const instanceData = {
     },
     edit: {
       button: "Inhalt überarbeiten",
-      unrevised: 'Show unrevised revisions'
+      unrevised: "Zeige neue Bearbeitungen"
     },
     license: {
       readMore: "Was bedeutet das?"
@@ -88,11 +92,11 @@ export const instanceData = {
       button: "Verstanden"
     },
     embed: {
-      part1: "Mit einem Klick auf das Bild oder den Button unten stimmst du zu, dass externe Inhalte von",
-      part2: "geladen werden. Dabei können persönliche Daten zu diesem Service übertragen werden – entsprechend unserer",
+      text: "Mit einem Klick auf das Bild oder den Button unten stimmst du zu, dass externe Inhalte von %provider% geladen werden. Dabei können persönliche Daten zu diesem Service übertragen werden – entsprechend unserer %privacypolicy%.",
       link: "Datenschutzerklärung",
       video: "Video abspielen",
-      applet: "Applet laden"
+      applet: "Applet laden",
+      twingle: 'Load Donation Form'
     },
     notifications: {
       notifications: "Benachrichtigungen",
