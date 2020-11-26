@@ -56,7 +56,8 @@ export const instanceData = {
       close: "Schließen"
     },
     edit: {
-      button: "Inhalt überarbeiten"
+      button: "Inhalt überarbeiten",
+      unrevised: 'Show unrevised revisions'
     },
     license: {
       readMore: "Was bedeutet das?"
