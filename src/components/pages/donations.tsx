@@ -4,7 +4,6 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { HeadTags } from '../head-tags'
-import { CookieBar } from '@/components/content/cookie-bar'
 import { PrivacyWrapper, Provider } from '@/components/content/privacy-wrapper'
 import { PartnerList } from '@/components/landing/partner-list'
 import { FooterNav } from '@/components/navigation/footer-nav'
@@ -159,7 +158,6 @@ export function Donations() {
         <PartnerList />
       </BlueContainer>
       <FooterNav data={footerEntries} />
-      <CookieBar />
     </>
   )
 }
