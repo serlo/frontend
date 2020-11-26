@@ -59,5 +59,6 @@ const Wrapper = styled.div<{ isParent?: boolean }>`
 
   > p {
     margin-bottom: 0;
+    white-space: pre-line;
   }
 `

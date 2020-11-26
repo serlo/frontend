@@ -5,6 +5,7 @@ import { Router } from 'next/router'
 import React from 'react'
 import styled from 'styled-components'
 
+import { CommentsProps } from '../comments/comments'
 import { HSpace } from './h-space'
 import { LicenseNotice } from '@/components/content/license-notice'
 import type { CourseFooterProps } from '@/components/navigation/course-footer'
@@ -29,6 +30,10 @@ const CourseFooter = dynamic<CourseFooterProps>(() =>
   import('@/components/navigation/course-footer').then(
     (mod) => mod.CourseFooter
   )
+)
+
+const Comments = dynamic<CommentsProps>(() =>
+  import('@/components/comments/comments').then((mod) => mod.Comments)
 )
 
 export interface EntityProps {
@@ -67,6 +72,8 @@ export function Entity({ data }: EntityProps) {
       {renderUserTools()}
       {renderShareModal()}
       {data.licenseData && <LicenseNotice data={data.licenseData} />}
+
+      <Comments id={data.id} />
     </>
   )
 
@@ -139,6 +146,7 @@ export function Entity({ data }: EntityProps) {
         onShare={() => setOpen(true)}
         id={data.id}
         hideEdit={!data.inviteToEdit}
+        unrevisedRevision={data.unrevisedRevisions}
         data={{
           type: data.typename,
           id: data.id,

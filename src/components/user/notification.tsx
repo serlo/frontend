@@ -83,50 +83,18 @@ export function Notification({
   )
 
   function renderMuteButton() {
-    const subscriptionId = getSubscriptionId()
-    return subscriptionId !== undefined ? (
+    return (
       <Tippy
         duration={[300, 250]}
         animation="fade"
         placement="bottom"
         content={<Tooltip>{loggedInStrings.hide}</Tooltip>}
       >
-        <MuteButton href={`/unsubscribe/${subscriptionId.toString()}`}>
+        <MuteButton href={`/unsubscribe/${event.objectId.toString()}`}>
           <FontAwesomeIcon icon={faVolumeMute} />
         </MuteButton>
       </Tippy>
-    ) : null
-  }
-
-  function getSubscriptionId() {
-    switch (event.__typename) {
-      case 'SetThreadStateNotificationEvent':
-      case 'CreateThreadNotificationEvent':
-      case 'CreateCommentNotificationEvent':
-        return event.thread.id
-
-      //TODO: Check if Subscription is linked to the child
-      case 'CreateEntityLinkNotificationEvent':
-      case 'RemoveEntityLinkNotificationEvent':
-      case 'CreateTaxonomyLinkNotificationEvent':
-      case 'RemoveTaxonomyLinkNotificationEvent':
-        return event.child.id
-
-      case 'CreateEntityNotificationEvent':
-      case 'CreateEntityRevisionNotificationEvent':
-        return event.entity.id
-
-      case 'SetLicenseNotificationEvent':
-      case 'CheckoutRevisionNotificationEvent':
-      case 'RejectRevisionNotificationEvent':
-        return event.repository.id
-
-      case 'SetUuidStateNotificationEvent':
-        return event.object.id
-
-      default:
-        return undefined
-    }
+    )
   }
 
   function parseString(

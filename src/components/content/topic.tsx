@@ -1,10 +1,12 @@
 import { faShareAlt, faFile } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import dynamic from 'next/dynamic'
 import React from 'react'
 import styled from 'styled-components'
 
 import { makeMargin } from '../../helper/css'
 import { renderArticle } from '../../schema/article-renderer'
+import { CommentsProps } from '../comments/comments'
 import { ShareModal } from '../navigation/share-modal'
 import { UserToolsMobileButton } from '../navigation/tool-line-button'
 import { UserTools } from '../navigation/user-tools'
@@ -23,6 +25,10 @@ import { categoryIconMapping } from '@/helper/icon-by-entity-type'
 export interface TopicProps {
   data: TaxonomyData
 }
+
+const Comments = dynamic<CommentsProps>(() =>
+  import('@/components/comments/comments').then((mod) => mod.Comments)
+)
 
 export function Topic({ data }: TopicProps) {
   const [open, setOpen] = React.useState(false)
@@ -84,6 +90,8 @@ export function Topic({ data }: TopicProps) {
       )}
 
       {defaultLicense && <LicenseNotice data={defaultLicense} />}
+
+      <Comments id={data.id} />
 
       <UserToolsMobile>
         <UserToolsMobileButton onClick={() => setOpen(true)}>

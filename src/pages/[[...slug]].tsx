@@ -4,7 +4,6 @@ import React, { RefObject } from 'react'
 
 import { AuthPayload, useAuth } from '@/auth/use-auth'
 import { RevisionProps } from '@/components/author/revision'
-import { CookieBar } from '@/components/content/cookie-bar'
 import { EntityProps } from '@/components/content/entity'
 import { HSpace } from '@/components/content/h-space'
 import { Horizon } from '@/components/content/horizon'
@@ -257,7 +256,6 @@ function renderPage(page: PageData, auth: RefObject<AuthPayload>) {
           )
         })()}
         <Footer />
-        <CookieBar />
       </>
     )
   }
