@@ -72,12 +72,16 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
     }
 
     if (!searchLoaded) {
-      // const cx = '016022363195733463411:78jhtkzhbhc'
-      const cx = '017461339636837994840:ifahsiurxu4' //"old version" with better autocomplete
+      const spanishEngineId = '5bd728bf64beb7e94'
+      // const frontendTestEngineId = '016022363195733463411:78jhtkzhbhc' //autocomplete is way worse, so we use the "old one"
+      const germanEngineId = '017461339636837994840:ifahsiurxu4'
+      const id = lang === 'es' ? spanishEngineId : germanEngineId
+
       const gcse = document.createElement('script')
       gcse.type = 'text/javascript'
       gcse.async = true
-      gcse.src = 'https://cse.google.com/cse.js?cx=' + cx
+      gcse.src = 'https://cse.google.com/cse.js?cx=' + id
+
       const s = document.getElementsByTagName('script')[0]
       s.parentNode!.insertBefore(gcse, s)
 

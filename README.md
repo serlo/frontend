@@ -51,7 +51,7 @@ At the moment, the frontend implements these features:
 
 - **Horizon**. The german version contains a horizon that features selected items.
 
-- **Google Custom Search**. Search with the built-in search input or by visiting the search page: https://frontend.serlo.org/search?q=hypotenuse
+- **Google Programmable Search**. Search with the built-in search input or by visiting the search page: https://frontend.serlo.org/search?q=hypotenuse
 
 - **Login**. You can login to your account with your username (not e-mail) and the password `123456` (currently only available on staging and localhost).
 
