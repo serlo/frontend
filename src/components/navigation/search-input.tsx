@@ -72,12 +72,10 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
     }
 
     if (!searchLoaded) {
-      const id = getSearchEngineId(lang)
-
       const gcse = document.createElement('script')
       gcse.type = 'text/javascript'
       gcse.async = true
-      gcse.src = 'https://cse.google.com/cse.js?cx=' + id
+      gcse.src = 'https://cse.google.com/cse.js?cx=' + getSearchEngineId(lang)
 
       const s = document.getElementsByTagName('script')[0]
       s.parentNode!.insertBefore(gcse, s)
