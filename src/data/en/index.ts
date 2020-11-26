@@ -9,6 +9,10 @@ export const instanceData = {
       search: 'Search',
       login: 'Login'
     },
+    search: {
+      privacy: 'The search stores your data! Beware! See our %privacypolicy%.',
+      agree: 'Agree'
+    },
     footer: {
       summaryHeading: 'Serlo.org is the Wikipedia for learning.',
       summaryText: 'We are a community of visionaries working tirelessly to make great education freely available to everyone.',
@@ -88,11 +92,11 @@ export const instanceData = {
       button: 'Agree'
     },
     embed: {
-      part1: 'By clicking on the image or button below you agree that external content from',
-      part2: 'will be loaded. Also personal data may be transferred to this service in accordance with our',
+      text: 'By clicking on the image or button below you agree that external content from %provider% will be loaded. Also personal data may be transferred to this service in accordance with our %privacypolicy%.',
       link: 'Privacy Policy',
       video: 'Play Video',
-      applet: 'Load Applet'
+      applet: 'Load Applet',
+      twingle: 'Load Donation Form'
     },
     notifications: {
       notifications: 'Notifications',
