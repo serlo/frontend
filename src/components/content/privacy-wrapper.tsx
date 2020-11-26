@@ -1,14 +1,11 @@
-import {
-  faCubes,
-  faPlayCircle,
-  faSpinner,
-} from '@fortawesome/free-solid-svg-icons'
+import { faHeart, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { ReactChild } from 'react'
 import styled from 'styled-components'
 
 import { useInstanceData } from '@/contexts/instance-context'
 import { makeMargin, makePadding, makePrimaryButton } from '@/helper/css'
+import { entityIconMapping } from '@/helper/icon-by-entity-type'
 import { reactReplaceString } from '@/helper/react-replace-string'
 
 // inspired by https://github.com/ibrahimcesar/react-lite-youtube-embed
@@ -19,14 +16,16 @@ export enum Provider {
   WikimediaCommons = 'wikimedia',
   Vimeo = 'vimeo',
   GeoGebra = 'geogebra',
+  Twingle = 'twingle',
 }
 
 interface PrivacyWrapperProps {
   children: ReactChild
   placeholder?: ReactChild
-  type: 'video' | 'applet'
+  type: 'video' | 'applet' | 'twingle'
   provider: Provider
-  previewImageUrl: string
+  previewImageUrl?: string
+  twingleCallback?: () => void
 }
 
 export function PrivacyWrapper({
@@ -35,6 +34,7 @@ export function PrivacyWrapper({
   type,
   previewImageUrl,
   provider,
+  twingleCallback,
 }: PrivacyWrapperProps) {
   const [showIframe, setShowIframe] = React.useState(false)
 
@@ -42,6 +42,7 @@ export function PrivacyWrapper({
 
   const confirmLoad = () => {
     if (showIframe) return
+    if (type === 'twingle' && twingleCallback) twingleCallback()
     setShowIframe(true)
   }
 
@@ -53,7 +54,7 @@ export function PrivacyWrapper({
   }
 
   return (
-    <Wrapper>
+    <Wrapper noMargin={type === 'twingle'}>
       {renderPlaceholder()}
       {showIframe && children}
     </Wrapper>
@@ -63,6 +64,7 @@ export function PrivacyWrapper({
     if (placeholder) return placeholder
     const buttonLabel = strings.embed[type]
     const providerLabel = renderProvider(provider)
+    if (type === 'twingle' && showIframe) return null
 
     return (
       <Placeholder>
@@ -87,9 +89,9 @@ export function PrivacyWrapper({
               icon={
                 showIframe
                   ? faSpinner
-                  : type === 'video'
-                  ? faPlayCircle
-                  : faCubes
+                  : type === 'twingle'
+                  ? faHeart
+                  : entityIconMapping[type]
               }
               spin={showIframe}
             />{' '}
@@ -110,6 +112,8 @@ export function PrivacyWrapper({
         return 'Vimeo'
       case Provider.GeoGebra:
         return 'GeoGebra'
+      case Provider.Twingle:
+        return 'Twingle'
     }
   }
 }
@@ -167,8 +171,8 @@ const PreviewImage = styled.img`
   height: 100%;
 `
 
-const Wrapper = styled.div`
-  ${makeMargin};
+const Wrapper = styled.div<{ noMargin?: boolean }>`
+  ${(props) => (props.noMargin ? '' : makeMargin)};
   margin-bottom: ${(props) => props.theme.spacing.mb.block};
   position: relative;
   display: block;
