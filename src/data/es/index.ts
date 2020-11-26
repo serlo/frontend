@@ -56,7 +56,8 @@ export const instanceData = {
       close: "Cerca"
     },
     edit: {
-      button: "Editar"
+      button: "Editar",
+      unrevised: 'Show unrevised revisions'
     },
     license: {
       readMore: "Información"
