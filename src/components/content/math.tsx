@@ -13,11 +13,14 @@ export function Math(props: MathProps) {
   const { inline = false } = props
 
   // make empty formulas clickable
-  const formula = '\\sf ' + props.formula || '\\,'
+  const formula = props.formula || '\\,'
+
+  const regex = /\\mathrm([ {])/gm
+  const nonserif = '\\sf ' + formula.replace(regex, '$1')
 
   // block formular use displaystyle
   const html = KaTeX.renderToString(
-    inline ? formula : '\\displaystyle' + formula,
+    inline ? nonserif : '\\displaystyle' + nonserif,
     {
       displayMode: false,
       throwOnError: false,
