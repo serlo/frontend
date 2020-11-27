@@ -146,6 +146,9 @@ export function Comments({ id: _id }: CommentsProps) {
         {strings.comments.loading}
       </StyledP>
     )
+
+  if (!auth.current && commentCount == 0) return null // avoid rendering anything
+
   return (
     <div>
       {auth.current && (
