@@ -1,6 +1,6 @@
 import { headerData, footerData, landingSubjectsData } from './menu-data';
 export const instanceData = {
-  lang: 'en',
+  lang: "hi",
   headerData: headerData,
   footerData: footerData,
   strings: {
@@ -10,7 +10,7 @@ export const instanceData = {
       login: "लॉग इन करें"
     },
     search: {
-      privacy: 'The search stores your data! Beware! See our %privacypolicy%.',
+      privacy: 'The search is provided by Google. See our %privacypolicy% to find out what information is processed.',
       agree: 'Agree'
     },
     footer: {
