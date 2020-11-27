@@ -9,6 +9,10 @@ export const instanceData = {
       search: "தேடுக",
       login: "உள்நுழை"
     },
+    search: {
+      privacy: 'The search is provided by Google. See our %privacypolicy% to find out what information is processed.',
+      agree: 'Agree'
+    },
     footer: {
       summaryHeading: "கற்பதற்கு விக்கிபீடியா போன்றது Serlo.org.",
       summaryText: "நாங்கள் கல்வியை அனைவருக்கும் இலவசமாகக் கிடைக்கச் செய்ய அயராது உழைக்கிறோம்",
@@ -56,7 +60,8 @@ export const instanceData = {
       close: "நெருக்கமான"
     },
     edit: {
-      button: "தொகு"
+      button: "தொகு",
+      unrevised: 'Show unrevised revisions'
     },
     license: {
       readMore: "தகவல்"
@@ -87,11 +92,11 @@ export const instanceData = {
       button: "ஒப்புக்கொள்கிறேன்"
     },
     embed: {
-      part1: 'By clicking on the image or button below you agree that external content from',
-      part2: 'will be loaded. Also personal data may be transferred to this service in accordance with our',
+      text: 'By clicking on the image or button below you agree that external content from %provider% will be loaded. Also personal data may be transferred to this service in accordance with our %privacypolicy%.',
       link: 'Privacy Policy',
       video: 'Play Video',
-      applet: 'Load Applet'
+      applet: 'Load Applet',
+      twingle: 'Load Donation Form'
     },
     notifications: {
       notifications: "அறிவிப்புகள்",
@@ -109,7 +114,8 @@ export const instanceData = {
       deleteComment: 'Delete comment',
       postedOn: 'Posted on',
       placeholder: "Your question or suggestion…",
-      placeholderReply: "உங்கள் பதில்:"
+      placeholderReply: "உங்கள் பதில்:",
+      loading: 'Looking for comments ...'
     },
     revisions: {
       toOverview: "Back to overview",

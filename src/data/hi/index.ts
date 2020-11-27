@@ -1,6 +1,6 @@
 import { headerData, footerData, landingSubjectsData } from './menu-data';
 export const instanceData = {
-  lang: 'en',
+  lang: "hi",
   headerData: headerData,
   footerData: footerData,
   strings: {
@@ -8,6 +8,10 @@ export const instanceData = {
       slogan: "ओपन लर्निंग प्लेटफॉर्म",
       search: "खोजें",
       login: "लॉग इन करें"
+    },
+    search: {
+      privacy: 'The search is provided by Google. See our %privacypolicy% to find out what information is processed.',
+      agree: 'Agree'
     },
     footer: {
       summaryHeading: "Serlo.org सीखने की विकिपीडिया है",
@@ -56,7 +60,8 @@ export const instanceData = {
       close: "बंद करें"
     },
     edit: {
-      button: "संपादित करें"
+      button: "संपादित करें",
+      unrevised: 'Show unrevised revisions'
     },
     license: {
       readMore: "सूचना"
@@ -87,11 +92,11 @@ export const instanceData = {
       button: "सहमत"
     },
     embed: {
-      part1: 'By clicking on the image or button below you agree that external content from',
-      part2: 'will be loaded. Also personal data may be transferred to this service in accordance with our',
+      text: 'By clicking on the image or button below you agree that external content from %provider% will be loaded. Also personal data may be transferred to this service in accordance with our %privacypolicy%.',
       link: 'Privacy Policy',
       video: 'Play Video',
-      applet: 'Load Applet'
+      applet: 'Load Applet',
+      twingle: 'Load Donation Form'
     },
     notifications: {
       notifications: "सूचनाएँ",
@@ -109,7 +114,8 @@ export const instanceData = {
       deleteComment: "टिप्पणी हटाएँ",
       postedOn: "इस दिन पोस्ट हुआ",
       placeholder: "आपका प्रश्न या सुझाव",
-      placeholderReply: "आपका उत्तर"
+      placeholderReply: "आपका उत्तर",
+      loading: 'Looking for comments ...'
     },
     revisions: {
       toOverview: "अवलोकन पर वापस जाएं",

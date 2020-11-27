@@ -9,6 +9,10 @@ export const instanceData = {
       search: "Suche",
       login: "Anmelden"
     },
+    search: {
+      privacy: "Die Suche wird von Google bereitgestellt. Schau dir unsere %privacypolicy% an, um herauszufinden, welche Informationen verarbeitet werden.",
+      agree: "Zustimmen"
+    },
     footer: {
       summaryHeading: "Serlo.org ist die Wikipedia fürs Lernen.",
       summaryText: "Wir sind eine engagierte Gemeinschaft, die daran arbeitet, hochwertige Bildung weltweit frei verfügbar zu machen.",
@@ -56,7 +60,8 @@ export const instanceData = {
       close: "Schließen"
     },
     edit: {
-      button: "Inhalt überarbeiten"
+      button: "Inhalt überarbeiten",
+      unrevised: "Zeige neue Bearbeitungen"
     },
     license: {
       readMore: "Was bedeutet das?"
@@ -87,11 +92,11 @@ export const instanceData = {
       button: "Verstanden"
     },
     embed: {
-      part1: "Mit einem Klick auf das Bild oder den Button unten stimmst du zu, dass externe Inhalte von",
-      part2: "geladen werden. Dabei können persönliche Daten zu diesem Service übertragen werden – entsprechend unserer",
+      text: "Mit einem Klick auf das Bild oder den Button unten stimmst du zu, dass externe Inhalte von %provider% geladen werden. Dabei können persönliche Daten zu diesem Service übertragen werden – entsprechend unserer %privacypolicy%.",
       link: "Datenschutzerklärung",
       video: "Video abspielen",
-      applet: "Applet laden"
+      applet: "Applet laden",
+      twingle: "Spendenformular laden"
     },
     notifications: {
       notifications: "Benachrichtigungen",
@@ -109,7 +114,8 @@ export const instanceData = {
       deleteComment: "Kommentar löschen",
       postedOn: "Gepostet am",
       placeholder: "Deine Frage oder Vorschlag…",
-      placeholderReply: "Deine Antwort…"
+      placeholderReply: "Deine Antwort…",
+      loading: "Kommentare werden geladen…"
     },
     revisions: {
       toOverview: "Zurück zur Übersicht",
