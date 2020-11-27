@@ -15,16 +15,18 @@ export function HeadTags({ data }: HeadTagsProps) {
   const { lang } = useInstanceData()
   const router = useRouter()
 
+  const canonicalHref = `https://${lang}.serlo.org${router.asPath.replace(
+    new RegExp('^/' + lang),
+    ''
+  )}`
+
   return (
     <Head>
       <title>{title}</title>
       {contentType && <meta name="content_type" content={contentType} />}
       {metaDescription && <meta name="description" content={metaDescription} />}
       <meta property="og:title" content={title} />
-      <link
-        rel="canonical"
-        href={`https://${lang}.serlo.org${router.asPath}`}
-      />
+      <link rel="canonical" href={canonicalHref} />
       <meta
         property="og:image"
         content={metaImage ? metaImage : origin + '/_assets/img/meta/serlo.jpg'}
