@@ -114,7 +114,8 @@ export const instanceData = {
       deleteComment: "टिप्पणी हटाएँ",
       postedOn: "इस दिन पोस्ट हुआ",
       placeholder: "आपका प्रश्न या सुझाव",
-      placeholderReply: "आपका उत्तर"
+      placeholderReply: "आपका उत्तर",
+      loading: 'Looking for comments ...'
     },
     revisions: {
       toOverview: "अवलोकन पर वापस जाएं",
