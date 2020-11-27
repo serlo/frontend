@@ -10,7 +10,7 @@ export const instanceData = {
       login: "Ingresar"
     },
     search: {
-      privacy: 'The search stores your data! Beware! See our %privacypolicy%.',
+      privacy: 'The search is provided by Google. See our %privacypolicy% to find out what information is processed.',
       agree: 'Agree'
     },
     footer: {
