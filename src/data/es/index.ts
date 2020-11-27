@@ -114,7 +114,8 @@ export const instanceData = {
       deleteComment: "Eliminar comentario",
       postedOn: "Publicado el",
       placeholder: "Tus preguntas o sugerencias...",
-      placeholderReply: "Tu respuesta..."
+      placeholderReply: "Tu respuesta...",
+      loading: 'Looking for comments ...'
     },
     revisions: {
       toOverview: "Volver a Vista general",
