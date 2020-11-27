@@ -10,7 +10,7 @@ export const instanceData = {
       login: "Anmelden"
     },
     search: {
-      privacy: 'The search is provided by Google. See our %privacypolicy% to find out what information is processed.',
+      privacy: "Die Suche wird von Google bereitgestellt. Schau dir unsere %privacypolicy% an, um herauszufinden, welche Informationen verarbeitet werden.",
       agree: "Zustimmen"
     },
     footer: {
@@ -96,7 +96,7 @@ export const instanceData = {
       link: "Datenschutzerklärung",
       video: "Video abspielen",
       applet: "Applet laden",
-      twingle: 'Load Donation Form'
+      twingle: "Spendenformular laden"
     },
     notifications: {
       notifications: "Benachrichtigungen",
@@ -114,7 +114,8 @@ export const instanceData = {
       deleteComment: "Kommentar löschen",
       postedOn: "Gepostet am",
       placeholder: "Deine Frage oder Vorschlag…",
-      placeholderReply: "Deine Antwort…"
+      placeholderReply: "Deine Antwort…",
+      loading: "Kommentare werden geladen…"
     },
     revisions: {
       toOverview: "Zurück zur Übersicht",
