@@ -1,10 +1,15 @@
-import { faComments, faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
+import {
+  faComments,
+  faQuestionCircle,
+  faSpinner,
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { gql, request } from 'graphql-request'
 import React from 'react'
 import styled from 'styled-components'
 
 import { Lazy } from '../content/lazy'
+import { StyledP } from '../tags/styled-p'
 import { Comment } from './comment'
 import { CommentForm } from './comment-form'
 import { endpoint } from '@/api/endpoint'
@@ -126,8 +131,15 @@ export function Comments({ id: _id }: CommentsProps) {
     })()
   }, [_id])
 
-  if (!data) return null
-
+  if (!data)
+    return (
+      <StyledP>
+        <ColoredIcon>
+          <FontAwesomeIcon icon={faSpinner} spin size="1x" />
+        </ColoredIcon>{' '}
+        {strings.comments.loading}
+      </StyledP>
+    )
   return (
     <div>
       {auth.current && (
@@ -210,4 +222,8 @@ const CustomH2 = styled(StyledH2)`
 const StyledIcon = styled(FontAwesomeIcon)`
   color: ${(props) => props.theme.colors.lighterblue};
   font-size: 1.73rem;
+`
+
+const ColoredIcon = styled.span`
+  color: ${(props) => props.theme.colors.brand};
 `
