@@ -344,8 +344,8 @@ describe('check all supported typenames with stored api-data', () => {
       'Mathematik Aufgabe - lernen mit Serlo!'
     )
     expect(pageData.metaData?.contentType).toBe('text-exercise')
-    expect(pageData.metaData?.metaDescription).toBe(
-      'Ordne folgendem Graphen die richtige Funktionsgleichung zu:Richtig! Der Nobelpreis ist ganz nah ;-)Leider falsch! Du denkst wahrscheinlich …'
+    expect(pageData.metaData?.metaDescription).toContain(
+      'Ordne folgendem Graphen die richtige Funktionsgleichung zu:'
     )
 
     assertCorrectMetaImageLink(pageData)
