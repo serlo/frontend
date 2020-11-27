@@ -23,7 +23,7 @@ export function Video(props: VideoProps) {
   const wikimedia = /^(https?:\/\/)?(.*?upload\.wikimedia\.org\/)(.+)/.exec(src)
   if (wikimedia) return renderWikimedia()
 
-  const youtube = /^(https?:\/\/)?(.*?youtube\.com\/watch\?(.*&)?v=|.*?youtu\.be\/)(.+)/.exec(
+  const youtube = /^(https?:\/\/)?(.*?youtube\.com\/watch\?(.*&)?v=|.*?youtu\.be\/)([a-zA-Z0-9_-]{11})/.exec(
     src
   )
   if (youtube) return renderYoutube(youtube[4])
@@ -49,6 +49,8 @@ export function Video(props: VideoProps) {
   }
 
   function renderYoutube(path: string) {
+    console.log(path)
+    console.log(src)
     const videoId = encodeURIComponent(path.split('&', 1)[0])
     const useSubtitles = path.indexOf('cc_load_policy=1') > 0
     const previewImageUrl = `https://i.ytimg.com/vi/${videoId}/sddefault.jpg`
