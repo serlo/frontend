@@ -9,7 +9,7 @@ import styled, { createGlobalStyle, css } from 'styled-components'
 import SearchIcon from '@/assets-webkit/img/search-icon.svg'
 import { useInstanceData } from '@/contexts/instance-context'
 import { inputFontReset, makeLightButton, makePadding } from '@/helper/css'
-import { reactReplaceString } from '@/helper/react-replace-string'
+import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { theme } from '@/theme'
 
 interface SearchInputProps {
@@ -177,7 +177,7 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
     if (searchActive || consentGiven) return null
     return (
       <ConsentPop>
-        {reactReplaceString(strings.search.privacy, {
+        {replacePlaceholders(strings.search.privacy, {
           privacypolicy: (
             <a href="/privacy" target="_blank">
               {strings.embed.link}

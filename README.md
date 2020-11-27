@@ -126,9 +126,26 @@ import { useInstanceData } from '@/contexts/instance-context'
 
 export function SerloBird() {
   const { strings } = useInstanceData()
-  render (
-    <h1>{strings.header.slogan}</h1>
+  return <h1>{strings.header.slogan}</h1>
+}
+```
+
+For strings with links for example you can use the `replacePlaceholders` helper with placeholders in this format `%placeholder%`:
+
+```tsx
+import { useInstanceData } from '@/contexts/instance-context'
+import { replacePlaceholders } from '@/helper/replace-placeholders'
+
+function Sentence() {
+  const { strings } = useInstanceData()
+  return (
+    <p>
+      {replacePlaceholders(strings.embed.sentence, {
+        link: <a href="/whereto">{strings.embed.link}</a>,
+      })}
+    </p>
   )
+}
 ```
 
 ## Repository

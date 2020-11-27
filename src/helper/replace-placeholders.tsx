@@ -1,6 +1,8 @@
 import React from 'react'
 
-export function reactReplaceString(
+//expects placeholders to be in this format: %placeholder%
+
+export function replacePlaceholders(
   string: string,
   replaceables: { [key: string]: JSX.Element | string }
 ) {

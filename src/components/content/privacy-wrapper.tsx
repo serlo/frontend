@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import { useInstanceData } from '@/contexts/instance-context'
 import { makeMargin, makePadding, makePrimaryButton } from '@/helper/css'
 import { entityIconMapping } from '@/helper/icon-by-entity-type'
-import { reactReplaceString } from '@/helper/react-replace-string'
+import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 // inspired by https://github.com/ibrahimcesar/react-lite-youtube-embed
 // also borrowed some code
@@ -74,7 +74,7 @@ export function PrivacyWrapper({
           </PreviewImageWrapper>
         )}
         <InfoBar>
-          {reactReplaceString(strings.embed.text, {
+          {replacePlaceholders(strings.embed.text, {
             provider: <b>{providerLabel}</b>,
             privacypolicy: (
               <a href="/privacy" target="_blank">
