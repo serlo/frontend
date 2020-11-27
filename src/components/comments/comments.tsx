@@ -105,6 +105,7 @@ function createComment(node: any): CommentData {
 export function Comments({ id: _id }: CommentsProps) {
   const [data, setData] = React.useState<CommentsData | null>(null)
   const [commentCount, setCommentCount] = React.useState(0)
+  const [failure, setFailure] = React.useState<String | null>(null)
   const { strings } = useInstanceData()
   const auth = useAuth()
 
@@ -127,9 +128,14 @@ export function Comments({ id: _id }: CommentsProps) {
         }
       } catch (e) {
         console.log(e)
+        setFailure(e.toString())
       }
     })()
   }, [_id])
+
+  if (failure) {
+    return <StyledP>{failure}</StyledP>
+  }
 
   if (!data)
     return (
