@@ -28,7 +28,6 @@ import { convertLegacyState } from '@/schema/convert-legacy-state'
 export async function fetchPageData(raw_alias: string): Promise<PageData> {
   try {
     const { alias, instance } = parseLanguageSubfolder(raw_alias)
-
     if (alias == '/') {
       return { kind: 'landing', landingData: getLandingData(instance) }
     }
@@ -36,9 +35,12 @@ export async function fetchPageData(raw_alias: string): Promise<PageData> {
       const id = parseInt(alias.split('license/detail/')[1])
       return await apiLicensePageRequest(id, instance)
     }
-    if (alias.startsWith('/user/profile/')) {
-      const idPath = alias.split('user/profile')[1]
-      const pageData = await apiRequest(idPath, instance as Instance)
+
+    if (alias === '/user/me' || alias === '/user/public') {
+      const pageData = await apiRequest(
+        '/user/profile/' + 'botho',
+        instance as Instance
+      )
       await prettifyLinks(pageData)
       return pageData
     }
@@ -53,7 +55,10 @@ export async function fetchPageData(raw_alias: string): Promise<PageData> {
   }
 }
 
-async function apiRequest(alias: string, instance: Instance): Promise<PageData> {
+async function apiRequest(
+  alias: string,
+  instance: Instance
+): Promise<PageData> {
   const isId = /^\/[\d]+$/.test(alias) //e.g. /1565
   const variables = isId
     ? {
@@ -64,9 +69,8 @@ async function apiRequest(alias: string, instance: Instance): Promise<PageData> 
           instance,
           path: alias,
         },
-    }
+      }
 
-  
   const { uuid } = await request<{ uuid: QueryResponse }>(
     endpoint,
     dataQuery,
@@ -96,7 +100,7 @@ async function apiRequest(alias: string, instance: Instance): Promise<PageData> 
   const breadcrumbsData = createBreadcrumbs(uuid)
   const horizonData = instance == 'de' ? buildHorizonData() : undefined
   const cacheKey = `/${instance}${alias}`
-  const title = createTitle(uuid,instance)
+  const title = createTitle(uuid, instance)
   const metaImage = getMetaImage(uuid.alias ? uuid.alias : undefined)
 
   if (uuid.__typename === 'User') {
@@ -112,7 +116,6 @@ async function apiRequest(alias: string, instance: Instance): Promise<PageData> 
         },
       ],
     })
-
     const description = uuid.description
       ? uuid.description === 'NULL'
         ? convertState(placeholder)

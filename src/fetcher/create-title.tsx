@@ -9,7 +9,6 @@ import {
   getInstanceDataByLang,
 } from '@/helper/feature-i18n'
 
-
 export function createTitle(uuid: QueryResponse, instance: Instance): string {
   const instanceData = getServerSideStrings(instance)
   const { strings } = getInstanceDataByLang(instance)

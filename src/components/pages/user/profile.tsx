@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { ProfileCommunityBanner } from './profile-community-banner'
 import { ProfileDonationForm } from './profile-donation-form'
 import { useAuth } from '@/auth/use-auth'
+// import { Comments } from '@/components/comments/comments'
 import { HSpace } from '@/components/content/h-space'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { RelativeContainer } from '@/components/navigation/relative-container'
@@ -44,6 +45,8 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         )}
 
         {/* <StyledH2>{strings.profiles.recentActivities}</StyledH2> */}
+
+        {/* <Comments id={id} /> */}
 
         {lastLoginDate && (
           <Gray>
