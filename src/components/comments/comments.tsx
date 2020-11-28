@@ -183,7 +183,7 @@ export function Comments({ id: _id }: CommentsProps) {
 
   function buildDisussion(discussion: Discussion) {
     return (
-      <div>
+      <div key={discussion.id}>
         {/* <p>
           Eine Diskussion zu {discussion.entity.type}{' '}
           <a href={discussion.entity.alias}>{discussion.entity.title}</a>.
