@@ -15,6 +15,7 @@ import {
   licenseDetailsQuery,
   ArticleRevision,
   VideoRevision,
+  Instance,
 } from './query'
 import { endpoint } from '@/api/endpoint'
 import { PageData, FrontendContentNode, EntityTypes } from '@/data-types'
@@ -37,12 +38,12 @@ export async function fetchPageData(raw_alias: string): Promise<PageData> {
     }
     if (alias.startsWith('/user/profile/')) {
       const idPath = alias.split('user/profile')[1]
-      const pageData = await apiRequest(idPath, instance)
+      const pageData = await apiRequest(idPath, instance as Instance)
       await prettifyLinks(pageData)
       return pageData
     }
 
-    const pageData = await apiRequest(alias, instance)
+    const pageData = await apiRequest(alias, instance as Instance)
     await prettifyLinks(pageData)
     return pageData
   } catch (e) {
@@ -52,7 +53,7 @@ export async function fetchPageData(raw_alias: string): Promise<PageData> {
   }
 }
 
-async function apiRequest(alias: string, instance: string): Promise<PageData> {
+async function apiRequest(alias: string, instance: Instance): Promise<PageData> {
   const isId = /^\/[\d]+$/.test(alias) //e.g. /1565
   const variables = isId
     ? {
@@ -95,7 +96,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
   const breadcrumbsData = createBreadcrumbs(uuid)
   const horizonData = instance == 'de' ? buildHorizonData() : undefined
   const cacheKey = `/${instance}${alias}`
-  const title = createTitle(uuid)
+  const title = createTitle(uuid,instance)
   const metaImage = getMetaImage(uuid.alias ? uuid.alias : undefined)
 
   if (uuid.__typename === 'User') {
