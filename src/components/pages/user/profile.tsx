@@ -9,6 +9,7 @@ import { Comments } from '@/components/comments/comments'
 import { HSpace } from '@/components/content/h-space'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { RelativeContainer } from '@/components/navigation/relative-container'
+import { UserTools } from '@/components/navigation/user-tools'
 import { StyledH1 } from '@/components/tags/styled-h1'
 import { StyledH2 } from '@/components/tags/styled-h2'
 import { StyledP } from '@/components/tags/styled-p'
@@ -36,18 +37,14 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         <StyledH1>{username}</StyledH1>
         <StyledP></StyledP>
         {lang === 'de' && renderCommunityFeatures()}
-
         {description && (
           <>
             <StyledH2>{strings.profiles.aboutMe}</StyledH2>
             {renderArticle(description)}
           </>
         )}
-
         {/* <StyledH2>{strings.profiles.recentActivities}</StyledH2> */}
-
         <Comments id={id} />
-
         {lastLoginDate && (
           <Gray>
             {strings.profiles.lastSeen}:{' '}
@@ -56,9 +53,8 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
             </b>
           </Gray>
         )}
-
+        {renderUserTools()}
         {/* <StyledH2>{strings.profiles.roles}</StyledH2> */}
-
         <HSpace amount={100} />
       </MaxWidthDiv>
     </RelativeContainer>
@@ -82,6 +78,20 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
           />
         )}
       </>
+    )
+  }
+
+  function renderUserTools() {
+    if (!isOwnProfile) return null
+    return (
+      <UserTools
+        id={id}
+        hideEdit={false}
+        data={{
+          type: 'Profile',
+          id: id,
+        }}
+      />
     )
   }
 }
