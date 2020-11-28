@@ -1,8 +1,8 @@
 import { NextPage } from 'next'
 import dynamic from 'next/dynamic'
-import React, { RefObject } from 'react'
+import React from 'react'
 
-import { AuthPayload, useAuth } from '@/auth/use-auth'
+import { useAuth } from '@/auth/use-auth'
 import { RevisionProps } from '@/components/author/revision'
 import { EntityProps } from '@/components/content/entity'
 import { HSpace } from '@/components/content/h-space'
@@ -60,10 +60,6 @@ const Notifications = dynamic<{}>(() =>
   import('@/components/pages/user/notifications').then(
     (mod) => mod.Notifications
   )
-)
-
-const Flasher = dynamic<{}>(() =>
-  import('@/components/navigation/flasher').then((mod) => mod.Flasher)
 )
 
 const NewsletterPopup = dynamic<{}>(
@@ -130,7 +126,7 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
       <OriginProvider value={initialProps.origin}>
         <InstanceDataProvider value={instanceData}>
           <LoggedInDataProvider value={loggedInData}>
-            {renderPage(initialProps.pageData, auth)}
+            {renderPage(initialProps.pageData)}
           </LoggedInDataProvider>
         </InstanceDataProvider>
       </OriginProvider>
@@ -177,7 +173,7 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
   }
 }
 
-function renderPage(page: PageData, auth: RefObject<AuthPayload>) {
+function renderPage(page: PageData) {
   if (page === undefined) return <ErrorPage code={404} />
 
   if (page.kind === 'donation') {
@@ -227,7 +223,6 @@ function renderPage(page: PageData, auth: RefObject<AuthPayload>) {
                       }
                     />
                   )}
-                  {auth.current && <Flasher />}
                   <main>
                     {(() => {
                       if (page.kind === 'license-detail') {
