@@ -317,7 +317,15 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
       <Li>
         <form method="post" action={`/uuid/trash/${id}`}>
           <input type="hidden" name="csrf" value={cookies['CSRF']} />
-          <button>{loggedInStrings.authorMenu.moveToTrash}</button>
+          <SubLink>
+            <SubButtonStyle
+              onClick={(e: any) =>
+                e.target.parentElement.parentElement.submit()
+              }
+            >
+              {loggedInStrings.authorMenu.moveToTrash}
+            </SubButtonStyle>
+          </SubLink>
         </form>
       </Li>
     )
