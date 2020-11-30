@@ -108,7 +108,6 @@ export const instanceData = {
       commentsOne: "टिप्पणी:",
       commentsMany: "टिप्पणियां",
       submit: "जमा करें",
-      reportComment: "टिप्पणी रिपोर्ट करें",
       archiveThread: "आर्काइव थ्रेड",
       deleteThread: "थ्रेड मिटाएं",
       deleteComment: "टिप्पणी हटाएँ",
