@@ -108,7 +108,6 @@ export const instanceData = {
       commentsOne: 'Comment',
       commentsMany: 'Comments',
       submit: 'Submit',
-      reportComment: 'Report comment',
       archiveThread: 'Archive thread',
       deleteThread: 'Delete thread',
       deleteComment: 'Delete comment',
