@@ -1,4 +1,4 @@
-import Tippy from '@tippyjs/react'
+import Tippy, { TippyProps } from '@tippyjs/react'
 import cookie from 'cookie'
 import { gql } from 'graphql-request'
 import { useRouter } from 'next/router'
@@ -25,6 +25,13 @@ export interface AuthorToolsData {
 
 export interface AuthorToolsHoverMenuProps {
   data: AuthorToolsData
+}
+
+const tippyDefaultProps: Partial<TippyProps> = {
+  delay: [0, 270],
+  interactiveBorder: 40,
+  interactive: true,
+  placement: 'left-end',
 }
 
 export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
@@ -107,8 +114,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
       <HoverSubList>
         <Li>
           <Tippy
-            interactive
-            placement="left-end"
+            {...tippyDefaultProps}
             content={
               <HoverSubList>
                 {abo()}
@@ -135,8 +141,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
 
         <Li>
           <Tippy
-            interactive
-            placement="left-end"
+            {...tippyDefaultProps}
             content={
               <HoverSubList>
                 {abo(data.courseId)}
@@ -247,8 +252,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
     }
     return (
       <Tippy
-        interactive
-        placement="left-end"
+        {...tippyDefaultProps}
         content={
           <HoverSubList>
             {renderLi(
@@ -354,8 +358,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
       return (
         <Li>
           <Tippy
-            interactive
-            placement="left-end"
+            {...tippyDefaultProps}
             content={
               <HoverSubList>
                 {data.taxonomyFolder && (
@@ -422,6 +425,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
 
 const HoverSubList = styled(SubList)`
   background-color: ${(props) => props.theme.colors.lightBackground};
+  min-width: 180px;
 `
 
 const Li = styled.li`
