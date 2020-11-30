@@ -108,7 +108,6 @@ export const instanceData = {
       commentsOne: "கருத்து",
       commentsMany: "கருத்துகள்",
       submit: "இணைக்க",
-      reportComment: 'Report comment',
       archiveThread: 'Archive thread',
       deleteThread: 'Delete thread',
       deleteComment: 'Delete comment',
