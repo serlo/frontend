@@ -85,7 +85,7 @@ export function Exercise({ node }: ExerciseProps) {
             </SolutionTools>
           )
         }
-        <Comments id={node.context.solutionId!} />
+        {/* <Comments id={node.context.solutionId!} /> */}
       </SolutionBox>
     )
   }

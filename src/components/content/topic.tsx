@@ -91,7 +91,7 @@ export function Topic({ data }: TopicProps) {
 
       {defaultLicense && <LicenseNotice data={defaultLicense} />}
 
-      <Comments id={data.id} />
+      {/* <Comments id={data.id} /> */}
 
       <UserToolsMobile>
         <UserToolsMobileButton onClick={() => setOpen(true)}>

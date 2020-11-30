@@ -73,7 +73,7 @@ export function Entity({ data }: EntityProps) {
       {renderShareModal()}
       {data.licenseData && <LicenseNotice data={data.licenseData} />}
 
-      <Comments id={data.id} />
+      {/* <Comments id={data.id} /> */}
     </>
   )
 
