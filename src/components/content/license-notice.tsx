@@ -63,7 +63,7 @@ export function LicenseNotice({ data, minimal, type }: LicenseNoticeProps) {
             {licenseName}
           </StyledA>
           {' → '}
-          <Link href={`/license/detail/${data.id}`}>
+          <Link href={`/license/detail/${data.id}`} noCSR>
             <b>{strings.license.readMore}</b>
           </Link>
         </StyledSmall>
