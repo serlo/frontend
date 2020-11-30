@@ -108,7 +108,6 @@ export const instanceData = {
       commentsOne: "Kommentar",
       commentsMany: "Kommentare",
       submit: "Abschicken",
-      reportComment: "Kommentar melden",
       archiveThread: "Thread archivieren",
       deleteThread: "Thread löschen",
       deleteComment: "Kommentar löschen",
