@@ -79,11 +79,12 @@ export function UserTools({
         )}
         <IconButton onClick={onShare} as="button">
           <FontAwesomeIcon icon={faShareAlt} size="1x" /> {strings.share.button}
-          !
         </IconButton>
         {loaded && auth.current && loggedInData && data && (
           <Tippy
             interactive
+            delay={[0, 300]}
+            interactiveBorder={40}
             content={<AuthorToolsHoverMenu data={data} />}
             placement="left-end"
           >
