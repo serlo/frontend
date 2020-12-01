@@ -214,7 +214,6 @@ export const loggedInData = {
       convert: "Umwandeln (beta)",
       history: "Bearbeitungsverlauf",
       editAssignments: "Zuweisung zu Themen und Lehrplänen bearbeiten",
-      flagContent: "Inhalt melden",
       moveToTrash: "In den Papierkorb verschieben",
       restoreContent: "Aus dem Papierkorb wiederherstellen",
       sort: "Unterelemente sortieren",
