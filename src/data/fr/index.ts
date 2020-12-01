@@ -214,7 +214,6 @@ export const loggedInData = {
       convert: 'Convert (beta)',
       history: "Histoire",
       editAssignments: "Modifier le sujet et le programme d'études",
-      flagContent: "Marquez cet élément comme inapproprié",
       moveToTrash: "Déplacer dans la corbeille",
       restoreContent: 'Restore from trash',
       sort: 'Sort children',
