@@ -54,6 +54,8 @@ const DropContent = styled.div`
 const DropContentButton = styled.button`
   ${makeTransparentButton}
   margin-bottom: 0.2rem;
+  font-size: 1rem;
+  font-weight: normal;
 `
 
 const Time = styled.span`

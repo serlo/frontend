@@ -16,7 +16,7 @@ export function MetaBar({
 }: {
   isParent?: boolean
   user: { username: string; id: number }
-  timestamp: number
+  timestamp: string
 }) {
   const eventDate = new Date(timestamp)
 
@@ -41,6 +41,7 @@ export function MetaBar({
 const TimeAgoButton = styled.button`
   ${makeTransparentButton}
   color: ${(props) => props.theme.colors.lightblue};
+  font-size: 1rem;
 `
 
 const StyledUserLink = styled(UserLink)`
