@@ -68,14 +68,11 @@ export function Menu({ data, auth }: MenuProps) {
         onCreate={(tip) => setTippyRoot(tip)}
       />
       <List>
-        {data.map((link) => (
-          <Entry
-            link={link}
-            key={link.title}
-            target={target}
-            onSubMenuInnerClick={onSubMenuInnerClick}
-          />
-        ))}
+        {data.map((link) =>
+          renderEntry({
+            link: link,
+          })
+        )}
         {renderAuthMenu()}
       </List>
     </ResponsiveNav>
@@ -90,115 +87,92 @@ export function Menu({ data, auth }: MenuProps) {
 
     // render placeholder while data is loading
     if (!data)
-      return (
-        <Entry
-          link={{
-            url: '/auth/login',
-            title: strings.header.login,
-            icon: 'user',
-          }}
-          target={target}
-          authMenuMounted={false}
-          onSubMenuInnerClick={onSubMenuInnerClick}
-        />
-      )
+      return renderEntry({
+        link: {
+          url: '/auth/login',
+          title: strings.header.login,
+          icon: 'user',
+        },
+        authMenuMounted: false,
+      })
 
-    return data.map((link, i) => {
-      return (
-        <Entry
-          key={i}
-          link={link}
-          target={target}
-          authMenuMounted={mounted}
-          onSubMenuInnerClick={onSubMenuInnerClick}
-        />
-      )
+    return data.map((link) => {
+      return renderEntry({
+        link: link,
+        authMenuMounted: mounted,
+      })
     })
   }
-}
 
-interface EntryProps {
-  link: HeaderLink
-  target: TippyProps['singleton']
-  authMenuMounted?: boolean
-  onSubMenuInnerClick: () => void
-}
+  interface EntryData {
+    link: HeaderLink
+    authMenuMounted?: boolean
+  }
 
-function Entry({
-  link,
-  target,
-  onSubMenuInnerClick,
-  authMenuMounted,
-}: EntryProps) {
-  const hasChildren = link.children !== undefined
-  const hasIcon =
-    link.icon &&
-    link.icon !== undefined &&
-    menuIconMapping[link.icon] !== undefined
-
-  return (
-    <Li show={authMenuMounted === undefined ? true : authMenuMounted}>
-      {hasChildren ? (
-        <Tippy
-          content={
-            <SubMenuInner
-              onSubMenuInnerClick={onSubMenuInnerClick}
-              subEntries={link.children}
-            ></SubMenuInner>
-          }
-          singleton={target}
-        >
-          <StyledLink hasIcon={hasIcon} as="a" tabIndex={0} /*active={true}*/>
-            {renderIcon()}
-            {!hasIcon && link.title} <FontAwesomeIcon icon={faCaretDown} />
-          </StyledLink>
-        </Tippy>
-      ) : (
-        <StyledLink hasIcon={hasIcon} /*active={true}*/ href={link.url}>
-          {renderIcon()} {!hasIcon && link.title}
-        </StyledLink>
-      )}
-    </Li>
-  )
-
-  function renderIcon() {
-    if (!hasIcon) return null
-
-    if (link.icon === 'notifications')
-      return <UnreadNotificationsCount icon={menuIconMapping[link.icon]} />
-
+  function renderEntry({ link, authMenuMounted }: EntryData) {
+    const hasChildren = link.children !== undefined
+    const hasIcon =
+      link.icon &&
+      link.icon !== undefined &&
+      menuIconMapping[link.icon] !== undefined
     return (
-      <span className="fa-layers fa-fw">
-        <FontAwesomeIcon
-          // checking for undefined this in hasIcon
-          icon={menuIconMapping[link.icon!]!}
-          style={{ height: '1.4rem', width: '1.4rem', paddingTop: '0' }}
-        />
-      </span>
+      <Li
+        key={link.title}
+        show={authMenuMounted === undefined ? true : authMenuMounted}
+      >
+        {hasChildren ? (
+          <Tippy content={renderSubMenuInner(link.children)} singleton={target}>
+            <StyledLink hasIcon={hasIcon} as="a" tabIndex={0} /*active={true}*/>
+              {renderIcon()}
+              {!hasIcon && link.title} <FontAwesomeIcon icon={faCaretDown} />
+            </StyledLink>
+          </Tippy>
+        ) : (
+          <StyledLink hasIcon={hasIcon} /*active={true}*/ href={link.url}>
+            {renderIcon()} {!hasIcon && link.title}
+          </StyledLink>
+        )}
+      </Li>
+    )
+
+    function renderIcon() {
+      if (!hasIcon) return null
+
+      if (link.icon === 'notifications')
+        return <UnreadNotificationsCount icon={menuIconMapping[link.icon]} />
+
+      return (
+        <span className="fa-layers fa-fw">
+          <FontAwesomeIcon
+            // checking for undefined this in hasIcon
+            icon={menuIconMapping[link.icon!]!}
+            style={{ height: '1.4rem', width: '1.4rem', paddingTop: '0' }}
+          />
+        </span>
+      )
+    }
+  }
+
+  function renderSubMenuInner(subEntries?: HeaderLink[]) {
+    return (
+      <SubList>
+        {subEntries !== undefined &&
+          subEntries.map((entry) => {
+            const href =
+              entry.url === '/user/public' && auth
+                ? `/user/profile/${auth.username}`
+                : entry.url
+            return (
+              <li key={entry.title} onClick={onSubMenuInnerClick}>
+                <SubLink href={href}>
+                  <SubButtonStyle>{entry.title}</SubButtonStyle>
+                </SubLink>
+              </li>
+            )
+          })}
+      </SubList>
     )
   }
-}
-
-interface SubMenuInnerProps {
-  subEntries: HeaderLink[] | undefined
-  onSubMenuInnerClick: () => void
-}
-
-function SubMenuInner({ subEntries, onSubMenuInnerClick }: SubMenuInnerProps) {
-  return (
-    <SubList>
-      {subEntries !== undefined &&
-        subEntries.map((entry) => {
-          return (
-            <li key={entry.title} onClick={onSubMenuInnerClick}>
-              <SubLink href={entry.url}>
-                <SubButtonStyle>{entry.title}</SubButtonStyle>
-              </SubLink>
-            </li>
-          )
-        })}
-    </SubList>
-  )
 }
 
 const ResponsiveNav = styled.nav`

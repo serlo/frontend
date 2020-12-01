@@ -15,6 +15,7 @@ import {
   licenseDetailsQuery,
   ArticleRevision,
   VideoRevision,
+  Instance,
 } from './query'
 import { endpoint } from '@/api/endpoint'
 import { PageData, FrontendContentNode, EntityTypes } from '@/data-types'
@@ -27,7 +28,6 @@ import { convertLegacyState } from '@/schema/convert-legacy-state'
 export async function fetchPageData(raw_alias: string): Promise<PageData> {
   try {
     const { alias, instance } = parseLanguageSubfolder(raw_alias)
-
     if (alias == '/') {
       return { kind: 'landing', landingData: getLandingData(instance) }
     }
@@ -36,7 +36,7 @@ export async function fetchPageData(raw_alias: string): Promise<PageData> {
       return await apiLicensePageRequest(id, instance)
     }
 
-    const pageData = await apiRequest(alias, instance)
+    const pageData = await apiRequest(alias, instance as Instance)
     await prettifyLinks(pageData)
     return pageData
   } catch (e) {
@@ -46,20 +46,26 @@ export async function fetchPageData(raw_alias: string): Promise<PageData> {
   }
 }
 
-async function apiRequest(alias: string, instance: string): Promise<PageData> {
+async function apiRequest(
+  alias: string,
+  instance: Instance
+): Promise<PageData> {
+  const isId = /^\/[\d]+$/.test(alias) //e.g. /1565
+  const variables = isId
+    ? {
+        id: parseInt(alias.substring(1), 10),
+      }
+    : {
+        alias: {
+          instance,
+          path: alias,
+        },
+      }
+
   const { uuid } = await request<{ uuid: QueryResponse }>(
     endpoint,
     dataQuery,
-    /^\/[\d]+$/.test(alias)
-      ? {
-          id: parseInt(alias.substring(1), 10),
-        }
-      : {
-          alias: {
-            instance,
-            path: alias,
-          },
-        }
+    variables
   )
 
   if (uuid === null) {
@@ -85,8 +91,41 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
   const breadcrumbsData = createBreadcrumbs(uuid)
   const horizonData = instance == 'de' ? buildHorizonData() : undefined
   const cacheKey = `/${instance}${alias}`
-  const title = createTitle(uuid)
+  const title = createTitle(uuid, instance)
   const metaImage = getMetaImage(uuid.alias ? uuid.alias : undefined)
+
+  if (uuid.__typename === 'User') {
+    const placeholder = JSON.stringify({
+      plugin: 'text',
+      state: [
+        {
+          type: 'p',
+          children: {
+            text:
+              'This is where we display the description on a the production server.',
+          },
+        },
+      ],
+    })
+    const description = uuid.description
+      ? uuid.description === 'NULL'
+        ? convertState(placeholder)
+        : convertState(uuid.description)
+      : undefined
+    return {
+      kind: 'user/profile',
+      newsletterPopup: false,
+      userData: {
+        id: uuid.id,
+        username: uuid.username,
+        description: description,
+        lastLogin: uuid.lastLogin,
+        activeReviewer: uuid.activeReviewer,
+        activeAuthor: uuid.activeAuthor,
+        activeDonor: uuid.activeDonor,
+      },
+    }
+  }
 
   if (uuid.__typename === 'TaxonomyTerm') {
     return {
@@ -222,8 +261,7 @@ async function apiRequest(alias: string, instance: string): Promise<PageData> {
         },
         changes: (uuid as ArticleRevision).changes,
         user: {
-          id: uuid.author.id,
-          username: uuid.author.username,
+          ...uuid.author,
         },
         date: uuid.date,
       },
