@@ -214,7 +214,6 @@ export const loggedInData = {
       convert: "Convertir (beta)",
       history: "Historial",
       editAssignments: "Editar el tema y las asignaciones de currículo",
-      flagContent: "Marcar contenido",
       moveToTrash: "Mover a la papelera",
       restoreContent: "Restaurar de la papelera",
       sort: "Ordenar los niños",
