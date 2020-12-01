@@ -214,7 +214,6 @@ export const loggedInData = {
       convert: 'Convert (beta)',
       history: "வரலாறு",
       editAssignments: "தலைப்பு மற்றும் பாடத்திட்ட பணிகளை உருவாக்கவும்.",
-      flagContent: "கொடி உள்ளடக்கம்",
       moveToTrash: "குப்பைக்கு நகர்த்தவும்",
       restoreContent: 'Restore from trash',
       sort: 'Sort children',
