@@ -190,6 +190,9 @@ export const loggedInData = {
       url: '/event/history/user/me',
       title: 'Recent activities'
     }, {
+      url: '/subscriptions/manage',
+      title: 'Subscriptions'
+    }, {
       url: '/api/auth/logout',
       title: 'Log out'
     }]
