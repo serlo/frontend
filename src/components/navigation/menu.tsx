@@ -248,6 +248,7 @@ export const SubLink = styled(Link)`
   padding-top: 3px;
   padding-bottom: 3px;
   display: block;
+  hyphens: auto;
   &:hover span {
     color: #fff;
     background-color: ${(props) => props.theme.colors.brand};
@@ -258,6 +259,7 @@ export const SubButtonStyle = styled.span`
   display: block;
   ${linkStyle}
   ${makeTransparentButton}
+  border-radius: 12px;
   font-size: 1rem;
   font-weight: normal;
 `

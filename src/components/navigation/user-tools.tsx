@@ -111,6 +111,8 @@ export function UserTools({
         interactive
         content={<AuthorToolsHoverMenu data={data} />}
         placement="left-end"
+        delay={[0, 300]}
+        interactiveBorder={40}
       >
         <IconButton as="button">
           <FontAwesomeIcon icon={faTools} size="1x" />{' '}

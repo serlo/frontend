@@ -25,6 +25,8 @@ export function AuthorTools({ data }: AuthorToolsProps) {
     <Tippy
       interactive
       placement="bottom-end"
+      delay={[0, 300]}
+      interactiveBorder={40}
       content={<AuthorToolsHoverMenu data={data} />}
     >
       <EditButton>
