@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { lighten } from 'polished'
 import * as React from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 import { useInstanceData } from '@/contexts/instance-context'
 import { makeGreenButton, inputFontReset, makeMargin } from '@/helper/css'
@@ -40,11 +40,9 @@ export function CommentForm({
           setCommentValue(event.target.value)
         }}
         placeholder={placeholder}
-        reply={reply}
       />
       <SendButton
         title={strings.comments.submit}
-        reply={reply}
         // onClick={
         //   onSendComment
         //     ? () =>
@@ -71,7 +69,7 @@ const StyledBox = styled.div`
   margin-bottom: 30px;
 `
 
-const StyledTextarea = styled(TextareaAutosize)<{ reply?: boolean }>`
+const StyledTextarea = styled(TextareaAutosize)`
   ${inputFontReset}
   font-size: 1.125rem;
   background-color: ${(props) => lighten(0.45, props.theme.colors.brandGreen)};
@@ -79,8 +77,7 @@ const StyledTextarea = styled(TextareaAutosize)<{ reply?: boolean }>`
   color: #000;
   border: none;
   border-radius: 1.8rem;
-  padding: ${(props) =>
-    props.reply ? '.5rem 3.5rem .5rem 1rem' : '1.25rem 3.5rem 1.25rem 1rem'};
+  padding: 1.25rem 3.5rem 1.25rem 1rem;
   box-sizing: border-box;
   outline: none;
   overflow: hidden;
@@ -98,27 +95,18 @@ const StyledTextarea = styled(TextareaAutosize)<{ reply?: boolean }>`
   transition: all 0.2s ease-in;
 `
 
-const SendButton = styled.button<{ reply?: boolean }>`
+const SendButton = styled.button`
   position: absolute;
   right: 7px;
   bottom: 13px;
   width: 45px;
   height: 45px;
+  font-size: 1.66rem;
+
   ${makeGreenButton}
-  font-size: 1.55rem;
-  padding-left: 7px;
 
   > svg {
-    vertical-align: ${(props) => (props.reply ? '-2px' : '-4px')};
-    padding-left: ${(props) => (props.reply ? '0' : '2px')};
+    vertical-align: -5px;
+    padding-left: 1px;
   }
-
-  ${(props) =>
-    props.reply &&
-    css`
-      font-size: 1rem;
-      width: 30px;
-      height: 30px;
-      bottom: 9px;
-    `}
 `
