@@ -214,7 +214,6 @@ export const loggedInData = {
       convert: "धर्मांतरित (बीटा)",
       history: "इतिहास",
       editAssignments: "विषय और पाठ्यचर्या असाइनमेंट संपादित करें",
-      flagContent: "सामग्री फ्लैग करें",
       moveToTrash: "रद्दी में डालें",
       restoreContent: "कचरे से पुनर्स्थापित करें",
       sort: "सोर्ट चिल्ड्रन",
