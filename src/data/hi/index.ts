@@ -50,7 +50,13 @@ export const instanceData = {
       revision: "संशोधन",
       thread: "धागा",
       topic: "विषय",
-      subject: "विषय"
+      subject: "विषय",
+      userProfile: 'User Profile'
+    },
+    roles: {
+      donor: "Donor",
+      author: 'Author',
+      reviewer: 'Reviewer'
     },
     share: {
       button: "सांझा करें",
@@ -141,6 +147,13 @@ export const instanceData = {
     },
     print: {
       warning: 'Important: To make sure all images and formulas print, please scroll down to the end of the page once. Thank you!'
+    },
+    profiles: {
+      aboutMe: 'About me',
+      recentActivities: 'Recent activities',
+      showAllActivities: 'Show all activities',
+      lastSeen: 'Last seen',
+      roles: 'Roles'
     }
   }
 };
@@ -225,7 +238,8 @@ export const loggedInData = {
       moveToGroupedTextExercise: "सामग्री को अन्य समूहीकृत-पाठ-व्यायाम में ले जाएँ",
       moveToTextExercise: "सामग्री को अन्य पाठ-व्यायाम में ले जाएँ",
       sortEntities: "सामग्री को क्रमबद्ध करें",
-      newEntity: "नई इकाई"
+      newEntity: "नई इकाई",
+      editProfile: 'Edit profile'
     },
     notifications: {
       loadMore: "अधिक लोड करें",
