@@ -15,7 +15,7 @@ interface Comment {
   user: User
   body: string
   children?: Comment[]
-  timestamp: number
+  timestamp: string
   entity?: Entity
 }
 

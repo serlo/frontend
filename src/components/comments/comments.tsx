@@ -4,6 +4,7 @@ import {
   faSpinner,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { AbstractUuid, Comment as CommentType, Thread } from '@serlo/api'
 import { gql, request } from 'graphql-request'
 import React from 'react'
 import styled from 'styled-components'
@@ -38,7 +39,7 @@ export interface Discussion {
 
 export interface CommentData {
   id: number
-  timestamp: number
+  timestamp: string
   user: { username: string; id: number }
   text: string
 }
@@ -78,7 +79,7 @@ const query = gql`
 
 // TODO: rework data structure
 
-function createDiscussion(thread: any): Discussion {
+function createDiscussion(thread: Thread): Discussion {
   const question = thread.comments.nodes[0]
   const replies = thread.comments.nodes.slice(1)
   return {
@@ -86,12 +87,12 @@ function createDiscussion(thread: any): Discussion {
     id: question.id,
     question: createComment(question),
     replies: replies
-      .filter((reply: any) => !reply.trashed && !reply.archived)
+      .filter((reply) => !reply.trashed && !reply.archived)
       .map(createComment),
   }
 }
 
-function createComment(node: any): CommentData {
+function createComment(node: CommentType): CommentData {
   return {
     id: node.id,
     timestamp: node.createdAt,
@@ -99,7 +100,7 @@ function createComment(node: any): CommentData {
     user: {
       ...node.author,
       username: node.author.alias.substring(
-        (node.author.alias.lastIndexOf('/') as number) + 1
+        node.author.alias.lastIndexOf('/') + 1
       ),
     },
   }
@@ -116,22 +117,26 @@ export function Comments({ id: _id }: CommentsProps) {
     // todo: fetch data
     void (async () => {
       try {
-        const queryData = await request(endpoint, query, { id: _id })
+        const queryData = await request<{ uuid: AbstractUuid }>(
+          endpoint,
+          query,
+          { id: _id }
+        )
         if (queryData !== null) {
           const activeThreads = queryData.uuid.threads.nodes.filter(
-            (node: any) => !node.archived && !node.trashed
+            (node) => !node.archived && !node.trashed
           )
           const output = activeThreads.map(createDiscussion)
           setData(output)
           setCommentCount(
-            output.reduce((acc: any, val: any) => {
-              return (acc as number) + (val.replies.length as number) + 1
+            output.reduce((acc, val) => {
+              return acc + val.replies.length + 1
             }, 0)
           )
         }
-      } catch (e) {
+      } catch (e: unknown) {
         console.log(e)
-        setFailure(e.toString())
+        setFailure((e as string).toString())
       }
     })()
   }, [_id])

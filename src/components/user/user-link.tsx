@@ -12,14 +12,16 @@ import { FrontendUserData } from '@/data-types'
 export interface UserLinkProps {
   user: FrontendUserData
   withIcon?: boolean
+  className?: string
 }
 
-export function UserLink({ user, withIcon }: UserLinkProps) {
+export function UserLink({ user, withIcon, className }: UserLinkProps) {
   const { strings } = useInstanceData()
   return (
     <>
-      <Link href={`/user/profile/${user.id}`}>
-        {withIcon && <FontAwesomeIcon icon={faUser} />} {user.username}
+      <Link href={`/user/profile/${user.id}`} className={className}>
+        {withIcon && <StyledFontAwesomeIcon icon={faUser} />}
+        {user.username}
         {renderBadges()}
       </Link>
     </>
@@ -56,4 +58,8 @@ const BadgesWrap = styled.div`
     height: auto;
     margin-left: 0.3em;
   }
+`
+
+const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
+  margin-right: 5px;
 `
