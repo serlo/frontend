@@ -97,6 +97,8 @@ export type PageData =
   | SingleEntityPage
   | RevisionPage
   | TaxonomyPage
+  | UserPage
+  | UserPageRedirect
 
 // The landing page is custom built and takes i18n strings
 
@@ -143,6 +145,11 @@ export interface SearchPage {
 
 export interface NotificationsPage {
   kind: 'user/notifications'
+}
+
+//fallback for legacy routes /user/me and /user/public
+export interface UserPageRedirect {
+  kind: 'user/me'
 }
 
 // Error page has some additional data
@@ -230,6 +237,16 @@ export interface HorizonEntry {
   url: string
 }
 
+// User data exept for profiles use this structure
+
+export interface FrontendUserData {
+  username: string
+  id: number
+  activeAuthor?: boolean
+  activeDonor?: boolean
+  activeReviewer?: boolean
+}
+
 // All entities (except taxonomy) have a shared data structure.
 
 export interface SingleEntityPage extends EntityPageBase {
@@ -261,10 +278,7 @@ export interface RevisionData {
   typename: string
   date: string
   type: EntityTypes
-  user: {
-    id: number
-    username: string
-  }
+  user: FrontendUserData
   repositoryId: number
   thisRevision: {
     id: number
@@ -688,6 +702,19 @@ export interface CoursePageEntry {
 export interface TaxonomyPage extends EntityPageBase {
   kind: 'taxonomy'
   taxonomyData: TaxonomyData
+}
+
+export interface UserPage extends EntityPageBase {
+  kind: 'user/profile'
+  userData: {
+    id: number
+    username: string
+    description?: FrontendContentNode[] | null
+    lastLogin?: string | null
+    activeReviewer?: boolean
+    activeAuthor?: boolean
+    activeDonor?: boolean
+  }
 }
 
 // Shared attributes for first and second level.

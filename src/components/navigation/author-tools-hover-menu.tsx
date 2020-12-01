@@ -1,4 +1,4 @@
-import Tippy from '@tippyjs/react'
+import Tippy, { TippyProps } from '@tippyjs/react'
 import cookie from 'cookie'
 import { gql } from 'graphql-request'
 import { useRouter } from 'next/router'
@@ -25,6 +25,13 @@ export interface AuthorToolsData {
 
 export interface AuthorToolsHoverMenuProps {
   data: AuthorToolsData
+}
+
+const tippyDefaultProps: Partial<TippyProps> = {
+  delay: [0, 270],
+  interactiveBorder: 40,
+  interactive: true,
+  placement: 'left-end',
 }
 
 export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
@@ -106,13 +113,11 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
       <HoverSubList>
         <Li>
           <Tippy
-            interactive
-            placement="left-end"
+            {...tippyDefaultProps}
             content={
               <HoverSubList>
                 {abo()}
                 {history()}
-
                 {renderLi(
                   `/entity/link/move/link/${data.id}/${data.courseId!}`,
                   loggedInStrings.authorMenu.moveCoursePage
@@ -133,8 +138,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
 
         <Li>
           <Tippy
-            interactive
-            placement="left-end"
+            {...tippyDefaultProps}
             content={
               <HoverSubList>
                 {abo(data.courseId)}
@@ -219,7 +223,6 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
                 : loggedInStrings.authorMenu.moveToTextExercise
             )
           : curriculum()}
-
         {renderLi(
           `/entity/license/update/${data.id}`,
           loggedInStrings.authorMenu.changeLicense
@@ -243,8 +246,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
     }
     return (
       <Tippy
-        interactive
-        placement="left-end"
+        {...tippyDefaultProps}
         content={
           <HoverSubList>
             {renderLi(
@@ -309,7 +311,15 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
       <Li>
         <form method="post" action={`/uuid/trash/${id}`}>
           <input type="hidden" name="csrf" value={cookies['CSRF']} />
-          <button>{loggedInStrings.authorMenu.moveToTrash}</button>
+          <SubLink>
+            <SubButtonStyle
+              onClick={(e: any) =>
+                e.target.parentElement.parentElement.submit()
+              }
+            >
+              {loggedInStrings.authorMenu.moveToTrash}
+            </SubButtonStyle>
+          </SubLink>
         </form>
       </Li>
     )
@@ -338,8 +348,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
       return (
         <Li>
           <Tippy
-            interactive
-            placement="left-end"
+            {...tippyDefaultProps}
             content={
               <HoverSubList>
                 {data.taxonomyFolder && (
@@ -406,6 +415,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
 
 const HoverSubList = styled(SubList)`
   background-color: ${(props) => props.theme.colors.lightBackground};
+  min-width: 180px;
 `
 
 const Li = styled.li`

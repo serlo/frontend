@@ -18,12 +18,12 @@ import {
   SetThreadStateNotificationEvent,
   SetUuidStateNotificationEvent,
   TaxonomyTerm,
-  User,
 } from '@serlo/api'
 import Tippy from '@tippyjs/react'
 import React from 'react'
 import styled, { css } from 'styled-components'
 
+import { UserLink } from './user-link'
 import { TimeAgo } from '@/components/time-ago'
 import { useInstanceData } from '@/contexts/instance-context'
 import { LoggedInData } from '@/data-types'
@@ -102,7 +102,7 @@ export function Notification({
     replaceables: { [key: string]: JSX.Element | string }
   ) {
     const parts = string.split('%')
-    const actor = renderUser(event.actor)
+    const actor = <UserLink user={event.actor} />
     const keys = Object.keys(replaceables)
 
     return parts.map((part, index) => {
@@ -118,7 +118,7 @@ export function Notification({
   }
 
   function renderText() {
-    const actor = renderUser(event.actor)
+    const actor = <UserLink user={event.actor} />
 
     switch (event.__typename) {
       case 'SetThreadStateNotificationEvent':
@@ -248,12 +248,6 @@ export function Notification({
     ) {
       return <Content>{event.reason}</Content>
     }
-  }
-
-  function renderUser(user: User) {
-    return (
-      <StyledLink href={`/user/profile/${user.id}`}>{user.username}</StyledLink>
-    )
   }
 
   function renderObject(object: {

@@ -72,12 +72,11 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
     }
 
     if (!searchLoaded) {
-      // const cx = '016022363195733463411:78jhtkzhbhc'
-      const cx = '017461339636837994840:ifahsiurxu4' //"old version" with better autocomplete
       const gcse = document.createElement('script')
       gcse.type = 'text/javascript'
       gcse.async = true
-      gcse.src = 'https://cse.google.com/cse.js?cx=' + cx
+      gcse.src = 'https://cse.google.com/cse.js?cx=' + getSearchEngineId(lang)
+
       const s = document.getElementsByTagName('script')[0]
       s.parentNode!.insertBefore(gcse, s)
 
@@ -128,6 +127,24 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
       },
       false
     )
+  }
+
+  function getSearchEngineId(instance: string) {
+    switch (instance) {
+      case 'de':
+        return '017461339636837994840:ifahsiurxu4'
+      case 'es':
+        return '5bd728bf64beb7e94'
+      case 'fr':
+        return 'b31aebc4f2a4db942'
+      case 'ta':
+        return '65f223ba41d6c4383'
+      case 'hi':
+        return 'd1ded9becf410cea7'
+      case 'en':
+      default:
+        return 'b3d3ba59c482534d2'
+    }
   }
 
   return (

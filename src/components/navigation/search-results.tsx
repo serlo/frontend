@@ -36,24 +36,6 @@ export const SearchResults = styled.div`
     max-width: 800px;
     margin: 0 auto;
 
-    .gsc-results-wrapper-visible::before {
-      /* content: attr(data-customsearch); */
-      content: 'Custom Search';
-      font-weight: bold;
-      display: block;
-      color: ${(props) => props.theme.colors.brand};
-      width: 100%;
-      padding: 10px 0;
-      background: url('//www.google.com/cse/static/images/1x/googlelogo_lightgrey_46x16dp.png')
-        left center no-repeat;
-      text-indent: 50px;
-
-      @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-        max-width: 800px;
-        margin: 0 auto;
-      }
-    }
-
     .gsc-url-top,
     div.gs-per-result-labels {
       display: none;

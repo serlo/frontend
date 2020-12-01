@@ -1,8 +1,8 @@
 import { NextPage } from 'next'
 import dynamic from 'next/dynamic'
-import React, { RefObject } from 'react'
+import React from 'react'
 
-import { AuthPayload, useAuth } from '@/auth/use-auth'
+import { useAuth } from '@/auth/use-auth'
 import { RevisionProps } from '@/components/author/revision'
 import { EntityProps } from '@/components/content/entity'
 import { HSpace } from '@/components/content/h-space'
@@ -17,6 +17,7 @@ import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { MetaMenu } from '@/components/navigation/meta-menu'
 import { RelativeContainer } from '@/components/navigation/relative-container'
 import { LandingInternationalProps } from '@/components/pages/landing-international'
+import { ProfileProps } from '@/components/pages/user/profile'
 import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
 import { OriginProvider } from '@/contexts/origin-context'
@@ -37,13 +38,11 @@ import { PrintStylesheet } from '@/helper/css'
 const LandingDE = dynamic<LandingInternationalProps>(() =>
   import('@/components/pages/landing-de').then((mod) => mod.LandingDE)
 )
-
 const LandingInternational = dynamic<LandingInternationalProps>(() =>
   import('@/components/pages/landing-international').then(
     (mod) => mod.LandingInternational
   )
 )
-
 const Search = dynamic<{}>(() =>
   import('@/components/pages/search').then((mod) => mod.Search)
 )
@@ -61,11 +60,14 @@ const Notifications = dynamic<{}>(() =>
     (mod) => mod.Notifications
   )
 )
-
-const Flasher = dynamic<{}>(() =>
-  import('@/components/navigation/flasher').then((mod) => mod.Flasher)
+const Profile = dynamic<ProfileProps>(() =>
+  import('@/components/pages/user/profile').then((mod) => mod.Profile)
 )
-
+const ProfileRedirectMe = dynamic<{}>(() =>
+  import('@/components/pages/user/profile-redirect-me').then(
+    (mod) => mod.ProfileRedirectMe
+  )
+)
 const NewsletterPopup = dynamic<{}>(
   () =>
     import('@/components/scripts/newsletter-popup').then(
@@ -75,11 +77,9 @@ const NewsletterPopup = dynamic<{}>(
     ssr: false,
   }
 )
-
 const Topic = dynamic<TopicProps>(() =>
   import('@/components/content/topic').then((mod) => mod.Topic)
 )
-
 const Entity = dynamic<EntityProps>(() =>
   import('@/components/content/entity').then((mod) => mod.Entity)
 )
@@ -130,7 +130,7 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
       <OriginProvider value={initialProps.origin}>
         <InstanceDataProvider value={instanceData}>
           <LoggedInDataProvider value={loggedInData}>
-            {renderPage(initialProps.pageData, auth)}
+            {renderPage(initialProps.pageData)}
           </LoggedInDataProvider>
         </InstanceDataProvider>
       </OriginProvider>
@@ -177,7 +177,7 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
   }
 }
 
-function renderPage(page: PageData, auth: RefObject<AuthPayload>) {
+function renderPage(page: PageData) {
   if (page === undefined) return <ErrorPage code={404} />
 
   if (page.kind === 'donation') {
@@ -200,6 +200,12 @@ function renderPage(page: PageData, auth: RefObject<AuthPayload>) {
           }
           if (page.kind === 'user/notifications') {
             return <Notifications />
+          }
+          if (page.kind === 'user/profile') {
+            return <Profile userData={page.userData} />
+          }
+          if (page.kind === 'user/me') {
+            return <ProfileRedirectMe />
           }
           if (page.kind === 'error') {
             return (
@@ -227,7 +233,6 @@ function renderPage(page: PageData, auth: RefObject<AuthPayload>) {
                       }
                     />
                   )}
-                  {auth.current && <Flasher />}
                   <main>
                     {(() => {
                       if (page.kind === 'license-detail') {

@@ -39,9 +39,13 @@ export async function getInitialProps(
     instanceData = getInstanceDataByLang(instance)
   }
 
-  const rawAlias = alias.substring(1)
+  const rawAlias = alias.substring(1).replace('user/public', 'user/me')
 
-  if (rawAlias === 'search' || rawAlias === 'user/notifications') {
+  if (
+    rawAlias === 'search' ||
+    rawAlias === 'user/notifications' ||
+    rawAlias === 'user/me' //fallback for legacy routes /user/me and /user/public
+  ) {
     return {
       pageData: {
         kind: rawAlias,

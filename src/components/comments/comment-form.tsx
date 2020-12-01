@@ -65,6 +65,8 @@ export function CommentForm({
 const StyledBox = styled.div`
   position: relative;
   ${makeMargin}
+  margin-top: 18px;
+  margin-bottom: 30px;
 `
 
 const StyledTextarea = styled(TextareaAutosize)`
