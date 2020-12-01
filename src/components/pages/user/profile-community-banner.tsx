@@ -12,6 +12,7 @@ import BirdReviewerSVG from '@/assets-webkit/img/community/birds-reviewer.svg'
 import { Link } from '@/components/content/link'
 import { StyledP } from '@/components/tags/styled-p'
 import { makeMargin } from '@/helper/css'
+import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 const bannerContent = {
   activeAuthors: {
@@ -96,23 +97,20 @@ export const ProfileCommunityBanner = ({
   ) {
     if (isOwnProfile) {
       const counts = fetchGroupsTotalCounts()
-      const parts = bannerContent[key].ownProfileMessage.split('%no%')
-      const ownProfileMessage = (
-        <>
-          {parts[0]}
-          <b>{counts && counts[key].totalCount}</b>
-          {parts[1]}
-        </>
+      const ownProfileMessage = replacePlaceholders(
+        bannerContent[key].ownProfileMessage,
+        {
+          no: <b>{counts && counts[key].totalCount}</b>,
+        }
       )
       return <StyledP>{ownProfileMessage}</StyledP>
     }
 
     return (
       <StyledP>
-        {bannerContent[key].otherUserProfileMessage.replace(
-          '%username%',
-          username
-        )}{' '}
+        {replacePlaceholders(bannerContent[key].otherUserProfileMessage, {
+          username: username,
+        })}{' '}
         {bannerContent[key].callToAction}
       </StyledP>
     )

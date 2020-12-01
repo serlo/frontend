@@ -30,7 +30,6 @@ export function AuthorTools({ data }: AuthorToolsProps) {
       content={<AuthorToolsHoverMenu data={data} />}
     >
       <EditButton>
-        author tools
         <FontAwesomeIcon icon={faTools} />
       </EditButton>
     </Tippy>
