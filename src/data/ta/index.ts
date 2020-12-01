@@ -190,6 +190,9 @@ export const loggedInData = {
       url: '/event/history/user/me',
       title: "சமீபத்திய செய்தவை"
     }, {
+      url: '/subscriptions/manage',
+      title: "சந்தாக்கள்"
+    }, {
       url: '/api/auth/logout',
       title: "வெளியேறு"
     }]
