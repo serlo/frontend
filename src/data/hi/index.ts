@@ -190,6 +190,9 @@ export const loggedInData = {
       url: '/event/history/user/me',
       title: "हाल की गतिविधि"
     }, {
+      url: '/subscriptions/manage',
+      title: "सब्सक्रिप्शन"
+    }, {
       url: '/api/auth/logout',
       title: "लॉगआउट करें"
     }]
