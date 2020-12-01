@@ -50,7 +50,13 @@ export const instanceData = {
       revision: "Revisión",
       thread: "Hilo de conversación",
       topic: "Tema",
-      subject: "Asunto"
+      subject: "Asunto",
+      userProfile: 'User Profile'
+    },
+    roles: {
+      donor: "Donor",
+      author: 'Author',
+      reviewer: 'Reviewer'
     },
     share: {
       button: "Compartir",
@@ -141,6 +147,13 @@ export const instanceData = {
     },
     print: {
       warning: "Importante: Para asegurarse de que todas las imágenes y fórmulas se impriman, por favor, desciende hasta el final de la página una vez. ¡Gracias!"
+    },
+    profiles: {
+      aboutMe: 'About me',
+      recentActivities: 'Recent activities',
+      showAllActivities: 'Show all activities',
+      lastSeen: 'Last seen',
+      roles: 'Roles'
     }
   }
 };
@@ -225,7 +238,8 @@ export const loggedInData = {
       moveToGroupedTextExercise: "Mover contenido a otro grupo de ejercicios de texto",
       moveToTextExercise: "Mover contenido a otro ejercicio de texto",
       sortEntities: "Ordenar contenido",
-      newEntity: "Nueva Entidad"
+      newEntity: "Nueva Entidad",
+      editProfile: 'Edit profile'
     },
     notifications: {
       loadMore: "Cargar más",
