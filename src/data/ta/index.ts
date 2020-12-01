@@ -50,7 +50,13 @@ export const instanceData = {
       revision: "மீட்டல்",
       thread: 'Thread',
       topic: 'Topic',
-      subject: 'Subject'
+      subject: 'Subject',
+      userProfile: 'User Profile'
+    },
+    roles: {
+      donor: "Donor",
+      author: 'Author',
+      reviewer: 'Reviewer'
     },
     share: {
       button: "பகிர்க",
@@ -108,7 +114,6 @@ export const instanceData = {
       commentsOne: "கருத்து",
       commentsMany: "கருத்துகள்",
       submit: "இணைக்க",
-      reportComment: 'Report comment',
       archiveThread: 'Archive thread',
       deleteThread: 'Delete thread',
       deleteComment: 'Delete comment',
@@ -142,6 +147,13 @@ export const instanceData = {
     },
     print: {
       warning: 'Important: To make sure all images and formulas print, please scroll down to the end of the page once. Thank you!'
+    },
+    profiles: {
+      aboutMe: 'About me',
+      recentActivities: 'Recent activities',
+      showAllActivities: 'Show all activities',
+      lastSeen: 'Last seen',
+      roles: 'Roles'
     }
   }
 };
@@ -191,6 +203,9 @@ export const loggedInData = {
       url: '/event/history/user/me',
       title: "சமீபத்திய செய்தவை"
     }, {
+      url: '/subscriptions/manage',
+      title: "சந்தாக்கள்"
+    }, {
       url: '/api/auth/logout',
       title: "வெளியேறு"
     }]
@@ -215,7 +230,6 @@ export const loggedInData = {
       convert: 'Convert (beta)',
       history: "வரலாறு",
       editAssignments: "தலைப்பு மற்றும் பாடத்திட்ட பணிகளை உருவாக்கவும்.",
-      flagContent: "கொடி உள்ளடக்கம்",
       moveToTrash: "குப்பைக்கு நகர்த்தவும்",
       restoreContent: 'Restore from trash',
       sort: 'Sort children',
@@ -224,7 +238,8 @@ export const loggedInData = {
       moveToGroupedTextExercise: 'Move content to other grouped-text-exercise',
       moveToTextExercise: 'Move content to other text-exercise',
       sortEntities: 'Sort content',
-      newEntity: 'New Entity'
+      newEntity: 'New Entity',
+      editProfile: 'Edit profile'
     },
     notifications: {
       loadMore: "Load more",

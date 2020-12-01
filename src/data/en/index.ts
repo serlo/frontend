@@ -51,12 +51,12 @@ export const instanceData = {
       thread: 'Thread',
       topic: 'Topic',
       subject: 'Subject',
-      userProfile: 'User Profile',
+      userProfile: 'User Profile'
     },
     roles: {
       donor: "Donor",
       author: 'Author',
-      reviewer: 'Reviewer',
+      reviewer: 'Reviewer'
     },
     share: {
       button: 'Share',

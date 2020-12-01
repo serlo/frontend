@@ -50,7 +50,13 @@ export const instanceData = {
       revision: "Revisión",
       thread: "Hilo de conversación",
       topic: "Tema",
-      subject: "Asunto"
+      subject: "Asunto",
+      userProfile: 'User Profile'
+    },
+    roles: {
+      donor: "Donor",
+      author: 'Author',
+      reviewer: 'Reviewer'
     },
     share: {
       button: "Compartir",
@@ -108,7 +114,6 @@ export const instanceData = {
       commentsOne: "Comentario",
       commentsMany: "Comentarios",
       submit: "Enviar",
-      reportComment: "Denunciar comentario",
       archiveThread: "Archivar hilo de la conversación",
       deleteThread: "Eliminar hilo de la conversación",
       deleteComment: "Eliminar comentario",
@@ -142,6 +147,13 @@ export const instanceData = {
     },
     print: {
       warning: "Importante: Para asegurarse de que todas las imágenes y fórmulas se impriman, por favor, desciende hasta el final de la página una vez. ¡Gracias!"
+    },
+    profiles: {
+      aboutMe: 'About me',
+      recentActivities: 'Recent activities',
+      showAllActivities: 'Show all activities',
+      lastSeen: 'Last seen',
+      roles: 'Roles'
     }
   }
 };
@@ -191,6 +203,9 @@ export const loggedInData = {
       url: '/event/history/user/me',
       title: "Actividades recientes"
     }, {
+      url: '/subscriptions/manage',
+      title: "Subscripciones"
+    }, {
       url: '/api/auth/logout',
       title: "Cerrar sesión"
     }]
@@ -215,7 +230,6 @@ export const loggedInData = {
       convert: "Convertir (beta)",
       history: "Historial",
       editAssignments: "Editar el tema y las asignaciones de currículo",
-      flagContent: "Marcar contenido",
       moveToTrash: "Mover a la papelera",
       restoreContent: "Restaurar de la papelera",
       sort: "Ordenar los niños",
@@ -224,7 +238,8 @@ export const loggedInData = {
       moveToGroupedTextExercise: "Mover contenido a otro grupo de ejercicios de texto",
       moveToTextExercise: "Mover contenido a otro ejercicio de texto",
       sortEntities: "Ordenar contenido",
-      newEntity: "Nueva Entidad"
+      newEntity: "Nueva Entidad",
+      editProfile: 'Edit profile'
     },
     notifications: {
       loadMore: "Cargar más",

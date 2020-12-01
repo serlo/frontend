@@ -50,7 +50,13 @@ export const instanceData = {
       revision: "संशोधन",
       thread: "धागा",
       topic: "विषय",
-      subject: "विषय"
+      subject: "विषय",
+      userProfile: 'User Profile'
+    },
+    roles: {
+      donor: "Donor",
+      author: 'Author',
+      reviewer: 'Reviewer'
     },
     share: {
       button: "सांझा करें",
@@ -108,7 +114,6 @@ export const instanceData = {
       commentsOne: "टिप्पणी:",
       commentsMany: "टिप्पणियां",
       submit: "जमा करें",
-      reportComment: "टिप्पणी रिपोर्ट करें",
       archiveThread: "आर्काइव थ्रेड",
       deleteThread: "थ्रेड मिटाएं",
       deleteComment: "टिप्पणी हटाएँ",
@@ -142,6 +147,13 @@ export const instanceData = {
     },
     print: {
       warning: 'Important: To make sure all images and formulas print, please scroll down to the end of the page once. Thank you!'
+    },
+    profiles: {
+      aboutMe: 'About me',
+      recentActivities: 'Recent activities',
+      showAllActivities: 'Show all activities',
+      lastSeen: 'Last seen',
+      roles: 'Roles'
     }
   }
 };
@@ -191,6 +203,9 @@ export const loggedInData = {
       url: '/event/history/user/me',
       title: "हाल की गतिविधि"
     }, {
+      url: '/subscriptions/manage',
+      title: "सब्सक्रिप्शन"
+    }, {
       url: '/api/auth/logout',
       title: "लॉगआउट करें"
     }]
@@ -215,7 +230,6 @@ export const loggedInData = {
       convert: "धर्मांतरित (बीटा)",
       history: "इतिहास",
       editAssignments: "विषय और पाठ्यचर्या असाइनमेंट संपादित करें",
-      flagContent: "सामग्री फ्लैग करें",
       moveToTrash: "रद्दी में डालें",
       restoreContent: "कचरे से पुनर्स्थापित करें",
       sort: "सोर्ट चिल्ड्रन",
@@ -224,7 +238,8 @@ export const loggedInData = {
       moveToGroupedTextExercise: "सामग्री को अन्य समूहीकृत-पाठ-व्यायाम में ले जाएँ",
       moveToTextExercise: "सामग्री को अन्य पाठ-व्यायाम में ले जाएँ",
       sortEntities: "सामग्री को क्रमबद्ध करें",
-      newEntity: "नई इकाई"
+      newEntity: "नई इकाई",
+      editProfile: 'Edit profile'
     },
     notifications: {
       loadMore: "अधिक लोड करें",

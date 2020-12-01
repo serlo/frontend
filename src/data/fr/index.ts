@@ -50,7 +50,13 @@ export const instanceData = {
       revision: 'Revision',
       thread: 'Thread',
       topic: 'Topic',
-      subject: 'Subject'
+      subject: 'Subject',
+      userProfile: 'User Profile'
+    },
+    roles: {
+      donor: "Donor",
+      author: 'Author',
+      reviewer: 'Reviewer'
     },
     share: {
       button: "Partager",
@@ -108,7 +114,6 @@ export const instanceData = {
       commentsOne: "Commentaire",
       commentsMany: "Commentaires",
       submit: "Soumettre",
-      reportComment: 'Report comment',
       archiveThread: 'Archive thread',
       deleteThread: 'Delete thread',
       deleteComment: 'Delete comment',
@@ -142,6 +147,13 @@ export const instanceData = {
     },
     print: {
       warning: 'Important: To make sure all images and formulas print, please scroll down to the end of the page once. Thank you!'
+    },
+    profiles: {
+      aboutMe: 'About me',
+      recentActivities: 'Recent activities',
+      showAllActivities: 'Show all activities',
+      lastSeen: 'Last seen',
+      roles: 'Roles'
     }
   }
 };
@@ -191,6 +203,9 @@ export const loggedInData = {
       url: '/event/history/user/me',
       title: "Activités récentes"
     }, {
+      url: '/subscriptions/manage',
+      title: "Abonnements"
+    }, {
       url: '/api/auth/logout',
       title: "Se déconnecter"
     }]
@@ -215,7 +230,6 @@ export const loggedInData = {
       convert: 'Convert (beta)',
       history: "Histoire",
       editAssignments: "Modifier le sujet et le programme d'études",
-      flagContent: "Marquez cet élément comme inapproprié",
       moveToTrash: "Déplacer dans la corbeille",
       restoreContent: 'Restore from trash',
       sort: 'Sort children',
@@ -224,7 +238,8 @@ export const loggedInData = {
       moveToGroupedTextExercise: 'Move content to other grouped-text-exercise',
       moveToTextExercise: 'Move content to other text-exercise',
       sortEntities: 'Sort content',
-      newEntity: 'New Entity'
+      newEntity: 'New Entity',
+      editProfile: 'Edit profile'
     },
     notifications: {
       loadMore: "Load more",

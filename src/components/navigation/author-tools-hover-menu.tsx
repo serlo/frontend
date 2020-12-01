@@ -122,6 +122,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
                   `/entity/link/move/link/${data.id}/${data.courseId!}`,
                   loggedInStrings.authorMenu.moveCoursePage
                 )}
+
                 {log()}
                 {trash()}
               </HoverSubList>
@@ -226,6 +227,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
           `/entity/license/update/${data.id}`,
           loggedInStrings.authorMenu.changeLicense
         )}
+
         {log()}
         {trash()}
       </HoverSubList>
