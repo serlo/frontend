@@ -63,6 +63,11 @@ const Notifications = dynamic<{}>(() =>
 const Profile = dynamic<ProfileProps>(() =>
   import('@/components/pages/user/profile').then((mod) => mod.Profile)
 )
+const ProfileRedirectMe = dynamic<{}>(() =>
+  import('@/components/pages/user/profile-redirect-me').then(
+    (mod) => mod.ProfileRedirectMe
+  )
+)
 const NewsletterPopup = dynamic<{}>(
   () =>
     import('@/components/scripts/newsletter-popup').then(
@@ -198,6 +203,9 @@ function renderPage(page: PageData) {
           }
           if (page.kind === 'user/profile') {
             return <Profile userData={page.userData} />
+          }
+          if (page.kind === 'user/me') {
+            return <ProfileRedirectMe />
           }
           if (page.kind === 'error') {
             return (

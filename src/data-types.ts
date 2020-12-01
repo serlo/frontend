@@ -98,6 +98,7 @@ export type PageData =
   | RevisionPage
   | TaxonomyPage
   | UserPage
+  | UserPageRedirect
 
 // The landing page is custom built and takes i18n strings
 
@@ -144,6 +145,11 @@ export interface SearchPage {
 
 export interface NotificationsPage {
   kind: 'user/notifications'
+}
+
+//fallback for legacy routes /user/me and /user/public
+export interface UserPageRedirect {
+  kind: 'user/me'
 }
 
 // Error page has some additional data
