@@ -36,15 +36,6 @@ export async function fetchPageData(raw_alias: string): Promise<PageData> {
       return await apiLicensePageRequest(id, instance)
     }
 
-    if (alias === '/user/me' || alias === '/user/public') {
-      const pageData = await apiRequest(
-        '/user/profile/' + 'botho',
-        instance as Instance
-      )
-      await prettifyLinks(pageData)
-      return pageData
-    }
-
     const pageData = await apiRequest(alias, instance as Instance)
     await prettifyLinks(pageData)
     return pageData
