@@ -1,4 +1,4 @@
-import { faCheck, faFlag, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import * as React from 'react'
 import styled from 'styled-components'
@@ -21,9 +21,6 @@ export function DropdownMenu({
     <DropContent>
       {auth.current && (
         <>
-          <DropContentButton>
-            <FontAwesomeIcon icon={faFlag} /> {strings.comments.reportComment}
-          </DropContentButton>
           {isParent && (
             <DropContentButton>
               <FontAwesomeIcon icon={faCheck} />{' '}

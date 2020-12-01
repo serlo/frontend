@@ -95,7 +95,6 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
         {abo()}
         {history()}
         {curriculum()}
-        {flag()}
         {log()}
         {trash()}
       </HoverSubList>
@@ -119,7 +118,6 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
                   loggedInStrings.authorMenu.moveCoursePage
                 )}
 
-                {flag()}
                 {log()}
                 {trash()}
               </HoverSubList>
@@ -149,7 +147,6 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
 
                 {sort(data.courseId)}
                 {curriculum(data.courseId)}
-                {flag(data.courseId)}
                 {log(data.courseId)}
                 {trash(data.courseId)}
               </HoverSubList>
@@ -228,7 +225,6 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
           loggedInStrings.authorMenu.changeLicense
         )}
 
-        {flag()}
         {log()}
         {trash()}
       </HoverSubList>
@@ -296,10 +292,6 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
       `/entity/taxonomy/update/${id}`,
       loggedInStrings.authorMenu.editAssignments
     )
-  }
-
-  function flag(id = data.id) {
-    return renderLi(`/flag/add/${id}`, loggedInStrings.authorMenu.flagContent)
   }
 
   function trash(id = data.id) {
