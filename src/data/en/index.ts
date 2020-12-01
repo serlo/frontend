@@ -214,7 +214,6 @@ export const loggedInData = {
       convert: 'Convert (beta)',
       history: 'History',
       editAssignments: 'Edit topic and curriculum assignments',
-      flagContent: 'Flag content',
       moveToTrash: 'Move to trash',
       restoreContent: 'Restore from trash',
       sort: 'Sort children',
