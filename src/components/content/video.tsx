@@ -49,8 +49,6 @@ export function Video(props: VideoProps) {
   }
 
   function renderYoutube(path: string) {
-    console.log(path)
-    console.log(src)
     const videoId = encodeURIComponent(path.split('&', 1)[0])
     const useSubtitles = path.indexOf('cc_load_policy=1') > 0
     const previewImageUrl = `https://i.ytimg.com/vi/${videoId}/sddefault.jpg`

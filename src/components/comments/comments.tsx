@@ -17,6 +17,8 @@ import { endpoint } from '@/api/endpoint'
 import { useAuth } from '@/auth/use-auth'
 import { StyledH2 } from '@/components/tags/styled-h2'
 import { useInstanceData } from '@/contexts/instance-context'
+import { makeTransparentButton } from '@/helper/css'
+import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 export interface CommentsProps {
   id: number
@@ -26,7 +28,7 @@ export interface CommentsProps {
 export type CommentsData = Discussion[]
 
 export interface Discussion {
-  status: 'open' | 'closed'
+  status: 'active' | 'trashed' | 'archived'
   id: number
   /*entity: {
     title: string
@@ -43,8 +45,6 @@ export interface CommentData {
   user: { username: string; id: number }
   text: string
 }
-
-// TODO: Type the query
 
 const query = gql`
   query getComments($id: Int!) {
@@ -83,12 +83,14 @@ function createDiscussion(thread: Thread): Discussion {
   const question = thread.comments.nodes[0]
   const replies = thread.comments.nodes.slice(1)
   return {
-    status: thread.archived || thread.trashed ? 'closed' : 'open',
+    status: thread.trashed
+      ? 'trashed'
+      : thread.archived
+      ? 'archived'
+      : 'active',
     id: question.id,
     question: createComment(question),
-    replies: replies
-      .filter((reply) => !reply.trashed && !reply.archived)
-      .map(createComment),
+    replies: replies.filter((reply) => !reply.trashed).map(createComment),
   }
 }
 
@@ -110,6 +112,7 @@ export function Comments({ id: _id }: CommentsProps) {
   const [data, setData] = React.useState<CommentsData | null>(null)
   const [commentCount, setCommentCount] = React.useState(0)
   const [failure, setFailure] = React.useState<String | null>(null)
+  const [showArchived, setShowArchived] = React.useState<boolean>(false)
   const { strings } = useInstanceData()
   const auth = useAuth()
 
@@ -123,10 +126,10 @@ export function Comments({ id: _id }: CommentsProps) {
           { id: _id }
         )
         if (queryData !== null) {
-          const activeThreads = queryData.uuid.threads.nodes.filter(
-            (node) => !node.archived && !node.trashed
+          const existingThreads = queryData.uuid.threads.nodes.filter(
+            (node) => !node.trashed
           )
-          const output = activeThreads.map(createDiscussion)
+          const output = existingThreads.map(createDiscussion)
           setData(output)
           setCommentCount(
             output.reduce((acc, val) => {
@@ -140,6 +143,10 @@ export function Comments({ id: _id }: CommentsProps) {
       }
     })()
   }, [_id])
+
+  function toogleShowArchived() {
+    setShowArchived(!showArchived)
+  }
 
   if (failure) {
     return <StyledP>{failure}</StyledP>
@@ -183,16 +190,32 @@ export function Comments({ id: _id }: CommentsProps) {
               : strings.comments.commentsMany}
           </CustomH2>
 
-          <Lazy>{data.map(buildDisussion)}</Lazy>
+          <Lazy>
+            {renderDisussions('active')}
+            <StyledP>
+              <ShowArchivedButton
+                onClick={toogleShowArchived}
+                onPointerUp={(e) => e.currentTarget.blur()}
+              >
+                {replacePlaceholders(strings.comments.showArchived, {
+                  threads: strings.entities.threads,
+                })}{' '}
+                ▾
+              </ShowArchivedButton>
+            </StyledP>
+            {showArchived && renderDisussions('archived')}
+          </Lazy>
         </>
       )}
     </div>
   )
 
-  function buildDisussion(discussion: Discussion) {
-    return (
-      <div key={discussion.id}>
-        {/* <p>
+  function renderDisussions(showStatus: Discussion['status']) {
+    return data?.map((discussion) => {
+      if (discussion.status !== showStatus) return null
+      return (
+        <div key={discussion.id}>
+          {/* <p>
           Eine Diskussion zu {discussion.entity.type}{' '}
           <a href={discussion.entity.alias}>{discussion.entity.title}</a>.
         </p>
@@ -200,34 +223,35 @@ export function Comments({ id: _id }: CommentsProps) {
           Status: {discussion.status}, Upvotes: {discussion.upvotes}
         </p>
         <p>hier Link zu upvoten</p> */}
-        <Comment
-          id={discussion.question.id}
-          timestamp={discussion.question.timestamp}
-          user={discussion.question.user}
-          body={discussion.question.text}
-          isParent
-          key={discussion.question.id}
-        />
-        <div>
-          {discussion.replies.map((comment) => (
-            <Comment
-              id={comment.id}
-              key={comment.id}
-              timestamp={comment.timestamp}
-              user={comment.user}
-              body={comment.text}
-            />
-          ))}
-          {auth.current && (
-            <CommentForm
-              placeholder={strings.comments.placeholderReply}
-              parent_id={discussion.id}
-              reply
-            />
-          )}
+          <Comment
+            id={discussion.question.id}
+            timestamp={discussion.question.timestamp}
+            user={discussion.question.user}
+            body={discussion.question.text}
+            isParent
+            key={discussion.question.id}
+          />
+          <div>
+            {discussion.replies.map((comment) => (
+              <Comment
+                id={comment.id}
+                key={comment.id}
+                timestamp={comment.timestamp}
+                user={comment.user}
+                body={comment.text}
+              />
+            ))}
+            {auth.current && (
+              <CommentForm
+                placeholder={strings.comments.placeholderReply}
+                parent_id={discussion.id}
+                reply
+              />
+            )}
+          </div>
         </div>
-      </div>
-    )
+      )
+    })
   }
 }
 
@@ -243,4 +267,9 @@ const StyledIcon = styled(FontAwesomeIcon)`
 
 const ColoredIcon = styled.span`
   color: ${(props) => props.theme.colors.brand};
+`
+
+const ShowArchivedButton = styled.button`
+  ${makeTransparentButton}
+  margin-top: 16px;
 `
