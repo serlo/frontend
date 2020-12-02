@@ -301,7 +301,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
 
   function trash(id = data.id) {
     // todo: use graphql mutation
-    if (!data.trashed) {
+    if (data.trashed) {
       return (
         <Li>
           <SubButtonStyle
@@ -313,19 +313,14 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
         </Li>
       )
     }
-    const cookies = cookie.parse(
-      typeof window === 'undefined' ? '' : document.cookie
-    )
     return (
       <Li>
-        <form method="post" action={`/uuid/trash/${id}`}>
-          <input type="hidden" name="csrf" value={cookies['CSRF']} />
-          <SubLink as="button">
-            <SubButtonStyle>
-              {loggedInStrings.authorMenu.moveToTrash}
-            </SubButtonStyle>
-          </SubLink>
-        </form>
+        <SubButtonStyle
+          as="button"
+          onClick={() => fetchLegacyUrl(`/uuid/trash/${id}`, true)}
+        >
+          {loggedInStrings.authorMenu.moveToTrash}
+        </SubButtonStyle>
       </Li>
     )
   }
@@ -418,15 +413,26 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
   }
 
   //quick experiment
-  function fetchLegacyUrl(url: string) {
+  function fetchLegacyUrl(url: string, csrf?: boolean) {
     NProgress.start()
 
+    const cookies = cookie.parse(
+      typeof window === 'undefined' ? '' : document.cookie
+    )
+
+    const options = csrf
+      ? { method: 'POST', body: JSON.stringify({ csrf: cookies['CSRF'] }) }
+      : {}
+
     try {
-      void fetch(url)
+      void fetch(url, options)
         .then((res) => {
           if (res.status === 200) {
             NProgress.done()
             showToastNotice('Completed', 'success')
+            setTimeout(() => {
+              window.location.reload()
+            }, 1000)
           } else {
             showErrorNotice()
           }
