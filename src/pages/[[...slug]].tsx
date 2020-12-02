@@ -1,6 +1,7 @@
 import { NextPage } from 'next'
 import dynamic from 'next/dynamic'
 import React from 'react'
+import { notify } from 'react-notify-toast'
 
 import { useAuth } from '@/auth/use-auth'
 import { RevisionProps } from '@/components/author/revision'
@@ -21,6 +22,7 @@ import { ProfileProps } from '@/components/pages/user/profile'
 import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
 import { OriginProvider } from '@/contexts/origin-context'
+import { ToastNoticeProvider } from '@/contexts/toast-notice-context'
 import {
   InitialProps,
   InstanceData,
@@ -121,6 +123,8 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
     loggedInData,
   ])
 
+  const toastNotice = notify.createShowQueue()
+
   // dev
   //console.dir(initialProps)
 
@@ -130,7 +134,9 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
       <OriginProvider value={initialProps.origin}>
         <InstanceDataProvider value={instanceData}>
           <LoggedInDataProvider value={loggedInData}>
-            {renderPage(initialProps.pageData)}
+            <ToastNoticeProvider value={toastNotice}>
+              {renderPage(initialProps.pageData)}
+            </ToastNoticeProvider>
           </LoggedInDataProvider>
         </InstanceDataProvider>
       </OriginProvider>

@@ -11,22 +11,42 @@ import '@/assets-webkit/fonts/karmilla.css'
 import '@/assets-webkit/fonts/katex/katex.css'
 
 import { NProgressStyles } from '@/components/navigation/n-progress-styles'
-import { ToastNotifications } from '@/components/toast-notifications'
+import { ToastNotice } from '@/components/toast-notice'
 import { FontFix } from '@/helper/css'
 import { theme } from '@/theme'
 
 config.autoAddCss = false
+
+export interface SentryGlobal {
+  Sentry?: {
+    addBreadcrumb: (arg0: {
+      type?: string
+      category?: string
+      message?: string
+      level?: string
+      timestamp?: string
+      data?: unknown
+    }) => void
+    captureException: (arg0: Error) => void
+    Severity?: {
+      Info: string
+    }
+    init: (arg0: { environment: string; release: string }) => void
+    forceLoad: () => void
+  }
+}
 
 if (
   process.env.NEXT_PUBLIC_SENTRY_DSN !== undefined &&
   process.env.NEXT_PUBLIC_COMMIT_SHA !== undefined &&
   typeof window !== 'undefined'
 ) {
-  ;(window as any).Sentry?.init({
+  const windowWithSentry = (window as unknown) as Window & SentryGlobal
+  windowWithSentry.Sentry?.init({
     environment: process.env.NEXT_PUBLIC_ENV,
     release: `frontend@${process.env.NEXT_PUBLIC_COMMIT_SHA?.substr(0, 7)}`,
   })
-  ;(window as any).Sentry?.forceLoad()
+  windowWithSentry.Sentry?.forceLoad()
 }
 
 Router.events.on('routeChangeStart', () => {
@@ -43,7 +63,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <FontFix />
         <NProgressStyles />
         <Component {...pageProps} />
-        <ToastNotifications />
+        <ToastNotice />
       </ThemeProvider>
     </React.StrictMode>
   )
