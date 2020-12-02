@@ -122,6 +122,8 @@ export const instanceData = {
       placeholder: "Your question or suggestion…",
       placeholderReply: "Your answer…",
       loading: 'Looking for comments ...',
+      showMoreReply: 'Show one more reply',
+      showMoreReplies: 'Show %number% more replies',
       showArchived: 'Show archived %threads%'
     },
     revisions: {
