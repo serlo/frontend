@@ -2,7 +2,6 @@ import Tippy, { TippyProps } from '@tippyjs/react'
 import cookie from 'cookie'
 import { gql } from 'graphql-request'
 import { useRouter } from 'next/router'
-import NProgress from 'nprogress'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -240,15 +239,9 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
   function abo(id = data.id) {
     // todo: check if entity is already subscribed
     if (isSubscriped) {
-      return (
-        <Li>
-          <SubButtonStyle
-            as="button"
-            onClick={() => fetchLegacyUrl(`/unsubscribe/${id}`)}
-          >
-            {loggedInStrings.authorMenu.unsubscribeNotifications}
-          </SubButtonStyle>
-        </Li>
+      return renderLi(
+        `/unsubscribe/${id}`,
+        loggedInStrings.authorMenu.unsubscribeNotifications
       )
     }
     return (
@@ -306,25 +299,28 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
   function trash(id = data.id) {
     // todo: use graphql mutation
     if (data.trashed) {
-      return (
-        <Li>
-          <SubButtonStyle
-            as="button"
-            onClick={() => fetchLegacyUrl(`/uuid/restore/${id}`)}
-          >
-            {loggedInStrings.authorMenu.restoreContent}
-          </SubButtonStyle>
-        </Li>
+      return renderLi(
+        `/uuid/restore/${id}`,
+        loggedInStrings.authorMenu.restoreContent
       )
     }
+    const cookies = cookie.parse(
+      typeof window === 'undefined' ? '' : document.cookie
+    )
     return (
       <Li>
-        <SubButtonStyle
-          as="button"
-          onClick={() => fetchLegacyUrl(`/uuid/trash/${id}`, true)}
-        >
-          {loggedInStrings.authorMenu.moveToTrash}
-        </SubButtonStyle>
+        <form method="post" action={`/uuid/trash/${id}`}>
+          <input type="hidden" name="csrf" value={cookies['CSRF']} />
+          <SubLink>
+            <SubButtonStyle
+              onClick={(e: any) =>
+                e.target.parentElement.parentElement.submit()
+              }
+            >
+              {loggedInStrings.authorMenu.moveToTrash}
+            </SubButtonStyle>
+          </SubLink>
+        </form>
       </Li>
     )
   }
@@ -414,49 +410,6 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
         </SubLink>
       </Li>
     )
-  }
-
-  //quick experiment
-  function fetchLegacyUrl(url: string, csrf?: boolean) {
-    NProgress.start()
-
-    const cookies = cookie.parse(
-      typeof window === 'undefined' ? '' : document.cookie
-    )
-
-    const options = csrf
-      ? {
-          method: 'POST',
-          headers: { 'X-CSRF-Token': cookies['CSRF'] },
-        }
-      : {}
-
-    try {
-      void fetch(url, options)
-        .then((res) => {
-          if (res.status === 200) {
-            NProgress.done()
-            console.log('Completed')
-            console.log(res)
-            setTimeout(() => {
-              window.location.reload()
-            }, 2500)
-          } else {
-            showErrorNotice()
-          }
-        })
-        .catch(() => {
-          showErrorNotice()
-        })
-    } catch (e) {
-      console.log(e)
-      showErrorNotice()
-    }
-
-    function showErrorNotice() {
-      NProgress.done()
-      console.log('Something went wrong… Please try again')
-    }
   }
 }
 
