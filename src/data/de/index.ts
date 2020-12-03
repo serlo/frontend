@@ -51,11 +51,11 @@ export const instanceData = {
       thread: "Diskussion",
       topic: "Thema",
       subject: "Fach",
-      userProfile: 'User Profile'
+      userProfile: "Benutzerprofil"
     },
     roles: {
-      donor: "Donor",
-      author: 'Author',
+      donor: "Spender*in",
+      author: "Autor*in",
       reviewer: 'Reviewer'
     },
     share: {
@@ -149,11 +149,11 @@ export const instanceData = {
       warning: "Wichtig: Damit alle Bilder und Formeln gedruckt werden, scrolle bitte einmal bis zum Ende der Seite. Vielen Dank!"
     },
     profiles: {
-      aboutMe: 'About me',
-      recentActivities: 'Recent activities',
-      showAllActivities: 'Show all activities',
-      lastSeen: 'Last seen',
-      roles: 'Roles'
+      aboutMe: "Über mich",
+      recentActivities: "Aktivitäten",
+      showAllActivities: "Alle Aktivitäten anzeigen",
+      lastSeen: "Zuletzt online",
+      roles: "Rollen"
     }
   }
 };
@@ -239,7 +239,7 @@ export const loggedInData = {
       moveToTextExercise: "Inhalt zu anderer Textaufgabe verschieben",
       sortEntities: "Inhalt sortieren",
       newEntity: "Neuer Inhalt",
-      editProfile: 'Edit profile'
+      editProfile: "Profil bearbeiten"
     },
     notifications: {
       loadMore: "Weitere laden",
