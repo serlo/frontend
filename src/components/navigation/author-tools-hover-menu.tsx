@@ -425,7 +425,10 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
     )
 
     const options = csrf
-      ? { method: 'POST', body: JSON.stringify({ csrf: cookies['CSRF'] }) }
+      ? {
+          method: 'POST',
+          headers: { 'X-CSRF-Token': cookies['CSRF'] },
+        }
       : {}
 
     try {
@@ -434,9 +437,10 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
           if (res.status === 200) {
             NProgress.done()
             console.log('Completed')
+            console.log(res)
             setTimeout(() => {
               window.location.reload()
-            }, 1000)
+            }, 2500)
           } else {
             showErrorNotice()
           }
