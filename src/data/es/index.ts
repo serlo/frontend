@@ -150,9 +150,9 @@ export const instanceData = {
     },
     profiles: {
       aboutMe: 'About me',
-      recentActivities: 'Recent activities',
+      recentActivities: "Actividades recientes",
       showAllActivities: 'Show all activities',
-      lastSeen: 'Last seen',
+      lastSeen: "Visto por última vez",
       roles: 'Roles'
     }
   }
@@ -239,7 +239,7 @@ export const loggedInData = {
       moveToTextExercise: "Mover contenido a otro ejercicio de texto",
       sortEntities: "Ordenar contenido",
       newEntity: "Nueva Entidad",
-      editProfile: 'Edit profile'
+      editProfile: "Editar perfil"
     },
     notifications: {
       loadMore: "Cargar más",
