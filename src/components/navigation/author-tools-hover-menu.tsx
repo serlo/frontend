@@ -293,23 +293,27 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
   function log(id = data.id) {
     return (
       <>
-        <button
-          onClick={() => {
-            refreshFromAPI()
-          }}
-        >
-          Delete Cache
-        </button>
-        <button
-          onClick={() => {
-            refreshFromAPI(true)
-          }}
-        >
-          Keep Cache
-        </button>
+        {renderLi(`/event/history/${id}`, loggedInStrings.authorMenu.log)}
+        <li>
+          <button
+            onClick={() => {
+              refreshFromAPI()
+            }}
+          >
+            Delete Cache
+          </button>
+        </li>
+        <li>
+          <button
+            onClick={() => {
+              refreshFromAPI(true)
+            }}
+          >
+            Keep Cache
+          </button>
+        </li>
       </>
     )
-    // renderLi(`/event/history/${id}`, loggedInStrings.authorMenu.log)
   }
 
   function curriculum(id = data.id) {
@@ -327,15 +331,10 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
         loggedInStrings.authorMenu.restoreContent
       )
     }
-    return (
-      <Li>
-        <SubButtonStyle
-          as="button"
-          onClick={() => fetchLegacyUrl(`/uuid/trash/${id}`, true)}
-        >
-          {loggedInStrings.authorMenu.moveToTrash}
-        </SubButtonStyle>
-      </Li>
+    return renderFetchLi(
+      `/uuid/trash/${id}`,
+      loggedInStrings.authorMenu.moveToTrash,
+      true
     )
   }
 
