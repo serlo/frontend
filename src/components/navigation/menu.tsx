@@ -262,4 +262,5 @@ export const SubButtonStyle = styled.span`
   border-radius: 12px;
   font-size: 1rem;
   font-weight: normal;
+  text-align: left;
 `
