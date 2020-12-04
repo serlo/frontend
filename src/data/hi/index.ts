@@ -49,6 +49,7 @@ export const instanceData = {
       comment: "टिप्पणियां",
       revision: "संशोधन",
       thread: "धागा",
+      threads: 'Threads',
       topic: "विषय",
       subject: "विषय",
       userProfile: 'User Profile'
@@ -120,7 +121,10 @@ export const instanceData = {
       postedOn: "इस दिन पोस्ट हुआ",
       placeholder: "आपका प्रश्न या सुझाव",
       placeholderReply: "आपका उत्तर",
-      loading: 'Looking for comments ...'
+      loading: 'Looking for comments ...',
+      showMoreReply: 'Show one more reply',
+      showMoreReplies: 'Show %number% more replies',
+      showArchived: 'Show archived %threads%'
     },
     revisions: {
       toOverview: "अवलोकन पर वापस जाएं",
