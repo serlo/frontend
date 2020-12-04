@@ -4,7 +4,11 @@ import {
   faSpinner,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { AbstractUuid, Comment as CommentType, Thread } from '@serlo/api'
+import {
+  AbstractUuid,
+  Comment as CommentApiType,
+  Thread as ThreadApiType,
+} from '@serlo/api'
 import { gql, request } from 'graphql-request'
 import React from 'react'
 import styled from 'styled-components'
@@ -17,16 +21,18 @@ import { endpoint } from '@/api/endpoint'
 import { useAuth } from '@/auth/use-auth'
 import { StyledH2 } from '@/components/tags/styled-h2'
 import { useInstanceData } from '@/contexts/instance-context'
+import { makeLightButton } from '@/helper/css'
+import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 export interface CommentsProps {
   id: number
 }
 
 // PROTOTYPE
-export type CommentsData = Discussion[]
+export type CommentsData = Thread[]
 
-export interface Discussion {
-  status: 'open' | 'closed'
+export interface Thread {
+  status: 'active' | 'trashed' | 'archived'
   id: number
   /*entity: {
     title: string
@@ -43,8 +49,6 @@ export interface CommentData {
   user: { username: string; id: number }
   text: string
 }
-
-// TODO: Type the query
 
 const query = gql`
   query getComments($id: Int!) {
@@ -79,20 +83,22 @@ const query = gql`
 
 // TODO: rework data structure
 
-function createDiscussion(thread: Thread): Discussion {
+function createThread(thread: ThreadApiType): Thread {
   const question = thread.comments.nodes[0]
   const replies = thread.comments.nodes.slice(1)
   return {
-    status: thread.archived || thread.trashed ? 'closed' : 'open',
+    status: thread.trashed
+      ? 'trashed'
+      : thread.archived
+      ? 'archived'
+      : 'active',
     id: question.id,
     question: createComment(question),
-    replies: replies
-      .filter((reply) => !reply.trashed && !reply.archived)
-      .map(createComment),
+    replies: replies.filter((reply) => !reply.trashed).map(createComment),
   }
 }
 
-function createComment(node: CommentType): CommentData {
+function createComment(node: CommentApiType): CommentData {
   return {
     id: node.id,
     timestamp: node.createdAt,
@@ -110,6 +116,10 @@ export function Comments({ id: _id }: CommentsProps) {
   const [data, setData] = React.useState<CommentsData | null>(null)
   const [commentCount, setCommentCount] = React.useState(0)
   const [failure, setFailure] = React.useState<String | null>(null)
+  const [showArchived, setShowArchived] = React.useState<boolean>(false)
+  const [showThreadChildren, setShowThreadChildren] = React.useState<number[]>(
+    []
+  )
   const { strings } = useInstanceData()
   const auth = useAuth()
 
@@ -123,10 +133,10 @@ export function Comments({ id: _id }: CommentsProps) {
           { id: _id }
         )
         if (queryData !== null) {
-          const activeThreads = queryData.uuid.threads.nodes.filter(
-            (node) => !node.archived && !node.trashed
+          const existingThreads = queryData.uuid.threads.nodes.filter(
+            (node) => !node.trashed
           )
-          const output = activeThreads.map(createDiscussion)
+          const output = existingThreads.map(createThread)
           setData(output)
           setCommentCount(
             output.reduce((acc, val) => {
@@ -140,6 +150,10 @@ export function Comments({ id: _id }: CommentsProps) {
       }
     })()
   }, [_id])
+
+  function toogleShowArchived() {
+    setShowArchived(!showArchived)
+  }
 
   if (failure) {
     return <StyledP>{failure}</StyledP>
@@ -183,50 +197,115 @@ export function Comments({ id: _id }: CommentsProps) {
               : strings.comments.commentsMany}
           </CustomH2>
 
-          <Lazy>{data.map(buildDisussion)}</Lazy>
+          <Lazy>
+            {renderThreads('active')}
+            <StyledP>
+              <ShowArchivedButton
+                onClick={toogleShowArchived}
+                onPointerUp={(e) => e.currentTarget.blur()}
+              >
+                {replacePlaceholders(strings.comments.showArchived, {
+                  threads: strings.entities.threads,
+                })}{' '}
+                ▾
+              </ShowArchivedButton>
+            </StyledP>
+            {showArchived && renderThreads('archived')}
+          </Lazy>
         </>
       )}
     </div>
   )
 
-  function buildDisussion(discussion: Discussion) {
-    return (
-      <div key={discussion.id}>
-        {/* <p>
-          Eine Diskussion zu {discussion.entity.type}{' '}
-          <a href={discussion.entity.alias}>{discussion.entity.title}</a>.
+  function renderThreads(showStatus: Thread['status']) {
+    return data?.map((thread) => {
+      if (thread.status !== showStatus) return null
+      return (
+        <ThreadWrapper key={thread.id}>
+          {/* <p>
+          Eine Diskussion zu {thread.entity.type}{' '}
+          <a href={thread.entity.alias}>{thread.entity.title}</a>.
         </p>
         <p>
-          Status: {discussion.status}, Upvotes: {discussion.upvotes}
+          Status: {thread.status}, Upvotes: {thread.upvotes}
         </p>
         <p>hier Link zu upvoten</p> */}
-        <Comment
-          id={discussion.question.id}
-          timestamp={discussion.question.timestamp}
-          user={discussion.question.user}
-          body={discussion.question.text}
-          isParent
-          key={discussion.question.id}
-        />
+          <Comment
+            id={thread.question.id}
+            timestamp={thread.question.timestamp}
+            user={thread.question.user}
+            body={thread.question.text}
+            isParent
+            key={thread.question.id}
+          />
+          {renderThreadReplies(thread)}
+        </ThreadWrapper>
+      )
+    })
+  }
+
+  function renderThreadReplies(thread: Thread) {
+    const length = thread.replies.length
+
+    //only show first reply by default
+
+    if (length === 0) return renderReplyForm(thread.id)
+
+    if (length === 1)
+      return (
         <div>
-          {discussion.replies.map((comment) => (
-            <Comment
-              id={comment.id}
-              key={comment.id}
-              timestamp={comment.timestamp}
-              user={comment.user}
-              body={comment.text}
-            />
-          ))}
-          {auth.current && (
-            <CommentForm
-              placeholder={strings.comments.placeholderReply}
-              parent_id={discussion.id}
-              reply
-            />
-          )}
+          {thread.replies.map(renderComment)}
+          {renderReplyForm(thread.id)}
         </div>
+      )
+
+    return showThreadChildren.includes(thread.id) ? (
+      <div>
+        {thread.replies.map(renderComment)}
+        {renderReplyForm(thread.id)}
       </div>
+    ) : (
+      <div>
+        {renderComment(thread.replies[0])}
+        <StyledP>
+          <ShowChildrenButton
+            onClick={() =>
+              setShowThreadChildren([...showThreadChildren, thread.id])
+            }
+          >
+            {length === 2
+              ? strings.comments.showMoreReply
+              : replacePlaceholders(strings.comments.showMoreReplies, {
+                  number: (length - 1).toString(),
+                })}{' '}
+            ▾
+          </ShowChildrenButton>
+        </StyledP>
+      </div>
+    )
+  }
+
+  function renderComment(comment: CommentData) {
+    return (
+      <Comment
+        id={comment.id}
+        key={comment.id}
+        timestamp={comment.timestamp}
+        user={comment.user}
+        body={comment.text}
+      />
+    )
+  }
+
+  function renderReplyForm(threadId: number) {
+    return (
+      auth.current && (
+        <CommentForm
+          placeholder={strings.comments.placeholderReply}
+          parent_id={threadId}
+          reply
+        />
+      )
     )
   }
 }
@@ -243,4 +322,17 @@ const StyledIcon = styled(FontAwesomeIcon)`
 
 const ColoredIcon = styled.span`
   color: ${(props) => props.theme.colors.brand};
+`
+
+const ThreadWrapper = styled.div`
+  margin-bottom: 45px;
+`
+
+const ShowArchivedButton = styled.button`
+  ${makeLightButton}
+  margin-top: 16px;
+`
+
+const ShowChildrenButton = styled.button`
+  ${makeLightButton}
 `

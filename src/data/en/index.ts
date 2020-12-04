@@ -49,6 +49,7 @@ export const instanceData = {
       comment: 'Comment',
       revision: 'Revision',
       thread: 'Thread',
+      threads: 'Threads',
       topic: 'Topic',
       subject: 'Subject',
       userProfile: 'User Profile'
@@ -120,7 +121,10 @@ export const instanceData = {
       postedOn: 'Posted on',
       placeholder: "Your question or suggestion…",
       placeholderReply: "Your answer…",
-      loading: 'Looking for comments ...'
+      loading: 'Looking for comments ...',
+      showMoreReply: 'Show one more reply',
+      showMoreReplies: 'Show %number% more replies',
+      showArchived: 'Show archived %threads%'
     },
     revisions: {
       toOverview: "Back to overview",
