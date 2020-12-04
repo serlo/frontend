@@ -49,7 +49,7 @@ export const instanceData = {
       comment: "Kommentar",
       revision: "Bearbeitung",
       thread: "Diskussion",
-      threads: 'Threads',
+      threads: "Diskussionen",
       topic: "Thema",
       subject: "Fach",
       userProfile: "Benutzerprofil"
@@ -57,7 +57,7 @@ export const instanceData = {
     roles: {
       donor: "Spender*in",
       author: "Autor*in",
-      reviewer: 'Reviewer'
+      reviewer: "Reviewer*in"
     },
     share: {
       button: "Teilen",
@@ -122,9 +122,9 @@ export const instanceData = {
       placeholder: "Deine Frage oder Vorschlag…",
       placeholderReply: "Deine Antwort…",
       loading: "Kommentare werden geladen…",
-      showMoreReply: 'Show one more reply',
-      showMoreReplies: 'Show %number% more replies',
-      showArchived: 'Show archived %threads%'
+      showMoreReply: "Einen weiteren Kommentar",
+      showMoreReplies: "%number% weitere Kommentare",
+      showArchived: "Archivierte %threads% anzeigen"
     },
     revisions: {
       toOverview: "Zurück zur Übersicht",
