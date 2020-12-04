@@ -118,6 +118,7 @@ export async function getInitialProps(
     try {
       const fromCache = sessionStorage.getItem(`/${instance}${alias}`)
       if (fromCache) {
+        console.log('cached')
         return {
           origin: fetcherAdditionalData.origin,
           pageData: JSON.parse(fromCache) as PageData,

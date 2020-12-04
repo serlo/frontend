@@ -12,6 +12,7 @@ import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { useToastNotice } from '@/contexts/toast-notice-context'
+import { useRefreshFromAPI } from '@/helper/use-refresh-from-api'
 
 export interface AuthorToolsData {
   type: string
@@ -40,6 +41,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
   const loggedInData = useLoggedInData()
   const instanceData = useInstanceData()
   const showToastNotice = useToastNotice()
+  const refreshFromAPI = useRefreshFromAPI()
   const [isSubscriped, setSubscriped] = React.useState(false)
 
   const auth = useAuth()
@@ -289,7 +291,25 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
   }
 
   function log(id = data.id) {
-    return renderLi(`/event/history/${id}`, loggedInStrings.authorMenu.log)
+    return (
+      <>
+        <button
+          onClick={() => {
+            refreshFromAPI()
+          }}
+        >
+          Delete Cache
+        </button>
+        <button
+          onClick={() => {
+            refreshFromAPI(true)
+          }}
+        >
+          Keep Cache
+        </button>
+      </>
+    )
+    // renderLi(`/event/history/${id}`, loggedInStrings.authorMenu.log)
   }
 
   function curriculum(id = data.id) {
@@ -302,15 +322,9 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
   function trash(id = data.id) {
     // todo: use graphql mutation
     if (data.trashed) {
-      return (
-        <Li>
-          <SubButtonStyle
-            as="button"
-            onClick={() => fetchLegacyUrl(`/uuid/restore/${id}`)}
-          >
-            {loggedInStrings.authorMenu.restoreContent}
-          </SubButtonStyle>
-        </Li>
+      return renderFetchLi(
+        `/uuid/restore/${id}`,
+        loggedInStrings.authorMenu.restoreContent
       )
     }
     return (
@@ -412,8 +426,21 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
     )
   }
 
+  function renderFetchLi(href: string, text: string, csrf?: boolean) {
+    return (
+      <Li>
+        <SubButtonStyle
+          as="button"
+          onClick={() => fetchLegacyUrl(href, text, csrf)}
+        >
+          {text}
+        </SubButtonStyle>
+      </Li>
+    )
+  }
+
   //quick experiment
-  function fetchLegacyUrl(url: string, csrf?: boolean) {
+  function fetchLegacyUrl(url: string, text: string, csrf?: boolean) {
     NProgress.start()
 
     const cookies = cookie.parse(
@@ -427,12 +454,13 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
     try {
       void fetch(url, options)
         .then((res) => {
+          console.log(res) //debug
           if (res.status === 200) {
             NProgress.done()
-            showToastNotice('Completed', 'success')
+            showToastNotice(`'${text}' erfolgreich `, 'success')
             setTimeout(() => {
-              window.location.reload()
-            }, 1000)
+              refreshFromAPI()
+            }, 1500)
           } else {
             showErrorNotice()
           }
@@ -447,7 +475,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
 
     function showErrorNotice() {
       NProgress.done()
-      showToastNotice('Something went wrong… Please try again', 'warning')
+      showToastNotice('Something went wrong… Please try again.', 'warning')
     }
   }
 }
