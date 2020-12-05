@@ -10,8 +10,8 @@ export const instanceData = {
       login: "Se connecter"
     },
     search: {
-      privacy: 'The search is provided by Google. See our %privacypolicy% to find out what information is processed.',
-      agree: 'Agree'
+      privacy: "La recherche est fournie par Google. Consultez notre %privacypolicy% pour savoir quelles sont les informations traitées.",
+      agree: "Accepter"
     },
     footer: {
       summaryHeading: "Serlo.org est le Wikipedia pour l'apprentissage.",
@@ -22,18 +22,18 @@ export const instanceData = {
       toTop: "En haut"
     },
     categories: {
-      articles: 'Articles',
-      courses: 'Courses',
-      videos: 'Videos',
-      applets: 'Applets',
-      folders: 'Folders',
-      exercises: "Exercices",
-      events: 'Events'
+      articles: "articles",
+      courses: "cours",
+      videos: "vidéos",
+      applets: "applets",
+      folders: "dossiers",
+      exercises: "exercices",
+      events: "événements"
     },
     entities: {
-      applet: 'Applet',
-      article: 'Article',
-      course: 'Course',
+      applet: "applet",
+      article: "article",
+      course: "cours",
       coursePage: 'Course Page',
       event: 'Event',
       exercise: 'Exercise',
