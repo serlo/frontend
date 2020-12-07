@@ -12,7 +12,6 @@ export interface VideoProps {
 }
 
 export function Video(props: VideoProps) {
-  const [vimeoImg, setVimeoImg] = React.useState('')
   const { lang } = useInstanceData()
 
   const { src } = props
@@ -36,59 +35,26 @@ export function Video(props: VideoProps) {
   )
 
   function renderWikimedia() {
-    //there is probably an easier way of getting this?
-    const seperator = '/commons/'
-    const parts = src.split(seperator)
-    const baseURL = parts[0]
-    const filenameWithPath = parts[1]
-    const filename = filenameWithPath.substring(
-      filenameWithPath.lastIndexOf('/') + 1
-    )
-    const previewImageUrl = `${baseURL}${seperator}thumb/${filenameWithPath}/800px--${filename}.jpg`
-    return renderVideo(previewImageUrl, Provider.WikimediaCommons)
+    return renderVideo(Provider.WikimediaCommons)
   }
 
   function renderYoutube(path: string) {
     const videoId = encodeURIComponent(path.split('&', 1)[0])
     const useSubtitles = path.indexOf('cc_load_policy=1') > 0
-    const previewImageUrl = `https://i.ytimg.com/vi/${videoId}/sddefault.jpg`
-    // const previewImageFallbackUrl = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`
     const iframeUrl = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&html5=1${
       useSubtitles ? `&cc_lang_pref=${lang}&cc_load_policy=1` : ''
     }`
-
-    return renderVideo(previewImageUrl, Provider.YouTube, iframeUrl)
+    return renderVideo(Provider.YouTube, iframeUrl)
   }
 
   function renderVimeo(id: string) {
     const iframeUrl = `https://player.vimeo.com/video/${id}?autoplay=1`
-
-    if (vimeoImg === '') return fetchVimeoInfo()
-    return renderVideo(vimeoImg, Provider.Vimeo, iframeUrl)
+    return renderVideo(Provider.Vimeo, iframeUrl)
   }
 
-  function fetchVimeoInfo() {
-    void fetch(
-      'https://vimeo.com/api/oembed.json?url=' + encodeURIComponent(src)
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        setVimeoImg(data.thumbnail_url.replace(/_[0-9|x]+/, ''))
-      })
-    return null
-  }
-
-  function renderVideo(
-    previewImageUrl: string,
-    provider: Provider,
-    iframeUrl?: string
-  ) {
+  function renderVideo(provider: Provider, iframeUrl?: string) {
     return (
-      <PrivacyWrapper
-        type="video"
-        previewImageUrl={previewImageUrl}
-        provider={provider}
-      >
+      <PrivacyWrapper type="video" provider={provider} embedUrl={iframeUrl}>
         <VideoWrapper className="video">
           {provider === 'wikimedia' && <video controls src={src} />}
           {(provider === 'youtube' || provider === 'vimeo') && (
