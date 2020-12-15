@@ -57,7 +57,7 @@ test('useGraphqlSwr', async () => {
   })
 })
 
-async function useGraphqlSwrWithMockedAuth<T>(
+async function useGraphqlSwrWithMockedAuth(
   args: Parameters<typeof useGraphqlSwr>[0]
 ) {
   const authHook = renderHook(() => {

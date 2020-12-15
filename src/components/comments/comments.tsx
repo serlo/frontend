@@ -66,6 +66,7 @@ const query = gql`
                 archived
                 createdAt
                 author {
+                  username
                   alias
                   id
                   activeAuthor
@@ -105,9 +106,7 @@ function createComment(node: CommentApiType): CommentData {
     text: node.content,
     user: {
       ...node.author,
-      username: node.author.alias.substring(
-        node.author.alias.lastIndexOf('/') + 1
-      ),
+      username: node.author.username,
     },
   }
 }
@@ -329,7 +328,7 @@ const ThreadWrapper = styled.div`
 `
 
 const ShowArchivedButton = styled.button`
-  ${makeLightButton}
+  ${makeLightButton};
   margin-top: 16px;
 `
 
