@@ -21,7 +21,7 @@ module.exports = {
   rules: {
     // eslint
     'no-duplicate-imports': 'error',
-    'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    'no-unused-vars': 'off',
 
     // @typescript-eslint/eslint-plugin
     '@typescript-eslint/ban-ts-comment': 'warn',
