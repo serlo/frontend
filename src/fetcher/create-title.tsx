@@ -2,15 +2,16 @@ import {
   QueryResponseNoRevision,
   QueryResponse,
   QueryResponseRevision,
+  Instance,
 } from './query'
 import {
   getServerSideStrings,
   getInstanceDataByLang,
 } from '@/helper/feature-i18n'
 
-export function createTitle(uuid: QueryResponse): string {
-  const instanceData = getServerSideStrings(uuid.instance)
-  const { strings } = getInstanceDataByLang(uuid.instance)
+export function createTitle(uuid: QueryResponse, instance: Instance): string {
+  const instanceData = getServerSideStrings(instance)
+  const { strings } = getInstanceDataByLang(instance)
   const suffix = ` - ${instanceData.title}`
 
   if (isRevision(uuid)) {

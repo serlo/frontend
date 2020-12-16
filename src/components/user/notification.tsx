@@ -18,12 +18,12 @@ import {
   SetThreadStateNotificationEvent,
   SetUuidStateNotificationEvent,
   TaxonomyTerm,
-  User,
 } from '@serlo/api'
 import Tippy from '@tippyjs/react'
 import React from 'react'
 import styled, { css } from 'styled-components'
 
+import { UserLink } from './user-link'
 import { TimeAgo } from '@/components/time-ago'
 import { useInstanceData } from '@/contexts/instance-context'
 import { LoggedInData } from '@/data-types'
@@ -83,50 +83,18 @@ export function Notification({
   )
 
   function renderMuteButton() {
-    const subscriptionId = getSubscriptionId()
-    return subscriptionId !== undefined ? (
+    return (
       <Tippy
         duration={[300, 250]}
         animation="fade"
         placement="bottom"
         content={<Tooltip>{loggedInStrings.hide}</Tooltip>}
       >
-        <MuteButton href={`/unsubscribe/${subscriptionId.toString()}`}>
+        <MuteButton href={`/unsubscribe/${event.objectId.toString()}`}>
           <FontAwesomeIcon icon={faVolumeMute} />
         </MuteButton>
       </Tippy>
-    ) : null
-  }
-
-  function getSubscriptionId() {
-    switch (event.__typename) {
-      case 'SetThreadStateNotificationEvent':
-      case 'CreateThreadNotificationEvent':
-      case 'CreateCommentNotificationEvent':
-        return event.thread.id
-
-      //TODO: Check if Subscription is linked to the child
-      case 'CreateEntityLinkNotificationEvent':
-      case 'RemoveEntityLinkNotificationEvent':
-      case 'CreateTaxonomyLinkNotificationEvent':
-      case 'RemoveTaxonomyLinkNotificationEvent':
-        return event.child.id
-
-      case 'CreateEntityNotificationEvent':
-      case 'CreateEntityRevisionNotificationEvent':
-        return event.entity.id
-
-      case 'SetLicenseNotificationEvent':
-      case 'CheckoutRevisionNotificationEvent':
-      case 'RejectRevisionNotificationEvent':
-        return event.repository.id
-
-      case 'SetUuidStateNotificationEvent':
-        return event.object.id
-
-      default:
-        return undefined
-    }
+    )
   }
 
   function parseString(
@@ -134,7 +102,7 @@ export function Notification({
     replaceables: { [key: string]: JSX.Element | string }
   ) {
     const parts = string.split('%')
-    const actor = renderUser(event.actor)
+    const actor = <UserLink user={event.actor} />
     const keys = Object.keys(replaceables)
 
     return parts.map((part, index) => {
@@ -150,7 +118,7 @@ export function Notification({
   }
 
   function renderText() {
-    const actor = renderUser(event.actor)
+    const actor = <UserLink user={event.actor} />
 
     switch (event.__typename) {
       case 'SetThreadStateNotificationEvent':
@@ -280,12 +248,6 @@ export function Notification({
     ) {
       return <Content>{event.reason}</Content>
     }
-  }
-
-  function renderUser(user: User) {
-    return (
-      <StyledLink href={`/user/profile/${user.id}`}>{user.username}</StyledLink>
-    )
   }
 
   function renderObject(object: {

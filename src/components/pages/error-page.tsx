@@ -10,23 +10,7 @@ import { StyledP } from '@/components/tags/styled-p'
 import { useInstanceData } from '@/contexts/instance-context'
 import { ErrorData } from '@/data-types'
 import { makePrimaryButton } from '@/helper/css'
-
-export interface SentryGlobal {
-  Sentry?: {
-    addBreadcrumb: (arg0: {
-      type?: string
-      category?: string
-      message?: string
-      level?: string
-      timestamp?: string
-      data?: unknown
-    }) => void
-    captureException: (arg0: Error) => void
-    Severity?: {
-      Info: string
-    }
-  }
-}
+import { SentryGlobal } from '@/pages/_app'
 
 export function ErrorPage({ code, message }: ErrorData) {
   const [path, setPath] = React.useState('')
@@ -37,13 +21,13 @@ export function ErrorPage({ code, message }: ErrorData) {
     console.log(message)
 
     if (process.env.NEXT_PUBLIC_SENTRY_DSN !== undefined) {
-      const _window = (window as unknown) as Window & SentryGlobal
-      _window.Sentry?.addBreadcrumb({
+      const windowWithSentry = (window as unknown) as Window & SentryGlobal
+      windowWithSentry.Sentry?.addBreadcrumb({
         category: 'error message',
         message,
-        level: _window.Sentry?.Severity?.Info || 'info',
+        level: windowWithSentry.Sentry?.Severity?.Info || 'info',
       })
-      _window.Sentry?.captureException(
+      windowWithSentry.Sentry?.captureException(
         new Error(`${code}: ${message || 'without message'}`)
       )
     }

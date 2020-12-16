@@ -1,8 +1,9 @@
-import { faCheck, faFlag, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import * as React from 'react'
 import styled from 'styled-components'
 
+import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
 import { makeTransparentButton } from '@/helper/css'
 
@@ -14,23 +15,26 @@ export function DropdownMenu({
   eventDate: Date
 }) {
   const { lang, strings } = useInstanceData()
+  const auth = useAuth()
 
   return (
     <DropContent>
-      <DropContentButton>
-        <FontAwesomeIcon icon={faFlag} /> {strings.comments.reportComment}
-      </DropContentButton>
-      {isParent && (
-        <DropContentButton>
-          <FontAwesomeIcon icon={faCheck} /> {strings.comments.archiveThread}
-        </DropContentButton>
+      {auth.current && (
+        <>
+          {isParent && (
+            <DropContentButton>
+              <FontAwesomeIcon icon={faCheck} />{' '}
+              {strings.comments.archiveThread}
+            </DropContentButton>
+          )}
+          <DropContentButton>
+            <FontAwesomeIcon icon={faTrash} />{' '}
+            {isParent
+              ? strings.comments.deleteThread
+              : strings.comments.deleteComment}
+          </DropContentButton>
+        </>
       )}
-      <DropContentButton>
-        <FontAwesomeIcon icon={faTrash} />{' '}
-        {isParent
-          ? strings.comments.deleteThread
-          : strings.comments.deleteComment}
-      </DropContentButton>
       <Time>
         {strings.comments.postedOn} {eventDate.toLocaleString(lang)}
       </Time>
@@ -50,6 +54,8 @@ const DropContent = styled.div`
 const DropContentButton = styled.button`
   ${makeTransparentButton}
   margin-bottom: 0.2rem;
+  font-size: 1rem;
+  font-weight: normal;
 `
 
 const Time = styled.span`

@@ -9,6 +9,10 @@ export const instanceData = {
       search: "தேடுக",
       login: "உள்நுழை"
     },
+    search: {
+      privacy: 'The search is provided by Google. See our %privacypolicy% to find out what information is processed.',
+      agree: 'Agree'
+    },
     footer: {
       summaryHeading: "கற்பதற்கு விக்கிபீடியா போன்றது Serlo.org.",
       summaryText: "நாங்கள் கல்வியை அனைவருக்கும் இலவசமாகக் கிடைக்கச் செய்ய அயராது உழைக்கிறோம்",
@@ -45,8 +49,15 @@ export const instanceData = {
       comment: "கருத்து",
       revision: "மீட்டல்",
       thread: 'Thread',
+      threads: 'Threads',
       topic: 'Topic',
-      subject: 'Subject'
+      subject: 'Subject',
+      userProfile: 'User Profile'
+    },
+    roles: {
+      donor: "Donor",
+      author: 'Author',
+      reviewer: 'Reviewer'
     },
     share: {
       button: "பகிர்க",
@@ -56,7 +67,8 @@ export const instanceData = {
       close: "நெருக்கமான"
     },
     edit: {
-      button: "தொகு"
+      button: "தொகு",
+      unrevised: 'Show unrevised revisions'
     },
     license: {
       readMore: "தகவல்"
@@ -87,11 +99,11 @@ export const instanceData = {
       button: "ஒப்புக்கொள்கிறேன்"
     },
     embed: {
-      part1: 'By clicking on the image or button below you agree that external content from',
-      part2: 'will be loaded. Also personal data may be transferred to this service in accordance with our',
+      text: 'By clicking on the image or button below you agree that external content from %provider% will be loaded. Also personal data may be transferred to this service in accordance with our %privacypolicy%.',
       link: 'Privacy Policy',
       video: 'Play Video',
-      applet: 'Load Applet'
+      applet: 'Load Applet',
+      twingle: 'Load Donation Form'
     },
     notifications: {
       notifications: "அறிவிப்புகள்",
@@ -103,13 +115,16 @@ export const instanceData = {
       commentsOne: "கருத்து",
       commentsMany: "கருத்துகள்",
       submit: "இணைக்க",
-      reportComment: 'Report comment',
       archiveThread: 'Archive thread',
       deleteThread: 'Delete thread',
       deleteComment: 'Delete comment',
       postedOn: 'Posted on',
       placeholder: "Your question or suggestion…",
-      placeholderReply: "உங்கள் பதில்:"
+      placeholderReply: "உங்கள் பதில்:",
+      loading: 'Looking for comments ...',
+      showMoreReply: 'Show one more reply',
+      showMoreReplies: 'Show %number% more replies',
+      showArchived: 'Show archived %threads%'
     },
     revisions: {
       toOverview: "Back to overview",
@@ -136,6 +151,13 @@ export const instanceData = {
     },
     print: {
       warning: 'Important: To make sure all images and formulas print, please scroll down to the end of the page once. Thank you!'
+    },
+    profiles: {
+      aboutMe: 'About me',
+      recentActivities: 'Recent activities',
+      showAllActivities: 'Show all activities',
+      lastSeen: 'Last seen',
+      roles: 'Roles'
     }
   }
 };
@@ -185,6 +207,9 @@ export const loggedInData = {
       url: '/event/history/user/me',
       title: "சமீபத்திய செய்தவை"
     }, {
+      url: '/subscriptions/manage',
+      title: "சந்தாக்கள்"
+    }, {
       url: '/api/auth/logout',
       title: "வெளியேறு"
     }]
@@ -209,7 +234,6 @@ export const loggedInData = {
       convert: 'Convert (beta)',
       history: "வரலாறு",
       editAssignments: "தலைப்பு மற்றும் பாடத்திட்ட பணிகளை உருவாக்கவும்.",
-      flagContent: "கொடி உள்ளடக்கம்",
       moveToTrash: "குப்பைக்கு நகர்த்தவும்",
       restoreContent: 'Restore from trash',
       sort: 'Sort children',
@@ -218,7 +242,8 @@ export const loggedInData = {
       moveToGroupedTextExercise: 'Move content to other grouped-text-exercise',
       moveToTextExercise: 'Move content to other text-exercise',
       sortEntities: 'Sort content',
-      newEntity: 'New Entity'
+      newEntity: 'New Entity',
+      editProfile: 'Edit profile'
     },
     notifications: {
       loadMore: "Load more",

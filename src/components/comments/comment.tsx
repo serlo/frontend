@@ -15,7 +15,7 @@ interface Comment {
   user: User
   body: string
   children?: Comment[]
-  timestamp: number
+  timestamp: string
   entity?: Entity
 }
 
@@ -59,5 +59,7 @@ const Wrapper = styled.div<{ isParent?: boolean }>`
 
   > p {
     margin-bottom: 0;
+    white-space: pre-line;
+    padding-left: 8px;
   }
 `

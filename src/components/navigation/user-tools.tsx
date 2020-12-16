@@ -1,4 +1,5 @@
 import {
+  faClock,
   faPencilAlt,
   faShareAlt,
   faTools,
@@ -27,13 +28,20 @@ interface UserToolsProps {
   onShare?: () => void
   hideEdit: boolean
   data: AuthorToolsData
+  unrevisedRevision?: number
 }
 
 export interface UserToolsData {
   editHref: string
 }
 
-export function UserTools({ id, onShare, hideEdit, data }: UserToolsProps) {
+export function UserTools({
+  id,
+  onShare,
+  hideEdit,
+  data,
+  unrevisedRevision,
+}: UserToolsProps) {
   const { strings } = useInstanceData()
   const auth = useAuth()
   const [loaded, setLoaded] = React.useState(false)
@@ -41,42 +49,92 @@ export function UserTools({ id, onShare, hideEdit, data }: UserToolsProps) {
     setLoaded(true)
   }, [])
   const loggedInData = useLoggedInData()
+  const showHistory = unrevisedRevision !== undefined && unrevisedRevision > 0
 
-  const editHref =
-    data.type == 'Page'
-      ? `/page/revision/create/${data.id}/${data.revisionId || ''}`
-      : data.type == 'Taxonomy'
-      ? `/taxonomy/term/update/${id}`
-      : `/entity/repository/add-revision/${id}`
+  if (data.type === 'Profile') return renderProfileMenu()
 
   return (
     <AbsoluteWrapper>
       <BoxWrapper>
         {(!hideEdit || (loaded && auth.current)) && (
-          <IconButton href={editHref}>
-            <FontAwesomeIcon icon={faPencilAlt} size="1x" />{' '}
-            {strings.edit.button}
-          </IconButton>
+          <>
+            {renderEdit()}
+            {renderUnrevised()}
+          </>
         )}
-        <IconButton onClick={onShare} as="button">
-          <FontAwesomeIcon icon={faShareAlt} size="1x" /> {strings.share.button}
-          !
-        </IconButton>
-        {loaded && auth.current && loggedInData && data && (
-          <Tippy
-            interactive
-            content={<AuthorToolsHoverMenu data={data} />}
-            placement="left-end"
-          >
-            <IconButton as="button">
-              <FontAwesomeIcon icon={faTools} size="1x" />{' '}
-              {loggedInData.strings.tools}
-            </IconButton>
-          </Tippy>
-        )}
+        {renderShare()}
+        {renderTools()}
       </BoxWrapper>
     </AbsoluteWrapper>
   )
+
+  function renderEdit() {
+    const editHref =
+      data.type == 'Page'
+        ? `/page/revision/create/${data.id}/${data.revisionId || ''}`
+        : data.type == 'Taxonomy'
+        ? `/taxonomy/term/update/${id}`
+        : `/entity/repository/add-revision/${id}`
+
+    return (
+      !showHistory && (
+        <IconButton href={editHref}>
+          <FontAwesomeIcon icon={faPencilAlt} size="1x" /> {strings.edit.button}
+        </IconButton>
+      )
+    )
+  }
+
+  function renderUnrevised() {
+    return (
+      showHistory && (
+        <IconButton href={`/entity/repository/history/${id}`}>
+          <FontAwesomeIcon icon={faClock} size="1x" />{' '}
+          {`${strings.edit.unrevised} (${unrevisedRevision || ''})`}
+        </IconButton>
+      )
+    )
+  }
+
+  function renderShare() {
+    return (
+      <IconButton onClick={onShare} as="button">
+        <FontAwesomeIcon icon={faShareAlt} size="1x" /> {strings.share.button}!
+      </IconButton>
+    )
+  }
+
+  function renderTools() {
+    if (!(loaded && auth.current && loggedInData && data)) return null
+    return (
+      <Tippy
+        interactive
+        content={<AuthorToolsHoverMenu data={data} />}
+        placement="left-end"
+        delay={[0, 300]}
+        interactiveBorder={40}
+      >
+        <IconButton as="button">
+          <FontAwesomeIcon icon={faTools} size="1x" />{' '}
+          {loggedInData.strings.tools}
+        </IconButton>
+      </Tippy>
+    )
+  }
+
+  function renderProfileMenu() {
+    if (!(loaded && auth.current && loggedInData)) return null
+    return (
+      <AbsoluteWrapper>
+        <BoxWrapper>
+          <IconButton href="/user/settings">
+            <FontAwesomeIcon icon={faPencilAlt} size="1x" />{' '}
+            {loggedInData?.strings.authorMenu.editProfile}
+          </IconButton>
+        </BoxWrapper>
+      </AbsoluteWrapper>
+    )
+  }
 }
 
 const AbsoluteWrapper = styled.nav`

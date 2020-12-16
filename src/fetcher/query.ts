@@ -47,6 +47,9 @@ export interface Article extends EntityWithTaxonomyTerms {
       'title' | 'content' | 'metaTitle' | 'metaDescription'
     >
   >
+  revisions: {
+    totalCount: number
+  }
 }
 
 export interface Video extends EntityWithTaxonomyTerms {
@@ -54,6 +57,9 @@ export interface Video extends EntityWithTaxonomyTerms {
   currentRevision?: GraphQL.Maybe<
     Pick<GraphQL.VideoRevision, 'title' | 'url' | 'content'>
   >
+  revisions: {
+    totalCount: number
+  }
 }
 
 export interface Applet extends EntityWithTaxonomyTerms {
@@ -64,6 +70,9 @@ export interface Applet extends EntityWithTaxonomyTerms {
       'title' | 'content' | 'url' | 'metaTitle' | 'metaDescription'
     >
   >
+  revisions: {
+    totalCount: number
+  }
 }
 
 export interface CoursePage extends Entity {
@@ -71,6 +80,9 @@ export interface CoursePage extends Entity {
   currentRevision?: GraphQL.Maybe<
     Pick<GraphQL.CoursePageRevision, 'content' | 'title'>
   >
+  revisions: {
+    totalCount: number
+  }
   course: {
     id: number
     currentRevision?: GraphQL.Maybe<Pick<GraphQL.CourseRevision, 'title'>>
@@ -90,6 +102,9 @@ export interface BareExercise extends Entity {
   currentRevision?: GraphQL.Maybe<
     Pick<GraphQL.AbstractExerciseRevision, 'content'>
   >
+  revisions: {
+    totalCount: number
+  }
   solution?: {
     id: number
     currentRevision?: GraphQL.Maybe<Pick<GraphQL.SolutionRevision, 'content'>>
@@ -110,6 +125,9 @@ export interface BareExerciseGroup extends Entity {
   currentRevision?: GraphQL.Maybe<
     Pick<GraphQL.ExerciseGroupRevision, 'content'>
   >
+  revisions: {
+    totalCount: number
+  }
   exercises: BareExercise[]
 }
 
@@ -132,6 +150,15 @@ export interface Event extends Repository {
   >
 }
 
+// User profiles
+export interface User extends GraphQL.User {
+  __typename: 'User'
+}
+
+// export interface User extends Repository, GraphQL.User {
+//   __typename: 'User'
+// }
+
 // If a course is encountered, the first page will get loaded
 
 export interface Course extends Repository {
@@ -140,6 +167,9 @@ export interface Course extends Repository {
     alias?: string
   }[]
   currentRevision?: GraphQL.Maybe<Pick<GraphQL.CourseRevision, 'title'>>
+  revisions: {
+    totalCount: number
+  }
 }
 
 export interface TaxonomyTermChild {
@@ -292,6 +322,9 @@ export const dataQuery = gql`
         author {
           id
           username
+          activeAuthor
+          activeDonor
+          activeReviewer
         }
         ... on ArticleRevision {
           ...articleRevision
@@ -429,11 +462,28 @@ export const dataQuery = gql`
         currentRevision {
           ...articleRevision
         }
+        revisions(unrevised: true) {
+          totalCount
+        }
+      }
+
+      ... on User {
+        username
+        trashed
+        date
+        lastLogin
+        description
+        activeReviewer
+        activeAuthor
+        activeDonor
       }
 
       ... on Video {
         currentRevision {
           ...videoRevision
+        }
+        revisions(unrevised: true) {
+          totalCount
         }
       }
 
@@ -441,11 +491,17 @@ export const dataQuery = gql`
         currentRevision {
           ...appletRevision
         }
+        revisions(unrevised: true) {
+          totalCount
+        }
       }
 
       ... on CoursePage {
         currentRevision {
           ...coursePageRevision
+        }
+        revisions(unrevised: true) {
+          totalCount
         }
         course {
           id
@@ -465,13 +521,26 @@ export const dataQuery = gql`
         }
       }
 
-      ... on AbstractExercise {
+      ... on Exercise {
         ...exercise
+        revisions(unrevised: true) {
+          totalCount
+        }
+      }
+
+      ... on GroupedExercise {
+        ...exercise
+        revisions(unrevised: true) {
+          totalCount
+        }
       }
 
       ... on ExerciseGroup {
         currentRevision {
           ...exerciseGroupRevision
+        }
+        revisions(unrevised: true) {
+          totalCount
         }
         exercises {
           ...exercise
@@ -705,12 +774,13 @@ export type QueryResponseNoRevision =
   | Event
   | Course
   | TaxonomyTerm
+  | User
 
 export type QueryResponse = QueryResponseNoRevision | QueryResponseRevision
 
 export const idsQuery = (ids: number[]) => {
   const map = ids.map(
-    (id) => `
+    (id) => gql` 
     uuid${id}: uuid(id:${id}) {
         ... on AbstractEntity {
           alias
@@ -731,7 +801,7 @@ export const idsQuery = (ids: number[]) => {
 }
 
 // Note: This query will soon be removed from the fetcher (cloudflare takes this job)
-export const idQuery = (id: number) => `
+export const idQuery = (id: number) => gql`
   {
     uuid(id:${id}) {
       ... on AbstractEntity {

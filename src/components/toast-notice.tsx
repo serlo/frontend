@@ -4,14 +4,13 @@ import Notification, { notify } from 'react-notify-toast'
 import { useAuth } from '@/auth/use-auth'
 import { theme } from '@/theme'
 
-export function ToastNotifications() {
+export function ToastNotice() {
   const auth = useAuth()
 
   const notifyColor = {
     background: theme.colors.brand,
     text: '#fff',
   }
-  // const queue = notify.createShowQueue()
   const showTime = 2000
 
   React.useEffect(() => {

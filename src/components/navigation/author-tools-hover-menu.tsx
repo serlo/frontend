@@ -1,7 +1,8 @@
-import Tippy from '@tippyjs/react'
+import Tippy, { TippyProps } from '@tippyjs/react'
 import cookie from 'cookie'
 import { gql } from 'graphql-request'
 import { useRouter } from 'next/router'
+import NProgress from 'nprogress'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -10,6 +11,7 @@ import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
 import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useToastNotice } from '@/contexts/toast-notice-context'
 
 export interface AuthorToolsData {
   type: string
@@ -27,9 +29,17 @@ export interface AuthorToolsHoverMenuProps {
   data: AuthorToolsData
 }
 
+const tippyDefaultProps: Partial<TippyProps> = {
+  delay: [0, 270],
+  interactiveBorder: 40,
+  interactive: true,
+  placement: 'left-end',
+}
+
 export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
   const loggedInData = useLoggedInData()
   const instanceData = useInstanceData()
+  const showToastNotice = useToastNotice()
   const [isSubscriped, setSubscriped] = React.useState(false)
 
   const auth = useAuth()
@@ -95,7 +105,6 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
         {abo()}
         {history()}
         {curriculum()}
-        {flag()}
         {log()}
         {trash()}
       </HoverSubList>
@@ -107,19 +116,16 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
       <HoverSubList>
         <Li>
           <Tippy
-            interactive
-            placement="left-end"
+            {...tippyDefaultProps}
             content={
               <HoverSubList>
                 {abo()}
                 {history()}
-
                 {renderLi(
                   `/entity/link/move/link/${data.id}/${data.courseId!}`,
                   loggedInStrings.authorMenu.moveCoursePage
                 )}
 
-                {flag()}
                 {log()}
                 {trash()}
               </HoverSubList>
@@ -135,8 +141,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
 
         <Li>
           <Tippy
-            interactive
-            placement="left-end"
+            {...tippyDefaultProps}
             content={
               <HoverSubList>
                 {abo(data.courseId)}
@@ -149,7 +154,6 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
 
                 {sort(data.courseId)}
                 {curriculum(data.courseId)}
-                {flag(data.courseId)}
                 {log(data.courseId)}
                 {trash(data.courseId)}
               </HoverSubList>
@@ -222,13 +226,11 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
                 : loggedInStrings.authorMenu.moveToTextExercise
             )
           : curriculum()}
-
         {renderLi(
           `/entity/license/update/${data.id}`,
           loggedInStrings.authorMenu.changeLicense
         )}
 
-        {flag()}
         {log()}
         {trash()}
       </HoverSubList>
@@ -247,8 +249,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
     }
     return (
       <Tippy
-        interactive
-        placement="left-end"
+        {...tippyDefaultProps}
         content={
           <HoverSubList>
             {renderLi(
@@ -298,27 +299,28 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
     )
   }
 
-  function flag(id = data.id) {
-    return renderLi(`/flag/add/${id}`, loggedInStrings.authorMenu.flagContent)
-  }
-
   function trash(id = data.id) {
     // todo: use graphql mutation
     if (data.trashed) {
-      return renderLi(
-        `/uuid/restore/${id}`,
-        loggedInStrings.authorMenu.restoreContent
+      return (
+        <Li>
+          <SubButtonStyle
+            as="button"
+            onClick={() => fetchLegacyUrl(`/uuid/restore/${id}`)}
+          >
+            {loggedInStrings.authorMenu.restoreContent}
+          </SubButtonStyle>
+        </Li>
       )
     }
-    const cookies = cookie.parse(
-      typeof window === 'undefined' ? '' : document.cookie
-    )
     return (
       <Li>
-        <form method="post" action={`/uuid/trash/${id}`}>
-          <input type="hidden" name="csrf" value={cookies['CSRF']} />
-          <button>{loggedInStrings.authorMenu.moveToTrash}</button>
-        </form>
+        <SubButtonStyle
+          as="button"
+          onClick={() => fetchLegacyUrl(`/uuid/trash/${id}`, true)}
+        >
+          {loggedInStrings.authorMenu.moveToTrash}
+        </SubButtonStyle>
       </Li>
     )
   }
@@ -346,8 +348,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
       return (
         <Li>
           <Tippy
-            interactive
-            placement="left-end"
+            {...tippyDefaultProps}
             content={
               <HoverSubList>
                 {data.taxonomyFolder && (
@@ -410,10 +411,50 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
       </Li>
     )
   }
+
+  //quick experiment
+  function fetchLegacyUrl(url: string, csrf?: boolean) {
+    NProgress.start()
+
+    const cookies = cookie.parse(
+      typeof window === 'undefined' ? '' : document.cookie
+    )
+
+    const options = csrf
+      ? { method: 'POST', body: JSON.stringify({ csrf: cookies['CSRF'] }) }
+      : {}
+
+    try {
+      void fetch(url, options)
+        .then((res) => {
+          if (res.status === 200) {
+            NProgress.done()
+            showToastNotice('Completed', 'success')
+            setTimeout(() => {
+              window.location.reload()
+            }, 1000)
+          } else {
+            showErrorNotice()
+          }
+        })
+        .catch(() => {
+          showErrorNotice()
+        })
+    } catch (e) {
+      console.log(e)
+      showErrorNotice()
+    }
+
+    function showErrorNotice() {
+      NProgress.done()
+      showToastNotice('Something went wrong… Please try again', 'warning')
+    }
+  }
 }
 
 const HoverSubList = styled(SubList)`
   background-color: ${(props) => props.theme.colors.lightBackground};
+  min-width: 180px;
 `
 
 const Li = styled.li`

@@ -9,6 +9,10 @@ export const instanceData = {
       search: "Suche",
       login: "Anmelden"
     },
+    search: {
+      privacy: "Die Suche wird von Google bereitgestellt. Schau dir unsere %privacypolicy% an, um herauszufinden, welche Informationen verarbeitet werden.",
+      agree: "Zustimmen"
+    },
     footer: {
       summaryHeading: "Serlo.org ist die Wikipedia fürs Lernen.",
       summaryText: "Wir sind eine engagierte Gemeinschaft, die daran arbeitet, hochwertige Bildung weltweit frei verfügbar zu machen.",
@@ -45,8 +49,15 @@ export const instanceData = {
       comment: "Kommentar",
       revision: "Bearbeitung",
       thread: "Diskussion",
+      threads: "Diskussionen",
       topic: "Thema",
-      subject: "Fach"
+      subject: "Fach",
+      userProfile: "Benutzerprofil"
+    },
+    roles: {
+      donor: "Spender*in",
+      author: "Autor*in",
+      reviewer: "Reviewer*in"
     },
     share: {
       button: "Teilen",
@@ -56,7 +67,8 @@ export const instanceData = {
       close: "Schließen"
     },
     edit: {
-      button: "Inhalt überarbeiten"
+      button: "Inhalt überarbeiten",
+      unrevised: "Zeige neue Bearbeitungen"
     },
     license: {
       readMore: "Was bedeutet das?"
@@ -87,11 +99,11 @@ export const instanceData = {
       button: "Verstanden"
     },
     embed: {
-      part1: "Mit einem Klick auf das Bild oder den Button unten stimmst du zu, dass externe Inhalte von",
-      part2: "geladen werden. Dabei können persönliche Daten zu diesem Service übertragen werden – entsprechend unserer",
+      text: "Mit einem Klick auf das Bild oder den Button unten stimmst du zu, dass externe Inhalte von %provider% geladen werden. Dabei können persönliche Daten zu diesem Service übertragen werden – entsprechend unserer %privacypolicy%.",
       link: "Datenschutzerklärung",
       video: "Video abspielen",
-      applet: "Applet laden"
+      applet: "Applet laden",
+      twingle: "Spendenformular laden"
     },
     notifications: {
       notifications: "Benachrichtigungen",
@@ -103,13 +115,16 @@ export const instanceData = {
       commentsOne: "Kommentar",
       commentsMany: "Kommentare",
       submit: "Abschicken",
-      reportComment: "Kommentar melden",
       archiveThread: "Thread archivieren",
       deleteThread: "Thread löschen",
       deleteComment: "Kommentar löschen",
       postedOn: "Gepostet am",
       placeholder: "Deine Frage oder Vorschlag…",
-      placeholderReply: "Deine Antwort…"
+      placeholderReply: "Deine Antwort…",
+      loading: "Kommentare werden geladen…",
+      showMoreReply: "Einen weiteren Kommentar",
+      showMoreReplies: "%number% weitere Kommentare",
+      showArchived: "Archivierte %threads% anzeigen"
     },
     revisions: {
       toOverview: "Zurück zur Übersicht",
@@ -136,6 +151,13 @@ export const instanceData = {
     },
     print: {
       warning: "Wichtig: Damit alle Bilder und Formeln gedruckt werden, scrolle bitte einmal bis zum Ende der Seite. Vielen Dank!"
+    },
+    profiles: {
+      aboutMe: "Über mich",
+      recentActivities: "Aktivitäten",
+      showAllActivities: "Alle Aktivitäten anzeigen",
+      lastSeen: "Zuletzt online",
+      roles: "Rollen"
     }
   }
 };
@@ -185,6 +207,9 @@ export const loggedInData = {
       url: '/event/history/user/me',
       title: "Meine Aktivitäten"
     }, {
+      url: '/subscriptions/manage',
+      title: "Abonnements"
+    }, {
       url: '/api/auth/logout',
       title: "Abmelden"
     }]
@@ -209,7 +234,6 @@ export const loggedInData = {
       convert: "Umwandeln (beta)",
       history: "Bearbeitungsverlauf",
       editAssignments: "Zuweisung zu Themen und Lehrplänen bearbeiten",
-      flagContent: "Inhalt melden",
       moveToTrash: "In den Papierkorb verschieben",
       restoreContent: "Aus dem Papierkorb wiederherstellen",
       sort: "Unterelemente sortieren",
@@ -218,7 +242,8 @@ export const loggedInData = {
       moveToGroupedTextExercise: "Inhalt zu anderer Gruppe verschieben",
       moveToTextExercise: "Inhalt zu anderer Textaufgabe verschieben",
       sortEntities: "Inhalt sortieren",
-      newEntity: "Neuer Inhalt"
+      newEntity: "Neuer Inhalt",
+      editProfile: "Profil bearbeiten"
     },
     notifications: {
       loadMore: "Weitere laden",

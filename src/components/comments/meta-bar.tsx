@@ -1,9 +1,10 @@
-import { faUser, faCaretDown } from '@fortawesome/free-solid-svg-icons'
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Tippy from '@tippyjs/react'
 import * as React from 'react'
 import styled from 'styled-components'
 
+import { UserLink } from '../user/user-link'
 import { DropdownMenu } from './dropdown-menu'
 import { TimeAgo } from '@/components/time-ago'
 import { makeTransparentButton, makeMargin } from '@/helper/css'
@@ -15,15 +16,13 @@ export function MetaBar({
 }: {
   isParent?: boolean
   user: { username: string; id: number }
-  timestamp: number
+  timestamp: string
 }) {
   const eventDate = new Date(timestamp)
 
   return (
     <MetaBarBox>
-      <UserLink href={`https://serlo.org/${user.id}`}>
-        <FontAwesomeIcon icon={faUser} /> {user.username}
-      </UserLink>
+      <StyledUserLink user={user} withIcon />
 
       <Tippy
         interactive
@@ -42,10 +41,13 @@ export function MetaBar({
 const TimeAgoButton = styled.button`
   ${makeTransparentButton}
   color: ${(props) => props.theme.colors.lightblue};
+  font-size: 1rem;
 `
 
-const UserLink = styled.a`
+const StyledUserLink = styled(UserLink)`
   ${makeTransparentButton}
+  font-size: 1.125rem;
+  font-weight: bold;
 `
 
 const MetaBarBox = styled.div`

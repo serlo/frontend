@@ -51,7 +51,7 @@ At the moment, the frontend implements these features:
 
 - **Horizon**. The german version contains a horizon that features selected items.
 
-- **Google Custom Search**. Search with the built-in search input or by visiting the search page: https://frontend.serlo.org/search?q=hypotenuse
+- **Google Programmable Search**. Search with the built-in search input or by visiting the search page: https://frontend.serlo.org/search?q=hypotenuse
 
 - **Login**. You can login to your account with your username (not e-mail) and the password `123456` (currently only available on staging and localhost).
 
@@ -126,9 +126,26 @@ import { useInstanceData } from '@/contexts/instance-context'
 
 export function SerloBird() {
   const { strings } = useInstanceData()
-  render (
-    <h1>{strings.header.slogan}</h1>
+  return <h1>{strings.header.slogan}</h1>
+}
+```
+
+For strings with links for example you can use the `replacePlaceholders` helper with placeholders in this format `%placeholder%`:
+
+```tsx
+import { useInstanceData } from '@/contexts/instance-context'
+import { replacePlaceholders } from '@/helper/replace-placeholders'
+
+function Sentence() {
+  const { strings } = useInstanceData()
+  return (
+    <p>
+      {replacePlaceholders(strings.embed.sentence, {
+        link: <a href="/whereto">{strings.embed.link}</a>,
+      })}
+    </p>
   )
+}
 ```
 
 ## Repository
@@ -527,10 +544,10 @@ export function HelloWorld() {
 You can import a svg directly. They are inlined and usable as component:
 
 ```tsx
-import SerloLogo from '../public/_assets/img/serlo-logo.svg'
+import ParticipateSVG from '@/assets-webkit/img/footer-participate.svg'
 
 export function HelloWorld() {
-  return <SerloLogo />
+  return <ParticipateSVG />
 }
 ```
 

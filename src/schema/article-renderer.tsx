@@ -4,7 +4,6 @@ import { CSSProperties } from 'styled-components'
 
 import { Col } from '../components/content/col'
 import { ExerciseGroup } from '../components/content/exercises/exercise-group'
-import { GeogebraWrapper } from '../components/content/geogebra-wrapper'
 import { ImageLink } from '../components/content/image-link'
 import { ImgCentered } from '../components/content/img-centered'
 import { Important } from '../components/content/important'
@@ -293,9 +292,7 @@ function renderElement(props: RenderElementProps): React.ReactNode {
   if (element.type === 'geogebra') {
     return (
       <Lazy>
-        <GeogebraWrapper>
-          <Geogebra id={element.id} />
-        </GeogebraWrapper>
+        <Geogebra id={element.id} />
       </Lazy>
     )
   }

@@ -9,6 +9,10 @@ export const instanceData = {
       search: "Buscar",
       login: "Ingresar"
     },
+    search: {
+      privacy: 'The search is provided by Google. See our %privacypolicy% to find out what information is processed.',
+      agree: 'Agree'
+    },
     footer: {
       summaryHeading: "Serlo.org es la Wikipedia para el aprendizaje.",
       summaryText: "Somos una comunidad de visionarios que trabajan sin descanso para que todo el mundo tenga acceso gratuito a una educación excelente.",
@@ -45,8 +49,15 @@ export const instanceData = {
       comment: "Comentario",
       revision: "Revisión",
       thread: "Hilo de conversación",
+      threads: 'Threads',
       topic: "Tema",
-      subject: "Asunto"
+      subject: "Asunto",
+      userProfile: 'User Profile'
+    },
+    roles: {
+      donor: "Donor",
+      author: 'Author',
+      reviewer: 'Reviewer'
     },
     share: {
       button: "Compartir",
@@ -56,7 +67,8 @@ export const instanceData = {
       close: "Cerca"
     },
     edit: {
-      button: "Editar"
+      button: "Editar",
+      unrevised: 'Show unrevised revisions'
     },
     license: {
       readMore: "Información"
@@ -87,11 +99,11 @@ export const instanceData = {
       button: "Aceptar"
     },
     embed: {
-      part1: 'By clicking on the image or button below you agree that external content from',
-      part2: 'will be loaded. Also personal data may be transferred to this service in accordance with our',
+      text: 'By clicking on the image or button below you agree that external content from %provider% will be loaded. Also personal data may be transferred to this service in accordance with our %privacypolicy%.',
       link: 'Privacy Policy',
       video: 'Play Video',
-      applet: 'Load Applet'
+      applet: 'Load Applet',
+      twingle: 'Load Donation Form'
     },
     notifications: {
       notifications: "Notificaciones",
@@ -103,13 +115,16 @@ export const instanceData = {
       commentsOne: "Comentario",
       commentsMany: "Comentarios",
       submit: "Enviar",
-      reportComment: "Denunciar comentario",
       archiveThread: "Archivar hilo de la conversación",
       deleteThread: "Eliminar hilo de la conversación",
       deleteComment: "Eliminar comentario",
       postedOn: "Publicado el",
       placeholder: "Tus preguntas o sugerencias...",
-      placeholderReply: "Tu respuesta..."
+      placeholderReply: "Tu respuesta...",
+      loading: 'Looking for comments ...',
+      showMoreReply: 'Show one more reply',
+      showMoreReplies: 'Show %number% more replies',
+      showArchived: 'Show archived %threads%'
     },
     revisions: {
       toOverview: "Volver a Vista general",
@@ -136,6 +151,13 @@ export const instanceData = {
     },
     print: {
       warning: "Importante: Para asegurarse de que todas las imágenes y fórmulas se impriman, por favor, desciende hasta el final de la página una vez. ¡Gracias!"
+    },
+    profiles: {
+      aboutMe: 'About me',
+      recentActivities: "Actividades recientes",
+      showAllActivities: 'Show all activities',
+      lastSeen: "Visto por última vez",
+      roles: 'Roles'
     }
   }
 };
@@ -185,6 +207,9 @@ export const loggedInData = {
       url: '/event/history/user/me',
       title: "Actividades recientes"
     }, {
+      url: '/subscriptions/manage',
+      title: "Subscripciones"
+    }, {
       url: '/api/auth/logout',
       title: "Cerrar sesión"
     }]
@@ -209,7 +234,6 @@ export const loggedInData = {
       convert: "Convertir (beta)",
       history: "Historial",
       editAssignments: "Editar el tema y las asignaciones de currículo",
-      flagContent: "Marcar contenido",
       moveToTrash: "Mover a la papelera",
       restoreContent: "Restaurar de la papelera",
       sort: "Ordenar los niños",
@@ -218,7 +242,8 @@ export const loggedInData = {
       moveToGroupedTextExercise: "Mover contenido a otro grupo de ejercicios de texto",
       moveToTextExercise: "Mover contenido a otro ejercicio de texto",
       sortEntities: "Ordenar contenido",
-      newEntity: "Nueva Entidad"
+      newEntity: "Nueva Entidad",
+      editProfile: "Editar perfil"
     },
     notifications: {
       loadMore: "Cargar más",

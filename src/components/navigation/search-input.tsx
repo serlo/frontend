@@ -1,14 +1,16 @@
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Tippy from '@tippyjs/react'
 import { useRouter } from 'next/router'
 import { lighten } from 'polished'
 import React from 'react'
 import styled, { createGlobalStyle, css } from 'styled-components'
 
-import { inputFontReset } from '../../helper/css'
-import { theme } from '../../theme'
 import SearchIcon from '@/assets-webkit/img/search-icon.svg'
 import { useInstanceData } from '@/contexts/instance-context'
+import { inputFontReset, makeLightButton, makePadding } from '@/helper/css'
+import { replacePlaceholders } from '@/helper/replace-placeholders'
+import { theme } from '@/theme'
 
 interface SearchInputProps {
   onSearchPage?: boolean
@@ -25,6 +27,13 @@ It's a bit hacky, but it's free and works quite well.
 export function SearchInput({ onSearchPage }: SearchInputProps) {
   const [searchLoaded, setSearchLoaded] = React.useState(false)
   const [searchActive, setSearchActive] = React.useState(false)
+  const [consentJustGiven, setConsentJustGiven] = React.useState(false)
+  const consentGiven =
+    typeof window !== 'undefined' &&
+    sessionStorage.GoogleSearchConsent === 'true'
+
+  const searchFormRef = React.useRef<HTMLDivElement>(null)
+
   // const [isSearchPage, setIsSearchPage] = React.useState(false)
   const { lang, strings } = useInstanceData()
   const router = useRouter()
@@ -32,12 +41,16 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
   React.useEffect(() => {
     // note: find a better way to tell search input that it should activate itself
     if (onSearchPage) {
-      // setIsSearchPage(true)
       activateSearch()
     }
     // I only want to run this the first time the page loads
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  React.useEffect(() => {
+    if (consentJustGiven) activateSearch()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [consentJustGiven])
 
   React.useEffect(() => {
     const resultsContainer = document.getElementById('gcs-results')
@@ -53,14 +66,17 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
 
   function activateSearch() {
     if (searchActive) return
+    if (!consentGiven) {
+      searchFormRef.current?.focus()
+      return
+    }
 
     if (!searchLoaded) {
-      // const cx = '016022363195733463411:78jhtkzhbhc'
-      const cx = '017461339636837994840:ifahsiurxu4' //"old version" with better autocomplete
       const gcse = document.createElement('script')
       gcse.type = 'text/javascript'
       gcse.async = true
-      gcse.src = 'https://cse.google.com/cse.js?cx=' + cx
+      gcse.src = 'https://cse.google.com/cse.js?cx=' + getSearchEngineId(lang)
+
       const s = document.getElementsByTagName('script')[0]
       s.parentNode!.insertBefore(gcse, s)
 
@@ -76,6 +92,11 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
       const resultsContainer = document.getElementById('gcs-results')
       setupLinkCatcher(resultsContainer)
     })
+  }
+
+  function giveConsent() {
+    sessionStorage.GoogleSearchConsent = 'true'
+    setConsentJustGiven(true)
   }
 
   function setupLinkCatcher(container: HTMLElement | null) {
@@ -108,41 +129,92 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
     )
   }
 
+  function getSearchEngineId(instance: string) {
+    switch (instance) {
+      case 'de':
+        return '017461339636837994840:ifahsiurxu4'
+      case 'es':
+        return '5bd728bf64beb7e94'
+      case 'fr':
+        return 'b31aebc4f2a4db942'
+      case 'ta':
+        return '65f223ba41d6c4383'
+      case 'hi':
+        return 'd1ded9becf410cea7'
+      case 'en':
+      default:
+        return 'b3d3ba59c482534d2'
+    }
+  }
+
   return (
     <>
-      <SearchForm
-        id="searchform"
-        onClick={activateSearch}
-        onKeyDown={(e) => {
-          if (e.key == 'Enter') {
-            activateSearch()
-          }
-        }}
-        tabIndex={searchActive ? -1 : 0}
+      <Tippy
+        content={renderConsentPop()}
+        trigger="focus click"
+        interactive
+        placement="bottom-end"
       >
-        {!searchActive && (
-          <>
-            <PlaceholderText>{strings.header.search}</PlaceholderText>
-            <PlaceholderButton>
-              {!searchLoaded ? (
-                <PlaceholderIcon />
-              ) : (
-                <LoadingIcon icon={faSpinner} size="1x" spin />
-              )}
-            </PlaceholderButton>
-          </>
-        )}
-        <div
-          className="gcse-searchbox-only"
-          data-autocompletemaxcompletions="7"
-          data-resultsurl="/search"
-          data-enablehistory="true"
-        />
-      </SearchForm>
+        <SearchForm
+          id="searchform"
+          ref={searchFormRef}
+          onClick={activateSearch}
+          onKeyDown={(e) => {
+            if (e.key == 'Enter') {
+              activateSearch()
+            }
+          }}
+          tabIndex={searchActive ? -1 : 0}
+        >
+          {!searchActive && (
+            <>
+              <PlaceholderText>{strings.header.search}</PlaceholderText>
+              <PlaceholderButton>
+                {!searchLoaded ? (
+                  <PlaceholderIcon />
+                ) : (
+                  <LoadingIcon icon={faSpinner} size="1x" spin />
+                )}
+              </PlaceholderButton>
+            </>
+          )}
 
+          <div
+            className="gcse-searchbox-only"
+            data-autocompletemaxcompletions="7"
+            data-resultsurl="/search"
+            data-enablehistory="true"
+          />
+        </SearchForm>
+      </Tippy>
       <AutocompleteStyle />
     </>
   )
+  function renderConsentPop() {
+    if (searchActive || consentGiven) return null
+    return (
+      <ConsentPop>
+        {replacePlaceholders(strings.search.privacy, {
+          privacypolicy: (
+            <a href="/privacy" target="_blank">
+              {strings.embed.link}
+            </a>
+          ),
+        })}
+        <br />
+        <ConsentButton
+          onClick={giveConsent}
+          onKeyDown={(e) => {
+            if (e.key == 'Enter') {
+              giveConsent()
+            }
+          }}
+        >
+          {strings.search.agree}
+        </ConsentButton>
+      </ConsentPop>
+    )
+  }
 }
 
 const height = 40
@@ -305,6 +377,7 @@ const SearchForm = styled.div`
   display: flex;
   transition: background-color 0.4s ease;
   cursor: pointer;
+  outline: none;
 
   &:focus-within {
     background-color: ${(props) =>
@@ -371,5 +444,35 @@ const AutocompleteStyle = createGlobalStyle`
       ${inputFontReset}
       white-space: normal !important;
     }
+  }
+`
+
+//this is overriding the styles of the modal-content only. see doc to change overlay etc.
+
+const ConsentPop = styled.div`
+  background-color: ${(props) => props.theme.colors.brand};
+  color: #fff;
+  width: auto;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px;
+  ${makePadding};
+  padding-top: 12px;
+  padding-bottom: 12px;
+  z-index: 5;
+  width: 88vw;
+  outline: 0;
+
+  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
+    width: 277px;
+  }
+`
+
+const ConsentButton = styled.button`
+  ${makeLightButton}
+  font-size: 1rem;
+  margin-top: 12px;
+  &:hover {
+    background-color: #fff;
+    color: ${(props) => props.theme.colors.brand};
   }
 `

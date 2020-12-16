@@ -20,17 +20,8 @@ interface SingleChoiceProps {
   idBase: string
 }
 
-function shuffleArray(array: EdtrPluginScMcExercise['state']['answers']) {
-  //Durstenfeld shuffle https://stackoverflow.com/a/12646864 probably overkill, but hey it's all about the performance right?
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
-    ;[array[i], array[j]] = [array[j], array[i]]
-  }
-}
-
 export function ScMcExercise({ state, idBase }: ScMcExerciseProps) {
   const answers = state.answers.slice(0)
-  shuffleArray(answers)
 
   if (state.isSingleChoice)
     return <SingleChoice answers={answers} idBase={idBase} />

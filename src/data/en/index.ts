@@ -9,6 +9,10 @@ export const instanceData = {
       search: 'Search',
       login: 'Login'
     },
+    search: {
+      privacy: 'The search is provided by Google. See our %privacypolicy% to find out what information is processed.',
+      agree: 'Agree'
+    },
     footer: {
       summaryHeading: 'Serlo.org is the Wikipedia for learning.',
       summaryText: 'We are a community of visionaries working tirelessly to make great education freely available to everyone.',
@@ -45,8 +49,15 @@ export const instanceData = {
       comment: 'Comment',
       revision: 'Revision',
       thread: 'Thread',
+      threads: 'Threads',
       topic: 'Topic',
-      subject: 'Subject'
+      subject: 'Subject',
+      userProfile: 'User Profile'
+    },
+    roles: {
+      donor: "Donor",
+      author: 'Author',
+      reviewer: 'Reviewer'
     },
     share: {
       button: 'Share',
@@ -56,7 +67,8 @@ export const instanceData = {
       close: 'Close'
     },
     edit: {
-      button: 'Edit'
+      button: 'Edit',
+      unrevised: 'Show unrevised revisions'
     },
     license: {
       readMore: 'Info'
@@ -87,11 +99,11 @@ export const instanceData = {
       button: 'Agree'
     },
     embed: {
-      part1: 'By clicking on the image or button below you agree that external content from',
-      part2: 'will be loaded. Also personal data may be transferred to this service in accordance with our',
+      text: 'By clicking on the image or button below you agree that external content from %provider% will be loaded. Also personal data may be transferred to this service in accordance with our %privacypolicy%.',
       link: 'Privacy Policy',
       video: 'Play Video',
-      applet: 'Load Applet'
+      applet: 'Load Applet',
+      twingle: 'Load Donation Form'
     },
     notifications: {
       notifications: 'Notifications',
@@ -103,13 +115,16 @@ export const instanceData = {
       commentsOne: 'Comment',
       commentsMany: 'Comments',
       submit: 'Submit',
-      reportComment: 'Report comment',
       archiveThread: 'Archive thread',
       deleteThread: 'Delete thread',
       deleteComment: 'Delete comment',
       postedOn: 'Posted on',
       placeholder: "Your question or suggestion…",
-      placeholderReply: "Your answer…"
+      placeholderReply: "Your answer…",
+      loading: 'Looking for comments ...',
+      showMoreReply: 'Show one more reply',
+      showMoreReplies: 'Show %number% more replies',
+      showArchived: 'Show archived %threads%'
     },
     revisions: {
       toOverview: "Back to overview",
@@ -136,6 +151,13 @@ export const instanceData = {
     },
     print: {
       warning: 'Important: To make sure all images and formulas print, please scroll down to the end of the page once. Thank you!'
+    },
+    profiles: {
+      aboutMe: 'About me',
+      recentActivities: 'Recent activities',
+      showAllActivities: 'Show all activities',
+      lastSeen: 'Last seen',
+      roles: 'Roles'
     }
   }
 };
@@ -185,6 +207,9 @@ export const loggedInData = {
       url: '/event/history/user/me',
       title: 'Recent activities'
     }, {
+      url: '/subscriptions/manage',
+      title: 'Subscriptions'
+    }, {
       url: '/api/auth/logout',
       title: 'Log out'
     }]
@@ -209,7 +234,6 @@ export const loggedInData = {
       convert: 'Convert (beta)',
       history: 'History',
       editAssignments: 'Edit topic and curriculum assignments',
-      flagContent: 'Flag content',
       moveToTrash: 'Move to trash',
       restoreContent: 'Restore from trash',
       sort: 'Sort children',
@@ -218,7 +242,8 @@ export const loggedInData = {
       moveToGroupedTextExercise: 'Move content to other grouped-text-exercise',
       moveToTextExercise: 'Move content to other text-exercise',
       sortEntities: 'Sort content',
-      newEntity: 'New Entity'
+      newEntity: 'New Entity',
+      editProfile: 'Edit profile'
     },
     notifications: {
       loadMore: "Load more",

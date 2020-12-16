@@ -1,106 +1,190 @@
-import { faComments, faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
+import {
+  faComments,
+  faQuestionCircle,
+  faSpinner,
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  AbstractUuid,
+  Comment as CommentApiType,
+  Thread as ThreadApiType,
+} from '@serlo/api'
+import { gql, request } from 'graphql-request'
 import React from 'react'
 import styled from 'styled-components'
 
+import { Lazy } from '../content/lazy'
+import { StyledP } from '../tags/styled-p'
 import { Comment } from './comment'
 import { CommentForm } from './comment-form'
-import { Lazy } from '@/components/content/lazy'
+import { endpoint } from '@/api/endpoint'
+import { useAuth } from '@/auth/use-auth'
 import { StyledH2 } from '@/components/tags/styled-h2'
 import { useInstanceData } from '@/contexts/instance-context'
+import { makeLightButton } from '@/helper/css'
+import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 export interface CommentsProps {
   id: number
 }
 
 // PROTOTYPE
-export type CommentsData = Discussion[]
+export type CommentsData = Thread[]
 
-export interface Discussion {
-  status: 'open' | 'closed'
-  upvotes: number
+export interface Thread {
+  status: 'active' | 'trashed' | 'archived'
   id: number
-  entity: {
+  /*entity: {
     title: string
     alias: string
     type: string
-  }
+  }*/
   question: CommentData
   replies: CommentData[]
 }
 
 export interface CommentData {
   id: number
-  timestamp: number
+  timestamp: string
   user: { username: string; id: number }
   text: string
 }
 
+const query = gql`
+  query getComments($id: Int!) {
+    uuid(id: $id) {
+      ... on AbstractUuid {
+        threads {
+          nodes {
+            archived
+            trashed
+            comments {
+              nodes {
+                id
+                trashed
+                content
+                archived
+                createdAt
+                author {
+                  username
+                  alias
+                  id
+                  activeAuthor
+                  activeDonor
+                  activeReviewer
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`
+
+// TODO: rework data structure
+
+function createThread(thread: ThreadApiType): Thread {
+  const question = thread.comments.nodes[0]
+  const replies = thread.comments.nodes.slice(1)
+  return {
+    status: thread.trashed
+      ? 'trashed'
+      : thread.archived
+      ? 'archived'
+      : 'active',
+    id: question.id,
+    question: createComment(question),
+    replies: replies.filter((reply) => !reply.trashed).map(createComment),
+  }
+}
+
+function createComment(node: CommentApiType): CommentData {
+  return {
+    id: node.id,
+    timestamp: node.createdAt,
+    text: node.content,
+    user: {
+      ...node.author,
+      username: node.author.username,
+    },
+  }
+}
+
 export function Comments({ id: _id }: CommentsProps) {
   const [data, setData] = React.useState<CommentsData | null>(null)
+  const [commentCount, setCommentCount] = React.useState(0)
+  const [failure, setFailure] = React.useState<String | null>(null)
+  const [showArchived, setShowArchived] = React.useState<boolean>(false)
+  const [showThreadChildren, setShowThreadChildren] = React.useState<number[]>(
+    []
+  )
   const { strings } = useInstanceData()
+  const auth = useAuth()
 
   React.useEffect(() => {
     // todo: fetch data
-    setData([
-      {
-        status: 'open',
-        upvotes: 2,
-        id: 5555,
-        entity: {
-          title: 'Parabeln',
-          alias: '/1234',
-          type: 'Artikel',
-        },
-        question: {
-          id: 6666,
-          timestamp: 1597314547,
-          user: {
-            username: 'Markus',
-            id: 123,
-          },
-          text: 'hey, Ich habe da so eine Frage',
-        },
-        replies: [
-          {
-            id: 7777,
-            timestamp: 1597314547,
-            user: {
-              username: 'Thomas',
-              id: 124,
-            },
-            text: 'Schieß los',
-          },
-          {
-            id: 7778,
-            timestamp: 1597344547,
-            user: {
-              username: 'Anita',
-              id: 125,
-            },
-            text: 'Ja das stimmt so!',
-          },
-        ],
-      },
-    ])
-  }, [])
+    void (async () => {
+      try {
+        const queryData = await request<{ uuid: AbstractUuid }>(
+          endpoint,
+          query,
+          { id: _id }
+        )
+        if (queryData !== null) {
+          const existingThreads = queryData.uuid.threads.nodes.filter(
+            (node) => !node.trashed
+          )
+          const output = existingThreads.map(createThread)
+          setData(output)
+          setCommentCount(
+            output.reduce((acc, val) => {
+              return acc + val.replies.length + 1
+            }, 0)
+          )
+        }
+      } catch (e: unknown) {
+        console.log(e)
+        setFailure((e as string).toString())
+      }
+    })()
+  }, [_id])
 
-  if (!data) return null
+  function toogleShowArchived() {
+    setShowArchived(!showArchived)
+  }
 
-  /* TODO: calculate amount of comments (+children) or get from server */
-  const commentCount = 1
+  if (failure) {
+    return <StyledP>{failure}</StyledP>
+  }
+
+  if (!data)
+    return (
+      <StyledP>
+        <ColoredIcon>
+          <FontAwesomeIcon icon={faSpinner} spin size="1x" />
+        </ColoredIcon>{' '}
+        {strings.comments.loading}
+      </StyledP>
+    )
+
+  if (!auth.current && commentCount == 0) return null // avoid rendering anything
 
   return (
     <div>
-      <CustomH2>
-        <StyledIcon icon={faQuestionCircle} /> {strings.comments.question}
-      </CustomH2>
+      {auth.current && (
+        <CustomH2>
+          <StyledIcon icon={faQuestionCircle} /> {strings.comments.question}
+        </CustomH2>
+      )}
 
-      <CommentForm
-        placeholder={strings.comments.placeholder}
-        parent_id={123123}
-        // onSendComment={}
-      />
+      {auth.current && (
+        <CommentForm
+          placeholder={strings.comments.placeholder}
+          parent_id={_id}
+          // onSendComment={}
+        />
+      )}
 
       {commentCount > 0 && (
         <>
@@ -112,47 +196,115 @@ export function Comments({ id: _id }: CommentsProps) {
               : strings.comments.commentsMany}
           </CustomH2>
 
-          <Lazy>{data.map(buildDisussion)}</Lazy>
+          <Lazy>
+            {renderThreads('active')}
+            <StyledP>
+              <ShowArchivedButton
+                onClick={toogleShowArchived}
+                onPointerUp={(e) => e.currentTarget.blur()}
+              >
+                {replacePlaceholders(strings.comments.showArchived, {
+                  threads: strings.entities.threads,
+                })}{' '}
+                ▾
+              </ShowArchivedButton>
+            </StyledP>
+            {showArchived && renderThreads('archived')}
+          </Lazy>
         </>
       )}
     </div>
   )
 
-  function buildDisussion(discussion: Discussion) {
-    return (
-      <div>
-        {/* <p>
-          Eine Diskussion zu {discussion.entity.type}{' '}
-          <a href={discussion.entity.alias}>{discussion.entity.title}</a>.
+  function renderThreads(showStatus: Thread['status']) {
+    return data?.map((thread) => {
+      if (thread.status !== showStatus) return null
+      return (
+        <ThreadWrapper key={thread.id}>
+          {/* <p>
+          Eine Diskussion zu {thread.entity.type}{' '}
+          <a href={thread.entity.alias}>{thread.entity.title}</a>.
         </p>
         <p>
-          Status: {discussion.status}, Upvotes: {discussion.upvotes}
+          Status: {thread.status}, Upvotes: {thread.upvotes}
         </p>
         <p>hier Link zu upvoten</p> */}
-        <Comment
-          id={discussion.question.id}
-          timestamp={discussion.question.timestamp}
-          user={discussion.question.user}
-          body={discussion.question.text}
-          isParent
-        />
-        <div>
-          {discussion.replies.map((comment) => (
-            <Comment
-              id={comment.id}
-              key={comment.id}
-              timestamp={comment.timestamp}
-              user={comment.user}
-              body={comment.text}
-            />
-          ))}
-          <CommentForm
-            placeholder={strings.comments.placeholderReply}
-            parent_id={123123}
-            reply
+          <Comment
+            id={thread.question.id}
+            timestamp={thread.question.timestamp}
+            user={thread.question.user}
+            body={thread.question.text}
+            isParent
+            key={thread.question.id}
           />
+          {renderThreadReplies(thread)}
+        </ThreadWrapper>
+      )
+    })
+  }
+
+  function renderThreadReplies(thread: Thread) {
+    const length = thread.replies.length
+
+    //only show first reply by default
+
+    if (length === 0) return renderReplyForm(thread.id)
+
+    if (length === 1)
+      return (
+        <div>
+          {thread.replies.map(renderComment)}
+          {renderReplyForm(thread.id)}
         </div>
+      )
+
+    return showThreadChildren.includes(thread.id) ? (
+      <div>
+        {thread.replies.map(renderComment)}
+        {renderReplyForm(thread.id)}
       </div>
+    ) : (
+      <div>
+        {renderComment(thread.replies[0])}
+        <StyledP>
+          <ShowChildrenButton
+            onClick={() =>
+              setShowThreadChildren([...showThreadChildren, thread.id])
+            }
+          >
+            {length === 2
+              ? strings.comments.showMoreReply
+              : replacePlaceholders(strings.comments.showMoreReplies, {
+                  number: (length - 1).toString(),
+                })}{' '}
+            ▾
+          </ShowChildrenButton>
+        </StyledP>
+      </div>
+    )
+  }
+
+  function renderComment(comment: CommentData) {
+    return (
+      <Comment
+        id={comment.id}
+        key={comment.id}
+        timestamp={comment.timestamp}
+        user={comment.user}
+        body={comment.text}
+      />
+    )
+  }
+
+  function renderReplyForm(threadId: number) {
+    return (
+      auth.current && (
+        <CommentForm
+          placeholder={strings.comments.placeholderReply}
+          parent_id={threadId}
+          reply
+        />
+      )
     )
   }
 }
@@ -165,4 +317,21 @@ const CustomH2 = styled(StyledH2)`
 const StyledIcon = styled(FontAwesomeIcon)`
   color: ${(props) => props.theme.colors.lighterblue};
   font-size: 1.73rem;
+`
+
+const ColoredIcon = styled.span`
+  color: ${(props) => props.theme.colors.brand};
+`
+
+const ThreadWrapper = styled.div`
+  margin-bottom: 45px;
+`
+
+const ShowArchivedButton = styled.button`
+  ${makeLightButton};
+  margin-top: 16px;
+`
+
+const ShowChildrenButton = styled.button`
+  ${makeLightButton}
 `

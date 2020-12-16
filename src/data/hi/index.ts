@@ -1,6 +1,6 @@
 import { headerData, footerData, landingSubjectsData } from './menu-data';
 export const instanceData = {
-  lang: 'en',
+  lang: "hi",
   headerData: headerData,
   footerData: footerData,
   strings: {
@@ -8,6 +8,10 @@ export const instanceData = {
       slogan: "ओपन लर्निंग प्लेटफॉर्म",
       search: "खोजें",
       login: "लॉग इन करें"
+    },
+    search: {
+      privacy: 'The search is provided by Google. See our %privacypolicy% to find out what information is processed.',
+      agree: 'Agree'
     },
     footer: {
       summaryHeading: "Serlo.org सीखने की विकिपीडिया है",
@@ -45,8 +49,15 @@ export const instanceData = {
       comment: "टिप्पणियां",
       revision: "संशोधन",
       thread: "धागा",
+      threads: 'Threads',
       topic: "विषय",
-      subject: "विषय"
+      subject: "विषय",
+      userProfile: 'User Profile'
+    },
+    roles: {
+      donor: "Donor",
+      author: 'Author',
+      reviewer: 'Reviewer'
     },
     share: {
       button: "सांझा करें",
@@ -56,7 +67,8 @@ export const instanceData = {
       close: "बंद करें"
     },
     edit: {
-      button: "संपादित करें"
+      button: "संपादित करें",
+      unrevised: 'Show unrevised revisions'
     },
     license: {
       readMore: "सूचना"
@@ -87,11 +99,11 @@ export const instanceData = {
       button: "सहमत"
     },
     embed: {
-      part1: 'By clicking on the image or button below you agree that external content from',
-      part2: 'will be loaded. Also personal data may be transferred to this service in accordance with our',
+      text: 'By clicking on the image or button below you agree that external content from %provider% will be loaded. Also personal data may be transferred to this service in accordance with our %privacypolicy%.',
       link: 'Privacy Policy',
       video: 'Play Video',
-      applet: 'Load Applet'
+      applet: 'Load Applet',
+      twingle: 'Load Donation Form'
     },
     notifications: {
       notifications: "सूचनाएँ",
@@ -103,13 +115,16 @@ export const instanceData = {
       commentsOne: "टिप्पणी:",
       commentsMany: "टिप्पणियां",
       submit: "जमा करें",
-      reportComment: "टिप्पणी रिपोर्ट करें",
       archiveThread: "आर्काइव थ्रेड",
       deleteThread: "थ्रेड मिटाएं",
       deleteComment: "टिप्पणी हटाएँ",
       postedOn: "इस दिन पोस्ट हुआ",
       placeholder: "आपका प्रश्न या सुझाव",
-      placeholderReply: "आपका उत्तर"
+      placeholderReply: "आपका उत्तर",
+      loading: 'Looking for comments ...',
+      showMoreReply: 'Show one more reply',
+      showMoreReplies: 'Show %number% more replies',
+      showArchived: 'Show archived %threads%'
     },
     revisions: {
       toOverview: "अवलोकन पर वापस जाएं",
@@ -136,6 +151,13 @@ export const instanceData = {
     },
     print: {
       warning: 'Important: To make sure all images and formulas print, please scroll down to the end of the page once. Thank you!'
+    },
+    profiles: {
+      aboutMe: 'About me',
+      recentActivities: 'Recent activities',
+      showAllActivities: 'Show all activities',
+      lastSeen: 'Last seen',
+      roles: 'Roles'
     }
   }
 };
@@ -185,6 +207,9 @@ export const loggedInData = {
       url: '/event/history/user/me',
       title: "हाल की गतिविधि"
     }, {
+      url: '/subscriptions/manage',
+      title: "सब्सक्रिप्शन"
+    }, {
       url: '/api/auth/logout',
       title: "लॉगआउट करें"
     }]
@@ -209,7 +234,6 @@ export const loggedInData = {
       convert: "धर्मांतरित (बीटा)",
       history: "इतिहास",
       editAssignments: "विषय और पाठ्यचर्या असाइनमेंट संपादित करें",
-      flagContent: "सामग्री फ्लैग करें",
       moveToTrash: "रद्दी में डालें",
       restoreContent: "कचरे से पुनर्स्थापित करें",
       sort: "सोर्ट चिल्ड्रन",
@@ -218,7 +242,8 @@ export const loggedInData = {
       moveToGroupedTextExercise: "सामग्री को अन्य समूहीकृत-पाठ-व्यायाम में ले जाएँ",
       moveToTextExercise: "सामग्री को अन्य पाठ-व्यायाम में ले जाएँ",
       sortEntities: "सामग्री को क्रमबद्ध करें",
-      newEntity: "नई इकाई"
+      newEntity: "नई इकाई",
+      editProfile: 'Edit profile'
     },
     notifications: {
       loadMore: "अधिक लोड करें",
