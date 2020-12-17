@@ -112,7 +112,10 @@ function createComment(node: CommentApiType): CommentData {
 }
 
 export function Comments({ id: _id }: CommentsProps) {
-  const [data, setData] = React.useState<CommentsData | null>(null)
+  const [data, setData] = React.useState<{
+    active: CommentsData
+    archived: CommentsData
+  } | null>(null)
   const [commentCount, setCommentCount] = React.useState(0)
   const [failure, setFailure] = React.useState<String | null>(null)
   const [showArchived, setShowArchived] = React.useState<boolean>(false)
@@ -132,13 +135,21 @@ export function Comments({ id: _id }: CommentsProps) {
           { id: _id }
         )
         if (queryData !== null) {
-          const existingThreads = queryData.uuid.threads.nodes.filter(
-            (node) => !node.trashed
+          const existingThreads = queryData.uuid.threads.nodes
+            .filter((node) => !node.trashed)
+            .map(createThread)
+
+          const activeThreads = existingThreads.filter(
+            (thread) => thread.status === 'active'
           )
-          const output = existingThreads.map(createThread)
-          setData(output)
+          const archivedThreads = existingThreads.filter(
+            (thread) => thread.status === 'archived'
+          )
+
+          setData({ active: activeThreads, archived: archivedThreads })
+
           setCommentCount(
-            output.reduce((acc, val) => {
+            existingThreads.reduce((acc, val) => {
               return acc + val.replies.length + 1
             }, 0)
           )
@@ -197,28 +208,16 @@ export function Comments({ id: _id }: CommentsProps) {
           </CustomH2>
 
           <Lazy>
-            {renderThreads('active')}
-            <StyledP>
-              <ShowArchivedButton
-                onClick={toogleShowArchived}
-                onPointerUp={(e) => e.currentTarget.blur()}
-              >
-                {replacePlaceholders(strings.comments.showArchived, {
-                  threads: strings.entities.threads,
-                })}{' '}
-                ▾
-              </ShowArchivedButton>
-            </StyledP>
-            {showArchived && renderThreads('archived')}
+            {renderThreads(data.active)}
+            {renderArchive()}
           </Lazy>
         </>
       )}
     </div>
   )
 
-  function renderThreads(showStatus: Thread['status']) {
-    return data?.map((thread) => {
-      if (thread.status !== showStatus) return null
+  function renderThreads(threads: CommentsData) {
+    return threads?.map((thread) => {
       return (
         <ThreadWrapper key={thread.id}>
           {/* <p>
@@ -305,6 +304,26 @@ export function Comments({ id: _id }: CommentsProps) {
           reply
         />
       )
+    )
+  }
+
+  function renderArchive() {
+    if (!data || data.archived.length === 0) return null
+    return (
+      <>
+        <StyledP>
+          <ShowArchivedButton
+            onClick={toogleShowArchived}
+            onPointerUp={(e) => e.currentTarget.blur()}
+          >
+            {replacePlaceholders(strings.comments.showArchived, {
+              threads: strings.entities.threads,
+            })}{' '}
+            ▾
+          </ShowArchivedButton>
+        </StyledP>
+        {showArchived && renderThreads(data.archived)}
+      </>
     )
   }
 }
