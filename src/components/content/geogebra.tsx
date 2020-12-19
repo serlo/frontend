@@ -9,19 +9,11 @@ export interface GeogebraProps {
 
 export function Geogebra({ id }: GeogebraProps) {
   const appletId = id.replace('https://www.geogebra.org/m/', '')
-
+  const url = 'https://www.geogebra.org/material/iframe/id/' + appletId
   return (
-    <PrivacyWrapper
-      type="applet"
-      previewImageUrl="/_assets/img/blank-preview-image.png"
-      provider={Provider.GeoGebra}
-    >
+    <PrivacyWrapper type="applet" provider={Provider.GeoGebra} embedUrl={url}>
       <GeogebraContainer>
-        <GeogebraFrame
-          title={appletId}
-          scrolling="no"
-          src={'https://www.geogebra.org/material/iframe/id/' + appletId}
-        />
+        <GeogebraFrame title={appletId} scrolling="no" src={url} />
       </GeogebraContainer>
     </PrivacyWrapper>
   )

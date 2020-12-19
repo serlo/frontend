@@ -73,7 +73,6 @@ export function Donations() {
             type="twingle"
             provider={Provider.Twingle}
             twingleCallback={loadTwingle}
-            previewImageUrl="/_assets/img/blank-preview-image.png"
           >
             <div id={`twingle-public-embed-${twingleID}`} />
           </PrivacyWrapper>
