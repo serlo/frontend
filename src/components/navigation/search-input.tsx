@@ -6,6 +6,7 @@ import { lighten } from 'polished'
 import React from 'react'
 import styled, { createGlobalStyle, css } from 'styled-components'
 
+import { StyledA } from '../tags/styled-a'
 import SearchIcon from '@/assets-webkit/img/search-icon.svg'
 import { useInstanceData } from '@/contexts/instance-context'
 import { inputFontReset, makeLightButton, makePadding } from '@/helper/css'
@@ -196,9 +197,9 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
       <ConsentPop>
         {replacePlaceholders(strings.search.privacy, {
           privacypolicy: (
-            <a href="/privacy" target="_blank">
+            <_StyledA href="/privacy" target="_blank">
               {strings.embed.link}
-            </a>
+            </_StyledA>
           ),
         })}
         <br />
@@ -469,10 +470,22 @@ const ConsentPop = styled.div`
 
 const ConsentButton = styled.button`
   ${makeLightButton}
+  background-color: #fff;
   font-size: 1rem;
   margin-top: 12px;
   &:hover {
-    background-color: #fff;
+    background-color: ${(props) =>
+      lighten(0.15, props.theme.colors.lighterblue)};
     color: ${(props) => props.theme.colors.brand};
+  }
+`
+
+const _StyledA = styled(StyledA)`
+  color: #fff;
+  text-decoration: underline;
+  font-weight: bold;
+
+  &:hover {
+    text-decoration: none;
   }
 `

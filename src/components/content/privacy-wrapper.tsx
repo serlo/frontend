@@ -24,7 +24,7 @@ interface PrivacyWrapperProps {
   placeholder?: ReactChild
   type: 'video' | 'applet' | 'twingle'
   provider: Provider
-  previewImageUrl?: string
+  embedUrl?: string
   twingleCallback?: () => void
 }
 
@@ -32,8 +32,8 @@ export function PrivacyWrapper({
   children,
   placeholder,
   type,
-  previewImageUrl,
   provider,
+  embedUrl,
   twingleCallback,
 }: PrivacyWrapperProps) {
   const [showIframe, setShowIframe] = React.useState(false)
@@ -66,13 +66,15 @@ export function PrivacyWrapper({
     const providerLabel = renderProvider(provider)
     if (type === 'twingle' && showIframe) return null
 
+    const previewImageUrl = `https://embed.serlo.org/thumbnail?url=${encodeURIComponent(
+      embedUrl || ''
+    )}`
+
     return (
       <Placeholder>
-        {previewImageUrl && (
-          <PreviewImageWrapper>
-            <PreviewImage src={previewImageUrl} />
-          </PreviewImageWrapper>
-        )}
+        <PreviewImageWrapper>
+          <PreviewImage src={previewImageUrl} />
+        </PreviewImageWrapper>
         <InfoBar>
           {replacePlaceholders(strings.embed.text, {
             provider: <b>{providerLabel}</b>,
