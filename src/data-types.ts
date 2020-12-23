@@ -99,12 +99,17 @@ export type PageData =
   | TaxonomyPage
   | UserPage
   | UserPageRedirect
+  | ExplorePage
 
 // The landing page is custom built and takes i18n strings
 
 export interface LandingPage {
   kind: 'landing'
   landingData: InstanceLandingData
+}
+
+export interface ExplorePage {
+  kind: 'explore'
 }
 
 // Landing pages have a different structure, because they should only load on the landing page

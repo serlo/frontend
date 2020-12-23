@@ -65,6 +65,16 @@ export async function getInitialProps(
     }
   }
 
+  if (alias === '/explore' && instance == 'de') {
+    return {
+      origin,
+      instanceData,
+      pageData: {
+        kind: 'explore',
+      },
+    }
+  }
+
   if (typeof window === 'undefined') {
     if (alias === '/') {
       return {
