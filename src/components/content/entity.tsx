@@ -62,11 +62,10 @@ export function Entity({ data }: EntityProps) {
       {renderCourseNavigation()}
       {data.trashed && renderTrashedNotice()}
       {renderStyledH1()}
-      {renderUserTools({ mobile: true })}
+      {renderUserTools({ aboveContent: true })}
       {data.content && renderContent(data.content)}
       {renderCourseFooter()}
       <HSpace amount={20} />
-      {renderUserTools({ mobile: true })}
       {renderUserTools()}
       {renderShareModal()}
       {data.licenseData && <LicenseNotice data={data.licenseData} />}
@@ -124,11 +123,11 @@ export function Entity({ data }: EntityProps) {
     return renderArticle(value)
   }
 
-  function renderUserTools(setting?: { mobile?: boolean }) {
+  function renderUserTools(setting?: { aboveContent?: boolean }) {
     return (
       <UserTools
         onShare={() => setOpen(true)}
-        mobile={setting?.mobile}
+        aboveContent={setting?.aboveContent}
         id={data.id}
         hideEdit={!data.inviteToEdit}
         unrevisedRevision={data.unrevisedRevisions}

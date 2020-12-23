@@ -53,7 +53,7 @@ export function Topic({ data }: TopicProps) {
           </span>
         )}
       </Headline>
-      {renderUserTools({ mobile: true })}
+      {renderUserTools({ aboveContent: true })}
       <ImageSizer>
         {data.description && renderArticle(data.description)}
       </ImageSizer>
@@ -87,7 +87,6 @@ export function Topic({ data }: TopicProps) {
 
       <Comments id={data.id} />
 
-      {renderUserTools({ mobile: true })}
       {renderUserTools()}
       <ShareModal
         open={open}
@@ -97,7 +96,7 @@ export function Topic({ data }: TopicProps) {
     </>
   )
 
-  function renderUserTools(setting?: { mobile?: boolean }) {
+  function renderUserTools(setting?: { aboveContent?: boolean }) {
     return (
       <UserTools
         onShare={() => setOpen(true)}
@@ -109,7 +108,7 @@ export function Topic({ data }: TopicProps) {
           taxonomyTopic: isTopic,
         }}
         id={data.id}
-        mobile={setting?.mobile}
+        aboveContent={setting?.aboveContent}
       />
     )
   }
