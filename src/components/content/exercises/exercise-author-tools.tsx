@@ -30,7 +30,6 @@ export function ExerciseAuthorTools({ data }: ExerciseAuthorToolsProps) {
       content={<AuthorToolsHoverMenu data={data} />}
     >
       <EditButton>
-        !!!
         <FontAwesomeIcon icon={faTools} />
       </EditButton>
     </Tippy>
@@ -38,20 +37,25 @@ export function ExerciseAuthorTools({ data }: ExerciseAuthorToolsProps) {
 }
 
 const EditButton = styled.a`
-  ${makeTransparentButton}
+  display: none;
 
-  text-align: center;
-  color: ${(props) => props.theme.colors.dark1};
-  background-color: ${(props) => props.theme.colors.lightBackground};
-  font-size: 1rem;
-  line-height: 2rem;
-  width: 2rem;
-  height: 2rem;
-  padding: 0;
-  margin-left: 5px;
+  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
+    display: inline;
+    ${makeTransparentButton}
 
-  &:hover {
-    background-color: ${(props) => props.theme.colors.brand};
-    color: #fff;
+    text-align: center;
+    color: ${(props) => props.theme.colors.dark1};
+    background-color: ${(props) => props.theme.colors.lightBackground};
+    font-size: 1rem;
+    line-height: 2rem;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    margin-left: 5px;
+
+    &:hover {
+      background-color: ${(props) => props.theme.colors.brand};
+      color: #fff;
+    }
   }
 `
