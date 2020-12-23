@@ -25,6 +25,7 @@ const Comments = dynamic<CommentsProps>(() =>
 export function Exercise({ node }: ExerciseProps) {
   const { strings } = useInstanceData()
   const [solutionVisible, setVisible] = React.useState(false)
+  const [randomId] = React.useState(Math.random().toString())
 
   const auth = useAuth()
   const [loaded, setLoaded] = React.useState(false)
@@ -127,9 +128,9 @@ export function Exercise({ node }: ExerciseProps) {
         return (
           <ScMcExercise
             state={state.interactive.state}
-            idBase={`ex-${node.positionOnPage ? node.positionOnPage : ''}-${
-              node.positionInGroup ? node.positionInGroup : ''
-            }-`}
+            idBase={`ex-${
+              node.positionOnPage ? node.positionOnPage : randomId
+            }-${node.positionInGroup ? node.positionInGroup : ''}-`}
           />
         )
       }

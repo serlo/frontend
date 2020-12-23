@@ -3,6 +3,7 @@ import React from 'react'
 import { HSpace } from '../content/h-space'
 import { Injection } from '../content/injection'
 import { Lazy } from '../content/lazy'
+import { SpecialCss } from '../content/special-css'
 import { RelativeContainer } from '../navigation/relative-container'
 import { StyledH1 } from '../tags/styled-h1'
 import { StyledP } from '../tags/styled-p'
@@ -26,7 +27,7 @@ export function Explore() {
   React.useEffect(() => {
     void (async () => {
       const res = await fetch(
-        'https://gist.githubusercontent.com/Entkenntnis/f5e888a4e4ec96510066c5d800232d20/raw/7ed0ad2a6998832ea8c8b90bd820bc508127af90/stems_exercises_23_dez_2020.json'
+        'https://gist.githubusercontent.com/Entkenntnis/f5e888a4e4ec96510066c5d800232d20/raw/91197a0901db631e039db488703ae5d359971686/stems_exercises_23_dez_2020.json'
       )
       const json = await res.json()
       setStems(json)
@@ -37,7 +38,7 @@ export function Explore() {
     console.log('search:', query)
     const lower = query.toLowerCase()
     const words = lower
-      .split(/[^a-zäöüß]/)
+      .split(/[^a-zäöüß0-9]/)
       .map((x) => stem(x))
       .filter((x) => x)
     console.log(words)
@@ -68,32 +69,34 @@ export function Explore() {
   return (
     <RelativeContainer>
       <MaxWidthDiv>
-        <HSpace amount={50} />
-        <StyledH1>Entdecke Übungsaufgaben auf Serlo</StyledH1>
-        {stems && (
-          <>
-            <HSpace amount={10} />
-            <StyledP>
-              Suche: <InputField debouncedSearch={debouncedSearch} />
-            </StyledP>
-            <StyledP>
-              <em>{ids.length} Ergebnisse (von 3169)</em>
-            </StyledP>
-            <HSpace amount={30} />
-            <hr />
-            {ids.map((id) => {
-              return (
-                <React.Fragment key={id}>
-                  <Lazy>
-                    <Injection href={`/${id}`} key={id} />
-                  </Lazy>
-                  <hr />
-                </React.Fragment>
-              )
-            })}
-          </>
-        )}
-        {!stems && <StyledP>Suchindex wird geladen ...</StyledP>}
+        <SpecialCss>
+          <HSpace amount={50} />
+          <StyledH1>Entdecke Übungsaufgaben auf Serlo</StyledH1>
+          {stems && (
+            <>
+              <HSpace amount={10} />
+              <StyledP>
+                Suche: <InputField debouncedSearch={debouncedSearch} />
+              </StyledP>
+              <StyledP>
+                <em>{ids.length} Ergebnisse (von 3169)</em>
+              </StyledP>
+              <HSpace amount={30} />
+              <hr />
+              {ids.map((id) => {
+                return (
+                  <React.Fragment key={id}>
+                    <Lazy>
+                      <Injection href={`/${id}`} key={id} />
+                    </Lazy>
+                    <hr />
+                  </React.Fragment>
+                )
+              })}
+            </>
+          )}
+          {!stems && <StyledP>Suchindex wird geladen ...</StyledP>}
+        </SpecialCss>
       </MaxWidthDiv>
     </RelativeContainer>
   )
