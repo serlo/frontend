@@ -1,4 +1,4 @@
-import { faShareAlt, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import dynamic from 'next/dynamic'
 import { Router } from 'next/router'
@@ -11,9 +11,7 @@ import { LicenseNotice } from '@/components/content/license-notice'
 import type { CourseFooterProps } from '@/components/navigation/course-footer'
 import type { CourseNavigationProps } from '@/components/navigation/course-navigation'
 import { ShareModal } from '@/components/navigation/share-modal'
-import { UserToolsMobileButton } from '@/components/navigation/tool-line-button'
 import { UserTools } from '@/components/navigation/user-tools'
-import { UserToolsMobile } from '@/components/navigation/user-tools-mobile'
 import { StyledH1 } from '@/components/tags/styled-h1'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EntityData, FrontendContentNode } from '@/data-types'
@@ -64,11 +62,11 @@ export function Entity({ data }: EntityProps) {
       {renderCourseNavigation()}
       {data.trashed && renderTrashedNotice()}
       {renderStyledH1()}
-      {renderUserToolsMobile()}
+      {renderUserTools({ mobile: true })}
       {data.content && renderContent(data.content)}
       {renderCourseFooter()}
       <HSpace amount={20} />
-      {renderUserToolsMobile()}
+      {renderUserTools({ mobile: true })}
       {renderUserTools()}
       {renderShareModal()}
       {data.licenseData && <LicenseNotice data={data.licenseData} />}
@@ -126,24 +124,11 @@ export function Entity({ data }: EntityProps) {
     return renderArticle(value)
   }
 
-  function renderUserToolsMobile() {
-    return (
-      <UserToolsMobile>
-        <UserToolsMobileButton
-          isOnTop
-          tabIndex={0}
-          onClick={() => setOpen(true)}
-        >
-          <FontAwesomeIcon icon={faShareAlt} size="1x" /> {strings.share.button}
-        </UserToolsMobileButton>
-      </UserToolsMobile>
-    )
-  }
-
-  function renderUserTools() {
+  function renderUserTools(setting?: { mobile?: boolean }) {
     return (
       <UserTools
         onShare={() => setOpen(true)}
+        mobile={setting?.mobile}
         id={data.id}
         hideEdit={!data.inviteToEdit}
         unrevisedRevision={data.unrevisedRevisions}

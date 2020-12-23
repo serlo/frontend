@@ -10,7 +10,11 @@ import dynamic from 'next/dynamic'
 import React from 'react'
 import styled from 'styled-components'
 
-import { makeGreenTransparentButton, inputFontReset } from '../../helper/css'
+import {
+  makeGreenTransparentButton,
+  makeGreenButton,
+  inputFontReset,
+} from '../../helper/css'
 import {
   AuthorToolsHoverMenuProps,
   AuthorToolsData,
@@ -29,6 +33,7 @@ interface UserToolsProps {
   hideEdit: boolean
   data: AuthorToolsData
   unrevisedRevision?: number
+  mobile?: boolean
 }
 
 export interface UserToolsData {
@@ -41,6 +46,7 @@ export function UserTools({
   hideEdit,
   data,
   unrevisedRevision,
+  mobile,
 }: UserToolsProps) {
   const { strings } = useInstanceData()
   const auth = useAuth()
@@ -52,6 +58,8 @@ export function UserTools({
   const showHistory = unrevisedRevision !== undefined && unrevisedRevision > 0
 
   if (data.type === 'Profile') return renderProfileMenu()
+
+  if (mobile) return <UserToolsMobile>{renderShare()}</UserToolsMobile>
 
   return (
     <AbsoluteWrapper>
@@ -158,13 +166,43 @@ const BoxWrapper = styled.div`
 `
 
 const IconButton = styled.a`
-  ${makeGreenTransparentButton}
-  ${inputFontReset}
-  font-weight: bold;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  margin: 4px;
-  svg {
-    margin-right: 2px;
+  @media (max-width: ${(props) => props.theme.breakpoints.lg}) {
+    ${makeGreenButton}
+
+    font-size: 0.9rem;
+    margin: 2px;
+    margin-left: 3px;
+    color: white;
+    background-color: ${(props) => props.theme.colors.brandGreen};
+    padding-top: 3px;
+    padding-bottom: 3px;
+
+    &:hover {
+      color: white;
+      background-color: ${(props) => props.theme.colors.brandGreen};
+    }
+  }
+
+  @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
+    ${makeGreenTransparentButton}
+    ${inputFontReset}
+    padding-top: 4px;
+    padding-bottom: 4px;
+    margin: 4px;
+    svg {
+      margin-right: 2px;
+    }
+  }
+`
+
+export const UserToolsMobile = styled.nav`
+  display: none;
+  @media (max-width: ${(props) => props.theme.breakpoints.lg}) {
+    display: block;
+    margin-right: 16px;
+    margin-top: -35px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: flex-end;
   }
 `

@@ -1,4 +1,4 @@
-import { faShareAlt, faFile } from '@fortawesome/free-solid-svg-icons'
+import { faFile } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import dynamic from 'next/dynamic'
 import React from 'react'
@@ -8,9 +8,7 @@ import { makeMargin } from '../../helper/css'
 import { renderArticle } from '../../schema/article-renderer'
 import { CommentsProps } from '../comments/comments'
 import { ShareModal } from '../navigation/share-modal'
-import { UserToolsMobileButton } from '../navigation/tool-line-button'
 import { UserTools } from '../navigation/user-tools'
-import { UserToolsMobile } from '../navigation/user-tools-mobile'
 import { LicenseNotice } from './license-notice'
 import { Link } from './link'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -55,11 +53,7 @@ export function Topic({ data }: TopicProps) {
           </span>
         )}
       </Headline>
-      <UserToolsMobile>
-        <UserToolsMobileButton isOnTop onClick={() => setOpen(true)}>
-          <FontAwesomeIcon icon={faShareAlt} size="1x" /> {strings.share.button}
-        </UserToolsMobileButton>
-      </UserToolsMobile>
+      {renderUserTools({ mobile: true })}
       <ImageSizer>
         {data.description && renderArticle(data.description)}
       </ImageSizer>
@@ -93,11 +87,18 @@ export function Topic({ data }: TopicProps) {
 
       <Comments id={data.id} />
 
-      <UserToolsMobile>
-        <UserToolsMobileButton onClick={() => setOpen(true)}>
-          <FontAwesomeIcon icon={faShareAlt} size="1x" /> {strings.share.button}
-        </UserToolsMobileButton>
-      </UserToolsMobile>
+      {renderUserTools({ mobile: true })}
+      {renderUserTools()}
+      <ShareModal
+        open={open}
+        onClose={() => setOpen(false)}
+        contentId={data.id}
+      />
+    </>
+  )
+
+  function renderUserTools(setting?: { mobile?: boolean }) {
+    return (
       <UserTools
         onShare={() => setOpen(true)}
         hideEdit
@@ -108,14 +109,10 @@ export function Topic({ data }: TopicProps) {
           taxonomyTopic: isTopic,
         }}
         id={data.id}
+        mobile={setting?.mobile}
       />
-      <ShareModal
-        open={open}
-        onClose={() => setOpen(false)}
-        contentId={data.id}
-      />
-    </>
-  )
+    )
+  }
 
   function getDefaultLicense() {
     for (let i = 0; i < data.exercisesContent.length; i++) {
