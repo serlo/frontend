@@ -106,7 +106,7 @@ const BreadcrumbLink = styled(Link)`
     cursor: default;
   }
 
-  @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
+  @media (max-width: ${(props) => props.theme.breakpointsMax.sm}) {
     display: none;
   }
 
@@ -137,7 +137,7 @@ const BreadcrumbLinkLast = styled(BreadcrumbLink)<{ isTaxonomy: boolean }>`
 
   color: ${(props) => props.theme.colors.brand};
 
-  @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
+  @media (max-width: ${(props) => props.theme.breakpointsMax.sm}) {
     display: inline-flex;
     background: ${(props) =>
       transparentize(0.35, props.theme.colors.lightBlueBackground)};

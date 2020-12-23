@@ -194,7 +194,7 @@ const Wrapper = styled.div`
   &:last-child {
     border-bottom: 0;
   }
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpointsMax.mobile}) {
     flex-direction: column;
   }
 `
@@ -261,7 +261,7 @@ const LinkSection = styled.div<{ full?: boolean }>`
     margin-top: 0;
   }
 
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpointsMax.mobile}) {
     flex-direction: column;
   }
 `

@@ -192,7 +192,7 @@ const Section = styled.section`
 `
 
 const ContactCol = styled.div`
-  @media (max-width: ${(props) => props.theme.breakpoints.md}) {
+  @media (max-width: ${(props) => props.theme.breakpointsMax.md}) {
     border-top: 8px solid ${(props) => props.theme.colors.lightBlueBackground};
     padding-top: 30px;
     margin-top: 45px;

@@ -222,7 +222,7 @@ const Button = styled.a`
   margin-left: 20px;
   display: inline;
 
-  @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
+  @media (max-width: ${(props) => props.theme.breakpointsMax.sm}) {
     ${makeMargin}
     margin-top: 6px;
     display: block;
