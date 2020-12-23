@@ -7,20 +7,20 @@ import styled from 'styled-components'
 import {
   AuthorToolsData,
   AuthorToolsHoverMenuProps,
-} from '../navigation/author-tools-hover-menu'
+} from '../../navigation/author-tools-hover-menu'
 import { makeTransparentButton } from '@/helper/css'
 
-export interface AuthorToolsProps {
+export interface ExerciseAuthorToolsProps {
   data: AuthorToolsData
 }
 
 const AuthorToolsHoverMenu = dynamic<AuthorToolsHoverMenuProps>(() =>
-  import('../navigation/author-tools-hover-menu').then(
+  import('../../navigation/author-tools-hover-menu').then(
     (mod) => mod.AuthorToolsHoverMenu
   )
 )
 
-export function AuthorTools({ data }: AuthorToolsProps) {
+export function ExerciseAuthorTools({ data }: ExerciseAuthorToolsProps) {
   return (
     <Tippy
       interactive
@@ -30,6 +30,7 @@ export function AuthorTools({ data }: AuthorToolsProps) {
       content={<AuthorToolsHoverMenu data={data} />}
     >
       <EditButton>
+        !!!
         <FontAwesomeIcon icon={faTools} />
       </EditButton>
     </Tippy>

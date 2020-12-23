@@ -2,8 +2,8 @@ import dynamic from 'next/dynamic'
 import React from 'react'
 import styled, { css } from 'styled-components'
 
-import { AuthorTools } from '../author-tools'
 import { LicenseNotice } from '../license-notice'
+import { ExerciseAuthorTools } from './exercise-author-tools'
 import { ExerciseNumbering } from './exercise-numbering'
 import { InputExercise } from './input-exercise'
 import { ScMcExercise } from './sc-mc-exercise'
@@ -54,7 +54,7 @@ export function Exercise({ node }: ExerciseProps) {
       <LicenseNotice minimal data={node.solution.license} type="solution" />
     )
     const authorTools = loaded && auth.current && (
-      <AuthorTools
+      <ExerciseAuthorTools
         data={{
           type: '_SolutionInline',
           id: node.context.solutionId!,
@@ -148,7 +148,7 @@ export function Exercise({ node }: ExerciseProps) {
           <LicenseNotice minimal data={node.task.license} type="task" />
         )}
         {loaded && auth.current && (
-          <AuthorTools
+          <ExerciseAuthorTools
             data={{ type: '_ExerciseInline', id: node.context.id }}
           />
         )}

@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { AuthorTools } from '../author-tools'
+import { ExerciseAuthorTools } from './exercise-author-tools'
 import { ExerciseNumbering } from './exercise-numbering'
 import { useAuth } from '@/auth/use-auth'
 
@@ -40,7 +40,7 @@ export function ExerciseGroup({
           <IntroWrapper>{groupIntro}</IntroWrapper>
           <div>{license}</div>
           {loaded && auth.current && (
-            <AuthorTools data={{ type: '_ExerciseGroupInline', id }} />
+            <ExerciseAuthorTools data={{ type: '_ExerciseGroupInline', id }} />
           )}
         </TopLine>
       </ExerciseIntro>
