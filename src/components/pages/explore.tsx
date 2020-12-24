@@ -149,7 +149,12 @@ export function Explore() {
           <StyledH1>Entdecke Aufgaben auf Serlo</StyledH1>
           {stems && categories ? (
             <>
-              <InputForm runSearch={setQuery} />
+              <InputForm
+                runSearch={(query: string) => {
+                  setQuery(query)
+                  setLimit(10)
+                }}
+              />
               <StyledP>
                 <em>{ids.length} Ergebnisse (von 3169)</em>
               </StyledP>
