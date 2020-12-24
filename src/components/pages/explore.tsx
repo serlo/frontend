@@ -10,19 +10,15 @@ import { StyledP } from '../tags/styled-p'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 
 export function Explore() {
-  const [ids, setIds] = React.useState<number[]>([])
   const [stems, setStems] = React.useState<any>({})
+  const [categories, setCategories] = React.useState<any>({})
 
-  const debouncedSearch = React.useCallback(
-    (() => {
-      let timer: number
-      return (query: string) => {
-        clearTimeout(timer)
-        timer = setTimeout(() => runSearch(query), 500)
-      }
-    })(),
-    [stems]
-  )
+  const [choices, setChoices] = React.useState<any>([])
+  const [limit, setLimit] = React.useState(10)
+  const [query, setQuery] = React.useState<string>('')
+
+  //const [index, setIndex] = React.useState<any>({})
+  //const [ids, setIds] = React.useState<number[]>([])
 
   React.useEffect(() => {
     void (async () => {
@@ -30,40 +26,119 @@ export function Explore() {
         'https://gist.githubusercontent.com/Entkenntnis/f5e888a4e4ec96510066c5d800232d20/raw/91197a0901db631e039db488703ae5d359971686/stems_exercises_23_dez_2020.json'
       )
       const json = await res.json()
+      const res2 = await fetch(
+        'https://gist.githubusercontent.com/Entkenntnis/43245321524b433f5c34d42a2cf6c2a0/raw/47aa23106e1142268d58c0f4c8e3ce0789e4fad1/categories_exercises_24_dez_2020.json'
+      )
+      const json2 = await res2.json()
+
       setStems(json)
+      setCategories(json2)
     })()
   }, [])
 
-  function runSearch(query: string) {
-    console.log('search:', query)
-    const lower = query.toLowerCase()
-    const words = lower
-      .split(/[^a-zäöüß0-9]/)
-      .map((x) => stem(x))
-      .filter((x) => x)
-    console.log(words)
-    const candidates = new Set<number>()
-    for (const word of words) {
-      if (stems[word]) {
-        for (const id of stems[word]) {
-          candidates.add(id)
+  let index: any = {
+    subject: {},
+    type: {},
+    age: {},
+  }
+
+  console.log('search:', query)
+  const lower = query.toLowerCase()
+  const words = lower
+    .split(/[^a-zäöüß0-9]/)
+    .map((x) => stem(x))
+    .filter((x) => x)
+  console.log(words)
+
+  let ids = words.map((word) => stems[word] || [])
+
+  if (ids.length > 0) {
+    let results = ids[0].filter((id: number) =>
+      ids.every((arr) => arr.includes(id))
+    )
+
+    for (const id of results) {
+      if (categories[id]) {
+        const { subject, type, age } = categories[id]
+
+        if (!index.subject[subject]) index.subject[subject] = 0
+        if (!index.type[type]) index.type[type] = 0
+        if (!index.age[age]) index.age[age] = 0
+
+        index.subject[subject]++
+        index.type[type]++
+        index.age[age]++
+      }
+    }
+
+    results = results.filter((id: any) => {
+      const cat = categories[id]
+      if (cat) {
+        const hasSubjectChoice = !Object.keys(index.subject).every(
+          (key) => !choices.includes(key)
+        )
+        const hasTypeChoice = !Object.keys(index.type).every(
+          (key) => !choices.includes(key)
+        )
+        const hasAgeChoice = !Object.keys(index.age).every(
+          (key) => !choices.includes(key)
+        )
+
+        if (hasSubjectChoice) {
+          if (!choices.includes(cat.subject)) return false
         }
+
+        if (hasTypeChoice) {
+          if (!choices.includes(cat.type)) return false
+        }
+
+        if (hasAgeChoice) {
+          if (!choices.includes(cat.age)) return false
+        }
+
+        //console.log(noAge)
+        /*if (
+          )
+        ) {
+          // use filter
+          return choices.includes(cat.subject)
+        }
+        if () {
+          // use filter
+          return choices.includes(cat.type)
+        }
+        if () {
+          // use filter
+          console.log('use age')
+          return choices.includes(cat.age)
+        }*/
+        return true
       }
-    }
-    const ranking = []
-    for (const candidate of candidates) {
-      let keep = true
-      for (const word of words) {
-        if (!stems[word] || !stems[word].includes(candidate)) keep = false
-      }
-      if (keep) ranking.push({ id: candidate, score: 10 })
-    }
-    ranking.sort((a, b) => {
-      if (a.score == b.score) return b.id - a.id
-      return b.score - a.score
     })
-    console.log(ranking)
-    setIds(ranking.map((el) => el.id))
+
+    index = {
+      subject: {},
+      type: {},
+      age: {},
+    }
+
+    for (const id of results) {
+      if (categories[id]) {
+        const { subject, type, age } = categories[id]
+
+        if (!index.subject[subject]) index.subject[subject] = 0
+        if (!index.type[type]) index.type[type] = 0
+        if (!index.age[age]) index.age[age] = 0
+
+        index.subject[subject]++
+        index.type[type]++
+        index.age[age]++
+      }
+    }
+
+    console.log(index)
+
+    ids = results
   }
 
   return (
@@ -71,48 +146,167 @@ export function Explore() {
       <MaxWidthDiv>
         <SpecialCss>
           <HSpace amount={50} />
-          <StyledH1>Entdecke Übungsaufgaben auf Serlo</StyledH1>
-          {stems && (
+          <StyledH1>Entdecke Aufgaben auf Serlo</StyledH1>
+          {stems && categories ? (
             <>
-              <HSpace amount={10} />
-              <StyledP>
-                Suche: <InputField debouncedSearch={debouncedSearch} />
-              </StyledP>
+              <InputForm runSearch={setQuery} />
               <StyledP>
                 <em>{ids.length} Ergebnisse (von 3169)</em>
               </StyledP>
-              <HSpace amount={30} />
-              <hr />
-              {ids.map((id) => {
-                return (
-                  <React.Fragment key={id}>
-                    <Lazy>
-                      <Injection href={`/${id}`} key={id} />
-                    </Lazy>
-                    <hr />
-                  </React.Fragment>
-                )
-              })}
+              {choices.length > 0 ? (
+                <>
+                  <StyledP>
+                    Filter:{' '}
+                    {choices.map((choice: any) => (
+                      <>
+                        {choice}{' '}
+                        <span
+                          style={{ color: 'blue', cursor: 'pointer' }}
+                          onClick={() =>
+                            setChoices(choices.filter((c: any) => c != choice))
+                          }
+                        >
+                          [x]
+                        </span>
+                        ,{' '}
+                      </>
+                    ))}
+                  </StyledP>
+                  <HSpace amount={20} />
+                </>
+              ) : (
+                <HSpace amount={40} />
+              )}
+
+              {((index && ids.length > 10) || choices.length > 0) && (
+                <>
+                  <CategorySelector
+                    catIndex={index.subject}
+                    heading="Fächer"
+                    choices={choices}
+                    setChoices={setChoices}
+                  />
+                  <CategorySelector
+                    catIndex={index.type}
+                    heading="Typ"
+                    choices={choices}
+                    setChoices={setChoices}
+                  />
+                  <CategorySelector
+                    catIndex={index.age}
+                    heading="Altersstufe"
+                    choices={choices}
+                    setChoices={setChoices}
+                  />
+                </>
+              )}
+              {ids.slice(0, limit).map((id) => (
+                <React.Fragment key={id}>
+                  <HSpace amount={50} />
+                  <Lazy>
+                    <Injection href={`/${id}`} key={id} />
+                  </Lazy>
+                </React.Fragment>
+              ))}
+              {ids.length > limit && (
+                <StyledP>
+                  <button
+                    onClick={() => {
+                      setLimit(limit + 10)
+                    }}
+                  >
+                    Mehr anzeigen
+                  </button>
+                </StyledP>
+              )}
             </>
+          ) : (
+            <StyledP>Suchindex wird geladen ...</StyledP>
           )}
-          {!stems && <StyledP>Suchindex wird geladen ...</StyledP>}
         </SpecialCss>
       </MaxWidthDiv>
     </RelativeContainer>
   )
 }
 
-function InputField({ debouncedSearch }: { debouncedSearch: any }) {
+function InputForm(props: any) {
   const [query, setQuery] = React.useState('')
 
   return (
-    <input
-      value={query}
-      onChange={(e) => {
-        setQuery(e.target.value)
-        debouncedSearch(e.target.value)
-      }}
-    />
+    <StyledP>
+      Suche:{' '}
+      <input
+        onKeyDown={(e) => {
+          if (e.key == 'Enter') {
+            props.runSearch(query)
+          }
+        }}
+        value={query}
+        onChange={(e) => {
+          setQuery(e.target.value)
+        }}
+      />{' '}
+      <button
+        onClick={() => {
+          props.runSearch(query)
+        }}
+      >
+        Los
+      </button>
+    </StyledP>
+  )
+}
+
+function CategorySelector(props: any) {
+  const { catIndex, heading, choices, setChoices } = props
+
+  if (!catIndex) return null
+
+  const categories = []
+
+  for (const key of Object.keys(catIndex)) {
+    categories.push({ key, count: catIndex[key] })
+  }
+
+  if (categories.length <= 1) return null
+
+  categories.sort((a, b) => b.count - a.count)
+
+  console.log('render', heading, choices)
+
+  return (
+    <>
+      <StyledP>
+        <strong>{heading}</strong>:
+        {categories.map((cat) => (
+          <React.Fragment key={cat.key}>
+            <label>
+              <input
+                type="checkbox"
+                checked={choices.includes(cat.key)}
+                onChange={() => {
+                  if (choices.includes(cat.key)) {
+                    setChoices(choices.filter((c: any) => c != cat.key))
+                  } else {
+                    setChoices([...choices, cat.key])
+                  }
+                }}
+              />
+              {choices.includes(cat.key) ? (
+                <strong>
+                  {cat.key} ({cat.count})
+                </strong>
+              ) : (
+                <>
+                  {cat.key} ({cat.count})
+                </>
+              )}
+            </label>
+            &nbsp;&nbsp;
+          </React.Fragment>
+        ))}
+      </StyledP>
+    </>
   )
 }
 
