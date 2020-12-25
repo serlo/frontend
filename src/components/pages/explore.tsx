@@ -1,48 +1,42 @@
 import React from 'react'
+import styled from 'styled-components'
 
 import { HSpace } from '../content/h-space'
 import { Injection } from '../content/injection'
 import { Lazy } from '../content/lazy'
+import { Link } from '../content/link'
 import { SpecialCss } from '../content/special-css'
 import { RelativeContainer } from '../navigation/relative-container'
 import { StyledH1 } from '../tags/styled-h1'
 import { StyledP } from '../tags/styled-p'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
-import { contextType } from 'react-modal'
-import { Link } from '../content/link'
 
 export function Explore() {
-  const [stems, setStems] = React.useState<any>({})
-  const [categories, setCategories] = React.useState<any>({})
   const [searchIndex, setSearchIndex] = React.useState<any>({})
 
   const ranking = React.useRef<any>([])
+  const counts = React.useRef<any>({ age: {} })
 
   const [choices, setChoices] = React.useState<any>([])
   const [limit, setLimit] = React.useState(10)
   const [query, setQuery] = React.useState<string>('')
   const [counter, setCounter] = React.useState(1)
 
-  //const [index, setIndex] = React.useState<any>({})
-  //const [ids, setIds] = React.useState<number[]>([])
-
   React.useEffect(() => {
     void (async () => {
-      const res = await fetch(
-        'https://gist.githubusercontent.com/Entkenntnis/f5e888a4e4ec96510066c5d800232d20/raw/91197a0901db631e039db488703ae5d359971686/stems_exercises_23_dez_2020.json'
-      )
-      const json = await res.json()
-      const res2 = await fetch(
-        'https://gist.githubusercontent.com/Entkenntnis/43245321524b433f5c34d42a2cf6c2a0/raw/47aa23106e1142268d58c0f4c8e3ce0789e4fad1/categories_exercises_24_dez_2020.json'
-      )
-      const json2 = await res2.json()
       const res3 = await fetch(
-        'https://gist.githubusercontent.com/Entkenntnis/992a2a1f6eda48d6d72753d30a75d1ff/raw/f220734f1353fc0936be5d2d143b2564f4795025/exercise_index_25_dez_2020.json'
+        'https://gist.githubusercontent.com/Entkenntnis/992a2a1f6eda48d6d72753d30a75d1ff/raw/54d0e58fa18aee889f30d909ce16fda8b4ed6b14/exercise_index_25_dez_2020.json'
       )
       const json3 = await res3.json()
 
-      setStems(json)
-      setCategories(json2)
+      json3.lengthCache = {}
+
+      for (const key of Object.keys(json3.tokens)) {
+        json3.lengthCache[key] = Object.keys(json3.tokens[key]).length
+      }
+
+      //console.log(json3)
+
       setSearchIndex(json3)
 
       //console.log(searchIndex)
@@ -58,7 +52,7 @@ export function Explore() {
       .filter((x) => x && !stopwords.includes(x))
     console.log(words)
 
-    const candidates = new Set()
+    const candidates = new Set<any>()
 
     const addFromToken = (token: any) => {
       if (token) {
@@ -70,14 +64,12 @@ export function Explore() {
 
     // collect all possible results
     for (const word of words) {
-      addFromToken(searchIndex.taskTokens[word])
-      addFromToken(searchIndex.solutionTokens[word])
-      addFromToken(searchIndex.taxTokens[word])
+      addFromToken(searchIndex.tokens[word])
     }
 
     let confirmed = true
 
-    if (candidates.size > 1000) {
+    if (candidates.size > 10000) {
       confirmed = confirm(
         'Diese Suche kann etwas länger dauern ... Fortfahren?'
       )
@@ -87,6 +79,14 @@ export function Explore() {
       ranking.current = []
 
       for (const id of candidates) {
+        if (choices.length > 0) {
+          if (
+            !searchIndex.payloads[id].age.some((age: any) =>
+              choices.includes(age)
+            )
+          )
+            continue
+        }
         ranking.current.push({
           id,
           score: score(id, words, searchIndex),
@@ -95,45 +95,21 @@ export function Explore() {
 
       ranking.current.sort((a: any, b: any) => b.score - a.score)
 
-      // TOP 10 combine
-      const top20 = ranking.current.slice(0, 20)
-      const parentsToCombine = new Set()
-      for (const entry of top20) {
-        if (searchIndex.grouped2parent[entry.id]) {
-          const parent = searchIndex.grouped2parent[entry.id]
-          let count = 0
-          for (const entry of top20) {
-            if (searchIndex.grouped2parent[entry.id] == parent) {
-              count++
-            }
-          }
-          if (count >= 3) {
-            parentsToCombine.add(parent)
-          }
+      // count
+      counts.current = { age: {} }
+      for (const entry of ranking.current) {
+        const ages = searchIndex.payloads[entry.id].age
+        for (const age of ages) {
+          if (!counts.current.age[age]) counts.current.age[age] = 0
+          counts.current.age[age]++
         }
       }
-      for (const parent of parentsToCombine) {
-        let firstIndex = 0
-        for (let i = 0; i < ranking.current.length; i++) {
-          if (searchIndex.grouped2parent[ranking.current[i].id] == parent) {
-            firstIndex = i
-            break
-          }
-        }
-        const score = ranking.current[firstIndex].score
-        ranking.current = ranking.current.filter(
-          (x) => searchIndex.grouped2parent[x.id] != parent
-        )
-        ranking.current.splice(firstIndex, 0, { id: parent, score })
-      }
+
+      //console.log(counts.current)
+
       setCounter(counter + 1)
     }
-  }, [query])
-  /*let index: any = {
-    subject: {},
-    type: {},
-    age: {},
-  }*/
+  }, [query, choices])
 
   return (
     <RelativeContainer>
@@ -141,7 +117,7 @@ export function Explore() {
         <SpecialCss>
           <HSpace amount={50} />
           <StyledH1>Entdecke Aufgaben auf Serlo</StyledH1>
-          {stems && categories ? (
+          {searchIndex ? (
             <>
               <InputForm
                 runSearch={(query: string) => {
@@ -154,12 +130,12 @@ export function Explore() {
                 <em>{ranking.current.length} Ergebnisse</em>
               </StyledP>
               {choices.length > 0 ? (
-                <>
+                <FacetDiv>
                   <StyledP>
                     Filter:{' '}
                     {choices.map((choice: any) => (
-                      <>
-                        {choice}{' '}
+                      <React.Fragment key={choice}>
+                        <strong>{choice}</strong>{' '}
                         <span
                           style={{ color: 'blue', cursor: 'pointer' }}
                           onClick={() =>
@@ -169,40 +145,22 @@ export function Explore() {
                           [x]
                         </span>
                         ,{' '}
-                      </>
+                      </React.Fragment>
                     ))}
                   </StyledP>
-                  <HSpace amount={20} />
-                </>
-              ) : (
-                <HSpace amount={40} />
+                </FacetDiv>
+              ) : null}
+              {choices.length == 0 && (
+                <CategorySelector
+                  counts={counts.current.age}
+                  heading="Altersstufe"
+                  choices={choices}
+                  setChoices={setChoices}
+                />
               )}
-
-              {/*((index && ids.length > 10) || choices.length > 0) && (
-                <>
-                  <CategorySelector
-                    catIndex={index.subject}
-                    heading="Fächer"
-                    choices={choices}
-                    setChoices={setChoices}
-                  />
-                  <CategorySelector
-                    catIndex={index.type}
-                    heading="Typ"
-                    choices={choices}
-                    setChoices={setChoices}
-                  />
-                  <CategorySelector
-                    catIndex={index.age}
-                    heading="Altersstufe"
-                    choices={choices}
-                    setChoices={setChoices}
-                  />
-                </>
-              )*/}
               {ranking.current.slice(0, limit).map(({ id, score }: any) => (
                 <React.Fragment key={id}>
-                  <Document id={id} searchIndex={searchIndex} score={score} />
+                  <Document id={id} score={score} />
                 </React.Fragment>
               ))}
               {ranking.current.length > limit && (
@@ -255,24 +213,22 @@ function InputForm(props: any) {
 }
 
 function CategorySelector(props: any) {
-  const { catIndex, heading, choices, setChoices } = props
+  const { counts, heading, choices, setChoices } = props
 
-  if (!catIndex) return null
+  if (!counts) return null
 
   const categories = []
 
-  for (const key of Object.keys(catIndex)) {
-    categories.push({ key, count: catIndex[key] })
+  for (const key of Object.keys(counts)) {
+    categories.push({ key, count: counts[key] })
   }
 
   if (categories.length <= 1) return null
 
   categories.sort((a, b) => b.count - a.count)
 
-  console.log('render', heading, choices)
-
   return (
-    <>
+    <FacetDiv>
       <StyledP>
         <strong>{heading}</strong>:
         {categories.map((cat) => (
@@ -303,36 +259,23 @@ function CategorySelector(props: any) {
           </React.Fragment>
         ))}
       </StyledP>
-    </>
+    </FacetDiv>
   )
 }
 
-function Document({ id, searchIndex, score }: any) {
-  const parentId = searchIndex.grouped2parent[id]
+function Document({ id, score }: any) {
   return (
     <>
       <HSpace amount={60} />
       <p style={{ textAlign: 'right' }}>
         <small>
-          {parentId ? (
-            <>
-              <Link href={`/${id}`}>{id}</Link> - Teilaufgabe von{' '}
-              <Link href={`/${parentId}`}>{parentId}</Link>
-            </>
-          ) : (
-            <>
-              Aufgabe <Link href={`/${id}`}>{id}</Link>
-            </>
-          )}{' '}
-          (Score: {Math.round(score * 100) / 100})
+          Aufgabe <Link href={`/${id}`}>{id}</Link> (Score:{' '}
+          {Math.round(score * 100) / 100})
         </small>
       </p>
       <Lazy>
-        {parentId ? (
-          <Injection href={`/${parentId}`} key={id} extractGrouped={id} />
-        ) : (
-          <Injection href={`/${id}`} key={id} />
-        )}
+        {' '}
+        <Injection href={`/${id}`} key={id} />
       </Lazy>
     </>
   )
@@ -340,18 +283,29 @@ function Document({ id, searchIndex, score }: any) {
 
 function score(id: any, words: string[], searchIndex: any) {
   // task score
-  const weightTask = calculateTFIDF(id, words, searchIndex.taskTokens)
-  const weightSolution = calculateTFIDF(id, words, searchIndex.solutionTokens)
-  const weightTax = calculateTFIDF(id, words, searchIndex.taxTokens)
+  const weight = calculateTFIDF(
+    id,
+    words,
+    searchIndex.tokens,
+    searchIndex.payloads[id].docLength,
+    searchIndex
+  )
 
   //console.log('weights', weightTask, weightSolution, weightTax)
+  const penaltyFactor = searchIndex.payloads[id].solutionMissing ? 0.45 : 1
 
-  return (
-    weightTask * 1.5 + weightSolution + weightTax * 0.7 + Math.log(id) * 0.2
-  )
+  //console.log(id, weight, penaltyFactor)
+
+  return (weight + Math.log(id) * 0.05) * penaltyFactor
 }
 
-function calculateTFIDF(id: any, words: any, tokens: any) {
+function calculateTFIDF(
+  id: any,
+  words: any,
+  tokens: any,
+  length: any,
+  searchIndex: any
+) {
   let score = 0
   let occurCount = 0
   for (const word of words) {
@@ -359,9 +313,14 @@ function calculateTFIDF(id: any, words: any, tokens: any) {
     if (token) {
       if (token[id]) {
         occurCount++
-        const tf = Math.sqrt(token[id])
-        const idf = Math.log(4000 / (Object.keys(token).length + 1)) + 1
-        score += tf * idf
+        const tf = Math.sqrt(Math.min(token[id], 4))
+        const idf =
+          Math.log(4000 / ((searchIndex.lengthCache[word] as number) + 1)) + 1
+        const fieldLength = Math.max(
+          1 / Math.sqrt(Math.max(40, length)),
+          1 / 400
+        )
+        score += tf * idf * fieldLength
         //console.log('idf', idf)
       }
     }
@@ -369,6 +328,12 @@ function calculateTFIDF(id: any, words: any, tokens: any) {
 
   return (occurCount / words.length) * score
 }
+
+const FacetDiv = styled.div`
+  background-color: ${(props) => props.theme.colors.lightBlueBackground};
+  padding-top: 20px;
+  padding-bottom: 1px;
+`
 
 // CISTEM
 
