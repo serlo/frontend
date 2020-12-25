@@ -8,14 +8,20 @@ import { RelativeContainer } from '../navigation/relative-container'
 import { StyledH1 } from '../tags/styled-h1'
 import { StyledP } from '../tags/styled-p'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
+import { contextType } from 'react-modal'
+import { Link } from '../content/link'
 
 export function Explore() {
   const [stems, setStems] = React.useState<any>({})
   const [categories, setCategories] = React.useState<any>({})
+  const [searchIndex, setSearchIndex] = React.useState<any>({})
+
+  const ranking = React.useRef<any>([])
 
   const [choices, setChoices] = React.useState<any>([])
   const [limit, setLimit] = React.useState(10)
   const [query, setQuery] = React.useState<string>('')
+  const [counter, setCounter] = React.useState(1)
 
   //const [index, setIndex] = React.useState<any>({})
   //const [ids, setIds] = React.useState<number[]>([])
@@ -30,116 +36,104 @@ export function Explore() {
         'https://gist.githubusercontent.com/Entkenntnis/43245321524b433f5c34d42a2cf6c2a0/raw/47aa23106e1142268d58c0f4c8e3ce0789e4fad1/categories_exercises_24_dez_2020.json'
       )
       const json2 = await res2.json()
+      const res3 = await fetch(
+        'https://gist.githubusercontent.com/Entkenntnis/992a2a1f6eda48d6d72753d30a75d1ff/raw/f220734f1353fc0936be5d2d143b2564f4795025/exercise_index_25_dez_2020.json'
+      )
+      const json3 = await res3.json()
 
       setStems(json)
       setCategories(json2)
+      setSearchIndex(json3)
+
+      //console.log(searchIndex)
     })()
   }, [])
 
-  let index: any = {
+  React.useEffect(() => {
+    console.log('search:', query)
+    const lower = query.toLowerCase()
+    const words = lower
+      .split(/[^a-zäöüß0-9]/)
+      .map((x) => stem(x))
+      .filter((x) => x && !stopwords.includes(x))
+    console.log(words)
+
+    const candidates = new Set()
+
+    const addFromToken = (token: any) => {
+      if (token) {
+        for (const id of Object.keys(token)) {
+          candidates.add(id)
+        }
+      }
+    }
+
+    // collect all possible results
+    for (const word of words) {
+      addFromToken(searchIndex.taskTokens[word])
+      addFromToken(searchIndex.solutionTokens[word])
+      addFromToken(searchIndex.taxTokens[word])
+    }
+
+    let confirmed = true
+
+    if (candidates.size > 1000) {
+      confirmed = confirm(
+        'Diese Suche kann etwas länger dauern ... Fortfahren?'
+      )
+    }
+
+    if (confirmed) {
+      ranking.current = []
+
+      for (const id of candidates) {
+        ranking.current.push({
+          id,
+          score: score(id, words, searchIndex),
+        })
+      }
+
+      ranking.current.sort((a: any, b: any) => b.score - a.score)
+
+      // TOP 10 combine
+      const top20 = ranking.current.slice(0, 20)
+      const parentsToCombine = new Set()
+      for (const entry of top20) {
+        if (searchIndex.grouped2parent[entry.id]) {
+          const parent = searchIndex.grouped2parent[entry.id]
+          let count = 0
+          for (const entry of top20) {
+            if (searchIndex.grouped2parent[entry.id] == parent) {
+              count++
+            }
+          }
+          if (count >= 3) {
+            parentsToCombine.add(parent)
+          }
+        }
+      }
+      for (const parent of parentsToCombine) {
+        let firstIndex = 0
+        for (let i = 0; i < ranking.current.length; i++) {
+          if (searchIndex.grouped2parent[ranking.current[i].id] == parent) {
+            firstIndex = i
+            break
+          }
+        }
+        const score = ranking.current[firstIndex].score
+        ranking.current = ranking.current.filter(
+          (x) => searchIndex.grouped2parent[x.id] != parent
+        )
+        ranking.current.splice(firstIndex, 0, { id: parent, score })
+      }
+      setCounter(counter + 1)
+    }
+  }, [query])
+  /*let index: any = {
     subject: {},
     type: {},
     age: {},
-  }
-
-  console.log('search:', query)
-  const lower = query.toLowerCase()
-  const words = lower
-    .split(/[^a-zäöüß0-9]/)
-    .map((x) => stem(x))
-    .filter((x) => x)
-  console.log(words)
-
-  let ids = words.map((word) => stems[word] || [])
-
-  if (ids.length > 0) {
-    let results = ids[0].filter((id: number) =>
-      ids.every((arr) => arr.includes(id))
-    )
-
-    for (const id of results) {
-      if (categories[id]) {
-        const { subject, type, age } = categories[id]
-
-        if (!index.subject[subject]) index.subject[subject] = 0
-        if (!index.type[type]) index.type[type] = 0
-        if (!index.age[age]) index.age[age] = 0
-
-        index.subject[subject]++
-        index.type[type]++
-        index.age[age]++
-      }
-    }
-
-    results = results.filter((id: any) => {
-      const cat = categories[id]
-      if (cat) {
-        const hasSubjectChoice = !Object.keys(index.subject).every(
-          (key) => !choices.includes(key)
-        )
-        const hasTypeChoice = !Object.keys(index.type).every(
-          (key) => !choices.includes(key)
-        )
-        const hasAgeChoice = !Object.keys(index.age).every(
-          (key) => !choices.includes(key)
-        )
-
-        if (hasSubjectChoice) {
-          if (!choices.includes(cat.subject)) return false
-        }
-
-        if (hasTypeChoice) {
-          if (!choices.includes(cat.type)) return false
-        }
-
-        if (hasAgeChoice) {
-          if (!choices.includes(cat.age)) return false
-        }
-
-        //console.log(noAge)
-        /*if (
-          )
-        ) {
-          // use filter
-          return choices.includes(cat.subject)
-        }
-        if () {
-          // use filter
-          return choices.includes(cat.type)
-        }
-        if () {
-          // use filter
-          console.log('use age')
-          return choices.includes(cat.age)
-        }*/
-        return true
-      }
-    })
-
-    index = {
-      subject: {},
-      type: {},
-      age: {},
-    }
-
-    for (const id of results) {
-      if (categories[id]) {
-        const { subject, type, age } = categories[id]
-
-        if (!index.subject[subject]) index.subject[subject] = 0
-        if (!index.type[type]) index.type[type] = 0
-        if (!index.age[age]) index.age[age] = 0
-
-        index.subject[subject]++
-        index.type[type]++
-        index.age[age]++
-      }
-    }
-
-    console.log(index)
-
-    ids = results
-  }
+  }*/
 
   return (
     <RelativeContainer>
@@ -151,12 +145,13 @@ export function Explore() {
             <>
               <InputForm
                 runSearch={(query: string) => {
-                  setQuery(query)
                   setLimit(10)
+                  console.log('split')
+                  setQuery(query)
                 }}
               />
               <StyledP>
-                <em>{ids.length} Ergebnisse (von 3169)</em>
+                <em>{ranking.current.length} Ergebnisse</em>
               </StyledP>
               {choices.length > 0 ? (
                 <>
@@ -183,7 +178,7 @@ export function Explore() {
                 <HSpace amount={40} />
               )}
 
-              {((index && ids.length > 10) || choices.length > 0) && (
+              {/*((index && ids.length > 10) || choices.length > 0) && (
                 <>
                   <CategorySelector
                     catIndex={index.subject}
@@ -204,16 +199,13 @@ export function Explore() {
                     setChoices={setChoices}
                   />
                 </>
-              )}
-              {ids.slice(0, limit).map((id) => (
+              )*/}
+              {ranking.current.slice(0, limit).map(({ id, score }: any) => (
                 <React.Fragment key={id}>
-                  <HSpace amount={50} />
-                  <Lazy>
-                    <Injection href={`/${id}`} key={id} />
-                  </Lazy>
+                  <Document id={id} searchIndex={searchIndex} score={score} />
                 </React.Fragment>
               ))}
-              {ids.length > limit && (
+              {ranking.current.length > limit && (
                 <StyledP>
                   <button
                     onClick={() => {
@@ -313,6 +305,69 @@ function CategorySelector(props: any) {
       </StyledP>
     </>
   )
+}
+
+function Document({ id, searchIndex, score }: any) {
+  const parentId = searchIndex.grouped2parent[id]
+  return (
+    <>
+      <HSpace amount={60} />
+      <p style={{ textAlign: 'right' }}>
+        <small>
+          {parentId ? (
+            <>
+              <Link href={`/${id}`}>{id}</Link> - Teilaufgabe von{' '}
+              <Link href={`/${parentId}`}>{parentId}</Link>
+            </>
+          ) : (
+            <>
+              Aufgabe <Link href={`/${id}`}>{id}</Link>
+            </>
+          )}{' '}
+          (Score: {Math.round(score * 100) / 100})
+        </small>
+      </p>
+      <Lazy>
+        {parentId ? (
+          <Injection href={`/${parentId}`} key={id} extractGrouped={id} />
+        ) : (
+          <Injection href={`/${id}`} key={id} />
+        )}
+      </Lazy>
+    </>
+  )
+}
+
+function score(id: any, words: string[], searchIndex: any) {
+  // task score
+  const weightTask = calculateTFIDF(id, words, searchIndex.taskTokens)
+  const weightSolution = calculateTFIDF(id, words, searchIndex.solutionTokens)
+  const weightTax = calculateTFIDF(id, words, searchIndex.taxTokens)
+
+  //console.log('weights', weightTask, weightSolution, weightTax)
+
+  return (
+    weightTask * 1.5 + weightSolution + weightTax * 0.7 + Math.log(id) * 0.2
+  )
+}
+
+function calculateTFIDF(id: any, words: any, tokens: any) {
+  let score = 0
+  let occurCount = 0
+  for (const word of words) {
+    const token = tokens[word]
+    if (token) {
+      if (token[id]) {
+        occurCount++
+        const tf = Math.sqrt(token[id])
+        const idf = Math.log(4000 / (Object.keys(token).length + 1)) + 1
+        score += tf * idf
+        //console.log('idf', idf)
+      }
+    }
+  }
+
+  return (occurCount / words.length) * score
 }
 
 // CISTEM
@@ -420,3 +475,682 @@ function stem(word: string, case_insensitive = false) {
 
   return word
 }
+
+const stopwords = [
+  'ab',
+  'aber',
+  'alle',
+  'allein',
+  'allem',
+  'allen',
+  'aller',
+  'allerdings',
+  'allerlei',
+  'alles',
+  'allmählich',
+  'allzu',
+  'als',
+  'alsbald',
+  'also',
+  'am',
+  'an',
+  'and',
+  'ander',
+  'andere',
+  'anderem',
+  'anderen',
+  'anderer',
+  'andererseits',
+  'anderes',
+  'anderm',
+  'andern',
+  'andernfalls',
+  'anders',
+  'anstatt',
+  'auch',
+  'auf',
+  'aus',
+  'ausgenommen',
+  'ausser',
+  'ausserdem',
+  'außer',
+  'außerdem',
+  'außerhalb',
+  'bald',
+  'bei',
+  'beide',
+  'beiden',
+  'beiderlei',
+  'beides',
+  'beim',
+  'beinahe',
+  'bereits',
+  'besonders',
+  'besser',
+  'beträchtlich',
+  'bevor',
+  'bezüglich',
+  'bin',
+  'bis',
+  'bisher',
+  'bislang',
+  'bist',
+  'bloß',
+  'bsp.',
+  'bzw',
+  'ca',
+  'ca.',
+  'content',
+  'da',
+  'dabei',
+  'dadurch',
+  'dafür',
+  'dagegen',
+  'daher',
+  'dahin',
+  'damals',
+  'damit',
+  'danach',
+  'daneben',
+  'dann',
+  'daran',
+  'darauf',
+  'daraus',
+  'darin',
+  'darum',
+  'darunter',
+  'darüber',
+  'darüberhinaus',
+  'das',
+  'dass',
+  'dasselbe',
+  'davon',
+  'davor',
+  'dazu',
+  'daß',
+  'dein',
+  'deine',
+  'deinem',
+  'deinen',
+  'deiner',
+  'deines',
+  'dem',
+  'demnach',
+  'demselben',
+  'den',
+  'denen',
+  'denn',
+  'dennoch',
+  'denselben',
+  'der',
+  'derart',
+  'derartig',
+  'derem',
+  'deren',
+  'derer',
+  'derjenige',
+  'derjenigen',
+  'derselbe',
+  'derselben',
+  'derzeit',
+  'des',
+  'deshalb',
+  'desselben',
+  'dessen',
+  'desto',
+  'deswegen',
+  'dich',
+  'die',
+  'diejenige',
+  'dies',
+  'diese',
+  'dieselbe',
+  'dieselben',
+  'diesem',
+  'diesen',
+  'dieser',
+  'dieses',
+  'diesseits',
+  'dir',
+  'direkt',
+  'direkte',
+  'direkten',
+  'direkter',
+  'doch',
+  'dort',
+  'dorther',
+  'dorthin',
+  'drauf',
+  'drin',
+  'drunter',
+  'drüber',
+  'du',
+  'dunklen',
+  'durch',
+  'durchaus',
+  'eben',
+  'ebenfalls',
+  'ebenso',
+  'eher',
+  'eigenen',
+  'eigenes',
+  'eigentlich',
+  'ein',
+  'eine',
+  'einem',
+  'einen',
+  'einer',
+  'einerseits',
+  'eines',
+  'einfach',
+  'einführen',
+  'einführte',
+  'einführten',
+  'eingesetzt',
+  'einig',
+  'einige',
+  'einigem',
+  'einigen',
+  'einiger',
+  'einigermaßen',
+  'einiges',
+  'einmal',
+  'eins',
+  'einseitig',
+  'einseitige',
+  'einseitigen',
+  'einseitiger',
+  'einst',
+  'einstmals',
+  'einzig',
+  'entsprechend',
+  'entweder',
+  'er',
+  'erst',
+  'es',
+  'etc',
+  'etliche',
+  'etwa',
+  'etwas',
+  'euch',
+  'euer',
+  'eure',
+  'eurem',
+  'euren',
+  'eurer',
+  'eures',
+  'falls',
+  'fast',
+  'ferner',
+  'folgende',
+  'folgenden',
+  'folgender',
+  'folgendes',
+  'folglich',
+  'fuer',
+  'für',
+  'gab',
+  'ganze',
+  'ganzem',
+  'ganzen',
+  'ganzer',
+  'ganzes',
+  'gar',
+  'gegen',
+  'gemäss',
+  'ggf',
+  'gleich',
+  'gleichwohl',
+  'gleichzeitig',
+  'glücklicherweise',
+  'gänzlich',
+  'hab',
+  'habe',
+  'haben',
+  'haette',
+  'hast',
+  'hat',
+  'hatte',
+  'hatten',
+  'hattest',
+  'hattet',
+  'heraus',
+  'herein',
+  'hier',
+  'hier',
+  'hinter',
+  'hiermit',
+  'hiesige',
+  'hin',
+  'hinein',
+  'hinten',
+  'hinter',
+  'hinterher',
+  'http',
+  'hätt',
+  'hätte',
+  'hätten',
+  'höchstens',
+  'ich',
+  'igitt',
+  'ihm',
+  'ihn',
+  'ihnen',
+  'ihr',
+  'ihre',
+  'ihrem',
+  'ihren',
+  'ihrer',
+  'ihres',
+  'im',
+  'immer',
+  'immerhin',
+  'in',
+  'indem',
+  'indessen',
+  'infolge',
+  'innen',
+  'innerhalb',
+  'ins',
+  'insofern',
+  'inzwischen',
+  'irgend',
+  'irgendeine',
+  'irgendwas',
+  'irgendwen',
+  'irgendwer',
+  'irgendwie',
+  'irgendwo',
+  'ist',
+  'ja',
+  'je',
+  'jed',
+  'jede',
+  'jedem',
+  'jeden',
+  'jedenfalls',
+  'jeder',
+  'jederlei',
+  'jedes',
+  'jedoch',
+  'jemand',
+  'jene',
+  'jenem',
+  'jenen',
+  'jener',
+  'jenes',
+  'jenseits',
+  'jetzt',
+  'jährig',
+  'jährige',
+  'jährigen',
+  'jähriges',
+  'kam',
+  'kann',
+  'kannst',
+  'kaum',
+  'kein',
+  'keine',
+  'keinem',
+  'keinen',
+  'keiner',
+  'keinerlei',
+  'keines',
+  'keineswegs',
+  'klar',
+  'klare',
+  'klaren',
+  'klares',
+  'klein',
+  'kleinen',
+  'kleiner',
+  'kleines',
+  'koennen',
+  'koennt',
+  'koennte',
+  'koennten',
+  'komme',
+  'kommen',
+  'kommt',
+  'konkret',
+  'konkrete',
+  'konkreten',
+  'konkreter',
+  'konkretes',
+  'können',
+  'könnt',
+  'künftig',
+  'leider',
+  'machen',
+  'man',
+  'manche',
+  'manchem',
+  'manchen',
+  'mancher',
+  'mancherorts',
+  'manches',
+  'manchmal',
+  'mehr',
+  'mehrere',
+  'mein',
+  'meine',
+  'meinem',
+  'meinen',
+  'meiner',
+  'meines',
+  'mich',
+  'mir',
+  'mit',
+  'mithin',
+  'muessen',
+  'muesst',
+  'muesste',
+  'muss',
+  'musst',
+  'musste',
+  'mussten',
+  'muß',
+  'mußt',
+  'müssen',
+  'müsste',
+  'müssten',
+  'müßt',
+  'müßte',
+  'nach',
+  'nachdem',
+  'nachher',
+  'nachhinein',
+  'nahm',
+  'natürlich',
+  'neben',
+  'nebenan',
+  'nehmen',
+  'nein',
+  'nicht',
+  'nichts',
+  'nie',
+  'niemals',
+  'niemand',
+  'nirgends',
+  'nirgendwo',
+  'noch',
+  'nun',
+  'nur',
+  'nächste',
+  'nämlich',
+  'nötigenfalls',
+  'ob',
+  'oben',
+  'oberhalb',
+  'obgleich',
+  'obschon',
+  'obwohl',
+  'oder',
+  'oft',
+  'per',
+  'plötzlich',
+  'schließlich',
+  'schon',
+  'sehr',
+  'sehrwohl',
+  'seid',
+  'sein',
+  'seine',
+  'seinem',
+  'seinen',
+  'seiner',
+  'seines',
+  'seit',
+  'seitdem',
+  'seither',
+  'selber',
+  'selbst',
+  'sich',
+  'sicher',
+  'sicherlich',
+  'sie',
+  'sind',
+  'so',
+  'sobald',
+  'sodass',
+  'sodaß',
+  'soeben',
+  'sofern',
+  'sofort',
+  'sogar',
+  'solange',
+  'solch',
+  'solche',
+  'solchem',
+  'solchen',
+  'solcher',
+  'solches',
+  'soll',
+  'sollen',
+  'sollst',
+  'sollt',
+  'sollte',
+  'sollten',
+  'solltest',
+  'somit',
+  'sondern',
+  'sonst',
+  'sonstwo',
+  'sooft',
+  'soviel',
+  'soweit',
+  'sowie',
+  'sowohl',
+  'tatsächlich',
+  'tatsächlichen',
+  'tatsächlicher',
+  'tatsächliches',
+  'trotzdem',
+  'ueber',
+  'um',
+  'umso',
+  'unbedingt',
+  'und',
+  'unmöglich',
+  'unmögliche',
+  'unmöglichen',
+  'unmöglicher',
+  'uns',
+  'unser',
+  'unser',
+  'unsere',
+  'unsere',
+  'unserem',
+  'unseren',
+  'unserer',
+  'unseres',
+  'unter',
+  'usw',
+  'viel',
+  'viele',
+  'vielen',
+  'vieler',
+  'vieles',
+  'vielleicht',
+  'vielmals',
+  'vom',
+  'von',
+  'vor',
+  'voran',
+  'vorher',
+  'vorüber',
+  'völlig',
+  'wann',
+  'war',
+  'waren',
+  'warst',
+  'warum',
+  'was',
+  'weder',
+  'weil',
+  'weiter',
+  'weitere',
+  'weiterem',
+  'weiteren',
+  'weiterer',
+  'weiteres',
+  'weiterhin',
+  'weiß',
+  'welche',
+  'welchem',
+  'welchen',
+  'welcher',
+  'welches',
+  'wem',
+  'wen',
+  'wenig',
+  'wenige',
+  'weniger',
+  'wenigstens',
+  'wenn',
+  'wenngleich',
+  'wer',
+  'werde',
+  'werden',
+  'werdet',
+  'weshalb',
+  'wessen',
+  'wichtig',
+  'wie',
+  'wieder',
+  'wieso',
+  'wieviel',
+  'wiewohl',
+  'will',
+  'willst',
+  'wir',
+  'wird',
+  'wirklich',
+  'wirst',
+  'wo',
+  'wodurch',
+  'wogegen',
+  'woher',
+  'wohin',
+  'wohingegen',
+  'wohl',
+  'wohlweislich',
+  'womit',
+  'woraufhin',
+  'woraus',
+  'worin',
+  'wurde',
+  'wurden',
+  'während',
+  'währenddessen',
+  'wär',
+  'wäre',
+  'wären',
+  'würde',
+  'würden',
+  'z.B.',
+  'zB',
+  'zahlreich',
+  'zeitweise',
+  'zu',
+  'zudem',
+  'zuerst',
+  'zufolge',
+  'zugleich',
+  'zuletzt',
+  'zum',
+  'zumal',
+  'zur',
+  'zurück',
+  'zusammen',
+  'zuviel',
+  'zwar',
+  'zwischen',
+  'ähnlich',
+  'übel',
+  'über',
+  'überall',
+  'überallhin',
+  'überdies',
+  'übermorgen',
+  'übrig',
+  'übrigens',
+]
+
+/*let ids = words.map((word) => stems[word] || [])
+
+  if (ids.length > 0) {
+    let results = ids[0].filter((id: number) =>
+      ids.every((arr) => arr.includes(id))
+    )
+
+    for (const id of results) {
+      if (categories[id]) {
+        const { subject, type, age } = categories[id]
+
+        if (!index.subject[subject]) index.subject[subject] = 0
+        if (!index.type[type]) index.type[type] = 0
+        if (!index.age[age]) index.age[age] = 0
+
+        index.subject[subject]++
+        index.type[type]++
+        index.age[age]++
+      }
+    }
+
+    results = results.filter((id: any) => {
+      const cat = categories[id]
+      if (cat) {
+        const hasSubjectChoice = !Object.keys(index.subject).every(
+          (key) => !choices.includes(key)
+        )
+        const hasTypeChoice = !Object.keys(index.type).every(
+          (key) => !choices.includes(key)
+        )
+        const hasAgeChoice = !Object.keys(index.age).every(
+          (key) => !choices.includes(key)
+        )
+
+        if (hasSubjectChoice) {
+          if (!choices.includes(cat.subject)) return false
+        }
+
+        if (hasTypeChoice) {
+          if (!choices.includes(cat.type)) return false
+        }
+
+        if (hasAgeChoice) {
+          if (!choices.includes(cat.age)) return false
+        }
+
+        //console.log(noAge)
+        return true
+      }
+    })
+
+    index = {
+      subject: {},
+      type: {},
+      age: {},
+    }
+
+    for (const id of results) {
+      if (categories[id]) {
+        const { subject, type, age } = categories[id]
+
+        if (!index.subject[subject]) index.subject[subject] = 0
+        if (!index.type[type]) index.type[type] = 0
+        if (!index.age[age]) index.age[age] = 0
+
+        index.subject[subject]++
+        index.type[type]++
+        index.age[age]++
+      }
+    }
+
+    console.log(index)
+
+    ids = results
+  }
+
+  */
