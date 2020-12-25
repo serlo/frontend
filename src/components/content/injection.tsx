@@ -12,12 +12,11 @@ import { renderArticle } from '@/schema/article-renderer'
 
 export interface InjectionProps {
   href: string
-  extractGrouped?: number
 }
 
 // TODO: Give injection a separate fetched data type
 
-export function Injection({ href, extractGrouped }: InjectionProps) {
+export function Injection({ href }: InjectionProps) {
   const [value, setValue] = React.useState<FrontendContentNode[] | undefined>(
     undefined
   )
@@ -50,6 +49,8 @@ export function Injection({ href, extractGrouped }: InjectionProps) {
         else return res.text()
       })
       .then((pageData: PageData) => {
+        dataToState(pageData)
+
         if (pageData.kind === 'single-entity') {
           try {
             sessionStorage.setItem(
@@ -60,8 +61,6 @@ export function Injection({ href, extractGrouped }: InjectionProps) {
             //
           }
         }
-
-        dataToState(pageData)
       })
   }, [href, origin, lang])
 
@@ -87,14 +86,6 @@ export function Injection({ href, extractGrouped }: InjectionProps) {
   if (value) {
     //Show only video without description when injecting
     const renderValue = value[0].type === 'video' ? [value[0]] : value
-
-    if (extractGrouped) {
-      // @ts-ignore
-      renderValue[0].children = renderValue[0].children.filter(
-        // @ts-ignore
-        (x) => x.context?.id == extractGrouped
-      )
-    }
 
     return (
       <>
