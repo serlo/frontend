@@ -57,12 +57,13 @@ export function Explore() {
       .filter((x) => x)
     console.log(words)
 
-    const candidates = new Set<any>()
+    const candidates: any = {}
 
     const addFromToken = (token: any) => {
       if (token) {
         for (const id of Object.keys(token)) {
-          candidates.add(id)
+          if (!candidates[id]) candidates[id] = 0
+          candidates[id]++
         }
       }
     }
@@ -72,18 +73,29 @@ export function Explore() {
       addFromToken(searchIndex.tokens[word])
     }
 
-    let confirmed = true
+    const minCount = Math.ceil(words.length / 2)
+    const excludeList: any = []
+    for (const id in candidates) {
+      if (candidates[id] < minCount) {
+        excludeList.push(id)
+      }
+    }
 
-    if (candidates.size > 10000) {
+    console.log(excludeList)
+
+    const confirmed = true
+
+    /*if (candidates.size > 10000) {
       confirmed = confirm(
         'Diese Suche kann etwas länger dauern ... Fortfahren?'
       )
-    }
+    }*/
 
     if (confirmed) {
       ranking.current = []
 
-      for (const id of candidates) {
+      for (const id in candidates) {
+        if (excludeList.includes(id)) continue
         if (choices.length > 0) {
           if (
             !searchIndex.payloads[id].age.some((age: any) =>
