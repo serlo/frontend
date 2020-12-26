@@ -1,4 +1,6 @@
+import levenshtein from 'fast-levenshtein'
 import React from 'react'
+import Autosuggest from 'react-autosuggest'
 import styled from 'styled-components'
 
 import { HSpace } from '../content/h-space'
@@ -10,6 +12,7 @@ import { RelativeContainer } from '../navigation/relative-container'
 import { StyledH1 } from '../tags/styled-h1'
 import { StyledP } from '../tags/styled-p'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
+import theme from '@/components/pages/explore.module.css'
 
 export function Explore() {
   const [searchIndex, setSearchIndex] = React.useState<any>({})
@@ -25,7 +28,7 @@ export function Explore() {
   React.useEffect(() => {
     void (async () => {
       const res3 = await fetch(
-        'https://gist.githubusercontent.com/Entkenntnis/992a2a1f6eda48d6d72753d30a75d1ff/raw/e018ac1f9bb60fbfd71350c9acfc3cfb28a1d301/exercise_index_25_dez_2020.json'
+        'https://gist.githubusercontent.com/Entkenntnis/a5019187ea4a11a59df8ac88376fb45c/raw/40936d4d50aab01cf7ca4eaba452947bfaa013a2/exercise_index_26_dez_2020.json'
       )
       const json3 = await res3.json()
 
@@ -49,7 +52,7 @@ export function Explore() {
     const words = lower
       .split(/[^a-zäöüß0-9]/)
       .map((x) => stem(x))
-      .filter((x) => x && !stopwords.includes(x))
+      .filter((x) => x)
     console.log(words)
 
     const candidates = new Set<any>()
@@ -125,6 +128,7 @@ export function Explore() {
                   console.log('split')
                   setQuery(query)
                 }}
+                searchIndex={searchIndex}
               />
               <StyledP>
                 <em>{ranking.current.length} Ergebnisse</em>
@@ -185,30 +189,73 @@ export function Explore() {
 }
 
 function InputForm(props: any) {
-  const [query, setQuery] = React.useState('')
+  const [inputValue, setInputValue] = React.useState('')
+  const [suggestions, setSuggestions] = React.useState<string[]>([])
 
   return (
-    <StyledP>
-      Suche:{' '}
-      <input
-        onKeyDown={(e) => {
-          if (e.key == 'Enter') {
-            props.runSearch(query)
-          }
-        }}
-        value={query}
-        onChange={(e) => {
-          setQuery(e.target.value)
-        }}
-      />{' '}
-      <button
-        onClick={() => {
-          props.runSearch(query)
-        }}
-      >
-        Los
-      </button>
-    </StyledP>
+    <>
+      <div style={{ display: 'flex' }}>
+        <div style={{ width: '20px' }} />
+        <Autosuggest
+          suggestions={suggestions}
+          onSuggestionsFetchRequested={({ value }: any) => {
+            // to search
+            let suggs: any = []
+            const query = value.toLowerCase()
+            const tokens = query
+              .split(/ /g)
+              .filter((x: any) => x && x.length > 1)
+
+            for (const val of props.searchIndex.autocomplete) {
+              const lower = val.toLowerCase()
+              if (tokens.some((token: any) => lower.includes(token))) {
+                const distance = levenshtein.get(lower, query)
+
+                if (
+                  suggs.length < 5 ||
+                  suggs.some((sugg: any) => distance < sugg.distance)
+                ) {
+                  suggs.push({ val, distance })
+                  suggs.sort((a: any, b: any) => a.distance - b.distance)
+                  if (suggs.length > 5) {
+                    suggs = suggs.slice(0, 5)
+                  }
+                }
+              }
+            }
+            setSuggestions(suggs.map((sugg: any) => sugg.val))
+          }}
+          onSuggestionsClearRequested={() => {
+            setSuggestions([])
+          }}
+          getSuggestionValue={(str: any) => {
+            return str
+          }}
+          renderSuggestion={(str: any) => str}
+          inputProps={{
+            value: inputValue,
+            onChange: (e: any, { newValue }: any) => {
+              setInputValue(newValue)
+            },
+            onKeyDown: (e: any) => {
+              if (e.key == 'Enter') {
+                props.runSearch(inputValue)
+              }
+            },
+          }}
+          theme={theme}
+        />
+        <div style={{ width: '20px' }} />
+        <button
+          onClick={() => {
+            props.runSearch(inputValue)
+          }}
+        >
+          Los
+        </button>
+      </div>
+      <HSpace amount={40} />
+    </>
   )
 }
 
@@ -318,7 +365,7 @@ function calculateTFIDF(
           Math.log(4000 / ((searchIndex.lengthCache[word] as number) + 1)) + 1
         const fieldLength = Math.max(
           1 / Math.sqrt(Math.max(40, length)),
-          1 / 400
+          1 / 60
         )
         score += tf * idf * fieldLength
         //console.log('idf', idf)
@@ -440,569 +487,6 @@ function stem(word: string, case_insensitive = false) {
 
   return word
 }
-
-const stopwords = [
-  'ab',
-  'aber',
-  'alle',
-  'allein',
-  'allem',
-  'allen',
-  'aller',
-  'allerdings',
-  'allerlei',
-  'alles',
-  'allmählich',
-  'allzu',
-  'als',
-  'alsbald',
-  'also',
-  'am',
-  'an',
-  'and',
-  'ander',
-  'andere',
-  'anderem',
-  'anderen',
-  'anderer',
-  'andererseits',
-  'anderes',
-  'anderm',
-  'andern',
-  'andernfalls',
-  'anders',
-  'anstatt',
-  'auch',
-  'auf',
-  'aus',
-  'ausgenommen',
-  'ausser',
-  'ausserdem',
-  'außer',
-  'außerdem',
-  'außerhalb',
-  'bald',
-  'bei',
-  'beide',
-  'beiden',
-  'beiderlei',
-  'beides',
-  'beim',
-  'beinahe',
-  'bereits',
-  'besonders',
-  'besser',
-  'beträchtlich',
-  'bevor',
-  'bezüglich',
-  'bin',
-  'bis',
-  'bisher',
-  'bislang',
-  'bist',
-  'bloß',
-  'bsp.',
-  'bzw',
-  'content',
-  'da',
-  'dabei',
-  'dadurch',
-  'dafür',
-  'dagegen',
-  'daher',
-  'dahin',
-  'damals',
-  'damit',
-  'danach',
-  'daneben',
-  'dann',
-  'daran',
-  'darauf',
-  'daraus',
-  'darin',
-  'darum',
-  'darunter',
-  'darüber',
-  'darüberhinaus',
-  'das',
-  'dass',
-  'dasselbe',
-  'davon',
-  'davor',
-  'dazu',
-  'daß',
-  'dein',
-  'deine',
-  'deinem',
-  'deinen',
-  'deiner',
-  'deines',
-  'dem',
-  'demnach',
-  'demselben',
-  'den',
-  'denen',
-  'denn',
-  'dennoch',
-  'denselben',
-  'der',
-  'derart',
-  'derartig',
-  'derem',
-  'deren',
-  'derer',
-  'derjenige',
-  'derjenigen',
-  'derselbe',
-  'derselben',
-  'derzeit',
-  'des',
-  'deshalb',
-  'desselben',
-  'dessen',
-  'desto',
-  'deswegen',
-  'dich',
-  'die',
-  'diejenige',
-  'dies',
-  'diese',
-  'dieselbe',
-  'dieselben',
-  'diesem',
-  'diesen',
-  'dieser',
-  'dieses',
-  'diesseits',
-  'dir',
-  'doch',
-  'dort',
-  'dorther',
-  'dorthin',
-  'drauf',
-  'drin',
-  'drunter',
-  'drüber',
-  'du',
-  'dunklen',
-  'durch',
-  'durchaus',
-  'eben',
-  'ebenfalls',
-  'ebenso',
-  'eher',
-  'eigenen',
-  'eigenes',
-  'eigentlich',
-  'ein',
-  'eine',
-  'einem',
-  'einen',
-  'einer',
-  'einerseits',
-  'eines',
-  'einführen',
-  'einführte',
-  'einführten',
-  'eingesetzt',
-  'einig',
-  'einige',
-  'einigem',
-  'einigen',
-  'einiger',
-  'einigermaßen',
-  'einiges',
-  'einmal',
-  'einst',
-  'einstmals',
-  'einzig',
-  'entsprechend',
-  'entweder',
-  'er',
-  'erst',
-  'es',
-  'etc',
-  'etliche',
-  'etwa',
-  'etwas',
-  'euch',
-  'euer',
-  'eure',
-  'eurem',
-  'euren',
-  'eurer',
-  'eures',
-  'falls',
-  'ferner',
-  'folgende',
-  'folgenden',
-  'folgender',
-  'folgendes',
-  'folglich',
-  'fuer',
-  'für',
-  'gab',
-  'gar',
-  'gemäss',
-  'ggf',
-  'gleichwohl',
-  'gleichzeitig',
-  'glücklicherweise',
-  'gänzlich',
-  'hab',
-  'habe',
-  'haben',
-  'haette',
-  'hast',
-  'hat',
-  'hatte',
-  'hatten',
-  'hattest',
-  'hattet',
-  'heraus',
-  'herein',
-  'hier',
-  'hier',
-  'hinter',
-  'hiermit',
-  'hiesige',
-  'hin',
-  'hinein',
-  'hinten',
-  'hinter',
-  'hinterher',
-  'http',
-  'hätt',
-  'hätte',
-  'hätten',
-  'ich',
-  'igitt',
-  'ihm',
-  'ihn',
-  'ihnen',
-  'ihr',
-  'ihre',
-  'ihrem',
-  'ihren',
-  'ihrer',
-  'ihres',
-  'im',
-  'immer',
-  'immerhin',
-  'in',
-  'indem',
-  'indessen',
-  'infolge',
-  'innen',
-  'innerhalb',
-  'ins',
-  'insofern',
-  'inzwischen',
-  'irgend',
-  'irgendeine',
-  'irgendwas',
-  'irgendwen',
-  'irgendwer',
-  'irgendwie',
-  'irgendwo',
-  'ist',
-  'ja',
-  'je',
-  'jed',
-  'jede',
-  'jedem',
-  'jeden',
-  'jedenfalls',
-  'jeder',
-  'jederlei',
-  'jedes',
-  'jedoch',
-  'jemand',
-  'jene',
-  'jenem',
-  'jenen',
-  'jener',
-  'jenes',
-  'jenseits',
-  'jetzt',
-  'jährig',
-  'jährige',
-  'jährigen',
-  'jähriges',
-  'kam',
-  'kann',
-  'kannst',
-  'kaum',
-  'kein',
-  'keine',
-  'keinem',
-  'keinen',
-  'keiner',
-  'keinerlei',
-  'keines',
-  'keineswegs',
-  'klar',
-  'klare',
-  'klaren',
-  'klares',
-  'koennen',
-  'koennt',
-  'koennte',
-  'koennten',
-  'komme',
-  'kommen',
-  'kommt',
-  'können',
-  'könnt',
-  'künftig',
-  'leider',
-  'machen',
-  'man',
-  'manche',
-  'manchem',
-  'manchen',
-  'mancher',
-  'mancherorts',
-  'manches',
-  'manchmal',
-  'mehr',
-  'mehrere',
-  'mein',
-  'meine',
-  'meinem',
-  'meinen',
-  'meiner',
-  'meines',
-  'mich',
-  'mir',
-  'mit',
-  'mithin',
-  'muessen',
-  'muesst',
-  'muesste',
-  'muss',
-  'musst',
-  'musste',
-  'mussten',
-  'muß',
-  'mußt',
-  'müssen',
-  'müsste',
-  'müssten',
-  'müßt',
-  'müßte',
-  'nach',
-  'nachdem',
-  'nachher',
-  'nachhinein',
-  'nahm',
-  'natürlich',
-  'nebenan',
-  'nehmen',
-  'nein',
-  'nie',
-  'niemals',
-  'niemand',
-  'nirgends',
-  'nirgendwo',
-  'noch',
-  'nun',
-  'nur',
-  'nächste',
-  'nämlich',
-  'nötigenfalls',
-  'ob',
-  'oben',
-  'oberhalb',
-  'obgleich',
-  'obschon',
-  'obwohl',
-  'oder',
-  'oft',
-  'per',
-  'plötzlich',
-  'schließlich',
-  'schon',
-  'sehr',
-  'sehrwohl',
-  'seid',
-  'sein',
-  'seine',
-  'seinem',
-  'seinen',
-  'seiner',
-  'seines',
-  'seit',
-  'seitdem',
-  'seither',
-  'selber',
-  'selbst',
-  'sich',
-  'sicherlich',
-  'sie',
-  'sind',
-  'so',
-  'sobald',
-  'sodass',
-  'sodaß',
-  'soeben',
-  'sofern',
-  'sofort',
-  'sogar',
-  'solange',
-  'solch',
-  'solche',
-  'solchem',
-  'solchen',
-  'solcher',
-  'solches',
-  'soll',
-  'sollen',
-  'sollst',
-  'sollt',
-  'sollte',
-  'sollten',
-  'solltest',
-  'somit',
-  'sondern',
-  'sonst',
-  'sonstwo',
-  'sooft',
-  'soviel',
-  'soweit',
-  'sowie',
-  'sowohl',
-  'tatsächlich',
-  'tatsächlichen',
-  'tatsächlicher',
-  'tatsächliches',
-  'trotzdem',
-  'ueber',
-  'um',
-  'umso',
-  'unbedingt',
-  'und',
-  'uns',
-  'unser',
-  'unser',
-  'unsere',
-  'unsere',
-  'unserem',
-  'unseren',
-  'unserer',
-  'unseres',
-  'unter',
-  'usw',
-  'viel',
-  'viele',
-  'vielen',
-  'vieler',
-  'vieles',
-  'vielleicht',
-  'vielmals',
-  'vom',
-  'von',
-  'vor',
-  'voran',
-  'vorher',
-  'vorüber',
-  'völlig',
-  'wann',
-  'war',
-  'waren',
-  'warst',
-  'warum',
-  'was',
-  'weder',
-  'weil',
-  'weiter',
-  'weitere',
-  'weiterem',
-  'weiteren',
-  'weiterer',
-  'weiteres',
-  'weiterhin',
-  'weiß',
-  'welche',
-  'welchem',
-  'welchen',
-  'welcher',
-  'welches',
-  'wem',
-  'wen',
-  'wenig',
-  'wenige',
-  'weniger',
-  'wenigstens',
-  'wenn',
-  'wenngleich',
-  'wer',
-  'werde',
-  'werden',
-  'werdet',
-  'weshalb',
-  'wessen',
-  'wichtig',
-  'wie',
-  'wieder',
-  'wieso',
-  'wieviel',
-  'wiewohl',
-  'will',
-  'willst',
-  'wir',
-  'wird',
-  'wirklich',
-  'wirst',
-  'wo',
-  'wodurch',
-  'wogegen',
-  'woher',
-  'wohin',
-  'wohingegen',
-  'wohl',
-  'wohlweislich',
-  'womit',
-  'woraufhin',
-  'woraus',
-  'worin',
-  'wurde',
-  'wurden',
-  'während',
-  'währenddessen',
-  'wär',
-  'wäre',
-  'wären',
-  'würde',
-  'würden',
-  'z.B.',
-  'zB',
-  'zahlreich',
-  'zeitweise',
-  'zu',
-  'zudem',
-  'zuerst',
-  'zufolge',
-  'zugleich',
-  'zuletzt',
-  'zum',
-  'zumal',
-  'zur',
-  'zurück',
-  'zusammen',
-  'zuviel',
-  'zwar',
-  'zwischen',
-  'ähnlich',
-  'übel',
-  'über',
-  'überall',
-  'überallhin',
-  'überdies',
-  'übermorgen',
-  'übrig',
-  'übrigens',
-]
 
 /*let ids = words.map((word) => stems[word] || [])
 
