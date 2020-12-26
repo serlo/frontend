@@ -28,7 +28,7 @@ export function Explore() {
   React.useEffect(() => {
     void (async () => {
       const res3 = await fetch(
-        'https://gist.githubusercontent.com/Entkenntnis/a5019187ea4a11a59df8ac88376fb45c/raw/40936d4d50aab01cf7ca4eaba452947bfaa013a2/exercise_index_26_dez_2020.json'
+        'https://gist.githubusercontent.com/Entkenntnis/a5019187ea4a11a59df8ac88376fb45c/raw/cf6acd07702fb37c6446944860e9ddc88a6b6d0e/exercise_index_26_dez_2020.json'
       )
       const json3 = await res3.json()
 
@@ -37,6 +37,8 @@ export function Explore() {
       for (const key of Object.keys(json3.tokens)) {
         json3.lengthCache[key] = Object.keys(json3.tokens[key]).length
       }
+
+      json3.autocomplete.tokenList = Object.keys(json3.autocomplete.tokens)
 
       //console.log(json3)
 
@@ -188,9 +190,78 @@ export function Explore() {
   )
 }
 
+const autocompleteStopwords = ['zu', 'zur', 'zum', 'und', 'aufgaben']
+
 function InputForm(props: any) {
   const [inputValue, setInputValue] = React.useState('')
   const [suggestions, setSuggestions] = React.useState<string[]>([])
+
+  const throttled = React.useCallback(
+    throttle(500, ({ value }: any) => {
+      // to search
+      const query = value.toLowerCase()
+
+      const tokens = query.split(/[^a-zäöüß0-9]/).filter((x: any) => x)
+
+      if (tokens.length > 0) {
+        const frontToken = tokens[tokens.length - 1]
+        const fixedToken = tokens.slice(0, -1)
+
+        let docs = Object.keys(props.searchIndex.autocomplete.docs)
+
+        for (const t of fixedToken) {
+          docs = docs.filter((doc) =>
+            props.searchIndex.autocomplete.tokens[t]?.includes(parseInt(doc))
+          )
+        }
+
+        const relevantTokens = props.searchIndex.autocomplete.tokenList.filter(
+          (t: any) =>
+            t.includes(frontToken) &&
+            !fixedToken.includes(t) &&
+            props.searchIndex.autocomplete.tokens[t]?.some((doc: any) => {
+              return docs.includes(doc.toString())
+            })
+        )
+
+        if (relevantTokens.length == 1 || relevantTokens.includes(frontToken)) {
+          const relTok =
+            relevantTokens.length == 1 ? relevantTokens[0] : frontToken
+          docs = docs.filter((doc) =>
+            props.searchIndex.autocomplete.tokens[relTok].includes(
+              parseInt(doc)
+            )
+          )
+          for (const id of docs) {
+            for (const token of props.searchIndex.autocomplete.docs[id]) {
+              if (token !== relTok && !fixedToken.includes(token)) {
+                if (!autocompleteStopwords.includes(token)) {
+                  const newTok = `${relTok} ${token}`
+                  if (!relevantTokens.includes(newTok)) {
+                    relevantTokens.push(newTok)
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        const entries = relevantTokens
+          .map((t: any) => [...fixedToken, t].join(' '))
+          .map((val: any) => {
+            return {
+              val,
+              distance: levenshtein.get(val, query),
+            }
+          })
+
+        entries.sort((a: any, b: any) => a.distance - b.distance)
+
+        setSuggestions(entries.slice(0, 5).map((entry: any) => entry.val))
+      }
+    }),
+    [props.searchIndex]
+  )
 
   return (
     <>
@@ -198,33 +269,7 @@ function InputForm(props: any) {
         <div style={{ width: '20px' }} />
         <Autosuggest
           suggestions={suggestions}
-          onSuggestionsFetchRequested={({ value }: any) => {
-            // to search
-            let suggs: any = []
-            const query = value.toLowerCase()
-            const tokens = query
-              .split(/ /g)
-              .filter((x: any) => x && x.length > 1)
-
-            for (const val of props.searchIndex.autocomplete) {
-              const lower = val.toLowerCase()
-              if (tokens.some((token: any) => lower.includes(token))) {
-                const distance = levenshtein.get(lower, query)
-
-                if (
-                  suggs.length < 5 ||
-                  suggs.some((sugg: any) => distance < sugg.distance)
-                ) {
-                  suggs.push({ val, distance })
-                  suggs.sort((a: any, b: any) => a.distance - b.distance)
-                  if (suggs.length > 5) {
-                    suggs = suggs.slice(0, 5)
-                  }
-                }
-              }
-            }
-            setSuggestions(suggs.map((sugg: any) => sugg.val))
-          }}
+          onSuggestionsFetchRequested={throttled}
           onSuggestionsClearRequested={() => {
             setSuggestions([])
           }}
@@ -259,6 +304,31 @@ function InputForm(props: any) {
   )
 }
 
+function throttle(delay: any, fn: any) {
+  let inThrottle = false
+  let last: any = undefined
+
+  return (args: any) => {
+    if (inThrottle) {
+      last = () => {
+        fn(args)
+      }
+      return
+    }
+
+    inThrottle = true
+    fn(args)
+    const resetThrottle = () => {
+      if (last) {
+        last()
+        last = undefined
+        setTimeout(resetThrottle, delay)
+      }
+      inThrottle = false
+    }
+    setTimeout(resetThrottle, delay)
+  }
+}
 function CategorySelector(props: any) {
   const { counts, heading, choices, setChoices } = props
 
