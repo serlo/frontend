@@ -52,6 +52,10 @@ export function Explore() {
   }, [])
 
   React.useEffect(() => {
+    if (query) sessionStorage.setItem('__explore_query', query)
+  }, [query])
+
+  React.useEffect(() => {
     console.log('search:', query)
     const words = query2tokens(query)
     console.log(words)
@@ -273,6 +277,13 @@ function InputForm(props: any) {
     }),
     [props.searchIndex]
   )
+
+  React.useEffect(() => {
+    if (props.searchIndex) {
+      setInputValue(sessionStorage.getItem('__explore_query') ?? '')
+      props.runSearch(inputValue)
+    }
+  }, [props.searchIndex])
 
   return (
     <>
