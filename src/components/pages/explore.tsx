@@ -31,7 +31,7 @@ export function Explore() {
     void (async () => {
       const res3 = await fetch(
         //'http://localhost:8081/exercise_index_28_dez_2020.json'
-        'https://gist.githubusercontent.com/Entkenntnis/eaf81c98ca3bb0c212a1d8f1cbc5946a/raw/e823067ec9f8c12b6aa6c2980dd7f5e956e52bf2/exercise_index_28_dez_2020.json'
+        'https://gist.githubusercontent.com/Entkenntnis/eaf81c98ca3bb0c212a1d8f1cbc5946a/raw/1c9885df11470c3c6c916113f4c3c57cda223c89/exercise_index_28_dez_2020.json'
       )
       const json3 = await res3.json()
 
