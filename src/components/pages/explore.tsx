@@ -28,7 +28,7 @@ export function Explore() {
   React.useEffect(() => {
     void (async () => {
       const res3 = await fetch(
-        'https://gist.githubusercontent.com/Entkenntnis/a5019187ea4a11a59df8ac88376fb45c/raw/cf6acd07702fb37c6446944860e9ddc88a6b6d0e/exercise_index_26_dez_2020.json'
+        'https://gist.githubusercontent.com/Entkenntnis/eaf81c98ca3bb0c212a1d8f1cbc5946a/raw/dc739e259f086e9743708de9d5029ac0eddaa6a6/exercise_index_28_dez_2020.json'
       )
       const json3 = await res3.json()
 
@@ -421,11 +421,19 @@ function score(id: any, words: string[], searchIndex: any) {
   )
 
   //console.log('weights', weightTask, weightSolution, weightTax)
-  const penaltyFactor = searchIndex.payloads[id].solutionMissing ? 0.45 : 1
+  const penaltyFactor1 = searchIndex.payloads[id].solutionMissing ? 0.45 : 1
+  const penaltyFactor2 = getLinkedEntityPenalty(
+    searchIndex.payloads[id].linkedEntities.length
+  )
 
   //console.log(id, weight, penaltyFactor)
 
-  return (weight + Math.log(id) * 0.05) * penaltyFactor
+  return (weight + Math.log(id) * 0.05) * penaltyFactor1 * penaltyFactor2
+}
+
+function getLinkedEntityPenalty(amount: any) {
+  if (amount == 0) return 0.45
+  return 1
 }
 
 function calculateTFIDF(
