@@ -12,6 +12,7 @@ import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { useToastNotice } from '@/contexts/toast-notice-context'
+import { useRefreshFromAPI } from '@/helper/use-refresh-from-api'
 
 export interface AuthorToolsData {
   type: string
@@ -40,7 +41,8 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
   const loggedInData = useLoggedInData()
   const instanceData = useInstanceData()
   const showToastNotice = useToastNotice()
-  const [isSubscriped, setSubscriped] = React.useState(false)
+  const refreshFromAPI = useRefreshFromAPI()
+  const [isSubscribed, setSubscribed] = React.useState(false)
 
   const auth = useAuth()
   const request = createAuthAwareGraphqlFetch(auth)
@@ -61,7 +63,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
             `,
           })
         )
-        setSubscriped(
+        setSubscribed(
           res.subscriptions.nodes.some((n: any) => n.id === data.id)
         )
       } catch (e) {
@@ -240,9 +242,8 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
   return null
 
   function abo(id = data.id) {
-    // todo: check if entity is already subscribed
-    if (isSubscriped) {
-      return renderLi(
+    if (isSubscribed) {
+      return renderFetchLi(
         `/unsubscribe/${id}`,
         loggedInStrings.authorMenu.unsubscribeNotifications
       )
@@ -252,11 +253,11 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
         {...tippyDefaultProps}
         content={
           <HoverSubList>
-            {renderLi(
+            {renderFetchLi(
               `/subscribe/${id}/0`,
               loggedInStrings.authorMenu.subscribeNotifications
             )}
-            {renderLi(
+            {renderFetchLi(
               `/subscribe/${id}/1`,
               loggedInStrings.authorMenu.subscribeNotificationsAndMail
             )}
@@ -289,7 +290,29 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
   }
 
   function log(id = data.id) {
-    return renderLi(`/event/history/${id}`, loggedInStrings.authorMenu.log)
+    return (
+      <>
+        {renderLi(`/event/history/${id}`, loggedInStrings.authorMenu.log)}
+        <li>
+          <button
+            onClick={() => {
+              refreshFromAPI()
+            }}
+          >
+            Delete Cache
+          </button>
+        </li>
+        <li>
+          <button
+            onClick={() => {
+              refreshFromAPI(true)
+            }}
+          >
+            Keep Cache
+          </button>
+        </li>
+      </>
+    )
   }
 
   function curriculum(id = data.id) {
@@ -302,26 +325,15 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
   function trash(id = data.id) {
     // todo: use graphql mutation
     if (data.trashed) {
-      return (
-        <Li>
-          <SubButtonStyle
-            as="button"
-            onClick={() => fetchLegacyUrl(`/uuid/restore/${id}`)}
-          >
-            {loggedInStrings.authorMenu.restoreContent}
-          </SubButtonStyle>
-        </Li>
+      return renderFetchLi(
+        `/uuid/restore/${id}`,
+        loggedInStrings.authorMenu.restoreContent
       )
     }
-    return (
-      <Li>
-        <SubButtonStyle
-          as="button"
-          onClick={() => fetchLegacyUrl(`/uuid/trash/${id}`, true)}
-        >
-          {loggedInStrings.authorMenu.moveToTrash}
-        </SubButtonStyle>
-      </Li>
+    return renderFetchLi(
+      `/uuid/trash/${id}`,
+      loggedInStrings.authorMenu.moveToTrash,
+      true
     )
   }
 
@@ -412,8 +424,21 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
     )
   }
 
+  function renderFetchLi(href: string, text: string, csrf?: boolean) {
+    return (
+      <Li>
+        <SubButtonStyle
+          as="button"
+          onClick={() => fetchLegacyUrl(href, text, csrf)}
+        >
+          {text}
+        </SubButtonStyle>
+      </Li>
+    )
+  }
+
   //quick experiment
-  function fetchLegacyUrl(url: string, csrf?: boolean) {
+  function fetchLegacyUrl(url: string, text: string, csrf?: boolean) {
     NProgress.start()
 
     const cookies = cookie.parse(
@@ -427,12 +452,13 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
     try {
       void fetch(url, options)
         .then((res) => {
+          console.log(res) //debug
           if (res.status === 200) {
             NProgress.done()
-            showToastNotice('Completed', 'success')
+            showToastNotice(`'${text}' erfolgreich `, 'success')
             setTimeout(() => {
-              window.location.reload()
-            }, 1000)
+              refreshFromAPI()
+            }, 1500)
           } else {
             showErrorNotice()
           }
@@ -447,7 +473,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
 
     function showErrorNotice() {
       NProgress.done()
-      showToastNotice('Something went wrong… Please try again', 'warning')
+      showToastNotice('Something went wrong… Please try again.', 'warning')
     }
   }
 }
