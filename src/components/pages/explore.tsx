@@ -30,8 +30,8 @@ export function Explore() {
   React.useEffect(() => {
     void (async () => {
       const res3 = await fetch(
-        //'http://localhost:8081/exercise_index_28_dez_2020.json'
-        'https://gist.githubusercontent.com/Entkenntnis/eaf81c98ca3bb0c212a1d8f1cbc5946a/raw/1c9885df11470c3c6c916113f4c3c57cda223c89/exercise_index_28_dez_2020.json'
+        //'http://localhost:8081/exercise_index_29_dez_2020.json'
+        'https://gist.githubusercontent.com/Entkenntnis/321a2f2d1941f8dfdd66c34e0041bc81/raw/184aa30ab3a5aee44299f9a49c777b9b061ad166/exercise_index_29_dez_2020.json'
       )
       const json3 = await res3.json()
 
@@ -42,6 +42,30 @@ export function Explore() {
       }
 
       json3.autocomplete.tokenList = Object.keys(json3.autocomplete.tokens)
+
+      const avgTF: any = {}
+
+      for (const id in json3.payloads) {
+        avgTF[id] = []
+      }
+
+      for (const token in json3.tokens) {
+        if (token.length > 3) {
+          for (const id in json3.tokens[token]) {
+            avgTF[id].push(json3.tokens[token][id])
+          }
+        }
+      }
+
+      for (const id in avgTF) {
+        avgTF[id] =
+          avgTF[id].length == 0
+            ? 0
+            : avgTF[id].reduce((a: number, b: number) => a + b, 0) /
+              avgTF[id].length
+      }
+
+      json3.avgTF = avgTF
 
       //console.log(json3)
 
@@ -107,9 +131,11 @@ export function Explore() {
           )
             continue
         }
+        const { score, explain } = calculateScore(id, words, searchIndex)
         ranking.current.push({
           id,
-          score: score(id, words, searchIndex),
+          score,
+          explain,
         })
       }
 
@@ -179,9 +205,9 @@ export function Explore() {
                   setChoices={setChoices}
                 />
               )}
-              {ranking.current.slice(0, limit).map(({ id, score }: any) => (
+              {ranking.current.slice(0, limit).map(({ id, explain }: any) => (
                 <React.Fragment key={id}>
-                  <Document id={id} score={score} />
+                  <Document id={id} explain={explain} />
                 </React.Fragment>
               ))}
               {ranking.current.length > limit && (
@@ -402,14 +428,13 @@ function CategorySelector(props: any) {
   )
 }
 
-function Document({ id, score }: any) {
+function Document({ id, explain }: any) {
   return (
     <>
       <HSpace amount={60} />
       <p style={{ textAlign: 'right' }}>
         <small>
-          Aufgabe <Link href={`/${id}`}>{id}</Link> (Score:{' '}
-          {Math.round(score * 100) / 100})
+          Aufgabe <Link href={`/${id}`}>{id}</Link> ({explain})
         </small>
       </p>
       <Lazy>
@@ -420,9 +445,13 @@ function Document({ id, score }: any) {
   )
 }
 
-function score(id: any, words: string[], searchIndex: any) {
+function round2(num: number) {
+  return Math.round(num * 100) / 100
+}
+
+function calculateScore(id: any, words: string[], searchIndex: any) {
   // task score
-  const weight = calculateTFIDF(
+  const { weight, explain } = calculateTFIDF(
     id,
     words,
     searchIndex.tokens,
@@ -436,9 +465,28 @@ function score(id: any, words: string[], searchIndex: any) {
     searchIndex.payloads[id].linkedEntities.length
   )
 
+  const recencyValue = Math.log(id) * 0.01
+
+  const taxBoost =
+    words.filter((word) => searchIndex.payloads[id].taxonomy.includes(word))
+      .length > 0
+      ? 1
+      : 0.75
+
   //console.log(id, weight, penaltyFactor)
 
-  return (weight + Math.log(id) * 0.05) * penaltyFactor1 * penaltyFactor2
+  //console.log('parts', searchIndex.payloads[id].parts)
+
+  const score =
+    (weight + recencyValue) * penaltyFactor1 * penaltyFactor2 * taxBoost
+  return {
+    score,
+    explain: `Score: ${round2(
+      score
+    )}, sol: ${penaltyFactor1}, lnks: ${penaltyFactor2}, rec: ${round2(
+      recencyValue
+    )}, tax: ${round2(taxBoost)}, ${explain}`,
+  }
 }
 
 function getLinkedEntityPenalty(amount: any) {
@@ -454,26 +502,32 @@ function calculateTFIDF(
   searchIndex: any
 ) {
   let score = 0
+  let explain = ''
   let occurCount = 0
   for (const word of words) {
     const token = tokens[word]
     if (token) {
       if (token[id]) {
         occurCount++
-        const tf = Math.sqrt(Math.min(token[id], 4))
+        const tf = Math.sqrt(Math.min(token[id], 6))
         const idf =
           Math.log(4000 / ((searchIndex.lengthCache[word] as number) + 1)) + 1
-        const fieldLength = Math.max(
-          1 / Math.sqrt(Math.max(40, length)),
-          1 / 60
-        )
-        score += tf * idf * fieldLength
+        score += tf * idf
+        explain += `[${word} tf:${round2(tf)} idf:${round2(idf)}] `
         //console.log('idf', idf)
       }
     }
   }
 
-  return (occurCount / words.length) * score
+  const fieldLength = Math.max(1 / Math.sqrt(Math.max(40, length)), 1 / 60)
+
+  const coord = occurCount / words.length
+
+  explain += `* fl:${round2(fieldLength)} * coord:${round2(coord)}`
+
+  const weight = coord * score * fieldLength
+
+  return { weight, explain }
 }
 
 const FacetDiv = styled.div`

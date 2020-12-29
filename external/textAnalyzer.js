@@ -6,13 +6,36 @@ const config = {
         'ganze zahl',
         'ganze zahlen',
         'ganzen zahlen',
+        'ganzer zahlen',
         'ganzen zahl',
         'negative zahl',
         'negative zahlen',
         'negativen zahl',
         'negativen zahlen',
+        'negativer zahlen',
       ],
       replace: '_ganze_zahl_,_negative_zahl_',
+    },
+    {
+      match: [
+        'los',
+        'lose',
+        'losen',
+        'loses',
+      ],
+      replace: '_los_',
+    },
+    {
+      match: [
+        'addition',
+      ],
+      replace: 'addieren',
+    },
+    {
+      match: [
+        'ableitung',
+      ],
+      replace: 'ableiten',
     },
   ],
   protect: [
@@ -75,7 +98,8 @@ function text2tokens(str, indexTime = true) {
   for (const synonym of config.synonyms) {
     for (const match of synonym.match) {
       const regex = new RegExp(`(^|[^a-z0-9äöüß_])${match}($|[^a-z0-9äöüß_])`, 'g')
-      lower = lower.replace(regex, ` ${synonym.replace} `)
+      lower = lower.replace(regex, `$1${synonym.replace}$2`)
+      //console.log(lower)
     }
   }
   
