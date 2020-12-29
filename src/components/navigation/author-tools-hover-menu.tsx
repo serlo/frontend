@@ -290,29 +290,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
   }
 
   function log(id = data.id) {
-    return (
-      <>
-        {renderLi(`/event/history/${id}`, loggedInStrings.authorMenu.log)}
-        <li>
-          <button
-            onClick={() => {
-              refreshFromAPI()
-            }}
-          >
-            Delete Cache
-          </button>
-        </li>
-        <li>
-          <button
-            onClick={() => {
-              refreshFromAPI(true)
-            }}
-          >
-            Keep Cache
-          </button>
-        </li>
-      </>
-    )
+    return renderLi(`/event/history/${id}`, loggedInStrings.authorMenu.log)
   }
 
   function curriculum(id = data.id) {
@@ -452,8 +430,8 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
     try {
       void fetch(url, options)
         .then((res) => {
-          console.log(res) //debug
-          if (res.status === 200) {
+          //if location.href is not res.url there was probably an authentication error. use api mutation in the future.
+          if (res.status === 200 && location.href.startsWith(res.url)) {
             NProgress.done()
             showToastNotice(`'${text}' erfolgreich `, 'success')
             setTimeout(() => {
