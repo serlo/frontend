@@ -42,7 +42,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
   const instanceData = useInstanceData()
   const showToastNotice = useToastNotice()
   const refreshFromAPI = useRefreshFromAPI()
-  const [isSubscriped, setSubscriped] = React.useState(false)
+  const [isSubscribed, setSubscribed] = React.useState(false)
 
   const auth = useAuth()
   const request = createAuthAwareGraphqlFetch(auth)
@@ -63,7 +63,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
             `,
           })
         )
-        setSubscriped(
+        setSubscribed(
           res.subscriptions.nodes.some((n: any) => n.id === data.id)
         )
       } catch (e) {
@@ -242,9 +242,8 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
   return null
 
   function abo(id = data.id) {
-    // todo: check if entity is already subscribed
-    if (isSubscriped) {
-      return renderLi(
+    if (isSubscribed) {
+      return renderFetchLi(
         `/unsubscribe/${id}`,
         loggedInStrings.authorMenu.unsubscribeNotifications
       )
@@ -254,11 +253,11 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
         {...tippyDefaultProps}
         content={
           <HoverSubList>
-            {renderLi(
+            {renderFetchLi(
               `/subscribe/${id}/0`,
               loggedInStrings.authorMenu.subscribeNotifications
             )}
-            {renderLi(
+            {renderFetchLi(
               `/subscribe/${id}/1`,
               loggedInStrings.authorMenu.subscribeNotificationsAndMail
             )}
