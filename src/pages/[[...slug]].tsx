@@ -17,7 +17,6 @@ import { Header } from '@/components/navigation/header'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { MetaMenu } from '@/components/navigation/meta-menu'
 import { RelativeContainer } from '@/components/navigation/relative-container'
-import { Explore } from '@/components/pages/explore'
 import { LandingInternationalProps } from '@/components/pages/landing-international'
 import { ProfileProps } from '@/components/pages/user/profile'
 import { InstanceDataProvider } from '@/contexts/instance-context'
@@ -89,6 +88,10 @@ const Entity = dynamic<EntityProps>(() =>
 
 const Revision = dynamic<RevisionProps>(() =>
   import('@/components/author/revision').then((mod) => mod.Revision)
+)
+
+const Explore = dynamic<{}>(() =>
+  import('@/components/pages/explore').then((mod) => mod.Explore)
 )
 
 const PageView: NextPage<InitialProps> = (initialProps) => {
