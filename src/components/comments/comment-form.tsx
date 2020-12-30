@@ -1,10 +1,13 @@
 import { faReply, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { gql } from 'graphql-request'
 import { lighten } from 'polished'
 import * as React from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
 import styled, { css } from 'styled-components'
 
+import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
+import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
 import { makeGreenButton, inputFontReset, makeMargin } from '@/helper/css'
 
@@ -25,12 +28,45 @@ interface CommentFormProps {
 
 export function CommentForm({
   placeholder,
-  // parent_id,
+  parent_id,
   // onSendComment,
   reply,
 }: CommentFormProps) {
   const [commentValue, setCommentValue] = React.useState('')
   const { strings } = useInstanceData()
+
+  const auth = useAuth()
+
+  function onSendComment() {
+    const input = {
+      query: gql`
+        mutation createThread(
+          $title: String!
+          $content: String!
+          $objectId: Int!
+          $authorId: Int!
+        ) {
+          createThread(
+            title: $title
+            content: $content
+            objectId: $objectId
+            authorId: $authorId
+          ) {
+            __typename
+          }
+        }
+      `,
+      variables: {
+        title: '',
+        content: commentValue,
+        objectId: parent_id,
+        authorId: 1, //TODO: would be easier to use username… auth.current?.username
+      },
+    }
+    const graphqlFetch = createAuthAwareGraphqlFetch(auth)
+    const thread = graphqlFetch(JSON.stringify(input))
+    console.log(thread)
+  }
 
   return (
     <StyledBox>
@@ -45,18 +81,7 @@ export function CommentForm({
       <SendButton
         title={strings.comments.submit}
         reply={reply}
-        // onClick={
-        //   onSendComment
-        //     ? () =>
-        //         onSendComment({
-        //           entity_id: entity.id,
-        //           parent_id: parent_id,
-        //           user_id: user.id,
-        //           user_name: user.username,
-        //           body: this.state.newCommentValue,
-        //         })
-        //     : () => {}
-        // }
+        onClick={onSendComment}
       >
         <FontAwesomeIcon icon={reply ? faReply : faArrowRight} />
       </SendButton>
