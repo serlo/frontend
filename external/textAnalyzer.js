@@ -85,9 +85,21 @@ const config = {
   ],
 }
 
+// create regex upfront
+
+for (const synonym of config.synonyms) {
+  const arr = []
+  for (const match of synonym.match) {
+    arr.push(new RegExp(`(^|[^a-z0-9äöüß_])${match}($|[^a-z0-9äöüß_])`, 'g'))
+  }
+  synonym.matchRegExp = arr
+}
+
 function query2tokens(query) {
   return text2tokens(query, false)
 }
+
+const splitRegex = /[^a-z0-9äöüß_]/
  
 
 function text2tokens(str, indexTime = true) {
@@ -96,15 +108,14 @@ function text2tokens(str, indexTime = true) {
   
   // Step 2: handle synonyms
   for (const synonym of config.synonyms) {
-    for (const match of synonym.match) {
-      const regex = new RegExp(`(^|[^a-z0-9äöüß_])${match}($|[^a-z0-9äöüß_])`, 'g')
+    for (const regex of synonym.matchRegExp) {
       lower = lower.replace(regex, `$1${synonym.replace}$2`)
       //console.log(lower)
     }
   }
   
   // Tokenize
-  let tokens = lower.split(/[^a-z0-9äöüß_]/).filter(x => x)
+  let tokens = lower.split(splitRegex).filter(x => x)
   
   // Step 3: protect words
   tokens = tokens.map(token => {

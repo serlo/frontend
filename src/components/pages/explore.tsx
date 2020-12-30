@@ -1,6 +1,7 @@
 import levenshtein from 'fast-levenshtein'
 import React from 'react'
 import Autosuggest from 'react-autosuggest'
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import styled from 'styled-components'
 
 import { HSpace } from '../content/h-space'
@@ -10,10 +11,15 @@ import { Link } from '../content/link'
 import { SpecialCss } from '../content/special-css'
 import { RelativeContainer } from '../navigation/relative-container'
 import { StyledH1 } from '../tags/styled-h1'
+import { StyledH3 } from '../tags/styled-h3'
 import { StyledP } from '../tags/styled-p'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import theme from '@/components/pages/explore.module.css'
 
+// eslint-disable-next-line import/no-internal-modules,import/no-unassigned-import
+import 'react-tabs/style/react-tabs.css'
+
+// eslint-disable-next-line import/no-internal-modules,import/no-commonjs
 const { query2tokens } = require('../../../external/textAnalyzer.js')
 
 export function Explore() {
@@ -22,16 +28,26 @@ export function Explore() {
   const ranking = React.useRef<any>([])
   const counts = React.useRef<any>({ age: {} })
 
+  const ranking2 = React.useRef<any>([])
+  const [limit2, setLimit2] = React.useState(10)
+
   const [choices, setChoices] = React.useState<any>([])
   const [limit, setLimit] = React.useState(10)
   const [query, setQuery] = React.useState<string>('')
   const [counter, setCounter] = React.useState(1)
 
+  const [tabIndex, setTabIndex] = React.useState(0)
+
+  React.useEffect(() => {
+    setTabIndex(parseInt(sessionStorage.getItem('__tab_index') ?? '') ?? 0)
+    setCounter(counter + 1)
+  }, [])
+
   React.useEffect(() => {
     void (async () => {
       const res3 = await fetch(
-        //'http://localhost:8081/exercise_index_29_dez_2020.json'
-        'https://gist.githubusercontent.com/Entkenntnis/321a2f2d1941f8dfdd66c34e0041bc81/raw/184aa30ab3a5aee44299f9a49c777b9b061ad166/exercise_index_29_dez_2020.json'
+        //'http://localhost:8081/entity_index_30_dez_2020.json'
+        'https://gist.githubusercontent.com/Entkenntnis/808a4a9e88a89308f4f2acdada95c8fa/raw/1c88d4fc4d860d49575e6650c578b03f8d2b851c/entity_index_30_dez_2020.json'
       )
       const json3 = await res3.json()
 
@@ -41,9 +57,15 @@ export function Explore() {
         json3.lengthCache[key] = Object.keys(json3.tokens[key]).length
       }
 
+      json3.lengthCache2 = {}
+
+      for (const key of Object.keys(json3.tokens2)) {
+        json3.lengthCache2[key] = Object.keys(json3.tokens2[key]).length
+      }
+
       json3.autocomplete.tokenList = Object.keys(json3.autocomplete.tokens)
 
-      const avgTF: any = {}
+      /*const avgTF: any = {}
 
       for (const id in json3.payloads) {
         avgTF[id] = []
@@ -65,7 +87,7 @@ export function Explore() {
               avgTF[id].length
       }
 
-      json3.avgTF = avgTF
+      json3.avgTF = avgTF*/
 
       //console.log(json3)
 
@@ -86,18 +108,15 @@ export function Explore() {
 
     const candidates: any = {}
 
-    const addFromToken = (token: any) => {
+    // collect all possible results
+    for (const word of words) {
+      const token = searchIndex.tokens[word]
       if (token) {
         for (const id of Object.keys(token)) {
           if (!candidates[id]) candidates[id] = 0
           candidates[id]++
         }
       }
-    }
-
-    // collect all possible results
-    for (const word of words) {
-      addFromToken(searchIndex.tokens[word])
     }
 
     const minCount = Math.ceil(words.length / 2)
@@ -108,7 +127,28 @@ export function Explore() {
       }
     }
 
-    console.log(excludeList)
+    // DUUUPPPP
+    const candidates2: any = {}
+    for (const word of words) {
+      const token = searchIndex.tokens2[word]
+      if (token) {
+        for (const id of Object.keys(token)) {
+          if (!candidates2[id]) candidates2[id] = 0
+          candidates2[id]++
+        }
+      }
+    }
+
+    const excludeList2: any = []
+    for (const id in candidates2) {
+      if (candidates2[id] < minCount) {
+        excludeList2.push(id)
+      }
+    }
+
+    //console.log(candidates2)
+
+    //console.log(excludeList)
 
     const confirmed = true
 
@@ -141,6 +181,21 @@ export function Explore() {
 
       ranking.current.sort((a: any, b: any) => b.score - a.score)
 
+      // DUUUUUPPP
+      ranking2.current = []
+
+      for (const id in candidates2) {
+        if (excludeList2.includes(id)) continue
+        const { score, explain } = calculateScore2(id, words, searchIndex)
+        ranking2.current.push({
+          id,
+          score,
+          explain,
+        })
+      }
+
+      ranking2.current.sort((a: any, b: any) => b.score - a.score)
+
       // count
       counts.current = { age: {} }
       for (const entry of ranking.current) {
@@ -162,65 +217,113 @@ export function Explore() {
       <MaxWidthDiv>
         <SpecialCss>
           <HSpace amount={50} />
-          <StyledH1>Entdecke Aufgaben auf Serlo</StyledH1>
+          <StyledH1>Entdecke Inhalte auf Serlo</StyledH1>
           {searchIndex ? (
             <>
               <InputForm
                 runSearch={(query: string) => {
                   setLimit(10)
-                  console.log('split')
+                  setLimit2(10)
                   setQuery(query)
                 }}
                 searchIndex={searchIndex}
               />
-              <StyledP>
-                <em>{ranking.current.length} Ergebnisse</em>
-              </StyledP>
-              {choices.length > 0 ? (
-                <FacetDiv>
-                  <StyledP>
-                    Filter:{' '}
-                    {choices.map((choice: any) => (
-                      <React.Fragment key={choice}>
-                        <strong>{choice}</strong>{' '}
-                        <span
-                          style={{ color: 'blue', cursor: 'pointer' }}
-                          onClick={() =>
-                            setChoices(choices.filter((c: any) => c != choice))
-                          }
-                        >
-                          [x]
-                        </span>
-                        ,{' '}
+
+              <Tabs
+                selectedIndex={tabIndex}
+                onSelect={(index) => {
+                  setTabIndex(index)
+                  sessionStorage.setItem('__tab_index', index.toString())
+                }}
+              >
+                <TabList style={{ marginLeft: 6 }}>
+                  <Tab>Aufgaben ({ranking.current.length})</Tab>
+                  <Tab>Erklärungen ({ranking2.current.length})</Tab>
+                </TabList>
+
+                <TabPanel>
+                  <HSpace amount={30} />
+                  {choices.length > 0 ? (
+                    <FacetDiv>
+                      <StyledP>
+                        Filter:{' '}
+                        {choices.map((choice: any) => (
+                          <React.Fragment key={choice}>
+                            <strong>{choice}</strong>{' '}
+                            <span
+                              style={{ color: 'blue', cursor: 'pointer' }}
+                              onClick={() =>
+                                setChoices(
+                                  choices.filter((c: any) => c != choice)
+                                )
+                              }
+                            >
+                              [x]
+                            </span>
+                            ,{' '}
+                          </React.Fragment>
+                        ))}
+                      </StyledP>
+                    </FacetDiv>
+                  ) : null}
+                  {choices.length == 0 && (
+                    <CategorySelector
+                      counts={counts.current.age}
+                      heading="Altersstufe"
+                      choices={choices}
+                      setChoices={setChoices}
+                    />
+                  )}
+                  {ranking.current
+                    .slice(0, limit)
+                    .map(({ id, explain }: any) => (
+                      <React.Fragment key={id}>
+                        <Document id={id} explain={explain} />
                       </React.Fragment>
                     ))}
-                  </StyledP>
-                </FacetDiv>
-              ) : null}
-              {choices.length == 0 && (
-                <CategorySelector
-                  counts={counts.current.age}
-                  heading="Altersstufe"
-                  choices={choices}
-                  setChoices={setChoices}
-                />
-              )}
-              {ranking.current.slice(0, limit).map(({ id, explain }: any) => (
-                <React.Fragment key={id}>
-                  <Document id={id} explain={explain} />
-                </React.Fragment>
-              ))}
-              {ranking.current.length > limit && (
-                <StyledP>
-                  <button
-                    onClick={() => {
-                      setLimit(limit + 10)
-                    }}
-                  >
-                    Mehr anzeigen
-                  </button>
-                </StyledP>
-              )}
+                  {ranking.current.length > limit && (
+                    <StyledP>
+                      <button
+                        onClick={() => {
+                          setLimit(limit + 10)
+                        }}
+                      >
+                        Mehr anzeigen
+                      </button>
+                    </StyledP>
+                  )}
+                </TabPanel>
+                <TabPanel>
+                  {ranking2.current.slice(0, limit2).map(({ id }: any) => (
+                    <React.Fragment key={id}>
+                      <HSpace amount={30} />
+                      <div style={{ display: 'flex', alignItems: 'baseline' }}>
+                        <StyledH3 style={{ marginRight: '5px' }}>
+                          <Link href={`/${id}`}>
+                            {searchIndex.docs[id].title}
+                          </Link>
+                        </StyledH3>
+                        <small>
+                          [{type2string(searchIndex.docs[id].type)}]
+                        </small>
+                      </div>
+                      <StyledP>{searchIndex.docs[id].highlight} </StyledP>
+                    </React.Fragment>
+                  ))}
+                  {ranking2.current.length > limit2 && (
+                    <StyledP>
+                      <button
+                        onClick={() => {
+                          setLimit2(limit2 + 10)
+                        }}
+                      >
+                        Mehr anzeigen
+                      </button>
+                    </StyledP>
+                  )}
+                  <HSpace amount={30} />
+                </TabPanel>
+              </Tabs>
             </>
           ) : (
             <StyledP>Suchindex wird geladen ...</StyledP>
@@ -229,6 +332,12 @@ export function Explore() {
       </MaxWidthDiv>
     </RelativeContainer>
   )
+}
+
+function type2string(type: string) {
+  if (type == 'Article') return 'Artikel'
+  if (type == 'CoursePage') return 'Kurs'
+  return type
 }
 
 const autocompleteStopwords = ['zu', 'zur', 'zum', 'und', 'aufgaben']
@@ -314,7 +423,7 @@ function InputForm(props: any) {
   return (
     <>
       <div style={{ display: 'flex' }}>
-        <div style={{ width: '20px' }} />
+        <div style={{ width: '14px' }} />
         <Autosuggest
           suggestions={suggestions}
           onSuggestionsFetchRequested={throttled}
@@ -347,6 +456,11 @@ function InputForm(props: any) {
           Los
         </button>
       </div>
+      <StyledP>
+        <small style={{ fontSize: '0.7em' }}>
+          Stand Dezember 2020, nur konvertierte Inhalte
+        </small>
+      </StyledP>
       <HSpace amount={40} />
     </>
   )
@@ -434,7 +548,11 @@ function Document({ id, explain }: any) {
       <HSpace amount={60} />
       <p style={{ textAlign: 'right' }}>
         <small>
-          Aufgabe <Link href={`/${id}`}>{id}</Link> ({explain})
+          Aufgabe <Link href={`/${id}`}>{id}</Link> (
+          <span title={explain} style={{ cursor: 'pointer' }}>
+            Details
+          </span>
+          )
         </small>
       </p>
       <Lazy>
@@ -456,7 +574,7 @@ function calculateScore(id: any, words: string[], searchIndex: any) {
     words,
     searchIndex.tokens,
     searchIndex.payloads[id].docLength,
-    searchIndex
+    searchIndex.lengthCache
   )
 
   //console.log('weights', weightTask, weightSolution, weightTax)
@@ -489,6 +607,26 @@ function calculateScore(id: any, words: string[], searchIndex: any) {
   }
 }
 
+function calculateScore2(id: any, words: string[], searchIndex: any) {
+  // task score
+  const { weight, explain } = calculateTFIDF(
+    id,
+    words,
+    searchIndex.tokens2,
+    searchIndex.docs[id].length,
+    searchIndex.lengthCache2
+  )
+
+  //console.log(id, weight, penaltyFactor)
+
+  //console.log('parts', searchIndex.payloads[id].parts)
+
+  return {
+    score: weight,
+    explain,
+  }
+}
+
 function getLinkedEntityPenalty(amount: any) {
   if (amount == 0) return 0.45
   return 1
@@ -499,7 +637,7 @@ function calculateTFIDF(
   words: any,
   tokens: any,
   length: any,
-  searchIndex: any
+  lengthCache: any
 ) {
   let score = 0
   let explain = ''
@@ -510,8 +648,7 @@ function calculateTFIDF(
       if (token[id]) {
         occurCount++
         const tf = Math.sqrt(Math.min(token[id], 6))
-        const idf =
-          Math.log(4000 / ((searchIndex.lengthCache[word] as number) + 1)) + 1
+        const idf = Math.log(4000 / ((lengthCache[word] as number) + 1)) + 1
         score += tf * idf
         explain += `[${word} tf:${round2(tf)} idf:${round2(idf)}] `
         //console.log('idf', idf)
@@ -531,7 +668,7 @@ function calculateTFIDF(
 }
 
 const FacetDiv = styled.div`
-  background-color: ${(props) => props.theme.colors.lightBlueBackground};
+  background-color: ${(props) => props.theme.colors.bluewhite};
   padding-top: 20px;
   padding-bottom: 1px;
 `
