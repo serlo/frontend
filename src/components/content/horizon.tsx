@@ -33,7 +33,7 @@ const Wrapper = styled.aside`
   padding-top: 32px;
   padding-bottom: 24px;
   margin-left: -10px;
-  @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
+  @media (max-width: ${(props) => props.theme.breakpointsMax.sm}) {
     flex-direction: column;
   }
 `
@@ -53,7 +53,7 @@ const Item = styled(Link)`
     color: ${(props) => props.theme.colors.darkgray};
   }
 
-  @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
+  @media (max-width: ${(props) => props.theme.breakpointsMax.sm}) {
     /* quickfix: slider or not loading them at all would be better */
     display: none;
     &:first-child {

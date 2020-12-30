@@ -10,7 +10,11 @@ import dynamic from 'next/dynamic'
 import React from 'react'
 import styled from 'styled-components'
 
-import { makeGreenTransparentButton, inputFontReset } from '../../helper/css'
+import {
+  makeGreenTransparentButton,
+  makeGreenButton,
+  inputFontReset,
+} from '../../helper/css'
 import {
   AuthorToolsHoverMenuProps,
   AuthorToolsData,
@@ -18,6 +22,7 @@ import {
 import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { theme } from '@/theme'
 
 const AuthorToolsHoverMenu = dynamic<AuthorToolsHoverMenuProps>(() =>
   import('./author-tools-hover-menu').then((mod) => mod.AuthorToolsHoverMenu)
@@ -29,6 +34,7 @@ interface UserToolsProps {
   hideEdit: boolean
   data: AuthorToolsData
   unrevisedRevision?: number
+  aboveContent?: boolean
 }
 
 export interface UserToolsData {
@@ -41,6 +47,7 @@ export function UserTools({
   hideEdit,
   data,
   unrevisedRevision,
+  aboveContent,
 }: UserToolsProps) {
   const { strings } = useInstanceData()
   const auth = useAuth()
@@ -51,11 +58,25 @@ export function UserTools({
   const loggedInData = useLoggedInData()
   const showHistory = unrevisedRevision !== undefined && unrevisedRevision > 0
 
+  function getBrowserWidth() {
+    return (
+      window.innerWidth ||
+      document.documentElement.clientWidth ||
+      document.body.clientWidth
+    )
+  }
+
   if (data.type === 'Profile') return renderProfileMenu()
 
   return (
-    <AbsoluteWrapper>
-      <BoxWrapper>
+    <AbsoluteWrapper hideOnLarge={aboveContent}>
+      <BoxWrapper>{renderButtons()}</BoxWrapper>
+    </AbsoluteWrapper>
+  )
+
+  function renderButtons() {
+    return (
+      <>
         {(!hideEdit || (loaded && auth.current)) && (
           <>
             {renderEdit()}
@@ -63,10 +84,10 @@ export function UserTools({
           </>
         )}
         {renderShare()}
-        {renderTools()}
-      </BoxWrapper>
-    </AbsoluteWrapper>
-  )
+        {renderExtraTools()}
+      </>
+    )
+  }
 
   function renderEdit() {
     const editHref =
@@ -78,7 +99,7 @@ export function UserTools({
 
     return (
       !showHistory && (
-        <IconButton href={editHref}>
+        <IconButton href={editHref} hideOnSmall>
           <FontAwesomeIcon icon={faPencilAlt} size="1x" /> {strings.edit.button}
         </IconButton>
       )
@@ -104,17 +125,18 @@ export function UserTools({
     )
   }
 
-  function renderTools() {
+  function renderExtraTools() {
     if (!(loaded && auth.current && loggedInData && data)) return null
+    const isLargeScreen = getBrowserWidth() > theme.breakpointsInt.lg
     return (
       <Tippy
         interactive
         content={<AuthorToolsHoverMenu data={data} />}
-        placement="left-end"
+        placement={isLargeScreen ? 'left-end' : 'bottom'}
         delay={[0, 300]}
-        interactiveBorder={40}
+        interactiveBorder={isLargeScreen ? 40 : 10}
       >
-        <IconButton as="button">
+        <IconButton as="button" hideOnSmall>
           <FontAwesomeIcon icon={faTools} size="1x" />{' '}
           {loggedInData.strings.tools}
         </IconButton>
@@ -137,34 +159,57 @@ export function UserTools({
   }
 }
 
-const AbsoluteWrapper = styled.nav`
-  position: absolute;
-  right: 32px;
-  bottom: 32px;
-  height: 100%;
-  display: flex;
-  align-items: flex-end;
-`
-
-const BoxWrapper = styled.div`
-  position: sticky;
-  bottom: 32px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  @media (max-width: ${(props) => props.theme.breakpoints.lg}) {
-    display: none;
+const AbsoluteWrapper = styled.nav<{ hideOnLarge?: boolean }>`
+  @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
+    position: absolute;
+    right: 32px;
+    bottom: 32px;
+    height: 100%;
+    align-items: flex-end;
+    display: ${(props) => (props.hideOnLarge ? 'none' : 'flex')};
   }
 `
 
-const IconButton = styled.a`
-  ${makeGreenTransparentButton}
-  ${inputFontReset}
-  font-weight: bold;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  margin: 4px;
-  svg {
-    margin-right: 2px;
+const BoxWrapper = styled.div`
+  @media (max-width: ${(props) => props.theme.breakpointsMax.lg}) {
+    display: block;
+    margin-right: 16px;
+    margin-top: -15px;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
+    position: sticky;
+    bottom: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+`
+
+const IconButton = styled.a<{ hideOnSmall?: boolean }>`
+  @media (max-width: ${(props) => props.theme.breakpointsMax.sm}) {
+    display: ${(props) => (props.hideOnSmall ? 'none' : 'block')} !important;
+  }
+
+  @media (max-width: ${(props) => props.theme.breakpointsMax.lg}) {
+    ${makeGreenButton}
+
+    font-size: 0.9rem;
+    margin: 2px;
+    margin-left: 3px;
+  }
+
+  @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
+    ${makeGreenTransparentButton}
+    ${inputFontReset}
+    padding-top: 4px;
+    padding-bottom: 4px;
+    margin: 4px;
+    svg {
+      margin-right: 2px;
+    }
   }
 `

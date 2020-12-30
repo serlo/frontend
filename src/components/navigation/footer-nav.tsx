@@ -69,12 +69,12 @@ const ColWithPadding = styled.div`
     flex-basis: 0;
   }
   @media (max-width: ${(props) =>
-      props.theme.breakpoints.md}) and (min-width: ${(props) =>
+      props.theme.breakpointsMax.md}) and (min-width: ${(props) =>
       props.theme.breakpoints.sm}) {
     flex-basis: 50%;
     max-width: 50%;
   }
-  @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
+  @media (max-width: ${(props) => props.theme.breakpointsMax.sm}) {
     flex-basis: 100%;
     max-width: 100%;
   }
@@ -117,7 +117,7 @@ const NavLi = styled.li`
 `
 
 const NavLink = styled(Link)`
-  @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
+  @media (max-width: ${(props) => props.theme.breakpointsMax.sm}) {
     display: inline-block;
     padding: 8px 0;
   }

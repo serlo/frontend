@@ -293,7 +293,7 @@ const Header = styled.h2`
   vertical-align: top;
   margin-top: 1rem;
 
-  @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
+  @media (max-width: ${(props) => props.theme.breakpointsMax.sm}) {
     &:hover {
       color: ${(props) => props.theme.colors.brand};
       background-color: transparent;

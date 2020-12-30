@@ -68,7 +68,7 @@ const PartnerLogos = styled.div`
 
 const PartnerLogo = styled.img`
   max-height: 40px;
-  @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
+  @media (max-width: ${(props) => props.theme.breakpointsMax.sm}) {
     margin-bottom: 15px;
   }
 `

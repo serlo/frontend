@@ -98,7 +98,7 @@ export const ProfileDonationForm = ({
 const StyledIframe = styled.iframe`
   border: 0;
 
-  @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
+  @media (max-width: ${(props) => props.theme.breakpointsMax.sm}) {
     width: 100%;
   }
 `
