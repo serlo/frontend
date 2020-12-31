@@ -1484,6 +1484,11 @@
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.2.5.tgz#8eed982e2ee6f7f4e44c253e12962980791efd46"
   integrity sha512-6U71C2Wp7r5XtFtQzYrW5iKFT67OixrSxjI4MptCHzdSVlgabczzqLe0ZSgnub/5Kp4hSbpDB1tMytZY9pwxxA==
 
+"@entkenntnis/serlo-searchindex@^0.20.121":
+  version "0.20.121"
+  resolved "https://registry.yarnpkg.com/@entkenntnis/serlo-searchindex/-/serlo-searchindex-0.20.121.tgz#75f584b16a92e416f285fb332b04cd795520c925"
+  integrity sha512-3LFrNykDe5EzKsWlnCpQcL+Hrho/S3nIIq0I+Oxx0ELqfs69USbsFdqwkfIGMuEIy4u4yZMh/j9noJt9S55RIg==
+
 "@eslint/eslintrc@^0.2.2":
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/@eslint/eslintrc/-/eslintrc-0.2.2.tgz#d01fc791e2fc33e88a29d6f3dc7e93d0cd784b76"

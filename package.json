@@ -27,6 +27,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@entkenntnis/serlo-searchindex": "^0.20.121",
     "@fortawesome/fontawesome-svg-core": "^1.0.0",
     "@fortawesome/free-brands-svg-icons": "^5.0.0",
     "@fortawesome/free-regular-svg-icons": "^5.0.0",
