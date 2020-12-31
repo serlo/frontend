@@ -215,8 +215,9 @@ function InputForm(props: any) {
   )
 
   React.useEffect(() => {
-    setInputValue(sessionStorage.getItem('__explore_query') ?? '')
-    props.runSearch(inputValue)
+    const value = sessionStorage.getItem('__explore_query') ?? ''
+    setInputValue(value)
+    props.runSearch(value)
   }, [])
 
   return (
