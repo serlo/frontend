@@ -142,7 +142,7 @@ export function Explore() {
                   <Document id={id} explain={explain} />
                 </React.Fragment>
               ))}
-              {ranking.current.length > limit && (
+              {result.exercises.length > limit && (
                 <StyledP>
                   <button
                     onClick={() => {
@@ -169,7 +169,7 @@ export function Explore() {
                     <StyledP>{highlight} </StyledP>
                   </React.Fragment>
                 ))}
-              {ranking2.current.length > limit2 && (
+              {result.documents.length > limit2 && (
                 <StyledP>
                   <button
                     onClick={() => {
