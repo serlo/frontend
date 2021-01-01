@@ -22,10 +22,8 @@ import { SearchQueryResponse } from '@/pages/api/search/query'
 import 'react-tabs/style/react-tabs.css'
 
 export function Explore() {
-  const ranking = React.useRef<any>([])
   const counts = React.useRef<any>({ age: {} })
 
-  const ranking2 = React.useRef<any>([])
   const [limit2, setLimit2] = React.useState(10)
 
   const [choices, setChoices] = React.useState<any>([])
