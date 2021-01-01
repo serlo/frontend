@@ -13,20 +13,19 @@ export function Math(props: MathProps) {
   const { inline = false } = props
 
   // make empty formulas clickable
-  const formula = props.formula || '\\,'
+  let formula = props.formula || '\\,'
 
-  const regex = /\\mathrm([ {])/gm
-  const nonserif = '\\sf ' + formula.replace(regex, '$1')
+  // render block formula with displaystyle
+  if (!inline) {
+    formula = '\\displaystyle ' + formula
+  }
 
   // block formular use displaystyle
-  const html = KaTeX.renderToString(
-    inline ? nonserif : '\\displaystyle' + nonserif,
-    {
-      displayMode: false,
-      throwOnError: false,
-      strict: false,
-    }
-  )
+  const html = KaTeX.renderToString(formula, {
+    displayMode: false,
+    throwOnError: false,
+    strict: false,
+  })
 
   return <KaTeXSpan dangerouslySetInnerHTML={{ __html: html }} />
 }
