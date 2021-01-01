@@ -45,6 +45,13 @@ colors.h23 = colors.darkgray // should be 'darkgray'
 colors.linkColor = brand //was '#337AB7'
 colors.linkHoverColor = shade(0.3, colors.linkColor) // was '#23527c' (even another level of recursion)
 
+const breakpointsInt = {
+  mobile: 500,
+  sm: 800,
+  md: 1024,
+  lg: 1216,
+}
+
 export const theme = {
   spacing: {
     mb: {
@@ -57,11 +64,18 @@ export const theme = {
     },
   },
   colors: colors,
+  breakpointsInt: breakpointsInt,
+  breakpointsMax: {
+    mobile: `${breakpointsInt.mobile - 1}px`,
+    sm: `${breakpointsInt.sm - 1}px`,
+    md: `${breakpointsInt.md - 1}px`,
+    lg: `${breakpointsInt.lg - 1}px`,
+  },
   breakpoints: {
-    mobile: '500px',
-    sm: '800px',
-    md: '1024px',
-    lg: '1216px',
+    mobile: `${breakpointsInt.mobile}px`,
+    sm: `${breakpointsInt.sm}px`,
+    md: `${breakpointsInt.md}px`,
+    lg: `${breakpointsInt.lg}px`,
   },
   defaults: {
     sideSpacingMobile: '16px',

@@ -177,7 +177,7 @@ export function Menu({ data, auth }: MenuProps) {
 
 const ResponsiveNav = styled.nav`
   min-height: 50px;
-  @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
+  @media (max-width: ${(props) => props.theme.breakpointsMax.sm}) {
     display: none;
   }
 `

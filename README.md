@@ -24,7 +24,7 @@ Staging deployment: [frontend-git-staging.serlo.vercel.app](https://frontend-git
 
 ### Local installation
 
-You can run the frontend on your local system. For that, install [Node.js](https://nodejs.org/en/) (current LTS) and [yarn](https://classic.yarnpkg.com/en/docs/install).
+You can run the frontend on your local system. For that, install [Node.js v12](https://nodejs.org/en/) and [yarn](https://classic.yarnpkg.com/en/docs/install).
 
 Then, run following commands:
 

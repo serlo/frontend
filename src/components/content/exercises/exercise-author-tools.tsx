@@ -7,20 +7,20 @@ import styled from 'styled-components'
 import {
   AuthorToolsData,
   AuthorToolsHoverMenuProps,
-} from '../navigation/author-tools-hover-menu'
+} from '../../navigation/author-tools-hover-menu'
 import { makeTransparentButton } from '@/helper/css'
 
-export interface AuthorToolsProps {
+export interface ExerciseAuthorToolsProps {
   data: AuthorToolsData
 }
 
 const AuthorToolsHoverMenu = dynamic<AuthorToolsHoverMenuProps>(() =>
-  import('../navigation/author-tools-hover-menu').then(
+  import('../../navigation/author-tools-hover-menu').then(
     (mod) => mod.AuthorToolsHoverMenu
   )
 )
 
-export function AuthorTools({ data }: AuthorToolsProps) {
+export function ExerciseAuthorTools({ data }: ExerciseAuthorToolsProps) {
   return (
     <Tippy
       interactive
@@ -37,20 +37,25 @@ export function AuthorTools({ data }: AuthorToolsProps) {
 }
 
 const EditButton = styled.a`
-  ${makeTransparentButton}
+  display: none;
 
-  text-align: center;
-  color: ${(props) => props.theme.colors.dark1};
-  background-color: ${(props) => props.theme.colors.lightBackground};
-  font-size: 1rem;
-  line-height: 2rem;
-  width: 2rem;
-  height: 2rem;
-  padding: 0;
-  margin-left: 5px;
+  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
+    display: inline;
+    ${makeTransparentButton}
 
-  &:hover {
-    background-color: ${(props) => props.theme.colors.brand};
-    color: #fff;
+    text-align: center;
+    color: ${(props) => props.theme.colors.dark1};
+    background-color: ${(props) => props.theme.colors.lightBackground};
+    font-size: 1rem;
+    line-height: 2rem;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    margin-left: 5px;
+
+    &:hover {
+      background-color: ${(props) => props.theme.colors.brand};
+      color: #fff;
+    }
   }
 `

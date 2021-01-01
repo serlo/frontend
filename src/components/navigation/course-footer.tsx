@@ -37,7 +37,7 @@ export function CourseFooter({ nextHref }: CourseFooterProps) {
 
 const Wrapper = styled.nav`
   margin: 40px 0 30px 0;
-  @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
+  @media (max-width: ${(props) => props.theme.breakpointsMax.sm}) {
     background-color: ${(props) => props.theme.colors.lightBackground};
   }
   padding: 20px 0;
