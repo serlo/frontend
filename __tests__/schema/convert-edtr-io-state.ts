@@ -575,7 +575,7 @@ describe('text types', () => {
     expect(result).toEqual([
       {
         type: 'inline-math',
-        formula: '\\tan^{-1}',
+        formula: '\\sf \\tan^{-1}',
       },
     ])
   })
@@ -587,7 +587,7 @@ describe('text types', () => {
       inline: false,
       children: [{ text: '' }],
     })
-    expect(result).toEqual([{ type: 'math', formula: 'Math Block' }])
+    expect(result).toEqual([{ type: 'math', formula: '\\sf Math Block' }])
   })
 
   test('text-type: unodered-list', () => {
