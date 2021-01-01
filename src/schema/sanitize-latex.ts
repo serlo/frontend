@@ -10,7 +10,7 @@ const envStart = /(\\begin{(pmatrix|vmatrix|cases)}|\\begin{array}{[a-z]+})/gm
 
 export function sanitizeLatex(formula: string): string {
   // ignore empty formulas
-  if (!formula.trim()) return formula
+  if (!formula || !formula.trim()) return formula
 
   // mathrm is not necessary anymore
   formula = formula.replace(regexMathRm, '')

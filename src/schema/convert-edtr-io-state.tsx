@@ -346,7 +346,7 @@ function convertSlate(node: SlateBlockElement) {
       {
         type: 'math',
         formula: sanitizeLatex(node.src),
-        debugOriginalFormula: node.src,
+        //debugOriginalFormula: node.src,
       },
     ]
   }
@@ -355,7 +355,7 @@ function convertSlate(node: SlateBlockElement) {
       {
         type: 'inline-math',
         formula: sanitizeLatex(node.src),
-        debugOriginalFormula: node.src,
+        //debugOriginalFormula: node.src,
       },
     ]
   }
