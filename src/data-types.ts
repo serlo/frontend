@@ -375,6 +375,7 @@ export interface FrontendInlineMathNode {
   type: 'inline-math'
   formula: string
   children?: undefined
+  debugOriginalFormula?: string
 }
 
 export interface FrontendPNode {
@@ -394,6 +395,7 @@ export interface FrontendMathNode {
   formula: string
   alignLeft?: boolean
   children?: undefined
+  debugOriginalFormula?: string
 }
 
 export interface FrontendImgNode {
