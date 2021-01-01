@@ -3,7 +3,6 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 
 import { LicenseNotice } from '../license-notice'
-import { ExerciseAuthorTools } from './exercise-author-tools'
 import { ExerciseNumbering } from './exercise-numbering'
 import { InputExercise } from './input-exercise'
 import { ScMcExercise } from './sc-mc-exercise'
