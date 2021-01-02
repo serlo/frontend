@@ -9,6 +9,7 @@ import styled, { css } from 'styled-components'
 import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
 import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
+import { useUserData } from '@/contexts/user-data-context'
 import { makeGreenButton, inputFontReset, makeMargin } from '@/helper/css'
 
 export interface SendProps {
@@ -34,10 +35,12 @@ export function CommentForm({
 }: CommentFormProps) {
   const [commentValue, setCommentValue] = React.useState('')
   const { strings } = useInstanceData()
-
   const auth = useAuth()
+  const request = createAuthAwareGraphqlFetch(auth)
+  const user = useUserData()
 
-  function onSendComment() {
+  async function onSendComment() {
+    if (user === null) return
     const input = {
       query: gql`
         mutation createThread(
@@ -60,11 +63,10 @@ export function CommentForm({
         title: '',
         content: commentValue,
         objectId: parent_id,
-        authorId: 1, //TODO: would be easier to use username… auth.current?.username
+        authorId: user.id,
       },
     }
-    const graphqlFetch = createAuthAwareGraphqlFetch(auth)
-    const thread = graphqlFetch(JSON.stringify(input))
+    const thread = await request(JSON.stringify(input))
     console.log(thread)
   }
 

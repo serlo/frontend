@@ -1,8 +1,10 @@
+import { gql } from 'graphql-request'
 import { NextPage } from 'next'
 import dynamic from 'next/dynamic'
 import React from 'react'
 import { notify } from 'react-notify-toast'
 
+import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
 import { useAuth } from '@/auth/use-auth'
 import { RevisionProps } from '@/components/author/revision'
 import { EntityProps } from '@/components/content/entity'
@@ -23,6 +25,7 @@ import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
 import { OriginProvider } from '@/contexts/origin-context'
 import { ToastNoticeProvider } from '@/contexts/toast-notice-context'
+import { UserDataProvider } from '@/contexts/user-data-context'
 import {
   InitialProps,
   InstanceData,
@@ -30,6 +33,7 @@ import {
   ErrorData,
   LoggedInData,
   LicenseDetailData,
+  FrontendUserData,
 } from '@/data-types'
 import {
   fetcherAdditionalData,
@@ -123,6 +127,14 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
     loggedInData,
   ])
 
+  const [userData, setUserData] = React.useState<FrontendUserData | null>(
+    getCachedUserData()
+  )
+
+  const request = createAuthAwareGraphqlFetch(auth)
+
+  React.useEffect(fetchUserData, [auth, userData, request])
+
   const toastNotice = notify.createShowQueue()
 
   // dev
@@ -134,9 +146,11 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
       <OriginProvider value={initialProps.origin}>
         <InstanceDataProvider value={instanceData}>
           <LoggedInDataProvider value={loggedInData}>
-            <ToastNoticeProvider value={toastNotice}>
-              {renderPage(initialProps.pageData)}
-            </ToastNoticeProvider>
+            <UserDataProvider value={userData}>
+              <ToastNoticeProvider value={toastNotice}>
+                {renderPage(initialProps.pageData)}
+              </ToastNoticeProvider>
+            </UserDataProvider>
           </LoggedInDataProvider>
         </InstanceDataProvider>
       </OriginProvider>
@@ -178,6 +192,49 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
           JSON.stringify(json)
         )
         setLoggedInData(json)
+      })()
+    }
+  }
+
+  function getCachedUserData() {
+    if (typeof window === 'undefined') return null
+    const cacheValue = sessionStorage.getItem(
+      `___userData_${instanceData.lang}`
+    )
+    if (!cacheValue) return null
+    return JSON.parse(cacheValue) as FrontendUserData
+  }
+
+  function fetchUserData() {
+    if (auth.current && !userData) {
+      if (auth.current === null) return
+      void (async () => {
+        try {
+          const res = (await request(
+            JSON.stringify({
+              query: gql`
+                query uuid($path: String!) {
+                  uuid(alias: { instance: de, path: $path }) {
+                    ... on User {
+                      id
+                    }
+                  }
+                }
+              `,
+              variables: {
+                path: `/user/profile/${auth.current!.username}`,
+              },
+            })
+          )) as { uuid: { id: number } }
+          const fetchedUserData = {
+            id: res.uuid.id,
+            name: auth.current!.username,
+          }
+          sessionStorage.setItem(`___userData`, JSON.stringify(fetchedUserData))
+          setUserData(fetchedUserData)
+        } catch (e) {
+          //
+        }
       })()
     }
   }

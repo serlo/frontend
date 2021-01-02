@@ -21,7 +21,7 @@ export function UserLink({ user, withIcon, className }: UserLinkProps) {
     <>
       <Link href={`/user/profile/${user.id}`} className={className}>
         {withIcon && <StyledFontAwesomeIcon icon={faUser} />}
-        {user.username}
+        {user.name}
         {renderBadges()}
       </Link>
     </>

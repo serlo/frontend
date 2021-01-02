@@ -240,7 +240,7 @@ export interface HorizonEntry {
 // User data exept for profiles use this structure
 
 export interface FrontendUserData {
-  username: string
+  name: string
   id: number
   activeAuthor?: boolean
   activeDonor?: boolean
