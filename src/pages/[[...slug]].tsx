@@ -227,8 +227,8 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
             })
           )) as { uuid: { id: number } }
           const fetchedUserData = {
+            username: auth.current!.username,
             id: res.uuid.id,
-            name: auth.current!.username,
           }
           sessionStorage.setItem(`___userData`, JSON.stringify(fetchedUserData))
           setUserData(fetchedUserData)
