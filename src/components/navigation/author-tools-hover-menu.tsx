@@ -434,6 +434,15 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
           if (res.status === 200 && location.href.startsWith(res.url)) {
             NProgress.done()
             showToastNotice(`'${text}' erfolgreich `, 'success')
+
+            if (
+              url.startsWith('/subscribe') ||
+              url.startsWith('/unsubscribe')
+            ) {
+              setSubscribed(!isSubscribed)
+              return
+            }
+
             setTimeout(() => {
               refreshFromAPI()
             }, 1500)
