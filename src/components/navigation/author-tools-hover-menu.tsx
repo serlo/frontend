@@ -435,11 +435,12 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
             NProgress.done()
             showToastNotice(`'${text}' erfolgreich `, 'success')
 
-            if (
-              url.startsWith('/subscribe') ||
-              url.startsWith('/unsubscribe')
-            ) {
-              setSubscribed(!isSubscribed)
+            if (url.startsWith('/subscribe/')) {
+              setSubscribed(true)
+              return
+            }
+            if (url.startsWith('/unsubscribe/')) {
+              setSubscribed(false)
               return
             }
 
