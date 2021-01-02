@@ -32,7 +32,7 @@ export function InputExercise({ data }: InputExerciseProps) {
         value={value}
         onChange={(e) => setValue(e.target.value)}
         onKeyDown={(e) => {
-          if (e.keyCode == 13) evaluate()
+          if (e.key == 'Enter') evaluate()
         }}
         placeholder={strings.content.yourAnswer}
       />{' '}
