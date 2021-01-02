@@ -127,7 +127,22 @@ export function UserTools({
 
   function renderExtraTools() {
     if (!(loaded && auth.current && loggedInData && data)) return null
+    const supportedTypes = [
+      'Page',
+      'Article',
+      'Video',
+      'Applet',
+      'Event',
+      'CoursePage',
+      'Taxonomy',
+      '_ExerciseInline',
+      '_ExerciseGroupInline',
+      '_SolutionInline',
+    ]
+    if (supportedTypes.indexOf(data.type) === -1) return null
+
     const isLargeScreen = getBrowserWidth() > theme.breakpointsInt.lg
+
     return (
       <Tippy
         interactive
