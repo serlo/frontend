@@ -87,6 +87,10 @@ async function apiRequest(
     }
   }
 
+  if (uuid.__typename === 'Solution') {
+    return await apiRequest(`/${uuid.exercise.id}`, instance)
+  }
+
   const secondaryNavigationData = createNavigation(uuid)
   const breadcrumbsData = createBreadcrumbs(uuid)
   const horizonData = instance == 'de' ? buildHorizonData() : undefined
@@ -491,7 +495,7 @@ async function apiRequest(
     kind: 'error',
     errorData: {
       code: 404,
-      message: 'Content type not supported: ' + uuid.__typename,
+      message: `Unknown content type!`,
     },
   }
 }
