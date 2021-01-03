@@ -9,13 +9,13 @@ import { BreadcrumbsData, BreadcrumbEntry } from '@/data-types'
 import { makeTransparentButton, makeMargin } from '@/helper/css'
 
 export interface BreadcrumbsProps {
-  data: BreadcrumbsData
+  data?: BreadcrumbsData
   isTaxonomy: boolean
 }
 
 export function Breadcrumbs({ data, isTaxonomy }: BreadcrumbsProps) {
   if (!data || data.length < 1) {
-    return null
+    return <BreadcrumbWrapper> </BreadcrumbWrapper>
   }
 
   return (

@@ -42,12 +42,13 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
   const instanceData = useInstanceData()
   const showToastNotice = useToastNotice()
   const refreshFromAPI = useRefreshFromAPI()
-  const [isSubscribed, setSubscribed] = React.useState(false)
+  const [isSubscribed, setSubscribed] = React.useState<boolean | null>(null)
 
   const auth = useAuth()
   const request = createAuthAwareGraphqlFetch(auth)
 
   React.useEffect(() => {
+    if (isSubscribed !== null) return
     void (async () => {
       try {
         const res = await request(
@@ -70,7 +71,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
         //
       }
     })()
-  }, [request, data.id])
+  }, [request, data.id, isSubscribed])
 
   const router = useRouter()
   if (!loggedInData) return null
@@ -434,6 +435,15 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
           if (res.status === 200 && location.href.startsWith(res.url)) {
             NProgress.done()
             showToastNotice(`'${text}' erfolgreich `, 'success')
+
+            if (
+              url.startsWith('/subscribe') ||
+              url.startsWith('/unsubscribe')
+            ) {
+              setSubscribed(!isSubscribed)
+              return false
+            }
+
             setTimeout(() => {
               refreshFromAPI()
             }, 1500)
@@ -452,6 +462,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
     function showErrorNotice() {
       NProgress.done()
       showToastNotice('Something went wrong… Please try again.', 'warning')
+      return false
     }
   }
 }

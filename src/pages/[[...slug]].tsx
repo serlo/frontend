@@ -237,15 +237,13 @@ function renderPage(page: PageData) {
               {page.newsletterPopup && <NewsletterPopup />}
               <RelativeContainer>
                 <MaxWidthDiv showNav={!!page.secondaryNavigationData}>
-                  {page.breadcrumbsData && (
-                    <Breadcrumbs
-                      data={page.breadcrumbsData}
-                      isTaxonomy={
-                        page.kind !== 'single-entity' &&
-                        !(page.metaData?.contentType == 'topic-folder')
-                      }
-                    />
-                  )}
+                  <Breadcrumbs
+                    data={page.breadcrumbsData}
+                    isTaxonomy={
+                      page.kind !== 'single-entity' &&
+                      !(page.metaData?.contentType == 'topic-folder')
+                    }
+                  />
                   <main>
                     {(() => {
                       if (page.kind === 'license-detail') {
