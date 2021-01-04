@@ -38,6 +38,7 @@ export function CommentForm({
   const request = createAuthAwareGraphqlFetch(auth)
   const user = auth.current
 
+  //TODO: Finish once legacy endpoint is done so we can test
   async function onSendComment() {
     if (user === null) return
     const input = {
