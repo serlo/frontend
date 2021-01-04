@@ -762,10 +762,10 @@ export interface LoggedInData {
 
 export enum UserRoles {
   Guest = 'guest',
-  Author = 'author',
+  Login = 'login',
   Moderator = 'moderator',
   Reviewer = 'reviewer',
-  Architect = 'architect',
+  TaxonomyManager = 'taxonomy-manager',
   PageBuilder = 'page-builder',
   Admin = 'admin',
   SysAdmin = 'sys-admin',

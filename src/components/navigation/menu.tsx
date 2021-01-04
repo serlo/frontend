@@ -6,7 +6,7 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 
 import { Link } from '../content/link'
-import { UnreadNotificationsCountProps } from './unread-notifications-count'
+import { UnreadNotificationsCountProps } from '../user-tools/unread-notifications-count'
 import { AuthPayload } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -15,7 +15,7 @@ import { makeTransparentButton } from '@/helper/css'
 import { getAuthData, shouldUseNewAuth } from '@/helper/feature-auth'
 
 const UnreadNotificationsCount = dynamic<UnreadNotificationsCountProps>(() =>
-  import('./unread-notifications-count').then(
+  import('../user-tools/unread-notifications-count').then(
     (mod) => mod.UnreadNotificationsCount
   )
 )

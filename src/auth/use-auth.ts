@@ -25,7 +25,7 @@ export function useAuth(): React.RefObject<AuthPayload> {
       return {
         username: decoded.username,
         id: decoded.id,
-        roles: [UserRoles.Admin, UserRoles.Author],
+        roles: [UserRoles.Admin, UserRoles.Login],
         token: access_token as string,
         refreshToken,
       }
