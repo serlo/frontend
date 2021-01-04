@@ -22,6 +22,7 @@ import {
 import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { UserRoles } from '@/data-types'
 import { theme } from '@/theme'
 
 const AuthorToolsHoverMenu = dynamic<AuthorToolsHoverMenuProps>(() =>
@@ -90,6 +91,13 @@ export function UserTools({
   }
 
   function renderEdit() {
+    if (
+      auth.current === null ||
+      auth.current?.roles.indexOf(UserRoles.PageBuilder) > -1
+    ) {
+      return null
+    }
+
     const editHref =
       data.type == 'Page'
         ? `/page/revision/create/${data.id}/${data.revisionId || ''}`
