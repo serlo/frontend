@@ -9,7 +9,6 @@ import styled, { css } from 'styled-components'
 import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
 import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
-import { useUserData } from '@/contexts/user-data-context'
 import { makeGreenButton, inputFontReset, makeMargin } from '@/helper/css'
 
 export interface SendProps {
@@ -37,7 +36,7 @@ export function CommentForm({
   const { strings } = useInstanceData()
   const auth = useAuth()
   const request = createAuthAwareGraphqlFetch(auth)
-  const user = useUserData()
+  const user = auth.current
 
   async function onSendComment() {
     if (user === null) return

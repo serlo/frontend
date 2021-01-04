@@ -17,10 +17,12 @@ export function useAuth(): React.RefObject<AuthPayload> {
       const { access_token, id_token } = JSON.parse(
         cookies['auth-token']
       ) as Token
-      const decoded = jwt_decode(id_token)
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+      const decoded = jwt_decode(id_token) as { username: string; id: number }
 
       return {
-        username: (decoded as { username: string }).username,
+        username: decoded.username,
+        id: decoded.id,
         token: access_token as string,
         refreshToken,
       }
@@ -40,6 +42,7 @@ export function useAuth(): React.RefObject<AuthPayload> {
 
 export type AuthPayload = {
   username: string
+  id: number
   token: string
   refreshToken(): Promise<void>
 } | null

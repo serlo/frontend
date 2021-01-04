@@ -64,6 +64,7 @@ async function useGraphqlSwrWithMockedAuth(
     // eslint-disable-next-line react-hooks/rules-of-hooks
     return useRef({
       username: 'username',
+      id: 1,
       token: 'token',
       async refreshToken() {},
     })
