@@ -914,3 +914,4 @@ The brother can pass a message to its sister by declaring the state in the paren
 ### How can I change the port of the dev server?
 
 You can change the port by running `yarn dev --port 8080`.
+Beware that authentication only works on the default port.

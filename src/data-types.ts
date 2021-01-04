@@ -757,3 +757,16 @@ export interface LoggedInData {
   authMenu: HeaderData
   strings: typeof loggedInData['strings']
 }
+
+// User roles
+
+export enum UserRoles {
+  Guest = 'guest',
+  Author = 'author',
+  Moderator = 'moderator',
+  Reviewer = 'reviewer',
+  Architect = 'architect',
+  PageBuilder = 'page-builder',
+  Admin = 'admin',
+  SysAdmin = 'sys-admin',
+}
