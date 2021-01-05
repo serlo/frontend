@@ -36,25 +36,18 @@ export function CommentForm({
   const { strings } = useInstanceData()
   const auth = useAuth()
   const request = createAuthAwareGraphqlFetch(auth)
-  const user = auth.current
 
   //TODO: Finish once legacy endpoint is done so we can test
   async function onSendComment() {
-    if (user === null) return
+    if (auth.current === null) return
     const input = {
       query: gql`
         mutation createThread(
           $title: String!
           $content: String!
           $objectId: Int!
-          $authorId: Int!
         ) {
-          createThread(
-            title: $title
-            content: $content
-            objectId: $objectId
-            authorId: $authorId
-          ) {
+          createThread(title: $title, content: $content, objectId: $objectId) {
             __typename
           }
         }
@@ -63,7 +56,6 @@ export function CommentForm({
         title: '',
         content: commentValue,
         objectId: parent_id,
-        authorId: user.id,
       },
     }
     const thread = await request(JSON.stringify(input))

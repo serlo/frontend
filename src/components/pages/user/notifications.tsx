@@ -225,26 +225,30 @@ export const Notifications: NextPage = () => {
   React.useEffect(() => {
     if (!mounted || auth.current === null || !response.data) return
 
-    response.data?.nodes
-      .filter((node) => node.unread === true)
-      .forEach((node) => {
-        //TODO: remove as soon as reworked mutation is deployed!
-        void setToRead(node.id)
-      })
-    async function setToRead(id: number) {
+    const unreadIds = response.data?.nodes.flatMap((node) =>
+      node.unread ? [node.id] : []
+    )
+    const setToRead = async () => {
       const input = {
         query: gql`
-          mutation setNotificationState($id: Int!, $unread: Boolean!) {
-            setNotificationState(id: $id, unread: $unread)
+          mutation setState($input: NotificationSetStateInput!) {
+            notification {
+              setState(input: $input) {
+                success
+              }
+            }
           }
         `,
         variables: {
-          id: id,
-          unread: false,
+          input: {
+            id: unreadIds,
+            unread: false,
+          },
         },
       }
       await createAuthAwareGraphqlFetch(auth)(JSON.stringify(input))
     }
+    void setToRead()
   }, [mounted, auth, response])
 
   if (!mounted) return null
