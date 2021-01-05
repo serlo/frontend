@@ -52,7 +52,7 @@ export function CourseNavigation({
 const Wrapper = styled.nav`
   margin-top: 25px;
 
-  @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
+  @media (max-width: ${(props) => props.theme.breakpointsMax.sm}) {
     background-color: ${(props) => props.theme.colors.lightBackground};
   }
   padding: 5px 0 22px 0;

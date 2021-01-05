@@ -9,13 +9,13 @@ import { BreadcrumbsData, BreadcrumbEntry } from '@/data-types'
 import { makeTransparentButton, makeMargin } from '@/helper/css'
 
 export interface BreadcrumbsProps {
-  data: BreadcrumbsData
+  data?: BreadcrumbsData
   isTaxonomy: boolean
 }
 
 export function Breadcrumbs({ data, isTaxonomy }: BreadcrumbsProps) {
   if (!data || data.length < 1) {
-    return null
+    return <BreadcrumbWrapper> </BreadcrumbWrapper>
   }
 
   return (
@@ -106,7 +106,7 @@ const BreadcrumbLink = styled(Link)`
     cursor: default;
   }
 
-  @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
+  @media (max-width: ${(props) => props.theme.breakpointsMax.sm}) {
     display: none;
   }
 
@@ -137,7 +137,7 @@ const BreadcrumbLinkLast = styled(BreadcrumbLink)<{ isTaxonomy: boolean }>`
 
   color: ${(props) => props.theme.colors.brand};
 
-  @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
+  @media (max-width: ${(props) => props.theme.breakpointsMax.sm}) {
     display: inline-flex;
     background: ${(props) =>
       transparentize(0.35, props.theme.colors.lightBlueBackground)};

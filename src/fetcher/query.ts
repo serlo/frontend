@@ -139,6 +139,7 @@ export interface Solution extends Repository {
   trashed: boolean
   currentRevision?: GraphQL.Maybe<Pick<GraphQL.SolutionRevision, 'content'>>
   license: License
+  exercise: { id: number }
 }
 
 // Events are only used in injections, no support for full page view
@@ -549,6 +550,14 @@ export const dataQuery = gql`
 
       ... on Solution {
         ...solution
+        exercise {
+          ... on Exercise {
+            id
+          }
+          ... on GroupedExercise {
+            id
+          }
+        }
       }
 
       ... on Event {

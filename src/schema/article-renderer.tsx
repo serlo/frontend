@@ -199,11 +199,11 @@ function renderElement(props: RenderElementProps): React.ReactNode {
     }
 
     return (
-      <Lazy slim>
-        <MathWrapper centered={!element.alignLeft} bigger={bigger}>
+      <MathWrapper centered={!element.alignLeft} bigger={bigger}>
+        <Lazy slim>
           <Math formula={formula} />
-        </MathWrapper>
-      </Lazy>
+        </Lazy>
+      </MathWrapper>
     )
   }
   if (element.type === 'p') {

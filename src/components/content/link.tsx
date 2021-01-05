@@ -78,6 +78,11 @@ export function Link({
   return renderLink(href)
 
   function normalizeSerloLink(_href: string) {
+    // compat: some user are typing \1234 instead of /1234
+    if (/^\\[\d]+$/.test(_href)) {
+      return _href.replace('\\', '/')
+    }
+
     return _href.startsWith(`https://${lang}.serlo.org/`)
       ? _href.replace(`https://${lang}.serlo.org`, '')
       : _href.startsWith('/')

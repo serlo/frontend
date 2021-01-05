@@ -1,6 +1,6 @@
 import * as htmlparser2 from 'htmlparser2'
 
-import { MathProps } from '@/components/content/math'
+import { sanitizeLatex } from './sanitize-latex'
 import {
   FrontendContentNode,
   FrontendColNode,
@@ -9,6 +9,7 @@ import {
   FrontendTdNode,
   FrontendThNode,
   FrontendTextNode,
+  FrontendInlineMathNode,
 } from '@/data-types'
 
 // Result of the htmlparser
@@ -196,7 +197,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
         return [
           {
             type: 'inline-math',
-            formula,
+            formula: sanitizeLatex(formula),
           },
         ]
       }
@@ -212,7 +213,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
         return [
           {
             type: 'math',
-            formula: formula,
+            formula: sanitizeLatex(formula),
             alignLeft: true,
           },
         ]
@@ -273,7 +274,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
           {
             type: 'math',
             alignLeft: true,
-            formula: (inlineMaths[0] as MathProps).formula,
+            formula: (inlineMaths[0] as FrontendInlineMathNode).formula,
           },
         ]
       }

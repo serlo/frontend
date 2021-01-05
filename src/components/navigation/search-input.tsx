@@ -385,7 +385,7 @@ const SearchForm = styled.div`
       lighten(0.1, props.theme.colors.lighterblue)};
   }
 
-  @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
+  @media (max-width: ${(props) => props.theme.breakpointsMax.sm}) {
     padding-left: 16px;
     min-height: 38px;
   }
@@ -424,7 +424,7 @@ const AutocompleteStyle = createGlobalStyle`
 
     z-index: 100010;
 
-    @media (max-width: ${theme.breakpoints.sm}) {
+    @media (max-width: ${theme.breakpointsMax.sm}) {
       margin-top: 2px;
       left: 5px !important;
       right: 5px !important;

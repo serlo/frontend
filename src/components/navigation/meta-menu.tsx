@@ -46,7 +46,7 @@ export function MetaMenu({ data }: MetaMenuProps) {
 }
 
 const MetaMenuWrapper = styled.nav`
-  @media (max-width: ${(props) => props.theme.breakpoints.md}) {
+  @media (max-width: ${(props) => props.theme.breakpointsMax.md}) {
     overflow-x: scroll;
     &::-webkit-scrollbar {
       display: none;
@@ -72,7 +72,7 @@ const List = styled.ul`
   list-style-type: none;
   padding: 0;
 
-  @media (max-width: ${(props) => props.theme.breakpoints.md}) {
+  @media (max-width: ${(props) => props.theme.breakpointsMax.md}) {
     font-size: 0.9rem;
 
     padding: 12px 16px 0 16px;
@@ -92,7 +92,7 @@ interface LinkProps {
 }
 
 const StyledLink = styled(Link)<LinkProps>`
-  @media (max-width: ${(props) => props.theme.breakpoints.md}) {
+  @media (max-width: ${(props) => props.theme.breakpointsMax.md}) {
     text-decoration: none !important;
     padding: 3px 0;
     margin-right: 1rem;
@@ -136,7 +136,7 @@ const ButtonStyle = styled.span<{ active?: boolean }>`
 `
 
 const StyledGradient = styled.div`
-  @media (max-width: ${(props) => props.theme.breakpoints.md}) {
+  @media (max-width: ${(props) => props.theme.breakpointsMax.md}) {
     position: absolute;
     pointer-events: none;
     right: 0;

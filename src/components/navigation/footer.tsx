@@ -64,7 +64,7 @@ function About() {
 const AboutContainer = styled.div`
   margin-top: 32px;
   display: flex;
-  @media (max-width: ${(props) => props.theme.breakpoints.md}) {
+  @media (max-width: ${(props) => props.theme.breakpointsMax.md}) {
     flex-direction: column;
   }
 `

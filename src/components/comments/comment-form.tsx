@@ -65,20 +65,30 @@ export function CommentForm({
 }
 
 const StyledBox = styled.div`
-  position: relative;
   ${makeMargin}
   margin-top: 18px;
   margin-bottom: 30px;
+  display: flex;
+  align-items: flex-end;
+
+  background-color: ${(props) => lighten(0.45, props.theme.colors.brandGreen)};
+  border-radius: 1.8rem;
+
+  &:focus-within {
+    min-height: 3rem;
+    background-color: ${(props) =>
+      lighten(0.35, props.theme.colors.brandGreen)};
+  }
 `
 
 const StyledTextarea = styled(TextareaAutosize)<{ reply?: boolean }>`
   ${inputFontReset}
-  font-size: 1.125rem;
-  background-color: ${(props) => lighten(0.45, props.theme.colors.brandGreen)};
+  display: block;
   width: 100%;
+  font-size: 1.125rem;
   color: #000;
   border: none;
-  border-radius: 1.8rem;
+  background: transparent;
   padding: ${(props) =>
     props.reply ? '.5rem 3.5rem .5rem 1rem' : '1.25rem 3.5rem 1.25rem 1rem'};
   box-sizing: border-box;
@@ -90,23 +100,18 @@ const StyledTextarea = styled(TextareaAutosize)<{ reply?: boolean }>`
   ::placeholder {
     color: ${(props) => props.theme.colors.brandGreen};
   }
-  &:focus {
-    min-height: 3rem;
-    background-color: ${(props) =>
-      lighten(0.35, props.theme.colors.brandGreen)};
-  }
+
   transition: all 0.2s ease-in;
 `
 
 const SendButton = styled.button<{ reply?: boolean }>`
-  position: absolute;
-  right: 7px;
-  bottom: 13px;
   width: 45px;
   height: 45px;
   ${makeGreenButton}
   font-size: 1.55rem;
   padding-left: 7px;
+
+  margin: 0 7px 8px 0;
 
   > svg {
     vertical-align: ${(props) => (props.reply ? '-2px' : '-4px')};
