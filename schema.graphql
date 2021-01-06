@@ -553,6 +553,7 @@ type Mutation {
     _updateCache(keys: [String!]!): Boolean
     createThread(content: String!, objectId: Int!, title: String!): Thread
     notification: NotificationMutation!
+    uuid: UuidMutation!
 }
 
 type Navigation {
@@ -597,10 +598,10 @@ type NotificationEdge {
 }
 
 type NotificationMutation {
-    setState(input: NotificationSetStateInput!): NotificationMutationPayload
+    setState(input: NotificationSetStateInput!): NotificationSetStateResponse
 }
 
-type NotificationMutationPayload {
+type NotificationSetStateResponse {
     query: Query!
     record: AbstractNotificationEvent
     success: Boolean!
@@ -886,6 +887,15 @@ type UserEdge {
     node: User!
 }
 
+type UuidMutation {
+    setState(input: UuidSetStateInput!): UuidSetStateResponse
+}
+
+type UuidSetStateResponse {
+    query: Query!
+    success: Boolean!
+}
+
 type Video implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid & InstanceAware {
     alias: String
     currentRevision: VideoRevision
@@ -961,6 +971,11 @@ input AliasInput {
 input NotificationSetStateInput {
     id: [Int!]!
     unread: Boolean!
+}
+
+input UuidSetStateInput {
+    id: [Int!]!
+    trashed: Boolean!
 }
 
 
