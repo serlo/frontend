@@ -13,8 +13,8 @@ export async function prettifyLinks(pageData: PageData) {
     if (pageData.secondaryNavigationData) {
       pageData.secondaryNavigationData.forEach((entry) => {
         if (entry.url) {
-          if (isId(entry.url)) {
-            const id = getId(entry.url)
+          const id = getId(entry.url)
+          if (id) {
             ids.push(id)
             callbacks.push({
               id,
@@ -42,9 +42,9 @@ export async function prettifyLinks(pageData: PageData) {
       if (node.type === 'a' || node.type === 'img') {
         const href = node.href
         if (href) {
-          if (isId(href)) {
+          const id = getId(href)
+          if (id) {
             // hit
-            const id = getId(href)
             ids.push(id)
             callbacks.push({
               id,
@@ -116,10 +116,9 @@ export async function prettifyLinks(pageData: PageData) {
   })
 }
 
-function isId(href: string): boolean {
-  return /^\/[\d]{1,7}$/.test(href)
-}
-
-function getId(href: string): number {
-  return parseInt(href.substring(1))
+function getId(href: string): number | undefined {
+  const testString = href.substring(1)
+  if (!/^[\d]+$/.test(testString)) return undefined
+  const testNumber = parseInt(testString)
+  return testNumber < Math.pow(2, 31) ? testNumber : undefined
 }
