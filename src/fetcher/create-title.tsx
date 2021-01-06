@@ -35,7 +35,7 @@ export function createTitle(uuid: QueryResponse, instance: Instance): string {
 
   if (uuid.__typename === 'Exercise' || uuid.__typename === 'ExerciseGroup') {
     const subject =
-      uuid.taxonomyTerms.nodes?.[0].navigation?.path.nodes[0].label
+      uuid.taxonomyTerms.nodes?.[0]?.navigation?.path.nodes[0].label
     const typenameString = getTranslatedType(uuid.__typename)
     if (!subject) return typenameString + suffix
     return subject + ' ' + typenameString + suffix

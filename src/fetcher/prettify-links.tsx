@@ -117,7 +117,7 @@ export async function prettifyLinks(pageData: PageData) {
 }
 
 function isId(href: string): boolean {
-  return /^\/[\d]+$/.test(href)
+  return /^\/[\d]{1,7}$/.test(href)
 }
 
 function getId(href: string): number {

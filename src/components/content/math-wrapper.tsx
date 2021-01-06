@@ -14,9 +14,8 @@ export const MathWrapper = styled.div<MathWrapperProps>`
   /* text-align: ${(props) => (props.centered ? 'center' : 'left')}; */
   text-align: left;
   margin-bottom: ${(props) => props.theme.spacing.mb.block};
-  font-size: 1.3125rem;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  overflow: auto;
+  font-size: 1.125rem;
+  overflow-x: auto;
+  overflow-y: hidden;
   ${(props) => (props.bigger ? 'line-height:2.5;' : '')}
 `

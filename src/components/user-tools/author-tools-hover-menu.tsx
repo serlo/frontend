@@ -6,12 +6,13 @@ import NProgress from 'nprogress'
 import React from 'react'
 import styled from 'styled-components'
 
-import { SubList, SubLink, SubButtonStyle } from './menu'
+import { SubList, SubLink, SubButtonStyle } from '../navigation/menu'
 import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
 import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { useToastNotice } from '@/contexts/toast-notice-context'
+import { UserRoles } from '@/data-types'
 import { useRefreshFromAPI } from '@/helper/use-refresh-from-api'
 
 export interface AuthorToolsData {
@@ -42,12 +43,13 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
   const instanceData = useInstanceData()
   const showToastNotice = useToastNotice()
   const refreshFromAPI = useRefreshFromAPI()
-  const [isSubscribed, setSubscribed] = React.useState(false)
+  const [isSubscribed, setSubscribed] = React.useState<boolean | null>(null)
 
   const auth = useAuth()
   const request = createAuthAwareGraphqlFetch(auth)
 
   React.useEffect(() => {
+    if (isSubscribed !== null) return
     void (async () => {
       try {
         const res = await request(
@@ -70,7 +72,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
         //
       }
     })()
-  }, [request, data.id])
+  }, [request, data.id, isSubscribed])
 
   const router = useRouter()
   if (!loggedInData) return null
@@ -78,20 +80,167 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
   const entities = instanceData.strings.entities
   const lang = instanceData.lang
 
+  const RoleEverybody = [UserRoles.Guest, UserRoles.Login]
+
+  const tools = {
+    abo: {
+      renderer: abo,
+      forRole: [UserRoles.Login],
+    },
+    convert: {
+      renderer: convert,
+      forRole: [],
+    },
+    pageConvert: {
+      renderer: convert,
+      forRole: [UserRoles.PageBuilder],
+    },
+    log: {
+      renderer: log,
+      forRole: RoleEverybody,
+    },
+    history: {
+      renderer: history,
+      forRole: RoleEverybody,
+    },
+    sort: {
+      renderer: sort,
+      forRole: [UserRoles.Reviewer, UserRoles.TaxonomyManager],
+    },
+    edit: {
+      renderer: edit,
+      forRole: [UserRoles.Login],
+    },
+    curriculum: {
+      renderer: curriculum,
+      forRole: [UserRoles.Login],
+    },
+    trash: {
+      renderer: trash,
+      forRole: [UserRoles.Admin],
+    },
+    pageHistory: {
+      renderer: () => {
+        return renderLi(
+          `/page/revision/revisions/${data.id}`,
+          loggedInStrings.authorMenu.history
+        )
+      },
+      forRole: [UserRoles.Login],
+    },
+    pageSetting: {
+      renderer: () => {
+        return renderLi(
+          `/page/update/${data.id}`,
+          loggedInStrings.authorMenu.settings
+        )
+      },
+      forRole: [UserRoles.PageBuilder],
+    },
+    moveCoursePage: {
+      renderer: () => {
+        return renderLi(
+          `/entity/link/move/link/${data.id}/${data.courseId!}`,
+          loggedInStrings.authorMenu.moveCoursePage
+        )
+      },
+      forRole: [UserRoles.TaxonomyManager, UserRoles.Reviewer],
+    },
+    organize: {
+      renderer: () => {
+        return renderLi(
+          `/taxonomy/term/organize/${data.id}`,
+          loggedInStrings.authorMenu.organize
+        )
+      },
+      forRole: [UserRoles.TaxonomyManager],
+    },
+    sortEntities: {
+      renderer: () => {
+        return renderLi(
+          `/taxonomy/term/sort/entities/${data.id}`,
+          loggedInStrings.authorMenu.sortEntities
+        )
+      },
+      forRole: [UserRoles.Login],
+    },
+    copyItems: {
+      renderer: () => {
+        return renderLi(
+          `/taxonomy/term/copy/batch/${data.id}`,
+          loggedInStrings.authorMenu.copyItems
+        )
+      },
+      forRole: [UserRoles.TaxonomyManager],
+    },
+    addGroupedTextExercise: {
+      renderer: () => {
+        return renderLi(
+          `/entity/create/grouped-text-exercise?link%5Btype%5D=link&link%5Bchild%5D=${data.id}`,
+          loggedInStrings.authorMenu.addGroupedTextExercise
+        )
+      },
+      forRole: [UserRoles.Login],
+    },
+    changeLicense: {
+      renderer: () => {
+        return renderLi(
+          `/entity/license/update/${data.id}`,
+          loggedInStrings.authorMenu.changeLicense
+        )
+      },
+      forRole: [UserRoles.Admin],
+    },
+    moveItems: {
+      renderer: () => {
+        return renderLi(
+          `/taxonomy/term/move/batch/${data.id}`,
+          loggedInStrings.authorMenu.moveItems
+        )
+      },
+      forRole: [UserRoles.TaxonomyManager, UserRoles.Reviewer],
+    },
+    moveToExercise: {
+      renderer: () => {
+        return renderLi(
+          `/entity/link/move/link/${data.id}/${data.parentId!}`,
+          data.grouped
+            ? loggedInStrings.authorMenu.moveToGroupedTextExercise
+            : loggedInStrings.authorMenu.moveToTextExercise
+        )
+      },
+      forRole: [UserRoles.TaxonomyManager, UserRoles.Reviewer],
+    },
+    addCoursePage: {
+      renderer: () => {
+        return renderLi(
+          `/entity/create/course-page?link%5Btype%5D=link&link%5Bchild%5D=${data.courseId!}`,
+          loggedInStrings.authorMenu.addCoursePage
+        )
+      },
+      forRole: [UserRoles.Login],
+    },
+    newEntitySubmenu: {
+      renderer: renderNewEntity,
+      forRole: [UserRoles.Login],
+    },
+  } as Record<
+    string,
+    { renderer: (overwriteId?: number) => JSX.Element; forRole: UserRoles[] }
+  >
+
+  type ItemsType = keyof typeof tools
+
   if (data.type == 'Page') {
     return (
       <HoverSubList>
-        {abo()}
-        {convert()}
-        {renderLi(
-          `/page/revision/revisions/${data.id}`,
-          loggedInStrings.authorMenu.history
-        )}
-        {log()}
-        {renderLi(
-          `/page/update/${data.id}`,
-          loggedInStrings.authorMenu.settings
-        )}
+        {renderTools([
+          'abo',
+          'pageConvert',
+          'pageHistory',
+          'log',
+          'pageSetting',
+        ])}
       </HoverSubList>
     )
   }
@@ -104,11 +253,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
   ) {
     return (
       <HoverSubList>
-        {abo()}
-        {history()}
-        {curriculum()}
-        {log()}
-        {trash()}
+        {renderTools(['abo', 'history', 'curriculum', 'log', 'trash'])}
       </HoverSubList>
     )
   }
@@ -116,58 +261,55 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
   if (data.type == 'CoursePage') {
     return (
       <HoverSubList>
-        <Li>
-          <Tippy
-            {...tippyDefaultProps}
-            content={
-              <HoverSubList>
-                {abo()}
-                {history()}
-                {renderLi(
-                  `/entity/link/move/link/${data.id}/${data.courseId!}`,
-                  loggedInStrings.authorMenu.moveCoursePage
-                )}
-
-                {log()}
-                {trash()}
-              </HoverSubList>
-            }
-          >
+        <Tippy
+          {...tippyDefaultProps}
+          content={
+            <HoverSubList>
+              {renderTools([
+                'abo',
+                'history',
+                'moveCoursePage',
+                'log',
+                'trash',
+              ])}
+            </HoverSubList>
+          }
+        >
+          <Li>
             <SubLink>
               <SubButtonStyle>
-                {loggedInStrings.authorMenu.thisCoursePage}
+                ◂ {loggedInStrings.authorMenu.thisCoursePage}
               </SubButtonStyle>
             </SubLink>
-          </Tippy>
-        </Li>
-
-        <Li>
-          <Tippy
-            {...tippyDefaultProps}
-            content={
-              <HoverSubList>
-                {abo(data.courseId)}
-                {history(data.courseId)}
-
-                {renderLi(
-                  `/entity/create/course-page?link%5Btype%5D=link&link%5Bchild%5D=${data.courseId!}`,
-                  loggedInStrings.authorMenu.addCoursePage
-                )}
-
-                {sort(data.courseId)}
-                {curriculum(data.courseId)}
-                {log(data.courseId)}
-                {trash(data.courseId)}
-              </HoverSubList>
-            }
-          >
+          </Li>
+        </Tippy>
+        <Tippy
+          {...tippyDefaultProps}
+          content={
+            <HoverSubList>
+              {renderTools(
+                [
+                  'abo',
+                  'history',
+                  'addCoursePage',
+                  'sort',
+                  'curriculum',
+                  'log',
+                  'trash',
+                ],
+                data.courseId
+              )}
+            </HoverSubList>
+          }
+        >
+          <Li>
             <SubLink>
               <SubButtonStyle>
-                {loggedInStrings.authorMenu.wholeCourse}
+                ◂ {loggedInStrings.authorMenu.wholeCourse}
               </SubButtonStyle>
             </SubLink>
-          </Tippy>
-        </Li>
+          </Li>
+        </Tippy>
       </HoverSubList>
     )
   }
@@ -175,27 +317,15 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
   if (data.type == 'Taxonomy') {
     return (
       <HoverSubList>
-        {abo()}
-        {renderLi(
-          `/taxonomy/term/organize/${data.id}`,
-          loggedInStrings.authorMenu.organize
-        )}
-        {log()}
-
-        {renderNewEntity()}
-
-        {renderLi(
-          `/taxonomy/term/sort/entities/${data.id}`,
-          loggedInStrings.authorMenu.sortEntities
-        )}
-        {renderLi(
-          `/taxonomy/term/copy/batch/${data.id}`,
-          loggedInStrings.authorMenu.copyItems
-        )}
-        {renderLi(
-          `/taxonomy/term/move/batch/${data.id}`,
-          loggedInStrings.authorMenu.moveItems
-        )}
+        {renderTools([
+          'abo',
+          'organize',
+          'log',
+          'newEntitySubmenu',
+          'sortEntities',
+          'copyItems',
+          'moveItems',
+        ])}
       </HoverSubList>
     )
   }
@@ -207,39 +337,35 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
   ) {
     return (
       <HoverSubList>
-        {edit()}
-        {abo()}
-
-        {history()}
+        {renderTools(['edit', 'abo', 'history'])}
 
         {data.type == '_ExerciseGroupInline' &&
-          renderLi(
-            `/entity/create/grouped-text-exercise?link%5Btype%5D=link&link%5Bchild%5D=${data.id}`,
-            loggedInStrings.authorMenu.addGroupedTextExercise
-          )}
+          renderTools(['addGroupedTextExercise'])}
 
-        {data.type != '_SolutionInline' && sort()}
+        {data.type != '_SolutionInline' && renderTools(['sort'])}
 
         {data.type == '_SolutionInline'
-          ? renderLi(
-              `/entity/link/move/link/${data.id}/${data.parentId!}`,
-              data.grouped
-                ? loggedInStrings.authorMenu.moveToGroupedTextExercise
-                : loggedInStrings.authorMenu.moveToTextExercise
-            )
-          : curriculum()}
-        {renderLi(
-          `/entity/license/update/${data.id}`,
-          loggedInStrings.authorMenu.changeLicense
-        )}
-
-        {log()}
-        {trash()}
+          ? renderTools(['moveToExercise'])
+          : renderTools(['curriculum'])}
+        {renderTools(['changeLicense', 'log', 'trash'])}
       </HoverSubList>
     )
   }
 
   return null
+
+  function renderTools(toolNames: ItemsType[], overwriteId?: number) {
+    return toolNames.map((toolName) => {
+      const tool = tools[toolName]
+      const roles = auth.current?.roles || [UserRoles.Guest]
+      const hasPower =
+        tool.forRole.filter((role) => {
+          return roles.indexOf(role) > -1
+        }).length > 0
+
+      if (hasPower) return tool.renderer(overwriteId)
+    })
+  }
 
   function abo(id = data.id) {
     if (isSubscribed) {
@@ -394,7 +520,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
 
   function renderLi(href: string, text: string) {
     return (
-      <Li>
+      <Li key={text}>
         <SubLink href={href} noCSR>
           <SubButtonStyle>{text}</SubButtonStyle>
         </SubLink>
@@ -404,7 +530,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
 
   function renderFetchLi(href: string, text: string, csrf?: boolean) {
     return (
-      <Li>
+      <Li key={text}>
         <SubButtonStyle
           as="button"
           onClick={() => fetchLegacyUrl(href, text, csrf)}
@@ -434,6 +560,15 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
           if (res.status === 200 && location.href.startsWith(res.url)) {
             NProgress.done()
             showToastNotice(`'${text}' erfolgreich `, 'success')
+
+            if (
+              url.startsWith('/subscribe') ||
+              url.startsWith('/unsubscribe')
+            ) {
+              setSubscribed(!isSubscribed)
+              return false
+            }
+
             setTimeout(() => {
               refreshFromAPI()
             }, 1500)
@@ -452,6 +587,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
     function showErrorNotice() {
       NProgress.done()
       showToastNotice('Something went wrong… Please try again.', 'warning')
+      return false
     }
   }
 }

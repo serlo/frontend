@@ -375,6 +375,7 @@ export interface FrontendInlineMathNode {
   type: 'inline-math'
   formula: string
   children?: undefined
+  debugOriginalFormula?: string
 }
 
 export interface FrontendPNode {
@@ -394,6 +395,7 @@ export interface FrontendMathNode {
   formula: string
   alignLeft?: boolean
   children?: undefined
+  debugOriginalFormula?: string
 }
 
 export interface FrontendImgNode {
@@ -754,4 +756,17 @@ export interface TaxonomyData extends TaxonomyTermBase {
 export interface LoggedInData {
   authMenu: HeaderData
   strings: typeof loggedInData['strings']
+}
+
+// User roles
+
+export enum UserRoles {
+  Guest = 'guest',
+  Login = 'login',
+  Moderator = 'moderator',
+  Reviewer = 'reviewer',
+  TaxonomyManager = 'taxonomy-manager',
+  PageBuilder = 'page-builder',
+  Admin = 'admin',
+  SysAdmin = 'sys-admin',
 }

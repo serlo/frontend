@@ -2,8 +2,8 @@ import dynamic from 'next/dynamic'
 import React from 'react'
 import styled, { css } from 'styled-components'
 
+import { ExerciseAuthorTools } from '../exercises/exercise-author-tools'
 import { LicenseNotice } from '../license-notice'
-import { ExerciseAuthorTools } from './exercise-author-tools'
 import { ExerciseNumbering } from './exercise-numbering'
 import { InputExercise } from './input-exercise'
 import { ScMcExercise } from './sc-mc-exercise'
@@ -25,6 +25,7 @@ const Comments = dynamic<CommentsProps>(() =>
 export function Exercise({ node }: ExerciseProps) {
   const { strings } = useInstanceData()
   const [solutionVisible, setVisible] = React.useState(false)
+  const [randomId] = React.useState(Math.random().toString())
 
   const auth = useAuth()
   const [loaded, setLoaded] = React.useState(false)
@@ -127,9 +128,9 @@ export function Exercise({ node }: ExerciseProps) {
         return (
           <ScMcExercise
             state={state.interactive.state}
-            idBase={`ex-${node.positionOnPage ? node.positionOnPage : ''}-${
-              node.positionInGroup ? node.positionInGroup : ''
-            }-`}
+            idBase={`ex-${
+              node.positionOnPage ? node.positionOnPage : randomId
+            }-${node.positionInGroup ? node.positionInGroup : ''}-`}
           />
         )
       }

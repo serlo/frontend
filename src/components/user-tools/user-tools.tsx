@@ -22,6 +22,7 @@ import {
 import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { UserRoles } from '@/data-types'
 import { theme } from '@/theme'
 
 const AuthorToolsHoverMenu = dynamic<AuthorToolsHoverMenuProps>(() =>
@@ -90,6 +91,13 @@ export function UserTools({
   }
 
   function renderEdit() {
+    if (
+      auth.current === null ||
+      auth.current?.roles.indexOf(UserRoles.PageBuilder) > -1
+    ) {
+      return null
+    }
+
     const editHref =
       data.type == 'Page'
         ? `/page/revision/create/${data.id}/${data.revisionId || ''}`
@@ -127,7 +135,22 @@ export function UserTools({
 
   function renderExtraTools() {
     if (!(loaded && auth.current && loggedInData && data)) return null
+    const supportedTypes = [
+      'Page',
+      'Article',
+      'Video',
+      'Applet',
+      'Event',
+      'CoursePage',
+      'Taxonomy',
+      '_ExerciseInline',
+      '_ExerciseGroupInline',
+      '_SolutionInline',
+    ]
+    if (supportedTypes.indexOf(data.type) === -1) return null
+
     const isLargeScreen = getBrowserWidth() > theme.breakpointsInt.lg
+
     return (
       <Tippy
         interactive

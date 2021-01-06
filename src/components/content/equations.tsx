@@ -23,44 +23,48 @@ export function Equations({ steps }: EquationProps) {
   return (
     <Wrapper>
       <TableWrapper>
-        <Table>
-          {steps.map((step, i) => {
-            const hasExplanation = step.explanation.some((p) => {
-              return p?.children?.length
-            })
+        <table>
+          <TBody>
+            {steps.map((step, i) => {
+              const hasExplanation = step.explanation.some((p) => {
+                return p?.children?.length
+              })
 
-            return (
-              <React.Fragment key={i}>
-                <tr>
-                  <LeftTd>
-                    {step.left ? <Math formula={step.left} /> : null}
-                  </LeftTd>
-                  <SignTd>
-                    <Math formula={renderSignToString(step.sign)} />
-                  </SignTd>
-                  <td>{step.right ? <Math formula={step.right} /> : null}</td>
-                  <TransformTd>
-                    {step.transform ? (
-                      <>
-                        |
-                        <Math formula={step.transform} />
-                      </>
-                    ) : null}
-                  </TransformTd>
-                </tr>
-                {hasExplanation ? (
-                  <ExplanationTr>
-                    <td />
-                    <SignTd>{i === steps.length - 1 ? '→' : '↓'}</SignTd>
-                    <td colSpan={2}>
-                      {renderArticle(step.explanation, false)}
-                    </td>
-                  </ExplanationTr>
-                ) : null}
-              </React.Fragment>
-            )
-          })}
-        </Table>
+              return (
+                <React.Fragment key={i}>
+                  <tr>
+                    <LeftTd>
+                      {step.left ? <Math formula={step.left} /> : null}
+                    </LeftTd>
+                    <SignTd>
+                      <Math formula={renderSignToString(step.sign)} />
+                    </SignTd>
+                    <RightTd>
+                      {step.right ? <Math formula={step.right} /> : null}
+                    </RightTd>
+                    <TransformTd>
+                      {step.transform ? (
+                        <>
+                          |
+                          <Math formula={step.transform} />
+                        </>
+                      ) : null}
+                    </TransformTd>
+                  </tr>
+                  {hasExplanation ? (
+                    <ExplanationTr>
+                      <td />
+                      <SignTd>{i === steps.length - 1 ? '→' : '↓'}</SignTd>
+                      <td colSpan={2}>
+                        {renderArticle(step.explanation, false)}
+                      </td>
+                    </ExplanationTr>
+                  ) : null}
+                </React.Fragment>
+              )
+            })}
+          </TBody>
+        </table>
       </TableWrapper>
     </Wrapper>
   )
@@ -89,11 +93,11 @@ const Wrapper = styled.div`
 `
 
 const TableWrapper = styled.div`
-  overflow-x: scroll;
+  overflow-x: auto;
   padding: 10px 0;
 `
 
-const Table = styled.table`
+const TBody = styled.tbody`
   white-space: nowrap;
 
   > tr > td {
@@ -103,15 +107,22 @@ const Table = styled.table`
 
 const LeftTd = styled.td`
   text-align: right;
+  font-size: 1.125rem;
+`
+
+const RightTd = styled.td`
+  font-size: 1.125rem;
 `
 
 const SignTd = styled.td`
   padding: 0 3px;
   text-align: center;
+  font-size: 1.125rem;
 `
 
 const TransformTd = styled.td`
   padding-left: 5px;
+  font-size: 1.125rem;
 `
 
 const ExplanationTr = styled.tr`

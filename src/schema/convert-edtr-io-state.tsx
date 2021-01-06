@@ -8,10 +8,11 @@ import {
   SlateTextElement,
   UnsupportedEdtrState,
 } from './edtr-io-types'
-import { MathProps } from '@/components/content/math'
+import { sanitizeLatex } from './sanitize-latex'
 import {
   FrontendContentNode,
   FrontendLiNode,
+  FrontendMathNode,
   FrontendTextColor,
 } from '@/data-types'
 
@@ -197,10 +198,10 @@ function convertPlugin(node: EdtrState) {
   if (node.plugin === 'equations') {
     const steps = node.state.steps.map((step) => {
       return {
-        left: step.left,
+        left: sanitizeLatex(step.left),
         sign: step.sign,
-        right: step.right,
-        transform: step.transform,
+        right: sanitizeLatex(step.right),
+        transform: sanitizeLatex(step.transform),
         explanation: convert(step.explanation),
       }
     })
@@ -226,6 +227,31 @@ function convertSlate(node: SlateBlockElement) {
       (children[0].type === 'ul' || children[0].type === 'ol')
     ) {
       return children
+    }
+
+    // compat: extract math formulas, see https://github.com/serlo/frontend/issues/186 (first warning)
+    const math = children.filter(
+      (child) => child.type === 'math' || child.type === 'inline-math'
+    )
+    if (math.length >= 1) {
+      if (
+        children.every(
+          (child) =>
+            child.type === 'math' ||
+            child.type === 'inline-math' ||
+            (child.type === 'text' && child.text === '')
+        )
+      ) {
+        return children
+          .filter(
+            (child) => child.type === 'math' || child.type === 'inline-math'
+          )
+          .map((mathChild) => {
+            mathChild.type = 'math'
+            ;(mathChild as FrontendMathNode).alignLeft = true
+            return mathChild
+          })
+      }
     }
 
     // compat handle newlines
@@ -274,33 +300,6 @@ function convertSlate(node: SlateBlockElement) {
       })
       return result
     }
-
-    // compat: extract math formulas, see https://github.com/serlo/frontend/issues/186 (first warning)
-    const math = children.filter(
-      (child) => child.type === 'math' || child.type === 'inline-math'
-    )
-    if (math.length >= 1) {
-      if (
-        children.every(
-          (child) =>
-            child.type === 'math' ||
-            child.type === 'inline-math' ||
-            (child.type === 'text' && child.text === '')
-        )
-      ) {
-        return children
-          .filter(
-            (child) => child.type === 'math' || child.type === 'inline-math'
-          )
-          .map((mathChild) => {
-            return {
-              type: 'math',
-              formula: (mathChild as MathProps).formula,
-              alignLeft: true, // caveat: this differs from existing presentation
-            }
-          })
-      }
-    }
     return [
       {
         type: 'p',
@@ -346,7 +345,8 @@ function convertSlate(node: SlateBlockElement) {
     return [
       {
         type: 'math',
-        formula: node.src,
+        formula: sanitizeLatex(node.src),
+        //debugOriginalFormula: node.src,
       },
     ]
   }
@@ -354,7 +354,8 @@ function convertSlate(node: SlateBlockElement) {
     return [
       {
         type: 'inline-math',
-        formula: node.src,
+        formula: sanitizeLatex(node.src),
+        //debugOriginalFormula: node.src,
       },
     ]
   }
