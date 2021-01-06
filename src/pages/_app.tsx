@@ -7,7 +7,7 @@ import NProgress from 'nprogress'
 import React from 'react'
 import { ThemeProvider } from 'styled-components'
 
-import '@/assets-webkit/fonts/karmilla.css'
+//import '@/assets-webkit/fonts/karmilla.css'
 import '@/assets-webkit/fonts/katex/katex.css'
 
 import { NProgressStyles } from '@/components/navigation/n-progress-styles'

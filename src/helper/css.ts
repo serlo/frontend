@@ -89,7 +89,7 @@ function makeButton(props: _ThemeProps & MakeButtonProps) {
 
     text-decoration: none !important;
     font-size: 1.125rem;
-    font-family: Karmilla, sans-serif;
+    font-family: 'DM Sans', sans-serif;
     letter-spacing: '-0.007em';
 
     color: ${colorsObject.color};
@@ -119,18 +119,11 @@ export const makeLightButton = (props: _ThemeProps) =>
 export const inputFontReset = () =>
   css`
     font-size: 1rem;
-    font-family: Karmilla, sans-serif;
+    font-family: 'DM Sans', sans-serif;
     letter-spacing: '-0.007em';
   `
 
-export const FontFix = createGlobalStyle`
-  h1,h2, main b {
-    letter-spacing: ${(props) => props.theme.defaults.boldLetterSpacing};
-  }
-  body {
-    letter-spacing: ${(props) => props.theme.defaults.regularLetterSpacing};
-  }
-`
+export const FontFix = createGlobalStyle``
 
 interface Props {
   warning: string

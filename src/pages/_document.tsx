@@ -9,7 +9,7 @@ import { ServerStyleSheet } from 'styled-components'
 
 const bodyStyles = {
   margin: 0,
-  fontFamily: 'Karmilla, sans-serif',
+  fontFamily: 'DM Sans, sans-serif',
 }
 
 export default class MyDocument extends Document {
@@ -79,6 +79,11 @@ export default class MyDocument extends Document {
           <meta
             name="msapplication-config"
             content="/_assets/browserconfig.xml"
+          />
+          <link rel="preconnect" href="https://fonts.gstatic.com" />
+          <link
+            href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap"
+            rel="stylesheet"
           />
           <meta name="theme-color" content="#007ec1"></meta>
           <link
