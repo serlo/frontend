@@ -1,5 +1,6 @@
 import {
   faComments,
+  faExclamationCircle,
   faQuestionCircle,
   faSpinner,
 } from '@fortawesome/free-solid-svg-icons'
@@ -35,7 +36,7 @@ const query = gql`
   query getComments($id: Int!) {
     uuid(id: $id) {
       ... on AbstractUuid {
-        threads {
+        threadssss {
           nodes {
             archived
             trashed
@@ -117,17 +118,17 @@ export function Comments({ id: parentId }: CommentsProps) {
     setShowArchived(!showArchived)
   }
 
-  if (failure) {
-    return <StyledP>{failure}</StyledP>
-  }
-
   if (!data)
     return (
       <StyledP>
         <ColoredIcon>
-          <FontAwesomeIcon icon={faSpinner} spin size="1x" />
+          <FontAwesomeIcon
+            icon={failure ? faExclamationCircle : faSpinner}
+            spin={!failure}
+            size="1x"
+          />
         </ColoredIcon>{' '}
-        {strings.comments.loading}
+        {failure ? strings.comments.error : strings.comments.loading}
       </StyledP>
     )
 
