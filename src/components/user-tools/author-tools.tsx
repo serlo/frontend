@@ -208,7 +208,6 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
 
         if (hasPower) {
           if (renderer) return renderer(entityId)
-          console.log(toolName)
           if (url) return renderLi(url, title || getTranslatedString(toolName))
         }
       })}
