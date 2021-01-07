@@ -36,7 +36,7 @@ const query = gql`
   query getComments($id: Int!) {
     uuid(id: $id) {
       ... on AbstractUuid {
-        threadssss {
+        threads {
           nodes {
             archived
             trashed
