@@ -28,7 +28,7 @@ interface CommentFormProps {
 
 export function CommentForm({
   placeholder,
-  // parentId,
+  parentId,
   // onSendComment,
   reply,
 }: CommentFormProps) {
@@ -55,7 +55,7 @@ export function CommentForm({
       variables: {
         title: '',
         content: commentValue,
-        objectId: parent_id,
+        objectId: parentId,
       },
     }
     const thread = await request(JSON.stringify(input))
@@ -75,18 +75,7 @@ export function CommentForm({
       <SendButton
         title={strings.comments.submit}
         reply={reply}
-        // onClick={
-        //   onSendComment
-        //     ? () =>
-        //         onSendComment({
-        //           entity_id: entity.id,
-        //           parentId: parentId,
-        //           user_id: user.id,
-        //           user_name: user.username,
-        //           body: this.state.newCommentValue,
-        //         })
-        //     : () => {}
-        // }
+        onClick={onSendComment}
       >
         <FontAwesomeIcon icon={reply ? faReply : faArrowRight} />
       </SendButton>
