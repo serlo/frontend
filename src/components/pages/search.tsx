@@ -51,4 +51,5 @@ export function Search() {
 
 const StyledSearchResults = styled(SearchResults)`
   padding: 50px 0;
+  min-height: 100vh;
 `
