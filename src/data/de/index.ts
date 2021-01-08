@@ -122,6 +122,7 @@ export const instanceData = {
       placeholder: "Deine Frage oder Vorschlag…",
       placeholderReply: "Deine Antwort…",
       loading: "Kommentare werden geladen…",
+      error: 'Sorry, comments could not be loaded, please try again later.',
       showMoreReply: "Einen weiteren Kommentar",
       showMoreReplies: "%number% weitere Kommentare",
       showArchived: "Archivierte %threads% anzeigen"
