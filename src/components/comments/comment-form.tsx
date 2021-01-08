@@ -10,14 +10,14 @@ import { makeGreenButton, inputFontReset, makeMargin } from '@/helper/css'
 
 export interface SendProps {
   entity_id: string
-  parent_id: string
+  parentId: string
   user_id: string
   user_name: string
   body?: string
 }
 
 interface CommentFormProps {
-  parent_id: number
+  parentId: number
   onSendComment?: (props: SendProps) => void
   placeholder: string
   reply?: boolean
@@ -25,7 +25,7 @@ interface CommentFormProps {
 
 export function CommentForm({
   placeholder,
-  // parent_id,
+  // parentId,
   // onSendComment,
   reply,
 }: CommentFormProps) {
@@ -50,7 +50,7 @@ export function CommentForm({
         //     ? () =>
         //         onSendComment({
         //           entity_id: entity.id,
-        //           parent_id: parent_id,
+        //           parentId: parentId,
         //           user_id: user.id,
         //           user_name: user.username,
         //           body: this.state.newCommentValue,
