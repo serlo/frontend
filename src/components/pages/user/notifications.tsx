@@ -5,7 +5,9 @@ import { NextPage } from 'next'
 import React from 'react'
 import styled from 'styled-components'
 
+import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
 import { useGraphqlSwrPagination } from '@/api/use-graphql-swr'
+import { useAuth } from '@/auth/use-auth'
 import { Link } from '@/components/content/link'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { RelativeContainer } from '@/components/navigation/relative-container'
@@ -19,6 +21,7 @@ import { shouldUseNewAuth } from '@/helper/feature-auth'
 
 export const Notifications: NextPage = () => {
   const [mounted, setMounted] = React.useState(!shouldUseNewAuth())
+  const auth = useAuth()
 
   React.useEffect(() => {
     setMounted(true)
@@ -218,6 +221,35 @@ export const Notifications: NextPage = () => {
       return data.notifications
     },
   })
+
+  React.useEffect(() => {
+    if (!mounted || auth.current === null || !response.data) return
+
+    const unreadIds = response.data?.nodes.flatMap((node) =>
+      node.unread ? [node.id] : []
+    )
+    const setToRead = async () => {
+      const input = {
+        query: gql`
+          mutation setState($input: NotificationSetStateInput!) {
+            notification {
+              setState(input: $input) {
+                success
+              }
+            }
+          }
+        `,
+        variables: {
+          input: {
+            id: unreadIds,
+            unread: false,
+          },
+        },
+      }
+      await createAuthAwareGraphqlFetch(auth)(JSON.stringify(input))
+    }
+    void setToRead()
+  }, [mounted, auth, response])
 
   if (!mounted) return null
 

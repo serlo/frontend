@@ -7,6 +7,7 @@ import { useRef } from 'react'
 
 import { endpoint } from '@/api/endpoint'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
+import { UserRoles } from '@/data-types'
 
 const server = setupServer()
 
@@ -64,6 +65,8 @@ async function useGraphqlSwrWithMockedAuth(
     // eslint-disable-next-line react-hooks/rules-of-hooks
     return useRef({
       username: 'username',
+      id: 1,
+      roles: [UserRoles.Admin],
       token: 'token',
       async refreshToken() {},
     })

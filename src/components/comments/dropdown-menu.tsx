@@ -5,6 +5,7 @@ import styled from 'styled-components'
 
 import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
+import { UserRoles } from '@/data-types'
 import { makeTransparentButton } from '@/helper/css'
 
 export function DropdownMenu({
@@ -16,11 +17,15 @@ export function DropdownMenu({
 }) {
   const { lang, strings } = useInstanceData()
   const auth = useAuth()
+  const isAllowed =
+    auth.current !== null &&
+    (auth.current?.roles.indexOf(UserRoles.Moderator) > -1 ||
+      auth.current?.roles.indexOf(UserRoles.Admin) > -1)
 
   return (
     <DropContent>
-      {auth.current && (
-        <>
+      {isAllowed && (
+        <ButtonWrapper>
           {isParent && (
             <DropContentButton>
               <FontAwesomeIcon icon={faCheck} />{' '}
@@ -33,7 +38,7 @@ export function DropdownMenu({
               ? strings.comments.deleteThread
               : strings.comments.deleteComment}
           </DropContentButton>
-        </>
+        </ButtonWrapper>
       )}
       <Time>
         {strings.comments.postedOn} {eventDate.toLocaleString(lang)}
@@ -58,9 +63,12 @@ const DropContentButton = styled.button`
   font-weight: normal;
 `
 
+const ButtonWrapper = styled.div`
+  margin-bottom: 15px;
+`
+
 const Time = styled.span`
   display: block;
   font-size: 0.8rem;
-  margin-top: 15px;
   color: ${(props) => props.theme.colors.gray};
 `

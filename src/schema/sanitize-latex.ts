@@ -1,6 +1,7 @@
 const regexMathRm = /\\mathrm(?=[^a-z])/gm
 const regexDfrac = /\\frac(?=[^a-z])/gm
 const regexDisplayStyle = /\\displaystyle(?=[^a-z])/gm
+const regexTextSimple = /\\text(?=[^a-z])/gm
 const regexText = /\\text{([^{]+)}/gm
 const regexComma = /(?<=[\d]),(?=[\d])/gm
 
@@ -21,6 +22,9 @@ export function sanitizeLatex(formula: string): string {
   // remove displaystyle in front
   formula = formula.replace(regexDisplayStyle, '')
 
+  // remove text command
+  formula = formula.replace(regexTextSimple, '')
+
   // handle text style
   formula = formula.replace(regexText, '\\text{\\sf $1}')
 
@@ -31,6 +35,14 @@ export function sanitizeLatex(formula: string): string {
 
   // fix comma style
   formula = formula.replace(regexComma, '{,}')
+
+  // add more array stretch
+  if (
+    formula.includes('\\begin{aligned}') ||
+    formula.includes('\\begin{array}')
+  ) {
+    formula = `\\def\\arraystretch{2.5} ${formula}`
+  }
 
   // add nonserif globally
   formula = '\\sf ' + formula

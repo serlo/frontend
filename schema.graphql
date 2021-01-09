@@ -39,6 +39,7 @@ interface AbstractExercise {
 }
 
 interface AbstractExerciseRevision {
+    alias: String
     author: User!
     changes: String!
     content: String!
@@ -71,6 +72,7 @@ interface AbstractRepository {
 }
 
 interface AbstractRevision {
+    alias: String
     """
 
     Implicitly has the following field
@@ -96,9 +98,14 @@ interface AbstractTaxonomyTermChild {
 }
 
 interface AbstractUuid {
+    alias: String
     id: Int!
     threads(after: String, before: String, first: Int, last: Int): ThreadsConnection!
     trashed: Boolean!
+}
+
+interface InstanceAware {
+    instance: Instance!
 }
 
 type AbstractUuidConnection {
@@ -113,7 +120,7 @@ type AbstractUuidCursor {
     node: AbstractUuid!
 }
 
-type Applet implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid {
+type Applet implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid & InstanceAware {
     alias: String
     currentRevision: AppletRevision
     date: DateTime!
@@ -127,6 +134,7 @@ type Applet implements AbstractEntity & AbstractRepository & AbstractTaxonomyTer
 }
 
 type AppletRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid {
+    alias: String
     author: User!
     changes: String!
     content: String!
@@ -153,7 +161,7 @@ type AppletRevisionCursor {
     node: AppletRevision!
 }
 
-type Article implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid {
+type Article implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid & InstanceAware {
     alias: String
     currentRevision: ArticleRevision
     date: DateTime!
@@ -167,6 +175,7 @@ type Article implements AbstractEntity & AbstractRepository & AbstractTaxonomyTe
 }
 
 type ArticleRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid {
+    alias: String
     author: User!
     changes: String!
     content: String!
@@ -192,7 +201,7 @@ type ArticleRevisionCursor {
     node: ArticleRevision!
 }
 
-type CheckoutRevisionNotificationEvent implements AbstractNotificationEvent {
+type CheckoutRevisionNotificationEvent implements AbstractNotificationEvent & InstanceAware {
     actor: User!
     date: DateTime!
     id: Int!
@@ -227,7 +236,7 @@ type CommentEdge {
     node: Comment!
 }
 
-type Course implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid {
+type Course implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid & InstanceAware {
     alias: String
     currentRevision: CourseRevision
     date: DateTime!
@@ -241,7 +250,7 @@ type Course implements AbstractEntity & AbstractRepository & AbstractTaxonomyTer
     trashed: Boolean!
 }
 
-type CoursePage implements AbstractEntity & AbstractRepository & AbstractUuid {
+type CoursePage implements AbstractEntity & AbstractRepository & AbstractUuid & InstanceAware {
     alias: String
     course: Course!
     currentRevision: CoursePageRevision
@@ -255,6 +264,7 @@ type CoursePage implements AbstractEntity & AbstractRepository & AbstractUuid {
 }
 
 type CoursePageRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid {
+    alias: String
     author: User!
     changes: String!
     content: String!
@@ -279,6 +289,7 @@ type CoursePageRevisionCursor {
 }
 
 type CourseRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid {
+    alias: String
     author: User!
     changes: String!
     content: String!
@@ -303,7 +314,7 @@ type CourseRevisionCursor {
     node: CourseRevision!
 }
 
-type CreateCommentNotificationEvent implements AbstractNotificationEvent {
+type CreateCommentNotificationEvent implements AbstractNotificationEvent & InstanceAware {
     actor: User!
     comment: UnsupportedComment!
     date: DateTime!
@@ -313,7 +324,7 @@ type CreateCommentNotificationEvent implements AbstractNotificationEvent {
     thread: UnsupportedThread!
 }
 
-type CreateEntityLinkNotificationEvent implements AbstractNotificationEvent {
+type CreateEntityLinkNotificationEvent implements AbstractNotificationEvent & InstanceAware {
     actor: User!
     child: AbstractEntity!
     date: DateTime!
@@ -323,7 +334,7 @@ type CreateEntityLinkNotificationEvent implements AbstractNotificationEvent {
     parent: AbstractEntity!
 }
 
-type CreateEntityNotificationEvent implements AbstractNotificationEvent {
+type CreateEntityNotificationEvent implements AbstractNotificationEvent & InstanceAware {
     actor: User!
     date: DateTime!
     entity: AbstractEntity!
@@ -332,7 +343,7 @@ type CreateEntityNotificationEvent implements AbstractNotificationEvent {
     objectId: Int!
 }
 
-type CreateEntityRevisionNotificationEvent implements AbstractNotificationEvent {
+type CreateEntityRevisionNotificationEvent implements AbstractNotificationEvent & InstanceAware {
     actor: User!
     date: DateTime!
     entity: AbstractEntity!
@@ -342,7 +353,7 @@ type CreateEntityRevisionNotificationEvent implements AbstractNotificationEvent 
     objectId: Int!
 }
 
-type CreateTaxonomyLinkNotificationEvent implements AbstractNotificationEvent {
+type CreateTaxonomyLinkNotificationEvent implements AbstractNotificationEvent & InstanceAware {
     actor: User!
     child: AbstractUuid!
     date: DateTime!
@@ -352,7 +363,7 @@ type CreateTaxonomyLinkNotificationEvent implements AbstractNotificationEvent {
     parent: TaxonomyTerm!
 }
 
-type CreateTaxonomyTermNotificationEvent implements AbstractNotificationEvent {
+type CreateTaxonomyTermNotificationEvent implements AbstractNotificationEvent & InstanceAware {
     actor: User!
     date: DateTime!
     id: Int!
@@ -361,7 +372,7 @@ type CreateTaxonomyTermNotificationEvent implements AbstractNotificationEvent {
     taxonomyTerm: TaxonomyTerm!
 }
 
-type CreateThreadNotificationEvent implements AbstractNotificationEvent {
+type CreateThreadNotificationEvent implements AbstractNotificationEvent & InstanceAware {
     actor: User!
     date: DateTime!
     id: Int!
@@ -371,7 +382,7 @@ type CreateThreadNotificationEvent implements AbstractNotificationEvent {
     thread: UnsupportedThread!
 }
 
-type Event implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid {
+type Event implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid & InstanceAware {
     alias: String
     currentRevision: EventRevision
     date: DateTime!
@@ -385,6 +396,7 @@ type Event implements AbstractEntity & AbstractRepository & AbstractTaxonomyTerm
 }
 
 type EventRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid {
+    alias: String
     author: User!
     changes: String!
     content: String!
@@ -410,7 +422,7 @@ type EventRevisionCursor {
     node: EventRevision!
 }
 
-type Exercise implements AbstractEntity & AbstractExercise & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid {
+type Exercise implements AbstractEntity & AbstractExercise & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid & InstanceAware {
     alias: String
     currentRevision: ExerciseRevision
     date: DateTime!
@@ -424,7 +436,7 @@ type Exercise implements AbstractEntity & AbstractExercise & AbstractRepository 
     trashed: Boolean!
 }
 
-type ExerciseGroup implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid {
+type ExerciseGroup implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid & InstanceAware {
     alias: String
     currentRevision: ExerciseGroupRevision
     date: DateTime!
@@ -439,6 +451,7 @@ type ExerciseGroup implements AbstractEntity & AbstractRepository & AbstractTaxo
 }
 
 type ExerciseGroupRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid {
+    alias: String
     author: User!
     changes: String!
     content: String!
@@ -462,6 +475,7 @@ type ExerciseGroupRevisionCursor {
 }
 
 type ExerciseRevision implements AbstractEntityRevision & AbstractExerciseRevision & AbstractRevision & AbstractUuid {
+    alias: String
     author: User!
     changes: String!
     content: String!
@@ -484,7 +498,7 @@ type ExerciseRevisionCursor {
     node: ExerciseRevision!
 }
 
-type GroupedExercise implements AbstractEntity & AbstractExercise & AbstractRepository & AbstractUuid {
+type GroupedExercise implements AbstractEntity & AbstractExercise & AbstractRepository & AbstractUuid & InstanceAware {
     alias: String
     currentRevision: GroupedExerciseRevision
     date: DateTime!
@@ -499,6 +513,7 @@ type GroupedExercise implements AbstractEntity & AbstractExercise & AbstractRepo
 }
 
 type GroupedExerciseRevision implements AbstractEntityRevision & AbstractExerciseRevision & AbstractRevision & AbstractUuid {
+    alias: String
     author: User!
     changes: String!
     content: String!
@@ -521,7 +536,7 @@ type GroupedExerciseRevisionCursor {
     node: GroupedExerciseRevision!
 }
 
-type License {
+type License implements InstanceAware {
     agreement: String!
     content: String!
     default: Boolean!
@@ -536,7 +551,9 @@ type Mutation {
     _removeCache(key: String!): Boolean
     _setCache(key: String!, value: JSON!): Boolean
     _updateCache(keys: [String!]!): Boolean
-    setNotificationState(id: Int!, unread: Boolean!): Boolean
+    createThread(content: String!, objectId: Int!, title: String!): Thread
+    notification: NotificationMutation!
+    uuid: UuidMutation!
 }
 
 type Navigation {
@@ -580,7 +597,17 @@ type NotificationEdge {
     node: Notification!
 }
 
-type Page implements AbstractNavigationChild & AbstractRepository & AbstractUuid {
+type NotificationMutation {
+    setState(input: NotificationSetStateInput!): NotificationSetStateResponse
+}
+
+type NotificationSetStateResponse {
+    query: Query!
+    record: AbstractNotificationEvent
+    success: Boolean!
+}
+
+type Page implements AbstractNavigationChild & AbstractRepository & AbstractUuid & InstanceAware {
     alias: String
     currentRevision: PageRevision
     date: DateTime!
@@ -601,6 +628,7 @@ type PageInfo {
 }
 
 type PageRevision implements AbstractRevision & AbstractUuid {
+    alias: String
     author: User!
     content: String!
     date: DateTime!
@@ -642,7 +670,7 @@ type QuerySubscriptionResult {
     totalCount: Int!
 }
 
-type RejectRevisionNotificationEvent implements AbstractNotificationEvent {
+type RejectRevisionNotificationEvent implements AbstractNotificationEvent & InstanceAware {
     actor: User!
     date: DateTime!
     id: Int!
@@ -653,7 +681,7 @@ type RejectRevisionNotificationEvent implements AbstractNotificationEvent {
     revision: AbstractRevision!
 }
 
-type RemoveEntityLinkNotificationEvent implements AbstractNotificationEvent {
+type RemoveEntityLinkNotificationEvent implements AbstractNotificationEvent & InstanceAware {
     actor: User!
     child: AbstractEntity!
     date: DateTime!
@@ -663,7 +691,7 @@ type RemoveEntityLinkNotificationEvent implements AbstractNotificationEvent {
     parent: AbstractEntity!
 }
 
-type RemoveTaxonomyLinkNotificationEvent implements AbstractNotificationEvent {
+type RemoveTaxonomyLinkNotificationEvent implements AbstractNotificationEvent & InstanceAware {
     actor: User!
     child: AbstractUuid!
     date: DateTime!
@@ -673,7 +701,7 @@ type RemoveTaxonomyLinkNotificationEvent implements AbstractNotificationEvent {
     parent: TaxonomyTerm!
 }
 
-type SetLicenseNotificationEvent implements AbstractNotificationEvent {
+type SetLicenseNotificationEvent implements AbstractNotificationEvent & InstanceAware {
     actor: User!
     date: DateTime!
     id: Int!
@@ -682,7 +710,7 @@ type SetLicenseNotificationEvent implements AbstractNotificationEvent {
     repository: AbstractRepository!
 }
 
-type SetTaxonomyParentNotificationEvent implements AbstractNotificationEvent {
+type SetTaxonomyParentNotificationEvent implements AbstractNotificationEvent & InstanceAware {
     actor: User!
     child: TaxonomyTerm!
     date: DateTime!
@@ -693,7 +721,7 @@ type SetTaxonomyParentNotificationEvent implements AbstractNotificationEvent {
     previousParent: TaxonomyTerm
 }
 
-type SetTaxonomyTermNotificationEvent implements AbstractNotificationEvent {
+type SetTaxonomyTermNotificationEvent implements AbstractNotificationEvent & InstanceAware {
     actor: User!
     date: DateTime!
     id: Int!
@@ -702,7 +730,7 @@ type SetTaxonomyTermNotificationEvent implements AbstractNotificationEvent {
     taxonomyTerm: TaxonomyTerm!
 }
 
-type SetThreadStateNotificationEvent implements AbstractNotificationEvent {
+type SetThreadStateNotificationEvent implements AbstractNotificationEvent & InstanceAware {
     actor: User!
     archived: Boolean!
     date: DateTime!
@@ -712,7 +740,7 @@ type SetThreadStateNotificationEvent implements AbstractNotificationEvent {
     thread: UnsupportedThread!
 }
 
-type SetUuidStateNotificationEvent implements AbstractNotificationEvent {
+type SetUuidStateNotificationEvent implements AbstractNotificationEvent & InstanceAware {
     actor: User!
     date: DateTime!
     id: Int!
@@ -722,7 +750,7 @@ type SetUuidStateNotificationEvent implements AbstractNotificationEvent {
     trashed: Boolean!
 }
 
-type Solution implements AbstractEntity & AbstractRepository & AbstractUuid {
+type Solution implements AbstractEntity & AbstractRepository & AbstractUuid & InstanceAware {
     alias: String
     currentRevision: SolutionRevision
     date: DateTime!
@@ -736,6 +764,7 @@ type Solution implements AbstractEntity & AbstractRepository & AbstractUuid {
 }
 
 type SolutionRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid {
+    alias: String
     author: User!
     changes: String!
     content: String!
@@ -775,7 +804,7 @@ type SubscriptionCursor {
     node: AbstractUuid!
 }
 
-type TaxonomyTerm implements AbstractNavigationChild & AbstractUuid {
+type TaxonomyTerm implements AbstractNavigationChild & AbstractUuid & InstanceAware {
     alias: String
     children(after: String, before: String, first: Int, last: Int): AbstractUuidConnection!
     description: String
@@ -807,7 +836,7 @@ type Thread {
     comments(after: String, before: String, first: Int, last: Int): CommentConnection!
     createdAt: DateTime!
     object: AbstractUuid!
-    title: String!
+    title: String
     trashed: Boolean!
     updatedAt: DateTime!
 }
@@ -858,7 +887,16 @@ type UserEdge {
     node: User!
 }
 
-type Video implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid {
+type UuidMutation {
+    setState(input: UuidSetStateInput!): UuidSetStateResponse
+}
+
+type UuidSetStateResponse {
+    query: Query!
+    success: Boolean!
+}
+
+type Video implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid & InstanceAware {
     alias: String
     currentRevision: VideoRevision
     date: DateTime!
@@ -872,6 +910,7 @@ type Video implements AbstractEntity & AbstractRepository & AbstractTaxonomyTerm
 }
 
 type VideoRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid {
+    alias: String
     author: User!
     changes: String!
     content: String!
@@ -927,6 +966,16 @@ enum TaxonomyTermType {
 input AliasInput {
     instance: Instance!
     path: String!
+}
+
+input NotificationSetStateInput {
+    id: [Int!]!
+    unread: Boolean!
+}
+
+input UuidSetStateInput {
+    id: [Int!]!
+    trashed: Boolean!
 }
 
 

@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import {
   AuthorToolsData,
   AuthorToolsHoverMenuProps,
-} from '../../navigation/author-tools-hover-menu'
+} from '../../user-tools/author-tools-hover-menu'
 import { makeTransparentButton } from '@/helper/css'
 
 export interface ExerciseAuthorToolsProps {
@@ -15,7 +15,7 @@ export interface ExerciseAuthorToolsProps {
 }
 
 const AuthorToolsHoverMenu = dynamic<AuthorToolsHoverMenuProps>(() =>
-  import('../../navigation/author-tools-hover-menu').then(
+  import('../../user-tools/author-tools-hover-menu').then(
     (mod) => mod.AuthorToolsHoverMenu
   )
 )
