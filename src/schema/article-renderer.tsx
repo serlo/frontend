@@ -182,26 +182,10 @@ function renderElement(props: RenderElementProps): React.ReactNode {
     return <Math formula={element.formula} inline />
   }
   if (element.type === 'math') {
-    let formula = element.formula
-    let bigger = false
-    if (
-      element.formula.includes('\\int') ||
-      element.formula.includes('frac') ||
-      element.formula.includes('^')
-    ) {
-      bigger = true
-    }
-    if (
-      formula.includes('\\begin{aligned}') ||
-      formula.includes('\\begin{array}')
-    ) {
-      formula = `\\def\\arraystretch{1.6} ${formula}`
-    }
-
     return (
-      <MathWrapper centered={!element.alignLeft} bigger={bigger}>
+      <MathWrapper centered={!element.alignLeft}>
         <Lazy slim>
-          <Math formula={formula} />
+          <Math formula={element.formula} />
         </Lazy>
       </MathWrapper>
     )
