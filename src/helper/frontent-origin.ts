@@ -5,5 +5,5 @@ export const frontendOrigin =
     : process.env.NEXT_PUBLIC_VERCEL_URL
     ? // use preview deployment url
       `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
-    : //  else we are on local deployment
+    : // we are on local deployment
       'http://localhost:3000'
