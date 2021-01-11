@@ -1,5 +1,4 @@
 import { NextPageContext } from 'next'
-import absoluteUrl from 'next-absolute-url'
 
 import { InitialProps, PageData, InstanceData } from '@/data-types'
 import {
@@ -7,9 +6,9 @@ import {
   getInstanceDataByLang,
   getLandingData,
 } from '@/helper/feature-i18n'
+import { frontendOrigin } from '@/helper/frontent-origin'
 
 export const fetcherAdditionalData = {
-  origin: '',
   instance: '',
 }
 
@@ -24,7 +23,6 @@ export async function getInitialProps(
       : props.query.slug
   const joinedSlug = slug.join('/')
   const url = '/' + joinedSlug
-  const { origin } = absoluteUrl(props.req)
 
   const { instance: instance_path, alias } = parseLanguageSubfolder(url)
   const instance =
@@ -51,13 +49,11 @@ export async function getInitialProps(
         kind: rawAlias,
       },
       instanceData,
-      origin,
     }
   }
 
   if (alias === '/spenden' && instance == 'de') {
     return {
-      origin,
       instanceData,
       pageData: {
         kind: 'donation',
@@ -68,7 +64,6 @@ export async function getInitialProps(
   if (typeof window === 'undefined') {
     if (alias === '/') {
       return {
-        origin,
         instanceData,
         pageData: {
           kind: 'landing',
@@ -79,7 +74,7 @@ export async function getInitialProps(
 
     //server
     const res = await fetch(
-      `${origin}/api/frontend/${encodeURIComponent(joinedSlug)}`
+      `${frontendOrigin}/api/frontend/${encodeURIComponent(joinedSlug)}`
     )
 
     const fetchedData = (await res.json()) as PageData
@@ -108,7 +103,6 @@ export async function getInitialProps(
     }
 
     return {
-      origin,
       instanceData,
       pageData: fetchedData,
     }
@@ -119,7 +113,6 @@ export async function getInitialProps(
       const fromCache = sessionStorage.getItem(`/${instance}${alias}`)
       if (fromCache) {
         return {
-          origin: fetcherAdditionalData.origin,
           pageData: JSON.parse(fromCache) as PageData,
         }
       }
@@ -128,7 +121,7 @@ export async function getInitialProps(
     }
 
     const res = await fetch(
-      `${fetcherAdditionalData.origin}/api/frontend/${
+      `${frontendOrigin}/api/frontend/${
         fetcherAdditionalData.instance
       }${alias.replace(/\/$/, '')}`
     )
@@ -145,7 +138,6 @@ export async function getInitialProps(
       }
     }*/
     return {
-      origin: fetcherAdditionalData.origin,
       pageData: fetchedData,
     }
   }

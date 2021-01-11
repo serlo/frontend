@@ -6,8 +6,8 @@ import styled from 'styled-components'
 import { StyledP } from '../tags/styled-p'
 import { LicenseNotice } from './license-notice'
 import { useInstanceData } from '@/contexts/instance-context'
-import { useOrigin } from '@/contexts/origin-context'
 import { LicenseData, PageData, FrontendContentNode } from '@/data-types'
+import { frontendOrigin } from '@/helper/frontent-origin'
 import { renderArticle } from '@/schema/article-renderer'
 
 export interface InjectionProps {
@@ -23,8 +23,6 @@ export function Injection({ href }: InjectionProps) {
   const [license, setLicense] = React.useState<undefined | LicenseData>(
     undefined
   )
-
-  const origin = useOrigin()
 
   const { lang } = useInstanceData()
 
@@ -43,7 +41,7 @@ export function Injection({ href }: InjectionProps) {
       //
     }
 
-    void fetch(`${origin}/api/frontend/${lang}${encodedHref}`)
+    void fetch(`${frontendOrigin}/api/frontend/${lang}${encodedHref}`)
       .then((res) => {
         if (res.headers.get('content-type')!.includes('json')) return res.json()
         else return res.text()
@@ -62,7 +60,7 @@ export function Injection({ href }: InjectionProps) {
           }
         }
       })
-  }, [href, origin, lang])
+  }, [href, lang])
 
   function dataToState(pageData: PageData) {
     if (pageData.kind === 'single-entity') {
