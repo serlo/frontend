@@ -21,7 +21,6 @@ import { LandingInternationalProps } from '@/components/pages/landing-internatio
 import { ProfileProps } from '@/components/pages/user/profile'
 import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
-import { OriginProvider } from '@/contexts/origin-context'
 import { ToastNoticeProvider } from '@/contexts/toast-notice-context'
 import {
   InitialProps,
@@ -36,6 +35,7 @@ import {
   getInitialProps,
 } from '@/fetcher/get-initial-props'
 import { PrintStylesheet } from '@/helper/css'
+import { frontendOrigin } from '@/helper/frontent-origin'
 
 const LandingDE = dynamic<LandingInternationalProps>(() =>
   import('@/components/pages/landing-de').then((mod) => mod.LandingDE)
@@ -108,7 +108,6 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
     sessionStorage.setItem('currentPathname', window.location.pathname)
   })
 
-  fetcherAdditionalData.origin = initialProps.origin
   fetcherAdditionalData.instance = instanceData.lang
 
   const auth = useAuth()
@@ -116,12 +115,7 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
     getCachedLoggedInData()
   )
 
-  React.useEffect(fetchLoggedInData, [
-    auth,
-    initialProps.origin,
-    instanceData.lang,
-    loggedInData,
-  ])
+  React.useEffect(fetchLoggedInData, [auth, instanceData.lang, loggedInData])
 
   const toastNotice = notify.createShowQueue()
 
@@ -131,15 +125,13 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
   return (
     <>
       <PrintStylesheet warning={instanceData.strings.print.warning} />
-      <OriginProvider value={initialProps.origin}>
-        <InstanceDataProvider value={instanceData}>
-          <LoggedInDataProvider value={loggedInData}>
-            <ToastNoticeProvider value={toastNotice}>
-              {renderPage(initialProps.pageData)}
-            </ToastNoticeProvider>
-          </LoggedInDataProvider>
-        </InstanceDataProvider>
-      </OriginProvider>
+      <InstanceDataProvider value={instanceData}>
+        <LoggedInDataProvider value={loggedInData}>
+          <ToastNoticeProvider value={toastNotice}>
+            {renderPage(initialProps.pageData)}
+          </ToastNoticeProvider>
+        </LoggedInDataProvider>
+      </InstanceDataProvider>
     </>
   )
 
@@ -170,7 +162,7 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
     if (auth.current && !loggedInData) {
       void (async () => {
         const res = await fetch(
-          initialProps.origin + '/api/locale/' + instanceData.lang
+          frontendOrigin + '/api/locale/' + instanceData.lang
         )
         const json = (await res.json()) as LoggedInData
         sessionStorage.setItem(
