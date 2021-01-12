@@ -116,14 +116,14 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
     sessionStorage.setItem('currentPathname', window.location.pathname)
   })
 
-  fetcherAdditionalData.instance = initialProps.lang
+  fetcherAdditionalData.instance = instanceData.lang
 
   const auth = useAuth()
   const [loggedInData, setLoggedInData] = React.useState<LoggedInData | null>(
     getCachedLoggedInData()
   )
 
-  React.useEffect(fetchLoggedInData, [auth, loggedInData, initialProps.lang])
+  React.useEffect(fetchLoggedInData, [auth, instanceData.lang, loggedInData])
 
   const toastNotice = notify.createShowQueue()
 
@@ -170,11 +170,11 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
     if (auth.current && !loggedInData) {
       void (async () => {
         const res = await fetch(
-          frontendOrigin + '/api/locale/' + initialProps.lang
+          frontendOrigin + '/api/locale/' + instanceData.lang
         )
         const json = (await res.json()) as LoggedInData
         sessionStorage.setItem(
-          `___loggedInData_${initialProps.lang}`,
+          `___loggedInData_${instanceData.lang}`,
           JSON.stringify(json)
         )
         setLoggedInData(json)
