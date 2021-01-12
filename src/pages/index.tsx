@@ -25,7 +25,6 @@ export default Page
 
 // eslint-disable-next-line @typescript-eslint/require-await
 export const getStaticProps: GetStaticProps = async (context) => {
-  console.log(context.locale)
   return {
     props: {
       pageData: {
