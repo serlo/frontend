@@ -35,6 +35,7 @@ import {
   getInitialProps,
 } from '@/fetcher/get-initial-props'
 import { PrintStylesheet } from '@/helper/css'
+import { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { frontendOrigin } from '@/helper/frontent-origin'
 
 const LandingDE = dynamic<LandingInternationalProps>(() =>
@@ -91,11 +92,18 @@ const Revision = dynamic<RevisionProps>(() =>
 )
 
 const PageView: NextPage<InitialProps> = (initialProps) => {
-  // note: we assume that instance data is passing in the first time this components renders
-  // subsequent render calls should be client-side-navigation
-  const [instanceData] = React.useState<InstanceData>(
-    initialProps?.instanceData!
-  )
+  const [instanceData] = React.useState<InstanceData>(() => {
+    if (typeof window === 'undefined') {
+      // load instance data for server side rendering
+      return getInstanceDataByLang(initialProps.lang)
+    } else {
+      // load instance data from client from document tag
+      return JSON.parse(
+        document.getElementById('__FRONTEND_CLIENT_INSTANCE_DATA__')
+          ?.textContent ?? '{}'
+      )
+    }
+  })
 
   React.useEffect(storePageData, [initialProps])
 
@@ -108,14 +116,14 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
     sessionStorage.setItem('currentPathname', window.location.pathname)
   })
 
-  fetcherAdditionalData.instance = instanceData.lang
+  fetcherAdditionalData.instance = initialProps.lang
 
   const auth = useAuth()
   const [loggedInData, setLoggedInData] = React.useState<LoggedInData | null>(
     getCachedLoggedInData()
   )
 
-  React.useEffect(fetchLoggedInData, [auth, instanceData.lang, loggedInData])
+  React.useEffect(fetchLoggedInData, [auth, loggedInData, initialProps.lang])
 
   const toastNotice = notify.createShowQueue()
 
@@ -162,11 +170,11 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
     if (auth.current && !loggedInData) {
       void (async () => {
         const res = await fetch(
-          frontendOrigin + '/api/locale/' + instanceData.lang
+          frontendOrigin + '/api/locale/' + initialProps.lang
         )
         const json = (await res.json()) as LoggedInData
         sessionStorage.setItem(
-          `___loggedInData_${instanceData.lang}`,
+          `___loggedInData_${initialProps.lang}`,
           JSON.stringify(json)
         )
         setLoggedInData(json)
