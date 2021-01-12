@@ -1,11 +1,7 @@
 import { NextPageContext } from 'next'
 
-import { InitialProps, PageData, InstanceData } from '@/data-types'
-import {
-  parseLanguageSubfolder,
-  getInstanceDataByLang,
-  getLandingData,
-} from '@/helper/feature-i18n'
+import { InitialProps, PageData } from '@/data-types'
+import { parseLanguageSubfolder, getLandingData } from '@/helper/feature-i18n'
 import { frontendOrigin } from '@/helper/frontent-origin'
 
 export const fetcherAdditionalData = {
@@ -30,13 +26,6 @@ export async function getInitialProps(
       ? fetcherAdditionalData.instance
       : instance_path
 
-  let instanceData: InstanceData | undefined = undefined
-
-  if (typeof window === 'undefined') {
-    // only load instanceData serverside
-    instanceData = getInstanceDataByLang(instance)
-  }
-
   const rawAlias = alias.substring(1).replace('user/public', 'user/me')
 
   if (
@@ -48,27 +37,27 @@ export async function getInitialProps(
       pageData: {
         kind: rawAlias,
       },
-      instanceData,
+      lang: instance,
     }
   }
 
   if (alias === '/spenden' && instance == 'de') {
     return {
-      instanceData,
       pageData: {
         kind: 'donation',
       },
+      lang: instance,
     }
   }
 
   if (typeof window === 'undefined') {
     if (alias === '/') {
       return {
-        instanceData,
         pageData: {
           kind: 'landing',
           landingData: getLandingData(instance),
         },
+        lang: instance,
       }
     }
 
@@ -103,8 +92,8 @@ export async function getInitialProps(
     }
 
     return {
-      instanceData,
       pageData: fetchedData,
+      lang: instance,
     }
   } else {
     //client
@@ -114,6 +103,7 @@ export async function getInitialProps(
       if (fromCache) {
         return {
           pageData: JSON.parse(fromCache) as PageData,
+          lang: instance,
         }
       }
     } catch (e) {
@@ -139,6 +129,7 @@ export async function getInitialProps(
     }*/
     return {
       pageData: fetchedData,
+      lang: instance,
     }
   }
 }

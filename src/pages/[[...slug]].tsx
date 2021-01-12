@@ -35,6 +35,7 @@ import {
   getInitialProps,
 } from '@/fetcher/get-initial-props'
 import { PrintStylesheet } from '@/helper/css'
+import { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { frontendOrigin } from '@/helper/frontent-origin'
 
 const LandingDE = dynamic<LandingInternationalProps>(() =>
@@ -91,11 +92,18 @@ const Revision = dynamic<RevisionProps>(() =>
 )
 
 const PageView: NextPage<InitialProps> = (initialProps) => {
-  // note: we assume that instance data is passing in the first time this components renders
-  // subsequent render calls should be client-side-navigation
-  const [instanceData] = React.useState<InstanceData>(
-    initialProps?.instanceData!
-  )
+  const [instanceData] = React.useState<InstanceData>(() => {
+    if (typeof window === 'undefined') {
+      // load instance data for server side rendering
+      return getInstanceDataByLang(initialProps.lang)
+    } else {
+      // load instance data from client from document tag
+      return JSON.parse(
+        document.getElementById('__FRONTEND_CLIENT_INSTANCE_DATA__')
+          ?.textContent ?? '{}'
+      )
+    }
+  })
 
   React.useEffect(storePageData, [initialProps])
 

@@ -16,8 +16,8 @@ import { instanceData, instanceLandingData, loggedInData } from '@/data/en'
 // If your data is static across all pages and languages, don't add it here, but add it directly to the component.
 
 export interface InitialProps {
-  instanceData?: InstanceData
   pageData: PageData
+  lang: Instance | string
 }
 
 // Instance data consists of the language, translation strings, header menu and footer menu.
