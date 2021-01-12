@@ -1,4 +1,4 @@
-import { GetStaticProps, NextPage } from 'next'
+import { GetStaticProps } from 'next'
 import React from 'react'
 
 import { Donations } from '@/components/pages/donations'
