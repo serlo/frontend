@@ -6,7 +6,6 @@ import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
 import { ToastNoticeProvider } from '@/contexts/toast-notice-context'
 import { InitialProps, InstanceData, LoggedInData } from '@/data-types'
-import { fetcherAdditionalData } from '@/fetcher/get-initial-props'
 import { PrintStylesheet } from '@/helper/css'
 import { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { frontendOrigin } from '@/helper/frontent-origin'
@@ -39,8 +38,6 @@ export function FrontendClientBase(initialProps: FrontendClientBaseProps) {
     )
     sessionStorage.setItem('currentPathname', window.location.pathname)
   })
-
-  fetcherAdditionalData.instance = instanceData.lang
 
   const auth = useAuth()
   const [loggedInData, setLoggedInData] = React.useState<LoggedInData | null>(

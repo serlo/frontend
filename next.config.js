@@ -30,6 +30,9 @@ module.exports = withSourceMaps(
     devIndicators: {
       autoPrerender: false,
     },
+    async rewrites() {
+      return [{ source: '/user/public', destination: '/user/me' }]
+    },
     i18n: {
       locales: ['de', 'en', 'ta', 'hi', 'fr', 'es'],
       defaultLocale: 'de',
