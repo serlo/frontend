@@ -8,13 +8,13 @@ export default function Page() {
 }
 
 // eslint-disable-next-line @typescript-eslint/require-await
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async (context) => {
+  if (context.locale !== 'de') return { notFound: true }
   return {
     props: {
       pageData: {
         kind: 'donation',
       },
-      lang: 'de',
     },
   }
 }

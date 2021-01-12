@@ -90,7 +90,7 @@ if (typeof window !== 'undefined' && /^[a-z]{2}\./.test(window.location.host)) {
 // end of patch
 
 // eslint-disable-next-line import/no-default-export
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps, router }: AppProps) {
   const comp = <Component {...pageProps} />
   if (pageProps.pageData) {
     return (
@@ -98,7 +98,9 @@ export default function App({ Component, pageProps }: AppProps) {
         <ThemeProvider theme={theme}>
           <FontFix />
           <NProgressStyles />
-          <FrontendClientBase {...pageProps}>{comp}</FrontendClientBase>
+          <FrontendClientBase {...pageProps} locale={router.locale!}>
+            {comp}
+          </FrontendClientBase>
           <ToastNotice />
         </ThemeProvider>
       </React.StrictMode>

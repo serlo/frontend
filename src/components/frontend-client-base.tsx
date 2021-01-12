@@ -11,13 +11,15 @@ import { PrintStylesheet } from '@/helper/css'
 import { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { frontendOrigin } from '@/helper/frontent-origin'
 
-export type FrontendClientBaseProps = React.PropsWithChildren<InitialProps>
+export type FrontendClientBaseProps = React.PropsWithChildren<
+  InitialProps & { locale: string }
+>
 
 export function FrontendClientBase(initialProps: FrontendClientBaseProps) {
   const [instanceData] = React.useState<InstanceData>(() => {
     if (typeof window === 'undefined') {
       // load instance data for server side rendering
-      return getInstanceDataByLang(initialProps.lang)
+      return getInstanceDataByLang(initialProps.locale)
     } else {
       // load instance data from client from document tag
       return JSON.parse(

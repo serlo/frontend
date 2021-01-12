@@ -92,7 +92,7 @@ export function Link({
 
   function renderClientSide(_href: string) {
     return (
-      <NextLink prefetch={false} href={`/${lang}${_href}`}>
+      <NextLink prefetch={false} href={_href}>
         {renderLink(_href)}
       </NextLink>
     )

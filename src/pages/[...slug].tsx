@@ -10,7 +10,6 @@ import { HeaderFooterProps } from '@/components/header-footer'
 import { ProfileProps } from '@/components/pages/user/profile'
 import { InitialProps, ErrorData, LicenseDetailData } from '@/data-types'
 import { fetchPageData } from '@/fetcher/fetch-page-data'
-import { parseLanguageSubfolder } from '@/helper/feature-i18n'
 
 const EntityBase = dynamic<EntityBaseProps>(() =>
   import('@/components/entity-base').then((mod) => mod.EntityBase)
@@ -101,13 +100,10 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
 // eslint-disable-next-line @typescript-eslint/require-await
 export const getStaticProps: GetStaticProps = async (context) => {
   const alias = (context.params?.slug as string[]).join('/')
-  const { instance } = parseLanguageSubfolder(alias)
-
-  const pageData = await fetchPageData('/' + alias)
+  const pageData = await fetchPageData('/' + context.locale! + '/' + alias)
   return {
     props: {
       pageData: JSON.parse(JSON.stringify(pageData)), // remove undefined values
-      lang: instance,
     },
     revalidate: 1,
   }

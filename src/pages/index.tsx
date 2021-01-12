@@ -1,15 +1,22 @@
-import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
+import { GetStaticProps, NextPage } from 'next'
+import { useRouter } from 'next/router'
 import React from 'react'
 
 import { HeaderFooter } from '@/components/header-footer'
+import { LandingDE } from '@/components/pages/landing-de'
 import { LandingInternational } from '@/components/pages/landing-international'
 import { LandingPage } from '@/data-types'
 import { getLandingData } from '@/helper/feature-i18n'
 
 const Page: NextPage<{ pageData: LandingPage }> = ({ pageData }) => {
+  const { locale } = useRouter()
   return (
     <HeaderFooter page={pageData}>
-      <LandingInternational data={pageData.landingData} />
+      {locale == 'de' ? (
+        <LandingDE data={pageData.landingData} />
+      ) : (
+        <LandingInternational data={pageData.landingData} />
+      )}
     </HeaderFooter>
   )
 }
@@ -18,28 +25,13 @@ export default Page
 
 // eslint-disable-next-line @typescript-eslint/require-await
 export const getStaticProps: GetStaticProps = async (context) => {
-  const lang = context.params?.lang as string
+  console.log(context.locale)
   return {
     props: {
       pageData: {
         kind: 'landing',
-        landingData: getLandingData(lang),
+        landingData: getLandingData(context.locale!),
       },
-      lang,
     },
-  }
-}
-
-// eslint-disable-next-line @typescript-eslint/require-await
-export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    paths: [
-      { params: { lang: 'en' } },
-      { params: { lang: 'ta' } },
-      { params: { lang: 'hi' } },
-      { params: { lang: 'fr' } },
-      { params: { lang: 'es' } },
-    ],
-    fallback: 'blocking',
   }
 }

@@ -2,14 +2,13 @@ import { GetStaticProps, NextPage } from 'next'
 import React from 'react'
 
 import { HeaderFooter } from '@/components/header-footer'
-import { LandingDE } from '@/components/pages/landing-de'
-import { LandingPage } from '@/data-types'
-import { getLandingData } from '@/helper/feature-i18n'
+import { Search } from '@/components/pages/search'
+import { SearchPage } from '@/data-types'
 
-const Page: NextPage<{ pageData: LandingPage }> = ({ pageData }) => {
+const Page: NextPage<{ pageData: SearchPage }> = ({ pageData }) => {
   return (
     <HeaderFooter page={pageData}>
-      <LandingDE data={pageData.landingData} />
+      <Search />
     </HeaderFooter>
   )
 }
@@ -21,10 +20,8 @@ export const getStaticProps: GetStaticProps = async () => {
   return {
     props: {
       pageData: {
-        kind: 'landing',
-        landingData: getLandingData('de'),
+        kind: 'search',
       },
-      lang: 'de',
     },
   }
 }

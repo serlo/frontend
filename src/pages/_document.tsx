@@ -43,16 +43,11 @@ export default class MyDocument extends Document {
   }
 
   render() {
-    const props = this.props.__NEXT_DATA__.props.pageProps
-    const langData = props.lang ? getInstanceDataByLang(props.lang) : undefined
+    const langData = this.props.__NEXT_DATA__.locale
+      ? getInstanceDataByLang(this.props.__NEXT_DATA__.locale)
+      : undefined
     return (
-      <Html
-        lang={
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-          (this.props.__NEXT_DATA__.props.pageProps?.instanceData
-            ?.lang as string) ?? 'de'
-        }
-      >
+      <Html>
         <Head>
           <meta property="og:site_name" content="Serlo" />
           <meta property="og:type" content="website" />
