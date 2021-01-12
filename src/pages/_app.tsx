@@ -15,7 +15,7 @@ import { FrontendClientBaseProps } from '@/components/frontend-client-base'
 import { NProgressStyles } from '@/components/navigation/n-progress-styles'
 import { ToastNotice } from '@/components/toast-notice'
 import { FontFix } from '@/helper/css'
-import { parseLanguageSubfolder } from '@/helper/feature-i18n'
+import { languages } from '@/helper/feature-i18n'
 import { theme } from '@/theme'
 
 config.autoAddCss = false
@@ -65,24 +65,27 @@ const FrontendClientBase = dynamic<FrontendClientBaseProps>(() =>
 )
 
 // a very specific monkey patch for the next.js router usage of history api
-function newHistoryFunction(method: any) {
+function newHistoryFunction(method: any, lang: string) {
   return (state: any, title: any, url: any) => {
     console.log(state)
     if (!state || !state.__N) {
       return method(state, title, url)
     } else {
       const url_raw = state.as ?? '/'
-      const { alias } = parseLanguageSubfolder(url_raw)
-      method(state, title, alias)
+      method(state, title, url_raw.replace(new RegExp(`^/${lang}`), ''))
     }
   }
 }
 
-if (typeof window !== 'undefined') {
-  const pushState = window.history.pushState.bind(window.history)
-  const replaceState = window.history.replaceState.bind(window.history)
-  window.history.pushState = newHistoryFunction(pushState)
-  window.history.replaceState = newHistoryFunction(replaceState)
+// only apply patch if we are on language subdomain
+if (typeof window !== 'undefined' && /^[a-z]{2}\./.test(window.location.host)) {
+  const lang = window.location.host.substring(0, 2)
+  if ((languages as string[]).includes(lang)) {
+    const pushState = window.history.pushState.bind(window.history)
+    const replaceState = window.history.replaceState.bind(window.history)
+    window.history.pushState = newHistoryFunction(pushState, lang)
+    window.history.replaceState = newHistoryFunction(replaceState, lang)
+  }
 }
 // end of patch
 
