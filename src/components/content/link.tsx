@@ -91,11 +91,7 @@ export function Link({
   }
 
   function renderClientSide(_href: string) {
-    return (
-      <NextLink href="/[[...slug]]" as={decodeURIComponent(_href)}>
-        {renderLink(_href)}
-      </NextLink>
-    )
+    return <NextLink href={`/${lang}${_href}`}>{renderLink(_href)}</NextLink>
   }
 
   function renderLink(_href: string) {

@@ -19,6 +19,7 @@ export async function getInitialProps(
       : props.query.slug
   const joinedSlug = slug.join('/')
   const url = '/' + joinedSlug
+  console.log('url', url)
 
   const { instance: instance_path, alias } = parseLanguageSubfolder(url)
   const instance =

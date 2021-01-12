@@ -2,6 +2,7 @@ import { config } from '@fortawesome/fontawesome-svg-core'
 // eslint-disable-next-line import/no-unassigned-import
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import { AppProps } from 'next/app'
+import dynamic from 'next/dynamic'
 import Router from 'next/router'
 import NProgress from 'nprogress'
 import React from 'react'
@@ -10,9 +11,11 @@ import { ThemeProvider } from 'styled-components'
 import '@/assets-webkit/fonts/karmilla.css'
 import '@/assets-webkit/fonts/katex/katex.css'
 
+import { FrontendClientBaseProps } from '@/components/frontend-client-base'
 import { NProgressStyles } from '@/components/navigation/n-progress-styles'
 import { ToastNotice } from '@/components/toast-notice'
 import { FontFix } from '@/helper/css'
+import { parseLanguageSubfolder } from '@/helper/feature-i18n'
 import { theme } from '@/theme'
 
 config.autoAddCss = false
@@ -55,16 +58,48 @@ Router.events.on('routeChangeStart', () => {
 Router.events.on('routeChangeComplete', () => NProgress.done())
 Router.events.on('routeChangeError', () => NProgress.done())
 
+const FrontendClientBase = dynamic<FrontendClientBaseProps>(() =>
+  import('@/components/frontend-client-base').then(
+    (mod) => mod.FrontendClientBase
+  )
+)
+
+// a very specific monkey patch for the next.js router usage of history api
+function newHistoryFunction(method: any) {
+  return (state: any, title: any, url: any) => {
+    console.log(state)
+    if (!state || !state.__N) {
+      return method(state, title, url)
+    } else {
+      const url_raw = state.as ?? '/'
+      const { alias } = parseLanguageSubfolder(url_raw)
+      method(state, title, alias)
+    }
+  }
+}
+
+if (typeof window !== 'undefined') {
+  const pushState = window.history.pushState.bind(window.history)
+  const replaceState = window.history.replaceState.bind(window.history)
+  window.history.pushState = newHistoryFunction(pushState)
+  window.history.replaceState = newHistoryFunction(replaceState)
+}
+// end of patch
+
 // eslint-disable-next-line import/no-default-export
 export default function App({ Component, pageProps }: AppProps) {
-  return (
-    <React.StrictMode>
-      <ThemeProvider theme={theme}>
-        <FontFix />
-        <NProgressStyles />
-        <Component {...pageProps} />
-        <ToastNotice />
-      </ThemeProvider>
-    </React.StrictMode>
-  )
+  const comp = <Component {...pageProps} />
+  if (pageProps.pageData) {
+    return (
+      <React.StrictMode>
+        <ThemeProvider theme={theme}>
+          <FontFix />
+          <NProgressStyles />
+          <FrontendClientBase {...pageProps}>{comp}</FrontendClientBase>
+          <ToastNotice />
+        </ThemeProvider>
+      </React.StrictMode>
+    )
+  }
+  return comp
 }
