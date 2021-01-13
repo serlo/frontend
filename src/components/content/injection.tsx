@@ -29,27 +29,33 @@ export function Injection({ href }: InjectionProps) {
   useEffect(() => {
     const encodedHref = encodeURI(href.startsWith('/') ? href : `/${href}`)
 
-    try {
+    /*try {
       const cachedData = sessionStorage.getItem(
         'injection' + lang + encodedHref
       )
       if (cachedData) {
-        dataToState(JSON.parse(cachedData))
-        return
+        //dataToState(JSON.parse(cachedData))
+        //return
       }
     } catch (e) {
       //
-    }
+    }*/
 
-    void fetch(`${frontendOrigin}/api/frontend/${lang}${encodedHref}`)
+    const { buildId } = JSON.parse(
+      document.getElementById('__NEXT_DATA__')?.textContent ?? '{}'
+    )
+
+    void fetch(
+      `${frontendOrigin}/_next/data/${buildId}/${lang}${encodedHref}.json`
+    )
       .then((res) => {
-        if (res.headers.get('content-type')!.includes('json')) return res.json()
-        else return res.text()
+        return res.json()
       })
-      .then((pageData: PageData) => {
+      .then((json) => {
+        const pageData: PageData = json.pageProps.pageData
         dataToState(pageData)
 
-        if (pageData.kind === 'single-entity') {
+        /*if (pageData.kind === 'single-entity') {
           try {
             sessionStorage.setItem(
               'injection' + lang + encodedHref,
@@ -58,7 +64,7 @@ export function Injection({ href }: InjectionProps) {
           } catch (e) {
             //
           }
-        }
+        }*/
       })
   }, [href, lang])
 
