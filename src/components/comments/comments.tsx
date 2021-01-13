@@ -6,9 +6,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
-  AbstractUuid,
   Comment as CommentType,
   Thread as ThreadType,
+  ThreadAware,
 } from '@serlo/api'
 import { gql, request } from 'graphql-request'
 import React from 'react'
@@ -35,7 +35,7 @@ export type ThreadsData = ThreadType[]
 const query = gql`
   query getComments($id: Int!) {
     uuid(id: $id) {
-      ... on AbstractUuid {
+      ... on ThreadAware {
         threads {
           nodes {
             archived
@@ -81,7 +81,7 @@ export function Comments({ id: parentId }: CommentsProps) {
   React.useEffect(() => {
     void (async () => {
       try {
-        const queryData = await request<{ uuid: AbstractUuid }>(
+        const queryData = await request<{ uuid: ThreadAware }>(
           endpoint,
           query,
           { id: parentId }
