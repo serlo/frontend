@@ -68,6 +68,8 @@ interface AbstractRepository {
     id: Int!
     instance: Instance!
     license: License!
+    "extends ThreadAware"
+    threads(after: String, before: String, first: Int, last: Int): ThreadsConnection!
     trashed: Boolean!
 }
 
@@ -83,6 +85,8 @@ interface AbstractRevision {
     date: DateTime!
     "extends AbstractUuid"
     id: Int!
+    "extends ThreadAware"
+    threads(after: String, before: String, first: Int, last: Int): ThreadsConnection!
     trashed: Boolean!
 }
 
@@ -100,12 +104,15 @@ interface AbstractTaxonomyTermChild {
 interface AbstractUuid {
     alias: String
     id: Int!
-    threads(after: String, before: String, first: Int, last: Int): ThreadsConnection!
     trashed: Boolean!
 }
 
 interface InstanceAware {
     instance: Instance!
+}
+
+interface ThreadAware {
+    threads(after: String, before: String, first: Int, last: Int): ThreadsConnection!
 }
 
 type AbstractUuidConnection {
@@ -120,7 +127,7 @@ type AbstractUuidCursor {
     node: AbstractUuid!
 }
 
-type Applet implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid & InstanceAware {
+type Applet implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid & InstanceAware & ThreadAware {
     alias: String
     currentRevision: AppletRevision
     date: DateTime!
@@ -133,7 +140,7 @@ type Applet implements AbstractEntity & AbstractRepository & AbstractTaxonomyTer
     trashed: Boolean!
 }
 
-type AppletRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid {
+type AppletRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid & ThreadAware {
     alias: String
     author: User!
     changes: String!
@@ -161,7 +168,7 @@ type AppletRevisionCursor {
     node: AppletRevision!
 }
 
-type Article implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid & InstanceAware {
+type Article implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid & InstanceAware & ThreadAware {
     alias: String
     currentRevision: ArticleRevision
     date: DateTime!
@@ -174,7 +181,7 @@ type Article implements AbstractEntity & AbstractRepository & AbstractTaxonomyTe
     trashed: Boolean!
 }
 
-type ArticleRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid {
+type ArticleRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid & ThreadAware {
     alias: String
     author: User!
     changes: String!
@@ -219,7 +226,6 @@ type Comment implements AbstractUuid {
     content: String!
     createdAt: DateTime!
     id: Int!
-    threads(after: String, before: String, first: Int, last: Int): ThreadsConnection!
     title: String!
     trashed: Boolean!
 }
@@ -236,7 +242,7 @@ type CommentEdge {
     node: Comment!
 }
 
-type Course implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid & InstanceAware {
+type Course implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid & InstanceAware & ThreadAware {
     alias: String
     currentRevision: CourseRevision
     date: DateTime!
@@ -250,7 +256,7 @@ type Course implements AbstractEntity & AbstractRepository & AbstractTaxonomyTer
     trashed: Boolean!
 }
 
-type CoursePage implements AbstractEntity & AbstractRepository & AbstractUuid & InstanceAware {
+type CoursePage implements AbstractEntity & AbstractRepository & AbstractUuid & InstanceAware & ThreadAware {
     alias: String
     course: Course!
     currentRevision: CoursePageRevision
@@ -263,7 +269,7 @@ type CoursePage implements AbstractEntity & AbstractRepository & AbstractUuid & 
     trashed: Boolean!
 }
 
-type CoursePageRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid {
+type CoursePageRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid & ThreadAware {
     alias: String
     author: User!
     changes: String!
@@ -288,7 +294,7 @@ type CoursePageRevisionCursor {
     node: CoursePageRevision!
 }
 
-type CourseRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid {
+type CourseRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid & ThreadAware {
     alias: String
     author: User!
     changes: String!
@@ -382,7 +388,7 @@ type CreateThreadNotificationEvent implements AbstractNotificationEvent & Instan
     thread: UnsupportedThread!
 }
 
-type Event implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid & InstanceAware {
+type Event implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid & InstanceAware & ThreadAware {
     alias: String
     currentRevision: EventRevision
     date: DateTime!
@@ -395,7 +401,7 @@ type Event implements AbstractEntity & AbstractRepository & AbstractTaxonomyTerm
     trashed: Boolean!
 }
 
-type EventRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid {
+type EventRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid & ThreadAware {
     alias: String
     author: User!
     changes: String!
@@ -422,7 +428,7 @@ type EventRevisionCursor {
     node: EventRevision!
 }
 
-type Exercise implements AbstractEntity & AbstractExercise & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid & InstanceAware {
+type Exercise implements AbstractEntity & AbstractExercise & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid & InstanceAware & ThreadAware {
     alias: String
     currentRevision: ExerciseRevision
     date: DateTime!
@@ -436,7 +442,7 @@ type Exercise implements AbstractEntity & AbstractExercise & AbstractRepository 
     trashed: Boolean!
 }
 
-type ExerciseGroup implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid & InstanceAware {
+type ExerciseGroup implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid & InstanceAware & ThreadAware {
     alias: String
     currentRevision: ExerciseGroupRevision
     date: DateTime!
@@ -450,7 +456,7 @@ type ExerciseGroup implements AbstractEntity & AbstractRepository & AbstractTaxo
     trashed: Boolean!
 }
 
-type ExerciseGroupRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid {
+type ExerciseGroupRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid & ThreadAware {
     alias: String
     author: User!
     changes: String!
@@ -474,7 +480,7 @@ type ExerciseGroupRevisionCursor {
     node: ExerciseGroupRevision!
 }
 
-type ExerciseRevision implements AbstractEntityRevision & AbstractExerciseRevision & AbstractRevision & AbstractUuid {
+type ExerciseRevision implements AbstractEntityRevision & AbstractExerciseRevision & AbstractRevision & AbstractUuid & ThreadAware {
     alias: String
     author: User!
     changes: String!
@@ -498,7 +504,7 @@ type ExerciseRevisionCursor {
     node: ExerciseRevision!
 }
 
-type GroupedExercise implements AbstractEntity & AbstractExercise & AbstractRepository & AbstractUuid & InstanceAware {
+type GroupedExercise implements AbstractEntity & AbstractExercise & AbstractRepository & AbstractUuid & InstanceAware & ThreadAware {
     alias: String
     currentRevision: GroupedExerciseRevision
     date: DateTime!
@@ -512,7 +518,7 @@ type GroupedExercise implements AbstractEntity & AbstractExercise & AbstractRepo
     trashed: Boolean!
 }
 
-type GroupedExerciseRevision implements AbstractEntityRevision & AbstractExerciseRevision & AbstractRevision & AbstractUuid {
+type GroupedExerciseRevision implements AbstractEntityRevision & AbstractExerciseRevision & AbstractRevision & AbstractUuid & ThreadAware {
     alias: String
     author: User!
     changes: String!
@@ -607,7 +613,7 @@ type NotificationSetStateResponse {
     success: Boolean!
 }
 
-type Page implements AbstractNavigationChild & AbstractRepository & AbstractUuid & InstanceAware {
+type Page implements AbstractNavigationChild & AbstractRepository & AbstractUuid & InstanceAware & ThreadAware {
     alias: String
     currentRevision: PageRevision
     date: DateTime!
@@ -627,7 +633,7 @@ type PageInfo {
     startCursor: String
 }
 
-type PageRevision implements AbstractRevision & AbstractUuid {
+type PageRevision implements AbstractRevision & AbstractUuid & ThreadAware {
     alias: String
     author: User!
     content: String!
@@ -750,7 +756,7 @@ type SetUuidStateNotificationEvent implements AbstractNotificationEvent & Instan
     trashed: Boolean!
 }
 
-type Solution implements AbstractEntity & AbstractRepository & AbstractUuid & InstanceAware {
+type Solution implements AbstractEntity & AbstractRepository & AbstractUuid & InstanceAware & ThreadAware {
     alias: String
     currentRevision: SolutionRevision
     date: DateTime!
@@ -763,7 +769,7 @@ type Solution implements AbstractEntity & AbstractRepository & AbstractUuid & In
     trashed: Boolean!
 }
 
-type SolutionRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid {
+type SolutionRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid & ThreadAware {
     alias: String
     author: User!
     changes: String!
@@ -804,7 +810,7 @@ type SubscriptionCursor {
     node: AbstractUuid!
 }
 
-type TaxonomyTerm implements AbstractNavigationChild & AbstractUuid & InstanceAware {
+type TaxonomyTerm implements AbstractNavigationChild & AbstractUuid & InstanceAware & ThreadAware {
     alias: String
     children(after: String, before: String, first: Int, last: Int): AbstractUuidConnection!
     description: String
@@ -861,7 +867,7 @@ type UnsupportedThread {
     id: Int!
 }
 
-type User implements AbstractUuid {
+type User implements AbstractUuid & ThreadAware {
     activeAuthor: Boolean!
     activeDonor: Boolean!
     activeReviewer: Boolean!
@@ -896,7 +902,7 @@ type UuidSetStateResponse {
     success: Boolean!
 }
 
-type Video implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid & InstanceAware {
+type Video implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid & InstanceAware & ThreadAware {
     alias: String
     currentRevision: VideoRevision
     date: DateTime!
@@ -909,7 +915,7 @@ type Video implements AbstractEntity & AbstractRepository & AbstractTaxonomyTerm
     trashed: Boolean!
 }
 
-type VideoRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid {
+type VideoRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid & ThreadAware {
     alias: String
     author: User!
     changes: String!
