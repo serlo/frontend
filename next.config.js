@@ -42,12 +42,6 @@ module.exports = withSourceMaps(
       locales: ['de', 'en', 'ta', 'hi', 'fr', 'es'],
       defaultLocale: 'de',
       localeDetection: false,
-      domains: [
-        {
-          domain: 'en.' + serloDomain,
-          defaultLocale: 'en',
-        },
-      ],
     },
   })
 )
