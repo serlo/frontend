@@ -7,7 +7,6 @@ import { StyledP } from '../tags/styled-p'
 import { LicenseNotice } from './license-notice'
 import { useInstanceData } from '@/contexts/instance-context'
 import { LicenseData, PageData, FrontendContentNode } from '@/data-types'
-import { frontendOrigin } from '@/helper/frontent-origin'
 import { renderArticle } from '@/schema/article-renderer'
 
 export interface InjectionProps {
