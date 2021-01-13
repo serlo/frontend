@@ -67,7 +67,7 @@ in the browser URL bar, this monkey patch strips the language subfolder
 from the third argument of pushState and replaceState when nextjs uses
 the history API.
 */
-stripLocaleFromHistoryStateUrlMonkeyPatch()
+//stripLocaleFromHistoryStateUrlMonkeyPatch()
 
 // eslint-disable-next-line import/no-default-export
 export default function App({ Component, pageProps }: AppProps) {
