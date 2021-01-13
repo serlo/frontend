@@ -1,47 +1,21 @@
+import { Comment as CommentType } from '@serlo/api'
 import * as React from 'react'
 import styled, { css } from 'styled-components'
 
 import { StyledP } from '../tags/styled-p'
-import { SendProps } from './comment-form'
 import { MetaBar } from './meta-bar'
 
-interface CommentProps extends Comment {
+interface CommentProps {
   isParent?: boolean
-  onSendComment?: (props: SendProps) => void
+  data: CommentType
 }
 
-interface Comment {
-  id: number
-  user: User
-  body: string
-  children?: Comment[]
-  timestamp: string
-  entity?: Entity
-}
-
-interface User {
-  id: number
-  username: string
-}
-
-interface Entity {
-  id: number
-  label: string
-}
-
-export function Comment({
-  // id,
-  user,
-  body,
-  // children,
-  timestamp,
-  isParent,
-}: // onSendComment,
-CommentProps) {
+export function Comment({ data, isParent }: CommentProps) {
+  const { author, createdAt, content } = data
   return (
     <Wrapper isParent={isParent}>
-      <MetaBar user={user} timestamp={timestamp} isParent={isParent} />
-      <StyledP>{body}</StyledP>
+      <MetaBar user={author} timestamp={createdAt} isParent={isParent} />
+      <StyledP>{content}</StyledP>
     </Wrapper>
   )
 }

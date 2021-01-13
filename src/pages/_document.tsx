@@ -7,6 +7,9 @@ import Document, {
 } from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
 
+import { getInstanceDataByLang } from '@/helper/feature-i18n'
+import { htmlEscapeJsonString } from '@/helper/html-escape'
+
 const bodyStyles = {
   margin: 0,
   fontFamily: 'Karmilla, sans-serif',
@@ -40,14 +43,11 @@ export default class MyDocument extends Document {
   }
 
   render() {
+    const langData = this.props.__NEXT_DATA__.locale
+      ? getInstanceDataByLang(this.props.__NEXT_DATA__.locale)
+      : undefined
     return (
-      <Html
-        lang={
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-          (this.props.__NEXT_DATA__.props.pageProps?.instanceData
-            ?.lang as string) ?? 'de'
-        }
-      >
+      <Html>
         <Head>
           <meta property="og:site_name" content="Serlo" />
           <meta property="og:type" content="website" />
@@ -98,6 +98,15 @@ export default class MyDocument extends Document {
         </Head>
         <body style={bodyStyles}>
           <Main />
+          {langData && (
+            <script
+              type="application/json"
+              id="__FRONTEND_CLIENT_INSTANCE_DATA__"
+              dangerouslySetInnerHTML={{
+                __html: htmlEscapeJsonString(JSON.stringify(langData)),
+              }}
+            />
+          )}
           <NextScript />
           <script async defer src="https://sa.serlo.org/latest.js" />
           <noscript>

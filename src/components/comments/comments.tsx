@@ -1,13 +1,14 @@
 import {
   faComments,
+  faExclamationCircle,
   faQuestionCircle,
   faSpinner,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
-  AbstractUuid,
-  Comment as CommentApiType,
-  Thread as ThreadApiType,
+  Comment as CommentType,
+  Thread as ThreadType,
+  ThreadAware,
 } from '@serlo/api'
 import { gql, request } from 'graphql-request'
 import React from 'react'
@@ -28,32 +29,13 @@ export interface CommentsProps {
   id: number
 }
 
-// PROTOTYPE
-export type CommentsData = Thread[]
-
-export interface Thread {
-  status: 'active' | 'trashed' | 'archived'
-  id: number
-  /*entity: {
-    title: string
-    alias: string
-    type: string
-  }*/
-  question: CommentData
-  replies: CommentData[]
-}
-
-export interface CommentData {
-  id: number
-  timestamp: string
-  user: { username: string; id: number }
-  text: string
-}
+export type CommentsData = CommentType[]
+export type ThreadsData = ThreadType[]
 
 const query = gql`
   query getComments($id: Int!) {
     uuid(id: $id) {
-      ... on AbstractUuid {
+      ... on ThreadAware {
         threads {
           nodes {
             archived
@@ -82,39 +64,10 @@ const query = gql`
   }
 `
 
-// TODO: rework data structure
-
-function createThread(thread: ThreadApiType): Thread {
-  const question = thread.comments.nodes[0]
-  const replies = thread.comments.nodes.slice(1)
-  return {
-    status: thread.trashed
-      ? 'trashed'
-      : thread.archived
-      ? 'archived'
-      : 'active',
-    id: question.id,
-    question: createComment(question),
-    replies: replies.filter((reply) => !reply.trashed).map(createComment),
-  }
-}
-
-function createComment(node: CommentApiType): CommentData {
-  return {
-    id: node.id,
-    timestamp: node.createdAt,
-    text: node.content,
-    user: {
-      ...node.author,
-      username: node.author.username,
-    },
-  }
-}
-
-export function Comments({ id: _id }: CommentsProps) {
+export function Comments({ id: parentId }: CommentsProps) {
   const [data, setData] = React.useState<{
-    active: CommentsData
-    archived: CommentsData
+    active: ThreadsData
+    archived: ThreadsData
   } | null>(null)
   const [commentCount, setCommentCount] = React.useState(0)
   const [failure, setFailure] = React.useState<String | null>(null)
@@ -126,31 +79,31 @@ export function Comments({ id: _id }: CommentsProps) {
   const auth = useAuth()
 
   React.useEffect(() => {
-    // todo: fetch data
     void (async () => {
       try {
-        const queryData = await request<{ uuid: AbstractUuid }>(
+        const queryData = await request<{ uuid: ThreadAware }>(
           endpoint,
           query,
-          { id: _id }
+          { id: parentId }
         )
         if (queryData !== null) {
-          const existingThreads = queryData.uuid.threads.nodes
-            .filter((node) => !node.trashed)
-            .map(createThread)
-
-          const activeThreads = existingThreads.filter(
-            (thread) => thread.status === 'active'
+          //TODO: for api: Trashed threads should not even be send to the frontend here
+          const untrashedThreads = queryData.uuid.threads.nodes.filter(
+            (node) => !node.trashed
           )
-          const archivedThreads = existingThreads.filter(
-            (thread) => thread.status === 'archived'
+
+          const activeThreads = untrashedThreads.filter(
+            (thread) => !thread.archived
+          )
+          const archivedThreads = untrashedThreads.filter(
+            (thread) => thread.archived
           )
 
           setData({ active: activeThreads, archived: archivedThreads })
 
           setCommentCount(
-            existingThreads.reduce((acc, val) => {
-              return acc + val.replies.length + 1
+            untrashedThreads.reduce((acc, thread) => {
+              return acc + thread.comments.nodes.length
             }, 0)
           )
         }
@@ -159,42 +112,41 @@ export function Comments({ id: _id }: CommentsProps) {
         setFailure((e as string).toString())
       }
     })()
-  }, [_id])
+  }, [parentId])
 
   function toogleShowArchived() {
     setShowArchived(!showArchived)
-  }
-
-  if (failure) {
-    return <StyledP>{failure}</StyledP>
   }
 
   if (!data)
     return (
       <StyledP>
         <ColoredIcon>
-          <FontAwesomeIcon icon={faSpinner} spin size="1x" />
+          <FontAwesomeIcon
+            icon={failure ? faExclamationCircle : faSpinner}
+            spin={!failure}
+            size="1x"
+          />
         </ColoredIcon>{' '}
-        {strings.comments.loading}
+        {failure ? strings.comments.error : strings.comments.loading}
       </StyledP>
     )
 
   if (!auth.current && commentCount == 0) return null // avoid rendering anything
 
   return (
-    <div>
+    <>
       {auth.current && (
-        <CustomH2>
-          <StyledIcon icon={faQuestionCircle} /> {strings.comments.question}
-        </CustomH2>
-      )}
-
-      {auth.current && (
-        <CommentForm
-          placeholder={strings.comments.placeholder}
-          parent_id={_id}
-          // onSendComment={}
-        />
+        <>
+          <CustomH2>
+            <StyledIcon icon={faQuestionCircle} /> {strings.comments.question}
+          </CustomH2>
+          <CommentForm
+            placeholder={strings.comments.placeholder}
+            parentId={parentId}
+            // onSendComment={}
+          />
+        </>
       )}
 
       {commentCount > 0 && (
@@ -213,62 +165,39 @@ export function Comments({ id: _id }: CommentsProps) {
           </Lazy>
         </>
       )}
-    </div>
+    </>
   )
 
-  function renderThreads(threads: CommentsData) {
+  function renderThreads(threads: ThreadsData) {
     return threads?.map((thread) => {
       return (
-        <ThreadWrapper key={thread.id}>
-          {/* <p>
-          Eine Diskussion zu {thread.entity.type}{' '}
-          <a href={thread.entity.alias}>{thread.entity.title}</a>.
-        </p>
-        <p>
-          Status: {thread.status}, Upvotes: {thread.upvotes}
-        </p>
-        <p>hier Link zu upvoten</p> */}
-          <Comment
-            id={thread.question.id}
-            timestamp={thread.question.timestamp}
-            user={thread.question.user}
-            body={thread.question.text}
-            isParent
-            key={thread.question.id}
-          />
-          {renderThreadReplies(thread)}
+        <ThreadWrapper key={thread.createdAt}>
+          {/* //TODO: implement threadId in api */}
+          {renderComments([thread.comments.nodes[0]], true)}
+          {renderThreadComments(thread.comments.nodes.slice(1), 0)}
         </ThreadWrapper>
       )
     })
   }
 
-  function renderThreadReplies(thread: Thread) {
-    const length = thread.replies.length
-
+  function renderThreadComments(comments: CommentsData, threadId: number) {
+    const length = comments.length
     //only show first reply by default
-
-    if (length === 0) return renderReplyForm(thread.id)
-
-    if (length === 1)
+    if (length < 2 || showThreadChildren.includes(threadId))
       return (
-        <div>
-          {thread.replies.map(renderComment)}
-          {renderReplyForm(thread.id)}
-        </div>
+        <>
+          {length > 0 && renderComments(comments)}
+          {renderReplyForm(threadId)}
+        </>
       )
 
-    return showThreadChildren.includes(thread.id) ? (
-      <div>
-        {thread.replies.map(renderComment)}
-        {renderReplyForm(thread.id)}
-      </div>
-    ) : (
-      <div>
-        {renderComment(thread.replies[0])}
+    return (
+      <>
+        {renderComments([comments[0]])}
         <StyledP>
           <ShowChildrenButton
             onClick={() =>
-              setShowThreadChildren([...showThreadChildren, thread.id])
+              setShowThreadChildren([...showThreadChildren, threadId])
             }
           >
             {length === 2
@@ -279,20 +208,14 @@ export function Comments({ id: _id }: CommentsProps) {
             ▾
           </ShowChildrenButton>
         </StyledP>
-      </div>
+      </>
     )
   }
 
-  function renderComment(comment: CommentData) {
-    return (
-      <Comment
-        id={comment.id}
-        key={comment.id}
-        timestamp={comment.timestamp}
-        user={comment.user}
-        body={comment.text}
-      />
-    )
+  function renderComments(comments: CommentsData, isParent?: boolean) {
+    return comments.map((comment) => {
+      return <Comment key={comment.id} data={comment} isParent={isParent} />
+    })
   }
 
   function renderReplyForm(threadId: number) {
@@ -300,7 +223,7 @@ export function Comments({ id: _id }: CommentsProps) {
       auth.current && (
         <CommentForm
           placeholder={strings.comments.placeholderReply}
-          parent_id={threadId}
+          parentId={threadId}
           reply
         />
       )

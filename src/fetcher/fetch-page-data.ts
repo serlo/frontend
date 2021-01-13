@@ -21,16 +21,13 @@ import { endpoint } from '@/api/endpoint'
 import { PageData, FrontendContentNode, EntityTypes } from '@/data-types'
 import { horizonData } from '@/data/horizon_de'
 import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
-import { parseLanguageSubfolder, getLandingData } from '@/helper/feature-i18n'
+import { parseLanguageSubfolder } from '@/helper/feature-i18n'
 import { convert } from '@/schema/convert-edtr-io-state'
 import { convertLegacyState } from '@/schema/convert-legacy-state'
 
 export async function fetchPageData(raw_alias: string): Promise<PageData> {
   try {
     const { alias, instance } = parseLanguageSubfolder(raw_alias)
-    if (alias == '/') {
-      return { kind: 'landing', landingData: getLandingData(instance) }
-    }
     if (alias.startsWith('/license/detail/')) {
       const id = parseInt(alias.split('license/detail/')[1])
       return await apiLicensePageRequest(id, instance)

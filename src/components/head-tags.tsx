@@ -2,8 +2,8 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 
 import { useInstanceData } from '@/contexts/instance-context'
-import { useOrigin } from '@/contexts/origin-context'
 import { HeadData } from '@/data-types'
+import { serloDomain } from '@/helper/serlo-domain'
 
 interface HeadTagsProps {
   data: HeadData
@@ -11,7 +11,6 @@ interface HeadTagsProps {
 
 export function HeadTags({ data }: HeadTagsProps) {
   const { title, contentType, metaDescription, metaImage } = data
-  const origin = useOrigin()
   const { lang } = useInstanceData()
   const router = useRouter()
 
@@ -29,7 +28,11 @@ export function HeadTags({ data }: HeadTagsProps) {
       <link rel="canonical" href={canonicalHref} />
       <meta
         property="og:image"
-        content={metaImage ? metaImage : origin + '/_assets/img/meta/serlo.jpg'}
+        content={
+          metaImage
+            ? metaImage
+            : `https://${lang}.${serloDomain}/_assets/img/meta/serlo.jpg`
+        }
       />
     </Head>
   )

@@ -1730,7 +1730,7 @@ const GraphiQL = dynamic<GraphiQLProps>(() => import('graphiql'), {
 })
 const GraphQL: NextPage = () => {
   const auth = useAuth()
-  console.log('GraphQL auth', auth.current)
+  //console.log('GraphQL auth', auth.current)
 
   return (
     <>
