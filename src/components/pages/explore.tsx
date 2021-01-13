@@ -351,7 +351,7 @@ function Document({ id, explain }: any) {
   return (
     <>
       <HSpace amount={60} />
-      <p style={{ textAlign: 'right' }}>
+      <p style={{ textAlign: 'right', marginBottom: '-10px' }}>
         <small>
           Aufgabe <Link href={`/${id}`}>{id}</Link> (
           <span title={explain} style={{ cursor: 'pointer' }}>

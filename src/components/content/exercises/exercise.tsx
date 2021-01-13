@@ -168,6 +168,7 @@ const StyledSpan = styled.span`
 `
 
 const Wrapper = styled.div<{ grouped?: boolean }>`
+  margin-top: 40px;
   margin-bottom: 10px;
 
   ${(props) =>
