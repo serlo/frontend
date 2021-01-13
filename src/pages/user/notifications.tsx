@@ -1,27 +1,15 @@
-import { GetStaticProps, NextPage } from 'next'
 import React from 'react'
 
+import { FrontendClientBase } from '@/components/frontend-client-base'
 import { HeaderFooter } from '@/components/header-footer'
 import { Notifications } from '@/components/pages/user/notifications'
-import { SearchPage } from '@/data-types'
 
-const Page: NextPage<{ pageData: SearchPage }> = ({ pageData }) => {
+export default function Page() {
   return (
-    <HeaderFooter page={pageData}>
-      <Notifications />
-    </HeaderFooter>
+    <FrontendClientBase>
+      <HeaderFooter>
+        <Notifications />
+      </HeaderFooter>
+    </FrontendClientBase>
   )
-}
-
-export default Page
-
-// eslint-disable-next-line @typescript-eslint/require-await
-export const getStaticProps: GetStaticProps = async () => {
-  return {
-    props: {
-      pageData: {
-        kind: 'user/notifications',
-      },
-    },
-  }
 }

@@ -2,17 +2,16 @@ import React from 'react'
 
 import { Footer } from './navigation/footer'
 import { Header } from './navigation/header'
-import { PageData } from '@/data-types'
 
 export interface HeaderFooterProps {
   children: React.ReactNode
-  page: PageData
+  onSearchPage?: boolean
 }
 
-export function HeaderFooter({ children, page }: HeaderFooterProps) {
+export function HeaderFooter({ children, onSearchPage }: HeaderFooterProps) {
   return (
     <>
-      <Header onSearchPage={page.kind === 'search'} />
+      <Header onSearchPage={onSearchPage} />
       {children}
       <Footer />
     </>

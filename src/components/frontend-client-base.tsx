@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import React from 'react'
 import { notify } from 'react-notify-toast'
 
@@ -5,20 +6,19 @@ import { useAuth } from '@/auth/use-auth'
 import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
 import { ToastNoticeProvider } from '@/contexts/toast-notice-context'
-import { InitialProps, InstanceData, LoggedInData } from '@/data-types'
+import { InstanceData, LoggedInData } from '@/data-types'
 import { PrintStylesheet } from '@/helper/css'
 import { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { frontendOrigin } from '@/helper/frontent-origin'
 
-export type FrontendClientBaseProps = React.PropsWithChildren<
-  InitialProps & { locale: string }
->
+export type FrontendClientBaseProps = React.PropsWithChildren<{}>
 
-export function FrontendClientBase(initialProps: FrontendClientBaseProps) {
+export function FrontendClientBase({ children }: FrontendClientBaseProps) {
+  const { locale } = useRouter()
   const [instanceData] = React.useState<InstanceData>(() => {
     if (typeof window === 'undefined') {
       // load instance data for server side rendering
-      return getInstanceDataByLang(initialProps.locale)
+      return getInstanceDataByLang(locale!)
     } else {
       // load instance data from client from document tag
       return JSON.parse(
@@ -28,7 +28,7 @@ export function FrontendClientBase(initialProps: FrontendClientBaseProps) {
     }
   })
 
-  React.useEffect(storePageData, [initialProps])
+  //React.useEffect(storePageData, [initialProps])
 
   React.useEffect(() => {
     //tiny history
@@ -57,13 +57,14 @@ export function FrontendClientBase(initialProps: FrontendClientBaseProps) {
       <InstanceDataProvider value={instanceData}>
         <LoggedInDataProvider value={loggedInData}>
           <ToastNoticeProvider value={toastNotice}>
-            {initialProps.children}
+            {children}
           </ToastNoticeProvider>
         </LoggedInDataProvider>
       </InstanceDataProvider>
     </>
   )
 
+  /*
   function storePageData() {
     try {
       const pageData = initialProps?.pageData
@@ -76,7 +77,7 @@ export function FrontendClientBase(initialProps: FrontendClientBaseProps) {
     } catch (e) {
       //
     }
-  }
+  }*/
 
   function getCachedLoggedInData() {
     if (typeof window === 'undefined') return null

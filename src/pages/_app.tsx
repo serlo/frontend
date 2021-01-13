@@ -2,7 +2,6 @@ import { config } from '@fortawesome/fontawesome-svg-core'
 // eslint-disable-next-line import/no-unassigned-import
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import { AppProps } from 'next/app'
-import dynamic from 'next/dynamic'
 import Router from 'next/router'
 import NProgress from 'nprogress'
 import React from 'react'
@@ -11,11 +10,10 @@ import { ThemeProvider } from 'styled-components'
 import '@/assets-webkit/fonts/karmilla.css'
 import '@/assets-webkit/fonts/katex/katex.css'
 
-import { FrontendClientBaseProps } from '@/components/frontend-client-base'
 import { NProgressStyles } from '@/components/navigation/n-progress-styles'
 import { ToastNotice } from '@/components/toast-notice'
 import { FontFix } from '@/helper/css'
-import { languages } from '@/helper/feature-i18n'
+import { stripLocaleFromHistoryStateUrlMonkeyPatch } from '@/helper/strip-locale-from-history-state-url-monkey-patch'
 import { theme } from '@/theme'
 
 config.autoAddCss = false
@@ -58,53 +56,29 @@ Router.events.on('routeChangeStart', () => {
 Router.events.on('routeChangeComplete', () => NProgress.done())
 Router.events.on('routeChangeError', () => NProgress.done())
 
-const FrontendClientBase = dynamic<FrontendClientBaseProps>(() =>
-  import('@/components/frontend-client-base').then(
-    (mod) => mod.FrontendClientBase
-  )
-)
+/*
+If we are behind the cf worker, next.js is not aware that we
+are behind a language subdomain, but instead will still route non default
+languages through a subfolder. To avoid paths like
 
-// a very specific monkey patch for the next.js router usage of history api
-function newHistoryFunction(method: any, lang: string) {
-  return (state: any, title: any, url: any) => {
-    console.log(state)
-    if (!state || !state.__N) {
-      return method(state, title, url)
-    } else {
-      const url_raw = state.as ?? '/'
-      method(state, title, url_raw.replace(new RegExp(`^/${lang}`), ''))
-    }
-  }
-}
+en.serlo.org/en/serlo
 
-// only apply patch if we are on language subdomain
-if (typeof window !== 'undefined' && /^[a-z]{2}\./.test(window.location.host)) {
-  const lang = window.location.host.substring(0, 2)
-  if ((languages as string[]).includes(lang)) {
-    const pushState = window.history.pushState.bind(window.history)
-    const replaceState = window.history.replaceState.bind(window.history)
-    window.history.pushState = newHistoryFunction(pushState, lang)
-    window.history.replaceState = newHistoryFunction(replaceState, lang)
-  }
-}
-// end of patch
+in the browser URL bar, this monkey patch strips the language subfolder
+from the third argument of pushState and replaceState when nextjs uses
+the history API.
+*/
+stripLocaleFromHistoryStateUrlMonkeyPatch()
 
 // eslint-disable-next-line import/no-default-export
-export default function App({ Component, pageProps, router }: AppProps) {
-  const comp = <Component {...pageProps} />
-  if (pageProps.pageData) {
-    return (
-      <React.StrictMode>
-        <ThemeProvider theme={theme}>
-          <FontFix />
-          <NProgressStyles />
-          <FrontendClientBase {...pageProps} locale={router.locale!}>
-            {comp}
-          </FrontendClientBase>
-          <ToastNotice />
-        </ThemeProvider>
-      </React.StrictMode>
-    )
-  }
-  return comp
+export default function App({ Component, pageProps }: AppProps) {
+  return (
+    <React.StrictMode>
+      <ThemeProvider theme={theme}>
+        <FontFix />
+        <NProgressStyles />
+        <Component {...pageProps} />
+        <ToastNotice />
+      </ThemeProvider>
+    </React.StrictMode>
+  )
 }

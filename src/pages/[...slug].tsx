@@ -6,17 +6,14 @@ import { RevisionProps } from '@/components/author/revision'
 import { EntityProps } from '@/components/content/entity'
 import { TopicProps } from '@/components/content/topic'
 import { EntityBaseProps } from '@/components/entity-base'
-import { HeaderFooterProps } from '@/components/header-footer'
+import { FrontendClientBase } from '@/components/frontend-client-base'
+import { HeaderFooter } from '@/components/header-footer'
 import { ProfileProps } from '@/components/pages/user/profile'
 import { InitialProps, ErrorData, LicenseDetailData } from '@/data-types'
 import { fetchPageData } from '@/fetcher/fetch-page-data'
 
 const EntityBase = dynamic<EntityBaseProps>(() =>
   import('@/components/entity-base').then((mod) => mod.EntityBase)
-)
-
-const HeaderFooter = dynamic<HeaderFooterProps>(() =>
-  import('@/components/header-footer').then((mod) => mod.HeaderFooter)
 )
 
 const LicenseDetail = dynamic<LicenseDetailData>(() =>
@@ -43,28 +40,14 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
   const page = initialProps.pageData
   if (page === undefined) return <ErrorPage code={404} />
 
-  if (page.kind === 'donation') {
-    return null
-  } else {
-    // all other kinds are using basic layout
-    // render it together to avoid remounting
-    return (
-      <HeaderFooter page={page}>
+  // all other kinds are using basic layout
+  // render it together to avoid remounting
+  return (
+    <FrontendClientBase>
+      <HeaderFooter>
         {(() => {
-          if (page.kind === 'landing') {
-            return null
-          }
-          if (page.kind === 'search') {
-            return null
-          }
-          if (page.kind === 'user/notifications') {
-            return null
-          }
           if (page.kind === 'user/profile') {
             return <Profile userData={page.userData} />
-          }
-          if (page.kind === 'user/me') {
-            return null
           }
           if (page.kind === 'error') {
             return (
@@ -94,8 +77,8 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
           )
         })()}
       </HeaderFooter>
-    )
-  }
+    </FrontendClientBase>
+  )
 }
 // eslint-disable-next-line @typescript-eslint/require-await
 export const getStaticProps: GetStaticProps = async (context) => {
