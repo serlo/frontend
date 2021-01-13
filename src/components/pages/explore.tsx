@@ -14,7 +14,7 @@ import { StyledH3 } from '../tags/styled-h3'
 import { StyledP } from '../tags/styled-p'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import theme from '@/components/pages/explore.module.css'
-import { useOrigin } from '@/contexts/origin-context'
+import { frontendOrigin } from '@/helper/frontent-origin'
 import { AutocompleteResponse } from '@/pages/api/search/autocomplete'
 import { SearchQueryResponse } from '@/pages/api/search/query'
 
@@ -37,11 +37,12 @@ export function Explore() {
 
   const [tabIndex, setTabIndex] = React.useState(0)
 
-  const origin = useOrigin()
+  const origin = frontendOrigin
 
   React.useEffect(() => {
     setTabIndex(parseInt(sessionStorage.getItem('__tab_index') ?? '0') ?? 0)
     setCounter(counter + 1)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   React.useEffect(() => {
@@ -76,6 +77,7 @@ export function Explore() {
         })
         .catch(() => {})
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query, choices])
 
   return (
@@ -196,13 +198,17 @@ function type2string(type: string) {
 function InputForm(props: any) {
   const [inputValue, setInputValue] = React.useState('')
   const [suggestions, setSuggestions] = React.useState<string[]>([])
-  const origin = useOrigin()
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const throttled = React.useCallback(
     throttle(1000, ({ value }: any) => {
       // to search
       //setSuggestions(entries.slice(0, 5).map((entry: any) => entry.val))
-      fetch(origin + '/api/search/autocomplete?q=' + encodeURIComponent(value))
+      fetch(
+        frontendOrigin +
+          '/api/search/autocomplete?q=' +
+          encodeURIComponent(value)
+      )
         .then((res) => res.json())
         .then((json: AutocompleteResponse) => {
           setSuggestions(json.result)
@@ -216,6 +222,7 @@ function InputForm(props: any) {
     const value = sessionStorage.getItem('__explore_query') ?? ''
     setInputValue(value)
     props.runSearch(value)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
