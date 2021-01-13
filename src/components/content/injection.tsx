@@ -46,7 +46,7 @@ export function Injection({ href }: InjectionProps) {
     )
 
     void fetch(
-      `${frontendOrigin}/_next/data/${buildId}/${lang}${encodedHref}.json`
+      `${window.location.protocol}//${window.location.host}/_next/data/${buildId}/${lang}${encodedHref}.json`
     )
       .then((res) => {
         return res.json()
