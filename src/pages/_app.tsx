@@ -13,6 +13,7 @@ import '@/assets-webkit/fonts/katex/katex.css'
 import { NProgressStyles } from '@/components/navigation/n-progress-styles'
 import { ToastNotice } from '@/components/toast-notice'
 import { FontFix } from '@/helper/css'
+import { stripLocaleFromHistoryStateUrlMonkeyPatch } from '@/helper/strip-locale-from-history-state-url-monkey-patch'
 import { theme } from '@/theme'
 
 config.autoAddCss = false
@@ -54,6 +55,19 @@ Router.events.on('routeChangeStart', () => {
 })
 Router.events.on('routeChangeComplete', () => NProgress.done())
 Router.events.on('routeChangeError', () => NProgress.done())
+
+/*
+If we are behind the cf worker, next.js is not aware that we
+are behind a language subdomain, but instead will still route non default
+languages through a subfolder. To avoid paths like
+
+en.serlo.org/en/serlo
+
+in the browser URL bar, this monkey patch strips the language subfolder
+from the third argument of pushState and replaceState when nextjs uses
+the history API.
+*/
+stripLocaleFromHistoryStateUrlMonkeyPatch()
 
 // eslint-disable-next-line import/no-default-export
 export default function App({ Component, pageProps }: AppProps) {

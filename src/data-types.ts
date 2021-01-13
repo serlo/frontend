@@ -3,26 +3,15 @@ import { TaxonomyTermType } from '@serlo/api'
 import { Instance } from './fetcher/query'
 import { instanceData, instanceLandingData, loggedInData } from '@/data/en'
 
-// This file describes the data structures that controls the frontend.
-
-// There are two types of data: instance data (language specific) and page data.
-
-// Instance data are bound to one language and will not reload between pages within this language.
-
-// Page data is reloaded for every page request.
-
-// Both data comes in through initial props on the index page.
-
-// If your data is static across all pages and languages, don't add it here, but add it directly to the component.
-
 export interface InitialProps {
   pageData: PageData
-  lang: Instance | string
 }
 
 // Instance data consists of the language, translation strings, header menu and footer menu.
 
 // The frontend supports all languages that the backend supports.
+
+// Instance data is not part of initial props anymore. Instead, it is added to the html directly.
 
 export interface InstanceData {
   lang: Instance | string
@@ -85,17 +74,12 @@ export type FooterIcon = 'newsletter' | 'github'
 // We have different types of pages, each with its own set of data:
 
 export type PageData =
-  | LandingPage
-  | DonationPage
-  | SearchPage
   | ErrorPage
   | LicenseDetailPage
-  | NotificationsPage
   | SingleEntityPage
   | RevisionPage
   | TaxonomyPage
   | UserPage
-  | UserPageRedirect
 
 // The landing page is custom built and takes i18n strings
 
@@ -129,25 +113,6 @@ export type LandingSubjectIcon =
   | 'biology'
   | 'sustainability'
   | 'chemistry'
-
-// The same for donation, search and notifications page:
-
-export interface DonationPage {
-  kind: 'donation'
-}
-
-export interface SearchPage {
-  kind: 'search'
-}
-
-export interface NotificationsPage {
-  kind: 'user/notifications'
-}
-
-//fallback for legacy routes /user/me and /user/public
-export interface UserPageRedirect {
-  kind: 'user/me'
-}
 
 // Error page has some additional data
 
