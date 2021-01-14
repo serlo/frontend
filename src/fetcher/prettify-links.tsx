@@ -117,8 +117,8 @@ export async function prettifyLinks(pageData: PageData) {
 }
 
 function getId(href: string): number | undefined {
-  const testString = href.substring(1)
-  if (!/^[\d]+$/.test(testString)) return undefined
+  if (!/^(\/)?[\d]+$/.test(href)) return undefined
+  const testString = href.replace('/', '')
   const testNumber = parseInt(testString)
   return testNumber < Math.pow(2, 31) ? testNumber : undefined
 }
