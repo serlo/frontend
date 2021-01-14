@@ -22,6 +22,13 @@ const Comments = dynamic<CommentsProps>(() =>
   import('@/components/comments/comments').then((mod) => mod.Comments)
 )
 
+function submitEvent(name: string) {
+  const window_local: any = window
+  if (window_local.sa_event) {
+    window_local.sa_event(name)
+  }
+}
+
 export function Exercise({ node }: ExerciseProps) {
   const { strings } = useInstanceData()
   const [solutionVisible, setVisible] = React.useState(false)
@@ -32,8 +39,7 @@ export function Exercise({ node }: ExerciseProps) {
   React.useEffect(() => {
     setLoaded(true)
     console.log('exercise loaded, id', node.context.id)
-    // @ts-ignore
-    window.sa_event(`show_exercise_${node.context.id}`)
+    submitEvent(`show_exercise_${node.context.id}`)
   }, [node.context.id])
 
   return (
@@ -102,8 +108,7 @@ export function Exercise({ node }: ExerciseProps) {
         onClick={() => {
           if (!solutionVisible) {
             console.log('open solution, id', node.context.id)
-            // @ts-ignore
-            window.sa_event(`open_solution_of_${node.context.id}`)
+            submitEvent(`open_solution_of_${node.context.id}`)
           }
           setVisible(!solutionVisible)
         }}
