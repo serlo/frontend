@@ -4,10 +4,10 @@ import React, { ReactChild } from 'react'
 import styled from 'styled-components'
 
 import { useInstanceData } from '@/contexts/instance-context'
-import { cloudflareWorkerDomain } from '@/helper/cloudflare-worker-domain'
 import { makeMargin, makePadding, makePrimaryButton } from '@/helper/css'
 import { entityIconMapping } from '@/helper/icon-by-entity-type'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
+import { serloDomain } from '@/helper/serlo-domain'
 
 // inspired by https://github.com/ibrahimcesar/react-lite-youtube-embed
 // also borrowed some code
@@ -67,7 +67,7 @@ export function PrivacyWrapper({
     const providerLabel = renderProvider(provider)
     if (type === 'twingle' && showIframe) return null
 
-    const previewImageUrl = `https://embed.${cloudflareWorkerDomain}/thumbnail?url=${encodeURIComponent(
+    const previewImageUrl = `https://embed.${serloDomain}/thumbnail?url=${encodeURIComponent(
       embedUrl || ''
     )}`
 
