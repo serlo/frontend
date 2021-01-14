@@ -31,7 +31,10 @@ export function Exercise({ node }: ExerciseProps) {
   const [loaded, setLoaded] = React.useState(false)
   React.useEffect(() => {
     setLoaded(true)
-  }, [])
+    console.log('exercise loaded, id', node.context.id)
+    // @ts-ignore
+    window.sa_event(`show_exercise_${node.context.id}`)
+  }, [node.context.id])
 
   return (
     <Wrapper grouped={node.grouped}>
@@ -97,6 +100,11 @@ export function Exercise({ node }: ExerciseProps) {
     return (
       <SolutionToggle
         onClick={() => {
+          if (!solutionVisible) {
+            console.log('open solution, id', node.context.id)
+            // @ts-ignore
+            window.sa_event(`open_solution_of_${node.context.id}`)
+          }
           setVisible(!solutionVisible)
         }}
         onPointerUp={(e) => e.currentTarget.blur()} //hack, use https://caniuse.com/#feat=css-focus-visible when supported
