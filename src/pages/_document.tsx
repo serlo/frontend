@@ -92,14 +92,14 @@ export default class MyDocument extends Document {
             href="/_assets/fonts/karmilla/karmilla-regular.woff2"
             as="font"
             type="font/woff2"
-            crossOrigin="anonymous"
+            crossOrigin=""
           />
           <link
             rel="preload"
             href="/_assets/fonts/karmilla/karmilla-bold.woff2"
             as="font"
             type="font/woff2"
-            crossOrigin="anonymous"
+            crossOrigin=""
           />
           {process.env.NEXT_PUBLIC_SENTRY_DSN !== undefined && (
             <script
