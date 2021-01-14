@@ -38,8 +38,6 @@ export function Exercise({ node }: ExerciseProps) {
   const [loaded, setLoaded] = React.useState(false)
   React.useEffect(() => {
     setLoaded(true)
-    console.log('exercise loaded, id', node.context.id)
-    submitEvent(`show_exercise_${node.context.id}`)
   }, [node.context.id])
 
   return (
@@ -107,8 +105,7 @@ export function Exercise({ node }: ExerciseProps) {
       <SolutionToggle
         onClick={() => {
           if (!solutionVisible) {
-            console.log('open solution, id', node.context.id)
-            submitEvent(`open_solution_of_${node.context.id}`)
+            submitEvent(`solution_opened_${node.context.id}`)
           }
           setVisible(!solutionVisible)
         }}
