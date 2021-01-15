@@ -22,6 +22,9 @@ export function CourseNavigation({
   onOverviewButtonClick,
 }: CourseNavigationProps) {
   const { strings } = useInstanceData()
+
+  const entries = data.pages.filter((item) => item.title !== '')
+
   return (
     <Wrapper id="course-overview">
       <CourseH1>
@@ -29,7 +32,7 @@ export function CourseNavigation({
       </CourseH1>
       {open ? (
         <StyledOl>
-          {data.pages.map((page) => (
+          {entries.map((page) => (
             <StyledLi key={page.url}>
               <CourseLink
                 active={!!page.active}
