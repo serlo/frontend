@@ -6,6 +6,7 @@ import { lighten } from 'polished'
 import React from 'react'
 import styled, { createGlobalStyle, css } from 'styled-components'
 
+import { isLegacyLink } from '../content/link'
 import { StyledA } from '../tags/styled-a'
 import SearchIcon from '@/assets-webkit/img/search-icon.svg'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -112,17 +113,22 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
         const link = target.classList.contains(className)
           ? target
           : target.parentElement
+
+        const absoluteHref = link?.dataset.ctorig
+        const relativeHref = absoluteHref?.replace(langDomain, '')
         if (
           !e.metaKey &&
           !e.ctrlKey &&
           link &&
           link.classList.contains(className) &&
-          typeof link.dataset.ctorig !== 'undefined' &&
-          link.dataset.ctorig.startsWith(langDomain)
+          typeof absoluteHref !== 'undefined' &&
+          absoluteHref.startsWith(langDomain) &&
+          relativeHref !== undefined &&
+          !isLegacyLink(relativeHref)
         ) {
           e.preventDefault()
           void router
-            .push('/[[...slug]]', link.dataset.ctorig.replace(langDomain, ''))
+            .push('/[[...slug]]', relativeHref)
             .then(() => window.scrollTo(0, 0))
         }
       },

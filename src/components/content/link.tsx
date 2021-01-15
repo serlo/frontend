@@ -26,10 +26,12 @@ const legacyLinks = [
   '/discussions',
 ]
 
-function isLegacyLink(_href: string) {
+export function isLegacyLink(_href: string) {
   // compat: this is a special frontend route
   if (_href == '/user/notifications') return false
   if (_href.startsWith('/user/profile/')) return false
+
+  ///event/history/user/15478
 
   return (
     legacyLinks.indexOf(_href) > -1 ||
