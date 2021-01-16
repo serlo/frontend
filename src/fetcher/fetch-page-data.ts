@@ -436,7 +436,12 @@ async function apiRequest(
 
   if (uuid.__typename === 'CoursePage') {
     const pagesToShow = uuid.course.pages.filter(
-      (page) => page.alias && !page.trashed && !page.currentRevision?.trashed
+      (page) =>
+        page.alias &&
+        !page.trashed &&
+        !page.currentRevision?.trashed &&
+        page.currentRevision?.title &&
+        page.currentRevision?.title !== ''
     )
 
     let currentPageIndex = -1

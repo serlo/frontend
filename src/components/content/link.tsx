@@ -26,7 +26,7 @@ const legacyLinks = [
   '/discussions',
 ]
 
-function isLegacyLink(_href: string) {
+export function isLegacyLink(_href: string) {
   // compat: this is a special frontend route
   if (_href == '/user/notifications') return false
   if (_href.startsWith('/user/profile/')) return false

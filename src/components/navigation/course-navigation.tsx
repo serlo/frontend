@@ -22,6 +22,7 @@ export function CourseNavigation({
   onOverviewButtonClick,
 }: CourseNavigationProps) {
   const { strings } = useInstanceData()
+
   return (
     <Wrapper id="course-overview">
       <CourseH1>
