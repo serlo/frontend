@@ -99,7 +99,7 @@ export const instanceData = {
       button: "Je suis d'accord"
     },
     embed: {
-      text: "En cliquant sur l'image ou le bouton ci-dessous, vous acceptez que le contenu externe de %provider% soit chargé. Des données personnelles peuvent également être transférées vers ce service conformément à notre %privacypolicy%.",
+      text: 'By clicking on image or button above you agree that external content from %provider% will be loaded. Also personal data may be transferred to this service in accordance with our %privacypolicy%.',
       link: "Politique de confidentialité",
       video: "Jouer la vidéo",
       applet: "Charger l'applet",
