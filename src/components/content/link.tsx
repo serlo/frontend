@@ -31,8 +31,6 @@ export function isLegacyLink(_href: string) {
   if (_href == '/user/notifications') return false
   if (_href.startsWith('/user/profile/')) return false
 
-  ///event/history/user/15478
-
   return (
     legacyLinks.indexOf(_href) > -1 ||
     _href.startsWith('/user/') ||

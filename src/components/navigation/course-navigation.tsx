@@ -23,8 +23,6 @@ export function CourseNavigation({
 }: CourseNavigationProps) {
   const { strings } = useInstanceData()
 
-  const entries = data.pages.filter((item) => item.title !== '')
-
   return (
     <Wrapper id="course-overview">
       <CourseH1>
@@ -32,7 +30,7 @@ export function CourseNavigation({
       </CourseH1>
       {open ? (
         <StyledOl>
-          {entries.map((page) => (
+          {data.pages.map((page) => (
             <StyledLi key={page.url}>
               <CourseLink
                 active={!!page.active}
