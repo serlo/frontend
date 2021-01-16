@@ -1,4 +1,7 @@
-import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
+import {
+  faArrowCircleRight,
+  faArrowCircleUp,
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import styled from 'styled-components'
@@ -16,19 +19,26 @@ export interface CourseFooterData {
   nextHref: string
 }
 
-export function CourseFooter({ nextHref }: CourseFooterProps) {
-  // const onOverviewClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-  //   location.href = '#course-overview'
-  //   onOverviewButtonClick(e)
-  // }
+export function CourseFooter({
+  nextHref,
+  onOverviewButtonClick,
+}: CourseFooterProps) {
+  const onOverviewClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    location.href = '#course-overview'
+    onOverviewButtonClick(e)
+  }
 
   const { strings } = useInstanceData()
 
   return (
     <Wrapper>
-      {nextHref && (
+      {nextHref ? (
         <ButtonLink href={nextHref}>
           <FontAwesomeIcon icon={faArrowCircleRight} /> {strings.course.next}
+        </ButtonLink>
+      ) : (
+        <ButtonLink as="button" onClick={onOverviewClick}>
+          <FontAwesomeIcon icon={faArrowCircleUp} /> {strings.course.showPages}
         </ButtonLink>
       )}
     </Wrapper>
