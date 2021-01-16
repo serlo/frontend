@@ -1,8 +1,10 @@
 import styled from 'styled-components'
 
-import { inputFontReset } from '../../helper/css'
+import { makeMargin, inputFontReset } from '../../helper/css'
 
 export const SearchResults = styled.div`
+  ${makeMargin}
+
   .gsc-control-cse {
     border: 0;
     padding: 0;

@@ -201,14 +201,6 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
     if (searchActive || consentGiven) return null
     return (
       <ConsentPop>
-        {replacePlaceholders(strings.search.privacy, {
-          privacypolicy: (
-            <_StyledA href="/privacy" target="_blank">
-              {strings.embed.link}
-            </_StyledA>
-          ),
-        })}
-        <br />
         <ConsentButton
           onClick={giveConsent}
           onKeyDown={(e) => {
@@ -219,6 +211,13 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
         >
           {strings.search.agree}
         </ConsentButton>
+        {replacePlaceholders(strings.search.privacy, {
+          privacypolicy: (
+            <_StyledA href="/privacy" target="_blank">
+              {strings.embed.link}
+            </_StyledA>
+          ),
+        })}
       </ConsentPop>
     )
   }
@@ -478,7 +477,8 @@ const ConsentButton = styled.button`
   ${makeLightButton}
   background-color: #fff;
   font-size: 1rem;
-  margin-top: 12px;
+  display: block;
+  margin: 3px auto 8px auto;
   &:hover {
     background-color: ${(props) =>
       lighten(0.15, props.theme.colors.lighterblue)};
