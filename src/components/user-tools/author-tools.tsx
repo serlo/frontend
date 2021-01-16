@@ -13,6 +13,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { useToastNotice } from '@/contexts/toast-notice-context'
 import { UserRoles } from '@/data-types'
+import { useIsSubscribed } from '@/helper/use-is-subscribed'
 import { useRefreshFromAPI } from '@/helper/use-refresh-from-api'
 
 export enum Tool {
@@ -64,38 +65,11 @@ const tippyDefaultProps: Partial<TippyProps> = {
 export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   const loggedInData = useLoggedInData()
   const instanceData = useInstanceData()
+  const { isSubscribed, updateIsSubscribed } = useIsSubscribed(data.id)
   const showToastNotice = useToastNotice()
   const refreshFromAPI = useRefreshFromAPI()
-  const [isSubscribed, setSubscribed] = React.useState<boolean | null>(null)
 
   const auth = useAuth()
-  const request = createAuthAwareGraphqlFetch(auth)
-
-  React.useEffect(() => {
-    if (isSubscribed !== null) return
-    void (async () => {
-      try {
-        const res = await request(
-          JSON.stringify({
-            query: gql`
-              query {
-                subscriptions {
-                  nodes {
-                    id
-                  }
-                }
-              }
-            `,
-          })
-        )
-        setSubscribed(
-          res.subscriptions.nodes.some((n: any) => n.id === data.id)
-        )
-      } catch (e) {
-        //
-      }
-    })()
-  }, [request, data.id, isSubscribed])
 
   const router = useRouter()
   if (!loggedInData) return null
@@ -257,18 +231,58 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   }
 
   function trash() {
-    // todo: use graphql mutation
     if (data.trashed) {
-      return renderFetchLi(
-        `/uuid/restore/${entityId}`,
-        loggedInStrings.authorMenu.restoreContent
+      return (
+        <Li key={loggedInStrings.authorMenu.restoreContent}>
+          <SubButtonStyle
+            as="button"
+            onClick={() => {
+              console.log(`restore ${entityId}`)
+            }}
+          >
+            {loggedInStrings.authorMenu.restoreContent}
+          </SubButtonStyle>
+        </Li>
       )
     }
-    return renderFetchLi(
-      `/uuid/trash/${entityId}`,
-      loggedInStrings.authorMenu.moveToTrash,
-      true
+    return (
+      <Li key={loggedInStrings.authorMenu.moveToTrash}>
+        <SubButtonStyle
+          as="button"
+          onClick={() => {
+            console.log(`trash ${entityId}`)
+
+            void setStateMutation(188292, true)
+          }}
+        >
+          {loggedInStrings.authorMenu.moveToTrash}
+        </SubButtonStyle>
+      </Li>
     )
+  }
+
+  async function setStateMutation(id: number, unread: boolean) {
+    const input = {
+      query: gql`
+        mutation setState($input: NotificationSetStateInput!) {
+          notification {
+            setState(input: $input) {
+              success
+            }
+          }
+        }
+      `,
+      variables: {
+        input: {
+          id,
+          unread,
+        },
+      },
+    }
+    const result = await createAuthAwareGraphqlFetch(auth)(
+      JSON.stringify(input)
+    )
+    console.log(result)
   }
 
   function renderNewEntity() {
@@ -359,6 +373,12 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
 
   //quick experiment
   function fetchLegacyUrl(url: string, text: string, csrf?: boolean) {
+    //TODO: this works quite nicely, but the fetch below does not :)
+    if (url.startsWith('/subscribe') || url.startsWith('/unsubscribe')) {
+      updateIsSubscribed(data.id, !isSubscribed)
+      return false
+    }
+
     NProgress.start()
 
     const cookies = cookie.parse(
@@ -381,7 +401,8 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
               url.startsWith('/subscribe') ||
               url.startsWith('/unsubscribe')
             ) {
-              setSubscribed(!isSubscribed)
+              //TODO: Mutate Subscribed here
+
               return false
             }
 
