@@ -1,7 +1,7 @@
 import { ThreadAware } from '@serlo/api'
 import { gql } from 'graphql-request'
 
-import { useGraphqlSwr } from '@/api/use-graphql-swr'
+import { useGraphqlSwrWithoutAuth } from '@/api/use-graphql-swr'
 
 const query = gql`
   query getComments($id: Int!) {
@@ -36,11 +36,11 @@ const query = gql`
 `
 export function useCommentData(id: number) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const { data, error } = useGraphqlSwr<{ uuid: ThreadAware }>({
+  const { data, error } = useGraphqlSwrWithoutAuth<{ uuid: ThreadAware }>({
     query,
     variables: { id },
     config: {
-      refreshInterval: 60 * 60 * 1000, //60min -> only update on cache mutation
+      refreshInterval: 60 * 60 * 1000, //60min -> update on cache mutation
     },
   })
 

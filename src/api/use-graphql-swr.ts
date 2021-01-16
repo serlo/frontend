@@ -5,8 +5,27 @@ import useSWR, {
   useSWRInfinite,
 } from 'swr'
 
-import { createAuthAwareGraphqlFetch } from './graphql-fetch'
+import {
+  createAuthAwareGraphqlFetch,
+  createGraphqlFetch,
+} from './graphql-fetch'
 import { useAuth } from '@/auth/use-auth'
+
+export function useGraphqlSwrWithoutAuth<T>({
+  query,
+  variables,
+  config,
+}: {
+  query: string
+  variables?: Record<string, unknown>
+  config?: ConfigInterface<T>
+}) {
+  return useSWR<T>(
+    JSON.stringify({ query, variables }),
+    createGraphqlFetch(),
+    config
+  )
+}
 
 export function useGraphqlSwr<T>({
   query,

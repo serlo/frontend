@@ -5,6 +5,22 @@ import React from 'react'
 import { endpoint } from '@/api/endpoint'
 import { AuthPayload } from '@/auth/use-auth'
 
+export function createGraphqlFetch() {
+  return async function fetch(args: string) {
+    const { query, variables } = JSON.parse(args)
+    try {
+      return await executeQuery()
+    } catch (e) {
+      console.log(e)
+    }
+
+    function executeQuery() {
+      const client = new GraphQLClient(endpoint)
+      return client.request(query, variables)
+    }
+  }
+}
+
 export function createAuthAwareGraphqlFetch(
   auth: React.RefObject<AuthPayload>
 ) {
