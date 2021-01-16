@@ -5,12 +5,7 @@ import {
   faSpinner,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  Comment as CommentType,
-  Thread as ThreadType,
-  ThreadAware,
-} from '@serlo/api'
-import { gql, request } from 'graphql-request'
+import { Comment as CommentType, Thread as ThreadType } from '@serlo/api'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -18,12 +13,12 @@ import { Lazy } from '../content/lazy'
 import { StyledP } from '../tags/styled-p'
 import { Comment } from './comment'
 import { CommentForm } from './comment-form'
-import { endpoint } from '@/api/endpoint'
 import { useAuth } from '@/auth/use-auth'
 import { StyledH2 } from '@/components/tags/styled-h2'
 import { useInstanceData } from '@/contexts/instance-context'
 import { makeLightButton } from '@/helper/css'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
+import { useCommentData } from '@/helper/use-comment-data'
 
 export interface CommentsProps {
   id: number
@@ -32,45 +27,7 @@ export interface CommentsProps {
 export type CommentsData = CommentType[]
 export type ThreadsData = ThreadType[]
 
-const query = gql`
-  query getComments($id: Int!) {
-    uuid(id: $id) {
-      ... on ThreadAware {
-        threads {
-          nodes {
-            archived
-            trashed
-            comments {
-              nodes {
-                id
-                trashed
-                content
-                archived
-                createdAt
-                author {
-                  username
-                  alias
-                  id
-                  activeAuthor
-                  activeDonor
-                  activeReviewer
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`
-
 export function Comments({ id: parentId }: CommentsProps) {
-  const [data, setData] = React.useState<{
-    active: ThreadsData
-    archived: ThreadsData
-  } | null>(null)
-  const [commentCount, setCommentCount] = React.useState(0)
-  const [failure, setFailure] = React.useState<String | null>(null)
   const [showArchived, setShowArchived] = React.useState<boolean>(false)
   const [showThreadChildren, setShowThreadChildren] = React.useState<number[]>(
     []
@@ -78,57 +35,23 @@ export function Comments({ id: parentId }: CommentsProps) {
   const { strings } = useInstanceData()
   const auth = useAuth()
 
-  React.useEffect(() => {
-    void (async () => {
-      try {
-        const queryData = await request<{ uuid: ThreadAware }>(
-          endpoint,
-          query,
-          { id: parentId }
-        )
-        if (queryData !== null) {
-          //TODO: for api: Trashed threads should not even be send to the frontend here
-          const untrashedThreads = queryData.uuid.threads.nodes.filter(
-            (node) => !node.trashed
-          )
-
-          const activeThreads = untrashedThreads.filter(
-            (thread) => !thread.archived
-          )
-          const archivedThreads = untrashedThreads.filter(
-            (thread) => thread.archived
-          )
-
-          setData({ active: activeThreads, archived: archivedThreads })
-
-          setCommentCount(
-            untrashedThreads.reduce((acc, thread) => {
-              return acc + thread.comments.nodes.length
-            }, 0)
-          )
-        }
-      } catch (e: unknown) {
-        console.log(e)
-        setFailure((e as string).toString())
-      }
-    })()
-  }, [parentId])
+  const { commentData, commentCount, error } = useCommentData(parentId)
 
   function toogleShowArchived() {
     setShowArchived(!showArchived)
   }
 
-  if (!data)
+  if (!commentData || commentCount === undefined)
     return (
       <StyledP>
         <ColoredIcon>
           <FontAwesomeIcon
-            icon={failure ? faExclamationCircle : faSpinner}
-            spin={!failure}
+            icon={error ? faExclamationCircle : faSpinner}
+            spin={!error}
             size="1x"
           />
         </ColoredIcon>{' '}
-        {failure ? strings.comments.error : strings.comments.loading}
+        {error ? strings.comments.error : strings.comments.loading}
       </StyledP>
     )
 
@@ -160,7 +83,7 @@ export function Comments({ id: parentId }: CommentsProps) {
           </CustomH2>
 
           <Lazy>
-            {renderThreads(data.active)}
+            {renderThreads(commentData.active ?? [])}
             {renderArchive()}
           </Lazy>
         </>
@@ -231,7 +154,12 @@ export function Comments({ id: parentId }: CommentsProps) {
   }
 
   function renderArchive() {
-    if (!data || data.archived.length === 0) return null
+    if (
+      !commentData ||
+      commentData.archived === undefined ||
+      commentData.archived.length === 0
+    )
+      return null
     return (
       <>
         <StyledP>
@@ -245,7 +173,7 @@ export function Comments({ id: parentId }: CommentsProps) {
             ▾
           </ShowArchivedButton>
         </StyledP>
-        {showArchived && renderThreads(data.archived)}
+        {showArchived && renderThreads(commentData.archived ?? [])}
       </>
     )
   }
