@@ -160,7 +160,7 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
         content={renderConsentPop()}
         trigger="focus click"
         interactive
-        placement="bottom-end"
+        placement="bottom-start"
       >
         <SearchForm
           id="searchform"
