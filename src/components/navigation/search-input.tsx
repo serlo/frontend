@@ -23,7 +23,7 @@ This components starts with only a placeholder that looks like a searchbar (basi
 When activated (by click) it loads the Google Custom Search scrips that generate the real input button and alot of markup.
 We style this markup and use it to silenty replace the placeholder.
 From this point on it's a styled GSC that loads /search to display the results.
-It's a bit hacky, but it's free and works quite well.
+It's a very hacky, but it's free and works … okay.
 */
 
 export function SearchInput({ onSearchPage }: SearchInputProps) {
