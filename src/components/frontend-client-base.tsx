@@ -13,6 +13,10 @@ import { frontendOrigin } from '@/helper/frontent-origin'
 
 export type FrontendClientBaseProps = React.PropsWithChildren<{}>
 
+export const StatsContext = React.createContext<any>(undefined)
+
+export const IdContext = React.createContext<number>(-10000)
+
 export function FrontendClientBase({ children }: FrontendClientBaseProps) {
   const { locale } = useRouter()
   const [instanceData] = React.useState<InstanceData>(() => {
@@ -27,6 +31,22 @@ export function FrontendClientBase({ children }: FrontendClientBaseProps) {
       )
     }
   })
+
+  const [statsData, setStatsData] = React.useState(undefined)
+  const [useStats] = React.useState(true)
+
+  React.useEffect(() => {
+    void (async () => {
+      const filekey = localStorage.getItem('experiment_stats_filekey')
+      if (filekey) {
+        const res = await fetch(
+          `https://arrrg.uber.space/serlo-stats/${filekey}.json`
+        )
+        const json = await res.json()
+        setStatsData(json)
+      }
+    })()
+  }, [])
 
   //React.useEffect(storePageData, [initialProps])
 
@@ -57,7 +77,9 @@ export function FrontendClientBase({ children }: FrontendClientBaseProps) {
       <InstanceDataProvider value={instanceData}>
         <LoggedInDataProvider value={loggedInData}>
           <ToastNoticeProvider value={toastNotice}>
-            {children}
+            <StatsContext.Provider value={{ statsData, useStats }}>
+              {children}
+            </StatsContext.Provider>
           </ToastNoticeProvider>
         </LoggedInDataProvider>
       </InstanceDataProvider>

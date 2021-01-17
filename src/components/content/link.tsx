@@ -3,6 +3,7 @@ import React from 'react'
 
 import { StyledA } from '../tags/styled-a'
 import { ExternalLink } from './external-link'
+import { UrlClicks } from './url-clicks'
 import { useInstanceData } from '@/contexts/instance-context'
 
 export interface LinkProps {
@@ -12,6 +13,7 @@ export interface LinkProps {
   noExternalIcon?: boolean
   title?: string
   noCSR?: boolean
+  fixColor?: boolean
 }
 
 //TODO: Should come from cloudflare worker https://github.com/serlo/frontend/issues/328
@@ -51,6 +53,7 @@ export function Link({
   noExternalIcon,
   title,
   noCSR,
+  fixColor,
 }: LinkProps) {
   const { lang } = useInstanceData()
 
@@ -103,6 +106,7 @@ export function Link({
       <StyledA href={_href} className={className} title={title}>
         {children}
         {isExternal && !noExternalIcon && <ExternalLink />}
+        <UrlClicks href={_href} fixColor={fixColor} />
       </StyledA>
     )
   }

@@ -3,8 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styled from 'styled-components'
 
 import { Link } from '../content/link'
+import { StatsViews } from '../content/stats-views'
 import { HeadTags } from '../head-tags'
 import { PrinciplesGraphic } from '../landing/principles-graphic'
+import { StyledH1 } from '../tags/styled-h1'
 import { StyledP } from '../tags/styled-p'
 import DonateSVG from '@/assets-webkit/img/footer-donate.svg'
 import ParticipateSVG from '@/assets-webkit/img/footer-participate.svg'
@@ -24,6 +26,9 @@ export function LandingDE({ data }: LandingDEProps) {
   return (
     <>
       <HeadTags data={{ title: 'Serlo – Die freie Lernplattform' }} />
+      <StyledH1>
+        <StatsViews />
+      </StyledH1>
       <SubjectsSection>
         <LandingSubjects data={subjectsData} />
       </SubjectsSection>

@@ -1,7 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { StatsViews } from '../content/stats-views'
 import { HeadTags } from '../head-tags'
+import { StyledH1 } from '../tags/styled-h1'
 import { SearchResults } from '@/components/navigation/search-results'
 import { useInstanceData } from '@/contexts/instance-context'
 
@@ -42,6 +44,9 @@ export function Search() {
   return (
     <>
       <HeadTags data={{ title: `Serlo.org - ${strings.header.search}` }} />
+      <StyledH1>
+        <StatsViews />
+      </StyledH1>
       <StyledSearchResults>
         <div id="gcs-results"></div>
       </StyledSearchResults>

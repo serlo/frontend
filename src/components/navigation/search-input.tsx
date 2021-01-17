@@ -7,6 +7,7 @@ import React from 'react'
 import styled, { createGlobalStyle, css } from 'styled-components'
 
 import { isLegacyLink } from '../content/link'
+import { UrlClicks } from '../content/url-clicks'
 import { StyledA } from '../tags/styled-a'
 import SearchIcon from '@/assets-webkit/img/search-icon.svg'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -175,7 +176,9 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
         >
           {!searchActive && (
             <>
-              <PlaceholderText>{strings.header.search}</PlaceholderText>
+              <PlaceholderText>
+                {strings.header.search} <UrlClicks href="/search" />
+              </PlaceholderText>
               <PlaceholderButton>
                 {!searchLoaded ? (
                   <PlaceholderIcon />

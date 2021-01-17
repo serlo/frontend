@@ -6,7 +6,10 @@ import { RevisionProps } from '@/components/author/revision'
 import { EntityProps } from '@/components/content/entity'
 import { TopicProps } from '@/components/content/topic'
 import { EntityBaseProps } from '@/components/entity-base'
-import { FrontendClientBase } from '@/components/frontend-client-base'
+import {
+  FrontendClientBase,
+  IdContext,
+} from '@/components/frontend-client-base'
 import { HeaderFooter } from '@/components/header-footer'
 import { ProfileProps } from '@/components/pages/user/profile'
 import { InitialProps, ErrorData, LicenseDetailData } from '@/data-types'
@@ -44,39 +47,51 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
   // render it together to avoid remounting
   return (
     <FrontendClientBase>
-      <HeaderFooter>
-        {(() => {
-          if (page.kind === 'user/profile') {
-            return <Profile userData={page.userData} />
-          }
-          if (page.kind === 'error') {
+      <IdContext.Provider
+        value={
+          page.kind == 'single-entity'
+            ? page.entityData.id
+            : page.kind == 'taxonomy'
+            ? page.taxonomyData.id
+            : page.kind == 'user/profile'
+            ? page.userData.id
+            : -9999
+        }
+      >
+        <HeaderFooter>
+          {(() => {
+            if (page.kind === 'user/profile') {
+              return <Profile userData={page.userData} />
+            }
+            if (page.kind === 'error') {
+              return (
+                <ErrorPage
+                  code={page.errorData.code}
+                  message={page.errorData.message}
+                />
+              )
+            }
             return (
-              <ErrorPage
-                code={page.errorData.code}
-                message={page.errorData.message}
-              />
+              <EntityBase page={page}>
+                {(() => {
+                  if (page.kind === 'license-detail') {
+                    return <LicenseDetail {...page.licenseData} />
+                  }
+                  if (page.kind === 'single-entity') {
+                    return <Entity data={page.entityData} />
+                  }
+                  if (page.kind === 'revision') {
+                    return <Revision data={page.revisionData} />
+                  } else {
+                    /* taxonomy */
+                    return <Topic data={page.taxonomyData} />
+                  }
+                })()}
+              </EntityBase>
             )
-          }
-          return (
-            <EntityBase page={page}>
-              {(() => {
-                if (page.kind === 'license-detail') {
-                  return <LicenseDetail {...page.licenseData} />
-                }
-                if (page.kind === 'single-entity') {
-                  return <Entity data={page.entityData} />
-                }
-                if (page.kind === 'revision') {
-                  return <Revision data={page.revisionData} />
-                } else {
-                  /* taxonomy */
-                  return <Topic data={page.taxonomyData} />
-                }
-              })()}
-            </EntityBase>
-          )
-        })()}
-      </HeaderFooter>
+          })()}
+        </HeaderFooter>
+      </IdContext.Provider>
     </FrontendClientBase>
   )
 }

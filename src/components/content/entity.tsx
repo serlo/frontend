@@ -7,6 +7,7 @@ import styled from 'styled-components'
 
 import { CommentsProps } from '../comments/comments'
 import { HSpace } from './h-space'
+import { StatsViews } from './stats-views'
 import { LicenseNotice } from '@/components/content/license-notice'
 import type { CourseFooterProps } from '@/components/navigation/course-footer'
 import type { CourseNavigationProps } from '@/components/navigation/course-navigation'
@@ -75,12 +76,18 @@ export function Entity({ data }: EntityProps) {
   )
 
   function renderStyledH1() {
-    if (!data.title) return null
+    if (!data.title)
+      return (
+        <StyledH1>
+          {' '}
+          <StatsViews />
+        </StyledH1>
+      )
 
     return (
       <StyledH1 extraMarginTop itemProp="name">
         {data.title}
-        {renderEntityIcon()}
+        {renderEntityIcon()} <StatsViews />
       </StyledH1>
     )
   }

@@ -21,7 +21,11 @@ export function ExerciseNumbering({
     const char = String.fromCharCode(97 + index)
     return <StyledNumberChild>{char}</StyledNumberChild>
   }
-  return <StyledNumberParent href={href}>{index + 1}</StyledNumberParent>
+  return (
+    <StyledNumberParent href={href} fixColor>
+      {index + 1}{' '}
+    </StyledNumberParent>
+  )
 }
 
 const StyledNumberParent = styled(Link)`

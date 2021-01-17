@@ -11,6 +11,7 @@ import { ShareModal } from '../user-tools/share-modal'
 import { UserTools } from '../user-tools/user-tools'
 import { LicenseNotice } from './license-notice'
 import { Link } from './link'
+import { StatsViews } from './stats-views'
 import { useInstanceData } from '@/contexts/instance-context'
 import {
   TaxonomyData,
@@ -51,7 +52,8 @@ export function Topic({ data }: TopicProps) {
             {' '}
             <StyledIcon icon={faFile} />{' '}
           </span>
-        )}
+        )}{' '}
+        <StatsViews />
       </Headline>
       {renderUserTools({ aboveContent: true })}
       <ImageSizer>
