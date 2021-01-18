@@ -6,6 +6,7 @@ import { lighten } from 'polished'
 import React from 'react'
 import styled, { createGlobalStyle, css } from 'styled-components'
 
+import { isLegacyLink } from '../content/link'
 import { StyledA } from '../tags/styled-a'
 import SearchIcon from '@/assets-webkit/img/search-icon.svg'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -22,7 +23,7 @@ This components starts with only a placeholder that looks like a searchbar (basi
 When activated (by click) it loads the Google Custom Search scrips that generate the real input button and alot of markup.
 We style this markup and use it to silenty replace the placeholder.
 From this point on it's a styled GSC that loads /search to display the results.
-It's a bit hacky, but it's free and works quite well.
+It's a very hacky, but it's free and works … okay.
 */
 
 export function SearchInput({ onSearchPage }: SearchInputProps) {
@@ -112,17 +113,22 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
         const link = target.classList.contains(className)
           ? target
           : target.parentElement
+
+        const absoluteHref = link?.dataset.ctorig
+        const relativeHref = absoluteHref?.replace(langDomain, '')
         if (
           !e.metaKey &&
           !e.ctrlKey &&
           link &&
           link.classList.contains(className) &&
-          typeof link.dataset.ctorig !== 'undefined' &&
-          link.dataset.ctorig.startsWith(langDomain)
+          typeof absoluteHref !== 'undefined' &&
+          absoluteHref.startsWith(langDomain) &&
+          relativeHref !== undefined &&
+          !isLegacyLink(relativeHref)
         ) {
           e.preventDefault()
           void router
-            .push('/[[...slug]]', link.dataset.ctorig.replace(langDomain, ''))
+            .push('/[[...slug]]', relativeHref)
             .then(() => window.scrollTo(0, 0))
         }
       },
@@ -154,7 +160,7 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
         content={renderConsentPop()}
         trigger="focus click"
         interactive
-        placement="bottom-end"
+        placement="bottom-start"
       >
         <SearchForm
           id="searchform"
@@ -195,14 +201,6 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
     if (searchActive || consentGiven) return null
     return (
       <ConsentPop>
-        {replacePlaceholders(strings.search.privacy, {
-          privacypolicy: (
-            <_StyledA href="/privacy" target="_blank">
-              {strings.embed.link}
-            </_StyledA>
-          ),
-        })}
-        <br />
         <ConsentButton
           onClick={giveConsent}
           onKeyDown={(e) => {
@@ -213,6 +211,13 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
         >
           {strings.search.agree}
         </ConsentButton>
+        {replacePlaceholders(strings.search.privacy, {
+          privacypolicy: (
+            <_StyledA href="/privacy" target="_blank">
+              {strings.embed.link}
+            </_StyledA>
+          ),
+        })}
       </ConsentPop>
     )
   }
@@ -472,7 +477,8 @@ const ConsentButton = styled.button`
   ${makeLightButton}
   background-color: #fff;
   font-size: 1rem;
-  margin-top: 12px;
+  display: block;
+  margin: 3px auto 8px auto;
   &:hover {
     background-color: ${(props) =>
       lighten(0.15, props.theme.colors.lighterblue)};

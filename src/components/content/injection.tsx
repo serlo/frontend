@@ -7,7 +7,6 @@ import { StyledP } from '../tags/styled-p'
 import { LicenseNotice } from './license-notice'
 import { useInstanceData } from '@/contexts/instance-context'
 import { LicenseData, PageData, FrontendContentNode } from '@/data-types'
-import { frontendOrigin } from '@/helper/frontent-origin'
 import { renderArticle } from '@/schema/article-renderer'
 
 export interface InjectionProps {
@@ -29,27 +28,33 @@ export function Injection({ href }: InjectionProps) {
   useEffect(() => {
     const encodedHref = encodeURI(href.startsWith('/') ? href : `/${href}`)
 
-    try {
+    /*try {
       const cachedData = sessionStorage.getItem(
         'injection' + lang + encodedHref
       )
       if (cachedData) {
-        dataToState(JSON.parse(cachedData))
-        return
+        //dataToState(JSON.parse(cachedData))
+        //return
       }
     } catch (e) {
       //
-    }
+    }*/
 
-    void fetch(`${frontendOrigin}/api/frontend/${lang}${encodedHref}`)
+    const { buildId } = JSON.parse(
+      document.getElementById('__NEXT_DATA__')?.textContent ?? '{}'
+    )
+
+    void fetch(
+      `${window.location.protocol}//${window.location.host}/_next/data/${buildId}/${lang}${encodedHref}.json`
+    )
       .then((res) => {
-        if (res.headers.get('content-type')!.includes('json')) return res.json()
-        else return res.text()
+        return res.json()
       })
-      .then((pageData: PageData) => {
+      .then((json) => {
+        const pageData: PageData = json.pageProps.pageData
         dataToState(pageData)
 
-        if (pageData.kind === 'single-entity') {
+        /*if (pageData.kind === 'single-entity') {
           try {
             sessionStorage.setItem(
               'injection' + lang + encodedHref,
@@ -58,7 +63,7 @@ export function Injection({ href }: InjectionProps) {
           } catch (e) {
             //
           }
-        }
+        }*/
       })
   }, [href, lang])
 

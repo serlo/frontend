@@ -8,7 +8,7 @@ import Document, {
 import { ServerStyleSheet } from 'styled-components'
 
 import { getInstanceDataByLang } from '@/helper/feature-i18n'
-import { htmlEscapeJsonString } from '@/helper/html-escape'
+import { htmlEscapeString } from '@/helper/html-escape'
 
 const bodyStyles = {
   margin: 0,
@@ -87,6 +87,20 @@ export default class MyDocument extends Document {
             type="application/opensearchdescription+xml"
             title="Serlo (de)"
           />
+          <link
+            rel="preload"
+            href="/_assets/fonts/karmilla/karmilla-regular.woff2"
+            as="font"
+            type="font/woff2"
+            crossOrigin=""
+          />
+          <link
+            rel="preload"
+            href="/_assets/fonts/karmilla/karmilla-bold.woff2"
+            as="font"
+            type="font/woff2"
+            crossOrigin=""
+          />
           {process.env.NEXT_PUBLIC_SENTRY_DSN !== undefined && (
             <script
               src={`/_assets/sentry/${process.env.NEXT_PUBLIC_SENTRY_DSN.substring(
@@ -103,7 +117,7 @@ export default class MyDocument extends Document {
               type="application/json"
               id="__FRONTEND_CLIENT_INSTANCE_DATA__"
               dangerouslySetInnerHTML={{
-                __html: htmlEscapeJsonString(JSON.stringify(langData)),
+                __html: htmlEscapeString(JSON.stringify(langData)),
               }}
             />
           )}
