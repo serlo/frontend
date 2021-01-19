@@ -32,7 +32,6 @@ function Top100() {
   const stats = React.useContext(StatsContext)
   const [limit, setLimit] = React.useState(100)
   if (!stats?.statsData) return null
-  console.log('top 100')
   const entries = []
   for (const id in stats.statsData.counts) {
     entries.push({ id, count: stats.statsData.counts[id] })

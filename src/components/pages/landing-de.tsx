@@ -27,7 +27,8 @@ export function LandingDE({ data }: LandingDEProps) {
     <>
       <HeadTags data={{ title: 'Serlo – Die freie Lernplattform' }} />
       <StyledH1>
-        <StatsViews /> - <Link href="/___toppages">Liste der Top-Seiten</Link>
+        <StatsViews /> - <Link href="/___toppages">Liste der Top-Seiten</Link> -{' '}
+        <Link href="/___about">Infos zu den Daten</Link>
       </StyledH1>
       <SubjectsSection>
         <LandingSubjects data={subjectsData} />
