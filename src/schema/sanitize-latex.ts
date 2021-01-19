@@ -34,7 +34,7 @@ export function sanitizeLatex(formula: string): string {
     .map((line, index) => {
       if (index == 0) return line
       if (line.includes('\\hline'))
-        return line.replace('\\hline', '\\hline \\sf ')
+        return '\\\\ ' + line.replace('\\hline', '\\hline \\sf ')
       return ' \\\\ \\sf ' + line
     })
     .join('')
