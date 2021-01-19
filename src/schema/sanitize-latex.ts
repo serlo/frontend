@@ -50,7 +50,11 @@ export function sanitizeLatex(formula: string): string {
     formula.includes('\\begin{aligned}') ||
     formula.includes('\\begin{array}')
   ) {
-    formula = `\\def\\arraystretch{2.5} ${formula}`
+    if (formula.includes('\\dfrac') || formula.includes('\\int')) {
+      formula = `\\def\\arraystretch{2} ${formula}`
+    } else {
+      formula = `\\def\\arraystretch{1.25} ${formula}`
+    }
   }
 
   // add nonserif globally
