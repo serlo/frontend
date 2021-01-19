@@ -48,7 +48,7 @@ function RefererList() {
   refs.sort((a, b) => b.count - a.count)
   return (
     <div style={{ backgroundColor: 'whitesmoke', padding: 4 }}>
-      {refs.length} Referrer, davon Top 5:
+      {refs.length} interne Referrer, davon Top 5:
       <br />
       {refs.slice(0, 5).map((ref, id) => {
         const path = Object.keys(stats.statsData.uuid2paths[ref.id])[0]
