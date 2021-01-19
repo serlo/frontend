@@ -29,7 +29,16 @@ export function sanitizeLatex(formula: string): string {
   formula = formula.replace(regexTextSimple, '')
 
   // handle environments
-  formula = formula.replace(regexNewLine, ' \\\\ \\sf ')
+  formula = formula
+    .split(regexNewLine)
+    .map((line, index) => {
+      if (index == 0) return line
+      if (line.includes('\\hline'))
+        return line.replace('\\hline', '\\hline \\sf ')
+      return ' \\\\ \\sf ' + line
+    })
+    .join('')
+
   formula = formula.replace(regexAmpersand, ' & \\sf ')
   formula = formula.replace(envStart, (str) => `${str} \\sf `)
 
