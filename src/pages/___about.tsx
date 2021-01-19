@@ -17,7 +17,7 @@ export default function About() {
           <MaxWidthDiv>
             <StyledH1>Infos zu den Daten</StyledH1>
             <StyledP>
-              Hier sind die Analytics-Daten vom 1. Januar bis 15. Januar 2021
+              Hier sind die Analytics-Daten vom 1. Januar bis 18. Januar 2021
               dargestellt.
             </StyledP>
             <ImgCentered>
