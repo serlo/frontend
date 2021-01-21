@@ -18,7 +18,12 @@ import {
   Instance,
 } from './query'
 import { endpoint } from '@/api/endpoint'
-import { PageData, FrontendContentNode, EntityTypes } from '@/data-types'
+import {
+  PageData,
+  FrontendContentNode,
+  EntityTypes,
+  LicenseDetailPage,
+} from '@/data-types'
 import { horizonData } from '@/data/horizon_de'
 import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
 import { parseLanguageSubfolder } from '@/helper/feature-i18n'
@@ -28,10 +33,6 @@ import { convertLegacyState } from '@/schema/convert-legacy-state'
 export async function fetchPageData(raw_alias: string): Promise<PageData> {
   try {
     const { alias, instance } = parseLanguageSubfolder(raw_alias)
-    if (alias.startsWith('/license/detail/')) {
-      const id = parseInt(alias.split('license/detail/')[1])
-      return await apiLicensePageRequest(id, instance)
-    }
 
     const pageData = await apiRequest(alias, instance as Instance)
     await prettifyLinks(pageData)
@@ -502,10 +503,10 @@ async function apiRequest(
   }
 }
 
-async function apiLicensePageRequest(
+export async function apiLicensePageRequest(
   id: number,
   instance: string
-): Promise<PageData> {
+): Promise<LicenseDetailPage> {
   const { license } = await request<{ license: GraphQL.License }>(
     endpoint,
     licenseDetailsQuery(id)
