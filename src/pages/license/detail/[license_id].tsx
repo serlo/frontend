@@ -7,7 +7,7 @@ import { HeaderFooter } from '@/components/header-footer'
 import { ErrorPage } from '@/components/pages/error-page'
 import { LicenseDetail } from '@/components/pages/license-detail'
 import { InitialProps, LicenseDetailPage } from '@/data-types'
-import { apiLicensePageRequest } from '@/fetcher/fetch-page-data'
+import { fetchPageData } from '@/fetcher/fetch-page-data'
 
 const PageView: NextPage<InitialProps> = (initialProps) => {
   const page = initialProps.pageData as LicenseDetailPage
@@ -28,12 +28,13 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
 // eslint-disable-next-line @typescript-eslint/require-await
 export const getStaticProps: GetStaticProps = async (context) => {
   const id = parseInt(context.params?.license_id as string)
+  const instance = context.locale ?? context.defaultLocale ?? 'de'
+
   const pageData = isNaN(id)
     ? undefined
-    : await apiLicensePageRequest(
-        id,
-        context.locale ?? context.defaultLocale ?? 'de'
-      )
+    : ((await fetchPageData(
+        `/${instance}/license/detail/${id}`
+      )) as LicenseDetailPage)
 
   return {
     props: {
