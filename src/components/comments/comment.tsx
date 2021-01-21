@@ -1,10 +1,10 @@
 import { Comment as CommentType } from '@serlo/api'
+import escapeHtml from 'escape-html'
 import * as React from 'react'
 import styled, { css } from 'styled-components'
 
 import { StyledP } from '../tags/styled-p'
 import { MetaBar } from './meta-bar'
-import { htmlEscapeString } from '@/helper/html-escape'
 
 interface CommentProps {
   isParent?: boolean
@@ -16,17 +16,16 @@ export function Comment({ data, isParent }: CommentProps) {
 
   const urlFinder = /https?:\/\/(www\.)?([-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b)([-a-zA-Z0-9()@:%_+.~#?&//=]*)/g
 
-  //could content end up here unescaped?
-  const escapedContent = htmlEscapeString(content)
+  const escapedContent = escapeHtml(content)
 
-  const contentWithLinks = escapedContent.replace(urlFinder, (match) => {
+  const escapedWithLinks = escapedContent.replace(urlFinder, (match) => {
     return `<a href="${match}" rel="ugc nofollow">${match}</a>`
   })
 
   return (
     <Wrapper isParent={isParent}>
       <MetaBar user={author} timestamp={createdAt} isParent={isParent} />
-      <StyledP dangerouslySetInnerHTML={{ __html: contentWithLinks }}></StyledP>
+      <StyledP dangerouslySetInnerHTML={{ __html: escapedWithLinks }}></StyledP>
     </Wrapper>
   )
 }
