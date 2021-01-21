@@ -161,12 +161,12 @@ export const instanceData = {
       roles: "Rollen"
     },
     notices: {
-      welcome: '👋 Welcome %username%!',
-      bye: '👋 See you soon!',
-      revisionSaved: 'Revision is saved and will be reviewed soon 👍',
-      revisionAccepted: 'Revision was successfully accepted ✅',
-      revisionRejected: 'Revision was successfully rejected ❎',
-      revisionSavedAccepted: 'Revision was successfully saved and accepted ✅'
+      welcome: "👋 Willkommen %username%!",
+      bye: "👋 Bis bald!",
+      revisionSaved: "Die Bearbeitung wurde gespeichert und wird bald überprüft 👍",
+      revisionAccepted: "Die Bearbeitung wurde akzeptiert ✅",
+      revisionRejected: "Die Bearbeitung wurde abgelehnt ❎",
+      revisionSavedAccepted: "Die Bearbeitung wurde erfolgreich gespeichert und akzeptiert ✅"
     }
   }
 };
