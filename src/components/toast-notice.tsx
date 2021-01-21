@@ -54,9 +54,9 @@ export function ToastNotice() {
         return 'Are aliens real?'
       }
       showToast(getText())
-      removeHash()
       setTimeout(() => {
-        refreshFromAPI(false)
+        window.location.hash = ''
+        window.location.reload()
       }, 1000)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
