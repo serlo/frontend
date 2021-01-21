@@ -56,8 +56,8 @@ export function ToastNotice() {
       showToast(getText())
       removeHash()
       setTimeout(() => {
-        refreshFromAPI()
-      }, 800)
+        refreshFromAPI(false)
+      }, 1000)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
