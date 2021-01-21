@@ -8,23 +8,16 @@ import { makeMargin, makePadding, makePrimaryButton } from '@/helper/css'
 import { entityIconMapping } from '@/helper/icon-by-entity-type'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { serloDomain } from '@/helper/serlo-domain'
+import { ExternalProvider, useConsent } from '@/helper/use-consent'
 
 // inspired by https://github.com/ibrahimcesar/react-lite-youtube-embed
 // also borrowed some code
-
-export enum Provider {
-  YouTube = 'youtube',
-  WikimediaCommons = 'wikimedia',
-  Vimeo = 'vimeo',
-  GeoGebra = 'geogebra',
-  Twingle = 'twingle',
-}
 
 interface PrivacyWrapperProps {
   children: ReactChild
   placeholder?: ReactChild
   type: 'video' | 'applet' | 'twingle'
-  provider: Provider
+  provider: ExternalProvider
   embedUrl?: string
   twingleCallback?: () => void
 }
@@ -38,11 +31,13 @@ export function PrivacyWrapper({
   twingleCallback,
 }: PrivacyWrapperProps) {
   const [showIframe, setShowIframe] = React.useState(false)
-  const isTwingle = type === Provider.Twingle
+  const isTwingle = provider === ExternalProvider.Twingle
+  const { checkConsent, giveConsent } = useConsent()
 
   const { strings } = useInstanceData()
 
   const confirmLoad = () => {
+    giveConsent(provider)
     if (showIframe) return
     if (isTwingle && twingleCallback) twingleCallback()
     setShowIframe(true)
@@ -65,7 +60,6 @@ export function PrivacyWrapper({
   function renderPlaceholder() {
     if (placeholder) return placeholder
     const buttonLabel = strings.embed[type]
-    const providerLabel = renderProvider(provider)
     if (isTwingle && showIframe) return null
 
     const previewImageUrl = isTwingle
@@ -79,23 +73,25 @@ export function PrivacyWrapper({
         <PreviewImageWrapper>
           <PreviewImage src={previewImageUrl} faded={isTwingle} />
         </PreviewImageWrapper>
-        <InfoBar>
-          {replacePlaceholders(strings.embed.text, {
-            provider: <b>{providerLabel}</b>,
-            privacypolicy: (
-              <a href="/privacy" target="_blank">
-                {strings.embed.link}
-              </a>
-            ),
-          })}
-        </InfoBar>
+        {!checkConsent(provider) && (
+          <InfoBar>
+            {replacePlaceholders(strings.embed.text, {
+              provider: <b>{provider}</b>,
+              privacypolicy: (
+                <a href="/privacy" target="_blank">
+                  {strings.embed.link}
+                </a>
+              ),
+            })}
+          </InfoBar>
+        )}
         <ButtonWrap onClick={confirmLoad}>
           <Playbutton onKeyDown={onKeyDown}>
             <FontAwesomeIcon
               icon={
                 showIframe
                   ? faSpinner
-                  : type === Provider.Twingle
+                  : type === 'twingle'
                   ? faHeart
                   : entityIconMapping[type]
               }
@@ -106,21 +102,6 @@ export function PrivacyWrapper({
         </ButtonWrap>
       </Placeholder>
     )
-  }
-
-  function renderProvider(provider: Provider) {
-    switch (provider) {
-      case Provider.YouTube:
-        return 'YouTube'
-      case Provider.WikimediaCommons:
-        return 'Wikimedia Commons'
-      case Provider.Vimeo:
-        return 'Vimeo'
-      case Provider.GeoGebra:
-        return 'GeoGebra'
-      case Provider.Twingle:
-        return 'Twingle'
-    }
   }
 }
 
