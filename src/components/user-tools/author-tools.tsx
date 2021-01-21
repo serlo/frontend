@@ -207,7 +207,12 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
           }).length > 0
 
         if (hasPower) {
-          if (renderer) return renderer(entityId)
+          if (renderer)
+            return (
+              <React.Fragment key={`${title}`}>
+                {renderer(entityId)}
+              </React.Fragment>
+            )
           if (url) return renderLi(url, title || getTranslatedString(toolName))
         }
       })}
@@ -346,7 +351,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
 
   function renderFetchLi(href: string, text: string, csrf?: boolean) {
     return (
-      <Li key={text}>
+      <Li>
         <SubButtonStyle
           as="button"
           onClick={() => fetchLegacyUrl(href, text, csrf)}
