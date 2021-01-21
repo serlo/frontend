@@ -159,6 +159,14 @@ export const instanceData = {
       showAllActivities: "Alle Aktivitäten anzeigen",
       lastSeen: "Zuletzt online",
       roles: "Rollen"
+    },
+    notices: {
+      welcome: "👋 Willkommen %username%!",
+      bye: "👋 Bis bald!",
+      revisionSaved: "Die Bearbeitung wurde gespeichert und wird bald überprüft 👍",
+      revisionAccepted: "Die Bearbeitung wurde akzeptiert ✅",
+      revisionRejected: "Die Bearbeitung wurde abgelehnt ❎",
+      revisionSavedAccepted: "Die Bearbeitung wurde erfolgreich gespeichert und akzeptiert ✅"
     }
   }
 };
