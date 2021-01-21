@@ -59,7 +59,8 @@ export function ToastNotice() {
         refreshFromAPI()
       }, 800)
     }
-  })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return <Notification />
 }
