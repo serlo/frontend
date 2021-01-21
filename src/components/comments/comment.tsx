@@ -45,13 +45,13 @@ const Wrapper = styled.div<{ isParent?: boolean }>`
   > p {
     margin-bottom: 0;
     white-space: pre-line;
-    overflow-wrap: break-word;
-    word-break: break-all;
     hyphens: auto;
     padding-left: 8px;
+    overflow-wrap: break-word;
 
     > a {
       color: ${(props) => props.theme.colors.brand};
+      word-break: break-all; /* breaks without hyphen*/
     }
   }
 `
