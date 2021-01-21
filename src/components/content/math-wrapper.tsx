@@ -17,5 +17,6 @@ export const MathWrapper = styled.div<MathWrapperProps>`
   font-size: 1.125rem;
   overflow-x: auto;
   overflow-y: hidden;
+  padding-top: 2px;
   ${(props) => (props.bigger ? 'line-height:2.5;' : '')}
 `
