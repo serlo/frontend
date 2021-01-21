@@ -90,14 +90,6 @@ export const instanceData = {
       chooseOption: 'Click on one of the options.',
       trashedNotice: 'This content is marked for deletion.'
     },
-    cookie: {
-      part1: 'By using this website you declare that you agree with our',
-      part2: 'and',
-      part3: '.',
-      link1: 'Privacy Policy',
-      link2: 'Terms of use',
-      button: 'Agree'
-    },
     embed: {
       text: 'By clicking on image or button above you agree that external content from %provider% will be loaded. Also personal data may be transferred to this service in accordance with our %privacypolicy%.',
       link: 'Privacy Policy',

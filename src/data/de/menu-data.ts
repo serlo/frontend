@@ -106,6 +106,10 @@ export const footerData: InstanceData['footerData'] = {
       children: [
         { title: 'Datenschutz', url: `https://de.${serloDomain}/privacy` },
         {
+          title: 'Einwilligungen widerrufen',
+          url: `/consent`,
+        },
+        {
           title: 'Nutzungsbedingungen und Urheberrecht',
           url: `https://de.${serloDomain}/terms`,
         },
