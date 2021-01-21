@@ -34,13 +34,17 @@ export interface ShareData {
   contentId: number
 }
 
-export function ShareModal(props: ShareModalProps) {
-  const { open, onClose, contentId } = props
+export function ShareModal({ open, onClose, contentId }: ShareModalProps) {
   const shareInputRef = React.useRef<HTMLInputElement>(null)
   const [copySuccess, setCopySuccess] = React.useState('')
   const { strings } = useInstanceData()
 
   if (!open) return null
+
+  function onCloseClick() {
+    setCopySuccess('')
+    onClose()
+  }
 
   function copyToClipboard(event: React.MouseEvent, text?: string) {
     const target = event.target as HTMLAnchorElement
@@ -95,7 +99,7 @@ export function ShareModal(props: ShareModalProps) {
   ]
 
   return (
-    <StyledModal isOpen={open} onRequestClose={onClose}>
+    <StyledModal isOpen={open} onRequestClose={onCloseClick}>
       <StyledH2>{strings.share.title}</StyledH2>
       <div>
         <ShareInput
@@ -108,11 +112,7 @@ export function ShareModal(props: ShareModalProps) {
             <Button onClick={copyToClipboard} as="button">
               <FontAwesomeIcon icon={faCopy} /> {strings.share.copyLink}
             </Button>
-            {copySuccess !== '' && (
-              <Gray
-                dangerouslySetInnerHTML={{ __html: copySuccess + '&nbsp;' }}
-              />
-            )}
+            {copySuccess !== '' && <Gray>{copySuccess}&nbsp;</Gray>}
             <br />
           </>
         )}{' '}
@@ -120,7 +120,7 @@ export function ShareModal(props: ShareModalProps) {
           {buildButtons(socialShare, copyToClipboard)}
         </ButtonWrapper>
         <ButtonWrapper>{buildButtons(lmsShare, copyToClipboard)}</ButtonWrapper>
-        <CloseButton onClick={onClose} title={strings.share.close}>
+        <CloseButton onClick={onCloseClick} title={strings.share.close}>
           <FontAwesomeIcon icon={faTimes} size="lg" />
         </CloseButton>
       </div>
