@@ -29,7 +29,16 @@ export function sanitizeLatex(formula: string): string {
   formula = formula.replace(regexTextSimple, '')
 
   // handle environments
-  formula = formula.replace(regexNewLine, ' \\\\ \\sf ')
+  formula = formula
+    .split(regexNewLine)
+    .map((line, index) => {
+      if (index == 0) return line
+      if (line.includes('\\hline'))
+        return '\\\\ ' + line.replace('\\hline', '\\hline \\sf ')
+      return ' \\\\ \\sf ' + line
+    })
+    .join('')
+
   formula = formula.replace(regexAmpersand, ' & \\sf ')
   formula = formula.replace(envStart, (str) => `${str} \\sf `)
 
@@ -41,7 +50,11 @@ export function sanitizeLatex(formula: string): string {
     formula.includes('\\begin{aligned}') ||
     formula.includes('\\begin{array}')
   ) {
-    formula = `\\def\\arraystretch{2.5} ${formula}`
+    if (formula.includes('\\dfrac') || formula.includes('\\int')) {
+      formula = `\\def\\arraystretch{2} ${formula}`
+    } else {
+      formula = `\\def\\arraystretch{1.25} ${formula}`
+    }
   }
 
   // add nonserif globally
