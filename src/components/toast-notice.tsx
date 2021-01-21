@@ -4,11 +4,13 @@ import Notification, { notify } from 'react-notify-toast'
 import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
+import { useRefreshFromAPI } from '@/helper/use-refresh-from-api'
 import { theme } from '@/theme'
 
 export function ToastNotice() {
   const auth = useAuth()
   const { strings } = useInstanceData()
+  const refreshFromAPI = useRefreshFromAPI()
 
   const notifyColor = {
     background: theme.colors.brand,
@@ -53,6 +55,9 @@ export function ToastNotice() {
       }
       showToast(getText())
       removeHash()
+      setTimeout(() => {
+        refreshFromAPI()
+      }, 800)
     }
   })
 
