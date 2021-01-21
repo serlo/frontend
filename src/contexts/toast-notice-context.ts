@@ -32,7 +32,7 @@ export function useToastNotice() {
     ;((toastNotice as unknown) as typeof notify['show'])(
       message,
       'custom',
-      2000,
+      3200,
       colors[type || 'default']
     )
   }

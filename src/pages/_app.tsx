@@ -11,7 +11,6 @@ import '@/assets-webkit/fonts/karmilla.css'
 import '@/assets-webkit/fonts/katex/katex.css'
 
 import { NProgressStyles } from '@/components/navigation/n-progress-styles'
-import { ToastNotice } from '@/components/toast-notice'
 import { FontFix } from '@/helper/css'
 import { theme } from '@/theme'
 
@@ -63,7 +62,6 @@ export default function App({ Component, pageProps }: AppProps) {
         <FontFix />
         <NProgressStyles />
         <Component {...pageProps} />
-        <ToastNotice />
       </ThemeProvider>
     </React.StrictMode>
   )
