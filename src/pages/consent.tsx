@@ -33,10 +33,9 @@ export default function Page() {
 
             <StyledP>
               Während dem Benutzen der Seite hast du uns vielleicht erlaubt,
-              dass wir Inhalte von externen Anbietern laden. Dabei können
-              persönliche Daten zu diesem Service übertragen werden.
-              <br />
-              Die Details kannst du in unserer Datenschutzerklärung nachlesen.
+              dass wir Inhalte von externen Anbietern laden. Die Details kannst
+              du in unserer <a href="/privacy">Datenschutzerklärung</a>{' '}
+              nachlesen.
             </StyledP>
             <StyledH2>Widerrufen</StyledH2>
             <StyledP>
@@ -60,7 +59,7 @@ export default function Page() {
     return (
       <StyledTr>
         <_StyledTd>
-          <b>Keine Einwilligung gespeichert</b>
+          <b>Keine Einwilligungen gespeichert</b>
         </_StyledTd>
       </StyledTr>
     )
