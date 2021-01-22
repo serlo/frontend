@@ -15,7 +15,6 @@ import { fetchPageData } from '@/fetcher/fetch-page-data'
 const EntityBase = dynamic<EntityBaseProps>(() =>
   import('@/components/entity-base').then((mod) => mod.EntityBase)
 )
-
 const ErrorPage = dynamic<ErrorData>(() =>
   import('@/components/pages/error-page').then((mod) => mod.ErrorPage)
 )
@@ -58,7 +57,7 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
             <EntityBase page={page}>
               {(() => {
                 if (page.kind === 'license-detail') {
-                  return 'test'
+                  return 'are you a wizard?' //license has a own page
                 }
                 if (page.kind === 'single-entity') {
                   return <Entity data={page.entityData} />

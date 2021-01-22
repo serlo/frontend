@@ -10,11 +10,9 @@ interface UseIsSubscribedReturn {
 export function useIsSubscribed(id: number): UseIsSubscribedReturn {
   const { data, mutate } = useGraphqlSwrWithAuth<{
     subscriptions: {
-      nodes: [
-        {
-          id: number
-        }
-      ]
+      nodes: {
+        id: number
+      }[]
     }
   }>({
     query: gql`
@@ -32,7 +30,6 @@ export function useIsSubscribed(id: number): UseIsSubscribedReturn {
   })
 
   const mutateSingleId = function (id: number, subscribed: boolean) {
-    // @ts-expect-error
     void mutate((data) => {
       if (!data) return data
       const nodes = data.subscriptions.nodes.filter((n) => n.id !== id)
