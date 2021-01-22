@@ -11,7 +11,7 @@ import {
 } from './graphql-fetch'
 import { useAuth } from '@/auth/use-auth'
 
-export function useGraphqlSwrWithoutAuth<T>({
+export function useGraphqlSwr<T>({
   query,
   variables,
   config,
@@ -20,14 +20,14 @@ export function useGraphqlSwrWithoutAuth<T>({
   variables?: Record<string, unknown>
   config?: ConfigInterface<T>
 }) {
-  return useSWR<T>(
+  return useSWR<T, object>(
     JSON.stringify({ query, variables }),
     createGraphqlFetch(),
     config
   )
 }
 
-export function useGraphqlSwr<T>({
+export function useGraphqlSwrWithAuth<T>({
   query,
   variables,
   config,
@@ -46,7 +46,7 @@ export function useGraphqlSwr<T>({
   )
 }
 
-export function useGraphqlSwrPagination<T>({
+export function useGraphqlSwrPaginationWithAuth<T>({
   query,
   variables,
   config,

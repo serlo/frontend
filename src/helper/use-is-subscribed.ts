@@ -1,6 +1,6 @@
 import { gql } from 'graphql-request'
 
-import { useGraphqlSwr } from '@/api/use-graphql-swr'
+import { useGraphqlSwrWithAuth } from '@/api/use-graphql-swr'
 
 interface UseIsSubscribedReturn {
   isSubscribed: boolean | null
@@ -8,7 +8,7 @@ interface UseIsSubscribedReturn {
 }
 
 export function useIsSubscribed(id: number): UseIsSubscribedReturn {
-  const { data, mutate } = useGraphqlSwr<{
+  const { data, mutate } = useGraphqlSwrWithAuth<{
     subscriptions: {
       nodes: [
         {
