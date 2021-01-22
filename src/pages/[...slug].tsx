@@ -9,7 +9,7 @@ import { EntityBaseProps } from '@/components/entity-base'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { HeaderFooter } from '@/components/header-footer'
 import { ProfileProps } from '@/components/pages/user/profile'
-import { InitialProps, ErrorData } from '@/data-types'
+import { InitialProps, ErrorData, PageData } from '@/data-types'
 import { fetchPageData } from '@/fetcher/fetch-page-data'
 
 const EntityBase = dynamic<EntityBaseProps>(() =>
@@ -83,7 +83,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const pageData = await fetchPageData('/' + context.locale! + '/' + alias)
   return {
     props: {
-      pageData: JSON.parse(JSON.stringify(pageData)), // remove undefined values
+      pageData: JSON.parse(JSON.stringify(pageData)) as PageData, // remove undefined values
     },
     revalidate: 1,
   }

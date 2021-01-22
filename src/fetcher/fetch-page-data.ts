@@ -4,6 +4,7 @@ import { request } from 'graphql-request'
 import { render } from '../../external/legacy_render'
 import { createBreadcrumbs } from './create-breadcrumbs'
 import { createExercise, createExerciseGroup } from './create-exercises'
+import { createHorizon } from './create-horizon'
 import { getMetaImage, getMetaDescription } from './create-meta-data'
 import { createNavigation } from './create-navigation'
 import { buildTaxonomyData } from './create-taxonomy'
@@ -24,7 +25,6 @@ import {
   EntityTypes,
   LicenseDetailPage,
 } from '@/data-types'
-import { horizonData } from '@/data/horizon_de'
 import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
 import { parseLanguageSubfolder } from '@/helper/feature-i18n'
 import { convert } from '@/schema/convert-edtr-io-state'
@@ -95,7 +95,7 @@ async function apiRequest(
 
   const secondaryNavigationData = createNavigation(uuid)
   const breadcrumbsData = createBreadcrumbs(uuid)
-  const horizonData = instance == 'de' ? buildHorizonData() : undefined
+  const horizonData = instance == 'de' ? createHorizon() : undefined
   const cacheKey = `/${instance}${alias}`
   const title = createTitle(uuid, instance)
   const metaImage = getMetaImage(uuid.alias ? uuid.alias : undefined)
@@ -200,30 +200,6 @@ async function apiRequest(
       cacheKey,
     }
   }
-
-  /* Solutions should always be shown alongside the exercise
-  if (uuid.__typename === 'Solution') {
-    const solution = [createSolution(uuid)]
-    return {
-      kind: 'single-entity',
-      entityData: {
-        id: uuid.id,
-        typename: uuid.__typename,
-        content: solution,
-        inviteToEdit: false,
-      },
-      newsletterPopup: false,
-      breadcrumbsData,
-      metaData: {
-        title,
-        contentType: 'solution',
-        metaImage,
-        metaDescription: '',
-      },
-      horizonData,
-      cacheKey,
-    }
-  }*/
 
   if (
     uuid.__typename === 'ArticleRevision' ||
@@ -515,7 +491,7 @@ async function apiLicensePageRequest(
     endpoint,
     licenseDetailsQuery(id)
   )
-  const horizonData = instance == 'de' ? buildHorizonData() : undefined
+  const horizonData = instance == 'de' ? createHorizon() : undefined
 
   return {
     kind: 'license-detail',
@@ -531,19 +507,6 @@ async function apiLicensePageRequest(
       contentType: 'page',
     },
   }
-}
-
-function buildHorizonData() {
-  const entries = Object.keys(horizonData)
-  const selected = []
-
-  while (selected.length < 3) {
-    const index = parseInt(entries[Math.floor(Math.random() * entries.length)])
-    if (Math.random() > horizonData[index].frequency) continue
-    if (selected.indexOf(horizonData[index]) === -1)
-      selected.push(horizonData[index])
-  }
-  return selected
 }
 
 export function convertState(raw: string | undefined): FrontendContentNode[] {
