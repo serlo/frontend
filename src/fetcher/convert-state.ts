@@ -1,5 +1,4 @@
-import { render } from 'external/legacy_render'
-
+import { render } from '../../external/legacy_render'
 import { FrontendContentNode } from '@/data-types'
 import { convert } from '@/schema/convert-edtr-io-state'
 import { convertLegacyState } from '@/schema/convert-legacy-state'

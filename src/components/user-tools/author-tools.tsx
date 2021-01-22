@@ -209,7 +209,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
         if (hasPower) {
           if (renderer)
             return (
-              <React.Fragment key={`${title}`}>
+              <React.Fragment key={`${title ?? url ?? '_'}`}>
                 {renderer(entityId)}
               </React.Fragment>
             )
