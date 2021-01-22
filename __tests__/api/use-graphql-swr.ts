@@ -6,7 +6,7 @@ import nodeFetch from 'node-fetch'
 import { useRef } from 'react'
 
 import { endpoint } from '@/api/endpoint'
-import { useGraphqlSwr } from '@/api/use-graphql-swr'
+import { useGraphqlSwrWithAuth } from '@/api/use-graphql-swr'
 import { UserRoles } from '@/data-types'
 
 const server = setupServer()
@@ -25,7 +25,7 @@ afterAll(() => {
   server.close()
 })
 
-test('useGraphqlSwr', async () => {
+test('useGraphqlSwrWithAuth', async () => {
   server.use(
     rest.post(endpoint, (req, res, ctx) => {
       return res(
@@ -39,7 +39,7 @@ test('useGraphqlSwr', async () => {
       )
     })
   )
-  const { data } = await useGraphqlSwrWithMockedAuth({
+  const { data } = await useGraphqlSwrWithAuthWithMockedAuth({
     query: gql`
       query uuid($id: Int!) {
         uuid(id: $id) {
@@ -58,8 +58,8 @@ test('useGraphqlSwr', async () => {
   })
 })
 
-async function useGraphqlSwrWithMockedAuth(
-  args: Parameters<typeof useGraphqlSwr>[0]
+async function useGraphqlSwrWithAuthWithMockedAuth(
+  args: Parameters<typeof useGraphqlSwrWithAuth>[0]
 ) {
   const authHook = renderHook(() => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -73,7 +73,7 @@ async function useGraphqlSwrWithMockedAuth(
   })
   const { result, waitFor } = renderHook(() => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    return useGraphqlSwr({
+    return useGraphqlSwrWithAuth({
       ...args,
       overrideAuth: authHook.result.current,
     })

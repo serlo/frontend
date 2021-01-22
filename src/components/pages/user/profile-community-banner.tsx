@@ -2,7 +2,7 @@ import { gql } from 'graphql-request'
 import styled from 'styled-components'
 
 import { ProfileProps } from './profile'
-import { useGraphqlSwr } from '@/api/use-graphql-swr'
+import { useGraphqlSwrWithAuth } from '@/api/use-graphql-swr'
 import AuthorBadge from '@/assets-webkit/img/community/badge-author.svg'
 import DonorBadge from '@/assets-webkit/img/community/badge-donor.svg'
 import ReviewerBadge from '@/assets-webkit/img/community/badge-reviewer.svg'
@@ -130,7 +130,7 @@ export const ProfileCommunityBanner = ({
 
   function fetchGroupsTotalCounts() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const { data } = useGraphqlSwr<TotalCounts>({
+    const { data } = useGraphqlSwrWithAuth<TotalCounts>({
       query: gql`
         {
           activeReviewers {

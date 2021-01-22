@@ -6,7 +6,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
-import { useGraphqlSwrPagination } from '@/api/use-graphql-swr'
+import { useGraphqlSwrPaginationWithAuth } from '@/api/use-graphql-swr'
 import { useAuth } from '@/auth/use-auth'
 import { Link } from '@/components/content/link'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
@@ -30,7 +30,7 @@ export const Notifications: NextPage = () => {
   const loggedInData = useLoggedInData()
   const { strings } = useInstanceData()
 
-  const response = useGraphqlSwrPagination<{
+  const response = useGraphqlSwrPaginationWithAuth<{
     id: number
     event: NotificationEvent
     unread: boolean
