@@ -53,7 +53,7 @@ export const instanceData = {
       topic: 'Topic',
       subject: 'Subject',
       userProfile: 'User Profile',
-      privacyPolicy: 'Privacy Policy'
+      privacyPolicy: 'Privacy Policy',
     },
     roles: {
       donor: "Donor",
