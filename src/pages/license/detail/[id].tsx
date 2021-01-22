@@ -27,7 +27,7 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
 
 // eslint-disable-next-line @typescript-eslint/require-await
 export const getStaticProps: GetStaticProps = async (context) => {
-  const id = parseInt(context.params?.license_id as string)
+  const id = parseInt(context.params?.id as string)
   const instance = context.locale ?? context.defaultLocale ?? 'de'
 
   const pageData = isNaN(id)
