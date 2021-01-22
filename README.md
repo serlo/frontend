@@ -140,8 +140,8 @@ function Sentence() {
   const { strings } = useInstanceData()
   return (
     <p>
-      {replacePlaceholders(strings.embed.sentence, {
-        link: <a href="/whereto">{strings.embed.link}</a>,
+      {replacePlaceholders(strings.example.sentence, {
+        link: <a href="/whereto">{strings.example.link}</a>,
       })}
     </p>
   )

@@ -79,7 +79,7 @@ export function PrivacyWrapper({
               provider: <b>{provider}</b>,
               privacypolicy: (
                 <a href="/privacy" target="_blank">
-                  {strings.embed.link}
+                  {strings.entities.privacyPolicy}
                 </a>
               ),
             })}

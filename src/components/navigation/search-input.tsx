@@ -213,7 +213,7 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
         {replacePlaceholders(strings.search.privacy, {
           privacypolicy: (
             <_StyledA href="/privacy" target="_blank">
-              {strings.embed.link}
+              {strings.entities.privacyPolicy}
             </_StyledA>
           ),
         })}
