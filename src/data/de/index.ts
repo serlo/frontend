@@ -52,7 +52,8 @@ export const instanceData = {
       threads: "Diskussionen",
       topic: "Thema",
       subject: "Fach",
-      userProfile: "Benutzerprofil"
+      userProfile: "Benutzerprofil",
+      privacyPolicy: 'Privacy Policy'
     },
     roles: {
       donor: "Spender*in",
@@ -90,19 +91,18 @@ export const instanceData = {
       chooseOption: "Klicke auf eine der Optionen.",
       trashedNotice: "Dieser Inhalt wurde zum Löschen markiert."
     },
-    cookie: {
-      part1: "Mit der Nutzung dieser Webseite erklärst du dich mit unserer",
-      part2: "und",
-      part3: "einverstanden.",
-      link1: "Datenschutzerklärung",
-      link2: "Nutzungsbedingungen",
-      button: "Verstanden"
+    consent: {
+      title: 'Consent for external Content',
+      intro: 'While using this site you may allowed us to load content from external providers. You can read about the details in the %privacypolicy%.',
+      revokeTitle: 'Revoke',
+      revokeText: 'Here you can revoke your consent. In this case we ask again, before we load content from those providers',
+      noConsent: 'No content saved.',
+      revokeConsent: 'Revoke consent'
     },
     embed: {
       text: "Mit einem Klick auf Bild oder Button oben stimmst du zu, dass externe Inhalte von %provider% geladen werden. Dabei können persönliche Daten zu diesem Service übertragen werden – entsprechend unserer %privacypolicy%.",
-      link: "Datenschutzerklärung",
-      video: "Video abspielen",
-      applet: "Applet laden",
+      video: 'Play Video from %provider%',
+      applet: 'Load Applet from %provider%',
       twingle: "Spendenformular laden"
     },
     notifications: {
