@@ -18,6 +18,7 @@ import { StyledH2 } from '@/components/tags/styled-h2'
 import { useInstanceData } from '@/contexts/instance-context'
 import { makeLightButton } from '@/helper/css'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
+import { scrollToPrevious } from '@/helper/scroll'
 import { useCommentData } from '@/helper/use-comment-data'
 
 export interface CommentsProps {
@@ -32,6 +33,11 @@ export function Comments({ id: parentId }: CommentsProps) {
   const [showThreadChildren, setShowThreadChildren] = React.useState<number[]>(
     []
   )
+  const [highlightedCommentId, setHighlightedCommentId] = React.useState<
+    number | undefined
+  >(undefined)
+  const container = React.useRef<HTMLDivElement>(null)
+
   const { strings } = useInstanceData()
   const auth = useAuth()
 
@@ -41,9 +47,26 @@ export function Comments({ id: parentId }: CommentsProps) {
     setShowArchived(!showArchived)
   }
 
-  if (!commentData || commentCount === undefined)
+  React.useEffect(() => {
+    if (window.location.hash.startsWith('#comment-')) {
+      if (container.current) scrollToPrevious(container.current)
+
+      const id = parseInt(window.location.hash.replace('#comment-', ''))
+      if (!isNaN(id)) setHighlightedCommentId(id)
+    }
+  }, [])
+
+  return (
+    <div ref={container}>
+      {!commentData || commentCount === undefined
+        ? renderErrorOrLoading()
+        : renderContent()}
+    </div>
+  )
+
+  function renderErrorOrLoading() {
     return (
-      <StyledP>
+      <StyledP id="comments">
         <ColoredIcon>
           <FontAwesomeIcon
             icon={error ? faExclamationCircle : faSpinner}
@@ -54,42 +77,46 @@ export function Comments({ id: parentId }: CommentsProps) {
         {error ? strings.comments.error : strings.comments.loading}
       </StyledP>
     )
+  }
 
-  if (!auth.current && commentCount == 0) return null // avoid rendering anything
+  function renderContent() {
+    if (commentCount === undefined || (!auth.current && commentCount == 0))
+      return null
 
-  return (
-    <>
-      {auth.current && (
-        <>
-          <CustomH2>
-            <StyledIcon icon={faQuestionCircle} /> {strings.comments.question}
-          </CustomH2>
-          <CommentForm
-            placeholder={strings.comments.placeholder}
-            parentId={parentId}
-            // onSendComment={}
-          />
-        </>
-      )}
+    return (
+      <>
+        {auth.current && (
+          <>
+            <CustomH2 id="comments">
+              <StyledIcon icon={faQuestionCircle} /> {strings.comments.question}
+            </CustomH2>
+            <CommentForm
+              placeholder={strings.comments.placeholder}
+              parentId={parentId}
+              // onSendComment={}
+            />
+          </>
+        )}
 
-      {commentCount > 0 && (
-        <>
-          <CustomH2>
-            {/* i18n Note: Pluralisation hack */}
-            <StyledIcon icon={faComments} /> {commentCount}{' '}
-            {commentCount === 1
-              ? strings.comments.commentsOne
-              : strings.comments.commentsMany}
-          </CustomH2>
+        {commentCount > 0 && (
+          <>
+            <CustomH2>
+              {/* i18n Note: Pluralisation hack */}
+              <StyledIcon icon={faComments} /> {commentCount}{' '}
+              {commentCount === 1
+                ? strings.comments.commentsOne
+                : strings.comments.commentsMany}
+            </CustomH2>
 
-          <Lazy>
-            {renderThreads(commentData.active ?? [])}
-            {renderArchive()}
-          </Lazy>
-        </>
-      )}
-    </>
-  )
+            <Lazy>
+              {renderThreads(commentData.active ?? [])}
+              {renderArchive()}
+            </Lazy>
+          </>
+        )}
+      </>
+    )
+  }
 
   function renderThreads(threads: ThreadsData) {
     return threads?.map((thread, index) => {
@@ -137,7 +164,15 @@ export function Comments({ id: parentId }: CommentsProps) {
 
   function renderComments(comments: CommentsData, isParent?: boolean) {
     return comments.map((comment) => {
-      return <Comment key={comment.id} data={comment} isParent={isParent} />
+      const isHighlight = comment.id === highlightedCommentId
+      return (
+        <Comment
+          key={comment.id}
+          data={comment}
+          isParent={isParent}
+          isHighlight={isHighlight}
+        />
+      )
     })
   }
 

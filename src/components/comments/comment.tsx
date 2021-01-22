@@ -5,14 +5,18 @@ import styled, { css } from 'styled-components'
 
 import { StyledP } from '../tags/styled-p'
 import { MetaBar } from './meta-bar'
+import { scrollIfNeeded } from '@/helper/scroll'
 
 interface CommentProps {
   isParent?: boolean
+  isHighlight?: boolean
   data: CommentType
 }
 
-export function Comment({ data, isParent }: CommentProps) {
-  const { author, createdAt, content } = data
+export function Comment(props: CommentProps) {
+  const highlightedComment = React.useRef<HTMLDivElement>(null)
+  const { data, isParent, isHighlight } = props
+  const { author, createdAt, content, id } = data
 
   const urlFinder = /https?:\/\/(www\.)?([-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b)([-a-zA-Z0-9()@:%_+.~#?&//=]*)/g
 
@@ -22,17 +26,26 @@ export function Comment({ data, isParent }: CommentProps) {
     return `<a href="${match}" rel="ugc nofollow">${match}</a>`
   })
 
+  React.useEffect(() => {
+    scrollIfNeeded(highlightedComment.current, true)
+  })
+
   return (
-    <Wrapper isParent={isParent}>
+    <Wrapper
+      ref={isHighlight ? highlightedComment : undefined}
+      $isHighlight={isHighlight}
+      $isParent={isParent}
+      id={`comment-${id}`}
+    >
       <MetaBar user={author} timestamp={createdAt} isParent={isParent} />
       <StyledP dangerouslySetInnerHTML={{ __html: escapedWithLinks }}></StyledP>
     </Wrapper>
   )
 }
 
-const Wrapper = styled.div<{ isParent?: boolean }>`
+const Wrapper = styled.div<{ $isParent?: boolean; $isHighlight?: boolean }>`
   ${(props) =>
-    !props.isParent &&
+    !props.$isParent &&
     css`
       border-left: 7px solid
         ${(props) => props.theme.colors.lightBlueBackground};
@@ -53,4 +66,8 @@ const Wrapper = styled.div<{ isParent?: boolean }>`
       word-break: break-all; /* breaks without hyphen*/
     }
   }
+
+  border-radius: ${(props) => (props.$isParent ? '15px' : '0 15px 15px 0')};
+  background-color: ${(props) =>
+    props.$isHighlight ? 'rgb(251, 244, 244)' : 'transparent'};
 `
