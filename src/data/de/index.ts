@@ -53,7 +53,7 @@ export const instanceData = {
       topic: "Thema",
       subject: "Fach",
       userProfile: "Benutzerprofil",
-      privacyPolicy: 'Privacy Policy'
+      privacyPolicy: "Datenschutzerklärung"
     },
     roles: {
       donor: "Spender*in",
@@ -92,17 +92,17 @@ export const instanceData = {
       trashedNotice: "Dieser Inhalt wurde zum Löschen markiert."
     },
     consent: {
-      title: 'Consent for external Content',
-      intro: 'While using this site you may allowed us to load content from external providers. You can read about the details in the %privacypolicy%.',
-      revokeTitle: 'Revoke',
-      revokeText: 'Here you can revoke your consent. In this case we ask again, before we load content from those providers',
-      noConsent: 'No content saved.',
-      revokeConsent: 'Revoke consent'
+      title: "Einwilligungen für externe Inhalte",
+      intro: "Während dem Benutzen der Seite hast du uns vielleicht erlaubt, dass wir Inhalte von externen Anbietern laden. Die Details kannst du in unserer %privacypolicy% nachlesen.",
+      revokeTitle: "Widerrufen",
+      revokeText: "Hier hast du die Möglichkeit mit einem Klick deine Einwilligung zurückzuziehen. In dem Fall fragen wir wieder nach, bevor wir etwas laden.",
+      noConsent: "Keine Einwilligungen gespeichert",
+      revokeConsent: "Nicht mehr erlauben"
     },
     embed: {
       text: "Mit einem Klick auf Bild oder Button oben stimmst du zu, dass externe Inhalte von %provider% geladen werden. Dabei können persönliche Daten zu diesem Service übertragen werden – entsprechend unserer %privacypolicy%.",
-      video: 'Play Video from %provider%',
-      applet: 'Load Applet from %provider%',
+      video: "Video abspielen von %provider%",
+      applet: "Applet laden von %provider%",
       twingle: "Spendenformular laden"
     },
     notifications: {
