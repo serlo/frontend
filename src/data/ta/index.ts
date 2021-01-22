@@ -52,7 +52,8 @@ export const instanceData = {
       threads: 'Threads',
       topic: 'Topic',
       subject: 'Subject',
-      userProfile: 'User Profile'
+      userProfile: 'User Profile',
+      privacyPolicy: 'Privacy Policy'
     },
     roles: {
       donor: "Donor",
@@ -90,19 +91,18 @@ export const instanceData = {
       chooseOption: 'Click on one of the options.',
       trashedNotice: "இந்த உள்ளடக்கம் குப்பையாக குறிக்கப்பட்டுள்ளது."
     },
-    cookie: {
-      part1: "இந்த வலைத்தளத்தைப் பயன்படுத்துவதன் மூலம் நீங்கள் எங்களுடன் உடன்படுகிறீர்கள் என்று அறிவிக்கிறீர்கள்",
-      part2: "மற்றும்",
-      part3: '.',
-      link1: "தனியுரிமைக் கொள்கை",
-      link2: "பயன்பாட்டு விதிமுறைகளை",
-      button: "ஒப்புக்கொள்கிறேன்"
+    consent: {
+      title: 'Consent for external Content',
+      intro: 'While using this site you may allowed us to load content from external providers. You can read about the details in the %privacypolicy%.',
+      revokeTitle: 'Revoke',
+      revokeText: 'Here you can revoke your consent. In this case we ask again, before we load content from those providers',
+      noConsent: 'No content saved.',
+      revokeConsent: 'Revoke consent'
     },
     embed: {
       text: 'By clicking on image or button above you agree that external content from %provider% will be loaded. Also personal data may be transferred to this service in accordance with our %privacypolicy%.',
-      link: 'Privacy Policy',
-      video: 'Play Video',
-      applet: 'Load Applet',
+      video: 'Play Video from %provider%',
+      applet: 'Load Applet from %provider%',
       twingle: 'Load Donation Form'
     },
     notifications: {
