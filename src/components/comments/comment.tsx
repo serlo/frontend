@@ -28,12 +28,14 @@ export function Comment(props: CommentProps) {
 
   React.useEffect(() => {
     scrollIfNeeded(highlightedComment.current, true)
-  })
+
+    if (highlightedComment.current)
+      highlightedComment.current.style.backgroundColor = 'rgb(251, 243, 243)'
+  }, [isHighlight])
 
   return (
     <Wrapper
       ref={isHighlight ? highlightedComment : undefined}
-      $isHighlight={isHighlight}
       $isParent={isParent}
       id={`comment-${id}`}
     >
@@ -43,7 +45,7 @@ export function Comment(props: CommentProps) {
   )
 }
 
-const Wrapper = styled.div<{ $isParent?: boolean; $isHighlight?: boolean }>`
+const Wrapper = styled.div<{ $isParent?: boolean }>`
   ${(props) =>
     !props.$isParent &&
     css`
@@ -68,6 +70,5 @@ const Wrapper = styled.div<{ $isParent?: boolean; $isHighlight?: boolean }>`
   }
 
   border-radius: ${(props) => (props.$isParent ? '15px' : '0 15px 15px 0')};
-  background-color: ${(props) =>
-    props.$isHighlight ? 'rgb(251, 244, 244)' : 'transparent'};
+  transition: background-color 0.8s ease-out;
 `

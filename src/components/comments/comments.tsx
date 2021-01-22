@@ -50,11 +50,10 @@ export function Comments({ id: parentId }: CommentsProps) {
   React.useEffect(() => {
     if (window.location.hash.startsWith('#comment-')) {
       if (container.current) scrollToPrevious(container.current)
-
       const id = parseInt(window.location.hash.replace('#comment-', ''))
       if (!isNaN(id)) setHighlightedCommentId(id)
     }
-  }, [])
+  }, [container, parentId])
 
   return (
     <div ref={container}>
