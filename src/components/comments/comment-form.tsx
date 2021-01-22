@@ -100,6 +100,7 @@ const StyledBox = styled.div`
   }
 `
 
+// Info: https://styled-components.com/docs/api#transient-props
 const StyledTextarea = styled(TextareaAutosize)<{ $reply?: boolean }>`
   ${inputFontReset}
   display: block;
