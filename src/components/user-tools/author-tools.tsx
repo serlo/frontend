@@ -207,12 +207,13 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
           }).length > 0
 
         if (hasPower) {
-          if (renderer)
+          if (renderer) {
             return (
-              <React.Fragment key={`${title ?? url ?? '_'}`}>
+              <React.Fragment key={`${title ?? renderer.name}`}>
                 {renderer(entityId)}
               </React.Fragment>
             )
+          }
           if (url) return renderLi(url, title || getTranslatedString(toolName))
         }
       })}

@@ -70,11 +70,11 @@ export function CommentForm({
           setCommentValue(event.target.value)
         }}
         placeholder={placeholder}
-        reply={reply}
+        $reply={reply}
       />
       <SendButton
         title={strings.comments.submit}
-        reply={reply}
+        $reply={reply}
         onClick={onSendComment}
       >
         <FontAwesomeIcon icon={reply ? faReply : faArrowRight} />
@@ -100,7 +100,7 @@ const StyledBox = styled.div`
   }
 `
 
-const StyledTextarea = styled(TextareaAutosize)<{ reply?: boolean }>`
+const StyledTextarea = styled(TextareaAutosize)<{ $reply?: boolean }>`
   ${inputFontReset}
   display: block;
   width: 100%;
@@ -109,7 +109,7 @@ const StyledTextarea = styled(TextareaAutosize)<{ reply?: boolean }>`
   border: none;
   background: transparent;
   padding: ${(props) =>
-    props.reply ? '.5rem 3.5rem .5rem 1rem' : '1.25rem 3.5rem 1.25rem 1rem'};
+    props.$reply ? '.5rem 3.5rem .5rem 1rem' : '1.25rem 3.5rem 1.25rem 1rem'};
   box-sizing: border-box;
   outline: none;
   overflow: hidden;
@@ -123,7 +123,7 @@ const StyledTextarea = styled(TextareaAutosize)<{ reply?: boolean }>`
   transition: all 0.2s ease-in;
 `
 
-const SendButton = styled.button<{ reply?: boolean }>`
+const SendButton = styled.button<{ $reply?: boolean }>`
   width: 45px;
   height: 45px;
   ${makeGreenButton}
@@ -133,12 +133,12 @@ const SendButton = styled.button<{ reply?: boolean }>`
   margin: 0 7px 8px 0;
 
   > svg {
-    vertical-align: ${(props) => (props.reply ? '-2px' : '-4px')};
-    padding-left: ${(props) => (props.reply ? '0' : '2px')};
+    vertical-align: ${(props) => (props.$reply ? '-2px' : '-4px')};
+    padding-left: ${(props) => (props.$reply ? '0' : '2px')};
   }
 
   ${(props) =>
-    props.reply &&
+    props.$reply &&
     css`
       font-size: 1rem;
       width: 30px;
