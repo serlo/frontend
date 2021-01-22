@@ -97,7 +97,7 @@ export const instanceData = {
       revokeTitle: 'Revoke',
       revokeText: 'Here you can revoke your consent. In this case we ask again, before we load content from those providers',
       noConsent: 'No content saved.',
-      revokeConsent: 'Revoke consent'
+      revokeConsent: 'Revoke consent',
     },
     embed: {
       text: 'By clicking on image or button above you agree that external content from %provider% will be loaded. Also personal data may be transferred to this service in accordance with our %privacypolicy%.',
