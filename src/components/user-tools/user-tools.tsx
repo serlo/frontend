@@ -92,8 +92,9 @@ export function UserTools({
 
   function renderEdit() {
     if (
-      auth.current === null ||
-      auth.current?.roles.indexOf(UserRoles.PageBuilder) > -1
+      loaded &&
+      (auth.current === null ||
+        auth.current?.roles.indexOf(UserRoles.PageBuilder) > -1)
     ) {
       return null
     }
