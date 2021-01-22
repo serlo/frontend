@@ -4,8 +4,9 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { StyledP } from '../tags/styled-p'
-import { PrivacyWrapper, Provider } from './privacy-wrapper'
+import { PrivacyWrapper } from './privacy-wrapper'
 import { useInstanceData } from '@/contexts/instance-context'
+import { ExternalProvider } from '@/helper/use-consent'
 
 export interface VideoProps {
   src: string
@@ -35,7 +36,7 @@ export function Video(props: VideoProps) {
   )
 
   function renderWikimedia() {
-    return renderVideo(Provider.WikimediaCommons)
+    return renderVideo(ExternalProvider.WikimediaCommons)
   }
 
   function renderYoutube(path: string) {
@@ -44,20 +45,23 @@ export function Video(props: VideoProps) {
     const iframeUrl = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&html5=1${
       useSubtitles ? `&cc_lang_pref=${lang}&cc_load_policy=1` : ''
     }`
-    return renderVideo(Provider.YouTube, iframeUrl)
+    return renderVideo(ExternalProvider.YouTube, iframeUrl)
   }
 
   function renderVimeo(id: string) {
     const iframeUrl = `https://player.vimeo.com/video/${id}?autoplay=1`
-    return renderVideo(Provider.Vimeo, iframeUrl)
+    return renderVideo(ExternalProvider.Vimeo, iframeUrl)
   }
 
-  function renderVideo(provider: Provider, iframeUrl?: string) {
+  function renderVideo(provider: ExternalProvider, iframeUrl?: string) {
     return (
       <PrivacyWrapper type="video" provider={provider} embedUrl={iframeUrl}>
         <VideoWrapper className="video">
-          {provider === 'wikimedia' && <video controls src={src} />}
-          {(provider === 'youtube' || provider === 'vimeo') && (
+          {provider === ExternalProvider.WikimediaCommons && (
+            <video controls src={src} />
+          )}
+          {(provider === ExternalProvider.YouTube ||
+            ExternalProvider.Vimeo) && (
             <iframe
               src={iframeUrl}
               frameBorder="0"

@@ -5,7 +5,7 @@ import {
 import { gql } from 'graphql-request'
 import styled from 'styled-components'
 
-import { useGraphqlSwr } from '@/api/use-graphql-swr'
+import { useGraphqlSwrWithAuth } from '@/api/use-graphql-swr'
 
 export interface UnreadNotificationsCountProps {
   icon: FontAwesomeIconProps['icon']
@@ -14,7 +14,7 @@ export interface UnreadNotificationsCountProps {
 export function UnreadNotificationsCount({
   icon,
 }: UnreadNotificationsCountProps) {
-  const { data } = useGraphqlSwr<{
+  const { data } = useGraphqlSwrWithAuth<{
     notifications: {
       totalCount: number
     }

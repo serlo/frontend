@@ -24,6 +24,10 @@ export const footerData: InstanceData['footerData'] = {
       children: [
         { title: 'गोपनीयता की नीति', url: `https://de.${serloDomain}/privacy` },
         {
+          title: 'Revoke consent',
+          url: `/consent`,
+        },
+        {
           title: 'नियम और शर्ते',
           url: `https://de.${serloDomain}/terms`,
         },
