@@ -58,7 +58,7 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
             <EntityBase page={page}>
               {(() => {
                 if (page.kind === 'license-detail') {
-                  return null
+                  return 'test'
                 }
                 if (page.kind === 'single-entity') {
                   return <Entity data={page.entityData} />
