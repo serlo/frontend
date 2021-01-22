@@ -69,6 +69,10 @@ export const footerData: InstanceData['footerData'] = {
           url: `https://es.${serloDomain}/privacy`,
         },
         {
+          title: 'Revoke consent',
+          url: `/consent`,
+        },
+        {
           title: 'Términos legales',
           url: `https://es.${serloDomain}/terms`,
         },

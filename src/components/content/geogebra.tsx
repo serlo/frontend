@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { PrivacyWrapper, Provider } from './privacy-wrapper'
+import { PrivacyWrapper } from './privacy-wrapper'
+import { ExternalProvider } from '@/helper/use-consent'
 
 export interface GeogebraProps {
   id: string
@@ -11,7 +12,11 @@ export function Geogebra({ id }: GeogebraProps) {
   const appletId = id.replace('https://www.geogebra.org/m/', '')
   const url = 'https://www.geogebra.org/material/iframe/id/' + appletId
   return (
-    <PrivacyWrapper type="applet" provider={Provider.GeoGebra} embedUrl={url}>
+    <PrivacyWrapper
+      type="applet"
+      provider={ExternalProvider.GeoGebra}
+      embedUrl={url}
+    >
       <GeogebraContainer>
         <GeogebraFrame title={appletId} scrolling="no" src={url} />
       </GeogebraContainer>
