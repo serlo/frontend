@@ -1,5 +1,5 @@
+import { convertState } from './convert-state'
 import { createExercise, createExerciseGroup } from './create-exercises'
-import { convertState } from './fetch-page-data'
 import {
   TaxonomyTerm,
   TaxonomyTermChild,

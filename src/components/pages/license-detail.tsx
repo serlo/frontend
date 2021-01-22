@@ -13,7 +13,7 @@ export function LicenseDetail({ title, content, iconHref }: LicenseDetailData) {
   return (
     <>
       <HSpace amount={70} />
-      <_StyledP>{strings.license.readMore}</_StyledP>
+      <BigP>{strings.license.readMore}</BigP>
       <StyledH2>{title}</StyledH2>
       <HSpace amount={20} />
       {renderArticle(content)}
@@ -26,7 +26,7 @@ export function LicenseDetail({ title, content, iconHref }: LicenseDetailData) {
   )
 }
 
-const _StyledP = styled(StyledP)`
+const BigP = styled(StyledP)`
   font-size: 1.125rem;
   font-weight: bold;
   color: ${(props) => props.theme.colors.lightblue};

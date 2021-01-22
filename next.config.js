@@ -38,5 +38,6 @@ module.exports = withSourceMaps(
       defaultLocale: 'de',
       localeDetection: false,
     },
+    reactStrictMode: true,
   })
 )

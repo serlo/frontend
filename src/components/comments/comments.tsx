@@ -92,9 +92,9 @@ export function Comments({ id: parentId }: CommentsProps) {
   )
 
   function renderThreads(threads: ThreadsData) {
-    return threads?.map((thread) => {
+    return threads?.map((thread, index) => {
       return (
-        <ThreadWrapper key={thread.createdAt}>
+        <ThreadWrapper key={`${thread.createdAt}_${index}`}>
           {/* //TODO: implement threadId in api */}
           {renderComments([thread.comments.nodes[0]], true)}
           {renderThreadComments(thread.comments.nodes.slice(1), 0)}

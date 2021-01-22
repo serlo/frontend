@@ -3,7 +3,6 @@ import Notification, { notify } from 'react-notify-toast'
 
 import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
-import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { theme } from '@/theme'
 
 export function ToastNotice() {
@@ -29,9 +28,7 @@ export function ToastNotice() {
       removeHash()
       showToast(
         auth.current
-          ? ((replacePlaceholders(strings.notices.welcome, {
-              username: auth.current.username,
-            }) as unknown) as string)
+          ? strings.notices.welcome.replace('%username%', auth.current.username)
           : strings.notices.bye
       )
     }
