@@ -101,8 +101,8 @@ export const instanceData = {
     },
     embed: {
       text: 'By clicking on image or button above you agree that external content from %provider% will be loaded. Also personal data may be transferred to this service in accordance with our %privacypolicy%.',
-      video: 'Play Video',
-      applet: 'Load Applet',
+      video: 'Play Video from %provider%',
+      applet: 'Load Applet from %provider%',
       twingle: 'Load Donation Form'
     },
     notifications: {

@@ -59,7 +59,9 @@ export function PrivacyWrapper({
 
   function renderPlaceholder() {
     if (placeholder) return placeholder
-    const buttonLabel = strings.embed[type]
+    const buttonLabel = replacePlaceholders(strings.embed[type], {
+      provider: provider,
+    })
     if (isTwingle && showIframe) return null
 
     const previewImageUrl = isTwingle
