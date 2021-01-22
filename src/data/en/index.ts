@@ -53,7 +53,7 @@ export const instanceData = {
       topic: 'Topic',
       subject: 'Subject',
       userProfile: 'User Profile',
-      privacyPolicy: 'Privacy Policy',
+      privacyPolicy: 'Privacy Policy'
     },
     roles: {
       donor: "Donor",
@@ -97,7 +97,7 @@ export const instanceData = {
       revokeTitle: 'Revoke',
       revokeText: 'Here you can revoke your consent. In this case we ask again, before we load content from those providers',
       noConsent: 'No content saved.',
-      revokeConsent: 'Revoke consent',
+      revokeConsent: 'Revoke consent'
     },
     embed: {
       text: 'By clicking on image or button above you agree that external content from %provider% will be loaded. Also personal data may be transferred to this service in accordance with our %privacypolicy%.',
@@ -166,8 +166,8 @@ export const instanceData = {
       revisionSaved: 'Revision is saved and will be reviewed soon 👍',
       revisionAccepted: 'Revision was successfully accepted ✅',
       revisionRejected: 'Revision was successfully rejected ❎',
-      revisionSavedAccepted: 'Revision was successfully saved and accepted ✅',
-    },
+      revisionSavedAccepted: 'Revision was successfully saved and accepted ✅'
+    }
   }
 };
 export const instanceLandingData = {
@@ -280,6 +280,6 @@ export const loggedInData = {
       setUuidStateTrashed: "%actor% trashed %object%.",
       setUuidStateRestored: "%actor% restored %object%.",
       entityPlaceholderFallback: "Content"
-    },
+    }
   }
 };
