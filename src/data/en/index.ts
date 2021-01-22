@@ -166,8 +166,8 @@ export const instanceData = {
       revisionSaved: 'Revision is saved and will be reviewed soon 👍',
       revisionAccepted: 'Revision was successfully accepted ✅',
       revisionRejected: 'Revision was successfully rejected ❎',
-      revisionSavedAccepted: 'Revision was successfully saved and accepted ✅'
-    }
+      revisionSavedAccepted: 'Revision was successfully saved and accepted ✅',
+    },
   }
 };
 export const instanceLandingData = {
@@ -280,6 +280,6 @@ export const loggedInData = {
       setUuidStateTrashed: "%actor% trashed %object%.",
       setUuidStateRestored: "%actor% restored %object%.",
       entityPlaceholderFallback: "Content"
-    }
+    },
   }
 };
