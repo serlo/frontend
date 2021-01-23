@@ -114,7 +114,8 @@ export const instanceData = {
     subscriptions: {
       title: "Subscriptions",
       pleaseLogInLink: 'Please log in',
-      pleaseLogInText: 'to see your subscriptions.'
+      pleaseLogInText: 'to see your subscriptions.',
+      unknownProblem: "There was a problem loading the subscriptions, please try again later.",
     },
     comments: {
       question: 'Do you have a question?',
@@ -291,7 +292,6 @@ export const loggedInData = {
       entityPlaceholderFallback: "Content"
     },
     subscriptions: {
-      unknownProblem: "There was a problem loading the subscriptions, please try again later.",
       loading: "Loading subscriptions…",
       mail: "E-mails",
       subscription: "Subscription",
