@@ -170,6 +170,7 @@ export function Comments({ id: parentId }: CommentsProps) {
           data={comment}
           isParent={isParent}
           isHighlight={isHighlight}
+          highlight={setHighlightedCommentId}
         />
       )
     })

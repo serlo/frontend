@@ -4,6 +4,7 @@ import * as React from 'react'
 import styled, { css } from 'styled-components'
 
 import { StyledP } from '../tags/styled-p'
+import { DropdownMenu } from './dropdown-menu'
 import { MetaBar } from './meta-bar'
 import { scrollIfNeeded } from '@/helper/scroll'
 
@@ -11,11 +12,16 @@ interface CommentProps {
   isParent?: boolean
   isHighlight?: boolean
   data: CommentType
+  highlight: (id: number) => void
 }
 
-export function Comment(props: CommentProps) {
-  const highlightedComment = React.useRef<HTMLDivElement>(null)
-  const { data, isParent, isHighlight } = props
+export function Comment({
+  data,
+  isParent,
+  isHighlight,
+  highlight,
+}: CommentProps) {
+  const commentRef = React.useRef<HTMLDivElement>(null)
   const { author, createdAt, content, id } = data
 
   const urlFinder = /https?:\/\/(www\.)?([-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b)([-a-zA-Z0-9()@:%_+.~#?&//=]*)/g
@@ -27,19 +33,31 @@ export function Comment(props: CommentProps) {
   })
 
   React.useEffect(() => {
-    scrollIfNeeded(highlightedComment.current, true)
+    if (isHighlight) scrollIfNeeded(commentRef.current, true)
 
-    if (highlightedComment.current)
-      highlightedComment.current.style.backgroundColor = 'rgb(251, 243, 243)'
+    if (commentRef.current) {
+      commentRef.current.style.backgroundColor = isHighlight
+        ? 'rgb(251, 243, 243)'
+        : 'transparent'
+    }
   }, [isHighlight])
 
+  const eventDate = new Date(createdAt)
+
   return (
-    <Wrapper
-      ref={isHighlight ? highlightedComment : undefined}
-      $isParent={isParent}
-      id={`comment-${id}`}
-    >
-      <MetaBar user={author} timestamp={createdAt} isParent={isParent} />
+    <Wrapper ref={commentRef} $isParent={isParent} id={`comment-${id}`}>
+      <MetaBar
+        user={author}
+        date={eventDate}
+        dropdownMenu={
+          <DropdownMenu
+            isParent={isParent}
+            date={eventDate}
+            id={id}
+            highlight={highlight}
+          />
+        }
+      />
       <StyledP dangerouslySetInnerHTML={{ __html: escapedWithLinks }}></StyledP>
     </Wrapper>
   )

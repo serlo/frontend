@@ -1,4 +1,8 @@
-import { faCheck, faTrash } from '@fortawesome/free-solid-svg-icons'
+import {
+  faCheck,
+  faPaperclip,
+  faTrash,
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import * as React from 'react'
 import styled from 'styled-components'
@@ -10,10 +14,14 @@ import { makeTransparentButton } from '@/helper/css'
 
 export function DropdownMenu({
   isParent,
-  eventDate,
+  id,
+  date,
+  highlight,
 }: {
   isParent?: boolean
-  eventDate: Date
+  date: Date
+  id: number
+  highlight: (id: number) => void
 }) {
   const { lang, strings } = useInstanceData()
   const auth = useAuth()
@@ -25,7 +33,7 @@ export function DropdownMenu({
   return (
     <DropContent>
       {isAllowed && (
-        <ButtonWrapper>
+        <>
           {isParent && (
             <DropContentButton>
               <FontAwesomeIcon icon={faCheck} />{' '}
@@ -38,13 +46,21 @@ export function DropdownMenu({
               ? strings.comments.deleteThread
               : strings.comments.deleteComment}
           </DropContentButton>
-        </ButtonWrapper>
+        </>
       )}
+      <DropContentButton onClick={onLinkToComment}>
+        <FontAwesomeIcon icon={faPaperclip} /> {strings.comments.linkToComment}
+      </DropContentButton>
       <Time>
-        {strings.comments.postedOn} {eventDate.toLocaleString(lang)}
+        {strings.comments.postedOn} {date.toLocaleString(lang)}
       </Time>
     </DropContent>
   )
+
+  function onLinkToComment() {
+    highlight(id)
+    history.replaceState(null, '', `#comment-${id}`)
+  }
 }
 
 const DropContent = styled.div`
@@ -63,12 +79,9 @@ const DropContentButton = styled.button`
   font-weight: normal;
 `
 
-const ButtonWrapper = styled.div`
-  margin-bottom: 15px;
-`
-
 const Time = styled.span`
   display: block;
   font-size: 0.8rem;
+  margin-top: 15px;
   color: ${(props) => props.theme.colors.gray};
 `

@@ -5,33 +5,23 @@ import * as React from 'react'
 import styled from 'styled-components'
 
 import { UserLink } from '../user/user-link'
-import { DropdownMenu } from './dropdown-menu'
 import { TimeAgo } from '@/components/time-ago'
 import { makeTransparentButton, makeMargin } from '@/helper/css'
 
-export function MetaBar({
-  isParent,
-  user,
-  timestamp,
-}: {
-  isParent?: boolean
+export interface MetaBarProps {
   user: { username: string; id: number }
-  timestamp: string
-}) {
-  const eventDate = new Date(timestamp)
+  date: Date
+  dropdownMenu: React.ReactElement
+}
 
+export function MetaBar({ user, date, dropdownMenu }: MetaBarProps) {
   return (
     <MetaBarBox>
       <StyledUserLink user={user} withIcon />
 
-      <Tippy
-        interactive
-        content={<DropdownMenu isParent={isParent} eventDate={eventDate} />}
-        placement="bottom-end"
-      >
-        <TimeAgoButton title={eventDate.toLocaleString('de-DE')}>
-          <TimeAgo datetime={eventDate} />{' '}
-          <FontAwesomeIcon icon={faCaretDown} />
+      <Tippy interactive content={dropdownMenu} placement="bottom-end">
+        <TimeAgoButton title={date.toLocaleString('de-DE')}>
+          <TimeAgo datetime={date} /> <FontAwesomeIcon icon={faCaretDown} />
         </TimeAgoButton>
       </Tippy>
     </MetaBarBox>
