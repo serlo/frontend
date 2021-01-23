@@ -107,15 +107,10 @@ export const instanceData = {
       twingle: 'Load Donation Form'
     },
     notifications: {
-      notifications: 'Notifications',
-      pleaseLogInLink: 'Please log in',
-      pleaseLogInText: 'to see your notifications.'
+      notifications: 'Notifications'
     },
     subscriptions: {
       title: "Subscriptions",
-      pleaseLogInLink: 'Please log in',
-      pleaseLogInText: 'to see your subscriptions.',
-      unknownProblem: "There was a problem loading the subscriptions, please try again later.",
     },
     comments: {
       question: 'Do you have a question?',
@@ -176,7 +171,13 @@ export const instanceData = {
       revisionSavedAccepted: 'Revision was successfully saved and accepted ✅'
     },
     loading: {
-      isLoading: 'Content is loading…'
+      isLoading: 'Content is loading…',
+      unknownProblem: "Sorry, there was a problem loading the content, please try again later.",
+    },
+    login: {
+      pleaseLogInLink: 'Please log in',
+      pleaseLogInText: 'to use this feature.',
+
     }
   }
 };
@@ -266,8 +267,6 @@ export const loggedInData = {
     },
     notifications: {
       loadMore: "Load more",
-      unknownProblem: "There was a problem loading the notifications, please try again later.",
-      loading: "Loading notifications",
       hide: "Hide notifications for this content.",
       setThreadStateArchived: "%actor% archived %thread%.",
       setThreadStateUnarchived: "%actor% restored %thread%.",

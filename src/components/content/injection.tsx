@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 
-import { LoadingSpinner } from '../navigation/loading-spinner'
+import { LoadingSpinner } from '../loading/loading-spinner'
 import { StyledP } from '../tags/styled-p'
 import { LicenseNotice } from './license-notice'
 import { useInstanceData } from '@/contexts/instance-context'

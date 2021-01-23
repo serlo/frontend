@@ -1,14 +1,14 @@
 import { gql } from 'graphql-request'
-import Link from 'next/link'
 import React from 'react'
 
 import { useGraphqlSwrWithAuth } from '@/api/use-graphql-swr'
 import { useAuth } from '@/auth/use-auth'
 import { PageTitle } from '@/components/content/page-title'
 import { FrontendClientBase } from '@/components/frontend-client-base'
-import { LoadingSpinner } from '@/components/navigation/loading-spinner'
+import { LoadingError } from '@/components/loading/loading-error'
+import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { ManageSubscriptions } from '@/components/pages/manage-subscriptions'
-import { StyledP } from '@/components/tags/styled-p'
+import { PleaseLogIn } from '@/components/user/please-log-in'
 import { useInstanceData } from '@/contexts/instance-context'
 import { QueryResponse } from '@/fetcher/query'
 import { shouldUseNewAuth } from '@/helper/feature-auth'
@@ -23,7 +23,6 @@ export default function Page() {
   return (
     <FrontendClientBase>
       <Content />
-      {/* <ManageSubscriptions data={initialProps.pageData} /> */}
     </FrontendClientBase>
   )
 }
@@ -124,11 +123,11 @@ function Content() {
 
   const output =
     auth.current === null ? (
-      renderUnauthorized()
+      <PleaseLogIn />
     ) : !data ? (
       <LoadingSpinner noText />
     ) : error !== undefined ? (
-      renderUnknownError()
+      <LoadingError error={error} />
     ) : (
       <ManageSubscriptions subscriptions={data.subscriptions.nodes} />
     )
@@ -139,27 +138,4 @@ function Content() {
       {output}
     </>
   )
-
-  // TODO: Turn into components
-  function renderUnauthorized() {
-    return (
-      <>
-        <StyledP>
-          <Link href="/api/auth/login">
-            {strings.subscriptions.pleaseLogInLink}
-          </Link>{' '}
-          {strings.subscriptions.pleaseLogInText}
-        </StyledP>
-      </>
-    )
-  }
-
-  // TODO: Turn into components
-  function renderUnknownError() {
-    return (
-      <>
-        <StyledP>{strings.subscriptions.unknownProblem}</StyledP>
-      </>
-    )
-  }
 }

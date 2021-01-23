@@ -21,9 +21,10 @@ export function ManageSubscriptions({
 }: {
   subscriptions: QueryResponse[]
 }) {
-  const loggedInData = useLoggedInData()!
-  const loggedInStrings = loggedInData.strings.subscriptions
   const { strings } = useInstanceData()
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return null
+  const loggedInStrings = loggedInData.strings.subscriptions
 
   return (
     <StyledTable>

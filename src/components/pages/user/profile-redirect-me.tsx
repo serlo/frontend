@@ -2,7 +2,7 @@ import { NextPage } from 'next'
 import React from 'react'
 
 import { useAuth } from '@/auth/use-auth'
-import { LoadingSpinner } from '@/components/navigation/loading-spinner'
+import { LoadingSpinner } from '@/components/loading/loading-spinner'
 
 //fallback for legacy routes /user/me and /user/public
 
