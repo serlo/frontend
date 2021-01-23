@@ -199,9 +199,12 @@ function convertPlugin(node: EdtrState) {
     const steps = node.state.steps.map((step) => {
       return {
         left: sanitizeLatex(step.left),
+        leftSource: step.left,
         sign: step.sign,
         right: sanitizeLatex(step.right),
+        rightSource: step.right,
         transform: sanitizeLatex(step.transform),
+        transformSource: step.transform,
         explanation: convert(step.explanation),
       }
     })
@@ -346,6 +349,7 @@ function convertSlate(node: SlateBlockElement) {
       {
         type: 'math',
         formula: sanitizeLatex(node.src),
+        formulaSource: node.src,
         //debugOriginalFormula: node.src,
       },
     ]
@@ -355,6 +359,7 @@ function convertSlate(node: SlateBlockElement) {
       {
         type: 'inline-math',
         formula: sanitizeLatex(node.src),
+        formulaSource: node.src,
         //debugOriginalFormula: node.src,
       },
     ]
