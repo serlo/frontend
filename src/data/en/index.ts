@@ -173,6 +173,9 @@ export const instanceData = {
       revisionAccepted: 'Revision was successfully accepted ✅',
       revisionRejected: 'Revision was successfully rejected ❎',
       revisionSavedAccepted: 'Revision was successfully saved and accepted ✅'
+    },
+    loading: {
+      isLoading: 'Content is loading…'
     }
   }
 };

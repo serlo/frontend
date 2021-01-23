@@ -1,10 +1,8 @@
-import { faSpinner } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { NextPage } from 'next'
 import React from 'react'
-import styled from 'styled-components'
 
 import { useAuth } from '@/auth/use-auth'
+import { LoadingSpinner } from '@/components/navigation/loading-spinner'
 
 //fallback for legacy routes /user/me and /user/public
 
@@ -19,15 +17,5 @@ export const ProfileRedirectMe: NextPage = () => {
     }
   }, [auth])
 
-  return (
-    <ColoredIcon>
-      <FontAwesomeIcon icon={faSpinner} spin size="2x" />
-    </ColoredIcon>
-  )
+  return <LoadingSpinner noText />
 }
-
-const ColoredIcon = styled.div`
-  color: ${(props) => props.theme.colors.brand};
-  text-align: center;
-  margin-top: 50px;
-`

@@ -1,10 +1,11 @@
-import { faCircle, faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { faCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { gql } from 'graphql-request'
 import React from 'react'
 import styled from 'styled-components'
 
 import { PageTitle } from '../content/page-title'
+import { LoadingSpinner } from '../navigation/loading-spinner'
 import { StyledTable } from '../tags/styled-table'
 import { StyledTd } from '../tags/styled-td'
 import { StyledTh } from '../tags/styled-th'
@@ -14,6 +15,7 @@ import { Link } from '@/components/content/link'
 import { StyledP } from '@/components/tags/styled-p'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { EntityTypes } from '@/data-types'
 import { getRawTitle } from '@/fetcher/create-title'
 import { QueryResponse } from '@/fetcher/query'
 import { makeLightButton } from '@/helper/css'
@@ -150,19 +152,15 @@ export function ManageSubscriptions() {
           const title =
             getRawTitle(entry, 'de') ?? strings.entities[typenameCamelCase]
 
+          const icon =
+            entityIconMapping[typenameCamelCase as EntityTypes] ?? faCircle
+
           return (
             <StyledTr key={entry.id}>
               <StyledTd>
                 <span title={strings.entities[typenameCamelCase]}>
                   {' '}
-                  <StyledIcon
-                    icon={
-                      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-                      typenameCamelCase === 'topicFolder'
-                        ? faCircle
-                        : entityIconMapping[typenameCamelCase] ?? faCircle
-                    }
-                  />{' '}
+                  <StyledIcon icon={icon} />{' '}
                 </span>
                 <Link href={entry.alias ?? ''}>{title}</Link>
               </StyledTd>
@@ -210,7 +208,6 @@ export function ManageSubscriptions() {
     )
   }
 
-  // Turn into component
   function renderUnknownError() {
     console.log(error)
     return wrapInContainer(
@@ -220,22 +217,10 @@ export function ManageSubscriptions() {
     )
   }
 
-  // TODO: turn into component
   function renderLoading() {
-    return wrapInContainer(
-      <StyledP style={{ marginTop: '50px' }}>
-        <ColoredIcon>
-          <FontAwesomeIcon icon={faSpinner} spin size="1x" />
-        </ColoredIcon>{' '}
-        {loggedInStrings.loading}
-      </StyledP>
-    )
+    return wrapInContainer(<LoadingSpinner text={loggedInStrings.loading} />)
   }
 }
-
-const ColoredIcon = styled.span`
-  color: ${(props) => props.theme.colors.brand};
-`
 
 const Wrapper = styled.div`
   margin-bottom: 80px;

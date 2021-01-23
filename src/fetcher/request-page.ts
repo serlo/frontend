@@ -41,7 +41,8 @@ export async function requestPage(
     variables
   )
 
-  if (uuid === null) {
+  if (uuid === null || uuid.__typename === 'Comment') {
+    // TODO: Handle comment
     return {
       kind: 'error',
       errorData: {

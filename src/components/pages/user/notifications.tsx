@@ -1,5 +1,3 @@
-import { faSpinner } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { gql } from 'graphql-request'
 import { NextPage } from 'next'
 import React from 'react'
@@ -10,6 +8,7 @@ import { useGraphqlSwrPaginationWithAuth } from '@/api/use-graphql-swr'
 import { useAuth } from '@/auth/use-auth'
 import { Link } from '@/components/content/link'
 import { PageTitle } from '@/components/content/page-title'
+import { LoadingSpinner } from '@/components/navigation/loading-spinner'
 import { StyledP } from '@/components/tags/styled-p'
 import { Notification, NotificationEvent } from '@/components/user/notification'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -273,7 +272,7 @@ export const Notifications: NextPage = () => {
     <>
       {notifications}
       {response.error && renderUnknownError()}
-      {isLoading && renderLoading()}
+      {isLoading && <LoadingSpinner text={loggedInStrings.loading} />}
       {response.data?.pageInfo.hasNextPage && !isLoading ? (
         <Button
           onClick={() => {
@@ -319,22 +318,7 @@ export const Notifications: NextPage = () => {
       </>
     )
   }
-
-  function renderLoading() {
-    return (
-      <StyledP style={{ marginTop: '50px' }}>
-        <ColoredIcon>
-          <FontAwesomeIcon icon={faSpinner} spin size="1x" />
-        </ColoredIcon>{' '}
-        {loggedInStrings.loading}
-      </StyledP>
-    )
-  }
 }
-
-const ColoredIcon = styled.span`
-  color: ${(props) => props.theme.colors.brand};
-`
 
 const Wrapper = styled.div`
   margin-bottom: 80px;
