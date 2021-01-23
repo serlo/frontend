@@ -2,8 +2,6 @@ import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import React from 'react'
 
 import { EntityBase } from '@/components/entity-base'
-import { FrontendClientBase } from '@/components/frontend-client-base'
-import { HeaderFooter } from '@/components/header-footer'
 import { ErrorPage } from '@/components/pages/error-page'
 import { LicenseDetail } from '@/components/pages/license-detail'
 import { InitialProps, LicenseDetailPage } from '@/data-types'
@@ -15,13 +13,9 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
   if (page === undefined) return <ErrorPage code={404} />
 
   return (
-    <FrontendClientBase>
-      <HeaderFooter>
-        <EntityBase page={page}>
-          <LicenseDetail {...page.licenseData} />
-        </EntityBase>
-      </HeaderFooter>
-    </FrontendClientBase>
+    <EntityBase page={page}>
+      <LicenseDetail {...page.licenseData} />
+    </EntityBase>
   )
 }
 

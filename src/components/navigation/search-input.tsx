@@ -15,10 +15,6 @@ import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { ExternalProvider, useConsent } from '@/helper/use-consent'
 import { theme } from '@/theme'
 
-interface SearchInputProps {
-  onSearchPage?: boolean
-}
-
 /*
 This components starts with only a placeholder that looks like a searchbar (basically a button).
 When activated (by click) it loads the Google Custom Search scrips that generate the real input button and alot of markup.
@@ -27,7 +23,7 @@ From this point on it's a styled GSC that loads /search to display the results.
 It's a very hacky, but it's free and works … okay.
 */
 
-export function SearchInput({ onSearchPage }: SearchInputProps) {
+export function SearchInput() {
   const [searchLoaded, setSearchLoaded] = React.useState(false)
   const [searchActive, setSearchActive] = React.useState(false)
   const [consentJustGiven, setConsentJustGiven] = React.useState(false)
@@ -38,6 +34,7 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
   // const [isSearchPage, setIsSearchPage] = React.useState(false)
   const { lang, strings } = useInstanceData()
   const router = useRouter()
+  const onSearchPage = router.route === '/search'
 
   React.useEffect(() => {
     // note: find a better way to tell search input that it should activate itself

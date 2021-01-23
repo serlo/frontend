@@ -7,9 +7,9 @@ import { ProfileDonationForm } from './profile-donation-form'
 import { useAuth } from '@/auth/use-auth'
 import { Comments } from '@/components/comments/comments'
 import { HSpace } from '@/components/content/h-space'
+import { PageTitle } from '@/components/content/page-title'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { RelativeContainer } from '@/components/navigation/relative-container'
-import { StyledH1 } from '@/components/tags/styled-h1'
 import { StyledH2 } from '@/components/tags/styled-h2'
 import { StyledP } from '@/components/tags/styled-p'
 import { TimeAgo } from '@/components/time-ago'
@@ -33,8 +33,8 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   return (
     <RelativeContainer>
       <MaxWidthDiv>
-        <HSpace amount={50} />
-        <StyledH1>{username}</StyledH1>
+        <PageTitle title={username} headTitle />
+
         <StyledP></StyledP>
         {lang === 'de' && renderCommunityFeatures()}
         {description && (

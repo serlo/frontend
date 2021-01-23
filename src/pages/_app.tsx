@@ -1,7 +1,7 @@
 import { config } from '@fortawesome/fontawesome-svg-core'
 // eslint-disable-next-line import/no-unassigned-import
 import '@fortawesome/fontawesome-svg-core/styles.css'
-import { AppProps } from 'next/app'
+import { NextComponentType, NextPageContext } from 'next'
 import Router from 'next/router'
 import NProgress from 'nprogress'
 import React from 'react'
@@ -10,7 +10,10 @@ import { ThemeProvider } from 'styled-components'
 import '@/assets-webkit/fonts/karmilla.css'
 import '@/assets-webkit/fonts/katex/katex.css'
 
+import { FrontendClientBase } from '@/components/frontend-client-base'
+import { HeaderFooter } from '@/components/header-footer'
 import { NProgressStyles } from '@/components/navigation/n-progress-styles'
+import { InitialProps } from '@/data-types'
 import { FontFix } from '@/helper/css'
 import { theme } from '@/theme'
 
@@ -54,14 +57,28 @@ Router.events.on('routeChangeStart', () => {
 Router.events.on('routeChangeComplete', () => NProgress.done())
 Router.events.on('routeChangeError', () => NProgress.done())
 
-// eslint-disable-next-line import/no-default-export
-export default function App({ Component, pageProps }: AppProps) {
+interface CustomAppProps {
+  Component: NextComponentType<NextPageContext, any, InitialProps>
+  pageProps: InitialProps
+}
+
+export default function App({ Component, pageProps }: CustomAppProps) {
+  const noHeaderFooter = pageProps.pageData?.kind === 'donation'
+
   return (
     <React.StrictMode>
       <ThemeProvider theme={theme}>
         <FontFix />
         <NProgressStyles />
-        <Component {...pageProps} />
+        <FrontendClientBase>
+          {noHeaderFooter ? (
+            <Component {...pageProps} />
+          ) : (
+            <HeaderFooter>
+              <Component {...pageProps} />
+            </HeaderFooter>
+          )}
+        </FrontendClientBase>
       </ThemeProvider>
     </React.StrictMode>
   )

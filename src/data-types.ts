@@ -80,6 +80,7 @@ export type PageData =
   | RevisionPage
   | TaxonomyPage
   | UserPage
+  | DonationPage
 
 // The landing page is custom built and takes i18n strings
 
@@ -113,6 +114,12 @@ export type LandingSubjectIcon =
   | 'biology'
   | 'sustainability'
   | 'chemistry'
+
+// Error page has some additional data
+
+export interface DonationPage {
+  kind: 'donation'
+}
 
 // Error page has some additional data
 

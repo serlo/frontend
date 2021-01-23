@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { HeadTags } from '../head-tags'
+import { MaxWidthDiv } from '../navigation/max-width-div'
 import { SearchResults } from '@/components/navigation/search-results'
 import { useInstanceData } from '@/contexts/instance-context'
 
@@ -42,9 +43,11 @@ export function Search() {
   return (
     <>
       <HeadTags data={{ title: `Serlo.org - ${strings.header.search}` }} />
-      <StyledSearchResults>
-        <div id="gcs-results"></div>
-      </StyledSearchResults>
+      <MaxWidthDiv>
+        <StyledSearchResults>
+          <div id="gcs-results"></div>
+        </StyledSearchResults>
+      </MaxWidthDiv>
     </>
   )
 }

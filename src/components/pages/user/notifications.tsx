@@ -9,7 +9,7 @@ import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
 import { useGraphqlSwrPaginationWithAuth } from '@/api/use-graphql-swr'
 import { useAuth } from '@/auth/use-auth'
 import { Link } from '@/components/content/link'
-import { StyledH1 } from '@/components/tags/styled-h1'
+import { PageTitle } from '@/components/content/page-title'
 import { StyledP } from '@/components/tags/styled-p'
 import { Notification, NotificationEvent } from '@/components/user/notification'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -290,7 +290,7 @@ export const Notifications: NextPage = () => {
     const title = strings.notifications.notifications
     return (
       <>
-        <StyledH1 extraMarginTop>{title}</StyledH1>
+        <PageTitle title={title} headTitle />
         <Wrapper>{children}</Wrapper>
       </>
     )
