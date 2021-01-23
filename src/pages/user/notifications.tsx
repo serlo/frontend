@@ -247,7 +247,7 @@ function Content() {
 
   return (
     <>
-      <PageTitle title={strings.notifications.notifications} headTitle />
+      <PageTitle title={strings.pageTitles.notifications} headTitle />
       {output}
     </>
   )

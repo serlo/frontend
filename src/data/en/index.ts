@@ -56,6 +56,10 @@ export const instanceData = {
       privacyPolicy: 'Privacy Policy',
       content: "Content"
     },
+    pageTitles: {
+      notifications: 'Your Notifications',
+      subscriptions: "Manage Subscriptions",
+    },
     roles: {
       donor: "Donor",
       author: 'Author',
@@ -105,12 +109,6 @@ export const instanceData = {
       video: 'Play Video from %provider%',
       applet: 'Load Applet from %provider%',
       twingle: 'Load Donation Form'
-    },
-    notifications: {
-      notifications: 'Notifications'
-    },
-    subscriptions: {
-      title: "Subscriptions",
     },
     comments: {
       question: 'Do you have a question?',
@@ -176,8 +174,7 @@ export const instanceData = {
     },
     login: {
       pleaseLogInLink: 'Please log in',
-      pleaseLogInText: 'to use this feature.',
-
+      pleaseLogInText: 'to use this feature.'
     }
   }
 };
@@ -291,7 +288,6 @@ export const loggedInData = {
       entityPlaceholderFallback: "Content"
     },
     subscriptions: {
-      loading: "Loading subscriptions…",
       mail: "E-mails",
       subscription: "Subscription",
       noMails: "deactivate",

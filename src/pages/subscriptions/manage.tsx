@@ -134,7 +134,7 @@ function Content() {
 
   return (
     <>
-      <PageTitle title={strings.subscriptions.title} headTitle />
+      <PageTitle title={strings.pageTitles.subscriptions} headTitle />
       {output}
     </>
   )
