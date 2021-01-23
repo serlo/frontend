@@ -2,6 +2,10 @@ import { useRouter } from 'next/router'
 import React from 'react'
 import { notify } from 'react-notify-toast'
 
+import { ConditonalWrap } from './conditional-wrap'
+import { HeaderFooter } from './header-footer'
+import { MaxWidthDiv } from './navigation/max-width-div'
+import { RelativeContainer } from './navigation/relative-container'
 import { ToastNotice } from './toast-notice'
 import { useAuth } from '@/auth/use-auth'
 import { InstanceDataProvider } from '@/contexts/instance-context'
@@ -12,9 +16,18 @@ import { PrintStylesheet } from '@/helper/css'
 import { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { frontendOrigin } from '@/helper/frontent-origin'
 
-export type FrontendClientBaseProps = React.PropsWithChildren<{}>
+export type FrontendClientBaseProps = React.PropsWithChildren<{
+  noHeaderFooter?: boolean
+  noContainers?: boolean
+  showNav?: boolean
+}>
 
-export function FrontendClientBase({ children }: FrontendClientBaseProps) {
+export function FrontendClientBase({
+  children,
+  noHeaderFooter,
+  noContainers,
+  showNav,
+}: FrontendClientBaseProps) {
   const { locale } = useRouter()
   const [instanceData] = React.useState<InstanceData>(() => {
     if (typeof window === 'undefined') {
@@ -58,7 +71,24 @@ export function FrontendClientBase({ children }: FrontendClientBaseProps) {
       <InstanceDataProvider value={instanceData}>
         <LoggedInDataProvider value={loggedInData}>
           <ToastNoticeProvider value={toastNotice}>
-            {children}
+            <ConditonalWrap
+              condition={!noHeaderFooter}
+              wrapper={(kids) => <HeaderFooter>{kids}</HeaderFooter>}
+            >
+              <ConditonalWrap
+                condition={!noContainers}
+                wrapper={(kids) => (
+                  <RelativeContainer>
+                    <MaxWidthDiv showNav={showNav}>
+                      <main>{kids}</main>
+                    </MaxWidthDiv>
+                  </RelativeContainer>
+                )}
+              >
+                {/* should not be necessary…?*/}
+                {children as JSX.Element}
+              </ConditonalWrap>
+            </ConditonalWrap>
             <ToastNotice />
           </ToastNoticeProvider>
         </LoggedInDataProvider>

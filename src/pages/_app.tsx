@@ -10,8 +10,6 @@ import { ThemeProvider } from 'styled-components'
 import '@/assets-webkit/fonts/karmilla.css'
 import '@/assets-webkit/fonts/katex/katex.css'
 
-import { FrontendClientBase } from '@/components/frontend-client-base'
-import { HeaderFooter } from '@/components/header-footer'
 import { NProgressStyles } from '@/components/navigation/n-progress-styles'
 import { InitialProps } from '@/data-types'
 import { FontFix } from '@/helper/css'
@@ -63,22 +61,12 @@ interface CustomAppProps {
 }
 
 export default function App({ Component, pageProps }: CustomAppProps) {
-  const noHeaderFooter = pageProps.pageData?.kind === 'donation'
-
   return (
     <React.StrictMode>
       <ThemeProvider theme={theme}>
         <FontFix />
         <NProgressStyles />
-        <FrontendClientBase>
-          {noHeaderFooter ? (
-            <Component {...pageProps} />
-          ) : (
-            <HeaderFooter>
-              <Component {...pageProps} />
-            </HeaderFooter>
-          )}
-        </FrontendClientBase>
+        <Component {...pageProps} />
       </ThemeProvider>
     </React.StrictMode>
   )

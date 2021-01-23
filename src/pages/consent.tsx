@@ -1,12 +1,12 @@
 import React from 'react'
 
-import { PageBaseDefault } from '@/components/page-base-default'
+import { FrontendClientBase } from '@/components/frontend-client-base'
 import { ConsentPage } from '@/components/pages/consent-page'
 
 export default function Page() {
   return (
-    <PageBaseDefault>
+    <FrontendClientBase>
       <ConsentPage />
-    </PageBaseDefault>
+    </FrontendClientBase>
   )
 }

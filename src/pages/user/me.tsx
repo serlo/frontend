@@ -1,12 +1,12 @@
 import React from 'react'
 
-import { PageBaseDefault } from '@/components/page-base-default'
+import { FrontendClientBase } from '@/components/frontend-client-base'
 import { ProfileRedirectMe } from '@/components/pages/user/profile-redirect-me'
 
 export default function Page() {
   return (
-    <PageBaseDefault>
+    <FrontendClientBase>
       <ProfileRedirectMe />
-    </PageBaseDefault>
+    </FrontendClientBase>
   )
 }

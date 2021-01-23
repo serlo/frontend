@@ -5,8 +5,8 @@ import React from 'react'
 import { useGraphqlSwrWithAuth } from '@/api/use-graphql-swr'
 import { useAuth } from '@/auth/use-auth'
 import { PageTitle } from '@/components/content/page-title'
+import { FrontendClientBase } from '@/components/frontend-client-base'
 import { LoadingSpinner } from '@/components/navigation/loading-spinner'
-import { PageBaseDefault } from '@/components/page-base-default'
 import { ManageSubscriptions } from '@/components/pages/manage-subscriptions'
 import { StyledP } from '@/components/tags/styled-p'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -21,10 +21,10 @@ export default function Page() {
 
   if (!mounted) return null
   return (
-    <PageBaseDefault>
+    <FrontendClientBase>
       <Content />
       {/* <ManageSubscriptions data={initialProps.pageData} /> */}
-    </PageBaseDefault>
+    </FrontendClientBase>
   )
 }
 

@@ -1,10 +1,15 @@
 import { GetStaticProps } from 'next'
 import React from 'react'
 
+import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Donations } from '@/components/pages/donations'
 
 export default function Page() {
-  return <Donations />
+  return (
+    <FrontendClientBase noHeaderFooter noContainers>
+      <Donations />
+    </FrontendClientBase>
+  )
 }
 
 // eslint-disable-next-line @typescript-eslint/require-await

@@ -1,12 +1,12 @@
 import React from 'react'
 
-import { PageBaseDefault } from '@/components/page-base-default'
+import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Notifications } from '@/components/pages/user/notifications'
 
 export default function Page() {
   return (
-    <PageBaseDefault>
+    <FrontendClientBase>
       <Notifications />
-    </PageBaseDefault>
+    </FrontendClientBase>
   )
 }

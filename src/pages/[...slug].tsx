@@ -6,6 +6,7 @@ import { RevisionProps } from '@/components/author/revision'
 import { EntityProps } from '@/components/content/entity'
 import { TopicProps } from '@/components/content/topic'
 import { EntityBaseProps } from '@/components/entity-base'
+import { FrontendClientBase } from '@/components/frontend-client-base'
 import { ProfileProps } from '@/components/pages/user/profile'
 import { InitialProps, ErrorData, PageData } from '@/data-types'
 import { fetchPageData } from '@/fetcher/fetch-page-data'
@@ -31,33 +32,54 @@ const Revision = dynamic<RevisionProps>(() =>
 )
 
 const PageView: NextPage<InitialProps> = (initialProps) => {
-  const page = initialProps.pageData
-  if (page === undefined) return <ErrorPage code={404} />
-  if (page.kind === 'error') {
+  const pageData = initialProps.pageData
+
+  if (pageData === undefined) return <ErrorPage code={404} />
+
+  const page = getPage()
+
+  if (
+    pageData.kind === 'single-entity' ||
+    pageData.kind === 'revision' ||
+    pageData.kind === 'taxonomy'
+  )
     return (
-      <ErrorPage code={page.errorData.code} message={page.errorData.message} />
-    )
-  }
-  if (page.kind === 'user/profile') {
-    return <Profile userData={page.userData} />
-  }
-  if (page.kind === 'license-detail' || page.kind === 'donation') {
-    return null // have own pages…
-  }
-
-  const entity =
-    page.kind === 'single-entity' ? (
-      <Entity data={page.entityData} />
-    ) : page.kind === 'revision' ? (
-      <Revision data={page.revisionData} />
-    ) : page.kind === 'taxonomy' ? (
-      <Topic data={page.taxonomyData} />
-    ) : (
-      'are you a wizard?'
+      <FrontendClientBase noContainers>
+        <EntityBase page={pageData}>{page}</EntityBase>
+      </FrontendClientBase>
     )
 
-  return <EntityBase page={page}>{entity}</EntityBase>
+  return <FrontendClientBase>{page}</FrontendClientBase>
+
+  function getPage() {
+    switch (pageData.kind) {
+      case 'error':
+        return (
+          <ErrorPage
+            code={pageData.errorData.code}
+            message={pageData.errorData.message}
+          />
+        )
+      case 'user/profile':
+        return <Profile userData={pageData.userData} />
+
+      case 'license-detail':
+      case 'donation':
+        return null
+
+      case 'single-entity':
+        return <Entity data={pageData.entityData} />
+
+      case 'revision':
+        return <Revision data={pageData.revisionData} />
+
+      case 'taxonomy':
+        return <Topic data={pageData.taxonomyData} />
+    }
+    return 'are you a wizard?'
+  }
 }
+
 // eslint-disable-next-line @typescript-eslint/require-await
 export const getStaticProps: GetStaticProps = async (context) => {
   const alias = (context.params?.slug as string[]).join('/')
