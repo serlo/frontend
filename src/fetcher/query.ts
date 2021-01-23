@@ -96,11 +96,6 @@ export interface CoursePage extends Entity {
   }
 }
 
-interface Comment extends Entity {
-  __typename: 'Comment'
-  objectId: number
-}
-
 // We treat a grouped exercise just as a normal exercise.
 export interface BareExercise extends Entity {
   trashed: boolean
@@ -789,7 +784,6 @@ export type QueryResponseNoRevision =
   | Course
   | TaxonomyTerm
   | User
-  | Comment
 
 export type QueryResponse = QueryResponseNoRevision | QueryResponseRevision
 
