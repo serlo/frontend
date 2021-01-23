@@ -18,7 +18,7 @@ export function createTitle(uuid: QueryResponse, instance: Instance): string {
   if (!title) return 'Serlo'
   if (uuid.__typename === 'User') return 'User ' + title
   if (isRevision(uuid)) return title
-  return title + ' ' + suffix
+  return title + suffix
 }
 
 export function getRawTitle(
