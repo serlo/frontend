@@ -82,7 +82,11 @@ export function FrontendClientBase({ children }: FrontendClientBaseProps) {
   }*/
 
   function getCachedLoggedInData() {
-    if (typeof window === 'undefined') return null
+    if (
+      typeof window === 'undefined' ||
+      window.location.hostname === 'localhost'
+    )
+      return null
     const cacheValue = sessionStorage.getItem(
       `___loggedInData_${instanceData.lang}`
     )

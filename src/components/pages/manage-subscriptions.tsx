@@ -1,19 +1,16 @@
 import { faCircle, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { gql } from 'graphql-request'
-import { NextPage } from 'next'
 import React from 'react'
 import styled from 'styled-components'
 
+import { PageTitle } from '../content/page-title'
 import { StyledTable } from '../tags/styled-table'
 import { StyledTd } from '../tags/styled-td'
 import { StyledTh } from '../tags/styled-th'
 import { StyledTr } from '../tags/styled-tr'
 import { useGraphqlSwrWithAuth } from '@/api/use-graphql-swr'
 import { Link } from '@/components/content/link'
-import { MaxWidthDiv } from '@/components/navigation/max-width-div'
-import { RelativeContainer } from '@/components/navigation/relative-container'
-import { StyledH1 } from '@/components/tags/styled-h1'
 import { StyledP } from '@/components/tags/styled-p'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -24,12 +21,7 @@ import { shouldUseNewAuth } from '@/helper/feature-auth'
 import { entityIconMapping } from '@/helper/icon-by-entity-type'
 
 /* TO DO: 
-
-- i18n
 - sort out error / loading handling
-- cleanup
-- 
-
 */
 
 export function ManageSubscriptions() {
@@ -145,9 +137,9 @@ export function ManageSubscriptions() {
     <StyledTable>
       <thead>
         <StyledTr>
-          <StyledTh>Object</StyledTh>
-          <StyledTh>E-Mails</StyledTh>
-          <StyledTh>Abonnement</StyledTh>
+          <StyledTh>{strings.entities.content}</StyledTh>
+          <StyledTh>{loggedInStrings.mail}</StyledTh>
+          <StyledTh>{loggedInStrings.subscription}</StyledTh>
         </StyledTr>
       </thead>
       <tbody>
@@ -174,20 +166,20 @@ export function ManageSubscriptions() {
                 </span>
                 <Link href={entry.alias ?? ''}>{title}</Link>
               </StyledTd>
-              <StyledTd>
+              <CenteredTd>
                 <Button
                   href={`https://de.serlo.org/subscription/update/${entry.id}/0`}
                 >
                   {loggedInStrings.noMails}
                 </Button>
-              </StyledTd>
-              <StyledTd>
+              </CenteredTd>
+              <CenteredTd>
                 <Button
                   href={`https://de.serlo.org/subscription/update/${entry.id}/1`}
                 >
                   {loggedInStrings.noNotifications}
                 </Button>
-              </StyledTd>
+              </CenteredTd>
             </StyledTr>
           )
         })}
@@ -197,16 +189,10 @@ export function ManageSubscriptions() {
 
   function wrapInContainer(children: JSX.Element) {
     return (
-      <RelativeContainer>
-        <MaxWidthDiv showNav>
-          <main>
-            <StyledH1 extraMarginTop>
-              {strings.subscriptions.subscriptions}
-            </StyledH1>
-            <Wrapper>{children}</Wrapper>
-          </main>
-        </MaxWidthDiv>
-      </RelativeContainer>
+      <>
+        <PageTitle title={strings.subscriptions.title} headTitle />
+        <Wrapper>{children}</Wrapper>
+      </>
     )
   }
 
@@ -255,8 +241,13 @@ const Wrapper = styled.div`
   margin-bottom: 80px;
 `
 
+const CenteredTd = styled(StyledTd)`
+  text-align: center;
+`
+
 const Button = styled.a`
   ${makeLightButton}
+  margin: 0 auto;
   font-size: 1rem;
 `
 

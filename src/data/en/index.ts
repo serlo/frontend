@@ -53,7 +53,8 @@ export const instanceData = {
       topic: 'Topic',
       subject: 'Subject',
       userProfile: 'User Profile',
-      privacyPolicy: 'Privacy Policy'
+      privacyPolicy: 'Privacy Policy',
+      content: "Content"
     },
     roles: {
       donor: "Donor",
@@ -109,6 +110,11 @@ export const instanceData = {
       notifications: 'Notifications',
       pleaseLogInLink: 'Please log in',
       pleaseLogInText: 'to see your notifications.'
+    },
+    subscriptions: {
+      title: "Subscriptions",
+      pleaseLogInLink: 'Please log in',
+      pleaseLogInText: 'to see your subscriptions.'
     },
     comments: {
       question: 'Do you have a question?',
@@ -280,6 +286,14 @@ export const loggedInData = {
       setUuidStateTrashed: "%actor% trashed %object%.",
       setUuidStateRestored: "%actor% restored %object%.",
       entityPlaceholderFallback: "Content"
+    },
+    subscriptions: {
+      unknownProblem: "There was a problem loading the subscriptions, please try again later.",
+      loading: "Loading subscriptions…",
+      mail: "E-mails",
+      subscription: "Subscription",
+      noMails: "deactivate",
+      noNotifications: "cancel"
     }
   }
 };
