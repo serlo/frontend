@@ -32,7 +32,6 @@ const Revision = dynamic<RevisionProps>(() =>
 
 const PageView: NextPage<InitialProps> = (initialProps) => {
   const page = initialProps.pageData
-  console.log(page.kind)
   if (page === undefined) return <ErrorPage code={404} />
   if (page.kind === 'error') {
     return (
