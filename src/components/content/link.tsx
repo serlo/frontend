@@ -39,7 +39,6 @@ export function isLegacyLink(_href: string) {
     _href.startsWith('/api/auth') ||
     _href.startsWith('/entity/') ||
     _href.startsWith('/discussions') ||
-    _href.startsWith('/subscriptions/manage') ||
     _href.indexOf('.serlo.org') > -1 //e.g. community.serlo.org or different language
   )
 }
