@@ -9,8 +9,6 @@ import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
 import { useGraphqlSwrPaginationWithAuth } from '@/api/use-graphql-swr'
 import { useAuth } from '@/auth/use-auth'
 import { Link } from '@/components/content/link'
-import { MaxWidthDiv } from '@/components/navigation/max-width-div'
-import { RelativeContainer } from '@/components/navigation/relative-container'
 import { StyledH1 } from '@/components/tags/styled-h1'
 import { StyledP } from '@/components/tags/styled-p'
 import { Notification, NotificationEvent } from '@/components/user/notification'
@@ -289,17 +287,12 @@ export const Notifications: NextPage = () => {
   )
 
   function wrapInContainer(children: JSX.Element) {
+    const title = strings.notifications.notifications
     return (
-      <RelativeContainer>
-        <MaxWidthDiv showNav>
-          <main>
-            <StyledH1 extraMarginTop>
-              {strings.notifications.notifications}
-            </StyledH1>
-            <Wrapper>{children}</Wrapper>
-          </main>
-        </MaxWidthDiv>
-      </RelativeContainer>
+      <>
+        <StyledH1 extraMarginTop>{title}</StyledH1>
+        <Wrapper>{children}</Wrapper>
+      </>
     )
   }
 

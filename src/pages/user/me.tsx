@@ -1,15 +1,15 @@
 import React from 'react'
 
 import { FrontendClientBase } from '@/components/frontend-client-base'
-import { HeaderFooter } from '@/components/header-footer'
+import { PageBaseDefault } from '@/components/page-base-default'
 import { ProfileRedirectMe } from '@/components/pages/user/profile-redirect-me'
 
 export default function Page() {
   return (
     <FrontendClientBase>
-      <HeaderFooter>
+      <PageBaseDefault>
         <ProfileRedirectMe />
-      </HeaderFooter>
+      </PageBaseDefault>
     </FrontendClientBase>
   )
 }

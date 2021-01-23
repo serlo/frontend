@@ -5,8 +5,6 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { useAuth } from '@/auth/use-auth'
-import { MaxWidthDiv } from '@/components/navigation/max-width-div'
-import { RelativeContainer } from '@/components/navigation/relative-container'
 
 //fallback for legacy routes /user/me and /user/public
 
@@ -22,13 +20,9 @@ export const ProfileRedirectMe: NextPage = () => {
   }, [auth])
 
   return (
-    <RelativeContainer>
-      <MaxWidthDiv>
-        <ColoredIcon>
-          <FontAwesomeIcon icon={faSpinner} spin size="2x" />
-        </ColoredIcon>
-      </MaxWidthDiv>
-    </RelativeContainer>
+    <ColoredIcon>
+      <FontAwesomeIcon icon={faSpinner} spin size="2x" />
+    </ColoredIcon>
   )
 }
 
