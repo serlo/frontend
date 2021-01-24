@@ -126,7 +126,7 @@ export const instanceData = {
       showMoreReply: 'Show one more reply',
       showMoreReplies: 'Show %number% more replies',
       showArchived: 'Show archived %threads%',
-      linkToComment: 'Link to this comment'
+      copyLink: 'Copy comment link'
     },
     revisions: {
       toOverview: "Back to overview",

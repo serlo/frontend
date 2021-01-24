@@ -12,17 +12,21 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { UserRoles } from '@/data-types'
 import { makeTransparentButton } from '@/helper/css'
 
+interface DropdownMenuProps {
+  isParent?: boolean
+  date: Date
+  id: number
+  highlight: (id: number) => void
+  onAnyClick: () => void
+}
+
 export function DropdownMenu({
   isParent,
   id,
   date,
   highlight,
-}: {
-  isParent?: boolean
-  date: Date
-  id: number
-  highlight: (id: number) => void
-}) {
+  onAnyClick,
+}: DropdownMenuProps) {
   const { lang, strings } = useInstanceData()
   const auth = useAuth()
   const isAllowed =
@@ -32,6 +36,9 @@ export function DropdownMenu({
 
   return (
     <DropContent>
+      <DropContentButton onClick={onLinkToComment}>
+        <FontAwesomeIcon icon={faPaperclip} /> {strings.comments.copyLink}
+      </DropContentButton>
       {isAllowed && (
         <>
           {isParent && (
@@ -48,9 +55,6 @@ export function DropdownMenu({
           </DropContentButton>
         </>
       )}
-      <DropContentButton onClick={onLinkToComment}>
-        <FontAwesomeIcon icon={faPaperclip} /> {strings.comments.linkToComment}
-      </DropContentButton>
       <Time>
         {strings.comments.postedOn} {date.toLocaleString(lang)}
       </Time>
@@ -58,8 +62,19 @@ export function DropdownMenu({
   )
 
   function onLinkToComment() {
+    onAnyClick()
     highlight(id)
     history.replaceState(null, '', `#comment-${id}`)
+    copyToClipboad(window.location.href)
+  }
+
+  function copyToClipboad(text: string) {
+    const input = document.createElement('input')
+    input.setAttribute('value', text)
+    document.body.appendChild(input)
+    input.select()
+    document.execCommand('copy')
+    document.body.removeChild(input)
   }
 }
 

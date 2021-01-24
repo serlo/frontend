@@ -4,7 +4,6 @@ import * as React from 'react'
 import styled, { css } from 'styled-components'
 
 import { StyledP } from '../tags/styled-p'
-import { DropdownMenu } from './dropdown-menu'
 import { MetaBar } from './meta-bar'
 import { scrollIfNeeded } from '@/helper/scroll'
 
@@ -42,21 +41,14 @@ export function Comment({
     }
   }, [isHighlight])
 
-  const eventDate = new Date(createdAt)
-
   return (
     <Wrapper ref={commentRef} $isParent={isParent} id={`comment-${id}`}>
       <MetaBar
         user={author}
-        date={eventDate}
-        dropdownMenu={
-          <DropdownMenu
-            isParent={isParent}
-            date={eventDate}
-            id={id}
-            highlight={highlight}
-          />
-        }
+        timestamp={createdAt}
+        isParent={isParent}
+        id={id}
+        highlight={highlight}
       />
       <StyledP dangerouslySetInnerHTML={{ __html: escapedWithLinks }}></StyledP>
     </Wrapper>
