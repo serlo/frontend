@@ -141,6 +141,12 @@ export const instanceData = {
       thisIsCurrentVersion: "This is the currently accepted version.",
       by: 'By'
     },
+    revisionHistory: {
+      changes: 'Changes',
+      author: 'Author',
+      date: 'Date',
+      createNew: 'Create a new revision starting from this specific revision'
+    },
     errors: {
       title: '😬 Websites make mistakes sometimes…',
       defaultMessage: 'So sorry, we ran into a problem loading this content.',

@@ -1,31 +1,29 @@
 import { gql } from 'graphql-request'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import React from 'react'
-import styled from 'styled-components'
 
-import { useGraphqlSwrWithAuth } from '@/api/use-graphql-swr'
+import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { PageTitle } from '@/components/content/page-title'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Guard } from '@/components/guard'
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
 import { RevisionHistory } from '@/components/pages/revision-history'
 import { useInstanceData } from '@/contexts/instance-context'
-import { makeLightButton } from '@/helper/css'
+import { FrontendUserData } from '@/data-types'
 
 export interface HistoryRevisionData {
-  author: {
-    username: string
-  }
-  changes: string
+  author: FrontendUserData
+  changes?: string
   date: string
   id: number
 }
 
 export interface HistoryRevisionsData {
   id: number
+  alias: string
   currentRevision: {
     id: number
-    title: string
+    title?: string
   }
   revisions: {
     nodes: HistoryRevisionData[]
@@ -34,14 +32,13 @@ export interface HistoryRevisionsData {
 
 export default function Page({ id }: { id: number }) {
   const response = useFetch(id)
-
   return (
     <FrontendClientBase>
       <Breadcrumbs
         data={[
           {
-            label: response.data?.uuid.currentRevision.title ?? '…',
-            url: 'url',
+            label: response.data?.uuid.currentRevision.title ?? '',
+            url: response.data?.uuid.alias ?? undefined,
           },
         ]}
         asBackButton
@@ -78,7 +75,7 @@ function Title() {
 }
 
 function useFetch(id: number) {
-  return useGraphqlSwrWithAuth<{ uuid: HistoryRevisionsData }>({
+  return useGraphqlSwr<{ uuid: HistoryRevisionsData }>({
     query,
     variables: { id },
     config: {
@@ -91,6 +88,23 @@ const query = gql`
   query getRevisions($id: Int!) {
     uuid(id: $id) {
       id
+      alias
+      ... on Applet {
+        currentRevision {
+          title
+          id
+        }
+        revisions {
+          nodes {
+            id
+            author {
+              ...authorData
+            }
+            changes
+            date
+          }
+        }
+      }
       ... on Article {
         currentRevision {
           title
@@ -100,7 +114,131 @@ const query = gql`
           nodes {
             id
             author {
-              username
+              ...authorData
+            }
+            changes
+            date
+          }
+        }
+      }
+      ... on Course {
+        currentRevision {
+          title
+          id
+        }
+        revisions {
+          nodes {
+            id
+            author {
+              ...authorData
+            }
+            changes
+            date
+          }
+        }
+      }
+      ... on CoursePage {
+        currentRevision {
+          title
+          id
+        }
+        revisions {
+          nodes {
+            id
+            author {
+              ...authorData
+            }
+            changes
+            date
+          }
+        }
+      }
+      ... on Event {
+        currentRevision {
+          title
+          id
+        }
+        revisions {
+          nodes {
+            id
+            author {
+              ...authorData
+            }
+            changes
+            date
+          }
+        }
+      }
+      ... on Exercise {
+        currentRevision {
+          id
+        }
+        revisions {
+          nodes {
+            id
+            author {
+              ...authorData
+            }
+            changes
+            date
+          }
+        }
+      }
+      ... on ExerciseGroup {
+        currentRevision {
+          id
+        }
+        revisions {
+          nodes {
+            id
+            author {
+              ...authorData
+            }
+            changes
+            date
+          }
+        }
+      }
+      ... on GroupedExercise {
+        currentRevision {
+          id
+        }
+        revisions {
+          nodes {
+            id
+            author {
+              ...authorData
+            }
+            changes
+            date
+          }
+        }
+      }
+      ... on Page {
+        currentRevision {
+          title
+          id
+        }
+        revisions {
+          nodes {
+            id
+            author {
+              ...authorData
+            }
+            date
+          }
+        }
+      }
+      ... on Video {
+        currentRevision {
+          title
+          id
+        }
+        revisions {
+          nodes {
+            id
+            author {
+              ...authorData
             }
             changes
             date
@@ -108,5 +246,13 @@ const query = gql`
         }
       }
     }
+  }
+
+  fragment authorData on User {
+    id
+    username
+    activeAuthor
+    activeDonor
+    activeReviewer
   }
 `

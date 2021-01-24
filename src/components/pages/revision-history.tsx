@@ -7,8 +7,9 @@ import { StyledTable } from '../tags/styled-table'
 import { StyledTd } from '../tags/styled-td'
 import { StyledTh } from '../tags/styled-th'
 import { StyledTr } from '../tags/styled-tr'
-// import { useInstanceData } from '@/contexts/instance-context'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { UserLink } from '../user/user-link'
+import { TimeAgo } from '@/components/time-ago'
+import { useInstanceData } from '@/contexts/instance-context'
 import { makeLightButton } from '@/helper/css'
 import { HistoryRevisionsData } from '@/pages/entity/repository/history/[id]'
 
@@ -17,18 +18,18 @@ export interface RevisionHistoryProps {
 }
 
 export function RevisionHistory({ data }: RevisionHistoryProps) {
-  // const { strings } = useInstanceData()
-  const loggedInData = useLoggedInData()
-  if (!loggedInData || !data) return null
-  // const loggedInStrings = loggedInData.strings.revisions
+  const { strings } = useInstanceData()
+  if (!data) return null
 
   return (
     <StyledTable>
       <thead>
         <StyledTr>
-          <StyledTh>Changes</StyledTh>
-          <StyledTh>Author</StyledTh>
-          <StyledTh>Date</StyledTh>
+          <StyledTh>{strings.revisionHistory.changes}</StyledTh>
+          <StyledTh style={{ minWidth: '90px' }}>
+            {strings.revisionHistory.author}
+          </StyledTh>
+          <StyledTh>{strings.revisionHistory.date}</StyledTh>
           <StyledTh>&nbsp;</StyledTh>
           <StyledTh>&nbsp;</StyledTh>
         </StyledTr>
@@ -39,14 +40,18 @@ export function RevisionHistory({ data }: RevisionHistoryProps) {
             <StyledTr key={entry.id}>
               <StyledTd>
                 {entry.id === data.currentRevision.id && (
-                  <span title="This revision is currently checked out">
+                  <span title={strings.revisions.thisIsCurrentVersion}>
                     ✅{' '}
                   </span>
                 )}
                 <b>{entry.changes}</b>
               </StyledTd>
-              <StyledTd>{entry.author.username}</StyledTd>
-              <StyledTd>{entry.date}</StyledTd>
+              <StyledTd>
+                <UserLink user={entry.author} />
+              </StyledTd>
+              <StyledTd>
+                <TimeAgo datetime={new Date(entry.date)} dateAsTitle />
+              </StyledTd>
               <StyledTd>
                 <Button
                   href={`/entity/repository/compare/${data.id}/${entry.id}`}
@@ -56,7 +61,7 @@ export function RevisionHistory({ data }: RevisionHistoryProps) {
               </StyledTd>
               <StyledTd>
                 <Button
-                  title="Create a new revision starting from this specific revision"
+                  title={strings.revisionHistory.createNew}
                   href={`/entity/repository/add-revision/${data.id}/${entry.id}`}
                 >
                   <FontAwesomeIcon icon={faPencilAlt} size="1x" />
