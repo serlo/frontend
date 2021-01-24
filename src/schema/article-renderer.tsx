@@ -45,6 +45,8 @@ import type { MathProps } from '@/components/content/math'
 import { Multimedia } from '@/components/content/multimedia'
 import type { VideoProps } from '@/components/content/video'
 import { FrontendContentNode } from '@/data-types'
+import { useId } from '@/contexts/id-context'
+import { submitEvent } from '@/helper/submit-event'
 
 interface RenderElementProps {
   element: FrontendContentNode
@@ -174,7 +176,7 @@ export function renderLeaf({ leaf, key, children }: RenderLeafProps) {
 }
 
 function renderElement(props: RenderElementProps): React.ReactNode {
-  const { element, children } = props
+  const { element, children, path } = props
   if (element.type === 'a') {
     return <Link href={element.href}>{children}</Link>
   }
@@ -223,7 +225,9 @@ function renderElement(props: RenderElementProps): React.ReactNode {
   }
   if (element.type === 'spoiler-container') {
     if (!Array.isArray(children)) return null
-    return <SpoilerForEndUser title={children[0]} body={children[1]} />
+    return (
+      <SpoilerForEndUser title={children[0]} body={children[1]} path={path} />
+    )
   }
   if (element.type === 'spoiler-body') {
     return <SpoilerBody>{children}</SpoilerBody>
@@ -328,13 +332,25 @@ function renderElement(props: RenderElementProps): React.ReactNode {
 interface SpoilerForEndUserProps {
   body: React.ReactNode
   title: React.ReactNode
+  path: number[]
 }
 
-function SpoilerForEndUser({ body, title }: SpoilerForEndUserProps) {
+function SpoilerForEndUser({ body, title, path }: SpoilerForEndUserProps) {
   const [open, setOpen] = React.useState(false)
+  const id = useId()
+  const eventKey =
+    id > 0 ? `${id}_spoileropen_${path.map((x) => x.toString()).join('x')}` : ''
   return (
     <SpoilerContainer>
-      <SpoilerTitle onClick={() => setOpen(!open)} open={open}>
+      <SpoilerTitle
+        onClick={() => {
+          if (!open && eventKey) {
+            submitEvent(eventKey)
+          }
+          setOpen(!open)
+        }}
+        open={open}
+      >
         <SpoilerToggle open={open} />
         {title}
       </SpoilerTitle>

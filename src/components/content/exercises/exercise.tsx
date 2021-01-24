@@ -9,9 +9,11 @@ import { InputExercise } from './input-exercise'
 import { ScMcExercise } from './sc-mc-exercise'
 import { useAuth } from '@/auth/use-auth'
 import { CommentsProps } from '@/components/comments/comments'
+import { useId } from '@/contexts/id-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { FrontendExerciseNode } from '@/data-types'
 import { makeMargin, makeTransparentButton, makePadding } from '@/helper/css'
+import { submitEvent } from '@/helper/submit-event'
 import { renderArticle } from '@/schema/article-renderer'
 
 export interface ExerciseProps {
@@ -22,23 +24,17 @@ const Comments = dynamic<CommentsProps>(() =>
   import('@/components/comments/comments').then((mod) => mod.Comments)
 )
 
-function submitEvent(name: string) {
-  const window_local: any = window
-  if (window_local.sa_event) {
-    window_local.sa_event(name)
-  }
-}
-
 export function Exercise({ node }: ExerciseProps) {
   const { strings } = useInstanceData()
   const [solutionVisible, setVisible] = React.useState(false)
   const [randomId] = React.useState(Math.random().toString())
 
   const auth = useAuth()
+  const id = useId()
   const [loaded, setLoaded] = React.useState(false)
   React.useEffect(() => {
     setLoaded(true)
-  }, [node.context.id])
+  }, [])
 
   return (
     <Wrapper grouped={node.grouped}>
@@ -104,8 +100,8 @@ export function Exercise({ node }: ExerciseProps) {
     return (
       <SolutionToggle
         onClick={() => {
-          if (!solutionVisible) {
-            submitEvent(`solution_opened_${node.context.id}`)
+          if (!solutionVisible && id > 0) {
+            submitEvent(`${id}_solutionopen_${node.context.id}`)
           }
           setVisible(!solutionVisible)
         }}
