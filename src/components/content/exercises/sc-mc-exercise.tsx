@@ -218,6 +218,7 @@ const StyledInput = styled.input`
 
 const StyledLabel = styled.label<{ selected: boolean; focused?: boolean }>`
   display: flex;
+  align-items: center;
   cursor: pointer;
 
   > svg {

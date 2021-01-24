@@ -8,7 +8,7 @@ import Document, {
 import { ServerStyleSheet } from 'styled-components'
 
 import { getInstanceDataByLang } from '@/helper/feature-i18n'
-import { htmlEscapeJsonString } from '@/helper/html-escape'
+import { htmlEscapeStringForJson } from '@/helper/html-escape'
 
 const bodyStyles = {
   margin: 0,
@@ -122,7 +122,7 @@ export default class MyDocument extends Document {
               type="application/json"
               id="__FRONTEND_CLIENT_INSTANCE_DATA__"
               dangerouslySetInnerHTML={{
-                __html: htmlEscapeJsonString(JSON.stringify(langData)),
+                __html: htmlEscapeStringForJson(JSON.stringify(langData)),
               }}
             />
           )}

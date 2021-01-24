@@ -1,4 +1,5 @@
 import React from 'react'
+import styled from 'styled-components'
 
 import { Footer } from './navigation/footer'
 import { Header } from './navigation/header'
@@ -12,8 +13,12 @@ export function HeaderFooter({ children, onSearchPage }: HeaderFooterProps) {
   return (
     <>
       <Header onSearchPage={onSearchPage} />
-      {children}
+      <MinHeightDiv className="_">{children}</MinHeightDiv>
       <Footer />
     </>
   )
 }
+
+const MinHeightDiv = styled.div`
+  min-height: 68vh;
+`

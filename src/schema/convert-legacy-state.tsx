@@ -198,6 +198,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
           {
             type: 'inline-math',
             formula: sanitizeLatex(formula),
+            formulaSource: formula,
           },
         ]
       }
@@ -214,6 +215,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
           {
             type: 'math',
             formula: sanitizeLatex(formula),
+            formulaSource: formula,
             alignLeft: true,
           },
         ]
@@ -275,6 +277,8 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
             type: 'math',
             alignLeft: true,
             formula: (inlineMaths[0] as FrontendInlineMathNode).formula,
+            formulaSource: (inlineMaths[0] as FrontendInlineMathNode)
+              .formulaSource,
           },
         ]
       }

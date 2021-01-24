@@ -1,4 +1,4 @@
-import { convertState } from './fetch-page-data'
+import { convertState } from './convert-state'
 import { Solution, BareExercise, BareExerciseGroup } from './query'
 import {
   FrontendExerciseNode,

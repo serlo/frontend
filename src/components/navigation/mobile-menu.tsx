@@ -173,7 +173,7 @@ const List = styled.ul`
 
 const Seperator = styled.li`
   height: 28px;
-  background-color: #fff;
+  background-color: ${(props) => transparentize(0.8, props.theme.colors.brand)};
   border-bottom: 1px solid ${(props) => props.theme.colors.lighterblue};
 `
 

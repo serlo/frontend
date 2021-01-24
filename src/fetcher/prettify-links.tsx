@@ -102,8 +102,6 @@ export async function prettifyLinks(pageData: PageData) {
           }
         }>(endpoint, idsQuery([...new Set(ids)]))
 
-  //console.log('prettylinks', prettyLinks)
-
   callbacks.forEach((x) => {
     if (prettyLinks === undefined) return
 
