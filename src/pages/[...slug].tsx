@@ -63,10 +63,6 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
       case 'user/profile':
         return <Profile userData={pageData.userData} />
 
-      case 'license-detail':
-      case 'donation':
-        return null
-
       case 'single-entity':
         return <Entity data={pageData.entityData} />
 

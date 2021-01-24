@@ -75,12 +75,10 @@ export type FooterIcon = 'newsletter' | 'github'
 
 export type PageData =
   | ErrorPage
-  | LicenseDetailPage
   | SingleEntityPage
   | RevisionPage
   | TaxonomyPage
   | UserPage
-  | DonationPage
 
 // The landing page is custom built and takes i18n strings
 
@@ -117,12 +115,6 @@ export type LandingSubjectIcon =
 
 // Error page has some additional data
 
-export interface DonationPage {
-  kind: 'donation'
-}
-
-// Error page has some additional data
-
 export interface ErrorPage {
   kind: 'error'
   errorData: ErrorData
@@ -132,10 +124,9 @@ export interface ErrorData {
   code: number
   message?: string
 }
+// License detail page has some additional data and is not part of the PageData type
 
-// License detail page has some additional data
-
-export interface LicenseDetailPage extends EntityPageBase {
+export interface LicenseDetailPage {
   kind: 'license-detail'
   licenseData: LicenseDetailData
 }
