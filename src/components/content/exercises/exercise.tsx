@@ -137,11 +137,17 @@ export function Exercise({ node }: ExerciseProps) {
             idBase={`ex-${
               node.positionOnPage ? node.positionOnPage : randomId
             }-${node.positionInGroup ? node.positionInGroup : ''}-`}
+            eventKey={id > 0 ? `${id}_interactivecheck_${node.context.id}` : ''}
           />
         )
       }
       if (state.interactive.plugin === 'inputExercise') {
-        return <InputExercise data={state.interactive.state} />
+        return (
+          <InputExercise
+            data={state.interactive.state}
+            eventKey={id > 0 ? `${id}_interactivecheck_${node.context.id}` : ''}
+          />
+        )
       }
     }
   }

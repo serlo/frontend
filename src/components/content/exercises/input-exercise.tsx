@@ -6,9 +6,11 @@ import { Feedback } from './feedback'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EdtrPluginInputExercise } from '@/data-types'
 import { makeMargin, makePrimaryButton, inputFontReset } from '@/helper/css'
+import { submitEvent } from '@/helper/submit-event'
 
 export interface InputExerciseProps {
   data: EdtrPluginInputExercise['state']
+  eventKey?: string
 }
 
 interface FeedbackData {
@@ -16,13 +18,16 @@ interface FeedbackData {
   message: string
 }
 
-export function InputExercise({ data }: InputExerciseProps) {
+export function InputExercise({ data, eventKey }: InputExerciseProps) {
   const [feedback, setFeedback] = React.useState<FeedbackData | null>(null)
   const [value, setValue] = React.useState('')
   const { strings } = useInstanceData()
 
   function evaluate() {
     setFeedback(checkAnswer())
+    if (eventKey) {
+      submitEvent(eventKey)
+    }
   }
 
   return (

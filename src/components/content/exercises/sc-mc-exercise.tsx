@@ -8,28 +8,35 @@ import { Feedback } from './feedback'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EdtrPluginScMcExercise } from '@/data-types'
 import { makeMargin, makePrimaryButton } from '@/helper/css'
+import { submitEvent } from '@/helper/submit-event'
 import { renderArticle } from '@/schema/article-renderer'
 
 export interface ScMcExerciseProps {
   state: EdtrPluginScMcExercise['state']
   idBase: string
+  eventKey?: string
 }
 
 interface SingleChoiceProps {
   answers: EdtrPluginScMcExercise['state']['answers']
   idBase: string
+  eventKey?: string
 }
 
-export function ScMcExercise({ state, idBase }: ScMcExerciseProps) {
+export function ScMcExercise({ state, idBase, eventKey }: ScMcExerciseProps) {
   const answers = state.answers.slice(0)
 
   if (state.isSingleChoice)
-    return <SingleChoice answers={answers} idBase={idBase} />
+    return (
+      <SingleChoice answers={answers} idBase={idBase} eventKey={eventKey} />
+    )
 
-  return <MultipleChoice answers={answers} idBase={idBase} />
+  return (
+    <MultipleChoice answers={answers} idBase={idBase} eventKey={eventKey} />
+  )
 }
 
-function SingleChoice({ answers, idBase }: SingleChoiceProps) {
+function SingleChoice({ answers, idBase, eventKey }: SingleChoiceProps) {
   const [selected, setSelected] = React.useState<number | undefined>(undefined)
   const [focused, setFocused] = React.useState<number | undefined>(undefined)
   const [showFeedback, setShowFeedback] = React.useState(false)
@@ -82,7 +89,12 @@ function SingleChoice({ answers, idBase }: SingleChoiceProps) {
       </Choices>
       <CheckButton
         selectable={selected !== undefined}
-        onClick={() => setShowFeedback(true)}
+        onClick={() => {
+          setShowFeedback(true)
+          if (eventKey) {
+            submitEvent(eventKey)
+          }
+        }}
         //blur-hack, use https://caniuse.com/#feat=css-focus-visible when supported
         onPointerUp={(e) => e.currentTarget.blur()}
       >
@@ -94,7 +106,7 @@ function SingleChoice({ answers, idBase }: SingleChoiceProps) {
   )
 }
 
-function MultipleChoice({ answers, idBase }: SingleChoiceProps) {
+function MultipleChoice({ answers, idBase, eventKey }: SingleChoiceProps) {
   const [selected, setSelected] = React.useState(answers.map(() => false))
   const [focused, setFocused] = React.useState<number | undefined>(undefined)
   const [showFeedback, setShowFeedback] = React.useState(false)
@@ -152,7 +164,12 @@ function MultipleChoice({ answers, idBase }: SingleChoiceProps) {
       )}
       <CheckButton
         selectable
-        onClick={() => setShowFeedback(true)}
+        onClick={() => {
+          setShowFeedback(true)
+          if (eventKey) {
+            submitEvent(eventKey)
+          }
+        }}
         onPointerUp={(e) => e.currentTarget.blur()}
       >
         {strings.content.check}

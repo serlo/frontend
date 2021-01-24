@@ -44,8 +44,8 @@ import { Lazy } from '@/components/content/lazy'
 import type { MathProps } from '@/components/content/math'
 import { Multimedia } from '@/components/content/multimedia'
 import type { VideoProps } from '@/components/content/video'
-import { FrontendContentNode } from '@/data-types'
 import { useId } from '@/contexts/id-context'
+import { FrontendContentNode } from '@/data-types'
 import { submitEvent } from '@/helper/submit-event'
 
 interface RenderElementProps {
