@@ -1,4 +1,3 @@
-import { GetStaticProps } from 'next'
 import React from 'react'
 
 import { FrontendClientBase } from '@/components/frontend-client-base'
@@ -10,15 +9,4 @@ export default function Page() {
       <Donations />
     </FrontendClientBase>
   )
-}
-
-// eslint-disable-next-line @typescript-eslint/require-await
-export const getStaticProps: GetStaticProps = async () => {
-  return {
-    props: {
-      pageData: {
-        kind: 'donation',
-      },
-    },
-  }
 }

@@ -1,7 +1,7 @@
 import { config } from '@fortawesome/fontawesome-svg-core'
 // eslint-disable-next-line import/no-unassigned-import
 import '@fortawesome/fontawesome-svg-core/styles.css'
-import { NextComponentType, NextPageContext } from 'next'
+import { AppProps } from 'next/app'
 import Router from 'next/router'
 import NProgress from 'nprogress'
 import React from 'react'
@@ -11,7 +11,6 @@ import '@/assets-webkit/fonts/karmilla.css'
 import '@/assets-webkit/fonts/katex/katex.css'
 
 import { NProgressStyles } from '@/components/navigation/n-progress-styles'
-import { InitialProps } from '@/data-types'
 import { FontFix } from '@/helper/css'
 import { theme } from '@/theme'
 
@@ -55,12 +54,7 @@ Router.events.on('routeChangeStart', () => {
 Router.events.on('routeChangeComplete', () => NProgress.done())
 Router.events.on('routeChangeError', () => NProgress.done())
 
-interface CustomAppProps {
-  Component: NextComponentType<NextPageContext, any, InitialProps>
-  pageProps: InitialProps
-}
-
-export default function App({ Component, pageProps }: CustomAppProps) {
+export default function App({ Component, pageProps }: AppProps) {
   return (
     <React.StrictMode>
       <ThemeProvider theme={theme}>
