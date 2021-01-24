@@ -13,7 +13,7 @@ export function HeaderFooter({ children, onSearchPage }: HeaderFooterProps) {
   return (
     <>
       <Header onSearchPage={onSearchPage} />
-      <MinHeightDiv>{children}</MinHeightDiv>
+      <MinHeightDiv className="_">{children}</MinHeightDiv>
       <Footer />
     </>
   )

@@ -12,15 +12,11 @@ import {
 } from '@/components/frontend-client-base'
 import { HeaderFooter } from '@/components/header-footer'
 import { ProfileProps } from '@/components/pages/user/profile'
-import { InitialProps, ErrorData, LicenseDetailData } from '@/data-types'
+import { InitialProps, ErrorData, PageData } from '@/data-types'
 import { fetchPageData } from '@/fetcher/fetch-page-data'
 
 const EntityBase = dynamic<EntityBaseProps>(() =>
   import('@/components/entity-base').then((mod) => mod.EntityBase)
-)
-
-const LicenseDetail = dynamic<LicenseDetailData>(() =>
-  import('@/components/pages/license-detail').then((mod) => mod.LicenseDetail)
 )
 const ErrorPage = dynamic<ErrorData>(() =>
   import('@/components/pages/error-page').then((mod) => mod.ErrorPage)
@@ -75,7 +71,7 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
               <EntityBase page={page}>
                 {(() => {
                   if (page.kind === 'license-detail') {
-                    return <LicenseDetail {...page.licenseData} />
+                    return 'are you a wizard?' //license has a own page
                   }
                   if (page.kind === 'single-entity') {
                     return <Entity data={page.entityData} />
@@ -101,7 +97,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const pageData = await fetchPageData('/' + context.locale! + '/' + alias)
   return {
     props: {
-      pageData: JSON.parse(JSON.stringify(pageData)), // remove undefined values
+      pageData: JSON.parse(JSON.stringify(pageData)) as PageData, // remove undefined values
     },
     revalidate: 1,
   }

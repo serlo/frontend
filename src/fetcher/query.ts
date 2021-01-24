@@ -809,23 +809,6 @@ export const idsQuery = (ids: number[]) => {
   return `{${map.join()}}`
 }
 
-// Note: This query will soon be removed from the fetcher (cloudflare takes this job)
-export const idQuery = (id: number) => gql`
-  {
-    uuid(id:${id}) {
-      ... on AbstractEntity {
-        alias
-      }
-      ... on Page {
-        alias
-      }
-      ... on TaxonomyTerm {
-        alias
-      }
-    }
-  }
-`
-
 export const licenseDetailsQuery = (id: number) => `
   query {
     license(id: ${id}) {

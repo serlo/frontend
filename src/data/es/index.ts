@@ -52,7 +52,8 @@ export const instanceData = {
       threads: 'Threads',
       topic: "Tema",
       subject: "Asunto",
-      userProfile: 'User Profile'
+      userProfile: 'User Profile',
+      privacyPolicy: 'Privacy Policy'
     },
     roles: {
       donor: "Donor",
@@ -90,19 +91,18 @@ export const instanceData = {
       chooseOption: "Elige una de las opciones.",
       trashedNotice: "Este contenido está marcado para su eliminación."
     },
-    cookie: {
-      part1: "Al utilizar este sitio web, declara que acepta nuestra",
-      part2: "y",
-      part3: '.',
-      link1: "Política de privacidad",
-      link2: "Términos de uso",
-      button: "Aceptar"
+    consent: {
+      title: 'Consent for external Content',
+      intro: 'While using this site you may allowed us to load content from external providers. You can read about the details in the %privacypolicy%.',
+      revokeTitle: 'Revoke',
+      revokeText: 'Here you can revoke your consent. In this case we ask again, before we load content from those providers',
+      noConsent: 'No content saved.',
+      revokeConsent: 'Revoke consent'
     },
     embed: {
       text: 'By clicking on image or button above you agree that external content from %provider% will be loaded. Also personal data may be transferred to this service in accordance with our %privacypolicy%.',
-      link: 'Privacy Policy',
-      video: 'Play Video',
-      applet: 'Load Applet',
+      video: 'Play Video from %provider%',
+      applet: 'Load Applet from %provider%',
       twingle: 'Load Donation Form'
     },
     notifications: {
@@ -159,6 +159,14 @@ export const instanceData = {
       showAllActivities: 'Show all activities',
       lastSeen: "Visto por última vez",
       roles: 'Roles'
+    },
+    notices: {
+      welcome: '👋 Welcome %username%!',
+      bye: '👋 See you soon!',
+      revisionSaved: 'Revision is saved and will be reviewed soon 👍',
+      revisionAccepted: 'Revision was successfully accepted ✅',
+      revisionRejected: 'Revision was successfully rejected ❎',
+      revisionSavedAccepted: 'Revision was successfully saved and accepted ✅'
     }
   }
 };

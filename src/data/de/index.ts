@@ -52,7 +52,8 @@ export const instanceData = {
       threads: "Diskussionen",
       topic: "Thema",
       subject: "Fach",
-      userProfile: "Benutzerprofil"
+      userProfile: "Benutzerprofil",
+      privacyPolicy: "Datenschutzerklärung"
     },
     roles: {
       donor: "Spender*in",
@@ -90,19 +91,18 @@ export const instanceData = {
       chooseOption: "Klicke auf eine der Optionen.",
       trashedNotice: "Dieser Inhalt wurde zum Löschen markiert."
     },
-    cookie: {
-      part1: "Mit der Nutzung dieser Webseite erklärst du dich mit unserer",
-      part2: "und",
-      part3: "einverstanden.",
-      link1: "Datenschutzerklärung",
-      link2: "Nutzungsbedingungen",
-      button: "Verstanden"
+    consent: {
+      title: "Einwilligungen für externe Inhalte",
+      intro: "Während dem Benutzen der Seite hast du uns vielleicht erlaubt, dass wir Inhalte von externen Anbietern laden. Die Details kannst du in unserer %privacypolicy% nachlesen.",
+      revokeTitle: "Widerrufen",
+      revokeText: "Hier hast du die Möglichkeit mit einem Klick deine Einwilligung zurückzuziehen. In dem Fall fragen wir wieder nach, bevor wir etwas laden.",
+      noConsent: "Keine Einwilligungen gespeichert",
+      revokeConsent: "Nicht mehr erlauben"
     },
     embed: {
       text: "Mit einem Klick auf Bild oder Button oben stimmst du zu, dass externe Inhalte von %provider% geladen werden. Dabei können persönliche Daten zu diesem Service übertragen werden – entsprechend unserer %privacypolicy%.",
-      link: "Datenschutzerklärung",
-      video: "Video abspielen",
-      applet: "Applet laden",
+      video: "Video abspielen von %provider%",
+      applet: "Applet laden von %provider%",
       twingle: "Spendenformular laden"
     },
     notifications: {
@@ -159,6 +159,14 @@ export const instanceData = {
       showAllActivities: "Alle Aktivitäten anzeigen",
       lastSeen: "Zuletzt online",
       roles: "Rollen"
+    },
+    notices: {
+      welcome: "👋 Willkommen %username%!",
+      bye: "👋 Bis bald!",
+      revisionSaved: "Die Bearbeitung wurde gespeichert und wird bald überprüft 👍",
+      revisionAccepted: "Die Bearbeitung wurde akzeptiert ✅",
+      revisionRejected: "Die Bearbeitung wurde abgelehnt ❎",
+      revisionSavedAccepted: "Die Bearbeitung wurde erfolgreich gespeichert und akzeptiert ✅"
     }
   }
 };
@@ -251,10 +259,10 @@ export const loggedInData = {
       unknownProblem: "Es gibt ein Problem beim laden der Benachrichtigungen, bitte versuche es später noch einmal.",
       loading: "Benachrichtigungen werden geladen",
       hide: "Benachrichtigungen für diesen Inhalt nicht mehr anzeigen.",
-      setThreadStateArchived: "%actor% hat einen %thread% archiviert.",
-      setThreadStateUnarchived: "%actor% hat einen %thread% unarchiviert.",
-      createComment: "%actor% hat einen %comment% in einem %thread% erstellt.",
-      createThread: "%actor% hat einen %thread% in einem %object% erstellt.",
+      setThreadStateArchived: "%actor% hat eine %thread% archiviert.",
+      setThreadStateUnarchived: "%actor% hat eine %thread% aus dem Archiv geholt.",
+      createComment: "%actor% hat einen %comment% in einer %thread% erstellt.",
+      createThread: "%actor% hat eine %thread% in einem %object% erstellt.",
       createEntity: "%actor% hat %object% erstellt.",
       setLicense: "%actor% hat die Lizenz von %repository% geändert.",
       createEntityLink: "%actor% hat %child% mit %parent% verknüpft.",

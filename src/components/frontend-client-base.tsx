@@ -2,6 +2,7 @@ import { useRouter } from 'next/router'
 import React from 'react'
 import { notify } from 'react-notify-toast'
 
+import { ToastNotice } from './toast-notice'
 import { useAuth } from '@/auth/use-auth'
 import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
@@ -79,6 +80,7 @@ export function FrontendClientBase({ children }: FrontendClientBaseProps) {
           <ToastNoticeProvider value={toastNotice}>
             <StatsContext.Provider value={{ statsData, useStats }}>
               {children}
+              <ToastNotice />
             </StatsContext.Provider>
           </ToastNoticeProvider>
         </LoggedInDataProvider>

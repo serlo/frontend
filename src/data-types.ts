@@ -336,6 +336,7 @@ export interface FrontendANode {
 export interface FrontendInlineMathNode {
   type: 'inline-math'
   formula: string
+  formulaSource?: string
   children?: undefined
   debugOriginalFormula?: string
 }
@@ -355,9 +356,9 @@ export interface FrontendHNode {
 export interface FrontendMathNode {
   type: 'math'
   formula: string
+  formulaSource?: string
   alignLeft?: boolean
   children?: undefined
-  debugOriginalFormula?: string
 }
 
 export interface FrontendImgNode {
@@ -584,9 +585,12 @@ export interface FrontendEquationsNode {
   type: 'equations'
   steps: {
     left: string
+    leftSource?: string
     sign: Sign
     right: string
+    rightSource?: string
     transform: string
+    transformSource?: string
     explanation: FrontendContentNode[]
   }[]
   children?: undefined

@@ -27,7 +27,8 @@ export function StatsViews() {
     }
     return (
       <small>
-        ({count} Aufrufe,{text}extern, {actions} Aktionen{' '}
+        ({count} Aufrufe,{text}extern, {Math.round((actions * 100) / count)}{' '}
+        <span title="Aktionen pro 100 Aufrufe">AphA</span>,{' '}
         <Tippy content={<RefererList />}>
           <span>
             <FontAwesomeIcon icon={faQuestionCircle} />

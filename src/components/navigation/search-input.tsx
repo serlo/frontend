@@ -13,6 +13,7 @@ import SearchIcon from '@/assets-webkit/img/search-icon.svg'
 import { useInstanceData } from '@/contexts/instance-context'
 import { inputFontReset, makeLightButton, makePadding } from '@/helper/css'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
+import { ExternalProvider, useConsent } from '@/helper/use-consent'
 import { theme } from '@/theme'
 
 interface SearchInputProps {
@@ -31,10 +32,8 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
   const [searchLoaded, setSearchLoaded] = React.useState(false)
   const [searchActive, setSearchActive] = React.useState(false)
   const [consentJustGiven, setConsentJustGiven] = React.useState(false)
-  const consentGiven =
-    typeof window !== 'undefined' &&
-    sessionStorage.GoogleSearchConsent === 'true'
-
+  const { checkConsent, giveConsent } = useConsent()
+  const consentGiven = checkConsent(ExternalProvider.GoogleSearch)
   const searchFormRef = React.useRef<HTMLDivElement>(null)
 
   // const [isSearchPage, setIsSearchPage] = React.useState(false)
@@ -97,8 +96,8 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
     })
   }
 
-  function giveConsent() {
-    sessionStorage.GoogleSearchConsent = 'true'
+  function onConsentButtonAction() {
+    giveConsent(ExternalProvider.GoogleSearch)
     setConsentJustGiven(true)
   }
 
@@ -205,10 +204,10 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
     return (
       <ConsentPop>
         <ConsentButton
-          onClick={giveConsent}
+          onClick={onConsentButtonAction}
           onKeyDown={(e) => {
             if (e.key == 'Enter') {
-              giveConsent()
+              onConsentButtonAction()
             }
           }}
         >
@@ -217,7 +216,7 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
         {replacePlaceholders(strings.search.privacy, {
           privacypolicy: (
             <_StyledA href="/privacy" target="_blank">
-              {strings.embed.link}
+              {strings.entities.privacyPolicy}
             </_StyledA>
           ),
         })}

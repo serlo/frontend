@@ -8,9 +8,8 @@ export function useRefreshFromAPI() {
 
   return (keepCache?: boolean) => {
     if (!keepCache) {
-      window.location.hash = ''
       sessionStorage.removeItem(`/${lang}${router.asPath}`)
     }
-    void router.replace(router.asPath)
+    void router.replace(router.asPath.split('#')[0])
   }
 }
