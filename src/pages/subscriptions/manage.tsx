@@ -2,29 +2,43 @@ import { gql } from 'graphql-request'
 import React from 'react'
 
 import { useGraphqlSwrWithAuth } from '@/api/use-graphql-swr'
-import { useAuth } from '@/auth/use-auth'
 import { PageTitle } from '@/components/content/page-title'
 import { FrontendClientBase } from '@/components/frontend-client-base'
-import { LoadingError } from '@/components/loading/loading-error'
-import { LoadingSpinner } from '@/components/loading/loading-spinner'
+import { Guard } from '@/components/guard'
 import { ManageSubscriptions } from '@/components/pages/manage-subscriptions'
-import { PleaseLogIn } from '@/components/user/please-log-in'
 import { useInstanceData } from '@/contexts/instance-context'
 import { QueryResponse } from '@/fetcher/query'
-import { shouldUseNewAuth } from '@/helper/feature-auth'
 
 export default function Page() {
-  const [mounted, setMounted] = React.useState(!shouldUseNewAuth())
-  React.useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  if (!mounted) return null
+  const response = useFetch()
   return (
     <FrontendClientBase>
-      <Content />
+      <Title />
+      <Guard {...response} needsAuth>
+        <ManageSubscriptions
+          subscriptions={response.data?.subscriptions.nodes!}
+        />
+      </Guard>
     </FrontendClientBase>
   )
+}
+
+function Title() {
+  const { strings } = useInstanceData()
+  return <PageTitle title={strings.pageTitles.subscriptions} headTitle />
+}
+
+function useFetch() {
+  return useGraphqlSwrWithAuth<{
+    subscriptions: {
+      nodes: QueryResponse[]
+    }
+  }>({
+    query,
+    config: {
+      refreshInterval: 60 * 60 * 1000, //60min -> update on cache mutation
+    },
+  })
 }
 
 const query = gql`
@@ -106,36 +120,3 @@ const query = gql`
     }
   }
 `
-
-function Content() {
-  const auth = useAuth()
-  const { strings } = useInstanceData()
-  const { data, error } = useGraphqlSwrWithAuth<{
-    subscriptions: {
-      nodes: QueryResponse[]
-    }
-  }>({
-    query,
-    config: {
-      refreshInterval: 60 * 60 * 1000, //60min -> only update on cache mutation
-    },
-  })
-
-  const output =
-    auth.current === null ? (
-      <PleaseLogIn />
-    ) : !data ? (
-      <LoadingSpinner noText />
-    ) : error !== undefined ? (
-      <LoadingError error={error} />
-    ) : (
-      <ManageSubscriptions subscriptions={data.subscriptions.nodes} />
-    )
-
-  return (
-    <>
-      <PageTitle title={strings.pageTitles.subscriptions} headTitle />
-      {output}
-    </>
-  )
-}

@@ -2,29 +2,56 @@ import { gql } from 'graphql-request'
 import React from 'react'
 
 import { useGraphqlSwrPaginationWithAuth } from '@/api/use-graphql-swr'
-import { useAuth } from '@/auth/use-auth'
 import { PageTitle } from '@/components/content/page-title'
 import { FrontendClientBase } from '@/components/frontend-client-base'
-import { LoadingError } from '@/components/loading/loading-error'
-import { LoadingSpinner } from '@/components/loading/loading-spinner'
+import { Guard } from '@/components/guard'
 import { Notifications } from '@/components/pages/user/notifications'
 import { NotificationEvent } from '@/components/user/notification'
-import { PleaseLogIn } from '@/components/user/please-log-in'
 import { useInstanceData } from '@/contexts/instance-context'
-import { shouldUseNewAuth } from '@/helper/feature-auth'
 
 export default function Page() {
-  const [mounted, setMounted] = React.useState(!shouldUseNewAuth())
-  React.useEffect(() => {
-    setMounted(true)
-  }, [])
-  if (!mounted) return null
+  // eslint-disable-next-line @typescript-eslint/unbound-method
+  const { data, error, loadMore, loading } = useFetch()
+
+  function loadMoreAction() {
+    loadMore()
+  }
 
   return (
     <FrontendClientBase>
-      <Content />
+      <Title />
+      <Guard data={data} error={error} needsAuth>
+        <Notifications
+          data={data!}
+          isLoading={loading}
+          loadMore={loadMoreAction}
+        />
+      </Guard>
     </FrontendClientBase>
   )
+}
+
+function Title() {
+  const { strings } = useInstanceData()
+  return <PageTitle title={strings.pageTitles.notifications} headTitle />
+}
+
+function useFetch() {
+  // eslint-disable-next-line @typescript-eslint/unbound-method
+  return useGraphqlSwrPaginationWithAuth<{
+    id: number
+    event: NotificationEvent
+    unread: boolean
+  }>({
+    query,
+    variables: {
+      first: 10,
+      unread: undefined,
+    },
+    getConnection(data) {
+      return data.notifications
+    },
+  })
 }
 
 const query = gql`
@@ -205,50 +232,3 @@ const query = gql`
     }
   }
 `
-
-function Content() {
-  const auth = useAuth()
-  const { strings } = useInstanceData()
-
-  // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { data, error, loadMore, loading } = useGraphqlSwrPaginationWithAuth<{
-    id: number
-    event: NotificationEvent
-    unread: boolean
-  }>({
-    query,
-    variables: {
-      first: 10,
-      unread: undefined,
-    },
-    getConnection(data) {
-      return data.notifications
-    },
-  })
-
-  function loadMoreAction() {
-    loadMore()
-  }
-
-  const output =
-    auth.current === null ? (
-      <PleaseLogIn />
-    ) : !data ? (
-      <LoadingSpinner noText />
-    ) : error !== undefined ? (
-      <LoadingError error={error} />
-    ) : (
-      <Notifications
-        data={data}
-        isLoading={loading}
-        loadMore={loadMoreAction}
-      />
-    )
-
-  return (
-    <>
-      <PageTitle title={strings.pageTitles.notifications} headTitle />
-      {output}
-    </>
-  )
-}

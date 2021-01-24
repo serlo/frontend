@@ -23,7 +23,7 @@ export function ManageSubscriptions({
 }) {
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
+  if (!loggedInData || !subscriptions) return null
   const loggedInStrings = loggedInData.strings.subscriptions
 
   return (
