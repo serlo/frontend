@@ -12,13 +12,10 @@ export function StatsViews() {
     const count = stats.statsData.counts[id]
     const countInternal = stats.statsData.countsInternal[id] ?? 0
     const countExternal = stats.statsData.countsExternal[id] ?? 0
-    let nonExit = 0
+    let actions = 0
     for (const refId in stats.statsData.clicks[id]) {
-      nonExit += stats.statsData.clicks[id][refId]
+      actions += stats.statsData.clicks[id][refId]
     }
-    console.log(nonExit, stats.statsData.clicks[id])
-    nonExit = Math.max(0, Math.min(count, nonExit))
-    nonExit = Math.round((100 * (count - nonExit)) / count)
     if (!count) return <small>(0 Aufrufe)</small>
     const lowerBound = Math.round((countExternal * 100) / count)
     const upperBound = Math.round(100 - (countInternal * 100) / count)
@@ -30,7 +27,7 @@ export function StatsViews() {
     }
     return (
       <small>
-        ({count} Aufrufe,{text}extern, ~{nonExit}% exit rate{' '}
+        ({count} Aufrufe,{text}extern, {actions} Aktionen{' '}
         <Tippy content={<RefererList />}>
           <span>
             <FontAwesomeIcon icon={faQuestionCircle} />
