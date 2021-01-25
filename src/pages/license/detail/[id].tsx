@@ -1,26 +1,22 @@
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import React from 'react'
 
-import { EntityBase } from '@/components/entity-base'
 import { FrontendClientBase } from '@/components/frontend-client-base'
-import { HeaderFooter } from '@/components/header-footer'
 import { ErrorPage } from '@/components/pages/error-page'
 import { LicenseDetail } from '@/components/pages/license-detail'
-import { InitialProps, LicenseDetailPage } from '@/data-types'
-import { fetchPageData } from '@/fetcher/fetch-page-data'
+import { LicenseDetailPage } from '@/data-types'
+import { requestLicensePage } from '@/fetcher/request-license-page'
 
-const PageView: NextPage<InitialProps> = (initialProps) => {
-  const page = initialProps.pageData as LicenseDetailPage
-
-  if (page === undefined) return <ErrorPage code={404} />
+const PageView: NextPage<{ pageData: LicenseDetailPage }> = (initialProps) => {
+  const page = initialProps.pageData
 
   return (
     <FrontendClientBase>
-      <HeaderFooter>
-        <EntityBase page={page}>
-          <LicenseDetail {...page.licenseData} />
-        </EntityBase>
-      </HeaderFooter>
+      {page === undefined ? (
+        <ErrorPage code={404} />
+      ) : (
+        <LicenseDetail {...page.licenseData} />
+      )}
     </FrontendClientBase>
   )
 }
@@ -28,17 +24,12 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
 // eslint-disable-next-line @typescript-eslint/require-await
 export const getStaticProps: GetStaticProps = async (context) => {
   const id = parseInt(context.params?.id as string)
-  const instance = context.locale ?? context.defaultLocale ?? 'de'
 
-  const pageData = isNaN(id)
-    ? undefined
-    : ((await fetchPageData(
-        `/${instance}/license/detail/${id}`
-      )) as LicenseDetailPage)
+  const licenseData = isNaN(id) ? undefined : await requestLicensePage(id)
 
   return {
     props: {
-      pageData: { ...pageData, horizonData: pageData?.horizonData ?? null },
+      pageData: licenseData,
     },
     revalidate: 60 * 60 * 24, //one day in seconds
   }

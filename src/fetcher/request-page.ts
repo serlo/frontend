@@ -41,16 +41,6 @@ export async function requestPage(
     variables
   )
 
-  if (uuid === null) {
-    return {
-      kind: 'error',
-      errorData: {
-        code: 404,
-        message: 'Content not found.',
-      },
-    }
-  }
-
   if (uuid.__typename === 'Course') {
     const firstPage = uuid.pages[0]?.alias
     if (firstPage) {

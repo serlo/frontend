@@ -6,13 +6,12 @@ import { Header } from './navigation/header'
 
 export interface HeaderFooterProps {
   children: React.ReactNode
-  onSearchPage?: boolean
 }
 
-export function HeaderFooter({ children, onSearchPage }: HeaderFooterProps) {
+export function HeaderFooter({ children }: HeaderFooterProps) {
   return (
     <>
-      <Header onSearchPage={onSearchPage} />
+      <Header />
       <MinHeightDiv className="_">{children}</MinHeightDiv>
       <Footer />
     </>

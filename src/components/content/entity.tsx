@@ -78,7 +78,7 @@ export function Entity({ data }: EntityProps) {
     if (!data.title) return null
 
     return (
-      <StyledH1 extraMarginTop itemProp="name">
+      <StyledH1 spaceAbove itemProp="name">
         {data.title}
         {renderEntityIcon()}
       </StyledH1>

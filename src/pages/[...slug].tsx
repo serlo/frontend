@@ -7,7 +7,6 @@ import { EntityProps } from '@/components/content/entity'
 import { TopicProps } from '@/components/content/topic'
 import { EntityBaseProps } from '@/components/entity-base'
 import { FrontendClientBase } from '@/components/frontend-client-base'
-import { HeaderFooter } from '@/components/header-footer'
 import { ProfileProps } from '@/components/pages/user/profile'
 import { IdContextProvider } from '@/contexts/id-context'
 import { InitialProps, ErrorData, PageData } from '@/data-types'
@@ -34,61 +33,68 @@ const Revision = dynamic<RevisionProps>(() =>
 )
 
 const PageView: NextPage<InitialProps> = (initialProps) => {
-  const page = initialProps.pageData
-  if (page === undefined) return <ErrorPage code={404} />
+  const pageData = initialProps.pageData
 
-  // all other kinds are using basic layout
-  // render it together to avoid remounting
+  if (pageData === undefined) return <ErrorPage code={404} />
+
+  const page = getPage()
+
+  if (
+    pageData.kind === 'single-entity' ||
+    pageData.kind === 'revision' ||
+    pageData.kind === 'taxonomy'
+  )
+    return (
+      <FrontendClientBase noContainers>
+        <IdContextProvider
+          value={
+            pageData.kind == 'single-entity'
+              ? pageData.entityData.id
+              : pageData.kind == 'taxonomy'
+              ? pageData.taxonomyData.id
+              : -1
+          }
+        >
+          <EntityBase page={pageData}>{page}</EntityBase>
+        </IdContextProvider>
+      </FrontendClientBase>
+    )
+
   return (
     <FrontendClientBase>
       <IdContextProvider
-        value={
-          page.kind == 'single-entity'
-            ? page.entityData.id
-            : page.kind == 'taxonomy'
-            ? page.taxonomyData.id
-            : page.kind == 'user/profile'
-            ? page.userData.id
-            : -1
-        }
+        value={pageData.kind == 'user/profile' ? pageData.userData.id : -1}
       >
-        <HeaderFooter>
-          {(() => {
-            if (page.kind === 'user/profile') {
-              return <Profile userData={page.userData} />
-            }
-            if (page.kind === 'error') {
-              return (
-                <ErrorPage
-                  code={page.errorData.code}
-                  message={page.errorData.message}
-                />
-              )
-            }
-            return (
-              <EntityBase page={page}>
-                {(() => {
-                  if (page.kind === 'license-detail') {
-                    return 'are you a wizard?' //license has a own page
-                  }
-                  if (page.kind === 'single-entity') {
-                    return <Entity data={page.entityData} />
-                  }
-                  if (page.kind === 'revision') {
-                    return <Revision data={page.revisionData} />
-                  } else {
-                    /* taxonomy */
-                    return <Topic data={page.taxonomyData} />
-                  }
-                })()}
-              </EntityBase>
-            )
-          })()}
-        </HeaderFooter>
+        {page}
       </IdContextProvider>
     </FrontendClientBase>
   )
+
+  function getPage() {
+    switch (pageData.kind) {
+      case 'error':
+        return (
+          <ErrorPage
+            code={pageData.errorData.code}
+            message={pageData.errorData.message}
+          />
+        )
+      case 'user/profile':
+        return <Profile userData={pageData.userData} />
+
+      case 'single-entity':
+        return <Entity data={pageData.entityData} />
+
+      case 'revision':
+        return <Revision data={pageData.revisionData} />
+
+      case 'taxonomy':
+        return <Topic data={pageData.taxonomyData} />
+    }
+    return 'are you a wizard?'
+  }
 }
+
 // eslint-disable-next-line @typescript-eslint/require-await
 export const getStaticProps: GetStaticProps = async (context) => {
   const alias = (context.params?.slug as string[]).join('/')

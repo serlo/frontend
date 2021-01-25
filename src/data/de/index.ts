@@ -280,6 +280,14 @@ export const loggedInData = {
       setUuidStateTrashed: "%actor% hat %object% in den Papierkorb verschoben.",
       setUuidStateRestored: "%actor% hat %object% aus dem Papierkorb wieder hergestellt.",
       entityPlaceholderFallback: "Inhalt"
+    },
+    subscriptions: {
+      unknownProblem: "There was a problem loading the subscriptions, please try again later.",
+      loading: "Loading subscriptions…",
+      mail: "E-mails",
+      subscription: "Subscription",
+      noMails: "deactivate",
+      noNotifications: "unsubscribe"
     }
   }
 };
