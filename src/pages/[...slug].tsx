@@ -28,8 +28,6 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
 
   if (pageData === undefined) return <ErrorPage code={404} />
 
-  const page = getPage()
-
   //fallback, should be handled by CFWorker
   if (pageData.kind === 'redirect') {
     if (typeof window !== 'undefined') {
@@ -42,33 +40,33 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
     )
   }
 
-  if (pageData.kind === 'single-entity' || pageData.kind === 'taxonomy')
+  if (pageData.kind === 'single-entity' || pageData.kind === 'taxonomy') {
+    const page =
+      pageData.kind === 'single-entity' ? (
+        <Entity data={pageData.entityData} />
+      ) : (
+        <Topic data={pageData.taxonomyData} />
+      )
+
     return (
       <FrontendClientBase noContainers>
         <EntityBase page={pageData}>{page}</EntityBase>
       </FrontendClientBase>
     )
-
-  return <FrontendClientBase>{page}</FrontendClientBase>
-
-  function getPage() {
-    switch (pageData.kind) {
-      case 'error':
-        return (
-          <ErrorPage
-            code={pageData.errorData.code}
-            message={pageData.errorData.message}
-          />
-        )
-
-      case 'single-entity':
-        return <Entity data={pageData.entityData} />
-
-      case 'taxonomy':
-        return <Topic data={pageData.taxonomyData} />
-    }
-    return 'are you a wizard?'
   }
+
+  return (
+    <FrontendClientBase>
+      <ErrorPage
+        code={pageData.kind === 'error' ? pageData.errorData.code : 400}
+        message={
+          pageData.kind === 'error'
+            ? pageData.errorData.message
+            : 'unsupported type'
+        }
+      />
+    </FrontendClientBase>
+  )
 }
 
 // eslint-disable-next-line @typescript-eslint/require-await

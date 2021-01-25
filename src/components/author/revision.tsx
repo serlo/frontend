@@ -5,6 +5,7 @@ import React from 'react'
 import ReactDiffViewer from 'react-diff-viewer'
 import styled, { css } from 'styled-components'
 
+import { PageTitle } from '../content/page-title'
 import { GeogebraProps } from '@/components/content/geogebra'
 import { HSpace } from '@/components/content/h-space'
 import { VideoProps } from '@/components/content/video'
@@ -48,7 +49,7 @@ export function Revision({ data }: RevisionProps) {
     displayMode === 'current' ? data.currentRevision : data.thisRevision
 
   const notCompare = displayMode !== 'compare'
-
+  const icon = renderEntityIcon()
   return (
     <>
       <MetaBar>
@@ -61,15 +62,16 @@ export function Revision({ data }: RevisionProps) {
         <div>{renderButtons()}</div>
       </MetaBar>
       <HSpace amount={5} />
-      <StyledH1>
-        {strings.entities.revision} {renderEntityIcon()}
-      </StyledH1>
+      <PageTitle
+        title={strings.entities.revision}
+        headTitle
+        icon={icon ? icon : undefined}
+      />
       {isCurrentRevision && (
         <StyledP>
           <i>{strings.revisions.thisIsCurrentVersion}</i>
         </StyledP>
       )}
-
       <StyledP>
         {data.changes !== undefined && (
           <>
@@ -81,21 +83,17 @@ export function Revision({ data }: RevisionProps) {
         {strings.revisions.by} <UserLink user={data.user} />{' '}
         <TimeAgo datetime={new Date(data.date)} dateAsTitle />
       </StyledP>
-
       {dataSet.title !== undefined && (
         <PreviewBox title={strings.revisions.title} diffType="title">
           <StyledH1>{dataSet.title}</StyledH1>
         </PreviewBox>
       )}
-
       {dataSet.content !== undefined && (
         <PreviewBox title={strings.revisions.content} diffType="content">
           {renderArticle(dataSet.content || [])}
         </PreviewBox>
       )}
-
       {renderVideoOrAppletBox()}
-
       {dataSet.metaTitle !== undefined && (
         <PreviewBox title={strings.revisions.metaTitle} diffType="metaTitle">
           {dataSet.metaTitle}

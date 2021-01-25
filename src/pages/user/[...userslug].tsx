@@ -1,7 +1,7 @@
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import React from 'react'
 
-import { EntityBase } from '@/components/entity-base'
+import { PageTitle } from '@/components/content/page-title'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Profile } from '@/components/pages/user/profile'
 import { InitialPropsUser, UserPage } from '@/data-types'
@@ -11,10 +11,9 @@ export default function Page(initialProps: NextPage & InitialPropsUser) {
   const pageData = initialProps.pageData
 
   return (
-    <FrontendClientBase noContainers>
-      <EntityBase page={pageData}>
-        <Profile userData={pageData.userData} />
-      </EntityBase>
+    <FrontendClientBase>
+      <PageTitle title={pageData.userData.username} headTitle />
+      <Profile userData={pageData.userData} />
     </FrontendClientBase>
   )
 }

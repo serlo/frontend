@@ -81,13 +81,7 @@ export type FooterIcon = 'newsletter' | 'github'
 
 // We have different types of pages, each with its own set of data:
 
-export type PageData =
-  | ErrorPage
-  | SingleEntityPage
-  | RevisionPage
-  | TaxonomyPage
-  | UserPage
-  | Redirect
+export type PageData = ErrorPage | SingleEntityPage | TaxonomyPage | Redirect
 
 // The landing page is custom built and takes i18n strings
 

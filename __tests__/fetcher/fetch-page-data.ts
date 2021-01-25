@@ -17,7 +17,12 @@ import {
   coursePageUuidMock,
 } from '../../__fixtures__/api_mockdata'
 import { endpoint } from '@/api/endpoint'
-import { SingleEntityPage, TaxonomyPage, UserPage } from '@/data-types'
+import {
+  Redirect,
+  SingleEntityPage,
+  TaxonomyPage,
+  UserPage,
+} from '@/data-types'
 import { fetchPageData } from '@/fetcher/fetch-page-data'
 import { serloDomain } from '@/helper/serlo-domain'
 
@@ -531,14 +536,10 @@ describe('check all supported typenames with stored api-data', () => {
         ],
       }),
     })
-    const pageData = (await fetchPageData('/de/18981')) as UserPage
+    const pageData = (await fetchPageData('/de/18981')) as Redirect
 
-    expect(pageData.kind).toBe('user/profile')
-    expect(pageData.userData.username).toBe('BestUser111')
-    //@ts-expect-error
-    expect(pageData.userData.description?.[0].children?.[0].text!).toBe(
-      'a long description'
-    )
+    expect(pageData.kind).toBe('redirect')
+    expect(pageData.target).toBe('/user/18981/BestUser111')
   })
 })
 
