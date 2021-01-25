@@ -1,6 +1,6 @@
 import { TaxonomyTermType } from '@serlo/api'
 
-import { Instance } from './fetcher/query'
+import { Instance } from './fetcher/query-types'
 import { instanceData, instanceLandingData, loggedInData } from '@/data/en'
 
 export interface InitialProps {

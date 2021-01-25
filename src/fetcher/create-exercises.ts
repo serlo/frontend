@@ -1,5 +1,5 @@
 import { convertState } from './convert-state'
-import { Solution, BareExercise, BareExerciseGroup } from './query'
+import { Solution, BareExercise, BareExerciseGroup } from './query-types'
 import {
   FrontendExerciseNode,
   FrontendContentNode,

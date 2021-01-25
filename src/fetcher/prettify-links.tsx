@@ -1,6 +1,6 @@
 import { request } from 'graphql-request'
 
-import { idsQuery } from './query'
+import { idsQuery } from './query-ids'
 import { endpoint } from '@/api/endpoint'
 import { PageData, FrontendContentNode } from '@/data-types'
 import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'

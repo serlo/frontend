@@ -8,13 +8,13 @@ import { getMetaImage, getMetaDescription } from './create-meta-data'
 import { createNavigation } from './create-navigation'
 import { buildTaxonomyData } from './create-taxonomy'
 import { createTitle } from './create-title'
+import { dataQuery } from './query'
 import {
-  dataQuery,
   QueryResponse,
   Instance,
   ArticleRevision,
   VideoRevision,
-} from './query'
+} from './query-types'
 import { endpoint } from '@/api/endpoint'
 import { EntityTypes, PageData } from '@/data-types'
 import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'

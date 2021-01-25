@@ -6,7 +6,7 @@ import { Revision } from '@/components/author/revision'
 import { EntityBase } from '@/components/entity-base'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { InitialPropsRevision, RevisionPage } from '@/data-types'
-import { requestPage } from '@/fetcher/request-page'
+import { requestRevision } from '@/fetcher/revision/request'
 
 export default function Page(initialProps: NextPage & InitialPropsRevision) {
   const pageData = initialProps.pageData
@@ -25,7 +25,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   const pageData = isNaN(revisionId)
     ? undefined
-    : await requestPage(`/${revisionId}`, context.locale! as Instance)
+    : await requestRevision(revisionId, context.locale! as Instance)
 
   return {
     props: {
