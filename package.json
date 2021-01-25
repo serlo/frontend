@@ -64,7 +64,8 @@
     "styled-components": "^5.0.0",
     "swr": "^0.3.0",
     "timeago-react": "^3.0.0",
-    "timeago.js": "^4.0.0"
+    "timeago.js": "^4.0.0",
+    "tippy.js": "^6.2.7"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

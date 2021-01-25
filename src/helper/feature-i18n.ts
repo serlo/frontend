@@ -37,7 +37,7 @@ import {
   loggedInData as taLoggedInData,
   instanceLandingData as taInstanceLandingData,
 } from '@/data/ta'
-import { Instance } from '@/fetcher/query'
+import { Instance } from '@/fetcher/query-types'
 
 export const languages: Instance[] = ['de', 'en', 'es', 'fr', 'hi', 'ta']
 

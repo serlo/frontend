@@ -260,7 +260,7 @@ const SubjectLink = styled(Link)`
     }
     && .blue {
       fill: ${(props) => props.theme.colors.brand};
-    } /* TODO: Helperblue */
+    }
     && .green {
       fill: #becd2b;
     }

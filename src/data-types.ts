@@ -1,10 +1,14 @@
 import { TaxonomyTermType } from '@serlo/api'
 
-import { Instance } from './fetcher/query'
+import { Instance } from './fetcher/query-types'
 import { instanceData, instanceLandingData, loggedInData } from '@/data/en'
 
 export interface InitialProps {
   pageData: PageData
+}
+
+export interface InitialPropsRevision {
+  pageData: RevisionPage
 }
 
 // Instance data consists of the language, translation strings, header menu and footer menu.
@@ -75,11 +79,11 @@ export type FooterIcon = 'newsletter' | 'github'
 
 export type PageData =
   | ErrorPage
-  | LicenseDetailPage
   | SingleEntityPage
   | RevisionPage
   | TaxonomyPage
   | UserPage
+  | Redirect
 
 // The landing page is custom built and takes i18n strings
 
@@ -125,10 +129,9 @@ export interface ErrorData {
   code: number
   message?: string
 }
+// License detail page has some additional data and is not part of the PageData type
 
-// License detail page has some additional data
-
-export interface LicenseDetailPage extends EntityPageBase {
+export interface LicenseDetailPage {
   kind: 'license-detail'
   licenseData: LicenseDetailData
 }
@@ -137,6 +140,14 @@ export interface LicenseDetailData {
   title: string
   content: FrontendContentNode[]
   iconHref: string
+}
+
+// For types that are supported through their own pages we return this helper in request-page
+
+export interface Redirect {
+  kind: 'redirect'
+  type?: string
+  target?: string
 }
 
 // There are several page elements that are common for entities:
