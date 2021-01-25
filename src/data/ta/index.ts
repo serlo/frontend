@@ -53,7 +53,12 @@ export const instanceData = {
       topic: 'Topic',
       subject: 'Subject',
       userProfile: 'User Profile',
-      privacyPolicy: 'Privacy Policy'
+      privacyPolicy: 'Privacy Policy',
+      content: "Content"
+    },
+    pageTitles: {
+      notifications: 'Your Notifications',
+      subscriptions: "Manage Subscriptions"
     },
     roles: {
       donor: "Donor",
@@ -105,11 +110,6 @@ export const instanceData = {
       applet: 'Load Applet from %provider%',
       twingle: 'Load Donation Form'
     },
-    notifications: {
-      notifications: "அறிவிப்புகள்",
-      pleaseLogInLink: 'Please log in',
-      pleaseLogInText: 'to see your notifications.'
-    },
     comments: {
       question: 'Do you have a question?',
       commentsOne: "கருத்து",
@@ -125,7 +125,8 @@ export const instanceData = {
       error: 'Sorry, comments could not be loaded, please try again later.',
       showMoreReply: 'Show one more reply',
       showMoreReplies: 'Show %number% more replies',
-      showArchived: 'Show archived %threads%'
+      showArchived: 'Show archived %threads%',
+      copyLink: 'Copy comment link'
     },
     revisions: {
       toOverview: "Back to overview",
@@ -167,6 +168,14 @@ export const instanceData = {
       revisionAccepted: 'Revision was successfully accepted ✅',
       revisionRejected: 'Revision was successfully rejected ❎',
       revisionSavedAccepted: 'Revision was successfully saved and accepted ✅'
+    },
+    loading: {
+      isLoading: 'Content is loading…',
+      unknownProblem: "Sorry, there was a problem loading the content, please try again later."
+    },
+    login: {
+      pleaseLogInLink: 'Please log in',
+      pleaseLogInText: 'to use this feature.'
     }
   }
 };
@@ -256,8 +265,6 @@ export const loggedInData = {
     },
     notifications: {
       loadMore: "Load more",
-      unknownProblem: "There was a problem loading the notifications, please try again later.",
-      loading: "Loading notifications",
       hide: "Hide notifications for this content.",
       setThreadStateArchived: "%actor% archived %thread%.",
       setThreadStateUnarchived: "%actor% restored %thread%.",
@@ -280,6 +287,12 @@ export const loggedInData = {
       setUuidStateTrashed: "%actor% trashed %object%.",
       setUuidStateRestored: "%actor% restored %object%.",
       entityPlaceholderFallback: "உட்பொருள்"
+    },
+    subscriptions: {
+      mail: "E-mails",
+      subscription: "Subscription",
+      noMails: "deactivate",
+      noNotifications: "cancel"
     }
   }
 };
