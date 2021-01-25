@@ -11,7 +11,9 @@ export const ProfileRedirectMe: NextPage = () => {
 
   React.useEffect(() => {
     if (auth.current) {
-      window.location.replace('/user/profile/' + auth.current.username)
+      window.location.replace(
+        `/user/${auth.current.id}/${auth.current.username}`
+      )
     } else {
       window.location.replace('/api/auth/login')
     }

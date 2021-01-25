@@ -7,7 +7,6 @@ import { TopicProps } from '@/components/content/topic'
 import { EntityBaseProps } from '@/components/entity-base'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
-import { ProfileProps } from '@/components/pages/user/profile'
 import { InitialProps, ErrorData, PageData } from '@/data-types'
 import { fetchPageData } from '@/fetcher/fetch-page-data'
 
@@ -16,9 +15,6 @@ const EntityBase = dynamic<EntityBaseProps>(() =>
 )
 const ErrorPage = dynamic<ErrorData>(() =>
   import('@/components/pages/error-page').then((mod) => mod.ErrorPage)
-)
-const Profile = dynamic<ProfileProps>(() =>
-  import('@/components/pages/user/profile').then((mod) => mod.Profile)
 )
 const Topic = dynamic<TopicProps>(() =>
   import('@/components/content/topic').then((mod) => mod.Topic)
@@ -64,8 +60,6 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
             message={pageData.errorData.message}
           />
         )
-      case 'user/profile':
-        return <Profile userData={pageData.userData} />
 
       case 'single-entity':
         return <Entity data={pageData.entityData} />
