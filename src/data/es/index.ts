@@ -10,8 +10,8 @@ export const instanceData = {
       login: "Ingresar"
     },
     search: {
-      privacy: 'The search is provided by Google. See our %privacypolicy% to find out what information is processed.',
-      agree: 'Agree'
+      privacy: "La búsqueda es proporcionada por Google. Vea nuestra  %privacypolicy%  para saber qué información se procesa.",
+      agree: "Estoy de acuerdo"
     },
     footer: {
       summaryHeading: "Serlo.org es la Wikipedia para el aprendizaje.",
@@ -49,16 +49,22 @@ export const instanceData = {
       comment: "Comentario",
       revision: "Revisión",
       thread: "Hilo de conversación",
-      threads: 'Threads',
+      threads: "Hilo de conversación",
       topic: "Tema",
       subject: "Asunto",
-      userProfile: 'User Profile',
-      privacyPolicy: 'Privacy Policy'
+      userProfile: "Perfil de usuario",
+      privacyPolicy: "Política de privacidad",
+      content: "Contenido"
+    },
+    pageTitles: {
+      notifications: "Tus notificaciones",
+      subscriptions: "Administra las suscripciones",
+      revisionHistory: "Revision History"
     },
     roles: {
-      donor: "Donor",
-      author: 'Author',
-      reviewer: 'Reviewer'
+      donor: "Donante",
+      author: "Autor",
+      reviewer: "Revisor"
     },
     share: {
       button: "Compartir",
@@ -69,7 +75,7 @@ export const instanceData = {
     },
     edit: {
       button: "Editar",
-      unrevised: 'Show unrevised revisions'
+      unrevised: "Mostrar revisiones sin revisar"
     },
     license: {
       readMore: "Información"
@@ -92,23 +98,18 @@ export const instanceData = {
       trashedNotice: "Este contenido está marcado para su eliminación."
     },
     consent: {
-      title: 'Consent for external Content',
-      intro: 'While using this site you may allowed us to load content from external providers. You can read about the details in the %privacypolicy%.',
-      revokeTitle: 'Revoke',
-      revokeText: 'Here you can revoke your consent. In this case we ask again, before we load content from those providers',
-      noConsent: 'No content saved.',
-      revokeConsent: 'Revoke consent'
+      title: "Consentimiento para contenido externo",
+      intro: "Al utilizar este sitio, puedes permitirnos cargar contenido de proveedores externos. Puedes leer los detalles en la %privacypolicy%.",
+      revokeTitle: "Revocar",
+      revokeText: "Aquí puedes revocar tu consentimiento. En este caso te lo volvemos a preguntar antes de cargar el contenido de esos proveedores",
+      noConsent: "No hay contenido guardado.",
+      revokeConsent: "Revocar el consentimiento"
     },
     embed: {
-      text: 'By clicking on image or button above you agree that external content from %provider% will be loaded. Also personal data may be transferred to this service in accordance with our %privacypolicy%.',
-      video: 'Play Video from %provider%',
-      applet: 'Load Applet from %provider%',
-      twingle: 'Load Donation Form'
-    },
-    notifications: {
-      notifications: "Notificaciones",
-      pleaseLogInLink: "Por favor, inicia sesión",
-      pleaseLogInText: "para ver tus notificaciones."
+      text: "Al hacer clic en la imagen o en el botón superior, aceptas que se cargará el contenido externo del %provider% . También los datos personales pueden ser transferidos a este servicio de acuerdo con nuestro %privacypolicy%.",
+      video: "Reproducir vídeo del %provider%",
+      applet: "Cargar Applet del %provider%",
+      twingle: "Cargar formulario de donación"
     },
     comments: {
       question: "¿Tienes una pregunta?",
@@ -121,11 +122,12 @@ export const instanceData = {
       postedOn: "Publicado el",
       placeholder: "Tus preguntas o sugerencias...",
       placeholderReply: "Tu respuesta...",
-      loading: 'Looking for comments ...',
-      error: 'Sorry, comments could not be loaded, please try again later.',
-      showMoreReply: 'Show one more reply',
-      showMoreReplies: 'Show %number% more replies',
-      showArchived: 'Show archived %threads%'
+      loading: "Buscando comentarios ...",
+      error: "Lo sentimos, no se han podido cargar los comentarios. Inténtalo de nuevo más tarde.",
+      showMoreReply: "Mostrar una respuesta más",
+      showMoreReplies: "Mostrar %number% respuestas más",
+      showArchived: "Mostrar archivados %threads%",
+      copyLink: "Copiar el vínculo del comentario"
     },
     revisions: {
       toOverview: "Volver a Vista general",
@@ -139,6 +141,12 @@ export const instanceData = {
       thisVersion: "Esta Versión",
       thisIsCurrentVersion: "Esta es la versión aceptada actualmente.",
       by: "Por"
+    },
+    revisionHistory: {
+      changes: 'Changes',
+      author: 'Author',
+      date: 'Date',
+      createNew: 'Create a new revision starting from this specific revision'
     },
     errors: {
       title: "😬 Los sitios web a veces cometen errores…",
@@ -154,19 +162,27 @@ export const instanceData = {
       warning: "Importante: Para asegurarse de que todas las imágenes y fórmulas se impriman, por favor, desciende hasta el final de la página una vez. ¡Gracias!"
     },
     profiles: {
-      aboutMe: 'About me',
+      aboutMe: "Sobre mi",
       recentActivities: "Actividades recientes",
-      showAllActivities: 'Show all activities',
+      showAllActivities: "Mostrar todas las actividades",
       lastSeen: "Visto por última vez",
-      roles: 'Roles'
+      roles: "Roles (funciones)"
     },
     notices: {
-      welcome: '👋 Welcome %username%!',
-      bye: '👋 See you soon!',
-      revisionSaved: 'Revision is saved and will be reviewed soon 👍',
-      revisionAccepted: 'Revision was successfully accepted ✅',
-      revisionRejected: 'Revision was successfully rejected ❎',
-      revisionSavedAccepted: 'Revision was successfully saved and accepted ✅'
+      welcome: "¡Bienvenida/o  %username%!",
+      bye: "👋 ¡Nos vemos pronto!",
+      revisionSaved: "La revisión se ha guardado y se revisará pronto :thumbnail s_up:",
+      revisionAccepted: "Revisión aceptada con éxito ✅",
+      revisionRejected: "Revisión rechazada con éxito ❎",
+      revisionSavedAccepted: "Revisión guardada y aceptada con éxito ✅"
+    },
+    loading: {
+      isLoading: "El contenido está cargando…",
+      unknownProblem: "Lo sentimos, hubo un problema al cargar el contenido, por favor inténtalo de nuevo más tarde."
+    },
+    login: {
+      pleaseLogInLink: "Por favor, inicia sesión",
+      pleaseLogInText: "para utilizar esta función. "
     }
   }
 };
@@ -256,8 +272,6 @@ export const loggedInData = {
     },
     notifications: {
       loadMore: "Cargar más",
-      unknownProblem: "Hubo un problema al cargar las notificaciones, por favor, inténtalo de nuevo más tarde.",
-      loading: "Cargando notificaciones",
       hide: "Ocultar notificaciones para este contenido.",
       setThreadStateArchived: "%actor% archivado %thread%",
       setThreadStateUnarchived: "%actor% restaurado %thread%.",
@@ -280,6 +294,12 @@ export const loggedInData = {
       setUuidStateTrashed: "%actor% envió a la papelera %object%.",
       setUuidStateRestored: "%actor% restauró %object%.",
       entityPlaceholderFallback: "Contenido"
+    },
+    subscriptions: {
+      mail: "E-mails",
+      subscription: "Suscripción",
+      noMails: "desactivar",
+      noNotifications: "cancelar"
     }
   }
 };

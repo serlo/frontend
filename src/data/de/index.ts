@@ -53,7 +53,13 @@ export const instanceData = {
       topic: "Thema",
       subject: "Fach",
       userProfile: "Benutzerprofil",
-      privacyPolicy: "Datenschutzerklärung"
+      privacyPolicy: "Datenschutzerklärung",
+      content: "Content"
+    },
+    pageTitles: {
+      notifications: 'Your Notifications',
+      subscriptions: "Manage Subscriptions",
+      revisionHistory: "Revision History"
     },
     roles: {
       donor: "Spender*in",
@@ -105,11 +111,6 @@ export const instanceData = {
       applet: "Applet laden von %provider%",
       twingle: "Spendenformular laden"
     },
-    notifications: {
-      notifications: "Benachrichtigungen",
-      pleaseLogInLink: "Bitte melde dich an",
-      pleaseLogInText: "um deine Benachrichtigungen zu sehen"
-    },
     comments: {
       question: "Hast du eine Frage?",
       commentsOne: "Kommentar",
@@ -125,7 +126,8 @@ export const instanceData = {
       error: "Die Kommentare konnten leider nicht geladen werden, bitte versuch es später noch einmal.",
       showMoreReply: "Einen weiteren Kommentar",
       showMoreReplies: "%number% weitere Kommentare",
-      showArchived: "Archivierte %threads% anzeigen"
+      showArchived: "Archivierte %threads% anzeigen",
+      copyLink: 'Copy comment link'
     },
     revisions: {
       toOverview: "Zurück zur Übersicht",
@@ -139,6 +141,12 @@ export const instanceData = {
       thisVersion: "Diese Version",
       thisIsCurrentVersion: "Das ist die aktuell akzeptierte Version.",
       by: "Von"
+    },
+    revisionHistory: {
+      changes: 'Changes',
+      author: 'Author',
+      date: 'Date',
+      createNew: 'Create a new revision starting from this specific revision'
     },
     errors: {
       title: "😬 Auch Webseiten machen mal Fehler…",
@@ -167,6 +175,14 @@ export const instanceData = {
       revisionAccepted: "Die Bearbeitung wurde akzeptiert ✅",
       revisionRejected: "Die Bearbeitung wurde abgelehnt ❎",
       revisionSavedAccepted: "Die Bearbeitung wurde erfolgreich gespeichert und akzeptiert ✅"
+    },
+    loading: {
+      isLoading: 'Content is loading…',
+      unknownProblem: "Sorry, there was a problem loading the content, please try again later."
+    },
+    login: {
+      pleaseLogInLink: 'Please log in',
+      pleaseLogInText: 'to use this feature.'
     }
   }
 };
@@ -256,8 +272,6 @@ export const loggedInData = {
     },
     notifications: {
       loadMore: "Weitere laden",
-      unknownProblem: "Es gibt ein Problem beim laden der Benachrichtigungen, bitte versuche es später noch einmal.",
-      loading: "Benachrichtigungen werden geladen",
       hide: "Benachrichtigungen für diesen Inhalt nicht mehr anzeigen.",
       setThreadStateArchived: "%actor% hat eine %thread% archiviert.",
       setThreadStateUnarchived: "%actor% hat eine %thread% aus dem Archiv geholt.",
@@ -282,12 +296,10 @@ export const loggedInData = {
       entityPlaceholderFallback: "Inhalt"
     },
     subscriptions: {
-      unknownProblem: "There was a problem loading the subscriptions, please try again later.",
-      loading: "Loading subscriptions…",
       mail: "E-mails",
       subscription: "Subscription",
       noMails: "deactivate",
-      noNotifications: "unsubscribe"
+      noNotifications: "cancel"
     }
   }
 };
