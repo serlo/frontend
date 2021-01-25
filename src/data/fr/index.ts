@@ -53,7 +53,12 @@ export const instanceData = {
       topic: "Thèmes",
       subject: "Sujet",
       userProfile: "Profil d'utilisateur·utilisatrice",
-      privacyPolicy: 'Privacy Policy'
+      privacyPolicy: 'Privacy Policy',
+      content: "Content"
+    },
+    pageTitles: {
+      notifications: 'Your Notifications',
+      subscriptions: "Manage Subscriptions"
     },
     roles: {
       donor: "Donneur·e",
@@ -105,11 +110,6 @@ export const instanceData = {
       applet: 'Load Applet from %provider%',
       twingle: "Charger le formulaire de don"
     },
-    notifications: {
-      notifications: 'Notifications',
-      pleaseLogInLink: "Veuillez vous connecter",
-      pleaseLogInText: "pour voir vos notifications."
-    },
     comments: {
       question: "As-tu une question?",
       commentsOne: "Commentaire",
@@ -125,7 +125,8 @@ export const instanceData = {
       error: 'Sorry, comments could not be loaded, please try again later.',
       showMoreReply: "Afficher un commentaire de plus",
       showMoreReplies: "Afficher %number% commentaires supplémentaires",
-      showArchived: "Afficher les %threads% affichés"
+      showArchived: "Afficher les %threads% affichés",
+      copyLink: 'Copy comment link'
     },
     revisions: {
       toOverview: "Retour à la vue d'ensemble",
@@ -167,6 +168,14 @@ export const instanceData = {
       revisionAccepted: 'Revision was successfully accepted ✅',
       revisionRejected: 'Revision was successfully rejected ❎',
       revisionSavedAccepted: 'Revision was successfully saved and accepted ✅'
+    },
+    loading: {
+      isLoading: 'Content is loading…',
+      unknownProblem: "Sorry, there was a problem loading the content, please try again later."
+    },
+    login: {
+      pleaseLogInLink: 'Please log in',
+      pleaseLogInText: 'to use this feature.'
     }
   }
 };
@@ -256,8 +265,6 @@ export const loggedInData = {
     },
     notifications: {
       loadMore: "Charger d'avantage",
-      unknownProblem: "Un problème est survenu lors du chargement des notifications, veuille réessayer plus tard.",
-      loading: "Chargement des notifications",
       hide: "Masquer les notifications pour ce contenu.",
       setThreadStateArchived: "%actor% a archivé %thread%.",
       setThreadStateUnarchived: "%actor% a restauré %thread%.",
@@ -280,6 +287,12 @@ export const loggedInData = {
       setUuidStateTrashed: "%actor% a mis %object% dans la corbeille.",
       setUuidStateRestored: "%actor% a restauré %object%.",
       entityPlaceholderFallback: "Contenu"
+    },
+    subscriptions: {
+      mail: "E-mails",
+      subscription: "Subscription",
+      noMails: "deactivate",
+      noNotifications: "cancel"
     }
   }
 };
