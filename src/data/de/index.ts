@@ -58,7 +58,8 @@ export const instanceData = {
     },
     pageTitles: {
       notifications: 'Your Notifications',
-      subscriptions: "Manage Subscriptions"
+      subscriptions: "Manage Subscriptions",
+      revisionHistory: "Revision History"
     },
     roles: {
       donor: "Spender*in",
@@ -140,6 +141,12 @@ export const instanceData = {
       thisVersion: "Diese Version",
       thisIsCurrentVersion: "Das ist die aktuell akzeptierte Version.",
       by: "Von"
+    },
+    revisionHistory: {
+      changes: 'Changes',
+      author: 'Author',
+      date: 'Date',
+      createNew: 'Create a new revision starting from this specific revision'
     },
     errors: {
       title: "😬 Auch Webseiten machen mal Fehler…",
