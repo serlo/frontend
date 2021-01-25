@@ -83,6 +83,7 @@ export type PageData =
   | RevisionPage
   | TaxonomyPage
   | UserPage
+  | Redirect
 
 // The landing page is custom built and takes i18n strings
 
@@ -139,6 +140,14 @@ export interface LicenseDetailData {
   title: string
   content: FrontendContentNode[]
   iconHref: string
+}
+
+// For types that are supported through their own pages we return this helper in request-page
+
+export interface Redirect {
+  kind: 'redirect'
+  type?: string
+  target?: string
 }
 
 // There are several page elements that are common for entities:
