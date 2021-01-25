@@ -24,8 +24,9 @@ export function Guard({ children, data, error, needsAuth }: GuardProps) {
   if (needsAuth && !mounted) return null
 
   if (needsAuth && auth.current === null) return <PleaseLogIn />
-  if (!data) return <LoadingSpinner noText />
-  if (error !== undefined) return <LoadingError error={error} />
-  if (children) return children
+
+  if (!data && !error) return <LoadingSpinner noText />
+  if (error) return <LoadingError error={error} />
+  if (data && children) return children
   return null
 }
