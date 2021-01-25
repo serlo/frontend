@@ -58,7 +58,8 @@ export const instanceData = {
     },
     pageTitles: {
       notifications: 'Your Notifications',
-      subscriptions: "Manage Subscriptions"
+      subscriptions: "Manage Subscriptions",
+      revisionHistory: "Revision History"
     },
     roles: {
       donor: "Donor",
@@ -140,6 +141,12 @@ export const instanceData = {
       thisVersion: "यह संस्करण",
       thisIsCurrentVersion: "यह वर्तमान में स्वीकृत संस्करण है।",
       by: "द्वारा"
+    },
+    revisionHistory: {
+      changes: 'Changes',
+      author: 'Author',
+      date: 'Date',
+      createNew: 'Create a new revision starting from this specific revision'
     },
     errors: {
       title: "😬 वेबसाइटें कभी-कभी गलतियाँ करती हैं",
