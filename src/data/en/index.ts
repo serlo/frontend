@@ -58,7 +58,8 @@ export const instanceData = {
     },
     pageTitles: {
       notifications: 'Your Notifications',
-      subscriptions: "Manage Subscriptions"
+      subscriptions: "Manage Subscriptions",
+      revisionHistory: "Revision History",
     },
     roles: {
       donor: "Donor",
@@ -141,6 +142,12 @@ export const instanceData = {
       thisIsCurrentVersion: "This is the currently accepted version.",
       by: 'By'
     },
+    revisionHistory: {
+      changes: 'Changes',
+      author: 'Author',
+      date: 'Date',
+      createNew: 'Create a new revision starting from this specific revision'
+    },
     errors: {
       title: '😬 Websites make mistakes sometimes…',
       defaultMessage: 'So sorry, we ran into a problem loading this content.',
@@ -171,7 +178,7 @@ export const instanceData = {
     },
     loading: {
       isLoading: 'Content is loading…',
-      unknownProblem: "Sorry, there was a problem loading the content, please try again later."
+      unknownProblem: "Sorry, there was a problem loading the content, please try again later.",
     },
     login: {
       pleaseLogInLink: 'Please log in',
