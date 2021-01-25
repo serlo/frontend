@@ -5,14 +5,23 @@ import styled, { css } from 'styled-components'
 
 import { StyledP } from '../tags/styled-p'
 import { MetaBar } from './meta-bar'
+import { scrollIfNeeded } from '@/helper/scroll'
 
 interface CommentProps {
   isParent?: boolean
+  isHighlight?: boolean
   data: CommentType
+  highlight: (id: number) => void
 }
 
-export function Comment({ data, isParent }: CommentProps) {
-  const { author, createdAt, content } = data
+export function Comment({
+  data,
+  isParent,
+  isHighlight,
+  highlight,
+}: CommentProps) {
+  const commentRef = React.useRef<HTMLDivElement>(null)
+  const { author, createdAt, content, id } = data
 
   const urlFinder = /https?:\/\/(www\.)?([-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b)([-a-zA-Z0-9()@:%_+.~#?&//=]*)/g
 
@@ -22,17 +31,33 @@ export function Comment({ data, isParent }: CommentProps) {
     return `<a href="${match}" rel="ugc nofollow">${match}</a>`
   })
 
+  React.useEffect(() => {
+    if (isHighlight) scrollIfNeeded(commentRef.current, true)
+
+    if (commentRef.current) {
+      commentRef.current.style.backgroundColor = isHighlight
+        ? 'rgb(251, 243, 243)'
+        : 'transparent'
+    }
+  }, [isHighlight])
+
   return (
-    <Wrapper isParent={isParent}>
-      <MetaBar user={author} timestamp={createdAt} isParent={isParent} />
+    <Wrapper ref={commentRef} $isParent={isParent} id={`comment-${id}`}>
+      <MetaBar
+        user={author}
+        timestamp={createdAt}
+        isParent={isParent}
+        id={id}
+        highlight={highlight}
+      />
       <StyledP dangerouslySetInnerHTML={{ __html: escapedWithLinks }}></StyledP>
     </Wrapper>
   )
 }
 
-const Wrapper = styled.div<{ isParent?: boolean }>`
+const Wrapper = styled.div<{ $isParent?: boolean }>`
   ${(props) =>
-    !props.isParent &&
+    !props.$isParent &&
     css`
       border-left: 7px solid
         ${(props) => props.theme.colors.lightBlueBackground};
@@ -53,4 +78,7 @@ const Wrapper = styled.div<{ isParent?: boolean }>`
       word-break: break-all; /* breaks without hyphen*/
     }
   }
+
+  border-radius: ${(props) => (props.$isParent ? '15px' : '0 15px 15px 0')};
+  transition: background-color 0.8s ease-out;
 `

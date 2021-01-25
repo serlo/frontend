@@ -123,9 +123,9 @@ export function SearchInput() {
           !isLegacyLink(relativeHref)
         ) {
           e.preventDefault()
-          void router
-            .push('/[[...slug]]', relativeHref)
-            .then(() => window.scrollTo(0, 0))
+          void router.push('/[[...slug]]', relativeHref).then(() => {
+            if (window.location.hash.length < 1) window.scrollTo(0, 0)
+          })
         }
       },
       false
