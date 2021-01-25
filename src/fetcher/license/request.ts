@@ -1,7 +1,7 @@
 import * as GraphQL from '@serlo/api'
 import { request } from 'graphql-request'
 
-import { convertState } from './convert-state'
+import { convertState } from '../convert-state'
 import { licenseDetailsQuery } from './query'
 import { endpoint } from '@/api/endpoint'
 import { LicenseDetailPage } from '@/data-types'

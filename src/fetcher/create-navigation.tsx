@@ -1,4 +1,4 @@
-import { QueryResponse } from './query'
+import { QueryResponse } from './query-types'
 import { SecondaryNavigationData, SecondaryNavigationEntry } from '@/data-types'
 
 interface NavigationData {

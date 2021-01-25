@@ -3,7 +3,7 @@ import {
   QueryResponse,
   QueryResponseRevision,
   Instance,
-} from './query'
+} from './query-types'
 import {
   getServerSideStrings,
   getInstanceDataByLang,

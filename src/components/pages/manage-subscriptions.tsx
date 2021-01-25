@@ -12,7 +12,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { EntityTypes } from '@/data-types'
 import { getRawTitle } from '@/fetcher/create-title'
-import { QueryResponse } from '@/fetcher/query'
+import { QueryResponse } from '@/fetcher/query-types'
 import { makeLightButton } from '@/helper/css'
 import { entityIconMapping } from '@/helper/icon-by-entity-type'
 

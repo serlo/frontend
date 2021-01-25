@@ -5,7 +5,7 @@ import { FrontendClientBase } from '@/components/frontend-client-base'
 import { ErrorPage } from '@/components/pages/error-page'
 import { LicenseDetail } from '@/components/pages/license-detail'
 import { LicenseDetailPage } from '@/data-types'
-import { requestLicensePage } from '@/fetcher/request-license-page'
+import { requestLicensePage } from '@/fetcher/license/request'
 
 const PageView: NextPage<{ pageData: LicenseDetailPage }> = (initialProps) => {
   const page = initialProps.pageData

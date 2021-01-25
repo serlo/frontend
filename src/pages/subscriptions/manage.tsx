@@ -7,7 +7,7 @@ import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Guard } from '@/components/guard'
 import { ManageSubscriptions } from '@/components/pages/manage-subscriptions'
 import { useInstanceData } from '@/contexts/instance-context'
-import { QueryResponse } from '@/fetcher/query'
+import { QueryResponse } from '@/fetcher/query-types'
 
 export default function Page() {
   const response = useFetch()

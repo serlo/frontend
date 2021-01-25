@@ -6,7 +6,7 @@ import {
   TaxonomyTermChildOnX,
   TaxonomyTermChildrenLevel2,
   TaxonomyTermChildrenLevel1,
-} from './query'
+} from './query-types'
 import {
   TaxonomyData,
   FrontendExerciseNode,

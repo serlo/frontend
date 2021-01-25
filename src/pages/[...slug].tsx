@@ -2,11 +2,11 @@ import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import dynamic from 'next/dynamic'
 import React from 'react'
 
-import { RevisionProps } from '@/components/author/revision'
 import { EntityProps } from '@/components/content/entity'
 import { TopicProps } from '@/components/content/topic'
 import { EntityBaseProps } from '@/components/entity-base'
 import { FrontendClientBase } from '@/components/frontend-client-base'
+import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { ProfileProps } from '@/components/pages/user/profile'
 import { InitialProps, ErrorData, PageData } from '@/data-types'
 import { fetchPageData } from '@/fetcher/fetch-page-data'
@@ -27,10 +27,6 @@ const Entity = dynamic<EntityProps>(() =>
   import('@/components/content/entity').then((mod) => mod.Entity)
 )
 
-const Revision = dynamic<RevisionProps>(() =>
-  import('@/components/author/revision').then((mod) => mod.Revision)
-)
-
 const PageView: NextPage<InitialProps> = (initialProps) => {
   const pageData = initialProps.pageData
 
@@ -38,11 +34,19 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
 
   const page = getPage()
 
-  if (
-    pageData.kind === 'single-entity' ||
-    pageData.kind === 'revision' ||
-    pageData.kind === 'taxonomy'
-  )
+  //fallback, should be handled by CFWorker
+  if (pageData.kind === 'redirect') {
+    if (typeof window !== 'undefined') {
+      window.location.href = pageData.target!
+    }
+    return (
+      <FrontendClientBase>
+        <LoadingSpinner noText />
+      </FrontendClientBase>
+    )
+  }
+
+  if (pageData.kind === 'single-entity' || pageData.kind === 'taxonomy')
     return (
       <FrontendClientBase noContainers>
         <EntityBase page={pageData}>{page}</EntityBase>
@@ -65,9 +69,6 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
 
       case 'single-entity':
         return <Entity data={pageData.entityData} />
-
-      case 'revision':
-        return <Revision data={pageData.revisionData} />
 
       case 'taxonomy':
         return <Topic data={pageData.taxonomyData} />

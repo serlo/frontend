@@ -1,5 +1,5 @@
 import { prettifyLinks } from './prettify-links'
-import { Instance } from './query'
+import { Instance } from './query-types'
 import { requestPage } from './request-page'
 import { PageData } from '@/data-types'
 import { parseLanguageSubfolder } from '@/helper/feature-i18n'
