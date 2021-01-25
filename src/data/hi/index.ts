@@ -53,7 +53,12 @@ export const instanceData = {
       topic: "विषय",
       subject: "विषय",
       userProfile: 'User Profile',
-      privacyPolicy: 'Privacy Policy'
+      privacyPolicy: 'Privacy Policy',
+      content: "Content"
+    },
+    pageTitles: {
+      notifications: 'Your Notifications',
+      subscriptions: "Manage Subscriptions"
     },
     roles: {
       donor: "Donor",
@@ -105,11 +110,6 @@ export const instanceData = {
       applet: 'Load Applet from %provider%',
       twingle: 'Load Donation Form'
     },
-    notifications: {
-      notifications: "सूचनाएँ",
-      pleaseLogInLink: "कृपया लॉगिन करें",
-      pleaseLogInText: "अपनी सूचनाएं देखने के लिए।"
-    },
     comments: {
       question: "क्या आपका कोई प्रश्न है?",
       commentsOne: "टिप्पणी:",
@@ -125,7 +125,8 @@ export const instanceData = {
       error: 'Sorry, comments could not be loaded, please try again later.',
       showMoreReply: 'Show one more reply',
       showMoreReplies: 'Show %number% more replies',
-      showArchived: 'Show archived %threads%'
+      showArchived: 'Show archived %threads%',
+      copyLink: 'Copy comment link'
     },
     revisions: {
       toOverview: "अवलोकन पर वापस जाएं",
@@ -167,6 +168,14 @@ export const instanceData = {
       revisionAccepted: 'Revision was successfully accepted ✅',
       revisionRejected: 'Revision was successfully rejected ❎',
       revisionSavedAccepted: 'Revision was successfully saved and accepted ✅'
+    },
+    loading: {
+      isLoading: 'Content is loading…',
+      unknownProblem: "Sorry, there was a problem loading the content, please try again later."
+    },
+    login: {
+      pleaseLogInLink: 'Please log in',
+      pleaseLogInText: 'to use this feature.'
     }
   }
 };
@@ -256,8 +265,6 @@ export const loggedInData = {
     },
     notifications: {
       loadMore: "अधिक लोड करें",
-      unknownProblem: "सूचनाएं लोड करने में समस्या थी, कृपया बाद में पुनः प्रयास करें।",
-      loading: "सूचनाएं लोड हो रही हैं...",
       hide: "इस सामग्री के लिए सूचनाएं छिपाएँ।",
       setThreadStateArchived: "%actor% संग्रहीत %thread%.",
       setThreadStateUnarchived: "%actor% बहाल %thread%.",
@@ -280,6 +287,12 @@ export const loggedInData = {
       setUuidStateTrashed: "%actor% को खारिज किया %object%.",
       setUuidStateRestored: "%actor% बहाल %object%.",
       entityPlaceholderFallback: "सामग्री"
+    },
+    subscriptions: {
+      mail: "E-mails",
+      subscription: "Subscription",
+      noMails: "deactivate",
+      noNotifications: "cancel"
     }
   }
 };
