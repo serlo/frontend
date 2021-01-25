@@ -13,7 +13,6 @@ import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
 import { ToastNoticeProvider } from '@/contexts/toast-notice-context'
 import { InstanceData, LoggedInData } from '@/data-types'
 import { PrintStylesheet } from '@/helper/css'
-import { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { frontendOrigin } from '@/helper/frontent-origin'
 
 export type FrontendClientBaseProps = React.PropsWithChildren<{
@@ -32,7 +31,8 @@ export function FrontendClientBase({
   const [instanceData] = React.useState<InstanceData>(() => {
     if (typeof window === 'undefined') {
       // load instance data for server side rendering
-      return getInstanceDataByLang(locale!)
+      // Note: using requrie to avoid webpack bundling it
+      return require('@/helper/feature-i18n').getInstanceDataByLang(locale!)
     } else {
       // load instance data from client from document tag
       return JSON.parse(
