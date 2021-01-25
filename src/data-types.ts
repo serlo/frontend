@@ -7,6 +7,10 @@ export interface InitialProps {
   pageData: PageData
 }
 
+export interface InitialPropsRevision {
+  pageData: RevisionPage
+}
+
 // Instance data consists of the language, translation strings, header menu and footer menu.
 
 // The frontend supports all languages that the backend supports.
