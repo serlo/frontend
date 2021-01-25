@@ -10,10 +10,15 @@ import { makeTransparentButton, makeMargin } from '@/helper/css'
 
 export interface BreadcrumbsProps {
   data?: BreadcrumbsData
-  isTaxonomy: boolean
+  isTaxonomy?: boolean
+  asBackButton?: boolean
 }
 
-export function Breadcrumbs({ data, isTaxonomy }: BreadcrumbsProps) {
+export function Breadcrumbs({
+  data,
+  isTaxonomy,
+  asBackButton,
+}: BreadcrumbsProps) {
   if (!data || data.length < 1) {
     return <BreadcrumbWrapper> </BreadcrumbWrapper>
   }
@@ -28,6 +33,7 @@ export function Breadcrumbs({ data, isTaxonomy }: BreadcrumbsProps) {
             arrayLength={completeArray.length}
             key={i}
             isTaxonomy={isTaxonomy}
+            asBackButton={asBackButton}
           />
         )
       })}
@@ -39,7 +45,8 @@ interface BradcrumbEntriesProps {
   bcEntry: BreadcrumbEntry
   i: number
   arrayLength: number
-  isTaxonomy: boolean
+  isTaxonomy?: boolean
+  asBackButton?: boolean
 }
 
 function BreadcrumbEntries({
@@ -47,6 +54,7 @@ function BreadcrumbEntries({
   i,
   arrayLength,
   isTaxonomy,
+  asBackButton,
 }: BradcrumbEntriesProps) {
   if (bcEntry.ellipsis) {
     return <BreadcrumbLink as="span">…</BreadcrumbLink>
@@ -69,7 +77,10 @@ function BreadcrumbEntries({
             </MobileIcon>
             {!isTaxonomy && (
               <DesktopIcon>
-                <FontAwesomeIcon icon={faList} size="1x" />
+                <FontAwesomeIcon
+                  icon={asBackButton ? faArrowCircleLeft : faList}
+                  size="1x"
+                />
               </DesktopIcon>
             )}
             {bcEntry.label}
@@ -123,7 +134,7 @@ const BreadcrumbLink = styled(Link)`
   }
 `
 
-const BreadcrumbLinkLast = styled(BreadcrumbLink)<{ isTaxonomy: boolean }>`
+const BreadcrumbLinkLast = styled(BreadcrumbLink)<{ isTaxonomy?: boolean }>`
   &:after {
     display: none;
   }
