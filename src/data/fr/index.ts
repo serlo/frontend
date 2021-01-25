@@ -58,7 +58,8 @@ export const instanceData = {
     },
     pageTitles: {
       notifications: 'Your Notifications',
-      subscriptions: "Manage Subscriptions"
+      subscriptions: "Manage Subscriptions",
+      revisionHistory: "Revision History"
     },
     roles: {
       donor: "Donneur·e",
@@ -140,6 +141,12 @@ export const instanceData = {
       thisVersion: "Cette Version",
       thisIsCurrentVersion: "Ceci est la version actuellement acceptée.",
       by: "De"
+    },
+    revisionHistory: {
+      changes: 'Changes',
+      author: 'Author',
+      date: 'Date',
+      createNew: 'Create a new revision starting from this specific revision'
     },
     errors: {
       title: "😬 Les sites Web font parfois des erreurs…",
