@@ -1,11 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { PageTitle } from '../content/page-title'
 import { HSpace } from '@/components/content/h-space'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { RelativeContainer } from '@/components/navigation/relative-container'
 import { StyledA } from '@/components/tags/styled-a'
-import { StyledH1 } from '@/components/tags/styled-h1'
 import { StyledP } from '@/components/tags/styled-p'
 import { useInstanceData } from '@/contexts/instance-context'
 import { ErrorData } from '@/data-types'
@@ -43,8 +43,7 @@ export function ErrorPage({ code, message }: ErrorData) {
   return (
     <RelativeContainer>
       <MaxWidthDiv>
-        <HSpace amount={100} />
-        <StyledH1>{strings.errors.title}</StyledH1>
+        <PageTitle title={strings.errors.title} headTitle />
         <_StyledP>
           {strings.errors.defaultMessage}{' '}
           {!isProbablyTemporary && (

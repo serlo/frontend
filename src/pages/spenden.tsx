@@ -5,7 +5,7 @@ import { Donations } from '@/components/pages/donations'
 
 export default function Page() {
   return (
-    <FrontendClientBase>
+    <FrontendClientBase noHeaderFooter noContainers>
       <Donations />
     </FrontendClientBase>
   )

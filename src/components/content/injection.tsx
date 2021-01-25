@@ -1,8 +1,6 @@
-import { faSpinner } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useEffect } from 'react'
-import styled from 'styled-components'
 
+import { LoadingSpinner } from '../loading/loading-spinner'
 import { StyledP } from '../tags/styled-p'
 import { LicenseNotice } from './license-notice'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -101,16 +99,5 @@ export function Injection({ href }: InjectionProps) {
       </>
     )
   }
-  return (
-    <StyledP>
-      <ColoredIcon>
-        <FontAwesomeIcon icon={faSpinner} spin size="1x" />
-      </ColoredIcon>{' '}
-      Lade: {href}
-    </StyledP>
-  )
+  return <LoadingSpinner />
 }
-
-const ColoredIcon = styled.span`
-  color: ${(props) => props.theme.colors.brand};
-`

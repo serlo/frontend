@@ -54,7 +54,6 @@ Router.events.on('routeChangeStart', () => {
 Router.events.on('routeChangeComplete', () => NProgress.done())
 Router.events.on('routeChangeError', () => NProgress.done())
 
-// eslint-disable-next-line import/no-default-export
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <React.StrictMode>
