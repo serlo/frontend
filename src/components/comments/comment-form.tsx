@@ -61,7 +61,12 @@ export function CommentForm({
         $reply={reply}
         minRows={1}
       />
-      <SendButton title={sendTitle} $reply={reply} onClick={onSendAction}>
+      <SendButton
+        title={sendTitle}
+        $reply={reply}
+        onClick={onSendAction}
+        onPointerUp={(e) => e.currentTarget.blur()}
+      >
         <FontAwesomeIcon
           spin={isSending}
           icon={isSending ? faSpinner : reply ? faReply : faArrowRight}

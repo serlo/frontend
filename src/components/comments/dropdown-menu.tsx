@@ -86,12 +86,14 @@ export function DropdownMenu({
   }
 
   function onDelete() {
+    onAnyClick()
     if (!isParent) {
       void setCommentStateMutation(auth, id, true, entityId)
     }
   }
 
   function onArchiveThread() {
+    onAnyClick()
     if (isParent && threadId) {
       void setThreadArchivedMutation(auth, threadId, true, entityId)
     }
