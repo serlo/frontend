@@ -69,8 +69,8 @@ export function FrontendClientBase({
   //console.dir(initialProps)
 
   return (
-    <NProgressRouter>
-      <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
+      <NProgressRouter>
         <FontFix />
         <PrintStylesheet warning={instanceData.strings.print.warning} />
         <InstanceDataProvider value={instanceData}>
@@ -98,8 +98,8 @@ export function FrontendClientBase({
             </ToastNoticeProvider>
           </LoggedInDataProvider>
         </InstanceDataProvider>
-      </ThemeProvider>
-    </NProgressRouter>
+      </NProgressRouter>
+    </ThemeProvider>
   )
 
   /*
