@@ -57,6 +57,7 @@ export function Exercise({ node }: ExerciseProps) {
       <LicenseNotice minimal data={node.solution.license} type="solution" />
     )
     const Comp = lic?.ExerciseAuthorTools
+    console.log('exercise', Comp)
     const authorTools = Comp && loaded && auth.current && (
       <Comp
         data={{

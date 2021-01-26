@@ -5,14 +5,13 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 
 import { Link } from '../content/link'
-import { UnreadNotificationsCount } from '../user-tools/unread-notifications-count'
 import { AuthPayload } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
+import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { HeaderData, HeaderLink } from '@/data-types'
 import { makeTransparentButton } from '@/helper/css'
 import { getAuthData, shouldUseNewAuth } from '@/helper/feature-auth'
-import { useLoggedInComponents } from '@/contexts/logged-in-components'
 
 // Only show some icons on full menu
 const menuIconMapping = {

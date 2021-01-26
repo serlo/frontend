@@ -11,6 +11,7 @@ import { RelativeContainer } from './navigation/relative-container'
 import { ToastNotice } from './toast-notice'
 import { useAuth } from '@/auth/use-auth'
 import { InstanceDataProvider } from '@/contexts/instance-context'
+import { LoggedInComponentsProvider } from '@/contexts/logged-in-components'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
 import { ToastNoticeProvider } from '@/contexts/toast-notice-context'
 import { InstanceData, LoggedInData } from '@/data-types'
@@ -65,7 +66,10 @@ export function FrontendClientBase({
   console.log('Comps', loggedInComponents)
 
   React.useEffect(fetchLoggedInData, [
-    /*auth, instanceData.lang, loggedInData*/
+    auth,
+    instanceData.lang,
+    loggedInData,
+    loggedInComponents,
   ])
 
   const toastNotice = notify.createShowQueue()
@@ -79,29 +83,31 @@ export function FrontendClientBase({
         <FontFix />
         <PrintStylesheet warning={instanceData.strings.print.warning} />
         <InstanceDataProvider value={instanceData}>
-          <LoggedInDataProvider value={loggedInData}>
-            <ToastNoticeProvider value={toastNotice}>
-              <ConditonalWrap
-                condition={!noHeaderFooter}
-                wrapper={(kids) => <HeaderFooter>{kids}</HeaderFooter>}
-              >
+          <LoggedInComponentsProvider value={loggedInComponents}>
+            <LoggedInDataProvider value={loggedInData}>
+              <ToastNoticeProvider value={toastNotice}>
                 <ConditonalWrap
-                  condition={!noContainers}
-                  wrapper={(kids) => (
-                    <RelativeContainer>
-                      <MaxWidthDiv showNav={showNav}>
-                        <main>{kids}</main>
-                      </MaxWidthDiv>
-                    </RelativeContainer>
-                  )}
+                  condition={!noHeaderFooter}
+                  wrapper={(kids) => <HeaderFooter>{kids}</HeaderFooter>}
                 >
-                  {/* should not be necessary…?*/}
-                  {children as JSX.Element}
+                  <ConditonalWrap
+                    condition={!noContainers}
+                    wrapper={(kids) => (
+                      <RelativeContainer>
+                        <MaxWidthDiv showNav={showNav}>
+                          <main>{kids}</main>
+                        </MaxWidthDiv>
+                      </RelativeContainer>
+                    )}
+                  >
+                    {/* should not be necessary…?*/}
+                    {children as JSX.Element}
+                  </ConditonalWrap>
                 </ConditonalWrap>
-              </ConditonalWrap>
-              <ToastNotice />
-            </ToastNoticeProvider>
-          </LoggedInDataProvider>
+                <ToastNotice />
+              </ToastNoticeProvider>
+            </LoggedInDataProvider>
+          </LoggedInComponentsProvider>
         </InstanceDataProvider>
       </NProgressRouter>
     </ThemeProvider>
@@ -143,16 +149,17 @@ export function FrontendClientBase({
               frontendOrigin + '/api/locale/' + instanceData.lang
             ).then((res) => res.json())
           : false,
-        import('@/helper/logged-in-stuff-chunk'),
+        !loggedInComponents ? import('@/helper/logged-in-stuff-chunk') : false,
       ])
         .then((values: any) => {
-          console.log(values)
-          sessionStorage.setItem(
-            `___loggedInData_${instanceData.lang}`,
-            JSON.stringify(values[0])
-          )
-          setLoggedInData(values[0])
-          setLoggedInComponents(values[1])
+          if (values[0]) {
+            sessionStorage.setItem(
+              `___loggedInData_${instanceData.lang}`,
+              JSON.stringify(values[0])
+            )
+            setLoggedInData(values[0])
+          }
+          if (values[1]) setLoggedInComponents(values[1].Components)
         })
         .catch(() => {})
     }
