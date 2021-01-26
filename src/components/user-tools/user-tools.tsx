@@ -5,7 +5,6 @@ import {
   faTools,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Tippy from '@tippyjs/react'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -14,6 +13,7 @@ import {
   makeGreenButton,
   inputFontReset,
 } from '../../helper/css'
+import { LazyTippy } from '../navigation/lazy-tippy'
 import { AuthorToolsData } from './author-tools-hover-menu'
 import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -149,7 +149,7 @@ export function UserTools({
     const Comp = lic.AuthorToolsHoverMenu
 
     return (
-      <Tippy
+      <LazyTippy
         interactive
         content={<Comp data={data} />}
         placement={isLargeScreen ? 'left-end' : 'bottom'}
@@ -160,7 +160,7 @@ export function UserTools({
           <FontAwesomeIcon icon={faTools} size="1x" />{' '}
           {loggedInData.strings.tools}
         </IconButton>
-      </Tippy>
+      </LazyTippy>
     )
   }
 

@@ -1,6 +1,5 @@
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Tippy from '@tippyjs/react'
 import { useRouter } from 'next/router'
 import { lighten } from 'polished'
 import React from 'react'
@@ -14,6 +13,7 @@ import { inputFontReset, makeLightButton, makePadding } from '@/helper/css'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { ExternalProvider, useConsent } from '@/helper/use-consent'
 import { theme } from '@/theme'
+import { LazyTippy } from './lazy-tippy'
 
 /*
 This components starts with only a placeholder that looks like a searchbar (basically a button).
@@ -152,7 +152,7 @@ export function SearchInput() {
 
   return (
     <>
-      <Tippy
+      <LazyTippy
         content={renderConsentPop()}
         trigger="focus click"
         interactive
@@ -189,7 +189,7 @@ export function SearchInput() {
             data-enablehistory="true"
           />
         </SearchForm>
-      </Tippy>
+      </LazyTippy>
       <AutocompleteStyle />
     </>
   )
