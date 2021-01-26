@@ -10,7 +10,6 @@ const query = gql`
         threads {
           nodes {
             archived
-            trashed
             comments {
               nodes {
                 id
