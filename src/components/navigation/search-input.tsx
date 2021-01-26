@@ -7,13 +7,13 @@ import styled, { createGlobalStyle, css } from 'styled-components'
 
 import { isLegacyLink } from '../content/link'
 import { StyledA } from '../tags/styled-a'
+import { LazyTippy } from './lazy-tippy'
 import SearchIcon from '@/assets-webkit/img/search-icon.svg'
 import { useInstanceData } from '@/contexts/instance-context'
 import { inputFontReset, makeLightButton, makePadding } from '@/helper/css'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { ExternalProvider, useConsent } from '@/helper/use-consent'
 import { theme } from '@/theme'
-import { LazyTippy } from './lazy-tippy'
 
 /*
 This components starts with only a placeholder that looks like a searchbar (basically a button).
