@@ -17,6 +17,7 @@ import { useAuth } from '@/auth/use-auth'
 import { StyledH2 } from '@/components/tags/styled-h2'
 import { useInstanceData } from '@/contexts/instance-context'
 import { makeLightButton } from '@/helper/css'
+import { createCommentMutation, createThreadMutation } from '@/helper/mutations'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { scrollToPrevious } from '@/helper/scroll'
 import { useCommentData } from '@/helper/use-comment-data'
@@ -28,9 +29,9 @@ export interface CommentsProps {
 export type CommentsData = CommentType[]
 export type ThreadsData = ThreadType[]
 
-export function Comments({ id: parentId }: CommentsProps) {
+export function Comments({ id: entityId }: CommentsProps) {
   const [showArchived, setShowArchived] = React.useState<boolean>(false)
-  const [showThreadChildren, setShowThreadChildren] = React.useState<number[]>(
+  const [showThreadChildren, setShowThreadChildren] = React.useState<string[]>(
     []
   )
   const [highlightedCommentId, setHighlightedCommentId] = React.useState<
@@ -41,7 +42,7 @@ export function Comments({ id: parentId }: CommentsProps) {
   const { strings } = useInstanceData()
   const auth = useAuth()
 
-  const { commentData, commentCount, error } = useCommentData(parentId)
+  const { commentData, commentCount, error } = useCommentData(entityId)
 
   function toogleShowArchived() {
     setShowArchived(!showArchived)
@@ -53,7 +54,7 @@ export function Comments({ id: parentId }: CommentsProps) {
       const id = parseInt(window.location.hash.replace('#comment-', ''))
       if (!isNaN(id)) setHighlightedCommentId(id)
     }
-  }, [container, parentId])
+  }, [container, entityId])
 
   return (
     <div ref={container}>
@@ -91,8 +92,7 @@ export function Comments({ id: parentId }: CommentsProps) {
             </CustomH2>
             <CommentForm
               placeholder={strings.comments.placeholder}
-              parentId={parentId}
-              // onSendComment={}
+              onSend={onSend}
             />
           </>
         )}
@@ -118,18 +118,17 @@ export function Comments({ id: parentId }: CommentsProps) {
   }
 
   function renderThreads(threads: ThreadsData) {
-    return threads?.map((thread, index) => {
+    return threads?.map((thread) => {
       return (
-        <ThreadWrapper key={`${thread.createdAt}_${index}`}>
-          {/* //TODO: implement threadId in api */}
+        <ThreadWrapper key={thread.id}>
           {renderComments([thread.comments.nodes[0]], true)}
-          {renderThreadComments(thread.comments.nodes.slice(1), 0)}
+          {renderThreadComments(thread.comments.nodes.slice(1), thread.id)}
         </ThreadWrapper>
       )
     })
   }
 
-  function renderThreadComments(comments: CommentsData, threadId: number) {
+  function renderThreadComments(comments: CommentsData, threadId: string) {
     const length = comments.length
     //only show first reply by default
     if (length < 2 || showThreadChildren.includes(threadId))
@@ -176,13 +175,14 @@ export function Comments({ id: parentId }: CommentsProps) {
     })
   }
 
-  function renderReplyForm(threadId: number) {
+  function renderReplyForm(threadId: string) {
     return (
       auth.current && (
         <CommentForm
           placeholder={strings.comments.placeholderReply}
-          parentId={threadId}
+          threadId={threadId}
           reply
+          onSend={onSend}
         />
       )
     )
@@ -211,6 +211,30 @@ export function Comments({ id: parentId }: CommentsProps) {
         {showArchived && renderThreads(commentData.archived ?? [])}
       </>
     )
+  }
+
+  async function onSend(content: string, reply?: boolean, threadId?: string) {
+    if (auth.current === null) return false
+
+    if (reply) {
+      if (threadId === undefined) return false
+      setShowThreadChildren([...showThreadChildren, threadId])
+      return await createCommentMutation(
+        auth,
+        {
+          content,
+          threadId,
+        },
+        entityId
+      )
+    } else {
+      await createThreadMutation(auth, {
+        title: '',
+        content,
+        objectId: entityId,
+      })
+      return true
+    }
   }
 }
 

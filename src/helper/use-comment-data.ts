@@ -1,7 +1,8 @@
 import { ThreadAware } from '@serlo/api'
-import { gql } from 'graphql-request'
+import { gql, GraphQLClient } from 'graphql-request'
+import useSWR from 'swr'
 
-import { useGraphqlSwr } from '@/api/use-graphql-swr'
+import { endpoint } from '@/api/endpoint'
 
 const query = gql`
   query getComments($id: Int!) {
@@ -9,6 +10,7 @@ const query = gql`
       ... on ThreadAware {
         threads(trashed: false) {
           nodes {
+            id
             archived
             comments {
               nodes {
@@ -34,14 +36,23 @@ const query = gql`
   }
 `
 export function useCommentData(id: number) {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const { data, error } = useGraphqlSwr<{ uuid: ThreadAware }>({
-    query,
-    variables: { id },
-    config: {
-      refreshInterval: 10 * 60 * 1000, // 10min, todo: update on cache mutation
-    },
+  // // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  // const resp = useGraphqlSwr<{ uuid: ThreadAware }>({
+  //   key: 'test',
+  //   query,
+  //   variables: { id },
+  //   config: {
+  //     refreshInterval: 10 * 60 * 1000, // 10min, todo: update on cache mutation
+  //   },
+  // })
+
+  const client = new GraphQLClient(endpoint)
+  const fetcher = () => client.request(query, { id })
+  const resp = useSWR<{ uuid: ThreadAware }, any>(`comments::${id}`, fetcher, {
+    refreshInterval: 10 * 60 * 1000,
   })
+
+  const { data, error } = resp
 
   const threads = data?.uuid.threads.nodes
 

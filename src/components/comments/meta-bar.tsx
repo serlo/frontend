@@ -65,6 +65,7 @@ export function MetaBar({
 
 const TimeAgoButton = styled.button`
   ${makeTransparentButton}
+  font-weight: normal;
   color: ${(props) => props.theme.colors.lightblue};
   font-size: 1rem;
 `
