@@ -59,7 +59,7 @@ export const instanceData = {
     pageTitles: {
       notifications: 'Your Notifications',
       subscriptions: "Manage Subscriptions",
-      revisionHistory: "Revision History",
+      revisionHistory: "Revision History"
     },
     roles: {
       donor: "Donor",
@@ -178,7 +178,7 @@ export const instanceData = {
     },
     loading: {
       isLoading: 'Content is loading…',
-      unknownProblem: "Sorry, there was a problem loading the content, please try again later.",
+      unknownProblem: "Sorry, there was a problem loading the content, please try again later."
     },
     login: {
       pleaseLogInLink: 'Please log in',

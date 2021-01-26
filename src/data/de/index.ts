@@ -54,12 +54,12 @@ export const instanceData = {
       subject: "Fach",
       userProfile: "Benutzerprofil",
       privacyPolicy: "Datenschutzerklärung",
-      content: "Content"
+      content: "Inhalt"
     },
     pageTitles: {
-      notifications: 'Your Notifications',
-      subscriptions: "Manage Subscriptions",
-      revisionHistory: "Revision History"
+      notifications: "Deine Benachrichtigungen",
+      subscriptions: "Abonnements verwalten",
+      revisionHistory: "Bearbeitungsverlauf"
     },
     roles: {
       donor: "Spender*in",
@@ -127,7 +127,7 @@ export const instanceData = {
       showMoreReply: "Einen weiteren Kommentar",
       showMoreReplies: "%number% weitere Kommentare",
       showArchived: "Archivierte %threads% anzeigen",
-      copyLink: 'Copy comment link'
+      copyLink: "Kommentarlink kopieren"
     },
     revisions: {
       toOverview: "Zurück zur Übersicht",
@@ -143,10 +143,10 @@ export const instanceData = {
       by: "Von"
     },
     revisionHistory: {
-      changes: 'Changes',
-      author: 'Author',
-      date: 'Date',
-      createNew: 'Create a new revision starting from this specific revision'
+      changes: "Änderungen",
+      author: "Autor*in",
+      date: "Wann?",
+      createNew: "Erstelle eine neue Bearbeitung von dieser Bearbeitung aus"
     },
     errors: {
       title: "😬 Auch Webseiten machen mal Fehler…",
@@ -177,12 +177,12 @@ export const instanceData = {
       revisionSavedAccepted: "Die Bearbeitung wurde erfolgreich gespeichert und akzeptiert ✅"
     },
     loading: {
-      isLoading: 'Content is loading…',
-      unknownProblem: "Sorry, there was a problem loading the content, please try again later."
+      isLoading: "Inhalt wird geladen…",
+      unknownProblem: "Es gab ein Problem beim laden des Inhalts, bitte versuch' es später noch einmal."
     },
     login: {
-      pleaseLogInLink: 'Please log in',
-      pleaseLogInText: 'to use this feature.'
+      pleaseLogInLink: "Bitte melde dich an",
+      pleaseLogInText: "um diese Funktion zu benutzen."
     }
   }
 };
@@ -296,10 +296,10 @@ export const loggedInData = {
       entityPlaceholderFallback: "Inhalt"
     },
     subscriptions: {
-      mail: "E-mails",
-      subscription: "Subscription",
-      noMails: "deactivate",
-      noNotifications: "cancel"
+      mail: "E-Mails",
+      subscription: "Abonnement",
+      noMails: "deaktivieren",
+      noNotifications: "abbestellen"
     }
   }
 };
