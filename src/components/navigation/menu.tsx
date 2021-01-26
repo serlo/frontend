@@ -31,9 +31,11 @@ export interface MenuProps {
 }
 
 export function Menu(props: MenuProps) {
-  const [Tippy, setTippy] = React.useState<any>(null)
+  const [Tippy, setTippy] = React.useState<
+    typeof import('@tippyjs/react') | null
+  >(null)
   React.useEffect(() => {
-    void import('@tippyjs/react').then((value) => setTippy(value.default))
+    void import('@tippyjs/react').then((value) => setTippy(value))
   }, [])
   if (!Tippy) {
     return <MenuWithoutTippy {...props} />
@@ -45,7 +47,9 @@ function MenuWithoutTippy(props: MenuProps) {
   return <MenuInner {...props} />
 }
 
-function MenuWithTippy(props: MenuProps & { Tippy: any }) {
+function MenuWithTippy(
+  props: MenuProps & { Tippy: typeof import('@tippyjs/react') }
+) {
   const [source, target] = props.Tippy.useSingleton()
   return <MenuInner {...props} source={source} target={target} />
 }
@@ -56,7 +60,11 @@ function MenuInner({
   Tippy,
   source,
   target,
-}: MenuProps & { Tippy?: any; source?: any; target?: any }) {
+}: MenuProps & {
+  Tippy?: typeof import('@tippyjs/react')
+  source?: any
+  target?: any
+}) {
   //
   const [mounted, setMounted] = React.useState(!shouldUseNewAuth())
   const { strings } = useInstanceData()
@@ -76,7 +84,7 @@ function MenuInner({
   return (
     <ResponsiveNav>
       {Tippy && (
-        <Tippy
+        <Tippy.default
           singleton={source}
           placement="bottom-start"
           trigger="click mouseenter focus"
@@ -85,7 +93,7 @@ function MenuInner({
           delay={[50, 0]}
           duration={[300, 100]}
           animation="fade"
-          onCreate={(tip: any) => {
+          onCreate={(tip) => {
             //console.log('set tippy root')
             setTippyRoot(tip)
           }}
@@ -146,7 +154,7 @@ function MenuInner({
       >
         {hasChildren ? (
           Tippy ? (
-            <Tippy
+            <Tippy.default
               content={renderSubMenuInner(link.children)}
               singleton={target}
             >
@@ -158,7 +166,7 @@ function MenuInner({
                 {renderIcon()}
                 {!hasIcon && link.title} <FontAwesomeIcon icon={faCaretDown} />
               </StyledLink>
-            </Tippy>
+            </Tippy.default>
           ) : (
             <StyledLink hasIcon={hasIcon} as="a" tabIndex={0} /*active={true}*/>
               {renderIcon()}

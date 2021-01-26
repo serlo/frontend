@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import { makeMargin } from '../../helper/css'
 import { renderArticle } from '../../schema/article-renderer'
 import { CommentsProps } from '../comments/comments'
-import { ShareModal } from '../user-tools/share-modal'
+import { ShareModalProps } from '../user-tools/share-modal'
 import { UserTools } from '../user-tools/user-tools'
 import { LicenseNotice } from './license-notice'
 import { Link } from './link'
@@ -26,6 +26,10 @@ export interface TopicProps {
 
 const Comments = dynamic<CommentsProps>(() =>
   import('@/components/comments/comments').then((mod) => mod.Comments)
+)
+
+const ShareModal = dynamic<ShareModalProps>(() =>
+  import('@/components/user-tools/share-modal').then((mod) => mod.ShareModal)
 )
 
 export function Topic({ data }: TopicProps) {

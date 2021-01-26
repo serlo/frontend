@@ -63,7 +63,7 @@ export function FrontendClientBase({
   )
   const [loggedInComponents, setLoggedInComponents] = React.useState<any>(null)
 
-  console.log('Comps', loggedInComponents)
+  //console.log('Comps', loggedInComponents)
 
   React.useEffect(fetchLoggedInData, [
     auth,

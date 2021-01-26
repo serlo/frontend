@@ -449,8 +449,6 @@ const AutocompleteStyle = createGlobalStyle`
   }
 `
 
-//this is overriding the styles of the modal-content only. see doc to change overlay etc.
-
 const ConsentPop = styled.div`
   background-color: ${(props) => props.theme.colors.brand};
   color: #fff;

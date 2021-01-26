@@ -11,7 +11,7 @@ import { LicenseNotice } from '@/components/content/license-notice'
 import { CourseFooter } from '@/components/navigation/course-footer'
 import { CourseNavigation } from '@/components/navigation/course-navigation'
 import { StyledH1 } from '@/components/tags/styled-h1'
-import { ShareModal } from '@/components/user-tools/share-modal'
+import { ShareModalProps } from '@/components/user-tools/share-modal'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EntityData, FrontendContentNode } from '@/data-types'
@@ -24,6 +24,10 @@ export interface EntityProps {
 
 const Comments = dynamic<CommentsProps>(() =>
   import('@/components/comments/comments').then((mod) => mod.Comments)
+)
+
+const ShareModal = dynamic<ShareModalProps>(() =>
+  import('@/components/user-tools/share-modal').then((mod) => mod.ShareModal)
 )
 
 export function Entity({ data }: EntityProps) {
