@@ -2,6 +2,7 @@ import {
   ThreadCreateCommentInput,
   ThreadCreateThreadInput,
   ThreadMutation,
+  ThreadMutationCreateThreadArgs,
 } from '@serlo/api'
 import { gql } from 'graphql-request'
 import { mutate } from 'swr'
@@ -79,27 +80,42 @@ export async function setStateMutation(
 //   console.log(result)
 // }
 
-// export async function setCommentState(id: number, unread: boolean) {
-//   const input = {
-//     query: gql`
-//       mutation setState($input: NotificationSetStateInput!) {
-//         notification {
-//           setState(input: $input) {
-//             success
-//           }
-//         }
-//       }
-//     `,
-//     variables: {
-//       input: {
-//         id,
-//         unread,
-//       },
-//     },
-//   }
-//   const result = await createAuthAwareGraphqlFetch(auth)(JSON.stringify(input))
-//   console.log(result)
-// }
+export async function setCommentState(
+  auth: React.RefObject<AuthPayload>,
+  id: number,
+  trashed: boolean,
+  entityId: number
+) {
+  const input = {
+    query: gql`
+      mutation setState($input: ThreadSetCommentStateInput!) {
+        thread {
+          setCommentState(input: $input) {
+            success
+          }
+        }
+      }
+    `,
+    variables: {
+      input: {
+        id,
+        trashed,
+      },
+    },
+  }
+  const response = (await createAuthAwareGraphqlFetch(auth)(
+    JSON.stringify(input)
+  )) as { thread: ThreadMutation }
+  console.log(response)
+
+  if (response.thread.setCommentState?.success) {
+    return !!(await mutate(`comments::${entityId}`))
+  } else {
+    //TODO: display error notice
+    console.log(response)
+    return false
+  }
+}
 
 export async function createThreadMutation(
   auth: React.RefObject<AuthPayload>,

@@ -12,6 +12,7 @@ interface CommentProps {
   isHighlight?: boolean
   data: CommentType
   highlight: (id: number) => void
+  entityId: number
 }
 
 export function Comment({
@@ -19,6 +20,7 @@ export function Comment({
   isParent,
   isHighlight,
   highlight,
+  entityId,
 }: CommentProps) {
   const commentRef = React.useRef<HTMLDivElement>(null)
   const { author, createdAt, content, id } = data
@@ -48,6 +50,7 @@ export function Comment({
         timestamp={createdAt}
         isParent={isParent}
         id={id}
+        entityId={entityId}
         highlight={highlight}
       />
       <StyledP dangerouslySetInnerHTML={{ __html: escapedWithLinks }}></StyledP>

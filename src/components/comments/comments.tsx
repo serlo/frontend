@@ -168,6 +168,7 @@ export function Comments({ id: entityId }: CommentsProps) {
           key={comment.id}
           data={comment}
           isParent={isParent}
+          entityId={entityId}
           isHighlight={isHighlight}
           highlight={setHighlightedCommentId}
         />

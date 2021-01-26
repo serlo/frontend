@@ -11,11 +11,13 @@ import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UserRoles } from '@/data-types'
 import { makeTransparentButton } from '@/helper/css'
+import { setCommentState } from '@/helper/mutations'
 
 interface DropdownMenuProps {
   isParent?: boolean
   date: Date
   id: number
+  entityId: number
   highlight: (id: number) => void
   onAnyClick: () => void
 }
@@ -26,6 +28,7 @@ export function DropdownMenu({
   date,
   highlight,
   onAnyClick,
+  entityId,
 }: DropdownMenuProps) {
   const { lang, strings } = useInstanceData()
   const auth = useAuth()
@@ -47,7 +50,7 @@ export function DropdownMenu({
               {strings.comments.archiveThread}
             </DropContentButton>
           )}
-          <DropContentButton>
+          <DropContentButton onClick={onDelete}>
             <FontAwesomeIcon icon={faTrash} />{' '}
             {isParent
               ? strings.comments.deleteThread
@@ -75,6 +78,12 @@ export function DropdownMenu({
     input.select()
     document.execCommand('copy')
     document.body.removeChild(input)
+  }
+
+  function onDelete() {
+    if (!isParent) {
+      void setCommentState(auth, id, true, entityId)
+    }
   }
 }
 
