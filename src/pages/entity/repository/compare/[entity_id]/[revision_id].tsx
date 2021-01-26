@@ -3,7 +3,6 @@ import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import React from 'react'
 
 import { Revision } from '@/components/author/revision'
-import { EntityBase } from '@/components/entity-base'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { InitialPropsRevision, RevisionPage } from '@/data-types'
 import { requestRevision } from '@/fetcher/revision/request'
@@ -12,10 +11,8 @@ export default function Page(initialProps: NextPage & InitialPropsRevision) {
   const pageData = initialProps.pageData
 
   return (
-    <FrontendClientBase noContainers>
-      <EntityBase page={pageData}>
-        <Revision data={pageData.revisionData} />
-      </EntityBase>
+    <FrontendClientBase>
+      <Revision data={pageData.revisionData} />
     </FrontendClientBase>
   )
 }

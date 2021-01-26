@@ -160,7 +160,7 @@ export function Menu({ data, auth }: MenuProps) {
           subEntries.map((entry) => {
             const href =
               entry.url === '/user/public' && auth
-                ? `/user/profile/${auth.username}`
+                ? `/user/${auth.id}/${auth.username}`
                 : entry.url
             return (
               <li key={entry.title} onClick={onSubMenuInnerClick}>

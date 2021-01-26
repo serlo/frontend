@@ -7,7 +7,6 @@ import { TopicProps } from '@/components/content/topic'
 import { EntityBaseProps } from '@/components/entity-base'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
-import { ProfileProps } from '@/components/pages/user/profile'
 import { InitialProps, ErrorData, PageData } from '@/data-types'
 import { fetchPageData } from '@/fetcher/fetch-page-data'
 
@@ -16,9 +15,6 @@ const EntityBase = dynamic<EntityBaseProps>(() =>
 )
 const ErrorPage = dynamic<ErrorData>(() =>
   import('@/components/pages/error-page').then((mod) => mod.ErrorPage)
-)
-const Profile = dynamic<ProfileProps>(() =>
-  import('@/components/pages/user/profile').then((mod) => mod.Profile)
 )
 const Topic = dynamic<TopicProps>(() =>
   import('@/components/content/topic').then((mod) => mod.Topic)
@@ -32,8 +28,6 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
 
   if (pageData === undefined) return <ErrorPage code={404} />
 
-  const page = getPage()
-
   //fallback, should be handled by CFWorker
   if (pageData.kind === 'redirect') {
     if (typeof window !== 'undefined') {
@@ -46,35 +40,33 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
     )
   }
 
-  if (pageData.kind === 'single-entity' || pageData.kind === 'taxonomy')
+  if (pageData.kind === 'single-entity' || pageData.kind === 'taxonomy') {
+    const page =
+      pageData.kind === 'single-entity' ? (
+        <Entity data={pageData.entityData} />
+      ) : (
+        <Topic data={pageData.taxonomyData} />
+      )
+
     return (
       <FrontendClientBase noContainers>
         <EntityBase page={pageData}>{page}</EntityBase>
       </FrontendClientBase>
     )
-
-  return <FrontendClientBase>{page}</FrontendClientBase>
-
-  function getPage() {
-    switch (pageData.kind) {
-      case 'error':
-        return (
-          <ErrorPage
-            code={pageData.errorData.code}
-            message={pageData.errorData.message}
-          />
-        )
-      case 'user/profile':
-        return <Profile userData={pageData.userData} />
-
-      case 'single-entity':
-        return <Entity data={pageData.entityData} />
-
-      case 'taxonomy':
-        return <Topic data={pageData.taxonomyData} />
-    }
-    return 'are you a wizard?'
   }
+
+  return (
+    <FrontendClientBase>
+      <ErrorPage
+        code={pageData.kind === 'error' ? pageData.errorData.code : 400}
+        message={
+          pageData.kind === 'error'
+            ? pageData.errorData.message
+            : 'unsupported type'
+        }
+      />
+    </FrontendClientBase>
+  )
 }
 
 // eslint-disable-next-line @typescript-eslint/require-await

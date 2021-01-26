@@ -3,10 +3,10 @@ import { request } from 'graphql-request'
 import { convertState } from '../convert-state'
 import { createTitle } from '../create-title'
 import {
-  QueryResponse,
   Instance,
   ArticleRevision,
   VideoRevision,
+  QueryResponseRevision,
 } from '../query-types'
 import { revisionQuery } from './query'
 import { endpoint } from '@/api/endpoint'
@@ -20,7 +20,7 @@ export async function requestRevision(
     id: revisionId,
   }
 
-  const { uuid } = await request<{ uuid: QueryResponse }>(
+  const { uuid } = await request<{ uuid: QueryResponseRevision }>(
     endpoint,
     revisionQuery,
     variables

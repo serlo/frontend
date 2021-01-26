@@ -1,9 +1,6 @@
-// These types are auto-generated from the GraphQL schema
 import { gql } from 'graphql-request'
 
 import { sharedRevisionFragments } from './query-fragments'
-
-// query
 
 export const dataQuery = gql`
   query uuid($id: Int, $alias: AliasInput) {
@@ -43,13 +40,6 @@ export const dataQuery = gql`
 
       ... on User {
         username
-        trashed
-        date
-        lastLogin
-        description
-        activeReviewer
-        activeAuthor
-        activeDonor
       }
 
       ... on Video {
