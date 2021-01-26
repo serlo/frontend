@@ -1886,10 +1886,10 @@
   resolved "https://registry.yarnpkg.com/@redux-saga/types/-/types-1.1.0.tgz#0e81ce56b4883b4b2a3001ebe1ab298b84237204"
   integrity sha512-afmTuJrylUU/0OtqzaRkbyYFFNgCF73Bvel/sw90pvGrWIZ+vyoIJqA6eMSoA6+nb443kTmulmBtC9NerXboNg==
 
-"@serlo/api@^0.17.0":
-  version "0.17.1"
-  resolved "https://registry.yarnpkg.com/@serlo/api/-/api-0.17.1.tgz#06d7f6d56a01a156d189ce95e5deb7086dbd3a6f"
-  integrity sha512-4arEoLsyJ0IIS4pGCJJKw1hOl8Z6uJb+RbljArmQfEnWkspscaGZgIwx8S5Mj9K5nGRl2L1fCyZSBqcCA5aBvg==
+"@serlo/api@^0.18.0":
+  version "0.18.0"
+  resolved "https://registry.yarnpkg.com/@serlo/api/-/api-0.18.0.tgz#bd36ac3d15b70436c01631789485e4a1df77e36f"
+  integrity sha512-l2LBV6djZat3btk2TwZ6FH2d+8/yqfnjOIBxdXs5icMZeypk4XSa1NoEDjkaPVZ958trTGMfak/Haqz0ZTZ7IA==
 
 "@sideway/address@^4.1.0":
   version "4.1.0"
