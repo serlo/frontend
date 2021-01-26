@@ -19,7 +19,7 @@ export function UserLink({ user, withIcon, className }: UserLinkProps) {
   const { strings } = useInstanceData()
   return (
     <>
-      <Link href={`/user/profile/${user.id}`} className={className}>
+      <Link href={`/user/${user.id}/${user.username}`} className={className}>
         {withIcon && <StyledFontAwesomeIcon icon={faUser} />}
         {user.username}
         {renderBadges()}
