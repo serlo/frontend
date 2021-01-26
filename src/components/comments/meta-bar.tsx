@@ -13,6 +13,7 @@ import { makeTransparentButton, makeMargin } from '@/helper/css'
 export interface MetaBarProps {
   user: { username: string; id: number }
   timestamp: string
+  threadId: string
   isParent?: boolean
   id: number
   entityId: number
@@ -26,6 +27,7 @@ export function MetaBar({
   id,
   highlight,
   entityId,
+  threadId,
 }: MetaBarProps) {
   const [
     tippyInstance,
@@ -33,7 +35,6 @@ export function MetaBar({
   ] = React.useState<Instance<Props> | null>(null)
 
   const date = new Date(timestamp)
-
   return (
     <MetaBarBox>
       <StyledUserLink user={user} withIcon />
@@ -46,6 +47,7 @@ export function MetaBar({
           tippyInstance ? (
             <DropdownMenu
               isParent={isParent}
+              threadId={threadId}
               date={date}
               id={id}
               entityId={entityId}

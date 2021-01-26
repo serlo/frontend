@@ -121,7 +121,7 @@ export function Comments({ id: entityId }: CommentsProps) {
     return threads?.map((thread) => {
       return (
         <ThreadWrapper key={thread.id}>
-          {renderComments([thread.comments.nodes[0]], true)}
+          {renderComments([thread.comments.nodes[0]], thread.id, true)}
           {renderThreadComments(thread.comments.nodes.slice(1), thread.id)}
         </ThreadWrapper>
       )
@@ -134,14 +134,14 @@ export function Comments({ id: entityId }: CommentsProps) {
     if (length < 2 || showThreadChildren.includes(threadId))
       return (
         <>
-          {length > 0 && renderComments(comments)}
+          {length > 0 && renderComments(comments, threadId)}
           {renderReplyForm(threadId)}
         </>
       )
 
     return (
       <>
-        {renderComments([comments[0]])}
+        {renderComments([comments[0]], threadId)}
         <StyledP>
           <ShowChildrenButton
             onClick={() =>
@@ -160,15 +160,20 @@ export function Comments({ id: entityId }: CommentsProps) {
     )
   }
 
-  function renderComments(comments: CommentsData, isParent?: boolean) {
+  function renderComments(
+    comments: CommentsData,
+    threadId: string,
+    isParent?: boolean
+  ) {
     return comments.map((comment) => {
       const isHighlight = comment.id === highlightedCommentId
       return (
         <Comment
           key={comment.id}
           data={comment}
-          isParent={isParent}
           entityId={entityId}
+          threadId={threadId}
+          isParent={isParent}
           isHighlight={isHighlight}
           highlight={setHighlightedCommentId}
         />

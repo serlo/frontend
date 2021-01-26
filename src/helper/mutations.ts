@@ -2,9 +2,9 @@ import {
   ThreadCreateCommentInput,
   ThreadCreateThreadInput,
   ThreadMutation,
-  ThreadMutationCreateThreadArgs,
 } from '@serlo/api'
 import { gql } from 'graphql-request'
+import NProgress from 'nprogress'
 import { mutate } from 'swr'
 
 import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
@@ -58,29 +58,47 @@ export async function setStateMutation(
 //   console.log(result)
 // }
 
-// export async function setThreadArchived(id: number, unread: boolean) {
-//   const input = {
-//     query: gql`
-//       mutation setState($input: NotificationSetStateInput!) {
-//         notification {
-//           setState(input: $input) {
-//             success
-//           }
-//         }
-//       }
-//     `,
-//     variables: {
-//       input: {
-//         id,
-//         unread,
-//       },
-//     },
-//   }
-//   const result = await createAuthAwareGraphqlFetch(auth)(JSON.stringify(input))
-//   console.log(result)
-// }
+export async function setThreadArchivedMutation(
+  auth: React.RefObject<AuthPayload>,
+  id: string,
+  archived: boolean,
+  entityId: number
+) {
+  const input = {
+    query: gql`
+      mutation setState($input: ThreadSetThreadArchivedInput!) {
+        thread {
+          setThreadArchived(input: $input) {
+            success
+          }
+        }
+      }
+    `,
+    variables: {
+      input: {
+        id,
+        archived,
+      },
+    },
+  }
+  NProgress.start()
+  const response = (await createAuthAwareGraphqlFetch(auth)(
+    JSON.stringify(input)
+  )) as { thread: ThreadMutation }
 
-export async function setCommentState(
+  if (response.thread.setThreadArchived?.success) {
+    await mutate(`comments::${entityId}`)
+    NProgress.done()
+    return true
+  } else {
+    //TODO: display error notice
+    console.log(response)
+    NProgress.done()
+    return false
+  }
+}
+
+export async function setCommentStateMutation(
   auth: React.RefObject<AuthPayload>,
   id: number,
   trashed: boolean,

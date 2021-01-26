@@ -11,7 +11,10 @@ import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UserRoles } from '@/data-types'
 import { makeTransparentButton } from '@/helper/css'
-import { setCommentState } from '@/helper/mutations'
+import {
+  setCommentStateMutation,
+  setThreadArchivedMutation,
+} from '@/helper/mutations'
 
 interface DropdownMenuProps {
   isParent?: boolean
@@ -20,6 +23,7 @@ interface DropdownMenuProps {
   entityId: number
   highlight: (id: number) => void
   onAnyClick: () => void
+  threadId?: string
 }
 
 export function DropdownMenu({
@@ -29,6 +33,7 @@ export function DropdownMenu({
   highlight,
   onAnyClick,
   entityId,
+  threadId,
 }: DropdownMenuProps) {
   const { lang, strings } = useInstanceData()
   const auth = useAuth()
@@ -45,7 +50,7 @@ export function DropdownMenu({
       {isAllowed && (
         <>
           {isParent && (
-            <DropContentButton>
+            <DropContentButton onClick={onArchiveThread}>
               <FontAwesomeIcon icon={faCheck} />{' '}
               {strings.comments.archiveThread}
             </DropContentButton>
@@ -82,7 +87,13 @@ export function DropdownMenu({
 
   function onDelete() {
     if (!isParent) {
-      void setCommentState(auth, id, true, entityId)
+      void setCommentStateMutation(auth, id, true, entityId)
+    }
+  }
+
+  function onArchiveThread() {
+    if (isParent && threadId) {
+      void setThreadArchivedMutation(auth, threadId, true, entityId)
     }
   }
 }

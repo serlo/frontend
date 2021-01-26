@@ -8,6 +8,7 @@ import { MetaBar } from './meta-bar'
 import { scrollIfNeeded } from '@/helper/scroll'
 
 interface CommentProps {
+  threadId: string
   isParent?: boolean
   isHighlight?: boolean
   data: CommentType
@@ -17,10 +18,11 @@ interface CommentProps {
 
 export function Comment({
   data,
-  isParent,
+  threadId,
   isHighlight,
   highlight,
   entityId,
+  isParent,
 }: CommentProps) {
   const commentRef = React.useRef<HTMLDivElement>(null)
   const { author, createdAt, content, id } = data
@@ -49,6 +51,7 @@ export function Comment({
         user={author}
         timestamp={createdAt}
         isParent={isParent}
+        threadId={threadId}
         id={id}
         entityId={entityId}
         highlight={highlight}
