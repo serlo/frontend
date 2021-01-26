@@ -69,7 +69,7 @@ interface AbstractRepository {
     instance: Instance!
     license: License!
     "extends ThreadAware"
-    threads(after: String, before: String, first: Int, last: Int): ThreadsConnection!
+    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
     trashed: Boolean!
 }
 
@@ -86,7 +86,7 @@ interface AbstractRevision {
     "extends AbstractUuid"
     id: Int!
     "extends ThreadAware"
-    threads(after: String, before: String, first: Int, last: Int): ThreadsConnection!
+    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
     trashed: Boolean!
 }
 
@@ -112,7 +112,7 @@ interface InstanceAware {
 }
 
 interface ThreadAware {
-    threads(after: String, before: String, first: Int, last: Int): ThreadsConnection!
+    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
 }
 
 type AbstractUuidConnection {
@@ -136,7 +136,7 @@ type Applet implements AbstractEntity & AbstractRepository & AbstractTaxonomyTer
     license: License!
     revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): AppletRevisionConnection!
     taxonomyTerms(after: String, before: String, first: Int, last: Int): TaxonomyTermConnection!
-    threads(after: String, before: String, first: Int, last: Int): ThreadsConnection!
+    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
     trashed: Boolean!
 }
 
@@ -150,7 +150,7 @@ type AppletRevision implements AbstractEntityRevision & AbstractRevision & Abstr
     metaDescription: String!
     metaTitle: String!
     repository: Applet!
-    threads(after: String, before: String, first: Int, last: Int): ThreadsConnection!
+    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
     title: String!
     trashed: Boolean!
     url: String!
@@ -177,7 +177,7 @@ type Article implements AbstractEntity & AbstractRepository & AbstractTaxonomyTe
     license: License!
     revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): ArticleRevisionConnection!
     taxonomyTerms(after: String, before: String, first: Int, last: Int): TaxonomyTermConnection!
-    threads(after: String, before: String, first: Int, last: Int): ThreadsConnection!
+    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
     trashed: Boolean!
 }
 
@@ -191,7 +191,7 @@ type ArticleRevision implements AbstractEntityRevision & AbstractRevision & Abst
     metaDescription: String!
     metaTitle: String!
     repository: Article!
-    threads(after: String, before: String, first: Int, last: Int): ThreadsConnection!
+    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
     title: String!
     trashed: Boolean!
 }
@@ -220,7 +220,7 @@ type CheckoutRevisionNotificationEvent implements AbstractNotificationEvent & In
 }
 
 type Comment implements AbstractUuid {
-    alias: String
+    alias: String!
     archived: Boolean!
     author: User!
     content: String!
@@ -252,7 +252,7 @@ type Course implements AbstractEntity & AbstractRepository & AbstractTaxonomyTer
     pages: [CoursePage!]!
     revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): CourseRevisionConnection!
     taxonomyTerms(after: String, before: String, first: Int, last: Int): TaxonomyTermConnection!
-    threads(after: String, before: String, first: Int, last: Int): ThreadsConnection!
+    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
     trashed: Boolean!
 }
 
@@ -265,7 +265,7 @@ type CoursePage implements AbstractEntity & AbstractRepository & AbstractUuid & 
     instance: Instance!
     license: License!
     revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): CoursePageRevisionConnection!
-    threads(after: String, before: String, first: Int, last: Int): ThreadsConnection!
+    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
     trashed: Boolean!
 }
 
@@ -277,7 +277,7 @@ type CoursePageRevision implements AbstractEntityRevision & AbstractRevision & A
     date: DateTime!
     id: Int!
     repository: CoursePage!
-    threads(after: String, before: String, first: Int, last: Int): ThreadsConnection!
+    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
     title: String!
     trashed: Boolean!
 }
@@ -303,7 +303,7 @@ type CourseRevision implements AbstractEntityRevision & AbstractRevision & Abstr
     id: Int!
     metaDescription: String!
     repository: Course!
-    threads(after: String, before: String, first: Int, last: Int): ThreadsConnection!
+    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
     title: String!
     trashed: Boolean!
 }
@@ -397,7 +397,7 @@ type Event implements AbstractEntity & AbstractRepository & AbstractTaxonomyTerm
     license: License!
     revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): EventRevisionConnection!
     taxonomyTerms(after: String, before: String, first: Int, last: Int): TaxonomyTermConnection!
-    threads(after: String, before: String, first: Int, last: Int): ThreadsConnection!
+    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
     trashed: Boolean!
 }
 
@@ -411,7 +411,7 @@ type EventRevision implements AbstractEntityRevision & AbstractRevision & Abstra
     metaDescription: String!
     metaTitle: String!
     repository: Event!
-    threads(after: String, before: String, first: Int, last: Int): ThreadsConnection!
+    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
     title: String!
     trashed: Boolean!
 }
@@ -438,7 +438,7 @@ type Exercise implements AbstractEntity & AbstractExercise & AbstractRepository 
     revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): ExerciseRevisionConnection!
     solution: Solution
     taxonomyTerms(after: String, before: String, first: Int, last: Int): TaxonomyTermConnection!
-    threads(after: String, before: String, first: Int, last: Int): ThreadsConnection!
+    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
     trashed: Boolean!
 }
 
@@ -452,7 +452,7 @@ type ExerciseGroup implements AbstractEntity & AbstractRepository & AbstractTaxo
     license: License!
     revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): ExerciseGroupRevisionConnection!
     taxonomyTerms(after: String, before: String, first: Int, last: Int): TaxonomyTermConnection!
-    threads(after: String, before: String, first: Int, last: Int): ThreadsConnection!
+    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
     trashed: Boolean!
 }
 
@@ -464,7 +464,7 @@ type ExerciseGroupRevision implements AbstractEntityRevision & AbstractRevision 
     date: DateTime!
     id: Int!
     repository: ExerciseGroup!
-    threads(after: String, before: String, first: Int, last: Int): ThreadsConnection!
+    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
     trashed: Boolean!
 }
 
@@ -488,7 +488,7 @@ type ExerciseRevision implements AbstractEntityRevision & AbstractExerciseRevisi
     date: DateTime!
     id: Int!
     repository: Exercise!
-    threads(after: String, before: String, first: Int, last: Int): ThreadsConnection!
+    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
     trashed: Boolean!
 }
 
@@ -514,7 +514,7 @@ type GroupedExercise implements AbstractEntity & AbstractExercise & AbstractRepo
     license: License!
     revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): GroupedExerciseRevisionConnection!
     solution: Solution
-    threads(after: String, before: String, first: Int, last: Int): ThreadsConnection!
+    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
     trashed: Boolean!
 }
 
@@ -526,7 +526,7 @@ type GroupedExerciseRevision implements AbstractEntityRevision & AbstractExercis
     date: DateTime!
     id: Int!
     repository: GroupedExercise!
-    threads(after: String, before: String, first: Int, last: Int): ThreadsConnection!
+    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
     trashed: Boolean!
 }
 
@@ -557,8 +557,8 @@ type Mutation {
     _removeCache(key: String!): Boolean
     _setCache(key: String!, value: JSON!): Boolean
     _updateCache(keys: [String!]!): Boolean
-    createThread(content: String!, objectId: Int!, title: String!): Thread
     notification: NotificationMutation!
+    thread: ThreadMutation!
     uuid: UuidMutation!
 }
 
@@ -609,7 +609,6 @@ type NotificationMutation {
 
 type NotificationSetStateResponse {
     query: Query!
-    record: AbstractNotificationEvent
     success: Boolean!
 }
 
@@ -622,7 +621,7 @@ type Page implements AbstractNavigationChild & AbstractRepository & AbstractUuid
     license: License!
     navigation: Navigation
     revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): PageRevisionConnection!
-    threads(after: String, before: String, first: Int, last: Int): ThreadsConnection!
+    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
     trashed: Boolean!
 }
 
@@ -640,7 +639,7 @@ type PageRevision implements AbstractRevision & AbstractUuid & ThreadAware {
     date: DateTime!
     id: Int!
     repository: Page!
-    threads(after: String, before: String, first: Int, last: Int): ThreadsConnection!
+    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
     title: String!
     trashed: Boolean!
 }
@@ -658,7 +657,6 @@ type PageRevisionCursor {
 }
 
 type Query {
-    _cacheKeys(after: String, before: String, first: Int, last: Int): StringConnection!
     activeAuthors(after: String, before: String, first: Int, last: Int): UserConnection!
     activeDonors(after: String, before: String, first: Int, last: Int): UserConnection!
     activeReviewers(after: String, before: String, first: Int, last: Int): UserConnection!
@@ -765,7 +763,7 @@ type Solution implements AbstractEntity & AbstractRepository & AbstractUuid & In
     instance: Instance!
     license: License!
     revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): SolutionRevisionConnection
-    threads(after: String, before: String, first: Int, last: Int): ThreadsConnection!
+    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
     trashed: Boolean!
 }
 
@@ -777,7 +775,7 @@ type SolutionRevision implements AbstractEntityRevision & AbstractRevision & Abs
     date: DateTime!
     id: Int!
     repository: Solution!
-    threads(after: String, before: String, first: Int, last: Int): ThreadsConnection!
+    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
     trashed: Boolean!
 }
 
@@ -791,18 +789,6 @@ type SolutionRevisionConnection {
 type SolutionRevisionCursor {
     cursor: String!
     node: SolutionRevision!
-}
-
-type StringConnection {
-    edges: [StringEdge!]!
-    nodes: [String!]!
-    pageInfo: PageInfo!
-    totalCount: Int!
-}
-
-type StringEdge {
-    cursor: String!
-    node: String!
 }
 
 type SubscriptionCursor {
@@ -819,7 +805,7 @@ type TaxonomyTerm implements AbstractNavigationChild & AbstractUuid & InstanceAw
     name: String!
     navigation: Navigation
     parent: TaxonomyTerm
-    threads(after: String, before: String, first: Int, last: Int): ThreadsConnection!
+    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
     trashed: Boolean!
     type: TaxonomyTermType!
     weight: Int!
@@ -841,10 +827,44 @@ type Thread {
     archived: Boolean!
     comments(after: String, before: String, first: Int, last: Int): CommentConnection!
     createdAt: DateTime!
+    id: String!
     object: AbstractUuid!
     title: String
-    trashed: Boolean!
-    updatedAt: DateTime!
+}
+
+type ThreadCreateCommentResponse {
+    query: Query!
+    record: Comment
+    success: Boolean!
+}
+
+type ThreadCreateThreadResponse {
+    query: Query!
+    record: Thread
+    success: Boolean!
+}
+
+type ThreadMutation {
+    createComment(input: ThreadCreateCommentInput!): ThreadCreateCommentResponse
+    createThread(input: ThreadCreateThreadInput!): ThreadCreateThreadResponse
+    setCommentState(input: ThreadSetCommentStateInput!): ThreadSetCommentStateResponse
+    setThreadArchived(input: ThreadSetThreadArchivedInput!): ThreadSetThreadArchivedResponse
+    setThreadState(input: ThreadSetThreadStateInput!): ThreadSetThreadStateResponse
+}
+
+type ThreadSetCommentStateResponse {
+    query: Query!
+    success: Boolean!
+}
+
+type ThreadSetThreadArchivedResponse {
+    query: Query!
+    success: Boolean!
+}
+
+type ThreadSetThreadStateResponse {
+    query: Query!
+    success: Boolean!
 }
 
 type ThreadsConnection {
@@ -876,7 +896,7 @@ type User implements AbstractUuid & ThreadAware {
     description: String
     id: Int!
     lastLogin: DateTime
-    threads(after: String, before: String, first: Int, last: Int): ThreadsConnection!
+    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
     trashed: Boolean!
     username: String!
 }
@@ -911,7 +931,7 @@ type Video implements AbstractEntity & AbstractRepository & AbstractTaxonomyTerm
     license: License!
     revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): VideoRevisionConnection!
     taxonomyTerms(after: String, before: String, first: Int, last: Int): TaxonomyTermConnection!
-    threads(after: String, before: String, first: Int, last: Int): ThreadsConnection!
+    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
     trashed: Boolean!
 }
 
@@ -923,7 +943,7 @@ type VideoRevision implements AbstractEntityRevision & AbstractRevision & Abstra
     date: DateTime!
     id: Int!
     repository: Video!
-    threads(after: String, before: String, first: Int, last: Int): ThreadsConnection!
+    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
     title: String!
     trashed: Boolean!
     url: String!
@@ -977,6 +997,32 @@ input AliasInput {
 input NotificationSetStateInput {
     id: [Int!]!
     unread: Boolean!
+}
+
+input ThreadCreateCommentInput {
+    content: String!
+    threadId: String!
+}
+
+input ThreadCreateThreadInput {
+    content: String!
+    objectId: Int!
+    title: String!
+}
+
+input ThreadSetCommentStateInput {
+    id: Int!
+    trashed: Boolean!
+}
+
+input ThreadSetThreadArchivedInput {
+    archived: Boolean!
+    id: String!
+}
+
+input ThreadSetThreadStateInput {
+    id: String!
+    trashed: Boolean!
 }
 
 input UuidSetStateInput {

@@ -7,10 +7,9 @@ const query = gql`
   query getComments($id: Int!) {
     uuid(id: $id) {
       ... on ThreadAware {
-        threads {
+        threads(trashed: false) {
           nodes {
             archived
-            trashed
             comments {
               nodes {
                 id
@@ -44,14 +43,13 @@ export function useCommentData(id: number) {
     },
   })
 
-  const untrashedThreads = data?.uuid.threads.nodes.filter(
-    (node) => !node.trashed
-  )
-  const activeThreads = untrashedThreads?.filter((thread) => !thread.archived)
-  const archivedThreads = untrashedThreads?.filter((thread) => thread.archived)
+  const threads = data?.uuid.threads.nodes
+
+  const activeThreads = threads?.filter((thread) => !thread.archived)
+  const archivedThreads = threads?.filter((thread) => thread.archived)
 
   const commentData = { active: activeThreads, archived: archivedThreads }
-  const commentCount = untrashedThreads?.reduce((acc, thread) => {
+  const commentCount = threads?.reduce((acc, thread) => {
     return acc + thread.comments.nodes.length
   }, 0)
 
