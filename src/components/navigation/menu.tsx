@@ -12,6 +12,7 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { HeaderData, HeaderLink } from '@/data-types'
 import { makeTransparentButton } from '@/helper/css'
 import { getAuthData, shouldUseNewAuth } from '@/helper/feature-auth'
+import { useLoggedInComponents } from '@/contexts/logged-in-components'
 
 // Only show some icons on full menu
 const menuIconMapping = {
@@ -42,6 +43,8 @@ export function Menu({ data, auth }: MenuProps) {
 
   type TippyRoot = Parameters<NonNullable<TippyProps['onCreate']>>[0]
   const [tippyRoot, setTippyRoot] = React.useState<TippyRoot | null>(null)
+
+  const lic = useLoggedInComponents()
 
   function onSubMenuInnerClick() {
     if (tippyRoot && tippyRoot !== undefined) tippyRoot.hide()
@@ -131,8 +134,10 @@ export function Menu({ data, auth }: MenuProps) {
     function renderIcon() {
       if (!hasIcon) return null
 
-      if (link.icon === 'notifications')
-        return <UnreadNotificationsCount icon={menuIconMapping[link.icon]} />
+      if (link.icon === 'notifications') {
+        const Comp = lic?.UnreadNotificationsCount
+        if (Comp) return <Comp icon={menuIconMapping[link.icon]} />
+      }
 
       return (
         <span className="fa-layers fa-fw">

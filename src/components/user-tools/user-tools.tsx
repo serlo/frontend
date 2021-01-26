@@ -14,12 +14,10 @@ import {
   makeGreenButton,
   inputFontReset,
 } from '../../helper/css'
-import {
-  AuthorToolsHoverMenu,
-  AuthorToolsData,
-} from './author-tools-hover-menu'
+import { AuthorToolsData } from './author-tools-hover-menu'
 import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
+import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UserRoles } from '@/data-types'
 import { theme } from '@/theme'
@@ -52,6 +50,7 @@ export function UserTools({
     setLoaded(true)
   }, [])
   const loggedInData = useLoggedInData()
+  const lic = useLoggedInComponents()
   const showHistory = unrevisedRevision !== undefined && unrevisedRevision > 0
 
   function getBrowserWidth() {
@@ -130,7 +129,7 @@ export function UserTools({
   }
 
   function renderExtraTools() {
-    if (!(loaded && auth.current && loggedInData && data)) return null
+    if (!(loaded && auth.current && loggedInData && data && lic)) return null
     const supportedTypes = [
       'Page',
       'Article',
@@ -147,10 +146,12 @@ export function UserTools({
 
     const isLargeScreen = getBrowserWidth() > theme.breakpointsInt.lg
 
+    const Comp = lic.AuthorToolsHoverMenu
+
     return (
       <Tippy
         interactive
-        content={<AuthorToolsHoverMenu data={data} />}
+        content={<Comp data={data} />}
         placement={isLargeScreen ? 'left-end' : 'bottom'}
         delay={[0, 300]}
         interactiveBorder={isLargeScreen ? 40 : 10}

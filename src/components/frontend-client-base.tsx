@@ -34,7 +34,7 @@ export function FrontendClientBase({
   const [instanceData] = React.useState<InstanceData>(() => {
     if (typeof window === 'undefined') {
       // load instance data for server side rendering
-      // Note: using requrie to avoid webpack bundling it
+      // Note: using require to avoid webpack bundling it
       return require('@/helper/feature-i18n').getInstanceDataByLang(locale!)
     } else {
       // load instance data from client from document tag
@@ -60,8 +60,13 @@ export function FrontendClientBase({
   const [loggedInData, setLoggedInData] = React.useState<LoggedInData | null>(
     getCachedLoggedInData()
   )
+  const [loggedInComponents, setLoggedInComponents] = React.useState<any>(null)
 
-  React.useEffect(fetchLoggedInData, [auth, instanceData.lang, loggedInData])
+  console.log('Comps', loggedInComponents)
+
+  React.useEffect(fetchLoggedInData, [
+    /*auth, instanceData.lang, loggedInData*/
+  ])
 
   const toastNotice = notify.createShowQueue()
 
@@ -131,18 +136,25 @@ export function FrontendClientBase({
   }
 
   function fetchLoggedInData() {
-    if (auth.current && !loggedInData) {
-      void (async () => {
-        const res = await fetch(
-          frontendOrigin + '/api/locale/' + instanceData.lang
-        )
-        const json = (await res.json()) as LoggedInData
-        sessionStorage.setItem(
-          `___loggedInData_${instanceData.lang}`,
-          JSON.stringify(json)
-        )
-        setLoggedInData(json)
-      })()
+    if (auth.current) {
+      Promise.all([
+        !loggedInData
+          ? fetch(
+              frontendOrigin + '/api/locale/' + instanceData.lang
+            ).then((res) => res.json())
+          : false,
+        import('@/helper/logged-in-stuff-chunk'),
+      ])
+        .then((values: any) => {
+          console.log(values)
+          sessionStorage.setItem(
+            `___loggedInData_${instanceData.lang}`,
+            JSON.stringify(values[0])
+          )
+          setLoggedInData(values[0])
+          setLoggedInComponents(values[1])
+        })
+        .catch(() => {})
     }
   }
 }

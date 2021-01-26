@@ -1,10 +1,11 @@
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import dynamic from 'next/dynamic'
 import { Router } from 'next/router'
 import React from 'react'
 import styled from 'styled-components'
 
-import { Comments } from '../comments/comments'
+import { CommentsProps } from '../comments/comments'
 import { HSpace } from './h-space'
 import { LicenseNotice } from '@/components/content/license-notice'
 import { CourseFooter } from '@/components/navigation/course-footer'
@@ -20,6 +21,10 @@ import { renderArticle } from '@/schema/article-renderer'
 export interface EntityProps {
   data: EntityData
 }
+
+const Comments = dynamic<CommentsProps>(() =>
+  import('@/components/comments/comments').then((mod) => mod.Comments)
+)
 
 export function Entity({ data }: EntityProps) {
   // state of the share modal

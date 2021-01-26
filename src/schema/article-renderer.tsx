@@ -41,7 +41,7 @@ import { Solution } from '@/components/content/exercises/solution'
 import { Geogebra } from '@/components/content/geogebra'
 import { Injection } from '@/components/content/injection'
 import { Lazy } from '@/components/content/lazy'
-import { MathProps } from '@/components/content/math'
+import { MathSpanProps } from '@/components/content/math-span'
 import { Multimedia } from '@/components/content/multimedia'
 import { Video } from '@/components/content/video'
 import { FrontendContentNode } from '@/data-types'
@@ -53,8 +53,8 @@ interface RenderElementProps {
   path: number[]
 }
 
-const Math = dynamic<MathProps>(() =>
-  import('../components/content/math').then((mod) => mod.Math)
+const Math = dynamic<MathSpanProps>(() =>
+  import('../components/content/math-span').then((mod) => mod.MathSpan)
 )
 
 export function renderArticle(value: FrontendContentNode[], addCSS = true) {
