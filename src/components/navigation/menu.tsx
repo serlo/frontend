@@ -1,24 +1,17 @@
 import { faCaretDown, faUser, faBell } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Tippy, { TippyProps, useSingleton } from '@tippyjs/react'
-import dynamic from 'next/dynamic'
 import React from 'react'
 import styled, { css } from 'styled-components'
 
 import { Link } from '../content/link'
-import { UnreadNotificationsCountProps } from '../user-tools/unread-notifications-count'
+import { UnreadNotificationsCount } from '../user-tools/unread-notifications-count'
 import { AuthPayload } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { HeaderData, HeaderLink } from '@/data-types'
 import { makeTransparentButton } from '@/helper/css'
 import { getAuthData, shouldUseNewAuth } from '@/helper/feature-auth'
-
-const UnreadNotificationsCount = dynamic<UnreadNotificationsCountProps>(() =>
-  import('../user-tools/unread-notifications-count').then(
-    (mod) => mod.UnreadNotificationsCount
-  )
-)
 
 // Only show some icons on full menu
 const menuIconMapping = {

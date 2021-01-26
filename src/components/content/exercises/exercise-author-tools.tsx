@@ -1,24 +1,17 @@
 import { faTools } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Tippy from '@tippyjs/react'
-import dynamic from 'next/dynamic'
 import styled from 'styled-components'
 
 import {
   AuthorToolsData,
-  AuthorToolsHoverMenuProps,
+  AuthorToolsHoverMenu,
 } from '../../user-tools/author-tools-hover-menu'
 import { makeTransparentButton } from '@/helper/css'
 
 export interface ExerciseAuthorToolsProps {
   data: AuthorToolsData
 }
-
-const AuthorToolsHoverMenu = dynamic<AuthorToolsHoverMenuProps>(() =>
-  import('../../user-tools/author-tools-hover-menu').then(
-    (mod) => mod.AuthorToolsHoverMenu
-  )
-)
 
 export function ExerciseAuthorTools({ data }: ExerciseAuthorToolsProps) {
   return (

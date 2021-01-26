@@ -6,7 +6,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Tippy from '@tippyjs/react'
-import dynamic from 'next/dynamic'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -16,7 +15,7 @@ import {
   inputFontReset,
 } from '../../helper/css'
 import {
-  AuthorToolsHoverMenuProps,
+  AuthorToolsHoverMenu,
   AuthorToolsData,
 } from './author-tools-hover-menu'
 import { useAuth } from '@/auth/use-auth'
@@ -24,10 +23,6 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UserRoles } from '@/data-types'
 import { theme } from '@/theme'
-
-const AuthorToolsHoverMenu = dynamic<AuthorToolsHoverMenuProps>(() =>
-  import('./author-tools-hover-menu').then((mod) => mod.AuthorToolsHoverMenu)
-)
 
 interface UserToolsProps {
   id: number

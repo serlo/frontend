@@ -1,12 +1,11 @@
 import { faFile } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import dynamic from 'next/dynamic'
 import React from 'react'
 import styled from 'styled-components'
 
 import { makeMargin } from '../../helper/css'
 import { renderArticle } from '../../schema/article-renderer'
-import { CommentsProps } from '../comments/comments'
+import { Comments } from '../comments/comments'
 import { ShareModal } from '../user-tools/share-modal'
 import { UserTools } from '../user-tools/user-tools'
 import { LicenseNotice } from './license-notice'
@@ -23,10 +22,6 @@ import { categoryIconMapping } from '@/helper/icon-by-entity-type'
 export interface TopicProps {
   data: TaxonomyData
 }
-
-const Comments = dynamic<CommentsProps>(() =>
-  import('@/components/comments/comments').then((mod) => mod.Comments)
-)
 
 export function Topic({ data }: TopicProps) {
   const [open, setOpen] = React.useState(false)

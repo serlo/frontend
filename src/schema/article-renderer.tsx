@@ -6,12 +6,12 @@ import { Col } from '../components/content/col'
 import { ExerciseGroup } from '../components/content/exercises/exercise-group'
 import { ImageLink } from '../components/content/image-link'
 import { ImgCentered } from '../components/content/img-centered'
+import { ImgMaxWidthDiv } from '../components/content/img-max-width-div'
 import { Important } from '../components/content/important'
 import { LayoutRow } from '../components/content/layout-row'
 import { LicenseNotice } from '../components/content/license-notice'
 import { Link } from '../components/content/link'
 import { MathWrapper } from '../components/content/math-wrapper'
-import { MaxWidthDiv } from '../components/content/max-width-div'
 import { SpecialCss } from '../components/content/special-css'
 import { SpoilerBody } from '../components/content/spoiler-body'
 import { SpoilerContainer } from '../components/content/spoiler-container'
@@ -34,16 +34,16 @@ import { StyledTr } from '../components/tags/styled-tr'
 import { StyledUl } from '../components/tags/styled-ul'
 import { theme } from '../theme'
 import { Blockquote } from '@/components/content/blockquote'
-import type { CodeProps } from '@/components/content/code'
-import type { EquationProps } from '@/components/content/equations'
-import { ExerciseProps } from '@/components/content/exercises/exercise'
+import { Code } from '@/components/content/code'
+import { Equations } from '@/components/content/equations'
+import { Exercise } from '@/components/content/exercises/exercise'
 import { Solution } from '@/components/content/exercises/solution'
-import type { GeogebraProps } from '@/components/content/geogebra'
-import type { InjectionProps } from '@/components/content/injection'
+import { Geogebra } from '@/components/content/geogebra'
+import { Injection } from '@/components/content/injection'
 import { Lazy } from '@/components/content/lazy'
-import type { MathProps } from '@/components/content/math'
+import { MathProps } from '@/components/content/math'
 import { Multimedia } from '@/components/content/multimedia'
-import type { VideoProps } from '@/components/content/video'
+import { Video } from '@/components/content/video'
 import { FrontendContentNode } from '@/data-types'
 
 interface RenderElementProps {
@@ -55,24 +55,6 @@ interface RenderElementProps {
 
 const Math = dynamic<MathProps>(() =>
   import('../components/content/math').then((mod) => mod.Math)
-)
-const Geogebra = dynamic<GeogebraProps>(() =>
-  import('../components/content/geogebra').then((mod) => mod.Geogebra)
-)
-const Injection = dynamic<InjectionProps>(() =>
-  import('../components/content/injection').then((mod) => mod.Injection)
-)
-const Exercise = dynamic<ExerciseProps>(() =>
-  import('../components/content/exercises/exercise').then((mod) => mod.Exercise)
-)
-const Video = dynamic<VideoProps>(() =>
-  import('../components/content/video').then((mod) => mod.Video)
-)
-const Equations = dynamic<EquationProps>(() =>
-  import('../components/content/equations').then((mod) => mod.Equations)
-)
-const Code = dynamic<CodeProps>(() =>
-  import('../components/content/code').then((mod) => mod.Code)
 )
 
 export function renderArticle(value: FrontendContentNode[], addCSS = true) {
@@ -207,7 +189,7 @@ function renderElement(props: RenderElementProps): React.ReactNode {
     }
     return (
       <ImgCentered itemScope itemType="http://schema.org/ImageObject">
-        <MaxWidthDiv maxWidth={element.maxWidth ? element.maxWidth : 0}>
+        <ImgMaxWidthDiv maxWidth={element.maxWidth ? element.maxWidth : 0}>
           {wrapInA(
             <Lazy>
               <StyledImg
@@ -217,7 +199,7 @@ function renderElement(props: RenderElementProps): React.ReactNode {
               ></StyledImg>
             </Lazy>
           )}
-        </MaxWidthDiv>
+        </ImgMaxWidthDiv>
       </ImgCentered>
     )
   }

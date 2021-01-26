@@ -1,4 +1,3 @@
-import dynamic from 'next/dynamic'
 import React from 'react'
 import styled, { css } from 'styled-components'
 
@@ -8,7 +7,7 @@ import { ExerciseNumbering } from './exercise-numbering'
 import { InputExercise } from './input-exercise'
 import { ScMcExercise } from './sc-mc-exercise'
 import { useAuth } from '@/auth/use-auth'
-import { CommentsProps } from '@/components/comments/comments'
+import { Comments } from '@/components/comments/comments'
 import { useInstanceData } from '@/contexts/instance-context'
 import { FrontendExerciseNode } from '@/data-types'
 import { makeMargin, makeTransparentButton, makePadding } from '@/helper/css'
@@ -17,10 +16,6 @@ import { renderArticle } from '@/schema/article-renderer'
 export interface ExerciseProps {
   node: FrontendExerciseNode
 }
-
-const Comments = dynamic<CommentsProps>(() =>
-  import('@/components/comments/comments').then((mod) => mod.Comments)
-)
 
 export function Exercise({ node }: ExerciseProps) {
   const { strings } = useInstanceData()

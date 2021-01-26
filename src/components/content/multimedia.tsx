@@ -1,18 +1,13 @@
-import dynamic from 'next/dynamic'
 import React from 'react'
 import styled from 'styled-components'
 
-import { LightBoxProps } from './light-box'
+import { LightBox } from './light-box'
 import {
   FrontendMultiMediaNode,
   FrontendImgNode,
   FrontendContentNode,
 } from '@/data-types'
 import { renderArticle } from '@/schema/article-renderer'
-
-const LightBox = dynamic<LightBoxProps>(() =>
-  import('./light-box').then((mod) => mod.LightBox)
-)
 
 export function Multimedia({
   mediaWidth,

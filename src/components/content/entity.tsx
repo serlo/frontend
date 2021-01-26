@@ -1,15 +1,14 @@
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import dynamic from 'next/dynamic'
 import { Router } from 'next/router'
 import React from 'react'
 import styled from 'styled-components'
 
-import { CommentsProps } from '../comments/comments'
+import { Comments } from '../comments/comments'
 import { HSpace } from './h-space'
 import { LicenseNotice } from '@/components/content/license-notice'
-import type { CourseFooterProps } from '@/components/navigation/course-footer'
-import type { CourseNavigationProps } from '@/components/navigation/course-navigation'
+import { CourseFooter } from '@/components/navigation/course-footer'
+import { CourseNavigation } from '@/components/navigation/course-navigation'
 import { StyledH1 } from '@/components/tags/styled-h1'
 import { ShareModal } from '@/components/user-tools/share-modal'
 import { UserTools } from '@/components/user-tools/user-tools'
@@ -17,22 +16,6 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { EntityData, FrontendContentNode } from '@/data-types'
 import { entityIconMapping } from '@/helper/icon-by-entity-type'
 import { renderArticle } from '@/schema/article-renderer'
-
-const CourseNavigation = dynamic<CourseNavigationProps>(() =>
-  import('@/components/navigation/course-navigation').then(
-    (mod) => mod.CourseNavigation
-  )
-)
-
-const CourseFooter = dynamic<CourseFooterProps>(() =>
-  import('@/components/navigation/course-footer').then(
-    (mod) => mod.CourseFooter
-  )
-)
-
-const Comments = dynamic<CommentsProps>(() =>
-  import('@/components/comments/comments').then((mod) => mod.Comments)
-)
 
 export interface EntityProps {
   data: EntityData
