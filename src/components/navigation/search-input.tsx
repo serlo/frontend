@@ -1,6 +1,5 @@
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Tippy from '@tippyjs/react'
 import { useRouter } from 'next/router'
 import { lighten } from 'polished'
 import React from 'react'
@@ -8,6 +7,7 @@ import styled, { createGlobalStyle, css } from 'styled-components'
 
 import { isLegacyLink } from '../content/link'
 import { StyledA } from '../tags/styled-a'
+import { LazyTippy } from './lazy-tippy'
 import SearchIcon from '@/assets-webkit/img/search-icon.svg'
 import { useInstanceData } from '@/contexts/instance-context'
 import { inputFontReset, makeLightButton, makePadding } from '@/helper/css'
@@ -152,7 +152,7 @@ export function SearchInput() {
 
   return (
     <>
-      <Tippy
+      <LazyTippy
         content={renderConsentPop()}
         trigger="focus click"
         interactive
@@ -189,7 +189,7 @@ export function SearchInput() {
             data-enablehistory="true"
           />
         </SearchForm>
-      </Tippy>
+      </LazyTippy>
       <AutocompleteStyle />
     </>
   )
@@ -448,8 +448,6 @@ const AutocompleteStyle = createGlobalStyle`
     }
   }
 `
-
-//this is overriding the styles of the modal-content only. see doc to change overlay etc.
 
 const ConsentPop = styled.div`
   background-color: ${(props) => props.theme.colors.brand};

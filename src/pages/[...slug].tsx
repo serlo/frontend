@@ -1,27 +1,14 @@
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
-import dynamic from 'next/dynamic'
 import React from 'react'
 
-import { EntityProps } from '@/components/content/entity'
-import { TopicProps } from '@/components/content/topic'
-import { EntityBaseProps } from '@/components/entity-base'
+import { Entity } from '@/components/content/entity'
+import { Topic } from '@/components/content/topic'
+import { EntityBase } from '@/components/entity-base'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
-import { InitialProps, ErrorData, PageData } from '@/data-types'
+import { ErrorPage } from '@/components/pages/error-page'
+import { InitialProps, PageData } from '@/data-types'
 import { fetchPageData } from '@/fetcher/fetch-page-data'
-
-const EntityBase = dynamic<EntityBaseProps>(() =>
-  import('@/components/entity-base').then((mod) => mod.EntityBase)
-)
-const ErrorPage = dynamic<ErrorData>(() =>
-  import('@/components/pages/error-page').then((mod) => mod.ErrorPage)
-)
-const Topic = dynamic<TopicProps>(() =>
-  import('@/components/content/topic').then((mod) => mod.Topic)
-)
-const Entity = dynamic<EntityProps>(() =>
-  import('@/components/content/entity').then((mod) => mod.Entity)
-)
 
 const PageView: NextPage<InitialProps> = (initialProps) => {
   const pageData = initialProps.pageData

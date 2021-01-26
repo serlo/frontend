@@ -2,7 +2,6 @@ import dynamic from 'next/dynamic'
 import React from 'react'
 import styled, { css } from 'styled-components'
 
-import { ExerciseAuthorTools } from '../exercises/exercise-author-tools'
 import { LicenseNotice } from '../license-notice'
 import { ExerciseNumbering } from './exercise-numbering'
 import { InputExercise } from './input-exercise'
@@ -10,6 +9,7 @@ import { ScMcExercise } from './sc-mc-exercise'
 import { useAuth } from '@/auth/use-auth'
 import { CommentsProps } from '@/components/comments/comments'
 import { useInstanceData } from '@/contexts/instance-context'
+import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { FrontendExerciseNode } from '@/data-types'
 import { makeMargin, makeTransparentButton, makePadding } from '@/helper/css'
 import { renderArticle } from '@/schema/article-renderer'
@@ -33,6 +33,8 @@ export function Exercise({ node }: ExerciseProps) {
     setLoaded(true)
   }, [])
 
+  const lic = useLoggedInComponents()
+
   return (
     <Wrapper grouped={node.grouped}>
       <ExerciseNumbering
@@ -54,8 +56,10 @@ export function Exercise({ node }: ExerciseProps) {
     const license = node.solution.license && !node.solution.license.default && (
       <LicenseNotice minimal data={node.solution.license} type="solution" />
     )
-    const authorTools = loaded && auth.current && (
-      <ExerciseAuthorTools
+    const Comp = lic?.ExerciseAuthorTools
+    console.log('exercise', Comp)
+    const authorTools = Comp && loaded && auth.current && (
+      <Comp
         data={{
           type: '_SolutionInline',
           id: node.context.solutionId!,
@@ -141,6 +145,7 @@ export function Exercise({ node }: ExerciseProps) {
   }
 
   function renderToolsAndLicense() {
+    const Comp = lic?.ExerciseAuthorTools
     return (
       <ExerciseTools>
         {renderSolutionToggle()}
@@ -148,10 +153,8 @@ export function Exercise({ node }: ExerciseProps) {
         {node.task.license && (
           <LicenseNotice minimal data={node.task.license} type="task" />
         )}
-        {loaded && auth.current && (
-          <ExerciseAuthorTools
-            data={{ type: '_ExerciseInline', id: node.context.id }}
-          />
+        {loaded && auth.current && Comp && (
+          <Comp data={{ type: '_ExerciseInline', id: node.context.id }} />
         )}
       </ExerciseTools>
     )

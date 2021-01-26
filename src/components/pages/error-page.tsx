@@ -2,15 +2,14 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { PageTitle } from '../content/page-title'
+import { FrontendClientBase } from '../frontend-client-base'
 import { HSpace } from '@/components/content/h-space'
-import { MaxWidthDiv } from '@/components/navigation/max-width-div'
-import { RelativeContainer } from '@/components/navigation/relative-container'
 import { StyledA } from '@/components/tags/styled-a'
 import { StyledP } from '@/components/tags/styled-p'
 import { useInstanceData } from '@/contexts/instance-context'
 import { ErrorData } from '@/data-types'
 import { makePrimaryButton } from '@/helper/css'
-import { SentryGlobal } from '@/pages/_app'
+import { SentryGlobal } from '@/helper/sentry-types'
 
 export function ErrorPage({ code, message }: ErrorData) {
   const [path, setPath] = React.useState('')
@@ -41,36 +40,34 @@ export function ErrorPage({ code, message }: ErrorData) {
   const isProbablyTemporary = code > 500
 
   return (
-    <RelativeContainer>
-      <MaxWidthDiv>
-        <PageTitle title={strings.errors.title} headTitle />
-        <_StyledP>
-          {strings.errors.defaultMessage}{' '}
-          {!isProbablyTemporary && (
-            <>
-              <br />
-              {strings.errors.permanent}
-            </>
-          )}
-        </_StyledP>
-        <_StyledP>{isProbablyTemporary && strings.errors.temporary}</_StyledP>
-        <StyledP>{renderButtons()}</StyledP>
-        <HSpace amount={70} />
-        <StyledP>
-          <b>Error: {code}</b>
-        </StyledP>
-        {process.env.NODE_ENV !== 'production' && (
-          <StyledP>
-            Details:{' '}
-            <StyledA href={`/api/frontend${path}`}>
-              /api/frontend
-              {path}
-            </StyledA>
-          </StyledP>
+    <FrontendClientBase noHeaderFooter>
+      <PageTitle title={strings.errors.title} headTitle />
+      <_StyledP>
+        {strings.errors.defaultMessage}{' '}
+        {!isProbablyTemporary && (
+          <>
+            <br />
+            {strings.errors.permanent}
+          </>
         )}
-        <HSpace amount={100} />
-      </MaxWidthDiv>
-    </RelativeContainer>
+      </_StyledP>
+      <_StyledP>{isProbablyTemporary && strings.errors.temporary}</_StyledP>
+      <StyledP>{renderButtons()}</StyledP>
+      <HSpace amount={70} />
+      <StyledP>
+        <b>Error: {code}</b>
+      </StyledP>
+      {process.env.NODE_ENV !== 'production' && (
+        <StyledP>
+          Details:{' '}
+          <StyledA href={`/api/frontend${path}`}>
+            /api/frontend
+            {path}
+          </StyledA>
+        </StyledP>
+      )}
+      <HSpace amount={100} />
+    </FrontendClientBase>
   )
 
   function renderButtons() {

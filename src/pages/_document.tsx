@@ -15,6 +15,17 @@ const bodyStyles = {
   fontFamily: 'Karmilla, sans-serif',
 }
 
+// See https://docs.sentry.io/platforms/javascript/install/lazy-load-sentry/
+const sentryLoader = `
+  if (window.Sentry) {
+    window.Sentry.init({
+      environment: ${process.env.NEXT_PUBLIC_ENV},
+      release: frontend@${process.env.NEXT_PUBLIC_COMMIT_SHA?.substr(0, 7)}
+    });
+    window.Sentry.forceLoad();
+  }
+`
+
 export default class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
     const sheet = new ServerStyleSheet()
@@ -107,8 +118,16 @@ export default class MyDocument extends Document {
                 8,
                 40
               )}.min.js`}
-            ></script>
+            />
           )}
+          {process.env.NEXT_PUBLIC_SENTRY_DSN !== undefined &&
+            process.env.NEXT_PUBLIC_COMMIT_SHA !== undefined && (
+              <script
+                dangerouslySetInnerHTML={{
+                  __html: sentryLoader.replace(/[\s]/g, ''),
+                }}
+              />
+            )}
         </Head>
         <body style={bodyStyles}>
           <Main />

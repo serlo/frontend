@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { ExerciseAuthorTools } from './exercise-author-tools'
 import { ExerciseNumbering } from './exercise-numbering'
 import { useAuth } from '@/auth/use-auth'
+import { useLoggedInComponents } from '@/contexts/logged-in-components'
 
 export interface ExerciseGroupProps {
   children: React.ReactNode
@@ -27,6 +27,8 @@ export function ExerciseGroup({
     setLoaded(true)
   }, [])
   const auth = useAuth()
+  const lic = useLoggedInComponents()
+  const Comp = lic?.ExerciseAuthorTools
   return (
     <Container>
       <ExerciseIntro>
@@ -39,8 +41,8 @@ export function ExerciseGroup({
         <TopLine>
           <IntroWrapper>{groupIntro}</IntroWrapper>
           <div>{license}</div>
-          {loaded && auth.current && (
-            <ExerciseAuthorTools data={{ type: '_ExerciseGroupInline', id }} />
+          {loaded && auth.current && Comp && (
+            <Comp data={{ type: '_ExerciseGroupInline', id }} />
           )}
         </TopLine>
       </ExerciseIntro>

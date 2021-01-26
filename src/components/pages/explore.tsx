@@ -8,11 +8,9 @@ import { Injection } from '../content/injection'
 import { Lazy } from '../content/lazy'
 import { Link } from '../content/link'
 import { SpecialCss } from '../content/special-css'
-import { RelativeContainer } from '../navigation/relative-container'
 import { StyledH1 } from '../tags/styled-h1'
 import { StyledH3 } from '../tags/styled-h3'
 import { StyledP } from '../tags/styled-p'
-import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import theme from '@/components/pages/explore.module.css'
 import { frontendOrigin } from '@/helper/frontent-origin'
 import { AutocompleteResponse } from '@/pages/api/search/autocomplete'
@@ -81,111 +79,107 @@ export function Explore() {
   }, [query, choices])
 
   return (
-    <RelativeContainer>
-      <MaxWidthDiv>
-        <SpecialCss>
-          <HSpace amount={50} />
-          <StyledH1>Entdecke Inhalte auf Serlo</StyledH1>
-          <InputForm
-            runSearch={(query: string) => {
-              setLimit(10)
-              setLimit2(10)
-              setQuery(query)
-            }}
-          />
+    <SpecialCss>
+      <HSpace amount={50} />
+      <StyledH1>Entdecke Inhalte auf Serlo</StyledH1>
+      <InputForm
+        runSearch={(query: string) => {
+          setLimit(10)
+          setLimit2(10)
+          setQuery(query)
+        }}
+      />
 
-          <Tabs
-            selectedIndex={tabIndex}
-            onSelect={(index) => {
-              setTabIndex(index)
-              sessionStorage.setItem('__tab_index', index.toString())
-            }}
-          >
-            <TabList style={{ marginLeft: 6 }}>
-              <Tab>Aufgaben ({result.exercises.length})</Tab>
-              <Tab>Erklärungen ({result.documents.length})</Tab>
-            </TabList>
+      <Tabs
+        selectedIndex={tabIndex}
+        onSelect={(index) => {
+          setTabIndex(index)
+          sessionStorage.setItem('__tab_index', index.toString())
+        }}
+      >
+        <TabList style={{ marginLeft: 6 }}>
+          <Tab>Aufgaben ({result.exercises.length})</Tab>
+          <Tab>Erklärungen ({result.documents.length})</Tab>
+        </TabList>
 
-            <TabPanel>
-              <HSpace amount={30} />
-              {choices.length > 0 ? (
-                <FacetDiv>
-                  <StyledP>
-                    Filter:{' '}
-                    {choices.map((choice: any) => (
-                      <React.Fragment key={choice}>
-                        <strong>{choice}</strong>{' '}
-                        <span
-                          style={{ color: 'blue', cursor: 'pointer' }}
-                          onClick={() =>
-                            setChoices(choices.filter((c: any) => c != choice))
-                          }
-                        >
-                          [x]
-                        </span>
-                        ,{' '}
-                      </React.Fragment>
-                    ))}
-                  </StyledP>
-                </FacetDiv>
-              ) : null}
-              {choices.length == 0 && (
-                <CategorySelector
-                  counts={counts.current.age}
-                  heading="Altersstufe"
-                  choices={choices}
-                  setChoices={setChoices}
-                />
-              )}
-              {result.exercises.slice(0, limit).map(({ id, explain }) => (
-                <React.Fragment key={id}>
-                  <Document id={id} explain={explain} />
-                </React.Fragment>
-              ))}
-              {result.exercises.length > limit && (
-                <StyledP>
-                  <button
-                    onClick={() => {
-                      setLimit(limit + 10)
-                    }}
-                  >
-                    Mehr anzeigen
-                  </button>
-                </StyledP>
-              )}
-            </TabPanel>
-            <TabPanel>
-              {result.documents
-                .slice(0, limit2)
-                .map(({ id, title, highlight, type }) => (
-                  <React.Fragment key={id}>
-                    <HSpace amount={30} />
-                    <div style={{ display: 'flex', alignItems: 'baseline' }}>
-                      <StyledH3 style={{ marginRight: '5px' }}>
-                        <Link href={`/${id}`}>{title}</Link>
-                      </StyledH3>
-                      <small>[{type2string(type)}]</small>
-                    </div>
-                    <StyledP>{highlight} </StyledP>
+        <TabPanel>
+          <HSpace amount={30} />
+          {choices.length > 0 ? (
+            <FacetDiv>
+              <StyledP>
+                Filter:{' '}
+                {choices.map((choice: any) => (
+                  <React.Fragment key={choice}>
+                    <strong>{choice}</strong>{' '}
+                    <span
+                      style={{ color: 'blue', cursor: 'pointer' }}
+                      onClick={() =>
+                        setChoices(choices.filter((c: any) => c != choice))
+                      }
+                    >
+                      [x]
+                    </span>
+                    ,{' '}
                   </React.Fragment>
                 ))}
-              {result.documents.length > limit2 && (
-                <StyledP>
-                  <button
-                    onClick={() => {
-                      setLimit2(limit2 + 10)
-                    }}
-                  >
-                    Mehr anzeigen
-                  </button>
-                </StyledP>
-              )}
-              <HSpace amount={30} />
-            </TabPanel>
-          </Tabs>
-        </SpecialCss>
-      </MaxWidthDiv>
-    </RelativeContainer>
+              </StyledP>
+            </FacetDiv>
+          ) : null}
+          {choices.length == 0 && (
+            <CategorySelector
+              counts={counts.current.age}
+              heading="Altersstufe"
+              choices={choices}
+              setChoices={setChoices}
+            />
+          )}
+          {result.exercises.slice(0, limit).map(({ id, explain }) => (
+            <React.Fragment key={id}>
+              <Document id={id} explain={explain} />
+            </React.Fragment>
+          ))}
+          {result.exercises.length > limit && (
+            <StyledP>
+              <button
+                onClick={() => {
+                  setLimit(limit + 10)
+                }}
+              >
+                Mehr anzeigen
+              </button>
+            </StyledP>
+          )}
+        </TabPanel>
+        <TabPanel>
+          {result.documents
+            .slice(0, limit2)
+            .map(({ id, title, highlight, type }) => (
+              <React.Fragment key={id}>
+                <HSpace amount={30} />
+                <div style={{ display: 'flex', alignItems: 'baseline' }}>
+                  <StyledH3 style={{ marginRight: '5px' }}>
+                    <Link href={`/${id}`}>{title}</Link>
+                  </StyledH3>
+                  <small>[{type2string(type)}]</small>
+                </div>
+                <StyledP>{highlight} </StyledP>
+              </React.Fragment>
+            ))}
+          {result.documents.length > limit2 && (
+            <StyledP>
+              <button
+                onClick={() => {
+                  setLimit2(limit2 + 10)
+                }}
+              >
+                Mehr anzeigen
+              </button>
+            </StyledP>
+          )}
+          <HSpace amount={30} />
+        </TabPanel>
+      </Tabs>
+    </SpecialCss>
   )
 }
 

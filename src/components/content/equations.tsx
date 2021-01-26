@@ -2,7 +2,6 @@ import { shade } from 'polished'
 import React from 'react'
 import styled from 'styled-components'
 
-import { Math } from '@/components/content/math'
 import { FrontendContentNode, Sign } from '@/data-types'
 import { makeMargin } from '@/helper/css'
 import { renderArticle } from '@/schema/article-renderer'
@@ -34,19 +33,40 @@ export function Equations({ steps }: EquationProps) {
                 <React.Fragment key={i}>
                   <tr>
                     <LeftTd>
-                      {step.left ? <Math formula={step.left} /> : null}
+                      {step.left
+                        ? renderArticle(
+                            [{ type: 'inline-math', formula: step.left }],
+                            false
+                          )
+                        : null}
                     </LeftTd>
                     <SignTd>
-                      <Math formula={renderSignToString(step.sign)} />
+                      {renderArticle(
+                        [
+                          {
+                            type: 'inline-math',
+                            formula: renderSignToString(step.sign),
+                          },
+                        ],
+                        false
+                      )}
                     </SignTd>
                     <RightTd>
-                      {step.right ? <Math formula={step.right} /> : null}
+                      {step.right
+                        ? renderArticle(
+                            [{ type: 'inline-math', formula: step.right }],
+                            false
+                          )
+                        : null}
                     </RightTd>
                     <TransformTd>
                       {step.transform ? (
                         <>
                           |
-                          <Math formula={step.transform} />
+                          {renderArticle(
+                            [{ type: 'inline-math', formula: step.transform }],
+                            false
+                          )}
                         </>
                       ) : null}
                     </TransformTd>
