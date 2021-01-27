@@ -56,7 +56,11 @@ export function Revision({ data }: RevisionProps) {
       </MetaBar>
       <HSpace amount={5} />
       <PageTitle
-        title={strings.entities.revision}
+        title={
+          data.currentRevision.metaTitle ??
+          data.currentRevision.title ??
+          strings.entities.revision
+        }
         headTitle
         icon={icon ? icon : undefined}
       />
