@@ -7,53 +7,58 @@ import { EntityBase } from '@/components/entity-base'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { ErrorPage } from '@/components/pages/error-page'
-import { InitialProps, PageData } from '@/data-types'
+import { SlugProps, SlugPageData, PageWithWrapper } from '@/data-types'
 import { fetchPageData } from '@/fetcher/fetch-page-data'
 
-const PageView: NextPage<InitialProps> = (initialProps) => {
+const PageView: NextPage<SlugProps> = (initialProps) => {
   const pageData = initialProps.pageData
-
-  if (pageData === undefined) return <ErrorPage code={404} />
 
   //fallback, should be handled by CFWorker
   if (pageData.kind === 'redirect') {
     if (typeof window !== 'undefined') {
       window.location.href = pageData.target!
     }
-    return (
-      <FrontendClientBase>
-        <LoadingSpinner noText />
-      </FrontendClientBase>
-    )
+    return <LoadingSpinner noText />
   }
 
   if (pageData.kind === 'single-entity' || pageData.kind === 'taxonomy') {
-    const page =
-      pageData.kind === 'single-entity' ? (
-        <Entity data={pageData.entityData} />
-      ) : (
-        <Topic data={pageData.taxonomyData} />
-      )
-
-    return (
-      <FrontendClientBase noContainers>
-        <EntityBase page={pageData}>{page}</EntityBase>
-      </FrontendClientBase>
+    return pageData.kind === 'single-entity' ? (
+      <Entity data={pageData.entityData} />
+    ) : (
+      <Topic data={pageData.taxonomyData} />
     )
   }
 
   return (
-    <FrontendClientBase>
-      <ErrorPage
-        code={pageData.kind === 'error' ? pageData.errorData.code : 400}
-        message={
-          pageData.kind === 'error'
-            ? pageData.errorData.message
-            : 'unsupported type'
-        }
-      />
-    </FrontendClientBase>
+    <ErrorPage
+      code={pageData.kind === 'error' ? pageData.errorData.code : 400}
+      message={
+        pageData.kind === 'error'
+          ? pageData.errorData.message
+          : 'unsupported type'
+      }
+    />
   )
+}
+
+// eslint-disable-next-line react/display-name
+;(PageView as typeof PageView & PageWithWrapper<SlugProps>).wrapper = (
+  child,
+  props
+) => {
+  if (props.pageData === undefined) return <ErrorPage code={404} />
+
+  if (
+    props.pageData.kind == 'single-entity' ||
+    props.pageData.kind == 'taxonomy'
+  ) {
+    return (
+      <FrontendClientBase noContainers>
+        <EntityBase page={props.pageData}>{child}</EntityBase>
+      </FrontendClientBase>
+    )
+  }
+  return <FrontendClientBase>{child}</FrontendClientBase>
 }
 
 // eslint-disable-next-line @typescript-eslint/require-await
@@ -62,7 +67,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const pageData = await fetchPageData('/' + context.locale! + '/' + alias)
   return {
     props: {
-      pageData: JSON.parse(JSON.stringify(pageData)) as PageData, // remove undefined values
+      pageData: JSON.parse(JSON.stringify(pageData)) as SlugPageData, // remove undefined values
     },
     revalidate: 1,
   }

@@ -3,15 +3,42 @@ import { TaxonomyTermType } from '@serlo/api'
 import { Instance } from './fetcher/query-types'
 import { instanceData, instanceLandingData, loggedInData } from '@/data/en'
 
-export interface InitialProps {
-  pageData: PageData
+export interface PageWithWrapper<T = {}> {
+  wrapper: (page: JSX.Element, props: T) => JSX.Element
 }
 
-export interface InitialPropsRevision {
+/*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*/
+
+export interface SlugProps {
+  pageData: SlugPageData
+}
+
+export interface RevisionProps {
   pageData: RevisionPage
 }
 
-export interface InitialPropsUser {
+export interface UserProps {
   pageData: UserPage
 }
 
@@ -81,7 +108,11 @@ export type FooterIcon = 'newsletter' | 'github'
 
 // We have different types of pages, each with its own set of data:
 
-export type PageData = ErrorPage | SingleEntityPage | TaxonomyPage | Redirect
+export type SlugPageData =
+  | ErrorPage
+  | SingleEntityPage
+  | TaxonomyPage
+  | Redirect
 
 // The landing page is custom built and takes i18n strings
 
