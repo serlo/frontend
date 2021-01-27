@@ -161,13 +161,13 @@ function renderElement(props: RenderElementProps): React.ReactNode {
     return <Link href={element.href}>{children}</Link>
   }
   if (element.type === 'inline-math') {
-    return <Math formula={element.formula} inline />
+    return <Math formula={element.formula} />
   }
   if (element.type === 'math') {
     return (
       <MathWrapper centered={!element.alignLeft}>
         <Lazy slim>
-          <Math formula={element.formula} />
+          <Math formula={'\\displaystyle ' + element.formula} />
         </Lazy>
       </MathWrapper>
     )
