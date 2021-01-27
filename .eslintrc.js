@@ -117,7 +117,6 @@ module.exports = {
     'react/jsx-fragments': ['error', 'syntax'],
     'react/prop-types': 'off',
     'react/react-in-jsx-scope': 'off',
-    'react/display-name': ['error', { allow: ['@/pages/**'] }],
 
     // eslint-plugin-react-hooks
     'react-hooks/exhaustive-deps': 'warn',
@@ -137,6 +136,8 @@ module.exports = {
       files: ['src/pages/**/*'],
       rules: {
         'import/no-default-export': 'off',
+        'react/display-name': 'off',
+        '@typescript-eslint/require-await': 'off',
       },
     },
     {

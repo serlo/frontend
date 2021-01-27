@@ -4,7 +4,7 @@ import React from 'react'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { LandingDE } from '@/components/pages/landing-de'
 import { LandingInternational } from '@/components/pages/landing-international'
-import { LandingPage, LandingProps } from '@/data-types'
+import { LandingProps } from '@/data-types'
 import { getLandingData } from '@/helper/feature-i18n'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
