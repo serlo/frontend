@@ -11,16 +11,13 @@ export function LoadingError({ error }: { error: object }) {
   console.log(error)
   return (
     <ColoredIcon>
-      <StyledP>
-        <FontAwesomeIcon icon={faExclamationCircle} />{' '}
-        {strings.loading.unknownProblem}
-      </StyledP>
+      <FontAwesomeIcon icon={faExclamationCircle} />{' '}
+      {strings.loading.unknownProblem}
     </ColoredIcon>
   )
 }
 
-const ColoredIcon = styled.div`
+const ColoredIcon = styled(StyledP)`
   margin-top: 50px;
   color: ${(props) => props.theme.colors.brand};
-  text-align: ${(props) => (props.$center ? 'center' : 'initial')};
 `
