@@ -164,9 +164,7 @@ function renderElement(props: RenderElementProps): React.ReactNode {
     return <Math formula={element.formula} />
   }
   if (element.type === 'math') {
-    const nowrap =
-      element.formula.includes('\\begin{array}') ||
-      element.formula.includes('\\begin{aligned}')
+    const nowrap = /\\begin *{(array|aligned)}/.test(element.formula)
     // alignLeft is assumed to be always true
     return (
       <MathWrapper nowrap={nowrap}>
