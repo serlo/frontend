@@ -7,10 +7,17 @@ import React from 'react'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import '@/assets-webkit/fonts/karmilla.css'
 import '@/assets-webkit/fonts/katex/katex.css'
+import { isRenderedPage } from '@/helper/rendered-page'
 
 // Not adding fontawesome styles again
 config.autoAddCss = false
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App(props: AppProps) {
+  const { Component, pageProps } = props
+
+  if (isRenderedPage(Component)) {
+    return Component.renderer(pageProps, props)
+  }
+
   return <Component {...pageProps} />
 }

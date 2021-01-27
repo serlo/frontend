@@ -8,8 +8,16 @@ import { Guard } from '@/components/guard'
 import { Notifications } from '@/components/pages/user/notifications'
 import { NotificationEvent } from '@/components/user/notification'
 import { useInstanceData } from '@/contexts/instance-context'
+import { renderedPageNoHooks } from '@/helper/rendered-page'
 
-export default function Page() {
+export default renderedPageNoHooks(() => (
+  <FrontendClientBase>
+    <Title />
+    <Content />
+  </FrontendClientBase>
+))
+
+function Content() {
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { data, error, loadMore, loading } = useFetch()
 
@@ -18,16 +26,13 @@ export default function Page() {
   }
 
   return (
-    <FrontendClientBase>
-      <Title />
-      <Guard data={data} error={error} needsAuth>
-        <Notifications
-          data={data!}
-          isLoading={loading}
-          loadMore={loadMoreAction}
-        />
-      </Guard>
-    </FrontendClientBase>
+    <Guard data={data} error={error} needsAuth>
+      <Notifications
+        data={data!}
+        isLoading={loading}
+        loadMore={loadMoreAction}
+      />
+    </Guard>
   )
 }
 

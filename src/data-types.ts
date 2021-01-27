@@ -3,16 +3,20 @@ import { TaxonomyTermType } from '@serlo/api'
 import { Instance } from './fetcher/query-types'
 import { instanceData, instanceLandingData, loggedInData } from '@/data/en'
 
-export interface InitialProps {
-  pageData: PageData
+export interface SlugProps {
+  pageData: SlugPageData
 }
 
-export interface InitialPropsRevision {
+export interface RevisionProps {
   pageData: RevisionPage
 }
 
-export interface InitialPropsUser {
+export interface UserProps {
   pageData: UserPage
+}
+
+export interface LandingProps {
+  pageData: LandingPage
 }
 
 // Instance data consists of the language, translation strings, header menu and footer menu.
@@ -81,7 +85,11 @@ export type FooterIcon = 'newsletter' | 'github'
 
 // We have different types of pages, each with its own set of data:
 
-export type PageData = ErrorPage | SingleEntityPage | TaxonomyPage | Redirect
+export type SlugPageData =
+  | ErrorPage
+  | SingleEntityPage
+  | TaxonomyPage
+  | Redirect
 
 // The landing page is custom built and takes i18n strings
 
@@ -129,6 +137,10 @@ export interface ErrorData {
 }
 // License detail page has some additional data and is not part of the PageData type
 
+export interface LicenseDetailProps {
+  pageData: LicenseDetailPage
+}
+
 export interface LicenseDetailPage {
   kind: 'license-detail'
   licenseData: LicenseDetailData
@@ -138,6 +150,29 @@ export interface LicenseDetailData {
   title: string
   content: FrontendContentNode[]
   iconHref: string
+}
+
+export interface HistoryRevisionData {
+  author: FrontendUserData
+  changes?: string
+  date: string
+  id: number
+}
+
+export interface HistoryRevisionsData {
+  id: number
+  alias: string
+  currentRevision: {
+    id: number
+    title?: string
+  }
+  revisions: {
+    nodes: HistoryRevisionData[]
+  }
+}
+
+export interface HistoryRevisionProps {
+  id: number
 }
 
 // For types that are supported through their own pages we return this helper in request-page

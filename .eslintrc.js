@@ -136,6 +136,8 @@ module.exports = {
       files: ['src/pages/**/*'],
       rules: {
         'import/no-default-export': 'off',
+        'react/display-name': 'off',
+        '@typescript-eslint/require-await': 'off',
       },
     },
     {

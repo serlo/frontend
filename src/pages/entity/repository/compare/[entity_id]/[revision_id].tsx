@@ -1,23 +1,22 @@
 import { Instance } from '@serlo/api'
-import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
+import { GetStaticPaths, GetStaticProps } from 'next'
 import React from 'react'
 
 import { Revision } from '@/components/author/revision'
 import { FrontendClientBase } from '@/components/frontend-client-base'
-import { InitialPropsRevision, RevisionPage } from '@/data-types'
+import { RevisionProps, RevisionPage } from '@/data-types'
 import { requestRevision } from '@/fetcher/revision/request'
+import { renderedPageNoHooks } from '@/helper/rendered-page'
 
-export default function Page(initialProps: NextPage & InitialPropsRevision) {
-  const pageData = initialProps.pageData
+export default renderedPageNoHooks<RevisionProps>(({ pageData }) => (
+  <FrontendClientBase>
+    <Revision data={pageData.revisionData} />
+  </FrontendClientBase>
+))
 
-  return (
-    <FrontendClientBase>
-      <Revision data={pageData.revisionData} />
-    </FrontendClientBase>
-  )
-}
-
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getStaticProps: GetStaticProps<RevisionProps> = async (
+  context
+) => {
   const revisionId = parseInt(context.params?.revision_id as string)
 
   const pageData = isNaN(revisionId)
@@ -32,7 +31,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/require-await
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: [],

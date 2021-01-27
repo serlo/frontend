@@ -2,10 +2,10 @@ import { request } from 'graphql-request'
 
 import { idsQuery } from './query-ids'
 import { endpoint } from '@/api/endpoint'
-import { PageData, FrontendContentNode } from '@/data-types'
+import { SlugPageData, FrontendContentNode } from '@/data-types'
 import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
 
-export async function prettifyLinks(pageData: PageData) {
+export async function prettifyLinks(pageData: SlugPageData) {
   const ids: number[] = []
   const callbacks: { id: number; callback: (alias: string) => void }[] = []
 

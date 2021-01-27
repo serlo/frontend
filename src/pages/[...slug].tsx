@@ -1,4 +1,4 @@
-import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
+import { GetStaticPaths, GetStaticProps } from 'next'
 import React from 'react'
 
 import { Entity } from '@/components/content/entity'
@@ -7,12 +7,11 @@ import { EntityBase } from '@/components/entity-base'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { ErrorPage } from '@/components/pages/error-page'
-import { InitialProps, PageData } from '@/data-types'
+import { SlugProps, SlugPageData } from '@/data-types'
 import { fetchPageData } from '@/fetcher/fetch-page-data'
+import { renderedPageNoHooks } from '@/helper/rendered-page'
 
-const PageView: NextPage<InitialProps> = (initialProps) => {
-  const pageData = initialProps.pageData
-
+export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
   if (pageData === undefined) return <ErrorPage code={404} />
 
   //fallback, should be handled by CFWorker
@@ -54,26 +53,22 @@ const PageView: NextPage<InitialProps> = (initialProps) => {
       />
     </FrontendClientBase>
   )
-}
+})
 
-// eslint-disable-next-line @typescript-eslint/require-await
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getStaticProps: GetStaticProps<SlugProps> = async (context) => {
   const alias = (context.params?.slug as string[]).join('/')
   const pageData = await fetchPageData('/' + context.locale! + '/' + alias)
   return {
     props: {
-      pageData: JSON.parse(JSON.stringify(pageData)) as PageData, // remove undefined values
+      pageData: JSON.parse(JSON.stringify(pageData)) as SlugPageData, // remove undefined values
     },
     revalidate: 1,
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/require-await
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: [],
     fallback: 'blocking',
   }
 }
-
-export default PageView
