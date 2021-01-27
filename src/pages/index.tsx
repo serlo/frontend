@@ -21,7 +21,7 @@ const Page: NextPage<{ pageData: LandingPage }> = ({ pageData }) => {
 ;(Page as typeof Page &
   // eslint-disable-next-line react/display-name
   PageWithWrapper<{ pageData: LandingPage }>).wrapper = (child) => {
-  return <FrontendClientBase>{child}</FrontendClientBase>
+  return <FrontendClientBase noContainers>{child}</FrontendClientBase>
 }
 
 export default Page
