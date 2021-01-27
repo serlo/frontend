@@ -10,7 +10,7 @@ export interface GuardProps {
   data?: any
   error?: object
   needsAuth?: boolean
-  children: React.ReactElement
+  children: React.ReactElement | null
 }
 
 export function Guard({ children, data, error, needsAuth }: GuardProps) {

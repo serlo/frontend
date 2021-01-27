@@ -91,8 +91,7 @@ export async function setThreadArchivedMutation(
     NProgress.done()
     return true
   } else {
-    //TODO: display error notice
-    console.log(response)
+    handleError(response)
     NProgress.done()
     return false
   }
@@ -124,13 +123,12 @@ export async function setCommentStateMutation(
   const response = (await createAuthAwareGraphqlFetch(auth)(
     JSON.stringify(input)
   )) as { thread: ThreadMutation }
-  console.log(response)
+  handleError(response)
 
   if (response.thread.setCommentState?.success) {
     return !!(await mutate(`comments::${entityId}`))
   } else {
-    //TODO: display error notice
-    console.log(response)
+    handleError(response)
     return false
   }
 }
@@ -161,8 +159,7 @@ export async function createThreadMutation(
   if (response.thread.createThread?.success) {
     return !!(await mutate(`comments::${input.objectId}`))
   } else {
-    //TODO: display error notice
-    console.log(response)
+    handleError(response)
     return false
   }
 }
@@ -185,15 +182,22 @@ export async function createCommentMutation(
     variables: { input },
   }
 
-  const response = (await createAuthAwareGraphqlFetch(auth)(
-    JSON.stringify(args)
-  )) as { thread: ThreadMutation }
+  try {
+    const response = (await createAuthAwareGraphqlFetch(auth)(
+      JSON.stringify(args)
+    )) as { thread: ThreadMutation }
 
-  if (response.thread.createComment?.success) {
-    return !!(await mutate(`comments::${entityId}`))
-  } else {
-    //TODO: display error notice
-    console.log(response)
+    if (response.thread.createComment?.success) {
+      return !!(await mutate(`comments::${entityId}`))
+    }
+  } catch (e) {
+    handleError(e)
     return false
   }
+}
+
+function handleError(response: object) {
+  console.log(response)
+  //   const showToastNotice = useToastNotice()
+  //   showToastNotice(`Das hat leider nicht geklappt…`, 'warning')
 }

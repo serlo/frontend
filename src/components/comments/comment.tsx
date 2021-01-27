@@ -36,7 +36,11 @@ export function Comment({
   })
 
   React.useEffect(() => {
-    if (isHighlight) scrollIfNeeded(commentRef.current, true)
+    if (isHighlight) {
+      setTimeout(() => {
+        scrollIfNeeded(commentRef.current)
+      }, 500)
+    }
 
     if (commentRef.current) {
       commentRef.current.style.backgroundColor = isHighlight
@@ -67,8 +71,7 @@ const Wrapper = styled.div<{ $isParent?: boolean }>`
     css`
       border-left: 7px solid
         ${(props) => props.theme.colors.lightBlueBackground};
-      padding-top: 3px;
-      padding-bottom: 2px;
+      padding: 3px 0 2px 4px;
       margin: 20px 0 20px ${(props) => props.theme.defaults.sideSpacingMobile};
     `}
 
@@ -76,7 +79,6 @@ const Wrapper = styled.div<{ $isParent?: boolean }>`
     margin-bottom: 0;
     white-space: pre-line;
     hyphens: auto;
-    padding-left: 8px;
     overflow-wrap: break-word;
 
     > a {

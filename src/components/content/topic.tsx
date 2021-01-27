@@ -6,7 +6,7 @@ import styled from 'styled-components'
 
 import { makeMargin } from '../../helper/css'
 import { renderArticle } from '../../schema/article-renderer'
-import { CommentsProps } from '../comments/comments'
+import { CommentAreaProps } from '../comments/comment-area'
 import { ShareModalProps } from '../user-tools/share-modal'
 import { UserTools } from '../user-tools/user-tools'
 import { LicenseNotice } from './license-notice'
@@ -24,8 +24,8 @@ export interface TopicProps {
   data: TaxonomyData
 }
 
-const Comments = dynamic<CommentsProps>(() =>
-  import('@/components/comments/comments').then((mod) => mod.Comments)
+const CommentArea = dynamic<CommentAreaProps>(() =>
+  import('@/components/comments/comment-area').then((mod) => mod.CommentArea)
 )
 
 const ShareModal = dynamic<ShareModalProps>(() =>
@@ -89,7 +89,7 @@ export function Topic({ data }: TopicProps) {
 
       {defaultLicense && <LicenseNotice data={defaultLicense} />}
 
-      <Comments id={data.id} />
+      <CommentArea id={data.id} />
 
       {renderUserTools()}
       <ShareModal

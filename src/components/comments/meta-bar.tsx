@@ -79,6 +79,7 @@ const StyledUserLink = styled(UserLink)`
   ${makeTransparentButton}
   font-size: 1.125rem;
   font-weight: bold;
+  margin-left: -5px;
 `
 
 const MetaBarBox = styled.div`
