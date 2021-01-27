@@ -117,6 +117,7 @@ module.exports = {
     'react/jsx-fragments': ['error', 'syntax'],
     'react/prop-types': 'off',
     'react/react-in-jsx-scope': 'off',
+    'react/display-name': ['error', { allow: ['@/pages/**'] }],
 
     // eslint-plugin-react-hooks
     'react-hooks/exhaustive-deps': 'warn',

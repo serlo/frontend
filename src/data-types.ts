@@ -3,33 +3,6 @@ import { TaxonomyTermType } from '@serlo/api'
 import { Instance } from './fetcher/query-types'
 import { instanceData, instanceLandingData, loggedInData } from '@/data/en'
 
-export interface PageWithWrapper<T = {}> {
-  wrapper: (page: JSX.Element, props: T) => JSX.Element
-}
-
-/*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-*/
-
 export interface SlugProps {
   pageData: SlugPageData
 }
@@ -40,6 +13,10 @@ export interface RevisionProps {
 
 export interface UserProps {
   pageData: UserPage
+}
+
+export interface LandingProps {
+  pageData: LandingPage
 }
 
 // Instance data consists of the language, translation strings, header menu and footer menu.
@@ -160,6 +137,10 @@ export interface ErrorData {
 }
 // License detail page has some additional data and is not part of the PageData type
 
+export interface LicenseDetailProps {
+  pageData: LicenseDetailPage
+}
+
 export interface LicenseDetailPage {
   kind: 'license-detail'
   licenseData: LicenseDetailData
@@ -169,6 +150,29 @@ export interface LicenseDetailData {
   title: string
   content: FrontendContentNode[]
   iconHref: string
+}
+
+export interface HistoryRevisionData {
+  author: FrontendUserData
+  changes?: string
+  date: string
+  id: number
+}
+
+export interface HistoryRevisionsData {
+  id: number
+  alias: string
+  currentRevision: {
+    id: number
+    title?: string
+  }
+  revisions: {
+    nodes: HistoryRevisionData[]
+  }
+}
+
+export interface HistoryRevisionProps {
+  id: number
 }
 
 // For types that are supported through their own pages we return this helper in request-page

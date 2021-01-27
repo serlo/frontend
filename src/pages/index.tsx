@@ -1,33 +1,24 @@
-import { GetStaticProps, NextPage } from 'next'
-import { useRouter } from 'next/router'
+import { GetStaticProps } from 'next'
 import React from 'react'
 
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { LandingDE } from '@/components/pages/landing-de'
 import { LandingInternational } from '@/components/pages/landing-international'
-import { LandingPage, PageWithWrapper } from '@/data-types'
+import { LandingPage, LandingProps } from '@/data-types'
 import { getLandingData } from '@/helper/feature-i18n'
+import { renderedPageNoHooks } from '@/helper/rendered-page'
 
-const Page: NextPage<{ pageData: LandingPage }> = ({ pageData }) => {
-  const { locale } = useRouter()
+export default renderedPageNoHooks<LandingProps>(({ pageData }, { router }) => (
+  <FrontendClientBase noContainers>
+    {router.locale == 'de' ? (
+      <LandingDE data={pageData.landingData} />
+    ) : (
+      <LandingInternational data={pageData.landingData} />
+    )}
+  </FrontendClientBase>
+))
 
-  return locale == 'de' ? (
-    <LandingDE data={pageData.landingData} />
-  ) : (
-    <LandingInternational data={pageData.landingData} />
-  )
-}
-
-;(Page as typeof Page &
-  // eslint-disable-next-line react/display-name
-  PageWithWrapper<{ pageData: LandingPage }>).wrapper = (child) => {
-  return <FrontendClientBase noContainers>{child}</FrontendClientBase>
-}
-
-export default Page
-
-// eslint-disable-next-line @typescript-eslint/require-await
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getStaticProps: GetStaticProps<LandingProps> = async (context) => {
   return {
     props: {
       pageData: {

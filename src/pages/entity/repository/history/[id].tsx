@@ -9,31 +9,19 @@ import { Guard } from '@/components/guard'
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
 import { RevisionHistory } from '@/components/pages/revision-history'
 import { useInstanceData } from '@/contexts/instance-context'
-import { FrontendUserData } from '@/data-types'
+import { HistoryRevisionProps, HistoryRevisionsData } from '@/data-types'
+import { renderedPageNoHooks } from '@/helper/rendered-page'
 
-export interface HistoryRevisionData {
-  author: FrontendUserData
-  changes?: string
-  date: string
-  id: number
-}
+export default renderedPageNoHooks<HistoryRevisionProps>((props) => (
+  <FrontendClientBase>
+    <Content {...props} />
+  </FrontendClientBase>
+))
 
-export interface HistoryRevisionsData {
-  id: number
-  alias: string
-  currentRevision: {
-    id: number
-    title?: string
-  }
-  revisions: {
-    nodes: HistoryRevisionData[]
-  }
-}
-
-export default function Page({ id }: { id: number }) {
+function Content({ id }: HistoryRevisionProps) {
   const response = useFetch(id)
   return (
-    <FrontendClientBase>
+    <>
       <Breadcrumbs
         data={[
           {
@@ -47,12 +35,13 @@ export default function Page({ id }: { id: number }) {
       <Guard {...response}>
         <RevisionHistory data={response.data?.uuid} />
       </Guard>
-    </FrontendClientBase>
+    </>
   )
 }
 
-// eslint-disable-next-line @typescript-eslint/require-await
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getStaticProps: GetStaticProps<HistoryRevisionProps> = async (
+  context
+) => {
   const id = parseInt(context.params?.id as string)
   return {
     props: {
@@ -61,7 +50,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/require-await
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: [],

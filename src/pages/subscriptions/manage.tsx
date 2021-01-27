@@ -8,18 +8,23 @@ import { Guard } from '@/components/guard'
 import { ManageSubscriptions } from '@/components/pages/manage-subscriptions'
 import { useInstanceData } from '@/contexts/instance-context'
 import { QueryResponse } from '@/fetcher/query-types'
+import { renderedPageNoHooks } from '@/helper/rendered-page'
 
-export default function Page() {
+export default renderedPageNoHooks(() => (
+  <FrontendClientBase>
+    <Title />
+    <Content />
+  </FrontendClientBase>
+))
+
+function Content() {
   const response = useFetch()
   return (
-    <FrontendClientBase>
-      <Title />
-      <Guard {...response} needsAuth>
-        <ManageSubscriptions
-          subscriptions={response.data?.subscriptions.nodes!}
-        />
-      </Guard>
-    </FrontendClientBase>
+    <Guard {...response} needsAuth>
+      <ManageSubscriptions
+        subscriptions={response.data?.subscriptions.nodes!}
+      />
+    </Guard>
   )
 }
 
