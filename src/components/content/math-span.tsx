@@ -3,13 +3,13 @@ import React from 'react'
 
 import KaTeXSpan from '../../../external/katexstyles'
 
-export interface MathProps {
+export interface MathSpanProps {
   formula: string
   inline?: boolean
   alignLeft?: boolean
 }
 
-export function Math(props: MathProps) {
+export function MathSpan(props: MathSpanProps) {
   const { inline = false } = props
 
   // make empty formulas clickable

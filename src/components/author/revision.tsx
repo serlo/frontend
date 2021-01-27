@@ -1,14 +1,13 @@
 import { faList } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import dynamic from 'next/dynamic'
 import React from 'react'
 import ReactDiffViewer from 'react-diff-viewer'
 import styled, { css } from 'styled-components'
 
 import { PageTitle } from '../content/page-title'
-import { GeogebraProps } from '@/components/content/geogebra'
+import { Geogebra } from '@/components/content/geogebra'
 import { HSpace } from '@/components/content/h-space'
-import { VideoProps } from '@/components/content/video'
+import { Video } from '@/components/content/video'
 import { StyledH1 } from '@/components/tags/styled-h1'
 import { StyledP } from '@/components/tags/styled-p'
 import { TimeAgo } from '@/components/time-ago'
@@ -25,12 +24,6 @@ import {
 import { entityIconMapping } from '@/helper/icon-by-entity-type'
 import { renderArticle } from '@/schema/article-renderer'
 
-const Video = dynamic<VideoProps>(() =>
-  import('../content/video').then((mod) => mod.Video)
-)
-const Geogebra = dynamic<GeogebraProps>(() =>
-  import('../content/geogebra').then((mod) => mod.Geogebra)
-)
 export interface RevisionProps {
   data: RevisionData
 }

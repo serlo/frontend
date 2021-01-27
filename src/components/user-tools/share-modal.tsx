@@ -24,7 +24,7 @@ import { Modal } from '../modal'
 import { StyledH2 } from '../tags/styled-h2'
 import { useInstanceData } from '@/contexts/instance-context'
 
-interface ShareModalProps {
+export interface ShareModalProps {
   open: boolean
   onClose: () => void
   contentId?: number
