@@ -10,8 +10,8 @@ import { StyledTr } from '../tags/styled-tr'
 import { UserLink } from '../user/user-link'
 import { TimeAgo } from '@/components/time-ago'
 import { useInstanceData } from '@/contexts/instance-context'
+import type { HistoryRevisionsData } from '@/data-types'
 import { makeLightButton } from '@/helper/css'
-import { HistoryRevisionsData } from '@/pages/entity/repository/history/[id]'
 
 export interface RevisionHistoryProps {
   data?: HistoryRevisionsData
