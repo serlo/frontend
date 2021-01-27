@@ -4,10 +4,10 @@ import React from 'react'
 import { PageTitle } from '@/components/content/page-title'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Profile } from '@/components/pages/user/profile'
-import { InitialPropsUser, UserPage } from '@/data-types'
+import { UserProps, UserPage } from '@/data-types'
 import { requestUser } from '@/fetcher/user/request'
 
-export default function Page(initialProps: NextPage & InitialPropsUser) {
+export default function Page(initialProps: NextPage & UserProps) {
   const pageData = initialProps.pageData
 
   return (

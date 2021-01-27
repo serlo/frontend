@@ -4,7 +4,7 @@ import { LoadingSpinner } from '../loading/loading-spinner'
 import { StyledP } from '../tags/styled-p'
 import { LicenseNotice } from './license-notice'
 import { useInstanceData } from '@/contexts/instance-context'
-import { LicenseData, PageData, FrontendContentNode } from '@/data-types'
+import { LicenseData, SlugPageData, FrontendContentNode } from '@/data-types'
 import { renderArticle } from '@/schema/article-renderer'
 
 export interface InjectionProps {
@@ -49,7 +49,7 @@ export function Injection({ href }: InjectionProps) {
         return res.json()
       })
       .then((json) => {
-        const pageData: PageData = json.pageProps.pageData
+        const pageData: SlugPageData = json.pageProps.pageData
         dataToState(pageData)
 
         /*if (pageData.kind === 'single-entity') {
@@ -65,7 +65,7 @@ export function Injection({ href }: InjectionProps) {
       })
   }, [href, lang])
 
-  function dataToState(pageData: PageData) {
+  function dataToState(pageData: SlugPageData) {
     if (pageData.kind === 'single-entity') {
       setValue(pageData.entityData.content)
       if (pageData.entityData.licenseData) {

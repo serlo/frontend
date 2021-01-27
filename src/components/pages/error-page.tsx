@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { PageTitle } from '../content/page-title'
-import { FrontendClientBase } from '../frontend-client-base'
 import { HSpace } from '@/components/content/h-space'
 import { StyledA } from '@/components/tags/styled-a'
 import { StyledP } from '@/components/tags/styled-p'

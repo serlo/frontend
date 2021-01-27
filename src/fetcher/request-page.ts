@@ -11,13 +11,13 @@ import { createTitle } from './create-title'
 import { dataQuery } from './query'
 import { QueryResponse, Instance } from './query-types'
 import { endpoint } from '@/api/endpoint'
-import { PageData } from '@/data-types'
+import { SlugPageData } from '@/data-types'
 import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
 
 export async function requestPage(
   alias: string,
   instance: Instance
-): Promise<PageData> {
+): Promise<SlugPageData> {
   const isId = /^\/[\d]+$/.test(alias) //e.g. /1565
   const variables = isId
     ? {

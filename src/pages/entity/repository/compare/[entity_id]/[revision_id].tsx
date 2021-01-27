@@ -4,10 +4,10 @@ import React from 'react'
 
 import { Revision } from '@/components/author/revision'
 import { FrontendClientBase } from '@/components/frontend-client-base'
-import { InitialPropsRevision, RevisionPage } from '@/data-types'
+import { RevisionProps, RevisionPage } from '@/data-types'
 import { requestRevision } from '@/fetcher/revision/request'
 
-export default function Page(initialProps: NextPage & InitialPropsRevision) {
+export default function Page(initialProps: NextPage & RevisionProps) {
   const pageData = initialProps.pageData
 
   return (
