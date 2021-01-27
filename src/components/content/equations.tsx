@@ -35,7 +35,12 @@ export function Equations({ steps }: EquationProps) {
                     <LeftTd>
                       {step.left
                         ? renderArticle(
-                            [{ type: 'inline-math', formula: step.left }],
+                            [
+                              {
+                                type: 'inline-math',
+                                formula: '\\displaystyle ' + step.left,
+                              },
+                            ],
                             false
                           )
                         : null}
@@ -54,7 +59,12 @@ export function Equations({ steps }: EquationProps) {
                     <RightTd>
                       {step.right
                         ? renderArticle(
-                            [{ type: 'inline-math', formula: step.right }],
+                            [
+                              {
+                                type: 'inline-math',
+                                formula: '\\displaystyle ' + step.right,
+                              },
+                            ],
                             false
                           )
                         : null}
@@ -64,7 +74,12 @@ export function Equations({ steps }: EquationProps) {
                         <>
                           |
                           {renderArticle(
-                            [{ type: 'inline-math', formula: step.transform }],
+                            [
+                              {
+                                type: 'inline-math',
+                                formula: '\\displaystyle ' + step.transform,
+                              },
+                            ],
                             false
                           )}
                         </>
