@@ -7,7 +7,7 @@ import { ExerciseNumbering } from './exercise-numbering'
 import { InputExercise } from './input-exercise'
 import { ScMcExercise } from './sc-mc-exercise'
 import { useAuth } from '@/auth/use-auth'
-import { CommentsProps } from '@/components/comments/comments'
+import { CommentAreaProps } from '@/components/comments/comment-area'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { FrontendExerciseNode } from '@/data-types'
@@ -18,8 +18,8 @@ export interface ExerciseProps {
   node: FrontendExerciseNode
 }
 
-const Comments = dynamic<CommentsProps>(() =>
-  import('@/components/comments/comments').then((mod) => mod.Comments)
+const CommentArea = dynamic<CommentAreaProps>(() =>
+  import('@/components/comments/comment-area').then((mod) => mod.CommentArea)
 )
 
 export function Exercise({ node }: ExerciseProps) {
@@ -90,7 +90,7 @@ export function Exercise({ node }: ExerciseProps) {
             </SolutionTools>
           )
         }
-        <Comments id={node.context.solutionId!} />
+        <CommentArea id={node.context.solutionId!} />
       </SolutionBox>
     )
   }

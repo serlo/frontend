@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { ProfileCommunityBanner } from './profile-community-banner'
 import { ProfileDonationForm } from './profile-donation-form'
 import { useAuth } from '@/auth/use-auth'
-import { Comments } from '@/components/comments/comments'
+import { CommentArea } from '@/components/comments/comment-area'
 import { StyledH2 } from '@/components/tags/styled-h2'
 import { StyledP } from '@/components/tags/styled-p'
 import { TimeAgo } from '@/components/time-ago'
@@ -37,7 +37,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         </>
       )}
       {/* <StyledH2>{strings.profiles.recentActivities}</StyledH2> */}
-      <Comments id={id} />
+      <CommentArea id={id} noForms />
       {lastLoginDate && (
         <Gray>
           {strings.profiles.lastSeen}:{' '}

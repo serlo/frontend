@@ -11,13 +11,19 @@ import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UserRoles } from '@/data-types'
 import { makeTransparentButton } from '@/helper/css'
+import {
+  setCommentStateMutation,
+  setThreadArchivedMutation,
+} from '@/helper/mutations'
 
 interface DropdownMenuProps {
   isParent?: boolean
   date: Date
   id: number
+  entityId: number
   highlight: (id: number) => void
   onAnyClick: () => void
+  threadId?: string
 }
 
 export function DropdownMenu({
@@ -26,6 +32,8 @@ export function DropdownMenu({
   date,
   highlight,
   onAnyClick,
+  entityId,
+  threadId,
 }: DropdownMenuProps) {
   const { lang, strings } = useInstanceData()
   const auth = useAuth()
@@ -42,12 +50,12 @@ export function DropdownMenu({
       {isAllowed && (
         <>
           {isParent && (
-            <DropContentButton>
+            <DropContentButton onClick={onArchiveThread}>
               <FontAwesomeIcon icon={faCheck} />{' '}
               {strings.comments.archiveThread}
             </DropContentButton>
           )}
-          <DropContentButton>
+          <DropContentButton onClick={onDelete}>
             <FontAwesomeIcon icon={faTrash} />{' '}
             {isParent
               ? strings.comments.deleteThread
@@ -75,6 +83,20 @@ export function DropdownMenu({
     input.select()
     document.execCommand('copy')
     document.body.removeChild(input)
+  }
+
+  function onDelete() {
+    onAnyClick()
+    if (!isParent) {
+      void setCommentStateMutation(auth, id, true, entityId)
+    }
+  }
+
+  function onArchiveThread() {
+    onAnyClick()
+    if (isParent && threadId) {
+      void setThreadArchivedMutation(auth, threadId, true, entityId)
+    }
   }
 }
 

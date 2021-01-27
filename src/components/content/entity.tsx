@@ -5,7 +5,7 @@ import { Router } from 'next/router'
 import React from 'react'
 import styled from 'styled-components'
 
-import { CommentsProps } from '../comments/comments'
+import { CommentAreaProps } from '../comments/comment-area'
 import { HSpace } from './h-space'
 import { LicenseNotice } from '@/components/content/license-notice'
 import { CourseFooter } from '@/components/navigation/course-footer'
@@ -22,8 +22,8 @@ export interface EntityProps {
   data: EntityData
 }
 
-const Comments = dynamic<CommentsProps>(() =>
-  import('@/components/comments/comments').then((mod) => mod.Comments)
+const CommentArea = dynamic<CommentAreaProps>(() =>
+  import('@/components/comments/comment-area').then((mod) => mod.CommentArea)
 )
 
 const ShareModal = dynamic<ShareModalProps>(() =>
@@ -31,7 +31,7 @@ const ShareModal = dynamic<ShareModalProps>(() =>
 )
 
 export function Entity({ data }: EntityProps) {
-  // state of the share modal
+  // state@/components/comments/comment-area
   const [open, setOpen] = React.useState(false)
 
   // course
@@ -62,7 +62,7 @@ export function Entity({ data }: EntityProps) {
       {renderShareModal()}
       {data.licenseData && <LicenseNotice data={data.licenseData} />}
 
-      {data.typename !== 'Page' && <Comments id={data.id} />}
+      {data.typename !== 'Page' && <CommentArea id={data.id} />}
     </>
   )
 

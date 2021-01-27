@@ -13,8 +13,10 @@ import { makeTransparentButton, makeMargin } from '@/helper/css'
 export interface MetaBarProps {
   user: { username: string; id: number }
   timestamp: string
+  threadId: string
   isParent?: boolean
   id: number
+  entityId: number
   highlight: (id: number) => void
 }
 
@@ -24,6 +26,8 @@ export function MetaBar({
   isParent,
   id,
   highlight,
+  entityId,
+  threadId,
 }: MetaBarProps) {
   const [
     tippyInstance,
@@ -31,7 +35,6 @@ export function MetaBar({
   ] = React.useState<Instance<Props> | null>(null)
 
   const date = new Date(timestamp)
-
   return (
     <MetaBarBox>
       <StyledUserLink user={user} withIcon />
@@ -44,8 +47,10 @@ export function MetaBar({
           tippyInstance ? (
             <DropdownMenu
               isParent={isParent}
+              threadId={threadId}
               date={date}
               id={id}
+              entityId={entityId}
               highlight={highlight}
               // eslint-disable-next-line @typescript-eslint/unbound-method
               onAnyClick={tippyInstance.hide}
@@ -65,6 +70,7 @@ export function MetaBar({
 
 const TimeAgoButton = styled.button`
   ${makeTransparentButton}
+  font-weight: normal;
   color: ${(props) => props.theme.colors.lightblue};
   font-size: 1rem;
 `
@@ -73,6 +79,7 @@ const StyledUserLink = styled(UserLink)`
   ${makeTransparentButton}
   font-size: 1.125rem;
   font-weight: bold;
+  margin-left: -5px;
 `
 
 const MetaBarBox = styled.div`

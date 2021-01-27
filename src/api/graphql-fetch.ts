@@ -47,6 +47,7 @@ export function createAuthAwareGraphqlFetch(
       const client = new GraphQLClient(endpoint, {
         headers: auth.current
           ? {
+              'access-control-allow-origin': '*',
               Authorization: `Bearer ${auth.current.token}`,
             }
           : {},

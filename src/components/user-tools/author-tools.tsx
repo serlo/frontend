@@ -1,18 +1,17 @@
 import Tippy, { TippyProps } from '@tippyjs/react'
 import cookie from 'cookie'
-import { gql } from 'graphql-request'
 import { useRouter } from 'next/router'
 import NProgress from 'nprogress'
 import React from 'react'
 
 import { SubButtonStyle, SubLink } from '../navigation/menu'
 import { AuthorToolsData, HoverSubList, Li } from './author-tools-hover-menu'
-import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
 import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { useToastNotice } from '@/contexts/toast-notice-context'
 import { UserRoles } from '@/data-types'
+import { setStateMutation } from '@/helper/mutations'
 import { useIsSubscribed } from '@/helper/use-is-subscribed'
 import { useRefreshFromAPI } from '@/helper/use-refresh-from-api'
 
@@ -258,37 +257,13 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
           onClick={() => {
             console.log(`trash ${entityId}`)
 
-            void setStateMutation(188292, true)
+            void setStateMutation(auth, 188292, true)
           }}
         >
           {loggedInStrings.authorMenu.moveToTrash}
         </SubButtonStyle>
       </Li>
     )
-  }
-
-  async function setStateMutation(id: number, unread: boolean) {
-    const input = {
-      query: gql`
-        mutation setState($input: NotificationSetStateInput!) {
-          notification {
-            setState(input: $input) {
-              success
-            }
-          }
-        }
-      `,
-      variables: {
-        input: {
-          id,
-          unread,
-        },
-      },
-    }
-    const result = await createAuthAwareGraphqlFetch(auth)(
-      JSON.stringify(input)
-    )
-    console.log(result)
   }
 
   function renderNewEntity() {
