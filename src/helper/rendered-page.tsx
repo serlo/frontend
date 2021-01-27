@@ -8,7 +8,7 @@ export type NextRenderedPage<T = {}> = NextPage<T> & {
 }
 
 export function renderedPageNoHooks<T>(renderer: RenderLayout<T>) {
-  const NextPage: NextRenderedPage<T> = (props) => null
+  const NextPage: NextRenderedPage<T> = () => null
   NextPage.renderer = renderer
   return NextPage
 }
