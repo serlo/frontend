@@ -40,7 +40,7 @@ export function ErrorPage({ code, message }: ErrorData) {
   const isProbablyTemporary = code > 500
 
   return (
-    <FrontendClientBase noHeaderFooter>
+    <>
       <PageTitle title={strings.errors.title} headTitle />
       <_StyledP>
         {strings.errors.defaultMessage}{' '}
@@ -67,7 +67,7 @@ export function ErrorPage({ code, message }: ErrorData) {
         </StyledP>
       )}
       <HSpace amount={100} />
-    </FrontendClientBase>
+    </>
   )
 
   function renderButtons() {

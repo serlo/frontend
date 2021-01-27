@@ -46,7 +46,12 @@ const PageView: NextPage<SlugProps> = (initialProps) => {
   child,
   props
 ) => {
-  if (props.pageData === undefined) return <ErrorPage code={404} />
+  if (props.pageData === undefined)
+    return (
+      <FrontendClientBase noHeaderFooter>
+        <ErrorPage code={404} />
+      </FrontendClientBase>
+    )
 
   if (
     props.pageData.kind == 'single-entity' ||
