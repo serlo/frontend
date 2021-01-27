@@ -164,8 +164,12 @@ function renderElement(props: RenderElementProps): React.ReactNode {
     return <Math formula={element.formula} />
   }
   if (element.type === 'math') {
+    const nowrap =
+      element.formula.includes('\\begin{array}') ||
+      element.formula.includes('\\begin{aligned}')
+    // alignLeft is assumed to be always true
     return (
-      <MathWrapper centered={!element.alignLeft}>
+      <MathWrapper nowrap={nowrap}>
         <Lazy slim>
           <Math formula={'\\displaystyle ' + element.formula} />
         </Lazy>
