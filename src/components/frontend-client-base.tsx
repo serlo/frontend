@@ -35,7 +35,7 @@ export function FrontendClientBase({
   showNav,
   entityId,
 }: FrontendClientBaseProps) {
-  const { locale, asPath } = useRouter()
+  const { locale } = useRouter()
   const [instanceData] = React.useState<InstanceData>(() => {
     if (typeof window === 'undefined') {
       // load instance data for server side rendering
@@ -78,13 +78,6 @@ export function FrontendClientBase({
 
   const toastNotice = notify.createShowQueue()
 
-  const idCheck = /\/(\d+)(\/)?/.exec(asPath)
-  const _entityId = entityId
-    ? entityId
-    : idCheck && idCheck[1]
-    ? parseInt(idCheck[1])
-    : null
-
   // dev
   //console.dir(initialProps)
 
@@ -96,7 +89,7 @@ export function FrontendClientBase({
         <InstanceDataProvider value={instanceData}>
           <LoggedInComponentsProvider value={loggedInComponents}>
             <LoggedInDataProvider value={loggedInData}>
-              <EntityIdProvider value={_entityId}>
+              <EntityIdProvider value={entityId || null}>
                 <ToastNoticeProvider value={toastNotice}>
                   <ConditonalWrap
                     condition={!noHeaderFooter}

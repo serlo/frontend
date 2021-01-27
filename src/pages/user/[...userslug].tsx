@@ -9,7 +9,7 @@ import { requestUser } from '@/fetcher/user/request'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks<UserProps>(({ pageData }) => (
-  <FrontendClientBase>
+  <FrontendClientBase entityId={pageData.userData.id}>
     <PageTitle title={pageData.userData.username} headTitle />
     <Profile userData={pageData.userData} />
   </FrontendClientBase>
