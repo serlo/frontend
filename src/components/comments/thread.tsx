@@ -11,7 +11,6 @@ import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 interface ThreadProps {
   thread: ThreadType
-  entityId: number
   showChildren: boolean
   highlightedCommentId?: number
   renderReplyForm?: (threadId: string) => React.ReactNode
@@ -21,7 +20,6 @@ interface ThreadProps {
 
 export function Thread({
   thread,
-  entityId,
   showChildren,
   renderReplyForm,
   highlight,
@@ -80,7 +78,6 @@ export function Thread({
         <Comment
           key={comment.id}
           data={comment}
-          entityId={entityId}
           threadId={threadId}
           isParent={isParent}
           isHighlight={isHighlight}

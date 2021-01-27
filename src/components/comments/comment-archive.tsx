@@ -9,7 +9,6 @@ import { makeLightButton } from '@/helper/css'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 export interface CommentArchiveProps {
-  id: number
   show?: boolean
   data?: ThreadsData
   highlightedCommentId?: number
@@ -17,7 +16,6 @@ export interface CommentArchiveProps {
 }
 
 export function CommentArchive({
-  id: entityId,
   show,
   data,
   highlightedCommentId,
@@ -58,7 +56,6 @@ export function CommentArchive({
         <Thread
           key={thread.id}
           thread={thread}
-          entityId={entityId}
           showChildren
           highlightedCommentId={highlightedCommentId}
           highlight={highlight}

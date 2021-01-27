@@ -13,7 +13,10 @@ import { useAuth } from '@/auth/use-auth'
 import { StyledH2 } from '@/components/tags/styled-h2'
 import { useInstanceData } from '@/contexts/instance-context'
 import { isClient } from '@/helper/client-detection'
-import { createCommentMutation, createThreadMutation } from '@/helper/mutations'
+import {
+  useCreateThreadMutation,
+  useCreateCommentMutation,
+} from '@/helper/mutations'
 import { scrollToPrevious } from '@/helper/scroll'
 import { useCommentData } from '@/helper/use-comment-data'
 
@@ -35,6 +38,8 @@ export function CommentArea({ id: entityId, noForms }: CommentAreaProps) {
   const [showThreadChildren, setShowThreadChildren] = React.useState<string[]>(
     []
   )
+  const createThread = useCreateThreadMutation()
+  const createComment = useCreateCommentMutation()
   const { commentData, commentCount, error } = useCommentData(entityId)
 
   const showAll = isClient() && window.location.hash.startsWith('#comment-')
@@ -99,7 +104,6 @@ export function CommentArea({ id: entityId, noForms }: CommentAreaProps) {
       <Thread
         key={thread.id}
         thread={thread}
-        entityId={entityId}
         showChildren={showAll ? true : showThreadChildren.includes(thread.id)}
         highlightedCommentId={highlightedCommentId}
         renderReplyForm={renderReplyForm}
@@ -124,7 +128,6 @@ export function CommentArea({ id: entityId, noForms }: CommentAreaProps) {
   function renderArchive() {
     return (
       <CommentArchive
-        id={entityId}
         show={showAll}
         data={commentData.archived}
         highlightedCommentId={highlightedCommentId}
@@ -143,21 +146,16 @@ export function CommentArea({ id: entityId, noForms }: CommentAreaProps) {
     if (reply) {
       if (threadId === undefined) return false
       setShowThreadChildren([...showThreadChildren, threadId])
-      return await createCommentMutation(
-        auth,
-        {
-          content,
-          threadId,
-        },
-        entityId
-      )
+      return createComment({
+        content,
+        threadId,
+      })
     } else {
-      await createThreadMutation(auth, {
+      return createThread({
         title: '',
         content,
         objectId: entityId,
       })
-      return true
     }
   }
 }
