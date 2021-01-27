@@ -19,8 +19,8 @@ const bodyStyles = {
 const sentryLoader = `
   if (window.Sentry) {
     window.Sentry.init({
-      environment: ${process.env.NEXT_PUBLIC_ENV},
-      release: frontend@${process.env.NEXT_PUBLIC_COMMIT_SHA?.substr(0, 7)}
+      environment: "${process.env.NEXT_PUBLIC_ENV}",
+      release: "frontend@${process.env.NEXT_PUBLIC_COMMIT_SHA?.substr(0, 7)}"
     });
     window.Sentry.forceLoad();
   }
