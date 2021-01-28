@@ -11,7 +11,7 @@ import { NodePath } from '@/schema/article-renderer'
 
 export interface InputExerciseProps {
   data: EdtrPluginInputExercise['state']
-  path: NodePath
+  path?: NodePath
 }
 
 interface FeedbackData {

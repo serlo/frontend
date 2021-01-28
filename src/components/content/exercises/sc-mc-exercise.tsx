@@ -15,14 +15,14 @@ export interface ScMcExerciseProps {
   state: EdtrPluginScMcExercise['state']
   idBase: string
   renderNested: RenderNestedFunction
-  path: NodePath
+  path?: NodePath
 }
 
 interface SingleChoiceProps {
   answers: EdtrPluginScMcExercise['state']['answers']
   idBase: string
   renderNested: RenderNestedFunction
-  path: NodePath
+  path?: NodePath
 }
 
 export function ScMcExercise({
