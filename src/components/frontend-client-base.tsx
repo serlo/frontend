@@ -10,12 +10,14 @@ import { NProgressRouter } from './navigation/n-progress-router'
 import { RelativeContainer } from './navigation/relative-container'
 import { ToastNotice } from './toast-notice'
 import { useAuth } from '@/auth/use-auth'
+import { EntityIdProvider } from '@/contexts/entity-id-context'
 import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInComponentsProvider } from '@/contexts/logged-in-components'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
 import { ToastNoticeProvider } from '@/contexts/toast-notice-context'
 import { InstanceData, LoggedInData } from '@/data-types'
 import { FontFix, PrintStylesheet } from '@/helper/css'
+import type { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { frontendOrigin } from '@/helper/frontent-origin'
 import { theme } from '@/theme'
 
@@ -23,6 +25,7 @@ export type FrontendClientBaseProps = React.PropsWithChildren<{
   noHeaderFooter?: boolean
   noContainers?: boolean
   showNav?: boolean
+  entityId?: number
 }>
 
 export function FrontendClientBase({
@@ -30,6 +33,7 @@ export function FrontendClientBase({
   noHeaderFooter,
   noContainers,
   showNav,
+  entityId,
 }: FrontendClientBaseProps) {
   const { locale } = useRouter()
   const [instanceData] = React.useState<InstanceData>(() => {
@@ -42,7 +46,7 @@ export function FrontendClientBase({
       return JSON.parse(
         document.getElementById('__FRONTEND_CLIENT_INSTANCE_DATA__')
           ?.textContent ?? '{}'
-      )
+      ) as ReturnType<typeof getInstanceDataByLang>
     }
   })
 
@@ -85,27 +89,29 @@ export function FrontendClientBase({
         <InstanceDataProvider value={instanceData}>
           <LoggedInComponentsProvider value={loggedInComponents}>
             <LoggedInDataProvider value={loggedInData}>
-              <ToastNoticeProvider value={toastNotice}>
-                <ConditonalWrap
-                  condition={!noHeaderFooter}
-                  wrapper={(kids) => <HeaderFooter>{kids}</HeaderFooter>}
-                >
+              <EntityIdProvider value={entityId || null}>
+                <ToastNoticeProvider value={toastNotice}>
                   <ConditonalWrap
-                    condition={!noContainers}
-                    wrapper={(kids) => (
-                      <RelativeContainer>
-                        <MaxWidthDiv showNav={showNav}>
-                          <main>{kids}</main>
-                        </MaxWidthDiv>
-                      </RelativeContainer>
-                    )}
+                    condition={!noHeaderFooter}
+                    wrapper={(kids) => <HeaderFooter>{kids}</HeaderFooter>}
                   >
-                    {/* should not be necessary…?*/}
-                    {children as JSX.Element}
+                    <ConditonalWrap
+                      condition={!noContainers}
+                      wrapper={(kids) => (
+                        <RelativeContainer>
+                          <MaxWidthDiv showNav={showNav}>
+                            <main>{kids}</main>
+                          </MaxWidthDiv>
+                        </RelativeContainer>
+                      )}
+                    >
+                      {/* should not be necessary…?*/}
+                      {children as JSX.Element}
+                    </ConditonalWrap>
                   </ConditonalWrap>
-                </ConditonalWrap>
-                <ToastNotice />
-              </ToastNoticeProvider>
+                  <ToastNotice />
+                </ToastNoticeProvider>
+              </EntityIdProvider>
             </LoggedInDataProvider>
           </LoggedInComponentsProvider>
         </InstanceDataProvider>

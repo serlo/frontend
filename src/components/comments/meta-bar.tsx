@@ -16,7 +16,6 @@ export interface MetaBarProps {
   threadId: string
   isParent?: boolean
   id: number
-  entityId: number
   highlight: (id: number) => void
 }
 
@@ -26,7 +25,6 @@ export function MetaBar({
   isParent,
   id,
   highlight,
-  entityId,
   threadId,
 }: MetaBarProps) {
   const [
@@ -50,7 +48,6 @@ export function MetaBar({
               threadId={threadId}
               date={date}
               id={id}
-              entityId={entityId}
               highlight={highlight}
               // eslint-disable-next-line @typescript-eslint/unbound-method
               onAnyClick={tippyInstance.hide}

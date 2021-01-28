@@ -11,7 +11,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { useToastNotice } from '@/contexts/toast-notice-context'
 import { UserRoles } from '@/data-types'
-import { setStateMutation } from '@/helper/mutations'
+// import { setStateMutation } from '@/helper/mutations'
 import { useIsSubscribed } from '@/helper/use-is-subscribed'
 import { useRefreshFromAPI } from '@/helper/use-refresh-from-api'
 
@@ -67,7 +67,6 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   const { isSubscribed, updateIsSubscribed } = useIsSubscribed(data.id)
   const showToastNotice = useToastNotice()
   const refreshFromAPI = useRefreshFromAPI()
-
   const auth = useAuth()
 
   const router = useRouter()
@@ -256,8 +255,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
           as="button"
           onClick={() => {
             console.log(`trash ${entityId}`)
-
-            void setStateMutation(auth, 188292, true)
+            // void setStateMutation(auth, 188292, true)
           }}
         >
           {loggedInStrings.authorMenu.moveToTrash}

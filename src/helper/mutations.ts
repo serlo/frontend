@@ -2,39 +2,54 @@ import {
   ThreadCreateCommentInput,
   ThreadCreateThreadInput,
   ThreadMutation,
+  ThreadSetCommentStateInput,
+  ThreadSetThreadArchivedInput,
 } from '@serlo/api'
 import { gql } from 'graphql-request'
 import NProgress from 'nprogress'
 import { mutate } from 'swr'
 
 import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
-import { AuthPayload } from '@/auth/use-auth'
+import { AuthPayload, useAuth } from '@/auth/use-auth'
+import { useEntityId } from '@/contexts/entity-id-context'
 
-export async function setStateMutation(
-  auth: React.RefObject<AuthPayload>,
-  id: number,
-  unread: boolean
-) {
-  const input = {
-    query: gql`
-      mutation setState($input: NotificationSetStateInput!) {
-        notification {
-          setState(input: $input) {
-            success
-          }
-        }
-      }
-    `,
-    variables: {
-      input: {
-        id,
-        unread,
-      },
-    },
+const authFetchThread = async (
+  input: { query: string; variables: object },
+  auth: React.RefObject<AuthPayload>
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+) =>
+  (await createAuthAwareGraphqlFetch(auth)(JSON.stringify(input))) as {
+    thread: ThreadMutation
   }
-  const result = await createAuthAwareGraphqlFetch(auth)(JSON.stringify(input))
-  console.log(result)
-}
+
+// export function useNotificationSetStateMutation() {
+//   const auth = useAuth()
+
+//   return async (input: NotificationSetStateInput) =>
+//     await notificationSetStateMutation(auth, input)
+// }
+
+// export async function notificationSetStateMutation(
+//   auth: React.RefObject<AuthPayload>,
+//   input: NotificationSetStateInput
+// ) {
+//   const args = {
+//     query: gql`
+//       mutation setState($input: NotificationSetStateInput!) {
+//         notification {
+//           setState(input: $input) {
+//             success
+//           }
+//         }
+//       }
+//     `,
+//     variables: {
+//       input,
+//     },
+//   }
+//   const response = await authFetchThread(args, auth)
+//   console.log(response)
+// }
 
 // export async function setThreadState(id: number, unread: boolean) {
 //   const input = {
@@ -58,13 +73,20 @@ export async function setStateMutation(
 //   console.log(result)
 // }
 
-export async function setThreadArchivedMutation(
+export function useThreadArchivedMutation() {
+  const auth = useAuth()
+  const entityId = useEntityId()
+
+  return async (input: ThreadSetThreadArchivedInput) =>
+    await setThreadArchivedMutation(auth, input, entityId)
+}
+
+async function setThreadArchivedMutation(
   auth: React.RefObject<AuthPayload>,
-  id: string,
-  archived: boolean,
+  input: ThreadSetThreadArchivedInput,
   entityId: number
 ) {
-  const input = {
+  const args = {
     query: gql`
       mutation setState($input: ThreadSetThreadArchivedInput!) {
         thread {
@@ -74,17 +96,11 @@ export async function setThreadArchivedMutation(
         }
       }
     `,
-    variables: {
-      input: {
-        id,
-        archived,
-      },
-    },
+    variables: { input },
   }
   NProgress.start()
-  const response = (await createAuthAwareGraphqlFetch(auth)(
-    JSON.stringify(input)
-  )) as { thread: ThreadMutation }
+
+  const response = await authFetchThread(args, auth)
 
   if (response.thread.setThreadArchived?.success) {
     await mutate(`comments::${entityId}`)
@@ -97,13 +113,20 @@ export async function setThreadArchivedMutation(
   }
 }
 
-export async function setCommentStateMutation(
+export function useSetCommentStateMutation() {
+  const auth = useAuth()
+  const entityId = useEntityId()
+
+  return async (input: ThreadSetCommentStateInput) =>
+    await setCommentStateMutation(auth, input, entityId)
+}
+
+async function setCommentStateMutation(
   auth: React.RefObject<AuthPayload>,
-  id: number,
-  trashed: boolean,
+  input: ThreadSetCommentStateInput,
   entityId: number
 ) {
-  const input = {
+  const args = {
     query: gql`
       mutation setState($input: ThreadSetCommentStateInput!) {
         thread {
@@ -114,15 +137,10 @@ export async function setCommentStateMutation(
       }
     `,
     variables: {
-      input: {
-        id,
-        trashed,
-      },
+      input: { input },
     },
   }
-  const response = (await createAuthAwareGraphqlFetch(auth)(
-    JSON.stringify(input)
-  )) as { thread: ThreadMutation }
+  const response = await authFetchThread(args, auth)
   handleError(response)
 
   if (response.thread.setCommentState?.success) {
@@ -133,7 +151,14 @@ export async function setCommentStateMutation(
   }
 }
 
-export async function createThreadMutation(
+export function useCreateThreadMutation() {
+  const auth = useAuth()
+
+  return async (input: ThreadCreateThreadInput) =>
+    await createThreadMutation(auth, input)
+}
+
+async function createThreadMutation(
   auth: React.RefObject<AuthPayload>,
   input: ThreadCreateThreadInput
 ) {
@@ -150,11 +175,7 @@ export async function createThreadMutation(
     variables: { input },
   }
 
-  const response = (await createAuthAwareGraphqlFetch(auth)(
-    JSON.stringify(args)
-  )) as {
-    thread: ThreadMutation
-  }
+  const response = await authFetchThread(args, auth)
 
   if (response.thread.createThread?.success) {
     return !!(await mutate(`comments::${input.objectId}`))
@@ -164,7 +185,15 @@ export async function createThreadMutation(
   }
 }
 
-export async function createCommentMutation(
+export function useCreateCommentMutation() {
+  const auth = useAuth()
+  const entityId = useEntityId()
+
+  return async (input: ThreadCreateCommentInput) =>
+    await createCommentMutation(auth, input, entityId)
+}
+
+async function createCommentMutation(
   auth: React.RefObject<AuthPayload>,
   input: ThreadCreateCommentInput,
   entityId: number
@@ -183,9 +212,7 @@ export async function createCommentMutation(
   }
 
   try {
-    const response = (await createAuthAwareGraphqlFetch(auth)(
-      JSON.stringify(args)
-    )) as { thread: ThreadMutation }
+    const response = await authFetchThread(args, auth)
 
     if (response.thread.createComment?.success) {
       return !!(await mutate(`comments::${entityId}`))

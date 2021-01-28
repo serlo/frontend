@@ -12,15 +12,14 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { UserRoles } from '@/data-types'
 import { makeTransparentButton } from '@/helper/css'
 import {
-  setCommentStateMutation,
-  setThreadArchivedMutation,
+  useSetCommentStateMutation,
+  useThreadArchivedMutation,
 } from '@/helper/mutations'
 
 interface DropdownMenuProps {
   isParent?: boolean
   date: Date
   id: number
-  entityId: number
   highlight: (id: number) => void
   onAnyClick: () => void
   threadId?: string
@@ -32,7 +31,6 @@ export function DropdownMenu({
   date,
   highlight,
   onAnyClick,
-  entityId,
   threadId,
 }: DropdownMenuProps) {
   const { lang, strings } = useInstanceData()
@@ -41,6 +39,9 @@ export function DropdownMenu({
     auth.current !== null &&
     (auth.current?.roles.indexOf(UserRoles.Moderator) > -1 ||
       auth.current?.roles.indexOf(UserRoles.Admin) > -1)
+
+  const setThreadArchived = useThreadArchivedMutation()
+  const setCommentState = useSetCommentStateMutation()
 
   return (
     <DropContent>
@@ -88,14 +89,14 @@ export function DropdownMenu({
   function onDelete() {
     onAnyClick()
     if (!isParent) {
-      void setCommentStateMutation(auth, id, true, entityId)
+      void setCommentState({ id, trashed: true })
     }
   }
 
   function onArchiveThread() {
     onAnyClick()
     if (isParent && threadId) {
-      void setThreadArchivedMutation(auth, threadId, true, entityId)
+      void setThreadArchived({ id: threadId, archived: true })
     }
   }
 }
