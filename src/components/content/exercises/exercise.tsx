@@ -12,18 +12,20 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { FrontendExerciseNode } from '@/data-types'
 import { makeMargin, makeTransparentButton, makePadding } from '@/helper/css'
-import type { RenderNestedFunction } from '@/schema/article-renderer'
+import { submitEventWithPath } from '@/helper/submit-event'
+import type { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
 
 export interface ExerciseProps {
   node: FrontendExerciseNode
   renderNested: RenderNestedFunction
+  path?: NodePath
 }
 
 const CommentArea = dynamic<CommentAreaProps>(() =>
   import('@/components/comments/comment-area').then((mod) => mod.CommentArea)
 )
 
-export function Exercise({ node, renderNested }: ExerciseProps) {
+export function Exercise({ node, renderNested, path }: ExerciseProps) {
   const { strings } = useInstanceData()
   const [solutionVisible, setVisible] = React.useState(false)
   const [randomId] = React.useState(Math.random().toString())
@@ -58,7 +60,6 @@ export function Exercise({ node, renderNested }: ExerciseProps) {
       <LicenseNotice minimal data={node.solution.license} type="solution" />
     )
     const Comp = lic?.ExerciseAuthorTools
-    console.log('exercise', Comp)
     const authorTools = Comp && loaded && auth.current && (
       <Comp
         data={{
@@ -102,6 +103,9 @@ export function Exercise({ node, renderNested }: ExerciseProps) {
     return (
       <SolutionToggle
         onClick={() => {
+          if (!solutionVisible) {
+            submitEventWithPath('opensolution', path)
+          }
           setVisible(!solutionVisible)
         }}
         onPointerUp={(e) => e.currentTarget.blur()} //hack, use https://caniuse.com/#feat=css-focus-visible when supported
@@ -137,11 +141,12 @@ export function Exercise({ node, renderNested }: ExerciseProps) {
               node.positionOnPage ? node.positionOnPage : randomId
             }-${node.positionInGroup ? node.positionInGroup : ''}-`}
             renderNested={renderNested}
+            path={path}
           />
         )
       }
       if (state.interactive.plugin === 'inputExercise') {
-        return <InputExercise data={state.interactive.state} />
+        return <InputExercise data={state.interactive.state} path={path} />
       }
     }
   }

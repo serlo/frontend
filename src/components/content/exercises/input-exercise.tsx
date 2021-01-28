@@ -6,9 +6,12 @@ import { Feedback } from './feedback'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EdtrPluginInputExercise } from '@/data-types'
 import { makeMargin, makePrimaryButton, inputFontReset } from '@/helper/css'
+import { submitEventWithPath } from '@/helper/submit-event'
+import { NodePath } from '@/schema/article-renderer'
 
 export interface InputExerciseProps {
   data: EdtrPluginInputExercise['state']
+  path: NodePath
 }
 
 interface FeedbackData {
@@ -16,7 +19,7 @@ interface FeedbackData {
   message: string
 }
 
-export function InputExercise({ data }: InputExerciseProps) {
+export function InputExercise({ data, path }: InputExerciseProps) {
   const [feedback, setFeedback] = React.useState<FeedbackData | null>(null)
   const [value, setValue] = React.useState('')
   const [A, setA] = React.useState<typeof import('algebra.js') | null>(null)
@@ -28,6 +31,7 @@ export function InputExercise({ data }: InputExerciseProps) {
 
   function evaluate() {
     setFeedback(checkAnswer())
+    submitEventWithPath('checkinput', path)
   }
 
   return (

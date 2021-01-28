@@ -45,12 +45,15 @@ import { MathSpanProps } from '@/components/content/math-span'
 import { Multimedia } from '@/components/content/multimedia'
 import { Video } from '@/components/content/video'
 import { FrontendContentNode } from '@/data-types'
+import { submitEventWithPath } from '@/helper/submit-event'
+
+export type NodePath = (number | string)[]
 
 interface RenderElementProps {
   element: FrontendContentNode
   children: React.ReactNode
   value: FrontendContentNode
-  path: (number | string)[]
+  path: NodePath
 }
 
 export type RenderNestedFunction = (
@@ -71,8 +74,8 @@ export function renderArticle(
 
 function renderNested(
   value: FrontendContentNode[],
-  previousPath: (number | string)[],
-  pathPrefix: (number | string)[]
+  previousPath: NodePath,
+  pathPrefix: NodePath
 ) {
   return _renderArticle(value, false, previousPath.concat(pathPrefix))
 }
@@ -80,7 +83,7 @@ function renderNested(
 function _renderArticle(
   value: FrontendContentNode[],
   addCSS: boolean,
-  pathPrefix: (number | string)[]
+  pathPrefix: NodePath
 ) {
   if (!value || !Array.isArray(value)) return null
   const root = { children: value } as FrontendContentNode
@@ -104,7 +107,7 @@ function getNode(
 
 function render(
   value: FrontendContentNode,
-  path: (number | string)[] = []
+  path: NodePath = []
 ): React.ReactNode {
   const currentPath: number[] = []
   for (let i = path.length - 1; i >= 0; i--) {
@@ -192,8 +195,6 @@ export function renderLeaf({ leaf, key, children }: RenderLeafProps) {
 function renderElement(props: RenderElementProps): React.ReactNode {
   const { element, children, path } = props
 
-  console.log('render element', path)
-
   if (element.type === 'a') {
     return <Link href={element.href}>{children}</Link>
   }
@@ -244,7 +245,9 @@ function renderElement(props: RenderElementProps): React.ReactNode {
   }
   if (element.type === 'spoiler-container') {
     if (!Array.isArray(children)) return null
-    return <SpoilerForEndUser title={children[0]} body={children[1]} />
+    return (
+      <SpoilerForEndUser title={children[0]} body={children[1]} path={path} />
+    )
   }
   if (element.type === 'spoiler-body') {
     return <SpoilerBody>{children}</SpoilerBody>
@@ -302,7 +305,7 @@ function renderElement(props: RenderElementProps): React.ReactNode {
   if (element.type === 'geogebra') {
     return (
       <Lazy>
-        <Geogebra id={element.id} />
+        <Geogebra id={element.id} path={path} />
       </Lazy>
     )
   }
@@ -322,6 +325,7 @@ function renderElement(props: RenderElementProps): React.ReactNode {
       <Exercise
         node={element}
         renderNested={(value, ...prefix) => renderNested(value, path, prefix)}
+        path={path}
       />
     )
   }
@@ -353,7 +357,7 @@ function renderElement(props: RenderElementProps): React.ReactNode {
   if (element.type === 'video') {
     return (
       <Lazy>
-        <Video src={element.src} />
+        <Video src={element.src} path={path} />
       </Lazy>
     )
   }
@@ -374,13 +378,22 @@ function renderElement(props: RenderElementProps): React.ReactNode {
 interface SpoilerForEndUserProps {
   body: React.ReactNode
   title: React.ReactNode
+  path: NodePath
 }
 
-function SpoilerForEndUser({ body, title }: SpoilerForEndUserProps) {
+function SpoilerForEndUser({ body, title, path }: SpoilerForEndUserProps) {
   const [open, setOpen] = React.useState(false)
   return (
     <SpoilerContainer>
-      <SpoilerTitle onClick={() => setOpen(!open)} open={open}>
+      <SpoilerTitle
+        onClick={() => {
+          setOpen(!open)
+          if (!open) {
+            submitEventWithPath('openspoiler', path)
+          }
+        }}
+        open={open}
+      >
         <SpoilerToggle open={open} />
         {title}
       </SpoilerTitle>
