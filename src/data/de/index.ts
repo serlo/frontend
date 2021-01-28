@@ -185,8 +185,8 @@ export const instanceData = {
       pleaseLogInText: "um diese Funktion zu benutzen."
     },
     keys: {
-      ctrl: 'ctrl',
-      return: 'return'
+      ctrl: "Strg",
+      return: "Enter"
     }
   }
 };
