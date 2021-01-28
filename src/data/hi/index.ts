@@ -183,6 +183,10 @@ export const instanceData = {
     login: {
       pleaseLogInLink: 'Please log in',
       pleaseLogInText: 'to use this feature.'
+    },
+    keys: {
+      ctrl: 'ctrl',
+      return: 'return'
     }
   }
 };
