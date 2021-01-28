@@ -1,7 +1,7 @@
 import { NodePath } from '@/schema/article-renderer'
 
 export function submitEvent(name: string) {
-  console.log('event', name)
+  //console.log('event', name)
   try {
     const window_local: any = window
     if (window_local.sa_event) {
