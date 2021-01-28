@@ -3,12 +3,12 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { LightBoxProps } from './light-box'
-import {
+import type {
   FrontendMultiMediaNode,
   FrontendImgNode,
   FrontendContentNode,
 } from '@/data-types'
-import { renderArticle } from '@/schema/article-renderer'
+import type { RenderNestedFunction } from '@/schema/article-renderer'
 
 const LightBox = dynamic<LightBoxProps>(() =>
   import('./light-box').then((mod) => mod.LightBox)
@@ -18,7 +18,8 @@ export function Multimedia({
   mediaWidth,
   media,
   children,
-}: FrontendMultiMediaNode) {
+  renderNested,
+}: FrontendMultiMediaNode & { renderNested: RenderNestedFunction }) {
   const [open, setOpen] = React.useState(false)
   function openLightBox() {
     setOpen(true)
@@ -34,9 +35,9 @@ export function Multimedia({
         onClick={mediaChildIsImage ? openLightBox : undefined}
         useLightbox={mediaChildIsImage}
       >
-        {renderArticle(media)}
+        {renderNested(media, 'media')}
       </Wrapper>
-      {renderArticle(children)}
+      {renderNested(children, 'children')}
       {renderLightbox()}
       <Clear />
     </>

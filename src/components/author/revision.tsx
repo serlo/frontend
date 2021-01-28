@@ -87,7 +87,10 @@ export function Revision({ data }: RevisionProps) {
       )}
       {dataSet.content !== undefined && (
         <PreviewBox title={strings.revisions.content} diffType="content">
-          {renderArticle(dataSet.content || [])}
+          {renderArticle(
+            dataSet.content || [],
+            `revision${dataSet.id || 'empty'}`
+          )}
         </PreviewBox>
       )}
       {renderVideoOrAppletBox()}

@@ -150,6 +150,7 @@ export interface LicenseDetailData {
   title: string
   content: FrontendContentNode[]
   iconHref: string
+  id: number
 }
 
 export interface HistoryRevisionData {
@@ -749,6 +750,7 @@ export interface TaxonomyLink {
 // Second level has folders and exercises as links
 
 export interface TaxonomySubTerm extends TaxonomyTermBase, TaxonomyLink {
+  id: number
   folders: TaxonomyLink[]
 }
 

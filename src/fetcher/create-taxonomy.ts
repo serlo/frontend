@@ -105,6 +105,7 @@ function collectNestedTaxonomyTerms(
     ) {
       const subChildren = child.children.nodes.filter(isActive)
       result.push({
+        id: child.id,
         title: child.name,
         url: getAlias(child),
         description: child.description

@@ -5,18 +5,22 @@ import { StyledP } from '../tags/styled-p'
 import { LicenseNotice } from './license-notice'
 import { useInstanceData } from '@/contexts/instance-context'
 import { LicenseData, SlugPageData, FrontendContentNode } from '@/data-types'
-import { renderArticle } from '@/schema/article-renderer'
+import type { RenderNestedFunction } from '@/schema/article-renderer'
 
 export interface InjectionProps {
   href: string
+  renderNested: RenderNestedFunction
 }
 
 // TODO: Give injection a separate fetched data type
 
-export function Injection({ href }: InjectionProps) {
+export function Injection({ href, renderNested }: InjectionProps) {
   const [value, setValue] = React.useState<FrontendContentNode[] | undefined>(
     undefined
   )
+
+  const [id, setId] = React.useState<number | undefined>(undefined)
+
   const [license, setLicense] = React.useState<undefined | LicenseData>(
     undefined
   )
@@ -67,6 +71,7 @@ export function Injection({ href }: InjectionProps) {
 
   function dataToState(pageData: SlugPageData) {
     if (pageData.kind === 'single-entity') {
+      setId(pageData.entityData.id)
       setValue(pageData.entityData.content)
       if (pageData.entityData.licenseData) {
         setLicense(pageData.entityData.licenseData)
@@ -90,7 +95,7 @@ export function Injection({ href }: InjectionProps) {
 
     return (
       <>
-        {renderArticle(renderValue, false)}
+        {renderNested(renderValue, `injection${id}`)}
         {license && !license.default && (
           <StyledP>
             <LicenseNotice minimal data={license} type="video" />

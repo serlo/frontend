@@ -50,20 +50,45 @@ interface RenderElementProps {
   element: FrontendContentNode
   children: React.ReactNode
   value: FrontendContentNode
-  path: number[]
+  path: (number | string)[]
 }
+
+export type RenderNestedFunction = (
+  value: FrontendContentNode[],
+  ...pathPrefix: string[]
+) => JSX.Element | null | React.ReactNode[]
 
 const Math = dynamic<MathSpanProps>(() =>
   import('../components/content/math-span').then((mod) => mod.MathSpan)
 )
 
-export function renderArticle(value: FrontendContentNode[], addCSS = true) {
+export function renderArticle(
+  value: FrontendContentNode[],
+  ...pathPrefix: string[]
+) {
+  return _renderArticle(value, true, pathPrefix)
+}
+
+function renderNested(
+  value: FrontendContentNode[],
+  previousPath: (number | string)[],
+  pathPrefix: (number | string)[]
+) {
+  return _renderArticle(value, false, previousPath.concat(pathPrefix))
+}
+
+function _renderArticle(
+  value: FrontendContentNode[],
+  addCSS: boolean,
+  pathPrefix: (number | string)[]
+) {
   if (!value || !Array.isArray(value)) return null
   const root = { children: value } as FrontendContentNode
-  const content = value.map((_, index) => render(root, [index]))
-  if (addCSS) {
-    return <SpecialCss>{content}</SpecialCss>
-  } else return content
+  const content = value.map((_, index) =>
+    render(root, pathPrefix.concat(index))
+  )
+  if (!addCSS) return content
+  return <SpecialCss>{content}</SpecialCss>
 }
 
 function getNode(
@@ -79,15 +104,24 @@ function getNode(
 
 function render(
   value: FrontendContentNode,
-  path: number[] = []
+  path: (number | string)[] = []
 ): React.ReactNode {
-  const currentNode = getNode(value, path)
-  const key = path[path.length - 1]
+  const currentPath: number[] = []
+  for (let i = path.length - 1; i >= 0; i--) {
+    const index = path[i]
+    if (typeof index === 'number') {
+      currentPath.unshift(index)
+    } else {
+      break
+    }
+  }
+  const currentNode = getNode(value, currentPath)
+  const key = currentPath[currentPath.length - 1]
 
   if (currentNode.type !== 'text') {
     const children: React.ReactNode[] = []
     if (currentNode.children) {
-      currentNode.children.forEach((child, index) => {
+      currentNode.children.forEach((_child, index) => {
         children.push(render(value, path.concat(index)))
       })
     }
@@ -156,7 +190,10 @@ export function renderLeaf({ leaf, key, children }: RenderLeafProps) {
 }
 
 function renderElement(props: RenderElementProps): React.ReactNode {
-  const { element, children } = props
+  const { element, children, path } = props
+
+  console.log('render element', path)
+
   if (element.type === 'a') {
     return <Link href={element.href}>{children}</Link>
   }
@@ -243,7 +280,12 @@ function renderElement(props: RenderElementProps): React.ReactNode {
     return <StyledTd>{children}</StyledTd>
   }
   if (element.type === 'multimedia') {
-    return <Multimedia {...element} />
+    return (
+      <Multimedia
+        {...element}
+        renderNested={(value, ...prefix) => renderNested(value, path, prefix)}
+      />
+    )
   }
   if (element.type === 'row') {
     return <LayoutRow>{children}</LayoutRow>
@@ -268,10 +310,20 @@ function renderElement(props: RenderElementProps): React.ReactNode {
     return <a id={element.id.toString()} />
   }
   if (element.type === 'injection') {
-    return <Injection href={element.href} />
+    return (
+      <Injection
+        href={element.href}
+        renderNested={(value, ...prefix) => renderNested(value, path, prefix)}
+      />
+    )
   }
   if (element.type === 'exercise') {
-    return <Exercise node={element} />
+    return (
+      <Exercise
+        node={element}
+        renderNested={(value, ...prefix) => renderNested(value, path, prefix)}
+      />
+    )
   }
   if (element.type === 'exercise-group') {
     return (
@@ -281,7 +333,7 @@ function renderElement(props: RenderElementProps): React.ReactNode {
             <LicenseNotice minimal data={element.license} type={element.type} />
           )
         }
-        groupIntro={renderArticle(element.content, false)}
+        groupIntro={renderNested(element.content, path, ['group-intro'])}
         positionOnPage={element.positionOnPage}
         id={element.context.id}
         href={element.href}
@@ -291,7 +343,12 @@ function renderElement(props: RenderElementProps): React.ReactNode {
     )
   }
   if (element.type === 'solution') {
-    return <Solution node={element.solution} />
+    return (
+      <Solution
+        node={element.solution}
+        renderNested={(value, ...prefix) => renderNested(value, path, prefix)}
+      />
+    )
   }
   if (element.type === 'video') {
     return (
@@ -301,7 +358,12 @@ function renderElement(props: RenderElementProps): React.ReactNode {
     )
   }
   if (element.type === 'equations') {
-    return <Equations steps={element.steps} />
+    return (
+      <Equations
+        steps={element.steps}
+        renderNested={(value, ...prefix) => renderNested(value, path, prefix)}
+      />
+    )
   }
   if (element.type === 'code') {
     return <Code content={element.code} />

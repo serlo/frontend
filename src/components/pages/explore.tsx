@@ -15,6 +15,7 @@ import theme from '@/components/pages/explore.module.css'
 import { frontendOrigin } from '@/helper/frontent-origin'
 import { AutocompleteResponse } from '@/pages/api/search/autocomplete'
 import { SearchQueryResponse } from '@/pages/api/search/query'
+import { renderArticle } from '@/schema/article-renderer'
 
 // eslint-disable-next-line import/no-internal-modules,import/no-unassigned-import
 import 'react-tabs/style/react-tabs.css'
@@ -356,7 +357,7 @@ function Document({ id, explain }: any) {
       </p>
       <Lazy>
         {' '}
-        <Injection href={`/${id}`} key={id} />
+        <Injection href={`/${id}`} key={id} renderNested={renderArticle} />
       </Lazy>
     </>
   )

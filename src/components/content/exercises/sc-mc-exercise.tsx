@@ -8,28 +8,46 @@ import { Feedback } from './feedback'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EdtrPluginScMcExercise } from '@/data-types'
 import { makeMargin, makePrimaryButton } from '@/helper/css'
-import { renderArticle } from '@/schema/article-renderer'
+import type { RenderNestedFunction } from '@/schema/article-renderer'
 
 export interface ScMcExerciseProps {
   state: EdtrPluginScMcExercise['state']
   idBase: string
+  renderNested: RenderNestedFunction
 }
 
 interface SingleChoiceProps {
   answers: EdtrPluginScMcExercise['state']['answers']
   idBase: string
+  renderNested: RenderNestedFunction
 }
 
-export function ScMcExercise({ state, idBase }: ScMcExerciseProps) {
+export function ScMcExercise({
+  state,
+  idBase,
+  renderNested,
+}: ScMcExerciseProps) {
   const answers = state.answers.slice(0)
 
   if (state.isSingleChoice)
-    return <SingleChoice answers={answers} idBase={idBase} />
+    return (
+      <SingleChoice
+        answers={answers}
+        idBase={idBase}
+        renderNested={renderNested}
+      />
+    )
 
-  return <MultipleChoice answers={answers} idBase={idBase} />
+  return (
+    <MultipleChoice
+      answers={answers}
+      idBase={idBase}
+      renderNested={renderNested}
+    />
+  )
 }
 
-function SingleChoice({ answers, idBase }: SingleChoiceProps) {
+function SingleChoice({ answers, idBase, renderNested }: SingleChoiceProps) {
   const [selected, setSelected] = React.useState<number | undefined>(undefined)
   const [focused, setFocused] = React.useState<number | undefined>(undefined)
   const [showFeedback, setShowFeedback] = React.useState(false)
@@ -65,7 +83,7 @@ function SingleChoice({ answers, idBase }: SingleChoiceProps) {
                   <FontAwesomeIcon
                     icon={selected === i ? faCheckCircle : faCircle}
                   />
-                  {renderArticle(answer.content)}
+                  {renderNested(answer.content, `scoption${i}`)}
                 </StyledLabel>
               </ChoiceWrapper>
               {showFeedback &&
@@ -73,7 +91,10 @@ function SingleChoice({ answers, idBase }: SingleChoiceProps) {
                 answers[selected] &&
                 answers[selected] === answer && (
                   <Feedback correct={answers[selected].isCorrect}>
-                    {renderArticle(answers[selected].feedback)}
+                    {renderNested(
+                      answers[selected].feedback,
+                      `scfeedback${selected}`
+                    )}
                   </Feedback>
                 )}
             </React.Fragment>
@@ -94,7 +115,7 @@ function SingleChoice({ answers, idBase }: SingleChoiceProps) {
   )
 }
 
-function MultipleChoice({ answers, idBase }: SingleChoiceProps) {
+function MultipleChoice({ answers, idBase, renderNested }: SingleChoiceProps) {
   const [selected, setSelected] = React.useState(answers.map(() => false))
   const [focused, setFocused] = React.useState<number | undefined>(undefined)
   const [showFeedback, setShowFeedback] = React.useState(false)
@@ -134,13 +155,13 @@ function MultipleChoice({ answers, idBase }: SingleChoiceProps) {
                   <FontAwesomeIcon
                     icon={selected[i] ? faCheckSquare : faSquare}
                   />
-                  {renderArticle(answer.content)}
+                  {renderNested(answer.content, `mcoption${i}`)}
                 </StyledLabel>
               </ChoiceWrapper>
               {showFeedback &&
                 selected[i] &&
                 hasFeedback &&
-                renderArticle(answer.feedback)}
+                renderNested(answer.feedback, `mcfeedback${i}`)}
             </React.Fragment>
           )
         })}

@@ -19,6 +19,7 @@ export async function requestLicensePage(
       content: convertState(license.content),
       title: license.title,
       iconHref: license.iconHref,
+      id,
     },
   }
 }

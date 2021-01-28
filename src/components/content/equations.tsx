@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import { FrontendContentNode, Sign } from '@/data-types'
 import { makeMargin } from '@/helper/css'
-import { renderArticle } from '@/schema/article-renderer'
+import { RenderNestedFunction } from '@/schema/article-renderer'
 
 export interface StepProps {
   left: string
@@ -16,9 +16,10 @@ export interface StepProps {
 
 export interface EquationProps {
   steps: StepProps[]
+  renderNested: RenderNestedFunction
 }
 
-export function Equations({ steps }: EquationProps) {
+export function Equations({ steps, renderNested }: EquationProps) {
   return (
     <Wrapper>
       <TableWrapper>
@@ -34,38 +35,41 @@ export function Equations({ steps }: EquationProps) {
                   <tr>
                     <LeftTd>
                       {step.left
-                        ? renderArticle(
+                        ? renderNested(
                             [
                               {
                                 type: 'inline-math',
                                 formula: '\\displaystyle ' + step.left,
                               },
                             ],
-                            false
+                            `step${i}`,
+                            'left'
                           )
                         : null}
                     </LeftTd>
                     <SignTd>
-                      {renderArticle(
+                      {renderNested(
                         [
                           {
                             type: 'inline-math',
                             formula: renderSignToString(step.sign),
                           },
                         ],
-                        false
+                        `step${i}`,
+                        'sign'
                       )}
                     </SignTd>
                     <RightTd>
                       {step.right
-                        ? renderArticle(
+                        ? renderNested(
                             [
                               {
                                 type: 'inline-math',
                                 formula: '\\displaystyle ' + step.right,
                               },
                             ],
-                            false
+                            `step${i}`,
+                            'right'
                           )
                         : null}
                     </RightTd>
@@ -73,14 +77,15 @@ export function Equations({ steps }: EquationProps) {
                       {step.transform ? (
                         <>
                           |
-                          {renderArticle(
+                          {renderNested(
                             [
                               {
                                 type: 'inline-math',
                                 formula: '\\displaystyle ' + step.transform,
                               },
                             ],
-                            false
+                            `step${i}`,
+                            'transform'
                           )}
                         </>
                       ) : null}
@@ -91,7 +96,11 @@ export function Equations({ steps }: EquationProps) {
                       <td />
                       <SignTd>{i === steps.length - 1 ? '→' : '↓'}</SignTd>
                       <td colSpan={2}>
-                        {renderArticle(step.explanation, false)}
+                        {renderNested(
+                          step.explanation,
+                          `step${i}`,
+                          'explaination'
+                        )}
                       </td>
                     </ExplanationTr>
                   ) : null}
