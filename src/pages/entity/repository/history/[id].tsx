@@ -31,7 +31,7 @@ function Content({ id }: HistoryRevisionProps) {
         ]}
         asBackButton
       />
-      <Title />
+      <Title amount={response.data?.uuid.revisions.nodes.length ?? 0} />
       <Guard {...response}>
         <RevisionHistory data={response.data?.uuid} />
       </Guard>
@@ -57,9 +57,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 }
 
-function Title() {
+function Title({ amount }: { amount: number }) {
   const { strings } = useInstanceData()
-  return <PageTitle title={strings.pageTitles.revisionHistory} headTitle />
+  console.log(amount)
+  return (
+    <PageTitle
+      title={`${strings.pageTitles.revisionHistory} (${amount})`}
+      headTitle
+    />
+  )
 }
 
 function useFetch(id: number) {

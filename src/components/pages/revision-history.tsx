@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import styled from 'styled-components'
 
-import { StyledTable } from '../tags/styled-table'
 import { StyledTd } from '../tags/styled-td'
 import { StyledTh } from '../tags/styled-th'
 import { StyledTr } from '../tags/styled-tr'
@@ -11,7 +10,7 @@ import { UserLink } from '../user/user-link'
 import { TimeAgo } from '@/components/time-ago'
 import { useInstanceData } from '@/contexts/instance-context'
 import type { HistoryRevisionsData } from '@/data-types'
-import { makeLightButton } from '@/helper/css'
+import { makeLightButton, makeMargin } from '@/helper/css'
 
 export interface RevisionHistoryProps {
   data?: HistoryRevisionsData
@@ -22,7 +21,7 @@ export function RevisionHistory({ data }: RevisionHistoryProps) {
   if (!data) return null
 
   return (
-    <StyledTable>
+    <Table>
       <thead>
         <StyledTr>
           <StyledTh>{strings.revisionHistory.changes}</StyledTh>
@@ -71,7 +70,7 @@ export function RevisionHistory({ data }: RevisionHistoryProps) {
           )
         })}
       </tbody>
-    </StyledTable>
+    </Table>
   )
 }
 
@@ -79,4 +78,10 @@ const Button = styled.a`
   ${makeLightButton}
   margin: 0 auto;
   font-size: 1rem;
+`
+
+export const Table = styled.table`
+  ${makeMargin}
+  border-collapse: collapse;
+  width: 100%;
 `

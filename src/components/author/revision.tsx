@@ -56,7 +56,11 @@ export function Revision({ data }: RevisionProps) {
       </MetaBar>
       <HSpace amount={5} />
       <PageTitle
-        title={strings.entities.revision}
+        title={
+          data.currentRevision.metaTitle ||
+          data.currentRevision.title ||
+          strings.entities.revision
+        }
         headTitle
         icon={icon ? icon : undefined}
       />
@@ -87,12 +91,12 @@ export function Revision({ data }: RevisionProps) {
         </PreviewBox>
       )}
       {renderVideoOrAppletBox()}
-      {dataSet.metaTitle !== undefined && (
+      {dataSet.metaTitle && (
         <PreviewBox title={strings.revisions.metaTitle} diffType="metaTitle">
           {dataSet.metaTitle}
         </PreviewBox>
       )}
-      {dataSet.metaDescription !== undefined && (
+      {dataSet.metaDescription && (
         <PreviewBox
           title={strings.revisions.metaDescription}
           diffType="metaDescription"
