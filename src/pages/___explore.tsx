@@ -5,7 +5,7 @@ import { Explore } from '@/components/pages/explore'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks(() => (
-  <FrontendClientBase>
+  <FrontendClientBase entityId={-1}>
     <Explore />
   </FrontendClientBase>
 ))

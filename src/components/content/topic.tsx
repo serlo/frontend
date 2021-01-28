@@ -59,17 +59,24 @@ export function Topic({ data }: TopicProps) {
       </Headline>
       {renderUserTools({ aboveContent: true })}
       <ImageSizer>
-        {data.description && renderArticle(data.description)}
+        {data.description &&
+          renderArticle(data.description, `taxDesc${data.id}`)}
       </ImageSizer>
       {data.subterms &&
         data.subterms.map((child) => (
           <React.Fragment key={child.title}>
-            <SubTopic data={child} />
+            <SubTopic data={child} subid={child.id} id={data.id} />
           </React.Fragment>
         ))}
       {data.exercisesContent &&
         data.exercisesContent.map((exercise, i) => (
-          <React.Fragment key={i}>{renderArticle([exercise])}</React.Fragment>
+          <React.Fragment key={i}>
+            {renderArticle(
+              [exercise],
+              `tax${data.id}`,
+              `ex${exercise.context.id}`
+            )}
+          </React.Fragment>
         ))}
       {isTopic && (
         <LinkList>
@@ -133,7 +140,15 @@ export function Topic({ data }: TopicProps) {
   }
 }
 
-function SubTopic({ data }: { data: TaxonomySubTerm }) {
+function SubTopic({
+  data,
+  subid,
+  id,
+}: {
+  data: TaxonomySubTerm
+  subid: number
+  id: number
+}) {
   return (
     <>
       <h2>
@@ -144,7 +159,8 @@ function SubTopic({ data }: { data: TaxonomySubTerm }) {
         <Overview>
           {' '}
           <ImageSizer>
-            {data.description && renderArticle(data.description)}
+            {data.description &&
+              renderArticle(data.description, `tax${id}`, `subtopic${subid}`)}
           </ImageSizer>
         </Overview>
 

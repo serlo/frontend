@@ -12,17 +12,18 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { FrontendExerciseNode } from '@/data-types'
 import { makeMargin, makeTransparentButton, makePadding } from '@/helper/css'
-import { renderArticle } from '@/schema/article-renderer'
+import type { RenderNestedFunction } from '@/schema/article-renderer'
 
 export interface ExerciseProps {
   node: FrontendExerciseNode
+  renderNested: RenderNestedFunction
 }
 
 const CommentArea = dynamic<CommentAreaProps>(() =>
   import('@/components/comments/comment-area').then((mod) => mod.CommentArea)
 )
 
-export function Exercise({ node }: ExerciseProps) {
+export function Exercise({ node, renderNested }: ExerciseProps) {
   const { strings } = useInstanceData()
   const [solutionVisible, setVisible] = React.useState(false)
   const [randomId] = React.useState(Math.random().toString())
@@ -71,7 +72,7 @@ export function Exercise({ node }: ExerciseProps) {
 
     return (
       <SolutionBox>
-        {renderArticle(
+        {renderNested(
           [
             {
               type: 'solution',
@@ -79,7 +80,7 @@ export function Exercise({ node }: ExerciseProps) {
               context: { id: node.context.solutionId! },
             },
           ],
-          false
+          'tasksol'
         )}
         {
           /* compat: hide div if empty */
@@ -115,9 +116,9 @@ export function Exercise({ node }: ExerciseProps) {
 
   function renderExerciseTask() {
     if (node.task.legacy) {
-      return renderArticle(node.task.legacy, false)
+      return renderNested(node.task.legacy, 'task')
     } else if (node.task.edtrState) {
-      return renderArticle(node.task.edtrState.content, false)
+      return renderNested(node.task.edtrState.content, 'task')
     }
     return null
   }
@@ -135,6 +136,7 @@ export function Exercise({ node }: ExerciseProps) {
             idBase={`ex-${
               node.positionOnPage ? node.positionOnPage : randomId
             }-${node.positionInGroup ? node.positionInGroup : ''}-`}
+            renderNested={renderNested}
           />
         )
       }

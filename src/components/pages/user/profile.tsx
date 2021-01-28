@@ -33,7 +33,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
       {description && (
         <>
           <StyledH2>{strings.profiles.aboutMe}</StyledH2>
-          {renderArticle(description)}
+          {renderArticle(description, `profile${id}`)}
         </>
       )}
       {/* <StyledH2>{strings.profiles.recentActivities}</StyledH2> */}

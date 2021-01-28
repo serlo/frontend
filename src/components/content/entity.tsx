@@ -109,10 +109,11 @@ export function Entity({ data }: EntityProps) {
   }
 
   function renderContent(value: FrontendContentNode[]) {
+    const content = renderArticle(value, `entity${data.id}`)
     if (data.schemaData?.setContentAsSection) {
-      return <section itemProp="articleBody">{renderArticle(value)}</section>
+      return <section itemProp="articleBody">{content}</section>
     }
-    return renderArticle(value)
+    return content
   }
 
   function renderUserTools(setting?: { aboveContent?: boolean }) {
