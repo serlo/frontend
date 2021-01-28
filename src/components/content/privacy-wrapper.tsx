@@ -20,6 +20,7 @@ interface PrivacyWrapperProps {
   provider: ExternalProvider
   embedUrl?: string
   twingleCallback?: () => void
+  onLoad?: () => void
 }
 
 export function PrivacyWrapper({
@@ -29,6 +30,7 @@ export function PrivacyWrapper({
   provider,
   embedUrl,
   twingleCallback,
+  onLoad,
 }: PrivacyWrapperProps) {
   const [showIframe, setShowIframe] = React.useState(false)
   const isTwingle = provider === ExternalProvider.Twingle
@@ -38,6 +40,7 @@ export function PrivacyWrapper({
 
   const confirmLoad = () => {
     giveConsent(provider)
+    if (onLoad) onLoad()
     if (showIframe) return
     if (isTwingle && twingleCallback) twingleCallback()
     setShowIframe(true)

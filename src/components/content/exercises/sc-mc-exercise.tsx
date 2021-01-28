@@ -8,24 +8,28 @@ import { Feedback } from './feedback'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EdtrPluginScMcExercise } from '@/data-types'
 import { makeMargin, makePrimaryButton } from '@/helper/css'
-import type { RenderNestedFunction } from '@/schema/article-renderer'
+import { submitEventWithPath } from '@/helper/submit-event'
+import type { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
 
 export interface ScMcExerciseProps {
   state: EdtrPluginScMcExercise['state']
   idBase: string
   renderNested: RenderNestedFunction
+  path?: NodePath
 }
 
 interface SingleChoiceProps {
   answers: EdtrPluginScMcExercise['state']['answers']
   idBase: string
   renderNested: RenderNestedFunction
+  path?: NodePath
 }
 
 export function ScMcExercise({
   state,
   idBase,
   renderNested,
+  path,
 }: ScMcExerciseProps) {
   const answers = state.answers.slice(0)
 
@@ -35,6 +39,7 @@ export function ScMcExercise({
         answers={answers}
         idBase={idBase}
         renderNested={renderNested}
+        path={path}
       />
     )
 
@@ -43,11 +48,17 @@ export function ScMcExercise({
       answers={answers}
       idBase={idBase}
       renderNested={renderNested}
+      path={path}
     />
   )
 }
 
-function SingleChoice({ answers, idBase, renderNested }: SingleChoiceProps) {
+function SingleChoice({
+  answers,
+  idBase,
+  renderNested,
+  path,
+}: SingleChoiceProps) {
   const [selected, setSelected] = React.useState<number | undefined>(undefined)
   const [focused, setFocused] = React.useState<number | undefined>(undefined)
   const [showFeedback, setShowFeedback] = React.useState(false)
@@ -72,7 +83,7 @@ function SingleChoice({ answers, idBase, renderNested }: SingleChoiceProps) {
                   onFocus={() => setFocused(i)}
                   onBlur={() => setFocused(undefined)}
                   onKeyDown={(e) => {
-                    if (e.keyCode == 13) setShowFeedback(true)
+                    if (e.key == 'Enter') setShowFeedback(true)
                   }}
                 />
                 <StyledLabel
@@ -103,7 +114,10 @@ function SingleChoice({ answers, idBase, renderNested }: SingleChoiceProps) {
       </Choices>
       <CheckButton
         selectable={selected !== undefined}
-        onClick={() => setShowFeedback(true)}
+        onClick={() => {
+          setShowFeedback(true)
+          submitEventWithPath('checksc', path)
+        }}
         //blur-hack, use https://caniuse.com/#feat=css-focus-visible when supported
         onPointerUp={(e) => e.currentTarget.blur()}
       >
@@ -115,7 +129,12 @@ function SingleChoice({ answers, idBase, renderNested }: SingleChoiceProps) {
   )
 }
 
-function MultipleChoice({ answers, idBase, renderNested }: SingleChoiceProps) {
+function MultipleChoice({
+  answers,
+  idBase,
+  renderNested,
+  path,
+}: SingleChoiceProps) {
   const [selected, setSelected] = React.useState(answers.map(() => false))
   const [focused, setFocused] = React.useState<number | undefined>(undefined)
   const [showFeedback, setShowFeedback] = React.useState(false)
@@ -173,7 +192,10 @@ function MultipleChoice({ answers, idBase, renderNested }: SingleChoiceProps) {
       )}
       <CheckButton
         selectable
-        onClick={() => setShowFeedback(true)}
+        onClick={() => {
+          setShowFeedback(true)
+          submitEventWithPath('checkmc', path)
+        }}
         onPointerUp={(e) => e.currentTarget.blur()}
       >
         {strings.content.check}
