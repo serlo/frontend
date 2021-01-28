@@ -13,7 +13,7 @@ import { HistoryRevisionProps, HistoryRevisionsData } from '@/data-types'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks<HistoryRevisionProps>((props) => (
-  <FrontendClientBase>
+  <FrontendClientBase entityId={props.id}>
     <Content {...props} />
   </FrontendClientBase>
 ))

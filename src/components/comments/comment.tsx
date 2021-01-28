@@ -13,7 +13,6 @@ interface CommentProps {
   isHighlight?: boolean
   data: CommentType
   highlight: (id: number) => void
-  entityId: number
 }
 
 export function Comment({
@@ -21,7 +20,6 @@ export function Comment({
   threadId,
   isHighlight,
   highlight,
-  entityId,
   isParent,
 }: CommentProps) {
   const commentRef = React.useRef<HTMLDivElement>(null)
@@ -57,7 +55,6 @@ export function Comment({
         isParent={isParent}
         threadId={threadId}
         id={id}
-        entityId={entityId}
         highlight={highlight}
       />
       <StyledP dangerouslySetInnerHTML={{ __html: escapedWithLinks }}></StyledP>

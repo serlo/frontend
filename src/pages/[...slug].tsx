@@ -33,9 +33,13 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
       ) : (
         <Topic data={pageData.taxonomyData} />
       )
+    const entityId =
+      pageData.kind === 'single-entity'
+        ? pageData.entityData.id
+        : pageData.taxonomyData.id
 
     return (
-      <FrontendClientBase noContainers>
+      <FrontendClientBase noContainers entityId={entityId}>
         <EntityBase page={pageData}>{page}</EntityBase>
       </FrontendClientBase>
     )

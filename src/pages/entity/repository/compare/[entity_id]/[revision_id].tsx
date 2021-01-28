@@ -9,7 +9,7 @@ import { requestRevision } from '@/fetcher/revision/request'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks<RevisionProps>(({ pageData }) => (
-  <FrontendClientBase>
+  <FrontendClientBase entityId={pageData.revisionData.thisRevision.id}>
     <Revision data={pageData.revisionData} />
   </FrontendClientBase>
 ))
