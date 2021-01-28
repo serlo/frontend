@@ -12,6 +12,7 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { useToastNotice } from '@/contexts/toast-notice-context'
 import { UserRoles } from '@/data-types'
 // import { setStateMutation } from '@/helper/mutations'
+import { useSetUuidStateMutation } from '@/helper/mutations'
 import { useIsSubscribed } from '@/helper/use-is-subscribed'
 import { useRefreshFromAPI } from '@/helper/use-refresh-from-api'
 
@@ -68,6 +69,8 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   const showToastNotice = useToastNotice()
   const refreshFromAPI = useRefreshFromAPI()
   const auth = useAuth()
+
+  const setUuidState = useSetUuidStateMutation()
 
   const router = useRouter()
   if (!loggedInData) return null
@@ -235,30 +238,23 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   }
 
   function trash() {
-    if (data.trashed) {
-      return (
-        <Li key={loggedInStrings.authorMenu.restoreContent}>
-          <SubButtonStyle
-            as="button"
-            onClick={() => {
-              console.log(`restore ${entityId}`)
-            }}
-          >
-            {loggedInStrings.authorMenu.restoreContent}
-          </SubButtonStyle>
-        </Li>
-      )
-    }
     return (
-      <Li key={loggedInStrings.authorMenu.moveToTrash}>
+      <Li
+        key={
+          data.trashed
+            ? loggedInStrings.authorMenu.restoreContent
+            : loggedInStrings.authorMenu.moveToTrash
+        }
+      >
         <SubButtonStyle
           as="button"
           onClick={() => {
-            console.log(`trash ${entityId}`)
-            // void setStateMutation(auth, 188292, true)
+            void setUuidState({ id: [data.id], trashed: !data.trashed })
           }}
         >
-          {loggedInStrings.authorMenu.moveToTrash}
+          {data.trashed
+            ? loggedInStrings.authorMenu.restoreContent
+            : loggedInStrings.authorMenu.moveToTrash}
         </SubButtonStyle>
       </Li>
     )

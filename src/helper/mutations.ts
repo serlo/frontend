@@ -4,11 +4,14 @@ import {
   ThreadMutation,
   ThreadSetCommentStateInput,
   ThreadSetThreadArchivedInput,
+  UuidMutation,
+  UuidSetStateInput,
 } from '@serlo/api'
 import { gql } from 'graphql-request'
 import NProgress from 'nprogress'
 import { mutate } from 'swr'
 
+import { useRefreshFromAPI } from './use-refresh-from-api'
 import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
 import { AuthPayload, useAuth } from '@/auth/use-auth'
 import { useEntityId } from '@/contexts/entity-id-context'
@@ -21,6 +24,44 @@ const authFetchThread = async (
   (await createAuthAwareGraphqlFetch(auth)(JSON.stringify(input))) as {
     thread: ThreadMutation
   }
+
+export function useSetUuidStateMutation() {
+  const auth = useAuth()
+  const refresh = useRefreshFromAPI()
+
+  return async (input: UuidSetStateInput) =>
+    await setUuidStateMutation(auth, input, refresh)
+}
+
+export async function setUuidStateMutation(
+  auth: React.RefObject<AuthPayload>,
+  input: UuidSetStateInput,
+  refresh: ReturnType<typeof useRefreshFromAPI>
+) {
+  const args = {
+    query: gql`
+      mutation setUuidState($input: UuidSetStateInput!) {
+        uuid {
+          setState(input: $input) {
+            success
+          }
+        }
+      }
+    `,
+    variables: {
+      input,
+    },
+  }
+  const response = (await createAuthAwareGraphqlFetch(auth)(
+    JSON.stringify(args)
+  )) as {
+    uuid: UuidMutation
+  }
+  if (response.uuid.setState?.success) {
+    // TODO: some type of cache mutation would make a lot more sense here
+    refresh()
+  }
+}
 
 // export function useNotificationSetStateMutation() {
 //   const auth = useAuth()
