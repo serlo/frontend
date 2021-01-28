@@ -16,5 +16,6 @@ export const MathWrapper = styled.div<MathWrapperProps>`
   overflow-x: auto;
   overflow-y: hidden;
   padding-top: 2px;
+  padding-bottom: 2px;
   ${(props) => (props.nowrap ? 'white-space: nowrap;' : '')}
 `
