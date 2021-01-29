@@ -58,8 +58,9 @@ export async function setUuidStateMutation(
     uuid: UuidMutation
   }
   if (response.uuid.setState?.success) {
-    // TODO: some type of cache mutation would make a lot more sense here
-    refresh()
+    setTimeout(() => {
+      refresh()
+    }, 1500)
   }
 }
 

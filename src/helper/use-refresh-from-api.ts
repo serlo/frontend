@@ -8,6 +8,7 @@ export function useRefreshFromAPI() {
 
   return (keepCache?: boolean) => {
     if (!keepCache) {
+      // TODO: orphaned feature
       sessionStorage.removeItem(`/${lang}${router.asPath}`)
     }
     void router.replace(router.asPath.split('#')[0])
