@@ -52,13 +52,15 @@ export function useSetUuidStateMutation() {
       uuid: UuidMutation
     }
     if (response.uuid.setState?.success) {
-      showToastNotice(
-        `✨ Erfolgreich ${input.trashed ? 'gelöscht' : 'wiederhergestellt'}.`,
-        'success'
-      )
+      setTimeout(() => {
+        showToastNotice(
+          `✨ Erfolgreich ${input.trashed ? 'gelöscht' : 'wiederhergestellt'}.`,
+          'success'
+        )
+      }, 600)
       setTimeout(() => {
         refresh()
-      }, 2200)
+      }, 3000)
     } else handleError(showToastNotice, response)
   }
   return async (input: UuidSetStateInput) => await setUuidStateMutation(input)
