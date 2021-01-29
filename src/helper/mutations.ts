@@ -15,6 +15,7 @@ import { useRefreshFromAPI } from './use-refresh-from-api'
 import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
 import { AuthPayload, useAuth } from '@/auth/use-auth'
 import { useEntityId } from '@/contexts/entity-id-context'
+import { useToastNotice } from '@/contexts/toast-notice-context'
 
 const authFetchThread = async (
   input: { query: string; variables: object },
@@ -28,40 +29,39 @@ const authFetchThread = async (
 export function useSetUuidStateMutation() {
   const auth = useAuth()
   const refresh = useRefreshFromAPI()
+  const showToastNotice = useToastNotice()
 
-  return async (input: UuidSetStateInput) =>
-    await setUuidStateMutation(auth, input, refresh)
-}
-
-export async function setUuidStateMutation(
-  auth: React.RefObject<AuthPayload>,
-  input: UuidSetStateInput,
-  refresh: ReturnType<typeof useRefreshFromAPI>
-) {
-  const args = {
-    query: gql`
-      mutation setUuidState($input: UuidSetStateInput!) {
-        uuid {
-          setState(input: $input) {
-            success
+  const setUuidStateMutation = async function (input: UuidSetStateInput) {
+    const args = {
+      query: gql`
+        mutation setUuidState($input: UuidSetStateInput!) {
+          uuid {
+            setState(input: $input) {
+              success
+            }
           }
         }
-      }
-    `,
-    variables: {
-      input,
-    },
+      `,
+      variables: {
+        input,
+      },
+    }
+    const response = (await createAuthAwareGraphqlFetch(auth)(
+      JSON.stringify(args)
+    )) as {
+      uuid: UuidMutation
+    }
+    if (response.uuid.setState?.success) {
+      showToastNotice(
+        `✨ Erfolgreich ${input.trashed ? 'gelöscht' : 'wiederhergestellt'}.`,
+        'success'
+      )
+      setTimeout(() => {
+        refresh()
+      }, 2200)
+    } else handleError(showToastNotice, response)
   }
-  const response = (await createAuthAwareGraphqlFetch(auth)(
-    JSON.stringify(args)
-  )) as {
-    uuid: UuidMutation
-  }
-  if (response.uuid.setState?.success) {
-    setTimeout(() => {
-      refresh()
-    }, 1500)
-  }
+  return async (input: UuidSetStateInput) => await setUuidStateMutation(input)
 }
 
 // export function useNotificationSetStateMutation() {
@@ -118,155 +118,152 @@ export async function setUuidStateMutation(
 export function useThreadArchivedMutation() {
   const auth = useAuth()
   const entityId = useEntityId()
+  const showToastNotice = useToastNotice()
 
-  return async (input: ThreadSetThreadArchivedInput) =>
-    await setThreadArchivedMutation(auth, input, entityId)
-}
-
-async function setThreadArchivedMutation(
-  auth: React.RefObject<AuthPayload>,
-  input: ThreadSetThreadArchivedInput,
-  entityId: number
-) {
-  const args = {
-    query: gql`
-      mutation setState($input: ThreadSetThreadArchivedInput!) {
-        thread {
-          setThreadArchived(input: $input) {
-            success
+  const setThreadArchivedMutation = async function (
+    input: ThreadSetThreadArchivedInput
+  ) {
+    const args = {
+      query: gql`
+        mutation setState($input: ThreadSetThreadArchivedInput!) {
+          thread {
+            setThreadArchived(input: $input) {
+              success
+            }
           }
         }
-      }
-    `,
-    variables: { input },
-  }
-  NProgress.start()
+      `,
+      variables: { input },
+    }
+    NProgress.start()
 
-  const response = await authFetchThread(args, auth)
+    const response = await authFetchThread(args, auth)
 
-  if (response.thread.setThreadArchived?.success) {
-    await mutate(`comments::${entityId}`)
-    NProgress.done()
-    return true
-  } else {
-    handleError(response)
-    NProgress.done()
-    return false
+    if (response.thread.setThreadArchived?.success) {
+      await mutate(`comments::${entityId}`)
+      NProgress.done()
+      return true
+    } else {
+      handleError(showToastNotice, response)
+      NProgress.done()
+      return false
+    }
   }
+
+  return async (input: ThreadSetThreadArchivedInput) =>
+    await setThreadArchivedMutation(input)
 }
 
 export function useSetCommentStateMutation() {
   const auth = useAuth()
   const entityId = useEntityId()
+  const showToastNotice = useToastNotice()
 
-  return async (input: ThreadSetCommentStateInput) =>
-    await setCommentStateMutation(auth, input, entityId)
-}
-
-async function setCommentStateMutation(
-  auth: React.RefObject<AuthPayload>,
-  input: ThreadSetCommentStateInput,
-  entityId: number
-) {
-  const args = {
-    query: gql`
-      mutation setState($input: ThreadSetCommentStateInput!) {
-        thread {
-          setCommentState(input: $input) {
-            success
+  const setCommentStateMutation = async function (
+    input: ThreadSetCommentStateInput
+  ) {
+    const args = {
+      query: gql`
+        mutation setState($input: ThreadSetCommentStateInput!) {
+          thread {
+            setCommentState(input: $input) {
+              success
+            }
           }
         }
-      }
-    `,
-    variables: {
-      input: { input },
-    },
-  }
-  const response = await authFetchThread(args, auth)
-  handleError(response)
+      `,
+      variables: {
+        input: { input },
+      },
+    }
+    const response = await authFetchThread(args, auth)
+    handleError(showToastNotice, response)
 
-  if (response.thread.setCommentState?.success) {
-    return !!(await mutate(`comments::${entityId}`))
-  } else {
-    handleError(response)
-    return false
+    if (response.thread.setCommentState?.success) {
+      return !!(await mutate(`comments::${entityId}`))
+    } else {
+      handleError(showToastNotice, response)
+      return false
+    }
   }
+
+  return async (input: ThreadSetCommentStateInput) =>
+    await setCommentStateMutation(input)
 }
 
 export function useCreateThreadMutation() {
   const auth = useAuth()
+  const showToastNotice = useToastNotice()
 
-  return async (input: ThreadCreateThreadInput) =>
-    await createThreadMutation(auth, input)
-}
-
-async function createThreadMutation(
-  auth: React.RefObject<AuthPayload>,
-  input: ThreadCreateThreadInput
-) {
-  const args = {
-    query: gql`
-      mutation createThread($input: ThreadCreateThreadInput!) {
-        thread {
-          createThread(input: $input) {
-            success
+  const createThreadMutation = async function (input: ThreadCreateThreadInput) {
+    const args = {
+      query: gql`
+        mutation createThread($input: ThreadCreateThreadInput!) {
+          thread {
+            createThread(input: $input) {
+              success
+            }
           }
         }
-      }
-    `,
-    variables: { input },
+      `,
+      variables: { input },
+    }
+
+    const response = await authFetchThread(args, auth)
+
+    if (response.thread.createThread?.success) {
+      return !!(await mutate(`comments::${input.objectId}`))
+    } else {
+      handleError(showToastNotice, response)
+      return false
+    }
   }
 
-  const response = await authFetchThread(args, auth)
-
-  if (response.thread.createThread?.success) {
-    return !!(await mutate(`comments::${input.objectId}`))
-  } else {
-    handleError(response)
-    return false
-  }
+  return async (input: ThreadCreateThreadInput) =>
+    await createThreadMutation(input)
 }
 
 export function useCreateCommentMutation() {
   const auth = useAuth()
   const entityId = useEntityId()
+  const showToastNotice = useToastNotice()
 
-  return async (input: ThreadCreateCommentInput) =>
-    await createCommentMutation(auth, input, entityId)
-}
-
-async function createCommentMutation(
-  auth: React.RefObject<AuthPayload>,
-  input: ThreadCreateCommentInput,
-  entityId: number
-) {
-  const args = {
-    query: gql`
-      mutation createComment($input: ThreadCreateCommentInput!) {
-        thread {
-          createComment(input: $input) {
-            success
+  const createCommentMutation = async function (
+    input: ThreadCreateCommentInput
+  ) {
+    const args = {
+      query: gql`
+        mutation createComment($input: ThreadCreateCommentInput!) {
+          thread {
+            createComment(input: $input) {
+              success
+            }
           }
         }
-      }
-    `,
-    variables: { input },
-  }
-
-  try {
-    const response = await authFetchThread(args, auth)
-
-    if (response.thread.createComment?.success) {
-      return !!(await mutate(`comments::${entityId}`))
+      `,
+      variables: { input },
     }
-  } catch (e) {
-    handleError(e)
-    return false
+
+    try {
+      const response = await authFetchThread(args, auth)
+
+      if (response.thread.createComment?.success) {
+        return !!(await mutate(`comments::${entityId}`))
+      }
+    } catch (e) {
+      handleError(showToastNotice, e)
+      return false
+    }
   }
+
+  return async (input: ThreadCreateCommentInput) =>
+    await createCommentMutation(input)
 }
 
-function handleError(response: object) {
+function handleError(
+  showToastNotice: ReturnType<typeof useToastNotice>,
+  response?: object
+) {
   console.log(response)
-  //   const showToastNotice = useToastNotice()
-  //   showToastNotice(`Das hat leider nicht geklappt…`, 'warning')
+  showToastNotice(`Das hat leider nicht geklappt…`, 'warning')
 }
