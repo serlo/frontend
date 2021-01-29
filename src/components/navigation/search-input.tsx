@@ -66,6 +66,9 @@ export function SearchInput() {
   }
 
   function activateSearch() {
+    if (id) {
+      submitEvent(`clicksearch_${id}`)
+    }
     if (searchActive) return
     if (!consentGiven) {
       searchFormRef.current?.focus()
@@ -81,9 +84,6 @@ export function SearchInput() {
       const s = document.getElementsByTagName('script')[0]
       s.parentNode!.insertBefore(gcse, s)
 
-      if (id) {
-        submitEvent(`activateseach_${id}`)
-      }
       setSearchLoaded(true)
     }
 
