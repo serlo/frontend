@@ -9,9 +9,11 @@ import { isLegacyLink } from '../content/link'
 import { StyledA } from '../tags/styled-a'
 import { LazyTippy } from './lazy-tippy'
 import SearchIcon from '@/assets-webkit/img/search-icon.svg'
+import { EntityIdContext } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { inputFontReset, makeLightButton, makePadding } from '@/helper/css'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
+import { submitEvent } from '@/helper/submit-event'
 import { ExternalProvider, useConsent } from '@/helper/use-consent'
 import { theme } from '@/theme'
 
@@ -35,6 +37,7 @@ export function SearchInput() {
   const { lang, strings } = useInstanceData()
   const router = useRouter()
   const onSearchPage = router.route === '/search'
+  const id = React.useContext(EntityIdContext)
 
   React.useEffect(() => {
     // note: find a better way to tell search input that it should activate itself
@@ -63,6 +66,9 @@ export function SearchInput() {
   }
 
   function activateSearch() {
+    if (id) {
+      submitEvent(`clicksearch_${id}`)
+    }
     if (searchActive) return
     if (!consentGiven) {
       searchFormRef.current?.focus()
