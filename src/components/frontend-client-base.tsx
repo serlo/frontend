@@ -83,39 +83,38 @@ export function FrontendClientBase({
 
   return (
     <ThemeProvider theme={theme}>
-      <NProgressRouter>
-        <FontFix />
-        <PrintStylesheet warning={instanceData.strings.print.warning} />
-        <InstanceDataProvider value={instanceData}>
-          <LoggedInComponentsProvider value={loggedInComponents}>
-            <LoggedInDataProvider value={loggedInData}>
-              <EntityIdProvider value={entityId || null}>
-                <ToastNoticeProvider value={toastNotice}>
+      <FontFix />
+      <NProgressRouter />
+      <PrintStylesheet warning={instanceData.strings.print.warning} />
+      <InstanceDataProvider value={instanceData}>
+        <LoggedInComponentsProvider value={loggedInComponents}>
+          <LoggedInDataProvider value={loggedInData}>
+            <EntityIdProvider value={entityId || null}>
+              <ToastNoticeProvider value={toastNotice}>
+                <ConditonalWrap
+                  condition={!noHeaderFooter}
+                  wrapper={(kids) => <HeaderFooter>{kids}</HeaderFooter>}
+                >
                   <ConditonalWrap
-                    condition={!noHeaderFooter}
-                    wrapper={(kids) => <HeaderFooter>{kids}</HeaderFooter>}
+                    condition={!noContainers}
+                    wrapper={(kids) => (
+                      <RelativeContainer>
+                        <MaxWidthDiv showNav={showNav}>
+                          <main>{kids}</main>
+                        </MaxWidthDiv>
+                      </RelativeContainer>
+                    )}
                   >
-                    <ConditonalWrap
-                      condition={!noContainers}
-                      wrapper={(kids) => (
-                        <RelativeContainer>
-                          <MaxWidthDiv showNav={showNav}>
-                            <main>{kids}</main>
-                          </MaxWidthDiv>
-                        </RelativeContainer>
-                      )}
-                    >
-                      {/* should not be necessary…?*/}
-                      {children as JSX.Element}
-                    </ConditonalWrap>
+                    {/* should not be necessary…?*/}
+                    {children as JSX.Element}
                   </ConditonalWrap>
-                  <ToastNotice />
-                </ToastNoticeProvider>
-              </EntityIdProvider>
-            </LoggedInDataProvider>
-          </LoggedInComponentsProvider>
-        </InstanceDataProvider>
-      </NProgressRouter>
+                </ConditonalWrap>
+                <ToastNotice />
+              </ToastNoticeProvider>
+            </EntityIdProvider>
+          </LoggedInDataProvider>
+        </LoggedInComponentsProvider>
+      </InstanceDataProvider>
     </ThemeProvider>
   )
 
