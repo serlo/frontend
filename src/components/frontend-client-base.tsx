@@ -44,7 +44,7 @@ export function FrontendClientBase({
     if (typeof window === 'undefined') {
       // load instance data for server side rendering
       // Note: using require to avoid webpack bundling it
-      // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
       return require('@/helper/feature-i18n').getInstanceDataByLang(locale!)
     } else {
       // load instance data from client from _document

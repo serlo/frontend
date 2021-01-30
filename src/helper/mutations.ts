@@ -1,10 +1,13 @@
 import {
+  NotificationMutation,
   NotificationSetStateInput,
   ThreadCreateCommentInput,
   ThreadCreateThreadInput,
+  ThreadMutation,
   ThreadSetCommentStateInput,
   ThreadSetThreadArchivedInput,
   ThreadSetThreadStateInput,
+  UuidMutation,
   UuidSetStateInput,
 } from '@serlo/api'
 import { GraphQLError } from 'graphql'
@@ -191,6 +194,8 @@ type MutationInput =
   | ThreadSetCommentStateInput
   | ThreadCreateCommentInput
 
+type MutationResponse = ThreadMutation | UuidMutation | NotificationMutation
+
 type ApiErrorType = 'UNAUTHENTICATED' | 'FORBIDDEN'
 type ErrorType = ApiErrorType | 'UNKNOWN'
 
@@ -209,7 +214,8 @@ export async function mutationFetch(
   if (auth.current === null) return handleError('UNAUTHENTICATED')
 
   try {
-    return await executeQuery()
+    const result = await executeQuery()
+    return !!result
   } catch (e) {
     const error = (e as ClientError).response.errors?.[0] as
       | ApiError
@@ -225,21 +231,15 @@ export async function mutationFetch(
     return handleError(type)
   }
 
-  async function executeQuery(): Promise<boolean> {
+  async function executeQuery(): Promise<MutationResponse> {
     const client = new GraphQLClient(endpoint, {
       headers: auth.current
         ? {
-            'access-control-allow-origin': '*',
             Authorization: `Bearer ${auth.current.token}`,
           }
         : {},
     })
-    // … okay for now
-    return (
-      JSON.stringify(await client.request(query, { input })).indexOf(
-        '"success":true'
-      ) > -1
-    )
+    return client.request(query, { input })
   }
 }
 
@@ -257,7 +257,7 @@ function handleError(type: ErrorType, e?: object): false {
   }
 
   if (type == 'UNAUTHENTICATED') {
-    //make sure correct auth state is showing
+    // TODO: Hack, solve https://github.com/serlo/frontend/issues/851 instead
     csrReload()
   }
 
