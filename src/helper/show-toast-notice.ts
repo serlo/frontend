@@ -23,7 +23,6 @@ export const showToastNotice = function (
   type?: 'default' | 'success' | 'warning',
   time?: number
 ) {
-  console.log('ja')
   if (!toastNotice) return
   ;((toastNotice as unknown) as typeof notify['show'])(
     message,

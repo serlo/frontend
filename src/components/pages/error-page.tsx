@@ -8,7 +8,7 @@ import { StyledP } from '@/components/tags/styled-p'
 import { useInstanceData } from '@/contexts/instance-context'
 import { ErrorData } from '@/data-types'
 import { makePrimaryButton } from '@/helper/css'
-import { SentryGlobal } from '@/helper/sentry-types'
+import { triggerSentry } from '@/helper/trigger-sentry'
 
 export function ErrorPage({ code, message }: ErrorData) {
   const [path, setPath] = React.useState('')
@@ -16,19 +16,7 @@ export function ErrorPage({ code, message }: ErrorData) {
   const { strings } = useInstanceData()
 
   React.useEffect(() => {
-    console.log(message)
-
-    if (process.env.NEXT_PUBLIC_SENTRY_DSN !== undefined) {
-      const windowWithSentry = (window as unknown) as Window & SentryGlobal
-      windowWithSentry.Sentry?.addBreadcrumb({
-        category: 'error message',
-        message,
-        level: windowWithSentry.Sentry?.Severity?.Info || 'info',
-      })
-      windowWithSentry.Sentry?.captureException(
-        new Error(`${code}: ${message || 'without message'}`)
-      )
-    }
+    void triggerSentry({ message, code })
 
     setPath(window.location.pathname)
 

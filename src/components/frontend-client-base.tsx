@@ -14,7 +14,6 @@ import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInComponentsProvider } from '@/contexts/logged-in-components'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
 import { InstanceData, LoggedInData } from '@/data-types'
-import { isServer } from '@/helper/client-detection'
 import { FontFix, PrintStylesheet } from '@/helper/css'
 import type { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { frontendOrigin } from '@/helper/frontent-origin'
@@ -42,7 +41,7 @@ export function FrontendClientBase({
 }: FrontendClientBaseProps) {
   const { locale } = useRouter()
   const [instanceData] = React.useState<InstanceData>(() => {
-    if (isServer) {
+    if (typeof window === 'undefined') {
       // load instance data for server side rendering
       // Note: using require to avoid webpack bundling it
       // eslint-disable-next-line

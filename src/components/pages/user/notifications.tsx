@@ -1,15 +1,14 @@
 import { PageInfo } from '@serlo/api'
-import { gql } from 'graphql-request'
 import React from 'react'
 import styled from 'styled-components'
 
-import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
 import { useAuth } from '@/auth/use-auth'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { Notification, NotificationEvent } from '@/components/user/notification'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { makePrimaryButton } from '@/helper/css'
+import { useSetNotificationStateMutation } from '@/helper/mutations'
 
 interface NotificationProps {
   data: {
@@ -30,6 +29,7 @@ export const Notifications = ({
   isLoading,
 }: NotificationProps) => {
   const auth = useAuth()
+  const setToRead = useSetNotificationStateMutation()
 
   React.useEffect(() => {
     setAllToRead()
@@ -74,27 +74,10 @@ export const Notifications = ({
     const unreadIds = data?.nodes.flatMap((node) =>
       node.unread ? [node.id] : []
     )
-    const setToRead = async () => {
-      const input = {
-        query: gql`
-          mutation setState($input: NotificationSetStateInput!) {
-            notification {
-              setState(input: $input) {
-                success
-              }
-            }
-          }
-        `,
-        variables: {
-          input: {
-            id: unreadIds,
-            unread: false,
-          },
-        },
-      }
-      await createAuthAwareGraphqlFetch(auth)(JSON.stringify(input))
-    }
-    void setToRead()
+    void setToRead({
+      id: unreadIds,
+      unread: false,
+    })
   }
 }
 

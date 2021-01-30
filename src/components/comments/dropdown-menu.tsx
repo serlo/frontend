@@ -89,14 +89,14 @@ export function DropdownMenu({
   function onDelete() {
     onAnyClick()
     if (!isParent) {
-      void setCommentState({ id, trashed: true })
+      void setCommentState({ id: [id], trashed: true })
     }
   }
 
   function onArchiveThread() {
     onAnyClick()
     if (isParent && threadId) {
-      void setThreadArchived({ id: threadId, archived: true })
+      void setThreadArchived({ id: [threadId], archived: true })
     }
   }
 }
