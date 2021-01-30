@@ -11,11 +11,11 @@ import { gql } from 'graphql-request'
 import NProgress from 'nprogress'
 import { mutate } from 'swr'
 
+import { showToastNotice } from './show-toast-notice'
 import { useRefreshFromAPI } from './use-refresh-from-api'
 import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
 import { AuthPayload, useAuth } from '@/auth/use-auth'
 import { useEntityId } from '@/contexts/entity-id-context'
-import { useToastNotice } from '@/contexts/toast-notice-context'
 
 const authFetchThread = async (
   input: { query: string; variables: object },
@@ -29,7 +29,6 @@ const authFetchThread = async (
 export function useSetUuidStateMutation() {
   const auth = useAuth()
   const refresh = useRefreshFromAPI()
-  const showToastNotice = useToastNotice()
 
   const setUuidStateMutation = async function (input: UuidSetStateInput) {
     const args = {
@@ -51,6 +50,7 @@ export function useSetUuidStateMutation() {
     )) as {
       uuid: UuidMutation
     }
+
     if (response.uuid.setState?.success) {
       setTimeout(() => {
         showToastNotice(
@@ -61,7 +61,7 @@ export function useSetUuidStateMutation() {
       setTimeout(() => {
         refresh()
       }, 3000)
-    } else handleError(showToastNotice, response)
+    } else handleError(response)
   }
   return async (input: UuidSetStateInput) => await setUuidStateMutation(input)
 }
@@ -120,7 +120,6 @@ export function useSetUuidStateMutation() {
 export function useThreadArchivedMutation() {
   const auth = useAuth()
   const entityId = useEntityId()
-  const showToastNotice = useToastNotice()
 
   const setThreadArchivedMutation = async function (
     input: ThreadSetThreadArchivedInput
@@ -146,7 +145,7 @@ export function useThreadArchivedMutation() {
       NProgress.done()
       return true
     } else {
-      handleError(showToastNotice, response)
+      handleError(response)
       NProgress.done()
       return false
     }
@@ -159,7 +158,6 @@ export function useThreadArchivedMutation() {
 export function useSetCommentStateMutation() {
   const auth = useAuth()
   const entityId = useEntityId()
-  const showToastNotice = useToastNotice()
 
   const setCommentStateMutation = async function (
     input: ThreadSetCommentStateInput
@@ -179,12 +177,12 @@ export function useSetCommentStateMutation() {
       },
     }
     const response = await authFetchThread(args, auth)
-    handleError(showToastNotice, response)
+    handleError(response)
 
     if (response.thread.setCommentState?.success) {
       return !!(await mutate(`comments::${entityId}`))
     } else {
-      handleError(showToastNotice, response)
+      handleError(response)
       return false
     }
   }
@@ -195,7 +193,6 @@ export function useSetCommentStateMutation() {
 
 export function useCreateThreadMutation() {
   const auth = useAuth()
-  const showToastNotice = useToastNotice()
 
   const createThreadMutation = async function (input: ThreadCreateThreadInput) {
     const args = {
@@ -216,7 +213,7 @@ export function useCreateThreadMutation() {
     if (response.thread.createThread?.success) {
       return !!(await mutate(`comments::${input.objectId}`))
     } else {
-      handleError(showToastNotice, response)
+      handleError(response)
       return false
     }
   }
@@ -228,7 +225,6 @@ export function useCreateThreadMutation() {
 export function useCreateCommentMutation() {
   const auth = useAuth()
   const entityId = useEntityId()
-  const showToastNotice = useToastNotice()
 
   const createCommentMutation = async function (
     input: ThreadCreateCommentInput
@@ -253,7 +249,7 @@ export function useCreateCommentMutation() {
         return !!(await mutate(`comments::${entityId}`))
       }
     } catch (e) {
-      handleError(showToastNotice, e)
+      handleError(e)
       return false
     }
   }
@@ -262,10 +258,7 @@ export function useCreateCommentMutation() {
     await createCommentMutation(input)
 }
 
-function handleError(
-  showToastNotice: ReturnType<typeof useToastNotice>,
-  response?: object
-) {
+function handleError(response?: object) {
   console.log(response)
   showToastNotice(`Das hat leider nicht geklappt…`, 'warning')
 }

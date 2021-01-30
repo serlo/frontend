@@ -9,10 +9,10 @@ import { AuthorToolsData, HoverSubList, Li } from './author-tools-hover-menu'
 import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { useToastNotice } from '@/contexts/toast-notice-context'
 import { UserRoles } from '@/data-types'
 // import { setStateMutation } from '@/helper/mutations'
 import { useSetUuidStateMutation } from '@/helper/mutations'
+import { showToastNotice } from '@/helper/show-toast-notice'
 import { useIsSubscribed } from '@/helper/use-is-subscribed'
 import { useRefreshFromAPI } from '@/helper/use-refresh-from-api'
 
@@ -66,7 +66,6 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   const loggedInData = useLoggedInData()
   const instanceData = useInstanceData()
   const { isSubscribed, updateIsSubscribed } = useIsSubscribed(data.id)
-  const showToastNotice = useToastNotice()
   const refreshFromAPI = useRefreshFromAPI()
   const auth = useAuth()
 
