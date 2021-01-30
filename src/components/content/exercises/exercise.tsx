@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic'
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 
 import { LicenseNotice } from '../license-notice'

@@ -1,5 +1,5 @@
 import { shade } from 'polished'
-import { Fragment } from 'react';
+import { Fragment } from 'react'
 import styled from 'styled-components'
 
 import { FrontendContentNode, Sign } from '@/data-types'
@@ -105,13 +105,13 @@ export function Equations({ steps, renderNested }: EquationProps) {
                     </ExplanationTr>
                   ) : null}
                 </Fragment>
-              );
+              )
             })}
           </TBody>
         </table>
       </TableWrapper>
     </Wrapper>
-  );
+  )
 }
 
 function renderSignToString(sign: Sign): string {

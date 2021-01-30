@@ -1,11 +1,9 @@
-import { createContext, useContext } from 'react';
+import { createContext, useContext } from 'react'
 import { notify } from 'react-notify-toast'
 
 import { theme } from '@/theme'
 
-export const ToastNoticeContext = createContext<typeof notify | null>(
-  null
-)
+export const ToastNoticeContext = createContext<typeof notify | null>(null)
 
 export const ToastNoticeProvider = ToastNoticeContext.Provider
 

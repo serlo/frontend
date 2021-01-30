@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 
 import { makeTransparentButton } from '../../helper/css'

@@ -2,7 +2,7 @@ import Tippy, { TippyProps } from '@tippyjs/react'
 import cookie from 'cookie'
 import { useRouter } from 'next/router'
 import NProgress from 'nprogress'
-import { Fragment } from 'react';
+import { Fragment } from 'react'
 
 import { SubButtonStyle, SubLink } from '../navigation/menu'
 import { AuthorToolsData, HoverSubList, Li } from './author-tools-hover-menu'
@@ -166,32 +166,34 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
     },
   } as ToolsConfig
 
-  return <>
-    {tools.map((toolName) => {
-      const {
-        forRoles = [UserRoles.Login],
-        renderer,
-        url,
-        title,
-      } = toolsConfig[toolName]
-      const roles = auth.current?.roles || [UserRoles.Guest]
-      const hasPower =
-        forRoles.filter((role) => {
-          return roles.indexOf(role) > -1
-        }).length > 0
+  return (
+    <>
+      {tools.map((toolName) => {
+        const {
+          forRoles = [UserRoles.Login],
+          renderer,
+          url,
+          title,
+        } = toolsConfig[toolName]
+        const roles = auth.current?.roles || [UserRoles.Guest]
+        const hasPower =
+          forRoles.filter((role) => {
+            return roles.indexOf(role) > -1
+          }).length > 0
 
-      if (hasPower) {
-        if (renderer) {
-          return (
-            <Fragment key={`${title ?? renderer.name}`}>
-              {renderer(entityId)}
-            </Fragment>
-          );
+        if (hasPower) {
+          if (renderer) {
+            return (
+              <Fragment key={`${title ?? renderer.name}`}>
+                {renderer(entityId)}
+              </Fragment>
+            )
+          }
+          if (url) return renderLi(url, title || getTranslatedString(toolName))
         }
-        if (url) return renderLi(url, title || getTranslatedString(toolName))
-      }
-    })}
-  </>;
+      })}
+    </>
+  )
 
   function getTranslatedString(toolName: Tool) {
     return toolName in loggedInStrings.authorMenu

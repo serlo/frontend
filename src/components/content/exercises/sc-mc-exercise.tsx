@@ -1,7 +1,7 @@
 import { faCircle, faSquare } from '@fortawesome/free-regular-svg-icons'
 import { faCheckCircle, faCheckSquare } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useState, Fragment } from 'react';
+import { useState, Fragment } from 'react'
 import styled, { css } from 'styled-components'
 
 import { Feedback } from './feedback'
@@ -109,7 +109,7 @@ function SingleChoice({
                   </Feedback>
                 )}
             </Fragment>
-          );
+          )
         })}
       </Choices>
       <CheckButton
@@ -126,7 +126,7 @@ function SingleChoice({
           : strings.content.chooseOption}
       </CheckButton>
     </Container>
-  );
+  )
 }
 
 function MultipleChoice({
@@ -182,7 +182,7 @@ function MultipleChoice({
                 hasFeedback &&
                 renderNested(answer.feedback, `mcfeedback${i}`)}
             </Fragment>
-          );
+          )
         })}
       </Choices>
       {showFeedback && (
@@ -201,7 +201,7 @@ function MultipleChoice({
         {strings.content.check}
       </CheckButton>
     </Container>
-  );
+  )
 }
 
 const CheckButton = styled.button<{ selectable: boolean }>`

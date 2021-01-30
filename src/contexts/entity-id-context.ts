@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react';
+import { createContext, useContext } from 'react'
 
 export const EntityIdContext = createContext<number | null>(null)
 

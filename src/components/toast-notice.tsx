@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect } from 'react'
 import Notification, { notify } from 'react-notify-toast'
 
 import { useAuth } from '@/auth/use-auth'

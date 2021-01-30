@@ -1,7 +1,7 @@
 import { faFile } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import dynamic from 'next/dynamic'
-import { useState, Fragment } from 'react';
+import { useState, Fragment } from 'react'
 import styled from 'styled-components'
 
 import { makeMargin } from '../../helper/css'
@@ -46,64 +46,66 @@ export function Topic({ data }: TopicProps) {
   const hasExercises = data.exercisesContent.length > 0
   const defaultLicense = hasExercises ? getDefaultLicense() : undefined
 
-  return <>
-    <Headline>
-      {data.title}
-      {isFolder && (
-        <span title={strings.entities.topicFolder}>
-          {' '}
-          <StyledIcon icon={faFile} />{' '}
-        </span>
+  return (
+    <>
+      <Headline>
+        {data.title}
+        {isFolder && (
+          <span title={strings.entities.topicFolder}>
+            {' '}
+            <StyledIcon icon={faFile} />{' '}
+          </span>
+        )}
+      </Headline>
+      {renderUserTools({ aboveContent: true })}
+      <ImageSizer>
+        {data.description &&
+          renderArticle(data.description, `taxDesc${data.id}`)}
+      </ImageSizer>
+      {data.subterms &&
+        data.subterms.map((child) => (
+          <Fragment key={child.title}>
+            <SubTopic data={child} subid={child.id} id={data.id} />
+          </Fragment>
+        ))}
+      {data.exercisesContent &&
+        data.exercisesContent.map((exercise, i) => (
+          <Fragment key={i}>
+            {renderArticle(
+              [exercise],
+              `tax${data.id}`,
+              `ex${exercise.context.id}`
+            )}
+          </Fragment>
+        ))}
+      {isTopic && (
+        <LinkList>
+          <CategoryLinks full category="articles" links={data.articles} />
+          <CategoryLinks full category="exercises" links={data.exercises} />
+          <CategoryLinks full category="videos" links={data.videos} />
+          <CategoryLinks full category="applets" links={data.applets} />
+          <CategoryLinks full category="courses" links={data.courses} />
+          <CategoryLinks full category="events" links={data.events} />
+        </LinkList>
       )}
-    </Headline>
-    {renderUserTools({ aboveContent: true })}
-    <ImageSizer>
-      {data.description &&
-        renderArticle(data.description, `taxDesc${data.id}`)}
-    </ImageSizer>
-    {data.subterms &&
-      data.subterms.map((child) => (
-        <Fragment key={child.title}>
-          <SubTopic data={child} subid={child.id} id={data.id} />
-        </Fragment>
-      ))}
-    {data.exercisesContent &&
-      data.exercisesContent.map((exercise, i) => (
-        <Fragment key={i}>
-          {renderArticle(
-            [exercise],
-            `tax${data.id}`,
-            `ex${exercise.context.id}`
-          )}
-        </Fragment>
-      ))}
-    {isTopic && (
-      <LinkList>
-        <CategoryLinks full category="articles" links={data.articles} />
-        <CategoryLinks full category="exercises" links={data.exercises} />
-        <CategoryLinks full category="videos" links={data.videos} />
-        <CategoryLinks full category="applets" links={data.applets} />
-        <CategoryLinks full category="courses" links={data.courses} />
-        <CategoryLinks full category="events" links={data.events} />
-      </LinkList>
-    )}
-    {isFolder && data.events && (
-      <LinkList>
-        <CategoryLinks full category="events" links={data.events} />
-      </LinkList>
-    )}
+      {isFolder && data.events && (
+        <LinkList>
+          <CategoryLinks full category="events" links={data.events} />
+        </LinkList>
+      )}
 
-    {defaultLicense && <LicenseNotice data={defaultLicense} />}
+      {defaultLicense && <LicenseNotice data={defaultLicense} />}
 
-    <CommentArea id={data.id} />
+      <CommentArea id={data.id} />
 
-    {renderUserTools()}
-    <ShareModal
-      open={open}
-      onClose={() => setOpen(false)}
-      contentId={data.id}
-    />
-  </>;
+      {renderUserTools()}
+      <ShareModal
+        open={open}
+        onClose={() => setOpen(false)}
+        contentId={data.id}
+      />
+    </>
+  )
 
   function renderUserTools(setting?: { aboveContent?: boolean }) {
     return (

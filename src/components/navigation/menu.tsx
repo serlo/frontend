@@ -1,7 +1,7 @@
 import { faCaretDown, faUser, faBell } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import type { TippyProps } from '@tippyjs/react'
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 
 import { Link } from '../content/link'
@@ -31,9 +31,9 @@ export interface MenuProps {
 }
 
 export function Menu(props: MenuProps) {
-  const [Tippy, setTippy] = useState<
-    typeof import('@tippyjs/react') | null
-  >(null)
+  const [Tippy, setTippy] = useState<typeof import('@tippyjs/react') | null>(
+    null
+  )
   useEffect(() => {
     void import('@tippyjs/react').then((value) => setTippy(value))
   }, [])

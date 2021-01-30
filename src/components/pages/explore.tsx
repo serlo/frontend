@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect, useCallback, Fragment } from 'react';
+import { useRef, useState, useEffect, useCallback, Fragment } from 'react'
 import Autosuggest from 'react-autosuggest'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import styled from 'styled-components'
@@ -181,7 +181,7 @@ export function Explore() {
         </TabPanel>
       </Tabs>
     </SpecialCss>
-  );
+  )
 }
 
 function type2string(type: string) {
@@ -339,7 +339,7 @@ function CategorySelector(props: any) {
         ))}
       </StyledP>
     </FacetDiv>
-  );
+  )
 }
 
 function Document({ id, explain }: any) {

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from 'react'
 import ReactTimeAgo from 'timeago-react'
 import * as timeago from 'timeago.js'
 

@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react'
 import styled from 'styled-components'
 
 import DonorBadge from '@/assets-webkit/img/community/badge-donor.svg'

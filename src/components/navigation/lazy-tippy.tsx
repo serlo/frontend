@@ -1,5 +1,5 @@
 import { TippyProps } from '@tippyjs/react'
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 
 export function LazyTippy({ children, ...props }: TippyProps) {
   const [Tippy, setTippy] = useState<any>(null)

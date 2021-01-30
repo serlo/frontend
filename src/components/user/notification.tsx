@@ -20,7 +20,7 @@ import {
   TaxonomyTerm,
 } from '@serlo/api'
 import Tippy from '@tippyjs/react'
-import { Fragment } from 'react';
+import { Fragment } from 'react'
 import styled, { css } from 'styled-components'
 
 import { UserLink } from './user-link'
@@ -108,13 +108,13 @@ export function Notification({
     return parts.map((part, index) => {
       if (part === '') return null
       if (part === 'actor') {
-        return <Fragment key={index}>{actor}</Fragment>;
+        return <Fragment key={index}>{actor}</Fragment>
       }
       if (keys.indexOf(part) > -1) {
-        return <Fragment key={index}>{replaceables[part]}</Fragment>;
+        return <Fragment key={index}>{replaceables[part]}</Fragment>
       }
       return part
-    });
+    })
   }
 
   function renderText() {

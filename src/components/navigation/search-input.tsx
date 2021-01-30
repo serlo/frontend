@@ -2,7 +2,7 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useRouter } from 'next/router'
 import { lighten } from 'polished'
-import { useState, useRef, useContext, useEffect } from 'react';
+import { useState, useRef, useContext, useEffect } from 'react'
 import styled, { createGlobalStyle, css } from 'styled-components'
 
 import { isLegacyLink } from '../content/link'

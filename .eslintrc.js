@@ -116,6 +116,7 @@ module.exports = {
     'react/jsx-curly-brace-presence': 'error',
     'react/jsx-fragments': ['error', 'syntax'],
     'react/prop-types': 'off',
+    'react/react-in-jsx-scope': 'off',
 
     // eslint-plugin-react-hooks
     'react-hooks/exhaustive-deps': 'warn',

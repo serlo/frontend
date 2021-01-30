@@ -1,7 +1,7 @@
 import { faComments, faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Comment as CommentType, Thread as ThreadType } from '@serlo/api'
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react'
 import styled from 'styled-components'
 
 import { Lazy } from '../content/lazy'
@@ -35,9 +35,7 @@ export function CommentArea({ id: entityId, noForms }: CommentAreaProps) {
   const container = useRef<HTMLDivElement>(null)
   const { strings } = useInstanceData()
   const auth = useAuth()
-  const [showThreadChildren, setShowThreadChildren] = useState<string[]>(
-    []
-  )
+  const [showThreadChildren, setShowThreadChildren] = useState<string[]>([])
   const createThread = useCreateThreadMutation()
   const createComment = useCreateCommentMutation()
   const { commentData, commentCount, error } = useCommentData(entityId)

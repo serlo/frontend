@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react';
+import { createContext, useContext } from 'react'
 
 import type { Components } from '@/helper/logged-in-stuff-chunk'
 
@@ -9,5 +9,5 @@ export const LoggedInComponentsContext = createContext<
 export const LoggedInComponentsProvider = LoggedInComponentsContext.Provider
 
 export function useLoggedInComponents() {
-  return useContext(LoggedInComponentsContext);
+  return useContext(LoggedInComponentsContext)
 }

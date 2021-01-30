@@ -1,5 +1,5 @@
 import { NextPage } from 'next'
-import { useEffect } from 'react';
+import { useEffect } from 'react'
 
 import { useAuth } from '@/auth/use-auth'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'

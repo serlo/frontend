@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 
 import { LoadingSpinner } from '../loading/loading-spinner'
 import { StyledP } from '../tags/styled-p'
@@ -21,9 +21,7 @@ export function Injection({ href, renderNested }: InjectionProps) {
 
   const [id, setId] = useState<number | undefined>(undefined)
 
-  const [license, setLicense] = useState<undefined | LicenseData>(
-    undefined
-  )
+  const [license, setLicense] = useState<undefined | LicenseData>(undefined)
 
   const { lang } = useInstanceData()
 

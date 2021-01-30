@@ -1,6 +1,6 @@
 import cookie from 'cookie'
 import jwt_decode from 'jwt-decode'
-import * as React from 'react';
+import * as React from 'react'
 import { Token } from 'simple-oauth2'
 
 import { UserRoles } from '@/data-types'

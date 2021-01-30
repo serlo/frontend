@@ -1,5 +1,5 @@
 import { Router } from 'next/router'
-import { useState } from 'react';
+import { useState } from 'react'
 import styled from 'styled-components'
 
 import { Logo } from './logo'
