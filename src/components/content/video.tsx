@@ -1,6 +1,5 @@
 import { faFilm } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
 import styled from 'styled-components'
 
 import { StyledP } from '../tags/styled-p'

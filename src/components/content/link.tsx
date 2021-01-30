@@ -1,5 +1,5 @@
 import { default as NextLink } from 'next/link'
-import React from 'react'
+import * as React from 'react';
 
 import { StyledA } from '../tags/styled-a'
 import { ExternalLink } from './external-link'

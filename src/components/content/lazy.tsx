@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react';
 import LazyLoad from 'react-lazyload'
 import styled from 'styled-components'
 

@@ -1,6 +1,5 @@
 import { gql } from 'graphql-request'
 import { GetStaticPaths, GetStaticProps } from 'next'
-import React from 'react'
 
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { PageTitle } from '@/components/content/page-title'

@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState } from 'react';
 import styled from 'styled-components'
 
 import { PageTitle } from '../content/page-title'
@@ -15,7 +15,7 @@ import { ExternalProvider, useConsent } from '@/helper/use-consent'
 
 export function ConsentPage() {
   const { checkConsent, revokeConsent } = useConsent()
-  const [, updateState] = React.useState({})
+  const [, updateState] = useState({})
   const { strings } = useInstanceData()
 
   const consentedProviders = Object.values(

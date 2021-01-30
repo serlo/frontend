@@ -1,4 +1,4 @@
-import React from 'react'
+import { useRef, useState, useEffect, useCallback, Fragment } from 'react';
 import Autosuggest from 'react-autosuggest'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import styled from 'styled-components'
@@ -21,34 +21,34 @@ import { renderArticle } from '@/schema/article-renderer'
 import 'react-tabs/style/react-tabs.css'
 
 export function Explore() {
-  const counts = React.useRef<any>({ age: {} })
+  const counts = useRef<any>({ age: {} })
 
-  const [limit2, setLimit2] = React.useState(10)
+  const [limit2, setLimit2] = useState(10)
 
-  const [choices, setChoices] = React.useState<any>([])
-  const [limit, setLimit] = React.useState(10)
-  const [query, setQuery] = React.useState<string>('')
-  const [counter, setCounter] = React.useState(1)
-  const [result, setResult] = React.useState<SearchQueryResponse>({
+  const [choices, setChoices] = useState<any>([])
+  const [limit, setLimit] = useState(10)
+  const [query, setQuery] = useState<string>('')
+  const [counter, setCounter] = useState(1)
+  const [result, setResult] = useState<SearchQueryResponse>({
     exercises: [],
     documents: [],
   })
 
-  const [tabIndex, setTabIndex] = React.useState(0)
+  const [tabIndex, setTabIndex] = useState(0)
 
   const origin = frontendOrigin
 
-  React.useEffect(() => {
+  useEffect(() => {
     setTabIndex(parseInt(sessionStorage.getItem('__tab_index') ?? '0') ?? 0)
     setCounter(counter + 1)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (query) sessionStorage.setItem('__explore_query', query)
   }, [query])
 
-  React.useEffect(() => {
+  useEffect(() => {
     console.log('search:', query)
 
     if (query) {
@@ -110,7 +110,7 @@ export function Explore() {
               <StyledP>
                 Filter:{' '}
                 {choices.map((choice: any) => (
-                  <React.Fragment key={choice}>
+                  <Fragment key={choice}>
                     <strong>{choice}</strong>{' '}
                     <span
                       style={{ color: 'blue', cursor: 'pointer' }}
@@ -121,7 +121,7 @@ export function Explore() {
                       [x]
                     </span>
                     ,{' '}
-                  </React.Fragment>
+                  </Fragment>
                 ))}
               </StyledP>
             </FacetDiv>
@@ -135,9 +135,9 @@ export function Explore() {
             />
           )}
           {result.exercises.slice(0, limit).map(({ id, explain }) => (
-            <React.Fragment key={id}>
+            <Fragment key={id}>
               <Document id={id} explain={explain} />
-            </React.Fragment>
+            </Fragment>
           ))}
           {result.exercises.length > limit && (
             <StyledP>
@@ -155,7 +155,7 @@ export function Explore() {
           {result.documents
             .slice(0, limit2)
             .map(({ id, title, highlight, type }) => (
-              <React.Fragment key={id}>
+              <Fragment key={id}>
                 <HSpace amount={30} />
                 <div style={{ display: 'flex', alignItems: 'baseline' }}>
                   <StyledH3 style={{ marginRight: '5px' }}>
@@ -164,7 +164,7 @@ export function Explore() {
                   <small>[{type2string(type)}]</small>
                 </div>
                 <StyledP>{highlight} </StyledP>
-              </React.Fragment>
+              </Fragment>
             ))}
           {result.documents.length > limit2 && (
             <StyledP>
@@ -181,7 +181,7 @@ export function Explore() {
         </TabPanel>
       </Tabs>
     </SpecialCss>
-  )
+  );
 }
 
 function type2string(type: string) {
@@ -191,11 +191,11 @@ function type2string(type: string) {
 }
 
 function InputForm(props: any) {
-  const [inputValue, setInputValue] = React.useState('')
-  const [suggestions, setSuggestions] = React.useState<string[]>([])
+  const [inputValue, setInputValue] = useState('')
+  const [suggestions, setSuggestions] = useState<string[]>([])
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const throttled = React.useCallback(
+  const throttled = useCallback(
     throttle(1000, ({ value }: any) => {
       // to search
       //setSuggestions(entries.slice(0, 5).map((entry: any) => entry.val))
@@ -213,7 +213,7 @@ function InputForm(props: any) {
     [props.searchIndex]
   )
 
-  React.useEffect(() => {
+  useEffect(() => {
     const value = sessionStorage.getItem('__explore_query') ?? ''
     setInputValue(value)
     props.runSearch(value)
@@ -311,7 +311,7 @@ function CategorySelector(props: any) {
       <StyledP>
         <strong>{heading}</strong>:
         {categories.map((cat) => (
-          <React.Fragment key={cat.key}>
+          <Fragment key={cat.key}>
             <label>
               <input
                 type="checkbox"
@@ -335,11 +335,11 @@ function CategorySelector(props: any) {
               )}
             </label>
             &nbsp;&nbsp;
-          </React.Fragment>
+          </Fragment>
         ))}
       </StyledP>
     </FacetDiv>
-  )
+  );
 }
 
 function Document({ id, explain }: any) {

@@ -1,5 +1,5 @@
 import type A from 'algebra.js'
-import React from 'react'
+import { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components'
 
 import { Feedback } from './feedback'
@@ -20,12 +20,12 @@ interface FeedbackData {
 }
 
 export function InputExercise({ data, path }: InputExerciseProps) {
-  const [feedback, setFeedback] = React.useState<FeedbackData | null>(null)
-  const [value, setValue] = React.useState('')
-  const [A, setA] = React.useState<typeof import('algebra.js') | null>(null)
+  const [feedback, setFeedback] = useState<FeedbackData | null>(null)
+  const [value, setValue] = useState('')
+  const [A, setA] = useState<typeof import('algebra.js') | null>(null)
   const { strings } = useInstanceData()
 
-  React.useEffect(() => {
+  useEffect(() => {
     void import('algebra.js').then((value) => setA(value))
   }, [])
 
@@ -91,7 +91,7 @@ export function InputExercise({ data, path }: InputExerciseProps) {
     const _value = collapseWhitespace(value)
     switch (data.type) {
       case 'input-number-exact-match-challenge':
-        return normalizeNumber(_value).replace(/( )?\/( )?/g, '/')
+        return normalizeNumber(_value).replace(/( )?\/( )?/g, '/');
       case 'input-expression-equal-match-challenge':
         return A ? A.parse(normalizeNumber(_value)) : undefined
       case 'input-string-normalized-match-challenge':
@@ -101,11 +101,11 @@ export function InputExercise({ data, path }: InputExerciseProps) {
 }
 
 function collapseWhitespace(val: string): string {
-  return val.replace(/\s+/g, ' ')
+  return val.replace(/\s+/g, ' ');
 }
 
 function normalizeNumber(val: string) {
-  return val.replace(/,/g, '.')
+  return val.replace(/,/g, '.');
 }
 
 const Wrapper = styled.div`

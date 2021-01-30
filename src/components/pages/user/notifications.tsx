@@ -1,6 +1,6 @@
 import { PageInfo } from '@serlo/api'
 import { gql } from 'graphql-request'
-import React from 'react'
+import { useEffect } from 'react';
 import styled from 'styled-components'
 
 import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
@@ -31,7 +31,7 @@ export const Notifications = ({
 }: NotificationProps) => {
   const auth = useAuth()
 
-  React.useEffect(() => {
+  useEffect(() => {
     setAllToRead()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth, data])

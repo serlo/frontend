@@ -3,7 +3,6 @@ import {
   faChevronCircleRight,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
 import styled from 'styled-components'
 
 import DonateIcon from '@/assets-webkit/img/footer-donate.svg'

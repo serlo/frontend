@@ -1,7 +1,7 @@
 import { faCircle, faSquare } from '@fortawesome/free-regular-svg-icons'
 import { faCheckCircle, faCheckSquare } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
+import { useState, Fragment } from 'react';
 import styled, { css } from 'styled-components'
 
 import { Feedback } from './feedback'
@@ -59,9 +59,9 @@ function SingleChoice({
   renderNested,
   path,
 }: SingleChoiceProps) {
-  const [selected, setSelected] = React.useState<number | undefined>(undefined)
-  const [focused, setFocused] = React.useState<number | undefined>(undefined)
-  const [showFeedback, setShowFeedback] = React.useState(false)
+  const [selected, setSelected] = useState<number | undefined>(undefined)
+  const [focused, setFocused] = useState<number | undefined>(undefined)
+  const [showFeedback, setShowFeedback] = useState(false)
   const { strings } = useInstanceData()
 
   return (
@@ -70,7 +70,7 @@ function SingleChoice({
         {answers.map((answer, i) => {
           const id = `${idBase}${i}`
           return (
-            <React.Fragment key={i}>
+            <Fragment key={i}>
               <ChoiceWrapper>
                 <StyledInput
                   id={id}
@@ -108,8 +108,8 @@ function SingleChoice({
                     )}
                   </Feedback>
                 )}
-            </React.Fragment>
-          )
+            </Fragment>
+          );
         })}
       </Choices>
       <CheckButton
@@ -126,7 +126,7 @@ function SingleChoice({
           : strings.content.chooseOption}
       </CheckButton>
     </Container>
-  )
+  );
 }
 
 function MultipleChoice({
@@ -135,9 +135,9 @@ function MultipleChoice({
   renderNested,
   path,
 }: SingleChoiceProps) {
-  const [selected, setSelected] = React.useState(answers.map(() => false))
-  const [focused, setFocused] = React.useState<number | undefined>(undefined)
-  const [showFeedback, setShowFeedback] = React.useState(false)
+  const [selected, setSelected] = useState(answers.map(() => false))
+  const [focused, setFocused] = useState<number | undefined>(undefined)
+  const [showFeedback, setShowFeedback] = useState(false)
   const { strings } = useInstanceData()
   const correct = answers.every((answer, i) => answer.isCorrect === selected[i])
   return (
@@ -151,7 +151,7 @@ function MultipleChoice({
             answer.feedback[0].children.length > 0
 
           return (
-            <React.Fragment key={i}>
+            <Fragment key={i}>
               <ChoiceWrapper>
                 <StyledInput
                   id={id}
@@ -181,8 +181,8 @@ function MultipleChoice({
                 selected[i] &&
                 hasFeedback &&
                 renderNested(answer.feedback, `mcfeedback${i}`)}
-            </React.Fragment>
-          )
+            </Fragment>
+          );
         })}
       </Choices>
       {showFeedback && (
@@ -201,7 +201,7 @@ function MultipleChoice({
         {strings.content.check}
       </CheckButton>
     </Container>
-  )
+  );
 }
 
 const CheckButton = styled.button<{ selectable: boolean }>`

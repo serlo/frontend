@@ -2,7 +2,7 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useRouter } from 'next/router'
 import { lighten } from 'polished'
-import React from 'react'
+import { useState, useRef, useContext, useEffect } from 'react';
 import styled, { createGlobalStyle, css } from 'styled-components'
 
 import { isLegacyLink } from '../content/link'
@@ -26,20 +26,20 @@ It's a very hacky, but it's free and works … okay.
 */
 
 export function SearchInput() {
-  const [searchLoaded, setSearchLoaded] = React.useState(false)
-  const [searchActive, setSearchActive] = React.useState(false)
-  const [consentJustGiven, setConsentJustGiven] = React.useState(false)
+  const [searchLoaded, setSearchLoaded] = useState(false)
+  const [searchActive, setSearchActive] = useState(false)
+  const [consentJustGiven, setConsentJustGiven] = useState(false)
   const { checkConsent, giveConsent } = useConsent()
   const consentGiven = checkConsent(ExternalProvider.GoogleSearch)
-  const searchFormRef = React.useRef<HTMLDivElement>(null)
+  const searchFormRef = useRef<HTMLDivElement>(null)
 
   // const [isSearchPage, setIsSearchPage] = React.useState(false)
   const { lang, strings } = useInstanceData()
   const router = useRouter()
   const onSearchPage = router.route === '/search'
-  const id = React.useContext(EntityIdContext)
+  const id = useContext(EntityIdContext)
 
-  React.useEffect(() => {
+  useEffect(() => {
     // note: find a better way to tell search input that it should activate itself
     if (onSearchPage) {
       activateSearch()
@@ -48,12 +48,12 @@ export function SearchInput() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (consentJustGiven) activateSearch()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [consentJustGiven])
 
-  React.useEffect(() => {
+  useEffect(() => {
     const resultsContainer = document.getElementById('gcs-results')
     setupLinkCatcher(resultsContainer)
   })

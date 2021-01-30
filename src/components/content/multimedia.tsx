@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic'
-import React from 'react'
+import { useState } from 'react';
 import styled from 'styled-components'
 
 import { LightBoxProps } from './light-box'
@@ -20,7 +20,7 @@ export function Multimedia({
   children,
   renderNested,
 }: FrontendMultiMediaNode & { renderNested: RenderNestedFunction }) {
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
   function openLightBox() {
     setOpen(true)
   }

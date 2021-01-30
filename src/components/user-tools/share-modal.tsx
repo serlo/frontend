@@ -12,7 +12,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { lighten } from 'polished'
-import React from 'react'
+import * as React from 'react';
 import styled from 'styled-components'
 
 import {

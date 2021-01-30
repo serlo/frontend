@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState } from 'react';
 import styled from 'styled-components'
 
 import { StyledP } from '../tags/styled-p'
@@ -21,7 +21,7 @@ export function CommentArchive({
   highlightedCommentId,
   highlight,
 }: CommentArchiveProps) {
-  const [showArchived, setShowArchived] = React.useState<boolean>(
+  const [showArchived, setShowArchived] = useState<boolean>(
     show ? true : false
   )
   const { strings } = useInstanceData()

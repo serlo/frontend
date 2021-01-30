@@ -1,5 +1,4 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
-import React from 'react'
 
 import { Entity } from '@/components/content/entity'
 import { Topic } from '@/components/content/topic'

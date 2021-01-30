@@ -1,16 +1,16 @@
-import React from 'react'
+import { createContext, useContext } from 'react';
 import { notify } from 'react-notify-toast'
 
 import { theme } from '@/theme'
 
-export const ToastNoticeContext = React.createContext<typeof notify | null>(
+export const ToastNoticeContext = createContext<typeof notify | null>(
   null
 )
 
 export const ToastNoticeProvider = ToastNoticeContext.Provider
 
 export function useToastNotice() {
-  const toastNotice = React.useContext(ToastNoticeContext)
+  const toastNotice = useContext(ToastNoticeContext)
 
   const colors = {
     default: {

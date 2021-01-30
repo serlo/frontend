@@ -1,6 +1,7 @@
 import { faHeart, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { ReactChild } from 'react'
+import { ReactChild } from 'react';
+import * as React from 'react';
 import styled from 'styled-components'
 
 import { useInstanceData } from '@/contexts/instance-context'

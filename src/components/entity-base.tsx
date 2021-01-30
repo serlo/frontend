@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react';
 
 import { HSpace } from './content/h-space'
 import { Horizon } from './content/horizon'

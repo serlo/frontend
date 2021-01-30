@@ -1,7 +1,7 @@
 import { faCaretDown, faUser, faBell } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import type { TippyProps } from '@tippyjs/react'
-import React from 'react'
+import { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components'
 
 import { Link } from '../content/link'
@@ -31,10 +31,10 @@ export interface MenuProps {
 }
 
 export function Menu(props: MenuProps) {
-  const [Tippy, setTippy] = React.useState<
+  const [Tippy, setTippy] = useState<
     typeof import('@tippyjs/react') | null
   >(null)
-  React.useEffect(() => {
+  useEffect(() => {
     void import('@tippyjs/react').then((value) => setTippy(value))
   }, [])
   if (!Tippy) {
@@ -66,14 +66,14 @@ function MenuInner({
   target?: any
 }) {
   //
-  const [mounted, setMounted] = React.useState(!shouldUseNewAuth())
+  const [mounted, setMounted] = useState(!shouldUseNewAuth())
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
 
   type TippyRoot = Parameters<NonNullable<TippyProps['onCreate']>>[0]
-  const [tippyRoot, setTippyRoot] = React.useState<TippyRoot | null>(null)
+  const [tippyRoot, setTippyRoot] = useState<TippyRoot | null>(null)
 
-  React.useEffect(() => setMounted(true), [])
+  useEffect(() => setMounted(true), [])
 
   const lic = useLoggedInComponents()
 

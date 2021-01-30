@@ -1,10 +1,10 @@
 import type { NProgress } from 'nprogress'
-import React from 'react'
+import { createContext, useContext } from 'react';
 
-export const ProgressContext = React.createContext<NProgress | null>(null)
+export const ProgressContext = createContext<NProgress | null>(null)
 
 export const ProgressProvider = ProgressContext.Provider
 
 export function useProgress() {
-  return React.useContext(ProgressContext)
+  return useContext(ProgressContext);
 }

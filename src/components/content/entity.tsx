@@ -2,7 +2,7 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import dynamic from 'next/dynamic'
 import { Router } from 'next/router'
-import React from 'react'
+import * as React from 'react';
 import styled from 'styled-components'
 
 import { CommentAreaProps } from '../comments/comment-area'
