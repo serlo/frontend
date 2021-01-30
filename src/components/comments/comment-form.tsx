@@ -46,7 +46,7 @@ export function CommentForm({
   }
 
   const sendTitle = `${strings.comments.submit}   ${
-    isMac() ? '⌘' : strings.keys.ctrl
+    isMac ? '⌘' : strings.keys.ctrl
   }↵`
 
   return (

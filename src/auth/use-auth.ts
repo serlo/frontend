@@ -4,6 +4,7 @@ import React from 'react'
 import { Token } from 'simple-oauth2'
 
 import { UserRoles } from '@/data-types'
+import { isServer } from '@/helper/client-detection'
 
 export function useAuth(): React.RefObject<AuthPayload> {
   // This has to be a ref since token changes when calling `refreshToken`.
@@ -13,9 +14,7 @@ export function useAuth(): React.RefObject<AuthPayload> {
 
   function parseAuthCookie(): AuthPayload {
     try {
-      const cookies = cookie.parse(
-        typeof window === 'undefined' ? '' : document.cookie
-      )
+      const cookies = cookie.parse(isServer ? '' : document.cookie)
       const { access_token, id_token } = JSON.parse(
         cookies['auth-token']
       ) as Token

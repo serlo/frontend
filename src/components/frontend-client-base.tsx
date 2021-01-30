@@ -14,6 +14,7 @@ import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInComponentsProvider } from '@/contexts/logged-in-components'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
 import { InstanceData, LoggedInData } from '@/data-types'
+import { isServer } from '@/helper/client-detection'
 import { FontFix, PrintStylesheet } from '@/helper/css'
 import type { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { frontendOrigin } from '@/helper/frontent-origin'
@@ -26,6 +27,12 @@ export type FrontendClientBaseProps = React.PropsWithChildren<{
   entityId?: number
 }>
 
+declare global {
+  interface Window {
+    __CLIENT_INSTANCE_DATA__: ReturnType<typeof getInstanceDataByLang>
+  }
+}
+
 export function FrontendClientBase({
   children,
   noHeaderFooter,
@@ -35,16 +42,14 @@ export function FrontendClientBase({
 }: FrontendClientBaseProps) {
   const { locale } = useRouter()
   const [instanceData] = React.useState<InstanceData>(() => {
-    if (typeof window === 'undefined') {
+    if (isServer) {
       // load instance data for server side rendering
       // Note: using require to avoid webpack bundling it
+      // eslint-disable-next-line
       return require('@/helper/feature-i18n').getInstanceDataByLang(locale!)
     } else {
-      // load instance data from client from document tag
-      return JSON.parse(
-        document.getElementById('__FRONTEND_CLIENT_INSTANCE_DATA__')
-          ?.textContent ?? '{}'
-      ) as ReturnType<typeof getInstanceDataByLang>
+      // load instance data from client from _document
+      return window.__CLIENT_INSTANCE_DATA__ ?? {}
     }
   })
 
