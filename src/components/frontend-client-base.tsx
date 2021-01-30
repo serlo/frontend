@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import React from 'react'
+import * as React from 'react'
 import { ThemeProvider } from 'styled-components'
 
 import { ConditonalWrap } from './conditional-wrap'

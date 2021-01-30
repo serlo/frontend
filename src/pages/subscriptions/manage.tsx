@@ -1,5 +1,4 @@
 import { gql } from 'graphql-request'
-import React from 'react'
 
 import { useGraphqlSwrWithAuth } from '@/api/use-graphql-swr'
 import { PageTitle } from '@/components/content/page-title'

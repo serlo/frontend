@@ -1,7 +1,7 @@
 import { faComments, faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Comment as CommentType, Thread as ThreadType } from '@serlo/api'
-import React from 'react'
+import { useState, useRef, useEffect } from 'react'
 import styled from 'styled-components'
 
 import { Lazy } from '../content/lazy'
@@ -29,22 +29,20 @@ export type CommentsData = CommentType[]
 export type ThreadsData = ThreadType[]
 
 export function CommentArea({ id: entityId, noForms }: CommentAreaProps) {
-  const [highlightedCommentId, setHighlightedCommentId] = React.useState<
+  const [highlightedCommentId, setHighlightedCommentId] = useState<
     number | undefined
   >(undefined)
-  const container = React.useRef<HTMLDivElement>(null)
+  const container = useRef<HTMLDivElement>(null)
   const { strings } = useInstanceData()
   const auth = useAuth()
-  const [showThreadChildren, setShowThreadChildren] = React.useState<string[]>(
-    []
-  )
+  const [showThreadChildren, setShowThreadChildren] = useState<string[]>([])
   const createThread = useCreateThreadMutation()
   const createComment = useCreateCommentMutation()
   const { commentData, commentCount, error } = useCommentData(entityId)
 
   const showAll = isClient && window.location.hash.startsWith('#comment-')
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (showAll && highlightedCommentId === undefined) {
       if (container.current) scrollToPrevious(container.current)
       const id = parseInt(window.location.hash.replace('#comment-', ''))

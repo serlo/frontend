@@ -1,5 +1,5 @@
 import { Router } from 'next/router'
-import React from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
 
 import { Logo } from './logo'
@@ -12,7 +12,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { makeResponsivePadding } from '@/helper/css'
 
 export function Header() {
-  const [isOpen, setOpen] = React.useState(false)
+  const [isOpen, setOpen] = useState(false)
   const auth = useAuth()
   const { headerData, strings } = useInstanceData()
 

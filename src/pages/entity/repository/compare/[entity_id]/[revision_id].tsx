@@ -1,6 +1,5 @@
 import { Instance } from '@serlo/api'
 import { GetStaticPaths, GetStaticProps } from 'next'
-import React from 'react'
 
 import { Revision } from '@/components/author/revision'
 import { FrontendClientBase } from '@/components/frontend-client-base'

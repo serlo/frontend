@@ -2,7 +2,6 @@ import { faGithubSquare } from '@fortawesome/free-brands-svg-icons'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { lighten } from 'polished'
-import React from 'react'
 import styled from 'styled-components'
 
 import { Link } from '@/components/content/link'

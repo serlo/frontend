@@ -1,5 +1,3 @@
-import React from 'react'
-
 import type { RenderNestedFunction } from '../../../schema/article-renderer'
 import { useInstanceData } from '@/contexts/instance-context'
 import { FrontendContentNode, FrontendSolutionNode } from '@/data-types'

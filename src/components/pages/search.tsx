@@ -1,4 +1,4 @@
-import React from 'react'
+import { useEffect } from 'react'
 import styled from 'styled-components'
 
 import { HeadTags } from '../head-tags'
@@ -36,7 +36,7 @@ export function Search() {
     })
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     renderResults()
   })
 

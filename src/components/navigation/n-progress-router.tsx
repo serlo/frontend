@@ -1,6 +1,5 @@
 import { Router } from 'next/router'
 import NProgress from 'nprogress'
-import React from 'react'
 
 import { NProgressStyles } from './n-progress-styles'
 

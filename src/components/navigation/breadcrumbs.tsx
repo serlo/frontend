@@ -1,7 +1,6 @@
 import { faArrowCircleLeft, faList } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { transparentize } from 'polished'
-import React from 'react'
 import styled, { css } from 'styled-components'
 
 import { Link } from '../content/link'

@@ -1,6 +1,6 @@
 import type { GraphQLError } from 'graphql'
 import { ClientError, GraphQLClient } from 'graphql-request'
-import React from 'react'
+import * as React from 'react'
 
 import { endpoint } from '@/api/endpoint'
 import { AuthPayload } from '@/auth/use-auth'

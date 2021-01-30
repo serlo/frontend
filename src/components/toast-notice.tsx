@@ -1,4 +1,4 @@
-import React from 'react'
+import { useEffect } from 'react'
 import Notification from 'react-notify-toast'
 
 import { useAuth } from '@/auth/use-auth'
@@ -15,7 +15,7 @@ export function ToastNotice() {
 
   const showTime = 4000
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (window.location.hash === '#auth') {
       removeHash()
       showToastNotice(

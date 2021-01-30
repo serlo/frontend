@@ -1,5 +1,5 @@
 import { PageInfo } from '@serlo/api'
-import React from 'react'
+import { useEffect } from 'react'
 import styled from 'styled-components'
 
 import { useAuth } from '@/auth/use-auth'
@@ -31,7 +31,7 @@ export const Notifications = ({
   const auth = useAuth()
   const setToRead = useSetNotificationStateMutation()
 
-  React.useEffect(() => {
+  useEffect(() => {
     setAllToRead()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth, data])

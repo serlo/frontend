@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 import { PageTitle } from '../content/page-title'
@@ -11,11 +11,11 @@ import { makePrimaryButton } from '@/helper/css'
 import { triggerSentry } from '@/helper/trigger-sentry'
 
 export function ErrorPage({ code, message }: ErrorData) {
-  const [path, setPath] = React.useState('')
-  const [hasSerloBacklink, setHasSerloBacklink] = React.useState(false)
+  const [path, setPath] = useState('')
+  const [hasSerloBacklink, setHasSerloBacklink] = useState(false)
   const { strings } = useInstanceData()
 
-  React.useEffect(() => {
+  useEffect(() => {
     void triggerSentry({ message, code })
 
     setPath(window.location.pathname)

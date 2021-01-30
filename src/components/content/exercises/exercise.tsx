@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic'
-import React from 'react'
+import { useState, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 
 import { LicenseNotice } from '../license-notice'
@@ -27,12 +27,12 @@ const CommentArea = dynamic<CommentAreaProps>(() =>
 
 export function Exercise({ node, renderNested, path }: ExerciseProps) {
   const { strings } = useInstanceData()
-  const [solutionVisible, setVisible] = React.useState(false)
-  const [randomId] = React.useState(Math.random().toString())
+  const [solutionVisible, setVisible] = useState(false)
+  const [randomId] = useState(Math.random().toString())
 
   const auth = useAuth()
-  const [loaded, setLoaded] = React.useState(false)
-  React.useEffect(() => {
+  const [loaded, setLoaded] = useState(false)
+  useEffect(() => {
     setLoaded(true)
   }, [])
 

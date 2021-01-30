@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic'
-import React from 'react'
+import * as React from 'react'
 import { CSSProperties } from 'styled-components'
 
 import { Col } from '../components/content/col'

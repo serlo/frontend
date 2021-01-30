@@ -5,7 +5,7 @@ import {
   faTools,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
+import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 import {
@@ -45,8 +45,8 @@ export function UserTools({
 }: UserToolsProps) {
   const { strings } = useInstanceData()
   const auth = useAuth()
-  const [loaded, setLoaded] = React.useState(false)
-  React.useEffect(() => {
+  const [loaded, setLoaded] = useState(false)
+  useEffect(() => {
     setLoaded(true)
   }, [])
   const loggedInData = useLoggedInData()
