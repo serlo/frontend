@@ -1,6 +1,6 @@
 import { faHeart, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { ReactChild } from 'react'
+import * as React from 'react'
 import styled from 'styled-components'
 
 import { useInstanceData } from '@/contexts/instance-context'
@@ -14,8 +14,8 @@ import { ExternalProvider, useConsent } from '@/helper/use-consent'
 // also borrowed some code
 
 interface PrivacyWrapperProps {
-  children: ReactChild
-  placeholder?: ReactChild
+  children: React.ReactChild
+  placeholder?: React.ReactChild
   type: 'video' | 'applet' | 'twingle'
   provider: ExternalProvider
   embedUrl?: string

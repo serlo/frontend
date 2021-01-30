@@ -1,5 +1,4 @@
 import { GetStaticProps } from 'next'
-import React from 'react'
 
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { LandingDE } from '@/components/pages/landing-de'

@@ -284,7 +284,7 @@ Use functional components and [hooks](https://reactjs.org/docs/hooks-overview.ht
 ```tsx
 // src/pages/hello-world.tsx
 
-import React from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
 
 export default function HelloWorld() {
@@ -292,7 +292,7 @@ export default function HelloWorld() {
 }
 
 function ClickMeTitle({ title }) {
-  const [clicked, setClicked] = React.useState(false)
+  const [clicked, setClicked] = useState(false)
   const smiley = clicked ? ' :)' : ''
   return (
     <BigParagraph onClick={() => setClicked(!clicked)}>
@@ -497,14 +497,14 @@ This is one of the rare places where types are mandatory.
 To boost your creativity, we included a bunch of useful css [helper from polished](https://polished.js.org/docs/):
 
 ```tsx
-import React from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCandyCane } from '@fortawesome/free-solid-svg-icons'
 import { lighten } from 'polished'
 
 export function HelloWorld() {
-  const [lighter, setLighter] = React.useState(0)
+  const [lighter, setLighter] = useState(0)
   return (
     <>
       <p>Click it:</p>
@@ -593,7 +593,7 @@ Surround the target element with the `Tippy` component and pass the content to i
 Show information to the user with modals. [react-modal](https://github.com/reactjs/react-modal) provides the necessary functionality. This example shows how you can get started:
 
 ```tsx
-import React from 'react'
+import { useState } from 'react'
 import { Modal } from '@/components/Modal' // our wrapper
 
 const centeredModal = {
@@ -608,7 +608,7 @@ const centeredModal = {
 }
 
 export function HelloWorld() {
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
   return (
     <>
       <button onClick={() => setOpen(true)}>Open modal</button>
@@ -681,7 +681,7 @@ Use a [dynamic import](https://nextjs.org/docs/advanced-features/dynamic-import)
 ```tsx
 // src/pages/hello-world.tsx
 
-import React from 'react'
+import { useState } from 'react'
 import dynamic from 'next/dynamic'
 
 const FancyComponent = dynamic(() =>
@@ -689,7 +689,7 @@ const FancyComponent = dynamic(() =>
 )
 
 export default function HelloWorld() {
-  const [visible, setVisible] = React.useState(false)
+  const [visible, setVisible] = useState(false)
   return (
     <>
       <p>
@@ -790,13 +790,13 @@ Only if it is absolutely necessary. You are able to import external `.css` files
 Delay these parts of the code after your component mounted, using the `useEffect` hook:
 
 ```tsx
-import React from 'react'
+import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 function HelloWorld() {
-  const [href, setHref] = React.useState(undefined)
+  const [href, setHref] = useState(undefined)
 
-  React.useEffect(() => {
+  useEffect(() => {
     setHref(window.location.href)
   }, [])
 
@@ -845,9 +845,9 @@ const url = props.url
 #### Destructuing Array
 
 ```tsx
-const [open, setOpen] = React.useState(false)
+const [open, setOpen] = useState(false)
 // -->
-const __temp = React.useState(false)
+const __temp = useState(false)
 const open = __temp[0]
 const setOpen = __temp[1]
 ```
@@ -871,9 +871,11 @@ return 'The key ' + key + ' can not be found in ' + db + '.'
 #### JSX
 
 ```tsx
-return <Par gray={true}>This is a paragraph</Par>
+return <h1>This is a heading</h1>
 // -->
-return React.createElement(Par, { gray: true }, `This is a paragraph`)
+import {jsx as _jsx} from 'react/jsx-runtime';
+[…]
+return _jsx('h1', { children: 'This is a heading' });
 ```
 
 ### How can I change the state of a sibling?
@@ -881,14 +883,14 @@ return React.createElement(Par, { gray: true }, `This is a paragraph`)
 Generally, you can't and shouldn't. Extract the state to the parent instead and pass change handlers:
 
 ```tsx
-import React from 'react'
+import { useState } from 'react'
 
 function HelloWorld() {
   return <Parent />
 }
 
 function Parent() {
-  const [msg, setMsg] = React.useState('hello')
+  const [msg, setMsg] = useState('hello')
   return (
     <>
       <Brother setMsg={setMsg} />

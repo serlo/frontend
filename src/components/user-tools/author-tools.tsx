@@ -2,7 +2,7 @@ import Tippy, { TippyProps } from '@tippyjs/react'
 import cookie from 'cookie'
 import { useRouter } from 'next/router'
 import NProgress from 'nprogress'
-import React from 'react'
+import { Fragment } from 'react'
 
 import { SubButtonStyle, SubLink } from '../navigation/menu'
 import { AuthorToolsData, HoverSubList, Li } from './author-tools-hover-menu'
@@ -184,9 +184,9 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
         if (hasPower) {
           if (renderer) {
             return (
-              <React.Fragment key={`${title ?? renderer.name}`}>
+              <Fragment key={`${title ?? renderer.name}`}>
                 {renderer(entityId)}
-              </React.Fragment>
+              </Fragment>
             )
           }
           if (url) return renderLi(url, title || getTranslatedString(toolName))

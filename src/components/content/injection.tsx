@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 import { LoadingSpinner } from '../loading/loading-spinner'
 import { StyledP } from '../tags/styled-p'
@@ -15,15 +15,13 @@ export interface InjectionProps {
 // TODO: Give injection a separate fetched data type
 
 export function Injection({ href, renderNested }: InjectionProps) {
-  const [value, setValue] = React.useState<FrontendContentNode[] | undefined>(
+  const [value, setValue] = useState<FrontendContentNode[] | undefined>(
     undefined
   )
 
-  const [id, setId] = React.useState<number | undefined>(undefined)
+  const [id, setId] = useState<number | undefined>(undefined)
 
-  const [license, setLicense] = React.useState<undefined | LicenseData>(
-    undefined
-  )
+  const [license, setLicense] = useState<undefined | LicenseData>(undefined)
 
   const { lang } = useInstanceData()
 

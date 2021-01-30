@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 
 import { useAuth } from '@/auth/use-auth'
 import { LoadingError } from '@/components/loading/loading-error'

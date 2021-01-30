@@ -1,5 +1,4 @@
 import { NextPage } from 'next'
-import React from 'react'
 import styled from 'styled-components'
 
 import { ProfileCommunityBanner } from './profile-community-banner'

@@ -1,5 +1,5 @@
 import { shade } from 'polished'
-import React from 'react'
+import { Fragment } from 'react'
 import styled from 'styled-components'
 
 import { FrontendContentNode, Sign } from '@/data-types'
@@ -31,7 +31,7 @@ export function Equations({ steps, renderNested }: EquationProps) {
               })
 
               return (
-                <React.Fragment key={i}>
+                <Fragment key={i}>
                   <tr>
                     <LeftTd>
                       {step.left
@@ -104,7 +104,7 @@ export function Equations({ steps, renderNested }: EquationProps) {
                       </td>
                     </ExplanationTr>
                   ) : null}
-                </React.Fragment>
+                </Fragment>
               )
             })}
           </TBody>

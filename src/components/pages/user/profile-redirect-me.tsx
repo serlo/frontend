@@ -1,5 +1,5 @@
 import { NextPage } from 'next'
-import React from 'react'
+import { useEffect } from 'react'
 
 import { useAuth } from '@/auth/use-auth'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
@@ -9,7 +9,7 @@ import { LoadingSpinner } from '@/components/loading/loading-spinner'
 export const ProfileRedirectMe: NextPage = () => {
   const auth = useAuth()
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (auth.current) {
       window.location.replace(
         `/user/${auth.current.id}/${auth.current.username}`

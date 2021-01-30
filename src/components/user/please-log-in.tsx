@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { Link } from '../content/link'
 import { StyledP } from '@/components/tags/styled-p'
 import { useInstanceData } from '@/contexts/instance-context'

@@ -1,7 +1,7 @@
 import { faFile } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import dynamic from 'next/dynamic'
-import React from 'react'
+import { useState, Fragment } from 'react'
 import styled from 'styled-components'
 
 import { makeMargin } from '../../helper/css'
@@ -33,7 +33,7 @@ const ShareModal = dynamic<ShareModalProps>(() =>
 )
 
 export function Topic({ data }: TopicProps) {
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
   const { strings } = useInstanceData()
 
   const isFolder =
@@ -64,19 +64,19 @@ export function Topic({ data }: TopicProps) {
       </ImageSizer>
       {data.subterms &&
         data.subterms.map((child) => (
-          <React.Fragment key={child.title}>
+          <Fragment key={child.title}>
             <SubTopic data={child} subid={child.id} id={data.id} />
-          </React.Fragment>
+          </Fragment>
         ))}
       {data.exercisesContent &&
         data.exercisesContent.map((exercise, i) => (
-          <React.Fragment key={i}>
+          <Fragment key={i}>
             {renderArticle(
               [exercise],
               `tax${data.id}`,
               `ex${exercise.context.id}`
             )}
-          </React.Fragment>
+          </Fragment>
         ))}
       {isTopic && (
         <LinkList>

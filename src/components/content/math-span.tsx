@@ -1,5 +1,4 @@
 import KaTeX from 'katex'
-import React from 'react'
 
 import KaTeXSpan from '../../../external/katexstyles'
 

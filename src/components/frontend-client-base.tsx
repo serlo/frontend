@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import React from 'react'
+import * as React from 'react'
 import { notify } from 'react-notify-toast'
 import { ThemeProvider } from 'styled-components'
 
