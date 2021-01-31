@@ -14,7 +14,6 @@ import { getRawTitle } from '@/fetcher/create-title'
 import { QueryResponse } from '@/fetcher/query-types'
 import { makeLightButton } from '@/helper/css'
 import { entityIconMapping } from '@/helper/icon-by-entity-type'
-import { serloDomain } from '@/helper/serlo-domain'
 
 export function ManageSubscriptions({
   subscriptions,
@@ -56,16 +55,12 @@ export function ManageSubscriptions({
                 <Link href={entry.alias ?? ''}>{title}</Link>
               </StyledTd>
               <CenteredTd>
-                <Button
-                  href={`https://de.${serloDomain}/subscription/update/${entry.id}/0`}
-                >
+                <Button href={`/subscription/update/${entry.id}/0`}>
                   {loggedInStrings.noMails}
                 </Button>
               </CenteredTd>
               <CenteredTd>
-                <Button
-                  href={`https://de.${serloDomain}/subscription/update/${entry.id}/1`}
-                >
+                <Button href={`/subscription/update/${entry.id}/1`}>
                   {loggedInStrings.noNotifications}
                 </Button>
               </CenteredTd>

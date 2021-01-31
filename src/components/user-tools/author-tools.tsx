@@ -326,7 +326,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   function renderLi(href: string, text: string) {
     return (
       <Li key={text}>
-        <SubLink href={href} noCSR>
+        <SubLink href={href}>
           <SubButtonStyle>{text}</SubButtonStyle>
         </SubLink>
       </Li>

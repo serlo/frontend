@@ -7,6 +7,7 @@ import styled, { css } from 'styled-components'
 import { PageTitle } from '../content/page-title'
 import { Geogebra } from '@/components/content/geogebra'
 import { HSpace } from '@/components/content/h-space'
+import { Link } from '@/components/content/link'
 import { Video } from '@/components/content/video'
 import { StyledH1 } from '@/components/tags/styled-h1'
 import { StyledP } from '@/components/tags/styled-p'
@@ -16,7 +17,6 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionData } from '@/data-types'
 import {
   makePadding,
-  // makeTransparentButton,
   makeTransparentButton,
   inputFontReset,
   makeLightButton,
@@ -46,10 +46,7 @@ export function Revision({ data }: RevisionProps) {
   return (
     <>
       <MetaBar>
-        <BackButton
-          as="a"
-          href={`/entity/repository/history/${data.repositoryId}`}
-        >
+        <BackButton href={`/entity/repository/history/${data.repositoryId}`}>
           <FontAwesomeIcon icon={faList} /> {strings.revisions.toOverview}
         </BackButton>
         <div>{renderButtons()}</div>
@@ -253,7 +250,7 @@ const Button = styled.button<{ current?: boolean }>`
     `}
 `
 
-const BackButton = styled(Button)`
+const BackButton = styled(Link)`
   ${makeLightButton}
 
   > svg {
