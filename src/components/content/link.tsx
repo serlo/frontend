@@ -23,7 +23,7 @@ const legacyLinks = [
   '/disable-frontend',
   '/enable-frontend',
   '/beitreten',
-  '/discussions',
+  '/user/settings',
 ]
 
 export function isLegacyLink(_href: string) {
@@ -33,12 +33,12 @@ export function isLegacyLink(_href: string) {
 
   return (
     legacyLinks.indexOf(_href) > -1 ||
-    _href.startsWith('/user/') ||
     _href.startsWith('/auth/') ||
     _href.startsWith('/event/history') ||
     _href.startsWith('/api/auth') ||
-    _href.startsWith('/entity/') ||
+    _href.startsWith('/entity/repository/add-revision') ||
     _href.startsWith('/discussions') ||
+    _href.startsWith('/subscription/update') ||
     _href.indexOf('.serlo.org') > -1 //e.g. community.serlo.org or different language
   )
 }
