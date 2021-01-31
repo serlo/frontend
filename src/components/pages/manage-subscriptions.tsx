@@ -55,12 +55,13 @@ export function ManageSubscriptions({
                 <Link href={entry.alias ?? ''}>{title}</Link>
               </StyledTd>
               <CenteredTd>
+                {/* TODO: We need info from the API how this is currently set */}
                 <Button href={`/subscription/update/${entry.id}/0`}>
                   {loggedInStrings.noMails}
                 </Button>
               </CenteredTd>
               <CenteredTd>
-                <Button href={`/subscription/update/${entry.id}/1`}>
+                <Button href={`/unsubscribe/${entry.id}`}>
                   {loggedInStrings.noNotifications}
                 </Button>
               </CenteredTd>
