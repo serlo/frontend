@@ -10,10 +10,6 @@ import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UserRoles } from '@/data-types'
 import { makeTransparentButton } from '@/helper/css'
-import {
-  useSetCommentStateMutation,
-  useThreadArchivedMutation,
-} from '@/helper/mutations'
 
 interface DropdownMenuProps {
   isParent?: boolean
@@ -39,8 +35,8 @@ export function DropdownMenu({
     (auth.current?.roles.indexOf(UserRoles.Moderator) > -1 ||
       auth.current?.roles.indexOf(UserRoles.Admin) > -1)
 
-  const setThreadArchived = useThreadArchivedMutation()
-  const setCommentState = useSetCommentStateMutation()
+  // const setThreadArchived = useThreadArchivedMutation()
+  // const setCommentState = useSetCommentStateMutation()
 
   return (
     <DropContent>
@@ -88,14 +84,14 @@ export function DropdownMenu({
   function onDelete() {
     onAnyClick()
     if (!isParent) {
-      void setCommentState({ id: [id], trashed: true })
+      // void setCommentState({ id: [id], trashed: true })
     }
   }
 
   function onArchiveThread() {
     onAnyClick()
     if (isParent && threadId) {
-      void setThreadArchived({ id: [threadId], archived: true })
+      // void setThreadArchived({ id: [threadId], archived: true })
     }
   }
 }
