@@ -14,6 +14,7 @@ import { getRawTitle } from '@/fetcher/create-title'
 import { QueryResponse } from '@/fetcher/query-types'
 import { makeLightButton } from '@/helper/css'
 import { entityIconMapping } from '@/helper/icon-by-entity-type'
+import { serloDomain } from '@/helper/serlo-domain'
 
 export function ManageSubscriptions({
   subscriptions,
