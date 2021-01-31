@@ -56,14 +56,14 @@ export function ManageSubscriptions({
               </StyledTd>
               <CenteredTd>
                 <Button
-                  href={`https://de.serlo.org/subscription/update/${entry.id}/0`}
+                  href={`https://de.${serloDomain}/subscription/update/${entry.id}/0`}
                 >
                   {loggedInStrings.noMails}
                 </Button>
               </CenteredTd>
               <CenteredTd>
                 <Button
-                  href={`https://de.serlo.org/subscription/update/${entry.id}/1`}
+                  href={`https://de.${serloDomain}/subscription/update/${entry.id}/1`}
                 >
                   {loggedInStrings.noNotifications}
                 </Button>
