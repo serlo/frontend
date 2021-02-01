@@ -12,6 +12,7 @@ import { UserRoles } from '@/data-types'
 import { makeTransparentButton } from '@/helper/css'
 import {
   useSetCommentStateMutation,
+  useSetThreadStateMutation,
   useThreadArchivedMutation,
 } from '@/helper/mutations'
 
@@ -40,6 +41,7 @@ export function DropdownMenu({
       auth.current?.roles.indexOf(UserRoles.Admin) > -1)
 
   const setThreadArchived = useThreadArchivedMutation()
+  const setThreadState = useSetThreadStateMutation()
   const setCommentState = useSetCommentStateMutation()
 
   return (
@@ -89,6 +91,10 @@ export function DropdownMenu({
     onAnyClick()
     if (!isParent) {
       void setCommentState({ id: [id], trashed: true })
+      return
+    }
+    if (isParent && threadId) {
+      void setThreadState({ id: [threadId], trashed: true })
     }
   }
 

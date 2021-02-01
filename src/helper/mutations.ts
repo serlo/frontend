@@ -110,6 +110,32 @@ export function useThreadArchivedMutation() {
     await setThreadArchivedMutation(input)
 }
 
+export function useSetThreadStateMutation() {
+  const auth = useAuth()
+  const entityId = useEntityId()
+  const mutation = gql`
+    mutation setState($input: ThreadSetThreadStateInput!) {
+      thread {
+        setThreadState(input: $input) {
+          success
+        }
+      }
+    }
+  `
+
+  const setThreadStateMutation = async function (
+    input: ThreadSetThreadStateInput
+  ) {
+    const success = await mutationFetch(auth, mutation, input)
+
+    if (success) await mutate(`comments::${entityId}`)
+    return success
+  }
+
+  return async (input: ThreadSetThreadStateInput) =>
+    await setThreadStateMutation(input)
+}
+
 export function useSetCommentStateMutation() {
   const auth = useAuth()
   const entityId = useEntityId()
@@ -217,7 +243,7 @@ export async function mutationFetch(
     const result = await executeQuery()
     return !!result
   } catch (e) {
-    const error = (e as ClientError).response.errors?.[0] as
+    const error = (e as ClientError).response?.errors?.[0] as
       | ApiError
       | undefined
 
