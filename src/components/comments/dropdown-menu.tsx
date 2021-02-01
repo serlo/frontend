@@ -18,6 +18,7 @@ import {
 
 interface DropdownMenuProps {
   isParent?: boolean
+  archived?: boolean
   date: Date
   id: number
   highlight: (id: number) => void
@@ -27,6 +28,7 @@ interface DropdownMenuProps {
 
 export function DropdownMenu({
   isParent,
+  archived,
   id,
   date,
   highlight,
@@ -54,7 +56,9 @@ export function DropdownMenu({
           {isParent && (
             <DropContentButton onClick={onArchiveThread}>
               <FontAwesomeIcon icon={faCheck} />{' '}
-              {strings.comments.archiveThread}
+              {archived
+                ? strings.comments.restoreThread
+                : strings.comments.archiveThread}
             </DropContentButton>
           )}
           <DropContentButton onClick={onDelete}>
@@ -101,7 +105,7 @@ export function DropdownMenu({
   function onArchiveThread() {
     onAnyClick()
     if (isParent && threadId) {
-      void setThreadArchived({ id: [threadId], archived: true })
+      void setThreadArchived({ id: [threadId], archived: !archived })
     }
   }
 }
