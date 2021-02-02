@@ -5,6 +5,8 @@ const regexTextSimple = /\\text(?=[^a-z{])/gm
 const regexText = /\\text *{([^{]+)}/gm
 const regexComma = /(?<=[\d]),(?=[\d])/gm
 
+const regexEmptyNewLine = /\\\\(?=[\s]*\\end{)/gm
+
 const regexNewLine = /\\\\/gm
 const regexAmpersand = /(?<=[^\\])&/gm
 const envStart = /(\\begin{(pmatrix|vmatrix|cases)}|\\begin{array}{[a-z]+})/gm
@@ -27,6 +29,9 @@ export function sanitizeLatex(formula: string): string {
 
   // remove text command
   formula = formula.replace(regexTextSimple, '')
+
+  // remove empty new line in environments
+  formula = formula.replace(regexEmptyNewLine, '')
 
   // handle environments
   formula = formula
