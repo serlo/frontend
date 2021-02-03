@@ -117,6 +117,7 @@ export const instanceData = {
       commentsMany: "टिप्पणियां",
       submit: "जमा करें",
       archiveThread: "आर्काइव थ्रेड",
+      restoreThread: 'Restore thread',
       deleteThread: "थ्रेड मिटाएं",
       deleteComment: "टिप्पणी हटाएँ",
       postedOn: "इस दिन पोस्ट हुआ",
