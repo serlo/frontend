@@ -10,9 +10,15 @@ import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UserRoles } from '@/data-types'
 import { makeTransparentButton } from '@/helper/css'
+import {
+  useSetCommentStateMutation,
+  useSetThreadStateMutation,
+  useThreadArchivedMutation,
+} from '@/helper/mutations'
 
 interface DropdownMenuProps {
   isParent?: boolean
+  archived?: boolean
   date: Date
   id: number
   highlight: (id: number) => void
@@ -22,6 +28,7 @@ interface DropdownMenuProps {
 
 export function DropdownMenu({
   isParent,
+  archived,
   id,
   date,
   highlight,
@@ -35,6 +42,9 @@ export function DropdownMenu({
     (auth.current?.roles.indexOf(UserRoles.Moderator) > -1 ||
       auth.current?.roles.indexOf(UserRoles.Admin) > -1)
 
+  const setThreadArchived = useThreadArchivedMutation()
+  const setThreadState = useSetThreadStateMutation()
+  const setCommentState = useSetCommentStateMutation()
   // const setThreadArchived = useThreadArchivedMutation()
   // const setCommentState = useSetCommentStateMutation()
 
@@ -48,7 +58,9 @@ export function DropdownMenu({
           {isParent && (
             <DropContentButton onClick={onArchiveThread}>
               <FontAwesomeIcon icon={faCheck} />{' '}
-              {strings.comments.archiveThread}
+              {archived
+                ? strings.comments.restoreThread
+                : strings.comments.archiveThread}
             </DropContentButton>
           )}
           <DropContentButton onClick={onDelete}>
@@ -84,6 +96,11 @@ export function DropdownMenu({
   function onDelete() {
     onAnyClick()
     if (!isParent) {
+      void setCommentState({ id: [id], trashed: true })
+      return
+    }
+    if (isParent && threadId) {
+      void setThreadState({ id: [threadId], trashed: true })
       // void setCommentState({ id: [id], trashed: true })
     }
   }
@@ -91,6 +108,7 @@ export function DropdownMenu({
   function onArchiveThread() {
     onAnyClick()
     if (isParent && threadId) {
+      void setThreadArchived({ id: [threadId], archived: !archived })
       // void setThreadArchived({ id: [threadId], archived: true })
     }
   }

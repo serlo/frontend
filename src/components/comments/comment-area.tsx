@@ -40,7 +40,9 @@ export function CommentArea({ id: entityId, noForms }: CommentAreaProps) {
   const createComment = useCreateCommentMutation()
   const { commentData, commentCount, error } = useCommentData(entityId)
 
-  const showAll = isClient() && window.location.hash.startsWith('#comment-')
+  const showAll = isClient && window.location.hash.startsWith('#comment-')
+
+  console.log(commentData)
 
   useEffect(() => {
     if (showAll && highlightedCommentId === undefined) {

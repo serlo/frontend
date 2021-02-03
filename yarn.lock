@@ -1887,9 +1887,9 @@
   integrity sha512-afmTuJrylUU/0OtqzaRkbyYFFNgCF73Bvel/sw90pvGrWIZ+vyoIJqA6eMSoA6+nb443kTmulmBtC9NerXboNg==
 
 "@serlo/api@^0.18.0":
-  version "0.18.0"
-  resolved "https://registry.yarnpkg.com/@serlo/api/-/api-0.18.0.tgz#bd36ac3d15b70436c01631789485e4a1df77e36f"
-  integrity sha512-l2LBV6djZat3btk2TwZ6FH2d+8/yqfnjOIBxdXs5icMZeypk4XSa1NoEDjkaPVZ958trTGMfak/Haqz0ZTZ7IA==
+  version "0.18.2"
+  resolved "https://registry.yarnpkg.com/@serlo/api/-/api-0.18.2.tgz#e9d5cdff6908bd6e6ce150b67362ea2f812666e5"
+  integrity sha512-enI17Tjr1VCsXegggfGIJnG1arigBxKkLyp8kpEcQRJSWMKYYIvuW4CvtL/tYggXN/cAWLh+SiJzlVXeYXGo6w==
 
 "@sideway/address@^4.1.0":
   version "4.1.0"
