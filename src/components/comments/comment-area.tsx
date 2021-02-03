@@ -42,8 +42,6 @@ export function CommentArea({ id: entityId, noForms }: CommentAreaProps) {
 
   const showAll = isClient && window.location.hash.startsWith('#comment-')
 
-  console.log(commentData)
-
   useEffect(() => {
     if (showAll && highlightedCommentId === undefined) {
       if (container.current) scrollToPrevious(container.current)
