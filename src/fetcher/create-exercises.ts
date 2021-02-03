@@ -39,6 +39,10 @@ export function createExercise(
           answer.content = convert(answer.content)
         })
         shuffleArray(taskState.interactive.state.answers)
+      } else if (taskState.interactive?.plugin == 'inputExercise') {
+        taskState.interactive.state.answers.forEach((answer: any) => {
+          answer.feedback = convert(answer.feedback)
+        })
       }
       taskEdtrState = taskState
     } else {

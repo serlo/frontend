@@ -222,9 +222,6 @@ function convertSlate(node: SlateBlockElement) {
     if (children.length === 1 && children[0].type === 'math') {
       return children
     }
-
-    // compat: unwrap ul/ol from p
-    // see https://github.com/serlo/frontend/issues/249
     if (
       children.length === 1 &&
       (children[0].type === 'ul' || children[0].type === 'ol')
