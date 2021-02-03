@@ -22,7 +22,9 @@ import {
 } from '../../helper/css'
 import { Modal } from '../modal'
 import { StyledH2 } from '../tags/styled-h2'
+import { EntityIdContext } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
+import { submitEvent } from '@/helper/submit-event'
 
 export interface ShareModalProps {
   open: boolean
@@ -38,8 +40,14 @@ export function ShareModal({ open, onClose, contentId }: ShareModalProps) {
   const shareInputRef = React.useRef<HTMLInputElement>(null)
   const [copySuccess, setCopySuccess] = React.useState('')
   const { strings } = useInstanceData()
+  const id = React.useContext(EntityIdContext)
 
   if (!open) return null
+
+  if (open && id) {
+    // submit event
+    submitEvent(`share_${id}`)
+  }
 
   function onCloseClick() {
     setCopySuccess('')

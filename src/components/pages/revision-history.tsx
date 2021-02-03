@@ -6,6 +6,7 @@ import { StyledTd } from '../tags/styled-td'
 import { StyledTh } from '../tags/styled-th'
 import { StyledTr } from '../tags/styled-tr'
 import { UserLink } from '../user/user-link'
+import { Link } from '@/components/content/link'
 import { TimeAgo } from '@/components/time-ago'
 import { useInstanceData } from '@/contexts/instance-context'
 import type { HistoryRevisionsData } from '@/data-types'
@@ -73,7 +74,7 @@ export function RevisionHistory({ data }: RevisionHistoryProps) {
   )
 }
 
-const Button = styled.a`
+const Button = styled(Link)`
   ${makeLightButton}
   margin: 0 auto;
   font-size: 1rem;

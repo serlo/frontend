@@ -45,6 +45,8 @@ export function DropdownMenu({
   const setThreadArchived = useThreadArchivedMutation()
   const setThreadState = useSetThreadStateMutation()
   const setCommentState = useSetCommentStateMutation()
+  // const setThreadArchived = useThreadArchivedMutation()
+  // const setCommentState = useSetCommentStateMutation()
 
   return (
     <DropContent>
@@ -94,18 +96,20 @@ export function DropdownMenu({
   function onDelete() {
     onAnyClick()
     if (!isParent) {
-      void setCommentState({ id: [id], trashed: true })
+      void setCommentState({ id: id, trashed: true })
       return
     }
     if (isParent && threadId) {
-      void setThreadState({ id: [threadId], trashed: true })
+      void setThreadState({ id: threadId, trashed: true })
+      // void setCommentState({ id: [id], trashed: true })
     }
   }
 
   function onArchiveThread() {
     onAnyClick()
     if (isParent && threadId) {
-      void setThreadArchived({ id: [threadId], archived: !archived })
+      void setThreadArchived({ id: threadId, archived: !archived })
+      // void setThreadArchived({ id: [threadId], archived: true })
     }
   }
 }
