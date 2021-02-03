@@ -1,15 +1,9 @@
-import React from 'react'
-
 import { FrontendClientBase } from '@/components/frontend-client-base'
-import { HeaderFooter } from '@/components/header-footer'
 import { ProfileRedirectMe } from '@/components/pages/user/profile-redirect-me'
+import { renderedPageNoHooks } from '@/helper/rendered-page'
 
-export default function Page() {
-  return (
-    <FrontendClientBase>
-      <HeaderFooter>
-        <ProfileRedirectMe />
-      </HeaderFooter>
-    </FrontendClientBase>
-  )
-}
+export default renderedPageNoHooks(() => (
+  <FrontendClientBase>
+    <ProfileRedirectMe />
+  </FrontendClientBase>
+))

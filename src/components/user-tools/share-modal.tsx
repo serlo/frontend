@@ -12,7 +12,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { lighten } from 'polished'
-import React from 'react'
+import * as React from 'react'
 import styled from 'styled-components'
 
 import {
@@ -22,9 +22,11 @@ import {
 } from '../../helper/css'
 import { Modal } from '../modal'
 import { StyledH2 } from '../tags/styled-h2'
+import { EntityIdContext } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
+import { submitEvent } from '@/helper/submit-event'
 
-interface ShareModalProps {
+export interface ShareModalProps {
   open: boolean
   onClose: () => void
   contentId?: number
@@ -38,8 +40,14 @@ export function ShareModal({ open, onClose, contentId }: ShareModalProps) {
   const shareInputRef = React.useRef<HTMLInputElement>(null)
   const [copySuccess, setCopySuccess] = React.useState('')
   const { strings } = useInstanceData()
+  const id = React.useContext(EntityIdContext)
 
   if (!open) return null
+
+  if (open && id) {
+    // submit event
+    submitEvent(`share_${id}`)
+  }
 
   function onCloseClick() {
     setCopySuccess('')

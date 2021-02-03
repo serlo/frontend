@@ -1,11 +1,10 @@
 import { shade } from 'polished'
-import React from 'react'
+import { Fragment } from 'react'
 import styled from 'styled-components'
 
-import { Math } from '@/components/content/math'
 import { FrontendContentNode, Sign } from '@/data-types'
 import { makeMargin } from '@/helper/css'
-import { renderArticle } from '@/schema/article-renderer'
+import { RenderNestedFunction } from '@/schema/article-renderer'
 
 export interface StepProps {
   left: string
@@ -17,9 +16,10 @@ export interface StepProps {
 
 export interface EquationProps {
   steps: StepProps[]
+  renderNested: RenderNestedFunction
 }
 
-export function Equations({ steps }: EquationProps) {
+export function Equations({ steps, renderNested }: EquationProps) {
   return (
     <Wrapper>
       <TableWrapper>
@@ -31,22 +31,62 @@ export function Equations({ steps }: EquationProps) {
               })
 
               return (
-                <React.Fragment key={i}>
+                <Fragment key={i}>
                   <tr>
                     <LeftTd>
-                      {step.left ? <Math formula={step.left} /> : null}
+                      {step.left
+                        ? renderNested(
+                            [
+                              {
+                                type: 'inline-math',
+                                formula: '\\displaystyle ' + step.left,
+                              },
+                            ],
+                            `step${i}`,
+                            'left'
+                          )
+                        : null}
                     </LeftTd>
                     <SignTd>
-                      <Math formula={renderSignToString(step.sign)} />
+                      {renderNested(
+                        [
+                          {
+                            type: 'inline-math',
+                            formula: renderSignToString(step.sign),
+                          },
+                        ],
+                        `step${i}`,
+                        'sign'
+                      )}
                     </SignTd>
                     <RightTd>
-                      {step.right ? <Math formula={step.right} /> : null}
+                      {step.right
+                        ? renderNested(
+                            [
+                              {
+                                type: 'inline-math',
+                                formula: '\\displaystyle ' + step.right,
+                              },
+                            ],
+                            `step${i}`,
+                            'right'
+                          )
+                        : null}
                     </RightTd>
                     <TransformTd>
                       {step.transform ? (
                         <>
                           |
-                          <Math formula={step.transform} />
+                          {renderNested(
+                            [
+                              {
+                                type: 'inline-math',
+                                formula: '\\displaystyle ' + step.transform,
+                              },
+                            ],
+                            `step${i}`,
+                            'transform'
+                          )}
                         </>
                       ) : null}
                     </TransformTd>
@@ -56,11 +96,15 @@ export function Equations({ steps }: EquationProps) {
                       <td />
                       <SignTd>{i === steps.length - 1 ? '→' : '↓'}</SignTd>
                       <td colSpan={2}>
-                        {renderArticle(step.explanation, false)}
+                        {renderNested(
+                          step.explanation,
+                          `step${i}`,
+                          'explaination'
+                        )}
                       </td>
                     </ExplanationTr>
                   ) : null}
-                </React.Fragment>
+                </Fragment>
               )
             })}
           </TBody>

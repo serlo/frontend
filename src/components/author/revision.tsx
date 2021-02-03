@@ -1,13 +1,14 @@
 import { faList } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import dynamic from 'next/dynamic'
-import React from 'react'
+import * as React from 'react'
 import ReactDiffViewer from 'react-diff-viewer'
 import styled, { css } from 'styled-components'
 
-import { GeogebraProps } from '@/components/content/geogebra'
+import { PageTitle } from '../content/page-title'
+import { Geogebra } from '@/components/content/geogebra'
 import { HSpace } from '@/components/content/h-space'
-import { VideoProps } from '@/components/content/video'
+import { Link } from '@/components/content/link'
+import { Video } from '@/components/content/video'
 import { StyledH1 } from '@/components/tags/styled-h1'
 import { StyledP } from '@/components/tags/styled-p'
 import { TimeAgo } from '@/components/time-ago'
@@ -16,7 +17,6 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionData } from '@/data-types'
 import {
   makePadding,
-  // makeTransparentButton,
   makeTransparentButton,
   inputFontReset,
   makeLightButton,
@@ -24,12 +24,6 @@ import {
 import { entityIconMapping } from '@/helper/icon-by-entity-type'
 import { renderArticle } from '@/schema/article-renderer'
 
-const Video = dynamic<VideoProps>(() =>
-  import('../content/video').then((mod) => mod.Video)
-)
-const Geogebra = dynamic<GeogebraProps>(() =>
-  import('../content/geogebra').then((mod) => mod.Geogebra)
-)
 export interface RevisionProps {
   data: RevisionData
 }
@@ -48,28 +42,30 @@ export function Revision({ data }: RevisionProps) {
     displayMode === 'current' ? data.currentRevision : data.thisRevision
 
   const notCompare = displayMode !== 'compare'
-
+  const icon = renderEntityIcon()
   return (
     <>
       <MetaBar>
-        <BackButton
-          as="a"
-          href={`/entity/repository/history/${data.repositoryId}`}
-        >
+        <BackButton href={`/entity/repository/history/${data.repositoryId}`}>
           <FontAwesomeIcon icon={faList} /> {strings.revisions.toOverview}
         </BackButton>
         <div>{renderButtons()}</div>
       </MetaBar>
       <HSpace amount={5} />
-      <StyledH1>
-        {strings.entities.revision} {renderEntityIcon()}
-      </StyledH1>
+      <PageTitle
+        title={
+          data.currentRevision.metaTitle ||
+          data.currentRevision.title ||
+          strings.entities.revision
+        }
+        headTitle
+        icon={icon ? icon : undefined}
+      />
       {isCurrentRevision && (
         <StyledP>
           <i>{strings.revisions.thisIsCurrentVersion}</i>
         </StyledP>
       )}
-
       <StyledP>
         {data.changes !== undefined && (
           <>
@@ -81,27 +77,26 @@ export function Revision({ data }: RevisionProps) {
         {strings.revisions.by} <UserLink user={data.user} />{' '}
         <TimeAgo datetime={new Date(data.date)} dateAsTitle />
       </StyledP>
-
       {dataSet.title !== undefined && (
         <PreviewBox title={strings.revisions.title} diffType="title">
           <StyledH1>{dataSet.title}</StyledH1>
         </PreviewBox>
       )}
-
       {dataSet.content !== undefined && (
         <PreviewBox title={strings.revisions.content} diffType="content">
-          {renderArticle(dataSet.content || [])}
+          {renderArticle(
+            dataSet.content || [],
+            `revision${dataSet.id || 'empty'}`
+          )}
         </PreviewBox>
       )}
-
       {renderVideoOrAppletBox()}
-
-      {dataSet.metaTitle !== undefined && (
+      {dataSet.metaTitle && (
         <PreviewBox title={strings.revisions.metaTitle} diffType="metaTitle">
           {dataSet.metaTitle}
         </PreviewBox>
       )}
-      {dataSet.metaDescription !== undefined && (
+      {dataSet.metaDescription && (
         <PreviewBox
           title={strings.revisions.metaDescription}
           diffType="metaDescription"
@@ -255,7 +250,7 @@ const Button = styled.button<{ current?: boolean }>`
     `}
 `
 
-const BackButton = styled(Button)`
+const BackButton = styled(Link)`
   ${makeLightButton}
 
   > svg {

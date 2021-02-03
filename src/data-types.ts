@@ -1,10 +1,22 @@
 import { TaxonomyTermType } from '@serlo/api'
 
-import { Instance } from './fetcher/query'
+import { Instance } from './fetcher/query-types'
 import { instanceData, instanceLandingData, loggedInData } from '@/data/en'
 
-export interface InitialProps {
-  pageData: PageData
+export interface SlugProps {
+  pageData: SlugPageData
+}
+
+export interface RevisionProps {
+  pageData: RevisionPage
+}
+
+export interface UserProps {
+  pageData: UserPage
+}
+
+export interface LandingProps {
+  pageData: LandingPage
 }
 
 // Instance data consists of the language, translation strings, header menu and footer menu.
@@ -73,13 +85,11 @@ export type FooterIcon = 'newsletter' | 'github'
 
 // We have different types of pages, each with its own set of data:
 
-export type PageData =
+export type SlugPageData =
   | ErrorPage
-  | LicenseDetailPage
   | SingleEntityPage
-  | RevisionPage
   | TaxonomyPage
-  | UserPage
+  | Redirect
 
 // The landing page is custom built and takes i18n strings
 
@@ -125,10 +135,13 @@ export interface ErrorData {
   code: number
   message?: string
 }
+// License detail page has some additional data and is not part of the PageData type
 
-// License detail page has some additional data
+export interface LicenseDetailProps {
+  pageData: LicenseDetailPage
+}
 
-export interface LicenseDetailPage extends EntityPageBase {
+export interface LicenseDetailPage {
   kind: 'license-detail'
   licenseData: LicenseDetailData
 }
@@ -137,6 +150,38 @@ export interface LicenseDetailData {
   title: string
   content: FrontendContentNode[]
   iconHref: string
+  id: number
+}
+
+export interface HistoryRevisionData {
+  author: FrontendUserData
+  changes?: string
+  date: string
+  id: number
+}
+
+export interface HistoryRevisionsData {
+  id: number
+  alias: string
+  currentRevision: {
+    id: number
+    title?: string
+  }
+  revisions: {
+    nodes: HistoryRevisionData[]
+  }
+}
+
+export interface HistoryRevisionProps {
+  id: number
+}
+
+// For types that are supported through their own pages we return this helper in request-page
+
+export interface Redirect {
+  kind: 'redirect'
+  type?: string
+  target?: string
 }
 
 // There are several page elements that are common for entities:
@@ -705,6 +750,7 @@ export interface TaxonomyLink {
 // Second level has folders and exercises as links
 
 export interface TaxonomySubTerm extends TaxonomyTermBase, TaxonomyLink {
+  id: number
   folders: TaxonomyLink[]
 }
 

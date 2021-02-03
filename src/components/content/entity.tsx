@@ -2,44 +2,36 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import dynamic from 'next/dynamic'
 import { Router } from 'next/router'
-import React from 'react'
+import * as React from 'react'
 import styled from 'styled-components'
 
-import { CommentsProps } from '../comments/comments'
+import { CommentAreaProps } from '../comments/comment-area'
 import { HSpace } from './h-space'
 import { LicenseNotice } from '@/components/content/license-notice'
-import type { CourseFooterProps } from '@/components/navigation/course-footer'
-import type { CourseNavigationProps } from '@/components/navigation/course-navigation'
+import { CourseFooter } from '@/components/navigation/course-footer'
+import { CourseNavigation } from '@/components/navigation/course-navigation'
 import { StyledH1 } from '@/components/tags/styled-h1'
-import { ShareModal } from '@/components/user-tools/share-modal'
+import { ShareModalProps } from '@/components/user-tools/share-modal'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EntityData, FrontendContentNode } from '@/data-types'
 import { entityIconMapping } from '@/helper/icon-by-entity-type'
 import { renderArticle } from '@/schema/article-renderer'
 
-const CourseNavigation = dynamic<CourseNavigationProps>(() =>
-  import('@/components/navigation/course-navigation').then(
-    (mod) => mod.CourseNavigation
-  )
-)
-
-const CourseFooter = dynamic<CourseFooterProps>(() =>
-  import('@/components/navigation/course-footer').then(
-    (mod) => mod.CourseFooter
-  )
-)
-
-const Comments = dynamic<CommentsProps>(() =>
-  import('@/components/comments/comments').then((mod) => mod.Comments)
-)
-
 export interface EntityProps {
   data: EntityData
 }
 
+const CommentArea = dynamic<CommentAreaProps>(() =>
+  import('@/components/comments/comment-area').then((mod) => mod.CommentArea)
+)
+
+const ShareModal = dynamic<ShareModalProps>(() =>
+  import('@/components/user-tools/share-modal').then((mod) => mod.ShareModal)
+)
+
 export function Entity({ data }: EntityProps) {
-  // state of the share modal
+  // state@/components/comments/comment-area
   const [open, setOpen] = React.useState(false)
 
   // course
@@ -70,7 +62,7 @@ export function Entity({ data }: EntityProps) {
       {renderShareModal()}
       {data.licenseData && <LicenseNotice data={data.licenseData} />}
 
-      {data.typename !== 'Page' && <Comments id={data.id} />}
+      {data.typename !== 'Page' && <CommentArea id={data.id} />}
     </>
   )
 
@@ -78,7 +70,7 @@ export function Entity({ data }: EntityProps) {
     if (!data.title) return null
 
     return (
-      <StyledH1 extraMarginTop itemProp="name">
+      <StyledH1 spaceAbove itemProp="name">
         {data.title}
         {renderEntityIcon()}
       </StyledH1>
@@ -117,10 +109,11 @@ export function Entity({ data }: EntityProps) {
   }
 
   function renderContent(value: FrontendContentNode[]) {
+    const content = renderArticle(value, `entity${data.id}`)
     if (data.schemaData?.setContentAsSection) {
-      return <section itemProp="articleBody">{renderArticle(value)}</section>
+      return <section itemProp="articleBody">{content}</section>
     }
-    return renderArticle(value)
+    return content
   }
 
   function renderUserTools(setting?: { aboveContent?: boolean }) {

@@ -1,16 +1,17 @@
 import { ThreadAware } from '@serlo/api'
-import { gql } from 'graphql-request'
+import { gql, GraphQLClient } from 'graphql-request'
+import useSWR from 'swr'
 
-import { useGraphqlSwr } from '@/api/use-graphql-swr'
+import { endpoint } from '@/api/endpoint'
 
 const query = gql`
   query getComments($id: Int!) {
     uuid(id: $id) {
       ... on ThreadAware {
-        threads {
+        threads(trashed: false) {
           nodes {
+            id
             archived
-            trashed
             comments {
               nodes {
                 id
@@ -35,23 +36,31 @@ const query = gql`
   }
 `
 export function useCommentData(id: number) {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const { data, error } = useGraphqlSwr<{ uuid: ThreadAware }>({
-    query,
-    variables: { id },
-    config: {
-      refreshInterval: 10 * 60 * 1000, // 10min, todo: update on cache mutation
-    },
+  // // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  // const resp = useGraphqlSwr<{ uuid: ThreadAware }>({
+  //   key: 'test',
+  //   query,
+  //   variables: { id },
+  //   config: {
+  //     refreshInterval: 10 * 60 * 1000, // 10min, todo: update on cache mutation
+  //   },
+  // })
+
+  const client = new GraphQLClient(endpoint)
+  const fetcher = () => client.request(query, { id })
+  const resp = useSWR<{ uuid: ThreadAware }, any>(`comments::${id}`, fetcher, {
+    refreshInterval: 10 * 60 * 1000,
   })
 
-  const untrashedThreads = data?.uuid.threads.nodes.filter(
-    (node) => !node.trashed
-  )
-  const activeThreads = untrashedThreads?.filter((thread) => !thread.archived)
-  const archivedThreads = untrashedThreads?.filter((thread) => thread.archived)
+  const { data, error } = resp
+
+  const threads = data?.uuid.threads.nodes
+
+  const activeThreads = threads?.filter((thread) => !thread.archived)
+  const archivedThreads = threads?.filter((thread) => thread.archived)
 
   const commentData = { active: activeThreads, archived: archivedThreads }
-  const commentCount = untrashedThreads?.reduce((acc, thread) => {
+  const commentCount = threads?.reduce((acc, thread) => {
     return acc + thread.comments.nodes.length
   }, 0)
 

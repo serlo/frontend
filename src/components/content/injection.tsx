@@ -1,27 +1,27 @@
-import { faSpinner } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useEffect } from 'react'
-import styled from 'styled-components'
+import { useState, useEffect } from 'react'
 
+import { LoadingSpinner } from '../loading/loading-spinner'
 import { StyledP } from '../tags/styled-p'
 import { LicenseNotice } from './license-notice'
 import { useInstanceData } from '@/contexts/instance-context'
-import { LicenseData, PageData, FrontendContentNode } from '@/data-types'
-import { renderArticle } from '@/schema/article-renderer'
+import { LicenseData, SlugPageData, FrontendContentNode } from '@/data-types'
+import type { RenderNestedFunction } from '@/schema/article-renderer'
 
 export interface InjectionProps {
   href: string
+  renderNested: RenderNestedFunction
 }
 
 // TODO: Give injection a separate fetched data type
 
-export function Injection({ href }: InjectionProps) {
-  const [value, setValue] = React.useState<FrontendContentNode[] | undefined>(
+export function Injection({ href, renderNested }: InjectionProps) {
+  const [value, setValue] = useState<FrontendContentNode[] | undefined>(
     undefined
   )
-  const [license, setLicense] = React.useState<undefined | LicenseData>(
-    undefined
-  )
+
+  const [id, setId] = useState<number | undefined>(undefined)
+
+  const [license, setLicense] = useState<undefined | LicenseData>(undefined)
 
   const { lang } = useInstanceData()
 
@@ -51,7 +51,7 @@ export function Injection({ href }: InjectionProps) {
         return res.json()
       })
       .then((json) => {
-        const pageData: PageData = json.pageProps.pageData
+        const pageData: SlugPageData = json.pageProps.pageData
         dataToState(pageData)
 
         /*if (pageData.kind === 'single-entity') {
@@ -67,8 +67,9 @@ export function Injection({ href }: InjectionProps) {
       })
   }, [href, lang])
 
-  function dataToState(pageData: PageData) {
+  function dataToState(pageData: SlugPageData) {
     if (pageData.kind === 'single-entity') {
+      setId(pageData.entityData.id)
       setValue(pageData.entityData.content)
       if (pageData.entityData.licenseData) {
         setLicense(pageData.entityData.licenseData)
@@ -92,7 +93,7 @@ export function Injection({ href }: InjectionProps) {
 
     return (
       <>
-        {renderArticle(renderValue, false)}
+        {renderNested(renderValue, `injection${id}`)}
         {license && !license.default && (
           <StyledP>
             <LicenseNotice minimal data={license} type="video" />
@@ -101,16 +102,5 @@ export function Injection({ href }: InjectionProps) {
       </>
     )
   }
-  return (
-    <StyledP>
-      <ColoredIcon>
-        <FontAwesomeIcon icon={faSpinner} spin size="1x" />
-      </ColoredIcon>{' '}
-      Lade: {href}
-    </StyledP>
-  )
+  return <LoadingSpinner />
 }
-
-const ColoredIcon = styled.span`
-  color: ${(props) => props.theme.colors.brand};
-`

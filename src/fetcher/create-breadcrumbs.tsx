@@ -1,4 +1,4 @@
-import { QueryResponse, TaxonomyTerms } from './query'
+import { QueryResponse, TaxonomyTerms } from './query-types'
 import { BreadcrumbsData } from '@/data-types'
 
 export function createBreadcrumbs(uuid: QueryResponse) {

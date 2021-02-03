@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState } from 'react'
 import ReactTimeAgo from 'timeago-react'
 import * as timeago from 'timeago.js'
 
@@ -17,7 +17,7 @@ export function TimeAgo({
   className,
   dateAsTitle,
 }: TimeAgoProps) {
-  const [languageLoaded, setLanguageLoaded] = React.useState(false)
+  const [languageLoaded, setLanguageLoaded] = useState(false)
   const { lang } = useInstanceData()
 
   if (lang !== 'en') {

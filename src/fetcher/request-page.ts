@@ -8,21 +8,16 @@ import { getMetaImage, getMetaDescription } from './create-meta-data'
 import { createNavigation } from './create-navigation'
 import { buildTaxonomyData } from './create-taxonomy'
 import { createTitle } from './create-title'
-import {
-  dataQuery,
-  QueryResponse,
-  Instance,
-  ArticleRevision,
-  VideoRevision,
-} from './query'
+import { dataQuery } from './query'
+import { QueryResponse, Instance } from './query-types'
 import { endpoint } from '@/api/endpoint'
-import { EntityTypes, PageData } from '@/data-types'
+import { SlugPageData } from '@/data-types'
 import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
 
 export async function requestPage(
   alias: string,
   instance: Instance
-): Promise<PageData> {
+): Promise<SlugPageData> {
   const isId = /^\/[\d]+$/.test(alias) //e.g. /1565
   const variables = isId
     ? {
@@ -41,13 +36,23 @@ export async function requestPage(
     variables
   )
 
-  if (uuid === null) {
+  // Can be deleted if CFWorker redirects those for us
+  if (
+    uuid.__typename === 'ArticleRevision' ||
+    uuid.__typename === 'PageRevision' ||
+    uuid.__typename === 'CoursePageRevision' ||
+    uuid.__typename === 'VideoRevision' ||
+    uuid.__typename === 'EventRevision' ||
+    uuid.__typename === 'AppletRevision' ||
+    uuid.__typename === 'GroupedExerciseRevision' ||
+    uuid.__typename === 'ExerciseRevision' ||
+    uuid.__typename === 'ExerciseGroupRevision' ||
+    uuid.__typename === 'SolutionRevision' ||
+    uuid.__typename === 'CourseRevision'
+  ) {
     return {
-      kind: 'error',
-      errorData: {
-        code: 404,
-        message: 'Content not found.',
-      },
+      kind: 'redirect',
+      target: `entity/repository/compare/0/${uuid.id}`,
     }
   }
 
@@ -72,35 +77,9 @@ export async function requestPage(
   const metaImage = getMetaImage(uuid.alias ? uuid.alias : undefined)
 
   if (uuid.__typename === 'User') {
-    const placeholder = JSON.stringify({
-      plugin: 'text',
-      state: [
-        {
-          type: 'p',
-          children: {
-            text:
-              'This is where we display the description on a the production server.',
-          },
-        },
-      ],
-    })
-    const description = uuid.description
-      ? uuid.description === 'NULL'
-        ? convertState(placeholder)
-        : convertState(uuid.description)
-      : undefined
     return {
-      kind: 'user/profile',
-      newsletterPopup: false,
-      userData: {
-        id: uuid.id,
-        username: uuid.username,
-        description: description,
-        lastLogin: uuid.lastLogin,
-        activeReviewer: uuid.activeReviewer,
-        activeAuthor: uuid.activeAuthor,
-        activeDonor: uuid.activeDonor,
-      },
+      kind: 'redirect',
+      target: `/user/${uuid.id}/${uuid.username}`,
     }
   }
 
@@ -169,63 +148,6 @@ export async function requestPage(
       },
       horizonData,
       cacheKey,
-    }
-  }
-
-  if (
-    uuid.__typename === 'ArticleRevision' ||
-    uuid.__typename === 'PageRevision' ||
-    uuid.__typename === 'CoursePageRevision' ||
-    uuid.__typename === 'VideoRevision' ||
-    uuid.__typename === 'EventRevision' ||
-    uuid.__typename === 'AppletRevision' ||
-    uuid.__typename === 'GroupedExerciseRevision' ||
-    uuid.__typename === 'ExerciseRevision' ||
-    uuid.__typename === 'ExerciseGroupRevision' ||
-    uuid.__typename === 'SolutionRevision' ||
-    uuid.__typename === 'CourseRevision'
-  ) {
-    return {
-      kind: 'revision',
-      newsletterPopup: false,
-      revisionData: {
-        type: uuid.__typename
-          .replace('Revision', '')
-          .toLowerCase() as EntityTypes,
-        repositoryId: uuid.repository.id,
-        typename: uuid.__typename,
-        thisRevision: {
-          id: uuid.id,
-          title: (uuid as ArticleRevision).title,
-          metaTitle: (uuid as ArticleRevision).metaTitle,
-          metaDescription: (uuid as ArticleRevision).metaDescription,
-          content: convertState(uuid.content),
-          url: (uuid as VideoRevision).url,
-        },
-        currentRevision: {
-          id: uuid.repository.currentRevision?.id,
-          title: (uuid as ArticleRevision).repository.currentRevision?.title,
-          metaTitle: (uuid as ArticleRevision).repository.currentRevision
-            ?.metaTitle,
-          metaDescription: (uuid as ArticleRevision).repository.currentRevision
-            ?.metaDescription,
-          content: convertState(uuid.repository.currentRevision?.content),
-          url: (uuid as VideoRevision).repository.currentRevision?.url,
-        },
-        changes: (uuid as ArticleRevision).changes,
-        user: {
-          ...uuid.author,
-        },
-        date: uuid.date,
-      },
-      metaData: {
-        title,
-        contentType: 'revision',
-        metaImage,
-        metaDescription: '',
-      },
-      cacheKey,
-      breadcrumbsData,
     }
   }
 

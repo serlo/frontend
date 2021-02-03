@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState, useRef, useEffect } from 'react'
 import styled from 'styled-components'
 
 import DonorBadge from '@/assets-webkit/img/community/badge-donor.svg'
@@ -18,11 +18,11 @@ export const ProfileDonationForm = ({
   userId,
   isCommunity,
 }: ProfileDonationFormProps) => {
-  const [expanded, setExpanded] = React.useState(false)
+  const [expanded, setExpanded] = useState(false)
 
-  const refIframe = React.useRef<null | HTMLIFrameElement>(null)
+  const refIframe = useRef<null | HTMLIFrameElement>(null)
 
-  React.useEffect(() => {
+  useEffect(() => {
     function donationFormListener(event: MessageEvent) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       if (event.data.type === 'size' && refIframe.current) {

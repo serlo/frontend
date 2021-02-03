@@ -1,18 +1,18 @@
 import Tippy, { TippyProps } from '@tippyjs/react'
 import cookie from 'cookie'
-import { gql } from 'graphql-request'
 import { useRouter } from 'next/router'
 import NProgress from 'nprogress'
-import React from 'react'
+import { Fragment } from 'react'
 
 import { SubButtonStyle, SubLink } from '../navigation/menu'
 import { AuthorToolsData, HoverSubList, Li } from './author-tools-hover-menu'
-import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
 import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { useToastNotice } from '@/contexts/toast-notice-context'
 import { UserRoles } from '@/data-types'
+// import { setStateMutation } from '@/helper/mutations'
+import { useSetUuidStateMutation } from '@/helper/mutations'
 import { useIsSubscribed } from '@/helper/use-is-subscribed'
 import { useRefreshFromAPI } from '@/helper/use-refresh-from-api'
 
@@ -68,8 +68,9 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   const { isSubscribed, updateIsSubscribed } = useIsSubscribed(data.id)
   const showToastNotice = useToastNotice()
   const refreshFromAPI = useRefreshFromAPI()
-
   const auth = useAuth()
+
+  const setUuidState = useSetUuidStateMutation()
 
   const router = useRouter()
   if (!loggedInData) return null
@@ -183,9 +184,9 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
         if (hasPower) {
           if (renderer) {
             return (
-              <React.Fragment key={`${title ?? renderer.name}`}>
+              <Fragment key={`${title ?? renderer.name}`}>
                 {renderer(entityId)}
-              </React.Fragment>
+              </Fragment>
             )
           }
           if (url) return renderLi(url, title || getTranslatedString(toolName))
@@ -237,58 +238,26 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   }
 
   function trash() {
-    if (data.trashed) {
-      return (
-        <Li key={loggedInStrings.authorMenu.restoreContent}>
-          <SubButtonStyle
-            as="button"
-            onClick={() => {
-              console.log(`restore ${entityId}`)
-            }}
-          >
-            {loggedInStrings.authorMenu.restoreContent}
-          </SubButtonStyle>
-        </Li>
-      )
-    }
     return (
-      <Li key={loggedInStrings.authorMenu.moveToTrash}>
+      <Li
+        key={
+          data.trashed
+            ? loggedInStrings.authorMenu.restoreContent
+            : loggedInStrings.authorMenu.moveToTrash
+        }
+      >
         <SubButtonStyle
           as="button"
           onClick={() => {
-            console.log(`trash ${entityId}`)
-
-            void setStateMutation(188292, true)
+            void setUuidState({ id: [data.id], trashed: !data.trashed })
           }}
         >
-          {loggedInStrings.authorMenu.moveToTrash}
+          {data.trashed
+            ? loggedInStrings.authorMenu.restoreContent
+            : loggedInStrings.authorMenu.moveToTrash}
         </SubButtonStyle>
       </Li>
     )
-  }
-
-  async function setStateMutation(id: number, unread: boolean) {
-    const input = {
-      query: gql`
-        mutation setState($input: NotificationSetStateInput!) {
-          notification {
-            setState(input: $input) {
-              success
-            }
-          }
-        }
-      `,
-      variables: {
-        input: {
-          id,
-          unread,
-        },
-      },
-    }
-    const result = await createAuthAwareGraphqlFetch(auth)(
-      JSON.stringify(input)
-    )
-    console.log(result)
   }
 
   function renderNewEntity() {
@@ -357,7 +326,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   function renderLi(href: string, text: string) {
     return (
       <Li key={text}>
-        <SubLink href={href} noCSR>
+        <SubLink href={href}>
           <SubButtonStyle>{text}</SubButtonStyle>
         </SubLink>
       </Li>

@@ -1,38 +1,67 @@
 import { faCircle, faSquare } from '@fortawesome/free-regular-svg-icons'
 import { faCheckCircle, faCheckSquare } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
+import { useState, Fragment } from 'react'
 import styled, { css } from 'styled-components'
 
 import { Feedback } from './feedback'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EdtrPluginScMcExercise } from '@/data-types'
 import { makeMargin, makePrimaryButton } from '@/helper/css'
-import { renderArticle } from '@/schema/article-renderer'
+import { submitEventWithPath } from '@/helper/submit-event'
+import type { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
 
 export interface ScMcExerciseProps {
   state: EdtrPluginScMcExercise['state']
   idBase: string
+  renderNested: RenderNestedFunction
+  path?: NodePath
 }
 
 interface SingleChoiceProps {
   answers: EdtrPluginScMcExercise['state']['answers']
   idBase: string
+  renderNested: RenderNestedFunction
+  path?: NodePath
 }
 
-export function ScMcExercise({ state, idBase }: ScMcExerciseProps) {
+export function ScMcExercise({
+  state,
+  idBase,
+  renderNested,
+  path,
+}: ScMcExerciseProps) {
   const answers = state.answers.slice(0)
 
   if (state.isSingleChoice)
-    return <SingleChoice answers={answers} idBase={idBase} />
+    return (
+      <SingleChoice
+        answers={answers}
+        idBase={idBase}
+        renderNested={renderNested}
+        path={path}
+      />
+    )
 
-  return <MultipleChoice answers={answers} idBase={idBase} />
+  return (
+    <MultipleChoice
+      answers={answers}
+      idBase={idBase}
+      renderNested={renderNested}
+      path={path}
+    />
+  )
 }
 
-function SingleChoice({ answers, idBase }: SingleChoiceProps) {
-  const [selected, setSelected] = React.useState<number | undefined>(undefined)
-  const [focused, setFocused] = React.useState<number | undefined>(undefined)
-  const [showFeedback, setShowFeedback] = React.useState(false)
+function SingleChoice({
+  answers,
+  idBase,
+  renderNested,
+  path,
+}: SingleChoiceProps) {
+  const [selected, setSelected] = useState<number | undefined>(undefined)
+  const [focused, setFocused] = useState<number | undefined>(undefined)
+  const [showFeedback, setShowFeedback] = useState(false)
   const { strings } = useInstanceData()
 
   return (
@@ -41,7 +70,7 @@ function SingleChoice({ answers, idBase }: SingleChoiceProps) {
         {answers.map((answer, i) => {
           const id = `${idBase}${i}`
           return (
-            <React.Fragment key={i}>
+            <Fragment key={i}>
               <ChoiceWrapper>
                 <StyledInput
                   id={id}
@@ -54,7 +83,7 @@ function SingleChoice({ answers, idBase }: SingleChoiceProps) {
                   onFocus={() => setFocused(i)}
                   onBlur={() => setFocused(undefined)}
                   onKeyDown={(e) => {
-                    if (e.keyCode == 13) setShowFeedback(true)
+                    if (e.key == 'Enter') setShowFeedback(true)
                   }}
                 />
                 <StyledLabel
@@ -65,7 +94,7 @@ function SingleChoice({ answers, idBase }: SingleChoiceProps) {
                   <FontAwesomeIcon
                     icon={selected === i ? faCheckCircle : faCircle}
                   />
-                  {renderArticle(answer.content)}
+                  {renderNested(answer.content, `scoption${i}`)}
                 </StyledLabel>
               </ChoiceWrapper>
               {showFeedback &&
@@ -73,16 +102,22 @@ function SingleChoice({ answers, idBase }: SingleChoiceProps) {
                 answers[selected] &&
                 answers[selected] === answer && (
                   <Feedback correct={answers[selected].isCorrect}>
-                    {renderArticle(answers[selected].feedback)}
+                    {renderNested(
+                      answers[selected].feedback,
+                      `scfeedback${selected}`
+                    )}
                   </Feedback>
                 )}
-            </React.Fragment>
+            </Fragment>
           )
         })}
       </Choices>
       <CheckButton
         selectable={selected !== undefined}
-        onClick={() => setShowFeedback(true)}
+        onClick={() => {
+          setShowFeedback(true)
+          submitEventWithPath('checksc', path)
+        }}
         //blur-hack, use https://caniuse.com/#feat=css-focus-visible when supported
         onPointerUp={(e) => e.currentTarget.blur()}
       >
@@ -94,10 +129,15 @@ function SingleChoice({ answers, idBase }: SingleChoiceProps) {
   )
 }
 
-function MultipleChoice({ answers, idBase }: SingleChoiceProps) {
-  const [selected, setSelected] = React.useState(answers.map(() => false))
-  const [focused, setFocused] = React.useState<number | undefined>(undefined)
-  const [showFeedback, setShowFeedback] = React.useState(false)
+function MultipleChoice({
+  answers,
+  idBase,
+  renderNested,
+  path,
+}: SingleChoiceProps) {
+  const [selected, setSelected] = useState(answers.map(() => false))
+  const [focused, setFocused] = useState<number | undefined>(undefined)
+  const [showFeedback, setShowFeedback] = useState(false)
   const { strings } = useInstanceData()
   const correct = answers.every((answer, i) => answer.isCorrect === selected[i])
   return (
@@ -111,7 +151,7 @@ function MultipleChoice({ answers, idBase }: SingleChoiceProps) {
             answer.feedback[0].children.length > 0
 
           return (
-            <React.Fragment key={i}>
+            <Fragment key={i}>
               <ChoiceWrapper>
                 <StyledInput
                   id={id}
@@ -134,14 +174,14 @@ function MultipleChoice({ answers, idBase }: SingleChoiceProps) {
                   <FontAwesomeIcon
                     icon={selected[i] ? faCheckSquare : faSquare}
                   />
-                  {renderArticle(answer.content)}
+                  {renderNested(answer.content, `mcoption${i}`)}
                 </StyledLabel>
               </ChoiceWrapper>
               {showFeedback &&
                 selected[i] &&
                 hasFeedback &&
-                renderArticle(answer.feedback)}
-            </React.Fragment>
+                renderNested(answer.feedback, `mcfeedback${i}`)}
+            </Fragment>
           )
         })}
       </Choices>
@@ -152,7 +192,10 @@ function MultipleChoice({ answers, idBase }: SingleChoiceProps) {
       )}
       <CheckButton
         selectable
-        onClick={() => setShowFeedback(true)}
+        onClick={() => {
+          setShowFeedback(true)
+          submitEventWithPath('checkmc', path)
+        }}
         onPointerUp={(e) => e.currentTarget.blur()}
       >
         {strings.content.check}

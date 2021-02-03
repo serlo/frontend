@@ -1,23 +1,21 @@
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Tippy from '@tippyjs/react'
 import { useRouter } from 'next/router'
 import { lighten } from 'polished'
-import React from 'react'
+import { useState, useRef, useContext, useEffect } from 'react'
 import styled, { createGlobalStyle, css } from 'styled-components'
 
 import { isLegacyLink } from '../content/link'
 import { StyledA } from '../tags/styled-a'
+import { LazyTippy } from './lazy-tippy'
 import SearchIcon from '@/assets-webkit/img/search-icon.svg'
+import { EntityIdContext } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { inputFontReset, makeLightButton, makePadding } from '@/helper/css'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
+import { submitEvent } from '@/helper/submit-event'
 import { ExternalProvider, useConsent } from '@/helper/use-consent'
 import { theme } from '@/theme'
-
-interface SearchInputProps {
-  onSearchPage?: boolean
-}
 
 /*
 This components starts with only a placeholder that looks like a searchbar (basically a button).
@@ -27,19 +25,21 @@ From this point on it's a styled GSC that loads /search to display the results.
 It's a very hacky, but it's free and works … okay.
 */
 
-export function SearchInput({ onSearchPage }: SearchInputProps) {
-  const [searchLoaded, setSearchLoaded] = React.useState(false)
-  const [searchActive, setSearchActive] = React.useState(false)
-  const [consentJustGiven, setConsentJustGiven] = React.useState(false)
+export function SearchInput() {
+  const [searchLoaded, setSearchLoaded] = useState(false)
+  const [searchActive, setSearchActive] = useState(false)
+  const [consentJustGiven, setConsentJustGiven] = useState(false)
   const { checkConsent, giveConsent } = useConsent()
   const consentGiven = checkConsent(ExternalProvider.GoogleSearch)
-  const searchFormRef = React.useRef<HTMLDivElement>(null)
+  const searchFormRef = useRef<HTMLDivElement>(null)
 
   // const [isSearchPage, setIsSearchPage] = React.useState(false)
   const { lang, strings } = useInstanceData()
   const router = useRouter()
+  const onSearchPage = router.route === '/search'
+  const id = useContext(EntityIdContext)
 
-  React.useEffect(() => {
+  useEffect(() => {
     // note: find a better way to tell search input that it should activate itself
     if (onSearchPage) {
       activateSearch()
@@ -48,12 +48,12 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (consentJustGiven) activateSearch()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [consentJustGiven])
 
-  React.useEffect(() => {
+  useEffect(() => {
     const resultsContainer = document.getElementById('gcs-results')
     setupLinkCatcher(resultsContainer)
   })
@@ -66,6 +66,9 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
   }
 
   function activateSearch() {
+    if (id) {
+      submitEvent(`clicksearch_${id}`)
+    }
     if (searchActive) return
     if (!consentGiven) {
       searchFormRef.current?.focus()
@@ -126,9 +129,9 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
           !isLegacyLink(relativeHref)
         ) {
           e.preventDefault()
-          void router
-            .push('/[[...slug]]', relativeHref)
-            .then(() => window.scrollTo(0, 0))
+          void router.push('/[[...slug]]', relativeHref).then(() => {
+            if (window.location.hash.length < 1) window.scrollTo(0, 0)
+          })
         }
       },
       false
@@ -155,7 +158,7 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
 
   return (
     <>
-      <Tippy
+      <LazyTippy
         content={renderConsentPop()}
         trigger="focus click"
         interactive
@@ -192,7 +195,7 @@ export function SearchInput({ onSearchPage }: SearchInputProps) {
             data-enablehistory="true"
           />
         </SearchForm>
-      </Tippy>
+      </LazyTippy>
       <AutocompleteStyle />
     </>
   )
@@ -451,8 +454,6 @@ const AutocompleteStyle = createGlobalStyle`
     }
   }
 `
-
-//this is overriding the styles of the modal-content only. see doc to change overlay etc.
 
 const ConsentPop = styled.div`
   background-color: ${(props) => props.theme.colors.brand};

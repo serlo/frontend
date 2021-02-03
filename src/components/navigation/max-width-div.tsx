@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components'
 
 export const MaxWidthDiv = styled.div<{ showNav?: boolean }>`
   max-width: 800px;
-  margin: 0 auto;
+  margin: 0 auto 100px auto;
 
   @media (min-width: ${(props) =>
       props.theme.breakpoints.sm}) AND (max-width: ${(props) =>

@@ -1,15 +1,9 @@
-import React from 'react'
-
 import { FrontendClientBase } from '@/components/frontend-client-base'
-import { HeaderFooter } from '@/components/header-footer'
 import { Explore } from '@/components/pages/explore'
+import { renderedPageNoHooks } from '@/helper/rendered-page'
 
-export default function Page() {
-  return (
-    <FrontendClientBase>
-      <HeaderFooter>
-        <Explore />
-      </HeaderFooter>
-    </FrontendClientBase>
-  )
-}
+export default renderedPageNoHooks(() => (
+  <FrontendClientBase entityId={-1}>
+    <Explore />
+  </FrontendClientBase>
+))

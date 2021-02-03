@@ -1,17 +1,17 @@
 import dynamic from 'next/dynamic'
-import React from 'react'
+import * as React from 'react'
 import { CSSProperties } from 'styled-components'
 
 import { Col } from '../components/content/col'
 import { ExerciseGroup } from '../components/content/exercises/exercise-group'
 import { ImageLink } from '../components/content/image-link'
 import { ImgCentered } from '../components/content/img-centered'
+import { ImgMaxWidthDiv } from '../components/content/img-max-width-div'
 import { Important } from '../components/content/important'
 import { LayoutRow } from '../components/content/layout-row'
 import { LicenseNotice } from '../components/content/license-notice'
 import { Link } from '../components/content/link'
 import { MathWrapper } from '../components/content/math-wrapper'
-import { MaxWidthDiv } from '../components/content/max-width-div'
 import { SpecialCss } from '../components/content/special-css'
 import { SpoilerBody } from '../components/content/spoiler-body'
 import { SpoilerContainer } from '../components/content/spoiler-container'
@@ -34,54 +34,64 @@ import { StyledTr } from '../components/tags/styled-tr'
 import { StyledUl } from '../components/tags/styled-ul'
 import { theme } from '../theme'
 import { Blockquote } from '@/components/content/blockquote'
-import type { CodeProps } from '@/components/content/code'
-import type { EquationProps } from '@/components/content/equations'
-import { ExerciseProps } from '@/components/content/exercises/exercise'
+import { Code } from '@/components/content/code'
+import { Equations } from '@/components/content/equations'
+import { Exercise } from '@/components/content/exercises/exercise'
 import { Solution } from '@/components/content/exercises/solution'
-import type { GeogebraProps } from '@/components/content/geogebra'
-import type { InjectionProps } from '@/components/content/injection'
+import { Geogebra } from '@/components/content/geogebra'
+import { Injection } from '@/components/content/injection'
 import { Lazy } from '@/components/content/lazy'
-import type { MathProps } from '@/components/content/math'
+import { MathSpanProps } from '@/components/content/math-span'
 import { Multimedia } from '@/components/content/multimedia'
-import type { VideoProps } from '@/components/content/video'
+import { Video } from '@/components/content/video'
 import { FrontendContentNode } from '@/data-types'
+import { submitEventWithPath } from '@/helper/submit-event'
+
+export type NodePath = (number | string)[]
 
 interface RenderElementProps {
   element: FrontendContentNode
   children: React.ReactNode
   value: FrontendContentNode
-  path: number[]
+  path: NodePath
 }
 
-const Math = dynamic<MathProps>(() =>
-  import('../components/content/math').then((mod) => mod.Math)
-)
-const Geogebra = dynamic<GeogebraProps>(() =>
-  import('../components/content/geogebra').then((mod) => mod.Geogebra)
-)
-const Injection = dynamic<InjectionProps>(() =>
-  import('../components/content/injection').then((mod) => mod.Injection)
-)
-const Exercise = dynamic<ExerciseProps>(() =>
-  import('../components/content/exercises/exercise').then((mod) => mod.Exercise)
-)
-const Video = dynamic<VideoProps>(() =>
-  import('../components/content/video').then((mod) => mod.Video)
-)
-const Equations = dynamic<EquationProps>(() =>
-  import('../components/content/equations').then((mod) => mod.Equations)
-)
-const Code = dynamic<CodeProps>(() =>
-  import('../components/content/code').then((mod) => mod.Code)
+export type RenderNestedFunction = (
+  value: FrontendContentNode[],
+  ...pathPrefix: string[]
+) => JSX.Element | null | React.ReactNode[]
+
+const Math = dynamic<MathSpanProps>(() =>
+  import('../components/content/math-span').then((mod) => mod.MathSpan)
 )
 
-export function renderArticle(value: FrontendContentNode[], addCSS = true) {
+export function renderArticle(
+  value: FrontendContentNode[],
+  ...pathPrefix: string[]
+) {
+  return _renderArticle(value, true, pathPrefix)
+}
+
+function renderNested(
+  value: FrontendContentNode[],
+  previousPath: NodePath,
+  pathPrefix: NodePath
+) {
+  return _renderArticle(value, false, previousPath.concat(pathPrefix))
+}
+
+function _renderArticle(
+  value: FrontendContentNode[],
+  addCSS: boolean,
+  pathPrefix: NodePath
+) {
   if (!value || !Array.isArray(value)) return null
   const root = { children: value } as FrontendContentNode
-  const content = value.map((_, index) => render(root, [index]))
-  if (addCSS) {
-    return <SpecialCss>{content}</SpecialCss>
-  } else return content
+  const content = value.map((_, index) =>
+    render(root, pathPrefix.concat(index))
+  )
+  if (!addCSS) return content
+  return <SpecialCss>{content}</SpecialCss>
 }
 
 function getNode(
@@ -97,15 +107,24 @@ function getNode(
 
 function render(
   value: FrontendContentNode,
-  path: number[] = []
+  path: NodePath = []
 ): React.ReactNode {
-  const currentNode = getNode(value, path)
-  const key = path[path.length - 1]
+  const currentPath: number[] = []
+  for (let i = path.length - 1; i >= 0; i--) {
+    const index = path[i]
+    if (typeof index === 'number') {
+      currentPath.unshift(index)
+    } else {
+      break
+    }
+  }
+  const currentNode = getNode(value, currentPath)
+  const key = currentPath[currentPath.length - 1]
 
   if (currentNode.type !== 'text') {
     const children: React.ReactNode[] = []
     if (currentNode.children) {
-      currentNode.children.forEach((child, index) => {
+      currentNode.children.forEach((_child, index) => {
         children.push(render(value, path.concat(index)))
       })
     }
@@ -174,18 +193,21 @@ export function renderLeaf({ leaf, key, children }: RenderLeafProps) {
 }
 
 function renderElement(props: RenderElementProps): React.ReactNode {
-  const { element, children } = props
+  const { element, children, path } = props
+
   if (element.type === 'a') {
     return <Link href={element.href}>{children}</Link>
   }
   if (element.type === 'inline-math') {
-    return <Math formula={element.formula} inline />
+    return <Math formula={element.formula} />
   }
   if (element.type === 'math') {
+    const nowrap = /\\begin *{(array|aligned)}/.test(element.formula)
+    // alignLeft is assumed to be always true
     return (
-      <MathWrapper centered={!element.alignLeft}>
+      <MathWrapper nowrap={nowrap}>
         <Lazy slim>
-          <Math formula={element.formula} />
+          <Math formula={'\\displaystyle ' + element.formula} />
         </Lazy>
       </MathWrapper>
     )
@@ -207,7 +229,7 @@ function renderElement(props: RenderElementProps): React.ReactNode {
     }
     return (
       <ImgCentered itemScope itemType="http://schema.org/ImageObject">
-        <MaxWidthDiv maxWidth={element.maxWidth ? element.maxWidth : 0}>
+        <ImgMaxWidthDiv maxWidth={element.maxWidth ? element.maxWidth : 0}>
           {wrapInA(
             <Lazy>
               <StyledImg
@@ -217,13 +239,15 @@ function renderElement(props: RenderElementProps): React.ReactNode {
               ></StyledImg>
             </Lazy>
           )}
-        </MaxWidthDiv>
+        </ImgMaxWidthDiv>
       </ImgCentered>
     )
   }
   if (element.type === 'spoiler-container') {
     if (!Array.isArray(children)) return null
-    return <SpoilerForEndUser title={children[0]} body={children[1]} />
+    return (
+      <SpoilerForEndUser title={children[0]} body={children[1]} path={path} />
+    )
   }
   if (element.type === 'spoiler-body') {
     return <SpoilerBody>{children}</SpoilerBody>
@@ -259,7 +283,12 @@ function renderElement(props: RenderElementProps): React.ReactNode {
     return <StyledTd>{children}</StyledTd>
   }
   if (element.type === 'multimedia') {
-    return <Multimedia {...element} />
+    return (
+      <Multimedia
+        {...element}
+        renderNested={(value, ...prefix) => renderNested(value, path, prefix)}
+      />
+    )
   }
   if (element.type === 'row') {
     return <LayoutRow>{children}</LayoutRow>
@@ -276,7 +305,7 @@ function renderElement(props: RenderElementProps): React.ReactNode {
   if (element.type === 'geogebra') {
     return (
       <Lazy>
-        <Geogebra id={element.id} />
+        <Geogebra id={element.id} path={path} />
       </Lazy>
     )
   }
@@ -284,10 +313,21 @@ function renderElement(props: RenderElementProps): React.ReactNode {
     return <a id={element.id.toString()} />
   }
   if (element.type === 'injection') {
-    return <Injection href={element.href} />
+    return (
+      <Injection
+        href={element.href}
+        renderNested={(value, ...prefix) => renderNested(value, path, prefix)}
+      />
+    )
   }
   if (element.type === 'exercise') {
-    return <Exercise node={element} />
+    return (
+      <Exercise
+        node={element}
+        renderNested={(value, ...prefix) => renderNested(value, path, prefix)}
+        path={path}
+      />
+    )
   }
   if (element.type === 'exercise-group') {
     return (
@@ -297,7 +337,7 @@ function renderElement(props: RenderElementProps): React.ReactNode {
             <LicenseNotice minimal data={element.license} type={element.type} />
           )
         }
-        groupIntro={renderArticle(element.content, false)}
+        groupIntro={renderNested(element.content, path, ['group-intro'])}
         positionOnPage={element.positionOnPage}
         id={element.context.id}
         href={element.href}
@@ -307,17 +347,27 @@ function renderElement(props: RenderElementProps): React.ReactNode {
     )
   }
   if (element.type === 'solution') {
-    return <Solution node={element.solution} />
+    return (
+      <Solution
+        node={element.solution}
+        renderNested={(value, ...prefix) => renderNested(value, path, prefix)}
+      />
+    )
   }
   if (element.type === 'video') {
     return (
       <Lazy>
-        <Video src={element.src} />
+        <Video src={element.src} path={path} />
       </Lazy>
     )
   }
   if (element.type === 'equations') {
-    return <Equations steps={element.steps} />
+    return (
+      <Equations
+        steps={element.steps}
+        renderNested={(value, ...prefix) => renderNested(value, path, prefix)}
+      />
+    )
   }
   if (element.type === 'code') {
     return <Code content={element.code} />
@@ -328,13 +378,22 @@ function renderElement(props: RenderElementProps): React.ReactNode {
 interface SpoilerForEndUserProps {
   body: React.ReactNode
   title: React.ReactNode
+  path: NodePath
 }
 
-function SpoilerForEndUser({ body, title }: SpoilerForEndUserProps) {
+function SpoilerForEndUser({ body, title, path }: SpoilerForEndUserProps) {
   const [open, setOpen] = React.useState(false)
   return (
     <SpoilerContainer>
-      <SpoilerTitle onClick={() => setOpen(!open)} open={open}>
+      <SpoilerTitle
+        onClick={() => {
+          setOpen(!open)
+          if (!open) {
+            submitEventWithPath('openspoiler', path)
+          }
+        }}
+        open={open}
+      >
         <SpoilerToggle open={open} />
         {title}
       </SpoilerTitle>

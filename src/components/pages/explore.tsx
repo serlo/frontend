@@ -1,4 +1,4 @@
-import React from 'react'
+import { useRef, useState, useEffect, useCallback, Fragment } from 'react'
 import Autosuggest from 'react-autosuggest'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import styled from 'styled-components'
@@ -8,48 +8,47 @@ import { Injection } from '../content/injection'
 import { Lazy } from '../content/lazy'
 import { Link } from '../content/link'
 import { SpecialCss } from '../content/special-css'
-import { RelativeContainer } from '../navigation/relative-container'
 import { StyledH1 } from '../tags/styled-h1'
 import { StyledH3 } from '../tags/styled-h3'
 import { StyledP } from '../tags/styled-p'
-import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import theme from '@/components/pages/explore.module.css'
 import { frontendOrigin } from '@/helper/frontent-origin'
 import { AutocompleteResponse } from '@/pages/api/search/autocomplete'
 import { SearchQueryResponse } from '@/pages/api/search/query'
+import { renderArticle } from '@/schema/article-renderer'
 
 // eslint-disable-next-line import/no-internal-modules,import/no-unassigned-import
 import 'react-tabs/style/react-tabs.css'
 
 export function Explore() {
-  const counts = React.useRef<any>({ age: {} })
+  const counts = useRef<any>({ age: {} })
 
-  const [limit2, setLimit2] = React.useState(10)
+  const [limit2, setLimit2] = useState(10)
 
-  const [choices, setChoices] = React.useState<any>([])
-  const [limit, setLimit] = React.useState(10)
-  const [query, setQuery] = React.useState<string>('')
-  const [counter, setCounter] = React.useState(1)
-  const [result, setResult] = React.useState<SearchQueryResponse>({
+  const [choices, setChoices] = useState<any>([])
+  const [limit, setLimit] = useState(10)
+  const [query, setQuery] = useState<string>('')
+  const [counter, setCounter] = useState(1)
+  const [result, setResult] = useState<SearchQueryResponse>({
     exercises: [],
     documents: [],
   })
 
-  const [tabIndex, setTabIndex] = React.useState(0)
+  const [tabIndex, setTabIndex] = useState(0)
 
   const origin = frontendOrigin
 
-  React.useEffect(() => {
+  useEffect(() => {
     setTabIndex(parseInt(sessionStorage.getItem('__tab_index') ?? '0') ?? 0)
     setCounter(counter + 1)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (query) sessionStorage.setItem('__explore_query', query)
   }, [query])
 
-  React.useEffect(() => {
+  useEffect(() => {
     console.log('search:', query)
 
     if (query) {
@@ -81,111 +80,107 @@ export function Explore() {
   }, [query, choices])
 
   return (
-    <RelativeContainer>
-      <MaxWidthDiv>
-        <SpecialCss>
-          <HSpace amount={50} />
-          <StyledH1>Entdecke Inhalte auf Serlo</StyledH1>
-          <InputForm
-            runSearch={(query: string) => {
-              setLimit(10)
-              setLimit2(10)
-              setQuery(query)
-            }}
-          />
+    <SpecialCss>
+      <HSpace amount={50} />
+      <StyledH1>Entdecke Inhalte auf Serlo</StyledH1>
+      <InputForm
+        runSearch={(query: string) => {
+          setLimit(10)
+          setLimit2(10)
+          setQuery(query)
+        }}
+      />
 
-          <Tabs
-            selectedIndex={tabIndex}
-            onSelect={(index) => {
-              setTabIndex(index)
-              sessionStorage.setItem('__tab_index', index.toString())
-            }}
-          >
-            <TabList style={{ marginLeft: 6 }}>
-              <Tab>Aufgaben ({result.exercises.length})</Tab>
-              <Tab>Erklärungen ({result.documents.length})</Tab>
-            </TabList>
+      <Tabs
+        selectedIndex={tabIndex}
+        onSelect={(index) => {
+          setTabIndex(index)
+          sessionStorage.setItem('__tab_index', index.toString())
+        }}
+      >
+        <TabList style={{ marginLeft: 6 }}>
+          <Tab>Aufgaben ({result.exercises.length})</Tab>
+          <Tab>Erklärungen ({result.documents.length})</Tab>
+        </TabList>
 
-            <TabPanel>
-              <HSpace amount={30} />
-              {choices.length > 0 ? (
-                <FacetDiv>
-                  <StyledP>
-                    Filter:{' '}
-                    {choices.map((choice: any) => (
-                      <React.Fragment key={choice}>
-                        <strong>{choice}</strong>{' '}
-                        <span
-                          style={{ color: 'blue', cursor: 'pointer' }}
-                          onClick={() =>
-                            setChoices(choices.filter((c: any) => c != choice))
-                          }
-                        >
-                          [x]
-                        </span>
-                        ,{' '}
-                      </React.Fragment>
-                    ))}
-                  </StyledP>
-                </FacetDiv>
-              ) : null}
-              {choices.length == 0 && (
-                <CategorySelector
-                  counts={counts.current.age}
-                  heading="Altersstufe"
-                  choices={choices}
-                  setChoices={setChoices}
-                />
-              )}
-              {result.exercises.slice(0, limit).map(({ id, explain }) => (
-                <React.Fragment key={id}>
-                  <Document id={id} explain={explain} />
-                </React.Fragment>
-              ))}
-              {result.exercises.length > limit && (
-                <StyledP>
-                  <button
-                    onClick={() => {
-                      setLimit(limit + 10)
-                    }}
-                  >
-                    Mehr anzeigen
-                  </button>
-                </StyledP>
-              )}
-            </TabPanel>
-            <TabPanel>
-              {result.documents
-                .slice(0, limit2)
-                .map(({ id, title, highlight, type }) => (
-                  <React.Fragment key={id}>
-                    <HSpace amount={30} />
-                    <div style={{ display: 'flex', alignItems: 'baseline' }}>
-                      <StyledH3 style={{ marginRight: '5px' }}>
-                        <Link href={`/${id}`}>{title}</Link>
-                      </StyledH3>
-                      <small>[{type2string(type)}]</small>
-                    </div>
-                    <StyledP>{highlight} </StyledP>
-                  </React.Fragment>
+        <TabPanel>
+          <HSpace amount={30} />
+          {choices.length > 0 ? (
+            <FacetDiv>
+              <StyledP>
+                Filter:{' '}
+                {choices.map((choice: any) => (
+                  <Fragment key={choice}>
+                    <strong>{choice}</strong>{' '}
+                    <span
+                      style={{ color: 'blue', cursor: 'pointer' }}
+                      onClick={() =>
+                        setChoices(choices.filter((c: any) => c != choice))
+                      }
+                    >
+                      [x]
+                    </span>
+                    ,{' '}
+                  </Fragment>
                 ))}
-              {result.documents.length > limit2 && (
-                <StyledP>
-                  <button
-                    onClick={() => {
-                      setLimit2(limit2 + 10)
-                    }}
-                  >
-                    Mehr anzeigen
-                  </button>
-                </StyledP>
-              )}
-              <HSpace amount={30} />
-            </TabPanel>
-          </Tabs>
-        </SpecialCss>
-      </MaxWidthDiv>
-    </RelativeContainer>
+              </StyledP>
+            </FacetDiv>
+          ) : null}
+          {choices.length == 0 && (
+            <CategorySelector
+              counts={counts.current.age}
+              heading="Altersstufe"
+              choices={choices}
+              setChoices={setChoices}
+            />
+          )}
+          {result.exercises.slice(0, limit).map(({ id, explain }) => (
+            <Fragment key={id}>
+              <Document id={id} explain={explain} />
+            </Fragment>
+          ))}
+          {result.exercises.length > limit && (
+            <StyledP>
+              <button
+                onClick={() => {
+                  setLimit(limit + 10)
+                }}
+              >
+                Mehr anzeigen
+              </button>
+            </StyledP>
+          )}
+        </TabPanel>
+        <TabPanel>
+          {result.documents
+            .slice(0, limit2)
+            .map(({ id, title, highlight, type }) => (
+              <Fragment key={id}>
+                <HSpace amount={30} />
+                <div style={{ display: 'flex', alignItems: 'baseline' }}>
+                  <StyledH3 style={{ marginRight: '5px' }}>
+                    <Link href={`/${id}`}>{title}</Link>
+                  </StyledH3>
+                  <small>[{type2string(type)}]</small>
+                </div>
+                <StyledP>{highlight} </StyledP>
+              </Fragment>
+            ))}
+          {result.documents.length > limit2 && (
+            <StyledP>
+              <button
+                onClick={() => {
+                  setLimit2(limit2 + 10)
+                }}
+              >
+                Mehr anzeigen
+              </button>
+            </StyledP>
+          )}
+          <HSpace amount={30} />
+        </TabPanel>
+      </Tabs>
+    </SpecialCss>
   )
 }
 
@@ -196,11 +191,11 @@ function type2string(type: string) {
 }
 
 function InputForm(props: any) {
-  const [inputValue, setInputValue] = React.useState('')
-  const [suggestions, setSuggestions] = React.useState<string[]>([])
+  const [inputValue, setInputValue] = useState('')
+  const [suggestions, setSuggestions] = useState<string[]>([])
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const throttled = React.useCallback(
+  const throttled = useCallback(
     throttle(1000, ({ value }: any) => {
       // to search
       //setSuggestions(entries.slice(0, 5).map((entry: any) => entry.val))
@@ -218,7 +213,7 @@ function InputForm(props: any) {
     [props.searchIndex]
   )
 
-  React.useEffect(() => {
+  useEffect(() => {
     const value = sessionStorage.getItem('__explore_query') ?? ''
     setInputValue(value)
     props.runSearch(value)
@@ -316,7 +311,7 @@ function CategorySelector(props: any) {
       <StyledP>
         <strong>{heading}</strong>:
         {categories.map((cat) => (
-          <React.Fragment key={cat.key}>
+          <Fragment key={cat.key}>
             <label>
               <input
                 type="checkbox"
@@ -340,7 +335,7 @@ function CategorySelector(props: any) {
               )}
             </label>
             &nbsp;&nbsp;
-          </React.Fragment>
+          </Fragment>
         ))}
       </StyledP>
     </FacetDiv>
@@ -362,7 +357,7 @@ function Document({ id, explain }: any) {
       </p>
       <Lazy>
         {' '}
-        <Injection href={`/${id}`} key={id} />
+        <Injection href={`/${id}`} key={id} renderNested={renderArticle} />
       </Lazy>
     </>
   )

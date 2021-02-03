@@ -1,4 +1,4 @@
-import React from 'react'
+import { useEffect } from 'react'
 
 const pages = [
   '/abc',
@@ -39,7 +39,7 @@ const pages = [
 ]
 
 export function NewsletterPopup() {
-  React.useEffect(() => {
+  useEffect(() => {
     const tenant = window.location.hostname.split('.')[0]
     if (
       (tenant === 'de' || tenant === 'localhost') &&

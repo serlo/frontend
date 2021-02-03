@@ -5,9 +5,7 @@ import {
   faTools,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Tippy from '@tippyjs/react'
-import dynamic from 'next/dynamic'
-import React from 'react'
+import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 import {
@@ -15,19 +13,14 @@ import {
   makeGreenButton,
   inputFontReset,
 } from '../../helper/css'
-import {
-  AuthorToolsHoverMenuProps,
-  AuthorToolsData,
-} from './author-tools-hover-menu'
+import { LazyTippy } from '../navigation/lazy-tippy'
+import { AuthorToolsData } from './author-tools-hover-menu'
 import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
+import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UserRoles } from '@/data-types'
 import { theme } from '@/theme'
-
-const AuthorToolsHoverMenu = dynamic<AuthorToolsHoverMenuProps>(() =>
-  import('./author-tools-hover-menu').then((mod) => mod.AuthorToolsHoverMenu)
-)
 
 interface UserToolsProps {
   id: number
@@ -52,11 +45,12 @@ export function UserTools({
 }: UserToolsProps) {
   const { strings } = useInstanceData()
   const auth = useAuth()
-  const [loaded, setLoaded] = React.useState(false)
-  React.useEffect(() => {
+  const [loaded, setLoaded] = useState(false)
+  useEffect(() => {
     setLoaded(true)
   }, [])
   const loggedInData = useLoggedInData()
+  const lic = useLoggedInComponents()
   const showHistory = unrevisedRevision !== undefined && unrevisedRevision > 0
 
   function getBrowserWidth() {
@@ -135,7 +129,7 @@ export function UserTools({
   }
 
   function renderExtraTools() {
-    if (!(loaded && auth.current && loggedInData && data)) return null
+    if (!(loaded && auth.current && loggedInData && data && lic)) return null
     const supportedTypes = [
       'Page',
       'Article',
@@ -152,10 +146,12 @@ export function UserTools({
 
     const isLargeScreen = getBrowserWidth() > theme.breakpointsInt.lg
 
+    const Comp = lic.AuthorToolsHoverMenu
+
     return (
-      <Tippy
+      <LazyTippy
         interactive
-        content={<AuthorToolsHoverMenu data={data} />}
+        content={<Comp data={data} />}
         placement={isLargeScreen ? 'left-end' : 'bottom'}
         delay={[0, 300]}
         interactiveBorder={isLargeScreen ? 40 : 10}
@@ -164,7 +160,7 @@ export function UserTools({
           <FontAwesomeIcon icon={faTools} size="1x" />{' '}
           {loggedInData.strings.tools}
         </IconButton>
-      </Tippy>
+      </LazyTippy>
     )
   }
 

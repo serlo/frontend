@@ -1,5 +1,5 @@
 import { Router } from 'next/router'
-import React from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
 
 import { Logo } from './logo'
@@ -11,12 +11,8 @@ import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
 import { makeResponsivePadding } from '@/helper/css'
 
-interface HeaderProps {
-  onSearchPage?: boolean
-}
-
-export function Header({ onSearchPage }: HeaderProps) {
-  const [isOpen, setOpen] = React.useState(false)
+export function Header() {
+  const [isOpen, setOpen] = useState(false)
   const auth = useAuth()
   const { headerData, strings } = useInstanceData()
 
@@ -32,7 +28,7 @@ export function Header({ onSearchPage }: HeaderProps) {
         <Menu data={headerData} auth={auth.current} />
         <Logo subline={strings.header.slogan} />
       </PaddedDiv>
-      <SearchInput onSearchPage={onSearchPage} />
+      <SearchInput />
       {isOpen && <MobileMenu data={headerData} auth={auth.current} />}
     </BlueHeader>
   )

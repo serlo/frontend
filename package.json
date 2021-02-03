@@ -33,7 +33,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.0.0",
     "@fortawesome/free-solid-svg-icons": "^5.0.0",
     "@fortawesome/react-fontawesome": "^0.1.0",
-    "@serlo/api": "^0.17.0",
+    "@serlo/api": "^0.18.0",
     "@tippyjs/react": "^4.0.0",
     "@types/react-tabs": "^2.3.2",
     "algebra.js": "^0.2.0",
@@ -62,9 +62,10 @@
     "showdown": "^1.9.0",
     "simple-oauth2": "^4.0.0",
     "styled-components": "^5.0.0",
-    "swr": "^0.3.0",
+    "swr": "^0.4.0",
     "timeago-react": "^3.0.0",
-    "timeago.js": "^4.0.0"
+    "timeago.js": "^4.0.0",
+    "tippy.js": "^6.2.7"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

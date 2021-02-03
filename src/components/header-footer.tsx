@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import styled from 'styled-components'
 
 import { Footer } from './navigation/footer'
@@ -6,13 +6,12 @@ import { Header } from './navigation/header'
 
 export interface HeaderFooterProps {
   children: React.ReactNode
-  onSearchPage?: boolean
 }
 
-export function HeaderFooter({ children, onSearchPage }: HeaderFooterProps) {
+export function HeaderFooter({ children }: HeaderFooterProps) {
   return (
     <>
-      <Header onSearchPage={onSearchPage} />
+      <Header />
       <MinHeightDiv className="_">{children}</MinHeightDiv>
       <Footer />
     </>

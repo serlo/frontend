@@ -1,13 +1,13 @@
 import { faFile } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import dynamic from 'next/dynamic'
-import React from 'react'
+import { useState, Fragment } from 'react'
 import styled from 'styled-components'
 
 import { makeMargin } from '../../helper/css'
 import { renderArticle } from '../../schema/article-renderer'
-import { CommentsProps } from '../comments/comments'
-import { ShareModal } from '../user-tools/share-modal'
+import { CommentAreaProps } from '../comments/comment-area'
+import { ShareModalProps } from '../user-tools/share-modal'
 import { UserTools } from '../user-tools/user-tools'
 import { LicenseNotice } from './license-notice'
 import { Link } from './link'
@@ -24,12 +24,16 @@ export interface TopicProps {
   data: TaxonomyData
 }
 
-const Comments = dynamic<CommentsProps>(() =>
-  import('@/components/comments/comments').then((mod) => mod.Comments)
+const CommentArea = dynamic<CommentAreaProps>(() =>
+  import('@/components/comments/comment-area').then((mod) => mod.CommentArea)
+)
+
+const ShareModal = dynamic<ShareModalProps>(() =>
+  import('@/components/user-tools/share-modal').then((mod) => mod.ShareModal)
 )
 
 export function Topic({ data }: TopicProps) {
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
   const { strings } = useInstanceData()
 
   const isFolder =
@@ -55,17 +59,24 @@ export function Topic({ data }: TopicProps) {
       </Headline>
       {renderUserTools({ aboveContent: true })}
       <ImageSizer>
-        {data.description && renderArticle(data.description)}
+        {data.description &&
+          renderArticle(data.description, `taxDesc${data.id}`)}
       </ImageSizer>
       {data.subterms &&
         data.subterms.map((child) => (
-          <React.Fragment key={child.title}>
-            <SubTopic data={child} />
-          </React.Fragment>
+          <Fragment key={child.title}>
+            <SubTopic data={child} subid={child.id} id={data.id} />
+          </Fragment>
         ))}
       {data.exercisesContent &&
         data.exercisesContent.map((exercise, i) => (
-          <React.Fragment key={i}>{renderArticle([exercise])}</React.Fragment>
+          <Fragment key={i}>
+            {renderArticle(
+              [exercise],
+              `tax${data.id}`,
+              `ex${exercise.context.id}`
+            )}
+          </Fragment>
         ))}
       {isTopic && (
         <LinkList>
@@ -85,7 +96,7 @@ export function Topic({ data }: TopicProps) {
 
       {defaultLicense && <LicenseNotice data={defaultLicense} />}
 
-      <Comments id={data.id} />
+      <CommentArea id={data.id} />
 
       {renderUserTools()}
       <ShareModal
@@ -129,7 +140,15 @@ export function Topic({ data }: TopicProps) {
   }
 }
 
-function SubTopic({ data }: { data: TaxonomySubTerm }) {
+function SubTopic({
+  data,
+  subid,
+  id,
+}: {
+  data: TaxonomySubTerm
+  subid: number
+  id: number
+}) {
   return (
     <>
       <h2>
@@ -140,7 +159,8 @@ function SubTopic({ data }: { data: TaxonomySubTerm }) {
         <Overview>
           {' '}
           <ImageSizer>
-            {data.description && renderArticle(data.description)}
+            {data.description &&
+              renderArticle(data.description, `tax${id}`, `subtopic${subid}`)}
           </ImageSizer>
         </Overview>
 

@@ -1,10 +1,8 @@
-import React from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
 
+import { PageTitle } from '../content/page-title'
 import { StyledA } from '../tags/styled-a'
-import { HSpace } from '@/components/content/h-space'
-import { MaxWidthDiv } from '@/components/navigation/max-width-div'
-import { StyledH1 } from '@/components/tags/styled-h1'
 import { StyledH2 } from '@/components/tags/styled-h2'
 import { StyledP } from '@/components/tags/styled-p'
 import { StyledTable } from '@/components/tags/styled-table'
@@ -17,7 +15,7 @@ import { ExternalProvider, useConsent } from '@/helper/use-consent'
 
 export function ConsentPage() {
   const { checkConsent, revokeConsent } = useConsent()
-  const [, updateState] = React.useState({})
+  const [, updateState] = useState({})
   const { strings } = useInstanceData()
 
   const consentedProviders = Object.values(
@@ -25,9 +23,8 @@ export function ConsentPage() {
   ).filter((provider) => checkConsent(provider))
 
   return (
-    <MaxWidthDiv>
-      <HSpace amount={100} />
-      <StyledH1>{strings.consent.title}</StyledH1>
+    <>
+      <PageTitle title={strings.consent.title} headTitle />
 
       <StyledP>
         {replacePlaceholders(strings.consent.intro, {
@@ -43,7 +40,7 @@ export function ConsentPage() {
           {consentedProviders.length > 0 ? renderTable() : renderEmpty()}
         </tbody>
       </StyledTable>
-    </MaxWidthDiv>
+    </>
   )
 
   function renderEmpty() {

@@ -1,5 +1,4 @@
 import Tippy, { TippyProps } from '@tippyjs/react'
-import React from 'react'
 import styled from 'styled-components'
 
 import { SubList, SubLink, SubButtonStyle } from '../navigation/menu'

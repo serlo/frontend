@@ -53,7 +53,13 @@ export const instanceData = {
       topic: "Thema",
       subject: "Fach",
       userProfile: "Benutzerprofil",
-      privacyPolicy: "Datenschutzerklärung"
+      privacyPolicy: "Datenschutzerklärung",
+      content: "Inhalt"
+    },
+    pageTitles: {
+      notifications: "Deine Benachrichtigungen",
+      subscriptions: "Abonnements verwalten",
+      revisionHistory: "Bearbeitungsverlauf"
     },
     roles: {
       donor: "Spender*in",
@@ -105,11 +111,6 @@ export const instanceData = {
       applet: "Applet laden von %provider%",
       twingle: "Spendenformular laden"
     },
-    notifications: {
-      notifications: "Benachrichtigungen",
-      pleaseLogInLink: "Bitte melde dich an",
-      pleaseLogInText: "um deine Benachrichtigungen zu sehen"
-    },
     comments: {
       question: "Hast du eine Frage?",
       commentsOne: "Kommentar",
@@ -125,7 +126,8 @@ export const instanceData = {
       error: "Die Kommentare konnten leider nicht geladen werden, bitte versuch es später noch einmal.",
       showMoreReply: "Einen weiteren Kommentar",
       showMoreReplies: "%number% weitere Kommentare",
-      showArchived: "Archivierte %threads% anzeigen"
+      showArchived: "Archivierte %threads% anzeigen",
+      copyLink: "Kommentarlink kopieren"
     },
     revisions: {
       toOverview: "Zurück zur Übersicht",
@@ -139,6 +141,12 @@ export const instanceData = {
       thisVersion: "Diese Version",
       thisIsCurrentVersion: "Das ist die aktuell akzeptierte Version.",
       by: "Von"
+    },
+    revisionHistory: {
+      changes: "Änderungen",
+      author: "Autor*in",
+      date: "Wann?",
+      createNew: "Erstelle eine neue Bearbeitung von dieser Bearbeitung aus"
     },
     errors: {
       title: "😬 Auch Webseiten machen mal Fehler…",
@@ -167,6 +175,18 @@ export const instanceData = {
       revisionAccepted: "Die Bearbeitung wurde akzeptiert ✅",
       revisionRejected: "Die Bearbeitung wurde abgelehnt ❎",
       revisionSavedAccepted: "Die Bearbeitung wurde erfolgreich gespeichert und akzeptiert ✅"
+    },
+    loading: {
+      isLoading: "Inhalt wird geladen…",
+      unknownProblem: "Es gab ein Problem beim laden des Inhalts, bitte versuch' es später noch einmal."
+    },
+    login: {
+      pleaseLogInLink: "Bitte melde dich an",
+      pleaseLogInText: "um diese Funktion zu benutzen."
+    },
+    keys: {
+      ctrl: "Strg",
+      return: "Enter"
     }
   }
 };
@@ -256,8 +276,6 @@ export const loggedInData = {
     },
     notifications: {
       loadMore: "Weitere laden",
-      unknownProblem: "Es gibt ein Problem beim laden der Benachrichtigungen, bitte versuche es später noch einmal.",
-      loading: "Benachrichtigungen werden geladen",
       hide: "Benachrichtigungen für diesen Inhalt nicht mehr anzeigen.",
       setThreadStateArchived: "%actor% hat eine %thread% archiviert.",
       setThreadStateUnarchived: "%actor% hat eine %thread% aus dem Archiv geholt.",
@@ -280,6 +298,12 @@ export const loggedInData = {
       setUuidStateTrashed: "%actor% hat %object% in den Papierkorb verschoben.",
       setUuidStateRestored: "%actor% hat %object% aus dem Papierkorb wieder hergestellt.",
       entityPlaceholderFallback: "Inhalt"
+    },
+    subscriptions: {
+      mail: "E-Mails",
+      subscription: "Abonnement",
+      noMails: "deaktivieren",
+      noNotifications: "abbestellen"
     }
   }
 };

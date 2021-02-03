@@ -1,14 +1,16 @@
-import React from 'react'
 import styled from 'styled-components'
 
 import { PrivacyWrapper } from './privacy-wrapper'
+import { submitEventWithPath } from '@/helper/submit-event'
 import { ExternalProvider } from '@/helper/use-consent'
+import { NodePath } from '@/schema/article-renderer'
 
 export interface GeogebraProps {
   id: string
+  path?: NodePath
 }
 
-export function Geogebra({ id }: GeogebraProps) {
+export function Geogebra({ id, path }: GeogebraProps) {
   const appletId = id.replace('https://www.geogebra.org/m/', '')
   const url = 'https://www.geogebra.org/material/iframe/id/' + appletId
   return (
@@ -16,6 +18,9 @@ export function Geogebra({ id }: GeogebraProps) {
       type="applet"
       provider={ExternalProvider.GeoGebra}
       embedUrl={url}
+      onLoad={() => {
+        submitEventWithPath('loadgeogebra', path)
+      }}
     >
       <GeogebraContainer>
         <GeogebraFrame title={appletId} scrolling="no" src={url} />

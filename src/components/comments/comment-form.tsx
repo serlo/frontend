@@ -1,66 +1,53 @@
-import { faReply, faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import {
+  faReply,
+  faArrowRight,
+  faSpinner,
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { gql } from 'graphql-request'
 import { lighten } from 'polished'
 import * as React from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
 import styled, { css } from 'styled-components'
 
-import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
-import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
+import { isMac } from '@/helper/client-detection'
 import { makeGreenButton, inputFontReset, makeMargin } from '@/helper/css'
 
-export interface SendProps {
-  entity_id: string
-  parentId: string
-  user_id: string
-  user_name: string
-  body?: string
-}
-
 interface CommentFormProps {
-  parentId: number
-  onSendComment?: (props: SendProps) => void
+  onSend: (
+    content: string,
+    reply?: boolean,
+    threadId?: string
+  ) => Promise<boolean | undefined>
   placeholder: string
   reply?: boolean
+  threadId?: string
 }
 
 export function CommentForm({
   placeholder,
-  parentId,
-  // onSendComment,
+  onSend,
   reply,
+  threadId,
 }: CommentFormProps) {
   const [commentValue, setCommentValue] = React.useState('')
   const { strings } = useInstanceData()
-  const auth = useAuth()
-  const request = createAuthAwareGraphqlFetch(auth)
+  const [isSending, setIsSending] = React.useState(false)
 
-  //TODO: Finish once legacy endpoint is done so we can test
-  async function onSendComment() {
-    if (auth.current === null) return
-    const input = {
-      query: gql`
-        mutation createThread(
-          $title: String!
-          $content: String!
-          $objectId: Int!
-        ) {
-          createThread(title: $title, content: $content, objectId: $objectId) {
-            __typename
-          }
-        }
-      `,
-      variables: {
-        title: '',
-        content: commentValue,
-        objectId: parentId,
-      },
-    }
-    const thread = await request(JSON.stringify(input))
-    console.log(thread)
+  async function onSendAction() {
+    setIsSending(true)
+    const success = await onSend(commentValue, reply, threadId)
+    setIsSending(false)
+    if (success) setCommentValue('')
   }
+
+  function onKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
+    if (e.code === 'Enter' && e.metaKey) void onSendAction()
+  }
+
+  const sendTitle = `${strings.comments.submit}   ${
+    isMac() ? '⌘' : strings.keys.ctrl
+  }↵`
 
   return (
     <StyledBox>
@@ -69,15 +56,21 @@ export function CommentForm({
         onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
           setCommentValue(event.target.value)
         }}
+        onKeyDown={onKeyDown}
         placeholder={placeholder}
         $reply={reply}
+        minRows={1}
       />
       <SendButton
-        title={strings.comments.submit}
+        title={sendTitle}
         $reply={reply}
-        onClick={onSendComment}
+        onClick={onSendAction}
+        onPointerUp={(e) => e.currentTarget.blur()}
       >
-        <FontAwesomeIcon icon={reply ? faReply : faArrowRight} />
+        <FontAwesomeIcon
+          spin={isSending}
+          icon={isSending ? faSpinner : reply ? faReply : faArrowRight}
+        />
       </SendButton>
     </StyledBox>
   )
@@ -91,20 +84,20 @@ const StyledBox = styled.div`
   align-items: flex-end;
 
   background-color: ${(props) => lighten(0.45, props.theme.colors.brandGreen)};
-  border-radius: 1.8rem;
+  border-radius: 18px;
 
   &:focus-within {
-    min-height: 3rem;
     background-color: ${(props) =>
       lighten(0.35, props.theme.colors.brandGreen)};
   }
+  transition: background-color 0.2s ease-in;
 `
 
 // Info: https://styled-components.com/docs/api#transient-props
 const StyledTextarea = styled(TextareaAutosize)<{ $reply?: boolean }>`
   ${inputFontReset}
-  display: block;
   width: 100%;
+  min-height: 33px;
   font-size: 1.125rem;
   color: #000;
   border: none;
@@ -113,15 +106,11 @@ const StyledTextarea = styled(TextareaAutosize)<{ $reply?: boolean }>`
     props.$reply ? '.5rem 3.5rem .5rem 1rem' : '1.25rem 3.5rem 1.25rem 1rem'};
   box-sizing: border-box;
   outline: none;
-  overflow: hidden;
   resize: none;
-  min-height: 1rem;
 
   ::placeholder {
     color: ${(props) => props.theme.colors.brandGreen};
   }
-
-  transition: all 0.2s ease-in;
 `
 
 const SendButton = styled.button<{ $reply?: boolean }>`
@@ -131,7 +120,7 @@ const SendButton = styled.button<{ $reply?: boolean }>`
   font-size: 1.55rem;
   padding-left: 7px;
 
-  margin: 0 7px 8px 0;
+  margin: 0 5px 8px 0;
 
   > svg {
     vertical-align: ${(props) => (props.$reply ? '-2px' : '-4px')};
@@ -144,6 +133,6 @@ const SendButton = styled.button<{ $reply?: boolean }>`
       font-size: 1rem;
       width: 30px;
       height: 30px;
-      bottom: 9px;
+      margin-bottom: 4px;
     `}
 `

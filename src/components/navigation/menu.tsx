@@ -1,24 +1,17 @@
 import { faCaretDown, faUser, faBell } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Tippy, { TippyProps, useSingleton } from '@tippyjs/react'
-import dynamic from 'next/dynamic'
-import React from 'react'
+import type { TippyProps } from '@tippyjs/react'
+import { useState, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 
 import { Link } from '../content/link'
-import { UnreadNotificationsCountProps } from '../user-tools/unread-notifications-count'
 import { AuthPayload } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
+import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { HeaderData, HeaderLink } from '@/data-types'
 import { makeTransparentButton } from '@/helper/css'
 import { getAuthData, shouldUseNewAuth } from '@/helper/feature-auth'
-
-const UnreadNotificationsCount = dynamic<UnreadNotificationsCountProps>(() =>
-  import('../user-tools/unread-notifications-count').then(
-    (mod) => mod.UnreadNotificationsCount
-  )
-)
 
 // Only show some icons on full menu
 const menuIconMapping = {
@@ -37,18 +30,52 @@ export interface MenuProps {
   auth: AuthPayload
 }
 
-export function Menu({ data, auth }: MenuProps) {
-  const [source, target] = useSingleton()
-  const [mounted, setMounted] = React.useState(!shouldUseNewAuth())
+export function Menu(props: MenuProps) {
+  const [Tippy, setTippy] = useState<typeof import('@tippyjs/react') | null>(
+    null
+  )
+  useEffect(() => {
+    void import('@tippyjs/react').then((value) => setTippy(value))
+  }, [])
+  if (!Tippy) {
+    return <MenuWithoutTippy {...props} />
+  }
+  return <MenuWithTippy {...props} Tippy={Tippy} />
+}
+
+function MenuWithoutTippy(props: MenuProps) {
+  return <MenuInner {...props} />
+}
+
+function MenuWithTippy(
+  props: MenuProps & { Tippy: typeof import('@tippyjs/react') }
+) {
+  const [source, target] = props.Tippy.useSingleton()
+  return <MenuInner {...props} source={source} target={target} />
+}
+
+function MenuInner({
+  data,
+  auth,
+  Tippy,
+  source,
+  target,
+}: MenuProps & {
+  Tippy?: typeof import('@tippyjs/react')
+  source?: any
+  target?: any
+}) {
+  //
+  const [mounted, setMounted] = useState(!shouldUseNewAuth())
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
 
-  React.useEffect(() => {
-    setMounted(true)
-  }, [])
-
   type TippyRoot = Parameters<NonNullable<TippyProps['onCreate']>>[0]
-  const [tippyRoot, setTippyRoot] = React.useState<TippyRoot | null>(null)
+  const [tippyRoot, setTippyRoot] = useState<TippyRoot | null>(null)
+
+  useEffect(() => setMounted(true), [])
+
+  const lic = useLoggedInComponents()
 
   function onSubMenuInnerClick() {
     if (tippyRoot && tippyRoot !== undefined) tippyRoot.hide()
@@ -56,17 +83,22 @@ export function Menu({ data, auth }: MenuProps) {
 
   return (
     <ResponsiveNav>
-      <Tippy
-        singleton={source}
-        placement="bottom-start"
-        trigger="click mouseenter focus"
-        hideOnClick
-        interactive
-        delay={[50, 0]}
-        duration={[300, 100]}
-        animation="fade"
-        onCreate={(tip) => setTippyRoot(tip)}
-      />
+      {Tippy && (
+        <Tippy.default
+          singleton={source}
+          placement="bottom-start"
+          trigger="click mouseenter focus"
+          hideOnClick
+          interactive
+          delay={[50, 0]}
+          duration={[300, 100]}
+          animation="fade"
+          onCreate={(tip) => {
+            //console.log('set tippy root')
+            setTippyRoot(tip)
+          }}
+        />
+      )}
       <List>
         {data.map((link) =>
           renderEntry({
@@ -121,12 +153,26 @@ export function Menu({ data, auth }: MenuProps) {
         show={authMenuMounted === undefined ? true : authMenuMounted}
       >
         {hasChildren ? (
-          <Tippy content={renderSubMenuInner(link.children)} singleton={target}>
+          Tippy ? (
+            <Tippy.default
+              content={renderSubMenuInner(link.children)}
+              singleton={target}
+            >
+              <StyledLink
+                hasIcon={hasIcon}
+                as="a"
+                tabIndex={0} /*active={true}*/
+              >
+                {renderIcon()}
+                {!hasIcon && link.title} <FontAwesomeIcon icon={faCaretDown} />
+              </StyledLink>
+            </Tippy.default>
+          ) : (
             <StyledLink hasIcon={hasIcon} as="a" tabIndex={0} /*active={true}*/>
               {renderIcon()}
               {!hasIcon && link.title} <FontAwesomeIcon icon={faCaretDown} />
             </StyledLink>
-          </Tippy>
+          )
         ) : (
           <StyledLink hasIcon={hasIcon} /*active={true}*/ href={link.url}>
             {renderIcon()} {!hasIcon && link.title}
@@ -138,8 +184,10 @@ export function Menu({ data, auth }: MenuProps) {
     function renderIcon() {
       if (!hasIcon) return null
 
-      if (link.icon === 'notifications')
-        return <UnreadNotificationsCount icon={menuIconMapping[link.icon]} />
+      if (link.icon === 'notifications') {
+        const Comp = lic?.UnreadNotificationsCount
+        if (Comp) return <Comp icon={menuIconMapping[link.icon]} />
+      }
 
       return (
         <span className="fa-layers fa-fw">
@@ -160,7 +208,7 @@ export function Menu({ data, auth }: MenuProps) {
           subEntries.map((entry) => {
             const href =
               entry.url === '/user/public' && auth
-                ? `/user/profile/${auth.username}`
+                ? `/user/${auth.id}/${auth.username}`
                 : entry.url
             return (
               <li key={entry.title} onClick={onSubMenuInnerClick}>

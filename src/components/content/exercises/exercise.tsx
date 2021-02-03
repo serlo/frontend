@@ -1,37 +1,42 @@
 import dynamic from 'next/dynamic'
-import React from 'react'
+import { useState, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 
-import { ExerciseAuthorTools } from '../exercises/exercise-author-tools'
 import { LicenseNotice } from '../license-notice'
 import { ExerciseNumbering } from './exercise-numbering'
 import { InputExercise } from './input-exercise'
 import { ScMcExercise } from './sc-mc-exercise'
 import { useAuth } from '@/auth/use-auth'
-import { CommentsProps } from '@/components/comments/comments'
+import { CommentAreaProps } from '@/components/comments/comment-area'
 import { useInstanceData } from '@/contexts/instance-context'
+import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { FrontendExerciseNode } from '@/data-types'
 import { makeMargin, makeTransparentButton, makePadding } from '@/helper/css'
-import { renderArticle } from '@/schema/article-renderer'
+import { submitEventWithPath } from '@/helper/submit-event'
+import type { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
 
 export interface ExerciseProps {
   node: FrontendExerciseNode
+  renderNested: RenderNestedFunction
+  path?: NodePath
 }
 
-const Comments = dynamic<CommentsProps>(() =>
-  import('@/components/comments/comments').then((mod) => mod.Comments)
+const CommentArea = dynamic<CommentAreaProps>(() =>
+  import('@/components/comments/comment-area').then((mod) => mod.CommentArea)
 )
 
-export function Exercise({ node }: ExerciseProps) {
+export function Exercise({ node, renderNested, path }: ExerciseProps) {
   const { strings } = useInstanceData()
-  const [solutionVisible, setVisible] = React.useState(false)
-  const [randomId] = React.useState(Math.random().toString())
+  const [solutionVisible, setVisible] = useState(false)
+  const [randomId] = useState(Math.random().toString())
 
   const auth = useAuth()
-  const [loaded, setLoaded] = React.useState(false)
-  React.useEffect(() => {
+  const [loaded, setLoaded] = useState(false)
+  useEffect(() => {
     setLoaded(true)
   }, [])
+
+  const lic = useLoggedInComponents()
 
   return (
     <Wrapper grouped={node.grouped}>
@@ -54,8 +59,9 @@ export function Exercise({ node }: ExerciseProps) {
     const license = node.solution.license && !node.solution.license.default && (
       <LicenseNotice minimal data={node.solution.license} type="solution" />
     )
-    const authorTools = loaded && auth.current && (
-      <ExerciseAuthorTools
+    const Comp = lic?.ExerciseAuthorTools
+    const authorTools = Comp && loaded && auth.current && (
+      <Comp
         data={{
           type: '_SolutionInline',
           id: node.context.solutionId!,
@@ -67,7 +73,7 @@ export function Exercise({ node }: ExerciseProps) {
 
     return (
       <SolutionBox>
-        {renderArticle(
+        {renderNested(
           [
             {
               type: 'solution',
@@ -75,7 +81,7 @@ export function Exercise({ node }: ExerciseProps) {
               context: { id: node.context.solutionId! },
             },
           ],
-          false
+          'tasksol'
         )}
         {
           /* compat: hide div if empty */
@@ -86,7 +92,7 @@ export function Exercise({ node }: ExerciseProps) {
             </SolutionTools>
           )
         }
-        <Comments id={node.context.solutionId!} />
+        <CommentArea id={node.context.solutionId!} />
       </SolutionBox>
     )
   }
@@ -97,6 +103,9 @@ export function Exercise({ node }: ExerciseProps) {
     return (
       <SolutionToggle
         onClick={() => {
+          if (!solutionVisible) {
+            submitEventWithPath('opensolution', path)
+          }
           setVisible(!solutionVisible)
         }}
         onPointerUp={(e) => e.currentTarget.blur()} //hack, use https://caniuse.com/#feat=css-focus-visible when supported
@@ -111,9 +120,9 @@ export function Exercise({ node }: ExerciseProps) {
 
   function renderExerciseTask() {
     if (node.task.legacy) {
-      return renderArticle(node.task.legacy, false)
+      return renderNested(node.task.legacy, 'task')
     } else if (node.task.edtrState) {
-      return renderArticle(node.task.edtrState.content, false)
+      return renderNested(node.task.edtrState.content, 'task')
     }
     return null
   }
@@ -131,16 +140,19 @@ export function Exercise({ node }: ExerciseProps) {
             idBase={`ex-${
               node.positionOnPage ? node.positionOnPage : randomId
             }-${node.positionInGroup ? node.positionInGroup : ''}-`}
+            renderNested={renderNested}
+            path={path}
           />
         )
       }
       if (state.interactive.plugin === 'inputExercise') {
-        return <InputExercise data={state.interactive.state} />
+        return <InputExercise data={state.interactive.state} path={path} />
       }
     }
   }
 
   function renderToolsAndLicense() {
+    const Comp = lic?.ExerciseAuthorTools
     return (
       <ExerciseTools>
         {renderSolutionToggle()}
@@ -148,10 +160,8 @@ export function Exercise({ node }: ExerciseProps) {
         {node.task.license && (
           <LicenseNotice minimal data={node.task.license} type="task" />
         )}
-        {loaded && auth.current && (
-          <ExerciseAuthorTools
-            data={{ type: '_ExerciseInline', id: node.context.id }}
-          />
+        {loaded && auth.current && Comp && (
+          <Comp data={{ type: '_ExerciseInline', id: node.context.id }} />
         )}
       </ExerciseTools>
     )

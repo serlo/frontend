@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components'
 
 import { HSpace } from '@/components/content/h-space'
@@ -8,7 +7,12 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { LicenseDetailData } from '@/data-types'
 import { renderArticle } from '@/schema/article-renderer'
 
-export function LicenseDetail({ title, content, iconHref }: LicenseDetailData) {
+export function LicenseDetail({
+  title,
+  content,
+  iconHref,
+  id,
+}: LicenseDetailData) {
   const { strings } = useInstanceData()
   return (
     <>
@@ -16,7 +20,7 @@ export function LicenseDetail({ title, content, iconHref }: LicenseDetailData) {
       <BigP>{strings.license.readMore}</BigP>
       <StyledH2>{title}</StyledH2>
       <HSpace amount={20} />
-      {renderArticle(content)}
+      {renderArticle(content, `license${id}`)}
       {iconHref && (
         <StyledP>
           <img src={iconHref} alt="License Badge" />

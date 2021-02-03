@@ -1,15 +1,10 @@
 import { NextPage } from 'next'
-import React from 'react'
 import styled from 'styled-components'
 
 import { ProfileCommunityBanner } from './profile-community-banner'
 import { ProfileDonationForm } from './profile-donation-form'
 import { useAuth } from '@/auth/use-auth'
-import { Comments } from '@/components/comments/comments'
-import { HSpace } from '@/components/content/h-space'
-import { MaxWidthDiv } from '@/components/navigation/max-width-div'
-import { RelativeContainer } from '@/components/navigation/relative-container'
-import { StyledH1 } from '@/components/tags/styled-h1'
+import { CommentArea } from '@/components/comments/comment-area'
 import { StyledH2 } from '@/components/tags/styled-h2'
 import { StyledP } from '@/components/tags/styled-p'
 import { TimeAgo } from '@/components/time-ago'
@@ -31,33 +26,28 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   const lastLoginDate = lastLogin ? new Date(lastLogin) : undefined
 
   return (
-    <RelativeContainer>
-      <MaxWidthDiv>
-        <HSpace amount={50} />
-        <StyledH1>{username}</StyledH1>
-        <StyledP></StyledP>
-        {lang === 'de' && renderCommunityFeatures()}
-        {description && (
-          <>
-            <StyledH2>{strings.profiles.aboutMe}</StyledH2>
-            {renderArticle(description)}
-          </>
-        )}
-        {/* <StyledH2>{strings.profiles.recentActivities}</StyledH2> */}
-        <Comments id={id} />
-        {lastLoginDate && (
-          <Gray>
-            {strings.profiles.lastSeen}:{' '}
-            <b>
-              <TimeAgo datetime={lastLoginDate} dateAsTitle />
-            </b>
-          </Gray>
-        )}
-        {renderUserTools()}
-        {/* <StyledH2>{strings.profiles.roles}</StyledH2> */}
-        <HSpace amount={100} />
-      </MaxWidthDiv>
-    </RelativeContainer>
+    <>
+      <StyledP></StyledP>
+      {lang === 'de' && renderCommunityFeatures()}
+      {description && (
+        <>
+          <StyledH2>{strings.profiles.aboutMe}</StyledH2>
+          {renderArticle(description, `profile${id}`)}
+        </>
+      )}
+      {/* <StyledH2>{strings.profiles.recentActivities}</StyledH2> */}
+      <CommentArea id={id} noForms />
+      {lastLoginDate && (
+        <Gray>
+          {strings.profiles.lastSeen}:{' '}
+          <b>
+            <TimeAgo datetime={lastLoginDate} dateAsTitle />
+          </b>
+        </Gray>
+      )}
+      {renderUserTools()}
+      {/* <StyledH2>{strings.profiles.roles}</StyledH2> */}
+    </>
   )
 
   function renderCommunityFeatures() {

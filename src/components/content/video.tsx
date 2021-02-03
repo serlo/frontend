@@ -1,21 +1,23 @@
 import { faFilm } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
 import styled from 'styled-components'
 
 import { StyledP } from '../tags/styled-p'
 import { PrivacyWrapper } from './privacy-wrapper'
 import { useInstanceData } from '@/contexts/instance-context'
+import { submitEventWithPath } from '@/helper/submit-event'
 import { ExternalProvider } from '@/helper/use-consent'
+import { NodePath } from '@/schema/article-renderer'
 
 export interface VideoProps {
   src: string
+  path?: NodePath
 }
 
 export function Video(props: VideoProps) {
   const { lang } = useInstanceData()
 
-  const { src } = props
+  const { src, path } = props
 
   const vimeo = /^(https?:\/\/)?(.*?vimeo\.com\/)(.+)/.exec(src)
   if (vimeo) return renderVimeo(vimeo[3])
@@ -55,7 +57,14 @@ export function Video(props: VideoProps) {
 
   function renderVideo(provider: ExternalProvider, iframeUrl?: string) {
     return (
-      <PrivacyWrapper type="video" provider={provider} embedUrl={iframeUrl}>
+      <PrivacyWrapper
+        type="video"
+        provider={provider}
+        embedUrl={iframeUrl}
+        onLoad={() => {
+          submitEventWithPath('loadvideo', path)
+        }}
+      >
         <VideoWrapper className="video">
           {provider === ExternalProvider.WikimediaCommons && (
             <video controls src={src} />

@@ -1,17 +1,16 @@
-import React from 'react'
-
-import { renderArticle } from '../../../schema/article-renderer'
+import type { RenderNestedFunction } from '../../../schema/article-renderer'
 import { useInstanceData } from '@/contexts/instance-context'
 import { FrontendContentNode, FrontendSolutionNode } from '@/data-types'
 
 export interface SolutionProps {
   node: FrontendSolutionNode['solution']
+  renderNested: RenderNestedFunction
 }
 
-export function Solution({ node }: SolutionProps) {
+export function Solution({ node, renderNested }: SolutionProps) {
   const { strings } = useInstanceData()
 
-  return <>{renderArticle(getSolutionContent(), false)}</>
+  return <>{renderNested(getSolutionContent(), 'sol')}</>
 
   function getSolutionContent(): FrontendContentNode[] {
     if (node.legacy) {

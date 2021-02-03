@@ -1,6 +1,6 @@
 import type { GraphQLError } from 'graphql'
 import { ClientError, GraphQLClient } from 'graphql-request'
-import React from 'react'
+import * as React from 'react'
 
 import { endpoint } from '@/api/endpoint'
 import { AuthPayload } from '@/auth/use-auth'
@@ -47,6 +47,7 @@ export function createAuthAwareGraphqlFetch(
       const client = new GraphQLClient(endpoint, {
         headers: auth.current
           ? {
+              'access-control-allow-origin': '*',
               Authorization: `Bearer ${auth.current.token}`,
             }
           : {},

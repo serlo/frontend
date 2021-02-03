@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 
 import { HSpace } from './content/h-space'
 import { Horizon } from './content/horizon'
@@ -9,11 +9,11 @@ import { MaxWidthDiv } from './navigation/max-width-div'
 import { MetaMenu } from './navigation/meta-menu'
 import { RelativeContainer } from './navigation/relative-container'
 import { NewsletterPopup } from './scripts/newsletter-popup'
-import { EntityPageBase, PageData } from '@/data-types'
+import { EntityPageBase, SlugPageData } from '@/data-types'
 
 export interface EntityBaseProps {
   children: React.ReactNode
-  page: PageData & EntityPageBase
+  page: SlugPageData & EntityPageBase
 }
 
 export function EntityBase({ children, page }: EntityBaseProps) {

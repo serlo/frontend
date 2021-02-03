@@ -1,55 +1,41 @@
-import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
-import React from 'react'
+import { GetStaticPaths, GetStaticProps } from 'next'
 
-import { EntityBase } from '@/components/entity-base'
 import { FrontendClientBase } from '@/components/frontend-client-base'
-import { HeaderFooter } from '@/components/header-footer'
 import { ErrorPage } from '@/components/pages/error-page'
 import { LicenseDetail } from '@/components/pages/license-detail'
-import { InitialProps, LicenseDetailPage } from '@/data-types'
-import { fetchPageData } from '@/fetcher/fetch-page-data'
+import { LicenseDetailPage, LicenseDetailProps } from '@/data-types'
+import { requestLicensePage } from '@/fetcher/license/request'
+import { renderedPageNoHooks } from '@/helper/rendered-page'
 
-const PageView: NextPage<InitialProps> = (initialProps) => {
-  const page = initialProps.pageData as LicenseDetailPage
+export default renderedPageNoHooks<LicenseDetailProps>(({ pageData }) => (
+  <FrontendClientBase>
+    {pageData === undefined ? (
+      <ErrorPage code={404} />
+    ) : (
+      <LicenseDetail {...pageData.licenseData} />
+    )}
+  </FrontendClientBase>
+))
 
-  if (page === undefined) return <ErrorPage code={404} />
-
-  return (
-    <FrontendClientBase>
-      <HeaderFooter>
-        <EntityBase page={page}>
-          <LicenseDetail {...page.licenseData} />
-        </EntityBase>
-      </HeaderFooter>
-    </FrontendClientBase>
-  )
-}
-
-// eslint-disable-next-line @typescript-eslint/require-await
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getStaticProps: GetStaticProps<LicenseDetailProps> = async (
+  context
+) => {
   const id = parseInt(context.params?.id as string)
-  const instance = context.locale ?? context.defaultLocale ?? 'de'
 
-  const pageData = isNaN(id)
-    ? undefined
-    : ((await fetchPageData(
-        `/${instance}/license/detail/${id}`
-      )) as LicenseDetailPage)
+  const licenseData = isNaN(id) ? undefined : await requestLicensePage(id)
+  // todo: return notFound if id is invalid
 
   return {
     props: {
-      pageData: { ...pageData, horizonData: pageData?.horizonData ?? null },
+      pageData: licenseData as LicenseDetailPage,
     },
     revalidate: 60 * 60 * 24, //one day in seconds
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/require-await
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: [],
     fallback: 'blocking',
   }
 }
-
-export default PageView

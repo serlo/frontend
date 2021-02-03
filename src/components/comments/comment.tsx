@@ -5,14 +5,25 @@ import styled, { css } from 'styled-components'
 
 import { StyledP } from '../tags/styled-p'
 import { MetaBar } from './meta-bar'
+import { scrollIfNeeded } from '@/helper/scroll'
 
 interface CommentProps {
+  threadId: string
   isParent?: boolean
+  isHighlight?: boolean
   data: CommentType
+  highlight: (id: number) => void
 }
 
-export function Comment({ data, isParent }: CommentProps) {
-  const { author, createdAt, content } = data
+export function Comment({
+  data,
+  threadId,
+  isHighlight,
+  highlight,
+  isParent,
+}: CommentProps) {
+  const commentRef = React.useRef<HTMLDivElement>(null)
+  const { author, createdAt, content, id } = data
 
   const urlFinder = /https?:\/\/(www\.)?([-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b)([-a-zA-Z0-9()@:%_+.~#?&//=]*)/g
 
@@ -22,22 +33,42 @@ export function Comment({ data, isParent }: CommentProps) {
     return `<a href="${match}" rel="ugc nofollow">${match}</a>`
   })
 
+  React.useEffect(() => {
+    if (isHighlight) {
+      setTimeout(() => {
+        scrollIfNeeded(commentRef.current)
+      }, 500)
+    }
+
+    if (commentRef.current) {
+      commentRef.current.style.backgroundColor = isHighlight
+        ? 'rgb(251, 243, 243)'
+        : 'transparent'
+    }
+  }, [isHighlight])
+
   return (
-    <Wrapper isParent={isParent}>
-      <MetaBar user={author} timestamp={createdAt} isParent={isParent} />
+    <Wrapper ref={commentRef} $isParent={isParent} id={`comment-${id}`}>
+      <MetaBar
+        user={author}
+        timestamp={createdAt}
+        isParent={isParent}
+        threadId={threadId}
+        id={id}
+        highlight={highlight}
+      />
       <StyledP dangerouslySetInnerHTML={{ __html: escapedWithLinks }}></StyledP>
     </Wrapper>
   )
 }
 
-const Wrapper = styled.div<{ isParent?: boolean }>`
+const Wrapper = styled.div<{ $isParent?: boolean }>`
   ${(props) =>
-    !props.isParent &&
+    !props.$isParent &&
     css`
       border-left: 7px solid
         ${(props) => props.theme.colors.lightBlueBackground};
-      padding-top: 3px;
-      padding-bottom: 2px;
+      padding: 3px 0 2px 4px;
       margin: 20px 0 20px ${(props) => props.theme.defaults.sideSpacingMobile};
     `}
 
@@ -45,7 +76,6 @@ const Wrapper = styled.div<{ isParent?: boolean }>`
     margin-bottom: 0;
     white-space: pre-line;
     hyphens: auto;
-    padding-left: 8px;
     overflow-wrap: break-word;
 
     > a {
@@ -53,4 +83,7 @@ const Wrapper = styled.div<{ isParent?: boolean }>`
       word-break: break-all; /* breaks without hyphen*/
     }
   }
+
+  border-radius: ${(props) => (props.$isParent ? '15px' : '0 15px 15px 0')};
+  transition: background-color 0.8s ease-out;
 `
