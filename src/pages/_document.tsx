@@ -138,10 +138,10 @@ export default class MyDocument extends Document {
           <Main />
           {langData && (
             <script
+              type="application/json"
+              id="__FRONTEND_CLIENT_INSTANCE_DATA__"
               dangerouslySetInnerHTML={{
-                __html:
-                  'window.__CLIENT_INSTANCE_DATA__ = ' +
-                  htmlEscapeStringForJson(JSON.stringify(langData)),
+                __html: htmlEscapeStringForJson(JSON.stringify(langData)),
               }}
             />
           )}

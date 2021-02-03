@@ -26,12 +26,6 @@ export type FrontendClientBaseProps = React.PropsWithChildren<{
   entityId?: number
 }>
 
-declare global {
-  interface Window {
-    __CLIENT_INSTANCE_DATA__: ReturnType<typeof getInstanceDataByLang>
-  }
-}
-
 export function FrontendClientBase({
   children,
   noHeaderFooter,
@@ -44,12 +38,13 @@ export function FrontendClientBase({
     if (typeof window === 'undefined') {
       // load instance data for server side rendering
       // Note: using require to avoid webpack bundling it
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      return (require('@/helper/feature-i18n')
-        .getInstanceDataByLang as typeof getInstanceDataByLang)(locale!)
+      return require('@/helper/feature-i18n').getInstanceDataByLang(locale!)
     } else {
-      // load instance data from client from _document
-      return window.__CLIENT_INSTANCE_DATA__ ?? {}
+      // load instance data from client from document tag
+      return JSON.parse(
+        document.getElementById('__FRONTEND_CLIENT_INSTANCE_DATA__')
+          ?.textContent ?? '{}'
+      ) as ReturnType<typeof getInstanceDataByLang>
     }
   })
 
