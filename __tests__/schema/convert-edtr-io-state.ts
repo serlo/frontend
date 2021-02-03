@@ -122,7 +122,7 @@ describe('edtr io plugins', () => {
               state: [
                 {
                   plugin: 'text',
-                  state: [{ type: 'math' }],
+                  state: [{ type: 'math', src: '123' }],
                 },
               ],
             },
@@ -272,7 +272,7 @@ describe('edtr io plugins', () => {
         {
           plugin: 'image',
           state: {
-            src: '',
+            src: 'bild.jpg',
             alt: '',
           },
         },
@@ -282,7 +282,7 @@ describe('edtr io plugins', () => {
       { type: 'h', level: 2, children: [] },
       {
         type: 'img',
-        src: '',
+        src: 'bild.jpg',
         alt: '',
         maxWidth: undefined,
       },
@@ -323,7 +323,6 @@ describe('edtr io plugins', () => {
     })
 
     expect(result).toEqual([
-      { type: 'text', text: ' ' },
       {
         type: 'table',
         children: [
@@ -361,7 +360,6 @@ describe('edtr io plugins', () => {
           },
         ],
       },
-      { type: 'text', text: ' ' },
     ])
   })
 
@@ -470,19 +468,24 @@ describe('text types', () => {
       test('is only child', () => {
         const result = convert({
           type: 'p',
-          children: [{ type: 'math' }],
+          children: [{ type: 'math', src: '123' }],
         })
-        expect(result).toEqual([{ type: 'math' }])
+        expect(result).toEqual([
+          { type: 'math', formula: '\\sf 123', formulaSource: '123' },
+        ])
       })
       test('has sibling', () => {
         const result = convert({
           type: 'p',
-          children: [{ type: 'math' }, { text: 'brother' }],
+          children: [{ type: 'math', src: '123' }, { text: 'brother' }],
         })
         expect(result).toEqual([
           {
             type: 'p',
-            children: [{ type: 'math' }, { type: 'text', text: 'brother' }],
+            children: [
+              { type: 'math', formula: '\\sf 123', formulaSource: '123' },
+              { type: 'text', text: 'brother' },
+            ],
           },
         ])
       })
@@ -527,13 +530,7 @@ describe('text types', () => {
         type: 'a',
         children: [{ text: 'link' }],
       })
-      expect(result).toEqual([
-        {
-          type: 'a',
-          href: '',
-          children: [{ type: 'text', text: 'link' }],
-        },
-      ])
+      expect(result).toEqual([{ type: 'text', text: 'link' }])
     })
   })
 
@@ -678,9 +675,7 @@ describe('text types', () => {
         type: 'list-item-child',
         children: [{ text: 'item-child' }],
       })
-      expect(result).toEqual([
-        { type: 'p', children: [{ type: 'text', text: 'item-child' }] },
-      ])
+      expect(result).toEqual([{ type: 'text', text: 'item-child' }])
     })
 
     test('compat: ps will not be wrapped in another p', () => {
@@ -729,6 +724,7 @@ describe('text types', () => {
         children: [
           {
             type: 'a',
+            href: '/123',
             children: [{ text: 'log text' }],
           },
         ],
@@ -739,7 +735,7 @@ describe('text types', () => {
           children: [
             {
               type: 'a',
-              href: '',
+              href: '/123',
               children: [{ type: 'text', text: 'log text' }],
             },
           ],
