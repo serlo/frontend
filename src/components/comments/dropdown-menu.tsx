@@ -96,11 +96,11 @@ export function DropdownMenu({
   function onDelete() {
     onAnyClick()
     if (!isParent) {
-      void setCommentState({ id: id, trashed: true })
+      void setCommentState({ id: [id], trashed: true })
       return
     }
     if (isParent && threadId) {
-      void setThreadState({ id: threadId, trashed: true })
+      void setThreadState({ id: [threadId], trashed: true })
       // void setCommentState({ id: [id], trashed: true })
     }
   }
@@ -108,7 +108,7 @@ export function DropdownMenu({
   function onArchiveThread() {
     onAnyClick()
     if (isParent && threadId) {
-      void setThreadArchived({ id: threadId, archived: !archived })
+      void setThreadArchived({ id: [threadId], archived: !archived })
       // void setThreadArchived({ id: [threadId], archived: true })
     }
   }
