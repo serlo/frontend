@@ -69,6 +69,7 @@ function convertPlugin(node: EdtrState) {
     return convert(node.state)
   }
   if (node.plugin === 'image') {
+    if (!node.state.src) return []
     return [
       {
         type: 'img',
@@ -101,12 +102,14 @@ function convertPlugin(node: EdtrState) {
         children: [
           {
             type: 'spoiler-title',
-            children: [
-              {
-                type: 'text',
-                text: node.state.title,
-              },
-            ],
+            children: node.state.title
+              ? [
+                  {
+                    type: 'text',
+                    text: node.state.title,
+                  },
+                ]
+              : [],
           },
           {
             type: 'spoiler-body',
@@ -168,7 +171,10 @@ function convertPlugin(node: EdtrState) {
   }
   if (node.plugin === 'table') {
     const html = converter.makeHtml(node.state)
-    return convertLegacyState(html).children
+    const children = convertLegacyState(html).children.filter(
+      (child) => child.type == 'table'
+    )
+    return children
   }
   if (node.plugin === 'video') {
     return [
@@ -218,8 +224,15 @@ function convertSlate(node: SlateBlockElement) {
   if (node.type === 'p') {
     const children = convert(node.children)
 
-    // compat unwrap math from p
-    if (children.length === 1 && children[0].type === 'math') {
+    // don't use p if children are all block elements (see 1907)
+    if (
+      children.every(
+        (child) =>
+          child.type !== 'text' &&
+          child.type !== 'a' &&
+          child.type !== 'inline-math'
+      )
+    ) {
       return children
     }
     if (
@@ -269,13 +282,17 @@ function convertSlate(node: SlateBlockElement) {
             const parts: (
               | FrontendContentNode
               | '##break##'
-            )[] = child.text.split('\n').flatMap((text) => [
-              {
-                type: 'text',
-                text,
-              },
-              '##break##',
-            ])
+            )[] = child.text.split('\n').flatMap((text) =>
+              text.trim() == ''
+                ? []
+                : [
+                    {
+                      type: 'text',
+                      text,
+                    },
+                    '##break##',
+                  ]
+            )
             parts.pop()
             return parts
           }
@@ -308,10 +325,13 @@ function convertSlate(node: SlateBlockElement) {
     ]
   }
   if (node.type === 'a') {
+    if (!node.href) {
+      return convert(node.children)
+    }
     return [
       {
         type: 'a',
-        href: node.href ?? '',
+        href: node.href,
         children: convert(node.children),
       },
     ]
@@ -342,6 +362,9 @@ function convertSlate(node: SlateBlockElement) {
     }
   }
   if (node.type === 'math' && !node.inline) {
+    if (!node.src) {
+      return []
+    }
     return [
       {
         type: 'math',
@@ -352,6 +375,9 @@ function convertSlate(node: SlateBlockElement) {
     ]
   }
   if (node.type === 'math' && node.inline) {
+    if (!node.src) {
+      return []
+    }
     return [
       {
         type: 'inline-math',
@@ -405,13 +431,13 @@ function convertSlate(node: SlateBlockElement) {
       return children
     }
 
-    //compat: only inline-math and links get wrapped? not sure about this
+    //compat: no inline elements -> we can safely pass it through
     if (
       children.filter(
         (child) =>
           child.type === 'inline-math' ||
           child.type === 'a' ||
-          child.type !== undefined
+          child.type === undefined
       ).length === 0
     ) {
       return children
