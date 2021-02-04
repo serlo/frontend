@@ -7,32 +7,36 @@ import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { Notification, NotificationEvent } from '@/components/user/notification'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { makePrimaryButton } from '@/helper/css'
+import { makeMargin, makePrimaryButton } from '@/helper/css'
 import { useSetNotificationStateMutation } from '@/helper/mutations'
+
+interface NotificationData {
+  id: number
+  event: NotificationEvent
+  unread: boolean
+}
 
 interface NotificationProps {
   data: {
-    nodes: {
-      id: number
-      event: NotificationEvent
-      unread: boolean
-    }[]
+    nodes: NotificationData[]
     pageInfo: PageInfo
   }
   loadMore: () => void
   isLoading: boolean
+  isUnread?: boolean
 }
 
 export const Notifications = ({
   data,
   loadMore,
   isLoading,
+  isUnread,
 }: NotificationProps) => {
   const auth = useAuth()
   const setToRead = useSetNotificationStateMutation()
 
   useEffect(() => {
-    setAllToRead()
+    if (isUnread) setAllToRead()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth, data])
 
@@ -41,20 +45,9 @@ export const Notifications = ({
   if (!loggedInData) return null
   const loggedInStrings = loggedInData.strings.notifications
 
-  const notifications = data.nodes.map((node) => {
-    return (
-      <Notification
-        key={node.id}
-        event={node.event}
-        unread={node.unread}
-        loggedInStrings={loggedInStrings}
-      />
-    )
-  })
-
   return (
     <>
-      {notifications}
+      {renderNotifications(data.nodes)}
       {isLoading && <LoadingSpinner text={strings.loading.isLoading} />}
       {data?.pageInfo.hasNextPage && !isLoading ? (
         <Button
@@ -67,6 +60,17 @@ export const Notifications = ({
       ) : null}
     </>
   )
+
+  function renderNotifications(nodes: NotificationData[]) {
+    return nodes.map((node) => (
+      <Notification
+        key={node.id}
+        event={node.event}
+        unread={node.unread}
+        loggedInStrings={loggedInStrings}
+      />
+    ))
+  }
 
   function setAllToRead() {
     if (auth.current === null) return
@@ -83,5 +87,7 @@ export const Notifications = ({
 
 const Button = styled.button`
   ${makePrimaryButton}
-  margin-top: 40px;
+  ${makeMargin}
+  margin-top: 20px;
+  margin-bottom: 50px;
 `

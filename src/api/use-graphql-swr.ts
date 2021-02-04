@@ -52,12 +52,14 @@ export function useGraphqlSwrPaginationWithAuth<T>({
   config,
   getConnection,
   overrideAuth,
+  noKey,
 }: {
   query: string
   variables?: Record<string, unknown>
   getConnection: (data: Record<string, unknown>) => unknown
   config?: SWRInfiniteConfigInterface
   overrideAuth?: ReturnType<typeof useAuth>
+  noKey?: boolean
 }): {
   loadMore(): void
   loading: boolean
@@ -78,6 +80,7 @@ export function useGraphqlSwrPaginationWithAuth<T>({
     pageIndex: number,
     previousResponse: Record<string, unknown> | null
   ) {
+    if (noKey) return null
     const previousPageData = previousResponse
       ? (getConnection(previousResponse) as { pageInfo: PageInfo })
       : null

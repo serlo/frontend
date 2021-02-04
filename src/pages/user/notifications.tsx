@@ -1,12 +1,17 @@
 import { gql } from 'graphql-request'
+import { useState } from 'react'
+import styled from 'styled-components'
 
 import { useGraphqlSwrPaginationWithAuth } from '@/api/use-graphql-swr'
 import { PageTitle } from '@/components/content/page-title'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Guard } from '@/components/guard'
 import { Notifications } from '@/components/pages/user/notifications'
+import { StyledP } from '@/components/tags/styled-p'
+import { UnreadNotificationsCount } from '@/components/user-tools/unread-notifications-count'
 import { NotificationEvent } from '@/components/user/notification'
 import { useInstanceData } from '@/contexts/instance-context'
+import { makeLightButton, makePrimaryButton } from '@/helper/css'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks(() => (
@@ -17,21 +22,64 @@ export default renderedPageNoHooks(() => (
 ))
 
 function Content() {
-  // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { data, error, loadMore, loading } = useFetch()
+  const [showUnread, setShowUnread] = useState(true)
 
-  function loadMoreAction() {
-    loadMore()
+  // eslint-disable-next-line @typescript-eslint/unbound-method
+  const { data, error, loadMore, loading } = useNotificationFetch(true)
+  // eslint-disable-next-line @typescript-eslint/unbound-method
+  const {
+    data: readData,
+    error: readError,
+    loadMore: loadMoreRead,
+    loading: loadingRead,
+  } = useNotificationFetch(false, showUnread) //dont fetch if showUnread is true
+
+  function onMoreRead() {
+    loadMoreRead()
+  }
+
+  function onTabClick() {
+    setShowUnread(!showUnread)
   }
 
   return (
-    <Guard data={data} error={error} needsAuth>
-      <Notifications
-        data={data!}
-        isLoading={loading}
-        loadMore={loadMoreAction}
-      />
-    </Guard>
+    <>
+      <StyledP>
+        {/* //blur-hack, use https://caniuse.com/#feat=css-focus-visible when supported*/}
+        <TabButton
+          active={showUnread}
+          onPointerUp={(e) => e.currentTarget.blur()}
+          onClick={onTabClick}
+        >
+          Show new (<UnreadNotificationsCount onlyNumber />)
+        </TabButton>
+        <TabButton
+          active={!showUnread}
+          onPointerUp={(e) => e.currentTarget.blur()}
+          onClick={onTabClick}
+        >
+          Show read
+        </TabButton>
+      </StyledP>
+      {showUnread ? (
+        <Guard data={data} error={error} needsAuth>
+          <Notifications
+            data={data!}
+            isLoading={loading}
+            loadMore={loadMore}
+            isUnread
+          />
+        </Guard>
+      ) : (
+        <Guard data={readData} error={readError} needsAuth>
+          <Notifications
+            data={readData!}
+            isLoading={loadingRead}
+            loadMore={onMoreRead}
+          />
+        </Guard>
+      )}
+    </>
   )
 }
 
@@ -40,7 +88,13 @@ function Title() {
   return <PageTitle title={strings.pageTitles.notifications} headTitle />
 }
 
-function useFetch() {
+const TabButton = styled.button<{ active: boolean }>`
+  ${(props) => (props.active ? makePrimaryButton : makeLightButton)}
+  margin-right: 20px;
+  margin-bottom: 20px;
+`
+
+export function useNotificationFetch(unread?: boolean, noKey?: boolean) {
   // eslint-disable-next-line @typescript-eslint/unbound-method
   return useGraphqlSwrPaginationWithAuth<{
     id: number
@@ -50,11 +104,12 @@ function useFetch() {
     query,
     variables: {
       first: 10,
-      unread: undefined,
+      unread,
     },
     getConnection(data) {
       return data.notifications
     },
+    noKey,
   })
 }
 
