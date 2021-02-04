@@ -1,10 +1,17 @@
 import { TippyProps } from '@tippyjs/react'
 import { useState, useEffect } from 'react'
 
-export function LazyTippy({ children, ...props }: TippyProps) {
+export function LazyTippy({
+  children,
+  onLoaded,
+  ...props
+}: TippyProps & { onLoaded?: () => void }) {
   const [Tippy, setTippy] = useState<any>(null)
   useEffect(() => {
-    void import('@tippyjs/react').then((value) => setTippy(value.default))
+    void import('@tippyjs/react').then((value) => {
+      setTippy(value.default)
+      setTimeout(() => onLoaded && onLoaded(), 0)
+    })
   }, [])
 
   if (!Tippy) {
