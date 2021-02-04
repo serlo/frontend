@@ -171,6 +171,9 @@ function convertPlugin(node: EdtrState) {
     return children
   }
   if (node.plugin === 'video') {
+    if (!node.src) {
+      return []
+    }
     return [
       {
         type: 'video',
@@ -322,11 +325,12 @@ function convertSlate(node: SlateBlockElement) {
 }
 
 function convertText(node: SlateTextElement) {
-  if (node.text === '') return []
+  const text = node.text.replace(/\ufeff/g, '')
+  if (text === '') return []
   return [
     {
       type: 'text',
-      text: node.text,
+      text,
       em: node.em,
       strong: node.strong,
       color: colors[node.color as number],

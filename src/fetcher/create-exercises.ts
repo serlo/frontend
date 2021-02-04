@@ -32,19 +32,23 @@ export function createExercise(
       // and we use this knowledge to convert subentries
       // TODO import types from edtr-io
       const taskState = JSON.parse(content).state
-      taskState.content = convert(taskState.content)
-      if (taskState.interactive?.plugin == 'scMcExercise') {
-        taskState.interactive.state.answers.forEach((answer: any) => {
-          answer.feedback = convert(answer.feedback)
-          answer.content = convert(answer.content)
-        })
-        shuffleArray(taskState.interactive.state.answers)
-      } else if (taskState.interactive?.plugin == 'inputExercise') {
-        taskState.interactive.state.answers.forEach((answer: any) => {
-          answer.feedback = convert(answer.feedback)
-        })
+      if (taskState.content) {
+        taskState.content = convert(taskState.content)
+        if (taskState.interactive?.plugin == 'scMcExercise') {
+          taskState.interactive.state.answers.forEach((answer: any) => {
+            answer.feedback = convert(answer.feedback)
+            answer.content = convert(answer.content)
+          })
+          shuffleArray(taskState.interactive.state.answers)
+        } else if (taskState.interactive?.plugin == 'inputExercise') {
+          taskState.interactive.state.answers.forEach((answer: any) => {
+            answer.feedback = convert(answer.feedback)
+          })
+        }
+        taskEdtrState = taskState
+      } else {
+        taskLegacy = convert(taskState) // some weird edge cases where task has no content (e.g. 117384)
       }
-      taskEdtrState = taskState
     } else {
       taskLegacy = convertState(content)
     }
