@@ -171,7 +171,7 @@ function convertPlugin(node: EdtrState) {
     return children
   }
   if (node.plugin === 'video') {
-    if (!node.src) {
+    if (!node.state.src) {
       return []
     }
     return [
