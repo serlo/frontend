@@ -334,7 +334,7 @@ const Item = styled.div`
   position: relative;
   margin: 10px 0;
   padding: 24px;
-  &:nth-child(even) {
+  &:nth-child(odd) {
     background: ${(props) => props.theme.colors.bluewhite};
   }
 

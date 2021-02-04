@@ -8,11 +8,13 @@ import styled from 'styled-components'
 import { useGraphqlSwrWithAuth } from '@/api/use-graphql-swr'
 
 export interface UnreadNotificationsCountProps {
-  icon: FontAwesomeIconProps['icon']
+  icon?: FontAwesomeIconProps['icon']
+  onlyNumber?: boolean
 }
 
 export function UnreadNotificationsCount({
   icon,
+  onlyNumber,
 }: UnreadNotificationsCountProps) {
   const { data } = useGraphqlSwrWithAuth<{
     notifications: {
@@ -34,12 +36,16 @@ export function UnreadNotificationsCount({
   const count = data === undefined ? 0 : data.notifications.totalCount
   const displayCount = count > 9 ? '+' : count
 
+  if (onlyNumber) return <>{count}</>
+
   return (
     <StyledFaLayer active={count > 0} className="fa-layers fa-fw">
-      <FontAwesomeIcon
-        icon={icon}
-        style={{ height: '1.45rem', width: '1.25rem', paddingTop: '0' }}
-      />
+      {icon && (
+        <FontAwesomeIcon
+          icon={icon}
+          style={{ height: '1.45rem', width: '1.25rem', paddingTop: '0' }}
+        />
+      )}
       <NotificationsNumber className="number">
         {displayCount}
       </NotificationsNumber>
