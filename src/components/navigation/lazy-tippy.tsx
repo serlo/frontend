@@ -10,7 +10,7 @@ export function LazyTippy({
   useEffect(() => {
     void import('@tippyjs/react').then((value) => {
       setTippy(value.default)
-      setTimeout(onLoaded, 0)
+      setTimeout(() => onLoaded && onLoaded(), 0)
     })
   }, [])
 
