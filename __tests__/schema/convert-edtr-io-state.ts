@@ -111,27 +111,6 @@ describe('edtr io plugins', () => {
         },
       ])
     })
-
-    test('compat: align math children left', () => {
-      const result = convert({
-        plugin: 'layout',
-        state: [
-          {
-            child: {
-              plugin: 'rows',
-              state: [
-                {
-                  plugin: 'text',
-                  state: [{ type: 'math', src: '123' }],
-                },
-              ],
-            },
-            width: 6,
-          },
-        ],
-      })
-      expect(result[0].children[0].children[0].alignLeft).toBe(true)
-    })
   })
 
   test('plugin: anchor', () => {
@@ -480,12 +459,10 @@ describe('text types', () => {
           children: [{ type: 'math', src: '123' }, { text: 'brother' }],
         })
         expect(result).toEqual([
+          { type: 'math', formula: '\\sf 123', formulaSource: '123' },
           {
             type: 'p',
-            children: [
-              { type: 'math', formula: '\\sf 123', formulaSource: '123' },
-              { type: 'text', text: 'brother' },
-            ],
+            children: [{ type: 'text', text: 'brother' }],
           },
         ])
       })
@@ -720,7 +697,7 @@ describe('text types', () => {
 
     test('compat: a gets wrapped in p', () => {
       const result = convert({
-        type: 'list-item-child',
+        type: 'list-item',
         children: [
           {
             type: 'a',
@@ -731,12 +708,17 @@ describe('text types', () => {
       })
       expect(result).toEqual([
         {
-          type: 'p',
+          type: 'li',
           children: [
             {
-              type: 'a',
-              href: '/123',
-              children: [{ type: 'text', text: 'log text' }],
+              type: 'p',
+              children: [
+                {
+                  type: 'a',
+                  href: '/123',
+                  children: [{ type: 'text', text: 'log text' }],
+                },
+              ],
             },
           ],
         },

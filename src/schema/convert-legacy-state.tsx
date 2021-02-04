@@ -75,34 +75,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
         ]
       }
       if (/^c[\d]+$/.test(className)) {
-        let children = convert(node.children)
-        // compat: wrap every inline child in p, grouped
-        children = children.reduce((acc, val) => {
-          if (
-            val.type === 'inline-math' ||
-            val.type === 'a' ||
-            (val.type === 'text' && val.text !== undefined)
-          ) {
-            let last: FrontendContentNode | undefined = undefined
-            if (acc.length > 0) {
-              last = acc[acc.length - 1]
-            }
-            if (last && last.type === 'p' && last.children !== undefined) {
-              last.children.push(val)
-              return acc
-            } else {
-              acc.push({
-                type: 'p',
-                children: [val],
-              })
-              return acc
-            }
-          } else {
-            // block element
-            acc.push(val)
-            return acc
-          }
-        }, [] as FrontendContentNode[])
+        const children = wrapSemistructuredTextInP(convert(node.children))
         return [
           {
             type: 'col',
@@ -569,5 +542,19 @@ function wrapSemistructuredTextInP(children: FrontendContentNode[]) {
       resultAppendable = false
     }
   })
-  return result
+  return unwrapSingleMathInline(result)
+}
+
+function unwrapSingleMathInline(children: FrontendContentNode[]) {
+  return children.map((child) => {
+    if (
+      child.type == 'p' &&
+      child.children?.length == 1 &&
+      child.children[0].type == 'inline-math'
+    ) {
+      ;(child.children[0] as any).type = 'math'
+      return child.children[0]
+    }
+    return child
+  })
 }
