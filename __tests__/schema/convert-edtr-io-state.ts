@@ -111,27 +111,6 @@ describe('edtr io plugins', () => {
         },
       ])
     })
-
-    test('compat: align math children left', () => {
-      const result = convert({
-        plugin: 'layout',
-        state: [
-          {
-            child: {
-              plugin: 'rows',
-              state: [
-                {
-                  plugin: 'text',
-                  state: [{ type: 'math' }],
-                },
-              ],
-            },
-            width: 6,
-          },
-        ],
-      })
-      expect(result[0].children[0].children[0].alignLeft).toBe(true)
-    })
   })
 
   test('plugin: anchor', () => {
@@ -272,7 +251,7 @@ describe('edtr io plugins', () => {
         {
           plugin: 'image',
           state: {
-            src: '',
+            src: 'bild.jpg',
             alt: '',
           },
         },
@@ -282,7 +261,7 @@ describe('edtr io plugins', () => {
       { type: 'h', level: 2, children: [] },
       {
         type: 'img',
-        src: '',
+        src: 'bild.jpg',
         alt: '',
         maxWidth: undefined,
       },
@@ -323,7 +302,6 @@ describe('edtr io plugins', () => {
     })
 
     expect(result).toEqual([
-      { type: 'text', text: ' ' },
       {
         type: 'table',
         children: [
@@ -361,7 +339,6 @@ describe('edtr io plugins', () => {
           },
         ],
       },
-      { type: 'text', text: ' ' },
     ])
   })
 
@@ -470,19 +447,22 @@ describe('text types', () => {
       test('is only child', () => {
         const result = convert({
           type: 'p',
-          children: [{ type: 'math' }],
+          children: [{ type: 'math', src: '123' }],
         })
-        expect(result).toEqual([{ type: 'math' }])
+        expect(result).toEqual([
+          { type: 'math', formula: '\\sf 123', formulaSource: '123' },
+        ])
       })
       test('has sibling', () => {
         const result = convert({
           type: 'p',
-          children: [{ type: 'math' }, { text: 'brother' }],
+          children: [{ type: 'math', src: '123' }, { text: 'brother' }],
         })
         expect(result).toEqual([
+          { type: 'math', formula: '\\sf 123', formulaSource: '123' },
           {
             type: 'p',
-            children: [{ type: 'math' }, { type: 'text', text: 'brother' }],
+            children: [{ type: 'text', text: 'brother' }],
           },
         ])
       })
@@ -527,13 +507,7 @@ describe('text types', () => {
         type: 'a',
         children: [{ text: 'link' }],
       })
-      expect(result).toEqual([
-        {
-          type: 'a',
-          href: '',
-          children: [{ type: 'text', text: 'link' }],
-        },
-      ])
+      expect(result).toEqual([{ type: 'text', text: 'link' }])
     })
   })
 
@@ -678,9 +652,7 @@ describe('text types', () => {
         type: 'list-item-child',
         children: [{ text: 'item-child' }],
       })
-      expect(result).toEqual([
-        { type: 'p', children: [{ type: 'text', text: 'item-child' }] },
-      ])
+      expect(result).toEqual([{ type: 'text', text: 'item-child' }])
     })
 
     test('compat: ps will not be wrapped in another p', () => {
@@ -725,22 +697,28 @@ describe('text types', () => {
 
     test('compat: a gets wrapped in p', () => {
       const result = convert({
-        type: 'list-item-child',
+        type: 'list-item',
         children: [
           {
             type: 'a',
+            href: '/123',
             children: [{ text: 'log text' }],
           },
         ],
       })
       expect(result).toEqual([
         {
-          type: 'p',
+          type: 'li',
           children: [
             {
-              type: 'a',
-              href: '',
-              children: [{ type: 'text', text: 'log text' }],
+              type: 'p',
+              children: [
+                {
+                  type: 'a',
+                  href: '/123',
+                  children: [{ type: 'text', text: 'log text' }],
+                },
+              ],
             },
           ],
         },
