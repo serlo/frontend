@@ -222,15 +222,16 @@ function convertSlate(node: SlateBlockElement) {
     return handleSemistructedContentOfP(convert(node.children))
   }
   if (node.type === 'a') {
+    const children = convert(node.children)
     if (!node.href) {
       // remove empty links
-      return convert(node.children)
+      return children
     }
     return [
       {
         type: 'a',
         href: node.href,
-        children: convert(node.children),
+        children,
       },
     ]
   }
