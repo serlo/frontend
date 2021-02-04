@@ -32,7 +32,7 @@ function Content() {
     error: readError,
     loadMore: loadMoreRead,
     loading: loadingRead,
-  } = useNotificationFetch(false)
+  } = useNotificationFetch(false, showUnread) //dont fetch if showUnread is true
 
   function onMoreRead() {
     loadMoreRead()
@@ -94,7 +94,7 @@ const TabButton = styled.button<{ active: boolean }>`
   margin-bottom: 20px;
 `
 
-export function useNotificationFetch(unread?: boolean) {
+export function useNotificationFetch(unread?: boolean, noKey?: boolean) {
   // eslint-disable-next-line @typescript-eslint/unbound-method
   return useGraphqlSwrPaginationWithAuth<{
     id: number
@@ -109,6 +109,7 @@ export function useNotificationFetch(unread?: boolean) {
     getConnection(data) {
       return data.notifications
     },
+    noKey,
   })
 }
 
