@@ -12,7 +12,7 @@ export function LazyTippy({
       setTippy(value.default)
       setTimeout(() => onLoaded && onLoaded(), 0)
     })
-  }, [])
+  }, [onLoaded])
 
   if (!Tippy) {
     //console.log('return children', props)
