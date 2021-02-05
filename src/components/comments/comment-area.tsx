@@ -158,12 +158,16 @@ export function CommentArea({ id: entityId, noForms }: CommentAreaProps) {
       return createComment({
         content,
         threadId,
+        subscribe: true,
+        sendEmail: false,
       })
     } else {
       return createThread({
         title: '',
         content,
         objectId: entityId,
+        subscribe: true,
+        sendEmail: false,
       })
     }
   }
