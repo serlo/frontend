@@ -21,6 +21,7 @@ interface PrivacyWrapperProps {
   embedUrl?: string
   twingleCallback?: () => void
   onLoad?: () => void
+  eventCounter?: JSX.Element
 }
 
 export function PrivacyWrapper({
@@ -30,6 +31,7 @@ export function PrivacyWrapper({
   provider,
   embedUrl,
   twingleCallback,
+  eventCounter,
   onLoad,
 }: PrivacyWrapperProps) {
   const [showIframe, setShowIframe] = React.useState(false)
@@ -103,6 +105,7 @@ export function PrivacyWrapper({
               spin={showIframe}
             />{' '}
             {buttonLabel}
+            {eventCounter}
           </Playbutton>
         </ButtonWrap>
       </Placeholder>

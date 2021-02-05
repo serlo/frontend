@@ -8,6 +8,7 @@ import { EdtrPluginInputExercise } from '@/data-types'
 import { makeMargin, makePrimaryButton, inputFontReset } from '@/helper/css'
 import { submitEventWithPath } from '@/helper/submit-event'
 import { NodePath } from '@/schema/article-renderer'
+import { EventCounter } from '@/components/event-counter'
 
 export interface InputExerciseProps {
   data: EdtrPluginInputExercise['state']
@@ -46,6 +47,7 @@ export function InputExercise({ data, path }: InputExerciseProps) {
         placeholder={strings.content.yourAnswer}
       />{' '}
       {data.unit}
+      <EventCounter prefix="checkinput" path={path} />
       <br />
       {feedback && (
         <Feedback correct={feedback.correct}>{feedback.message}</Feedback>

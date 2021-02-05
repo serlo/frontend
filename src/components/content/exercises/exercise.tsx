@@ -14,6 +14,7 @@ import { FrontendExerciseNode } from '@/data-types'
 import { makeMargin, makeTransparentButton, makePadding } from '@/helper/css'
 import { submitEventWithPath } from '@/helper/submit-event'
 import type { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
+import { EventCounter } from '@/components/event-counter'
 
 export interface ExerciseProps {
   node: FrontendExerciseNode
@@ -114,6 +115,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
         <StyledSpan>{solutionVisible ? '▾' : '▸'}&nbsp;</StyledSpan>
         {strings.entities.solution}{' '}
         {solutionVisible ? strings.content.hide : strings.content.show}
+        <EventCounter path={path} prefix="opensolution" />
       </SolutionToggle>
     )
   }

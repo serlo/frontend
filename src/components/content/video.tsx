@@ -8,6 +8,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { submitEventWithPath } from '@/helper/submit-event'
 import { ExternalProvider } from '@/helper/use-consent'
 import { NodePath } from '@/schema/article-renderer'
+import { EventCounter } from '../event-counter'
 
 export interface VideoProps {
   src: string
@@ -61,6 +62,7 @@ export function Video(props: VideoProps) {
         type="video"
         provider={provider}
         embedUrl={iframeUrl}
+        eventCounter={<EventCounter prefix="loadvideo" path={path} />}
         onLoad={() => {
           submitEventWithPath('loadvideo', path)
         }}

@@ -6,6 +6,7 @@ import * as React from 'react'
 import styled from 'styled-components'
 
 import { CommentAreaProps } from '../comments/comment-area'
+import { StatsViews } from '../stats-view'
 import { HSpace } from './h-space'
 import { LicenseNotice } from '@/components/content/license-notice'
 import { CourseFooter } from '@/components/navigation/course-footer'
@@ -67,12 +68,19 @@ export function Entity({ data }: EntityProps) {
   )
 
   function renderStyledH1() {
-    if (!data.title) return null
+    if (!data.title)
+      return (
+        <StyledH1>
+          {' '}
+          <StatsViews />
+        </StyledH1>
+      )
 
     return (
       <StyledH1 spaceAbove itemProp="name">
         {data.title}
         {renderEntityIcon()}
+        <StatsViews />
       </StyledH1>
     )
   }

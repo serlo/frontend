@@ -4,6 +4,7 @@ import { PrivacyWrapper } from './privacy-wrapper'
 import { submitEventWithPath } from '@/helper/submit-event'
 import { ExternalProvider } from '@/helper/use-consent'
 import { NodePath } from '@/schema/article-renderer'
+import { EventCounter } from '../event-counter'
 
 export interface GeogebraProps {
   id: string
@@ -18,6 +19,7 @@ export function Geogebra({ id, path }: GeogebraProps) {
       type="applet"
       provider={ExternalProvider.GeoGebra}
       embedUrl={url}
+      eventCounter={<EventCounter prefix="loadgeogebra" path={path} />}
       onLoad={() => {
         submitEventWithPath('loadgeogebra', path)
       }}

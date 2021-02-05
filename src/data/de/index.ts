@@ -5,7 +5,7 @@ export const instanceData = {
   footerData: footerData,
   strings: {
     header: {
-      slogan: "Die freie Lernplattform",
+      slogan: "Statistiken und Insights (Alpha)",
       search: "Suche",
       login: "Anmelden"
     },

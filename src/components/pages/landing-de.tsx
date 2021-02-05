@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { Link } from '../content/link'
 import { HeadTags } from '../head-tags'
 import { PrinciplesGraphic } from '../landing/principles-graphic'
+import { StatsOverview } from '../stats-overview'
 import { StyledP } from '../tags/styled-p'
 import DonateSVG from '@/assets-webkit/img/footer-donate.svg'
 import ParticipateSVG from '@/assets-webkit/img/footer-participate.svg'
@@ -24,6 +25,11 @@ export function LandingDE({ data }: LandingDEProps) {
   return (
     <>
       <HeadTags data={{ title: 'Serlo – Die freie Lernplattform' }} />
+
+      <StatsOverview />
+
+      <hr />
+
       <SubjectsSection>
         <LandingSubjects data={subjectsData} />
       </SubjectsSection>

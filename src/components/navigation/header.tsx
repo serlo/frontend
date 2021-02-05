@@ -35,7 +35,7 @@ export function Header() {
 }
 
 const BlueHeader = styled.header`
-  background-color: ${(props) => props.theme.colors.bluewhite};
+  background-color: #fffbe0;
 `
 
 const PaddedDiv = styled.div`

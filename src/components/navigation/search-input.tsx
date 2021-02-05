@@ -6,6 +6,7 @@ import { useState, useRef, useContext, useEffect } from 'react'
 import styled, { createGlobalStyle, css } from 'styled-components'
 
 import { isLegacyLink } from '../content/link'
+import { EventCounter } from '../event-counter'
 import { StyledA } from '../tags/styled-a'
 import { LazyTippy } from './lazy-tippy'
 import SearchIcon from '@/assets-webkit/img/search-icon.svg'
@@ -182,7 +183,10 @@ export function SearchInput() {
         >
           {!searchActive && (
             <>
-              <PlaceholderText>{strings.header.search}</PlaceholderText>
+              <PlaceholderText>
+                {strings.header.search}
+                <EventCounter prefix="clicksearch" path={[id]} />
+              </PlaceholderText>
               <PlaceholderButton>
                 {!searchLoaded ? (
                   <PlaceholderIcon />

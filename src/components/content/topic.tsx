@@ -7,6 +7,7 @@ import styled from 'styled-components'
 import { makeMargin } from '../../helper/css'
 import { renderArticle } from '../../schema/article-renderer'
 import { CommentAreaProps } from '../comments/comment-area'
+import { StatsViews } from '../stats-view'
 import { ShareModalProps } from '../user-tools/share-modal'
 import { UserTools } from '../user-tools/user-tools'
 import { LicenseNotice } from './license-notice'
@@ -55,7 +56,8 @@ export function Topic({ data }: TopicProps) {
             {' '}
             <StyledIcon icon={faFile} />{' '}
           </span>
-        )}
+        )}{' '}
+        <StatsViews />
       </Headline>
       {renderUserTools({ aboveContent: true })}
       <ImageSizer>

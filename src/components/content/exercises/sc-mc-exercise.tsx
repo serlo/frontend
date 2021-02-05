@@ -10,6 +10,7 @@ import { EdtrPluginScMcExercise } from '@/data-types'
 import { makeMargin, makePrimaryButton } from '@/helper/css'
 import { submitEventWithPath } from '@/helper/submit-event'
 import type { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
+import { EventCounter } from '@/components/event-counter'
 
 export interface ScMcExerciseProps {
   state: EdtrPluginScMcExercise['state']
@@ -124,6 +125,7 @@ function SingleChoice({
         {selected !== undefined
           ? strings.content.check
           : strings.content.chooseOption}
+        <EventCounter prefix="checksc" path={path} />
       </CheckButton>
     </Container>
   )
@@ -199,6 +201,7 @@ function MultipleChoice({
         onPointerUp={(e) => e.currentTarget.blur()}
       >
         {strings.content.check}
+        <EventCounter prefix="checkmc" path={path} />
       </CheckButton>
     </Container>
   )

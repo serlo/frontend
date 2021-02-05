@@ -44,6 +44,7 @@ import { Lazy } from '@/components/content/lazy'
 import { MathSpanProps } from '@/components/content/math-span'
 import { Multimedia } from '@/components/content/multimedia'
 import { Video } from '@/components/content/video'
+import { EventCounter } from '@/components/event-counter'
 import { FrontendContentNode } from '@/data-types'
 import { submitEventWithPath } from '@/helper/submit-event'
 
@@ -396,6 +397,7 @@ function SpoilerForEndUser({ body, title, path }: SpoilerForEndUserProps) {
       >
         <SpoilerToggle open={open} />
         {title}
+        <EventCounter prefix="openspoiler" path={path} />
       </SpoilerTitle>
       {open && body}
     </SpoilerContainer>

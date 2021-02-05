@@ -19,6 +19,8 @@ import type { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { frontendOrigin } from '@/helper/frontent-origin'
 import { theme } from '@/theme'
 
+export const StatsContext = React.createContext<any>(null)
+
 export type FrontendClientBaseProps = React.PropsWithChildren<{
   noHeaderFooter?: boolean
   noContainers?: boolean
@@ -47,6 +49,14 @@ export function FrontendClientBase({
       ) as ReturnType<typeof getInstanceDataByLang>
     }
   })
+
+  const [statsData, setStatsData] = React.useState(null)
+
+  React.useEffect(() => {
+    void fetch('http://localhost:8081/stats_current.json')
+      .then((res) => res.json())
+      .then((data) => setStatsData(data))
+  }, [])
 
   //React.useEffect(storePageData, [initialProps])
 
@@ -82,33 +92,35 @@ export function FrontendClientBase({
       <FontFix />
       <NProgressRouter />
       <PrintStylesheet warning={instanceData.strings.print.warning} />
-      <InstanceDataProvider value={instanceData}>
-        <LoggedInComponentsProvider value={loggedInComponents}>
-          <LoggedInDataProvider value={loggedInData}>
-            <EntityIdProvider value={entityId || null}>
-              <ConditonalWrap
-                condition={!noHeaderFooter}
-                wrapper={(kids) => <HeaderFooter>{kids}</HeaderFooter>}
-              >
+      <StatsContext.Provider value={statsData}>
+        <InstanceDataProvider value={instanceData}>
+          <LoggedInComponentsProvider value={loggedInComponents}>
+            <LoggedInDataProvider value={loggedInData}>
+              <EntityIdProvider value={entityId || null}>
                 <ConditonalWrap
-                  condition={!noContainers}
-                  wrapper={(kids) => (
-                    <RelativeContainer>
-                      <MaxWidthDiv showNav={showNav}>
-                        <main>{kids}</main>
-                      </MaxWidthDiv>
-                    </RelativeContainer>
-                  )}
+                  condition={!noHeaderFooter}
+                  wrapper={(kids) => <HeaderFooter>{kids}</HeaderFooter>}
                 >
-                  {/* should not be necessary…?*/}
-                  {children as JSX.Element}
+                  <ConditonalWrap
+                    condition={!noContainers}
+                    wrapper={(kids) => (
+                      <RelativeContainer>
+                        <MaxWidthDiv showNav={showNav}>
+                          <main>{kids}</main>
+                        </MaxWidthDiv>
+                      </RelativeContainer>
+                    )}
+                  >
+                    {/* should not be necessary…?*/}
+                    {children as JSX.Element}
+                  </ConditonalWrap>
                 </ConditonalWrap>
-              </ConditonalWrap>
-              <ToastNotice />
-            </EntityIdProvider>
-          </LoggedInDataProvider>
-        </LoggedInComponentsProvider>
-      </InstanceDataProvider>
+                <ToastNotice />
+              </EntityIdProvider>
+            </LoggedInDataProvider>
+          </LoggedInComponentsProvider>
+        </InstanceDataProvider>
+      </StatsContext.Provider>
     </ThemeProvider>
   )
 
