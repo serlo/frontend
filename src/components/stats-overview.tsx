@@ -156,7 +156,7 @@ export function StatsOverview() {
     data.rows.forEach((row: any) => {
       row.apha =
         row.views < 10
-          ? 0
+          ? -1
           : Math.round(
               // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
               ((row.navs +
@@ -291,7 +291,7 @@ export function StatsOverview() {
                         <StyledTd>{generateLink(row)}</StyledTd>
                         <StyledTd>{row.views}</StyledTd>
                         <StyledTd>{getExternBound(row)}</StyledTd>
-                        <StyledTd>{row.apha}</StyledTd>
+                        <StyledTd>{row.apha < 0 ? '--' : row.apha}</StyledTd>
                         <StyledTd>{row.navs}</StyledTd>
                         <StyledTd>{row.solutions}</StyledTd>
                         <StyledTd>{row.spoilers}</StyledTd>
