@@ -8,13 +8,13 @@ import { InputExercise } from './input-exercise'
 import { ScMcExercise } from './sc-mc-exercise'
 import { useAuth } from '@/auth/use-auth'
 import { CommentAreaProps } from '@/components/comments/comment-area'
+import { EventCounter } from '@/components/event-counter'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { FrontendExerciseNode } from '@/data-types'
 import { makeMargin, makeTransparentButton, makePadding } from '@/helper/css'
 import { submitEventWithPath } from '@/helper/submit-event'
 import type { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
-import { EventCounter } from '@/components/event-counter'
 
 export interface ExerciseProps {
   node: FrontendExerciseNode

@@ -3,12 +3,12 @@ import { useState, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 
 import { Feedback } from './feedback'
+import { EventCounter } from '@/components/event-counter'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EdtrPluginInputExercise } from '@/data-types'
 import { makeMargin, makePrimaryButton, inputFontReset } from '@/helper/css'
 import { submitEventWithPath } from '@/helper/submit-event'
 import { NodePath } from '@/schema/article-renderer'
-import { EventCounter } from '@/components/event-counter'
 
 export interface InputExerciseProps {
   data: EdtrPluginInputExercise['state']

@@ -5,12 +5,12 @@ import { useState, Fragment } from 'react'
 import styled, { css } from 'styled-components'
 
 import { Feedback } from './feedback'
+import { EventCounter } from '@/components/event-counter'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EdtrPluginScMcExercise } from '@/data-types'
 import { makeMargin, makePrimaryButton } from '@/helper/css'
 import { submitEventWithPath } from '@/helper/submit-event'
 import type { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
-import { EventCounter } from '@/components/event-counter'
 
 export interface ScMcExerciseProps {
   state: EdtrPluginScMcExercise['state']

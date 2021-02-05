@@ -13,6 +13,7 @@ import {
   makeGreenButton,
   inputFontReset,
 } from '../../helper/css'
+import { EventCounter } from '../event-counter'
 import { LazyTippy } from '../navigation/lazy-tippy'
 import { AuthorToolsData } from './author-tools-hover-menu'
 import { useAuth } from '@/auth/use-auth'
@@ -22,7 +23,6 @@ import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UserRoles } from '@/data-types'
 import { theme } from '@/theme'
-import { EventCounter } from '../event-counter'
 
 interface UserToolsProps {
   id: number

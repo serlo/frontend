@@ -1,10 +1,10 @@
 import styled from 'styled-components'
 
+import { EventCounter } from '../event-counter'
 import { PrivacyWrapper } from './privacy-wrapper'
 import { submitEventWithPath } from '@/helper/submit-event'
 import { ExternalProvider } from '@/helper/use-consent'
 import { NodePath } from '@/schema/article-renderer'
-import { EventCounter } from '../event-counter'
 
 export interface GeogebraProps {
   id: string
