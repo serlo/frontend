@@ -53,7 +53,7 @@ export function FrontendClientBase({
   const [statsData, setStatsData] = React.useState(null)
 
   React.useEffect(() => {
-    void fetch('http://localhost:8081/stats_current.json')
+    void fetch('https://arrrg.de/serlo-stats/stats_current.json')
       .then((res) => res.json())
       .then((data) => setStatsData(data))
   }, [])

@@ -1,10 +1,6 @@
-import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Tippy from '@tippyjs/react'
 import React from 'react'
 
 import { StatsContext } from './frontend-client-base'
-import { LazyTippy } from './navigation/lazy-tippy'
 import { EntityIdContext } from '@/contexts/entity-id-context'
 
 export function StatsViews() {
@@ -21,7 +17,6 @@ export function StatsViews() {
   let countInternal = 0
   let countExternal = 0
   let actions = 0
-  let referrer = {}
 
   for (const date of dates) {
     const cur = stats.stats[date]
