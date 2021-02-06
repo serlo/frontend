@@ -5,6 +5,7 @@ import ReactDiffViewer from 'react-diff-viewer'
 import styled, { css } from 'styled-components'
 
 import { PageTitle } from '../content/page-title'
+import { CheckoutRejectButtons } from './checkout-reject-buttons'
 import { Geogebra } from '@/components/content/geogebra'
 import { HSpace } from '@/components/content/h-space'
 import { Link } from '@/components/content/link'
@@ -66,17 +67,21 @@ export function Revision({ data }: RevisionProps) {
           <i>{strings.revisions.thisIsCurrentVersion}</i>
         </StyledP>
       )}
-      <StyledP>
-        {data.changes !== undefined && (
-          <>
-            <b>{strings.revisions.changes}:</b> {data.changes}
-            <br />
-            <br />
-          </>
-        )}
-        {strings.revisions.by} <UserLink user={data.user} />{' '}
-        <TimeAgo datetime={new Date(data.date)} dateAsTitle />
-      </StyledP>
+
+      {data.changes && (
+        <StyledP>
+          <b>{strings.revisions.changes}:</b> {data.changes}
+          <br />
+          <br />
+        </StyledP>
+      )}
+      <FlexWrapper>
+        <StyledP>
+          {strings.revisions.by} <UserLink user={data.user} />{' '}
+          <TimeAgo datetime={new Date(data.date)} dateAsTitle />
+        </StyledP>
+        <CheckoutRejectButtons />
+      </FlexWrapper>
       {dataSet.title !== undefined && (
         <PreviewBox title={strings.revisions.title} diffType="title">
           <StyledH1>{dataSet.title}</StyledH1>
@@ -104,7 +109,6 @@ export function Revision({ data }: RevisionProps) {
           {dataSet.metaDescription}
         </PreviewBox>
       )}
-      <HSpace amount={20} />
     </>
   )
 
@@ -264,7 +268,6 @@ const MetaBar = styled.div`
   ${makePadding}
   display: flex;
   justify-content: space-between;
-
   position: sticky;
   z-index: 50;
   padding-top: 25px;
@@ -279,4 +282,9 @@ const DiffViewerWrapper = styled.div`
     ${inputFontReset}
     font-size: 1.125rem !important;
   }
+`
+
+const FlexWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
 `
