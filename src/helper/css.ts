@@ -132,11 +132,7 @@ export const FontFix = createGlobalStyle`
   }
 `
 
-interface Props {
-  warning: string
-}
-
-export const PrintStylesheet = createGlobalStyle<Props>`
+export const PrintStylesheet = createGlobalStyle`
     @media print {
       html {
         font-size: 10pt;
@@ -163,14 +159,6 @@ export const PrintStylesheet = createGlobalStyle<Props>`
           width: 100%;
           max-width: 100%;
           position: relative;
-        }
-        main::before {
-          content: '${(props) => props.warning}';
-          display: block;
-          border: 1px solid black;
-          font-size: 1.125rem;
-          padding: 10px;
-          margin-top: 10px;
         }
       }
       .header-breadcrumbs,
