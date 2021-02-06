@@ -160,7 +160,7 @@ export const instanceData = {
       backToHome: 'To our home page'
     },
     print: {
-      warning: 'Important: To make sure all images and formulas print, please scroll down to the end of the page once. Thank you!'
+      warning: 'IMPORTANT: To make sure all images and formulas print, please scroll down to the end of the page once BEFORE you open this dialog. Thank you!'
     },
     profiles: {
       aboutMe: 'About me',
