@@ -9,6 +9,7 @@ import { NProgressRouter } from './navigation/n-progress-router'
 import { RelativeContainer } from './navigation/relative-container'
 import { ToastNotice } from './toast-notice'
 import { useAuth } from '@/auth/use-auth'
+import { PrintWarning } from '@/components/content/print-warning'
 import { EntityIdProvider } from '@/contexts/entity-id-context'
 import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInComponentsProvider } from '@/contexts/logged-in-components'
@@ -81,7 +82,8 @@ export function FrontendClientBase({
     <ThemeProvider theme={theme}>
       <FontFix />
       <NProgressRouter />
-      <PrintStylesheet warning={instanceData.strings.print.warning} />
+      <PrintStylesheet />
+      <PrintWarning warning={instanceData.strings.print.warning} />
       <InstanceDataProvider value={instanceData}>
         <LoggedInComponentsProvider value={loggedInComponents}>
           <LoggedInDataProvider value={loggedInData}>
