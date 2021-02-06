@@ -30,12 +30,12 @@ export function PrintWarning({ warning }: { warning: string }) {
 
 const PrintWarningDiv = styled.div`
   display: none;
-  border: 1.5px solid black;
-  font-size: 1.125rem;
-  padding: 10px;
-  margin-top: 10px;
 
   @media print {
     display: block;
+    border: 1.5px solid black;
+    font-size: 1.125rem;
+    padding: 10px;
+    margin-top: 10px;
   }
 `
