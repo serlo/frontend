@@ -160,7 +160,7 @@ export const instanceData = {
       backToHome: "Zur Startseite"
     },
     print: {
-      warning: "WICHTIG: Damit alle Bilder und Formeln gedruckt werden, scrolle bitte einmal bis zum Ende der Seite BEVOR du diese Dialog öffnest. Vielen Dank!"
+      warning: "WICHTIG: Damit alle Bilder und Formeln gedruckt werden, scrolle bitte einmal bis zum Ende der Seite BEVOR du diesen Dialog öffnest. Vielen Dank!"
     },
     profiles: {
       aboutMe: "Über mich",
