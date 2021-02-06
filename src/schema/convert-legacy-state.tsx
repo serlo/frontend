@@ -257,8 +257,6 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
       }
     }
 
-    console.log(children)
-
     return [
       {
         type: 'p',
@@ -532,7 +530,6 @@ function wrapSemistructuredTextInP(children: FrontendContentNode[]) {
       child.type == 'a' ||
       child.type == 'inline-math'
     ) {
-      console.log(child)
       const last = result[result.length - 1]
       if (resultAppendable && last && last.type == 'p') {
         last.children!.push(child)

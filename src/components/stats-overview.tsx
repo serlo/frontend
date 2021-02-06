@@ -43,6 +43,7 @@ export function StatsOverview() {
     data.applets = 0
     data.shares = 0
     data.spoilers = 0
+    data.interactives = 0
 
     data.uuid2path = {}
 
@@ -74,6 +75,7 @@ export function StatsOverview() {
             videos: 0,
             applets: 0,
             shares: 0,
+            interactives: 0,
           }
           data.rows.push(row)
           data.id2row[id] = row
@@ -149,6 +151,17 @@ export function StatsOverview() {
           }
           data.spoilers += cur.events[event]
         }
+        if (
+          event.startsWith('checksc_') ||
+          event.startsWith('checkmc_') ||
+          event.startsWith('checkinput_')
+        ) {
+          const row = getRow(event)
+          if (row) {
+            row.interactives += cur.events[event]
+          }
+          data.interactives += cur.events[event]
+        }
       }
     }
 
@@ -165,6 +178,7 @@ export function StatsOverview() {
                 row.searches +
                 row.videos +
                 row.applets +
+                row.interactives +
                 row.shares) *
                 100) /
                 row.views
@@ -196,7 +210,7 @@ export function StatsOverview() {
   if (stats && data) {
     return (
       <RelativeContainer>
-        <MaxWidthDiv width={1000}>
+        <MaxWidthDiv width={1200}>
           <SpecialCss>
             <HSpace amount={40} />
             <StyledH3>
@@ -222,6 +236,12 @@ export function StatsOverview() {
               </StyledLi>
               <StyledLi>
                 <StyledP>{data.solutions} Lösungen angezeigt</StyledP>
+              </StyledLi>
+              <StyledLi>
+                <StyledP>
+                  {data.interactives} interaktive Aufgaben (Sc/Mc/Input)
+                  überprüft
+                </StyledP>
               </StyledLi>
               <StyledLi>
                 <StyledP>{data.spoilers} Spoiler geöffnet</StyledP>
@@ -252,6 +272,9 @@ export function StatsOverview() {
                 <option value="navs">meiste Links geklickt</option>
                 <option value="apha">meiste Aktionen pro 100 Aufrufe</option>
                 <option value="solutions">meiste Lösungen angezeigt</option>
+                <option value="interactives">
+                  meiste interaktive Aufgaben überprüft
+                </option>
                 <option value="spoilers">meiste Spoiler aufgeklappt</option>
                 <option value="searches">
                   häufigsten die Suche angeklickt
@@ -278,6 +301,7 @@ export function StatsOverview() {
                     </StyledTh>
                     <StyledTh title="Klicks auf interne Links">Kl.</StyledTh>
                     <StyledTh title="Lösungen angezeigt">Lös.</StyledTh>
+                    <StyledTh title="Interaktive Aufgaben">Int.</StyledTh>
                     <StyledTh title="Spoiler aufgeklappt">Sp.</StyledTh>
                     <StyledTh title="Suche angeklickt">Su.</StyledTh>
                     <StyledTh title="Video geladen">Vid.</StyledTh>
@@ -294,6 +318,7 @@ export function StatsOverview() {
                         <StyledTd>{row.apha < 0 ? '--' : row.apha}</StyledTd>
                         <StyledTd>{row.navs}</StyledTd>
                         <StyledTd>{row.solutions}</StyledTd>
+                        <StyledTd>{row.interactives}</StyledTd>
                         <StyledTd>{row.spoilers}</StyledTd>
                         <StyledTd>{row.searches}</StyledTd>
                         <StyledTd>{row.videos}</StyledTd>
@@ -336,8 +361,8 @@ export function StatsOverview() {
       return <Link href={`/${row.id}`}>/{row.id}</Link>
     }
     let title = decodeURI(path)
-    if (title.length > 25) {
-      title = '...' + title.substring(title.length - 25)
+    if (title.length > 45) {
+      title = '...' + title.substring(title.length - 45)
     }
     return <Link href={path}>{title}</Link>
   }
