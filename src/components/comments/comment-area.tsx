@@ -53,7 +53,7 @@ export function CommentArea({ id: entityId, noForms }: CommentAreaProps) {
   }, [showAll, container, entityId])
 
   return (
-    <div ref={container}>
+    <div ref={container} className="comment-area-container">
       <Guard data={commentData} error={error}>
         <>
           {renderStartThreadForm()}

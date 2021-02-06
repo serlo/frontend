@@ -153,7 +153,8 @@ export const PrintStylesheet = createGlobalStyle<Props>`
         aside,
         div.cookie-bar,
         h1 > span > svg,
-        div.video, figure.video
+        div.video, figure.video,
+        .comment-area-container
         {
           display: none !important;
         }
