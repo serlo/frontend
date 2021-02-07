@@ -12,11 +12,12 @@ import { StyledA } from '../tags/styled-a'
 import { Link } from './link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { LicenseData } from '@/data-types'
+import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 interface LicenseNoticeProps {
   data: LicenseData
   minimal?: boolean
-  type?: string
+  type?: 'video' | 'task' | 'exercise-group' | 'solution'
 }
 
 export function LicenseNotice({ data, minimal, type }: LicenseNoticeProps) {
@@ -73,39 +74,44 @@ export function LicenseNotice({ data, minimal, type }: LicenseNoticeProps) {
 
   function renderMinimalNotice() {
     const typeString = translateTypeString()
+    const licenseHref = `/license/detail/${data.id}`
     return (
-      <MinimalLink
-        href={`/license/detail/${data.id}`}
-        title={typeString ? typeString + ': ' + data.title : data.title}
-        noExternalIcon
-      >
-        {isCreativeCommons ? (
-          <FontAwesomeIcon icon={faCreativeCommons} />
-        ) : (
-          <span className="fa-layers fa-fw">
+      <>
+        <MinimalLink
+          title={strings.license.nonFree}
+          href={licenseHref}
+          noExternalIcon
+        >
+          {isCreativeCommons ? (
             <FontAwesomeIcon icon={faCreativeCommons} />
-            <FontAwesomeIcon
-              icon={faSlash}
-              flip="horizontal"
-              transform="shrink-6"
-            />
-          </span>
+          ) : (
+            <span className="fa-layers fa-fw">
+              <FontAwesomeIcon icon={faCreativeCommons} />
+              <FontAwesomeIcon
+                icon={faSlash}
+                flip="horizontal"
+                transform="shrink-6"
+              />
+            </span>
+          )}
+        </MinimalLink>
+        {!isCreativeCommons && (
+          <SmallLicenseInfo>
+            {' '}
+            {replacePlaceholders(strings.license.licenseFor, {
+              contenttype: typeString,
+            })}
+            : <Link href={licenseHref}>{data.title}</Link>
+          </SmallLicenseInfo>
         )}
-      </MinimalLink>
+      </>
     )
   }
 
-  function translateTypeString() {
-    switch (type) {
-      case 'video':
-        return strings.entities.video
-      case 'task':
-      case 'exercise-group':
-        return strings.content.task
-      case 'solution':
-        return strings.entities.solution
-    }
-    return type
+  function translateTypeString(): string {
+    if (type == 'task') return strings.content.task
+    if (type == 'exercise-group') return strings.content.task
+    return strings.entities[type || 'content']
   }
 }
 
@@ -124,6 +130,11 @@ const MinimalLink = styled(Link)`
     vertical-align: -0.168em;
     margin-left: 0.009em;
   }
+`
+
+const SmallLicenseInfo = styled.span`
+  font-size: 1rem;
+  vertical-align: text-top;
 `
 
 const StyledSmall = styled.span`
