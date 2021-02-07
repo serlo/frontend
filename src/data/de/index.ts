@@ -308,16 +308,16 @@ export const loggedInData = {
     },
     revisions: {
       accept: {
-        action: 'Accept',
-        title: 'Accept Revision',
-        explanation: 'Please give the author some feedback.'
+        action: "Akzeptieren",
+        title: "Bearbeitung akzeptieren",
+        explanation: "Bitte gib der Autor*in ein bisschen Feedback."
       },
       reject: {
-        action: 'Reject',
-        title: 'Reject Revision',
-        explanation: 'Please tell the author why you are rejecting the submission.'
+        action: "Ablehnen",
+        title: "Bearbeitung ablehnen",
+        explanation: "Bitte teile dem Bearbeiter mit, warum seine Änderung abgelehnt wurde."
       },
-      confirm: 'Confirm'
+      confirm: "Bestätigen"
     }
   }
 };
