@@ -310,12 +310,12 @@ export const loggedInData = {
       accept: {
         action: 'Accept',
         title: 'Accept Revision',
-        explanation: 'Please give the author some feedback.',
+        explanation: 'Please give the author some feedback.'
       },
       reject: {
         action: 'Reject',
         title: 'Reject Revision',
-        explanation: 'Please tell the author why you are rejecting the submission.',
+        explanation: 'Please tell the author why you are rejecting the submission.'
       },
       confirm: 'Confirm'
     }
