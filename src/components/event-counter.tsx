@@ -17,7 +17,7 @@ export function EventCounter({ prefix, path }: any) {
 
   for (const date of dates) {
     const cur = stats.stats[date]
-    if (cur.events[key]) count += cur.events[key]
+    if (cur.events && cur.events[key]) count += cur.events[key]
   }
 
   if (count < 1) return null

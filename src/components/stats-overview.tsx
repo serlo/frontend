@@ -340,7 +340,7 @@ export function StatsOverview() {
       </RelativeContainer>
     )
   }
-  return null
+  return <StyledP>Daten werden geladen ...</StyledP>
 
   function getExternBound(row: any) {
     if (row.views < 10) return '--'
