@@ -91,21 +91,21 @@ export function InputExercise({ data, path }: InputExerciseProps) {
     const _value = collapseWhitespace(value)
     switch (data.type) {
       case 'input-number-exact-match-challenge':
-        return normalizeNumber(_value).replace(/( )?\/( )?/g, '/')
+        return normalizeNumber(_value).replace(/\s/g, '')
       case 'input-expression-equal-match-challenge':
         return A ? A.parse(normalizeNumber(_value)) : undefined
       case 'input-string-normalized-match-challenge':
         return _value.toUpperCase()
     }
   }
-}
 
-function collapseWhitespace(val: string): string {
-  return val.replace(/\s+/g, ' ')
-}
+  function collapseWhitespace(val: string): string {
+    return val.replace(/[\s\xa0]+/g, ' ').trim()
+  }
 
-function normalizeNumber(val: string) {
-  return val.replace(/,/g, '.')
+  function normalizeNumber(val: string) {
+    return val.replace(/,/g, '.').replace(/^[+]/, '')
+  }
 }
 
 const Wrapper = styled.div`
