@@ -305,6 +305,19 @@ export const loggedInData = {
       subscription: "Abonnement",
       noMails: "deaktivieren",
       noNotifications: "abbestellen"
+    },
+    revisions: {
+      accept: {
+        action: "Akzeptieren",
+        title: "Bearbeitung akzeptieren",
+        explanation: "Bitte gib der Autor*in ein bisschen Feedback."
+      },
+      reject: {
+        action: "Ablehnen",
+        title: "Bearbeitung ablehnen",
+        explanation: "Bitte teile dem Bearbeiter mit, warum seine Änderung abgelehnt wurde."
+      },
+      confirm: "Bestätigen"
     }
   }
 };
