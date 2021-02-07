@@ -176,7 +176,7 @@ function buildButtons(
   })
 }
 
-//this is overriding the styles of the modal-content only. see doc to change overlay etc.
+// this is overriding the styles of the modal-content only. see doc to change overlay etc.
 export const StyledModal = styled(Modal)`
   position: absolute;
   top: 40%;
@@ -250,7 +250,7 @@ const Gray = styled.small`
     font-weight: bold;
   }
 `
-const CloseButton = styled.button`
+export const CloseButton = styled.button`
   position: absolute;
   top: 14px;
   right: 14px;

@@ -1,10 +1,13 @@
 import { faList } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import dynamic from 'next/dynamic'
 import * as React from 'react'
 import ReactDiffViewer from 'react-diff-viewer'
 import styled, { css } from 'styled-components'
 
 import { PageTitle } from '../content/page-title'
+import type { CheckoutRejectButtonsProps } from './checkout-reject-buttons'
+import { useAuth } from '@/auth/use-auth'
 import { Geogebra } from '@/components/content/geogebra'
 import { HSpace } from '@/components/content/h-space'
 import { Link } from '@/components/content/link'
@@ -24,6 +27,12 @@ import {
 import { entityIconMapping } from '@/helper/icon-by-entity-type'
 import { renderArticle } from '@/schema/article-renderer'
 
+const CheckoutRejectButtons = dynamic<CheckoutRejectButtonsProps>(() =>
+  import('@/components/author/checkout-reject-buttons').then(
+    (mod) => mod.CheckoutRejectButtons
+  )
+)
+
 export interface RevisionProps {
   data: RevisionData
 }
@@ -32,6 +41,7 @@ export interface RevisionProps {
 type DisplayMode = 'this' | 'current' | 'compare'
 
 export function Revision({ data }: RevisionProps) {
+  const auth = useAuth()
   const { strings } = useInstanceData()
   const isCurrentRevision = data.thisRevision.id === data.currentRevision.id
   const [displayMode, setDisplayMode] = React.useState<DisplayMode>(
@@ -66,17 +76,21 @@ export function Revision({ data }: RevisionProps) {
           <i>{strings.revisions.thisIsCurrentVersion}</i>
         </StyledP>
       )}
-      <StyledP>
-        {data.changes !== undefined && (
-          <>
-            <b>{strings.revisions.changes}:</b> {data.changes}
-            <br />
-            <br />
-          </>
-        )}
-        {strings.revisions.by} <UserLink user={data.user} />{' '}
-        <TimeAgo datetime={new Date(data.date)} dateAsTitle />
-      </StyledP>
+
+      {data.changes && (
+        <StyledP>
+          <b>{strings.revisions.changes}:</b> {data.changes}
+          <br />
+          <br />
+        </StyledP>
+      )}
+      <FlexWrapper>
+        <StyledP>
+          {strings.revisions.by} <UserLink user={data.user} />{' '}
+          <TimeAgo datetime={new Date(data.date)} dateAsTitle />
+        </StyledP>
+        {auth.current && <CheckoutRejectButtons />}
+      </FlexWrapper>
       {dataSet.title !== undefined && (
         <PreviewBox title={strings.revisions.title} diffType="title">
           <StyledH1>{dataSet.title}</StyledH1>
@@ -104,7 +118,6 @@ export function Revision({ data }: RevisionProps) {
           {dataSet.metaDescription}
         </PreviewBox>
       )}
-      <HSpace amount={20} />
     </>
   )
 
@@ -264,7 +277,6 @@ const MetaBar = styled.div`
   ${makePadding}
   display: flex;
   justify-content: space-between;
-
   position: sticky;
   z-index: 50;
   padding-top: 25px;
@@ -279,4 +291,9 @@ const DiffViewerWrapper = styled.div`
     ${inputFontReset}
     font-size: 1.125rem !important;
   }
+`
+
+const FlexWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
 `
