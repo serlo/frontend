@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState } from 'react'
 import styled from 'styled-components'
 
-import { useAuth } from '@/auth/use-auth'
 import { StyledH2 } from '@/components/tags/styled-h2'
 import { StyledModal, CloseButton } from '@/components/user-tools/share-modal'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -11,13 +10,17 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { inputFontReset, makeLightButton, makeMargin } from '@/helper/css'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
+export interface CheckoutRejectButtonsProps {
+  onAccept?: () => void
+  onReject?: () => void
+}
+
 export function CheckoutRejectButtons() {
-  const auth = useAuth()
   const loggedInData = useLoggedInData()
   const instanceData = useInstanceData()
   const instanceStrings = instanceData.strings
   const [modalMode, setModalMode] = useState<'accept' | 'reject' | null>(null)
-  if (!auth.current || !loggedInData) return null
+  if (!loggedInData) return null
   const { strings } = loggedInData
 
   function onCloseClick() {
