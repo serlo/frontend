@@ -29,18 +29,19 @@ export function Multimedia({
   const mediaChildIsImage = isImage(mediaChild)
 
   return (
-    <>
-      <Wrapper
-        mediaWidth={mediaWidth}
+    <FlexWrapper>
+      <MediaWrapper
+        $width={mediaWidth}
         onClick={mediaChildIsImage ? openLightBox : undefined}
         useLightbox={mediaChildIsImage}
       >
         {renderNested(media, 'media')}
-      </Wrapper>
-      {renderNested(children, 'children')}
+      </MediaWrapper>
+      <ContentWrapper $width={100 - mediaWidth}>
+        {renderNested(children, 'children')}
+      </ContentWrapper>
       {renderLightbox()}
-      <Clear />
-    </>
+    </FlexWrapper>
   )
 
   function renderLightbox() {
@@ -67,20 +68,25 @@ function isImage(
   return (child as FrontendImgNode).type === 'img'
 }
 
-interface WrapperProps {
-  mediaWidth: number
-  useLightbox: boolean
-}
-const Wrapper = styled.div<WrapperProps>`
+const FlexWrapper = styled.div`
   @media (min-width: ${(props) => props.theme.breakpoints.mobile}) {
-    float: right;
-    width: ${(props) => props.mediaWidth}%;
+    display: flex;
+    flex-direction: row-reverse;
+  }
+`
+
+const MediaWrapper = styled.div<{ $width: number; useLightbox: boolean }>`
+  @media (min-width: ${(props) => props.theme.breakpoints.mobile}) {
+    flex-basis: ${(props) => props.$width}%;
     margin-top: 5px;
     margin-bottom: -3px;
     margin-left: 7px;
     cursor: ${(props) => (props.useLightbox ? 'zoom-in' : 'default')};
   }
 `
-const Clear = styled.div`
-  clear: both;
+
+const ContentWrapper = styled.div<{ $width: number }>`
+  @media (min-width: ${(props) => props.theme.breakpoints.mobile}) {
+    flex-basis: ${(props) => props.$width}%;
+  }
 `
