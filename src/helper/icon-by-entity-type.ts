@@ -10,6 +10,7 @@ import {
   faUser,
   faComments,
   faUserEdit,
+  faCircle,
 } from '@fortawesome/free-solid-svg-icons'
 
 import { CategoryTypes, EntityTypes } from '@/data-types'
@@ -22,6 +23,12 @@ export const categoryIconMapping: { [K in CategoryTypes]: IconDefinition } = {
   folders: faFolderOpen,
   exercises: faFile,
   events: faCalendarAlt,
+}
+
+export function getIconByTypename(typename: string) {
+  const typenameCamelCase = (typename.charAt(0).toLowerCase() +
+    typename.slice(1)) as EntityTypes
+  return entityIconMapping[typenameCamelCase] ?? faCircle
 }
 
 export const entityIconMapping: { [K in EntityTypes]: IconDefinition } = {
