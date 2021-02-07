@@ -12,7 +12,6 @@ import { StyledA } from '../tags/styled-a'
 import { Link } from './link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { LicenseData } from '@/data-types'
-import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 interface LicenseNoticeProps {
   data: LicenseData
@@ -78,32 +77,28 @@ export function LicenseNotice({ data, minimal, type }: LicenseNoticeProps) {
     return (
       <>
         <MinimalLink
-          title={strings.license.nonFree}
+          title={data.title + ' –– ' + strings.license.nonFree}
           href={licenseHref}
           noExternalIcon
         >
-          {isCreativeCommons ? (
+          {data.default ? (
             <FontAwesomeIcon icon={faCreativeCommons} />
           ) : (
-            <span className="fa-layers fa-fw">
-              <FontAwesomeIcon icon={faCreativeCommons} />
-              <FontAwesomeIcon
-                icon={faSlash}
-                flip="horizontal"
-                transform="shrink-6"
-              />
-            </span>
+            <>
+              <StyledIcon className="fa-layers fa-fw">
+                <FontAwesomeIcon icon={faCreativeCommons} />
+                {!isCreativeCommons && (
+                  <FontAwesomeIcon
+                    icon={faSlash}
+                    flip="horizontal"
+                    transform="shrink-6"
+                  />
+                )}
+              </StyledIcon>
+              {typeString}: {strings.license.special}
+            </>
           )}
         </MinimalLink>
-        {!isCreativeCommons && (
-          <SmallLicenseInfo>
-            {' '}
-            {replacePlaceholders(strings.license.licenseFor, {
-              contenttype: typeString,
-            })}
-            : <Link href={licenseHref}>{data.title}</Link>
-          </SmallLicenseInfo>
-        )}
       </>
     )
   }
@@ -117,24 +112,15 @@ export function LicenseNotice({ data, minimal, type }: LicenseNoticeProps) {
 
 const MinimalLink = styled(Link)`
   ${makeTransparentButton}
-  text-align: center;
-  color: ${(props) => props.theme.colors.dark1};
-  background-color: ${(props) => props.theme.colors.lightBackground};
-  font-size: 1.3rem;
-  line-height: 2rem;
-  width: 2rem;
-  height: 2rem;
-  padding: 0;
-
-  > svg {
-    vertical-align: -0.168em;
-    margin-left: 0.009em;
-  }
+  font-weight: normal;
+  font-size: 1rem;
+  height: max-content;
 `
 
-const SmallLicenseInfo = styled.span`
-  font-size: 1rem;
-  vertical-align: text-top;
+const StyledIcon = styled.span`
+  font-size: 1.25rem;
+  vertical-align: sub;
+  margin-right: 3px;
 `
 
 const StyledSmall = styled.span`

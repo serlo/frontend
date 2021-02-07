@@ -79,8 +79,8 @@ export const instanceData = {
     },
     license: {
       readMore: 'Info',
+      special: 'Different license',
       nonFree: 'Usage of this content might be more restricted than our other content.',
-      licenseFor: 'License for this %contenttype%'
     },
     course: {
       showPages: 'Show course overview',
