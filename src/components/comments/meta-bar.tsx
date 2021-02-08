@@ -15,6 +15,7 @@ export interface MetaBarProps {
   timestamp: string
   threadId: string
   isParent?: boolean
+  archived?: boolean
   id: number
   highlight: (id: number) => void
 }
@@ -23,6 +24,7 @@ export function MetaBar({
   user,
   timestamp,
   isParent,
+  archived,
   id,
   highlight,
   threadId,
@@ -48,6 +50,7 @@ export function MetaBar({
               threadId={threadId}
               date={date}
               id={id}
+              archived={archived}
               highlight={highlight}
               // eslint-disable-next-line @typescript-eslint/unbound-method
               onAnyClick={tippyInstance.hide}

@@ -6,6 +6,7 @@ import styled from 'styled-components'
 
 import { Lazy } from '../content/lazy'
 import { Guard } from '../guard'
+import { PleaseLogIn } from '../user/please-log-in'
 import { CommentArchive } from './comment-archive'
 import { CommentForm } from './comment-form'
 import { Thread } from './thread'
@@ -40,7 +41,7 @@ export function CommentArea({ id: entityId, noForms }: CommentAreaProps) {
   const createComment = useCreateCommentMutation()
   const { commentData, commentCount, error } = useCommentData(entityId)
 
-  const showAll = isClient() && window.location.hash.startsWith('#comment-')
+  const showAll = isClient && window.location.hash.startsWith('#comment-')
 
   useEffect(() => {
     if (showAll && highlightedCommentId === undefined) {
@@ -52,9 +53,12 @@ export function CommentArea({ id: entityId, noForms }: CommentAreaProps) {
   }, [showAll, container, entityId])
 
   return (
-    <div ref={container}>
+    <div ref={container} className="comment-area-container">
       <Guard data={commentData} error={error}>
-        {renderContent()}
+        <>
+          {renderStartThreadForm()}
+          {renderContent()}
+        </>
       </Guard>
     </div>
   )
@@ -65,18 +69,6 @@ export function CommentArea({ id: entityId, noForms }: CommentAreaProps) {
 
     return (
       <>
-        {!noForms && auth.current && (
-          <>
-            <CustomH2 id="comments">
-              <StyledIcon icon={faQuestionCircle} /> {strings.comments.question}
-            </CustomH2>
-            <CommentForm
-              placeholder={strings.comments.placeholder}
-              onSend={onSend}
-            />
-          </>
-        )}
-
         {commentCount > 0 && (
           <>
             <CustomH2>
@@ -92,6 +84,25 @@ export function CommentArea({ id: entityId, noForms }: CommentAreaProps) {
               {renderArchive()}
             </Lazy>
           </>
+        )}
+      </>
+    )
+  }
+
+  function renderStartThreadForm() {
+    if (noForms) return null
+    return (
+      <>
+        <CustomH2 id="comments">
+          <StyledIcon icon={faQuestionCircle} /> {strings.comments.question}
+        </CustomH2>
+        {auth.current === null ? (
+          <PleaseLogIn />
+        ) : (
+          <CommentForm
+            placeholder={strings.comments.placeholder}
+            onSend={onSend}
+          />
         )}
       </>
     )
@@ -147,12 +158,16 @@ export function CommentArea({ id: entityId, noForms }: CommentAreaProps) {
       return createComment({
         content,
         threadId,
+        subscribe: true,
+        sendEmail: false,
       })
     } else {
       return createThread({
         title: '',
         content,
         objectId: entityId,
+        subscribe: true,
+        sendEmail: false,
       })
     }
   }

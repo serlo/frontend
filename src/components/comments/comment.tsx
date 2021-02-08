@@ -54,6 +54,7 @@ export function Comment({
         timestamp={createdAt}
         isParent={isParent}
         threadId={threadId}
+        archived={data.archived}
         id={id}
         highlight={highlight}
       />

@@ -117,6 +117,7 @@ export const instanceData = {
       commentsMany: 'Comments',
       submit: 'Submit',
       archiveThread: 'Archive thread',
+      restoreThread: 'Restore thread',
       deleteThread: 'Delete thread',
       deleteComment: 'Delete comment',
       postedOn: 'Posted on',
@@ -159,7 +160,7 @@ export const instanceData = {
       backToHome: 'To our home page'
     },
     print: {
-      warning: 'Important: To make sure all images and formulas print, please scroll down to the end of the page once. Thank you!'
+      warning: 'IMPORTANT: To make sure all images and formulas print, please scroll down to the end of the page once BEFORE you open this dialog. Thank you!'
     },
     profiles: {
       aboutMe: 'About me',
@@ -304,6 +305,19 @@ export const loggedInData = {
       subscription: "Subscription",
       noMails: "deactivate",
       noNotifications: "cancel"
+    },
+    revisions: {
+      accept: {
+        action: 'Accept',
+        title: 'Accept Revision',
+        explanation: 'Please give the author some feedback.'
+      },
+      reject: {
+        action: 'Reject',
+        title: 'Reject Revision',
+        explanation: 'Please tell the author why you are rejecting the submission.'
+      },
+      confirm: 'Confirm'
     }
   }
 };

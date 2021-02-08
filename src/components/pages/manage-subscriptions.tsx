@@ -1,4 +1,3 @@
-import { faCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styled from 'styled-components'
 
@@ -9,11 +8,11 @@ import { StyledTr } from '../tags/styled-tr'
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { EntityTypes } from '@/data-types'
 import { getRawTitle } from '@/fetcher/create-title'
 import { QueryResponse } from '@/fetcher/query-types'
 import { makeLightButton } from '@/helper/css'
-import { entityIconMapping } from '@/helper/icon-by-entity-type'
+import { getEntityStringByTypename } from '@/helper/feature-i18n'
+import { getIconByTypename } from '@/helper/icon-by-entity-type'
 
 export function ManageSubscriptions({
   subscriptions,
@@ -36,19 +35,17 @@ export function ManageSubscriptions({
       </thead>
       <tbody>
         {subscriptions.map((entry) => {
-          const typenameCamelCase = (entry.__typename.charAt(0).toLowerCase() +
-            entry.__typename.slice(1)) as keyof typeof strings.entities
-
-          const title =
-            getRawTitle(entry, 'de') ?? strings.entities[typenameCamelCase]
-
-          const icon =
-            entityIconMapping[typenameCamelCase as EntityTypes] ?? faCircle
+          const entityString = getEntityStringByTypename(
+            entry.__typename,
+            strings
+          )
+          const title = getRawTitle(entry, 'de') ?? entityString
+          const icon = getIconByTypename(entry.__typename)
 
           return (
             <StyledTr key={entry.id}>
               <StyledTd>
-                <span title={strings.entities[typenameCamelCase]}>
+                <span title={entityString}>
                   {' '}
                   <StyledIcon icon={icon} />{' '}
                 </span>

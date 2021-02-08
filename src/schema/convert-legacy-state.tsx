@@ -75,41 +75,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
         ]
       }
       if (/^c[\d]+$/.test(className)) {
-        let children = convert(node.children)
-        if (children.length === 0) {
-          children = [
-            {
-              type: 'p',
-            },
-          ]
-        }
-        // compat: wrap every inline child in p, grouped
-        children = children.reduce((acc, val) => {
-          if (
-            val.type === 'inline-math' ||
-            val.type === 'a' ||
-            (val.type === 'text' && val.text !== undefined)
-          ) {
-            let last: FrontendContentNode | undefined = undefined
-            if (acc.length > 0) {
-              last = acc[acc.length - 1]
-            }
-            if (last && last.type === 'p' && last.children !== undefined) {
-              last.children.push(val)
-              return acc
-            } else {
-              acc.push({
-                type: 'p',
-                children: [val],
-              })
-              return acc
-            }
-          } else {
-            // block element
-            acc.push(val)
-            return acc
-          }
-        }, [] as FrontendContentNode[])
+        const children = wrapSemistructuredTextInP(convert(node.children))
         return [
           {
             type: 'col',
@@ -140,10 +106,15 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
         ]
       }
       if (className === 'spoiler-content panel-body') {
+        const children = wrapSemistructuredTextInP(
+          convert(node.children).filter(
+            (child) => !(child.type == 'text' && child.text.trim() == '')
+          )
+        )
         return [
           {
             type: 'spoiler-body',
-            children: convert(node.children),
+            children,
           },
         ]
       }
@@ -194,6 +165,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
           .join('<')
           .split('&nbsp;')
           .join(' ')
+        if (!formula) return []
         return [
           {
             type: 'inline-math',
@@ -204,13 +176,14 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
       }
       if (className === 'math') {
         const mathData = node.children[0].data
-        if (mathData === undefined) return []
+        if (!mathData) return []
         const formula = mathData
           .substring(2, mathData.length - 2)
           .split('&lt;')
           .join('<')
           .split('&nbsp;')
           .join(' ')
+        if (!formula) return []
         return [
           {
             type: 'math',
@@ -224,7 +197,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
   }
   if (node.name === 'p') {
     const children = convert(node.children)
-    // compoat: remove empty paragraphs
+    // compat: remove empty paragraphs
     if (children.length === 0) {
       return []
     }
@@ -320,17 +293,11 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
   }
   if (node.name === 'li') {
     // compat: wrap li in p only if there are only inlines
-    let children = convert(node.children)
-    if (
-      children.filter(
-        (child) =>
-          child.type !== 'text' &&
-          child.type !== 'a' &&
-          child.type !== 'inline-math'
-      ).length == 0
-    ) {
-      children = [{ type: 'p', children }]
-    }
+    const children = wrapSemistructuredTextInP(
+      convert(node.children).filter(
+        (child) => !(child.type == 'text' && child.text.trim() == '')
+      )
+    )
     return [
       {
         type: 'li',
@@ -368,10 +335,11 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
     ]
   }
   if (node.name === 'th') {
+    const children = wrapSemistructuredTextInP(convert(node.children))
     return [
       {
         type: 'th',
-        children: convert(node.children),
+        children,
       },
     ]
   }
@@ -381,10 +349,11 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
     if (node.children[0]?.text?.trim() === '') {
       return []
     }
+    const children = wrapSemistructuredTextInP(convert(node.children))
     return [
       {
         type: 'td',
-        children: convert(node.children),
+        children,
       },
     ]
   }
@@ -454,6 +423,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
     ) {
       children = [{ type: 'text', text: node.attribs.href! }]
     }
+    if (!node.attribs.href) return []
     return [
       {
         type: 'a',
@@ -484,10 +454,13 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
     return []
   }
   if (node.name === 'blockquote') {
+    const children = convert(node.children).filter(
+      (child) => !(child.type == 'text' && child.text.trim() == '')
+    )
     return [
       {
         type: 'important',
-        children: convert(node.children),
+        children,
       },
     ]
   }
@@ -543,6 +516,44 @@ function makeFormat(
     }
     if (Array.isArray(child.children)) {
       child.children = makeFormat(child.children, fn)
+    }
+    return child
+  })
+}
+
+function wrapSemistructuredTextInP(children: FrontendContentNode[]) {
+  const result: FrontendContentNode[] = []
+  let resultAppendable = false
+  children.forEach((child) => {
+    if (
+      child.type == 'text' ||
+      child.type == 'a' ||
+      child.type == 'inline-math'
+    ) {
+      const last = result[result.length - 1]
+      if (resultAppendable && last && last.type == 'p') {
+        last.children!.push(child)
+      } else {
+        result.push({ type: 'p', children: [child] })
+        resultAppendable = true
+      }
+    } else {
+      result.push(child)
+      resultAppendable = false
+    }
+  })
+  return unwrapSingleMathInline(result)
+}
+
+function unwrapSingleMathInline(children: FrontendContentNode[]) {
+  return children.map((child) => {
+    if (
+      child.type == 'p' &&
+      child.children?.length == 1 &&
+      child.children[0].type == 'inline-math'
+    ) {
+      ;(child.children[0] as any).type = 'math'
+      return child.children[0]
     }
     return child
   })

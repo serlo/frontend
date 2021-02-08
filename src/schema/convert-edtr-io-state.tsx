@@ -11,9 +11,8 @@ import {
 import { sanitizeLatex } from './sanitize-latex'
 import {
   FrontendContentNode,
-  FrontendLiNode,
-  FrontendMathNode,
   FrontendTextColor,
+  FrontendTextNode,
 } from '@/data-types'
 
 const colors: FrontendTextColor[] = ['blue', 'green', 'orange']
@@ -37,7 +36,6 @@ export function convert(
 ): FrontendContentNode[] {
   // compat: no or empty node, we ignore
   if (node === undefined || Object.keys(node).length === 0) {
-    // console.log('e: node EMPTY')
     return []
   }
 
@@ -69,6 +67,8 @@ function convertPlugin(node: EdtrState) {
     return convert(node.state)
   }
   if (node.plugin === 'image') {
+    // remove images without source
+    if (!node.state.src) return []
     return [
       {
         type: 'img',
@@ -104,7 +104,9 @@ function convertPlugin(node: EdtrState) {
             children: [
               {
                 type: 'text',
-                text: node.state.title,
+                text:
+                  node.state.title ||
+                  ' ' /* if title is falsy, use space instead to avoid empty text node*/,
               },
             ],
           },
@@ -135,12 +137,6 @@ function convertPlugin(node: EdtrState) {
         type: 'row',
         children: node.state.map((child) => {
           const children = convert(child.child)
-          // compat: math align left
-          children.forEach((child) => {
-            if (child.type === 'math') {
-              child.alignLeft = true
-            }
-          })
           return {
             type: 'col',
             size: child.width,
@@ -168,9 +164,16 @@ function convertPlugin(node: EdtrState) {
   }
   if (node.plugin === 'table') {
     const html = converter.makeHtml(node.state)
-    return convertLegacyState(html).children
+    // compat: the markdown converter could return all types of content, only use table nodes.
+    const children = convertLegacyState(html).children.filter(
+      (child) => child.type == 'table'
+    )
+    return children
   }
   if (node.plugin === 'video') {
+    if (!node.state.src) {
+      return []
+    }
     return [
       {
         type: 'video',
@@ -216,106 +219,19 @@ function convertPlugin(node: EdtrState) {
 
 function convertSlate(node: SlateBlockElement) {
   if (node.type === 'p') {
-    const children = convert(node.children)
-
-    // compat unwrap math from p
-    if (children.length === 1 && children[0].type === 'math') {
-      return children
-    }
-
-    // compat: unwrap ul/ol from p
-    // see https://github.com/serlo/frontend/issues/249
-    if (
-      children.length === 1 &&
-      (children[0].type === 'ul' || children[0].type === 'ol')
-    ) {
-      return children
-    }
-
-    // compat: extract math formulas, see https://github.com/serlo/frontend/issues/186 (first warning)
-    const math = children.filter(
-      (child) => child.type === 'math' || child.type === 'inline-math'
-    )
-    if (math.length >= 1) {
-      if (
-        children.every(
-          (child) =>
-            child.type === 'math' ||
-            child.type === 'inline-math' ||
-            (child.type === 'text' && child.text === '')
-        )
-      ) {
-        return children
-          .filter(
-            (child) => child.type === 'math' || child.type === 'inline-math'
-          )
-          .map((mathChild) => {
-            mathChild.type = 'math'
-            ;(mathChild as FrontendMathNode).alignLeft = true
-            return mathChild
-          })
-      }
-    }
-
-    // compat handle newlines
-    // see https://github.com/serlo/frontend/pull/527#discussion_r482969315
-    if (
-      children.some(
-        (child) =>
-          (child.type === 'text' && child.text.includes('\n')) ||
-          child.type === 'inline-math'
-      )
-    ) {
-      const splitted: (FrontendContentNode | '##break##')[] = children.flatMap(
-        (child) => {
-          if (child.type === 'text' && child.text.includes('\n')) {
-            const parts: (
-              | FrontendContentNode
-              | '##break##'
-            )[] = child.text.split('\n').flatMap((text) => [
-              {
-                type: 'text',
-                text,
-              },
-              '##break##',
-            ])
-            parts.pop()
-            return parts
-          }
-          return [child]
-        }
-      )
-      let current: FrontendContentNode[] = []
-      const result: FrontendContentNode[] = []
-      if (splitted[0] === '##break##') splitted.shift()
-      if (splitted[splitted.length - 1] !== '##break##')
-        splitted.push('##break##')
-      splitted.forEach((el) => {
-        if (el === '##break##') {
-          result.push({
-            type: 'p',
-            children: current,
-          })
-          current = []
-        } else {
-          current.push(el)
-        }
-      })
-      return result
-    }
-    return [
-      {
-        type: 'p',
-        children,
-      },
-    ]
+    return handleSemistructedContentOfP(convert(node.children))
   }
   if (node.type === 'a') {
+    const children = convert(node.children)
+    if (!node.href) {
+      // remove empty links
+      return children
+    }
     return [
       {
         type: 'a',
-        href: node.href ?? '',
-        children: convert(node.children),
+        href: node.href,
+        children,
       },
     ]
   }
@@ -345,32 +261,35 @@ function convertSlate(node: SlateBlockElement) {
     }
   }
   if (node.type === 'math' && !node.inline) {
+    if (!node.src) {
+      return []
+    }
     return [
       {
         type: 'math',
         formula: sanitizeLatex(node.src),
         formulaSource: node.src,
-        //debugOriginalFormula: node.src,
+        /* alignLeft: true -  the frontend always renders left aligned */
       },
     ]
   }
   if (node.type === 'math' && node.inline) {
+    if (!node.src) {
+      return []
+    }
     return [
       {
         type: 'inline-math',
         formula: sanitizeLatex(node.src),
         formulaSource: node.src,
-        //debugOriginalFormula: node.src,
       },
     ]
   }
   if (node.type === 'unordered-list') {
-    const children: FrontendLiNode[] = []
-    convert(node.children).forEach((child) => {
-      if (child.type === 'li') {
-        children.push(child)
-      }
-    })
+    // only allow li nodes
+    const children = convert(node.children).filter(
+      (child) => true && child.type === 'li'
+    )
     return [
       {
         type: 'ul',
@@ -379,12 +298,10 @@ function convertSlate(node: SlateBlockElement) {
     ]
   }
   if (node.type === 'ordered-list') {
-    const children: FrontendLiNode[] = []
-    convert(node.children).forEach((child) => {
-      if (child.type === 'li') {
-        children.push(child)
-      }
-    })
+    // only allow li nodes
+    const children = convert(node.children).filter(
+      (child) => true && child.type === 'li'
+    )
     return [
       {
         type: 'ol',
@@ -393,47 +310,92 @@ function convertSlate(node: SlateBlockElement) {
     ]
   }
   if (node.type === 'list-item') {
+    const children = handleSemistructedContentOfP(convert(node.children))
     return [
       {
         type: 'li',
-        children: convert(node.children),
+        children,
       },
     ]
   }
   if (node.type === 'list-item-child') {
-    const children = convert(node.children)
-
-    // compat: don't wrap ps, see https://github.com/serlo/frontend/issues/551 and 579
-    if (children.filter((child) => child.type === 'p').length > 0) {
-      return children
-    }
-
-    //compat: only inline-math and links get wrapped? not sure about this
-    if (
-      children.filter(
-        (child) =>
-          child.type === 'inline-math' ||
-          child.type === 'a' ||
-          child.type !== undefined
-      ).length === 0
-    ) {
-      return children
-    }
-    return [{ type: 'p', children }]
+    return convert(node.children)
   }
 
   return []
 }
 
 function convertText(node: SlateTextElement) {
-  if (node.text === '') return []
+  const text = node.text.replace(/\ufeff/g, '')
+  if (text === '') return []
   return [
     {
       type: 'text',
-      text: node.text,
+      text,
       em: node.em,
       strong: node.strong,
       color: colors[node.color as number],
     },
   ]
+}
+
+function unwrapSingleMathInline(children: FrontendContentNode[]) {
+  return children.map((child) => {
+    if (
+      child.type == 'p' &&
+      child.children?.length == 1 &&
+      child.children[0].type == 'inline-math'
+    ) {
+      ;(child.children[0] as any).type = 'math'
+      return child.children[0]
+    }
+    return child
+  })
+}
+
+function handleSemistructedContentOfP(input: FrontendContentNode[]) {
+  // generate children, split text blocks at new lines
+  const children = input.flatMap((child) => {
+    if (child.type == 'text' && child.text.includes('\n')) {
+      return child.text.split('\n').flatMap((text, i) => {
+        const value: FrontendTextNode[] = []
+        if (i != 0) {
+          value.push({ type: 'text', text: '%%%BARRIER%%%' })
+        }
+        if (text) {
+          value.push({ type: 'text', text })
+        }
+        return value
+      })
+    }
+    return child
+  })
+
+  // group inline nodes together in p, don't merge if barrier is present
+  const result: FrontendContentNode[] = []
+  let resultAppendable = false
+  children.forEach((child) => {
+    if (
+      child.type == 'text' ||
+      child.type == 'a' ||
+      child.type == 'inline-math'
+    ) {
+      const last = result[result.length - 1]
+      if (child.type == 'text' && child.text == '%%%BARRIER%%%') {
+        resultAppendable = false
+        return
+      }
+      if (resultAppendable && last && last.type == 'p') {
+        last.children!.push(child)
+      } else {
+        result.push({ type: 'p', children: [child] })
+        resultAppendable = true
+      }
+    } else {
+      result.push(child)
+      resultAppendable = false
+    }
+  })
+
+  return unwrapSingleMathInline(result)
 }

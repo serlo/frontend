@@ -163,6 +163,11 @@ export function SearchInput() {
         trigger="focus click"
         interactive
         placement="bottom-start"
+        onLoaded={() => {
+          if (onSearchPage && !consentGiven) {
+            searchFormRef.current?.focus()
+          }
+        }}
       >
         <SearchForm
           id="searchform"

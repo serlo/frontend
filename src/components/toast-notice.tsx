@@ -1,35 +1,29 @@
 import { useEffect } from 'react'
-import Notification, { notify } from 'react-notify-toast'
+import Notification from 'react-notify-toast'
 
 import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
-import { theme } from '@/theme'
+import { showToastNotice } from '@/helper/show-toast-notice'
 
 export function ToastNotice() {
   const auth = useAuth()
   const { strings } = useInstanceData()
 
-  const notifyColor = {
-    background: theme.colors.brand,
-    text: '#fff',
-  }
-  const showTime = 4000
-
   function removeHash() {
     history.replaceState(null, '', window.location.href.split('#')[0])
   }
 
-  function showToast(text: string) {
-    notify.show(text, 'custom', showTime, notifyColor)
-  }
+  const showTime = 4000
 
   useEffect(() => {
     if (window.location.hash === '#auth') {
       removeHash()
-      showToast(
+      showToastNotice(
         auth.current
           ? strings.notices.welcome.replace('%username%', auth.current.username)
-          : strings.notices.bye
+          : strings.notices.bye,
+        'default',
+        showTime
       )
     }
 
@@ -48,7 +42,8 @@ export function ToastNotice() {
         }
         return 'Are aliens real?'
       }
-      showToast(getText())
+      showToastNotice(getText(), 'default', showTime)
+
       setTimeout(() => {
         window.location.hash = ''
         window.location.reload()

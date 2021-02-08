@@ -147,7 +147,7 @@ function MultipleChoice({
           const id = `${idBase}${i}`
 
           const hasFeedback =
-            answer.feedback[0].children &&
+            answer.feedback[0]?.children &&
             answer.feedback[0].children.length > 0
 
           return (

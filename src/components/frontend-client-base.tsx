@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router'
 import * as React from 'react'
-import { notify } from 'react-notify-toast'
 import { ThemeProvider } from 'styled-components'
 
 import { ConditonalWrap } from './conditional-wrap'
@@ -10,11 +9,11 @@ import { NProgressRouter } from './navigation/n-progress-router'
 import { RelativeContainer } from './navigation/relative-container'
 import { ToastNotice } from './toast-notice'
 import { useAuth } from '@/auth/use-auth'
+import { PrintWarning } from '@/components/content/print-warning'
 import { EntityIdProvider } from '@/contexts/entity-id-context'
 import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInComponentsProvider } from '@/contexts/logged-in-components'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
-import { ToastNoticeProvider } from '@/contexts/toast-notice-context'
 import { InstanceData, LoggedInData } from '@/data-types'
 import { FontFix, PrintStylesheet } from '@/helper/css'
 import type { getInstanceDataByLang } from '@/helper/feature-i18n'
@@ -76,8 +75,6 @@ export function FrontendClientBase({
     loggedInComponents,
   ])
 
-  const toastNotice = notify.createShowQueue()
-
   // dev
   //console.dir(initialProps)
 
@@ -85,32 +82,31 @@ export function FrontendClientBase({
     <ThemeProvider theme={theme}>
       <FontFix />
       <NProgressRouter />
-      <PrintStylesheet warning={instanceData.strings.print.warning} />
+      <PrintStylesheet />
+      <PrintWarning warning={instanceData.strings.print.warning} />
       <InstanceDataProvider value={instanceData}>
         <LoggedInComponentsProvider value={loggedInComponents}>
           <LoggedInDataProvider value={loggedInData}>
             <EntityIdProvider value={entityId || null}>
-              <ToastNoticeProvider value={toastNotice}>
+              <ConditonalWrap
+                condition={!noHeaderFooter}
+                wrapper={(kids) => <HeaderFooter>{kids}</HeaderFooter>}
+              >
                 <ConditonalWrap
-                  condition={!noHeaderFooter}
-                  wrapper={(kids) => <HeaderFooter>{kids}</HeaderFooter>}
+                  condition={!noContainers}
+                  wrapper={(kids) => (
+                    <RelativeContainer>
+                      <MaxWidthDiv showNav={showNav}>
+                        <main>{kids}</main>
+                      </MaxWidthDiv>
+                    </RelativeContainer>
+                  )}
                 >
-                  <ConditonalWrap
-                    condition={!noContainers}
-                    wrapper={(kids) => (
-                      <RelativeContainer>
-                        <MaxWidthDiv showNav={showNav}>
-                          <main>{kids}</main>
-                        </MaxWidthDiv>
-                      </RelativeContainer>
-                    )}
-                  >
-                    {/* should not be necessary…?*/}
-                    {children as JSX.Element}
-                  </ConditonalWrap>
+                  {/* should not be necessary…?*/}
+                  {children as JSX.Element}
                 </ConditonalWrap>
-                <ToastNotice />
-              </ToastNoticeProvider>
+              </ConditonalWrap>
+              <ToastNotice />
             </EntityIdProvider>
           </LoggedInDataProvider>
         </LoggedInComponentsProvider>

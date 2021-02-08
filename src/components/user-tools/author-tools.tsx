@@ -9,12 +9,12 @@ import { AuthorToolsData, HoverSubList, Li } from './author-tools-hover-menu'
 import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { useToastNotice } from '@/contexts/toast-notice-context'
 import { UserRoles } from '@/data-types'
 // import { setStateMutation } from '@/helper/mutations'
+import { csrReload } from '@/helper/csr-reload'
 import { useSetUuidStateMutation } from '@/helper/mutations'
+import { showToastNotice } from '@/helper/show-toast-notice'
 import { useIsSubscribed } from '@/helper/use-is-subscribed'
-import { useRefreshFromAPI } from '@/helper/use-refresh-from-api'
 
 export enum Tool {
   Abo = 'abo',
@@ -66,8 +66,6 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   const loggedInData = useLoggedInData()
   const instanceData = useInstanceData()
   const { isSubscribed, updateIsSubscribed } = useIsSubscribed(data.id)
-  const showToastNotice = useToastNotice()
-  const refreshFromAPI = useRefreshFromAPI()
   const auth = useAuth()
 
   const setUuidState = useSetUuidStateMutation()
@@ -382,7 +380,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
             }
 
             setTimeout(() => {
-              refreshFromAPI()
+              csrReload()
             }, 1500)
           } else {
             showErrorNotice()

@@ -117,6 +117,7 @@ export const instanceData = {
       commentsMany: "Kommentare",
       submit: "Abschicken",
       archiveThread: "Thread archivieren",
+      restoreThread: "Thread wiederherstellen",
       deleteThread: "Thread löschen",
       deleteComment: "Kommentar löschen",
       postedOn: "Gepostet am",
@@ -159,7 +160,7 @@ export const instanceData = {
       backToHome: "Zur Startseite"
     },
     print: {
-      warning: "Wichtig: Damit alle Bilder und Formeln gedruckt werden, scrolle bitte einmal bis zum Ende der Seite. Vielen Dank!"
+      warning: "WICHTIG: Damit alle Bilder und Formeln gedruckt werden, scrolle bitte einmal bis zum Ende der Seite BEVOR du diesen Dialog öffnest. Vielen Dank!"
     },
     profiles: {
       aboutMe: "Über mich",
@@ -304,6 +305,19 @@ export const loggedInData = {
       subscription: "Abonnement",
       noMails: "deaktivieren",
       noNotifications: "abbestellen"
+    },
+    revisions: {
+      accept: {
+        action: "Akzeptieren",
+        title: "Bearbeitung akzeptieren",
+        explanation: "Bitte gib der Autor*in ein bisschen Feedback."
+      },
+      reject: {
+        action: "Ablehnen",
+        title: "Bearbeitung ablehnen",
+        explanation: "Bitte teile dem Bearbeiter mit, warum seine Änderung abgelehnt wurde."
+      },
+      confirm: "Bestätigen"
     }
   }
 };

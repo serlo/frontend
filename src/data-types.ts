@@ -588,6 +588,7 @@ export interface EdtrPluginInputExercise {
     answers: {
       value: string
       isCorrect: boolean
+      feedback: FrontendContentNode[]
     }[]
     unit: string
   }

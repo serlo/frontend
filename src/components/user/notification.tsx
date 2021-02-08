@@ -27,6 +27,7 @@ import { UserLink } from './user-link'
 import { TimeAgo } from '@/components/time-ago'
 import { useInstanceData } from '@/contexts/instance-context'
 import { LoggedInData } from '@/data-types'
+import { getEntityStringByTypename } from '@/helper/feature-i18n'
 
 export type NotificationEvent =
   | CheckoutRevisionNotificationEvent
@@ -57,21 +58,6 @@ export function Notification({
 }) {
   const eventDate = new Date(event.date)
   const { strings } = useInstanceData()
-
-  const placeholderLookup = {
-    Page: strings.entities.page,
-    Article: strings.entities.article,
-    Video: strings.entities.video,
-    Applet: strings.entities.applet,
-    CoursePage: strings.entities.coursePage,
-    Exercise: strings.entities.exercise,
-    GroupedExercise: strings.entities.groupedExercise,
-    ExerciseGroup: strings.entities.exerciseGroup,
-    Event: strings.entities.event,
-    Course: strings.entities.course,
-    TaxonomyTerm: strings.entities.taxonomyTerm,
-    fallback: loggedInStrings.entityPlaceholderFallback,
-  }
 
   return (
     <Item>
@@ -260,7 +246,7 @@ export function Notification({
     const title = object.currentRevision?.title
     return (
       <StyledLink href={`/${object.id}`}>
-        {title ? title : renderEntityTypePlaceholder(object.__typename)}
+        {title ? title : getEntityStringByTypename(object.__typename, strings)}
       </StyledLink>
     )
   }
@@ -275,15 +261,6 @@ export function Notification({
 
   function renderThread(id: number) {
     return <StyledLink href={`/${id}`}>{strings.entities.thread}</StyledLink>
-  }
-
-  type PlaceholderKeys = keyof typeof placeholderLookup
-
-  function renderEntityTypePlaceholder(typename: string | undefined) {
-    if (typename && typename in placeholderLookup) {
-      return placeholderLookup[typename as PlaceholderKeys]
-    }
-    return placeholderLookup.fallback
   }
 }
 
@@ -334,7 +311,7 @@ const Item = styled.div`
   position: relative;
   margin: 10px 0;
   padding: 24px;
-  &:nth-child(even) {
+  &:nth-child(odd) {
     background: ${(props) => props.theme.colors.bluewhite};
   }
 
