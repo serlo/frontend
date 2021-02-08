@@ -693,7 +693,7 @@ export interface LicenseData {
   url: string // to to license
   id: number // of the license
   default: boolean
-  shortTitle?: number // show this if not default
+  shortTitle?: string // show this if not default
 }
 
 // Data for a course page.

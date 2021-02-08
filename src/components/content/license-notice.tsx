@@ -74,13 +74,17 @@ export function LicenseNotice({ data, minimal, type }: LicenseNoticeProps) {
   function renderMinimalNotice() {
     const typeString = translateTypeString()
     const licenseHref = `/license/detail/${data.id}`
+
+    const text = `${typeString}: ${
+      data.shortTitle ? data.shortTitle : strings.license.special
+    }`
+    const title = isCreativeCommons
+      ? data.title
+      : `${data.title} –– ${strings.license.nonFree}`
+
     return (
       <>
-        <MinimalLink
-          title={data.title + ' –– ' + strings.license.nonFree}
-          href={licenseHref}
-          noExternalIcon
-        >
+        <MinimalLink title={title} href={licenseHref} noExternalIcon>
           {data.default ? (
             <FontAwesomeIcon icon={faCreativeCommons} />
           ) : (
@@ -95,7 +99,7 @@ export function LicenseNotice({ data, minimal, type }: LicenseNoticeProps) {
                   />
                 )}
               </StyledIcon>
-              {typeString}: {strings.license.special}
+              {text}
             </>
           )}
         </MinimalLink>
