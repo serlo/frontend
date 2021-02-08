@@ -610,6 +610,7 @@ export interface FrontendVideoNode {
   type: 'video'
   src: string
   children?: undefined
+  license?: LicenseData
 }
 
 export interface FrontendCodeNode {
@@ -692,6 +693,7 @@ export interface LicenseData {
   url: string // to to license
   id: number // of the license
   default: boolean
+  shortTitle?: number // show this if not default
 }
 
 // Data for a course page.

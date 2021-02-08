@@ -357,7 +357,7 @@ function renderElement(props: RenderElementProps): React.ReactNode {
   if (element.type === 'video') {
     return (
       <Lazy>
-        <Video src={element.src} path={path} />
+        <Video src={element.src} path={path} license={element.license} />
       </Lazy>
     )
   }
