@@ -28,6 +28,8 @@ export function StatsOverview() {
 
   const [sortOption, setSortOption] = useState<any>('views')
 
+  const [filter, setFilter] = useState<string>('')
+
   useEffect(() => {
     if (!stats) return
     const data: any = {}
@@ -208,6 +210,17 @@ export function StatsOverview() {
   }, [data, sortOption])
 
   if (stats && data) {
+    const visibleRows = []
+
+    for (const row of sorted) {
+      if (visibleRows.length >= limit) break
+      if (filter) {
+        const path = data.uuid2path[row.id]
+        if (!path || !path.includes(filter)) continue
+      }
+      visibleRows.push(row)
+    }
+
     return (
       <RelativeContainer>
         <MaxWidthDiv width={1200}>
@@ -283,7 +296,12 @@ export function StatsOverview() {
                 <option value="applets">meiste Applets geladen</option>
                 <option value="shares">am meisten geteilt</option>
                 <option value="id">größte Id</option>
-              </select>
+              </select>{' '}
+              Filter:{' '}
+              <input
+                value={filter}
+                onChange={(value) => setFilter(value.target.value)}
+              />
             </StyledP>
 
             <TableWrapper>
@@ -308,7 +326,7 @@ export function StatsOverview() {
                     <StyledTh title="Applet geladen">Ap.</StyledTh>
                     <StyledTh title="Inhalt geteilt">Tl.</StyledTh>
                   </StyledTr>
-                  {sorted.slice(0, limit).map((row: any, i: number) => {
+                  {visibleRows.map((row: any, i: number) => {
                     return (
                       <StyledTr key={i}>
                         <StyledTd>{i + 1}</StyledTd>
