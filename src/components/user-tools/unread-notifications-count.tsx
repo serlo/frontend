@@ -36,7 +36,7 @@ export function UnreadNotificationsCount({
   const count = data === undefined ? 0 : data.notifications.totalCount
   const displayCount = count > 9 ? '+' : count
 
-  if (onlyNumber) return <>{count}</>
+  if (onlyNumber) return <>{data === undefined ? '…' : count}</>
 
   return (
     <StyledFaLayer active={count > 0} className="fa-layers fa-fw">

@@ -8,7 +8,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { EdtrPluginInputExercise } from '@/data-types'
 import { makeMargin, makePrimaryButton, inputFontReset } from '@/helper/css'
 import { submitEventWithPath } from '@/helper/submit-event'
-import { NodePath } from '@/schema/article-renderer'
+import { NodePath, renderArticle } from '@/schema/article-renderer'
 
 export interface InputExerciseProps {
   data: EdtrPluginInputExercise['state']
@@ -17,7 +17,7 @@ export interface InputExerciseProps {
 
 interface FeedbackData {
   correct: boolean
-  message: string
+  message: JSX.Element
 }
 
 export function InputExercise({ data, path }: InputExerciseProps) {
@@ -60,7 +60,7 @@ export function InputExercise({ data, path }: InputExerciseProps) {
     </Wrapper>
   )
 
-  function checkAnswer() {
+  function checkAnswer(): FeedbackData {
     const answers = data.answers
     const filteredAnswers = answers.filter((answer) => {
       try {
@@ -82,10 +82,21 @@ export function InputExercise({ data, path }: InputExerciseProps) {
         return false
       }
     })
+    const hasCustomFeedback = filteredAnswers[0]?.feedback.length > 0
+    const customFeedbackNode =
+      hasCustomFeedback &&
+      (renderArticle(filteredAnswers[0]?.feedback) as JSX.Element)
+
     if (filteredAnswers.length !== 1 || !filteredAnswers[0].isCorrect) {
-      return { correct: false, message: strings.content.wrong }
+      return {
+        correct: false,
+        message: customFeedbackNode || <>{strings.content.wrong}</>,
+      }
     } else {
-      return { correct: true, message: strings.content.right }
+      return {
+        correct: true,
+        message: customFeedbackNode || <>{strings.content.right}</>,
+      }
     }
   }
 
@@ -93,21 +104,21 @@ export function InputExercise({ data, path }: InputExerciseProps) {
     const _value = collapseWhitespace(value)
     switch (data.type) {
       case 'input-number-exact-match-challenge':
-        return normalizeNumber(_value).replace(/( )?\/( )?/g, '/')
+        return normalizeNumber(_value).replace(/\s/g, '')
       case 'input-expression-equal-match-challenge':
         return A ? A.parse(normalizeNumber(_value)) : undefined
       case 'input-string-normalized-match-challenge':
         return _value.toUpperCase()
     }
   }
-}
 
-function collapseWhitespace(val: string): string {
-  return val.replace(/\s+/g, ' ')
-}
+  function collapseWhitespace(val: string): string {
+    return val.replace(/[\s\xa0]+/g, ' ').trim()
+  }
 
-function normalizeNumber(val: string) {
-  return val.replace(/,/g, '.')
+  function normalizeNumber(val: string) {
+    return val.replace(/,/g, '.').replace(/^[+]/, '')
+  }
 }
 
 const Wrapper = styled.div`

@@ -9,7 +9,7 @@ export function Lazy(props: LazyProps) {
     <>
       <LazyLoad
         once
-        offset={150}
+        offset={220}
         placeholder={
           <Placeholder className="lazyload-placeholder" slim={props.slim} />
         }
@@ -31,5 +31,5 @@ interface PlaceholderProps {
 const Placeholder = styled.div<PlaceholderProps>`
   background-color: ${(props) => props.theme.colors.bluewhite};
   height: auto;
-  padding-bottom: ${(props) => (props.slim ? '200px' : '65%')};
+  padding-bottom: ${(props) => (props.slim ? '50px' : '65%')};
 `

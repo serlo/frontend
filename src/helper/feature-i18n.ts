@@ -1,6 +1,7 @@
 // eslint-disable-next-line import/no-internal-modules
 import mergeDeepRight from 'ramda/src/mergeDeepRight'
 
+import { InstanceData } from '@/data-types'
 import {
   instanceData as deInstanceData,
   instanceLandingData as deInstanceLandingData,
@@ -135,4 +136,29 @@ export function getLoggedInData(lang: string) {
       : enLoggedInData
 
   return mergeDeepRight(enData, data) as typeof enLoggedInData
+}
+
+export function getEntityStringByTypename(
+  typename: string | undefined,
+  strings: InstanceData['strings']
+) {
+  const lookup = {
+    Page: strings.entities.page,
+    Article: strings.entities.article,
+    Video: strings.entities.video,
+    Applet: strings.entities.applet,
+    CoursePage: strings.entities.coursePage,
+    Exercise: strings.entities.exercise,
+    GroupedExercise: strings.entities.groupedExercise,
+    ExerciseGroup: strings.entities.exerciseGroup,
+    Event: strings.entities.event,
+    Course: strings.entities.course,
+    TaxonomyTerm: strings.entities.taxonomyTerm,
+    fallback: strings.entities.content,
+  }
+
+  if (typename && typename in lookup) {
+    return lookup[typename as keyof typeof lookup]
+  }
+  return lookup.fallback
 }
