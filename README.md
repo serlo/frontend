@@ -12,16 +12,6 @@ In a more complete environment, the frontend sits behind a [cloudflare worker](h
 
 ## Getting started
 
-### Enable frontend
-
-You need to opt-in to see the frontend:
-
-Enable frontend in _production environment_: [de.serlo.org/enable-frontend](https://de.serlo.org/enable-frontend)<br>
-Production deployment: [frontend.serlo.org](https://frontend.serlo.org)
-
-Enable frontend in _staging environment_: [de.serlo-staging.dev/enable-frontend](https://de.serlo-staging.dev/enable-frontend)<br>
-Staging deployment: [frontend-git-staging.serlo.vercel.app](https://frontend-git-staging.serlo.vercel.app)
-
 ### Local installation
 
 You can run the frontend on your local system. For that, install [Node.js v12](https://nodejs.org/en/) and [yarn](https://classic.yarnpkg.com/en/docs/install).
@@ -36,6 +26,74 @@ yarn dev
 ```
 
 The server is now running on [localhost:3000](http://localhost:3000).
+
+### next.js framework
+
+The frontend is built with [next.js](https://nextjs.org/) and uses many features of it. A good way to get started in this repo is to make yourself familiar with next.js. This will make it quite clear how the system is working. Features we use include (and are not limited to):
+
+- Server-Side Rendering
+- Router
+- Internationalization
+- Incremental Page Generation
+- TypeScript
+
+
+## Repository
+
+Here are some useful places to get started:
+
+- `/src/pages`: File-system routing root directory. Add new routes by creating files in this folder.
+
+- `/src/components`: Collection of react components for the frontend.
+
+- `/src/fetcher`: Requesting data from the GraphQL backend and process it.
+
+- `/src/schema`: Definition of the frontend content format, with renderer, and converter for edtr-io and legacy.
+
+- `/src/data`: Translations, entries for navigation
+
+- `/public/_`: A place for public assets, served as static files under the path `/_assets/`. Don't use `import` from here, see [Assets](#assets).
+
+- `/external`: Third-party code that is not maintained by the frontend.
+
+Some useful commands:
+
+```
+yarn dev
+```
+
+Starts the development server. This enables hot reloading and development warnings. Create a PR in this repository to get a preview deployment that uses production settings.
+
+```
+yarn format
+```
+
+Runs eslint and prettier, fixes issues automatically if possible.
+
+```
+yarn lint
+```
+
+Runs tsc, eslint and prettier. This command needs to pass before merging into staging.
+
+```
+yarn analyze
+```
+
+Creates a build of the frontend, shows summary of build artefacts and creates in-depth analysis of the bundles.
+
+```
+yarn test
+```
+
+Runs jest tests.
+
+All files are named with kebab-case. You should use `@/` to import files from `src/` instead of relative paths.
+
+<br><br><br><br><br>
+
+TODO: Review this content and move relevant information to the wiki.
+
 
 ## Features
 
