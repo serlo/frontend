@@ -35,7 +35,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
   const loggedInStrings = loggedInData.strings
 
   if (data.type == 'CoursePage') {
-    renderCoursePage()
+    return renderCoursePage()
   }
 
   if (
@@ -43,7 +43,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
     data.type == '_ExerciseGroupInline' ||
     data.type == '_SolutionInline'
   ) {
-    renderExercise()
+    return renderExercise()
   }
 
   return (
@@ -142,6 +142,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
     )
   }
   function renderExercise() {
+    console.log(data.type)
     return (
       <HoverSubList>
         <AuthorTools
