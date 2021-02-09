@@ -18,6 +18,7 @@ export const SpecialCss = styled.div`
     [class*='Important'],
     [class*='SpoilerBody'],
     [class*='SolutionBox'],
+    [class*='StyledLabel'],
     li,
     th,
     td {
