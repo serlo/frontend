@@ -47,7 +47,6 @@ export function Revision({ data }: RevisionProps) {
   const [displayMode, setDisplayMode] = React.useState<DisplayMode>(
     isCurrentRevision ? 'current' : 'this'
   )
-
   const dataSet =
     displayMode === 'current' ? data.currentRevision : data.thisRevision
 
