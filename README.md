@@ -90,7 +90,15 @@ Runs jest tests.
 
 All files are named with kebab-case. You should use `@/` to import files from `src/` instead of relative paths.
 
-<br><br><br><br><br>
+## More information
+
+You can find more detailed explanations in our wiki. Here are some interesting pages:
+
+- Internationalization (TODO)
+- Schema and Converter (TODO)
+- Tutorial (?) (TODO)
+
+<br><br><br><br><br><br><br><br><br><br>
 
 TODO: Review this content and move relevant information to the wiki.
 
