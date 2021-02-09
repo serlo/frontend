@@ -25,6 +25,7 @@ export function createBreadcrumbs(uuid: QueryResponse) {
   function buildFromTaxTerms(taxonomyPaths: TaxonomyTerms | undefined) {
     if (taxonomyPaths === undefined) return undefined
     let breadcrumbs
+    let backup
 
     for (const child of taxonomyPaths) {
       if (!child.navigation) continue
@@ -35,6 +36,9 @@ export function createBreadcrumbs(uuid: QueryResponse) {
           path.some((x) => x.label === 'Mathematik') &&
           !path.some((x) => x.label === 'Alle Themen')
         ) {
+          if (!backup || backup.length > path.length) {
+            backup = path
+          }
           continue
         }
 
@@ -42,7 +46,7 @@ export function createBreadcrumbs(uuid: QueryResponse) {
       }
     }
 
-    return breadcrumbs
+    return breadcrumbs ?? backup
   }
 
   function compat(breadcrumbs: BreadcrumbsData | undefined) {
