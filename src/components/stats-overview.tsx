@@ -330,18 +330,51 @@ export function StatsOverview() {
                     return (
                       <StyledTr key={i}>
                         <StyledTd>{i + 1}</StyledTd>
-                        <StyledTd>{generateLink(row)}</StyledTd>
-                        <StyledTd>{row.views}</StyledTd>
+                        <StyledTd
+                          style={{
+                            backgroundColor:
+                              'id' == sortOption ? 'lightyellow' : '',
+                          }}
+                        >
+                          {generateLink(row)}
+                        </StyledTd>
+                        <StyledTd
+                          style={{
+                            backgroundColor:
+                              sortOption == 'views' ? 'lightyellow' : '',
+                          }}
+                        >
+                          {row.views}
+                        </StyledTd>
                         <StyledTd>{getExternBound(row)}</StyledTd>
-                        <StyledTd>{row.apha < 0 ? '--' : row.apha}</StyledTd>
-                        <StyledTd>{row.navs}</StyledTd>
-                        <StyledTd>{row.solutions}</StyledTd>
-                        <StyledTd>{row.interactives}</StyledTd>
-                        <StyledTd>{row.spoilers}</StyledTd>
-                        <StyledTd>{row.searches}</StyledTd>
-                        <StyledTd>{row.videos}</StyledTd>
-                        <StyledTd>{row.applets}</StyledTd>
-                        <StyledTd>{row.shares}</StyledTd>
+                        <StyledTd
+                          style={{
+                            backgroundColor:
+                              'apha' == sortOption ? 'lightyellow' : '',
+                          }}
+                        >
+                          {row.apha < 0 ? '--' : row.apha}
+                        </StyledTd>
+                        {[
+                          'navs',
+                          'solutions',
+                          'interactives',
+                          'spoilers',
+                          'searches',
+                          'videos',
+                          'applets',
+                          'shares',
+                        ].map((key: string) => (
+                          <StyledTd
+                            key={key}
+                            style={{
+                              backgroundColor:
+                                key == sortOption ? 'lightyellow' : '',
+                            }}
+                          >
+                            {row[key]}
+                          </StyledTd>
+                        ))}
                       </StyledTr>
                     )
                   })}
