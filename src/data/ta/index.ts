@@ -78,7 +78,9 @@ export const instanceData = {
       unrevised: 'Show unrevised revisions'
     },
     license: {
-      readMore: "தகவல்"
+      readMore: "தகவல்",
+      special: 'Different license',
+      nonFree: 'Usage of this content might be more restricted than our other content.'
     },
     course: {
       showPages: "வகுப்பு மேலோட்டத்தைக் காட்டவும்",

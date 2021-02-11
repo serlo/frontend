@@ -78,7 +78,9 @@ export const instanceData = {
       unrevised: "Mostrar revisiones sin revisar"
     },
     license: {
-      readMore: "Información"
+      readMore: "Información",
+      special: 'Different license',
+      nonFree: 'Usage of this content might be more restricted than our other content.'
     },
     course: {
       showPages: "Mostrar descripción del curso",
