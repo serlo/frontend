@@ -37,7 +37,6 @@ The frontend is built with [next.js](https://nextjs.org/) and uses many features
 - Incremental Page Generation
 - TypeScript
 
-
 ## Repository
 
 Here are some useful places to get started:
@@ -97,4 +96,3 @@ You can find more detailed explanations in our wiki. Here are some interesting p
 - [Internationalization](https://github.com/serlo/frontend/wiki/Internationalization)
 - [Entities and Schema](https://github.com/serlo/frontend/wiki/Schema)
 - [Unsorted old stuff](https://github.com/serlo/frontend/wiki/Archive)
-
