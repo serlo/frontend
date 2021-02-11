@@ -16,7 +16,7 @@ import { LicenseData } from '@/data-types'
 interface LicenseNoticeProps {
   data: LicenseData
   minimal?: boolean
-  type?: string
+  type?: 'video' | 'task' | 'exercise-group' | 'solution'
 }
 
 export function LicenseNotice({ data, minimal, type }: LicenseNoticeProps) {
@@ -73,57 +73,58 @@ export function LicenseNotice({ data, minimal, type }: LicenseNoticeProps) {
 
   function renderMinimalNotice() {
     const typeString = translateTypeString()
+    const licenseHref = `/license/detail/${data.id}`
+
+    const text = `${typeString}: ${
+      data.shortTitle ? data.shortTitle : strings.license.special
+    }`
+    const title = isCreativeCommons
+      ? data.title
+      : `${data.title} –– ${strings.license.nonFree}`
+
     return (
-      <MinimalLink
-        href={`/license/detail/${data.id}`}
-        title={typeString ? typeString + ': ' + data.title : data.title}
-        noExternalIcon
-      >
-        {isCreativeCommons ? (
-          <FontAwesomeIcon icon={faCreativeCommons} />
-        ) : (
-          <span className="fa-layers fa-fw">
+      <>
+        <MinimalLink title={title} href={licenseHref} noExternalIcon>
+          {data.default ? (
             <FontAwesomeIcon icon={faCreativeCommons} />
-            <FontAwesomeIcon
-              icon={faSlash}
-              flip="horizontal"
-              transform="shrink-6"
-            />
-          </span>
-        )}
-      </MinimalLink>
+          ) : (
+            <>
+              <StyledIcon className="fa-layers fa-fw">
+                <FontAwesomeIcon icon={faCreativeCommons} />
+                {!isCreativeCommons && (
+                  <FontAwesomeIcon
+                    icon={faSlash}
+                    flip="horizontal"
+                    transform="shrink-6"
+                  />
+                )}
+              </StyledIcon>
+              {text}
+            </>
+          )}
+        </MinimalLink>
+      </>
     )
   }
 
-  function translateTypeString() {
-    switch (type) {
-      case 'video':
-        return strings.entities.video
-      case 'task':
-      case 'exercise-group':
-        return strings.content.task
-      case 'solution':
-        return strings.entities.solution
-    }
-    return type
+  function translateTypeString(): string {
+    if (type == 'task') return strings.content.task
+    if (type == 'exercise-group') return strings.content.task
+    return strings.entities[type || 'content']
   }
 }
 
 const MinimalLink = styled(Link)`
   ${makeTransparentButton}
-  text-align: center;
-  color: ${(props) => props.theme.colors.dark1};
-  background-color: ${(props) => props.theme.colors.lightBackground};
-  font-size: 1.3rem;
-  line-height: 2rem;
-  width: 2rem;
-  height: 2rem;
-  padding: 0;
+  font-weight: normal;
+  font-size: 1rem;
+  height: max-content;
+`
 
-  > svg {
-    vertical-align: -0.168em;
-    margin-left: 0.009em;
-  }
+const StyledIcon = styled.span`
+  font-size: 1.25rem;
+  vertical-align: sub;
+  margin-right: 3px;
 `
 
 const StyledSmall = styled.span`

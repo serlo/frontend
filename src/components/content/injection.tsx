@@ -1,10 +1,8 @@
 import { useState, useEffect } from 'react'
 
 import { LoadingSpinner } from '../loading/loading-spinner'
-import { StyledP } from '../tags/styled-p'
-import { LicenseNotice } from './license-notice'
 import { useInstanceData } from '@/contexts/instance-context'
-import { LicenseData, SlugPageData, FrontendContentNode } from '@/data-types'
+import { SlugPageData, FrontendContentNode } from '@/data-types'
 import type { RenderNestedFunction } from '@/schema/article-renderer'
 
 export interface InjectionProps {
@@ -21,7 +19,7 @@ export function Injection({ href, renderNested }: InjectionProps) {
 
   const [id, setId] = useState<number | undefined>(undefined)
 
-  const [license, setLicense] = useState<undefined | LicenseData>(undefined)
+  //const [license, setLicense] = useState<undefined | LicenseData>(undefined)
 
   const { lang } = useInstanceData()
 
@@ -71,9 +69,6 @@ export function Injection({ href, renderNested }: InjectionProps) {
     if (pageData.kind === 'single-entity') {
       setId(pageData.entityData.id)
       setValue(pageData.entityData.content)
-      if (pageData.entityData.licenseData) {
-        setLicense(pageData.entityData.licenseData)
-      }
     }
     if (pageData.kind === 'error') {
       if (pageData.errorData.message) {
@@ -91,16 +86,7 @@ export function Injection({ href, renderNested }: InjectionProps) {
     //Show only video without description when injecting
     const renderValue = value[0].type === 'video' ? [value[0]] : value
 
-    return (
-      <>
-        {renderNested(renderValue, `injection${id}`)}
-        {license && !license.default && (
-          <StyledP>
-            <LicenseNotice minimal data={license} type="video" />
-          </StyledP>
-        )}
-      </>
-    )
+    return <>{renderNested(renderValue, `injection${id}`)}</>
   }
   return <LoadingSpinner />
 }

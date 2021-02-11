@@ -4,8 +4,10 @@ import styled from 'styled-components'
 
 import { EventCounter } from '../event-counter'
 import { StyledP } from '../tags/styled-p'
+import { LicenseNotice } from './license-notice'
 import { PrivacyWrapper } from './privacy-wrapper'
 import { useInstanceData } from '@/contexts/instance-context'
+import { LicenseData } from '@/data-types'
 import { submitEventWithPath } from '@/helper/submit-event'
 import { ExternalProvider } from '@/helper/use-consent'
 import { NodePath } from '@/schema/article-renderer'
@@ -13,12 +15,13 @@ import { NodePath } from '@/schema/article-renderer'
 export interface VideoProps {
   src: string
   path?: NodePath
+  license?: LicenseData
 }
 
 export function Video(props: VideoProps) {
   const { lang } = useInstanceData()
 
-  const { src, path } = props
+  const { src, path, license } = props
 
   const vimeo = /^(https?:\/\/)?(.*?vimeo\.com\/)(.+)/.exec(src)
   if (vimeo) return renderVimeo(vimeo[3])
@@ -58,30 +61,37 @@ export function Video(props: VideoProps) {
 
   function renderVideo(provider: ExternalProvider, iframeUrl?: string) {
     return (
-      <PrivacyWrapper
-        type="video"
-        provider={provider}
-        embedUrl={iframeUrl}
-        eventCounter={<EventCounter prefix="loadvideo" path={path} />}
-        onLoad={() => {
-          submitEventWithPath('loadvideo', path)
-        }}
-      >
-        <VideoWrapper className="video">
-          {provider === ExternalProvider.WikimediaCommons && (
-            <video controls src={src} />
-          )}
-          {(provider === ExternalProvider.YouTube ||
-            ExternalProvider.Vimeo) && (
-            <iframe
-              src={iframeUrl}
-              frameBorder="0"
-              allow="autoplay; encrypted-media; picture-in-picture"
-              allowFullScreen
-            />
-          )}
-        </VideoWrapper>
-      </PrivacyWrapper>
+      <>
+        <PrivacyWrapper
+          type="video"
+          provider={provider}
+          embedUrl={iframeUrl}
+          eventCounter={<EventCounter prefix="loadvideo" path={path} />}
+          onLoad={() => {
+            submitEventWithPath('loadvideo', path)
+          }}
+        >
+          <VideoWrapper className="video">
+            {provider === ExternalProvider.WikimediaCommons && (
+              <video controls src={src} />
+            )}
+            {(provider === ExternalProvider.YouTube ||
+              ExternalProvider.Vimeo) && (
+              <iframe
+                src={iframeUrl}
+                frameBorder="0"
+                allow="autoplay; encrypted-media; picture-in-picture"
+                allowFullScreen
+              />
+            )}
+          </VideoWrapper>
+        </PrivacyWrapper>
+        {license && !license.default && (
+          <StyledP>
+            <LicenseNotice minimal data={license} type="video" />
+          </StyledP>
+        )}
+      </>
     )
   }
 }
