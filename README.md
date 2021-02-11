@@ -39,7 +39,7 @@ The frontend is built with [next.js](https://nextjs.org/) and uses many features
 
 ## Repository
 
-Here are some useful places to get started:
+Here are some useful places:
 
 - `/src/pages`: File-system routing root directory. Add new routes by creating files in this folder.
 
@@ -61,7 +61,7 @@ Some useful commands:
 yarn dev
 ```
 
-Starts the development server. This enables hot reloading and development warnings. Create a PR in this repository to get a preview deployment that uses production settings.
+Starts the development server. This enables hot reloading and development warnings.
 
 ```
 yarn format
@@ -73,7 +73,7 @@ Runs eslint and prettier, fixes issues automatically if possible.
 yarn lint
 ```
 
-Runs tsc, eslint and prettier. This command needs to pass before merging into staging.
+Runs tsc, eslint and prettier (without automatic fixes). This command needs to pass before merging into staging.
 
 ```
 yarn analyze
@@ -91,7 +91,7 @@ All files are named with kebab-case. You should use `@/` to import files from `s
 
 ## More information
 
-You can find more detailed explanations in our wiki. Here are some interesting pages:
+You can find more detailed explanations in our wiki. Currently, we have these pages available:
 
 - [Internationalization](https://github.com/serlo/frontend/wiki/Internationalization)
 - [Entities and Schema](https://github.com/serlo/frontend/wiki/Schema)
