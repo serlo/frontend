@@ -79,8 +79,8 @@ export const instanceData = {
     },
     license: {
       readMore: "Was bedeutet das?",
-      special: 'Different license',
-      nonFree: 'Usage of this content might be more restricted than our other content.'
+      special: "Besondere Lizenz",
+      nonFree: "Die Nutzung könnte vielleicht strengeren Regeln unterliegen als bei unseren anderen Inhalten."
     },
     course: {
       showPages: "Kursübersicht anzeigen",
