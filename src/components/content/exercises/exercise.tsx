@@ -146,7 +146,13 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
         )
       }
       if (state.interactive.plugin === 'inputExercise') {
-        return <InputExercise data={state.interactive.state} path={path} />
+        return (
+          <InputExercise
+            data={state.interactive.state}
+            path={path}
+            renderNested={renderNested}
+          />
+        )
       }
     }
   }
