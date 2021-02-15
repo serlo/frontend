@@ -7,19 +7,24 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { EdtrPluginInputExercise } from '@/data-types'
 import { makeMargin, makePrimaryButton, inputFontReset } from '@/helper/css'
 import { submitEventWithPath } from '@/helper/submit-event'
-import { NodePath } from '@/schema/article-renderer'
+import { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
 
 export interface InputExerciseProps {
   data: EdtrPluginInputExercise['state']
   path?: NodePath
+  renderNested: RenderNestedFunction
 }
 
 interface FeedbackData {
   correct: boolean
-  message: string
+  message: JSX.Element
 }
 
-export function InputExercise({ data, path }: InputExerciseProps) {
+export function InputExercise({
+  data,
+  path,
+  renderNested,
+}: InputExerciseProps) {
   const [feedback, setFeedback] = useState<FeedbackData | null>(null)
   const [value, setValue] = useState('')
   const [A, setA] = useState<typeof import('algebra.js') | null>(null)
@@ -58,7 +63,7 @@ export function InputExercise({ data, path }: InputExerciseProps) {
     </Wrapper>
   )
 
-  function checkAnswer() {
+  function checkAnswer(): FeedbackData {
     const answers = data.answers
     const filteredAnswers = answers.filter((answer) => {
       try {
@@ -80,10 +85,21 @@ export function InputExercise({ data, path }: InputExerciseProps) {
         return false
       }
     })
+    const hasCustomFeedback = filteredAnswers[0]?.feedback.length > 0
+    const customFeedbackNode =
+      hasCustomFeedback &&
+      (renderNested(filteredAnswers[0]?.feedback, 'feedback') as JSX.Element)
+
     if (filteredAnswers.length !== 1 || !filteredAnswers[0].isCorrect) {
-      return { correct: false, message: strings.content.wrong }
+      return {
+        correct: false,
+        message: customFeedbackNode || <>{strings.content.wrong}</>,
+      }
     } else {
-      return { correct: true, message: strings.content.right }
+      return {
+        correct: true,
+        message: customFeedbackNode || <>{strings.content.right}</>,
+      }
     }
   }
 

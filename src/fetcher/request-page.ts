@@ -4,6 +4,7 @@ import { convertState } from './convert-state'
 import { createBreadcrumbs } from './create-breadcrumbs'
 import { createExercise, createExerciseGroup } from './create-exercises'
 import { createHorizon } from './create-horizon'
+import { createInlineLicense } from './create-inline-license'
 import { getMetaImage, getMetaDescription } from './create-meta-data'
 import { createNavigation } from './create-navigation'
 import { buildTaxonomyData } from './create-taxonomy'
@@ -248,6 +249,7 @@ export async function requestPage(
           {
             type: 'video',
             src: uuid.currentRevision?.url!,
+            license: createInlineLicense(uuid.license),
           },
           ...content,
         ],

@@ -78,7 +78,9 @@ export const instanceData = {
       unrevised: "Zeige neue Bearbeitungen"
     },
     license: {
-      readMore: "Was bedeutet das?"
+      readMore: "Was bedeutet das?",
+      special: "Besondere Lizenz",
+      nonFree: "Die Nutzung könnte vielleicht strengeren Regeln unterliegen als bei unseren anderen Inhalten."
     },
     course: {
       showPages: "Kursübersicht anzeigen",

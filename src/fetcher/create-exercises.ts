@@ -1,4 +1,5 @@
 import { convertState } from './convert-state'
+import { createInlineLicense } from './create-inline-license'
 import { Solution, BareExercise, BareExerciseGroup } from './query-types'
 import {
   FrontendExerciseNode,
@@ -61,7 +62,7 @@ export function createExercise(
     task: {
       legacy: taskLegacy,
       edtrState: taskEdtrState,
-      license: uuid.license,
+      license: createInlineLicense(uuid.license),
     },
     solution: createSolutionData(uuid.solution),
     context: {
@@ -105,7 +106,7 @@ function createSolutionData(solution: BareExercise['solution']) {
   return {
     legacy: solutionLegacy,
     edtrState: solutionEdtrState,
-    license: solution?.license,
+    license: solution && createInlineLicense(solution.license),
   }
 }
 
@@ -143,7 +144,7 @@ export function createExerciseGroup(
     type: 'exercise-group',
     content: convertState(uuid.currentRevision?.content),
     positionOnPage: pageIndex,
-    license: uuid.license,
+    license: createInlineLicense(uuid.license),
     children,
     context: {
       id: uuid.id,

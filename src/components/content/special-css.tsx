@@ -9,6 +9,7 @@ export const SpecialCss = styled.div`
     li > p {
       margin-left: 0;
       margin-right: 0;
+      margin-bottom: 8px;
     }
     li > [class*='MathWrapper'] {
       padding-left: 0;
@@ -17,18 +18,19 @@ export const SpecialCss = styled.div`
     [class*='Important'],
     [class*='SpoilerBody'],
     [class*='SolutionBox'],
+    [class*='StyledLabel'],
     li,
     th,
     td {
-      p:last-child,
-      [class*='MathWrapper']:last-child,
-      ul:last-child,
-      ol:last-child,
-      [class*='ImgCentered']:last-child,
-      [class*='exercise__Wrapper']:last-child {
+      > p:last-child,
+      > [class*='MathWrapper']:last-child,
+      > ul:last-child,
+      > ol:last-child,
+      > [class*='ImgCentered']:last-child,
+      > [class*='exercise__Wrapper']:last-child {
         margin-bottom: 0;
       }
-      [class*='exercise__Wrapper']:first-child {
+      > [class*='exercise__Wrapper']:first-child {
         margin-top: 0;
       }
     }
