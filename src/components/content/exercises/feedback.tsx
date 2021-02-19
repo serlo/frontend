@@ -9,7 +9,8 @@ export interface FeedbackProps {
 export function Feedback({ children, correct }: FeedbackProps) {
   return (
     <FeedbackWrapper correct={correct}>
-      <span>⬤</span> {children} {correct && '🎉'}
+      <span>⬤</span> <div>{children}</div>
+      {correct && '🎉'}
     </FeedbackWrapper>
   )
 }
@@ -17,13 +18,9 @@ export function Feedback({ children, correct }: FeedbackProps) {
 const FeedbackWrapper = styled.div<{ correct?: boolean }>`
   margin-left: 0;
   margin-bottom: 0;
-  > div {
-    display: inline-block;
-    > p {
-      margin-left: 0;
-    }
-  }
+  display: flex;
   > span {
+    margin: 0 0 0 3px;
     color: ${(props) =>
       props.correct ? props.theme.colors.brandGreen : '#cc1500'};
   }
