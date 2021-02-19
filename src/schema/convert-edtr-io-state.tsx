@@ -67,6 +67,9 @@ function convertPlugin(node: EdtrState) {
     return convert(node.state)
   }
   if (node.plugin === 'image') {
+    if (node.state.alt?.trim() == '{{{backdrop}}}') {
+      return { type: 'backdrop', imageUrl: node.state.src }
+    }
     // remove images without source
     if (!node.state.src) return []
     return [
@@ -219,7 +222,17 @@ function convertPlugin(node: EdtrState) {
 
 function convertSlate(node: SlateBlockElement) {
   if (node.type === 'p') {
-    return handleSemistructedContentOfP(convert(node.children))
+    const children = convert(node.children)
+    if (children.length == 1) {
+      const child = children[0]
+      if (child.type == 'text') {
+        const result = /^{{{([\d]+)vh}}}$/.exec(child.text.trim())
+        if (result) {
+          return { type: 'spacer', vh: parseInt(result[1]) }
+        }
+      }
+    }
+    return handleSemistructedContentOfP(children)
   }
   if (node.type === 'a') {
     const children = convert(node.children)

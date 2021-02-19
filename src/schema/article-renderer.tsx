@@ -372,6 +372,19 @@ function renderElement(props: RenderElementProps): React.ReactNode {
   if (element.type === 'code') {
     return <Code content={element.code} />
   }
+  if (element.type == 'spacer') {
+    return <div style={{ width: '100%', height: `${element.vh}vh` }} />
+  }
+  if (element.type == 'backdrop') {
+    return (
+      <div
+        className="frontend-backdrop"
+        style={{ height: 0, overflow: 'hidden' }}
+      >
+        {element.imageUrl}
+      </div>
+    )
+  }
   return null
 }
 

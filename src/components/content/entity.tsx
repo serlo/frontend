@@ -6,6 +6,7 @@ import * as React from 'react'
 import styled from 'styled-components'
 
 import { CommentAreaProps } from '../comments/comment-area'
+import { MaxWidthDiv } from '../navigation/max-width-div'
 import { HSpace } from './h-space'
 import { LicenseNotice } from '@/components/content/license-notice'
 import { CourseFooter } from '@/components/navigation/course-footer'
@@ -34,6 +35,60 @@ export function Entity({ data }: EntityProps) {
   // state@/components/comments/comment-area
   const [open, setOpen] = React.useState(false)
 
+  const [backgroundImage, setBackgroundImage] = React.useState('')
+  const [activeImageUrl, setActiveImageUrl] = React.useState('')
+
+  const [useBackdrops] = React.useState(
+    () =>
+      data.content &&
+      data.content.filter((node) => node.type == 'backdrop').length > 0
+  )
+
+  // add scroll listener
+  React.useEffect(() => {
+    const backdrops = document.querySelectorAll('.frontend-backdrop')
+    function check() {
+      const windowHeight = window.document.documentElement.clientHeight
+      let minOverPx = -100000
+      let cur: any = undefined
+      for (let i = 0; i < backdrops.length; i++) {
+        const backdrop = backdrops[i]
+        const bot = backdrop.getBoundingClientRect().bottom - windowHeight
+        if (bot <= 0 && bot > minOverPx) {
+          minOverPx = bot
+          cur = backdrop
+        }
+      }
+      setBackgroundImage(cur ? cur.innerHTML : '')
+    }
+
+    if (backdrops.length > 0) {
+      check()
+      window.addEventListener('scroll', check)
+      return () => {
+        window.removeEventListener('scroll', check)
+      }
+    }
+  }, [])
+
+  // avoid flicker fix
+  React.useEffect(() => {
+    if (!backgroundImage) {
+      setActiveImageUrl('')
+      return
+    }
+    const img = new Image()
+    img.src = backgroundImage
+    img
+      .decode()
+      .then(() => {
+        setActiveImageUrl(backgroundImage)
+      })
+      .catch(() => {
+        // Do something with the error.
+      })
+  }, [backgroundImage])
+
   // course
   const [courseNavOpen, setCourseNavOpen] = React.useState(false)
   const openCourseNav = (
@@ -49,22 +104,34 @@ export function Entity({ data }: EntityProps) {
 
   const { strings } = useInstanceData()
 
-  return wrapWithSchema(
-    <>
-      {renderCourseNavigation()}
-      {data.trashed && renderTrashedNotice()}
-      {renderStyledH1()}
-      {renderUserTools({ aboveContent: true })}
-      {data.content && renderContent(data.content)}
-      {renderCourseFooter()}
-      <HSpace amount={20} />
-      {renderUserTools()}
-      {renderShareModal()}
-      {data.licenseData && <LicenseNotice data={data.licenseData} />}
+  return wrapWithBackdropCss(
+    wrapWithSchema(
+      <>
+        <FixedDiv>
+          <MaxWidthDiv>
+            <BackdropDiv url={activeImageUrl} />
+          </MaxWidthDiv>
+        </FixedDiv>
+        {renderCourseNavigation()}
+        {data.trashed && renderTrashedNotice()}
+        {renderStyledH1()}
+        {renderUserTools({ aboveContent: true })}
+        {data.content && renderContent(data.content)}
+        {renderCourseFooter()}
+        <HSpace amount={20} />
+        {renderUserTools()}
+        {renderShareModal()}
+        {data.licenseData && <LicenseNotice data={data.licenseData} />}
 
-      {data.typename !== 'Page' && <CommentArea id={data.id} />}
-    </>
+        {data.typename !== 'Page' && <CommentArea id={data.id} />}
+      </>
+    )
   )
+
+  function wrapWithBackdropCss(comp: JSX.Element) {
+    if (useBackdrops) return <CssForBackdrop>{comp}</CssForBackdrop>
+    return comp
+  }
 
   function renderStyledH1() {
     if (!data.title) return null
@@ -188,4 +255,43 @@ const TrashNotice = styled.div`
   background-color: #ddd;
   border-radius: 20px;
   font-weight: bold;
+`
+
+const BackdropDiv = styled.div<{ url: string }>`
+  width: 100%;
+  height: 100vh;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url('${(props) => props.url}');
+`
+
+const FixedDiv = styled.div`
+  position: fixed;
+  z-index: -1;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+`
+
+const CssForBackdrop = styled.div`
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  [class*='exercise__Wrapper'],
+  [class*='Important'] {
+    background-color: white;
+  }
+  [class*='Important'] {
+    border-right: 2px solid #007ec1;
+    border-top: 2px solid #007ec1;
+    border-bottom: 2px solid #007ec1;
+  }
+  [class*='exercise__Wrapper'] {
+    border: 1px solid #007ec1;
+  }
 `

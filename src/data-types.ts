@@ -513,6 +513,18 @@ export interface FrontendInjectionNode {
   children?: undefined
 }
 
+export interface FrontendSpacerNode {
+  type: 'spacer'
+  children?: undefined
+  vh: number
+}
+
+export interface FrontendBackdropNode {
+  type: 'backdrop'
+  children?: undefined
+  imageUrl: string
+}
+
 interface BareSolution {
   legacy?: FrontendContentNode[]
   edtrState?: SolutionEdtrState
@@ -655,6 +667,8 @@ export type FrontendVoidNode =
   | FrontendVideoNode
   | FrontendCodeNode
   | FrontendEquationsNode
+  | FrontendSpacerNode
+  | FrontendBackdropNode
 
 export type FrontendElementNode =
   | FrontendANode

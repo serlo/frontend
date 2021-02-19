@@ -50,7 +50,11 @@ export function Injection({ href, renderNested }: InjectionProps) {
       })
       .then((json) => {
         const pageData: SlugPageData = json.pageProps.pageData
-        dataToState(pageData)
+        try {
+          dataToState(pageData)
+        } catch (e) {
+          //
+        }
 
         /*if (pageData.kind === 'single-entity') {
           try {
