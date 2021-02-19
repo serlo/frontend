@@ -175,7 +175,9 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
 }
 
 const ExerciseTools = styled.div`
-  display: flex;
+  @media (min-width: ${(props) => props.theme.breakpoints.mobile}) {
+    display: flex;
+  }
 `
 
 const StyledSpan = styled.span`
