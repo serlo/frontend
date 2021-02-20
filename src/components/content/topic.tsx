@@ -94,7 +94,9 @@ export function Topic({ data }: TopicProps) {
         </LinkList>
       )}
 
-      {defaultLicense && <LicenseNotice data={defaultLicense} />}
+      {defaultLicense && (
+        <LicenseNotice data={defaultLicense} path={['license']} />
+      )}
 
       <CommentArea id={data.id} />
 
@@ -152,7 +154,9 @@ function SubTopic({
   return (
     <>
       <h2>
-        <StyledLink href={data.url}>{data.title}</StyledLink>
+        <StyledLink href={data.url} path={[subid, 'title']}>
+          {data.title}
+        </StyledLink>
       </h2>
 
       <Wrapper>
@@ -165,13 +169,17 @@ function SubTopic({
         </Overview>
 
         <LinkList>
-          <CategoryLinks category="articles" links={data.articles} />
-          <CategoryLinks category="exercises" links={data.exercises} />
-          <CategoryLinks category="videos" links={data.videos} />
-          <CategoryLinks category="applets" links={data.applets} />
-          <CategoryLinks category="courses" links={data.courses} />
-          <CategoryLinks category="folders" links={data.folders} />
-          <CategoryLinks category="events" links={data.events} />
+          <CategoryLinks category="articles" links={data.articles} id={subid} />
+          <CategoryLinks
+            category="exercises"
+            links={data.exercises}
+            id={subid}
+          />
+          <CategoryLinks category="videos" links={data.videos} id={subid} />
+          <CategoryLinks category="applets" links={data.applets} id={subid} />
+          <CategoryLinks category="courses" links={data.courses} id={subid} />
+          <CategoryLinks category="folders" links={data.folders} id={subid} />
+          <CategoryLinks category="events" links={data.events} id={subid} />
         </LinkList>
       </Wrapper>
     </>
@@ -182,9 +190,10 @@ interface CategoryLinksProps {
   links: TaxonomyLink[]
   full?: boolean
   category: CategoryTypes
+  id?: number
 }
 
-function CategoryLinks({ links, full, category }: CategoryLinksProps) {
+function CategoryLinks({ links, full, category, id }: CategoryLinksProps) {
   const { strings } = useInstanceData()
   if (links.length === 0) return null
   return (
@@ -195,8 +204,12 @@ function CategoryLinks({ links, full, category }: CategoryLinksProps) {
           <FontAwesomeIcon icon={categoryIconMapping[category]} />
         </LinkSectionHeadline>
 
-        {links.map((link) => (
-          <StyledLink2 href={link.url} key={link.url + '_' + link.title}>
+        {links.map((link, i) => (
+          <StyledLink2
+            href={link.url}
+            key={link.url + '_' + link.title}
+            path={full ? [category, i] : [id!, category, i]}
+          >
             {link.title}
           </StyledLink2>
         ))}

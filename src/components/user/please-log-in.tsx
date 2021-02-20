@@ -6,7 +6,9 @@ export function PleaseLogIn() {
   const { strings } = useInstanceData()
   return (
     <StyledP>
-      <Link href="/api/auth/login">{strings.login.pleaseLogInLink}</Link>{' '}
+      <Link href="/api/auth/login" path={[]}>
+        {strings.login.pleaseLogInLink}
+      </Link>{' '}
       {strings.login.pleaseLogInText}
     </StyledP>
   )

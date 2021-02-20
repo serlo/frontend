@@ -196,7 +196,11 @@ function renderElement(props: RenderElementProps): React.ReactNode {
   const { element, children, path } = props
 
   if (element.type === 'a') {
-    return <Link href={element.href}>{children}</Link>
+    return (
+      <Link href={element.href} path={path}>
+        {children}
+      </Link>
+    )
   }
   if (element.type === 'inline-math') {
     return <Math formula={element.formula} />
@@ -223,7 +227,11 @@ function renderElement(props: RenderElementProps): React.ReactNode {
     const wrapInA = (comp: React.ReactNode) => {
       if (element.href) {
         // needs investigation if this could be simplified
-        return <ImageLink href={element.href}>{comp}</ImageLink>
+        return (
+          <ImageLink href={element.href} path={path}>
+            {comp}
+          </ImageLink>
+        )
       }
       return comp
     }

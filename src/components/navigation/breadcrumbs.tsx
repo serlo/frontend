@@ -60,7 +60,10 @@ function BreadcrumbEntries({
   } else {
     if (arrayLength !== i + 1) {
       return (
-        <BreadcrumbLink href={bcEntry.url ?? undefined}>
+        <BreadcrumbLink
+          href={bcEntry.url ?? undefined}
+          path={['breadcrumbs', i]}
+        >
           {bcEntry.label}
         </BreadcrumbLink>
       )
@@ -70,6 +73,7 @@ function BreadcrumbEntries({
           <BreadcrumbLinkLast
             href={bcEntry.url ?? undefined}
             isTaxonomy={isTaxonomy}
+            path={['breadcrumbs', i]}
           >
             <MobileIcon>
               <FontAwesomeIcon icon={faArrowCircleLeft} size="1x" />

@@ -62,6 +62,7 @@ export function MobileMenu({ data, auth }: MobileMenuProps) {
           {...entry}
           open={openEntryIndex === index}
           index={index}
+          i={index}
         />
       ))}
       {renderAuthMenu()}
@@ -87,6 +88,7 @@ export function MobileMenu({ data, auth }: MobileMenuProps) {
           // eslint-disable-next-line react/no-children-prop
           children={link.children}
           icon={link.icon}
+          i="auth"
         />
       )
     })
@@ -101,6 +103,8 @@ interface EntryProps extends HeaderLink {
     e: React.MouseEvent<HTMLLIElement, MouseEvent>,
     index: number
   ) => void
+  i: number | string
+  subI?: number | string
 }
 
 function Entry({
@@ -112,6 +116,8 @@ function Entry({
   open,
   onToggle,
   index,
+  i,
+  subI,
 }: EntryProps) {
   return (
     <>
@@ -122,7 +128,12 @@ function Entry({
             : undefined
         }
       >
-        <EntryLink href={url} isChild={isChild} open={open}>
+        <EntryLink
+          href={url}
+          isChild={isChild}
+          open={open}
+          path={['menu', i, subI!]}
+        >
           {!isChild ? (
             <IconWrapper>
               <FontAwesomeIcon
@@ -146,7 +157,7 @@ function Entry({
       {open && children ? (
         <>
           {children.map((entry, index) => (
-            <Entry {...entry} isChild key={index} />
+            <Entry {...entry} isChild key={index} i={i} subI={index} />
           ))}{' '}
           <Seperator />
         </>

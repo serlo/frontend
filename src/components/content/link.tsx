@@ -3,8 +3,10 @@ import * as React from 'react'
 
 import { StyledA } from '../tags/styled-a'
 import { ExternalLink } from './external-link'
+import { EntityIdContext } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { submitEvent } from '@/helper/submit-event'
+import { NodePath } from '@/schema/article-renderer'
 
 export interface LinkProps {
   href?: string
@@ -13,6 +15,7 @@ export interface LinkProps {
   noExternalIcon?: boolean
   title?: string
   noCSR?: boolean
+  path?: NodePath
 }
 
 //TODO: Should come from cloudflare worker https://github.com/serlo/frontend/issues/328
@@ -56,8 +59,10 @@ export function Link({
   noExternalIcon,
   title,
   noCSR,
+  path,
 }: LinkProps) {
   const { lang } = useInstanceData()
+  const entityId = React.useContext(EntityIdContext)
 
   if (!href || href === undefined || href === '')
     return (
@@ -70,6 +75,22 @@ export function Link({
   const isExternal = isAbsolute && !href.includes('.serlo.org')
   const isAnchor = href.startsWith('#') || href.startsWith('/#')
   const isMailto = href.startsWith('mailto:')
+
+  let key = ''
+
+  if (entityId) {
+    if (!path) {
+      console.log('!!! !!! link has no path', href) // this woule be ignored
+    } else if (path.length == 0) {
+      // ignore
+    } else {
+      key = `clicklink_${entityId}_${path
+        .filter((x) => x !== undefined)
+        .map((x) => x.toString())
+        .join('_')}`
+      //console.log('key:', key)
+    }
+  }
 
   if (isAnchor || isMailto) return renderLink(href, false)
   if (isExternal || noCSR) return renderLink(href, true)
@@ -105,33 +126,28 @@ export function Link({
   }
 
   function renderLink(_href: string, outbound: boolean) {
-    return (
-      <StyledA
-        href={_href}
-        className={className}
-        title={title}
-        onClick={(e) => {
+    const clickHandler = key
+      ? (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
           if (!outbound) {
-            submitEvent('clicklink_test')
+            submitEvent(key)
           } else {
-            try {
-              let sent = false
+            let sent = false
 
-              const callback = function () {
-                console.log('debug - callback', sent)
-                if (!sent) {
-                  console.log('debug - navigate now to', _href)
-                  window.location.href = _href
-                }
-                sent = true
+            const callback = function () {
+              //console.log('debug - callback', sent)
+              if (!sent) {
+                //console.log('debug - navigate now to', _href)
+                window.location.href = _href
               }
+              sent = true
+            }
+            try {
+              const result = submitEvent(key, callback)
 
-              const result = submitEvent('clicklink_outbound_test', callback)
+              //console.log('debug - sending event')
 
-              console.log('debug - sending event')
-
-              if (result === false) {
-                console.log('debug - fallback')
+              if (result === false || window.location.hostname == 'localhost') {
+                //console.log('debug - fallback')
                 callback()
               }
 
@@ -141,9 +157,18 @@ export function Link({
               return false
             } catch (e) {
               //
+              callback()
             }
           }
-        }}
+        }
+      : undefined
+
+    return (
+      <StyledA
+        href={_href}
+        className={className}
+        title={title}
+        onClick={clickHandler}
       >
         {children}
         {isExternal && !noExternalIcon && <ExternalLink />}
