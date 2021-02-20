@@ -4,6 +4,7 @@ import * as React from 'react'
 import { StyledA } from '../tags/styled-a'
 import { ExternalLink } from './external-link'
 import { useInstanceData } from '@/contexts/instance-context'
+import { submitEvent } from '@/helper/submit-event'
 
 export interface LinkProps {
   href?: string
@@ -70,7 +71,8 @@ export function Link({
   const isAnchor = href.startsWith('#') || href.startsWith('/#')
   const isMailto = href.startsWith('mailto:')
 
-  if (isExternal || noCSR || isAnchor || isMailto) return renderLink(href)
+  if (isAnchor || isMailto) return renderLink(href, false)
+  if (isExternal || noCSR) return renderLink(href, true)
 
   //at this point only internal links should be left
 
@@ -79,7 +81,7 @@ export function Link({
   if (!isLegacyLink(internalLink)) return renderClientSide(internalLink)
 
   //fallback
-  return renderLink(href)
+  return renderLink(href, true)
 
   function normalizeSerloLink(_href: string) {
     // compat: some user are typing \1234 instead of /1234
@@ -97,14 +99,47 @@ export function Link({
   function renderClientSide(_href: string) {
     return (
       <NextLink prefetch={false} href={_href}>
-        {renderLink(_href)}
+        {renderLink(_href, false)}
       </NextLink>
     )
   }
 
-  function renderLink(_href: string) {
+  function renderLink(_href: string, outbound: boolean) {
     return (
-      <StyledA href={_href} className={className} title={title}>
+      <StyledA
+        href={_href}
+        className={className}
+        title={title}
+        onClick={(e) => {
+          if (!outbound) {
+            submitEvent('clicklink_test')
+          } else {
+            try {
+              let sent = false
+
+              const callback = function () {
+                console.log('debug - callback', sent)
+                if (!sent) {
+                  console.log('debug - navigate now to', _href)
+                  window.location.href = _href
+                }
+                sent = true
+              }
+
+              const result = submitEvent('clicklink_test', callback)
+
+              if (result === false) callback()
+
+              window.setTimeout(callback, 5000)
+
+              e.preventDefault()
+              return false
+            } catch (e) {
+              //
+            }
+          }
+        }}
+      >
         {children}
         {isExternal && !noExternalIcon && <ExternalLink />}
       </StyledA>
