@@ -80,7 +80,8 @@ export function Link({
 
   if (entityId) {
     if (!path) {
-      console.log('!!! !!! link has no path', href) // this woule be ignored
+      // uncomment this line to search for missing links
+      //console.log('!!! !!! link has no path', href)
     } else if (path.length == 0) {
       // ignore
     } else {
