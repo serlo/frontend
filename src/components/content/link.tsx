@@ -126,7 +126,9 @@ export function Link({
                 sent = true
               }
 
-              const result = submitEvent('clicklink_test', callback)
+              const result = submitEvent('clicklink_outbound_test', callback)
+
+              console.log('debug - sending event')
 
               if (result === false) callback()
 
