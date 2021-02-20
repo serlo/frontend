@@ -130,7 +130,10 @@ export function Link({
 
               console.log('debug - sending event')
 
-              if (result === false) callback()
+              if (result === false) {
+                console.log('debug - fallback')
+                callback()
+              }
 
               window.setTimeout(callback, 5000)
 

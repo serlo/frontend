@@ -6,6 +6,7 @@ export function submitEvent(name: string, callback?: () => void) {
     const window_local: any = window
     if (window_local.sa_event) {
       window_local.sa_event(name, callback)
+      return true
     }
   } catch (e) {
     // ignore failures
