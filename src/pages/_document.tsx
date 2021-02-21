@@ -128,11 +128,6 @@ export default class MyDocument extends Document {
                 }}
               />
             )}
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `window.sa_event=window.sa_event||function(){a=[].slice.call(arguments);sa_event.q?sa_event.q.push(a):sa_event.q=[a]};`,
-            }}
-          ></script>
         </Head>
         <body style={bodyStyles}>
           <Main />
@@ -146,7 +141,12 @@ export default class MyDocument extends Document {
             />
           )}
           <NextScript />
-          <script async defer src="https://sa.serlo.org/latest.js" />
+          <script
+            data-skip-dnt="true"
+            async
+            defer
+            src="https://sa.serlo.org/latest.js"
+          />
           <noscript>
             <img src="https://sa.serlo.org/noscript.gif" alt="" />
           </noscript>

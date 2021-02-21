@@ -147,7 +147,7 @@ export function Link({
 
               //console.log('debug - sending event')
 
-              if (result === false || window.location.hostname == 'localhost') {
+              if (result === false) {
                 //console.log('debug - fallback')
                 callback()
               }
