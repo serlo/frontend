@@ -52,7 +52,7 @@ export const instanceData = {
       threads: 'Threads',
       topic: "विषय",
       subject: "विषय",
-      userProfile: 'User Profile',
+      userProfile: "यूज़र प्रोफाइल",
       privacyPolicy: 'Privacy Policy',
       content: "Content"
     },
