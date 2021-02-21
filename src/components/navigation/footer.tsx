@@ -39,18 +39,21 @@ function About() {
           <SummaryHeading>{strings.footer.summaryHeading}</SummaryHeading>
           <SummaryText>{strings.footer.summaryText}</SummaryText>
           <SummaryButtonBox>
-            <SummaryButton href={footerData.aboutHref}>
+            <SummaryButton href={footerData.aboutHref} path={['footer_about']}>
               <FontAwesomeIcon icon={faChevronCircleRight} size="sm" />{' '}
               {strings.footer.learnMore}
             </SummaryButton>
           </SummaryButtonBox>
         </Summary>
         <Support>
-          <ImageLink href={footerData.participationHref}>
+          <ImageLink
+            href={footerData.participationHref}
+            path={['footer_participation']}
+          >
             <ParticipateIcon />
             <SupportButton>{strings.footer.participate}</SupportButton>
           </ImageLink>
-          <ImageLink href={footerData.donationHref}>
+          <ImageLink href={footerData.donationHref} path={['footer_donation']}>
             <DonateIcon />
             <SupportButton>{strings.footer.donate}</SupportButton>
           </ImageLink>

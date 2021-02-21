@@ -100,11 +100,7 @@ function MenuInner({
         />
       )}
       <List>
-        {data.map((link) =>
-          renderEntry({
-            link: link,
-          })
-        )}
+        {data.map((link, i) => renderEntry({ link }, i))}
         {renderAuthMenu()}
       </List>
     </ResponsiveNav>
@@ -119,20 +115,26 @@ function MenuInner({
 
     // render placeholder while data is loading
     if (!data)
-      return renderEntry({
-        link: {
-          url: '/auth/login',
-          title: strings.header.login,
-          icon: 'user',
+      return renderEntry(
+        {
+          link: {
+            url: '/auth/login',
+            title: strings.header.login,
+            icon: 'user',
+          },
+          authMenuMounted: false,
         },
-        authMenuMounted: false,
-      })
+        'auth'
+      )
 
     return data.map((link) => {
-      return renderEntry({
-        link: link,
-        authMenuMounted: mounted,
-      })
+      return renderEntry(
+        {
+          link: link,
+          authMenuMounted: mounted,
+        },
+        'auth'
+      )
     })
   }
 
@@ -141,7 +143,10 @@ function MenuInner({
     authMenuMounted?: boolean
   }
 
-  function renderEntry({ link, authMenuMounted }: EntryData) {
+  function renderEntry(
+    { link, authMenuMounted }: EntryData,
+    i: number | string
+  ) {
     const hasChildren = link.children !== undefined
     const hasIcon =
       link.icon &&
@@ -155,7 +160,7 @@ function MenuInner({
         {hasChildren ? (
           Tippy ? (
             <Tippy.default
-              content={renderSubMenuInner(link.children)}
+              content={renderSubMenuInner(link.children, i)}
               singleton={target}
             >
               <StyledLink
@@ -174,7 +179,11 @@ function MenuInner({
             </StyledLink>
           )
         ) : (
-          <StyledLink hasIcon={hasIcon} /*active={true}*/ href={link.url}>
+          <StyledLink
+            hasIcon={hasIcon}
+            /*active={true}*/ href={link.url}
+            path={['menu', i]}
+          >
             {renderIcon()} {!hasIcon && link.title}
           </StyledLink>
         )}
@@ -201,18 +210,18 @@ function MenuInner({
     }
   }
 
-  function renderSubMenuInner(subEntries?: HeaderLink[]) {
+  function renderSubMenuInner(subEntries?: HeaderLink[], i?: number | string) {
     return (
       <SubList>
         {subEntries !== undefined &&
-          subEntries.map((entry) => {
+          subEntries.map((entry, i2) => {
             const href =
               entry.url === '/user/public' && auth
                 ? `/user/${auth.id}/${auth.username}`
                 : entry.url
             return (
               <li key={entry.title} onClick={onSubMenuInnerClick}>
-                <SubLink href={href}>
+                <SubLink href={href} path={['menu', i!, i2]}>
                   <SubButtonStyle>{entry.title}</SubButtonStyle>
                 </SubLink>
               </li>

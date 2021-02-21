@@ -164,7 +164,12 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
         {renderSolutionToggle()}
 
         {node.task.license && (
-          <LicenseNotice minimal data={node.task.license} type="task" />
+          <LicenseNotice
+            minimal
+            data={node.task.license}
+            type="task"
+            path={path}
+          />
         )}
         {loaded && auth.current && Comp && (
           <Comp data={{ type: '_ExerciseInline', id: node.context.id }} />
