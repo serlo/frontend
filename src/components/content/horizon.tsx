@@ -13,7 +13,7 @@ export function Horizon({ data }: HorizonProps) {
     <Wrapper>
       {data.map((horizonEntry, index) => {
         return (
-          <Item href={horizonEntry.url} key={index} noExternalIcon>
+          <Item href={horizonEntry.url} key={index} noExternalIcon path={[]}>
             <Image alt={horizonEntry.title} src={horizonEntry.imageUrl} />
             <Headline>{horizonEntry.title}</Headline>
             <Text>{horizonEntry.text}</Text>

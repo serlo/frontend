@@ -37,7 +37,7 @@ export function MetaBar({
   const date = new Date(timestamp)
   return (
     <MetaBarBox>
-      <StyledUserLink user={user} withIcon />
+      <StyledUserLink user={user} withIcon path={['comment-user', id]} />
 
       <Tippy
         interactive

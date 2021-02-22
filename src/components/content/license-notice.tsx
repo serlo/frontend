@@ -12,14 +12,21 @@ import { StyledA } from '../tags/styled-a'
 import { Link } from './link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { LicenseData } from '@/data-types'
+import { NodePath } from '@/schema/article-renderer'
 
 interface LicenseNoticeProps {
   data: LicenseData
   minimal?: boolean
   type?: 'video' | 'task' | 'exercise-group' | 'solution'
+  path?: NodePath
 }
 
-export function LicenseNotice({ data, minimal, type }: LicenseNoticeProps) {
+export function LicenseNotice({
+  data,
+  minimal,
+  type,
+  path,
+}: LicenseNoticeProps) {
   const { strings } = useInstanceData()
   // only link license
   const titleParts = data.title.split('CC')
@@ -63,7 +70,7 @@ export function LicenseNotice({ data, minimal, type }: LicenseNoticeProps) {
             {licenseName}
           </StyledA>
           {' → '}
-          <Link href={`/license/detail/${data.id}`}>
+          <Link href={`/license/detail/${data.id}`} path={path}>
             <b>{strings.license.readMore}</b>
           </Link>
         </StyledSmall>
@@ -84,7 +91,12 @@ export function LicenseNotice({ data, minimal, type }: LicenseNoticeProps) {
 
     return (
       <>
-        <MinimalLink title={title} href={licenseHref} noExternalIcon>
+        <MinimalLink
+          title={title}
+          href={licenseHref}
+          noExternalIcon
+          path={path}
+        >
           {data.default ? (
             <FontAwesomeIcon icon={faCreativeCommons} />
           ) : (

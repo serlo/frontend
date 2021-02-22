@@ -8,18 +8,24 @@ import ReviewerBadge from '@/assets-webkit/img/community/badge-reviewer.svg'
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { FrontendUserData } from '@/data-types'
+import { NodePath } from '@/schema/article-renderer'
 
 export interface UserLinkProps {
   user: FrontendUserData
   withIcon?: boolean
   className?: string
+  path?: NodePath
 }
 
-export function UserLink({ user, withIcon, className }: UserLinkProps) {
+export function UserLink({ user, withIcon, className, path }: UserLinkProps) {
   const { strings } = useInstanceData()
   return (
     <>
-      <Link href={`/user/${user.id}/${user.username}`} className={className}>
+      <Link
+        href={`/user/${user.id}/${user.username}`}
+        className={className}
+        path={path ?? []}
+      >
         {withIcon && <StyledFontAwesomeIcon icon={faUser} />}
         {user.username}
         {renderBadges()}

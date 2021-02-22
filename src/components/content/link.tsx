@@ -3,7 +3,10 @@ import * as React from 'react'
 
 import { StyledA } from '../tags/styled-a'
 import { ExternalLink } from './external-link'
+import { EntityIdContext } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
+import { submitEvent } from '@/helper/submit-event'
+import { NodePath } from '@/schema/article-renderer'
 
 export interface LinkProps {
   href?: string
@@ -12,6 +15,7 @@ export interface LinkProps {
   noExternalIcon?: boolean
   title?: string
   noCSR?: boolean
+  path?: NodePath
 }
 
 //TODO: Should come from cloudflare worker https://github.com/serlo/frontend/issues/328
@@ -55,8 +59,10 @@ export function Link({
   noExternalIcon,
   title,
   noCSR,
+  path,
 }: LinkProps) {
   const { lang } = useInstanceData()
+  const entityId = React.useContext(EntityIdContext)
 
   if (!href || href === undefined || href === '')
     return (
@@ -70,7 +76,25 @@ export function Link({
   const isAnchor = href.startsWith('#') || href.startsWith('/#')
   const isMailto = href.startsWith('mailto:')
 
-  if (isExternal || noCSR || isAnchor || isMailto) return renderLink(href)
+  let key = ''
+
+  if (entityId) {
+    if (!path) {
+      // uncomment this line to search for missing links
+      //console.log('!!! !!! link has no path', href)
+    } else if (path.length == 0) {
+      // ignore
+    } else {
+      key = `clicklink_${entityId}_${path
+        .filter((x) => x !== undefined)
+        .map((x) => x.toString())
+        .join('_')}`
+      //console.log('key:', key)
+    }
+  }
+
+  if (isAnchor || isMailto) return renderLink(href, false)
+  if (isExternal || noCSR) return renderLink(href, true)
 
   //at this point only internal links should be left
 
@@ -79,7 +103,7 @@ export function Link({
   if (!isLegacyLink(internalLink)) return renderClientSide(internalLink)
 
   //fallback
-  return renderLink(href)
+  return renderLink(href, true)
 
   function normalizeSerloLink(_href: string) {
     // compat: some user are typing \1234 instead of /1234
@@ -97,14 +121,56 @@ export function Link({
   function renderClientSide(_href: string) {
     return (
       <NextLink prefetch={false} href={_href}>
-        {renderLink(_href)}
+        {renderLink(_href, false)}
       </NextLink>
     )
   }
 
-  function renderLink(_href: string) {
+  function renderLink(_href: string, outbound: boolean) {
+    const clickHandler = key
+      ? (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+          if (!outbound) {
+            submitEvent(key)
+          } else {
+            let sent = false
+
+            const callback = function () {
+              //console.log('debug - callback', sent)
+              if (!sent) {
+                //console.log('debug - navigate now to', _href)
+                window.location.href = _href
+              }
+              sent = true
+            }
+            try {
+              const result = submitEvent(key, callback)
+
+              //console.log('debug - sending event')
+
+              if (result === false) {
+                //console.log('debug - fallback')
+                callback()
+              }
+
+              window.setTimeout(callback, 1000)
+
+              e.preventDefault()
+              return false
+            } catch (e) {
+              //
+              callback()
+            }
+          }
+        }
+      : undefined
+
     return (
-      <StyledA href={_href} className={className} title={title}>
+      <StyledA
+        href={_href}
+        className={className}
+        title={title}
+        onClick={clickHandler}
+      >
         {children}
         {isExternal && !noExternalIcon && <ExternalLink />}
       </StyledA>

@@ -28,7 +28,11 @@ export function FooterNav({ data }: FooterNavProps) {
               <NavList>
                 {category.children.map((link, childindex) => (
                   <NavLi key={index + childindex}>
-                    <NavLink href={link.url} noExternalIcon>
+                    <NavLink
+                      href={link.url}
+                      noExternalIcon
+                      path={['footer', index, childindex]}
+                    >
                       {link.icon && (
                         <FontAwesomeIcon
                           icon={iconMapping[link.icon]}

@@ -225,6 +225,7 @@ const Choices = styled.ul`
   padding: 0;
   margin: 0;
   list-style-type: none;
+  overflow: auto;
 `
 
 const ChoiceWrapper = styled.li`
