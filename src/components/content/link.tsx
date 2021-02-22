@@ -152,7 +152,7 @@ export function Link({
                 callback()
               }
 
-              window.setTimeout(callback, 5000)
+              window.setTimeout(callback, 1000)
 
               e.preventDefault()
               return false

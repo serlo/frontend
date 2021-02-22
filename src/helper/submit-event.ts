@@ -6,6 +6,9 @@ export function submitEvent(name: string, callback?: () => void) {
     if (window_local.sa_event) {
       //console.log('event', name)
       window_local.sa_event(name, callback)
+      if (window_local.sa_event.q) {
+        return false
+      }
       return true
     }
   } catch (e) {
