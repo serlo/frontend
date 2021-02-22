@@ -110,7 +110,7 @@ export const instanceData = {
     embed: {
       text: "ऊपर की छवि या बटन पर क्लिक करके आप सहमत होते हैं कि%provider%  से बाहरी सामग्री लोड हो जाएगी। इसके अलावा व्यक्तिगत डेटा हमारे% privacypolicy% के अनुसार इस सेवा में स्थानांतरित किया जा सकता है।",
       video: "से वीडियो चलाएं %provider%",
-      applet: 'Load Applet from %provider%',
+      applet: "%provider% से लोड एप्लेट ",
       twingle: "लोड दान प्रपत्र"
     },
     comments: {
@@ -128,8 +128,8 @@ export const instanceData = {
       loading: "टिप्पणियों की तलाश में ...",
       error: "क्षमा करें, टिप्पणियां लोड नहीं की जा सकीं, कृपया बाद में पुनः प्रयास करें।",
       showMoreReply: "एक और उत्तर दिखाओ",
-      showMoreReplies: 'Show %number% more replies',
-      showArchived: "संग्रहीत दिखाएँ%threads%",
+      showMoreReplies: " %number% और उत्तर दिखाएं",
+      showArchived: "संग्रहीत दिखाएँ %threads%",
       copyLink: "टिप्पणी लिंक कॉपी करें"
     },
     revisions: {
