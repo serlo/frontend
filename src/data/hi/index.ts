@@ -10,8 +10,8 @@ export const instanceData = {
       login: "लॉग इन करें"
     },
     search: {
-      privacy: 'The search is provided by Google. See our %privacypolicy% to find out what information is processed.',
-      agree: 'Agree'
+      privacy: "खोज गूगल द्वारा प्रदान की गई है। क्या जानकारी संसाधित है, यह जानने के लिए हमारी%privacypolicy% देखें।",
+      agree: "सहमत"
     },
     footer: {
       summaryHeading: "Serlo.org सीखने की विकिपीडिया है",
@@ -49,22 +49,22 @@ export const instanceData = {
       comment: "टिप्पणियां",
       revision: "संशोधन",
       thread: "धागा",
-      threads: 'Threads',
+      threads: "थ्रेडस",
       topic: "विषय",
       subject: "विषय",
       userProfile: "यूज़र प्रोफाइल",
-      privacyPolicy: 'Privacy Policy',
-      content: "Content"
+      privacyPolicy: "गोपनीयता नीति",
+      content: "सामग्री"
     },
     pageTitles: {
-      notifications: 'Your Notifications',
-      subscriptions: "Manage Subscriptions",
-      revisionHistory: "Revision History"
+      notifications: "आपकी सूचनाएं",
+      subscriptions: "सदस्यताओं को प्रबंधित करें",
+      revisionHistory: "संशोधन इतिहास"
     },
     roles: {
-      donor: "Donor",
-      author: 'Author',
-      reviewer: 'Reviewer'
+      donor: "दाताओं",
+      author: "लेखक",
+      reviewer: "समीक्षक"
     },
     share: {
       button: "सांझा करें",
@@ -75,12 +75,12 @@ export const instanceData = {
     },
     edit: {
       button: "संपादित करें",
-      unrevised: 'Show unrevised revisions'
+      unrevised: "अप्रकाशित संशोधन दिखाएं"
     },
     license: {
       readMore: "सूचना",
-      special: 'Different license',
-      nonFree: 'Usage of this content might be more restricted than our other content.'
+      special: "अलग लाइसेंस",
+      nonFree: "इस सामग्री का उपयोग हमारी अन्य सामग्री की तुलना में अधिक प्रतिबंधित हो सकता है।"
     },
     course: {
       showPages: "पाठ्यक्रम का अवलोकन करें",
@@ -100,18 +100,18 @@ export const instanceData = {
       trashedNotice: "यह सामग्री हटाने के लिए चिह्नित है"
     },
     consent: {
-      title: 'Consent for external Content',
-      intro: 'While using this site you may allowed us to load content from external providers. You can read about the details in the %privacypolicy%.',
-      revokeTitle: 'Revoke',
-      revokeText: 'Here you can revoke your consent. In this case we ask again, before we load content from those providers',
-      noConsent: 'No content saved.',
-      revokeConsent: 'Revoke consent'
+      title: "बाहरी सामग्री के लिए सहमति",
+      intro: "इस साइट का उपयोग करते समय आप हमें बाहरी प्रदाताओं से सामग्री लोड करने की अनुमति दे सकते हैं। आप विवरण के बारे में पढ़ सकते हैं %privacypolicy%.",
+      revokeTitle: "वापस लेना",
+      revokeText: "यहां आप अपनी सहमति रद्द कर सकते हैं। इस मामले में, हम उन प्रदाताओं से सामग्री लोड करने से पहले फिर से पूछते हैं",
+      noConsent: "कोई सामग्री सहेजी नहीं गई।",
+      revokeConsent: "सहमति रद्द करें"
     },
     embed: {
-      text: 'By clicking on image or button above you agree that external content from %provider% will be loaded. Also personal data may be transferred to this service in accordance with our %privacypolicy%.',
-      video: 'Play Video from %provider%',
+      text: "ऊपर की छवि या बटन पर क्लिक करके आप सहमत होते हैं कि%provider%  से बाहरी सामग्री लोड हो जाएगी। इसके अलावा व्यक्तिगत डेटा हमारे% privacypolicy% के अनुसार इस सेवा में स्थानांतरित किया जा सकता है।",
+      video: "से वीडियो चलाएं %provider%",
       applet: 'Load Applet from %provider%',
-      twingle: 'Load Donation Form'
+      twingle: "लोड दान प्रपत्र"
     },
     comments: {
       question: "क्या आपका कोई प्रश्न है?",
@@ -119,18 +119,18 @@ export const instanceData = {
       commentsMany: "टिप्पणियां",
       submit: "जमा करें",
       archiveThread: "आर्काइव थ्रेड",
-      restoreThread: 'Restore thread',
+      restoreThread: "थ्रेड को पुनर्स्थापित करें",
       deleteThread: "थ्रेड मिटाएं",
       deleteComment: "टिप्पणी हटाएँ",
       postedOn: "इस दिन पोस्ट हुआ",
       placeholder: "आपका प्रश्न या सुझाव",
       placeholderReply: "आपका उत्तर",
-      loading: 'Looking for comments ...',
-      error: 'Sorry, comments could not be loaded, please try again later.',
-      showMoreReply: 'Show one more reply',
+      loading: "टिप्पणियों की तलाश में ...",
+      error: "क्षमा करें, टिप्पणियां लोड नहीं की जा सकीं, कृपया बाद में पुनः प्रयास करें।",
+      showMoreReply: "एक और उत्तर दिखाओ",
       showMoreReplies: 'Show %number% more replies',
-      showArchived: 'Show archived %threads%',
-      copyLink: 'Copy comment link'
+      showArchived: "संग्रहीत दिखाएँ%threads%",
+      copyLink: "टिप्पणी लिंक कॉपी करें"
     },
     revisions: {
       toOverview: "अवलोकन पर वापस जाएं",
@@ -146,10 +146,10 @@ export const instanceData = {
       by: "द्वारा"
     },
     revisionHistory: {
-      changes: 'Changes',
-      author: 'Author',
-      date: 'Date',
-      createNew: 'Create a new revision starting from this specific revision'
+      changes: "परिवर्तन",
+      author: "लेखक",
+      date: "दिनांक",
+      createNew: "इस विशिष्ट संशोधन से प्रारंभ एक नया संशोधन बनाएं"
     },
     errors: {
       title: "😬 वेबसाइटें कभी-कभी गलतियाँ करती हैं",
@@ -162,34 +162,34 @@ export const instanceData = {
       backToHome: "होमपेज पर जाएं"
     },
     print: {
-      warning: 'IMPORTANT: To make sure all images and formulas print, please scroll down to the end of the page once BEFORE you open this dialog. Thank you!'
+      warning: "महत्वपूर्ण: सभी चित्र और सूत्र प्रिंट करने के लिए, कृपया इस संवाद को खोलने से पहले पृष्ठ के अंत में नीचे स्क्रॉल करें। धन्यवाद!"
     },
     profiles: {
-      aboutMe: 'About me',
-      recentActivities: 'Recent activities',
-      showAllActivities: 'Show all activities',
-      lastSeen: 'Last seen',
-      roles: 'Roles'
+      aboutMe: "मेरे बारे में",
+      recentActivities: "हाल की गतिविधि",
+      showAllActivities: "समस्त गतिविधयाँ दिखाएँ",
+      lastSeen: "अंतिम बार देखा गया",
+      roles: "भूमिकाएं"
     },
     notices: {
-      welcome: '👋 Welcome %username%!',
-      bye: '👋 See you soon!',
-      revisionSaved: 'Revision is saved and will be reviewed soon 👍',
-      revisionAccepted: 'Revision was successfully accepted ✅',
-      revisionRejected: 'Revision was successfully rejected ❎',
-      revisionSavedAccepted: 'Revision was successfully saved and accepted ✅'
+      welcome: "आपका स्वागत है",
+      bye: "👋जल्द ही मिलते हैं!",
+      revisionSaved: "संशोधन सहेजा गया है और जल्द ही इसकी समीक्षा की जाएगी 👍",
+      revisionAccepted: "संशोधन को सफलतापूर्वक स्वीकार कर लिया गया ✅",
+      revisionRejected: "संशोधन को सफलतापूर्वक अस्वीकार कर दिया गया ❎",
+      revisionSavedAccepted: "संशोधन सफलतापूर्वक सहेजा गया और स्वीकार किया गया  ✅"
     },
     loading: {
-      isLoading: 'Content is loading…',
-      unknownProblem: "Sorry, there was a problem loading the content, please try again later."
+      isLoading: "सामग्री लोड हो रही है ...",
+      unknownProblem: "क्षमा करें, सामग्री लोड करने में समस्या थी, कृपया बाद में पुनः प्रयास करें।"
     },
     login: {
-      pleaseLogInLink: 'Please log in',
-      pleaseLogInText: 'to use this feature.'
+      pleaseLogInLink: "कृपया लॉगिन करें",
+      pleaseLogInText: "इस सुविधा का उपयोग करने के लिए"
     },
     keys: {
       ctrl: 'ctrl',
-      return: 'return'
+      return: "वापसी"
     }
   }
 };
@@ -275,7 +275,7 @@ export const loggedInData = {
       moveToTextExercise: "सामग्री को अन्य पाठ-व्यायाम में ले जाएँ",
       sortEntities: "सामग्री को क्रमबद्ध करें",
       newEntity: "नई इकाई",
-      editProfile: 'Edit profile'
+      editProfile: "प्रोफ़ाइल संपादित करें"
     },
     notifications: {
       loadMore: "अधिक लोड करें",
@@ -303,23 +303,23 @@ export const loggedInData = {
       entityPlaceholderFallback: "सामग्री"
     },
     subscriptions: {
-      mail: "E-mails",
-      subscription: "Subscription",
-      noMails: "deactivate",
-      noNotifications: "cancel"
+      mail: "ई-मेल",
+      subscription: "सदस्यता",
+      noMails: "निष्क्रिय करें ",
+      noNotifications: "रद्द करें"
     },
     revisions: {
       accept: {
-        action: 'Accept',
-        title: 'Accept Revision',
-        explanation: 'Please give the author some feedback.'
+        action: "स्वीकार करें ",
+        title: "संशोधन स्वीकारें",
+        explanation: "कृपया लेखक को कुछ प्रतिक्रिया दें"
       },
       reject: {
-        action: 'Reject',
-        title: 'Reject Revision',
-        explanation: 'Please tell the author why you are rejecting the submission.'
+        action: "अस्वीकार करें",
+        title: "संशोधन अस्वीकारें",
+        explanation: "कृपया लेखक को बताएं कि आप सबमिशन को क्यों अस्वीकार कर रहे हैं।"
       },
-      confirm: 'Confirm'
+      confirm: "पुष्टि करें"
     }
   }
 };
