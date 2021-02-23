@@ -176,7 +176,7 @@ export function Link({
       >
         {children}
         {isExternal && !noExternalIcon && <ExternalLink />}
-        <UrlClicks href={_href} fixColor={fixColor} />
+        <UrlClicks eventKey={key} fixColor={fixColor} />
       </StyledA>
     )
   }

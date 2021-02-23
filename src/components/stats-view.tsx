@@ -27,21 +27,22 @@ export function StatsViews() {
 
     const clicks = cur.clicks[id]
     if (clicks) {
-      for (const clickId in clicks) {
+      /*for (const clickId in clicks) {
         if (parseInt(clickId) !== -2) {
           console.log('click', clickId, clicks[clickId])
           actions += clicks[clickId] ?? 0
         }
-      }
+      }*/
     }
     for (const event in cur.events) {
       if (
         event.includes(`clicksearch_${id}`) ||
         event.includes(`share_${id}`) ||
         event.includes(`_entity${id}_`) ||
-        event.includes(`_tax${id}_`)
+        event.includes(`_tax${id}_`) ||
+        event.includes(`clicklink_${id}_`)
       ) {
-        console.log(event, cur.events[event])
+        //console.log(event, cur.events[event])
         actions += cur.events[event]
       }
     }

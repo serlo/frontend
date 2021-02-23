@@ -90,7 +90,7 @@ export function StatsOverview() {
 
       for (const id in cur.views) {
         data.totalViews += cur.views[id].sum
-        data.internalNavs += cur.views[id].internal
+        //data.internalNavs += cur.views[id].internal
         const row = data.id2row[id]
         if (row) {
           row.views += cur.views[id].sum
@@ -99,14 +99,14 @@ export function StatsOverview() {
         }
       }
 
-      for (const id in cur.clicks) {
+      /*for (const id in cur.clicks) {
         const row = data.id2row[id]
         if (row) {
           for (const targetId in cur.clicks[id]) {
             row.navs += cur.clicks[id][targetId]
           }
         }
-      }
+      }*/
 
       for (const event in cur.events) {
         if (event.startsWith('clicksearch_')) {
@@ -152,6 +152,14 @@ export function StatsOverview() {
             row.spoilers += cur.events[event]
           }
           data.spoilers += cur.events[event]
+        }
+
+        if (event.startsWith('clicklink_')) {
+          const row = data.id2row[event.split('_')[1]]
+          if (row) {
+            row.navs += cur.events[event]
+          }
+          data.internalNavs += cur.events[event]
         }
         if (
           event.startsWith('checksc_') ||
@@ -245,7 +253,7 @@ export function StatsOverview() {
                 <StyledP>{data.totalViews} Seiten aufgerufen</StyledP>
               </StyledLi>
               <StyledLi>
-                <StyledP>{data.internalNavs} interne Links geklickt</StyledP>
+                <StyledP>{data.internalNavs} Links geklickt</StyledP>
               </StyledLi>
               <StyledLi>
                 <StyledP>{data.solutions} Lösungen angezeigt</StyledP>
@@ -317,7 +325,7 @@ export function StatsOverview() {
                     <StyledTh title="Aktionen (siehe rechts) pro 100 Aufrufe">
                       AphA
                     </StyledTh>
-                    <StyledTh title="Klicks auf interne Links">Kl.</StyledTh>
+                    <StyledTh title="Klicks auf einen Link">Links</StyledTh>
                     <StyledTh title="Lösungen angezeigt">Lös.</StyledTh>
                     <StyledTh title="Interaktive Aufgaben">Int.</StyledTh>
                     <StyledTh title="Spoiler aufgeklappt">Sp.</StyledTh>

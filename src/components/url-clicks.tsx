@@ -4,10 +4,10 @@ import { StatsContext } from './frontend-client-base'
 import { EntityIdContext } from '@/contexts/entity-id-context'
 
 export function UrlClicks({
-  href,
+  eventKey,
   fixColor,
 }: {
-  href: string
+  eventKey: string
   fixColor?: boolean
 }) {
   const id = useContext(EntityIdContext)
@@ -21,9 +21,9 @@ export function UrlClicks({
 
   for (const date of dates) {
     const cur = stats.stats[date]
-    const hrefId = stats.path2uuid[encodeURI(decodeURI(href))]
-    if (hrefId && cur.clicks[id]) {
-      count += cur.clicks[id][hrefId] ?? 0
+    if (cur.events[eventKey]) {
+      //console.log(key)
+      count += cur.events[eventKey]
     }
   }
   if (count < 1) return null
