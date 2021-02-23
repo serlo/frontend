@@ -21,7 +21,7 @@ export function ExerciseNumbering({
     return <StyledNumberChild>{char}</StyledNumberChild>
   }
   return (
-    <StyledNumberParent href={href} fixColor>
+    <StyledNumberParent href={href} fixColor path={['numbering', index]}>
       {index + 1}
     </StyledNumberParent>
   )

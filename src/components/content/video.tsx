@@ -88,7 +88,7 @@ export function Video(props: VideoProps) {
         </PrivacyWrapper>
         {license && !license.default && (
           <StyledP>
-            <LicenseNotice minimal data={license} type="video" />
+            <LicenseNotice minimal data={license} type="video" path={path} />
           </StyledP>
         )}
       </>

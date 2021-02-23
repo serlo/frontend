@@ -24,10 +24,10 @@ export function MetaMenu({ data }: MetaMenuProps) {
       <MetaMenuWrapper>
         <StyledGradient />
         <List ref={containerRef}>
-          {data.map((entry) => {
+          {data.map((entry, i) => {
             return (
               <li key={entry.url} ref={entry.active ? activeRef : null}>
-                {renderLink(entry, !!entry.active)}
+                {renderLink(entry, !!entry.active, i)}
               </li>
             )
           })}
@@ -36,9 +36,13 @@ export function MetaMenu({ data }: MetaMenuProps) {
     </>
   )
 
-  function renderLink(entry: SecondaryNavigationEntry, active: boolean) {
+  function renderLink(
+    entry: SecondaryNavigationEntry,
+    active: boolean,
+    index: number
+  ) {
     return (
-      <StyledLink href={entry.url} active={active}>
+      <StyledLink href={entry.url} active={active} path={[`metamenu${index}`]}>
         <ButtonStyle active={active}>{entry.title}</ButtonStyle>
       </StyledLink>
     )

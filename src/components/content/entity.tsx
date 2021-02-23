@@ -61,7 +61,9 @@ export function Entity({ data }: EntityProps) {
       <HSpace amount={20} />
       {renderUserTools()}
       {renderShareModal()}
-      {data.licenseData && <LicenseNotice data={data.licenseData} />}
+      {data.licenseData && (
+        <LicenseNotice data={data.licenseData} path={['license']} />
+      )}
 
       {data.typename !== 'Page' && <CommentArea id={data.id} />}
     </>

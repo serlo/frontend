@@ -26,8 +26,8 @@ export function Equations({ steps, renderNested }: EquationProps) {
         <table>
           <TBody>
             {steps.map((step, i) => {
-              const hasExplanation = step.explanation.some((p) => {
-                return p?.children?.length
+              const hasExplanation = step.explanation.some((node) => {
+                return node?.children?.length || node.type == 'math'
               })
 
               return (

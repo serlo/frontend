@@ -1,15 +1,20 @@
 import { NodePath } from '@/schema/article-renderer'
 
-export function submitEvent(name: string) {
-  //console.log('event', name)
+export function submitEvent(name: string, callback?: () => void) {
   try {
     const window_local: any = window
     if (window_local.sa_event) {
-      window_local.sa_event(name)
+      //console.log('event', name)
+      window_local.sa_event(name, callback)
+      if (window_local.sa_event.q) {
+        return false
+      }
+      return true
     }
   } catch (e) {
     // ignore failures
   }
+  return false
 }
 
 export function submitEventWithPath(action: string, path?: NodePath) {
