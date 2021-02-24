@@ -3,7 +3,16 @@ import { InstanceData, LandingSubjectsData } from '@/data-types'
 
 export const landingSubjectsData: LandingSubjectsData = {
   subjects: [{ url: '/169578', title: 'Aprender matemáticas', icon: 'math' }],
-  additionalLinks: [],
+  additionalLinks: [
+    {
+      url: '/195616/p%C3%A1gina-de-inicio-para-padres',
+      title: 'Información para los padres',
+    },
+    {
+      url: '/195618/p%C3%A1gina-de-inicio-para-docentes',
+      title: 'Información para docentes',
+    },
+  ],
 }
 
 export const headerData: InstanceData['headerData'] = [
