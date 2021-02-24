@@ -16,9 +16,19 @@ export default renderedPageNoHooks<UserProps>(({ pageData }) => (
 
 export const getStaticProps: GetStaticProps<UserProps> = async (context) => {
   // /user/{id}}/{name} or /user/{id}
-  const userId = parseInt(context.params?.userslug[0] as string)
+  let pageData: any = undefined
 
-  const pageData = isNaN(userId) ? undefined : await requestUser(userId)
+  const params = context.params
+
+  if (params) {
+    const slug = Array.isArray(params.userslug)
+      ? params.userslug
+      : [params.userslug]
+    const path = `/user/${slug.join('/')}`
+    pageData = await requestUser(path, context.locale ?? 'de')
+  }
+
+  //const pageData = isNaN(userId) ? undefined : await
 
   return {
     props: {

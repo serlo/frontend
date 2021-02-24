@@ -6,9 +6,13 @@ import { userQuery } from './query'
 import { endpoint } from '@/api/endpoint'
 import { ErrorPage, UserPage } from '@/data-types'
 
-export async function requestUser(id: number): Promise<UserPage | ErrorPage> {
+export async function requestUser(
+  path: string,
+  instance: string
+): Promise<UserPage | ErrorPage> {
   const { uuid } = await request<{ uuid: User }>(endpoint, userQuery, {
-    id,
+    path,
+    instance,
   })
 
   if (uuid.__typename === 'User') {

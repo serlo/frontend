@@ -1,8 +1,8 @@
 import { gql } from 'graphql-request'
 
 export const userQuery = gql`
-  query userUuid($id: Int) {
-    uuid(id: $id) {
+  query userUuid($path: String!, $instance: Instance!) {
+    uuid(alias: { path: $path, instance: $instance }) {
       __typename
       id
       trashed
