@@ -223,8 +223,10 @@ export function StatsOverview() {
     for (const row of sorted) {
       if (visibleRows.length >= limit) break
       if (filter) {
-        const path = data.uuid2path[row.id]
-        if (!path || !path.includes(filter)) continue
+        const path = decodeURI(data.uuid2path[row.id])
+        const filterParts = filter.split(' ')
+        if (!path || !filterParts.every((filter) => path.includes(filter)))
+          continue
       }
       visibleRows.push(row)
     }

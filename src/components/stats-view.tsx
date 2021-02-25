@@ -36,13 +36,13 @@ export function StatsViews() {
     }
     for (const event in cur.events) {
       if (
-        event.includes(`clicksearch_${id}`) ||
-        event.includes(`share_${id}`) ||
+        event.startsWith(`clicksearch_${id}`) ||
+        event.startsWith(`share_${id}`) ||
         event.includes(`_entity${id}_`) ||
         event.includes(`_tax${id}_`) ||
-        event.includes(`clicklink_${id}_`)
+        event.startsWith(`clicklink_${id}_`)
       ) {
-        //console.log(event, cur.events[event])
+        //if (event.includes('clicklink_')) console.log(event, cur.events[event])
         actions += cur.events[event]
       }
     }

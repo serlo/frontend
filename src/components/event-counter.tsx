@@ -9,8 +9,6 @@ export function EventCounter({ prefix, path }: any) {
 
   const key = `${prefix}_${path.map((x: any) => x.toString()).join('_')}`
 
-  console.log(key)
-
   let count = 0
 
   const dates = Object.keys(stats.stats)
