@@ -7,8 +7,10 @@ import styled from 'styled-components'
 import { makeMargin } from '../../helper/css'
 import { renderArticle } from '../../schema/article-renderer'
 import { CommentAreaProps } from '../comments/comment-area'
+import { StyledH2 } from '../tags/styled-h2'
 import { ShareModalProps } from '../user-tools/share-modal'
 import { UserTools } from '../user-tools/user-tools'
+import { HSpace } from './h-space'
 import { LicenseNotice } from './license-notice'
 import { Link } from './link'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -22,6 +24,12 @@ import { categoryIconMapping } from '@/helper/icon-by-entity-type'
 
 export interface TopicProps {
   data: TaxonomyData
+}
+
+interface Section {
+  id: number
+  title: string
+  anchorId: string
 }
 
 const CommentArea = dynamic<CommentAreaProps>(() =>
@@ -46,6 +54,24 @@ export function Topic({ data }: TopicProps) {
   const hasExercises = data.exercisesContent.length > 0
   const defaultLicense = hasExercises ? getDefaultLicense() : undefined
 
+  // test
+  data.description = [
+    {
+      type: 'p',
+      children: [
+        {
+          type: 'text',
+          text:
+            '{{{toc:195105#Einfache Aufgaben|82064#Anspruchsvolle Aufgaben|6063#Textaufgaben}}}',
+        },
+      ],
+    },
+  ]
+  // end test
+
+  const sections: Section[] = []
+  experimentalEnableSections(sections, data)
+
   return (
     <>
       <Headline>
@@ -69,15 +95,27 @@ export function Topic({ data }: TopicProps) {
           </Fragment>
         ))}
       {data.exercisesContent &&
-        data.exercisesContent.map((exercise, i) => (
-          <Fragment key={i}>
-            {renderArticle(
-              [exercise],
-              `tax${data.id}`,
-              `ex${exercise.context.id}`
-            )}
-          </Fragment>
-        ))}
+        data.exercisesContent.map((exercise, i) => {
+          const matchingSections = sections.filter(
+            (section) => section.id == exercise.context.id
+          )
+          return (
+            <Fragment key={i}>
+              {matchingSections.length == 1 && (
+                <>
+                  <HSpace amount={50} />
+                  <a id={matchingSections[0].anchorId} />
+                  <StyledH2>{matchingSections[0].title}</StyledH2>
+                </>
+              )}
+              {renderArticle(
+                [exercise],
+                `tax${data.id}`,
+                `ex${exercise.context.id}`
+              )}
+            </Fragment>
+          )
+        })}
       {isTopic && (
         <LinkList>
           <CategoryLinks full category="articles" links={data.articles} />
@@ -139,6 +177,65 @@ export function Topic({ data }: TopicProps) {
     }
     //no part of collection has default license so don't show default notice.
     return undefined
+  }
+
+  function experimentalEnableSections(sections: Section[], data: TaxonomyData) {
+    if (isFolder && data.description) {
+      const desc = data.description
+      if (desc.length == 1) {
+        const node = desc[0]
+        if (node.type == 'p' && node.children && node.children.length == 1) {
+          const child = node.children[0]
+          if (child.type == 'text') {
+            const text = child.text
+            const m = /^{{{toc:(.*)}}}$/.exec(text)
+            if (m && m[1]) {
+              m[1]
+                .split('|')
+                .map((part) => {
+                  const parts = part.split('#')
+                  return {
+                    id: parseInt(parts[0]),
+                    title: parts[1],
+                    anchorId: parts[1]
+                      .toLowerCase()
+                      .replace(/[^a-z ]/g, '')
+                      .replace(/ /g, '-'),
+                  }
+                })
+                .forEach((section) => sections.push(section))
+              data.description = [
+                {
+                  type: 'h',
+                  level: 3,
+                  children: [{ type: 'text', text: 'Inhaltsverzeichnis' }],
+                },
+                {
+                  type: 'ul',
+                  children: sections.map((section) => {
+                    return {
+                      type: 'li',
+                      children: [
+                        {
+                          type: 'p',
+                          children: [
+                            {
+                              type: 'a',
+                              href: `#${section.anchorId}`,
+                              children: [{ type: 'text', text: section.title }],
+                            },
+                          ],
+                        },
+                      ],
+                    }
+                  }),
+                },
+              ]
+            }
+          }
+        }
+      }
+    }
   }
 }
 
