@@ -15,27 +15,32 @@ export default renderedPageNoHooks<UserProps>(({ pageData }) => (
 ))
 
 export const getStaticProps: GetStaticProps<UserProps> = async (context) => {
-  // /user/{id}}/{name} or /user/{id}
-  let pageData: any = undefined
+  // /user/{id}}/{name}
 
-  const params = context.params
+  try {
+    let pageData: UserPage | undefined = undefined
 
-  if (params) {
-    const slug = Array.isArray(params.userslug)
-      ? params.userslug
-      : [params.userslug]
-    const path = `/user/${slug.join('/')}`
-    pageData = await requestUser(path, context.locale ?? 'de')
+    const params = context.params
+
+    if (params) {
+      const slug = Array.isArray(params.userslug)
+        ? params.userslug
+        : [params.userslug]
+      const path = `/user/${slug.join('/')}`
+      pageData = await requestUser(path, context.locale ?? 'de')
+      return {
+        props: {
+          pageData: JSON.parse(JSON.stringify(pageData)) as UserPage, // remove undefined values
+        },
+        revalidate: 1,
+      }
+    }
+  } catch (e) {
+    // uff
   }
+  return { props: {}, notFound: true }
 
   //const pageData = isNaN(userId) ? undefined : await
-
-  return {
-    props: {
-      pageData: JSON.parse(JSON.stringify(pageData)) as UserPage, // remove undefined values
-    },
-    revalidate: 1,
-  }
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {

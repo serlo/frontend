@@ -4,12 +4,12 @@ import { convertState } from '../convert-state'
 import { User } from '../query-types'
 import { userQuery } from './query'
 import { endpoint } from '@/api/endpoint'
-import { ErrorPage, UserPage } from '@/data-types'
+import { UserPage } from '@/data-types'
 
 export async function requestUser(
   path: string,
   instance: string
-): Promise<UserPage | ErrorPage> {
+): Promise<UserPage> {
   const { uuid } = await request<{ uuid: User }>(endpoint, userQuery, {
     path,
     instance,
@@ -49,11 +49,5 @@ export async function requestUser(
     }
   }
 
-  return {
-    kind: 'error',
-    errorData: {
-      code: 404,
-      message: `Something went wrong, this is not a user!`,
-    },
-  }
+  throw 'User not found'
 }
