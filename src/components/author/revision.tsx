@@ -24,7 +24,7 @@ import {
   inputFontReset,
   makeLightButton,
 } from '@/helper/css'
-import { entityIconMapping } from '@/helper/icon-by-entity-type'
+import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { renderArticle } from '@/schema/article-renderer'
 
 const CheckoutRejectButtons = dynamic<CheckoutRejectButtonsProps>(() =>
@@ -47,7 +47,6 @@ export function Revision({ data }: RevisionProps) {
   const [displayMode, setDisplayMode] = React.useState<DisplayMode>(
     isCurrentRevision ? 'current' : 'this'
   )
-
   const dataSet =
     displayMode === 'current' ? data.currentRevision : data.thisRevision
 
@@ -152,7 +151,7 @@ export function Revision({ data }: RevisionProps) {
     return (
       <span title={strings.entities[data.type]}>
         {' '}
-        <StyledIcon icon={entityIconMapping[data.type]} />{' '}
+        <StyledIcon icon={getIconByTypename(data.type)} />{' '}
       </span>
     )
   }

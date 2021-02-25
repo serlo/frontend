@@ -15,7 +15,7 @@ import { ShareModalProps } from '@/components/user-tools/share-modal'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EntityData, FrontendContentNode } from '@/data-types'
-import { entityIconMapping } from '@/helper/icon-by-entity-type'
+import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { renderArticle } from '@/schema/article-renderer'
 
 export interface EntityProps {
@@ -84,7 +84,7 @@ export function Entity({ data }: EntityProps) {
     return (
       <span title={strings.entities[data.categoryIcon]}>
         {' '}
-        <StyledIcon icon={entityIconMapping[data.categoryIcon]} />{' '}
+        <StyledIcon icon={getIconByTypename(data.categoryIcon)} />{' '}
       </span>
     )
   }

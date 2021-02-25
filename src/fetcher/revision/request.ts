@@ -1,6 +1,7 @@
 import { request } from 'graphql-request'
 
 import { convertState } from '../convert-state'
+import { createExercise } from '../create-exercises'
 import { createTitle } from '../create-title'
 import {
   Instance,
@@ -42,6 +43,28 @@ export async function requestRevision(
     uuid.__typename === 'SolutionRevision' ||
     uuid.__typename === 'CourseRevision'
   ) {
+    const isExercise =
+      uuid.__typename === 'ExerciseRevision' ||
+      uuid.__typename === 'GroupedExerciseRevision'
+
+    const thisExercise = isExercise
+      ? [
+          createExercise({
+            ...uuid,
+            currentRevision: { content: uuid.content },
+          }),
+        ]
+      : null
+    const currentExercise =
+      isExercise && uuid.repository.currentRevision
+        ? [
+            createExercise({
+              ...uuid,
+              currentRevision: uuid.repository.currentRevision,
+            }),
+          ]
+        : null
+
     return {
       kind: 'revision',
       newsletterPopup: false,
@@ -56,7 +79,7 @@ export async function requestRevision(
           title: (uuid as ArticleRevision).title,
           metaTitle: (uuid as ArticleRevision).metaTitle,
           metaDescription: (uuid as ArticleRevision).metaDescription,
-          content: convertState(uuid.content),
+          content: thisExercise ? thisExercise : convertState(uuid.content),
           url: (uuid as VideoRevision).url,
         },
         currentRevision: {
@@ -66,7 +89,9 @@ export async function requestRevision(
             ?.metaTitle,
           metaDescription: (uuid as ArticleRevision).repository.currentRevision
             ?.metaDescription,
-          content: convertState(uuid.repository.currentRevision?.content),
+          content: currentExercise
+            ? currentExercise
+            : convertState(uuid.repository.currentRevision?.content),
           url: (uuid as VideoRevision).repository.currentRevision?.url,
         },
         changes: (uuid as ArticleRevision).changes,
