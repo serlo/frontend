@@ -31,7 +31,7 @@ export function LandingSubjects({ data }: LandingSubjectsProps) {
   function renderAdditionalLinks() {
     if (data.additionalLinks.length === 0) return null
     return (
-      <SubjectsWrapper extraLinks>
+      <SubjectsWrapper $extraLinks $center={data.subjects.length < 3}>
         {data.additionalLinks.map((link) => renderSubject(link, true))}
       </SubjectsWrapper>
     )
@@ -68,7 +68,12 @@ export function LandingSubjects({ data }: LandingSubjectsProps) {
   }
 }
 
-const SubjectsWrapper = styled.div<{ extraLinks?: boolean }>`
+interface SubjectsWrapperProps {
+  $extraLinks?: boolean
+  $center?: boolean
+}
+
+const SubjectsWrapper = styled.div<SubjectsWrapperProps>`
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -86,7 +91,7 @@ const SubjectsWrapper = styled.div<{ extraLinks?: boolean }>`
 
     /* bit hacky, but way easier */
     ${(props) =>
-      props.extraLinks &&
+      props.$extraLinks &&
       css`
         margin-left: 16px;
         justify-content: start;
@@ -100,6 +105,13 @@ const SubjectsWrapper = styled.div<{ extraLinks?: boolean }>`
         & > a {
           margin: 0;
         }
+      `}
+
+    ${(props) =>
+      props.$extraLinks &&
+      props.$center &&
+      css`
+        justify-content: center;
       `}
   }
 `
