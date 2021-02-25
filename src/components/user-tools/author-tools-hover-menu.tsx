@@ -142,7 +142,6 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
     )
   }
   function renderExercise() {
-    console.log(data.type)
     return (
       <HoverSubList>
         <AuthorTools
