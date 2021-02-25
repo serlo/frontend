@@ -33,7 +33,6 @@ const legacyLinks = [
 export function isLegacyLink(_href: string) {
   // compat: this is a special frontend route or force frontend use
   if (_href == '/user/notifications') return false
-  if (_href.startsWith('/user/profile/')) return false
   if (_href.startsWith('/entity/repository/history')) return false
   if (_href.startsWith('/entity/repository/compare')) return false
 
@@ -48,6 +47,7 @@ export function isLegacyLink(_href: string) {
     _href.startsWith('/discussions') ||
     _href.startsWith('/subscription/update') ||
     _href.startsWith('/unsubscribe') ||
+    _href.startsWith('/user/profile/') ||
     _href.indexOf('.serlo.org') > -1 //e.g. community.serlo.org or different language
   )
 }
