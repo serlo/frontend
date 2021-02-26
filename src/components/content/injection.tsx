@@ -18,26 +18,10 @@ export function Injection({ href, renderNested }: InjectionProps) {
   )
 
   const [id, setId] = useState<number | undefined>(undefined)
-
-  //const [license, setLicense] = useState<undefined | LicenseData>(undefined)
-
   const { lang } = useInstanceData()
 
   useEffect(() => {
     const encodedHref = encodeURI(href.startsWith('/') ? href : `/${href}`)
-
-    /*try {
-      const cachedData = sessionStorage.getItem(
-        'injection' + lang + encodedHref
-      )
-      if (cachedData) {
-        //dataToState(JSON.parse(cachedData))
-        //return
-      }
-    } catch (e) {
-      //
-    }*/
-
     const { buildId } = JSON.parse(
       document.getElementById('__NEXT_DATA__')?.textContent ?? '{}'
     )
@@ -51,17 +35,6 @@ export function Injection({ href, renderNested }: InjectionProps) {
       .then((json) => {
         const pageData: SlugPageData = json.pageProps.pageData
         dataToState(pageData)
-
-        /*if (pageData.kind === 'single-entity') {
-          try {
-            sessionStorage.setItem(
-              'injection' + lang + encodedHref,
-              JSON.stringify(pageData)
-            )
-          } catch (e) {
-            //
-          }
-        }*/
       })
   }, [href, lang])
 
