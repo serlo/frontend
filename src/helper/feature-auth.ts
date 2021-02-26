@@ -35,7 +35,7 @@ export function shouldUseNewAuth() {
     const cookies = cookie.parse(
       typeof window === 'undefined' ? '' : document.cookie
     )
-    const prob = parseInt(cookies['useFrontend'])
+    const prob = parseFloat(cookies['useFrontend'])
     console.log('prob', prob, cookies)
     if (prob === 0) {
       return true
