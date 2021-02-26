@@ -1,7 +1,7 @@
 import cookie from 'cookie'
 
 import { HeaderData } from '@/data-types'
-import { serloDomain } from '@/helper/serlo-domain'
+//import { serloDomain } from '@/helper/serlo-domain'
 
 export function getAuthData(
   loggedIn: boolean,
@@ -36,7 +36,7 @@ export function shouldUseNewAuth() {
       typeof window === 'undefined' ? '' : document.cookie
     )
     const prob = parseInt(cookies['useFrontend'])
-    console.log('prob', prob)
+    console.log('prob', prob, cookies)
     if (prob === 0) {
       return true
     }
