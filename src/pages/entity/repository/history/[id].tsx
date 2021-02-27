@@ -24,13 +24,13 @@ function Content({ id }: HistoryRevisionProps) {
       <Breadcrumbs
         data={[
           {
-            label: response.data?.uuid.currentRevision.title ?? '',
+            label: response.data?.uuid.currentRevision?.title ?? '',
             url: response.data?.uuid.alias ?? undefined,
           },
         ]}
         asBackButton
       />
-      <Title amount={response.data?.uuid.revisions.nodes.length} />
+      <Title amount={response.data?.uuid.revisions?.nodes.length} />
       <Guard {...response}>
         <RevisionHistory data={response.data?.uuid} />
       </Guard>
