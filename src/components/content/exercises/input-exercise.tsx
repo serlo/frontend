@@ -35,8 +35,12 @@ export function InputExercise({
   }, [])
 
   function evaluate() {
-    setFeedback(checkAnswer())
+    const feedbackData = checkAnswer()
+    setFeedback(feedbackData)
     submitEventWithPath('checkinput', path)
+    if (feedbackData.correct) {
+      submitEventWithPath('inputcorrect', path)
+    }
   }
 
   return (

@@ -573,6 +573,7 @@ export interface EdtrPluginScMcExercise {
       isCorrect: boolean
       feedback: FrontendContentNode[]
       content: FrontendContentNode[]
+      originalIndex: number
     }[]
     isSingleChoice?: boolean
   }
