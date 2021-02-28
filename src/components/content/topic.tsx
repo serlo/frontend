@@ -225,7 +225,9 @@ export function Topic({ data }: TopicProps) {
         <>
           <HSpace amount={50} />
           <a id={matchingSections[0].anchorId} />
-          <StyledH2>{matchingSections[0].title}</StyledH2>
+          <StyledH2 style={{ color: '#ff6600' }}>
+            {matchingSections[0].title}
+          </StyledH2>
         </>
       )
     }
