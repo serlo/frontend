@@ -35,8 +35,12 @@ export function InputExercise({
   }, [])
 
   function evaluate() {
-    setFeedback(checkAnswer())
+    const feedbackData = checkAnswer()
+    setFeedback(feedbackData)
     submitEventWithPath('checkinput', path)
+    if (feedbackData.correct) {
+      submitEventWithPath('inputcorrect', path)
+    }
   }
 
   return (
@@ -90,7 +94,7 @@ export function InputExercise({
       hasCustomFeedback &&
       (renderNested(filteredAnswers[0]?.feedback, 'feedback') as JSX.Element)
 
-    if (filteredAnswers.length !== 1 || !filteredAnswers[0].isCorrect) {
+    if (filteredAnswers.length < 1 || !filteredAnswers[0]?.isCorrect) {
       return {
         correct: false,
         message: customFeedbackNode || <>{strings.content.wrong}</>,

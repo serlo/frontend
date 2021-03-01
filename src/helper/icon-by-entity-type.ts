@@ -13,7 +13,7 @@ import {
   faCircle,
 } from '@fortawesome/free-solid-svg-icons'
 
-import { CategoryTypes, EntityTypes } from '@/data-types'
+import { CategoryTypes } from '@/data-types'
 
 export const categoryIconMapping: { [K in CategoryTypes]: IconDefinition } = {
   articles: faNewspaper,
@@ -26,24 +26,23 @@ export const categoryIconMapping: { [K in CategoryTypes]: IconDefinition } = {
 }
 
 export function getIconByTypename(typename: string) {
-  const typenameCamelCase = (typename.charAt(0).toLowerCase() +
-    typename.slice(1)) as EntityTypes
-  return entityIconMapping[typenameCamelCase] ?? faCircle
+  const typenameLowerCase = typename.toLowerCase() as keyof typeof entityIconMapping
+  return entityIconMapping[typenameLowerCase] ?? faCircle
 }
 
-export const entityIconMapping: { [K in EntityTypes]: IconDefinition } = {
+export const entityIconMapping = {
   applet: faCubes,
   article: faNewspaper,
   course: faGraduationCap,
-  coursePage: faGraduationCap,
+  coursepage: faGraduationCap,
   event: faCalendarAlt,
   exercise: faFile,
-  exerciseGroup: faFile,
+  exercisegroup: faFile,
   folder: faFolderOpen,
-  groupedExercise: faFile,
+  groupedexercise: faFile,
   page: faFile,
   solution: faFile,
-  taxonomyTerm: faFolderOpen,
+  taxonomyterm: faFolderOpen,
   user: faUser,
   video: faPlayCircle,
   revision: faUserEdit,
