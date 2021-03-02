@@ -55,8 +55,9 @@ export function InputExercise({
         }}
         placeholder={strings.content.yourAnswer}
       />{' '}
-      {data.unit}
-      <EventCounter prefix="checkinput" path={path} />
+      {data.unit} (
+      <EventCounter prefix="checkinput" path={path} onlyNumber /> Versuche,{' '}
+      <EventCounter prefix="inputcorrect" path={path} onlyNumber /> richtig)
       <br />
       {feedback && (
         <Feedback correct={feedback.correct}>{feedback.message}</Feedback>

@@ -92,6 +92,12 @@ function SingleChoice({
                   htmlFor={id}
                   focused={focused === i}
                 >
+                  <div style={{ marginRight: 10 }}>
+                    <EventCounter
+                      prefix="scoption"
+                      path={[...(path ?? []), answers[i].originalIndex]}
+                    />
+                  </div>
                   <FontAwesomeIcon
                     icon={selected === i ? faCheckCircle : faCircle}
                   />
@@ -179,6 +185,12 @@ function MultipleChoice({
                   htmlFor={id}
                   focused={focused === i}
                 >
+                  <div style={{ marginRight: 10 }}>
+                    <EventCounter
+                      prefix="mcoption"
+                      path={[...(path ?? []), answers[i].originalIndex]}
+                    />
+                  </div>
                   <FontAwesomeIcon
                     icon={selected[i] ? faCheckSquare : faSquare}
                   />
@@ -219,8 +231,9 @@ function MultipleChoice({
         }}
         onPointerUp={(e) => e.currentTarget.blur()}
       >
-        {strings.content.check}
-        <EventCounter prefix="checkmc" path={path} />
+        {strings.content.check} (
+        <EventCounter prefix="checkmc" path={path} onlyNumber /> Versuche,{' '}
+        <EventCounter prefix="mccorrect" path={path} onlyNumber /> richtig)
       </CheckButton>
     </Container>
   )
