@@ -9,14 +9,7 @@ export function EventCounter({ prefix, path }: any) {
 
   const key = `${prefix}_${path.map((x: any) => x.toString()).join('_')}`
 
-  let count = 0
-
-  const dates = Object.keys(stats.stats)
-
-  for (const date of dates) {
-    const cur = stats.stats[date]
-    if (cur.events && cur.events[key]) count += cur.events[key]
-  }
+  const count = stats.stats.events[key] ?? 0
 
   if (count < 1) return null
 

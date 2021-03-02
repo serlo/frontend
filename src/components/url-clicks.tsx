@@ -14,18 +14,7 @@ export function UrlClicks({
   const stats = useContext(StatsContext)
 
   if (!id || !stats) return null
-
-  const dates = Object.keys(stats.stats)
-
-  let count = 0
-
-  for (const date of dates) {
-    const cur = stats.stats[date]
-    if (cur.events[eventKey]) {
-      //console.log(key)
-      count += cur.events[eventKey]
-    }
-  }
+  const count = stats.stats.events[eventKey] ?? 0
   if (count < 1) return null
 
   //console.log('OK', eventKey, count)

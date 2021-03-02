@@ -20,7 +20,7 @@ import { StyledUl } from './tags/styled-ul'
 export function StatsOverview() {
   const stats = useContext(StatsContext)
 
-  const [data, setData] = useState<any>(undefined)
+  const [data, setData] = useState<any>()
 
   const [limit, setLimit] = useState<number>(20)
 
@@ -32,184 +32,16 @@ export function StatsOverview() {
 
   useEffect(() => {
     if (!stats) return
-    const data: any = {}
-
-    data.dates = Object.keys(stats.stats)
-    data.dates.sort()
-
-    data.totalViews = 0
-    data.internalNavs = 0
-    data.searches = 0
-    data.solutions = 0
-    data.videos = 0
-    data.applets = 0
-    data.shares = 0
-    data.spoilers = 0
-    data.interactives = 0
-
-    data.uuid2path = {}
-
-    for (const path in stats.path2uuid) {
-      const id = stats.path2uuid[path]
-      if (!data.uuid2path[id] && id >= 0) {
-        data.uuid2path[id] = path
-      }
+    const rows: any = []
+    for (const id in stats.stats.counts) {
+      rows.push(stats.stats.counts[id])
     }
-
-    data.rows = []
-    data.id2row = {}
-
-    // pass zero: collect ids
-    for (const date of data.dates) {
-      const cur = stats.stats[date]
-
-      for (const id in cur.views) {
-        if (!data.id2row[id]) {
-          const row = {
-            id,
-            views: 0,
-            internal: 0,
-            external: 0,
-            navs: 0,
-            solutions: 0,
-            spoilers: 0,
-            searches: 0,
-            videos: 0,
-            applets: 0,
-            shares: 0,
-            interactives: 0,
-          }
-          data.rows.push(row)
-          data.id2row[id] = row
-        }
-      }
-    }
-
-    for (const date of data.dates) {
-      const cur = stats.stats[date]
-
-      for (const id in cur.views) {
-        data.totalViews += cur.views[id].sum
-        //data.internalNavs += cur.views[id].internal
-        const row = data.id2row[id]
-        if (row) {
-          row.views += cur.views[id].sum
-          row.internal += cur.views[id].internal
-          row.external += cur.views[id].external
-        }
-      }
-
-      /*for (const id in cur.clicks) {
-        const row = data.id2row[id]
-        if (row) {
-          for (const targetId in cur.clicks[id]) {
-            row.navs += cur.clicks[id][targetId]
-          }
-        }
-      }*/
-
-      for (const event in cur.events) {
-        if (event.startsWith('clicksearch_')) {
-          const id = event.substring(12)
-          const row = data.id2row[id]
-          if (row) {
-            row.searches += cur.events[event]
-          }
-          data.searches += cur.events[event]
-        }
-        if (event.startsWith('opensolution_')) {
-          const row = getRow(event)
-          if (row) {
-            row.solutions += cur.events[event]
-          }
-          data.solutions += cur.events[event]
-        }
-        if (event.startsWith('loadvideo_')) {
-          const row = getRow(event)
-          if (row) {
-            row.videos += cur.events[event]
-          }
-          data.videos += cur.events[event]
-        }
-        if (event.startsWith('loadgeogebra_')) {
-          const row = getRow(event)
-          if (row) {
-            row.applets += cur.events[event]
-          }
-          data.applets += cur.events[event]
-        }
-        if (event.startsWith('share_')) {
-          const id = event.substring(6)
-          const row = data.id2row[id]
-          if (row) {
-            row.shares += cur.events[event]
-          }
-          data.shares += cur.events[event]
-        }
-        if (event.startsWith('openspoiler_')) {
-          const row = getRow(event)
-          if (row) {
-            row.spoilers += cur.events[event]
-          }
-          data.spoilers += cur.events[event]
-        }
-
-        if (event.startsWith('clicklink_')) {
-          const row = data.id2row[event.split('_')[1]]
-          if (row) {
-            row.navs += cur.events[event]
-          }
-          data.internalNavs += cur.events[event]
-        }
-        if (
-          event.startsWith('checksc_') ||
-          event.startsWith('checkmc_') ||
-          event.startsWith('checkinput_')
-        ) {
-          const row = getRow(event)
-          if (row) {
-            row.interactives += cur.events[event]
-          }
-          data.interactives += cur.events[event]
-        }
-      }
-    }
-
-    data.rows = data.rows.filter((row: any) => row.id > 0)
-    data.rows.forEach((row: any) => {
-      row.apha =
-        row.views < 10
-          ? -1
-          : Math.round(
-              // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-              ((row.navs +
-                row.solutions +
-                row.spoilers +
-                row.searches +
-                row.videos +
-                row.applets +
-                row.interactives +
-                row.shares) *
-                100) /
-                row.views
-            )
-    })
-
-    //console.log(data.rows)
-
-    setData(data)
-
-    function getRow(event: string) {
-      const m1 = /[a-z]+_entity([\d]+)_/gm.exec(event)
-      const m2 = /[a-z]+_tax([\d]+)_/gm.exec(event)
-      const entityId = m1 ? m1[1] : m2 ? m2[1] : ''
-      return data.id2row[entityId]
-    }
+    setData(rows)
   }, [stats])
 
   useEffect(() => {
     if (data) {
-      const newRows = data.rows.slice(0)
+      const newRows = data.slice(0)
       setSorted(newRows)
       newRows.sort((a: any, b: any) => {
         return b[sortOption] - a[sortOption]
@@ -223,7 +55,7 @@ export function StatsOverview() {
     for (const row of sorted) {
       if (visibleRows.length >= limit) break
       if (filter) {
-        const path = decodeURI(data.uuid2path[row.id])
+        const path = row.path
         const filterParts = filter.split(' ')
         if (!path || !filterParts.every((filter) => path.includes(filter)))
           continue
@@ -248,38 +80,42 @@ export function StatsOverview() {
               Außerdem können die verfügbaren Daten schwanken bzw. Angaben
               können ungenau / fehlerhaft sein. Nutzung daher auf eigene Gefahr.
             </StyledP>
-            <StyledP>Daten-Zeitraum: {data.dates.join(', ')}</StyledP>
+            <StyledP>Daten-Zeitraum: {stats.stats.date}</StyledP>
             <StyledP>Es wurden insgesamt:</StyledP>
             <StyledUl>
               <StyledLi>
-                <StyledP>{data.totalViews} Seiten aufgerufen</StyledP>
+                <StyledP>{stats.stats.summary.views} Seiten aufgerufen</StyledP>
               </StyledLi>
               <StyledLi>
-                <StyledP>{data.internalNavs} Links geklickt</StyledP>
-              </StyledLi>
-              <StyledLi>
-                <StyledP>{data.solutions} Lösungen angezeigt</StyledP>
+                <StyledP>{stats.stats.summary.clicks} Links geklickt</StyledP>
               </StyledLi>
               <StyledLi>
                 <StyledP>
-                  {data.interactives} interaktive Aufgaben (Sc/Mc/Input)
-                  überprüft
+                  {stats.stats.summary.solutions} Lösungen angezeigt
                 </StyledP>
               </StyledLi>
               <StyledLi>
-                <StyledP>{data.spoilers} Spoiler geöffnet</StyledP>
+                <StyledP>
+                  {stats.stats.summary.interactives} interaktive Aufgaben
+                  (Sc/Mc/Input) überprüft
+                </StyledP>
               </StyledLi>
               <StyledLi>
-                <StyledP>{data.searches} mal gesucht</StyledP>
+                <StyledP>
+                  {stats.stats.summary.spoilers} Spoiler geöffnet
+                </StyledP>
               </StyledLi>
               <StyledLi>
-                <StyledP>{data.videos} Videos geladen</StyledP>
+                <StyledP>{stats.stats.summary.searches} mal gesucht</StyledP>
               </StyledLi>
               <StyledLi>
-                <StyledP>{data.applets} Applets geladen</StyledP>
+                <StyledP>{stats.stats.summary.videos} Videos geladen</StyledP>
               </StyledLi>
               <StyledLi>
-                <StyledP>{data.shares} Inhalte geteilt</StyledP>
+                <StyledP>{stats.stats.summary.applets} Applets geladen</StyledP>
+              </StyledLi>
+              <StyledLi>
+                <StyledP>{stats.stats.summary.shares} Inhalte geteilt</StyledP>
               </StyledLi>
             </StyledUl>
 
@@ -292,7 +128,7 @@ export function StatsOverview() {
                 value={sortOption}
               >
                 <option value="views">meiste Aufrufe</option>
-                <option value="navs">meiste Links geklickt</option>
+                <option value="clicks">meiste Links geklickt</option>
                 <option value="apha">meiste Aktionen pro 100 Aufrufe</option>
                 <option value="solutions">meiste Lösungen angezeigt</option>
                 <option value="interactives">
@@ -307,11 +143,24 @@ export function StatsOverview() {
                 <option value="shares">am meisten geteilt</option>
                 <option value="id">größte Id</option>
               </select>{' '}
+              <br />
+              <br />
               Filter:{' '}
               <input
                 value={filter}
                 onChange={(value) => setFilter(value.target.value)}
               />
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <small>
+                (Beispiel:{' '}
+                <span
+                  style={{ color: 'grey', cursor: 'pointer' }}
+                  onClick={() => setFilter('biologie vögel')}
+                >
+                  biologie vögel
+                </span>
+                )
+              </small>
             </StyledP>
 
             <TableWrapper>
@@ -321,13 +170,13 @@ export function StatsOverview() {
                     <StyledTh>Nr</StyledTh>
                     <StyledTh>Seite</StyledTh>
                     <StyledTh>Aufrufe</StyledTh>
-                    <StyledTh title="geschätzter Anteil von Aufrufen die von extern auf die Seite kommen">
-                      extern
+                    <StyledTh title="Prozent intern / Suchmaschine / Website o. LMS">
+                      i/s/w
                     </StyledTh>
                     <StyledTh title="Aktionen (siehe rechts) pro 100 Aufrufe">
                       AphA
                     </StyledTh>
-                    <StyledTh title="Klicks auf einen Link">Links</StyledTh>
+                    <StyledTh title="Klicks auf einen Link">Klicks</StyledTh>
                     <StyledTh title="Lösungen angezeigt">Lös.</StyledTh>
                     <StyledTh title="Interaktive Aufgaben">Int.</StyledTh>
                     <StyledTh title="Spoiler aufgeklappt">Sp.</StyledTh>
@@ -356,7 +205,13 @@ export function StatsOverview() {
                         >
                           {row.views}
                         </StyledTd>
-                        <StyledTd>{getExternBound(row)}</StyledTd>
+                        <StyledTd>{`${Math.round(
+                          ((row.internal ?? 0) * 100) / row.views
+                        )}/${Math.round(
+                          ((row.searchengine ?? 0) * 100) / row.views
+                        )}/${Math.round(
+                          ((row.website ?? 0) * 100) / row.views
+                        )}`}</StyledTd>
                         <StyledTd
                           style={{
                             backgroundColor:
@@ -366,7 +221,7 @@ export function StatsOverview() {
                           {row.apha < 0 ? '--' : row.apha}
                         </StyledTd>
                         {[
-                          'navs',
+                          'clicks',
                           'solutions',
                           'interactives',
                           'spoilers',
@@ -403,25 +258,9 @@ export function StatsOverview() {
   }
   return <StyledP>Daten werden geladen ...</StyledP>
 
-  function getExternBound(row: any) {
-    if (row.views < 10) return '--'
-    const lowerBound = Math.round((row.external * 100) / row.views)
-    const upperBound = Math.round(100 - (row.internal * 100) / row.views)
-    let text = ' '
-    if (lowerBound == upperBound) {
-      text += `${lowerBound}% `
-    } else {
-      text += `${lowerBound}-${upperBound}% `
-    }
-    return text
-  }
-
   function generateLink(row: any) {
-    const path = data.uuid2path[row.id]
-    if (!path) {
-      return <Link href={`/${row.id}`}>/{row.id}</Link>
-    }
-    let title = decodeURI(path)
+    const path = row.path
+    let title = path as string
     if (title.length > 45) {
       title = '...' + title.substring(title.length - 45)
     }

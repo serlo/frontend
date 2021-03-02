@@ -54,7 +54,7 @@ export function FrontendClientBase({
   const [statsData, setStatsData] = React.useState(null)
 
   React.useEffect(() => {
-    void fetch('https://arrrg.de/serlo-stats/stats_current.json')
+    void fetch('https://arrrg.de/serlo-stats/v2_stats_current.json')
       .then((res) => res.json())
       .then((data) => setStatsData(data))
   }, [])
