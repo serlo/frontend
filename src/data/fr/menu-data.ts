@@ -13,7 +13,7 @@ export const headerData: InstanceData['headerData'] = [
     icon: 'subject',
     children: [
       { url: '/141585', title: 'Mathématiques' },
-      { url: '/148617', title: 'Boîte à méthodes' },
+      { url: '/148617', title: 'Conseils pour apprendre' },
       { url: '/141604', title: 'Nouvelle matières' },
     ],
   },
