@@ -34,7 +34,7 @@ export function StatsOverview() {
     if (!stats) return
     const rows: any = []
     for (const id in stats.stats.counts) {
-      rows.push(stats.stats.counts[id])
+      rows.push({ ...stats.stats.counts[id], id })
     }
     setData(rows)
   }, [stats])
