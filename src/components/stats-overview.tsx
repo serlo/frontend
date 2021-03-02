@@ -80,7 +80,11 @@ export function StatsOverview() {
               Außerdem können die verfügbaren Daten schwanken bzw. Angaben
               können ungenau / fehlerhaft sein. Nutzung daher auf eigene Gefahr.
             </StyledP>
-            <StyledP>Daten-Zeitraum: {stats.stats.date}</StyledP>
+            <StyledP>
+              Zeitraum: Daten der letzte 7 Tage (
+              {stats.stats.date.replace('to', 'bis')}) / Inhalte Stand
+              vorgestern
+            </StyledP>
             <StyledP>Es wurden insgesamt:</StyledP>
             <StyledUl>
               <StyledLi>
