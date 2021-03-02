@@ -36,10 +36,13 @@ export function createExercise(
       if (taskState.content) {
         taskState.content = convert(taskState.content)
         if (taskState.interactive?.plugin == 'scMcExercise') {
-          taskState.interactive.state.answers.forEach((answer: any) => {
-            answer.feedback = convert(answer.feedback)
-            answer.content = convert(answer.content)
-          })
+          taskState.interactive.state.answers.forEach(
+            (answer: any, i: number) => {
+              answer.feedback = convert(answer.feedback)
+              answer.content = convert(answer.content)
+              answer.originalIndex = i
+            }
+          )
           shuffleArray(taskState.interactive.state.answers)
         } else if (taskState.interactive?.plugin == 'inputExercise') {
           taskState.interactive.state.answers.forEach((answer: any) => {
@@ -106,7 +109,8 @@ function createSolutionData(solution: BareExercise['solution']) {
   return {
     legacy: solutionLegacy,
     edtrState: solutionEdtrState,
-    license: solution && createInlineLicense(solution.license),
+    license:
+      solution && solution.license && createInlineLicense(solution.license),
   }
 }
 

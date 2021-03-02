@@ -118,6 +118,12 @@ function SingleChoice({
         onClick={() => {
           setShowFeedback(true)
           submitEventWithPath('checksc', path)
+          if (selected !== undefined && path) {
+            submitEventWithPath('scoption', [
+              ...path,
+              answers[selected].originalIndex,
+            ])
+          }
         }}
         //blur-hack, use https://caniuse.com/#feat=css-focus-visible when supported
         onPointerUp={(e) => e.currentTarget.blur()}
@@ -197,6 +203,19 @@ function MultipleChoice({
         onClick={() => {
           setShowFeedback(true)
           submitEventWithPath('checkmc', path)
+          if (path) {
+            for (let i = 0; i < selected.length; i++) {
+              if (selected[i]) {
+                submitEventWithPath('mcoption', [
+                  ...path,
+                  answers[i].originalIndex,
+                ])
+              }
+            }
+            if (correct) {
+              submitEventWithPath('mccorrect', path)
+            }
+          }
         }}
         onPointerUp={(e) => e.currentTarget.blur()}
       >

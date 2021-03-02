@@ -34,7 +34,7 @@ export function RevisionHistory({ data }: RevisionHistoryProps) {
         </StyledTr>
       </thead>
       <tbody>
-        {data.revisions.nodes.map((entry) => {
+        {data.revisions?.nodes.map((entry) => {
           return (
             <StyledTr key={entry.id}>
               <StyledTd>
