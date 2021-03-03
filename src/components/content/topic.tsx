@@ -76,7 +76,7 @@ export function Topic({ data }: TopicProps) {
         {data.description &&
           renderArticle(
             sections.length > 0 ? experimentalBuildToc() : data.description,
-            `taxDesc${data.id}`
+            `taxdesc${data.id}`
           )}
       </ImageSizer>
       {data.subterms &&
