@@ -21,7 +21,8 @@ export function StatsViews() {
     <small>
       ({count} Aufrufe: {Math.round((countInternal * 100) / count)}% intern,{' '}
       {Math.round((countSE * 100) / count)}% SuMa,{' '}
-      {Math.round((countWebsites * 100) / count)}% Web / {apha}{' '}
+      {Math.round((countWebsites * 100) / count)}% Web /{' '}
+      {apha > 0 ? apha : '--'}{' '}
       <span title="Aktionen pro 100 Aufrufe">AphA</span>)
     </small>
   )
