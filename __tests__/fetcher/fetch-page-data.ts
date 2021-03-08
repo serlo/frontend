@@ -430,7 +430,10 @@ describe('check all supported typenames with stored api-data', () => {
           variables: { id?: number; alias?: { path: string; instance: 'de' } }
         }
 
-        if (body.variables.id === 51979) {
+        if (
+          body.variables.alias?.path === '/51979' &&
+          body.variables.alias?.instance === 'de'
+        ) {
           return res(
             ctx.json({
               data: {
