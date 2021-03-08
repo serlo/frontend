@@ -37,6 +37,7 @@ export function shouldUseNewAuth() {
       const cookies = cookie.parse(
         typeof window === 'undefined' ? '' : document.cookie
       )
+      if (cookies['useFrontend'] == 'always') return true
       const prob = parseFloat(cookies['useFrontend'])
       if (prob === 0) {
         return true
