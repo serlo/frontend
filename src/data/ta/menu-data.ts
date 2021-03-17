@@ -29,7 +29,7 @@ export const headerData: InstanceData['headerData'] = [
     icon: 'community',
     children: [
       {
-        url: '/35587',
+        url: '/140520',
         title: 'ஆசிரியர்களுக்கான தொடக்க பக்கம்',
       },
       {
