@@ -17,15 +17,15 @@ export const headerData: InstanceData['headerData'] = [
       { url: '/141604', title: 'Nouvelle matières' },
     ],
   },
-  { url: '/23727', title: 'À propos de serlo', icon: 'about' },
-  { url: '/27469', title: 'Participe!', icon: 'participate' },
+  { url: '/141579', title: 'À propos de serlo', icon: 'about' },
+  { url: '/141581', title: 'Participe!', icon: 'participate' },
   {
     url: '',
     title: 'Communauté',
     icon: 'community',
     children: [
       {
-        url: '/35587',
+        url: '/141583',
         title: 'Page de démarrage pour les auteurs',
       },
       { url: 'https://community.serlo.org/', title: 'Chat pour les auteurs' },
@@ -39,9 +39,9 @@ export const footerData: InstanceData['footerData'] = {
     {
       title: 'Général',
       children: [
-        { title: 'À propos de serlo', url: '/serlo' },
+        { title: 'À propos de serlo', url: '/141579' },
         { title: 'Participes!', url: '/141581' },
-        { title: 'Contact', url: '/41043' },
+        { title: 'Contact', url: '/143390' },
         {
           title: "Serlo dans d'autres langues",
           url: `https://en.${serloDomain}/global`,
@@ -63,7 +63,7 @@ export const footerData: InstanceData['footerData'] = {
       ],
     },
     {
-      title: 'Termes légaux',
+      title: 'Termes juridiques',
       children: [
         { title: 'Privacy Policy', url: `https://de.${serloDomain}/privacy` },
         {
@@ -71,7 +71,7 @@ export const footerData: InstanceData['footerData'] = {
           url: `/consent`,
         },
         {
-          title: "Conditions d'utilisation",
+          title: "Modalités d'utilisation",
           url: `https://de.${serloDomain}/terms`,
         },
         { title: 'Imprimer', url: `https://de.${serloDomain}/imprint` },
@@ -79,6 +79,6 @@ export const footerData: InstanceData['footerData'] = {
     },
   ],
   aboutHref: '/serlo',
-  participationHref: '/27469',
+  participationHref: '/141581',
   donationHref: '/spenden',
 }
