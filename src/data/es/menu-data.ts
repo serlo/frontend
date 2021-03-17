@@ -49,7 +49,7 @@ export const footerData: InstanceData['footerData'] = {
       children: [
         { title: 'A cerca de Serlo', url: '/serlo' },
         { title: '¡Participa!', url: '/participa' },
-        { title: 'Contactanos', url: '/41043' },
+        { title: 'Contactanos', url: '/181414' },
         {
           title: 'Serlo en otros idiomas',
           url: `https://en.${serloDomain}/global`,
@@ -90,6 +90,6 @@ export const footerData: InstanceData['footerData'] = {
     },
   ],
   aboutHref: '/serlo',
-  participationHref: '/27469',
+  participationHref: '/participa',
   donationHref: '/spenden',
 }
