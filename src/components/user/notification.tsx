@@ -18,8 +18,10 @@ import {
   SetThreadStateNotificationEvent,
   SetUuidStateNotificationEvent,
   TaxonomyTerm,
+  AbstractUuid,
 } from '@serlo/api'
 import Tippy from '@tippyjs/react'
+import * as R from 'ramda'
 import { Fragment } from 'react'
 import styled, { css } from 'styled-components'
 
@@ -236,14 +238,8 @@ export function Notification({
     }
   }
 
-  function renderObject(object: {
-    id: number
-    currentRevision?: {
-      title?: string
-    }
-    __typename?: string
-  }) {
-    const title = object.currentRevision?.title
+  function renderObject(object: AbstractUuid & { __typename?: string }) {
+    const title = R.pick(['currentRevision', 'title'], object)
     return (
       <StyledLink href={`/${object.id}`}>
         {title ? title : getEntityStringByTypename(object.__typename, strings)}

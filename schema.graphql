@@ -249,7 +249,7 @@ type Course implements AbstractEntity & AbstractRepository & AbstractTaxonomyTer
     id: Int!
     instance: Instance!
     license: License!
-    pages: [CoursePage!]!
+    pages(hasCurrentRevision: Boolean, trashed: Boolean): [CoursePage!]!
     revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): CourseRevisionConnection!
     taxonomyTerms(after: String, before: String, first: Int, last: Int): TaxonomyTermConnection!
     threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
@@ -558,6 +558,7 @@ type Mutation {
     _setCache(key: String!, value: JSON!): Boolean
     _updateCache(keys: [String!]!): Boolean
     notification: NotificationMutation!
+    subscription: SubscriptionMutation!
     thread: ThreadMutation!
     uuid: UuidMutation!
 }
@@ -796,6 +797,15 @@ type SubscriptionCursor {
     node: AbstractUuid!
 }
 
+type SubscriptionMutation {
+    set(input: SubscriptionSetInput!): SubscriptionSetResponse
+}
+
+type SubscriptionSetResponse {
+    query: Query!
+    success: Boolean!
+}
+
 type TaxonomyTerm implements AbstractNavigationChild & AbstractUuid & InstanceAware & ThreadAware {
     alias: String
     children(after: String, before: String, first: Int, last: Int): AbstractUuidConnection!
@@ -999,29 +1009,39 @@ input NotificationSetStateInput {
     unread: Boolean!
 }
 
+input SubscriptionSetInput {
+    id: [Int!]!
+    sendEmail: Boolean!
+    subscribe: Boolean!
+}
+
 input ThreadCreateCommentInput {
     content: String!
+    sendEmail: Boolean!
+    subscribe: Boolean!
     threadId: String!
 }
 
 input ThreadCreateThreadInput {
     content: String!
     objectId: Int!
+    sendEmail: Boolean!
+    subscribe: Boolean!
     title: String!
 }
 
 input ThreadSetCommentStateInput {
-    id: Int!
+    id: [Int!]!
     trashed: Boolean!
 }
 
 input ThreadSetThreadArchivedInput {
     archived: Boolean!
-    id: String!
+    id: [String!]!
 }
 
 input ThreadSetThreadStateInput {
-    id: String!
+    id: [String!]!
     trashed: Boolean!
 }
 
