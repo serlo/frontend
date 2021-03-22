@@ -93,7 +93,7 @@ export const instanceData = {
       prerequisite: "Für diese Aufgabe benötigst Du folgendes Grundwissen:",
       task: "Aufgabe",
       right: "Richtig",
-      wrong: "Falsch",
+      wrong: "Leider nicht richtig",
       check: "Stimmt's?",
       yourAnswer: "Deine Antwort…",
       chooseOption: "Klicke auf eine der Optionen.",
