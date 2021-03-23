@@ -411,7 +411,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
     let children = convert(node.children)
     // compat: link images by tag
     if (children.length === 1 && children[0].type === 'img') {
-      children[0].href = node.attribs.href!
+      children[0].href = node.attribs.href
       return children
     }
     // compat: handle empty tag

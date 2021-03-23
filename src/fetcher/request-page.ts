@@ -19,23 +19,9 @@ export async function requestPage(
   alias: string,
   instance: Instance
 ): Promise<SlugPageData> {
-  const isId = /^\/[\d]+$/.test(alias) //e.g. /1565
-  const variables = isId
-    ? {
-        id: parseInt(alias.substring(1), 10),
-      }
-    : {
-        alias: {
-          instance,
-          path: alias,
-        },
-      }
-
-  const { uuid } = await request<{ uuid: QueryResponse }>(
-    endpoint,
-    dataQuery,
-    variables
-  )
+  const { uuid } = await request<{ uuid: QueryResponse }>(endpoint, dataQuery, {
+    alias: { instance, path: alias },
+  })
 
   // Can be deleted if CFWorker redirects those for us
   if (

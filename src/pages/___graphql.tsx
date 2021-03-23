@@ -1,7 +1,4 @@
-import type {
-  FetcherResult,
-  GraphiQLProps,
-} from 'graphiql/esm/components/GraphiQL'
+import type { GraphiQLProps } from 'graphiql/esm/components/GraphiQL'
 import { GraphQLError } from 'graphql'
 import { GraphQLResponse } from 'graphql-request/dist/types'
 import { NextPage } from 'next'
@@ -1769,7 +1766,7 @@ const GraphQL: NextPage = () => {
               body: JSON.stringify(params),
               credentials: 'same-origin',
             })
-            return (await response.json()) as FetcherResult & GraphQLResponse
+            return (await response.json()) as GraphQLResponse
           }
         }}
       />
