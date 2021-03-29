@@ -1,10 +1,13 @@
 import { GetStaticProps } from 'next'
-import React from 'react'
+import styled from 'styled-components'
 
+import { PageTitle } from '@/components/content/page-title'
 import { EntityBase } from '@/components/entity-base'
 import { FrontendClientBase } from '@/components/frontend-client-base'
+import { StyledP } from '@/components/tags/styled-p'
 import { SlugProps, SlugPageData } from '@/data-types'
 import { fetchPageData } from '@/fetcher/fetch-page-data'
+import { makeGreenButton } from '@/helper/css'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 /*
@@ -16,12 +19,21 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
   return (
     <FrontendClientBase noContainers entityId={pageData.entityData.id}>
       <EntityBase page={pageData}>
-        <iframe
+        <PageTitle title="Chat für Mathe-Autor*innen" headTitle />
+        <StyledP>
+          <Button
+            href="https://community.serlo.org/channel/mathe"
+            target="_blank"
+          >
+            In neuem Tab öffnen
+          </Button>
+        </StyledP>
+        <StyledIFrame
           width="100%;"
           height="100%"
           src="https://community.serlo.org/channel/mathe?layout=embedded"
           frameBorder="0"
-        ></iframe>
+        ></StyledIFrame>
       </EntityBase>
     </FrontendClientBase>
   )
@@ -36,3 +48,11 @@ export const getStaticProps: GetStaticProps<SlugProps> = async () => {
     revalidate: 1,
   }
 }
+
+const StyledIFrame = styled.iframe`
+  min-height: 75vh;
+`
+
+const Button = styled.a`
+  ${makeGreenButton}
+`
