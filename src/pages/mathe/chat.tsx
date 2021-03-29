@@ -34,10 +34,3 @@ export const getStaticProps: GetStaticProps<SlugProps> = async () => {
     revalidate: 1,
   }
 }
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    paths: [],
-    fallback: 'blocking',
-  }
-}
