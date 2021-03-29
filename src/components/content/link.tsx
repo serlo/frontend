@@ -35,6 +35,8 @@ export function isLegacyLink(_href: string) {
   if (_href == '/user/notifications') return false
   if (_href.startsWith('/entity/repository/history')) return false
   if (_href.startsWith('/entity/repository/compare')) return false
+  if (_href == '/mathe/chat') return false
+  if (_href == '/nachhaltigkeit/chat') return false
 
   return (
     legacyLinks.indexOf(_href) > -1 ||

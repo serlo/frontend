@@ -31,6 +31,7 @@ export function MetaMenu({ data }: MetaMenuProps) {
               </li>
             )
           })}
+          {renderChatTest()}
         </List>
       </MetaMenuWrapper>
     </>
@@ -46,6 +47,31 @@ export function MetaMenu({ data }: MetaMenuProps) {
         <ButtonStyle active={active}>{entry.title}</ButtonStyle>
       </StyledLink>
     )
+  }
+
+  // Temporary mockup
+  function renderChatTest() {
+    switch (data[0].url) {
+      case '/mathe/5/mathe':
+        return renderLink(
+          {
+            url: '/mathe/chat',
+            title: 'Chat für Mathe-Autor*innen',
+          },
+          false,
+          data.length
+        )
+      case '/nachhaltigkeit/17744/nachhaltigkeit':
+        return renderLink(
+          {
+            url: '/nachhaltigkeit/chat',
+            title: 'Chat für Nachhaltigkeits-Autor*innen',
+          },
+          false,
+          data.length
+        )
+    }
+    return null
   }
 }
 
