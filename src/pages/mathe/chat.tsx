@@ -1,4 +1,4 @@
-import { GetStaticPaths, GetStaticProps } from 'next'
+import { GetStaticProps } from 'next'
 import React from 'react'
 
 import { EntityBase } from '@/components/entity-base'
