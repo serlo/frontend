@@ -17,9 +17,11 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
     <FrontendClientBase noContainers entityId={pageData.entityData.id}>
       <EntityBase page={pageData}>
         <iframe
-          src="http://community.serlo.org/home?layout=embedded"
+          width="100%;"
+          height="100%"
+          src="https://community.serlo.org/channel/mathe?layout=embedded"
           frameBorder="0"
-        />
+        ></iframe>
       </EntityBase>
     </FrontendClientBase>
   )
