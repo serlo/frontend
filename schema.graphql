@@ -542,7 +542,7 @@ type GroupedExerciseRevisionCursor {
     node: GroupedExerciseRevision!
 }
 
-type License implements InstanceAware {
+type License {
     agreement: String!
     content: String!
     default: Boolean!
@@ -661,6 +661,7 @@ type Query {
     activeAuthors(after: String, before: String, first: Int, last: Int): UserConnection!
     activeDonors(after: String, before: String, first: Int, last: Int): UserConnection!
     activeReviewers(after: String, before: String, first: Int, last: Int): UserConnection!
+    authorization: JSON!
     license(id: Int!): License
     notificationEvent(id: Int!): AbstractNotificationEvent
     notifications(after: String, before: String, first: Int, last: Int, unread: Boolean): NotificationConnection!
