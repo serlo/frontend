@@ -3,7 +3,7 @@ import { ClientError, GraphQLClient } from 'graphql-request'
 import * as React from 'react'
 
 import { endpoint } from '@/api/endpoint'
-import { AuthPayload } from '@/auth/use-auth'
+import { AuthenticationPayload } from '@/auth/use-authentication'
 
 export function createGraphqlFetch() {
   return async function fetch(args: string) {
@@ -21,7 +21,7 @@ export function createGraphqlFetch() {
 }
 
 export function createAuthAwareGraphqlFetch(
-  auth: React.RefObject<AuthPayload>
+  auth: React.RefObject<AuthenticationPayload>
 ) {
   return async function fetch(args: string) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment

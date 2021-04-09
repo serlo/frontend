@@ -6,7 +6,7 @@ import dynamic from 'next/dynamic'
 import { createGlobalStyle } from 'styled-components'
 
 import { endpoint } from '@/api/endpoint'
-import { useAuth } from '@/auth/use-auth'
+import { useAuthentication } from '@/auth/use-authentication'
 
 const Style = createGlobalStyle`
 body {
@@ -1726,7 +1726,7 @@ const GraphiQL = dynamic<GraphiQLProps>(() => import('graphiql'), {
   ssr: false,
 })
 const GraphQL: NextPage = () => {
-  const auth = useAuth()
+  const auth = useAuthentication()
   //console.log('GraphQL auth', auth.current)
 
   return (

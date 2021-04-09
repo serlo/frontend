@@ -15,7 +15,7 @@ import * as React from 'react'
 import styled from 'styled-components'
 
 import { Link } from '../content/link'
-import { AuthPayload } from '@/auth/use-auth'
+import { AuthenticationPayload } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { HeaderData, HeaderLink } from '@/data-types'
@@ -23,7 +23,7 @@ import { getAuthData } from '@/helper/feature-auth'
 
 interface MobileMenuProps {
   data: HeaderData
-  auth: AuthPayload
+  auth: AuthenticationPayload
 }
 
 const menuIconMapping = {

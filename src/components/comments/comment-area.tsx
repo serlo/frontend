@@ -10,7 +10,7 @@ import { PleaseLogIn } from '../user/please-log-in'
 import { CommentArchive } from './comment-archive'
 import { CommentForm } from './comment-form'
 import { Thread } from './thread'
-import { useAuth } from '@/auth/use-auth'
+import { useAuthentication } from '@/auth/use-authentication'
 import { StyledH2 } from '@/components/tags/styled-h2'
 import { useInstanceData } from '@/contexts/instance-context'
 import { isClient } from '@/helper/client-detection'
@@ -35,7 +35,7 @@ export function CommentArea({ id: entityId, noForms }: CommentAreaProps) {
   >(undefined)
   const container = useRef<HTMLDivElement>(null)
   const { strings } = useInstanceData()
-  const auth = useAuth()
+  const auth = useAuthentication()
   const [showThreadChildren, setShowThreadChildren] = useState<string[]>([])
   const createThread = useCreateThreadMutation()
   const createComment = useCreateCommentMutation()

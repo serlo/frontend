@@ -15,7 +15,7 @@ import {
 } from '../../helper/css'
 import { LazyTippy } from '../navigation/lazy-tippy'
 import { AuthorToolsData } from './author-tools-hover-menu'
-import { useAuth } from '@/auth/use-auth'
+import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -44,7 +44,7 @@ export function UserTools({
   aboveContent,
 }: UserToolsProps) {
   const { strings } = useInstanceData()
-  const auth = useAuth()
+  const auth = useAuthentication()
   const [loaded, setLoaded] = useState(false)
   useEffect(() => {
     setLoaded(true)

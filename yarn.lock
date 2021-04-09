@@ -1886,6 +1886,11 @@
   resolved "https://registry.yarnpkg.com/@serlo/api/-/api-0.21.0.tgz#d9252d17bae7ccfb591905d2322a1239cf23b3f3"
   integrity sha512-MSdXALSWEvGxcC92bJuaqGuDyraOQRLUSHeU9t4C188ZfOabOJwzy9xAvg5itV9o678urHkX6JbxpuO5DmwlkQ==
 
+"@serlo/authorization@^0.21.0":
+  version "0.21.0"
+  resolved "https://registry.yarnpkg.com/@serlo/authorization/-/authorization-0.21.0.tgz#de06335ec6fcfff509b3ad1a6b528d0131aac285"
+  integrity sha512-PzVXD5U0PIKOh/IZkseo6wqRe4EpmJZ/AyMEWhuQAZOoHQfYz8jDab4T3wJh6NLo+iLQykYQGrDeXNrlZd6jLA==
+
 "@sideway/address@^4.1.0":
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/@sideway/address/-/address-4.1.1.tgz#9e321e74310963fdf8eebfbee09c7bd69972de4d"

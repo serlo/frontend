@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import { ProfileCommunityBanner } from './profile-community-banner'
 import { ProfileDonationForm } from './profile-donation-form'
-import { useAuth } from '@/auth/use-auth'
+import { useAuthentication } from '@/auth/use-authentication'
 import { CommentArea } from '@/components/comments/comment-area'
 import { StyledH2 } from '@/components/tags/styled-h2'
 import { StyledP } from '@/components/tags/styled-p'
@@ -20,14 +20,14 @@ export interface ProfileProps {
 export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   const { lang, strings } = useInstanceData()
   const { id, username, description, lastLogin } = userData
-  const auth = useAuth()
+  const auth = useAuthentication()
   const isOwnProfile = auth.current?.username === username
 
   const lastLoginDate = lastLogin ? new Date(lastLogin) : undefined
 
   return (
     <>
-      <StyledP></StyledP>
+      <StyledP />
       {lang === 'de' && renderCommunityFeatures()}
       {description && (
         <>

@@ -6,7 +6,7 @@ import { LicenseNotice } from '../license-notice'
 import { ExerciseNumbering } from './exercise-numbering'
 import { InputExercise } from './input-exercise'
 import { ScMcExercise } from './sc-mc-exercise'
-import { useAuth } from '@/auth/use-auth'
+import { useAuthentication } from '@/auth/use-authentication'
 import { CommentAreaProps } from '@/components/comments/comment-area'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
@@ -30,7 +30,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
   const [solutionVisible, setVisible] = useState(false)
   const [randomId] = useState(Math.random().toString())
 
-  const auth = useAuth()
+  const auth = useAuthentication()
   const [loaded, setLoaded] = useState(false)
   useEffect(() => {
     setLoaded(true)
@@ -229,7 +229,7 @@ const SolutionToggle = styled.button<{ active: boolean }>`
     css`
       background-color: ${(props) => props.theme.colors.brand} !important;
       color: #fff !important;
-    `}
+    `};
 
   @media (hover: none) {
     &:hover {
@@ -242,7 +242,7 @@ const SolutionToggle = styled.button<{ active: boolean }>`
 const SolutionBox = styled.div`
   padding-top: 10px;
   padding-bottom: 10px;
-  ${makeMargin}
+  ${makeMargin};
   margin-bottom: ${(props) => props.theme.spacing.mb.block};
   border-left: 8px solid ${(props) => props.theme.colors.lightBlueBackground};
 `

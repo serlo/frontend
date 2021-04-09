@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { useAuth } from '@/auth/use-auth'
+import { useAuthentication } from '@/auth/use-authentication'
 import { LoadingError } from '@/components/loading/loading-error'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { PleaseLogIn } from '@/components/user/please-log-in'
@@ -14,7 +14,7 @@ export interface GuardProps {
 }
 
 export function Guard({ children, data, error, needsAuth }: GuardProps) {
-  const auth = useAuth()
+  const auth = useAuthentication()
   const [mounted, setMounted] = React.useState(!shouldUseNewAuth())
 
   React.useEffect(() => {
