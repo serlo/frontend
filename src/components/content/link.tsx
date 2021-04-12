@@ -1,7 +1,6 @@
 import { default as NextLink } from 'next/link'
 import * as React from 'react'
 
-import { StyledA } from '../tags/styled-a'
 import { ExternalLink } from './external-link'
 import { EntityIdContext } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -165,15 +164,15 @@ export function Link({
       : undefined
 
     return (
-      <StyledA
+      <a
         href={_href}
-        className={className}
+        className={(className ?? '') + ' serlo-link'}
         title={title}
         onClick={clickHandler}
       >
         {children}
         {isExternal && !noExternalIcon && <ExternalLink />}
-      </StyledA>
+      </a>
     )
   }
 }
