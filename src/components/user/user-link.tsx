@@ -63,6 +63,7 @@ const BadgesWrap = styled.div`
     width: 1.2em;
     height: auto;
     margin-left: 0.3em;
+    display: inline;
   }
 `
 
