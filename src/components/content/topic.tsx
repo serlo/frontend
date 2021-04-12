@@ -246,7 +246,7 @@ function SubTopic({
 }) {
   return (
     <>
-      <h2>
+      <h2 className="my-3">
         <StyledLink href={data.url} path={[subid, 'title']}>
           {data.title}
         </StyledLink>
@@ -344,6 +344,7 @@ const Headline = styled.h1`
   margin-top: 32px;
   margin-bottom: 40px;
   line-height: normal;
+  font-weight: bold;
 `
 
 const StyledLink = styled(Link)`
@@ -353,6 +354,7 @@ const StyledLink = styled(Link)`
   text-decoration: none;
   ${makeMargin}
   hyphens: auto;
+  font-weight: bold;
 
   &:hover {
     text-decoration: underline;
@@ -407,6 +409,7 @@ const StyledLink2 = styled(Link)`
   margin-bottom: 12px;
   display: block;
   text-decoration: none;
+  line-height: normal;
 
   &:hover {
     text-decoration: underline;

@@ -56,7 +56,9 @@ export function Donations() {
 
       <Section>
         <DonationCol>
-          <StyledH1>Deine Spende für freie Bildung</StyledH1>
+          <StyledH1 className="font-bold my-5">
+            Deine Spende für freie Bildung
+          </StyledH1>
           <StyledImg
             id="main-image"
             src="/_assets/img/donations-image.jpg"
@@ -79,8 +81,12 @@ export function Donations() {
 
           <noscript>Bitte Javascript aktivieren</noscript>
 
-          <StyledH2 id="no-formular">Ohne Angabe von Daten spenden</StyledH2>
-          <h3 id="spendenkonto">Spendenkonto</h3>
+          <StyledH2 id="no-formular" className="font-bold my-5">
+            Ohne Angabe von Daten spenden
+          </StyledH2>
+          <h3 id="spendenkonto" className="font-bold my-4 text-xl">
+            Spendenkonto
+          </h3>
 
           <p>
             Serlo Education e.V. <br />
@@ -88,7 +94,9 @@ export function Donations() {
             BIC: GENODEM1GLS (GLS Bank)
           </p>
 
-          <h3 id="paypal">PayPal</h3>
+          <h3 id="paypal" className="font-bold my-4 text-xl">
+            PayPal
+          </h3>
           <p>
             <Button href="https://www.paypal.me/serlo">
               <FontAwesomeIcon icon={faPaypal} size="1x" /> Über PayPal spenden
@@ -96,7 +104,7 @@ export function Donations() {
           </p>
         </DonationCol>
         <ContactCol>
-          <h3>Dein Ansprechpartner</h3>
+          <h3 className="font-bold my-4 text-xl">Dein Ansprechpartner</h3>
           <p>
             <RoundedImage
               src="/_assets/img/donations-contact.jpg"

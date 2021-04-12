@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-const KaTeXSpan = styled.span`
+export const KaTeXSpan = styled.span`
   .katex {
     font: normal 1.1em KaTeX_Main, Times New Roman, serif;
     line-height: 1.4;
@@ -9,6 +9,7 @@ const KaTeXSpan = styled.span`
   }
   .katex * {
     -ms-high-contrast-adjust: none !important;
+    border-color: black;
   }
   .katex .katex-version::after {
     content: '0.11.1';
@@ -891,5 +892,3 @@ const KaTeXSpan = styled.span`
     text-align: left;
   }
 `
-
-export default KaTeXSpan

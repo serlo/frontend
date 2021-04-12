@@ -15,4 +15,5 @@ export const StyledH1 = styled.h1<StyledH1Props>`
   margin-bottom: 38px;
   line-height: 1.22;
   hyphens: auto;
+  font-weight: bold;
 `

@@ -1,6 +1,6 @@
 import KaTeX from 'katex'
 
-import KaTeXSpan from '../../../external/katexstyles'
+import { KaTeXSpan } from '../../../external/katexstyles'
 
 export interface MathSpanProps {
   formula: string
