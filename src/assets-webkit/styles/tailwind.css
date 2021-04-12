@@ -6,7 +6,9 @@
   .serlo-link {
     @apply text-brand no-underline break-words hover:underline;
   }
+}
 
+@layer utilities {
   @media print {
     .serlo-no-after-content:after {
       content: '' !important;
