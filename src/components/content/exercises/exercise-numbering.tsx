@@ -48,7 +48,7 @@ export function ExerciseNumbering({
       </Link>
       <style jsx>{`
         @media print {
-          numbering-parent:after {
+          .numbering-parent:after {
             content: '' !important;
           }
         }
