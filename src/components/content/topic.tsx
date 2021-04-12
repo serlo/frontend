@@ -343,6 +343,7 @@ const Headline = styled.h1`
   ${makeMargin}
   margin-top: 32px;
   margin-bottom: 40px;
+  line-height: normal;
 `
 
 const StyledLink = styled(Link)`

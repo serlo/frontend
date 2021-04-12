@@ -82,6 +82,8 @@ const List = styled.ul`
     padding: 12px 16px 0 16px;
     display: inline-block;
     white-space: nowrap;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
 
     & li {
       display: inline-block;

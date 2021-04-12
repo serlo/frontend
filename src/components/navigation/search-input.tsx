@@ -285,6 +285,7 @@ const sharedIconStyles = css`
   @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
     margin-top: ${(smHeight - 18) / 2}px;
   }
+  display: inline;
 `
 
 const gscMiscResets = css`
@@ -364,6 +365,7 @@ const gcsButton = css`
     /* doesn't need shared styles */
     width: 18px;
     height: 18px;
+    display: inline;
   }
 `
 
@@ -450,7 +452,8 @@ const AutocompleteStyle = createGlobalStyle`
     }
 
     .gsc-completion-container > tbody > tr {
-      border-top: 1px solid #ccc;
+      //border-top: 1px solid #ccc;
+      // Is this intended? It's not visible, though, in the old design.
     }
 
     .gssb_a td{

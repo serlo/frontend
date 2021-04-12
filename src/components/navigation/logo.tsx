@@ -38,7 +38,9 @@ export function Logo({ subline, noLink }: LogoProps) {
   )
 }
 
-const Image = styled.img``
+const Image = styled.img`
+  display: inline;
+`
 
 const SublineWrap = styled.div`
   padding-left: 50px;

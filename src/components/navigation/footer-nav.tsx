@@ -87,6 +87,9 @@ const CategoryHeader = styled.h3`
   font-size: 1rem;
   margin-bottom: 8px;
   color: ${(props) => lighten(0.05, props.theme.colors.dark1)};
+  display: block;
+  margin-block-start: 1em;
+  font-weight: bold;
 `
 
 const NavList = styled.ul`

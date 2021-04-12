@@ -183,6 +183,7 @@ const SubjectLink = styled(Link)`
   & svg.sus,
   & svg.chem,
   & svg.blank {
+    display: inline;
     .blue {
       fill: ${(props) => props.theme.colors.lighterblue};
       transition: all 0.2s ease-in-out;
@@ -229,7 +230,7 @@ const SubjectLink = styled(Link)`
     stroke-width: 1.1px;
   }
 
-  .contents {
+  .chem-contents {
     transition: 0.7s ease-in all !important;
   }
   .pipette {
@@ -314,7 +315,7 @@ const Header = styled.h2`
 
   @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
     font-size: 1.5rem;
-    line-height: inherit;
+    line-height: normal;
     width: auto;
     margin-top: 2.5rem;
     transition: color 0.4s ease, background-color 0.4s ease;

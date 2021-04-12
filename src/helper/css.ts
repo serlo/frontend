@@ -87,6 +87,8 @@ function makeButton(props: _ThemeProps & MakeButtonProps) {
     border: 0;
     cursor: pointer;
 
+    line-height: normal;
+
     text-decoration: none !important;
     font-size: 1.125rem;
     font-family: Karmilla, sans-serif;
