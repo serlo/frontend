@@ -7,7 +7,6 @@ import { HSpace } from '../content/h-space'
 import { Injection } from '../content/injection'
 import { Lazy } from '../content/lazy'
 import { Link } from '../content/link'
-import { SpecialCss } from '../content/special-css'
 import { StyledH1 } from '../tags/styled-h1'
 import { StyledH3 } from '../tags/styled-h3'
 import { StyledP } from '../tags/styled-p'
@@ -80,7 +79,7 @@ export function Explore() {
   }, [query, choices])
 
   return (
-    <SpecialCss>
+    <div className="serlo-special-css">
       <HSpace amount={50} />
       <StyledH1>Entdecke Inhalte auf Serlo</StyledH1>
       <InputForm
@@ -180,7 +179,7 @@ export function Explore() {
           <HSpace amount={30} />
         </TabPanel>
       </Tabs>
-    </SpecialCss>
+    </div>
   )
 }
 

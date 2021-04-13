@@ -9,7 +9,7 @@ export const KaTeXStyles = () => <style jsx global>{`
     -ms-high-contrast-adjust: none !important;
     border-color: black;
   }
-  .katex .katex-version::after {
+  .katex .katex-version:after {
     content: '0.11.1';
   }
   .katex .katex-mathml {

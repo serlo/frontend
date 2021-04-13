@@ -1,4 +1,4 @@
-import { css, ThemeProps, createGlobalStyle } from 'styled-components'
+import { css, ThemeProps } from 'styled-components'
 
 import { theme } from '@/theme'
 
@@ -125,56 +125,5 @@ export const inputFontReset = () =>
     letter-spacing: '-0.007em';
   `
 
-export const FontFix = createGlobalStyle`
-  h1,h2, main b {
-    letter-spacing: ${(props) => props.theme.defaults.boldLetterSpacing};
-  }
-  body {
-    letter-spacing: ${(props) => props.theme.defaults.regularLetterSpacing};
-  }
-`
-
-export const PrintStylesheet = () => (
-  <style jsx global>{`
-    @media print {
-      html {
-        font-size: 10pt;
-      }
-      body {
-        background: 0 0;
-      }
-      #__next {
-        > header,
-        > footer,
-        #notification-wrapper,
-        nav,
-        button,
-        aside,
-        div.cookie-bar,
-        h1 > span > svg,
-        div.video,
-        figure.video,
-        .comment-area-container {
-          display: none !important;
-        }
-        main {
-          display: block;
-          width: 100%;
-          max-width: 100%;
-          position: relative;
-        }
-      }
-      .header-breadcrumbs,
-      a,
-      code,
-      code span,
-      html,
-      pre,
-      pre:before,
-      time {
-        background: 0 0 !important;
-        color: #000 !important;
-      }
-    }
-  `}</style>
-)
+export const FontFix = () => null
+export const PrintStylesheet = () => null

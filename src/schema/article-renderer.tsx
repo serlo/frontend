@@ -12,7 +12,6 @@ import { LayoutRow } from '../components/content/layout-row'
 import { LicenseNotice } from '../components/content/license-notice'
 import { Link } from '../components/content/link'
 import { MathWrapper } from '../components/content/math-wrapper'
-import { SpecialCss } from '../components/content/special-css'
 import { SpoilerBody } from '../components/content/spoiler-body'
 import { SpoilerContainer } from '../components/content/spoiler-container'
 import { SpoilerTitle } from '../components/content/spoiler-title'
@@ -91,7 +90,7 @@ function _renderArticle(
     render(root, pathPrefix.concat(index))
   )
   if (!addCSS) return content
-  return <SpecialCss>{content}</SpecialCss>
+  return <div className="serlo-special-css">{content}</div>
 }
 
 function getNode(

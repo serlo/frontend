@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useRouter } from 'next/router'
 import { lighten } from 'polished'
 import { useState, useRef, useContext, useEffect } from 'react'
-import styled, { createGlobalStyle, css } from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import { isLegacyLink } from '../content/link'
 import { StyledA } from '../tags/styled-a'
@@ -15,7 +15,6 @@ import { inputFontReset, makeLightButton, makePadding } from '@/helper/css'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { submitEvent } from '@/helper/submit-event'
 import { ExternalProvider, useConsent } from '@/helper/use-consent'
-import { theme } from '@/theme'
 
 /*
 This components starts with only a placeholder that looks like a searchbar (basically a button).
@@ -433,35 +432,7 @@ const SearchForm = styled.div`
 `
 
 /* needs to be global style because the autocomplete markup is just added as last body element */
-const AutocompleteStyle = createGlobalStyle`
-  table.gstl_50.gssb_c{
-
-    z-index: 100010;
-
-    @media (max-width: ${theme.breakpointsMax.sm}) {
-      margin-top: 2px;
-      left: 5px !important;
-      right: 5px !important;
-      width: auto !important;
-    }
-
-    @media (min-width: ${theme.breakpoints.sm}) {
-      margin-left: 10px;
-      margin-top: 2px;
-      width: auto;
-    }
-
-    .gsc-completion-container > tbody > tr {
-      //border-top: 1px solid #ccc;
-      // Is this intended? It's not visible, though, in the current design.
-    }
-
-    .gssb_a td{
-      ${inputFontReset}
-      white-space: normal !important;
-    }
-  }
-`
+const AutocompleteStyle = () => null
 
 const ConsentPop = styled.div`
   background-color: ${(props) => props.theme.colors.brand};
