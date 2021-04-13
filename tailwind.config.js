@@ -1,5 +1,6 @@
 const { tint } = require('polished')
 const plugin = require('tailwindcss/plugin')
+const colors = require('tailwindcss/colors')
 
 // base colors
 const brand = '#007ec1'
@@ -19,6 +20,7 @@ module.exports = {
           100: tint(0.94, brand), // <- bluewhite
           50: tint(0.96, brand), // <- lightBackground
         },
+        trueGray: colors.trueGray,
       },
       borderWidth: {
         3: '3px',
@@ -29,6 +31,12 @@ module.exports = {
       },
       animation: {
         'spin-fast': 'spin 400ms linear infinite',
+      },
+      borderRadius: {
+        '4xl': '4rem',
+      },
+      fontSize: {
+        'serlo-lg': ['1.125rem', 'normal'],
       },
     },
     screens: {
@@ -46,6 +54,11 @@ module.exports = {
       addComponents({
         '.serlo-link': {
           '@apply text-brand no-underline break-words hover:underline': {},
+        },
+        '.serlo-button': {
+          '@apply inline-block transition-all rounded-4xl py-1 px-2': {},
+          '@apply font-bold border-none cursor-pointer no-underline': {},
+          '@apply text-serlo-lg serlo-font tracking-slightestly-tighter': {},
         },
       })
 
