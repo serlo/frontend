@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { default as NextLink } from 'next/link'
 import * as React from 'react'
 
@@ -166,7 +167,7 @@ export function Link({
     return (
       <a
         href={_href}
-        className={(className ?? '') + ' serlo-link'}
+        className={clsx(className, ' serlo-link')}
         title={title}
         onClick={clickHandler}
       >

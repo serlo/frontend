@@ -1,12 +1,12 @@
 const { tint, shade } = require('polished')
+const plugin = require('tailwindcss/plugin')
 
 // base colors
 const brand = '#007ec1'
-const black = '#000'
 
 module.exports = {
-  jit: true,
-  purge: ['./src/**/*.{js,ts,jsx,tsx}'],
+  mode: 'jit',
+  purge: ['./src/**/*.{js,ts,jsx,tsx}', './tailwind.config.js'],
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
@@ -20,6 +20,9 @@ module.exports = {
           50: tint(0.96, brand), // <- lightBackground
         },
       },
+      borderWidth: {
+        3: '3px',
+      },
     },
     screens: {
       mobile: '500px',
@@ -31,5 +34,24 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    plugin(function ({ addUtilities, addComponents }) {
+      addComponents({
+        '.serlo-link': {
+          '@apply text-brand no-underline break-words hover:underline': {},
+        },
+      })
+
+      addUtilities({
+        '.boxshadow-brand': {
+          boxShadow: `0 0 10px ${brand}`,
+        },
+        '@media print': {
+          '.serlo-no-after-content:after': {
+            content: '"" !important',
+          },
+        },
+      })
+    }),
+  ],
 }

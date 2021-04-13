@@ -35,9 +35,9 @@
     "@fortawesome/react-fontawesome": "^0.1.0",
     "@serlo/api": "^0.20.2",
     "@tippyjs/react": "^4.0.0",
-    "@types/react-tabs": "^2.3.2",
+    "@types/react-tabs": "^2.0.0",
     "algebra.js": "^0.2.0",
-    "autoprefixer": "^10.2.5",
+    "autoprefixer": "^10.0.0",
     "clsx": "^1.0.0",
     "cookie": "^0.4.0",
     "escape-html": "^1.0.0",
@@ -51,16 +51,16 @@
     "next": "^10.0.0",
     "nprogress": "^0.2.0",
     "polished": "^4.0.0",
-    "postcss": "^8.2.10",
+    "postcss": "^8.0.0",
     "ramda": "^0.27.0",
     "react": "^17.0.0",
-    "react-autosuggest": "^10.0.4",
+    "react-autosuggest": "^10.0.0",
     "react-diff-viewer": "^3.0.0",
     "react-dom": "^17.0.0",
     "react-lazyload": "^3.0.0",
     "react-modal": "^3.0.0",
     "react-notify-toast": "^0.5.0",
-    "react-tabs": "^3.1.2",
+    "react-tabs": "^3.0.0",
     "react-textarea-autosize": "^8.0.0",
     "showdown": "^1.9.0",
     "simple-oauth2": "^4.0.0",
@@ -69,7 +69,7 @@
     "tailwindcss": "^2.1.1",
     "timeago-react": "^3.0.0",
     "timeago.js": "^4.0.0",
-    "tippy.js": "^6.2.7"
+    "tippy.js": "^6.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
@@ -108,7 +108,7 @@
     "@types/nprogress": "^0.2.0",
     "@types/ramda": "^0.27.0",
     "@types/react": "^17.0.0",
-    "@types/react-autosuggest": "^10.0.1",
+    "@types/react-autosuggest": "^10.0.0",
     "@types/react-lazyload": "^3.0.0",
     "@types/react-modal": "^3.0.0",
     "@types/react-notify-toast": "^0.5.0",
@@ -130,14 +130,14 @@
     "msw": "^0.25.0",
     "node-fetch": "^2.6.1",
     "npm-run-all": "^4.0.0",
+    "postcss-flexbugs-fixes": "^5.0.0",
+    "postcss-nested": "^5.0.0",
     "prettier": "^2.0.0",
     "prettier-plugin-packagejson": "^2.0.0",
     "prop-types": "^15.7.0",
     "react-is": "^17.0.0",
     "react-test-renderer": "^17.0.0",
+    "styled-jsx-plugin-postcss": "^4.0.0",
     "typescript": "^4.0.0"
-  },
-  "engines": {
-    "node": "^12.0.0"
   }
 }

@@ -453,7 +453,7 @@ const AutocompleteStyle = createGlobalStyle`
 
     .gsc-completion-container > tbody > tr {
       //border-top: 1px solid #ccc;
-      // Is this intended? It's not visible, though, in the old design.
+      // Is this intended? It's not visible, though, in the current design.
     }
 
     .gssb_a td{

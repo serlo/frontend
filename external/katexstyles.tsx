@@ -1,6 +1,4 @@
-import styled from 'styled-components'
-
-export const KaTeXSpan = styled.span`
+export const KaTeXStyles = () => <style jsx global>{`
   .katex {
     font: normal 1.1em KaTeX_Main, Times New Roman, serif;
     line-height: 1.4;
@@ -891,4 +889,4 @@ export const KaTeXSpan = styled.span`
   .katex-display.fleqn > .katex {
     text-align: left;
   }
-`
+`}</style>

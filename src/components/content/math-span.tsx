@@ -1,6 +1,6 @@
 import KaTeX from 'katex'
 
-import { KaTeXSpan } from '../../../external/katexstyles'
+import { KaTeXStyles } from '../../../external/katexstyles'
 
 export interface MathSpanProps {
   formula: string
@@ -14,5 +14,10 @@ export function MathSpan({ formula }: MathSpanProps) {
     strict: false,
   })
 
-  return <KaTeXSpan dangerouslySetInnerHTML={{ __html: html }} />
+  return (
+    <>
+      <KaTeXStyles />
+      <span dangerouslySetInnerHTML={{ __html: html }} />
+    </>
+  )
 }

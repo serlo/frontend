@@ -134,7 +134,8 @@ export const FontFix = createGlobalStyle`
   }
 `
 
-export const PrintStylesheet = createGlobalStyle`
+export const PrintStylesheet = () => (
+  <style jsx global>{`
     @media print {
       html {
         font-size: 10pt;
@@ -151,9 +152,9 @@ export const PrintStylesheet = createGlobalStyle`
         aside,
         div.cookie-bar,
         h1 > span > svg,
-        div.video, figure.video,
-        .comment-area-container
-        {
+        div.video,
+        figure.video,
+        .comment-area-container {
           display: none !important;
         }
         main {
@@ -175,4 +176,5 @@ export const PrintStylesheet = createGlobalStyle`
         color: #000 !important;
       }
     }
-  `
+  `}</style>
+)
