@@ -1,4 +1,4 @@
-const { tint, shade } = require('polished')
+const { tint } = require('polished')
 const plugin = require('tailwindcss/plugin')
 
 // base colors

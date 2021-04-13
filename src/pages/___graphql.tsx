@@ -7,7 +7,7 @@ import dynamic from 'next/dynamic'
 import { endpoint } from '@/api/endpoint'
 import { useAuth } from '@/auth/use-auth'
 
-const Style = (
+const Style = () => (
   <style global jsx>{`
     body {
       padding: 0;
