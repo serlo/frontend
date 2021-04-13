@@ -20,7 +20,7 @@ module.exports = {
           100: tint(0.94, brand), // <- bluewhite
           50: tint(0.96, brand), // <- lightBackground
         },
-        trueGray: colors.trueGray,
+        truegray: colors.trueGray,
       },
       borderWidth: {
         3: '3px',
@@ -35,8 +35,14 @@ module.exports = {
       borderRadius: {
         '4xl': '4rem',
       },
-      fontSize: {
-        'serlo-lg': ['1.125rem', 'normal'],
+      lineHeight: {
+        browser: 'normal',
+      },
+      margin: {
+        block: '30px',
+      },
+      spacing: {
+        0.25: '1px',
       },
     },
     screens: {
@@ -58,7 +64,25 @@ module.exports = {
         '.serlo-button': {
           '@apply inline-block transition-all rounded-4xl py-1 px-2': {},
           '@apply font-bold border-none cursor-pointer no-underline': {},
-          '@apply text-serlo-lg serlo-font tracking-slightestly-tighter': {},
+          '@apply text-lg leading-browser serlo-font tracking-slightestly-tighter': {},
+        },
+        '.serlo-list': {
+          '@apply mx-4 mb-block mt-0 pl-7 list-none': {},
+          '@apply reset-list-counter': {},
+
+          '> li:before': {
+            '@apply absolute content-list-counter increment-list-counter': {},
+            '@apply font-bold align-middle text-center rounded-full -ml-7': {},
+            '@apply mt-0.5 bg-brand-150 w-4 h-4 text-xs': {},
+            '@apply leading-tight text-brand pt-0.25': {},
+          },
+          '> li > ul, > li > ol': {
+            '@apply mt-2': {},
+            marginBottom: '16px !important',
+          },
+        },
+        '.serlo-li': {
+          '@apply mb-2': {},
         },
       })
 
@@ -108,6 +132,15 @@ module.exports = {
         },
         '.serlo-input-font-reset': {
           '@apply text-base tracking-slightestly-tighter serlo-font': {},
+        },
+        '.reset-list-counter': {
+          'counter-reset': 'list-counter',
+        },
+        '.content-list-counter': {
+          content: 'counter(list-counter)',
+        },
+        '.increment-list-counter': {
+          'counter-increment': 'list-counter',
         },
       })
     }),
