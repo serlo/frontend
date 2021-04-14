@@ -27,7 +27,6 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
 
   return (
     <>
-      <StyledP></StyledP>
       {lang === 'de' && renderCommunityFeatures()}
       {description && (
         <>
@@ -35,7 +34,6 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
           {renderArticle(description, `profile${id}`)}
         </>
       )}
-      {/* <StyledH2>{strings.profiles.recentActivities}</StyledH2> */}
       <CommentArea id={id} noForms />
       {lastLoginDate && (
         <Gray>
@@ -46,7 +44,6 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         </Gray>
       )}
       {renderUserTools()}
-      {/* <StyledH2>{strings.profiles.roles}</StyledH2> */}
     </>
   )
 
