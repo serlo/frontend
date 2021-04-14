@@ -24,6 +24,7 @@ module.exports = {
       },
       borderWidth: {
         3: '3px',
+        6: '6px',
       },
       letterSpacing: {
         'slightestly-tighter': '-0.006em',
@@ -43,6 +44,9 @@ module.exports = {
       },
       spacing: {
         0.25: '1px',
+      },
+      outline: {
+        gray: '1px dotted #212121',
       },
     },
     screens: {
@@ -84,6 +88,49 @@ module.exports = {
         '.serlo-li': {
           '@apply mb-2': {},
         },
+        '.serlo-math-wrapper': {
+          '@apply px-4 w-full text-left mb-block py-0.5': {},
+          '@apply text-lg leading-browser overflow-x-auto overflow-y-hidden': {},
+        },
+        '.serlo-important': {
+          '@apply border-l-6 border-brand p-2.5 mb-block mx-4': {},
+        },
+        '.serlo-spoiler-body': {
+          '@apply pt-6 pb-3.5 border-l-8 border-brand': {},
+        },
+        '.serlo-solution-box': {
+          '@apply py-2.5 mx-4 mb-block border-l-8 border-brand-150': {},
+        },
+        '.serlo-styled-label': {
+          '@apply flex items-center cursor-pointer': {},
+          '> svg': {
+            '@apply text-xl mt-0.5 text-brand': {},
+          },
+          '> div > *': {
+            '@apply ml-2': {},
+          },
+        },
+        '.serlo-image-centered': {
+          '@apply px-4 mb-block text-center': {},
+          img: {
+            '@apply inline': {},
+          },
+        },
+        '.serlo-exercise-wrapper': {
+          '@apply mt-10 mb-2.5': {},
+
+          '@media (hover: hover)': {
+            input: {
+              '@apply opacity-20 transition-opacity': {},
+            },
+
+            '&:hover': {
+              input: {
+                '@apply: opacity-100': {},
+              },
+            },
+          },
+        },
       })
 
       addUtilities({
@@ -103,26 +150,22 @@ module.exports = {
           },
         },
         '.serlo-special-css': {
-          // a little monster, will definitively break soon
-          // I have some ideas to make this better (use nested variants and class names to fix this)
           '@apply break-words': {},
           'p + ul': {
             '@apply -mt-3.5': {},
-            '.serlo-test': {
-              color: 'blue',
-            },
           },
           'li > p': {
             '@apply mx-0 mb-2': {},
           },
-          "li > [class*='MathWrapper']": {
+          'li > .serlo-math-wrapper': {
             '@apply px-0': {},
           },
-          "[class*='Important'], [class*='SpoilerBody'], [class*='SolutionBox'], [class*='StyledLabel'], li, th, td": {
-            "> p:last-child, > [class*='MathWrapper']:last-child, > ul:last-child, > ol:last-child, > [class*='ImgCentered']:last-child, > [class*='exercise__Wrapper']:last-child": {
+          '.serlo-important, .serlo-spoiler-body, .serlo-solution-box, .serlo-styled-label, li, th, td': {
+            '> p:last-child, > .serlo-math-wrapper:last-child, > ul:last-child, > ol:last-child,\
+             > .serlo-image-centered:last-child, > .serlo-exercise-wrapper:last-child': {
               '@apply mb-0': {},
             },
-            "> [class*='exercise__Wrapper']:first-child": {
+            '> .serlo-exercise-wrapper:first-child': {
               '@apply mt-0': {},
             },
           },

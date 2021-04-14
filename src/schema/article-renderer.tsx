@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import dynamic from 'next/dynamic'
 import * as React from 'react'
 import { CSSProperties } from 'styled-components'
@@ -5,14 +6,10 @@ import { CSSProperties } from 'styled-components'
 import { Col } from '../components/content/col'
 import { ExerciseGroup } from '../components/content/exercises/exercise-group'
 import { ImageLink } from '../components/content/image-link'
-import { ImgCentered } from '../components/content/img-centered'
 import { ImgMaxWidthDiv } from '../components/content/img-max-width-div'
-import { Important } from '../components/content/important'
 import { LayoutRow } from '../components/content/layout-row'
 import { LicenseNotice } from '../components/content/license-notice'
 import { Link } from '../components/content/link'
-import { MathWrapper } from '../components/content/math-wrapper'
-import { SpoilerBody } from '../components/content/spoiler-body'
 import { SpoilerContainer } from '../components/content/spoiler-container'
 import { SpoilerTitle } from '../components/content/spoiler-title'
 import { SpoilerToggle } from '../components/content/spoiler-toggle'
@@ -208,11 +205,13 @@ function renderElement(props: RenderElementProps): React.ReactNode {
     const nowrap = /\\begin *{(array|aligned)}/.test(element.formula)
     // alignLeft is assumed to be always true
     return (
-      <MathWrapper nowrap={nowrap}>
+      <div
+        className={clsx('serlo-math-wrapper', { 'whitespace-nowrap': nowrap })}
+      >
         <Lazy slim>
           <Math formula={'\\displaystyle ' + element.formula} />
         </Lazy>
-      </MathWrapper>
+      </div>
     )
   }
   if (element.type === 'p') {
@@ -235,7 +234,11 @@ function renderElement(props: RenderElementProps): React.ReactNode {
       return comp
     }
     return (
-      <ImgCentered itemScope itemType="http://schema.org/ImageObject">
+      <div
+        className="serlo-image-centered"
+        itemScope
+        itemType="http://schema.org/ImageObject"
+      >
         <ImgMaxWidthDiv maxWidth={element.maxWidth ? element.maxWidth : 0}>
           {wrapInA(
             <Lazy>
@@ -247,7 +250,7 @@ function renderElement(props: RenderElementProps): React.ReactNode {
             </Lazy>
           )}
         </ImgMaxWidthDiv>
-      </ImgCentered>
+      </div>
     )
   }
   if (element.type === 'spoiler-container') {
@@ -257,7 +260,7 @@ function renderElement(props: RenderElementProps): React.ReactNode {
     )
   }
   if (element.type === 'spoiler-body') {
-    return <SpoilerBody>{children}</SpoilerBody>
+    return <div className="serlo-spoiler-body">{children}</div>
   }
   if (element.type === 'spoiler-title') {
     return children
@@ -304,7 +307,7 @@ function renderElement(props: RenderElementProps): React.ReactNode {
     return <Col cSize={element.size}>{children}</Col>
   }
   if (element.type === 'important') {
-    return <Important>{children}</Important>
+    return <div className="serlo-important">{children}</div>
   }
   if (element.type === 'blockquote') {
     return <Blockquote>{children}</Blockquote>
