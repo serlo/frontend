@@ -5,6 +5,7 @@ import { ProfileCommunityBanner } from './profile-community-banner'
 import { ProfileDonationForm } from './profile-donation-form'
 import { useAuth } from '@/auth/use-auth'
 import { CommentArea } from '@/components/comments/comment-area'
+import { PageTitle } from '@/components/content/page-title'
 import { StyledH2 } from '@/components/tags/styled-h2'
 import { StyledP } from '@/components/tags/styled-p'
 import { TimeAgo } from '@/components/time-ago'
@@ -27,6 +28,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
 
   return (
     <>
+      <PageTitle title={username} headTitle />
       {lang === 'de' && renderCommunityFeatures()}
       {description && (
         <>

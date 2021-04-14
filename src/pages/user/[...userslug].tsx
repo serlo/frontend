@@ -1,6 +1,5 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 
-import { PageTitle } from '@/components/content/page-title'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Profile } from '@/components/pages/user/profile'
 import { UserProps, UserPage } from '@/data-types'
@@ -9,7 +8,6 @@ import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks<UserProps>(({ pageData }) => (
   <FrontendClientBase entityId={pageData.userData.id}>
-    <PageTitle title={pageData.userData.username} headTitle />
     <Profile userData={pageData.userData} />
   </FrontendClientBase>
 ))
