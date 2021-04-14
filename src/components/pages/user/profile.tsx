@@ -38,7 +38,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         <ProfileImage src={imageUrl} />
         <div>
           <UsernameHeading>{username}</UsernameHeading>
-          <StyledP>Bei Serlo seit {sinceYear}</StyledP>
+          <StyledP>{strings.profiles.activeSince} {sinceYear}</StyledP>
         </div>
       </ProfileHeader>
 
