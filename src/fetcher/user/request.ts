@@ -16,38 +16,34 @@ export async function requestUser(
   })
 
   if (uuid.__typename === 'User') {
-    const placeholder = JSON.stringify({
-      plugin: 'text',
-      state: [
-        {
-          type: 'p',
-          children: {
-            text:
-              'This is where we display the description on a the production server.',
-          },
-        },
-      ],
-    })
-
-    const description = uuid.description
-      ? uuid.description === 'NULL'
-        ? convertState(placeholder)
-        : convertState(uuid.description)
-      : undefined
     return {
       kind: 'user/profile',
       newsletterPopup: false,
-      userData: {
-        id: uuid.id,
-        username: uuid.username,
-        description: description,
-        lastLogin: uuid.lastLogin,
-        activeReviewer: uuid.activeReviewer,
-        activeAuthor: uuid.activeAuthor,
-        activeDonor: uuid.activeDonor,
-      },
+      userData: { ...uuid, description: getDescription(uuid) },
     }
+  } else {
+    throw 'User not found'
   }
+}
 
-  throw 'User not found'
+function getDescription(uuid: User) {
+  if (uuid.description == null) return undefined
+
+  const description =
+    uuid.description === 'NULL'
+      ? JSON.stringify({
+          plugin: 'text',
+          state: [
+            {
+              type: 'p',
+              children: {
+                text:
+                  'This is where we display the description on a the production server.',
+              },
+            },
+          ],
+        })
+      : uuid.description
+
+  return convertState(description)
 }
