@@ -22,7 +22,7 @@ export async function requestUser(
       userData: { ...uuid, description: getDescription(uuid) },
     }
   } else {
-    throw 'User not found'
+    throw new Error('User not found')
   }
 }
 
