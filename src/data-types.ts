@@ -726,8 +726,10 @@ export interface UserPage extends EntityPageBase {
   userData: {
     id: number
     username: string
+    imageUrl: string
     description?: FrontendContentNode[] | null
     lastLogin?: string | null
+    date: string
     activeReviewer?: boolean
     activeAuthor?: boolean
     activeDonor?: boolean

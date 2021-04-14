@@ -1,11 +1,12 @@
 import { NextPage } from 'next'
+import Head from 'next/head'
 import styled from 'styled-components'
 
 import { ProfileCommunityBanner } from './profile-community-banner'
 import { ProfileDonationForm } from './profile-donation-form'
 import { useAuth } from '@/auth/use-auth'
 import { CommentArea } from '@/components/comments/comment-area'
-import { PageTitle } from '@/components/content/page-title'
+import { StyledH1 } from '@/components/tags/styled-h1'
 import { StyledH2 } from '@/components/tags/styled-h2'
 import { StyledP } from '@/components/tags/styled-p'
 import { TimeAgo } from '@/components/time-ago'
@@ -19,17 +20,29 @@ export interface ProfileProps {
 }
 
 export const Profile: NextPage<ProfileProps> = ({ userData }) => {
-  const { lang, strings } = useInstanceData()
-  const { id, username, description, lastLogin } = userData
+  const { strings } = useInstanceData()
+  const { id, username, description, lastLogin, imageUrl, date } = userData
   const auth = useAuth()
   const isOwnProfile = auth.current?.username === username
 
   const lastLoginDate = lastLogin ? new Date(lastLogin) : undefined
+  const sinceYear = new Date(date).getFullYear()
 
   return (
     <>
-      <PageTitle title={username} headTitle />
-      {lang === 'de' && renderCommunityFeatures()}
+      <Head>
+        <title>{username}</title>
+      </Head>
+
+      <ProfileHeader>
+        <ProfileImage src={imageUrl} />
+        <div>
+          <UsernameHeading>{username}</UsernameHeading>
+          <StyledP>Bei Serlo seit {sinceYear}</StyledP>
+        </div>
+      </ProfileHeader>
+
+      {/*lang === 'de' && renderCommunityFeatures()*/}
       {description && (
         <>
           <StyledH2>{strings.profiles.aboutMe}</StyledH2>
@@ -84,6 +97,39 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
     )
   }
 }
+
+const ProfileImage = styled.img`
+  border-radius: 50%;
+  display: block;
+  width: 160px;
+`
+
+const ProfileHeader = styled.header`
+  margin-top: 40px;
+  margin-bottom: 20px;
+
+  @media (min-width: ${(props) => props.theme.breakpoints.mobile}) {
+    display: flex;
+    align-items: center;
+
+    & > ${ProfileImage} {
+      margin-right: 40px;
+    }
+  }
+
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    & > * {
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+  }
+`
+
+const UsernameHeading = styled(StyledH1)`
+  font-weight: normal;
+  margin-bottom: 10px;
+`
 
 const Gray = styled(StyledP)`
   margin-top: 70px;

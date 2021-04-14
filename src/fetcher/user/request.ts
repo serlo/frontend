@@ -19,7 +19,11 @@ export async function requestUser(
     return {
       kind: 'user/profile',
       newsletterPopup: false,
-      userData: { ...uuid, description: getDescription(uuid) },
+      userData: {
+        ...uuid,
+        imageUrl: `https://community.serlo.org/avatar/${uuid.username}`,
+        description: getDescription(uuid),
+      },
     }
   } else {
     throw new Error('User not found')
