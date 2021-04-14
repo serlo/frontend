@@ -83,10 +83,8 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
       <BadgesContainer>
         {activeReviewer &&
           renderBadge({ Badge: ReviewerBadge, name: 'Reviewer' })}
-        {activeAuthor &&
-          renderBadge({ Badge: AuthorBadge, name: 'Author' })}
-        {activeDonor &&
-          renderBadge({ Badge: DonorBadge, name: 'Donor' })}
+        {activeAuthor && renderBadge({ Badge: AuthorBadge, name: 'Author' })}
+        {activeDonor && renderBadge({ Badge: DonorBadge, name: 'Donor' })}
       </BadgesContainer>
     )
   }
@@ -102,25 +100,15 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
       margin-right: 20px;
 
       & > * {
+        display: block;
         margin-left: auto;
         margin-right: auto;
         text-align: center;
       }
-
-      & > svg {
-        display: block;
-      }
     `
-
-    const BadgeWithStyles = styled(Badge)`
-      margin-top: 15px;
-      margin-bottom: 10px;
-      height: 40px;
-    `
-
     return (
       <BadgeContainer>
-        <BadgeWithStyles />
+        <Badge />
         <StyledP>{name}</StyledP>
       </BadgeContainer>
     )
@@ -179,6 +167,13 @@ const ProfileHeader = styled.header`
     & > * {
       margin-right: 40px;
     }
+
+    & svg,
+    & h1 {
+      height: 40px;
+      margin-top: 15px;
+      margin-bottom: 10px;
+    }
   }
 
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
@@ -192,7 +187,6 @@ const ProfileHeader = styled.header`
 
 const UsernameHeading = styled(StyledH1)`
   font-weight: normal;
-  margin-bottom: 10px;
 `
 
 const Gray = styled(StyledP)`
