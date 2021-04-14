@@ -4,6 +4,9 @@ import styled from 'styled-components'
 
 import { ProfileCommunityBanner } from './profile-community-banner'
 import { ProfileDonationForm } from './profile-donation-form'
+import AuthorBadge from '@/assets-webkit/img/community/badge-author.svg'
+import DonorBadge from '@/assets-webkit/img/community/badge-donor.svg'
+import ReviewerBadge from '@/assets-webkit/img/community/badge-reviewer.svg'
 import { useAuth } from '@/auth/use-auth'
 import { CommentArea } from '@/components/comments/comment-area'
 import { StyledH1 } from '@/components/tags/styled-h1'
@@ -38,8 +41,11 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         <ProfileImage src={imageUrl} />
         <div>
           <UsernameHeading>{username}</UsernameHeading>
-          <StyledP>{strings.profiles.activeSince} {sinceYear}</StyledP>
+          <StyledP>
+            {strings.profiles.activeSince} {sinceYear}
+          </StyledP>
         </div>
+        {renderBadges()}
       </ProfileHeader>
 
       {/*lang === 'de' && renderCommunityFeatures()*/}
@@ -61,6 +67,64 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
       {renderUserTools()}
     </>
   )
+
+  function renderBadges() {
+    const { activeDonor, activeReviewer, activeAuthor } = userData
+
+    if (!activeAuthor && !activeReviewer && !activeDonor) return null
+
+    const BadgesContainer = styled.div`
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    `
+
+    return (
+      <BadgesContainer>
+        {activeReviewer &&
+          renderBadge({ Badge: ReviewerBadge, name: 'Reviewer' })}
+        {activeAuthor &&
+          renderBadge({ Badge: AuthorBadge, name: 'Author' })}
+        {activeDonor &&
+          renderBadge({ Badge: DonorBadge, name: 'Donor' })}
+      </BadgesContainer>
+    )
+  }
+
+  function renderBadge({
+    Badge,
+    name,
+  }: {
+    Badge: typeof ReviewerBadge | typeof AuthorBadge | typeof DonorBadge
+    name: string
+  }) {
+    const BadgeContainer = styled.div`
+      margin-right: 20px;
+
+      & > * {
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+      }
+
+      & > svg {
+        display: block;
+      }
+    `
+
+    const BadgeWithStyles = styled(Badge)`
+      margin-top: 15px;
+      margin-bottom: 10px;
+      height: 40px;
+    `
+
+    return (
+      <BadgeContainer>
+        <BadgeWithStyles />
+        <StyledP>{name}</StyledP>
+      </BadgeContainer>
+    )
+  }
 
   function renderCommunityFeatures() {
     return (
@@ -112,7 +176,7 @@ const ProfileHeader = styled.header`
     display: flex;
     align-items: center;
 
-    & > ${ProfileImage} {
+    & > * {
       margin-right: 40px;
     }
   }
