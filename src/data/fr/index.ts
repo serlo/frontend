@@ -17,7 +17,7 @@ export const instanceData = {
       summaryHeading: "Serlo.org est le Wikipedia pour l'apprentissage.",
       summaryText: "Nous sommes une communauté de visionnaires qui travaille sans relâche pour offrir une éducation gratuite et accessible à tous.",
       learnMore: "En savoir plus",
-      participate: "Rejoignez-nous",
+      participate: "Participer",
       donate: "Faire un don",
       toTop: "En haut"
     },
@@ -209,7 +209,7 @@ export const instanceLandingData = {
     wikiText: "Tout comme Wikipédia, cette plateforme est créée par une communauté d'auteur·e·s engagé·e·s. Serlo Education est gérée et détenue par des équipes décentralisées de bénévoles et de professionnel·le·s dans le monde entier.",
     movementTitle: "Rejoignez notre mouvement pour l'éducation libre",
     callForAuthors: "Nous cherchons des enseignant·e·s et des éducateur·e·s enthousiastes et passionné·e·s de leur matière. Devenez un·e auteur·e sur serlo.org, créez de nouveaux contenus et aidez-nous à assurer la qualité de la plateforme d'apprentissage.",
-    communityLink: "Visitez la page d'accueil d'auteurs",
+    communityLink: "Visitez la page d'accueil d'auteur·e·s",
     callForOther: "Nous offrons une variété d'emplois et de possibilités de bénévolat dans les domaines du développement de logiciel, de la conception, la traduction, la communication, la gestion de projet et d'autres.",
     getInvolved: "Participe!"
   }
