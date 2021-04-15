@@ -187,6 +187,7 @@ const BadgeContainer = styled.div`
 const ChatButton = styled.a`
   ${makeGreenButton}
   ${makeMargin}
+  margin-bottom: 30px;
   display: block;
   width: 175px;
   text-align: center;
