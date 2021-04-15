@@ -42,7 +42,10 @@ export function Search() {
 
   return (
     <>
-      <HeadTags data={{ title: `Serlo.org - ${strings.header.search}` }} />
+      <HeadTags
+        data={{ title: `Serlo.org - ${strings.header.search}` }}
+        noindex
+      />
       <MaxWidthDiv>
         <StyledSearchResults>
           <div id="gcs-results"></div>

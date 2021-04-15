@@ -1,4 +1,5 @@
 import { NextPage } from 'next'
+import Head from 'next/head'
 import styled from 'styled-components'
 
 import { ProfileCommunityBanner } from './profile-community-banner'
@@ -27,6 +28,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
 
   return (
     <>
+      {renderNoIndexMeta()}
       <StyledP></StyledP>
       {lang === 'de' && renderCommunityFeatures()}
       {description && (
@@ -83,6 +85,21 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         }}
       />
     )
+  }
+
+  function renderNoIndexMeta() {
+    if (
+      !userData.activeDonor &&
+      !userData.activeAuthor &&
+      !userData.activeReviewer
+    ) {
+      return (
+        <Head>
+          <meta name="robots" content="noindex" />
+        </Head>
+      )
+    }
+    return null
   }
 }
 
