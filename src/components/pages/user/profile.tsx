@@ -1,3 +1,5 @@
+import { faTelegramPlane } from '@fortawesome/free-brands-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { NextPage } from 'next'
 import Head from 'next/head'
 import styled from 'styled-components'
@@ -14,6 +16,7 @@ import { TimeAgo } from '@/components/time-ago'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UserPage } from '@/data-types'
+import { makeGreenButton } from '@/helper/css'
 import { renderArticle } from '@/schema/article-renderer'
 
 export interface ProfileProps {
@@ -45,6 +48,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         </div>
         {renderBadges()}
       </ProfileHeader>
+      {renderChatButton()}
 
       {description && (
         <>
@@ -111,6 +115,28 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
     )
   }
 
+  function renderChatButton() {
+    const ChatButton = styled.a`
+      ${makeGreenButton}
+      display: block;
+      width: 175px;
+      text-align: center;
+
+      @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+        margin-left: auto;
+        margin-right: auto;
+      }
+    `
+
+    const chatUrl = `https://community.serlo.org/direct/${username}`
+
+    return (
+      <ChatButton href={chatUrl} role="button">
+        Direktnachricht <FontAwesomeIcon icon={faTelegramPlane} />
+      </ChatButton>
+    )
+  }
+
   function renderUserTools() {
     if (!isOwnProfile) return null
     return (
@@ -129,7 +155,8 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
 const ProfileImage = styled.img`
   border-radius: 50%;
   display: block;
-  width: 160px;
+  /* This width matches the width of the direct chat button -> TODO: find a better solution */
+  width: 191px;
 `
 
 const ProfileHeader = styled.header`
@@ -138,6 +165,7 @@ const ProfileHeader = styled.header`
 
   @media (min-width: ${(props) => props.theme.breakpoints.mobile}) {
     display: flex;
+    flex-flow: row wrap;
     align-items: center;
 
     & > * {
