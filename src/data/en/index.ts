@@ -170,7 +170,8 @@ export const instanceData = {
       recentActivities: 'Recent activities',
       showAllActivities: 'Show all activities',
       lastSeen: 'Last seen',
-      roles: 'Roles'
+      roles: 'Roles',
+      directMessage: 'Direct message'
     },
     notices: {
       welcome: '👋 Welcome %username%!',

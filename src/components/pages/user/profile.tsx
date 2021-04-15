@@ -83,9 +83,9 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
     return (
       <BadgesContainer>
         {activeReviewer &&
-          renderBadge({ Badge: ReviewerBadge, name: 'Reviewer' })}
-        {activeAuthor && renderBadge({ Badge: AuthorBadge, name: 'Author' })}
-        {activeDonor && renderBadge({ Badge: DonorBadge, name: 'Donor' })}
+          renderBadge({ Badge: ReviewerBadge, name: strings.roles.reviewer })}
+        {activeAuthor && renderBadge({ Badge: AuthorBadge, name: strings.roles.author })}
+        {activeDonor && renderBadge({ Badge: DonorBadge, name: strings.roles.donor })}
       </BadgesContainer>
     )
   }
@@ -132,7 +132,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
 
     return (
       <ChatButton href={chatUrl} role="button">
-        Direktnachricht <FontAwesomeIcon icon={faTelegramPlane} />
+        {strings.profiles.directMessage} <FontAwesomeIcon icon={faTelegramPlane} />
       </ChatButton>
     )
   }
@@ -169,7 +169,7 @@ const ProfileHeader = styled.header`
     align-items: center;
 
     & > * {
-      margin-right: 40px;
+      margin-right: 20px;
     }
   }
 
