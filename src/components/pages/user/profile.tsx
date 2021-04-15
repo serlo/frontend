@@ -74,18 +74,14 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
 
     if (!activeAuthor && !activeReviewer && !activeDonor) return null
 
-    const BadgesContainer = styled.div`
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    `
-
     return (
       <BadgesContainer>
         {activeReviewer &&
           renderBadge({ Badge: ReviewerBadge, name: strings.roles.reviewer })}
-        {activeAuthor && renderBadge({ Badge: AuthorBadge, name: strings.roles.author })}
-        {activeDonor && renderBadge({ Badge: DonorBadge, name: strings.roles.donor })}
+        {activeAuthor &&
+          renderBadge({ Badge: AuthorBadge, name: strings.roles.author })}
+        {activeDonor &&
+          renderBadge({ Badge: DonorBadge, name: strings.roles.donor })}
       </BadgesContainer>
     )
   }
@@ -97,16 +93,6 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
     Badge: typeof ReviewerBadge | typeof AuthorBadge | typeof DonorBadge
     name: string
   }) {
-    const BadgeContainer = styled.div`
-      margin-right: 20px;
-
-      & > * {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        text-align: center;
-      }
-    `
     return (
       <BadgeContainer>
         <Badge />
@@ -116,23 +102,12 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   }
 
   function renderChatButton() {
-    const ChatButton = styled.a`
-      ${makeGreenButton}
-      display: block;
-      width: 175px;
-      text-align: center;
-
-      @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-        margin-left: auto;
-        margin-right: auto;
-      }
-    `
-
     const chatUrl = `https://community.serlo.org/direct/${username}`
 
     return (
       <ChatButton href={chatUrl} role="button">
-        {strings.profiles.directMessage} <FontAwesomeIcon icon={faTelegramPlane} />
+        {strings.profiles.directMessage}{' '}
+        <FontAwesomeIcon icon={faTelegramPlane} />
       </ChatButton>
     )
   }
@@ -186,6 +161,35 @@ const ProfileHeader = styled.header`
     height: 40px;
     margin-top: 15px;
     margin-bottom: 10px;
+  }
+`
+
+const BadgesContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
+const BadgeContainer = styled.div`
+  margin-right: 20px;
+
+  & > * {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+`
+
+const ChatButton = styled.a`
+  ${makeGreenButton}
+  display: block;
+  width: 175px;
+  text-align: center;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    margin-left: auto;
+    margin-right: auto;
   }
 `
 
