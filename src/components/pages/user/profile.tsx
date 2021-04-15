@@ -16,7 +16,7 @@ import { TimeAgo } from '@/components/time-ago'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UserPage } from '@/data-types'
-import { makeGreenButton } from '@/helper/css'
+import { makeGreenButton, makeMargin } from '@/helper/css'
 import { renderArticle } from '@/schema/article-renderer'
 
 export interface ProfileProps {
@@ -139,6 +139,7 @@ const ProfileImage = styled.img`
 const ProfileHeader = styled.header`
   margin-top: 40px;
   margin-bottom: 20px;
+  ${makeMargin}
 
   @media (min-width: ${(props) => props.theme.breakpoints.mobile}) {
     display: flex;
@@ -185,6 +186,7 @@ const BadgeContainer = styled.div`
 
 const ChatButton = styled.a`
   ${makeGreenButton}
+  ${makeMargin}
   display: block;
   width: 175px;
   text-align: center;
