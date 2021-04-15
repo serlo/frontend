@@ -37,7 +37,9 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
     <>
       <Head>
         <title>{username}</title>
-        {renderNoIndexMeta()}
+        {!activeDonor && !activeAuthor && !activeReviewer && (
+          <meta name="robots" content="noindex" />
+        )}
       </Head>
 
       <ProfileHeader>
@@ -124,12 +126,6 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         }}
       />
     )
-  }
-
-  function renderNoIndexMeta() {
-    return !activeDonor && !activeAuthor && !activeReviewer ? (
-      <meta name="robots" content="noindex" />
-    ) : null
   }
 }
 
