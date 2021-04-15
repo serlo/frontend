@@ -2,8 +2,6 @@ import { NextPage } from 'next'
 import Head from 'next/head'
 import styled from 'styled-components'
 
-import { ProfileCommunityBanner } from './profile-community-banner'
-import { ProfileDonationForm } from './profile-donation-form'
 import AuthorBadge from '@/assets-webkit/img/community/badge-author.svg'
 import DonorBadge from '@/assets-webkit/img/community/badge-donor.svg'
 import ReviewerBadge from '@/assets-webkit/img/community/badge-reviewer.svg'
@@ -48,7 +46,6 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         {renderBadges()}
       </ProfileHeader>
 
-      {/*lang === 'de' && renderCommunityFeatures()*/}
       {description && (
         <>
           <StyledH2>{strings.profiles.aboutMe}</StyledH2>
@@ -114,27 +111,6 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
     )
   }
 
-  function renderCommunityFeatures() {
-    return (
-      <>
-        <ProfileCommunityBanner
-          userData={userData}
-          isOwnProfile={isOwnProfile}
-        />
-        {isOwnProfile && (
-          <ProfileDonationForm
-            username={username}
-            userId={userData.id}
-            activeDonor={userData.activeDonor || false}
-            isCommunity={
-              userData.activeReviewer || userData.activeAuthor || false
-            }
-          />
-        )}
-      </>
-    )
-  }
-
   function renderUserTools() {
     if (!isOwnProfile) return null
     return (
@@ -167,13 +143,6 @@ const ProfileHeader = styled.header`
     & > * {
       margin-right: 40px;
     }
-
-    & svg,
-    & h1 {
-      height: 40px;
-      margin-top: 15px;
-      margin-bottom: 10px;
-    }
   }
 
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
@@ -182,6 +151,13 @@ const ProfileHeader = styled.header`
       margin-right: auto;
       text-align: center;
     }
+  }
+
+  & svg,
+  & h1 {
+    height: 40px;
+    margin-top: 15px;
+    margin-bottom: 10px;
   }
 `
 
