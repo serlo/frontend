@@ -169,7 +169,7 @@ export const instanceData = {
       activeSince: "At Serlo since",
       recentActivities: 'Recent activities',
       showAllActivities: 'Show all activities',
-      lastSeen: 'Last seen',
+      lastLogin: 'Last login',
       roles: 'Roles',
       directMessage: 'Direct message'
     },

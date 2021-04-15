@@ -63,7 +63,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
       <CommentArea id={id} noForms />
       {lastLoginDate && (
         <Gray>
-          {strings.profiles.lastSeen}:{' '}
+          {strings.profiles.lastLogin}:{' '}
           <b>
             <TimeAgo datetime={lastLoginDate} dateAsTitle />
           </b>
