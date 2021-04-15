@@ -21,7 +21,7 @@ export async function requestUser(
       newsletterPopup: false,
       userData: {
         ...uuid,
-        imageUrl: `https://community.serlo.org/avatar/${uuid.username}`,
+        imageUrl: `https://community.serlo.org/avatar/${uuid.username.toLowerCase()}`,
         description: getDescription(uuid),
       },
     }
