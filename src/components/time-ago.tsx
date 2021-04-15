@@ -1,13 +1,11 @@
 import { useState } from 'react'
-import ReactTimeAgo from 'timeago-react'
+import ReactTimeAgo, { TimeAgoProps as ReactTimeAgoProps } from 'timeago-react'
 import * as timeago from 'timeago.js'
 
 import { useInstanceData } from '@/contexts/instance-context'
 
-interface TimeAgoProps {
-  datetime: timeago.TDate
-  opts?: timeago.Opts
-  className?: string
+interface TimeAgoProps
+  extends Pick<ReactTimeAgoProps, 'datetime' | 'opts' | 'className'> {
   dateAsTitle?: boolean
 }
 
