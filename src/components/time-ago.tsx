@@ -27,13 +27,15 @@ export function TimeAgo({ datetime, dateAsTitle }: TimeAgoProps) {
     return <>datetime.toLocaleString(lang)</>
 
   return (
-    <span title={dateAsTitle ? datetime.toLocaleString(lang) : undefined}>
-      <ReactTimeAgo
-        datetime={datetime}
-        locale={lang}
-        opts={{ minInterval: 60 }}
-      />
-    </span>
+    <ReactTimeAgo
+      datetime={datetime}
+      locale={lang}
+      opts={{ minInterval: 60 }}
+      // TODO: Delete when https://github.com/hustcc/timeago-react/pull/37 got merged
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      title={dateAsTitle ? datetime.toLocaleString(lang) : undefined}
+    />
   )
 }
 
