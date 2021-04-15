@@ -4,11 +4,11 @@ import * as timeago from 'timeago.js'
 
 import { useInstanceData } from '@/contexts/instance-context'
 
-interface TimeAgoProps extends Pick<ReactTimeAgoProps, 'datetime' | 'opts'> {
+interface TimeAgoProps extends Pick<ReactTimeAgoProps, 'datetime'> {
   dateAsTitle?: boolean
 }
 
-export function TimeAgo({ datetime, opts, dateAsTitle }: TimeAgoProps) {
+export function TimeAgo({ datetime, dateAsTitle }: TimeAgoProps) {
   const [languageLoaded, setLanguageLoaded] = useState(false)
   const { lang } = useInstanceData()
 
@@ -31,7 +31,7 @@ export function TimeAgo({ datetime, opts, dateAsTitle }: TimeAgoProps) {
       <ReactTimeAgo
         datetime={datetime}
         locale={lang}
-        opts={opts || { minInterval: 60 }}
+        opts={{ minInterval: 60 }}
       />
     </span>
   )
