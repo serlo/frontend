@@ -26,6 +26,7 @@ export interface ProfileProps {
 export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   const { strings } = useInstanceData()
   const { id, username, description, lastLogin, imageUrl, date } = userData
+  const { activeDonor, activeReviewer, activeAuthor } = userData
   const auth = useAuth()
   const isOwnProfile = auth.current?.username === username
 
@@ -36,6 +37,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
     <>
       <Head>
         <title>{username}</title>
+        {renderNoIndexMeta()}
       </Head>
 
       <ProfileHeader>
@@ -70,8 +72,6 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   )
 
   function renderBadges() {
-    const { activeDonor, activeReviewer, activeAuthor } = userData
-
     if (!activeAuthor && !activeReviewer && !activeDonor) return null
 
     return (
@@ -124,6 +124,12 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         }}
       />
     )
+  }
+
+  function renderNoIndexMeta() {
+    return !activeDonor && !activeAuthor && !activeReviewer ? (
+      <meta name="robots" content="noindex" />
+    ) : null
   }
 }
 
