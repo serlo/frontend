@@ -29,9 +29,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   const { activeDonor, activeReviewer, activeAuthor } = userData
   const auth = useAuth()
   const isOwnProfile = auth.current?.username === username
-
   const lastLoginDate = lastLogin ? new Date(lastLogin) : undefined
-  const sinceYear = new Date(date).getFullYear()
 
   return (
     <>
@@ -47,7 +45,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         <div>
           <UsernameHeading>{username}</UsernameHeading>
           <StyledP>
-            {strings.profiles.activeSince} {sinceYear}
+            {strings.profiles.registered} <TimeAgo datetime={new Date(date)} dateAsTitle/>
           </StyledP>
         </div>
         {renderBadges()}
