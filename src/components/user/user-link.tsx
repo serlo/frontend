@@ -58,7 +58,7 @@ export function UserLink({ user, withIcon, className, path }: UserLinkProps) {
 
 const UserImage = styled.img`
   width: 36px;
-  border-radius: 8px;
+  border-radius: 50%;
   margin-right: 0.5em;
   vertical-align: middle;
 `
@@ -66,8 +66,9 @@ const UserImage = styled.img`
 const BadgesWrap = styled.div`
   display: inline-block;
   vertical-align: sub;
+  margin-left: 3px;
   > span > svg {
-    width: 1.2em;
+    width: 1.1em;
     height: auto;
     margin-left: 0.3em;
   }
