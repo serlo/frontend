@@ -1,5 +1,3 @@
-import { faTelegramPlane } from '@fortawesome/free-brands-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { NextPage } from 'next'
 import Head from 'next/head'
 import styled from 'styled-components'
@@ -16,7 +14,7 @@ import { TimeAgo } from '@/components/time-ago'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UserPage } from '@/data-types'
-import { makeGreenButton, makeMargin } from '@/helper/css'
+import { makeMargin } from '@/helper/css'
 import { renderArticle } from '@/schema/article-renderer'
 
 export interface ProfileProps {
@@ -45,12 +43,12 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         <div>
           <UsernameHeading>{username}</UsernameHeading>
           <StyledP>
-            {strings.profiles.registered} <TimeAgo datetime={new Date(date)} dateAsTitle/>
+            {strings.profiles.registered}{' '}
+            <TimeAgo datetime={new Date(date)} dateAsTitle />
           </StyledP>
         </div>
         {renderBadges()}
       </ProfileHeader>
-      {renderChatButton()}
 
       {description && (
         <>
@@ -101,17 +99,6 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
     )
   }
 
-  function renderChatButton() {
-    const chatUrl = `https://community.serlo.org/direct/${username}`
-
-    return (
-      <ChatButton href={chatUrl} role="button">
-        {strings.profiles.directMessage}{' '}
-        <FontAwesomeIcon icon={faTelegramPlane} />
-      </ChatButton>
-    )
-  }
-
   function renderUserTools() {
     if (!isOwnProfile) return null
     return (
@@ -135,9 +122,9 @@ const ProfileImage = styled.img`
 `
 
 const ProfileHeader = styled.header`
-  margin-top: 40px;
-  margin-bottom: 20px;
   ${makeMargin}
+  margin-top: 40px;
+  margin-bottom: 30px;
 
   @media (min-width: ${(props) => props.theme.breakpoints.mobile}) {
     display: flex;
@@ -179,20 +166,6 @@ const BadgeContainer = styled.div`
     margin-left: auto;
     margin-right: auto;
     text-align: center;
-  }
-`
-
-const ChatButton = styled.a`
-  ${makeGreenButton}
-  ${makeMargin}
-  margin-bottom: 30px;
-  display: block;
-  width: 175px;
-  text-align: center;
-
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin-left: auto;
-    margin-right: auto;
   }
 `
 
