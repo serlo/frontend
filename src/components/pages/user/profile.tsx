@@ -120,6 +120,23 @@ const ProfileImage = styled.img`
   width: 150px;
 `
 
+const BadgesContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
+const BadgeContainer = styled.div`
+  margin-right: 20px;
+
+  & > * {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+`
+
 const ProfileHeader = styled.header`
   ${makeMargin}
   margin-top: 40px;
@@ -143,28 +160,11 @@ const ProfileHeader = styled.header`
     }
   }
 
-  & svg,
+  & ${BadgeContainer} > svg,
   & h1 {
     height: 40px;
     margin-top: 15px;
     margin-bottom: 10px;
-  }
-`
-
-const BadgesContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
-
-const BadgeContainer = styled.div`
-  margin-right: 20px;
-
-  & > * {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
   }
 `
 
