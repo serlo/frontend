@@ -4,11 +4,12 @@ import * as timeago from 'timeago.js'
 
 import { useInstanceData } from '@/contexts/instance-context'
 
-interface TimeAgoProps extends Pick<ReactTimeAgoProps, 'datetime'> {
+interface TimeAgoProps
+  extends Pick<ReactTimeAgoProps, 'datetime' | 'className'> {
   dateAsTitle?: boolean
 }
 
-export function TimeAgo({ datetime, dateAsTitle }: TimeAgoProps) {
+export function TimeAgo({ datetime, dateAsTitle, className }: TimeAgoProps) {
   const [languageLoaded, setLanguageLoaded] = useState(false)
   const { lang } = useInstanceData()
 
@@ -31,6 +32,7 @@ export function TimeAgo({ datetime, dateAsTitle }: TimeAgoProps) {
       datetime={datetime}
       locale={lang}
       opts={{ minInterval: 60 }}
+      className={className}
       // TODO: Delete when https://github.com/hustcc/timeago-react/pull/37 got merged
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
