@@ -28,6 +28,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   const auth = useAuth()
   const isOwnProfile = auth.current?.username === username
   const lastLoginDate = lastLogin ? new Date(lastLogin) : undefined
+  const registerDate = new Date(date)
 
   return (
     <>
@@ -43,8 +44,13 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         <div>
           <UsernameHeading>{username}</UsernameHeading>
           <StyledP>
-            {strings.profiles.registered}{' '}
-            <TimeAgo datetime={new Date(date)} dateAsTitle />
+            {strings.profiles.activeSince}{' '}
+            <time
+              dateTime={registerDate.toISOString()}
+              title={registerDate.toLocaleDateString()}
+            >
+              {registerDate.getFullYear()}
+            </time>
           </StyledP>
         </div>
         {renderBadges()}

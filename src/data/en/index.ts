@@ -166,7 +166,7 @@ export const instanceData = {
     },
     profiles: {
       aboutMe: 'About me',
-      registered: 'Registered',
+      activeSince: 'At Serlo since',
       recentActivities: 'Recent activities',
       showAllActivities: 'Show all activities',
       lastLogin: 'Last login',
