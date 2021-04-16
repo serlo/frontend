@@ -17,7 +17,7 @@ export const instanceData = {
       summaryHeading: "Serlo.org est le Wikipedia pour l'apprentissage.",
       summaryText: "Nous sommes une communauté de visionnaires qui travaille sans relâche pour offrir une éducation gratuite et accessible à tous.",
       learnMore: "En savoir plus",
-      participate: "Rejoignez-nous",
+      participate: "Participer",
       donate: "Faire un don",
       toTop: "En haut"
     },
@@ -53,13 +53,13 @@ export const instanceData = {
       topic: "Thèmes",
       subject: "Sujet",
       userProfile: "Profil d'utilisateur·utilisatrice",
-      privacyPolicy: 'Privacy Policy',
-      content: "Content"
+      privacyPolicy: "Politique de confidentialité",
+      content: "Contenu"
     },
     pageTitles: {
-      notifications: 'Your Notifications',
-      subscriptions: "Manage Subscriptions",
-      revisionHistory: "Revision History"
+      notifications: "Tes notifications",
+      subscriptions: "Gérer les abonnements",
+      revisionHistory: "Historique des révisions"
     },
     roles: {
       donor: "Donneur·e",
@@ -79,8 +79,8 @@ export const instanceData = {
     },
     license: {
       readMore: "Information",
-      special: 'Different license',
-      nonFree: 'Usage of this content might be more restricted than our other content.'
+      special: "Licence différente",
+      nonFree: "L'utilisation de ce contenu pourrait être plus restreinte que notre autre contenu."
     },
     course: {
       showPages: "Afficher la vue globale du cours",
@@ -100,17 +100,17 @@ export const instanceData = {
       trashedNotice: "Ce contenu est marqué pour être supprimé."
     },
     consent: {
-      title: 'Consent for external Content',
-      intro: 'While using this site you may allowed us to load content from external providers. You can read about the details in the %privacypolicy%.',
-      revokeTitle: 'Revoke',
-      revokeText: 'Here you can revoke your consent. In this case we ask again, before we load content from those providers',
-      noConsent: 'No content saved.',
-      revokeConsent: 'Revoke consent'
+      title: "Consentement pour le contenu externe",
+      intro: "Lors de l'utilisation de ce site, il se peut que tu nous autorises à charger du contenu provenant de fournisseurs externes. Tu peux lire les détails dans la %privacypolicy%.",
+      revokeTitle: "Révoquer",
+      revokeText: "Ici, tu peux révoquer ton consentement. Dans ce cas, nous te demandons à nouveau, avant de charger le contenu de ces fournisseurs.",
+      noConsent: "Aucun contenu sauvegarder",
+      revokeConsent: "Révoquer le consentement"
     },
     embed: {
-      text: "En cliquant sur l'image ou le bouton au dessus, vous acceptez que le contenu externe de %provider% soit chargé. Des données personnelles peuvent également être transférées vers ce service conformément à notre %privacypolicy%.",
-      video: 'Play Video from %provider%',
-      applet: 'Load Applet from %provider%',
+      text: "En cliquant sur l'image ou le bouton au dessus, tu acceptes que le contenu externe de %provider% soit chargé. Des données personnelles peuvent également être transférées vers ce service conformément à notre %privacypolicy%.",
+      video: "Jouer la vidéo de %provider%",
+      applet: "Charger l'Applet de %provider%",
       twingle: "Charger le formulaire de don"
     },
     comments: {
@@ -119,18 +119,18 @@ export const instanceData = {
       commentsMany: "Commentaires",
       submit: "Soumettre",
       archiveThread: "Archiver le thread",
-      restoreThread: 'Restore thread',
+      restoreThread: "Rétablir le fil de discussion",
       deleteThread: "Supprimer le thread",
       deleteComment: "Supprimer le commentaire",
       postedOn: "Publié le",
       placeholder: "Ta question ou suggestion...",
       placeholderReply: "Ta réponse...",
       loading: "Les commentaires sont chargés...",
-      error: 'Sorry, comments could not be loaded, please try again later.',
+      error: "Désolé, les commentaires n'ont pas pu être chargés, veuille réessayer plus tard",
       showMoreReply: "Afficher un commentaire de plus",
       showMoreReplies: "Afficher %number% commentaires supplémentaires",
       showArchived: "Afficher les %threads% affichés",
-      copyLink: 'Copy comment link'
+      copyLink: "Copier le lien du commentaire"
     },
     revisions: {
       toOverview: "Retour à la vue d'ensemble",
@@ -146,10 +146,10 @@ export const instanceData = {
       by: "De"
     },
     revisionHistory: {
-      changes: 'Changes',
-      author: 'Author',
+      changes: "Modifications",
+      author: "Auteur·e",
       date: 'Date',
-      createNew: 'Create a new revision starting from this specific revision'
+      createNew: "Créer une nouvelle révision à partir de cette révision spécifique"
     },
     errors: {
       title: "😬 Les sites Web font parfois des erreurs…",
@@ -162,7 +162,7 @@ export const instanceData = {
       backToHome: "Aller à notre page d'accueil"
     },
     print: {
-      warning: 'IMPORTANT: To make sure all images and formulas print, please scroll down to the end of the page once BEFORE you open this dialog. Thank you!'
+      warning: "IMPORTANT : Pour t'assurer que toutes les images et formules sont imprimées, fais défiler la page une fois vers le bas AVANT d'ouvrir ce dialogue. Merci!"
     },
     profiles: {
       aboutMe: "À propos de moi",
@@ -172,24 +172,24 @@ export const instanceData = {
       roles: "Rôles"
     },
     notices: {
-      welcome: '👋 Welcome %username%!',
-      bye: '👋 See you soon!',
-      revisionSaved: 'Revision is saved and will be reviewed soon 👍',
-      revisionAccepted: 'Revision was successfully accepted ✅',
-      revisionRejected: 'Revision was successfully rejected ❎',
-      revisionSavedAccepted: 'Revision was successfully saved and accepted ✅'
+      welcome: "👋 Bienvenue %username%!",
+      bye: "👋 À bientôt !",
+      revisionSaved: "La révision est enregistrée et sera bientôt révisée 👍",
+      revisionAccepted: "La révision a été acceptée avec succès ✅",
+      revisionRejected: "La révision a été rejetée avec succès ❎",
+      revisionSavedAccepted: "La révision a été enregistrée avec succès et acceptée ✅"
     },
     loading: {
-      isLoading: 'Content is loading…',
-      unknownProblem: "Sorry, there was a problem loading the content, please try again later."
+      isLoading: "Chargement de contenu en cours…",
+      unknownProblem: "Désolé,une erreure s'est produite lors du chargement du contenu, veuille réessayer plus tard."
     },
     login: {
-      pleaseLogInLink: 'Please log in',
-      pleaseLogInText: 'to use this feature.'
+      pleaseLogInLink: "Veuille te connecter",
+      pleaseLogInText: "pour utiliser cette fonctionnalité."
     },
     keys: {
       ctrl: 'ctrl',
-      return: 'return'
+      return: "touche Entrée"
     }
   }
 };
@@ -209,7 +209,7 @@ export const instanceLandingData = {
     wikiText: "Tout comme Wikipédia, cette plateforme est créée par une communauté d'auteur·e·s engagé·e·s. Serlo Education est gérée et détenue par des équipes décentralisées de bénévoles et de professionnel·le·s dans le monde entier.",
     movementTitle: "Rejoignez notre mouvement pour l'éducation libre",
     callForAuthors: "Nous cherchons des enseignant·e·s et des éducateur·e·s enthousiastes et passionné·e·s de leur matière. Devenez un·e auteur·e sur serlo.org, créez de nouveaux contenus et aidez-nous à assurer la qualité de la plateforme d'apprentissage.",
-    communityLink: "Visitez la page d'accueil d'auteurs",
+    communityLink: "Visitez la page d'accueil d'auteur·e·s",
     callForOther: "Nous offrons une variété d'emplois et de possibilités de bénévolat dans les domaines du développement de logiciel, de la conception, la traduction, la communication, la gestion de projet et d'autres.",
     getInvolved: "Participe!"
   }
@@ -304,22 +304,22 @@ export const loggedInData = {
     },
     subscriptions: {
       mail: "E-mails",
-      subscription: "Subscription",
-      noMails: "deactivate",
-      noNotifications: "cancel"
+      subscription: "Abonnement",
+      noMails: "désactiver",
+      noNotifications: "annuler"
     },
     revisions: {
       accept: {
-        action: 'Accept',
-        title: 'Accept Revision',
-        explanation: 'Please give the author some feedback.'
+        action: "Accepter",
+        title: "Accepter la révision",
+        explanation: "Veuille donner un commentaire à l'auteur."
       },
       reject: {
-        action: 'Reject',
-        title: 'Reject Revision',
-        explanation: 'Please tell the author why you are rejecting the submission.'
+        action: "Rejeter",
+        title: "Rejeter la révision",
+        explanation: "Veuille préciser à l'auteur pourquoi tu refuses la soumission."
       },
-      confirm: 'Confirm'
+      confirm: "Confirmer"
     }
   }
 };
