@@ -48,6 +48,12 @@ module.exports = {
       outline: {
         gray: '1px dotted #212121',
       },
+      boxShadow: {
+        brand: `0 0 10px ${brand}, 0 0 5px ${brand}`,
+      },
+      fontFamily: {
+        serlo: 'Karmilla, sans-serif',
+      },
     },
     screens: {
       mobile: '500px',
@@ -61,6 +67,31 @@ module.exports = {
   },
   plugins: [
     plugin(function ({ addUtilities, addComponents }) {
+      // Custom utilities all start with `special-*`
+      // They use css that is not covered by tailwind
+      addUtilities({
+        '.special-shadow-transform': {
+          transform: 'rotate(3deg) translate(0px, -4px)',
+        },
+        '.special-border-half-transparent': {
+          borderTopColor: 'transparent',
+          borderLeftColor: 'transparent',
+        },
+        '.special-reset-list-counter': {
+          'counter-reset': 'list-counter',
+        },
+        '.special-content-list-counter': {
+          content: 'counter(list-counter)',
+        },
+        '.special-increment-list-counter': {
+          'counter-increment': 'list-counter',
+        },
+      })
+
+      // Custom components al start with `serlo-*`
+      // They serve as a lightwight abstraction for common elements
+      // Or they need to use css selectors - with is hacky, but sometimes the best way to go
+      // Use react components for more complex elements
       addComponents({
         '.serlo-link': {
           '@apply text-brand no-underline break-words hover:underline': {},
@@ -68,25 +99,25 @@ module.exports = {
         '.serlo-button': {
           '@apply inline-block transition-all rounded-4xl py-1 px-2': {},
           '@apply font-bold border-none cursor-pointer no-underline': {},
-          '@apply text-lg leading-browser serlo-font tracking-slightestly-tighter': {},
+          '@apply text-lg leading-browser font-serlo tracking-slightestly-tighter': {},
         },
         '.serlo-list': {
           '@apply mx-4 mb-block mt-0 pl-7 list-none': {},
-          '@apply reset-list-counter': {},
+          '@apply special-reset-list-counter': {},
 
           '> li:before': {
-            '@apply absolute content-list-counter increment-list-counter': {},
+            '@apply absolute special-content-list-counter special-increment-list-counter': {},
             '@apply font-bold align-middle text-center rounded-full -ml-7': {},
             '@apply mt-0.5 bg-brand-150 w-4 h-4 text-xs': {},
             '@apply leading-tight text-brand pt-0.25': {},
+          },
+          '> li': {
+            '@apply mb-2': {},
           },
           '> li > ul, > li > ol': {
             '@apply mt-2': {},
             marginBottom: '16px !important',
           },
-        },
-        '.serlo-li': {
-          '@apply mb-2': {},
         },
         '.serlo-math-wrapper': {
           '@apply px-4 w-full text-left mb-block py-0.5': {},
@@ -103,53 +134,36 @@ module.exports = {
         },
         '.serlo-styled-label': {
           '@apply flex items-center cursor-pointer': {},
-          '> svg': {
-            '@apply text-xl mt-0.5 text-brand': {},
-          },
           '> div > *': {
+            // hacky selector
             '@apply ml-2': {},
           },
         },
         '.serlo-image-centered': {
           '@apply px-4 mb-block text-center': {},
-          img: {
-            '@apply inline': {},
-          },
         },
         '.serlo-exercise-wrapper': {
           '@apply mt-10 mb-2.5': {},
 
           '@media (hover: hover)': {
+            // -> use tailwind stuff instead
             input: {
               '@apply opacity-20 transition-opacity': {},
             },
 
             '&:hover': {
+              // UwU
               input: {
                 '@apply: opacity-100': {},
               },
             },
           },
         },
-      })
-
-      addUtilities({
-        '.boxshadow-brand': {
-          boxShadow: `0 0 10px ${brand}`,
+        '.serlo-input-font-reset': {
+          '@apply text-base tracking-slightestly-tighter font-serlo': {},
         },
-        '.boxshadow-slightly-rotated': {
-          transform: 'rotate(3deg) translate(0px, -4px)',
-        },
-        '.half-circle-border-transparent': {
-          borderTopColor: 'transparent',
-          borderLeftColor: 'transparent',
-        },
-        '@media print': {
-          '.serlo-no-after-content:after': {
-            content: '"" !important',
-          },
-        },
-        '.serlo-special-css': {
+        '.serlo-content-with-spacing-fixes': {
+          // this feels really hacky
           '@apply break-words': {},
           'p + ul': {
             '@apply -mt-3.5': {},
@@ -169,21 +183,6 @@ module.exports = {
               '@apply mt-0': {},
             },
           },
-        },
-        '.serlo-font': {
-          fontFamily: 'Karmilla, sans-serif',
-        },
-        '.serlo-input-font-reset': {
-          '@apply text-base tracking-slightestly-tighter serlo-font': {},
-        },
-        '.reset-list-counter': {
-          'counter-reset': 'list-counter',
-        },
-        '.content-list-counter': {
-          content: 'counter(list-counter)',
-        },
-        '.increment-list-counter': {
-          'counter-increment': 'list-counter',
         },
       })
     }),

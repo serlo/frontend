@@ -21,7 +21,7 @@
 /* Fancy blur effect */
 #nprogress .peg {
   @apply block absolute right-0 w-24 h-full;
-  @apply boxshadow-brand opacity-100 boxshadow-slightly-rotated;
+  @apply shadow-brand opacity-100 special-shadow-transform;
 }
 
 /* Remove these to get rid of the spinner */
@@ -31,7 +31,7 @@
 
 #nprogress .spinner-icon {
   @apply w-6 h-6 border-3 border-brand rounded-full;
-  @apply half-circle-border-transparent animate-spin-fast;
+  @apply special-border-half-transparent animate-spin-fast;
 }
 
 .nprogress-custom-parent {
@@ -48,7 +48,7 @@
     @apply text-xs;
   }
   body {
-    @apply bg-black;
+    @apply bg-white;
   }
   #__next {
     > header,
@@ -76,7 +76,7 @@
   pre,
   pre:before,
   time {
-    @apply !bg-black !text-black;
+    @apply !bg-white !text-black;
   }
 }
 

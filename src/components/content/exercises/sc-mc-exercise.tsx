@@ -95,6 +95,7 @@ function SingleChoice({
                 >
                   <FontAwesomeIcon
                     icon={selected === i ? faCheckCircle : faCircle}
+                    className="text-xl mt-0.5 text-brand"
                   />
                   {renderNested(answer.content, `scoption${i}`)}
                 </label>
@@ -182,6 +183,7 @@ function MultipleChoice({
                 >
                   <FontAwesomeIcon
                     icon={selected[i] ? faCheckSquare : faSquare}
+                    className="text-xl mt-0.5 text-brand"
                   />
                   {renderNested(answer.content, `mcoption${i}`)}
                 </label>

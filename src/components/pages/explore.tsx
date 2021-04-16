@@ -79,7 +79,7 @@ export function Explore() {
   }, [query, choices])
 
   return (
-    <div className="serlo-special-css">
+    <div className="serlo-content-with-spacing-fixes">
       <HSpace amount={50} />
       <StyledH1>Entdecke Inhalte auf Serlo</StyledH1>
       <InputForm

@@ -87,7 +87,7 @@ function _renderArticle(
     render(root, pathPrefix.concat(index))
   )
   if (!addCSS) return content
-  return <div className="serlo-special-css">{content}</div>
+  return <div className="serlo-content-with-spacing-fixes">{content}</div>
 }
 
 function getNode(

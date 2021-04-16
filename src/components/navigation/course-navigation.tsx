@@ -31,7 +31,7 @@ export function CourseNavigation({
       {open ? (
         <ol className="serlo-list mb-0 mt-7 ">
           {data.pages.map((page) => (
-            <li className="serlo-li" key={page.url}>
+            <li key={page.url}>
               <Link
                 className={clsx('text-lg leading-browser', {
                   'font-semibold text-truegray-800 hover:no-underline':
