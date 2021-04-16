@@ -117,8 +117,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
 const ProfileImage = styled.img`
   border-radius: 50%;
   display: block;
-  /* This width matches the width of the direct chat button -> TODO: find a better solution */
-  width: 191px;
+  width: 150px;
 `
 
 const ProfileHeader = styled.header`
