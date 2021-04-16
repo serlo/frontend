@@ -166,10 +166,12 @@ export const instanceData = {
     },
     profiles: {
       aboutMe: "À propos de moi",
+      activeSince: 'With Serlo since',
       recentActivities: "Activités récentes",
       showAllActivities: "Afficher toutes les activités",
-      lastSeen: "Dernière visite",
-      roles: "Rôles"
+      lastLogin: 'Last login',
+      roles: "Rôles",
+      directMessage: 'Direct message'
     },
     notices: {
       welcome: "👋 Bienvenue %username%!",

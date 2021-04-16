@@ -166,10 +166,12 @@ export const instanceData = {
     },
     profiles: {
       aboutMe: "मेरे बारे में",
+      activeSince: 'With Serlo since',
       recentActivities: "हाल की गतिविधि",
       showAllActivities: "समस्त गतिविधयाँ दिखाएँ",
-      lastSeen: "अंतिम बार देखा गया",
-      roles: "भूमिकाएं"
+      lastLogin: 'Last login',
+      roles: "भूमिकाएं",
+      directMessage: 'Direct message'
     },
     notices: {
       welcome: "आपका स्वागत है",
