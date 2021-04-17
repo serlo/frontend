@@ -200,7 +200,6 @@ export function SearchInput() {
           />
         </SearchForm>
       </LazyTippy>
-      <AutocompleteStyle />
     </>
   )
   function renderConsentPop() {
@@ -430,9 +429,6 @@ const SearchForm = styled.div`
     ${gcsButton}
   }
 `
-
-/* needs to be global style because the autocomplete markup is just added as last body element */
-const AutocompleteStyle = () => null
 
 const ConsentPop = styled.div`
   background-color: ${(props) => props.theme.colors.brand};

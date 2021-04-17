@@ -124,6 +124,3 @@ export const inputFontReset = () =>
     font-family: Karmilla, sans-serif;
     letter-spacing: '-0.007em';
   `
-
-export const FontFix = () => null
-export const PrintStylesheet = () => null
