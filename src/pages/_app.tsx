@@ -6,8 +6,7 @@ import { AppProps } from 'next/app'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import '@/assets-webkit/fonts/karmilla.css'
 import '@/assets-webkit/fonts/katex/katex.css'
-import '@/assets-webkit/styles/tailwind.css'
-import '@/assets-webkit/styles/serlo-css-hacks.css'
+import '@/assets-webkit/styles/serlo-tailwind.css'
 
 import { isRenderedPage } from '@/helper/rendered-page'
 
