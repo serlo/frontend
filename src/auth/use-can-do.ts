@@ -1,35 +1,22 @@
 import { Instance } from '@serlo/api'
-import {
-  AuthorizationGuard,
-  AuthorizationPayload,
-  instanceToScope,
-} from '@serlo/authorization'
-import { gql } from 'graphql-request'
+import { AuthorizationGuard, instanceToScope } from '@serlo/authorization'
 
-import { useGraphqlSwrWithAuth } from '@/api/use-graphql-swr'
+import { useAuthorizationPayload } from '@/contexts/authorization-payload-context'
 import { useInstanceData } from '@/contexts/instance-context'
 
 export function useCanDo() {
   // TODO: this should also work if authorization === null
+  const authorizationPayload = useAuthorizationPayload()
   const instance = useInstanceData()
   const scope = instanceToScope(instance.lang as Instance)
-  const { data } = useGraphqlSwrWithAuth<{
-    authorization: AuthorizationPayload
-  }>({
-    query: gql`
-      {
-        authorization
-      }
-    `,
-  })
 
   return (guard: AuthorizationGuard) => {
-    // TODO: this shouldn't even happen, right?
-    if (data === undefined) {
+    if (!authorizationPayload) {
+      console.warn('No authorization context provided!')
       return false
     }
     return guard({
-      authorizationPayload: data.authorization,
+      authorizationPayload,
       scope,
     })
   }

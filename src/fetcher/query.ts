@@ -4,6 +4,7 @@ import { sharedRevisionFragments } from './query-fragments'
 
 export const dataQuery = gql`
   query uuid($id: Int, $alias: AliasInput) {
+    authorization
     uuid(id: $id, alias: $alias) {
       __typename
       id

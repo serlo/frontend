@@ -5,6 +5,7 @@ import { sharedRevisionFragments } from '../query-fragments'
 
 export const revisionQuery = gql`
   query revisionUuid($id: Int) {
+    authorization
     uuid(id: $id) {
       __typename
       id
