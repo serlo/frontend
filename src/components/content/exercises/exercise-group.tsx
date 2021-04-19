@@ -2,7 +2,7 @@ import * as React from 'react'
 import styled from 'styled-components'
 
 import { ExerciseNumbering } from './exercise-numbering'
-import { useAuth } from '@/auth/use-auth'
+import { useAuthentication } from '@/auth/use-authentication'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
 
 export interface ExerciseGroupProps {
@@ -26,7 +26,7 @@ export function ExerciseGroup({
   React.useEffect(() => {
     setLoaded(true)
   }, [])
-  const auth = useAuth()
+  const auth = useAuthentication()
   const lic = useLoggedInComponents()
   const Comp = lic?.ExerciseAuthorTools
   return (

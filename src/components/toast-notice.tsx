@@ -1,12 +1,12 @@
 import { useEffect } from 'react'
 import Notification from 'react-notify-toast'
 
-import { useAuth } from '@/auth/use-auth'
+import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
 export function ToastNotice() {
-  const auth = useAuth()
+  const auth = useAuthentication()
   const { strings } = useInstanceData()
 
   function removeHash() {

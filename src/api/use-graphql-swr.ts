@@ -9,7 +9,7 @@ import {
   createAuthAwareGraphqlFetch,
   createGraphqlFetch,
 } from './graphql-fetch'
-import { useAuth } from '@/auth/use-auth'
+import { useAuthentication } from '@/auth/use-authentication'
 
 export function useGraphqlSwr<T>({
   query,
@@ -36,9 +36,9 @@ export function useGraphqlSwrWithAuth<T>({
   query: string
   variables?: Record<string, unknown>
   config?: ConfigInterface<T>
-  overrideAuth?: ReturnType<typeof useAuth>
+  overrideAuth?: ReturnType<typeof useAuthentication>
 }) {
-  const auth = useAuth()
+  const auth = useAuthentication()
   return useSWR<T>(
     JSON.stringify({ query, variables }),
     createAuthAwareGraphqlFetch(overrideAuth ?? auth),
@@ -58,7 +58,7 @@ export function useGraphqlSwrPaginationWithAuth<T>({
   variables?: Record<string, unknown>
   getConnection: (data: Record<string, unknown>) => unknown
   config?: SWRInfiniteConfigInterface
-  overrideAuth?: ReturnType<typeof useAuth>
+  overrideAuth?: ReturnType<typeof useAuthentication>
   noKey?: boolean
 }): {
   loadMore(): void
@@ -69,7 +69,7 @@ export function useGraphqlSwrPaginationWithAuth<T>({
     pageInfo: PageInfo
   }
 } {
-  const auth = useAuth()
+  const auth = useAuthentication()
   const response = useSWRInfinite(
     getKey,
     createAuthAwareGraphqlFetch(overrideAuth ?? auth),

@@ -8,7 +8,7 @@ import { HeaderFooter } from './header-footer'
 import { MaxWidthDiv } from './navigation/max-width-div'
 import { RelativeContainer } from './navigation/relative-container'
 import { ToastNotice } from './toast-notice'
-import { useAuth } from '@/auth/use-auth'
+import { useAuthentication } from '@/auth/use-authentication'
 import { PrintWarning } from '@/components/content/print-warning'
 import { EntityIdProvider } from '@/contexts/entity-id-context'
 import { InstanceDataProvider } from '@/contexts/instance-context'
@@ -65,7 +65,7 @@ export function FrontendClientBase({
     sessionStorage.setItem('currentPathname', window.location.pathname)
   })
 
-  const auth = useAuth()
+  const auth = useAuthentication()
   const [loggedInData, setLoggedInData] = React.useState<LoggedInData | null>(
     getCachedLoggedInData()
   )

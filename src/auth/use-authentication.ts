@@ -5,13 +5,13 @@ import { Token } from 'simple-oauth2'
 
 import { UserRoles } from '@/data-types'
 
-export function useAuth(): React.RefObject<AuthPayload> {
+export function useAuthentication(): React.RefObject<AuthenticationPayload> {
   // This has to be a ref since token changes when calling `refreshToken`.
-  const cookieValue = React.useRef<AuthPayload>(null)
+  const cookieValue = React.useRef<AuthenticationPayload>(null)
   cookieValue.current = parseAuthCookie()
   return cookieValue
 
-  function parseAuthCookie(): AuthPayload {
+  function parseAuthCookie(): AuthenticationPayload {
     try {
       const cookies = cookie.parse(
         typeof window === 'undefined' ? '' : document.cookie
@@ -43,7 +43,7 @@ export function useAuth(): React.RefObject<AuthPayload> {
   }
 }
 
-export type AuthPayload = {
+export type AuthenticationPayload = {
   username: string
   id: number
   roles: UserRoles[]

@@ -6,7 +6,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styled from 'styled-components'
 
-import { useAuth } from '@/auth/use-auth'
+import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UserRoles } from '@/data-types'
 import { makeTransparentButton } from '@/helper/css'
@@ -36,7 +36,7 @@ export function DropdownMenu({
   threadId,
 }: DropdownMenuProps) {
   const { lang, strings } = useInstanceData()
-  const auth = useAuth()
+  const auth = useAuthentication()
   const isAllowed =
     auth.current !== null &&
     (auth.current?.roles.indexOf(UserRoles.Moderator) > -1 ||
@@ -124,7 +124,7 @@ const DropContent = styled.div`
 `
 
 const DropContentButton = styled.button`
-  ${makeTransparentButton}
+  ${makeTransparentButton};
   margin-bottom: 0.2rem;
   font-size: 1rem;
   font-weight: normal;

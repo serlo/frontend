@@ -2,7 +2,7 @@ import { PageInfo } from '@serlo/api'
 import { useEffect } from 'react'
 import styled from 'styled-components'
 
-import { useAuth } from '@/auth/use-auth'
+import { useAuthentication } from '@/auth/use-authentication'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { Notification, NotificationEvent } from '@/components/user/notification'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -32,7 +32,7 @@ export const Notifications = ({
   isLoading,
   isUnread,
 }: NotificationProps) => {
-  const auth = useAuth()
+  const auth = useAuthentication()
   const setToRead = useSetNotificationStateMutation()
 
   useEffect(() => {
