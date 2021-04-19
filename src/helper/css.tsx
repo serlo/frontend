@@ -1,4 +1,4 @@
-import { css, ThemeProps, createGlobalStyle } from 'styled-components'
+import { css, ThemeProps } from 'styled-components'
 
 import { theme } from '@/theme'
 
@@ -87,6 +87,8 @@ function makeButton(props: _ThemeProps & MakeButtonProps) {
     border: 0;
     cursor: pointer;
 
+    line-height: normal;
+
     text-decoration: none !important;
     font-size: 1.125rem;
     font-family: Karmilla, sans-serif;
@@ -121,56 +123,4 @@ export const inputFontReset = () =>
     font-size: 1rem;
     font-family: Karmilla, sans-serif;
     letter-spacing: '-0.007em';
-  `
-
-export const FontFix = createGlobalStyle`
-  h1,h2, main b {
-    letter-spacing: ${(props) => props.theme.defaults.boldLetterSpacing};
-  }
-  body {
-    letter-spacing: ${(props) => props.theme.defaults.regularLetterSpacing};
-  }
-`
-
-export const PrintStylesheet = createGlobalStyle`
-    @media print {
-      html {
-        font-size: 10pt;
-      }
-      body {
-        background: 0 0;
-      }
-      #__next {
-        > header,
-        > footer,
-        #notification-wrapper,
-        nav,
-        button,
-        aside,
-        div.cookie-bar,
-        h1 > span > svg,
-        div.video, figure.video,
-        .comment-area-container
-        {
-          display: none !important;
-        }
-        main {
-          display: block;
-          width: 100%;
-          max-width: 100%;
-          position: relative;
-        }
-      }
-      .header-breadcrumbs,
-      a,
-      code,
-      code span,
-      html,
-      pre,
-      pre:before,
-      time {
-        background: 0 0 !important;
-        color: #000 !important;
-      }
-    }
   `

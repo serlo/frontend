@@ -22,7 +22,13 @@ export function EntityBase({ children, page }: EntityBaseProps) {
       {page.secondaryNavigationData && (
         <MetaMenu data={page.secondaryNavigationData} />
       )}
-      {page.metaData && <HeadTags data={page.metaData} />}
+      {page.metaData && (
+        <HeadTags
+          data={page.metaData}
+          breadcrumbsData={page.breadcrumbsData}
+          noindex={'entityData' in page && page.entityData.trashed}
+        />
+      )}
       {page.newsletterPopup && <NewsletterPopup />}
       <RelativeContainer>
         <MaxWidthDiv showNav={!!page.secondaryNavigationData}>

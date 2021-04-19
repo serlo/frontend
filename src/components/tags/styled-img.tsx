@@ -11,6 +11,7 @@ export const StyledImg = styled.img<StyledImgProps>`
       ? `${props.maxWidth}px`
       : '100%'};
   height: auto;
+  display: inline;
   ${(props) =>
     props.inline &&
     css`

@@ -70,7 +70,7 @@ const Wrapper = styled.div<{ $isParent?: boolean }>`
       border-left: 7px solid
         ${(props) => props.theme.colors.lightBlueBackground};
       padding: 3px 0 2px 4px;
-      margin: 20px 0 20px ${(props) => props.theme.defaults.sideSpacingMobile};
+      margin: 25px 0 20px ${(props) => props.theme.defaults.sideSpacingMobile};
     `}
 
   > p {

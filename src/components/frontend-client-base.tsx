@@ -1,11 +1,11 @@
-import { useRouter } from 'next/router'
+import { Router, useRouter } from 'next/router'
+import NProgress from 'nprogress'
 import * as React from 'react'
 import { ThemeProvider } from 'styled-components'
 
 import { ConditonalWrap } from './conditional-wrap'
 import { HeaderFooter } from './header-footer'
 import { MaxWidthDiv } from './navigation/max-width-div'
-import { NProgressRouter } from './navigation/n-progress-router'
 import { RelativeContainer } from './navigation/relative-container'
 import { ToastNotice } from './toast-notice'
 import { useAuthentication } from '@/auth/use-authentication'
@@ -15,7 +15,6 @@ import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInComponentsProvider } from '@/contexts/logged-in-components'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
 import { InstanceData, LoggedInData } from '@/data-types'
-import { FontFix, PrintStylesheet } from '@/helper/css'
 import type { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { frontendOrigin } from '@/helper/frontent-origin'
 import { theme } from '@/theme'
@@ -26,6 +25,12 @@ export type FrontendClientBaseProps = React.PropsWithChildren<{
   showNav?: boolean
   entityId?: number
 }>
+
+Router.events.on('routeChangeStart', () => {
+  NProgress.start()
+})
+Router.events.on('routeChangeComplete', () => NProgress.done())
+Router.events.on('routeChangeError', () => NProgress.done())
 
 export function FrontendClientBase({
   children,
@@ -80,9 +85,6 @@ export function FrontendClientBase({
 
   return (
     <ThemeProvider theme={theme}>
-      <FontFix />
-      <NProgressRouter />
-      <PrintStylesheet />
       <PrintWarning warning={instanceData.strings.print.warning} />
       <InstanceDataProvider value={instanceData}>
         <LoggedInComponentsProvider value={loggedInComponents}>
