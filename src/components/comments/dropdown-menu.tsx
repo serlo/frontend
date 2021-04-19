@@ -4,11 +4,11 @@ import {
   faTrash,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Thread } from '@serlo/authorization'
 import styled from 'styled-components'
 
-import { useAuthentication } from '@/auth/use-authentication'
+import { useCanDo } from '@/auth/use-can-do'
 import { useInstanceData } from '@/contexts/instance-context'
-import { UserRoles } from '@/data-types'
 import { makeTransparentButton } from '@/helper/css'
 import {
   useSetCommentStateMutation,
@@ -36,11 +36,6 @@ export function DropdownMenu({
   threadId,
 }: DropdownMenuProps) {
   const { lang, strings } = useInstanceData()
-  const auth = useAuthentication()
-  const isAllowed =
-    auth.current !== null &&
-    (auth.current?.roles.indexOf(UserRoles.Moderator) > -1 ||
-      auth.current?.roles.indexOf(UserRoles.Admin) > -1)
 
   const setThreadArchived = useThreadArchivedMutation()
   const setThreadState = useSetThreadStateMutation()
@@ -48,28 +43,35 @@ export function DropdownMenu({
   // const setThreadArchived = useThreadArchivedMutation()
   // const setCommentState = useSetCommentStateMutation()
 
+  const canDo = useCanDo()
+
+  console.log(canDo(Thread.setThreadState), canDo(Thread.setCommentState))
+
+  const canDelete = isParent
+    ? canDo(Thread.setThreadState)
+    : canDo(Thread.setCommentState)
+  const canArchive = isParent && canDo(Thread.setThreadArchived)
+
   return (
     <DropContent>
       <DropContentButton onClick={onLinkToComment}>
         <FontAwesomeIcon icon={faPaperclip} /> {strings.comments.copyLink}
       </DropContentButton>
-      {isAllowed && (
-        <>
-          {isParent && (
-            <DropContentButton onClick={onArchiveThread}>
-              <FontAwesomeIcon icon={faCheck} />{' '}
-              {archived
-                ? strings.comments.restoreThread
-                : strings.comments.archiveThread}
-            </DropContentButton>
-          )}
-          <DropContentButton onClick={onDelete}>
-            <FontAwesomeIcon icon={faTrash} />{' '}
-            {isParent
-              ? strings.comments.deleteThread
-              : strings.comments.deleteComment}
-          </DropContentButton>
-        </>
+      {canArchive && (
+        <DropContentButton onClick={onArchiveThread}>
+          <FontAwesomeIcon icon={faCheck} />{' '}
+          {archived
+            ? strings.comments.restoreThread
+            : strings.comments.archiveThread}
+        </DropContentButton>
+      )}
+      {canDelete && (
+        <DropContentButton onClick={onDelete}>
+          <FontAwesomeIcon icon={faTrash} />{' '}
+          {isParent
+            ? strings.comments.deleteThread
+            : strings.comments.deleteComment}
+        </DropContentButton>
       )}
       <Time>
         {strings.comments.postedOn} {date.toLocaleString(lang)}
