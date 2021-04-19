@@ -1,7 +1,7 @@
 import { faComments, faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Comment as CommentType, Thread as ThreadType } from '@serlo/api'
-// import { Thread as AuthThread } from '@serlo/authorization'
+import { Thread as AuthThread } from '@serlo/authorization'
 import { useState, useRef, useEffect } from 'react'
 import styled from 'styled-components'
 
@@ -12,7 +12,7 @@ import { CommentArchive } from './comment-archive'
 import { CommentForm } from './comment-form'
 import { Thread } from './thread'
 import { useAuthentication } from '@/auth/use-authentication'
-// import { useCanDo } from '@/auth/use-can-do'
+import { useCanDo } from '@/auth/use-can-do'
 import { StyledH2 } from '@/components/tags/styled-h2'
 import { useInstanceData } from '@/contexts/instance-context'
 import { isClient } from '@/helper/client-detection'
@@ -42,6 +42,8 @@ export function CommentArea({ id: entityId, noForms }: CommentAreaProps) {
   const createThread = useCreateThreadMutation()
   const createComment = useCreateCommentMutation()
   const { commentData, commentCount, error } = useCommentData(entityId)
+
+  const canDo = useCanDo()
 
   // EXAMPLE
   // const canDo = useCanDo()
@@ -102,14 +104,16 @@ export function CommentArea({ id: entityId, noForms }: CommentAreaProps) {
         <CustomH2 id="comments">
           <StyledIcon icon={faQuestionCircle} /> {strings.comments.question}
         </CustomH2>
-        {auth.current === null ? (
-          <PleaseLogIn />
-        ) : (
-          <CommentForm
-            placeholder={strings.comments.placeholder}
-            onSend={onSend}
-          />
-        )}
+        {
+          auth.current === null ? (
+            <PleaseLogIn />
+          ) : canDo(AuthThread.createThread) ? (
+            <CommentForm
+              placeholder={strings.comments.placeholder}
+              onSend={onSend}
+            />
+          ) : null /* placeholder while loading permissions */
+        }
       </>
     )
   }
@@ -129,7 +133,8 @@ export function CommentArea({ id: entityId, noForms }: CommentAreaProps) {
   }
 
   function renderReplyForm(threadId: string) {
-    if (!auth.current || noForms) return null
+    if (!auth.current || noForms || !canDo(AuthThread.createComment))
+      return null
     return (
       <CommentForm
         placeholder={strings.comments.placeholderReply}

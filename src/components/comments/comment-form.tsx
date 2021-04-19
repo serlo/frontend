@@ -52,7 +52,7 @@ export function CommentForm({
       className={clsx(
         'serlo-make-margin mt-4 mb-7 flex items-end rounded-2xl',
         'bg-brandgreen-lighter focus-within:bg-brandgreen-light',
-        'transition-colors  duration-200 ease-in'
+        'transition-colors duration-200 ease-in'
       )}
     >
       <TextareaAutosize
