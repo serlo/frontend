@@ -9,7 +9,7 @@ import { gql } from 'graphql-request'
 import { useGraphqlSwrWithAuth } from '@/api/use-graphql-swr'
 import { useInstanceData } from '@/contexts/instance-context'
 
-export function useAuthorization() {
+export function useCanDo() {
   // TODO: this should also work if authorization === null
   const instance = useInstanceData()
   const scope = instanceToScope(instance.lang as Instance)
