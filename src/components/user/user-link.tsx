@@ -71,5 +71,6 @@ const BadgesWrap = styled.div`
     width: 1.1em;
     height: auto;
     margin-left: 0.3em;
+    display: inline;
   }
 `

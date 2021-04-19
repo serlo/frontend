@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import dynamic from 'next/dynamic'
 import { useState, useEffect } from 'react'
 import styled, { css } from 'styled-components'
@@ -39,7 +40,11 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
   const lic = useLoggedInComponents()
 
   return (
-    <Wrapper grouped={node.grouped}>
+    <div
+      className={clsx('serlo-exercise-wrapper', {
+        'pt-2 mb-10': !node.grouped,
+      })}
+    >
       <ExerciseNumbering
         isChild={node.grouped}
         index={node.grouped ? node.positionInGroup! : node.positionOnPage!}
@@ -52,7 +57,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
       {renderToolsAndLicense()}
 
       {solutionVisible && renderSolution()}
-    </Wrapper>
+    </div>
   )
 
   function renderSolution() {
@@ -72,7 +77,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
     )
 
     return (
-      <SolutionBox>
+      <div className="serlo-solution-box">
         {renderNested(
           [
             {
@@ -93,7 +98,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
           )
         }
         <CommentArea id={node.context.solutionId!} />
-      </SolutionBox>
+      </div>
     )
   }
 
@@ -190,31 +195,6 @@ const StyledSpan = styled.span`
   width: 0.9rem;
 `
 
-const Wrapper = styled.div<{ grouped?: boolean }>`
-  margin-top: 40px;
-  margin-bottom: 10px;
-
-  ${(props) =>
-    !props.grouped &&
-    css`
-      margin-bottom: 40px;
-      padding-top: 7px;
-    `};
-
-  @media (hover: hover) {
-    input {
-      opacity: 0.2;
-      transition: opacity 0.2s ease-in;
-    }
-
-    &:hover {
-      input {
-        opacity: 1;
-      }
-    }
-  }
-`
-
 const SolutionToggle = styled.button<{ active: boolean }>`
   ${makeMargin}
   ${makeTransparentButton}
@@ -237,14 +217,6 @@ const SolutionToggle = styled.button<{ active: boolean }>`
       color: ${(props) => props.theme.colors.brand};
     }
   }
-`
-
-const SolutionBox = styled.div`
-  padding-top: 10px;
-  padding-bottom: 10px;
-  ${makeMargin}
-  margin-bottom: ${(props) => props.theme.spacing.mb.block};
-  border-left: 8px solid ${(props) => props.theme.colors.lightBlueBackground};
 `
 
 const SolutionTools = styled.div`

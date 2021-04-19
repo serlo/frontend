@@ -154,6 +154,9 @@ const StyledH2 = styled.h2`
   @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
     width: 100%;
   }
+  font-weight: bold;
+  margin-block-start: 0.83em;
+  margin-block-end: 0.83em;
 `
 
 const Button = styled(Link)`

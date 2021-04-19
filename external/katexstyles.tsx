@@ -1,6 +1,4 @@
-import styled from 'styled-components'
-
-const KaTeXSpan = styled.span`
+export const KaTeXStyles = () => <style jsx global>{`
   .katex {
     font: normal 1.1em KaTeX_Main, Times New Roman, serif;
     line-height: 1.4;
@@ -9,8 +7,9 @@ const KaTeXSpan = styled.span`
   }
   .katex * {
     -ms-high-contrast-adjust: none !important;
+    border-color: black;
   }
-  .katex .katex-version::after {
+  .katex .katex-version:after {
     content: '0.11.1';
   }
   .katex .katex-mathml {
@@ -890,6 +889,4 @@ const KaTeXSpan = styled.span`
   .katex-display.fleqn > .katex {
     text-align: left;
   }
-`
-
-export default KaTeXSpan
+`}</style>
