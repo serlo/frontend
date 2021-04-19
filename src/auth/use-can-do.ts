@@ -10,8 +10,6 @@ export function useCanDo() {
   const instance = useInstanceData()
   const scope = instanceToScope(instance.lang as Instance)
 
-  console.log('useCanDo aufgerufen', authorizationPayload, scope)
-
   return (guard: AuthorizationGuard) => {
     if (!authorizationPayload) {
       console.warn('No authorization context provided!')

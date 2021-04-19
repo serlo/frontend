@@ -91,6 +91,7 @@ export function FrontendClientBase({
     instanceData.lang,
     loggedInData,
     loggedInComponents,
+    authorizationPayload,
   ])
 
   React.useEffect(() => {
@@ -189,6 +190,9 @@ export function FrontendClientBase({
             setLoggedInData(values[0])
           }
           if (values[1]) setLoggedInComponents(values[1].Components)
+          if (authorizationPayload == null) {
+            setAuthorizationPayload({})
+          }
         })
         .catch(() => {})
     }
