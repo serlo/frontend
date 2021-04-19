@@ -239,10 +239,11 @@ export function Notification({
   }
 
   function renderObject(object: AbstractUuid & { __typename?: string }) {
-    const title = R.pick(['currentRevision', 'title'], object)
     return (
       <StyledLink href={`/${object.id}`}>
-        {title ? title : getEntityStringByTypename(object.__typename, strings)}
+        {hasObject(object)
+          ? object.currentRevision.title
+          : getEntityStringByTypename(object.__typename, strings)}
       </StyledLink>
     )
   }
@@ -257,6 +258,12 @@ export function Notification({
 
   function renderThread(id: number) {
     return <StyledLink href={`/${id}`}>{strings.entities.thread}</StyledLink>
+  }
+
+  function hasObject(
+    object: unknown
+  ): object is { currentRevision: { title: string } } {
+    return R.hasPath(['currentRevision', 'title'], object)
   }
 }
 

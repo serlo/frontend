@@ -73,6 +73,7 @@ const TimeAgoButton = styled.button`
   font-weight: normal;
   color: ${(props) => props.theme.colors.lightblue};
   font-size: 1rem;
+  height: 27px;
 `
 
 const StyledUserLink = styled(UserLink)`
@@ -80,12 +81,19 @@ const StyledUserLink = styled(UserLink)`
   font-size: 1.125rem;
   font-weight: bold;
   margin-left: -5px;
+  padding-left: 3px;
+  display: flex;
+  align-items: center;
+  &:hover {
+    color: ${(props) => props.theme.colors.brand};
+    background-color: ${(props) => props.theme.colors.lightBlueBackground};
+  }
 `
 
 const MetaBarBox = styled.div`
   ${makeMargin}
   color: #222;
-  margin-bottom: 0.3rem;
+  margin-bottom: 8px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
