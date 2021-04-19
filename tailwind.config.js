@@ -63,6 +63,9 @@ module.exports = {
       minHeight: {
         8: '32px',
       },
+      maxWidth: {
+        65: '260px',
+      },
     },
     screens: {
       mobile: '500px',

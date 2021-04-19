@@ -45,10 +45,6 @@ export function CommentArea({ id: entityId, noForms }: CommentAreaProps) {
 
   const canDo = useCanDo()
 
-  // EXAMPLE
-  // const canDo = useCanDo()
-  // console.log(canDo(AuthThread.createThread))
-
   const showAll = isClient && window.location.hash.startsWith('#comment-')
 
   useEffect(() => {

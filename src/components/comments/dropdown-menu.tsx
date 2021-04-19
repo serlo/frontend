@@ -5,11 +5,10 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Thread } from '@serlo/authorization'
-import styled from 'styled-components'
+import clsx from 'clsx'
 
 import { useCanDo } from '@/auth/use-can-do'
 import { useInstanceData } from '@/contexts/instance-context'
-import { makeTransparentButton } from '@/helper/css'
 import {
   useSetCommentStateMutation,
   useSetThreadStateMutation,
@@ -40,12 +39,8 @@ export function DropdownMenu({
   const setThreadArchived = useThreadArchivedMutation()
   const setThreadState = useSetThreadStateMutation()
   const setCommentState = useSetCommentStateMutation()
-  // const setThreadArchived = useThreadArchivedMutation()
-  // const setCommentState = useSetCommentStateMutation()
 
   const canDo = useCanDo()
-
-  console.log(canDo(Thread.setThreadState), canDo(Thread.setCommentState))
 
   const canDelete = isParent
     ? canDo(Thread.setThreadState)
@@ -53,30 +48,42 @@ export function DropdownMenu({
   const canArchive = isParent && canDo(Thread.setThreadArchived)
 
   return (
-    <DropContent>
-      <DropContentButton onClick={onLinkToComment}>
-        <FontAwesomeIcon icon={faPaperclip} /> {strings.comments.copyLink}
-      </DropContentButton>
-      {canArchive && (
-        <DropContentButton onClick={onArchiveThread}>
-          <FontAwesomeIcon icon={faCheck} />{' '}
-          {archived
-            ? strings.comments.restoreThread
-            : strings.comments.archiveThread}
-        </DropContentButton>
+    <div
+      className={clsx(
+        'text-right bg-brand-50 py-3 pr-4 pl-2.5',
+        'shadow max-w-65 rounded-lg'
       )}
-      {canDelete && (
-        <DropContentButton onClick={onDelete}>
-          <FontAwesomeIcon icon={faTrash} />{' '}
-          {isParent
-            ? strings.comments.deleteThread
-            : strings.comments.deleteComment}
-        </DropContentButton>
+    >
+      {buildButton(
+        onLinkToComment,
+        <>
+          <FontAwesomeIcon icon={faPaperclip} /> {strings.comments.copyLink}
+        </>
       )}
-      <Time>
+      {canArchive &&
+        buildButton(
+          onArchiveThread,
+          <>
+            <FontAwesomeIcon icon={faCheck} />{' '}
+            {archived
+              ? strings.comments.restoreThread
+              : strings.comments.archiveThread}
+          </>
+        )}
+      {canDelete &&
+        buildButton(
+          onDelete,
+          <>
+            <FontAwesomeIcon icon={faTrash} />{' '}
+            {isParent
+              ? strings.comments.deleteThread
+              : strings.comments.deleteComment}
+          </>
+        )}
+      <span className={clsx('block text-sm mt-3.5 text-truegray-500')}>
         {strings.comments.postedOn} {date.toLocaleString(lang)}
-      </Time>
-    </DropContent>
+      </span>
+    </div>
   )
 
   function onLinkToComment() {
@@ -103,7 +110,6 @@ export function DropdownMenu({
     }
     if (isParent && threadId) {
       void setThreadState({ id: [threadId], trashed: true })
-      // void setCommentState({ id: [id], trashed: true })
     }
   }
 
@@ -111,30 +117,20 @@ export function DropdownMenu({
     onAnyClick()
     if (isParent && threadId) {
       void setThreadArchived({ id: [threadId], archived: !archived })
-      // void setThreadArchived({ id: [threadId], archived: true })
     }
   }
+
+  function buildButton(onClick: () => void, children: JSX.Element) {
+    return (
+      <button
+        className={clsx(
+          'serlo-button serlo-make-interactive-transparent-blue',
+          'mb-1 text-base font-normal leading-browser'
+        )}
+        onClick={onClick}
+      >
+        {children}
+      </button>
+    )
+  }
 }
-
-const DropContent = styled.div`
-  text-align: right;
-  background-color: ${(props) => props.theme.colors.lightBackground};
-  padding: 12px 15px 12px 10px;
-  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px;
-  max-width: 250px;
-  border-radius: 10px;
-`
-
-const DropContentButton = styled.button`
-  ${makeTransparentButton};
-  margin-bottom: 0.2rem;
-  font-size: 1rem;
-  font-weight: normal;
-`
-
-const Time = styled.span`
-  display: block;
-  font-size: 0.8rem;
-  margin-top: 15px;
-  color: ${(props) => props.theme.colors.gray};
-`
