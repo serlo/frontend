@@ -22,6 +22,10 @@
     @apply inline-block transition-all rounded-4xl py-1 px-2;
     @apply font-bold border-none cursor-pointer no-underline;
     @apply text-lg leading-browser font-serlo tracking-slightestly-tighter;
+    @apply ease-in-out duration-200;
+  }
+  .serlo-make-interactive-green {
+    @apply text-white bg-brandgreen hover:bg-brand;
   }
   .serlo-list {
     @apply mx-4 mb-block mt-0 pl-7 list-none;

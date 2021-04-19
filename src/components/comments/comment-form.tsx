@@ -4,14 +4,12 @@ import {
   faSpinner,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { lighten } from 'polished'
-import * as React from 'react'
+import clsx from 'clsx'
+import { useState, KeyboardEvent } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
-import styled, { css } from 'styled-components'
 
 import { useInstanceData } from '@/contexts/instance-context'
 import { isMac } from '@/helper/client-detection'
-import { makeGreenButton, inputFontReset, makeMargin } from '@/helper/css'
 
 interface CommentFormProps {
   onSend: (
@@ -30,9 +28,9 @@ export function CommentForm({
   reply,
   threadId,
 }: CommentFormProps) {
-  const [commentValue, setCommentValue] = React.useState('')
+  const [commentValue, setCommentValue] = useState('')
   const { strings } = useInstanceData()
-  const [isSending, setIsSending] = React.useState(false)
+  const [isSending, setIsSending] = useState(false)
 
   async function onSendAction() {
     setIsSending(true)
@@ -41,7 +39,7 @@ export function CommentForm({
     if (success) setCommentValue('')
   }
 
-  function onKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
+  function onKeyDown(e: KeyboardEvent<HTMLTextAreaElement>) {
     if (e.code === 'Enter' && e.metaKey) void onSendAction()
   }
 
@@ -50,89 +48,43 @@ export function CommentForm({
   }↵`
 
   return (
-    <StyledBox>
-      <StyledTextarea
+    <div
+      className={clsx(
+        'serlo-make-margin mt-4 mb-7 flex items-end rounded-2xl',
+        'bg-brandgreen-lighter focus-within:bg-brandgreen-light',
+        'transition-colors  duration-200 ease-in'
+      )}
+    >
+      <TextareaAutosize
         value={commentValue}
         onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
           setCommentValue(event.target.value)
         }}
         onKeyDown={onKeyDown}
         placeholder={placeholder}
-        $reply={reply}
         minRows={1}
+        className={clsx(
+          'serlo-input-font-reset w-full min-h-8 text-lg',
+          'text-black border-0 bg-transparent outline-none resize-none',
+          reply ? 'py-2 pr-14 pl-4' : 'py-5 pr-14 pl-4',
+          'placeholder-brandgreen'
+        )}
       />
-      <SendButton
+      <button
         title={sendTitle}
-        $reply={reply}
         onClick={onSendAction}
         onPointerUp={(e) => e.currentTarget.blur()}
+        className={clsx(
+          'serlo-button serlo-make-interactive-green pl-2 mr-1',
+          reply ? 'text-base w-8 h-8 mb-1' : 'text-2xl mb-2 w-10'
+        )}
       >
         <FontAwesomeIcon
           spin={isSending}
           icon={isSending ? faSpinner : reply ? faReply : faArrowRight}
+          className={reply ? '' : 'pl-0.5'}
         />
-      </SendButton>
-    </StyledBox>
+      </button>
+    </div>
   )
 }
-
-const StyledBox = styled.div`
-  ${makeMargin}
-  margin-top: 18px;
-  margin-bottom: 30px;
-  display: flex;
-  align-items: flex-end;
-
-  background-color: ${(props) => lighten(0.45, props.theme.colors.brandGreen)};
-  border-radius: 18px;
-
-  &:focus-within {
-    background-color: ${(props) =>
-      lighten(0.35, props.theme.colors.brandGreen)};
-  }
-  transition: background-color 0.2s ease-in;
-`
-
-// Info: https://styled-components.com/docs/api#transient-props
-const StyledTextarea = styled(TextareaAutosize)<{ $reply?: boolean }>`
-  ${inputFontReset}
-  width: 100%;
-  min-height: 33px;
-  font-size: 1.125rem;
-  color: #000;
-  border: none;
-  background: transparent;
-  padding: ${(props) =>
-    props.$reply ? '.5rem 3.5rem .5rem 1rem' : '1.25rem 3.5rem 1.25rem 1rem'};
-  box-sizing: border-box;
-  outline: none;
-  resize: none;
-
-  ::placeholder {
-    color: ${(props) => props.theme.colors.brandGreen};
-  }
-`
-
-const SendButton = styled.button<{ $reply?: boolean }>`
-  width: 45px;
-  height: 45px;
-  ${makeGreenButton}
-  font-size: 1.55rem;
-  padding-left: 7px;
-
-  margin: 0 5px 8px 0;
-
-  > svg {
-    vertical-align: ${(props) => (props.$reply ? '-2px' : '-4px')};
-    padding-left: ${(props) => (props.$reply ? '0' : '2px')};
-  }
-
-  ${(props) =>
-    props.$reply &&
-    css`
-      font-size: 1rem;
-      width: 30px;
-      height: 30px;
-      margin-bottom: 4px;
-    `}
-`
