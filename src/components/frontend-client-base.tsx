@@ -1,3 +1,4 @@
+import { AuthorizationPayload } from '@serlo/authorization'
 import { Router, useRouter } from 'next/router'
 import NProgress from 'nprogress'
 import * as React from 'react'
@@ -10,6 +11,7 @@ import { RelativeContainer } from './navigation/relative-container'
 import { ToastNotice } from './toast-notice'
 import { useAuthentication } from '@/auth/use-authentication'
 import { PrintWarning } from '@/components/content/print-warning'
+import { AuthorizationPayloadProvider } from '@/contexts/authorization-payload-context'
 import { EntityIdProvider } from '@/contexts/entity-id-context'
 import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInComponentsProvider } from '@/contexts/logged-in-components'
@@ -17,6 +19,7 @@ import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
 import { InstanceData, LoggedInData } from '@/data-types'
 import type { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { frontendOrigin } from '@/helper/frontent-origin'
+import type { LoggedInStuff } from '@/helper/logged-in-stuff-chunk'
 import { theme } from '@/theme'
 
 export type FrontendClientBaseProps = React.PropsWithChildren<{
@@ -24,6 +27,7 @@ export type FrontendClientBaseProps = React.PropsWithChildren<{
   noContainers?: boolean
   showNav?: boolean
   entityId?: number
+  authorization?: AuthorizationPayload
 }>
 
 Router.events.on('routeChangeStart', () => {
@@ -38,6 +42,7 @@ export function FrontendClientBase({
   noContainers,
   showNav,
   entityId,
+  authorization,
 }: FrontendClientBaseProps) {
   const { locale } = useRouter()
   const [instanceData] = React.useState<InstanceData>(() => {
@@ -54,6 +59,11 @@ export function FrontendClientBase({
     }
   })
 
+  const [
+    authorizationPayload,
+    setAuthorizationPayload,
+  ] = React.useState<AuthorizationPayload | null>(authorization ?? null)
+
   //React.useEffect(storePageData, [initialProps])
 
   React.useEffect(() => {
@@ -69,7 +79,10 @@ export function FrontendClientBase({
   const [loggedInData, setLoggedInData] = React.useState<LoggedInData | null>(
     getCachedLoggedInData()
   )
-  const [loggedInComponents, setLoggedInComponents] = React.useState<any>(null)
+  const [
+    loggedInComponents,
+    setLoggedInComponents,
+  ] = React.useState<LoggedInStuff | null>(null)
 
   //console.log('Comps', loggedInComponents)
 
@@ -80,6 +93,17 @@ export function FrontendClientBase({
     loggedInComponents,
   ])
 
+  React.useEffect(() => {
+    if (loggedInComponents && auth && auth.current) {
+      const fetch = loggedInComponents.createAuthAwareGraphqlFetch(auth)
+      fetch(JSON.stringify({ query: 'query{authorization}' }))
+        .then((value) => {
+          setAuthorizationPayload(value.authorization)
+        })
+        .catch(() => {})
+    }
+  }, [loggedInComponents, auth])
+
   // dev
   //console.dir(initialProps)
 
@@ -88,29 +112,31 @@ export function FrontendClientBase({
       <PrintWarning warning={instanceData.strings.print.warning} />
       <InstanceDataProvider value={instanceData}>
         <LoggedInComponentsProvider value={loggedInComponents}>
-          <LoggedInDataProvider value={loggedInData}>
-            <EntityIdProvider value={entityId || null}>
-              <ConditonalWrap
-                condition={!noHeaderFooter}
-                wrapper={(kids) => <HeaderFooter>{kids}</HeaderFooter>}
-              >
+          <AuthorizationPayloadProvider value={authorizationPayload}>
+            <LoggedInDataProvider value={loggedInData}>
+              <EntityIdProvider value={entityId || null}>
                 <ConditonalWrap
-                  condition={!noContainers}
-                  wrapper={(kids) => (
-                    <RelativeContainer>
-                      <MaxWidthDiv showNav={showNav}>
-                        <main>{kids}</main>
-                      </MaxWidthDiv>
-                    </RelativeContainer>
-                  )}
+                  condition={!noHeaderFooter}
+                  wrapper={(kids) => <HeaderFooter>{kids}</HeaderFooter>}
                 >
-                  {/* should not be necessary…?*/}
-                  {children as JSX.Element}
+                  <ConditonalWrap
+                    condition={!noContainers}
+                    wrapper={(kids) => (
+                      <RelativeContainer>
+                        <MaxWidthDiv showNav={showNav}>
+                          <main>{kids}</main>
+                        </MaxWidthDiv>
+                      </RelativeContainer>
+                    )}
+                  >
+                    {/* should not be necessary…?*/}
+                    {children as JSX.Element}
+                  </ConditonalWrap>
                 </ConditonalWrap>
-              </ConditonalWrap>
-              <ToastNotice />
-            </EntityIdProvider>
-          </LoggedInDataProvider>
+                <ToastNotice />
+              </EntityIdProvider>
+            </LoggedInDataProvider>
+          </AuthorizationPayloadProvider>
         </LoggedInComponentsProvider>
       </InstanceDataProvider>
     </ThemeProvider>

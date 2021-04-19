@@ -1,3 +1,4 @@
+import { AuthorizationPayload } from '@serlo/authorization'
 import { request } from 'graphql-request'
 
 import { convertState } from './convert-state'
@@ -19,7 +20,10 @@ export async function requestPage(
   alias: string,
   instance: Instance
 ): Promise<SlugPageData> {
-  const { uuid } = await request<{ uuid: QueryResponse }>(endpoint, dataQuery, {
+  const { uuid, authorization } = await request<{
+    uuid: QueryResponse
+    authorization: AuthorizationPayload
+  }>(endpoint, dataQuery, {
     alias: { instance, path: alias },
   })
 
@@ -86,6 +90,7 @@ export async function requestPage(
       cacheKey,
       breadcrumbsData,
       secondaryNavigationData,
+      authorization,
     }
   }
 
@@ -111,6 +116,7 @@ export async function requestPage(
       },
       horizonData,
       cacheKey,
+      authorization,
     }
   }
 
@@ -135,6 +141,7 @@ export async function requestPage(
       },
       horizonData,
       cacheKey,
+      authorization,
     }
   }
 
@@ -158,6 +165,7 @@ export async function requestPage(
         metaDescription: getMetaDescription(content),
       },
       cacheKey,
+      authorization,
     }
   }
 
@@ -183,6 +191,7 @@ export async function requestPage(
       cacheKey,
       secondaryNavigationData,
       breadcrumbsData: secondaryNavigationData ? undefined : breadcrumbsData,
+      authorization,
     }
   }
 
@@ -219,6 +228,7 @@ export async function requestPage(
       horizonData,
       cacheKey,
       breadcrumbsData,
+      authorization,
     }
   }
 
@@ -256,6 +266,7 @@ export async function requestPage(
       horizonData,
       cacheKey,
       breadcrumbsData,
+      authorization,
     }
   }
 
@@ -293,6 +304,7 @@ export async function requestPage(
       horizonData,
       cacheKey,
       breadcrumbsData,
+      authorization,
     }
   }
 
@@ -352,6 +364,7 @@ export async function requestPage(
       horizonData,
       cacheKey,
       breadcrumbsData,
+      authorization,
     }
   }
 

@@ -38,7 +38,11 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
         : pageData.taxonomyData.id
 
     return (
-      <FrontendClientBase noContainers entityId={entityId}>
+      <FrontendClientBase
+        noContainers
+        entityId={entityId}
+        authorization={pageData.authorization}
+      >
         <EntityBase page={pageData}>{page}</EntityBase>
       </FrontendClientBase>
     )
