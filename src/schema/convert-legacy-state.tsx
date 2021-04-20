@@ -471,6 +471,8 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
         {
           type: 'code',
           code,
+          language: '',
+          showLineNumbers: false,
         },
       ]
     } else {

@@ -30,7 +30,7 @@ import { StyledTr } from '../components/tags/styled-tr'
 import { StyledUl } from '../components/tags/styled-ul'
 import { theme } from '../theme'
 import { Blockquote } from '@/components/content/blockquote'
-import { Code } from '@/components/content/code'
+import type { CodeProps } from '@/components/content/code'
 import { Equations } from '@/components/content/equations'
 import { Exercise } from '@/components/content/exercises/exercise'
 import { Solution } from '@/components/content/exercises/solution'
@@ -59,6 +59,10 @@ export type RenderNestedFunction = (
 
 const Math = dynamic<MathSpanProps>(() =>
   import('../components/content/math-span').then((mod) => mod.MathSpan)
+)
+
+const Code = dynamic<CodeProps>(() =>
+  import('../components/content/code').then((mod) => mod.Code)
 )
 
 export function renderArticle(
@@ -380,7 +384,13 @@ function renderElement(props: RenderElementProps): React.ReactNode {
     )
   }
   if (element.type === 'code') {
-    return <Code content={element.code} />
+    return (
+      <Code
+        content={element.code}
+        language={element.language}
+        showLineNumbers={element.showLineNumbers}
+      />
+    )
   }
   return null
 }

@@ -1,33 +1,25 @@
 import * as React from 'react'
-import styled from 'styled-components'
-
-import { makeMargin } from '../../helper/css'
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+// eslint-disable-next-line import/no-internal-modules
+import coy from 'react-syntax-highlighter/dist/cjs/styles/prism/coy'
 
 export interface CodeProps {
   content: React.ReactNode
+  language: string
+  showLineNumbers: boolean
 }
 
-export function Code({ content }: CodeProps) {
+export function Code({ content, language, showLineNumbers }: CodeProps) {
+  // SyntaxHighlighter not supporting setting classname on pre, so wrap in div
   return (
-    <Pre>
-      <code>{content}</code>
-    </Pre>
+    <div className="mb-block mt-1 border-l-8 border-brand-lighter serlo-make-margin">
+      <SyntaxHighlighter
+        language={language}
+        showLineNumbers={showLineNumbers}
+        style={coy}
+      >
+        {content}
+      </SyntaxHighlighter>
+    </div>
   )
 }
-
-const Pre = styled.pre`
-  ${makeMargin}
-  margin-top: 5px;
-  margin-bottom: ${(props) => props.theme.spacing.mb.block};
-  padding: 16px;
-
-  background-color: ${(props) => props.theme.colors.bluewhite};
-  border-left: 8px solid ${(props) => props.theme.colors.lighterblue};
-
-  overflow-x: auto;
-
-  > code {
-    font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier,
-      monospace;
-  }
-`

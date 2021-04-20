@@ -159,6 +159,8 @@ function convertPlugin(node: EdtrState) {
       {
         type: 'code',
         code: node.state.code,
+        language: node.state.language,
+        showLineNumbers: node.state.showLineNumbers,
       },
     ]
   }

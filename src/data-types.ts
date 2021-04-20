@@ -619,6 +619,8 @@ export interface FrontendVideoNode {
 export interface FrontendCodeNode {
   type: 'code'
   code: string
+  language: string
+  showLineNumbers: boolean
   children?: undefined
 }
 
