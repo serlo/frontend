@@ -1,9 +1,12 @@
-import { faComments, faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
+import {
+  faComments,
+  faQuestionCircle,
+  IconDefinition,
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Comment as CommentType, Thread as ThreadType } from '@serlo/api'
 import { Thread as AuthThread } from '@serlo/authorization'
 import { useState, useRef, useEffect } from 'react'
-import styled from 'styled-components'
 
 import { Lazy } from '../content/lazy'
 import { Guard } from '../guard'
@@ -13,7 +16,6 @@ import { CommentForm } from './comment-form'
 import { Thread } from './thread'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useCanDo } from '@/auth/use-can-do'
-import { StyledH2 } from '@/components/tags/styled-h2'
 import { useInstanceData } from '@/contexts/instance-context'
 import { isClient } from '@/helper/client-detection'
 import {
@@ -75,14 +77,14 @@ export function CommentArea({ id: entityId, noForms }: CommentAreaProps) {
       <>
         {commentCount > 0 && (
           <>
-            <CustomH2>
-              {/* i18n Note: Pluralisation hack */}
-              <StyledIcon icon={faComments} /> {commentCount}{' '}
-              {commentCount === 1
-                ? strings.comments.commentsOne
-                : strings.comments.commentsMany}
-            </CustomH2>
-
+            {renderHeading(
+              faComments,
+              ` ${commentCount} ${
+                commentCount === 1
+                  ? strings.comments.commentsOne
+                  : strings.comments.commentsMany
+              }`
+            )}
             <Lazy>
               {renderThreads()}
               {renderArchive()}
@@ -97,9 +99,7 @@ export function CommentArea({ id: entityId, noForms }: CommentAreaProps) {
     if (noForms) return null
     return (
       <>
-        <CustomH2 id="comments">
-          <StyledIcon icon={faQuestionCircle} /> {strings.comments.question}
-        </CustomH2>
+        {renderHeading(faQuestionCircle, ` ${strings.comments.question}`)}
         {
           auth.current === null ? (
             <PleaseLogIn />
@@ -156,6 +156,19 @@ export function CommentArea({ id: entityId, noForms }: CommentAreaProps) {
     setShowThreadChildren([...showThreadChildren, threadId])
   }
 
+  function renderHeading(icon: IconDefinition, text: string) {
+    return (
+      <h2 className="serlo-h2 border-b-0 mt-10">
+        {/* i18n Note: Pluralisation hack */}
+        <FontAwesomeIcon
+          className="text-2.5xl text-brand-lighter"
+          icon={icon}
+        />
+        {text}
+      </h2>
+    )
+  }
+
   async function onSend(content: string, reply?: boolean, threadId?: string) {
     if (auth.current === null) return false
 
@@ -179,13 +192,3 @@ export function CommentArea({ id: entityId, noForms }: CommentAreaProps) {
     }
   }
 }
-
-const CustomH2 = styled(StyledH2)`
-  margin-top: 40px;
-  border-bottom: 0;
-`
-
-const StyledIcon = styled(FontAwesomeIcon)`
-  color: ${(props) => props.theme.colors.lighterblue};
-  font-size: 1.73rem;
-`

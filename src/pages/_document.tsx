@@ -11,7 +11,6 @@ import { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { htmlEscapeStringForJson } from '@/helper/html-escape'
 
 const bodyStyles = {
-  margin: 0,
   fontFamily: 'Karmilla, sans-serif',
 }
 

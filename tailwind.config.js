@@ -66,6 +66,9 @@ module.exports = {
       maxWidth: {
         65: '260px',
       },
+      fontSize: {
+        '2.5xl': '1.75rem',
+      },
     },
     screens: {
       mobile: '500px',

@@ -1,11 +1,8 @@
 import { useState } from 'react'
-import styled from 'styled-components'
 
-import { StyledP } from '../tags/styled-p'
 import { ThreadsData } from './comment-area'
 import { Thread } from './thread'
 import { useInstanceData } from '@/contexts/instance-context'
-import { makeLightButton } from '@/helper/css'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 export interface CommentArchiveProps {
@@ -32,17 +29,18 @@ export function CommentArchive({
 
   return (
     <>
-      <StyledP>
-        <ShowArchivedButton
+      <p className="serlo-p">
+        <button
           onClick={toogleShowArchived}
           onPointerUp={(e) => e.currentTarget.blur()}
+          className="serlo-button serlo-make-interactive-light mt-4"
         >
           {replacePlaceholders(strings.comments.showArchived, {
             threads: strings.entities.threads,
           })}{' '}
           ▾
-        </ShowArchivedButton>
-      </StyledP>
+        </button>
+      </p>
       {showArchived && renderThreads()}
     </>
   )
@@ -62,8 +60,3 @@ export function CommentArchive({
     )
   }
 }
-
-const ShowArchivedButton = styled.button`
-  ${makeLightButton};
-  margin-top: 16px;
-`
