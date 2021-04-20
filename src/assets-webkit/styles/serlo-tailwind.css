@@ -30,6 +30,9 @@
   .serlo-make-interactive-transparent-blue {
     @apply text-brand bg-transparent hover:text-white hover:bg-brand;
   }
+  .serlo-p {
+    @apply serlo-make-margin mt-0 mb-block special-hyphens-auto text-lg leading-6;
+  }
   .serlo-list {
     @apply mx-4 mb-block mt-0 pl-7 list-none;
     @apply special-reset-list-counter;

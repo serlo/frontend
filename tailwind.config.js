@@ -98,6 +98,9 @@ module.exports = {
         '.special-increment-list-counter': {
           'counter-increment': 'list-counter',
         },
+        '.special-hyphens-auto': {
+          hyphens: 'auto',
+        },
       })
 
       // add classes of serlo-components to autocomplete
