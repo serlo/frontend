@@ -1,5 +1,8 @@
 import { Instance } from '@serlo/api'
-import { AuthorizationGuard, instanceToScope } from '@serlo/authorization'
+import {
+  GenericAuthorizationGuard,
+  instanceToScope,
+} from '@serlo/authorization'
 
 import { useAuthorizationPayload } from '@/contexts/authorization-payload-context'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -10,14 +13,11 @@ export function useCanDo() {
   const instance = useInstanceData()
   const scope = instanceToScope(instance.lang as Instance)
 
-  return (guard: AuthorizationGuard) => {
+  return (guard: GenericAuthorizationGuard) => {
     if (!authorizationPayload) {
       console.warn('No authorization context provided!')
       return false
     }
-    return guard({
-      authorizationPayload,
-      scope,
-    })
+    return guard(scope)(authorizationPayload)
   }
 }

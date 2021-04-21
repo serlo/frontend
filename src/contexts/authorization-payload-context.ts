@@ -1,4 +1,4 @@
-import { AuthorizationPayload } from '@serlo/api'
+import { AuthorizationPayload } from '@serlo/authorization'
 import { createContext, useContext } from 'react'
 
 export const AuthorizationPayloadContext = createContext<AuthorizationPayload | null>(
@@ -8,6 +8,5 @@ export const AuthorizationPayloadContext = createContext<AuthorizationPayload | 
 export const AuthorizationPayloadProvider = AuthorizationPayloadContext.Provider
 
 export function useAuthorizationPayload() {
-  const data = useContext(AuthorizationPayloadContext)
-  return data
+  return useContext(AuthorizationPayloadContext)
 }
