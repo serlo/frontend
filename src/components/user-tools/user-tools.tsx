@@ -59,13 +59,32 @@ export function UserTools({
 
   return aboveContent ? renderInlineContainer() : renderSideContainer()
 
+  function fadeIn() {
+    return clsx('transition-opacity', firstPass ? 'opacity-0' : 'opacity-100')
+  }
+
+  function buttonClassName() {
+    // no autocomplete here yet
+    if (aboveContent) {
+      return clsx(
+        'serlo-button serlo-make-interactive-green',
+        'text-sm m-0.5 ml-1 leading-browser'
+      )
+    } else {
+      return clsx(
+        'serlo-button serlo-make-interactive-transparent-green',
+        'py-1 m-1 text-base leading-browser'
+      )
+    }
+  }
+
   function renderInlineContainer() {
     return (
       <nav
         className={clsx(
-          'lg:hidden block mr-4 -mt-4 mb-8',
-          'flex justify-end transition-opacity',
-          firstPass ? 'opacity-0' : 'opacity-100'
+          'mr-4 -mt-4 mb-8',
+          'flex lg:hidden justify-end',
+          fadeIn()
         )}
       >
         {renderButtons()}
@@ -77,9 +96,9 @@ export function UserTools({
     return (
       <nav
         className={clsx(
-          'absolute right-8 bottom-8 h-full items-end',
-          'lg:flex hidden transition-opacity',
-          firstPass ? 'opacity-0' : 'opacity-100'
+          'absolute right-8 bottom-8 h-full',
+          'lg:flex hidden items-end',
+          fadeIn()
         )}
       >
         <div className="sticky bottom-8 flex-col flex items-start">
@@ -92,7 +111,7 @@ export function UserTools({
   function renderButtons() {
     if (firstPass) {
       if (aboveContent) {
-        return renderButton({ size: 'small', text: '', icon: faShareAlt }) // placeholder button
+        return <button className={buttonClassName()}>X</button> // placeholder button, avoid layout shift
       }
       return null
     }
@@ -125,32 +144,33 @@ export function UserTools({
         ? `/taxonomy/term/update/${id}`
         : `/entity/repository/add-revision/${id}`
 
-    return renderButton({
-      icon: faPencilAlt,
-      hideOnSmall: true,
-      href: editHref,
-      text: ` ${strings.edit.button}`,
-      size: aboveContent ? 'small' : 'large',
-    })
+    return (
+      <a href={editHref} className={buttonClassName()}>
+        {renderInner(strings.edit.button, faPencilAlt)}
+      </a>
+    )
   }
 
   function renderUnrevised() {
-    return renderButton({
-      icon: faClock,
-      text: ` ${strings.edit.unrevised} (${unrevisedRevision || ''})`,
-      href: `/entity/repository/history/${id}`,
-      size: aboveContent ? 'small' : 'large',
-    })
+    return (
+      <a
+        href={`/entity/repository/history/${id}`}
+        className={buttonClassName()}
+      >
+        {renderInner(
+          `${strings.edit.unrevised} (${unrevisedRevision || ''})`,
+          faClock
+        )}
+      </a>
+    )
   }
 
   function renderShare() {
-    return renderButton({
-      icon: faShareAlt,
-      text: ` ${strings.share.button}!`,
-      asButton: true,
-      onClick: onShare,
-      size: aboveContent ? 'small' : 'large',
-    })
+    return (
+      <button className={buttonClassName()} onClick={onShare}>
+        {renderInner(strings.share.button, faShareAlt)}
+      </button>
+    )
   }
 
   function renderExtraTools() {
@@ -179,86 +199,26 @@ export function UserTools({
         delay={[0, 300]}
         interactiveBorder={aboveContent ? 10 : 40}
       >
-        <div>
-          {renderButton({
-            icon: faTools,
-            asButton: true,
-            hideOnSmall: true,
-            text: ` ${loggedInData.strings.tools}`,
-            size: aboveContent ? 'small' : 'large',
-          })}
-        </div>
+        <button className={buttonClassName()}>
+          {renderInner(loggedInData.strings.tools, faTools)}
+        </button>
       </LazyTippy>
     )
   }
 
   function renderProfileButtons() {
-    return renderButton({
-      icon: faPencilAlt,
-      href: '/user/settings',
-      text: ` ${loggedInData?.strings.authorMenu.editProfile}`,
-      size: aboveContent ? 'small' : 'large',
-    })
-  }
-}
-
-interface RenderButtonProps {
-  icon: IconDefinition
-  text: string
-  href?: string
-  asButton?: boolean
-  hideOnSmall?: boolean
-  onClick?: () => void
-  size: 'small' | 'large'
-}
-
-function renderButton({
-  icon,
-  text,
-  href,
-  asButton,
-  hideOnSmall,
-  onClick,
-  size,
-}: RenderButtonProps) {
-  const Comp = asButton
-    ? (props: any) => <button {...props}></button>
-    : (props: any) => <a {...props}></a>
-
-  if (size == 'small') {
+    if (!loggedInData) return null
     return (
-      <Comp
-        onClick={onClick}
-        href={href}
-        className={clsx(
-          'serlo-button serlo-make-interactive-green',
-          'text-sm m-0.5 ml-1 leading-browser',
-          { 'hidden sm:block': hideOnSmall }
-        )}
-      >
-        {renderInner()}
-      </Comp>
-    )
-  } else {
-    return (
-      <Comp
-        onClick={onClick}
-        href={href}
-        className={clsx(
-          'serlo-button serlo-make-interactive-transparent-green',
-          'py-1 m-1 serlo-input-font-reset leading-browser'
-        )}
-      >
-        {renderInner()}
-      </Comp>
+      <a href="/user/settings">
+        {renderInner(loggedInData.strings.authorMenu.editProfile, faPencilAlt)}
+      </a>
     )
   }
 
-  function renderInner() {
+  function renderInner(text: string, icon: IconDefinition) {
     return (
       <>
-        <FontAwesomeIcon icon={icon} className="lg: mr-0.5" />
-        {text}
+        <FontAwesomeIcon icon={icon} className="lg: mr-0.5" /> {text}
       </>
     )
   }
