@@ -10,7 +10,7 @@ export interface CodeProps {
 }
 
 export function Code({ content, language, showLineNumbers }: CodeProps) {
-  // SyntaxHighlighter not supporting setting classname on pre, so wrap in div
+  // SyntaxHighlighter has own styles on pre, so wrap in div to use own classes
   return (
     <div className="mb-block mt-1 border-l-8 border-brand-lighter serlo-make-margin">
       <SyntaxHighlighter
