@@ -54,9 +54,6 @@ export function UserTools({
   // note: this component is added twice, once without aboveContent and once with it
   // (responsive variants)
 
-  // HELP!! This component got somewhat super complicated ^^
-  // (maybe I have some better ideas another day ...)
-
   return aboveContent ? renderInlineContainer() : renderSideContainer()
 
   function fadeIn() {
@@ -207,9 +204,11 @@ export function UserTools({
   }
 
   function renderProfileButtons() {
-    if (!loggedInData) return null
+    if (!loggedInData) {
+      return null
+    }
     return (
-      <a href="/user/settings">
+      <a href="/user/settings" className={buttonClassName()}>
         {renderInner(loggedInData.strings.authorMenu.editProfile, faPencilAlt)}
       </a>
     )

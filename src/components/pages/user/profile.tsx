@@ -106,7 +106,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   }
 
   function renderUserTools() {
-    if (!isOwnProfile) return null
+    if (!isOwnProfile) return null // -> ssr warning
     return (
       <UserTools
         id={id}

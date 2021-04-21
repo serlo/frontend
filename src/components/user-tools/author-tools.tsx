@@ -208,29 +208,31 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
       )
     }
     return (
-      <Tippy
-        {...tippyDefaultProps}
-        content={
-          <HoverSubList>
-            {renderFetchLi(
-              `/subscribe/${entityId}/0`,
-              loggedInStrings.authorMenu.subscribeNotifications
-            )}
-            {renderFetchLi(
-              `/subscribe/${entityId}/1`,
-              loggedInStrings.authorMenu.subscribeNotificationsAndMail
-            )}
-          </HoverSubList>
-        }
-      >
-        <Li>
-          <SubLink as="div" tabIndex={0}>
-            <SubButtonStyle>
-              ◂ {loggedInStrings.authorMenu.subscribe}
-            </SubButtonStyle>
-          </SubLink>
-        </Li>
-      </Tippy>
+      <div>
+        <Tippy
+          {...tippyDefaultProps}
+          content={
+            <HoverSubList>
+              {renderFetchLi(
+                `/subscribe/${entityId}/0`,
+                loggedInStrings.authorMenu.subscribeNotifications
+              )}
+              {renderFetchLi(
+                `/subscribe/${entityId}/1`,
+                loggedInStrings.authorMenu.subscribeNotificationsAndMail
+              )}
+            </HoverSubList>
+          }
+        >
+          <Li>
+            <SubLink as="div" tabIndex={0}>
+              <SubButtonStyle>
+                ◂ {loggedInStrings.authorMenu.subscribe}
+              </SubButtonStyle>
+            </SubLink>
+          </Li>
+        </Tippy>
+      </div>
     )
   }
 
