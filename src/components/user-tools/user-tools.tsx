@@ -3,24 +3,18 @@ import {
   faPencilAlt,
   faShareAlt,
   faTools,
+  IconDefinition,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useState, useEffect } from 'react'
-import styled from 'styled-components'
+import clsx from 'clsx'
+import { useEffect, useState } from 'react'
 
-import {
-  makeGreenTransparentButton,
-  makeGreenButton,
-  inputFontReset,
-} from '../../helper/css'
 import { LazyTippy } from '../navigation/lazy-tippy'
 import { AuthorToolsData } from './author-tools-hover-menu'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { UserRoles } from '@/data-types'
-import { theme } from '@/theme'
 
 interface UserToolsProps {
   id: number
@@ -45,52 +39,83 @@ export function UserTools({
 }: UserToolsProps) {
   const { strings } = useInstanceData()
   const auth = useAuthentication()
-  const [loaded, setLoaded] = useState(false)
-  useEffect(() => {
-    setLoaded(true)
-  }, [])
   const loggedInData = useLoggedInData()
   const lic = useLoggedInComponents()
-  const showHistory = unrevisedRevision !== undefined && unrevisedRevision > 0
 
-  function getBrowserWidth() {
+  // note: we hide the ui on ssr and fade it in on the client
+  const [firstPass, setFirstPass] = useState(true)
+
+  useEffect(() => {
+    if (firstPass && (!auth.current || (auth.current && lic))) {
+      setFirstPass(false)
+    }
+  }, [auth, lic, firstPass])
+
+  // note: this component is added twice, once without aboveContent and once with it
+  // (responsive variants)
+
+  // HELP!! This component got somewhat super complicated ^^
+  // (maybe I have some better ideas another day ...)
+
+  return aboveContent ? renderInlineContainer() : renderSideContainer()
+
+  function renderInlineContainer() {
     return (
-      window.innerWidth ||
-      document.documentElement.clientWidth ||
-      document.body.clientWidth
+      <nav
+        className={clsx(
+          'lg:hidden block mr-4 -mt-4 mb-8',
+          'flex justify-end transition-opacity',
+          firstPass ? 'opacity-0' : 'opacity-100'
+        )}
+      >
+        {renderButtons()}
+      </nav>
     )
   }
 
-  if (data.type === 'Profile') return renderProfileMenu()
-
-  return (
-    <AbsoluteWrapper hideOnLarge={aboveContent}>
-      <BoxWrapper>{renderButtons()}</BoxWrapper>
-    </AbsoluteWrapper>
-  )
+  function renderSideContainer() {
+    return (
+      <nav
+        className={clsx(
+          'absolute right-8 bottom-8 h-full items-end',
+          'lg:flex hidden transition-opacity',
+          firstPass ? 'opacity-0' : 'opacity-100'
+        )}
+      >
+        <div className="sticky bottom-8 flex-col flex items-start">
+          {renderButtons()}
+        </div>
+      </nav>
+    )
+  }
 
   function renderButtons() {
-    return (
+    if (firstPass) {
+      if (aboveContent) {
+        return renderButton({ size: 'small', text: '', icon: faShareAlt }) // placeholder button
+      }
+      return null
+    }
+
+    return data.type === 'Profile' ? (
+      renderProfileButtons()
+    ) : (
       <>
-        {(!hideEdit || (loaded && auth.current)) && (
-          <>
-            {renderEdit()}
-            {renderUnrevised()}
-          </>
-        )}
+        {(!hideEdit || auth.current) && renderEdit()}
         {renderShare()}
-        {renderExtraTools()}
+        {auth.current && renderExtraTools()}
       </>
     )
   }
 
   function renderEdit() {
-    if (
-      loaded &&
-      (auth.current === null ||
-        auth.current?.roles.indexOf(UserRoles.PageBuilder) > -1)
-    ) {
-      return null
+    // TODO!!! Check permissions. createEntityRevision / editTaxonomy ?
+    // show history should only available to people who are able to create revision ? (= guest)
+
+    const showHistory = unrevisedRevision !== undefined && unrevisedRevision > 0
+
+    if (showHistory) {
+      return renderUnrevised()
     }
 
     const editHref =
@@ -100,36 +125,36 @@ export function UserTools({
         ? `/taxonomy/term/update/${id}`
         : `/entity/repository/add-revision/${id}`
 
-    return (
-      !showHistory && (
-        <IconButton href={editHref} hideOnSmall>
-          <FontAwesomeIcon icon={faPencilAlt} size="1x" /> {strings.edit.button}
-        </IconButton>
-      )
-    )
+    return renderButton({
+      icon: faPencilAlt,
+      hideOnSmall: true,
+      href: editHref,
+      text: ` ${strings.edit.button}`,
+      size: aboveContent ? 'small' : 'large',
+    })
   }
 
   function renderUnrevised() {
-    return (
-      showHistory && (
-        <IconButton href={`/entity/repository/history/${id}`}>
-          <FontAwesomeIcon icon={faClock} size="1x" />{' '}
-          {`${strings.edit.unrevised} (${unrevisedRevision || ''})`}
-        </IconButton>
-      )
-    )
+    return renderButton({
+      icon: faClock,
+      text: ` ${strings.edit.unrevised} (${unrevisedRevision || ''})`,
+      href: `/entity/repository/history/${id}`,
+      size: aboveContent ? 'small' : 'large',
+    })
   }
 
   function renderShare() {
-    return (
-      <IconButton onClick={onShare} as="button">
-        <FontAwesomeIcon icon={faShareAlt} size="1x" /> {strings.share.button}!
-      </IconButton>
-    )
+    return renderButton({
+      icon: faShareAlt,
+      text: ` ${strings.share.button}!`,
+      asButton: true,
+      onClick: onShare,
+      size: aboveContent ? 'small' : 'large',
+    })
   }
 
   function renderExtraTools() {
-    if (!(loaded && auth.current && loggedInData && data && lic)) return null
+    if (!lic || !loggedInData) return null // safeguard
     const supportedTypes = [
       'Page',
       'Article',
@@ -144,92 +169,97 @@ export function UserTools({
     ]
     if (supportedTypes.indexOf(data.type) === -1) return null
 
-    const isLargeScreen = getBrowserWidth() > theme.breakpointsInt.lg
-
     const Comp = lic.AuthorToolsHoverMenu
 
     return (
       <LazyTippy
         interactive
         content={<Comp data={data} />}
-        placement={isLargeScreen ? 'left-end' : 'bottom'}
+        placement={aboveContent ? 'bottom' : 'left-end'}
         delay={[0, 300]}
-        interactiveBorder={isLargeScreen ? 40 : 10}
+        interactiveBorder={aboveContent ? 10 : 40}
       >
-        <IconButton as="button" hideOnSmall>
-          <FontAwesomeIcon icon={faTools} size="1x" />{' '}
-          {loggedInData.strings.tools}
-        </IconButton>
+        <div>
+          {renderButton({
+            icon: faTools,
+            asButton: true,
+            hideOnSmall: true,
+            text: ` ${loggedInData.strings.tools}`,
+            size: aboveContent ? 'small' : 'large',
+          })}
+        </div>
       </LazyTippy>
     )
   }
 
-  function renderProfileMenu() {
-    if (!(loaded && auth.current && loggedInData)) return null
-    return (
-      <AbsoluteWrapper>
-        <BoxWrapper>
-          <IconButton href="/user/settings">
-            <FontAwesomeIcon icon={faPencilAlt} size="1x" />{' '}
-            {loggedInData?.strings.authorMenu.editProfile}
-          </IconButton>
-        </BoxWrapper>
-      </AbsoluteWrapper>
-    )
+  function renderProfileButtons() {
+    return renderButton({
+      icon: faPencilAlt,
+      href: '/user/settings',
+      text: ` ${loggedInData?.strings.authorMenu.editProfile}`,
+      size: aboveContent ? 'small' : 'large',
+    })
   }
 }
 
-const AbsoluteWrapper = styled.nav<{ hideOnLarge?: boolean }>`
-  @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
-    position: absolute;
-    right: 32px;
-    bottom: 32px;
-    height: 100%;
-    align-items: flex-end;
-    display: ${(props) => (props.hideOnLarge ? 'none' : 'flex')};
-  }
-`
+interface RenderButtonProps {
+  icon: IconDefinition
+  text: string
+  href?: string
+  asButton?: boolean
+  hideOnSmall?: boolean
+  onClick?: () => void
+  size: 'small' | 'large'
+}
 
-const BoxWrapper = styled.div`
-  @media (max-width: ${(props) => props.theme.breakpointsMax.lg}) {
-    display: block;
-    margin-right: 16px;
-    margin-top: -15px;
-    margin-bottom: 25px;
-    display: flex;
-    justify-content: flex-end;
+function renderButton({
+  icon,
+  text,
+  href,
+  asButton,
+  hideOnSmall,
+  onClick,
+  size,
+}: RenderButtonProps) {
+  const Comp = asButton
+    ? (props: any) => <button {...props}></button>
+    : (props: any) => <a {...props}></a>
+
+  if (size == 'small') {
+    return (
+      <Comp
+        onClick={onClick}
+        href={href}
+        className={clsx(
+          'serlo-button serlo-make-interactive-green',
+          'text-sm m-0.5 ml-1 leading-browser',
+          { 'hidden sm:block': hideOnSmall }
+        )}
+      >
+        {renderInner()}
+      </Comp>
+    )
+  } else {
+    return (
+      <Comp
+        onClick={onClick}
+        href={href}
+        className={clsx(
+          'serlo-button serlo-make-interactive-transparent-green',
+          'py-1 m-1 serlo-input-font-reset leading-browser'
+        )}
+      >
+        {renderInner()}
+      </Comp>
+    )
   }
 
-  @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
-    position: sticky;
-    bottom: 32px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+  function renderInner() {
+    return (
+      <>
+        <FontAwesomeIcon icon={icon} className="lg: mr-0.5" />
+        {text}
+      </>
+    )
   }
-`
-
-const IconButton = styled.a<{ hideOnSmall?: boolean }>`
-  @media (max-width: ${(props) => props.theme.breakpointsMax.sm}) {
-    display: ${(props) => (props.hideOnSmall ? 'none' : 'block')} !important;
-  }
-
-  @media (max-width: ${(props) => props.theme.breakpointsMax.lg}) {
-    ${makeGreenButton}
-
-    font-size: 0.9rem;
-    margin: 2px;
-    margin-left: 3px;
-  }
-
-  @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
-    ${makeGreenTransparentButton}
-    ${inputFontReset}
-    padding-top: 4px;
-    padding-bottom: 4px;
-    margin: 4px;
-    svg {
-      margin-right: 2px;
-    }
-  }
-`
+}
