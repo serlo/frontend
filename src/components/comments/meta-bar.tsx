@@ -1,14 +1,13 @@
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Tippy from '@tippyjs/react'
-import * as React from 'react'
-import styled from 'styled-components'
+import clsx from 'clsx'
+import { useState } from 'react'
 import { Instance, Props } from 'tippy.js'
 
 import { UserLink } from '../user/user-link'
 import { DropdownMenu } from './dropdown-menu'
 import { TimeAgo } from '@/components/time-ago'
-import { makeTransparentButton, makeMargin } from '@/helper/css'
 
 export interface MetaBarProps {
   user: { username: string; id: number }
@@ -29,15 +28,24 @@ export function MetaBar({
   highlight,
   threadId,
 }: MetaBarProps) {
-  const [
-    tippyInstance,
-    setTippyInstance,
-  ] = React.useState<Instance<Props> | null>(null)
+  const [tippyInstance, setTippyInstance] = useState<Instance<Props> | null>(
+    null
+  )
 
   const date = new Date(timestamp)
+
   return (
-    <MetaBarBox>
-      <StyledUserLink user={user} withIcon path={['comment-user', id]} />
+    <div className={clsx('serlo-make-margin mb-2 flex justify-between')}>
+      <UserLink
+        user={user}
+        withIcon
+        path={['comment-user', id]}
+        className={clsx(
+          'serlo-button text-brand text-lg font-bold',
+          '-ml-1 pl-1 flex items-center hover:no-underline',
+          'hover:text-brand hover:bg-brand-150'
+        )}
+      />
 
       <Tippy
         interactive
@@ -60,41 +68,15 @@ export function MetaBar({
           )
         }
       >
-        <TimeAgoButton title={date.toLocaleString('de-DE')}>
+        <button
+          title={date.toLocaleString('de-DE')}
+          className={clsx(
+            'serlo-button font-normal text-brand-light text-base h-7'
+          )}
+        >
           <TimeAgo datetime={date} /> <FontAwesomeIcon icon={faCaretDown} />
-        </TimeAgoButton>
+        </button>
       </Tippy>
-    </MetaBarBox>
+    </div>
   )
 }
-
-const TimeAgoButton = styled.button`
-  ${makeTransparentButton}
-  font-weight: normal;
-  color: ${(props) => props.theme.colors.lightblue};
-  font-size: 1rem;
-  height: 27px;
-`
-
-const StyledUserLink = styled(UserLink)`
-  ${makeTransparentButton}
-  font-size: 1.125rem;
-  font-weight: bold;
-  margin-left: -5px;
-  padding-left: 3px;
-  display: flex;
-  align-items: center;
-  &:hover {
-    color: ${(props) => props.theme.colors.brand};
-    background-color: ${(props) => props.theme.colors.lightBlueBackground};
-  }
-`
-
-const MetaBarBox = styled.div`
-  ${makeMargin}
-  color: #222;
-  margin-bottom: 8px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`

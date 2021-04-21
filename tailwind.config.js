@@ -1,9 +1,10 @@
-const { tint } = require('polished')
+const { tint, lighten } = require('polished')
 const plugin = require('tailwindcss/plugin')
 const colors = require('tailwindcss/colors')
 
 // base colors
 const brand = '#007ec1'
+const brandGreen = '#95bc1a'
 
 module.exports = {
   mode: 'jit',
@@ -19,6 +20,11 @@ module.exports = {
           150: tint(0.85, brand), // <-lightBlueBackground
           100: tint(0.94, brand), // <- bluewhite
           50: tint(0.96, brand), // <- lightBackground
+        },
+        brandgreen: {
+          DEFAULT: brandGreen,
+          light: lighten(0.35, brandGreen),
+          lighter: lighten(0.45, brandGreen),
         },
         truegray: colors.trueGray,
       },
@@ -54,6 +60,15 @@ module.exports = {
       fontFamily: {
         serlo: 'Karmilla, sans-serif',
       },
+      minHeight: {
+        8: '32px',
+      },
+      maxWidth: {
+        65: '260px',
+      },
+      fontSize: {
+        '2.5xl': '1.75rem',
+      },
     },
     screens: {
       mobile: '500px',
@@ -85,6 +100,9 @@ module.exports = {
         },
         '.special-increment-list-counter': {
           'counter-increment': 'list-counter',
+        },
+        '.special-hyphens-auto': {
+          hyphens: 'auto',
         },
       })
 
