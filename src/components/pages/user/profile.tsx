@@ -106,11 +106,10 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   }
 
   function renderUserTools() {
-    if (!isOwnProfile) return null // -> ssr warning
     return (
       <UserTools
         id={id}
-        hideEdit={false}
+        hideEditProfile={!isOwnProfile}
         data={{
           type: 'Profile',
           id: id,

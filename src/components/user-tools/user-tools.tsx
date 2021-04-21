@@ -19,7 +19,8 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 interface UserToolsProps {
   id: number
   onShare?: () => void
-  hideEdit: boolean
+  hideEdit?: boolean
+  hideEditProfile?: boolean
   data: AuthorToolsData
   unrevisedRevision?: number
   aboveContent?: boolean
@@ -36,6 +37,7 @@ export function UserTools({
   data,
   unrevisedRevision,
   aboveContent,
+  hideEditProfile,
 }: UserToolsProps) {
   const { strings } = useInstanceData()
   const auth = useAuthentication()
@@ -204,7 +206,7 @@ export function UserTools({
   }
 
   function renderProfileButtons() {
-    if (!loggedInData) {
+    if (!loggedInData || hideEditProfile) {
       return null
     }
     return (
