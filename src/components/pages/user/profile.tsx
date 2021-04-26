@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import AuthorBadge from '@/assets-webkit/img/community/badge-author.svg'
 import DonorBadge from '@/assets-webkit/img/community/badge-donor.svg'
 import ReviewerBadge from '@/assets-webkit/img/community/badge-reviewer.svg'
-import { useAuth } from '@/auth/use-auth'
+import { useAuthentication } from '@/auth/use-authentication'
 import { CommentArea } from '@/components/comments/comment-area'
 import { StyledH1 } from '@/components/tags/styled-h1'
 import { StyledH2 } from '@/components/tags/styled-h2'
@@ -25,7 +25,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   const { strings } = useInstanceData()
   const { id, username, description, lastLogin, imageUrl, date } = userData
   const { activeDonor, activeReviewer, activeAuthor } = userData
-  const auth = useAuth()
+  const auth = useAuthentication()
   const isOwnProfile = auth.current?.username === username
   const lastLoginDate = lastLogin ? new Date(lastLogin) : undefined
   const registerDate = new Date(date)

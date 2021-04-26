@@ -83,7 +83,7 @@ export function PrivacyWrapper({
             {replacePlaceholders(strings.embed.text, {
               provider: <b>{provider}</b>,
               privacypolicy: (
-                <a href="/privacy" target="_blank">
+                <a href="/privacy" target="_blank" className="underline">
                   {strings.entities.privacyPolicy}
                 </a>
               ),

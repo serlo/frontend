@@ -87,7 +87,12 @@ module.exports = {
     'import/no-self-import': 'error',
     'import/no-unassigned-import': [
       'error',
-      { allow: ['@/assets-webkit/fonts/**/*.css'] },
+      {
+        allow: [
+          '@/assets-webkit/fonts/**/*.css',
+          '@/assets-webkit/styles/**/*.css',
+        ],
+      },
     ],
     'import/no-useless-path-segments': [
       'error',
@@ -148,4 +153,5 @@ module.exports = {
       },
     },
   ],
+  ignorePatterns: ['tailwind.config.js', 'postcss.config.js', 'next.config.js'],
 }

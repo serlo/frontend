@@ -97,7 +97,8 @@ export const instanceData = {
       check: "Vérifier",
       yourAnswer: "Ta réponse...",
       chooseOption: "Sélectionne une des options :",
-      trashedNotice: "Ce contenu est marqué pour être supprimé."
+      trashedNotice: "Ce contenu est marqué pour être supprimé.",
+      strategy: 'Solution Strategy'
     },
     consent: {
       title: "Consentement pour le contenu externe",
@@ -166,12 +167,12 @@ export const instanceData = {
     },
     profiles: {
       aboutMe: "À propos de moi",
-      activeSince: 'With Serlo since',
+      activeSince: "Avec Serlo depuis",
       recentActivities: "Activités récentes",
       showAllActivities: "Afficher toutes les activités",
-      lastLogin: 'Last login',
+      lastLogin: "Dernière connexion",
       roles: "Rôles",
-      directMessage: 'Direct message'
+      directMessage: "Message direct "
     },
     notices: {
       welcome: "👋 Bienvenue %username%!",

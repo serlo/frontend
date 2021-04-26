@@ -1,9 +1,8 @@
 import { Comment as CommentType } from '@serlo/api'
+import clsx from 'clsx'
 import escapeHtml from 'escape-html'
 import * as React from 'react'
-import styled, { css } from 'styled-components'
 
-import { StyledP } from '../tags/styled-p'
 import { MetaBar } from './meta-bar'
 import { scrollIfNeeded } from '@/helper/scroll'
 
@@ -30,7 +29,7 @@ export function Comment({
   const escapedContent = escapeHtml(content)
 
   const escapedWithLinks = escapedContent.replace(urlFinder, (match) => {
-    return `<a href="${match}" rel="ugc nofollow">${match}</a>`
+    return `<a href="${match}" rel="ugc nofollow" class="text-brand break-all">${match}</a>`
   })
 
   React.useEffect(() => {
@@ -48,7 +47,20 @@ export function Comment({
   }, [isHighlight])
 
   return (
-    <Wrapper ref={commentRef} $isParent={isParent} id={`comment-${id}`}>
+    <div
+      ref={commentRef}
+      id={`comment-${id}`}
+      className={clsx(
+        'transition-colors duration-700 ease-out',
+        isParent
+          ? 'rounded-2xl'
+          : clsx(
+              'border-l-6 border-brand-150',
+              'pt-1 pb-0.5 pl-1 mt-8 mb-5 ml-4',
+              'rounded-r-2xl'
+            )
+      )}
+    >
       <MetaBar
         user={author}
         timestamp={createdAt}
@@ -58,33 +70,10 @@ export function Comment({
         id={id}
         highlight={highlight}
       />
-      <StyledP dangerouslySetInnerHTML={{ __html: escapedWithLinks }}></StyledP>
-    </Wrapper>
+      <p
+        className={clsx('serlo-p mb-0 whitespace-pre-line break-words')}
+        dangerouslySetInnerHTML={{ __html: escapedWithLinks }}
+      ></p>
+    </div>
   )
 }
-
-const Wrapper = styled.div<{ $isParent?: boolean }>`
-  ${(props) =>
-    !props.$isParent &&
-    css`
-      border-left: 7px solid
-        ${(props) => props.theme.colors.lightBlueBackground};
-      padding: 3px 0 2px 4px;
-      margin: 25px 0 20px ${(props) => props.theme.defaults.sideSpacingMobile};
-    `}
-
-  > p {
-    margin-bottom: 0;
-    white-space: pre-line;
-    hyphens: auto;
-    overflow-wrap: break-word;
-
-    > a {
-      color: ${(props) => props.theme.colors.brand};
-      word-break: break-all; /* breaks without hyphen*/
-    }
-  }
-
-  border-radius: ${(props) => (props.$isParent ? '15px' : '0 15px 15px 0')};
-  transition: background-color 0.8s ease-out;
-`

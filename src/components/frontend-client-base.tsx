@@ -1,23 +1,25 @@
-import { useRouter } from 'next/router'
+import { AuthorizationPayload } from '@serlo/authorization'
+import { Router, useRouter } from 'next/router'
+import NProgress from 'nprogress'
 import * as React from 'react'
 import { ThemeProvider } from 'styled-components'
 
 import { ConditonalWrap } from './conditional-wrap'
 import { HeaderFooter } from './header-footer'
 import { MaxWidthDiv } from './navigation/max-width-div'
-import { NProgressRouter } from './navigation/n-progress-router'
 import { RelativeContainer } from './navigation/relative-container'
 import { ToastNotice } from './toast-notice'
-import { useAuth } from '@/auth/use-auth'
+import { useAuthentication } from '@/auth/use-authentication'
 import { PrintWarning } from '@/components/content/print-warning'
+import { AuthorizationPayloadProvider } from '@/contexts/authorization-payload-context'
 import { EntityIdProvider } from '@/contexts/entity-id-context'
 import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInComponentsProvider } from '@/contexts/logged-in-components'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
 import { InstanceData, LoggedInData } from '@/data-types'
-import { FontFix, PrintStylesheet } from '@/helper/css'
 import type { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { frontendOrigin } from '@/helper/frontent-origin'
+import type { LoggedInStuff } from '@/helper/logged-in-stuff-chunk'
 import { theme } from '@/theme'
 
 export type FrontendClientBaseProps = React.PropsWithChildren<{
@@ -25,7 +27,14 @@ export type FrontendClientBaseProps = React.PropsWithChildren<{
   noContainers?: boolean
   showNav?: boolean
   entityId?: number
+  authorization?: AuthorizationPayload
 }>
+
+Router.events.on('routeChangeStart', () => {
+  NProgress.start()
+})
+Router.events.on('routeChangeComplete', () => NProgress.done())
+Router.events.on('routeChangeError', () => NProgress.done())
 
 export function FrontendClientBase({
   children,
@@ -33,6 +42,7 @@ export function FrontendClientBase({
   noContainers,
   showNav,
   entityId,
+  authorization,
 }: FrontendClientBaseProps) {
   const { locale } = useRouter()
   const [instanceData] = React.useState<InstanceData>(() => {
@@ -49,6 +59,11 @@ export function FrontendClientBase({
     }
   })
 
+  const [
+    authorizationPayload,
+    setAuthorizationPayload,
+  ] = React.useState<AuthorizationPayload | null>(authorization ?? null)
+
   //React.useEffect(storePageData, [initialProps])
 
   React.useEffect(() => {
@@ -60,11 +75,14 @@ export function FrontendClientBase({
     sessionStorage.setItem('currentPathname', window.location.pathname)
   })
 
-  const auth = useAuth()
+  const auth = useAuthentication()
   const [loggedInData, setLoggedInData] = React.useState<LoggedInData | null>(
     getCachedLoggedInData()
   )
-  const [loggedInComponents, setLoggedInComponents] = React.useState<any>(null)
+  const [
+    loggedInComponents,
+    setLoggedInComponents,
+  ] = React.useState<LoggedInStuff | null>(null)
 
   //console.log('Comps', loggedInComponents)
 
@@ -73,42 +91,53 @@ export function FrontendClientBase({
     instanceData.lang,
     loggedInData,
     loggedInComponents,
+    authorizationPayload,
   ])
+
+  React.useEffect(() => {
+    if (loggedInComponents && auth && auth.current) {
+      const fetch = loggedInComponents.createAuthAwareGraphqlFetch(auth)
+      fetch(JSON.stringify({ query: 'query{authorization}' }))
+        .then((value) => {
+          setAuthorizationPayload(value.authorization)
+        })
+        .catch(() => {})
+    }
+  }, [loggedInComponents, auth])
 
   // dev
   //console.dir(initialProps)
 
   return (
     <ThemeProvider theme={theme}>
-      <FontFix />
-      <NProgressRouter />
-      <PrintStylesheet />
       <PrintWarning warning={instanceData.strings.print.warning} />
       <InstanceDataProvider value={instanceData}>
         <LoggedInComponentsProvider value={loggedInComponents}>
-          <LoggedInDataProvider value={loggedInData}>
-            <EntityIdProvider value={entityId || null}>
-              <ConditonalWrap
-                condition={!noHeaderFooter}
-                wrapper={(kids) => <HeaderFooter>{kids}</HeaderFooter>}
-              >
+          <AuthorizationPayloadProvider value={authorizationPayload}>
+            <LoggedInDataProvider value={loggedInData}>
+              <EntityIdProvider value={entityId || null}>
                 <ConditonalWrap
-                  condition={!noContainers}
-                  wrapper={(kids) => (
-                    <RelativeContainer>
-                      <MaxWidthDiv showNav={showNav}>
-                        <main>{kids}</main>
-                      </MaxWidthDiv>
-                    </RelativeContainer>
-                  )}
+                  condition={!noHeaderFooter}
+                  wrapper={(kids) => <HeaderFooter>{kids}</HeaderFooter>}
                 >
-                  {/* should not be necessary…?*/}
-                  {children as JSX.Element}
+                  <ConditonalWrap
+                    condition={!noContainers}
+                    wrapper={(kids) => (
+                      <RelativeContainer>
+                        <MaxWidthDiv showNav={showNav}>
+                          <main>{kids}</main>
+                        </MaxWidthDiv>
+                      </RelativeContainer>
+                    )}
+                  >
+                    {/* should not be necessary…?*/}
+                    {children as JSX.Element}
+                  </ConditonalWrap>
                 </ConditonalWrap>
-              </ConditonalWrap>
-              <ToastNotice />
-            </EntityIdProvider>
-          </LoggedInDataProvider>
+                <ToastNotice />
+              </EntityIdProvider>
+            </LoggedInDataProvider>
+          </AuthorizationPayloadProvider>
         </LoggedInComponentsProvider>
       </InstanceDataProvider>
     </ThemeProvider>
@@ -161,6 +190,9 @@ export function FrontendClientBase({
             setLoggedInData(values[0])
           }
           if (values[1]) setLoggedInComponents(values[1].Components)
+          if (authorizationPayload == null) {
+            setAuthorizationPayload({})
+          }
         })
         .catch(() => {})
     }

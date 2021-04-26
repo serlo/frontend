@@ -6,11 +6,10 @@ import { Fragment } from 'react'
 
 import { SubButtonStyle, SubLink } from '../navigation/menu'
 import { AuthorToolsData, HoverSubList, Li } from './author-tools-hover-menu'
-import { useAuth } from '@/auth/use-auth'
+import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UserRoles } from '@/data-types'
-// import { setStateMutation } from '@/helper/mutations'
 import { csrReload } from '@/helper/csr-reload'
 import { useSetUuidStateMutation } from '@/helper/mutations'
 import { showToastNotice } from '@/helper/show-toast-notice'
@@ -66,7 +65,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   const loggedInData = useLoggedInData()
   const instanceData = useInstanceData()
   const { isSubscribed, updateIsSubscribed } = useIsSubscribed(data.id)
-  const auth = useAuth()
+  const auth = useAuthentication()
 
   const setUuidState = useSetUuidStateMutation()
 

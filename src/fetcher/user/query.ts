@@ -2,6 +2,7 @@ import { gql } from 'graphql-request'
 
 export const userQuery = gql`
   query userUuid($path: String!, $instance: Instance!) {
+    authorization
     uuid(alias: { path: $path, instance: $instance }) {
       __typename
       id

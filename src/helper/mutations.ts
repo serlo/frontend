@@ -19,11 +19,14 @@ import { csrReload } from './csr-reload'
 import { showToastNotice } from './show-toast-notice'
 import { triggerSentry } from './trigger-sentry'
 import { endpoint } from '@/api/endpoint'
-import { AuthPayload, useAuth } from '@/auth/use-auth'
+import {
+  AuthenticationPayload,
+  useAuthentication,
+} from '@/auth/use-authentication'
 import { useEntityId } from '@/contexts/entity-id-context'
 
 export function useSetUuidStateMutation() {
-  const auth = useAuth()
+  const auth = useAuthentication()
   const mutation = gql`
     mutation setUuidState($input: UuidSetStateInput!) {
       uuid {
@@ -54,7 +57,7 @@ export function useSetUuidStateMutation() {
 }
 
 export function useSetNotificationStateMutation() {
-  const auth = useAuth()
+  const auth = useAuthentication()
   const mutation = gql`
     mutation setState($input: NotificationSetStateInput!) {
       notification {
@@ -80,7 +83,7 @@ export function useSetNotificationStateMutation() {
 }
 
 export function useThreadArchivedMutation() {
-  const auth = useAuth()
+  const auth = useAuthentication()
   const entityId = useEntityId()
   const mutation = gql`
     mutation setState($input: ThreadSetThreadArchivedInput!) {
@@ -111,7 +114,7 @@ export function useThreadArchivedMutation() {
 }
 
 export function useSetThreadStateMutation() {
-  const auth = useAuth()
+  const auth = useAuthentication()
   const entityId = useEntityId()
   const mutation = gql`
     mutation setState($input: ThreadSetThreadStateInput!) {
@@ -137,7 +140,7 @@ export function useSetThreadStateMutation() {
 }
 
 export function useSetCommentStateMutation() {
-  const auth = useAuth()
+  const auth = useAuthentication()
   const entityId = useEntityId()
   const mutation = gql`
     mutation setState($input: ThreadSetCommentStateInput!) {
@@ -163,7 +166,7 @@ export function useSetCommentStateMutation() {
 }
 
 export function useCreateThreadMutation() {
-  const auth = useAuth()
+  const auth = useAuthentication()
   const mutation = gql`
     mutation createThread($input: ThreadCreateThreadInput!) {
       thread {
@@ -186,7 +189,7 @@ export function useCreateThreadMutation() {
 }
 
 export function useCreateCommentMutation() {
-  const auth = useAuth()
+  const auth = useAuthentication()
   const entityId = useEntityId()
   const mutation = gql`
     mutation createComment($input: ThreadCreateCommentInput!) {
@@ -232,7 +235,7 @@ export interface ApiError extends GraphQLError {
 }
 
 export async function mutationFetch(
-  auth: React.RefObject<AuthPayload>,
+  auth: React.RefObject<AuthenticationPayload>,
   query: string,
   input: MutationInput,
   isRetry?: boolean

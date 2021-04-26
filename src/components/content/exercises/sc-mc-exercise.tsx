@@ -1,6 +1,7 @@
 import { faCircle, faSquare } from '@fortawesome/free-regular-svg-icons'
 import { faCheckCircle, faCheckSquare } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import { useState, Fragment } from 'react'
 import styled, { css } from 'styled-components'
 
@@ -86,16 +87,18 @@ function SingleChoice({
                     if (e.key == 'Enter') setShowFeedback(true)
                   }}
                 />
-                <StyledLabel
-                  selected={selected === i}
+                <label
+                  className={clsx('serlo-styled-label', {
+                    'outline-gray': focused === i,
+                  })}
                   htmlFor={id}
-                  focused={focused === i}
                 >
                   <FontAwesomeIcon
                     icon={selected === i ? faCheckCircle : faCircle}
+                    className="text-xl mt-0.5 text-brand"
                   />
                   {renderNested(answer.content, `scoption${i}`)}
-                </StyledLabel>
+                </label>
               </ChoiceWrapper>
               {showFeedback &&
                 selected !== undefined &&
@@ -172,16 +175,18 @@ function MultipleChoice({
                   onFocus={() => setFocused(i)}
                   onBlur={() => setFocused(undefined)}
                 />
-                <StyledLabel
-                  selected={selected[i]}
+                <label
+                  className={clsx('serlo-styled-label', {
+                    'outline-gray': focused === i,
+                  })}
                   htmlFor={id}
-                  focused={focused === i}
                 >
                   <FontAwesomeIcon
                     icon={selected[i] ? faCheckSquare : faSquare}
+                    className="text-xl mt-0.5 text-brand"
                   />
                   {renderNested(answer.content, `mcoption${i}`)}
-                </StyledLabel>
+                </label>
               </ChoiceWrapper>
               {showFeedback &&
                 selected[i] &&
@@ -259,34 +264,6 @@ const StyledInput = styled.input`
     margin: 0;
     padding: 0;
     opacity: 0 !important;
-  }
-`
-
-const StyledLabel = styled.label<{ selected: boolean; focused?: boolean }>`
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-
-  > svg {
-    font-size: 1.33rem;
-    margin-top: 2px;
-    color: ${(props) => props.theme.colors.brand};
-
-    /* ${(props) =>
-      props.selected
-        ? props.theme.colors.brand
-        : props.theme.colors.lightBlueBackground}; */
-  }
-
-  ${(props) =>
-    props.focused &&
-    css`
-      outline: 1px dotted #212121;
-      outline: 5px auto -webkit-focus-ring-color;
-    `}
-
-  > div > * {
-    margin-left: 8px;
   }
 `
 

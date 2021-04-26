@@ -1,3 +1,4 @@
+import { AuthorizationPayload } from '@serlo/authorization'
 import { request } from 'graphql-request'
 
 import { convertState } from '../convert-state'
@@ -21,11 +22,10 @@ export async function requestRevision(
     id: revisionId,
   }
 
-  const { uuid } = await request<{ uuid: QueryResponseRevision }>(
-    endpoint,
-    revisionQuery,
-    variables
-  )
+  const { uuid, authorization } = await request<{
+    uuid: QueryResponseRevision
+    authorization: AuthorizationPayload
+  }>(endpoint, revisionQuery, variables)
 
   const cacheKey = `/${instance}/${revisionId}`
   const title = createTitle(uuid, instance)
@@ -141,6 +141,7 @@ export async function requestRevision(
         metaDescription: '',
       },
       cacheKey,
+      authorization,
     }
   }
 

@@ -1,13 +1,13 @@
 import { NextPage } from 'next'
 import { useEffect } from 'react'
 
-import { useAuth } from '@/auth/use-auth'
+import { useAuthentication } from '@/auth/use-authentication'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 
 //fallback for legacy routes /user/me and /user/public
 
 export const ProfileRedirectMe: NextPage = () => {
-  const auth = useAuth()
+  const auth = useAuthentication()
 
   useEffect(() => {
     if (auth.current) {

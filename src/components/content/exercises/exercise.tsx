@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import dynamic from 'next/dynamic'
 import { useState, useEffect } from 'react'
 import styled, { css } from 'styled-components'
@@ -6,7 +7,7 @@ import { LicenseNotice } from '../license-notice'
 import { ExerciseNumbering } from './exercise-numbering'
 import { InputExercise } from './input-exercise'
 import { ScMcExercise } from './sc-mc-exercise'
-import { useAuth } from '@/auth/use-auth'
+import { useAuthentication } from '@/auth/use-authentication'
 import { CommentAreaProps } from '@/components/comments/comment-area'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
@@ -30,7 +31,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
   const [solutionVisible, setVisible] = useState(false)
   const [randomId] = useState(Math.random().toString())
 
-  const auth = useAuth()
+  const auth = useAuthentication()
   const [loaded, setLoaded] = useState(false)
   useEffect(() => {
     setLoaded(true)
@@ -39,7 +40,11 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
   const lic = useLoggedInComponents()
 
   return (
-    <Wrapper grouped={node.grouped}>
+    <div
+      className={clsx('serlo-exercise-wrapper', {
+        'pt-2 mb-10': !node.grouped,
+      })}
+    >
       <ExerciseNumbering
         isChild={node.grouped}
         index={node.grouped ? node.positionInGroup! : node.positionOnPage!}
@@ -52,7 +57,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
       {renderToolsAndLicense()}
 
       {solutionVisible && renderSolution()}
-    </Wrapper>
+    </div>
   )
 
   function renderSolution() {
@@ -72,7 +77,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
     )
 
     return (
-      <SolutionBox>
+      <div className="serlo-solution-box">
         {renderNested(
           [
             {
@@ -93,7 +98,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
           )
         }
         <CommentArea id={node.context.solutionId!} />
-      </SolutionBox>
+      </div>
     )
   }
 
@@ -190,31 +195,6 @@ const StyledSpan = styled.span`
   width: 0.9rem;
 `
 
-const Wrapper = styled.div<{ grouped?: boolean }>`
-  margin-top: 40px;
-  margin-bottom: 10px;
-
-  ${(props) =>
-    !props.grouped &&
-    css`
-      margin-bottom: 40px;
-      padding-top: 7px;
-    `};
-
-  @media (hover: hover) {
-    input {
-      opacity: 0.2;
-      transition: opacity 0.2s ease-in;
-    }
-
-    &:hover {
-      input {
-        opacity: 1;
-      }
-    }
-  }
-`
-
 const SolutionToggle = styled.button<{ active: boolean }>`
   ${makeMargin}
   ${makeTransparentButton}
@@ -229,7 +209,7 @@ const SolutionToggle = styled.button<{ active: boolean }>`
     css`
       background-color: ${(props) => props.theme.colors.brand} !important;
       color: #fff !important;
-    `}
+    `};
 
   @media (hover: none) {
     &:hover {
@@ -239,14 +219,6 @@ const SolutionToggle = styled.button<{ active: boolean }>`
   }
 `
 
-const SolutionBox = styled.div`
-  padding-top: 10px;
-  padding-bottom: 10px;
-  ${makeMargin}
-  margin-bottom: ${(props) => props.theme.spacing.mb.block};
-  border-left: 8px solid ${(props) => props.theme.colors.lightBlueBackground};
-`
-
 const SolutionTools = styled.div`
-  ${makePadding}
+  ${makePadding};
 `

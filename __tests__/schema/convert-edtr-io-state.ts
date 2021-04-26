@@ -171,7 +171,14 @@ describe('edtr io plugins', () => {
         showLineNumbers: true,
       },
     })
-    expect(result).toEqual([{ type: 'code', code: '\n<html>Code</html>' }])
+    expect(result).toEqual([
+      {
+        type: 'code',
+        code: '\n<html>Code</html>',
+        language: 'html',
+        showLineNumbers: true,
+      },
+    ])
   })
 
   describe('plugin: multimediaExplanation', () => {

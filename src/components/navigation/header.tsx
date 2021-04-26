@@ -7,13 +7,13 @@ import { Menu } from './menu'
 import { MobileMenu } from './mobile-menu'
 import { MobileMenuButton } from './mobile-menu-button'
 import { SearchInput } from './search-input'
-import { useAuth } from '@/auth/use-auth'
+import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 import { makeResponsivePadding } from '@/helper/css'
 
 export function Header() {
   const [isOpen, setOpen] = useState(false)
-  const auth = useAuth()
+  const auth = useAuthentication()
   const { headerData, strings } = useInstanceData()
 
   // compat: close mobile menu on client side navigation, we need the global Router instance

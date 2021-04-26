@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 
 import { Link } from '../content/link'
-import { AuthPayload } from '@/auth/use-auth'
+import { AuthenticationPayload } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -27,7 +27,7 @@ const menuIconMapping = {
 
 export interface MenuProps {
   data: HeaderData
-  auth: AuthPayload
+  auth: AuthenticationPayload
 }
 
 export function Menu(props: MenuProps) {

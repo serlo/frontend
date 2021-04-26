@@ -1,3 +1,4 @@
+import { AuthorizationPayload } from '@serlo/authorization'
 import { request } from 'graphql-request'
 
 import { convertState } from '../convert-state'
@@ -10,7 +11,10 @@ export async function requestUser(
   path: string,
   instance: string
 ): Promise<UserPage> {
-  const { uuid } = await request<{ uuid: User }>(endpoint, userQuery, {
+  const { uuid, authorization } = await request<{
+    uuid: User
+    authorization: AuthorizationPayload
+  }>(endpoint, userQuery, {
     path,
     instance,
   })
@@ -24,6 +28,7 @@ export async function requestUser(
         imageUrl: `https://community.serlo.org/avatar/${uuid.username}`,
         description: getDescription(uuid),
       },
+      authorization,
     }
   } else {
     throw new Error('User not found')

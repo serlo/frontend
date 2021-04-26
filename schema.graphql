@@ -542,7 +542,7 @@ type GroupedExerciseRevisionCursor {
     node: GroupedExerciseRevision!
 }
 
-type License implements InstanceAware {
+type License {
     agreement: String!
     content: String!
     default: Boolean!
@@ -661,18 +661,12 @@ type Query {
     activeAuthors(after: String, before: String, first: Int, last: Int): UserConnection!
     activeDonors(after: String, before: String, first: Int, last: Int): UserConnection!
     activeReviewers(after: String, before: String, first: Int, last: Int): UserConnection!
+    authorization: JSON!
     license(id: Int!): License
     notificationEvent(id: Int!): AbstractNotificationEvent
     notifications(after: String, before: String, first: Int, last: Int, unread: Boolean): NotificationConnection!
-    subscriptions(after: String, before: String, first: Int, last: Int): QuerySubscriptionResult!
+    subscriptions(after: String, before: String, first: Int, last: Int): AbstractUuidConnection!
     uuid(alias: AliasInput, id: Int): AbstractUuid
-}
-
-type QuerySubscriptionResult {
-    edges: [SubscriptionCursor!]!
-    nodes: [AbstractUuid!]!
-    pageInfo: PageInfo!
-    totalCount: Int!
 }
 
 type RejectRevisionNotificationEvent implements AbstractNotificationEvent & InstanceAware {
@@ -704,6 +698,23 @@ type RemoveTaxonomyLinkNotificationEvent implements AbstractNotificationEvent & 
     instance: Instance!
     objectId: Int!
     parent: TaxonomyTerm!
+}
+
+type ScopedRole {
+    role: Role!
+    scope: String
+}
+
+type ScopedRoleConnection {
+    edges: [ScopedRoleCursor!]!
+    nodes: [ScopedRole!]!
+    pageInfo: PageInfo!
+    totalCount: Int!
+}
+
+type ScopedRoleCursor {
+    cursor: String!
+    node: ScopedRole!
 }
 
 type SetLicenseNotificationEvent implements AbstractNotificationEvent & InstanceAware {
@@ -790,11 +801,6 @@ type SolutionRevisionConnection {
 type SolutionRevisionCursor {
     cursor: String!
     node: SolutionRevision!
-}
-
-type SubscriptionCursor {
-    cursor: String!
-    node: AbstractUuid!
 }
 
 type SubscriptionMutation {
@@ -906,6 +912,7 @@ type User implements AbstractUuid & ThreadAware {
     description: String
     id: Int!
     lastLogin: DateTime
+    roles(after: String, before: String, first: Int, last: Int): ScopedRoleConnection!
     threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
     trashed: Boolean!
     username: String!
@@ -983,6 +990,17 @@ enum Instance {
     fr
     hi
     ta
+}
+
+enum Role {
+    admin
+    architect
+    guest
+    login
+    moderator
+    reviewer
+    staticPagesBuilder
+    sysadmin
 }
 
 enum TaxonomyTermType {

@@ -7,7 +7,7 @@ import styled, { css } from 'styled-components'
 
 import { PageTitle } from '../content/page-title'
 import type { CheckoutRejectButtonsProps } from './checkout-reject-buttons'
-import { useAuth } from '@/auth/use-auth'
+import { useAuthentication } from '@/auth/use-authentication'
 import { Geogebra } from '@/components/content/geogebra'
 import { HSpace } from '@/components/content/h-space'
 import { Link } from '@/components/content/link'
@@ -41,7 +41,7 @@ export interface RevisionProps {
 type DisplayMode = 'this' | 'current' | 'compare'
 
 export function Revision({ data }: RevisionProps) {
-  const auth = useAuth()
+  const auth = useAuthentication()
   const { strings } = useInstanceData()
   const isCurrentRevision = data.thisRevision.id === data.currentRevision.id
   const [displayMode, setDisplayMode] = React.useState<DisplayMode>(
@@ -248,7 +248,7 @@ const BoxHeader = styled(StyledP)`
 `
 
 const Button = styled.button<{ current?: boolean }>`
-  ${makeTransparentButton}
+  ${makeTransparentButton};
   margin-left: 5px;
 
   ${(props) =>
@@ -273,7 +273,7 @@ const BackButton = styled(Link)`
 `
 
 const MetaBar = styled.div`
-  ${makePadding}
+  ${makePadding};
   display: flex;
   justify-content: space-between;
   position: sticky;
@@ -287,7 +287,7 @@ const MetaBar = styled.div`
 
 const DiffViewerWrapper = styled.div`
   pre {
-    ${inputFontReset}
+    ${inputFontReset};
     font-size: 1.125rem !important;
   }
 `

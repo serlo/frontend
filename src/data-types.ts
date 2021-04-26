@@ -1,4 +1,5 @@
 import { TaxonomyTermType } from '@serlo/api'
+import { AuthorizationPayload } from '@serlo/authorization'
 
 import { Instance } from './fetcher/query-types'
 import { instanceData, instanceLandingData, loggedInData } from '@/data/en'
@@ -193,6 +194,7 @@ export interface EntityPageBase {
   horizonData?: HorizonData
   newsletterPopup: boolean
   cacheKey?: string // save page data to session storage
+  authorization: AuthorizationPayload
 }
 
 // Breadcrumb entries are shown nexts to each other, with possible ellipsis in between
@@ -617,6 +619,8 @@ export interface FrontendVideoNode {
 export interface FrontendCodeNode {
   type: 'code'
   code: string
+  language: string
+  showLineNumbers: boolean
   children?: undefined
 }
 

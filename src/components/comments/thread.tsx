@@ -1,12 +1,9 @@
 import { Thread as ThreadType } from '@serlo/api'
 import * as React from 'react'
-import styled from 'styled-components'
 
-import { StyledP } from '../tags/styled-p'
 import { Comment } from './comment'
 import { CommentsData } from './comment-area'
 import { useInstanceData } from '@/contexts/instance-context'
-import { makeLightButton } from '@/helper/css'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 interface ThreadProps {
@@ -29,10 +26,10 @@ export function Thread({
   const { strings } = useInstanceData()
 
   return (
-    <ThreadWrapper key={thread.id}>
+    <div className="mb-11" key={thread.id}>
       {renderComments([thread.comments.nodes[0]], thread.id, true)}
       {renderThreadComments(thread.comments.nodes.slice(1), thread.id)}
-    </ThreadWrapper>
+    </div>
   )
 
   function renderThreadComments(comments: CommentsData, threadId: string) {
@@ -49,8 +46,9 @@ export function Thread({
     return (
       <>
         {renderComments([comments[0]], threadId)}
-        <StyledP>
-          <ShowChildrenButton
+        <p className="serlo-p">
+          <button
+            className="serlo-button serlo-make-interactive-light"
             onClick={() => {
               if (onShowChildren) onShowChildren(threadId)
             }}
@@ -61,8 +59,8 @@ export function Thread({
                   number: (length - 1).toString(),
                 })}{' '}
             ▾
-          </ShowChildrenButton>
-        </StyledP>
+          </button>
+        </p>
       </>
     )
   }
@@ -87,11 +85,3 @@ export function Thread({
     })
   }
 }
-
-const ThreadWrapper = styled.div`
-  margin-bottom: 45px;
-`
-
-const ShowChildrenButton = styled.button`
-  ${makeLightButton}
-`
