@@ -7,15 +7,17 @@ import { LandingProps } from '@/data-types'
 import { getLandingData } from '@/helper/feature-i18n'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
-export default renderedPageNoHooks<LandingProps>(({ pageData }, { router }) => (
-  <FrontendClientBase noContainers>
-    {router.locale == 'de' ? (
-      <LandingDE data={pageData.landingData} />
-    ) : (
+export default renderedPageNoHooks<LandingProps>(({ pageData }, { router }) => {
+  return router.locale == 'de' ? (
+    <FrontendClientBase noContainers noHeaderFooter>
+      <LandingDE />
+    </FrontendClientBase>
+  ) : (
+    <FrontendClientBase noContainers>
       <LandingInternational data={pageData.landingData} />
-    )}
-  </FrontendClientBase>
-))
+    </FrontendClientBase>
+  )
+})
 
 export const getStaticProps: GetStaticProps<LandingProps> = async (context) => {
   return {

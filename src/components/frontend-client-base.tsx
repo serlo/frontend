@@ -110,7 +110,9 @@ export function FrontendClientBase({
 
   return (
     <ThemeProvider theme={theme}>
-      <PrintWarning warning={instanceData.strings.print.warning} />
+      {!noHeaderFooter && (
+        <PrintWarning warning={instanceData.strings.print.warning} />
+      )}
       <InstanceDataProvider value={instanceData}>
         <LoggedInComponentsProvider value={loggedInComponents}>
           <AuthorizationPayloadProvider value={authorizationPayload}>

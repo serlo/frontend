@@ -27,6 +27,17 @@ module.exports = {
           lighter: lighten(0.45, brandGreen),
         },
         truegray: colors.trueGray,
+        homepage: {
+          grey: '#eef1f5',
+          wally: '#f8f0e8',
+          font: '#414141',
+          blue: '#2f67e9',
+          yellow: '#ffbe5e',
+          green: '#2fceb1',
+          berry: '#857189',
+          brown: '#5f6062',
+          lightblue: '#488eff',
+        },
       },
       borderWidth: {
         3: '3px',
@@ -59,6 +70,8 @@ module.exports = {
       },
       fontFamily: {
         serlo: 'Karmilla, sans-serif',
+        homepage: 'Karla',
+        handwriting: 'Caveat',
       },
       minHeight: {
         8: '32px',
