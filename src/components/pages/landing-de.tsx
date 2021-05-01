@@ -13,7 +13,7 @@ export function LandingDE() {
   const [query, setQuery] = useState('')
 
   useEffect(() => {
-    void fetch('http://arrrg.de/serlo-stats/quickbar.json')
+    void fetch('https://arrrg.de/serlo-stats/quickbar.json')
       .then((res: any) => res.json())
       .then((data: any) => {
         setData(data)
