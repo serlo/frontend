@@ -79,7 +79,7 @@ export function LandingDE() {
           rel="stylesheet"
         />
       </Head>
-      (
+
       <div className="max-w-xl mt-20 mx-auto px-4">
         <input
           type="text"
@@ -126,7 +126,7 @@ export function LandingDE() {
           </div>
         )}
       </div>
-      )
+
       <div className="h-96" />
       <div className="h-96" />
     </>
