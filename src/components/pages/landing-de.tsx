@@ -16,17 +16,21 @@ export function LandingDE() {
     void fetch('https://arrrg.de/serlo-stats/quickbar.json')
       .then((res: any) => res.json())
       .then((data: any) => {
+        data.forEach((entry: any) => {
+          entry.pathLower = entry.path.map((x: any) => x.toLowerCase())
+          entry.titleLower = entry.title.toLowerCase()
+        })
         setData(data)
       })
   }, [])
 
-  const results = []
+  let results: any[] = []
 
   if (data && query) {
     const keywords = query.toLowerCase().split(' ')
     for (const entry of data) {
       let score = 0
-      if (entry.title.toLowerCase().includes(query.toLowerCase().trim())) {
+      if (entry.titleLower.includes(query.toLowerCase().trim())) {
         score += 100
       } else {
         let noHit = 0
@@ -34,13 +38,13 @@ export function LandingDE() {
         for (const keyword of keywords) {
           if (keyword) {
             kwCount++
-            if (entry.title.toLowerCase().includes(keyword)) {
+            if (entry.titleLower.includes(keyword)) {
               score += 10
               continue
             }
             let hitContinue = false
-            for (const p of entry.path) {
-              if (p.toLowerCase().includes(keyword)) {
+            for (const p of entry.pathLower) {
+              if (p.includes(keyword)) {
                 score += 2
                 hitContinue = true
                 break
@@ -61,9 +65,10 @@ export function LandingDE() {
       if (score > 0) {
         score += Math.log10(entry.count)
         results.push({ entry, score })
+        results.sort((a, b) => b.score - a.score)
+        results = results.slice(0, 7)
       }
     }
-    results.sort((a, b) => b.score - a.score)
   }
 
   return (
@@ -91,7 +96,7 @@ export function LandingDE() {
           />
           {data && query && (
             <div className="px-3 pb-2 border rounded shadow absolute top-14 w-full">
-              {results.slice(0, 7).map((x, i) => (
+              {results.map((x, i) => (
                 <p key={i} className="my-2">
                   <span className="text-sm text-gray-700">
                     {x.entry.path.join(' > ')}
