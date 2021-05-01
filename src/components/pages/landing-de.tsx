@@ -81,50 +81,53 @@ export function LandingDE() {
       </Head>
 
       <div className="max-w-xl mt-20 mx-auto px-4">
-        <input
-          type="text"
-          className="border-2 rounded-3xl px-3 h-12 w-full text-lg mb-2"
-          value={query}
-          onChange={(value) => setQuery(value.target.value)}
-        />
-        {data && query && (
-          <div className="px-3 pb-2 border rounded shadow">
-            {results.slice(0, 7).map((x, i) => (
-              <p key={i} className="my-2">
-                <span className="text-sm text-gray-700">
-                  {x.entry.path.join(' > ')}
-                  {x.entry.path.length > 0 ? ' > ' : ''}
-                </span>
+        <div className="relative">
+          <input
+            type="text"
+            className="border-2 rounded-3xl px-3 h-12 w-full text-lg mb-2"
+            value={query}
+            onChange={(value) => setQuery(value.target.value)}
+            placeholder="... heute lerne ich"
+          />
+          {data && query && (
+            <div className="px-3 pb-2 border rounded shadow absolute top-14 w-full">
+              {results.slice(0, 7).map((x, i) => (
+                <p key={i} className="my-2">
+                  <span className="text-sm text-gray-700">
+                    {x.entry.path.join(' > ')}
+                    {x.entry.path.length > 0 ? ' > ' : ''}
+                  </span>
+                  <a
+                    className="cursor-pointer"
+                    href={`https://de.serlo.org/${x.entry.id}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <span className="text-lg text-blue-500 hover:underline">
+                      {x.entry.title}
+                      {x.entry.isTax ? ' >' : ''}
+                    </span>
+                  </a>
+                </p>
+              ))}
+              <p className="cursor-pointer text-lg mt-2 text-gray-800 hover:text-black">
                 <a
-                  className="cursor-pointer"
-                  href={`https://de.serlo.org/${x.entry.id}`}
+                  href={`https://de.serlo.org/search?q=${encodeURIComponent(
+                    query
+                  )}`}
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <span className="text-lg text-blue-500 hover:underline">
-                    {x.entry.title}
-                    {x.entry.isTax ? ' >' : ''}
-                  </span>
+                  Auf Serlo nach{' '}
+                  <i>
+                    <strong>{query}</strong>
+                  </i>{' '}
+                  suchen ...
                 </a>
               </p>
-            ))}
-            <p className="cursor-pointer text-lg mt-2 text-gray-800 hover:text-black">
-              <a
-                href={`https://de.serlo.org/search?q=${encodeURIComponent(
-                  query
-                )}`}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Auf Serlo nach{' '}
-                <i>
-                  <strong>{query}</strong>
-                </i>{' '}
-                suchen ...
-              </a>
-            </p>
-          </div>
-        )}
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="h-96" />
