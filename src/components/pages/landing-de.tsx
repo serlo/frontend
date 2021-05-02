@@ -1,3 +1,5 @@
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
 
@@ -89,11 +91,19 @@ export function LandingDE() {
         <div className="relative">
           <input
             type="text"
-            className="border-2 rounded-3xl px-3 h-12 w-full text-lg mb-2"
+            className="border-2 rounded-3xl pl-3 pr-12 h-12 w-full text-lg hover:shadow focus:shadow outline-none"
             value={query}
             onChange={(value) => setQuery(value.target.value)}
             placeholder="... heute lerne ich"
           />
+          {query && (
+            <div
+              className="absolute top-0 right-0 bottom-0 flex items-center justify-center w-12 cursor-pointer text-gray-300"
+              onClick={() => setQuery('')}
+            >
+              <FontAwesomeIcon icon={faTimes} />
+            </div>
+          )}
           {data && query && (
             <div className="px-3 pb-2 border rounded shadow absolute top-14 w-full">
               {results.map((x, i) => (
