@@ -104,6 +104,9 @@ export function LandingDE() {
             onChange={(value) => setQuery(value.target.value)}
             placeholder="... heute lerne ich"
             ref={inputRef}
+            onBlur={() => {
+              setSel(-1)
+            }}
             onKeyDown={(e) => {
               if (
                 e.key == 'ArrowDown' ||
