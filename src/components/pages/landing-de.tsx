@@ -118,7 +118,7 @@ export function LandingDE() {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <span className="text-lg text-blue-500 hover:underline">
+                    <span className="text-lg text-homepage-blue hover:underline">
                       {x.entry.title}
                       {x.entry.isTax ? ' >' : ''}
                     </span>
