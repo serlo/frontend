@@ -123,7 +123,6 @@ export function LandingDE() {
                     )}`
                   }
                   if (sel >= 0 && sel < results.length) {
-                    console.log(results[sel])
                     window.location.href = `https://de.serlo.org/${results[sel].entry.id}`
                   }
                 }
