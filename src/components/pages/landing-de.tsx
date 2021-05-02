@@ -1,5 +1,6 @@
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import Head from 'next/head'
 import { useEffect, useRef, useState } from 'react'
 
@@ -15,6 +16,8 @@ export function LandingDE() {
   const [query, setQuery] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
 
+  const [sel, setSel] = useState(-1)
+
   useEffect(() => {
     void fetch('https://arrrg.de/serlo-stats/quickbar.json')
       .then((res: any) => res.json())
@@ -26,6 +29,10 @@ export function LandingDE() {
         setData(data)
       })
   }, [])
+
+  useEffect(() => {
+    setSel(-1)
+  }, [query])
 
   let results: any[] = []
 
@@ -97,6 +104,33 @@ export function LandingDE() {
             onChange={(value) => setQuery(value.target.value)}
             placeholder="... heute lerne ich"
             ref={inputRef}
+            onKeyDown={(e) => {
+              if (
+                e.key == 'ArrowDown' ||
+                e.key == 'ArrowUp' ||
+                e.key == 'Enter'
+              ) {
+                if (e.key == 'ArrowDown' && sel < results.length) {
+                  setSel(sel + 1)
+                }
+                if (e.key == 'ArrowUp' && sel >= 0) {
+                  setSel(sel - 1)
+                }
+                if (e.key == 'Enter') {
+                  if (sel == results.length) {
+                    window.location.href = `https://de.serlo.org/search?q=${encodeURIComponent(
+                      query
+                    )}`
+                  }
+                  if (sel >= 0 && sel < results.length) {
+                    console.log(results[sel])
+                    window.location.href = `https://de.serlo.org/${results[sel].entry.id}`
+                  }
+                }
+                e.preventDefault()
+                return false
+              }
+            }}
           />
           {query && (
             <div
@@ -114,7 +148,10 @@ export function LandingDE() {
           {data && query && (
             <div className="px-5 pb-2 border rounded-xl shadow absolute top-14 w-full">
               {results.map((x, i) => (
-                <p key={i} className="my-2">
+                <p
+                  key={i}
+                  className={clsx('my-2', { 'bg-brand-50': i == sel })}
+                >
                   <span className="text-sm text-gray-700">
                     {x.entry.path.join(' > ')}
                     {x.entry.path.length > 0 ? ' > ' : ''}
@@ -135,7 +172,11 @@ export function LandingDE() {
                   </a>
                 </p>
               ))}
-              <p className=" text-lg mt-2 text-gray-800 ">
+              <p
+                className={clsx('text-lg mt-2 text-gray-800', {
+                  'bg-brand-50': sel == results.length,
+                })}
+              >
                 <a
                   href={`https://de.serlo.org/search?q=${encodeURIComponent(
                     query
