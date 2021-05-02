@@ -1,7 +1,7 @@
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Head from 'next/head'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { HeadTags } from '../head-tags'
 import { InstanceLandingData } from '@/data-types'
@@ -13,6 +13,7 @@ export interface LandingDEProps {
 export function LandingDE() {
   const [data, setData] = useState<any>(null)
   const [query, setQuery] = useState('')
+  const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     void fetch('https://arrrg.de/serlo-stats/quickbar.json')
@@ -87,25 +88,31 @@ export function LandingDE() {
         />
       </Head>
 
-      <div className="max-w-xl mt-20 mx-auto px-4">
+      <div className="max-w-2xl mt-20 mx-auto px-4">
         <div className="relative">
           <input
             type="text"
-            className="border-2 rounded-3xl pl-3 pr-12 h-12 w-full text-lg hover:shadow focus:shadow outline-none"
+            className="border-2 rounded-3xl pl-5 pr-12 h-12 w-full text-lg hover:shadow focus:shadow outline-none"
             value={query}
             onChange={(value) => setQuery(value.target.value)}
             placeholder="... heute lerne ich"
+            ref={inputRef}
           />
           {query && (
             <div
               className="absolute top-0 right-0 bottom-0 flex items-center justify-center w-12 cursor-pointer text-gray-300"
-              onClick={() => setQuery('')}
+              onClick={() => {
+                setQuery('')
+                setTimeout(() => {
+                  inputRef.current?.focus()
+                }, 0)
+              }}
             >
               <FontAwesomeIcon icon={faTimes} />
             </div>
           )}
           {data && query && (
-            <div className="px-3 pb-2 border rounded shadow absolute top-14 w-full">
+            <div className="px-5 pb-2 border rounded-xl shadow absolute top-14 w-full">
               {results.map((x, i) => (
                 <p key={i} className="my-2">
                   <span className="text-sm text-gray-700">
@@ -128,13 +135,14 @@ export function LandingDE() {
                   </a>
                 </p>
               ))}
-              <p className="cursor-pointer text-lg mt-2 text-gray-800 hover:text-black">
+              <p className=" text-lg mt-2 text-gray-800 ">
                 <a
                   href={`https://de.serlo.org/search?q=${encodeURIComponent(
                     query
                   )}`}
                   target="_blank"
                   rel="noreferrer"
+                  className="cursor-pointer hover:text-black"
                 >
                   Auf Serlo nach{' '}
                   <i>
