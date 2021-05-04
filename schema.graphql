@@ -665,6 +665,7 @@ type Query {
     license(id: Int!): License
     notificationEvent(id: Int!): AbstractNotificationEvent
     notifications(after: String, before: String, first: Int, last: Int, unread: Boolean): NotificationConnection!
+    subscription: SubscriptionQuery!
     subscriptions(after: String, before: String, first: Int, last: Int): AbstractUuidConnection!
     uuid(alias: AliasInput, id: Int): AbstractUuid
 }
@@ -807,6 +808,10 @@ type SubscriptionMutation {
     set(input: SubscriptionSetInput!): SubscriptionSetResponse
 }
 
+type SubscriptionQuery {
+    currentUserHasSubscribed(id: Int!): Boolean!
+}
+
 type SubscriptionSetResponse {
     query: Query!
     success: Boolean!
@@ -846,6 +851,7 @@ type Thread {
     id: String!
     object: AbstractUuid!
     title: String
+    trashed: Boolean!
 }
 
 type ThreadCreateCommentResponse {
