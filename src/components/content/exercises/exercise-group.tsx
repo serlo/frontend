@@ -46,6 +46,16 @@ export function ExerciseGroup({
           )}
         </TopLine>
       </ExerciseIntro>
+      <div className="my-4">
+        <a
+          className="serlo-button serlo-make-interactive-transparent-blue"
+          href={`/entity/repository/parents/${id}`}
+          target="_blank"
+          rel="noreferrer"
+        >
+          Zuordnungen anzeigen
+        </a>
+      </div>
       <Content>{children}</Content>
     </Container>
   )

@@ -54,6 +54,19 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
       {renderExerciseTask()}
       {renderInteractive()}
 
+      {!node.grouped && (
+        <div className="my-4">
+          <a
+            className="serlo-button serlo-make-interactive-transparent-blue"
+            href={`/entity/repository/parents/${node.context.id}`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Zuordnungen anzeigen
+          </a>
+        </div>
+      )}
+
       {renderToolsAndLicense()}
 
       {solutionVisible && renderSolution()}
