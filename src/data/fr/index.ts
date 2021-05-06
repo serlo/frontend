@@ -97,7 +97,8 @@ export const instanceData = {
       check: "Vérifier",
       yourAnswer: "Ta réponse...",
       chooseOption: "Sélectionne une des options :",
-      trashedNotice: "Ce contenu est marqué pour être supprimé."
+      trashedNotice: "Ce contenu est marqué pour être supprimé.",
+      strategy: 'Solution Strategy'
     },
     consent: {
       title: "Consentement pour le contenu externe",

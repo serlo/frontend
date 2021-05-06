@@ -97,7 +97,8 @@ export const instanceData = {
       check: "जाँच करें",
       yourAnswer: "आपका उत्तर",
       chooseOption: "किसी एक विकल्प पर क्लिक करें",
-      trashedNotice: "यह सामग्री हटाने के लिए चिह्नित है"
+      trashedNotice: "यह सामग्री हटाने के लिए चिह्नित है",
+      strategy: 'Solution Strategy'
     },
     consent: {
       title: "बाहरी सामग्री के लिए सहमति",

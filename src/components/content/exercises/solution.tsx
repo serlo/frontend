@@ -32,7 +32,30 @@ export function Solution({ node, renderNested }: SolutionProps) {
         ],
       })
     }
-    const strategy = state.strategy
+
+    // quickfix for solution strategy
+    const strategy: FrontendContentNode[] =
+      state.strategy.length > 0
+        ? [
+            {
+              type: 'important',
+              children: [
+                {
+                  type: 'p',
+                  children: [
+                    {
+                      type: 'text',
+                      text: strings.content.strategy,
+                      strong: true,
+                    },
+                  ],
+                },
+                ...state.strategy,
+              ],
+            },
+          ]
+        : []
+
     const steps = state.steps
     return [...prereq, ...strategy, ...steps]
   }
