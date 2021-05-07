@@ -131,8 +131,9 @@ const ButtonStyle = styled.span<{ active?: boolean }>`
         &,
         &:hover,
         ${StyledLink}:hover & {
-          color: #333;
           @media (min-width: ${(props) => props.theme.breakpoints.md}) {
+            cursor: default;
+            color: ${(props) => props.theme.colors.brand};
             background-color: ${(props) =>
               props.theme.colors.lightBlueBackground};
           }

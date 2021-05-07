@@ -82,15 +82,15 @@ export default class MyDocument extends Document {
           <link
             rel="mask-icon"
             href="/_assets/safari-pinned-tab.svg"
-            color="#007ec1"
+            color="#2F67E9"
           />
           <link rel="shortcut icon" href="/_assets/favicon.ico" />
-          <meta name="msapplication-TileColor" content="#007ec1" />
+          <meta name="msapplication-TileColor" content="#2F67E9" />
           <meta
             name="msapplication-config"
             content="/_assets/browserconfig.xml"
           />
-          <meta name="theme-color" content="#007ec1"></meta>
+          <meta name="theme-color" content="#2F67E9"></meta>
           <link
             href="/_assets/opensearch.de.xml"
             rel="search"

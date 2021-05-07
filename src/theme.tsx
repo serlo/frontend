@@ -1,20 +1,19 @@
 import { tint, shade } from 'polished'
 
 // base colors
-const brand = '#007ec1'
+const brand = '#2F67E9'
 const black = '#000'
 
 // use object notation to allow types to be infered
 const basicColors = {
   //tint mixes with white
-
   //blues
   brand,
-  lightblue: tint(0.3, brand), //#4ca4d3
-  lighterblue: tint(0.55, brand), //#8cc4e3
-  lightBlueBackground: tint(0.85, brand), //#d8ebf5
-  bluewhite: tint(0.94, brand), //#f0f7fb
-  lightBackground: tint(0.96, brand), //#f3f9fb
+  lightblue: tint(0.2, brand),
+  lighterblue: tint(0.55, brand),
+  lightBlueBackground: tint(0.9, brand),
+  bluewhite: tint(0.94, brand),
+  lightBackground: tint(0.96, brand),
 
   //black, gray, white
   black,
@@ -41,9 +40,9 @@ type Colors = typeof basicColors & {
 }
 
 //content
-colors.h23 = colors.darkgray // should be 'darkgray'
-colors.linkColor = brand //was '#337AB7'
-colors.linkHoverColor = shade(0.3, colors.linkColor) // was '#23527c' (even another level of recursion)
+colors.h23 = colors.darkgray
+colors.linkColor = brand
+colors.linkHoverColor = shade(0.3, colors.linkColor)
 
 const breakpointsInt = {
   mobile: 500,
