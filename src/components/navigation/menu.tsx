@@ -5,6 +5,9 @@ import { useState, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 
 import { Link } from '../content/link'
+import { SubButtonStyle } from '../user-tools/sub-button-style'
+import { SubLink } from './sub-link'
+import { SubList } from './sub-list'
 import { AuthenticationPayload } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
@@ -286,38 +289,4 @@ const StyledLink = styled(Link)<{ active?: boolean; hasIcon?: boolean }>`
   margin: 0 3px;
   margin-top: ${(props) => (props.hasIcon ? '-5px' : '11px')};
   padding: ${(props) => (props.hasIcon ? '7px' : '2px 7px')};
-`
-
-export const SubList = styled.ul`
-  background-color: white;
-  padding: 12px 15px 12px 10px;
-  margin: 0;
-  text-align: left;
-  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px;
-  display: block;
-  overflow: auto;
-  list-style-type: none;
-  width: auto;
-  border-radius: 10px;
-`
-
-export const SubLink = styled(Link)`
-  padding-top: 3px;
-  padding-bottom: 3px;
-  display: block;
-  hyphens: auto;
-  &:hover span {
-    color: #fff;
-    background-color: ${(props) => props.theme.colors.brand};
-  }
-`
-
-export const SubButtonStyle = styled.span`
-  display: block;
-  ${linkStyle}
-  ${makeTransparentButton}
-  border-radius: 12px;
-  font-size: 1rem;
-  font-weight: normal;
-  text-align: left;
 `

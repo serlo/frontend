@@ -1,15 +1,23 @@
+import {
+  Entity,
+  Page,
+  Subscription,
+  TaxonomyTerm,
+  Uuid,
+} from '@serlo/authorization'
 import Tippy, { TippyProps } from '@tippyjs/react'
 import cookie from 'cookie'
 import { useRouter } from 'next/router'
 import NProgress from 'nprogress'
 import { Fragment } from 'react'
 
-import { SubButtonStyle, SubLink } from '../navigation/menu'
-import { AuthorToolsData, HoverSubList, Li } from './author-tools-hover-menu'
-import { useAuthentication } from '@/auth/use-authentication'
+import { SubLink } from '../navigation/sub-link'
+import { AuthorToolsData } from './author-tools-hover-menu'
+import { HoverSubList } from './hover-sub-list'
+import { SubButtonStyle } from './sub-button-style'
+import { useCanDo } from '@/auth/use-can-do'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { UserRoles } from '@/data-types'
 import { csrReload } from '@/helper/csr-reload'
 import { useSetUuidStateMutation } from '@/helper/mutations'
 import { showToastNotice } from '@/helper/show-toast-notice'
@@ -41,7 +49,7 @@ export enum Tool {
 interface ToolConfig {
   url?: string
   title?: string
-  forRoles?: UserRoles[]
+  canDo: boolean
   entityId?: number
   renderer?: (entityId?: number) => JSX.Element
 }
@@ -65,120 +73,121 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   const loggedInData = useLoggedInData()
   const instanceData = useInstanceData()
   const { isSubscribed, updateIsSubscribed } = useIsSubscribed(data.id)
-  const auth = useAuthentication()
 
   const setUuidState = useSetUuidStateMutation()
 
   const router = useRouter()
+  const canDo = useCanDo()
+
   if (!loggedInData) return null
   const loggedInStrings = loggedInData.strings
   const entities = instanceData.strings.entities
   const lang = instanceData.lang
 
-  const RoleEverybody = [UserRoles.Guest, UserRoles.Login]
-
   const toolsConfig = {
     abo: {
       renderer: abo,
+      canDo: canDo(Subscription.set),
     },
     convert: {
       url: `/page/revision/create/${entityId}/${data.revisionId || ''}`,
-      forRoles: [],
+      canDo: false, // we should remove this?
     },
     pageConvert: {
       url: `/page/revision/create/${entityId}/${data.revisionId || ''}`,
       title: loggedInStrings.authorMenu.convert,
-      forRoles: [UserRoles.PageBuilder],
+      canDo: canDo(Uuid.create('PageRevision')),
     },
     log: {
       url: `/event/history/${entityId}`,
-      forRoles: RoleEverybody,
+      canDo: true,
     },
     history: {
       url: `/entity/repository/history/${entityId}`,
-      forRoles: RoleEverybody,
+      canDo: true,
     },
     sort: {
       url: `/entity/link/order/${entityId}/link`,
-      forRoles: [UserRoles.Reviewer, UserRoles.TaxonomyManager],
+      canDo: canDo(Entity.orderChildren),
     },
     edit: {
       url: `/entity/repository/add-revision/${entityId}`,
+      canDo: canDo(Uuid.create('EntityRevision')),
     },
     curriculum: {
       url: `/entity/taxonomy/update/${entityId}`,
       title: loggedInStrings.authorMenu.editAssignments,
+      canDo:
+        canDo(TaxonomyTerm.set) &&
+        canDo(TaxonomyTerm.orderChildren) &&
+        canDo(TaxonomyTerm.addChild) &&
+        canDo(TaxonomyTerm.removeChild),
     },
     trash: {
       renderer: trash,
-      forRoles: [UserRoles.Admin],
+      canDo: canDo(Uuid.setState(data.type)),
     },
     newEntitySubmenu: {
       renderer: renderNewEntity,
+      canDo: canDo(Uuid.create(data.type)),
     },
     pageHistory: {
       url: `/page/revision/revisions/${data.id}`,
       title: loggedInStrings.authorMenu.history,
+      canDo: true,
     },
     pageSetting: {
       url: `/page/update/${data.id}`,
       title: loggedInStrings.authorMenu.settings,
-      forRoles: [UserRoles.PageBuilder],
+      canDo: canDo(Page.set),
     },
     moveCoursePage: {
       url: `/entity/link/move/link/${data.id}/${data.courseId!}`,
-      forRoles: [UserRoles.TaxonomyManager, UserRoles.Reviewer],
+      canDo: false,
     },
     organize: {
       url: `/taxonomy/term/organize/${data.id}`,
-      forRoles: [UserRoles.TaxonomyManager],
+      canDo: canDo(TaxonomyTerm.addChild) && canDo(TaxonomyTerm.removeChild),
     },
     sortEntities: {
       url: `/taxonomy/term/sort/entities/${data.id}`,
+      canDo: canDo(Entity.orderChildren),
     },
     copyItems: {
       url: `/taxonomy/term/copy/batch/${data.id}`,
-      forRoles: [UserRoles.TaxonomyManager],
+      canDo: canDo(TaxonomyTerm.addChild),
     },
     addGroupedTextExercise: {
       url: `/entity/create/grouped-text-exercise?link%5Btype%5D=link&link%5Bchild%5D=${data.id}`,
+      canDo: false,
     },
     changeLicense: {
       url: `/entity/license/update/${data.id}`,
-      forRoles: [UserRoles.Admin],
+      canDo: canDo(Entity.setLicense),
     },
     moveItems: {
       url: `/taxonomy/term/move/batch/${data.id}`,
-      forRoles: [UserRoles.TaxonomyManager, UserRoles.Reviewer],
+      canDo: canDo(TaxonomyTerm.addChild) && canDo(TaxonomyTerm.removeChild),
     },
     moveToExercise: {
       url: `/entity/link/move/link/${data.id}/${data.parentId!}`,
       title: data.grouped
         ? loggedInStrings.authorMenu.moveToGroupedTextExercise
         : loggedInStrings.authorMenu.moveToTextExercise,
-      forRoles: [UserRoles.TaxonomyManager, UserRoles.Reviewer],
+      canDo: canDo(TaxonomyTerm.addChild) && canDo(TaxonomyTerm.removeChild),
     },
     addCoursePage: {
       url: `/entity/create/course-page?link%5Btype%5D=link&link%5Bchild%5D=${data.courseId!}`,
+      canDo: false,
     },
   } as ToolsConfig
 
   return (
     <>
       {tools.map((toolName) => {
-        const {
-          forRoles = [UserRoles.Login],
-          renderer,
-          url,
-          title,
-        } = toolsConfig[toolName]
-        const roles = auth.current?.roles || [UserRoles.Guest]
-        const hasPower =
-          forRoles.filter((role) => {
-            return roles.indexOf(role) > -1
-          }).length > 0
+        const { canDo, renderer, url, title } = toolsConfig[toolName]
 
-        if (hasPower) {
+        if (canDo) {
           if (renderer) {
             return (
               <Fragment key={`${title ?? renderer.name}`}>
@@ -224,13 +233,13 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
             </HoverSubList>
           }
         >
-          <Li>
+          <li className="block">
             <SubLink as="div" tabIndex={0}>
               <SubButtonStyle>
                 ◂ {loggedInStrings.authorMenu.subscribe}
               </SubButtonStyle>
             </SubLink>
-          </Li>
+          </li>
         </Tippy>
       </div>
     )
@@ -238,7 +247,8 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
 
   function trash() {
     return (
-      <Li
+      <li
+        className="block"
         key={
           data.trashed
             ? loggedInStrings.authorMenu.restoreContent
@@ -255,7 +265,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
             ? loggedInStrings.authorMenu.restoreContent
             : loggedInStrings.authorMenu.moveToTrash}
         </SubButtonStyle>
-      </Li>
+      </li>
     )
   }
 
@@ -266,7 +276,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
 
     if (data.taxonomyFolder || data.taxonomyTopic)
       return (
-        <Li>
+        <li className="block">
           <Tippy
             {...tippyDefaultProps}
             content={
@@ -318,30 +328,30 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
               </SubButtonStyle>
             </SubLink>
           </Tippy>
-        </Li>
+        </li>
       )
   }
 
   function renderLi(href: string, text: string) {
     return (
-      <Li key={text}>
+      <li className="block" key={text}>
         <SubLink href={href}>
           <SubButtonStyle>{text}</SubButtonStyle>
         </SubLink>
-      </Li>
+      </li>
     )
   }
 
   function renderFetchLi(href: string, text: string, csrf?: boolean) {
     return (
-      <Li>
+      <li className="block">
         <SubButtonStyle
           as="button"
           onClick={() => fetchLegacyUrl(href, text, csrf)}
         >
           {text}
         </SubButtonStyle>
-      </Li>
+      </li>
     )
   }
 
