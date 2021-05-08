@@ -120,7 +120,7 @@ export function Link({
 
   function renderClientSide(_href: string) {
     return (
-      <NextLink prefetch={false} href={_href}>
+      <NextLink prefetch={false} href={_href} scroll={false}>
         {renderLink(_href, false)}
       </NextLink>
     )
