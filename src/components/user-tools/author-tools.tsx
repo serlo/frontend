@@ -1,7 +1,5 @@
 import Tippy, { TippyProps } from '@tippyjs/react'
-import cookie from 'cookie'
 import { useRouter } from 'next/router'
-import NProgress from 'nprogress'
 import { Fragment } from 'react'
 
 import { SubButtonStyle, SubLink } from '../navigation/menu'
@@ -10,12 +8,10 @@ import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UserRoles } from '@/data-types'
-import { csrReload } from '@/helper/csr-reload'
 import {
   useSetUuidStateMutation,
   useSubscriptionSetMutation,
 } from '@/helper/mutations'
-import { showToastNotice } from '@/helper/show-toast-notice'
 import { useIsSubscribed } from '@/helper/use-is-subscribed'
 
 export enum Tool {
@@ -364,60 +360,5 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
         </SubLink>
       </Li>
     )
-  }
-
-  function renderFetchLi(href: string, text: string, csrf?: boolean) {
-    return (
-      <Li>
-        <SubButtonStyle
-          as="button"
-          onClick={() => fetchLegacyUrl(href, text, csrf)}
-        >
-          {text}
-        </SubButtonStyle>
-      </Li>
-    )
-  }
-
-  //quick experiment
-  function fetchLegacyUrl(url: string, text: string, csrf?: boolean) {
-    NProgress.start()
-
-    const cookies = cookie.parse(
-      typeof window === 'undefined' ? '' : document.cookie
-    )
-
-    const options = csrf
-      ? { method: 'POST', body: JSON.stringify({ csrf: cookies['CSRF'] }) }
-      : {}
-
-    try {
-      void fetch(url, options)
-        .then((res) => {
-          //if location.href is not res.url there was probably an authentication error. use api mutation in the future.
-          if (res.status === 200 && location.href.startsWith(res.url)) {
-            NProgress.done()
-            showToastNotice(`'${text}' erfolgreich `, 'success')
-
-            setTimeout(() => {
-              csrReload()
-            }, 1500)
-          } else {
-            showErrorNotice()
-          }
-        })
-        .catch(() => {
-          showErrorNotice()
-        })
-    } catch (e) {
-      console.log(e)
-      showErrorNotice()
-    }
-
-    function showErrorNotice() {
-      NProgress.done()
-      showToastNotice('Something went wrong… Please try again.', 'warning')
-      return false
-    }
   }
 }
