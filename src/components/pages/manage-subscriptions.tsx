@@ -13,6 +13,7 @@ import { QueryResponse } from '@/fetcher/query-types'
 import { makeLightButton } from '@/helper/css'
 import { getEntityStringByTypename } from '@/helper/feature-i18n'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
+import { useSubscriptionSetMutation } from '@/helper/mutations'
 
 export function ManageSubscriptions({
   subscriptions,
@@ -21,6 +22,8 @@ export function ManageSubscriptions({
 }) {
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
+  const setSubscription = useSubscriptionSetMutation()
+
   if (!loggedInData || !subscriptions) return null
   const loggedInStrings = loggedInData.strings.subscriptions
 
@@ -53,12 +56,28 @@ export function ManageSubscriptions({
               </StyledTd>
               <CenteredTd>
                 {/* TODO: We need info from the API how this is currently set */}
-                <Button href={`/subscription/update/${entry.id}/0`}>
+                <Button
+                  onClick={() => {
+                    void setSubscription({
+                      id: [entry.id],
+                      subscribe: true,
+                      sendEmail: false,
+                    })
+                  }}
+                >
                   {loggedInStrings.noMails}
                 </Button>
               </CenteredTd>
               <CenteredTd>
-                <Button href={`/unsubscribe/${entry.id}`}>
+                <Button
+                  onClick={() => {
+                    void setSubscription({
+                      id: [entry.id],
+                      subscribe: false,
+                      sendEmail: false,
+                    })
+                  }}
+                >
                   {loggedInStrings.noNotifications}
                 </Button>
               </CenteredTd>

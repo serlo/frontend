@@ -26,6 +26,7 @@ import {
   useAuthentication,
 } from '@/auth/use-authentication'
 import { useEntityId } from '@/contexts/entity-id-context'
+import { subscriptionsQuery } from '@/pages/subscriptions/manage'
 
 export function useSetUuidStateMutation() {
   const auth = useAuthentication()
@@ -232,14 +233,20 @@ export function useSubscriptionSetMutation() {
   const subscriptionSetMutation = async function (input: SubscriptionSetInput) {
     const success = await mutationFetch(auth, mutation, input)
 
-    // TODO: Reconstructing SWR key here, we need a nice solution how we should handle SWR keys
-    // see https://swr.vercel.app/docs/arguments
+    // TODO: Reconstructing SWR keys here, we need a nice global solution how we handle SWR keys
+    // see https://swr.vercel.app/docs/arguments and useGraphqlSwr(WithAuth)
 
     if (success) {
       await mutate(
         JSON.stringify({
           query: isSubscribedQuery,
           variables: { id: input.id[0] },
+        })
+      )
+      //manually mutate if needed for performance
+      await mutate(
+        JSON.stringify({
+          query: subscriptionsQuery,
         })
       )
     }
