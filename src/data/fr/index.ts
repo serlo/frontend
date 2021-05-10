@@ -98,7 +98,7 @@ export const instanceData = {
       yourAnswer: "Ta réponse...",
       chooseOption: "Sélectionne une des options :",
       trashedNotice: "Ce contenu est marqué pour être supprimé.",
-      strategy: 'Solution Strategy'
+      strategy: "Stratégie de solution"
     },
     consent: {
       title: "Consentement pour le contenu externe",

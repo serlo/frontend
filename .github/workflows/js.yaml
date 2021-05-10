@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 12.x
+          node-version: 14.x
       - run: yarn
       - run: yarn build
   eslint:
@@ -21,7 +21,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 12.x
+          node-version: 14.x
       - run: yarn
       - run: yarn lint:eslint
   prettier:
@@ -30,7 +30,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 12.x
+          node-version: 14.x
       - run: yarn
       - run: yarn lint:prettier
   test:
@@ -39,7 +39,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 12.x
+          node-version: 14.x
       - run: yarn
       - run: yarn test
   tsc:
@@ -48,6 +48,6 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 12.x
+          node-version: 14.x
       - run: yarn
       - run: yarn lint:tsc
