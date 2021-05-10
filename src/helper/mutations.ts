@@ -1,6 +1,7 @@
 import {
   NotificationMutation,
   NotificationSetStateInput,
+  SubscriptionSetInput,
   ThreadCreateCommentInput,
   ThreadCreateThreadInput,
   ThreadMutation,
@@ -18,6 +19,7 @@ import { mutate } from 'swr'
 import { csrReload } from './csr-reload'
 import { showToastNotice } from './show-toast-notice'
 import { triggerSentry } from './trigger-sentry'
+import { isSubscribedQuery } from './use-is-subscribed'
 import { endpoint } from '@/api/endpoint'
 import {
   AuthenticationPayload,
@@ -214,6 +216,40 @@ export function useCreateCommentMutation() {
     await createCommentMutation(input)
 }
 
+export function useSubscriptionSetMutation() {
+  const auth = useAuthentication()
+
+  const mutation = gql`
+    mutation subscriptionSet($input: SubscriptionSetInput!) {
+      subscription {
+        set(input: $input) {
+          success
+        }
+      }
+    }
+  `
+
+  const subscriptionSetMutation = async function (input: SubscriptionSetInput) {
+    const success = await mutationFetch(auth, mutation, input)
+
+    // TODO: Reconstructing SWR key here, we need a nice solution how we should handle SWR keys
+    // see https://swr.vercel.app/docs/arguments
+
+    if (success) {
+      await mutate(
+        JSON.stringify({
+          query: isSubscribedQuery,
+          variables: { id: input.id[0] },
+        })
+      )
+    }
+    return success
+  }
+
+  return async (input: SubscriptionSetInput) =>
+    await subscriptionSetMutation(input)
+}
+
 type MutationInput =
   | NotificationSetStateInput
   | UuidSetStateInput
@@ -222,6 +258,7 @@ type MutationInput =
   | ThreadSetThreadStateInput
   | ThreadSetCommentStateInput
   | ThreadCreateCommentInput
+  | SubscriptionSetInput
 
 type MutationResponse = ThreadMutation | UuidMutation | NotificationMutation
 
