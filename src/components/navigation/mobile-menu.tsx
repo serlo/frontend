@@ -38,9 +38,8 @@ const menuIconMapping = {
 }
 
 export function MobileMenu({ data, auth }: MobileMenuProps) {
-  const [openEntryIndex, setOpenEntryIndex] = React.useState<null | number>(
-    null
-  )
+  const [openEntryIndex, setOpenEntryIndex] =
+    React.useState<null | number>(null)
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
 

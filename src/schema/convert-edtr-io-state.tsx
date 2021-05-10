@@ -61,7 +61,7 @@ export function convert(
 
 function convertPlugin(node: EdtrState) {
   if (node.plugin === 'rows') {
-    return convert((node.state as unknown) as EdtrState)
+    return convert(node.state as unknown as EdtrState)
   }
   if (node.plugin === 'text') {
     return convert(node.state)

@@ -202,8 +202,7 @@ export const taxonomyTermUuidMock = {
               alias:
                 '/mathe/zahlen-größen/zahlenmengen,-rechenausdrücke-allgemeine-rechengesetze',
               type: 'topic',
-              name:
-                'Zahlenmengen, Rechenausdrücke und allgemeine Rechengesetze',
+              name: 'Zahlenmengen, Rechenausdrücke und allgemeine Rechengesetze',
             },
             {
               trashed: false,
@@ -430,8 +429,7 @@ export const taxonomyTermUuidMock = {
               alias:
                 '/mathe/geometrie/spiegelung,-zentrische-streckung-andere-abbildungen-ebene',
               type: 'topic',
-              name:
-                'Spiegelung, zentrische Streckung und andere Abbildungen in der Ebene',
+              name: 'Spiegelung, zentrische Streckung und andere Abbildungen in der Ebene',
             },
             {
               trashed: false,
@@ -1278,8 +1276,7 @@ export const appletUuidMock = {
               },
               {
                 label: 'Rechnen mit Brüchen',
-                url:
-                  '/mathe/zahlen-größen/bruchrechnen-dezimalzahlen/rechnen-brüchen',
+                url: '/mathe/zahlen-größen/bruchrechnen-dezimalzahlen/rechnen-brüchen',
               },
             ],
           },
@@ -1542,13 +1539,11 @@ export const coursePageUuidMock = {
                 },
                 {
                   label: 'Wichtige Funktionstypen und ihre Eigenschaften',
-                  url:
-                    '/mathe/funktionen/wichtige-funktionstypen-eigenschaften',
+                  url: '/mathe/funktionen/wichtige-funktionstypen-eigenschaften',
                 },
                 {
                   label: 'Polynomfunktionen beliebigen Grades',
-                  url:
-                    '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/polynomfunktionen-beliebigen-grades',
+                  url: '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/polynomfunktionen-beliebigen-grades',
                 },
               ],
             },
@@ -1572,8 +1567,7 @@ export const coursePageUuidMock = {
                 },
                 {
                   label: 'Graphen ganzrationaler Funktionen',
-                  url:
-                    '/mathe/deutschland/bayern/gymnasium/klasse-10/graphen-ganzrationaler-funktionen',
+                  url: '/mathe/deutschland/bayern/gymnasium/klasse-10/graphen-ganzrationaler-funktionen',
                 },
               ],
             },
@@ -1609,13 +1603,11 @@ export const coursePageUuidMock = {
                 },
                 {
                   label: 'Ganzrationale Funktionen ',
-                  url:
-                    '/mathe/deutschland/bayern/fos-technik/klasse-11/ganzrationale-funktionen',
+                  url: '/mathe/deutschland/bayern/fos-technik/klasse-11/ganzrationale-funktionen',
                 },
                 {
                   label: 'Nullstellen ganzrationaler Funktionen berechnen',
-                  url:
-                    '/mathe/deutschland/bayern/fos-technik/klasse-11/ganzrationale-funktionen/nullstellen-ganzrationaler-funktionen-berechnen',
+                  url: '/mathe/deutschland/bayern/fos-technik/klasse-11/ganzrationale-funktionen/nullstellen-ganzrationaler-funktionen-berechnen',
                 },
               ],
             },
@@ -1635,18 +1627,15 @@ export const coursePageUuidMock = {
                 },
                 {
                   label: 'Klasse 11',
-                  url:
-                    '/mathe/deutschland/bayern/fos-bos---technisch/klasse-11',
+                  url: '/mathe/deutschland/bayern/fos-bos---technisch/klasse-11',
                 },
                 {
                   label: 'Ganzrationale Funktionen ',
-                  url:
-                    '/mathe/deutschland/bayern/fos-bos---technisch/klasse-11/ganzrationale-funktionen',
+                  url: '/mathe/deutschland/bayern/fos-bos---technisch/klasse-11/ganzrationale-funktionen',
                 },
                 {
                   label: 'Nullstellen ganzrationaler Funktionen berechnen',
-                  url:
-                    '/mathe/deutschland/bayern/fos-bos---technisch/klasse-11/ganzrationale-funktionen/nullstellen-ganzrationaler-funktionen-berechnen',
+                  url: '/mathe/deutschland/bayern/fos-bos---technisch/klasse-11/ganzrationale-funktionen/nullstellen-ganzrationaler-funktionen-berechnen',
                 },
               ],
             },
@@ -1734,14 +1723,12 @@ export const exerciseUuidMock = {
               },
               {
                 label: 'Trigonometrische Funktionen',
-                url:
-                  '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen',
+                url: '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen',
               },
               {
                 label:
                   'Aufgaben zum Verschieben und Strecken trigonometrischer Funktionen',
-                url:
-                  '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen/aufgaben-verschieben-strecken-trigonometrischer-funktionen',
+                url: '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen/aufgaben-verschieben-strecken-trigonometrischer-funktionen',
               },
             ],
           },
@@ -1777,14 +1764,12 @@ export const exerciseUuidMock = {
               },
               {
                 label: 'Trigonometrische Funktionen',
-                url:
-                  '/mathe/deutschland/bayern/fos-technik/klasse-12/trigonometrische-funktionen',
+                url: '/mathe/deutschland/bayern/fos-technik/klasse-12/trigonometrische-funktionen',
               },
               {
                 label:
                   'Aufgaben zum Verschieben und Strecken trigonometrischer Funktionen',
-                url:
-                  '/mathe/deutschland/bayern/fos-technik/klasse-12/trigonometrische-funktionen/aufgaben-verschieben-strecken-trigonometrischer-funktionen',
+                url: '/mathe/deutschland/bayern/fos-technik/klasse-12/trigonometrische-funktionen/aufgaben-verschieben-strecken-trigonometrischer-funktionen',
               },
             ],
           },
@@ -1808,13 +1793,11 @@ export const exerciseUuidMock = {
               },
               {
                 label: 'Trigonometrie',
-                url:
-                  '/mathe/deutschland/bayern/gymnasium/klasse-10/trigonometrie',
+                url: '/mathe/deutschland/bayern/gymnasium/klasse-10/trigonometrie',
               },
               {
                 label: 'Aufgaben zur allgemeinen Sinusfunktion',
-                url:
-                  '/mathe/deutschland/bayern/gymnasium/klasse-10/trigonometrie/aufgaben-allgemeinen-sinusfunktion',
+                url: '/mathe/deutschland/bayern/gymnasium/klasse-10/trigonometrie/aufgaben-allgemeinen-sinusfunktion',
               },
             ],
           },
@@ -1875,14 +1858,12 @@ export const exerciseGroupUuidMock = {
               },
               {
                 label: 'Trigonometrische Funktionen',
-                url:
-                  '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen',
+                url: '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen',
               },
               {
                 label:
                   'Aufgaben zum Verschieben und Strecken trigonometrischer Funktionen',
-                url:
-                  '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen/aufgaben-verschieben-strecken-trigonometrischer-funktionen',
+                url: '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen/aufgaben-verschieben-strecken-trigonometrischer-funktionen',
               },
             ],
           },
@@ -1918,14 +1899,12 @@ export const exerciseGroupUuidMock = {
               },
               {
                 label: 'Trigonometrische Funktionen',
-                url:
-                  '/mathe/deutschland/bayern/fos-technik/klasse-12/trigonometrische-funktionen',
+                url: '/mathe/deutschland/bayern/fos-technik/klasse-12/trigonometrische-funktionen',
               },
               {
                 label:
                   'Aufgaben zum Verschieben und Strecken trigonometrischer Funktionen',
-                url:
-                  '/mathe/deutschland/bayern/fos-technik/klasse-12/trigonometrische-funktionen/aufgaben-verschieben-strecken-trigonometrischer-funktionen',
+                url: '/mathe/deutschland/bayern/fos-technik/klasse-12/trigonometrische-funktionen/aufgaben-verschieben-strecken-trigonometrischer-funktionen',
               },
             ],
           },
@@ -1949,13 +1928,11 @@ export const exerciseGroupUuidMock = {
               },
               {
                 label: 'Trigonometrie',
-                url:
-                  '/mathe/deutschland/bayern/gymnasium/klasse-10/trigonometrie',
+                url: '/mathe/deutschland/bayern/gymnasium/klasse-10/trigonometrie',
               },
               {
                 label: 'Aufgaben zur allgemeinen Sinusfunktion',
-                url:
-                  '/mathe/deutschland/bayern/gymnasium/klasse-10/trigonometrie/aufgaben-allgemeinen-sinusfunktion',
+                url: '/mathe/deutschland/bayern/gymnasium/klasse-10/trigonometrie/aufgaben-allgemeinen-sinusfunktion',
               },
             ],
           },
@@ -2131,8 +2108,7 @@ export const courseUuidMock_id = {
               },
               {
                 label: 'Polynomfunktionen beliebigen Grades',
-                url:
-                  '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/polynomfunktionen-beliebigen-grades',
+                url: '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/polynomfunktionen-beliebigen-grades',
               },
             ],
           },
@@ -2156,8 +2132,7 @@ export const courseUuidMock_id = {
               },
               {
                 label: 'Graphen ganzrationaler Funktionen',
-                url:
-                  '/mathe/deutschland/bayern/gymnasium/klasse-10/graphen-ganzrationaler-funktionen',
+                url: '/mathe/deutschland/bayern/gymnasium/klasse-10/graphen-ganzrationaler-funktionen',
               },
             ],
           },
@@ -2193,13 +2168,11 @@ export const courseUuidMock_id = {
               },
               {
                 label: 'Ganzrationale Funktionen ',
-                url:
-                  '/mathe/deutschland/bayern/fos-technik/klasse-11/ganzrationale-funktionen',
+                url: '/mathe/deutschland/bayern/fos-technik/klasse-11/ganzrationale-funktionen',
               },
               {
                 label: 'Nullstellen ganzrationaler Funktionen berechnen',
-                url:
-                  '/mathe/deutschland/bayern/fos-technik/klasse-11/ganzrationale-funktionen/nullstellen-ganzrationaler-funktionen-berechnen',
+                url: '/mathe/deutschland/bayern/fos-technik/klasse-11/ganzrationale-funktionen/nullstellen-ganzrationaler-funktionen-berechnen',
               },
             ],
           },
@@ -2223,13 +2196,11 @@ export const courseUuidMock_id = {
               },
               {
                 label: 'Ganzrationale Funktionen ',
-                url:
-                  '/mathe/deutschland/bayern/fos-bos---technisch/klasse-11/ganzrationale-funktionen',
+                url: '/mathe/deutschland/bayern/fos-bos---technisch/klasse-11/ganzrationale-funktionen',
               },
               {
                 label: 'Nullstellen ganzrationaler Funktionen berechnen',
-                url:
-                  '/mathe/deutschland/bayern/fos-bos---technisch/klasse-11/ganzrationale-funktionen/nullstellen-ganzrationaler-funktionen-berechnen',
+                url: '/mathe/deutschland/bayern/fos-bos---technisch/klasse-11/ganzrationale-funktionen/nullstellen-ganzrationaler-funktionen-berechnen',
               },
             ],
           },
@@ -2514,13 +2485,11 @@ export const courseUuidMock_alias = {
                 },
                 {
                   label: 'Wichtige Funktionstypen und ihre Eigenschaften',
-                  url:
-                    '/mathe/funktionen/wichtige-funktionstypen-eigenschaften',
+                  url: '/mathe/funktionen/wichtige-funktionstypen-eigenschaften',
                 },
                 {
                   label: 'Polynomfunktionen beliebigen Grades',
-                  url:
-                    '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/polynomfunktionen-beliebigen-grades',
+                  url: '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/polynomfunktionen-beliebigen-grades',
                 },
               ],
             },
@@ -2544,8 +2513,7 @@ export const courseUuidMock_alias = {
                 },
                 {
                   label: 'Graphen ganzrationaler Funktionen',
-                  url:
-                    '/mathe/deutschland/bayern/gymnasium/klasse-10/graphen-ganzrationaler-funktionen',
+                  url: '/mathe/deutschland/bayern/gymnasium/klasse-10/graphen-ganzrationaler-funktionen',
                 },
               ],
             },
@@ -2581,13 +2549,11 @@ export const courseUuidMock_alias = {
                 },
                 {
                   label: 'Ganzrationale Funktionen ',
-                  url:
-                    '/mathe/deutschland/bayern/fos-technik/klasse-11/ganzrationale-funktionen',
+                  url: '/mathe/deutschland/bayern/fos-technik/klasse-11/ganzrationale-funktionen',
                 },
                 {
                   label: 'Nullstellen ganzrationaler Funktionen berechnen',
-                  url:
-                    '/mathe/deutschland/bayern/fos-technik/klasse-11/ganzrationale-funktionen/nullstellen-ganzrationaler-funktionen-berechnen',
+                  url: '/mathe/deutschland/bayern/fos-technik/klasse-11/ganzrationale-funktionen/nullstellen-ganzrationaler-funktionen-berechnen',
                 },
               ],
             },
@@ -2607,18 +2573,15 @@ export const courseUuidMock_alias = {
                 },
                 {
                   label: 'Klasse 11',
-                  url:
-                    '/mathe/deutschland/bayern/fos-bos---technisch/klasse-11',
+                  url: '/mathe/deutschland/bayern/fos-bos---technisch/klasse-11',
                 },
                 {
                   label: 'Ganzrationale Funktionen ',
-                  url:
-                    '/mathe/deutschland/bayern/fos-bos---technisch/klasse-11/ganzrationale-funktionen',
+                  url: '/mathe/deutschland/bayern/fos-bos---technisch/klasse-11/ganzrationale-funktionen',
                 },
                 {
                   label: 'Nullstellen ganzrationaler Funktionen berechnen',
-                  url:
-                    '/mathe/deutschland/bayern/fos-bos---technisch/klasse-11/ganzrationale-funktionen/nullstellen-ganzrationaler-funktionen-berechnen',
+                  url: '/mathe/deutschland/bayern/fos-bos---technisch/klasse-11/ganzrationale-funktionen/nullstellen-ganzrationaler-funktionen-berechnen',
                 },
               ],
             },

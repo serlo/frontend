@@ -28,9 +28,8 @@ export function MetaBar({
   highlight,
   threadId,
 }: MetaBarProps) {
-  const [tippyInstance, setTippyInstance] = useState<Instance<Props> | null>(
-    null
-  )
+  const [tippyInstance, setTippyInstance] =
+    useState<Instance<Props> | null>(null)
 
   const date = new Date(timestamp)
 

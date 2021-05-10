@@ -28,7 +28,7 @@ export function triggerSentry({
 }: TriggerSentryData) {
   console.log(message)
   if (process.env.NEXT_PUBLIC_SENTRY_DSN !== undefined) {
-    const windowWithSentry = (window as unknown) as Window & SentryGlobal
+    const windowWithSentry = window as unknown as Window & SentryGlobal
     windowWithSentry.Sentry?.addBreadcrumb({
       category: 'error message',
       message,

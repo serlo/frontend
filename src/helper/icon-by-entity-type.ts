@@ -26,7 +26,8 @@ export const categoryIconMapping: { [K in CategoryTypes]: IconDefinition } = {
 }
 
 export function getIconByTypename(typename: string) {
-  const typenameLowerCase = typename.toLowerCase() as keyof typeof entityIconMapping
+  const typenameLowerCase =
+    typename.toLowerCase() as keyof typeof entityIconMapping
   return entityIconMapping[typenameLowerCase] ?? faCircle
 }
 

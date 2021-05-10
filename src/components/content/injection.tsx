@@ -13,9 +13,8 @@ export interface InjectionProps {
 // TODO: Give injection a separate fetched data type
 
 export function Injection({ href, renderNested }: InjectionProps) {
-  const [value, setValue] = useState<FrontendContentNode[] | undefined>(
-    undefined
-  )
+  const [value, setValue] =
+    useState<FrontendContentNode[] | undefined>(undefined)
 
   const [id, setId] = useState<number | undefined>(undefined)
   const { lang } = useInstanceData()
