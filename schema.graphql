@@ -7,8 +7,10 @@ schema {
 
 interface AbstractEntity {
     alias: String
-    date: DateTime!
     "extends AbstractRepository"
+    date: DateTime!
+    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
+    "extends AbstractUuid"
     id: Int!
     instance: Instance!
     license: License!
@@ -21,6 +23,7 @@ interface AbstractEntityRevision {
     changes: String!
     content: String!
     date: DateTime!
+    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
     "extends AbstractUuid"
     id: Int!
     trashed: Boolean!
@@ -30,6 +33,7 @@ interface AbstractExercise {
     alias: String
     currentRevision: AbstractExerciseRevision
     date: DateTime!
+    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
     "extends AbstractEntity"
     id: Int!
     instance: Instance!
@@ -44,6 +48,7 @@ interface AbstractExerciseRevision {
     changes: String!
     content: String!
     date: DateTime!
+    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
     "extends AbstractEntityRevision"
     id: Int!
     trashed: Boolean!
@@ -64,6 +69,7 @@ interface AbstractNotificationEvent {
 interface AbstractRepository {
     alias: String
     date: DateTime!
+    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
     "extends AbstractUuid"
     id: Int!
     instance: Instance!
@@ -83,6 +89,7 @@ interface AbstractRevision {
     author: User!
     content: String!
     date: DateTime!
+    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
     "extends AbstractUuid"
     id: Int!
     "extends ThreadAware"
@@ -93,6 +100,7 @@ interface AbstractRevision {
 interface AbstractTaxonomyTermChild {
     alias: String
     date: DateTime!
+    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
     "extends AbstractEntity"
     id: Int!
     instance: Instance!
@@ -103,6 +111,7 @@ interface AbstractTaxonomyTermChild {
 
 interface AbstractUuid {
     alias: String
+    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
     id: Int!
     trashed: Boolean!
 }
@@ -113,6 +122,18 @@ interface InstanceAware {
 
 interface ThreadAware {
     threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
+}
+
+type AbstractNotificationEventConnection {
+    edges: [AbstractNotificationEventEdge!]!
+    nodes: [AbstractNotificationEvent!]!
+    pageInfo: PageInfo!
+    totalCount: Int!
+}
+
+type AbstractNotificationEventEdge {
+    cursor: String!
+    node: AbstractNotificationEvent!
 }
 
 type AbstractUuidConnection {
@@ -131,6 +152,7 @@ type Applet implements AbstractEntity & AbstractRepository & AbstractTaxonomyTer
     alias: String
     currentRevision: AppletRevision
     date: DateTime!
+    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
     id: Int!
     instance: Instance!
     license: License!
@@ -146,6 +168,7 @@ type AppletRevision implements AbstractEntityRevision & AbstractRevision & Abstr
     changes: String!
     content: String!
     date: DateTime!
+    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
     id: Int!
     metaDescription: String!
     metaTitle: String!
@@ -172,6 +195,7 @@ type Article implements AbstractEntity & AbstractRepository & AbstractTaxonomyTe
     alias: String
     currentRevision: ArticleRevision
     date: DateTime!
+    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
     id: Int!
     instance: Instance!
     license: License!
@@ -187,6 +211,7 @@ type ArticleRevision implements AbstractEntityRevision & AbstractRevision & Abst
     changes: String!
     content: String!
     date: DateTime!
+    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
     id: Int!
     metaDescription: String!
     metaTitle: String!
@@ -225,7 +250,16 @@ type Comment implements AbstractUuid {
     author: User!
     content: String!
     createdAt: DateTime!
+    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
     id: Int!
+    """
+
+    This property is only temporarily used to redirect requests of individual comments to its object
+    (Will be deleted when separate Comments module has been deployed)
+    e.g. Comment with id 35695 -> object: Article with id 1573
+    see https://github.com/serlo/serlo.org-cloudflare-worker/issues/152
+    """
+    legacyObject: AbstractUuid!
     title: String!
     trashed: Boolean!
 }
@@ -246,6 +280,7 @@ type Course implements AbstractEntity & AbstractRepository & AbstractTaxonomyTer
     alias: String
     currentRevision: CourseRevision
     date: DateTime!
+    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
     id: Int!
     instance: Instance!
     license: License!
@@ -261,6 +296,7 @@ type CoursePage implements AbstractEntity & AbstractRepository & AbstractUuid & 
     course: Course!
     currentRevision: CoursePageRevision
     date: DateTime!
+    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
     id: Int!
     instance: Instance!
     license: License!
@@ -275,6 +311,7 @@ type CoursePageRevision implements AbstractEntityRevision & AbstractRevision & A
     changes: String!
     content: String!
     date: DateTime!
+    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
     id: Int!
     repository: CoursePage!
     threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
@@ -300,6 +337,7 @@ type CourseRevision implements AbstractEntityRevision & AbstractRevision & Abstr
     changes: String!
     content: String!
     date: DateTime!
+    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
     id: Int!
     metaDescription: String!
     repository: Course!
@@ -392,6 +430,7 @@ type Event implements AbstractEntity & AbstractRepository & AbstractTaxonomyTerm
     alias: String
     currentRevision: EventRevision
     date: DateTime!
+    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
     id: Int!
     instance: Instance!
     license: License!
@@ -407,6 +446,7 @@ type EventRevision implements AbstractEntityRevision & AbstractRevision & Abstra
     changes: String!
     content: String!
     date: DateTime!
+    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
     id: Int!
     metaDescription: String!
     metaTitle: String!
@@ -432,6 +472,7 @@ type Exercise implements AbstractEntity & AbstractExercise & AbstractRepository 
     alias: String
     currentRevision: ExerciseRevision
     date: DateTime!
+    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
     id: Int!
     instance: Instance!
     license: License!
@@ -446,6 +487,7 @@ type ExerciseGroup implements AbstractEntity & AbstractRepository & AbstractTaxo
     alias: String
     currentRevision: ExerciseGroupRevision
     date: DateTime!
+    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
     exercises: [GroupedExercise!]!
     id: Int!
     instance: Instance!
@@ -462,6 +504,7 @@ type ExerciseGroupRevision implements AbstractEntityRevision & AbstractRevision 
     changes: String!
     content: String!
     date: DateTime!
+    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
     id: Int!
     repository: ExerciseGroup!
     threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
@@ -486,6 +529,7 @@ type ExerciseRevision implements AbstractEntityRevision & AbstractExerciseRevisi
     changes: String!
     content: String!
     date: DateTime!
+    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
     id: Int!
     repository: Exercise!
     threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
@@ -508,6 +552,7 @@ type GroupedExercise implements AbstractEntity & AbstractExercise & AbstractRepo
     alias: String
     currentRevision: GroupedExerciseRevision
     date: DateTime!
+    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
     exerciseGroup: ExerciseGroup!
     id: Int!
     instance: Instance!
@@ -524,6 +569,7 @@ type GroupedExerciseRevision implements AbstractEntityRevision & AbstractExercis
     changes: String!
     content: String!
     date: DateTime!
+    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
     id: Int!
     repository: GroupedExercise!
     threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
@@ -617,6 +663,7 @@ type Page implements AbstractNavigationChild & AbstractRepository & AbstractUuid
     alias: String
     currentRevision: PageRevision
     date: DateTime!
+    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
     id: Int!
     instance: Instance!
     license: License!
@@ -638,6 +685,7 @@ type PageRevision implements AbstractRevision & AbstractUuid & ThreadAware {
     author: User!
     content: String!
     date: DateTime!
+    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
     id: Int!
     repository: Page!
     threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
@@ -662,6 +710,7 @@ type Query {
     activeDonors(after: String, before: String, first: Int, last: Int): UserConnection!
     activeReviewers(after: String, before: String, first: Int, last: Int): UserConnection!
     authorization: JSON!
+    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int, objectId: Int): AbstractNotificationEventConnection!
     license(id: Int!): License
     notificationEvent(id: Int!): AbstractNotificationEvent
     notifications(after: String, before: String, first: Int, last: Int, unread: Boolean): NotificationConnection!
@@ -771,6 +820,7 @@ type Solution implements AbstractEntity & AbstractRepository & AbstractUuid & In
     alias: String
     currentRevision: SolutionRevision
     date: DateTime!
+    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
     exercise: AbstractExercise!
     id: Int!
     instance: Instance!
@@ -786,6 +836,7 @@ type SolutionRevision implements AbstractEntityRevision & AbstractRevision & Abs
     changes: String!
     content: String!
     date: DateTime!
+    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
     id: Int!
     repository: Solution!
     threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
@@ -821,6 +872,7 @@ type TaxonomyTerm implements AbstractNavigationChild & AbstractUuid & InstanceAw
     alias: String
     children(after: String, before: String, first: Int, last: Int): AbstractUuidConnection!
     description: String
+    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
     id: Int!
     instance: Instance!
     name: String!
@@ -916,6 +968,8 @@ type User implements AbstractUuid & ThreadAware {
     alias: String
     date: DateTime!
     description: String
+    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
+    eventsByUser(after: String, before: String, first: Int, instance: Instance, last: Int, objectId: Int): AbstractNotificationEventConnection!
     id: Int!
     lastLogin: DateTime
     roles(after: String, before: String, first: Int, last: Int): ScopedRoleConnection!
@@ -949,6 +1003,7 @@ type Video implements AbstractEntity & AbstractRepository & AbstractTaxonomyTerm
     alias: String
     currentRevision: VideoRevision
     date: DateTime!
+    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
     id: Int!
     instance: Instance!
     license: License!
@@ -964,6 +1019,7 @@ type VideoRevision implements AbstractEntityRevision & AbstractRevision & Abstra
     changes: String!
     content: String!
     date: DateTime!
+    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
     id: Int!
     repository: Video!
     threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
