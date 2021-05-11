@@ -12,6 +12,7 @@
     "_eslint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
     "_prettier": "prettier .",
     "analyze": "cross-env ANALYZE=true yarn build",
+    "prebuild": "cat .vercelignore && cat .env.local",
     "build": "next build",
     "dev": "next",
     "format": "npm-run-all --continue-on-error format:*",
