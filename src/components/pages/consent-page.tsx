@@ -18,9 +18,9 @@ export function ConsentPage() {
   const [, updateState] = useState({})
   const { strings } = useInstanceData()
 
-  const consentedProviders = Object.values(
-    ExternalProvider
-  ).filter((provider) => checkConsent(provider))
+  const consentedProviders = Object.values(ExternalProvider).filter(
+    (provider) => checkConsent(provider)
+  )
 
   return (
     <>

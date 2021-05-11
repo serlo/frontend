@@ -91,8 +91,7 @@ export const footerData: InstanceData['footerData'] = {
       children: [
         {
           title: 'Newsletter',
-          url:
-            'https://serlo.us7.list-manage.com/subscribe?u=23f4b04bf70ea485a766e532d&amp;id=a7bb2bbc4f',
+          url: 'https://serlo.us7.list-manage.com/subscribe?u=23f4b04bf70ea485a766e532d&amp;id=a7bb2bbc4f',
           icon: 'newsletter',
         },
         {

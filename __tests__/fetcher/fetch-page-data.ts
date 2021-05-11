@@ -28,7 +28,7 @@ import { serloDomain } from '@/helper/serlo-domain'
 
 const server = setupServer()
 
-global.fetch = (nodeFetch as unknown) as typeof global.fetch
+global.fetch = nodeFetch as unknown as typeof global.fetch
 
 beforeAll(() => {
   server.listen()
@@ -132,8 +132,7 @@ describe('check all supported typenames with stored api-data', () => {
       },
       {
         label: 'Polynomfunktionen beliebigen Grades',
-        url:
-          '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/polynomfunktionen-beliebigen-grades',
+        url: '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/polynomfunktionen-beliebigen-grades',
       },
     ])
 
@@ -322,14 +321,12 @@ describe('check all supported typenames with stored api-data', () => {
       },
       {
         label: 'Trigonometrische Funktionen',
-        url:
-          '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen',
+        url: '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen',
       },
       {
         label:
           'Aufgaben zum Verschieben und Strecken trigonometrischer Funktionen',
-        url:
-          '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen/aufgaben-verschieben-strecken-trigonometrischer-funktionen',
+        url: '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen/aufgaben-verschieben-strecken-trigonometrischer-funktionen',
       },
     ])
 
@@ -371,14 +368,12 @@ describe('check all supported typenames with stored api-data', () => {
       },
       {
         label: 'Trigonometrische Funktionen',
-        url:
-          '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen',
+        url: '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen',
       },
       {
         label:
           'Aufgaben zum Verschieben und Strecken trigonometrischer Funktionen',
-        url:
-          '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen/aufgaben-verschieben-strecken-trigonometrischer-funktionen',
+        url: '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen/aufgaben-verschieben-strecken-trigonometrischer-funktionen',
       },
     ])
 
@@ -477,8 +472,7 @@ describe('check all supported typenames with stored api-data', () => {
       },
       {
         label: 'Polynomfunktionen beliebigen Grades',
-        url:
-          '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/polynomfunktionen-beliebigen-grades',
+        url: '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/polynomfunktionen-beliebigen-grades',
       },
     ])
 

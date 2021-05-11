@@ -101,8 +101,7 @@ export function ShareModal({ open, onClose, contentId }: ShareModalProps) {
       icon: faCompass,
       href: 'copy',
       //TODO: Translate
-      text:
-        'Link in die Zwischenablage kopiert. Einfach auf <a href="https://www.mebis.bayern.de/">mebis</a> einfügen!',
+      text: 'Link in die Zwischenablage kopiert. Einfach auf <a href="https://www.mebis.bayern.de/">mebis</a> einfügen!',
     },
   ]
 

@@ -34,9 +34,8 @@ export type CommentsData = CommentType[]
 export type ThreadsData = ThreadType[]
 
 export function CommentArea({ id: entityId, noForms }: CommentAreaProps) {
-  const [highlightedCommentId, setHighlightedCommentId] = useState<
-    number | undefined
-  >(undefined)
+  const [highlightedCommentId, setHighlightedCommentId] =
+    useState<number | undefined>(undefined)
   const container = useRef<HTMLDivElement>(null)
   const { strings } = useInstanceData()
   const auth = useAuthentication()

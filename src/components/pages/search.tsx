@@ -22,7 +22,7 @@ export function Search() {
   const { strings } = useInstanceData()
 
   const renderResults = () => {
-    const _window = (window as unknown) as Window & GoogleSearchGlobal
+    const _window = window as unknown as Window & GoogleSearchGlobal
     if (typeof _window.google === 'undefined') {
       setTimeout(() => {
         renderResults()

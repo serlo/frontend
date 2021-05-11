@@ -1,6 +1,7 @@
 import {
   NotificationMutation,
   NotificationSetStateInput,
+  SubscriptionSetInput,
   ThreadCreateCommentInput,
   ThreadCreateThreadInput,
   ThreadMutation,
@@ -18,12 +19,14 @@ import { mutate } from 'swr'
 import { csrReload } from './csr-reload'
 import { showToastNotice } from './show-toast-notice'
 import { triggerSentry } from './trigger-sentry'
+import { isSubscribedQuery } from './use-is-subscribed'
 import { endpoint } from '@/api/endpoint'
 import {
   AuthenticationPayload,
   useAuthentication,
 } from '@/auth/use-authentication'
 import { useEntityId } from '@/contexts/entity-id-context'
+import { subscriptionsQuery } from '@/pages/subscriptions/manage'
 
 export function useSetUuidStateMutation() {
   const auth = useAuthentication()
@@ -214,6 +217,46 @@ export function useCreateCommentMutation() {
     await createCommentMutation(input)
 }
 
+export function useSubscriptionSetMutation() {
+  const auth = useAuthentication()
+
+  const mutation = gql`
+    mutation subscriptionSet($input: SubscriptionSetInput!) {
+      subscription {
+        set(input: $input) {
+          success
+        }
+      }
+    }
+  `
+
+  const subscriptionSetMutation = async function (input: SubscriptionSetInput) {
+    const success = await mutationFetch(auth, mutation, input)
+
+    // TODO: Reconstructing SWR keys here, we need a nice global solution how we handle SWR keys
+    // see https://swr.vercel.app/docs/arguments and useGraphqlSwr(WithAuth)
+
+    if (success) {
+      await mutate(
+        JSON.stringify({
+          query: isSubscribedQuery,
+          variables: { id: input.id[0] },
+        })
+      )
+      //manually mutate if needed for performance
+      await mutate(
+        JSON.stringify({
+          query: subscriptionsQuery,
+        })
+      )
+    }
+    return success
+  }
+
+  return async (input: SubscriptionSetInput) =>
+    await subscriptionSetMutation(input)
+}
+
 type MutationInput =
   | NotificationSetStateInput
   | UuidSetStateInput
@@ -222,6 +265,7 @@ type MutationInput =
   | ThreadSetThreadStateInput
   | ThreadSetCommentStateInput
   | ThreadCreateCommentInput
+  | SubscriptionSetInput
 
 type MutationResponse = ThreadMutation | UuidMutation | NotificationMutation
 

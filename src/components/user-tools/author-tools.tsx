@@ -6,9 +6,7 @@ import {
   Uuid,
 } from '@serlo/authorization'
 import Tippy, { TippyProps } from '@tippyjs/react'
-import cookie from 'cookie'
 import { useRouter } from 'next/router'
-import NProgress from 'nprogress'
 import { Fragment } from 'react'
 
 import { SubLink } from '../navigation/sub-link'
@@ -18,9 +16,10 @@ import { SubButtonStyle } from './sub-button-style'
 import { useCanDo } from '@/auth/use-can-do'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { csrReload } from '@/helper/csr-reload'
-import { useSetUuidStateMutation } from '@/helper/mutations'
-import { showToastNotice } from '@/helper/show-toast-notice'
+import {
+  useSetUuidStateMutation,
+  useSubscriptionSetMutation,
+} from '@/helper/mutations'
 import { useIsSubscribed } from '@/helper/use-is-subscribed'
 
 export enum Tool {
@@ -72,8 +71,9 @@ const tippyDefaultProps: Partial<TippyProps> = {
 export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   const loggedInData = useLoggedInData()
   const instanceData = useInstanceData()
-  const { isSubscribed, updateIsSubscribed } = useIsSubscribed(data.id)
 
+  const isSubscribed = useIsSubscribed(data.id)
+  const setSubscription = useSubscriptionSetMutation()
   const setUuidState = useSetUuidStateMutation()
 
   const router = useRouter()
@@ -211,37 +211,76 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
 
   function abo() {
     if (isSubscribed) {
-      return renderFetchLi(
-        `/unsubscribe/${entityId}`,
-        loggedInStrings.authorMenu.unsubscribeNotifications
+      return (
+        <li
+          className="block"
+          key={loggedInStrings.authorMenu.unsubscribeNotifications}
+        >
+          <SubButtonStyle
+            as="button"
+            onClick={() => {
+              void setSubscription({
+                id: [entityId],
+                subscribe: false,
+                sendEmail: false,
+              })
+            }}
+          >
+            {loggedInStrings.authorMenu.unsubscribeNotifications}
+          </SubButtonStyle>
+        </li>
       )
     }
     return (
-      <div>
-        <Tippy
-          {...tippyDefaultProps}
-          content={
-            <HoverSubList>
-              {renderFetchLi(
-                `/subscribe/${entityId}/0`,
-                loggedInStrings.authorMenu.subscribeNotifications
-              )}
-              {renderFetchLi(
-                `/subscribe/${entityId}/1`,
-                loggedInStrings.authorMenu.subscribeNotificationsAndMail
-              )}
-            </HoverSubList>
-          }
-        >
-          <li className="block">
-            <SubLink as="div" tabIndex={0}>
-              <SubButtonStyle>
-                ◂ {loggedInStrings.authorMenu.subscribe}
+      <Tippy
+        {...tippyDefaultProps}
+        content={
+          <HoverSubList>
+            <li
+              className="block"
+              key={loggedInStrings.authorMenu.subscribeNotifications}
+            >
+              <SubButtonStyle
+                as="button"
+                onClick={() => {
+                  void setSubscription({
+                    id: [entityId],
+                    subscribe: true,
+                    sendEmail: false,
+                  })
+                }}
+              >
+                {loggedInStrings.authorMenu.subscribeNotifications}
               </SubButtonStyle>
-            </SubLink>
-          </li>
-        </Tippy>
-      </div>
+            </li>
+            <li
+              className="block"
+              key={loggedInStrings.authorMenu.subscribeNotificationsAndMail}
+            >
+              <SubButtonStyle
+                as="button"
+                onClick={() => {
+                  void setSubscription({
+                    id: [entityId],
+                    subscribe: true,
+                    sendEmail: true,
+                  })
+                }}
+              >
+                {loggedInStrings.authorMenu.subscribeNotificationsAndMail}
+              </SubButtonStyle>
+            </li>
+          </HoverSubList>
+        }
+      >
+        <li className="block">
+          <SubLink as="div" tabIndex={0}>
+            <SubButtonStyle>
+              ◂ {loggedInStrings.authorMenu.subscribe}
+            </SubButtonStyle>
+          </SubLink>
+        </li>
+      </Tippy>
     )
   }
 
@@ -340,75 +379,5 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
         </SubLink>
       </li>
     )
-  }
-
-  function renderFetchLi(href: string, text: string, csrf?: boolean) {
-    return (
-      <li className="block">
-        <SubButtonStyle
-          as="button"
-          onClick={() => fetchLegacyUrl(href, text, csrf)}
-        >
-          {text}
-        </SubButtonStyle>
-      </li>
-    )
-  }
-
-  //quick experiment
-  function fetchLegacyUrl(url: string, text: string, csrf?: boolean) {
-    //TODO: this works quite nicely, but the fetch below does not :)
-    if (url.startsWith('/subscribe') || url.startsWith('/unsubscribe')) {
-      updateIsSubscribed(data.id, !isSubscribed)
-      return false
-    }
-
-    NProgress.start()
-
-    const cookies = cookie.parse(
-      typeof window === 'undefined' ? '' : document.cookie
-    )
-
-    const options = csrf
-      ? { method: 'POST', body: JSON.stringify({ csrf: cookies['CSRF'] }) }
-      : {}
-
-    try {
-      void fetch(url, options)
-        .then((res) => {
-          //if location.href is not res.url there was probably an authentication error. use api mutation in the future.
-          if (res.status === 200 && location.href.startsWith(res.url)) {
-            NProgress.done()
-            showToastNotice(`'${text}' erfolgreich `, 'success')
-
-            if (
-              url.startsWith('/subscribe') ||
-              url.startsWith('/unsubscribe')
-            ) {
-              //TODO: Mutate Subscribed here
-
-              return false
-            }
-
-            setTimeout(() => {
-              csrReload()
-            }, 1500)
-          } else {
-            showErrorNotice()
-          }
-        })
-        .catch(() => {
-          showErrorNotice()
-        })
-    } catch (e) {
-      console.log(e)
-      showErrorNotice()
-    }
-
-    function showErrorNotice() {
-      NProgress.done()
-      showToastNotice('Something went wrong… Please try again.', 'warning')
-      return false
-    }
   }
 }
