@@ -12,7 +12,10 @@ const shortTitles: { [key: number]: string } = {
   19: 'schule-bw.de',
 }
 
-export function createInlineLicense(license: License): LicenseData {
+export function createInlineLicense(
+  license?: License
+): LicenseData | undefined {
+  if (!license) return license
   const output: LicenseData = license
   output.shortTitle = shortTitles[output.id]
   return output
