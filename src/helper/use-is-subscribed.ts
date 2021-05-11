@@ -2,46 +2,26 @@ import { gql } from 'graphql-request'
 
 import { useGraphqlSwrWithAuth } from '@/api/use-graphql-swr'
 
-interface UseIsSubscribedReturn {
-  isSubscribed: boolean | null
-  updateIsSubscribed: (id: number, subscribed: boolean) => void
-}
+export const isSubscribedQuery = gql`
+  query hasSubscribed($id: Int!) {
+    subscription {
+      currentUserHasSubscribed(id: $id)
+    }
+  }
+`
 
-export function useIsSubscribed(id: number): UseIsSubscribedReturn {
-  const { data, mutate } = useGraphqlSwrWithAuth<{
-    subscriptions: {
-      nodes: {
-        id: number
-      }[]
+export function useIsSubscribed(id: number): boolean {
+  const { data } = useGraphqlSwrWithAuth<{
+    subscription: {
+      currentUserHasSubscribed: boolean
     }
   }>({
-    query: gql`
-      query {
-        subscriptions {
-          nodes {
-            id
-          }
-        }
-      }
-    `,
+    query: isSubscribedQuery,
+    variables: { id },
     config: {
-      refreshInterval: 60 * 60 * 1000, //60min -> only update on cache mutation
+      refreshInterval: 60 * 60 * 1000, // always refresh for now, maybe use cache in the future
     },
   })
 
-  const mutateSingleId = function (id: number, subscribed: boolean) {
-    void mutate((data) => {
-      if (!data) return data
-      const nodes = data.subscriptions.nodes.filter((n) => n.id !== id)
-      if (subscribed) nodes.push({ id })
-      return {
-        subscriptions: { nodes },
-      }
-    }, false) //should not revalidate
-  }
-
-  return {
-    isSubscribed: data?.subscriptions.nodes.some((n) => n.id === id) ?? null,
-    updateIsSubscribed: mutateSingleId,
-  }
+  return data?.subscription.currentUserHasSubscribed || false
 }
