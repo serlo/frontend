@@ -1,13 +1,12 @@
 import { faTools } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Tippy from '@tippyjs/react'
-import styled from 'styled-components'
+import clsx from 'clsx'
 
 import {
   AuthorToolsData,
   AuthorToolsHoverMenu,
 } from '../../user-tools/author-tools-hover-menu'
-import { makeTransparentButton } from '@/helper/css'
 
 export interface ExerciseAuthorToolsProps {
   data: AuthorToolsData
@@ -22,33 +21,15 @@ export function ExerciseAuthorTools({ data }: ExerciseAuthorToolsProps) {
       interactiveBorder={40}
       content={<AuthorToolsHoverMenu data={data} />}
     >
-      <EditButton>
+      <a
+        className={clsx(
+          'hidden sm:inline serlo-button text-center text-truegray-800',
+          'hover:bg-brand hover:text-white text-base leading-8',
+          'w-8 h-8 ml-1 p-0'
+        )}
+      >
         <FontAwesomeIcon icon={faTools} />
-      </EditButton>
+      </a>
     </Tippy>
   )
 }
-
-const EditButton = styled.a`
-  display: none;
-
-  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-    display: inline;
-    ${makeTransparentButton}
-
-    text-align: center;
-    color: ${(props) => props.theme.colors.dark1};
-    background-color: ${(props) => props.theme.colors.lightBackground};
-    font-size: 1rem;
-    line-height: 2rem;
-    width: 2rem;
-    height: 2rem;
-    padding: 0;
-    margin-left: 5px;
-
-    &:hover {
-      background-color: ${(props) => props.theme.colors.brand};
-      color: #fff;
-    }
-  }
-`
