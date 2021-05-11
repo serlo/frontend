@@ -11,7 +11,7 @@ import { UserRoles } from '@/data-types'
 
 const server = setupServer()
 
-global.fetch = nodeFetch as unknown as typeof global.fetch
+global.fetch = (nodeFetch as unknown) as typeof global.fetch
 
 beforeAll(() => {
   server.listen()

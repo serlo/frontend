@@ -38,8 +38,9 @@ const filters = [
 function Content() {
   const response = useFetch()
   const { strings } = useInstanceData()
-  const [showTypename, setShowTypename] =
-    useState<typeof filters[number]>('Article')
+  const [showTypename, setShowTypename] = useState<typeof filters[number]>(
+    'Article'
+  )
 
   const filtered = response.data?.subscriptions.nodes.filter(
     (node) => node.__typename === showTypename

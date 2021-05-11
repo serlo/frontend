@@ -29,7 +29,7 @@ interface LegacyNode {
 }
 
 export function convertLegacyState(html: string) {
-  const dom = htmlparser2.parseDOM(html) as unknown as LegacyNode
+  const dom = (htmlparser2.parseDOM(html) as unknown) as LegacyNode
   return { children: convert(dom) }
 }
 

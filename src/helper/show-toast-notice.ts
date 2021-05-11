@@ -24,7 +24,7 @@ export const showToastNotice = function (
   time?: number
 ) {
   if (!toastNotice) return
-  ;(toastNotice as unknown as typeof notify['show'])(
+  ;((toastNotice as unknown) as typeof notify['show'])(
     message,
     'custom',
     time ?? 3200,

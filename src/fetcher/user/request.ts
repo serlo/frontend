@@ -46,7 +46,8 @@ function getDescription(uuid: User) {
             {
               type: 'p',
               children: {
-                text: 'This is where we display the description on a the production server.',
+                text:
+                  'This is where we display the description on a the production server.',
               },
             },
           ],

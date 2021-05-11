@@ -28,10 +28,9 @@ export function Video(props: VideoProps) {
   const wikimedia = /^(https?:\/\/)?(.*?upload\.wikimedia\.org\/)(.+)/.exec(src)
   if (wikimedia) return renderWikimedia()
 
-  const youtube =
-    /^(https?:\/\/)?(.*?youtube\.com\/watch\?(.*&)?v=|.*?youtu\.be\/)([a-zA-Z0-9_-]{11})/.exec(
-      src
-    )
+  const youtube = /^(https?:\/\/)?(.*?youtube\.com\/watch\?(.*&)?v=|.*?youtu\.be\/)([a-zA-Z0-9_-]{11})/.exec(
+    src
+  )
   if (youtube) return renderYoutube(youtube[4])
 
   return (

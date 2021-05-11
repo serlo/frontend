@@ -59,8 +59,10 @@ export function FrontendClientBase({
     }
   })
 
-  const [authorizationPayload, setAuthorizationPayload] =
-    React.useState<AuthorizationPayload | null>(authorization ?? null)
+  const [
+    authorizationPayload,
+    setAuthorizationPayload,
+  ] = React.useState<AuthorizationPayload | null>(authorization ?? null)
 
   //React.useEffect(storePageData, [initialProps])
 
@@ -77,8 +79,10 @@ export function FrontendClientBase({
   const [loggedInData, setLoggedInData] = React.useState<LoggedInData | null>(
     getCachedLoggedInData()
   )
-  const [loggedInComponents, setLoggedInComponents] =
-    React.useState<LoggedInStuff | null>(null)
+  const [
+    loggedInComponents,
+    setLoggedInComponents,
+  ] = React.useState<LoggedInStuff | null>(null)
 
   //console.log('Comps', loggedInComponents)
 
@@ -171,9 +175,9 @@ export function FrontendClientBase({
     if (auth.current) {
       Promise.all([
         !loggedInData
-          ? fetch(frontendOrigin + '/api/locale/' + instanceData.lang).then(
-              (res) => res.json()
-            )
+          ? fetch(
+              frontendOrigin + '/api/locale/' + instanceData.lang
+            ).then((res) => res.json())
           : false,
         !loggedInComponents ? import('@/helper/logged-in-stuff-chunk') : false,
       ])
