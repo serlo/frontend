@@ -95,6 +95,10 @@ export const revisionQuery = gql`
           changes
           repository {
             id
+            license {
+              id
+              title
+            }
             currentRevision {
               content
             }
@@ -105,6 +109,10 @@ export const revisionQuery = gql`
           changes
           repository {
             id
+            license {
+              id
+              title
+            }
             currentRevision {
               ...exerciseGroupRevision
             }
