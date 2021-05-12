@@ -71,7 +71,7 @@ export const instanceData = {
       title: "Compartir",
       copyLink: "Copiar link",
       copySuccess: "Enlace copiado",
-      close: "Cerca"
+      close: "Cerrar"
     },
     edit: {
       button: "Editar",
@@ -79,8 +79,8 @@ export const instanceData = {
     },
     license: {
       readMore: "Información",
-      special: 'Different license',
-      nonFree: 'Usage of this content might be more restricted than our other content.'
+      special: "Licencia diferente",
+      nonFree: "El uso de este contenido podría estar más restringido que nuestro otro contenido."
     },
     course: {
       showPages: "Mostrar descripción del curso",
@@ -98,7 +98,7 @@ export const instanceData = {
       yourAnswer: "Tu respuesta...",
       chooseOption: "Elige una de las opciones.",
       trashedNotice: "Este contenido está marcado para su eliminación.",
-      strategy: 'Solution Strategy'
+      strategy: "Estrategia de solución"
     },
     consent: {
       title: "Consentimiento para contenido externo",
@@ -120,7 +120,7 @@ export const instanceData = {
       commentsMany: "Comentarios",
       submit: "Enviar",
       archiveThread: "Archivar hilo de la conversación",
-      restoreThread: 'Restore thread',
+      restoreThread: "Restaurar hilo",
       deleteThread: "Eliminar hilo de la conversación",
       deleteComment: "Eliminar comentario",
       postedOn: "Publicado el",
@@ -147,10 +147,10 @@ export const instanceData = {
       by: "Por"
     },
     revisionHistory: {
-      changes: 'Changes',
-      author: 'Author',
-      date: 'Date',
-      createNew: 'Create a new revision starting from this specific revision'
+      changes: "Cambios",
+      author: "Autor",
+      date: "Fecha",
+      createNew: "Crear una nueva revisión a partir de esta revisión específica"
     },
     errors: {
       title: "😬 Los sitios web a veces cometen errores…",
@@ -163,16 +163,16 @@ export const instanceData = {
       backToHome: "Ir a la página de inicio"
     },
     print: {
-      warning: 'IMPORTANT: To make sure all images and formulas print, please scroll down to the end of the page once BEFORE you open this dialog. Thank you!'
+      warning: "IMPORTANTE: Para asegurarse de que todas las imágenes y fórmulas se imprimen, por favor desplácese hasta el final de la página una vez que abra este diálogo. Gracias."
     },
     profiles: {
       aboutMe: "Sobre mi",
-      activeSince: 'With Serlo since',
+      activeSince: "Con Serlo desde",
       recentActivities: "Actividades recientes",
       showAllActivities: "Mostrar todas las actividades",
-      lastLogin: 'Last login',
+      lastLogin: "Ultimo Inicio de sesion",
       roles: "Roles (funciones)",
-      directMessage: 'Direct message'
+      directMessage: "Mensaje directo"
     },
     notices: {
       welcome: "¡Bienvenida/o  %username%!",
@@ -192,7 +192,7 @@ export const instanceData = {
     },
     keys: {
       ctrl: 'ctrl',
-      return: 'return'
+      return: "entrar"
     }
   }
 };
@@ -223,11 +223,11 @@ export const serverSideStrings = {
 export const loggedInData = {
   authMenu: [{
     url: '/user/notifications',
-    title: "notifications",
+    title: "Notificaciones",
     icon: 'notifications'
   }, {
     url: '',
-    title: "user",
+    title: "Usuario",
     icon: 'user',
     children: [{
       url: '/user/public',
@@ -243,7 +243,7 @@ export const loggedInData = {
       title: "Actividades recientes"
     }, {
       url: '/subscriptions/manage',
-      title: "Subscripciones"
+      title: "Suscripciones"
     }, {
       url: '/api/auth/logout',
       title: "Cerrar sesión"
@@ -262,7 +262,7 @@ export const loggedInData = {
       moveItems: "Mover elementos",
       addGroupedTextExercise: "Añade un grupo de ejercicios de texto",
       changeLicense: "Cambiar licencia",
-      subscribe: "Subscribir",
+      subscribe: "Suscribir",
       subscribeNotifications: "Recibir notificaciones",
       subscribeNotificationsAndMail: "Recibir notificaciones y correos electrónicos",
       unsubscribeNotifications: "Cancelar suscripción",
@@ -306,23 +306,23 @@ export const loggedInData = {
       entityPlaceholderFallback: "Contenido"
     },
     subscriptions: {
-      mail: "E-mails",
+      mail: "Correo electrónico",
       subscription: "Suscripción",
       noMails: "desactivar",
       noNotifications: "cancelar"
     },
     revisions: {
       accept: {
-        action: 'Accept',
-        title: 'Accept Revision',
-        explanation: 'Please give the author some feedback.'
+        action: "Aceptar",
+        title: "Aceptar la revisión",
+        explanation: "Por favor, dale al autor algún comentario."
       },
       reject: {
-        action: 'Reject',
-        title: 'Reject Revision',
-        explanation: 'Please tell the author why you are rejecting the submission.'
+        action: "Rechazar",
+        title: "Rechazar la revisión",
+        explanation: "Indica al autor por qué rechazas el trabajo."
       },
-      confirm: 'Confirm'
+      confirm: "Confirmar"
     }
   }
 };
