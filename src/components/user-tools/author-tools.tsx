@@ -125,11 +125,11 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
     },
     trash: {
       renderer: trash,
-      canDo: canDo(Uuid.setState(data.type)),
+      canDo: canDo(Uuid.setState(customTypeToAuthorizationType(data.type))),
     },
     newEntitySubmenu: {
       renderer: renderNewEntity,
-      canDo: canDo(Uuid.create(data.type)),
+      canDo: canDo(Uuid.create(customTypeToAuthorizationType(data.type))),
     },
     pageHistory: {
       url: `/page/revision/revisions/${data.id}`,
@@ -380,4 +380,11 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
       </li>
     )
   }
+}
+
+function customTypeToAuthorizationType(type: string) {
+  if (type == 'Taxonomy') return 'TaxonomyTerm'
+  if (['Page', 'PageRevision'].includes(type)) return type
+  if (type.includes('Revision')) return 'EntityRevision'
+  return 'Entity'
 }
