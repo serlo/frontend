@@ -59,7 +59,7 @@ export const instanceData = {
     pageTitles: {
       notifications: "Tus notificaciones",
       subscriptions: "Administra las suscripciones",
-      revisionHistory: "Revision History"
+      revisionHistory: "Historial de revisiones"
     },
     roles: {
       donor: "Donante",
