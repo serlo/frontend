@@ -233,6 +233,21 @@ type ArticleRevisionCursor {
     node: ArticleRevision!
 }
 
+type CacheRemoveResponse {
+    query: Query!
+    success: Boolean!
+}
+
+type CacheSetResponse {
+    query: Query!
+    success: Boolean!
+}
+
+type CacheUpdateResponse {
+    query: Query!
+    success: Boolean!
+}
+
 type CheckoutRevisionNotificationEvent implements AbstractNotificationEvent & InstanceAware {
     actor: User!
     date: DateTime!
@@ -600,9 +615,7 @@ type License {
 }
 
 type Mutation {
-    _removeCache(key: String!): Boolean
-    _setCache(key: String!, value: JSON!): Boolean
-    _updateCache(keys: [String!]!): Boolean
+    _cache: _cacheMutation!
     notification: NotificationMutation!
     subscription: SubscriptionMutation!
     thread: ThreadMutation!
@@ -1040,6 +1053,12 @@ type VideoRevisionCursor {
     node: VideoRevision!
 }
 
+type _cacheMutation {
+    remove(input: CacheRemoveInput!): CacheRemoveResponse!
+    set(input: CacheSetInput!): CacheSetResponse!
+    update(input: CacheUpdateInput!): CacheUpdateResponse!
+}
+
 enum CacheControlScope {
     PRIVATE
     PUBLIC
@@ -1082,6 +1101,19 @@ enum TaxonomyTermType {
 input AliasInput {
     instance: Instance!
     path: String!
+}
+
+input CacheRemoveInput {
+    key: String!
+}
+
+input CacheSetInput {
+    key: String!
+    value: JSON!
+}
+
+input CacheUpdateInput {
+    keys: [String!]!
 }
 
 input NotificationSetStateInput {
