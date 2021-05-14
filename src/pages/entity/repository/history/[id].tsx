@@ -19,6 +19,9 @@ export default renderedPageNoHooks<HistoryRevisionProps>((props) => (
 
 function Content({ id }: HistoryRevisionProps) {
   const response = useFetch(id)
+  if (response.data?.uuid.solutionRevisions) {
+    response.data.uuid.revisions = response.data.uuid.solutionRevisions
+  }
   return (
     <>
       <Breadcrumbs
@@ -227,6 +230,21 @@ const query = gql`
           id
         }
         revisions {
+          nodes {
+            id
+            author {
+              ...authorData
+            }
+            changes
+            date
+          }
+        }
+      }
+      ... on Solution {
+        currentRevision {
+          id
+        }
+        solutionRevisions: revisions {
           nodes {
             id
             author {
