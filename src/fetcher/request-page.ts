@@ -43,7 +43,7 @@ export async function requestPage(
   ) {
     return {
       kind: 'redirect',
-      target: `entity/repository/compare/0/${uuid.id}`,
+      target: uuid.alias || `entity/repository/compare/0/${uuid.id}`,
     }
   }
 

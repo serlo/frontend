@@ -9,9 +9,9 @@ export const dataQuery = gql`
       __typename
       id
       trashed
+      alias
 
       ... on AbstractRepository {
-        alias
         instance
         ...license
       }
