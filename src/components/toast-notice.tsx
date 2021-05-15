@@ -44,10 +44,19 @@ export function ToastNotice() {
       }
       showToastNotice(getText(), 'default', showTime)
 
-      setTimeout(() => {
-        window.location.hash = ''
-        window.location.reload()
-      }, 1000)
+      // fetch a legacy page to flush flash messages - then reload page
+      fetch('/auth/password/change')
+        .then((res) => res.text())
+        .then(() => {
+          window.location.hash = ''
+          window.location.reload()
+        })
+        .catch(() => {
+          setTimeout(() => {
+            window.location.hash = ''
+            window.location.reload()
+          }, 1000)
+        })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
