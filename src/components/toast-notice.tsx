@@ -55,7 +55,7 @@ export function ToastNotice() {
       fetch('/auth/password/change')
         .then((res) => res.text())
         .then(() => {
-          window.location.hash = ''
+          removeHash()
         })
         .catch(() => {})
     }
