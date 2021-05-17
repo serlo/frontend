@@ -142,7 +142,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
         return [
           {
             type: 'injection',
-            href,
+            href: href.trim(),
           },
         ]
       }

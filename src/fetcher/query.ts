@@ -9,9 +9,9 @@ export const dataQuery = gql`
       __typename
       id
       trashed
+      alias
 
       ... on AbstractRepository {
-        alias
         instance
         ...license
       }
@@ -73,10 +73,9 @@ export const dataQuery = gql`
           currentRevision {
             title
           }
-          pages {
+          pages(trashed: false, hasCurrentRevision: true) {
             alias
             id
-            trashed
             currentRevision {
               title
               trashed

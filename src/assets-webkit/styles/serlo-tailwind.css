@@ -27,6 +27,9 @@
   .serlo-make-interactive-green {
     @apply text-white bg-brandgreen hover:bg-brand;
   }
+  .serlo-make-interactive-transparent-green {
+    @apply text-brandgreen bg-transparent hover:text-white hover:bg-brandgreen;
+  }
   .serlo-make-interactive-transparent-blue {
     @apply text-brand bg-transparent hover:text-white hover:bg-brand;
   }

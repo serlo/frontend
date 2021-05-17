@@ -1,6 +1,7 @@
 const regexMathRm = /\\mathrm(?=[^a-z])/gm
 const regexDfrac = /\\frac(?=[^a-z])/gm
-const regexDisplayStyle = /\\displaystyle(?=[^a-z])/gm
+const regexBeginAlign = /\\begin{align}/gm
+const regexEndAlign = /\\end{align}/gm
 const regexTextSimple = /\\text(?=[^a-z{])/gm
 const regexText = /\\text *{([^{]+)}/gm
 const regexComma = /(?<=[\d]),(?=[\d])/gm
@@ -9,7 +10,8 @@ const regexEmptyNewLine = /\\\\(?=[\s]*\\end{)/gm
 
 const regexNewLine = /\\\\/gm
 const regexAmpersand = /(?<=[^\\])&/gm
-const envStart = /(\\begin{(pmatrix|vmatrix|cases)}|\\begin{array}{[a-z]+})/gm
+const envStart =
+  /(\\begin{(pmatrix|vmatrix|cases|aligned)}|\\begin{array}{[a-z]+})/gm
 
 export function sanitizeLatex(formula: string): string {
   // ignore empty formulas
@@ -21,8 +23,9 @@ export function sanitizeLatex(formula: string): string {
   // convert frac to dfrac
   formula = formula.replace(regexDfrac, '\\dfrac')
 
-  // remove displaystyle in front
-  formula = formula.replace(regexDisplayStyle, '')
+  // replace align with aligned
+  formula = formula.replace(regexBeginAlign, '\\begin{aligned}')
+  formula = formula.replace(regexEndAlign, '\\end{aligned}')
 
   // handle text style
   formula = formula.replace(regexText, '\\text{\\sf $1}')

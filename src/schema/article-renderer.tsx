@@ -207,13 +207,20 @@ function renderElement(props: RenderElementProps): React.ReactNode {
   }
   if (element.type === 'math') {
     const nowrap = /\\begin *{(array|aligned)}/.test(element.formula)
+    const addDisplaystile = !/\\displaystyle[^a-z]/.test(element.formula)
     // alignLeft is assumed to be always true
     return (
       <div
         className={clsx('serlo-math-wrapper', { 'whitespace-nowrap': nowrap })}
       >
         <Lazy slim>
-          <Math formula={'\\displaystyle ' + element.formula} />
+          <Math
+            formula={
+              addDisplaystile
+                ? '\\displaystyle ' + element.formula
+                : element.formula
+            }
+          />
         </Lazy>
       </div>
     )

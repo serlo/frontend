@@ -78,7 +78,7 @@ function useFetch() {
       nodes: QueryResponse[]
     }
   }>({
-    query,
+    query: subscriptionsQuery,
     config: {
       refreshInterval: 60 * 60 * 1000, //60min -> update on cache mutation
     },
@@ -91,7 +91,7 @@ const TabButton = styled.button<{ active: boolean }>`
   margin-bottom: 10px;
 `
 
-const query = gql`
+export const subscriptionsQuery = gql`
   query {
     subscriptions {
       nodes {

@@ -43,7 +43,7 @@ export async function requestPage(
   ) {
     return {
       kind: 'redirect',
-      target: `entity/repository/compare/0/${uuid.id}`,
+      target: uuid.alias || `entity/repository/compare/0/${uuid.id}`,
     }
   }
 
@@ -312,10 +312,9 @@ export async function requestPage(
     const pagesToShow = uuid.course.pages.filter(
       (page) =>
         page.alias &&
-        !page.trashed &&
-        !page.currentRevision?.trashed &&
-        page.currentRevision?.title &&
-        page.currentRevision?.title !== ''
+        !page.currentRevision.trashed &&
+        page.currentRevision.title &&
+        page.currentRevision.title !== ''
     )
 
     let currentPageIndex = -1

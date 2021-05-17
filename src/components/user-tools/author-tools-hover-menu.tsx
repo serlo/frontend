@@ -1,8 +1,9 @@
 import Tippy, { TippyProps } from '@tippyjs/react'
-import styled from 'styled-components'
 
-import { SubList, SubLink, SubButtonStyle } from '../navigation/menu'
+import { SubLink } from '../navigation/sub-link'
 import { AuthorTools, Tool } from './author-tools'
+import { HoverSubList } from './hover-sub-list'
+import { SubButtonStyle } from './sub-button-style'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export interface AuthorToolsData {
@@ -102,13 +103,13 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
             </HoverSubList>
           }
         >
-          <Li>
+          <li className="block">
             <SubLink>
               <SubButtonStyle>
                 ◂ {loggedInStrings.authorMenu.thisCoursePage}
               </SubButtonStyle>
             </SubLink>
-          </Li>
+          </li>
         </Tippy>
         <Tippy
           {...tippyDefaultProps}
@@ -130,13 +131,13 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
             </HoverSubList>
           }
         >
-          <Li>
+          <li className="block">
             <SubLink>
               <SubButtonStyle>
                 ◂ {loggedInStrings.authorMenu.wholeCourse}
               </SubButtonStyle>
             </SubLink>
-          </Li>
+          </li>
         </Tippy>
       </HoverSubList>
     )
@@ -185,12 +186,3 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
     )
   }
 }
-
-export const HoverSubList = styled(SubList)`
-  background-color: ${(props) => props.theme.colors.lightBackground};
-  min-width: 180px;
-`
-
-export const Li = styled.li`
-  display: block;
-`

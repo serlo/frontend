@@ -88,8 +88,7 @@ export interface CoursePage extends Entity {
     pages: {
       alias?: string
       id: number
-      trashed: boolean
-      currentRevision?: Pick<GraphQL.CoursePageRevision, 'title' | 'trashed'>
+      currentRevision: Pick<GraphQL.CoursePageRevision, 'title' | 'trashed'>
     }[]
     taxonomyTerms: { nodes: TaxonomyTerms }
   }
