@@ -16,7 +16,9 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
   //fallback, should be handled by CFWorker
   if (pageData.kind === 'redirect') {
     if (typeof window !== 'undefined') {
-      window.location.href = pageData.target!
+      setTimeout(() => {
+        window.location.href = pageData.target!
+      }, 1000)
     }
     return (
       <FrontendClientBase>
