@@ -45,6 +45,7 @@ export function isLegacyLink(_href: string) {
     _href.startsWith('/page') ||
     _href.startsWith('/taxonomy') ||
     _href.startsWith('/discussions') ||
+    _href.startsWith('/subscriptions') || //disabled for zwischenrelease
     _href.startsWith('/subscription/update') ||
     _href.startsWith('/unsubscribe') ||
     _href.startsWith('/user/profile/') ||
