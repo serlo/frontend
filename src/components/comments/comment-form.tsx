@@ -50,7 +50,7 @@ export function CommentForm({
   return (
     <div
       className={clsx(
-        'serlo-make-margin mt-4 mb-7 flex items-end rounded-2xl',
+        'serlo-make-margin mt-4 mb-7 flex items-center rounded-2xl',
         'bg-brandgreen-lighter focus-within:bg-brandgreen-light',
         'transition-colors duration-200 ease-in'
       )}
@@ -64,9 +64,9 @@ export function CommentForm({
         placeholder={placeholder}
         minRows={1}
         className={clsx(
-          'serlo-input-font-reset w-full min-h-8 text-lg',
+          'serlo-input-font-reset w-full text-lg',
           'text-black border-0 bg-transparent outline-none resize-none',
-          reply ? 'py-2 pr-14 pl-4' : 'py-5 pr-14 pl-4',
+          reply ? 'pr-14 pl-4' : 'pr-14 pl-4',
           'placeholder-brandgreen'
         )}
       />
@@ -75,8 +75,8 @@ export function CommentForm({
         onClick={onSendAction}
         onPointerUp={(e) => e.currentTarget.blur()}
         className={clsx(
-          'serlo-button serlo-make-interactive-green pl-2 mr-1',
-          reply ? 'text-base w-8 h-8 mb-1' : 'text-2xl mb-2 w-10'
+          'serlo-button serlo-make-interactive-green pl-2 mr-1 self-end',
+          reply ? 'text-base w-8 h-8 my-1' : 'text-2xl w-10 my-2'
         )}
       >
         <FontAwesomeIcon
