@@ -97,7 +97,7 @@ export function useGraphqlSwrPaginationWithAuth<T>({
 
   return {
     data:
-      response.data === undefined
+      response.data === undefined || !Array.isArray(response.data)
         ? undefined
         : {
             nodes: ([] as T[]).concat(
