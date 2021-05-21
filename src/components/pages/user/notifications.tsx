@@ -8,7 +8,7 @@ import { Notification, NotificationEvent } from '@/components/user/notification'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { makeMargin, makePrimaryButton } from '@/helper/css'
-import { useSetNotificationStateMutation } from '@/helper/mutations'
+// import { useSetNotificationStateMutation } from '@/helper/mutations'
 
 interface NotificationData {
   id: number
@@ -23,20 +23,20 @@ interface NotificationProps {
   }
   loadMore: () => void
   isLoading: boolean
-  isUnread?: boolean
+  // isUnread?: boolean
 }
 
 export const Notifications = ({
   data,
   loadMore,
   isLoading,
-  isUnread,
-}: NotificationProps) => {
+}: // isUnread,
+NotificationProps) => {
   const auth = useAuthentication()
-  const setToRead = useSetNotificationStateMutation()
+  // const setToRead = useSetNotificationStateMutation()
 
   useEffect(() => {
-    if (isUnread) setAllToRead()
+    //if (isUnread) setAllToRead()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth, data])
 
@@ -65,6 +65,7 @@ export const Notifications = ({
     return nodes.map((node) => (
       <Notification
         key={node.id}
+        eventId={node.id}
         event={node.event}
         unread={node.unread}
         loggedInStrings={loggedInStrings}
@@ -72,17 +73,17 @@ export const Notifications = ({
     ))
   }
 
-  function setAllToRead() {
-    if (auth.current === null) return
+  // function setAllToRead() {
+  //   if (auth.current === null) return
 
-    const unreadIds = data?.nodes.flatMap((node) =>
-      node.unread ? [node.id] : []
-    )
-    void setToRead({
-      id: unreadIds,
-      unread: false,
-    })
-  }
+  //   const unreadIds = data?.nodes.flatMap((node) =>
+  //     node.unread ? [node.id] : []
+  //   )
+  //   void setToRead({
+  //     id: unreadIds,
+  //     unread: false,
+  //   })
+  // }
 }
 
 const Button = styled.button`

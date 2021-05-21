@@ -14,7 +14,7 @@ import {
 import { GraphQLError } from 'graphql'
 import { ClientError, gql, GraphQLClient } from 'graphql-request'
 import NProgress from 'nprogress'
-import { mutate } from 'swr'
+import { mutate, cache } from 'swr'
 
 import { csrReload } from './csr-reload'
 import { showToastNotice } from './show-toast-notice'
@@ -76,9 +76,24 @@ export function useSetNotificationStateMutation() {
   ) {
     const success = await mutationFetch(auth, mutation, input)
 
+    // TODO: Maybe implement global cache key management
+
     if (success) {
-      console.log('...')
-    } // TODO: mutate mutation count
+      const keys = cache
+        .keys()
+        .filter(
+          (key) =>
+            key.startsWith('arg@') &&
+            key.indexOf('query notifications($first') > 0 &&
+            key.indexOf('"unread":true') > 0
+        )
+
+      keys.forEach((key) => {
+        // console.log(key)
+        // console.log(cache.get(key))
+        void mutate(key)
+      })
+    }
     return success
   }
   return async (input: NotificationSetStateInput) =>

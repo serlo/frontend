@@ -67,7 +67,7 @@ function Content() {
             data={data!}
             isLoading={loading}
             loadMore={loadMore}
-            isUnread
+            // isUnread
           />
         </Guard>
       ) : (
@@ -101,10 +101,10 @@ export function useNotificationFetch(unread?: boolean, noKey?: boolean) {
     event: NotificationEvent
     unread: boolean
   }>({
-    query,
-    variables: {
-      first: 10,
-      unread,
+    query: notificationsQuery,
+    variables: { first: 10, unread },
+    config: {
+      refreshInterval: 10 * 1000, // seconds
     },
     getConnection(data) {
       return data.notifications
@@ -113,7 +113,12 @@ export function useNotificationFetch(unread?: boolean, noKey?: boolean) {
   })
 }
 
-const query = gql`
+export const notificationsVariables = {
+  first: 10,
+  unread: undefined,
+}
+
+export const notificationsQuery = gql`
   query notifications($first: Int!, $unread: Boolean, $after: String) {
     notifications(first: $first, unread: $unread, after: $after) {
       pageInfo {

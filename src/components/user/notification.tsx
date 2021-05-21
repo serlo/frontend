@@ -1,4 +1,4 @@
-import { faVolumeMute } from '@fortawesome/free-solid-svg-icons'
+import { faBellSlash, faCheck } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   CheckoutRevisionNotificationEvent,
@@ -30,6 +30,7 @@ import { TimeAgo } from '@/components/time-ago'
 import { useInstanceData } from '@/contexts/instance-context'
 import { LoggedInData } from '@/data-types'
 import { getEntityStringByTypename } from '@/helper/feature-i18n'
+import { useSetNotificationStateMutation } from '@/helper/mutations'
 
 export type NotificationEvent =
   | CheckoutRevisionNotificationEvent
@@ -51,24 +52,52 @@ export type NotificationEvent =
 
 export function Notification({
   event,
+  eventId,
   unread,
   loggedInStrings,
 }: {
-  unread: boolean
   event: NotificationEvent
+  eventId: number
+  unread: boolean
   loggedInStrings: LoggedInData['strings']['notifications']
 }) {
   const eventDate = new Date(event.date)
   const { strings } = useInstanceData()
+  const setToRead = useSetNotificationStateMutation()
 
   return (
     <Item>
       <StyledTimeAgo datetime={eventDate} dateAsTitle />
       <Title unread={unread}>{renderText()}</Title>
       {renderExtraContent()}
-      {renderMuteButton()}
+      <ButtonWrapper>
+        {renderMuteButton()}
+        {unread && renderReadButton()}
+      </ButtonWrapper>
     </Item>
   )
+
+  function renderReadButton() {
+    return (
+      <Tippy
+        duration={[300, 250]}
+        animation="fade"
+        placement="bottom"
+        content={<Tooltip>{loggedInStrings.setToRead}</Tooltip>}
+      >
+        <StyledButton
+          onClick={() => {
+            void setToRead({
+              id: [eventId],
+              unread: false,
+            })
+          }}
+        >
+          <FontAwesomeIcon icon={faCheck} />
+        </StyledButton>
+      </Tippy>
+    )
+  }
 
   function renderMuteButton() {
     return (
@@ -78,9 +107,9 @@ export function Notification({
         placement="bottom"
         content={<Tooltip>{loggedInStrings.hide}</Tooltip>}
       >
-        <MuteButton href={`/unsubscribe/${event.objectId.toString()}`}>
-          <FontAwesomeIcon icon={faVolumeMute} />
-        </MuteButton>
+        <StyledButton href={`/unsubscribe/${event.objectId.toString()}`}>
+          <FontAwesomeIcon icon={faBellSlash} />
+        </StyledButton>
       </Tippy>
     )
   }
@@ -120,6 +149,7 @@ export function Notification({
         )
 
       case 'CreateCommentNotificationEvent':
+        console.log(event)
         return parseString(loggedInStrings.createComment, {
           thread: renderThread(event.thread.id),
           comment: (
@@ -281,14 +311,19 @@ const StyledTimeAgo = styled(TimeAgo)`
   color: ${(props) => props.theme.colors.gray};
 `
 
-const MuteButton = styled.a`
-  position: absolute;
-  opacity: 0;
+const ButtonWrapper = styled.div`
   display: flex;
-  justify-content: center;
+  position: absolute;
   right: 20px;
   top: 30px;
+`
+
+const StyledButton = styled.a`
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
   padding: 10px;
+  margin-left: 10px;
   border-radius: 2rem;
   transition: all 0.2s ease-in;
   color: ${(props) => props.theme.colors.brand};
@@ -318,7 +353,7 @@ const Item = styled.div`
     background: ${(props) => props.theme.colors.bluewhite};
   }
 
-  &:hover ${MuteButton} {
+  &:hover ${StyledButton} {
     opacity: 1;
   }
 `
