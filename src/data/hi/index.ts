@@ -283,6 +283,8 @@ export const loggedInData = {
     notifications: {
       loadMore: "अधिक लोड करें",
       hide: "इस सामग्री के लिए सूचनाएं छिपाएँ।",
+      setToRead: "Set notification to read.",
+      setAllToRead: "Set all visible to read",
       setThreadStateArchived: "%actor% संग्रहीत %thread%.",
       setThreadStateUnarchived: "%actor% बहाल %thread%.",
       createComment: "%actor% में टिप्पणी की %thread%: %comment%.",

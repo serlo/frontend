@@ -283,6 +283,8 @@ export const loggedInData = {
     notifications: {
       loadMore: "Load more",
       hide: "Hide notifications for this content.",
+      setToRead: "Set notification to read.",
+      setAllToRead: "Set all visible to read",
       setThreadStateArchived: "%actor% archived %thread%.",
       setThreadStateUnarchived: "%actor% restored %thread%.",
       createComment: "%actor% commented in %thread%: %comment%.",
