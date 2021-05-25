@@ -79,14 +79,13 @@ export function useSetNotificationStateMutation() {
     // TODO: Maybe implement global cache key management, but this works okay
 
     if (success) {
-      const keys = cache
-        .keys()
-        .filter(
-          (key) =>
-            key.startsWith('arg@') &&
+      const keys = cache.keys().filter(
+        (key) =>
+          (key.startsWith('arg@') &&
             key.indexOf('query notifications($first') > 0 &&
-            key.indexOf('"unread":true') > 0
-        )
+            key.indexOf('"unread":true') > 0) ||
+          key.indexOf('notifications(unread: true)') > 0 // update count
+      )
 
       keys.forEach((key) => {
         void mutate(key)

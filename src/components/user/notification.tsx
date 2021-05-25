@@ -22,7 +22,7 @@ import {
 } from '@serlo/api'
 import Tippy from '@tippyjs/react'
 import * as R from 'ramda'
-import { useState, Fragment } from 'react'
+import { Fragment } from 'react'
 import styled, { css } from 'styled-components'
 
 import { UserLink } from './user-link'
@@ -30,7 +30,6 @@ import { TimeAgo } from '@/components/time-ago'
 import { useInstanceData } from '@/contexts/instance-context'
 import { LoggedInData } from '@/data-types'
 import { getEntityStringByTypename } from '@/helper/feature-i18n'
-import { useSetNotificationStateMutation } from '@/helper/mutations'
 
 export type NotificationEvent =
   | CheckoutRevisionNotificationEvent
@@ -55,27 +54,16 @@ export function Notification({
   eventId,
   unread,
   loggedInStrings,
+  setToRead,
 }: {
   event: NotificationEvent
   eventId: number
   unread: boolean
   loggedInStrings: LoggedInData['strings']['notifications']
+  setToRead: (id: number) => void
 }) {
   const eventDate = new Date(event.date)
   const { strings } = useInstanceData()
-  const setToRead = useSetNotificationStateMutation()
-  const [hidden, setHidden] = useState<number[]>([])
-
-  function _setToRead(id: number) {
-    void setToRead({
-      id: [id],
-      unread: false,
-    })
-    // hide immediately
-    setHidden([...hidden, id])
-  }
-
-  if (hidden.includes(eventId)) return null
 
   return (
     <Item>
@@ -97,7 +85,7 @@ export function Notification({
         placement="bottom"
         content={<Tooltip>{loggedInStrings.setToRead}</Tooltip>}
       >
-        <StyledButton onClick={() => _setToRead(eventId)}>
+        <StyledButton onClick={() => setToRead(eventId)}>
           <FontAwesomeIcon icon={faCheck} />
         </StyledButton>
       </Tippy>
