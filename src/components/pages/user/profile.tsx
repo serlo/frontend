@@ -22,6 +22,7 @@ import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UserPage } from '@/data-types'
 import { makeGreenButton, makeMargin } from '@/helper/css'
+import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { renderArticle } from '@/schema/article-renderer'
 
 export interface ProfileProps {
@@ -141,38 +142,32 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   }
 
   function renderHowToEditImage() {
+    const { heading, description, steps } = strings.profiles.howToEditImage
+    const chatUrl = (
+      <StyledA href="https://community.serlo.org">community.serlo.org</StyledA>
+    )
+    const myAccountLink = (
+      <StyledA href="https://community.serlo.org/account/profile">
+        {steps.myAccount}
+      </StyledA>
+    )
+
     return (
       <StyledModal
         isOpen={howToEditImage}
         onRequestClose={() => setHowToEditImage(false)}
       >
-        <StyledH2>How to edit your profile picture</StyledH2>
-        <StyledP>
-          Currently we use the images from{' '}
-          <StyledA href="https://community.serlo.org">
-            community.serlo.org
-          </StyledA>{' '}
-          as profile pictures. In order to change your picture, do the
-          following:
-        </StyledP>
+        <StyledH2>{heading}</StyledH2>
+        <StyledP>{replacePlaceholders(description, { chatUrl })}</StyledP>
         <StyledOl>
           <StyledLi>
-            Go to{' '}
-            <StyledA href="https://community.serlo.org">
-              community.serlo.org
-            </StyledA>
+            {replacePlaceholders(steps.goToChat, { chatUrl })}
           </StyledLi>
-          <StyledLi>Sign in.</StyledLi>
+          <StyledLi>{steps.signIn}</StyledLi>
           <StyledLi>
-            Go to{' '}
-            <StyledA href="https://community.serlo.org/account/profile">
-              My Account
-            </StyledA>{' '}
-            in the user menu.
+            {replacePlaceholders(steps.goToMyAccount, { myAccountLink })}
           </StyledLi>
-          <StyledLi>
-            Upload a new profile picture and click &quot;Save changes&quot;.
-          </StyledLi>
+          <StyledLi>{steps.uploadPicture}</StyledLi>
         </StyledOl>
         {/*TODO: Should be merged in a common Modal*/}
         <CloseButton onClick={() => setHowToEditImage(false)}>
