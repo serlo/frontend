@@ -1,5 +1,8 @@
+import { faPencilAlt, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { NextPage } from 'next'
 import Head from 'next/head'
+import * as React from 'react'
 import styled from 'styled-components'
 
 import AuthorBadge from '@/assets-webkit/img/community/badge-author.svg'
@@ -7,14 +10,18 @@ import DonorBadge from '@/assets-webkit/img/community/badge-donor.svg'
 import ReviewerBadge from '@/assets-webkit/img/community/badge-reviewer.svg'
 import { useAuthentication } from '@/auth/use-authentication'
 import { CommentArea } from '@/components/comments/comment-area'
+import { StyledA } from '@/components/tags/styled-a'
 import { StyledH1 } from '@/components/tags/styled-h1'
 import { StyledH2 } from '@/components/tags/styled-h2'
+import { StyledLi } from '@/components/tags/styled-li'
+import { StyledOl } from '@/components/tags/styled-ol'
 import { StyledP } from '@/components/tags/styled-p'
 import { TimeAgo } from '@/components/time-ago'
+import { CloseButton, StyledModal } from '@/components/user-tools/share-modal'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UserPage } from '@/data-types'
-import { makeMargin } from '@/helper/css'
+import { makeGreenButton, makeMargin } from '@/helper/css'
 import { renderArticle } from '@/schema/article-renderer'
 
 export interface ProfileProps {
@@ -29,6 +36,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   const isOwnProfile = auth.current?.username === username
   const lastLoginDate = lastLogin ? new Date(lastLogin) : undefined
   const registerDate = new Date(date)
+  const [howToEditImage, setHowToEditImage] = React.useState(false)
 
   return (
     <>
@@ -40,7 +48,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
       </Head>
 
       <ProfileHeader>
-        <ProfileImage src={imageUrl} />
+        {renderProfileImage()}
         <div>
           <UsernameHeading>{username}</UsernameHeading>
           <StyledP>
@@ -72,6 +80,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         </Gray>
       )}
       {renderUserTools()}
+      {renderHowToEditImage()}
     </>
   )
 
@@ -117,12 +126,92 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
       />
     )
   }
+
+  function renderProfileImage() {
+    return (
+      <ProfileImageCage>
+        <ProfileImage src={imageUrl} />
+        {isOwnProfile && (
+          <ProfileImageEditButton onClick={() => setHowToEditImage(true)}>
+            <FontAwesomeIcon icon={faPencilAlt} />
+          </ProfileImageEditButton>
+        )}
+      </ProfileImageCage>
+    )
+  }
+
+  function renderHowToEditImage() {
+    return (
+      <StyledModal
+        isOpen={howToEditImage}
+        onRequestClose={() => setHowToEditImage(false)}
+      >
+        <StyledH2>How to edit your profile picture</StyledH2>
+        <StyledP>
+          Currently we use the images from{' '}
+          <StyledA href="https://community.serlo.org">
+            community.serlo.org
+          </StyledA>{' '}
+          as profile pictures. In order to change your picture, do the
+          following:
+        </StyledP>
+        <StyledOl>
+          <StyledLi>
+            Go to{' '}
+            <StyledA href="https://community.serlo.org">
+              community.serlo.org
+            </StyledA>
+          </StyledLi>
+          <StyledLi>Sign in.</StyledLi>
+          <StyledLi>
+            Go to{' '}
+            <StyledA href="https://community.serlo.org/account/profile">
+              My Account
+            </StyledA>{' '}
+            in the user menu.
+          </StyledLi>
+          <StyledLi>
+            Upload a new profile picture and click &quot;Save changes&quot;.
+          </StyledLi>
+        </StyledOl>
+        {/*TODO: Should be merged in a common Modal*/}
+        <CloseButton onClick={() => setHowToEditImage(false)}>
+          <FontAwesomeIcon icon={faTimes} size="lg" />
+        </CloseButton>
+      </StyledModal>
+    )
+  }
 }
+
+const ProfileImageEditButton = styled.button`
+  ${makeGreenButton}
+  position: absolute;
+  right: 2px;
+  bottom: 2px;
+  width: 2em;
+  height: 2em;
+  background-color: ${(props) => props.theme.colors.brandGreen};
+  color: ${(props) => props.theme.colors.white};
+
+  &:focus {
+    outline: 2px dotted ${(props) => props.theme.colors.brand};
+  }
+`
+
+const ProfileImageCage = styled.figure`
+  width: 150px;
+  height: 150px;
+  contain: content;
+
+  & > * {
+    display: block;
+  }
+`
 
 const ProfileImage = styled.img`
   border-radius: 50%;
-  display: block;
-  width: 150px;
+  width: 100%;
+  height: 100%;
 `
 
 const BadgesContainer = styled.div`
