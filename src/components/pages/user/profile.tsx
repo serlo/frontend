@@ -1,3 +1,4 @@
+import { faTelegramPlane } from '@fortawesome/free-brands-svg-icons'
 import { faPencilAlt, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { NextPage } from 'next'
@@ -31,7 +32,8 @@ export interface ProfileProps {
 
 export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   const { strings } = useInstanceData()
-  const { id, username, description, lastLogin, imageUrl, date } = userData
+  const { id, username, description, lastLogin, imageUrl, chatUrl, date } =
+    userData
   const { activeDonor, activeReviewer, activeAuthor } = userData
   const auth = useAuthentication()
   const isOwnProfile = auth.current?.username === username
@@ -63,6 +65,9 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
           </StyledP>
         </div>
         {renderBadges()}
+        <ChatButton href={chatUrl}>
+          <FontAwesomeIcon icon={faTelegramPlane} /> Direct Message
+        </ChatButton>
       </ProfileHeader>
 
       {description && (
@@ -178,6 +183,13 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   }
 }
 
+const ChatButton = styled.a`
+  ${makeGreenButton}
+  display: block;
+  width: 175px;
+  text-align: center;
+`
+
 const ProfileImageEditButton = styled.button`
   ${makeGreenButton}
   position: absolute;
@@ -194,8 +206,8 @@ const ProfileImageEditButton = styled.button`
 `
 
 const ProfileImageCage = styled.figure`
-  width: 150px;
-  height: 150px;
+  width: 175px;
+  height: 175px;
   contain: content;
 
   & > * {
@@ -232,13 +244,12 @@ const ProfileHeader = styled.header`
   margin-bottom: 30px;
 
   @media (min-width: ${(props) => props.theme.breakpoints.mobile}) {
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-
-    & > * {
-      margin-right: 20px;
-    }
+    display: grid;
+    grid-template-columns: 175px 30% auto;
+    grid-template-rows: auto auto;
+    row-gap: 20px;
+    column-gap: 20px;
+    place-items: center start;
   }
 
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {

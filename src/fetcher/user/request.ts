@@ -28,6 +28,7 @@ export async function requestUser(
       newsletterPopup: false,
       userData: {
         ...uuid,
+        chatUrl: `https://community.serlo.org/direct/${chatName}`,
         imageUrl: `https://community.serlo.org/avatar/${chatName}`,
         description: getDescription(uuid),
       },
