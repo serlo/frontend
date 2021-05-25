@@ -11,6 +11,7 @@ import { StyledP } from '@/components/tags/styled-p'
 import { UnreadNotificationsCount } from '@/components/user-tools/unread-notifications-count'
 import { NotificationEvent } from '@/components/user/notification'
 import { useInstanceData } from '@/contexts/instance-context'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { makeLightButton, makePrimaryButton } from '@/helper/css'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
@@ -34,6 +35,10 @@ function Content() {
     loading: loadingRead,
   } = useNotificationFetch(false, showUnread) //dont fetch if showUnread is true
 
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return null
+  const loggedInStrings = loggedInData.strings.notifications
+
   function onMoreRead() {
     loadMoreRead()
   }
@@ -51,14 +56,14 @@ function Content() {
           onPointerUp={(e) => e.currentTarget.blur()}
           onClick={onTabClick}
         >
-          Show new (<UnreadNotificationsCount onlyNumber />)
+          {loggedInStrings.showNew} (<UnreadNotificationsCount onlyNumber />)
         </TabButton>
         <TabButton
           active={!showUnread}
           onPointerUp={(e) => e.currentTarget.blur()}
           onClick={onTabClick}
         >
-          Show read
+          {loggedInStrings.showRead}
         </TabButton>
       </StyledP>
       {showUnread ? (
