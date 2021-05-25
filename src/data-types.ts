@@ -735,6 +735,7 @@ export interface UserPage extends EntityPageBase {
     username: string
     imageUrl: string
     chatUrl: string
+    motivation?: string
     description?: FrontendContentNode[] | null
     lastLogin?: string | null
     date: string

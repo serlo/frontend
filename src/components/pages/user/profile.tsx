@@ -32,8 +32,16 @@ export interface ProfileProps {
 
 export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   const { strings } = useInstanceData()
-  const { id, username, description, lastLogin, imageUrl, chatUrl, date } =
-    userData
+  const {
+    id,
+    username,
+    description,
+    lastLogin,
+    imageUrl,
+    chatUrl,
+    date,
+    motivation,
+  } = userData
   const { activeDonor, activeReviewer, activeAuthor } = userData
   const auth = useAuthentication()
   const isOwnProfile = auth.current?.username === username
@@ -65,6 +73,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
           </StyledP>
         </div>
         {renderBadges()}
+        {motivation && <Motivation>&quot;{motivation}&quot;</Motivation>}
         <ChatButton href={chatUrl}>
           <FontAwesomeIcon icon={faTelegramPlane} /> Direct Message
         </ChatButton>
@@ -183,11 +192,17 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   }
 }
 
+const Motivation = styled(StyledP)`
+  text-align: center;
+  grid-area: motivation;
+`
+
 const ChatButton = styled.a`
   ${makeGreenButton}
   display: block;
   width: 175px;
   text-align: center;
+  grid-area: chatButton;
 `
 
 const ProfileImageEditButton = styled.button`
@@ -243,10 +258,15 @@ const ProfileHeader = styled.header`
   margin-top: 40px;
   margin-bottom: 30px;
 
+  & p {
+    margin-bottom: 0;
+  }
+
   @media (min-width: ${(props) => props.theme.breakpoints.mobile}) {
     display: grid;
     grid-template-columns: 175px 30% auto;
     grid-template-rows: auto auto;
+    grid-template-areas: 'image username badges' 'chatButton motivation motivation';
     row-gap: 20px;
     column-gap: 20px;
     place-items: center start;
@@ -257,6 +277,7 @@ const ProfileHeader = styled.header`
       margin-left: auto;
       margin-right: auto;
       text-align: center;
+      margin-top: 23px;
     }
   }
 
