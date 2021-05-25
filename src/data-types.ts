@@ -171,6 +171,9 @@ export interface HistoryRevisionsData {
   revisions: {
     nodes: HistoryRevisionData[]
   }
+  solutionRevisions?: {
+    nodes: HistoryRevisionData[]
+  }
 }
 
 export interface HistoryRevisionProps {

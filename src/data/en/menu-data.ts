@@ -66,14 +66,14 @@ export const footerData: InstanceData['footerData'] = {
     {
       title: 'Legal terms',
       children: [
-        { title: 'Privacy Policy', url: `https://de.${serloDomain}/privacy` },
+        { title: 'Privacy Policy', url: `https://en.${serloDomain}/privacy` },
         {
           title: 'Revoke consent',
           url: `/consent`,
         },
         {
           title: 'Terms of use',
-          url: `https://de.${serloDomain}/terms`,
+          url: `https://en.${serloDomain}/terms`,
         },
         { title: 'Imprint', url: `/imprint` },
       ],

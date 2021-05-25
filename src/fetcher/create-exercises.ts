@@ -65,7 +65,7 @@ export function createExercise(
     task: {
       legacy: taskLegacy,
       edtrState: taskEdtrState,
-      license: createInlineLicense(uuid.license),
+      license: uuid.license && createInlineLicense(uuid.license),
     },
     solution: createSolutionData(uuid.solution),
     context: {
@@ -148,7 +148,7 @@ export function createExerciseGroup(
     type: 'exercise-group',
     content: convertState(uuid.currentRevision?.content),
     positionOnPage: pageIndex,
-    license: createInlineLicense(uuid.license),
+    license: uuid.license && createInlineLicense(uuid.license),
     children,
     context: {
       id: uuid.id,
