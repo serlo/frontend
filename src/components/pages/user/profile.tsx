@@ -189,7 +189,7 @@ const ProfileImageEditButton = styled.button`
   color: ${(props) => props.theme.colors.white};
 
   &:focus {
-    outline: 2px dotted ${(props) => props.theme.colors.brand};
+    background-color: ${(props) => props.theme.colors.brand};
   }
 `
 
