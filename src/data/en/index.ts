@@ -170,7 +170,7 @@ export const instanceData = {
       activeSince: 'With Serlo since',
       recentActivities: 'Recent activities',
       showAllActivities: 'Show all activities',
-      lastLogin: 'Last login',
+      lastLogin: 'Las:wqt login',
       roles: 'Roles',
       directMessage: 'Direct message',
       howToEditImage: {

@@ -75,7 +75,8 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         {renderBadges()}
         {motivation && <Motivation>&quot;{motivation}&quot;</Motivation>}
         <ChatButton href={chatUrl}>
-          <FontAwesomeIcon icon={faTelegramPlane} /> Direct Message
+          <FontAwesomeIcon icon={faTelegramPlane} />{' '}
+          {strings.profiles.directMessage}
         </ChatButton>
       </ProfileHeader>
 
