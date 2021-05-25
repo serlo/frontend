@@ -22,7 +22,7 @@ import {
 } from '@serlo/api'
 import Tippy from '@tippyjs/react'
 import * as R from 'ramda'
-import { Fragment } from 'react'
+import { useState, Fragment } from 'react'
 import styled, { css } from 'styled-components'
 
 import { UserLink } from './user-link'
@@ -64,6 +64,18 @@ export function Notification({
   const eventDate = new Date(event.date)
   const { strings } = useInstanceData()
   const setToRead = useSetNotificationStateMutation()
+  const [hidden, setHidden] = useState<number[]>([])
+
+  function _setToRead(id: number) {
+    void setToRead({
+      id: [id],
+      unread: false,
+    })
+    // hide immediately
+    setHidden([...hidden, id])
+  }
+
+  if (hidden.includes(eventId)) return null
 
   return (
     <Item>
@@ -85,14 +97,7 @@ export function Notification({
         placement="bottom"
         content={<Tooltip>{loggedInStrings.setToRead}</Tooltip>}
       >
-        <StyledButton
-          onClick={() => {
-            void setToRead({
-              id: [eventId],
-              unread: false,
-            })
-          }}
-        >
+        <StyledButton onClick={() => _setToRead(eventId)}>
           <FontAwesomeIcon icon={faCheck} />
         </StyledButton>
       </Tippy>
@@ -149,7 +154,6 @@ export function Notification({
         )
 
       case 'CreateCommentNotificationEvent':
-        console.log(event)
         return parseString(loggedInStrings.createComment, {
           thread: renderThread(event.thread.id),
           comment: (

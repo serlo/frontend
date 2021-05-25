@@ -76,7 +76,7 @@ export function useSetNotificationStateMutation() {
   ) {
     const success = await mutationFetch(auth, mutation, input)
 
-    // TODO: Maybe implement global cache key management
+    // TODO: Maybe implement global cache key management, but this works okay
 
     if (success) {
       const keys = cache
@@ -89,8 +89,6 @@ export function useSetNotificationStateMutation() {
         )
 
       keys.forEach((key) => {
-        // console.log(key)
-        // console.log(cache.get(key))
         void mutate(key)
       })
     }
