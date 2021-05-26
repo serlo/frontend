@@ -20,12 +20,15 @@ export async function requestUser(
   })
 
   if (uuid.__typename === 'User') {
+    // TODO: Need to be implemented in the API
+    const chatName = uuid.username === 'Kulla' ? 'kulla' : uuid.username
+
     return {
       kind: 'user/profile',
       newsletterPopup: false,
       userData: {
         ...uuid,
-        imageUrl: `https://community.serlo.org/avatar/${uuid.username}`,
+        imageUrl: `https://community.serlo.org/avatar/${chatName}`,
         description: getDescription(uuid),
       },
       authorization,
