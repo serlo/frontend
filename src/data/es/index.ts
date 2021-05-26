@@ -172,7 +172,18 @@ export const instanceData = {
       showAllActivities: "Mostrar todas las actividades",
       lastLogin: "Ultimo Inicio de sesion",
       roles: "Roles (funciones)",
-      directMessage: "Mensaje directo"
+      directMessage: "Mensaje directo",
+      howToEditImage: {
+        heading: 'How to edit your profile picture',
+        description: 'Currently we use the images from %chatUrl% as profile pictures. In order to change your picture, do the following:',
+        steps: {
+          goToChat: 'Go to %chatUrl%.',
+          signIn: 'Sign in.',
+          goToMyAccount: 'Go in the user menu to %myAccountLink%.',
+          myAccount: 'My Account',
+          uploadPicture: 'Upload a new picture and click "Save changes".'
+        }
+      }
     },
     notices: {
       welcome: "¡Bienvenida/o  %username%!",
