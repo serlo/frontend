@@ -174,14 +174,14 @@ export const instanceData = {
       roles: "Rollen",
       directMessage: "Direktnachricht",
       howToEditImage: {
-        heading: 'How to edit your profile picture',
-        description: 'Currently we use the images from %chatUrl% as profile pictures. In order to change your picture, do the following:',
+        heading: "So kannst du dein Profilbild ändern",
+        description: "Wir benutzen die Bilder von %chatUrl% als Profilbilder. Um dein Bild zu ändern musst du diesen Schritten folgen:",
         steps: {
-          goToChat: 'Go to %chatUrl%.',
-          signIn: 'Sign in.',
-          goToMyAccount: 'Go in the user menu to %myAccountLink%.',
-          myAccount: 'My Account',
-          uploadPicture: 'Upload a new picture and click "Save changes".'
+          goToChat: "Gehe zu %chatUrl%.",
+          signIn: "Melde dich an.",
+          goToMyAccount: "Gehe im Usermenü auf %myAccountLink%.",
+          myAccount: "Mein Konto",
+          uploadPicture: "Lade ein neues Bild hoch und klicke oben auf \"Änderungen speichern\"."
         }
       }
     },
