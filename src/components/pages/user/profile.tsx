@@ -37,7 +37,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   const isOwnProfile = auth.current?.username === username
   const lastLoginDate = lastLogin ? new Date(lastLogin) : undefined
   const registerDate = new Date(date)
-  const [howToEditImage, setHowToEditImage] = React.useState(false)
+  const [showImageModal, setShowImageModal] = React.useState(false)
 
   return (
     <>
@@ -133,7 +133,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
       <ProfileImageCage>
         <ProfileImage src={imageUrl} />
         {isOwnProfile && (
-          <ProfileImageEditButton onClick={() => setHowToEditImage(true)}>
+          <ProfileImageEditButton onClick={() => setShowImageModal(true)}>
             <FontAwesomeIcon icon={faPencilAlt} />
           </ProfileImageEditButton>
         )}
@@ -154,8 +154,8 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
 
     return (
       <StyledModal
-        isOpen={howToEditImage}
-        onRequestClose={() => setHowToEditImage(false)}
+        isOpen={showImageModal}
+        onRequestClose={() => setShowImageModal(false)}
       >
         <StyledH2>{heading}</StyledH2>
         <StyledP>{replacePlaceholders(description, { chatUrl })}</StyledP>
@@ -170,7 +170,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
           <StyledLi>{steps.uploadPicture}</StyledLi>
         </StyledOl>
         {/*TODO: Should be merged in a common Modal*/}
-        <CloseButton onClick={() => setHowToEditImage(false)}>
+        <CloseButton onClick={() => setShowImageModal(false)}>
           <FontAwesomeIcon icon={faTimes} size="lg" />
         </CloseButton>
       </StyledModal>
@@ -180,6 +180,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
 
 const ProfileImageEditButton = styled.button`
   ${makeGreenButton}
+  display: block;
   position: absolute;
   right: 2px;
   bottom: 2px;
@@ -197,13 +198,10 @@ const ProfileImageCage = styled.figure`
   width: 150px;
   height: 150px;
   contain: content;
-
-  & > * {
-    display: block;
-  }
 `
 
 const ProfileImage = styled.img`
+  display: block;
   border-radius: 50%;
   width: 100%;
   height: 100%;
