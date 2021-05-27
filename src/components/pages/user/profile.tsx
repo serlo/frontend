@@ -61,7 +61,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
       <ProfileHeader>
         {renderProfileImage()}
         <div>
-          <UsernameHeading>{username}</UsernameHeading>
+          <StyledH1>{username}</StyledH1>
           <StyledP>
             {strings.profiles.activeSince}{' '}
             <time
@@ -194,7 +194,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
 }
 
 const Motivation = styled(StyledP)`
-  text-align: center;
+  font-size: 1.3em;
   grid-area: motivation;
 `
 
@@ -204,6 +204,8 @@ const ChatButton = styled.a`
   width: 175px;
   text-align: center;
   grid-area: chatButton;
+  align-self: self-start;
+  margin-top: 5px;
 `
 
 const ProfileImageEditButton = styled.button`
@@ -254,8 +256,8 @@ const BadgeContainer = styled.div`
 
 const ProfileHeader = styled.header`
   ${makeMargin}
-  margin-top: 40px;
-  margin-bottom: 30px;
+  margin-top: 60px;
+  margin-bottom: 50px;
 
   & p {
     margin-bottom: 0;
@@ -286,10 +288,6 @@ const ProfileHeader = styled.header`
     margin-top: 15px;
     margin-bottom: 10px;
   }
-`
-
-const UsernameHeading = styled(StyledH1)`
-  font-weight: normal;
 `
 
 const Gray = styled(StyledP)`
