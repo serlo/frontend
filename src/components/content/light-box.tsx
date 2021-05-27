@@ -18,10 +18,6 @@ export function LightBox(props: LightBoxProps) {
     <StyledModal isOpen={open} onRequestClose={onClose}>
       <_StyledImg onClick={onClose} src={src} alt={label || 'Bild'} />
       <p>{label}</p>
-
-      {/* <CloseButton onClick={onClose} title="Close">
-        <FontAwesomeIcon icon={faTimes} size="lg" />
-      </CloseButton> */}
     </StyledModal>
   )
 }
@@ -56,22 +52,3 @@ const _StyledImg = styled.img`
   max-height: 86vh;
   cursor: zoom-out;
 `
-
-// const CloseButton = styled.button`
-//   position: absolute;
-//   top: 14px;
-//   right: 14px;
-//   background-color: rgba(255, 255, 255, 0.6);
-//   border: none;
-//   cursor: pointer;
-//   display: inline-block;
-//   color: ${props => props.theme.colors.dark1};
-//   &:hover {
-//     background-color: ${props => props.theme.colors.brand};
-//     color: white;
-//   }
-//   width: 35px;
-//   height: 35px;
-//   border-radius: 30px;
-//   text-align: center;
-// `
