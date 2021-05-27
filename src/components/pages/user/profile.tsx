@@ -1,3 +1,4 @@
+import { faTelegramPlane } from '@fortawesome/free-brands-svg-icons'
 import { faPencilAlt, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { NextPage } from 'next'
@@ -31,7 +32,16 @@ export interface ProfileProps {
 
 export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   const { strings } = useInstanceData()
-  const { id, username, description, lastLogin, imageUrl, date } = userData
+  const {
+    id,
+    username,
+    description,
+    lastLogin,
+    imageUrl,
+    chatUrl,
+    date,
+    motivation,
+  } = userData
   const { activeDonor, activeReviewer, activeAuthor } = userData
   const auth = useAuthentication()
   const isOwnProfile = auth.current?.username === username
@@ -51,7 +61,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
       <ProfileHeader>
         {renderProfileImage()}
         <div>
-          <UsernameHeading>{username}</UsernameHeading>
+          <StyledH1>{username}</StyledH1>
           <StyledP>
             {strings.profiles.activeSince}{' '}
             <time
@@ -63,6 +73,11 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
           </StyledP>
         </div>
         {renderBadges()}
+        {motivation && <Motivation>&quot;{motivation}&quot;</Motivation>}
+        <ChatButton href={chatUrl}>
+          <FontAwesomeIcon icon={faTelegramPlane} />{' '}
+          {strings.profiles.directMessage}
+        </ChatButton>
       </ProfileHeader>
 
       {description && (
@@ -178,6 +193,21 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   }
 }
 
+const Motivation = styled(StyledP)`
+  font-size: 1.3em;
+  grid-area: motivation;
+`
+
+const ChatButton = styled.a`
+  ${makeGreenButton}
+  display: block;
+  width: 175px;
+  text-align: center;
+  grid-area: chatButton;
+  align-self: self-start;
+  margin-top: 5px;
+`
+
 const ProfileImageEditButton = styled.button`
   ${makeGreenButton}
   display: block;
@@ -195,8 +225,8 @@ const ProfileImageEditButton = styled.button`
 `
 
 const ProfileImageCage = styled.figure`
-  width: 150px;
-  height: 150px;
+  width: 175px;
+  height: 175px;
   contain: content;
 `
 
@@ -226,17 +256,21 @@ const BadgeContainer = styled.div`
 
 const ProfileHeader = styled.header`
   ${makeMargin}
-  margin-top: 40px;
-  margin-bottom: 30px;
+  margin-top: 60px;
+  margin-bottom: 50px;
+
+  & p {
+    margin-bottom: 0;
+  }
 
   @media (min-width: ${(props) => props.theme.breakpoints.mobile}) {
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-
-    & > * {
-      margin-right: 20px;
-    }
+    display: grid;
+    grid-template-columns: 175px 30% auto;
+    grid-template-rows: auto auto;
+    grid-template-areas: 'image username badges' 'chatButton motivation motivation';
+    row-gap: 20px;
+    column-gap: 20px;
+    place-items: center start;
   }
 
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
@@ -244,6 +278,7 @@ const ProfileHeader = styled.header`
       margin-left: auto;
       margin-right: auto;
       text-align: center;
+      margin-top: 23px;
     }
   }
 
@@ -253,10 +288,6 @@ const ProfileHeader = styled.header`
     margin-top: 15px;
     margin-bottom: 10px;
   }
-`
-
-const UsernameHeading = styled(StyledH1)`
-  font-weight: normal;
 `
 
 const Gray = styled(StyledP)`
