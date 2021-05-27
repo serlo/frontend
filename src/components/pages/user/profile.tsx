@@ -1,5 +1,5 @@
 import { faTelegramPlane } from '@fortawesome/free-brands-svg-icons'
-import { faPencilAlt, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { NextPage } from 'next'
 import Head from 'next/head'
@@ -11,6 +11,7 @@ import DonorBadge from '@/assets-webkit/img/community/badge-donor.svg'
 import ReviewerBadge from '@/assets-webkit/img/community/badge-reviewer.svg'
 import { useAuthentication } from '@/auth/use-authentication'
 import { CommentArea } from '@/components/comments/comment-area'
+import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { StyledA } from '@/components/tags/styled-a'
 import { StyledH1 } from '@/components/tags/styled-h1'
 import { StyledH2 } from '@/components/tags/styled-h2'
@@ -18,7 +19,6 @@ import { StyledLi } from '@/components/tags/styled-li'
 import { StyledOl } from '@/components/tags/styled-ol'
 import { StyledP } from '@/components/tags/styled-p'
 import { TimeAgo } from '@/components/time-ago'
-import { CloseButton, StyledModal } from '@/components/user-tools/share-modal'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UserPage } from '@/data-types'
@@ -168,11 +168,11 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
     )
 
     return (
-      <StyledModal
+      <ModalWithCloseButton
         isOpen={showImageModal}
-        onRequestClose={() => setShowImageModal(false)}
+        onCloseClick={() => setShowImageModal(false)}
+        title={heading}
       >
-        <StyledH2>{heading}</StyledH2>
         <StyledP>{replacePlaceholders(description, { chatUrl })}</StyledP>
         <StyledOl>
           <StyledLi>
@@ -184,11 +184,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
           </StyledLi>
           <StyledLi>{steps.uploadPicture}</StyledLi>
         </StyledOl>
-        {/*TODO: Should be merged in a common Modal*/}
-        <CloseButton onClick={() => setShowImageModal(false)}>
-          <FontAwesomeIcon icon={faTimes} size="lg" />
-        </CloseButton>
-      </StyledModal>
+      </ModalWithCloseButton>
     )
   }
 }

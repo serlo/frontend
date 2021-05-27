@@ -3,9 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState } from 'react'
 import styled from 'styled-components'
 
-import { StyledH2 } from '@/components/tags/styled-h2'
-import { StyledModal, CloseButton } from '@/components/user-tools/share-modal'
-import { useInstanceData } from '@/contexts/instance-context'
+import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { inputFontReset, makeLightButton, makeMargin } from '@/helper/css'
 import { showToastNotice } from '@/helper/show-toast-notice'
@@ -17,8 +15,6 @@ export interface CheckoutRejectButtonsProps {
 
 export function CheckoutRejectButtons() {
   const loggedInData = useLoggedInData()
-  const instanceData = useInstanceData()
-  const instanceStrings = instanceData.strings
   const [modalMode, setModalMode] = useState<'accept' | 'reject' | null>(null)
   if (!loggedInData) return null
   const { strings } = loggedInData
@@ -48,9 +44,15 @@ export function CheckoutRejectButtons() {
         <FontAwesomeIcon icon={faTimes} /> {strings.revisions.reject.action}
       </RejectButton>
 
-      <StyledModal isOpen={modalMode != null} onRequestClose={onCloseClick}>
+      <ModalWithCloseButton
+        isOpen={modalMode != null}
+        onCloseClick={onCloseClick}
+        title={
+          modalMode != null ? strings.revisions[modalMode].title : undefined
+        }
+      >
         {renderModalContent()}
-      </StyledModal>
+      </ModalWithCloseButton>
     </div>
   )
 
@@ -58,7 +60,6 @@ export function CheckoutRejectButtons() {
     if (!modalMode) return null
     return (
       <>
-        <StyledH2>{strings.revisions[modalMode].title}</StyledH2>
         <Parapgraph>
           {strings.revisions[modalMode].explanation}
           <Textarea />
@@ -66,9 +67,6 @@ export function CheckoutRejectButtons() {
             {strings.revisions.confirm}
           </ConfirmButton>
         </Parapgraph>
-        <CloseButton onClick={onCloseClick} title={instanceStrings.share.close}>
-          <FontAwesomeIcon icon={faTimes} />
-        </CloseButton>
       </>
     )
   }
