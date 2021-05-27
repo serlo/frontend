@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState } from 'react'
 import styled from 'styled-components'
 
-import { ModalWithCloseButton } from '../modal'
+import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { inputFontReset, makeLightButton, makeMargin } from '@/helper/css'
 import { showToastNotice } from '@/helper/show-toast-notice'

@@ -14,7 +14,7 @@ import { lighten } from 'polished'
 import * as React from 'react'
 import styled from 'styled-components'
 
-import { ModalWithCloseButton } from '../modal'
+import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { EntityIdContext } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import {

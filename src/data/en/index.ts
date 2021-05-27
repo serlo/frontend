@@ -99,7 +99,7 @@ export const instanceData = {
       chooseOption: 'Click on one of the options.',
       trashedNotice: 'This content is marked for deletion.',
       strategy: 'Solution Strategy',
-      picture: 'picture',
+      picture: 'Picture',
     },
     consent: {
       title: 'Consent for external Content',

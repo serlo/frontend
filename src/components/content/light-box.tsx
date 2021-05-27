@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { Modal } from '../modal'
+import { Modal } from '@/components/modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
 import { makeMargin } from '@/helper/css'
 
