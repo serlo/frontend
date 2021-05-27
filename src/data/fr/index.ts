@@ -172,7 +172,18 @@ export const instanceData = {
       showAllActivities: "Afficher toutes les activités",
       lastLogin: "Dernière connexion",
       roles: "Rôles",
-      directMessage: "Message direct "
+      directMessage: "Message direct ",
+      howToEditImage: {
+        heading: 'How to edit your profile picture',
+        description: 'Currently we use the images from %chatUrl% as profile pictures. In order to change your picture, do the following:',
+        steps: {
+          goToChat: 'Go to %chatUrl%.',
+          signIn: 'Sign in.',
+          goToMyAccount: 'Go in the user menu to %myAccountLink%.',
+          myAccount: 'My Account',
+          uploadPicture: 'Upload a new picture and click "Save changes".'
+        }
+      }
     },
     notices: {
       welcome: "👋 Bienvenue %username%!",
@@ -283,6 +294,10 @@ export const loggedInData = {
     notifications: {
       loadMore: "Charger d'avantage",
       hide: "Masquer les notifications pour ce contenu.",
+      setToRead: "Set notification to read.",
+      setAllToRead: "Set all visible to read",
+      showNew: "New",
+      showRead: "Read",
       setThreadStateArchived: "%actor% a archivé %thread%.",
       setThreadStateUnarchived: "%actor% a restauré %thread%.",
       createComment: "%actor% a commenté dans %thread%: %comment%.",

@@ -172,7 +172,18 @@ export const instanceData = {
       showAllActivities: "समस्त गतिविधयाँ दिखाएँ",
       lastLogin: 'Last login',
       roles: "भूमिकाएं",
-      directMessage: 'Direct message'
+      directMessage: 'Direct message',
+      howToEditImage: {
+        heading: 'How to edit your profile picture',
+        description: 'Currently we use the images from %chatUrl% as profile pictures. In order to change your picture, do the following:',
+        steps: {
+          goToChat: 'Go to %chatUrl%.',
+          signIn: 'Sign in.',
+          goToMyAccount: 'Go in the user menu to %myAccountLink%.',
+          myAccount: 'My Account',
+          uploadPicture: 'Upload a new picture and click "Save changes".'
+        }
+      }
     },
     notices: {
       welcome: "आपका स्वागत है",
@@ -283,6 +294,10 @@ export const loggedInData = {
     notifications: {
       loadMore: "अधिक लोड करें",
       hide: "इस सामग्री के लिए सूचनाएं छिपाएँ।",
+      setToRead: "Set notification to read.",
+      setAllToRead: "Set all visible to read",
+      showNew: "New",
+      showRead: "Read",
       setThreadStateArchived: "%actor% संग्रहीत %thread%.",
       setThreadStateUnarchived: "%actor% बहाल %thread%.",
       createComment: "%actor% में टिप्पणी की %thread%: %comment%.",

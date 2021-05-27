@@ -11,6 +11,7 @@ import { StyledP } from '@/components/tags/styled-p'
 import { UnreadNotificationsCount } from '@/components/user-tools/unread-notifications-count'
 import { NotificationEvent } from '@/components/user/notification'
 import { useInstanceData } from '@/contexts/instance-context'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { makeLightButton, makePrimaryButton } from '@/helper/css'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
@@ -34,6 +35,10 @@ function Content() {
     loading: loadingRead,
   } = useNotificationFetch(false, showUnread) //dont fetch if showUnread is true
 
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return null
+  const loggedInStrings = loggedInData.strings.notifications
+
   function onMoreRead() {
     loadMoreRead()
   }
@@ -51,14 +56,14 @@ function Content() {
           onPointerUp={(e) => e.currentTarget.blur()}
           onClick={onTabClick}
         >
-          Show new (<UnreadNotificationsCount onlyNumber />)
+          {loggedInStrings.showNew} (<UnreadNotificationsCount onlyNumber />)
         </TabButton>
         <TabButton
           active={!showUnread}
           onPointerUp={(e) => e.currentTarget.blur()}
           onClick={onTabClick}
         >
-          Show read
+          {loggedInStrings.showRead}
         </TabButton>
       </StyledP>
       {showUnread ? (
@@ -67,7 +72,7 @@ function Content() {
             data={data!}
             isLoading={loading}
             loadMore={loadMore}
-            isUnread
+            // isUnread
           />
         </Guard>
       ) : (
@@ -101,10 +106,10 @@ export function useNotificationFetch(unread?: boolean, noKey?: boolean) {
     event: NotificationEvent
     unread: boolean
   }>({
-    query,
-    variables: {
-      first: 10,
-      unread,
+    query: notificationsQuery,
+    variables: { first: 10, unread },
+    config: {
+      refreshInterval: 10 * 1000, // seconds
     },
     getConnection(data) {
       return data.notifications
@@ -113,7 +118,12 @@ export function useNotificationFetch(unread?: boolean, noKey?: boolean) {
   })
 }
 
-const query = gql`
+export const notificationsVariables = {
+  first: 10,
+  unread: undefined,
+}
+
+export const notificationsQuery = gql`
   query notifications($first: Int!, $unread: Boolean, $after: String) {
     notifications(first: $first, unread: $unread, after: $after) {
       pageInfo {
