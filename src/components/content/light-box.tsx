@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { StyledModal } from '../user-tools/share-modal'
+import { Modal } from '../modal'
 import { useInstanceData } from '@/contexts/instance-context'
 import { makeMargin } from '@/helper/css'
 
@@ -19,14 +19,14 @@ export function LightBox(props: LightBoxProps) {
   const pictureString = strings.content.picture
 
   return (
-    <LightboxStyledModal isOpen={open} onRequestClose={onClose}>
+    <LightBoxModal isOpen={open} onRequestClose={onClose}>
       <_StyledImg onClick={onClose} src={src} alt={label ?? pictureString} />
       <p>{label}</p>
-    </LightboxStyledModal>
+    </LightBoxModal>
   )
 }
 
-export const LightboxStyledModal = styled(StyledModal)`
+export const LightBoxModal = styled(Modal)`
   text-align: center;
   top: 50%;
   padding-bottom: 30px;

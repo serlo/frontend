@@ -11,6 +11,7 @@ import DonorBadge from '@/assets-webkit/img/community/badge-donor.svg'
 import ReviewerBadge from '@/assets-webkit/img/community/badge-reviewer.svg'
 import { useAuthentication } from '@/auth/use-authentication'
 import { CommentArea } from '@/components/comments/comment-area'
+import { Modal } from '@/components/modal'
 import { StyledA } from '@/components/tags/styled-a'
 import { StyledH1 } from '@/components/tags/styled-h1'
 import { StyledH2 } from '@/components/tags/styled-h2'
@@ -18,7 +19,7 @@ import { StyledLi } from '@/components/tags/styled-li'
 import { StyledOl } from '@/components/tags/styled-ol'
 import { StyledP } from '@/components/tags/styled-p'
 import { TimeAgo } from '@/components/time-ago'
-import { CloseButton, StyledModal } from '@/components/user-tools/share-modal'
+import { CloseButton } from '@/components/user-tools/share-modal'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UserPage } from '@/data-types'
@@ -168,7 +169,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
     )
 
     return (
-      <StyledModal
+      <Modal
         isOpen={showImageModal}
         onRequestClose={() => setShowImageModal(false)}
       >
@@ -188,7 +189,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         <CloseButton onClick={() => setShowImageModal(false)}>
           <FontAwesomeIcon icon={faTimes} size="lg" />
         </CloseButton>
-      </StyledModal>
+      </Modal>
     )
   }
 }

@@ -3,8 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState } from 'react'
 import styled from 'styled-components'
 
+import { Modal } from '../modal'
 import { StyledH2 } from '@/components/tags/styled-h2'
-import { StyledModal, CloseButton } from '@/components/user-tools/share-modal'
+import { CloseButton } from '@/components/user-tools/share-modal'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { inputFontReset, makeLightButton, makeMargin } from '@/helper/css'
@@ -48,9 +49,9 @@ export function CheckoutRejectButtons() {
         <FontAwesomeIcon icon={faTimes} /> {strings.revisions.reject.action}
       </RejectButton>
 
-      <StyledModal isOpen={modalMode != null} onRequestClose={onCloseClick}>
+      <Modal isOpen={modalMode != null} onRequestClose={onCloseClick}>
         {renderModalContent()}
-      </StyledModal>
+      </Modal>
     </div>
   )
 

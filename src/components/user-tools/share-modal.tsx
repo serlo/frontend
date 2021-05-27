@@ -106,7 +106,7 @@ export function ShareModal({ open, onClose, contentId }: ShareModalProps) {
   ]
 
   return (
-    <StyledModal isOpen={open} onRequestClose={onCloseClick}>
+    <Modal isOpen={open} onRequestClose={onCloseClick}>
       <StyledH2>{strings.share.title}</StyledH2>
       <div>
         <ShareInput
@@ -131,7 +131,7 @@ export function ShareModal({ open, onClose, contentId }: ShareModalProps) {
           <FontAwesomeIcon icon={faTimes} size="lg" />
         </CloseButton>
       </div>
-    </StyledModal>
+    </Modal>
   )
 }
 
@@ -174,23 +174,6 @@ function buildButtons(
       )
   })
 }
-
-// this is overriding the styles of the modal-content only. see doc to change overlay etc.
-export const StyledModal = styled(Modal)`
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  margin-right: -50%;
-  transform: translate(-50%, -50%);
-  width: 500px;
-  border-radius: 12px;
-  max-width: 85%;
-  border: 0;
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
-  padding: 10px 10px 30px 10px;
-  background-color: #fff;
-  outline: none;
-`
 
 const ButtonWrapper = styled.div`
   margin-top: 17px;
