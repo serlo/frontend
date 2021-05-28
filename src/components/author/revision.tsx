@@ -6,6 +6,7 @@ import ReactDiffViewer from 'react-diff-viewer'
 import styled, { css } from 'styled-components'
 
 import { PageTitle } from '../content/page-title'
+import { UserTools } from '../user-tools/user-tools'
 import type { CheckoutRejectButtonsProps } from './checkout-reject-buttons'
 import { useAuthentication } from '@/auth/use-authentication'
 import { Geogebra } from '@/components/content/geogebra'
@@ -117,6 +118,15 @@ export function Revision({ data }: RevisionProps) {
           {dataSet.metaDescription}
         </PreviewBox>
       )}
+
+      <UserTools
+        id={data.thisRevision.id}
+        data={{
+          type: 'Revision',
+          id: data.repositoryId,
+          revisionId: data.thisRevision.id,
+        }}
+      />
     </>
   )
 

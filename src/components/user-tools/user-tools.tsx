@@ -141,6 +141,8 @@ export function UserTools({
         ? `/page/revision/create/${data.id}/${data.revisionId || ''}`
         : data.type == 'Taxonomy'
         ? `/taxonomy/term/update/${id}`
+        : data.type == 'Revision'
+        ? `/entity/repository/add-revision/${data.id}/${id}`
         : `/entity/repository/add-revision/${id}`
 
     return (
@@ -165,6 +167,8 @@ export function UserTools({
   }
 
   function renderShare() {
+    if (onShare === undefined) return null
+
     return (
       <button className={buttonClassName()} onClick={onShare}>
         {renderInner(strings.share.button, faShareAlt)}
