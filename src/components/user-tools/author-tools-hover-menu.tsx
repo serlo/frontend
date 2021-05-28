@@ -35,8 +35,6 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
   if (!loggedInData) return null
   const loggedInStrings = loggedInData.strings
 
-  console.log(data.type)
-
   if (data.type == 'CoursePage') {
     return renderCoursePage()
   }
