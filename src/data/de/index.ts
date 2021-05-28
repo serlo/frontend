@@ -99,7 +99,7 @@ export const instanceData = {
       chooseOption: "Klicke auf eine der Optionen.",
       trashedNotice: "Dieser Inhalt wurde zum Löschen markiert.",
       strategy: "Lösungsstrategie",
-      picture: 'Picture'
+      picture: "Bild"
     },
     consent: {
       title: "Einwilligungen für externe Inhalte",
