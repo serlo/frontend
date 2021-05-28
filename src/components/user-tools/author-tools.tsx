@@ -129,7 +129,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
     },
     newEntitySubmenu: {
       renderer: renderNewEntity,
-      canDo: canDo(Uuid.create(customTypeToAuthorizationType(data.type))),
+      canDo: canDo(Uuid.create('Entity')),
     },
     pageHistory: {
       url: `/page/revision/revisions/${data.id}`,
@@ -309,6 +309,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   }
 
   function renderNewEntity() {
+    console.log('renderNewEntity')
     const shouldRenderEvents =
       (lang === 'de' && router.asPath === '/community/veranstaltungen') ||
       (lang !== 'de' && router.asPath.startsWith('/community'))
