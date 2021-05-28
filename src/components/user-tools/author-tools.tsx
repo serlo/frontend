@@ -309,7 +309,6 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   }
 
   function renderNewEntity() {
-    console.log('renderNewEntity')
     const shouldRenderEvents =
       (lang === 'de' && router.asPath === '/community/veranstaltungen') ||
       (lang !== 'de' && router.asPath.startsWith('/community'))
