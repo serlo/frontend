@@ -98,7 +98,8 @@ export const instanceData = {
       yourAnswer: "உங்கள் பதில்:",
       chooseOption: 'Click on one of the options.',
       trashedNotice: "இந்த உள்ளடக்கம் குப்பையாக குறிக்கப்பட்டுள்ளது.",
-      strategy: 'Solution Strategy'
+      strategy: 'Solution Strategy',
+      picture: 'Picture'
     },
     consent: {
       title: 'Consent for external Content',
