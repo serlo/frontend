@@ -11,11 +11,15 @@ export const ProfileRedirectMe: NextPage = () => {
 
   useEffect(() => {
     if (auth.current) {
-      console.log(document.referrer)
       const url = `/user/${auth.current.id}/${auth.current.username}`
-      setTimeout(() => {
-        window.location.replace(url)
-      }, 2000)
+      const isChanged = document.referrer.endsWith('/user/settings')
+
+      setTimeout(
+        () => {
+          window.location.replace(url)
+        },
+        isChanged ? 4000 : 0
+      )
     } else {
       window.location.replace('/api/auth/login')
     }
