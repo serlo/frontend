@@ -129,7 +129,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
     },
     newEntitySubmenu: {
       renderer: renderNewEntity,
-      canDo: canDo(Uuid.create(customTypeToAuthorizationType(data.type))),
+      canDo: canDo(Uuid.create('Entity')),
     },
     pageHistory: {
       url: `/page/revision/revisions/${data.id}`,
