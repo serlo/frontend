@@ -117,8 +117,6 @@ export function UserTools({
 
     return data.type === 'Profile' ? (
       renderProfileButtons()
-    ) : data.type === 'Revision' ? (
-      renderRevisionButtons()
     ) : (
       <>
         {(!hideEdit || auth.current) && renderEdit()}
@@ -220,13 +218,6 @@ export function UserTools({
         {renderInner(loggedInData.strings.authorMenu.editProfile, faPencilAlt)}
       </a>
     )
-  }
-
-  function renderRevisionButtons() {
-    if (!loggedInData) {
-      return null
-    }
-    return renderEdit()
   }
 
   function renderInner(text: string, icon: IconDefinition) {
