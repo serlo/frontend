@@ -117,6 +117,8 @@ export function UserTools({
 
     return data.type === 'Profile' ? (
       renderProfileButtons()
+    ) : data.type === 'Revision' ? (
+      renderRevisionButtons()
     ) : (
       <>
         {(!hideEdit || auth.current) && renderEdit()}
@@ -141,6 +143,8 @@ export function UserTools({
         ? `/page/revision/create/${data.id}/${data.revisionId || ''}`
         : data.type == 'Taxonomy'
         ? `/taxonomy/term/update/${id}`
+        : data.type == 'Revision'
+        ? `/entity/repository/add-revision/${data.id}/${id}`
         : `/entity/repository/add-revision/${id}`
 
     return (
@@ -165,6 +169,8 @@ export function UserTools({
   }
 
   function renderShare() {
+    if (onShare === undefined) return null
+
     return (
       <button className={buttonClassName()} onClick={onShare}>
         {renderInner(strings.share.button, faShareAlt)}
@@ -214,6 +220,13 @@ export function UserTools({
         {renderInner(loggedInData.strings.authorMenu.editProfile, faPencilAlt)}
       </a>
     )
+  }
+
+  function renderRevisionButtons() {
+    if (!loggedInData) {
+      return null
+    }
+    return renderEdit()
   }
 
   function renderInner(text: string, icon: IconDefinition) {
