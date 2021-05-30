@@ -1,7 +1,7 @@
 import clsx from 'clsx'
+import CSS from 'csstype'
 import dynamic from 'next/dynamic'
 import * as React from 'react'
-import { CSSProperties } from 'styled-components'
 
 import { Col } from '../components/content/col'
 import { ExerciseGroup } from '../components/content/exercises/exercise-group'
@@ -175,7 +175,7 @@ interface RenderLeafProps {
 }
 
 export function renderLeaf({ leaf, key, children }: RenderLeafProps) {
-  const styles: CSSProperties = {}
+  const styles: CSS.Properties = {}
   if (leaf.color) styles.color = articleColors[leaf.color]
   if (leaf.em) styles.fontStyle = 'italic'
   if (leaf.strong) styles.fontWeight = 'bold'
