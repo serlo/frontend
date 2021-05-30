@@ -12,7 +12,7 @@ export function HeaderFooter({ children }: HeaderFooterProps) {
   return (
     <>
       <Header />
-      <MinHeightDiv className="_">{children}</MinHeightDiv>
+      <MinHeightDiv>{children}</MinHeightDiv>
       <Footer />
     </>
   )

@@ -11,15 +11,15 @@ export function Lazy(props: LazyProps) {
         once
         offset={220}
         placeholder={
-          <Placeholder className="lazyload-placeholder" slim={props.slim} />
+          <Placeholder
+            className="superspecial-noscript-hidden"
+            slim={props.slim}
+          />
         }
       >
         {props.children}
       </LazyLoad>
-      <noscript>
-        <style>{`.lazyload-placeholder { display: none; }`}</style>
-        {props.children}
-      </noscript>
+      <noscript>{props.children}</noscript>
     </>
   )
 }

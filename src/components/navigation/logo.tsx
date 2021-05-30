@@ -25,11 +25,7 @@ export function Logo({ subline, noLink }: LogoProps) {
       </div>
       {subline && (
         <SublineWrap>
-          <SublineLink
-            className="subline icon"
-            href={noLink ? undefined : '/'}
-            path={['logo']}
-          >
+          <SublineLink href={noLink ? undefined : '/'} path={['logo']}>
             {subline}
           </SublineLink>
         </SublineWrap>

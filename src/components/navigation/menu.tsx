@@ -2,7 +2,7 @@ import { faCaretDown, faUser, faBell } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import type { TippyProps } from '@tippyjs/react'
 import { useState, useEffect } from 'react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 import { Link } from '../content/link'
 import { SubButtonStyle } from '../user-tools/sub-button-style'
@@ -175,7 +175,12 @@ function MenuInner({
               </StyledLink>
             </Tippy.default>
           ) : (
-            <StyledLink hasIcon={hasIcon} as="a" tabIndex={0} /*active={true}*/>
+            <StyledLink
+              hasIcon={hasIcon}
+              as="a"
+              tabIndex={0}
+              /*active={true}*/
+            >
               {renderIcon()}
               {!hasIcon && link.title} <FontAwesomeIcon icon={faCaretDown} />
             </StyledLink>
@@ -185,6 +190,7 @@ function MenuInner({
             hasIcon={hasIcon}
             /*active={true}*/ href={link.url}
             path={['menu', i]}
+            className="group"
           >
             {renderIcon()} {!hasIcon && link.title}
           </StyledLink>
@@ -255,7 +261,8 @@ const Li = styled.li<{ show: boolean }>`
   transition: 0.7s linear;
 `
 
-const linkStyle = css`
+const StyledLink = styled(Link)<{ active?: boolean; hasIcon?: boolean }>`
+  ${makeTransparentButton}
   &:active,
   &:hover,
   &[aria-expanded='true'] {
@@ -263,18 +270,10 @@ const linkStyle = css`
     background-color: ${(props) => props.theme.colors.brand};
 
     /*just for notifications count*/
-    & span.number {
-      color: ${(props) => props.theme.colors.brand};
-    }
     & span.fa-layers {
       color: #fff;
     }
   }
-`
-
-const StyledLink = styled(Link)<{ active?: boolean; hasIcon?: boolean }>`
-  ${makeTransparentButton}
-  ${linkStyle}
   font-size: 1rem;
   color: ${(props) =>
     props.theme.colors[props.active ? 'darkgray' : 'lightblue']};

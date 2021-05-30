@@ -38,13 +38,15 @@ export function LandingSubjects({ data }: LandingSubjectsProps) {
   }
 
   function renderIcon(icon?: string) {
-    if (icon === undefined) return <BlankSVG />
-    if (icon == 'math') return <MathSVG className="math" />
-    if (icon == 'abc') return <AbcSVG className="abc" />
-    if (icon == 'sustainability') return <SustainabilitySVG className="sus" />
-    if (icon == 'biology') return <BiologySVG className="bio" />
-    if (icon == 'chemistry') return <ChemistrySVG className="chem" />
-    return <BlankSVG />
+    if (icon === undefined) return <BlankSVG className="superspecial-blank" />
+    if (icon == 'math') return <MathSVG className="superspecial-math" />
+    if (icon == 'abc') return <AbcSVG className="superspecial-abc" />
+    if (icon == 'sustainability')
+      return <SustainabilitySVG className="superspecial-sus" />
+    if (icon == 'biology') return <BiologySVG className="superspecial-bio" />
+    if (icon == 'chemistry')
+      return <ChemistrySVG className="superspecial-chem" />
+    return <BlankSVG className="superspecial-blank" />
   }
 
   function renderSubject(
@@ -177,12 +179,12 @@ const SubjectLink = styled(Link)`
     }
   }
 
-  & svg.bio,
-  & svg.math,
-  & svg.abc,
-  & svg.sus,
-  & svg.chem,
-  & svg.blank {
+  & svg.superspecial-bio,
+  & svg.superspecial-math,
+  & svg.superspecial-abc,
+  & svg.superspecial-sus,
+  & svg.superspecial-chem,
+  & svg.superspecial-blank {
     display: inline;
     .blue {
       fill: ${(props) => props.theme.colors.lighterblue};
@@ -244,10 +246,10 @@ const SubjectLink = styled(Link)`
     transform: scale(2) translateY(5px);
     transform-origin: 50% 50%;
   }
-  & .math {
+  & .superspecial-math {
     transition-duration: 0.6s;
   }
-  & .sus path.water {
+  & .superspecial-sus path.water {
     transform: scale(0) translateY(-30px);
     transform-origin: 9% 60%;
     transition: transform 0.6s cubic-bezier(0.175, 0.6, 0.32, 1.275);
@@ -256,19 +258,19 @@ const SubjectLink = styled(Link)`
   &:hover,
   &:focus,
   &:active {
-    & .bio {
+    & .superspecial-bio {
       animation: ${jump} 0.7s ease-in-out;
     }
-    & .abc {
+    & .superspecial-abc {
       transform: scale(1.25) rotate(10deg);
     }
-    & .math {
+    & .superspecial-math {
       transform: rotateY(-180deg) rotateX(-3deg);
     }
-    & .sus {
+    & .superspecial-sus {
       transform: rotate(-30deg);
     }
-    & .sus .blue.water {
+    & .superspecial-sus .blue.water {
       transform: scale(1.08);
     }
     && .blue {
@@ -278,7 +280,7 @@ const SubjectLink = styled(Link)`
       fill: #becd2b;
     }
 
-    & .chem {
+    & .superspecial-chem {
       .flask {
         animation: ${hickup} 0.7s ease-in-out;
       }

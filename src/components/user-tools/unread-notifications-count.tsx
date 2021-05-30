@@ -46,7 +46,8 @@ export function UnreadNotificationsCount({
           style={{ height: '1.45rem', width: '1.25rem', paddingTop: '0' }}
         />
       )}
-      <NotificationsNumber className="number">
+      {/* TODO: Think about better css styling here? */}
+      <NotificationsNumber className="group-hover:text-brand group-active:text-brand transition-all">
         {displayCount}
       </NotificationsNumber>
     </StyledFaLayer>

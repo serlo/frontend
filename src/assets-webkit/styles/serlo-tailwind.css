@@ -147,6 +147,11 @@
       }
     }
   }
+  @media print {
+    .serlo-print-hidden {
+      @apply !hidden;
+    }
+  }
 }
 
 /* Some exceptional cases where we can't / don't want to set classnames directly.
@@ -208,11 +213,7 @@
     nav,
     button,
     aside,
-    div.cookie-bar,
-    h1 > span > svg,
-    div.video,
-    figure.video,
-    .comment-area-container {
+    h1 > span > svg {
       @apply !hidden;
     }
     main {

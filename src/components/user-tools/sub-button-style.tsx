@@ -8,14 +8,6 @@ const linkStyle = css`
   &[aria-expanded='true'] {
     color: #fff;
     background-color: ${(props) => props.theme.colors.brand};
-
-    /*just for notifications count*/
-    & span.number {
-      color: ${(props) => props.theme.colors.brand};
-    }
-    & span.fa-layers {
-      color: #fff;
-    }
   }
 `
 

@@ -193,7 +193,6 @@ export function SearchInput() {
           )}
 
           <div
-            className="gcse-searchbox-only"
             data-autocompletemaxcompletions="7"
             data-resultsurl="/search"
             data-enablehistory="true"
