@@ -1,5 +1,4 @@
 import * as React from 'react'
-import styled from 'styled-components'
 
 import { ExerciseNumbering } from './exercise-numbering'
 import { useAuthentication } from '@/auth/use-authentication'
@@ -30,51 +29,23 @@ export function ExerciseGroup({
   const lic = useLoggedInComponents()
   const Comp = lic?.ExerciseAuthorTools
   return (
-    <Container>
-      <ExerciseIntro>
+    <div className="pt-1">
+      <div className="pt-2 mb-3">
         {positionOnPage !== undefined && (
           <ExerciseNumbering
             index={positionOnPage}
             href={href ? href : `/${id}`}
           />
         )}
-        <TopLine>
-          <IntroWrapper>{groupIntro}</IntroWrapper>
+        <div className="flex mb-0.5">
+          <div className="flex-grow">{groupIntro}</div>
           <div>{license}</div>
           {loaded && auth.current && Comp && (
             <Comp data={{ type: '_ExerciseGroupInline', id }} />
           )}
-        </TopLine>
-      </ExerciseIntro>
-      <Content>{children}</Content>
-    </Container>
+        </div>
+      </div>
+      <div className="pb-3.5 bg-white mb-2.5 mx-2 sm:pl-12">{children}</div>
+    </div>
   )
 }
-
-const TopLine = styled.div`
-  display: flex;
-  margin-bottom: 3px;
-`
-
-const IntroWrapper = styled.div`
-  flex-grow: 1;
-`
-
-const Container = styled.div`
-  padding-top: 4px;
-`
-
-const ExerciseIntro = styled.div`
-  padding-top: 8px;
-  margin-bottom: 12px;
-`
-
-const Content = styled.div`
-  padding-bottom: 14px;
-  background-color: #fff;
-  margin: 0 8px 10px 8px;
-
-  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-    padding-left: 50px;
-  }
-`
