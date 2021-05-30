@@ -76,7 +76,7 @@ export function CommentForm({
         onPointerUp={(e) => e.currentTarget.blur()}
         className={clsx(
           'serlo-button serlo-make-interactive-green pl-2 self-end',
-          reply ? 'text-base w-8 h-8  mr-1' : 'text-2xl w-10 my-1 mr-2'
+          reply ? 'text-base w-8 h-8 mr-1' : 'text-2xl w-10 my-1 mr-2'
         )}
       >
         <FontAwesomeIcon

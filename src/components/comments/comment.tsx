@@ -30,7 +30,7 @@ export function Comment({
   const escapedContent = escapeHtml(content)
 
   const escapedWithLinks = escapedContent.replace(urlFinder, (match) => {
-    return `<a href="${match}" rel="ugc nofollow" class="text-brand break-all">${match}</a>`
+    return `<a href="${match}" rel="ugc nofollow" class="text-brand break-all">${match}</a>` // handle this special case
   })
 
   React.useEffect(() => {

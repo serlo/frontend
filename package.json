@@ -24,7 +24,8 @@
     "lint:strict": "npm-run-all lint:tsc lint:prettier lint:eslint:strict",
     "lint:tsc": "tsc --noEmit",
     "start": "next start",
-    "test": "jest"
+    "test": "jest",
+    "tailwind:status": "node ./scripts/tailwind-status.js"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.0.0",
