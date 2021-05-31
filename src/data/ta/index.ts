@@ -244,7 +244,7 @@ export const loggedInData = {
     icon: 'user',
     children: [{
       url: '/user/public',
-      title: "பொதுவான சுயவிவரம்"
+      title: 'Own profile'
     }, {
       url: '/auth/password/change',
       title: "கடவுச்சொல்லை மாற்று"
