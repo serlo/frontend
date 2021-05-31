@@ -5,12 +5,9 @@ import * as React from 'react'
 
 import { Col } from '../components/content/col'
 import { ExerciseGroup } from '../components/content/exercises/exercise-group'
-import { ImageLink } from '../components/content/image-link'
 import { ImgMaxWidthDiv } from '../components/content/img-max-width-div'
-import { LayoutRow } from '../components/content/layout-row'
 import { LicenseNotice } from '../components/content/license-notice'
 import { Link } from '../components/content/link'
-import { SpoilerContainer } from '../components/content/spoiler-container'
 import { SpoilerTitle } from '../components/content/spoiler-title'
 import { SpoilerToggle } from '../components/content/spoiler-toggle'
 import { TableWrapper } from '../components/content/table-wrapper'
@@ -237,9 +234,14 @@ function renderElement(props: RenderElementProps): React.ReactNode {
       if (element.href) {
         // needs investigation if this could be simplified
         return (
-          <ImageLink href={element.href} path={path}>
+          <Link
+            className="w-full block"
+            href={element.href}
+            path={path}
+            noExternalIcon
+          >
             {comp}
-          </ImageLink>
+          </Link>
         )
       }
       return comp
@@ -312,7 +314,7 @@ function renderElement(props: RenderElementProps): React.ReactNode {
     )
   }
   if (element.type === 'row') {
-    return <LayoutRow>{children}</LayoutRow>
+    return <div className="flex mobile:flex-col">{children}</div>
   }
   if (element.type === 'col') {
     return <Col cSize={element.size}>{children}</Col>
@@ -411,7 +413,7 @@ interface SpoilerForEndUserProps {
 function SpoilerForEndUser({ body, title, path }: SpoilerForEndUserProps) {
   const [open, setOpen] = React.useState(false)
   return (
-    <SpoilerContainer>
+    <div className="flex flex-col mb-block mobile:mx-side">
       <SpoilerTitle
         onClick={() => {
           setOpen(!open)
@@ -425,6 +427,6 @@ function SpoilerForEndUser({ body, title, path }: SpoilerForEndUserProps) {
         {title}
       </SpoilerTitle>
       {open && body}
-    </SpoilerContainer>
+    </div>
   )
 }

@@ -50,7 +50,7 @@ export function CommentForm({
   return (
     <div
       className={clsx(
-        'serlo-make-margin mt-4 mb-7 flex items-center rounded-2xl',
+        'mx-side mt-4 mb-7 flex items-center rounded-2xl',
         'bg-brandgreen-lighter focus-within:bg-brandgreen-light',
         'transition-colors duration-200 ease-in py-1'
       )}
