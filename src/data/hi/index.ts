@@ -144,7 +144,7 @@ export const instanceData = {
       compare: "तुलना करें",
       currentVersion: "वर्तमान संस्करण",
       thisVersion: "यह संस्करण",
-      currentNotice: "This is the currently accepted version.",
+      currentNotice: "यह वर्तमान में स्वीकृत संस्करण है।",
       rejectedNotice: 'This revision was rejected.',
       by: "द्वारा"
     },
@@ -330,9 +330,9 @@ export const loggedInData = {
     },
     revisions: {
       checkout: {
-        action: 'Accept',
-        title: 'Accept Revision',
-        explanation: 'Please give the author some feedback.'
+        action: "स्वीकारें",
+        title: "संशोधन स्वीकारें",
+        explanation: "कृपया लेखक को कुछ प्रतिक्रिया दें"
       },
       reject: {
         action: "अस्वीकार करें",
