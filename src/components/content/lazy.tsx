@@ -3,7 +3,7 @@ import * as React from 'react'
 import LazyLoad from 'react-lazyload'
 
 export interface LazyProps {
-  children: JSX.Element
+  children: React.ReactNode
   slim?: boolean
 }
 
