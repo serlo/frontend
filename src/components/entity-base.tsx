@@ -37,6 +37,10 @@ export function EntityBase({ children, page }: EntityBaseProps) {
               page.kind !== 'single-entity' &&
               !(page.metaData?.contentType == 'topic-folder')
             }
+            asBackButton={
+              page.kind == 'single-entity' &&
+              page.entityData.typename == 'GroupedExercise'
+            }
           />
           <main>{children}</main>
           <HSpace amount={40} />

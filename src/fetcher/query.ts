@@ -94,6 +94,9 @@ export const dataQuery = gql`
 
       ... on GroupedExercise {
         ...exercise
+        exerciseGroup {
+          alias
+        }
         revisions(unrevised: true) {
           totalCount
         }

@@ -15,6 +15,7 @@ import { QueryResponse, Instance } from './query-types'
 import { endpoint } from '@/api/endpoint'
 import { SlugPageData } from '@/data-types'
 import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
+import { getInstanceDataByLang } from '@/helper/feature-i18n'
 
 export async function requestPage(
   alias: string,
@@ -109,7 +110,17 @@ export async function requestPage(
         unrevisedRevisions: uuid.revisions?.totalCount,
       },
       newsletterPopup: false,
-      breadcrumbsData,
+      breadcrumbsData:
+        uuid.__typename == 'GroupedExercise'
+          ? [
+              {
+                label:
+                  getInstanceDataByLang(instance).strings.entities
+                    .exerciseGroup,
+                url: uuid.exerciseGroup.alias,
+              },
+            ]
+          : breadcrumbsData,
       metaData: {
         title,
         contentType:

@@ -2071,6 +2071,9 @@ export const groupedExerciseUuidMock = {
       title: 'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0',
     },
   },
+  exerciseGroup: {
+    alias: '/mathe/12345/12345',
+  },
 }
 
 export const courseUuidMock_id = {
