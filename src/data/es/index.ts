@@ -144,7 +144,8 @@ export const instanceData = {
       compare: "Comparar",
       currentVersion: "Versión Actual",
       thisVersion: "Esta Versión",
-      thisIsCurrentVersion: "Esta es la versión aceptada actualmente.",
+      currentNotice: "This is the currently accepted version.",
+      rejectedNotice: 'This revision was rejected.',
       by: "Por"
     },
     revisionHistory: {
@@ -328,10 +329,10 @@ export const loggedInData = {
       noNotifications: "cancelar"
     },
     revisions: {
-      accept: {
-        action: "Aceptar",
-        title: "Aceptar la revisión",
-        explanation: "Por favor, dale al autor algún comentario."
+      checkout: {
+        action: 'Accept',
+        title: 'Accept Revision',
+        explanation: 'Please give the author some feedback.'
       },
       reject: {
         action: "Rechazar",
