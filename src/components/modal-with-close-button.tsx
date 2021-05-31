@@ -30,7 +30,11 @@ export function ModalWithCloseButton({
   const { strings } = useInstanceData()
 
   return (
-    <Modal isOpen={isOpen} onRequestClose={onCloseClick}>
+    <Modal
+      isOpen={isOpen}
+      onRequestClose={onCloseClick}
+      shouldReturnFocusAfterClose={false}
+    >
       {title && <StyledH2>{title}</StyledH2>}
       {children}
       <CloseButton onClick={onCloseClick} title={strings.share.close}>
