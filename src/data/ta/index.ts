@@ -245,9 +245,6 @@ export const loggedInData = {
       url: '/user/public',
       title: "பொதுவான சுயவிவரம்"
     }, {
-      url: '/user/settings',
-      title: "சுயவிவர திருத்தம்"
-    }, {
       url: '/auth/password/change',
       title: "கடவுச்சொல்லை மாற்று"
     }, {

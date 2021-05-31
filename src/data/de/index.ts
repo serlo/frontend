@@ -245,9 +245,6 @@ export const loggedInData = {
       url: '/user/public',
       title: "Eigenes Profil"
     }, {
-      url: '/user/settings',
-      title: "Profil bearbeiten"
-    }, {
       url: '/auth/password/change',
       title: "Passwort ändern"
     }, {
