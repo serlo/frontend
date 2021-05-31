@@ -2,6 +2,7 @@ import { tint, shade } from 'polished'
 
 // base colors
 const brand = '#007ec1'
+const brandGreen = '#95bc1a'
 const black = '#000'
 
 // use object notation to allow types to be infered
@@ -25,7 +26,8 @@ const basicColors = {
   white: '#fff',
 
   //rest
-  brandGreen: '#95bc1a',
+  brandGreen,
+  lighterBrandGreen: tint(0.55, brandGreen),
   orange: '#ff6600',
   blue: '#1794c1',
   green: '#006400',
