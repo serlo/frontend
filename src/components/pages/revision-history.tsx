@@ -1,6 +1,5 @@
 import { faTimes, faEye, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import styled from 'styled-components'
 
 import { StyledTd } from '../tags/styled-td'
 import { StyledTh } from '../tags/styled-th'
@@ -10,7 +9,6 @@ import { Link } from '@/components/content/link'
 import { TimeAgo } from '@/components/time-ago'
 import { useInstanceData } from '@/contexts/instance-context'
 import type { HistoryRevisionsData } from '@/data-types'
-import { makeLightButton, makeMargin } from '@/helper/css'
 
 export interface RevisionHistoryProps {
   data?: HistoryRevisionsData
@@ -21,7 +19,7 @@ export function RevisionHistory({ data }: RevisionHistoryProps) {
   if (!data) return null
 
   return (
-    <Table>
+    <table className="mx-side border-collapse w-full">
       <thead>
         <StyledTr>
           <StyledTh>{strings.revisionHistory.changes}</StyledTh>
@@ -57,36 +55,26 @@ export function RevisionHistory({ data }: RevisionHistoryProps) {
                 <TimeAgo datetime={new Date(entry.date)} dateAsTitle />
               </StyledTd>
               <StyledTd>
-                <Button
+                <Link
+                  className="serlo-button serlo-make-interactive-light my-0 mx-auto text-base"
                   href={`/entity/repository/compare/${data.id}/${entry.id}`}
                 >
                   <FontAwesomeIcon icon={faEye} size="1x" />
-                </Button>
+                </Link>
               </StyledTd>
               <StyledTd>
-                <Button
+                <Link
+                  className="serlo-button serlo-make-interactive-light my-0 mx-auto text-base"
                   title={strings.revisionHistory.createNew}
                   href={`/entity/repository/add-revision/${data.id}/${entry.id}`}
                 >
                   <FontAwesomeIcon icon={faPencilAlt} size="1x" />
-                </Button>
+                </Link>
               </StyledTd>
             </StyledTr>
           )
         })}
       </tbody>
-    </Table>
+    </table>
   )
 }
-
-const Button = styled(Link)`
-  ${makeLightButton}
-  margin: 0 auto;
-  font-size: 1rem;
-`
-
-export const Table = styled.table`
-  ${makeMargin}
-  border-collapse: collapse;
-  width: 100%;
-`

@@ -192,7 +192,9 @@ export function SearchInput() {
             </>
           )}
 
+          {/* Note: This exact classname is important for gcse to work!*/}
           <div
+            className="gcse-searchbox-only"
             data-autocompletemaxcompletions="7"
             data-resultsurl="/search"
             data-enablehistory="true"

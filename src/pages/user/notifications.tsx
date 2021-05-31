@@ -1,6 +1,6 @@
+import clsx from 'clsx'
 import { gql } from 'graphql-request'
 import { useState } from 'react'
-import styled from 'styled-components'
 
 import { useGraphqlSwrPaginationWithAuth } from '@/api/use-graphql-swr'
 import { PageTitle } from '@/components/content/page-title'
@@ -12,7 +12,6 @@ import { UnreadNotificationsCount } from '@/components/user-tools/unread-notific
 import { NotificationEvent } from '@/components/user/notification'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { makeLightButton, makePrimaryButton } from '@/helper/css'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks(() => (
@@ -51,20 +50,30 @@ function Content() {
     <>
       <StyledP>
         {/* //blur-hack, use https://caniuse.com/#feat=css-focus-visible when supported*/}
-        <TabButton
-          active={showUnread}
+        <button
+          className={clsx(
+            'serlo-button mr-5 mb-5',
+            showUnread
+              ? 'serlo-make-interactive-primary'
+              : 'serlo-make-interactive-light'
+          )}
           onPointerUp={(e) => e.currentTarget.blur()}
           onClick={onTabClick}
         >
           {loggedInStrings.showNew} (<UnreadNotificationsCount onlyNumber />)
-        </TabButton>
-        <TabButton
-          active={!showUnread}
+        </button>
+        <button
+          className={clsx(
+            'serlo-button mr-5 mb-5',
+            !showUnread
+              ? 'serlo-make-interactive-primary'
+              : 'serlo-make-interactive-light'
+          )}
           onPointerUp={(e) => e.currentTarget.blur()}
           onClick={onTabClick}
         >
           {loggedInStrings.showRead}
-        </TabButton>
+        </button>
       </StyledP>
       {showUnread ? (
         <Guard data={data} error={error} needsAuth>
@@ -92,12 +101,6 @@ function Title() {
   const { strings } = useInstanceData()
   return <PageTitle title={strings.pageTitles.notifications} headTitle />
 }
-
-const TabButton = styled.button<{ active: boolean }>`
-  ${(props) => (props.active ? makePrimaryButton : makeLightButton)}
-  margin-right: 20px;
-  margin-bottom: 20px;
-`
 
 export function useNotificationFetch(unread?: boolean, noKey?: boolean) {
   // eslint-disable-next-line @typescript-eslint/unbound-method
