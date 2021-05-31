@@ -98,7 +98,8 @@ export const instanceData = {
       yourAnswer: "உங்கள் பதில்:",
       chooseOption: 'Click on one of the options.',
       trashedNotice: "இந்த உள்ளடக்கம் குப்பையாக குறிக்கப்பட்டுள்ளது.",
-      strategy: 'Solution Strategy'
+      strategy: 'Solution Strategy',
+      picture: 'Picture'
     },
     consent: {
       title: 'Consent for external Content',
@@ -172,7 +173,18 @@ export const instanceData = {
       showAllActivities: 'Show all activities',
       lastLogin: 'Last login',
       roles: 'Roles',
-      directMessage: 'Direct message'
+      directMessage: 'Direct message',
+      howToEditImage: {
+        heading: 'How to edit your profile picture',
+        description: 'Currently we use the images from %chatUrl% as profile pictures. In order to change your picture, do the following:',
+        steps: {
+          goToChat: 'Go to %chatUrl%.',
+          signIn: 'Sign in.',
+          goToMyAccount: 'Go in the user menu to %myAccountLink%.',
+          myAccount: 'My Account',
+          uploadPicture: 'Upload a new picture and click "Save changes".'
+        }
+      }
     },
     notices: {
       welcome: '👋 Welcome %username%!',
@@ -283,6 +295,10 @@ export const loggedInData = {
     notifications: {
       loadMore: "Load more",
       hide: "Hide notifications for this content.",
+      setToRead: "Set notification to read.",
+      setAllToRead: "Set all visible to read",
+      showNew: "New",
+      showRead: "Read",
       setThreadStateArchived: "%actor% archived %thread%.",
       setThreadStateUnarchived: "%actor% restored %thread%.",
       createComment: "%actor% commented in %thread%: %comment%.",

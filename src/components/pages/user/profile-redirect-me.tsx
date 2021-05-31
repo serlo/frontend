@@ -11,8 +11,14 @@ export const ProfileRedirectMe: NextPage = () => {
 
   useEffect(() => {
     if (auth.current) {
-      window.location.replace(
-        `/user/${auth.current.id}/${auth.current.username}`
+      const url = `/user/${auth.current.id}/${auth.current.username}`
+      const isChanged = document.referrer.endsWith('/user/settings')
+
+      setTimeout(
+        () => {
+          window.location.replace(url)
+        },
+        isChanged ? 4000 : 0 // hack until we have a mutation
       )
     } else {
       window.location.replace('/api/auth/login')

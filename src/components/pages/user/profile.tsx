@@ -1,5 +1,9 @@
+import { faTelegramPlane } from '@fortawesome/free-brands-svg-icons'
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { NextPage } from 'next'
 import Head from 'next/head'
+import * as React from 'react'
 import styled from 'styled-components'
 
 import AuthorBadge from '@/assets-webkit/img/community/badge-author.svg'
@@ -7,14 +11,19 @@ import DonorBadge from '@/assets-webkit/img/community/badge-donor.svg'
 import ReviewerBadge from '@/assets-webkit/img/community/badge-reviewer.svg'
 import { useAuthentication } from '@/auth/use-authentication'
 import { CommentArea } from '@/components/comments/comment-area'
+import { ModalWithCloseButton } from '@/components/modal-with-close-button'
+import { StyledA } from '@/components/tags/styled-a'
 import { StyledH1 } from '@/components/tags/styled-h1'
 import { StyledH2 } from '@/components/tags/styled-h2'
+import { StyledLi } from '@/components/tags/styled-li'
+import { StyledOl } from '@/components/tags/styled-ol'
 import { StyledP } from '@/components/tags/styled-p'
 import { TimeAgo } from '@/components/time-ago'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UserPage } from '@/data-types'
-import { makeMargin } from '@/helper/css'
+import { makeGreenButton, makeMargin } from '@/helper/css'
+import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { renderArticle } from '@/schema/article-renderer'
 
 export interface ProfileProps {
@@ -23,12 +32,22 @@ export interface ProfileProps {
 
 export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   const { strings } = useInstanceData()
-  const { id, username, description, lastLogin, imageUrl, date } = userData
+  const {
+    id,
+    username,
+    description,
+    lastLogin,
+    imageUrl,
+    chatUrl,
+    date,
+    motivation,
+  } = userData
   const { activeDonor, activeReviewer, activeAuthor } = userData
   const auth = useAuthentication()
   const isOwnProfile = auth.current?.username === username
   const lastLoginDate = lastLogin ? new Date(lastLogin) : undefined
   const registerDate = new Date(date)
+  const [showImageModal, setShowImageModal] = React.useState(false)
 
   return (
     <>
@@ -40,9 +59,9 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
       </Head>
 
       <ProfileHeader>
-        <ProfileImage src={imageUrl} />
+        {renderProfileImage()}
         <div>
-          <UsernameHeading>{username}</UsernameHeading>
+          <StyledH1>{username}</StyledH1>
           <StyledP>
             {strings.profiles.activeSince}{' '}
             <time
@@ -54,6 +73,11 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
           </StyledP>
         </div>
         {renderBadges()}
+        {motivation && <Motivation>&quot;{motivation}&quot;</Motivation>}
+        <ChatButton href={chatUrl}>
+          <FontAwesomeIcon icon={faTelegramPlane} />{' '}
+          {strings.profiles.directMessage}
+        </ChatButton>
       </ProfileHeader>
 
       {description && (
@@ -72,6 +96,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         </Gray>
       )}
       {renderUserTools()}
+      {renderHowToEditImage()}
     </>
   )
 
@@ -117,12 +142,95 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
       />
     )
   }
+
+  function renderProfileImage() {
+    return (
+      <ProfileImageCage>
+        <ProfileImage src={imageUrl} />
+        {isOwnProfile && (
+          <ProfileImageEditButton onClick={() => setShowImageModal(true)}>
+            <FontAwesomeIcon icon={faPencilAlt} />
+          </ProfileImageEditButton>
+        )}
+      </ProfileImageCage>
+    )
+  }
+
+  function renderHowToEditImage() {
+    const { heading, description, steps } = strings.profiles.howToEditImage
+    const chatUrl = (
+      <StyledA href="https://community.serlo.org">community.serlo.org</StyledA>
+    )
+    const myAccountLink = (
+      <StyledA href="https://community.serlo.org/account/profile">
+        {steps.myAccount}
+      </StyledA>
+    )
+
+    return (
+      <ModalWithCloseButton
+        isOpen={showImageModal}
+        onCloseClick={() => setShowImageModal(false)}
+        title={heading}
+      >
+        <StyledP>{replacePlaceholders(description, { chatUrl })}</StyledP>
+        <StyledOl>
+          <StyledLi>
+            {replacePlaceholders(steps.goToChat, { chatUrl })}
+          </StyledLi>
+          <StyledLi>{steps.signIn}</StyledLi>
+          <StyledLi>
+            {replacePlaceholders(steps.goToMyAccount, { myAccountLink })}
+          </StyledLi>
+          <StyledLi>{steps.uploadPicture}</StyledLi>
+        </StyledOl>
+      </ModalWithCloseButton>
+    )
+  }
 }
 
-const ProfileImage = styled.img`
-  border-radius: 50%;
+const Motivation = styled(StyledP)`
+  font-size: 1.3em;
+  grid-area: motivation;
+`
+
+const ChatButton = styled.a`
+  ${makeGreenButton}
   display: block;
-  width: 150px;
+  width: 175px;
+  text-align: center;
+  grid-area: chatButton;
+  align-self: self-start;
+  margin-top: 5px;
+`
+
+const ProfileImageEditButton = styled.button`
+  ${makeGreenButton}
+  display: block;
+  position: absolute;
+  right: 2px;
+  bottom: 2px;
+  width: 2em;
+  height: 2em;
+  background-color: ${(props) => props.theme.colors.brandGreen};
+  color: ${(props) => props.theme.colors.white};
+
+  &:focus {
+    background-color: ${(props) => props.theme.colors.brand};
+  }
+`
+
+const ProfileImageCage = styled.figure`
+  width: 175px;
+  height: 175px;
+  contain: content;
+`
+
+const ProfileImage = styled.img`
+  display: block;
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
 `
 
 const BadgesContainer = styled.div`
@@ -144,17 +252,21 @@ const BadgeContainer = styled.div`
 
 const ProfileHeader = styled.header`
   ${makeMargin}
-  margin-top: 40px;
-  margin-bottom: 30px;
+  margin-top: 60px;
+  margin-bottom: 50px;
+
+  & p {
+    margin-bottom: 0;
+  }
 
   @media (min-width: ${(props) => props.theme.breakpoints.mobile}) {
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-
-    & > * {
-      margin-right: 20px;
-    }
+    display: grid;
+    grid-template-columns: 175px 30% auto;
+    grid-template-rows: auto auto;
+    grid-template-areas: 'image username badges' 'chatButton motivation motivation';
+    row-gap: 20px;
+    column-gap: 20px;
+    place-items: center start;
   }
 
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
@@ -162,6 +274,7 @@ const ProfileHeader = styled.header`
       margin-left: auto;
       margin-right: auto;
       text-align: center;
+      margin-top: 23px;
     }
   }
 
@@ -171,10 +284,6 @@ const ProfileHeader = styled.header`
     margin-top: 15px;
     margin-bottom: 10px;
   }
-`
-
-const UsernameHeading = styled(StyledH1)`
-  font-weight: normal;
 `
 
 const Gray = styled(StyledP)`

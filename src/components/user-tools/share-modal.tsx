@@ -5,7 +5,6 @@ import {
 } from '@fortawesome/free-brands-svg-icons'
 import {
   faCopy,
-  faTimes,
   faEnvelope,
   faCompass,
   IconDefinition,
@@ -15,15 +14,14 @@ import { lighten } from 'polished'
 import * as React from 'react'
 import styled from 'styled-components'
 
+import { ModalWithCloseButton } from '@/components/modal-with-close-button'
+import { EntityIdContext } from '@/contexts/entity-id-context'
+import { useInstanceData } from '@/contexts/instance-context'
 import {
   makeMargin,
   makeGreenTransparentButton,
   inputFontReset,
-} from '../../helper/css'
-import { Modal } from '../modal'
-import { StyledH2 } from '../tags/styled-h2'
-import { EntityIdContext } from '@/contexts/entity-id-context'
-import { useInstanceData } from '@/contexts/instance-context'
+} from '@/helper/css'
 import { submitEvent } from '@/helper/submit-event'
 
 export interface ShareModalProps {
@@ -106,32 +104,30 @@ export function ShareModal({ open, onClose, contentId }: ShareModalProps) {
   ]
 
   return (
-    <StyledModal isOpen={open} onRequestClose={onCloseClick}>
-      <StyledH2>{strings.share.title}</StyledH2>
-      <div>
-        <ShareInput
-          ref={shareInputRef}
-          onFocus={(e) => e.target.select()}
-          defaultValue={url}
-        />{' '}
-        {document.queryCommandSupported('copy') && (
-          <>
-            <Button onClick={copyToClipboard} as="button">
-              <FontAwesomeIcon icon={faCopy} /> {strings.share.copyLink}
-            </Button>
-            {copySuccess !== '' && <Gray>{copySuccess}&nbsp;</Gray>}
-            <br />
-          </>
-        )}{' '}
-        <ButtonWrapper>
-          {buildButtons(socialShare, copyToClipboard)}
-        </ButtonWrapper>
-        <ButtonWrapper>{buildButtons(lmsShare, copyToClipboard)}</ButtonWrapper>
-        <CloseButton onClick={onCloseClick} title={strings.share.close}>
-          <FontAwesomeIcon icon={faTimes} size="lg" />
-        </CloseButton>
-      </div>
-    </StyledModal>
+    <ModalWithCloseButton
+      isOpen={open}
+      onCloseClick={onCloseClick}
+      title={strings.share.title}
+    >
+      <ShareInput
+        ref={shareInputRef}
+        onFocus={(e) => e.target.select()}
+        defaultValue={url}
+      />{' '}
+      {document.queryCommandSupported('copy') && (
+        <>
+          <Button onClick={copyToClipboard} as="button">
+            <FontAwesomeIcon icon={faCopy} /> {strings.share.copyLink}
+          </Button>
+          {copySuccess !== '' && <Gray>{copySuccess}&nbsp;</Gray>}
+          <br />
+        </>
+      )}{' '}
+      <ButtonWrapper>
+        {buildButtons(socialShare, copyToClipboard)}
+      </ButtonWrapper>
+      <ButtonWrapper>{buildButtons(lmsShare, copyToClipboard)}</ButtonWrapper>
+    </ModalWithCloseButton>
   )
 }
 
@@ -174,23 +170,6 @@ function buildButtons(
       )
   })
 }
-
-// this is overriding the styles of the modal-content only. see doc to change overlay etc.
-export const StyledModal = styled(Modal)`
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  margin-right: -50%;
-  transform: translate(-50%, -50%);
-  width: 500px;
-  border-radius: 12px;
-  max-width: 85%;
-  border: 0;
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
-  padding: 10px 10px 30px 10px;
-  background-color: #fff;
-  outline: none;
-`
 
 const ButtonWrapper = styled.div`
   margin-top: 17px;
@@ -248,22 +227,4 @@ const Gray = styled.small`
     color: ${(props) => props.theme.colors.brand};
     font-weight: bold;
   }
-`
-export const CloseButton = styled.button`
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  display: inline-block;
-  color: ${(props) => props.theme.colors.dark1};
-  &:hover {
-    background-color: ${(props) => props.theme.colors.brand};
-    color: white;
-  }
-  width: 35px;
-  height: 35px;
-  border-radius: 30px;
-  text-align: center;
 `

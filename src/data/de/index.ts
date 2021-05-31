@@ -98,7 +98,8 @@ export const instanceData = {
       yourAnswer: "Deine Antwort…",
       chooseOption: "Klicke auf eine der Optionen.",
       trashedNotice: "Dieser Inhalt wurde zum Löschen markiert.",
-      strategy: "Lösungsstrategie"
+      strategy: "Lösungsstrategie",
+      picture: "Bild"
     },
     consent: {
       title: "Einwilligungen für externe Inhalte",
@@ -172,7 +173,18 @@ export const instanceData = {
       showAllActivities: "Alle Aktivitäten anzeigen",
       lastLogin: "Zuletzt angemeldet",
       roles: "Rollen",
-      directMessage: "Direktnachricht"
+      directMessage: "Direktnachricht",
+      howToEditImage: {
+        heading: "So kannst du dein Profilbild ändern",
+        description: "Wir benutzen die Bilder von %chatUrl% als Profilbilder. Um dein Bild zu ändern musst du diesen Schritten folgen:",
+        steps: {
+          goToChat: "Gehe zu %chatUrl%.",
+          signIn: "Melde dich an.",
+          goToMyAccount: "Gehe im Usermenü auf %myAccountLink%.",
+          myAccount: "Mein Konto",
+          uploadPicture: "Lade ein neues Bild hoch und klicke oben auf \"Änderungen speichern\"."
+        }
+      }
     },
     notices: {
       welcome: "👋 Willkommen %username%!",
@@ -283,6 +295,10 @@ export const loggedInData = {
     notifications: {
       loadMore: "Weitere laden",
       hide: "Benachrichtigungen für diesen Inhalt nicht mehr anzeigen.",
+      setToRead: "Benachrichtigung als gelesen markieren.",
+      setAllToRead: "Alle sichtbaren gelesen",
+      showNew: "Neu",
+      showRead: "Gelesen",
       setThreadStateArchived: "%actor% hat eine %thread% archiviert.",
       setThreadStateUnarchived: "%actor% hat eine %thread% aus dem Archiv geholt.",
       createComment: "%actor% hat einen %comment% in einer %thread% erstellt.",
