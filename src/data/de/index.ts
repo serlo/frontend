@@ -142,10 +142,10 @@ export const instanceData = {
       metaTitle: "Meta-Titel",
       metaDescription: "Meta-Beschreibung",
       compare: "Vergleichen",
-      currentVersion: "Aktuelle Version",
-      thisVersion: "Diese Version",
-      currentNotice: "This is the currently accepted version.",
-      rejectedNotice: 'This revision was rejected.',
+      currentVersion: "Aktuelle Bearbeitung",
+      thisVersion: "Diese Bearbeitung",
+      currentNotice: "Das ist die aktuell akzeptierte Bearbeitung.",
+      rejectedNotice: "Diese Bearbeitung wurde abgelehnt.",
       by: "Von"
     },
     revisionHistory: {
@@ -330,9 +330,9 @@ export const loggedInData = {
     },
     revisions: {
       checkout: {
-        action: 'Accept',
-        title: 'Accept Revision',
-        explanation: 'Please give the author some feedback.'
+        action: "Akzeptieren",
+        title: "Bearbeitung akzeptieren",
+        explanation: "Bitte gib der Autor*in ein bisschen Feedback."
       },
       reject: {
         action: "Ablehnen",
