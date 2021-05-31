@@ -1,48 +1,69 @@
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useState } from 'react'
-import styled from 'styled-components'
+import { useState, KeyboardEvent } from 'react'
+import styled, { css } from 'styled-components'
 
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { inputFontReset, makeLightButton, makeMargin } from '@/helper/css'
-import { showToastNotice } from '@/helper/show-toast-notice'
+import { RevisionMutationMode, useRevisionMutation } from '@/helper/mutations'
 
 export interface CheckoutRejectButtonsProps {
-  onAccept?: () => void
-  onReject?: () => void
+  revisionId: number
+  repositoryId: number
+  isRejected: boolean
+  isCurrent: boolean
 }
 
-export function CheckoutRejectButtons() {
+export function CheckoutRejectButtons({
+  revisionId,
+  repositoryId,
+  isRejected,
+  isCurrent,
+}: CheckoutRejectButtonsProps) {
   const loggedInData = useLoggedInData()
-  const [modalMode, setModalMode] = useState<'accept' | 'reject' | null>(null)
+  const [modalMode, setModalMode] = useState<RevisionMutationMode | null>(null)
+  const revisionMutation = useRevisionMutation()
+  const [reason, setReason] = useState('')
   if (!loggedInData) return null
+  if (isCurrent) return null
   const { strings } = loggedInData
+
+  const confirmActive = reason.length > 0
 
   function onCloseClick() {
     setModalMode(null)
   }
 
-  function onConfirmClick() {
-    showToastNotice('Sorry, not yet working in new frontend. 🙃 ')
-    // if (modalMode == 'accept') {
-    // }
+  function onConfirm() {
+    if (modalMode && confirmActive) {
+      void revisionMutation(modalMode, repositoryId, {
+        revisionId,
+        reason,
+      })
+    }
+  }
+
+  function onKeyDown(e: KeyboardEvent<HTMLTextAreaElement>) {
+    if (e.code === 'Enter' && e.metaKey) onConfirm()
   }
 
   return (
     <div>
       <CheckoutButton
-        onClick={() => setModalMode('accept')}
+        onClick={() => setModalMode('checkout')}
         onPointerUp={(e) => e.currentTarget.blur()}
       >
-        <FontAwesomeIcon icon={faCheck} /> {strings.revisions.accept.action}
+        <FontAwesomeIcon icon={faCheck} /> {strings.revisions.checkout.action}
       </CheckoutButton>
-      <RejectButton
-        onClick={() => setModalMode('reject')}
-        onPointerUp={(e) => e.currentTarget.blur()}
-      >
-        <FontAwesomeIcon icon={faTimes} /> {strings.revisions.reject.action}
-      </RejectButton>
+      {!isRejected && (
+        <RejectButton
+          onClick={() => setModalMode('reject')}
+          onPointerUp={(e) => e.currentTarget.blur()}
+        >
+          <FontAwesomeIcon icon={faTimes} /> {strings.revisions.reject.action}
+        </RejectButton>
+      )}
 
       <ModalWithCloseButton
         isOpen={modalMode != null}
@@ -62,8 +83,14 @@ export function CheckoutRejectButtons() {
       <>
         <Parapgraph>
           {strings.revisions[modalMode].explanation}
-          <Textarea />
-          <ConfirmButton onClick={onConfirmClick}>
+          <Textarea
+            value={reason}
+            onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
+              setReason(event.target.value)
+            }}
+            onKeyDown={onKeyDown}
+          />
+          <ConfirmButton disabled={!confirmActive} onClick={onConfirm}>
             {strings.revisions.confirm}
           </ConfirmButton>
         </Parapgraph>
@@ -94,6 +121,12 @@ const Parapgraph = styled.p`
 
 const ConfirmButton = styled.button`
   ${makeLightButton}
+  ${(props) =>
+    props.disabled &&
+    css`
+      opacity: 0.2;
+      cursor: not-allowed;
+    `}
 `
 
 const Textarea = styled.textarea`

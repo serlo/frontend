@@ -1,6 +1,8 @@
 import {
+  CheckoutRevisionInput,
   NotificationMutation,
   NotificationSetStateInput,
+  RejectRevisionInput,
   SubscriptionSetInput,
   ThreadCreateCommentInput,
   ThreadCreateThreadInput,
@@ -13,6 +15,7 @@ import {
 } from '@serlo/api'
 import { GraphQLError } from 'graphql'
 import { ClientError, gql, GraphQLClient } from 'graphql-request'
+import { useRouter } from 'next/router'
 import NProgress from 'nprogress'
 import { mutate, cache } from 'swr'
 
@@ -57,6 +60,66 @@ export function useSetUuidStateMutation() {
     return success
   }
   return async (input: UuidSetStateInput) => await setUuidStateMutation(input)
+}
+
+export type RevisionMutationMode = 'checkout' | 'reject'
+export function useRevisionMutation() {
+  const auth = useAuthentication()
+  const rejectMutation = gql`
+    mutation rejectRevision($input: RejectRevisionInput!) {
+      entity {
+        rejectRevision(input: $input) {
+          success
+        }
+      }
+    }
+  `
+  const checkoutMutation = gql`
+    mutation rejectRevision($input: CheckoutRevisionInput!) {
+      entity {
+        checkoutRevision(input: $input) {
+          success
+        }
+      }
+    }
+  `
+  const router = useRouter()
+
+  const revisionMutation = async function (
+    mode: RevisionMutationMode,
+    repositoryId: number,
+    input: RejectRevisionInput
+  ) {
+    const isCheckout = mode === 'checkout'
+    NProgress.start()
+    const success = await mutationFetch(
+      auth,
+      isCheckout ? checkoutMutation : rejectMutation,
+      input
+    )
+
+    if (success) {
+      setTimeout(() => {
+        showToastNotice(
+          `✨ Überarbeitung wurde ${isCheckout ? 'angenommen' : 'abgelehnt'}.`,
+          'success'
+        )
+      }, 200)
+      setTimeout(() => {
+        NProgress.done()
+        void router.push(
+          '/[[...slug]]',
+          `/entity/repository/history/${repositoryId}`
+        )
+      }, 3000)
+    }
+    return success
+  }
+  return async (
+    mode: RevisionMutationMode,
+    repositoryId: number,
+    input: RejectRevisionInput | CheckoutRevisionInput
+  ) => await revisionMutation(mode, repositoryId, input)
 }
 
 export function useSetNotificationStateMutation() {
@@ -278,6 +341,8 @@ type MutationInput =
   | ThreadSetCommentStateInput
   | ThreadCreateCommentInput
   | SubscriptionSetInput
+  | RejectRevisionInput
+  | CheckoutRevisionInput
 
 type MutationResponse = ThreadMutation | UuidMutation | NotificationMutation
 

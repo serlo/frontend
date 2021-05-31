@@ -92,6 +92,7 @@ const query = gql`
         revisions {
           nodes {
             id
+            trashed
             author {
               ...authorData
             }
@@ -108,6 +109,7 @@ const query = gql`
         revisions {
           nodes {
             id
+            trashed
             author {
               ...authorData
             }
@@ -124,6 +126,7 @@ const query = gql`
         revisions {
           nodes {
             id
+            trashed
             author {
               ...authorData
             }
@@ -140,6 +143,7 @@ const query = gql`
         revisions {
           nodes {
             id
+            trashed
             author {
               ...authorData
             }
@@ -156,6 +160,7 @@ const query = gql`
         revisions {
           nodes {
             id
+            trashed
             author {
               ...authorData
             }
@@ -171,6 +176,7 @@ const query = gql`
         revisions {
           nodes {
             id
+            trashed
             author {
               ...authorData
             }
@@ -186,6 +192,7 @@ const query = gql`
         revisions {
           nodes {
             id
+            trashed
             author {
               ...authorData
             }
@@ -201,6 +208,7 @@ const query = gql`
         revisions {
           nodes {
             id
+            trashed
             author {
               ...authorData
             }
@@ -217,6 +225,7 @@ const query = gql`
         revisions {
           nodes {
             id
+            trashed
             author {
               ...authorData
             }
@@ -232,6 +241,7 @@ const query = gql`
         revisions {
           nodes {
             id
+            trashed
             author {
               ...authorData
             }

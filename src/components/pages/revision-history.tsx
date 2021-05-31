@@ -1,4 +1,4 @@
-import { faEye, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
+import { faTimes, faEye, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styled from 'styled-components'
 
@@ -35,12 +35,17 @@ export function RevisionHistory({ data }: RevisionHistoryProps) {
       </thead>
       <tbody>
         {data.revisions?.nodes.map((entry) => {
+          const isCurrent = entry.id === data.currentRevision.id
           return (
             <StyledTr key={entry.id}>
               <StyledTd>
-                {entry.id === data.currentRevision.id && (
-                  <span title={strings.revisions.thisIsCurrentVersion}>
-                    ✅{' '}
+                {isCurrent && (
+                  <span title={strings.revisions.currentNotice}>✅ </span>
+                )}
+                {/* TODO: Remove isCurrent check once this is solved: https://github.com/serlo/serlo.org-database-layer/issues/102 */}
+                {entry.trashed && !isCurrent && (
+                  <span title={strings.revisions.rejectedNotice}>
+                    <FontAwesomeIcon icon={faTimes} />{' '}
                   </span>
                 )}
                 <b>{entry.changes}</b>
