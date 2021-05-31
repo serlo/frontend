@@ -246,9 +246,6 @@ export const loggedInData = {
       url: '/user/public',
       title: "सार्वजनिक प्रोफाइल"
     }, {
-      url: '/user/settings',
-      title: "प्रोफ़ाइल संपादित करें"
-    }, {
       url: '/auth/password/change',
       title: "पासवर्ड परिवर्तित करें"
     }, {

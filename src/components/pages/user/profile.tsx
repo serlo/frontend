@@ -74,7 +74,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         </div>
         {renderBadges()}
         {motivation && <Motivation>&quot;{motivation}&quot;</Motivation>}
-        <ChatButton href={chatUrl}>
+        <ChatButton href={chatUrl} enabled={!isOwnProfile}>
           <FontAwesomeIcon icon={faTelegramPlane} />{' '}
           {strings.profiles.directMessage}
         </ChatButton>
@@ -194,14 +194,26 @@ const Motivation = styled(StyledP)`
   grid-area: motivation;
 `
 
-const ChatButton = styled.a`
+const ChatButton = styled.a<{ enabled: boolean }>`
   ${makeGreenButton}
+  background-color: ${(props) =>
+    props.enabled
+      ? props.theme.colors.brandGreen
+      : props.theme.colors.lighterBrandGreen};
   display: block;
   width: 175px;
   text-align: center;
   grid-area: chatButton;
   align-self: self-start;
   margin-top: 5px;
+
+  &:hover,
+  &:focus {
+    background-color: ${(props) =>
+      props.enabled
+        ? props.theme.colors.brand
+        : props.theme.colors.lighterblue};
+  }
 `
 
 const ProfileImageEditButton = styled.button`
