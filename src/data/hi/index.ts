@@ -330,7 +330,7 @@ export const loggedInData = {
     },
     revisions: {
       checkout: {
-        action: "स्वीकारें",
+        action: "स्वीकार करें ",
         title: "संशोधन स्वीकारें",
         explanation: "कृपया लेखक को कुछ प्रतिक्रिया दें"
       },
