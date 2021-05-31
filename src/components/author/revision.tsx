@@ -1,6 +1,8 @@
-import { faList } from '@fortawesome/free-solid-svg-icons'
+import { faList, faTimes, faCheck } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Entity } from '@serlo/authorization'
 import dynamic from 'next/dynamic'
+import { tint } from 'polished'
 import * as React from 'react'
 import ReactDiffViewer from 'react-diff-viewer'
 import styled, { css } from 'styled-components'
@@ -9,6 +11,7 @@ import { PageTitle } from '../content/page-title'
 import { UserTools } from '../user-tools/user-tools'
 import type { CheckoutRejectButtonsProps } from './checkout-reject-buttons'
 import { useAuthentication } from '@/auth/use-authentication'
+import { useCanDo } from '@/auth/use-can-do'
 import { Geogebra } from '@/components/content/geogebra'
 import { HSpace } from '@/components/content/h-space'
 import { Link } from '@/components/content/link'
@@ -38,13 +41,17 @@ export interface RevisionProps {
   data: RevisionData
 }
 
-//current is currently accepted revision
+//current is the checked out revision
 type DisplayMode = 'this' | 'current' | 'compare'
 
 export function Revision({ data }: RevisionProps) {
   const auth = useAuthentication()
   const { strings } = useInstanceData()
+  const canDo = useCanDo()
+  const canCheckoutAndReject =
+    canDo(Entity.checkoutRevision) && canDo(Entity.rejectRevision)
   const isCurrentRevision = data.thisRevision.id === data.currentRevision.id
+  const isRejected = data.thisRevision.trashed
   const [displayMode, setDisplayMode] = React.useState<DisplayMode>(
     isCurrentRevision ? 'current' : 'this'
   )
@@ -53,6 +60,7 @@ export function Revision({ data }: RevisionProps) {
 
   const notCompare = displayMode !== 'compare'
   const icon = renderEntityIcon()
+
   return (
     <>
       <MetaBar>
@@ -62,6 +70,7 @@ export function Revision({ data }: RevisionProps) {
         <div>{renderButtons()}</div>
       </MetaBar>
       <HSpace amount={5} />
+      {renderNotice()}
       <PageTitle
         title={
           data.currentRevision.metaTitle ||
@@ -71,12 +80,6 @@ export function Revision({ data }: RevisionProps) {
         headTitle
         icon={icon ? icon : undefined}
       />
-      {isCurrentRevision && (
-        <StyledP>
-          <i>{strings.revisions.thisIsCurrentVersion}</i>
-        </StyledP>
-      )}
-
       {data.changes && (
         <StyledP>
           <b>{strings.revisions.changes}:</b> {data.changes}
@@ -89,7 +92,14 @@ export function Revision({ data }: RevisionProps) {
           {strings.revisions.by} <UserLink user={data.user} />{' '}
           <TimeAgo datetime={new Date(data.date)} dateAsTitle />
         </StyledP>
-        {auth.current && <CheckoutRejectButtons />}
+        {auth.current && canCheckoutAndReject && (
+          <CheckoutRejectButtons
+            revisionId={data.thisRevision.id}
+            repositoryId={data.repositoryId}
+            isRejected={isRejected}
+            isCurrent={isCurrentRevision}
+          />
+        )}
       </FlexWrapper>
       {dataSet.title !== undefined && (
         <PreviewBox title={strings.revisions.title} diffType="title">
@@ -118,7 +128,6 @@ export function Revision({ data }: RevisionProps) {
           {dataSet.metaDescription}
         </PreviewBox>
       )}
-
       <UserTools
         id={data.thisRevision.id}
         data={{
@@ -230,6 +239,20 @@ export function Revision({ data }: RevisionProps) {
       </>
     )
   }
+
+  function renderNotice() {
+    if (!isRejected && !isCurrentRevision) return null
+    /* TODO: Remove check once this is solved: https://github.com/serlo/serlo.org-database-layer/issues/102 */
+    const rejected = !isCurrentRevision && isRejected
+    return (
+      <Notice success={isCurrentRevision}>
+        <FontAwesomeIcon icon={rejected ? faTimes : faCheck} />{' '}
+        {rejected
+          ? strings.revisions.rejectedNotice
+          : strings.revisions.currentNotice}
+      </Notice>
+    )
+  }
 }
 
 const StyledIcon = styled(FontAwesomeIcon)`
@@ -305,4 +328,13 @@ const DiffViewerWrapper = styled.div`
 const FlexWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+`
+
+const Notice = styled.div<{ success?: boolean }>`
+  margin: 50px 0;
+  padding: 16px;
+  border-radius: 20px;
+  font-weight: bold;
+  background-color: ${(props) =>
+    tint(0.7, props.success ? props.theme.colors.brandGreen : '#c56c6c')};
 `
