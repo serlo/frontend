@@ -244,7 +244,7 @@ export const loggedInData = {
     icon: 'user',
     children: [{
       url: '/user/public',
-      title: "सार्वजनिक प्रोफाइल"
+      title: 'Own profile'
     }, {
       url: '/auth/password/change',
       title: "पासवर्ड परिवर्तित करें"
