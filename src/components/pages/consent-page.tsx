@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import styled from 'styled-components'
 
 import { PageTitle } from '../content/page-title'
 import { StyledA } from '../tags/styled-a'
@@ -9,7 +8,6 @@ import { StyledTable } from '@/components/tags/styled-table'
 import { StyledTd } from '@/components/tags/styled-td'
 import { StyledTr } from '@/components/tags/styled-tr'
 import { useInstanceData } from '@/contexts/instance-context'
-import { makeLightButton } from '@/helper/css'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { ExternalProvider, useConsent } from '@/helper/use-consent'
 
@@ -46,9 +44,9 @@ export function ConsentPage() {
   function renderEmpty() {
     return (
       <StyledTr>
-        <_StyledTd>
+        <StyledTd className="text-lg">
           <b>{strings.consent.noConsent}</b>
-        </_StyledTd>
+        </StyledTd>
       </StyledTr>
     )
   }
@@ -57,29 +55,22 @@ export function ConsentPage() {
     return consentedProviders.map((provider) => {
       return (
         <StyledTr key={provider}>
-          <_StyledTd>
+          <StyledTd className="text-lg">
             <b>{provider}</b>
-          </_StyledTd>
-          <_StyledTd>
-            <Button
+          </StyledTd>
+          <StyledTd className="text-lg">
+            <button
+              className="serlo-button serlo-make-interactive-light"
               onClick={() => {
                 revokeConsent(provider)
                 updateState({})
               }}
             >
               {strings.consent.revokeConsent}
-            </Button>
-          </_StyledTd>
+            </button>
+          </StyledTd>
         </StyledTr>
       )
     })
   }
 }
-
-const Button = styled.button`
-  ${makeLightButton};
-`
-
-const _StyledTd = styled(StyledTd)`
-  font-size: 1.125rem;
-`
