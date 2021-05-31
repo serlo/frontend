@@ -1939,17 +1939,17 @@
   resolved "https://registry.yarnpkg.com/@redux-saga/types/-/types-1.1.0.tgz#0e81ce56b4883b4b2a3001ebe1ab298b84237204"
   integrity sha512-afmTuJrylUU/0OtqzaRkbyYFFNgCF73Bvel/sw90pvGrWIZ+vyoIJqA6eMSoA6+nb443kTmulmBtC9NerXboNg==
 
-"@serlo/api@^0.24.0":
-  version "0.24.0"
-  resolved "https://registry.yarnpkg.com/@serlo/api/-/api-0.24.0.tgz#1a1d2a4183d9069eb8991dd5f43e9978696f952f"
-  integrity sha512-cTxyIGVWO20+KHxneTTZjOf+8iI2U5d2hT94ms87uu2eSWcUgg3FBFyBhXUuD0J0AQBFGemUbHwb5lbbUjjCHQ==
+"@serlo/api@^0.24.0", "@serlo/api@^0.24.6":
+  version "0.24.6"
+  resolved "https://registry.yarnpkg.com/@serlo/api/-/api-0.24.6.tgz#28bb8dd5a528a1382cb6b70824418e57a68682fe"
+  integrity sha512-/9lvY7JljrYuK2oE0/JY9mcrZa9BCSzbnOp4CDNYf0kqPAvVsr4BkHphq/jyx/Q9zbeVCAcmlNPVtVlYGIXCyg==
 
 "@serlo/authorization@^0.24.0":
-  version "0.24.0"
-  resolved "https://registry.yarnpkg.com/@serlo/authorization/-/authorization-0.24.0.tgz#a8b6f6caf72e7114d3caacad8ac52c3b157e6631"
-  integrity sha512-Juu4bdHy6A8uUFLe0zMbOC/4yl1d6q3QeFiwRvqj4WD32XIKnSn9S4TvPa3YV+u6ltigR76b4ue42TJKVl7reQ==
+  version "0.24.6"
+  resolved "https://registry.yarnpkg.com/@serlo/authorization/-/authorization-0.24.6.tgz#21de7da907a5d8131f61fb3e59c330af03e990b2"
+  integrity sha512-p+Kvtrhm8GkhWtRliN00e8TXQceohnWNQVOApXTG7O1lik5L+1qF3p2OtmXr3jWR4w2BvODiCJ5n0ci90MAHcg==
   dependencies:
-    "@serlo/api" "^0.24.0"
+    "@serlo/api" "^0.24.6"
 
 "@sideway/address@^4.1.0":
   version "4.1.2"

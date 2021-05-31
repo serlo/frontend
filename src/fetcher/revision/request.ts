@@ -107,6 +107,7 @@ export async function requestRevision(
         typename: uuid.__typename,
         thisRevision: {
           id: uuid.id,
+          trashed: uuid.trashed,
           title: (uuid as ArticleRevision).title,
           metaTitle: (uuid as ArticleRevision).metaTitle,
           metaDescription: (uuid as ArticleRevision).metaDescription,
