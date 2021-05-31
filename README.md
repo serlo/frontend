@@ -95,4 +95,5 @@ You can find more detailed explanations in our wiki. Currently, we have these pa
 
 - [Internationalization](https://github.com/serlo/frontend/wiki/Internationalization)
 - [Entities and Schema](https://github.com/serlo/frontend/wiki/Schema)
+- [VS Code Setup](https://github.com/serlo/frontend/wiki/VS-Code)
 - [Unsorted old stuff](https://github.com/serlo/frontend/wiki/Archive)
