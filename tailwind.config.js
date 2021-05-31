@@ -48,8 +48,13 @@ module.exports = {
       margin: {
         block: '30px',
       },
+      padding: {
+        '2/3': '66%',
+      },
       spacing: {
         0.25: '1px',
+        side: '16px',
+        'side-lg': '40px',
       },
       outline: {
         gray: '1px dotted #212121',

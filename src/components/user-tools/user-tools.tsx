@@ -223,7 +223,7 @@ export function UserTools({
   function renderInner(text: string, icon: IconDefinition) {
     return (
       <>
-        <FontAwesomeIcon icon={icon} className="lg: mr-0.5" /> {text}
+        <FontAwesomeIcon icon={icon} className="lg:mr-0.5" /> {text}
       </>
     )
   }

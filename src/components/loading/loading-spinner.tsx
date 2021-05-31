@@ -1,6 +1,6 @@
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import styled from 'styled-components'
+import clsx from 'clsx'
 
 import { StyledP } from '@/components/tags/styled-p'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -11,19 +11,13 @@ export interface LoadingSpinnerProps {
 }
 
 export function LoadingSpinner({ text, noText }: LoadingSpinnerProps) {
-  const { strings } = useInstanceData()
+  const { strings } = useInstanceData() // $center={noText}
   return (
-    <ColoredIcon $center={noText}>
+    <div className={clsx('mt-12 text-brand', noText && 'text-center')}>
       <StyledP>
         <FontAwesomeIcon icon={faSpinner} spin size={noText ? '2x' : '1x'} />{' '}
         {(!noText && text) ?? strings.loading.isLoading}
       </StyledP>
-    </ColoredIcon>
+    </div>
   )
 }
-
-const ColoredIcon = styled.div<{ $center?: boolean }>`
-  margin-top: 50px;
-  color: ${(props) => props.theme.colors.brand};
-  text-align: ${(props) => (props.$center ? 'center' : 'initial')};
-`

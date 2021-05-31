@@ -1,6 +1,6 @@
+import clsx from 'clsx'
 import { gql } from 'graphql-request'
 import { useState } from 'react'
-import styled from 'styled-components'
 
 import { useGraphqlSwrWithAuth } from '@/api/use-graphql-swr'
 import { PageTitle } from '@/components/content/page-title'
@@ -10,7 +10,6 @@ import { ManageSubscriptions } from '@/components/pages/manage-subscriptions'
 import { StyledP } from '@/components/tags/styled-p'
 import { useInstanceData } from '@/contexts/instance-context'
 import { QueryResponse } from '@/fetcher/query-types'
-import { makeLightButton, makePrimaryButton } from '@/helper/css'
 import { getEntityStringByTypename } from '@/helper/feature-i18n'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
@@ -50,14 +49,19 @@ function Content() {
       <StyledP>
         {/* //blur-hack, use https://caniuse.com/#feat=css-focus-visible when supported*/}
         {filters.map((typename) => (
-          <TabButton
+          <button
             key={typename}
-            active={showTypename == typename}
             onPointerUp={(e) => e.currentTarget.blur()}
             onClick={() => setShowTypename(typename)}
+            className={clsx(
+              'serlo-button mr-2 mb-2.5',
+              showTypename == typename
+                ? 'serlo-make-interactive-primary'
+                : 'serlo-make-interactive-light'
+            )}
           >
             {getEntityStringByTypename(typename, strings)}
-          </TabButton>
+          </button>
         ))}
       </StyledP>
       <Guard {...response} needsAuth>
@@ -84,12 +88,6 @@ function useFetch() {
     },
   })
 }
-
-const TabButton = styled.button<{ active: boolean }>`
-  ${(props) => (props.active ? makePrimaryButton : makeLightButton)}
-  margin-right: 8px;
-  margin-bottom: 10px;
-`
 
 export const subscriptionsQuery = gql`
   query {

@@ -21,7 +21,7 @@ export function ExerciseNumbering({
       <div
         className={clsx(
           'flex justify-center align-middle',
-          'h-7 w-7 serlo-make-margin mb-2.5 rounded-full',
+          'h-7 w-7 mx-side mb-2.5 rounded-full',
           'sm:absolute sm:-mt-1 sm:-ml-10',
           'text-xl font-bold text-brand bg-brand-150',
           'hover:no-underline hover:text-white hover:bg-brand'
@@ -42,7 +42,7 @@ export function ExerciseNumbering({
       href={href}
       path={['numbering', index]}
       className={clsx(
-        'block h-12 w-12 serlo-make-margin mb-5 pt-1 rounded-full',
+        'block h-12 w-12 mx-side mb-5 pt-1 rounded-full',
         'sm:absolute sm:-mt-2.5 sm:-ml-10 md:-ml-14',
         'text-white text-4xl text-center font-bold bg-brand',
         'hover:no-underline hover:bg-brand-lighter'

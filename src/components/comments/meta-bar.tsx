@@ -34,7 +34,7 @@ export function MetaBar({
   const date = new Date(timestamp)
 
   return (
-    <div className={clsx('serlo-make-margin mb-2 flex justify-between')}>
+    <div className={clsx('mx-side mb-2 flex justify-between')}>
       <UserLink
         user={user}
         withIcon

@@ -1,5 +1,4 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import styled from 'styled-components'
 
 import { StyledTable } from '../tags/styled-table'
 import { StyledTd } from '../tags/styled-td'
@@ -10,7 +9,6 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { getRawTitle } from '@/fetcher/create-title'
 import { QueryResponse } from '@/fetcher/query-types'
-import { makeLightButton } from '@/helper/css'
 import { getEntityStringByTypename } from '@/helper/feature-i18n'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { useSubscriptionSetMutation } from '@/helper/mutations'
@@ -50,13 +48,14 @@ export function ManageSubscriptions({
               <StyledTd>
                 <span title={entityString}>
                   {' '}
-                  <StyledIcon icon={icon} />{' '}
+                  <FontAwesomeIcon className="text-brand" icon={icon} />{' '}
                 </span>
                 <Link href={entry.alias ?? ''}>{title}</Link>
               </StyledTd>
-              <CenteredTd>
+              <StyledTd className="text-center">
                 {/* TODO: We need info from the API how this is currently set */}
-                <Button
+                <button
+                  className="serlo-button serlo-make-interactive-light mx-0 my-auto text-base"
                   onClick={() => {
                     void setSubscription({
                       id: [entry.id],
@@ -66,10 +65,11 @@ export function ManageSubscriptions({
                   }}
                 >
                   {loggedInStrings.noMails}
-                </Button>
-              </CenteredTd>
-              <CenteredTd>
-                <Button
+                </button>
+              </StyledTd>
+              <StyledTd className="text-center">
+                <button
+                  className="serlo-button serlo-make-interactive-light mx-0 my-auto text-base"
                   onClick={() => {
                     void setSubscription({
                       id: [entry.id],
@@ -79,8 +79,8 @@ export function ManageSubscriptions({
                   }}
                 >
                   {loggedInStrings.noNotifications}
-                </Button>
-              </CenteredTd>
+                </button>
+              </StyledTd>
             </StyledTr>
           )
         })}
@@ -88,17 +88,3 @@ export function ManageSubscriptions({
     </StyledTable>
   )
 }
-
-const CenteredTd = styled(StyledTd)`
-  text-align: center;
-`
-
-const Button = styled.a`
-  ${makeLightButton}
-  margin: 0 auto;
-  font-size: 1rem;
-`
-
-const StyledIcon = styled(FontAwesomeIcon)`
-  color: ${(props) => props.theme.colors.brand};
-`

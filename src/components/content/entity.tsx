@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import dynamic from 'next/dynamic'
 import { Router } from 'next/router'
 import * as React from 'react'
-import styled from 'styled-components'
 
 import { CommentAreaProps } from '../comments/comment-area'
 import { HSpace } from './h-space'
@@ -84,7 +83,10 @@ export function Entity({ data }: EntityProps) {
     return (
       <span title={strings.entities[data.categoryIcon]}>
         {' '}
-        <StyledIcon icon={getIconByTypename(data.categoryIcon)} />{' '}
+        <FontAwesomeIcon
+          icon={getIconByTypename(data.categoryIcon)}
+          className="text-brand-lighter text-2.5xl"
+        />{' '}
       </span>
     )
   }
@@ -172,22 +174,9 @@ export function Entity({ data }: EntityProps) {
 
   function renderTrashedNotice() {
     return (
-      <TrashNotice>
+      <div className="p-4 my-12 bg-truegray-100 rounded-2xl font-bold">
         <FontAwesomeIcon icon={faTrash} /> {strings.content.trashedNotice}
-      </TrashNotice>
+      </div>
     )
   }
 }
-
-const StyledIcon = styled(FontAwesomeIcon)`
-  color: ${(props) => props.theme.colors.lighterblue};
-  font-size: 1.73rem;
-`
-
-const TrashNotice = styled.div`
-  margin: 50px 0;
-  padding: 16px;
-  background-color: #ddd;
-  border-radius: 20px;
-  font-weight: bold;
-`

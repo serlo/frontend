@@ -1,8 +1,11 @@
+import clsx from 'clsx'
 import * as React from 'react'
 import LazyLoad from 'react-lazyload'
-import styled from 'styled-components'
 
-type LazyProps = React.Props<React.ReactNode> & PlaceholderProps
+export interface LazyProps {
+  children: React.ReactNode
+  slim?: boolean
+}
 
 export function Lazy(props: LazyProps) {
   return (
@@ -11,25 +14,17 @@ export function Lazy(props: LazyProps) {
         once
         offset={220}
         placeholder={
-          <Placeholder className="lazyload-placeholder" slim={props.slim} />
+          <div
+            className={clsx(
+              'superspecial-noscript-hidden h-auto bg-brand-100',
+              props.slim ? 'pb-12' : 'pb-2/3'
+            )}
+          />
         }
       >
         {props.children}
       </LazyLoad>
-      <noscript>
-        <style>{`.lazyload-placeholder { display: none; }`}</style>
-        {props.children}
-      </noscript>
+      <noscript>{props.children}</noscript>
     </>
   )
 }
-
-interface PlaceholderProps {
-  slim?: boolean
-}
-
-const Placeholder = styled.div<PlaceholderProps>`
-  background-color: ${(props) => props.theme.colors.bluewhite};
-  height: auto;
-  padding-bottom: ${(props) => (props.slim ? '50px' : '65%')};
-`

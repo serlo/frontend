@@ -9,12 +9,6 @@
  */
 
 @layer components {
-  .serlo-make-margin {
-    @apply mx-4;
-  }
-  .serlo-make-padding {
-    @apply px-4;
-  }
   .serlo-link {
     @apply text-brand no-underline break-words hover:underline;
   }
@@ -23,6 +17,9 @@
     @apply font-bold border-none cursor-pointer no-underline;
     @apply text-lg leading-browser font-serlo tracking-slightestly-tighter;
     @apply ease-in-out duration-200;
+  }
+  .serlo-make-interactive-primary {
+    @apply text-white bg-brand hover:bg-brand-light;
   }
   .serlo-make-interactive-green {
     @apply text-white bg-brandgreen hover:bg-brand;
@@ -37,10 +34,10 @@
     @apply text-brand bg-brand-100 hover:text-white hover:bg-brand;
   }
   .serlo-p {
-    @apply serlo-make-margin mt-0 mb-block special-hyphens-auto text-lg leading-6;
+    @apply mx-side mt-0 mb-block special-hyphens-auto text-lg leading-6;
   }
   .serlo-h2 {
-    @apply serlo-make-margin mt-0 mb-6 pb-1 pt-6;
+    @apply mx-side mt-0 mb-6 pb-1 pt-6;
     @apply text-2.5xl font-bold special-hyphens-auto leading-tight;
     @apply text-truegray-900 border-truegray-700 border-b;
   }
@@ -65,17 +62,17 @@
   .serlo-math-wrapper {
     @apply px-4 w-full text-left mb-block py-0.5;
     @apply text-lg leading-browser overflow-x-auto overflow-y-hidden;
-    @apply serlo-make-padding;
+    @apply px-side;
   }
   .serlo-important {
     @apply border-l-6 border-brand p-2.5 mb-block mx-4;
-    @apply serlo-make-margin;
+    @apply mx-side;
   }
   .serlo-spoiler-body {
     @apply pt-6 pb-3.5 border-l-8 border-brand;
   }
   .serlo-solution-box {
-    @apply py-2.5 serlo-make-margin mb-block border-l-8 border-brand-150;
+    @apply py-2.5 mx-side mb-block border-l-8 border-brand-150;
   }
   .serlo-styled-label {
     @apply flex items-center cursor-pointer;
@@ -147,6 +144,11 @@
       }
     }
   }
+  @media print {
+    .serlo-print-hidden {
+      @apply !hidden;
+    }
+  }
 }
 
 /* Some exceptional cases where we can't / don't want to set classnames directly.
@@ -208,11 +210,7 @@
     nav,
     button,
     aside,
-    div.cookie-bar,
-    h1 > span > svg,
-    div.video,
-    figure.video,
-    .comment-area-container {
+    h1 > span > svg {
       @apply !hidden;
     }
     main {

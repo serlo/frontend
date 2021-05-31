@@ -25,11 +25,11 @@ export function CourseNavigation({
       id="course-overview"
       className="mt-6 bg-brand-50 sm:bg-white pt-1 pb-5"
     >
-      <h1 className="serlo-make-margin my-4 font-bold text-xl text-brand">
+      <h1 className="mx-side my-4 font-bold text-xl text-brand">
         <FontAwesomeIcon icon={faGraduationCap} /> {data.title}
       </h1>
       {open ? (
-        <ol className="serlo-list mb-0 mt-7 ">
+        <ol className="serlo-list mb-0 mt-7">
           {data.pages.map((page) => (
             <li key={page.url}>
               <Link
@@ -47,7 +47,7 @@ export function CourseNavigation({
       ) : (
         <button
           onClick={onOverviewButtonClick}
-          className="serlo-button serlo-make-margin bg-brand text-white hover:bg-brand-lighter"
+          className="serlo-button mx-side bg-brand text-white hover:bg-brand-lighter"
         >
           <FontAwesomeIcon icon={faListUl} /> {strings.course.showPages}
         </button>

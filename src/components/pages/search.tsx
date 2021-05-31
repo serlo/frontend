@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import styled from 'styled-components'
 
 import { HeadTags } from '../head-tags'
 import { MaxWidthDiv } from '../navigation/max-width-div'
@@ -47,14 +46,10 @@ export function Search() {
         noindex
       />
       <MaxWidthDiv>
-        <StyledSearchResults>
+        <SearchResults className="py-12 px-0">
           <div id="gcs-results"></div>
-        </StyledSearchResults>
+        </SearchResults>
       </MaxWidthDiv>
     </>
   )
 }
-
-const StyledSearchResults = styled(SearchResults)`
-  padding: 50px 0;
-`

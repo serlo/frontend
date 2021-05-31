@@ -50,7 +50,7 @@ export function CommentForm({
   return (
     <div
       className={clsx(
-        'serlo-make-margin mt-4 mb-7 flex items-center rounded-2xl',
+        'mx-side mt-4 mb-7 flex items-center rounded-2xl',
         'bg-brandgreen-lighter focus-within:bg-brandgreen-light',
         'transition-colors duration-200 ease-in py-1'
       )}
@@ -76,7 +76,7 @@ export function CommentForm({
         onPointerUp={(e) => e.currentTarget.blur()}
         className={clsx(
           'serlo-button serlo-make-interactive-green pl-2 self-end',
-          reply ? 'text-base w-8 h-8  mr-1' : 'text-2xl w-10 my-1 mr-2'
+          reply ? 'text-base w-8 h-8 mr-1' : 'text-2xl w-10 my-1 mr-2'
         )}
       >
         <FontAwesomeIcon

@@ -1,5 +1,3 @@
-import styled from 'styled-components'
-
 import { HSpace } from '@/components/content/h-space'
 import { StyledH2 } from '@/components/tags/styled-h2'
 import { StyledP } from '@/components/tags/styled-p'
@@ -17,7 +15,9 @@ export function LicenseDetail({
   return (
     <>
       <HSpace amount={70} />
-      <BigP>{strings.license.readMore}</BigP>
+      <p className="serlo-p text-lg font-bold text-brand-light -mb-4">
+        {strings.license.readMore}
+      </p>
       <StyledH2>{title}</StyledH2>
       <HSpace amount={20} />
       {renderArticle(content, `license${id}`)}
@@ -29,10 +29,3 @@ export function LicenseDetail({
     </>
   )
 }
-
-const BigP = styled(StyledP)`
-  font-size: 1.125rem;
-  font-weight: bold;
-  color: ${(props) => props.theme.colors.lightblue};
-  margin-bottom: -15px;
-`

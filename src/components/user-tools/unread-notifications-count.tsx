@@ -2,8 +2,8 @@ import {
   FontAwesomeIcon,
   FontAwesomeIconProps,
 } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import { gql } from 'graphql-request'
-import styled from 'styled-components'
 
 import { useGraphqlSwrWithAuth } from '@/api/use-graphql-swr'
 
@@ -39,31 +39,23 @@ export function UnreadNotificationsCount({
   if (onlyNumber) return <>{data === undefined ? '…' : count}</>
 
   return (
-    <StyledFaLayer active={count > 0} className="fa-layers fa-fw">
+    <span className={clsx('fa-layers fa-fw', count > 0 && 'text-brand')}>
       {icon && (
         <FontAwesomeIcon
           icon={icon}
           style={{ height: '1.45rem', width: '1.25rem', paddingTop: '0' }}
         />
       )}
-      <NotificationsNumber className="number">
+      {/* TODO: Think about better css styling here? */}
+      <span
+        className={clsx(
+          'block text-sm absolute -mt-0.25 text-white',
+          'z-50 text-center w-5',
+          'group-hover:text-brand group-active:text-brand transition-all'
+        )}
+      >
         {displayCount}
-      </NotificationsNumber>
-    </StyledFaLayer>
+      </span>
+    </span>
   )
 }
-
-const StyledFaLayer = styled.span<{ active: boolean }>`
-  color: ${(props) => (props.active ? props.theme.colors.brand : 'inherit')};
-`
-
-const NotificationsNumber = styled.span`
-  display: block;
-  font-size: 0.9rem;
-  position: absolute;
-  margin-top: -1px;
-  color: #fff;
-  z-index: 200;
-  text-align: center;
-  width: 20px;
-`

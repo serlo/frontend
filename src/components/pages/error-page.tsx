@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import styled from 'styled-components'
 
 import { PageTitle } from '../content/page-title'
 import { HSpace } from '@/components/content/h-space'
@@ -7,7 +6,6 @@ import { StyledA } from '@/components/tags/styled-a'
 import { StyledP } from '@/components/tags/styled-p'
 import { useInstanceData } from '@/contexts/instance-context'
 import { ErrorData } from '@/data-types'
-import { makePrimaryButton } from '@/helper/css'
 import { triggerSentry } from '@/helper/trigger-sentry'
 
 export function ErrorPage({ code, message }: ErrorData) {
@@ -29,7 +27,7 @@ export function ErrorPage({ code, message }: ErrorData) {
   return (
     <>
       <PageTitle title={strings.errors.title} headTitle />
-      <_StyledP>
+      <p className="serlo-p text-2xl">
         {strings.errors.defaultMessage}{' '}
         {!isProbablyTemporary && (
           <>
@@ -37,8 +35,10 @@ export function ErrorPage({ code, message }: ErrorData) {
             {strings.errors.permanent}
           </>
         )}
-      </_StyledP>
-      <_StyledP>{isProbablyTemporary && strings.errors.temporary}</_StyledP>
+      </p>
+      <p className="serlo-p text-2xl">
+        {isProbablyTemporary && strings.errors.temporary}
+      </p>
       <StyledP>{renderButtons()}</StyledP>
       <HSpace amount={70} />
       <StyledP>
@@ -69,9 +69,12 @@ export function ErrorPage({ code, message }: ErrorData) {
           </>
         )}
         {isProbablyTemporary && (
-          <Button onClick={() => window.location.reload()}>
+          <button
+            className="serlo-button serlo-make-interactive-primary mr-4 mt-4"
+            onClick={() => window.location.reload()}
+          >
             {strings.errors.refreshNow}
-          </Button>
+          </button>
         )}
       </>
     )
@@ -80,18 +83,24 @@ export function ErrorPage({ code, message }: ErrorData) {
   function renderHomeLink() {
     //no csr here
     return (
-      <Button as="a" href="/">
+      <a
+        href="/"
+        className="serlo-button serlo-make-interactive-primary mr-4 mt-4"
+      >
         {strings.errors.backToHome}
-      </Button>
+      </a>
     )
   }
 
   function renderBacklink() {
     if (!hasSerloBacklink) return null
     return (
-      <Button onClick={() => window.history.back()}>
+      <button
+        className="serlo-button serlo-make-interactive-primary mr-4 mt-4"
+        onClick={() => window.history.back()}
+      >
         {strings.errors.backToPrevious}
-      </Button>
+      </button>
     )
   }
 
@@ -100,13 +109,3 @@ export function ErrorPage({ code, message }: ErrorData) {
     return renderHomeLink()
   }
 }
-
-const _StyledP = styled(StyledP)`
-  font-size: 1.5rem;
-`
-
-const Button = styled.button`
-  ${makePrimaryButton}
-  margin-right: 16px;
-  margin-top: 16px;
-`
