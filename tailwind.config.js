@@ -54,6 +54,7 @@ module.exports = {
       spacing: {
         0.25: '1px',
         side: '16px',
+        'side-lg': '40px',
       },
       outline: {
         gray: '1px dotted #212121',

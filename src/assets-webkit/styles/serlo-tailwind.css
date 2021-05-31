@@ -18,6 +18,9 @@
     @apply text-lg leading-browser font-serlo tracking-slightestly-tighter;
     @apply ease-in-out duration-200;
   }
+  .serlo-make-interactive-primary {
+    @apply text-white bg-brand hover:bg-brand-light;
+  }
   .serlo-make-interactive-green {
     @apply text-white bg-brandgreen hover:bg-brand;
   }

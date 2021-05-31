@@ -1,6 +1,5 @@
 import { Router } from 'next/router'
 import { useState } from 'react'
-import styled from 'styled-components'
 
 import { Logo } from './logo'
 import { Menu } from './menu'
@@ -9,7 +8,6 @@ import { MobileMenuButton } from './mobile-menu-button'
 import { SearchInput } from './search-input'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
-import { makeResponsivePadding } from '@/helper/css'
 
 export function Header() {
   const [isOpen, setOpen] = useState(false)
@@ -22,24 +20,14 @@ export function Header() {
   })
 
   return (
-    <BlueHeader>
+    <header className="bg-brand-100">
       <MobileMenuButton onClick={() => setOpen(!isOpen)} open={isOpen} />
-      <PaddedDiv>
+      <div className="pt-3 pb-6 px-side lg:px-side-lg">
         <Menu data={headerData} auth={auth.current} />
         <Logo subline={strings.header.slogan} />
-      </PaddedDiv>
+      </div>
       <SearchInput />
       {isOpen && <MobileMenu data={headerData} auth={auth.current} />}
-    </BlueHeader>
+    </header>
   )
 }
-
-const BlueHeader = styled.header`
-  background-color: ${(props) => props.theme.colors.bluewhite};
-`
-
-const PaddedDiv = styled.div`
-  ${makeResponsivePadding}
-  padding-top: 12px;
-  padding-bottom: 24px;
-`
