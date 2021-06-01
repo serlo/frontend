@@ -27,6 +27,7 @@ const tippyDefaultProps: Partial<TippyProps> = {
   interactiveBorder: 40,
   interactive: true,
   placement: 'left-end',
+  trigger: 'click mouseenter focus',
 }
 
 export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {

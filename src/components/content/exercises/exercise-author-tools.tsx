@@ -19,6 +19,7 @@ export function ExerciseAuthorTools({ data }: ExerciseAuthorToolsProps) {
       placement="bottom-end"
       delay={[0, 300]}
       interactiveBorder={40}
+      trigger="click mouseenter"
       content={<AuthorToolsHoverMenu data={data} />}
     >
       <a

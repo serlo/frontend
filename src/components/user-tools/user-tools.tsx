@@ -200,6 +200,7 @@ export function UserTools({
         content={<Comp data={data} />}
         placement={aboveContent ? 'bottom' : 'left-end'}
         delay={[0, 300]}
+        trigger="click mouseenter focus"
         interactiveBorder={aboveContent ? 10 : 40}
       >
         <button className={buttonClassName()}>
