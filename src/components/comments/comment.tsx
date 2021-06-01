@@ -5,6 +5,7 @@ import * as React from 'react'
 
 import { MathSpanProps } from '../content/math-span'
 import { MetaBar } from './meta-bar'
+import { replaceWithJSX } from '@/helper/replace-with-jsx'
 import { scrollIfNeeded } from '@/helper/scroll'
 
 interface CommentProps {
@@ -44,7 +45,7 @@ export function Comment({
         href={str}
         rel="ugc nofollow noreferrer"
         target="_blank"
-        className="text-brand break-all hover:underline"
+        className="serlo-link break-all"
       >
         {str}
       </a>
@@ -92,22 +93,4 @@ export function Comment({
       <p className="serlo-p mb-0 whitespace-pre-line break-words">{r2}</p>
     </div>
   )
-}
-
-function replaceWithJSX(
-  input: any[],
-  regex: RegExp,
-  fn: (str: string, i: number) => any
-) {
-  return input.flatMap((str) => {
-    if (typeof str == 'string') {
-      const result = str.split(regex)
-      for (let i = 1; i < result.length; i += 2) {
-        result[i] = fn(result[i], i)
-      }
-      return result
-    } else {
-      return [str]
-    }
-  })
 }
