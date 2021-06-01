@@ -30,35 +30,26 @@ export function Comment({
   const { author, createdAt, content, id } = data
 
   // Step 1: Replace formulas
-  const result: any[] = content.split(/%%(.+?)%%/g)
-  for (let i = 1; i < result.length; i += 2) {
-    result[i] = <MathSpan key={i} formula={result[i]} />
-  }
+  const r1 = replaceWithJSX([content], /%%(.+?)%%/g, (str, i) => (
+    <MathSpan key={`math-${i}`} formula={str} />
+  ))
 
   // Step 2: Replace urls in remaining strings
-  const result2 = result.flatMap((str) => {
-    if (typeof str == 'string') {
-      const t: any[] = str.split(
-        /(https?:\/\/(?:www\.)?(?:[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b)(?:[-a-zA-Z0-9()@:%_+~#?&//=]*))/g
-      )
-      for (let i = 1; i < t.length; i += 2) {
-        t[i] = (
-          <a
-            key={i}
-            href={t[i]}
-            rel="ugc nofollow noreferrer"
-            target="_blank"
-            className="text-brand break-all hover:underline"
-          >
-            {t[i]}
-          </a>
-        )
-      }
-      return t
-    } else {
-      return [str]
-    }
-  })
+  const r2 = replaceWithJSX(
+    r1,
+    /(https?:\/\/(?:www\.)?(?:[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b)(?:[-a-zA-Z0-9()@:%_+~#?&//=]*))/g,
+    (str, i) => (
+      <a
+        key={`link-${i}`}
+        href={str}
+        rel="ugc nofollow noreferrer"
+        target="_blank"
+        className="text-brand break-all hover:underline"
+      >
+        {str}
+      </a>
+    )
+  )
 
   React.useEffect(() => {
     if (isHighlight) {
@@ -98,7 +89,25 @@ export function Comment({
         id={id}
         highlight={highlight}
       />
-      <p className="serlo-p mb-0 whitespace-pre-line break-words">{result2}</p>
+      <p className="serlo-p mb-0 whitespace-pre-line break-words">{r2}</p>
     </div>
   )
+}
+
+function replaceWithJSX(
+  input: any[],
+  regex: RegExp,
+  fn: (str: string, i: number) => any
+) {
+  return input.flatMap((str) => {
+    if (typeof str == 'string') {
+      const result = str.split(regex)
+      for (let i = 1; i < result.length; i += 2) {
+        result[i] = fn(result[i], i)
+      }
+      return result
+    } else {
+      return [str]
+    }
+  })
 }
