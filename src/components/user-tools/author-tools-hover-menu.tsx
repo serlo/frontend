@@ -119,6 +119,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
               <AuthorTools
                 data={data}
                 tools={[
+                  Tool.Edit,
                   Tool.Abo,
                   Tool.History,
                   Tool.AddCoursePage,
