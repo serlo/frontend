@@ -314,7 +314,7 @@ function renderElement(props: RenderElementProps): React.ReactNode {
     )
   }
   if (element.type === 'row') {
-    return <div className="flex mobile:flex-col">{children}</div>
+    return <div className="flex flex-col mobile:flex-row">{children}</div>
   }
   if (element.type === 'col') {
     return <Col cSize={element.size}>{children}</Col>
