@@ -1,8 +1,9 @@
 import { Comment as CommentType } from '@serlo/api'
 import clsx from 'clsx'
-import escapeHtml from 'escape-html'
+import dynamic from 'next/dynamic'
 import * as React from 'react'
 
+import { MathSpanProps } from '../content/math-span'
 import { MetaBar } from './meta-bar'
 import { scrollIfNeeded } from '@/helper/scroll'
 
@@ -14,6 +15,10 @@ interface CommentProps {
   highlight: (id: number) => void
 }
 
+const MathSpan = dynamic<MathSpanProps>(() =>
+  import('@/components/content/math-span').then((mod) => mod.MathSpan)
+)
+
 export function Comment({
   data,
   threadId,
@@ -24,13 +29,35 @@ export function Comment({
   const commentRef = React.useRef<HTMLDivElement>(null)
   const { author, createdAt, content, id } = data
 
-  const urlFinder =
-    /https?:\/\/(www\.)?([-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b)([-a-zA-Z0-9()@:%_+.~#?&//=]*)/g
+  // Step 1: Replace formulas
+  const result: any[] = content.split(/%%(.+?)%%/g)
+  for (let i = 1; i < result.length; i += 2) {
+    result[i] = <MathSpan key={i} formula={result[i]} />
+  }
 
-  const escapedContent = escapeHtml(content)
-
-  const escapedWithLinks = escapedContent.replace(urlFinder, (match) => {
-    return `<a href="${match}" rel="ugc nofollow" class="text-brand break-all">${match}</a>` // handle this special case
+  // Step 2: Replace urls in remaining strings
+  const result2 = result.flatMap((str) => {
+    if (typeof str == 'string') {
+      const t: any[] = str.split(
+        /(https?:\/\/(?:www\.)?(?:[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b)(?:[-a-zA-Z0-9()@:%_+~#?&//=]*))/g
+      )
+      for (let i = 1; i < t.length; i += 2) {
+        t[i] = (
+          <a
+            key={i}
+            href={t[i]}
+            rel="ugc nofollow noreferrer"
+            target="_blank"
+            className="text-brand break-all hover:underline"
+          >
+            {t[i]}
+          </a>
+        )
+      }
+      return t
+    } else {
+      return [str]
+    }
   })
 
   React.useEffect(() => {
@@ -71,10 +98,7 @@ export function Comment({
         id={id}
         highlight={highlight}
       />
-      <p
-        className={clsx('serlo-p mb-0 whitespace-pre-line break-words')}
-        dangerouslySetInnerHTML={{ __html: escapedWithLinks }}
-      ></p>
+      <p className="serlo-p mb-0 whitespace-pre-line break-words">{result2}</p>
     </div>
   )
 }
