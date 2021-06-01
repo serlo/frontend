@@ -95,5 +95,6 @@ You can find more detailed explanations in our wiki. Currently, we have these pa
 
 - [Internationalization](https://github.com/serlo/frontend/wiki/Internationalization)
 - [Entities and Schema](https://github.com/serlo/frontend/wiki/Schema)
+- [Tailwind Getting Started Guide](https://github.com/serlo/frontend/wiki/Tailwind-Getting-Started-Guide)
 - [VS Code Setup](https://github.com/serlo/frontend/wiki/VS-Code)
 - [Unsorted old stuff](https://github.com/serlo/frontend/wiki/Archive)
