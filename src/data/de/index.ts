@@ -244,7 +244,7 @@ export const loggedInData = {
     icon: 'user',
     children: [{
       url: '/user/public',
-      title: 'Own profile'
+      title: "Eigenes Profil"
     }, {
       url: '/auth/password/change',
       title: "Passwort ändern"
