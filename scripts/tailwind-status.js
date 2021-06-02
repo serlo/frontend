@@ -49,11 +49,6 @@ files.forEach((file) => {
 
 // output
 
-console.log(
-  '\n' + filesWithStyledComponents.length + ' files using styled-components:\n'
-)
-filesWithStyledComponents.forEach((file) => console.log(`  ${file.substr(6)}`))
-
 console.log('\nExtracted class names:\n')
 classNameMatches.forEach(({ file, classNames }) => {
   console.log(`  ${file.substr(6)}`)
@@ -62,3 +57,8 @@ classNameMatches.forEach(({ file, classNames }) => {
   })
   console.log()
 })
+
+console.log(
+  '\n' + filesWithStyledComponents.length + ' files using styled-components:\n'
+)
+filesWithStyledComponents.forEach((file) => console.log(`  ${file.substr(6)}`))
