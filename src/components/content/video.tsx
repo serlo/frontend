@@ -35,10 +35,10 @@ export function Video(props: VideoProps) {
   if (youtube) return renderYoutube(youtube[4])
 
   return (
-    <VideoPlaceholder className="serlo-print-hidden">
+    <div className="text-center serlo-print-hidden">
       <FontAwesomeIcon icon={faFilm} size="5x" />
       <StyledP>Loading video failed: {src}</StyledP>
-    </VideoPlaceholder>
+    </div>
   )
 
   function renderWikimedia() {
@@ -70,7 +70,7 @@ export function Video(props: VideoProps) {
             submitEventWithPath('loadvideo', path)
           }}
         >
-          <VideoWrapper className="serlo-print-hidden">
+          <VideoWrapper className="m-0 p-0 serlo-print-hidden">
             {provider === ExternalProvider.WikimediaCommons && (
               <video controls src={src} />
             )}
@@ -96,8 +96,6 @@ export function Video(props: VideoProps) {
 }
 
 const VideoWrapper = styled.figure`
-  margin: 0;
-  padding: 0;
   & > video,
   & > iframe,
   & > div {
@@ -110,8 +108,4 @@ const VideoWrapper = styled.figure`
     z-index: 6;
     background-color: rgba(0, 0, 0, 0.3);
   }
-`
-
-const VideoPlaceholder = styled.div`
-  text-align: center;
 `
