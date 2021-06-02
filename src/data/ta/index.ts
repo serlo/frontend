@@ -136,6 +136,7 @@ export const instanceData = {
     },
     revisions: {
       toOverview: "Back to overview",
+      toContent: "Back to content",
       changes: "மாற்றங்கள்",
       title: "தலைப்பு",
       content: "உட்பொருள்",
