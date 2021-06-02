@@ -116,7 +116,7 @@ export const instanceData = {
       twingle: "Spendenformular laden"
     },
     comments: {
-      question: "Hast du eine Frage?",
+      question: "Hast du eine Frage oder Feedback?",
       commentsOne: "Kommentar",
       commentsMany: "Kommentare",
       submit: "Abschicken",
@@ -197,7 +197,7 @@ export const instanceData = {
     },
     loading: {
       isLoading: "Inhalt wird geladen…",
-      unknownProblem: "Es gab ein Problem beim laden des Inhalts, bitte versuch' es später noch einmal."
+      unknownProblem: "Es gab ein Problem beim Laden des Inhalts. Bitte versuche es später noch einmal."
     },
     login: {
       pleaseLogInLink: "Bitte melde dich an",
@@ -260,7 +260,7 @@ export const loggedInData = {
     }]
   }],
   strings: {
-    tools: "Weitere Tools",
+    tools: "Weitere Optionen",
     authorMenu: {
       log: "Aktivitätenlog",
       settings: "Einstellungen",
@@ -282,7 +282,7 @@ export const loggedInData = {
       moveToTrash: "In den Papierkorb verschieben",
       restoreContent: "Aus dem Papierkorb wiederherstellen",
       sort: "Unterelemente sortieren",
-      edit: "Bearbeiten",
+      edit: "Überarbeiten",
       organize: "Baumstruktur bearbeiten",
       moveToGroupedTextExercise: "Inhalt zu anderer Gruppe verschieben",
       moveToTextExercise: "Inhalt zu anderer Textaufgabe verschieben",
