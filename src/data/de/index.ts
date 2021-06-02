@@ -136,6 +136,7 @@ export const instanceData = {
     },
     revisions: {
       toOverview: "Zurück zur Übersicht",
+      toContent: "Back to content",
       changes: "Änderungen",
       title: "Titel",
       content: "Inhalt",
