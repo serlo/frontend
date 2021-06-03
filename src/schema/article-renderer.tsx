@@ -209,10 +209,17 @@ function renderElement(props: RenderElementProps): React.ReactNode {
     return <StyledP>{children}</StyledP>
   }
   if (element.type === 'h') {
+    const classNames = {
+      1: 'serlo-h1',
+      2: 'serlo-h2',
+      3: 'serlo-h3',
+      4: 'serlo-h4',
+      5: 'serlo-h5',
+    }
     return React.createElement(
       `h${element.level}`,
       {
-        className: `serlo-h${element.level}`,
+        className: classNames[element.level],
         id: element.id,
       },
       children

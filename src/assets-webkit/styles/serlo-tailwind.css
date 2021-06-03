@@ -41,7 +41,7 @@
   }
   .serlo-h2 {
     @apply mx-side mt-0 mb-6 pb-1 pt-6;
-    @apply text-2.5xl font-bold special-hyphens-auto leading-tight;
+    @apply text-2.5xl font-bold special-hyphens-auto;
     @apply text-truegray-900 border-truegray-300 border-b;
   }
   .serlo-h3 {
