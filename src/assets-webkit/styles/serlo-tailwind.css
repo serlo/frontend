@@ -98,6 +98,14 @@
       @apply mt-2 !mb-4;
     }
   }
+  .serlo-sub-list {
+    @apply bg-white py-3 pr-4 pl-2.5 m-0;
+    @apply text-left block overflow-auto list-none w-auto;
+    @apply rounded-lg shadow-menu;
+  }
+  .serlo-sub-list-hover {
+    @apply serlo-sub-list bg-brand-50 min-w-180;
+  }
   .serlo-img {
     @apply h-auto inline max-w-full;
   }

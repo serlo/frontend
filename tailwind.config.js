@@ -58,11 +58,15 @@ module.exports = {
         side: '16px',
         'side-lg': '40px',
       },
+      minWidth: {
+        180: '180px',
+      },
       outline: {
         gray: '1px dotted #212121',
       },
       boxShadow: {
         brand: `0 0 10px ${brand}, 0 0 5px ${brand}`,
+        menu: 'rgba(0, 0, 0, 0.2) 0px 2px 4px;',
       },
       fontFamily: {
         serlo: 'Karmilla, sans-serif',
