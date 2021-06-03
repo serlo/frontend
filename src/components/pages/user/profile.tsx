@@ -3,6 +3,7 @@ import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { NextPage } from 'next'
 import Head from 'next/head'
+import * as R from 'ramda'
 import * as React from 'react'
 import styled from 'styled-components'
 
@@ -31,7 +32,7 @@ export interface ProfileProps {
 }
 
 export const Profile: NextPage<ProfileProps> = ({ userData }) => {
-  const { strings } = useInstanceData()
+  const { strings, lang } = useInstanceData()
   const {
     id,
     username,
@@ -87,14 +88,17 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         </>
       )}
       <CommentArea id={id} noForms />
-      {lastLoginDate && (
-        <Gray>
-          {strings.profiles.lastLogin}:{' '}
-          <b>
-            <TimeAgo datetime={lastLoginDate} dateAsTitle />
-          </b>
-        </Gray>
-      )}
+      <Aside>
+        {renderRoles()}
+        {lastLoginDate && (
+          <StyledP>
+            {strings.profiles.lastLogin}:{' '}
+            <b>
+              <TimeAgo datetime={lastLoginDate} dateAsTitle />
+            </b>
+          </StyledP>
+        )}
+      </Aside>
       {renderUserTools()}
       {renderHowToEditImage()}
     </>
@@ -156,6 +160,36 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
     )
   }
 
+  function renderRoles() {
+    const [instanceRoles, foreignRoles] = R.partition(
+      (role) => role.instance === null || role.instance === lang,
+      userData.roles
+    )
+
+    return (
+      <>
+        {instanceRoles.length > 0 && (
+          <Roles>
+            Roles on {lang}.serlo.org:{' '}
+            {instanceRoles.map((role, index) => (
+              <Role key={index}>{role.role}</Role>
+            ))}
+          </Roles>
+        )}
+        {foreignRoles.length > 0 && (
+          <Roles>
+            Other roles:{' '}
+            {foreignRoles.map((role, index) => (
+              <Role key={index}>
+                {role.instance}: {role.role}
+              </Role>
+            ))}
+          </Roles>
+        )}
+      </>
+    )
+  }
+
   function renderHowToEditImage() {
     const { heading, description, steps } = strings.profiles.howToEditImage
     const chatUrl = (
@@ -188,6 +222,23 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
     )
   }
 }
+
+const Role = styled.span`
+  display: inline-block;
+  background-color: ${(props) => props.theme.colors.gray};
+  color: ${(props) => props.theme.colors.white};
+  margin-right: 0.5em;
+  border-radius: 2em;
+  padding: 3px 8px;
+  border: 0;
+  line-height: normal;
+  letter-spacing: '-0.007em';
+  font-weight: bold;
+`
+
+const Roles = styled(StyledP)`
+  font-size: smaller;
+`
 
 const Motivation = styled(StyledP)`
   font-size: 1.3em;
@@ -298,8 +349,12 @@ const ProfileHeader = styled.header`
   }
 `
 
-const Gray = styled(StyledP)`
+const Aside = styled.aside`
   margin-top: 70px;
-  font-size: 0.9rem;
   color: #777;
+
+  & > p {
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+  }
 `
