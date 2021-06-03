@@ -1,74 +1,54 @@
-import styled from 'styled-components'
+import clsx from 'clsx'
 
-export function PartnerList() {
-  return (
-    <PartnerWrap>
-      <StyledH2>Partner und Förderer</StyledH2>
-      <PartnerLogos>
-        <PartnerLogo
-          src="https://packages.serlo.org/serlo-org-static-assets@1/de/home/logo-beisheim.png"
-          alt="Beisheim Stiftung"
-          title="Beisheim Stiftung"
-        />
-        <PartnerLogo
-          src="https://packages.serlo.org/serlo-org-static-assets@1/de/home/logo-lmu.svg"
-          alt="Ludwig-Maximilians-Universität München"
-          title="Ludwig-Maximilians-Universität München"
-        />
-        <PartnerLogo
-          src="https://packages.serlo.org/serlo-org-static-assets@1/de/home/logo-tum.svg"
-          alt="Technische Universität München"
-          title="Technische Universität München"
-        />
-        <PartnerLogo
-          src="https://packages.serlo.org/serlo-org-static-assets@1/de/home/logo-wikimedia.svg"
-          alt="Wikimedia Deutschland"
-          title="Wikimedia Deutschland"
-        />
-        <PartnerLogo
-          src="https://packages.serlo.org/serlo-org-static-assets@1/de/home/logo-eu.svg"
-          alt="Europäische Kommission"
-          title="Europäische Kommission"
-          // style={maxHeight: 60px}
-        />
-        <PartnerLogo
-          src="https://packages.serlo.org/serlo-org-static-assets@1/de/home/logo-ashoka.png"
-          alt="Ashoka Deutschland"
-          title="Ashoka Deutschland"
-        />
-        <PartnerLogo
-          src="https://packages.serlo.org/serlo-org-static-assets@1/de/home/logo-hpi.png"
-          alt="Hasso-Plattner-Institut"
-          title="Hasso-Plattner-Institut"
-        />
-      </PartnerLogos>
-    </PartnerWrap>
-  )
+interface PartnerListProps {
+  higher?: boolean
 }
 
-const PartnerWrap = styled.div`
-  margin-top: auto;
-  margin-bottom: 30px;
-  width: 100%;
-`
+export function PartnerList({ higher }: PartnerListProps) {
+  return (
+    <div className="mt-auto mb-7 w-full">
+      <h2 className="text-lg mb-5">Partner und Förderer</h2>
+      <div className="text-white flex justify-between flex-wrap">
+        {renderLogo(
+          'Beisheim Stiftung',
+          'https://packages.serlo.org/serlo-org-static-assets@1/de/home/logo-beisheim.png'
+        )}
+        {renderLogo(
+          'Ludwig-Maximilians-Universität München',
+          'https://packages.serlo.org/serlo-org-static-assets@1/de/home/logo-lmu.svg'
+        )}
+        {renderLogo(
+          'Technische Universität München',
+          'https://packages.serlo.org/serlo-org-static-assets@1/de/home/logo-tum.svg'
+        )}
+        {renderLogo(
+          'Wikimedia Deutschland',
+          'https://packages.serlo.org/serlo-org-static-assets@1/de/home/logo-wikimedia.svg'
+        )}
+        {renderLogo(
+          'Europäische Kommission',
+          'https://packages.serlo.org/serlo-org-static-assets@1/de/home/logo-eu.svg'
+        )}
+        {renderLogo(
+          'Ashoka Deutschland',
+          'https://packages.serlo.org/serlo-org-static-assets@1/de/home/logo-ashoka.png'
+        )}
+        {renderLogo(
+          'Hasso-Plattner-Institut',
+          'https://packages.serlo.org/serlo-org-static-assets@1/de/home/logo-hpi.png'
+        )}
+      </div>
+    </div>
+  )
 
-const StyledH2 = styled.h2`
-  font-weight: 400;
-  font-size: 1.125rem;
-  margin-bottom: 20px;
-`
-
-const PartnerLogos = styled.div`
-  color: #fff;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  flex-wrap: wrap;
-`
-
-const PartnerLogo = styled.img`
-  max-height: 40px;
-  @media (max-width: ${(props) => props.theme.breakpointsMax.sm}) {
-    margin-bottom: 15px;
+  function renderLogo(title: string, url: string) {
+    return (
+      <img
+        className={clsx('max-h-10', higher && ' lg:max-h-16')}
+        src={url}
+        alt={title}
+        title={title}
+      />
+    )
   }
-`
+}

@@ -1,7 +1,6 @@
 import { faPaypal } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
-import styled from 'styled-components'
 
 import { HeadTags } from '../head-tags'
 import { PrivacyWrapper } from '@/components/content/privacy-wrapper'
@@ -51,7 +50,7 @@ export function Donations() {
           'md:mt-12 md:px-8 lg:block'
         )}
       >
-        <DonationCol className="max-w-xl mx-auto md:ml-0 lg:ml-auto">
+        <div className="max-w-xl mx-auto md:ml-0 lg:ml-auto text-lg">
           <h1 className="text-3.5xl text-brand border-0 font-bold my-5 sm:w-full">
             Deine Spende für freie Bildung
           </h1>
@@ -103,7 +102,7 @@ export function Donations() {
               <FontAwesomeIcon icon={faPaypal} size="1x" /> Über PayPal spenden
             </a>
           </p>
-        </DonationCol>
+        </div>
         <div
           className={clsx(
             'pt-16 mt-11 border-t-8 border-brand-150',
@@ -172,31 +171,14 @@ export function Donations() {
           <br />
         </div>
       </section>
-      <BlueContainer
+      <div
         className={clsx(
           'bg-brand text-white mt-24 p-7 serlo-responsive-padding'
         )}
       >
-        <PartnerList />
-      </BlueContainer>
+        <PartnerList higher />
+      </div>
       <FooterNav data={footerEntries} />
     </>
   )
 }
-
-const BlueContainer = styled.div`
-  @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
-    img {
-      max-height: 60px !important;
-    }
-  }
-`
-
-const DonationCol = styled.div`
-  iframe {
-    margin-left: -20px;
-  }
-  p {
-    font-size: 1.125rem;
-  }
-`
