@@ -7,7 +7,6 @@ import { PrivacyWrapper } from '@/components/content/privacy-wrapper'
 import { PartnerList } from '@/components/landing/partner-list'
 import { FooterNav } from '@/components/navigation/footer-nav'
 import { Logo } from '@/components/navigation/logo'
-import { StyledImg } from '@/components/tags/styled-img'
 import {
   makeGreenTransparentButton,
   makeResponsivePadding,
@@ -56,11 +55,11 @@ export function Donations() {
           <StyledH1 className="font-bold my-5">
             Deine Spende für freie Bildung
           </StyledH1>
-          <StyledImg
+          <img
+            className="serlo-img"
             id="main-image"
             src="/_assets/img/donations-image.jpg"
-            alt="test"
-            title=""
+            alt="Kind beim Lernen mit Serlo"
           />
           <p>
             Mit deiner Spende ermöglichst du es Kindern und Jugendlichen im
@@ -131,10 +130,12 @@ export function Donations() {
             <li className="serlo-li">Betreuung ehrenamtlicher Autor*innen</li>
             <li className="serlo-li">Weiterentwicklung der Plattform</li>
           </ul>
+          margin: 18px 0; display: block; width: 220px;
           <p>
             Eine genaue Aufstellung unserer Finanzen findest du unter
             www.serlo.org/transparenz
-            <ITZImg
+            <img
+              className="serlo-img my-5 mx-0 block w-56"
               src="/_assets/img/donations-itz.png"
               alt="Initiative Transparente Zivilgesellschaft"
             />
@@ -281,10 +282,4 @@ const BlueContainer = styled.div`
       max-height: 60px !important;
     }
   }
-`
-
-const ITZImg = styled(StyledImg)`
-  margin: 18px 0;
-  display: block;
-  width: 220px;
 `

@@ -98,6 +98,9 @@
       @apply mt-2 !mb-4;
     }
   }
+  .serlo-img {
+    @apply h-auto inline max-w-full;
+  }
   .serlo-math-wrapper {
     @apply px-4 w-full text-left mb-block py-0.5;
     @apply text-lg leading-browser overflow-x-auto overflow-y-hidden;

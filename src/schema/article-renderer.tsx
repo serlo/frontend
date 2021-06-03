@@ -11,7 +11,6 @@ import { Link } from '../components/content/link'
 import { SpoilerTitle } from '../components/content/spoiler-title'
 import { SpoilerToggle } from '../components/content/spoiler-toggle'
 import { TableWrapper } from '../components/content/table-wrapper'
-import { StyledImg } from '../components/tags/styled-img'
 import { StyledTd } from '../components/tags/styled-td'
 import { theme } from '../theme'
 import { Blockquote } from '@/components/content/blockquote'
@@ -248,11 +247,12 @@ function renderElement(props: RenderElementProps): React.ReactNode {
         <ImgMaxWidthDiv maxWidth={element.maxWidth ? element.maxWidth : 0}>
           {wrapInA(
             <Lazy>
-              <StyledImg
+              <img
+                className="serlo-img"
                 src={element.src}
                 alt={element.alt || 'Bild'}
                 itemProp="contentUrl"
-              ></StyledImg>
+              ></img>
             </Lazy>
           )}
         </ImgMaxWidthDiv>
