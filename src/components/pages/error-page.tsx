@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 
 import { PageTitle } from '../content/page-title'
 import { HSpace } from '@/components/content/h-space'
-import { StyledA } from '@/components/tags/styled-a'
 import { StyledP } from '@/components/tags/styled-p'
 import { useInstanceData } from '@/contexts/instance-context'
 import { ErrorData } from '@/data-types'
@@ -47,10 +46,10 @@ export function ErrorPage({ code, message }: ErrorData) {
       {process.env.NODE_ENV !== 'production' && (
         <StyledP>
           Details:{' '}
-          <StyledA href={`/api/frontend${path}`}>
+          <a className="serlo-link" href={`/api/frontend${path}`}>
             /api/frontend
             {path}
-          </StyledA>
+          </a>
         </StyledP>
       )}
       <HSpace amount={100} />

@@ -1,7 +1,6 @@
 import { useState } from 'react'
 
 import { PageTitle } from '../content/page-title'
-import { StyledA } from '../tags/styled-a'
 import { StyledH2 } from '@/components/tags/styled-h2'
 import { StyledP } from '@/components/tags/styled-p'
 import { StyledTable } from '@/components/tags/styled-table'
@@ -27,7 +26,9 @@ export function ConsentPage() {
       <StyledP>
         {replacePlaceholders(strings.consent.intro, {
           privacypolicy: (
-            <StyledA href="/privacy">{strings.entities.privacyPolicy}</StyledA>
+            <a className="serlo-link" href="/privacy">
+              {strings.entities.privacyPolicy}
+            </a>
           ),
         })}
       </StyledP>

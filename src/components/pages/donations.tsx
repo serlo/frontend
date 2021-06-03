@@ -7,7 +7,6 @@ import { PrivacyWrapper } from '@/components/content/privacy-wrapper'
 import { PartnerList } from '@/components/landing/partner-list'
 import { FooterNav } from '@/components/navigation/footer-nav'
 import { Logo } from '@/components/navigation/logo'
-import { StyledA } from '@/components/tags/styled-a'
 import { StyledImg } from '@/components/tags/styled-img'
 import { StyledLi } from '@/components/tags/styled-li'
 import { StyledUl } from '@/components/tags/styled-ul'
@@ -121,7 +120,9 @@ export function Donations() {
           <p>
             <b>Bei Fragen gern melden über:</b>
             <br />
-            <StyledA href="mailto:spenden@serlo.org">spenden@serlo.org</StyledA>
+            <a className="serlo-link" href="mailto:spenden@serlo.org">
+              spenden@serlo.org
+            </a>
           </p>
           <br />
           <p>
@@ -154,7 +155,9 @@ export function Donations() {
           </p>
           <p>
             Du kannst auch via{' '}
-            <StyledA href="#no-formular">Überweisung oder PayPal</StyledA>{' '}
+            <a className="serlo-link" href="#no-formular">
+              Überweisung oder PayPal
+            </a>{' '}
             spenden.
           </p>
           <br />

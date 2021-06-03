@@ -6,7 +6,6 @@ import { useState, useRef, useContext, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 
 import { isLegacyLink } from '../content/link'
-import { StyledA } from '../tags/styled-a'
 import { LazyTippy } from './lazy-tippy'
 import SearchIcon from '@/assets-webkit/img/search-icon.svg'
 import { EntityIdContext } from '@/contexts/entity-id-context'
@@ -219,9 +218,13 @@ export function SearchInput() {
         </ConsentButton>
         {replacePlaceholders(strings.search.privacy, {
           privacypolicy: (
-            <_StyledA href="/privacy" target="_blank">
+            <a
+              className="text-white font-bold hover:no-underline"
+              href="/privacy"
+              target="_blank"
+            >
               {strings.entities.privacyPolicy}
-            </_StyledA>
+            </a>
           ),
         })}
       </ConsentPop>
@@ -459,15 +462,5 @@ const ConsentButton = styled.button`
     background-color: ${(props) =>
       lighten(0.15, props.theme.colors.lighterblue)};
     color: ${(props) => props.theme.colors.brand};
-  }
-`
-
-const _StyledA = styled(StyledA)`
-  color: #fff;
-  text-decoration: underline;
-  font-weight: bold;
-
-  &:hover {
-    text-decoration: none;
   }
 `

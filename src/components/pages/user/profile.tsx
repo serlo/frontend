@@ -12,7 +12,6 @@ import ReviewerBadge from '@/assets-webkit/img/community/badge-reviewer.svg'
 import { useAuthentication } from '@/auth/use-authentication'
 import { CommentArea } from '@/components/comments/comment-area'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
-import { StyledA } from '@/components/tags/styled-a'
 import { StyledH1 } from '@/components/tags/styled-h1'
 import { StyledH2 } from '@/components/tags/styled-h2'
 import { StyledLi } from '@/components/tags/styled-li'
@@ -159,12 +158,17 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   function renderHowToEditImage() {
     const { heading, description, steps } = strings.profiles.howToEditImage
     const chatUrl = (
-      <StyledA href="https://community.serlo.org">community.serlo.org</StyledA>
+      <a className="serlo-link" href="https://community.serlo.org">
+        community.serlo.org
+      </a>
     )
     const myAccountLink = (
-      <StyledA href="https://community.serlo.org/account/profile">
+      <a
+        className="serlo-link"
+        href="https://community.serlo.org/account/profile"
+      >
         {steps.myAccount}
-      </StyledA>
+      </a>
     )
 
     return (
