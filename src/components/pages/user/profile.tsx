@@ -12,7 +12,6 @@ import ReviewerBadge from '@/assets-webkit/img/community/badge-reviewer.svg'
 import { useAuthentication } from '@/auth/use-authentication'
 import { CommentArea } from '@/components/comments/comment-area'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
-import { StyledOl } from '@/components/tags/styled-ol'
 import { TimeAgo } from '@/components/time-ago'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -178,7 +177,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         <p className="serlo-p">
           {replacePlaceholders(description, { chatUrl })}
         </p>
-        <StyledOl>
+        <ol className="serlo-ol">
           <li className="serlo-li">
             {replacePlaceholders(steps.goToChat, { chatUrl })}
           </li>
@@ -187,7 +186,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
             {replacePlaceholders(steps.goToMyAccount, { myAccountLink })}
           </li>
           <li className="serlo-li">{steps.uploadPicture}</li>
-        </StyledOl>
+        </ol>
       </ModalWithCloseButton>
     )
   }

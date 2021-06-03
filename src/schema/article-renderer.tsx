@@ -12,7 +12,6 @@ import { SpoilerTitle } from '../components/content/spoiler-title'
 import { SpoilerToggle } from '../components/content/spoiler-toggle'
 import { TableWrapper } from '../components/content/table-wrapper'
 import { StyledImg } from '../components/tags/styled-img'
-import { StyledOl } from '../components/tags/styled-ol'
 import { StyledTd } from '../components/tags/styled-td'
 import { StyledUl } from '../components/tags/styled-ul'
 import { theme } from '../theme'
@@ -277,7 +276,7 @@ function renderElement(props: RenderElementProps): React.ReactNode {
     return <StyledUl>{children}</StyledUl>
   }
   if (element.type === 'ol') {
-    return <StyledOl>{children}</StyledOl>
+    return <ol className="serlo-ol">{children}</ol>
   }
   if (element.type === 'li') {
     return <li className="serlo-li">{children}</li>
