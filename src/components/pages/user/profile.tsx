@@ -161,7 +161,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   }
 
   function renderRoles() {
-    const [instanceRoles, foreignRoles] = R.partition(
+    const [instanceRoles, otherRoles] = R.partition(
       (role) => role.instance === null || role.instance === lang,
       userData.roles
     )
@@ -170,16 +170,16 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
       <>
         {instanceRoles.length > 0 && (
           <Roles>
-            Roles on {lang}.serlo.org:{' '}
+            {replacePlaceholders(strings.profiles.instanceRoles, { lang })}{' '}
             {instanceRoles.map((role, index) => (
               <Role key={index}>{role.role}</Role>
             ))}
           </Roles>
         )}
-        {foreignRoles.length > 0 && (
+        {otherRoles.length > 0 && (
           <Roles>
-            Other roles:{' '}
-            {foreignRoles.map((role, index) => (
+            {strings.profiles.otherRoles}{' '}
+            {otherRoles.map((role, index) => (
               <Role key={index}>
                 {role.instance}: {role.role}
               </Role>
@@ -227,7 +227,8 @@ const Role = styled.span`
   display: inline-block;
   background-color: ${(props) => props.theme.colors.gray};
   color: ${(props) => props.theme.colors.white};
-  margin-right: 0.5em;
+  margin-right: 0.2em;
+  margin-left: 0.2em;
   border-radius: 2em;
   padding: 3px 8px;
   border: 0;
