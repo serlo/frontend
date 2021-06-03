@@ -1,7 +1,5 @@
-import styled from 'styled-components'
+import { PropsWithChildren, FC } from 'react'
 
-export const StyledTd = styled.td`
-  padding: 10px;
-  vertical-align: top;
-  border: 3px solid ${(props) => props.theme.colors.lightBlueBackground};
-`
+export const StyledTd: FC<PropsWithChildren<{ className?: string }>> = (
+  props
+) => <td className={`serlo-td ${props.className ?? ''}`}>{props.children}</td>
