@@ -2,7 +2,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import { StyledTd } from '../tags/styled-td'
 import { StyledTh } from '../tags/styled-th'
-import { StyledTr } from '../tags/styled-tr'
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -27,11 +26,11 @@ export function ManageSubscriptions({
   return (
     <table className="serlo-table">
       <thead>
-        <StyledTr>
+        <tr>
           <StyledTh>{strings.entities.content}</StyledTh>
           <StyledTh>{loggedInStrings.mail}</StyledTh>
           <StyledTh>{loggedInStrings.subscription}</StyledTh>
-        </StyledTr>
+        </tr>
       </thead>
       <tbody>
         {subscriptions.map((entry) => {
@@ -43,7 +42,7 @@ export function ManageSubscriptions({
           const icon = getIconByTypename(entry.__typename)
 
           return (
-            <StyledTr key={entry.id}>
+            <tr key={entry.id}>
               <StyledTd>
                 <span title={entityString}>
                   {' '}
@@ -80,7 +79,7 @@ export function ManageSubscriptions({
                   {loggedInStrings.noNotifications}
                 </button>
               </StyledTd>
-            </StyledTr>
+            </tr>
           )
         })}
       </tbody>

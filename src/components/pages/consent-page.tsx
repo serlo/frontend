@@ -3,7 +3,6 @@ import { useState } from 'react'
 import { PageTitle } from '../content/page-title'
 import { StyledP } from '@/components/tags/styled-p'
 import { StyledTd } from '@/components/tags/styled-td'
-import { StyledTr } from '@/components/tags/styled-tr'
 import { useInstanceData } from '@/contexts/instance-context'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { ExternalProvider, useConsent } from '@/helper/use-consent'
@@ -42,18 +41,18 @@ export function ConsentPage() {
 
   function renderEmpty() {
     return (
-      <StyledTr>
+      <tr>
         <StyledTd className="text-lg">
           <b>{strings.consent.noConsent}</b>
         </StyledTd>
-      </StyledTr>
+      </tr>
     )
   }
 
   function renderTable() {
     return consentedProviders.map((provider) => {
       return (
-        <StyledTr key={provider}>
+        <tr key={provider}>
           <StyledTd className="text-lg">
             <b>{provider}</b>
           </StyledTd>
@@ -68,7 +67,7 @@ export function ConsentPage() {
               {strings.consent.revokeConsent}
             </button>
           </StyledTd>
-        </StyledTr>
+        </tr>
       )
     })
   }

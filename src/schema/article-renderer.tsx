@@ -16,7 +16,6 @@ import { StyledOl } from '../components/tags/styled-ol'
 import { StyledP } from '../components/tags/styled-p'
 import { StyledTd } from '../components/tags/styled-td'
 import { StyledTh } from '../components/tags/styled-th'
-import { StyledTr } from '../components/tags/styled-tr'
 import { StyledUl } from '../components/tags/styled-ul'
 import { theme } from '../theme'
 import { Blockquote } from '@/components/content/blockquote'
@@ -288,7 +287,7 @@ function renderElement(props: RenderElementProps): React.ReactNode {
     )
   }
   if (element.type === 'tr') {
-    return <StyledTr>{children}</StyledTr>
+    return <tr>{children}</tr>
   }
   if (element.type === 'th') {
     return <StyledTh>{children}</StyledTh>

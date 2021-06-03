@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import { StyledTd } from '../tags/styled-td'
 import { StyledTh } from '../tags/styled-th'
-import { StyledTr } from '../tags/styled-tr'
 import { UserLink } from '../user/user-link'
 import { Link } from '@/components/content/link'
 import { TimeAgo } from '@/components/time-ago'
@@ -21,7 +20,7 @@ export function RevisionHistory({ data }: RevisionHistoryProps) {
   return (
     <table className="mx-side border-collapse w-full">
       <thead>
-        <StyledTr>
+        <tr>
           <StyledTh>{strings.revisionHistory.changes}</StyledTh>
           <StyledTh style={{ minWidth: '90px' }}>
             {strings.revisionHistory.author}
@@ -29,13 +28,13 @@ export function RevisionHistory({ data }: RevisionHistoryProps) {
           <StyledTh>{strings.revisionHistory.date}</StyledTh>
           <StyledTh>&nbsp;</StyledTh>
           <StyledTh>&nbsp;</StyledTh>
-        </StyledTr>
+        </tr>
       </thead>
       <tbody>
         {data.revisions?.nodes.map((entry) => {
           const isCurrent = entry.id === data.currentRevision.id
           return (
-            <StyledTr key={entry.id}>
+            <tr key={entry.id}>
               <StyledTd>
                 {isCurrent && (
                   <span title={strings.revisions.currentNotice}>✅ </span>
@@ -71,7 +70,7 @@ export function RevisionHistory({ data }: RevisionHistoryProps) {
                   <FontAwesomeIcon icon={faPencilAlt} size="1x" />
                 </Link>
               </StyledTd>
-            </StyledTr>
+            </tr>
           )
         })}
       </tbody>
