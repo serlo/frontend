@@ -1,7 +1,6 @@
 import { faTimes, faEye, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import { StyledTd } from '../tags/styled-td'
 import { UserLink } from '../user/user-link'
 import { Link } from '@/components/content/link'
 import { TimeAgo } from '@/components/time-ago'
@@ -32,7 +31,7 @@ export function RevisionHistory({ data }: RevisionHistoryProps) {
           const isCurrent = entry.id === data.currentRevision.id
           return (
             <tr key={entry.id}>
-              <StyledTd>
+              <td className="serlo-td">
                 {isCurrent && (
                   <span title={strings.revisions.currentNotice}>✅ </span>
                 )}
@@ -43,22 +42,22 @@ export function RevisionHistory({ data }: RevisionHistoryProps) {
                   </span>
                 )}
                 <b>{entry.changes}</b>
-              </StyledTd>
-              <StyledTd>
+              </td>
+              <td className="serlo-td">
                 <UserLink user={entry.author} />
-              </StyledTd>
-              <StyledTd>
+              </td>
+              <td className="serlo-td">
                 <TimeAgo datetime={new Date(entry.date)} dateAsTitle />
-              </StyledTd>
-              <StyledTd>
+              </td>
+              <td className="serlo-td">
                 <Link
                   className="serlo-button serlo-make-interactive-light my-0 mx-auto text-base"
                   href={`/entity/repository/compare/${data.id}/${entry.id}`}
                 >
                   <FontAwesomeIcon icon={faEye} size="1x" />
                 </Link>
-              </StyledTd>
-              <StyledTd>
+              </td>
+              <td className="serlo-td">
                 <Link
                   className="serlo-button serlo-make-interactive-light my-0 mx-auto text-base"
                   title={strings.revisionHistory.createNew}
@@ -66,7 +65,7 @@ export function RevisionHistory({ data }: RevisionHistoryProps) {
                 >
                   <FontAwesomeIcon icon={faPencilAlt} size="1x" />
                 </Link>
-              </StyledTd>
+              </td>
             </tr>
           )
         })}

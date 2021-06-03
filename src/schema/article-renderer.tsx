@@ -11,7 +11,6 @@ import { Link } from '../components/content/link'
 import { SpoilerTitle } from '../components/content/spoiler-title'
 import { SpoilerToggle } from '../components/content/spoiler-toggle'
 import { TableWrapper } from '../components/content/table-wrapper'
-import { StyledTd } from '../components/tags/styled-td'
 import { theme } from '../theme'
 import { Blockquote } from '@/components/content/blockquote'
 import type { CodeProps } from '@/components/content/code'
@@ -296,7 +295,7 @@ function renderElement(props: RenderElementProps): React.ReactNode {
     return <th className="serlo-th">{children}</th>
   }
   if (element.type === 'td') {
-    return <StyledTd>{children}</StyledTd>
+    return <td className="serlo-td">{children}</td>
   }
   if (element.type === 'multimedia') {
     return (

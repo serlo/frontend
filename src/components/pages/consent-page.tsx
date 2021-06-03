@@ -1,7 +1,6 @@
 import { useState } from 'react'
 
 import { PageTitle } from '../content/page-title'
-import { StyledTd } from '@/components/tags/styled-td'
 import { useInstanceData } from '@/contexts/instance-context'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { ExternalProvider, useConsent } from '@/helper/use-consent'
@@ -41,9 +40,9 @@ export function ConsentPage() {
   function renderEmpty() {
     return (
       <tr>
-        <StyledTd className="text-lg">
+        <td className="serlo-td text-lg">
           <b>{strings.consent.noConsent}</b>
-        </StyledTd>
+        </td>
       </tr>
     )
   }
@@ -52,10 +51,10 @@ export function ConsentPage() {
     return consentedProviders.map((provider) => {
       return (
         <tr key={provider}>
-          <StyledTd className="text-lg">
+          <td className="serlo-td text-lg">
             <b>{provider}</b>
-          </StyledTd>
-          <StyledTd className="text-lg">
+          </td>
+          <td className="serlo-td text-lg">
             <button
               className="serlo-button serlo-make-interactive-light"
               onClick={() => {
@@ -65,7 +64,7 @@ export function ConsentPage() {
             >
               {strings.consent.revokeConsent}
             </button>
-          </StyledTd>
+          </td>
         </tr>
       )
     })

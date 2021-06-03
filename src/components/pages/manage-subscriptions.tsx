@@ -1,6 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import { StyledTd } from '../tags/styled-td'
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -42,14 +41,14 @@ export function ManageSubscriptions({
 
           return (
             <tr key={entry.id}>
-              <StyledTd>
+              <td className="serlo-td">
                 <span title={entityString}>
                   {' '}
                   <FontAwesomeIcon className="text-brand" icon={icon} />{' '}
                 </span>
                 <Link href={entry.alias ?? ''}>{title}</Link>
-              </StyledTd>
-              <StyledTd className="text-center">
+              </td>
+              <td className="serlo-td text-center">
                 {/* TODO: We need info from the API how this is currently set */}
                 <button
                   className="serlo-button serlo-make-interactive-light mx-0 my-auto text-base"
@@ -63,8 +62,8 @@ export function ManageSubscriptions({
                 >
                   {loggedInStrings.noMails}
                 </button>
-              </StyledTd>
-              <StyledTd className="text-center">
+              </td>
+              <td className="serlo-td text-center">
                 <button
                   className="serlo-button serlo-make-interactive-light mx-0 my-auto text-base"
                   onClick={() => {
@@ -77,7 +76,7 @@ export function ManageSubscriptions({
                 >
                   {loggedInStrings.noNotifications}
                 </button>
-              </StyledTd>
+              </td>
             </tr>
           )
         })}
