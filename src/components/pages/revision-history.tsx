@@ -2,7 +2,6 @@ import { faTimes, faEye, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import { StyledTd } from '../tags/styled-td'
-import { StyledTh } from '../tags/styled-th'
 import { UserLink } from '../user/user-link'
 import { Link } from '@/components/content/link'
 import { TimeAgo } from '@/components/time-ago'
@@ -21,13 +20,11 @@ export function RevisionHistory({ data }: RevisionHistoryProps) {
     <table className="mx-side border-collapse w-full">
       <thead>
         <tr>
-          <StyledTh>{strings.revisionHistory.changes}</StyledTh>
-          <StyledTh style={{ minWidth: '90px' }}>
-            {strings.revisionHistory.author}
-          </StyledTh>
-          <StyledTh>{strings.revisionHistory.date}</StyledTh>
-          <StyledTh>&nbsp;</StyledTh>
-          <StyledTh>&nbsp;</StyledTh>
+          <th className="serlo-th">{strings.revisionHistory.changes}</th>
+          <th style={{ minWidth: '90px' }}>{strings.revisionHistory.author}</th>
+          <th className="serlo-th">{strings.revisionHistory.date}</th>
+          <th className="serlo-th">&nbsp;</th>
+          <th className="serlo-th">&nbsp;</th>
         </tr>
       </thead>
       <tbody>

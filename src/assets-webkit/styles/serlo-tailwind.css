@@ -57,6 +57,9 @@
   .serlo-table {
     @apply mx-side border-collapse whitespace-nowrap;
   }
+  .serlo-th {
+    @apply p-2.5 border-0 border-b-3 text-left pl-3;
+  }
   .serlo-li {
     @apply mb-2;
   }

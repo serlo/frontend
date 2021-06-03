@@ -15,7 +15,6 @@ import { StyledImg } from '../components/tags/styled-img'
 import { StyledOl } from '../components/tags/styled-ol'
 import { StyledP } from '../components/tags/styled-p'
 import { StyledTd } from '../components/tags/styled-td'
-import { StyledTh } from '../components/tags/styled-th'
 import { StyledUl } from '../components/tags/styled-ul'
 import { theme } from '../theme'
 import { Blockquote } from '@/components/content/blockquote'
@@ -290,7 +289,7 @@ function renderElement(props: RenderElementProps): React.ReactNode {
     return <tr>{children}</tr>
   }
   if (element.type === 'th') {
-    return <StyledTh>{children}</StyledTh>
+    return <th className="serlo-th">{children}</th>
   }
   if (element.type === 'td') {
     return <StyledTd>{children}</StyledTd>

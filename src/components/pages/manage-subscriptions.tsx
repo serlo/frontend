@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import { StyledTd } from '../tags/styled-td'
-import { StyledTh } from '../tags/styled-th'
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -27,9 +26,9 @@ export function ManageSubscriptions({
     <table className="serlo-table">
       <thead>
         <tr>
-          <StyledTh>{strings.entities.content}</StyledTh>
-          <StyledTh>{loggedInStrings.mail}</StyledTh>
-          <StyledTh>{loggedInStrings.subscription}</StyledTh>
+          <th className="serlo-th">{strings.entities.content}</th>
+          <th className="serlo-th">{loggedInStrings.mail}</th>
+          <th className="serlo-th">{loggedInStrings.subscription}</th>
         </tr>
       </thead>
       <tbody>
