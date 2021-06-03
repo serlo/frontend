@@ -44,6 +44,7 @@ module.exports = {
       },
       lineHeight: {
         browser: 'normal',
+        cozy: '1.33',
       },
       margin: {
         block: '30px',

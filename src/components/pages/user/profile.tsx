@@ -13,7 +13,6 @@ import { useAuthentication } from '@/auth/use-authentication'
 import { CommentArea } from '@/components/comments/comment-area'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { StyledOl } from '@/components/tags/styled-ol'
-import { StyledP } from '@/components/tags/styled-p'
 import { TimeAgo } from '@/components/time-ago'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -58,7 +57,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         {renderProfileImage()}
         <div>
           <h1 className="serlo-h1">{username}</h1>
-          <StyledP>
+          <p className="serlo-p">
             {strings.profiles.activeSince}{' '}
             <time
               dateTime={registerDate.toISOString()}
@@ -66,10 +65,12 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
             >
               {registerDate.getFullYear()}
             </time>
-          </StyledP>
+          </p>
         </div>
         {renderBadges()}
-        {motivation && <Motivation>&quot;{motivation}&quot;</Motivation>}
+        {motivation && (
+          <Motivation className="serlo-p">&quot;{motivation}&quot;</Motivation>
+        )}
         <ChatButton href={chatUrl} enabled={!isOwnProfile}>
           <FontAwesomeIcon icon={faTelegramPlane} />{' '}
           {strings.profiles.directMessage}
@@ -84,12 +85,12 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
       )}
       <CommentArea id={id} noForms />
       {lastLoginDate && (
-        <Gray>
+        <p className="serlo-p mt-16 text-sm text-gray-400">
           {strings.profiles.lastLogin}:{' '}
           <b>
             <TimeAgo datetime={lastLoginDate} dateAsTitle />
           </b>
-        </Gray>
+        </p>
       )}
       {renderUserTools()}
       {renderHowToEditImage()}
@@ -121,7 +122,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
     return (
       <BadgeContainer>
         <Badge />
-        <StyledP>{name}</StyledP>
+        <p className="serlo-p">{name}</p>
       </BadgeContainer>
     )
   }
@@ -174,7 +175,9 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         onCloseClick={() => setShowImageModal(false)}
         title={heading}
       >
-        <StyledP>{replacePlaceholders(description, { chatUrl })}</StyledP>
+        <p className="serlo-p">
+          {replacePlaceholders(description, { chatUrl })}
+        </p>
         <StyledOl>
           <li className="serlo-li">
             {replacePlaceholders(steps.goToChat, { chatUrl })}
@@ -190,7 +193,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   }
 }
 
-const Motivation = styled(StyledP)`
+const Motivation = styled.p`
   font-size: 1.3em;
   grid-area: motivation;
 `
@@ -297,10 +300,4 @@ const ProfileHeader = styled.header`
     margin-top: 15px;
     margin-bottom: 10px;
   }
-`
-
-const Gray = styled(StyledP)`
-  margin-top: 70px;
-  font-size: 0.9rem;
-  color: #777;
 `

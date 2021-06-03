@@ -2,7 +2,6 @@ import { faFilm } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styled from 'styled-components'
 
-import { StyledP } from '../tags/styled-p'
 import { LicenseNotice } from './license-notice'
 import { PrivacyWrapper } from './privacy-wrapper'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -37,7 +36,7 @@ export function Video(props: VideoProps) {
   return (
     <div className="text-center serlo-print-hidden">
       <FontAwesomeIcon icon={faFilm} size="5x" />
-      <StyledP>Loading video failed: {src}</StyledP>
+      <p className="serlo-p">Loading video failed: {src}</p>
     </div>
   )
 
@@ -86,9 +85,9 @@ export function Video(props: VideoProps) {
           </VideoWrapper>
         </PrivacyWrapper>
         {license && !license.default && (
-          <StyledP>
+          <p className="serlo-p">
             <LicenseNotice minimal data={license} type="video" path={path} />
-          </StyledP>
+          </p>
         )}
       </>
     )

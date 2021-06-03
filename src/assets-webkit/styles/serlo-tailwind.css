@@ -34,7 +34,7 @@
     @apply text-brand bg-brand-100 hover:text-white hover:bg-brand;
   }
   .serlo-p {
-    @apply mx-side mt-0 mb-block special-hyphens-auto text-lg leading-6;
+    @apply mx-side mt-0 mb-block special-hyphens-auto text-lg leading-cozy;
   }
   .serlo-h1 {
     @apply mx-side mb-9 mt-4 p-0 font-bold text-3.5xl special-hyphens-auto;

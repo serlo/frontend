@@ -1,5 +1,4 @@
 import { HSpace } from '@/components/content/h-space'
-import { StyledP } from '@/components/tags/styled-p'
 import { useInstanceData } from '@/contexts/instance-context'
 import { LicenseDetailData } from '@/data-types'
 import { renderArticle } from '@/schema/article-renderer'
@@ -21,9 +20,9 @@ export function LicenseDetail({
       <HSpace amount={20} />
       {renderArticle(content, `license${id}`)}
       {iconHref && (
-        <StyledP>
+        <p className="serlo-p">
           <img src={iconHref} alt="License Badge" />
-        </StyledP>
+        </p>
       )}
     </>
   )

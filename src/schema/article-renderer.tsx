@@ -13,7 +13,6 @@ import { SpoilerToggle } from '../components/content/spoiler-toggle'
 import { TableWrapper } from '../components/content/table-wrapper'
 import { StyledImg } from '../components/tags/styled-img'
 import { StyledOl } from '../components/tags/styled-ol'
-import { StyledP } from '../components/tags/styled-p'
 import { StyledTd } from '../components/tags/styled-td'
 import { StyledUl } from '../components/tags/styled-ul'
 import { theme } from '../theme'
@@ -206,7 +205,7 @@ function renderElement(props: RenderElementProps): React.ReactNode {
     )
   }
   if (element.type === 'p') {
-    return <StyledP>{children}</StyledP>
+    return <p className="serlo-p">{children}</p>
   }
   if (element.type === 'h') {
     const classNames = {

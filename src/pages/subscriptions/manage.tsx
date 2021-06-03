@@ -7,7 +7,6 @@ import { PageTitle } from '@/components/content/page-title'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Guard } from '@/components/guard'
 import { ManageSubscriptions } from '@/components/pages/manage-subscriptions'
-import { StyledP } from '@/components/tags/styled-p'
 import { useInstanceData } from '@/contexts/instance-context'
 import { QueryResponse } from '@/fetcher/query-types'
 import { getEntityStringByTypename } from '@/helper/feature-i18n'
@@ -46,7 +45,7 @@ function Content() {
 
   return (
     <>
-      <StyledP>
+      <p className="serlo-p">
         {/* //blur-hack, use https://caniuse.com/#feat=css-focus-visible when supported*/}
         {filters.map((typename) => (
           <button
@@ -63,7 +62,7 @@ function Content() {
             {getEntityStringByTypename(typename, strings)}
           </button>
         ))}
-      </StyledP>
+      </p>
       <Guard {...response} needsAuth>
         <ManageSubscriptions subscriptions={filtered!} />
       </Guard>

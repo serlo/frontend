@@ -1,7 +1,6 @@
 import { useState } from 'react'
 
 import { PageTitle } from '../content/page-title'
-import { StyledP } from '@/components/tags/styled-p'
 import { StyledTd } from '@/components/tags/styled-td'
 import { useInstanceData } from '@/contexts/instance-context'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
@@ -20,7 +19,7 @@ export function ConsentPage() {
     <>
       <PageTitle title={strings.consent.title} headTitle />
 
-      <StyledP>
+      <p className="serlo-p">
         {replacePlaceholders(strings.consent.intro, {
           privacypolicy: (
             <a className="serlo-link" href="/privacy">
@@ -28,9 +27,9 @@ export function ConsentPage() {
             </a>
           ),
         })}
-      </StyledP>
+      </p>
       <h2 className="serlo-h2">{strings.consent.revokeTitle}</h2>
-      <StyledP>{strings.consent.revokeText}</StyledP>
+      <p className="serlo-p">{strings.consent.revokeText}</p>
       <table className="serlo-table">
         <tbody>
           {consentedProviders.length > 0 ? renderTable() : renderEmpty()}
