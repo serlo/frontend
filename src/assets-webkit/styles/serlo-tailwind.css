@@ -70,7 +70,7 @@
 
     & > li:before {
       @apply absolute special-content-space bg-brand-lighter;
-      @apply w-2.5 h-2.5 rounded-full -ml-5 mt-2;
+      @apply w-2.5 h-2.5 rounded-full -ml-5 mt-2.25;
     }
     & > li {
       @apply mb-2;

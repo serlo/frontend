@@ -54,6 +54,7 @@ module.exports = {
       },
       spacing: {
         0.25: '1px',
+        2.25: '9px',
         side: '16px',
         'side-lg': '40px',
       },
@@ -111,7 +112,7 @@ module.exports = {
           'counter-increment': 'list-counter',
         },
         '.special-content-space': {
-          content: ' ',
+          content: '" "',
         },
         '.special-hyphens-auto': {
           hyphens: 'auto',
