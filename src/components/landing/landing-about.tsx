@@ -4,7 +4,6 @@ import styled from 'styled-components'
 
 import { makeResponsivePadding, makeTransparentButton } from '../../helper/css'
 import { Link } from '../content/link'
-import { StyledUl } from '../tags/styled-ul'
 import { PartnerList } from './partner-list'
 
 export function LandingAbout() {
@@ -17,14 +16,14 @@ export function LandingAbout() {
         <p>
           Die <b>freie Lernplattform serlo.org</b> bietet:
         </p>
-        <StyledUl fullWidth>
+        <ul className="serlo-ul mx-0">
           <li className="serlo-li">einfache Erklärungen</li>
           <li className="serlo-li">Kurse</li>
           <li className="serlo-li">Lernvideos</li>
           <li className="serlo-li">
             tausende Übungsaufgaben mit Musterlösungen
           </li>
-        </StyledUl>
+        </ul>
         <p>
           Wir ermöglichen Schüler*innen und Studierenden selbständig und im
           eigenen Tempo zu lernen – unabhängig von den finanziellen

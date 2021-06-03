@@ -110,6 +110,9 @@ module.exports = {
         '.special-increment-list-counter': {
           'counter-increment': 'list-counter',
         },
+        '.special-content-space': {
+          content: ' ',
+        },
         '.special-hyphens-auto': {
           hyphens: 'auto',
         },

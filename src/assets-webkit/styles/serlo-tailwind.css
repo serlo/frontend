@@ -65,6 +65,21 @@
   .serlo-li {
     @apply mb-2;
   }
+  .serlo-ul {
+    @apply mx-side mb-block mt-4 pl-5 list-none;
+
+    & > li:before {
+      @apply absolute special-content-space bg-brand-lighter;
+      @apply w-2.5 h-2.5 rounded-full -ml-5 mt-2;
+    }
+    & > li {
+      @apply mb-2;
+    }
+    & > li > ul,
+    & > li > ol {
+      @apply mt-2 !mb-4;
+    }
+  }
   .serlo-ol {
     @apply mx-side mb-block mt-0 pl-7 list-none;
     @apply special-reset-list-counter;

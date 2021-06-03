@@ -8,7 +8,6 @@ import { PartnerList } from '@/components/landing/partner-list'
 import { FooterNav } from '@/components/navigation/footer-nav'
 import { Logo } from '@/components/navigation/logo'
 import { StyledImg } from '@/components/tags/styled-img'
-import { StyledUl } from '@/components/tags/styled-ul'
 import {
   makeGreenTransparentButton,
   makeResponsivePadding,
@@ -127,11 +126,11 @@ export function Donations() {
           <p>
             <b>Deine Spende fließt vor allem in:</b>
           </p>
-          <StyledUl>
+          <ul className="serlo-ul">
             <li className="serlo-li">Serverkosten</li>
             <li className="serlo-li">Betreuung ehrenamtlicher Autor*innen</li>
             <li className="serlo-li">Weiterentwicklung der Plattform</li>
-          </StyledUl>
+          </ul>
           <p>
             Eine genaue Aufstellung unserer Finanzen findest du unter
             www.serlo.org/transparenz
