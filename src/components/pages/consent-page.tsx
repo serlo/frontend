@@ -3,7 +3,6 @@ import { useState } from 'react'
 import { PageTitle } from '../content/page-title'
 import { StyledH2 } from '@/components/tags/styled-h2'
 import { StyledP } from '@/components/tags/styled-p'
-import { StyledTable } from '@/components/tags/styled-table'
 import { StyledTd } from '@/components/tags/styled-td'
 import { StyledTr } from '@/components/tags/styled-tr'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -34,11 +33,11 @@ export function ConsentPage() {
       </StyledP>
       <StyledH2>{strings.consent.revokeTitle}</StyledH2>
       <StyledP>{strings.consent.revokeText}</StyledP>
-      <StyledTable>
+      <table className="serlo-table">
         <tbody>
           {consentedProviders.length > 0 ? renderTable() : renderEmpty()}
         </tbody>
-      </StyledTable>
+      </table>
     </>
   )
 

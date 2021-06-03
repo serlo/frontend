@@ -1,6 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import { StyledTable } from '../tags/styled-table'
 import { StyledTd } from '../tags/styled-td'
 import { StyledTh } from '../tags/styled-th'
 import { StyledTr } from '../tags/styled-tr'
@@ -26,7 +25,7 @@ export function ManageSubscriptions({
   const loggedInStrings = loggedInData.strings.subscriptions
 
   return (
-    <StyledTable>
+    <table className="serlo-table">
       <thead>
         <StyledTr>
           <StyledTh>{strings.entities.content}</StyledTh>
@@ -85,6 +84,6 @@ export function ManageSubscriptions({
           )
         })}
       </tbody>
-    </StyledTable>
+    </table>
   )
 }

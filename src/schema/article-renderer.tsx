@@ -19,7 +19,6 @@ import { StyledH5 } from '../components/tags/styled-h5'
 import { StyledImg } from '../components/tags/styled-img'
 import { StyledOl } from '../components/tags/styled-ol'
 import { StyledP } from '../components/tags/styled-p'
-import { StyledTable } from '../components/tags/styled-table'
 import { StyledTd } from '../components/tags/styled-td'
 import { StyledTh } from '../components/tags/styled-th'
 import { StyledTr } from '../components/tags/styled-tr'
@@ -289,9 +288,9 @@ function renderElement(props: RenderElementProps): React.ReactNode {
   if (element.type === 'table') {
     return (
       <TableWrapper>
-        <StyledTable>
+        <table className="serlo-table">
           <tbody>{children}</tbody>
-        </StyledTable>
+        </table>
       </TableWrapper>
     )
   }

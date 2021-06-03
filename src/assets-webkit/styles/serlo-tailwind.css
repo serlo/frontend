@@ -41,6 +41,9 @@
     @apply text-2.5xl font-bold special-hyphens-auto leading-tight;
     @apply text-truegray-900 border-truegray-700 border-b;
   }
+  .serlo-table {
+    @apply mx-side border-collapse whitespace-nowrap;
+  }
   .serlo-li {
     @apply mb-2;
   }
