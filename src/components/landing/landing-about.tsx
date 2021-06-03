@@ -4,7 +4,6 @@ import styled from 'styled-components'
 
 import { makeResponsivePadding, makeTransparentButton } from '../../helper/css'
 import { Link } from '../content/link'
-import { StyledLi } from '../tags/styled-li'
 import { StyledUl } from '../tags/styled-ul'
 import { PartnerList } from './partner-list'
 
@@ -19,10 +18,12 @@ export function LandingAbout() {
           Die <b>freie Lernplattform serlo.org</b> bietet:
         </p>
         <StyledUl fullWidth>
-          <StyledLi>einfache Erklärungen</StyledLi>
-          <StyledLi>Kurse</StyledLi>
-          <StyledLi>Lernvideos</StyledLi>
-          <StyledLi>tausende Übungsaufgaben mit Musterlösungen</StyledLi>
+          <li className="serlo-li">einfache Erklärungen</li>
+          <li className="serlo-li">Kurse</li>
+          <li className="serlo-li">Lernvideos</li>
+          <li className="serlo-li">
+            tausende Übungsaufgaben mit Musterlösungen
+          </li>
         </StyledUl>
         <p>
           Wir ermöglichen Schüler*innen und Studierenden selbständig und im

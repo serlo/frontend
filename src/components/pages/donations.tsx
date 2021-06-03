@@ -8,7 +8,6 @@ import { PartnerList } from '@/components/landing/partner-list'
 import { FooterNav } from '@/components/navigation/footer-nav'
 import { Logo } from '@/components/navigation/logo'
 import { StyledImg } from '@/components/tags/styled-img'
-import { StyledLi } from '@/components/tags/styled-li'
 import { StyledUl } from '@/components/tags/styled-ul'
 import {
   makeGreenTransparentButton,
@@ -129,9 +128,9 @@ export function Donations() {
             <b>Deine Spende fließt vor allem in:</b>
           </p>
           <StyledUl>
-            <StyledLi>Serverkosten</StyledLi>
-            <StyledLi>Betreuung ehrenamtlicher Autor*innen</StyledLi>
-            <StyledLi>Weiterentwicklung der Plattform</StyledLi>
+            <li className="serlo-li">Serverkosten</li>
+            <li className="serlo-li">Betreuung ehrenamtlicher Autor*innen</li>
+            <li className="serlo-li">Weiterentwicklung der Plattform</li>
           </StyledUl>
           <p>
             Eine genaue Aufstellung unserer Finanzen findest du unter

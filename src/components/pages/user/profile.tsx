@@ -14,7 +14,6 @@ import { CommentArea } from '@/components/comments/comment-area'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { StyledH1 } from '@/components/tags/styled-h1'
 import { StyledH2 } from '@/components/tags/styled-h2'
-import { StyledLi } from '@/components/tags/styled-li'
 import { StyledOl } from '@/components/tags/styled-ol'
 import { StyledP } from '@/components/tags/styled-p'
 import { TimeAgo } from '@/components/time-ago'
@@ -179,14 +178,14 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
       >
         <StyledP>{replacePlaceholders(description, { chatUrl })}</StyledP>
         <StyledOl>
-          <StyledLi>
+          <li className="serlo-li">
             {replacePlaceholders(steps.goToChat, { chatUrl })}
-          </StyledLi>
-          <StyledLi>{steps.signIn}</StyledLi>
-          <StyledLi>
+          </li>
+          <li className="serlo-li">{steps.signIn}</li>
+          <li className="serlo-li">
             {replacePlaceholders(steps.goToMyAccount, { myAccountLink })}
-          </StyledLi>
-          <StyledLi>{steps.uploadPicture}</StyledLi>
+          </li>
+          <li className="serlo-li">{steps.uploadPicture}</li>
         </StyledOl>
       </ModalWithCloseButton>
     )

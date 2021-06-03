@@ -17,7 +17,6 @@ import { StyledH3 } from '../components/tags/styled-h3'
 import { StyledH4 } from '../components/tags/styled-h4'
 import { StyledH5 } from '../components/tags/styled-h5'
 import { StyledImg } from '../components/tags/styled-img'
-import { StyledLi } from '../components/tags/styled-li'
 import { StyledOl } from '../components/tags/styled-ol'
 import { StyledP } from '../components/tags/styled-p'
 import { StyledTable } from '../components/tags/styled-table'
@@ -285,7 +284,7 @@ function renderElement(props: RenderElementProps): React.ReactNode {
     return <StyledOl>{children}</StyledOl>
   }
   if (element.type === 'li') {
-    return <StyledLi>{children}</StyledLi>
+    return <li className="serlo-li">{children}</li>
   }
   if (element.type === 'table') {
     return (
