@@ -106,7 +106,8 @@ export function Donations() {
         </DonationCol>
         <div
           className={clsx(
-            'max-md:pt-16 max-md:mt-11 max-md:border-t-8 max-md:border-brand-150',
+            'pt-16 mt-11 border-t-8 border-brand-150',
+            'md:pt-0 md:mt-0 md:border-t-0',
             'md:max-w-xs md:absolute md:right-0 md:top-48 md:pr-4'
           )}
         >
