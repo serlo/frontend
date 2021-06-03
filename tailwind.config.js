@@ -75,6 +75,7 @@ module.exports = {
         8: '32px',
       },
       maxWidth: {
+        xs: '300px',
         65: '260px',
       },
       fontSize: {
@@ -89,6 +90,10 @@ module.exports = {
       sm: '800px',
       md: '1024px',
       lg: '1216px',
+      'max-mobile': { max: '499px' },
+      'max-sm': { max: '799px' },
+      'max-md': { max: '1023px' },
+      'max-lg': { max: '1215px' },
     },
   },
   variants: {

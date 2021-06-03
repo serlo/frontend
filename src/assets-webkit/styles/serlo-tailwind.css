@@ -151,6 +151,12 @@
       }
     }
   }
+  .serlo-responsive-margin {
+    @apply mx-side lg:mx-side-lg;
+  }
+  .serlo-responsive-padding {
+    @apply px-side lg:px-side-lg;
+  }
   .serlo-input-font-reset {
     @apply text-base tracking-slightestly-tighter font-serlo;
   }
