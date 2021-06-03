@@ -11,11 +11,6 @@ import { Link } from '../components/content/link'
 import { SpoilerTitle } from '../components/content/spoiler-title'
 import { SpoilerToggle } from '../components/content/spoiler-toggle'
 import { TableWrapper } from '../components/content/table-wrapper'
-import { StyledH1 } from '../components/tags/styled-h1'
-import { StyledH2 } from '../components/tags/styled-h2'
-import { StyledH3 } from '../components/tags/styled-h3'
-import { StyledH4 } from '../components/tags/styled-h4'
-import { StyledH5 } from '../components/tags/styled-h5'
 import { StyledImg } from '../components/tags/styled-img'
 import { StyledOl } from '../components/tags/styled-ol'
 import { StyledP } from '../components/tags/styled-p'
@@ -151,14 +146,6 @@ export const articleColors = {
   orange: theme.colors.orange,
 }
 
-const StyledHx = {
-  1: StyledH1,
-  2: StyledH2,
-  3: StyledH3,
-  4: StyledH4,
-  5: StyledH5,
-}
-
 interface RenderLeafProps {
   leaf: FrontendContentNode & {
     color?: 'blue' | 'green' | 'orange'
@@ -224,8 +211,14 @@ function renderElement(props: RenderElementProps): React.ReactNode {
     return <StyledP>{children}</StyledP>
   }
   if (element.type === 'h') {
-    const Comp = StyledHx[element.level]
-    return <Comp id={element.id}>{children}</Comp>
+    return React.createElement(
+      `h${element.level}`,
+      {
+        className: `serlo-h${element.level}`,
+        id: element.id,
+      },
+      children
+    )
   }
   if (element.type === 'img') {
     const wrapInA = (comp: React.ReactNode) => {

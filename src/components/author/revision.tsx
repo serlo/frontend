@@ -16,7 +16,6 @@ import { Geogebra } from '@/components/content/geogebra'
 import { HSpace } from '@/components/content/h-space'
 import { Link } from '@/components/content/link'
 import { Video } from '@/components/content/video'
-import { StyledH1 } from '@/components/tags/styled-h1'
 import { StyledP } from '@/components/tags/styled-p'
 import { TimeAgo } from '@/components/time-ago'
 import { UserLink } from '@/components/user/user-link'
@@ -103,7 +102,7 @@ export function Revision({ data }: RevisionProps) {
       </FlexWrapper>
       {dataSet.title !== undefined && (
         <PreviewBox title={strings.revisions.title} diffType="title">
-          <StyledH1>{dataSet.title}</StyledH1>
+          <h1 className="serlo-h1">{dataSet.title}</h1>
         </PreviewBox>
       )}
       {dataSet.content !== undefined && (

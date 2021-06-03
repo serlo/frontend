@@ -36,10 +36,23 @@
   .serlo-p {
     @apply mx-side mt-0 mb-block special-hyphens-auto text-lg leading-6;
   }
+  .serlo-h1 {
+    @apply mx-side mb-9 mt-4 p-0 font-bold special-hyphens-auto special-text-2x;
+  }
   .serlo-h2 {
     @apply mx-side mt-0 mb-6 pb-1 pt-6;
     @apply text-2.5xl font-bold special-hyphens-auto leading-tight;
-    @apply text-truegray-900 border-truegray-700 border-b;
+    @apply text-truegray-900 border-truegray-300 border-b;
+  }
+  .serlo-h3 {
+    @apply mx-side mt-0 mb-8 pt-3 font-bold special-text-h3 text-truegray-900;
+  }
+  .serlo-h4 {
+    @apply mx-side mt-0 mb-5;
+    @apply special-text-h4;
+  }
+  .serlo-h5 {
+    @apply mx-side mt-0 mb-5;
   }
   .serlo-table {
     @apply mx-side border-collapse whitespace-nowrap;

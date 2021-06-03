@@ -1,7 +1,6 @@
 import { useState } from 'react'
 
 import { PageTitle } from '../content/page-title'
-import { StyledH2 } from '@/components/tags/styled-h2'
 import { StyledP } from '@/components/tags/styled-p'
 import { StyledTd } from '@/components/tags/styled-td'
 import { StyledTr } from '@/components/tags/styled-tr'
@@ -31,7 +30,7 @@ export function ConsentPage() {
           ),
         })}
       </StyledP>
-      <StyledH2>{strings.consent.revokeTitle}</StyledH2>
+      <h2 className="serlo-h2">{strings.consent.revokeTitle}</h2>
       <StyledP>{strings.consent.revokeText}</StyledP>
       <table className="serlo-table">
         <tbody>

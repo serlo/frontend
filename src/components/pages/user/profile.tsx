@@ -12,8 +12,6 @@ import ReviewerBadge from '@/assets-webkit/img/community/badge-reviewer.svg'
 import { useAuthentication } from '@/auth/use-authentication'
 import { CommentArea } from '@/components/comments/comment-area'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
-import { StyledH1 } from '@/components/tags/styled-h1'
-import { StyledH2 } from '@/components/tags/styled-h2'
 import { StyledOl } from '@/components/tags/styled-ol'
 import { StyledP } from '@/components/tags/styled-p'
 import { TimeAgo } from '@/components/time-ago'
@@ -59,7 +57,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
       <ProfileHeader>
         {renderProfileImage()}
         <div>
-          <StyledH1>{username}</StyledH1>
+          <h1 className="serlo-h1">{username}</h1>
           <StyledP>
             {strings.profiles.activeSince}{' '}
             <time
@@ -80,7 +78,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
 
       {description && (
         <>
-          <StyledH2>{strings.profiles.aboutMe}</StyledH2>
+          <h2 className="serlo-h2">{strings.profiles.aboutMe}</h2>
           {renderArticle(description, `profile${id}`)}
         </>
       )}
