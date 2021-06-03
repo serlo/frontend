@@ -2,6 +2,17 @@
 
 const fs = require('fs')
 
+const knownExceptions = [
+  'gcse-searchbox-only',
+  'superspecial-abc',
+  'superspecial-bio',
+  'superspecial-blank',
+  'superspecial-chem',
+  'superspecial-math',
+  'superspecial-noscript-hidden',
+  'superspecial-sus',
+]
+
 const isFileRegex = /\/.+\..+/
 const simpleClassNameRegex = /className="([^"]+)"/g
 const clsxRegex = /className=\{clsx\(.+?\)\}/gs
@@ -101,7 +112,6 @@ if (fs.existsSync('./.next/BUILD_ID')) {
       if (new RegExp(regexStr, 'g').test(css)) {
         return false
       } else {
-        //console.log(regexStr)
         return true
       }
     }
@@ -114,8 +124,16 @@ if (fs.existsSync('./.next/BUILD_ID')) {
   if (unknownClasses.length > 0) {
     console.log(
       '\nClass names not found in style sheet:\n ',
-      unknownClasses.join('\n  ')
+      unknownClasses
+        .map((cls) =>
+          knownExceptions.includes(cls) ? `${cls} (known exception)` : cls
+        )
+        .join('\n  ')
     )
+  }
+
+  if (unknownClasses.some((cls) => !knownExceptions.includes(cls))) {
+    throw 'Unknown class name!'
   }
 } else {
   console.log('\nNo build found, skipping class name validation\n')
