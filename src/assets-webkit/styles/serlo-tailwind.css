@@ -34,20 +34,56 @@
     @apply text-brand bg-brand-100 hover:text-white hover:bg-brand;
   }
   .serlo-p {
-    @apply mx-side mt-0 mb-block special-hyphens-auto text-lg leading-6;
+    @apply mx-side mt-0 mb-block special-hyphens-auto text-lg leading-cozy;
+  }
+  .serlo-h1 {
+    @apply mx-side mb-9 mt-4 p-0 font-bold text-3.5xl special-hyphens-auto;
   }
   .serlo-h2 {
     @apply mx-side mt-0 mb-6 pb-1 pt-6;
-    @apply text-2.5xl font-bold special-hyphens-auto leading-tight;
-    @apply text-truegray-900 border-truegray-700 border-b;
+    @apply text-2.5xl font-bold special-hyphens-auto;
+    @apply text-truegray-900 border-truegray-300 border-b;
   }
-  .serlo-list {
-    @apply mx-4 mb-block mt-0 pl-7 list-none;
+  .serlo-h3 {
+    @apply mx-side mt-0 mb-8 pt-3 font-bold text-1.5xl text-truegray-900;
+  }
+  .serlo-h4 {
+    @apply mx-side mt-0 mb-5 text-base-plus;
+  }
+  .serlo-h5 {
+    @apply mx-side mt-0 mb-5;
+  }
+  .serlo-table {
+    @apply mx-side border-collapse whitespace-nowrap;
+  }
+  .serlo-th {
+    @apply p-2.5 border-0 border-b-3 border-brand-150 text-left pl-3;
+  }
+  .serlo-td {
+    @apply p-2.5 align-top border-3 border-brand-150;
+  }
+  .serlo-ul {
+    @apply mx-side mb-block mt-4 pl-5 list-none;
+
+    & > li:before {
+      @apply absolute special-content-space bg-brand-lighter;
+      @apply w-2.5 h-2.5 rounded-full -ml-5 mt-2.25;
+    }
+    & > li {
+      @apply mb-2;
+    }
+    & > li > ul,
+    & > li > ol {
+      @apply mt-2 !mb-4;
+    }
+  }
+  .serlo-ol {
+    @apply mx-side mb-block mt-0 pl-7 list-none;
     @apply special-reset-list-counter;
 
     & > li:before {
       @apply absolute special-content-list-counter special-increment-list-counter;
-      @apply font-bold align-middle text-center rounded-full -ml-7;
+      @apply font-bold text-center rounded-full -ml-7;
       @apply mt-0.5 bg-brand-150 w-4 h-4 text-xs;
       @apply leading-tight text-brand pt-0.25;
     }
@@ -58,6 +94,17 @@
     & > li > ol {
       @apply mt-2 !mb-4;
     }
+  }
+  .serlo-sub-list {
+    @apply bg-white py-3 pr-4 pl-2.5 m-0;
+    @apply text-left block overflow-auto list-none w-auto;
+    @apply rounded-lg shadow-menu;
+  }
+  .serlo-sub-list-hover {
+    @apply serlo-sub-list bg-brand-50 min-w-180;
+  }
+  .serlo-img {
+    @apply h-auto inline max-w-full;
   }
   .serlo-math-wrapper {
     @apply px-4 w-full text-left mb-block py-0.5;
@@ -100,6 +147,12 @@
         }
       }
     }
+  }
+  .serlo-responsive-margin {
+    @apply mx-side lg:mx-side-lg;
+  }
+  .serlo-responsive-padding {
+    @apply px-side lg:px-side-lg;
   }
   .serlo-input-font-reset {
     @apply text-base tracking-slightestly-tighter font-serlo;

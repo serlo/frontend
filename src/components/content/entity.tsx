@@ -9,7 +9,6 @@ import { HSpace } from './h-space'
 import { LicenseNotice } from '@/components/content/license-notice'
 import { CourseFooter } from '@/components/navigation/course-footer'
 import { CourseNavigation } from '@/components/navigation/course-navigation'
-import { StyledH1 } from '@/components/tags/styled-h1'
 import { ShareModalProps } from '@/components/user-tools/share-modal'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -71,10 +70,10 @@ export function Entity({ data }: EntityProps) {
     if (!data.title) return null
 
     return (
-      <StyledH1 spaceAbove itemProp="name">
+      <h1 className="serlo-h1 mt-12" itemProp="name">
         {data.title}
         {renderEntityIcon()}
-      </StyledH1>
+      </h1>
     )
   }
 

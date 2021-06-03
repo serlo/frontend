@@ -11,7 +11,6 @@ import { Fragment } from 'react'
 
 import { SubLink } from '../navigation/sub-link'
 import { AuthorToolsData } from './author-tools-hover-menu'
-import { HoverSubList } from './hover-sub-list'
 import { SubButtonStyle } from './sub-button-style'
 import { useCanDo } from '@/auth/use-can-do'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -235,7 +234,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
       <Tippy
         {...tippyDefaultProps}
         content={
-          <HoverSubList>
+          <ul className="serlo-sub-list-hover">
             <li
               className="block"
               key={loggedInStrings.authorMenu.subscribeNotifications}
@@ -270,7 +269,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
                 {loggedInStrings.authorMenu.subscribeNotificationsAndMail}
               </SubButtonStyle>
             </li>
-          </HoverSubList>
+          </ul>
         }
       >
         <li className="block">
@@ -319,7 +318,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
           <Tippy
             {...tippyDefaultProps}
             content={
-              <HoverSubList>
+              <ul className="serlo-sub-list-hover">
                 {data.taxonomyFolder && (
                   <>
                     {renderLi(
@@ -358,7 +357,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
                       )}
                   </>
                 )}
-              </HoverSubList>
+              </ul>
             }
           >
             <SubLink as="div" tabIndex={0}>

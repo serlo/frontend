@@ -5,7 +5,6 @@ import styled from 'styled-components'
 import { Link } from '../content/link'
 import { HeadTags } from '../head-tags'
 import { PrinciplesGraphic } from '../landing/principles-graphic'
-import { StyledP } from '../tags/styled-p'
 import ParticipateSVG from '@/assets-webkit/img/footer-participate.svg'
 import { LandingSubjects } from '@/components/landing/landing-subjects'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -25,7 +24,7 @@ export function LandingInternational({ data }: LandingInternationalProps) {
     <>
       <HeadTags data={{ title: strings.header.slogan }} />
       <Section>
-        <LandingP>{landingStrings.vision}</LandingP>
+        <p className="serlo-p ml-0">{landingStrings.vision}</p>
         <Button href="/serlo">
           {landingStrings.learnMore}{' '}
           <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
@@ -41,7 +40,7 @@ export function LandingInternational({ data }: LandingInternationalProps) {
 
       <Section>
         <StyledH2>{landingStrings.wikiTitle}</StyledH2>
-        <LandingP>{landingStrings.wikiText}</LandingP>
+        <p className="serlo-p ml-0">{landingStrings.wikiText}</p>
       </Section>
 
       <ImageSection />
@@ -52,14 +51,14 @@ export function LandingInternational({ data }: LandingInternationalProps) {
           <ParticipateSVG />
         </IconStyle>
         <FlexCol>
-          <LandingP>{landingStrings.callForAuthors}</LandingP>
+          <p className="serlo-p ml-0">{landingStrings.callForAuthors}</p>
           <Button href="/community">
             {landingStrings.communityLink}{' '}
             <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
           </Button>
         </FlexCol>
         <FlexCol>
-          <LandingP>{landingStrings.callForOther}</LandingP>
+          <p className="serlo-p ml-0">{landingStrings.callForOther}</p>
           <Button href="/get-involved">
             {landingStrings.getInvolved}{' '}
             <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
@@ -73,11 +72,6 @@ export function LandingInternational({ data }: LandingInternationalProps) {
 const SubjectsSection = styled.section`
   margin-bottom: 60px;
 `
-
-const LandingP = styled(StyledP)`
-  margin-left: 0;
-`
-
 const Section = styled.section`
   margin-top: 60px;
   margin-bottom: 60px;

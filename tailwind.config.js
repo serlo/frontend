@@ -44,6 +44,7 @@ module.exports = {
       },
       lineHeight: {
         browser: 'normal',
+        cozy: '1.33',
       },
       margin: {
         block: '30px',
@@ -53,14 +54,19 @@ module.exports = {
       },
       spacing: {
         0.25: '1px',
+        2.25: '9px',
         side: '16px',
         'side-lg': '40px',
+      },
+      minWidth: {
+        180: '180px',
       },
       outline: {
         gray: '1px dotted #212121',
       },
       boxShadow: {
         brand: `0 0 10px ${brand}, 0 0 5px ${brand}`,
+        menu: 'rgba(0, 0, 0, 0.2) 0px 2px 4px;',
       },
       fontFamily: {
         serlo: 'Karmilla, sans-serif',
@@ -69,10 +75,14 @@ module.exports = {
         8: '32px',
       },
       maxWidth: {
+        xs: '300px',
         65: '260px',
       },
       fontSize: {
-        '2.5xl': '1.75rem',
+        'base-plus': ['1.1875rem', '1.22'],
+        '1.5xl': ['1.3125rem', '1.22'],
+        '2.5xl': ['1.7rem', '1.22'],
+        '3.5xl': ['2rem', '1.22'],
       },
     },
     screens: {
@@ -105,6 +115,9 @@ module.exports = {
         },
         '.special-increment-list-counter': {
           'counter-increment': 'list-counter',
+        },
+        '.special-content-space': {
+          content: '" "',
         },
         '.special-hyphens-auto': {
           hyphens: 'auto',

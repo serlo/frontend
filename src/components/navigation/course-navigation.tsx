@@ -29,7 +29,7 @@ export function CourseNavigation({
         <FontAwesomeIcon icon={faGraduationCap} /> {data.title}
       </h1>
       {open ? (
-        <ol className="serlo-list mb-0 mt-7">
+        <ol className="serlo-ol mb-0 mt-7">
           {data.pages.map((page) => (
             <li key={page.url}>
               <Link

@@ -1,9 +1,6 @@
 import { faTimes, faEye, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import { StyledTd } from '../tags/styled-td'
-import { StyledTh } from '../tags/styled-th'
-import { StyledTr } from '../tags/styled-tr'
 import { UserLink } from '../user/user-link'
 import { Link } from '@/components/content/link'
 import { TimeAgo } from '@/components/time-ago'
@@ -21,22 +18,20 @@ export function RevisionHistory({ data }: RevisionHistoryProps) {
   return (
     <table className="mx-side border-collapse w-full">
       <thead>
-        <StyledTr>
-          <StyledTh>{strings.revisionHistory.changes}</StyledTh>
-          <StyledTh style={{ minWidth: '90px' }}>
-            {strings.revisionHistory.author}
-          </StyledTh>
-          <StyledTh>{strings.revisionHistory.date}</StyledTh>
-          <StyledTh>&nbsp;</StyledTh>
-          <StyledTh>&nbsp;</StyledTh>
-        </StyledTr>
+        <tr>
+          <th className="serlo-th">{strings.revisionHistory.changes}</th>
+          <th style={{ minWidth: '90px' }}>{strings.revisionHistory.author}</th>
+          <th className="serlo-th">{strings.revisionHistory.date}</th>
+          <th className="serlo-th">&nbsp;</th>
+          <th className="serlo-th">&nbsp;</th>
+        </tr>
       </thead>
       <tbody>
         {data.revisions?.nodes.map((entry) => {
           const isCurrent = entry.id === data.currentRevision.id
           return (
-            <StyledTr key={entry.id}>
-              <StyledTd>
+            <tr key={entry.id}>
+              <td className="serlo-td">
                 {isCurrent && (
                   <span title={strings.revisions.currentNotice}>✅ </span>
                 )}
@@ -47,22 +42,22 @@ export function RevisionHistory({ data }: RevisionHistoryProps) {
                   </span>
                 )}
                 <b>{entry.changes}</b>
-              </StyledTd>
-              <StyledTd>
+              </td>
+              <td className="serlo-td">
                 <UserLink user={entry.author} />
-              </StyledTd>
-              <StyledTd>
+              </td>
+              <td className="serlo-td">
                 <TimeAgo datetime={new Date(entry.date)} dateAsTitle />
-              </StyledTd>
-              <StyledTd>
+              </td>
+              <td className="serlo-td">
                 <Link
                   className="serlo-button serlo-make-interactive-light my-0 mx-auto text-base"
                   href={`/entity/repository/compare/${data.id}/${entry.id}`}
                 >
                   <FontAwesomeIcon icon={faEye} size="1x" />
                 </Link>
-              </StyledTd>
-              <StyledTd>
+              </td>
+              <td className="serlo-td">
                 <Link
                   className="serlo-button serlo-make-interactive-light my-0 mx-auto text-base"
                   title={strings.revisionHistory.createNew}
@@ -70,8 +65,8 @@ export function RevisionHistory({ data }: RevisionHistoryProps) {
                 >
                   <FontAwesomeIcon icon={faPencilAlt} size="1x" />
                 </Link>
-              </StyledTd>
-            </StyledTr>
+              </td>
+            </tr>
           )
         })}
       </tbody>

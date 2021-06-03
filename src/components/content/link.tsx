@@ -168,7 +168,7 @@ export function Link({
     return (
       <a
         href={_href}
-        className={clsx(className, ' serlo-link')}
+        className={clsx(className, 'serlo-link')}
         title={title}
         onClick={clickHandler}
       >

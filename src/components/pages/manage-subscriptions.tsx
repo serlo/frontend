@@ -1,9 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import { StyledTable } from '../tags/styled-table'
-import { StyledTd } from '../tags/styled-td'
-import { StyledTh } from '../tags/styled-th'
-import { StyledTr } from '../tags/styled-tr'
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -26,13 +22,13 @@ export function ManageSubscriptions({
   const loggedInStrings = loggedInData.strings.subscriptions
 
   return (
-    <StyledTable>
+    <table className="serlo-table">
       <thead>
-        <StyledTr>
-          <StyledTh>{strings.entities.content}</StyledTh>
-          <StyledTh>{loggedInStrings.mail}</StyledTh>
-          <StyledTh>{loggedInStrings.subscription}</StyledTh>
-        </StyledTr>
+        <tr>
+          <th className="serlo-th">{strings.entities.content}</th>
+          <th className="serlo-th">{loggedInStrings.mail}</th>
+          <th className="serlo-th">{loggedInStrings.subscription}</th>
+        </tr>
       </thead>
       <tbody>
         {subscriptions.map((entry) => {
@@ -44,15 +40,15 @@ export function ManageSubscriptions({
           const icon = getIconByTypename(entry.__typename)
 
           return (
-            <StyledTr key={entry.id}>
-              <StyledTd>
+            <tr key={entry.id}>
+              <td className="serlo-td">
                 <span title={entityString}>
                   {' '}
                   <FontAwesomeIcon className="text-brand" icon={icon} />{' '}
                 </span>
                 <Link href={entry.alias ?? ''}>{title}</Link>
-              </StyledTd>
-              <StyledTd className="text-center">
+              </td>
+              <td className="serlo-td text-center">
                 {/* TODO: We need info from the API how this is currently set */}
                 <button
                   className="serlo-button serlo-make-interactive-light mx-0 my-auto text-base"
@@ -66,8 +62,8 @@ export function ManageSubscriptions({
                 >
                   {loggedInStrings.noMails}
                 </button>
-              </StyledTd>
-              <StyledTd className="text-center">
+              </td>
+              <td className="serlo-td text-center">
                 <button
                   className="serlo-button serlo-make-interactive-light mx-0 my-auto text-base"
                   onClick={() => {
@@ -80,11 +76,11 @@ export function ManageSubscriptions({
                 >
                   {loggedInStrings.noNotifications}
                 </button>
-              </StyledTd>
-            </StyledTr>
+              </td>
+            </tr>
           )
         })}
       </tbody>
-    </StyledTable>
+    </table>
   )
 }
