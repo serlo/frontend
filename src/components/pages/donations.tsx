@@ -137,9 +137,9 @@ export function Donations() {
             <b>Deine Spende fließt vor allem in:</b>
           </p>
           <ul className="serlo-ul">
-            <li className="serlo-li">Serverkosten</li>
-            <li className="serlo-li">Betreuung ehrenamtlicher Autor*innen</li>
-            <li className="serlo-li">Weiterentwicklung der Plattform</li>
+            <li>Serverkosten</li>
+            <li>Betreuung ehrenamtlicher Autor*innen</li>
+            <li>Weiterentwicklung der Plattform</li>
           </ul>
           margin: 18px 0; display: block; width: 220px;
           <p>

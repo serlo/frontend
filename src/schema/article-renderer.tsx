@@ -277,7 +277,7 @@ function renderElement(props: RenderElementProps): React.ReactNode {
     return <ol className="serlo-ol">{children}</ol>
   }
   if (element.type === 'li') {
-    return <li className="serlo-li">{children}</li>
+    return <li>{children}</li>
   }
   if (element.type === 'table') {
     return (

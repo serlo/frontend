@@ -62,9 +62,6 @@
   .serlo-td {
     @apply p-2.5 align-top border-3 border-brand-150;
   }
-  .serlo-li {
-    @apply mb-2;
-  }
   .serlo-ul {
     @apply mx-side mb-block mt-4 pl-5 list-none;
 

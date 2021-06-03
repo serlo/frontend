@@ -17,12 +17,10 @@ export function LandingAbout() {
           Die <b>freie Lernplattform serlo.org</b> bietet:
         </p>
         <ul className="serlo-ul mx-0">
-          <li className="serlo-li">einfache Erklärungen</li>
-          <li className="serlo-li">Kurse</li>
-          <li className="serlo-li">Lernvideos</li>
-          <li className="serlo-li">
-            tausende Übungsaufgaben mit Musterlösungen
-          </li>
+          <li>einfache Erklärungen</li>
+          <li>Kurse</li>
+          <li>Lernvideos</li>
+          <li>tausende Übungsaufgaben mit Musterlösungen</li>
         </ul>
         <p>
           Wir ermöglichen Schüler*innen und Studierenden selbständig und im

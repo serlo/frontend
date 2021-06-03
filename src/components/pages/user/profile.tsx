@@ -178,14 +178,10 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
           {replacePlaceholders(description, { chatUrl })}
         </p>
         <ol className="serlo-ol">
-          <li className="serlo-li">
-            {replacePlaceholders(steps.goToChat, { chatUrl })}
-          </li>
-          <li className="serlo-li">{steps.signIn}</li>
-          <li className="serlo-li">
-            {replacePlaceholders(steps.goToMyAccount, { myAccountLink })}
-          </li>
-          <li className="serlo-li">{steps.uploadPicture}</li>
+          <li>{replacePlaceholders(steps.goToChat, { chatUrl })}</li>
+          <li>{steps.signIn}</li>
+          <li>{replacePlaceholders(steps.goToMyAccount, { myAccountLink })}</li>
+          <li>{steps.uploadPicture}</li>
         </ol>
       </ModalWithCloseButton>
     )
