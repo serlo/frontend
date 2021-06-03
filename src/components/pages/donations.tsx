@@ -141,7 +141,6 @@ export function Donations() {
             <li>Betreuung ehrenamtlicher Autor*innen</li>
             <li>Weiterentwicklung der Plattform</li>
           </ul>
-          margin: 18px 0; display: block; width: 220px;
           <p>
             Eine genaue Aufstellung unserer Finanzen findest du unter
             www.serlo.org/transparenz
