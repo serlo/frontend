@@ -72,7 +72,10 @@ module.exports = {
         65: '260px',
       },
       fontSize: {
-        '2.5xl': '1.75rem',
+        'base-plus': ['1.1875rem', '1.22'],
+        '1.5xl': ['1.3125rem', '1.22'],
+        '2.5xl': ['1.75rem', '1.22'],
+        '3.5xl': ['2rem', '1.22'],
       },
     },
     screens: {
@@ -108,18 +111,6 @@ module.exports = {
         },
         '.special-hyphens-auto': {
           hyphens: 'auto',
-        },
-        '.special-text-h3': {
-          fontSize: '1.3125rem',
-          lineHeight: '1.22',
-        },
-        '.special-text-h4': {
-          fontSize: '1.1875rem',
-          lineHeight: '1.22',
-        },
-        '.special-text-2x': {
-          fontSize: '2rem',
-          lineHeight: '1.22',
         },
       })
 

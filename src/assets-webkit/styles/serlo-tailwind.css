@@ -37,7 +37,7 @@
     @apply mx-side mt-0 mb-block special-hyphens-auto text-lg leading-6;
   }
   .serlo-h1 {
-    @apply mx-side mb-9 mt-4 p-0 font-bold special-hyphens-auto special-text-2x;
+    @apply mx-side mb-9 mt-4 p-0 font-bold text-3.5xl special-hyphens-auto;
   }
   .serlo-h2 {
     @apply mx-side mt-0 mb-6 pb-1 pt-6;
@@ -45,11 +45,10 @@
     @apply text-truegray-900 border-truegray-300 border-b;
   }
   .serlo-h3 {
-    @apply mx-side mt-0 mb-8 pt-3 font-bold special-text-h3 text-truegray-900;
+    @apply mx-side mt-0 mb-8 pt-3 font-bold text-1.5xl text-truegray-900;
   }
   .serlo-h4 {
-    @apply mx-side mt-0 mb-5;
-    @apply special-text-h4;
+    @apply mx-side mt-0 mb-5 text-base-plus;
   }
   .serlo-h5 {
     @apply mx-side mt-0 mb-5;
