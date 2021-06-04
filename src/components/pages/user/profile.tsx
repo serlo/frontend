@@ -20,6 +20,7 @@ import { UserPage } from '@/data-types'
 import { makeGreenButton, makeMargin } from '@/helper/css'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { renderArticle } from '@/schema/article-renderer'
+import clsx from 'clsx'
 
 export interface ProfileProps {
   userData: UserPage['userData']
@@ -69,7 +70,9 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         </div>
         {renderBadges()}
         {motivation && (
-          <Motivation className="serlo-p">&quot;{motivation}&quot;</Motivation>
+          <Motivation className="serlo-p text-1.5xl">
+            &quot;{motivation}&quot;
+          </Motivation>
         )}
         <ChatButton href={chatUrl} enabled={!isOwnProfile}>
           <FontAwesomeIcon icon={faTelegramPlane} />{' '}
@@ -84,17 +87,17 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         </>
       )}
       <CommentArea id={id} noForms />
-      <Aside>
+      <aside className="mt-16 text-gray-400 text-sm mx-side">
         {renderRoles()}
         {lastLoginDate && (
-          <p className="serlo-p mt-16 text-sm text-gray-400">
+          <p>
             {strings.profiles.lastLogin}:{' '}
             <b>
               <TimeAgo datetime={lastLoginDate} dateAsTitle />
             </b>
           </p>
         )}
-      </Aside>
+      </aside>
       {renderUserTools()}
       {renderHowToEditImage()}
     </>
@@ -165,24 +168,39 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
     return (
       <>
         {instanceRoles.length > 0 && (
-          <Roles>
+          <p className="mb-5">
             {replacePlaceholders(strings.profiles.instanceRoles, { lang })}{' '}
             {instanceRoles.map((role, index) => (
-              <Role key={index}>{role.role}</Role>
+              <React.Fragment key={index}>
+                {renderRole(role.role)}
+              </React.Fragment>
             ))}
-          </Roles>
+          </p>
         )}
         {otherRoles.length > 0 && (
-          <Roles>
+          <p className="mb-block">
             {strings.profiles.otherRoles}{' '}
             {otherRoles.map((role, index) => (
-              <Role key={index}>
-                {role.instance}: {role.role}
-              </Role>
+              <React.Fragment key={index}>
+                {renderRole(`${role.instance}: ${role.role}`)}
+              </React.Fragment>
             ))}
-          </Roles>
+          </p>
         )}
       </>
+    )
+  }
+
+  function renderRole(text: string) {
+    return (
+      <span
+        className={clsx(
+          'text-white bg-gray-400 inline-block rounded-2xl font-bold',
+          'py-1 px-2 mx-1'
+        )}
+      >
+        {text}
+      </span>
     )
   }
 
@@ -222,28 +240,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   }
 }
 
-const Role = styled.span`
-  display: inline-block;
-  background-color: ${(props) => props.theme.colors.gray};
-  color: ${(props) => props.theme.colors.white};
-  margin-right: 0.2em;
-  margin-left: 0.2em;
-  border-radius: 2em;
-  padding: 3px 8px;
-  border: 0;
-  line-height: normal;
-  letter-spacing: '-0.007em';
-  font-weight: bold;
-`
-
-// + serlo-p
-const Roles = styled.p`
-  font-size: smaller;
-`
-
-// + serlo-p
 const Motivation = styled.p`
-  font-size: 1.3em;
   grid-area: motivation;
 `
 
@@ -348,15 +345,5 @@ const ProfileHeader = styled.header`
     height: 40px;
     margin-top: 15px;
     margin-bottom: 10px;
-  }
-`
-
-const Aside = styled.aside`
-  margin-top: 70px;
-  color: #777;
-
-  & > p {
-    font-size: 0.9rem;
-    margin-bottom: 20px;
   }
 `
