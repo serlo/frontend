@@ -241,7 +241,7 @@ export const loggedInData = {
     icon: 'notifications'
   }, {
     url: '',
-    title: "Benutzer",
+    title: "Benutzer*in",
     icon: 'user',
     children: [{
       url: '/user/public',
