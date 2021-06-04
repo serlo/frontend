@@ -52,7 +52,7 @@ export const instanceData = {
       threads: "Diskussionen",
       topic: "Thema",
       subject: "Fach",
-      userProfile: "Bernutzer*inprofil",
+      userProfile: "Userprofil",
       privacyPolicy: "Datenschutzerklärung",
       content: "Inhalt"
     },
