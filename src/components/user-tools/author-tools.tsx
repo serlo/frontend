@@ -5,12 +5,12 @@ import {
   TaxonomyTerm,
   Uuid,
 } from '@serlo/authorization'
-import Tippy, { TippyProps } from '@tippyjs/react'
+import Tippy from '@tippyjs/react'
 import { useRouter } from 'next/router'
 import { Fragment } from 'react'
 
 import { SubLink } from '../navigation/sub-link'
-import { AuthorToolsData } from './author-tools-hover-menu'
+import { AuthorToolsData, tippyDefaultProps } from './author-tools-hover-menu'
 import { SubButtonStyle } from './sub-button-style'
 import { useCanDo } from '@/auth/use-can-do'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -58,13 +58,6 @@ export interface AuthorToolsProps {
   tools: Tool[]
   entityId: number
   data: AuthorToolsData
-}
-
-const tippyDefaultProps: Partial<TippyProps> = {
-  delay: [0, 270],
-  interactiveBorder: 40,
-  interactive: true,
-  placement: 'left-end',
 }
 
 export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {

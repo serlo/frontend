@@ -21,7 +21,7 @@ export interface AuthorToolsHoverMenuProps {
   data: AuthorToolsData
 }
 
-const tippyDefaultProps: Partial<TippyProps> = {
+export const tippyDefaultProps: Partial<TippyProps> = {
   delay: [0, 270],
   interactiveBorder: 40,
   interactive: true,
