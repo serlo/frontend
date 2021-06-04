@@ -17,7 +17,6 @@ export interface UserLinkProps {
 
 export function UserLink({ user, withIcon, className, path }: UserLinkProps) {
   const { strings } = useInstanceData()
-  const imageUrl = `https://community.serlo.org/avatar/${user.username}`
 
   return (
     <>
@@ -26,7 +25,7 @@ export function UserLink({ user, withIcon, className, path }: UserLinkProps) {
         className={className}
         path={path ?? []}
       >
-        {withIcon && <UserImage src={imageUrl} />}
+        {withIcon && <UserImage src={getAvatarUrl(user.username)} />}
         {user.username}
         {renderBadges()}
       </Link>
@@ -54,6 +53,10 @@ export function UserLink({ user, withIcon, className, path }: UserLinkProps) {
       </BadgesWrap>
     )
   }
+}
+
+export function getAvatarUrl(username: string) {
+  return `https://community.serlo.org/avatar/${username}`
 }
 
 const UserImage = styled.img`

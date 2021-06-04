@@ -6,6 +6,7 @@ import styled from 'styled-components'
 
 import { Link } from '../content/link'
 import { SubButtonStyle } from '../user-tools/sub-button-style'
+import { getAvatarUrl } from '../user/user-link'
 import { SubLink } from './sub-link'
 import { AuthenticationPayload } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -95,7 +96,6 @@ function MenuInner({
           duration={[300, 100]}
           animation="fade"
           onCreate={(tip) => {
-            //console.log('set tippy root')
             setTippyRoot(tip)
           }}
         />
@@ -153,6 +153,7 @@ function MenuInner({
       link.icon &&
       link.icon !== undefined &&
       menuIconMapping[link.icon] !== undefined
+
     return (
       <Li
         key={link.title}
@@ -203,6 +204,16 @@ function MenuInner({
       if (link.icon === 'notifications') {
         const Comp = lic?.UnreadNotificationsCount
         if (Comp) return <Comp icon={menuIconMapping[link.icon]} />
+      }
+
+      if (link.icon === 'user' && auth && auth.username) {
+        return (
+          <img
+            className="rounded-full w-6 h-6 inline -mt-1"
+            src={getAvatarUrl(auth.username)}
+            title={`${link.title} ${auth.username}`}
+          />
+        )
       }
 
       return (
