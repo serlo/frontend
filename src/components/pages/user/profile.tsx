@@ -1,6 +1,7 @@
 import { faTelegramPlane } from '@fortawesome/free-brands-svg-icons'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import { NextPage } from 'next'
 import Head from 'next/head'
 import * as R from 'ramda'
@@ -20,7 +21,6 @@ import { UserPage } from '@/data-types'
 import { makeGreenButton, makeMargin } from '@/helper/css'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { renderArticle } from '@/schema/article-renderer'
-import clsx from 'clsx'
 
 export interface ProfileProps {
   userData: UserPage['userData']
