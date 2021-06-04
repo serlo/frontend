@@ -52,7 +52,7 @@ export const instanceData = {
       threads: "Diskussionen",
       topic: "Thema",
       subject: "Fach",
-      userProfile: "Bernutzer*inprofil",
+      userProfile: "Userprofil",
       privacyPolicy: "Datenschutzerklärung",
       content: "Inhalt"
     },
@@ -241,7 +241,7 @@ export const loggedInData = {
     icon: 'notifications'
   }, {
     url: '',
-    title: "Benutzer*in",
+    title: "Benutzer",
     icon: 'user',
     children: [{
       url: '/user/public',
