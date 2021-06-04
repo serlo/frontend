@@ -43,7 +43,7 @@ export const instanceData = {
       page: "Seite",
       solution: "Lösung",
       taxonomyTerm: "Taxonomie-Begriff",
-      user: "Benutzer",
+      user: "Benutzer*in",
       video: 'Video',
       topicFolder: "Aufgabensammlung",
       comment: "Kommentar",
@@ -52,7 +52,7 @@ export const instanceData = {
       threads: "Diskussionen",
       topic: "Thema",
       subject: "Fach",
-      userProfile: "Benutzerprofil",
+      userProfile: "Bernutzer*inprofil",
       privacyPolicy: "Datenschutzerklärung",
       content: "Inhalt"
     },
