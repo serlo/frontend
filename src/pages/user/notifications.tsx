@@ -7,7 +7,6 @@ import { PageTitle } from '@/components/content/page-title'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Guard } from '@/components/guard'
 import { Notifications } from '@/components/pages/user/notifications'
-import { StyledP } from '@/components/tags/styled-p'
 import { UnreadNotificationsCount } from '@/components/user-tools/unread-notifications-count'
 import { NotificationEvent } from '@/components/user/notification'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -48,7 +47,7 @@ function Content() {
 
   return (
     <>
-      <StyledP>
+      <p className="serlo-p">
         {/* //blur-hack, use https://caniuse.com/#feat=css-focus-visible when supported*/}
         <button
           className={clsx(
@@ -74,7 +73,7 @@ function Content() {
         >
           {loggedInStrings.showRead}
         </button>
-      </StyledP>
+      </p>
       {showUnread ? (
         <Guard data={data} error={error} needsAuth>
           <Notifications

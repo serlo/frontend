@@ -2,6 +2,17 @@
 
 const fs = require('fs')
 
+const knownExceptions = [
+  'gcse-searchbox-only',
+  'superspecial-abc',
+  'superspecial-bio',
+  'superspecial-blank',
+  'superspecial-chem',
+  'superspecial-math',
+  'superspecial-noscript-hidden',
+  'superspecial-sus',
+]
+
 const isFileRegex = /\/.+\..+/
 const simpleClassNameRegex = /className="([^"]+)"/g
 const clsxRegex = /className=\{clsx\(.+?\)\}/gs
@@ -47,18 +58,102 @@ files.forEach((file) => {
   }
 })
 
+// process classnames -> check availability and variants
+
+const classes = {}
+
+const variants = {}
+
+classNameMatches.forEach(({ classNames }) => {
+  classNames.forEach((cn) =>
+    cn.c.split(' ').forEach((c) => {
+      if (c) {
+        classes[c] = true
+        while (c.includes(':')) {
+          const index = c.indexOf(':')
+          const variant = c.substr(0, index)
+          variants[variant] = true
+          c = c.substr(index + 1)
+        }
+      }
+    })
+  )
+})
+
+const classList = Object.keys(classes)
+classList.sort()
+
+const variantList = Object.keys(variants)
+variantList.sort()
+
+if (fs.existsSync('./.next/BUILD_ID')) {
+  console.log(
+    '\nClass name validation. Please make sure the build is up-to-date'
+  )
+  const files = fs
+    .readdirSync('./.next/static/css')
+    .filter((entry) => entry.endsWith('.css'))
+
+  const css = fs.readFileSync(`./.next/static/css/${files[0]}`, 'utf8')
+
+  const invalidClasses = []
+
+  const unknownClasses = classList.filter((c) => {
+    const cFiltered = c.replace(/[^a-z-0-9\/\.\:]/g, '')
+    if (c !== cFiltered) {
+      invalidClasses.push(c)
+      return false
+    } else {
+      const escaped = cFiltered
+        .replace(/\./g, '\\\\\\.')
+        .replace(/\//g, '\\\\\\/')
+        .replace(/\:/g, '\\\\\\:')
+      const regexStr = `\\.${escaped}(?![a-z-0-9\\\\])`
+      if (new RegExp(regexStr, 'g').test(css)) {
+        return false
+      } else {
+        return true
+      }
+    }
+  })
+
+  if (invalidClasses.length > 0) {
+    console.log('\nInvalid class names:', invalidClasses.join(', '))
+  }
+
+  if (unknownClasses.length > 0) {
+    console.log(
+      '\nClass names not found in style sheet:\n ',
+      unknownClasses
+        .map((cls) =>
+          knownExceptions.includes(cls) ? `${cls} (known exception)` : cls
+        )
+        .join('\n  ')
+    )
+  }
+
+  if (unknownClasses.some((cls) => !knownExceptions.includes(cls))) {
+    throw 'Unknown class name!'
+  }
+} else {
+  console.log('\nNo build found, skipping class name validation\n')
+  console.log('\nClasses in use:\n', classList.join(', '))
+}
+
+console.log('\nVariants in use:', variantList.join(', '))
+
 // output
 
-console.log(
-  '\n' + filesWithStyledComponents.length + ' files using styled-components:\n'
-)
-filesWithStyledComponents.forEach((file) => console.log(`  ${file.substr(6)}`))
-
-console.log('\nExtracted class names:\n')
+/*console.log('\nExtracted class names:\n')
 classNameMatches.forEach(({ file, classNames }) => {
   console.log(`  ${file.substr(6)}`)
   classNames.forEach((cn) => {
     console.log(`    ${cn.clsx ? '=' : '-'}`, [cn.c])
   })
   console.log()
-})
+})*/
+
+console.log(
+  '\n' + filesWithStyledComponents.length + ' files using styled-components:\n'
+)
+filesWithStyledComponents.forEach((file) => console.log(`  ${file.substr(6)}`))

@@ -2,8 +2,6 @@ import { useState, useEffect } from 'react'
 
 import { PageTitle } from '../content/page-title'
 import { HSpace } from '@/components/content/h-space'
-import { StyledA } from '@/components/tags/styled-a'
-import { StyledP } from '@/components/tags/styled-p'
 import { useInstanceData } from '@/contexts/instance-context'
 import { ErrorData } from '@/data-types'
 import { triggerSentry } from '@/helper/trigger-sentry'
@@ -39,19 +37,19 @@ export function ErrorPage({ code, message }: ErrorData) {
       <p className="serlo-p text-2xl">
         {isProbablyTemporary && strings.errors.temporary}
       </p>
-      <StyledP>{renderButtons()}</StyledP>
+      <p className="serlo-p">{renderButtons()}</p>
       <HSpace amount={70} />
-      <StyledP>
+      <p className="serlo-p">
         <b>Error: {code}</b>
-      </StyledP>
+      </p>
       {process.env.NODE_ENV !== 'production' && (
-        <StyledP>
+        <p className="serlo-p">
           Details:{' '}
-          <StyledA href={`/api/frontend${path}`}>
+          <a className="serlo-link" href={`/api/frontend${path}`}>
             /api/frontend
             {path}
-          </StyledA>
-        </StyledP>
+          </a>
+        </p>
       )}
       <HSpace amount={100} />
     </>

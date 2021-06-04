@@ -16,8 +16,6 @@ import { Geogebra } from '@/components/content/geogebra'
 import { HSpace } from '@/components/content/h-space'
 import { Link } from '@/components/content/link'
 import { Video } from '@/components/content/video'
-import { StyledH1 } from '@/components/tags/styled-h1'
-import { StyledP } from '@/components/tags/styled-p'
 import { TimeAgo } from '@/components/time-ago'
 import { UserLink } from '@/components/user/user-link'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -81,17 +79,17 @@ export function Revision({ data }: RevisionProps) {
         icon={icon ? icon : undefined}
       />
       {data.changes && (
-        <StyledP>
+        <p className="serlo-p">
           <b>{strings.revisions.changes}:</b> {data.changes}
           <br />
           <br />
-        </StyledP>
+        </p>
       )}
       <FlexWrapper>
-        <StyledP>
+        <p className="serlo-p">
           {strings.revisions.by} <UserLink user={data.user} />{' '}
           <TimeAgo datetime={new Date(data.date)} dateAsTitle />
-        </StyledP>
+        </p>
         {auth.current && canCheckoutAndReject && (
           <CheckoutRejectButtons
             revisionId={data.thisRevision.id}
@@ -103,7 +101,7 @@ export function Revision({ data }: RevisionProps) {
       </FlexWrapper>
       {dataSet.title !== undefined && (
         <PreviewBox title={strings.revisions.title} diffType="title">
-          <StyledH1>{dataSet.title}</StyledH1>
+          <h1 className="serlo-h1">{dataSet.title}</h1>
         </PreviewBox>
       )}
       {dataSet.content !== undefined && (
@@ -230,9 +228,9 @@ export function Revision({ data }: RevisionProps) {
 
     return (
       <>
-        <BoxHeader>
+        <p className="serlo-p flex justify-between mt-10 mb-1.5">
           <b>{title}:</b>
-        </BoxHeader>
+        </p>
         <Box withPadding={withPadding}>
           {notCompare ? children : renderDiffViewer(diffType)}
         </Box>
@@ -271,13 +269,6 @@ const Box = styled.div<{ withPadding?: boolean }>`
     margin-top: 0;
     margin-bottom: 0;
   }
-`
-
-const BoxHeader = styled(StyledP)`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 40px;
-  margin-bottom: 5px;
 `
 
 const Button = styled.button<{ current?: boolean }>`

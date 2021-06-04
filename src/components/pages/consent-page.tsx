@@ -1,12 +1,6 @@
 import { useState } from 'react'
 
 import { PageTitle } from '../content/page-title'
-import { StyledA } from '../tags/styled-a'
-import { StyledH2 } from '@/components/tags/styled-h2'
-import { StyledP } from '@/components/tags/styled-p'
-import { StyledTable } from '@/components/tags/styled-table'
-import { StyledTd } from '@/components/tags/styled-td'
-import { StyledTr } from '@/components/tags/styled-tr'
 import { useInstanceData } from '@/contexts/instance-context'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { ExternalProvider, useConsent } from '@/helper/use-consent'
@@ -24,41 +18,43 @@ export function ConsentPage() {
     <>
       <PageTitle title={strings.consent.title} headTitle />
 
-      <StyledP>
+      <p className="serlo-p">
         {replacePlaceholders(strings.consent.intro, {
           privacypolicy: (
-            <StyledA href="/privacy">{strings.entities.privacyPolicy}</StyledA>
+            <a className="serlo-link" href="/privacy">
+              {strings.entities.privacyPolicy}
+            </a>
           ),
         })}
-      </StyledP>
-      <StyledH2>{strings.consent.revokeTitle}</StyledH2>
-      <StyledP>{strings.consent.revokeText}</StyledP>
-      <StyledTable>
+      </p>
+      <h2 className="serlo-h2">{strings.consent.revokeTitle}</h2>
+      <p className="serlo-p">{strings.consent.revokeText}</p>
+      <table className="serlo-table">
         <tbody>
           {consentedProviders.length > 0 ? renderTable() : renderEmpty()}
         </tbody>
-      </StyledTable>
+      </table>
     </>
   )
 
   function renderEmpty() {
     return (
-      <StyledTr>
-        <StyledTd className="text-lg">
+      <tr>
+        <td className="serlo-td text-lg">
           <b>{strings.consent.noConsent}</b>
-        </StyledTd>
-      </StyledTr>
+        </td>
+      </tr>
     )
   }
 
   function renderTable() {
     return consentedProviders.map((provider) => {
       return (
-        <StyledTr key={provider}>
-          <StyledTd className="text-lg">
+        <tr key={provider}>
+          <td className="serlo-td text-lg">
             <b>{provider}</b>
-          </StyledTd>
-          <StyledTd className="text-lg">
+          </td>
+          <td className="serlo-td text-lg">
             <button
               className="serlo-button serlo-make-interactive-light"
               onClick={() => {
@@ -68,8 +64,8 @@ export function ConsentPage() {
             >
               {strings.consent.revokeConsent}
             </button>
-          </StyledTd>
-        </StyledTr>
+          </td>
+        </tr>
       )
     })
   }

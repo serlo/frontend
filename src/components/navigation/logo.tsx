@@ -24,7 +24,7 @@ export function Logo({ subline, noLink }: LogoProps) {
         </Link>
       </div>
       {subline && (
-        <div className="pl-12 pt-1.5 ml-0.5">
+        <div className="pl-12 pt-2 ml-0.5">
           <Link
             href={noLink ? undefined : '/'}
             path={['logo']}

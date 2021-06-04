@@ -7,7 +7,6 @@ import styled from 'styled-components'
 import { Link } from '../content/link'
 import { SubButtonStyle } from '../user-tools/sub-button-style'
 import { SubLink } from './sub-link'
-import { SubList } from './sub-list'
 import { AuthenticationPayload } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
@@ -101,10 +100,10 @@ function MenuInner({
           }}
         />
       )}
-      <List>
+      <ul className="text-right block m-0 p-0">
         {data.map((link, i) => renderEntry({ link }, i))}
         {renderAuthMenu()}
-      </List>
+      </ul>
     </ResponsiveNav>
   )
 
@@ -220,7 +219,7 @@ function MenuInner({
 
   function renderSubMenuInner(subEntries?: HeaderLink[], i?: number | string) {
     return (
-      <SubList>
+      <ul className="serlo-sub-list">
         {subEntries !== undefined &&
           subEntries.map((entry, i2) => {
             const href =
@@ -235,7 +234,7 @@ function MenuInner({
               </li>
             )
           })}
-      </SubList>
+      </ul>
     )
   }
 }
@@ -245,14 +244,6 @@ const ResponsiveNav = styled.nav`
   @media (max-width: ${(props) => props.theme.breakpointsMax.sm}) {
     display: none;
   }
-`
-
-const List = styled.ul`
-  text-align: right;
-  user-select: none;
-  display: block;
-  margin: 0;
-  padding: 0;
 `
 
 const Li = styled.li<{ show: boolean }>`

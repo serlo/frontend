@@ -2,7 +2,6 @@ import Tippy, { TippyProps } from '@tippyjs/react'
 
 import { SubLink } from '../navigation/sub-link'
 import { AuthorTools, Tool } from './author-tools'
-import { HoverSubList } from './hover-sub-list'
 import { SubButtonStyle } from './sub-button-style'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
@@ -22,7 +21,7 @@ export interface AuthorToolsHoverMenuProps {
   data: AuthorToolsData
 }
 
-const tippyDefaultProps: Partial<TippyProps> = {
+export const tippyDefaultProps: Partial<TippyProps> = {
   delay: [0, 270],
   interactiveBorder: 40,
   interactive: true,
@@ -49,9 +48,9 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
   }
 
   return (
-    <HoverSubList>
+    <ul className="serlo-sub-list-hover">
       <AuthorTools entityId={data.id} data={data} tools={getToolsArray()} />
-    </HoverSubList>
+    </ul>
   )
 
   function getToolsArray(): Tool[] {
@@ -85,11 +84,11 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
 
   function renderCoursePage() {
     return (
-      <HoverSubList>
+      <ul className="serlo-sub-list-hover">
         <Tippy
           {...tippyDefaultProps}
           content={
-            <HoverSubList>
+            <ul className="serlo-sub-list-hover">
               <AuthorTools
                 entityId={data.id}
                 data={data}
@@ -101,7 +100,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
                   Tool.Trash,
                 ]}
               />
-            </HoverSubList>
+            </ul>
           }
         >
           <li className="block">
@@ -115,7 +114,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
         <Tippy
           {...tippyDefaultProps}
           content={
-            <HoverSubList>
+            <ul className="serlo-sub-list-hover">
               <AuthorTools
                 data={data}
                 tools={[
@@ -130,7 +129,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
                 ]}
                 entityId={data.courseId || data.id}
               />
-            </HoverSubList>
+            </ul>
           }
         >
           <li className="block">
@@ -141,12 +140,12 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
             </SubLink>
           </li>
         </Tippy>
-      </HoverSubList>
+      </ul>
     )
   }
   function renderExercise() {
     return (
-      <HoverSubList>
+      <ul className="serlo-sub-list-hover">
         <AuthorTools
           entityId={data.id}
           data={data}
@@ -184,7 +183,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
           data={data}
           tools={[Tool.ChangeLicense, Tool.Log, Tool.Trash]}
         />
-      </HoverSubList>
+      </ul>
     )
   }
 }

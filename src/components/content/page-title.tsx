@@ -1,8 +1,6 @@
 import Head from 'next/head'
 import * as React from 'react'
 
-import { StyledH1 } from '../tags/styled-h1'
-
 type PageTitleProps = React.PropsWithChildren<{
   headTitle?: boolean
   title: string
@@ -17,9 +15,9 @@ export function PageTitle({ headTitle, title, icon }: PageTitleProps) {
           <title>{title}</title>
         </Head>
       )}
-      <StyledH1 extraSpaceAbove>
+      <h1 className="serlo-h1 mt-20">
         {title} {icon}
-      </StyledH1>
+      </h1>
     </>
   )
 }
