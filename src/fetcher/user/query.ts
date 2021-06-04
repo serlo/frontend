@@ -16,6 +16,12 @@ export const userQuery = gql`
         activeReviewer
         activeAuthor
         activeDonor
+        roles {
+          nodes {
+            scope
+            role
+          }
+        }
       }
     }
   }

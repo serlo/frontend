@@ -1,8 +1,10 @@
 import { faTelegramPlane } from '@fortawesome/free-brands-svg-icons'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import { NextPage } from 'next'
 import Head from 'next/head'
+import * as R from 'ramda'
 import * as React from 'react'
 import styled from 'styled-components'
 
@@ -25,7 +27,7 @@ export interface ProfileProps {
 }
 
 export const Profile: NextPage<ProfileProps> = ({ userData }) => {
-  const { strings } = useInstanceData()
+  const { strings, lang } = useInstanceData()
   const {
     id,
     username,
@@ -68,7 +70,9 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         </div>
         {renderBadges()}
         {motivation && (
-          <Motivation className="serlo-p">&quot;{motivation}&quot;</Motivation>
+          <Motivation className="serlo-p text-1.5xl">
+            &quot;{motivation}&quot;
+          </Motivation>
         )}
         <ChatButton href={chatUrl} enabled={!isOwnProfile}>
           <FontAwesomeIcon icon={faTelegramPlane} />{' '}
@@ -83,14 +87,17 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         </>
       )}
       <CommentArea id={id} noForms />
-      {lastLoginDate && (
-        <p className="serlo-p mt-16 text-sm text-gray-400">
-          {strings.profiles.lastLogin}:{' '}
-          <b>
-            <TimeAgo datetime={lastLoginDate} dateAsTitle />
-          </b>
-        </p>
-      )}
+      <aside className="mt-16 text-gray-400 text-sm mx-side">
+        {renderRoles()}
+        {lastLoginDate && (
+          <p>
+            {strings.profiles.lastLogin}:{' '}
+            <b>
+              <TimeAgo datetime={lastLoginDate} dateAsTitle />
+            </b>
+          </p>
+        )}
+      </aside>
       {renderUserTools()}
       {renderHowToEditImage()}
     </>
@@ -152,6 +159,51 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
     )
   }
 
+  function renderRoles() {
+    const [instanceRoles, otherRoles] = R.partition(
+      (role) => role.instance === null || role.instance === lang,
+      userData.roles
+    )
+
+    return (
+      <>
+        {instanceRoles.length > 0 && (
+          <p className="mb-5">
+            {replacePlaceholders(strings.profiles.instanceRoles, { lang })}{' '}
+            {instanceRoles.map((role, index) => (
+              <React.Fragment key={index}>
+                {renderRole(role.role)}
+              </React.Fragment>
+            ))}
+          </p>
+        )}
+        {otherRoles.length > 0 && (
+          <p className="mb-block">
+            {strings.profiles.otherRoles}{' '}
+            {otherRoles.map((role, index) => (
+              <React.Fragment key={index}>
+                {renderRole(`${role.instance}: ${role.role}`)}
+              </React.Fragment>
+            ))}
+          </p>
+        )}
+      </>
+    )
+  }
+
+  function renderRole(text: string) {
+    return (
+      <span
+        className={clsx(
+          'text-white bg-gray-400 inline-block rounded-2xl font-bold',
+          'py-1 px-2 mx-1'
+        )}
+      >
+        {text}
+      </span>
+    )
+  }
+
   function renderHowToEditImage() {
     const { heading, description, steps } = strings.profiles.howToEditImage
     const chatUrl = (
@@ -189,7 +241,6 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
 }
 
 const Motivation = styled.p`
-  font-size: 1.3em;
   grid-area: motivation;
 `
 
