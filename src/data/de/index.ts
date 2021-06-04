@@ -175,6 +175,8 @@ export const instanceData = {
       showAllActivities: "Alle Aktivitäten anzeigen",
       lastLogin: "Zuletzt angemeldet",
       roles: "Rollen",
+      instanceRoles: "Rollen auf %lang%.serlo.org:",
+      otherRoles: "Andere Rollen:",
       directMessage: "Direktnachricht",
       howToEditImage: {
         heading: "So kannst du dein Profilbild ändern",
