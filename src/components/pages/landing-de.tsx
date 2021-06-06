@@ -1,24 +1,17 @@
-import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import styled from 'styled-components'
 
 import { Link } from '../content/link'
 import { HeadTags } from '../head-tags'
-import { PrinciplesGraphic } from '../landing/principles-graphic'
-import DonateSVG from '@/assets-webkit/img/footer-donate.svg'
-import ParticipateSVG from '@/assets-webkit/img/footer-participate.svg'
 import { LandingAbout } from '@/components/landing/landing-about'
 import { LandingSubjects } from '@/components/landing/landing-subjects'
 import { InstanceLandingData } from '@/data-types'
-import { makeLightButton, makeResponsivePadding } from '@/helper/css'
-import clsx from 'clsx'
 
 export interface LandingDEProps {
   data: InstanceLandingData
 }
 
 export function LandingDE({ data }: LandingDEProps) {
-  const landingStrings = data.strings
   const subjectsData = data.subjectsData
 
   return (
@@ -109,46 +102,6 @@ export function LandingDE({ data }: LandingDEProps) {
 
 const SubjectsSection = styled.section``
 
-const Section = styled.section`
-  margin-top: 60px;
-  margin-bottom: 60px;
-  ${makeResponsivePadding}
-
-  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
-    max-width: 900px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-`
-
-const Col = styled.div`
-  margin-top: 40px;
-
-  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-    margin-top: 0;
-    margin-right: 30px;
-    flex: 1;
-
-    & > p {
-      min-height: 80px;
-    }
-
-    &:last-child {
-      margin-right: 0;
-    }
-  }
-
-  @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
-    margin-right: 50px;
-  }
-`
-
 const AboutSection = styled.section`
   margin-top: 50px;
   display: flex;
@@ -157,60 +110,4 @@ const AboutSection = styled.section`
   @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
     flex-direction: row;
   }
-`
-
-const StyledH2 = styled.h2`
-  font-size: 1.66rem;
-  color: ${(props) => props.theme.colors.brand};
-  border: 0;
-  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-    width: 100%;
-  }
-  font-weight: bold;
-  margin-block-start: 0.83em;
-  margin-block-end: 0.83em;
-`
-
-const Button = styled(Link)`
-  ${makeLightButton}
-  margin-left: -3px;
-`
-
-const PrinciplesSection = styled.section`
-  background-color: ${(props) => props.theme.colors.brand};
-  text-align: center;
-  ${makeResponsivePadding}
-  padding-top: 70px;
-  padding-bottom: 70px;
-
-  & > svg {
-    height: 450px;
-    width: 100%;
-    font-family: inherit;
-  }
-`
-
-const IconStyle = styled.div`
-  & > path,
-  & .st0 {
-    fill: ${(props) => props.theme.colors.brandGreen};
-  }
-  width: 100px;
-  margin-right: 30px;
-  @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
-    margin-right: 50px;
-    width: 120px;
-  }
-`
-
-const FlexCol = styled(Col)`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-
-  ${Button} {
-    margin-top: auto;
-  }
-
-  margin-bottom: 60px;
 `
