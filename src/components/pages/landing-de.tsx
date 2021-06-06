@@ -11,6 +11,7 @@ import { LandingAbout } from '@/components/landing/landing-about'
 import { LandingSubjects } from '@/components/landing/landing-subjects'
 import { InstanceLandingData } from '@/data-types'
 import { makeLightButton, makeResponsivePadding } from '@/helper/css'
+import clsx from 'clsx'
 
 export interface LandingDEProps {
   data: InstanceLandingData
@@ -31,67 +32,79 @@ export function LandingDE({ data }: LandingDEProps) {
         <LandingAbout />
       </AboutSection>
 
-      <Section>
-        <StyledH2>Serlo.org ist die Wikipedia fürs Lernen</StyledH2>
-        <IconStyle>
-          <ParticipateSVG />
-        </IconStyle>
-        <FlexCol>
-          <p className="serlo-p ml-0">
-            Wir suchen Lehrkräfte mit Begeisterung für ihr Fach. Werden Sie
-            Autor*in auf serlo.org, erstellen Sie <b>neue Inhalte</b> und helfen
-            Sie uns, die <b>Qualität</b> der Lernplattform zu sichern.
-          </p>
-          <Button href="/community">
-            Zur Startseite für Autor*innen{' '}
-            <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
-          </Button>
-        </FlexCol>
-        <FlexCol>
-          <p className="serlo-p ml-0">
-            Wir suchen neue hauptamtliche und ehrenamtliche Teammitglieder für
-            die Bereiche <b>Softwareentwicklung</b>, <b>Redaktion</b> und{' '}
-            <b>NGO-Management</b>.
-          </p>
-          <Button href="/jobs">
-            Jobs und Engagement{' '}
-            <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
-          </Button>
-        </FlexCol>
-      </Section>
+      <div
+        className={clsx(
+          'text-center mt-40 text-4xl text-truegray-700 font-bold',
+          'leading-normal'
+        )}
+      >
+        <p>Wir sind eine große, ehrenamtliche</p>
+        <p>Community und gestalten Serlo</p>
+        <p className="text-brand italic">gemeinsam.</p>
+      </div>
 
-      <PrinciplesSection>
-        <PrinciplesGraphic strings={landingStrings} />
-      </PrinciplesSection>
+      <div className="my-12 text-center">
+        <Link href="/mitmachen">
+          <a
+            className={clsx(
+              'text-white font-bold text-xl bg-brand rounded',
+              'px-8 py-4'
+            )}
+          >
+            Magst du mitmachen?
+          </a>
+        </Link>
+      </div>
 
-      <Section>
-        <StyledH2>Werden Sie Teil unserer Bewegung für freie Bildung</StyledH2>
-        <IconStyle>
-          <DonateSVG />
-        </IconStyle>
-        <FlexCol>
-          <p className="serlo-p ml-0">
-            Bildung gehört uns allen! Werden Sie Mitglied in unserer
-            Organisation Serlo Education e.V. und so zu Mitherausgeber*in der
-            freien Lernplattform.
-          </p>
-          <Button href="/beitreten">
-            Mitglied werden{' '}
-            <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
-          </Button>
-        </FlexCol>
-        <FlexCol>
-          <p className="serlo-p ml-0">
-            Softwareentwicklung und Lerninhalte erstellen kostet Geld. Wir
-            freuen uns sehr, wenn Sie Serlo mit einer Spende unterstützen.
-          </p>
-          <Button href="/spenden">
-            Spenden <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
-          </Button>
-        </FlexCol>
-      </Section>
+      <div className="mb-60">
+        <div className="relative w-0 mx-auto" style={{ height: '700px' }}>
+          {renderPerson('menuja', 'Autorin', -200, 60)}
+          {renderPerson('LinaMaria', 'Spenderin', 200, 90)}
+          {renderPerson('Wolfgang', 'Botschaftler', -700, -140)}
+          {renderPerson('wanda', 'Autorin', 600, -110)}
+          {renderPerson('kathongi', 'Autorin', -550, 250)}
+        </div>
+      </div>
+
+      <div className="mt-36">
+        <img src="/_assets/img/crosses.png" className="mx-auto" />
+      </div>
+
+      <div
+        className={clsx(
+          'text-center mt-4 text-4xl text-truegray-700 font-bold',
+          'leading-normal mb-40'
+        )}
+      >
+        <p>Zusammen setzen wir uns dafür ein, dass</p>
+        <p>gute Bildung nicht abhängig vom</p>
+        <p>Geldbeutel der Eltern ist.</p>
+      </div>
     </>
   )
+
+  function renderPerson(
+    name: string,
+    role: string,
+    posx: number,
+    posy: number
+  ) {
+    return (
+      <div
+        style={{ left: `${posx}px`, top: `${posy}px` }}
+        className="absolute w-52 text-center"
+      >
+        <img
+          src={`https://community.serlo.org/avatar/${name}`}
+          className="rounded-full w-full"
+        />
+        <p className="text-lg mt-3 font-bold text-gray-700">@{name}</p>
+        <p className={clsx('text-white text-lg font-bold mt-3')}>
+          <span className="px-2 py-1 bg-yellow-500 rounded-2xl">{role}</span>
+        </p>
+      </div>
+    )
+  }
 }
 
 const SubjectsSection = styled.section``
