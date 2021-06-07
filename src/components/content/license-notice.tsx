@@ -99,7 +99,7 @@ export function LicenseNotice({
     return (
       <>
         <MinimalLink
-          className="serlo-button serlo-make-interactive-transparent-blue font-normal text-base !no-underline"
+          className="serlo-button serlo-make-interactive-transparent-blue font-normal text-base hover:no-underline"
           title={title}
           href={licenseHref}
           noExternalIcon

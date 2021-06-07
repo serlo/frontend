@@ -50,7 +50,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
       />
 
       <div className="flex justify-between">
-        {renderExerciseTask()}
+        <div>{renderExerciseTask()}</div>
         {renderToolsButton()}
       </div>
 
