@@ -1,4 +1,4 @@
-import { faTools } from '@fortawesome/free-solid-svg-icons'
+import { faLayerGroup, faTools } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Tippy from '@tippyjs/react'
 import clsx from 'clsx'
@@ -24,12 +24,14 @@ export function ExerciseAuthorTools({ data }: ExerciseAuthorToolsProps) {
     >
       <a
         className={clsx(
-          'hidden sm:inline serlo-button text-center text-truegray-800',
+          'hidden sm:inline-block serlo-button text-center text-truegray-800',
           'hover:bg-brand hover:text-white text-base leading-8',
           'w-8 h-8 ml-1 p-0'
         )}
       >
-        <FontAwesomeIcon icon={faTools} />
+        <FontAwesomeIcon
+          icon={data.type == '_ExerciseGroupInline' ? faLayerGroup : faTools}
+        />
       </a>
     </Tippy>
   )

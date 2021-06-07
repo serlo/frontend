@@ -12,7 +12,7 @@ import { CommentAreaProps } from '@/components/comments/comment-area'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { FrontendExerciseNode } from '@/data-types'
-import { makeMargin, makeTransparentButton, makePadding } from '@/helper/css'
+import { makeMargin, makeTransparentButton } from '@/helper/css'
 import { submitEventWithPath } from '@/helper/submit-event'
 import type { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
 
@@ -51,10 +51,16 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
         href={node.href ? node.href : `/${node.context.id}`}
       />
 
-      {renderExerciseTask()}
-      {renderInteractive()}
+      <div className="flex justify-between">
+        {renderExerciseTask()}
+        {renderToolsButton()}
+      </div>
 
-      {renderToolsAndLicense()}
+      {renderInteractive()}
+      <div className="flex">
+        {renderSolutionToggle()}
+        {renderLicense()}
+      </div>
 
       {solutionVisible && renderSolution()}
     </div>
@@ -78,6 +84,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
 
     return (
       <div className="serlo-solution-box">
+        {authorTools && <div className="text-right -mt-2">{authorTools}</div>}
         {renderNested(
           [
             {
@@ -88,15 +95,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
           ],
           'tasksol'
         )}
-        {
-          /* compat: hide div if empty */
-          (license || authorTools) && (
-            <SolutionTools>
-              {license}
-              {authorTools}
-            </SolutionTools>
-          )
-        }
+        {license && <div className="px-side">{license}</div>}
         <CommentArea id={node.context.solutionId!} />
       </div>
     )
@@ -162,33 +161,24 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
     }
   }
 
-  function renderToolsAndLicense() {
+  function renderToolsButton() {
     const Comp = lic?.ExerciseAuthorTools
     return (
-      <ExerciseTools>
-        {renderSolutionToggle()}
-
-        {node.task.license && (
-          <LicenseNotice
-            minimal
-            data={node.task.license}
-            type="task"
-            path={path}
-          />
-        )}
+      <>
         {loaded && auth.current && Comp && (
           <Comp data={{ type: '_ExerciseInline', id: node.context.id }} />
         )}
-      </ExerciseTools>
+      </>
+    )
+  }
+
+  function renderLicense() {
+    if (!node.task.license) return null
+    return (
+      <LicenseNotice minimal data={node.task.license} type="task" path={path} />
     )
   }
 }
-
-const ExerciseTools = styled.div`
-  @media (min-width: ${(props) => props.theme.breakpoints.mobile}) {
-    display: flex;
-  }
-`
 
 const StyledSpan = styled.span`
   display: inline-block;
@@ -217,8 +207,4 @@ const SolutionToggle = styled.button<{ active: boolean }>`
       color: ${(props) => props.theme.colors.brand};
     }
   }
-`
-
-const SolutionTools = styled.div`
-  ${makePadding};
 `

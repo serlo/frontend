@@ -81,9 +81,9 @@ export function LicenseNotice({
     const typeString = translateTypeString()
     const licenseHref = `/license/detail/${data.id}`
 
-    const text = `${typeString}: ${
+    const text = `${
       data.shortTitle ? data.shortTitle : strings.license.special
-    }`
+    } (${typeString})`
     const title = isCreativeCommons
       ? data.title
       : `${data.title} –– ${strings.license.nonFree}`
