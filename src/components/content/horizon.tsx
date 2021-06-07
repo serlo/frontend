@@ -1,6 +1,5 @@
-import styled from 'styled-components'
+import clsx from 'clsx'
 
-import { makePadding } from '../../helper/css'
 import { Link } from './link'
 import { HorizonData } from '@/data-types'
 
@@ -10,71 +9,39 @@ export interface HorizonProps {
 
 export function Horizon({ data }: HorizonProps) {
   return (
-    <Wrapper>
+    <aside
+      className={clsx(
+        'sm:flex sm:items-stretch sm:justify-between',
+        'px-side pt-8 pb-6 -ml-2.5'
+      )}
+    >
       {data.map((horizonEntry, index) => {
         return (
-          <Item href={horizonEntry.url} key={index} noExternalIcon path={[]}>
-            <Image alt={horizonEntry.title} src={horizonEntry.imageUrl} />
-            <Headline>{horizonEntry.title}</Headline>
-            <Text>{horizonEntry.text}</Text>
-          </Item>
+          <Link
+            className={clsx(
+              'text-brand text !no-underline box-border',
+              'py-4 px-2.5 leading-cozy',
+              'rounded hover:shadow-menu hover:text-truegray-700',
+              'hidden mb-8 w-full sm:w-1/3 sm:mb:0 sm:block',
+              'first:block sm:mr-6'
+            )}
+            href={horizonEntry.url}
+            key={index}
+            noExternalIcon
+            path={[]}
+          >
+            <img
+              className="mb-2.5 pr-1 h-auto"
+              alt={horizonEntry.title}
+              src={horizonEntry.imageUrl}
+            />
+            <h4 className="font-bold text-xl mx-0 mt-3 mb-1">
+              {horizonEntry.title}
+            </h4>
+            <p className="m-0">{horizonEntry.text}</p>
+          </Link>
         )
       })}
-    </Wrapper>
+    </aside>
   )
 }
-
-const Wrapper = styled.aside`
-  align-items: stretch;
-  display: flex;
-  justify-content: space-between;
-  ${makePadding}
-  padding-top: 32px;
-  padding-bottom: 24px;
-  margin-left: -10px;
-  @media (max-width: ${(props) => props.theme.breakpointsMax.sm}) {
-    flex-direction: column;
-  }
-`
-
-const Item = styled(Link)`
-  color: ${(props) => props.theme.colors.brand};
-  display: block;
-  line-height: 1.2;
-  text-decoration: none !important;
-  max-width: 400px;
-  width: 29.3%;
-  padding: 15px 10px;
-  box-sizing: border-box;
-
-  &:hover {
-    box-shadow: 0px 0px 10px 0px rgba(170, 170, 170, 0.25);
-    color: ${(props) => props.theme.colors.darkgray};
-  }
-
-  @media (max-width: ${(props) => props.theme.breakpointsMax.sm}) {
-    /* quickfix: slider or not loading them at all would be better */
-    display: none;
-    &:first-child {
-      display: block;
-    }
-    margin-bottom: 30px;
-    width: 100%;
-  }
-`
-
-const Image = styled.img`
-  margin-bottom: 10px;
-  max-width: 98%;
-  height: auto;
-`
-
-const Headline = styled.h4`
-  font-weight: bold;
-  font-size: 1.25rem;
-  margin: 10px 0 5px;
-`
-
-const Text = styled.p`
-  margin: 0;
-`
