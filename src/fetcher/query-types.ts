@@ -116,6 +116,9 @@ export interface Exercise extends EntityWithTaxonomyTerms, BareExercise {
 }
 export interface GroupedExercise extends BareExercise {
   __typename: 'GroupedExercise'
+  exerciseGroup: {
+    alias: string
+  }
 }
 
 export interface BareExerciseGroup extends Entity {

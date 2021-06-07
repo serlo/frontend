@@ -7,7 +7,6 @@ import { ThemeProvider } from 'styled-components'
 import { ConditonalWrap } from './conditional-wrap'
 import { HeaderFooter } from './header-footer'
 import { MaxWidthDiv } from './navigation/max-width-div'
-import { RelativeContainer } from './navigation/relative-container'
 import { ToastNotice } from './toast-notice'
 import { useAuthentication } from '@/auth/use-authentication'
 import { PrintWarning } from '@/components/content/print-warning'
@@ -119,11 +118,11 @@ export function FrontendClientBase({
                   <ConditonalWrap
                     condition={!noContainers}
                     wrapper={(kids) => (
-                      <RelativeContainer>
+                      <div className="relative">
                         <MaxWidthDiv showNav={showNav}>
                           <main>{kids}</main>
                         </MaxWidthDiv>
-                      </RelativeContainer>
+                      </div>
                     )}
                   >
                     {/* should not be necessary…?*/}

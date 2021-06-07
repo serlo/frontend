@@ -200,6 +200,7 @@ export function UserTools({
         content={<Comp data={data} />}
         placement={aboveContent ? 'bottom' : 'left-end'}
         delay={[0, 300]}
+        trigger="click mouseenter focus"
         interactiveBorder={aboveContent ? 10 : 40}
       >
         <button className={buttonClassName()}>
@@ -223,7 +224,7 @@ export function UserTools({
   function renderInner(text: string, icon: IconDefinition) {
     return (
       <>
-        <FontAwesomeIcon icon={icon} className="lg: mr-0.5" /> {text}
+        <FontAwesomeIcon icon={icon} className="lg:mr-0.5" /> {text}
       </>
     )
   }

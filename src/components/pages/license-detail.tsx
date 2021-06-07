@@ -1,8 +1,4 @@
-import styled from 'styled-components'
-
 import { HSpace } from '@/components/content/h-space'
-import { StyledH2 } from '@/components/tags/styled-h2'
-import { StyledP } from '@/components/tags/styled-p'
 import { useInstanceData } from '@/contexts/instance-context'
 import { LicenseDetailData } from '@/data-types'
 import { renderArticle } from '@/schema/article-renderer'
@@ -17,22 +13,17 @@ export function LicenseDetail({
   return (
     <>
       <HSpace amount={70} />
-      <BigP>{strings.license.readMore}</BigP>
-      <StyledH2>{title}</StyledH2>
+      <p className="serlo-p text-lg font-bold text-brand-light -mb-4">
+        {strings.license.readMore}
+      </p>
+      <h2 className="serlo-h2">{title}</h2>
       <HSpace amount={20} />
       {renderArticle(content, `license${id}`)}
       {iconHref && (
-        <StyledP>
+        <p className="serlo-p">
           <img src={iconHref} alt="License Badge" />
-        </StyledP>
+        </p>
       )}
     </>
   )
 }
-
-const BigP = styled(StyledP)`
-  font-size: 1.125rem;
-  font-weight: bold;
-  color: ${(props) => props.theme.colors.lightblue};
-  margin-bottom: -15px;
-`

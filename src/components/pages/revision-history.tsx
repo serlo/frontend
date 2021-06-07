@@ -1,16 +1,11 @@
-import { faEye, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
+import { faTimes, faEye, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import styled from 'styled-components'
 
-import { StyledTd } from '../tags/styled-td'
-import { StyledTh } from '../tags/styled-th'
-import { StyledTr } from '../tags/styled-tr'
 import { UserLink } from '../user/user-link'
 import { Link } from '@/components/content/link'
 import { TimeAgo } from '@/components/time-ago'
 import { useInstanceData } from '@/contexts/instance-context'
 import type { HistoryRevisionsData } from '@/data-types'
-import { makeLightButton, makeMargin } from '@/helper/css'
 
 export interface RevisionHistoryProps {
   data?: HistoryRevisionsData
@@ -21,67 +16,60 @@ export function RevisionHistory({ data }: RevisionHistoryProps) {
   if (!data) return null
 
   return (
-    <Table>
+    <table className="mx-side border-collapse w-full">
       <thead>
-        <StyledTr>
-          <StyledTh>{strings.revisionHistory.changes}</StyledTh>
-          <StyledTh style={{ minWidth: '90px' }}>
-            {strings.revisionHistory.author}
-          </StyledTh>
-          <StyledTh>{strings.revisionHistory.date}</StyledTh>
-          <StyledTh>&nbsp;</StyledTh>
-          <StyledTh>&nbsp;</StyledTh>
-        </StyledTr>
+        <tr>
+          <th className="serlo-th">{strings.revisionHistory.changes}</th>
+          <th style={{ minWidth: '90px' }}>{strings.revisionHistory.author}</th>
+          <th className="serlo-th">{strings.revisionHistory.date}</th>
+          <th className="serlo-th">&nbsp;</th>
+          <th className="serlo-th">&nbsp;</th>
+        </tr>
       </thead>
       <tbody>
         {data.revisions?.nodes.map((entry) => {
+          const isCurrent = entry.id === data.currentRevision.id
           return (
-            <StyledTr key={entry.id}>
-              <StyledTd>
-                {entry.id === data.currentRevision.id && (
-                  <span title={strings.revisions.thisIsCurrentVersion}>
-                    ✅{' '}
+            <tr key={entry.id}>
+              <td className="serlo-td">
+                {isCurrent && (
+                  <span title={strings.revisions.currentNotice}>✅ </span>
+                )}
+                {/* TODO: Remove isCurrent check once this is solved: https://github.com/serlo/serlo.org-database-layer/issues/102 */}
+                {entry.trashed && !isCurrent && (
+                  <span title={strings.revisions.rejectedNotice}>
+                    <FontAwesomeIcon icon={faTimes} />{' '}
                   </span>
                 )}
                 <b>{entry.changes}</b>
-              </StyledTd>
-              <StyledTd>
+              </td>
+              <td className="serlo-td">
                 <UserLink user={entry.author} />
-              </StyledTd>
-              <StyledTd>
+              </td>
+              <td className="serlo-td">
                 <TimeAgo datetime={new Date(entry.date)} dateAsTitle />
-              </StyledTd>
-              <StyledTd>
-                <Button
+              </td>
+              <td className="serlo-td">
+                <Link
+                  className="serlo-button serlo-make-interactive-light my-0 mx-auto text-base"
                   href={`/entity/repository/compare/${data.id}/${entry.id}`}
                 >
                   <FontAwesomeIcon icon={faEye} size="1x" />
-                </Button>
-              </StyledTd>
-              <StyledTd>
-                <Button
+                </Link>
+              </td>
+              <td className="serlo-td">
+                <Link
+                  className="serlo-button serlo-make-interactive-light my-0 mx-auto text-base"
                   title={strings.revisionHistory.createNew}
                   href={`/entity/repository/add-revision/${data.id}/${entry.id}`}
                 >
                   <FontAwesomeIcon icon={faPencilAlt} size="1x" />
-                </Button>
-              </StyledTd>
-            </StyledTr>
+                </Link>
+              </td>
+            </tr>
           )
         })}
       </tbody>
-    </Table>
+    </table>
   )
 }
-
-const Button = styled(Link)`
-  ${makeLightButton}
-  margin: 0 auto;
-  font-size: 1rem;
-`
-
-export const Table = styled.table`
-  ${makeMargin}
-  border-collapse: collapse;
-  width: 100%;
-`

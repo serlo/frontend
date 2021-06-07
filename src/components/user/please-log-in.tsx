@@ -1,15 +1,14 @@
 import { Link } from '../content/link'
-import { StyledP } from '@/components/tags/styled-p'
 import { useInstanceData } from '@/contexts/instance-context'
 
 export function PleaseLogIn() {
   const { strings } = useInstanceData()
   return (
-    <StyledP>
+    <p className="serlo-p">
       <Link href="/api/auth/login" path={[]}>
         {strings.login.pleaseLogInLink}
       </Link>{' '}
       {strings.login.pleaseLogInText}
-    </StyledP>
+    </p>
   )
 }

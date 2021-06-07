@@ -4,7 +4,6 @@ import React from 'react'
 import BaseModal from 'react-modal'
 import styled from 'styled-components'
 
-import { StyledH2 } from './tags/styled-h2'
 import { useInstanceData } from '@/contexts/instance-context'
 
 try {
@@ -30,8 +29,12 @@ export function ModalWithCloseButton({
   const { strings } = useInstanceData()
 
   return (
-    <Modal isOpen={isOpen} onRequestClose={onCloseClick}>
-      {title && <StyledH2>{title}</StyledH2>}
+    <Modal
+      isOpen={isOpen}
+      onRequestClose={onCloseClick}
+      shouldReturnFocusAfterClose={false}
+    >
+      {title && <h2 className="serlo-h2">{title}</h2>}
       {children}
       <CloseButton onClick={onCloseClick} title={strings.share.close}>
         <FontAwesomeIcon icon={faTimes} size="lg" />

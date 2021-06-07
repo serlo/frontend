@@ -136,6 +136,7 @@ export const instanceData = {
     },
     revisions: {
       toOverview: "Volver a Vista general",
+      toContent: "Back to content",
       changes: "Cambios",
       title: "Título",
       content: "Contenido",
@@ -144,7 +145,8 @@ export const instanceData = {
       compare: "Comparar",
       currentVersion: "Versión Actual",
       thisVersion: "Esta Versión",
-      thisIsCurrentVersion: "Esta es la versión aceptada actualmente.",
+      currentNotice: "Esta es la versión aceptada actualmente.",
+      rejectedNotice: 'This revision was rejected.',
       by: "Por"
     },
     revisionHistory: {
@@ -173,6 +175,8 @@ export const instanceData = {
       showAllActivities: "Mostrar todas las actividades",
       lastLogin: "Ultimo Inicio de sesion",
       roles: "Roles (funciones)",
+      instanceRoles: 'Roles on %lang%.serlo.org:',
+      otherRoles: 'Other roles:',
       directMessage: "Mensaje directo",
       howToEditImage: {
         heading: 'How to edit your profile picture',
@@ -243,10 +247,7 @@ export const loggedInData = {
     icon: 'user',
     children: [{
       url: '/user/public',
-      title: "Perfil público"
-    }, {
-      url: '/user/settings',
-      title: "Editar perfil"
+      title: 'Own profile'
     }, {
       url: '/auth/password/change',
       title: "Actualizar contraseña"
@@ -328,7 +329,7 @@ export const loggedInData = {
       noNotifications: "cancelar"
     },
     revisions: {
-      accept: {
+      checkout: {
         action: "Aceptar",
         title: "Aceptar la revisión",
         explanation: "Por favor, dale al autor algún comentario."

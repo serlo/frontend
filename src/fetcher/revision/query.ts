@@ -36,6 +36,7 @@ export const revisionQuery = gql`
           repository {
             id
             currentRevision {
+              id
               ...pageRevision
             }
           }
@@ -46,6 +47,7 @@ export const revisionQuery = gql`
           repository {
             id
             currentRevision {
+              id
               ...appletRevision
             }
           }
@@ -56,6 +58,7 @@ export const revisionQuery = gql`
           repository {
             id
             currentRevision {
+              id
               ...courseRevision
             }
           }
@@ -66,6 +69,7 @@ export const revisionQuery = gql`
           repository {
             id
             currentRevision {
+              id
               ...coursePageRevision
             }
           }
@@ -76,6 +80,7 @@ export const revisionQuery = gql`
           repository {
             id
             currentRevision {
+              id
               ...eventRevision
             }
           }
@@ -86,6 +91,7 @@ export const revisionQuery = gql`
           repository {
             id
             currentRevision {
+              id
               content
             }
           }
@@ -100,6 +106,7 @@ export const revisionQuery = gql`
               title
             }
             currentRevision {
+              id
               content
             }
           }
@@ -114,6 +121,7 @@ export const revisionQuery = gql`
               title
             }
             currentRevision {
+              id
               ...exerciseGroupRevision
             }
           }
@@ -124,6 +132,7 @@ export const revisionQuery = gql`
           repository {
             id
             currentRevision {
+              id
               content
             }
           }
@@ -134,6 +143,7 @@ export const revisionQuery = gql`
           repository {
             id
             currentRevision {
+              id
               ...videoRevision
             }
           }

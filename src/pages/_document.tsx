@@ -148,6 +148,7 @@ export default class MyDocument extends Document {
           <script async defer src="https://sa.serlo.org/latest.js" />
           <noscript>
             <img src="https://sa.serlo.org/noscript.gif" alt="" />
+            <style>{`.superspecial-noscript-hidden { display: none; }`}</style>
           </noscript>
         </body>
       </Html>

@@ -1,5 +1,4 @@
-import { lighten } from 'polished'
-import styled from 'styled-components'
+import clsx from 'clsx'
 
 import { Link } from '../content/link'
 
@@ -15,7 +14,8 @@ export function Logo({ subline, noLink }: LogoProps) {
     <>
       <div>
         <Link href={noLink ? undefined : '/'} path={['logo']}>
-          <Image
+          <img
+            className="inline"
             alt="Serlo"
             src="/_assets/img/serlo-logo.svg"
             width={logoTargetWidth}
@@ -24,41 +24,19 @@ export function Logo({ subline, noLink }: LogoProps) {
         </Link>
       </div>
       {subline && (
-        <SublineWrap>
-          <SublineLink
-            className="subline icon"
+        <div className="pl-12 pt-2 ml-0.5">
+          <Link
             href={noLink ? undefined : '/'}
             path={['logo']}
+            className={clsx(
+              'text-truegray-500 font-medium text-2xl hover:no-underline hover:text-brand',
+              'sm:text-2.5xl sm:tracking-slightly-tighter leading-normal'
+            )}
           >
             {subline}
-          </SublineLink>
-        </SublineWrap>
+          </Link>
+        </div>
       )}
     </>
   )
 }
-
-const Image = styled.img`
-  display: inline;
-`
-
-const SublineWrap = styled.div`
-  padding-left: 50px;
-  padding-top: 5px;
-`
-
-const SublineLink = styled(Link)`
-  color: ${(props) => lighten(0.25, props.theme.colors.darkgray)};
-  font-weight: 500;
-  font-size: 1.55rem;
-  text-decoration: none !important;
-
-  &:hover {
-    color: ${(props) => props.theme.colors.brand};
-  }
-
-  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-    font-size: 1.65rem;
-    letter-spacing: 0.008em;
-  }
-`

@@ -1,21 +1,12 @@
 import { faPaypal } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import styled from 'styled-components'
+import clsx from 'clsx'
 
 import { HeadTags } from '../head-tags'
 import { PrivacyWrapper } from '@/components/content/privacy-wrapper'
 import { PartnerList } from '@/components/landing/partner-list'
 import { FooterNav } from '@/components/navigation/footer-nav'
 import { Logo } from '@/components/navigation/logo'
-import { StyledA } from '@/components/tags/styled-a'
-import { StyledImg } from '@/components/tags/styled-img'
-import { StyledLi } from '@/components/tags/styled-li'
-import { StyledUl } from '@/components/tags/styled-ul'
-import {
-  makeGreenTransparentButton,
-  makeResponsivePadding,
-  makePadding,
-} from '@/helper/css'
 import { ExternalProvider } from '@/helper/use-consent'
 
 const footerEntries = [
@@ -47,23 +38,27 @@ export function Donations() {
   return (
     <>
       <HeadTags data={{ title: 'Spenden für freie Bildung – Serlo.org' }} />
-
-      <BlueHeader>
-        <PaddedDiv>
+      <header className="px-side pt-12 bg-brand-100 sm:text-center">
+        <div className="pb-6">
           <Logo subline="" noLink />
-        </PaddedDiv>
-      </BlueHeader>
+        </div>
+      </header>
 
-      <Section>
-        <DonationCol>
-          <StyledH1 className="font-bold my-5">
+      <section
+        className={clsx(
+          'serlo-responsive-margin mt-5 mb-16',
+          'md:mt-12 md:px-8 lg:block'
+        )}
+      >
+        <div className="max-w-xl mx-auto md:ml-0 lg:ml-auto text-lg">
+          <h1 className="text-3.5xl text-brand border-0 font-bold my-5 sm:w-full">
             Deine Spende für freie Bildung
-          </StyledH1>
-          <StyledImg
+          </h1>
+          <img
+            className="serlo-img"
             id="main-image"
             src="/_assets/img/donations-image.jpg"
-            alt="test"
-            title=""
+            alt="Kind beim Lernen mit Serlo"
           />
           <p>
             Mit deiner Spende ermöglichst du es Kindern und Jugendlichen im
@@ -80,10 +75,12 @@ export function Donations() {
           </PrivacyWrapper>
 
           <noscript>Bitte Javascript aktivieren</noscript>
-
-          <StyledH2 id="no-formular" className="font-bold my-5">
+          <h2
+            id="no-formular"
+            className="text-2.5xl text-brand font-bold my-11 sm:w-full"
+          >
             Ohne Angabe von Daten spenden
-          </StyledH2>
+          </h2>
           <h3 id="spendenkonto" className="font-bold my-4 text-xl">
             Spendenkonto
           </h3>
@@ -98,18 +95,27 @@ export function Donations() {
             PayPal
           </h3>
           <p>
-            <Button href="https://www.paypal.me/serlo">
+            <a
+              className="serlo-button serlo-make-interactive-transparent-green -ml-1 font-bold pt-1"
+              href="https://www.paypal.me/serlo"
+            >
               <FontAwesomeIcon icon={faPaypal} size="1x" /> Über PayPal spenden
-            </Button>
+            </a>
           </p>
-        </DonationCol>
-        <ContactCol>
+        </div>
+        <div
+          className={clsx(
+            'pt-16 mt-11 border-t-8 border-brand-150',
+            'md:pt-0 md:mt-0 md:border-t-0',
+            'md:max-w-xs md:absolute md:right-0 md:top-48 md:pr-4'
+          )}
+        >
           <h3 className="font-bold my-4 text-xl">Dein Ansprechpartner</h3>
           <p>
-            <RoundedImage
+            <img
+              className="rounded-full w-52 h-52 object-cover object-top mb-7 mt-3"
               src="/_assets/img/donations-contact.jpg"
-              alt="Wolfgang Schmid"
-              title=""
+              alt="Ansprechpartner Wolfgang Schmid"
             />
           </p>
           <p>
@@ -121,21 +127,24 @@ export function Donations() {
           <p>
             <b>Bei Fragen gern melden über:</b>
             <br />
-            <StyledA href="mailto:spenden@serlo.org">spenden@serlo.org</StyledA>
+            <a className="serlo-link" href="mailto:spenden@serlo.org">
+              spenden@serlo.org
+            </a>
           </p>
           <br />
           <p>
             <b>Deine Spende fließt vor allem in:</b>
           </p>
-          <StyledUl>
-            <StyledLi>Serverkosten</StyledLi>
-            <StyledLi>Betreuung ehrenamtlicher Autor*innen</StyledLi>
-            <StyledLi>Weiterentwicklung der Plattform</StyledLi>
-          </StyledUl>
+          <ul className="serlo-ul">
+            <li>Serverkosten</li>
+            <li>Betreuung ehrenamtlicher Autor*innen</li>
+            <li>Weiterentwicklung der Plattform</li>
+          </ul>
           <p>
             Eine genaue Aufstellung unserer Finanzen findest du unter
             www.serlo.org/transparenz
-            <ITZImg
+            <img
+              className="serlo-img my-5 mx-0 block w-56"
               src="/_assets/img/donations-itz.png"
               alt="Initiative Transparente Zivilgesellschaft"
             />
@@ -154,136 +163,22 @@ export function Donations() {
           </p>
           <p>
             Du kannst auch via{' '}
-            <StyledA href="#no-formular">Überweisung oder PayPal</StyledA>{' '}
+            <a className="serlo-link" href="#no-formular">
+              Überweisung oder PayPal
+            </a>{' '}
             spenden.
           </p>
           <br />
-        </ContactCol>
-      </Section>
-
-      <BlueContainer>
-        <PartnerList />
-      </BlueContainer>
+        </div>
+      </section>
+      <div
+        className={clsx(
+          'bg-brand text-white mt-24 p-7 serlo-responsive-padding'
+        )}
+      >
+        <PartnerList higher />
+      </div>
       <FooterNav data={footerEntries} />
     </>
   )
 }
-
-const BlueHeader = styled.header`
-  ${makePadding}
-  padding-top: 46px;
-  background-color: ${(props) => props.theme.colors.bluewhite};
-
-  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-    text-align: center;
-  }
-`
-
-const PaddedDiv = styled.div`
-  padding-bottom: 24px;
-`
-
-const Section = styled.section`
-  margin-top: 20px;
-  margin-bottom: 60px;
-  ${makeResponsivePadding}
-
-  @media (min-width: ${(props) => props.theme.breakpoints.md}) {
-    margin-top: 50px;
-    padding-left: 32px;
-    padding-right: 32px;
-  }
-
-  @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
-    display: block;
-  }
-`
-
-const ContactCol = styled.div`
-  @media (max-width: ${(props) => props.theme.breakpointsMax.md}) {
-    border-top: 8px solid ${(props) => props.theme.colors.lightBlueBackground};
-    padding-top: 30px;
-    margin-top: 45px;
-  }
-  @media (min-width: ${(props) => props.theme.breakpoints.md}) {
-    max-width: 300px;
-    position: absolute;
-    right: 0;
-    top: 197px;
-    padding-right: 15px;
-  }
-`
-
-const DonationCol = styled.div`
-  max-width: 600px;
-
-  margin-right: auto;
-  margin-left: auto;
-
-  @media (min-width: ${(props) =>
-      props.theme.breakpoints.md}) AND (max-width: 1320px) {
-    margin-left: inherit;
-  }
-
-  iframe {
-    margin-left: -20px;
-  }
-  p {
-    font-size: 1.125rem;
-  }
-`
-
-const StyledH1 = styled.h1`
-  font-size: 2rem;
-  color: ${(props) => props.theme.colors.brand};
-  border: 0;
-  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-    width: 100%;
-  }
-`
-
-const StyledH2 = styled.h2`
-  font-size: 1.66rem;
-  color: ${(props) => props.theme.colors.brand};
-  border: 0;
-  margin-top: 45px;
-  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-    width: 100%;
-  }
-`
-
-const Button = styled.a`
-  ${makeGreenTransparentButton}
-  margin-left: -3px;
-  font-weight: bold;
-  padding-top: 3px;
-  padding-top: 3px;
-`
-
-const RoundedImage = styled.img`
-  object-fit: cover;
-  object-position: top;
-  width: 200px;
-  height: 200px;
-  border-radius: 200px;
-`
-
-const BlueContainer = styled.div`
-  background-color: ${(props) => props.theme.colors.brand};
-  color: #fff;
-  margin-top: 100px;
-  ${makeResponsivePadding}
-  padding: 30px;
-
-  @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
-    img {
-      max-height: 60px !important;
-    }
-  }
-`
-
-const ITZImg = styled(StyledImg)`
-  margin: 18px 0;
-  display: block;
-  width: 220px;
-`

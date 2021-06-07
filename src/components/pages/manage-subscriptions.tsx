@@ -1,16 +1,10 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import styled from 'styled-components'
 
-import { StyledTable } from '../tags/styled-table'
-import { StyledTd } from '../tags/styled-td'
-import { StyledTh } from '../tags/styled-th'
-import { StyledTr } from '../tags/styled-tr'
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { getRawTitle } from '@/fetcher/create-title'
 import { QueryResponse } from '@/fetcher/query-types'
-import { makeLightButton } from '@/helper/css'
 import { getEntityStringByTypename } from '@/helper/feature-i18n'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { useSubscriptionSetMutation } from '@/helper/mutations'
@@ -28,13 +22,13 @@ export function ManageSubscriptions({
   const loggedInStrings = loggedInData.strings.subscriptions
 
   return (
-    <StyledTable>
+    <table className="serlo-table">
       <thead>
-        <StyledTr>
-          <StyledTh>{strings.entities.content}</StyledTh>
-          <StyledTh>{loggedInStrings.mail}</StyledTh>
-          <StyledTh>{loggedInStrings.subscription}</StyledTh>
-        </StyledTr>
+        <tr>
+          <th className="serlo-th">{strings.entities.content}</th>
+          <th className="serlo-th">{loggedInStrings.mail}</th>
+          <th className="serlo-th">{loggedInStrings.subscription}</th>
+        </tr>
       </thead>
       <tbody>
         {subscriptions.map((entry) => {
@@ -46,17 +40,18 @@ export function ManageSubscriptions({
           const icon = getIconByTypename(entry.__typename)
 
           return (
-            <StyledTr key={entry.id}>
-              <StyledTd>
+            <tr key={entry.id}>
+              <td className="serlo-td">
                 <span title={entityString}>
                   {' '}
-                  <StyledIcon icon={icon} />{' '}
+                  <FontAwesomeIcon className="text-brand" icon={icon} />{' '}
                 </span>
                 <Link href={entry.alias ?? ''}>{title}</Link>
-              </StyledTd>
-              <CenteredTd>
+              </td>
+              <td className="serlo-td text-center">
                 {/* TODO: We need info from the API how this is currently set */}
-                <Button
+                <button
+                  className="serlo-button serlo-make-interactive-light mx-0 my-auto text-base"
                   onClick={() => {
                     void setSubscription({
                       id: [entry.id],
@@ -66,10 +61,11 @@ export function ManageSubscriptions({
                   }}
                 >
                   {loggedInStrings.noMails}
-                </Button>
-              </CenteredTd>
-              <CenteredTd>
-                <Button
+                </button>
+              </td>
+              <td className="serlo-td text-center">
+                <button
+                  className="serlo-button serlo-make-interactive-light mx-0 my-auto text-base"
                   onClick={() => {
                     void setSubscription({
                       id: [entry.id],
@@ -79,26 +75,12 @@ export function ManageSubscriptions({
                   }}
                 >
                   {loggedInStrings.noNotifications}
-                </Button>
-              </CenteredTd>
-            </StyledTr>
+                </button>
+              </td>
+            </tr>
           )
         })}
       </tbody>
-    </StyledTable>
+    </table>
   )
 }
-
-const CenteredTd = styled(StyledTd)`
-  text-align: center;
-`
-
-const Button = styled.a`
-  ${makeLightButton}
-  margin: 0 auto;
-  font-size: 1rem;
-`
-
-const StyledIcon = styled(FontAwesomeIcon)`
-  color: ${(props) => props.theme.colors.brand};
-`

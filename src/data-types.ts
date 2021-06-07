@@ -156,6 +156,7 @@ export interface LicenseDetailData {
 
 export interface HistoryRevisionData {
   author: FrontendUserData
+  trashed: boolean
   changes?: string
   date: string
   id: number
@@ -294,6 +295,7 @@ export interface RevisionData {
   repositoryId: number
   thisRevision: {
     id: number
+    trashed: boolean
     title?: string
     metaTitle?: string
     metaDescription?: string
@@ -739,6 +741,7 @@ export interface UserPage extends EntityPageBase {
     description?: FrontendContentNode[] | null
     lastLogin?: string | null
     date: string
+    roles: { role: string; instance: string | null }[]
     activeReviewer: boolean
     activeAuthor: boolean
     activeDonor: boolean

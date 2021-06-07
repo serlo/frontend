@@ -19,6 +19,7 @@ export default renderedPageNoHooks<HistoryRevisionProps>((props) => (
 
 function Content({ id }: HistoryRevisionProps) {
   const response = useFetch(id)
+  const { strings } = useInstanceData()
   if (response.data?.uuid.solutionRevisions) {
     response.data.uuid.revisions = response.data.uuid.solutionRevisions
   }
@@ -27,7 +28,9 @@ function Content({ id }: HistoryRevisionProps) {
       <Breadcrumbs
         data={[
           {
-            label: response.data?.uuid.currentRevision?.title ?? '',
+            label:
+              response.data?.uuid.currentRevision?.title ??
+              strings.revisions.toContent,
             url: response.data?.uuid.alias ?? undefined,
           },
         ]}
@@ -92,6 +95,7 @@ const query = gql`
         revisions {
           nodes {
             id
+            trashed
             author {
               ...authorData
             }
@@ -108,6 +112,7 @@ const query = gql`
         revisions {
           nodes {
             id
+            trashed
             author {
               ...authorData
             }
@@ -124,6 +129,7 @@ const query = gql`
         revisions {
           nodes {
             id
+            trashed
             author {
               ...authorData
             }
@@ -140,6 +146,7 @@ const query = gql`
         revisions {
           nodes {
             id
+            trashed
             author {
               ...authorData
             }
@@ -156,6 +163,7 @@ const query = gql`
         revisions {
           nodes {
             id
+            trashed
             author {
               ...authorData
             }
@@ -171,6 +179,7 @@ const query = gql`
         revisions {
           nodes {
             id
+            trashed
             author {
               ...authorData
             }
@@ -186,6 +195,7 @@ const query = gql`
         revisions {
           nodes {
             id
+            trashed
             author {
               ...authorData
             }
@@ -201,6 +211,7 @@ const query = gql`
         revisions {
           nodes {
             id
+            trashed
             author {
               ...authorData
             }
@@ -217,6 +228,7 @@ const query = gql`
         revisions {
           nodes {
             id
+            trashed
             author {
               ...authorData
             }
@@ -232,6 +244,7 @@ const query = gql`
         revisions {
           nodes {
             id
+            trashed
             author {
               ...authorData
             }

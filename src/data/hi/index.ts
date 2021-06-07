@@ -136,6 +136,7 @@ export const instanceData = {
     },
     revisions: {
       toOverview: "अवलोकन पर वापस जाएं",
+      toContent: "Back to content",
       changes: "परिवर्तन",
       title: "शीर्षक",
       content: "सामग्री",
@@ -144,7 +145,8 @@ export const instanceData = {
       compare: "तुलना करें",
       currentVersion: "वर्तमान संस्करण",
       thisVersion: "यह संस्करण",
-      thisIsCurrentVersion: "यह वर्तमान में स्वीकृत संस्करण है।",
+      currentNotice: "यह वर्तमान में स्वीकृत संस्करण है।",
+      rejectedNotice: 'This revision was rejected.',
       by: "द्वारा"
     },
     revisionHistory: {
@@ -173,6 +175,8 @@ export const instanceData = {
       showAllActivities: "समस्त गतिविधयाँ दिखाएँ",
       lastLogin: 'Last login',
       roles: "भूमिकाएं",
+      instanceRoles: 'Roles on %lang%.serlo.org:',
+      otherRoles: 'Other roles:',
       directMessage: 'Direct message',
       howToEditImage: {
         heading: 'How to edit your profile picture',
@@ -243,10 +247,7 @@ export const loggedInData = {
     icon: 'user',
     children: [{
       url: '/user/public',
-      title: "सार्वजनिक प्रोफाइल"
-    }, {
-      url: '/user/settings',
-      title: "प्रोफ़ाइल संपादित करें"
+      title: 'Own profile'
     }, {
       url: '/auth/password/change',
       title: "पासवर्ड परिवर्तित करें"
@@ -328,7 +329,7 @@ export const loggedInData = {
       noNotifications: "रद्द करें"
     },
     revisions: {
-      accept: {
+      checkout: {
         action: "स्वीकार करें ",
         title: "संशोधन स्वीकारें",
         explanation: "कृपया लेखक को कुछ प्रतिक्रिया दें"

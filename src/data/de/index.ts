@@ -43,7 +43,7 @@ export const instanceData = {
       page: "Seite",
       solution: "Lösung",
       taxonomyTerm: "Taxonomie-Begriff",
-      user: "Benutzer",
+      user: "Benutzer*in",
       video: 'Video',
       topicFolder: "Aufgabensammlung",
       comment: "Kommentar",
@@ -52,7 +52,7 @@ export const instanceData = {
       threads: "Diskussionen",
       topic: "Thema",
       subject: "Fach",
-      userProfile: "Benutzerprofil",
+      userProfile: "Userprofil",
       privacyPolicy: "Datenschutzerklärung",
       content: "Inhalt"
     },
@@ -116,7 +116,7 @@ export const instanceData = {
       twingle: "Spendenformular laden"
     },
     comments: {
-      question: "Hast du eine Frage?",
+      question: "Hast du eine Frage oder Feedback?",
       commentsOne: "Kommentar",
       commentsMany: "Kommentare",
       submit: "Abschicken",
@@ -136,15 +136,17 @@ export const instanceData = {
     },
     revisions: {
       toOverview: "Zurück zur Übersicht",
+      toContent: "Zurück zum Inhalt",
       changes: "Änderungen",
       title: "Titel",
       content: "Inhalt",
       metaTitle: "Meta-Titel",
       metaDescription: "Meta-Beschreibung",
       compare: "Vergleichen",
-      currentVersion: "Aktuelle Version",
-      thisVersion: "Diese Version",
-      thisIsCurrentVersion: "Das ist die aktuell akzeptierte Version.",
+      currentVersion: "Aktuelle Bearbeitung",
+      thisVersion: "Diese Bearbeitung",
+      currentNotice: "Das ist die aktuell akzeptierte Bearbeitung.",
+      rejectedNotice: "Diese Bearbeitung wurde abgelehnt.",
       by: "Von"
     },
     revisionHistory: {
@@ -173,6 +175,8 @@ export const instanceData = {
       showAllActivities: "Alle Aktivitäten anzeigen",
       lastLogin: "Zuletzt angemeldet",
       roles: "Rollen",
+      instanceRoles: "Rollen auf %lang%.serlo.org:",
+      otherRoles: "Andere Rollen:",
       directMessage: "Direktnachricht",
       howToEditImage: {
         heading: "So kannst du dein Profilbild ändern",
@@ -196,7 +200,7 @@ export const instanceData = {
     },
     loading: {
       isLoading: "Inhalt wird geladen…",
-      unknownProblem: "Es gab ein Problem beim laden des Inhalts, bitte versuch' es später noch einmal."
+      unknownProblem: "Es gab ein Problem beim Laden des Inhalts. Bitte versuche es später noch einmal."
     },
     login: {
       pleaseLogInLink: "Bitte melde dich an",
@@ -239,14 +243,11 @@ export const loggedInData = {
     icon: 'notifications'
   }, {
     url: '',
-    title: "Benutzer",
+    title: "Benutzer*in",
     icon: 'user',
     children: [{
       url: '/user/public',
-      title: "Öffentliches Profil"
-    }, {
-      url: '/user/settings',
-      title: "Profil bearbeiten"
+      title: "Eigenes Profil"
     }, {
       url: '/auth/password/change',
       title: "Passwort ändern"
@@ -262,7 +263,7 @@ export const loggedInData = {
     }]
   }],
   strings: {
-    tools: "Weitere Tools",
+    tools: "Weitere Optionen",
     authorMenu: {
       log: "Aktivitätenlog",
       settings: "Einstellungen",
@@ -284,7 +285,7 @@ export const loggedInData = {
       moveToTrash: "In den Papierkorb verschieben",
       restoreContent: "Aus dem Papierkorb wiederherstellen",
       sort: "Unterelemente sortieren",
-      edit: "Bearbeiten",
+      edit: "Überarbeiten",
       organize: "Baumstruktur bearbeiten",
       moveToGroupedTextExercise: "Inhalt zu anderer Gruppe verschieben",
       moveToTextExercise: "Inhalt zu anderer Textaufgabe verschieben",
@@ -328,7 +329,7 @@ export const loggedInData = {
       noNotifications: "abbestellen"
     },
     revisions: {
-      accept: {
+      checkout: {
         action: "Akzeptieren",
         title: "Bearbeitung akzeptieren",
         explanation: "Bitte gib der Autor*in ein bisschen Feedback."

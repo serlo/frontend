@@ -10,16 +10,6 @@ export const makeMargin = (props: _ThemeProps) => `
   margin-right:${props.theme.defaults.sideSpacingMobile};
 `
 
-export const makeResponsiveMargin = (props: _ThemeProps) =>
-  `
-  margin-left:${props.theme.defaults.sideSpacingMobile};
-  margin-right:${props.theme.defaults.sideSpacingMobile};
-  @media (min-width: ${props.theme.breakpoints.lg}) {
-    margin-left:${props.theme.defaults.sideSpacingLg};
-    margin-right:${props.theme.defaults.sideSpacingLg};
-  }
-  `
-
 export const makePadding = (props: _ThemeProps) => `
   padding-left:${props.theme.defaults.sideSpacingMobile};
   padding-right:${props.theme.defaults.sideSpacingMobile};

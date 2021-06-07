@@ -3,14 +3,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import dynamic from 'next/dynamic'
 import { Router } from 'next/router'
 import * as React from 'react'
-import styled from 'styled-components'
 
 import { CommentAreaProps } from '../comments/comment-area'
 import { HSpace } from './h-space'
 import { LicenseNotice } from '@/components/content/license-notice'
 import { CourseFooter } from '@/components/navigation/course-footer'
 import { CourseNavigation } from '@/components/navigation/course-navigation'
-import { StyledH1 } from '@/components/tags/styled-h1'
 import { ShareModalProps } from '@/components/user-tools/share-modal'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -72,10 +70,10 @@ export function Entity({ data }: EntityProps) {
     if (!data.title) return null
 
     return (
-      <StyledH1 spaceAbove itemProp="name">
+      <h1 className="serlo-h1 mt-12" itemProp="name">
         {data.title}
         {renderEntityIcon()}
-      </StyledH1>
+      </h1>
     )
   }
 
@@ -84,7 +82,10 @@ export function Entity({ data }: EntityProps) {
     return (
       <span title={strings.entities[data.categoryIcon]}>
         {' '}
-        <StyledIcon icon={getIconByTypename(data.categoryIcon)} />{' '}
+        <FontAwesomeIcon
+          icon={getIconByTypename(data.categoryIcon)}
+          className="text-brand-lighter text-2.5xl"
+        />{' '}
       </span>
     )
   }
@@ -172,22 +173,9 @@ export function Entity({ data }: EntityProps) {
 
   function renderTrashedNotice() {
     return (
-      <TrashNotice>
+      <div className="p-4 my-12 bg-truegray-100 rounded-2xl font-bold">
         <FontAwesomeIcon icon={faTrash} /> {strings.content.trashedNotice}
-      </TrashNotice>
+      </div>
     )
   }
 }
-
-const StyledIcon = styled(FontAwesomeIcon)`
-  color: ${(props) => props.theme.colors.lighterblue};
-  font-size: 1.73rem;
-`
-
-const TrashNotice = styled.div`
-  margin: 50px 0;
-  padding: 16px;
-  background-color: #ddd;
-  border-radius: 20px;
-  font-weight: bold;
-`

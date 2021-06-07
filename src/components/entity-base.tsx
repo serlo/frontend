@@ -7,7 +7,6 @@ import { HeadTags } from './head-tags'
 import { Breadcrumbs } from './navigation/breadcrumbs'
 import { MaxWidthDiv } from './navigation/max-width-div'
 import { MetaMenu } from './navigation/meta-menu'
-import { RelativeContainer } from './navigation/relative-container'
 import { NewsletterPopup } from './scripts/newsletter-popup'
 import { EntityPageBase, SlugPageData } from '@/data-types'
 
@@ -30,13 +29,17 @@ export function EntityBase({ children, page }: EntityBaseProps) {
         />
       )}
       {page.newsletterPopup && <NewsletterPopup />}
-      <RelativeContainer>
+      <div className="relative">
         <MaxWidthDiv showNav={!!page.secondaryNavigationData}>
           <Breadcrumbs
             data={page.breadcrumbsData}
             isTaxonomy={
               page.kind !== 'single-entity' &&
               !(page.metaData?.contentType == 'topic-folder')
+            }
+            asBackButton={
+              page.kind == 'single-entity' &&
+              page.entityData.typename == 'GroupedExercise'
             }
           />
           <main>{children}</main>
@@ -47,7 +50,7 @@ export function EntityBase({ children, page }: EntityBaseProps) {
             </Lazy>
           )}
         </MaxWidthDiv>
-      </RelativeContainer>
+      </div>
     </>
   )
 }

@@ -136,6 +136,7 @@ export const instanceData = {
     },
     revisions: {
       toOverview: "Back to overview",
+      toContent: "Back to content",
       changes: "மாற்றங்கள்",
       title: "தலைப்பு",
       content: "உட்பொருள்",
@@ -144,7 +145,8 @@ export const instanceData = {
       compare: "Compare",
       currentVersion: "Current Version",
       thisVersion: "This Version",
-      thisIsCurrentVersion: "This is the currently accepted version.",
+      currentNotice: "This is the currently accepted version.",
+      rejectedNotice: 'This revision was rejected.',
       by: 'By'
     },
     revisionHistory: {
@@ -173,6 +175,8 @@ export const instanceData = {
       showAllActivities: 'Show all activities',
       lastLogin: 'Last login',
       roles: 'Roles',
+      instanceRoles: 'Roles on %lang%.serlo.org:',
+      otherRoles: 'Other roles:',
       directMessage: 'Direct message',
       howToEditImage: {
         heading: 'How to edit your profile picture',
@@ -243,10 +247,7 @@ export const loggedInData = {
     icon: 'user',
     children: [{
       url: '/user/public',
-      title: "பொதுவான சுயவிவரம்"
-    }, {
-      url: '/user/settings',
-      title: "சுயவிவர திருத்தம்"
+      title: 'Own profile'
     }, {
       url: '/auth/password/change',
       title: "கடவுச்சொல்லை மாற்று"
@@ -328,7 +329,7 @@ export const loggedInData = {
       noNotifications: "cancel"
     },
     revisions: {
-      accept: {
+      checkout: {
         action: 'Accept',
         title: 'Accept Revision',
         explanation: 'Please give the author some feedback.'

@@ -1,4 +1,4 @@
-import { AuthorizationPayload } from '@serlo/authorization'
+import { AuthorizationPayload, Scope } from '@serlo/authorization'
 import { request } from 'graphql-request'
 
 import { convertState } from '../convert-state'
@@ -36,6 +36,15 @@ export async function requestUser(
         chatUrl: `https://community.serlo.org/direct/${chatName}`,
         imageUrl: `https://community.serlo.org/avatar/${chatName}`,
         description: getDescription(uuid),
+        roles: uuid.roles.nodes.map((role) => {
+          return {
+            role: role.role,
+            instance:
+              role.scope == null || role.scope === Scope.Serlo
+                ? null
+                : role.scope.substring('serlo.org:'.length),
+          }
+        }),
       },
       authorization,
     }

@@ -2,7 +2,6 @@ import { faFilm } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styled from 'styled-components'
 
-import { StyledP } from '../tags/styled-p'
 import { LicenseNotice } from './license-notice'
 import { PrivacyWrapper } from './privacy-wrapper'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -35,10 +34,10 @@ export function Video(props: VideoProps) {
   if (youtube) return renderYoutube(youtube[4])
 
   return (
-    <VideoPlaceholder className="video">
+    <div className="text-center serlo-print-hidden">
       <FontAwesomeIcon icon={faFilm} size="5x" />
-      <StyledP>Loading video failed: {src}</StyledP>
-    </VideoPlaceholder>
+      <p className="serlo-p">Loading video failed: {src}</p>
+    </div>
   )
 
   function renderWikimedia() {
@@ -70,7 +69,7 @@ export function Video(props: VideoProps) {
             submitEventWithPath('loadvideo', path)
           }}
         >
-          <VideoWrapper className="video">
+          <VideoWrapper className="m-0 p-0 serlo-print-hidden">
             {provider === ExternalProvider.WikimediaCommons && (
               <video controls src={src} />
             )}
@@ -86,9 +85,9 @@ export function Video(props: VideoProps) {
           </VideoWrapper>
         </PrivacyWrapper>
         {license && !license.default && (
-          <StyledP>
+          <p className="serlo-p">
             <LicenseNotice minimal data={license} type="video" path={path} />
-          </StyledP>
+          </p>
         )}
       </>
     )
@@ -96,8 +95,6 @@ export function Video(props: VideoProps) {
 }
 
 const VideoWrapper = styled.figure`
-  margin: 0;
-  padding: 0;
   & > video,
   & > iframe,
   & > div {
@@ -110,8 +107,4 @@ const VideoWrapper = styled.figure`
     z-index: 6;
     background-color: rgba(0, 0, 0, 0.3);
   }
-`
-
-const VideoPlaceholder = styled.div`
-  text-align: center;
 `

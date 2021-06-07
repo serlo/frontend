@@ -2,12 +2,12 @@ import { faCaretDown, faUser, faBell } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import type { TippyProps } from '@tippyjs/react'
 import { useState, useEffect } from 'react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 import { Link } from '../content/link'
 import { SubButtonStyle } from '../user-tools/sub-button-style'
+import { getAvatarUrl } from '../user/user-link'
 import { SubLink } from './sub-link'
-import { SubList } from './sub-list'
 import { AuthenticationPayload } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
@@ -96,15 +96,14 @@ function MenuInner({
           duration={[300, 100]}
           animation="fade"
           onCreate={(tip) => {
-            //console.log('set tippy root')
             setTippyRoot(tip)
           }}
         />
       )}
-      <List>
+      <ul className="text-right block m-0 p-0">
         {data.map((link, i) => renderEntry({ link }, i))}
         {renderAuthMenu()}
-      </List>
+      </ul>
     </ResponsiveNav>
   )
 
@@ -154,6 +153,7 @@ function MenuInner({
       link.icon &&
       link.icon !== undefined &&
       menuIconMapping[link.icon] !== undefined
+
     return (
       <Li
         key={link.title}
@@ -175,7 +175,12 @@ function MenuInner({
               </StyledLink>
             </Tippy.default>
           ) : (
-            <StyledLink hasIcon={hasIcon} as="a" tabIndex={0} /*active={true}*/>
+            <StyledLink
+              hasIcon={hasIcon}
+              as="a"
+              tabIndex={0}
+              /*active={true}*/
+            >
               {renderIcon()}
               {!hasIcon && link.title} <FontAwesomeIcon icon={faCaretDown} />
             </StyledLink>
@@ -185,6 +190,7 @@ function MenuInner({
             hasIcon={hasIcon}
             /*active={true}*/ href={link.url}
             path={['menu', i]}
+            className="group"
           >
             {renderIcon()} {!hasIcon && link.title}
           </StyledLink>
@@ -198,6 +204,16 @@ function MenuInner({
       if (link.icon === 'notifications') {
         const Comp = lic?.UnreadNotificationsCount
         if (Comp) return <Comp icon={menuIconMapping[link.icon]} />
+      }
+
+      if (link.icon === 'user' && auth && auth.username) {
+        return (
+          <img
+            className="rounded-full w-6 h-6 inline -mt-1"
+            src={getAvatarUrl(auth.username)}
+            title={`${link.title} ${auth.username}`}
+          />
+        )
       }
 
       return (
@@ -214,7 +230,7 @@ function MenuInner({
 
   function renderSubMenuInner(subEntries?: HeaderLink[], i?: number | string) {
     return (
-      <SubList>
+      <ul className="serlo-sub-list">
         {subEntries !== undefined &&
           subEntries.map((entry, i2) => {
             const href =
@@ -229,7 +245,7 @@ function MenuInner({
               </li>
             )
           })}
-      </SubList>
+      </ul>
     )
   }
 }
@@ -241,21 +257,14 @@ const ResponsiveNav = styled.nav`
   }
 `
 
-const List = styled.ul`
-  text-align: right;
-  user-select: none;
-  display: block;
-  margin: 0;
-  padding: 0;
-`
-
 const Li = styled.li<{ show: boolean }>`
   display: inline-block;
   opacity: ${(props) => (props.show ? 1 : 0)};
   transition: 0.7s linear;
 `
 
-const linkStyle = css`
+const StyledLink = styled(Link)<{ active?: boolean; hasIcon?: boolean }>`
+  ${makeTransparentButton}
   &:active,
   &:hover,
   &[aria-expanded='true'] {
@@ -263,18 +272,10 @@ const linkStyle = css`
     background-color: ${(props) => props.theme.colors.brand};
 
     /*just for notifications count*/
-    & span.number {
-      color: ${(props) => props.theme.colors.brand};
-    }
     & span.fa-layers {
       color: #fff;
     }
   }
-`
-
-const StyledLink = styled(Link)<{ active?: boolean; hasIcon?: boolean }>`
-  ${makeTransparentButton}
-  ${linkStyle}
   font-size: 1rem;
   color: ${(props) =>
     props.theme.colors[props.active ? 'darkgray' : 'lightblue']};

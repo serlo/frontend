@@ -1,9 +1,11 @@
 import { Comment as CommentType } from '@serlo/api'
 import clsx from 'clsx'
-import escapeHtml from 'escape-html'
+import dynamic from 'next/dynamic'
 import * as React from 'react'
 
+import { MathSpanProps } from '../content/math-span'
 import { MetaBar } from './meta-bar'
+import { replaceWithJSX } from '@/helper/replace-with-jsx'
 import { scrollIfNeeded } from '@/helper/scroll'
 
 interface CommentProps {
@@ -13,6 +15,10 @@ interface CommentProps {
   data: CommentType
   highlight: (id: number) => void
 }
+
+const MathSpan = dynamic<MathSpanProps>(() =>
+  import('@/components/content/math-span').then((mod) => mod.MathSpan)
+)
 
 export function Comment({
   data,
@@ -24,14 +30,27 @@ export function Comment({
   const commentRef = React.useRef<HTMLDivElement>(null)
   const { author, createdAt, content, id } = data
 
-  const urlFinder =
-    /https?:\/\/(www\.)?([-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b)([-a-zA-Z0-9()@:%_+.~#?&//=]*)/g
+  // Step 1: Replace formulas
+  const r1 = replaceWithJSX([content], /%%(.+?)%%/g, (str, i) => (
+    <MathSpan key={`math-${i}`} formula={str} />
+  ))
 
-  const escapedContent = escapeHtml(content)
-
-  const escapedWithLinks = escapedContent.replace(urlFinder, (match) => {
-    return `<a href="${match}" rel="ugc nofollow" class="text-brand break-all">${match}</a>`
-  })
+  // Step 2: Replace urls in remaining strings
+  const r2 = replaceWithJSX(
+    r1,
+    /(https?:\/\/(?:www\.)?(?:[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b)(?:[-a-zA-Z0-9()@:%_+~#?&//=]*))/g,
+    (str, i) => (
+      <a
+        key={`link-${i}`}
+        href={str}
+        rel="ugc nofollow noreferrer"
+        target="_blank"
+        className="serlo-link break-all"
+      >
+        {str}
+      </a>
+    )
+  )
 
   React.useEffect(() => {
     if (isHighlight) {
@@ -71,10 +90,7 @@ export function Comment({
         id={id}
         highlight={highlight}
       />
-      <p
-        className={clsx('serlo-p mb-0 whitespace-pre-line break-words')}
-        dangerouslySetInnerHTML={{ __html: escapedWithLinks }}
-      ></p>
+      <p className="serlo-p mb-0 whitespace-pre-line break-words">{r2}</p>
     </div>
   )
 }

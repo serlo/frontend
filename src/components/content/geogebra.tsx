@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import clsx from 'clsx'
 
 import { PrivacyWrapper } from './privacy-wrapper'
 import { submitEventWithPath } from '@/helper/submit-event'
@@ -22,27 +22,17 @@ export function Geogebra({ id, path }: GeogebraProps) {
         submitEventWithPath('loadgeogebra', path)
       }}
     >
-      <GeogebraContainer>
-        <GeogebraFrame title={appletId} scrolling="no" src={url} />
-      </GeogebraContainer>
+      <div className="p-0 block h-0 overflow-hidden">
+        <iframe
+          className={clsx(
+            'z-10 absolute top-0 left-0 w-full',
+            'h-full border-none bg-black bg-opacity-30'
+          )}
+          title={appletId}
+          scrolling="no"
+          src={url}
+        />
+      </div>
     </PrivacyWrapper>
   )
 }
-
-const GeogebraFrame = styled.iframe`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-  z-index: 6;
-  background-color: rgba(0, 0, 0, 0.3);
-`
-
-const GeogebraContainer = styled.div`
-  padding: 0;
-  display: block;
-  height: 0;
-  overflow: hidden;
-`

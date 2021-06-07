@@ -33,8 +33,8 @@ const legacyLinks = [
 export function isLegacyLink(_href: string) {
   // compat: this is a special frontend route or force frontend use
   if (_href == '/user/notifications') return false
-  // if (_href.startsWith('/entity/repository/history')) return true //disabled for zwischenrelease
-  // if (_href.startsWith('/entity/repository/compare')) return true //disabled for zwischenrelease
+  if (_href.startsWith('/entity/repository/history')) return true
+  if (_href.startsWith('/entity/repository/compare')) return true
 
   return (
     legacyLinks.indexOf(_href) > -1 ||
@@ -168,7 +168,7 @@ export function Link({
     return (
       <a
         href={_href}
-        className={clsx(className, ' serlo-link')}
+        className={clsx(className, 'serlo-link')}
         title={title}
         onClick={clickHandler}
       >

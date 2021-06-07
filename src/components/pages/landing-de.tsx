@@ -5,7 +5,6 @@ import styled from 'styled-components'
 import { Link } from '../content/link'
 import { HeadTags } from '../head-tags'
 import { PrinciplesGraphic } from '../landing/principles-graphic'
-import { StyledP } from '../tags/styled-p'
 import DonateSVG from '@/assets-webkit/img/footer-donate.svg'
 import ParticipateSVG from '@/assets-webkit/img/footer-participate.svg'
 import { LandingAbout } from '@/components/landing/landing-about'
@@ -38,22 +37,22 @@ export function LandingDE({ data }: LandingDEProps) {
           <ParticipateSVG />
         </IconStyle>
         <FlexCol>
-          <LandingP>
+          <p className="serlo-p ml-0">
             Wir suchen Lehrkräfte mit Begeisterung für ihr Fach. Werden Sie
             Autor*in auf serlo.org, erstellen Sie <b>neue Inhalte</b> und helfen
             Sie uns, die <b>Qualität</b> der Lernplattform zu sichern.
-          </LandingP>
+          </p>
           <Button href="/community">
             Zur Startseite für Autor*innen{' '}
             <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
           </Button>
         </FlexCol>
         <FlexCol>
-          <LandingP>
+          <p className="serlo-p ml-0">
             Wir suchen neue hauptamtliche und ehrenamtliche Teammitglieder für
             die Bereiche <b>Softwareentwicklung</b>, <b>Redaktion</b> und{' '}
             <b>NGO-Management</b>.
-          </LandingP>
+          </p>
           <Button href="/jobs">
             Jobs und Engagement{' '}
             <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
@@ -71,21 +70,21 @@ export function LandingDE({ data }: LandingDEProps) {
           <DonateSVG />
         </IconStyle>
         <FlexCol>
-          <LandingP>
+          <p className="serlo-p ml-0">
             Bildung gehört uns allen! Werden Sie Mitglied in unserer
             Organisation Serlo Education e.V. und so zu Mitherausgeber*in der
             freien Lernplattform.
-          </LandingP>
+          </p>
           <Button href="/beitreten">
             Mitglied werden{' '}
             <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
           </Button>
         </FlexCol>
         <FlexCol>
-          <LandingP>
+          <p className="serlo-p ml-0">
             Softwareentwicklung und Lerninhalte erstellen kostet Geld. Wir
             freuen uns sehr, wenn Sie Serlo mit einer Spende unterstützen.
-          </LandingP>
+          </p>
           <Button href="/spenden">
             Spenden <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
           </Button>
@@ -189,10 +188,6 @@ const IconStyle = styled.div`
     margin-right: 50px;
     width: 120px;
   }
-`
-
-const LandingP = styled(StyledP)`
-  margin-left: 0;
 `
 
 const FlexCol = styled(Col)`

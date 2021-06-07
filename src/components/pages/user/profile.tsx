@@ -1,8 +1,10 @@
 import { faTelegramPlane } from '@fortawesome/free-brands-svg-icons'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import { NextPage } from 'next'
 import Head from 'next/head'
+import * as R from 'ramda'
 import * as React from 'react'
 import styled from 'styled-components'
 
@@ -12,12 +14,6 @@ import ReviewerBadge from '@/assets-webkit/img/community/badge-reviewer.svg'
 import { useAuthentication } from '@/auth/use-authentication'
 import { CommentArea } from '@/components/comments/comment-area'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
-import { StyledA } from '@/components/tags/styled-a'
-import { StyledH1 } from '@/components/tags/styled-h1'
-import { StyledH2 } from '@/components/tags/styled-h2'
-import { StyledLi } from '@/components/tags/styled-li'
-import { StyledOl } from '@/components/tags/styled-ol'
-import { StyledP } from '@/components/tags/styled-p'
 import { TimeAgo } from '@/components/time-ago'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -31,7 +27,7 @@ export interface ProfileProps {
 }
 
 export const Profile: NextPage<ProfileProps> = ({ userData }) => {
-  const { strings } = useInstanceData()
+  const { strings, lang } = useInstanceData()
   const {
     id,
     username,
@@ -61,8 +57,8 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
       <ProfileHeader>
         {renderProfileImage()}
         <div>
-          <StyledH1>{username}</StyledH1>
-          <StyledP>
+          <h1 className="serlo-h1">{username}</h1>
+          <p className="serlo-p">
             {strings.profiles.activeSince}{' '}
             <time
               dateTime={registerDate.toISOString()}
@@ -70,11 +66,15 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
             >
               {registerDate.getFullYear()}
             </time>
-          </StyledP>
+          </p>
         </div>
         {renderBadges()}
-        {motivation && <Motivation>&quot;{motivation}&quot;</Motivation>}
-        <ChatButton href={chatUrl}>
+        {motivation && (
+          <Motivation className="serlo-p text-1.5xl">
+            &quot;{motivation}&quot;
+          </Motivation>
+        )}
+        <ChatButton href={chatUrl} enabled={!isOwnProfile}>
           <FontAwesomeIcon icon={faTelegramPlane} />{' '}
           {strings.profiles.directMessage}
         </ChatButton>
@@ -82,19 +82,22 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
 
       {description && (
         <>
-          <StyledH2>{strings.profiles.aboutMe}</StyledH2>
+          <h2 className="serlo-h2">{strings.profiles.aboutMe}</h2>
           {renderArticle(description, `profile${id}`)}
         </>
       )}
       <CommentArea id={id} noForms />
-      {lastLoginDate && (
-        <Gray>
-          {strings.profiles.lastLogin}:{' '}
-          <b>
-            <TimeAgo datetime={lastLoginDate} dateAsTitle />
-          </b>
-        </Gray>
-      )}
+      <aside className="mt-16 text-gray-400 text-sm mx-side">
+        {renderRoles()}
+        {lastLoginDate && (
+          <p>
+            {strings.profiles.lastLogin}:{' '}
+            <b>
+              <TimeAgo datetime={lastLoginDate} dateAsTitle />
+            </b>
+          </p>
+        )}
+      </aside>
       {renderUserTools()}
       {renderHowToEditImage()}
     </>
@@ -125,7 +128,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
     return (
       <BadgeContainer>
         <Badge />
-        <StyledP>{name}</StyledP>
+        <p className="serlo-p">{name}</p>
       </BadgeContainer>
     )
   }
@@ -156,15 +159,65 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
     )
   }
 
+  function renderRoles() {
+    const [instanceRoles, otherRoles] = R.partition(
+      (role) => role.instance === null || role.instance === lang,
+      userData.roles
+    )
+
+    return (
+      <>
+        {instanceRoles.length > 0 && (
+          <p className="mb-5">
+            {replacePlaceholders(strings.profiles.instanceRoles, { lang })}{' '}
+            {instanceRoles.map((role, index) => (
+              <React.Fragment key={index}>
+                {renderRole(role.role)}
+              </React.Fragment>
+            ))}
+          </p>
+        )}
+        {otherRoles.length > 0 && (
+          <p className="mb-block">
+            {strings.profiles.otherRoles}{' '}
+            {otherRoles.map((role, index) => (
+              <React.Fragment key={index}>
+                {renderRole(`${role.instance}: ${role.role}`)}
+              </React.Fragment>
+            ))}
+          </p>
+        )}
+      </>
+    )
+  }
+
+  function renderRole(text: string) {
+    return (
+      <span
+        className={clsx(
+          'text-white bg-gray-400 inline-block rounded-2xl font-bold',
+          'py-1 px-2 mx-1'
+        )}
+      >
+        {text}
+      </span>
+    )
+  }
+
   function renderHowToEditImage() {
     const { heading, description, steps } = strings.profiles.howToEditImage
     const chatUrl = (
-      <StyledA href="https://community.serlo.org">community.serlo.org</StyledA>
+      <a className="serlo-link" href="https://community.serlo.org">
+        community.serlo.org
+      </a>
     )
     const myAccountLink = (
-      <StyledA href="https://community.serlo.org/account/profile">
+      <a
+        className="serlo-link"
+        href="https://community.serlo.org/account/profile"
+      >
         {steps.myAccount}
-      </StyledA>
+      </a>
     )
 
     return (
@@ -173,35 +226,44 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         onCloseClick={() => setShowImageModal(false)}
         title={heading}
       >
-        <StyledP>{replacePlaceholders(description, { chatUrl })}</StyledP>
-        <StyledOl>
-          <StyledLi>
-            {replacePlaceholders(steps.goToChat, { chatUrl })}
-          </StyledLi>
-          <StyledLi>{steps.signIn}</StyledLi>
-          <StyledLi>
-            {replacePlaceholders(steps.goToMyAccount, { myAccountLink })}
-          </StyledLi>
-          <StyledLi>{steps.uploadPicture}</StyledLi>
-        </StyledOl>
+        <p className="serlo-p">
+          {replacePlaceholders(description, { chatUrl })}
+        </p>
+        <ol className="serlo-ol">
+          <li>{replacePlaceholders(steps.goToChat, { chatUrl })}</li>
+          <li>{steps.signIn}</li>
+          <li>{replacePlaceholders(steps.goToMyAccount, { myAccountLink })}</li>
+          <li>{steps.uploadPicture}</li>
+        </ol>
       </ModalWithCloseButton>
     )
   }
 }
 
-const Motivation = styled(StyledP)`
-  font-size: 1.3em;
+const Motivation = styled.p`
   grid-area: motivation;
 `
 
-const ChatButton = styled.a`
+const ChatButton = styled.a<{ enabled: boolean }>`
   ${makeGreenButton}
+  background-color: ${(props) =>
+    props.enabled
+      ? props.theme.colors.brandGreen
+      : props.theme.colors.lighterBrandGreen};
   display: block;
   width: 175px;
   text-align: center;
   grid-area: chatButton;
   align-self: self-start;
   margin-top: 5px;
+
+  &:hover,
+  &:focus {
+    background-color: ${(props) =>
+      props.enabled
+        ? props.theme.colors.brand
+        : props.theme.colors.lighterblue};
+  }
 `
 
 const ProfileImageEditButton = styled.button`
@@ -284,10 +346,4 @@ const ProfileHeader = styled.header`
     margin-top: 15px;
     margin-bottom: 10px;
   }
-`
-
-const Gray = styled(StyledP)`
-  margin-top: 70px;
-  font-size: 0.9rem;
-  color: #777;
 `

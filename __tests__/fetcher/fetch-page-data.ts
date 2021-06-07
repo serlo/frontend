@@ -415,6 +415,7 @@ describe('check all supported typenames with stored api-data', () => {
     expect(pageData.kind).toBe('single-entity')
     expect(pageData.entityData.id).toBe(53209)
     expect(Array.isArray(pageData.entityData.content)).toBe(true)
+    expect(pageData.breadcrumbsData?.length == 1)
   })
 
   test('typename: Course', async () => {

@@ -1,33 +1,16 @@
 import clsx from 'clsx'
+import CSS from 'csstype'
 import dynamic from 'next/dynamic'
 import * as React from 'react'
-import { CSSProperties } from 'styled-components'
 
 import { Col } from '../components/content/col'
 import { ExerciseGroup } from '../components/content/exercises/exercise-group'
-import { ImageLink } from '../components/content/image-link'
 import { ImgMaxWidthDiv } from '../components/content/img-max-width-div'
-import { LayoutRow } from '../components/content/layout-row'
 import { LicenseNotice } from '../components/content/license-notice'
 import { Link } from '../components/content/link'
-import { SpoilerContainer } from '../components/content/spoiler-container'
 import { SpoilerTitle } from '../components/content/spoiler-title'
 import { SpoilerToggle } from '../components/content/spoiler-toggle'
 import { TableWrapper } from '../components/content/table-wrapper'
-import { StyledH1 } from '../components/tags/styled-h1'
-import { StyledH2 } from '../components/tags/styled-h2'
-import { StyledH3 } from '../components/tags/styled-h3'
-import { StyledH4 } from '../components/tags/styled-h4'
-import { StyledH5 } from '../components/tags/styled-h5'
-import { StyledImg } from '../components/tags/styled-img'
-import { StyledLi } from '../components/tags/styled-li'
-import { StyledOl } from '../components/tags/styled-ol'
-import { StyledP } from '../components/tags/styled-p'
-import { StyledTable } from '../components/tags/styled-table'
-import { StyledTd } from '../components/tags/styled-td'
-import { StyledTh } from '../components/tags/styled-th'
-import { StyledTr } from '../components/tags/styled-tr'
-import { StyledUl } from '../components/tags/styled-ul'
 import { theme } from '../theme'
 import { Blockquote } from '@/components/content/blockquote'
 import type { CodeProps } from '@/components/content/code'
@@ -156,14 +139,6 @@ export const articleColors = {
   orange: theme.colors.orange,
 }
 
-const StyledHx = {
-  1: StyledH1,
-  2: StyledH2,
-  3: StyledH3,
-  4: StyledH4,
-  5: StyledH5,
-}
-
 interface RenderLeafProps {
   leaf: FrontendContentNode & {
     color?: 'blue' | 'green' | 'orange'
@@ -175,7 +150,7 @@ interface RenderLeafProps {
 }
 
 export function renderLeaf({ leaf, key, children }: RenderLeafProps) {
-  const styles: CSSProperties = {}
+  const styles: CSS.Properties = {}
   if (leaf.color) styles.color = articleColors[leaf.color]
   if (leaf.em) styles.fontStyle = 'italic'
   if (leaf.strong) styles.fontWeight = 'bold'
@@ -226,20 +201,38 @@ function renderElement(props: RenderElementProps): React.ReactNode {
     )
   }
   if (element.type === 'p') {
-    return <StyledP>{children}</StyledP>
+    return <p className="serlo-p">{children}</p>
   }
   if (element.type === 'h') {
-    const Comp = StyledHx[element.level]
-    return <Comp id={element.id}>{children}</Comp>
+    const classNames = {
+      1: 'serlo-h1',
+      2: 'serlo-h2',
+      3: 'serlo-h3',
+      4: 'serlo-h4',
+      5: 'serlo-h5',
+    }
+    return React.createElement(
+      `h${element.level}`,
+      {
+        className: classNames[element.level],
+        id: element.id,
+      },
+      children
+    )
   }
   if (element.type === 'img') {
     const wrapInA = (comp: React.ReactNode) => {
       if (element.href) {
         // needs investigation if this could be simplified
         return (
-          <ImageLink href={element.href} path={path}>
+          <Link
+            className="w-full block"
+            href={element.href}
+            path={path}
+            noExternalIcon
+          >
             {comp}
-          </ImageLink>
+          </Link>
         )
       }
       return comp
@@ -253,11 +246,12 @@ function renderElement(props: RenderElementProps): React.ReactNode {
         <ImgMaxWidthDiv maxWidth={element.maxWidth ? element.maxWidth : 0}>
           {wrapInA(
             <Lazy>
-              <StyledImg
+              <img
+                className="serlo-img"
                 src={element.src}
                 alt={element.alt || 'Bild'}
                 itemProp="contentUrl"
-              ></StyledImg>
+              ></img>
             </Lazy>
           )}
         </ImgMaxWidthDiv>
@@ -277,31 +271,31 @@ function renderElement(props: RenderElementProps): React.ReactNode {
     return children
   }
   if (element.type === 'ul') {
-    return <StyledUl>{children}</StyledUl>
+    return <ul className="serlo-ul">{children}</ul>
   }
   if (element.type === 'ol') {
-    return <StyledOl>{children}</StyledOl>
+    return <ol className="serlo-ol">{children}</ol>
   }
   if (element.type === 'li') {
-    return <StyledLi>{children}</StyledLi>
+    return <li>{children}</li>
   }
   if (element.type === 'table') {
     return (
       <TableWrapper>
-        <StyledTable>
+        <table className="serlo-table">
           <tbody>{children}</tbody>
-        </StyledTable>
+        </table>
       </TableWrapper>
     )
   }
   if (element.type === 'tr') {
-    return <StyledTr>{children}</StyledTr>
+    return <tr>{children}</tr>
   }
   if (element.type === 'th') {
-    return <StyledTh>{children}</StyledTh>
+    return <th className="serlo-th">{children}</th>
   }
   if (element.type === 'td') {
-    return <StyledTd>{children}</StyledTd>
+    return <td className="serlo-td">{children}</td>
   }
   if (element.type === 'multimedia') {
     return (
@@ -312,7 +306,7 @@ function renderElement(props: RenderElementProps): React.ReactNode {
     )
   }
   if (element.type === 'row') {
-    return <LayoutRow>{children}</LayoutRow>
+    return <div className="flex flex-col mobile:flex-row">{children}</div>
   }
   if (element.type === 'col') {
     return <Col cSize={element.size}>{children}</Col>
@@ -411,7 +405,7 @@ interface SpoilerForEndUserProps {
 function SpoilerForEndUser({ body, title, path }: SpoilerForEndUserProps) {
   const [open, setOpen] = React.useState(false)
   return (
-    <SpoilerContainer>
+    <div className="flex flex-col mb-block mobile:mx-side">
       <SpoilerTitle
         onClick={() => {
           setOpen(!open)
@@ -425,6 +419,6 @@ function SpoilerForEndUser({ body, title, path }: SpoilerForEndUserProps) {
         {title}
       </SpoilerTitle>
       {open && body}
-    </SpoilerContainer>
+    </div>
   )
 }

@@ -8,7 +8,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styled from 'styled-components'
 
 import { makePadding, makeTransparentButton } from '../../helper/css'
-import { StyledA } from '../tags/styled-a'
 import { Link } from './link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { LicenseData } from '@/data-types'
@@ -66,9 +65,9 @@ export function LicenseNotice({
           {' '}
           {text}
           <br />
-          <StyledA href={data.url} rel="license">
+          <a className="serlo-link" href={data.url} rel="license">
             {licenseName}
-          </StyledA>
+          </a>
           {' → '}
           <Link href={`/license/detail/${data.id}`} path={path}>
             <b>{strings.license.readMore}</b>
