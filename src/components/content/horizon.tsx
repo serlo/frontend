@@ -19,7 +19,7 @@ export function Horizon({ data }: HorizonProps) {
         return (
           <Link
             className={clsx(
-              'text-brand text hover:no-underline box-border',
+              'text-brand hover:no-underline box-border',
               'py-4 px-2.5 leading-cozy',
               'rounded hover:shadow-menu hover:text-truegray-700',
               'hidden mb-8 w-full sm:w-1/3 sm:mb-0 sm:block',
