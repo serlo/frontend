@@ -291,7 +291,8 @@ export const loggedInData = {
       moveToTextExercise: "Inhalt zu anderer Textaufgabe verschieben",
       sortEntities: "Inhalt sortieren",
       newEntity: "Neuer Inhalt",
-      editProfile: "Profil bearbeiten"
+      editProfile: "Profil bearbeiten",
+      directLink: 'Direct link to this content'
     },
     notifications: {
       loadMore: "Weitere laden",
