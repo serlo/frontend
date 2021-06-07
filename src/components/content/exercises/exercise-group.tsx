@@ -45,7 +45,7 @@ export function ExerciseGroup({
           )}
         </div>
       </div>
-      <div className="pb-3.5 bg-white mb-2.5 mx-2 sm:pl-12">{children}</div>
+      <div className="pb-3.5 bg-white mb-2.5 ml-2 sm:pl-12">{children}</div>
     </div>
   )
 }
