@@ -23,7 +23,7 @@ export function Horizon({ data }: HorizonProps) {
               'py-4 px-2.5 leading-cozy',
               'rounded hover:shadow-menu hover:text-truegray-700',
               'hidden mb-8 w-full sm:w-1/3 sm:mb:0 sm:block',
-              'first:block sm:mr-6'
+              'first:block sm:mr-6 max-w-screen-mobile'
             )}
             href={horizonEntry.url}
             key={index}
