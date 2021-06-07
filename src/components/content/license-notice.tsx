@@ -5,9 +5,9 @@ import {
 } from '@fortawesome/free-brands-svg-icons'
 import { faSlash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import styled from 'styled-components'
 
-import { makePadding, makeTransparentButton } from '../../helper/css'
 import { Link } from './link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { LicenseData } from '@/data-types'
@@ -39,9 +39,17 @@ export function LicenseNotice({
   if (minimal) return renderMinimalNotice()
   return renderFullNotice()
 
+  // font-size: 0.9rem;
+  // color: ${ (props) => props.theme.colors.dark1 };
+
   function renderFullNotice() {
     return (
-      <Wrapper>
+      <Wrapper
+        className={clsx(
+          'border-t-2 border-brand-150 text-truegray-700 text-sm',
+          'px-side py-2.5 my-10 mobile:flex'
+        )}
+      >
         {data.default ? (
           <>
             <FontAwesomeIcon icon={faCreativeCommons} size="2x" />{' '}
@@ -61,7 +69,7 @@ export function LicenseNotice({
           </span>
         )}
         <br />
-        <StyledSmall>
+        <span className="mobile:ml-3">
           {' '}
           {text}
           <br />
@@ -72,7 +80,7 @@ export function LicenseNotice({
           <Link href={`/license/detail/${data.id}`} path={path}>
             <b>{strings.license.readMore}</b>
           </Link>
-        </StyledSmall>
+        </span>
       </Wrapper>
     )
   }
@@ -91,6 +99,7 @@ export function LicenseNotice({
     return (
       <>
         <MinimalLink
+          className="serlo-button serlo-make-interactive-transparent-blue font-normal text-base !no-underline"
           title={title}
           href={licenseHref}
           noExternalIcon
@@ -100,7 +109,7 @@ export function LicenseNotice({
             <FontAwesomeIcon icon={faCreativeCommons} />
           ) : (
             <>
-              <StyledIcon className="fa-layers fa-fw">
+              <StyledIcon className="fa-layers fa-fw text-xl mr-0.5">
                 <FontAwesomeIcon icon={faCreativeCommons} />
                 {!isCreativeCommons && (
                   <FontAwesomeIcon
@@ -125,34 +134,11 @@ export function LicenseNotice({
   }
 }
 
-const MinimalLink = styled(Link)`
-  ${makeTransparentButton}
-  font-weight: normal;
-  font-size: 1rem;
-  height: max-content;
-`
-
 const StyledIcon = styled.span`
-  font-size: 1.25rem;
   vertical-align: sub;
-  margin-right: 3px;
-`
-
-const StyledSmall = styled.span`
-  @media (min-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin-left: 12px;
-  }
 `
 
 const Wrapper = styled.div`
-  ${makePadding}
-  padding-top: 10px;
-  padding-bottom: 10px;
-  font-size: 0.9rem;
-  margin-top: 40px;
-  margin-bottom: 40px;
-  border-top: 2px solid ${(props) => props.theme.colors.lightBlueBackground};
-  color: ${(props) => props.theme.colors.dark1};
   > svg {
     color: ${(props) => props.theme.colors.lighterblue};
     width: 1.4rem !important;
@@ -160,8 +146,6 @@ const Wrapper = styled.div`
   }
 
   @media (min-width: ${(props) => props.theme.breakpoints.mobile}) {
-    display: flex;
-
     > svg {
       width: 2rem !important;
       height: 2rem !important;
@@ -169,4 +153,8 @@ const Wrapper = styled.div`
       margin-right: 2px;
     }
   }
+`
+
+const MinimalLink = styled(Link)`
+  height: max-content;
 `
