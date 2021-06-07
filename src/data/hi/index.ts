@@ -291,7 +291,8 @@ export const loggedInData = {
       moveToTextExercise: "सामग्री को अन्य पाठ-व्यायाम में ले जाएँ",
       sortEntities: "सामग्री को क्रमबद्ध करें",
       newEntity: "नई इकाई",
-      editProfile: "प्रोफ़ाइल संपादित करें"
+      editProfile: "प्रोफ़ाइल संपादित करें",
+      directLink: 'Direct link to this content'
     },
     notifications: {
       loadMore: "अधिक लोड करें",
