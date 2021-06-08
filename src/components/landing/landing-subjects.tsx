@@ -5,12 +5,12 @@ import styled, { css, keyframes } from 'styled-components'
 
 import { makeResponsivePadding, makeTransparentButton } from '../../helper/css'
 import { Link } from '../content/link'
-import AbcSVG from '@/assets-webkit/img/subjects-abc.svg'
-import BiologySVG from '@/assets-webkit/img/subjects-biology.svg'
-import BlankSVG from '@/assets-webkit/img/subjects-blank.svg'
-import ChemistrySVG from '@/assets-webkit/img/subjects-chemistry.svg'
-import MathSVG from '@/assets-webkit/img/subjects-math.svg'
-import SustainabilitySVG from '@/assets-webkit/img/subjects-sustainability.svg'
+import AbcSVG from '@/assets-webkit/img/landing/subjects-abc.svg'
+import BiologySVG from '@/assets-webkit/img/landing/subjects-biology.svg'
+import BlankSVG from '@/assets-webkit/img/landing/subjects-blank.svg'
+import ChemistrySVG from '@/assets-webkit/img/landing/subjects-chemistry.svg'
+import MathSVG from '@/assets-webkit/img/landing/subjects-math.svg'
+import SustainabilitySVG from '@/assets-webkit/img/landing/subjects-sustainability.svg'
 import { LandingSubjectLink, LandingSubjectsData } from '@/data-types'
 
 interface LandingSubjectsProps {

@@ -15,7 +15,7 @@ export function LandingDE({ data }: LandingDEProps) {
   const subjectsData = data.subjectsData
 
   return (
-    <>
+    <div className="overflow-hidden">
       <HeadTags data={{ title: 'Serlo – Die freie Lernplattform' }} />
       <SubjectsSection>
         <LandingSubjects data={subjectsData} />
@@ -25,27 +25,29 @@ export function LandingDE({ data }: LandingDEProps) {
         <LandingAbout />
       </AboutSection>
 
-      <div
+      <h3
         className={clsx(
-          'text-center mt-40 text-4xl text-truegray-700 font-bold',
-          'leading-normal'
+          'text-center text-4xl text-truegray-700 font-bold',
+          'leading-cozy tracking-tight',
+          'max-w-2xl mt-40 mx-auto'
         )}
       >
-        <p>Wir sind eine große, ehrenamtliche</p>
-        <p>Community und gestalten Serlo</p>
-        <p className="text-brand italic">gemeinsam.</p>
-      </div>
+        Wir sind eine große, ehrenamtliche Community und gestalten Serlo
+        <span className="serlo-landing-circled-and-arrow text-brand italic block">
+          gemeinsam.
+        </span>
+      </h3>
 
-      <div className="my-12 text-center">
-        <Link href="/mitmachen">
-          <a
-            className={clsx(
-              'text-white font-bold text-xl bg-brand rounded',
-              'px-8 py-4'
-            )}
-          >
-            Magst du mitmachen?
-          </a>
+      <div className="mt-16 mb-12 text-center">
+        <Link
+          className={clsx(
+            'text-white font-bold text-xl bg-brand rounded',
+            'px-8 py-4 tracking-tight',
+            'hover:serlo-landing-underlined hover:bg-brand-light hover:no-underline'
+          )}
+          href="/mitmachen"
+        >
+          Magst du mitmachen?
         </Link>
       </div>
 
@@ -73,7 +75,7 @@ export function LandingDE({ data }: LandingDEProps) {
         <p>gute Bildung nicht abhängig vom</p>
         <p>Geldbeutel der Eltern ist.</p>
       </div>
-    </>
+    </div>
   )
 
   function renderPerson(
