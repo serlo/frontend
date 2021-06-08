@@ -28,7 +28,7 @@ export function RevisionHistory({ data }: RevisionHistoryProps) {
       </thead>
       <tbody>
         {data.revisions?.nodes.map((entry) => {
-          const isCurrent = entry.id === data.currentRevision.id
+          const isCurrent = entry.id === data.currentRevision?.id
           return (
             <tr key={entry.id}>
               <td className="serlo-td">
