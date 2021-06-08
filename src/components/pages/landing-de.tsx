@@ -6,6 +6,7 @@ import { HeadTags } from '../head-tags'
 import { LandingAbout } from '@/components/landing/landing-about'
 import { LandingSubjects } from '@/components/landing/landing-subjects'
 import { InstanceLandingData } from '@/data-types'
+import Head from 'next/head'
 
 export interface LandingDEProps {
   data: InstanceLandingData
@@ -42,6 +43,12 @@ export function LandingDE({ data }: LandingDEProps) {
 
   return (
     <div className="overflow-hidden">
+      <Head>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Caveat"
+          rel="stylesheet"
+        />
+      </Head>
       <HeadTags data={{ title: 'Serlo – Die freie Lernplattform' }} />
       <SubjectsSection>
         <LandingSubjects data={subjectsData} />
@@ -60,22 +67,45 @@ export function LandingDE({ data }: LandingDEProps) {
           )}
         >
           Wir sind eine große, ehrenamtliche Community und gestalten Serlo
-          <span className="serlo-landing-circled-and-arrow text-brand italic block">
+          <div className="text-brand italic" style={{ fontFamily: 'Caveat' }}>
             gemeinsam.
-          </span>
+          </div>
+          <div className="relative">
+            <div className="absolute flex justify-center inset-0 -mt-12">
+              <img
+                className={clsx(
+                  'pointer-events-none select-none h-32 ml-5 -mt-1'
+                )}
+                src="/_assets/img/landing/circled_and_arrow.svg"
+                draggable={false}
+              />
+            </div>
+          </div>
         </h3>
 
-        <div className="mt-16 text-center">
+        <div className="mt-16 text-center group z-10">
           <Link
             className={clsx(
               'text-white font-bold text-xl bg-brand rounded',
               'px-8 py-4 tracking-tight',
-              'serlo-landing-underlined hover:bg-brand-light hover:no-underline'
+              'group-hover:bg-brand-light hover:no-underline'
             )}
             href="/mitmachen"
           >
             Magst du mitmachen?
           </Link>
+          <div className="relative">
+            <div className="absolute flex justify-center inset-0">
+              <img
+                className={clsx(
+                  'pointer-events-none select-none w-72 h-5 mt-6 group-hover:opacity-100 opacity-0',
+                  'transition-all ease-linear transition-200 group-hover:transform group-hover:rotate-1'
+                )}
+                src="/_assets/img/landing/underlined.svg"
+                draggable={false}
+              />
+            </div>
+          </div>
         </div>
 
         <PersonsWrap className="mb-50 flex flex-wrap justify-evenly md:relative md:block md:h-3/5">
