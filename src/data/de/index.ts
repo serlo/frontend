@@ -292,7 +292,7 @@ export const loggedInData = {
       sortEntities: "Inhalt sortieren",
       newEntity: "Neuer Inhalt",
       editProfile: "Profil bearbeiten",
-      directLink: 'Direct link to this content'
+      directLink: "Direkter Link zu diesem Inhalt"
     },
     notifications: {
       loadMore: "Weitere laden",
