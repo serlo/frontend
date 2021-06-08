@@ -143,7 +143,7 @@ export const instanceData = {
       metaTitle: "Meta-Titel",
       metaDescription: "Meta-Beschreibung",
       compare: "Vergleichen",
-      currentVersion: "Aktuelle Bearbeitung",
+      currentVersion: "Akzeptierte Bearbeitung",
       thisVersion: "Diese Bearbeitung",
       currentNotice: "Das ist die aktuell akzeptierte Bearbeitung.",
       rejectedNotice: "Diese Bearbeitung wurde abgelehnt.",
