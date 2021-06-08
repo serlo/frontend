@@ -15,13 +15,29 @@ export function LandingDE({ data }: LandingDEProps) {
   const subjectsData = data.subjectsData
 
   const persons = [
-    { name: 'menuja', role: 'Autorin', pos: [-200, 60] },
-    { name: 'LinaMaria', role: 'Spenderin', pos: [200, 90] },
-    { name: 'Wolfgang', role: 'Botschaftler', pos: [-700, -140] },
-    { name: 'wanda', role: 'Autorin', pos: [600, -110] },
-    { name: 'kathongi', role: 'Redaktion', pos: [-550, 250] },
-    { name: 'inyono', role: 'Entwickler', pos: [-250, 450] },
-    { name: 'nish', role: 'Support', pos: [-250, 450] },
+    { name: 'menuja', role: 'Autorin' },
+    { name: 'LinaMaria', role: 'Spenderin' },
+    { name: 'Wolfgang', role: 'Botschaftler' },
+    { name: 'wanda', role: 'Autorin' },
+    { name: 'kathongi', role: 'Redaktion' },
+    { name: 'inyono', role: 'Entwickler' },
+    { name: 'nish', role: 'Support' },
+    { name: 'ole', role: 'Sanitär' },
+    { name: 'dal', role: 'Entwickler' },
+    { name: 'jakobwes', role: 'Autor' },
+  ]
+
+  const positions = [
+    ['8%', '-5%'],
+    ['80%', '2%'],
+    ['38%', '12%'],
+    ['60%', '18%'],
+    ['19%', '36%'],
+    ['49%', '59%'],
+    ['75%', '48%'],
+    ['4%', '74%'],
+    ['30%', '84%'],
+    ['65%', '89%'],
   ]
 
   return (
@@ -49,12 +65,12 @@ export function LandingDE({ data }: LandingDEProps) {
           </span>
         </h3>
 
-        <div className="mt-16 mb-12 text-center">
+        <div className="mt-16 text-center">
           <Link
             className={clsx(
               'text-white font-bold text-xl bg-brand rounded',
               'px-8 py-4 tracking-tight',
-              'hover:serlo-landing-underlined hover:bg-brand-light hover:no-underline'
+              'serlo-landing-underlined hover:bg-brand-light hover:no-underline'
             )}
             href="/mitmachen"
           >
@@ -62,9 +78,9 @@ export function LandingDE({ data }: LandingDEProps) {
           </Link>
         </div>
 
-        <div className="mb-60 bg-truegray-50">
-          <div className="flex flex-wrap justify-evenly">{renderPersons()}</div>
-        </div>
+        <PersonsWrap className="mb-50 flex flex-wrap justify-evenly md:relative md:block md:h-3/5">
+          {renderPersons()}
+        </PersonsWrap>
       </section>
 
       <section className="mt-36 mb-20">
@@ -85,61 +101,40 @@ export function LandingDE({ data }: LandingDEProps) {
   )
 
   function renderPersons() {
-    return persons
-      .sort(() => 0.5 - Math.random())
-      .map(({ name, role }, index) => {
-        const lineBreak = index === 1 || index === 6
-        return (
-          <>
-            <div
-              key={name}
-              className="mt-12 mx-1 text-center sm:!w-40"
-              style={{ width: '24vw' }}
-            >
+    // const randomPositions = positions.sort(() => 0.5 - Math.random()) // good enough
+    return persons.map(({ name, role }, index) => {
+      const lineBreak = index === 1 || index === 6
+      const pos = positions[index]
+      return (
+        <>
+          <PersonWrap
+            key={name}
+            className="mt-12 mx-1 text-center md:serlo-landing-wiggle"
+            style={{ left: pos[0], top: pos[1] }}
+          >
+            <Link className="hover:no-underline" href={`/user/profile/${name}`}>
               <img
                 src={`https://community.serlo.org/avatar/${name}`}
                 className="rounded-full w-full"
               />
-              <p className="text-lg mt-3 font-bold text-gray-700">@{name}</p>
-              <p className={clsx('text-white text-lg font-bold mt-3')}>
-                <span className="px-2 py-1 bg-yellow-500 rounded-2xl">
-                  {role}
-                </span>
+              <p className="text-base mt-2 mb-2 font-bold text-gray-700">
+                @{name}
               </p>
-            </div>
-            {lineBreak && (
-              <div
-                className="sm:hidden"
-                style={{ height: '0', flexBasis: '100%' }}
-              ></div>
-            )}
-          </>
-        )
-      })
+              <span className="text-white text-base font-bold px-2 py-1 bg-yellow-500 rounded-2xl">
+                {role}
+              </span>
+            </Link>
+          </PersonWrap>
+          {lineBreak && (
+            <div
+              className="md:hidden"
+              style={{ height: '0', flexBasis: '100%' }}
+            ></div>
+          )}
+        </>
+      )
+    })
   }
-  /*
-  function renderPerson(
-    name: string,
-    role: string,
-    posx: number,
-    posy: number
-  ) {
-    return (
-      <div
-        style={{ left: `${posx}px`, top: `${posy}px` }}
-        className="absolute w-52 text-center"
-      >
-        <img
-          src={`https://community.serlo.org/avatar/${name}`}
-          className="rounded-full w-full"
-        />
-        <p className="text-lg mt-3 font-bold text-gray-700">@{name}</p>
-        <p className={clsx('text-white text-lg font-bold mt-3')}>
-          <span className="px-2 py-1 bg-yellow-500 rounded-2xl">{role}</span>
-        </p>
-      </div>
-    )
-  } */
 }
 
 const SubjectsSection = styled.section``
@@ -151,5 +146,20 @@ const AboutSection = styled.section`
 
   @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
     flex-direction: row;
+  }
+`
+
+const PersonsWrap = styled.div`
+  @media (min-width: ${(props) => props.theme.breakpoints.md}) {
+    height: 630px;
+    margin-bottom: 290px;
+  }
+`
+
+const PersonWrap = styled.div`
+  width: 24vw;
+  @media (min-width: ${(props) => props.theme.breakpoints.md}) {
+    width: 12vw;
+    position: absolute;
   }
 `
