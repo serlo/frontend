@@ -85,7 +85,8 @@ export const instanceData = {
     course: {
       showPages: "पाठ्यक्रम का अवलोकन करें",
       pages: "पाठ्यक्रम अवलोकन",
-      next: "अगला"
+      next: "अगला",
+      back: 'Back'
     },
     content: {
       show: "दिखाएँ",
