@@ -1,5 +1,6 @@
 import clsx from 'clsx'
 import Head from 'next/head'
+import { Fragment } from 'react'
 import styled from 'styled-components'
 
 import { Link } from '../content/link'
@@ -63,25 +64,20 @@ export function LandingDE({ data }: LandingDEProps) {
           className={clsx(
             'text-center text-4xl text-truegray-700 font-bold',
             'leading-cozy tracking-tight',
-            'max-w-2xl mt-40 mx-auto'
+            'max-w-2xl mt-40 mx-auto relative z-10'
           )}
         >
           Wir sind eine große, ehrenamtliche Community und gestalten Serlo
-          <div className="text-brand italic" style={{ fontFamily: 'Caveat' }}>
-            gemeinsam.
-          </div>
-          <div className="relative">
-            <div className="absolute flex justify-center inset-0 -mt-12">
-              <img
-                className={clsx(
-                  'pointer-events-none select-none h-32 ml-5 -mt-1'
-                )}
-                src="/_assets/img/landing/circled_and_arrow.svg"
-                draggable={false}
-              />
-            </div>
-          </div>
+          <p className="text-brand italic font-handwritten">gemeinsam.</p>
         </h3>
+        <div className="relative z-0 h-0 w-full mt-1">
+          <div
+            className={clsx(
+              'absolute inset-0 -mt-14 h-32 ml-5',
+              'bg-circled-and-arrow bg-no-repeat bg-top bg-contain'
+            )}
+          ></div>
+        </div>
 
         <div className="mt-16 text-center group z-10">
           <Link
@@ -136,9 +132,8 @@ export function LandingDE({ data }: LandingDEProps) {
       const lineBreak = index === 1 || index === 6
       const pos = positions[index]
       return (
-        <>
+        <Fragment key={name}>
           <PersonWrap
-            key={name}
             className="mt-12 mx-1 text-center md:serlo-landing-wiggle"
             style={{ left: pos[0], top: pos[1] }}
           >
@@ -161,7 +156,7 @@ export function LandingDE({ data }: LandingDEProps) {
               style={{ height: '0', flexBasis: '100%' }}
             ></div>
           )}
-        </>
+        </Fragment>
       )
     })
   }

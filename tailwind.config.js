@@ -70,6 +70,11 @@ module.exports = {
       },
       fontFamily: {
         serlo: 'Karmilla, sans-serif',
+        handwritten: 'Caveat, sans-serif',
+      },
+      backgroundImage: {
+        'circled-and-arrow':
+          "url('/_assets/img/landing/circled_and_arrow.svg')",
       },
       minHeight: {
         8: '32px',
