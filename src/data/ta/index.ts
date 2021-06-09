@@ -85,7 +85,8 @@ export const instanceData = {
     course: {
       showPages: "வகுப்பு மேலோட்டத்தைக் காட்டவும்",
       pages: 'Course overview',
-      next: "அடுத்து"
+      next: "அடுத்து",
+      back: 'Back'
     },
     content: {
       show: "காட்டு",
