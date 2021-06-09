@@ -32,7 +32,7 @@ export function CourseFooter({
 
   return (
     <nav className="mt-10 mb-8 py-5 bg-brand-50 sm:bg-white flex justify-between">
-      {previousHref ? (
+      {previousHref && (
         <Link
           href={previousHref}
           path={['courseback']}
@@ -44,14 +44,12 @@ export function CourseFooter({
           />{' '}
           {strings.course.back}
         </Link>
-      ) : (
-        <div>{/* placeholder for flex row */}</div>
       )}
       {nextHref ? (
         <Link
           href={nextHref}
           path={['coursenext']}
-          className="serlo-button serlo-make-interactive-primary mx-side hover:no-underline"
+          className="serlo-button serlo-make-interactive-primary ml-auto mr-side hover:no-underline"
         >
           <FontAwesomeIcon icon={faArrowCircleRight} /> {strings.course.next}
         </Link>
