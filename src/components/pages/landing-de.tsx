@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import Head from 'next/head'
 import styled from 'styled-components'
 
 import { Link } from '../content/link'
@@ -6,7 +7,6 @@ import { HeadTags } from '../head-tags'
 import { LandingAbout } from '@/components/landing/landing-about'
 import { LandingSubjects } from '@/components/landing/landing-subjects'
 import { InstanceLandingData } from '@/data-types'
-import Head from 'next/head'
 
 export interface LandingDEProps {
   data: InstanceLandingData
