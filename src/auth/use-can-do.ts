@@ -15,6 +15,7 @@ export function useCanDo() {
 
   return (guard: GenericAuthorizationGuard) => {
     if (!authorizationPayload) {
+      // eslint-disable-next-line no-console
       console.warn('No authorization context provided!')
       return false
     }

@@ -8,6 +8,7 @@ export default async function fetch(req: NextApiRequest, res: NextApiResponse) {
   const slug = req.query.slug as string[]
   const data = await fetchPageData('/' + slug.join('/'))
   if (data.kind === 'error') {
+    // eslint-disable-next-line no-console
     console.log(data.errorData.message)
     res.statusCode = data.errorData.code
   }

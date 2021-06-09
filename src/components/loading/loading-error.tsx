@@ -5,6 +5,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 
 export function LoadingError({ error }: { error: object }) {
   const { strings } = useInstanceData()
+  // eslint-disable-next-line no-console
   console.log(error)
   return (
     <p className="serlo-p mt-12 text-brand">

@@ -55,7 +55,6 @@ export function convert(
     return convertText(node) as FrontendContentNode[]
   }
 
-  console.log('unsupported -> ', node)
   return []
 }
 
