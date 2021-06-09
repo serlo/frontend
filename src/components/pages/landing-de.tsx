@@ -95,7 +95,7 @@ export function LandingDE({ data }: LandingDEProps) {
               <img
                 className={clsx(
                   'pointer-events-none select-none w-72 h-5 mt-6 group-hover:opacity-100 opacity-0',
-                  'transition-all ease-linear transition-200 group-hover:transform group-hover:rotate-1'
+                  'transition-all ease-linear duration-200 group-hover:transform group-hover:rotate-1'
                 )}
                 src="/_assets/img/landing/underlined.svg"
                 draggable={false}
