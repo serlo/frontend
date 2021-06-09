@@ -202,35 +202,6 @@
       @apply !hidden;
     }
   }
-  .serlo-landing-circled-and-arrow:before {
-    content: ' ';
-    display: block;
-    position: absolute;
-    pointer-events: none;
-    background: url('/_assets/img/landing/circled_and_arrow.svg') no-repeat 52%
-      50%;
-    width: 100%;
-    left: 0;
-    margin-top: -12px;
-    height: 140px;
-  }
-  .serlo-landing-underlined:before {
-    content: ' ';
-    display: block;
-    position: absolute;
-    pointer-events: none;
-    background: url('/_assets/img/landing/underlined.svg') no-repeat 50% 50%;
-    width: 98%;
-    margin-top: -12px;
-    left: 0;
-    height: 140px;
-    opacity: 0;
-    transition: linear all 200ms;
-  }
-  .serlo-landing-underlined:hover:before {
-    opacity: 1;
-    transform: rotate(1deg);
-  }
   .serlo-landing-wiggle:before {
     content: ' ';
     display: block;
