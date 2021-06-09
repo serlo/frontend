@@ -78,7 +78,7 @@ export function LandingDE({ data }: LandingDEProps) {
           </Link>
         </div>
 
-        <PersonsWrap className="mb-50 flex flex-wrap justify-evenly md:relative md:block md:h-3/5">
+        <PersonsWrap className="mb-52 flex flex-wrap justify-evenly md:relative md:block md:h-3/5">
           {renderPersons()}
         </PersonsWrap>
       </section>
