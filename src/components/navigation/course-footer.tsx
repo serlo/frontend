@@ -15,10 +15,12 @@ export interface CourseFooterProps extends CourseFooterData {
 
 export interface CourseFooterData {
   nextHref: string
+  previousHref: string
 }
 
 export function CourseFooter({
   nextHref,
+  previousHref,
   onOverviewButtonClick,
 }: CourseFooterProps) {
   const onOverviewClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -29,7 +31,22 @@ export function CourseFooter({
   const { strings } = useInstanceData()
 
   return (
-    <nav className="mt-10 mb-8 py-5 bg-brand-50 sm:bg-white">
+    <nav className="mt-10 mb-8 py-5 bg-brand-50 sm:bg-white flex justify-between">
+      {previousHref ? (
+        <Link
+          href={previousHref}
+          path={['courseback']}
+          className="serlo-button serlo-make-interactive-primary mx-side hover:no-underline"
+        >
+          <FontAwesomeIcon
+            icon={faArrowCircleRight}
+            className="fa-flip-horizontal"
+          />{' '}
+          {strings.course.back}
+        </Link>
+      ) : (
+        <div>{/* placeholder for flex row */}</div>
+      )}
       {nextHref ? (
         <Link
           href={nextHref}
