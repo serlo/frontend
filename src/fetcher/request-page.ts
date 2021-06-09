@@ -365,6 +365,7 @@ export async function requestPage(
           title: uuid.course.currentRevision?.title ?? '',
           pages,
           nextPageUrl: pages[currentPageIndex]?.url,
+          previousPageUrl: pages[currentPageIndex - 2]?.url,
         },
         unrevisedRevisions: uuid.revisions?.totalCount,
       },
