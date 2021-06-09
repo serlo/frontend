@@ -75,6 +75,7 @@ module.exports = {
       backgroundImage: {
         'circled-and-arrow':
           "url('/_assets/img/landing/circled_and_arrow.svg')",
+        underlined: "url('/_assets/img/landing/underlined.svg')",
       },
       minHeight: {
         8: '32px',

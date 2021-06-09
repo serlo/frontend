@@ -79,27 +79,29 @@ export function LandingDE({ data }: LandingDEProps) {
           ></div>
         </div>
 
-        <div className="mt-16 text-center group z-10">
-          <Link
-            className={clsx(
-              'text-white font-bold text-xl bg-brand rounded',
-              'px-8 py-4 tracking-tight',
-              'group-hover:bg-brand-light hover:no-underline'
-            )}
-            href="/mitmachen"
-          >
-            Magst du mitmachen?
-          </Link>
-          <div className="relative">
-            <div className="absolute flex justify-center inset-0">
-              <img
-                className={clsx(
-                  'pointer-events-none select-none w-72 h-5 mt-6 group-hover:opacity-100 opacity-0',
-                  'transition-all ease-linear duration-200 group-hover:transform group-hover:rotate-1'
-                )}
-                src="/_assets/img/landing/underlined.svg"
-                draggable={false}
-              />
+        <div className="mt-16 z-10 flex justify-center relative">
+          <div className="group text-center">
+            <Link
+              className={clsx(
+                'text-white font-bold text-xl bg-brand rounded',
+                'px-8 py-4 tracking-tight',
+                'group-hover:bg-brand-light hover:no-underline'
+              )}
+              href="/mitmachen"
+            >
+              Magst du mitmachen?
+            </Link>
+            <div className="relative">
+              <div className="absolute flex justify-center inset-0">
+                <div
+                  className={clsx(
+                    'pointer-events-none select-none w-72 h-5 mt-6',
+                    'group-hover:opacity-100 opacity-0 group-hover:transform group-hover:rotate-1',
+                    'transition-all ease-linear duration-200',
+                    'bg-underlined bg-contain bg-no-repeat bg-top'
+                  )}
+                />
+              </div>
             </div>
           </div>
         </div>
