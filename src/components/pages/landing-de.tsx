@@ -106,7 +106,12 @@ export function LandingDE({ data }: LandingDEProps) {
           </div>
         </div>
 
-        <PersonsWrap className="mb-52 flex flex-wrap justify-evenly md:relative md:block md:h-3/5">
+        <PersonsWrap
+          className={clsx(
+            'mb-52 flex flex-wrap justify-evenly',
+            'md:relative md:block md:mb-72'
+          )}
+        >
           {renderPersons()}
         </PersonsWrap>
       </section>
@@ -128,6 +133,29 @@ export function LandingDE({ data }: LandingDEProps) {
     </div>
   )
 
+  /*
+
+
+  .serlo-landing-wiggle:before {
+    content: ' ';
+    display: block;
+    position: absolute;
+    pointer-events: none;
+    background: url(/_assets/img/landing/wiggle.svg) no-repeat 0% 0%;
+    width: 160%;
+    margin-left: -50px;
+    left: 0;
+    height: 100%;
+    opacity: 0;
+    transition: linear all 200ms;
+  }
+  .serlo-landing-wiggle:hover:before {
+    opacity: 1;
+    transform: rotate(1deg);
+  }
+
+  */
+
   function renderPersons() {
     // const randomPositions = positions.sort(() => 0.5 - Math.random()) // good enough
     return persons.map(({ name, role }, index) => {
@@ -136,10 +164,23 @@ export function LandingDE({ data }: LandingDEProps) {
       return (
         <Fragment key={name}>
           <PersonWrap
-            className="mt-12 mx-1 text-center md:serlo-landing-wiggle"
+            className="mt-12 mx-1 text-center group"
             style={{ left: pos[0], top: pos[1] }}
           >
-            <Link className="hover:no-underline" href={`/user/profile/${name}`}>
+            <div className="relative w-full z-0">
+              <div
+                className={clsx(
+                  'bg-wiggle absolute -left-12 -right-12',
+                  'bg-no-repeat bg-contain opacity-0 group-hover:opacity-100',
+                  'transition-all ease-linear duration-200 group-hover:transform group-hover:rotate-1'
+                )}
+                style={{ paddingBottom: '120%' }}
+              ></div>
+            </div>
+            <Link
+              className="hover:no-underline relative z-10"
+              href={`/user/profile/${name}`}
+            >
               <img
                 src={`https://community.serlo.org/avatar/${name}`}
                 className="rounded-full w-full"
@@ -147,16 +188,18 @@ export function LandingDE({ data }: LandingDEProps) {
               <p className="text-base mt-2 mb-2 font-bold text-gray-700">
                 @{name}
               </p>
-              <span className="text-white text-base font-bold px-2 py-1 bg-yellow-500 rounded-2xl">
+              <span
+                className={clsx(
+                  'text-white text-base font-bold px-2 py-1',
+                  'bg-yellow-500 rounded-2xl'
+                )}
+              >
                 {role}
               </span>
             </Link>
           </PersonWrap>
           {lineBreak && (
-            <div
-              className="md:hidden"
-              style={{ height: '0', flexBasis: '100%' }}
-            ></div>
+            <div className="md:hidden h-0 " style={{ flexBasis: '100%' }}></div>
           )}
         </Fragment>
       )
@@ -179,7 +222,6 @@ const AboutSection = styled.section`
 const PersonsWrap = styled.div`
   @media (min-width: ${(props) => props.theme.breakpoints.md}) {
     height: 630px;
-    margin-bottom: 290px;
   }
 `
 

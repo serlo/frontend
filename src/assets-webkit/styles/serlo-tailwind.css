@@ -202,23 +202,6 @@
       @apply !hidden;
     }
   }
-  .serlo-landing-wiggle:before {
-    content: ' ';
-    display: block;
-    position: absolute;
-    pointer-events: none;
-    background: url(/_assets/img/landing/wiggle.svg) no-repeat 0% 0%;
-    width: 160%;
-    margin-left: -50px;
-    left: 0;
-    height: 100%;
-    opacity: 0;
-    transition: linear all 200ms;
-  }
-  .serlo-landing-wiggle:hover:before {
-    opacity: 1;
-    transform: rotate(1deg);
-  }
 }
 
 /* Some exceptional cases where we can't / don't want to set classnames directly.

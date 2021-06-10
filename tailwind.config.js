@@ -76,6 +76,7 @@ module.exports = {
         'circled-and-arrow':
           "url('/_assets/img/landing/circled_and_arrow.svg')",
         underlined: "url('/_assets/img/landing/underlined.svg')",
+        wiggle: "url('/_assets/img/landing/wiggle.svg')",
       },
       minHeight: {
         8: '32px',
