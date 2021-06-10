@@ -92,7 +92,11 @@ export function FrontendClientBase({
   React.useEffect(() => {
     if (loggedInComponents && auth && auth.current) {
       const fetch = loggedInComponents.createAuthAwareGraphqlFetch(auth)
-      fetch(JSON.stringify({ query: 'query{authorization}' }))
+      fetch(
+        JSON.stringify({
+          query: 'query{authorization\nnotifications(unread:true){totalCount}}',
+        })
+      )
         .then((value) => {
           setAuthorizationPayload(value.authorization)
         })

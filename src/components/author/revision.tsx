@@ -202,8 +202,8 @@ export function Revision({ data }: RevisionProps) {
     if (diffType === 'content') {
       return (
         <ReactDiffViewer
-          oldValue={JSON.stringify(data.thisRevision.content, null, 2)}
-          newValue={JSON.stringify(data.currentRevision.content, null, 2)}
+          oldValue={JSON.stringify(data.currentRevision.content, null, 2)}
+          newValue={JSON.stringify(data.thisRevision.content, null, 2)}
           splitView
           hideLineNumbers
         />
@@ -212,8 +212,8 @@ export function Revision({ data }: RevisionProps) {
     return (
       <DiffViewerWrapper>
         <ReactDiffViewer
-          oldValue={data.thisRevision[diffType]}
-          newValue={data.currentRevision[diffType]}
+          oldValue={data.currentRevision[diffType]}
+          newValue={data.thisRevision[diffType]}
           splitView={false}
           hideLineNumbers
           showDiffOnly={false}

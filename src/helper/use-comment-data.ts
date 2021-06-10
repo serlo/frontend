@@ -36,16 +36,6 @@ const query = gql`
   }
 `
 export function useCommentData(id: number) {
-  // // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  // const resp = useGraphqlSwr<{ uuid: ThreadAware }>({
-  //   key: 'test',
-  //   query,
-  //   variables: { id },
-  //   config: {
-  //     refreshInterval: 10 * 60 * 1000, // 10min, todo: update on cache mutation
-  //   },
-  // })
-
   const client = new GraphQLClient(endpoint)
   const fetcher = () => client.request(query, { id })
   const resp = useSWR<{ uuid: ThreadAware }, any>(`comments::${id}`, fetcher, {
@@ -64,6 +54,7 @@ export function useCommentData(id: number) {
     return acc + thread.comments.nodes.length
   }, 0)
 
+  // eslint-disable-next-line no-console
   if (error) console.log(error)
 
   return { commentData, commentCount, error }

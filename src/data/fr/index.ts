@@ -85,7 +85,8 @@ export const instanceData = {
     course: {
       showPages: "Afficher la vue globale du cours",
       pages: "Vue globale du cours",
-      next: "Suivant"
+      next: "Suivant",
+      back: 'Back'
     },
     content: {
       show: "montrer",

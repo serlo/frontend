@@ -5,7 +5,7 @@ import clsx from 'clsx'
 import { NextPage } from 'next'
 import Head from 'next/head'
 import * as R from 'ramda'
-import * as React from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 import AuthorBadge from '@/assets-webkit/img/community/badge-author.svg'
@@ -40,10 +40,14 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   } = userData
   const { activeDonor, activeReviewer, activeAuthor } = userData
   const auth = useAuthentication()
-  const isOwnProfile = auth.current?.username === username
   const lastLoginDate = lastLogin ? new Date(lastLogin) : undefined
   const registerDate = new Date(date)
-  const [showImageModal, setShowImageModal] = React.useState(false)
+  const [showImageModal, setShowImageModal] = useState(false)
+  const [isOwnProfile, setIsOwnProfile] = useState(false)
+
+  useEffect(() => {
+    setIsOwnProfile(auth.current?.username === username)
+  }, [auth, username])
 
   return (
     <>
@@ -171,9 +175,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
           <p className="mb-5">
             {replacePlaceholders(strings.profiles.instanceRoles, { lang })}{' '}
             {instanceRoles.map((role, index) => (
-              <React.Fragment key={index}>
-                {renderRole(role.role)}
-              </React.Fragment>
+              <Fragment key={index}>{renderRole(role.role)}</Fragment>
             ))}
           </p>
         )}
@@ -181,9 +183,9 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
           <p className="mb-block">
             {strings.profiles.otherRoles}{' '}
             {otherRoles.map((role, index) => (
-              <React.Fragment key={index}>
+              <Fragment key={index}>
                 {renderRole(`${role.instance}: ${role.role}`)}
-              </React.Fragment>
+              </Fragment>
             ))}
           </p>
         )}
