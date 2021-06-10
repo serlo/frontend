@@ -28,17 +28,23 @@ export function Multimedia({
 
   const mediaChild = media[0]
   const mediaChildIsImage = isImage(mediaChild)
+  const width = convertToClosestQuarter(mediaWidth) // we can do this becaues witdth is only 25%, 50%, 75% or 100%
 
   return (
     <div className="flex flex-col mobile:block">
-      <MediaWrapper
-        $width={mediaWidth}
+      <div
         onClick={mediaChildIsImage ? openLightBox : undefined}
-        useLightbox={mediaChildIsImage}
-        className={clsx('mobile:float-right mobile:mt-1 mobile:-mb-1 ml-2')}
+        className={clsx(
+          'mobile:float-right mobile:mt-1 mobile:-mb-1 mobile:ml-2',
+          mediaChildIsImage && 'mobile:cursor-zoom-in',
+          width == 25 && 'mobile:w-1/4',
+          width == 50 && 'mobile:w-1/2',
+          width == 75 && 'mobile:w-3/4',
+          width == 100 && 'mobile:w-full'
+        )}
       >
         {renderNested(media, 'media')}
-      </MediaWrapper>
+      </div>
       <div>{renderNested(children, 'children')}</div>
       {renderLightbox()}
       <div className="clear-both" />
@@ -69,9 +75,6 @@ function isImage(
   return (child as FrontendImgNode).type === 'img'
 }
 
-const MediaWrapper = styled.div<{ $width: number; useLightbox: boolean }>`
-  @media (min-width: ${(props) => props.theme.breakpoints.mobile}) {
-    width: ${(props) => props.$width}%;
-    cursor: ${(props) => (props.useLightbox ? 'zoom-in' : 'default')};
-  }
-`
+function convertToClosestQuarter(width: number) {
+  return Math.round(width / 25) * 25
+}
