@@ -91,6 +91,13 @@ module.exports = {
         '2.5xl': ['1.7rem', '1.22'],
         '3.5xl': ['2rem', '1.22'],
       },
+      width: {
+        '1/8v': '12.5vw',
+        '1/4v': '25vw',
+      },
+      height: {
+        630: '630px',
+      },
     },
     screens: {
       mobile: '500px',

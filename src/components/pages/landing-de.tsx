@@ -1,7 +1,6 @@
 import clsx from 'clsx'
 import Head from 'next/head'
 import { Fragment } from 'react'
-import styled from 'styled-components'
 
 import { Link } from '../content/link'
 import { HeadTags } from '../head-tags'
@@ -51,13 +50,13 @@ export function LandingDE({ data }: LandingDEProps) {
         />
       </Head>
       <HeadTags data={{ title: 'Serlo – Die freie Lernplattform' }} />
-      <SubjectsSection>
+      <section>
         <LandingSubjects data={subjectsData} />
-      </SubjectsSection>
+      </section>
 
-      <AboutSection>
+      <section className="mt-12 flex flex-col sm:flex-row">
         <LandingAbout />
-      </AboutSection>
+      </section>
 
       <section>
         <h3
@@ -106,14 +105,14 @@ export function LandingDE({ data }: LandingDEProps) {
           </div>
         </div>
 
-        <PersonsWrap
+        <div
           className={clsx(
             'mb-52 flex flex-wrap justify-evenly',
-            'md:relative md:block md:mb-72'
+            'md:relative md:block md:mb-72 md:h-630'
           )}
         >
           {renderPersons()}
-        </PersonsWrap>
+        </div>
       </section>
 
       <section className="mt-36 mb-20">
@@ -133,29 +132,6 @@ export function LandingDE({ data }: LandingDEProps) {
     </div>
   )
 
-  /*
-
-
-  .serlo-landing-wiggle:before {
-    content: ' ';
-    display: block;
-    position: absolute;
-    pointer-events: none;
-    background: url(/_assets/img/landing/wiggle.svg) no-repeat 0% 0%;
-    width: 160%;
-    margin-left: -50px;
-    left: 0;
-    height: 100%;
-    opacity: 0;
-    transition: linear all 200ms;
-  }
-  .serlo-landing-wiggle:hover:before {
-    opacity: 1;
-    transform: rotate(1deg);
-  }
-
-  */
-
   function renderPersons() {
     // const randomPositions = positions.sort(() => 0.5 - Math.random()) // good enough
     return persons.map(({ name, role }, index) => {
@@ -163,8 +139,11 @@ export function LandingDE({ data }: LandingDEProps) {
       const pos = positions[index]
       return (
         <Fragment key={name}>
-          <PersonWrap
-            className="mt-12 mx-1 text-center group"
+          <div
+            className={clsx(
+              'mt-12 mx-1 text-center group',
+              'w-1/4v md:w-1/8v md:absolute'
+            )}
             style={{ left: pos[0], top: pos[1] }}
           >
             <div className="relative w-full z-0">
@@ -197,7 +176,7 @@ export function LandingDE({ data }: LandingDEProps) {
                 {role}
               </span>
             </Link>
-          </PersonWrap>
+          </div>
           {lineBreak && (
             <div className="md:hidden h-0 " style={{ flexBasis: '100%' }}></div>
           )}
@@ -206,29 +185,3 @@ export function LandingDE({ data }: LandingDEProps) {
     })
   }
 }
-
-const SubjectsSection = styled.section``
-
-const AboutSection = styled.section`
-  margin-top: 50px;
-  display: flex;
-  flex-direction: column;
-
-  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-    flex-direction: row;
-  }
-`
-
-const PersonsWrap = styled.div`
-  @media (min-width: ${(props) => props.theme.breakpoints.md}) {
-    height: 630px;
-  }
-`
-
-const PersonWrap = styled.div`
-  width: 24vw;
-  @media (min-width: ${(props) => props.theme.breakpoints.md}) {
-    width: 12vw;
-    position: absolute;
-  }
-`
