@@ -35,6 +35,7 @@ async function refreshToken(req: NextApiRequest, res: NextApiResponse) {
     )
     res.end()
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.log(e)
     res.setHeader(
       'Set-Cookie',

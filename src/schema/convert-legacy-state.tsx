@@ -35,7 +35,6 @@ export function convertLegacyState(html: string) {
 
 function convert(node: LegacyNode[] | LegacyNode): FrontendContentNode[] {
   if (!node) {
-    console.log('l: empty node, ignoring')
     return []
   }
 
@@ -43,7 +42,6 @@ function convert(node: LegacyNode[] | LegacyNode): FrontendContentNode[] {
   if (node.type === 'tag') return convertTags(node)
   if (node.type === 'text') return convertText(node)
 
-  console.log('--> ', node)
   return []
 }
 
@@ -500,7 +498,7 @@ function convertText(node: LegacyNode): FrontendContentNode[] {
     .join('>')
     .split('&amp;')
     .join('&')
-    .replace(/&#(\d+);/g, function (match, dec: number) {
+    .replace(/&#(\d+);/g, function (_match, dec: number) {
       return String.fromCharCode(dec)
     })
   // compat: remove empty text
