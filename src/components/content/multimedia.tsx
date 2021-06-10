@@ -1,7 +1,6 @@
 import clsx from 'clsx'
 import dynamic from 'next/dynamic'
 import { useState } from 'react'
-import styled from 'styled-components'
 
 import { LightBoxProps } from './light-box'
 import type {
