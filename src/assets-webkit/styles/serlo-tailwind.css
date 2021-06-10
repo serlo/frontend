@@ -107,7 +107,7 @@
     @apply h-auto inline max-w-full;
   }
   .serlo-math-wrapper {
-    @apply px-4 w-full text-left mb-block py-0.5;
+    @apply px-4 text-left mb-block py-0.5;
     @apply text-lg leading-browser overflow-x-auto overflow-y-hidden;
     @apply px-side;
   }

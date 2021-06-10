@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import dynamic from 'next/dynamic'
 import { useState } from 'react'
 import styled from 'styled-components'
@@ -29,19 +30,19 @@ export function Multimedia({
   const mediaChildIsImage = isImage(mediaChild)
 
   return (
-    <FlexWrapper>
+    <div className="flex flex-col mobile:block">
       <MediaWrapper
         $width={mediaWidth}
         onClick={mediaChildIsImage ? openLightBox : undefined}
         useLightbox={mediaChildIsImage}
+        className={clsx('mobile:float-right mobile:mt-1 mobile:-mb-1 ml-2')}
       >
         {renderNested(media, 'media')}
       </MediaWrapper>
-      <ContentWrapper $width={100 - mediaWidth}>
-        {renderNested(children, 'children')}
-      </ContentWrapper>
+      <div>{renderNested(children, 'children')}</div>
       {renderLightbox()}
-    </FlexWrapper>
+      <div className="clear-both" />
+    </div>
   )
 
   function renderLightbox() {
@@ -68,25 +69,9 @@ function isImage(
   return (child as FrontendImgNode).type === 'img'
 }
 
-const FlexWrapper = styled.div`
-  @media (min-width: ${(props) => props.theme.breakpoints.mobile}) {
-    display: flex;
-    flex-direction: row-reverse;
-  }
-`
-
 const MediaWrapper = styled.div<{ $width: number; useLightbox: boolean }>`
   @media (min-width: ${(props) => props.theme.breakpoints.mobile}) {
-    flex-basis: ${(props) => props.$width}%;
-    margin-top: 5px;
-    margin-bottom: -3px;
-    margin-left: 7px;
+    width: ${(props) => props.$width}%;
     cursor: ${(props) => (props.useLightbox ? 'zoom-in' : 'default')};
-  }
-`
-
-const ContentWrapper = styled.div<{ $width: number }>`
-  @media (min-width: ${(props) => props.theme.breakpoints.mobile}) {
-    flex-basis: ${(props) => props.$width}%;
   }
 `
