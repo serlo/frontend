@@ -149,11 +149,10 @@ export function LandingDE({ data }: LandingDEProps) {
             <div className="relative w-full z-0">
               <div
                 className={clsx(
-                  'bg-wiggle absolute -left-12 -right-12',
+                  'bg-wiggle absolute -left-12 -right-12 pb-6/5',
                   'bg-no-repeat bg-contain opacity-0 group-hover:opacity-100',
                   'transition-all ease-linear duration-200 group-hover:transform group-hover:rotate-1'
                 )}
-                style={{ paddingBottom: '120%' }}
               ></div>
             </div>
             <Link
@@ -177,9 +176,7 @@ export function LandingDE({ data }: LandingDEProps) {
               </span>
             </Link>
           </div>
-          {lineBreak && (
-            <div className="md:hidden h-0 " style={{ flexBasis: '100%' }}></div>
-          )}
+          {lineBreak && <div className="md:hidden h-0 w-full"></div>}
         </Fragment>
       )
     })
