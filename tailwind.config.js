@@ -84,6 +84,9 @@ module.exports = {
         '2.5xl': ['1.7rem', '1.22'],
         '3.5xl': ['2rem', '1.22'],
       },
+      cursor: {
+        'zoom-in': 'zoom-in',
+      },
     },
     screens: {
       mobile: '500px',
