@@ -147,7 +147,7 @@ export const instanceData = {
       currentVersion: "वर्तमान संस्करण",
       thisVersion: "यह संस्करण",
       currentNotice: "यह वर्तमान में स्वीकृत संस्करण है।",
-      rejectedNotice: 'This revision was rejected.',
+      rejectedNotice: 'This revision was not accepted.',
       by: "द्वारा"
     },
     revisionHistory: {
@@ -311,8 +311,8 @@ export const loggedInData = {
       createEntityLink: "%actor% संबद्ध %child% साथ में %parent%.",
       removeEntityLink: "%actor% अलग %child% से %parent%.",
       createEntityRevision: "%actor% एक बनाया %revision% का %entity%.",
-      checkoutRevision: "%actor% चेक औट %revision% में %repository%.",
-      rejectRevision: "%actor% रद्द %revision% में %repository%।",
+      checkoutRevision: "%actor% checked out a %revision% in %repository%.",
+      rejectRevision: "%actor% did not accept a %revision% in %repository%.",
       createTaxonomyLink: "%actor% जोड़ा %child% से %parent%।",
       removeTaxonomyLink: "%actor% अलग %child% से %parent%।",
       createTaxonomyTerm: "%actor% बनाया था %object%।",
@@ -339,7 +339,7 @@ export const loggedInData = {
       reject: {
         action: "अस्वीकार करें",
         title: "संशोधन अस्वीकारें",
-        explanation: "कृपया लेखक को बताएं कि आप सबमिशन को क्यों अस्वीकार कर रहे हैं।"
+        explanation: 'Please tell the author why you will not accept the submission.'
       },
       confirm: "पुष्टि करें"
     }

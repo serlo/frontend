@@ -147,7 +147,7 @@ export const instanceData = {
       currentVersion: "Versión Actual",
       thisVersion: "Esta Versión",
       currentNotice: "Esta es la versión aceptada actualmente.",
-      rejectedNotice: "Esta revisión fue rechazada",
+      rejectedNotice: 'This revision was not accepted.',
       by: "Por"
     },
     revisionHistory: {
@@ -311,8 +311,8 @@ export const loggedInData = {
       createEntityLink: "%actor% vinculado %child% con %parent%.",
       removeEntityLink: "%actor% desvinculado %child% de %parent%.",
       createEntityRevision: "%actor% creó un %revision% de %entity%.",
-      checkoutRevision: "%actor% ha verificado %revision% en %repository%",
-      rejectRevision: "%actor% rechazó  %revision% en%repository%.",
+      checkoutRevision: "%actor% checked out a %revision% in %repository%.",
+      rejectRevision: "%actor% did not accept a %revision% in %repository%.",
       createTaxonomyLink: "%actor% agregó %child% a %parent%.",
       removeTaxonomyLink: "%actor% eliminó a %child% de %parent%.",
       createTaxonomyTerm: "%actor% creó %term%.",
@@ -339,7 +339,7 @@ export const loggedInData = {
       reject: {
         action: "Rechazar",
         title: "Rechazar la revisión",
-        explanation: "Indica al autor por qué rechazas el trabajo."
+        explanation: 'Please tell the author why you will not accept the submission.'
       },
       confirm: "Confirmar"
     }
