@@ -311,8 +311,8 @@ export const loggedInData = {
       createEntityLink: "%actor% hat %child% mit %parent% verknüpft.",
       removeEntityLink: "%actor% hat die Verknüpfung von %child% mit %parent% entfernt.",
       createEntityRevision: "%actor% hat eine %revision% von %entity% erstellt.",
-      checkoutRevision: "%actor% checked out a %revision% in %repository%.",
-      rejectRevision: "%actor% did not accept a %revision% in %repository%.",
+      checkoutRevision: "%actor% hat eine %revision% von %repository% übernommen.",
+      rejectRevision: "%user% hat eine %revision% in %repository% nicht übernommen.",
       createTaxonomyLink: "%actor% hat %child% in %parent% eingeordnet.",
       removeTaxonomyLink: "%actor% hat %child% aus %parent% entfernt.",
       createTaxonomyTerm: "%actor% hat den %term% erstellt.",
@@ -339,7 +339,7 @@ export const loggedInData = {
       reject: {
         action: "Ablehnen",
         title: "Bearbeitung ablehnen",
-        explanation: 'Please tell the author why you will not accept the submission.'
+        explanation: "Bitte sag der Bearbeiter*in, warum die Änderung nicht angenommen wird."
       },
       confirm: "Bestätigen"
     }
