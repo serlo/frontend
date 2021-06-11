@@ -147,7 +147,7 @@ export const instanceData = {
       currentVersion: "Current Version",
       thisVersion: "This Version",
       currentNotice: "This is the currently accepted version.",
-      rejectedNotice: 'This revision was rejected.',
+      rejectedNotice: 'This revision was not accepted.',
       by: 'By'
     },
     revisionHistory: {
@@ -312,7 +312,7 @@ export const loggedInData = {
       removeEntityLink: "%actor% dissociated %child% from %parent%.",
       createEntityRevision: "%actor% created a %revision% of %entity%.",
       checkoutRevision: "%actor% checked out %revision% in %repository%.",
-      rejectRevision: "%actor% rejected a %revision% in %repository%.",
+      rejectRevision: "%actor% did not accepted a %revision% in %repository%.",
       createTaxonomyLink: "%actor% added %child% to %parent%.",
       removeTaxonomyLink: "%actor% removed %child% from %parent%.",
       createTaxonomyTerm: "%actor% created %term%.",
@@ -339,7 +339,7 @@ export const loggedInData = {
       reject: {
         action: 'Reject',
         title: 'Reject Revision',
-        explanation: 'Please tell the author why you are rejecting the submission.'
+        explanation: 'Please tell the author why you do not accept the submission.'
       },
       confirm: 'Confirm'
     }
