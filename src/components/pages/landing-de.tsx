@@ -73,6 +73,12 @@ export function LandingDE({ data }: LandingDEProps) {
       role: 'Autor',
       imgSrc: 'https://community.serlo.org/avatar/hwlang',
     },
+    {
+      name: 'maria_f',
+      role: 'Spenderin',
+      imgSrc:
+        'https://assets.serlo.org/60c5d7dd380cc_61b9718ba853191c16b30798169a669bf9803380.JPG',
+    },
   ])
 
   useEffect(() => {
