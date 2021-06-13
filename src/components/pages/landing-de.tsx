@@ -14,28 +14,9 @@ export interface LandingDEProps {
 }
 
 export function LandingDE({ data }: LandingDEProps) {
-  const [positions, setPositions] = useState<[string, string][]>([
-    ['8%', '-5%'],
-    ['80%', '2%'],
-    ['38%', '12%'],
-    ['60%', '18%'],
-    ['19%', '36%'],
-    ['49%', '59%'],
-    ['73%', '48%'],
-    ['4%', '74%'],
-    ['30%', '84%'],
-    ['65%', '89%'],
-  ])
-
-  useEffect(() => {
-    shuffleArray(positions)
-    setPositions(positions)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  const subjectsData = data.subjectsData
-
-  const persons = [
+  const [persons, setPersons] = useState<
+    { name: string; role: string; imgSrc: string }[]
+  >([
     {
       name: 'daniel-flueck',
       role: 'Spender',
@@ -92,6 +73,27 @@ export function LandingDE({ data }: LandingDEProps) {
       role: 'Autor',
       imgSrc: 'https://community.serlo.org/avatar/hwlang',
     },
+  ])
+
+  useEffect(() => {
+    shuffleArray(persons)
+    setPersons(persons)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const subjectsData = data.subjectsData
+
+  const positions = [
+    ['8%', '-5%'],
+    ['80%', '2%'],
+    ['38%', '12%'],
+    ['60%', '18%'],
+    ['19%', '36%'],
+    ['49%', '59%'],
+    ['73%', '48%'],
+    ['4%', '74%'],
+    ['30%', '84%'],
+    ['65%', '89%'],
   ]
 
   return (
@@ -188,6 +190,7 @@ export function LandingDE({ data }: LandingDEProps) {
   function renderPersons() {
     // const randomPositions = positions.sort(() => 0.5 - Math.random()) // good enough
     return persons.map(({ name, role, imgSrc }, index) => {
+      if (index >= positions.length) return null
       const lineBreak = index === 1 || index === 6
       const hideMobile = index > 6
       const pos = positions[index]
