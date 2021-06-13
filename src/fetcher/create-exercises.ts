@@ -8,17 +8,9 @@ import {
   SolutionEdtrState,
   FrontendExerciseGroupNode,
   FrontendSolutionNode,
-  EdtrPluginScMcExercise,
 } from '@/data-types'
+import { shuffleArray } from '@/helper/shuffle-array'
 import { convert } from '@/schema/convert-edtr-io-state'
-
-function shuffleArray(array: EdtrPluginScMcExercise['state']['answers']) {
-  //Durstenfeld shuffle https://stackoverflow.com/a/12646864 probably overkill, but hey it's all about the performance right?
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
-    ;[array[i], array[j]] = [array[j], array[i]]
-  }
-}
 
 export function createExercise(
   uuid: BareExercise,
@@ -43,7 +35,7 @@ export function createExercise(
               answer.originalIndex = i
             }
           )
-          shuffleArray(taskState.interactive.state.answers)
+          shuffleArray<any>(taskState.interactive.state.answers)
         } else if (taskState.interactive?.plugin == 'inputExercise') {
           taskState.interactive.state.answers.forEach((answer: any) => {
             answer.feedback = convert(answer.feedback)
