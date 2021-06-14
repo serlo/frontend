@@ -8,7 +8,7 @@ import { FooterNew } from '../landing/rework/footer-new'
 import { HeaderNew } from '../landing/rework/header-new'
 import { PartnerListNew } from '../landing/rework/partner-list-new'
 import { Link } from '@/components/content/link'
-import { LandingSubjects } from '@/components/landing/landing-subjects'
+import { LandingSubjectsNew } from '@/components/landing/rework/landing-subjects-new'
 import { SearchInputNew } from '@/components/landing/rework/search-input-new'
 import { Separator } from '@/components/landing/rework/separator'
 import { InstanceLandingData } from '@/data-types'
@@ -55,8 +55,8 @@ export function LandingDE({ data }: LandingDEProps) {
         </p>
       </section>
 
-      <section>
-        <LandingSubjects data={subjectsData} />
+      <section className="mt-10">
+        <LandingSubjectsNew data={subjectsData} />
       </section>
 
       <AboutSection>
