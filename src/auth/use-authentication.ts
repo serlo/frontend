@@ -36,9 +36,13 @@ export function useAuthentication(): React.RefObject<AuthenticationPayload> {
 
   async function refreshToken() {
     if (typeof window === 'undefined') return
-    await fetch('/api/auth/refresh-token', {
+    const response = await fetch('/api/auth/refresh-token', {
       method: 'POST',
     })
+    if (response.status == 500) {
+      // refresh failed
+      window.location.reload()
+    }
     cookieValue.current = parseAuthCookie()
   }
 }
