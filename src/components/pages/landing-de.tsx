@@ -1,12 +1,16 @@
 import clsx from 'clsx'
 import Head from 'next/head'
 import { Fragment, useEffect, useState } from 'react'
+import styled from 'styled-components'
 
 import { Link } from '../content/link'
 import { HeadTags } from '../head-tags'
-import { LandingAbout } from '@/components/landing/landing-about'
+import { PartnerListNew } from '../landing/partner-list-new'
+import { HeaderNew } from '../navigation/header-new'
 import { LandingSubjects } from '@/components/landing/landing-subjects'
-import { InstanceLandingData } from '@/data-types'
+import { SearchInputNew } from '@/components/navigation/search-input-new'
+import { useInstanceData } from '@/contexts/instance-context'
+import { FooterLink, InstanceLandingData } from '@/data-types'
 import { shuffleArray } from '@/helper/shuffle-array'
 
 export interface LandingDEProps {
@@ -81,6 +85,8 @@ export function LandingDE({ data }: LandingDEProps) {
     },
   ])
 
+  const { headerData, footerData } = useInstanceData()
+
   useEffect(() => {
     shuffleArray(persons)
     setPersons(persons)
@@ -103,96 +109,185 @@ export function LandingDE({ data }: LandingDEProps) {
   ]
 
   return (
-    <div className="overflow-hidden">
-      <Head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Caveat"
-          rel="stylesheet"
-        />
-      </Head>
-      <HeadTags data={{ title: 'Serlo – Die freie Lernplattform' }} />
-      <section>
-        <LandingSubjects data={subjectsData} />
-      </section>
+    <>
+      <div className="overflow-hidden">
+        <Head>
+          <link
+            href="https://fonts.googleapis.com/css2?family=Caveat"
+            rel="stylesheet"
+          />
+        </Head>
+        <HeadTags data={{ title: 'Serlo – Die freie Lernplattform' }} />
+        <HeaderNew />
 
-      <section className="mt-12 flex flex-col sm:flex-row">
-        <LandingAbout />
-      </section>
-
-      <section>
-        <h3
-          className={clsx(
-            'text-center text-4xl text-truegray-700 font-bold',
-            'leading-cozy tracking-tight',
-            'max-w-2xl mt-40 mx-auto relative z-10'
-          )}
-        >
-          Wir sind eine große, ehrenamtliche Community und gestalten Serlo
-          <p className="text-brand italic font-handwritten text-5xl">
-            gemeinsam.
+        <section className="text-center max-w-3xl mx-auto mt-40">
+          <PWithWink
+            as="p"
+            className="text-brand italic font-handwritten text-3xl"
+          >
+            Schön dich heute zu sehen.
+          </PWithWink>
+          <h1
+            className={clsx(
+              'text-center text-5xl font-extrabold text-truegray-700',
+              'tracking-tight',
+              'max-w-2xl mt-2 mb-6 mx-auto'
+            )}
+          >
+            Was möchtest du <Underlined className="pb-2">Lernen ?</Underlined>
+          </h1>
+          <div className="md:hidden mt-10 mb-8">
+            <SearchInputNew />
+          </div>
+          <p className="text-3xl leading-cozy">
+            Hier auf Serlo findest du <b>einfache Erklärungen,</b> ausgewählte{' '}
+            <b>Lernvideos</b> und interaktive <b>Übungsaufgaben</b> mit
+            Musterlösungen.
           </p>
-        </h3>
-        <div className="relative z-0 h-0 w-full mt-1">
+        </section>
+        <section>
+          <LandingSubjects data={subjectsData} />
+        </section>
+
+        <AboutSection>
           <div
             className={clsx(
-              'absolute inset-0 -mt-14 h-32 ml-5',
-              'bg-circled-and-arrow bg-no-repeat bg-top bg-contain'
+              'text-center text-4xl text-truegray-700',
+              'tracking-tight',
+              'max-w-2xl mt-7 mx-auto'
             )}
-          ></div>
-        </div>
-
-        <div className="mt-16 z-10 flex justify-center relative">
-          <div className="group text-center">
-            <Link
+          >
+            <p className="mb-8">
+              Unsere Lernplattform ist gemeinnützig und damit komplett
+              kostenlos, werbefrei und frei lizenziert.{' '}
+              <Underlined
+                className="font-handwritten text-brand"
+                style={{ fontSize: '1.2em' }}
+              >
+                Für immer!
+              </Underlined>
+            </p>
+            <p className="font-bold mb-8">
+              Jeden Monat lernen über 1.5 Millionen Schüler*innen und Lehrkräfte
+              gemeinsam mit Serlo.
+            </p>
+            <ButtonWithWings
               className={clsx(
-                'text-white font-bold text-xl bg-brand rounded',
+                'text-white font-bold text-xl bg-brand rounded-lg',
                 'px-8 py-4 tracking-tight',
-                'group-hover:bg-brand-light hover:no-underline'
+                'hover:bg-brand-light hover:no-underline'
               )}
-              href="/mitmachen"
+              href="/serlo"
             >
-              Magst du mitmachen?
-            </Link>
-            <div className="relative">
-              <div className="absolute flex justify-center inset-0">
-                <div
-                  className={clsx(
-                    'pointer-events-none select-none w-72 h-5 mt-6',
-                    'group-hover:opacity-100 opacity-0 group-hover:transform group-hover:rotate-1',
-                    'transition-all ease-linear duration-200',
-                    'bg-underlined bg-contain bg-no-repeat bg-top'
-                  )}
-                />
+              Mehr über uns
+            </ButtonWithWings>
+          </div>
+        </AboutSection>
+
+        <section>
+          <h3
+            className={clsx(
+              'text-center text-4xl text-truegray-700 font-bold',
+              'leading-cozy tracking-tight',
+              'max-w-2xl mt-32 mx-auto relative z-10'
+            )}
+          >
+            Wir sind eine große, ehrenamtliche Community und gestalten Serlo
+            <p className="text-brand italic font-handwritten text-5xl">
+              gemeinsam.
+            </p>
+          </h3>
+          <div className="relative z-0 h-0 w-full mt-1">
+            <div
+              className={clsx(
+                'absolute inset-0 -mt-14 h-32 ml-5',
+                'bg-circled-and-arrow bg-no-repeat bg-top bg-contain'
+              )}
+            ></div>
+          </div>
+
+          <div className="mt-16 z-10 flex justify-center relative">
+            <div className="group text-center">
+              <Link
+                className={clsx(
+                  'text-white font-bold text-xl bg-brand rounded-lg',
+                  'px-8 py-4 tracking-tight',
+                  'group-hover:bg-brand-light hover:no-underline'
+                )}
+                href="/mitmachen"
+              >
+                Magst du mitmachen?
+              </Link>
+              <div className="relative">
+                <div className="absolute flex justify-center inset-0">
+                  <div
+                    className={clsx(
+                      'pointer-events-none select-none w-72 h-5 mt-6',
+                      'group-hover:opacity-100 opacity-0 group-hover:transform group-hover:rotate-1',
+                      'transition-all ease-linear duration-200',
+                      'bg-underlined bg-contain bg-no-repeat bg-top'
+                    )}
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div
-          className={clsx(
-            'mb-52 flex flex-wrap justify-evenly',
-            'md:relative md:block md:mb-72 md:h-630'
-          )}
-        >
-          {renderPersons()}
-        </div>
-      </section>
+          <div
+            className={clsx(
+              'mb-52 flex flex-wrap justify-evenly',
+              'md:relative md:block md:mb-72 md:h-630'
+            )}
+          >
+            {renderPersons()}
+          </div>
+        </section>
 
-      <section className="mt-36 mb-20">
-        <img src="/_assets/img/landing/birds.svg" className="mx-auto" />
+        <section className="mt-36 mb-20">
+          <img src="/_assets/img/landing/birds.svg" className="mx-auto" />
 
+          <h3
+            className={clsx(
+              'text-center text-4xl text-truegray-700 font-bold',
+              'leading-cozy tracking-tight',
+              'max-w-2xl mt-7 mx-auto'
+            )}
+          >
+            Zusammen setzen wir uns dafür ein, dass gute Bildung nicht abhängig
+            vom Geldbeutel der Eltern ist.
+          </h3>
+        </section>
+      </div>
+      <PartnerSection className="text-center">
         <h3
           className={clsx(
             'text-center text-4xl text-truegray-700 font-bold',
             'leading-cozy tracking-tight',
-            'max-w-2xl mt-7 mx-auto'
+            'max-w-2xl mt-32 mx-auto relative z-10 mb-16'
           )}
         >
-          Zusammen setzen wir uns dafür ein, dass gute Bildung nicht abhängig
-          vom Geldbeutel der Eltern ist.
+          Partner und Förderer
         </h3>
-      </section>
-    </div>
+        <PartnerListNew />
+        <ButtonWithWink
+          className={clsx(
+            'hidden md:inline-block mx-auto',
+            'text-truegray-700 font-bold text-xl rounded-lg',
+            'px-8 py-4 tracking-tight border-truegray-700 border-solid border-2',
+            'hover:border-brand-light hover:no-underline hover:text-brand-light'
+          )}
+          href="/partner"
+        >
+          Alle Förderer ansehen
+        </ButtonWithWink>
+        <Separator />
+      </PartnerSection>
+      <Footer className="px-side md:px-side-lg pb-10">
+        {renderFooterNav()}
+        <Separator />
+        <div>{renderFooterLine()}</div>
+      </Footer>
+    </>
   )
 
   function renderPersons() {
@@ -249,4 +344,206 @@ export function LandingDE({ data }: LandingDEProps) {
       )
     })
   }
+
+  function renderFooterNav() {
+    return (
+      <nav className="flex flex-wrap md:flex justify-center md:justify-between">
+        <div className="md:mr-5 text-center md:text-left">
+          <h1 className="font-handwritten text-4xl -mt-2 mb-10">
+            Serlo:
+            <br />
+            Die freie Lernplattform
+          </h1>
+          <SloganButton
+            className={clsx(
+              'text-white text-xl bg-brand rounded-lg',
+              'px-8 py-4 mb-5 tracking-tight block text-center',
+              'hover:bg-brand-light hover:no-underline',
+              'mx-auto md:mx-0'
+            )}
+            href="/mitmachen"
+          >
+            Mitmachen
+          </SloganButton>
+          <SloganButton
+            className={clsx(
+              'text-white text-xl bg-brand rounded-lg',
+              'px-8 py-4 tracking-tight block text-center',
+              'hover:bg-brand-light hover:no-underline',
+              'mx-auto md:mx-0'
+            )}
+            href="/spenden"
+          >
+            Spenden
+          </SloganButton>
+        </div>
+        <Separator className="md:hidden" />
+        <FooterMenuCol>
+          {renderFooterNavChildren(footerData.footerNavigation[0].children)}
+        </FooterMenuCol>
+        <FooterMenuCol>
+          {renderFooterNavChildren(headerData[0].children as FooterLink[])}
+        </FooterMenuCol>
+
+        <FooterMenuCol className="hidden md:block">
+          {renderFooterNavChildren(footerData.footerNavigation[1].children)}
+        </FooterMenuCol>
+      </nav>
+    )
+  }
+
+  function renderFooterNavChildren(items?: FooterLink[]) {
+    if (!items) return null
+
+    return items.map((item) => (
+      <>
+        <Link
+          className={clsx(
+            'inline-block text-truegray-700 mb-2 w-auto',
+            'border-transparent border-b-2 hover:no-underline hover:border-brand hover:text-brand'
+          )}
+          key={item.url}
+          href={item.url}
+          noExternalIcon
+        >
+          {item.title}
+        </Link>
+        <br />
+      </>
+    ))
+  }
+
+  function renderFooterLine() {
+    return (
+      <div className="text-center md:text-right">
+        {footerData.footerNavigation[2].children.map((item) => (
+          <>
+            <Link
+              key={item.title}
+              className="mr-3 text-truegray-700"
+              href={item.url}
+              noExternalIcon
+            >
+              {item.title}
+            </Link>
+          </>
+        ))}
+        {footerData.footerNavigation[1].children.map((item) => (
+          <>
+            <Link
+              key={item.title}
+              className="mr-3 text-truegray-700 md:hidden"
+              href={item.url}
+              noExternalIcon
+            >
+              {item.title}
+            </Link>
+          </>
+        ))}
+      </div>
+    )
+  }
 }
+
+const AboutSection = styled.section`
+  padding-top: 11rem;
+  padding-bottom: 9rem;
+  margin: 6rem 0 0 0;
+  background-image: url('/_assets/img/landing/about-big-arrow.svg'),
+    url('/_assets/img/landing/about-container.svg');
+  background-position: 20% 19%;
+  background-repeat: no-repeat, no-repeat;
+  background-size: 82%, 100vw 100%;
+`
+
+const Underlined = styled.i`
+  padding-right: 1rem;
+  background: url('/_assets/img/landing/simple-underline.svg') no-repeat bottom;
+`
+
+const ButtonWithWings = styled(Link)`
+  &:after,
+  &:before {
+    content: ' ';
+    background: url('/_assets/img/landing/wing-left.svg') no-repeat;
+    position: absolute;
+    margin-top: -0.6rem;
+    width: 4rem;
+    height: 4rem;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity ease-in 0.2s;
+  }
+
+  &:after {
+    margin-left: 1rem;
+    transform: scaleX(-1);
+  }
+
+  &:before {
+    margin-left: -5rem;
+  }
+
+  &:hover {
+    &:after,
+    &:before {
+      opacity: 1;
+    }
+  }
+`
+
+const ButtonWithWink = styled(ButtonWithWings)`
+  &:after,
+  &:before {
+    background: url('/_assets/img/landing/wink-left.svg') no-repeat;
+    margin-top: -2rem;
+    background-size: 65%;
+  }
+`
+
+const PWithWink = styled(ButtonWithWink)`
+  &:after,
+  &:before {
+    margin-top: -1rem;
+    background-size: 75%;
+    width: 2.5rem;
+    height 2.5rem;
+    opacity: 1;
+  }
+  &:after {
+    margin-left: -0.5rem;
+  }
+   &:before {
+    margin-left: -1.5rem;
+  }
+`
+
+const PartnerSection = styled.footer`
+  padding-top: 1rem;
+  background: url('/_assets/img/landing/footer-container.svg') no-repeat;
+  background-size: 100% 100%;
+`
+
+const Footer = styled.footer`
+  background-color: #eef1f5;
+`
+
+const Separator = styled.hr`
+  border: 0;
+  outline: none;
+  background: url('/_assets/img/landing/separator.svg') no-repeat center center;
+  height: 2rem;
+  width: 80%;
+  margin: 0 auto;
+  padding: 5rem 0;
+`
+
+const FooterMenuCol = styled.div`
+  /* flex-grow: 2; */
+  margin-right: 2rem;
+  max-width: 50%;
+`
+
+const SloganButton = styled(Link)`
+  max-width: 190px;
+`
