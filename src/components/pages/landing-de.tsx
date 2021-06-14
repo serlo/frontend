@@ -128,7 +128,9 @@ export function LandingDE({ data }: LandingDEProps) {
           )}
         >
           Wir sind eine große, ehrenamtliche Community und gestalten Serlo
-          <p className="text-brand italic font-handwritten">gemeinsam.</p>
+          <p className="text-brand italic font-handwritten text-5xl">
+            gemeinsam.
+          </p>
         </h3>
         <div className="relative z-0 h-0 w-full mt-1">
           <div
