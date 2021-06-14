@@ -166,6 +166,7 @@ export function Entity({ data }: EntityProps) {
         <CourseFooter
           onOverviewButtonClick={openCourseNav}
           nextHref={data.courseData.nextPageUrl ?? ''}
+          previousHref={data.courseData.previousPageUrl ?? ''}
         />
       )
     } else return null

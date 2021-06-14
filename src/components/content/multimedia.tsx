@@ -1,6 +1,6 @@
+import clsx from 'clsx'
 import dynamic from 'next/dynamic'
 import { useState } from 'react'
-import styled from 'styled-components'
 
 import { LightBoxProps } from './light-box'
 import type {
@@ -27,21 +27,27 @@ export function Multimedia({
 
   const mediaChild = media[0]
   const mediaChildIsImage = isImage(mediaChild)
+  const width = convertToClosestQuarter(mediaWidth) // we can do this becaues witdth is only 25%, 50%, 75% or 100%
 
   return (
-    <FlexWrapper>
-      <MediaWrapper
-        $width={mediaWidth}
+    <div className="flex flex-col mobile:block">
+      <div
         onClick={mediaChildIsImage ? openLightBox : undefined}
-        useLightbox={mediaChildIsImage}
+        className={clsx(
+          'mobile:float-right mobile:mt-1 mobile:-mb-1 mobile:ml-2',
+          mediaChildIsImage && 'mobile:cursor-zoom-in',
+          width == 25 && 'mobile:w-1/4',
+          width == 50 && 'mobile:w-1/2',
+          width == 75 && 'mobile:w-3/4',
+          width == 100 && 'mobile:w-full'
+        )}
       >
         {renderNested(media, 'media')}
-      </MediaWrapper>
-      <ContentWrapper $width={100 - mediaWidth}>
-        {renderNested(children, 'children')}
-      </ContentWrapper>
+      </div>
+      <div>{renderNested(children, 'children')}</div>
       {renderLightbox()}
-    </FlexWrapper>
+      <div className="clear-both" />
+    </div>
   )
 
   function renderLightbox() {
@@ -68,25 +74,6 @@ function isImage(
   return (child as FrontendImgNode).type === 'img'
 }
 
-const FlexWrapper = styled.div`
-  @media (min-width: ${(props) => props.theme.breakpoints.mobile}) {
-    display: flex;
-    flex-direction: row-reverse;
-  }
-`
-
-const MediaWrapper = styled.div<{ $width: number; useLightbox: boolean }>`
-  @media (min-width: ${(props) => props.theme.breakpoints.mobile}) {
-    flex-basis: ${(props) => props.$width}%;
-    margin-top: 5px;
-    margin-bottom: -3px;
-    margin-left: 7px;
-    cursor: ${(props) => (props.useLightbox ? 'zoom-in' : 'default')};
-  }
-`
-
-const ContentWrapper = styled.div<{ $width: number }>`
-  @media (min-width: ${(props) => props.theme.breakpoints.mobile}) {
-    flex-basis: ${(props) => props.$width}%;
-  }
-`
+function convertToClosestQuarter(width: number) {
+  return Math.round(width / 25) * 25
+}

@@ -85,7 +85,8 @@ export const instanceData = {
     course: {
       showPages: "வகுப்பு மேலோட்டத்தைக் காட்டவும்",
       pages: 'Course overview',
-      next: "அடுத்து"
+      next: "அடுத்து",
+      back: 'Back'
     },
     content: {
       show: "காட்டு",
@@ -146,7 +147,7 @@ export const instanceData = {
       currentVersion: "Current Version",
       thisVersion: "This Version",
       currentNotice: "This is the currently accepted version.",
-      rejectedNotice: 'This revision was rejected.',
+      rejectedNotice: 'This revision was not accepted.',
       by: 'By'
     },
     revisionHistory: {
@@ -291,7 +292,8 @@ export const loggedInData = {
       moveToTextExercise: 'Move content to other text-exercise',
       sortEntities: 'Sort content',
       newEntity: 'New Entity',
-      editProfile: 'Edit profile'
+      editProfile: 'Edit profile',
+      directLink: 'Direct link to this content'
     },
     notifications: {
       loadMore: "Load more",
@@ -309,8 +311,8 @@ export const loggedInData = {
       createEntityLink: "%actor% associated %child% with %parent%.",
       removeEntityLink: "%actor% dissociated %child% from %parent%.",
       createEntityRevision: "%actor% created a %revision% of %entity%.",
-      checkoutRevision: "%actor% checked out %revision% in %repository%.",
-      rejectRevision: "%actor% rejected a %revision% in %repository%.",
+      checkoutRevision: "%actor% checked out a %revision% in %repository%.",
+      rejectRevision: "%actor% did not accept a %revision% in %repository%.",
       createTaxonomyLink: "%actor% added %child% to %parent%.",
       removeTaxonomyLink: "%actor% removed %child% from %parent%.",
       createTaxonomyTerm: "%actor% created %term%.",
@@ -337,7 +339,7 @@ export const loggedInData = {
       reject: {
         action: 'Reject',
         title: 'Reject Revision',
-        explanation: 'Please tell the author why you are rejecting the submission.'
+        explanation: 'Please tell the author why you will not accept the submission.'
       },
       confirm: 'Confirm'
     }

@@ -3,6 +3,7 @@ import Tippy, { TippyProps } from '@tippyjs/react'
 import { SubLink } from '../navigation/sub-link'
 import { AuthorTools, Tool } from './author-tools'
 import { SubButtonStyle } from './sub-button-style'
+import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export interface AuthorToolsData {
@@ -31,6 +32,7 @@ export const tippyDefaultProps: Partial<TippyProps> = {
 
 export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
   const loggedInData = useLoggedInData()
+  const instanceData = useInstanceData()
 
   if (!loggedInData) return null
   const loggedInStrings = loggedInData.strings
@@ -144,12 +146,26 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
     )
   }
   function renderExercise() {
+    const entities = instanceData.strings.entities
+
+    const typeName =
+      entities[
+        data.type === '_ExerciseInline'
+          ? 'exercise'
+          : data.type === '_ExerciseGroupInline'
+          ? 'exerciseGroup'
+          : data.type === '_SolutionInline'
+          ? 'solution'
+          : 'exercise'
+      ]
+
     return (
       <ul className="serlo-sub-list-hover">
+        <li className="mb-1.5 ml-2 font-bold">{typeName}</li>
         <AuthorTools
           entityId={data.id}
           data={data}
-          tools={[Tool.Edit, Tool.Abo, Tool.History]}
+          tools={[Tool.Edit, Tool.History]}
         />
 
         {data.type == '_ExerciseGroupInline' && (
@@ -181,8 +197,15 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
         <AuthorTools
           entityId={data.id}
           data={data}
-          tools={[Tool.ChangeLicense, Tool.Log, Tool.Trash]}
+          tools={[Tool.ChangeLicense, Tool.Log, Tool.Abo, Tool.Trash]}
         />
+        {data.type != '_SolutionInline' && (
+          <AuthorTools
+            entityId={data.id}
+            data={data}
+            tools={[Tool.DirectLink]}
+          />
+        )}
       </ul>
     )
   }

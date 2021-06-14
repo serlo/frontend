@@ -99,6 +99,9 @@ module.exports = {
       height: {
         630: '630px',
       },
+      cursor: {
+        'zoom-in': 'zoom-in',
+      },
     },
     screens: {
       mobile: '500px',

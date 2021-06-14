@@ -42,6 +42,7 @@ export enum Tool {
   Sort = 'sort',
   SortEntities = 'sortEntities',
   Trash = 'trash',
+  DirectLink = 'directLink',
 }
 
 interface ToolConfig {
@@ -171,6 +172,11 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
     addCoursePage: {
       url: `/entity/create/course-page?link%5Btype%5D=link&link%5Bchild%5D=${data.courseId!}`,
       canDo: false,
+    },
+    directLink: {
+      title: loggedInStrings.authorMenu.directLink,
+      url: `/${data.id}`,
+      canDo: true,
     },
   } as ToolsConfig
 

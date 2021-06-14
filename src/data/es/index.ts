@@ -85,7 +85,8 @@ export const instanceData = {
     course: {
       showPages: "Mostrar descripción del curso",
       pages: "Descripción del curso",
-      next: "Siguiente"
+      next: "Siguiente",
+      back: 'Back'
     },
     content: {
       show: "mostrar",
@@ -99,7 +100,7 @@ export const instanceData = {
       chooseOption: "Elige una de las opciones.",
       trashedNotice: "Este contenido está marcado para su eliminación.",
       strategy: "Estrategia de solución",
-      picture: 'Picture'
+      picture: "Imagen"
     },
     consent: {
       title: "Consentimiento para contenido externo",
@@ -136,7 +137,7 @@ export const instanceData = {
     },
     revisions: {
       toOverview: "Volver a Vista general",
-      toContent: "Back to content",
+      toContent: "Regresar al conenido",
       changes: "Cambios",
       title: "Título",
       content: "Contenido",
@@ -146,7 +147,7 @@ export const instanceData = {
       currentVersion: "Versión Actual",
       thisVersion: "Esta Versión",
       currentNotice: "Esta es la versión aceptada actualmente.",
-      rejectedNotice: 'This revision was rejected.',
+      rejectedNotice: 'This revision was not accepted.',
       by: "Por"
     },
     revisionHistory: {
@@ -175,18 +176,18 @@ export const instanceData = {
       showAllActivities: "Mostrar todas las actividades",
       lastLogin: "Ultimo Inicio de sesion",
       roles: "Roles (funciones)",
-      instanceRoles: 'Roles on %lang%.serlo.org:',
-      otherRoles: 'Other roles:',
+      instanceRoles: "Roles en %lang%.serlo.org",
+      otherRoles: "Otros roles",
       directMessage: "Mensaje directo",
       howToEditImage: {
-        heading: 'How to edit your profile picture',
-        description: 'Currently we use the images from %chatUrl% as profile pictures. In order to change your picture, do the following:',
+        heading: "Como editar tu foto del perfil",
+        description: "Actualmente utilizamos las imágenes de %chatUrl% como imágenes de perfil. Para cambiar tu foto, haz lo siguiente:",
         steps: {
-          goToChat: 'Go to %chatUrl%.',
-          signIn: 'Sign in.',
-          goToMyAccount: 'Go in the user menu to %myAccountLink%.',
-          myAccount: 'My Account',
-          uploadPicture: 'Upload a new picture and click "Save changes".'
+          goToChat: "Ir a %chatUrl%.",
+          signIn: "Iniciar sesión",
+          goToMyAccount: "Ir al menú de usuario a %myAccountLink%",
+          myAccount: "Mi cuenta",
+          uploadPicture: "Sube una nueva foto y haz clic en \"Guardar cambios\"."
         }
       }
     },
@@ -247,7 +248,7 @@ export const loggedInData = {
     icon: 'user',
     children: [{
       url: '/user/public',
-      title: 'Own profile'
+      title: "Perfil propio"
     }, {
       url: '/auth/password/change',
       title: "Actualizar contraseña"
@@ -291,15 +292,16 @@ export const loggedInData = {
       moveToTextExercise: "Mover contenido a otro ejercicio de texto",
       sortEntities: "Ordenar contenido",
       newEntity: "Nueva Entidad",
-      editProfile: "Editar perfil"
+      editProfile: "Editar perfil",
+      directLink: 'Direct link to this content'
     },
     notifications: {
       loadMore: "Cargar más",
       hide: "Ocultar notificaciones para este contenido.",
-      setToRead: "Set notification to read.",
-      setAllToRead: "Set all visible to read",
-      showNew: "New",
-      showRead: "Read",
+      setToRead: "Marcar notificaciones para leer.",
+      setAllToRead: "Poner todas visibles a leer",
+      showNew: "Nueva",
+      showRead: "Leídas",
       setThreadStateArchived: "%actor% archivado %thread%",
       setThreadStateUnarchived: "%actor% restaurado %thread%.",
       createComment: "%actor% comentado en %thread%: %comment%.",
@@ -309,8 +311,8 @@ export const loggedInData = {
       createEntityLink: "%actor% vinculado %child% con %parent%.",
       removeEntityLink: "%actor% desvinculado %child% de %parent%.",
       createEntityRevision: "%actor% creó un %revision% de %entity%.",
-      checkoutRevision: "%actor% ha verificado %revision% en %repository%",
-      rejectRevision: "%actor% rechazó  %revision% en%repository%.",
+      checkoutRevision: "%actor% checked out a %revision% in %repository%.",
+      rejectRevision: "%actor% did not accept a %revision% in %repository%.",
       createTaxonomyLink: "%actor% agregó %child% a %parent%.",
       removeTaxonomyLink: "%actor% eliminó a %child% de %parent%.",
       createTaxonomyTerm: "%actor% creó %term%.",
@@ -337,7 +339,7 @@ export const loggedInData = {
       reject: {
         action: "Rechazar",
         title: "Rechazar la revisión",
-        explanation: "Indica al autor por qué rechazas el trabajo."
+        explanation: 'Please tell the author why you will not accept the submission.'
       },
       confirm: "Confirmar"
     }

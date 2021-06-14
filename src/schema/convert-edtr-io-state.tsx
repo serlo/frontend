@@ -55,7 +55,6 @@ export function convert(
     return convertText(node) as FrontendContentNode[]
   }
 
-  console.log('unsupported -> ', node)
   return []
 }
 
@@ -75,6 +74,7 @@ function convertPlugin(node: EdtrState) {
         src: node.state.src,
         alt: node.state.alt,
         maxWidth: node.state.maxWidth,
+        href: node.state.link?.href,
       },
     ]
   }

@@ -402,6 +402,7 @@ function handleError(type: ErrorType, e?: object): false {
       : 'Ein unbekannter Fehler…'
 
   if (type == 'UNKNOWN') {
+    // eslint-disable-next-line no-console
     console.log(e)
     triggerSentry({ message: 'Unknown API error' })
   }
