@@ -5,12 +5,13 @@ import styled, { css, keyframes } from 'styled-components'
 
 import { makeResponsivePadding, makeTransparentButton } from '../../helper/css'
 import { Link } from '../content/link'
-import AbcSVG from '@/assets-webkit/img/landing/subjects-abc.svg'
-import BiologySVG from '@/assets-webkit/img/landing/subjects-biology.svg'
-import BlankSVG from '@/assets-webkit/img/landing/subjects-blank.svg'
-import ChemistrySVG from '@/assets-webkit/img/landing/subjects-chemistry.svg'
-import MathSVG from '@/assets-webkit/img/landing/subjects-math.svg'
-import SustainabilitySVG from '@/assets-webkit/img/landing/subjects-sustainability.svg'
+import AbcSVG from '@/assets-webkit/img/subjects-abc.svg'
+import BiologySVG from '@/assets-webkit/img/subjects-biology.svg'
+import BlankSVG from '@/assets-webkit/img/subjects-blank.svg'
+import ChemistrySVG from '@/assets-webkit/img/subjects-chemistry.svg'
+import InformaticsSVG from '@/assets-webkit/img/subjects-informatics.svg'
+import MathSVG from '@/assets-webkit/img/subjects-math.svg'
+import SustainabilitySVG from '@/assets-webkit/img/subjects-sustainability.svg'
 import { LandingSubjectLink, LandingSubjectsData } from '@/data-types'
 
 interface LandingSubjectsProps {
@@ -43,6 +44,9 @@ export function LandingSubjects({ data }: LandingSubjectsProps) {
     if (icon == 'abc') return <AbcSVG className="superspecial-abc" />
     if (icon == 'sustainability')
       return <SustainabilitySVG className="superspecial-sus" />
+    if (icon == 'biology') return <BiologySVG className="superspecial-bio" />
+    if (icon == 'informatics')
+      return <InformaticsSVG className="superspecial-informatics" />
     if (icon == 'biology') return <BiologySVG className="superspecial-bio" />
     if (icon == 'chemistry')
       return <ChemistrySVG className="superspecial-chem" />
@@ -84,11 +88,13 @@ const SubjectsWrapper = styled.div<SubjectsWrapperProps>`
     ${makeResponsivePadding}
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: left;
+    margin-left: 40px;
   }
 
   @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
     justify-content: space-between;
+    margin-left: 0;
     margin-top: 40px;
 
     /* bit hacky, but way easier */
@@ -168,7 +174,7 @@ const SubjectLink = styled(Link)`
     }
   }
   @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
-    min-width: 25%;
+    min-width: 18%;
     text-align: center;
 
     margin: 0 auto;
@@ -184,7 +190,8 @@ const SubjectLink = styled(Link)`
   & svg.superspecial-abc,
   & svg.superspecial-sus,
   & svg.superspecial-chem,
-  & svg.superspecial-blank {
+  & svg.superspecial-blank,
+  & svg.superspecial-informatics {
     display: inline;
     .blue {
       fill: ${(props) => props.theme.colors.lighterblue};
@@ -196,17 +203,19 @@ const SubjectLink = styled(Link)`
       fill: #becd2b;
       transition: all 0.2s ease-in-out;
     }
+
     @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
       .blue {
         fill: ${(props) => lighten(0.07, props.theme.colors.lighterblue)};
       }
     }
 
-    /* animations */
     width: 6rem;
     height: 6rem;
     margin-top: 1rem;
     margin-right: 1rem;
+
+    /* animations */
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     box-shadow: 0 0 1px rgba(0, 0, 0, 0);
     animation-play-state: paused;
@@ -232,6 +241,16 @@ const SubjectLink = styled(Link)`
     stroke-width: 1.1px;
   }
 
+  .eye-closed,
+  .sound {
+    opacity: 0;
+  }
+
+  .eye-closed {
+    stroke: #000;
+    stroke-width: 2px;
+  }
+
   .chem-contents {
     transition: 0.7s ease-in all !important;
   }
@@ -254,7 +273,9 @@ const SubjectLink = styled(Link)`
     transform-origin: 9% 60%;
     transition: transform 0.6s cubic-bezier(0.175, 0.6, 0.32, 1.275);
   }
-
+  & .superspecial-informatics {
+    transition: fill ease-in 0.5s;
+  }
   &:hover,
   &:focus,
   &:active {
@@ -278,6 +299,13 @@ const SubjectLink = styled(Link)`
     }
     && .green {
       fill: #becd2b;
+    }
+    .eye-open {
+      opacity: 0;
+    }
+    .eye-closed,
+    .sound {
+      opacity: 1;
     }
 
     & .superspecial-chem {

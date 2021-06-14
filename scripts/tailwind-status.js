@@ -11,6 +11,7 @@ const knownExceptions = [
   'superspecial-math',
   'superspecial-noscript-hidden',
   'superspecial-sus',
+  'superspecial-informatics',
 ]
 
 const isFileRegex = /\/.+\..+/

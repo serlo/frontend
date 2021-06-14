@@ -124,6 +124,7 @@ export type LandingSubjectIcon =
   | 'biology'
   | 'sustainability'
   | 'chemistry'
+  | 'informatics'
 
 // Error page has some additional data
 

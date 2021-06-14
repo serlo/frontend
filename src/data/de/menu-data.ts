@@ -11,6 +11,7 @@ export const landingSubjectsData: LandingSubjectsData = {
     },
     { url: '/biologie', title: 'Biologie lernen', icon: 'biology' },
     { url: '/chemie', title: 'Chemie lernen', icon: 'chemistry' },
+    { url: '/informatik', title: 'Informatik lernen', icon: 'informatics' },
   ],
   additionalLinks: [
     { url: '/eltern', title: 'Einstieg für Eltern' },
