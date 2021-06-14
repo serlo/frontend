@@ -1,10 +1,10 @@
 import { Router } from 'next/router'
 import { useState } from 'react'
 
-import { Link } from '../content/link'
+import { Link } from '../../content/link'
+import { MobileMenu } from '../../navigation/mobile-menu'
+import { MobileMenuButtonNew } from '../../navigation/mobile-menu-button-new'
 import { MenuNew } from './menu-new'
-import { MobileMenu } from './mobile-menu'
-import { MobileMenuButtonNew } from './mobile-menu-button-new'
 import { SearchInputNew } from './search-input-new'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'

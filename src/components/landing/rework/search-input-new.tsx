@@ -5,8 +5,8 @@ import { lighten } from 'polished'
 import { useState, useRef, useContext, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 
-import { isLegacyLink } from '../content/link'
-import { LazyTippy } from './lazy-tippy'
+import { isLegacyLink } from '../../content/link'
+import { LazyTippy } from '../../navigation/lazy-tippy'
 import SearchIcon from '@/assets-webkit/img/search-icon.svg'
 import { EntityIdContext } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -248,7 +248,7 @@ const sharedTextStyles = css`
   margin-left: 52px;
   line-height: ${heightPx};
   font-size: 0.9rem;
-
+  font-weight: bold;
   color: #ccc;
   margin-left: 15px;
 `

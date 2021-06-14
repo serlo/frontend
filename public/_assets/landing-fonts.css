@@ -1,0 +1,16 @@
+@font-face {
+  font-family: 'Caveat';
+  font-style: bold;
+  font-weight: 700;
+  src: url('/_assets/fonts/caveat/caveat-bold.woff2') format('woff2'),
+    url('/_assets/fonts/caveat/caveat-bold.woff') format('woff');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Karmilla';
+  font-style: bolder;
+  font-weight: 800;
+  src: url('/_assets/fonts/karmilla/karmilla-bolder.woff2') format('woff2'),
+    url('/_assets/fonts/karmilla/karmilla-bold.woff') format('woff');
+  font-display: swap;
+}
