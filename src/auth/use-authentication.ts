@@ -1,9 +1,7 @@
-import cookie from 'cookie'
+import Cookies from 'js-cookie'
 import jwt_decode from 'jwt-decode'
 import * as React from 'react'
 import { Token } from 'simple-oauth2'
-
-import { UserRoles } from '@/data-types'
 
 export function useAuthentication(): React.RefObject<AuthenticationPayload> {
   // This has to be a ref since token changes when calling `refreshToken`.
@@ -13,9 +11,8 @@ export function useAuthentication(): React.RefObject<AuthenticationPayload> {
 
   function parseAuthCookie(): AuthenticationPayload {
     try {
-      const cookies = cookie.parse(
-        typeof window === 'undefined' ? '' : document.cookie
-      )
+      const cookies = typeof window === 'undefined' ? {} : Cookies.get()
+
       const { access_token, id_token } = JSON.parse(
         cookies['auth-token']
       ) as Token
@@ -25,7 +22,6 @@ export function useAuthentication(): React.RefObject<AuthenticationPayload> {
       return {
         username: decoded.username,
         id: decoded.id,
-        roles: [UserRoles.Admin, UserRoles.Login],
         token: access_token as string,
         refreshToken,
       }
@@ -34,15 +30,17 @@ export function useAuthentication(): React.RefObject<AuthenticationPayload> {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/require-await
   async function refreshToken() {
     if (typeof window === 'undefined') return
-    const response = await fetch('/api/auth/refresh-token', {
+    Cookies.remove('auth-token')
+
+    window.location.reload()
+
+    /*const response = await fetch('/api/auth/refresh-token', {
       method: 'POST',
-    })
-    if (response.status == 500) {
-      // refresh failed
-      window.location.reload()
-    }
+    })*/
+
     cookieValue.current = parseAuthCookie()
   }
 }
@@ -50,7 +48,6 @@ export function useAuthentication(): React.RefObject<AuthenticationPayload> {
 export type AuthenticationPayload = {
   username: string
   id: number
-  roles: UserRoles[]
   token: string
   refreshToken(): Promise<void>
 } | null

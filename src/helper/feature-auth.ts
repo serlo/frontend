@@ -1,4 +1,4 @@
-import cookie from 'cookie'
+import Cookies from 'js-cookie'
 
 import { HeaderData } from '@/data-types'
 import { serloDomain } from '@/helper/serlo-domain'
@@ -34,9 +34,7 @@ export function shouldUseNewAuth() {
     return true
   } else {
     try {
-      const cookies = cookie.parse(
-        typeof window === 'undefined' ? '' : document.cookie
-      )
+      const cookies = typeof window === 'undefined' ? {} : Cookies.get()
       if (cookies['useFrontend'] == 'always') return true
       const prob = parseFloat(cookies['useFrontend'])
       if (prob === 0) {
