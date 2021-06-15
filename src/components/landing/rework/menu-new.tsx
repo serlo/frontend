@@ -34,9 +34,8 @@ export interface MenuProps {
 }
 
 export function MenuNew(props: MenuProps) {
-  const [Tippy, setTippy] = useState<typeof import('@tippyjs/react') | null>(
-    null
-  )
+  const [Tippy, setTippy] =
+    useState<typeof import('@tippyjs/react') | null>(null)
   useEffect(() => {
     void import('@tippyjs/react').then((value) => setTippy(value))
   }, [])
