@@ -278,7 +278,7 @@ export function Notification({
     return <StyledLink href={`/${id}`}>{strings.entities.revision}</StyledLink>
   }
 
-  function renderThread(id: number) {
+  function renderThread(id: string) {
     return <StyledLink href={`/${id}`}>{strings.entities.thread}</StyledLink>
   }
 

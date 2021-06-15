@@ -325,7 +325,31 @@ function renderElement(props: RenderElementProps): React.ReactNode {
     )
   }
   if (element.type === 'anchor') {
-    return <a id={element.id.toString()} />
+    const match = /\{\{snack ([0-9]+)\}\}/.exec(element.id)
+
+    if (match) {
+      const id = match[1]
+
+      return (
+        <div
+          className="bg-white my-20"
+          style={{ height: '70vh', width: '100%' }}
+        >
+          <iframe
+            src={`https://www.learningsnacks.de/embed/${id}`}
+            style={{ width: '100%', height: '100%' }}
+          ></iframe>
+          <a
+            href={`https://www.learningsnacks.de/share/${id}`}
+            className="relative my-4 h-5 text-center float-right"
+          >
+            © siehe Snack
+          </a>
+        </div>
+      )
+    }
+
+    return <a id={element.id} />
   }
   if (element.type === 'injection') {
     return (
