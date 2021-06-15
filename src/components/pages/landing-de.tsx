@@ -26,9 +26,8 @@ export function LandingDE({ data }: LandingDEProps) {
         <link href="_assets/landing-fonts.css" rel="stylesheet" />
       </Head>
       <HeadTags data={{ title: 'Serlo – Die freie Lernplattform' }} />
-      <HeaderNew />
 
-      <section className="text-center max-w-3xl mx-auto mt-20 md:mt-36 font-bold">
+      <section className="text-center max-w-3xl mx-auto mt-20 font-bold">
         <PWithWink
           as="p"
           className="text-brand italic font-handwritten text-3xl"

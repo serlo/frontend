@@ -6,14 +6,15 @@ import { Header } from './navigation/header'
 
 export interface HeaderFooterProps {
   children: React.ReactNode
+  headerOnly?: boolean
 }
 
-export function HeaderFooter({ children }: HeaderFooterProps) {
+export function HeaderFooter({ children, headerOnly }: HeaderFooterProps) {
   return (
     <>
       <Header />
-      <MinHeightDiv>{children}</MinHeightDiv>
-      <Footer />
+      {headerOnly ? children : <MinHeightDiv>{children}</MinHeightDiv>}
+      {!headerOnly && <Footer />}
     </>
   )
 }

@@ -23,6 +23,7 @@ import { theme } from '@/theme'
 
 export type FrontendClientBaseProps = React.PropsWithChildren<{
   noHeaderFooter?: boolean
+  headerOnly?: boolean
   noContainers?: boolean
   showNav?: boolean
   entityId?: number
@@ -42,6 +43,7 @@ export function FrontendClientBase({
   showNav,
   entityId,
   authorization,
+  headerOnly,
 }: FrontendClientBaseProps) {
   const { locale } = useRouter()
   const [instanceData] = React.useState<InstanceData>(() => {
@@ -117,7 +119,9 @@ export function FrontendClientBase({
               <EntityIdProvider value={entityId || null}>
                 <ConditonalWrap
                   condition={!noHeaderFooter}
-                  wrapper={(kids) => <HeaderFooter>{kids}</HeaderFooter>}
+                  wrapper={(kids) => (
+                    <HeaderFooter headerOnly={headerOnly}>{kids}</HeaderFooter>
+                  )}
                 >
                   <ConditonalWrap
                     condition={!noContainers}

@@ -10,7 +10,7 @@ import { renderedPageNoHooks } from '@/helper/rendered-page'
 export default renderedPageNoHooks<LandingProps>(({ pageData }, { router }) => {
   if (router.locale == 'de') {
     return (
-      <FrontendClientBase noContainers noHeaderFooter>
+      <FrontendClientBase noContainers headerOnly>
         <LandingDE data={pageData.landingData} />
       </FrontendClientBase>
     )
