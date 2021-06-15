@@ -42,9 +42,14 @@ export function TimeAgo({ datetime, dateAsTitle, className }: TimeAgoProps) {
 }
 
 function getTimeAgoLang(lang: string) {
+  // eslint-disable-next-line import/no-internal-modules
   if (lang == 'de') return import('timeago.js/lib/lang/de')
+  // eslint-disable-next-line import/no-internal-modules
   if (lang == 'es') return import('timeago.js/lib/lang/es')
+  // eslint-disable-next-line import/no-internal-modules
   if (lang == 'fr') return import('timeago.js/lib/lang/fr')
+  // eslint-disable-next-line import/no-internal-modules
   if (lang == 'hi') return import('timeago.js/lib/lang/hi_IN')
+  // eslint-disable-next-line import/no-internal-modules
   if (lang == 'ta') return import('timeago.js/lib/lang/ta')
 }

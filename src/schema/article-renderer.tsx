@@ -22,6 +22,7 @@ import { Injection } from '@/components/content/injection'
 import { Lazy } from '@/components/content/lazy'
 import { MathSpanProps } from '@/components/content/math-span'
 import { Multimedia } from '@/components/content/multimedia'
+import { Snack } from '@/components/content/snack'
 import { Video } from '@/components/content/video'
 import { FrontendContentNode } from '@/data-types'
 import { submitEventWithPath } from '@/helper/submit-event'
@@ -325,7 +326,15 @@ function renderElement(props: RenderElementProps): React.ReactNode {
     )
   }
   if (element.type === 'anchor') {
-    return <a id={element.id.toString()} />
+    const match = /\{\{snack ([0-9]+)\}\}/.exec(element.id)
+
+    if (match) {
+      const id = match[1]
+
+      return <Snack id={parseInt(id)} />
+    }
+
+    return <a id={element.id} />
   }
   if (element.type === 'injection') {
     return (

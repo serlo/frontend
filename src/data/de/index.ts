@@ -147,7 +147,7 @@ export const instanceData = {
       currentVersion: "Akzeptierte Bearbeitung",
       thisVersion: "Diese Bearbeitung",
       currentNotice: "Das ist die aktuell akzeptierte Bearbeitung.",
-      rejectedNotice: "Diese Bearbeitung wurde abgelehnt.",
+      rejectedNotice: "Diese Bearbeitung wurde nicht akzeptiert.",
       by: "Von"
     },
     revisionHistory: {
@@ -196,7 +196,7 @@ export const instanceData = {
       bye: "👋 Bis bald!",
       revisionSaved: "Die Bearbeitung wurde gespeichert und wird bald überprüft 👍",
       revisionAccepted: "Die Bearbeitung wurde akzeptiert ✅",
-      revisionRejected: "Die Bearbeitung wurde abgelehnt ❎",
+      revisionRejected: "Die Bearbeitung wurde nicht akzeptiert ❎",
       revisionSavedAccepted: "Die Bearbeitung wurde erfolgreich gespeichert und akzeptiert ✅"
     },
     loading: {
@@ -312,7 +312,7 @@ export const loggedInData = {
       removeEntityLink: "%actor% hat die Verknüpfung von %child% mit %parent% entfernt.",
       createEntityRevision: "%actor% hat eine %revision% von %entity% erstellt.",
       checkoutRevision: "%actor% hat eine %revision% von %repository% übernommen.",
-      rejectRevision: "%actor% hat %revision% für %repository% abgelehnt.",
+      rejectRevision: "%user% hat eine %revision% in %repository% nicht übernommen.",
       createTaxonomyLink: "%actor% hat %child% in %parent% eingeordnet.",
       removeTaxonomyLink: "%actor% hat %child% aus %parent% entfernt.",
       createTaxonomyTerm: "%actor% hat den %term% erstellt.",
@@ -339,7 +339,7 @@ export const loggedInData = {
       reject: {
         action: "Ablehnen",
         title: "Bearbeitung ablehnen",
-        explanation: "Bitte teile dem Bearbeiter mit, warum seine Änderung abgelehnt wurde."
+        explanation: "Bitte sag der Bearbeiter*in, warum die Änderung nicht angenommen wird."
       },
       confirm: "Bestätigen"
     }

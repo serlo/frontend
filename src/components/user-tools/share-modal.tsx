@@ -154,7 +154,12 @@ function buildButtons(
       return (
         <Button
           as="button"
-          onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+          onClick={(
+            event: React.MouseEvent<
+              /*HTMLButtonElement (note: as-construct is breaking the type here)*/ any,
+              MouseEvent
+            >
+          ) => {
             copyToClipboard(event, entry.text)
           }}
           key={entry.title}
