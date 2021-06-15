@@ -129,7 +129,7 @@
     }
   }
   .serlo-image-centered {
-    @apply px-4 mb-block text-center;
+    @apply px-4 mb-block;
   }
   .serlo-exercise-wrapper {
     @apply mt-10 mb-2.5;
@@ -197,11 +197,6 @@
       }
     }
   }
-  @media print {
-    .serlo-print-hidden {
-      @apply !hidden;
-    }
-  }
 }
 
 /* Some exceptional cases where we can't / don't want to set classnames directly.
@@ -227,7 +222,8 @@
 /* Fancy blur effect */
 #nprogress .peg {
   @apply block absolute right-0 w-24 h-full;
-  @apply shadow-brand opacity-100 special-shadow-transform;
+  @apply shadow-brand opacity-100;
+  @apply transform rotate-3 -translate-y-1;
 }
 
 /* Remove these to get rid of the spinner */

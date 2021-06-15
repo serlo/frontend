@@ -34,7 +34,7 @@ export function Video(props: VideoProps) {
   if (youtube) return renderYoutube(youtube[4])
 
   return (
-    <div className="text-center serlo-print-hidden">
+    <div className="text-center print:hidden">
       <FontAwesomeIcon icon={faFilm} size="5x" />
       <p className="serlo-p">Loading video failed: {src}</p>
     </div>
@@ -69,7 +69,7 @@ export function Video(props: VideoProps) {
             submitEventWithPath('loadvideo', path)
           }}
         >
-          <VideoWrapper className="m-0 p-0 serlo-print-hidden">
+          <VideoWrapper className="m-0 p-0 print:hidden">
             {provider === ExternalProvider.WikimediaCommons && (
               <video controls src={src} />
             )}

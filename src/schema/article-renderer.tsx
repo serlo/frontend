@@ -5,7 +5,6 @@ import * as React from 'react'
 
 import { Col } from '../components/content/col'
 import { ExerciseGroup } from '../components/content/exercises/exercise-group'
-import { ImgMaxWidthDiv } from '../components/content/img-max-width-div'
 import { LicenseNotice } from '../components/content/license-notice'
 import { Link } from '../components/content/link'
 import { SpoilerTitle } from '../components/content/spoiler-title'
@@ -238,13 +237,24 @@ function renderElement(props: RenderElementProps): React.ReactNode {
       }
       return comp
     }
+
+    /*
+
+    export const ImgMaxWidthDiv = styled.div<{ maxWidth: number }>`
+  ${(props) => (props.maxWidth > 0 ? `max-width: ${props.maxWidth}px` : '')}
+`
+
+*/
     return (
       <div
         className="serlo-image-centered"
         itemScope
         itemType="http://schema.org/ImageObject"
       >
-        <ImgMaxWidthDiv maxWidth={element.maxWidth ? element.maxWidth : 0}>
+        <div
+          style={element.maxWidth ? { maxWidth: element.maxWidth } : {}}
+          className="mx-auto"
+        >
           {wrapInA(
             <Lazy>
               <img
@@ -255,7 +265,7 @@ function renderElement(props: RenderElementProps): React.ReactNode {
               ></img>
             </Lazy>
           )}
-        </ImgMaxWidthDiv>
+        </div>
       </div>
     )
   }
