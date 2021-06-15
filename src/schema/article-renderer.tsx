@@ -22,6 +22,7 @@ import { Injection } from '@/components/content/injection'
 import { Lazy } from '@/components/content/lazy'
 import { MathSpanProps } from '@/components/content/math-span'
 import { Multimedia } from '@/components/content/multimedia'
+import { Snack } from '@/components/content/snack'
 import { Video } from '@/components/content/video'
 import { FrontendContentNode } from '@/data-types'
 import { submitEventWithPath } from '@/helper/submit-event'
@@ -330,23 +331,7 @@ function renderElement(props: RenderElementProps): React.ReactNode {
     if (match) {
       const id = match[1]
 
-      return (
-        <div
-          className="bg-white my-20"
-          style={{ height: '70vh', width: '100%' }}
-        >
-          <iframe
-            src={`https://www.learningsnacks.de/embed/${id}`}
-            style={{ width: '100%', height: '100%' }}
-          ></iframe>
-          <a
-            href={`https://www.learningsnacks.de/share/${id}`}
-            className="relative my-4 h-5 text-center float-right"
-          >
-            © siehe Snack
-          </a>
-        </div>
-      )
+      return <Snack id={parseInt(id)} />
     }
 
     return <a id={element.id} />
