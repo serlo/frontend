@@ -129,7 +129,7 @@
     }
   }
   .serlo-image-centered {
-    @apply px-4 mb-block;
+    @apply px-4 mb-block text-center;
   }
   .serlo-exercise-wrapper {
     @apply mt-10 mb-2.5;
