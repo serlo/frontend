@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { Router } from 'next/router'
 import { useState } from 'react'
 
@@ -33,7 +34,12 @@ export function HeaderNew() {
               height="80"
             />
           </Link>
-          <span className="font-handwritten text-xl ml-2 mt-4 inline-block align-text-top">
+          <span
+            className={clsx(
+              'font-handwritten text-xl align-text-top',
+              'ml-9 mt-2 block mobile:inline-block mobile:ml-2 mobile:mt-4'
+            )}
+          >
             Die freie Lernplattform
           </span>
         </div>

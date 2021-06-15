@@ -95,6 +95,7 @@ module.exports = {
       width: {
         '1/8v': '12.5vw',
         '1/4v': '25vw',
+        '1/3v': '33vw',
       },
       height: {
         630: '630px',

@@ -132,6 +132,7 @@ const SubjectLink = styled(Link)`
   display: block;
   padding-left: 0;
   min-width: 40%;
+  max-width: 49%;
   @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
     min-width: 30%;
   }

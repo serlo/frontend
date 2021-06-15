@@ -96,7 +96,7 @@ export function LandingDE({ data }: LandingDEProps) {
 
       <CommunityWall />
 
-      <section className="mt-36 mb-20">
+      <section className="mt-20 mb-20 mx-side">
         <img src="/_assets/img/landing/birds.svg" className="mx-auto" />
 
         <h3
@@ -124,7 +124,7 @@ export function LandingDE({ data }: LandingDEProps) {
         <PartnerListNew />
         <ButtonWithWink
           className={clsx(
-            'hidden md:inline-block mx-auto',
+            'hidden md:inline-block mx-auto mt-12',
             'text-truegray-700 font-bold text-xl rounded-lg',
             'px-8 py-4 tracking-tight border-truegray-700 border-solid border-2',
             'hover:border-brand-light hover:no-underline hover:text-brand-light'
@@ -142,18 +142,26 @@ export function LandingDE({ data }: LandingDEProps) {
 }
 
 const AboutSection = styled.section`
-  padding-top: 11rem;
-  padding-bottom: 9rem;
+  padding-top: 7rem;
+  padding-bottom: 5rem;
   margin: 6rem 0 0 0;
   background-image: url('/_assets/img/landing/about-big-arrow.svg'),
     url('/_assets/img/landing/about-container.svg');
-  background-position: 20% 19%;
   background-repeat: no-repeat, no-repeat;
-  background-size: 82%, 100vw 100%;
+  background-position: 77% 12%;
+  background-size: 200%, 100vw 100%;
+
+  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
+    padding-top: 11rem;
+    padding-bottom: 9rem;
+    background-position: 20% 19%;
+    background-size: 82%, 100vw 100%;
+  }
 `
 
 const Underlined = styled.i`
   padding-right: 1rem;
+  white-space: nowrap;
   background: url('/_assets/img/landing/simple-underline.svg') no-repeat bottom;
 `
 
@@ -214,7 +222,7 @@ const PWithWink = styled(ButtonWithWink)`
   }
 `
 
-const PartnerSection = styled.footer`
+const PartnerSection = styled.div`
   padding-top: 1rem;
   background: url('/_assets/img/landing/footer-container.svg') no-repeat;
   background-size: 100% 100%;

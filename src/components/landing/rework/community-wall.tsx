@@ -119,7 +119,7 @@ export function CommunityWall() {
           <Link
             className={clsx(
               'text-white font-bold text-xl bg-brand rounded-lg',
-              'px-8 py-4 tracking-tight',
+              'px-8 py-4 mb-5 tracking-tight inline-block',
               'group-hover:bg-brand-light hover:no-underline'
             )}
             href="/mitmachen"
@@ -143,8 +143,8 @@ export function CommunityWall() {
 
       <div
         className={clsx(
-          'mb-52 flex flex-wrap justify-evenly',
-          'md:relative md:block md:mb-72 md:h-630'
+          'flex flex-wrap justify-evenly',
+          'md:relative md:block md:mb-64 md:h-630'
         )}
       >
         {renderPersons()}
@@ -164,7 +164,7 @@ export function CommunityWall() {
           <div
             className={clsx(
               'mt-12 mx-1 text-center group',
-              'w-1/4v md:w-1/8v md:absolute',
+              'w-1/3v sm:w-1/4v md:w-1/8v md:absolute',
               hideMobile && 'hidden md:block'
             )}
             style={{ left: pos[0], top: pos[1] }}
@@ -179,7 +179,7 @@ export function CommunityWall() {
               ></div>
             </div>
             <Link
-              className="hover:no-underline relative z-10"
+              className="hover:no-underline relative z-10 whitespace-nowrap"
               href={`/user/profile/${name}`}
             >
               <img src={imgSrc} className="rounded-full w-full" />

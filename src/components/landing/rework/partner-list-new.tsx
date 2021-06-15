@@ -1,13 +1,15 @@
 import clsx from 'clsx'
 
-interface PartnerListProps {
-  higher?: boolean
-}
-
-export function PartnerListNew({ higher }: PartnerListProps) {
+export function PartnerListNew() {
   return (
     <div className="mt-auto mb-7">
-      <div className="text-gray-800 flex flex-wrap justify-center max-w-5xl mx-auto">
+      <div
+        className={clsx(
+          'flex flex-wrap justify-evenly mx-side',
+          'sm:justify-center max-w-5xl sm:mx-auto',
+          'text-gray-800 -mb-16'
+        )}
+      >
         {renderLogo(
           'Beisheim Stiftung',
           'https://packages.serlo.org/serlo-org-static-assets@1/de/home/logo-beisheim.png'
@@ -43,7 +45,7 @@ export function PartnerListNew({ higher }: PartnerListProps) {
   function renderLogo(title: string, url: string) {
     return (
       <img
-        className={clsx('max-h-12 px-16 mb-16', higher && ' lg:max-h-16')}
+        className={clsx('max-h-12 px-8 mb-16 sm:px-16')}
         style={{ filter: 'invert(1)', opacity: '0.45' }}
         src={url}
         alt={title}

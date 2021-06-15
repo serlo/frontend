@@ -378,13 +378,22 @@ const LoadingIcon = styled(FontAwesomeIcon)`
 `
 
 const SearchForm = styled.div`
-  margin: 0 auto;
-  background-color: ${(props) => lighten(0.1, props.theme.colors.lighterblue)};
   display: flex;
-  transition: background-color 0.4s ease;
-  cursor: pointer;
+  justify-content: flex-end;
+  height: ${smHeightPx};
+  min-height: 38px;
+  margin: 0 auto;
+  padding-left: 16px;
+  margin: 1.5rem 16px 0 16px;
+  max-width: 380px;
+
   outline: none;
+  cursor: pointer;
   border: 1px solid #ccc;
+  background-color: ${(props) => lighten(0.1, props.theme.colors.lighterblue)};
+  transition: all 0.4s ease;
+  border-radius: 22px;
+  background-color: transparent;
 
   &:focus-within {
     background-color: ${(props) =>
@@ -393,23 +402,12 @@ const SearchForm = styled.div`
     color: red !important;
   }
 
-  padding-left: 16px;
-  min-height: 38px;
+  @media (min-width: 412px) {
+    margin: 1.5rem auto 0 auto;
+  }
 
-  /* position: absolute;
-    top: 133px;
-    right: 32px; */
-  margin-top: 1.5rem;
-  height: ${smHeightPx};
-  width: 380px;
-  background-color: transparent;
-  border-radius: 22px;
-  transition: all 0.4s ease;
-  justify-content: flex-end;
-
-  @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
-    /* right: 27px;
-    margin-left: auto; */
+  @media (min-width: ${(props) => props.theme.breakpoints.md}) {
+    width: 380px;
   }
 
   ${gscMiscResets}
