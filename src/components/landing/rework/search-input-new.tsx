@@ -385,7 +385,7 @@ const SearchForm = styled.div`
   margin: 0 auto;
   padding-left: 16px;
   margin: 1.5rem 16px 0 16px;
-  max-width: 380px;
+  max-width: 320px;
 
   outline: none;
   cursor: pointer;
@@ -408,6 +408,10 @@ const SearchForm = styled.div`
 
   @media (min-width: ${(props) => props.theme.breakpoints.md}) {
     width: 380px;
+  }
+
+  @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
+    max-width: 380px;
   }
 
   ${gscMiscResets}

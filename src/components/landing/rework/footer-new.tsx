@@ -8,8 +8,9 @@ export function FooterNew() {
   return (
     <footer
       style={{ backgroundColor: '#eef1f5' }}
-      className="px-side md:px-side-lg pb-10 font-bold"
+      className="px-side lg:px-36 pb-10 font-bold"
     >
+      <Separator />
       <FooterNavNew />
       <Separator />
       <div>{renderFooterLine()}</div>
@@ -18,29 +19,36 @@ export function FooterNew() {
 
   function renderFooterLine() {
     return (
-      <div className="text-center md:text-right">
-        {footerData.footerNavigation[2].children.map((item) => (
+      <div className="text-center">
+        {footerData.footerNavigation[2].children.map((item, index, array) => (
           <>
             <Link
               key={item.title}
-              className="mr-3 text-truegray-700"
+              className="text-truegray-700"
               href={item.url}
               noExternalIcon
             >
               {item.title}
             </Link>
+            {index < array.length - 1 && (
+              <span className="px-1 text-truegray-400"> • </span>
+            )}
           </>
         ))}
-        {footerData.footerNavigation[1].children.map((item) => (
+        <span className="px-1 md:hidden text-truegray-400"> • </span>
+        {footerData.footerNavigation[1].children.map((item, index, array) => (
           <>
             <Link
               key={item.title}
-              className="mr-3 text-truegray-700 md:hidden"
+              className="text-truegray-700 md:hidden"
               href={item.url}
               noExternalIcon
             >
               {item.title}
             </Link>
+            {index < array.length - 1 && (
+              <span className="px-1 text-truegray-400 md:hidden"> • </span>
+            )}
           </>
         ))}
       </div>

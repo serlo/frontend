@@ -130,7 +130,7 @@ export function CommunityWall() {
             <div className="absolute flex justify-center inset-0">
               <div
                 className={clsx(
-                  'pointer-events-none select-none w-72 h-5 mt-6',
+                  'pointer-events-none select-none w-72 h-5',
                   'group-hover:opacity-100 opacity-0 group-hover:transform group-hover:rotate-1',
                   'transition-all ease-linear duration-200',
                   'bg-underlined bg-contain bg-no-repeat bg-top'
@@ -144,7 +144,7 @@ export function CommunityWall() {
       <div
         className={clsx(
           'flex flex-wrap justify-evenly',
-          'md:relative md:block md:mb-64 md:h-630'
+          'md:relative md:block md:mb-72 md:h-630'
         )}
       >
         {renderPersons()}
@@ -153,11 +153,10 @@ export function CommunityWall() {
   )
 
   function renderPersons() {
-    // const randomPositions = positions.sort(() => 0.5 - Math.random()) // good enough
     return persons.map(({ name, role, imgSrc }, index) => {
       if (index >= positions.length) return null
       const lineBreak = index === 1 || index === 6
-      const hideMobile = index > 6
+      const hideMobile = index > 5
       const pos = positions[index]
       return (
         <Fragment key={name}>

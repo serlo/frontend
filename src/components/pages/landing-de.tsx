@@ -10,7 +10,6 @@ import { PartnerListNew } from '../landing/rework/partner-list-new'
 import { Link } from '@/components/content/link'
 import { LandingSubjectsNew } from '@/components/landing/rework/landing-subjects-new'
 import { SearchInputNew } from '@/components/landing/rework/search-input-new'
-import { Separator } from '@/components/landing/rework/separator'
 import { InstanceLandingData } from '@/data-types'
 
 export interface LandingDEProps {
@@ -21,14 +20,14 @@ export function LandingDE({ data }: LandingDEProps) {
   const subjectsData = data.subjectsData
 
   return (
-    <>
+    <div className="text-truegray-700">
       <Head>
         <link href="_assets/landing-fonts.css" rel="stylesheet" />
       </Head>
       <HeadTags data={{ title: 'Serlo – Die freie Lernplattform' }} />
       <HeaderNew />
 
-      <section className="text-center max-w-3xl mx-auto mt-20 md:mt-36 font-bold">
+      <section className="text-center max-w-3xl mx-auto mt-20 md:mt-15vh font-bold">
         <PWithWink
           as="p"
           className="text-brand italic font-handwritten text-3xl"
@@ -37,12 +36,12 @@ export function LandingDE({ data }: LandingDEProps) {
         </PWithWink>
         <h1
           className={clsx(
-            'text-center text-5xl font-extrabold text-truegray-700',
+            'text-center text-5xl font-extrabold',
             'tracking-tight',
             'max-w-2xl mt-3 mb-6 mx-auto'
           )}
         >
-          Was möchtest du <Underlined className="pb-2">Lernen ?</Underlined>
+          Was möchtest du <Underlined className="pb-2">lernen ?</Underlined>
         </h1>
         <div className="md:hidden mt-10 mb-8">
           <SearchInputNew />
@@ -62,7 +61,7 @@ export function LandingDE({ data }: LandingDEProps) {
       <AboutSection>
         <div
           className={clsx(
-            'text-center text-4xl text-truegray-700',
+            'text-center text-4xl',
             'tracking-tight font-bold',
             'max-w-2xl mt-7 mx-auto'
           )}
@@ -78,7 +77,7 @@ export function LandingDE({ data }: LandingDEProps) {
             </Underlined>
           </p>
           <p className="font-extrabold mb-8">
-            Jeden Monat lernen über 1.5 Millionen Schüler*innen und Lehrkräfte
+            Jeden Monat lernen über 1.2 Millionen Schüler*innen und Lehrkräfte
             gemeinsam mit Serlo.
           </p>
           <ButtonWithWings
@@ -101,12 +100,12 @@ export function LandingDE({ data }: LandingDEProps) {
 
         <h3
           className={clsx(
-            'text-center text-4xl text-truegray-700 font-bold',
+            'text-center text-4xl font-bold',
             'leading-cozy tracking-tight',
             'max-w-2xl mt-7 mx-auto'
           )}
         >
-          Zusammen setzen wir uns dafür ein, dass gute Bildung nicht abhängig
+          Zusammen setzen wir uns dafür ein, dass gute Bildung weniger abhängig
           vom Geldbeutel der Eltern ist.
         </h3>
       </section>
@@ -114,7 +113,7 @@ export function LandingDE({ data }: LandingDEProps) {
       <PartnerSection className="text-center">
         <h3
           className={clsx(
-            'text-center text-4xl text-truegray-700 font-bold',
+            'text-center text-4xl font-bold',
             'leading-cozy tracking-tight',
             'max-w-2xl mt-32 mx-auto relative z-10 mb-16'
           )}
@@ -125,19 +124,18 @@ export function LandingDE({ data }: LandingDEProps) {
         <ButtonWithWink
           className={clsx(
             'hidden md:inline-block mx-auto mt-12',
-            'text-truegray-700 font-bold text-xl rounded-lg',
+            'font-bold text-xl rounded-lg text-truegray-700 ',
             'px-8 py-4 tracking-tight border-truegray-700 border-solid border-2',
             'hover:border-brand-light hover:no-underline hover:text-brand-light'
           )}
           href="/partner"
         >
-          Alle Förderer ansehen
+          Alle Partner ansehen
         </ButtonWithWink>
-        <Separator />
       </PartnerSection>
 
       <FooterNew />
-    </>
+    </div>
   )
 }
 
@@ -159,7 +157,7 @@ const AboutSection = styled.section`
   }
 `
 
-const Underlined = styled.i`
+const Underlined = styled.span`
   padding-right: 1rem;
   white-space: nowrap;
   background: url('/_assets/img/landing/simple-underline.svg') no-repeat bottom;

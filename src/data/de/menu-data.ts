@@ -12,6 +12,11 @@ export const landingSubjectsData: LandingSubjectsData = {
     { url: '/biologie', title: 'Biologie', icon: 'biology' },
     { url: '/chemie', title: 'Chemie', icon: 'chemistry' },
     { url: '/informatik', title: 'Informatik', icon: 'informatics' },
+    {
+      url: '/community/neue-fächer-themen',
+      title: 'Fächer im Aufbau',
+      icon: 'new',
+    },
   ],
   additionalLinks: [],
 }

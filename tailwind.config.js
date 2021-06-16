@@ -48,6 +48,7 @@ module.exports = {
       },
       margin: {
         block: '30px',
+        '15vh': '15vh',
       },
       padding: {
         '2/3': '66%',

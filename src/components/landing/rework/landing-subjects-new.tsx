@@ -9,6 +9,7 @@ import BlankSVG from '@/assets-webkit/img/landing/subjects-blank.svg'
 import ChemistrySVG from '@/assets-webkit/img/landing/subjects-chemistry.svg'
 import InformaticsSVG from '@/assets-webkit/img/landing/subjects-informatics.svg'
 import MathSVG from '@/assets-webkit/img/landing/subjects-math.svg'
+import NewSVG from '@/assets-webkit/img/landing/subjects-new.svg'
 import SustainabilitySVG from '@/assets-webkit/img/landing/subjects-sustainability.svg'
 import { Link } from '@/components/content/link'
 import { LandingSubjectLink, LandingSubjectsData } from '@/data-types'
@@ -48,6 +49,7 @@ export function LandingSubjectsNew({ data }: LandingSubjectsProps) {
     if (icon == 'informatics')
       return <InformaticsSVG className="superspecial-informatics" />
     if (icon == 'biology') return <BiologySVG className="superspecial-bio" />
+    if (icon == 'new') return <NewSVG className="superspecial-new" />
     if (icon == 'chemistry')
       return <ChemistrySVG className="superspecial-chem" />
     return <BlankSVG className="superspecial-blank" />
@@ -148,6 +150,7 @@ const SubjectLink = styled(Link)`
   & svg.superspecial-abc,
   & svg.superspecial-sus,
   & svg.superspecial-chem,
+  & svg.superspecial-new,
   & svg.superspecial-blank,
   & svg.superspecial-informatics {
     display: block;
@@ -225,6 +228,9 @@ const SubjectLink = styled(Link)`
   & .superspecial-informatics {
     transition: fill ease-in 0.5s;
   }
+  & .superspecial-new {
+    transform-origin: 50% 60%;
+  }
   &:hover,
   &:focus,
   &:active {
@@ -242,6 +248,9 @@ const SubjectLink = styled(Link)`
     }
     & .superspecial-sus .blue.water {
       transform: scale(1.08);
+    }
+    & .superspecial-new {
+      transform: rotate(180deg);
     }
     && .blue {
       fill: ${(props) => props.theme.colors.brand};
