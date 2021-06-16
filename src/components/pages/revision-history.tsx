@@ -35,8 +35,7 @@ export function RevisionHistory({ data }: RevisionHistoryProps) {
                 {isCurrent && (
                   <span title={strings.revisions.currentNotice}>✅ </span>
                 )}
-                {/* TODO: Remove isCurrent check once this is solved: https://github.com/serlo/serlo.org-database-layer/issues/102 */}
-                {entry.trashed && !isCurrent && (
+                {entry.trashed && (
                   <span title={strings.revisions.rejectedNotice}>
                     <FontAwesomeIcon icon={faTimes} />{' '}
                   </span>

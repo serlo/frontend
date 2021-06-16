@@ -240,12 +240,10 @@ export function Revision({ data }: RevisionProps) {
 
   function renderNotice() {
     if (!isRejected && !isCurrentRevision) return null
-    /* TODO: Remove check once this is solved: https://github.com/serlo/serlo.org-database-layer/issues/102 */
-    const rejected = !isCurrentRevision && isRejected
     return (
       <Notice success={isCurrentRevision}>
-        <FontAwesomeIcon icon={rejected ? faTimes : faCheck} />{' '}
-        {rejected
+        <FontAwesomeIcon icon={isRejected ? faTimes : faCheck} />{' '}
+        {isRejected
           ? strings.revisions.rejectedNotice
           : strings.revisions.currentNotice}
       </Notice>
