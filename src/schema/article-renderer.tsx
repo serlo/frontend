@@ -55,7 +55,7 @@ export function renderArticle(
   return _renderArticle(value, true, pathPrefix)
 }
 
-function renderNested(
+export function renderNested(
   value: FrontendContentNode[],
   previousPath: NodePath,
   pathPrefix: NodePath

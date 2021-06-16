@@ -7,10 +7,12 @@ import { CommunityWall } from '../landing/rework/community-wall'
 import { FooterNew } from '../landing/rework/footer-new'
 import { HeaderNew } from '../landing/rework/header-new'
 import { PartnerListNew } from '../landing/rework/partner-list-new'
+import { Injection } from '@/components/content/injection'
 import { Link } from '@/components/content/link'
 import { LandingSubjectsNew } from '@/components/landing/rework/landing-subjects-new'
 import { SearchInputNew } from '@/components/landing/rework/search-input-new'
 import { InstanceLandingData } from '@/data-types'
+import { renderNested } from '@/schema/article-renderer'
 
 export interface LandingDEProps {
   data: InstanceLandingData
@@ -26,7 +28,6 @@ export function LandingDE({ data }: LandingDEProps) {
       </Head>
       <HeadTags data={{ title: 'Serlo – Die freie Lernplattform' }} />
       <HeaderNew />
-
       <section className="text-center max-w-3xl mx-auto mt-20 md:mt-15vh font-bold">
         <PWithWink
           as="p"
@@ -97,7 +98,6 @@ export function LandingDE({ data }: LandingDEProps) {
 
       <section className="mt-20 mb-20 mx-side">
         <img src="/_assets/img/landing/birds.svg" className="mx-auto" />
-
         <h3
           className={clsx(
             'text-center text-4xl font-bold',
@@ -108,6 +108,13 @@ export function LandingDE({ data }: LandingDEProps) {
           Zusammen setzen wir uns dafür ein, dass gute Bildung weniger abhängig
           vom Geldbeutel der Eltern ist.
         </h3>
+
+        <div className="max-w-2xl mx-auto serlo-content-with-spacing-fixes text-4xl">
+          <Injection
+            href="/75485"
+            renderNested={(value, ...prefix) => renderNested(value, [], prefix)}
+          />
+        </div>
       </section>
 
       <PartnerSection className="text-center">
