@@ -31,7 +31,6 @@ export function createExercise(
     if (content.startsWith('{')) {
       // special case here: we know it's a edtr-io exercise
       // and we use this knowledge to convert subentries
-      // TODO import types from edtr-io
       const taskState = (JSON.parse(content) as { state: TaskEdtrState }).state
 
       if (taskState.content) {
@@ -89,7 +88,6 @@ function createSolutionData(solution: BareExercise['solution']) {
         solutionLegacy = convert(contentJson as any)
       } else {
         // special case here: we know it's a edtr-io solution
-        // TODO import types from edtr-io
         const solutionState = contentJson.state
         solutionState.strategy = convert(solutionState.strategy as any)
         // compat: (probably quite fragile) if strategy is empty, we ignore it
