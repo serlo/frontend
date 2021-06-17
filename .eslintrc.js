@@ -31,14 +31,14 @@ module.exports = {
     '@typescript-eslint/no-extraneous-class': 'error',
     '@typescript-eslint/no-parameter-properties': 'off',
     '@typescript-eslint/no-this-alias': 'warn',
-    // TODO: `off` only for migration purposes, should be `error` in the future
-    '@typescript-eslint/no-unsafe-assignment': 'off',
-    // TODO: `off` only for migration purposes, should be `error` in the future
-    '@typescript-eslint/no-unsafe-call': 'off',
-    // TODO: `off` only for migration purposes, should be `error` in the future
-    '@typescript-eslint/no-unsafe-member-access': 'off',
-    // TODO: `off` only for migration purposes, should be `error` in the future
-    '@typescript-eslint/no-unsafe-return': 'off',
+    // TODO: `warn` only for migration purposes, should be `error` in the future
+    '@typescript-eslint/no-unsafe-assignment': 'warn',
+    // TODO: `warn` only for migration purposes, should be `error` in the future
+    '@typescript-eslint/no-unsafe-call': 'warn',
+    // TODO: `warn` only for migration purposes, should be `error` in the future
+    '@typescript-eslint/no-unsafe-member-access': 'warn',
+    // TODO: `warn` only for migration purposes, should be `error` in the future
+    '@typescript-eslint/no-unsafe-return': 'warn',
     '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     '@typescript-eslint/no-use-before-define': [
       'error',
@@ -51,8 +51,8 @@ module.exports = {
     ],
     '@typescript-eslint/no-useless-constructor': 'error',
     '@typescript-eslint/prefer-ts-expect-error': 'error',
-    // TODO: `off` only for migration purposes, should be `error` in the future
-    '@typescript-eslint/restrict-template-expressions': 'off',
+    // TODO: `warn` only for migration purposes, should be `error` in the future
+    '@typescript-eslint/restrict-template-expressions': 'warn',
 
     // eslint-plugin-import
     'import/export': 'error',
