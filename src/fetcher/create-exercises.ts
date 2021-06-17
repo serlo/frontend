@@ -32,26 +32,25 @@ export function createExercise(
       // special case here: we know it's a edtr-io exercise
       // and we use this knowledge to convert subentries
       // TODO import types from edtr-io
-      const taskState = JSON.parse(content).state
+      const taskState = (JSON.parse(content) as { state: TaskEdtrState }).state
+
       if (taskState.content) {
-        taskState.content = convert(taskState.content)
+        taskState.content = convert(taskState.content as any)
         if (taskState.interactive?.plugin == 'scMcExercise') {
-          taskState.interactive.state.answers.forEach(
-            (answer: any, i: number) => {
-              answer.feedback = convert(answer.feedback)
-              answer.content = convert(answer.content)
-              answer.originalIndex = i
-            }
-          )
+          taskState.interactive.state.answers.forEach((answer, i: number) => {
+            answer.feedback = convert(answer.feedback as any)
+            answer.content = convert(answer.content as any)
+            answer.originalIndex = i
+          })
           shuffleArray(taskState.interactive.state.answers)
         } else if (taskState.interactive?.plugin == 'inputExercise') {
-          taskState.interactive.state.answers.forEach((answer: any) => {
-            answer.feedback = convert(answer.feedback)
+          taskState.interactive.state.answers.forEach((answer) => {
+            answer.feedback = convert(answer.feedback as any)
           })
         }
         taskEdtrState = taskState
       } else {
-        taskLegacy = convert(taskState) // some weird edge cases where task has no content (e.g. 117384)
+        taskLegacy = convert(undefined) // some weird edge cases where task has no content (e.g. 117384)
       }
     } else {
       taskLegacy = convertState(content)
@@ -82,24 +81,26 @@ function createSolutionData(solution: BareExercise['solution']) {
   const content = solution?.currentRevision?.content
   if (content) {
     if (content.startsWith('{')) {
-      const contentJson = JSON.parse(content)
+      const contentJson = JSON.parse(content) as
+        | { plugin: 'rows' }
+        | { plugin: ''; state: SolutionEdtrState }
       if (contentJson.plugin == 'rows') {
         // half converted, like 189579
-        solutionLegacy = convert(contentJson)
+        solutionLegacy = convert(contentJson as any)
       } else {
         // special case here: we know it's a edtr-io solution
         // TODO import types from edtr-io
         const solutionState = contentJson.state
-        solutionState.strategy = convert(solutionState.strategy)
+        solutionState.strategy = convert(solutionState.strategy as any)
         // compat: (probably quite fragile) if strategy is empty, we ignore it
         if (
           solutionState.strategy.length == 1 &&
           solutionState.strategy[0].type == 'p' &&
-          solutionState.strategy[0].children.length === 0
+          solutionState.strategy[0].children?.length === 0
         ) {
           solutionState.strategy = []
         }
-        solutionState.steps = convert(solutionState.steps)
+        solutionState.steps = convert(solutionState.steps as any)
         solutionEdtrState = solutionState
       }
     } else {
