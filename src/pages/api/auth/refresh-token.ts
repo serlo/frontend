@@ -41,7 +41,7 @@ async function refreshToken(req: NextApiRequest, res: NextApiResponse) {
       'Set-Cookie',
       `auth-token=; Path=/; Expires=${new Date(0).toUTCString()};`
     )
-    fail(`Token not valid ${e}`)
+    fail(`Token not valid ${e as string}`)
   }
 
   function fail(message: string) {
