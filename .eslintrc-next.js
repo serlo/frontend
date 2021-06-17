@@ -1,6 +1,6 @@
 /* eslint-disable import/no-commonjs */
 module.exports = {
-  extends: ['next'],
+  extends: ['plugin:@next/next/recommended'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: ['tsconfig.json', 'tsconfig.eslint.json'],
