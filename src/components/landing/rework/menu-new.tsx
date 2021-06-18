@@ -84,7 +84,7 @@ function MenuInner({
   function onSubMenuInnerClick() {
     if (tippyRoot && tippyRoot !== undefined) tippyRoot.hide()
   }
-  const newData = [data[0], data[3], data[1]]
+  const newData = [data[1], data[4]]
   return (
     <ResponsiveNav>
       {Tippy && (

@@ -7,6 +7,7 @@ import { CommunityWall } from '../landing/rework/community-wall'
 import { FooterNew } from '../landing/rework/footer-new'
 import { HeaderNew } from '../landing/rework/header-new'
 import { PartnerListNew } from '../landing/rework/partner-list-new'
+import { WelcomeMessage } from '../landing/rework/welcome-message'
 import { Injection } from '@/components/content/injection'
 import { Link } from '@/components/content/link'
 import { LandingSubjectsNew } from '@/components/landing/rework/landing-subjects-new'
@@ -29,11 +30,8 @@ export function LandingDE({ data }: LandingDEProps) {
       <HeadTags data={{ title: 'Serlo – Die freie Lernplattform' }} />
       <HeaderNew />
       <section className="text-center max-w-3xl mx-auto mt-20 md:mt-15vh font-bold">
-        <PWithWink
-          as="p"
-          className="text-brand italic font-handwritten text-3xl"
-        >
-          Schön dich heute zu sehen.
+        <PWithWink as="p" className="text-brand font-handwritten text-3xl">
+          <WelcomeMessage />
         </PWithWink>
         <h1
           className={clsx(
@@ -68,8 +66,13 @@ export function LandingDE({ data }: LandingDEProps) {
           )}
         >
           <p className="mb-8">
-            Unsere Lernplattform ist gemeinnützig und damit komplett kostenlos,
-            werbefrei und frei lizenziert.{' '}
+            Unsere Lernplattform wird von einem gemeinnützigen Verein
+            entwickelt. Sie ist komplett{' '}
+            <b className="font-extrabold">
+              kostenlos, werbefrei und{' '}
+              <span className="whitespace-nowrap">frei lizenziert</span>
+            </b>
+            .{' '}
             <Underlined
               className="font-handwritten text-brand"
               style={{ fontSize: '1.2em' }}
@@ -77,9 +80,9 @@ export function LandingDE({ data }: LandingDEProps) {
               Für immer!
             </Underlined>
           </p>
-          <p className="font-extrabold mb-8">
-            Jeden Monat lernen über 1.2 Millionen Schüler*innen und Lehrkräfte
-            gemeinsam mit Serlo.
+          <p className="mb-8">
+            Jeden Monat nutzen über 1.2 Millionen Schüler*innen und Lehrkräfte
+            Serlo.
           </p>
           <ButtonWithWings
             className={clsx(

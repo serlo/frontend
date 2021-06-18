@@ -45,6 +45,7 @@ export const headerData: InstanceData['headerData'] = [
   },
   { url: '/serlo', title: 'Über Serlo', icon: 'about' },
   { url: '/mitmachen', title: 'Mitmachen', icon: 'participate' },
+  { url: '/spenden', title: 'Spenden', icon: 'donate' },
   {
     url: '',
     title: 'Community',
@@ -63,7 +64,6 @@ export const headerData: InstanceData['headerData'] = [
       { url: '/discussions', title: 'Liste aller Kommentare' },
     ],
   },
-  { url: '/spenden', title: 'Spenden', icon: 'donate' },
 ]
 
 export const footerData: InstanceData['footerData'] = {
@@ -72,7 +72,7 @@ export const footerData: InstanceData['footerData'] = {
       title: 'Allgemein',
       children: [
         { title: 'Über Serlo', url: '/serlo' },
-        { title: 'Partner & Förderer', url: '/partner' },
+        { title: 'Community', url: '/community' },
         { title: 'Presse', url: '/presse' },
         { title: 'Kontakt', url: '/kontakt' },
         {
