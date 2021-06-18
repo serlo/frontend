@@ -33,13 +33,13 @@ export function useAuthentication(): React.RefObject<AuthenticationPayload> {
   // eslint-disable-next-line @typescript-eslint/require-await
   async function refreshToken() {
     if (typeof window === 'undefined') return
-    Cookies.remove('auth-token')
+    // Cookies.remove('auth-token')
 
-    window.location.reload()
+    // window.location.reload()
 
-    /*const response = await fetch('/api/auth/refresh-token', {
+    const response = await fetch('/api/auth/refresh-token', {
       method: 'POST',
-    })*/
+    })
 
     cookieValue.current = parseAuthCookie()
   }
