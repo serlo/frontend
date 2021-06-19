@@ -278,8 +278,8 @@ const sharedIconStyles = css`
   width: 18px;
   height: 18px;
   fill: #fff;
-  margin-top: ${(height - 19) / 2}px;
-  margin-top: ${(smHeight - 22) / 2}px;
+  margin-top: 9px;
+  margin-left: 1px;
 
   display: inline;
 `
@@ -356,6 +356,7 @@ const gcsButton = css`
     width: 18px;
     height: 18px;
     display: inline;
+    margin-left: 1px;
   }
 `
 
