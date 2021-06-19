@@ -268,21 +268,10 @@ const Li = styled.li<{ show: boolean }>`
 
 const StyledLink = styled(Link)<{ active?: boolean; hasIcon?: boolean }>`
   ${makeTransparentButton}
-  &:active,
-  &:hover,
-  &[aria-expanded='true'] {
-    background-color: transparent;
-    //color: #fff;
-    //background-color: ${(props) => props.theme.colors.brand};
-    color: ${(props) => props.theme.colors.brand};
 
-    /*just for notifications count*/
-    & span.fa-layers {
-      color: #fff;
-    }
-  }
   font-size: 0.9rem;
-  color: rgb(65, 65, 65);
+  color: ${(props) =>
+    props.theme.colors[props.active ? 'darkgray' : 'lightblue']};
 
   background-color: ${(props) =>
     props.active ? props.theme.colors.lighterblue : 'inherit'};
@@ -293,4 +282,15 @@ const StyledLink = styled(Link)<{ active?: boolean; hasIcon?: boolean }>`
   margin: 0 3px;
   margin-top: ${(props) => (props.hasIcon ? '-5px' : '11px')};
   padding: ${(props) => (props.hasIcon ? '7px' : '2px 7px')};
+
+  &:active,
+  &:hover,
+  &[aria-expanded='true'] {
+    color: #fff;
+    background-color: ${(props) => props.theme.colors.brand};
+    /*just for notifications count*/
+    & span.fa-layers {
+      color: #fff;
+    }
+  }
 `
