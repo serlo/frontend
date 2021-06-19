@@ -108,8 +108,8 @@ export function LandingDE({ data }: LandingDEProps) {
             'max-w-2xl mt-7 mx-auto'
           )}
         >
-          Zusammen setzen wir uns dafür ein, dass gute Bildung weniger abhängig
-          vom Geldbeutel der Eltern ist.
+          Zusammen setzen wir uns für mehr Bildungsgerechtigkeit und die
+          digitale Transformation unserer Schulen ein.
         </h3>
 
         <div className="max-w-2xl mx-auto serlo-content-with-spacing-fixes text-4xl">
