@@ -223,7 +223,7 @@
 #nprogress .peg {
   @apply block absolute right-0 w-24 h-full;
   @apply shadow-brand opacity-100;
-  @apply transform rotate-3 -translate-y-1;
+  @apply rotate-3 -translate-y-1;
 }
 
 /* Remove these to get rid of the spinner */
