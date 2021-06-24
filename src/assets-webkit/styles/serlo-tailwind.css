@@ -197,6 +197,11 @@
       }
     }
   }
+  .serlo-new-landing-button {
+    @apply text-white text-xl bg-brand rounded-lg font-bold;
+    @apply px-8 py-4 mb-5 tracking-tight block text-center;
+    @apply hover:bg-brand-light hover:no-underline;
+  }
   @media print {
     .serlo-print-hidden {
       @apply !hidden;

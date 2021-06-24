@@ -85,11 +85,7 @@ export function LandingDE({ data }: LandingDEProps) {
             Serlo.
           </p>
           <ButtonWithWings
-            className={clsx(
-              'text-white font-bold text-xl bg-brand rounded-lg',
-              'px-8 py-4 tracking-tight',
-              'hover:bg-brand-light hover:no-underline'
-            )}
+            className="serlo-new-landing-button inline"
             href="/serlo"
           >
             Mehr über uns

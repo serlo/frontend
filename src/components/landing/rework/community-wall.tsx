@@ -117,11 +117,7 @@ export function CommunityWall() {
       <div className="mt-16 z-10 flex justify-center relative">
         <div className="group text-center">
           <Link
-            className={clsx(
-              'text-white font-bold text-xl bg-brand rounded-lg',
-              'px-8 py-4 mb-5 tracking-tight inline-block',
-              'group-hover:bg-brand-light hover:no-underline'
-            )}
+            className="serlo-new-landing-button inline-block group-hover:bg-brand-light hover:no-underline"
             href="/mitmachen"
           >
             Magst du mitmachen?

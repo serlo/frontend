@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 
-import { Link } from '../../content/link'
 import { Separator } from './separator'
+import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { FooterLink } from '@/data-types'
 
@@ -17,25 +17,12 @@ export function FooterNavNew() {
         </h1>
         <div className="mx-auto md:mx-0" style={{ maxWidth: '190px' }}>
           <Link
-            className={clsx(
-              'text-white text-xl bg-brand rounded-lg',
-              'px-8 py-4 mb-5 tracking-tight block text-center',
-              'hover:bg-brand-light hover:no-underline',
-              'md:mx-0 max-w-xs'
-            )}
+            className="serlo-new-landing-button md:mx-0 max-w-xs"
             href="/mitmachen"
           >
             Mitmachen
           </Link>
-          <Link
-            className={clsx(
-              'text-white text-xl bg-brand rounded-lg',
-              'px-8 py-4 tracking-tight block text-center',
-              'hover:bg-brand-light hover:no-underline',
-              'md:mx-0'
-            )}
-            href="/spenden"
-          >
+          <Link className="serlo-new-landing-button md:mx-0" href="/spenden">
             Spenden
           </Link>
         </div>
