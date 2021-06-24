@@ -65,8 +65,8 @@ function MenuInner({
   target,
 }: MenuProps & {
   Tippy?: typeof import('@tippyjs/react')
-  source?: any
-  target?: any
+  source?: TippyProps['singleton']
+  target?: TippyProps['singleton']
 }) {
   //
   const [mounted, setMounted] = useState(!shouldUseNewAuth())

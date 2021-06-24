@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import { useInstanceData } from '@/contexts/instance-context'
 
-export function LoadingError({ error }: { error: object }) {
+export function LoadingError({ error }: { error: string }) {
   const { strings } = useInstanceData()
   // eslint-disable-next-line no-console
   console.log(error)

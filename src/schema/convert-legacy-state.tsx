@@ -10,6 +10,7 @@ import {
   FrontendThNode,
   FrontendTextNode,
   FrontendInlineMathNode,
+  FrontendMathNode,
 } from '@/data-types'
 
 // Result of the htmlparser
@@ -552,7 +553,8 @@ function unwrapSingleMathInline(children: FrontendContentNode[]) {
       child.children?.length == 1 &&
       child.children[0].type == 'inline-math'
     ) {
-      ;(child.children[0] as any).type = 'math'
+      // force conversion to math node
+      ;(child.children[0] as unknown as FrontendMathNode).type = 'math'
       return child.children[0]
     }
     return child

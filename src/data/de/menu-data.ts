@@ -56,6 +56,7 @@ export const headerData: InstanceData['headerData'] = [
         title: 'Startseite für Autor*innen',
       },
       { url: 'https://community.serlo.org/', title: 'Chat für Autor*innen' },
+      { url: '/88059', title: 'Hilfeseiten' },
       {
         url: '/community/veranstaltungen/veranstaltungsübersicht',
         title: 'Veranstaltungen für Autor*innen',

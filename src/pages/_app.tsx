@@ -14,11 +14,11 @@ import { isRenderedPage } from '@/helper/rendered-page'
 config.autoAddCss = false
 
 export default function App(props: AppProps) {
-  const { Component, pageProps } = props
+  const { Component } = props
 
   if (isRenderedPage(Component)) {
-    return Component.renderer(pageProps, props)
+    return Component.renderer(props.pageProps, props)
   }
 
-  return <Component {...pageProps} />
+  return <Component {...props.pageProps} />
 }

@@ -110,6 +110,7 @@ module.exports = {
       sm: '800px',
       md: '1024px',
       lg: '1216px',
+      print: { raw: 'print' },
     },
   },
   variants: {
@@ -120,9 +121,6 @@ module.exports = {
       // Custom utilities all start with `special-*`
       // They use css that is not covered by tailwind
       addUtilities({
-        '.special-shadow-transform': {
-          transform: 'rotate(3deg) translate(0px, -4px)',
-        },
         '.special-border-half-transparent': {
           borderTopColor: 'transparent',
           borderLeftColor: 'transparent',
