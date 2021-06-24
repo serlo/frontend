@@ -1,3 +1,4 @@
+import { Fragment } from 'react'
 import { Link } from '../../content/link'
 import { FooterNavNew } from './footer-nav-new'
 import { Separator } from './separator'
@@ -21,25 +22,19 @@ export function FooterNew() {
     return (
       <div className="text-center">
         {footerData.footerNavigation[2].children.map((item, index, array) => (
-          <>
-            <Link
-              key={item.title}
-              className="text-truegray-700"
-              href={item.url}
-              noExternalIcon
-            >
+          <Fragment key={item.title}>
+            <Link className="text-truegray-700" href={item.url} noExternalIcon>
               {item.title}
             </Link>
             {index < array.length - 1 && (
               <span className="px-1 text-truegray-400"> • </span>
             )}
-          </>
+          </Fragment>
         ))}
         <span className="px-1 md:hidden text-truegray-400"> • </span>
         {footerData.footerNavigation[1].children.map((item, index, array) => (
-          <>
+          <Fragment key={item.title}>
             <Link
-              key={item.title}
               className="text-truegray-700 md:hidden"
               href={item.url}
               noExternalIcon
@@ -49,7 +44,7 @@ export function FooterNew() {
             {index < array.length - 1 && (
               <span className="px-1 text-truegray-400 md:hidden"> • </span>
             )}
-          </>
+          </Fragment>
         ))}
       </div>
     )

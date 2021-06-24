@@ -1,3 +1,4 @@
+import { Fragment } from 'react'
 import clsx from 'clsx'
 
 import { Separator } from './separator'
@@ -45,20 +46,19 @@ export function FooterNavNew() {
     if (!items) return null
 
     return items.map((item) => (
-      <>
+      <Fragment key={item.url}>
         <Link
           className={clsx(
             'inline-block text-truegray-700 mb-2 w-auto',
             'border-transparent border-b-2 hover:no-underline hover:border-brand hover:text-brand'
           )}
-          key={item.url}
           href={item.url}
           noExternalIcon
         >
           {item.title}
         </Link>
         <br />
-      </>
+      </Fragment>
     ))
   }
 }

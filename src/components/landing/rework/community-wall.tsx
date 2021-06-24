@@ -127,7 +127,7 @@ export function CommunityWall() {
               <div
                 className={clsx(
                   'pointer-events-none select-none w-72 h-5',
-                  'group-hover:opacity-100 opacity-0 group-hover:transform group-hover:rotate-1',
+                  'group-hover:opacity-100 opacity-0 transform group-hover:rotate-1',
                   'transition-all ease-linear duration-200',
                   'bg-underlined bg-contain bg-no-repeat bg-top'
                 )}
@@ -169,7 +169,7 @@ export function CommunityWall() {
                 className={clsx(
                   'bg-wiggle absolute -left-12 -right-12 pb-6/5',
                   'bg-no-repeat bg-contain opacity-0 group-hover:opacity-100',
-                  'transition-all ease-linear duration-200 group-hover:transform group-hover:rotate-1'
+                  'transition-all ease-linear duration-200 transform group-hover:rotate-1'
                 )}
               ></div>
             </div>
