@@ -25,7 +25,12 @@ import { TimeAgo } from '@/components/time-ago'
 import { UserLink } from '@/components/user/user-link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionData } from '@/data-types'
-import { makePadding, inputFontReset, makeLightButton } from '@/helper/css'
+import {
+  makePadding,
+  inputFontReset,
+  makeLightButton,
+  makeMargin,
+} from '@/helper/css'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { renderArticle } from '@/schema/article-renderer'
 
@@ -63,11 +68,17 @@ export function Revision({ data }: RevisionProps) {
       {renderHeader()}
 
       {displayMode === 'sidebyside' && (
-        <div className="flex mx-side">
-          <div className="flex-1 mr-4 opacity-70">
+        <div className="flex mt-12">
+          <div className="flex-1 px-side bg-brand-50">
+            <h2 className="serlo-h2 mt-12 mb-4">
+              {strings.revisions.currentVersion}
+            </h2>
             {renderPreviewBoxes(data.currentRevision)}
           </div>
           <div className="flex-1 ml-4">
+            <h2 className="serlo-h2 mt-12 mb-4">
+              {strings.revisions.thisVersion}
+            </h2>
             {renderPreviewBoxes(data.thisRevision)}
           </div>
         </div>
@@ -202,6 +213,9 @@ export function Revision({ data }: RevisionProps) {
         diffType="url"
       >
         {isVideo ? <Video src={dataSet.url} /> : <Geogebra id={dataSet.url} />}
+        <GrayStringCompare>
+          <b>url:</b> {dataSet.url}
+        </GrayStringCompare>
       </PreviewBox>
     )
   }
@@ -328,4 +342,11 @@ const Notice = styled.div<{ success?: boolean }>`
   font-weight: bold;
   background-color: ${(props) =>
     tint(0.7, props.success ? props.theme.colors.brandGreen : '#c56c6c')};
+`
+
+const GrayStringCompare = styled.span`
+  ${makeMargin}
+  background-color: #ccc;
+  padding: 0.1rem 0.2rem;
+  font-size: 1rem;
 `
