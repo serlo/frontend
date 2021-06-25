@@ -141,6 +141,9 @@ export const revisionQuery = gql`
           repository {
             id
             alias
+            exercise {
+              id
+            }
             currentRevision {
               id
               content

@@ -96,7 +96,7 @@ export function UserTools({
     return (
       <nav
         className={clsx(
-          'absolute right-8 bottom-8 h-full',
+          'absolute z-50 right-8 bottom-8 h-full',
           'lg:flex hidden items-end pointer-events-none',
           fadeIn()
         )}

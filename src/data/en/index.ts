@@ -139,6 +139,7 @@ export const instanceData = {
       toOverview: "Back to overview",
       toContent: "Go to content",
       changes: "Changes",
+      context: "Context (current version)",
       title: "Title",
       content: "Content",
       metaTitle: "Meta Title",

@@ -1,3 +1,4 @@
+import { SolutionRevision } from '@serlo/api'
 import { AuthorizationPayload } from '@serlo/authorization'
 import { request } from 'graphql-request'
 
@@ -106,6 +107,9 @@ export async function requestRevision(
         repository: {
           id: uuid.repository.id,
           alias: uuid.repository.alias || undefined,
+          exerciseId:
+            (uuid as SolutionRevision).repository.exercise?.id ||
+            uuid.repository.id,
         },
         typename: uuid.__typename,
         thisRevision: {

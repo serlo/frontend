@@ -18,6 +18,7 @@ import { RevisionModeSwitcher } from './revision-mode-switcher'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useCanDo } from '@/auth/use-can-do'
 import { Geogebra } from '@/components/content/geogebra'
+import { Injection } from '@/components/content/injection'
 import { Link } from '@/components/content/link'
 import { Video } from '@/components/content/video'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
@@ -25,14 +26,9 @@ import { TimeAgo } from '@/components/time-ago'
 import { UserLink } from '@/components/user/user-link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionData } from '@/data-types'
-import {
-  makePadding,
-  inputFontReset,
-  makeLightButton,
-  makeMargin,
-} from '@/helper/css'
+import { makePadding, inputFontReset, makeLightButton } from '@/helper/css'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
-import { renderArticle } from '@/schema/article-renderer'
+import { renderArticle, renderNested } from '@/schema/article-renderer'
 
 export interface RevisionProps {
   data: RevisionData
@@ -89,7 +85,12 @@ export function Revision({ data }: RevisionProps) {
       )}
 
       {displayMode === 'this' && (
-        <MaxWidthDiv>{renderPreviewBoxes(data.thisRevision)}</MaxWidthDiv>
+        <>
+          <MaxWidthDiv>
+            {renderPreviewBoxes(data.thisRevision)}
+            {renderExerciseBox()}
+          </MaxWidthDiv>
+        </>
       )}
 
       {renderUserTools(false)}
@@ -217,6 +218,26 @@ export function Revision({ data }: RevisionProps) {
           <b>url:</b> {dataSet.url}
         </span>
       </PreviewBox>
+    )
+  }
+
+  function renderExerciseBox() {
+    if (
+      (data.type !== 'solution' && data.type !== 'exercise') ||
+      data.repository.exerciseId === undefined
+    )
+      return null
+
+    return (
+      <>
+        <h2 className="serlo-h2 mt-12">
+          {strings.revisions.context} – {strings.entities.exercise}
+        </h2>
+        <Injection
+          href={`/${data.repository.exerciseId}`}
+          renderNested={(value, ...prefix) => renderNested(value, [], prefix)}
+        />
+      </>
     )
   }
 

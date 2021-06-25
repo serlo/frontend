@@ -295,6 +295,7 @@ export interface RevisionData {
   repository: {
     id: number
     alias?: string
+    exerciseId?: number
   }
   thisRevision: {
     id: number

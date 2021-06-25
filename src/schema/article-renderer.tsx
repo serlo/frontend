@@ -55,7 +55,7 @@ export function renderArticle(
   return _renderArticle(value, true, pathPrefix)
 }
 
-function renderNested(
+export function renderNested(
   value: FrontendContentNode[],
   previousPath: NodePath,
   pathPrefix: NodePath
@@ -466,7 +466,7 @@ function renderRevisionExtra(
 ) {
   if (
     !isRevisionView &&
-    !['a', 'img', 'anchor', 'injection'].includes(element.type)
+    ['a', 'img', 'anchor', 'injection'].includes(element.type)
   )
     return null
 
