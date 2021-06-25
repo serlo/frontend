@@ -1,4 +1,4 @@
-import { SolutionRevision } from '@serlo/api'
+import { GroupedExerciseRevision, SolutionRevision } from '@serlo/api'
 import { AuthorizationPayload } from '@serlo/authorization'
 import { request } from 'graphql-request'
 
@@ -10,6 +10,7 @@ import {
   ArticleRevision,
   VideoRevision,
   QueryResponseRevision,
+  GroupedExercise,
 } from '../query-types'
 import { revisionQuery } from './query'
 import { endpoint } from '@/api/endpoint'
@@ -97,19 +98,30 @@ export async function requestRevision(
           ]
         : null
 
+    const _typeNoRevision = uuid.__typename.replace('Revision', '')
+    const type = (_typeNoRevision.charAt(0).toLowerCase() +
+      _typeNoRevision.slice(1)) as EntityTypes
+
+    const parentId =
+      type === 'groupedExercise'
+        ? (uuid as GroupedExerciseRevision).repository.exerciseGroup.id
+        : type === 'solution'
+        ? (uuid as SolutionRevision).repository.exercise.id ||
+          (
+            (uuid as SolutionRevision).repository
+              .exercise as unknown as GroupedExercise
+          ).exerciseGroup?.id
+        : uuid.repository.id
+
     return {
       kind: 'revision',
       newsletterPopup: false,
       revisionData: {
-        type: uuid.__typename
-          .replace('Revision', '')
-          .toLowerCase() as EntityTypes,
+        type,
         repository: {
           id: uuid.repository.id,
           alias: uuid.repository.alias || undefined,
-          exerciseId:
-            (uuid as SolutionRevision).repository.exercise?.id ||
-            uuid.repository.id,
+          parentId,
         },
         typename: uuid.__typename,
         thisRevision: {

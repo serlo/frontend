@@ -40,7 +40,6 @@ const CheckoutRejectButtons = dynamic<CheckoutRejectButtonsProps>(() =>
   )
 )
 
-//current is the checked out revision
 export type DisplayMode = 'this' | 'sidebyside' | 'diff'
 
 export function Revision({ data }: RevisionProps) {
@@ -51,9 +50,7 @@ export function Revision({ data }: RevisionProps) {
     canDo(Entity.checkoutRevision) && canDo(Entity.rejectRevision)
   const isCurrentRevision = data.thisRevision.id === data.currentRevision.id
   const isRejected = data.thisRevision.trashed
-  const [displayMode, setDisplayMode] = React.useState<DisplayMode>(
-    isCurrentRevision ? 'sidebyside' : 'this'
-  )
+  const [displayMode, setDisplayMode] = React.useState<DisplayMode>('this')
 
   const notCompare = displayMode !== 'diff'
   const icon = renderEntityIcon()
@@ -196,7 +193,6 @@ export function Revision({ data }: RevisionProps) {
 
   function renderEntityIcon() {
     if (!data.type) return null
-
     return (
       <span title={strings.entities[data.type]}>
         {' '}
@@ -223,18 +219,18 @@ export function Revision({ data }: RevisionProps) {
 
   function renderExerciseBox() {
     if (
-      (data.type !== 'solution' && data.type !== 'exercise') ||
-      data.repository.exerciseId === undefined
+      !['solution', 'exercise', 'exerciseGroup', 'groupedExercise'].includes(
+        data.type
+      ) ||
+      data.repository.parentId === undefined
     )
       return null
 
     return (
       <>
-        <h2 className="serlo-h2 mt-12">
-          {strings.revisions.context} – {strings.entities.exercise}
-        </h2>
+        <h2 className="serlo-h2 mt-12">{strings.revisions.context}</h2>
         <Injection
-          href={`/${data.repository.exerciseId}`}
+          href={`/${data.repository.parentId}`}
           renderNested={(value, ...prefix) => renderNested(value, [], prefix)}
         />
       </>

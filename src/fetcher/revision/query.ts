@@ -109,6 +109,9 @@ export const revisionQuery = gql`
           repository {
             id
             alias
+            exerciseGroup {
+              id
+            }
             license {
               id
               title
@@ -142,7 +145,14 @@ export const revisionQuery = gql`
             id
             alias
             exercise {
-              id
+              ... on Exercise {
+                id
+              }
+              ... on GroupedExercise {
+                exerciseGroup {
+                  id
+                }
+              }
             }
             currentRevision {
               id

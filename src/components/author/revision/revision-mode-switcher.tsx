@@ -24,8 +24,8 @@ export function RevisionModeSwitcher({
     return (
       <>
         {!isCurrent && renderButton('diff', strings.revisions.diff)}
-        {renderButton('sidebyside', strings.revisions.sidebyside)}
-        {!isCurrent && renderButton('this', strings.revisions.thisVersion)}
+        {!isCurrent && renderButton('sidebyside', strings.revisions.sidebyside)}
+        {renderButton('this', strings.revisions.thisVersion)}
       </>
     )
   }
