@@ -171,7 +171,7 @@ export function UserTools({
   function renderRevisionOverview() {
     return (
       <a
-        href={`/entity/repository/history/${id}`}
+        href={`/entity/repository/history/${data.id}`}
         className={buttonClassName()}
       >
         {renderInner(strings.pageTitles.revisionHistory, faList)}
