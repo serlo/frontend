@@ -98,11 +98,10 @@ export function UserTools({
         className={clsx(
           'absolute right-8 bottom-8 h-full',
           'lg:flex hidden items-end',
-          'bg-white rounded-md',
           fadeIn()
         )}
       >
-        <div className="sticky bottom-8 flex-col flex items-start">
+        <div className="sticky bottom-8 flex-col flex items-start bg-white rounded-md">
           {renderButtons()}
         </div>
       </nav>
