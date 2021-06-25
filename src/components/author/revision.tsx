@@ -1,4 +1,8 @@
-import { faList, faTimes, faCheck } from '@fortawesome/free-solid-svg-icons'
+import {
+  faTimes,
+  faCheck,
+  faArrowCircleLeft,
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Entity } from '@serlo/authorization'
 import dynamic from 'next/dynamic'
@@ -62,8 +66,9 @@ export function Revision({ data }: RevisionProps) {
   return (
     <>
       <MetaBar>
-        <BackButton href={`/entity/repository/history/${data.repositoryId}`}>
-          <FontAwesomeIcon icon={faList} /> {strings.revisions.toOverview}
+        <BackButton href={data.repository.alias ?? `/${data.repository.id}`}>
+          <FontAwesomeIcon icon={faArrowCircleLeft} />{' '}
+          {strings.revisions.toContent}
         </BackButton>
         <div>{renderButtons()}</div>
       </MetaBar>
@@ -93,7 +98,7 @@ export function Revision({ data }: RevisionProps) {
         {auth.current && canCheckoutAndReject && (
           <CheckoutRejectButtons
             revisionId={data.thisRevision.id}
-            repositoryId={data.repositoryId}
+            repositoryId={data.repository.id}
             isRejected={isRejected}
             isCurrent={isCurrentRevision}
           />
@@ -130,7 +135,7 @@ export function Revision({ data }: RevisionProps) {
         id={data.thisRevision.id}
         data={{
           type: 'Revision',
-          id: data.repositoryId,
+          id: data.repository.id,
           revisionId: data.thisRevision.id,
         }}
       />

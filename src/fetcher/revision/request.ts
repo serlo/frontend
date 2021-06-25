@@ -103,7 +103,10 @@ export async function requestRevision(
         type: uuid.__typename
           .replace('Revision', '')
           .toLowerCase() as EntityTypes,
-        repositoryId: uuid.repository.id,
+        repository: {
+          id: uuid.repository.id,
+          alias: uuid.repository.alias || undefined,
+        },
         typename: uuid.__typename,
         thisRevision: {
           id: uuid.id,

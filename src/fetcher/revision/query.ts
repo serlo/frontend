@@ -25,6 +25,7 @@ export const revisionQuery = gql`
           changes
           repository {
             id
+            alias
             currentRevision {
               id
               ...articleRevision
@@ -35,6 +36,7 @@ export const revisionQuery = gql`
           ...pageRevision
           repository {
             id
+            alias
             currentRevision {
               id
               ...pageRevision
@@ -46,6 +48,7 @@ export const revisionQuery = gql`
           changes
           repository {
             id
+            alias
             currentRevision {
               id
               ...appletRevision
@@ -57,6 +60,7 @@ export const revisionQuery = gql`
           changes
           repository {
             id
+            alias
             currentRevision {
               id
               ...courseRevision
@@ -68,6 +72,7 @@ export const revisionQuery = gql`
           changes
           repository {
             id
+            alias
             currentRevision {
               id
               ...coursePageRevision
@@ -79,6 +84,7 @@ export const revisionQuery = gql`
           changes
           repository {
             id
+            alias
             currentRevision {
               id
               ...eventRevision
@@ -90,6 +96,7 @@ export const revisionQuery = gql`
           changes
           repository {
             id
+            alias
             currentRevision {
               id
               content
@@ -101,6 +108,7 @@ export const revisionQuery = gql`
           changes
           repository {
             id
+            alias
             license {
               id
               title
@@ -116,6 +124,7 @@ export const revisionQuery = gql`
           changes
           repository {
             id
+            alias
             license {
               id
               title
@@ -131,6 +140,7 @@ export const revisionQuery = gql`
           changes
           repository {
             id
+            alias
             currentRevision {
               id
               content
@@ -142,6 +152,7 @@ export const revisionQuery = gql`
           changes
           repository {
             id
+            alias
             currentRevision {
               id
               ...videoRevision
