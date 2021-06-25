@@ -1,5 +1,6 @@
 import {
   faClock,
+  faList,
   faPencilAlt,
   faShareAlt,
   faTools,
@@ -115,12 +116,13 @@ export function UserTools({
       return null
     }
 
-    return data.type === 'Profile' ? (
-      renderProfileButtons()
-    ) : (
+    if (data.type === 'Profile') return renderProfileButtons()
+
+    return (
       <>
         {(!hideEdit || auth.current) && renderEdit()}
         {renderShare()}
+        {data.type === 'Revision' && renderRevisionOverview()}
         {auth.current && renderExtraTools()}
       </>
     )
@@ -162,6 +164,17 @@ export function UserTools({
           `${strings.edit.unrevised} (${unrevisedRevision || ''})`,
           faClock
         )}
+      </a>
+    )
+  }
+
+  function renderRevisionOverview() {
+    return (
+      <a
+        href={`/entity/repository/history/${id}`}
+        className={buttonClassName()}
+      >
+        {renderInner(strings.pageTitles.revisionHistory, faList)}
       </a>
     )
   }
