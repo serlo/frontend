@@ -23,8 +23,8 @@ export function RevisionModeSwitcher({
   function renderButtons() {
     return (
       <>
-        {!isCurrent && renderButton('compare', strings.revisions.compare)}
-        {renderButton('current', strings.revisions.currentVersion)}
+        {!isCurrent && renderButton('diff', strings.revisions.diff)}
+        {renderButton('sidebyside', strings.revisions.sidebyside)}
         {!isCurrent && renderButton('this', strings.revisions.thisVersion)}
       </>
     )
@@ -47,12 +47,11 @@ export function RevisionModeSwitcher({
 const MetaBar = styled.nav`
   ${makePadding};
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   position: sticky;
   z-index: 50;
   padding-top: 25px;
   padding-bottom: 10px;
-  margin-bottom: 20px;
   top: 0;
   background-color: #fff;
 `

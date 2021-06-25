@@ -8,8 +8,8 @@ import { Entity } from '@serlo/authorization'
 import dynamic from 'next/dynamic'
 import { tint } from 'polished'
 import * as React from 'react'
-import ReactDiffViewer from 'react-diff-viewer'
-import styled from 'styled-components'
+import ReactDiffViewer, { DiffMethod } from 'react-diff-viewer'
+import styled, { css } from 'styled-components'
 
 import { PageTitle } from '../../content/page-title'
 import { UserTools } from '../../user-tools/user-tools'
@@ -20,6 +20,7 @@ import { useCanDo } from '@/auth/use-can-do'
 import { Geogebra } from '@/components/content/geogebra'
 import { Link } from '@/components/content/link'
 import { Video } from '@/components/content/video'
+import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { TimeAgo } from '@/components/time-ago'
 import { UserLink } from '@/components/user/user-link'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -39,7 +40,7 @@ const CheckoutRejectButtons = dynamic<CheckoutRejectButtonsProps>(() =>
 )
 
 //current is the checked out revision
-export type DisplayMode = 'this' | 'current' | 'compare'
+export type DisplayMode = 'this' | 'sidebyside' | 'diff'
 
 export function Revision({ data }: RevisionProps) {
   const auth = useAuthentication()
@@ -50,20 +51,83 @@ export function Revision({ data }: RevisionProps) {
   const isCurrentRevision = data.thisRevision.id === data.currentRevision.id
   const isRejected = data.thisRevision.trashed
   const [displayMode, setDisplayMode] = React.useState<DisplayMode>(
-    isCurrentRevision ? 'current' : 'this'
+    isCurrentRevision ? 'sidebyside' : 'this'
   )
-  const dataSet =
-    displayMode === 'current' ? data.currentRevision : data.thisRevision
 
-  const notCompare = displayMode !== 'compare'
+  const notCompare = displayMode !== 'diff'
   const icon = renderEntityIcon()
   const repositoryAlias = data.repository.alias ?? `/${data.repository.id}`
 
   return (
-    <>
+    <div className="relative pb-52">
       {renderHeader()}
 
-      <main>
+      {displayMode === 'sidebyside' && (
+        <div className="flex mx-side">
+          <div className="flex-1 mr-4 opacity-70">
+            {renderPreviewBoxes(data.currentRevision)}
+          </div>
+          <div className="flex-1 ml-4">
+            {renderPreviewBoxes(data.thisRevision)}
+          </div>
+        </div>
+      )}
+
+      {displayMode === 'diff' && (
+        <div className="mx-side">{renderPreviewBoxes(data.thisRevision)}</div>
+      )}
+
+      {displayMode === 'this' && (
+        <MaxWidthDiv>{renderPreviewBoxes(data.thisRevision)}</MaxWidthDiv>
+      )}
+
+      {renderUserTools(false)}
+    </div>
+  )
+
+  function renderHeader() {
+    return (
+      <>
+        <MaxWidthDiv className="!mb-0">
+          <BackButton href={repositoryAlias} className="mt-6 mx-side">
+            <FontAwesomeIcon icon={faArrowCircleLeft} />{' '}
+            {strings.revisions.toContent}
+          </BackButton>
+
+          {renderNotice()}
+          <PageTitle
+            title={
+              data.currentRevision.metaTitle ||
+              data.currentRevision.title ||
+              strings.entities.revision
+            }
+            headTitle
+            icon={icon ? icon : undefined}
+          />
+          {renderUserTools(true)}
+          <p className="serlo-p leading-7">
+            {data.changes && (
+              <>
+                <b>{strings.revisions.changes}:</b> {data.changes}
+              </>
+            )}
+            <br />
+            {strings.revisions.by} <UserLink user={data.user} />{' '}
+            <TimeAgo datetime={new Date(data.date)} dateAsTitle />
+          </p>
+        </MaxWidthDiv>
+        <RevisionModeSwitcher
+          isCurrent={isCurrentRevision}
+          setDisplayMode={setDisplayMode}
+          displayMode={displayMode}
+        />
+      </>
+    )
+  }
+
+  function renderPreviewBoxes(dataSet: RevisionData['currentRevision']) {
+    return (
+      <>
         {dataSet.title !== undefined && (
           <PreviewBox title={strings.revisions.title} diffType="title">
             <h1 className="serlo-h1">{dataSet.title}</h1>
@@ -77,7 +141,7 @@ export function Revision({ data }: RevisionProps) {
             )}
           </PreviewBox>
         )}
-        {renderVideoOrAppletBox()}
+        {renderVideoOrAppletBox(dataSet)}
         {dataSet.metaTitle && (
           <PreviewBox title={strings.revisions.metaTitle} diffType="metaTitle">
             {dataSet.metaTitle}
@@ -91,47 +155,7 @@ export function Revision({ data }: RevisionProps) {
             {dataSet.metaDescription}
           </PreviewBox>
         )}
-      </main>
-      {renderUserTools(false)}
-    </>
-  )
-
-  function renderHeader() {
-    return (
-      <header>
-        <BackButton href={repositoryAlias} className="mt-6 mx-side">
-          <FontAwesomeIcon icon={faArrowCircleLeft} />{' '}
-          {strings.revisions.toContent}
-        </BackButton>
-
-        {renderNotice()}
-        <PageTitle
-          title={
-            data.currentRevision.metaTitle ||
-            data.currentRevision.title ||
-            strings.entities.revision
-          }
-          headTitle
-          icon={icon ? icon : undefined}
-        />
-        {renderUserTools(true)}
-        <p className="serlo-p leading-7">
-          {data.changes && (
-            <>
-              <b>{strings.revisions.changes}:</b> {data.changes}
-            </>
-          )}
-          <br />
-          {strings.revisions.by} <UserLink user={data.user} />{' '}
-          <TimeAgo datetime={new Date(data.date)} dateAsTitle />
-        </p>
-
-        <RevisionModeSwitcher
-          isCurrent={isCurrentRevision}
-          setDisplayMode={setDisplayMode}
-          displayMode={displayMode}
-        />
-      </header>
+      </>
     )
   }
 
@@ -169,7 +193,7 @@ export function Revision({ data }: RevisionProps) {
     )
   }
 
-  function renderVideoOrAppletBox() {
+  function renderVideoOrAppletBox(dataSet: RevisionData['currentRevision']) {
     if (dataSet.url === undefined) return null
     const isVideo = data.type === 'video'
     return (
@@ -197,12 +221,17 @@ export function Revision({ data }: RevisionProps) {
   function renderDiffViewer(diffType: DiffViewerTypes) {
     if (diffType === 'content') {
       return (
-        <ReactDiffViewer
-          oldValue={JSON.stringify(data.currentRevision.content, null, 2)}
-          newValue={JSON.stringify(data.thisRevision.content, null, 2)}
-          splitView
-          hideLineNumbers
-        />
+        <DiffViewerWrapper split>
+          <ReactDiffViewer
+            leftTitle={strings.revisions.currentVersion}
+            rightTitle={strings.revisions.thisVersion}
+            oldValue={JSON.stringify(data.currentRevision.content, null, 2)}
+            newValue={JSON.stringify(data.thisRevision.content, null, 2)}
+            splitView
+            hideLineNumbers
+            compareMethod={DiffMethod.WORDS}
+          />
+        </DiffViewerWrapper>
       )
     }
     return (
@@ -275,11 +304,21 @@ const BackButton = styled(Link)`
   }
 `
 
-const DiffViewerWrapper = styled.div`
+const DiffViewerWrapper = styled.div<{ split?: boolean }>`
   pre {
-    ${inputFontReset};
-    font-size: 1.125rem !important;
+    ${(props) => props.split === undefined && inputFontReset}
+    font-size: ${(props) => (props.split ? '0.9rem' : '1.125rem !important')};
   }
+
+  ${(props) =>
+    props.split &&
+    css`
+      td {
+        width: 50%;
+        max-width: 45vw;
+        overflow: scroll;
+      }
+    `}
 `
 
 const Notice = styled.div<{ success?: boolean }>`

@@ -11,6 +11,7 @@ export default renderedPageNoHooks<RevisionProps>(({ pageData }) => (
   <FrontendClientBase
     entityId={pageData.revisionData.thisRevision.id}
     authorization={pageData.authorization}
+    noContainers
   >
     <Revision data={pageData.revisionData} />
   </FrontendClientBase>
