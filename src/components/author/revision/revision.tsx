@@ -213,9 +213,9 @@ export function Revision({ data }: RevisionProps) {
         diffType="url"
       >
         {isVideo ? <Video src={dataSet.url} /> : <Geogebra id={dataSet.url} />}
-        <GrayStringCompare>
+        <span className="text-sm px-1 bg-yellow-200">
           <b>url:</b> {dataSet.url}
-        </GrayStringCompare>
+        </span>
       </PreviewBox>
     )
   }
@@ -342,11 +342,4 @@ const Notice = styled.div<{ success?: boolean }>`
   font-weight: bold;
   background-color: ${(props) =>
     tint(0.7, props.success ? props.theme.colors.brandGreen : '#c56c6c')};
-`
-
-const GrayStringCompare = styled.span`
-  ${makeMargin}
-  background-color: #ccc;
-  padding: 0.1rem 0.2rem;
-  font-size: 1rem;
 `
