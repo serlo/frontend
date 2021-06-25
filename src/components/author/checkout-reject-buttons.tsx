@@ -10,7 +10,7 @@ import { RevisionMutationMode, useRevisionMutation } from '@/helper/mutations'
 
 export interface CheckoutRejectButtonsProps {
   revisionId: number
-  repositoryId: number
+  repositoryAlias: string
   isRejected: boolean
   isCurrent: boolean
   buttonStyle?: string
@@ -18,7 +18,7 @@ export interface CheckoutRejectButtonsProps {
 
 export function CheckoutRejectButtons({
   revisionId,
-  repositoryId,
+  repositoryAlias,
   isRejected,
   isCurrent,
   buttonStyle,
@@ -39,7 +39,7 @@ export function CheckoutRejectButtons({
 
   function onConfirm() {
     if (modalMode && confirmActive) {
-      void revisionMutation(modalMode, repositoryId, {
+      void revisionMutation(modalMode, repositoryAlias, {
         revisionId,
         reason,
       })

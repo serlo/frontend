@@ -61,13 +61,11 @@ export function Revision({ data }: RevisionProps) {
 
   const notCompare = displayMode !== 'compare'
   const icon = renderEntityIcon()
+  const repositoryAlias = data.repository.alias ?? `/${data.repository.id}`
 
   return (
     <>
-      <BackButton
-        href={data.repository.alias ?? `/${data.repository.id}`}
-        className="mt-6 mx-side"
-      >
+      <BackButton href={repositoryAlias} className="mt-6 mx-side">
         <FontAwesomeIcon icon={faArrowCircleLeft} />{' '}
         {strings.revisions.toContent}
       </BackButton>
@@ -140,7 +138,7 @@ export function Revision({ data }: RevisionProps) {
             auth.current && canCheckoutAndReject ? (
               <CheckoutRejectButtons
                 revisionId={data.thisRevision.id}
-                repositoryId={data.repository.id}
+                repositoryAlias={repositoryAlias}
                 isRejected={isRejected}
                 isCurrent={isCurrentRevision}
               />
