@@ -17,7 +17,6 @@ import type { CheckoutRejectButtonsProps } from './checkout-reject-buttons'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useCanDo } from '@/auth/use-can-do'
 import { Geogebra } from '@/components/content/geogebra'
-import { HSpace } from '@/components/content/h-space'
 import { Link } from '@/components/content/link'
 import { Video } from '@/components/content/video'
 import { TimeAgo } from '@/components/time-ago'
@@ -33,15 +32,15 @@ import {
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { renderArticle } from '@/schema/article-renderer'
 
+export interface RevisionProps {
+  data: RevisionData
+}
+
 const CheckoutRejectButtons = dynamic<CheckoutRejectButtonsProps>(() =>
   import('@/components/author/checkout-reject-buttons').then(
     (mod) => mod.CheckoutRejectButtons
   )
 )
-
-export interface RevisionProps {
-  data: RevisionData
-}
 
 //current is the checked out revision
 type DisplayMode = 'this' | 'current' | 'compare'
@@ -65,14 +64,14 @@ export function Revision({ data }: RevisionProps) {
 
   return (
     <>
-      <MetaBar>
-        <BackButton href={data.repository.alias ?? `/${data.repository.id}`}>
-          <FontAwesomeIcon icon={faArrowCircleLeft} />{' '}
-          {strings.revisions.toContent}
-        </BackButton>
-        <div>{renderButtons()}</div>
-      </MetaBar>
-      <HSpace amount={5} />
+      <BackButton
+        href={data.repository.alias ?? `/${data.repository.id}`}
+        className="mt-6 mx-side"
+      >
+        <FontAwesomeIcon icon={faArrowCircleLeft} />{' '}
+        {strings.revisions.toContent}
+      </BackButton>
+
       {renderNotice()}
       <PageTitle
         title={
@@ -83,27 +82,20 @@ export function Revision({ data }: RevisionProps) {
         headTitle
         icon={icon ? icon : undefined}
       />
-      {data.changes && (
-        <p className="serlo-p">
-          <b>{strings.revisions.changes}:</b> {data.changes}
-          <br />
-          <br />
-        </p>
-      )}
-      <FlexWrapper>
-        <p className="serlo-p">
-          {strings.revisions.by} <UserLink user={data.user} />{' '}
-          <TimeAgo datetime={new Date(data.date)} dateAsTitle />
-        </p>
-        {auth.current && canCheckoutAndReject && (
-          <CheckoutRejectButtons
-            revisionId={data.thisRevision.id}
-            repositoryId={data.repository.id}
-            isRejected={isRejected}
-            isCurrent={isCurrentRevision}
-          />
+      {renderUserTools(true)}
+      <p className="serlo-p leading-7">
+        {data.changes && (
+          <>
+            <b>{strings.revisions.changes}:</b> {data.changes}
+          </>
         )}
-      </FlexWrapper>
+        <br />
+        {strings.revisions.by} <UserLink user={data.user} />{' '}
+        <TimeAgo datetime={new Date(data.date)} dateAsTitle />
+      </p>
+
+      <MetaBar>{renderButtons()}</MetaBar>
+
       {dataSet.title !== undefined && (
         <PreviewBox title={strings.revisions.title} diffType="title">
           <h1 className="serlo-h1">{dataSet.title}</h1>
@@ -131,26 +123,42 @@ export function Revision({ data }: RevisionProps) {
           {dataSet.metaDescription}
         </PreviewBox>
       )}
+      {renderUserTools(false)}
+    </>
+  )
+
+  function renderUserTools(above: boolean) {
+    return (
       <UserTools
         id={data.thisRevision.id}
+        aboveContent={above}
         data={{
           type: 'Revision',
           id: data.repository.id,
           revisionId: data.thisRevision.id,
+          checkoutRejectButtons:
+            auth.current && canCheckoutAndReject ? (
+              <CheckoutRejectButtons
+                revisionId={data.thisRevision.id}
+                repositoryId={data.repository.id}
+                isRejected={isRejected}
+                isCurrent={isCurrentRevision}
+              />
+            ) : undefined,
         }}
       />
-    </>
-  )
+    )
+  }
 
   function renderButtons() {
     return (
-      <span>
+      <>
         {!isCurrentRevision &&
           renderButton('compare', strings.revisions.compare)}
         {renderButton('current', strings.revisions.currentVersion)}
         {!isCurrentRevision &&
           renderButton('this', strings.revisions.thisVersion)}
-      </span>
+      </>
     )
   }
 
@@ -302,7 +310,7 @@ const BackButton = styled(Link)`
 const MetaBar = styled.div`
   ${makePadding};
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   position: sticky;
   z-index: 50;
   padding-top: 25px;
@@ -317,11 +325,6 @@ const DiffViewerWrapper = styled.div`
     ${inputFontReset};
     font-size: 1.125rem !important;
   }
-`
-
-const FlexWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
 `
 
 const Notice = styled.div<{ success?: boolean }>`

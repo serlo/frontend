@@ -13,6 +13,7 @@ export interface CheckoutRejectButtonsProps {
   repositoryId: number
   isRejected: boolean
   isCurrent: boolean
+  buttonStyle?: string
 }
 
 export function CheckoutRejectButtons({
@@ -20,6 +21,7 @@ export function CheckoutRejectButtons({
   repositoryId,
   isRejected,
   isCurrent,
+  buttonStyle,
 }: CheckoutRejectButtonsProps) {
   const loggedInData = useLoggedInData()
   const [modalMode, setModalMode] = useState<RevisionMutationMode | null>(null)
@@ -49,19 +51,28 @@ export function CheckoutRejectButtons({
   }
 
   return (
-    <div>
+    <>
       <CheckoutButton
+        className={buttonStyle}
         onClick={() => setModalMode('checkout')}
         onPointerUp={(e) => e.currentTarget.blur()}
       >
-        <FontAwesomeIcon icon={faCheck} /> {strings.revisions.checkout.action}
+        <FontAwesomeIcon icon={faCheck} className="lg:mr-0.5" />{' '}
+        {strings.revisions.checkout.action}
       </CheckoutButton>
       {!isRejected && (
         <RejectButton
+          className={buttonStyle}
           onClick={() => setModalMode('reject')}
           onPointerUp={(e) => e.currentTarget.blur()}
         >
-          <FontAwesomeIcon icon={faTimes} /> {strings.revisions.reject.action}
+          &nbsp;
+          <FontAwesomeIcon
+            icon={faTimes}
+            size="1x"
+            className="lg:mr-0.5"
+          />{' '}
+          {strings.revisions.reject.action}
         </RejectButton>
       )}
 
@@ -74,7 +85,7 @@ export function CheckoutRejectButtons({
       >
         {renderModalContent()}
       </ModalWithCloseButton>
-    </div>
+    </>
   )
 
   function renderModalContent() {
@@ -100,18 +111,18 @@ export function CheckoutRejectButtons({
 }
 
 const CheckoutButton = styled.button`
-  ${makeLightButton}
+  /* ${makeLightButton}
   &:hover {
     background-color: ${(props) => props.theme.colors.brandGreen};
   }
-  margin-right: 15px;
+  margin-right: 15px; */
 `
 
 const RejectButton = styled.button`
-  ${makeLightButton}
+  /* ${makeLightButton}
   &:hover {
     background-color: #c56c6c;
-  }
+  } */
 `
 
 const Parapgraph = styled.p`

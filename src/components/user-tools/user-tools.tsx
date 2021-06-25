@@ -8,7 +8,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, cloneElement } from 'react'
 
 import { LazyTippy } from '../navigation/lazy-tippy'
 import { AuthorToolsData } from './author-tools-hover-menu'
@@ -98,6 +98,7 @@ export function UserTools({
         className={clsx(
           'absolute right-8 bottom-8 h-full',
           'lg:flex hidden items-end',
+          'bg-white rounded-md',
           fadeIn()
         )}
       >
@@ -120,9 +121,9 @@ export function UserTools({
 
     return (
       <>
+        {data.type === 'Revision' && renderRevisionTools()}
         {(!hideEdit || auth.current) && renderEdit()}
         {renderShare()}
-        {data.type === 'Revision' && renderRevisionOverview()}
         {auth.current && renderExtraTools()}
       </>
     )
@@ -168,14 +169,20 @@ export function UserTools({
     )
   }
 
-  function renderRevisionOverview() {
+  function renderRevisionTools() {
     return (
-      <a
-        href={`/entity/repository/history/${data.id}`}
-        className={buttonClassName()}
-      >
-        {renderInner(strings.pageTitles.revisionHistory, faList)}
-      </a>
+      <>
+        {data.checkoutRejectButtons &&
+          cloneElement(data.checkoutRejectButtons, {
+            buttonStyle: buttonClassName(),
+          })}
+        <a
+          href={`/entity/repository/history/${data.id}`}
+          className={buttonClassName()}
+        >
+          {renderInner(strings.pageTitles.revisionHistory, faList)}
+        </a>
+      </>
     )
   }
 
