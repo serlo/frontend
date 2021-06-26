@@ -25,7 +25,7 @@ import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { TimeAgo } from '@/components/time-ago'
 import { UserLink } from '@/components/user/user-link'
 import { useInstanceData } from '@/contexts/instance-context'
-import { RevisionData } from '@/data-types'
+import { FrontendExerciseNode, RevisionData } from '@/data-types'
 import { makePadding, inputFontReset, makeLightButton } from '@/helper/css'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { renderArticle, renderNested } from '@/schema/article-renderer'
@@ -68,7 +68,7 @@ export function Revision({ data }: RevisionProps) {
             </h2>
             {renderPreviewBoxes(data.currentRevision)}
           </div>
-          <div className="flex-1 ml-4">
+          <div className="flex-1 ml-4 mr-side">
             <h2 className="serlo-h2 mt-12 mb-4">
               {strings.revisions.thisVersion}
             </h2>
@@ -85,7 +85,7 @@ export function Revision({ data }: RevisionProps) {
         <>
           <MaxWidthDiv>
             {renderPreviewBoxes(data.thisRevision)}
-            {renderExerciseBox()}
+            {renderExercisePreview()}
           </MaxWidthDiv>
         </>
       )}
@@ -151,6 +151,7 @@ export function Revision({ data }: RevisionProps) {
           </PreviewBox>
         )}
         {renderVideoOrAppletBox(dataSet)}
+        {renderExerciseAnswerBoxes(dataSet)}
         {dataSet.metaTitle && (
           <PreviewBox title={strings.revisions.metaTitle} diffType="metaTitle">
             {dataSet.metaTitle}
@@ -217,24 +218,59 @@ export function Revision({ data }: RevisionProps) {
     )
   }
 
-  function renderExerciseBox() {
+  function renderExercisePreview() {
     if (
-      !['solution', 'exercise', 'exerciseGroup', 'groupedExercise'].includes(
-        data.type
-      ) ||
+      !['solution', 'exerciseGroup', 'groupedExercise'].includes(data.type) ||
       data.repository.parentId === undefined
     )
       return null
 
     return (
-      <>
+      <div className="serlo-content-with-spacing-fixes">
         <h2 className="serlo-h2 mt-12">{strings.revisions.context}</h2>
         <Injection
           href={`/${data.repository.parentId}`}
           renderNested={(value, ...prefix) => renderNested(value, [], prefix)}
         />
-      </>
+      </div>
     )
+  }
+
+  function renderExerciseAnswerBoxes(dataSet: RevisionData['currentRevision']) {
+    if (!['exercise'].includes(data.type)) return null
+
+    if (data.type === 'exercise') {
+      const interactive = (dataSet.content as FrontendExerciseNode[])[0].task
+        .edtrState?.interactive
+      if (
+        interactive?.plugin === 'inputExercise' &&
+        interactive?.state.answers
+      ) {
+        return (
+          <>
+            <p className="serlo-p mt-3 pb-10 text-sm font-bold">
+              [{interactive.state.type}]
+            </p>
+            {interactive.state.answers.map((answer) => (
+              <PreviewBox
+                key={answer.value}
+                title={`${strings.content.answer} (${
+                  answer.isCorrect
+                    ? strings.content.right
+                    : strings.content.wrong
+                }): ${answer.value}`}
+                diffType="content"
+              >
+                <>
+                  <b className="font-bold text-sm mx-side">Feedback:</b>
+                  {renderArticle(answer.feedback)}
+                </>
+              </PreviewBox>
+            ))}
+          </>
+        )
+      }
+    }
   }
 
   type DiffViewerTypes =
@@ -285,9 +321,16 @@ export function Revision({ data }: RevisionProps) {
     return (
       <>
         <p className="serlo-p flex justify-between mt-10 mb-1.5">
-          <b>{title}:</b>
+          <b>{title}</b>
         </p>
-        <Box withPadding={withPadding}>
+        <Box
+          withPadding={withPadding}
+          className={
+            data.type === 'exercise' || data.type === 'groupedExercise'
+              ? '!py-2'
+              : ''
+          }
+        >
           {notCompare ? children : renderDiffViewer(diffType)}
         </Box>
       </>

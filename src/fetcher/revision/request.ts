@@ -58,6 +58,7 @@ export async function requestRevision(
           }),
         ]
       : null
+
     const currentExercise =
       isExercise && uuid.repository.currentRevision
         ? [
@@ -130,11 +131,7 @@ export async function requestRevision(
           title: (uuid as ArticleRevision).title,
           metaTitle: (uuid as ArticleRevision).metaTitle,
           metaDescription: (uuid as ArticleRevision).metaDescription,
-          content: thisExercise
-            ? thisExercise
-            : thisSolution
-            ? thisSolution
-            : convertState(uuid.content),
+          content: thisExercise || thisSolution || convertState(uuid.content),
           url: (uuid as VideoRevision).url,
         },
         currentRevision: {
@@ -144,11 +141,10 @@ export async function requestRevision(
             ?.metaTitle,
           metaDescription: (uuid as ArticleRevision).repository.currentRevision
             ?.metaDescription,
-          content: currentExercise
-            ? currentExercise
-            : currentSolution
-            ? currentSolution
-            : convertState(uuid.repository.currentRevision?.content),
+          content:
+            currentExercise ||
+            currentSolution ||
+            convertState(uuid.repository.currentRevision?.content),
           url: (uuid as VideoRevision).repository.currentRevision?.url,
         },
         changes: (uuid as ArticleRevision).changes,

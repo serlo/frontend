@@ -466,7 +466,7 @@ function renderRevisionExtra(
 ) {
   if (
     !isRevisionView &&
-    ['a', 'img', 'anchor', 'injection'].includes(element.type)
+    ['a', 'img', 'anchor', 'injection', 'exercise'].includes(element.type)
   )
     return null
 

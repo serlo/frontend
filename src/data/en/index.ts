@@ -95,6 +95,8 @@ export const instanceData = {
       task: 'Task',
       right: 'Right',
       wrong: 'Wrong',
+      feedback: 'Feedback',
+      answer: 'Answer',
       check: 'Check',
       yourAnswer: 'Your answer…',
       chooseOption: 'Click on one of the options.',

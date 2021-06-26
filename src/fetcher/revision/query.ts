@@ -101,6 +101,12 @@ export const revisionQuery = gql`
               id
               content
             }
+            solution {
+              id
+              currentRevision {
+                content
+              }
+            }
           }
         }
         ... on GroupedExerciseRevision {
