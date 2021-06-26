@@ -28,6 +28,8 @@ export function InputExercise({
   const [feedback, setFeedback] = useState<FeedbackData | null>(null)
   const [value, setValue] = useState('')
   const [A, setA] = useState<typeof import('algebra.js') | null>(null)
+  const isRevisionView =
+    path && typeof path[0] === 'string' && path[0].startsWith('revision')
   const { strings } = useInstanceData()
 
   useEffect(() => {
@@ -60,9 +62,12 @@ export function InputExercise({
         <Feedback correct={feedback.correct}>{feedback.message}</Feedback>
       )}
       {A && (
-        <CheckButton selectable={value !== ''} onClick={evaluate}>
-          {strings.content.check}
-        </CheckButton>
+        <>
+          <CheckButton selectable={value !== ''} onClick={evaluate}>
+            {strings.content.check}
+          </CheckButton>
+          {isRevisionView && renderRevisionExtra()}
+        </>
       )}
     </Wrapper>
   )
@@ -126,6 +131,22 @@ export function InputExercise({
   function normalizeNumber(val: string) {
     return val.replace(/,/g, '.').replace(/^[+]/, '')
   }
+
+  function renderRevisionExtra() {
+    return data.answers.map((answer) => (
+      <RevisionExtraInfo
+        key={answer.value}
+        className="bg-yellow-200 rounded-xl py-2 mb-4"
+      >
+        <span className="font-bold text-sm mx-side">
+          {strings.content.answer}{' '}
+          {answer.isCorrect && `[${strings.content.right}]`}:
+        </span>
+        {answer.value}
+        {renderNested(answer.feedback, `mcfeedbackrevision`)}
+      </RevisionExtraInfo>
+    ))
+  }
 }
 
 const Wrapper = styled.div`
@@ -169,5 +190,15 @@ const StyledInput = styled.input`
   &::placeholder {
     color: #fff;
     font-weight: 400;
+  }
+`
+
+const RevisionExtraInfo = styled.div`
+  .serlo-p:last-child {
+    margin-bottom: 0;
+  }
+
+  > .serlo-p {
+    font-size: 1rem !important;
   }
 `

@@ -25,7 +25,7 @@ import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { TimeAgo } from '@/components/time-ago'
 import { UserLink } from '@/components/user/user-link'
 import { useInstanceData } from '@/contexts/instance-context'
-import { FrontendExerciseNode, RevisionData } from '@/data-types'
+import { RevisionData } from '@/data-types'
 import { makePadding, inputFontReset, makeLightButton } from '@/helper/css'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { renderArticle, renderNested } from '@/schema/article-renderer'
@@ -151,7 +151,6 @@ export function Revision({ data }: RevisionProps) {
           </PreviewBox>
         )}
         {renderVideoOrAppletBox(dataSet)}
-        {renderExerciseAnswerBoxes(dataSet)}
         {dataSet.metaTitle && (
           <PreviewBox title={strings.revisions.metaTitle} diffType="metaTitle">
             {dataSet.metaTitle}
@@ -234,43 +233,6 @@ export function Revision({ data }: RevisionProps) {
         />
       </div>
     )
-  }
-
-  function renderExerciseAnswerBoxes(dataSet: RevisionData['currentRevision']) {
-    if (!['exercise'].includes(data.type)) return null
-
-    if (data.type === 'exercise') {
-      const interactive = (dataSet.content as FrontendExerciseNode[])[0].task
-        .edtrState?.interactive
-      if (
-        interactive?.plugin === 'inputExercise' &&
-        interactive?.state.answers
-      ) {
-        return (
-          <>
-            <p className="serlo-p mt-3 pb-10 text-sm font-bold">
-              [{interactive.state.type}]
-            </p>
-            {interactive.state.answers.map((answer) => (
-              <PreviewBox
-                key={answer.value}
-                title={`${strings.content.answer} (${
-                  answer.isCorrect
-                    ? strings.content.right
-                    : strings.content.wrong
-                }): ${answer.value}`}
-                diffType="content"
-              >
-                <>
-                  <b className="font-bold text-sm mx-side">Feedback:</b>
-                  {renderArticle(answer.feedback)}
-                </>
-              </PreviewBox>
-            ))}
-          </>
-        )
-      }
-    }
   }
 
   type DiffViewerTypes =
