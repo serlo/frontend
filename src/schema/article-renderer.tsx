@@ -423,11 +423,14 @@ function renderElement({
   }
   if (element.type === 'code') {
     return (
-      <Code
-        content={element.code}
-        language={element.language}
-        showLineNumbers={element.showLineNumbers}
-      />
+      <>
+        <Code
+          content={element.code}
+          language={element.language}
+          showLineNumbers={element.showLineNumbers}
+        />
+        {renderRevisionExtra(isRevisionView, element)}
+      </>
     )
   }
   return null
@@ -466,7 +469,9 @@ function renderRevisionExtra(
 ) {
   if (
     !isRevisionView &&
-    ['a', 'img', 'anchor', 'injection', 'exercise'].includes(element.type)
+    ['a', 'img', 'anchor', 'injection', 'exercise', 'code'].includes(
+      element.type
+    )
   )
     return null
 
@@ -474,6 +479,10 @@ function renderRevisionExtra(
     <span className="text-sm px-1 bg-yellow-200">
       {(element.type === 'a' || element.type === 'injection') && element.href}
       {element.type === 'anchor' && element.id}
+      {element.type === 'code' &&
+        `${element.language || '(no language)'} ${
+          element.showLineNumbers ? '(with line numbers)' : ''
+        }`}
       {element.type === 'img' && (
         <>
           {element.alt}{' '}
