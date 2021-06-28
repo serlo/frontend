@@ -260,7 +260,8 @@ const Container = styled.div`
   }
 `
 
-const RevisionExtraInfo = styled.div`
+// Only for review view: hack to display feedback more compactly
+export const RevisionExtraInfo = styled.div`
   .serlo-p:last-child {
     margin-bottom: 0;
   }

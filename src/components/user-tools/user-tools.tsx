@@ -174,6 +174,7 @@ export function UserTools({
   }
 
   function renderRevisionTools() {
+    // cloneElement seems to be the accepted way to add additional props to an inherited component.
     return (
       <>
         {data.checkoutRejectButtons &&

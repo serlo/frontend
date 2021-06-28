@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 
 import { Feedback } from './feedback'
+import { RevisionExtraInfo } from './sc-mc-exercise'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EdtrPluginInputExercise } from '@/data-types'
 import { makeMargin, makePrimaryButton, inputFontReset } from '@/helper/css'
@@ -190,15 +191,5 @@ const StyledInput = styled.input`
   &::placeholder {
     color: #fff;
     font-weight: 400;
-  }
-`
-
-const RevisionExtraInfo = styled.div`
-  .serlo-p:last-child {
-    margin-bottom: 0;
-  }
-
-  > .serlo-p {
-    font-size: 1rem !important;
   }
 `

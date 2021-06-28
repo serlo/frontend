@@ -52,16 +52,16 @@ export function CheckoutRejectButtons({
 
   return (
     <>
-      <CheckoutButton
+      <button
         className={buttonStyle}
         onClick={() => setModalMode('checkout')}
         onPointerUp={(e) => e.currentTarget.blur()}
       >
         <FontAwesomeIcon icon={faCheck} className="lg:mr-0.5" />{' '}
         {strings.revisions.checkout.action}
-      </CheckoutButton>
+      </button>
       {!isRejected && (
-        <RejectButton
+        <button
           className={buttonStyle}
           onClick={() => setModalMode('reject')}
           onPointerUp={(e) => e.currentTarget.blur()}
@@ -73,7 +73,7 @@ export function CheckoutRejectButtons({
             className="lg:mr-0.5"
           />{' '}
           {strings.revisions.reject.action}
-        </RejectButton>
+        </button>
       )}
 
       <ModalWithCloseButton
@@ -109,21 +109,6 @@ export function CheckoutRejectButtons({
     )
   }
 }
-
-const CheckoutButton = styled.button`
-  /* ${makeLightButton}
-  &:hover {
-    background-color: ${(props) => props.theme.colors.brandGreen};
-  }
-  margin-right: 15px; */
-`
-
-const RejectButton = styled.button`
-  /* ${makeLightButton}
-  &:hover {
-    background-color: #c56c6c;
-  } */
-`
 
 const Parapgraph = styled.p`
   ${makeMargin}
