@@ -16,7 +16,7 @@ export function Code({ content, language, showLineNumbers }: CodeProps) {
       <SyntaxHighlighter
         language={language}
         showLineNumbers={showLineNumbers}
-        style={coy}
+        style={coy as object}
       >
         {content}
       </SyntaxHighlighter>

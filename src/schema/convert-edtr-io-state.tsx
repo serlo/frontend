@@ -11,6 +11,7 @@ import {
 import { sanitizeLatex } from './sanitize-latex'
 import {
   FrontendContentNode,
+  FrontendMathNode,
   FrontendTextColor,
   FrontendTextNode,
 } from '@/data-types'
@@ -348,7 +349,8 @@ function unwrapSingleMathInline(children: FrontendContentNode[]) {
       child.children?.length == 1 &&
       child.children[0].type == 'inline-math'
     ) {
-      ;(child.children[0] as any).type = 'math'
+      // force conversion
+      ;(child.children[0] as unknown as FrontendMathNode).type = 'math'
       return child.children[0]
     }
     return child

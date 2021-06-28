@@ -1,7 +1,7 @@
 import { PageInfo } from '@serlo/api'
 import useSWR, {
-  ConfigInterface,
-  SWRInfiniteConfigInterface,
+  SWRConfiguration,
+  SWRInfiniteConfiguration,
   useSWRInfinite,
 } from 'swr'
 
@@ -18,7 +18,7 @@ export function useGraphqlSwr<T>({
 }: {
   query: string
   variables?: Record<string, unknown>
-  config?: ConfigInterface<T>
+  config?: SWRConfiguration<T>
 }) {
   return useSWR<T, object>(
     JSON.stringify({ query, variables }),
@@ -35,7 +35,7 @@ export function useGraphqlSwrWithAuth<T>({
 }: {
   query: string
   variables?: Record<string, unknown>
-  config?: ConfigInterface<T>
+  config?: SWRConfiguration<T>
   overrideAuth?: ReturnType<typeof useAuthentication>
 }) {
   const auth = useAuthentication()
@@ -57,7 +57,7 @@ export function useGraphqlSwrPaginationWithAuth<T>({
   query: string
   variables?: Record<string, unknown>
   getConnection: (data: Record<string, unknown>) => unknown
-  config?: SWRInfiniteConfigInterface
+  config?: SWRInfiniteConfiguration
   overrideAuth?: ReturnType<typeof useAuthentication>
   noKey?: boolean
 }): {
@@ -70,11 +70,10 @@ export function useGraphqlSwrPaginationWithAuth<T>({
   }
 } {
   const auth = useAuthentication()
-  const response = useSWRInfinite(
-    getKey,
-    createAuthAwareGraphqlFetch(overrideAuth ?? auth),
-    config
-  )
+  const response = useSWRInfinite<
+    Record<string, unknown>,
+    { message: string } | undefined
+  >(getKey, createAuthAwareGraphqlFetch(overrideAuth ?? auth), config)
 
   function getKey(
     pageIndex: number,

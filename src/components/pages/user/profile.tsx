@@ -184,7 +184,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
             {strings.profiles.otherRoles}{' '}
             {otherRoles.map((role, index) => (
               <Fragment key={index}>
-                {renderRole(`${role.instance}: ${role.role}`)}
+                {renderRole(`${role.instance ?? ''}: ${role.role}`)}
               </Fragment>
             ))}
           </p>

@@ -59,7 +59,7 @@ export function CommentArea({ id: entityId, noForms }: CommentAreaProps) {
   }, [showAll, container, entityId])
 
   return (
-    <div ref={container} className="serlo-print-hidden">
+    <div ref={container} className="print:hidden">
       <Guard data={commentData} error={error}>
         <>
           {renderStartThreadForm()}

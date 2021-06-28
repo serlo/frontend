@@ -48,7 +48,10 @@ export function FrontendClientBase({
     if (typeof window === 'undefined') {
       // load instance data for server side rendering
       // Note: using require to avoid webpack bundling it
-      return require('@/helper/feature-i18n').getInstanceDataByLang(locale!)
+      const featureI18n = require('@/helper/feature-i18n') as {
+        getInstanceDataByLang: typeof getInstanceDataByLang
+      }
+      return featureI18n.getInstanceDataByLang(locale!)
     } else {
       // load instance data from client from document tag
       return JSON.parse(
@@ -97,7 +100,7 @@ export function FrontendClientBase({
           query: 'query{authorization\nnotifications(unread:true){totalCount}}',
         })
       )
-        .then((value) => {
+        .then((value: { authorization: AuthorizationPayload }) => {
           setAuthorizationPayload(value.authorization)
         })
         .catch(() => {})
@@ -180,7 +183,7 @@ export function FrontendClientBase({
           : false,
         !loggedInComponents ? import('@/helper/logged-in-stuff-chunk') : false,
       ])
-        .then((values: any) => {
+        .then((values) => {
           if (values[0]) {
             sessionStorage.setItem(
               `___loggedInData_${instanceData.lang}`,
@@ -188,7 +191,10 @@ export function FrontendClientBase({
             )
             setLoggedInData(values[0])
           }
-          if (values[1]) setLoggedInComponents(values[1].Components)
+          if (values[1])
+            setLoggedInComponents(
+              (values[1] as { Components: LoggedInStuff }).Components
+            )
           if (authorizationPayload == null) {
             setAuthorizationPayload({})
           }
