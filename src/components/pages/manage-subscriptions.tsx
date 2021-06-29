@@ -12,12 +12,10 @@ import { useSubscriptionSetMutation } from '@/helper/mutations'
 export function ManageSubscriptions({
   subscriptions,
 }: {
-  subscriptions: [
-    {
-      object: QueryResponse
-      sendEmail: boolean
-    }
-  ]
+  subscriptions: {
+    object: QueryResponse
+    sendEmail: boolean
+  }[]
 }) {
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
@@ -37,7 +35,6 @@ export function ManageSubscriptions({
       </thead>
       <tbody>
         {subscriptions.map(({ object, sendEmail }) => {
-          console.log(sendEmail)
           const entityString = getEntityStringByTypename(
             object.__typename,
             strings
@@ -55,18 +52,19 @@ export function ManageSubscriptions({
                 <Link href={object.alias ?? ''}>{title}</Link>
               </td>
               <td className="serlo-td text-center">
-                {/* TODO: We need info from the API how this is currently set */}
                 <button
                   className="serlo-button serlo-make-interactive-light mx-0 my-auto text-base"
                   onClick={() => {
                     void setSubscription({
                       id: [object.id],
                       subscribe: true,
-                      sendEmail: false,
+                      sendEmail: !sendEmail,
                     })
                   }}
                 >
-                  {loggedInStrings.noMails}
+                  {sendEmail
+                    ? loggedInStrings.noMails
+                    : loggedInStrings.getMails}
                 </button>
               </td>
               <td className="serlo-td text-center">

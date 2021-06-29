@@ -328,6 +328,7 @@ export const loggedInData = {
       mail: "E-mails",
       subscription: "Subscription",
       noMails: "deactivate",
+      getMails: "activate",
       noNotifications: "cancel"
     },
     revisions: {

@@ -81,7 +81,7 @@ function useFetch() {
       getSubscriptions: {
         nodes: {
           object: QueryResponse
-          sendEmail: Boolean
+          sendEmail: boolean
         }[]
       }
     }
@@ -98,6 +98,7 @@ export const subscriptionsQuery = gql`
     subscription {
       getSubscriptions {
         nodes {
+          sendEmail
           object {
             __typename
             id
