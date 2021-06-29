@@ -133,7 +133,7 @@ if (fs.existsSync('./.next/BUILD_ID')) {
   }
 
   if (unknownClasses.some((cls) => !knownExceptions.includes(cls))) {
-    throw 'Unknown class name!'
+    throw new Error('Unknown class name!')
   }
 } else {
   console.log('\nNo build found, skipping class name validation\n')

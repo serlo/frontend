@@ -15,7 +15,7 @@ import * as React from 'react'
 import styled from 'styled-components'
 
 import { Link } from '../content/link'
-import { AuthenticationPayload } from '@/auth/use-authentication'
+import { AuthenticationPayload } from '@/auth/auth-provider'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { HeaderData, HeaderLink } from '@/data-types'
