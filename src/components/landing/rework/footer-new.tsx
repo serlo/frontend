@@ -1,3 +1,5 @@
+import clsx from 'clsx'
+import * as R from 'ramda'
 import { Fragment } from 'react'
 
 import { Link } from '../../content/link'
@@ -15,39 +17,45 @@ export function FooterNew() {
       <Separator />
       <FooterNavNew />
       <Separator />
-      <div>{renderFooterLine()}</div>
+      {renderFooterLine()}
     </footer>
   )
 
   function renderFooterLine() {
+    const items = R.concat(
+      R.map(
+        R.assoc('mdHidden', false),
+        footerData.footerNavigation[2].children
+      ),
+      R.map(R.assoc('mdHidden', true), footerData.footerNavigation[1].children)
+    )
+
+    return <nav className="text-center">{items.map(renderFooterLineItem)}</nav>
+  }
+
+  function renderFooterLineItem(
+    { title, url, mdHidden }: { title: string; url: string; mdHidden: boolean },
+    index: number
+  ) {
+    const dot = ' • '
+
     return (
-      <div className="text-center">
-        {footerData.footerNavigation[2].children.map((item, index, array) => (
-          <Fragment key={item.title}>
-            <Link className="text-truegray-700" href={item.url} noExternalIcon>
-              {item.title}
-            </Link>
-            {index < array.length - 1 && (
-              <span className="px-1 text-truegray-400"> • </span>
-            )}
-          </Fragment>
-        ))}
-        <span className="px-1 md:hidden text-truegray-400"> • </span>
-        {footerData.footerNavigation[1].children.map((item, index, array) => (
-          <Fragment key={item.title}>
-            <Link
-              className="text-truegray-700 md:hidden"
-              href={item.url}
-              noExternalIcon
-            >
-              {item.title}
-            </Link>
-            {index < array.length - 1 && (
-              <span className="px-1 text-truegray-400 md:hidden"> • </span>
-            )}
-          </Fragment>
-        ))}
-      </div>
+      <>
+        {index > 0 && (
+          <span
+            className={clsx('px-1 text-truegray-400', mdHidden && 'md:hidden')}
+          >
+            {dot}
+          </span>
+        )}
+        <Link
+          className={clsx('text-truegray-700', mdHidden && 'md:hidden')}
+          href={url}
+          noExternalIcon
+        >
+          {title}
+        </Link>
+      </>
     )
   }
 }
