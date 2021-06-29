@@ -39,8 +39,8 @@ function Content() {
   const [showTypename, setShowTypename] =
     useState<typeof filters[number]>('Article')
 
-  const filtered = response.data?.subscriptions.nodes.filter(
-    (node) => node.__typename === showTypename
+  const filtered = response.data?.subscription.getSubscriptions.nodes.filter(
+    (node) => node.object.__typename === showTypename
   )
 
   return (
@@ -77,8 +77,13 @@ function Title() {
 
 function useFetch() {
   return useGraphqlSwrWithAuth<{
-    subscriptions: {
-      nodes: QueryResponse[]
+    subscription: {
+      getSubscriptions: {
+        nodes: {
+          object: QueryResponse
+          sendEmail: Boolean
+        }[]
+      }
     }
   }>({
     query: subscriptionsQuery,
@@ -90,77 +95,81 @@ function useFetch() {
 
 export const subscriptionsQuery = gql`
   query {
-    subscriptions {
-      nodes {
-        __typename
-        id
-        alias
-        ... on User {
-          username
-        }
-        ... on TaxonomyTerm {
-          type
-          name
-        }
-        ... on Exercise {
-          taxonomyTerms {
-            nodes {
-              navigation {
-                path {
-                  nodes {
-                    label
+    subscription {
+      getSubscriptions {
+        nodes {
+          object {
+            __typename
+            id
+            alias
+            ... on User {
+              username
+            }
+            ... on TaxonomyTerm {
+              type
+              name
+            }
+            ... on Exercise {
+              taxonomyTerms {
+                nodes {
+                  navigation {
+                    path {
+                      nodes {
+                        label
+                      }
+                    }
                   }
                 }
               }
             }
-          }
-        }
-        ... on ExerciseGroup {
-          taxonomyTerms {
-            nodes {
-              navigation {
-                path {
-                  nodes {
-                    label
+            ... on ExerciseGroup {
+              taxonomyTerms {
+                nodes {
+                  navigation {
+                    path {
+                      nodes {
+                        label
+                      }
+                    }
                   }
                 }
               }
             }
-          }
-        }
-        ... on Page {
-          currentRevision {
-            title
-          }
-        }
-        ... on Article {
-          currentRevision {
-            title
-          }
-        }
-        ... on Video {
-          currentRevision {
-            title
-          }
-        }
-        ... on Applet {
-          currentRevision {
-            title
-          }
-        }
-        ... on CoursePage {
-          currentRevision {
-            title
-          }
-        }
-        ... on Course {
-          currentRevision {
-            title
-          }
-        }
-        ... on Event {
-          currentRevision {
-            title
+            ... on Page {
+              currentRevision {
+                title
+              }
+            }
+            ... on Article {
+              currentRevision {
+                title
+              }
+            }
+            ... on Video {
+              currentRevision {
+                title
+              }
+            }
+            ... on Applet {
+              currentRevision {
+                title
+              }
+            }
+            ... on CoursePage {
+              currentRevision {
+                title
+              }
+            }
+            ... on Course {
+              currentRevision {
+                title
+              }
+            }
+            ... on Event {
+              currentRevision {
+                title
+              }
+            }
           }
         }
       }
