@@ -12,7 +12,11 @@ import ChemistrySVG from '@/assets-webkit/img/landing/subjects-chemistry.svg'
 import InformaticsSVG from '@/assets-webkit/img/landing/subjects-informatics.svg'
 import MathSVG from '@/assets-webkit/img/landing/subjects-math.svg'
 import SustainabilitySVG from '@/assets-webkit/img/landing/subjects-sustainability.svg'
-import { LandingSubjectLink, LandingSubjectsData } from '@/data-types'
+import {
+  LandingSubjectIcon,
+  LandingSubjectLink,
+  LandingSubjectsData,
+} from '@/data-types'
 
 interface LandingSubjectsProps {
   data: LandingSubjectsData
@@ -38,19 +42,23 @@ export function LandingSubjects({ data }: LandingSubjectsProps) {
     )
   }
 
-  function renderIcon(icon?: string) {
-    if (icon === undefined) return <BlankSVG className="superspecial-blank" />
-    if (icon == 'math') return <MathSVG className="superspecial-math" />
-    if (icon == 'abc') return <AbcSVG className="superspecial-abc" />
-    if (icon == 'sustainability')
-      return <SustainabilitySVG className="superspecial-sus" />
-    if (icon == 'biology') return <BiologySVG className="superspecial-bio" />
-    if (icon == 'informatics')
-      return <InformaticsSVG className="superspecial-informatics" />
-    if (icon == 'biology') return <BiologySVG className="superspecial-bio" />
-    if (icon == 'chemistry')
-      return <ChemistrySVG className="superspecial-chem" />
-    return <BlankSVG className="superspecial-blank" />
+  function renderIcon(icon?: LandingSubjectIcon) {
+    switch (icon) {
+      case 'math':
+        return <MathSVG className="superspecial-math" />
+      case 'abc':
+        return <AbcSVG className="superspecial-abc" />
+      case 'sustainability':
+        return <SustainabilitySVG className="superspecial-sus" />
+      case 'biology':
+        return <BiologySVG className="superspecial-bio" />
+      case 'informatics':
+        return <InformaticsSVG className="superspecial-informatics" />
+      case 'chemistry':
+        return <ChemistrySVG className="superspecial-chem" />
+      default:
+        return <BlankSVG className="superspecial-blank" />
+    }
   }
 
   function renderSubject(
