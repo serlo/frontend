@@ -1,13 +1,12 @@
 import clsx from 'clsx'
-import { Fragment } from 'react'
 
 import { Separator } from './separator'
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
-import { FooterLink } from '@/data-types'
 
 export function FooterNavNew() {
   const { headerData, footerData } = useInstanceData()
+
   return (
     <nav className="flex flex-wrap md:flex justify-center md:justify-between">
       <div className="md:mr-5 text-center md:text-left">
@@ -29,36 +28,37 @@ export function FooterNavNew() {
         </div>
       </div>
       <Separator className="md:hidden" />
-      <div style={{ maxWidth: '50%' }} className="mr-8">
-        {renderFooterNavChildren(footerData.footerNavigation[0].children)}
-      </div>
-      <div style={{ maxWidth: '50%' }} className="mr-8">
-        {renderFooterNavChildren(headerData[0].children as FooterLink[])}
-      </div>
-
-      <div style={{ maxWidth: '50%' }} className="mr-8 hidden md:block">
-        {renderFooterNavChildren(footerData.footerNavigation[1].children)}
-      </div>
+      {renderFooterNavChildren(footerData.footerNavigation[0].children)}
+      {headerData[0].children &&
+        renderFooterNavChildren(headerData[0].children)}
+      {renderFooterNavChildren(
+        footerData.footerNavigation[1].children,
+        'hidden md:block'
+      )}
     </nav>
   )
 
-  function renderFooterNavChildren(items?: FooterLink[]) {
-    if (!items) return null
-
-    return items.map((item) => (
-      <Fragment key={item.url}>
-        <Link
-          className={clsx(
-            'inline-block text-truegray-700 mb-2 w-auto',
-            'border-transparent border-b-2 hover:no-underline hover:border-brand hover:text-brand'
-          )}
-          href={item.url}
-          noExternalIcon
-        >
-          {item.title}
-        </Link>
-        <br />
-      </Fragment>
-    ))
+  function renderFooterNavChildren(
+    items: { url: string; title: string }[],
+    className = ''
+  ) {
+    return (
+      <ul style={{ maxWidth: '50%' }} className={clsx('mr-8', className)}>
+        {items.map(({ url, title }) => (
+          <li key={url}>
+            <Link
+              className={clsx(
+                'text-truegray-700 mb-2 w-auto border-transparent border-b-2',
+                'inline-block hover:no-underline hover:border-brand hover:text-brand'
+              )}
+              href={url}
+              noExternalIcon
+            >
+              {title}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    )
   }
 }
