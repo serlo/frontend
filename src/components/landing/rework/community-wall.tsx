@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import { zip } from 'ramda'
 import { Fragment, useEffect, useState } from 'react'
 
 import { Link } from '@/components/content/link'
@@ -149,11 +150,11 @@ export function CommunityWall() {
   )
 
   function renderPersons() {
-    return persons.map(({ name, role, imgSrc }, index) => {
-      if (index >= positions.length) return null
-      const lineBreak = index === 1 || index === 6
+    return zip(persons, positions).map((arg, index) => {
+      const [{ name, role, imgSrc }, [left, top]] = arg
+      const lineBreak = index % 5 === 1
       const hideMobile = index > 5
-      const pos = positions[index]
+
       return (
         <Fragment key={name}>
           <div
@@ -162,7 +163,7 @@ export function CommunityWall() {
               'w-1/3v sm:w-1/4v md:w-1/8v md:absolute',
               hideMobile && 'hidden md:block'
             )}
-            style={{ left: pos[0], top: pos[1] }}
+            style={{ left, top }}
           >
             <div className="relative w-full z-0">
               <div

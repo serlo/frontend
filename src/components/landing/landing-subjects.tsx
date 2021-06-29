@@ -82,12 +82,10 @@ export function LandingSubjects({ data }: LandingSubjectsProps) {
   }
 }
 
-interface SubjectsWrapperProps {
+const SubjectsWrapper = styled.div<{
   $extraLinks?: boolean
   $center?: boolean
-}
-
-const SubjectsWrapper = styled.div<SubjectsWrapperProps>`
+}>`
   display: flex;
   justify-content: center;
   flex-direction: column;
