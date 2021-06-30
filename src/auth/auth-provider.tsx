@@ -36,9 +36,18 @@ export function useAuth(): AuthContextValue {
   return contextValue
 }
 
-export function AuthProvider({ children }: { children: ReactNode }) {
+export function AuthProvider({
+  children,
+  unauthenticatedAuthorizationPayload,
+}: {
+  children: ReactNode
+  unauthenticatedAuthorizationPayload?: AuthorizationPayload
+}) {
   const [authenticationPayload, loggedIn] = useAuthentication()
-  const authorizationPayload = useAuthorizationPayload(authenticationPayload)
+  const authorizationPayload = useAuthorizationPayload(
+    authenticationPayload,
+    unauthenticatedAuthorizationPayload
+  )
 
   return (
     <AuthContext.Provider
@@ -130,16 +139,17 @@ function useAuthentication(): [RefObject<AuthenticationPayload>, boolean] {
 }
 
 function useAuthorizationPayload(
-  authenticationPayload: RefObject<AuthenticationPayload>
+  authenticationPayload: RefObject<AuthenticationPayload>,
+  unauthenticatedAuthorizationPayload?: AuthorizationPayload
 ) {
   async function fetchAuthorizationPayload(
     authenticationPayload: RefObject<AuthenticationPayload>
   ): Promise<AuthorizationPayload> {
-    const fetch =
-      authenticationPayload.current === null
-        ? createGraphqlFetch()
-        : createAuthAwareGraphqlFetch(authenticationPayload)
+    if (authenticationPayload.current === null) {
+      return unauthenticatedAuthorizationPayload ?? {}
+    }
 
+    const fetch = createAuthAwareGraphqlFetch(authenticationPayload)
     const data = (await fetch(
       JSON.stringify({
         query: gql`
@@ -153,7 +163,9 @@ function useAuthorizationPayload(
   }
 
   const [authorizationPayload, setAuthorizationPayload] =
-    useState<AuthorizationPayload | null>(null)
+    useState<AuthorizationPayload | null>(
+      unauthenticatedAuthorizationPayload ?? null
+    )
 
   useEffect(() => {
     void fetchAuthorizationPayload(authenticationPayload).then(

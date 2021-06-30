@@ -40,6 +40,7 @@ export function FrontendClientBase({
   noContainers,
   showNav,
   entityId,
+  authorization,
 }: FrontendClientBaseProps) {
   const { locale } = useRouter()
   const [instanceData] = React.useState<InstanceData>(() => {
@@ -92,7 +93,7 @@ export function FrontendClientBase({
     <ThemeProvider theme={theme}>
       <PrintWarning warning={instanceData.strings.print.warning} />
       <InstanceDataProvider value={instanceData}>
-        <AuthProvider>
+        <AuthProvider unauthenticatedAuthorizationPayload={authorization}>
           <LoggedInComponentsProvider value={loggedInComponents}>
             <LoggedInDataProvider value={loggedInData}>
               <EntityIdProvider value={entityId || null}>
