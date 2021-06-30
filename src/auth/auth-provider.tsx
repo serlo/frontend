@@ -1,5 +1,4 @@
 import { AuthorizationPayload } from '@serlo/authorization'
-import { gql } from 'graphql-request'
 import Cookies from 'js-cookie'
 import jwt_decode from 'jwt-decode'
 import {
@@ -151,7 +150,7 @@ function useAuthorizationPayload(
     const fetch = lc.createAuthAwareGraphqlFetch(authenticationPayload)
     const data = (await fetch(
       JSON.stringify({
-        query: gql`
+        query: `
           query {
             authorization
           }
