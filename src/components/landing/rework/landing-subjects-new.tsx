@@ -12,7 +12,11 @@ import MathSVG from '@/assets-webkit/img/landing/subjects-math.svg'
 import NewSVG from '@/assets-webkit/img/landing/subjects-new.svg'
 import SustainabilitySVG from '@/assets-webkit/img/landing/subjects-sustainability.svg'
 import { Link } from '@/components/content/link'
-import { LandingSubjectLink, LandingSubjectsData } from '@/data-types'
+import {
+  LandingSubjectIcon,
+  LandingSubjectLink,
+  LandingSubjectsData,
+} from '@/data-types'
 import { makeResponsivePadding, makeTransparentButton } from '@/helper/css'
 
 interface LandingSubjectsProps {
@@ -22,66 +26,57 @@ interface LandingSubjectsProps {
 export function LandingSubjectsNew({ data }: LandingSubjectsProps) {
   return (
     <>
-      <SubjectsWrapper>
-        {data.subjects.map((subject) => renderSubject(subject))}
-      </SubjectsWrapper>
+      <SubjectsWrapper>{data.subjects.map(renderSubject)}</SubjectsWrapper>
 
-      {renderAdditionalLinks()}
+      {data.additionalLinks.length > 0 && (
+        <SubjectsWrapper $extraLinks $center={data.subjects.length < 3}>
+          {data.additionalLinks.map(renderSubject)}
+        </SubjectsWrapper>
+      )}
     </>
   )
 
-  function renderAdditionalLinks() {
-    if (data.additionalLinks.length === 0) return null
-    return (
-      <SubjectsWrapper $extraLinks $center={data.subjects.length < 3}>
-        {data.additionalLinks.map((link) => renderSubject(link, true))}
-      </SubjectsWrapper>
-    )
-  }
-
-  function renderIcon(icon?: string) {
-    if (icon === undefined) return <BlankSVG className="superspecial-blank" />
-    if (icon == 'math') return <MathSVG className="superspecial-math" />
-    if (icon == 'abc') return <AbcSVG className="superspecial-abc" />
-    if (icon == 'sustainability')
-      return <SustainabilitySVG className="superspecial-sus" />
-    if (icon == 'biology') return <BiologySVG className="superspecial-bio" />
-    if (icon == 'informatics')
-      return <InformaticsSVG className="superspecial-informatics" />
-    if (icon == 'biology') return <BiologySVG className="superspecial-bio" />
-    if (icon == 'new') return <NewSVG className="superspecial-new" />
-    if (icon == 'chemistry')
-      return <ChemistrySVG className="superspecial-chem" />
-    return <BlankSVG className="superspecial-blank" />
-  }
-
-  function renderSubject(
-    { title, url, icon }: LandingSubjectLink,
-    alwaysShowArrow?: boolean
-  ) {
+  function renderSubject({ title, url, icon }: LandingSubjectLink) {
     return (
       <SubjectLink key={title} href={url}>
-        <>
-          {' '}
-          {renderIcon(icon)}
-          <Header>
-            {title}
-            <StyledIcon alwaysShow={alwaysShowArrow}>
-              <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
-            </StyledIcon>
-          </Header>
-        </>
+        {' '}
+        {renderIcon(icon)}
+        <Header>
+          {title}
+          <StyledIcon>
+            <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
+          </StyledIcon>
+        </Header>
       </SubjectLink>
     )
   }
+
+  function renderIcon(icon?: LandingSubjectIcon) {
+    switch (icon) {
+      case 'math':
+        return <MathSVG className="superspecial-math" />
+      case 'abc':
+        return <AbcSVG className="superspecial-abc" />
+      case 'sustainability':
+        return <SustainabilitySVG className="superspecial-sus" />
+      case 'biology':
+        return <BiologySVG className="superspecial-bio" />
+      case 'informatics':
+        return <InformaticsSVG className="superspecial-informatics" />
+      case 'new':
+        return <NewSVG className="superspecial-new" />
+      case 'chemistry':
+        return <ChemistrySVG className="superspecial-chem" />
+      default:
+        ;<BlankSVG className="superspecial-blank" />
+    }
+  }
 }
 
-interface SubjectsWrapperProps {
+const SubjectsWrapper = styled.div<{
   $extraLinks?: boolean
   $center?: boolean
-}
-
-const SubjectsWrapper = styled.div<SubjectsWrapperProps>`
+}>`
   display: flex;
   justify-content: space-evenly;
 
@@ -311,7 +306,7 @@ const Header = styled.h2`
   }
 `
 
-const StyledIcon = styled.span<{ alwaysShow?: boolean }>`
+const StyledIcon = styled.span`
   margin-left: 0.4rem;
   vertical-align: middle;
 `
