@@ -1,23 +1,15 @@
-import { Fragment } from 'react'
-
-const messages = {
-  early: ['Yeah, Schule geht los', ''], //😬
-  default: ['Schön, dass Du da bist', ''], //🙂
-  late: ['Oha! Um diese Zeit noch fleißig?', '🦉'],
-}
-
 export function WelcomeMessage() {
   const hours = new Date().getHours()
-  const phase =
+  const { message, icon } =
     hours >= 4 && hours < 9
-      ? 'early'
+      ? { message: 'Yeah, Schule geht los', icon: '' }
       : hours > 22 || hours < 4
-      ? 'late'
-      : 'default'
+      ? { message: 'Oha! Um diese Zeit noch fleißig?', icon: '🦉' }
+      : { message: 'Schön, dass Du da bist', icon: '' }
 
   return (
     <>
-      <span className="italic">{messages[phase][0]}</span> {messages[phase][1]}
+      <span className="italic">{message}</span> {icon}
     </>
   )
 }
