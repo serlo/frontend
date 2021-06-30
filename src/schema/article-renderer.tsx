@@ -176,9 +176,11 @@ function renderElement({
     typeof path[0] === 'string' && path[0].startsWith('revision')
 
   if (element.type === 'a') {
+    const isOnProfile =
+      path && typeof path[0] === 'string' && path[0].startsWith('profile')
     return (
       <>
-        <Link href={element.href} path={path}>
+        <Link href={element.href} path={path} unreviewed={isOnProfile}>
           {children}
         </Link>
         {renderRevisionExtra(isRevisionView, element)}

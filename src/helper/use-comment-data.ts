@@ -61,5 +61,5 @@ export function useCommentData(id: number) {
   // eslint-disable-next-line no-console
   if (error) console.log(error)
 
-  return { commentData, commentCount, error: error ?? {} }
+  return { commentData, commentCount, error }
 }
