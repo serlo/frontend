@@ -13,10 +13,7 @@ import {
 } from 'react'
 import { Token } from 'simple-oauth2'
 
-import {
-  createAuthAwareGraphqlFetch,
-  createGraphqlFetch,
-} from '@/api/graphql-fetch'
+import { useLoggedInComponents } from '@/contexts/logged-in-components'
 
 export interface AuthContextValue {
   loggedIn: boolean
@@ -142,14 +139,16 @@ function useAuthorizationPayload(
   authenticationPayload: RefObject<AuthenticationPayload>,
   unauthenticatedAuthorizationPayload?: AuthorizationPayload
 ) {
+  const lc = useLoggedInComponents()
+
   async function fetchAuthorizationPayload(
     authenticationPayload: RefObject<AuthenticationPayload>
   ): Promise<AuthorizationPayload> {
-    if (authenticationPayload.current === null) {
+    if (authenticationPayload.current === null || lc === null) {
       return unauthenticatedAuthorizationPayload ?? {}
     }
 
-    const fetch = createAuthAwareGraphqlFetch(authenticationPayload)
+    const fetch = lc.createAuthAwareGraphqlFetch(authenticationPayload)
     const data = (await fetch(
       JSON.stringify({
         query: gql`
@@ -173,7 +172,8 @@ function useAuthorizationPayload(
         setAuthorizationPayload(authorizationPayload)
       }
     )
-  }, [authenticationPayload, authenticationPayload.current?.id])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authenticationPayload, authenticationPayload.current?.id, lc])
 
   return authorizationPayload
 }

@@ -93,8 +93,8 @@ export function FrontendClientBase({
     <ThemeProvider theme={theme}>
       <PrintWarning warning={instanceData.strings.print.warning} />
       <InstanceDataProvider value={instanceData}>
-        <AuthProvider unauthenticatedAuthorizationPayload={authorization}>
-          <LoggedInComponentsProvider value={loggedInComponents}>
+        <LoggedInComponentsProvider value={loggedInComponents}>
+          <AuthProvider unauthenticatedAuthorizationPayload={authorization}>
             <LoggedInDataProvider value={loggedInData}>
               <EntityIdProvider value={entityId || null}>
                 <ConditonalWrap
@@ -118,8 +118,8 @@ export function FrontendClientBase({
                 <ToastNotice />
               </EntityIdProvider>
             </LoggedInDataProvider>
-          </LoggedInComponentsProvider>
-        </AuthProvider>
+          </AuthProvider>
+        </LoggedInComponentsProvider>
       </InstanceDataProvider>
     </ThemeProvider>
   )
