@@ -16,7 +16,7 @@ export const ProfileRedirectMe: NextPage = () => {
 
       setTimeout(
         () => {
-          window.location.replace(url)
+          window.location.href = url
         },
         isChanged ? 6000 : 0 // hack until we have a mutation
       )
