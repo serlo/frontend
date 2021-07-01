@@ -18,7 +18,7 @@ export const ProfileRedirectMe: NextPage = () => {
         () => {
           window.location.replace(url)
         },
-        isChanged ? 4000 : 0 // hack until we have a mutation
+        isChanged ? 6000 : 0 // hack until we have a mutation
       )
     } else {
       window.location.replace('/api/auth/login')

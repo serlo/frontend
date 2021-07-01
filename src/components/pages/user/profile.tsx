@@ -244,10 +244,10 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
       <a
         className="serlo-link cursor-pointer"
         onClick={() => {
-          caches.open('v1').then(function (cache) {
-            cache
+          void caches.open('v1').then(function (cache) {
+            void cache
               .delete('https://community.serlo.org/avatar/botho')
-              .then(function (response) {
+              .then(function () {
                 void location.reload()
               })
           })
