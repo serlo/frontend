@@ -58,6 +58,15 @@ export function ToastNotice() {
       }, 1000)
     }
 
+    if (window.location.hash === '#profile-refresh') {
+      showToastNotice(strings.loading.oneMomentPlease, 'default', showTime)
+
+      setTimeout(() => {
+        window.location.hash = '#flush-legacy'
+        window.location.reload()
+      }, 1000)
+    }
+
     if (window.location.hash == '#flush-legacy') {
       // fetch a legacy page to flush flash messages - then reload page
       fetch('/auth/password/change')
