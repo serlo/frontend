@@ -87,8 +87,9 @@ export function CommunityWall() {
   ])
 
   useEffect(() => {
-    shuffleArray(persons)
-    setPersons(persons)
+    const newPersons = [...persons]
+    shuffleArray(newPersons)
+    setPersons(newPersons)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
