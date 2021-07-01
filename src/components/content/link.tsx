@@ -16,6 +16,7 @@ export interface LinkProps {
   title?: string
   noCSR?: boolean
   path?: NodePath
+  unreviewed?: boolean // e.g. user profiles or comments
 }
 
 //TODO: Should come from cloudflare worker https://github.com/serlo/frontend/issues/328
@@ -61,6 +62,7 @@ export function Link({
   title,
   noCSR,
   path,
+  unreviewed,
 }: LinkProps) {
   const { lang } = useInstanceData()
   const entityId = React.useContext(EntityIdContext)
@@ -166,11 +168,14 @@ export function Link({
       : undefined
 
     return (
+      // eslint-disable-next-line react/jsx-no-target-blank
       <a
         href={_href}
         className={clsx(className, 'serlo-link')}
         title={title}
         onClick={clickHandler}
+        rel={unreviewed && isExternal ? 'ugc nofollow noreferrer' : undefined}
+        target={unreviewed && isExternal ? '_blank' : undefined}
       >
         {children}
         {isExternal && !noExternalIcon && <ExternalLink />}

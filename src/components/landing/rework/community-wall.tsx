@@ -87,8 +87,9 @@ export function CommunityWall() {
   ])
 
   useEffect(() => {
-    shuffleArray(persons)
-    setPersons(persons)
+    const newPersons = [...persons]
+    shuffleArray(newPersons)
+    setPersons(newPersons)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -98,7 +99,7 @@ export function CommunityWall() {
         className={clsx(
           'text-center text-4xl text-truegray-700 font-bold',
           'leading-cozy tracking-tight',
-          'max-w-2xl mt-32 mx-auto relative z-10'
+          'max-w-2xl mt-32 mx-auto relative z-10 px-2'
         )}
       >
         Wir sind eine große, ehrenamtliche Community und gestalten Serlo
@@ -187,10 +188,12 @@ export function CommunityWall() {
                   'text-white text-base font-bold px-2 py-1',
                   'rounded-2xl',
                   role.includes('Autor')
-                    ? 'bg-yellow-500'
+                    ? 'bg-yellow'
                     : role.includes('Team')
-                    ? 'bg-brand'
-                    : 'bg-purple-500'
+                    ? 'bg-brand-light'
+                    : role.includes('Lehrer')
+                    ? 'bg-newGreen'
+                    : 'bg-berry'
                 )}
               >
                 {role}

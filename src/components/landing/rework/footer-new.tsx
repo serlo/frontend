@@ -1,6 +1,4 @@
-import clsx from 'clsx'
-import * as R from 'ramda'
-import { Fragment } from 'react'
+import styled from 'styled-components'
 
 import { Link } from '../../content/link'
 import { FooterNavNew } from './footer-nav-new'
@@ -22,40 +20,33 @@ export function FooterNew() {
   )
 
   function renderFooterLine() {
-    const items = R.concat(
-      R.map(
-        R.assoc('mdHidden', false),
-        footerData.footerNavigation[2].children
-      ),
-      R.map(R.assoc('mdHidden', true), footerData.footerNavigation[1].children)
-    )
-
-    return <nav className="text-center">{items.map(renderFooterLineItem)}</nav>
-  }
-
-  function renderFooterLineItem(
-    { title, url, mdHidden }: { title: string; url: string; mdHidden: boolean },
-    index: number
-  ) {
-    const dot = ' • '
-
     return (
-      <>
-        {index > 0 && (
-          <span
-            className={clsx('px-1 text-truegray-400', mdHidden && 'md:hidden')}
-          >
-            {dot}
-          </span>
-        )}
-        <Link
-          className={clsx('text-truegray-700', mdHidden && 'md:hidden')}
-          href={url}
-          noExternalIcon
-        >
-          {title}
-        </Link>
-      </>
+      <FooterLineNav className="text-center">
+        {footerData.footerNavigation[2].children.map(({ title, url }) => {
+          return (
+            <>
+              <Link
+                className="text-truegray-700 mobile:whitespace-nowrap pr-4"
+                href={url}
+                noExternalIcon
+              >
+                {title}
+              </Link>{' '}
+            </>
+          )
+        })}
+      </FooterLineNav>
     )
   }
 }
+
+const FooterLineNav = styled.nav`
+  > a {
+    &:not(:last-child):after {
+      content: '•';
+      position: absolute;
+      width: 1.2rem;
+      opacity: 0.4;
+    }
+  }
+`

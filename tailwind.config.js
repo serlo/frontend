@@ -27,6 +27,9 @@ module.exports = {
           lighter: lighten(0.45, brandGreen),
         },
         truegray: colors.trueGray,
+        berry: '#857189',
+        newGreen: '#2fceb1',
+        yellow: '#ffbe5e',
       },
       borderWidth: {
         3: '3px',
@@ -86,6 +89,7 @@ module.exports = {
       maxWidth: {
         xs: '300px',
         65: '260px',
+        '30p': '30%',
       },
       fontSize: {
         'base-plus': ['1.1875rem', '1.22'],

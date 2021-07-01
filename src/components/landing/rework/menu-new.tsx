@@ -8,7 +8,7 @@ import { Link } from '../../content/link'
 import { SubLink } from '../../navigation/sub-link'
 import { SubButtonStyle } from '../../user-tools/sub-button-style'
 import { getAvatarUrl } from '../../user/user-link'
-import { AuthenticationPayload } from '@/auth/use-authentication'
+import { AuthenticationPayload } from '@/auth/auth-provider'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -236,7 +236,7 @@ function MenuInner({
         {subEntries !== undefined &&
           subEntries.map((entry, i2) => {
             const href =
-              entry.url === '/user/public' && auth
+              entry.url === '/user/me' && auth
                 ? `/user/${auth.id}/${auth.username}`
                 : entry.url
             return (

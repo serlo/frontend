@@ -8,7 +8,12 @@ export function FooterNavNew() {
   const { headerData, footerData } = useInstanceData()
 
   return (
-    <nav className="flex flex-wrap md:flex justify-center md:justify-between">
+    <nav
+      className={clsx(
+        'text-center mobile:text-left mobile:flex flex-wrap',
+        'justify-center md:justify-between'
+      )}
+    >
       <div className="md:mr-5 text-center md:text-left">
         <h1 className="font-handwritten text-4xl -mt-2 mb-10">
           Serlo:
@@ -28,22 +33,19 @@ export function FooterNavNew() {
         </div>
       </div>
       <Separator className="md:hidden" />
+      {/* first row */}
       {renderFooterNavChildren(footerData.footerNavigation[0].children)}
+      {/* subjects */}
       {headerData[0].children &&
         renderFooterNavChildren(headerData[0].children)}
-      {renderFooterNavChildren(
-        footerData.footerNavigation[1].children,
-        'hidden md:block'
-      )}
+      {/* newsletter/github */}
+      {renderFooterNavChildren(footerData.footerNavigation[1].children)}
     </nav>
   )
 
-  function renderFooterNavChildren(
-    items: { url: string; title: string }[],
-    className = ''
-  ) {
+  function renderFooterNavChildren(items: { url: string; title: string }[]) {
     return (
-      <ul style={{ maxWidth: '50%' }} className={clsx('mr-8', className)}>
+      <ul className="mobile:max-w-30p mobile:mr-8 mt-8 mobile:mt-0">
         {items.map(({ url, title }) => (
           <li key={url}>
             <Link

@@ -171,8 +171,10 @@ function renderElement(props: RenderElementProps): React.ReactNode {
   const { element, children, path } = props
 
   if (element.type === 'a') {
+    const isOnProfile =
+      path && typeof path[0] === 'string' && path[0].startsWith('profile')
     return (
-      <Link href={element.href} path={path}>
+      <Link href={element.href} path={path} unreviewed={isOnProfile}>
         {children}
       </Link>
     )
