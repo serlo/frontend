@@ -236,7 +236,7 @@ function MenuInner({
         {subEntries !== undefined &&
           subEntries.map((entry, i2) => {
             const href =
-              entry.url === '/user/public' && auth
+              entry.url === '/user/me' && auth
                 ? `/user/${auth.id}/${auth.username}`
                 : entry.url
             return (
