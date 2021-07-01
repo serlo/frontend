@@ -240,6 +240,22 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         {steps.myAccount}
       </a>
     )
+    const refreshLink = (
+      <a
+        className="serlo-link cursor-pointer"
+        onClick={() => {
+          caches.open('v1').then(function (cache) {
+            cache
+              .delete('https://community.serlo.org/avatar/botho')
+              .then(function (response) {
+                void location.reload()
+              })
+          })
+        }}
+      >
+        {steps.refreshLink}
+      </a>
+    )
 
     return (
       <ModalWithCloseButton
@@ -255,6 +271,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
           <li>{steps.signIn}</li>
           <li>{replacePlaceholders(steps.goToMyAccount, { myAccountLink })}</li>
           <li>{steps.uploadPicture}</li>
+          <li>{replacePlaceholders(steps.refreshPage, { refreshLink })}</li>
         </ol>
       </ModalWithCloseButton>
     )
