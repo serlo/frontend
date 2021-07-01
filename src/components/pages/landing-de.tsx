@@ -8,12 +8,10 @@ import { FooterNew } from '../landing/rework/footer-new'
 import { HeaderNew } from '../landing/rework/header-new'
 import { PartnerListNew } from '../landing/rework/partner-list-new'
 import { WelcomeMessage } from '../landing/rework/welcome-message'
-import { Injection } from '@/components/content/injection'
 import { Link } from '@/components/content/link'
 import { LandingSubjectsNew } from '@/components/landing/rework/landing-subjects-new'
 import { SearchInputNew } from '@/components/landing/rework/search-input-new'
 import { InstanceLandingData } from '@/data-types'
-import { renderNested } from '@/schema/article-renderer'
 
 export interface LandingDEProps {
   data: InstanceLandingData
@@ -107,13 +105,6 @@ export function LandingDE({ data }: LandingDEProps) {
           Zusammen setzen wir uns für mehr Bildungsgerechtigkeit und die
           digitale Transformation unserer Schulen ein.
         </h3>
-
-        <div className="max-w-2xl mx-auto serlo-content-with-spacing-fixes text-4xl">
-          <Injection
-            href="/75485"
-            renderNested={(value, ...prefix) => renderNested(value, [], prefix)}
-          />
-        </div>
       </section>
 
       <PartnerSection className="text-center">
