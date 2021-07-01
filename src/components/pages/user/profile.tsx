@@ -120,8 +120,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
 
   function renderTimeBadge() {
     const elapsed = new Date().getTime() - new Date(registerDate).getTime()
-    const elapsedYears = elapsed / (1000 * 3600 * 24 * 365)
-    const yearsFloored = Math.floor(elapsedYears)
+    const yearsFloored = Math.floor(elapsed / (1000 * 3600 * 24 * 365))
     if (yearsFloored < 1) return null
 
     const fullYear = registerDate.getFullYear()
@@ -243,14 +242,11 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
     const refreshLink = (
       <a
         className="serlo-link cursor-pointer"
-        onClick={() => {
-          void caches.open('v1').then(function (cache) {
-            void cache
-              .delete('https://community.serlo.org/avatar/botho')
-              .then(function () {
-                void location.reload()
-              })
-          })
+        onClick={async () => {
+          const cache = await caches.open('v1')
+
+          await cache.delete(imageUrl)
+          location.reload()
         }}
       >
         {steps.refreshLink}
