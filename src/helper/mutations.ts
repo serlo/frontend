@@ -17,6 +17,7 @@ import { GraphQLError } from 'graphql'
 import { ClientError, gql, GraphQLClient } from 'graphql-request'
 import { useRouter } from 'next/router'
 import NProgress from 'nprogress'
+import { RefObject } from 'react'
 import { mutate, cache } from 'swr'
 
 import { csrReload } from './csr-reload'
@@ -24,10 +25,8 @@ import { showToastNotice } from './show-toast-notice'
 import { triggerSentry } from './trigger-sentry'
 import { isSubscribedQuery } from './use-is-subscribed'
 import { endpoint } from '@/api/endpoint'
-import {
-  AuthenticationPayload,
-  useAuthentication,
-} from '@/auth/use-authentication'
+import { AuthenticationPayload } from '@/auth/auth-provider'
+import { useAuthentication } from '@/auth/use-authentication'
 import { useEntityId } from '@/contexts/entity-id-context'
 import { subscriptionsQuery } from '@/pages/subscriptions/manage'
 
@@ -346,7 +345,7 @@ type MutationInput =
 
 type MutationResponse = ThreadMutation | UuidMutation | NotificationMutation
 
-type ApiErrorType = 'UNAUTHENTICATED' | 'FORBIDDEN'
+type ApiErrorType = 'UNAUTHENTICATED' | 'FORBIDDEN' | 'INVALID_TOKEN'
 type ErrorType = ApiErrorType | 'UNKNOWN'
 
 export interface ApiError extends GraphQLError {
@@ -356,13 +355,14 @@ export interface ApiError extends GraphQLError {
 }
 
 export async function mutationFetch(
-  auth: React.RefObject<AuthenticationPayload>,
+  auth: RefObject<AuthenticationPayload>,
   query: string,
   input: MutationInput,
   isRetry?: boolean
 ): Promise<boolean> {
   if (auth.current === null) return handleError('UNAUTHENTICATED')
 
+  const usedToken = auth.current.token
   try {
     const result = await executeQuery()
     return !!result
@@ -373,8 +373,8 @@ export async function mutationFetch(
 
     const type = error ? error.extensions.code : 'UNKNOWN'
 
-    if (type === 'UNAUTHENTICATED' && !isRetry) {
-      await auth.current.refreshToken()
+    if (type === 'INVALID_TOKEN' && !isRetry) {
+      await auth.current.refreshToken(usedToken)
       return await mutationFetch(auth, query, input, true)
     }
 

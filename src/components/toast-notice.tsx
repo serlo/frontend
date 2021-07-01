@@ -30,8 +30,8 @@ export function ToastNotice() {
         showTime
       )
       if (!auth.current) {
-        // quick fix: force legacy logout
-        fetch('/auth/logout', { credentials: 'same-origin' }).catch(() => {})
+        //// quick fix: force legacy logout
+        // fetch('/auth/logout', { credentials: 'same-origin' }).catch(() => {})
       }
     }
 

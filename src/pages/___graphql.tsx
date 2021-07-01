@@ -5,6 +5,7 @@ import { NextPage } from 'next'
 import dynamic from 'next/dynamic'
 
 import { endpoint } from '@/api/endpoint'
+import { AuthProvider } from '@/auth/auth-provider'
 import { useAuthentication } from '@/auth/use-authentication'
 
 const Style = () => (
@@ -1826,28 +1827,37 @@ const Style = () => (
 const GraphiQL = dynamic<GraphiQLProps>(() => import('graphiql'), {
   ssr: false,
 })
-const GraphQL: NextPage = () => {
+
+const GraphQLPage: NextPage = () => {
+  return (
+    <AuthProvider>
+      <GraphQL />
+    </AuthProvider>
+  )
+}
+
+function GraphQL() {
   const auth = useAuthentication()
-  //console.log('GraphQL auth', auth.current)
 
   return (
     <>
       <Style />
       <GraphiQL
         fetcher={async function fetcher(params) {
+          const usedToken = auth.current?.token
           const data = await executeQuery()
           const error = data.errors?.[0] as
             | (GraphQLError & {
                 extensions: {
-                  code: 'UNAUTHENTICATED'
+                  code: 'INVALID_TOKEN'
                 }
               })
             | undefined
           if (
-            error?.extensions.code === 'UNAUTHENTICATED' &&
+            error?.extensions.code === 'INVALID_TOKEN' &&
             auth.current !== null
           ) {
-            await auth.current.refreshToken()
+            await auth.current.refreshToken(usedToken!)
             return await executeQuery()
           }
           return data
@@ -1875,4 +1885,4 @@ const GraphQL: NextPage = () => {
   )
 }
 
-export default GraphQL
+export default GraphQLPage
