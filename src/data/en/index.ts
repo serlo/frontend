@@ -189,7 +189,7 @@ export const instanceData = {
           signIn: 'Sign in.',
           goToMyAccount: 'Go in the user menu to %myAccountLink%.',
           myAccount: 'My Account',
-          uploadPicture: 'Upload a new picture and click "Save changes".'
+          uploadPicture: 'Upload a new picture (make sure it is square) and click "Save changes".'
         }
       },
     },

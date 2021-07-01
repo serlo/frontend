@@ -62,7 +62,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
       <ProfileHeader>
         {renderProfileImage()}
         <div>
-          <h1 className="serlo-h1">{username}thatisverylong</h1>
+          <h1 className="serlo-h1">{username}</h1>
           {renderBadges()}
         </div>
         {motivation && (
