@@ -289,7 +289,7 @@ body {
 
 table.gstl_50.gssb_c {
   @apply z-50 serlo-input-font-reset;
-  @apply mt-0.5 !left-1 !right-1 !w-auto;
+  @apply mt-0.5 left-1 !right-1 !w-auto;
   @apply sm:ml-2.5 sm:mt-0.5 w-auto;
 
   .gssb_a td {
