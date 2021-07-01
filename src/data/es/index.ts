@@ -171,7 +171,6 @@ export const instanceData = {
     },
     profiles: {
       aboutMe: "Sobre mi",
-      activeSince: "Con Serlo desde",
       recentActivities: "Actividades recientes",
       showAllActivities: "Mostrar todas las actividades",
       lastLogin: "Ultimo Inicio de sesion",

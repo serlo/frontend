@@ -171,7 +171,6 @@ export const instanceData = {
     },
     profiles: {
       aboutMe: "À propos de moi",
-      activeSince: "Avec Serlo depuis",
       recentActivities: "Activités récentes",
       showAllActivities: "Afficher toutes les activités",
       lastLogin: "Dernière connexion",
