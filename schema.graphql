@@ -259,6 +259,11 @@ type CheckoutRevisionNotificationEvent implements AbstractNotificationEvent & In
     revision: AbstractRevision!
 }
 
+type CheckoutRevisionResponse {
+    query: Query!
+    success: Boolean!
+}
+
 type Comment implements AbstractUuid {
     alias: String!
     archived: Boolean!
@@ -375,12 +380,12 @@ type CourseRevisionCursor {
 
 type CreateCommentNotificationEvent implements AbstractNotificationEvent & InstanceAware {
     actor: User!
-    comment: UnsupportedComment!
+    comment: Comment!
     date: DateTime!
     id: Int!
     instance: Instance!
     objectId: Int!
-    thread: UnsupportedThread!
+    thread: Thread!
 }
 
 type CreateEntityLinkNotificationEvent implements AbstractNotificationEvent & InstanceAware {
@@ -438,7 +443,12 @@ type CreateThreadNotificationEvent implements AbstractNotificationEvent & Instan
     instance: Instance!
     object: AbstractUuid!
     objectId: Int!
-    thread: UnsupportedThread!
+    thread: Thread!
+}
+
+type EntityMutation {
+    checkoutRevision(input: CheckoutRevisionInput!): CheckoutRevisionResponse!
+    rejectRevision(input: RejectRevisionInput!): RejectRevisionResponse!
 }
 
 type Event implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid & InstanceAware & ThreadAware {
@@ -616,9 +626,11 @@ type License {
 
 type Mutation {
     _cache: _cacheMutation!
+    entity: EntityMutation!
     notification: NotificationMutation!
     subscription: SubscriptionMutation!
     thread: ThreadMutation!
+    user: UserMutation!
     uuid: UuidMutation!
 }
 
@@ -743,6 +755,11 @@ type RejectRevisionNotificationEvent implements AbstractNotificationEvent & Inst
     revision: AbstractRevision!
 }
 
+type RejectRevisionResponse {
+    query: Query!
+    success: Boolean!
+}
+
 type RemoveEntityLinkNotificationEvent implements AbstractNotificationEvent & InstanceAware {
     actor: User!
     child: AbstractEntity!
@@ -816,7 +833,7 @@ type SetThreadStateNotificationEvent implements AbstractNotificationEvent & Inst
     id: Int!
     instance: Instance!
     objectId: Int!
-    thread: UnsupportedThread!
+    thread: Thread!
 }
 
 type SetUuidStateNotificationEvent implements AbstractNotificationEvent & InstanceAware {
@@ -966,14 +983,6 @@ type ThreadsCursor {
     node: Thread!
 }
 
-type UnsupportedComment {
-    id: Int!
-}
-
-type UnsupportedThread {
-    id: Int!
-}
-
 type User implements AbstractUuid & ThreadAware {
     activeAuthor: Boolean!
     activeDonor: Boolean!
@@ -998,9 +1007,33 @@ type UserConnection {
     totalCount: Int!
 }
 
+type UserDeleteBotsResponse {
+    reason: String
+    success: Boolean!
+    username: String!
+}
+
+type UserDeleteRegularUsersResponse {
+    reason: String
+    success: Boolean!
+    username: String
+}
+
 type UserEdge {
     cursor: String!
     node: User!
+}
+
+type UserMutation {
+    deleteBots(input: UserDeleteBotsInput!): [UserDeleteBotsResponse!]!
+    deleteRegularUsers(input: UserDeleteRegularUsersInput!): [UserDeleteRegularUsersResponse!]!
+    setEmail(input: UserSetEmailInput!): UserSetEmailResponse!
+}
+
+type UserSetEmailResponse {
+    email: String!
+    success: Boolean!
+    username: String!
 }
 
 type UuidMutation {
@@ -1116,9 +1149,19 @@ input CacheUpdateInput {
     keys: [String!]!
 }
 
+input CheckoutRevisionInput {
+    reason: String!
+    revisionId: Int!
+}
+
 input NotificationSetStateInput {
     id: [Int!]!
     unread: Boolean!
+}
+
+input RejectRevisionInput {
+    reason: String!
+    revisionId: Int!
 }
 
 input SubscriptionSetInput {
@@ -1155,6 +1198,19 @@ input ThreadSetThreadArchivedInput {
 input ThreadSetThreadStateInput {
     id: [String!]!
     trashed: Boolean!
+}
+
+input UserDeleteBotsInput {
+    botIds: [Int!]!
+}
+
+input UserDeleteRegularUsersInput {
+    userIds: [Int!]!
+}
+
+input UserSetEmailInput {
+    email: String!
+    userId: Int!
 }
 
 input UuidSetStateInput {

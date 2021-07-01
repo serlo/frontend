@@ -3,7 +3,7 @@ import { ClientError, GraphQLClient } from 'graphql-request'
 import * as React from 'react'
 
 import { endpoint } from '@/api/endpoint'
-import { AuthenticationPayload } from '@/auth/use-authentication'
+import { AuthenticationPayload } from '@/auth/auth-provider'
 
 export function createGraphqlFetch() {
   return async function fetch(args: string) {
@@ -27,6 +27,8 @@ export function createAuthAwareGraphqlFetch(
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const { query, variables } = JSON.parse(args)
     if (auth.current === null) throw new Error('unauthorized')
+
+    const usedToken = auth.current.token
     try {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return await executeQuery()
@@ -35,10 +37,17 @@ export function createAuthAwareGraphqlFetch(
         response: { errors },
       } = e as ClientError
       const error = errors?.[0] as ApolloError | undefined
-      if (error && error.extensions.code === 'UNAUTHENTICATED') {
-        await auth.current.refreshToken()
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        return await executeQuery()
+
+      if (error && error.extensions.code === 'INVALID_TOKEN') {
+        try {
+          await auth.current.refreshToken(usedToken)
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+          return await executeQuery()
+        } catch (e) {
+          // Failed to refresh token
+          auth.current.clearToken()
+          throw e
+        }
       }
       throw e
     }
@@ -58,6 +67,6 @@ export function createAuthAwareGraphqlFetch(
 
 export interface ApolloError extends GraphQLError {
   extensions: {
-    code: 'UNAUTHENTICATED'
+    code: 'INVALID_TOKEN'
   }
 }
