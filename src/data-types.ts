@@ -390,7 +390,6 @@ export interface FrontendInlineMathNode {
   formula: string
   formulaSource?: string
   children?: undefined
-  debugOriginalFormula?: string
 }
 
 export interface FrontendPNode {
@@ -409,8 +408,8 @@ export interface FrontendMathNode {
   type: 'math'
   formula: string
   formulaSource?: string
-  alignLeft?: boolean
   children?: undefined
+  alignCenter?: boolean
 }
 
 export interface FrontendImgNode {
