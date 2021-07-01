@@ -203,6 +203,7 @@ export const instanceData = {
       revisionSavedAccepted: 'Revision was successfully saved and accepted ✅'
     },
     loading: {
+      oneMomentPlease: 'One moment please…',
       isLoading: 'Content is loading…',
       unknownProblem: "Sorry, there was a problem loading the content, please try again later."
     },
