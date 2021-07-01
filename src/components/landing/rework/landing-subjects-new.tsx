@@ -27,12 +27,6 @@ export function LandingSubjectsNew({ data }: LandingSubjectsProps) {
   return (
     <>
       <SubjectsWrapper>{data.subjects.map(renderSubject)}</SubjectsWrapper>
-
-      {data.additionalLinks.length > 0 && (
-        <SubjectsWrapper $extraLinks $center={data.subjects.length < 3}>
-          {data.additionalLinks.map(renderSubject)}
-        </SubjectsWrapper>
-      )}
     </>
   )
 
@@ -73,10 +67,7 @@ export function LandingSubjectsNew({ data }: LandingSubjectsProps) {
   }
 }
 
-const SubjectsWrapper = styled.div<{
-  $extraLinks?: boolean
-  $center?: boolean
-}>`
+const SubjectsWrapper = styled.div`
   display: flex;
   justify-content: space-evenly;
 
