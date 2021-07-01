@@ -351,7 +351,6 @@ function unwrapSingleMathInline(children: FrontendContentNode[]) {
     ) {
       // force conversion
       ;(child.children[0] as unknown as FrontendMathNode).type = 'math'
-      ;(child.children[0] as unknown as FrontendMathNode).alignCenter = true
       return child.children[0]
     }
     return child
