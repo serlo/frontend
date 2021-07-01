@@ -188,10 +188,12 @@ export function CommunityWall() {
                   'text-white text-base font-bold px-2 py-1',
                   'rounded-2xl',
                   role.includes('Autor')
-                    ? 'bg-yellow-500'
+                    ? 'bg-yellow'
                     : role.includes('Team')
-                    ? 'bg-brand'
-                    : 'bg-purple-500'
+                    ? 'bg-brand-light'
+                    : role.includes('Lehrer')
+                    ? 'bg-newGreen'
+                    : 'bg-berry'
                 )}
               >
                 {role}

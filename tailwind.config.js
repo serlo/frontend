@@ -27,6 +27,9 @@ module.exports = {
           lighter: lighten(0.45, brandGreen),
         },
         truegray: colors.trueGray,
+        berry: '#857189',
+        newGreen: '#2fceb1',
+        yellow: '#ffbe5e',
       },
       borderWidth: {
         3: '3px',
