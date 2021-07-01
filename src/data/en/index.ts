@@ -175,6 +175,8 @@ export const instanceData = {
       recentActivities: 'Recent activities',
       showAllActivities: 'Show all activities',
       lastLogin: 'Last login',
+      yearsWithSerlo: 'Years with Serlo!',
+      yearWithSerlo: 'Year with Serlo!',
       roles: 'Roles',
       instanceRoles: 'Roles on %lang%.serlo.org:',
       otherRoles: 'Other roles:',
