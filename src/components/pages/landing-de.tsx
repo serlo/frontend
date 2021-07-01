@@ -218,7 +218,7 @@ const PWithWink = styled(ButtonWithWink)`
   }
 `
 
-const PartnerSection = styled.div`
+const PartnerSection = styled.section`
   padding-top: 1rem;
   background: url('/_assets/img/landing/footer-container.svg') no-repeat;
   background-size: 100% 100%;
