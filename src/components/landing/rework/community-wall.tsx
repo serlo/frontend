@@ -99,7 +99,7 @@ export function CommunityWall() {
         className={clsx(
           'text-center text-4xl text-truegray-700 font-bold',
           'leading-cozy tracking-tight',
-          'max-w-2xl mt-32 mx-auto relative z-10'
+          'max-w-2xl mt-32 mx-auto relative z-10 px-2'
         )}
       >
         Wir sind eine große, ehrenamtliche Community und gestalten Serlo

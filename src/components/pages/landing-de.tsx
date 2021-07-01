@@ -27,7 +27,7 @@ export function LandingDE({ data }: LandingDEProps) {
       </Head>
       <HeadTags data={{ title: 'Serlo – Die freie Lernplattform' }} />
       <HeaderNew />
-      <section className="text-center max-w-3xl mx-auto mt-20 md:mt-15vh font-bold">
+      <section className="text-center max-w-3xl mx-auto mt-20 md:mt-15vh font-bold px-2">
         <PWithWink as="p" className="text-brand font-handwritten text-3xl">
           <WelcomeMessage />
         </PWithWink>
@@ -60,7 +60,7 @@ export function LandingDE({ data }: LandingDEProps) {
           className={clsx(
             'text-center text-4xl',
             'tracking-tight font-bold',
-            'max-w-2xl mt-7 mx-auto'
+            'max-w-2xl mt-7 mx-auto px-2'
           )}
         >
           <p className="mb-8">
@@ -96,6 +96,7 @@ export function LandingDE({ data }: LandingDEProps) {
       <section className="mt-20 mb-20 mx-side">
         <img src="/_assets/img/landing/birds.svg" className="mx-auto" />
         <h3
+          style={{ hyphens: 'auto' }}
           className={clsx(
             'text-center text-4xl font-bold',
             'leading-cozy tracking-tight',
