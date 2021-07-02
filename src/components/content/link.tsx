@@ -19,8 +19,7 @@ export interface LinkProps {
   unreviewed?: boolean // e.g. user profiles or comments
 }
 
-//Note: Previous discussion about dynamic fetching https://github.com/serlo/frontend/issues/328
-//but dismissed because of complexity and little gain
+// note: Previous discussion about fetching this dynamically https://github.com/serlo/frontend/issues/328
 const legacyLinks = [
   '/privacy',
   '/datenschutz',
