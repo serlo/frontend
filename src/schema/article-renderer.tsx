@@ -185,10 +185,13 @@ function renderElement(props: RenderElementProps): React.ReactNode {
   if (element.type === 'math') {
     const nowrap = /\\begin *{(array|aligned)}/.test(element.formula)
     const addDisplaystile = !/\\displaystyle[^a-z]/.test(element.formula)
-    // alignLeft is assumed to be always true
     return (
       <div
-        className={clsx('serlo-math-wrapper', { 'whitespace-nowrap': nowrap })}
+        className={clsx(
+          'serlo-math-wrapper',
+          { 'whitespace-nowrap': nowrap },
+          element.alignCenter && 'text-center'
+        )}
       >
         <Lazy slim>
           <Math
