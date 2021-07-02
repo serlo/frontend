@@ -174,6 +174,8 @@ export const instanceData = {
       recentActivities: "Activités récentes",
       showAllActivities: "Afficher toutes les activités",
       lastLogin: "Dernière connexion",
+      yearsWithSerlo: 'Years with Serlo!',
+      yearWithSerlo: 'Year with Serlo!',
       roles: "Rôles",
       instanceRoles: 'Roles on %lang%.serlo.org:',
       otherRoles: 'Other roles:',
@@ -186,7 +188,9 @@ export const instanceData = {
           signIn: 'Sign in.',
           goToMyAccount: 'Go in the user menu to %myAccountLink%.',
           myAccount: 'My Account',
-          uploadPicture: 'Upload a new picture and click "Save changes".'
+          uploadPicture: 'Upload a new picture (make sure it is square) and click "Save changes".',
+          refreshPage: 'Come back here and refresh the image using %refreshLink%.',
+          refreshLink: 'this link'
         }
       }
     },
@@ -199,6 +203,7 @@ export const instanceData = {
       revisionSavedAccepted: "La révision a été enregistrée avec succès et acceptée ✅"
     },
     loading: {
+      oneMomentPlease: 'One moment please…',
       isLoading: "Chargement de contenu en cours…",
       unknownProblem: "Désolé,une erreure s'est produite lors du chargement du contenu, veuille réessayer plus tard."
     },
