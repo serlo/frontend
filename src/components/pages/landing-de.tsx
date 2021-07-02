@@ -21,49 +21,48 @@ export function LandingDE({ data }: LandingDEProps) {
   const subjectsData = data.subjectsData
 
   return (
-    <div className="text-truegray-700">
+    <>
       <Head>
         <link href="_assets/landing-fonts.css" rel="stylesheet" />
       </Head>
       <HeadTags data={{ title: 'Serlo – Die freie Lernplattform' }} />
       <HeaderNew />
-      <section className="text-center max-w-3xl mx-auto mt-20 md:mt-15vh font-bold px-2">
-        <PWithWink as="p" className="text-brand font-handwritten text-3xl">
-          <WelcomeMessage />
-        </PWithWink>
-        <h1
-          className={clsx(
-            'text-center text-5xl font-extrabold',
-            'tracking-tight',
-            'max-w-2xl mt-3 mb-6 mx-auto'
-          )}
-        >
-          Was möchtest du <Underlined className="pb-2">lernen ?</Underlined>
-        </h1>
-        <div className="md:hidden mt-10 mb-8">
-          <SearchInputNew />
-        </div>
-        <p className="text-3xl leading-cozy">
-          Hier auf Serlo findest du{' '}
-          <b className="tracking-tight">einfache Erklärungen,</b> ausgewählte{' '}
-          <b className="tracking-tight">Lernvideos</b> und interaktive{' '}
-          <b className="tracking-tight">Übungsaufgaben</b> mit Musterlösungen.
-        </p>
-      </section>
+      <main className="text-truegray-700">
+        <section className="text-center max-w-3xl mx-auto mt-20 md:mt-15vh font-bold px-2">
+          <PWithWink as="p" className="text-brand font-handwritten text-3xl">
+            <WelcomeMessage />
+          </PWithWink>
+          <h1
+            className={clsx(
+              'text-center text-5xl font-extrabold',
+              'tracking-tight',
+              'max-w-2xl mt-3 mb-6 mx-auto'
+            )}
+          >
+            Was möchtest du <Underlined className="pb-2">lernen ?</Underlined>
+          </h1>
+          <div className="md:hidden mt-10 mb-8">
+            <SearchInputNew />
+          </div>
+          <p className="text-3xl leading-cozy">
+            Hier auf Serlo findest du{' '}
+            <b className="tracking-tight">einfache Erklärungen,</b> ausgewählte{' '}
+            <b className="tracking-tight">Lernvideos</b> und interaktive{' '}
+            <b className="tracking-tight">Übungsaufgaben</b> mit Musterlösungen.
+          </p>
+        </section>
 
-      <section className="mt-10">
-        <LandingSubjectsNew data={subjectsData} />
-      </section>
+        <section className="mt-10">
+          <LandingSubjectsNew data={subjectsData} />
+        </section>
 
-      <AboutSection>
-        <div
+        <AboutSection
           className={clsx(
             'text-center text-4xl',
-            'tracking-tight font-bold',
-            'max-w-2xl mt-7 mx-auto px-2'
+            'tracking-tight font-bold mt-7'
           )}
         >
-          <p className="mb-8">
+          <p className="mb-8 max-w-2xl px-2 mx-auto">
             Unsere Lernplattform wird von einem gemeinnützigen Verein
             entwickelt. Sie ist komplett{' '}
             <b className="font-extrabold">
@@ -78,7 +77,7 @@ export function LandingDE({ data }: LandingDEProps) {
               Für immer!
             </Underlined>
           </p>
-          <p className="mb-8">
+          <p className="mb-8 max-w-2xl px-2 mx-auto">
             Jeden Monat nutzen über 1.2 Millionen Schüler*innen und Lehrkräfte
             Serlo.
           </p>
@@ -88,52 +87,51 @@ export function LandingDE({ data }: LandingDEProps) {
           >
             Mehr über uns
           </ButtonWithWings>
-        </div>
-      </AboutSection>
+        </AboutSection>
 
-      <CommunityWall />
+        <CommunityWall />
 
-      <section className="mt-20 mb-20 mx-side">
-        <img src="/_assets/img/landing/birds.svg" className="mx-auto" />
-        <h3
-          style={{ hyphens: 'auto' }}
-          className={clsx(
-            'text-center text-4xl font-bold',
-            'leading-cozy tracking-tight',
-            'max-w-2xl mt-7 mx-auto'
-          )}
-        >
-          Zusammen setzen wir uns für mehr Bildungsgerechtigkeit und die
-          digitale Transformation unserer Schulen ein.
-        </h3>
-      </section>
+        <section className="mt-20 mb-20 mx-side">
+          <img src="/_assets/img/landing/birds.svg" className="mx-auto" />
+          <h3
+            style={{ hyphens: 'auto' }}
+            className={clsx(
+              'text-center text-4xl font-bold',
+              'leading-cozy tracking-tight',
+              'max-w-2xl mt-7 mx-auto'
+            )}
+          >
+            Zusammen setzen wir uns für mehr Bildungsgerechtigkeit und die
+            digitale Transformation unserer Schulen ein.
+          </h3>
+        </section>
 
-      <PartnerSection className="text-center">
-        <h3
-          className={clsx(
-            'text-center text-4xl font-bold',
-            'leading-cozy tracking-tight',
-            'max-w-2xl mt-32 mx-auto relative z-10 mb-16'
-          )}
-        >
-          Partner und Förderer
-        </h3>
-        <PartnerListNew />
-        <ButtonWithWink
-          className={clsx(
-            'hidden md:inline-block mx-auto mt-12',
-            'font-bold text-xl rounded-lg text-truegray-700 ',
-            'px-8 py-4 tracking-tight border-truegray-700 border-solid border-2',
-            'hover:border-brand-light hover:no-underline hover:text-brand-light'
-          )}
-          href="/partner"
-        >
-          Alle Partner ansehen
-        </ButtonWithWink>
-      </PartnerSection>
-
+        <PartnerSection className="text-center">
+          <h3
+            className={clsx(
+              'text-center text-4xl font-bold',
+              'leading-cozy tracking-tight',
+              'max-w-2xl mt-32 mx-auto relative z-10 mb-16'
+            )}
+          >
+            Partner und Förderer
+          </h3>
+          <PartnerListNew />
+          <ButtonWithWink
+            className={clsx(
+              'hidden md:inline-block mx-auto mt-12',
+              'font-bold text-xl rounded-lg text-truegray-700 ',
+              'px-8 py-4 tracking-tight border-truegray-700 border-solid border-2',
+              'hover:border-brand-light hover:no-underline hover:text-brand-light'
+            )}
+            href="/partner"
+          >
+            Alle Partner ansehen
+          </ButtonWithWink>
+        </PartnerSection>
+      </main>
       <FooterNew />
-    </div>
+    </>
   )
 }
 

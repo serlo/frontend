@@ -10,7 +10,7 @@ export function FooterNew() {
   return (
     <footer
       style={{ backgroundColor: '#eef1f5' }}
-      className="px-side lg:px-36 pb-10 font-bold"
+      className="px-side lg:px-36 pb-10 font-bold text-truegray-700"
     >
       <Separator />
       <FooterNavNew />

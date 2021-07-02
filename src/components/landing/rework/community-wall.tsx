@@ -158,7 +158,7 @@ export function CommunityWall() {
 
       return (
         <Fragment key={name}>
-          <div
+          <figure
             className={clsx(
               'mt-12 mx-1 text-center group',
               'w-1/3v sm:w-1/4v md:w-1/8v md:absolute',
@@ -179,7 +179,11 @@ export function CommunityWall() {
               className="hover:no-underline relative z-10 whitespace-nowrap"
               href={`/user/profile/${name}`}
             >
-              <img src={imgSrc} className="rounded-full w-full" />
+              <img
+                src={imgSrc}
+                alt={`Avatar of ${name}`}
+                className="rounded-full w-full"
+              />
               <p className="text-base mt-2 mb-2 font-bold text-gray-700">
                 @{name}
               </p>
@@ -199,7 +203,7 @@ export function CommunityWall() {
                 {role}
               </span>
             </Link>
-          </div>
+          </figure>
           {lineBreak && <div className="md:hidden h-0 w-full"></div>}
         </Fragment>
       )

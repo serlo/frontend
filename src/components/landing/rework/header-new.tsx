@@ -21,7 +21,7 @@ export function HeaderNew() {
   })
 
   return (
-    <header>
+    <header className="text-truegray-700">
       <MobileMenuButtonNew onClick={() => setOpen(!isOpen)} open={isOpen} />
       <div className="flex justify-between pt-3 pb-6 px-side lg:px-side-lg">
         <div>

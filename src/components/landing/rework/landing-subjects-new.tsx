@@ -67,7 +67,7 @@ export function LandingSubjectsNew({ data }: LandingSubjectsProps) {
   }
 }
 
-const SubjectsWrapper = styled.div`
+const SubjectsWrapper = styled.nav`
   display: flex;
   justify-content: space-evenly;
 

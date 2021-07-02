@@ -47,10 +47,10 @@ export function PartnerListNew() {
   function renderPartner({ name, logo }: { name: string; logo: string }) {
     return (
       <img
-        className={clsx('max-h-12 px-8 mb-16 sm:px-16')}
+        className="max-h-12 px-8 mb-16 sm:px-16"
         style={{ filter: 'invert(1)', opacity: '0.45' }}
         src={logo}
-        alt={name}
+        alt={`Logo of ${name}`}
         title={name}
       />
     )
