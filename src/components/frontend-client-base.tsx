@@ -8,9 +8,8 @@ import { ConditonalWrap } from './conditional-wrap'
 import { HeaderFooter } from './header-footer'
 import { MaxWidthDiv } from './navigation/max-width-div'
 import { ToastNotice } from './toast-notice'
-import { useAuthentication } from '@/auth/use-authentication'
+import { AuthProvider } from '@/auth/auth-provider'
 import { PrintWarning } from '@/components/content/print-warning'
-import { AuthorizationPayloadProvider } from '@/contexts/authorization-payload-context'
 import { EntityIdProvider } from '@/contexts/entity-id-context'
 import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInComponentsProvider } from '@/contexts/logged-in-components'
@@ -48,7 +47,10 @@ export function FrontendClientBase({
     if (typeof window === 'undefined') {
       // load instance data for server side rendering
       // Note: using require to avoid webpack bundling it
-      return require('@/helper/feature-i18n').getInstanceDataByLang(locale!)
+      const featureI18n = require('@/helper/feature-i18n') as {
+        getInstanceDataByLang: typeof getInstanceDataByLang
+      }
+      return featureI18n.getInstanceDataByLang(locale!)
     } else {
       // load instance data from client from document tag
       return JSON.parse(
@@ -57,9 +59,6 @@ export function FrontendClientBase({
       ) as ReturnType<typeof getInstanceDataByLang>
     }
   })
-
-  const [authorizationPayload, setAuthorizationPayload] =
-    React.useState<AuthorizationPayload | null>(authorization ?? null)
 
   //React.useEffect(storePageData, [initialProps])
 
@@ -72,7 +71,7 @@ export function FrontendClientBase({
     sessionStorage.setItem('currentPathname', window.location.pathname)
   })
 
-  const auth = useAuthentication()
+  // const auth = useAuthentication('frontend-client-base')
   const [loggedInData, setLoggedInData] = React.useState<LoggedInData | null>(
     getCachedLoggedInData()
   )
@@ -82,27 +81,10 @@ export function FrontendClientBase({
   //console.log('Comps', loggedInComponents)
 
   React.useEffect(fetchLoggedInData, [
-    auth,
     instanceData.lang,
     loggedInData,
     loggedInComponents,
-    authorizationPayload,
   ])
-
-  React.useEffect(() => {
-    if (loggedInComponents && auth && auth.current) {
-      const fetch = loggedInComponents.createAuthAwareGraphqlFetch(auth)
-      fetch(
-        JSON.stringify({
-          query: 'query{authorization\nnotifications(unread:true){totalCount}}',
-        })
-      )
-        .then((value) => {
-          setAuthorizationPayload(value.authorization)
-        })
-        .catch(() => {})
-    }
-  }, [loggedInComponents, auth])
 
   // dev
   //console.dir(initialProps)
@@ -112,7 +94,7 @@ export function FrontendClientBase({
       <PrintWarning warning={instanceData.strings.print.warning} />
       <InstanceDataProvider value={instanceData}>
         <LoggedInComponentsProvider value={loggedInComponents}>
-          <AuthorizationPayloadProvider value={authorizationPayload}>
+          <AuthProvider unauthenticatedAuthorizationPayload={authorization}>
             <LoggedInDataProvider value={loggedInData}>
               <EntityIdProvider value={entityId || null}>
                 <ConditonalWrap
@@ -136,26 +118,11 @@ export function FrontendClientBase({
                 <ToastNotice />
               </EntityIdProvider>
             </LoggedInDataProvider>
-          </AuthorizationPayloadProvider>
+          </AuthProvider>
         </LoggedInComponentsProvider>
       </InstanceDataProvider>
     </ThemeProvider>
   )
-
-  /*
-  function storePageData() {
-    try {
-      const pageData = initialProps?.pageData
-      if (pageData) {
-        if (pageData.kind === 'single-entity' || pageData.kind === 'taxonomy') {
-          if (pageData.cacheKey)
-            sessionStorage.setItem(pageData.cacheKey, JSON.stringify(pageData))
-        }
-      }
-    } catch (e) {
-      //
-    }
-  }*/
 
   function getCachedLoggedInData() {
     if (
@@ -171,29 +138,27 @@ export function FrontendClientBase({
   }
 
   function fetchLoggedInData() {
-    if (auth.current) {
-      Promise.all([
-        !loggedInData
-          ? fetch(frontendOrigin + '/api/locale/' + instanceData.lang).then(
-              (res) => res.json()
-            )
-          : false,
-        !loggedInComponents ? import('@/helper/logged-in-stuff-chunk') : false,
-      ])
-        .then((values: any) => {
-          if (values[0]) {
-            sessionStorage.setItem(
-              `___loggedInData_${instanceData.lang}`,
-              JSON.stringify(values[0])
-            )
-            setLoggedInData(values[0])
-          }
-          if (values[1]) setLoggedInComponents(values[1].Components)
-          if (authorizationPayload == null) {
-            setAuthorizationPayload({})
-          }
-        })
-        .catch(() => {})
-    }
+    Promise.all([
+      !loggedInData
+        ? fetch(frontendOrigin + '/api/locale/' + instanceData.lang).then(
+            (res) => res.json()
+          )
+        : false,
+      !loggedInComponents ? import('@/helper/logged-in-stuff-chunk') : false,
+    ])
+      .then((values) => {
+        if (values[0]) {
+          sessionStorage.setItem(
+            `___loggedInData_${instanceData.lang}`,
+            JSON.stringify(values[0])
+          )
+          setLoggedInData(values[0])
+        }
+        if (values[1])
+          setLoggedInComponents(
+            (values[1] as { Components: LoggedInStuff }).Components
+          )
+      })
+      .catch(() => {})
   }
 }

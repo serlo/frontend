@@ -38,9 +38,13 @@ const query = gql`
 export function useCommentData(id: number) {
   const client = new GraphQLClient(endpoint)
   const fetcher = () => client.request(query, { id })
-  const resp = useSWR<{ uuid: ThreadAware }, any>(`comments::${id}`, fetcher, {
-    refreshInterval: 10 * 60 * 1000,
-  })
+  const resp = useSWR<{ uuid: ThreadAware }, object>(
+    `comments::${id}`,
+    fetcher,
+    {
+      refreshInterval: 10 * 60 * 1000,
+    }
+  )
 
   const { data, error } = resp
 

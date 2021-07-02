@@ -11,6 +11,7 @@ import styled from 'styled-components'
 import AuthorBadge from '@/assets-webkit/img/community/badge-author.svg'
 import DonorBadge from '@/assets-webkit/img/community/badge-donor.svg'
 import ReviewerBadge from '@/assets-webkit/img/community/badge-reviewer.svg'
+import TimeBadge from '@/assets-webkit/img/community/badge-time.svg'
 import { useAuthentication } from '@/auth/use-authentication'
 import { CommentArea } from '@/components/comments/comment-area'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
@@ -62,17 +63,8 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         {renderProfileImage()}
         <div>
           <h1 className="serlo-h1">{username}</h1>
-          <p className="serlo-p">
-            {strings.profiles.activeSince}{' '}
-            <time
-              dateTime={registerDate.toISOString()}
-              title={registerDate.toLocaleDateString()}
-            >
-              {registerDate.getFullYear()}
-            </time>
-          </p>
+          {renderBadges()}
         </div>
-        {renderBadges()}
         {motivation && (
           <Motivation className="serlo-p text-1.5xl">
             &quot;{motivation}&quot;
@@ -113,26 +105,52 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
     return (
       <BadgesContainer>
         {activeReviewer &&
-          renderBadge({ Badge: ReviewerBadge, name: strings.roles.reviewer })}
+          renderBadge({
+            Badge: <ReviewerBadge />,
+            name: strings.roles.reviewer,
+          })}
         {activeAuthor &&
-          renderBadge({ Badge: AuthorBadge, name: strings.roles.author })}
+          renderBadge({ Badge: <AuthorBadge />, name: strings.roles.author })}
         {activeDonor &&
-          renderBadge({ Badge: DonorBadge, name: strings.roles.donor })}
+          renderBadge({ Badge: <DonorBadge />, name: strings.roles.donor })}
+        {renderTimeBadge()}
       </BadgesContainer>
     )
   }
 
-  function renderBadge({
-    Badge,
-    name,
-  }: {
-    Badge: typeof ReviewerBadge | typeof AuthorBadge | typeof DonorBadge
-    name: string
-  }) {
+  function renderTimeBadge() {
+    const elapsed = new Date().getTime() - new Date(registerDate).getTime()
+    const yearsFloored = Math.floor(elapsed / (1000 * 3600 * 24 * 365))
+    if (yearsFloored < 1) return null
+
+    const fullYear = registerDate.getFullYear()
+
+    return renderBadge({
+      Badge: (
+        <>
+          <TimeBadgeNumber>
+            {fullYear === 2014 && (
+              <span className="text-lg align-text-top inline-block pt-1 pr-1">
+                &gt;
+              </span>
+            )}
+            {yearsFloored}
+          </TimeBadgeNumber>
+          <TimeBadge />
+        </>
+      ),
+      name:
+        yearsFloored === 1
+          ? strings.profiles.yearWithSerlo
+          : strings.profiles.yearsWithSerlo,
+    })
+  }
+
+  function renderBadge({ Badge, name }: { Badge: JSX.Element; name: string }) {
     return (
       <BadgeContainer>
-        <Badge />
-        <p className="serlo-p">{name}</p>
+        {Badge}
+        <p className="serlo-p text-sm leading-tight">{name}</p>
       </BadgeContainer>
     )
   }
@@ -184,7 +202,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
             {strings.profiles.otherRoles}{' '}
             {otherRoles.map((role, index) => (
               <Fragment key={index}>
-                {renderRole(`${role.instance}: ${role.role}`)}
+                {renderRole(`${role.instance ?? ''}: ${role.role}`)}
               </Fragment>
             ))}
           </p>
@@ -221,6 +239,19 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         {steps.myAccount}
       </a>
     )
+    const refreshLink = (
+      <a
+        className="serlo-link cursor-pointer"
+        onClick={async () => {
+          const cache = await caches.open('v1')
+
+          await cache.delete(imageUrl)
+          location.reload()
+        }}
+      >
+        {steps.refreshLink}
+      </a>
+    )
 
     return (
       <ModalWithCloseButton
@@ -236,6 +267,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
           <li>{steps.signIn}</li>
           <li>{replacePlaceholders(steps.goToMyAccount, { myAccountLink })}</li>
           <li>{steps.uploadPicture}</li>
+          <li>{replacePlaceholders(steps.refreshPage, { refreshLink })}</li>
         </ol>
       </ModalWithCloseButton>
     )
@@ -299,19 +331,34 @@ const ProfileImage = styled.img`
 
 const BadgesContainer = styled.div`
   display: flex;
-  align-items: center;
   justify-content: center;
+  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
+    justify-content: left;
+  }
+  ${makeMargin}
 `
 
 const BadgeContainer = styled.div`
-  margin-right: 20px;
-
+  margin-right: 30px;
+  width: 65px;
+  > svg {
+    height: 40px;
+  }
   & > * {
     display: block;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
   }
+`
+
+const TimeBadgeNumber = styled.div`
+  position: absolute;
+  font-size: 1.8rem;
+  color: #333;
+  text-align: center;
+  width: 65px;
+  margin-top: 13px;
 `
 
 const ProfileHeader = styled.header`
@@ -323,17 +370,17 @@ const ProfileHeader = styled.header`
     margin-bottom: 0;
   }
 
-  @media (min-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
     display: grid;
-    grid-template-columns: 175px 30% auto;
+    grid-template-columns: 175px auto;
     grid-template-rows: auto auto;
-    grid-template-areas: 'image username badges' 'chatButton motivation motivation';
+    grid-template-areas: 'image badges' 'chatButton motivation';
     row-gap: 20px;
     column-gap: 20px;
     place-items: center start;
   }
 
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
     & > * {
       margin-left: auto;
       margin-right: auto;
@@ -343,8 +390,7 @@ const ProfileHeader = styled.header`
   }
 
   & ${BadgeContainer} > svg,
-  & h1 {
-    height: 40px;
+  h1 {
     margin-top: 15px;
     margin-bottom: 10px;
   }

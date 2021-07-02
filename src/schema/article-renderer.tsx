@@ -5,7 +5,6 @@ import * as React from 'react'
 
 import { Col } from '../components/content/col'
 import { ExerciseGroup } from '../components/content/exercises/exercise-group'
-import { ImgMaxWidthDiv } from '../components/content/img-max-width-div'
 import { LicenseNotice } from '../components/content/license-notice'
 import { Link } from '../components/content/link'
 import { SpoilerTitle } from '../components/content/spoiler-title'
@@ -22,6 +21,7 @@ import { Injection } from '@/components/content/injection'
 import { Lazy } from '@/components/content/lazy'
 import { MathSpanProps } from '@/components/content/math-span'
 import { Multimedia } from '@/components/content/multimedia'
+import { Snack } from '@/components/content/snack'
 import { Video } from '@/components/content/video'
 import { FrontendContentNode } from '@/data-types'
 import { submitEventWithPath } from '@/helper/submit-event'
@@ -171,8 +171,10 @@ function renderElement(props: RenderElementProps): React.ReactNode {
   const { element, children, path } = props
 
   if (element.type === 'a') {
+    const isOnProfile =
+      path && typeof path[0] === 'string' && path[0].startsWith('profile')
     return (
-      <Link href={element.href} path={path}>
+      <Link href={element.href} path={path} unreviewed={isOnProfile}>
         {children}
       </Link>
     )
@@ -183,10 +185,13 @@ function renderElement(props: RenderElementProps): React.ReactNode {
   if (element.type === 'math') {
     const nowrap = /\\begin *{(array|aligned)}/.test(element.formula)
     const addDisplaystile = !/\\displaystyle[^a-z]/.test(element.formula)
-    // alignLeft is assumed to be always true
     return (
       <div
-        className={clsx('serlo-math-wrapper', { 'whitespace-nowrap': nowrap })}
+        className={clsx(
+          'serlo-math-wrapper',
+          { 'whitespace-nowrap': nowrap },
+          element.alignCenter && 'text-center'
+        )}
       >
         <Lazy slim>
           <Math
@@ -237,13 +242,24 @@ function renderElement(props: RenderElementProps): React.ReactNode {
       }
       return comp
     }
+
+    /*
+
+    export const ImgMaxWidthDiv = styled.div<{ maxWidth: number }>`
+  ${(props) => (props.maxWidth > 0 ? `max-width: ${props.maxWidth}px` : '')}
+`
+
+*/
     return (
       <div
         className="serlo-image-centered"
         itemScope
         itemType="http://schema.org/ImageObject"
       >
-        <ImgMaxWidthDiv maxWidth={element.maxWidth ? element.maxWidth : 0}>
+        <div
+          style={element.maxWidth ? { maxWidth: element.maxWidth } : {}}
+          className="mx-auto"
+        >
           {wrapInA(
             <Lazy>
               <img
@@ -254,7 +270,7 @@ function renderElement(props: RenderElementProps): React.ReactNode {
               ></img>
             </Lazy>
           )}
-        </ImgMaxWidthDiv>
+        </div>
       </div>
     )
   }
@@ -325,7 +341,15 @@ function renderElement(props: RenderElementProps): React.ReactNode {
     )
   }
   if (element.type === 'anchor') {
-    return <a id={element.id.toString()} />
+    const match = /\{\{snack ([0-9]+)\}\}/.exec(element.id)
+
+    if (match) {
+      const id = match[1]
+
+      return <Snack id={parseInt(id)} />
+    }
+
+    return <a id={element.id} />
   }
   if (element.type === 'injection') {
     return (

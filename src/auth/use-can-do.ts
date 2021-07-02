@@ -4,12 +4,11 @@ import {
   instanceToScope,
 } from '@serlo/authorization'
 
-import { useAuthorizationPayload } from '@/contexts/authorization-payload-context'
+import { useAuth } from '@/auth/auth-provider'
 import { useInstanceData } from '@/contexts/instance-context'
 
 export function useCanDo() {
-  // TODO: this should also work if authorization === null
-  const authorizationPayload = useAuthorizationPayload()
+  const { authorizationPayload } = useAuth()
   const instance = useInstanceData()
   const scope = instanceToScope(instance.lang as Instance)
 

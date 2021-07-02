@@ -10,14 +10,18 @@ export function ToastNotice() {
   const { strings } = useInstanceData()
 
   function removeHash() {
-    history.replaceState(null, '', window.location.href.split('#')[0])
+    history.replaceState(
+      null,
+      document.title,
+      window.location.pathname + window.location.search
+    )
   }
 
   const showTime = 4000
 
   useEffect(() => {
     if (window.location.hash === '#auth') {
-      removeHash()
+      setTimeout(removeHash, 3000)
       showToastNotice(
         auth.current
           ? strings.notices.welcome.replace('%username%', auth.current.username)
@@ -25,6 +29,10 @@ export function ToastNotice() {
         'default',
         showTime
       )
+      if (!auth.current) {
+        //// quick fix: force legacy logout
+        // fetch('/auth/logout', { credentials: 'same-origin' }).catch(() => {})
+      }
     }
 
     //Temporary helpers until we use mutations and or implement edtr into the frontend directly
@@ -43,6 +51,15 @@ export function ToastNotice() {
         return 'Are aliens real?'
       }
       showToastNotice(getText(), 'default', showTime)
+
+      setTimeout(() => {
+        window.location.hash = '#flush-legacy'
+        window.location.reload()
+      }, 1000)
+    }
+
+    if (window.location.hash === '#profile-refresh') {
+      showToastNotice(strings.loading.oneMomentPlease, 'default', showTime)
 
       setTimeout(() => {
         window.location.hash = '#flush-legacy'

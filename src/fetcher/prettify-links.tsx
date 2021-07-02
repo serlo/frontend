@@ -71,7 +71,7 @@ export async function prettifyLinks(pageData: SlugPageData) {
           if (prereq) {
             const id =
               typeof prereq.id === 'string' ? parseInt(prereq.id) : prereq.id
-            prereq.href = `/${prereq.id}` //fallback
+            prereq.href = `/${prereq.id ?? ''}` //fallback
             if (id && Number.isInteger(id)) {
               ids.push(id)
               callbacks.push({

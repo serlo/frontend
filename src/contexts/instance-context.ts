@@ -9,7 +9,7 @@ export const InstanceDataProvider = InstanceDataContext.Provider
 export function useInstanceData() {
   const data = useContext(InstanceDataContext)
   if (!data) {
-    throw 'Attempt to use instance data outside of provider!'
+    throw new Error('Attempt to use instance data outside of provider!')
   }
   return data
 }

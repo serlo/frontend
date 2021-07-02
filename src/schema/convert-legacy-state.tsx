@@ -10,6 +10,7 @@ import {
   FrontendThNode,
   FrontendTextNode,
   FrontendInlineMathNode,
+  FrontendMathNode,
 } from '@/data-types'
 
 // Result of the htmlparser
@@ -187,7 +188,6 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
             type: 'math',
             formula: sanitizeLatex(formula),
             formulaSource: formula,
-            alignLeft: true,
           },
         ]
       }
@@ -246,7 +246,6 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
         return [
           {
             type: 'math',
-            alignLeft: true,
             formula: (inlineMaths[0] as FrontendInlineMathNode).formula,
             formulaSource: (inlineMaths[0] as FrontendInlineMathNode)
               .formulaSource,
@@ -552,7 +551,8 @@ function unwrapSingleMathInline(children: FrontendContentNode[]) {
       child.children?.length == 1 &&
       child.children[0].type == 'inline-math'
     ) {
-      ;(child.children[0] as any).type = 'math'
+      // force conversion to math node
+      ;(child.children[0] as unknown as FrontendMathNode).type = 'math'
       return child.children[0]
     }
     return child

@@ -1,7 +1,4 @@
-import cookie from 'cookie'
-
 import { HeaderData } from '@/data-types'
-import { serloDomain } from '@/helper/serlo-domain'
 
 export function getAuthData(
   loggedIn: boolean,
@@ -30,21 +27,5 @@ export function getAuthData(
 }
 
 export function shouldUseNewAuth() {
-  if (serloDomain !== 'serlo.org') {
-    return true
-  } else {
-    try {
-      const cookies = cookie.parse(
-        typeof window === 'undefined' ? '' : document.cookie
-      )
-      if (cookies['useFrontend'] == 'always') return true
-      const prob = parseFloat(cookies['useFrontend'])
-      if (prob === 0) {
-        return true
-      }
-    } catch (e) {
-      // ignore
-    }
-  }
-  return false
+  return true
 }

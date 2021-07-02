@@ -8,7 +8,7 @@ import { Link } from '../content/link'
 import { SubButtonStyle } from '../user-tools/sub-button-style'
 import { getAvatarUrl } from '../user/user-link'
 import { SubLink } from './sub-link'
-import { AuthenticationPayload } from '@/auth/use-authentication'
+import { AuthenticationPayload } from '@/auth/auth-provider'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -34,8 +34,9 @@ export interface MenuProps {
 }
 
 export function Menu(props: MenuProps) {
-  const [Tippy, setTippy] =
-    useState<typeof import('@tippyjs/react') | null>(null)
+  const [Tippy, setTippy] = useState<typeof import('@tippyjs/react') | null>(
+    null
+  )
   useEffect(() => {
     void import('@tippyjs/react').then((value) => setTippy(value))
   }, [])
@@ -64,8 +65,8 @@ function MenuInner({
   target,
 }: MenuProps & {
   Tippy?: typeof import('@tippyjs/react')
-  source?: any
-  target?: any
+  source?: TippyProps['singleton']
+  target?: TippyProps['singleton']
 }) {
   //
   const [mounted, setMounted] = useState(!shouldUseNewAuth())

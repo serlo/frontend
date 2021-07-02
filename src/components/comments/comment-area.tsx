@@ -34,8 +34,9 @@ export type CommentsData = CommentType[]
 export type ThreadsData = ThreadType[]
 
 export function CommentArea({ id: entityId, noForms }: CommentAreaProps) {
-  const [highlightedCommentId, setHighlightedCommentId] =
-    useState<number | undefined>(undefined)
+  const [highlightedCommentId, setHighlightedCommentId] = useState<
+    number | undefined
+  >(undefined)
   const container = useRef<HTMLDivElement>(null)
   const { strings } = useInstanceData()
   const auth = useAuthentication()
@@ -58,7 +59,7 @@ export function CommentArea({ id: entityId, noForms }: CommentAreaProps) {
   }, [showAll, container, entityId])
 
   return (
-    <div ref={container} className="serlo-print-hidden">
+    <div ref={container} className="print:hidden">
       <Guard data={commentData} error={error}>
         <>
           {renderStartThreadForm()}

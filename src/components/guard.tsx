@@ -26,7 +26,7 @@ export function Guard({ children, data, error, needsAuth }: GuardProps) {
   if (needsAuth && auth.current === null) return <PleaseLogIn />
 
   if (!data && !error) return <LoadingSpinner noText />
-  if (error) return <LoadingError error={error} />
+  if (error) return <LoadingError error={error.toString()} />
   if (data && children) return children
   return null
 }

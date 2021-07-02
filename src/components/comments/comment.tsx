@@ -3,6 +3,7 @@ import clsx from 'clsx'
 import dynamic from 'next/dynamic'
 import * as React from 'react'
 
+import { Link } from '../content/link'
 import { MathSpanProps } from '../content/math-span'
 import { MetaBar } from './meta-bar'
 import { replaceWithJSX } from '@/helper/replace-with-jsx'
@@ -40,15 +41,14 @@ export function Comment({
     r1,
     /(https?:\/\/(?:www\.)?(?:[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b)(?:[-a-zA-Z0-9()@:%_+~#?&//=]*))/g,
     (str, i) => (
-      <a
+      <Link
         key={`link-${i}`}
         href={str}
-        rel="ugc nofollow noreferrer"
-        target="_blank"
         className="serlo-link break-all"
+        unreviewed
       >
         {str}
-      </a>
+      </Link>
     )
   )
 

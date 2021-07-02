@@ -37,7 +37,7 @@ export interface ShareData {
 export function ShareModal({ open, onClose, contentId }: ShareModalProps) {
   const shareInputRef = React.useRef<HTMLInputElement>(null)
   const [copySuccess, setCopySuccess] = React.useState('')
-  const { strings } = useInstanceData()
+  const { strings, lang } = useInstanceData()
   const id = React.useContext(EntityIdContext)
 
   if (!open) return null
@@ -98,7 +98,6 @@ export function ShareModal({ open, onClose, contentId }: ShareModalProps) {
       title: 'Mebis',
       icon: faCompass,
       href: 'copy',
-      //TODO: Translate
       text: 'Link in die Zwischenablage kopiert. Einfach auf <a href="https://www.mebis.bayern.de/">mebis</a> einfügen!',
     },
   ]
@@ -119,14 +118,23 @@ export function ShareModal({ open, onClose, contentId }: ShareModalProps) {
           <Button onClick={copyToClipboard} as="button">
             <FontAwesomeIcon icon={faCopy} /> {strings.share.copyLink}
           </Button>
-          {copySuccess !== '' && <Gray>{copySuccess}&nbsp;</Gray>}
+          {copySuccess !== '' && (
+            <Gray
+              dangerouslySetInnerHTML={{ __html: copySuccess + '&nbsp;' }}
+            />
+          )}
           <br />
         </>
       )}{' '}
       <ButtonWrapper>
         {buildButtons(socialShare, copyToClipboard)}
       </ButtonWrapper>
-      <ButtonWrapper>{buildButtons(lmsShare, copyToClipboard)}</ButtonWrapper>
+      <ButtonWrapper>
+        {buildButtons(
+          lang === 'de' ? lmsShare : [lmsShare[0]], //mebis only in de
+          copyToClipboard
+        )}
+      </ButtonWrapper>
     </ModalWithCloseButton>
   )
 }
@@ -154,7 +162,12 @@ function buildButtons(
       return (
         <Button
           as="button"
-          onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+          onClick={(
+            event: React.MouseEvent<
+              /*HTMLButtonElement (note: as-construct is breaking the type here)*/ any,
+              MouseEvent
+            >
+          ) => {
             copyToClipboard(event, entry.text)
           }}
           key={entry.title}
