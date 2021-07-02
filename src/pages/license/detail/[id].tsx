@@ -23,7 +23,6 @@ export const getStaticProps: GetStaticProps<LicenseDetailProps> = async (
   const id = parseInt(context.params?.id as string)
 
   const licenseData = isNaN(id) ? undefined : await requestLicensePage(id)
-  // todo: return notFound if id is invalid
 
   return {
     props: {

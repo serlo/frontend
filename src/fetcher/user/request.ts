@@ -20,7 +20,7 @@ export async function requestUser(
   })
 
   if (uuid.__typename === 'User') {
-    // TODO: Need to be implemented in the API
+    // stub: Need to be implemented in the API
     const chatName = uuid.username === 'Kulla' ? 'kulla' : uuid.username
 
     return {
@@ -28,7 +28,7 @@ export async function requestUser(
       newsletterPopup: false,
       userData: {
         ...uuid,
-        // TODO: request this from API
+        // stub: request this from API
         motivation:
           uuid.username === 'Kulla'
             ? 'Mein Ziel bei Serlo: Jedes Kind / jeder Jugendliche soll unabhängig der finanziellen Möglichkeiten seiner Familie optimal auf seinem Bildungsweg unterstützt werden.'

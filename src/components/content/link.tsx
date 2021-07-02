@@ -19,7 +19,8 @@ export interface LinkProps {
   unreviewed?: boolean // e.g. user profiles or comments
 }
 
-//TODO: Should come from cloudflare worker https://github.com/serlo/frontend/issues/328
+//Note: Previous discussion about dynamic fetching https://github.com/serlo/frontend/issues/328
+//but dismissed because of complexity and little gain
 const legacyLinks = [
   '/privacy',
   '/datenschutz',

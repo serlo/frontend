@@ -46,7 +46,6 @@ export function UnreadNotificationsCount({
           style={{ height: '1.45rem', width: '1.25rem', paddingTop: '0' }}
         />
       )}
-      {/* TODO: Think about better css styling here? */}
       <span
         className={clsx(
           'block text-sm absolute -mt-0.25 text-white',
