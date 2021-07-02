@@ -49,7 +49,6 @@ export function ManageSubscriptions({
                 <Link href={entry.alias ?? ''}>{title}</Link>
               </td>
               <td className="serlo-td text-center">
-                {/* TODO: We need info from the API how this is currently set */}
                 <button
                   className="serlo-button serlo-make-interactive-light mx-0 my-auto text-base"
                   onClick={() => {

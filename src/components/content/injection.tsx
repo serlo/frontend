@@ -10,8 +10,6 @@ export interface InjectionProps {
   renderNested: RenderNestedFunction
 }
 
-// TODO: Give injection a separate fetched data type
-
 export function Injection({ href, renderNested }: InjectionProps) {
   const [value, setValue] = useState<FrontendContentNode[] | undefined>(
     undefined

@@ -33,7 +33,7 @@ export function TimeAgo({ datetime, dateAsTitle, className }: TimeAgoProps) {
       locale={lang}
       opts={{ minInterval: 60 }}
       className={className}
-      // TODO: Delete when https://github.com/hustcc/timeago-react/pull/37 got merged
+      // see: https://github.com/hustcc/timeago-react/pull/37
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
       title={dateAsTitle ? datetime.toLocaleString(lang) : undefined}
