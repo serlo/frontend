@@ -87,11 +87,8 @@ export function CommunityWall() {
   ])
 
   useEffect(() => {
-    const newPersons = [...persons]
-    shuffleArray(newPersons)
-    setPersons(newPersons)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    setPersons(shuffleArray(persons))
+  }, []) // eslint-line react-hooks/exhaustive-deps
 
   return (
     <section className="overflow-hidden">

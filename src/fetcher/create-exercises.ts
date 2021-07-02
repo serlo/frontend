@@ -33,7 +33,9 @@ export function createExercise(
             answer.content = convert(answer.content as any)
             answer.originalIndex = i
           })
-          shuffleArray(taskState.interactive.state.answers)
+          taskState.interactive.state.answers = shuffleArray(
+            taskState.interactive.state.answers
+          )
         } else if (taskState.interactive?.plugin == 'inputExercise') {
           taskState.interactive.state.answers.forEach((answer) => {
             answer.feedback = convert(answer.feedback as any)
