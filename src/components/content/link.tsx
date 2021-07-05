@@ -19,7 +19,7 @@ export interface LinkProps {
   unreviewed?: boolean // e.g. user profiles or comments
 }
 
-//TODO: Should come from cloudflare worker https://github.com/serlo/frontend/issues/328
+// note: Previous discussion about fetching this dynamically https://github.com/serlo/frontend/issues/328
 const legacyLinks = [
   '/privacy',
   '/datenschutz',

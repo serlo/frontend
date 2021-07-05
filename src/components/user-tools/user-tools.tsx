@@ -127,9 +127,6 @@ export function UserTools({
   }
 
   function renderEdit() {
-    // TODO!!! Check permissions. createEntityRevision / editTaxonomy ?
-    // show history should only available to people who are able to create revision ? (= guest)
-
     const showHistory = unrevisedRevision !== undefined && unrevisedRevision > 0
 
     if (showHistory) {

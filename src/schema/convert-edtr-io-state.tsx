@@ -272,7 +272,7 @@ function convertSlate(node: SlateBlockElement) {
         type: 'math',
         formula: sanitizeLatex(node.src),
         formulaSource: node.src,
-        /* alignLeft: true -  the frontend always renders left aligned */
+        alignCenter: true,
       },
     ]
   }

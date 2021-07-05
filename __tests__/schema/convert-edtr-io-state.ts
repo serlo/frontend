@@ -457,7 +457,12 @@ describe('text types', () => {
           children: [{ type: 'math', src: '123' }],
         })
         expect(result).toEqual([
-          { type: 'math', formula: '\\sf 123', formulaSource: '123' },
+          {
+            type: 'math',
+            formula: '\\sf 123',
+            formulaSource: '123',
+            alignCenter: true,
+          },
         ])
       })
       test('has sibling', () => {
@@ -466,7 +471,12 @@ describe('text types', () => {
           children: [{ type: 'math', src: '123' }, { text: 'brother' }],
         })
         expect(result).toEqual([
-          { type: 'math', formula: '\\sf 123', formulaSource: '123' },
+          {
+            type: 'math',
+            formula: '\\sf 123',
+            formulaSource: '123',
+            alignCenter: true,
+          },
           {
             type: 'p',
             children: [{ type: 'text', text: 'brother' }],
@@ -574,6 +584,7 @@ describe('text types', () => {
         type: 'math',
         formula: '\\sf Math Block',
         formulaSource: 'Math Block',
+        alignCenter: true,
       },
     ])
   })
