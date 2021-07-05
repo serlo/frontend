@@ -111,6 +111,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
       url: `/entity/taxonomy/update/${entityId}`,
       title: loggedInStrings.authorMenu.editAssignments,
       canDo:
+        !(data.type === '_ExerciseInline' && data.grouped) &&
         canDo(TaxonomyTerm.set) &&
         canDo(TaxonomyTerm.orderChildren) &&
         canDo(TaxonomyTerm.addChild) &&
