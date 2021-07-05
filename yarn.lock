@@ -1422,6 +1422,13 @@
     "@types/styled-components" "^5.0.0"
     ramda "^0.27.0"
 
+"@elbotho/timeago-react@^3.0.0":
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/@elbotho/timeago-react/-/timeago-react-3.0.3.tgz#6816246eae64a69ca7e7232af8c8f4f656640f82"
+  integrity sha512-00ZbTLmc0ycxqzNbRq8LPIbAVoCBzLB1dmbQi/piv6rR8vGhrKFfpE6+VXgDigAF39FQHttGlhIydeNhbsDEVQ==
+  dependencies:
+    timeago.js "^4.0.0"
+
 "@emotion/cache@^10.0.27":
   version "10.0.29"
   resolved "https://registry.yarnpkg.com/@emotion/cache/-/cache-10.0.29.tgz#87e7e64f412c060102d589fe7c6dc042e6f9d1e0"
@@ -9349,13 +9356,6 @@ through@^2.3.6:
   version "2.3.8"
   resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
   integrity sha1-DdTJ/6q8NXlgsbckEV1+Doai4fU=
-
-timeago-react@^3.0.0:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/timeago-react/-/timeago-react-3.0.2.tgz#1bd8b86c37c93bcd6a4340fea340e6c9c2bdd4e0"
-  integrity sha512-K+NqoRcE13xv7lrmHtZmy7G+yXF8ZxmuwRK/EGKyT1chpI3zmV6YnB5o9+slnOCq1dXuQJknr/hWjINyP7C9LA==
-  dependencies:
-    timeago.js "^4.0.0"
 
 timeago.js@^4.0.0:
   version "4.0.2"
