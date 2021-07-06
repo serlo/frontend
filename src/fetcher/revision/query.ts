@@ -101,6 +101,10 @@ export const revisionQuery = gql`
               id
               content
             }
+            license {
+              id
+              title
+            }
             solution {
               id
               currentRevision {
