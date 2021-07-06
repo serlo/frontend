@@ -350,7 +350,6 @@ const DiffViewerWrapper = styled.div<{ split?: boolean }>`
     props.split &&
     css`
       td {
-        width: 50%;
         max-width: 45vw;
         overflow: scroll;
       }
