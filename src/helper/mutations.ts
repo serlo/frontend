@@ -86,7 +86,7 @@ export function useRevisionMutation() {
 
   const revisionMutation = async function (
     mode: RevisionMutationMode,
-    repositoryId: number,
+    repositoryAlias: string,
     input: RejectRevisionInput
   ) {
     const isCheckout = mode === 'checkout'
@@ -106,19 +106,16 @@ export function useRevisionMutation() {
       }, 200)
       setTimeout(() => {
         NProgress.done()
-        void router.push(
-          '/[[...slug]]',
-          `/entity/repository/history/${repositoryId}`
-        )
+        void router.push('/[[...slug]]', repositoryAlias)
       }, 3000)
     }
     return success
   }
   return async (
     mode: RevisionMutationMode,
-    repositoryId: number,
+    repositoryAlias: string,
     input: RejectRevisionInput | CheckoutRevisionInput
-  ) => await revisionMutation(mode, repositoryId, input)
+  ) => await revisionMutation(mode, repositoryAlias, input)
 }
 
 export function useSetNotificationStateMutation() {

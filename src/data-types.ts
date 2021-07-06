@@ -292,7 +292,11 @@ export interface RevisionData {
   date: string
   type: EntityTypes
   user: FrontendUserData
-  repositoryId: number
+  repository: {
+    id: number
+    alias?: string
+    parentId?: number
+  }
   thisRevision: {
     id: number
     trashed: boolean

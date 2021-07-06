@@ -66,7 +66,7 @@ const UserImage = styled.img`
   vertical-align: middle;
 `
 
-const BadgesWrap = styled.div`
+const BadgesWrap = styled.span`
   display: inline-block;
   vertical-align: sub;
   margin-left: 3px;

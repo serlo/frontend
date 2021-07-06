@@ -1,5 +1,6 @@
 import {
   faClock,
+  faList,
   faPencilAlt,
   faShareAlt,
   faTools,
@@ -7,7 +8,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, cloneElement } from 'react'
 
 import { LazyTippy } from '../navigation/lazy-tippy'
 import { AuthorToolsData } from './author-tools-hover-menu'
@@ -95,12 +96,17 @@ export function UserTools({
     return (
       <nav
         className={clsx(
-          'absolute right-8 bottom-8 h-full',
-          'lg:flex hidden items-end',
+          'absolute z-50 right-8 bottom-8 h-full',
+          'lg:flex hidden items-end pointer-events-none',
           fadeIn()
         )}
       >
-        <div className="sticky bottom-8 flex-col flex items-start">
+        <div
+          className={clsx(
+            'sticky bottom-8 flex-col flex items-start',
+            'bg-white rounded-md pointer-events-auto'
+          )}
+        >
           {renderButtons()}
         </div>
       </nav>
@@ -115,10 +121,11 @@ export function UserTools({
       return null
     }
 
-    return data.type === 'Profile' ? (
-      renderProfileButtons()
-    ) : (
+    if (data.type === 'Profile') return renderProfileButtons()
+
+    return (
       <>
+        {data.type === 'Revision' && renderRevisionTools()}
         {(!hideEdit || auth.current) && renderEdit()}
         {renderShare()}
         {auth.current && renderExtraTools()}
@@ -160,6 +167,24 @@ export function UserTools({
           faClock
         )}
       </a>
+    )
+  }
+
+  function renderRevisionTools() {
+    // cloneElement seems to be the accepted way to add additional props to an inherited component.
+    return (
+      <>
+        {data.checkoutRejectButtons &&
+          cloneElement(data.checkoutRejectButtons, {
+            buttonStyle: buttonClassName(),
+          })}
+        <a
+          href={`/entity/repository/history/${data.id}`}
+          className={buttonClassName()}
+        >
+          {renderInner(strings.pageTitles.revisionHistory, faList)}
+        </a>
+      </>
     )
   }
 
