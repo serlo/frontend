@@ -36,6 +36,8 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
   }, [])
 
   const lic = useLoggedInComponents()
+  const isRevisionView =
+    path && typeof path[0] === 'string' && path[0].startsWith('revision')
 
   return (
     <div
@@ -148,6 +150,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
             }-${node.positionInGroup ? node.positionInGroup : ''}-`}
             renderNested={renderNested}
             path={path}
+            isRevisionView={isRevisionView}
           />
         )
       }
@@ -157,6 +160,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
             data={state.interactive.state}
             path={path}
             renderNested={renderNested}
+            isRevisionView={isRevisionView}
           />
         )
       }
@@ -164,6 +168,8 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
   }
 
   function renderToolsButton() {
+    if (isRevisionView) return null
+
     const Comp = lic?.ExerciseAuthorTools
     return (
       <>

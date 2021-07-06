@@ -14,6 +14,7 @@ export interface InputExerciseProps {
   data: EdtrPluginInputExercise['state']
   path?: NodePath
   renderNested: RenderNestedFunction
+  isRevisionView?: boolean
 }
 
 interface FeedbackData {
@@ -25,12 +26,11 @@ export function InputExercise({
   data,
   path,
   renderNested,
+  isRevisionView,
 }: InputExerciseProps) {
   const [feedback, setFeedback] = useState<FeedbackData | null>(null)
   const [value, setValue] = useState('')
   const [A, setA] = useState<typeof import('algebra.js') | null>(null)
-  const isRevisionView =
-    path && typeof path[0] === 'string' && path[0].startsWith('revision')
   const { strings } = useInstanceData()
 
   useEffect(() => {

@@ -17,6 +17,7 @@ export interface ScMcExerciseProps {
   idBase: string
   renderNested: RenderNestedFunction
   path?: NodePath
+  isRevisionView?: boolean
 }
 
 export function ScMcExercise({
@@ -24,11 +25,10 @@ export function ScMcExercise({
   idBase,
   renderNested,
   path,
+  isRevisionView,
 }: ScMcExerciseProps) {
   const { strings } = useInstanceData()
   const answers = state.answers.slice(0)
-  const isRevisionView =
-    path && typeof path[0] === 'string' && path[0].startsWith('revision')
   const [selected, setSelected] = useState<number | undefined>(undefined)
   const [showFeedback, setShowFeedback] = useState(false)
   const [focused, setFocused] = useState<number | undefined>(undefined)
