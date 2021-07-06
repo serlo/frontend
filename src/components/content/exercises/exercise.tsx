@@ -168,7 +168,13 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
     return (
       <>
         {loaded && auth.current && Comp && (
-          <Comp data={{ type: '_ExerciseInline', id: node.context.id }} />
+          <Comp
+            data={{
+              type: '_ExerciseInline',
+              id: node.context.id,
+              grouped: node.grouped,
+            }}
+          />
         )}
       </>
     )
