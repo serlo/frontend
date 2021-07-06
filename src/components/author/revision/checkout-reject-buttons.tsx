@@ -31,14 +31,12 @@ export function CheckoutRejectButtons({
   if (isCurrent) return null
   const { strings } = loggedInData
 
-  const confirmActive = reason.length > 0
-
   function onCloseClick() {
     setModalMode(null)
   }
 
   function onConfirm() {
-    if (modalMode && confirmActive) {
+    if (modalMode) {
       void revisionMutation(modalMode, repositoryAlias, {
         revisionId,
         reason,
@@ -101,7 +99,7 @@ export function CheckoutRejectButtons({
             }}
             onKeyDown={onKeyDown}
           />
-          <ConfirmButton disabled={!confirmActive} onClick={onConfirm}>
+          <ConfirmButton onClick={onConfirm}>
             {strings.revisions.confirm}
           </ConfirmButton>
         </Parapgraph>
