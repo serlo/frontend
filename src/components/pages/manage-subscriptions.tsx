@@ -12,7 +12,10 @@ import { useSubscriptionSetMutation } from '@/helper/mutations'
 export function ManageSubscriptions({
   subscriptions,
 }: {
-  subscriptions: QueryResponse[]
+  subscriptions: {
+    object: QueryResponse
+    sendEmail: boolean
+  }[]
 }) {
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
@@ -31,35 +34,37 @@ export function ManageSubscriptions({
         </tr>
       </thead>
       <tbody>
-        {subscriptions.map((entry) => {
+        {subscriptions.map(({ object, sendEmail }) => {
           const entityString = getEntityStringByTypename(
-            entry.__typename,
+            object.__typename,
             strings
           )
-          const title = getRawTitle(entry, 'de') ?? entityString
-          const icon = getIconByTypename(entry.__typename)
+          const title = getRawTitle(object, 'de') ?? entityString
+          const icon = getIconByTypename(object.__typename)
 
           return (
-            <tr key={entry.id}>
+            <tr key={object.id}>
               <td className="serlo-td">
                 <span title={entityString}>
                   {' '}
                   <FontAwesomeIcon className="text-brand" icon={icon} />{' '}
                 </span>
-                <Link href={entry.alias ?? ''}>{title}</Link>
+                <Link href={object.alias ?? ''}>{title}</Link>
               </td>
               <td className="serlo-td text-center">
                 <button
                   className="serlo-button serlo-make-interactive-light mx-0 my-auto text-base"
                   onClick={() => {
                     void setSubscription({
-                      id: [entry.id],
+                      id: [object.id],
                       subscribe: true,
-                      sendEmail: false,
+                      sendEmail: !sendEmail,
                     })
                   }}
                 >
-                  {loggedInStrings.noMails}
+                  {sendEmail
+                    ? loggedInStrings.noMails
+                    : loggedInStrings.getMails}
                 </button>
               </td>
               <td className="serlo-td text-center">
@@ -67,7 +72,7 @@ export function ManageSubscriptions({
                   className="serlo-button serlo-make-interactive-light mx-0 my-auto text-base"
                   onClick={() => {
                     void setSubscription({
-                      id: [entry.id],
+                      id: [object.id],
                       subscribe: false,
                       sendEmail: false,
                     })
