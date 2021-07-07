@@ -1,17 +1,20 @@
 import {
   faClock,
+  faList,
   faPencilAlt,
   faShareAlt,
   faTools,
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { TaxonomyTerm, Uuid } from '@serlo/authorization'
 import clsx from 'clsx'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, cloneElement } from 'react'
 
 import { LazyTippy } from '../navigation/lazy-tippy'
 import { AuthorToolsData } from './author-tools-hover-menu'
 import { useAuthentication } from '@/auth/use-authentication'
+import { useCanDo } from '@/auth/use-can-do'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -43,6 +46,7 @@ export function UserTools({
   const auth = useAuthentication()
   const loggedInData = useLoggedInData()
   const lic = useLoggedInComponents()
+  const canDo = useCanDo()
 
   // note: we hide the ui on ssr and fade it in on the client
   const [firstPass, setFirstPass] = useState(true)
@@ -95,12 +99,17 @@ export function UserTools({
     return (
       <nav
         className={clsx(
-          'absolute right-8 bottom-8 h-full',
-          'lg:flex hidden items-end',
+          'absolute z-50 right-8 bottom-8 h-full',
+          'lg:flex hidden items-end pointer-events-none',
           fadeIn()
         )}
       >
-        <div className="sticky bottom-8 flex-col flex items-start">
+        <div
+          className={clsx(
+            'sticky bottom-8 flex-col flex items-start',
+            'bg-white rounded-md pointer-events-auto'
+          )}
+        >
           {renderButtons()}
         </div>
       </nav>
@@ -115,10 +124,11 @@ export function UserTools({
       return null
     }
 
-    return data.type === 'Profile' ? (
-      renderProfileButtons()
-    ) : (
+    if (data.type === 'Profile') return renderProfileButtons()
+
+    return (
       <>
+        {data.type === 'Revision' && renderRevisionTools()}
         {(!hideEdit || auth.current) && renderEdit()}
         {renderShare()}
         {auth.current && renderExtraTools()}
@@ -127,29 +137,42 @@ export function UserTools({
   }
 
   function renderEdit() {
-    // TODO!!! Check permissions. createEntityRevision / editTaxonomy ?
-    // show history should only available to people who are able to create revision ? (= guest)
-
     const showHistory = unrevisedRevision !== undefined && unrevisedRevision > 0
 
     if (showHistory) {
       return renderUnrevised()
     }
 
-    const editHref =
-      data.type == 'Page'
-        ? `/page/revision/create/${data.id}/${data.revisionId || ''}`
-        : data.type == 'Taxonomy'
-        ? `/taxonomy/term/update/${id}`
-        : data.type == 'Revision'
-        ? `/entity/repository/add-revision/${data.id}/${id}`
-        : `/entity/repository/add-revision/${id}`
+    const editHref = getEditHref()
+
+    if (!editHref) {
+      return null
+    }
 
     return (
       <a href={editHref} className={buttonClassName()}>
         {renderInner(strings.edit.button, faPencilAlt)}
       </a>
     )
+  }
+
+  function getEditHref(): string | undefined {
+    if (data.type == 'Page') {
+      if (canDo(Uuid.create('PageRevision'))) {
+        return `/page/revision/create/${data.id}/${data.revisionId || ''}`
+      }
+    } else if (data.type == 'Taxonomy') {
+      if (canDo(TaxonomyTerm.set)) {
+        return `/taxonomy/term/update/${id}`
+      }
+    } else {
+      if (canDo(Uuid.create('EntityRevision'))) {
+        return data.type == 'Revision'
+          ? `/entity/repository/add-revision/${data.id}/${id}`
+          : `/entity/repository/add-revision/${id}`
+      }
+    }
+    return
   }
 
   function renderUnrevised() {
@@ -163,6 +186,24 @@ export function UserTools({
           faClock
         )}
       </a>
+    )
+  }
+
+  function renderRevisionTools() {
+    // cloneElement seems to be the accepted way to add additional props to an inherited component.
+    return (
+      <>
+        {data.checkoutRejectButtons &&
+          cloneElement(data.checkoutRejectButtons, {
+            buttonStyle: buttonClassName(),
+          })}
+        <a
+          href={`/entity/repository/history/${data.id}`}
+          className={buttonClassName()}
+        >
+          {renderInner(strings.pageTitles.revisionHistory, faList)}
+        </a>
+      </>
     )
   }
 

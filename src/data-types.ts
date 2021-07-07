@@ -294,7 +294,11 @@ export interface RevisionData {
   date: string
   type: EntityTypes
   user: FrontendUserData
-  repositoryId: number
+  repository: {
+    id: number
+    alias?: string
+    parentId?: number
+  }
   thisRevision: {
     id: number
     trashed: boolean
@@ -392,7 +396,6 @@ export interface FrontendInlineMathNode {
   formula: string
   formulaSource?: string
   children?: undefined
-  debugOriginalFormula?: string
 }
 
 export interface FrontendPNode {
@@ -411,8 +414,8 @@ export interface FrontendMathNode {
   type: 'math'
   formula: string
   formulaSource?: string
-  alignLeft?: boolean
   children?: undefined
+  alignCenter?: boolean
 }
 
 export interface FrontendImgNode {

@@ -118,6 +118,7 @@ export interface GroupedExercise extends BareExercise {
   __typename: 'GroupedExercise'
   exerciseGroup: {
     alias: string
+    id: number
   }
 }
 

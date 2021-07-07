@@ -95,6 +95,8 @@ export const instanceData = {
       task: "कार्य",
       right: "सही!",
       wrong: "गलत",
+      feedback: 'Feedback',
+      answer: 'Answer',
       check: "जाँच करें",
       yourAnswer: "आपका उत्तर",
       chooseOption: "किसी एक विकल्प पर क्लिक करें",
@@ -137,13 +139,15 @@ export const instanceData = {
     },
     revisions: {
       toOverview: "अवलोकन पर वापस जाएं",
-      toContent: "Back to content",
+      toContent: "Go to content",
       changes: "परिवर्तन",
+      context: "Context (current version)",
       title: "शीर्षक",
       content: "सामग्री",
       metaTitle: "मेटा शीर्षक",
       metaDescription: "मेटा विवरण",
-      compare: "तुलना करें",
+      diff: "Source view",
+      sidebyside: "Side By Side",
       currentVersion: "वर्तमान संस्करण",
       thisVersion: "यह संस्करण",
       currentNotice: "यह वर्तमान में स्वीकृत संस्करण है।",
@@ -171,10 +175,11 @@ export const instanceData = {
     },
     profiles: {
       aboutMe: "मेरे बारे में",
-      activeSince: 'With Serlo since',
       recentActivities: "हाल की गतिविधि",
       showAllActivities: "समस्त गतिविधयाँ दिखाएँ",
       lastLogin: 'Last login',
+      yearsWithSerlo: 'Years with Serlo!',
+      yearWithSerlo: 'Year with Serlo!',
       roles: "भूमिकाएं",
       instanceRoles: 'Roles on %lang%.serlo.org:',
       otherRoles: 'Other roles:',
@@ -187,7 +192,9 @@ export const instanceData = {
           signIn: 'Sign in.',
           goToMyAccount: 'Go in the user menu to %myAccountLink%.',
           myAccount: 'My Account',
-          uploadPicture: 'Upload a new picture and click "Save changes".'
+          uploadPicture: 'Upload a new picture (make sure it is square) and click "Save changes".',
+          refreshPage: 'Come back here and refresh the image using %refreshLink%.',
+          refreshLink: 'this link'
         }
       }
     },
@@ -200,6 +207,7 @@ export const instanceData = {
       revisionSavedAccepted: "संशोधन सफलतापूर्वक सहेजा गया और स्वीकार किया गया  ✅"
     },
     loading: {
+      oneMomentPlease: 'One moment please…',
       isLoading: "सामग्री लोड हो रही है ...",
       unknownProblem: "क्षमा करें, सामग्री लोड करने में समस्या थी, कृपया बाद में पुनः प्रयास करें।"
     },
@@ -328,7 +336,10 @@ export const loggedInData = {
       mail: "ई-मेल",
       subscription: "सदस्यता",
       noMails: "निष्क्रिय करें ",
-      noNotifications: "रद्द करें"
+      getMails: "activate",
+      noNotifications: "रद्द करें",
+      loadedSentence: "Loaded %loadedCount% of %totalCount% subscriptions.",
+      loadMoreLink: "Load more!"
     },
     revisions: {
       checkout: {

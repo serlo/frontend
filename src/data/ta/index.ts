@@ -95,6 +95,8 @@ export const instanceData = {
       task: 'Task',
       right: "சரி",
       wrong: "பிழை",
+      feedback: 'Feedback',
+      answer: 'Answer',
       check: "சரிபார்க்கவும்",
       yourAnswer: "உங்கள் பதில்:",
       chooseOption: 'Click on one of the options.',
@@ -137,13 +139,15 @@ export const instanceData = {
     },
     revisions: {
       toOverview: "Back to overview",
-      toContent: "Back to content",
+      toContent: "Go to content",
       changes: "மாற்றங்கள்",
+      context: "Context (current version)",
       title: "தலைப்பு",
       content: "உட்பொருள்",
       metaTitle: "Meta Title",
       metaDescription: "Meta Description",
-      compare: "Compare",
+      diff: "Source view",
+      sidebyside: "Side By Side",
       currentVersion: "Current Version",
       thisVersion: "This Version",
       currentNotice: "This is the currently accepted version.",
@@ -171,10 +175,11 @@ export const instanceData = {
     },
     profiles: {
       aboutMe: 'About me',
-      activeSince: 'With Serlo since',
       recentActivities: 'Recent activities',
       showAllActivities: 'Show all activities',
       lastLogin: 'Last login',
+      yearsWithSerlo: 'Years with Serlo!',
+      yearWithSerlo: 'Year with Serlo!',
       roles: 'Roles',
       instanceRoles: 'Roles on %lang%.serlo.org:',
       otherRoles: 'Other roles:',
@@ -187,7 +192,9 @@ export const instanceData = {
           signIn: 'Sign in.',
           goToMyAccount: 'Go in the user menu to %myAccountLink%.',
           myAccount: 'My Account',
-          uploadPicture: 'Upload a new picture and click "Save changes".'
+          uploadPicture: 'Upload a new picture (make sure it is square) and click "Save changes".',
+          refreshPage: 'Come back here and refresh the image using %refreshLink%.',
+          refreshLink: 'this link'
         }
       }
     },
@@ -200,6 +207,7 @@ export const instanceData = {
       revisionSavedAccepted: 'Revision was successfully saved and accepted ✅'
     },
     loading: {
+      oneMomentPlease: 'One moment please…',
       isLoading: 'Content is loading…',
       unknownProblem: "Sorry, there was a problem loading the content, please try again later."
     },
@@ -328,7 +336,10 @@ export const loggedInData = {
       mail: "E-mails",
       subscription: "Subscription",
       noMails: "deactivate",
-      noNotifications: "cancel"
+      getMails: "activate",
+      noNotifications: "cancel",
+      loadedSentence: "Loaded %loadedCount% of %totalCount% subscriptions.",
+      loadMoreLink: "Load more!"
     },
     revisions: {
       checkout: {

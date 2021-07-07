@@ -1,7 +1,7 @@
 import { Instance } from '@serlo/api'
 import { GetStaticPaths, GetStaticProps } from 'next'
 
-import { Revision } from '@/components/author/revision'
+import { Revision } from '@/components/author/revision/revision'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { RevisionProps, RevisionPage } from '@/data-types'
 import { requestRevision } from '@/fetcher/revision/request'
@@ -11,6 +11,7 @@ export default renderedPageNoHooks<RevisionProps>(({ pageData }) => (
   <FrontendClientBase
     entityId={pageData.revisionData.thisRevision.id}
     authorization={pageData.authorization}
+    noContainers
   >
     <Revision data={pageData.revisionData} />
   </FrontendClientBase>

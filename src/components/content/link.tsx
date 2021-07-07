@@ -19,7 +19,7 @@ export interface LinkProps {
   unreviewed?: boolean // e.g. user profiles or comments
 }
 
-//TODO: Should come from cloudflare worker https://github.com/serlo/frontend/issues/328
+// note: Previous discussion about fetching this dynamically https://github.com/serlo/frontend/issues/328
 const legacyLinks = [
   '/privacy',
   '/datenschutz',
@@ -46,7 +46,6 @@ export function isLegacyLink(_href: string) {
     _href.startsWith('/page') ||
     _href.startsWith('/taxonomy') ||
     _href.startsWith('/discussions') ||
-    _href.startsWith('/subscriptions') || //disabled for zwischenrelease
     _href.startsWith('/subscription/update') ||
     _href.startsWith('/unsubscribe') ||
     _href.startsWith('/user/profile/') ||

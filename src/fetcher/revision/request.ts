@@ -1,3 +1,4 @@
+import { GroupedExerciseRevision, SolutionRevision } from '@serlo/api'
 import { AuthorizationPayload } from '@serlo/authorization'
 import { request } from 'graphql-request'
 
@@ -9,6 +10,7 @@ import {
   ArticleRevision,
   VideoRevision,
   QueryResponseRevision,
+  GroupedExercise,
 } from '../query-types'
 import { revisionQuery } from './query'
 import { endpoint } from '@/api/endpoint'
@@ -56,6 +58,7 @@ export async function requestRevision(
           }),
         ]
       : null
+
     const currentExercise =
       isExercise && uuid.repository.currentRevision
         ? [
@@ -96,14 +99,31 @@ export async function requestRevision(
           ]
         : null
 
+    const _typeNoRevision = uuid.__typename.replace('Revision', '')
+    const type = (_typeNoRevision.charAt(0).toLowerCase() +
+      _typeNoRevision.slice(1)) as EntityTypes
+
+    const parentId =
+      type === 'groupedExercise'
+        ? (uuid as GroupedExerciseRevision).repository.exerciseGroup.id
+        : type === 'solution'
+        ? (uuid as SolutionRevision).repository.exercise.id ||
+          (
+            (uuid as SolutionRevision).repository
+              .exercise as unknown as GroupedExercise
+          ).exerciseGroup?.id
+        : uuid.repository.id
+
     return {
       kind: 'revision',
       newsletterPopup: false,
       revisionData: {
-        type: uuid.__typename
-          .replace('Revision', '')
-          .toLowerCase() as EntityTypes,
-        repositoryId: uuid.repository.id,
+        type,
+        repository: {
+          id: uuid.repository.id,
+          alias: uuid.repository.alias || undefined,
+          parentId,
+        },
         typename: uuid.__typename,
         thisRevision: {
           id: uuid.id,
@@ -111,11 +131,7 @@ export async function requestRevision(
           title: (uuid as ArticleRevision).title,
           metaTitle: (uuid as ArticleRevision).metaTitle,
           metaDescription: (uuid as ArticleRevision).metaDescription,
-          content: thisExercise
-            ? thisExercise
-            : thisSolution
-            ? thisSolution
-            : convertState(uuid.content),
+          content: thisExercise || thisSolution || convertState(uuid.content),
           url: (uuid as VideoRevision).url,
         },
         currentRevision: {
@@ -125,11 +141,10 @@ export async function requestRevision(
             ?.metaTitle,
           metaDescription: (uuid as ArticleRevision).repository.currentRevision
             ?.metaDescription,
-          content: currentExercise
-            ? currentExercise
-            : currentSolution
-            ? currentSolution
-            : convertState(uuid.repository.currentRevision?.content),
+          content:
+            currentExercise ||
+            currentSolution ||
+            convertState(uuid.repository.currentRevision?.content),
           url: (uuid as VideoRevision).repository.currentRevision?.url,
         },
         changes: (uuid as ArticleRevision).changes,

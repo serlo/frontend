@@ -95,6 +95,8 @@ export const instanceData = {
       task: "Tarea",
       right: "Correcto",
       wrong: "Incorrecto",
+      feedback: 'Feedback',
+      answer: 'Answer',
       check: "Revisa tu respuesta",
       yourAnswer: "Tu respuesta...",
       chooseOption: "Elige una de las opciones.",
@@ -137,13 +139,15 @@ export const instanceData = {
     },
     revisions: {
       toOverview: "Volver a Vista general",
-      toContent: "Regresar al conenido",
+      toContent: "Go to content",
       changes: "Cambios",
+      context: "Context (current version)",
       title: "Título",
       content: "Contenido",
       metaTitle: "Meta Título",
       metaDescription: "Meta Descripción",
-      compare: "Comparar",
+      diff: "Source view",
+      sidebyside: "Side By Side",
       currentVersion: "Versión Actual",
       thisVersion: "Esta Versión",
       currentNotice: "Esta es la versión aceptada actualmente.",
@@ -171,10 +175,11 @@ export const instanceData = {
     },
     profiles: {
       aboutMe: "Sobre mi",
-      activeSince: "Con Serlo desde",
       recentActivities: "Actividades recientes",
       showAllActivities: "Mostrar todas las actividades",
       lastLogin: "Ultimo Inicio de sesion",
+      yearsWithSerlo: 'Years with Serlo!',
+      yearWithSerlo: 'Year with Serlo!',
       roles: "Roles (funciones)",
       instanceRoles: "Roles en %lang%.serlo.org",
       otherRoles: "Otros roles",
@@ -187,7 +192,9 @@ export const instanceData = {
           signIn: "Iniciar sesión",
           goToMyAccount: "Ir al menú de usuario a %myAccountLink%",
           myAccount: "Mi cuenta",
-          uploadPicture: "Sube una nueva foto y haz clic en \"Guardar cambios\"."
+          uploadPicture: 'Upload a new picture (make sure it is square) and click "Save changes".',
+          refreshPage: 'Come back here and refresh the image using %refreshLink%.',
+          refreshLink: 'this link'
         }
       }
     },
@@ -200,6 +207,7 @@ export const instanceData = {
       revisionSavedAccepted: "Revisión guardada y aceptada con éxito ✅"
     },
     loading: {
+      oneMomentPlease: 'One moment please…',
       isLoading: "El contenido está cargando…",
       unknownProblem: "Lo sentimos, hubo un problema al cargar el contenido, por favor inténtalo de nuevo más tarde."
     },
@@ -328,7 +336,10 @@ export const loggedInData = {
       mail: "Correo electrónico",
       subscription: "Suscripción",
       noMails: "desactivar",
-      noNotifications: "cancelar"
+      getMails: "activate",
+      noNotifications: "cancelar",
+      loadedSentence: "Loaded %loadedCount% of %totalCount% subscriptions.",
+      loadMoreLink: "Load more!"
     },
     revisions: {
       checkout: {

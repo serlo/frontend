@@ -86,7 +86,7 @@ export function useRevisionMutation() {
 
   const revisionMutation = async function (
     mode: RevisionMutationMode,
-    repositoryId: number,
+    repositoryAlias: string,
     input: RejectRevisionInput
   ) {
     const isCheckout = mode === 'checkout'
@@ -106,19 +106,16 @@ export function useRevisionMutation() {
       }, 200)
       setTimeout(() => {
         NProgress.done()
-        void router.push(
-          '/[[...slug]]',
-          `/entity/repository/history/${repositoryId}`
-        )
+        void router.push('/[[...slug]]', repositoryAlias)
       }, 3000)
     }
     return success
   }
   return async (
     mode: RevisionMutationMode,
-    repositoryId: number,
+    repositoryAlias: string,
     input: RejectRevisionInput | CheckoutRevisionInput
-  ) => await revisionMutation(mode, repositoryId, input)
+  ) => await revisionMutation(mode, repositoryAlias, input)
 }
 
 export function useSetNotificationStateMutation() {
@@ -138,7 +135,7 @@ export function useSetNotificationStateMutation() {
   ) {
     const success = await mutationFetch(auth, mutation, input)
 
-    // TODO: Maybe implement global cache key management, but this works okay
+    // note: Maybe implement global cache key management, but this works okay
 
     if (success) {
       const keys = cache.keys().filter(
@@ -307,7 +304,7 @@ export function useSubscriptionSetMutation() {
   const subscriptionSetMutation = async function (input: SubscriptionSetInput) {
     const success = await mutationFetch(auth, mutation, input)
 
-    // TODO: Reconstructing SWR keys here, we need a nice global solution how we handle SWR keys
+    // note: Reconstructing SWR keys here, we need a nice global solution how we handle SWR keys
     // see https://swr.vercel.app/docs/arguments and useGraphqlSwr(WithAuth)
 
     if (success) {
@@ -408,7 +405,6 @@ function handleError(type: ErrorType, e?: object): false {
   }
 
   if (type == 'UNAUTHENTICATED') {
-    // TODO: Hack, solve https://github.com/serlo/frontend/issues/851 instead
     csrReload()
   }
 

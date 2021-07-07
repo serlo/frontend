@@ -10,16 +10,18 @@ import { RevisionMutationMode, useRevisionMutation } from '@/helper/mutations'
 
 export interface CheckoutRejectButtonsProps {
   revisionId: number
-  repositoryId: number
+  repositoryAlias: string
   isRejected: boolean
   isCurrent: boolean
+  buttonStyle?: string
 }
 
 export function CheckoutRejectButtons({
   revisionId,
-  repositoryId,
+  repositoryAlias,
   isRejected,
   isCurrent,
+  buttonStyle,
 }: CheckoutRejectButtonsProps) {
   const loggedInData = useLoggedInData()
   const [modalMode, setModalMode] = useState<RevisionMutationMode | null>(null)
@@ -29,15 +31,13 @@ export function CheckoutRejectButtons({
   if (isCurrent) return null
   const { strings } = loggedInData
 
-  const confirmActive = reason.length > 0
-
   function onCloseClick() {
     setModalMode(null)
   }
 
   function onConfirm() {
-    if (modalMode && confirmActive) {
-      void revisionMutation(modalMode, repositoryId, {
+    if (modalMode) {
+      void revisionMutation(modalMode, repositoryAlias, {
         revisionId,
         reason,
       })
@@ -49,20 +49,29 @@ export function CheckoutRejectButtons({
   }
 
   return (
-    <div>
-      <CheckoutButton
+    <>
+      <button
+        className={buttonStyle}
         onClick={() => setModalMode('checkout')}
         onPointerUp={(e) => e.currentTarget.blur()}
       >
-        <FontAwesomeIcon icon={faCheck} /> {strings.revisions.checkout.action}
-      </CheckoutButton>
+        <FontAwesomeIcon icon={faCheck} className="lg:mr-0.5" />{' '}
+        {strings.revisions.checkout.action}
+      </button>
       {!isRejected && (
-        <RejectButton
+        <button
+          className={buttonStyle}
           onClick={() => setModalMode('reject')}
           onPointerUp={(e) => e.currentTarget.blur()}
         >
-          <FontAwesomeIcon icon={faTimes} /> {strings.revisions.reject.action}
-        </RejectButton>
+          &nbsp;
+          <FontAwesomeIcon
+            icon={faTimes}
+            size="1x"
+            className="lg:mr-0.5"
+          />{' '}
+          {strings.revisions.reject.action}
+        </button>
       )}
 
       <ModalWithCloseButton
@@ -74,7 +83,7 @@ export function CheckoutRejectButtons({
       >
         {renderModalContent()}
       </ModalWithCloseButton>
-    </div>
+    </>
   )
 
   function renderModalContent() {
@@ -90,7 +99,7 @@ export function CheckoutRejectButtons({
             }}
             onKeyDown={onKeyDown}
           />
-          <ConfirmButton disabled={!confirmActive} onClick={onConfirm}>
+          <ConfirmButton onClick={onConfirm}>
             {strings.revisions.confirm}
           </ConfirmButton>
         </Parapgraph>
@@ -98,21 +107,6 @@ export function CheckoutRejectButtons({
     )
   }
 }
-
-const CheckoutButton = styled.button`
-  ${makeLightButton}
-  &:hover {
-    background-color: ${(props) => props.theme.colors.brandGreen};
-  }
-  margin-right: 15px;
-`
-
-const RejectButton = styled.button`
-  ${makeLightButton}
-  &:hover {
-    background-color: #c56c6c;
-  }
-`
 
 const Parapgraph = styled.p`
   ${makeMargin}

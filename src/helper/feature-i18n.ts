@@ -154,6 +154,8 @@ export function getEntityStringByTypename(
     Event: strings.entities.event,
     Course: strings.entities.course,
     TaxonomyTerm: strings.entities.taxonomyTerm,
+    Solution: strings.entities.solution,
+    User: strings.entities.user,
     fallback: strings.entities.content,
   }
 

@@ -167,16 +167,24 @@ export function renderLeaf({ leaf, key, children }: RenderLeafProps) {
   )
 }
 
-function renderElement(props: RenderElementProps): React.ReactNode {
-  const { element, children, path } = props
+function renderElement({
+  element,
+  children,
+  path,
+}: RenderElementProps): React.ReactNode {
+  const isRevisionView =
+    typeof path[0] === 'string' && path[0].startsWith('revision')
 
   if (element.type === 'a') {
     const isOnProfile =
       path && typeof path[0] === 'string' && path[0].startsWith('profile')
     return (
-      <Link href={element.href} path={path} unreviewed={isOnProfile}>
-        {children}
-      </Link>
+      <>
+        <Link href={element.href} path={path} unreviewed={isOnProfile}>
+          {children}
+        </Link>
+        {renderRevisionExtra(isRevisionView, element)}
+      </>
     )
   }
   if (element.type === 'inline-math') {
@@ -185,10 +193,13 @@ function renderElement(props: RenderElementProps): React.ReactNode {
   if (element.type === 'math') {
     const nowrap = /\\begin *{(array|aligned)}/.test(element.formula)
     const addDisplaystile = !/\\displaystyle[^a-z]/.test(element.formula)
-    // alignLeft is assumed to be always true
     return (
       <div
-        className={clsx('serlo-math-wrapper', { 'whitespace-nowrap': nowrap })}
+        className={clsx(
+          'serlo-math-wrapper',
+          { 'whitespace-nowrap': nowrap },
+          element.alignCenter && 'text-center'
+        )}
       >
         <Lazy slim>
           <Math
@@ -227,14 +238,16 @@ function renderElement(props: RenderElementProps): React.ReactNode {
       if (element.href) {
         // needs investigation if this could be simplified
         return (
-          <Link
-            className="w-full block"
-            href={element.href}
-            path={path}
-            noExternalIcon
-          >
-            {comp}
-          </Link>
+          <>
+            <Link
+              className="w-full block"
+              href={element.href}
+              path={path}
+              noExternalIcon
+            >
+              {comp}
+            </Link>
+          </>
         )
       }
       return comp
@@ -264,9 +277,10 @@ function renderElement(props: RenderElementProps): React.ReactNode {
                 src={element.src}
                 alt={element.alt || 'Bild'}
                 itemProp="contentUrl"
-              ></img>
+              />
             </Lazy>
           )}
+          {renderRevisionExtra(isRevisionView, element)}
         </div>
       </div>
     )
@@ -342,18 +356,25 @@ function renderElement(props: RenderElementProps): React.ReactNode {
 
     if (match) {
       const id = match[1]
-
       return <Snack id={parseInt(id)} />
     }
 
-    return <a id={element.id} />
+    return (
+      <>
+        <a id={element.id} />
+        {renderRevisionExtra(isRevisionView, element)}
+      </>
+    )
   }
   if (element.type === 'injection') {
     return (
-      <Injection
-        href={element.href}
-        renderNested={(value, ...prefix) => renderNested(value, path, prefix)}
-      />
+      <>
+        <Injection
+          href={element.href}
+          renderNested={(value, ...prefix) => renderNested(value, path, prefix)}
+        />
+        {renderRevisionExtra(isRevisionView, element)}
+      </>
     )
   }
   if (element.type === 'exercise') {
@@ -407,11 +428,14 @@ function renderElement(props: RenderElementProps): React.ReactNode {
   }
   if (element.type === 'code') {
     return (
-      <Code
-        content={element.code}
-        language={element.language}
-        showLineNumbers={element.showLineNumbers}
-      />
+      <>
+        <Code
+          content={element.code}
+          language={element.language}
+          showLineNumbers={element.showLineNumbers}
+        />
+        {renderRevisionExtra(isRevisionView, element)}
+      </>
     )
   }
   return null
@@ -441,5 +465,39 @@ function SpoilerForEndUser({ body, title, path }: SpoilerForEndUserProps) {
       </SpoilerTitle>
       {open && body}
     </div>
+  )
+}
+
+function renderRevisionExtra(
+  isRevisionView: boolean,
+  element: FrontendContentNode
+) {
+  if (
+    !isRevisionView &&
+    ['a', 'img', 'anchor', 'injection', 'exercise', 'code'].includes(
+      element.type
+    )
+  )
+    return null
+
+  return (
+    <span className="text-sm px-1 bg-yellow-200">
+      {(element.type === 'a' || element.type === 'injection') && element.href}
+      {element.type === 'anchor' && element.id}
+      {element.type === 'code' &&
+        `${element.language || '(no language)'} ${
+          element.showLineNumbers ? '(with line numbers)' : ''
+        }`}
+      {element.type === 'img' && (
+        <>
+          {element.alt}{' '}
+          {element.href && (
+            <>
+              <b>href:</b> {element.href}
+            </>
+          )}
+        </>
+      )}
+    </span>
   )
 }

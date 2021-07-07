@@ -16,6 +16,7 @@ export interface AuthorToolsData {
   courseId?: number
   grouped?: boolean
   trashed?: boolean
+  checkoutRejectButtons?: JSX.Element
 }
 
 export interface AuthorToolsHoverMenuProps {

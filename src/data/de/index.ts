@@ -95,6 +95,8 @@ export const instanceData = {
       task: "Aufgabe",
       right: "Richtig",
       wrong: "Leider nicht richtig",
+      feedback: 'Feedback',
+      answer: "Antwort",
       check: "Stimmt's?",
       yourAnswer: "Deine Antwort…",
       chooseOption: "Klicke auf eine der Optionen.",
@@ -137,13 +139,15 @@ export const instanceData = {
     },
     revisions: {
       toOverview: "Zurück zur Übersicht",
-      toContent: "Zurück zum Inhalt",
+      toContent: "Zum Inhalt",
       changes: "Änderungen",
+      context: "Im Zusammenhang (akzeptierte Bearbeitung)",
       title: "Titel",
       content: "Inhalt",
       metaTitle: "Meta-Titel",
       metaDescription: "Meta-Beschreibung",
-      compare: "Vergleichen",
+      diff: "Quelltext",
+      sidebyside: "Nebeneinander",
       currentVersion: "Akzeptierte Bearbeitung",
       thisVersion: "Diese Bearbeitung",
       currentNotice: "Das ist die aktuell akzeptierte Bearbeitung.",
@@ -171,10 +175,11 @@ export const instanceData = {
     },
     profiles: {
       aboutMe: "Über mich",
-      activeSince: "Bei Serlo seit",
       recentActivities: "Aktivitäten",
       showAllActivities: "Alle Aktivitäten anzeigen",
       lastLogin: "Zuletzt angemeldet",
+      yearsWithSerlo: "Jahre dabei!",
+      yearWithSerlo: "Jahr dabei!",
       roles: "Rollen",
       instanceRoles: "Rollen auf %lang%.serlo.org:",
       otherRoles: "Andere Rollen:",
@@ -187,7 +192,9 @@ export const instanceData = {
           signIn: "Melde dich an.",
           goToMyAccount: "Gehe im Usermenü auf %myAccountLink%.",
           myAccount: "Mein Konto",
-          uploadPicture: "Lade ein neues Bild hoch und klicke oben auf \"Änderungen speichern\"."
+          uploadPicture: "Lade ein neues Bild hoch (ein quadratisches!) und klicke oben auf \"Änderungen speichern\".",
+          refreshPage: "Komme hierher zurück und aktualisiere dein Bild mit %refreshLink%.",
+          refreshLink: "diesem magischem Link"
         }
       }
     },
@@ -200,6 +207,7 @@ export const instanceData = {
       revisionSavedAccepted: "Die Bearbeitung wurde erfolgreich gespeichert und akzeptiert ✅"
     },
     loading: {
+      oneMomentPlease: "Einen Moment bitte …",
       isLoading: "Inhalt wird geladen…",
       unknownProblem: "Es gab ein Problem beim Laden des Inhalts. Bitte versuche es später noch einmal."
     },
@@ -328,7 +336,10 @@ export const loggedInData = {
       mail: "E-Mails",
       subscription: "Abonnement",
       noMails: "deaktivieren",
-      noNotifications: "abbestellen"
+      getMails: "aktivieren",
+      noNotifications: "abbestellen",
+      loadedSentence: "%loadedCount% von %totalCount% Abonnements geladen.",
+      loadMoreLink: "Mehr laden!"
     },
     revisions: {
       checkout: {
