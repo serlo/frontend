@@ -28,7 +28,7 @@ module.exports = {
         },
         truegray: colors.trueGray,
         berry: '#857189',
-        newGreen: '#2fceb1',
+        newgreen: '#2fceb1',
         yellow: '#ffbe5e',
       },
       borderWidth: {

@@ -88,7 +88,8 @@ export function CommunityWall() {
 
   useEffect(() => {
     setPersons(shuffleArray(persons))
-  }, []) // eslint-line react-hooks/exhaustive-deps
+    // eslint-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <section className="overflow-hidden">
@@ -193,7 +194,7 @@ export function CommunityWall() {
                     : role.includes('Team')
                     ? 'bg-brand-light'
                     : role.includes('Lehrer')
-                    ? 'bg-newGreen'
+                    ? 'bg-newgreen'
                     : 'bg-berry'
                 )}
               >
