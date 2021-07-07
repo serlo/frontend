@@ -336,7 +336,10 @@ export const loggedInData = {
       mail: "ई-मेल",
       subscription: "सदस्यता",
       noMails: "निष्क्रिय करें ",
-      noNotifications: "रद्द करें"
+      getMails: "activate",
+      noNotifications: "रद्द करें",
+      loadedSentence: "Loaded %loadedCount% of %totalCount% subscriptions.",
+      loadMoreLink: "Load more!"
     },
     revisions: {
       checkout: {

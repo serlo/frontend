@@ -336,7 +336,10 @@ export const loggedInData = {
       mail: "Correo electrónico",
       subscription: "Suscripción",
       noMails: "desactivar",
-      noNotifications: "cancelar"
+      getMails: "activate",
+      noNotifications: "cancelar",
+      loadedSentence: "Loaded %loadedCount% of %totalCount% subscriptions.",
+      loadMoreLink: "Load more!"
     },
     revisions: {
       checkout: {
