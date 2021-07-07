@@ -1,44 +1,47 @@
 import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { lighten } from 'polished'
-import styled, { css, keyframes } from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 
-import { makeResponsivePadding, makeTransparentButton } from '../../helper/css'
-import { Link } from '../content/link'
 import AbcSVG from '@/assets-webkit/img/landing/subjects-abc.svg'
 import BiologySVG from '@/assets-webkit/img/landing/subjects-biology.svg'
 import BlankSVG from '@/assets-webkit/img/landing/subjects-blank.svg'
 import ChemistrySVG from '@/assets-webkit/img/landing/subjects-chemistry.svg'
 import InformaticsSVG from '@/assets-webkit/img/landing/subjects-informatics.svg'
 import MathSVG from '@/assets-webkit/img/landing/subjects-math.svg'
+import NewSVG from '@/assets-webkit/img/landing/subjects-new.svg'
 import SustainabilitySVG from '@/assets-webkit/img/landing/subjects-sustainability.svg'
+import { Link } from '@/components/content/link'
 import {
   LandingSubjectIcon,
   LandingSubjectLink,
   LandingSubjectsData,
 } from '@/data-types'
+import { makeResponsivePadding, makeTransparentButton } from '@/helper/css'
 
 interface LandingSubjectsProps {
   data: LandingSubjectsData
 }
 
-export function LandingSubjects({ data }: LandingSubjectsProps) {
+export function LandingSubjectsNew({ data }: LandingSubjectsProps) {
   return (
     <>
-      <SubjectsWrapper>
-        {data.subjects.map((subject) => renderSubject(subject))}
-      </SubjectsWrapper>
-
-      {renderAdditionalLinks()}
+      <SubjectsWrapper>{data.subjects.map(renderSubject)}</SubjectsWrapper>
     </>
   )
 
-  function renderAdditionalLinks() {
-    if (data.additionalLinks.length === 0) return null
+  function renderSubject({ title, url, icon }: LandingSubjectLink) {
     return (
-      <SubjectsWrapper $extraLinks $center={data.subjects.length < 3}>
-        {data.additionalLinks.map((link) => renderSubject(link, true))}
-      </SubjectsWrapper>
+      <SubjectLink key={title} href={url}>
+        {' '}
+        {renderIcon(icon)}
+        <Header>
+          {title}
+          <StyledIcon>
+            <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
+          </StyledIcon>
+        </Header>
+      </SubjectLink>
     )
   }
 
@@ -54,79 +57,29 @@ export function LandingSubjects({ data }: LandingSubjectsProps) {
         return <BiologySVG className="superspecial-bio" />
       case 'informatics':
         return <InformaticsSVG className="superspecial-informatics" />
+      case 'new':
+        return <NewSVG className="superspecial-new" />
       case 'chemistry':
         return <ChemistrySVG className="superspecial-chem" />
       default:
-        return <BlankSVG className="superspecial-blank" />
+        ;<BlankSVG className="superspecial-blank" />
     }
-  }
-
-  function renderSubject(
-    { title, url, icon }: LandingSubjectLink,
-    alwaysShowArrow?: boolean
-  ) {
-    return (
-      <SubjectLink key={title} href={url}>
-        <>
-          {' '}
-          {renderIcon(icon)}
-          <Header>
-            {title}
-            <StyledIcon alwaysShow={alwaysShowArrow}>
-              <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
-            </StyledIcon>
-          </Header>
-        </>
-      </SubjectLink>
-    )
   }
 }
 
-const SubjectsWrapper = styled.div<{
-  $extraLinks?: boolean
-  $center?: boolean
-}>`
+const SubjectsWrapper = styled.nav`
   display: flex;
-  justify-content: center;
-  flex-direction: column;
+  justify-content: space-evenly;
 
-  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-    ${makeResponsivePadding}
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: left;
-    margin-left: 40px;
-  }
+  ${makeResponsivePadding}
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  margin: 0 auto;
+  max-width: 800px;
 
   @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
-    justify-content: space-between;
-    margin-left: 0;
     margin-top: 40px;
-
-    /* bit hacky, but way easier */
-    ${(props) =>
-      props.$extraLinks &&
-      css`
-        margin-left: 16px;
-        justify-content: start;
-        && > a > svg {
-          display: none;
-        }
-        & > a > h2 {
-          margin-right: 40px;
-          font-size: 1.3rem;
-        }
-        & > a {
-          margin: 0;
-        }
-      `}
-
-    ${(props) =>
-      props.$extraLinks &&
-      props.$center &&
-      css`
-        justify-content: center;
-      `}
   }
 `
 
@@ -165,30 +118,17 @@ const hickup = keyframes`
 
 const SubjectLink = styled(Link)`
   display: block;
-  border-bottom: 1px solid ${(props) => props.theme.colors.lightblue};
-  padding-left: 0.5rem;
-  &:hover {
-    background-color: ${(props) => lighten(0.5, props.theme.colors.brand)};
-    cursor: pointer;
-  }
+  padding-left: 0;
+  min-width: 40%;
+  max-width: 49%;
   @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-    border-bottom: 0;
-    min-width: 430px;
-    padding-left: 0;
-    &:hover {
-      background: transparent;
-    }
+    min-width: 30%;
   }
-  @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
-    min-width: 18%;
-    text-align: center;
 
-    margin: 0 auto;
-  }
-  @media (max-width: 400px) {
-    & svg.blank {
-      display: none;
-    }
+  text-align: center;
+
+  &:hover {
+    cursor: pointer;
   }
 
   & svg.superspecial-bio,
@@ -196,9 +136,18 @@ const SubjectLink = styled(Link)`
   & svg.superspecial-abc,
   & svg.superspecial-sus,
   & svg.superspecial-chem,
+  & svg.superspecial-new,
   & svg.superspecial-blank,
   & svg.superspecial-informatics {
-    display: inline;
+    display: block;
+    margin: 0 auto;
+    min-width: 10rem;
+
+    width: 8rem;
+    height: 8rem;
+    margin: 1rem 0.5rem 0 0.5rem;
+    margin: 1rem auto 0 auto;
+
     .blue {
       fill: ${(props) => props.theme.colors.lighterblue};
       transition: all 0.2s ease-in-out;
@@ -216,27 +165,10 @@ const SubjectLink = styled(Link)`
       }
     }
 
-    width: 6rem;
-    height: 6rem;
-    margin-top: 1rem;
-    margin-right: 1rem;
-
     /* animations */
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     box-shadow: 0 0 1px rgba(0, 0, 0, 0);
     animation-play-state: paused;
-
-    @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
-      display: block;
-      margin: 0 auto;
-      width: auto;
-      height: auto;
-      max-width: 120px;
-    }
-
-    @media (min-width: 1470px) {
-      max-width: 100%;
-    }
   }
 
   .pipette path,
@@ -282,6 +214,9 @@ const SubjectLink = styled(Link)`
   & .superspecial-informatics {
     transition: fill ease-in 0.5s;
   }
+  & .superspecial-new {
+    transform-origin: 50% 60%;
+  }
   &:hover,
   &:focus,
   &:active {
@@ -299,6 +234,9 @@ const SubjectLink = styled(Link)`
     }
     & .superspecial-sus .blue.water {
       transform: scale(1.08);
+    }
+    & .superspecial-new {
+      transform: rotate(180deg);
     }
     && .blue {
       fill: ${(props) => props.theme.colors.brand};
@@ -338,9 +276,18 @@ const SubjectLink = styled(Link)`
 
 const Header = styled.h2`
   ${makeTransparentButton}
-  line-height: 5.8rem;
   vertical-align: top;
-  margin-top: 1rem;
+  margin-top: 10px;
+
+  font-size: 1.3rem;
+  line-height: normal;
+  width: auto;
+  transition: color 0.4s ease, background-color 0.4s ease;
+
+  ${SubjectLink}:hover & {
+    background-color: ${(props) => props.theme.colors.lightBlueBackground};
+    color: ${(props) => props.theme.colors.brand};
+  }
 
   @media (max-width: ${(props) => props.theme.breakpointsMax.sm}) {
     &:hover {
@@ -348,33 +295,9 @@ const Header = styled.h2`
       background-color: transparent;
     }
   }
-
-  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-    font-size: 1.5rem;
-    line-height: normal;
-    width: auto;
-    margin-top: 2.5rem;
-    transition: color 0.4s ease, background-color 0.4s ease;
-    ${SubjectLink}:hover & {
-      background-color: ${(props) => lighten(0, props.theme.colors.brand)};
-      color: #fff;
-    }
-  }
-
-  @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
-    margin-top: 10px;
-  }
 `
 
-const StyledIcon = styled.span<{ alwaysShow?: boolean }>`
+const StyledIcon = styled.span`
   margin-left: 0.4rem;
   vertical-align: middle;
-
-  ${(props) =>
-    !props.alwaysShow &&
-    css`
-      @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-        display: none;
-      }
-    `}
 `

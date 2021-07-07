@@ -255,7 +255,7 @@ export const loggedInData = {
     title: "பயனர்",
     icon: 'user',
     children: [{
-      url: '/user/public',
+      url: '/user/me',
       title: 'Own profile'
     }, {
       url: '/auth/password/change',

@@ -4,10 +4,10 @@ import type { TippyProps } from '@tippyjs/react'
 import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
-import { Link } from '../content/link'
-import { SubButtonStyle } from '../user-tools/sub-button-style'
-import { getAvatarUrl } from '../user/user-link'
-import { SubLink } from './sub-link'
+import { Link } from '../../content/link'
+import { SubLink } from '../../navigation/sub-link'
+import { SubButtonStyle } from '../../user-tools/sub-button-style'
+import { getAvatarUrl } from '../../user/user-link'
 import { AuthenticationPayload } from '@/auth/auth-provider'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
@@ -33,13 +33,14 @@ export interface MenuProps {
   auth: AuthenticationPayload
 }
 
-export function Menu(props: MenuProps) {
+export function MenuNew(props: MenuProps) {
   const [Tippy, setTippy] = useState<typeof import('@tippyjs/react') | null>(
     null
   )
   useEffect(() => {
     void import('@tippyjs/react').then((value) => setTippy(value))
   }, [])
+
   if (!Tippy) {
     return <MenuWithoutTippy {...props} />
   }
@@ -83,7 +84,7 @@ function MenuInner({
   function onSubMenuInnerClick() {
     if (tippyRoot && tippyRoot !== undefined) tippyRoot.hide()
   }
-
+  const newData = [data[1], data[4]]
   return (
     <ResponsiveNav>
       {Tippy && (
@@ -102,7 +103,7 @@ function MenuInner({
         />
       )}
       <ul className="text-right block m-0 p-0">
-        {data.map((link, i) => renderEntry({ link }, i))}
+        {newData.map((link, i) => renderEntry({ link }, i))}
         {renderAuthMenu()}
       </ul>
     </ResponsiveNav>
@@ -252,6 +253,7 @@ function MenuInner({
 }
 
 const ResponsiveNav = styled.nav`
+  margin-top: 1.5rem;
   min-height: 50px;
   @media (max-width: ${(props) => props.theme.breakpointsMax.sm}) {
     display: none;
@@ -266,18 +268,8 @@ const Li = styled.li<{ show: boolean }>`
 
 const StyledLink = styled(Link)<{ active?: boolean; hasIcon?: boolean }>`
   ${makeTransparentButton}
-  &:active,
-  &:hover,
-  &[aria-expanded='true'] {
-    color: #fff;
-    background-color: ${(props) => props.theme.colors.brand};
 
-    /*just for notifications count*/
-    & span.fa-layers {
-      color: #fff;
-    }
-  }
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: ${(props) =>
     props.theme.colors[props.active ? 'darkgray' : 'lightblue']};
 
@@ -290,4 +282,15 @@ const StyledLink = styled(Link)<{ active?: boolean; hasIcon?: boolean }>`
   margin: 0 3px;
   margin-top: ${(props) => (props.hasIcon ? '-5px' : '11px')};
   padding: ${(props) => (props.hasIcon ? '7px' : '2px 7px')};
+
+  &:active,
+  &:hover,
+  &[aria-expanded='true'] {
+    color: #fff;
+    background-color: ${(props) => props.theme.colors.brand};
+    /*just for notifications count*/
+    & span.fa-layers {
+      color: #fff;
+    }
+  }
 `

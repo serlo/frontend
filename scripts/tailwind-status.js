@@ -6,11 +6,14 @@ const knownExceptions = [
   'gcse-searchbox-only',
   'superspecial-abc',
   'superspecial-bio',
+  'superspecial-new',
   'superspecial-blank',
   'superspecial-chem',
   'superspecial-math',
   'superspecial-noscript-hidden',
   'superspecial-sus',
+  'superspecial-informatics',
+  'bg-yellow-200', // no idea why this is needed!
 ]
 
 const isFileRegex = /\/.+\..+/

@@ -6,7 +6,7 @@ import { Link } from '../content/link'
 import { HeadTags } from '../head-tags'
 import { PrinciplesGraphic } from '../landing/principles-graphic'
 import ParticipateSVG from '@/assets-webkit/img/footer-participate.svg'
-import { LandingSubjects } from '@/components/landing/landing-subjects'
+import { LandingSubjectsNew } from '@/components/landing/rework/landing-subjects-new'
 import { useInstanceData } from '@/contexts/instance-context'
 import { InstanceLandingData } from '@/data-types'
 import { makeLightButton, makeResponsivePadding } from '@/helper/css'
@@ -31,7 +31,7 @@ export function LandingInternational({ data }: LandingInternationalProps) {
         </Button>
       </Section>
       <SubjectsSection>
-        <LandingSubjects data={subjectsData} />
+        <LandingSubjectsNew data={subjectsData} />
       </SubjectsSection>
 
       <PrinciplesSection>
