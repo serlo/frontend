@@ -7,12 +7,14 @@ import {
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { TaxonomyTerm, Uuid } from '@serlo/authorization'
 import clsx from 'clsx'
 import { useEffect, useState, cloneElement } from 'react'
 
 import { LazyTippy } from '../navigation/lazy-tippy'
 import { AuthorToolsData } from './author-tools-hover-menu'
 import { useAuthentication } from '@/auth/use-authentication'
+import { useCanDo } from '@/auth/use-can-do'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -44,6 +46,7 @@ export function UserTools({
   const auth = useAuthentication()
   const loggedInData = useLoggedInData()
   const lic = useLoggedInComponents()
+  const canDo = useCanDo()
 
   // note: we hide the ui on ssr and fade it in on the client
   const [firstPass, setFirstPass] = useState(true)
@@ -140,20 +143,36 @@ export function UserTools({
       return renderUnrevised()
     }
 
-    const editHref =
-      data.type == 'Page'
-        ? `/page/revision/create/${data.id}/${data.revisionId || ''}`
-        : data.type == 'Taxonomy'
-        ? `/taxonomy/term/update/${id}`
-        : data.type == 'Revision'
-        ? `/entity/repository/add-revision/${data.id}/${id}`
-        : `/entity/repository/add-revision/${id}`
+    const editHref = getEditHref()
+
+    if (!editHref) {
+      return null
+    }
 
     return (
       <a href={editHref} className={buttonClassName()}>
         {renderInner(strings.edit.button, faPencilAlt)}
       </a>
     )
+  }
+
+  function getEditHref(): string | undefined {
+    if (data.type == 'Page') {
+      if (canDo(Uuid.create('PageRevision'))) {
+        return `/page/revision/create/${data.id}/${data.revisionId || ''}`
+      }
+    } else if (data.type == 'Taxonomy') {
+      if (canDo(TaxonomyTerm.set)) {
+        return `/taxonomy/term/update/${id}`
+      }
+    } else {
+      if (canDo(Uuid.create('EntityRevision'))) {
+        return data.type == 'Revision'
+          ? `/entity/repository/add-revision/${data.id}/${id}`
+          : `/entity/repository/add-revision/${id}`
+      }
+    }
+    return
   }
 
   function renderUnrevised() {
