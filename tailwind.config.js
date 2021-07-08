@@ -5,6 +5,7 @@ const colors = require('tailwindcss/colors')
 // base colors
 const brand = '#007ec1'
 const brandGreen = '#95bc1a'
+const yellow = '#ffbe5e'
 
 module.exports = {
   mode: 'jit',
@@ -29,7 +30,10 @@ module.exports = {
         truegray: colors.trueGray,
         berry: '#857189',
         newgreen: '#2fceb1',
-        yellow: '#ffbe5e',
+        yellow: {
+          DEFAULT: yellow,
+          200: tint(0.75, yellow),
+        },
       },
       borderWidth: {
         3: '3px',
