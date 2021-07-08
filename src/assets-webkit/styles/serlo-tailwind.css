@@ -16,7 +16,7 @@
     @apply inline-block transition-all rounded-4xl py-1 px-2;
     @apply font-bold border-none cursor-pointer no-underline;
     @apply text-lg leading-browser font-serlo tracking-slightestly-tighter;
-    @apply ease-in-out duration-200;
+    @apply ease-in-out duration-200 hover:no-underline;
   }
   .serlo-make-interactive-primary {
     @apply text-white bg-brand hover:bg-brand-light;
