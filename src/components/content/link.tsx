@@ -101,8 +101,6 @@ export function Link({
   //at this point only internal links should be left
 
   const internalLink = normalizeSerloLink(href)
-  console.log(internalLink)
-  console.log(isLegacyLink(internalLink))
   if (!isLegacyLink(internalLink)) return renderClientSide(internalLink)
 
   //fallback

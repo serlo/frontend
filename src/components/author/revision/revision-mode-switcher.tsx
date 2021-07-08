@@ -1,18 +1,23 @@
 import { Dispatch } from 'react'
 import styled, { css } from 'styled-components'
 
-import { DisplayMode } from './revision'
+import { DisplayModes } from './revision'
+import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { makePadding, makeTransparentButton } from '@/helper/css'
 
 export interface RevisionModeSwitcherProps {
   isCurrent: boolean
-  displayMode: DisplayMode
-  setDisplayMode: Dispatch<React.SetStateAction<DisplayMode>>
+  previousRevisionId?: number
+  repositoryId: number
+  displayMode: DisplayModes
+  setDisplayMode: Dispatch<React.SetStateAction<DisplayModes>>
 }
 
 export function RevisionModeSwitcher({
   isCurrent,
+  previousRevisionId,
+  repositoryId,
   displayMode,
   setDisplayMode,
 }: RevisionModeSwitcherProps) {
@@ -23,14 +28,23 @@ export function RevisionModeSwitcher({
   function renderButtons() {
     return (
       <>
-        {!isCurrent && renderButton('diff', strings.revisions.diff)}
-        {!isCurrent && renderButton('sidebyside', strings.revisions.sidebyside)}
-        {renderButton('this', strings.revisions.thisVersion)}
+        {!isCurrent && renderButton(DisplayModes.Diff, strings.revisions.diff)}
+        {!isCurrent &&
+          renderButton(DisplayModes.SideBySide, strings.revisions.sidebyside)}
+        {isCurrent && previousRevisionId && (
+          <ViewPreviousButton
+            href={`/entity/repository/compare/${repositoryId}/${previousRevisionId}#${DisplayModes.SideBySide}`}
+          >
+            Vorherige Bearbeitung ansehen
+          </ViewPreviousButton>
+        )}
+
+        {renderButton(DisplayModes.This, strings.revisions.thisVersion)}
       </>
     )
   }
 
-  function renderButton(mode: DisplayMode, title: string) {
+  function renderButton(mode: DisplayModes, title: string) {
     //blur-hack, use https://caniuse.com/#feat=css-focus-visible when supported
     return (
       <Button
@@ -54,6 +68,11 @@ const MetaBar = styled.nav`
   padding-bottom: 10px;
   top: 0;
   background-color: #fff;
+`
+
+const ViewPreviousButton = styled(Link)`
+  ${makeTransparentButton};
+  margin-left: 5px;
 `
 
 const Button = styled.button<{ current?: boolean }>`

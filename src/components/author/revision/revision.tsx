@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Entity } from '@serlo/authorization'
 import dynamic from 'next/dynamic'
 import { tint } from 'polished'
-import * as React from 'react'
+import { useState, ReactNode, useEffect } from 'react'
 import ReactDiffViewer, { DiffMethod } from 'react-diff-viewer'
 import styled, { css } from 'styled-components'
 
@@ -23,6 +23,7 @@ import { Link } from '@/components/content/link'
 import { Video } from '@/components/content/video'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { TimeAgo } from '@/components/time-ago'
+import { removeHash } from '@/components/toast-notice'
 import { UserLink } from '@/components/user/user-link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionData } from '@/data-types'
@@ -39,8 +40,11 @@ const CheckoutRejectButtons = dynamic<CheckoutRejectButtonsProps>(() =>
     (mod) => mod.CheckoutRejectButtons
   )
 )
-
-export type DisplayMode = 'this' | 'sidebyside' | 'diff'
+export enum DisplayModes {
+  This = 'this',
+  SideBySide = 'sidebyside',
+  Diff = 'diff',
+}
 
 export function Revision({ data }: RevisionProps) {
   const auth = useAuthentication()
@@ -50,9 +54,18 @@ export function Revision({ data }: RevisionProps) {
     canDo(Entity.checkoutRevision) && canDo(Entity.rejectRevision)
   const isCurrentRevision = data.thisRevision.id === data.currentRevision.id
   const isRejected = data.thisRevision.trashed
-  const [displayMode, setDisplayMode] = React.useState<DisplayMode>('this')
+  const [displayMode, setDisplayMode] = useState<DisplayModes>(
+    DisplayModes.This
+  )
 
-  const notCompare = displayMode !== 'diff'
+  useEffect(() => {
+    if (window.location.hash.substr(1) === DisplayModes.SideBySide) {
+      setDisplayMode(DisplayModes.SideBySide)
+      removeHash()
+    }
+  }, [])
+
+  const notCompare = displayMode !== DisplayModes.Diff
   const icon = renderEntityIcon()
   const repositoryAlias = data.repository.alias ?? `/${data.repository.id}`
 
@@ -60,7 +73,7 @@ export function Revision({ data }: RevisionProps) {
     <div className="relative pb-52">
       {renderHeader()}
 
-      {displayMode === 'sidebyside' && (
+      {displayMode === DisplayModes.SideBySide && (
         <div className="flex mt-12">
           <div className="flex-1 px-side bg-brand-50">
             <h2 className="serlo-h2 mt-12 mb-4">
@@ -77,11 +90,11 @@ export function Revision({ data }: RevisionProps) {
         </div>
       )}
 
-      {displayMode === 'diff' && (
+      {displayMode === DisplayModes.Diff && (
         <div className="mx-side">{renderPreviewBoxes(data.thisRevision)}</div>
       )}
 
-      {displayMode === 'this' && (
+      {displayMode === DisplayModes.This && (
         <>
           <MaxWidthDiv>
             {renderPreviewBoxes(data.thisRevision)}
@@ -127,6 +140,8 @@ export function Revision({ data }: RevisionProps) {
         </MaxWidthDiv>
         <RevisionModeSwitcher
           isCurrent={isCurrentRevision}
+          previousRevisionId={data.repository.previousRevisionId}
+          repositoryId={data.repository.id}
           setDisplayMode={setDisplayMode}
           displayMode={displayMode}
         />
@@ -245,7 +260,7 @@ export function Revision({ data }: RevisionProps) {
   interface PreviewBoxProps {
     title: string
     diffType: DiffViewerTypes
-    children: React.ReactNode
+    children: ReactNode
   }
   function renderDiffViewer(diffType: DiffViewerTypes) {
     if (diffType === 'content') {

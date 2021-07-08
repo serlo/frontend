@@ -30,6 +30,12 @@ export const revisionQuery = gql`
               id
               ...articleRevision
             }
+            revisions(unrevised: false) {
+              nodes {
+                id
+                trashed
+              }
+            }
           }
         }
         ... on PageRevision {
@@ -40,6 +46,12 @@ export const revisionQuery = gql`
             currentRevision {
               id
               ...pageRevision
+            }
+            revisions(unrevised: false) {
+              nodes {
+                id
+                trashed
+              }
             }
           }
         }
@@ -53,6 +65,12 @@ export const revisionQuery = gql`
               id
               ...appletRevision
             }
+            revisions(unrevised: false) {
+              nodes {
+                id
+                trashed
+              }
+            }
           }
         }
         ... on CourseRevision {
@@ -64,6 +82,12 @@ export const revisionQuery = gql`
             currentRevision {
               id
               ...courseRevision
+            }
+            revisions(unrevised: false) {
+              nodes {
+                id
+                trashed
+              }
             }
           }
         }
@@ -77,6 +101,12 @@ export const revisionQuery = gql`
               id
               ...coursePageRevision
             }
+            revisions(unrevised: false) {
+              nodes {
+                id
+                trashed
+              }
+            }
           }
         }
         ... on EventRevision {
@@ -88,6 +118,12 @@ export const revisionQuery = gql`
             currentRevision {
               id
               ...eventRevision
+            }
+            revisions(unrevised: false) {
+              nodes {
+                id
+                trashed
+              }
             }
           }
         }
@@ -130,6 +166,12 @@ export const revisionQuery = gql`
               id
               content
             }
+            revisions(unrevised: false) {
+              nodes {
+                id
+                trashed
+              }
+            }
           }
         }
         ... on ExerciseGroupRevision {
@@ -145,6 +187,12 @@ export const revisionQuery = gql`
             currentRevision {
               id
               ...exerciseGroupRevision
+            }
+            revisions(unrevised: false) {
+              nodes {
+                id
+                trashed
+              }
             }
           }
         }
@@ -168,6 +216,13 @@ export const revisionQuery = gql`
               id
               content
             }
+            # https://github.com/serlo/api.serlo.org/issues/438 ?
+            # revisions(unrevised: false) {
+            #   nodes {
+            #     id
+            #     trashed
+            #   }
+            # }
           }
         }
         ... on VideoRevision {
@@ -179,6 +234,12 @@ export const revisionQuery = gql`
             currentRevision {
               id
               ...videoRevision
+            }
+            revisions(unrevised: false) {
+              nodes {
+                id
+                trashed
+              }
             }
           }
         }

@@ -114,6 +114,20 @@ export async function requestRevision(
           ).exerciseGroup?.id
         : uuid.repository.id
 
+    // likely the previously accepted revision
+    const getPreviousRevisionId = () => {
+      const revNodes = uuid.repository.revisions?.nodes
+      if (!revNodes) return
+      const thisIndex = revNodes.findIndex((node) => node.id === uuid.id)
+      const olderRevNodes = revNodes.slice(thisIndex + 1)
+      const previousRevision = (
+        olderRevNodes as { trashed: boolean; id: number }[]
+      ).find(
+        (rev) => !rev.trashed && rev.id !== uuid.repository.currentRevision?.id
+      )
+      return previousRevision?.id
+    }
+
     return {
       kind: 'revision',
       newsletterPopup: false,
@@ -123,6 +137,7 @@ export async function requestRevision(
           id: uuid.repository.id,
           alias: uuid.repository.alias || undefined,
           parentId,
+          previousRevisionId: getPreviousRevisionId(),
         },
         typename: uuid.__typename,
         thisRevision: {
