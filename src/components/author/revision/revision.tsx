@@ -76,7 +76,7 @@ export function Revision({ data }: RevisionProps) {
 
       {displayMode === DisplayModes.SideBySide && (
         <div className="flex mt-12">
-          <div className="flex-1 px-side bg-brand-50">
+          <div className="flex-1 px-side pb-6 bg-brand-50">
             <h2 className="serlo-h2 mt-12 mb-4">
               {strings.revisions.currentVersion}
             </h2>

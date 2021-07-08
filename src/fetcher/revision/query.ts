@@ -216,13 +216,12 @@ export const revisionQuery = gql`
               id
               content
             }
-            # https://github.com/serlo/api.serlo.org/issues/438 ?
-            # revisions(unrevised: false) {
-            #   nodes {
-            #     id
-            #     trashed
-            #   }
-            # }
+            revisions(unrevised: false) {
+              nodes {
+                id
+                trashed
+              }
+            }
           }
         }
         ... on VideoRevision {
