@@ -58,12 +58,13 @@ export function Revision({ data }: RevisionProps) {
     DisplayModes.This
   )
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (window.location.hash.substr(1) === DisplayModes.SideBySide) {
       setDisplayMode(DisplayModes.SideBySide)
       removeHash()
     }
-  }, [])
+  })
 
   const notCompare = displayMode !== DisplayModes.Diff
   const icon = renderEntityIcon()
