@@ -139,6 +139,7 @@ export const revisionQuery = gql`
             }
             license {
               id
+              default
               title
             }
             solution {
@@ -160,6 +161,7 @@ export const revisionQuery = gql`
             }
             license {
               id
+              default
               title
             }
             currentRevision {
@@ -182,6 +184,7 @@ export const revisionQuery = gql`
             alias
             license {
               id
+              default
               title
             }
             currentRevision {

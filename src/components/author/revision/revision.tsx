@@ -150,7 +150,9 @@ export function Revision({ data }: RevisionProps) {
     )
   }
 
-  function renderPreviewBoxes(dataSet: RevisionData['currentRevision']) {
+  function renderPreviewBoxes(
+    dataSet: RevisionData['thisRevision'] | RevisionData['currentRevision']
+  ) {
     return (
       <>
         {dataSet.title !== undefined && (
