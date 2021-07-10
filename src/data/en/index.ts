@@ -155,6 +155,7 @@ export const instanceData = {
       noCurrentNotice: 'There is no accepted revision yet',
       by: 'By',
       parentFallbackLink: 'To parent content',
+      hasChanges: 'There have been changes in this area'
     },
     revisionHistory: {
       changes: 'Changes',

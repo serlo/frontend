@@ -160,12 +160,20 @@ export function Revision({ data }: RevisionProps) {
     return (
       <>
         {dataSet.title !== undefined && (
-          <PreviewBox title={strings.revisions.title} diffType="title">
+          <PreviewBox
+            title={strings.revisions.title}
+            diffType="title"
+            changes={dataSet.title !== data.currentRevision.title}
+          >
             <h1 className="serlo-h1">{dataSet.title}</h1>
           </PreviewBox>
         )}
         {dataSet.content !== undefined && (
-          <PreviewBox title={strings.revisions.content} diffType="content">
+          <PreviewBox
+            title={strings.revisions.content}
+            diffType="content"
+            changes={dataSet.content !== data.currentRevision.content}
+          >
             {renderArticle(
               dataSet.content || [],
               `revision${dataSet.id || 'empty'}`
@@ -174,7 +182,11 @@ export function Revision({ data }: RevisionProps) {
         )}
         {renderVideoOrAppletBox(dataSet)}
         {dataSet.metaTitle && (
-          <PreviewBox title={strings.revisions.metaTitle} diffType="metaTitle">
+          <PreviewBox
+            title={strings.revisions.metaTitle}
+            diffType="metaTitle"
+            changes={dataSet.metaTitle !== data.currentRevision.metaTitle}
+          >
             {dataSet.metaTitle}
           </PreviewBox>
         )}
@@ -182,6 +194,9 @@ export function Revision({ data }: RevisionProps) {
           <PreviewBox
             title={strings.revisions.metaDescription}
             diffType="metaDescription"
+            changes={
+              dataSet.metaDescription !== data.currentRevision.metaDescription
+            }
           >
             {dataSet.metaDescription}
           </PreviewBox>
@@ -230,6 +245,7 @@ export function Revision({ data }: RevisionProps) {
       <PreviewBox
         title={isVideo ? strings.entities.video : strings.entities.applet}
         diffType="url"
+        changes={dataSet.url !== data.currentRevision.url}
       >
         {isVideo ? <Video src={dataSet.url} /> : <Geogebra id={dataSet.url} />}
         <span className="text-sm px-1 bg-yellow-200">
@@ -276,11 +292,6 @@ export function Revision({ data }: RevisionProps) {
     | 'metaDescription'
     | 'url'
 
-  interface PreviewBoxProps {
-    title: string
-    diffType: DiffViewerTypes
-    children: ReactNode
-  }
   function renderDiffViewer(diffType: DiffViewerTypes) {
     if (diffType === 'content') {
       return (
@@ -310,14 +321,24 @@ export function Revision({ data }: RevisionProps) {
     )
   }
 
-  function PreviewBox({ title, children, diffType }: PreviewBoxProps) {
+  interface PreviewBoxProps {
+    title: string
+    diffType: DiffViewerTypes
+    children: ReactNode
+    changes?: boolean
+  }
+
+  function PreviewBox({ title, children, diffType, changes }: PreviewBoxProps) {
     const withPadding =
       notCompare && (diffType === 'metaDescription' || diffType === 'metaTitle')
 
     return (
       <>
         <p className="serlo-p flex justify-between mt-10 mb-1.5">
-          <b>{title}</b>
+          <b title={changes ? strings.revisions.hasChanges : undefined}>
+            {title}
+            {changes && <span className="text-sm">{' 🟠'}</span>}
+          </b>
         </p>
         <Box
           withPadding={withPadding}
