@@ -53,6 +53,8 @@ export function Revision({ data }: RevisionProps) {
   const canCheckoutAndReject =
     canDo(Entity.checkoutRevision) && canDo(Entity.rejectRevision)
   const isCurrentRevision = data.thisRevision.id === data.currentRevision.id
+  const hasCurrentRevision = data.currentRevision.id !== undefined
+
   const isRejected = data.thisRevision.trashed
   const [displayMode, setDisplayMode] = useState<DisplayModes>(
     DisplayModes.This
@@ -139,13 +141,15 @@ export function Revision({ data }: RevisionProps) {
             <TimeAgo datetime={new Date(data.date)} dateAsTitle />
           </p>
         </MaxWidthDiv>
-        <RevisionModeSwitcher
-          isCurrent={isCurrentRevision}
-          previousRevisionId={data.repository.previousRevisionId}
-          repositoryId={data.repository.id}
-          setDisplayMode={setDisplayMode}
-          displayMode={displayMode}
-        />
+        {hasCurrentRevision && (
+          <RevisionModeSwitcher
+            isCurrent={isCurrentRevision}
+            previousRevisionId={data.repository.previousRevisionId}
+            repositoryId={data.repository.id}
+            setDisplayMode={setDisplayMode}
+            displayMode={displayMode}
+          />
+        )}
       </>
     )
   }
@@ -241,14 +245,26 @@ export function Revision({ data }: RevisionProps) {
       data.repository.parentId === undefined
     )
       return null
+    const { parentId } = data.repository
+
+    if (!hasCurrentRevision) {
+      return (
+        <p className="serlo-p mt-20">
+          <Link href={`/entity/repository/history/${parentId}`}>
+            {strings.revisions.parentFallbackLink}
+          </Link>
+        </p>
+      )
+    }
 
     return (
       <div className="serlo-content-with-spacing-fixes">
         <h2 className="serlo-h2 mt-12">{strings.revisions.context}</h2>
         <Injection
-          href={`/${data.repository.parentId}`}
+          href={`/${parentId}`}
           renderNested={(value, ...prefix) => renderNested(value, [], prefix)}
         />
+        )
       </div>
     )
   }
@@ -318,6 +334,9 @@ export function Revision({ data }: RevisionProps) {
   }
 
   function renderNotice() {
+    if (!hasCurrentRevision) {
+      return <Notice success>{strings.revisions.noCurrentNotice}</Notice>
+    }
     if (!isRejected && !isCurrentRevision) return null
     return (
       <Notice success={isCurrentRevision}>
