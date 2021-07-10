@@ -5,7 +5,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
-import { useState, KeyboardEvent } from 'react'
+import { useState, KeyboardEvent, useRef } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
 
 import { useInstanceData } from '@/contexts/instance-context'
@@ -31,8 +31,13 @@ export function CommentForm({
   const [commentValue, setCommentValue] = useState('')
   const { strings } = useInstanceData()
   const [isSending, setIsSending] = useState(false)
+  const textareaRef = useRef<null | HTMLTextAreaElement>(null)
 
   async function onSendAction() {
+    if (commentValue.length < 1) {
+      textareaRef.current?.focus()
+      return
+    }
     setIsSending(true)
     const success = await onSend(commentValue, reply, threadId)
     setIsSending(false)
@@ -57,6 +62,7 @@ export function CommentForm({
     >
       <TextareaAutosize
         value={commentValue}
+        ref={textareaRef}
         onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
           setCommentValue(event.target.value)
         }}
