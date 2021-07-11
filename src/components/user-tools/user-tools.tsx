@@ -15,6 +15,7 @@ import { LazyTippy } from '../navigation/lazy-tippy'
 import { AuthorToolsData } from './author-tools-hover-menu'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useCanDo } from '@/auth/use-can-do'
+import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -150,9 +151,9 @@ export function UserTools({
     }
 
     return (
-      <a href={editHref} className={buttonClassName()}>
+      <Link href={editHref} className={buttonClassName()}>
         {renderInner(strings.edit.button, faPencilAlt)}
-      </a>
+      </Link>
     )
   }
 
@@ -177,7 +178,7 @@ export function UserTools({
 
   function renderUnrevised() {
     return (
-      <a
+      <Link
         href={`/entity/repository/history/${id}`}
         className={buttonClassName()}
       >
@@ -185,7 +186,7 @@ export function UserTools({
           `${strings.edit.unrevised} (${unrevisedRevision || ''})`,
           faClock
         )}
-      </a>
+      </Link>
     )
   }
 
@@ -197,12 +198,12 @@ export function UserTools({
           cloneElement(data.checkoutRejectButtons, {
             buttonStyle: buttonClassName(),
           })}
-        <a
+        <Link
           href={`/entity/repository/history/${data.id}`}
           className={buttonClassName()}
         >
           {renderInner(strings.pageTitles.revisionHistory, faList)}
-        </a>
+        </Link>
       </>
     )
   }
@@ -256,9 +257,9 @@ export function UserTools({
       return null
     }
     return (
-      <a href="/user/settings" className={buttonClassName()}>
+      <Link href="/user/settings" className={buttonClassName()}>
         {renderInner(loggedInData.strings.authorMenu.editProfile, faPencilAlt)}
-      </a>
+      </Link>
     )
   }
 

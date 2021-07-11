@@ -1,34 +1,23 @@
-import {
-  faTimes,
-  faCheck,
-  faArrowCircleLeft,
-} from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Entity } from '@serlo/authorization'
 import dynamic from 'next/dynamic'
-import { tint } from 'polished'
-import * as React from 'react'
-import ReactDiffViewer, { DiffMethod } from 'react-diff-viewer'
-import styled, { css } from 'styled-components'
+import { useState, useEffect } from 'react'
 
-import { PageTitle } from '../../content/page-title'
-import { UserTools } from '../../user-tools/user-tools'
 import type { CheckoutRejectButtonsProps } from './checkout-reject-buttons'
-import { RevisionModeSwitcher } from './revision-mode-switcher'
+import { RevisionHeader } from './revision-header'
+import {
+  RevisionPreviewBoxes,
+  RevisionPreviewBoxesProps,
+} from './revision-preview-boxes'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useCanDo } from '@/auth/use-can-do'
-import { Geogebra } from '@/components/content/geogebra'
 import { Injection } from '@/components/content/injection'
 import { Link } from '@/components/content/link'
-import { Video } from '@/components/content/video'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
-import { TimeAgo } from '@/components/time-ago'
-import { UserLink } from '@/components/user/user-link'
+import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionData } from '@/data-types'
-import { makePadding, inputFontReset, makeLightButton } from '@/helper/css'
-import { getIconByTypename } from '@/helper/icon-by-entity-type'
-import { renderArticle, renderNested } from '@/schema/article-renderer'
+import { removeHash } from '@/helper/remove-hash'
+import { renderNested } from '@/schema/article-renderer'
 
 export interface RevisionProps {
   data: RevisionData
@@ -39,8 +28,11 @@ const CheckoutRejectButtons = dynamic<CheckoutRejectButtonsProps>(() =>
     (mod) => mod.CheckoutRejectButtons
   )
 )
-
-export type DisplayMode = 'this' | 'sidebyside' | 'diff'
+export enum DisplayModes {
+  This = 'this',
+  SideBySide = 'sidebyside',
+  Diff = 'diff',
+}
 
 export function Revision({ data }: RevisionProps) {
   const auth = useAuthentication()
@@ -49,20 +41,28 @@ export function Revision({ data }: RevisionProps) {
   const canCheckoutAndReject =
     canDo(Entity.checkoutRevision) && canDo(Entity.rejectRevision)
   const isCurrentRevision = data.thisRevision.id === data.currentRevision.id
+  const hasCurrentRevision = data.currentRevision.id !== undefined
   const isRejected = data.thisRevision.trashed
-  const [displayMode, setDisplayMode] = React.useState<DisplayMode>('this')
-
-  const notCompare = displayMode !== 'diff'
-  const icon = renderEntityIcon()
+  const [displayMode, setDisplayMode] = useState<DisplayModes>(
+    DisplayModes.This
+  )
   const repositoryAlias = data.repository.alias ?? `/${data.repository.id}`
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    if (window.location.hash.substr(1) === DisplayModes.SideBySide) {
+      setDisplayMode(DisplayModes.SideBySide)
+      removeHash()
+    }
+  })
 
   return (
     <div className="relative pb-52">
       {renderHeader()}
 
-      {displayMode === 'sidebyside' && (
+      {displayMode === DisplayModes.SideBySide && (
         <div className="flex mt-12">
-          <div className="flex-1 px-side bg-brand-50">
+          <div className="flex-1 px-side pb-6 bg-brand-50">
             <h2 className="serlo-h2 mt-12 mb-4">
               {strings.revisions.currentVersion}
             </h2>
@@ -77,11 +77,11 @@ export function Revision({ data }: RevisionProps) {
         </div>
       )}
 
-      {displayMode === 'diff' && (
+      {displayMode === DisplayModes.Diff && (
         <div className="mx-side">{renderPreviewBoxes(data.thisRevision)}</div>
       )}
 
-      {displayMode === 'this' && (
+      {displayMode === DisplayModes.This && (
         <>
           <MaxWidthDiv>
             {renderPreviewBoxes(data.thisRevision)}
@@ -96,75 +96,26 @@ export function Revision({ data }: RevisionProps) {
 
   function renderHeader() {
     return (
-      <>
-        <MaxWidthDiv className="!mb-0">
-          <BackButton href={repositoryAlias} className="mt-6 mx-side">
-            <FontAwesomeIcon icon={faArrowCircleLeft} />{' '}
-            {strings.revisions.toContent}
-          </BackButton>
-
-          {renderNotice()}
-          <PageTitle
-            title={
-              data.currentRevision.metaTitle ||
-              data.currentRevision.title ||
-              strings.entities.revision
-            }
-            headTitle
-            icon={icon ? icon : undefined}
-          />
-          {renderUserTools(true)}
-          <p className="serlo-p leading-7">
-            {data.changes && (
-              <>
-                <b>{strings.revisions.changes}:</b> {data.changes}
-              </>
-            )}
-            <br />
-            {strings.revisions.by} <UserLink user={data.user} />{' '}
-            <TimeAgo datetime={new Date(data.date)} dateAsTitle />
-          </p>
-        </MaxWidthDiv>
-        <RevisionModeSwitcher
-          isCurrent={isCurrentRevision}
-          setDisplayMode={setDisplayMode}
-          displayMode={displayMode}
-        />
-      </>
+      <RevisionHeader
+        data={data}
+        isCurrentRevision={isCurrentRevision}
+        repositoryAlias={repositoryAlias}
+        renderUserTools={renderUserTools}
+        isRejected={isRejected}
+        displayMode={displayMode}
+        setDisplayMode={setDisplayMode}
+        hasCurrentRevision={hasCurrentRevision}
+      />
     )
   }
 
-  function renderPreviewBoxes(dataSet: RevisionData['currentRevision']) {
+  function renderPreviewBoxes(dataSet: RevisionPreviewBoxesProps['dataSet']) {
     return (
-      <>
-        {dataSet.title !== undefined && (
-          <PreviewBox title={strings.revisions.title} diffType="title">
-            <h1 className="serlo-h1">{dataSet.title}</h1>
-          </PreviewBox>
-        )}
-        {dataSet.content !== undefined && (
-          <PreviewBox title={strings.revisions.content} diffType="content">
-            {renderArticle(
-              dataSet.content || [],
-              `revision${dataSet.id || 'empty'}`
-            )}
-          </PreviewBox>
-        )}
-        {renderVideoOrAppletBox(dataSet)}
-        {dataSet.metaTitle && (
-          <PreviewBox title={strings.revisions.metaTitle} diffType="metaTitle">
-            {dataSet.metaTitle}
-          </PreviewBox>
-        )}
-        {dataSet.metaDescription && (
-          <PreviewBox
-            title={strings.revisions.metaDescription}
-            diffType="metaDescription"
-          >
-            {dataSet.metaDescription}
-          </PreviewBox>
-        )}
-      </>
+      <RevisionPreviewBoxes
+        dataSet={dataSet}
+        data={data}
+        displayMode={displayMode}
+      />
     )
   }
 
@@ -191,176 +142,33 @@ export function Revision({ data }: RevisionProps) {
     )
   }
 
-  function renderEntityIcon() {
-    if (!data.type) return null
-    return (
-      <span title={strings.entities[data.type]}>
-        {' '}
-        <StyledIcon icon={getIconByTypename(data.type)} />{' '}
-      </span>
-    )
-  }
-
-  function renderVideoOrAppletBox(dataSet: RevisionData['currentRevision']) {
-    if (dataSet.url === undefined) return null
-    const isVideo = data.type === 'video'
-    return (
-      <PreviewBox
-        title={isVideo ? strings.entities.video : strings.entities.applet}
-        diffType="url"
-      >
-        {isVideo ? <Video src={dataSet.url} /> : <Geogebra id={dataSet.url} />}
-        <span className="text-sm px-1 bg-yellow-200">
-          <b>url:</b> {dataSet.url}
-        </span>
-      </PreviewBox>
-    )
-  }
-
   function renderExercisePreview() {
     if (
       !['solution', 'exerciseGroup', 'groupedExercise'].includes(data.type) ||
       data.repository.parentId === undefined
     )
       return null
+    const { parentId } = data.repository
+
+    if (!hasCurrentRevision) {
+      return (
+        <p className="serlo-p mt-20">
+          <Link href={`/entity/repository/history/${parentId}`}>
+            {strings.revisions.parentFallbackLink}
+          </Link>
+        </p>
+      )
+    }
 
     return (
       <div className="serlo-content-with-spacing-fixes">
         <h2 className="serlo-h2 mt-12">{strings.revisions.context}</h2>
         <Injection
-          href={`/${data.repository.parentId}`}
+          href={`/${parentId}`}
           renderNested={(value, ...prefix) => renderNested(value, [], prefix)}
         />
+        )
       </div>
     )
   }
-
-  type DiffViewerTypes =
-    | 'content'
-    | 'title'
-    | 'metaTitle'
-    | 'metaDescription'
-    | 'url'
-
-  interface PreviewBoxProps {
-    title: string
-    diffType: DiffViewerTypes
-    children: React.ReactNode
-  }
-  function renderDiffViewer(diffType: DiffViewerTypes) {
-    if (diffType === 'content') {
-      return (
-        <DiffViewerWrapper split>
-          <ReactDiffViewer
-            leftTitle={strings.revisions.currentVersion}
-            rightTitle={strings.revisions.thisVersion}
-            oldValue={JSON.stringify(data.currentRevision.content, null, 2)}
-            newValue={JSON.stringify(data.thisRevision.content, null, 2)}
-            splitView
-            hideLineNumbers
-            compareMethod={DiffMethod.WORDS}
-          />
-        </DiffViewerWrapper>
-      )
-    }
-    return (
-      <DiffViewerWrapper>
-        <ReactDiffViewer
-          oldValue={data.currentRevision[diffType]}
-          newValue={data.thisRevision[diffType]}
-          splitView={false}
-          hideLineNumbers
-          showDiffOnly={false}
-        />
-      </DiffViewerWrapper>
-    )
-  }
-
-  function PreviewBox({ title, children, diffType }: PreviewBoxProps) {
-    const withPadding =
-      notCompare && (diffType === 'metaDescription' || diffType === 'metaTitle')
-
-    return (
-      <>
-        <p className="serlo-p flex justify-between mt-10 mb-1.5">
-          <b>{title}</b>
-        </p>
-        <Box
-          withPadding={withPadding}
-          className={
-            data.type === 'exercise' || data.type === 'groupedExercise'
-              ? '!py-2'
-              : ''
-          }
-        >
-          {notCompare ? children : renderDiffViewer(diffType)}
-        </Box>
-      </>
-    )
-  }
-
-  function renderNotice() {
-    if (!isRejected && !isCurrentRevision) return null
-    return (
-      <Notice success={isCurrentRevision}>
-        <FontAwesomeIcon icon={isRejected ? faTimes : faCheck} />{' '}
-        {isRejected
-          ? strings.revisions.rejectedNotice
-          : strings.revisions.currentNotice}
-      </Notice>
-    )
-  }
 }
-
-const StyledIcon = styled(FontAwesomeIcon)`
-  color: ${(props) => props.theme.colors.lighterblue};
-  font-size: 1.73rem;
-`
-const Box = styled.div<{ withPadding?: boolean }>`
-  ${(props) => props.withPadding && makePadding}
-  font-size: 1.125rem;
-  padding-top: 30px;
-  padding-bottom: 30px;
-  border: 1px solid ${(props) => props.theme.colors.lighterblue};
-  border-radius: 15px;
-
-  > h1 {
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-`
-
-const BackButton = styled(Link)`
-  ${makeLightButton}
-
-  > svg {
-    font-size: 1rem;
-    margin-right: 2px;
-    padding-top: 1px;
-  }
-`
-
-const DiffViewerWrapper = styled.div<{ split?: boolean }>`
-  pre {
-    ${(props) => props.split === undefined && inputFontReset}
-    font-size: ${(props) => (props.split ? '0.9rem' : '1.125rem !important')};
-  }
-
-  ${(props) =>
-    props.split &&
-    css`
-      td {
-        max-width: 45vw;
-        overflow: scroll;
-      }
-    `}
-`
-
-const Notice = styled.div<{ success?: boolean }>`
-  margin: 50px 0;
-  padding: 16px;
-  border-radius: 20px;
-  font-weight: bold;
-  background-color: ${(props) =>
-    tint(0.7, props.success ? props.theme.colors.brandGreen : '#c56c6c')};
-`

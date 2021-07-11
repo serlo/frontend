@@ -298,6 +298,7 @@ export interface RevisionData {
     id: number
     alias?: string
     parentId?: number
+    previousRevisionId?: number
   }
   thisRevision: {
     id: number
