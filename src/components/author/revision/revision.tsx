@@ -14,9 +14,9 @@ import { useCanDo } from '@/auth/use-can-do'
 import { Injection } from '@/components/content/injection'
 import { Link } from '@/components/content/link'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
-import { removeHash } from '@/components/toast-notice'
 import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionData } from '@/data-types'
+import { removeHash } from '@/helper/remove-hash'
 import { renderNested } from '@/schema/article-renderer'
 
 export interface RevisionProps {

@@ -3,15 +3,8 @@ import Notification from 'react-notify-toast'
 
 import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
+import { removeHash } from '@/helper/remove-hash'
 import { showToastNotice } from '@/helper/show-toast-notice'
-
-export function removeHash() {
-  history.replaceState(
-    null,
-    document.title,
-    window.location.pathname + window.location.search
-  )
-}
 
 export function ToastNotice() {
   const auth = useAuthentication()
