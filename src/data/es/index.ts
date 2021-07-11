@@ -152,7 +152,10 @@ export const instanceData = {
       thisVersion: "Esta Versión",
       currentNotice: "Esta es la versión aceptada actualmente.",
       rejectedNotice: 'This revision was not accepted.',
-      by: "Por"
+      noCurrentNotice: 'There is no accepted revision yet',
+      by: "Por",
+      parentFallbackLink: 'To parent content',
+      hasChanges: 'There have been changes in this area'
     },
     revisionHistory: {
       changes: "Cambios",
