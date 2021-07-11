@@ -152,7 +152,10 @@ export const instanceData = {
       thisVersion: "यह संस्करण",
       currentNotice: "यह वर्तमान में स्वीकृत संस्करण है।",
       rejectedNotice: 'This revision was not accepted.',
-      by: "द्वारा"
+      noCurrentNotice: 'There is no accepted revision yet',
+      by: "द्वारा",
+      parentFallbackLink: 'To parent content',
+      hasChanges: 'There have been changes in this area'
     },
     revisionHistory: {
       changes: "परिवर्तन",
