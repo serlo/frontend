@@ -9,7 +9,7 @@ import { Guard } from '@/components/guard'
 import { ManageSubscriptions } from '@/components/pages/manage-subscriptions'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { QueryResponse } from '@/fetcher/query-types'
+import { SubscriptionData } from '@/data-types'
 import { getEntityStringByTypename } from '@/helper/feature-i18n'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
@@ -107,14 +107,11 @@ function Content() {
 }
 
 function useFetch() {
-  return useGraphqlSwrPaginationWithAuth<{
-    object: QueryResponse
-    sendEmail: boolean
-  }>({
+  return useGraphqlSwrPaginationWithAuth<SubscriptionData>({
     query: subscriptionsQuery,
     variables: { first: 300 },
     config: {
-      refreshInterval: 60 * 60 * 1000, //60min -> update on cache mutation
+      refreshInterval: 2 * 60 * 1000, // 2min
     },
     getConnection(data) {
       return (data.subscription as { getSubscriptions: object })

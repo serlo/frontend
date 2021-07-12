@@ -28,7 +28,6 @@ import { endpoint } from '@/api/endpoint'
 import { AuthenticationPayload } from '@/auth/auth-provider'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useEntityId } from '@/contexts/entity-id-context'
-import { subscriptionsQuery } from '@/pages/subscriptions/manage'
 
 export function useSetUuidStateMutation() {
   const auth = useAuthentication()
@@ -314,12 +313,14 @@ export function useSubscriptionSetMutation() {
           variables: { id: input.id[0] },
         })
       )
-      //manually mutate if needed for performance
-      await mutate(
-        JSON.stringify({
-          query: subscriptionsQuery,
-        })
-      )
+      // deactivated in favour of optimistic ui and automatic revalidations
+      // const keys = cache
+      //   .keys()
+      //   .filter((key) => key.includes('query subscription'))
+
+      // keys.forEach((key) => {
+      //   void mutate(key)
+      // })
     }
     return success
   }
