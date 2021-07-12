@@ -85,7 +85,6 @@ export function useGraphqlSwrPaginationWithAuth<T>({
       ? (getConnection(previousResponse) as { pageInfo: PageInfo })
       : null
     if (previousPageData?.pageInfo.hasNextPage === false) return null
-
     return JSON.stringify({
       query,
       variables: {

@@ -1,7 +1,7 @@
 import { TaxonomyTermType } from '@serlo/api'
 import { AuthorizationPayload } from '@serlo/authorization'
 
-import { Instance } from './fetcher/query-types'
+import { Instance, QueryResponse } from './fetcher/query-types'
 import { instanceData, instanceLandingData, loggedInData } from '@/data/en'
 
 export interface SlugProps {
@@ -806,4 +806,11 @@ export enum UserRoles {
   PageBuilder = 'page-builder',
   Admin = 'admin',
   SysAdmin = 'sys-admin',
+}
+
+// Subscription Management Page
+
+export interface SubscriptionData {
+  object: QueryResponse
+  sendEmail: boolean
 }
