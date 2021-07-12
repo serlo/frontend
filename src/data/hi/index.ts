@@ -95,6 +95,8 @@ export const instanceData = {
       task: "कार्य",
       right: "सही!",
       wrong: "गलत",
+      feedback: 'Feedback',
+      answer: 'Answer',
       check: "जाँच करें",
       yourAnswer: "आपका उत्तर",
       chooseOption: "किसी एक विकल्प पर क्लिक करें",
@@ -137,18 +139,23 @@ export const instanceData = {
     },
     revisions: {
       toOverview: "अवलोकन पर वापस जाएं",
-      toContent: "Back to content",
+      toContent: "Go to content",
       changes: "परिवर्तन",
+      context: "Context (current version)",
       title: "शीर्षक",
       content: "सामग्री",
       metaTitle: "मेटा शीर्षक",
       metaDescription: "मेटा विवरण",
-      compare: "तुलना करें",
+      diff: "Source view",
+      sidebyside: "Side By Side",
       currentVersion: "वर्तमान संस्करण",
       thisVersion: "यह संस्करण",
       currentNotice: "यह वर्तमान में स्वीकृत संस्करण है।",
       rejectedNotice: 'This revision was not accepted.',
-      by: "द्वारा"
+      noCurrentNotice: 'There is no accepted revision yet.',
+      by: "द्वारा",
+      parentFallbackLink: 'To parent content',
+      hasChanges: 'There have been changes in this area'
     },
     revisionHistory: {
       changes: "परिवर्तन",
@@ -251,7 +258,7 @@ export const loggedInData = {
     title: "उपयोगकर्ता",
     icon: 'user',
     children: [{
-      url: '/user/public',
+      url: '/user/me',
       title: 'Own profile'
     }, {
       url: '/auth/password/change',
@@ -332,7 +339,10 @@ export const loggedInData = {
       mail: "ई-मेल",
       subscription: "सदस्यता",
       noMails: "निष्क्रिय करें ",
-      noNotifications: "रद्द करें"
+      getMails: "activate",
+      noNotifications: "रद्द करें",
+      loadedSentence: "Loaded %loadedCount% of %totalCount% subscriptions.",
+      loadMoreLink: "Load more!"
     },
     revisions: {
       checkout: {

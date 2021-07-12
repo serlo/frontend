@@ -95,6 +95,8 @@ export const instanceData = {
       task: "Aufgabe",
       right: "Richtig",
       wrong: "Leider nicht richtig",
+      feedback: 'Feedback',
+      answer: "Antwort",
       check: "Stimmt's?",
       yourAnswer: "Deine Antwort…",
       chooseOption: "Klicke auf eine der Optionen.",
@@ -137,18 +139,23 @@ export const instanceData = {
     },
     revisions: {
       toOverview: "Zurück zur Übersicht",
-      toContent: "Zurück zum Inhalt",
+      toContent: "Zum Inhalt",
       changes: "Änderungen",
+      context: "Im Zusammenhang (akzeptierte Bearbeitung)",
       title: "Titel",
       content: "Inhalt",
       metaTitle: "Meta-Titel",
       metaDescription: "Meta-Beschreibung",
-      compare: "Vergleichen",
+      diff: "Quelltext",
+      sidebyside: "Nebeneinander",
       currentVersion: "Akzeptierte Bearbeitung",
       thisVersion: "Diese Bearbeitung",
       currentNotice: "Das ist die aktuell akzeptierte Bearbeitung.",
       rejectedNotice: "Diese Bearbeitung wurde nicht akzeptiert.",
-      by: "Von"
+      noCurrentNotice: "Es gibt noch keine akzeptierte Bearbeitung.",
+      by: "Von",
+      parentFallbackLink: "Zum übergeordneten Inhalt",
+      hasChanges: "In diesem Bereich hat es Änderungen gegeben"
     },
     revisionHistory: {
       changes: "Änderungen",
@@ -251,7 +258,7 @@ export const loggedInData = {
     title: "Benutzer*in",
     icon: 'user',
     children: [{
-      url: '/user/public',
+      url: '/user/me',
       title: "Eigenes Profil"
     }, {
       url: '/auth/password/change',
@@ -332,7 +339,10 @@ export const loggedInData = {
       mail: "E-Mails",
       subscription: "Abonnement",
       noMails: "deaktivieren",
-      noNotifications: "abbestellen"
+      getMails: "aktivieren",
+      noNotifications: "abbestellen",
+      loadedSentence: "%loadedCount% von %totalCount% Abonnements geladen.",
+      loadMoreLink: "Mehr laden!"
     },
     revisions: {
       checkout: {

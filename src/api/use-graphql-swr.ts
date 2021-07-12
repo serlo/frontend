@@ -67,6 +67,7 @@ export function useGraphqlSwrPaginationWithAuth<T>({
   data?: {
     nodes: T[]
     pageInfo: PageInfo
+    totalCount?: number
   }
 } {
   const auth = useAuthentication()
@@ -84,7 +85,6 @@ export function useGraphqlSwrPaginationWithAuth<T>({
       ? (getConnection(previousResponse) as { pageInfo: PageInfo })
       : null
     if (previousPageData?.pageInfo.hasNextPage === false) return null
-
     return JSON.stringify({
       query,
       variables: {
@@ -107,6 +107,9 @@ export function useGraphqlSwrPaginationWithAuth<T>({
             pageInfo: mapResponseToConnection(
               response.data[response.data.length - 1]
             ).pageInfo,
+            totalCount: mapResponseToConnection(
+              response.data[response.data.length - 1]
+            ).totalCount,
           },
     error: response.error,
     loading: response.isValidating,
@@ -121,6 +124,7 @@ export function useGraphqlSwrPaginationWithAuth<T>({
     return getConnection(response) as {
       nodes: T[]
       pageInfo: PageInfo
+      totalCount?: number
     }
   }
 }

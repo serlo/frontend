@@ -31,7 +31,7 @@ function Content() {
     error: readError,
     loadMore: loadMoreRead,
     loading: loadingRead,
-  } = useNotificationFetch(false, showUnread) //dont fetch if showUnread is true
+  } = useNotificationFetch(false, showUnread) //don't fetch if showUnread is true
 
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null

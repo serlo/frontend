@@ -34,8 +34,8 @@ const legacyLinks = [
 export function isLegacyLink(_href: string) {
   // compat: this is a special frontend route or force frontend use
   if (_href == '/user/notifications') return false
-  if (_href.startsWith('/entity/repository/history')) return true
-  if (_href.startsWith('/entity/repository/compare')) return true
+  if (_href.startsWith('/entity/repository/history')) return false
+  if (_href.startsWith('/entity/repository/compare')) return false
 
   return (
     legacyLinks.indexOf(_href) > -1 ||
@@ -46,7 +46,6 @@ export function isLegacyLink(_href: string) {
     _href.startsWith('/page') ||
     _href.startsWith('/taxonomy') ||
     _href.startsWith('/discussions') ||
-    _href.startsWith('/subscriptions') || //disabled for zwischenrelease
     _href.startsWith('/subscription/update') ||
     _href.startsWith('/unsubscribe') ||
     _href.startsWith('/user/profile/') ||
@@ -102,7 +101,6 @@ export function Link({
   //at this point only internal links should be left
 
   const internalLink = normalizeSerloLink(href)
-
   if (!isLegacyLink(internalLink)) return renderClientSide(internalLink)
 
   //fallback

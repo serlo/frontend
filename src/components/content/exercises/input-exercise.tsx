@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 
 import { Feedback } from './feedback'
+import { RevisionExtraInfo } from './sc-mc-exercise'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EdtrPluginInputExercise } from '@/data-types'
 import { makeMargin, makePrimaryButton, inputFontReset } from '@/helper/css'
@@ -13,6 +14,7 @@ export interface InputExerciseProps {
   data: EdtrPluginInputExercise['state']
   path?: NodePath
   renderNested: RenderNestedFunction
+  isRevisionView?: boolean
 }
 
 interface FeedbackData {
@@ -24,6 +26,7 @@ export function InputExercise({
   data,
   path,
   renderNested,
+  isRevisionView,
 }: InputExerciseProps) {
   const [feedback, setFeedback] = useState<FeedbackData | null>(null)
   const [value, setValue] = useState('')
@@ -60,9 +63,12 @@ export function InputExercise({
         <Feedback correct={feedback.correct}>{feedback.message}</Feedback>
       )}
       {A && (
-        <CheckButton selectable={value !== ''} onClick={evaluate}>
-          {strings.content.check}
-        </CheckButton>
+        <>
+          <CheckButton selectable={value !== ''} onClick={evaluate}>
+            {strings.content.check}
+          </CheckButton>
+          {isRevisionView && renderRevisionExtra()}
+        </>
       )}
     </Wrapper>
   )
@@ -125,6 +131,22 @@ export function InputExercise({
 
   function normalizeNumber(val: string) {
     return val.replace(/,/g, '.').replace(/^[+]/, '')
+  }
+
+  function renderRevisionExtra() {
+    return data.answers.map((answer) => (
+      <RevisionExtraInfo
+        key={answer.value}
+        className="bg-yellow-200 rounded-xl py-2 mb-4"
+      >
+        <span className="font-bold text-sm mx-side">
+          {strings.content.answer}{' '}
+          {answer.isCorrect && `[${strings.content.right}]`}:
+        </span>
+        {answer.value}
+        {renderNested(answer.feedback, `mcfeedbackrevision`)}
+      </RevisionExtraInfo>
+    ))
   }
 }
 

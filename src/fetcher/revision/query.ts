@@ -25,9 +25,16 @@ export const revisionQuery = gql`
           changes
           repository {
             id
+            alias
             currentRevision {
               id
               ...articleRevision
+            }
+            revisions(unrevised: false) {
+              nodes {
+                id
+                trashed
+              }
             }
           }
         }
@@ -35,9 +42,16 @@ export const revisionQuery = gql`
           ...pageRevision
           repository {
             id
+            alias
             currentRevision {
               id
               ...pageRevision
+            }
+            revisions(unrevised: false) {
+              nodes {
+                id
+                trashed
+              }
             }
           }
         }
@@ -46,9 +60,16 @@ export const revisionQuery = gql`
           changes
           repository {
             id
+            alias
             currentRevision {
               id
               ...appletRevision
+            }
+            revisions(unrevised: false) {
+              nodes {
+                id
+                trashed
+              }
             }
           }
         }
@@ -57,9 +78,16 @@ export const revisionQuery = gql`
           changes
           repository {
             id
+            alias
             currentRevision {
               id
               ...courseRevision
+            }
+            revisions(unrevised: false) {
+              nodes {
+                id
+                trashed
+              }
             }
           }
         }
@@ -68,9 +96,16 @@ export const revisionQuery = gql`
           changes
           repository {
             id
+            alias
             currentRevision {
               id
               ...coursePageRevision
+            }
+            revisions(unrevised: false) {
+              nodes {
+                id
+                trashed
+              }
             }
           }
         }
@@ -79,9 +114,16 @@ export const revisionQuery = gql`
           changes
           repository {
             id
+            alias
             currentRevision {
               id
               ...eventRevision
+            }
+            revisions(unrevised: false) {
+              nodes {
+                id
+                trashed
+              }
             }
           }
         }
@@ -90,9 +132,21 @@ export const revisionQuery = gql`
           changes
           repository {
             id
+            alias
             currentRevision {
               id
               content
+            }
+            license {
+              id
+              default
+              title
+            }
+            solution {
+              id
+              currentRevision {
+                content
+              }
             }
           }
         }
@@ -101,13 +155,24 @@ export const revisionQuery = gql`
           changes
           repository {
             id
+            alias
+            exerciseGroup {
+              id
+            }
             license {
               id
+              default
               title
             }
             currentRevision {
               id
               content
+            }
+            revisions(unrevised: false) {
+              nodes {
+                id
+                trashed
+              }
             }
           }
         }
@@ -116,13 +181,21 @@ export const revisionQuery = gql`
           changes
           repository {
             id
+            alias
             license {
               id
+              default
               title
             }
             currentRevision {
               id
               ...exerciseGroupRevision
+            }
+            revisions(unrevised: false) {
+              nodes {
+                id
+                trashed
+              }
             }
           }
         }
@@ -131,9 +204,26 @@ export const revisionQuery = gql`
           changes
           repository {
             id
+            alias
+            exercise {
+              ... on Exercise {
+                id
+              }
+              ... on GroupedExercise {
+                exerciseGroup {
+                  id
+                }
+              }
+            }
             currentRevision {
               id
               content
+            }
+            revisions(unrevised: false) {
+              nodes {
+                id
+                trashed
+              }
             }
           }
         }
@@ -142,9 +232,16 @@ export const revisionQuery = gql`
           changes
           repository {
             id
+            alias
             currentRevision {
               id
               ...videoRevision
+            }
+            revisions(unrevised: false) {
+              nodes {
+                id
+                trashed
+              }
             }
           }
         }

@@ -1,11 +1,13 @@
+import ReactTimeAgo, {
+  TimeAgoProps as ReactTimeAgoProps,
+} from '@elbotho/timeago-react'
 import { useState } from 'react'
-import ReactTimeAgo, { TimeAgoProps as ReactTimeAgoProps } from 'timeago-react'
 import * as timeago from 'timeago.js'
 
 import { useInstanceData } from '@/contexts/instance-context'
 
-interface TimeAgoProps
-  extends Pick<ReactTimeAgoProps, 'datetime' | 'className'> {
+interface TimeAgoProps extends Pick<ReactTimeAgoProps, 'datetime'> {
+  className?: string
   dateAsTitle?: boolean
 }
 
@@ -33,9 +35,6 @@ export function TimeAgo({ datetime, dateAsTitle, className }: TimeAgoProps) {
       locale={lang}
       opts={{ minInterval: 60 }}
       className={className}
-      // see: https://github.com/hustcc/timeago-react/pull/37
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
       title={dateAsTitle ? datetime.toLocaleString(lang) : undefined}
     />
   )

@@ -1,7 +1,7 @@
 import { TaxonomyTermType } from '@serlo/api'
 import { AuthorizationPayload } from '@serlo/authorization'
 
-import { Instance } from './fetcher/query-types'
+import { Instance, QueryResponse } from './fetcher/query-types'
 import { instanceData, instanceLandingData, loggedInData } from '@/data/en'
 
 export interface SlugProps {
@@ -124,6 +124,8 @@ export type LandingSubjectIcon =
   | 'biology'
   | 'sustainability'
   | 'chemistry'
+  | 'informatics'
+  | 'new'
 
 // Error page has some additional data
 
@@ -292,7 +294,12 @@ export interface RevisionData {
   date: string
   type: EntityTypes
   user: FrontendUserData
-  repositoryId: number
+  repository: {
+    id: number
+    alias?: string
+    parentId?: number
+    previousRevisionId?: number
+  }
   thisRevision: {
     id: number
     trashed: boolean
@@ -799,4 +806,11 @@ export enum UserRoles {
   PageBuilder = 'page-builder',
   Admin = 'admin',
   SysAdmin = 'sys-admin',
+}
+
+// Subscription Management Page
+
+export interface SubscriptionData {
+  object: QueryResponse
+  sendEmail: boolean
 }

@@ -1,203 +1,223 @@
-import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
+import Head from 'next/head'
 import styled from 'styled-components'
 
-import { Link } from '../content/link'
 import { HeadTags } from '../head-tags'
-import { PrinciplesGraphic } from '../landing/principles-graphic'
-import DonateSVG from '@/assets-webkit/img/footer-donate.svg'
-import ParticipateSVG from '@/assets-webkit/img/footer-participate.svg'
-import { LandingAbout } from '@/components/landing/landing-about'
-import { LandingSubjects } from '@/components/landing/landing-subjects'
+import { CommunityWall } from '../landing/rework/community-wall'
+import { FooterNew } from '../landing/rework/footer-new'
+import { HeaderNew } from '../landing/rework/header-new'
+import { PartnerListNew } from '../landing/rework/partner-list-new'
+import { WelcomeMessage } from '../landing/rework/welcome-message'
+import { Link } from '@/components/content/link'
+import { LandingSubjectsNew } from '@/components/landing/rework/landing-subjects-new'
+import { SearchInputNew } from '@/components/landing/rework/search-input-new'
 import { InstanceLandingData } from '@/data-types'
-import { makeLightButton, makeResponsivePadding } from '@/helper/css'
 
 export interface LandingDEProps {
   data: InstanceLandingData
 }
 
 export function LandingDE({ data }: LandingDEProps) {
-  const landingStrings = data.strings
   const subjectsData = data.subjectsData
 
   return (
     <>
+      <Head>
+        <link href="_assets/landing-fonts.css" rel="stylesheet" />
+      </Head>
       <HeadTags data={{ title: 'Serlo – Die freie Lernplattform' }} />
-      <SubjectsSection>
-        <LandingSubjects data={subjectsData} />
-      </SubjectsSection>
-
-      <AboutSection>
-        <LandingAbout />
-      </AboutSection>
-
-      <Section>
-        <StyledH2>Serlo.org ist die Wikipedia fürs Lernen</StyledH2>
-        <IconStyle>
-          <ParticipateSVG />
-        </IconStyle>
-        <FlexCol>
-          <p className="serlo-p ml-0">
-            Wir suchen Lehrkräfte mit Begeisterung für ihr Fach. Werden Sie
-            Autor*in auf serlo.org, erstellen Sie <b>neue Inhalte</b> und helfen
-            Sie uns, die <b>Qualität</b> der Lernplattform zu sichern.
+      <HeaderNew />
+      <main className="text-truegray-700">
+        <section className="text-center max-w-3xl mx-auto mt-20 md:mt-15vh font-bold px-2">
+          <PWithWink as="p" className="text-brand font-handwritten text-3xl">
+            <WelcomeMessage />
+          </PWithWink>
+          <h1
+            className={clsx(
+              'text-center text-5xl font-extrabold',
+              'tracking-tight',
+              'max-w-2xl mt-3 mb-6 mx-auto'
+            )}
+          >
+            Was möchtest du <Underlined className="pb-2">lernen ?</Underlined>
+          </h1>
+          <div className="md:hidden mt-10 mb-8">
+            <SearchInputNew />
+          </div>
+          <p className="text-3xl leading-cozy">
+            Hier auf Serlo findest du{' '}
+            <b className="tracking-tight">einfache Erklärungen,</b> ausgewählte{' '}
+            <b className="tracking-tight">Lernvideos</b> und interaktive{' '}
+            <b className="tracking-tight">Übungsaufgaben</b> mit Musterlösungen.
           </p>
-          <Button href="/community">
-            Zur Startseite für Autor*innen{' '}
-            <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
-          </Button>
-        </FlexCol>
-        <FlexCol>
-          <p className="serlo-p ml-0">
-            Wir suchen neue hauptamtliche und ehrenamtliche Teammitglieder für
-            die Bereiche <b>Softwareentwicklung</b>, <b>Redaktion</b> und{' '}
-            <b>NGO-Management</b>.
-          </p>
-          <Button href="/jobs">
-            Jobs und Engagement{' '}
-            <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
-          </Button>
-        </FlexCol>
-      </Section>
+        </section>
 
-      <PrinciplesSection>
-        <PrinciplesGraphic strings={landingStrings} />
-      </PrinciplesSection>
+        <section className="mt-10">
+          <LandingSubjectsNew data={subjectsData} />
+        </section>
 
-      <Section>
-        <StyledH2>Werden Sie Teil unserer Bewegung für freie Bildung</StyledH2>
-        <IconStyle>
-          <DonateSVG />
-        </IconStyle>
-        <FlexCol>
-          <p className="serlo-p ml-0">
-            Bildung gehört uns allen! Werden Sie Mitglied in unserer
-            Organisation Serlo Education e.V. und so zu Mitherausgeber*in der
-            freien Lernplattform.
+        <AboutSection
+          className={clsx(
+            'text-center text-4xl',
+            'tracking-tight font-bold mt-7'
+          )}
+        >
+          <p className="mb-8 max-w-2xl px-2 mx-auto">
+            Unsere Lernplattform wird von einem gemeinnützigen Verein
+            entwickelt. Sie ist komplett{' '}
+            <b className="font-extrabold">
+              kostenlos, werbefrei und{' '}
+              <span className="whitespace-nowrap">frei lizenziert</span>
+            </b>
+            .{' '}
+            <Underlined
+              className="font-handwritten text-brand"
+              style={{ fontSize: '1.2em' }}
+            >
+              Für immer!
+            </Underlined>
           </p>
-          <Button href="/beitreten">
-            Mitglied werden{' '}
-            <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
-          </Button>
-        </FlexCol>
-        <FlexCol>
-          <p className="serlo-p ml-0">
-            Softwareentwicklung und Lerninhalte erstellen kostet Geld. Wir
-            freuen uns sehr, wenn Sie Serlo mit einer Spende unterstützen.
+          <p className="mb-8 max-w-2xl px-2 mx-auto">
+            Jeden Monat nutzen über 1.2 Millionen Schüler*innen und Lehrkräfte
+            Serlo.
           </p>
-          <Button href="/spenden">
-            Spenden <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
-          </Button>
-        </FlexCol>
-      </Section>
+          <ButtonWithWings
+            className="serlo-new-landing-button inline"
+            href="/serlo"
+          >
+            Mehr über uns
+          </ButtonWithWings>
+        </AboutSection>
+
+        <CommunityWall />
+
+        <section className="mt-20 mb-20 mx-side">
+          <img src="/_assets/img/landing/birds.svg" className="mx-auto" />
+          <h3
+            style={{ hyphens: 'auto' }}
+            className={clsx(
+              'text-center text-4xl font-bold',
+              'leading-cozy tracking-tight',
+              'max-w-2xl mt-7 mx-auto'
+            )}
+          >
+            Zusammen setzen wir uns für mehr Bildungsgerechtigkeit und die
+            digitale Transformation unserer Schulen ein.
+          </h3>
+        </section>
+
+        <PartnerSection className="text-center">
+          <h3
+            className={clsx(
+              'text-center text-4xl font-bold',
+              'leading-cozy tracking-tight',
+              'max-w-2xl mt-32 mx-auto relative z-10 mb-16'
+            )}
+          >
+            Partner und Förderer
+          </h3>
+          <PartnerListNew />
+          <ButtonWithWink
+            className={clsx(
+              'hidden md:inline-block mx-auto mt-12',
+              'font-bold text-xl rounded-lg text-truegray-700 ',
+              'px-8 py-4 tracking-tight border-truegray-700 border-solid border-2',
+              'hover:border-brand-light hover:no-underline hover:text-brand-light'
+            )}
+            href="/partner"
+          >
+            Alle Partner ansehen
+          </ButtonWithWink>
+        </PartnerSection>
+      </main>
+      <FooterNew />
     </>
   )
 }
 
-const SubjectsSection = styled.section``
-
-const Section = styled.section`
-  margin-top: 60px;
-  margin-bottom: 60px;
-  ${makeResponsivePadding}
-
-  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
-    max-width: 900px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-`
-
-const Col = styled.div`
-  margin-top: 40px;
-
-  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-    margin-top: 0;
-    margin-right: 30px;
-    flex: 1;
-
-    & > p {
-      min-height: 80px;
-    }
-
-    &:last-child {
-      margin-right: 0;
-    }
-  }
-
-  @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
-    margin-right: 50px;
-  }
-`
-
 const AboutSection = styled.section`
-  margin-top: 50px;
-  display: flex;
-  flex-direction: column;
+  padding-top: 7rem;
+  padding-bottom: 5rem;
+  margin: 6rem 0 0 0;
+  background-image: url('/_assets/img/landing/about-big-arrow.svg'),
+    url('/_assets/img/landing/about-container.svg');
+  background-repeat: no-repeat, no-repeat;
+  background-position: 77% 12%;
+  background-size: 200%, 100vw 100%;
 
   @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-    flex-direction: row;
+    padding-top: 11rem;
+    padding-bottom: 9rem;
+    background-position: 20% 19%;
+    background-size: 82%, 100vw 100%;
   }
 `
 
-const StyledH2 = styled.h2`
-  font-size: 1.66rem;
-  color: ${(props) => props.theme.colors.brand};
-  border: 0;
-  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-    width: 100%;
-  }
-  font-weight: bold;
-  margin-block-start: 0.83em;
-  margin-block-end: 0.83em;
+const Underlined = styled.span`
+  padding-right: 1rem;
+  white-space: nowrap;
+  background: url('/_assets/img/landing/simple-underline.svg') no-repeat bottom;
 `
 
-const Button = styled(Link)`
-  ${makeLightButton}
-  margin-left: -3px;
-`
-
-const PrinciplesSection = styled.section`
-  background-color: ${(props) => props.theme.colors.brand};
-  text-align: center;
-  ${makeResponsivePadding}
-  padding-top: 70px;
-  padding-bottom: 70px;
-
-  & > svg {
-    height: 450px;
-    width: 100%;
-    font-family: inherit;
+const ButtonWithWings = styled(Link)`
+  &:after,
+  &:before {
+    content: ' ';
+    background: url('/_assets/img/landing/wing-left.svg') no-repeat;
+    position: absolute;
+    margin-top: -0.6rem;
+    width: 4rem;
+    height: 4rem;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity ease-in 0.2s;
   }
-`
 
-const IconStyle = styled.div`
-  & > path,
-  & .st0 {
-    fill: ${(props) => props.theme.colors.brandGreen};
+  &:after {
+    margin-left: 1rem;
+    transform: scaleX(-1);
   }
-  width: 100px;
-  margin-right: 30px;
-  @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
-    margin-right: 50px;
-    width: 120px;
+
+  &:before {
+    margin-left: -5rem;
+  }
+
+  &:hover {
+    &:after,
+    &:before {
+      opacity: 1;
+    }
   }
 `
 
-const FlexCol = styled(Col)`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-
-  ${Button} {
-    margin-top: auto;
+const ButtonWithWink = styled(ButtonWithWings)`
+  &:after,
+  &:before {
+    background: url('/_assets/img/landing/wink-left.svg') no-repeat;
+    margin-top: -2rem;
+    background-size: 65%;
   }
+`
 
-  margin-bottom: 60px;
+const PWithWink = styled(ButtonWithWink)`
+  &:after,
+  &:before {
+    margin-top: -1rem;
+    background-size: 75%;
+    width: 2.5rem;
+    height: 2.5rem;
+    opacity: 1;
+  }
+  &:after {
+    margin-left: -0.5rem;
+  }
+  &:before {
+    margin-left: -1.5rem;
+  }
+`
+
+const PartnerSection = styled.section`
+  padding-top: 1rem;
+  background: url('/_assets/img/landing/footer-container.svg') no-repeat;
+  background-size: 100% 100%;
 `

@@ -5,6 +5,7 @@ const colors = require('tailwindcss/colors')
 // base colors
 const brand = '#007ec1'
 const brandGreen = '#95bc1a'
+const yellow = '#ffbe5e'
 
 module.exports = {
   mode: 'jit',
@@ -27,6 +28,12 @@ module.exports = {
           lighter: lighten(0.45, brandGreen),
         },
         truegray: colors.trueGray,
+        berry: '#857189',
+        newgreen: '#2fceb1',
+        yellow: {
+          DEFAULT: yellow,
+          200: tint(0.75, yellow),
+        },
       },
       borderWidth: {
         3: '3px',
@@ -48,9 +55,11 @@ module.exports = {
       },
       margin: {
         block: '30px',
+        '15vh': '15vh',
       },
       padding: {
         '2/3': '66%',
+        '6/5': '120%',
       },
       spacing: {
         0.25: '1px',
@@ -70,6 +79,13 @@ module.exports = {
       },
       fontFamily: {
         serlo: 'Karmilla, sans-serif',
+        handwritten: 'Caveat, sans-serif',
+      },
+      backgroundImage: {
+        'circled-and-arrow':
+          "url('/_assets/img/landing/circled_and_arrow.svg')",
+        underlined: "url('/_assets/img/landing/underlined.svg')",
+        wiggle: "url('/_assets/img/landing/wiggle.svg')",
       },
       minHeight: {
         8: '32px',
@@ -77,12 +93,21 @@ module.exports = {
       maxWidth: {
         xs: '300px',
         65: '260px',
+        '30p': '30%',
       },
       fontSize: {
         'base-plus': ['1.1875rem', '1.22'],
         '1.5xl': ['1.3125rem', '1.22'],
         '2.5xl': ['1.7rem', '1.22'],
         '3.5xl': ['2rem', '1.22'],
+      },
+      width: {
+        '1/8v': '12.5vw',
+        '1/4v': '25vw',
+        '1/3v': '33vw',
+      },
+      height: {
+        630: '630px',
       },
       cursor: {
         'zoom-in': 'zoom-in',

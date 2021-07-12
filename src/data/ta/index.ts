@@ -95,6 +95,8 @@ export const instanceData = {
       task: 'Task',
       right: "சரி",
       wrong: "பிழை",
+      feedback: 'Feedback',
+      answer: 'Answer',
       check: "சரிபார்க்கவும்",
       yourAnswer: "உங்கள் பதில்:",
       chooseOption: 'Click on one of the options.',
@@ -137,18 +139,23 @@ export const instanceData = {
     },
     revisions: {
       toOverview: "Back to overview",
-      toContent: "Back to content",
+      toContent: "Go to content",
       changes: "மாற்றங்கள்",
+      context: "Context (current version)",
       title: "தலைப்பு",
       content: "உட்பொருள்",
       metaTitle: "Meta Title",
       metaDescription: "Meta Description",
-      compare: "Compare",
+      diff: "Source view",
+      sidebyside: "Side By Side",
       currentVersion: "Current Version",
       thisVersion: "This Version",
       currentNotice: "This is the currently accepted version.",
       rejectedNotice: 'This revision was not accepted.',
-      by: 'By'
+      noCurrentNotice: 'There is no accepted revision yet.',
+      by: 'By',
+      parentFallbackLink: 'To parent content',
+      hasChanges: 'There have been changes in this area'
     },
     revisionHistory: {
       changes: 'Changes',
@@ -251,7 +258,7 @@ export const loggedInData = {
     title: "பயனர்",
     icon: 'user',
     children: [{
-      url: '/user/public',
+      url: '/user/me',
       title: 'Own profile'
     }, {
       url: '/auth/password/change',
@@ -332,7 +339,10 @@ export const loggedInData = {
       mail: "E-mails",
       subscription: "Subscription",
       noMails: "deactivate",
-      noNotifications: "cancel"
+      getMails: "activate",
+      noNotifications: "cancel",
+      loadedSentence: "Loaded %loadedCount% of %totalCount% subscriptions.",
+      loadMoreLink: "Load more!"
     },
     revisions: {
       checkout: {

@@ -9,7 +9,6 @@ export interface SolutionProps {
 
 export function Solution({ node, renderNested }: SolutionProps) {
   const { strings } = useInstanceData()
-
   return <>{renderNested(getSolutionContent(), 'sol')}</>
 
   function getSolutionContent(): FrontendContentNode[] {
@@ -19,14 +18,15 @@ export function Solution({ node, renderNested }: SolutionProps) {
     if (!node.edtrState) return []
     const state = node.edtrState
     const prereq: FrontendContentNode[] = []
-    if (state.prerequisite && state.prerequisite.href) {
+    if (state.prerequisite && state.prerequisite.id) {
       prereq.push({
         type: 'p',
         children: [
           { type: 'text', text: `${strings.content.prerequisite} ` },
           {
             type: 'a',
-            href: state.prerequisite.href,
+            href:
+              state.prerequisite.href ?? `/${state.prerequisite.id.toString()}`, // for revisions
             children: [{ type: 'text', text: state.prerequisite.title }],
           },
         ],

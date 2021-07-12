@@ -95,6 +95,8 @@ export const instanceData = {
       task: "Tarea",
       right: "Correcto",
       wrong: "Incorrecto",
+      feedback: 'Feedback',
+      answer: 'Answer',
       check: "Revisa tu respuesta",
       yourAnswer: "Tu respuesta...",
       chooseOption: "Elige una de las opciones.",
@@ -137,18 +139,23 @@ export const instanceData = {
     },
     revisions: {
       toOverview: "Volver a Vista general",
-      toContent: "Regresar al conenido",
+      toContent: "Go to content",
       changes: "Cambios",
+      context: "Context (current version)",
       title: "Título",
       content: "Contenido",
       metaTitle: "Meta Título",
       metaDescription: "Meta Descripción",
-      compare: "Comparar",
+      diff: "Source view",
+      sidebyside: "Side By Side",
       currentVersion: "Versión Actual",
       thisVersion: "Esta Versión",
       currentNotice: "Esta es la versión aceptada actualmente.",
       rejectedNotice: 'This revision was not accepted.',
-      by: "Por"
+      noCurrentNotice: 'There is no accepted revision yet.',
+      by: "Por",
+      parentFallbackLink: 'To parent content',
+      hasChanges: 'There have been changes in this area'
     },
     revisionHistory: {
       changes: "Cambios",
@@ -251,7 +258,7 @@ export const loggedInData = {
     title: "Usuario",
     icon: 'user',
     children: [{
-      url: '/user/public',
+      url: '/user/me',
       title: "Perfil propio"
     }, {
       url: '/auth/password/change',
@@ -332,7 +339,10 @@ export const loggedInData = {
       mail: "Correo electrónico",
       subscription: "Suscripción",
       noMails: "desactivar",
-      noNotifications: "cancelar"
+      getMails: "activate",
+      noNotifications: "cancelar",
+      loadedSentence: "Loaded %loadedCount% of %totalCount% subscriptions.",
+      loadMoreLink: "Load more!"
     },
     revisions: {
       checkout: {
