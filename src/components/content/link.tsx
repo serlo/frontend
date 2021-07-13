@@ -40,7 +40,6 @@ export function isLegacyLink(_href: string) {
   return (
     legacyLinks.indexOf(_href) > -1 ||
     _href.startsWith('/auth/') ||
-    _href.startsWith('/event/history') ||
     _href.startsWith('/api/auth') ||
     _href.startsWith('/entity') ||
     _href.startsWith('/page') ||
