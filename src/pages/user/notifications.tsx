@@ -6,11 +6,14 @@ import { useGraphqlSwrPaginationWithAuth } from '@/api/use-graphql-swr'
 import { PageTitle } from '@/components/content/page-title'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Guard } from '@/components/guard'
-import { Notifications } from '@/components/pages/user/notifications'
+import {
+  NotificationData,
+  Notifications,
+} from '@/components/pages/user/notifications'
 import { UnreadNotificationsCount } from '@/components/user-tools/unread-notifications-count'
-import { NotificationEvent } from '@/components/user/notification'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { sharedEventFragments } from '@/fetcher/query-fragments'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks(() => (
@@ -103,11 +106,7 @@ function Title() {
 
 export function useNotificationFetch(unread?: boolean, noKey?: boolean) {
   // eslint-disable-next-line @typescript-eslint/unbound-method
-  return useGraphqlSwrPaginationWithAuth<{
-    id: number
-    event: NotificationEvent
-    unread: boolean
-  }>({
+  return useGraphqlSwrPaginationWithAuth<NotificationData>({
     query: notificationsQuery,
     variables: { first: 10, unread },
     config: {
@@ -136,170 +135,11 @@ export const notificationsQuery = gql`
         id
         unread
         event {
-          date
-          __typename
-          actor {
-            id
-            username
-            activeAuthor
-            activeDonor
-            activeReviewer
-          }
-          objectId
-          ... on CheckoutRevisionNotificationEvent {
-            revision {
-              id
-            }
-            repository {
-              ...withTitle
-            }
-            reason
-          }
-          ... on CreateCommentNotificationEvent {
-            comment {
-              id
-            }
-            thread {
-              id
-            }
-          }
-          ... on CreateEntityNotificationEvent {
-            entity {
-              id
-            }
-          }
-          ... on CreateEntityLinkNotificationEvent {
-            parent {
-              id
-            }
-            child {
-              id
-            }
-          }
-          ... on CreateEntityRevisionNotificationEvent {
-            entityRevision {
-              id
-            }
-            entity {
-              ...withTitle
-            }
-          }
-          ... on CreateTaxonomyTermNotificationEvent {
-            taxonomyTerm {
-              id
-            }
-          }
-          ... on CreateTaxonomyLinkNotificationEvent {
-            child {
-              ...withTitle
-            }
-            parent {
-              id
-              name
-            }
-          }
-          ... on CreateThreadNotificationEvent {
-            thread {
-              id
-            }
-            object {
-              ...withTitle
-            }
-          }
-          ... on RejectRevisionNotificationEvent {
-            repository {
-              id
-            }
-            revision {
-              id
-            }
-            reason
-          }
-          ... on RemoveEntityLinkNotificationEvent {
-            parent {
-              id
-            }
-            child {
-              id
-            }
-          }
-          ... on RemoveTaxonomyLinkNotificationEvent {
-            child {
-              ...withTitle
-            }
-            parent {
-              id
-              name
-            }
-          }
-          ... on SetLicenseNotificationEvent {
-            repository {
-              ...withTitle
-            }
-          }
-          ... on SetTaxonomyParentNotificationEvent {
-            child {
-              id
-            }
-            previousParent {
-              id
-            }
-          }
-          ... on SetTaxonomyTermNotificationEvent {
-            taxonomyTerm {
-              id
-            }
-          }
-          ... on SetThreadStateNotificationEvent {
-            archived
-            thread {
-              id
-            }
-          }
-          ... on SetUuidStateNotificationEvent {
-            object {
-              ...withTitle
-            }
-            trashed
-          }
+          ...eventData
         }
       }
     }
   }
 
-  fragment withTitle on AbstractUuid {
-    __typename
-    id
-
-    ... on Applet {
-      currentRevision {
-        title
-      }
-    }
-    ... on Article {
-      currentRevision {
-        title
-      }
-    }
-    ... on Course {
-      currentRevision {
-        title
-      }
-    }
-    ... on CoursePage {
-      currentRevision {
-        title
-      }
-    }
-    ... on Video {
-      currentRevision {
-        title
-      }
-    }
-    ... on Page {
-      currentRevision {
-        title
-      }
-    }
-  }
+  ${sharedEventFragments}
 `

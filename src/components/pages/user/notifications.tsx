@@ -12,7 +12,7 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { makeLightButton, makeMargin, makePrimaryButton } from '@/helper/css'
 import { useSetNotificationStateMutation } from '@/helper/mutations'
 
-interface NotificationData {
+export interface NotificationData {
   id: number
   event: NotificationEvent
   unread: boolean
