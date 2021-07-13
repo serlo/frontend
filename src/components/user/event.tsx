@@ -31,7 +31,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { LoggedInData } from '@/data-types'
 import { getEntityStringByTypename } from '@/helper/feature-i18n'
 
-export type NotificationEvent =
+export type EventData =
   | CheckoutRevisionNotificationEvent
   | CreateCommentNotificationEvent
   | CreateEntityNotificationEvent
@@ -49,18 +49,18 @@ export type NotificationEvent =
   | SetThreadStateNotificationEvent
   | SetUuidStateNotificationEvent
 
-export function Notification({
+export function Event({
   event,
   eventId,
   unread,
   loggedInStrings,
   setToRead,
 }: {
-  event: NotificationEvent
+  event: EventData
   eventId: number
   unread: boolean
-  loggedInStrings: LoggedInData['strings']['notifications']
-  setToRead: (id: number) => void
+  loggedInStrings?: LoggedInData['strings']['notifications']
+  setToRead?: (id: number) => void
 }) {
   const eventDate = new Date(event.date)
   const { strings } = useInstanceData()
@@ -71,19 +71,20 @@ export function Notification({
       <Title unread={unread}>{renderText()}</Title>
       {renderExtraContent()}
       <ButtonWrapper>
-        {renderMuteButton()}
-        {unread && renderReadButton()}
+        {setToRead && renderMuteButton()}
+        {unread && setToRead && renderReadButton()}
       </ButtonWrapper>
     </Item>
   )
 
   function renderReadButton() {
+    if (!setToRead) return null
     return (
       <Tippy
         duration={[300, 250]}
         animation="fade"
         placement="bottom"
-        content={<Tooltip>{loggedInStrings.setToRead}</Tooltip>}
+        content={<Tooltip>{loggedInStrings?.setToRead}</Tooltip>}
       >
         <StyledButton onClick={() => setToRead(eventId)}>
           <FontAwesomeIcon icon={faCheck} />
@@ -98,7 +99,7 @@ export function Notification({
         duration={[300, 250]}
         animation="fade"
         placement="bottom"
-        content={<Tooltip>{loggedInStrings.hide}</Tooltip>}
+        content={<Tooltip>{loggedInStrings?.hide}</Tooltip>}
       >
         <StyledButton href={`/unsubscribe/${event.objectId.toString()}`}>
           <FontAwesomeIcon icon={faBellSlash} />
@@ -134,15 +135,15 @@ export function Notification({
       case 'SetThreadStateNotificationEvent':
         return parseString(
           event.archived
-            ? loggedInStrings.setThreadStateArchived
-            : loggedInStrings.setThreadStateUnarchived,
+            ? strings.events.setThreadStateArchived
+            : strings.events.setThreadStateUnarchived,
           {
             thread: renderThread(event.thread.id),
           }
         )
 
       case 'CreateCommentNotificationEvent':
-        return parseString(loggedInStrings.createComment, {
+        return parseString(strings.events.createComment, {
           thread: renderThread(event.thread.id),
           comment: (
             <StyledLink href={`/${event.comment.id}`}>
@@ -152,89 +153,89 @@ export function Notification({
         })
 
       case 'CreateThreadNotificationEvent':
-        return parseString(loggedInStrings.createThread, {
+        return parseString(strings.events.createThread, {
           thread: renderThread(event.thread.id),
           object: renderObject(event.object),
         })
 
       case 'CreateEntityNotificationEvent':
-        return parseString(loggedInStrings.createEntity, {
+        return parseString(strings.events.createEntity, {
           object: renderObject(event.entity),
         })
 
       case 'SetLicenseNotificationEvent':
-        return parseString(loggedInStrings.setLicense, {
+        return parseString(strings.events.setLicense, {
           repository: renderObject(event.repository),
         })
 
       case 'CreateEntityLinkNotificationEvent':
-        return parseString(loggedInStrings.createEntityLink, {
+        return parseString(strings.events.createEntityLink, {
           child: renderObject(event.child),
           parent: renderObject(event.parent),
         })
 
       case 'RemoveEntityLinkNotificationEvent':
-        return parseString(loggedInStrings.removeEntityLink, {
+        return parseString(strings.events.removeEntityLink, {
           child: renderObject(event.child),
           parent: renderObject(event.parent),
         })
 
       case 'CreateEntityRevisionNotificationEvent':
-        return parseString(loggedInStrings.createEntityRevision, {
+        return parseString(strings.events.createEntityRevision, {
           revision: renderRevision(event.entityRevision.id),
           entity: renderObject(event.entity),
         })
 
       case 'CheckoutRevisionNotificationEvent':
-        return parseString(loggedInStrings.checkoutRevision, {
+        return parseString(strings.events.checkoutRevision, {
           actor: actor,
           revision: renderRevision(event.revision.id),
           repository: renderObject(event.repository),
         })
 
       case 'RejectRevisionNotificationEvent':
-        return parseString(loggedInStrings.rejectRevision, {
+        return parseString(strings.events.rejectRevision, {
           revision: renderRevision(event.revision.id),
           repository: renderObject(event.repository),
         })
 
       case 'CreateTaxonomyLinkNotificationEvent':
-        return parseString(loggedInStrings.createTaxonomyLink, {
+        return parseString(strings.events.createTaxonomyLink, {
           child: renderObject(event.child),
           parent: renderObject(event.parent),
         })
 
       case 'RemoveTaxonomyLinkNotificationEvent':
-        return parseString(loggedInStrings.removeTaxonomyLink, {
+        return parseString(strings.events.removeTaxonomyLink, {
           child: renderObject(event.child),
           parent: renderTax(event.parent),
         })
 
       case 'CreateTaxonomyTermNotificationEvent':
-        return parseString(loggedInStrings.createTaxonomyTerm, {
+        return parseString(strings.events.createTaxonomyTerm, {
           term: renderTax(event.taxonomyTerm),
         })
 
       case 'SetTaxonomyTermNotificationEvent':
-        return parseString(loggedInStrings.setTaxonomyTerm, {
+        return parseString(strings.events.setTaxonomyTerm, {
           term: renderTax(event.taxonomyTerm),
         })
 
       case 'SetTaxonomyParentNotificationEvent':
         if (!event.parent) {
           //deleted
-          return parseString(loggedInStrings.setTaxonomyParentDeleted, {
+          return parseString(strings.events.setTaxonomyParentDeleted, {
             child: renderTax(event.child),
           })
         }
         if (event.previousParent) {
-          return parseString(loggedInStrings.setTaxonomyParentChangedFrom, {
+          return parseString(strings.events.setTaxonomyParentChangedFrom, {
             child: renderTax(event.child),
             previousparent: renderTax(event.previousParent),
             parent: renderTax(event.parent),
           })
         }
-        return parseString(loggedInStrings.setTaxonomyParentChanged, {
+        return parseString(strings.events.setTaxonomyParentChanged, {
           child: renderTax(event.child),
           parent: renderTax(event.parent),
         })
@@ -242,8 +243,8 @@ export function Notification({
       case 'SetUuidStateNotificationEvent':
         return parseString(
           event.trashed
-            ? loggedInStrings.setUuidStateTrashed
-            : loggedInStrings.setUuidStateRestored,
+            ? strings.events.setUuidStateTrashed
+            : strings.events.setUuidStateRestored,
           {
             object: renderObject(event.object),
           }

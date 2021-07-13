@@ -6,8 +6,10 @@ import { useGraphqlSwrPaginationWithAuth } from '@/api/use-graphql-swr'
 import { PageTitle } from '@/components/content/page-title'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Guard } from '@/components/guard'
+import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
-import { EventLog, EventLogData } from '@/components/pages/event-log'
+import { EventLog } from '@/components/pages/event-log'
+import { EventData } from '@/components/user/event'
 import { useInstanceData } from '@/contexts/instance-context'
 import { sharedEventFragments } from '@/fetcher/query-fragments'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
@@ -26,7 +28,7 @@ export default renderedPageNoHooks<EventLogPageProps>((props) => (
 
 function Content({ id, alias, title }: EventLogPageProps) {
   // eslint-disable-next-line @typescript-eslint/unbound-method
-  // const { data, error, loadMore } = useFetch(id)
+  const { data, error, loadMore, loading } = useFetch(id)
   const { strings } = useInstanceData()
 
   return (
@@ -41,16 +43,29 @@ function Content({ id, alias, title }: EventLogPageProps) {
         asBackButton
       />
       <Title />
-      {/* <Guard data={data} error={error}>
+      <Guard data={data?.nodes} error={error}>
         <>
-          <EventLog data={data} />
-          <a onClick={loadMore} className="serlo-link cursor-pointer">
-            load moaar
-          </a>
+          <EventLog events={data?.nodes} />
+          {loading ? renderSpinner() : renderButton()}
         </>
-      </Guard> */}
+      </Guard>
     </>
   )
+  function renderSpinner() {
+    return <LoadingSpinner text={strings.loading.isLoading} />
+  }
+
+  function renderButton() {
+    if (!data?.pageInfo.hasNextPage) return null
+    return (
+      <a
+        onClick={loadMore}
+        className="serlo-button serlo-make-interactive-primary"
+      >
+        {strings.actions.loadMore}
+      </a>
+    )
+  }
 }
 
 export const getStaticProps: GetStaticProps<EventLogPageProps> = async (
@@ -69,6 +84,32 @@ export const getStaticProps: GetStaticProps<EventLogPageProps> = async (
   }
 }
 
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  }
+}
+
+function Title() {
+  const { strings } = useInstanceData()
+  return <PageTitle title={strings.pageTitles.eventLog} headTitle />
+}
+
+function useFetch(id: number) {
+  return useGraphqlSwrPaginationWithAuth<EventData>({
+    query: eventDataQuery,
+    variables: { id, first: 1 },
+    config: {
+      refreshInterval: 10 * 60 * 1000, //10min
+    },
+    getConnection(data) {
+      return (data.uuid as { events: object }).events
+    },
+    noAuth: true,
+  })
+}
+
 interface MetaData {
   alias: string
   title?: string
@@ -85,33 +126,22 @@ export async function requestMetaData(id: number): Promise<MetaData> {
   }
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    paths: [],
-    fallback: 'blocking',
+const eventDataQuery = gql`
+  query getEventData($id: Int!, $first: Int!, $after: String) {
+    uuid(id: $id) {
+      events(first: $first, after: $after) {
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+        nodes {
+          ...eventData
+        }
+      }
+    }
   }
-}
-
-function Title() {
-  const { strings } = useInstanceData()
-  return <PageTitle title={strings.pageTitles.eventLog} headTitle />
-}
-
-function useFetch(id: number) {
-  return useGraphqlSwrPaginationWithAuth<{
-    events: EventLogData
-  }>({
-    query: eventDataQuery,
-    variables: { id, first: 30 },
-    config: {
-      refreshInterval: 10 * 60 * 1000, //10min
-    },
-    getConnection(data) {
-      return (data.uuid as { events: object }).events
-    },
-    noAuth: true,
-  })
-}
+  ${sharedEventFragments}
+`
 
 const metaDataQuery = (id: number) => gql`
   query {
@@ -155,17 +185,4 @@ const metaDataQuery = (id: number) => gql`
       }
     }
   }
-`
-
-const eventDataQuery = gql`
-  query getEventData($id: Int!, $first: Int!, $after: String) {
-    uuid(id: $id) {
-      events(first: $first, after: $after) {
-        nodes {
-          ...eventData
-        }
-      }
-    }
-  }
-  ${sharedEventFragments}
 `

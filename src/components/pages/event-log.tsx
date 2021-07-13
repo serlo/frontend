@@ -1,80 +1,24 @@
-import { faTimes, faEye, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
-import { UserLink } from '../user/user-link'
-import { Link } from '@/components/content/link'
-import { TimeAgo } from '@/components/time-ago'
-import { useInstanceData } from '@/contexts/instance-context'
-import type { FrontendUserData } from '@/data-types'
-
-export interface EventLogData {
-  author: FrontendUserData
-  id: number
-}
+import { Event, EventData } from '@/components/user/event'
 
 export interface EventLogProps {
-  data?: EventLogData
+  events?: EventData[]
 }
 
-export function EventLog({ data }: EventLogProps) {
-  const { strings } = useInstanceData()
-  if (!data) return null
-  console.log(data)
+export function EventLog({ events }: EventLogProps) {
+  if (!events) return null
 
   return (
-    <table className="mx-side border-collapse w-full">
-      <thead>
-        <tr>
-          <th className="serlo-th">{strings.revisionHistory.changes}</th>
-          <th style={{ minWidth: '90px' }}>{strings.revisionHistory.author}</th>
-          <th className="serlo-th">{strings.revisionHistory.date}</th>
-          <th className="serlo-th">&nbsp;</th>
-          <th className="serlo-th">&nbsp;</th>
-        </tr>
-      </thead>
-      <tbody>
-        {data.revisions?.nodes.map((entry) => {
-          const isCurrent = entry.id === data.currentRevision?.id
-          return (
-            <tr key={entry.id}>
-              <td className="serlo-td">
-                {isCurrent && (
-                  <span title={strings.revisions.currentNotice}>✅ </span>
-                )}
-                {entry.trashed && (
-                  <span title={strings.revisions.rejectedNotice}>
-                    <FontAwesomeIcon icon={faTimes} />{' '}
-                  </span>
-                )}
-                <b>{entry.changes}</b>
-              </td>
-              <td className="serlo-td">
-                <UserLink user={entry.author} />
-              </td>
-              <td className="serlo-td">
-                <TimeAgo datetime={new Date(entry.date)} dateAsTitle />
-              </td>
-              <td className="serlo-td">
-                <Link
-                  className="serlo-button serlo-make-interactive-light my-0 mx-auto text-base"
-                  href={`/entity/repository/compare/${data.id}/${entry.id}`}
-                >
-                  <FontAwesomeIcon icon={faEye} size="1x" />
-                </Link>
-              </td>
-              <td className="serlo-td">
-                <Link
-                  className="serlo-button serlo-make-interactive-light my-0 mx-auto text-base"
-                  title={strings.revisionHistory.createNew}
-                  href={`/entity/repository/add-revision/${data.id}/${entry.id}`}
-                >
-                  <FontAwesomeIcon icon={faPencilAlt} size="1x" />
-                </Link>
-              </td>
-            </tr>
-          )
-        })}
-      </tbody>
-    </table>
+    <>
+      {events.map((event) => {
+        return (
+          <Event
+            key={event.id}
+            eventId={event.id}
+            event={event}
+            unread={false}
+          />
+        )
+      })}
+    </>
   )
 }

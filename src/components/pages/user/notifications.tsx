@@ -6,7 +6,7 @@ import styled from 'styled-components'
 
 import { useAuthentication } from '@/auth/use-authentication'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
-import { Notification, NotificationEvent } from '@/components/user/notification'
+import { Event, EventData } from '@/components/user/event'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { makeLightButton, makeMargin, makePrimaryButton } from '@/helper/css'
@@ -14,7 +14,7 @@ import { useSetNotificationStateMutation } from '@/helper/mutations'
 
 export interface NotificationData {
   id: number
-  event: NotificationEvent
+  event: EventData
   unread: boolean
 }
 
@@ -47,8 +47,8 @@ export const Notifications = ({
       {isLoading && <LoadingSpinner text={strings.loading.isLoading} />}
       {data?.pageInfo.hasNextPage && !isLoading ? (
         <ButtonWrap>
-          <Button onClick={() => loadMore()}>{loggedInStrings.loadMore}</Button>
-          <LightButton onClick={() => setAllToRead()}>
+          <Button onClick={loadMore}>{strings.actions.loadMore}</Button>
+          <LightButton onClick={setAllToRead}>
             <FontAwesomeIcon icon={faCheck} /> {loggedInStrings.setAllToRead}
           </LightButton>
         </ButtonWrap>
@@ -60,7 +60,7 @@ export const Notifications = ({
     return nodes.map((node) => {
       if (hidden.includes(node.id)) return null
       return (
-        <Notification
+        <Event
           key={node.id}
           eventId={node.id}
           event={node.event}

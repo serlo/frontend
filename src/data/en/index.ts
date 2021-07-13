@@ -222,6 +222,32 @@ export const instanceData = {
     keys: {
       ctrl: 'ctrl',
       return: 'return'
+    },
+    events: {
+      setThreadStateArchived: "%actor% archived %thread%.",
+      setThreadStateUnarchived: "%actor% restored %thread%.",
+      createComment: "%actor% commented in %thread%: %comment%.",
+      createThread: "%actor% started %thread% on %object%.",
+      createEntity: "%actor% created %object%.",
+      setLicense: "%actor% changed the license of %repository%.",
+      createEntityLink: "%actor% associated %child% with %parent%.",
+      removeEntityLink: "%actor% dissociated %child% from %parent%.",
+      createEntityRevision: "%actor% created a %revision% of %entity%.",
+      checkoutRevision: "%actor% checked out a %revision% in %repository%.",
+      rejectRevision: "%actor% did not accept a %revision% in %repository%.",
+      createTaxonomyLink: "%actor% added %child% to %parent%.",
+      removeTaxonomyLink: "%actor% removed %child% from %parent%.",
+      createTaxonomyTerm: "%actor% created %term%.",
+      setTaxonomyTerm: "%actor% updated %term%.",
+      setTaxonomyParentDeleted: "%actor% removed the parent of %child%.",
+      setTaxonomyParentChangedFrom: "%actor% changed parent of %child% from %previousparent% to %parent%.",
+      setTaxonomyParentChanged: "%actor% changed parent of %child% to %parent%.",
+      setUuidStateTrashed: "%actor% trashed %object%.",
+      setUuidStateRestored: "%actor% restored %object%.",
+      entityPlaceholderFallback: "Content"
+    },
+    actions: {
+      loadMore: "Load more",
     }
   }
 };
@@ -308,33 +334,11 @@ export const loggedInData = {
       directLink: 'Direct link to this content',
     },
     notifications: {
-      loadMore: "Load more",
       hide: "Hide notifications for this content.",
       setToRead: "Set notification to read.",
       setAllToRead: "Set all visible to read",
       showNew: "New",
       showRead: "Read",
-      setThreadStateArchived: "%actor% archived %thread%.",
-      setThreadStateUnarchived: "%actor% restored %thread%.",
-      createComment: "%actor% commented in %thread%: %comment%.",
-      createThread: "%actor% started %thread% on %object%.",
-      createEntity: "%actor% created %object%.",
-      setLicense: "%actor% changed the license of %repository%.",
-      createEntityLink: "%actor% associated %child% with %parent%.",
-      removeEntityLink: "%actor% dissociated %child% from %parent%.",
-      createEntityRevision: "%actor% created a %revision% of %entity%.",
-      checkoutRevision: "%actor% checked out a %revision% in %repository%.",
-      rejectRevision: "%actor% did not accept a %revision% in %repository%.",
-      createTaxonomyLink: "%actor% added %child% to %parent%.",
-      removeTaxonomyLink: "%actor% removed %child% from %parent%.",
-      createTaxonomyTerm: "%actor% created %term%.",
-      setTaxonomyTerm: "%actor% updated %term%.",
-      setTaxonomyParentDeleted: "%actor% removed the parent of %child%.",
-      setTaxonomyParentChangedFrom: "%actor% changed parent of %child% from %previousparent% to %parent%.",
-      setTaxonomyParentChanged: "%actor% changed parent of %child% to %parent%.",
-      setUuidStateTrashed: "%actor% trashed %object%.",
-      setUuidStateRestored: "%actor% restored %object%.",
-      entityPlaceholderFallback: "Content"
     },
     subscriptions: {
       mail: "E-mails",

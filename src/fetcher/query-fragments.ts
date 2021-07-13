@@ -45,6 +45,7 @@ export const sharedRevisionFragments = gql`
 export const sharedEventFragments = gql`
   fragment eventData on AbstractNotificationEvent {
     date
+    id
     __typename
     actor {
       id
