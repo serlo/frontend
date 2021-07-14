@@ -156,6 +156,9 @@ export interface Event extends Repository {
 // User profiles
 export interface User extends GraphQL.User {
   __typename: 'User'
+  chatUrl: string | null // TODO: Remove when api is updated
+  imageUrl: string // TODO: Remove when api is updated
+  motivation: string | null // TODO: Remove when api is updated
 }
 
 // export interface User extends Repository, GraphQL.User {

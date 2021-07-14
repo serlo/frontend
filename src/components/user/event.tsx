@@ -21,6 +21,7 @@ import {
   AbstractUuid,
 } from '@serlo/api'
 import Tippy from '@tippyjs/react'
+import clsx from 'clsx'
 import * as R from 'ramda'
 import { Fragment } from 'react'
 import styled, { css } from 'styled-components'
@@ -55,18 +56,22 @@ export function Event({
   unread,
   loggedInStrings,
   setToRead,
+  slim,
+  noExtraContent,
 }: {
   event: EventData
   eventId: number
   unread: boolean
   loggedInStrings?: LoggedInData['strings']['notifications']
   setToRead?: (id: number) => void
+  slim?: boolean
+  noExtraContent?: boolean
 }) {
   const eventDate = new Date(event.date)
   const { strings } = useInstanceData()
 
   return (
-    <Item>
+    <Item className={clsx('p-6', slim && 'pt-1 pb-1')}>
       <StyledTimeAgo datetime={eventDate} dateAsTitle />
       <Title unread={unread}>{renderText()}</Title>
       {renderExtraContent()}
@@ -253,6 +258,7 @@ export function Event({
   }
 
   function renderExtraContent() {
+    if (noExtraContent) return null
     if (
       event.__typename === 'RejectRevisionNotificationEvent' ||
       event.__typename === 'CheckoutRevisionNotificationEvent'
@@ -341,7 +347,6 @@ const Tooltip = styled.span`
 const Item = styled.div`
   position: relative;
   margin: 10px 0;
-  padding: 24px;
   &:nth-child(odd) {
     background: ${(props) => props.theme.colors.bluewhite};
   }

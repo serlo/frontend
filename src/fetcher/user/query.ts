@@ -16,6 +16,9 @@ export const userQuery = gql`
         activeReviewer
         activeAuthor
         activeDonor
+        chatUrl
+        imageUrl
+        motivation
         roles {
           nodes {
             scope

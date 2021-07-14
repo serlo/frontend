@@ -20,21 +20,14 @@ export async function requestUser(
   })
 
   if (uuid.__typename === 'User') {
-    // wip: Need to be implemented in the API
-    const chatName = uuid.username === 'Kulla' ? 'kulla' : uuid.username
-
     return {
       kind: 'user/profile',
       newsletterPopup: false,
       userData: {
         ...uuid,
-        // wip: actually request this from API
-        motivation:
-          uuid.username === 'Kulla'
-            ? 'Mein Ziel bei Serlo: Jedes Kind / jeder Jugendliche soll unabhängig der finanziellen Möglichkeiten seiner Familie optimal auf seinem Bildungsweg unterstützt werden.'
-            : undefined,
-        chatUrl: `https://community.serlo.org/direct/${chatName}`,
-        imageUrl: `https://community.serlo.org/avatar/${chatName}`,
+        motivation: uuid.motivation ?? undefined,
+        chatUrl: uuid.chatUrl ?? undefined,
+        imageUrl: uuid.imageUrl,
         description: getDescription(uuid),
         roles: uuid.roles.nodes.map((role) => {
           return {

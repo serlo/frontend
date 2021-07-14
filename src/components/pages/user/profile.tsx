@@ -14,9 +14,11 @@ import ReviewerBadge from '@/assets-webkit/img/community/badge-reviewer.svg'
 import TimeBadge from '@/assets-webkit/img/community/badge-time.svg'
 import { useAuthentication } from '@/auth/use-authentication'
 import { CommentArea } from '@/components/comments/comment-area'
+import { Link } from '@/components/content/link'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { TimeAgo } from '@/components/time-ago'
 import { UserTools } from '@/components/user-tools/user-tools'
+import { Events } from '@/components/user/events'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UserPage } from '@/data-types'
 import { makeGreenButton, makeMargin } from '@/helper/css'
@@ -26,6 +28,16 @@ import { renderArticle } from '@/schema/article-renderer'
 export interface ProfileProps {
   userData: UserPage['userData']
 }
+
+/*
+todos:
+- What to do when user is not using rocket chat
+- Link Role Icons and Title to: https://de.serlo.org/community/202923/rollen-der-serlo-community
+- Motivation: Add edit button (https://docs.google.com/forms/d/e/1FAIpQLSdb_My7YAVNA7ha9XnBcYCZDk36cOqgcWkBqowatbefX0IzEg/viewform?usp=pp_url&entry.14483495=<username>)
+- Add activity diagrams
+- Add events
+- Reverse event order in API
+*/
 
 export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   const { strings, lang } = useInstanceData()
@@ -58,7 +70,6 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
           <meta name="robots" content="noindex" />
         )}
       </Head>
-
       <ProfileHeader>
         {renderProfileImage()}
         <div>
@@ -70,18 +81,31 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
             &quot;{motivation}&quot;
           </Motivation>
         )}
-        <ChatButton href={chatUrl} enabled={!isOwnProfile}>
-          <FontAwesomeIcon icon={faTelegramPlane} />{' '}
-          {strings.profiles.directMessage}
-        </ChatButton>
+        {chatUrl && (
+          <ChatButton href={chatUrl} enabled={!isOwnProfile}>
+            <FontAwesomeIcon icon={faTelegramPlane} />{' '}
+            {strings.profiles.directMessage}
+          </ChatButton>
+        )}
       </ProfileHeader>
-
       {description && (
         <>
           <h2 className="serlo-h2">{strings.profiles.aboutMe}</h2>
           {renderArticle(description, `profile${id}`)}
         </>
       )}
+
+      <h2 className="serlo-h2">{strings.profiles.recentActivities}</h2>
+      <Events userId={id} perPage={5} noLoadMore />
+      <p className="serlo-p">
+        <Link
+          className="serlo-button serlo-make-interactive-primary mt-4"
+          href={`/event/history/${id}`}
+        >
+          Mehr anzeigen
+        </Link>
+      </p>
+
       <CommentArea id={id} noForms />
       <aside className="mt-16 text-gray-400 text-sm mx-side">
         {renderRoles()}
@@ -226,7 +250,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
 
   function renderHowToEditImage() {
     const { heading, description, steps } = strings.profiles.howToEditImage
-    const chatUrl = (
+    const chatLink = (
       <a className="serlo-link" href="https://community.serlo.org">
         community.serlo.org
       </a>
@@ -244,7 +268,6 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         className="serlo-link cursor-pointer"
         onClick={async () => {
           const cache = await caches.open('v1')
-
           await cache.delete(imageUrl)
           location.reload()
         }}
@@ -260,10 +283,10 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         title={heading}
       >
         <p className="serlo-p">
-          {replacePlaceholders(description, { chatUrl })}
+          {replacePlaceholders(description, { chatLink })}
         </p>
         <ol className="serlo-ol">
-          <li>{replacePlaceholders(steps.goToChat, { chatUrl })}</li>
+          <li>{replacePlaceholders(steps.goToChat, { chatLink })}</li>
           <li>{steps.signIn}</li>
           <li>{replacePlaceholders(steps.goToMyAccount, { myAccountLink })}</li>
           <li>{steps.uploadPicture}</li>
