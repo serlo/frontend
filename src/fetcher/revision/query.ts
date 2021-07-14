@@ -158,6 +158,9 @@ export const revisionQuery = gql`
             alias
             exerciseGroup {
               id
+              exercises {
+                id
+              }
             }
             license {
               id
@@ -206,12 +209,17 @@ export const revisionQuery = gql`
             id
             alias
             exercise {
+              __typename
               ... on Exercise {
                 id
               }
               ... on GroupedExercise {
+                id
                 exerciseGroup {
                   id
+                  exercises {
+                    id
+                  }
                 }
               }
             }

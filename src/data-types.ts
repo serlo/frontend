@@ -299,6 +299,7 @@ export interface RevisionData {
     alias?: string
     parentId?: number
     previousRevisionId?: number
+    positionInGroup?: number
   }
   thisRevision: {
     id: number

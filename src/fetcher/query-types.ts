@@ -119,6 +119,7 @@ export interface GroupedExercise extends BareExercise {
   exerciseGroup: {
     alias: string
     id: number
+    exercises: { id: number }[]
   }
 }
 

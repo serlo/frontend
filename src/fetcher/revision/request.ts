@@ -1,4 +1,3 @@
-import { GroupedExerciseRevision, SolutionRevision } from '@serlo/api'
 import { AuthorizationPayload } from '@serlo/authorization'
 import { request } from 'graphql-request'
 
@@ -11,6 +10,7 @@ import {
   VideoRevision,
   QueryResponseRevision,
   GroupedExercise,
+  Exercise,
 } from '../query-types'
 import { revisionQuery } from './query'
 import { endpoint } from '@/api/endpoint'
@@ -99,20 +99,38 @@ export async function requestRevision(
           ]
         : null
 
-    const _typeNoRevision = uuid.__typename.replace('Revision', '')
-    const type = (_typeNoRevision.charAt(0).toLowerCase() +
-      _typeNoRevision.slice(1)) as EntityTypes
+    const getParentId = () => {
+      if (uuid.__typename === 'GroupedExerciseRevision')
+        return uuid.repository.exerciseGroup.id
+      if (uuid.__typename === 'SolutionRevision') {
+        const exercise = uuid.repository.exercise as unknown as
+          | GroupedExercise
+          | Exercise
+        if (exercise.__typename === 'GroupedExercise')
+          return exercise.exerciseGroup.id
+        return exercise.id
+      }
+      return uuid.repository.id
+    }
 
-    const parentId =
-      type === 'groupedExercise'
-        ? (uuid as GroupedExerciseRevision).repository.exerciseGroup.id
-        : type === 'solution'
-        ? (uuid as SolutionRevision).repository.exercise.id ||
-          (
-            (uuid as SolutionRevision).repository
-              .exercise as unknown as GroupedExercise
-          ).exerciseGroup?.id
-        : uuid.repository.id
+    const getPositionInGroup = () => {
+      if (uuid.__typename === 'SolutionRevision') {
+        const exercise = uuid.repository.exercise as unknown as GroupedExercise
+        if (exercise.__typename === 'GroupedExercise') {
+          const pos = exercise.exerciseGroup.exercises.findIndex(
+            (ex) => ex.id === exercise.id
+          )
+          return pos > -1 ? pos : undefined
+        }
+      }
+      if (uuid.__typename === 'GroupedExerciseRevision') {
+        const pos = uuid.repository.exerciseGroup.exercises.findIndex(
+          (ex) => ex.id === uuid.repository.id
+        )
+        return pos > -1 ? pos : undefined
+      }
+      return undefined
+    }
 
     // likely the previously accepted revision
     const getPreviousRevisionId = () => {
@@ -128,6 +146,10 @@ export async function requestRevision(
       return previousRevision?.id
     }
 
+    const _typeNoRevision = uuid.__typename.replace('Revision', '')
+    const type = (_typeNoRevision.charAt(0).toLowerCase() +
+      _typeNoRevision.slice(1)) as EntityTypes
+
     return {
       kind: 'revision',
       newsletterPopup: false,
@@ -136,8 +158,9 @@ export async function requestRevision(
         repository: {
           id: uuid.repository.id,
           alias: uuid.repository.alias || undefined,
-          parentId,
+          parentId: getParentId(),
           previousRevisionId: getPreviousRevisionId(),
+          positionInGroup: getPositionInGroup(),
         },
         typename: uuid.__typename,
         thisRevision: {
