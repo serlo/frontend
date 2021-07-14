@@ -45,7 +45,9 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
         entityId={entityId}
         authorization={pageData.authorization}
       >
-        <EntityBase page={pageData}>{page}</EntityBase>
+        <EntityBase page={pageData} entityId={entityId}>
+          {page}
+        </EntityBase>
       </FrontendClientBase>
     )
   }
