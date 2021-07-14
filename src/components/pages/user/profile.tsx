@@ -1,22 +1,18 @@
 import { faTelegramPlane } from '@fortawesome/free-brands-svg-icons'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import clsx from 'clsx'
 import { NextPage } from 'next'
 import Head from 'next/head'
-import * as R from 'ramda'
-import { Fragment, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
-import AuthorBadge from '@/assets-webkit/img/community/badge-author.svg'
-import DonorBadge from '@/assets-webkit/img/community/badge-donor.svg'
-import ReviewerBadge from '@/assets-webkit/img/community/badge-reviewer.svg'
-import TimeBadge from '@/assets-webkit/img/community/badge-time.svg'
 import { useAuthentication } from '@/auth/use-authentication'
 import { CommentArea } from '@/components/comments/comment-area'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { TimeAgo } from '@/components/time-ago'
 import { UserTools } from '@/components/user-tools/user-tools'
+import { ProfileBadges } from '@/components/user/profile-badges'
+import { ProfileRoles } from '@/components/user/profile-roles'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UserPage } from '@/data-types'
 import { makeGreenButton, makeMargin } from '@/helper/css'
@@ -28,7 +24,7 @@ export interface ProfileProps {
 }
 
 export const Profile: NextPage<ProfileProps> = ({ userData }) => {
-  const { strings, lang } = useInstanceData()
+  const { strings } = useInstanceData()
   const {
     id,
     username,
@@ -42,7 +38,6 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   const { activeDonor, activeReviewer, activeAuthor } = userData
   const auth = useAuthentication()
   const lastLoginDate = lastLogin ? new Date(lastLogin) : undefined
-  const registerDate = new Date(date)
   const [showImageModal, setShowImageModal] = useState(false)
   const [isOwnProfile, setIsOwnProfile] = useState(false)
 
@@ -63,7 +58,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         {renderProfileImage()}
         <div>
           <h1 className="serlo-h1">{username}</h1>
-          {renderBadges()}
+          <ProfileBadges userData={userData} date={date} />
         </div>
         {motivation && (
           <Motivation className="serlo-p text-1.5xl">
@@ -84,7 +79,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
       )}
       <CommentArea id={id} noForms />
       <aside className="mt-16 text-gray-400 text-sm mx-side">
-        {renderRoles()}
+        <ProfileRoles roles={userData.roles} />
         {lastLoginDate && (
           <p>
             {strings.profiles.lastLogin}:{' '}
@@ -98,62 +93,6 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
       {renderHowToEditImage()}
     </>
   )
-
-  function renderBadges() {
-    if (!activeAuthor && !activeReviewer && !activeDonor) return null
-
-    return (
-      <BadgesContainer>
-        {activeReviewer &&
-          renderBadge({
-            Badge: <ReviewerBadge />,
-            name: strings.roles.reviewer,
-          })}
-        {activeAuthor &&
-          renderBadge({ Badge: <AuthorBadge />, name: strings.roles.author })}
-        {activeDonor &&
-          renderBadge({ Badge: <DonorBadge />, name: strings.roles.donor })}
-        {renderTimeBadge()}
-      </BadgesContainer>
-    )
-  }
-
-  function renderTimeBadge() {
-    const elapsed = new Date().getTime() - new Date(registerDate).getTime()
-    const yearsFloored = Math.floor(elapsed / (1000 * 3600 * 24 * 365))
-    if (yearsFloored < 1) return null
-
-    const fullYear = registerDate.getFullYear()
-
-    return renderBadge({
-      Badge: (
-        <>
-          <TimeBadgeNumber>
-            {fullYear === 2014 && (
-              <span className="text-lg align-text-top inline-block pt-1 pr-1">
-                &gt;
-              </span>
-            )}
-            {yearsFloored}
-          </TimeBadgeNumber>
-          <TimeBadge />
-        </>
-      ),
-      name:
-        yearsFloored === 1
-          ? strings.profiles.yearWithSerlo
-          : strings.profiles.yearsWithSerlo,
-    })
-  }
-
-  function renderBadge({ Badge, name }: { Badge: JSX.Element; name: string }) {
-    return (
-      <BadgeContainer>
-        {Badge}
-        <p className="serlo-p text-sm leading-tight">{name}</p>
-      </BadgeContainer>
-    )
-  }
 
   function renderUserTools() {
     return (
@@ -178,49 +117,6 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
           </ProfileImageEditButton>
         )}
       </ProfileImageCage>
-    )
-  }
-
-  function renderRoles() {
-    const [instanceRoles, otherRoles] = R.partition(
-      (role) => role.instance === null || role.instance === lang,
-      userData.roles
-    )
-
-    return (
-      <>
-        {instanceRoles.length > 0 && (
-          <p className="mb-5">
-            {replacePlaceholders(strings.profiles.instanceRoles, { lang })}{' '}
-            {instanceRoles.map((role, index) => (
-              <Fragment key={index}>{renderRole(role.role)}</Fragment>
-            ))}
-          </p>
-        )}
-        {otherRoles.length > 0 && (
-          <p className="mb-block">
-            {strings.profiles.otherRoles}{' '}
-            {otherRoles.map((role, index) => (
-              <Fragment key={index}>
-                {renderRole(`${role.instance ?? ''}: ${role.role}`)}
-              </Fragment>
-            ))}
-          </p>
-        )}
-      </>
-    )
-  }
-
-  function renderRole(text: string) {
-    return (
-      <span
-        className={clsx(
-          'text-white bg-gray-400 inline-block rounded-2xl font-bold',
-          'py-1 px-2 mx-1'
-        )}
-      >
-        {text}
-      </span>
     )
   }
 
@@ -329,38 +225,6 @@ const ProfileImage = styled.img`
   height: 100%;
 `
 
-const BadgesContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-    justify-content: left;
-  }
-  ${makeMargin}
-`
-
-const BadgeContainer = styled.div`
-  margin-right: 30px;
-  width: 65px;
-  > svg {
-    height: 40px;
-  }
-  & > * {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-  }
-`
-
-const TimeBadgeNumber = styled.div`
-  position: absolute;
-  font-size: 1.8rem;
-  color: #333;
-  text-align: center;
-  width: 65px;
-  margin-top: 13px;
-`
-
 const ProfileHeader = styled.header`
   ${makeMargin}
   margin-top: 60px;
@@ -389,7 +253,6 @@ const ProfileHeader = styled.header`
     }
   }
 
-  & ${BadgeContainer} > svg,
   h1 {
     margin-top: 15px;
     margin-bottom: 10px;
