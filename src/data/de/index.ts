@@ -147,7 +147,7 @@ export const instanceData = {
       metaTitle: "Meta-Titel",
       metaDescription: "Meta-Beschreibung",
       diff: "Quelltext",
-      sidebyside: "Nebeneinander",
+      sidebyside: "Vergleich",
       currentVersion: "Akzeptierte Bearbeitung",
       thisVersion: "Diese Bearbeitung",
       currentNotice: "Das ist die aktuell akzeptierte Bearbeitung.",
