@@ -95,6 +95,9 @@ function Content({ metaData }: EventPage) {
 export const getStaticProps: GetStaticProps<EventPage | ErrorPageType> = async (
   context
 ) => {
+  // TODO: use fetch logic from default slug instead
+  // it's more data, but it's most likely cached already
+
   const raw_alias = (context.params?.slug as string[]).join('/')
   const { alias, instance } = parseLanguageSubfolder(
     `/${context.locale!}/${raw_alias}`
@@ -137,7 +140,7 @@ function Title() {
 function useFetch(aliasInput: AliasInput) {
   return useGraphqlSwrPaginationWithAuth<EventData>({
     query: eventDataQuery,
-    variables: { alias: aliasInput, first: 1 },
+    variables: { alias: aliasInput, first: 10 },
     config: {
       refreshInterval: 10 * 60 * 1000, //10min
     },

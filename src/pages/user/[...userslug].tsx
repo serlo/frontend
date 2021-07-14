@@ -16,7 +16,7 @@ export default renderedPageNoHooks<UserProps>(({ pageData }) => (
 ))
 
 export const getStaticProps: GetStaticProps<UserProps> = async (context) => {
-  // /user/{id}}/{name}
+  // /user/{id}/{name}
 
   try {
     let pageData: UserPage | undefined = undefined
