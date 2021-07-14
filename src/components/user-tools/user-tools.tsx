@@ -2,6 +2,7 @@ import {
   faClock,
   faList,
   faPencilAlt,
+  faQuestionCircle,
   faShareAlt,
   faTools,
   IconDefinition,
@@ -203,6 +204,12 @@ export function UserTools({
           className={buttonClassName()}
         >
           {renderInner(strings.pageTitles.revisionHistory, faList)}
+        </Link>
+        <Link
+          href="/community/140473/hilfeseiten-für-reviewer"
+          className={buttonClassName()}
+        >
+          {renderInner(strings.revisions.helpLink, faQuestionCircle)}
         </Link>
       </>
     )
