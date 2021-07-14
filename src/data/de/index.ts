@@ -92,7 +92,7 @@ export const instanceData = {
       show: "anzeigen",
       hide: "ausblenden",
       prerequisite: "Für diese Aufgabe benötigst Du folgendes Grundwissen:",
-      task: "Aufgabe",
+      task: "Aufgabenstellung",
       right: "Richtig",
       wrong: "Leider nicht richtig",
       feedback: 'Feedback',
