@@ -96,6 +96,7 @@ export const sharedEventFragments = gql`
     ... on CreateTaxonomyTermNotificationEvent {
       taxonomyTerm {
         id
+        name
       }
     }
     ... on CreateTaxonomyLinkNotificationEvent {
@@ -157,6 +158,7 @@ export const sharedEventFragments = gql`
     ... on SetTaxonomyTermNotificationEvent {
       taxonomyTerm {
         id
+        name
       }
     }
     ... on SetThreadStateNotificationEvent {
