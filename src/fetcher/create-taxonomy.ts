@@ -23,6 +23,7 @@ export function buildTaxonomyData(uuid: TaxonomyTerm): TaxonomyData {
     description: uuid.description ? convertState(uuid.description) : undefined,
     title: uuid.name,
     id: uuid.id,
+    alias: uuid.alias ?? undefined,
     taxonomyType: uuid.type,
 
     articles: collectType(children, 'Article'),

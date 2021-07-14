@@ -12,10 +12,10 @@ interface EventsProps {
   userId?: number
   objectId?: number
   perPage?: number
-  noLoadMore?: boolean
+  moreButton?: boolean
 }
 
-export function Events({ userId, objectId, perPage, noLoadMore }: EventsProps) {
+export function Events({ userId, objectId, perPage, moreButton }: EventsProps) {
   const { strings } = useInstanceData()
 
   // eslint-disable-next-line @typescript-eslint/unbound-method
@@ -40,7 +40,7 @@ export function Events({ userId, objectId, perPage, noLoadMore }: EventsProps) {
             />
           )
         })}
-        {!noLoadMore && (loading ? renderSpinner() : renderButton())}
+        {moreButton ? (loading ? renderSpinner() : renderButton()) : null}
       </>
     </Guard>
   )
@@ -52,12 +52,14 @@ export function Events({ userId, objectId, perPage, noLoadMore }: EventsProps) {
   function renderButton() {
     if (!data?.pageInfo.hasNextPage) return null
     return (
-      <a
-        onClick={loadMore}
-        className="serlo-button serlo-make-interactive-primary"
-      >
-        {strings.actions.loadMore}
-      </a>
+      <p className="serlo-p mt-12">
+        <a
+          onClick={loadMore}
+          className="serlo-button serlo-make-interactive-primary"
+        >
+          {strings.actions.loadMore}
+        </a>
+      </p>
     )
   }
 }

@@ -90,6 +90,7 @@ export type SlugPageData =
   | ErrorPage
   | SingleEntityPage
   | TaxonomyPage
+  | UserEventsPage
   | Redirect
 
 // The landing page is custom built and takes i18n strings
@@ -271,6 +272,7 @@ export interface SingleEntityPage extends EntityPageBase {
 
 export interface EntityData {
   id: number
+  alias?: string
   typename: string
   trashed?: boolean
   revisionId?: number
@@ -755,6 +757,15 @@ export interface UserPage extends EntityPageBase {
   }
 }
 
+export interface UserEventsPage {
+  kind: 'user/events'
+  userData: {
+    id: number
+    title: string
+    alias?: string
+  }
+}
+
 // Shared attributes for first and second level.
 
 export interface TaxonomyTermBase {
@@ -783,6 +794,7 @@ export interface TaxonomySubTerm extends TaxonomyTermBase, TaxonomyLink {
 
 export interface TaxonomyData extends TaxonomyTermBase {
   id: number
+  alias?: string
   title: string
   taxonomyType: TaxonomyTermType
   subterms: TaxonomySubTerm[]

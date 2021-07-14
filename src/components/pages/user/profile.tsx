@@ -96,7 +96,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
       )}
 
       <h2 className="serlo-h2">{strings.profiles.recentActivities}</h2>
-      <Events userId={id} perPage={5} noLoadMore />
+      <Events userId={id} perPage={5} />
       <p className="serlo-p">
         <Link
           className="serlo-button serlo-make-interactive-primary mt-4"
