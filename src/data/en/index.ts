@@ -188,6 +188,9 @@ export const instanceData = {
       instanceRoles: 'Roles on %lang%.serlo.org:',
       otherRoles: 'Other roles:',
       directMessage: 'Direct message',
+      goToChat: 'Go to Chat',
+      registerChat: 'Register for Chat',
+      inviteToChat: 'Invite to chat',
       howToEditImage: {
         heading: 'How to edit your profile picture',
         description: 'Currently we use the images from %chatUrl% as profile pictures. In order to change your picture, do the following:',
