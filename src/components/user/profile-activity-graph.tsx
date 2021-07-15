@@ -6,7 +6,7 @@ import styled from 'styled-components'
 
 interface ProfileActivityGraphProps {
   isOwnProfile: boolean
-  amount: number
+  amount?: number
   absoluteValue: number
   title: string
 }
@@ -20,10 +20,12 @@ export function ProfileActivityGraph({
   const dashArray = 283
   const dashOffsetMin = 17 //space for the heart
   const [dashOffset, setDashOffset] = useState(dashArray)
+  const dashOffsetTarget =
+    dashOffsetMin + (1 - amount) * (dashArray - dashOffsetMin)
 
   // start animation
   useEffect(() => {
-    setDashOffset(dashOffsetMin + (1 - amount) * (dashArray - dashOffsetMin))
+    setDashOffset(dashOffsetTarget)
   }, [amount])
 
   return (
@@ -31,24 +33,31 @@ export function ProfileActivityGraph({
       <h3 className="text-xl font-bold mt-5 mb-2 ">{title}</h3>
       <StyledSVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
         <OuterCircle r="45" cx="50" cy="50" />
-        <ProgressCircle
-          r="45"
-          cx="50"
-          cy="50"
-          style={{
-            strokeDasharray: dashArray,
-            strokeDashoffset: dashOffset,
-          }}
-        />
+        {amount && (
+          <ProgressCircle
+            r="45"
+            cx="50"
+            cy="50"
+            style={{
+              strokeDasharray: dashArray,
+              strokeDashoffset: dashOffset,
+            }}
+          />
+        )}
         <InnerCircle r="24" cx="50" cy="50" />
       </StyledSVG>
-      <HeartLevel>
-        <span>1</span>
-        <FontAwesomeIcon icon={faHeart} />
-      </HeartLevel>
       <AbsoluteNumber>{absoluteValue}</AbsoluteNumber>
-      {isOwnProfile && (
-        <figcaption className="mt-2">Noch 22 bis Level 2!</figcaption>
+      {amount && (
+        <>
+          <HeartLevel>
+            <span>1</span>
+            <FontAwesomeIcon icon={faHeart} />
+          </HeartLevel>
+
+          {isOwnProfile && (
+            <figcaption className="mt-2">Noch 22 bis Level 2!</figcaption>
+          )}
+        </>
       )}
     </figure>
   )
