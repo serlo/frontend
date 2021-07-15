@@ -42,6 +42,7 @@
     "escape-html": "^1.0.0",
     "graphiql": "^1.0.0",
     "graphql": "^15.0.0",
+    "graphql-config": "^3.3.0",
     "graphql-request": "^3.0.0",
     "htmlparser2": "^6.0.0",
     "js-cookie": "^2.0.0",
