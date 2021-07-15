@@ -30,9 +30,8 @@ export function ProfileActivityGraph({
     <figure className="mx-side w-40 text-center text-brand relative">
       <h3 className="text-xl font-bold mt-5 mb-2 ">{title}</h3>
       <StyledSVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-        <circle className="outer" r="45" cx="50" cy="50" />
-        <circle
-          className="progress"
+        <OuterCircle r="45" cx="50" cy="50" />
+        <ProgressCircle
           r="45"
           cx="50"
           cy="50"
@@ -41,14 +40,14 @@ export function ProfileActivityGraph({
             strokeDashoffset: dashOffset,
           }}
         />
-        <circle className="inner" r="24" cx="50" cy="50" />
+        <InnerCircle r="24" cx="50" cy="50" />
       </StyledSVG>
       <HeartLevel>
         <span>1</span>
         <FontAwesomeIcon icon={faHeart} />
       </HeartLevel>
       <AbsoluteNumber>{absoluteValue}</AbsoluteNumber>
-      {!isOwnProfile && (
+      {isOwnProfile && (
         <figcaption className="mt-2">Noch 22 bis Level 2!</figcaption>
       )}
     </figure>
@@ -58,23 +57,25 @@ export function ProfileActivityGraph({
 const StyledSVG = styled.svg`
   height: 10rem;
   width: 10rem;
+`
 
-  circle.outer {
-    fill: ${(props) => tint(0.85, props.theme.colors.brandGreen)};
-    stroke: ${(props) => tint(0.75, props.theme.colors.brandGreen)};
-    stroke-width: 5;
-  }
-  circle.inner {
-    fill: ${(props) => props.theme.colors.brandGreen};
-  }
-  circle.progress {
-    fill: none;
-    stroke: ${(props) => tint(0.4, props.theme.colors.brandGreen)};
-    stroke-width: 5;
-    transition: all ease 3.5s;
-    transform-origin: center;
-    transform: rotate(58deg);
-  }
+const OuterCircle = styled.circle`
+  fill: ${(props) => tint(0.85, props.theme.colors.brandGreen)};
+  stroke: ${(props) => tint(0.75, props.theme.colors.brandGreen)};
+  stroke-width: 5;
+`
+
+const InnerCircle = styled.circle`
+  fill: ${(props) => props.theme.colors.brandGreen};
+`
+
+const ProgressCircle = styled.circle`
+  fill: none;
+  stroke: ${(props) => tint(0.4, props.theme.colors.brandGreen)};
+  stroke-width: 5;
+  transition: all ease 3.5s;
+  transform-origin: center;
+  transform: rotate(58deg);
 `
 
 const AbsoluteNumber = styled.div`
