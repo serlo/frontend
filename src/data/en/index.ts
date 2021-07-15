@@ -191,6 +191,14 @@ export const instanceData = {
       goToChat: 'Go to Chat',
       registerChat: 'Register for Chat',
       inviteToChat: 'Invite to chat',
+      activityGraph: {
+        edits: "Edits",
+        comments: "Comments",
+        reviews: "Reviews",
+        taxonomy: "Taxonomy",
+        levelTitle: "Level %level% of 3",
+        noLevel: "No level yet"
+      },
       howToEditImage: {
         heading: 'How to edit your profile picture',
         description: 'Currently we use the images from %chatUrl% as profile pictures. In order to change your picture, do the following:',

@@ -159,6 +159,13 @@ export interface User extends GraphQL.User {
   chatUrl: string | null // TODO: Remove when api is updated
   imageUrl: string // TODO: Remove when api is updated
   motivation: string | null // TODO: Remove when api is updated
+  activityByType: {
+    // TODO: Remove when api is updated
+    edits: number
+    comments: number
+    reviews: number
+    taxonomy: number
+  }
 }
 
 // export interface User extends Repository, GraphQL.User {

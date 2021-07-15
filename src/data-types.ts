@@ -1,7 +1,7 @@
 import { Role, TaxonomyTermType } from '@serlo/api'
 import { AuthorizationPayload } from '@serlo/authorization'
 
-import { Instance, QueryResponse } from './fetcher/query-types'
+import { Instance, QueryResponse, User } from './fetcher/query-types'
 import { instanceData, instanceLandingData, loggedInData } from '@/data/en'
 
 export interface SlugProps {
@@ -754,6 +754,7 @@ export interface UserPage extends EntityPageBase {
     activeReviewer: boolean
     activeAuthor: boolean
     activeDonor: boolean
+    activityByType: User['activityByType']
   }
 }
 

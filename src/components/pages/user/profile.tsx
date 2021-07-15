@@ -28,7 +28,6 @@ export interface ProfileProps {
 /*
 todos:
 - Motivation: Add edit button (https://docs.google.com/forms/d/e/1FAIpQLSdb_My7YAVNA7ha9XnBcYCZDk36cOqgcWkBqowatbefX0IzEg/viewform?usp=pp_url&entry.14483495=<username>)
-- Add activity diagrams
 */
 
 export const Profile: NextPage<ProfileProps> = ({ userData }) => {
@@ -42,6 +41,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
     chatUrl,
     date,
     motivation,
+    activityByType,
   } = userData
   const { activeDonor, activeReviewer, activeAuthor } = userData
   const auth = useAuthentication()
@@ -85,7 +85,10 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         </>
       )}
 
-      <ProfileActivityGraphs isOwnProfile={isOwnProfile} />
+      <ProfileActivityGraphs
+        values={activityByType}
+        isOwnProfile={isOwnProfile}
+      />
 
       <h2 className="serlo-h2">{strings.profiles.recentActivities}</h2>
       <Events userId={id} perPage={5} />
@@ -130,7 +133,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   function renderProfileImage() {
     return (
       <ProfileImageCage>
-        <ProfileImage src={imageUrl} />
+        <ProfileImage src={imageUrl} alt={`Profile image of ${username}`} />
         {isOwnProfile && (
           <ProfileImageEditButton onClick={() => setShowImageModal(true)}>
             <FontAwesomeIcon icon={faPencilAlt} />

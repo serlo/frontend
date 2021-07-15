@@ -25,6 +25,12 @@ export const userQuery = gql`
             role
           }
         }
+        activityByType {
+          edits
+          comments
+          reviews
+          taxonomy
+        }
       }
     }
   }
