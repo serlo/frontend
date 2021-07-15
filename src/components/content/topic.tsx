@@ -53,43 +53,45 @@ export function Topic({ data }: TopicProps) {
         )}
       </Headline>
       {renderUserTools({ aboveContent: true })}
-      <ImageSizer>
-        {data.description &&
-          renderArticle(data.description, `taxdesc${data.id}`)}
-      </ImageSizer>
-      {data.subterms &&
-        data.subterms.map((child) => (
-          <Fragment key={child.title}>
-            <SubTopic data={child} subid={child.id} id={data.id} />
-          </Fragment>
-        ))}
-      {data.exercisesContent &&
-        data.exercisesContent.map((exercise, i) => {
-          return (
-            <Fragment key={i}>
-              {renderArticle(
-                [exercise],
-                `tax${data.id}`,
-                `ex${exercise.context.id}`
-              )}
+      <div className="min-h-1/2">
+        <ImageSizer>
+          {data.description &&
+            renderArticle(data.description, `taxdesc${data.id}`)}
+        </ImageSizer>
+        {data.subterms &&
+          data.subterms.map((child) => (
+            <Fragment key={child.title}>
+              <SubTopic data={child} subid={child.id} id={data.id} />
             </Fragment>
-          )
-        })}
-      {isTopic && (
-        <LinkList>
-          <CategoryLinks full category="articles" links={data.articles} />
-          <CategoryLinks full category="exercises" links={data.exercises} />
-          <CategoryLinks full category="videos" links={data.videos} />
-          <CategoryLinks full category="applets" links={data.applets} />
-          <CategoryLinks full category="courses" links={data.courses} />
-          <CategoryLinks full category="events" links={data.events} />
-        </LinkList>
-      )}
-      {isFolder && data.events && (
-        <LinkList>
-          <CategoryLinks full category="events" links={data.events} />
-        </LinkList>
-      )}
+          ))}
+        {data.exercisesContent &&
+          data.exercisesContent.map((exercise, i) => {
+            return (
+              <Fragment key={i}>
+                {renderArticle(
+                  [exercise],
+                  `tax${data.id}`,
+                  `ex${exercise.context.id}`
+                )}
+              </Fragment>
+            )
+          })}
+        {isTopic && (
+          <LinkList>
+            <CategoryLinks full category="articles" links={data.articles} />
+            <CategoryLinks full category="exercises" links={data.exercises} />
+            <CategoryLinks full category="videos" links={data.videos} />
+            <CategoryLinks full category="applets" links={data.applets} />
+            <CategoryLinks full category="courses" links={data.courses} />
+            <CategoryLinks full category="events" links={data.events} />
+          </LinkList>
+        )}
+        {isFolder && data.events && (
+          <LinkList>
+            <CategoryLinks full category="events" links={data.events} />
+          </LinkList>
+        )}
+      </div>
 
       {defaultLicense && (
         <LicenseNotice data={defaultLicense} path={['license']} />

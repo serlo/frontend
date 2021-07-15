@@ -42,7 +42,7 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
       <div className="relative">
         <MaxWidthDiv showNav={!!page.secondaryNavigationData}>
           {renderBreadcrumbs()}
-          <main className="min-h-half">{children}</main>
+          <main>{children}</main>
 
           {!noComments && <CommentArea id={entityId} />}
 

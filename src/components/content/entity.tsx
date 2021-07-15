@@ -46,7 +46,9 @@ export function Entity({ data }: EntityProps) {
       {data.trashed && renderTrashedNotice()}
       {renderStyledH1()}
       {renderUserTools({ aboveContent: true })}
-      {data.content && renderContent(data.content)}
+      <div className="min-h-1/4">
+        {data.content && renderContent(data.content)}
+      </div>
       {renderCourseFooter()}
       <HSpace amount={20} />
       {renderUserTools()}
