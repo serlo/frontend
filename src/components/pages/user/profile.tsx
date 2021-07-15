@@ -12,6 +12,7 @@ import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { TimeAgo } from '@/components/time-ago'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { Events } from '@/components/user/events'
+import { ProfileActivityGraphs } from '@/components/user/profile-activity-graphs'
 import { ProfileBadges } from '@/components/user/profile-badges'
 import { ProfileChatButton } from '@/components/user/profile-chat-button'
 import { ProfileRoles } from '@/components/user/profile-roles'
@@ -86,6 +87,8 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
           {renderArticle(description, `profile${id}`)}
         </>
       )}
+
+      <ProfileActivityGraphs isOwnProfile={isOwnProfile} />
 
       <h2 className="serlo-h2">{strings.profiles.recentActivities}</h2>
       <Events userId={id} perPage={5} />

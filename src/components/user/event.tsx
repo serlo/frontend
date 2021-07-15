@@ -71,7 +71,7 @@ export function Event({
   const { strings } = useInstanceData()
 
   return (
-    <Item className={clsx('p-6', slim && 'pt-1 pb-1')}>
+    <Item className={clsx('py-6 px-side', slim && 'pt-1 pb-1')}>
       <StyledTimeAgo datetime={eventDate} dateAsTitle />
       <Title unread={unread}>{renderText()}</Title>
       {renderExtraContent()}
