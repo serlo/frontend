@@ -351,7 +351,7 @@ export const loggedInData = {
         explanation: "Bitte gib der Autor*in ein bisschen Feedback."
       },
       reject: {
-        action: "Ablehnen",
+        action: "Nicht akzeptieren",
         title: "Bearbeitung ablehnen",
         explanation: "Bitte sag der Bearbeiter*in, warum die Änderung nicht angenommen wird."
       },
