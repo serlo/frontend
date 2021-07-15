@@ -1,4 +1,5 @@
 {
+  "schema": "schema.graphql",
   "extensions": {
     "endpoints": {
       "staging": {
@@ -9,6 +10,5 @@
         "introspect": true
       }
     }
-  },
-  "schema": "schema.graphql"
+  }
 }
