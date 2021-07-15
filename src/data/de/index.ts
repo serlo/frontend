@@ -352,7 +352,7 @@ export const loggedInData = {
       },
       reject: {
         action: "Nicht akzeptieren",
-        title: "Bearbeitung ablehnen",
+        title: "Bearbeitung nicht akzeptieren",
         explanation: "Bitte sag der Bearbeiter*in, warum die Änderung nicht angenommen wird."
       },
       confirm: "Bestätigen"
