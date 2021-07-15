@@ -378,7 +378,7 @@ describe('check all supported typenames with stored api-data', () => {
     ])
 
     expect(pageData.metaData?.title).toBe(
-      'Mathematik Aufgabengruppe - lernen mit Serlo!'
+      'Mathematik Aufgabe mit Teilaufgaben - lernen mit Serlo!'
     )
     expect(pageData.metaData?.contentType).toBe('exercisegroup')
     expect(pageData.metaData?.metaDescription).toBe(
@@ -400,9 +400,7 @@ describe('check all supported typenames with stored api-data', () => {
 
     const pageData = (await fetchPageData('/de/53209')) as SingleEntityPage
 
-    expect(pageData.metaData?.title).toBe(
-      'Gruppierte Aufgabe - lernen mit Serlo!'
-    )
+    expect(pageData.metaData?.title).toBe('Teilaufgabe - lernen mit Serlo!')
     expect(pageData.metaData?.contentType).toBe('groupedexercise')
     expect(pageData.metaData?.metaDescription).toBe(
       'Die Ruhelage der Funktion liegt auf der -Achse.Der Graph schneidet das Koordinatensystem im Nullpunkt, also handelt es sich um eine Sinusfunktion …'
