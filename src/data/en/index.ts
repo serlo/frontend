@@ -196,14 +196,14 @@ export const instanceData = {
         comments: "Comments",
         reviews: "Reviews",
         taxonomy: "Taxonomy",
-        levelTitle: "Level %level% of 3",
-        noLevel: "No level yet"
+        levelTitle: "Level %level% of %max_level%  |  Next level at %level_ceil% 🎉",
+        noLevel: "No level yet",
       },
       howToEditImage: {
         heading: 'How to edit your profile picture',
-        description: 'Currently we use the images from %chatUrl% as profile pictures. In order to change your picture, do the following:',
+        description: 'Currently we use the images from %chatLink% as profile pictures. In order to change your picture, do the following:',
         steps: {
-          goToChat: 'Go to %chatUrl%.',
+          goToChat: 'Go to %chatLink%.',
           signIn: 'Sign in.',
           goToMyAccount: 'Go in the user menu to %myAccountLink%.',
           myAccount: 'My Account',
@@ -211,6 +211,14 @@ export const instanceData = {
           refreshPage: 'Come back here and refresh the image using %refreshLink%.',
           refreshLink: 'this link',
         }
+      },
+      motivation: {
+        edit: 'Edit motivation',
+        add: 'Add motivation',
+        heading: 'How to edit your motivation',
+        intro: 'Motivations are a new feature we test at the moment. To edit your motivation you have to fill out a simple form.',
+        privacy: 'The form and data storage is offered by Google and personal data may be transferred to this service when using this feature.',
+        toForm: 'Motivation Form'
       },
     },
     notices: {

@@ -13,7 +13,6 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { theme } from '@/theme'
 
 interface ProfileActivityGraphProps {
-  isOwnProfile: boolean
   value: number
   title: string
 }
@@ -27,7 +26,6 @@ const levels = {
 }
 
 export function ProfileActivityGraph({
-  isOwnProfile,
   value,
   title,
 }: ProfileActivityGraphProps) {
@@ -71,6 +69,14 @@ export function ProfileActivityGraph({
   }
 
   function renderGraphInProgress() {
+    const titleString =
+      level > 0
+        ? strings.profiles.activityGraph.levelTitle
+            .replace('%level%', level.toString())
+            .replace('%max_level%', '4')
+            .replace('%level_ceil%', levels[level].ceil.toString())
+        : strings.profiles.activityGraph.noLevel
+
     return (
       <>
         <StyledSVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
@@ -89,24 +95,13 @@ export function ProfileActivityGraph({
         <AbsoluteNumber>{value}</AbsoluteNumber>
 
         <HeartLevel
-          title={
-            level > 0
-              ? strings.profiles.activityGraph.levelTitle.replace(
-                  '%level%',
-                  level.toString()
-                )
-              : strings.profiles.activityGraph.noLevel
-          }
+          title={titleString}
           className="cursor-pointer"
           level={level}
         >
           {level > 0 && <span>{level}</span>}
           <FontAwesomeIcon icon={levels[level].icon} />
         </HeartLevel>
-
-        {isOwnProfile && (
-          <figcaption className="mt-2">Noch 22 bis Level 2!</figcaption>
-        )}
       </>
     )
   }

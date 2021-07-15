@@ -1,10 +1,12 @@
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 import { makeGreenButton } from '@/helper/css'
+import { shouldUseNewAuth } from '@/helper/feature-auth'
 import { useCreateThreadMutation } from '@/helper/mutations'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
@@ -22,6 +24,13 @@ export function ProfileChatButton({
   const { strings } = useInstanceData()
   const createThread = useCreateThreadMutation()
   const auth = useAuthentication()
+  const [mounted, setMounted] = useState(!shouldUseNewAuth())
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) return null
   if (auth.current === null) return null
 
   const text = isOwnProfile

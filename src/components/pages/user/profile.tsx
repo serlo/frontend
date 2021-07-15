@@ -31,7 +31,7 @@ todos:
 */
 
 export const Profile: NextPage<ProfileProps> = ({ userData }) => {
-  const { strings } = useInstanceData()
+  const { strings, lang } = useInstanceData()
   const {
     id,
     username,
@@ -47,6 +47,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   const auth = useAuthentication()
   const lastLoginDate = lastLogin ? new Date(lastLogin) : undefined
   const [showImageModal, setShowImageModal] = useState(false)
+  const [showMotivationModal, setShowMotivationModal] = useState(false)
   const [isOwnProfile, setIsOwnProfile] = useState(false)
 
   useEffect(() => {
@@ -67,11 +68,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
           <h1 className="serlo-h1">{username}</h1>
           <ProfileBadges userData={userData} date={date} />
         </div>
-        {motivation && (
-          <Motivation className="serlo-p text-1.5xl">
-            &quot;{motivation}&quot;
-          </Motivation>
-        )}
+        {renderMotivation()}
         <ProfileChatButton
           userId={id}
           isOwnProfile={isOwnProfile}
@@ -85,13 +82,11 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         </>
       )}
 
-      <ProfileActivityGraphs
-        values={activityByType}
-        isOwnProfile={isOwnProfile}
-      />
+      <ProfileActivityGraphs values={activityByType} />
 
       <h2 className="serlo-h2">{strings.profiles.recentActivities}</h2>
       <Events userId={id} perPage={5} />
+
       <p className="serlo-p">
         <Link
           className="serlo-button serlo-make-interactive-primary mt-4"
@@ -114,6 +109,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
       </aside>
       {renderUserTools()}
       {renderHowToEditImage()}
+      {lang === 'de' && renderHowToEditMotivation()}
     </>
   )
 
@@ -187,6 +183,58 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
           <li>{steps.uploadPicture}</li>
           <li>{replacePlaceholders(steps.refreshPage, { refreshLink })}</li>
         </ol>
+      </ModalWithCloseButton>
+    )
+  }
+
+  function renderMotivation() {
+    return (
+      <>
+        <Motivation className="serlo-p text-1.5xl w-full">
+          {motivation && <>&quot;{motivation}&quot;</>}
+          {isOwnProfile && renderEditMotivationLink()}
+        </Motivation>
+      </>
+    )
+  }
+
+  function renderEditMotivationLink() {
+    if (lang !== 'de') return null
+    return (
+      <p className="serlo-p text-sm text-right ml-auto mt-3">
+        <a
+          onClick={() => setShowMotivationModal(true)}
+          className="serlo-link cursor-pointer"
+        >
+          <FontAwesomeIcon icon={faPencilAlt} />{' '}
+          {motivation
+            ? strings.profiles.motivation.edit
+            : strings.profiles.motivation.add}
+        </a>
+      </p>
+    )
+  }
+
+  function renderHowToEditMotivation() {
+    const { heading, intro, privacy, toForm } = strings.profiles.motivation
+    const editUrl = `https://docs.google.com/forms/d/e/1FAIpQLSdb_My7YAVNA7ha9XnBcYCZDk36cOqgcWkBqowatbefX0IzEg/viewform?usp=pp_url&entry.14483495=${username}`
+
+    return (
+      <ModalWithCloseButton
+        isOpen={showMotivationModal}
+        onCloseClick={() => setShowMotivationModal(false)}
+        title={heading}
+      >
+        <p className="serlo-p">{intro}</p>
+        <p className="serlo-p">{privacy}</p>
+        <p className="serlo-p">
+          <a
+            href={editUrl}
+            className="serlo-button serlo-make-interactive-primary"
+          >
+            {toForm}
+          </a>
+        </p>
       </ModalWithCloseButton>
     )
   }
