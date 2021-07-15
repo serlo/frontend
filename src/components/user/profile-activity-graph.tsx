@@ -6,7 +6,7 @@ import styled from 'styled-components'
 
 interface ProfileActivityGraphProps {
   isOwnProfile: boolean
-  amount?: number
+  amount: number
   absoluteValue: number
   title: string
 }
@@ -26,7 +26,7 @@ export function ProfileActivityGraph({
   // start animation
   useEffect(() => {
     setDashOffset(dashOffsetTarget)
-  }, [amount])
+  }, [amount, dashOffsetTarget])
 
   return (
     <figure className="mx-side w-40 text-center text-brand relative">

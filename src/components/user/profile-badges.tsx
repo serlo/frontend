@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 
+import { Link } from '../content/link'
 import AuthorBadge from '@/assets-webkit/img/community/badge-author.svg'
 import DonorBadge from '@/assets-webkit/img/community/badge-donor.svg'
 import ReviewerBadge from '@/assets-webkit/img/community/badge-reviewer.svg'
@@ -16,7 +17,7 @@ interface ProfileBadgesProps {
 export function ProfileBadges({ userData, date }: ProfileBadgesProps) {
   const { activeDonor, activeReviewer, activeAuthor } = userData
   const registerDate = new Date(date)
-  const { strings } = useInstanceData()
+  const { strings, lang } = useInstanceData()
 
   if (!activeAuthor && !activeReviewer && !activeDonor) return null
 
@@ -26,11 +27,20 @@ export function ProfileBadges({ userData, date }: ProfileBadgesProps) {
         renderBadge({
           Badge: <ReviewerBadge />,
           name: strings.roles.reviewer,
+          anchor: 'reviewer',
         })}
       {activeAuthor &&
-        renderBadge({ Badge: <AuthorBadge />, name: strings.roles.author })}
+        renderBadge({
+          Badge: <AuthorBadge />,
+          name: strings.roles.author,
+          anchor: 'author',
+        })}
       {activeDonor &&
-        renderBadge({ Badge: <DonorBadge />, name: strings.roles.donor })}
+        renderBadge({
+          Badge: <DonorBadge />,
+          name: strings.roles.donor,
+          anchor: 'donor',
+        })}
       {renderTimeBadge()}
     </BadgesContainer>
   )
@@ -63,12 +73,34 @@ export function ProfileBadges({ userData, date }: ProfileBadgesProps) {
     })
   }
 
-  function renderBadge({ Badge, name }: { Badge: JSX.Element; name: string }) {
-    return (
+  function renderBadge({
+    Badge,
+    name,
+    anchor,
+  }: {
+    Badge: JSX.Element
+    name: string
+    anchor?: string
+  }) {
+    const content = (
       <BadgeContainer>
         {Badge}
-        <p className="serlo-p text-sm leading-tight">{name}</p>
+        <p className="text-sm leading-tight">{name}</p>
       </BadgeContainer>
+    )
+    return (
+      <>
+        {lang === 'de' && anchor ? (
+          <Link
+            noStyle
+            href={`/community/202923/rollen-der-serlo-community#${anchor}`}
+          >
+            {content}
+          </Link>
+        ) : (
+          content
+        )}
+      </>
     )
   }
 }

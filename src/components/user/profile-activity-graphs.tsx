@@ -17,20 +17,20 @@ export function ProfileActivityGraphs({
       />
       <ProfileActivityGraph
         title="Kommentare"
-        // amount={0.9}
+        amount={0.9}
         absoluteValue={1337}
         isOwnProfile={isOwnProfile}
       />
       <div style={{ flexBasis: '100%' }} className="sm:hidden" />
       <ProfileActivityGraph
         title="Reviews"
-        // amount={0.1}
+        amount={0.1}
         absoluteValue={4}
         isOwnProfile={isOwnProfile}
       />
       <ProfileActivityGraph
         title="Taxonomy"
-        // amount={0.6}
+        amount={0.6}
         absoluteValue={123}
         isOwnProfile={isOwnProfile}
       />

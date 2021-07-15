@@ -28,8 +28,6 @@ export interface ProfileProps {
 
 /*
 todos:
-- What to do when user is not using rocket chat
-- Link Role Icons and Title to: https://de.serlo.org/community/202923/rollen-der-serlo-community
 - Motivation: Add edit button (https://docs.google.com/forms/d/e/1FAIpQLSdb_My7YAVNA7ha9XnBcYCZDk36cOqgcWkBqowatbefX0IzEg/viewform?usp=pp_url&entry.14483495=<username>)
 - Add activity diagrams
 */
@@ -108,7 +106,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
           <p>
             {strings.profiles.lastLogin}:{' '}
             <b>
-              <TimeAgo datetime={lastLoginDate} dateAsTitle />
+              <TimeAgo datetime={lastLoginDate} />
             </b>
           </p>
         )}

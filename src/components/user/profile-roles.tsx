@@ -1,7 +1,9 @@
+import { Role } from '@serlo/api'
 import clsx from 'clsx'
 import * as R from 'ramda'
 import { Fragment } from 'react'
 
+import { Link } from '../content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UserPage } from '@/data-types'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
@@ -24,7 +26,7 @@ export function ProfileRoles({ roles }: ProfileRolesProps) {
         <p className="mb-5">
           {replacePlaceholders(strings.profiles.instanceRoles, { lang })}{' '}
           {instanceRoles.map((role, index) => (
-            <Fragment key={index}>{renderRole(role.role)}</Fragment>
+            <Fragment key={index}>{renderRole(role.role, role.role)}</Fragment>
           ))}
         </p>
       )}
@@ -33,7 +35,7 @@ export function ProfileRoles({ roles }: ProfileRolesProps) {
           {strings.profiles.otherRoles}{' '}
           {otherRoles.map((role, index) => (
             <Fragment key={index}>
-              {renderRole(`${role.instance ?? ''}: ${role.role}`)}
+              {renderRole(`${role.instance ?? ''}: ${role.role}`, role.role)}
             </Fragment>
           ))}
         </p>
@@ -41,8 +43,8 @@ export function ProfileRoles({ roles }: ProfileRolesProps) {
     </>
   )
 
-  function renderRole(text: string) {
-    return (
+  function renderRole(text: string, role: Role) {
+    const label = (
       <span
         className={clsx(
           'text-white bg-gray-400 inline-block rounded-2xl font-bold',
@@ -51,6 +53,18 @@ export function ProfileRoles({ roles }: ProfileRolesProps) {
       >
         {text}
       </span>
+    )
+
+    return (
+      <>
+        {lang === 'de' ? (
+          <Link href={`/community/202923/rollen-der-serlo-community#${role}`}>
+            {label}
+          </Link>
+        ) : (
+          label
+        )}
+      </>
     )
   }
 }

@@ -17,6 +17,7 @@ export interface LinkProps {
   noCSR?: boolean
   path?: NodePath
   unreviewed?: boolean // e.g. user profiles or comments
+  noStyle?: boolean
 }
 
 // note: Previous discussion about fetching this dynamically https://github.com/serlo/frontend/issues/328
@@ -61,6 +62,7 @@ export function Link({
   noCSR,
   path,
   unreviewed,
+  noStyle,
 }: LinkProps) {
   const { lang } = useInstanceData()
   const entityId = React.useContext(EntityIdContext)
@@ -168,7 +170,7 @@ export function Link({
       // eslint-disable-next-line react/jsx-no-target-blank
       <a
         href={_href}
-        className={clsx(className, 'serlo-link')}
+        className={clsx(className, noStyle ? undefined : 'serlo-link')}
         title={title}
         onClick={clickHandler}
         rel={unreviewed && isExternal ? 'ugc nofollow noreferrer' : undefined}

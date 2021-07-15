@@ -1,4 +1,4 @@
-import { TaxonomyTermType } from '@serlo/api'
+import { Role, TaxonomyTermType } from '@serlo/api'
 import { AuthorizationPayload } from '@serlo/authorization'
 
 import { Instance, QueryResponse } from './fetcher/query-types'
@@ -750,7 +750,7 @@ export interface UserPage extends EntityPageBase {
     description?: FrontendContentNode[] | null
     lastLogin?: string | null
     date: string
-    roles: { role: string; instance: string | null }[]
+    roles: { role: Role; instance: string | null }[]
     activeReviewer: boolean
     activeAuthor: boolean
     activeDonor: boolean
