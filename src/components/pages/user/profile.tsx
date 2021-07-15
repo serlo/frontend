@@ -6,7 +6,6 @@ import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 import { useAuthentication } from '@/auth/use-authentication'
-import { CommentArea } from '@/components/comments/comment-area'
 import { Link } from '@/components/content/link'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { TimeAgo } from '@/components/time-ago'
@@ -99,7 +98,6 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         </Link>
       </p>
 
-      <CommentArea id={id} noForms />
       <aside className="mt-16 text-gray-400 text-sm mx-side">
         <ProfileRoles roles={userData.roles} />
         {lastLoginDate && (
