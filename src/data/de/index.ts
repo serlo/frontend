@@ -285,7 +285,7 @@ export const loggedInData = {
       wholeCourse: "Gesamter Kurs",
       copyItems: "Element kopieren",
       moveItems: "Elemente verschieben",
-      addGroupedTextExercise: "Gruppierte Textaufgabe hinzufügen",
+      addGroupedTextExercise: "Textaufgabe mit Teilaufgaben hinzufügen",
       changeLicense: "Lizenz auswählen",
       subscribe: "Abonnieren",
       subscribeNotifications: "Benachrichtigungen empfangen",
