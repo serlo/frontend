@@ -242,6 +242,10 @@ export const instanceData = {
       ctrl: 'ctrl',
       return: 'return'
     },
+    eventLog: {
+      currentEvents: 'Current events',
+      oldestEvents: '%amount% oldest events',
+    },
     events: {
       setThreadStateArchived: "%actor% archived %thread%.",
       setThreadStateUnarchived: "%actor% restored %thread%.",

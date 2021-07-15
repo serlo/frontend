@@ -1,6 +1,8 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 
+import { Lazy } from '@/components/content/lazy'
 import { PageTitle } from '@/components/content/page-title'
+import { Spoiler } from '@/components/content/spoiler'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
 import { ErrorPage } from '@/components/pages/error-page'
@@ -69,20 +71,42 @@ function Content({
   return (
     <>
       <Breadcrumbs data={[{ label, url }]} asBackButton />
-      <Title />
+      <PageTitle
+        title={
+          strings.pageTitles.eventLog +
+          (title && title !== '' ? ' – ' + title : '')
+        }
+        headTitle
+      />
+
+      <h3 className="serlo-h3">{strings.eventLog.currentEvents}</h3>
       <Events
         objectId={isUser ? undefined : id}
         userId={isUser ? id : undefined}
         perPage={10}
         moreButton
       />
+
+      <div className="mt-20">
+        <Spoiler
+          title={
+            <b>{strings.eventLog.oldestEvents.replace('%amount%', '10')}</b>
+          }
+          body={
+            <Lazy>
+              <Events
+                objectId={isUser ? undefined : id}
+                userId={isUser ? id : undefined}
+                perPage={10}
+                oldest
+              />
+            </Lazy>
+          }
+          path={['eventlog', id]}
+        />
+      </div>
     </>
   )
-}
-
-function Title() {
-  const { strings } = useInstanceData()
-  return <PageTitle title={strings.pageTitles.eventLog} headTitle />
 }
 
 export const getStaticProps: GetStaticProps<SlugProps> = async (context) => {

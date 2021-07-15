@@ -13,16 +13,24 @@ interface EventsProps {
   objectId?: number
   perPage?: number
   moreButton?: boolean
+  oldest?: boolean
 }
 
-export function Events({ userId, objectId, perPage, moreButton }: EventsProps) {
+export function Events({
+  userId,
+  objectId,
+  perPage,
+  moreButton,
+  oldest,
+}: EventsProps) {
   const { strings } = useInstanceData()
 
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { data, error, loadMore, loading } = useEventsFetch(
     userId,
     objectId,
-    perPage
+    perPage,
+    oldest
   )
 
   return (
@@ -64,10 +72,20 @@ export function Events({ userId, objectId, perPage, moreButton }: EventsProps) {
   }
 }
 
-function useEventsFetch(actorId?: number, objectId?: number, first?: number) {
+function useEventsFetch(
+  actorId?: number,
+  objectId?: number,
+  first?: number,
+  oldest?: boolean
+) {
   return useGraphqlSwrPaginationWithAuth<EventData>({
     query: eventsQuery,
-    variables: { actorId, objectId, first: first ?? 20 },
+    variables: {
+      actorId,
+      objectId,
+      first: oldest ? undefined : first ?? 20,
+      last: oldest ? first ?? 20 : undefined,
+    },
     config: {
       refreshInterval: 10 * 60 * 1000, //10min
     },
@@ -82,13 +100,15 @@ const eventsQuery = gql`
   query getEventData(
     $actorId: Int
     $objectId: Int
-    $first: Int!
+    $first: Int
+    $last: Int
     $after: String
   ) {
     events(
       actorId: $actorId
       objectId: $objectId
       first: $first
+      last: $last
       after: $after
     ) {
       pageInfo {
