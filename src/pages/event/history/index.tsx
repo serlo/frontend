@@ -14,7 +14,7 @@ export default renderedPageNoHooks<SlugProps>(() => {
 })
 
 function Content() {
-  const { strings } = useInstanceData()
+  const { strings, lang } = useInstanceData()
 
   return (
     <>
@@ -22,9 +22,12 @@ function Content() {
         title={`${strings.pageTitles.eventLog} – serlo.org`}
         headTitle
       />
-      {/* here: insert text that will be provided by wolfgang */}
 
-      <Events perPage={1} moreButton />
+      <p className="serlo-p">
+        {strings.eventLog.globalDescription.replace('%lang%', lang)}
+      </p>
+
+      <Events perPage={30} moreButton />
     </>
   )
 }

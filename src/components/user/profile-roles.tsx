@@ -1,15 +1,14 @@
-import { Role } from '@serlo/api'
 import clsx from 'clsx'
 import * as R from 'ramda'
-import { Fragment } from 'react'
 
 import { Link } from '../content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UserPage } from '@/data-types'
-import { replacePlaceholders } from '@/helper/replace-placeholders'
+
+type Roles = UserPage['userData']['roles']
 
 interface ProfileRolesProps {
-  roles: UserPage['userData']['roles']
+  roles: Roles
 }
 
 export function ProfileRoles({ roles }: ProfileRolesProps) {
@@ -22,33 +21,36 @@ export function ProfileRoles({ roles }: ProfileRolesProps) {
 
   return (
     <>
-      {instanceRoles.length > 0 && (
-        <p className="mb-5">
-          {replacePlaceholders(strings.profiles.instanceRoles, { lang })}{' '}
-          {instanceRoles.map((role, index) => (
-            <Fragment key={index}>{renderRole(role.role, role.role)}</Fragment>
-          ))}
-        </p>
-      )}
-      {otherRoles.length > 0 && (
-        <p className="mb-block">
-          {strings.profiles.otherRoles}{' '}
-          {otherRoles.map((role, index) => (
-            <Fragment key={index}>
-              {renderRole(`${role.instance ?? ''}: ${role.role}`, role.role)}
-            </Fragment>
-          ))}
-        </p>
-      )}
+      {renderRoles(instanceRoles, true)}
+      {renderRoles(otherRoles, false)}
     </>
   )
 
-  function renderRole(text: string, role: Role) {
+  function renderRoles(roles: Roles, instance: boolean) {
+    if (roles.length < 1) return null
+
+    const title = instance
+      ? strings.profiles.instanceRoles.replace('%lang%', lang)
+      : strings.profiles.otherRoles
+
+    return (
+      <p className="mb-5">
+        {title}{' '}
+        {roles.map((role) => {
+          const text = instance
+            ? role.role
+            : `${role.instance ?? ''}: ${role.role}`
+          return <Role key={text} text={text} role={role.role} />
+        })}
+      </p>
+    )
+  }
+
+  function Role({ text, role }: { text: string; role: string }) {
     const label = (
       <span
         className={clsx(
-          'text-white bg-gray-400 inline-block rounded-2xl font-bold',
-          'py-1 px-2 mx-1'
+          'serlo-button serlo-make-interactive-light text-sm ml-1'
         )}
       >
         {text}

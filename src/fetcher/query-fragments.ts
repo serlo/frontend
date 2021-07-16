@@ -75,14 +75,17 @@ export const sharedEventFragments = gql`
     ... on CreateEntityNotificationEvent {
       entity {
         id
+        alias
       }
     }
     ... on CreateEntityLinkNotificationEvent {
       parent {
         id
+        alias
       }
       child {
         id
+        alias
       }
     }
     ... on CreateEntityRevisionNotificationEvent {
@@ -97,6 +100,7 @@ export const sharedEventFragments = gql`
       taxonomyTerm {
         id
         name
+        alias
       }
     }
     ... on CreateTaxonomyLinkNotificationEvent {
@@ -105,6 +109,7 @@ export const sharedEventFragments = gql`
       }
       parent {
         id
+        alias
         name
       }
     }
@@ -119,18 +124,22 @@ export const sharedEventFragments = gql`
     ... on RejectRevisionNotificationEvent {
       repository {
         id
+        alias
       }
       revision {
         id
+        alias
       }
       reason
     }
     ... on RemoveEntityLinkNotificationEvent {
       parent {
         id
+        alias
       }
       child {
         id
+        alias
       }
     }
     ... on RemoveTaxonomyLinkNotificationEvent {
@@ -139,6 +148,7 @@ export const sharedEventFragments = gql`
       }
       parent {
         id
+        alias
         name
       }
     }
@@ -150,14 +160,17 @@ export const sharedEventFragments = gql`
     ... on SetTaxonomyParentNotificationEvent {
       child {
         id
+        alias
       }
       previousParent {
         id
+        alias
       }
     }
     ... on SetTaxonomyTermNotificationEvent {
       taxonomyTerm {
         id
+        alias
         name
       }
     }
@@ -178,6 +191,7 @@ export const sharedEventFragments = gql`
   fragment withTitle on AbstractUuid {
     __typename
     id
+    alias
 
     ... on Applet {
       currentRevision {

@@ -13,8 +13,6 @@ import { fetchPageData } from '@/fetcher/fetch-page-data'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
-  if (pageData === undefined) return <ErrorPage code={404} />
-
   if (
     pageData.kind === 'single-entity' ||
     pageData.kind === 'taxonomy' ||
@@ -46,7 +44,7 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
         message={
           pageData.kind === 'error'
             ? pageData.errorData.message
-            : 'unsupported type'
+            : 'not supported'
         }
       />
     </FrontendClientBase>
@@ -65,19 +63,17 @@ function Content({
   isUser?: boolean
 }) {
   const { strings } = useInstanceData()
-  const label = title && title !== '' ? title : strings.revisions.toContent
+
+  const hasTitle = title && title.length > 1
+  const label = hasTitle ? title! : strings.revisions.toContent
   const url = alias ? alias : id ? `/${id}` : undefined
+  const titleString =
+    strings.pageTitles.eventLog + (hasTitle ? ' – ' + title! : '')
 
   return (
     <>
       <Breadcrumbs data={[{ label, url }]} asBackButton />
-      <PageTitle
-        title={
-          strings.pageTitles.eventLog +
-          (title && title !== '' ? ' – ' + title : '')
-        }
-        headTitle
-      />
+      <PageTitle title={titleString} headTitle />
 
       <h3 className="serlo-h3">{strings.eventLog.currentEvents}</h3>
       <Events
@@ -87,6 +83,12 @@ function Content({
         moreButton
       />
 
+      {renderOldestEvents()}
+    </>
+  )
+
+  function renderOldestEvents() {
+    return (
       <div className="mt-20">
         <Spoiler
           title={
@@ -105,8 +107,8 @@ function Content({
           path={['eventlog', id]}
         />
       </div>
-    </>
-  )
+    )
+  }
 }
 
 export const getStaticProps: GetStaticProps<SlugProps> = async (context) => {

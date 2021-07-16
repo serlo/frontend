@@ -7,22 +7,24 @@ import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 import { makeGreenButton } from '@/helper/css'
 import { shouldUseNewAuth } from '@/helper/feature-auth'
-import { useCreateThreadMutation } from '@/helper/mutations'
+// import { useCreateThreadMutation } from '@/helper/mutations'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
 interface ProfileChatButtonProps {
   userId: number
   isOwnProfile: boolean
   chatUrl?: string
+  className?: string
 }
 
 export function ProfileChatButton({
   userId,
   isOwnProfile,
   chatUrl,
+  className,
 }: ProfileChatButtonProps) {
   const { strings } = useInstanceData()
-  const createThread = useCreateThreadMutation()
+  // const createThread = useCreateThreadMutation()
   const auth = useAuthentication()
   const [mounted, setMounted] = useState(!shouldUseNewAuth())
 
@@ -32,35 +34,37 @@ export function ProfileChatButton({
 
   if (!mounted) return null
   if (auth.current === null) return null
+  const isRegistered = !!chatUrl
 
   const text = isOwnProfile
-    ? chatUrl
+    ? isRegistered
       ? strings.profiles.goToChat
       : strings.profiles.registerChat
-    : chatUrl
+    : isRegistered
     ? strings.profiles.directMessage
     : strings.profiles.inviteToChat
 
   const url = isOwnProfile ? 'https://community.serlo.org/' : chatUrl
-  const onClickAction = isOwnProfile || chatUrl ? undefined : inviteToChat
+  const onClickAction = isOwnProfile || isRegistered ? undefined : inviteToChat
 
   return (
-    <ChatButton href={url} onClick={onClickAction}>
+    <ChatButton href={url} onClick={onClickAction} className={className}>
       <FontAwesomeIcon icon={faPaperPlane} /> {text}
     </ChatButton>
   )
 
-  async function inviteToChat() {
+  function inviteToChat() {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const _userId = userId
-    await createThread({
-      title: '',
-      content: 'Hi, wanna chat?!',
-      objectId: 1565, // userId TODO: add support for comments in user pages in db-layer
-      subscribe: false,
-      sendEmail: false,
-    })
-    showToastNotice('✨ Erfolgreich eingeladen!', 'success')
+    showToastNotice('⚠️ Sorry! Feature will be added soon ⚠️')
+    // await createThread({
+    //   title: '',
+    //   content: 'Hi, wanna chat?!',
+    //   objectId: 1565, // userId TODO: add support for comments in user pages in db-layer
+    //   subscribe: false,
+    //   sendEmail: false,
+    // })
+    // showToastNotice('✨ Erfolgreich eingeladen!', 'success')
   }
 }
 

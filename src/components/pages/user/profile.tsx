@@ -1,7 +1,7 @@
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import { NextPage } from 'next'
-import Head from 'next/head'
 import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
@@ -17,7 +17,6 @@ import { ProfileChatButton } from '@/components/user/profile-chat-button'
 import { ProfileRoles } from '@/components/user/profile-roles'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UserPage } from '@/data-types'
-import { makeGreenButton, makeMargin } from '@/helper/css'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { renderArticle } from '@/schema/article-renderer'
 
@@ -25,13 +24,10 @@ export interface ProfileProps {
   userData: UserPage['userData']
 }
 
-/*
-todos:
-- Motivation: Add edit button (https://docs.google.com/forms/d/e/1FAIpQLSdb_My7YAVNA7ha9XnBcYCZDk36cOqgcWkBqowatbefX0IzEg/viewform?usp=pp_url&entry.14483495=<username>)
-*/
-
 export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   const { strings, lang } = useInstanceData()
+  const auth = useAuthentication()
+
   const {
     id,
     username,
@@ -43,9 +39,8 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
     motivation,
     activityByType,
   } = userData
-  const { activeDonor, activeReviewer, activeAuthor } = userData
-  const auth = useAuthentication()
   const lastLoginDate = lastLogin ? new Date(lastLogin) : undefined
+
   const [showImageModal, setShowImageModal] = useState(false)
   const [showMotivationModal, setShowMotivationModal] = useState(false)
   const [isOwnProfile, setIsOwnProfile] = useState(false)
@@ -56,62 +51,109 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
 
   return (
     <>
-      <Head>
-        <title>{username}</title>
-        {!activeDonor && !activeAuthor && !activeReviewer && (
-          <meta name="robots" content="noindex" />
-        )}
-      </Head>
-      <ProfileHeader>
+      {renderHeader()}
+      {renderDescription()}
+      <ProfileActivityGraphs values={activityByType} />
+      {renderRecentActivities()}
+      {renderRoles()}
+      {renderUserTools()}
+      {renderHowToEditImage()}
+      {renderHowToEditMotivation()}
+    </>
+  )
+
+  function renderHeader() {
+    return (
+      <ProfileHeader className="mx-side mt-14 text-center sm:text-left">
         {renderProfileImage()}
-        <div>
-          <h1 className="serlo-h1">{username}</h1>
+        <div className="mt-5 sm:mt-0">
+          <h1 className="serlo-h1 mt-4 mb-3">{username}</h1>
           <ProfileBadges userData={userData} date={date} />
         </div>
-        {renderMotivation()}
+        <p
+          className="serlo-p text-1.5xl w-full mt-5 sm:mt-0"
+          style={{ gridArea: 'motivation' }}
+        >
+          {motivation && <>&quot;{motivation}&quot;</>}
+          {isOwnProfile && renderEditMotivationLink()}
+        </p>
         <ProfileChatButton
           userId={id}
           isOwnProfile={isOwnProfile}
           chatUrl={chatUrl}
+          className="mx-auto sm:mx-0 mb-8"
         />
       </ProfileHeader>
-      {description && (
-        <>
-          <h2 className="serlo-h2">{strings.profiles.aboutMe}</h2>
-          {renderArticle(description, `profile${id}`)}
-        </>
-      )}
+    )
+  }
 
-      <ProfileActivityGraphs values={activityByType} />
+  function renderProfileImage() {
+    return (
+      <figure
+        className="w-44 h-44 mx-auto sm:mx-0"
+        style={{ contain: 'content' }}
+      >
+        <img
+          src={imageUrl}
+          alt={`Profile image of ${username}`}
+          className="block rounded-full w-full h-full"
+        />
+        {isOwnProfile && (
+          <a
+            onClick={() => setShowImageModal(true)}
+            className={clsx(
+              'serlo-button serlo-make-interactive-green',
+              'block absolute right-1 bottom-1 w-8 h-8'
+            )}
+          >
+            <FontAwesomeIcon icon={faPencilAlt} />
+          </a>
+        )}
+      </figure>
+    )
+  }
 
-      <h2 className="serlo-h2">{strings.profiles.recentActivities}</h2>
-      <Events userId={id} perPage={5} />
+  function renderDescription() {
+    if (!description) return null
+    return (
+      <section>
+        <h2 className="serlo-h2">{strings.profiles.aboutMe}</h2>
+        {renderArticle(description, `profile${id}`)}
+      </section>
+    )
+  }
 
-      <p className="serlo-p">
-        <Link
-          className="serlo-button serlo-make-interactive-primary mt-4"
-          href={`/event/history/${id}`}
-        >
-          Mehr anzeigen
-        </Link>
-      </p>
+  function renderRecentActivities() {
+    return (
+      <section>
+        <h2 className="serlo-h2">{strings.profiles.recentActivities}</h2>
+        <Events userId={id} perPage={5} />
 
-      <aside className="mt-16 text-gray-400 text-sm mx-side">
+        <p className="serlo-p">
+          <Link
+            className="serlo-button serlo-make-interactive-primary mt-4"
+            href={`/event/history/${id}`}
+          >
+            Mehr anzeigen
+          </Link>
+        </p>
+      </section>
+    )
+  }
+
+  function renderRoles() {
+    return (
+      <aside className="mt-20 text-gray-500 text-sm mx-side">
         <ProfileRoles roles={userData.roles} />
         {lastLoginDate && (
           <p>
             {strings.profiles.lastLogin}:{' '}
-            <b>
-              <TimeAgo datetime={lastLoginDate} />
-            </b>
+            <TimeAgo className="pl-2 font-bold" datetime={lastLoginDate} />
           </p>
         )}
       </aside>
-      {renderUserTools()}
-      {renderHowToEditImage()}
-      {lang === 'de' && renderHowToEditMotivation()}
-    </>
-  )
+    )
+  }
 
   function renderUserTools() {
     return (
@@ -123,19 +165,6 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
           id: id,
         }}
       />
-    )
-  }
-
-  function renderProfileImage() {
-    return (
-      <ProfileImageCage>
-        <ProfileImage src={imageUrl} alt={`Profile image of ${username}`} />
-        {isOwnProfile && (
-          <ProfileImageEditButton onClick={() => setShowImageModal(true)}>
-            <FontAwesomeIcon icon={faPencilAlt} />
-          </ProfileImageEditButton>
-        )}
-      </ProfileImageCage>
     )
   }
 
@@ -187,17 +216,6 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
     )
   }
 
-  function renderMotivation() {
-    return (
-      <>
-        <Motivation className="serlo-p text-1.5xl w-full">
-          {motivation && <>&quot;{motivation}&quot;</>}
-          {isOwnProfile && renderEditMotivationLink()}
-        </Motivation>
-      </>
-    )
-  }
-
   function renderEditMotivationLink() {
     if (lang !== 'de') return null
     return (
@@ -216,6 +234,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   }
 
   function renderHowToEditMotivation() {
+    if (lang !== 'de') return null
     const { heading, intro, privacy, toForm } = strings.profiles.motivation
     const editUrl = `https://docs.google.com/forms/d/e/1FAIpQLSdb_My7YAVNA7ha9XnBcYCZDk36cOqgcWkBqowatbefX0IzEg/viewform?usp=pp_url&entry.14483495=${username}`
 
@@ -240,69 +259,14 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   }
 }
 
-const Motivation = styled.p`
-  grid-area: motivation;
-`
-
-const ProfileImageEditButton = styled.button`
-  ${makeGreenButton}
-  display: block;
-  position: absolute;
-  right: 2px;
-  bottom: 2px;
-  width: 2em;
-  height: 2em;
-  background-color: ${(props) => props.theme.colors.brandGreen};
-  color: ${(props) => props.theme.colors.white};
-
-  &:focus {
-    background-color: ${(props) => props.theme.colors.brand};
-  }
-`
-
-const ProfileImageCage = styled.figure`
-  width: 175px;
-  height: 175px;
-  contain: content;
-`
-
-const ProfileImage = styled.img`
-  display: block;
-  border-radius: 50%;
-  width: 100%;
-  height: 100%;
-`
-
 const ProfileHeader = styled.header`
-  ${makeMargin}
-  margin-top: 60px;
-  margin-bottom: 50px;
-
-  & p {
-    margin-bottom: 0;
-  }
-
   @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-    display: grid;
+    display: grid; //grid
     grid-template-columns: 175px auto;
     grid-template-rows: auto auto;
     grid-template-areas: 'image badges' 'chatButton motivation';
     row-gap: 20px;
     column-gap: 20px;
     place-items: center start;
-  }
-
-  @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
-    & > * {
-      margin-left: auto;
-      margin-right: auto;
-      text-align: center;
-      margin-top: 23px;
-    }
-  }
-
-  h1 {
-    margin-top: 15px;
-    margin-bottom: 10px;
   }
 `

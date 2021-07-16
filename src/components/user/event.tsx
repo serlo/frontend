@@ -23,14 +23,15 @@ import {
 import Tippy from '@tippyjs/react'
 import clsx from 'clsx'
 import * as R from 'ramda'
-import { Fragment } from 'react'
 import styled, { css } from 'styled-components'
 
 import { UserLink } from './user-link'
+import { Link } from '@/components/content/link'
 import { TimeAgo } from '@/components/time-ago'
 import { useInstanceData } from '@/contexts/instance-context'
 import { LoggedInData } from '@/data-types'
 import { getEntityStringByTypename } from '@/helper/feature-i18n'
+import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 export type EventData =
   | CheckoutRevisionNotificationEvent
@@ -50,6 +51,16 @@ export type EventData =
   | SetThreadStateNotificationEvent
   | SetUuidStateNotificationEvent
 
+interface EventProps {
+  event: EventData
+  eventId: number
+  unread: boolean
+  loggedInStrings?: LoggedInData['strings']['notifications']
+  setToRead?: (id: number) => void
+  slim?: boolean
+  noPrivateContent?: boolean
+}
+
 export function Event({
   event,
   eventId,
@@ -57,80 +68,26 @@ export function Event({
   loggedInStrings,
   setToRead,
   slim,
-  noExtraContent,
-}: {
-  event: EventData
-  eventId: number
-  unread: boolean
-  loggedInStrings?: LoggedInData['strings']['notifications']
-  setToRead?: (id: number) => void
-  slim?: boolean
-  noExtraContent?: boolean
-}) {
-  const eventDate = new Date(event.date)
+  noPrivateContent,
+}: EventProps) {
   const { strings } = useInstanceData()
+  const eventDate = new Date(event.date)
 
   return (
     <Item className={clsx('py-6 px-side', slim && 'pt-1 pb-1')}>
       <StyledTimeAgo datetime={eventDate} dateAsTitle />
       <Title unread={unread}>{renderText()}</Title>
-      {renderExtraContent()}
-      <ButtonWrapper>
-        {setToRead && renderMuteButton()}
-        {unread && setToRead && renderReadButton()}
-      </ButtonWrapper>
+      {renderReason()}
+      {renderButtons()}
     </Item>
   )
-
-  function renderReadButton() {
-    if (!setToRead) return null
-    return (
-      <Tippy
-        duration={[300, 250]}
-        animation="fade"
-        placement="bottom"
-        content={<Tooltip>{loggedInStrings?.setToRead}</Tooltip>}
-      >
-        <StyledButton onClick={() => setToRead(eventId)}>
-          <FontAwesomeIcon icon={faCheck} />
-        </StyledButton>
-      </Tippy>
-    )
-  }
-
-  function renderMuteButton() {
-    return (
-      <Tippy
-        duration={[300, 250]}
-        animation="fade"
-        placement="bottom"
-        content={<Tooltip>{loggedInStrings?.hide}</Tooltip>}
-      >
-        <StyledButton href={`/unsubscribe/${event.objectId.toString()}`}>
-          <FontAwesomeIcon icon={faBellSlash} />
-        </StyledButton>
-      </Tippy>
-    )
-  }
 
   function parseString(
     string: string,
     replaceables: { [key: string]: JSX.Element | string }
   ) {
-    const parts = string.split('%')
-    const actor = <UserLink user={event.actor} />
-    const keys = Object.keys(replaceables)
-
-    return parts.map((part, index) => {
-      if (part === '') return null
-      if (part === 'actor') {
-        return <Fragment key={index}>{actor}</Fragment>
-      }
-      if (keys.indexOf(part) > -1) {
-        return <Fragment key={index}>{replaceables[part]}</Fragment>
-      }
-      return part
-    })
+    replaceables.actor = <UserLink user={event.actor} />
+    return replacePlaceholders(string, replaceables)
   }
 
   function renderText() {
@@ -151,9 +108,9 @@ export function Event({
         return parseString(strings.events.createComment, {
           thread: renderThread(event.thread.id),
           comment: (
-            <StyledLink href={`/${event.comment.id}`}>
+            <Link href={`/${event.comment.id}`}>
               {strings.entities.comment}
-            </StyledLink>
+            </Link>
           ),
         })
 
@@ -257,8 +214,8 @@ export function Event({
     }
   }
 
-  function renderExtraContent() {
-    if (noExtraContent) return null
+  function renderReason() {
+    if (noPrivateContent) return null
     if (
       event.__typename === 'RejectRevisionNotificationEvent' ||
       event.__typename === 'CheckoutRevisionNotificationEvent'
@@ -269,24 +226,26 @@ export function Event({
 
   function renderObject(object: AbstractUuid & { __typename?: string }) {
     return (
-      <StyledLink href={`/${object.id}`}>
+      <Link href={object.alias ?? `/${object.id}`}>
         {hasObject(object)
           ? object.currentRevision.title
           : getEntityStringByTypename(object.__typename, strings)}
-      </StyledLink>
+      </Link>
     )
   }
 
   function renderTax(taxonomy: TaxonomyTerm) {
-    return <StyledLink href={`/${taxonomy.id}`}>{taxonomy.name}</StyledLink>
+    return (
+      <Link href={taxonomy.alias ?? `/${taxonomy.id}`}>{taxonomy.name}</Link>
+    )
   }
 
   function renderRevision(id: number) {
-    return <StyledLink href={`/${id}`}>{strings.entities.revision}</StyledLink>
+    return <Link href={`/${id}`}>{strings.entities.revision}</Link>
   }
 
   function renderThread(id: string) {
-    return <StyledLink href={`/${id}`}>{strings.entities.thread}</StyledLink>
+    return <Link href={`/${id}`}>{strings.entities.thread}</Link>
   }
 
   function hasObject(
@@ -294,16 +253,48 @@ export function Event({
   ): object is { currentRevision: { title: string } } {
     return R.hasPath(['currentRevision', 'title'], object)
   }
-}
 
-const StyledLink = styled.a`
-  color: ${(props) => props.theme.colors.brand};
-  text-decoration: none;
-
-  &:hover {
-    color: ${(props) => props.theme.colors.lightblue};
+  function renderButtons() {
+    if (!setToRead) return null
+    return (
+      <ButtonWrapper>
+        {renderMuteButton()}
+        {unread && renderReadButton()}
+      </ButtonWrapper>
+    )
   }
-`
+
+  function renderReadButton() {
+    if (!setToRead) return null
+    return (
+      <Tippy
+        duration={[300, 250]}
+        animation="fade"
+        placement="bottom"
+        content={<Tooltip>{loggedInStrings?.setToRead}</Tooltip>}
+      >
+        <StyledButton onClick={() => setToRead(eventId)}>
+          <FontAwesomeIcon icon={faCheck} />
+        </StyledButton>
+      </Tippy>
+    )
+  }
+
+  function renderMuteButton() {
+    return (
+      <Tippy
+        duration={[300, 250]}
+        animation="fade"
+        placement="bottom"
+        content={<Tooltip>{loggedInStrings?.hide}</Tooltip>}
+      >
+        <StyledButton href={`/unsubscribe/${event.objectId.toString()}`}>
+          <FontAwesomeIcon icon={faBellSlash} />
+        </StyledButton>
+      </Tippy>
+    )
+  }
+}
 
 const StyledTimeAgo = styled(TimeAgo)`
   font-size: 0.8rem;
@@ -380,12 +371,4 @@ const Title = styled.span<{ unread: boolean }>`
   display: block;
   margin-bottom: 9px;
   margin-top: 1px;
-
-  a {
-    color: ${(props) => props.theme.colors.brand};
-    text-decoration: none;
-  }
-  a:hover {
-    color: ${(props) => props.theme.colors.lightblue};
-  }
 `

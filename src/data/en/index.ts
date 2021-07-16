@@ -245,6 +245,7 @@ export const instanceData = {
     eventLog: {
       currentEvents: 'Current events',
       oldestEvents: '%amount% oldest events',
+      globalDescription: 'All events that happen somewhere on %lang%.serlo.org'
     },
     events: {
       setThreadStateArchived: "%actor% archived %thread%.",

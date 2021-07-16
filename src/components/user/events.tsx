@@ -44,7 +44,7 @@ export function Events({
               event={event}
               unread={false}
               slim
-              noExtraContent
+              noPrivateContent
             />
           )
         })}
@@ -75,7 +75,7 @@ export function Events({
 function useEventsFetch(
   actorId?: number,
   objectId?: number,
-  first?: number,
+  amount?: number,
   oldest?: boolean
 ) {
   return useGraphqlSwrPaginationWithAuth<EventData>({
@@ -83,8 +83,8 @@ function useEventsFetch(
     variables: {
       actorId,
       objectId,
-      first: oldest ? undefined : first ?? 20,
-      last: oldest ? first ?? 20 : undefined,
+      first: oldest ? undefined : amount ?? 20,
+      last: oldest ? amount ?? 20 : undefined,
     },
     config: {
       refreshInterval: 10 * 60 * 1000, //10min

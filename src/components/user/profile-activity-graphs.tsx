@@ -26,20 +26,19 @@ export function ProfileActivityGraphs({ values }: ProfileActivityGraphsProps) {
     return null
   })
 
-  const length = graphs.length
   return (
-    <div className="flex justify-center sm:justify-between flex-wrap sm:flex-nowrap my-20">
+    <section className="flex justify-center sm:justify-between flex-wrap sm:flex-nowrap my-20">
       {graphs.map((graph, index) => {
         if (!graph) return null
         return (
           <Fragment key={index}>
             {graph}
-            {length === 4 && index === 1 && (
+            {index === 1 && (
               <div style={{ flexBasis: '100%' }} className="sm:hidden" />
             )}
           </Fragment>
         )
       })}
-    </div>
+    </section>
   )
 }

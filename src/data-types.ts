@@ -13,7 +13,7 @@ export interface RevisionProps {
 }
 
 export interface UserProps {
-  pageData: UserPage
+  pageData: UserPage | ErrorPage
 }
 
 export interface LandingProps {
