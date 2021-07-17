@@ -19,6 +19,7 @@ import {
   SetUuidStateNotificationEvent,
   TaxonomyTerm,
   AbstractUuid,
+  Thread,
 } from '@serlo/api'
 import Tippy from '@tippyjs/react'
 import clsx from 'clsx'
@@ -100,13 +101,13 @@ export function Event({
             ? strings.events.setThreadStateArchived
             : strings.events.setThreadStateUnarchived,
           {
-            thread: renderThread(event.thread.id),
+            thread: renderThread(event.thread),
           }
         )
 
       case 'CreateCommentNotificationEvent':
         return parseString(strings.events.createComment, {
-          thread: renderThread(event.thread.id),
+          thread: renderThread(event.thread),
           comment: (
             <Link href={`/${event.comment.id}`}>
               {strings.entities.comment}
@@ -116,7 +117,7 @@ export function Event({
 
       case 'CreateThreadNotificationEvent':
         return parseString(strings.events.createThread, {
-          thread: renderThread(event.thread.id),
+          thread: renderThread(event.thread),
           object: renderObject(event.object),
         })
 
@@ -244,7 +245,8 @@ export function Event({
     return <Link href={`/${id}`}>{strings.entities.revision}</Link>
   }
 
-  function renderThread(id: string) {
+  function renderThread(thread: Thread) {
+    const id = thread.comments?.nodes[0]?.id
     return <Link href={`/${id}`}>{strings.entities.thread}</Link>
   }
 

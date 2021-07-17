@@ -70,6 +70,11 @@ export const sharedEventFragments = gql`
       }
       thread {
         id
+        comments(first: 1) {
+          nodes {
+            id
+          }
+        }
       }
     }
     ... on CreateEntityNotificationEvent {
@@ -116,6 +121,11 @@ export const sharedEventFragments = gql`
     ... on CreateThreadNotificationEvent {
       thread {
         id
+        comments(first: 1) {
+          nodes {
+            id
+          }
+        }
       }
       object {
         ...withTitle
@@ -178,6 +188,11 @@ export const sharedEventFragments = gql`
       archived
       thread {
         id
+        comments(first: 1) {
+          nodes {
+            id
+          }
+        }
       }
     }
     ... on SetUuidStateNotificationEvent {
