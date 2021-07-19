@@ -7,7 +7,7 @@ import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 import { makeGreenButton } from '@/helper/css'
 import { shouldUseNewAuth } from '@/helper/feature-auth'
-// import { useCreateThreadMutation } from '@/helper/mutations'
+import { useCreateThreadMutation } from '@/helper/mutations'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
 interface ProfileChatButtonProps {
@@ -24,7 +24,7 @@ export function ProfileChatButton({
   className,
 }: ProfileChatButtonProps) {
   const { strings } = useInstanceData()
-  // const createThread = useCreateThreadMutation()
+  const createThread = useCreateThreadMutation()
   const auth = useAuthentication()
   const [mounted, setMounted] = useState(!shouldUseNewAuth())
 
@@ -53,18 +53,17 @@ export function ProfileChatButton({
     </ChatButton>
   )
 
-  function inviteToChat() {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const _userId = userId
-    showToastNotice('⚠️ Sorry! Feature will be added soon ⚠️')
-    // await createThread({
-    //   title: '',
-    //   content: 'Hi, wanna chat?!',
-    //   objectId: 1565, // userId TODO: add support for comments in user pages in db-layer
-    //   subscribe: false,
-    //   sendEmail: false,
-    // })
-    // showToastNotice('✨ Erfolgreich eingeladen!', 'success')
+  async function inviteToChat() {
+    await createThread({
+      title: '',
+      content: strings.profiles.invitation
+        .replace('%username%', auth.current?.username!)
+        .replace('%chatlink%', 'https://community.serlo.org'),
+      objectId: userId,
+      subscribe: false,
+      sendEmail: false,
+    })
+    showToastNotice('✨ Erfolgreich eingeladen!', 'success')
   }
 }
 
