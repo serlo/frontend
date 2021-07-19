@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { Link } from '../content/link'
+import { UnstyledLink } from '../content/link'
 import AuthorBadge from '@/assets-webkit/img/community/badge-author.svg'
 import DonorBadge from '@/assets-webkit/img/community/badge-donor.svg'
 import ReviewerBadge from '@/assets-webkit/img/community/badge-reviewer.svg'
@@ -91,12 +91,11 @@ export function ProfileBadges({ userData, date }: ProfileBadgesProps) {
     return (
       <>
         {lang === 'de' && anchor ? (
-          <Link
-            noStyle
+          <UnstyledLink
             href={`/community/202923/rollen-der-serlo-community#${anchor}`}
           >
             {content}
-          </Link>
+          </UnstyledLink>
         ) : (
           content
         )}
