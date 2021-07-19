@@ -27,9 +27,7 @@ function Content() {
   const [showUnread, setShowUnread] = useState(true)
 
   // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { data, error, loadMore, loading } = useNotificationFetch({
-    unread: showUnread,
-  })
+  const { data, error, loadMore, loading } = useNotificationFetch(showUnread)
 
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
@@ -80,13 +78,7 @@ function Title() {
   return <PageTitle title={strings.pageTitles.notifications} headTitle />
 }
 
-function useNotificationFetch({
-  unread,
-  noKey,
-}: {
-  unread?: boolean
-  noKey?: boolean
-}) {
+function useNotificationFetch(unread: boolean) {
   // eslint-disable-next-line @typescript-eslint/unbound-method
   return useGraphqlSwrPaginationWithAuth<NotificationData>({
     query: notificationsQuery,
@@ -97,7 +89,6 @@ function useNotificationFetch({
     getConnection(data) {
       return data.notifications
     },
-    noKey,
   })
 }
 
