@@ -27,7 +27,6 @@ export async function requestUser(
         ...uuid,
         motivation: uuid.motivation ?? undefined,
         chatUrl: uuid.chatUrl ?? undefined,
-        imageUrl: uuid.imageUrl,
         description: getDescription(uuid),
         roles: uuid.roles.nodes.map((role) => {
           return {
