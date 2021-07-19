@@ -155,7 +155,9 @@ export const instanceData = {
       noCurrentNotice: "Es gibt noch keine akzeptierte Bearbeitung.",
       by: "Von",
       parentFallbackLink: "Zum übergeordneten Inhalt",
-      hasChanges: "In diesem Bereich hat es Änderungen gegeben"
+      hasChanges: "In diesem Bereich hat es Änderungen gegeben",
+      positionForGrouped: "Diese %exercise_or_solution% ist Teil von %title%.",
+      helpLink: "Reviewer-Hilfe"
     },
     revisionHistory: {
       changes: "Änderungen",
