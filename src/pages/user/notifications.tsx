@@ -31,42 +31,46 @@ function Content() {
 
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
-  const loggedInStrings = loggedInData.strings.notifications
+
+  const { showNew, showRead } = loggedInData.strings.notifications
 
   return (
     <>
       <p className="serlo-p">
-        {/* //blur-hack, use https://caniuse.com/#feat=css-focus-visible when supported*/}
-        <button
-          className={clsx(
-            'serlo-button mr-5 mb-5',
-            showUnread
-              ? 'serlo-make-interactive-primary'
-              : 'serlo-make-interactive-light'
-          )}
-          onPointerUp={(e) => e.currentTarget.blur()}
-          onClick={() => setShowUnread(true)}
-        >
-          {loggedInStrings.showNew} (<UnreadNotificationsCount onlyNumber />)
-        </button>
-        <button
-          className={clsx(
-            'serlo-button mr-5 mb-5',
-            !showUnread
-              ? 'serlo-make-interactive-primary'
-              : 'serlo-make-interactive-light'
-          )}
-          onPointerUp={(e) => e.currentTarget.blur()}
-          onClick={() => setShowUnread(false)}
-        >
-          {loggedInStrings.showRead}
-        </button>
+        <TabButton setShowUnreadTo>
+          {showNew} (<UnreadNotificationsCount onlyNumber />)
+        </TabButton>
+        <TabButton setShowUnreadTo={false}>{showRead}</TabButton>
       </p>
       <Guard data={data} error={error} needsAuth>
         <Notifications data={data!} isLoading={loading} loadMore={loadMore} />
       </Guard>
     </>
   )
+
+  function TabButton({
+    setShowUnreadTo,
+    children,
+  }: {
+    setShowUnreadTo: boolean
+    children: React.ReactNode
+  }) {
+    // blur-hack, use https://caniuse.com/#feat=css-focus-visible when supported
+    return (
+      <button
+        className={clsx(
+          'serlo-button mr-5 mb-5',
+          showUnread === setShowUnreadTo
+            ? 'serlo-make-interactive-primary'
+            : 'serlo-make-interactive-light'
+        )}
+        onPointerUp={(e) => e.currentTarget.blur()}
+        onClick={() => setShowUnread(setShowUnreadTo)}
+      >
+        {children}
+      </button>
+    )
+  }
 }
 
 function Title() {
