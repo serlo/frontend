@@ -2,6 +2,7 @@ import {
   faClock,
   faList,
   faPencilAlt,
+  faQuestionCircle,
   faShareAlt,
   faTools,
   IconDefinition,
@@ -43,7 +44,7 @@ export function UserTools({
   aboveContent,
   hideEditProfile,
 }: UserToolsProps) {
-  const { strings } = useInstanceData()
+  const { strings, lang } = useInstanceData()
   const auth = useAuthentication()
   const loggedInData = useLoggedInData()
   const lic = useLoggedInComponents()
@@ -204,6 +205,14 @@ export function UserTools({
         >
           {renderInner(strings.pageTitles.revisionHistory, faList)}
         </Link>
+        {lang === 'de' && (
+          <Link
+            href="/community/140473/hilfeseiten-für-reviewer"
+            className={buttonClassName()}
+          >
+            {renderInner(strings.revisions.helpLink, faQuestionCircle)}
+          </Link>
+        )}
       </>
     )
   }
