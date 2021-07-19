@@ -27,22 +27,14 @@ function Content() {
   const [showUnread, setShowUnread] = useState(true)
 
   // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { data, error, loadMore, loading } = useNotificationFetch(true)
-  // eslint-disable-next-line @typescript-eslint/unbound-method
-  const {
-    data: readData,
-    error: readError,
-    loadMore: loadMoreRead,
-    loading: loadingRead,
-  } = useNotificationFetch(false, showUnread) //don't fetch if showUnread is true
+  const { data, error, loadMore, loading } = useNotificationFetch({
+    unread: showUnread,
+    noKey: !showUnread,
+  })
 
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
   const loggedInStrings = loggedInData.strings.notifications
-
-  function onMoreRead() {
-    loadMoreRead()
-  }
 
   function onTabClick() {
     setShowUnread(!showUnread)
@@ -77,24 +69,14 @@ function Content() {
           {loggedInStrings.showRead}
         </button>
       </p>
-      {showUnread ? (
-        <Guard data={data} error={error} needsAuth>
-          <Notifications
-            data={data!}
-            isLoading={loading}
-            loadMore={loadMore}
-            isUnread
-          />
-        </Guard>
-      ) : (
-        <Guard data={readData} error={readError} needsAuth>
-          <Notifications
-            data={readData!}
-            isLoading={loadingRead}
-            loadMore={onMoreRead}
-          />
-        </Guard>
-      )}
+      <Guard data={data} error={error} needsAuth>
+        <Notifications
+          data={data!}
+          isLoading={loading}
+          loadMore={loadMore}
+          isUnread={showUnread}
+        />
+      </Guard>
     </>
   )
 }
@@ -104,7 +86,13 @@ function Title() {
   return <PageTitle title={strings.pageTitles.notifications} headTitle />
 }
 
-export function useNotificationFetch(unread?: boolean, noKey?: boolean) {
+function useNotificationFetch({
+  unread,
+  noKey,
+}: {
+  unread?: boolean
+  noKey?: boolean
+}) {
   // eslint-disable-next-line @typescript-eslint/unbound-method
   return useGraphqlSwrPaginationWithAuth<NotificationData>({
     query: notificationsQuery,
@@ -119,12 +107,7 @@ export function useNotificationFetch(unread?: boolean, noKey?: boolean) {
   })
 }
 
-export const notificationsVariables = {
-  first: 10,
-  unread: undefined,
-}
-
-export const notificationsQuery = gql`
+const notificationsQuery = gql`
   query notifications($first: Int!, $unread: Boolean, $after: String) {
     notifications(first: $first, unread: $unread, after: $after) {
       pageInfo {

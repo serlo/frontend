@@ -92,7 +92,7 @@ export function useGraphqlSwrPaginationWithAuth<T>(
   )
 
   function getKey(
-    pageIndex: number,
+    _pageIndex: number,
     previousResponse: Record<string, unknown> | null
   ) {
     if (noKey) return null
