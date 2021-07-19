@@ -25,14 +25,12 @@ interface NotificationProps {
   }
   loadMore: () => void
   isLoading: boolean
-  isUnread?: boolean
 }
 
 export const Notifications = ({
   data,
   loadMore,
   isLoading,
-  isUnread,
 }: NotificationProps) => {
   const auth = useAuthentication()
   const setNotificationToRead = useSetNotificationStateMutation()
@@ -47,10 +45,10 @@ export const Notifications = ({
     <>
       {renderNotifications(data.nodes)}
       {isLoading && <LoadingSpinner text={strings.loading.isLoading} />}
-      {data?.pageInfo.hasNextPage && !isLoading ? (
+      {data.pageInfo.hasNextPage && !isLoading ? (
         <ButtonWrap>
           <Button onClick={loadMore}>{strings.actions.loadMore}</Button>
-          {isUnread && (
+          {data.nodes[0]?.unread && (
             <LightButton onClick={setAllToRead}>
               <FontAwesomeIcon icon={faCheck} /> {loggedInStrings.setAllToRead}
             </LightButton>

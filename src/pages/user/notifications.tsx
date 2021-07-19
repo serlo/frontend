@@ -70,12 +70,7 @@ function Content() {
         </button>
       </p>
       <Guard data={data} error={error} needsAuth>
-        <Notifications
-          data={data!}
-          isLoading={loading}
-          loadMore={loadMore}
-          isUnread={showUnread}
-        />
+        <Notifications data={data!} isLoading={loading} loadMore={loadMore} />
       </Guard>
     </>
   )
