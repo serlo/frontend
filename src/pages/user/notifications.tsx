@@ -33,10 +33,6 @@ function Content() {
   if (!loggedInData) return null
   const loggedInStrings = loggedInData.strings.notifications
 
-  function onTabClick() {
-    setShowUnread(!showUnread)
-  }
-
   return (
     <>
       <p className="serlo-p">
@@ -49,7 +45,7 @@ function Content() {
               : 'serlo-make-interactive-light'
           )}
           onPointerUp={(e) => e.currentTarget.blur()}
-          onClick={onTabClick}
+          onClick={() => setShowUnread(true)}
         >
           {loggedInStrings.showNew} (<UnreadNotificationsCount onlyNumber />)
         </button>
@@ -61,7 +57,7 @@ function Content() {
               : 'serlo-make-interactive-light'
           )}
           onPointerUp={(e) => e.currentTarget.blur()}
-          onClick={onTabClick}
+          onClick={() => setShowUnread(false)}
         >
           {loggedInStrings.showRead}
         </button>
