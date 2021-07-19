@@ -29,7 +29,6 @@ function Content() {
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { data, error, loadMore, loading } = useNotificationFetch({
     unread: showUnread,
-    noKey: !showUnread,
   })
 
   const loggedInData = useLoggedInData()
