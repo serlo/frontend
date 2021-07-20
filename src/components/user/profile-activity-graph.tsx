@@ -77,18 +77,42 @@ export function ProfileActivityGraph({
 
     return (
       <>
-        <StyledSVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-          <OuterCircle r="45" cx="50" cy="50" />
-          <ProgressCircle
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 100 100"
+          className="w-40 h-40"
+        >
+          <circle
             r="45"
             cx="50"
             cy="50"
             style={{
+              fill: tint(0.85, theme.colors.brandGreen),
+              stroke: tint(0.75, theme.colors.brandGreen),
+              strokeWidth: 5,
+            }}
+          />
+          <circle
+            r="45"
+            cx="50"
+            cy="50"
+            style={{
+              fill: 'none',
+              stroke: tint(0.4, theme.colors.brandGreen),
+              strokeWidth: 5,
+              transition: 'all ease 3s',
+              transformOrigin: 'center',
+              transform: 'rotate(58deg)',
               strokeDasharray: dashArray,
               strokeDashoffset: dashOffset,
             }}
           />
-          <InnerCircle r={(progress / max_level) * 40} cx="50" cy="50" />
+          <circle
+            r={(progress / max_level) * 40}
+            cx="50"
+            cy="50"
+            style={{ fill: theme.colors.brandGreen }}
+          />
           <text
             className="font-bold text-white fill-current"
             textAnchor="middle"
@@ -98,7 +122,7 @@ export function ProfileActivityGraph({
           >
             {value}
           </text>
-        </StyledSVG>
+        </svg>
 
         <HeartLevel
           title={titleString}
@@ -112,30 +136,6 @@ export function ProfileActivityGraph({
     )
   }
 }
-
-const StyledSVG = styled.svg`
-  height: 10rem;
-  width: 10rem;
-`
-
-const OuterCircle = styled.circle`
-  fill: ${(props) => tint(0.85, props.theme.colors.brandGreen)};
-  stroke: ${(props) => tint(0.75, props.theme.colors.brandGreen)};
-  stroke-width: 5;
-`
-
-const InnerCircle = styled.circle`
-  fill: ${(props) => props.theme.colors.brandGreen};
-`
-
-const ProgressCircle = styled.circle`
-  fill: none;
-  stroke: ${(props) => tint(0.4, props.theme.colors.brandGreen)};
-  stroke-width: 5;
-  transition: all ease 3s;
-  transform-origin: center;
-  transform: rotate(58deg);
-`
 
 const HeartLevel = styled.div<{ level: number }>`
   position: absolute;
