@@ -12,13 +12,7 @@ import styled, { css } from 'styled-components'
 import { useInstanceData } from '@/contexts/instance-context'
 import { theme } from '@/theme'
 
-const levels = [
-  { floor: 0, ceil: 10, icon: faCircle },
-  { floor: 10, ceil: 100, icon: faCircle },
-  { floor: 100, ceil: 1000, icon: faHeart },
-  { floor: 1000, ceil: 10000, icon: faStar },
-  { floor: 10000, ceil: -1, icon: faGrinStars },
-]
+const max_value = 10_000
 
 export function ProfileActivityGraph({
   value,
@@ -29,11 +23,10 @@ export function ProfileActivityGraph({
 }) {
   const { strings } = useInstanceData()
 
-  const level = Math.floor(Math.log10(Math.min(value, 10_000)))
-
-  const levelAmount = levels[level].ceil - levels[level].floor
-  const missing = levelAmount - (value - levels[level].floor)
-  const amount = 1 - missing / levelAmount
+  const progress = Math.log10(Math.min(value, max_value))
+  const max_level = Math.floor(Math.log10(max_value))
+  const level = Math.floor(progress)
+  const amount = progress - level
 
   const dashArray = 283
   const dashOffsetMin = 17 //space for the heart
@@ -49,9 +42,7 @@ export function ProfileActivityGraph({
   return (
     <figure className="mx-side w-40 text-center text-brand relative">
       <h3 className="text-xl font-bold mt-5 mb-2">{title}</h3>
-      {level === levels.length - 1
-        ? renderLegendary()
-        : renderGraphInProgress()}
+      {level >= max_level ? renderLegendary() : renderGraphInProgress()}
     </figure>
   )
 
@@ -73,12 +64,14 @@ export function ProfileActivityGraph({
   }
 
   function renderGraphInProgress() {
+    const levels = [faCircle, faCircle, faHeart, faStar]
+    const levelCeil = Math.pow(10, Math.ceil(progress)).toString()
     const titleString =
       level > 0
         ? strings.profiles.activityGraph.levelTitle
             .replace('%level%', level.toString())
-            .replace('%max_level%', '4')
-            .replace('%level_ceil%', levels[level].ceil.toString())
+            .replace('%max_level%', Math.log10(max_value).toString())
+            .replace('%level_ceil%', levelCeil)
         : strings.profiles.activityGraph.noLevel
 
     return (
@@ -104,7 +97,7 @@ export function ProfileActivityGraph({
           level={level}
         >
           {level > 0 && <span>{level}</span>}
-          <FontAwesomeIcon icon={levels[level].icon} />
+          <FontAwesomeIcon icon={levels[level]} />
         </HeartLevel>
       </>
     )
