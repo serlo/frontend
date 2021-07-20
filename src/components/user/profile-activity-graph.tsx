@@ -12,26 +12,24 @@ import styled, { css } from 'styled-components'
 import { useInstanceData } from '@/contexts/instance-context'
 import { theme } from '@/theme'
 
-interface ProfileActivityGraphProps {
-  value: number
-  title: string
-}
-
-const levels = {
-  0: { floor: 0, ceil: 10, icon: faCircle },
-  1: { floor: 10, ceil: 100, icon: faCircle },
-  2: { floor: 100, ceil: 1000, icon: faHeart },
-  3: { floor: 1000, ceil: 10000, icon: faStar },
-  4: { floor: 10000, ceil: -1, icon: faGrinStars },
-}
+const levels = [
+  { floor: 0, ceil: 10, icon: faCircle },
+  { floor: 10, ceil: 100, icon: faCircle },
+  { floor: 100, ceil: 1000, icon: faHeart },
+  { floor: 1000, ceil: 10000, icon: faStar },
+  { floor: 10000, ceil: -1, icon: faGrinStars },
+]
 
 export function ProfileActivityGraph({
   value,
   title,
-}: ProfileActivityGraphProps) {
+}: {
+  value: number
+  title: string
+}) {
   const { strings } = useInstanceData()
 
-  const level = Math.min(Math.floor(Math.log10(value)), 4) as 1 | 2 | 3 | 4
+  const level = Math.floor(Math.log10(Math.min(value, 10_000)))
 
   const levelAmount = levels[level].ceil - levels[level].floor
   const missing = levelAmount - (value - levels[level].floor)
@@ -51,7 +49,9 @@ export function ProfileActivityGraph({
   return (
     <figure className="mx-side w-40 text-center text-brand relative">
       <h3 className="text-xl font-bold mt-5 mb-2">{title}</h3>
-      {level === 4 ? renderLegendary() : renderGraphInProgress()}
+      {level === levels.length - 1
+        ? renderLegendary()
+        : renderGraphInProgress()}
     </figure>
   )
 
@@ -59,11 +59,15 @@ export function ProfileActivityGraph({
     return (
       <>
         <FontAwesomeIcon
-          icon={levels[level].icon}
+          icon={faGrinStars}
           size="10x"
           style={{ color: theme.colors.lighterBrandGreen }}
         />
-        <AbsoluteNumber legendary>{value}</AbsoluteNumber>
+        <AbsoluteNumber
+          style={{ marginTop: 0, color: theme.colors.brandGreen }}
+        >
+          {value}
+        </AbsoluteNumber>
       </>
     )
   }
@@ -131,20 +135,13 @@ const ProgressCircle = styled.circle`
   transform: rotate(58deg);
 `
 
-const AbsoluteNumber = styled.div<{ legendary?: boolean }>`
+const AbsoluteNumber = styled.p`
   position: absolute;
   margin-top: -6rem;
   width: 10rem;
   color: #fff;
   font-weight: bold;
   font-size: 1.33rem;
-
-  ${(props) =>
-    props.legendary &&
-    css`
-      margin-top: 0;
-      color: ${(props) => props.theme.colors.brandGreen};
-    `};
 `
 
 const HeartLevel = styled.div<{ level: number }>`
