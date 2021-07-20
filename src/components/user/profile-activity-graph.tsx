@@ -54,11 +54,12 @@ export function ProfileActivityGraph({
           size="10x"
           style={{ color: theme.colors.lighterBrandGreen }}
         />
-        <AbsoluteNumber
-          style={{ marginTop: 0, color: theme.colors.brandGreen }}
+        <p
+          className="font-bold text-xl"
+          style={{ color: theme.colors.brandGreen }}
         >
           {value}
-        </AbsoluteNumber>
+        </p>
       </>
     )
   }
@@ -88,8 +89,16 @@ export function ProfileActivityGraph({
             }}
           />
           <InnerCircle r="24" cx="50" cy="50" />
+          <text
+            className="font-bold text-white fill-current"
+            textAnchor="middle"
+            x="50"
+            y="54"
+            style={{ fontSize: 12 }}
+          >
+            {value}
+          </text>
         </StyledSVG>
-        <AbsoluteNumber>{value}</AbsoluteNumber>
 
         <HeartLevel
           title={titleString}
@@ -126,15 +135,6 @@ const ProgressCircle = styled.circle`
   transition: all ease 3s;
   transform-origin: center;
   transform: rotate(58deg);
-`
-
-const AbsoluteNumber = styled.p`
-  position: absolute;
-  margin-top: -6rem;
-  width: 10rem;
-  color: #fff;
-  font-weight: bold;
-  font-size: 1.33rem;
 `
 
 const HeartLevel = styled.div<{ level: number }>`
