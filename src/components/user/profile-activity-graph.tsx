@@ -88,7 +88,7 @@ export function ProfileActivityGraph({
               strokeDashoffset: dashOffset,
             }}
           />
-          <InnerCircle r="24" cx="50" cy="50" />
+          <InnerCircle r={(progress / max_level) * 40} cx="50" cy="50" />
           <text
             className="font-bold text-white fill-current"
             textAnchor="middle"
