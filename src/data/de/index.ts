@@ -59,7 +59,8 @@ export const instanceData = {
     pageTitles: {
       notifications: "Deine Benachrichtigungen",
       subscriptions: "Abonnements verwalten",
-      revisionHistory: "Bearbeitungsverlauf"
+      revisionHistory: "Bearbeitungsverlauf",
+      eventLog: "Event Log"
     },
     roles: {
       donor: "Spender*in",
@@ -189,11 +190,23 @@ export const instanceData = {
       instanceRoles: "Rollen auf %lang%.serlo.org:",
       otherRoles: "Andere Rollen:",
       directMessage: "Direktnachricht",
+      goToChat: 'Go to Chat',
+      registerChat: 'Register for Chat',
+      inviteToChat: 'Invite to chat',
+      invitation: '💬 %username% has invited you to the Serlo community chat!\nGo to %chatlink% to join.',
+      activityGraph: {
+        edits: "Edits",
+        comments: "Comments",
+        reviews: "Reviews",
+        taxonomy: "Taxonomy",
+        levelTitle: "Level %level% of %max_level%  |  Next level at %level_ceil% 🎉",
+        noLevel: "No level yet"
+      },
       howToEditImage: {
         heading: "So kannst du dein Profilbild ändern",
-        description: "Wir benutzen die Bilder von %chatUrl% als Profilbilder. Um dein Bild zu ändern musst du diesen Schritten folgen:",
+        description: 'Currently we use the images from %chatLink% as profile pictures. In order to change your picture, do the following:',
         steps: {
-          goToChat: "Gehe zu %chatUrl%.",
+          goToChat: 'Go to %chatLink%.',
           signIn: "Melde dich an.",
           goToMyAccount: "Gehe im Usermenü auf %myAccountLink%.",
           myAccount: "Mein Konto",
@@ -201,6 +214,14 @@ export const instanceData = {
           refreshPage: "Komme hierher zurück und aktualisiere dein Bild mit %refreshLink%.",
           refreshLink: "diesem magischem Link"
         }
+      },
+      motivation: {
+        edit: 'Edit motivation',
+        add: 'Add motivation',
+        heading: 'How to edit your motivation',
+        intro: 'Motivations are a new feature we test at the moment. To edit your motivation you have to fill out a simple form.',
+        privacy: 'The form and data storage is offered by Google and personal data may be transferred to this service when using this feature.',
+        toForm: 'Motivation Form'
       }
     },
     notices: {
@@ -223,6 +244,37 @@ export const instanceData = {
     keys: {
       ctrl: "Strg",
       return: "Enter"
+    },
+    eventLog: {
+      currentEvents: 'Current events',
+      oldestEvents: '%amount% oldest events',
+      globalDescription: 'All events that happen somewhere on %lang%.serlo.org'
+    },
+    events: {
+      setThreadStateArchived: "%actor% archived %thread%.",
+      setThreadStateUnarchived: "%actor% restored %thread%.",
+      createComment: "%actor% commented in %thread%: %comment%.",
+      createThread: "%actor% started %thread% on %object%.",
+      createEntity: "%actor% created %object%.",
+      setLicense: "%actor% changed the license of %repository%.",
+      createEntityLink: "%actor% associated %child% with %parent%.",
+      removeEntityLink: "%actor% dissociated %child% from %parent%.",
+      createEntityRevision: "%actor% created a %revision% of %entity%.",
+      checkoutRevision: "%actor% checked out a %revision% in %repository%.",
+      rejectRevision: "%actor% did not accept a %revision% in %repository%.",
+      createTaxonomyLink: "%actor% added %child% to %parent%.",
+      removeTaxonomyLink: "%actor% removed %child% from %parent%.",
+      createTaxonomyTerm: "%actor% created %term%.",
+      setTaxonomyTerm: "%actor% updated %term%.",
+      setTaxonomyParentDeleted: "%actor% removed the parent of %child%.",
+      setTaxonomyParentChangedFrom: "%actor% changed parent of %child% from %previousparent% to %parent%.",
+      setTaxonomyParentChanged: "%actor% changed parent of %child% to %parent%.",
+      setUuidStateTrashed: "%actor% trashed %object%.",
+      setUuidStateRestored: "%actor% restored %object%.",
+      entityPlaceholderFallback: "Content"
+    },
+    actions: {
+      loadMore: "Load more"
     }
   }
 };
@@ -309,33 +361,11 @@ export const loggedInData = {
       directLink: "Direkter Link zu diesem Inhalt"
     },
     notifications: {
-      loadMore: "Weitere laden",
       hide: "Benachrichtigungen für diesen Inhalt nicht mehr anzeigen.",
       setToRead: "Benachrichtigung als gelesen markieren.",
       setAllToRead: "Alle sichtbaren gelesen",
       showNew: "Neu",
-      showRead: "Gelesen",
-      setThreadStateArchived: "%actor% hat eine %thread% archiviert.",
-      setThreadStateUnarchived: "%actor% hat eine %thread% aus dem Archiv geholt.",
-      createComment: "%actor% hat einen %comment% in einer %thread% erstellt.",
-      createThread: "%actor% hat eine %thread% in einem %object% erstellt.",
-      createEntity: "%actor% hat %object% erstellt.",
-      setLicense: "%actor% hat die Lizenz von %repository% geändert.",
-      createEntityLink: "%actor% hat %child% mit %parent% verknüpft.",
-      removeEntityLink: "%actor% hat die Verknüpfung von %child% mit %parent% entfernt.",
-      createEntityRevision: "%actor% hat eine %revision% von %entity% erstellt.",
-      checkoutRevision: "%actor% hat eine %revision% von %repository% übernommen.",
-      rejectRevision: "%user% hat eine %revision% in %repository% nicht übernommen.",
-      createTaxonomyLink: "%actor% hat %child% in %parent% eingeordnet.",
-      removeTaxonomyLink: "%actor% hat %child% aus %parent% entfernt.",
-      createTaxonomyTerm: "%actor% hat den %term% erstellt.",
-      setTaxonomyTerm: "%actor% hat den %term% geändert.",
-      setTaxonomyParentDeleted: "%actor% hat den Elternknoten von %child% entfernt.",
-      setTaxonomyParentChangedFrom: "%actor% hat den Elternknoten von %child% von %previousparent% auf %parent% geändert.",
-      setTaxonomyParentChanged: "%actor% hat den Elternknoten von %child% auf %parent% geändert.",
-      setUuidStateTrashed: "%actor% hat %object% in den Papierkorb verschoben.",
-      setUuidStateRestored: "%actor% hat %object% aus dem Papierkorb wieder hergestellt.",
-      entityPlaceholderFallback: "Inhalt"
+      showRead: "Gelesen"
     },
     subscriptions: {
       mail: "E-Mails",
