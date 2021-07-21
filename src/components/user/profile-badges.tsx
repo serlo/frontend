@@ -10,12 +10,6 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { UserPage } from '@/data-types'
 import { makeMargin } from '@/helper/css'
 
-const badgeSVGs = {
-  author: <AuthorBadge />,
-  donor: <DonorBadge />,
-  reviewer: <ReviewerBadge />,
-}
-
 export function ProfileBadges({
   userData,
   date,
@@ -39,17 +33,13 @@ export function ProfileBadges({
   function* getBadges() {
     const { activeDonor, activeReviewer, activeAuthor } = userData
 
-    for (const [hasBadge, key] of [
-      [activeReviewer, 'reviewer'],
-      [activeAuthor, 'author'],
-      [activeDonor, 'donor'],
+    for (const [hasBadge, key, Badge] of [
+      [activeReviewer, 'reviewer', <ReviewerBadge key={0} />],
+      [activeAuthor, 'author', <AuthorBadge key={1} />],
+      [activeDonor, 'donor', <DonorBadge key={2} />],
     ] as const) {
       if (hasBadge)
-        yield renderBadge({
-          Badge: badgeSVGs[key],
-          name: strings.roles[key],
-          anchor: key,
-        })
+        yield renderBadge({ Badge, name: strings.roles[key], anchor: key })
     }
 
     yield* getTimeBadge()
@@ -57,29 +47,28 @@ export function ProfileBadges({
 
   function* getTimeBadge() {
     const elapsed = new Date().getTime() - new Date(registerDate).getTime()
-    const yearsFloored = Math.floor(elapsed / (1000 * 3600 * 24 * 365))
-    if (yearsFloored < 1) return
+    const years = Math.floor(elapsed / (365.25 * 24 * 60 * 60 * 1000))
 
-    const fullYear = registerDate.getFullYear()
+    if (years < 1) return
+
+    const maxYears = 5
+    const { yearWithSerlo, yearsWithSerlo } = strings.profiles
 
     yield renderBadge({
       Badge: (
         <>
           <TimeBadgeNumber>
-            {fullYear === 2014 && (
+            {years > maxYears && (
               <span className="text-lg align-text-top inline-block pt-1 pr-1">
                 &gt;
               </span>
             )}
-            {yearsFloored}
+            {Math.min(years, maxYears)}
           </TimeBadgeNumber>
           <TimeBadge />
         </>
       ),
-      name:
-        yearsFloored === 1
-          ? strings.profiles.yearWithSerlo
-          : strings.profiles.yearsWithSerlo,
+      name: years === 1 ? yearWithSerlo : yearsWithSerlo,
     })
   }
 
