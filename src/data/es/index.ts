@@ -59,7 +59,8 @@ export const instanceData = {
     pageTitles: {
       notifications: "Tus notificaciones",
       subscriptions: "Administra las suscripciones",
-      revisionHistory: "Historial de revisiones"
+      revisionHistory: "Historial de revisiones",
+      eventLog: "Event Log"
     },
     roles: {
       donor: "Donante",
@@ -189,11 +190,23 @@ export const instanceData = {
       instanceRoles: "Roles en %lang%.serlo.org",
       otherRoles: "Otros roles",
       directMessage: "Mensaje directo",
+      goToChat: 'Go to Chat',
+      registerChat: 'Register for Chat',
+      inviteToChat: 'Invite to chat',
+      invitation: '💬 %username% has invited you to the Serlo community chat!\nGo to %chatlink% to join.',
+      activityGraph: {
+        edits: "Edits",
+        comments: "Comments",
+        reviews: "Reviews",
+        taxonomy: "Taxonomy",
+        levelTitle: "Level %level% of %max_level%  |  Next level at %level_ceil% 🎉",
+        noLevel: "No level yet"
+      },
       howToEditImage: {
         heading: "Como editar tu foto del perfil",
-        description: "Actualmente utilizamos las imágenes de %chatUrl% como imágenes de perfil. Para cambiar tu foto, haz lo siguiente:",
+        description: 'Currently we use the images from %chatLink% as profile pictures. In order to change your picture, do the following:',
         steps: {
-          goToChat: "Ir a %chatUrl%.",
+          goToChat: 'Go to %chatLink%.',
           signIn: "Iniciar sesión",
           goToMyAccount: "Ir al menú de usuario a %myAccountLink%",
           myAccount: "Mi cuenta",
@@ -201,6 +214,14 @@ export const instanceData = {
           refreshPage: 'Come back here and refresh the image using %refreshLink%.',
           refreshLink: 'this link'
         }
+      },
+      motivation: {
+        edit: 'Edit motivation',
+        add: 'Add motivation',
+        heading: 'How to edit your motivation',
+        intro: 'Motivations are a new feature we test at the moment. To edit your motivation you have to fill out a simple form.',
+        privacy: 'The form and data storage is offered by Google and personal data may be transferred to this service when using this feature.',
+        toForm: 'Motivation Form'
       }
     },
     notices: {
@@ -223,6 +244,37 @@ export const instanceData = {
     keys: {
       ctrl: 'ctrl',
       return: "entrar"
+    },
+    eventLog: {
+      currentEvents: 'Current events',
+      oldestEvents: '%amount% oldest events',
+      globalDescription: 'All events that happen somewhere on %lang%.serlo.org'
+    },
+    events: {
+      setThreadStateArchived: "%actor% archived %thread%.",
+      setThreadStateUnarchived: "%actor% restored %thread%.",
+      createComment: "%actor% commented in %thread%: %comment%.",
+      createThread: "%actor% started %thread% on %object%.",
+      createEntity: "%actor% created %object%.",
+      setLicense: "%actor% changed the license of %repository%.",
+      createEntityLink: "%actor% associated %child% with %parent%.",
+      removeEntityLink: "%actor% dissociated %child% from %parent%.",
+      createEntityRevision: "%actor% created a %revision% of %entity%.",
+      checkoutRevision: "%actor% checked out a %revision% in %repository%.",
+      rejectRevision: "%actor% did not accept a %revision% in %repository%.",
+      createTaxonomyLink: "%actor% added %child% to %parent%.",
+      removeTaxonomyLink: "%actor% removed %child% from %parent%.",
+      createTaxonomyTerm: "%actor% created %term%.",
+      setTaxonomyTerm: "%actor% updated %term%.",
+      setTaxonomyParentDeleted: "%actor% removed the parent of %child%.",
+      setTaxonomyParentChangedFrom: "%actor% changed parent of %child% from %previousparent% to %parent%.",
+      setTaxonomyParentChanged: "%actor% changed parent of %child% to %parent%.",
+      setUuidStateTrashed: "%actor% trashed %object%.",
+      setUuidStateRestored: "%actor% restored %object%.",
+      entityPlaceholderFallback: "Content"
+    },
+    actions: {
+      loadMore: "Load more"
     }
   }
 };
@@ -309,33 +361,11 @@ export const loggedInData = {
       directLink: 'Direct link to this content'
     },
     notifications: {
-      loadMore: "Cargar más",
       hide: "Ocultar notificaciones para este contenido.",
       setToRead: "Marcar notificaciones para leer.",
       setAllToRead: "Poner todas visibles a leer",
       showNew: "Nueva",
-      showRead: "Leídas",
-      setThreadStateArchived: "%actor% archivado %thread%",
-      setThreadStateUnarchived: "%actor% restaurado %thread%.",
-      createComment: "%actor% comentado en %thread%: %comment%.",
-      createThread: "%actor% ha iniciado %thread% en %object%.",
-      createEntity: "%actor% creó %object%.",
-      setLicense: "%actor% cambió la licencia de %repository%.",
-      createEntityLink: "%actor% vinculado %child% con %parent%.",
-      removeEntityLink: "%actor% desvinculado %child% de %parent%.",
-      createEntityRevision: "%actor% creó un %revision% de %entity%.",
-      checkoutRevision: "%actor% checked out a %revision% in %repository%.",
-      rejectRevision: "%actor% did not accept a %revision% in %repository%.",
-      createTaxonomyLink: "%actor% agregó %child% a %parent%.",
-      removeTaxonomyLink: "%actor% eliminó a %child% de %parent%.",
-      createTaxonomyTerm: "%actor% creó %term%.",
-      setTaxonomyTerm: "%actor% actualizó %term%.",
-      setTaxonomyParentDeleted: "%actor% eliminó el padre de %child%.",
-      setTaxonomyParentChangedFrom: "%actor% cambió el padre de %child% de  %previousparent% a %parent%.",
-      setTaxonomyParentChanged: "%actor% cambió el padre de %child% a %parent%.",
-      setUuidStateTrashed: "%actor% envió a la papelera %object%.",
-      setUuidStateRestored: "%actor% restauró %object%.",
-      entityPlaceholderFallback: "Contenido"
+      showRead: "Leídas"
     },
     subscriptions: {
       mail: "Correo electrónico",
