@@ -9,6 +9,7 @@ import TimeBadge from '@/assets-webkit/img/community/badge-time.svg'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UserPage } from '@/data-types'
 import { makeMargin } from '@/helper/css'
+import { isDefined } from '@/helper/utils'
 
 export function ProfileBadges({
   userData,
@@ -20,7 +21,28 @@ export function ProfileBadges({
   const registerDate = new Date(date)
   const { strings, lang } = useInstanceData()
 
-  const badges = [...getBadges()]
+  const { activeDonor, activeReviewer, activeAuthor } = userData
+  const badges = [
+    activeReviewer &&
+      renderBadge({
+        Badge: <ReviewerBadge />,
+        name: strings.roles.reviewer,
+        anchor: 'reviewer',
+      }),
+    activeAuthor &&
+      renderBadge({
+        Badge: <AuthorBadge />,
+        name: strings.roles.author,
+        anchor: 'author',
+      }),
+    activeDonor &&
+      renderBadge({
+        Badge: <DonorBadge />,
+        name: strings.roles.donor,
+        anchor: 'donor',
+      }),
+    renderTimeBadge(),
+  ].filter(isDefined)
 
   return badges.length > 0 ? (
     <BadgesContainer>
@@ -30,31 +52,16 @@ export function ProfileBadges({
     </BadgesContainer>
   ) : null
 
-  function* getBadges() {
-    const { activeDonor, activeReviewer, activeAuthor } = userData
-
-    for (const [hasBadge, key, Badge] of [
-      [activeReviewer, 'reviewer', <ReviewerBadge key={0} />],
-      [activeAuthor, 'author', <AuthorBadge key={1} />],
-      [activeDonor, 'donor', <DonorBadge key={2} />],
-    ] as const) {
-      if (hasBadge)
-        yield renderBadge({ Badge, name: strings.roles[key], anchor: key })
-    }
-
-    yield* getTimeBadge()
-  }
-
-  function* getTimeBadge() {
+  function renderTimeBadge() {
     const elapsed = new Date().getTime() - new Date(registerDate).getTime()
     const years = Math.floor(elapsed / (365.25 * 24 * 60 * 60 * 1000))
 
-    if (years < 1) return
+    if (years < 1) return null
 
     const maxYears = 5
     const { yearWithSerlo, yearsWithSerlo } = strings.profiles
 
-    yield renderBadge({
+    return renderBadge({
       Badge: (
         <>
           <TimeBadgeNumber>
