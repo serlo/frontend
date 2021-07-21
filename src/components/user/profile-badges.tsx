@@ -5,7 +5,6 @@ import { UnstyledLink } from '../content/link'
 import AuthorBadge from '@/assets-webkit/img/community/badge-author.svg'
 import DonorBadge from '@/assets-webkit/img/community/badge-donor.svg'
 import ReviewerBadge from '@/assets-webkit/img/community/badge-reviewer.svg'
-import TimeBadge from '@/assets-webkit/img/community/badge-time.svg'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UserPage } from '@/data-types'
 import { makeMargin } from '@/helper/css'
@@ -63,17 +62,20 @@ export function ProfileBadges({
 
     return renderBadge({
       Badge: (
-        <>
-          <TimeBadgeNumber>
-            {years > maxYears && (
-              <span className="text-lg align-text-top inline-block pt-1 pr-1">
-                &gt;
-              </span>
-            )}
+        <svg viewBox="0 0 100 100">
+          <path
+            d="m 98.373744,42.123443 v 3.20708 c -1.38186,12.09087 0.12091,29.30964 -13.49038,41.14326 -10.91667,12.10802 -25.01161,11.57636 -38.70926,11.88507 -6.92656,0.15435 -13.35219,-0.90896 -18.89689,-3.36144 a 37.396497,37.130119 0 0 1 -13.52492,-9.9471 C 5.6166143,75.703473 2.6628943,64.075663 1.6264943,55.809273 v -0.3087 c 0,-13.15418 1.27822,-30.2529 13.2485597,-40.66305 C 26.845384,4.4273633 36.449284,1.4775333 51.027874,1.6318933 h 7.46203 c 11.7976,0.15435 21.6606,6.86006 28.9499,13.8916297 a 38.001059,37.730375 0 0 1 10.93394,26.59992 z"
+            style={{
+              fill: '#bcd179',
+              stroke: 'black',
+              strokeWidth: 3.25,
+            }}
+          />
+          <text textAnchor="middle" x="50" y="66" style={{ fontSize: 50 }}>
+            {years > maxYears && '>'}
             {Math.min(years, maxYears)}
-          </TimeBadgeNumber>
-          <TimeBadge />
-        </>
+          </text>
+        </svg>
       ),
       name: years === 1 ? yearWithSerlo : yearsWithSerlo,
     })
@@ -133,13 +135,4 @@ const BadgeContainer = styled.div`
     margin-right: auto;
     text-align: center;
   }
-`
-
-const TimeBadgeNumber = styled.div`
-  position: absolute;
-  font-size: 1.8rem;
-  color: #333;
-  text-align: center;
-  width: 65px;
-  margin-top: 13px;
 `
