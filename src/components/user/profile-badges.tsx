@@ -1,3 +1,4 @@
+import { Fragment } from 'react'
 import styled from 'styled-components'
 
 import { UnstyledLink } from '../content/link'
@@ -9,50 +10,59 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { UserPage } from '@/data-types'
 import { makeMargin } from '@/helper/css'
 
-interface ProfileBadgesProps {
-  userData: UserPage['userData']
-  date: string
+const badgeSVGs = {
+  author: <AuthorBadge />,
+  donor: <DonorBadge />,
+  reviewer: <ReviewerBadge />,
 }
 
-export function ProfileBadges({ userData, date }: ProfileBadgesProps) {
-  const { activeDonor, activeReviewer, activeAuthor } = userData
+export function ProfileBadges({
+  userData,
+  date,
+}: {
+  userData: UserPage['userData']
+  date: string
+}) {
   const registerDate = new Date(date)
   const { strings, lang } = useInstanceData()
 
-  if (!activeAuthor && !activeReviewer && !activeDonor) return null
+  const badges = [...getBadges()]
 
-  return (
+  return badges.length > 0 ? (
     <BadgesContainer>
-      {activeReviewer &&
-        renderBadge({
-          Badge: <ReviewerBadge />,
-          name: strings.roles.reviewer,
-          anchor: 'reviewer',
-        })}
-      {activeAuthor &&
-        renderBadge({
-          Badge: <AuthorBadge />,
-          name: strings.roles.author,
-          anchor: 'author',
-        })}
-      {activeDonor &&
-        renderBadge({
-          Badge: <DonorBadge />,
-          name: strings.roles.donor,
-          anchor: 'donor',
-        })}
-      {renderTimeBadge()}
+      {badges.map((badge, index) => (
+        <Fragment key={index}>{badge}</Fragment>
+      ))}
     </BadgesContainer>
-  )
+  ) : null
 
-  function renderTimeBadge() {
+  function* getBadges() {
+    const { activeDonor, activeReviewer, activeAuthor } = userData
+
+    for (const [hasBadge, key] of [
+      [activeReviewer, 'reviewer'],
+      [activeAuthor, 'author'],
+      [activeDonor, 'donor'],
+    ] as const) {
+      if (hasBadge)
+        yield renderBadge({
+          Badge: badgeSVGs[key],
+          name: strings.roles[key],
+          anchor: key,
+        })
+    }
+
+    yield* getTimeBadge()
+  }
+
+  function* getTimeBadge() {
     const elapsed = new Date().getTime() - new Date(registerDate).getTime()
     const yearsFloored = Math.floor(elapsed / (1000 * 3600 * 24 * 365))
-    if (yearsFloored < 1) return null
+    if (yearsFloored < 1) return
 
     const fullYear = registerDate.getFullYear()
 
-    return renderBadge({
+    yield renderBadge({
       Badge: (
         <>
           <TimeBadgeNumber>
