@@ -235,10 +235,13 @@ function MenuInner({
       <ul className="serlo-sub-list">
         {subEntries !== undefined &&
           subEntries.map((entry, i2) => {
-            const href =
-              entry.url === '/user/me' && auth
-                ? `/user/${auth.id}/${auth.username}`
-                : entry.url
+            const href = auth
+              ? entry.url.replace(
+                  '/user/me',
+                  `/user/${auth.id}/${auth.username}`
+                )
+              : entry.url
+
             return (
               <li key={entry.title} onClick={onSubMenuInnerClick}>
                 <SubLink href={href} path={['menu', i!, i2]}>

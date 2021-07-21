@@ -46,21 +46,17 @@ export function useGraphqlSwrWithAuth<T>({
   )
 }
 
-export function useGraphqlSwrPaginationWithAuth<T>({
-  query,
-  variables,
-  config,
-  getConnection,
-  overrideAuth,
-  noKey,
-}: {
+interface UseGraphqlSwrPaginationData {
   query: string
   variables?: Record<string, unknown>
   getConnection: (data: Record<string, unknown>) => unknown
   config?: SWRInfiniteConfiguration
+  noAuth?: boolean
   overrideAuth?: ReturnType<typeof useAuthentication>
   noKey?: boolean
-}): {
+}
+
+interface UseGraphqlSwrPaginationReturn<T> {
   loadMore(): void
   loading: boolean
   error?: { message: string }
@@ -69,15 +65,34 @@ export function useGraphqlSwrPaginationWithAuth<T>({
     pageInfo: PageInfo
     totalCount?: number
   }
-} {
+}
+
+export function useGraphqlSwrPaginationWithAuth<T>(
+  data: UseGraphqlSwrPaginationData
+): UseGraphqlSwrPaginationReturn<T> {
+  const {
+    query,
+    variables,
+    config,
+    getConnection,
+    noAuth,
+    overrideAuth,
+    noKey,
+  } = data
   const auth = useAuthentication()
   const response = useSWRInfinite<
     Record<string, unknown>,
     { message: string } | undefined
-  >(getKey, createAuthAwareGraphqlFetch(overrideAuth ?? auth), config)
+  >(
+    getKey,
+    noAuth
+      ? createGraphqlFetch()
+      : createAuthAwareGraphqlFetch(overrideAuth ?? auth),
+    config
+  )
 
   function getKey(
-    pageIndex: number,
+    _pageIndex: number,
     previousResponse: Record<string, unknown> | null
   ) {
     if (noKey) return null
@@ -99,6 +114,7 @@ export function useGraphqlSwrPaginationWithAuth<T>({
       response.data === undefined || !Array.isArray(response.data)
         ? undefined
         : {
+            ...response.data,
             nodes: ([] as T[]).concat(
               ...response.data.map((data) => {
                 return mapResponseToConnection(data).nodes

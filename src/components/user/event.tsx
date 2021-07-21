@@ -19,19 +19,22 @@ import {
   SetUuidStateNotificationEvent,
   TaxonomyTerm,
   AbstractUuid,
+  Thread,
 } from '@serlo/api'
 import Tippy from '@tippyjs/react'
+import clsx from 'clsx'
 import * as R from 'ramda'
-import { Fragment } from 'react'
 import styled, { css } from 'styled-components'
 
 import { UserLink } from './user-link'
+import { Link } from '@/components/content/link'
 import { TimeAgo } from '@/components/time-ago'
 import { useInstanceData } from '@/contexts/instance-context'
 import { LoggedInData } from '@/data-types'
 import { getEntityStringByTypename } from '@/helper/feature-i18n'
+import { replacePlaceholders } from '@/helper/replace-placeholders'
 
-export type NotificationEvent =
+export type EventData =
   | CheckoutRevisionNotificationEvent
   | CreateCommentNotificationEvent
   | CreateEntityNotificationEvent
@@ -49,41 +52,228 @@ export type NotificationEvent =
   | SetThreadStateNotificationEvent
   | SetUuidStateNotificationEvent
 
-export function Notification({
+interface EventProps {
+  event: EventData
+  eventId: number
+  unread: boolean
+  loggedInStrings?: LoggedInData['strings']['notifications']
+  setToRead?: (id: number) => void
+  slim?: boolean
+  noPrivateContent?: boolean
+}
+
+export function Event({
   event,
   eventId,
   unread,
   loggedInStrings,
   setToRead,
-}: {
-  event: NotificationEvent
-  eventId: number
-  unread: boolean
-  loggedInStrings: LoggedInData['strings']['notifications']
-  setToRead: (id: number) => void
-}) {
-  const eventDate = new Date(event.date)
+  slim,
+  noPrivateContent,
+}: EventProps) {
   const { strings } = useInstanceData()
+  const eventDate = new Date(event.date)
 
   return (
-    <Item>
+    <Item className={clsx('py-6 px-side', slim && 'pt-1 pb-1')}>
       <StyledTimeAgo datetime={eventDate} dateAsTitle />
       <Title unread={unread}>{renderText()}</Title>
-      {renderExtraContent()}
+      {renderReason()}
+      {renderButtons()}
+    </Item>
+  )
+
+  function parseString(
+    string: string,
+    replaceables: { [key: string]: JSX.Element | string }
+  ) {
+    replaceables.actor = <UserLink user={event.actor} />
+    return replacePlaceholders(string, replaceables)
+  }
+
+  function renderText() {
+    const actor = <UserLink user={event.actor} />
+
+    switch (event.__typename) {
+      case 'SetThreadStateNotificationEvent':
+        return parseString(
+          event.archived
+            ? strings.events.setThreadStateArchived
+            : strings.events.setThreadStateUnarchived,
+          {
+            thread: renderThread(event.thread),
+          }
+        )
+
+      case 'CreateCommentNotificationEvent':
+        return parseString(strings.events.createComment, {
+          thread: renderThread(event.thread),
+          comment: (
+            <Link href={`/${event.comment.id}`}>
+              {strings.entities.comment}
+            </Link>
+          ),
+        })
+
+      case 'CreateThreadNotificationEvent':
+        return parseString(strings.events.createThread, {
+          thread: renderThread(event.thread),
+          object: renderObject(event.object),
+        })
+
+      case 'CreateEntityNotificationEvent':
+        return parseString(strings.events.createEntity, {
+          object: renderObject(event.entity),
+        })
+
+      case 'SetLicenseNotificationEvent':
+        return parseString(strings.events.setLicense, {
+          repository: renderObject(event.repository),
+        })
+
+      case 'CreateEntityLinkNotificationEvent':
+        return parseString(strings.events.createEntityLink, {
+          child: renderObject(event.child),
+          parent: renderObject(event.parent),
+        })
+
+      case 'RemoveEntityLinkNotificationEvent':
+        return parseString(strings.events.removeEntityLink, {
+          child: renderObject(event.child),
+          parent: renderObject(event.parent),
+        })
+
+      case 'CreateEntityRevisionNotificationEvent':
+        return parseString(strings.events.createEntityRevision, {
+          revision: renderRevision(event.entityRevision.id),
+          entity: renderObject(event.entity),
+        })
+
+      case 'CheckoutRevisionNotificationEvent':
+        return parseString(strings.events.checkoutRevision, {
+          actor: actor,
+          revision: renderRevision(event.revision.id),
+          repository: renderObject(event.repository),
+        })
+
+      case 'RejectRevisionNotificationEvent':
+        return parseString(strings.events.rejectRevision, {
+          revision: renderRevision(event.revision.id),
+          repository: renderObject(event.repository),
+        })
+
+      case 'CreateTaxonomyLinkNotificationEvent':
+        return parseString(strings.events.createTaxonomyLink, {
+          child: renderObject(event.child),
+          parent: renderObject(event.parent),
+        })
+
+      case 'RemoveTaxonomyLinkNotificationEvent':
+        return parseString(strings.events.removeTaxonomyLink, {
+          child: renderObject(event.child),
+          parent: renderTax(event.parent),
+        })
+
+      case 'CreateTaxonomyTermNotificationEvent':
+        return parseString(strings.events.createTaxonomyTerm, {
+          term: renderTax(event.taxonomyTerm),
+        })
+
+      case 'SetTaxonomyTermNotificationEvent':
+        return parseString(strings.events.setTaxonomyTerm, {
+          term: renderTax(event.taxonomyTerm),
+        })
+
+      case 'SetTaxonomyParentNotificationEvent':
+        if (!event.parent) {
+          //deleted
+          return parseString(strings.events.setTaxonomyParentDeleted, {
+            child: renderTax(event.child),
+          })
+        }
+        if (event.previousParent) {
+          return parseString(strings.events.setTaxonomyParentChangedFrom, {
+            child: renderTax(event.child),
+            previousparent: renderTax(event.previousParent),
+            parent: renderTax(event.parent),
+          })
+        }
+        return parseString(strings.events.setTaxonomyParentChanged, {
+          child: renderTax(event.child),
+          parent: renderTax(event.parent),
+        })
+
+      case 'SetUuidStateNotificationEvent':
+        return parseString(
+          event.trashed
+            ? strings.events.setUuidStateTrashed
+            : strings.events.setUuidStateRestored,
+          {
+            object: renderObject(event.object),
+          }
+        )
+    }
+  }
+
+  function renderReason() {
+    if (noPrivateContent) return null
+    if (
+      event.__typename === 'RejectRevisionNotificationEvent' ||
+      event.__typename === 'CheckoutRevisionNotificationEvent'
+    ) {
+      return <Content>{event.reason}</Content>
+    }
+  }
+
+  function renderObject(object: AbstractUuid & { __typename?: string }) {
+    return (
+      <Link href={object.alias ?? `/${object.id}`}>
+        {hasObject(object)
+          ? object.currentRevision.title
+          : getEntityStringByTypename(object.__typename, strings)}
+      </Link>
+    )
+  }
+
+  function renderTax(taxonomy: TaxonomyTerm) {
+    return (
+      <Link href={taxonomy.alias ?? `/${taxonomy.id}`}>{taxonomy.name}</Link>
+    )
+  }
+
+  function renderRevision(id: number) {
+    return <Link href={`/${id}`}>{strings.entities.revision}</Link>
+  }
+
+  function renderThread(thread: Thread) {
+    const id = thread.comments?.nodes[0]?.id
+    return <Link href={`/${id}`}>{strings.entities.thread}</Link>
+  }
+
+  function hasObject(
+    object: unknown
+  ): object is { currentRevision: { title: string } } {
+    return R.hasPath(['currentRevision', 'title'], object)
+  }
+
+  function renderButtons() {
+    if (!setToRead) return null
+    return (
       <ButtonWrapper>
         {renderMuteButton()}
         {unread && renderReadButton()}
       </ButtonWrapper>
-    </Item>
-  )
+    )
+  }
 
   function renderReadButton() {
+    if (!setToRead) return null
     return (
       <Tippy
         duration={[300, 250]}
         animation="fade"
         placement="bottom"
-        content={<Tooltip>{loggedInStrings.setToRead}</Tooltip>}
+        content={<Tooltip>{loggedInStrings?.setToRead}</Tooltip>}
       >
         <StyledButton onClick={() => setToRead(eventId)}>
           <FontAwesomeIcon icon={faCheck} />
@@ -98,7 +288,7 @@ export function Notification({
         duration={[300, 250]}
         animation="fade"
         placement="bottom"
-        content={<Tooltip>{loggedInStrings.hide}</Tooltip>}
+        content={<Tooltip>{loggedInStrings?.hide}</Tooltip>}
       >
         <StyledButton href={`/unsubscribe/${event.objectId.toString()}`}>
           <FontAwesomeIcon icon={faBellSlash} />
@@ -106,197 +296,7 @@ export function Notification({
       </Tippy>
     )
   }
-
-  function parseString(
-    string: string,
-    replaceables: { [key: string]: JSX.Element | string }
-  ) {
-    const parts = string.split('%')
-    const actor = <UserLink user={event.actor} />
-    const keys = Object.keys(replaceables)
-
-    return parts.map((part, index) => {
-      if (part === '') return null
-      if (part === 'actor') {
-        return <Fragment key={index}>{actor}</Fragment>
-      }
-      if (keys.indexOf(part) > -1) {
-        return <Fragment key={index}>{replaceables[part]}</Fragment>
-      }
-      return part
-    })
-  }
-
-  function renderText() {
-    const actor = <UserLink user={event.actor} />
-
-    switch (event.__typename) {
-      case 'SetThreadStateNotificationEvent':
-        return parseString(
-          event.archived
-            ? loggedInStrings.setThreadStateArchived
-            : loggedInStrings.setThreadStateUnarchived,
-          {
-            thread: renderThread(event.thread.id),
-          }
-        )
-
-      case 'CreateCommentNotificationEvent':
-        return parseString(loggedInStrings.createComment, {
-          thread: renderThread(event.thread.id),
-          comment: (
-            <StyledLink href={`/${event.comment.id}`}>
-              {strings.entities.comment}
-            </StyledLink>
-          ),
-        })
-
-      case 'CreateThreadNotificationEvent':
-        return parseString(loggedInStrings.createThread, {
-          thread: renderThread(event.thread.id),
-          object: renderObject(event.object),
-        })
-
-      case 'CreateEntityNotificationEvent':
-        return parseString(loggedInStrings.createEntity, {
-          object: renderObject(event.entity),
-        })
-
-      case 'SetLicenseNotificationEvent':
-        return parseString(loggedInStrings.setLicense, {
-          repository: renderObject(event.repository),
-        })
-
-      case 'CreateEntityLinkNotificationEvent':
-        return parseString(loggedInStrings.createEntityLink, {
-          child: renderObject(event.child),
-          parent: renderObject(event.parent),
-        })
-
-      case 'RemoveEntityLinkNotificationEvent':
-        return parseString(loggedInStrings.removeEntityLink, {
-          child: renderObject(event.child),
-          parent: renderObject(event.parent),
-        })
-
-      case 'CreateEntityRevisionNotificationEvent':
-        return parseString(loggedInStrings.createEntityRevision, {
-          revision: renderRevision(event.entityRevision.id),
-          entity: renderObject(event.entity),
-        })
-
-      case 'CheckoutRevisionNotificationEvent':
-        return parseString(loggedInStrings.checkoutRevision, {
-          actor: actor,
-          revision: renderRevision(event.revision.id),
-          repository: renderObject(event.repository),
-        })
-
-      case 'RejectRevisionNotificationEvent':
-        return parseString(loggedInStrings.rejectRevision, {
-          revision: renderRevision(event.revision.id),
-          repository: renderObject(event.repository),
-        })
-
-      case 'CreateTaxonomyLinkNotificationEvent':
-        return parseString(loggedInStrings.createTaxonomyLink, {
-          child: renderObject(event.child),
-          parent: renderObject(event.parent),
-        })
-
-      case 'RemoveTaxonomyLinkNotificationEvent':
-        return parseString(loggedInStrings.removeTaxonomyLink, {
-          child: renderObject(event.child),
-          parent: renderTax(event.parent),
-        })
-
-      case 'CreateTaxonomyTermNotificationEvent':
-        return parseString(loggedInStrings.createTaxonomyTerm, {
-          term: renderTax(event.taxonomyTerm),
-        })
-
-      case 'SetTaxonomyTermNotificationEvent':
-        return parseString(loggedInStrings.setTaxonomyTerm, {
-          term: renderTax(event.taxonomyTerm),
-        })
-
-      case 'SetTaxonomyParentNotificationEvent':
-        if (!event.parent) {
-          //deleted
-          return parseString(loggedInStrings.setTaxonomyParentDeleted, {
-            child: renderTax(event.child),
-          })
-        }
-        if (event.previousParent) {
-          return parseString(loggedInStrings.setTaxonomyParentChangedFrom, {
-            child: renderTax(event.child),
-            previousparent: renderTax(event.previousParent),
-            parent: renderTax(event.parent),
-          })
-        }
-        return parseString(loggedInStrings.setTaxonomyParentChanged, {
-          child: renderTax(event.child),
-          parent: renderTax(event.parent),
-        })
-
-      case 'SetUuidStateNotificationEvent':
-        return parseString(
-          event.trashed
-            ? loggedInStrings.setUuidStateTrashed
-            : loggedInStrings.setUuidStateRestored,
-          {
-            object: renderObject(event.object),
-          }
-        )
-    }
-  }
-
-  function renderExtraContent() {
-    if (
-      event.__typename === 'RejectRevisionNotificationEvent' ||
-      event.__typename === 'CheckoutRevisionNotificationEvent'
-    ) {
-      return <Content>{event.reason}</Content>
-    }
-  }
-
-  function renderObject(object: AbstractUuid & { __typename?: string }) {
-    return (
-      <StyledLink href={`/${object.id}`}>
-        {hasObject(object)
-          ? object.currentRevision.title
-          : getEntityStringByTypename(object.__typename, strings)}
-      </StyledLink>
-    )
-  }
-
-  function renderTax(taxonomy: TaxonomyTerm) {
-    return <StyledLink href={`/${taxonomy.id}`}>{taxonomy.name}</StyledLink>
-  }
-
-  function renderRevision(id: number) {
-    return <StyledLink href={`/${id}`}>{strings.entities.revision}</StyledLink>
-  }
-
-  function renderThread(id: string) {
-    return <StyledLink href={`/${id}`}>{strings.entities.thread}</StyledLink>
-  }
-
-  function hasObject(
-    object: unknown
-  ): object is { currentRevision: { title: string } } {
-    return R.hasPath(['currentRevision', 'title'], object)
-  }
 }
-
-const StyledLink = styled.a`
-  color: ${(props) => props.theme.colors.brand};
-  text-decoration: none;
-
-  &:hover {
-    color: ${(props) => props.theme.colors.lightblue};
-  }
-`
 
 const StyledTimeAgo = styled(TimeAgo)`
   font-size: 0.8rem;
@@ -340,7 +340,6 @@ const Tooltip = styled.span`
 const Item = styled.div`
   position: relative;
   margin: 10px 0;
-  padding: 24px;
   &:nth-child(odd) {
     background: ${(props) => props.theme.colors.bluewhite};
   }
@@ -374,12 +373,4 @@ const Title = styled.span<{ unread: boolean }>`
   display: block;
   margin-bottom: 9px;
   margin-top: 1px;
-
-  a {
-    color: ${(props) => props.theme.colors.brand};
-    text-decoration: none;
-  }
-  a:hover {
-    color: ${(props) => props.theme.colors.lightblue};
-  }
 `

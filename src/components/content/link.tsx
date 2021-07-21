@@ -40,7 +40,6 @@ export function isLegacyLink(_href: string) {
   return (
     legacyLinks.indexOf(_href) > -1 ||
     _href.startsWith('/auth/') ||
-    _href.startsWith('/event/history') ||
     _href.startsWith('/api/auth') ||
     _href.startsWith('/entity') ||
     _href.startsWith('/page') ||
@@ -53,7 +52,14 @@ export function isLegacyLink(_href: string) {
   )
 }
 
-export function Link({
+export function Link(props: LinkProps) {
+  return UnstyledLink({
+    ...props,
+    className: clsx(props.className, 'serlo-link'),
+  })
+}
+
+export function UnstyledLink({
   href,
   children,
   className,
@@ -169,7 +175,7 @@ export function Link({
       // eslint-disable-next-line react/jsx-no-target-blank
       <a
         href={_href}
-        className={clsx(className, 'serlo-link')}
+        className={className}
         title={title}
         onClick={clickHandler}
         rel={unreviewed && isExternal ? 'ugc nofollow noreferrer' : undefined}
