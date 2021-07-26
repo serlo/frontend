@@ -8,6 +8,7 @@ import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { ErrorPage } from '@/components/pages/error-page'
 import { SlugProps, SlugPageData } from '@/data-types'
 import { fetchPageData } from '@/fetcher/fetch-page-data'
+import { isClient } from '@/helper/client-detection'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
@@ -15,7 +16,7 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
 
   //fallback, should be handled by CFWorker
   if (pageData.kind === 'redirect') {
-    if (typeof window !== 'undefined') {
+    if (isClient) {
       setTimeout(() => {
         window.location.href = pageData.target!
       }, 1000)

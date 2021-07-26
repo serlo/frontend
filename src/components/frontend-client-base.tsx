@@ -18,6 +18,7 @@ import { InstanceData, LoggedInData } from '@/data-types'
 import type { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { frontendOrigin } from '@/helper/frontent-origin'
 import type { LoggedInStuff } from '@/helper/logged-in-stuff-chunk'
+import { setupPrintHacks } from '@/helper/print-mode'
 import { theme } from '@/theme'
 
 export type FrontendClientBaseProps = React.PropsWithChildren<{
@@ -69,6 +70,9 @@ export function FrontendClientBase({
       sessionStorage.getItem('currentPathname') || ''
     )
     sessionStorage.setItem('currentPathname', window.location.pathname)
+
+    //print mode hacks
+    void setupPrintHacks()
   })
 
   // const auth = useAuthentication('frontend-client-base')

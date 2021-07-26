@@ -2,12 +2,18 @@ import clsx from 'clsx'
 import * as React from 'react'
 import LazyLoad from 'react-lazyload'
 
+import { isPrintMode } from '@/helper/print-mode'
+
 export interface LazyProps {
   children: React.ReactNode
   slim?: boolean
 }
 
 export function Lazy(props: LazyProps) {
+  if (isPrintMode) {
+    return <>props.children</>
+  }
+
   return (
     <>
       <LazyLoad

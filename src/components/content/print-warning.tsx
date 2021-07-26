@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
+import { isPrintMode } from '@/helper/print-mode'
+
 export function PrintWarning({ warning }: { warning: string }) {
   const [scrolledToBottom, setScrolled] = useState(false)
 
@@ -23,6 +25,7 @@ export function PrintWarning({ warning }: { warning: string }) {
     }
   }, [scrolledToBottom])
 
+  if (isPrintMode) return null
   if (scrolledToBottom) return null
 
   return <PrintWarningDiv>{warning}</PrintWarningDiv>

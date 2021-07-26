@@ -255,6 +255,27 @@
   @apply absolute;
 }
 
+h1,
+h2,
+main b {
+  @apply tracking-slightestly-tighter;
+}
+body {
+  @apply tracking-slightly-tighter;
+}
+
+table.gstl_50.gssb_c {
+  @apply z-50 serlo-input-font-reset;
+  @apply mt-0.5 left-1 !right-1 !w-auto;
+  @apply sm:ml-2.5 sm:mt-0.5 w-auto;
+
+  .gssb_a td {
+    @apply !whitespace-normal;
+  }
+}
+
+/* print */
+
 @media print {
   html {
     @apply text-xs;
@@ -288,21 +309,36 @@
   }
 }
 
-h1,
-h2,
-main b {
-  @apply tracking-slightestly-tighter;
-}
-body {
-  @apply tracking-slightly-tighter;
-}
+/* just duplicated for now, could not get it to work even with the postcss-mixin plugin */
 
-table.gstl_50.gssb_c {
-  @apply z-50 serlo-input-font-reset;
-  @apply mt-0.5 left-1 !right-1 !w-auto;
-  @apply sm:ml-2.5 sm:mt-0.5 w-auto;
+.serlo-print-style {
+  @apply text-xs;
 
-  .gssb_a td {
-    @apply !whitespace-normal;
+  body {
+    @apply bg-white;
+  }
+  #__next {
+    > header,
+    > footer,
+    #notification-wrapper,
+    nav,
+    button,
+    aside,
+    h1 > span > svg {
+      @apply !hidden;
+    }
+    main {
+      @apply block w-full max-w-full relative;
+    }
+  }
+  .header-breadcrumbs,
+  a,
+  code,
+  code span,
+  html,
+  pre,
+  pre:before,
+  time {
+    @apply !bg-white !text-black;
   }
 }
