@@ -11,7 +11,7 @@ export interface LazyProps {
 
 export function Lazy(props: LazyProps) {
   if (isPrintMode) {
-    return <>props.children</>
+    return <>{props.children}</>
   }
 
   return (

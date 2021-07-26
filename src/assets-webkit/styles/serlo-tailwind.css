@@ -318,6 +318,7 @@ table.gstl_50.gssb_c {
     @apply bg-white;
   }
   #__next {
+    .serlo-print-hidden,
     > header,
     > footer,
     #notification-wrapper,
