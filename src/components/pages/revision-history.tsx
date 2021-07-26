@@ -1,5 +1,7 @@
 import { faEye, faPencilAlt, faCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
+import { ReactChild } from 'react'
 
 import { UserLink } from '../user/user-link'
 import { Link } from '@/components/content/link'
@@ -17,15 +19,15 @@ export function RevisionHistory({ data }: RevisionHistoryProps) {
   if (!data) return null
 
   return (
-    <table className="mx-side border-collapse w-full">
+    <table className="mx-side border-collapse w-full relative">
       <thead>
         <tr>
-          <th className="serlo-th">{strings.revisionHistory.changes}</th>
-          <th>{strings.revisionHistory.status}</th>
-          <th style={{ minWidth: '90px' }}>{strings.revisionHistory.author}</th>
-          <th>{strings.revisionHistory.date}</th>
-          <th>{strings.revisionHistory.view}</th>
-          <th>{strings.revisionHistory.new}</th>
+          <Th text={strings.revisionHistory.changes} />
+          <Th text={strings.revisionHistory.status} />
+          <Th text={strings.revisionHistory.author} />
+          <Th text={strings.revisionHistory.date} />
+          <Th text={strings.revisionHistory.view} />
+          <Th text={strings.revisionHistory.new} />
         </tr>
       </thead>
       <tbody>
@@ -34,22 +36,25 @@ export function RevisionHistory({ data }: RevisionHistoryProps) {
           const viewUrl = `/entity/repository/compare/${data.id}/${entry.id}`
 
           return (
-            <tr key={entry.id}>
-              <td className="serlo-td">
+            <tr
+              key={entry.id}
+              className={isCurrent ? 'bg-brand-50' : undefined}
+            >
+              <Td>
                 <Link title={strings.revisionHistory.viewLabel} href={viewUrl}>
-                  <b>{entry.changes || '–'}</b>
+                  <span className={isCurrent ? 'font-bold' : undefined}>
+                    {entry.changes || '–'}
+                  </span>
                 </Link>
-              </td>
-              <td className="serlo-td text-center">
-                {getStatus(entry.trashed, isCurrent)}
-              </td>
-              <td className="serlo-td">
+              </Td>
+              <Td centered>{getStatus(entry.trashed, isCurrent)}</Td>
+              <Td>
                 <UserLink user={entry.author} />
-              </td>
-              <td className="serlo-td">
+              </Td>
+              <Td>
                 <TimeAgo datetime={new Date(entry.date)} dateAsTitle />
-              </td>
-              <td className="serlo-td text-center">
+              </Td>
+              <Td centered>
                 <Link
                   className="serlo-button serlo-make-interactive-light my-0 mx-auto text-base"
                   title={strings.revisionHistory.viewLabel}
@@ -57,8 +62,8 @@ export function RevisionHistory({ data }: RevisionHistoryProps) {
                 >
                   <FontAwesomeIcon icon={faEye} size="1x" />
                 </Link>
-              </td>
-              <td className="serlo-td text-center">
+              </Td>
+              <Td centered>
                 <Link
                   className="serlo-button serlo-make-interactive-light my-0 mx-auto text-base"
                   title={strings.revisionHistory.newLabel}
@@ -66,7 +71,7 @@ export function RevisionHistory({ data }: RevisionHistoryProps) {
                 >
                   <FontAwesomeIcon icon={faPencilAlt} size="1x" />
                 </Link>
-              </td>
+              </Td>
             </tr>
           )
         })}
@@ -92,3 +97,22 @@ export function RevisionHistory({ data }: RevisionHistoryProps) {
     )
   }
 }
+
+const Th = ({ text }: { text: string }) => (
+  <th className="serlo-th sticky top-0 bg-white border-0">{text}</th>
+)
+
+const Td = ({
+  children,
+  centered,
+}: {
+  children: ReactChild
+  centered?: boolean
+}) => (
+  <td
+    className={clsx('serlo-td', centered && 'text-center')}
+    style={{ borderLeftColor: 'transparent', borderRightColor: 'transparent' }}
+  >
+    {children}
+  </td>
+)
