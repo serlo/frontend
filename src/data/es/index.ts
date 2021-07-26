@@ -154,6 +154,7 @@ export const instanceData = {
       currentNotice: "Esta es la versión aceptada actualmente.",
       rejectedNotice: 'This revision was not accepted.',
       noCurrentNotice: 'There is no accepted revision yet.',
+      unknownNotice: 'This revision was accepted once or was never reviewed.',
       by: "Por",
       parentFallbackLink: 'To parent content',
       hasChanges: 'There have been changes in this area',
@@ -164,7 +165,11 @@ export const instanceData = {
       changes: "Cambios",
       author: "Autor",
       date: "Fecha",
-      createNew: "Crear una nueva revisión a partir de esta revisión específica"
+      new: 'Edit',
+      newLabel: 'Create a new revision starting from this specific revision',
+      view: 'Show',
+      viewLabel: 'Show this revision',
+      status: 'Status'
     },
     errors: {
       title: "😬 Los sitios web a veces cometen errores…",

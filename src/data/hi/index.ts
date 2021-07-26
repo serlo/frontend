@@ -154,6 +154,7 @@ export const instanceData = {
       currentNotice: "यह वर्तमान में स्वीकृत संस्करण है।",
       rejectedNotice: 'This revision was not accepted.',
       noCurrentNotice: 'There is no accepted revision yet.',
+      unknownNotice: 'This revision was accepted once or was never reviewed.',
       by: "द्वारा",
       parentFallbackLink: 'To parent content',
       hasChanges: 'There have been changes in this area',
@@ -164,7 +165,11 @@ export const instanceData = {
       changes: "परिवर्तन",
       author: "लेखक",
       date: "दिनांक",
-      createNew: "इस विशिष्ट संशोधन से प्रारंभ एक नया संशोधन बनाएं"
+      new: 'Edit',
+      newLabel: 'Create a new revision starting from this specific revision',
+      view: 'Show',
+      viewLabel: 'Show this revision',
+      status: 'Status'
     },
     errors: {
       title: "😬 वेबसाइटें कभी-कभी गलतियाँ करती हैं",
