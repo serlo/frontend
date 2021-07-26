@@ -154,7 +154,7 @@ export const instanceData = {
       currentNotice: "Das ist die aktuell akzeptierte Bearbeitung.",
       rejectedNotice: "Diese Bearbeitung wurde nicht akzeptiert.",
       noCurrentNotice: "Es gibt noch keine akzeptierte Bearbeitung.",
-      unknownNotice: 'This revision was accepted once or was never reviewed.',
+      unknownNotice: "Diese Revision war vorher die Akzeptierte oder wurde nie überprüft.",
       by: "Von",
       parentFallbackLink: "Zum übergeordneten Inhalt",
       hasChanges: "In diesem Bereich hat es Änderungen gegeben",
@@ -165,10 +165,10 @@ export const instanceData = {
       changes: "Änderungen",
       author: "Autor*in",
       date: "Wann?",
-      new: 'Edit',
-      newLabel: 'Create a new revision starting from this specific revision',
-      view: 'Show',
-      viewLabel: 'Show this revision',
+      new: "Bearbeiten",
+      newLabel: "Erstelle eine Bearbeitung von dieser Bearbeitung aus",
+      view: "Anzeigen",
+      viewLabel: "Diese Bearbeitung anzeigen",
       status: 'Status'
     },
     errors: {
