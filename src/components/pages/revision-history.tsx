@@ -1,13 +1,12 @@
 import { faEye, faPencilAlt, faCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
-import { ReactChild } from 'react'
 
 import { UserLink } from '../user/user-link'
 import { Link } from '@/components/content/link'
 import { TimeAgo } from '@/components/time-ago'
 import { useInstanceData } from '@/contexts/instance-context'
-import type { HistoryRevisionsData } from '@/data-types'
+import type { CompBaseProps, HistoryRevisionsData } from '@/data-types'
 import { theme } from '@/theme'
 
 export interface RevisionHistoryProps {
@@ -22,12 +21,12 @@ export function RevisionHistory({ data }: RevisionHistoryProps) {
     <table className="mx-side border-collapse w-full relative">
       <thead>
         <tr>
-          <Th text={strings.revisionHistory.changes} />
-          <Th text={strings.revisionHistory.status} />
-          <Th text={strings.revisionHistory.author} />
-          <Th text={strings.revisionHistory.date} />
-          <Th text={strings.revisionHistory.view} />
-          <Th text={strings.revisionHistory.new} />
+          <Th>{strings.revisionHistory.changes}</Th>
+          <Th>{strings.revisionHistory.status}</Th>
+          <Th>{strings.revisionHistory.author}</Th>
+          <Th>{strings.revisionHistory.date}</Th>
+          <Th>{strings.revisionHistory.view}</Th>
+          <Th>{strings.revisionHistory.new}</Th>
         </tr>
       </thead>
       <tbody>
@@ -98,17 +97,13 @@ export function RevisionHistory({ data }: RevisionHistoryProps) {
   }
 }
 
-const Th = ({ text }: { text: string }) => (
-  <th className="serlo-th sticky top-0 bg-white border-0">{text}</th>
+const Th: CompBaseProps = ({ children }) => (
+  <th className="serlo-th sticky top-0 bg-white border-0">{children}</th>
 )
 
-const Td = ({
-  children,
-  centered,
-}: {
-  children: ReactChild
+const Td: CompBaseProps<{
   centered?: boolean
-}) => (
+}> = ({ children, centered }) => (
   <td
     className={clsx('serlo-td', centered && 'text-center')}
     style={{ borderLeftColor: 'transparent', borderRightColor: 'transparent' }}

@@ -1,5 +1,6 @@
 import { Role, TaxonomyTermType } from '@serlo/api'
 import { AuthorizationPayload } from '@serlo/authorization'
+import { CSSProperties, FunctionComponent } from 'react'
 
 import { Instance, QueryResponse, User } from './fetcher/query-types'
 import { instanceData, instanceLandingData, loggedInData } from '@/data/en'
@@ -828,3 +829,11 @@ export interface SubscriptionData {
   object: QueryResponse
   sendEmail: boolean
 }
+
+export type CompBaseProps<T = {}> = FunctionComponent<
+  T & {
+    className?: string
+    style?: CSSProperties
+    title?: string
+  }
+>
