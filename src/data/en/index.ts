@@ -165,8 +165,8 @@ export const instanceData = {
       changes: 'Changes',
       author: 'Author',
       date: 'Date',
-      edit: 'Edit',
-      editLabel: 'Create a new revision starting from this specific revision',
+      new: 'Edit',
+      newLabel: 'Create a new revision starting from this specific revision',
       view: 'Show',
       viewLabel: 'Show this revision',
       status: 'Status'
