@@ -165,8 +165,8 @@ export const instanceData = {
       changes: "Änderungen",
       author: "Autor*in",
       date: "Wann?",
-      new: "Bearbeiten",
-      newLabel: "Erstelle eine Bearbeitung von dieser Bearbeitung aus",
+      edit: "Überarbeiten",
+      editLabel: "Erstelle eine Bearbeitung von dieser Bearbeitung aus",
       view: "Anzeigen",
       viewLabel: "Diese Bearbeitung anzeigen",
       status: 'Status'
