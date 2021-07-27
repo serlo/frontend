@@ -196,9 +196,7 @@ export const instanceData = {
         edits: "Edits",
         comments: "Comments",
         reviews: "Reviews",
-        taxonomy: "Taxonomy",
-        levelTitle: "Level %level% of %max_level%  |  Next level at %level_ceil% 🎉",
-        noLevel: "No level yet",
+        taxonomy: "Taxonomy"
       },
       howToEditImage: {
         heading: 'How to edit your profile picture',

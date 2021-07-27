@@ -1,48 +1,49 @@
-import {
-  faCircle,
-  faGrinStars,
-  faHeart,
-  faStar,
-} from '@fortawesome/free-solid-svg-icons'
+import { faGrinStars } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { tint } from 'polished'
 import { useState, useEffect } from 'react'
-import styled, { css } from 'styled-components'
 
-import { useInstanceData } from '@/contexts/instance-context'
+// import { useInstanceData } from '@/contexts/instance-context'
 import { theme } from '@/theme'
 
-const max_value = 10_000
+interface ProfileActivityGraphProps {
+  value: number
+  maxValue: number
+  title: string
+}
+
+const maxLevel = 5
+const fullRadius = 50
+const minRadius = 15
 
 export function ProfileActivityGraph({
   value,
+  maxValue,
   title,
-}: {
-  value: number
-  title: string
-}) {
-  const { strings } = useInstanceData()
+}: ProfileActivityGraphProps) {
+  const factor = Math.sqrt(maxValue) / maxLevel
+  const progress = Math.sqrt(value) / factor // 0 to maxLevel
+  const radiusStep = (fullRadius - minRadius) / maxLevel
+  const level = Math.floor(progress) // 0 to maxLevel
+  const extraAmount = progress - level // 0 to 1
+  //TODO: calculate value until next level
 
-  const progress = Math.log10(Math.min(value, max_value))
-  const max_level = Math.floor(Math.log10(max_value))
-  const level = Math.floor(progress)
-  const amount = progress - level
+  const innerRadius = minRadius + level * radiusStep
+  const progressRadius = innerRadius + 0.5 * radiusStep // since strokes get centered
+  const dashArray = 2 * Math.PI * progressRadius
 
-  const dashArray = 283
-  const dashOffsetMin = 17 //space for the heart
   const [dashOffset, setDashOffset] = useState(dashArray)
-  const dashOffsetTarget =
-    dashOffsetMin + (1 - amount) * (dashArray - dashOffsetMin)
+  const dashOffsetTarget = (1 - extraAmount) * dashArray
 
   // start animation
   useEffect(() => {
     setDashOffset(dashOffsetTarget)
-  }, [amount, dashOffsetTarget])
+  }, [dashOffsetTarget])
 
   return (
-    <figure className="mx-side w-40 text-center text-brand relative">
+    <figure className="mx-side w-36 text-center text-brand relative">
       <h3 className="text-xl font-bold mt-5 mb-2">{title}</h3>
-      {level >= max_level ? renderLegendary() : renderGraphInProgress()}
+      {value >= maxValue ? renderLegendary() : renderGraphInProgress()}
     </figure>
   )
 
@@ -51,7 +52,7 @@ export function ProfileActivityGraph({
       <>
         <FontAwesomeIcon
           icon={faGrinStars}
-          size="10x"
+          size="8x"
           style={{ color: theme.colors.lighterBrandGreen }}
         />
         <p
@@ -65,109 +66,55 @@ export function ProfileActivityGraph({
   }
 
   function renderGraphInProgress() {
-    const levels = [faCircle, faCircle, faHeart, faStar]
-    const levelCeil = Math.pow(10, Math.ceil(progress)).toString()
-    const titleString =
-      level > 0
-        ? strings.profiles.activityGraph.levelTitle
-            .replace('%level%', level.toString())
-            .replace('%max_level%', Math.log10(max_value).toString())
-            .replace('%level_ceil%', levelCeil)
-        : strings.profiles.activityGraph.noLevel
-
     return (
       <>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 100 100"
-          className="w-40 h-40"
+          className="w-36 h-36"
         >
           <circle
-            r="45"
-            cx="50"
-            cy="50"
+            r={progressRadius}
+            cx={fullRadius}
+            cy={fullRadius}
             style={{
-              fill: tint(0.85, theme.colors.brandGreen),
-              stroke: tint(0.75, theme.colors.brandGreen),
-              strokeWidth: 5,
+              fill: 'none',
+              stroke: tint(0.85, theme.colors.brandGreen),
+              strokeWidth: radiusStep,
             }}
           />
           <circle
-            r="45"
-            cx="50"
-            cy="50"
+            r={progressRadius}
+            cx={fullRadius}
+            cy={fullRadius}
             style={{
               fill: 'none',
-              stroke: tint(0.4, theme.colors.brandGreen),
-              strokeWidth: 5,
+              stroke: tint(0.5, theme.colors.brandGreen),
+              strokeWidth: radiusStep,
               transition: 'all ease 3s',
               transformOrigin: 'center',
-              transform: 'rotate(58deg)',
+              transform: 'rotate(90deg)',
               strokeDasharray: dashArray,
               strokeDashoffset: dashOffset,
             }}
           />
           <circle
-            r={(progress / max_level) * 40}
-            cx="50"
-            cy="50"
+            r={innerRadius}
+            cx={fullRadius}
+            cy={fullRadius}
             style={{ fill: theme.colors.brandGreen }}
           />
           <text
             className="font-bold text-white fill-current"
             textAnchor="middle"
-            x="50"
+            x={fullRadius}
             y="54"
             style={{ fontSize: 12 }}
           >
             {value}
           </text>
         </svg>
-
-        <HeartLevel
-          title={titleString}
-          className="cursor-pointer"
-          level={level}
-        >
-          {level > 0 && <span>{level}</span>}
-          <FontAwesomeIcon icon={levels[level]} />
-        </HeartLevel>
       </>
     )
   }
 }
-
-const HeartLevel = styled.div<{ level: number }>`
-  position: absolute;
-  margin-top: -3.1rem;
-  right: 0.9rem;
-  width: 2.3rem;
-  height: 2.3rem;
-  color: ${(props) => props.theme.colors.brandGreen};
-  font-size: 2.2rem;
-
-  > span {
-    position: absolute;
-    width: 2.15rem;
-    margin-top: 0.45rem;
-    font-weight: bold;
-    font-size: 1.3rem;
-    color: #fff;
-  }
-
-  ${(props) =>
-    props.level === 3 &&
-    css`
-      > svg {
-        margin-left: -2px;
-        margin-bottom: 3px;
-      }
-    `};
-  ${(props) =>
-    props.level === 1 &&
-    css`
-      > svg {
-        margin-bottom: 1px;
-      }
-    `};
-`
