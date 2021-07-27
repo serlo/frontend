@@ -165,8 +165,8 @@ export const instanceData = {
       changes: "परिवर्तन",
       author: "लेखक",
       date: "दिनांक",
-      new: 'Edit',
-      newLabel: 'Create a new revision starting from this specific revision',
+      edit: 'Edit',
+      editLabel: 'Create a new revision starting from this specific revision',
       view: 'Show',
       viewLabel: 'Show this revision',
       status: 'Status'
