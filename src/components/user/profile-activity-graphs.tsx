@@ -26,10 +26,12 @@ export function ProfileActivityGraphs({ values }: ProfileActivityGraphsProps) {
   )
 
   function renderGraph(key: keyof User['activityByType'], maxValue: number) {
+    const value = values[key]
+    if (value === 0) return null
     return (
       <ProfileActivityGraph
         title={strings.profiles.activityGraph[key]}
-        value={values[key]}
+        value={value}
         maxValue={maxValue}
       />
     )
