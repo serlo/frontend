@@ -1,3 +1,5 @@
+import clsx from 'clsx'
+
 import { ProfileActivityGraph } from '@/components/user/profile-activity-graph'
 import { useInstanceData } from '@/contexts/instance-context'
 import { User } from '@/fetcher/query-types'
@@ -10,7 +12,12 @@ export function ProfileActivityGraphs({ values }: ProfileActivityGraphsProps) {
   const { strings } = useInstanceData()
 
   return (
-    <section className="flex justify-center sm:justify-between flex-wrap sm:flex-nowrap my-20">
+    <section
+      className={clsx(
+        'flex justify-center flex-wrap my-20 max-w-lg mx-auto',
+        'sm:justify-between sm:flex-nowrap sm:max-w-none'
+      )}
+    >
       {renderGraph('edits', 3000)}
       {renderGraph('comments', 200)}
       {renderGraph('reviews', 6000)}
