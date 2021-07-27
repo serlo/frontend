@@ -6,7 +6,6 @@ import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 import { useAuthentication } from '@/auth/use-authentication'
-import { CommentArea } from '@/components/comments/comment-area'
 import { Link } from '@/components/content/link'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { TimeAgo } from '@/components/time-ago'
@@ -57,7 +56,6 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
       <ProfileActivityGraphs values={activityByType} />
       {renderRecentActivities()}
       {renderRoles()}
-      {isOwnProfile && <CommentArea id={id} />}
       {renderUserTools()}
       {renderHowToEditImage()}
       {renderHowToEditMotivation()}

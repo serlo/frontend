@@ -27,6 +27,7 @@ import * as R from 'ramda'
 import styled, { css } from 'styled-components'
 
 import { UserLink } from './user-link'
+import { useAuthentication } from '@/auth/use-authentication'
 import { Link } from '@/components/content/link'
 import { TimeAgo } from '@/components/time-ago'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -74,6 +75,9 @@ export function Event({
   const { strings } = useInstanceData()
   const eventDate = new Date(event.date)
 
+  // for chat invitation mvp
+  const auth = useAuthentication()
+
   return (
     <Item className={clsx('py-6 px-side', slim && 'pt-1 pb-1')}>
       <StyledTimeAgo datetime={eventDate} dateAsTitle />
@@ -87,12 +91,12 @@ export function Event({
     string: string,
     replaceables: { [key: string]: JSX.Element | string }
   ) {
-    replaceables.actor = <UserLink user={event.actor} />
+    replaceables.actor = <UserLink noBadges user={event.actor} />
     return replacePlaceholders(string, replaceables)
   }
 
   function renderText() {
-    const actor = <UserLink user={event.actor} />
+    const actor = <UserLink noBadges user={event.actor} />
 
     switch (event.__typename) {
       case 'SetThreadStateNotificationEvent':
@@ -116,6 +120,15 @@ export function Event({
         })
 
       case 'CreateThreadNotificationEvent':
+        // for invite to chat mvp
+        if (event.object.id === auth.current?.id) {
+          return parseString(strings.events.inviteToChat, {
+            chatLink: (
+              <a href="https://community.serlo.org">community.serlo.org</a>
+            ),
+            break: <br />,
+          })
+        }
         return parseString(strings.events.createThread, {
           thread: renderThread(event.thread),
           object: renderObject(event.object),

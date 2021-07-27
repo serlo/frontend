@@ -38,17 +38,18 @@ export function isLegacyLink(_href: string) {
   if (_href.startsWith('/entity/repository/compare')) return false
 
   return (
-    legacyLinks.indexOf(_href) > -1 ||
+    legacyLinks.includes(_href) ||
     _href.startsWith('/auth/') ||
     _href.startsWith('/api/auth') ||
     _href.startsWith('/entity') ||
+    _href.startsWith('/event/history') ||
     _href.startsWith('/page') ||
     _href.startsWith('/taxonomy') ||
     _href.startsWith('/discussions') ||
     _href.startsWith('/subscription/update') ||
     _href.startsWith('/unsubscribe') ||
     _href.startsWith('/user/profile/') ||
-    _href.indexOf('.serlo.org') > -1 //e.g. community.serlo.org or different language
+    _href.includes('.serlo.org') //e.g. community.serlo.org or different language
   )
 }
 
