@@ -124,7 +124,9 @@ export function Event({
         if (event.object.id === auth.current?.id) {
           return parseString(strings.events.inviteToChat, {
             chatLink: (
-              <a href="https://community.serlo.org">community.serlo.org</a>
+              <a className="serlo-link" href="https://community.serlo.org">
+                community.serlo.org
+              </a>
             ),
             break: <br />,
           })
