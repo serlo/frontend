@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import clsx from 'clsx'
 
 import { ProfileActivityGraph } from '@/components/user/profile-activity-graph'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -11,34 +11,29 @@ interface ProfileActivityGraphsProps {
 export function ProfileActivityGraphs({ values }: ProfileActivityGraphsProps) {
   const { strings } = useInstanceData()
 
-  const graphs = Object.keys(values).map((key) => {
-    const typedKey = key as keyof typeof values
-    const value = values[typedKey]
-    if (value > 0) {
-      return (
-        <ProfileActivityGraph
-          key={key}
-          title={strings.profiles.activityGraph[typedKey]}
-          value={value}
-        />
-      )
-    }
-    return null
-  })
-
   return (
-    <section className="flex justify-center sm:justify-between flex-wrap sm:flex-nowrap my-20">
-      {graphs.map((graph, index) => {
-        if (!graph) return null
-        return (
-          <Fragment key={index}>
-            {graph}
-            {index === 1 && (
-              <div style={{ flexBasis: '100%' }} className="sm:hidden" />
-            )}
-          </Fragment>
-        )
-      })}
+    <section
+      className={clsx(
+        'flex justify-center flex-wrap my-20 max-w-lg mx-auto',
+        'sm:justify-between sm:flex-nowrap sm:max-w-none'
+      )}
+    >
+      {renderGraph('edits', 3000)}
+      {renderGraph('comments', 200)}
+      {renderGraph('reviews', 6000)}
+      {renderGraph('taxonomy', 1500)}
     </section>
   )
+
+  function renderGraph(key: keyof User['activityByType'], maxValue: number) {
+    const value = values[key]
+    if (value === 0) return null
+    return (
+      <ProfileActivityGraph
+        title={strings.profiles.activityGraph[key]}
+        value={value}
+        maxValue={maxValue}
+      />
+    )
+  }
 }

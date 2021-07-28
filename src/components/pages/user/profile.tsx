@@ -6,12 +6,9 @@ import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 import { useAuthentication } from '@/auth/use-authentication'
-import { CommentArea } from '@/components/comments/comment-area'
-import { Link } from '@/components/content/link'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { TimeAgo } from '@/components/time-ago'
 import { UserTools } from '@/components/user-tools/user-tools'
-import { Events } from '@/components/user/events'
 import { ProfileActivityGraphs } from '@/components/user/profile-activity-graphs'
 import { ProfileBadges } from '@/components/user/profile-badges'
 import { ProfileChatButton } from '@/components/user/profile-chat-button'
@@ -57,7 +54,6 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
       <ProfileActivityGraphs values={activityByType} />
       {renderRecentActivities()}
       {renderRoles()}
-      {isOwnProfile && <CommentArea id={id} />}
       {renderUserTools()}
       {renderHowToEditImage()}
       {renderHowToEditMotivation()}
@@ -126,21 +122,23 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   }
 
   function renderRecentActivities() {
-    return (
-      <section>
-        <h2 className="serlo-h2">{strings.profiles.recentActivities}</h2>
-        <Events userId={id} perPage={5} />
+    // Deactivated until the API provides newer events also
+    return null
+    // return (
+    //   <section>
+    //     <h2 className="serlo-h2">{strings.profiles.recentActivities}</h2>
+    //     <Events userId={id} perPage={5} />
 
-        <p className="serlo-p">
-          <Link
-            className="serlo-button serlo-make-interactive-primary mt-4"
-            href={`/event/history/${id}`}
-          >
-            Mehr anzeigen
-          </Link>
-        </p>
-      </section>
-    )
+    //     <p className="serlo-p">
+    //       <Link
+    //         className="serlo-button serlo-make-interactive-primary mt-4"
+    //         href={`/event/history/${id}`}
+    //       >
+    //         Mehr anzeigen
+    //       </Link>
+    //     </p>
+    //   </section>
+    // )
   }
 
   function renderRoles() {
