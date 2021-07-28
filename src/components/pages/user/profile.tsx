@@ -77,6 +77,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         </p>
         <ProfileChatButton
           userId={id}
+          username={username}
           isOwnProfile={isOwnProfile}
           chatUrl={chatUrl}
           className="mx-auto sm:mx-0 mb-8"
