@@ -90,6 +90,9 @@ export interface CoursePage extends Entity {
       id: number
       currentRevision: Pick<GraphQL.CoursePageRevision, 'title' | 'trashed'>
     }[]
+    revisions: {
+      totalCount: number
+    }
     taxonomyTerms: { nodes: TaxonomyTerms }
   }
 }

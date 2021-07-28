@@ -285,6 +285,7 @@ export interface EntityData {
   licenseData?: LicenseData
   courseData?: CourseData
   unrevisedRevisions?: number
+  unrevisedCourseRevisions?: number
 }
 
 export interface RevisionPage extends EntityPageBase {

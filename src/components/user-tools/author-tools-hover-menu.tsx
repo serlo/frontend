@@ -18,6 +18,7 @@ export interface AuthorToolsData {
   trashed?: boolean
   checkoutRejectButtons?: JSX.Element
   unrevisedRevisions?: number
+  unrevisedCourseRevisions?: number
 }
 
 export interface AuthorToolsHoverMenuProps {
@@ -89,16 +90,21 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
   }
 
   function renderCoursePage() {
+    const hasCourseRevisions =
+      data.unrevisedCourseRevisions && data.unrevisedCourseRevisions > 0
+
     return (
       <ul className="serlo-sub-list-hover">
         <Tippy
           {...tippyDefaultProps}
           content={
             <ul className="serlo-sub-list-hover">
+              {/* Author tools for this course page */}
               <AuthorTools
                 entityId={data.id}
                 data={data}
                 tools={[
+                  hasUnrevised ? Tool.UnrevisedEdit : Tool.Edit,
                   Tool.Abo,
                   Tool.History,
                   Tool.MoveCoursePage,
@@ -121,10 +127,11 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
           {...tippyDefaultProps}
           content={
             <ul className="serlo-sub-list-hover">
+              {/* Author tools for course */}
               <AuthorTools
                 data={data}
                 tools={[
-                  Tool.Edit,
+                  hasCourseRevisions ? Tool.UnrevisedEdit : Tool.Edit,
                   Tool.History,
                   Tool.Abo,
                   Tool.AddCoursePage,
