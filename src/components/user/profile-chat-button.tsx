@@ -1,17 +1,20 @@
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import { useAuthentication } from '@/auth/use-authentication'
+import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
 import { makeGreenButton } from '@/helper/css'
 import { shouldUseNewAuth } from '@/helper/feature-auth'
 import { useCreateThreadMutation } from '@/helper/mutations'
+import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
 interface ProfileChatButtonProps {
   userId: number
+  username: string
   isOwnProfile: boolean
   chatUrl?: string
   className?: string
@@ -19,6 +22,7 @@ interface ProfileChatButtonProps {
 
 export function ProfileChatButton({
   userId,
+  username,
   isOwnProfile,
   chatUrl,
   className,
@@ -27,6 +31,7 @@ export function ProfileChatButton({
   const createThread = useCreateThreadMutation()
   const auth = useAuthentication()
   const [mounted, setMounted] = useState(!shouldUseNewAuth())
+  const [showInviteModal, setShowInviteModal] = useState(false)
 
   useEffect(() => {
     setMounted(true)
@@ -45,12 +50,16 @@ export function ProfileChatButton({
     : strings.profiles.inviteToChat
 
   const url = isOwnProfile ? 'https://community.serlo.org/' : chatUrl
-  const onClickAction = isOwnProfile || isRegistered ? undefined : inviteToChat
+  const onClickAction =
+    isOwnProfile || isRegistered ? undefined : () => setShowInviteModal(true)
 
   return (
-    <ChatButton href={url} onClick={onClickAction} className={className}>
-      <FontAwesomeIcon icon={faPaperPlane} /> {text}
-    </ChatButton>
+    <>
+      <ChatButton href={url} onClick={onClickAction} className={className}>
+        <FontAwesomeIcon icon={faPaperPlane} /> {text}
+      </ChatButton>
+      {!isOwnProfile && !isRegistered && renderInviteModal()}
+    </>
   )
 
   async function inviteToChat() {
@@ -64,6 +73,39 @@ export function ProfileChatButton({
       sendEmail: false,
     })
     showToastNotice('✨ Erfolgreich eingeladen!', 'success')
+  }
+
+  function renderInviteModal() {
+    const { part1, part2, button } = strings.profiles.inviteModal
+    const chatLink = (
+      <a
+        className="serlo-link whitespace-nowrap"
+        href="https://community.serlo.org"
+      >
+        community.serlo.org
+      </a>
+    )
+    return (
+      <ModalWithCloseButton
+        isOpen={showInviteModal}
+        onCloseClick={() => setShowInviteModal(false)}
+        title={strings.profiles.inviteToChat}
+      >
+        <p className="serlo-p">
+          {replacePlaceholders(part1, { chatLink, username })}
+          <br />
+          {replacePlaceholders(part2, { username })}
+        </p>
+        <p className="serlo-p">
+          <a
+            onClick={inviteToChat}
+            className="serlo-button serlo-make-interactive-green"
+          >
+            {button}
+          </a>
+        </p>
+      </ModalWithCloseButton>
+    )
   }
 }
 
