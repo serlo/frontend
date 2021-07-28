@@ -200,9 +200,9 @@ export const instanceData = {
       inviteToChat: "Zum Chat einladen",
       invitation: "💬 %username% hat dich in den Serlo Community Chat eingeladen!\nGehe zu %chatlink% um dich anzumelden.",
       inviteModal: {
-        part1: '%username% is not yet active in our community chat at %chatLink%.',
-        part2: 'You can invite %username% to the chat to send direct messages:',
-        button: 'Send invitation'
+        part1: "%username% ist noch nicht in unserem Community-Chat unter %chatLink% aktiv.",
+        part2: "Du kannst %username% zum Chat einladen, um Direktnachrichten zu senden:",
+        button: "Einladung senden"
       },
       activityGraph: {
         edits: "Bearbeitungen",
