@@ -111,6 +111,9 @@ export const dataQuery = gql`
         }
         exercises {
           ...exercise
+          revisions(unrevised: true) {
+            totalCount
+          }
         }
       }
 

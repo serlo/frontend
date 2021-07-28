@@ -17,6 +17,7 @@ export interface AuthorToolsData {
   grouped?: boolean
   trashed?: boolean
   checkoutRejectButtons?: JSX.Element
+  unrevisedRevisions?: number
 }
 
 export interface AuthorToolsHoverMenuProps {
@@ -37,6 +38,8 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
 
   if (!loggedInData) return null
   const loggedInStrings = loggedInData.strings
+  const hasUnrevised =
+    data.unrevisedRevisions !== undefined && data.unrevisedRevisions > 0
 
   if (data.type == 'CoursePage') {
     return renderCoursePage()
@@ -122,8 +125,8 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
                 data={data}
                 tools={[
                   Tool.Edit,
-                  Tool.Abo,
                   Tool.History,
+                  Tool.Abo,
                   Tool.AddCoursePage,
                   Tool.Sort,
                   Tool.Curriculum,
@@ -166,7 +169,9 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
         <AuthorTools
           entityId={data.id}
           data={data}
-          tools={[Tool.Edit, Tool.History]}
+          tools={
+            hasUnrevised ? [Tool.UnrevisedEdit] : [Tool.Edit, Tool.History]
+          }
         />
 
         {data.type == '_ExerciseGroupInline' && (

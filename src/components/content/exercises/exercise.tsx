@@ -78,6 +78,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
           id: node.context.solutionId!,
           parentId: node.context.id,
           grouped: node.grouped,
+          unrevisedRevisions: node.unrevisedRevisions,
         }}
       />
     )
@@ -169,7 +170,6 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
 
   function renderToolsButton() {
     if (isRevisionView) return null
-
     const ExerciseAuthorTools = loggedInComponents?.ExerciseAuthorTools
     return (
       <>
@@ -179,6 +179,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
               type: '_ExerciseInline',
               id: node.context.id,
               grouped: node.grouped,
+              unrevisedRevisions: node.unrevisedRevisions,
             }}
           />
         )}

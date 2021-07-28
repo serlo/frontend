@@ -11,6 +11,7 @@ export interface ExerciseGroupProps {
   positionOnPage?: number
   id: number
   href?: string
+  unrevisedRevisions?: number
 }
 
 export function ExerciseGroup({
@@ -20,6 +21,7 @@ export function ExerciseGroup({
   positionOnPage,
   id,
   href,
+  unrevisedRevisions,
 }: ExerciseGroupProps) {
   const [loaded, setLoaded] = React.useState(false)
   React.useEffect(() => {
@@ -42,7 +44,13 @@ export function ExerciseGroup({
           <div className="flex-grow">{groupIntro}</div>
           <div>{license}</div>
           {loaded && auth.current && ExerciseAuthorTools && (
-            <ExerciseAuthorTools data={{ type: '_ExerciseGroupInline', id }} />
+            <ExerciseAuthorTools
+              data={{
+                type: '_ExerciseGroupInline',
+                id,
+                unrevisedRevisions,
+              }}
+            />
           )}
         </div>
       </div>
