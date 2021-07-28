@@ -37,7 +37,6 @@ export enum Tool {
   NewEntitySubmenu = 'newEntitySubmenu',
   Organize = 'organize',
   PageConvert = 'pageConvert',
-  PageHistory = 'pageHistory',
   PageSetting = 'pageSetting',
   Sort = 'sort',
   SortEntities = 'sortEntities',
@@ -124,11 +123,6 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
     newEntitySubmenu: {
       renderer: renderNewEntity,
       canDo: canDo(Uuid.create('Entity')),
-    },
-    pageHistory: {
-      url: `/page/revision/revisions/${data.id}`,
-      title: loggedInStrings.authorMenu.history,
-      canDo: true,
     },
     pageSetting: {
       url: `/page/update/${data.id}`,

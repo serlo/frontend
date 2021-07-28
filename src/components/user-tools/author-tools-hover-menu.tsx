@@ -62,7 +62,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
         return [
           Tool.Abo,
           Tool.PageConvert,
-          Tool.PageHistory,
+          Tool.History,
           Tool.Log,
           Tool.PageSetting,
         ]
