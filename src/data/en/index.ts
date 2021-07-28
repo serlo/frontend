@@ -196,7 +196,9 @@ export const instanceData = {
         edits: "Edits",
         comments: "Comments",
         reviews: "Reviews",
-        taxonomy: "Taxonomy"
+        taxonomy: "Taxonomy",
+        legendary: "💙 Just wow! 💙",
+        untilNextLevel: "%amount% more to complete this circle 🎉"
       },
       howToEditImage: {
         heading: 'How to edit your profile picture',

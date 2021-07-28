@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { tint } from 'polished'
 import { useState, useEffect } from 'react'
 
-// import { useInstanceData } from '@/contexts/instance-context'
+import { useInstanceData } from '@/contexts/instance-context'
 import { theme } from '@/theme'
 
 interface ProfileActivityGraphProps {
@@ -21,13 +21,15 @@ export function ProfileActivityGraph({
   maxValue,
   title,
 }: ProfileActivityGraphProps) {
+  const { activityGraph } = useInstanceData().strings.profiles
+
   const factor = Math.sqrt(maxValue) / maxLevel
   const progress = Math.sqrt(value) / factor // 0 to maxLevel
-  const radiusStep = (fullRadius - minRadius) / maxLevel
   const level = Math.floor(progress) // 0 to maxLevel
   const extraAmount = progress - level // 0 to 1
-  //TODO: calculate value until next level
+  const untilNextLevel = Math.floor(Math.pow((level + 1) * factor, 2)) - value
 
+  const radiusStep = (fullRadius - minRadius) / maxLevel
   const innerRadius = minRadius + level * radiusStep
   const progressRadius = innerRadius + 0.5 * radiusStep // since strokes get centered
   const dashArray = 2 * Math.PI * progressRadius
@@ -35,15 +37,27 @@ export function ProfileActivityGraph({
   const [dashOffset, setDashOffset] = useState(dashArray)
   const dashOffsetTarget = (1 - extraAmount) * dashArray
 
+  const isLegendary = value >= maxValue
+
   // start animation
   useEffect(() => {
     setDashOffset(dashOffsetTarget)
   }, [dashOffsetTarget])
 
   return (
-    <figure className="mx-side w-36 text-center text-brand relative">
+    <figure
+      className="mx-side w-36 text-center text-brand relative"
+      title={
+        isLegendary
+          ? activityGraph.legendary
+          : activityGraph.untilNextLevel.replace(
+              '%amount%',
+              untilNextLevel.toString()
+            )
+      }
+    >
       <h3 className="text-xl font-bold mt-5 mb-2">{title}</h3>
-      {value >= maxValue ? renderLegendary() : renderGraphInProgress()}
+      {isLegendary ? renderLegendary() : renderGraphInProgress()}
     </figure>
   )
 
