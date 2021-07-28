@@ -204,8 +204,8 @@ export const instanceData = {
         comments: "Kommentare",
         reviews: "Reviews",
         taxonomy: "Taxonomie",
-        levelTitle: "Level %level% von %max_level%  |  Nächstes level bei %level_ceil% 🎉",
-        noLevel: "Noch kein Level"
+        legendary: "💙 Oh wow! 💙",
+        untilNextLevel: "%amount% mehr um diesen Kreis zu füllen 🎉"
       },
       howToEditImage: {
         heading: "So kannst du dein Profilbild ändern",
@@ -276,6 +276,7 @@ export const instanceData = {
       setTaxonomyParentChanged: "%actor% hat den Elternknoten von %child% auf %parent% geändert.",
       setUuidStateTrashed: "%actor% hat %object% in den Papierkorb verschoben.",
       setUuidStateRestored: "%actor% hat %object% aus dem Papierkorb wieder hergestellt.",
+      inviteToChat: "Du wurdest in den Chat eingeladen! %break% Gehe zu %chatLink% , um mit %actor% und anderen zu chatten.",
       entityPlaceholderFallback: "Inhalt"
     },
     actions: {
