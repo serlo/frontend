@@ -363,6 +363,7 @@ export const loggedInData = {
       restoreContent: "कचरे से पुनर्स्थापित करें",
       sort: "सोर्ट चिल्ड्रन",
       edit: "संपादित",
+      unrevisedEdit: 'Show unrevised revisions',
       organize: "आयोजन",
       moveToGroupedTextExercise: "सामग्री को अन्य समूहीकृत-पाठ-व्यायाम में ले जाएँ",
       moveToTextExercise: "सामग्री को अन्य पाठ-व्यायाम में ले जाएँ",
