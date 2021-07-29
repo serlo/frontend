@@ -363,6 +363,7 @@ export const loggedInData = {
       restoreContent: 'Restore from trash',
       sort: 'Sort children',
       edit: "திருத்தம்",
+      unrevisedEdit: 'Show unrevised revisions',
       organize: "ஒழுங்குபடுத்த",
       moveToGroupedTextExercise: 'Move content to other grouped-text-exercise',
       moveToTextExercise: 'Move content to other text-exercise',
