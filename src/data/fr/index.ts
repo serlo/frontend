@@ -363,6 +363,7 @@ export const loggedInData = {
       restoreContent: "Restaurer à partir de la corbeille",
       sort: "Trier les sous-éléments",
       edit: "Modifier",
+      unrevisedEdit: 'Show unrevised revisions',
       organize: "Organiser",
       moveToGroupedTextExercise: "Déplacer le contenu vers un autre exercice de texte groupé",
       moveToTextExercise: "Déplacer le contenu vers un autre exercice de texte",
