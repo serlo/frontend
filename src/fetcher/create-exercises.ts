@@ -49,7 +49,6 @@ export function createExercise(
       taskLegacy = convertState(content)
     }
   }
-
   return {
     type: 'exercise',
     grouped: false,
@@ -65,6 +64,7 @@ export function createExercise(
       solutionId: uuid.solution?.id,
     },
     href: uuid.alias ? uuid.alias : undefined,
+    unrevisedRevisions: uuid.revisions?.totalCount,
   }
 }
 
@@ -115,6 +115,7 @@ export function createSolution(uuid: Solution): FrontendSolutionNode {
       id: uuid.id,
     },
     href: uuid.alias ? uuid.alias : undefined,
+    unrevisedRevisions: uuid.unrevisedRevisions,
   }
 }
 
@@ -147,5 +148,6 @@ export function createExerciseGroup(
       id: uuid.id,
     },
     href: uuid.alias ? uuid.alias : undefined,
+    unrevisedRevisions: uuid.revisions.totalCount,
   }
 }

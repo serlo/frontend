@@ -285,6 +285,7 @@ export interface EntityData {
   licenseData?: LicenseData
   courseData?: CourseData
   unrevisedRevisions?: number
+  unrevisedCourseRevisions?: number
 }
 
 export interface RevisionPage extends EntityPageBase {
@@ -554,6 +555,7 @@ export interface FrontendExerciseNode {
   }
   children?: undefined
   href?: string
+  unrevisedRevisions?: number
 }
 
 export interface FrontendSolutionNode {
@@ -565,6 +567,7 @@ export interface FrontendSolutionNode {
   }
   href?: string
   children?: undefined
+  unrevisedRevisions?: number
 }
 
 export interface TaskEdtrState {
@@ -622,6 +625,7 @@ export interface FrontendExerciseGroupNode {
     id: number
   }
   href?: string
+  unrevisedRevisions?: number
 }
 
 export interface FrontendVideoNode {

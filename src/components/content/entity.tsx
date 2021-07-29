@@ -119,13 +119,15 @@ export function Entity({ data }: EntityProps) {
         aboveContent={setting?.aboveContent}
         id={data.id}
         hideEdit={!data.inviteToEdit}
-        unrevisedRevision={data.unrevisedRevisions}
+        unrevisedRevisions={data.unrevisedRevisions}
         data={{
           type: data.typename,
           id: data.id,
           revisionId: data.revisionId,
           courseId: data.courseData?.id,
           trashed: data.trashed,
+          unrevisedRevisions: data.unrevisedRevisions,
+          unrevisedCourseRevisions: data.unrevisedCourseRevisions,
         }}
       />
     )

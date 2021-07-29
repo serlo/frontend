@@ -90,6 +90,9 @@ export interface CoursePage extends Entity {
       id: number
       currentRevision: Pick<GraphQL.CoursePageRevision, 'title' | 'trashed'>
     }[]
+    revisions: {
+      totalCount: number
+    }
     taxonomyTerms: { nodes: TaxonomyTerms }
   }
 }
@@ -143,6 +146,7 @@ export interface Solution extends Repository {
   currentRevision?: GraphQL.Maybe<Pick<GraphQL.SolutionRevision, 'content'>>
   license: License
   exercise: { id: number }
+  unrevisedRevisions?: number
 }
 
 // Events are only used in injections, no support for full page view

@@ -27,7 +27,7 @@ interface UserToolsProps {
   hideEdit?: boolean
   hideEditProfile?: boolean
   data: AuthorToolsData
-  unrevisedRevision?: number
+  unrevisedRevisions?: number
   aboveContent?: boolean
 }
 
@@ -40,24 +40,24 @@ export function UserTools({
   onShare,
   hideEdit,
   data,
-  unrevisedRevision,
+  unrevisedRevisions,
   aboveContent,
   hideEditProfile,
 }: UserToolsProps) {
   const { strings, lang } = useInstanceData()
   const auth = useAuthentication()
   const loggedInData = useLoggedInData()
-  const lic = useLoggedInComponents()
+  const loggedInComponents = useLoggedInComponents()
   const canDo = useCanDo()
 
   // note: we hide the ui on ssr and fade it in on the client
   const [firstPass, setFirstPass] = useState(true)
 
   useEffect(() => {
-    if (firstPass && (!auth.current || (auth.current && lic))) {
+    if (firstPass && (!auth.current || (auth.current && loggedInComponents))) {
       setFirstPass(false)
     }
-  }, [auth, lic, firstPass])
+  }, [auth, loggedInComponents, firstPass])
 
   // note: this component is added twice, once without aboveContent and once with it
   // (responsive variants)
@@ -139,17 +139,12 @@ export function UserTools({
   }
 
   function renderEdit() {
-    const showHistory = unrevisedRevision !== undefined && unrevisedRevision > 0
-
-    if (showHistory) {
-      return renderUnrevised()
-    }
+    const hasUnrevised =
+      unrevisedRevisions !== undefined && unrevisedRevisions > 0
+    if (hasUnrevised) return renderUnrevised()
 
     const editHref = getEditHref()
-
-    if (!editHref) {
-      return null
-    }
+    if (!editHref) return null
 
     return (
       <Link href={editHref} className={buttonClassName()}>
@@ -184,7 +179,7 @@ export function UserTools({
         className={buttonClassName()}
       >
         {renderInner(
-          `${strings.edit.unrevised} (${unrevisedRevision || ''})`,
+          `${strings.edit.unrevised} (${unrevisedRevisions || ''})`,
           faClock
         )}
       </Link>
@@ -228,7 +223,7 @@ export function UserTools({
   }
 
   function renderExtraTools() {
-    if (!lic || !loggedInData) return null // safeguard
+    if (!loggedInComponents || !loggedInData) return null // safeguard
     const supportedTypes = [
       'Page',
       'Article',
@@ -243,12 +238,12 @@ export function UserTools({
     ]
     if (supportedTypes.indexOf(data.type) === -1) return null
 
-    const Comp = lic.AuthorToolsHoverMenu
+    const AuthorToolsHoverMenu = loggedInComponents?.AuthorToolsHoverMenu
 
     return (
       <LazyTippy
         interactive
-        content={<Comp data={data} />}
+        content={<AuthorToolsHoverMenu data={data} />}
         placement={aboveContent ? 'bottom' : 'left-end'}
         delay={[0, 300]}
         trigger="click mouseenter focus"

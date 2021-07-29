@@ -29,6 +29,7 @@ export enum Tool {
   CopyItems = 'copyItems',
   Curriculum = 'curriculum',
   Edit = 'edit',
+  UnrevisedEdit = 'unrevisedEdit',
   History = 'history',
   Log = 'log',
   MoveCoursePage = 'moveCoursePage',
@@ -104,6 +105,10 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
     },
     edit: {
       url: `/entity/repository/add-revision/${entityId}`,
+      canDo: canDo(Uuid.create('EntityRevision')),
+    },
+    unrevisedEdit: {
+      url: `/entity/repository/history/${entityId}`,
       canDo: canDo(Uuid.create('EntityRevision')),
     },
     curriculum: {

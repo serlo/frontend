@@ -363,6 +363,7 @@ export const loggedInData = {
       restoreContent: 'Restore from trash',
       sort: 'Sort children',
       edit: 'Edit',
+      unrevisedEdit: 'Show unrevised revisions',
       organize: 'Organize',
       moveToGroupedTextExercise: 'Move content to other grouped-text-exercise',
       moveToTextExercise: 'Move content to other text-exercise',
