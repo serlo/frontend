@@ -1,3 +1,5 @@
+import { Editor } from '@edtr-io/core'
+import { createTextPlugin, TextConfig } from '@edtr-io/plugin-text'
 import {
   faReply,
   faArrowRight,
@@ -6,10 +8,13 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 import { useState, KeyboardEvent, useRef } from 'react'
-import TextareaAutosize from 'react-textarea-autosize'
+// import TextareaAutosize from 'react-textarea-autosize'
+
+import styled from 'styled-components'
 
 import { useInstanceData } from '@/contexts/instance-context'
 import { isMac } from '@/helper/client-detection'
+import { inputFontReset } from '@/helper/css'
 
 interface CommentFormProps {
   onSend: (
@@ -22,29 +27,49 @@ interface CommentFormProps {
   threadId?: string
 }
 
+const initialState = { plugin: 'text' }
+
 export function CommentForm({
   placeholder,
   onSend,
   reply,
   threadId,
 }: CommentFormProps) {
-  const [commentValue, setCommentValue] = useState('')
+  const commentValue = useRef('')
   const { strings } = useInstanceData()
   const [isSending, setIsSending] = useState(false)
-  const textareaRef = useRef<null | HTMLTextAreaElement>(null)
+  const editorWrapRef = useRef<null | HTMLDivElement>(null)
+
+  const textPlugin = createTextPlugin({
+    placeholder,
+    plugins: {
+      suggestions: true,
+      math: true,
+      code: true,
+      headings: false,
+      lists: true,
+      colors: true,
+    },
+    registry: [],
+  } as TextConfig)
 
   async function onSendAction() {
-    if (commentValue.length < 1) {
-      textareaRef.current?.focus()
+    // TODO: check if state is empty
+    if (commentValue.current.length === 0) {
+      const slate = editorWrapRef.current?.querySelector(
+        '[data-slate-editor="true"]'
+      ) as HTMLDivElement
+      slate?.focus()
       return
     }
     setIsSending(true)
-    const success = await onSend(commentValue, reply, threadId)
+    const success = await onSend(commentValue.current, reply, threadId)
     setIsSending(false)
-    if (success) setCommentValue('')
+    if (success) commentValue.current = ''
   }
 
-  function onKeyDown(e: KeyboardEvent<HTMLTextAreaElement>) {
+  function onKeyDown(e: KeyboardEvent<HTMLDivElement>) {
+    // TODO: grab enter key again
     if (e.code === 'Enter' && e.metaKey) void onSendAction()
   }
 
@@ -53,14 +78,26 @@ export function CommentForm({
   }↵`
 
   return (
-    <div
+    <StyleWrap
       className={clsx(
         'mx-side mt-4 mb-7 flex items-center rounded-2xl',
         'bg-brandgreen-lighter focus-within:bg-brandgreen-light',
         'transition-colors duration-200 ease-in py-1'
       )}
+      onKeyDown={onKeyDown}
+      ref={editorWrapRef}
     >
-      <TextareaAutosize
+      <Editor
+        onChange={(event) => {
+          commentValue.current = JSON.stringify(
+            event.getDocument() ?? initialState
+          )
+        }}
+        // @ts-ignore
+        plugins={{ text: textPlugin }}
+        initialState={initialState}
+      />
+      {/* <TextareaAutosize
         value={commentValue}
         ref={textareaRef}
         onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -75,7 +112,7 @@ export function CommentForm({
           reply ? 'pr-14 pl-4' : 'pr-14 pl-4',
           'placeholder-brandgreen'
         )}
-      />
+      /> */}
       <button
         title={sendTitle}
         onClick={onSendAction}
@@ -91,6 +128,61 @@ export function CommentForm({
           className={reply ? '' : 'pl-0.5'}
         />
       </button>
-    </div>
+    </StyleWrap>
   )
 }
+
+const StyleWrap = styled.div`
+  margin-bottom: 4rem;
+
+  overflow: hidden;
+
+  &:focus-within {
+    overflow: visible;
+  }
+
+  > div {
+    ${inputFontReset}
+    width: 100%;
+    font-size: 1.125rem;
+    color: #000;
+
+    padding: 0 3.5rem 0 0.6rem;
+
+    div {
+      margin-bottom: 0 !important;
+    }
+
+    span[contenteditable='false'] {
+      color: ${(props) => props.theme.colors.brandGreen} !important;
+      opacity: 1 !important;
+    }
+
+    /* Do I have a choice? */
+    /* should be the toolbar */
+    > div > div > div > div > div:first-child {
+      margin-left: 7rem !important;
+      position: absolute !important;
+      height: fit-content !important;
+      top: auto !important;
+      left: 0 !important;
+      opacity: 1 !important;
+      bottom: -4.2rem !important;
+      display: block !important;
+
+      div:first-child {
+        margin-left: -7.6rem;
+        margin-top: -3.25rem;
+      }
+
+      div:nth-child(2) {
+        display: none;
+      }
+    }
+
+    /* div[data-slate-editor='true'] {
+      
+    } */
+  }
+`
+//   'placeholder-brandgreen'
