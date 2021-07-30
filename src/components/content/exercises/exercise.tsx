@@ -11,6 +11,7 @@ import { CommentAreaProps } from '@/components/comments/comment-area'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { FrontendExerciseNode } from '@/data-types'
+import { isPrintMode } from '@/helper/print-mode'
 import { submitEventWithPath } from '@/helper/submit-event'
 import type { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
 
@@ -26,7 +27,9 @@ const CommentArea = dynamic<CommentAreaProps>(() =>
 
 export function Exercise({ node, renderNested, path }: ExerciseProps) {
   const { strings } = useInstanceData()
-  const [solutionVisible, setVisible] = useState(false)
+  const [solutionVisible, setSolutionVisible] = useState(
+    isPrintMode ? true : false
+  )
   const [randomId] = useState(Math.random().toString())
 
   const auth = useAuthentication()
@@ -115,7 +118,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
           if (!solutionVisible) {
             submitEventWithPath('opensolution', path)
           }
-          setVisible(!solutionVisible)
+          setSolutionVisible(!solutionVisible)
         }}
         onPointerUp={(e) => e.currentTarget.blur()} //hack, use https://caniuse.com/#feat=css-focus-visible when supported
       >

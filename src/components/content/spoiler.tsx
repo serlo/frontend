@@ -1,7 +1,9 @@
 import { ReactNode, useState } from 'react'
 import styled, { css } from 'styled-components'
 
+import { isClient } from '@/helper/client-detection'
 import { inputFontReset } from '@/helper/css'
+import { isPrintMode } from '@/helper/print-mode'
 import { submitEventWithPath } from '@/helper/submit-event'
 import { NodePath } from '@/schema/article-renderer'
 
@@ -12,7 +14,7 @@ export interface SpoilerProps {
 }
 
 export function Spoiler({ body, title, path }: SpoilerProps) {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(isPrintMode ? true : false)
   return (
     <div className="flex flex-col mb-block mobile:mx-side">
       <SpoilerTitle
@@ -47,7 +49,7 @@ function SpoilerTitle({
     <StyledSpoilerTitle
       onClick={!disabled ? onClick : undefined}
       onPointerUp={(e) => e.currentTarget.blur()} //hack, use https://caniuse.com/#feat=css-focus-visible when supported
-      open={open}
+      open={!isClient ? true : open}
       interactive={!disabled}
     >
       {children}

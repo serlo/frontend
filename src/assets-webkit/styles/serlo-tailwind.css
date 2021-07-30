@@ -287,7 +287,6 @@ table.gstl_50.gssb_c {
     > footer,
     #notification-wrapper,
     nav,
-    button,
     aside,
     h1 > span > svg {
       @apply !hidden;
@@ -325,7 +324,6 @@ table.gstl_50.gssb_c {
     > footer,
     #notification-wrapper,
     nav,
-    button,
     aside,
     h1 > span > svg {
       @apply !hidden;

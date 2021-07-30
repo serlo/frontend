@@ -3,8 +3,8 @@ import { removeHash } from './remove-hash'
 import { showToastNotice } from './show-toast-notice'
 
 // print mode deactivates lazy loading, should work in chrome and firefox
-// print-warning.tsx is a fallback now
-// TODO: open spoilers and solutions
+// print-warning.tsx is only a fallback now
+// #print--preview is used for pdf creation and preview
 
 export const isPrintMode =
   isClient && window.location.hash.startsWith('#print--')
