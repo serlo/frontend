@@ -1,6 +1,9 @@
 import chromium from 'chrome-aws-lambda'
 import { NextApiRequest, NextApiResponse } from 'next'
 
+// puppeteer as dev dependency is used locally
+// on vercel it's not present and puppeter-core and chrome-aws-lambda is used instead
+
 const styles = `
     width: 100%;
     position:relative;
@@ -18,20 +21,14 @@ const styles = `
 //const today = new Date().toLocaleDateString("de-DE");
 //const updated = `Stand: ${today}`;
 
-// const browser = await puppeteer.launch( { args: ['--no-sandbox'] } );
-
 export default async function createPdf(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  console.log('starting')
-  console.log(req.query.url)
-  const urlString = 'https://de.serlo-staging.dev/1565' //decodeURIComponent(req.query.url as string)
-  try {
-    if (urlString) {
-      //&& isValidUrl(urlString)
-      console.log('url check passed')
+  const urlString = decodeURIComponent(req.url?.split('?url=')[1] ?? '')
 
+  try {
+    if (urlString && isValidUrl(urlString)) {
       const browser = await chromium.puppeteer.launch({
         args: [
           ...chromium.args,
@@ -46,13 +43,10 @@ export default async function createPdf(
         headless: true,
         ignoreHTTPSErrors: true,
       })
-      console.log('browser launched')
       const page = await browser.newPage()
-      console.log('new page created')
       await page.goto(urlString + '#print--preview', {
         waitUntil: 'networkidle0',
       })
-      console.log('navigated')
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const pdf = await page.pdf({
         format: 'a4',
@@ -70,33 +64,29 @@ export default async function createPdf(
                             <span><span class="pageNumber"></span>/<span class="totalPages"></span></span>
                         </div>`,
       })
-      console.log('pdf created')
-
       await browser.close()
-      console.log('browser closed')
-      // res.status(200).send(urlString)
-      // console.log('response sent')
       res.setHeader('Content-Type', 'application/pdf')
       res.setHeader('Content-Length', pdf.length)
-      // res.setHeader('Cache-Control', 's-maxage=1, stale-while-revalidate')
-      res.setHeader('Access-Control-Allow-Origin', '*')
+      res.setHeader(
+        'Cache-Control',
+        'maxage=86400, stale-while-revalidate=3600, stale-if-error=604800'
+      )
       res.status(200).send(pdf)
     } else throw 'Invalid URL!'
   } catch (error: unknown) {
-    throw 'Unknown'
-    // res.status(500).send({
-    //   status: 'Failed',
-    //   error,
-    // })
+    res.status(500).send({
+      status: 'Failed',
+      error,
+    })
   }
 }
 
-// function isValidUrl(string: string) {
-//   try {
-//     const url = new URL(string)
-//     if (url.hostname === 'serlo.org') return true
-//   } catch (_) {
-//     return false
-//   }
-//   return false
-// }
+function isValidUrl(string: string) {
+  try {
+    const url = new URL(string)
+    if (url.hostname === 'serlo.org') return true
+  } catch (_) {
+    return false
+  }
+  return false
+}
