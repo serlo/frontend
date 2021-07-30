@@ -15,7 +15,6 @@ import { SubButtonStyle } from './sub-button-style'
 import { useCanDo } from '@/auth/use-can-do'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { isClient } from '@/helper/client-detection'
 import {
   useSetUuidStateMutation,
   useSubscriptionSetMutation,
@@ -292,9 +291,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   function pdf() {
     const { pdf } = loggedInStrings.authorMenu
     const path = router.asPath.split('#')[0]
-    // TODO: Just for testing!
-    const url = isClient ? window.location.href : ''
-    // const url = `https://${router.locale ?? 'de'}.${domain}${path}`
+    const url = `https://${router.locale ?? 'de'}.serlo.org${path}`
     const fileName = `serlo__${path.split('/').pop() ?? entityId}.pdf`
 
     return (
