@@ -85,8 +85,9 @@ export default async function createPdf(
 function getValidUrl(string: string) {
   try {
     const url = new URL(string)
-    if (!url.hostname.endsWith('serlo.org'))
-      throw 'sorry, only serlo.org urls are valid.'
+    // TODO: reactivate before merging to production!
+    // if (!url.hostname.endsWith('serlo.org'))
+    //   throw 'sorry, only serlo.org urls are valid.'
     return url
   } catch (_) {
     return false
