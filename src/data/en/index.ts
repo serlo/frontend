@@ -359,6 +359,7 @@ export const loggedInData = {
       newEntity: 'New Entity',
       editProfile: 'Edit profile',
       directLink: 'Direct link to this content',
+      pdf: 'Download as PDF'
     },
     notifications: {
       hide: "Hide notifications for this content.",

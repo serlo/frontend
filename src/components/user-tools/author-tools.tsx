@@ -39,6 +39,7 @@ export enum Tool {
   PageConvert = 'pageConvert',
   PageHistory = 'pageHistory',
   PageSetting = 'pageSetting',
+  Pdf = 'pdf',
   Sort = 'sort',
   SortEntities = 'sortEntities',
   Trash = 'trash',
@@ -93,6 +94,10 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
     },
     log: {
       url: `/event/history/${entityId}`,
+      canDo: true,
+    },
+    pdf: {
+      renderer: pdf,
       canDo: true,
     },
     history: {
@@ -283,25 +288,37 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
     )
   }
 
-  function trash() {
+  function pdf() {
+    const { pdf } = loggedInStrings.authorMenu
+    const path = router.asPath.split('#')[0]
+    const url = `https://${router.locale ?? 'de'}.serlo.org${path}`
+    const fileName = `serlo__${path.split('/').pop() ?? entityId}`
     return (
-      <li
-        className="block"
-        key={
-          data.trashed
-            ? loggedInStrings.authorMenu.restoreContent
-            : loggedInStrings.authorMenu.moveToTrash
-        }
-      >
+      <li className="block" key={pdf}>
+        <SubButtonStyle
+          as="a"
+          download={fileName}
+          href={`/api/pdf?url=${encodeURIComponent(url)}`}
+        >
+          {pdf}
+        </SubButtonStyle>
+      </li>
+    )
+  }
+
+  function trash() {
+    const title = data.trashed
+      ? loggedInStrings.authorMenu.restoreContent
+      : loggedInStrings.authorMenu.moveToTrash
+    return (
+      <li className="block" key={title}>
         <SubButtonStyle
           as="button"
           onClick={() => {
             void setUuidState({ id: [data.id], trashed: !data.trashed })
           }}
         >
-          {data.trashed
-            ? loggedInStrings.authorMenu.restoreContent
-            : loggedInStrings.authorMenu.moveToTrash}
+          {title}
         </SubButtonStyle>
       </li>
     )

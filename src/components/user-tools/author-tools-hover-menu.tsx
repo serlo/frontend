@@ -65,8 +65,17 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
           Tool.PageHistory,
           Tool.Log,
           Tool.PageSetting,
+          Tool.Pdf,
         ]
       case 'Article':
+        return [
+          Tool.Abo,
+          Tool.History,
+          Tool.Curriculum,
+          Tool.Log,
+          Tool.Trash,
+          Tool.Pdf,
+        ]
       case 'Video':
       case 'Applet':
       case 'Event':
@@ -80,6 +89,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
           Tool.SortEntities,
           Tool.CopyItems,
           Tool.MoveItems,
+          Tool.Pdf,
         ]
     }
     return []
