@@ -4,6 +4,7 @@ import { showToastNotice } from './show-toast-notice'
 
 // print mode deactivates lazy loading, should work in chrome and firefox
 // print-warning.tsx is a fallback now
+// TODO: open spoilers and solutions
 
 export const isPrintMode =
   isClient && window.location.hash.startsWith('#print--')
@@ -13,6 +14,7 @@ export const setupPrintHacks = () => {
     window.addEventListener('beforeprint', function () {
       window.location.hash = 'print--now'
       window.location.reload()
+      return false
     })
   }
 
@@ -20,7 +22,7 @@ export const setupPrintHacks = () => {
     showToastNotice(`⌛  Preparing print!  🖨️`)
     setTimeout(() => {
       window.print()
-    }, 2000) //give injections a chance
+    }, 2000) // give injections a chance ☮
 
     removeHash()
   }
