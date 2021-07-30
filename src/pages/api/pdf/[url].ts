@@ -22,17 +22,21 @@ export default async function createPdf(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  console.log('starting')
   const urlString = decodeURIComponent(req.query.url as string)
-
   try {
     if (urlString && isValidUrl(urlString)) {
+      console.log('url check passed')
       const browser = await playwright.launchChromium({ headless: true })
+      console.log('browser launched')
       const context = await browser.newContext()
+      console.log('browser launched')
       const page = await context.newPage()
-
+      console.log('new page created')
       await page.goto(urlString + '#print--preview')
-
-      const pdf = await page.pdf({
+      console.log('navigated')
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const _pdf = await page.pdf({
         format: 'A4',
         margin: {
           top: '40px',
@@ -48,14 +52,12 @@ export default async function createPdf(
                             <span><span class="pageNumber"></span>/<span class="totalPages"></span></span>
                         </div>`,
       })
-
-      // eslint-disable-next-line no-console
-      console.log(pdf)
+      console.log('pdf created')
 
       await browser.close()
-
+      console.log('browser closed')
       res.status(200).send(urlString)
-
+      console.log('response sent')
       // res.setHeader('Content-Type', 'application/pdf')
       // res.setHeader('Content-Length', pdf.length)
       // res.setHeader('Cache-Control', 's-maxage=1, stale-while-revalidate')
