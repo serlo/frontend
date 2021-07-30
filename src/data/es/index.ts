@@ -363,6 +363,7 @@ export const loggedInData = {
       restoreContent: "Restaurar de la papelera",
       sort: "Ordenar los niños",
       edit: "Modificar",
+      unrevisedEdit: 'Show unrevised revisions',
       organize: "Organizar",
       moveToGroupedTextExercise: "Mover contenido a otro grupo de ejercicios de texto",
       moveToTextExercise: "Mover contenido a otro ejercicio de texto",
