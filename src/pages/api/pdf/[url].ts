@@ -1,5 +1,5 @@
+import chromium from 'chrome-aws-lambda'
 import { NextApiRequest, NextApiResponse } from 'next'
-import playwright from 'playwright-aws-lambda'
 
 const styles = `
     width: 100%;
@@ -18,30 +18,44 @@ const styles = `
 //const today = new Date().toLocaleDateString("de-DE");
 //const updated = `Stand: ${today}`;
 
+// const browser = await puppeteer.launch( { args: ['--no-sandbox'] } );
+
 export default async function createPdf(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   console.log('starting')
   console.log(req.query.url)
-  const urlString = 'https://serlo.org/1565' //decodeURIComponent(req.query.url as string)
+  const urlString = 'https://de.serlo-staging.dev/1565' //decodeURIComponent(req.query.url as string)
   try {
     if (urlString) {
       //&& isValidUrl(urlString)
       console.log('url check passed')
-      const browser = await playwright.launchChromium({ headless: true })
+
+      const browser = await chromium.puppeteer.launch({
+        args: [
+          ...chromium.args,
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '--headless',
+          '--disable-gpu',
+          '--disable-dev-shm-usage',
+        ],
+        defaultViewport: chromium.defaultViewport,
+        executablePath: await chromium.executablePath,
+        headless: true,
+        ignoreHTTPSErrors: true,
+      })
       console.log('browser launched')
-      const context = await browser.newContext()
-      console.log('browser launched')
-      const page = await context.newPage()
+      const page = await browser.newPage()
       console.log('new page created')
       await page.goto(urlString + '#print--preview', {
-        waitUntil: 'networkidle',
+        waitUntil: 'networkidle0',
       })
       console.log('navigated')
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const pdf = await page.pdf({
-        format: 'A4',
+        format: 'a4',
         margin: {
           top: '40px',
           bottom: '80px',
