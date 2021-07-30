@@ -29,6 +29,7 @@ export default async function createPdf(
       const browser = await playwright.launchChromium({ headless: true })
       const context = await browser.newContext()
       const page = await context.newPage()
+
       await page.goto(urlString + '#print--preview')
 
       const pdf = await page.pdf({
@@ -48,13 +49,18 @@ export default async function createPdf(
                         </div>`,
       })
 
+      // eslint-disable-next-line no-console
+      console.log(pdf)
+
       await browser.close()
 
-      res.setHeader('Content-Type', 'application/pdf')
-      res.setHeader('Content-Length', pdf.length)
+      res.status(200).send(urlString)
+
+      // res.setHeader('Content-Type', 'application/pdf')
+      // res.setHeader('Content-Length', pdf.length)
       // res.setHeader('Cache-Control', 's-maxage=1, stale-while-revalidate')
       // res.setHeader('Access-Control-Allow-Origin', '*')
-      res.status(200).send(pdf)
+      // res.status(200).send(pdf)
     } else throw 'Invalid URL'
   } catch (error: unknown) {
     res.status(500).send({
