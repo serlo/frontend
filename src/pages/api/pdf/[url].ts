@@ -23,9 +23,11 @@ export default async function createPdf(
   res: NextApiResponse
 ) {
   console.log('starting')
-  const urlString = decodeURIComponent(req.query.url as string)
+  console.log(req.query.url)
+  const urlString = 'https://serlo.org/1565' //decodeURIComponent(req.query.url as string)
   try {
-    if (urlString && isValidUrl(urlString)) {
+    if (urlString) {
+      //&& isValidUrl(urlString)
       console.log('url check passed')
       const browser = await playwright.launchChromium({ headless: true })
       console.log('browser launched')
@@ -33,10 +35,12 @@ export default async function createPdf(
       console.log('browser launched')
       const page = await context.newPage()
       console.log('new page created')
-      await page.goto(urlString + '#print--preview')
+      await page.goto(urlString + '#print--preview', {
+        waitUntil: 'networkidle',
+      })
       console.log('navigated')
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const _pdf = await page.pdf({
+      const pdf = await page.pdf({
         format: 'A4',
         margin: {
           top: '40px',
@@ -56,28 +60,29 @@ export default async function createPdf(
 
       await browser.close()
       console.log('browser closed')
-      res.status(200).send(urlString)
-      console.log('response sent')
-      // res.setHeader('Content-Type', 'application/pdf')
-      // res.setHeader('Content-Length', pdf.length)
+      // res.status(200).send(urlString)
+      // console.log('response sent')
+      res.setHeader('Content-Type', 'application/pdf')
+      res.setHeader('Content-Length', pdf.length)
       // res.setHeader('Cache-Control', 's-maxage=1, stale-while-revalidate')
-      // res.setHeader('Access-Control-Allow-Origin', '*')
-      // res.status(200).send(pdf)
-    } else throw 'Invalid URL'
+      res.setHeader('Access-Control-Allow-Origin', '*')
+      res.status(200).send(pdf)
+    } else throw 'Invalid URL!'
   } catch (error: unknown) {
-    res.status(500).send({
-      status: 'Failed',
-      error,
-    })
+    throw 'Unknown'
+    // res.status(500).send({
+    //   status: 'Failed',
+    //   error,
+    // })
   }
 }
 
-function isValidUrl(string: string) {
-  try {
-    const url = new URL(string)
-    if (url.hostname === 'serlo.org') return true
-  } catch (_) {
-    return false
-  }
-  return false
-}
+// function isValidUrl(string: string) {
+//   try {
+//     const url = new URL(string)
+//     if (url.hostname === 'serlo.org') return true
+//   } catch (_) {
+//     return false
+//   }
+//   return false
+// }
