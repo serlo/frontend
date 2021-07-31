@@ -44,9 +44,14 @@ export default async function createPdf(
       ignoreHTTPSErrors: true,
     })
     const page = await browser.newPage()
-    await page.goto(urlString + '#print--preview', {
-      waitUntil: 'networkidle0',
-    })
+    await page.goto(
+      urlString + '#print--preview',
+      urlObject.hostname === 'localhost'
+        ? {}
+        : {
+            waitUntil: 'networkidle0',
+          }
+    )
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const pdf = await page.pdf({
       format: 'a4',
@@ -68,7 +73,7 @@ export default async function createPdf(
     res.setHeader('Content-Type', 'application/pdf')
     res.setHeader('Content-Length', pdf.length)
 
-    // 1 day mayage, take your time revalidating (1h), if there's an error 1 week old is also okay
+    // 1 day maxage, take your time revalidating (1h), if there's an error 1 week old is also okay
     res.setHeader(
       'Cache-Control',
       'maxage=86400, stale-while-revalidate=3600, stale-if-error=604800'
@@ -85,8 +90,8 @@ export default async function createPdf(
 function getValidUrl(string: string) {
   try {
     const url = new URL(string)
-    if (!url.hostname.endsWith('serlo.org'))
-      throw 'sorry, only serlo.org urls are valid.'
+    if (!url.hostname.includes('serlo') && !(url.hostname === 'localhost'))
+      throw 'sorry, only for serlo domains.'
     return url
   } catch (_) {
     return false
