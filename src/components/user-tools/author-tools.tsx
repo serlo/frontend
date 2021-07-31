@@ -20,6 +20,7 @@ import {
   useSetUuidStateMutation,
   useSubscriptionSetMutation,
 } from '@/helper/mutations'
+import { showToastNotice } from '@/helper/show-toast-notice'
 import { useIsSubscribed } from '@/helper/use-is-subscribed'
 
 export enum Tool {
@@ -302,6 +303,11 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
         <SubButtonStyle
           as="a"
           download={fileName}
+          onClick={() => {
+            showToastNotice(
+              '🐒 ' + instanceData.strings.loading.oneMomentPlease
+            )
+          }}
           href={`/api/pdf?url=${encodeURIComponent(url)}`}
         >
           {pdf}
