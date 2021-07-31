@@ -10,7 +10,6 @@ import { convertState } from '@/fetcher/convert-state'
 import { replaceWithJSX } from '@/helper/replace-with-jsx'
 import { scrollIfNeeded } from '@/helper/scroll'
 import { renderArticle } from '@/schema/article-renderer'
-import { convert } from '@/schema/convert-edtr-io-state'
 
 interface CommentProps {
   threadId: string

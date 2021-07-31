@@ -8,8 +8,6 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 import { useState, KeyboardEvent, useRef } from 'react'
-// import TextareaAutosize from 'react-textarea-autosize'
-
 import styled from 'styled-components'
 
 import { useInstanceData } from '@/contexts/instance-context'
@@ -45,10 +43,10 @@ export function CommentForm({
     plugins: {
       suggestions: true,
       math: true,
-      code: true,
+      code: false, // rendering not working yet
       headings: false,
       lists: true,
-      colors: true,
+      colors: false, // ui not working yet
     },
     registry: [],
   } as TextConfig)
@@ -92,27 +90,10 @@ export function CommentForm({
           commentValue.current = JSON.stringify(
             event.getDocument() ?? initialState
           )
-        }}
-        // @ts-ignore
+        }} // @ts-expect-error think I followed edtr-io example, so maybe outdated code in there?
         plugins={{ text: textPlugin }}
         initialState={initialState}
       />
-      {/* <TextareaAutosize
-        value={commentValue}
-        ref={textareaRef}
-        onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
-          setCommentValue(event.target.value)
-        }}
-        onKeyDown={onKeyDown}
-        placeholder={placeholder}
-        minRows={1}
-        className={clsx(
-          'serlo-input-font-reset w-full text-lg',
-          'text-black border-0 bg-transparent outline-none resize-none',
-          reply ? 'pr-14 pl-4' : 'pr-14 pl-4',
-          'placeholder-brandgreen'
-        )}
-      /> */}
       <button
         title={sendTitle}
         onClick={onSendAction}
@@ -141,6 +122,10 @@ const StyleWrap = styled.div`
     overflow: visible;
   }
 
+  ul {
+    list-style: initial;
+  }
+
   > div {
     ${inputFontReset}
     width: 100%;
@@ -159,6 +144,9 @@ const StyleWrap = styled.div`
     }
 
     /* Do I have a choice? */
+    /* TODO: Investigate if we can solve this with theme or if we have to change edtr code */
+    /* Maybe we should add a staticToolbar option or smth. */
+
     /* should be the toolbar */
     > div > div > div > div > div:first-child {
       margin-left: 7rem !important;
