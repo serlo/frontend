@@ -1,5 +1,9 @@
 import { Editor } from '@edtr-io/core'
-import { createTextPlugin, TextConfig } from '@edtr-io/plugin-text'
+import {
+  createTextPlugin,
+  TextConfig,
+  TextPluginState,
+} from '@edtr-io/plugin-text'
 import {
   faReply,
   faArrowRight,
@@ -11,8 +15,10 @@ import { useState, KeyboardEvent, useRef } from 'react'
 import styled from 'styled-components'
 
 import { useInstanceData } from '@/contexts/instance-context'
+import { FrontendPNode } from '@/data-types'
 import { isMac } from '@/helper/client-detection'
 import { inputFontReset } from '@/helper/css'
+import { EdtrPluginText } from '@/schema/edtr-io-types'
 
 interface CommentFormProps {
   onSend: (
@@ -25,7 +31,10 @@ interface CommentFormProps {
   threadId?: string
 }
 
-const initialState = { plugin: 'text' }
+const initialState = {
+  plugin: 'text',
+  state: [{ type: 'p', children: [{ text: '' }] }],
+} as EdtrPluginText
 
 export function CommentForm({
   placeholder,
@@ -33,7 +42,7 @@ export function CommentForm({
   reply,
   threadId,
 }: CommentFormProps) {
-  const commentValue = useRef('')
+  const commentState = useRef<EdtrPluginText>(initialState)
   const { strings } = useInstanceData()
   const [isSending, setIsSending] = useState(false)
   const editorWrapRef = useRef<null | HTMLDivElement>(null)
@@ -52,8 +61,9 @@ export function CommentForm({
   } as TextConfig)
 
   async function onSendAction() {
-    // TODO: check if state is empty
-    if (commentValue.current.length === 0) {
+    const content = JSON.stringify(commentState.current)
+
+    if (content === JSON.stringify(initialState)) {
       const slate = editorWrapRef.current?.querySelector(
         '[data-slate-editor="true"]'
       ) as HTMLDivElement
@@ -61,9 +71,9 @@ export function CommentForm({
       return
     }
     setIsSending(true)
-    const success = await onSend(commentValue.current, reply, threadId)
+    const success = await onSend(content, reply, threadId)
+    if (success) commentState.current = initialState
     setIsSending(false)
-    if (success) commentValue.current = ''
   }
 
   function onKeyDown(e: KeyboardEvent<HTMLDivElement>) {
@@ -87,9 +97,7 @@ export function CommentForm({
     >
       <Editor
         onChange={(event) => {
-          commentValue.current = JSON.stringify(
-            event.getDocument() ?? initialState
-          )
+          commentState.current = event.getDocument() as EdtrPluginText
         }} // @ts-expect-error think I followed edtr-io example, so maybe outdated code in there?
         plugins={{ text: textPlugin }}
         initialState={initialState}
