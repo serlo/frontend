@@ -1,9 +1,5 @@
 import { Editor } from '@edtr-io/core'
-import {
-  createTextPlugin,
-  TextConfig,
-  TextPluginState,
-} from '@edtr-io/plugin-text'
+import { createTextPlugin, TextConfig } from '@edtr-io/plugin-text'
 import {
   faReply,
   faArrowRight,
@@ -15,7 +11,6 @@ import { useState, KeyboardEvent, useRef } from 'react'
 import styled from 'styled-components'
 
 import { useInstanceData } from '@/contexts/instance-context'
-import { FrontendPNode } from '@/data-types'
 import { isMac } from '@/helper/client-detection'
 import { inputFontReset } from '@/helper/css'
 import { EdtrPluginText } from '@/schema/edtr-io-types'
@@ -62,8 +57,9 @@ export function CommentForm({
 
   async function onSendAction() {
     const content = JSON.stringify(commentState.current)
+    const isEmpty = content.replace(/\s+/g, '') === JSON.stringify(initialState)
 
-    if (content === JSON.stringify(initialState)) {
+    if (isEmpty) {
       const slate = editorWrapRef.current?.querySelector(
         '[data-slate-editor="true"]'
       ) as HTMLDivElement
@@ -77,7 +73,7 @@ export function CommentForm({
   }
 
   function onKeyDown(e: KeyboardEvent<HTMLDivElement>) {
-    // TODO: grab enter key again
+    // TODO: grab enter key again: only possible in edtr.io
     if (e.code === 'Enter' && e.metaKey) void onSendAction()
   }
 
@@ -88,9 +84,9 @@ export function CommentForm({
   return (
     <StyleWrap
       className={clsx(
-        'mx-side mt-4 mb-7 flex items-center rounded-2xl',
+        'mx-side mt-4 mb-16 flex items-center rounded-2xl',
         'bg-brandgreen-lighter focus-within:bg-brandgreen-light',
-        'transition-colors duration-200 ease-in py-1'
+        'transition-colors duration-200 ease-in py-1 overflow-hidden'
       )}
       onKeyDown={onKeyDown}
       ref={editorWrapRef}
@@ -122,16 +118,20 @@ export function CommentForm({
 }
 
 const StyleWrap = styled.div`
-  margin-bottom: 4rem;
-
-  overflow: hidden;
-
   &:focus-within {
     overflow: visible;
   }
 
   ul {
     list-style: initial;
+  }
+
+  ol {
+    list-style: decimal;
+  }
+
+  a {
+    text-decoration: underline;
   }
 
   > div {
@@ -151,11 +151,7 @@ const StyleWrap = styled.div`
       opacity: 1 !important;
     }
 
-    /* Do I have a choice? */
-    /* TODO: Investigate if we can solve this with theme or if we have to change edtr code */
-    /* Maybe we should add a staticToolbar option or smth. */
-
-    /* should be the toolbar */
+    /* TODO: expose floating toolbar setting in edtr-io, maybe add some way to style the toolbar from "the outside" */
     > div > div > div > div > div:first-child {
       margin-left: 7rem !important;
       position: absolute !important;
@@ -181,4 +177,3 @@ const StyleWrap = styled.div`
     } */
   }
 `
-//   'placeholder-brandgreen'
