@@ -13,6 +13,7 @@ const knownExceptions = [
   'superspecial-noscript-hidden',
   'superspecial-sus',
   'superspecial-informatics',
+  'special-no-page-breaks-inside',
 ]
 
 const isFileRegex = /\/.+\..+/
