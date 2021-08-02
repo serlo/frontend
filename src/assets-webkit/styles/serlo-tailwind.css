@@ -202,6 +202,49 @@
     @apply px-8 py-4 mb-5 tracking-tight block text-center;
     @apply hover:bg-brand-light hover:no-underline;
   }
+
+  /* print */
+  .serlo-print-style {
+    @apply text-xs;
+
+    body {
+      @apply bg-white;
+    }
+    .print\:block {
+      @apply !block;
+    }
+    #__next {
+      .print\:hidden,
+      > header,
+      > footer,
+      #notification-wrapper,
+      nav,
+      aside,
+      h1 > span > svg {
+        @apply !hidden;
+      }
+      main {
+        @apply block w-full max-w-full relative;
+      }
+      img,
+      table {
+        page-break-inside: avoid;
+      }
+      .serlo-exercise-wrapper {
+        border-bottom: 1px solid black;
+      }
+    }
+    .header-breadcrumbs,
+    a,
+    code,
+    code span,
+    html,
+    pre,
+    pre:before,
+    time {
+      @apply !bg-white !text-black;
+    }
+  }
 }
 
 /* Some exceptional cases where we can't / don't want to set classnames directly.
@@ -266,94 +309,5 @@ table.gstl_50.gssb_c {
 
   .gssb_a td {
     @apply !whitespace-normal;
-  }
-}
-
-/* print */
-
-@media print {
-  html {
-    @apply text-xs;
-  }
-  body {
-    @apply bg-white;
-  }
-  .print\:block {
-    @apply !block;
-  }
-  #__next {
-    .print\:hidden,
-    > header,
-    > footer,
-    #notification-wrapper,
-    nav,
-    aside,
-    h1 > span > svg {
-      @apply !hidden;
-    }
-    main {
-      @apply block w-full max-w-full relative;
-    }
-    img,
-    table {
-      page-break-inside: avoid;
-    }
-    .serlo-exercise-wrapper {
-      border-bottom: 1px solid black;
-    }
-  }
-  .header-breadcrumbs,
-  a,
-  code,
-  code span,
-  html,
-  pre,
-  pre:before,
-  time {
-    @apply !bg-white !text-black;
-  }
-}
-
-/* just duplicated for now, could not get it to work even with the postcss-mixin plugin */
-
-.serlo-print-style {
-  @apply text-xs;
-
-  body {
-    @apply bg-white;
-  }
-  .print\:block {
-    @apply !block;
-  }
-  #__next {
-    .print\:hidden,
-    > header,
-    > footer,
-    #notification-wrapper,
-    nav,
-    aside,
-    h1 > span > svg {
-      @apply !hidden;
-    }
-    main {
-      @apply block w-full max-w-full relative;
-    }
-    img,
-    table {
-      page-break-inside: avoid;
-    }
-    .serlo-exercise-wrapper {
-      border-bottom: 1px solid black;
-    }
-  }
-  .header-breadcrumbs,
-  a,
-  code,
-  code span,
-  html,
-  pre,
-  pre:before,
-  time {
-    @apply !bg-white !text-black;
   }
 }

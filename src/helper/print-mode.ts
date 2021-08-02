@@ -2,7 +2,8 @@ import { isClient } from './client-detection'
 import { removeHash } from './remove-hash'
 import { showToastNotice } from './show-toast-notice'
 
-// print mode deactivates lazy loading, should work in chrome and firefox
+// print mode deactivates lazy loading and expands spoilers and solution,
+// automatic redirect should work in chrome and firefox
 // print-warning.tsx is only a fallback now
 // #print--preview is used for pdf creation and preview
 
@@ -23,7 +24,6 @@ export const setupPrintHacks = () => {
     setTimeout(() => {
       window.print()
     }, 2000) // give injections a chance ☮
-
     removeHash()
   }
 
