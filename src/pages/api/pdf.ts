@@ -47,7 +47,7 @@ export default async function createPdf(
     await page.goto(
       urlString + '#print--preview',
       urlObject.hostname === 'localhost'
-        ? {}
+        ? { waitUntil: 'networkidle2' }
         : {
             waitUntil: 'networkidle0',
           }

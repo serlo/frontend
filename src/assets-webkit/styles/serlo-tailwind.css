@@ -294,6 +294,10 @@ table.gstl_50.gssb_c {
     main {
       @apply block w-full max-w-full relative;
     }
+    img,
+    table {
+      page-break-inside: avoid;
+    }
   }
   .header-breadcrumbs,
   a,

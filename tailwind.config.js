@@ -150,6 +150,9 @@ module.exports = {
         '.special-hyphens-auto': {
           hyphens: 'auto',
         },
+        'special-no-page-breaks-inside': {
+          'page-break-inside': 'avoid',
+        },
       })
 
       // add classes of serlo-components to autocomplete
