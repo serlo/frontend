@@ -10,6 +10,13 @@ import { showToastNotice } from './show-toast-notice'
 export const isPrintMode =
   isClient && window.location.hash.startsWith('#print--')
 
+const showSolutions =
+  isPrintMode && window.location.hash === '#print--preview-no-solutions'
+    ? false
+    : true
+
+export const printModeSolutionVisible = isPrintMode ? showSolutions : false
+
 export const setupPrintHacks = () => {
   if (!isPrintMode) {
     window.addEventListener('beforeprint', function () {
@@ -27,7 +34,7 @@ export const setupPrintHacks = () => {
     removeHash()
   }
 
-  if (window.location.hash === '#print--preview') {
+  if (window.location.hash.startsWith('#print--preview')) {
     document.documentElement.classList.add('serlo-print-style')
   }
 }

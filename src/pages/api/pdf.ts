@@ -1,8 +1,9 @@
 import chromium from 'chrome-aws-lambda'
 import { NextApiRequest, NextApiResponse } from 'next'
 
-// puppeteer as dev dependency is used locally
-// on vercel it's not present and puppeter-core and chrome-aws-lambda is used instead
+// this runs on chrome-aws-lambda and does not work on normal machines
+// run `yarn add -D puppeteer` to test locally,
+// but since it uses a lot of space make sure to remove it before merging
 
 const styles = `
     width: 100%;
@@ -21,9 +22,9 @@ export default async function createPdf(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const urlString = decodeURIComponent(req.url?.split('?url=')[1] ?? '')
+  const noSolutions = req.query.noSolutions !== undefined
+  const urlString = decodeURIComponent(req.query.url.toString())
   const urlObject = getValidUrl(urlString)
-  if (!urlObject) throw 'url is not valid.'
 
   const locale = urlObject.hostname.startsWith('de') ? 'de-DE' : 'en-GB'
   const date = new Date().toLocaleDateString(locale)
@@ -45,7 +46,7 @@ export default async function createPdf(
     })
     const page = await browser.newPage()
     await page.goto(
-      urlString + '#print--preview',
+      urlString + '#print--preview' + (noSolutions ? '' : '-no-solutions'),
       urlObject.hostname === 'localhost'
         ? { waitUntil: 'networkidle2' }
         : {
@@ -90,10 +91,11 @@ export default async function createPdf(
 function getValidUrl(string: string) {
   try {
     const url = new URL(string)
-    if (!url.hostname.includes('serlo') && !(url.hostname === 'localhost'))
+    if (!url.hostname.includes('serlo') && !(url.hostname === 'localhost')) {
       throw 'sorry, only for serlo domains.'
+    }
     return url
   } catch (_) {
-    return false
+    throw 'url is not valid.'
   }
 }

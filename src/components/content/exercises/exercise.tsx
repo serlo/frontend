@@ -11,7 +11,7 @@ import { CommentAreaProps } from '@/components/comments/comment-area'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { FrontendExerciseNode } from '@/data-types'
-import { isPrintMode } from '@/helper/print-mode'
+import { printModeSolutionVisible } from '@/helper/print-mode'
 import { submitEventWithPath } from '@/helper/submit-event'
 import type { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
 
@@ -28,7 +28,7 @@ const CommentArea = dynamic<CommentAreaProps>(() =>
 export function Exercise({ node, renderNested, path }: ExerciseProps) {
   const { strings } = useInstanceData()
   const [solutionVisible, setSolutionVisible] = useState(
-    isPrintMode ? true : false
+    printModeSolutionVisible
   )
   const [randomId] = useState(Math.random().toString())
 
@@ -73,9 +73,9 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
     const license = node.solution.license && !node.solution.license.default && (
       <LicenseNotice minimal data={node.solution.license} type="solution" />
     )
-    const Comp = lic?.ExerciseAuthorTools
-    const authorTools = Comp && loaded && auth.current && (
-      <Comp
+    const ExerciseAuthorTools = lic?.ExerciseAuthorTools
+    const authorTools = ExerciseAuthorTools && loaded && auth.current && (
+      <ExerciseAuthorTools
         data={{
           type: '_SolutionInline',
           id: node.context.solutionId!,
@@ -106,6 +106,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
 
   function renderSolutionToggle() {
     if (!node.solution.edtrState && !node.solution.legacy) return null
+    if (!printModeSolutionVisible) return null
 
     return (
       <button
