@@ -190,7 +190,7 @@
       }
 
       /* this selector causes a bug with postcss-nested > 5.0.1, so we need 5.0.1 for this to work
-       * It the bug is fixed, revert to current version again
+       * If the bug is fixed, revert to current version again
        */
       > .serlo-exercise-wrapper:first-child {
         @apply mt-0;
@@ -298,6 +298,9 @@ table.gstl_50.gssb_c {
     table {
       page-break-inside: avoid;
     }
+    .serlo-exercise-wrapper {
+      border-bottom: 1px solid black;
+    }
   }
   .header-breadcrumbs,
   a,
@@ -334,6 +337,13 @@ table.gstl_50.gssb_c {
     }
     main {
       @apply block w-full max-w-full relative;
+    }
+    img,
+    table {
+      page-break-inside: avoid;
+    }
+    .serlo-exercise-wrapper {
+      border-bottom: 1px solid black;
     }
   }
   .header-breadcrumbs,
