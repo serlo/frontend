@@ -210,16 +210,21 @@
   .serlo-print-style {
     @apply text-xs;
 
-    body {
-      @apply bg-white;
+    body,
+    header {
+      background-color: white;
     }
     .print\:block {
       @apply !block;
     }
+    #__next header > div {
+      padding-bottom: 0;
+    }
     #__next {
       .print\:hidden,
-      > header,
       > footer,
+      #searchform,
+      header > button,
       #notification-wrapper,
       nav,
       aside,
