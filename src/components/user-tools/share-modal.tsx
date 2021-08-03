@@ -8,6 +8,7 @@ import {
   faEnvelope,
   faCompass,
   IconDefinition,
+  faDownload,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { lighten } from 'polished'
@@ -22,6 +23,7 @@ import {
   makeGreenTransparentButton,
   inputFontReset,
 } from '@/helper/css'
+import { showToastNotice } from '@/helper/show-toast-notice'
 import { submitEvent } from '@/helper/submit-event'
 
 export interface ShareModalProps {
@@ -36,7 +38,6 @@ export interface ShareData {
 
 export function ShareModal({ open, onClose, contentId }: ShareModalProps) {
   const shareInputRef = React.useRef<HTMLInputElement>(null)
-  const [copySuccess, setCopySuccess] = React.useState('')
   const { strings, lang } = useInstanceData()
   const id = React.useContext(EntityIdContext)
 
@@ -47,17 +48,12 @@ export function ShareModal({ open, onClose, contentId }: ShareModalProps) {
     submitEvent(`share_${id}`)
   }
 
-  function onCloseClick() {
-    setCopySuccess('')
-    onClose()
-  }
-
   function copyToClipboard(event: React.MouseEvent, text?: string) {
     const target = event.target as HTMLAnchorElement
     shareInputRef.current!.select()
     document.execCommand('copy')
     target.focus()
-    setCopySuccess(text ? text : strings.share.copySuccess)
+    showToastNotice('👌' + text ? text : strings.share.copySuccess)
   }
 
   const url = contentId
@@ -102,10 +98,24 @@ export function ShareModal({ open, onClose, contentId }: ShareModalProps) {
     },
   ]
 
+  // const pdfExport = [
+  //   {
+  //     title: 'Download as PDF',
+  //     icon: faDownload,
+  //     href: `https://classroom.google.com/u/0/share?url=${urlEncoded}&title=${titleEncoded}&body=`,
+  //   },
+  //   {
+  //     title: 'Mebis',
+  //     icon: faCompass,
+  //     href: 'copy',
+  //     text: 'Link in die Zwischenablage kopiert. Einfach auf <a href="https://www.mebis.bayern.de/">mebis</a> einfügen!',
+  //   },
+  // ]
+
   return (
     <ModalWithCloseButton
       isOpen={open}
-      onCloseClick={onCloseClick}
+      onCloseClick={onClose}
       title={strings.share.title}
     >
       <ShareInput
@@ -118,11 +128,6 @@ export function ShareModal({ open, onClose, contentId }: ShareModalProps) {
           <Button onClick={copyToClipboard} as="button">
             <FontAwesomeIcon icon={faCopy} /> {strings.share.copyLink}
           </Button>
-          {copySuccess !== '' && (
-            <Gray
-              dangerouslySetInnerHTML={{ __html: copySuccess + '&nbsp;' }}
-            />
-          )}
           <br />
         </>
       )}{' '}
@@ -135,6 +140,10 @@ export function ShareModal({ open, onClose, contentId }: ShareModalProps) {
           copyToClipboard
         )}
       </ButtonWrapper>
+      <p className="serlo-p">
+        <hr className="mt-6 mb-6" />
+        123
+      </p>
     </ModalWithCloseButton>
   )
 }
