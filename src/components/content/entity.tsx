@@ -132,11 +132,19 @@ export function Entity({ data }: EntityProps) {
   }
 
   function renderShareModal() {
+    const showPdf = [
+      'Page',
+      'Article',
+      'CoursePage',
+      'ExerciseGroup',
+      'Exercise',
+      'Solution',
+    ].includes(data.typename)
     return (
       <ShareModal
         open={open}
         onClose={() => setOpen(false)}
-        contentId={data.id}
+        showPdf={showPdf}
       />
     )
   }

@@ -7,8 +7,8 @@ import {
   faCopy,
   faEnvelope,
   faCompass,
-  IconDefinition,
   faDownload,
+  IconDefinition,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { lighten } from 'polished'
@@ -29,21 +29,24 @@ import { submitEvent } from '@/helper/submit-event'
 export interface ShareModalProps {
   open: boolean
   onClose: () => void
-  contentId?: number
+  showPdf?: boolean
 }
 
-export interface ShareData {
-  contentId: number
+interface EntryData {
+  title: string
+  icon: IconDefinition
+  href?: string
+  onClick?: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void
 }
 
-export function ShareModal({ open, onClose, contentId }: ShareModalProps) {
+export function ShareModal({ open, onClose, showPdf }: ShareModalProps) {
   const shareInputRef = React.useRef<HTMLInputElement>(null)
   const { strings, lang } = useInstanceData()
   const id = React.useContext(EntityIdContext)
 
-  if (!open) return null
+  if (!open || !id) return null
 
-  if (open && id) {
+  if (open) {
     // submit event
     submitEvent(`share_${id}`)
   }
@@ -53,13 +56,14 @@ export function ShareModal({ open, onClose, contentId }: ShareModalProps) {
     shareInputRef.current!.select()
     document.execCommand('copy')
     target.focus()
-    showToastNotice('👌' + text ? text : strings.share.copySuccess)
+    showToastNotice(
+      '👌 ' + (text ? text : strings.share.copySuccess),
+      'success'
+    )
   }
 
-  const url = contentId
-    ? `https://${window.location.hostname}/${contentId}`
-    : window.location.href
-  const urlEncoded = encodeURIComponent(url)
+  const shareUrl = `${window.location.protocol}//${window.location.host}/${id}`
+  const urlEncoded = encodeURIComponent(shareUrl)
   const titleEncoded = encodeURIComponent(document.title)
 
   const socialShare = [
@@ -67,7 +71,7 @@ export function ShareModal({ open, onClose, contentId }: ShareModalProps) {
       title: 'E-Mail',
       icon: faEnvelope,
       href: `mailto:?subject=${titleEncoded}&body=${encodeURIComponent(
-        document.title + '\n' + url
+        document.title + '\n' + shareUrl
       )}`,
     },
     {
@@ -79,7 +83,7 @@ export function ShareModal({ open, onClose, contentId }: ShareModalProps) {
       title: 'Whatsapp',
       icon: faWhatsappSquare,
       href: `whatsapp://send?text=${encodeURIComponent(
-        document.title + ': ' + url
+        document.title + ': ' + shareUrl
       )}`,
     },
   ]
@@ -93,24 +97,32 @@ export function ShareModal({ open, onClose, contentId }: ShareModalProps) {
     {
       title: 'Mebis',
       icon: faCompass,
-      href: 'copy',
-      text: 'Link in die Zwischenablage kopiert. Einfach auf <a href="https://www.mebis.bayern.de/">mebis</a> einfügen!',
+      onClick: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+        copyToClipboard(
+          event,
+          'Link in die Zwischenablage kopiert.\r\nEinfach auf Mebis (www.mebis.bayern.de) einfügen!'
+        )
+      },
     },
   ]
 
-  // const pdfExport = [
-  //   {
-  //     title: 'Download as PDF',
-  //     icon: faDownload,
-  //     href: `https://classroom.google.com/u/0/share?url=${urlEncoded}&title=${titleEncoded}&body=`,
-  //   },
-  //   {
-  //     title: 'Mebis',
-  //     icon: faCompass,
-  //     href: 'copy',
-  //     text: 'Link in die Zwischenablage kopiert. Einfach auf <a href="https://www.mebis.bayern.de/">mebis</a> einfügen!',
-  //   },
-  // ]
+  const path = window.location.pathname
+  const fileName = `serlo__${path.split('/').pop() ?? id}.pdf`
+
+  const getPdfData = (noSolutions?: boolean) => {
+    return {
+      title: strings.share[noSolutions ? 'pdfNoSolutions' : 'pdf'],
+      icon: faDownload,
+      download: fileName,
+      onClick: () => {
+        showToastNotice('🐒 ' + strings.loading.oneMomentPlease)
+      },
+      href: `/api/pdf?url=${urlEncoded}${noSolutions ? '&noSolutions' : ''}`,
+    }
+  }
+
+  const lmsData = lang === 'de' ? lmsShare : [lmsShare[0]] //mebis only in de
+  const pdfData = [getPdfData(), getPdfData(true)]
 
   return (
     <ModalWithCloseButton
@@ -118,79 +130,55 @@ export function ShareModal({ open, onClose, contentId }: ShareModalProps) {
       onCloseClick={onClose}
       title={strings.share.title}
     >
-      <ShareInput
-        ref={shareInputRef}
-        onFocus={(e) => e.target.select()}
-        defaultValue={url}
-      />{' '}
-      {document.queryCommandSupported('copy') && (
+      {renderShareInput()}
+      {renderButtons(socialShare)}
+      {renderButtons(lmsData)}
+      {showPdf && (
         <>
-          <Button onClick={copyToClipboard} as="button">
-            <FontAwesomeIcon icon={faCopy} /> {strings.share.copyLink}
-          </Button>
-          <br />
+          <hr className="mt-8 mb-8 mx-side" />
+          {renderButtons(pdfData)}
         </>
-      )}{' '}
-      <ButtonWrapper>
-        {buildButtons(socialShare, copyToClipboard)}
-      </ButtonWrapper>
-      <ButtonWrapper>
-        {buildButtons(
-          lang === 'de' ? lmsShare : [lmsShare[0]], //mebis only in de
-          copyToClipboard
-        )}
-      </ButtonWrapper>
-      <p className="serlo-p">
-        <hr className="mt-6 mb-6" />
-        123
-      </p>
+      )}
     </ModalWithCloseButton>
   )
-}
 
-interface EntryData {
-  title: string
-  icon: IconDefinition
-  href: string
-  text?: string
-}
+  function renderShareInput() {
+    return (
+      <>
+        <ShareInput
+          ref={shareInputRef}
+          onFocus={(e) => e.target.select()}
+          defaultValue={shareUrl}
+        />{' '}
+        {document.queryCommandSupported('copy') && (
+          <>
+            <Button onClick={copyToClipboard} as="button">
+              <FontAwesomeIcon icon={faCopy} /> {strings.share.copyLink}
+            </Button>
+            <br />
+          </>
+        )}
+      </>
+    )
+  }
 
-function buildButtons(
-  list: EntryData[],
-  copyToClipboard: (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    text?: string
-  ) => void
-) {
-  //
-
-  return list.map((entry: EntryData) => {
-    const isCopyLink = entry.href === 'copy' //for mebis
-
-    if (isCopyLink)
-      return (
-        <Button
-          as="button"
-          onClick={(
-            event: React.MouseEvent<
-              /*HTMLButtonElement (note: as-construct is breaking the type here)*/ any,
-              MouseEvent
+  function renderButtons(list: EntryData[]) {
+    return (
+      <ButtonWrapper>
+        {list.map((entry: EntryData) => {
+          return (
+            <Button
+              href={entry.href ?? undefined}
+              key={entry.title}
+              onClick={entry.onClick ?? undefined}
             >
-          ) => {
-            copyToClipboard(event, entry.text)
-          }}
-          key={entry.title}
-        >
-          <FontAwesomeIcon icon={entry.icon} /> {entry.title}
-        </Button>
-      )
-    else
-      return (
-        <Button href={entry.href} key={entry.title}>
-          <FontAwesomeIcon icon={entry.icon} /> {entry.title}
-        </Button>
-      )
-  })
+              <FontAwesomeIcon icon={entry.icon} /> {entry.title}
+            </Button>
+          )
+        })}
+      </ButtonWrapper>
+    )
+  }
 }
 
 const ButtonWrapper = styled.div`
@@ -227,26 +215,12 @@ const Button = styled.a`
   ${makeGreenTransparentButton}
   ${inputFontReset}
   font-weight: bold;
-  margin-left: 20px;
+  margin-left: 12px;
   display: inline;
 
   @media (max-width: ${(props) => props.theme.breakpointsMax.sm}) {
     ${makeMargin}
     margin-top: 6px;
     display: block;
-  }
-`
-
-const Gray = styled.small`
-  color: ${(props) => props.theme.colors.brand};
-  ${makeMargin}
-  margin-top: 5px;
-  margin-bottom: 5px;
-  padding-left: 10px;
-  display: block;
-
-  > a {
-    color: ${(props) => props.theme.colors.brand};
-    font-weight: bold;
   }
 `

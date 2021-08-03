@@ -72,7 +72,9 @@ export const instanceData = {
       title: 'Share!',
       copyLink: 'Copy link',
       copySuccess: 'Link copied! ',
-      close: 'Close'
+      close: 'Close',
+      pdf: 'Download as PDF',
+      pdfNoSolutions: 'PDF without solutions'
     },
     edit: {
       button: 'Edit',
@@ -359,7 +361,6 @@ export const loggedInData = {
       newEntity: 'New Entity',
       editProfile: 'Edit profile',
       directLink: 'Direct link to this content',
-      pdf: 'Download as PDF'
     },
     notifications: {
       hide: "Hide notifications for this content.",
