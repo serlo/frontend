@@ -46,7 +46,7 @@ export default async function createPdf(
     })
     const page = await browser.newPage()
     await page.goto(
-      urlString + '#print--preview' + (noSolutions ? '' : '-no-solutions'),
+      urlString + '#print--preview' + (noSolutions ? '-no-solutions' : ''),
       urlObject.hostname === 'localhost'
         ? { waitUntil: 'networkidle2' }
         : {
