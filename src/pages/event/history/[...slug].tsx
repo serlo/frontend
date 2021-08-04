@@ -1,8 +1,6 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 
-import { Lazy } from '@/components/content/lazy'
 import { PageTitle } from '@/components/content/page-title'
-import { Spoiler } from '@/components/content/spoiler'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
 import { ErrorPage } from '@/components/pages/error-page'
@@ -82,33 +80,8 @@ function Content({
         perPage={10}
         moreButton
       />
-
-      {renderOldestEvents()}
     </>
   )
-
-  function renderOldestEvents() {
-    return (
-      <div className="mt-20">
-        <Spoiler
-          title={
-            <b>{strings.eventLog.oldestEvents.replace('%amount%', '10')}</b>
-          }
-          body={
-            <Lazy>
-              <Events
-                objectId={isUser ? undefined : id}
-                userId={isUser ? id : undefined}
-                perPage={10}
-                oldest
-              />
-            </Lazy>
-          }
-          path={['eventlog', id]}
-        />
-      </div>
-    )
-  }
 }
 
 export const getStaticProps: GetStaticProps<SlugProps> = async (context) => {
