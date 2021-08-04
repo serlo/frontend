@@ -49,6 +49,7 @@ export function InputExercise({
   return (
     <Wrapper>
       <StyledInput
+        className="print:hidden"
         type="text"
         value={value}
         onChange={(e) => setValue(e.target.value)}

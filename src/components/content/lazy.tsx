@@ -7,12 +7,14 @@ import { isPrintMode } from '@/helper/print-mode'
 export interface LazyProps {
   children: React.ReactNode
   slim?: boolean
+  noPrint?: boolean
 }
 
 export function Lazy(props: LazyProps) {
   if (isPrintMode) {
     return <>{props.children}</>
   }
+  if (props.noPrint) return null
 
   return (
     <>
