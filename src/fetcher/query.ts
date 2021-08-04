@@ -82,6 +82,9 @@ export const dataQuery = gql`
             }
           }
           ...taxonomyTerms
+          revisions(unrevised: true) {
+            totalCount
+          }
         }
       }
 
@@ -111,6 +114,9 @@ export const dataQuery = gql`
         }
         exercises {
           ...exercise
+          revisions(unrevised: true) {
+            totalCount
+          }
         }
       }
 

@@ -1,7 +1,8 @@
-import { TaxonomyTermType } from '@serlo/api'
+import { Role, TaxonomyTermType } from '@serlo/api'
 import { AuthorizationPayload } from '@serlo/authorization'
+import { CSSProperties, FunctionComponent } from 'react'
 
-import { Instance, QueryResponse } from './fetcher/query-types'
+import { Instance, QueryResponse, User } from './fetcher/query-types'
 import { instanceData, instanceLandingData, loggedInData } from '@/data/en'
 
 export interface SlugProps {
@@ -13,7 +14,7 @@ export interface RevisionProps {
 }
 
 export interface UserProps {
-  pageData: UserPage
+  pageData: UserPage | ErrorPage
 }
 
 export interface LandingProps {
@@ -90,6 +91,7 @@ export type SlugPageData =
   | ErrorPage
   | SingleEntityPage
   | TaxonomyPage
+  | UserEventsPage
   | Redirect
 
 // The landing page is custom built and takes i18n strings
@@ -271,6 +273,7 @@ export interface SingleEntityPage extends EntityPageBase {
 
 export interface EntityData {
   id: number
+  alias?: string
   typename: string
   trashed?: boolean
   revisionId?: number
@@ -282,6 +285,7 @@ export interface EntityData {
   licenseData?: LicenseData
   courseData?: CourseData
   unrevisedRevisions?: number
+  unrevisedCourseRevisions?: number
 }
 
 export interface RevisionPage extends EntityPageBase {
@@ -299,6 +303,7 @@ export interface RevisionData {
     alias?: string
     parentId?: number
     previousRevisionId?: number
+    positionInGroup?: number
   }
   thisRevision: {
     id: number
@@ -550,6 +555,7 @@ export interface FrontendExerciseNode {
   }
   children?: undefined
   href?: string
+  unrevisedRevisions?: number
 }
 
 export interface FrontendSolutionNode {
@@ -561,6 +567,7 @@ export interface FrontendSolutionNode {
   }
   href?: string
   children?: undefined
+  unrevisedRevisions?: number
 }
 
 export interface TaskEdtrState {
@@ -618,6 +625,7 @@ export interface FrontendExerciseGroupNode {
     id: number
   }
   href?: string
+  unrevisedRevisions?: number
 }
 
 export interface FrontendVideoNode {
@@ -743,15 +751,25 @@ export interface UserPage extends EntityPageBase {
     id: number
     username: string
     imageUrl: string
-    chatUrl: string
+    chatUrl?: string
     motivation?: string
     description?: FrontendContentNode[] | null
     lastLogin?: string | null
     date: string
-    roles: { role: string; instance: string | null }[]
+    roles: { role: Role; instance: string | null }[]
     activeReviewer: boolean
     activeAuthor: boolean
     activeDonor: boolean
+    activityByType: User['activityByType']
+  }
+}
+
+export interface UserEventsPage {
+  kind: 'user/events'
+  userData: {
+    id: number
+    title: string
+    alias?: string
   }
 }
 
@@ -783,6 +801,7 @@ export interface TaxonomySubTerm extends TaxonomyTermBase, TaxonomyLink {
 
 export interface TaxonomyData extends TaxonomyTermBase {
   id: number
+  alias?: string
   title: string
   taxonomyType: TaxonomyTermType
   subterms: TaxonomySubTerm[]
@@ -814,3 +833,11 @@ export interface SubscriptionData {
   object: QueryResponse
   sendEmail: boolean
 }
+
+export type CompBaseProps<T = {}> = FunctionComponent<
+  T & {
+    className?: string
+    style?: CSSProperties
+    title?: string
+  }
+>

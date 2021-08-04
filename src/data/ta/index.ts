@@ -59,7 +59,8 @@ export const instanceData = {
     pageTitles: {
       notifications: 'Your Notifications',
       subscriptions: "Manage Subscriptions",
-      revisionHistory: "Revision History"
+      revisionHistory: "Revision History",
+      eventLog: "Event Log"
     },
     roles: {
       donor: "Donor",
@@ -153,15 +154,22 @@ export const instanceData = {
       currentNotice: "This is the currently accepted version.",
       rejectedNotice: 'This revision was not accepted.',
       noCurrentNotice: 'There is no accepted revision yet.',
+      unknownNotice: 'This revision was accepted once or was never reviewed.',
       by: 'By',
       parentFallbackLink: 'To parent content',
-      hasChanges: 'There have been changes in this area'
+      hasChanges: 'There have been changes in this area',
+      positionForGrouped: 'This %exercise_or_solution% is part of %title%.',
+      helpLink: 'Revision Help'
     },
     revisionHistory: {
       changes: 'Changes',
       author: 'Author',
       date: 'Date',
-      createNew: 'Create a new revision starting from this specific revision'
+      edit: 'Edit',
+      editLabel: 'Create a new revision starting from this specific revision',
+      view: 'Show',
+      viewLabel: 'Show this revision',
+      status: 'Status'
     },
     errors: {
       title: '😬 Websites make mistakes sometimes…',
@@ -187,11 +195,28 @@ export const instanceData = {
       instanceRoles: 'Roles on %lang%.serlo.org:',
       otherRoles: 'Other roles:',
       directMessage: 'Direct message',
+      goToChat: 'Go to Chat',
+      registerChat: 'Register for Chat',
+      inviteToChat: 'Invite to chat',
+      invitation: '💬 %username% has invited you to the Serlo community chat!\nGo to %chatlink% to join.',
+      inviteModal: {
+        part1: '%username% is not yet active in our community chat at %chatLink%.',
+        part2: 'You can invite %username% to the chat to send direct messages:',
+        button: 'Send invitation'
+      },
+      activityGraph: {
+        edits: "Edits",
+        comments: "Comments",
+        reviews: "Reviews",
+        taxonomy: "Taxonomy",
+        legendary: "💙 Just wow! 💙",
+        untilNextLevel: "%amount% more to complete this circle 🎉"
+      },
       howToEditImage: {
         heading: 'How to edit your profile picture',
-        description: 'Currently we use the images from %chatUrl% as profile pictures. In order to change your picture, do the following:',
+        description: 'Currently we use the images from %chatLink% as profile pictures. In order to change your picture, do the following:',
         steps: {
-          goToChat: 'Go to %chatUrl%.',
+          goToChat: 'Go to %chatLink%.',
           signIn: 'Sign in.',
           goToMyAccount: 'Go in the user menu to %myAccountLink%.',
           myAccount: 'My Account',
@@ -199,6 +224,14 @@ export const instanceData = {
           refreshPage: 'Come back here and refresh the image using %refreshLink%.',
           refreshLink: 'this link'
         }
+      },
+      motivation: {
+        edit: 'Edit motivation',
+        add: 'Add motivation',
+        heading: 'How to edit your motivation',
+        intro: 'Motivations are a new feature we test at the moment. To edit your motivation you have to fill out a simple form.',
+        privacy: 'The form and data storage is offered by Google and personal data may be transferred to this service when using this feature.',
+        toForm: 'Motivation Form'
       }
     },
     notices: {
@@ -221,6 +254,38 @@ export const instanceData = {
     keys: {
       ctrl: 'ctrl',
       return: 'return'
+    },
+    eventLog: {
+      currentEvents: 'Current events',
+      oldestEvents: '%amount% oldest events',
+      globalDescription: 'All events that happen somewhere on %lang%.serlo.org'
+    },
+    events: {
+      setThreadStateArchived: "%actor% archived %thread%.",
+      setThreadStateUnarchived: "%actor% restored %thread%.",
+      createComment: "%actor% commented in %thread%: %comment%.",
+      createThread: "%actor% started %thread% on %object%.",
+      createEntity: "%actor% created %object%.",
+      setLicense: "%actor% changed the license of %repository%.",
+      createEntityLink: "%actor% associated %child% with %parent%.",
+      removeEntityLink: "%actor% dissociated %child% from %parent%.",
+      createEntityRevision: "%actor% created a %revision% of %entity%.",
+      checkoutRevision: "%actor% checked out a %revision% in %repository%.",
+      rejectRevision: "%actor% did not accept a %revision% in %repository%.",
+      createTaxonomyLink: "%actor% added %child% to %parent%.",
+      removeTaxonomyLink: "%actor% removed %child% from %parent%.",
+      createTaxonomyTerm: "%actor% created %term%.",
+      setTaxonomyTerm: "%actor% updated %term%.",
+      setTaxonomyParentDeleted: "%actor% removed the parent of %child%.",
+      setTaxonomyParentChangedFrom: "%actor% changed parent of %child% from %previousparent% to %parent%.",
+      setTaxonomyParentChanged: "%actor% changed parent of %child% to %parent%.",
+      setUuidStateTrashed: "%actor% trashed %object%.",
+      setUuidStateRestored: "%actor% restored %object%.",
+      inviteToChat: "You have been invited to the Chat! %break% Go to %chatLink% to chat with %actor% and others.",
+      entityPlaceholderFallback: "Content"
+    },
+    actions: {
+      loadMore: "Load more"
     }
   }
 };
@@ -298,6 +363,7 @@ export const loggedInData = {
       restoreContent: 'Restore from trash',
       sort: 'Sort children',
       edit: "திருத்தம்",
+      unrevisedEdit: 'Show unrevised revisions',
       organize: "ஒழுங்குபடுத்த",
       moveToGroupedTextExercise: 'Move content to other grouped-text-exercise',
       moveToTextExercise: 'Move content to other text-exercise',
@@ -307,33 +373,11 @@ export const loggedInData = {
       directLink: 'Direct link to this content'
     },
     notifications: {
-      loadMore: "Load more",
       hide: "Hide notifications for this content.",
       setToRead: "Set notification to read.",
       setAllToRead: "Set all visible to read",
       showNew: "New",
-      showRead: "Read",
-      setThreadStateArchived: "%actor% archived %thread%.",
-      setThreadStateUnarchived: "%actor% restored %thread%.",
-      createComment: "%actor% commented in %thread%: %comment%.",
-      createThread: "%actor% started %thread% on %object%.",
-      createEntity: "%actor% created %object%.",
-      setLicense: "%actor% changed the license of %repository%.",
-      createEntityLink: "%actor% associated %child% with %parent%.",
-      removeEntityLink: "%actor% dissociated %child% from %parent%.",
-      createEntityRevision: "%actor% created a %revision% of %entity%.",
-      checkoutRevision: "%actor% checked out a %revision% in %repository%.",
-      rejectRevision: "%actor% did not accept a %revision% in %repository%.",
-      createTaxonomyLink: "%actor% added %child% to %parent%.",
-      removeTaxonomyLink: "%actor% removed %child% from %parent%.",
-      createTaxonomyTerm: "%actor% created %term%.",
-      setTaxonomyTerm: "%actor% updated %term%.",
-      setTaxonomyParentDeleted: "%actor% removed the parent of %child%.",
-      setTaxonomyParentChangedFrom: "%actor% changed parent of %child% from %previousparent% to %parent%.",
-      setTaxonomyParentChanged: "%actor% changed parent of %child% to %parent%.",
-      setUuidStateTrashed: "%actor% trashed %object%.",
-      setUuidStateRestored: "%actor% restored %object%.",
-      entityPlaceholderFallback: "உட்பொருள்"
+      showRead: "Read"
     },
     subscriptions: {
       mail: "E-mails",

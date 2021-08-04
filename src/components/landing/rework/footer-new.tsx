@@ -1,3 +1,4 @@
+import { Fragment } from 'react'
 import styled from 'styled-components'
 
 import { Link } from '../../content/link'
@@ -24,7 +25,7 @@ export function FooterNew() {
       <FooterLineNav className="text-center">
         {footerData.footerNavigation[2].children.map(({ title, url }) => {
           return (
-            <>
+            <Fragment key={title}>
               <Link
                 className="text-truegray-700 mobile:whitespace-nowrap pr-4"
                 href={url}
@@ -32,7 +33,7 @@ export function FooterNew() {
               >
                 {title}
               </Link>{' '}
-            </>
+            </Fragment>
           )
         })}
       </FooterLineNav>

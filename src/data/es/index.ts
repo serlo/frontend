@@ -10,7 +10,7 @@ export const instanceData = {
       login: "Ingresar"
     },
     search: {
-      privacy: "La búsqueda es proporcionada por Google. Vea nuestra  %privacypolicy%  para saber qué información se procesa.",
+      privacy: "La búsqueda es proporcionada por Google. Mira  nuestra  %privacypolicy%  para saber qué información se procesa.",
       agree: "Estoy de acuerdo"
     },
     footer: {
@@ -19,7 +19,7 @@ export const instanceData = {
       learnMore: "Aprende más",
       participate: "Únete a la causa",
       donate: "Donaciones",
-      toTop: "a la cima"
+      toTop: "Hacia arriba"
     },
     categories: {
       articles: "Artículos",
@@ -58,8 +58,9 @@ export const instanceData = {
     },
     pageTitles: {
       notifications: "Tus notificaciones",
-      subscriptions: "Administra las suscripciones",
-      revisionHistory: "Historial de revisiones"
+      subscriptions: "Administrar suscripciones",
+      revisionHistory: "Historial de revisiones",
+      eventLog: "Registro de eventos"
     },
     roles: {
       donor: "Donante",
@@ -68,9 +69,9 @@ export const instanceData = {
     },
     share: {
       button: "Compartir",
-      title: "Compartir",
-      copyLink: "Copiar link",
-      copySuccess: "Enlace copiado",
+      title: "¡Comparte!",
+      copyLink: "Copiar enlace",
+      copySuccess: "!Enlace copiado!",
       close: "Cerrar"
     },
     edit: {
@@ -86,7 +87,7 @@ export const instanceData = {
       showPages: "Mostrar descripción del curso",
       pages: "Descripción del curso",
       next: "Siguiente",
-      back: 'Back'
+      back: "Volver"
     },
     content: {
       show: "mostrar",
@@ -95,8 +96,8 @@ export const instanceData = {
       task: "Tarea",
       right: "Correcto",
       wrong: "Incorrecto",
-      feedback: 'Feedback',
-      answer: 'Answer',
+      feedback: "Sugerencias",
+      answer: "Respuesta",
       check: "Revisa tu respuesta",
       yourAnswer: "Tu respuesta...",
       chooseOption: "Elige una de las opciones.",
@@ -113,9 +114,9 @@ export const instanceData = {
       revokeConsent: "Revocar el consentimiento"
     },
     embed: {
-      text: "Al hacer clic en la imagen o en el botón superior, aceptas que se cargará el contenido externo del %provider% . También los datos personales pueden ser transferidos a este servicio de acuerdo con nuestro %privacypolicy%.",
-      video: "Reproducir vídeo del %provider%",
-      applet: "Cargar Applet del %provider%",
+      text: "Al hacer clic en la imagen o en el botón superior, aceptas que se cargará el contenido externo de %provider% . También los datos personales pueden ser transferidos a este servicio de acuerdo con nuestro %privacypolicy%.",
+      video: "Reproducir vídeo de %provider%",
+      applet: "Cargar Applet de %provider%",
       twingle: "Cargar formulario de donación"
     },
     comments: {
@@ -139,29 +140,36 @@ export const instanceData = {
     },
     revisions: {
       toOverview: "Volver a Vista general",
-      toContent: "Go to content",
+      toContent: "Ir al contenido",
       changes: "Cambios",
-      context: "Context (current version)",
+      context: "Contexto (versión actual)",
       title: "Título",
       content: "Contenido",
       metaTitle: "Meta Título",
       metaDescription: "Meta Descripción",
-      diff: "Source view",
-      sidebyside: "Side By Side",
+      diff: "Vista fuente",
+      sidebyside: "Lado a Lado",
       currentVersion: "Versión Actual",
       thisVersion: "Esta Versión",
       currentNotice: "Esta es la versión aceptada actualmente.",
-      rejectedNotice: 'This revision was not accepted.',
-      noCurrentNotice: 'There is no accepted revision yet.',
+      rejectedNotice: "Esta revisión no fue aceptada.",
+      noCurrentNotice: "Todavía no hay revisión aceptada.",
+      unknownNotice: "Esta revisión fue aceptada una vez o no ha sido revisada.",
       by: "Por",
-      parentFallbackLink: 'To parent content',
-      hasChanges: 'There have been changes in this area'
+      parentFallbackLink: "A contenido padre",
+      hasChanges: "Ha habido cambios en esta área",
+      positionForGrouped: "Este/a %exercise_or_solution% es parte de %title%.",
+      helpLink: "Ayuda de revisión"
     },
     revisionHistory: {
       changes: "Cambios",
       author: "Autor",
       date: "Fecha",
-      createNew: "Crear una nueva revisión a partir de esta revisión específica"
+      edit: "Edición",
+      editLabel: "Crear una nueva revisión a partir de esta revisión específica",
+      view: "Mostrar",
+      viewLabel: "Mostrar esta revisión",
+      status: "Estado"
     },
     errors: {
       title: "😬 Los sitios web a veces cometen errores…",
@@ -174,43 +182,68 @@ export const instanceData = {
       backToHome: "Ir a la página de inicio"
     },
     print: {
-      warning: "IMPORTANTE: Para asegurarse de que todas las imágenes y fórmulas se imprimen, por favor desplácese hasta el final de la página una vez que abra este diálogo. Gracias."
+      warning: "IMPORTANTE: Para asegurarse de que todas las imágenes y fórmulas se puedan imprimir, por favor desplácese hasta el final de la página ANTES de abrir este diálogo. ¡Gracias!"
     },
     profiles: {
       aboutMe: "Sobre mi",
       recentActivities: "Actividades recientes",
       showAllActivities: "Mostrar todas las actividades",
-      lastLogin: "Ultimo Inicio de sesion",
-      yearsWithSerlo: 'Years with Serlo!',
-      yearWithSerlo: 'Year with Serlo!',
+      lastLogin: "Último inicio de sesion",
+      yearsWithSerlo: "¡Años con Serlo!",
+      yearWithSerlo: "¡Año con Serlo!",
       roles: "Roles (funciones)",
       instanceRoles: "Roles en %lang%.serlo.org",
-      otherRoles: "Otros roles",
+      otherRoles: "Otros roles:",
       directMessage: "Mensaje directo",
+      goToChat: "Ir al chat",
+      registerChat: "Registrate para el chat",
+      inviteToChat: "Invita al chat",
+      invitation: " ¡💬 %username%  te ha invitado a la comunidad del chat de Serlo!\nVe a %chatlink% para unirte.",
+      inviteModal: {
+        part1: "%username%  aún no está activo/a en nuestra comunidad del chat en %chatLink%.",
+        part2: "Puedes invitar a %username% al chat para enviar mensajes directos: ",
+        button: "Enviar invitación"
+      },
+      activityGraph: {
+        edits: "Ediciones",
+        comments: "Comentarios",
+        reviews: "Revisiones",
+        taxonomy: "Taxonomía",
+        legendary: "💙 Simplemente, ¡guau! 💙",
+        untilNextLevel: "%amount% más para completar este círculo 🎉"
+      },
       howToEditImage: {
         heading: "Como editar tu foto del perfil",
-        description: "Actualmente utilizamos las imágenes de %chatUrl% como imágenes de perfil. Para cambiar tu foto, haz lo siguiente:",
+        description: "Actualmente usamos las imágenes del %chatLink%  como impagen de perfil.  Para cambiar la imágen, haz lo siguiente:",
         steps: {
-          goToChat: "Ir a %chatUrl%.",
-          signIn: "Iniciar sesión",
+          goToChat: "Ir a %chatLink%.",
+          signIn: "Iniciar sesión.",
           goToMyAccount: "Ir al menú de usuario a %myAccountLink%",
           myAccount: "Mi cuenta",
-          uploadPicture: 'Upload a new picture (make sure it is square) and click "Save changes".',
-          refreshPage: 'Come back here and refresh the image using %refreshLink%.',
-          refreshLink: 'this link'
+          uploadPicture: "Sube una nueva imagen (asegúrate de que sea cuadrada) y haz clic en \"Guardar cambios\".",
+          refreshPage: "Vuelve aquí y actualiza la imagen usando %refreshLink%.",
+          refreshLink: "este enlace"
         }
+      },
+      motivation: {
+        edit: "Editar motivación",
+        add: "Añadir motivación",
+        heading: "Cómo editar tu motivación",
+        intro: "La motivación es una función nueva que está a prueba en este momento. Para editar tu motivación tienes que completar un sencillo formulario.",
+        privacy: "El formulario y el almacenamiento de datos lo ofrece Google y la información personal puede ser transferida a este servicio cuando se utiliza esta función.",
+        toForm: "Formulario de Motivación"
       }
     },
     notices: {
       welcome: "¡Bienvenida/o  %username%!",
       bye: "👋 ¡Nos vemos pronto!",
-      revisionSaved: "La revisión se ha guardado y se revisará pronto :thumbnail s_up:",
+      revisionSaved: "La revisión se ha guardado y se revisará pronto 👍",
       revisionAccepted: "Revisión aceptada con éxito ✅",
       revisionRejected: "Revisión rechazada con éxito ❎",
       revisionSavedAccepted: "Revisión guardada y aceptada con éxito ✅"
     },
     loading: {
-      oneMomentPlease: 'One moment please…',
+      oneMomentPlease: "Un momento, por favor...",
       isLoading: "El contenido está cargando…",
       unknownProblem: "Lo sentimos, hubo un problema al cargar el contenido, por favor inténtalo de nuevo más tarde."
     },
@@ -220,7 +253,39 @@ export const instanceData = {
     },
     keys: {
       ctrl: 'ctrl',
-      return: "entrar"
+      return: "Volver"
+    },
+    eventLog: {
+      currentEvents: "Eventos recientes",
+      oldestEvents: "%amount% de eventos pasados",
+      globalDescription: "Todos los eventos que ocurrieron en algún momento en %lang%.serlo.org"
+    },
+    events: {
+      setThreadStateArchived: "%actor% archivó %thread%.",
+      setThreadStateUnarchived: "%actor% restauró %thread%.",
+      createComment: "%actor% comentó en %thread%: %comment%.",
+      createThread: "%actor% ha iniciado %thread% en %object%.",
+      createEntity: "%actor% creó %object%.",
+      setLicense: "%actor% cambió la licencia de %repository%.",
+      createEntityLink: "%actor% vinculó %child% con %parent%.",
+      removeEntityLink: "%actor% disoció %child% de %parent%.",
+      createEntityRevision: "%actor% creó una %revision% de %entity%.",
+      checkoutRevision: "%actor% revisió una %revision% en %repository%.",
+      rejectRevision: "%actor% no aceptó a %revision% en %repository%.",
+      createTaxonomyLink: "%actor% agregó %child% a %parent%.",
+      removeTaxonomyLink: "%actor% eliminó %child% de %parent%.",
+      createTaxonomyTerm: "%actor% creó %term%.",
+      setTaxonomyTerm: "%actor% actualizó %term%.",
+      setTaxonomyParentDeleted: "%actor% eliminó padre de %child%.",
+      setTaxonomyParentChangedFrom: "%actor% cambió padre de %child% del %previousparent% a %parent%.",
+      setTaxonomyParentChanged: "%actor% cambió padre de %child% a %parent%.",
+      setUuidStateTrashed: "%actor% desechó %object%.",
+      setUuidStateRestored: "%actor% restauró %object%.",
+      inviteToChat: "¡Has sido invitado al chat! %break% Ve a %chatLink% para chatear con %actor% y otras/os.",
+      entityPlaceholderFallback: "Contenido"
+    },
+    actions: {
+      loadMore: "Cargar más"
     }
   }
 };
@@ -252,11 +317,11 @@ export const loggedInData = {
   authMenu: [{
     url: '/user/notifications',
     title: "Notificaciones",
-    icon: 'notifications'
+    icon: "notificaciones"
   }, {
-    url: '',
+    url: "[secuencia vacía]",
     title: "Usuario",
-    icon: 'user',
+    icon: "usuario",
     children: [{
       url: '/user/me',
       title: "Perfil propio"
@@ -287,7 +352,7 @@ export const loggedInData = {
       moveItems: "Mover elementos",
       addGroupedTextExercise: "Añade un grupo de ejercicios de texto",
       changeLicense: "Cambiar licencia",
-      subscribe: "Suscribir",
+      subscribe: "Suscribirse",
       subscribeNotifications: "Recibir notificaciones",
       subscribeNotificationsAndMail: "Recibir notificaciones y correos electrónicos",
       unsubscribeNotifications: "Cancelar suscripción",
@@ -297,52 +362,31 @@ export const loggedInData = {
       moveToTrash: "Mover a la papelera",
       restoreContent: "Restaurar de la papelera",
       sort: "Ordenar los niños",
-      edit: "Modificar",
+      edit: "Editar",
+      unrevisedEdit: "Mostrar revisiones sin revisar",
       organize: "Organizar",
       moveToGroupedTextExercise: "Mover contenido a otro grupo de ejercicios de texto",
       moveToTextExercise: "Mover contenido a otro ejercicio de texto",
       sortEntities: "Ordenar contenido",
       newEntity: "Nueva Entidad",
       editProfile: "Editar perfil",
-      directLink: 'Direct link to this content'
+      directLink: "Enlace directo a este contenido"
     },
     notifications: {
-      loadMore: "Cargar más",
       hide: "Ocultar notificaciones para este contenido.",
       setToRead: "Marcar notificaciones para leer.",
-      setAllToRead: "Poner todas visibles a leer",
+      setAllToRead: "Poner todas visibles para leer",
       showNew: "Nueva",
-      showRead: "Leídas",
-      setThreadStateArchived: "%actor% archivado %thread%",
-      setThreadStateUnarchived: "%actor% restaurado %thread%.",
-      createComment: "%actor% comentado en %thread%: %comment%.",
-      createThread: "%actor% ha iniciado %thread% en %object%.",
-      createEntity: "%actor% creó %object%.",
-      setLicense: "%actor% cambió la licencia de %repository%.",
-      createEntityLink: "%actor% vinculado %child% con %parent%.",
-      removeEntityLink: "%actor% desvinculado %child% de %parent%.",
-      createEntityRevision: "%actor% creó un %revision% de %entity%.",
-      checkoutRevision: "%actor% checked out a %revision% in %repository%.",
-      rejectRevision: "%actor% did not accept a %revision% in %repository%.",
-      createTaxonomyLink: "%actor% agregó %child% a %parent%.",
-      removeTaxonomyLink: "%actor% eliminó a %child% de %parent%.",
-      createTaxonomyTerm: "%actor% creó %term%.",
-      setTaxonomyTerm: "%actor% actualizó %term%.",
-      setTaxonomyParentDeleted: "%actor% eliminó el padre de %child%.",
-      setTaxonomyParentChangedFrom: "%actor% cambió el padre de %child% de  %previousparent% a %parent%.",
-      setTaxonomyParentChanged: "%actor% cambió el padre de %child% a %parent%.",
-      setUuidStateTrashed: "%actor% envió a la papelera %object%.",
-      setUuidStateRestored: "%actor% restauró %object%.",
-      entityPlaceholderFallback: "Contenido"
+      showRead: "Leídas"
     },
     subscriptions: {
-      mail: "Correo electrónico",
+      mail: "Correos electrónicos",
       subscription: "Suscripción",
       noMails: "desactivar",
-      getMails: "activate",
+      getMails: "activar",
       noNotifications: "cancelar",
-      loadedSentence: "Loaded %loadedCount% of %totalCount% subscriptions.",
-      loadMoreLink: "Load more!"
+      loadedSentence: "Cargar %loadedCount% de %totalCount% suscripciones.",
+      loadMoreLink: "¡Cargar más!"
     },
     revisions: {
       checkout: {
@@ -353,7 +397,7 @@ export const loggedInData = {
       reject: {
         action: "Rechazar",
         title: "Rechazar la revisión",
-        explanation: 'Please tell the author why you will not accept the submission.'
+        explanation: "Por favor, indica al autor por qué no aceptas el trabajo."
       },
       confirm: "Confirmar"
     }

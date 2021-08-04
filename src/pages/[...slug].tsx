@@ -12,7 +12,6 @@ import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
   if (pageData === undefined) return <ErrorPage code={404} />
-
   //fallback, should be handled by CFWorker
   if (pageData.kind === 'redirect') {
     if (typeof window !== 'undefined') {
@@ -45,7 +44,9 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
         entityId={entityId}
         authorization={pageData.authorization}
       >
-        <EntityBase page={pageData}>{page}</EntityBase>
+        <EntityBase page={pageData} entityId={entityId}>
+          {page}
+        </EntityBase>
       </FrontendClientBase>
     )
   }

@@ -1944,6 +1944,9 @@ export const exerciseGroupUuidMock = {
     content:
       '{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Finde die passenden Gleichungen zu den Funktionsgraphen:"}]}]}]}',
   },
+  revisions: {
+    totalCount: 1,
+  },
   exercises: [
     {
       id: 53209,

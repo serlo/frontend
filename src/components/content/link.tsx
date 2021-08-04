@@ -38,9 +38,8 @@ export function isLegacyLink(_href: string) {
   if (_href.startsWith('/entity/repository/compare')) return false
 
   return (
-    legacyLinks.indexOf(_href) > -1 ||
+    legacyLinks.includes(_href) ||
     _href.startsWith('/auth/') ||
-    _href.startsWith('/event/history') ||
     _href.startsWith('/api/auth') ||
     _href.startsWith('/entity') ||
     _href.startsWith('/page') ||
@@ -49,11 +48,18 @@ export function isLegacyLink(_href: string) {
     _href.startsWith('/subscription/update') ||
     _href.startsWith('/unsubscribe') ||
     _href.startsWith('/user/profile/') ||
-    _href.indexOf('.serlo.org') > -1 //e.g. community.serlo.org or different language
+    _href.includes('.serlo.org') //e.g. community.serlo.org or different language
   )
 }
 
-export function Link({
+export function Link(props: LinkProps) {
+  return UnstyledLink({
+    ...props,
+    className: clsx(props.className, 'serlo-link'),
+  })
+}
+
+export function UnstyledLink({
   href,
   children,
   className,
@@ -169,7 +175,7 @@ export function Link({
       // eslint-disable-next-line react/jsx-no-target-blank
       <a
         href={_href}
-        className={clsx(className, 'serlo-link')}
+        className={className}
         title={title}
         onClick={clickHandler}
         rel={unreviewed && isExternal ? 'ugc nofollow noreferrer' : undefined}

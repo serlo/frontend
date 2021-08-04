@@ -2,9 +2,8 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import dynamic from 'next/dynamic'
 import { Router } from 'next/router'
-import * as React from 'react'
+import { useState, MouseEvent as ReactMouseEvent } from 'react'
 
-import { CommentAreaProps } from '../comments/comment-area'
 import { HSpace } from './h-space'
 import { LicenseNotice } from '@/components/content/license-notice'
 import { CourseFooter } from '@/components/navigation/course-footer'
@@ -20,23 +19,17 @@ export interface EntityProps {
   data: EntityData
 }
 
-const CommentArea = dynamic<CommentAreaProps>(() =>
-  import('@/components/comments/comment-area').then((mod) => mod.CommentArea)
-)
-
 const ShareModal = dynamic<ShareModalProps>(() =>
   import('@/components/user-tools/share-modal').then((mod) => mod.ShareModal)
 )
 
 export function Entity({ data }: EntityProps) {
   // state@/components/comments/comment-area
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
 
   // course
-  const [courseNavOpen, setCourseNavOpen] = React.useState(false)
-  const openCourseNav = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const [courseNavOpen, setCourseNavOpen] = useState(false)
+  const openCourseNav = (e: ReactMouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault()
     setCourseNavOpen(true)
   }
@@ -53,7 +46,9 @@ export function Entity({ data }: EntityProps) {
       {data.trashed && renderTrashedNotice()}
       {renderStyledH1()}
       {renderUserTools({ aboveContent: true })}
-      {data.content && renderContent(data.content)}
+      <div className="min-h-1/4">
+        {data.content && renderContent(data.content)}
+      </div>
       {renderCourseFooter()}
       <HSpace amount={20} />
       {renderUserTools()}
@@ -61,8 +56,6 @@ export function Entity({ data }: EntityProps) {
       {data.licenseData && (
         <LicenseNotice data={data.licenseData} path={['license']} />
       )}
-
-      {data.typename !== 'Page' && <CommentArea id={data.id} />}
     </>
   )
 
@@ -126,13 +119,15 @@ export function Entity({ data }: EntityProps) {
         aboveContent={setting?.aboveContent}
         id={data.id}
         hideEdit={!data.inviteToEdit}
-        unrevisedRevision={data.unrevisedRevisions}
+        unrevisedRevisions={data.unrevisedRevisions}
         data={{
           type: data.typename,
           id: data.id,
           revisionId: data.revisionId,
           courseId: data.courseData?.id,
           trashed: data.trashed,
+          unrevisedRevisions: data.unrevisedRevisions,
+          unrevisedCourseRevisions: data.unrevisedCourseRevisions,
         }}
       />
     )

@@ -17,6 +17,7 @@ import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionData } from '@/data-types'
 import { removeHash } from '@/helper/remove-hash'
+import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { renderNested } from '@/schema/article-renderer'
 
 export interface RevisionProps {
@@ -148,6 +149,7 @@ export function Revision({ data }: RevisionProps) {
       data.repository.parentId === undefined
     )
       return null
+
     const { parentId } = data.repository
 
     if (!hasCurrentRevision) {
@@ -160,15 +162,36 @@ export function Revision({ data }: RevisionProps) {
       )
     }
 
+    const char =
+      data.repository.positionInGroup === undefined
+        ? undefined
+        : String.fromCharCode(97 + data.repository.positionInGroup)
+
     return (
-      <div className="serlo-content-with-spacing-fixes">
-        <h2 className="serlo-h2 mt-12">{strings.revisions.context}</h2>
-        <Injection
-          href={`/${parentId}`}
-          renderNested={(value, ...prefix) => renderNested(value, [], prefix)}
-        />
-        )
-      </div>
+      <>
+        <div className="serlo-content-with-spacing-fixes">
+          <h2 className="serlo-h2 mt-12">{strings.revisions.context}</h2>
+          {char && (
+            <span className="mx-side px-1 mb-10 inline-block bg-yellow-200">
+              {replacePlaceholders(strings.revisions.positionForGrouped, {
+                exercise_or_solution:
+                  data.type === 'groupedExercise'
+                    ? strings.content.task
+                    : strings.entities.solution,
+                title: (
+                  <b>
+                    {strings.entities.groupedExercise} {char}
+                  </b>
+                ),
+              })}{' '}
+            </span>
+          )}
+          <Injection
+            href={`/${parentId}`}
+            renderNested={(value, ...prefix) => renderNested(value, [], prefix)}
+          />
+        </div>
+      </>
     )
   }
 }

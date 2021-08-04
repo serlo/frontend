@@ -7,8 +7,6 @@ import { Col } from '../components/content/col'
 import { ExerciseGroup } from '../components/content/exercises/exercise-group'
 import { LicenseNotice } from '../components/content/license-notice'
 import { Link } from '../components/content/link'
-import { SpoilerTitle } from '../components/content/spoiler-title'
-import { SpoilerToggle } from '../components/content/spoiler-toggle'
 import { TableWrapper } from '../components/content/table-wrapper'
 import { theme } from '../theme'
 import { Blockquote } from '@/components/content/blockquote'
@@ -22,9 +20,9 @@ import { Lazy } from '@/components/content/lazy'
 import { MathSpanProps } from '@/components/content/math-span'
 import { Multimedia } from '@/components/content/multimedia'
 import { Snack } from '@/components/content/snack'
+import { Spoiler } from '@/components/content/spoiler'
 import { Video } from '@/components/content/video'
 import { FrontendContentNode } from '@/data-types'
-import { submitEventWithPath } from '@/helper/submit-event'
 
 export type NodePath = (number | string)[]
 
@@ -287,9 +285,7 @@ function renderElement({
   }
   if (element.type === 'spoiler-container') {
     if (!Array.isArray(children)) return null
-    return (
-      <SpoilerForEndUser title={children[0]} body={children[1]} path={path} />
-    )
+    return <Spoiler title={children[0]} body={children[1]} path={path} />
   }
   if (element.type === 'spoiler-body') {
     return <div className="serlo-spoiler-body">{children}</div>
@@ -398,6 +394,7 @@ function renderElement({
         positionOnPage={element.positionOnPage}
         id={element.context.id}
         href={element.href}
+        unrevisedRevisions={element.unrevisedRevisions}
       >
         {children}
       </ExerciseGroup>
@@ -439,33 +436,6 @@ function renderElement({
     )
   }
   return null
-}
-
-interface SpoilerForEndUserProps {
-  body: React.ReactNode
-  title: React.ReactNode
-  path: NodePath
-}
-
-function SpoilerForEndUser({ body, title, path }: SpoilerForEndUserProps) {
-  const [open, setOpen] = React.useState(false)
-  return (
-    <div className="flex flex-col mb-block mobile:mx-side">
-      <SpoilerTitle
-        onClick={() => {
-          setOpen(!open)
-          if (!open) {
-            submitEventWithPath('openspoiler', path)
-          }
-        }}
-        open={open}
-      >
-        <SpoilerToggle open={open} />
-        {title}
-      </SpoilerTitle>
-      {open && body}
-    </div>
-  )
 }
 
 function renderRevisionExtra(

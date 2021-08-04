@@ -1,25 +1,22 @@
-import { faTelegramPlane } from '@fortawesome/free-brands-svg-icons'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 import { NextPage } from 'next'
-import Head from 'next/head'
-import * as R from 'ramda'
-import { Fragment, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
-import AuthorBadge from '@/assets-webkit/img/community/badge-author.svg'
-import DonorBadge from '@/assets-webkit/img/community/badge-donor.svg'
-import ReviewerBadge from '@/assets-webkit/img/community/badge-reviewer.svg'
-import TimeBadge from '@/assets-webkit/img/community/badge-time.svg'
 import { useAuthentication } from '@/auth/use-authentication'
-import { CommentArea } from '@/components/comments/comment-area'
+import { Link } from '@/components/content/link'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { TimeAgo } from '@/components/time-ago'
 import { UserTools } from '@/components/user-tools/user-tools'
+import { Events } from '@/components/user/events'
+import { ProfileActivityGraphs } from '@/components/user/profile-activity-graphs'
+import { ProfileBadges } from '@/components/user/profile-badges'
+import { ProfileChatButton } from '@/components/user/profile-chat-button'
+import { ProfileRoles } from '@/components/user/profile-roles'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UserPage } from '@/data-types'
-import { makeGreenButton, makeMargin } from '@/helper/css'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { renderArticle } from '@/schema/article-renderer'
 
@@ -29,6 +26,8 @@ export interface ProfileProps {
 
 export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   const { strings, lang } = useInstanceData()
+  const auth = useAuthentication()
+
   const {
     id,
     username,
@@ -38,12 +37,12 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
     chatUrl,
     date,
     motivation,
+    activityByType,
   } = userData
-  const { activeDonor, activeReviewer, activeAuthor } = userData
-  const auth = useAuthentication()
   const lastLoginDate = lastLogin ? new Date(lastLogin) : undefined
-  const registerDate = new Date(date)
+
   const [showImageModal, setShowImageModal] = useState(false)
+  const [showMotivationModal, setShowMotivationModal] = useState(false)
   const [isOwnProfile, setIsOwnProfile] = useState(false)
 
   useEffect(() => {
@@ -52,106 +51,108 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
 
   return (
     <>
-      <Head>
-        <title>{username}</title>
-        {!activeDonor && !activeAuthor && !activeReviewer && (
-          <meta name="robots" content="noindex" />
-        )}
-      </Head>
-
-      <ProfileHeader>
-        {renderProfileImage()}
-        <div>
-          <h1 className="serlo-h1">{username}</h1>
-          {renderBadges()}
-        </div>
-        {motivation && (
-          <Motivation className="serlo-p text-1.5xl">
-            &quot;{motivation}&quot;
-          </Motivation>
-        )}
-        <ChatButton href={chatUrl} enabled={!isOwnProfile}>
-          <FontAwesomeIcon icon={faTelegramPlane} />{' '}
-          {strings.profiles.directMessage}
-        </ChatButton>
-      </ProfileHeader>
-
-      {description && (
-        <>
-          <h2 className="serlo-h2">{strings.profiles.aboutMe}</h2>
-          {renderArticle(description, `profile${id}`)}
-        </>
-      )}
-      <CommentArea id={id} noForms />
-      <aside className="mt-16 text-gray-400 text-sm mx-side">
-        {renderRoles()}
-        {lastLoginDate && (
-          <p>
-            {strings.profiles.lastLogin}:{' '}
-            <b>
-              <TimeAgo datetime={lastLoginDate} dateAsTitle />
-            </b>
-          </p>
-        )}
-      </aside>
+      {renderHeader()}
+      {renderDescription()}
+      <ProfileActivityGraphs values={activityByType} />
+      {renderRecentActivities()}
+      {renderRoles()}
       {renderUserTools()}
       {renderHowToEditImage()}
+      {renderHowToEditMotivation()}
     </>
   )
 
-  function renderBadges() {
-    if (!activeAuthor && !activeReviewer && !activeDonor) return null
-
+  function renderHeader() {
     return (
-      <BadgesContainer>
-        {activeReviewer &&
-          renderBadge({
-            Badge: <ReviewerBadge />,
-            name: strings.roles.reviewer,
-          })}
-        {activeAuthor &&
-          renderBadge({ Badge: <AuthorBadge />, name: strings.roles.author })}
-        {activeDonor &&
-          renderBadge({ Badge: <DonorBadge />, name: strings.roles.donor })}
-        {renderTimeBadge()}
-      </BadgesContainer>
+      <ProfileHeader className="mx-side mt-14 text-center sm:text-left">
+        {renderProfileImage()}
+        <div className="mt-5 sm:mt-0">
+          <h1 className="serlo-h1 mt-4 mb-3">{username}</h1>
+          <ProfileBadges userData={userData} date={date} />
+        </div>
+        <p
+          className="serlo-p text-1.5xl w-full mt-5 sm:mt-0"
+          style={{ gridArea: 'motivation' }}
+        >
+          {motivation && <>&quot;{motivation}&quot;</>}
+          {isOwnProfile && renderEditMotivationLink()}
+        </p>
+        <ProfileChatButton
+          userId={id}
+          username={username}
+          isOwnProfile={isOwnProfile}
+          chatUrl={chatUrl}
+          className="mx-auto sm:mx-0 mb-8"
+        />
+      </ProfileHeader>
     )
   }
 
-  function renderTimeBadge() {
-    const elapsed = new Date().getTime() - new Date(registerDate).getTime()
-    const yearsFloored = Math.floor(elapsed / (1000 * 3600 * 24 * 365))
-    if (yearsFloored < 1) return null
-
-    const fullYear = registerDate.getFullYear()
-
-    return renderBadge({
-      Badge: (
-        <>
-          <TimeBadgeNumber>
-            {fullYear === 2014 && (
-              <span className="text-lg align-text-top inline-block pt-1 pr-1">
-                &gt;
-              </span>
+  function renderProfileImage() {
+    return (
+      <figure
+        className="w-44 h-44 mx-auto sm:mx-0"
+        style={{ contain: 'content' }}
+      >
+        <img
+          src={imageUrl}
+          alt={`Profile image of ${username}`}
+          className="block rounded-full w-full h-full"
+        />
+        {isOwnProfile && (
+          <a
+            onClick={() => setShowImageModal(true)}
+            className={clsx(
+              'serlo-button serlo-make-interactive-green',
+              'block absolute right-1 bottom-1 w-8 h-8'
             )}
-            {yearsFloored}
-          </TimeBadgeNumber>
-          <TimeBadge />
-        </>
-      ),
-      name:
-        yearsFloored === 1
-          ? strings.profiles.yearWithSerlo
-          : strings.profiles.yearsWithSerlo,
-    })
+          >
+            <FontAwesomeIcon icon={faPencilAlt} />
+          </a>
+        )}
+      </figure>
+    )
   }
 
-  function renderBadge({ Badge, name }: { Badge: JSX.Element; name: string }) {
+  function renderDescription() {
+    if (!description) return null
     return (
-      <BadgeContainer>
-        {Badge}
-        <p className="serlo-p text-sm leading-tight">{name}</p>
-      </BadgeContainer>
+      <section>
+        <h2 className="serlo-h2">{strings.profiles.aboutMe}</h2>
+        {renderArticle(description, `profile${id}`)}
+      </section>
+    )
+  }
+
+  function renderRecentActivities() {
+    return (
+      <section>
+        <h2 className="serlo-h2">{strings.profiles.recentActivities}</h2>
+        <Events userId={id} perPage={5} />
+
+        <p className="serlo-p">
+          <Link
+            className="serlo-button serlo-make-interactive-primary mt-4"
+            href={`/event/history/${id}`}
+          >
+            Mehr anzeigen
+          </Link>
+        </p>
+      </section>
+    )
+  }
+
+  function renderRoles() {
+    return (
+      <aside className="mt-20 text-gray-500 text-sm mx-side">
+        <ProfileRoles roles={userData.roles} />
+        {lastLoginDate && (
+          <p>
+            {strings.profiles.lastLogin}:{' '}
+            <TimeAgo className="pl-2 font-bold" datetime={lastLoginDate} />
+          </p>
+        )}
+      </aside>
     )
   }
 
@@ -168,65 +169,9 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
     )
   }
 
-  function renderProfileImage() {
-    return (
-      <ProfileImageCage>
-        <ProfileImage src={imageUrl} />
-        {isOwnProfile && (
-          <ProfileImageEditButton onClick={() => setShowImageModal(true)}>
-            <FontAwesomeIcon icon={faPencilAlt} />
-          </ProfileImageEditButton>
-        )}
-      </ProfileImageCage>
-    )
-  }
-
-  function renderRoles() {
-    const [instanceRoles, otherRoles] = R.partition(
-      (role) => role.instance === null || role.instance === lang,
-      userData.roles
-    )
-
-    return (
-      <>
-        {instanceRoles.length > 0 && (
-          <p className="mb-5">
-            {replacePlaceholders(strings.profiles.instanceRoles, { lang })}{' '}
-            {instanceRoles.map((role, index) => (
-              <Fragment key={index}>{renderRole(role.role)}</Fragment>
-            ))}
-          </p>
-        )}
-        {otherRoles.length > 0 && (
-          <p className="mb-block">
-            {strings.profiles.otherRoles}{' '}
-            {otherRoles.map((role, index) => (
-              <Fragment key={index}>
-                {renderRole(`${role.instance ?? ''}: ${role.role}`)}
-              </Fragment>
-            ))}
-          </p>
-        )}
-      </>
-    )
-  }
-
-  function renderRole(text: string) {
-    return (
-      <span
-        className={clsx(
-          'text-white bg-gray-400 inline-block rounded-2xl font-bold',
-          'py-1 px-2 mx-1'
-        )}
-      >
-        {text}
-      </span>
-    )
-  }
-
   function renderHowToEditImage() {
     const { heading, description, steps } = strings.profiles.howToEditImage
-    const chatUrl = (
+    const chatLink = (
       <a className="serlo-link" href="https://community.serlo.org">
         community.serlo.org
       </a>
@@ -244,7 +189,6 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         className="serlo-link cursor-pointer"
         onClick={async () => {
           const cache = await caches.open('v1')
-
           await cache.delete(imageUrl)
           location.reload()
         }}
@@ -260,10 +204,10 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         title={heading}
       >
         <p className="serlo-p">
-          {replacePlaceholders(description, { chatUrl })}
+          {replacePlaceholders(description, { chatLink })}
         </p>
         <ol className="serlo-ol">
-          <li>{replacePlaceholders(steps.goToChat, { chatUrl })}</li>
+          <li>{replacePlaceholders(steps.goToChat, { chatLink })}</li>
           <li>{steps.signIn}</li>
           <li>{replacePlaceholders(steps.goToMyAccount, { myAccountLink })}</li>
           <li>{steps.uploadPicture}</li>
@@ -272,126 +216,58 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
       </ModalWithCloseButton>
     )
   }
+
+  function renderEditMotivationLink() {
+    if (lang !== 'de') return null
+    return (
+      <p className="serlo-p text-sm text-right ml-auto mt-3">
+        <a
+          onClick={() => setShowMotivationModal(true)}
+          className="serlo-link cursor-pointer"
+        >
+          <FontAwesomeIcon icon={faPencilAlt} />{' '}
+          {motivation
+            ? strings.profiles.motivation.edit
+            : strings.profiles.motivation.add}
+        </a>
+      </p>
+    )
+  }
+
+  function renderHowToEditMotivation() {
+    if (lang !== 'de') return null
+    const { heading, intro, privacy, toForm } = strings.profiles.motivation
+    const editUrl = `https://docs.google.com/forms/d/e/1FAIpQLSdb_My7YAVNA7ha9XnBcYCZDk36cOqgcWkBqowatbefX0IzEg/viewform?usp=pp_url&entry.14483495=${username}`
+
+    return (
+      <ModalWithCloseButton
+        isOpen={showMotivationModal}
+        onCloseClick={() => setShowMotivationModal(false)}
+        title={heading}
+      >
+        <p className="serlo-p">{intro}</p>
+        <p className="serlo-p">{privacy}</p>
+        <p className="serlo-p">
+          <a
+            href={editUrl}
+            className="serlo-button serlo-make-interactive-primary"
+          >
+            {toForm}
+          </a>
+        </p>
+      </ModalWithCloseButton>
+    )
+  }
 }
 
-const Motivation = styled.p`
-  grid-area: motivation;
-`
-
-const ChatButton = styled.a<{ enabled: boolean }>`
-  ${makeGreenButton}
-  background-color: ${(props) =>
-    props.enabled
-      ? props.theme.colors.brandGreen
-      : props.theme.colors.lighterBrandGreen};
-  display: block;
-  width: 175px;
-  text-align: center;
-  grid-area: chatButton;
-  align-self: self-start;
-  margin-top: 5px;
-
-  &:hover,
-  &:focus {
-    background-color: ${(props) =>
-      props.enabled
-        ? props.theme.colors.brand
-        : props.theme.colors.lighterblue};
-  }
-`
-
-const ProfileImageEditButton = styled.button`
-  ${makeGreenButton}
-  display: block;
-  position: absolute;
-  right: 2px;
-  bottom: 2px;
-  width: 2em;
-  height: 2em;
-  background-color: ${(props) => props.theme.colors.brandGreen};
-  color: ${(props) => props.theme.colors.white};
-
-  &:focus {
-    background-color: ${(props) => props.theme.colors.brand};
-  }
-`
-
-const ProfileImageCage = styled.figure`
-  width: 175px;
-  height: 175px;
-  contain: content;
-`
-
-const ProfileImage = styled.img`
-  display: block;
-  border-radius: 50%;
-  width: 100%;
-  height: 100%;
-`
-
-const BadgesContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-    justify-content: left;
-  }
-  ${makeMargin}
-`
-
-const BadgeContainer = styled.div`
-  margin-right: 30px;
-  width: 65px;
-  > svg {
-    height: 40px;
-  }
-  & > * {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-  }
-`
-
-const TimeBadgeNumber = styled.div`
-  position: absolute;
-  font-size: 1.8rem;
-  color: #333;
-  text-align: center;
-  width: 65px;
-  margin-top: 13px;
-`
-
 const ProfileHeader = styled.header`
-  ${makeMargin}
-  margin-top: 60px;
-  margin-bottom: 50px;
-
-  & p {
-    margin-bottom: 0;
-  }
-
   @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-    display: grid;
+    display: grid; //grid
     grid-template-columns: 175px auto;
     grid-template-rows: auto auto;
     grid-template-areas: 'image badges' 'chatButton motivation';
     row-gap: 20px;
     column-gap: 20px;
     place-items: center start;
-  }
-
-  @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
-    & > * {
-      margin-left: auto;
-      margin-right: auto;
-      text-align: center;
-      margin-top: 23px;
-    }
-  }
-
-  & ${BadgeContainer} > svg,
-  h1 {
-    margin-top: 15px;
-    margin-bottom: 10px;
   }
 `

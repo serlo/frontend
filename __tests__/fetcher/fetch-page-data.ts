@@ -17,12 +17,7 @@ import {
   coursePageUuidMock,
 } from '../../__fixtures__/api_mockdata'
 import { endpoint } from '@/api/endpoint'
-import {
-  Redirect,
-  SingleEntityPage,
-  TaxonomyPage,
-  UserPage,
-} from '@/data-types'
+import { Redirect, SingleEntityPage, TaxonomyPage } from '@/data-types'
 import { fetchPageData } from '@/fetcher/fetch-page-data'
 import { serloDomain } from '@/helper/serlo-domain'
 
@@ -378,7 +373,7 @@ describe('check all supported typenames with stored api-data', () => {
     ])
 
     expect(pageData.metaData?.title).toBe(
-      'Mathematik Aufgabengruppe - lernen mit Serlo!'
+      'Mathematik Aufgabe mit Teilaufgaben - lernen mit Serlo!'
     )
     expect(pageData.metaData?.contentType).toBe('exercisegroup')
     expect(pageData.metaData?.metaDescription).toBe(
@@ -400,9 +395,7 @@ describe('check all supported typenames with stored api-data', () => {
 
     const pageData = (await fetchPageData('/de/53209')) as SingleEntityPage
 
-    expect(pageData.metaData?.title).toBe(
-      'Gruppierte Aufgabe - lernen mit Serlo!'
-    )
+    expect(pageData.metaData?.title).toBe('Teilaufgabe - lernen mit Serlo!')
     expect(pageData.metaData?.contentType).toBe('groupedexercise')
     expect(pageData.metaData?.metaDescription).toBe(
       'Die Ruhelage der Funktion liegt auf der -Achse.Der Graph schneidet das Koordinatensystem im Nullpunkt, also handelt es sich um eine Sinusfunktion …'
@@ -517,27 +510,6 @@ describe('check all supported typenames with stored api-data', () => {
     expect(pageData.newsletterPopup).toBe(false)
     expect(pageData.kind).toBe('single-entity')
     expect(Array.isArray(pageData.entityData.content)).toBe(true)
-  })
-
-  test('typename: User', async () => {
-    givenApiReturnsUuid({
-      __typename: 'User',
-      id: 18981,
-      username: 'BestUser111',
-      description: JSON.stringify({
-        plugin: 'text',
-        state: [
-          {
-            type: 'p',
-            children: { text: 'a long description' },
-          },
-        ],
-      }),
-    })
-    const pageData = (await fetchPageData('/de/18981')) as Redirect
-
-    expect(pageData.kind).toBe('redirect')
-    expect(pageData.target).toBe('/user/18981/BestUser111')
   })
 })
 

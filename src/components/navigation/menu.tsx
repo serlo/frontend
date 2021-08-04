@@ -78,7 +78,7 @@ function MenuInner({
 
   useEffect(() => setMounted(true), [])
 
-  const lic = useLoggedInComponents()
+  const loggedInComponents = useLoggedInComponents()
 
   function onSubMenuInnerClick() {
     if (tippyRoot && tippyRoot !== undefined) tippyRoot.hide()
@@ -203,7 +203,7 @@ function MenuInner({
       if (!hasIcon) return null
 
       if (link.icon === 'notifications') {
-        const Comp = lic?.UnreadNotificationsCount
+        const Comp = loggedInComponents?.UnreadNotificationsCount
         if (Comp) return <Comp icon={menuIconMapping[link.icon]} />
       }
 
@@ -234,10 +234,12 @@ function MenuInner({
       <ul className="serlo-sub-list">
         {subEntries !== undefined &&
           subEntries.map((entry, i2) => {
-            const href =
-              entry.url === '/user/me' && auth
-                ? `/user/${auth.id}/${auth.username}`
-                : entry.url
+            const href = auth
+              ? entry.url.replace(
+                  '/user/me',
+                  `/user/${auth.id}/${auth.username}`
+                )
+              : entry.url
             return (
               <li key={entry.title} onClick={onSubMenuInnerClick}>
                 <SubLink href={href} path={['menu', i!, i2]}>

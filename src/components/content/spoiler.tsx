@@ -1,20 +1,48 @@
+import { ReactNode, useState } from 'react'
 import styled, { css } from 'styled-components'
 
 import { inputFontReset } from '@/helper/css'
+import { submitEventWithPath } from '@/helper/submit-event'
+import { NodePath } from '@/schema/article-renderer'
 
-export interface SpoilerTitleProps {
-  open: boolean
-  children: {}
-  onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
-  disabled?: boolean
+export interface SpoilerProps {
+  body: ReactNode
+  title: ReactNode
+  path: NodePath
 }
 
-export function SpoilerTitle({
+export function Spoiler({ body, title, path }: SpoilerProps) {
+  const [open, setOpen] = useState(false)
+  return (
+    <div className="flex flex-col mb-block mobile:mx-side">
+      <SpoilerTitle
+        onClick={() => {
+          setOpen(!open)
+          if (!open) {
+            submitEventWithPath('openspoiler', path)
+          }
+        }}
+        open={open}
+      >
+        <SpoilerToggle open={open} />
+        {title}
+      </SpoilerTitle>
+      {open && body}
+    </div>
+  )
+}
+
+function SpoilerTitle({
   open,
   children,
   onClick,
   disabled,
-}: SpoilerTitleProps) {
+}: {
+  open: boolean
+  children: {}
+  onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
+  disabled?: boolean
+}) {
   return (
     <StyledSpoilerTitle
       onClick={!disabled ? onClick : undefined}
@@ -25,6 +53,10 @@ export function SpoilerTitle({
       {children}
     </StyledSpoilerTitle>
   )
+}
+
+function SpoilerToggle({ open }: { open: boolean }) {
+  return <span className="inline w-4">{open ? '▾ ' : '▸ '} </span>
 }
 
 const StyledSpoilerTitle = styled.button<{

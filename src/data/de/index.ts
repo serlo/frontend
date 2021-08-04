@@ -37,9 +37,9 @@ export const instanceData = {
       coursePage: "Kursseite",
       event: "Veranstaltung",
       exercise: "Aufgabe",
-      exerciseGroup: "Aufgabengruppe",
+      exerciseGroup: "Aufgabe mit Teilaufgaben",
       folder: "Bereich",
-      groupedExercise: "Gruppierte Aufgabe",
+      groupedExercise: "Teilaufgabe",
       page: "Seite",
       solution: "Lösung",
       taxonomyTerm: "Taxonomie-Begriff",
@@ -59,7 +59,8 @@ export const instanceData = {
     pageTitles: {
       notifications: "Deine Benachrichtigungen",
       subscriptions: "Abonnements verwalten",
-      revisionHistory: "Bearbeitungsverlauf"
+      revisionHistory: "Bearbeitungsverlauf",
+      eventLog: "Aktivitäten"
     },
     roles: {
       donor: "Spender*in",
@@ -92,7 +93,7 @@ export const instanceData = {
       show: "anzeigen",
       hide: "ausblenden",
       prerequisite: "Für diese Aufgabe benötigst Du folgendes Grundwissen:",
-      task: "Aufgabe",
+      task: "Aufgabenstellung",
       right: "Richtig",
       wrong: "Leider nicht richtig",
       feedback: 'Feedback',
@@ -147,21 +148,28 @@ export const instanceData = {
       metaTitle: "Meta-Titel",
       metaDescription: "Meta-Beschreibung",
       diff: "Quelltext",
-      sidebyside: "Nebeneinander",
+      sidebyside: "Vergleich",
       currentVersion: "Akzeptierte Bearbeitung",
       thisVersion: "Diese Bearbeitung",
       currentNotice: "Das ist die aktuell akzeptierte Bearbeitung.",
       rejectedNotice: "Diese Bearbeitung wurde nicht akzeptiert.",
       noCurrentNotice: "Es gibt noch keine akzeptierte Bearbeitung.",
+      unknownNotice: "Diese Revision war vorher die Akzeptierte oder wurde nie überprüft.",
       by: "Von",
       parentFallbackLink: "Zum übergeordneten Inhalt",
-      hasChanges: "In diesem Bereich hat es Änderungen gegeben"
+      hasChanges: "In diesem Bereich hat es Änderungen gegeben",
+      positionForGrouped: "Diese %exercise_or_solution% ist Teil von %title%.",
+      helpLink: "Reviewer-Hilfe"
     },
     revisionHistory: {
       changes: "Änderungen",
       author: "Autor*in",
       date: "Wann?",
-      createNew: "Erstelle eine neue Bearbeitung von dieser Bearbeitung aus"
+      edit: "Überarbeiten",
+      editLabel: "Erstelle eine Bearbeitung von dieser Bearbeitung aus",
+      view: "Anzeigen",
+      viewLabel: "Diese Bearbeitung anzeigen",
+      status: 'Status'
     },
     errors: {
       title: "😬 Auch Webseiten machen mal Fehler…",
@@ -187,11 +195,28 @@ export const instanceData = {
       instanceRoles: "Rollen auf %lang%.serlo.org:",
       otherRoles: "Andere Rollen:",
       directMessage: "Direktnachricht",
+      goToChat: "Zum Chat",
+      registerChat: "Beim Chat anmelden",
+      inviteToChat: "Zum Chat einladen",
+      invitation: "💬 %username% hat dich in den Serlo Community Chat eingeladen!\nGehe zu %chatlink% um dich anzumelden.",
+      inviteModal: {
+        part1: "%username% ist noch nicht in unserem Community-Chat unter %chatLink% aktiv.",
+        part2: "Du kannst %username% zum Chat einladen, um Direktnachrichten zu senden:",
+        button: "Einladung senden"
+      },
+      activityGraph: {
+        edits: "Bearbeitungen",
+        comments: "Kommentare",
+        reviews: "Reviews",
+        taxonomy: "Taxonomie",
+        legendary: "💙 Oh wow! 💙",
+        untilNextLevel: "%amount% mehr um diesen Kreis zu füllen 🎉"
+      },
       howToEditImage: {
         heading: "So kannst du dein Profilbild ändern",
-        description: "Wir benutzen die Bilder von %chatUrl% als Profilbilder. Um dein Bild zu ändern musst du diesen Schritten folgen:",
+        description: "Wir benutzen die Bilder von %chatLink% als Profilbilder. Um dein Bild zu ändern musst du diesen Schritten folgen:",
         steps: {
-          goToChat: "Gehe zu %chatUrl%.",
+          goToChat: "Gehe zu %chatLink%.",
           signIn: "Melde dich an.",
           goToMyAccount: "Gehe im Usermenü auf %myAccountLink%.",
           myAccount: "Mein Konto",
@@ -199,6 +224,14 @@ export const instanceData = {
           refreshPage: "Komme hierher zurück und aktualisiere dein Bild mit %refreshLink%.",
           refreshLink: "diesem magischem Link"
         }
+      },
+      motivation: {
+        edit: "Motivationstext ändern",
+        add: "Motivation hinzufügen",
+        heading: "So kannst du deinen Motivationstext ändern",
+        intro: "Motivationen sind eine neue Funktion, die wir aktuell testen. Um deinen Motivationstext zu ändern musst du ein kurzes Formular ausfüllen.",
+        privacy: "Das Formular und die Datenspeicherung werden von Google angeboten und persönliche Daten werden zu diesem Anbieter übertragen werden, wenn du dieses Feature benutzt.",
+        toForm: "Motivationsformular"
       }
     },
     notices: {
@@ -221,6 +254,38 @@ export const instanceData = {
     keys: {
       ctrl: "Strg",
       return: "Enter"
+    },
+    eventLog: {
+      currentEvents: "Neuste Aktivitäten",
+      oldestEvents: "%amount% älteste Aktivitäten",
+      globalDescription: "Alle Aktivitäten auf %lang%.serlo.org "
+    },
+    events: {
+      setThreadStateArchived: "%actor% hat eine %thread% archiviert.",
+      setThreadStateUnarchived: "%actor% hat eine %thread% aus dem Archiv geholt.",
+      createComment: "%actor% hat einen %comment% in einer %thread% erstellt.",
+      createThread: "%actor% hat eine %thread% in einem %object% erstellt.",
+      createEntity: "%actor% hat %object% erstellt.",
+      setLicense: "%actor% hat die Lizenz von %repository% geändert.",
+      createEntityLink: "%actor% hat %child% mit %parent% verknüpft.",
+      removeEntityLink: "%actor% hat die Verknüpfung von %child% mit %parent% entfernt.",
+      createEntityRevision: "%actor% hat eine %revision% von %entity% erstellt.",
+      checkoutRevision: "%actor% hat eine %revision% von %repository% übernommen.",
+      rejectRevision: "%user% hat eine %revision% in %repository% nicht übernommen.",
+      createTaxonomyLink: "%actor% hat %child% in %parent% eingeordnet.",
+      removeTaxonomyLink: "%actor% hat %child% aus %parent% entfernt.",
+      createTaxonomyTerm: "%actor% hat den %term% erstellt.",
+      setTaxonomyTerm: "%actor% hat den %term% geändert.",
+      setTaxonomyParentDeleted: "%actor% hat den Elternknoten von %child% entfernt.",
+      setTaxonomyParentChangedFrom: "%actor% hat den Elternknoten von %child% von %previousparent% auf %parent% geändert.",
+      setTaxonomyParentChanged: "%actor% hat den Elternknoten von %child% auf %parent% geändert.",
+      setUuidStateTrashed: "%actor% hat %object% in den Papierkorb verschoben.",
+      setUuidStateRestored: "%actor% hat %object% aus dem Papierkorb wieder hergestellt.",
+      inviteToChat: "Du wurdest in den Chat eingeladen! %break% Gehe zu %chatLink% , um mit %actor% und anderen zu chatten.",
+      entityPlaceholderFallback: "Inhalt"
+    },
+    actions: {
+      loadMore: "Weitere laden"
     }
   }
 };
@@ -285,7 +350,7 @@ export const loggedInData = {
       wholeCourse: "Gesamter Kurs",
       copyItems: "Element kopieren",
       moveItems: "Elemente verschieben",
-      addGroupedTextExercise: "Gruppierte Textaufgabe hinzufügen",
+      addGroupedTextExercise: "Textaufgabe mit Teilaufgaben hinzufügen",
       changeLicense: "Lizenz auswählen",
       subscribe: "Abonnieren",
       subscribeNotifications: "Benachrichtigungen empfangen",
@@ -298,6 +363,7 @@ export const loggedInData = {
       restoreContent: "Aus dem Papierkorb wiederherstellen",
       sort: "Unterelemente sortieren",
       edit: "Überarbeiten",
+      unrevisedEdit: "Zeige neue Bearbeitungen",
       organize: "Baumstruktur bearbeiten",
       moveToGroupedTextExercise: "Inhalt zu anderer Gruppe verschieben",
       moveToTextExercise: "Inhalt zu anderer Textaufgabe verschieben",
@@ -307,33 +373,11 @@ export const loggedInData = {
       directLink: "Direkter Link zu diesem Inhalt"
     },
     notifications: {
-      loadMore: "Weitere laden",
       hide: "Benachrichtigungen für diesen Inhalt nicht mehr anzeigen.",
       setToRead: "Benachrichtigung als gelesen markieren.",
       setAllToRead: "Alle sichtbaren gelesen",
       showNew: "Neu",
-      showRead: "Gelesen",
-      setThreadStateArchived: "%actor% hat eine %thread% archiviert.",
-      setThreadStateUnarchived: "%actor% hat eine %thread% aus dem Archiv geholt.",
-      createComment: "%actor% hat einen %comment% in einer %thread% erstellt.",
-      createThread: "%actor% hat eine %thread% in einem %object% erstellt.",
-      createEntity: "%actor% hat %object% erstellt.",
-      setLicense: "%actor% hat die Lizenz von %repository% geändert.",
-      createEntityLink: "%actor% hat %child% mit %parent% verknüpft.",
-      removeEntityLink: "%actor% hat die Verknüpfung von %child% mit %parent% entfernt.",
-      createEntityRevision: "%actor% hat eine %revision% von %entity% erstellt.",
-      checkoutRevision: "%actor% hat eine %revision% von %repository% übernommen.",
-      rejectRevision: "%user% hat eine %revision% in %repository% nicht übernommen.",
-      createTaxonomyLink: "%actor% hat %child% in %parent% eingeordnet.",
-      removeTaxonomyLink: "%actor% hat %child% aus %parent% entfernt.",
-      createTaxonomyTerm: "%actor% hat den %term% erstellt.",
-      setTaxonomyTerm: "%actor% hat den %term% geändert.",
-      setTaxonomyParentDeleted: "%actor% hat den Elternknoten von %child% entfernt.",
-      setTaxonomyParentChangedFrom: "%actor% hat den Elternknoten von %child% von %previousparent% auf %parent% geändert.",
-      setTaxonomyParentChanged: "%actor% hat den Elternknoten von %child% auf %parent% geändert.",
-      setUuidStateTrashed: "%actor% hat %object% in den Papierkorb verschoben.",
-      setUuidStateRestored: "%actor% hat %object% aus dem Papierkorb wieder hergestellt.",
-      entityPlaceholderFallback: "Inhalt"
+      showRead: "Gelesen"
     },
     subscriptions: {
       mail: "E-Mails",
@@ -351,8 +395,8 @@ export const loggedInData = {
         explanation: "Bitte gib der Autor*in ein bisschen Feedback."
       },
       reject: {
-        action: "Ablehnen",
-        title: "Bearbeitung ablehnen",
+        action: "Nicht akzeptieren",
+        title: "Bearbeitung nicht akzeptieren",
         explanation: "Bitte sag der Bearbeiter*in, warum die Änderung nicht angenommen wird."
       },
       confirm: "Bestätigen"
