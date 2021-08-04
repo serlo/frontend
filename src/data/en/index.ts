@@ -103,6 +103,7 @@ export const instanceData = {
       check: 'Check',
       yourAnswer: 'Your answer…',
       chooseOption: 'Click on one of the options.',
+      printModeChooseOption: 'Check one of the options.',
       trashedNotice: 'This content is marked for deletion.',
       strategy: 'Solution Strategy',
       picture: 'Picture',

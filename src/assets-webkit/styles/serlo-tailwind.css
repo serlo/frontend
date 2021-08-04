@@ -239,9 +239,10 @@
         page-break-inside: avoid;
       }
       .serlo-exercise-wrapper {
-        margin-top: -1rem;
+        margin-top: 0;
         border-bottom: 1px solid black;
-        padding-bottom: 2rem;
+        padding-bottom: 1rem;
+        margin-bottom: 2rem;
       }
       .serlo-ul,
       .serlo-ol {

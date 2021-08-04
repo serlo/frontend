@@ -9,6 +9,7 @@ import { Feedback } from './feedback'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EdtrPluginScMcExercise } from '@/data-types'
 import { makeMargin, makePrimaryButton } from '@/helper/css'
+import { isPrintMode } from '@/helper/print-mode'
 import { submitEventWithPath } from '@/helper/submit-event'
 import { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
 
@@ -107,6 +108,8 @@ export function ScMcExercise({
         >
           {selected !== undefined
             ? strings.content.check
+            : isPrintMode
+            ? strings.content.printModeChooseOption
             : strings.content.chooseOption}
         </CheckButton>
       </Container>
