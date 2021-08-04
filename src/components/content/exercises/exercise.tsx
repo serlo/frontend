@@ -38,7 +38,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
     setLoaded(true)
   }, [])
 
-  const lic = useLoggedInComponents()
+  const loggedInComponents = useLoggedInComponents()
   const isRevisionView =
     path && typeof path[0] === 'string' && path[0].startsWith('revision')
 
@@ -73,7 +73,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
     const license = node.solution.license && !node.solution.license.default && (
       <LicenseNotice minimal data={node.solution.license} type="solution" />
     )
-    const ExerciseAuthorTools = lic?.ExerciseAuthorTools
+    const ExerciseAuthorTools = loggedInComponents?.ExerciseAuthorTools
     const authorTools = ExerciseAuthorTools && loaded && auth.current && (
       <ExerciseAuthorTools
         data={{
@@ -81,6 +81,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
           id: node.context.solutionId!,
           parentId: node.context.id,
           grouped: node.grouped,
+          unrevisedRevisions: node.unrevisedRevisions,
         }}
       />
     )
@@ -173,16 +174,16 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
 
   function renderToolsButton() {
     if (isRevisionView) return null
-
-    const Comp = lic?.ExerciseAuthorTools
+    const ExerciseAuthorTools = loggedInComponents?.ExerciseAuthorTools
     return (
       <>
-        {loaded && auth.current && Comp && (
-          <Comp
+        {loaded && auth.current && ExerciseAuthorTools && (
+          <ExerciseAuthorTools
             data={{
               type: '_ExerciseInline',
               id: node.context.id,
               grouped: node.grouped,
+              unrevisedRevisions: node.unrevisedRevisions,
             }}
           />
         )}

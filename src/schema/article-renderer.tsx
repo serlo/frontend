@@ -394,6 +394,7 @@ function renderElement({
         positionOnPage={element.positionOnPage}
         id={element.context.id}
         href={element.href}
+        unrevisedRevisions={element.unrevisedRevisions}
       >
         {children}
       </ExerciseGroup>

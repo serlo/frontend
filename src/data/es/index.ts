@@ -154,6 +154,7 @@ export const instanceData = {
       currentNotice: "Esta es la versión aceptada actualmente.",
       rejectedNotice: 'This revision was not accepted.',
       noCurrentNotice: 'There is no accepted revision yet.',
+      unknownNotice: 'This revision was accepted once or was never reviewed.',
       by: "Por",
       parentFallbackLink: 'To parent content',
       hasChanges: 'There have been changes in this area',
@@ -164,7 +165,11 @@ export const instanceData = {
       changes: "Cambios",
       author: "Autor",
       date: "Fecha",
-      createNew: "Crear una nueva revisión a partir de esta revisión específica"
+      edit: 'Edit',
+      editLabel: 'Create a new revision starting from this specific revision',
+      view: 'Show',
+      viewLabel: 'Show this revision',
+      status: 'Status'
     },
     errors: {
       title: "😬 Los sitios web a veces cometen errores…",
@@ -194,13 +199,18 @@ export const instanceData = {
       registerChat: 'Register for Chat',
       inviteToChat: 'Invite to chat',
       invitation: '💬 %username% has invited you to the Serlo community chat!\nGo to %chatlink% to join.',
+      inviteModal: {
+        part1: '%username% is not yet active in our community chat at %chatLink%.',
+        part2: 'You can invite %username% to the chat to send direct messages:',
+        button: 'Send invitation'
+      },
       activityGraph: {
         edits: "Edits",
         comments: "Comments",
         reviews: "Reviews",
         taxonomy: "Taxonomy",
-        levelTitle: "Level %level% of %max_level%  |  Next level at %level_ceil% 🎉",
-        noLevel: "No level yet"
+        legendary: "💙 Just wow! 💙",
+        untilNextLevel: "%amount% more to complete this circle 🎉"
       },
       howToEditImage: {
         heading: "Como editar tu foto del perfil",
@@ -271,6 +281,7 @@ export const instanceData = {
       setTaxonomyParentChanged: "%actor% changed parent of %child% to %parent%.",
       setUuidStateTrashed: "%actor% trashed %object%.",
       setUuidStateRestored: "%actor% restored %object%.",
+      inviteToChat: "You have been invited to the Chat! %break% Go to %chatLink% to chat with %actor% and others.",
       entityPlaceholderFallback: "Content"
     },
     actions: {
@@ -352,6 +363,7 @@ export const loggedInData = {
       restoreContent: "Restaurar de la papelera",
       sort: "Ordenar los niños",
       edit: "Modificar",
+      unrevisedEdit: 'Show unrevised revisions',
       organize: "Organizar",
       moveToGroupedTextExercise: "Mover contenido a otro grupo de ejercicios de texto",
       moveToTextExercise: "Mover contenido a otro ejercicio de texto",

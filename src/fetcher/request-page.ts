@@ -381,6 +381,7 @@ export async function requestPage(
           previousPageUrl: pages[currentPageIndex - 2]?.url,
         },
         unrevisedRevisions: uuid.revisions?.totalCount,
+        unrevisedCourseRevisions: uuid.course.revisions?.totalCount,
       },
       metaData: {
         title,

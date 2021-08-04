@@ -11,11 +11,18 @@ import { NodePath } from '@/schema/article-renderer'
 export interface UserLinkProps {
   user: FrontendUserData
   withIcon?: boolean
+  noBadges?: boolean
   className?: string
   path?: NodePath
 }
 
-export function UserLink({ user, withIcon, className, path }: UserLinkProps) {
+export function UserLink({
+  user,
+  withIcon,
+  noBadges,
+  className,
+  path,
+}: UserLinkProps) {
   const { strings } = useInstanceData()
 
   return (
@@ -27,7 +34,7 @@ export function UserLink({ user, withIcon, className, path }: UserLinkProps) {
       >
         {withIcon && <UserImage src={getAvatarUrl(user.username)} />}
         {user.username}
-        {renderBadges()}
+        {!noBadges && renderBadges()}
       </Link>
     </>
   )

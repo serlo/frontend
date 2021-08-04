@@ -78,7 +78,7 @@ function MenuInner({
 
   useEffect(() => setMounted(true), [])
 
-  const lic = useLoggedInComponents()
+  const loggedInComponents = useLoggedInComponents()
 
   function onSubMenuInnerClick() {
     if (tippyRoot && tippyRoot !== undefined) tippyRoot.hide()
@@ -203,7 +203,7 @@ function MenuInner({
       if (!hasIcon) return null
 
       if (link.icon === 'notifications') {
-        const Comp = lic?.UnreadNotificationsCount
+        const Comp = loggedInComponents?.UnreadNotificationsCount
         if (Comp) return <Comp icon={menuIconMapping[link.icon]} />
       }
 

@@ -17,6 +17,8 @@ export interface AuthorToolsData {
   grouped?: boolean
   trashed?: boolean
   checkoutRejectButtons?: JSX.Element
+  unrevisedRevisions?: number
+  unrevisedCourseRevisions?: number
 }
 
 export interface AuthorToolsHoverMenuProps {
@@ -37,6 +39,8 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
 
   if (!loggedInData) return null
   const loggedInStrings = loggedInData.strings
+  const hasUnrevised =
+    data.unrevisedRevisions !== undefined && data.unrevisedRevisions > 0
 
   if (data.type == 'CoursePage') {
     return renderCoursePage()
@@ -62,7 +66,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
         return [
           Tool.Abo,
           Tool.PageConvert,
-          Tool.PageHistory,
+          Tool.History,
           Tool.Log,
           Tool.PageSetting,
         ]
@@ -86,16 +90,21 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
   }
 
   function renderCoursePage() {
+    const hasCourseRevisions =
+      data.unrevisedCourseRevisions && data.unrevisedCourseRevisions > 0
+
     return (
       <ul className="serlo-sub-list-hover">
         <Tippy
           {...tippyDefaultProps}
           content={
             <ul className="serlo-sub-list-hover">
+              {/* Author tools for this course page */}
               <AuthorTools
                 entityId={data.id}
                 data={data}
                 tools={[
+                  hasUnrevised ? Tool.UnrevisedEdit : Tool.Edit,
                   Tool.Abo,
                   Tool.History,
                   Tool.MoveCoursePage,
@@ -118,12 +127,13 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
           {...tippyDefaultProps}
           content={
             <ul className="serlo-sub-list-hover">
+              {/* Author tools for course */}
               <AuthorTools
                 data={data}
                 tools={[
-                  Tool.Edit,
-                  Tool.Abo,
+                  hasCourseRevisions ? Tool.UnrevisedEdit : Tool.Edit,
                   Tool.History,
+                  Tool.Abo,
                   Tool.AddCoursePage,
                   Tool.Sort,
                   Tool.Curriculum,
@@ -166,7 +176,9 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
         <AuthorTools
           entityId={data.id}
           data={data}
-          tools={[Tool.Edit, Tool.History]}
+          tools={
+            hasUnrevised ? [Tool.UnrevisedEdit] : [Tool.Edit, Tool.History]
+          }
         />
 
         {data.type == '_ExerciseGroupInline' && (

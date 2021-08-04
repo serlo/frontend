@@ -154,6 +154,7 @@ export const instanceData = {
       currentNotice: "यह वर्तमान में स्वीकृत संस्करण है।",
       rejectedNotice: 'This revision was not accepted.',
       noCurrentNotice: 'There is no accepted revision yet.',
+      unknownNotice: 'This revision was accepted once or was never reviewed.',
       by: "द्वारा",
       parentFallbackLink: 'To parent content',
       hasChanges: 'There have been changes in this area',
@@ -164,7 +165,11 @@ export const instanceData = {
       changes: "परिवर्तन",
       author: "लेखक",
       date: "दिनांक",
-      createNew: "इस विशिष्ट संशोधन से प्रारंभ एक नया संशोधन बनाएं"
+      edit: 'Edit',
+      editLabel: 'Create a new revision starting from this specific revision',
+      view: 'Show',
+      viewLabel: 'Show this revision',
+      status: 'Status'
     },
     errors: {
       title: "😬 वेबसाइटें कभी-कभी गलतियाँ करती हैं",
@@ -194,13 +199,18 @@ export const instanceData = {
       registerChat: 'Register for Chat',
       inviteToChat: 'Invite to chat',
       invitation: '💬 %username% has invited you to the Serlo community chat!\nGo to %chatlink% to join.',
+      inviteModal: {
+        part1: '%username% is not yet active in our community chat at %chatLink%.',
+        part2: 'You can invite %username% to the chat to send direct messages:',
+        button: 'Send invitation'
+      },
       activityGraph: {
         edits: "Edits",
         comments: "Comments",
         reviews: "Reviews",
         taxonomy: "Taxonomy",
-        levelTitle: "Level %level% of %max_level%  |  Next level at %level_ceil% 🎉",
-        noLevel: "No level yet"
+        legendary: "💙 Just wow! 💙",
+        untilNextLevel: "%amount% more to complete this circle 🎉"
       },
       howToEditImage: {
         heading: 'How to edit your profile picture',
@@ -271,6 +281,7 @@ export const instanceData = {
       setTaxonomyParentChanged: "%actor% changed parent of %child% to %parent%.",
       setUuidStateTrashed: "%actor% trashed %object%.",
       setUuidStateRestored: "%actor% restored %object%.",
+      inviteToChat: "You have been invited to the Chat! %break% Go to %chatLink% to chat with %actor% and others.",
       entityPlaceholderFallback: "Content"
     },
     actions: {
@@ -352,6 +363,7 @@ export const loggedInData = {
       restoreContent: "कचरे से पुनर्स्थापित करें",
       sort: "सोर्ट चिल्ड्रन",
       edit: "संपादित",
+      unrevisedEdit: 'Show unrevised revisions',
       organize: "आयोजन",
       moveToGroupedTextExercise: "सामग्री को अन्य समूहीकृत-पाठ-व्यायाम में ले जाएँ",
       moveToTextExercise: "सामग्री को अन्य पाठ-व्यायाम में ले जाएँ",

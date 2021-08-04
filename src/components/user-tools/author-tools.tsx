@@ -29,6 +29,7 @@ export enum Tool {
   CopyItems = 'copyItems',
   Curriculum = 'curriculum',
   Edit = 'edit',
+  UnrevisedEdit = 'unrevisedEdit',
   History = 'history',
   Log = 'log',
   MoveCoursePage = 'moveCoursePage',
@@ -37,7 +38,6 @@ export enum Tool {
   NewEntitySubmenu = 'newEntitySubmenu',
   Organize = 'organize',
   PageConvert = 'pageConvert',
-  PageHistory = 'pageHistory',
   PageSetting = 'pageSetting',
   Sort = 'sort',
   SortEntities = 'sortEntities',
@@ -107,6 +107,10 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
       url: `/entity/repository/add-revision/${entityId}`,
       canDo: canDo(Uuid.create('EntityRevision')),
     },
+    unrevisedEdit: {
+      url: `/entity/repository/history/${entityId}`,
+      canDo: canDo(Uuid.create('EntityRevision')),
+    },
     curriculum: {
       url: `/entity/taxonomy/update/${entityId}`,
       title: loggedInStrings.authorMenu.editAssignments,
@@ -124,11 +128,6 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
     newEntitySubmenu: {
       renderer: renderNewEntity,
       canDo: canDo(Uuid.create('Entity')),
-    },
-    pageHistory: {
-      url: `/page/revision/revisions/${data.id}`,
-      title: loggedInStrings.authorMenu.history,
-      canDo: true,
     },
     pageSetting: {
       url: `/page/update/${data.id}`,
