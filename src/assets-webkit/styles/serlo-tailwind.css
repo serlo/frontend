@@ -239,8 +239,16 @@
         page-break-inside: avoid;
       }
       .serlo-exercise-wrapper {
+        margin-top: -1rem;
         border-bottom: 1px solid black;
         padding-bottom: 2rem;
+      }
+      .serlo-ul,
+      .serlo-ol {
+        list-style-type: initial;
+        li:before {
+          display: none;
+        }
       }
     }
     .header-breadcrumbs,
