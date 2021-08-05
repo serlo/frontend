@@ -7,6 +7,7 @@ import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { Event } from '@/components/user/event'
 import { useInstanceData } from '@/contexts/instance-context'
 import { sharedEventFragments } from '@/fetcher/query-fragments'
+import { Instance } from '@/fetcher/query-types'
 
 interface EventsProps {
   userId?: number
@@ -23,14 +24,15 @@ export function Events({
   moreButton,
   oldest,
 }: EventsProps) {
-  const { strings } = useInstanceData()
+  const { lang, strings } = useInstanceData()
 
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { data, error, loadMore, loading } = useEventsFetch(
     userId,
     objectId,
     perPage,
-    oldest
+    oldest,
+    lang as Instance
   )
 
   return (
@@ -76,13 +78,15 @@ function useEventsFetch(
   actorId?: number,
   objectId?: number,
   amount?: number,
-  oldest?: boolean
+  oldest?: boolean,
+  instance?: Instance
 ) {
   return useGraphqlSwrPaginationWithAuth<EventData>({
     query: eventsQuery,
     variables: {
       actorId,
       objectId,
+      instance,
       first: oldest ? undefined : amount ?? 20,
       last: oldest ? amount ?? 20 : undefined,
     },
@@ -100,6 +104,7 @@ const eventsQuery = gql`
   query getEventData(
     $actorId: Int
     $objectId: Int
+    $instance: Instance
     $first: Int
     $last: Int
     $after: String
@@ -107,6 +112,7 @@ const eventsQuery = gql`
     events(
       actorId: $actorId
       objectId: $objectId
+      instance: $instance
       first: $first
       last: $last
       after: $after
