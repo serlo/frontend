@@ -251,6 +251,9 @@
           display: none;
         }
       }
+      .serlo-ol {
+        list-style-type: decimal;
+      }
     }
     .header-breadcrumbs,
     a,
