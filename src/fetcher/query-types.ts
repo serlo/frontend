@@ -131,7 +131,7 @@ export interface BareExerciseGroup extends Entity {
   currentRevision?: GraphQL.Maybe<
     Pick<GraphQL.ExerciseGroupRevision, 'content'>
   >
-  revisions: {
+  revisions?: {
     totalCount: number
   }
   exercises: BareExercise[]
