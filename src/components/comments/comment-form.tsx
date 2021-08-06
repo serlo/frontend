@@ -47,7 +47,7 @@ export function CommentForm({
     plugins: {
       suggestions: true,
       math: true,
-      code: false, // rendering not working yet
+      code: true,
       headings: false,
       lists: true,
       colors: true,
@@ -132,6 +132,14 @@ const StyleWrap = styled.div`
 
   a {
     text-decoration: underline;
+  }
+
+  code {
+    background-color: ${(props) => props.theme.colors.lightBlueBackground};
+    color: ${(props) => props.theme.colors.brand};
+    border-radius: 2px;
+    font-size: 1rem;
+    padding: 2px;
   }
 
   // overwrite some edtr.io styles
