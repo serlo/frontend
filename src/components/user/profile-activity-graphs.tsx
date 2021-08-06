@@ -1,11 +1,11 @@
+import { UserActivityByType } from '@serlo/api'
 import clsx from 'clsx'
 
 import { ProfileActivityGraph } from '@/components/user/profile-activity-graph'
 import { useInstanceData } from '@/contexts/instance-context'
-import { User } from '@/fetcher/query-types'
 
 interface ProfileActivityGraphsProps {
-  values: User['activityByType']
+  values: UserActivityByType
 }
 
 export function ProfileActivityGraphs({ values }: ProfileActivityGraphsProps) {
@@ -25,7 +25,10 @@ export function ProfileActivityGraphs({ values }: ProfileActivityGraphsProps) {
     </section>
   )
 
-  function renderGraph(key: keyof User['activityByType'], maxValue: number) {
+  function renderGraph(
+    key: keyof Omit<UserActivityByType, '__typename'>,
+    maxValue: number
+  ) {
     const value = values[key]
     if (value === 0) return null
     return (

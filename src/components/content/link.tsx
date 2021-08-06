@@ -42,7 +42,6 @@ export function isLegacyLink(_href: string) {
     _href.startsWith('/auth/') ||
     _href.startsWith('/api/auth') ||
     _href.startsWith('/entity') ||
-    _href.startsWith('/event/history') ||
     _href.startsWith('/page') ||
     _href.startsWith('/taxonomy') ||
     _href.startsWith('/discussions') ||

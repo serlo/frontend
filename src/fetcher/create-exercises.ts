@@ -148,6 +148,6 @@ export function createExerciseGroup(
       id: uuid.id,
     },
     href: uuid.alias ? uuid.alias : undefined,
-    unrevisedRevisions: uuid.revisions.totalCount,
+    unrevisedRevisions: uuid.revisions?.totalCount,
   }
 }
