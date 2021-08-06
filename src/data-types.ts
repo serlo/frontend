@@ -386,6 +386,7 @@ export interface FrontendTextNode {
   color?: FrontendTextColor
   em?: boolean
   strong?: boolean
+  code?: boolean
   children?: undefined
 }
 
