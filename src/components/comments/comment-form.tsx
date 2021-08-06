@@ -50,7 +50,7 @@ export function CommentForm({
       code: false, // rendering not working yet
       headings: false,
       lists: true,
-      colors: false, // ui not working yet
+      colors: true,
     },
     registry: [],
   } as TextConfig)
@@ -86,7 +86,7 @@ export function CommentForm({
       className={clsx(
         'mx-side mt-4 mb-16 flex items-center rounded-2xl',
         'bg-brandgreen-lighter focus-within:bg-brandgreen-light',
-        'transition-colors duration-200 ease-in py-1 overflow-hidden'
+        'transition-colors duration-200 ease-in py-1'
       )}
       onKeyDown={onKeyDown}
       ref={editorWrapRef}
@@ -94,7 +94,7 @@ export function CommentForm({
       <Editor
         onChange={(event) => {
           commentState.current = event.getDocument() as EdtrPluginText
-        }} // @ts-expect-error think I followed edtr-io example, so maybe outdated code in there?
+        }} // @ts-expect-error think I followed edtr-io example, maybe outdated code in there?
         plugins={{ text: textPlugin }}
         initialState={initialState}
       />
@@ -134,6 +134,7 @@ const StyleWrap = styled.div`
     text-decoration: underline;
   }
 
+  // overwrite some edtr.io styles
   > div {
     ${inputFontReset}
     width: 100%;
@@ -146,34 +147,15 @@ const StyleWrap = styled.div`
       margin-bottom: 0 !important;
     }
 
+    /* style placeholder */
     span[contenteditable='false'] {
       color: ${(props) => props.theme.colors.brandGreen} !important;
       opacity: 1 !important;
     }
 
-    /* TODO: expose floating toolbar setting in edtr-io, maybe add some way to style the toolbar from "the outside" */
+    /* hide bottom toolbar*/
     > div > div > div > div > div:first-child {
-      margin-left: 7rem !important;
-      position: absolute !important;
-      height: fit-content !important;
-      top: auto !important;
-      left: 0 !important;
-      opacity: 1 !important;
-      bottom: -4.2rem !important;
-      display: block !important;
-
-      div:first-child {
-        margin-left: -7.6rem;
-        margin-top: -3.25rem;
-      }
-
-      div:nth-child(2) {
-        display: none;
-      }
+      opacity: 0;
     }
-
-    /* div[data-slate-editor='true'] {
-      
-    } */
   }
 `
