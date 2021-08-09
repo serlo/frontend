@@ -176,7 +176,9 @@ export const instanceData = {
       supportLinks: 'Support links for reviewing',
       guideline: 'Guideline for reviewing',
       discussionList: 'List of all discussions',
-      questionnaire: 'Questionnaire for reviewers'
+      questionnaire: 'Questionnaire for reviewers',
+      showMoreEntities: 'Show all in %subject%',
+      showMoreRevisions: 'Show %number% more…'
     },
     errors: {
       title: '😬 Websites make mistakes sometimes…',
