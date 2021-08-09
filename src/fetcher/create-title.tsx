@@ -8,6 +8,7 @@ import {
   getServerSideStrings,
   getInstanceDataByLang,
 } from '@/helper/feature-i18n'
+import { getTranslatedType } from '@/helper/get-translated-type'
 
 export function createTitle(uuid: QueryResponse, instance: Instance): string {
   const instanceData = getServerSideStrings(instance)
@@ -29,7 +30,8 @@ export function getRawTitle(
   if (isRevision(uuid)) {
     //good enough for now
     return (
-      'Revision: ' + getTranslatedType(uuid.__typename.replace('Revision', ''))
+      'Revision: ' +
+      getTranslatedType(strings, uuid.__typename.replace('Revision', ''))
     )
   }
 
@@ -48,14 +50,14 @@ export function getRawTitle(
   if (uuid.__typename === 'Exercise' || uuid.__typename === 'ExerciseGroup') {
     const subject =
       uuid.taxonomyTerms.nodes?.[0]?.navigation?.path.nodes[0].label
-    const typenameString = getTranslatedType(uuid.__typename)
+    const typenameString = getTranslatedType(strings, uuid.__typename)
     if (!subject) return typenameString
     return subject + ' ' + typenameString
   }
 
   if (uuid.__typename === 'GroupedExercise') {
     //good enough for now
-    return getTranslatedType(uuid.__typename)
+    return getTranslatedType(strings, uuid.__typename)
   }
   if (uuid.__typename === 'User') {
     return uuid.username
@@ -76,12 +78,6 @@ export function getRawTitle(
 
   //fallback
   return null
-
-  function getTranslatedType(typename: string) {
-    const camelCase = (typename.charAt(0).toLowerCase() +
-      typename.slice(1)) as keyof typeof strings.entities
-    return strings.entities[camelCase]
-  }
 }
 
 function isRevision(

@@ -1952,7 +1952,12 @@
   resolved "https://registry.yarnpkg.com/@rushstack/eslint-patch/-/eslint-patch-1.0.6.tgz#023d72a5c4531b4ce204528971700a78a85a0c50"
   integrity sha512-Myxw//kzromB9yWgS8qYGuGVf91oBUUJpNvy5eM50sqvmKLbKjwLxohJnkWGTeeI9v9IBMtPLxz5Gc60FIfvCA==
 
-"@serlo/api@^0.26.0", "@serlo/api@^0.26.17":
+"@serlo/api@^0.26.0":
+  version "0.26.19"
+  resolved "https://registry.yarnpkg.com/@serlo/api/-/api-0.26.19.tgz#a4e454c48b2de82858f89636a6256fb22f5e7e08"
+  integrity sha512-m2TkDDGgPO6VhwatVeliMcdsuttsXqQ1NmMqZjFW6yOrxAyas/tc+natxP8ID2yMB3QyIkLEXsKe475dz+Aszg==
+
+"@serlo/api@^0.26.17":
   version "0.26.17"
   resolved "https://registry.yarnpkg.com/@serlo/api/-/api-0.26.17.tgz#510ef5fdd4fe28684d2a033231de88144f7a14ca"
   integrity sha512-t33mOMMLga3ZMgV9I9LApHrFieD2Juwl+FNU2kUHL2EdTi0zcOvhU1kwrUWcvVyBK9D2oKuuXGaWjMIxce8AIg==

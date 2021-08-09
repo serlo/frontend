@@ -330,3 +330,13 @@ export type QueryResponseNoRevision =
   | User
 
 export type QueryResponse = QueryResponseNoRevision | QueryResponseRevision
+
+// those could have title set in currentRevision
+export type QueryResponseWithTitle =
+  | Page
+  | Article
+  | Video
+  | Applet
+  | CoursePage
+  | Event
+  | Course

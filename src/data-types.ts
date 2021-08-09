@@ -1,4 +1,4 @@
-import { Role, TaxonomyTermType } from '@serlo/api'
+import { Role, Subject, TaxonomyTermType } from '@serlo/api'
 import { AuthorizationPayload } from '@serlo/authorization'
 import { CSSProperties, FunctionComponent } from 'react'
 
@@ -19,6 +19,10 @@ export interface UserProps {
 
 export interface LandingProps {
   pageData: LandingPage
+}
+
+export interface UnrevisedRevisionsProps {
+  pageData: UnrevisedRevisionsPage
 }
 
 // Instance data consists of the language, translation strings, header menu and footer menu.
@@ -323,6 +327,15 @@ export interface RevisionData {
     url?: string
   }
   changes?: string
+}
+
+export interface UnrevisedRevisionsPage extends EntityPageBase {
+  kind: 'unrevisedRevisions'
+  revisionsData: UnrevisedRevisionsData
+}
+
+export interface UnrevisedRevisionsData {
+  subjects: Subject[]
 }
 
 // Entities each should have an translated string and a corresponding icon

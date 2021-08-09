@@ -60,7 +60,8 @@ export const instanceData = {
       notifications: 'Your Notifications',
       subscriptions: "Manage Subscriptions",
       revisionHistory: "Revision History",
-      eventLog: "Event Log"
+      eventLog: "Event Log",
+      unrevisedRevisions: 'Unrevised Revisions'
     },
     roles: {
       donor: "Donor",
@@ -170,6 +171,12 @@ export const instanceData = {
       view: 'Show',
       viewLabel: 'Show this revision',
       status: 'Status'
+    },
+    unrevisedRevisions:{
+      supportLinks: 'Support links for reviewing',
+      guideline: 'Guideline for reviewing',
+      discussionList: 'List of all discussions',
+      questionnaire: 'Questionnaire for reviewers'
     },
     errors: {
       title: '😬 Websites make mistakes sometimes…',
