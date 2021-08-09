@@ -178,7 +178,11 @@ export const instanceData = {
       discussionList: 'List of all discussions',
       questionnaire: 'Questionnaire for reviewers',
       showMoreEntities: 'Show all in %subject%',
-      showMoreRevisions: 'Show %number% more…'
+      showMoreRevisions: 'Show %number% more…',
+      newLabelText: 'new',
+      newLabelNote: 'This is a new entity',
+      wipLabelText: 'wip',
+      wipLabelNote: 'Marked as work in progress. Do not review yet.',
     },
     errors: {
       title: '😬 Websites make mistakes sometimes…',

@@ -10,9 +10,7 @@ import { Link } from '@/components/content/link'
 import { TimeAgo } from '@/components/time-ago'
 import { useInstanceData } from '@/contexts/instance-context'
 import type { CompBaseProps } from '@/data-types'
-import { QueryResponseNoRevision } from '@/fetcher/query-types'
 import { getTranslatedType } from '@/helper/get-translated-type'
-import { getTitleFromEntity } from '@/helper/getTitleFromEntity'
 
 export interface UnrevisedEntityProps {
   key: number
@@ -20,6 +18,10 @@ export interface UnrevisedEntityProps {
 }
 
 export interface UnrevisedEntityData extends AbstractEntity {
+  currentRevision: {
+    id: number
+    title?: string
+  } | null
   __typename:
     | 'Applet'
     | 'Article'
@@ -46,11 +48,10 @@ export function UnrevisedEntity({ key, entity }: UnrevisedEntityProps) {
   const nodes = entity.revisions?.nodes ?? entity.solutionRevisions?.nodes ?? []
 
   // @ts-expect-error I'm okay with just trying if it's there
-  const revisionTitle = entity.revisions?.nodes[0].title as string | undefined
-  const title =
-    getTitleFromEntity(entity as QueryResponseNoRevision) ??
-    revisionTitle ??
-    entity.id
+  const revisionTitle = entity.revisions?.nodes[0]?.title as string | undefined
+  const title = entity.currentRevision?.title ?? revisionTitle ?? entity.id
+
+  const isProbablyNew = entity.currentRevision === null
 
   return (
     <div key={key} className="mx-side mb-10">
@@ -85,15 +86,14 @@ export function UnrevisedEntity({ key, entity }: UnrevisedEntityProps) {
 
   function renderRevision(revision: QueryResponseRevisionNoPage) {
     const viewUrl = `/entity/repository/compare/${entity.id}/${revision.id}`
-
+    const isProbablyWIP = checkWIP(revision.changes)
     return (
-      <tr
-        className={isProbablyWIP(revision.changes) ? 'opacity-50' : undefined}
-      >
+      <tr className={isProbablyWIP ? 'opacity-50' : undefined}>
         <Td className="pl-0 w-1/2">
           <Link href={viewUrl} className="hover:no-underline text-black">
             {revision.changes || '–'}
           </Link>
+          {renderLabels(isProbablyWIP)}
         </Td>
         <Td>
           <UserLink user={revision.author} />
@@ -114,6 +114,29 @@ export function UnrevisedEntity({ key, entity }: UnrevisedEntityProps) {
     )
   }
 
+  function renderLabels(isProbablyWIP: boolean) {
+    const { newLabelNote, newLabelText, wipLabelNote, wipLabelText } =
+      strings.unrevisedRevisions
+    return (
+      <>
+        {' '}
+        {isProbablyNew && renderLabel(newLabelText, newLabelNote)}{' '}
+        {isProbablyWIP && renderLabel(wipLabelText, wipLabelNote)}
+      </>
+    )
+  }
+
+  function renderLabel(text: string, note?: string) {
+    return (
+      <span
+        className="serlo-button serlo-make-interactive-light cursor-default text-base"
+        title={note}
+      >
+        {text}
+      </span>
+    )
+  }
+
   function renderShowAll() {
     if (nodes.length === 1 || showAll) return null
     return (
@@ -126,7 +149,8 @@ export function UnrevisedEntity({ key, entity }: UnrevisedEntityProps) {
     )
   }
 
-  function isProbablyWIP(changes: string) {
+  // test: placeholder until we get this info from the api
+  function checkWIP(changes: string) {
     const wipStrings = [
       'wip',
       'in arbeit',
