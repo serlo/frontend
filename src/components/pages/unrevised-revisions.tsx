@@ -2,7 +2,6 @@ import { faEye } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { AbstractEntity, PageRevision, Subject } from '@serlo/api'
 import clsx from 'clsx'
-import React from 'react'
 
 import { UserLink } from '../user/user-link'
 import { Link } from '@/components/content/link'
@@ -150,7 +149,9 @@ export function UnrevisedRevisionsOverview({
     const viewUrl = `/entity/repository/compare/${entityId}/${revision.id}`
 
     return (
-      <tr>
+      <tr
+        className={isProbablyWIP(revision.changes) ? 'opacity-50' : undefined}
+      >
         <Td className="pl-0 w-1/2">
           <Link href={viewUrl} className="hover:no-underline text-black">
             {revision.changes || '–'}
@@ -173,6 +174,19 @@ export function UnrevisedRevisionsOverview({
         </Td>
       </tr>
     )
+  }
+
+  function isProbablyWIP(changes: string) {
+    const wipStrings = [
+      'wip',
+      'in arbeit',
+      'work in progress',
+      'noch nicht freigeben',
+      'zwischenspeicherung',
+      'noch nicht fertig',
+      'im aufbau',
+    ]
+    return wipStrings.some((testStr) => changes.toLowerCase().includes(testStr))
   }
 }
 
