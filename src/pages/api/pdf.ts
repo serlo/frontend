@@ -31,7 +31,6 @@ export default async function createPdf(
   const urlString = `${origin}/${id}`
   const locale = urlString.startsWith('https://de.') ? 'de-DE' : 'en-GB'
   const date = new Date().toLocaleDateString(locale)
-  const isLocalhost = origin === 'http://localhost:3000'
 
   try {
     const browser = await chromium.puppeteer.launch({
