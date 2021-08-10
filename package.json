@@ -132,7 +132,6 @@
     "prettier": "^2.0.0",
     "prettier-plugin-packagejson": "^2.0.0",
     "prop-types": "^15.7.0",
-    "puppeteer": "^10.1.0",
     "react-is": "^17.0.0",
     "react-test-renderer": "^17.0.0",
     "styled-jsx-plugin-postcss": "^4.0.0",
