@@ -102,6 +102,7 @@ export const instanceData = {
       yourAnswer: 'Your answer…',
       chooseOption: 'Click on one of the options.',
       trashedNotice: 'This content is marked for deletion.',
+      unrevisedNotice: 'This content has no accepted revision yet. Please use the %link% to preview.',
       strategy: 'Solution Strategy',
       picture: 'Picture',
     },

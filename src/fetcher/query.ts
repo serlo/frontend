@@ -36,6 +36,9 @@ export const dataQuery = gql`
         }
         revisions(unrevised: true) {
           totalCount
+          nodes {
+            title
+          }
         }
       }
 
@@ -49,6 +52,9 @@ export const dataQuery = gql`
         }
         revisions(unrevised: true) {
           totalCount
+          nodes {
+            title
+          }
         }
       }
 
@@ -58,6 +64,9 @@ export const dataQuery = gql`
         }
         revisions(unrevised: true) {
           totalCount
+          nodes {
+            title
+          }
         }
       }
 
@@ -67,6 +76,9 @@ export const dataQuery = gql`
         }
         revisions(unrevised: true) {
           totalCount
+          nodes {
+            title
+          }
         }
         course {
           id

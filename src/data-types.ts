@@ -286,6 +286,7 @@ export interface EntityData {
   courseData?: CourseData
   unrevisedRevisions?: number
   unrevisedCourseRevisions?: number
+  isUnrevised: boolean
 }
 
 export interface RevisionPage extends EntityPageBase {
