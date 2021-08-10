@@ -789,6 +789,7 @@ export interface TaxonomyTermBase {
 export interface TaxonomyLink {
   title: string
   url: string
+  unrevised?: boolean
 }
 
 // Second level has folders and exercises as links

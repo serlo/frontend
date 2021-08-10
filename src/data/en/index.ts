@@ -399,7 +399,8 @@ export const loggedInData = {
         title: 'Reject Revision',
         explanation: 'Please tell the author why you will not accept the submission.'
       },
-      confirm: 'Confirm'
+      confirm: 'Confirm',
+      unrevisedTaxNote: 'New content, not accepted yet'
     }
   }
 };

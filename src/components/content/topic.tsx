@@ -1,4 +1,4 @@
-import { faFile } from '@fortawesome/free-solid-svg-icons'
+import { faFile, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import dynamic from 'next/dynamic'
 import { useState, Fragment } from 'react'
@@ -10,7 +10,9 @@ import { ShareModalProps } from '../user-tools/share-modal'
 import { UserTools } from '../user-tools/user-tools'
 import { LicenseNotice } from './license-notice'
 import { Link } from './link'
+import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import {
   TaxonomyData,
   TaxonomySubTerm,
@@ -192,6 +194,9 @@ interface CategoryLinksProps {
 
 function CategoryLinks({ links, full, category, id }: CategoryLinksProps) {
   const { strings } = useInstanceData()
+  const loggedInData = useLoggedInData()
+  const auth = useAuthentication()
+
   if (links.length === 0) return null
   return (
     <LinkSection full={full} key={category}>
@@ -201,15 +206,26 @@ function CategoryLinks({ links, full, category, id }: CategoryLinksProps) {
           <FontAwesomeIcon icon={categoryIconMapping[category]} />
         </LinkSectionHeadline>
 
-        {links.map((link, i) => (
-          <StyledLink2
-            href={link.url}
-            key={link.url + '_' + link.title}
-            path={full ? [category, i] : [id!, category, i]}
-          >
-            {link.title}
-          </StyledLink2>
-        ))}
+        {links.map((link, i) => {
+          if (!auth.current && link.unrevised) return null
+          return (
+            <StyledLink2
+              className={link.unrevised ? 'opacity-60' : undefined}
+              href={link.url}
+              key={link.url + '_' + link.title}
+              path={full ? [category, i] : [id!, category, i]}
+            >
+              {link.title}
+              {link.unrevised && (
+                <FontAwesomeIcon
+                  icon={faInfoCircle}
+                  title={loggedInData?.strings.revisions.unrevisedTaxNote}
+                  className="ml-1"
+                />
+              )}
+            </StyledLink2>
+          )
+        })}
       </div>
     </LinkSection>
   )

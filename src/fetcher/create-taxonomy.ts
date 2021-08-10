@@ -46,10 +46,10 @@ function collectExercises(children: TaxonomyTermChildrenLevel1[]) {
   let index = 0
   const result: (FrontendExerciseNode | FrontendExerciseGroupNode)[] = []
   children.forEach((child) => {
-    if (child.__typename === 'Exercise' && child.currentRevision) {
+    if (child.__typename === 'Exercise') {
       result.push(createExercise(child, index++))
     }
-    if (child.__typename === 'ExerciseGroup' && child.currentRevision) {
+    if (child.__typename === 'ExerciseGroup') {
       if (children.length === 1) result.push(createExerciseGroup(child))
       else result.push(createExerciseGroup(child, index++))
     }
@@ -63,11 +63,17 @@ function collectType(
 ) {
   const result: TaxonomyLink[] = []
   children.forEach((child) => {
-    if (child.__typename === typename && child.alias && child.currentRevision)
-      result.push({
-        title: child.currentRevision.title,
-        url: getAlias(child),
-      })
+    if (child.__typename === typename && child.alias) {
+      const title =
+        child.currentRevision?.title ?? child.revisions?.nodes?.[0]?.title
+      if (title) {
+        result.push({
+          title,
+          url: getAlias(child),
+          unrevised: !child.currentRevision,
+        })
+      }
+    }
   })
   return result
 }

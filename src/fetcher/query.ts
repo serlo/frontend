@@ -238,6 +238,11 @@ export const dataQuery = gql`
       currentRevision {
         title
       }
+      revisions(first: 1, unrevised: true) {
+        nodes {
+          title
+        }
+      }
     }
 
     ... on Video {
@@ -245,6 +250,11 @@ export const dataQuery = gql`
       id
       currentRevision {
         title
+      }
+      revisions(first: 1, unrevised: true) {
+        nodes {
+          title
+        }
       }
     }
 
@@ -254,6 +264,11 @@ export const dataQuery = gql`
       currentRevision {
         title
       }
+      revisions(first: 1, unrevised: true) {
+        nodes {
+          title
+        }
+      }
     }
 
     ... on Course {
@@ -262,6 +277,11 @@ export const dataQuery = gql`
       currentRevision {
         title
       }
+      revisions(first: 1, unrevised: true) {
+        nodes {
+          title
+        }
+      }
     }
 
     ... on Event {
@@ -269,6 +289,11 @@ export const dataQuery = gql`
       id
       currentRevision {
         title
+      }
+      revisions(first: 1, unrevised: true) {
+        nodes {
+          title
+        }
       }
     }
   }

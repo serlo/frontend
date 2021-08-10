@@ -192,6 +192,7 @@ export interface TaxonomyTermChildOnX extends TaxonomyTermChild {
   currentRevision?: {
     title: string
   }
+  revisions?: { nodes?: [{ title: string }] }
 }
 
 export interface TaxonomyTermChildExercise
