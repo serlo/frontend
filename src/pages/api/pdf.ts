@@ -82,6 +82,13 @@ export default async function createPdf(
                         </div>`,
     })
     await browser.close()
+    if (!pdf) {
+      res.status(500).send({
+        status: 'Failed',
+        error: 'pdf creation failed',
+      })
+      return false
+    }
     res.setHeader('Content-Type', 'application/pdf')
     res.setHeader('Content-Length', pdf.length)
 
@@ -94,7 +101,7 @@ export default async function createPdf(
   } catch (error: unknown) {
     res.status(500).send({
       status: 'Failed',
-      error,
+      error: 'pdf creation failed',
     })
   }
 
