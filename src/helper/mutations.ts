@@ -61,40 +61,52 @@ export function useSetUuidStateMutation() {
 }
 
 export type RevisionMutationMode = 'checkout' | 'reject'
+const rejectEntityMutation = gql`
+  mutation rejectRevision($input: RejectRevisionInput!) {
+    entity {
+      rejectRevision(input: $input) {
+        success
+      }
+    }
+  }
+`
+const checkoutEntityMutation = gql`
+  mutation rejectRevision($input: CheckoutRevisionInput!) {
+    entity {
+      checkoutRevision(input: $input) {
+        success
+      }
+    }
+  }
+`
+const checkoutPageMutation = gql`
+  mutation rejectRevision($input: RejectRevisionInput!) {
+    page {
+      checkoutRevision(input: $input) {
+        success
+      }
+    }
+  }
+`
+
 export function useRevisionMutation() {
   const auth = useAuthentication()
-  const rejectMutation = gql`
-    mutation rejectRevision($input: RejectRevisionInput!) {
-      entity {
-        rejectRevision(input: $input) {
-          success
-        }
-      }
-    }
-  `
-  const checkoutMutation = gql`
-    mutation rejectRevision($input: CheckoutRevisionInput!) {
-      entity {
-        checkoutRevision(input: $input) {
-          success
-        }
-      }
-    }
-  `
   const router = useRouter()
 
   const revisionMutation = async function (
     mode: RevisionMutationMode,
     repositoryAlias: string,
-    input: RejectRevisionInput
+    input: RejectRevisionInput,
+    isPage: boolean
   ) {
     const isCheckout = mode === 'checkout'
+    const mutation = isPage
+      ? checkoutPageMutation
+      : isCheckout
+      ? checkoutEntityMutation
+      : rejectEntityMutation
     NProgress.start()
-    const success = await mutationFetch(
-      auth,
-      isCheckout ? checkoutMutation : rejectMutation,
-      input
-    )
+    const success = await mutationFetch(auth, mutation, input)
 
     if (success) {
       setTimeout(() => {
@@ -113,8 +125,9 @@ export function useRevisionMutation() {
   return async (
     mode: RevisionMutationMode,
     repositoryAlias: string,
-    input: RejectRevisionInput | CheckoutRevisionInput
-  ) => await revisionMutation(mode, repositoryAlias, input)
+    input: RejectRevisionInput | CheckoutRevisionInput,
+    isPage: boolean
+  ) => await revisionMutation(mode, repositoryAlias, input, isPage)
 }
 
 export function useSetNotificationStateMutation() {
