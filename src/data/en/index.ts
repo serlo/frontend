@@ -173,7 +173,7 @@ export const instanceData = {
       status: 'Status'
     },
     unrevisedRevisions:{
-      supportLinks: 'Support links for reviewing',
+      supportLinks: 'Review support',
       guideline: 'Guideline for reviewing',
       discussionList: 'List of all discussions',
       questionnaire: 'Questionnaire for reviewers',
