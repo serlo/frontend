@@ -1,5 +1,6 @@
 import chromium from 'chrome-aws-lambda'
 import { NextApiRequest, NextApiResponse } from 'next'
+import absoluteUrl from 'next-absolute-url'
 
 // this runs on chrome-aws-lambda and does not work on normal machines
 // run `yarn add -D puppeteer` to test locally,
@@ -22,12 +23,15 @@ export default async function createPdf(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const noSolutions = req.query.noSolutions !== undefined
-  const urlString = decodeURIComponent(req.query.url.toString())
-  const urlObject = getValidUrl(urlString)
+  const { origin } = absoluteUrl(req)
+  const id = parseInt(req.query.id?.toString())
+  if (!checkId()) return
 
-  const locale = urlObject.hostname.startsWith('de') ? 'de-DE' : 'en-GB'
+  const noSolutions = req.query.noSolutions !== undefined
+  const urlString = `${origin}/${id}`
+  const locale = urlString.startsWith('https://de.') ? 'de-DE' : 'en-GB'
   const date = new Date().toLocaleDateString(locale)
+  const isLocalhost = origin === 'http://localhost:3000'
 
   try {
     const browser = await chromium.puppeteer.launch({
@@ -47,7 +51,7 @@ export default async function createPdf(
     const page = await browser.newPage()
     await page.goto(
       urlString + '#print--preview' + (noSolutions ? '-no-solutions' : ''),
-      urlObject.hostname === 'localhost'
+      isLocalhost
         ? { waitUntil: 'networkidle2' }
         : {
             waitUntil: 'networkidle0',
@@ -86,16 +90,15 @@ export default async function createPdf(
       error,
     })
   }
-}
 
-function getValidUrl(string: string) {
-  try {
-    const url = new URL(string)
-    if (!url.hostname.includes('serlo') && !(url.hostname === 'localhost')) {
-      throw 'sorry, only for serlo domains.'
+  function checkId() {
+    if (!Number.isInteger(id)) {
+      res.status(500).send({
+        status: 'Failed',
+        error: 'invalid input',
+      })
+      return false
     }
-    return url
-  } catch (_) {
-    throw 'url is not valid.'
+    return true
   }
 }

@@ -117,7 +117,7 @@ export function ShareModal({ open, onClose, showPdf }: ShareModalProps) {
       onClick: () => {
         showToastNotice('🐒 ' + strings.loading.oneMomentPlease)
       },
-      href: `/api/pdf?url=${urlEncoded}${noSolutions ? '&noSolutions' : ''}`,
+      href: `/api/pdf?id=${id}${noSolutions ? '&noSolutions' : ''}`,
     }
   }
 
