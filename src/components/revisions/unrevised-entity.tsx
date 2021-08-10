@@ -13,7 +13,6 @@ import type { CompBaseProps } from '@/data-types'
 import { getTranslatedType } from '@/helper/get-translated-type'
 
 export interface UnrevisedEntityProps {
-  key: number
   entity: UnrevisedEntityData
 }
 
@@ -41,7 +40,7 @@ export interface UnrevisedEntityData extends AbstractEntity {
   }
 }
 
-export function UnrevisedEntity({ key, entity }: UnrevisedEntityProps) {
+export function UnrevisedEntity({ entity }: UnrevisedEntityProps) {
   const [showAll, setShowAll] = useState(false)
   const { strings } = useInstanceData()
 
@@ -54,7 +53,7 @@ export function UnrevisedEntity({ key, entity }: UnrevisedEntityProps) {
   const isProbablyNew = entity.currentRevision === null
 
   return (
-    <div key={key} className="mx-side mb-10">
+    <div className="mx-side mb-10">
       <Link
         title={strings.revisionHistory.viewLabel}
         href={entity.alias ?? undefined}
@@ -85,6 +84,7 @@ export function UnrevisedEntity({ key, entity }: UnrevisedEntityProps) {
   }
 
   function renderRevision(revision: QueryResponseRevisionNoPage) {
+    if (!revision) return null
     const viewUrl = `/entity/repository/compare/${entity.id}/${revision.id}`
     const isProbablyWIP = checkWIP(revision.changes)
     return (
@@ -97,6 +97,8 @@ export function UnrevisedEntity({ key, entity }: UnrevisedEntityProps) {
         </Td>
         <Td>
           <UserLink user={revision.author} />
+          {/* @ts-expect-error remove once api naming is final */}
+          {revision.author.isNewAuthor && renderAuthorLabel()}
         </Td>
         <Td className="w-1/6">
           <TimeAgo datetime={new Date(revision.date)} dateAsTitle />
@@ -124,6 +126,11 @@ export function UnrevisedEntity({ key, entity }: UnrevisedEntityProps) {
         {isProbablyWIP && renderLabel(wipLabelText, wipLabelNote)}
       </>
     )
+  }
+
+  function renderAuthorLabel() {
+    const { newAuthorText, newAuthorNote } = strings.unrevisedRevisions
+    return renderLabel(newAuthorText, newAuthorNote)
   }
 
   function renderLabel(text: string, note?: string) {

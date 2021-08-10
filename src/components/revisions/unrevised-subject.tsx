@@ -13,10 +13,8 @@ export function UnrevisedSubject({ subject }: UnrevisedSubjectProps) {
   const [showAll, setShowAll] = useState(false)
   const { strings } = useInstanceData()
 
-  const nodes = subject.unrevisedEntities.nodes
-  const visibleNodes = showAll
-    ? nodes
-    : subject.unrevisedEntities.nodes.slice(0, 3)
+  const nodes = Array.from(subject.unrevisedEntities.nodes).reverse()
+  const visibleNodes = showAll ? nodes : nodes.slice(0, 3)
   const name = subject.taxonomyTerm.name
   if (subject.unrevisedEntities.totalCount === 0) {
     return null

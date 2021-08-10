@@ -183,6 +183,8 @@ export const instanceData = {
       newLabelNote: 'This is a new entity',
       wipLabelText: 'wip',
       wipLabelNote: 'Marked as work in progress. Do not review yet.',
+      newAuthorText: 'new author',
+      newAuthorNote: 'This is one of the first edits of this author, maybe prioritise this.',
     },
     errors: {
       title: '😬 Websites make mistakes sometimes…',

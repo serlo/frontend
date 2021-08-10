@@ -193,5 +193,6 @@ export const unrevisedRevisionsQuery = gql`
     activeAuthor
     activeDonor
     activeReviewer
+    isNewAuthor
   }
 `
