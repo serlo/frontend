@@ -49,14 +49,22 @@ export default async function createPdf(
       ignoreHTTPSErrors: true,
     })
     const page = await browser.newPage()
-    await page.goto(
-      urlString + '#print--preview' + (noSolutions ? '-no-solutions' : ''),
-      isLocalhost
-        ? { waitUntil: 'networkidle2' }
-        : {
-            waitUntil: 'networkidle0',
-          }
-    )
+
+    const url =
+      urlString + '#print--preview' + (noSolutions ? '-no-solutions' : '')
+
+    try {
+      await page.goto(url, {
+        timeout: 20000,
+        waitUntil: ['load', 'domcontentloaded', 'networkidle2'],
+      })
+    } catch (error) {
+      res.status(500).send({
+        status: 'Failed',
+        error: 'navigation timeout',
+      })
+      return false
+    }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const pdf = await page.pdf({
       format: 'a4',
