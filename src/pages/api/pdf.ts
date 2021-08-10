@@ -54,7 +54,7 @@ export default async function createPdf(
 
     try {
       await page.goto(url, {
-        timeout: 20000,
+        timeout: 30000,
         waitUntil: ['load', 'domcontentloaded', 'networkidle2'],
       })
     } catch (error) {
