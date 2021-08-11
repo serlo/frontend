@@ -25,7 +25,7 @@ import {
 import { submitEvent } from '@/helper/submit-event'
 
 export interface ShareModalProps {
-  open: boolean
+  isOpen: boolean
   onClose: () => void
   contentId?: number
 }
@@ -34,15 +34,15 @@ export interface ShareData {
   contentId: number
 }
 
-export function ShareModal({ open, onClose, contentId }: ShareModalProps) {
+export function ShareModal({ isOpen, onClose, contentId }: ShareModalProps) {
   const shareInputRef = React.useRef<HTMLInputElement>(null)
   const [copySuccess, setCopySuccess] = React.useState('')
   const { strings, lang } = useInstanceData()
   const id = React.useContext(EntityIdContext)
 
-  if (!open) return null
+  if (!isOpen) return null
 
-  if (open && id) {
+  if (isOpen && id) {
     // submit event
     submitEvent(`share_${id}`)
   }
@@ -104,7 +104,7 @@ export function ShareModal({ open, onClose, contentId }: ShareModalProps) {
 
   return (
     <ModalWithCloseButton
-      isOpen={open}
+      isOpen={isOpen}
       onCloseClick={onCloseClick}
       title={strings.share.title}
     >

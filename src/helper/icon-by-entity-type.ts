@@ -11,11 +11,14 @@ import {
   faComments,
   faUserEdit,
   faCircle,
+  faInfoCircle,
 } from '@fortawesome/free-solid-svg-icons'
 
-import { CategoryTypes } from '@/data-types'
+import { TopicCategoryTypes } from '@/data-types'
 
-export const categoryIconMapping: { [K in CategoryTypes]: IconDefinition } = {
+export const categoryIconMapping: {
+  [K in TopicCategoryTypes]: IconDefinition
+} = {
   articles: faNewspaper,
   courses: faGraduationCap,
   videos: faPlayCircle,
@@ -23,6 +26,7 @@ export const categoryIconMapping: { [K in CategoryTypes]: IconDefinition } = {
   folders: faFolderOpen,
   exercises: faFile,
   events: faCalendarAlt,
+  unrevised: faInfoCircle,
 }
 
 export function getIconByTypename(typename: string) {

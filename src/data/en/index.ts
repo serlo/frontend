@@ -28,7 +28,8 @@ export const instanceData = {
       applets: 'Applets',
       folders: 'Folders',
       exercises: 'Exercises',
-      events: 'Events'
+      events: 'Events',
+      unrevised: 'Unrevised'
     },
     entities: {
       applet: 'Applet',

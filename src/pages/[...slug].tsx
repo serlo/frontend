@@ -1,7 +1,7 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 
 import { Entity } from '@/components/content/entity'
-import { Topic } from '@/components/content/topic'
+import { Topic } from '@/components/content/taxonomy/topic'
 import { EntityBase } from '@/components/entity-base'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'

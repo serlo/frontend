@@ -354,7 +354,7 @@ export type EntityStrings = {
 
 // Entities can belong to a category that we use in the taxonomy
 
-export type CategoryTypes =
+export type TopicCategoryTypes =
   | 'articles'
   | 'courses'
   | 'videos'
@@ -362,10 +362,7 @@ export type CategoryTypes =
   | 'folders'
   | 'exercises'
   | 'events'
-
-export type CategoryStrings = {
-  [K in EntityTypes]: string
-}
+  | 'unrevised'
 
 // Some flags to control schema.org behaviour. Not very well done yet.
 

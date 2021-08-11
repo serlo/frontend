@@ -138,7 +138,7 @@ export function Entity({ data }: EntityProps) {
   function renderShareModal() {
     return (
       <ShareModal
-        open={open}
+        isOpen={open}
         onClose={() => setOpen(false)}
         contentId={data.id}
       />
