@@ -267,7 +267,7 @@ export const instanceData = {
       createThread: "%actor% ha iniciado %thread% en %object%.",
       createEntity: "%actor% creó %object%.",
       setLicense: "%actor% cambió la licencia de %repository%.",
-      createEntityLink: "%actor% vinculó %child% con %parent%.",
+      createEntityLink: "%actor% asoció %child% con %parent%.",
       removeEntityLink: "%actor% disoció %child% de %parent%.",
       createEntityRevision: "%actor% creó una %revision% de %entity%.",
       checkoutRevision: "%actor% revisió una %revision% en %repository%.",
@@ -302,10 +302,10 @@ export const instanceLandingData = {
     adFree: "sin publicidad",
     freeOfCharge: "gratuito",
     wikiTitle: "Serlo es la Wikipedia para el Aprendizaje",
-    wikiText: "Al igual que Wikipedia, esta plataforma es creada por una comunidad de autores comprometidos con la educación. “Serlo Education” es propiedad de varios equipos descentralizados de voluntarios y profesionales, y manejado por ellos mismos alrededor del mundo.",
+    wikiText: "Al igual que Wikipedia, esta plataforma es creada por una comunidad de autores comprometidos con la educación. Serlo Education está dirigido y es propiedad de de varios equipos descentralizados de voluntarios y profesionales alrededor del mundo.",
     movementTitle: "Conviértete en Parte de Nuestro Movimiento para la Educación Abierta",
-    callForAuthors: "Estamos buscando profesores, maestros y educadores entusiastas a quienes les apasionen las materias que enseñan. ¡Conviértete en un autor en serlo.org! Tu puedes crear nuevo material de aprendizaje y ayudarnos a mejorar el contenido existente.",
-    communityLink: "Visita la página para autores",
+    callForAuthors: "Buscamos profesores y educadores apasionados por las materias que enseñan. Forma parte de nuestra comunidad para crear nuevo material didáctico y ayudarnos a mejorar los contenidos existentes.",
+    communityLink: "Visite la página de inicio de los autores",
     callForOther: "Nosotros ofrecemos una diversa gama de trabajo y oportunidades de voluntariado, dentro del campo del desarrollo de software, diseño, traducción, comunicación, administración de proyectos, y más.",
     getInvolved: "¡Participa!"
   }
