@@ -1,42 +1,20 @@
 import { faEye } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { AbstractEntity } from '@serlo/api'
 import clsx from 'clsx'
 
-import { QueryResponseRevisionNoPage } from '../pages/unrevised-revisions'
 import { UserLink } from '../user/user-link'
 import { Link } from '@/components/content/link'
 import { TimeAgo } from '@/components/time-ago'
 import { useInstanceData } from '@/contexts/instance-context'
 import type { CompBaseProps } from '@/data-types'
+import {
+  QueryResponseRevisionNoPage,
+  UnrevisedEntityData,
+} from '@/fetcher/query-types'
 import { getTranslatedType } from '@/helper/get-translated-type'
 
 export interface UnrevisedEntityProps {
   entity: UnrevisedEntityData
-}
-
-export interface UnrevisedEntityData extends AbstractEntity {
-  currentRevision: {
-    id: number
-    title?: string
-  } | null
-  __typename:
-    | 'Applet'
-    | 'Article'
-    | 'Course'
-    | 'CoursePage'
-    | 'Event'
-    | 'Exercise'
-    | 'ExerciseGroup'
-    | 'GroupedExercise'
-    | 'Video'
-    | 'Solution'
-  revisions?: {
-    nodes: QueryResponseRevisionNoPage[]
-  }
-  solutionRevisions?: {
-    nodes: QueryResponseRevisionNoPage[]
-  }
 }
 
 export function UnrevisedEntity({ entity }: UnrevisedEntityProps) {

@@ -1,19 +1,13 @@
-import { PageRevision, Subject } from '@serlo/api'
+import { Subject } from '@serlo/api'
 
 import { UnrevisedSubject } from '../revisions/unrevised-subject'
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import type { UnrevisedRevisionsData } from '@/data-types'
-import { QueryResponseRevision } from '@/fetcher/query-types'
 
 export interface UnrevisedRevisionsOverviewProps {
   data: UnrevisedRevisionsData
 }
-
-export type QueryResponseRevisionNoPage = Exclude<
-  QueryResponseRevision,
-  PageRevision
->
 
 export function UnrevisedRevisionsOverview({
   data,
