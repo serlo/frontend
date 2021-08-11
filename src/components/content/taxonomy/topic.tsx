@@ -1,17 +1,15 @@
 import { faFile } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import dynamic from 'next/dynamic'
-import React, { useState, Fragment } from 'react'
-import styled from 'styled-components'
+import { useState, Fragment } from 'react'
 
 import { SubTopic } from './sub-topic'
-import { TopicCategory } from './topic-category'
+import { TopicCategories } from './topic-categories'
 import { LicenseNotice } from '@/components/content/license-notice'
 import { ShareModalProps } from '@/components/user-tools/share-modal'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
 import { TaxonomyData } from '@/data-types'
-import { makeMargin } from '@/helper/css'
 import { renderArticle } from '@/schema/article-renderer'
 
 export interface TopicProps {
@@ -50,20 +48,10 @@ export function Topic({ data }: TopicProps) {
 
         {renderExercises()}
 
-        {isTopic && (
-          <LinkList>
-            <TopicCategory full category="articles" links={data.articles} />
-            <TopicCategory full category="exercises" links={data.exercises} />
-            <TopicCategory full category="videos" links={data.videos} />
-            <TopicCategory full category="applets" links={data.applets} />
-            <TopicCategory full category="courses" links={data.courses} />
-            <TopicCategory full category="events" links={data.events} />
-          </LinkList>
-        )}
+        {isTopic && <TopicCategories data={data} full />}
+
         {isFolder && data.events && (
-          <LinkList>
-            <TopicCategory full category="events" links={data.events} />
-          </LinkList>
+          <TopicCategories data={data} categories={['events']} full />
         )}
       </div>
 
@@ -158,11 +146,3 @@ export function Topic({ data }: TopicProps) {
     return undefined
   }
 }
-
-const LinkList = styled.div`
-  display: flex;
-  flex: 1 1 55%;
-  flex-direction: column;
-  ${makeMargin}
-  margin-top: 6px;
-`
