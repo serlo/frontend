@@ -36,6 +36,7 @@ interface EntryData {
   title: string
   icon: IconDefinition
   href?: string
+  download?: string
   onClick?: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void
 }
 
@@ -171,6 +172,7 @@ export function ShareModal({ open, onClose, showPdf }: ShareModalProps) {
               href={entry.href ?? undefined}
               key={entry.title}
               onClick={entry.onClick ?? undefined}
+              download={entry.download}
             >
               <FontAwesomeIcon icon={entry.icon} /> {entry.title}
             </Button>
