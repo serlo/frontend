@@ -2,7 +2,6 @@ import { faEye } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { AbstractEntity } from '@serlo/api'
 import clsx from 'clsx'
-import { useState } from 'react'
 
 import { QueryResponseRevisionNoPage } from '../pages/unrevised-revisions'
 import { UserLink } from '../user/user-link'
@@ -41,7 +40,6 @@ export interface UnrevisedEntityData extends AbstractEntity {
 }
 
 export function UnrevisedEntity({ entity }: UnrevisedEntityProps) {
-  const [showAll, setShowAll] = useState(false)
   const { strings } = useInstanceData()
 
   const nodes = entity.revisions?.nodes ?? entity.solutionRevisions?.nodes ?? []
@@ -61,24 +59,15 @@ export function UnrevisedEntity({ entity }: UnrevisedEntityProps) {
       >
         <b>{title}</b>
       </Link>{' '}
-      <span className="text-sm text-gray-500">
-        {getTranslatedType(strings, entity.__typename)}
-      </span>
+      <span>| {getTranslatedType(strings, entity.__typename)}</span>
       {renderTable()}
-      {renderShowAll()}
     </div>
   )
 
   function renderTable() {
     return (
       <table className="mt-1 border-collapse w-full relative">
-        <tbody>
-          {renderRevision(nodes[0])}
-          {showAll &&
-            nodes.slice(1).map((revision) => {
-              return renderRevision(revision)
-            })}
-        </tbody>
+        <tbody>{nodes.map((revision) => renderRevision(revision))}</tbody>
       </table>
     )
   }
@@ -141,18 +130,6 @@ export function UnrevisedEntity({ entity }: UnrevisedEntityProps) {
       >
         {text}
       </span>
-    )
-  }
-
-  function renderShowAll() {
-    if (nodes.length === 1 || showAll) return null
-    return (
-      <button className="serlo-link mt-2" onClick={() => void setShowAll(true)}>
-        {strings.unrevisedRevisions.showMoreRevisions.replace(
-          '%number%',
-          nodes.length.toString()
-        )}
-      </button>
     )
   }
 

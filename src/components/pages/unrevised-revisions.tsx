@@ -33,31 +33,19 @@ export function UnrevisedRevisionsOverview({
   )
 
   function renderHelp() {
-    const { supportLinks, guideline, discussionList, questionnaire } =
-      strings.unrevisedRevisions
+    const { supportLinks, guideline } = strings.unrevisedRevisions
 
     const guidelineUrl =
       lang === 'de'
         ? '/140473'
         : 'https://docs.google.com/document/d/1p03xx2KJrFw8Mui4-xllvSTHcEPi8G1bdC8rGXcH6f8/edit'
 
-    const questionnaireUrl =
-      'https://docs.google.com/forms/d/e/1FAIpQLSfMjWIZZq2_AoHbqNv3AOEjQRBwA8qEZIMJpk5l0vX7w2nwnQ/viewform'
-
     return (
       <div>
         <h2 className="serlo-h2">{supportLinks}</h2>
-        <ul className="serlo-ul">
-          <li>
-            <Link href={guidelineUrl}>{guideline}</Link>
-          </li>
-          <li>
-            <Link href="/discussions">{discussionList}</Link>
-          </li>
-          <li>
-            <Link href={questionnaireUrl}>{questionnaire}</Link>
-          </li>
-        </ul>
+        <p className="serlo-p">
+          <Link href={guidelineUrl}>{guideline}</Link>
+        </p>
       </div>
     )
   }

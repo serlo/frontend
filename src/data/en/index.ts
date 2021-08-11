@@ -175,8 +175,6 @@ export const instanceData = {
     unrevisedRevisions:{
       supportLinks: 'Review support',
       guideline: 'Guideline for reviewing',
-      discussionList: 'List of all discussions',
-      questionnaire: 'Questionnaire for reviewers',
       showMoreEntities: 'Show all in %subject%',
       showMoreRevisions: 'Show %number% more…',
       newLabelText: 'new',
