@@ -135,7 +135,7 @@ export const instanceData = {
       error: "Lo sentimos, no se han podido cargar los comentarios. Inténtalo de nuevo más tarde.",
       showMoreReply: "Mostrar una respuesta más",
       showMoreReplies: "Mostrar %number% respuestas más",
-      showArchived: "Mostrar archivados %threads%",
+      showArchived: "Mostrar  %threads% archivados",
       copyLink: "Copiar el vínculo del comentario"
     },
     revisions: {
@@ -253,7 +253,7 @@ export const instanceData = {
     },
     keys: {
       ctrl: 'ctrl',
-      return: "Volver"
+      return: "retorno"
     },
     eventLog: {
       currentEvents: "Eventos recientes",
