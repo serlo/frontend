@@ -12,6 +12,15 @@ export function MathSpan({ formula }: MathSpanProps) {
     displayMode: false,
     throwOnError: false,
     strict: false,
+    macros: {
+      '\\Q': '\\mathbb{Q}',
+      '\\C': '\\mathbb{C}',
+      '\\and': '\\wedge',
+      '\\euro': '€',
+      '\\or': '\\vee',
+      '\\arccot': '\\operatorname{arccot}',
+      '\\sgn': '\\operatorname{sgn}',
+    },
   })
 
   return (
