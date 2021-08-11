@@ -11,7 +11,7 @@ import { CommentAreaProps } from '@/components/comments/comment-area'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { FrontendExerciseNode } from '@/data-types'
-import { printModeSolutionVisible } from '@/helper/print-mode'
+import { isPrintMode, printModeSolutionVisible } from '@/helper/print-mode'
 import { submitEventWithPath } from '@/helper/submit-event'
 import type { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
 
@@ -107,7 +107,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
 
   function renderSolutionToggle() {
     if (!node.solution.edtrState && !node.solution.legacy) return null
-    if (!printModeSolutionVisible) return null
+    if (isPrintMode && !printModeSolutionVisible) return null
 
     return (
       <button
