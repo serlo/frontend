@@ -136,6 +136,7 @@ export function Revision({ data }: RevisionProps) {
                 repositoryAlias={repositoryAlias}
                 isRejected={isRejected}
                 isCurrent={isCurrentRevision}
+                isPage={data.typename === 'PageRevision'}
               />
             ) : undefined,
         }}
