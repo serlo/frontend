@@ -47,7 +47,18 @@ export default async function createPdf(
       headless: true,
       ignoreHTTPSErrors: true,
     })
+
     const page = await browser.newPage()
+
+    // https://github.com/puppeteer/puppeteer/issues/4410
+    await page.setRequestInterception(true)
+    page.on('request', (request) => {
+      const headers = Object.assign({}, request.headers(), {
+        accept:
+          'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+      })
+      void request.continue({ headers })
+    })
 
     const url =
       urlString + '#print--preview' + (noSolutions ? '-no-solutions' : '')
