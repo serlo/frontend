@@ -35,11 +35,4 @@ module.exports = withBundleAnalyzer({
   },
   reactStrictMode: true,
   productionBrowserSourceMaps: true,
-
-  // there is a problem with svg and the new static images feature
-  // https://stackoverflow.com/questions/68008498/nextjs-typeerror-unsupported-file-type-undefined-after-update-to-v-11
-  // https://github.com/vercel/next.js/pull/24993
-  images: {
-    disableStaticImages: true,
-  },
 })
