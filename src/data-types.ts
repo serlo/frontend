@@ -362,7 +362,6 @@ export type TopicCategoryTypes =
   | 'folders'
   | 'exercises'
   | 'events'
-  | 'unrevised'
 
 // Some flags to control schema.org behaviour. Not very well done yet.
 

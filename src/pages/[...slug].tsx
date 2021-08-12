@@ -1,11 +1,11 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 
 import { Entity } from '@/components/content/entity'
-import { Topic } from '@/components/content/taxonomy/topic'
 import { EntityBase } from '@/components/entity-base'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { ErrorPage } from '@/components/pages/error-page'
+import { Topic } from '@/components/taxonomy/topic'
 import { SlugProps, SlugPageData } from '@/data-types'
 import { fetchPageData } from '@/fetcher/fetch-page-data'
 import { renderedPageNoHooks } from '@/helper/rendered-page'

@@ -1,12 +1,14 @@
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
+import { useEffect, useState } from 'react'
 
 import { useAuthentication } from '@/auth/use-authentication'
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { TaxonomyLink, TopicCategoryTypes } from '@/data-types'
+import { shouldUseNewAuth } from '@/helper/feature-auth'
 import { categoryIconMapping } from '@/helper/icon-by-entity-type'
 
 export interface TopicCategoryProps {
@@ -22,11 +24,22 @@ export function TopicCategory({
   category,
   id,
 }: TopicCategoryProps) {
+  const [mounted, setMounted] = useState(!shouldUseNewAuth())
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
   const auth = useAuthentication()
 
-  if (links.length === 0) return null
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (
+    links.length === 0 ||
+    (!auth.current && links.filter((link) => !link.unrevised).length === 0)
+  )
+    return null
+
+  if (!mounted) return null
 
   return (
     <ul
@@ -43,13 +56,15 @@ export function TopicCategory({
   )
 
   function renderLink(link: TaxonomyLink, i: number) {
-    if (!auth.current && link.unrevised) return null
+    if (link.unrevised && !mounted) return null
+    if (link.unrevised && mounted && !auth.current) return null
+
     return (
       <li className="block mb-3 leading-cozy" key={link.url + '_' + link.title}>
         <Link
           className={clsx(
-            'text-[1.2rem]',
-            link.unrevised ? 'opacity-60' : undefined
+            link.unrevised ? 'opacity-60' : undefined,
+            'text-[1.2rem]'
           )}
           href={link.url}
           path={full ? [category, i] : [id!, category, i]}
