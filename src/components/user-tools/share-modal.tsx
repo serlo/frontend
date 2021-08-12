@@ -118,7 +118,9 @@ export function ShareModal({ open, onClose, showPdf }: ShareModalProps) {
       onClick: () => {
         showToastNotice('🐒 ' + strings.loading.oneMomentPlease)
       },
-      href: `/api/pdf?id=${id}${noSolutions ? '&noSolutions' : ''}`,
+      href: `https://pdf.serlo.org/api/${id}${
+        noSolutions ? '?noSolutions' : ''
+      }`,
     }
   }
 
