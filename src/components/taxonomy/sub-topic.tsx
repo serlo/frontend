@@ -24,7 +24,7 @@ export function SubTopic({ data, subid, id }: SubTopicProps) {
         </Link>
       </h2>
 
-      <Wrapper className="mb-5 pb-6 flex flex-col sm:flex-row border-b-1 border-gray-300">
+      <Wrapper className="mb-5 pb-6 flex flex-col sm:flex-row border-b border-gray-300">
         <div style={{ flex: '1 1 40%' }}>
           {' '}
           <div className="mt-6 sm:mb-5">
