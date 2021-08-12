@@ -46,10 +46,10 @@ function collectExercises(children: TaxonomyTermChildrenLevel1[]) {
   let index = 0
   const result: (FrontendExerciseNode | FrontendExerciseGroupNode)[] = []
   children.forEach((child) => {
-    if (child.__typename === 'Exercise') {
+    if (child.__typename === 'Exercise' && child.currentRevision) {
       result.push(createExercise(child, index++))
     }
-    if (child.__typename === 'ExerciseGroup') {
+    if (child.__typename === 'ExerciseGroup' && child.currentRevision) {
       if (children.length === 1) result.push(createExerciseGroup(child))
       else result.push(createExerciseGroup(child, index++))
     }
