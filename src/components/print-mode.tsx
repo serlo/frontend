@@ -45,7 +45,9 @@ export function PrintMode() {
     if (window.location.hash.startsWith('#print--preview')) {
       document.documentElement.classList.add('serlo-print-style')
     }
+  })
 
+  useEffect(() => {
     if (!scrolledToBottom) {
       window.addEventListener('scroll', () => {
         try {
