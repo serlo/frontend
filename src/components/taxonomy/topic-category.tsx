@@ -1,4 +1,4 @@
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons'
+import { faTools } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
@@ -72,9 +72,9 @@ export function TopicCategory({
           {link.title}
           {link.unrevised && (
             <FontAwesomeIcon
-              icon={faInfoCircle}
+              icon={faTools}
               title={loggedInData?.strings.revisions.unrevisedTaxNote}
-              className="ml-1"
+              className="ml-1 text-base"
             />
           )}
         </Link>

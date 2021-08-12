@@ -11,7 +11,6 @@ import {
   faComments,
   faUserEdit,
   faCircle,
-  faInfoCircle,
 } from '@fortawesome/free-solid-svg-icons'
 
 import { TopicCategoryTypes } from '@/data-types'
@@ -26,7 +25,6 @@ export const categoryIconMapping: {
   folders: faFolderOpen,
   exercises: faFile,
   events: faCalendarAlt,
-  unrevised: faInfoCircle,
 }
 
 export function getIconByTypename(typename: string) {

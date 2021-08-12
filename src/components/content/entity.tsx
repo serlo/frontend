@@ -1,4 +1,4 @@
-import { faInfoCircle, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faTools, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import dynamic from 'next/dynamic'
 import { Router } from 'next/router'
@@ -185,7 +185,7 @@ export function Entity({ data }: EntityProps) {
     )
     return (
       <div className="p-4 my-12 bg-brand-100 rounded-2xl font-bold">
-        <FontAwesomeIcon icon={faInfoCircle} />{' '}
+        <FontAwesomeIcon icon={faTools} />{' '}
         {replacePlaceholders(strings.content.unrevisedNotice, {
           link,
         })}
