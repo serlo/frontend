@@ -9,7 +9,7 @@ import { HeaderFooter } from './header-footer'
 import { MaxWidthDiv } from './navigation/max-width-div'
 import { ToastNotice } from './toast-notice'
 import { AuthProvider } from '@/auth/auth-provider'
-import { PrintWarning } from '@/components/content/print-warning'
+import { PrintMode } from '@/components/print-mode'
 import { EntityIdProvider } from '@/contexts/entity-id-context'
 import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInComponentsProvider } from '@/contexts/logged-in-components'
@@ -18,7 +18,6 @@ import { InstanceData, LoggedInData } from '@/data-types'
 import type { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { frontendOrigin } from '@/helper/frontent-origin'
 import type { LoggedInStuff } from '@/helper/logged-in-stuff-chunk'
-import { setupPrintHacks } from '@/helper/print-mode'
 import { theme } from '@/theme'
 
 export type FrontendClientBaseProps = React.PropsWithChildren<{
@@ -70,9 +69,6 @@ export function FrontendClientBase({
       sessionStorage.getItem('currentPathname') || ''
     )
     sessionStorage.setItem('currentPathname', window.location.pathname)
-
-    //print mode hacks
-    void setupPrintHacks()
   })
 
   // const auth = useAuthentication('frontend-client-base')
@@ -95,8 +91,8 @@ export function FrontendClientBase({
 
   return (
     <ThemeProvider theme={theme}>
-      <PrintWarning warning={instanceData.strings.print.warning} />
       <InstanceDataProvider value={instanceData}>
+        <PrintMode />
         <LoggedInComponentsProvider value={loggedInComponents}>
           <AuthProvider unauthenticatedAuthorizationPayload={authorization}>
             <LoggedInDataProvider value={loggedInData}>

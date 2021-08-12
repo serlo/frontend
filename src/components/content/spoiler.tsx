@@ -1,9 +1,9 @@
 import { ReactNode, useState } from 'react'
 import styled, { css } from 'styled-components'
 
+import { isPrintMode } from '../print-mode'
 import { isClient } from '@/helper/client-detection'
 import { inputFontReset } from '@/helper/css'
-import { isPrintMode } from '@/helper/print-mode'
 import { submitEventWithPath } from '@/helper/submit-event'
 import { NodePath } from '@/schema/article-renderer'
 

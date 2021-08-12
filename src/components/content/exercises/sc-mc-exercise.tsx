@@ -6,10 +6,10 @@ import { useState, Fragment } from 'react'
 import styled, { css } from 'styled-components'
 
 import { Feedback } from './feedback'
+import { isPrintMode } from '@/components/print-mode'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EdtrPluginScMcExercise } from '@/data-types'
 import { makeMargin, makePrimaryButton } from '@/helper/css'
-import { isPrintMode } from '@/helper/print-mode'
 import { submitEventWithPath } from '@/helper/submit-event'
 import { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
 

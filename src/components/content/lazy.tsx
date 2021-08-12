@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import * as React from 'react'
 import LazyLoad from 'react-lazyload'
 
-import { isPrintMode } from '@/helper/print-mode'
+import { isPrintMode } from '../print-mode'
 
 export interface LazyProps {
   children: React.ReactNode
