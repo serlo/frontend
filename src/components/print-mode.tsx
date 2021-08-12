@@ -35,7 +35,7 @@ export function PrintMode() {
     }
 
     if (window.location.hash === '#print--now') {
-      showToastNotice(`⌛  Preparing print!  🖨️`)
+      showToastNotice(`⌛  ${strings.print.preparingNotice}  🖨️`)
       setTimeout(() => {
         window.print()
       }, 2000) // give injections a chance ☮
