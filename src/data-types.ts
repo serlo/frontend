@@ -286,6 +286,7 @@ export interface EntityData {
   courseData?: CourseData
   unrevisedRevisions?: number
   unrevisedCourseRevisions?: number
+  isUnrevised: boolean
 }
 
 export interface RevisionPage extends EntityPageBase {
@@ -353,7 +354,7 @@ export type EntityStrings = {
 
 // Entities can belong to a category that we use in the taxonomy
 
-export type CategoryTypes =
+export type TopicCategoryTypes =
   | 'articles'
   | 'courses'
   | 'videos'
@@ -361,10 +362,6 @@ export type CategoryTypes =
   | 'folders'
   | 'exercises'
   | 'events'
-
-export type CategoryStrings = {
-  [K in EntityTypes]: string
-}
 
 // Some flags to control schema.org behaviour. Not very well done yet.
 
@@ -789,6 +786,7 @@ export interface TaxonomyTermBase {
 export interface TaxonomyLink {
   title: string
   url: string
+  unrevised?: boolean
 }
 
 // Second level has folders and exercises as links

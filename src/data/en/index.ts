@@ -28,7 +28,8 @@ export const instanceData = {
       applets: 'Applets',
       folders: 'Folders',
       exercises: 'Exercises',
-      events: 'Events'
+      events: 'Events',
+      unrevised: 'Unrevised'
     },
     entities: {
       applet: 'Applet',
@@ -102,6 +103,7 @@ export const instanceData = {
       yourAnswer: 'Your answer…',
       chooseOption: 'Click on one of the options.',
       trashedNotice: 'This content is marked for deletion.',
+      unrevisedNotice: 'This content has no accepted revision yet. Please use the %link% to preview.',
       strategy: 'Solution Strategy',
       picture: 'Picture',
     },
@@ -399,7 +401,8 @@ export const loggedInData = {
         title: 'Reject Revision',
         explanation: 'Please tell the author why you will not accept the submission.'
       },
-      confirm: 'Confirm'
+      confirm: 'Confirm',
+      unrevisedTaxNote: 'New content, not accepted yet'
     }
   }
 };

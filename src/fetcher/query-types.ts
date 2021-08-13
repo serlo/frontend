@@ -48,6 +48,11 @@ export interface Article extends EntityWithTaxonomyTerms {
   >
   revisions: {
     totalCount: number
+    nodes: [
+      {
+        title: string
+      }
+    ]
   }
 }
 
@@ -58,6 +63,11 @@ export interface Video extends EntityWithTaxonomyTerms {
   >
   revisions: {
     totalCount: number
+    nodes: [
+      {
+        title: string
+      }
+    ]
   }
 }
 
@@ -71,6 +81,11 @@ export interface Applet extends EntityWithTaxonomyTerms {
   >
   revisions: {
     totalCount: number
+    nodes: [
+      {
+        title: string
+      }
+    ]
   }
 }
 
@@ -81,6 +96,11 @@ export interface CoursePage extends Entity {
   >
   revisions: {
     totalCount: number
+    nodes: [
+      {
+        title: string
+      }
+    ]
   }
   course: {
     id: number
@@ -192,6 +212,7 @@ export interface TaxonomyTermChildOnX extends TaxonomyTermChild {
   currentRevision?: {
     title: string
   }
+  revisions?: { nodes?: [{ title: string }] }
 }
 
 export interface TaxonomyTermChildExercise

@@ -43,9 +43,7 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
         <MaxWidthDiv showNav={!!page.secondaryNavigationData}>
           {renderBreadcrumbs()}
           <main>{children}</main>
-
           {!noComments && <CommentArea id={entityId} />}
-
           <HSpace amount={40} />
           {page.horizonData && (
             <Lazy>
