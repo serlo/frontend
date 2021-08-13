@@ -29,6 +29,7 @@ export const instanceData = {
       folders: 'Folders',
       exercises: 'Exercises',
       events: 'Events',
+      unrevised: 'Unrevised'
     },
     entities: {
       applet: 'Applet',
