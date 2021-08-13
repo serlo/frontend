@@ -13,9 +13,9 @@ export const userQuery = gql`
         date
         lastLogin
         description
-        activeReviewer
-        activeAuthor
-        activeDonor
+        isActiveReviewer
+        isActiveAuthor
+        isActiveDonor
         chatUrl
         imageUrl
         motivation

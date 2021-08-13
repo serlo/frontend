@@ -42,17 +42,17 @@ export function UserLink({
   function renderBadges() {
     return (
       <BadgesWrap>
-        {user.activeReviewer && (
+        {user.isActiveReviewer && (
           <span title={strings.roles.reviewer}>
             <ReviewerBadge />
           </span>
         )}
-        {user.activeAuthor && (
+        {user.isActiveAuthor && (
           <span title={strings.roles.author}>
             <AuthorBadge />
           </span>
         )}
-        {user.activeDonor && (
+        {user.isActiveDonor && (
           <span title={strings.roles.donor}>
             <DonorBadge />
           </span>

@@ -1952,17 +1952,17 @@
   resolved "https://registry.yarnpkg.com/@rushstack/eslint-patch/-/eslint-patch-1.0.6.tgz#023d72a5c4531b4ce204528971700a78a85a0c50"
   integrity sha512-Myxw//kzromB9yWgS8qYGuGVf91oBUUJpNvy5eM50sqvmKLbKjwLxohJnkWGTeeI9v9IBMtPLxz5Gc60FIfvCA==
 
-"@serlo/api@^0.26.0", "@serlo/api@^0.26.19":
-  version "0.26.19"
-  resolved "https://registry.yarnpkg.com/@serlo/api/-/api-0.26.19.tgz#a4e454c48b2de82858f89636a6256fb22f5e7e08"
-  integrity sha512-m2TkDDGgPO6VhwatVeliMcdsuttsXqQ1NmMqZjFW6yOrxAyas/tc+natxP8ID2yMB3QyIkLEXsKe475dz+Aszg==
+"@serlo/api@^0.26.0", "@serlo/api@^0.26.21":
+  version "0.26.21"
+  resolved "https://registry.yarnpkg.com/@serlo/api/-/api-0.26.21.tgz#aed750fb95a654de3aed17b1b0fcdfcc481c69fc"
+  integrity sha512-ZL1vE0vY4S7zqBhym4gYdvlaBLkv0UsjbJ5MvsY2hagC7n3ErvAQTKuHjaD+CF4qmkLUI7LJGD3VsKTyvmaMig==
 
 "@serlo/authorization@^0.26.0":
-  version "0.26.19"
-  resolved "https://registry.yarnpkg.com/@serlo/authorization/-/authorization-0.26.19.tgz#893b79db28564cdea4deca9a1bee983d9e3a85e4"
-  integrity sha512-82XYaHt+4CzvsxtmivDDSSvpPvq8GghSZ192NHt9GV8RbaSqduycCxzt/B0sIS9Rf0cJk4hfFFqzr2ASOrPraQ==
+  version "0.26.21"
+  resolved "https://registry.yarnpkg.com/@serlo/authorization/-/authorization-0.26.21.tgz#98d0bf0cd3bdebdef99a442a02d9b2c1b3fdc16a"
+  integrity sha512-H/d5rjbx5Rr+jNVHn7+97LmoNZ+pmJzEIHbe0+sm8GiqP5T5r+f3EeOHvV4XfT0w7j7Om4MddAoPi0ZKvUcrRw==
   dependencies:
-    "@serlo/api" "^0.26.19"
+    "@serlo/api" "^0.26.21"
 
 "@sideway/address@^4.1.0":
   version "4.1.2"

@@ -263,9 +263,9 @@ export interface HorizonEntry {
 export interface FrontendUserData {
   username: string
   id: number
-  activeAuthor?: boolean
-  activeDonor?: boolean
-  activeReviewer?: boolean
+  isActiveAuthor?: boolean
+  isActiveDonor?: boolean
+  isActiveReviewer?: boolean
 }
 
 // All entities (except taxonomy) have a shared data structure.
@@ -771,9 +771,9 @@ export interface UserPage extends EntityPageBase {
     lastLogin?: string | null
     date: string
     roles: { role: Role; instance: string | null }[]
-    activeReviewer: boolean
-    activeAuthor: boolean
-    activeDonor: boolean
+    isActiveReviewer: boolean
+    isActiveAuthor: boolean
+    isActiveDonor: boolean
     activityByType: User['activityByType']
   }
 }

@@ -190,9 +190,9 @@ export const unrevisedRevisionsQuery = gql`
   fragment authorData on User {
     id
     username
-    activeAuthor
-    activeDonor
-    activeReviewer
+    isActiveAuthor
+    isActiveDonor
+    isActiveReviewer
     isNewAuthor
   }
 `

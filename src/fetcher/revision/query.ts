@@ -16,9 +16,9 @@ export const revisionQuery = gql`
         author {
           id
           username
-          activeAuthor
-          activeDonor
-          activeReviewer
+          isActiveAuthor
+          isActiveDonor
+          isActiveReviewer
         }
         ... on ArticleRevision {
           ...articleRevision

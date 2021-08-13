@@ -64,7 +64,6 @@ export function UnrevisedEntity({ entity }: UnrevisedEntityProps) {
         </Td>
         <Td>
           <UserLink user={revision.author} />
-          {/* @ts-expect-error remove once api naming is final */}
           {revision.author.isNewAuthor && renderAuthorLabel()}
         </Td>
         <Td className="w-1/6">

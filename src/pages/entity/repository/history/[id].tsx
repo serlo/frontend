@@ -274,8 +274,8 @@ const query = gql`
   fragment authorData on User {
     id
     username
-    activeAuthor
-    activeDonor
-    activeReviewer
+    isActiveAuthor
+    isActiveDonor
+    isActiveReviewer
   }
 `
