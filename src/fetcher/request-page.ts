@@ -114,6 +114,7 @@ export async function requestPage(
         content: exercise,
         inviteToEdit: true,
         unrevisedRevisions: uuid.revisions?.totalCount,
+        isUnrevised: !uuid.currentRevision,
       },
       newsletterPopup: false,
       breadcrumbsData:
@@ -151,6 +152,7 @@ export async function requestPage(
         content: exercise,
         inviteToEdit: true,
         unrevisedRevisions: uuid.revisions?.totalCount,
+        isUnrevised: !uuid.currentRevision,
       },
       newsletterPopup: false,
       breadcrumbsData,
@@ -177,6 +179,7 @@ export async function requestPage(
         trashed: uuid.trashed,
         typename: uuid.__typename,
         content,
+        isUnrevised: false,
       },
       newsletterPopup: false,
       horizonData,
@@ -203,6 +206,7 @@ export async function requestPage(
         revisionId: uuid.currentRevision?.id,
         title: uuid.currentRevision?.title ?? '',
         content,
+        isUnrevised: !uuid.currentRevision,
       },
       metaData: {
         title,
@@ -229,7 +233,7 @@ export async function requestPage(
         alias: uuid.alias ?? undefined,
         trashed: uuid.trashed,
         typename: uuid.__typename,
-        title: uuid.currentRevision?.title ?? '',
+        title: uuid.currentRevision?.title ?? uuid.revisions?.nodes[0]?.title,
         content,
         licenseData,
         schemaData: {
@@ -240,6 +244,7 @@ export async function requestPage(
         categoryIcon: 'article',
         inviteToEdit: true,
         unrevisedRevisions: uuid.revisions?.totalCount,
+        isUnrevised: !uuid.currentRevision,
       },
       metaData: {
         title,
@@ -281,6 +286,7 @@ export async function requestPage(
         },
         licenseData,
         unrevisedRevisions: uuid.revisions?.totalCount,
+        isUnrevised: !uuid.currentRevision,
       },
       metaData: {
         title,
@@ -318,6 +324,7 @@ export async function requestPage(
         },
         licenseData,
         unrevisedRevisions: uuid.revisions?.totalCount,
+        isUnrevised: !uuid.currentRevision,
       },
       metaData: {
         title,
@@ -382,6 +389,7 @@ export async function requestPage(
         },
         unrevisedRevisions: uuid.revisions?.totalCount,
         unrevisedCourseRevisions: uuid.course.revisions?.totalCount,
+        isUnrevised: !uuid.currentRevision,
       },
       metaData: {
         title,

@@ -124,7 +124,9 @@ module.exports = {
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      margin: ['first'],
+    },
   },
   plugins: [
     plugin(function ({ addUtilities, addComponents }) {

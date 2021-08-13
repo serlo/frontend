@@ -1,10 +1,11 @@
-import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faTools, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import dynamic from 'next/dynamic'
 import { Router } from 'next/router'
 import { useState, MouseEvent as ReactMouseEvent } from 'react'
 
 import { HSpace } from './h-space'
+import { Link } from './link'
 import { LicenseNotice } from '@/components/content/license-notice'
 import { CourseFooter } from '@/components/navigation/course-footer'
 import { CourseNavigation } from '@/components/navigation/course-navigation'
@@ -13,6 +14,7 @@ import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EntityData, FrontendContentNode } from '@/data-types'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
+import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { renderArticle } from '@/schema/article-renderer'
 
 export interface EntityProps {
@@ -39,12 +41,12 @@ export function Entity({ data }: EntityProps) {
   })
 
   const { strings } = useInstanceData()
-
   return wrapWithSchema(
     <>
       {renderCourseNavigation()}
       {data.trashed && renderTrashedNotice()}
       {renderStyledH1()}
+      {!data.trashed && data.isUnrevised && renderUnrevisedNotice()}
       {renderUserTools({ aboveContent: true })}
       <div className="min-h-1/4">
         {data.content && renderContent(data.content)}
@@ -144,7 +146,7 @@ export function Entity({ data }: EntityProps) {
     ].includes(data.typename)
     return (
       <ShareModal
-        open={open}
+        isOpen={open}
         onClose={() => setOpen(false)}
         showPdf={showPdf}
       />
@@ -179,6 +181,22 @@ export function Entity({ data }: EntityProps) {
     return (
       <div className="p-4 my-12 bg-truegray-100 rounded-2xl font-bold">
         <FontAwesomeIcon icon={faTrash} /> {strings.content.trashedNotice}
+      </div>
+    )
+  }
+
+  function renderUnrevisedNotice() {
+    const link = (
+      <Link href={`/entity/repository/history/${data.id}`}>
+        {strings.pageTitles.revisionHistory}
+      </Link>
+    )
+    return (
+      <div className="p-4 my-12 bg-brand-100 rounded-2xl font-bold">
+        <FontAwesomeIcon icon={faTools} />{' '}
+        {replacePlaceholders(strings.content.unrevisedNotice, {
+          link,
+        })}
       </div>
     )
   }

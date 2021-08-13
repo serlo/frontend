@@ -27,7 +27,7 @@ import { showToastNotice } from '@/helper/show-toast-notice'
 import { submitEvent } from '@/helper/submit-event'
 
 export interface ShareModalProps {
-  open: boolean
+  isOpen: boolean
   onClose: () => void
   showPdf?: boolean
 }
@@ -40,17 +40,14 @@ interface EntryData {
   onClick?: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void
 }
 
-export function ShareModal({ open, onClose, showPdf }: ShareModalProps) {
+export function ShareModal({ isOpen, onClose, showPdf }: ShareModalProps) {
   const shareInputRef = React.useRef<HTMLInputElement>(null)
   const { strings, lang } = useInstanceData()
   const id = React.useContext(EntityIdContext)
 
-  if (!open || !id) return null
+  if (!isOpen || !id) return null
 
-  if (open) {
-    // submit event
-    submitEvent(`share_${id}`)
-  }
+  submitEvent(`share_${id}`)
 
   function copyToClipboard(event: React.MouseEvent, text?: string) {
     const target = event.target as HTMLAnchorElement
@@ -129,7 +126,7 @@ export function ShareModal({ open, onClose, showPdf }: ShareModalProps) {
 
   return (
     <ModalWithCloseButton
-      isOpen={open}
+      isOpen={isOpen}
       onCloseClick={onClose}
       title={strings.share.title}
     >
