@@ -28,7 +28,8 @@ export const instanceData = {
       applets: 'Applets',
       folders: 'Folders',
       exercises: "பயிற்சிகள்",
-      events: "நிகழ்வுகள்"
+      events: "நிகழ்வுகள்",
+      unrevised: 'Unrevised'
     },
     entities: {
       applet: "ஆப்லெட்",
@@ -72,7 +73,9 @@ export const instanceData = {
       title: "பகிர்!",
       copyLink: "இணைப்பை நகலெடுக்கவும்",
       copySuccess: "இணைப்பு நகலெடுக்கப்பட்டது!",
-      close: "நெருக்கமான"
+      close: "நெருக்கமான",
+      pdf: 'Download as PDF',
+      pdfNoSolutions: 'PDF without solutions'
     },
     edit: {
       button: "தொகு",
@@ -101,7 +104,9 @@ export const instanceData = {
       check: "சரிபார்க்கவும்",
       yourAnswer: "உங்கள் பதில்:",
       chooseOption: 'Click on one of the options.',
+      printModeChooseOption: 'Check one of the options.',
       trashedNotice: "இந்த உள்ளடக்கம் குப்பையாக குறிக்கப்பட்டுள்ளது.",
+      unrevisedNotice: 'This content has no accepted revision yet. Please use the %link% to preview.',
       strategy: 'Solution Strategy',
       picture: 'Picture'
     },
@@ -182,6 +187,7 @@ export const instanceData = {
       backToHome: 'To our home page'
     },
     print: {
+      preparingNotice: 'Preparing print!',
       warning: 'IMPORTANT: To make sure all images and formulas print, please scroll down to the end of the page once BEFORE you open this dialog. Thank you!'
     },
     profiles: {
@@ -399,7 +405,8 @@ export const loggedInData = {
         title: 'Reject Revision',
         explanation: 'Please tell the author why you will not accept the submission.'
       },
-      confirm: 'Confirm'
+      confirm: 'Confirm',
+      unrevisedTaxNote: 'New content, not accepted yet'
     }
   }
 };
