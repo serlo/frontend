@@ -28,7 +28,8 @@ export const instanceData = {
       applets: 'Applets',
       folders: "Bereiche",
       exercises: "Aufgaben",
-      events: "Veranstaltungen"
+      events: "Veranstaltungen",
+      unrevised: 'Unrevised'
     },
     entities: {
       applet: 'Applet',
@@ -72,7 +73,9 @@ export const instanceData = {
       title: "Weitergeben!",
       copyLink: "Link kopieren",
       copySuccess: "In die Zwischenablage kopiert!",
-      close: "Schließen"
+      close: "Schließen",
+      pdf: "Als PDF herunterladen",
+      pdfNoSolutions: "PDF ohne Lösungen"
     },
     edit: {
       button: "Inhalt überarbeiten",
@@ -101,7 +104,9 @@ export const instanceData = {
       check: "Stimmt's?",
       yourAnswer: "Deine Antwort…",
       chooseOption: "Klicke auf eine der Optionen.",
+      printModeChooseOption: "Kreuze eine der Optionen an",
       trashedNotice: "Dieser Inhalt wurde zum Löschen markiert.",
+      unrevisedNotice: "Dieser Inhalt hat noch keine akzeptierte Bearbeitung. Über die %link% kannst du dir die Entwürfe anzeigen lassen.",
       strategy: "Lösungsstrategie",
       picture: "Bild"
     },
@@ -182,6 +187,7 @@ export const instanceData = {
       backToHome: "Zur Startseite"
     },
     print: {
+      preparingNotice: "Druck wird vorbereitet!",
       warning: "WICHTIG: Damit alle Bilder und Formeln gedruckt werden, scrolle bitte einmal bis zum Ende der Seite BEVOR du diesen Dialog öffnest. Vielen Dank!"
     },
     profiles: {
@@ -399,7 +405,8 @@ export const loggedInData = {
         title: "Bearbeitung nicht akzeptieren",
         explanation: "Bitte sag der Bearbeiter*in, warum die Änderung nicht angenommen wird."
       },
-      confirm: "Bestätigen"
+      confirm: "Bestätigen",
+      unrevisedTaxNote: "Neuer Inhalt, noch nicht akzeptiert"
     }
   }
 };

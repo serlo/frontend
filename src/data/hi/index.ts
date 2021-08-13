@@ -28,7 +28,8 @@ export const instanceData = {
       applets: "एप्लेट",
       folders: "फ़ोल्डर्स",
       exercises: "अभ्यास",
-      events: "कार्यक्रम"
+      events: "कार्यक्रम",
+      unrevised: 'Unrevised'
     },
     entities: {
       applet: "एप्लेट",
@@ -72,7 +73,9 @@ export const instanceData = {
       title: "सांझा करें",
       copyLink: "लिंक कॉपी करें",
       copySuccess: "लिंक कॉपी किया गया!",
-      close: "बंद करें"
+      close: "बंद करें",
+      pdf: 'Download as PDF',
+      pdfNoSolutions: 'PDF without solutions'
     },
     edit: {
       button: "संपादित करें",
@@ -101,7 +104,9 @@ export const instanceData = {
       check: "जाँच करें",
       yourAnswer: "आपका उत्तर",
       chooseOption: "किसी एक विकल्प पर क्लिक करें",
+      printModeChooseOption: 'Check one of the options.',
       trashedNotice: "यह सामग्री हटाने के लिए चिह्नित है",
+      unrevisedNotice: 'This content has no accepted revision yet. Please use the %link% to preview.',
       strategy: 'Solution Strategy',
       picture: 'Picture'
     },
@@ -182,6 +187,7 @@ export const instanceData = {
       backToHome: "होमपेज पर जाएं"
     },
     print: {
+      preparingNotice: 'Preparing print!',
       warning: "महत्वपूर्ण: सभी चित्र और सूत्र प्रिंट करने के लिए, कृपया इस संवाद को खोलने से पहले पृष्ठ के अंत में नीचे स्क्रॉल करें। धन्यवाद!"
     },
     profiles: {
@@ -399,7 +405,8 @@ export const loggedInData = {
         title: "संशोधन अस्वीकारें",
         explanation: 'Please tell the author why you will not accept the submission.'
       },
-      confirm: "पुष्टि करें"
+      confirm: "पुष्टि करें",
+      unrevisedTaxNote: 'New content, not accepted yet'
     }
   }
 };
