@@ -63,7 +63,7 @@ export function Topic({ data }: TopicProps) {
       <ShareModal
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
-        contentId={data.id}
+        showPdf={!!data.exercisesContent}
       />
     </>
   )
