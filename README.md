@@ -2,7 +2,7 @@
 
 # serlo/frontend
 
-Welcome to the new frontend.
+Test Welcome to the new frontend.
 
 ## Overview
 
