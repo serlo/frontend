@@ -28,7 +28,8 @@ export const instanceData = {
       applets: 'Applets',
       folders: "Carpetas",
       exercises: "Ejercicios",
-      events: "Eventos"
+      events: "Eventos",
+      unrevised: 'Unrevised'
     },
     entities: {
       applet: 'Applet',
@@ -72,7 +73,9 @@ export const instanceData = {
       title: "¡Comparte!",
       copyLink: "Copiar enlace",
       copySuccess: "!Enlace copiado!",
-      close: "Cerrar"
+      close: "Cerrar",
+      pdf: 'Download as PDF',
+      pdfNoSolutions: 'PDF without solutions'
     },
     edit: {
       button: "Editar",
@@ -101,7 +104,9 @@ export const instanceData = {
       check: "Revisa tu respuesta",
       yourAnswer: "Tu respuesta...",
       chooseOption: "Elige una de las opciones.",
+      printModeChooseOption: 'Check one of the options.',
       trashedNotice: "Este contenido está marcado para su eliminación.",
+      unrevisedNotice: 'This content has no accepted revision yet. Please use the %link% to preview.',
       strategy: "Estrategia de solución",
       picture: "Imagen"
     },
@@ -182,6 +187,7 @@ export const instanceData = {
       backToHome: "Ir a la página de inicio"
     },
     print: {
+      preparingNotice: 'Preparing print!',
       warning: "IMPORTANTE: Para asegurarse de que todas las imágenes y fórmulas se puedan imprimir, por favor desplácese hasta el final de la página ANTES de abrir este diálogo. ¡Gracias!"
     },
     profiles: {
@@ -399,7 +405,8 @@ export const loggedInData = {
         title: "Rechazar la revisión",
         explanation: "Por favor, indica al autor por qué no aceptas el trabajo."
       },
-      confirm: "Confirmar"
+      confirm: "Confirmar",
+      unrevisedTaxNote: 'New content, not accepted yet'
     }
   }
 };
