@@ -15,6 +15,7 @@ import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInComponentsProvider } from '@/contexts/logged-in-components'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
 import { InstanceData, LoggedInData } from '@/data-types'
+import { isClient } from '@/helper/client-detection'
 import type { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { frontendOrigin } from '@/helper/frontent-origin'
 import type { LoggedInStuff } from '@/helper/logged-in-stuff-chunk'
@@ -44,7 +45,7 @@ export function FrontendClientBase({
 }: FrontendClientBaseProps) {
   const { locale } = useRouter()
   const [instanceData] = React.useState<InstanceData>(() => {
-    if (typeof window === 'undefined') {
+    if (!isClient) {
       // load instance data for server side rendering
       // Note: using require to avoid webpack bundling it
       const featureI18n = require('@/helper/feature-i18n') as {
@@ -125,11 +126,7 @@ export function FrontendClientBase({
   )
 
   function getCachedLoggedInData() {
-    if (
-      typeof window === 'undefined' ||
-      window.location.hostname === 'localhost'
-    )
-      return null
+    if (!isClient || window.location.hostname === 'localhost') return null
     const cacheValue = sessionStorage.getItem(
       `___loggedInData_${instanceData.lang}`
     )
