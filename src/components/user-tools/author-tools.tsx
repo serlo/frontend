@@ -283,24 +283,18 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   }
 
   function trash() {
+    const title = data.trashed
+      ? loggedInStrings.authorMenu.restoreContent
+      : loggedInStrings.authorMenu.moveToTrash
     return (
-      <li
-        className="block"
-        key={
-          data.trashed
-            ? loggedInStrings.authorMenu.restoreContent
-            : loggedInStrings.authorMenu.moveToTrash
-        }
-      >
+      <li className="block" key={title}>
         <SubButtonStyle
           as="button"
           onClick={() => {
             void setUuidState({ id: [data.id], trashed: !data.trashed })
           }}
         >
-          {data.trashed
-            ? loggedInStrings.authorMenu.restoreContent
-            : loggedInStrings.authorMenu.moveToTrash}
+          {title}
         </SubButtonStyle>
       </li>
     )

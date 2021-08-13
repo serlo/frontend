@@ -55,7 +55,7 @@ export const Modal = styled(BaseModal)`
   max-width: 85%;
   border: 0;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
-  padding: 10px 10px 30px 10px;
+  padding: 10px 10px 38px 10px;
   background-color: #fff;
   outline: none;
 `

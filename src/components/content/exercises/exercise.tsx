@@ -8,6 +8,7 @@ import { InputExercise } from './input-exercise'
 import { ScMcExercise } from './sc-mc-exercise'
 import { useAuthentication } from '@/auth/use-authentication'
 import { CommentAreaProps } from '@/components/comments/comment-area'
+import { isPrintMode, printModeSolutionVisible } from '@/components/print-mode'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { FrontendExerciseNode } from '@/data-types'
@@ -26,7 +27,9 @@ const CommentArea = dynamic<CommentAreaProps>(() =>
 
 export function Exercise({ node, renderNested, path }: ExerciseProps) {
   const { strings } = useInstanceData()
-  const [solutionVisible, setVisible] = useState(false)
+  const [solutionVisible, setSolutionVisible] = useState(
+    printModeSolutionVisible
+  )
   const [randomId] = useState(Math.random().toString())
 
   const auth = useAuthentication()
@@ -104,6 +107,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
 
   function renderSolutionToggle() {
     if (!node.solution.edtrState && !node.solution.legacy) return null
+    if (isPrintMode && !printModeSolutionVisible) return null
 
     return (
       <button
@@ -116,7 +120,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
           if (!solutionVisible) {
             submitEventWithPath('opensolution', path)
           }
-          setVisible(!solutionVisible)
+          setSolutionVisible(!solutionVisible)
         }}
         onPointerUp={(e) => e.currentTarget.blur()} //hack, use https://caniuse.com/#feat=css-focus-visible when supported
       >

@@ -73,7 +73,9 @@ export const instanceData = {
       title: 'Share!',
       copyLink: 'Copy link',
       copySuccess: 'Link copied! ',
-      close: 'Close'
+      close: 'Close',
+      pdf: 'Download as PDF',
+      pdfNoSolutions: 'PDF without solutions'
     },
     edit: {
       button: 'Edit',
@@ -102,6 +104,7 @@ export const instanceData = {
       check: 'Check',
       yourAnswer: 'Your answer…',
       chooseOption: 'Click on one of the options.',
+      printModeChooseOption: 'Check one of the options.',
       trashedNotice: 'This content is marked for deletion.',
       unrevisedNotice: 'This content has no accepted revision yet. Please use the %link% to preview.',
       strategy: 'Solution Strategy',
@@ -184,6 +187,7 @@ export const instanceData = {
       backToHome: 'To our home page'
     },
     print: {
+      preparingNotice: 'Preparing print!',
       warning: 'IMPORTANT: To make sure all images and formulas print, please scroll down to the end of the page once BEFORE you open this dialog. Thank you!'
     },
     profiles: {

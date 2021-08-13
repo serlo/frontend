@@ -26,7 +26,10 @@ export function MathSpan({ formula }: MathSpanProps) {
   return (
     <>
       <KaTeXStyles />
-      <span dangerouslySetInnerHTML={{ __html: html }} />
+      <span
+        className="special-no-page-breaks-inside"
+        dangerouslySetInnerHTML={{ __html: html }}
+      />
     </>
   )
 }

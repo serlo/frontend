@@ -361,7 +361,7 @@ function renderElement({
   }
   if (element.type === 'geogebra') {
     return (
-      <Lazy>
+      <Lazy noPrint>
         <Geogebra id={element.id} path={path} />
       </Lazy>
     )
@@ -429,7 +429,7 @@ function renderElement({
   }
   if (element.type === 'video') {
     return (
-      <Lazy>
+      <Lazy noPrint>
         <Video src={element.src} path={path} license={element.license} />
       </Lazy>
     )

@@ -15,6 +15,7 @@ import { ExternalProvider, useConsent } from '@/helper/use-consent'
 
 interface PrivacyWrapperProps {
   children: React.ReactChild
+  className?: string
   placeholder?: React.ReactChild
   type: 'video' | 'applet' | 'twingle'
   provider: ExternalProvider
@@ -26,6 +27,7 @@ interface PrivacyWrapperProps {
 export function PrivacyWrapper({
   children,
   placeholder,
+  className,
   type,
   provider,
   embedUrl,
@@ -54,7 +56,7 @@ export function PrivacyWrapper({
   }
 
   return (
-    <Wrapper noMargin={isTwingle}>
+    <Wrapper noMargin={isTwingle} className={className}>
       {renderPlaceholder()}
       {showIframe && children}
     </Wrapper>
