@@ -39,7 +39,8 @@ export enum Tool {
   Organize = 'organize',
   PageConvert = 'pageConvert',
   PageSetting = 'pageSetting',
-  Sort = 'sort',
+  SortCoursePages = 'sortCoursePages',
+  SortGroupedExercises = 'sortGroupedExercises',
   SortEntities = 'sortEntities',
   Trash = 'trash',
   DirectLink = 'directLink',
@@ -99,7 +100,11 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
       url: `/entity/repository/history/${entityId}`,
       canDo: true,
     },
-    sort: {
+    sortCoursePages: {
+      url: `/entity/link/order/${entityId}/link`,
+      canDo: canDo(Entity.orderChildren),
+    },
+    sortGroupedExercises: {
       url: `/entity/link/order/${entityId}/link`,
       canDo: canDo(Entity.orderChildren),
     },

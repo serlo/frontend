@@ -135,7 +135,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
                   Tool.History,
                   Tool.Abo,
                   Tool.AddCoursePage,
-                  Tool.Sort,
+                  Tool.SortCoursePages,
                   Tool.Curriculum,
                   Tool.Log,
                   Tool.Trash,
@@ -190,7 +190,11 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
         )}
 
         {data.type != '_SolutionInline' && (
-          <AuthorTools entityId={data.id} data={data} tools={[Tool.Sort]} />
+          <AuthorTools
+            entityId={data.id}
+            data={data}
+            tools={[Tool.SortGroupedExercises]}
+          />
         )}
 
         {data.type == '_SolutionInline' ? (
