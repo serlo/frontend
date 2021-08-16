@@ -61,7 +61,7 @@ export const instanceData = {
       subscriptions: "Abonnements verwalten",
       revisionHistory: "Bearbeitungsverlauf",
       eventLog: "Aktivitäten",
-      unrevisedRevisions: 'Unrevised Revisions'
+      unrevisedRevisions: "Ungeprüfte Bearbeitungen"
     },
     roles: {
       donor: "Spender*in",
@@ -177,16 +177,16 @@ export const instanceData = {
       status: 'Status'
     },
     unrevisedRevisions: {
-      supportLinks: 'Review support',
-      guideline: 'Guideline for reviewing',
-      showMoreEntities: 'Show all in %subject%',
-      showMoreRevisions: 'Show %number% more…',
-      newLabelText: 'new',
-      newLabelNote: 'This is a new entity',
+      supportLinks: "Wie reviewe ich?",
+      guideline: "Review Hilfeseite",
+      showMoreEntities: "Alle in %subject% anzeigen",
+      showMoreRevisions: "%number weitere anzeigen",
+      newLabelText: "neu",
+      newLabelNote: "Dieser Inhalt ist neu angelegt",
       wipLabelText: 'wip',
-      wipLabelNote: 'Marked as work in progress. Do not review yet.',
-      newAuthorText: 'new author',
-      newAuthorNote: 'This is one of the first edits of this author, maybe prioritise this.'
+      wipLabelNote: "Diese Bearbeitung ist noch in Arbeit. Bitte noch nicht reviewen.",
+      newAuthorText: "neuer autor",
+      newAuthorNote: "Diese Autor*in hat noch nicht viele Bearbeitungen gemacht und freut sich bestimmt über ein schnelles Review."
     },
     errors: {
       title: "😬 Auch Webseiten machen mal Fehler…",
