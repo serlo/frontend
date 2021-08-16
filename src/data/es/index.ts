@@ -60,7 +60,8 @@ export const instanceData = {
       notifications: "Tus notificaciones",
       subscriptions: "Administrar suscripciones",
       revisionHistory: "Historial de revisiones",
-      eventLog: "Registro de eventos"
+      eventLog: "Registro de eventos",
+      unrevisedRevisions: 'Unrevised Revisions'
     },
     roles: {
       donor: "Donante",
@@ -174,6 +175,18 @@ export const instanceData = {
       view: "Mostrar",
       viewLabel: "Mostrar esta revisión",
       status: "Estado"
+    },
+    unrevisedRevisions: {
+      supportLinks: 'Review support',
+      guideline: 'Guideline for reviewing',
+      showMoreEntities: 'Show all in %subject%',
+      showMoreRevisions: 'Show %number% more…',
+      newLabelText: 'new',
+      newLabelNote: 'This is a new entity',
+      wipLabelText: 'wip',
+      wipLabelNote: 'Marked as work in progress. Do not review yet.',
+      newAuthorText: 'new author',
+      newAuthorNote: 'This is one of the first edits of this author, maybe prioritise this.'
     },
     errors: {
       title: "😬 Los sitios web a veces cometen errores…",
