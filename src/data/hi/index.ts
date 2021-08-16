@@ -60,7 +60,8 @@ export const instanceData = {
       notifications: "आपकी सूचनाएं",
       subscriptions: "सदस्यताओं को प्रबंधित करें",
       revisionHistory: "संशोधन इतिहास",
-      eventLog: "Event Log"
+      eventLog: "Event Log",
+      unrevisedRevisions: 'Unrevised Revisions'
     },
     roles: {
       donor: "दाताओं",
@@ -174,6 +175,18 @@ export const instanceData = {
       view: 'Show',
       viewLabel: 'Show this revision',
       status: 'Status'
+    },
+    unrevisedRevisions: {
+      supportLinks: 'Review support',
+      guideline: 'Guideline for reviewing',
+      showMoreEntities: 'Show all in %subject%',
+      showMoreRevisions: 'Show %number% more…',
+      newLabelText: 'new',
+      newLabelNote: 'This is a new entity',
+      wipLabelText: 'wip',
+      wipLabelNote: 'Marked as work in progress. Do not review yet.',
+      newAuthorText: 'new author',
+      newAuthorNote: 'This is one of the first edits of this author, maybe prioritise this.'
     },
     errors: {
       title: "😬 वेबसाइटें कभी-कभी गलतियाँ करती हैं",
