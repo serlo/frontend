@@ -35,6 +35,7 @@ export const getStaticProps: GetStaticProps<UnrevisedRevisionsProps> = async (
   context
 ) => {
   const pageData = await requestUnrevisedRevisions(context.locale as Instance)
+
   return {
     props: {
       pageData: JSON.parse(JSON.stringify(pageData)) as UnrevisedRevisionsPage, // remove undefined values
