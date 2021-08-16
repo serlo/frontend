@@ -60,7 +60,8 @@ export const instanceData = {
       notifications: "Deine Benachrichtigungen",
       subscriptions: "Abonnements verwalten",
       revisionHistory: "Bearbeitungsverlauf",
-      eventLog: "Aktivitäten"
+      eventLog: "Aktivitäten",
+      unrevisedRevisions: 'Unrevised Revisions'
     },
     roles: {
       donor: "Spender*in",
@@ -174,6 +175,18 @@ export const instanceData = {
       view: "Anzeigen",
       viewLabel: "Diese Bearbeitung anzeigen",
       status: 'Status'
+    },
+    unrevisedRevisions: {
+      supportLinks: 'Review support',
+      guideline: 'Guideline for reviewing',
+      showMoreEntities: 'Show all in %subject%',
+      showMoreRevisions: 'Show %number% more…',
+      newLabelText: 'new',
+      newLabelNote: 'This is a new entity',
+      wipLabelText: 'wip',
+      wipLabelNote: 'Marked as work in progress. Do not review yet.',
+      newAuthorText: 'new author',
+      newAuthorNote: 'This is one of the first edits of this author, maybe prioritise this.'
     },
     errors: {
       title: "😬 Auch Webseiten machen mal Fehler…",
