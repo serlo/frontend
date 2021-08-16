@@ -338,6 +338,7 @@ function convertText(node: SlateTextElement) {
       em: node.em,
       strong: node.strong,
       color: colors[node.color as number],
+      code: node.code,
     },
   ]
 }

@@ -1,5 +1,4 @@
 const regexMathRm = /\\mathrm(?=[^a-z])/gm
-const regexDfrac = /\\frac(?=[^a-z])/gm
 const regexBeginAlign = /\\begin{align}/gm
 const regexEndAlign = /\\end{align}/gm
 const regexTextSimple = /\\text(?=[^a-z{])/gm
@@ -19,9 +18,6 @@ export function sanitizeLatex(formula: string): string {
 
   // mathrm is not necessary anymore
   formula = formula.replace(regexMathRm, '')
-
-  // convert frac to dfrac
-  formula = formula.replace(regexDfrac, '\\dfrac')
 
   // replace align with aligned
   formula = formula.replace(regexBeginAlign, '\\begin{aligned}')

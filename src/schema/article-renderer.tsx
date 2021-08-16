@@ -142,6 +142,7 @@ interface RenderLeafProps {
     color?: 'blue' | 'green' | 'orange'
     em?: boolean
     strong?: boolean
+    code?: boolean
   }
   key: number
   children: React.ReactNode
@@ -149,13 +150,31 @@ interface RenderLeafProps {
 
 export function renderLeaf({ leaf, key, children }: RenderLeafProps) {
   const styles: CSS.Properties = {}
+
+  if (leaf.code) {
+    return (
+      <code
+        key={key}
+        className="bg-brand-100 text-brand p-1 rounded-sm text-base"
+      >
+        {children}
+      </code>
+    )
+  }
+
   if (leaf.color) styles.color = articleColors[leaf.color]
   if (leaf.em) styles.fontStyle = 'italic'
   if (leaf.strong) styles.fontWeight = 'bold'
 
   if (Object.keys(styles).length === 0) return children
 
-  const LeafTag = leaf.strong ? 'b' : leaf.em ? 'i' : 'span'
+  const LeafTag = leaf.code
+    ? 'code'
+    : leaf.strong
+    ? 'b'
+    : leaf.em
+    ? 'i'
+    : 'span'
   const outputStyles = !(Object.keys(styles).length === 1 && LeafTag !== 'span')
 
   return (
@@ -342,7 +361,7 @@ function renderElement({
   }
   if (element.type === 'geogebra') {
     return (
-      <Lazy>
+      <Lazy noPrint>
         <Geogebra id={element.id} path={path} />
       </Lazy>
     )
@@ -410,7 +429,7 @@ function renderElement({
   }
   if (element.type === 'video') {
     return (
-      <Lazy>
+      <Lazy noPrint>
         <Video src={element.src} path={path} license={element.license} />
       </Lazy>
     )

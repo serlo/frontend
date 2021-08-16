@@ -13,6 +13,7 @@ export interface CheckoutRejectButtonsProps {
   repositoryAlias: string
   isRejected: boolean
   isCurrent: boolean
+  isPage: boolean
   buttonStyle?: string
 }
 
@@ -21,6 +22,7 @@ export function CheckoutRejectButtons({
   repositoryAlias,
   isRejected,
   isCurrent,
+  isPage,
   buttonStyle,
 }: CheckoutRejectButtonsProps) {
   const loggedInData = useLoggedInData()
@@ -37,10 +39,15 @@ export function CheckoutRejectButtons({
 
   function onConfirm() {
     if (modalMode) {
-      void revisionMutation(modalMode, repositoryAlias, {
-        revisionId,
-        reason,
-      })
+      void revisionMutation(
+        modalMode,
+        repositoryAlias,
+        {
+          revisionId,
+          reason,
+        },
+        isPage
+      )
     }
   }
 
@@ -58,7 +65,7 @@ export function CheckoutRejectButtons({
         <FontAwesomeIcon icon={faCheck} className="lg:mr-0.5" />{' '}
         {strings.revisions.checkout.action}
       </button>
-      {!isRejected && (
+      {!isRejected && !isPage && (
         <button
           className={buttonStyle}
           onClick={() => setModalMode('reject')}

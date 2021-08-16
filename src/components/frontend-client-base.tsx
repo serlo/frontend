@@ -9,12 +9,13 @@ import { HeaderFooter } from './header-footer'
 import { MaxWidthDiv } from './navigation/max-width-div'
 import { ToastNotice } from './toast-notice'
 import { AuthProvider } from '@/auth/auth-provider'
-import { PrintWarning } from '@/components/content/print-warning'
+import { PrintMode } from '@/components/print-mode'
 import { EntityIdProvider } from '@/contexts/entity-id-context'
 import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInComponentsProvider } from '@/contexts/logged-in-components'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
 import { InstanceData, LoggedInData } from '@/data-types'
+import { isClient } from '@/helper/client-detection'
 import type { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { frontendOrigin } from '@/helper/frontent-origin'
 import type { LoggedInStuff } from '@/helper/logged-in-stuff-chunk'
@@ -44,7 +45,7 @@ export function FrontendClientBase({
 }: FrontendClientBaseProps) {
   const { locale } = useRouter()
   const [instanceData] = React.useState<InstanceData>(() => {
-    if (typeof window === 'undefined') {
+    if (!isClient) {
       // load instance data for server side rendering
       // Note: using require to avoid webpack bundling it
       const featureI18n = require('@/helper/feature-i18n') as {
@@ -91,8 +92,8 @@ export function FrontendClientBase({
 
   return (
     <ThemeProvider theme={theme}>
-      <PrintWarning warning={instanceData.strings.print.warning} />
       <InstanceDataProvider value={instanceData}>
+        <PrintMode />
         <LoggedInComponentsProvider value={loggedInComponents}>
           <AuthProvider unauthenticatedAuthorizationPayload={authorization}>
             <LoggedInDataProvider value={loggedInData}>
@@ -125,11 +126,7 @@ export function FrontendClientBase({
   )
 
   function getCachedLoggedInData() {
-    if (
-      typeof window === 'undefined' ||
-      window.location.hostname === 'localhost'
-    )
-      return null
+    if (!isClient || window.location.hostname === 'localhost') return null
     const cacheValue = sessionStorage.getItem(
       `___loggedInData_${instanceData.lang}`
     )

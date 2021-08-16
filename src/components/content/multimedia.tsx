@@ -71,6 +71,7 @@ export function Multimedia({
 function isImage(
   child: FrontendImgNode | FrontendContentNode
 ): child is FrontendImgNode {
+  if (!child) return false
   return (child as FrontendImgNode).type === 'img'
 }
 

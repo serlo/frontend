@@ -28,7 +28,7 @@ export const instanceData = {
       applets: 'Applets',
       folders: 'Folders',
       exercises: 'Exercises',
-      events: 'Events'
+      events: 'Events',
     },
     entities: {
       applet: 'Applet',
@@ -60,7 +60,8 @@ export const instanceData = {
       notifications: 'Your Notifications',
       subscriptions: "Manage Subscriptions",
       revisionHistory: "Revision History",
-      eventLog: "Event Log"
+      eventLog: "Event Log",
+      unrevisedRevisions: 'Unrevised Revisions'
     },
     roles: {
       donor: "Donor",
@@ -72,7 +73,9 @@ export const instanceData = {
       title: 'Share!',
       copyLink: 'Copy link',
       copySuccess: 'Link copied! ',
-      close: 'Close'
+      close: 'Close',
+      pdf: 'Download as PDF',
+      pdfNoSolutions: 'PDF without solutions'
     },
     edit: {
       button: 'Edit',
@@ -101,7 +104,9 @@ export const instanceData = {
       check: 'Check',
       yourAnswer: 'Your answer…',
       chooseOption: 'Click on one of the options.',
+      printModeChooseOption: 'Check one of the options.',
       trashedNotice: 'This content is marked for deletion.',
+      unrevisedNotice: 'This content has no accepted revision yet. Please use the %link% to preview.',
       strategy: 'Solution Strategy',
       picture: 'Picture',
     },
@@ -171,6 +176,18 @@ export const instanceData = {
       viewLabel: 'Show this revision',
       status: 'Status'
     },
+    unrevisedRevisions:{
+      supportLinks: 'Review support',
+      guideline: 'Guideline for reviewing',
+      showMoreEntities: 'Show all in %subject%',
+      showMoreRevisions: 'Show %number% more…',
+      newLabelText: 'new',
+      newLabelNote: 'This is a new entity',
+      wipLabelText: 'wip',
+      wipLabelNote: 'Marked as work in progress. Do not review yet.',
+      newAuthorText: 'new author',
+      newAuthorNote: 'This is one of the first edits of this author, maybe prioritise this.',
+    },
     errors: {
       title: '😬 Websites make mistakes sometimes…',
       defaultMessage: 'So sorry, we ran into a problem loading this content.',
@@ -182,6 +199,7 @@ export const instanceData = {
       backToHome: 'To our home page'
     },
     print: {
+      preparingNotice: 'Preparing print!',
       warning: 'IMPORTANT: To make sure all images and formulas print, please scroll down to the end of the page once BEFORE you open this dialog. Thank you!'
     },
     profiles: {
@@ -361,7 +379,8 @@ export const loggedInData = {
       editAssignments: 'Edit topic and curriculum assignments',
       moveToTrash: 'Move to trash',
       restoreContent: 'Restore from trash',
-      sort: 'Sort children',
+      sortCoursePages: 'Sort course pages',
+      sortGroupedExercises: 'Sort grouped Exercises',
       edit: 'Edit',
       unrevisedEdit: 'Show unrevised revisions',
       organize: 'Organize',
@@ -399,7 +418,8 @@ export const loggedInData = {
         title: 'Reject Revision',
         explanation: 'Please tell the author why you will not accept the submission.'
       },
-      confirm: 'Confirm'
+      confirm: 'Confirm',
+      unrevisedTaxNote: 'New content, not accepted yet'
     }
   }
 };

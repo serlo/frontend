@@ -236,7 +236,7 @@ export function UserTools({
       '_ExerciseGroupInline',
       '_SolutionInline',
     ]
-    if (supportedTypes.indexOf(data.type) === -1) return null
+    if (!supportedTypes.includes(data.type)) return null
 
     const AuthorToolsHoverMenu = loggedInComponents?.AuthorToolsHoverMenu
 

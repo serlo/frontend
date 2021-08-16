@@ -60,7 +60,8 @@ export const instanceData = {
       notifications: "Deine Benachrichtigungen",
       subscriptions: "Abonnements verwalten",
       revisionHistory: "Bearbeitungsverlauf",
-      eventLog: "Aktivitäten"
+      eventLog: "Aktivitäten",
+      unrevisedRevisions: "Ungeprüfte Bearbeitungen"
     },
     roles: {
       donor: "Spender*in",
@@ -72,7 +73,9 @@ export const instanceData = {
       title: "Weitergeben!",
       copyLink: "Link kopieren",
       copySuccess: "In die Zwischenablage kopiert!",
-      close: "Schließen"
+      close: "Schließen",
+      pdf: "Als PDF herunterladen",
+      pdfNoSolutions: "PDF ohne Lösungen"
     },
     edit: {
       button: "Inhalt überarbeiten",
@@ -101,7 +104,9 @@ export const instanceData = {
       check: "Stimmt's?",
       yourAnswer: "Deine Antwort…",
       chooseOption: "Klicke auf eine der Optionen.",
+      printModeChooseOption: "Kreuze eine der Optionen an",
       trashedNotice: "Dieser Inhalt wurde zum Löschen markiert.",
+      unrevisedNotice: "Dieser Inhalt hat noch keine akzeptierte Bearbeitung. Über die %link% kannst du dir die Entwürfe anzeigen lassen.",
       strategy: "Lösungsstrategie",
       picture: "Bild"
     },
@@ -171,6 +176,18 @@ export const instanceData = {
       viewLabel: "Diese Bearbeitung anzeigen",
       status: 'Status'
     },
+    unrevisedRevisions: {
+      supportLinks: "Wie reviewe ich?",
+      guideline: "Review Hilfeseite",
+      showMoreEntities: "Alle in %subject% anzeigen",
+      showMoreRevisions: "%number weitere anzeigen",
+      newLabelText: "neu",
+      newLabelNote: "Dieser Inhalt ist neu angelegt",
+      wipLabelText: 'wip',
+      wipLabelNote: "Diese Bearbeitung ist noch in Arbeit. Bitte noch nicht reviewen.",
+      newAuthorText: "neuer autor",
+      newAuthorNote: "Diese Autor*in hat noch nicht viele Bearbeitungen gemacht und freut sich bestimmt über ein schnelles Review."
+    },
     errors: {
       title: "😬 Auch Webseiten machen mal Fehler…",
       defaultMessage: "Es tut uns leid, beim Laden dieses Inhalts ging was schief.",
@@ -182,6 +199,7 @@ export const instanceData = {
       backToHome: "Zur Startseite"
     },
     print: {
+      preparingNotice: "Druck wird vorbereitet!",
       warning: "WICHTIG: Damit alle Bilder und Formeln gedruckt werden, scrolle bitte einmal bis zum Ende der Seite BEVOR du diesen Dialog öffnest. Vielen Dank!"
     },
     profiles: {
@@ -361,7 +379,8 @@ export const loggedInData = {
       editAssignments: "Zuweisung zu Themen und Lehrplänen bearbeiten",
       moveToTrash: "In den Papierkorb verschieben",
       restoreContent: "Aus dem Papierkorb wiederherstellen",
-      sort: "Unterelemente sortieren",
+      sortCoursePages: "Kursseiten sortieren",
+      sortGroupedExercises: "Teilaufgaben sortieren",
       edit: "Überarbeiten",
       unrevisedEdit: "Zeige neue Bearbeitungen",
       organize: "Baumstruktur bearbeiten",
@@ -399,7 +418,8 @@ export const loggedInData = {
         title: "Bearbeitung nicht akzeptieren",
         explanation: "Bitte sag der Bearbeiter*in, warum die Änderung nicht angenommen wird."
       },
-      confirm: "Bestätigen"
+      confirm: "Bestätigen",
+      unrevisedTaxNote: "Neuer Inhalt, noch nicht akzeptiert"
     }
   }
 };

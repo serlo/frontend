@@ -1,6 +1,7 @@
 // eslint-disable-next-line import/no-internal-modules
 import mergeDeepRight from 'ramda/src/mergeDeepRight'
 
+import { isClient } from './client-detection'
 import { InstanceData } from '@/data-types'
 import {
   instanceData as deInstanceData,
@@ -53,7 +54,7 @@ export function parseLanguageSubfolder(alias: string) {
 }
 
 export function isOnLanguageSubdomain() {
-  if (typeof window === 'undefined') return false
+  if (!isClient) return false
   else {
     for (const lang of languages) {
       if (window.location.host.startsWith(`${lang}.`)) return true

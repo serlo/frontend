@@ -60,7 +60,8 @@ export const instanceData = {
       notifications: "Tes notifications",
       subscriptions: "Gérer les abonnements",
       revisionHistory: "Historique des révisions",
-      eventLog: "Event Log"
+      eventLog: "Event Log",
+      unrevisedRevisions: 'Unrevised Revisions'
     },
     roles: {
       donor: "Donneur·e",
@@ -72,7 +73,9 @@ export const instanceData = {
       title: "Partager",
       copyLink: "Copier le lien",
       copySuccess: "Lien copié!",
-      close: "Fermer"
+      close: "Fermer",
+      pdf: 'Download as PDF',
+      pdfNoSolutions: 'PDF without solutions'
     },
     edit: {
       button: "Modifier",
@@ -101,7 +104,9 @@ export const instanceData = {
       check: "Vérifier",
       yourAnswer: "Ta réponse...",
       chooseOption: "Sélectionne une des options :",
+      printModeChooseOption: 'Check one of the options.',
       trashedNotice: "Ce contenu est marqué pour être supprimé.",
+      unrevisedNotice: 'This content has no accepted revision yet. Please use the %link% to preview.',
       strategy: "Stratégie de solution",
       picture: 'Picture'
     },
@@ -171,6 +176,18 @@ export const instanceData = {
       viewLabel: 'Show this revision',
       status: 'Status'
     },
+    unrevisedRevisions: {
+      supportLinks: 'Review support',
+      guideline: 'Guideline for reviewing',
+      showMoreEntities: 'Show all in %subject%',
+      showMoreRevisions: 'Show %number% more…',
+      newLabelText: 'new',
+      newLabelNote: 'This is a new entity',
+      wipLabelText: 'wip',
+      wipLabelNote: 'Marked as work in progress. Do not review yet.',
+      newAuthorText: 'new author',
+      newAuthorNote: 'This is one of the first edits of this author, maybe prioritise this.'
+    },
     errors: {
       title: "😬 Les sites Web font parfois des erreurs…",
       defaultMessage: "Désolé, nous avons rencontré un problème lors du chargement de ce contenu.",
@@ -182,6 +199,7 @@ export const instanceData = {
       backToHome: "Aller à notre page d'accueil"
     },
     print: {
+      preparingNotice: 'Preparing print!',
       warning: "IMPORTANT : Pour t'assurer que toutes les images et formules sont imprimées, fais défiler la page une fois vers le bas AVANT d'ouvrir ce dialogue. Merci!"
     },
     profiles: {
@@ -361,7 +379,8 @@ export const loggedInData = {
       editAssignments: "Modifier le sujet et le programme d'études",
       moveToTrash: "Déplacer dans la corbeille",
       restoreContent: "Restaurer à partir de la corbeille",
-      sort: "Trier les sous-éléments",
+      sortCoursePages: 'Sort course pages',
+      sortGroupedExercises: 'Sort grouped Exercises',
       edit: "Modifier",
       unrevisedEdit: 'Show unrevised revisions',
       organize: "Organiser",
@@ -399,7 +418,8 @@ export const loggedInData = {
         title: "Rejeter la révision",
         explanation: 'Please tell the author why you will not accept the submission.'
       },
-      confirm: "Confirmer"
+      confirm: "Confirmer",
+      unrevisedTaxNote: 'New content, not accepted yet'
     }
   }
 };

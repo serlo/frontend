@@ -6,6 +6,7 @@ import { useState, Fragment } from 'react'
 import styled, { css } from 'styled-components'
 
 import { Feedback } from './feedback'
+import { isPrintMode } from '@/components/print-mode'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EdtrPluginScMcExercise } from '@/data-types'
 import { makeMargin, makePrimaryButton } from '@/helper/css'
@@ -107,6 +108,8 @@ export function ScMcExercise({
         >
           {selected !== undefined
             ? strings.content.check
+            : isPrintMode
+            ? strings.content.printModeChooseOption
             : strings.content.chooseOption}
         </CheckButton>
       </Container>

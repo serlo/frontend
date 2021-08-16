@@ -63,11 +63,17 @@ function collectType(
 ) {
   const result: TaxonomyLink[] = []
   children.forEach((child) => {
-    if (child.__typename === typename && child.alias && child.currentRevision)
-      result.push({
-        title: child.currentRevision.title,
-        url: getAlias(child),
-      })
+    if (child.__typename === typename && child.alias) {
+      const title =
+        child.currentRevision?.title ?? child.revisions?.nodes?.[0]?.title
+      if (title) {
+        result.push({
+          title,
+          url: getAlias(child),
+          unrevised: !child.currentRevision,
+        })
+      }
+    }
   })
   return result
 }

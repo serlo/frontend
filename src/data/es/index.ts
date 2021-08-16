@@ -60,7 +60,8 @@ export const instanceData = {
       notifications: "Tus notificaciones",
       subscriptions: "Administrar suscripciones",
       revisionHistory: "Historial de revisiones",
-      eventLog: "Registro de eventos"
+      eventLog: "Registro de eventos",
+      unrevisedRevisions: 'Unrevised Revisions'
     },
     roles: {
       donor: "Donante",
@@ -72,7 +73,9 @@ export const instanceData = {
       title: "¡Comparte!",
       copyLink: "Copiar enlace",
       copySuccess: "!Enlace copiado!",
-      close: "Cerrar"
+      close: "Cerrar",
+      pdf: 'Download as PDF',
+      pdfNoSolutions: 'PDF without solutions'
     },
     edit: {
       button: "Editar",
@@ -101,7 +104,9 @@ export const instanceData = {
       check: "Revisa tu respuesta",
       yourAnswer: "Tu respuesta...",
       chooseOption: "Elige una de las opciones.",
+      printModeChooseOption: 'Check one of the options.',
       trashedNotice: "Este contenido está marcado para su eliminación.",
+      unrevisedNotice: 'This content has no accepted revision yet. Please use the %link% to preview.',
       strategy: "Estrategia de solución",
       picture: "Imagen"
     },
@@ -135,7 +140,7 @@ export const instanceData = {
       error: "Lo sentimos, no se han podido cargar los comentarios. Inténtalo de nuevo más tarde.",
       showMoreReply: "Mostrar una respuesta más",
       showMoreReplies: "Mostrar %number% respuestas más",
-      showArchived: "Mostrar archivados %threads%",
+      showArchived: "Mostrar  %threads% archivados",
       copyLink: "Copiar el vínculo del comentario"
     },
     revisions: {
@@ -171,6 +176,18 @@ export const instanceData = {
       viewLabel: "Mostrar esta revisión",
       status: "Estado"
     },
+    unrevisedRevisions: {
+      supportLinks: 'Review support',
+      guideline: 'Guideline for reviewing',
+      showMoreEntities: 'Show all in %subject%',
+      showMoreRevisions: 'Show %number% more…',
+      newLabelText: 'new',
+      newLabelNote: 'This is a new entity',
+      wipLabelText: 'wip',
+      wipLabelNote: 'Marked as work in progress. Do not review yet.',
+      newAuthorText: 'new author',
+      newAuthorNote: 'This is one of the first edits of this author, maybe prioritise this.'
+    },
     errors: {
       title: "😬 Los sitios web a veces cometen errores…",
       defaultMessage: "Lo sientimos, hemos encontrado un problema al cargar este contenido.",
@@ -182,6 +199,7 @@ export const instanceData = {
       backToHome: "Ir a la página de inicio"
     },
     print: {
+      preparingNotice: 'Preparing print!',
       warning: "IMPORTANTE: Para asegurarse de que todas las imágenes y fórmulas se puedan imprimir, por favor desplácese hasta el final de la página ANTES de abrir este diálogo. ¡Gracias!"
     },
     profiles: {
@@ -253,7 +271,7 @@ export const instanceData = {
     },
     keys: {
       ctrl: 'ctrl',
-      return: "Volver"
+      return: "retorno"
     },
     eventLog: {
       currentEvents: "Eventos recientes",
@@ -267,7 +285,7 @@ export const instanceData = {
       createThread: "%actor% ha iniciado %thread% en %object%.",
       createEntity: "%actor% creó %object%.",
       setLicense: "%actor% cambió la licencia de %repository%.",
-      createEntityLink: "%actor% vinculó %child% con %parent%.",
+      createEntityLink: "%actor% asoció %child% con %parent%.",
       removeEntityLink: "%actor% disoció %child% de %parent%.",
       createEntityRevision: "%actor% creó una %revision% de %entity%.",
       checkoutRevision: "%actor% revisió una %revision% en %repository%.",
@@ -302,10 +320,10 @@ export const instanceLandingData = {
     adFree: "sin publicidad",
     freeOfCharge: "gratuito",
     wikiTitle: "Serlo es la Wikipedia para el Aprendizaje",
-    wikiText: "Al igual que Wikipedia, esta plataforma es creada por una comunidad de autores comprometidos con la educación. “Serlo Education” es propiedad de varios equipos descentralizados de voluntarios y profesionales, y manejado por ellos mismos alrededor del mundo.",
+    wikiText: "Al igual que Wikipedia, esta plataforma es creada por una comunidad de autores comprometidos con la educación. Serlo Education está dirigido y es propiedad de de varios equipos descentralizados de voluntarios y profesionales alrededor del mundo.",
     movementTitle: "Conviértete en Parte de Nuestro Movimiento para la Educación Abierta",
-    callForAuthors: "Estamos buscando profesores, maestros y educadores entusiastas a quienes les apasionen las materias que enseñan. ¡Conviértete en un autor en serlo.org! Tu puedes crear nuevo material de aprendizaje y ayudarnos a mejorar el contenido existente.",
-    communityLink: "Visita la página para autores",
+    callForAuthors: "Buscamos profesores y educadores apasionados por las materias que enseñan. Forma parte de nuestra comunidad para crear nuevo material didáctico y ayudarnos a mejorar los contenidos existentes.",
+    communityLink: "Visite la página de inicio de los autores",
     callForOther: "Nosotros ofrecemos una diversa gama de trabajo y oportunidades de voluntariado, dentro del campo del desarrollo de software, diseño, traducción, comunicación, administración de proyectos, y más.",
     getInvolved: "¡Participa!"
   }
@@ -361,7 +379,8 @@ export const loggedInData = {
       editAssignments: "Editar el tema y las asignaciones de currículo",
       moveToTrash: "Mover a la papelera",
       restoreContent: "Restaurar de la papelera",
-      sort: "Ordenar los niños",
+      sortCoursePages: 'Sort course pages',
+      sortGroupedExercises: 'Sort grouped Exercises',
       edit: "Editar",
       unrevisedEdit: "Mostrar revisiones sin revisar",
       organize: "Organizar",
@@ -399,7 +418,8 @@ export const loggedInData = {
         title: "Rechazar la revisión",
         explanation: "Por favor, indica al autor por qué no aceptas el trabajo."
       },
-      confirm: "Confirmar"
+      confirm: "Confirmar",
+      unrevisedTaxNote: 'New content, not accepted yet'
     }
   }
 };

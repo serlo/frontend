@@ -1,5 +1,7 @@
+import { isClient } from './client-detection'
+
 export function removeHash() {
-  if (typeof window === 'undefined') return
+  if (!isClient) return
   history.replaceState(
     null,
     document.title,

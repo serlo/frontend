@@ -124,7 +124,9 @@ module.exports = {
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      margin: ['first'],
+    },
   },
   plugins: [
     plugin(function ({ addUtilities, addComponents }) {
@@ -149,6 +151,9 @@ module.exports = {
         },
         '.special-hyphens-auto': {
           hyphens: 'auto',
+        },
+        'special-no-page-breaks-inside': {
+          'page-break-inside': 'avoid',
         },
       })
 

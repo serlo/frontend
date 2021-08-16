@@ -50,9 +50,9 @@ export const sharedEventFragments = gql`
     actor {
       id
       username
-      activeAuthor
-      activeDonor
-      activeReviewer
+      isActiveAuthor
+      isActiveDonor
+      isActiveReviewer
     }
     objectId
     ... on CheckoutRevisionNotificationEvent {

@@ -59,7 +59,7 @@ export default class MyDocument extends Document {
       ? getInstanceDataByLang(this.props.__NEXT_DATA__.locale)
       : undefined
     return (
-      <Html>
+      <Html className="print:serlo-print-style">
         <Head>
           <meta property="og:site_name" content="Serlo" />
           <meta property="og:type" content="website" />
