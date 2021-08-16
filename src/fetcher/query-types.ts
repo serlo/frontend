@@ -351,3 +351,32 @@ export type QueryResponseNoRevision =
   | User
 
 export type QueryResponse = QueryResponseNoRevision | QueryResponseRevision
+
+export type QueryResponseRevisionNoPage = Exclude<
+  QueryResponseRevision,
+  PageRevision
+>
+
+export interface UnrevisedEntityData extends GraphQL.AbstractEntity {
+  currentRevision: {
+    id: number
+    title?: string
+  } | null
+  __typename:
+    | 'Applet'
+    | 'Article'
+    | 'Course'
+    | 'CoursePage'
+    | 'Event'
+    | 'Exercise'
+    | 'ExerciseGroup'
+    | 'GroupedExercise'
+    | 'Video'
+    | 'Solution'
+  revisions?: {
+    nodes: QueryResponseRevisionNoPage[]
+  }
+  solutionRevisions?: {
+    nodes: QueryResponseRevisionNoPage[]
+  }
+}

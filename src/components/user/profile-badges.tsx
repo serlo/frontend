@@ -20,21 +20,21 @@ export function ProfileBadges({
   const registerDate = new Date(date)
   const { strings, lang } = useInstanceData()
 
-  const { activeDonor, activeReviewer, activeAuthor } = userData
+  const { isActiveDonor, isActiveReviewer, isActiveAuthor } = userData
   const badges = [
-    activeReviewer &&
+    isActiveReviewer &&
       renderBadge({
         Badge: <ReviewerBadge />,
         name: strings.roles.reviewer,
         anchor: 'reviewer',
       }),
-    activeAuthor &&
+    isActiveAuthor &&
       renderBadge({
         Badge: <AuthorBadge />,
         name: strings.roles.author,
         anchor: 'author',
       }),
-    activeDonor &&
+    isActiveDonor &&
       renderBadge({
         Badge: <DonorBadge />,
         name: strings.roles.donor,

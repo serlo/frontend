@@ -23,9 +23,9 @@ const query = gql`
                   username
                   alias
                   id
-                  activeAuthor
-                  activeDonor
-                  activeReviewer
+                  isActiveAuthor
+                  isActiveDonor
+                  isActiveReviewer
                 }
               }
             }

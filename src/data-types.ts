@@ -1,4 +1,4 @@
-import { Role, TaxonomyTermType } from '@serlo/api'
+import { Role, Subject, TaxonomyTermType } from '@serlo/api'
 import { AuthorizationPayload } from '@serlo/authorization'
 import { CSSProperties, FunctionComponent } from 'react'
 
@@ -19,6 +19,10 @@ export interface UserProps {
 
 export interface LandingProps {
   pageData: LandingPage
+}
+
+export interface UnrevisedRevisionsProps {
+  pageData: UnrevisedRevisionsPage
 }
 
 // Instance data consists of the language, translation strings, header menu and footer menu.
@@ -259,9 +263,9 @@ export interface HorizonEntry {
 export interface FrontendUserData {
   username: string
   id: number
-  activeAuthor?: boolean
-  activeDonor?: boolean
-  activeReviewer?: boolean
+  isActiveAuthor?: boolean
+  isActiveDonor?: boolean
+  isActiveReviewer?: boolean
 }
 
 // All entities (except taxonomy) have a shared data structure.
@@ -324,6 +328,15 @@ export interface RevisionData {
     url?: string
   }
   changes?: string
+}
+
+export interface UnrevisedRevisionsPage extends EntityPageBase {
+  kind: 'unrevisedRevisions'
+  revisionsData: UnrevisedRevisionsData
+}
+
+export interface UnrevisedRevisionsData {
+  subjects: Subject[]
 }
 
 // Entities each should have an translated string and a corresponding icon
@@ -755,9 +768,9 @@ export interface UserPage extends EntityPageBase {
     lastLogin?: string | null
     date: string
     roles: { role: Role; instance: string | null }[]
-    activeReviewer: boolean
-    activeAuthor: boolean
-    activeDonor: boolean
+    isActiveReviewer: boolean
+    isActiveAuthor: boolean
+    isActiveDonor: boolean
     activityByType: User['activityByType']
   }
 }
