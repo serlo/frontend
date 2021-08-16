@@ -60,7 +60,8 @@ export const instanceData = {
       notifications: "Deine Benachrichtigungen",
       subscriptions: "Abonnements verwalten",
       revisionHistory: "Bearbeitungsverlauf",
-      eventLog: "Aktivitäten"
+      eventLog: "Aktivitäten",
+      unrevisedRevisions: "Ungeprüfte Bearbeitungen"
     },
     roles: {
       donor: "Spender*in",
@@ -174,6 +175,18 @@ export const instanceData = {
       view: "Anzeigen",
       viewLabel: "Diese Bearbeitung anzeigen",
       status: 'Status'
+    },
+    unrevisedRevisions: {
+      supportLinks: "Wie reviewe ich?",
+      guideline: "Review Hilfeseite",
+      showMoreEntities: "Alle in %subject% anzeigen",
+      showMoreRevisions: "%number weitere anzeigen",
+      newLabelText: "neu",
+      newLabelNote: "Dieser Inhalt ist neu angelegt",
+      wipLabelText: 'wip',
+      wipLabelNote: "Diese Bearbeitung ist noch in Arbeit. Bitte noch nicht reviewen.",
+      newAuthorText: "neuer autor",
+      newAuthorNote: "Diese Autor*in hat noch nicht viele Bearbeitungen gemacht und freut sich bestimmt über ein schnelles Review."
     },
     errors: {
       title: "😬 Auch Webseiten machen mal Fehler…",
