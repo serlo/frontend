@@ -44,7 +44,8 @@ export function Multimedia({
       >
         {renderNested(media, 'media')}
       </div>
-      <div>{renderNested(children, 'children')}</div>
+      {/* 1px margin fixes mistery bug in firefox */}
+      <div className="ml-[1px]">{renderNested(children, 'children')}</div>
       {renderLightbox()}
       <div className="clear-both" />
     </div>
