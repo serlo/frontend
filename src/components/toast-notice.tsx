@@ -67,7 +67,7 @@ export function ToastNotice() {
     if (document.referrer.includes('/taxonomy/term/organize/')) {
       setTimeout(() => {
         window.location.reload()
-      }, 500)
+      }, 200)
     }
 
     if (window.location.hash == '#flush-legacy') {
