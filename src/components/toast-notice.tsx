@@ -13,6 +13,10 @@ export function ToastNotice() {
   const showTime = 4000
 
   useEffect(() => {
+    // eslint-disable-next-line no-console
+    console.log(document.referrer)
+
+    // welcome, bye
     if (window.location.hash === '#auth') {
       setTimeout(removeHash, 3000)
       showToastNotice(
@@ -58,6 +62,12 @@ export function ToastNotice() {
         window.location.hash = '#flush-legacy'
         window.location.reload()
       }, 1000)
+    }
+
+    if (document.referrer.includes('/taxonomy/term/organize/')) {
+      setTimeout(() => {
+        window.location.reload()
+      }, 500)
     }
 
     if (window.location.hash == '#flush-legacy') {
