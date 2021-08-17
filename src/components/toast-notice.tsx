@@ -13,9 +13,6 @@ export function ToastNotice() {
   const showTime = 4000
 
   useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log(document.referrer)
-
     // welcome, bye
     if (window.location.hash === '#auth') {
       setTimeout(removeHash, 3000)
