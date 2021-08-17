@@ -12,9 +12,9 @@ export interface LazyProps {
 
 export function Lazy(props: LazyProps) {
   if (isPrintMode) {
+    if (props.noPrint) return null
     return <>{props.children}</>
   }
-  if (props.noPrint) return null
 
   return (
     <>
