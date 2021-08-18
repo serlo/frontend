@@ -108,7 +108,8 @@ export const instanceData = {
       trashedNotice: "यह सामग्री हटाने के लिए चिह्नित है",
       unrevisedNotice: 'This content has no accepted revision yet. Please use the %link% to preview.',
       strategy: 'Solution Strategy',
-      picture: 'Picture'
+      picture: 'Picture',
+      previewImage: 'Preview Image'
     },
     consent: {
       title: "बाहरी सामग्री के लिए सहमति",
