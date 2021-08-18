@@ -109,7 +109,7 @@ export const instanceData = {
       unrevisedNotice: "Dieser Inhalt hat noch keine akzeptierte Bearbeitung. Über die %link% kannst du dir die Entwürfe anzeigen lassen.",
       strategy: "Lösungsstrategie",
       picture: "Bild",
-      previewImage: 'Preview Image'
+      previewImage: "Vorschaubild"
     },
     consent: {
       title: "Einwilligungen für externe Inhalte",
