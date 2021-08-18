@@ -32,7 +32,12 @@ export function UserLink({
         className={className}
         path={path ?? []}
       >
-        {withIcon && <UserImage src={getAvatarUrl(user.username)} />}
+        {withIcon && (
+          <UserImage
+            src={getAvatarUrl(user.username)}
+            alt={`User-Avatar: ${user.username}`}
+          />
+        )}
         {user.username}
         {!noBadges && renderBadges()}
       </Link>

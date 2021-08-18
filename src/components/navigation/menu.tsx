@@ -194,6 +194,7 @@ function MenuInner({
             className="group"
           >
             {renderIcon()} {!hasIcon && link.title}
+            <span className="sr-only">{strings.pageTitles.notifications}</span>
           </StyledLink>
         )}
       </Li>

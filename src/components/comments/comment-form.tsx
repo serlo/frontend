@@ -52,6 +52,8 @@ export function CommentForm({
     isMac ? '⌘' : strings.keys.ctrl
   }↵`
 
+  const formId = `comment-form${threadId ?? ''}`
+
   return (
     <div
       className={clsx(
@@ -60,9 +62,13 @@ export function CommentForm({
         'transition-colors duration-200 ease-in py-1'
       )}
     >
+      <label htmlFor={formId} className="sr-only">
+        {placeholder}
+      </label>
       <TextareaAutosize
         value={commentValue}
         ref={textareaRef}
+        id={formId}
         onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
           setCommentValue(event.target.value)
         }}
