@@ -108,7 +108,8 @@ export const instanceData = {
       trashedNotice: "Este contenido está marcado para su eliminación.",
       unrevisedNotice: 'This content has no accepted revision yet. Please use the %link% to preview.',
       strategy: "Estrategia de solución",
-      picture: "Imagen"
+      picture: "Imagen",
+      previewImage: 'Preview Image'
     },
     consent: {
       title: "Consentimiento para contenido externo",

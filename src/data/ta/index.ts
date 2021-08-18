@@ -108,7 +108,8 @@ export const instanceData = {
       trashedNotice: "இந்த உள்ளடக்கம் குப்பையாக குறிக்கப்பட்டுள்ளது.",
       unrevisedNotice: 'This content has no accepted revision yet. Please use the %link% to preview.',
       strategy: 'Solution Strategy',
-      picture: 'Picture'
+      picture: 'Picture',
+      previewImage: 'Preview Image'
     },
     consent: {
       title: 'Consent for external Content',
