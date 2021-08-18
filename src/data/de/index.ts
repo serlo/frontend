@@ -108,7 +108,8 @@ export const instanceData = {
       trashedNotice: "Dieser Inhalt wurde zum Löschen markiert.",
       unrevisedNotice: "Dieser Inhalt hat noch keine akzeptierte Bearbeitung. Über die %link% kannst du dir die Entwürfe anzeigen lassen.",
       strategy: "Lösungsstrategie",
-      picture: "Bild"
+      picture: "Bild",
+      previewImage: 'Preview Image'
     },
     consent: {
       title: "Einwilligungen für externe Inhalte",
