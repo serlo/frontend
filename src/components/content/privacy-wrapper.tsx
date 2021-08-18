@@ -78,7 +78,11 @@ export function PrivacyWrapper({
     return (
       <Placeholder>
         <PreviewImageWrapper>
-          <PreviewImage src={previewImageUrl} faded={isTwingle} />
+          <PreviewImage
+            src={previewImageUrl}
+            faded={isTwingle}
+            alt={`${strings.content.previewImage} ${provider}`}
+          />
         </PreviewImageWrapper>
         {!checkConsent(provider) && (
           <InfoBar>

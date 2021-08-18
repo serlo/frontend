@@ -24,7 +24,9 @@ const CommentArea = dynamic<CommentAreaProps>(() =>
 
 export function EntityBase({ children, page, entityId }: EntityBaseProps) {
   const noComments =
-    page.kind === 'single-entity' && page.entityData.typename === 'Page'
+    page.kind === 'single-entity' &&
+    (page.entityData.typename === 'Page' ||
+      page.entityData.typename === 'GroupedExercise')
 
   return (
     <>

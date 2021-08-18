@@ -16,10 +16,8 @@ export interface VideoProps {
   license?: LicenseData
 }
 
-export function Video(props: VideoProps) {
+export function Video({ src, path, license }: VideoProps) {
   const { lang } = useInstanceData()
-
-  const { src, path, license } = props
 
   const vimeo = /^(https?:\/\/)?(.*?vimeo\.com\/)(.+)/.exec(src)
   if (vimeo) return renderVimeo(vimeo[3])
