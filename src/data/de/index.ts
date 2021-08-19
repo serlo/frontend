@@ -283,7 +283,7 @@ export const instanceData = {
       setThreadStateArchived: "%actor% hat eine %thread% archiviert.",
       setThreadStateUnarchived: "%actor% hat eine %thread% aus dem Archiv geholt.",
       createComment: "%actor% hat einen %comment% in einer %thread% erstellt.",
-      createThread: "%actor% hat eine %thread% in einem %object% erstellt.",
+      createThread: "%actor% hat eine %thread% in einem/einer %object% erstellt.",
       createEntity: "%actor% hat %object% erstellt.",
       setLicense: "%actor% hat die Lizenz von %repository% geändert.",
       createEntityLink: "%actor% hat %child% mit %parent% verknüpft.",
