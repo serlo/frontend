@@ -19,6 +19,7 @@ import { isClient } from '@/helper/client-detection'
 import type { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { frontendOrigin } from '@/helper/frontent-origin'
 import type { LoggedInStuff } from '@/helper/logged-in-stuff-chunk'
+import { triggerSentry } from '@/helper/trigger-sentry'
 import { theme } from '@/theme'
 
 export type FrontendClientBaseProps = React.PropsWithChildren<{
@@ -32,7 +33,16 @@ export type FrontendClientBaseProps = React.PropsWithChildren<{
 Router.events.on('routeChangeStart', () => {
   NProgress.start()
 })
-Router.events.on('routeChangeComplete', () => NProgress.done())
+Router.events.on('routeChangeComplete', (url, { shallow }) => {
+  NProgress.done()
+  // experiment: when using csr and running into an error, try without csr once
+  if (!shallow && document.getElementById('error-page-description') !== null) {
+    triggerSentry({ message: 'trying again without csr' })
+    setTimeout(() => {
+      window.location.reload()
+    }, 300)
+  }
+})
 Router.events.on('routeChangeError', () => NProgress.done())
 
 export function FrontendClientBase({
