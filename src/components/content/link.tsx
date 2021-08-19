@@ -45,13 +45,14 @@ export function isLegacyLink(_href: string) {
     _href.startsWith('/api/auth') ||
     _href.startsWith('/discussions') ||
     _href.startsWith('/entity') ||
-    _href.startsWith('/math/wiki/') ||
+    _href.startsWith('/math/wiki/') || //temporary
+    _href.startsWith('/ref/') || // temporary
     _href.startsWith('/page') ||
     _href.startsWith('/taxonomy') ||
     _href.startsWith('/unsubscribe') ||
     _href.startsWith('/user/profile/') ||
     _href.startsWith('/subscription/update') ||
-    _href.includes('.serlo.org') //e.g. community.serlo.org or different language
+    _href.includes('.serlo.org') // e.g. community.serlo.org or different language
   )
 }
 
