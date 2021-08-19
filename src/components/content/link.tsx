@@ -29,6 +29,7 @@ const legacyLinks = [
   '/enable-frontend',
   '/beitreten',
   '/user/settings',
+  '/user/register',
 ]
 
 export function isLegacyLink(_href: string) {
