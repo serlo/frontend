@@ -39,7 +39,7 @@ export function Comment({
   // Step 2: Replace urls in remaining strings
   const r2 = replaceWithJSX(
     r1,
-    /(https?:\/\/(?:www\.)?(?:[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b)(?:[-a-zA-Z0-9()@:%_+~#?&//=]*))/g,
+    /(https?:\/\/(?:www\.)?(?:[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9]{1,6}\b)(?:[-a-zA-Z0-9@:%_+~#?&//=]*))/g,
     (str, i) => (
       <Link
         key={`link-${i}`}
