@@ -7,11 +7,11 @@ export function convertState(raw: string | undefined): FrontendContentNode[] {
   if (!raw) return []
 
   if (raw?.startsWith('[')) {
-    // legacy
+    // Legacy editor state
     const legacyHTML = render(raw)
     return convertLegacyState(legacyHTML).children
   } else if (raw?.startsWith('{')) {
-    // edtrio
+    // Edtr.io state
     return convert(JSON.parse(raw))
   } else {
     // raw as text
