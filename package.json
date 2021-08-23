@@ -121,7 +121,7 @@
     "eslint-plugin-react": "^7.0.0",
     "eslint-plugin-react-hooks": "^4.0.0",
     "jest": "^27.0.0",
-    "msw": "^0.34.0",
+    "msw": "^0.35.0",
     "node-fetch": "^2.6.1",
     "npm-run-all": "^4.0.0",
     "postcss-flexbugs-fixes": "^5.0.0",
