@@ -106,7 +106,7 @@ export const instanceData = {
       chooseOption: "Klicke auf eine der Optionen.",
       printModeChooseOption: "Kreuze eine der Optionen an",
       trashedNotice: "Dieser Inhalt wurde gelöscht.",
-      unrevisedNotice: "Dieser Inhalt hat noch keine akzeptierte Bearbeitung. Über die %link% kannst du dir die Entwürfe anzeigen lassen.",
+      unrevisedNotice: "Dieser Inhalt wurde noch nicht überprüft. Über den %link% kannst du dir die Entwürfe anzeigen lassen.",
       strategy: "Lösungsstrategie",
       picture: "Bild",
       previewImage: "Vorschaubild"
