@@ -186,7 +186,7 @@ export const instanceData = {
       newLabelNote: "Dieser Inhalt ist neu angelegt",
       wipLabelText: 'wip',
       wipLabelNote: "Diese Bearbeitung ist noch in Arbeit. Bitte noch nicht reviewen.",
-      newAuthorText: "neuer autor",
+      newAuthorText: "neuer Autor",
       newAuthorNote: "Diese Autor*in hat noch nicht viele Bearbeitungen gemacht und freut sich bestimmt über ein schnelles Review."
     },
     errors: {
