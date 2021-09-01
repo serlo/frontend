@@ -63,8 +63,14 @@ export function convert(
 
 function convertPlugin(node: EdtrState): FrontendContentNode[] {
   if (node.plugin === 'article') {
-    const { introduction, content, exercises, relatedContent, sources } =
-      node.state
+    const {
+      introduction,
+      content,
+      exercises,
+      exerciseFolder,
+      relatedContent,
+      sources,
+    } = node.state
 
     const hasRelatedContent = Object.values(relatedContent).some(
       (section) => section.length > 0
@@ -76,7 +82,7 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
         plugin: 'multimedia',
       }),
       ...convert(content),
-      ...(exercises.length > 0
+      ...(exercises.length > 0 || exerciseFolder.id
         ? [
             ...convertSlate({
               type: 'h',
@@ -89,6 +95,29 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
                 return convertPlugin(exercise)
               })
               .flat(),
+            ...(exerciseFolder.id
+              ? [
+                  ...convertSlate({
+                    type: 'p',
+                    children: [
+                      {
+                        // TODO: i18n
+                        text: 'Weitere Aufgaben zum Thema findest du im folgenden Aufgabenordner:',
+                      },
+                    ],
+                  }),
+                  ...convertSlate({
+                    type: 'p',
+                    children: [
+                      {
+                        type: 'a',
+                        href: `/${exerciseFolder.id}`,
+                        children: [{ text: exerciseFolder.title }],
+                      },
+                    ],
+                  }),
+                ]
+              : []),
           ]
         : []),
       ...(hasRelatedContent
@@ -112,7 +141,6 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
               relatedContent.articles,
               relatedContent.courses,
               relatedContent.videos,
-              relatedContent.exercises,
             ]
               .map((section, index) => {
                 if (section.length === 0) return []
