@@ -23,6 +23,10 @@ export interface EdtrPluginArticle {
     introduction: EdtrPluginArticleIntroduction
     content: EdtrPluginRows
     exercises: EdtrPluginSerloInjection[]
+    exerciseFolder: {
+      id: string
+      title: string
+    }
     relatedContent: {
       articles: {
         id: string
@@ -33,10 +37,6 @@ export interface EdtrPluginArticle {
         title: string
       }[]
       videos: {
-        id: string
-        title: string
-      }[]
-      exercises: {
         id: string
         title: string
       }[]
