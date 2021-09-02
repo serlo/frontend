@@ -17,6 +17,42 @@ export type SlateTextElement = NewText
 
 // types for all supported @edtr-io plugins
 
+export interface EdtrPluginArticle {
+  plugin: 'article'
+  state: {
+    introduction: EdtrPluginArticleIntroduction
+    content: EdtrPluginRows
+    exercises: EdtrPluginSerloInjection[]
+    exerciseFolder: {
+      id: string
+      title: string
+    }
+    relatedContent: {
+      articles: {
+        id: string
+        title: string
+      }[]
+      courses: {
+        id: string
+        title: string
+      }[]
+      videos: {
+        id: string
+        title: string
+      }[]
+    }
+    sources: {
+      href: string
+      title: string
+    }[]
+  }
+}
+
+export interface EdtrPluginArticleIntroduction {
+  plugin: 'articleIntroduction'
+  state: StateTypeSerializedType<MultimediaExplanationPluginState>
+}
+
 export interface EdtrPluginGeogebra {
   plugin: 'geogebra'
   state: StateTypeSerializedType<GeogebraPluginState>
@@ -105,6 +141,7 @@ export interface EdtrPluginEquations {
 }
 
 export type EdtrState =
+  | EdtrPluginArticle
   | EdtrPluginGeogebra
   | EdtrPluginAnchor
   | EdtrPluginVideo

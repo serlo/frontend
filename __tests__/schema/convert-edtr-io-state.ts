@@ -42,6 +42,7 @@ describe('edtr io plugins', () => {
         {
           type: 'img',
           src: 'https://assets.serlo.org/logo.jpg',
+          alt: '',
         },
       ])
     })
@@ -210,7 +211,7 @@ describe('edtr io plugins', () => {
           type: 'multimedia',
           mediaWidth: 20,
           float: 'right',
-          media: [{ type: 'img', src: 'test.jpg' }],
+          media: [{ type: 'img', src: 'test.jpg', alt: '' }],
           children: [],
         },
       ])
@@ -236,7 +237,7 @@ describe('edtr io plugins', () => {
           type: 'multimedia',
           mediaWidth: 50,
           float: 'right',
-          media: [{ type: 'img', src: 'test.jpg' }],
+          media: [{ type: 'img', src: 'test.jpg', alt: '' }],
           children: [],
         },
       ])

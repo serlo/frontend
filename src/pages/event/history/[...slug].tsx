@@ -63,10 +63,10 @@ function Content({
   const { strings } = useInstanceData()
 
   const hasTitle = title && title.length > 1
-  const label = hasTitle ? title! : strings.revisions.toContent
+  const label = hasTitle ? title : strings.revisions.toContent
   const url = alias ? alias : id ? `/${id}` : undefined
   const titleString =
-    strings.pageTitles.eventLog + (hasTitle ? ' – ' + title! : '')
+    strings.pageTitles.eventLog + (hasTitle ? ' – ' + title : '')
 
   return (
     <>

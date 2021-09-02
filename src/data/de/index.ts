@@ -106,7 +106,7 @@ export const instanceData = {
       chooseOption: "Klicke auf eine der Optionen.",
       printModeChooseOption: "Kreuze eine der Optionen an",
       trashedNotice: "Dieser Inhalt wurde gelöscht.",
-      unrevisedNotice: "Dieser Inhalt hat noch keine akzeptierte Bearbeitung. Über die %link% kannst du dir die Entwürfe anzeigen lassen.",
+      unrevisedNotice: "Dieser Inhalt wurde noch nicht überprüft. Über den %link% kannst du dir die Entwürfe anzeigen lassen.",
       strategy: "Lösungsstrategie",
       picture: "Bild",
       previewImage: "Vorschaubild"
@@ -186,7 +186,7 @@ export const instanceData = {
       newLabelNote: "Dieser Inhalt ist neu angelegt",
       wipLabelText: 'wip',
       wipLabelNote: "Diese Bearbeitung ist noch in Arbeit. Bitte noch nicht reviewen.",
-      newAuthorText: "neuer autor",
+      newAuthorText: "neuer Autor",
       newAuthorNote: "Diese Autor*in hat noch nicht viele Bearbeitungen gemacht und freut sich bestimmt über ein schnelles Review."
     },
     errors: {

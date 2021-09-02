@@ -11,9 +11,11 @@ import {
 import { sanitizeLatex } from './sanitize-latex'
 import {
   FrontendContentNode,
+  FrontendLiNode,
   FrontendMathNode,
   FrontendTextColor,
   FrontendTextNode,
+  Sign,
 } from '@/data-types'
 
 const colors: FrontendTextColor[] = ['blue', 'green', 'orange']
@@ -45,21 +47,175 @@ export function convert(
   }
 
   if (isEdtrState(node)) {
-    return convertPlugin(node) as FrontendContentNode[]
+    return convertPlugin(node)
   }
 
   if (isSlateBlock(node)) {
-    return convertSlate(node) as FrontendContentNode[]
+    return convertSlate(node)
   }
 
   if (isTextNode(node)) {
-    return convertText(node) as FrontendContentNode[]
+    return convertText(node)
   }
 
   return []
 }
 
-function convertPlugin(node: EdtrState) {
+function convertPlugin(node: EdtrState): FrontendContentNode[] {
+  if (node.plugin === 'article') {
+    const {
+      introduction,
+      content,
+      exercises,
+      exerciseFolder,
+      relatedContent,
+      sources,
+    } = node.state
+
+    const hasRelatedContent = Object.values(relatedContent).some(
+      (section) => section.length > 0
+    )
+
+    return [
+      ...convertPlugin({
+        ...introduction,
+        plugin: 'multimedia',
+      }),
+      ...convert(content),
+      ...(exercises.length > 0 || exerciseFolder.id
+        ? [
+            ...convertSlate({
+              type: 'h',
+              level: 2,
+              // TODO: i18n
+              children: [{ text: 'Übungsaufgaben' }],
+            }),
+            ...exercises
+              .map((exercise) => {
+                return convertPlugin(exercise)
+              })
+              .flat(),
+            ...(exerciseFolder.id
+              ? [
+                  ...convertSlate({
+                    type: 'p',
+                    children: [
+                      {
+                        // TODO: i18n
+                        text: 'Weitere Aufgaben zum Thema findest du im folgenden Aufgabenordner:',
+                      },
+                    ],
+                  }),
+                  ...convertSlate({
+                    type: 'p',
+                    children: [
+                      {
+                        type: 'a',
+                        href: `/${exerciseFolder.id}`,
+                        children: [{ text: exerciseFolder.title }],
+                      },
+                    ],
+                  }),
+                ]
+              : []),
+          ]
+        : []),
+      ...(hasRelatedContent
+        ? [
+            ...convertSlate({
+              type: 'h',
+              level: 2,
+              // TODO: i18n
+              children: [{ text: 'Du hast noch nicht genug vom Thema?' }],
+            }),
+            ...convertSlate({
+              type: 'p',
+              // TODO: i18n
+              children: [
+                {
+                  text: 'Hier findest du noch weitere passende Inhalte zum Thema:',
+                },
+              ],
+            }),
+            ...[
+              relatedContent.articles,
+              relatedContent.courses,
+              relatedContent.videos,
+            ]
+              .map((section, index) => {
+                if (section.length === 0) return []
+
+                // TODO: i18n
+                const title = [
+                  'Artikel',
+                  'Kurse',
+                  'Videos',
+                  'Aufgaben und Aufgabenordner',
+                ][index]
+
+                return [
+                  // TODO: icon
+                  ...convertSlate({
+                    type: 'h',
+                    level: 3,
+                    children: [{ text: title }],
+                  }),
+                  ...section
+                    .map((item) => {
+                      return convertSlate({
+                        type: 'unordered-list',
+                        children: [
+                          {
+                            type: 'list-item',
+                            children: [
+                              {
+                                type: 'a',
+                                href: `/${item.id}`,
+                                children: [{ text: item.title }],
+                              },
+                            ],
+                          },
+                        ],
+                      })
+                    })
+                    .flat(),
+                ]
+              })
+              .flat(),
+          ]
+        : []),
+      ...(sources.length > 0
+        ? [
+            ...convertSlate({
+              type: 'h',
+              level: 2,
+              // TODO: i18n
+              children: [{ text: 'Sources' }],
+            }),
+            ...convertSlate({
+              type: 'unordered-list',
+              children: sources.map((source) => {
+                return {
+                  type: 'list-item',
+                  children: [
+                    {
+                      type: 'a',
+                      href: source.href,
+                      children: [
+                        {
+                          text: source.title,
+                        },
+                      ],
+                    },
+                  ],
+                }
+              }),
+            }),
+          ]
+        : []),
+    ]
+  }
+
   if (node.plugin === 'rows') {
     return convert(node.state as unknown as EdtrState)
   }
@@ -72,8 +228,8 @@ function convertPlugin(node: EdtrState) {
     return [
       {
         type: 'img',
-        src: node.state.src,
-        alt: node.state.alt,
+        src: node.state.src as string,
+        alt: node.state.alt || '',
         maxWidth: node.state.maxWidth,
         href: node.state.link?.href,
       },
@@ -206,7 +362,7 @@ function convertPlugin(node: EdtrState) {
       return {
         left: sanitizeLatex(step.left),
         leftSource: step.left,
-        sign: step.sign,
+        sign: step.sign as Sign,
         right: sanitizeLatex(step.right),
         rightSource: step.right,
         transform: sanitizeLatex(step.transform),
@@ -220,7 +376,7 @@ function convertPlugin(node: EdtrState) {
   return []
 }
 
-function convertSlate(node: SlateBlockElement) {
+function convertSlate(node: SlateBlockElement): FrontendContentNode[] {
   if (node.type === 'p') {
     return handleSemistructedContentOfP(convert(node.children))
   }
@@ -242,7 +398,7 @@ function convertSlate(node: SlateBlockElement) {
     if (
       node.level === 1 ||
       node.level === 2 ||
-      node.level == 3 ||
+      node.level === 3 ||
       node.level === 4 ||
       node.level === 5
     ) {
@@ -291,8 +447,9 @@ function convertSlate(node: SlateBlockElement) {
   if (node.type === 'unordered-list') {
     // only allow li nodes
     const children = convert(node.children).filter(
-      (child) => true && child.type === 'li'
-    )
+      (child) => child.type === 'li'
+    ) as FrontendLiNode[]
+
     return [
       {
         type: 'ul',
@@ -303,8 +460,9 @@ function convertSlate(node: SlateBlockElement) {
   if (node.type === 'ordered-list') {
     // only allow li nodes
     const children = convert(node.children).filter(
-      (child) => true && child.type === 'li'
-    )
+      (child) => child.type === 'li'
+    ) as FrontendLiNode[]
+
     return [
       {
         type: 'ol',
@@ -328,7 +486,7 @@ function convertSlate(node: SlateBlockElement) {
   return []
 }
 
-function convertText(node: SlateTextElement) {
+function convertText(node: SlateTextElement): FrontendContentNode[] {
   const text = node.text.replace(/\ufeff/g, '')
   if (text === '') return []
   return [

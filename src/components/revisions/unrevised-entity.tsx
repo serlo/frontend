@@ -1,10 +1,11 @@
 import { faEye } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
+import { Fragment } from 'react'
 
-import { UserLink } from '../user/user-link'
 import { Link } from '@/components/content/link'
 import { TimeAgo } from '@/components/time-ago'
+import { UserLink } from '@/components/user/user-link'
 import { useInstanceData } from '@/contexts/instance-context'
 import type { CompBaseProps } from '@/data-types'
 import {
@@ -45,7 +46,11 @@ export function UnrevisedEntity({ entity }: UnrevisedEntityProps) {
   function renderTable() {
     return (
       <table className="mt-1 border-collapse w-full relative">
-        <tbody>{nodes.map((revision) => renderRevision(revision))}</tbody>
+        <tbody>
+          {nodes.map((revision) => (
+            <Fragment key={revision.id}>{renderRevision(revision)}</Fragment>
+          ))}
+        </tbody>
       </table>
     )
   }
