@@ -23,9 +23,9 @@ export interface EquationProps {
 export function Equations({ steps, renderNested }: EquationProps) {
   return (
     <Wrapper>
-      <TableWrapper>
+      <div className="overflow-x-auto py-2.5">
         <table>
-          <TBody>
+          <TBody className="whitespace-no-wrap">
             {steps.map((step, i) => {
               const hasExplanation = step.explanation.some((node) => {
                 return node?.children?.length || node.type == 'math'
@@ -34,7 +34,7 @@ export function Equations({ steps, renderNested }: EquationProps) {
               return (
                 <Fragment key={i}>
                   <tr>
-                    <LeftTd>
+                    <MathTd className="text-right">
                       {step.left
                         ? renderNested(
                             [
@@ -47,8 +47,8 @@ export function Equations({ steps, renderNested }: EquationProps) {
                             'left'
                           )
                         : null}
-                    </LeftTd>
-                    <SignTd>
+                    </MathTd>
+                    <MathTd className="text-center">
                       {renderNested(
                         [
                           {
@@ -59,8 +59,8 @@ export function Equations({ steps, renderNested }: EquationProps) {
                         `step${i}`,
                         'sign'
                       )}
-                    </SignTd>
-                    <RightTd>
+                    </MathTd>
+                    <MathTd className="text-left">
                       {step.right
                         ? renderNested(
                             [
@@ -73,7 +73,7 @@ export function Equations({ steps, renderNested }: EquationProps) {
                             'right'
                           )
                         : null}
-                    </RightTd>
+                    </MathTd>
                     <TransformTd>
                       {step.transform ? (
                         <>
@@ -110,7 +110,7 @@ export function Equations({ steps, renderNested }: EquationProps) {
             })}
           </TBody>
         </table>
-      </TableWrapper>
+      </div>
     </Wrapper>
   )
 
@@ -186,34 +186,18 @@ const Wrapper = styled.div`
   ${makeMargin}
 `
 
-const TableWrapper = styled.div`
-  overflow-x: auto;
-  padding: 10px 0;
-`
-
 const TBody = styled.tbody`
-  white-space: nowrap;
-
   > tr > td {
     padding: 3px 3px 13px 3px;
   }
 `
 
-const RightTd = styled.td`
+const MathTd = styled.td`
   vertical-align: baseline;
   font-size: 1.125rem;
 `
 
-const LeftTd = styled(RightTd)`
-  text-align: right;
-`
-
-const SignTd = styled(RightTd)`
-  padding: 0 3px;
-  text-align: center;
-`
-
-const TransformTd = styled(RightTd)`
+const TransformTd = styled(MathTd)`
   padding-left: 5px;
 `
 
