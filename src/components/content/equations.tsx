@@ -21,6 +21,8 @@ export interface EquationProps {
 }
 
 export function Equations({ steps, renderNested }: EquationProps) {
+  const explanationColor = shade(0.3, theme.colors.brandGreen)
+
   return (
     <Wrapper className="overflow-x-auto py-2.5">
       <table>
@@ -92,7 +94,10 @@ export function Equations({ steps, renderNested }: EquationProps) {
                   </TransformTd>
                 </tr>
                 {hasExplanation ? (
-                  <ExplanationTr>
+                  <tr
+                    className="whitespace-normal"
+                    style={{ color: explanationColor }}
+                  >
                     <td />
                     {renderDownArrow()}
                     <td colSpan={2}>
@@ -102,7 +107,7 @@ export function Equations({ steps, renderNested }: EquationProps) {
                         'explaination'
                       )}
                     </td>
-                  </ExplanationTr>
+                  </tr>
                 ) : null}
               </Fragment>
             )
@@ -113,7 +118,6 @@ export function Equations({ steps, renderNested }: EquationProps) {
   )
 
   function renderDownArrow() {
-    const color = shade(0.3, theme.colors.brandGreen)
     const downArrow = `
       <svg xmlns="http://www.w3.org/2000/svg">
         <defs>
@@ -129,7 +133,7 @@ export function Equations({ steps, renderNested }: EquationProps) {
           >
             <path
               d="M 0,0 l 10,5 l -10,5"
-              stroke="${color}"
+              stroke="${explanationColor}"
               stroke-width="2"
               fill="none"
               vector-effect="non-scaling-size"
@@ -141,7 +145,7 @@ export function Equations({ steps, renderNested }: EquationProps) {
           y1="0%"
           x2="10"
           y2="99%"
-          stroke="${color}"
+          stroke="${explanationColor}"
           stroke-width="1.5"
           marker-end="url(#arrow)"
           vector-effect="non-scaling-stroke"
@@ -197,9 +201,4 @@ const MathTd = styled.td`
 
 const TransformTd = styled(MathTd)`
   padding-left: 5px;
-`
-
-const ExplanationTr = styled.tr`
-  color: ${(props) => shade(0.3, props.theme.colors.brandGreen)};
-  white-space: normal;
 `
