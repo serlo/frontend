@@ -173,16 +173,3 @@ const ExplanationTr = styled.tr`
   color: ${(props) => shade(0.3, props.theme.colors.brandGreen)};
   white-space: normal;
 `
-
-/*
-const RightSide = styled.div`
-  width: 33%;
-  display: flex;
-  flex-direction: row;
-  @media (max-width: 480px) {
-    width: 100%;
-  }
-  @media (max-width: 768px) {
-    width: 50%;
-  }
-`*/
