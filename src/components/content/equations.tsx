@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { FrontendContentNode, Sign } from '@/data-types'
 import { makeMargin } from '@/helper/css'
 import { RenderNestedFunction } from '@/schema/article-renderer'
+import { theme } from '@/theme'
 
 export interface StepProps {
   left: string
@@ -94,7 +95,7 @@ export function Equations({ steps, renderNested }: EquationProps) {
                   {hasExplanation ? (
                     <ExplanationTr>
                       <td />
-                      <SignTd>{i === steps.length - 1 ? '→' : '↓'}</SignTd>
+                      {renderDownArrow()}
                       <td colSpan={2}>
                         {renderNested(
                           step.explanation,
@@ -112,6 +113,55 @@ export function Equations({ steps, renderNested }: EquationProps) {
       </TableWrapper>
     </Wrapper>
   )
+
+  function renderDownArrow() {
+    const color = shade(0.3, theme.colors.brandGreen)
+    const downArrow = `
+    <svg xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker
+          id="arrow"
+          markerWidth="10"
+          markerHeight="10"
+          orient="auto"
+          markerUnits="strokeWidth"
+          refX="10"
+          refY="5"
+          viewBox="0 0 20 10"
+        >
+          <path
+            d="M 0,0 l 10,5 l -10,5"
+            stroke="${color}"
+            stroke-width="2"
+            fill="none"
+            vector-effect="non-scaling-size"
+          />
+        </marker>
+      </defs>
+      <line
+        x1="10"
+        y1="0%"
+        x2="10"
+        y2="99%"
+        stroke="${color}"
+        stroke-width="2"
+        marker-end="url(#arrow)"
+        vector-effect="non-scaling-stroke"
+      />
+    </svg>`
+    const downArrowBase64 = Buffer.from(downArrow).toString('base64')
+
+    return (
+      <td
+        style={{
+          backgroundImage: `url('data:image/svg+xml;base64,${downArrowBase64}')`,
+          backgroundSize: '20px calc(100% - 10px)',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center 5px',
+        }}
+      />
+    )
+  }
 }
 
 function renderSignToString(sign: Sign): string {
