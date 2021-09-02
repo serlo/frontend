@@ -24,105 +24,60 @@ export function Equations({ steps, renderNested }: EquationProps) {
   return (
     <div className="overflow-x-auto py-2.5 mx-side mb-7">
       <table>
+        <tbody className="whitespace-no-wrap">{steps.map(renderStep)}</tbody>
+      </table>
+    </div>
+  )
+
+  function renderStep(step: StepProps, i: number) {
+    const hasExplanation = step.explanation.some((node) => {
+      return node?.children?.length || node.type == 'math'
+    })
+
+    return (
+      <>
         <style jsx>{`
           .formula {
             @apply align-baseline text-lg;
           }
-
-          .tbody > tr > td {
+          tr > td {
             padding: 3px 3px 13px 3px;
           }
         `}</style>
-        <tbody className="tbody whitespace-no-wrap">
-          {steps.map((step, i) => {
-            const hasExplanation = step.explanation.some((node) => {
-              return node?.children?.length || node.type == 'math'
-            })
+        <tr>
+          <td className="text-right formula">
+            {step.left ? renderStepFormula('left') : null}
+          </td>
+          <td className="text-center formula">
+            {renderFormula(renderSignToString(step.sign), 'sign')}
+          </td>
+          <td className="text-left formula">
+            {step.right ? renderStepFormula('right') : null}
+          </td>
+          <td className="pl-1 formula">
+            {step.transform ? <>|{renderStepFormula('transform')}</> : null}
+          </td>
+        </tr>
+        {hasExplanation ? (
+          <tr className="whitespace-normal" style={{ color: explanationColor }}>
+            <td />
+            {renderDownArrow()}
+            <td colSpan={2}>
+              {renderNested(step.explanation, `step${i}`, 'explaination')}
+            </td>
+          </tr>
+        ) : null}
+      </>
+    )
 
-            return (
-              <Fragment key={i}>
-                <tr>
-                  <td className="text-right formula">
-                    {step.left
-                      ? renderNested(
-                          [
-                            {
-                              type: 'inline-math',
-                              formula: '\\displaystyle ' + step.left,
-                            },
-                          ],
-                          `step${i}`,
-                          'left'
-                        )
-                      : null}
-                  </td>
-                  <td className="text-center formula">
-                    {renderNested(
-                      [
-                        {
-                          type: 'inline-math',
-                          formula: renderSignToString(step.sign),
-                        },
-                      ],
-                      `step${i}`,
-                      'sign'
-                    )}
-                  </td>
-                  <td className="text-left formula">
-                    {step.right
-                      ? renderNested(
-                          [
-                            {
-                              type: 'inline-math',
-                              formula: '\\displaystyle ' + step.right,
-                            },
-                          ],
-                          `step${i}`,
-                          'right'
-                        )
-                      : null}
-                  </td>
-                  <td className="pl-1 formula">
-                    {step.transform ? (
-                      <>
-                        |
-                        {renderNested(
-                          [
-                            {
-                              type: 'inline-math',
-                              formula: '\\displaystyle ' + step.transform,
-                            },
-                          ],
-                          `step${i}`,
-                          'transform'
-                        )}
-                      </>
-                    ) : null}
-                  </td>
-                </tr>
-                {hasExplanation ? (
-                  <tr
-                    className="whitespace-normal"
-                    style={{ color: explanationColor }}
-                  >
-                    <td />
-                    {renderDownArrow()}
-                    <td colSpan={2}>
-                      {renderNested(
-                        step.explanation,
-                        `step${i}`,
-                        'explaination'
-                      )}
-                    </td>
-                  </tr>
-                ) : null}
-              </Fragment>
-            )
-          })}
-        </tbody>
-      </table>
-    </div>
-  )
+    function renderStepFormula(key: 'transform' | 'left' | 'right') {
+      return renderFormula('\\displaystyle ' + step[key], key)
+    }
+
+    function renderFormula(formula: string, key: string) {
+      return renderNested([{ type: 'inline-math', formula }], `step${i}`, key)
+    }
+  }
 
   function renderDownArrow() {
     const downArrow = `
