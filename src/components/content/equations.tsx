@@ -22,95 +22,93 @@ export interface EquationProps {
 
 export function Equations({ steps, renderNested }: EquationProps) {
   return (
-    <Wrapper>
-      <div className="overflow-x-auto py-2.5">
-        <table>
-          <TBody className="whitespace-no-wrap">
-            {steps.map((step, i) => {
-              const hasExplanation = step.explanation.some((node) => {
-                return node?.children?.length || node.type == 'math'
-              })
+    <Wrapper className="overflow-x-auto py-2.5">
+      <table>
+        <TBody className="whitespace-no-wrap">
+          {steps.map((step, i) => {
+            const hasExplanation = step.explanation.some((node) => {
+              return node?.children?.length || node.type == 'math'
+            })
 
-              return (
-                <Fragment key={i}>
-                  <tr>
-                    <MathTd className="text-right">
-                      {step.left
-                        ? renderNested(
-                            [
-                              {
-                                type: 'inline-math',
-                                formula: '\\displaystyle ' + step.left,
-                              },
-                            ],
-                            `step${i}`,
-                            'left'
-                          )
-                        : null}
-                    </MathTd>
-                    <MathTd className="text-center">
-                      {renderNested(
-                        [
-                          {
-                            type: 'inline-math',
-                            formula: renderSignToString(step.sign),
-                          },
-                        ],
-                        `step${i}`,
-                        'sign'
-                      )}
-                    </MathTd>
-                    <MathTd className="text-left">
-                      {step.right
-                        ? renderNested(
-                            [
-                              {
-                                type: 'inline-math',
-                                formula: '\\displaystyle ' + step.right,
-                              },
-                            ],
-                            `step${i}`,
-                            'right'
-                          )
-                        : null}
-                    </MathTd>
-                    <TransformTd>
-                      {step.transform ? (
-                        <>
-                          |
-                          {renderNested(
-                            [
-                              {
-                                type: 'inline-math',
-                                formula: '\\displaystyle ' + step.transform,
-                              },
-                            ],
-                            `step${i}`,
-                            'transform'
-                          )}
-                        </>
-                      ) : null}
-                    </TransformTd>
-                  </tr>
-                  {hasExplanation ? (
-                    <ExplanationTr>
-                      <td />
-                      {renderDownArrow()}
-                      <td colSpan={2}>
-                        {renderNested(
-                          step.explanation,
+            return (
+              <Fragment key={i}>
+                <tr>
+                  <MathTd className="text-right">
+                    {step.left
+                      ? renderNested(
+                          [
+                            {
+                              type: 'inline-math',
+                              formula: '\\displaystyle ' + step.left,
+                            },
+                          ],
                           `step${i}`,
-                          'explaination'
+                          'left'
+                        )
+                      : null}
+                  </MathTd>
+                  <MathTd className="text-center">
+                    {renderNested(
+                      [
+                        {
+                          type: 'inline-math',
+                          formula: renderSignToString(step.sign),
+                        },
+                      ],
+                      `step${i}`,
+                      'sign'
+                    )}
+                  </MathTd>
+                  <MathTd className="text-left">
+                    {step.right
+                      ? renderNested(
+                          [
+                            {
+                              type: 'inline-math',
+                              formula: '\\displaystyle ' + step.right,
+                            },
+                          ],
+                          `step${i}`,
+                          'right'
+                        )
+                      : null}
+                  </MathTd>
+                  <TransformTd>
+                    {step.transform ? (
+                      <>
+                        |
+                        {renderNested(
+                          [
+                            {
+                              type: 'inline-math',
+                              formula: '\\displaystyle ' + step.transform,
+                            },
+                          ],
+                          `step${i}`,
+                          'transform'
                         )}
-                      </td>
-                    </ExplanationTr>
-                  ) : null}
-                </Fragment>
-              )
-            })}
-          </TBody>
-        </table>
-      </div>
+                      </>
+                    ) : null}
+                  </TransformTd>
+                </tr>
+                {hasExplanation ? (
+                  <ExplanationTr>
+                    <td />
+                    {renderDownArrow()}
+                    <td colSpan={2}>
+                      {renderNested(
+                        step.explanation,
+                        `step${i}`,
+                        'explaination'
+                      )}
+                    </td>
+                  </ExplanationTr>
+                ) : null}
+              </Fragment>
+            )
+          })}
+        </TBody>
+      </table>
     </Wrapper>
   )
 
