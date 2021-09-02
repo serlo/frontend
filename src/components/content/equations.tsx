@@ -144,7 +144,7 @@ export function Equations({ steps, renderNested }: EquationProps) {
         x2="10"
         y2="99%"
         stroke="${color}"
-        stroke-width="2"
+        stroke-width="1.5"
         marker-end="url(#arrow)"
         vector-effect="non-scaling-stroke"
       />
