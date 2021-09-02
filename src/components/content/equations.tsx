@@ -1,9 +1,7 @@
 import { shade } from 'polished'
 import { Fragment } from 'react'
-import styled from 'styled-components'
 
 import { FrontendContentNode, Sign } from '@/data-types'
-import { makeMargin } from '@/helper/css'
 import { RenderNestedFunction } from '@/schema/article-renderer'
 import { theme } from '@/theme'
 
@@ -24,7 +22,7 @@ export function Equations({ steps, renderNested }: EquationProps) {
   const explanationColor = shade(0.3, theme.colors.brandGreen)
 
   return (
-    <Wrapper className="overflow-x-auto py-2.5">
+    <div className="overflow-x-auto py-2.5 mx-side mb-7">
       <table>
         <style jsx>{`
           .formula {
@@ -123,7 +121,7 @@ export function Equations({ steps, renderNested }: EquationProps) {
           })}
         </tbody>
       </table>
-    </Wrapper>
+    </div>
   )
 
   function renderDownArrow() {
@@ -191,8 +189,3 @@ function renderSignToString(sign: Sign): string {
       return '≈'
   }
 }
-
-const Wrapper = styled.div`
-  margin-bottom: ${(props) => props.theme.spacing.mb.block};
-  ${makeMargin}
-`
