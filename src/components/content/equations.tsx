@@ -30,8 +30,12 @@ export function Equations({ steps, renderNested }: EquationProps) {
           .formula {
             @apply align-baseline text-lg;
           }
+
+          .tbody > tr > td {
+            padding: 3px 3px 13px 3px;
+          }
         `}</style>
-        <TBody className="whitespace-no-wrap">
+        <tbody className="tbody whitespace-no-wrap">
           {steps.map((step, i) => {
             const hasExplanation = step.explanation.some((node) => {
               return node?.children?.length || node.type == 'math'
@@ -117,7 +121,7 @@ export function Equations({ steps, renderNested }: EquationProps) {
               </Fragment>
             )
           })}
-        </TBody>
+        </tbody>
       </table>
     </Wrapper>
   )
@@ -191,10 +195,4 @@ function renderSignToString(sign: Sign): string {
 const Wrapper = styled.div`
   margin-bottom: ${(props) => props.theme.spacing.mb.block};
   ${makeMargin}
-`
-
-const TBody = styled.tbody`
-  > tr > td {
-    padding: 3px 3px 13px 3px;
-  }
 `
