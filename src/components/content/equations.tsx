@@ -26,6 +26,11 @@ export function Equations({ steps, renderNested }: EquationProps) {
   return (
     <Wrapper className="overflow-x-auto py-2.5">
       <table>
+        <style jsx>{`
+          .formula {
+            @apply align-baseline text-lg;
+          }
+        `}</style>
         <TBody className="whitespace-no-wrap">
           {steps.map((step, i) => {
             const hasExplanation = step.explanation.some((node) => {
@@ -35,7 +40,7 @@ export function Equations({ steps, renderNested }: EquationProps) {
             return (
               <Fragment key={i}>
                 <tr>
-                  <MathTd className="text-right">
+                  <td className="text-right formula">
                     {step.left
                       ? renderNested(
                           [
@@ -48,8 +53,8 @@ export function Equations({ steps, renderNested }: EquationProps) {
                           'left'
                         )
                       : null}
-                  </MathTd>
-                  <MathTd className="text-center">
+                  </td>
+                  <td className="text-center formula">
                     {renderNested(
                       [
                         {
@@ -60,8 +65,8 @@ export function Equations({ steps, renderNested }: EquationProps) {
                       `step${i}`,
                       'sign'
                     )}
-                  </MathTd>
-                  <MathTd className="text-left">
+                  </td>
+                  <td className="text-left formula">
                     {step.right
                       ? renderNested(
                           [
@@ -74,8 +79,8 @@ export function Equations({ steps, renderNested }: EquationProps) {
                           'right'
                         )
                       : null}
-                  </MathTd>
-                  <MathTd className="pl-1">
+                  </td>
+                  <td className="pl-1 formula">
                     {step.transform ? (
                       <>
                         |
@@ -91,7 +96,7 @@ export function Equations({ steps, renderNested }: EquationProps) {
                         )}
                       </>
                     ) : null}
-                  </MathTd>
+                  </td>
                 </tr>
                 {hasExplanation ? (
                   <tr
@@ -192,9 +197,4 @@ const TBody = styled.tbody`
   > tr > td {
     padding: 3px 3px 13px 3px;
   }
-`
-
-const MathTd = styled.td`
-  vertical-align: baseline;
-  font-size: 1.125rem;
 `
