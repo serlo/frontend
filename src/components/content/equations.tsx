@@ -149,24 +149,22 @@ const TBody = styled.tbody`
   }
 `
 
-const LeftTd = styled.td`
-  text-align: right;
-  font-size: 1.125rem;
-`
-
 const RightTd = styled.td`
+  vertical-align: baseline;
   font-size: 1.125rem;
 `
 
-const SignTd = styled.td`
+const LeftTd = styled(RightTd)`
+  text-align: right;
+`
+
+const SignTd = styled(RightTd)`
   padding: 0 3px;
   text-align: center;
-  font-size: 1.125rem;
 `
 
-const TransformTd = styled.td`
+const TransformTd = styled(RightTd)`
   padding-left: 5px;
-  font-size: 1.125rem;
 `
 
 const ExplanationTr = styled.tr`
