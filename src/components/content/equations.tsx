@@ -75,7 +75,7 @@ export function Equations({ steps, renderNested }: EquationProps) {
                         )
                       : null}
                   </MathTd>
-                  <TransformTd>
+                  <MathTd className="pl-1">
                     {step.transform ? (
                       <>
                         |
@@ -91,7 +91,7 @@ export function Equations({ steps, renderNested }: EquationProps) {
                         )}
                       </>
                     ) : null}
-                  </TransformTd>
+                  </MathTd>
                 </tr>
                 {hasExplanation ? (
                   <tr
@@ -197,8 +197,4 @@ const TBody = styled.tbody`
 const MathTd = styled.td`
   vertical-align: baseline;
   font-size: 1.125rem;
-`
-
-const TransformTd = styled(MathTd)`
-  padding-left: 5px;
 `
