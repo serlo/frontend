@@ -24,7 +24,7 @@ export function Equations({ steps, renderNested }: EquationProps) {
   return (
     <div className="overflow-x-auto py-2.5 mx-side mb-7">
       <table>
-        <tbody className="whitespace-no-wrap">{steps.map(renderStep)}</tbody>
+        <tbody>{steps.map(renderStep)}</tbody>
       </table>
     </div>
   )

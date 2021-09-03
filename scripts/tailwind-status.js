@@ -4,6 +4,7 @@ const fs = require('fs')
 
 const knownExceptions = [
   'gcse-searchbox-only',
+  'formula',
   'superspecial-abc',
   'superspecial-bio',
   'superspecial-new',
@@ -18,7 +19,7 @@ const knownExceptions = [
 
 const isFileRegex = /\/.+\..+/
 const simpleClassNameRegex = /className="([^"]+)"/g
-const clsxRegex = /className=\{clsx\(.+?\)\}/gs
+const clsxRegex = /className={clsx\(.+?\)}/gs
 const strRegex = /'(.+?)'/g
 
 function walkDir(path) {
@@ -102,7 +103,7 @@ if (fs.existsSync('./.next/BUILD_ID')) {
   const invalidClasses = []
 
   const unknownClasses = classList.filter((c) => {
-    const cFiltered = c.replace(/[^a-z-0-9\/\.\:]/g, '')
+    const cFiltered = c.replace(/[^a-z-0-9\/.:]/g, '')
     if (c !== cFiltered) {
       invalidClasses.push(c)
       return false
@@ -110,13 +111,9 @@ if (fs.existsSync('./.next/BUILD_ID')) {
       const escaped = cFiltered
         .replace(/\./g, '\\\\\\.')
         .replace(/\//g, '\\\\\\/')
-        .replace(/\:/g, '\\\\\\:')
+        .replace(/:/g, '\\\\\\:')
       const regexStr = `\\.${escaped}(?![a-z-0-9\\\\])`
-      if (new RegExp(regexStr, 'g').test(css)) {
-        return false
-      } else {
-        return true
-      }
+      return !new RegExp(regexStr, 'g').test(css)
     }
   })
 
@@ -135,8 +132,11 @@ if (fs.existsSync('./.next/BUILD_ID')) {
     )
   }
 
+  const unkownClassNames = unknownClasses.filter(
+    (cls) => !knownExceptions.includes(cls)
+  )
   if (unknownClasses.some((cls) => !knownExceptions.includes(cls))) {
-    throw new Error('Unknown class name!')
+    throw new Error(`Unknown class name! ${unkownClassNames}`)
   }
 } else {
   console.log('\nNo build found, skipping class name validation\n')
