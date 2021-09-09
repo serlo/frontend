@@ -71,7 +71,7 @@ const rejectEntityMutation = gql`
   }
 `
 const checkoutEntityMutation = gql`
-  mutation rejectRevision($input: CheckoutRevisionInput!) {
+  mutation checkoutRevision($input: CheckoutRevisionInput!) {
     entity {
       checkoutRevision(input: $input) {
         success
@@ -80,7 +80,7 @@ const checkoutEntityMutation = gql`
   }
 `
 const checkoutPageMutation = gql`
-  mutation rejectRevision($input: CheckoutRevisionInput!) {
+  mutation checkoutPageRevision($input: CheckoutRevisionInput!) {
     page {
       checkoutRevision(input: $input) {
         success
