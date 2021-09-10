@@ -1,4 +1,5 @@
 import { shade } from 'polished'
+import { Fragment } from 'react'
 
 import { FrontendContentNode, Sign } from '@/data-types'
 import { RenderNestedFunction } from '@/schema/article-renderer'
@@ -34,7 +35,7 @@ export function Equations({ steps, renderNested }: EquationProps) {
     })
 
     return (
-      <>
+      <Fragment key={i}>
         <style jsx>{`
           .formula {
             @apply align-baseline text-lg;
@@ -70,7 +71,7 @@ export function Equations({ steps, renderNested }: EquationProps) {
             </td>
           </tr>
         ) : null}
-      </>
+      </Fragment>
     )
 
     function renderStepFormula(key: 'transform' | 'left' | 'right') {
