@@ -1,5 +1,4 @@
 import { shade } from 'polished'
-import { Fragment } from 'react'
 
 import { FrontendContentNode, Sign } from '@/data-types'
 import { RenderNestedFunction } from '@/schema/article-renderer'
@@ -54,8 +53,12 @@ export function Equations({ steps, renderNested }: EquationProps) {
           <td className="text-left formula">
             {step.right ? renderStepFormula('right') : null}
           </td>
-          <td className="pl-1 formula">
-            {step.transform ? <>|{renderStepFormula('transform')}</> : null}
+          <td className="formula">
+            {step.transform ? (
+              <span className="border-l border-black pl-1">
+                {renderStepFormula('transform')}
+              </span>
+            ) : null}
           </td>
         </tr>
         {hasExplanation ? (
