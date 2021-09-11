@@ -71,7 +71,7 @@ const rejectEntityMutation = gql`
   }
 `
 const checkoutEntityMutation = gql`
-  mutation rejectRevision($input: CheckoutRevisionInput!) {
+  mutation checkoutRevision($input: CheckoutRevisionInput!) {
     entity {
       checkoutRevision(input: $input) {
         success
@@ -80,7 +80,7 @@ const checkoutEntityMutation = gql`
   }
 `
 const checkoutPageMutation = gql`
-  mutation rejectRevision($input: CheckoutRevisionInput!) {
+  mutation checkoutPageRevision($input: CheckoutRevisionInput!) {
     page {
       checkoutRevision(input: $input) {
         success
@@ -95,7 +95,6 @@ export function useRevisionMutation() {
 
   const revisionMutation = async function (
     mode: RevisionMutationMode,
-    repositoryAlias: string,
     input: RejectRevisionInput,
     isPage: boolean
   ) {
@@ -117,17 +116,16 @@ export function useRevisionMutation() {
       }, 200)
       setTimeout(() => {
         NProgress.done()
-        void router.push('/[[...slug]]', repositoryAlias)
+        void router.push('/entity/unrevised?_vercel_no_cache=1')
       }, 3000)
     }
     return success
   }
   return async (
     mode: RevisionMutationMode,
-    repositoryAlias: string,
     input: RejectRevisionInput | CheckoutRevisionInput,
     isPage: boolean
-  ) => await revisionMutation(mode, repositoryAlias, input, isPage)
+  ) => await revisionMutation(mode, input, isPage)
 }
 
 export function useSetNotificationStateMutation() {
