@@ -20,7 +20,7 @@ export function Article({
       {renderNested(content, 'article-content')}
 
       <h2 className="serlo-h2">{strings.content.exercisesTitle}</h2>
-      {renderNested(exercises, 'article-content')}
+      {renderNested(exercises, 'article-exercises')}
 
       {renderMoreExLink()}
       {renderRelatedContent()}
