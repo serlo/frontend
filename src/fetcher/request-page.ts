@@ -27,7 +27,7 @@ export async function requestPage(
   }>(endpoint, dataQuery, {
     alias: { instance, path: alias },
   })
-
+  if (!uuid) return { kind: 'error', errorData: { code: 404 } }
   // Can be deleted if CFWorker redirects those for us
   if (
     uuid.__typename === 'ArticleRevision' ||
