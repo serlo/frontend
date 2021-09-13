@@ -408,6 +408,29 @@ export interface FrontendANode {
   children?: FrontendContentNode[]
 }
 
+export interface ArticleNodeUuidLink {
+  id: string
+  title: string
+}
+
+export interface FrontendArticleNode {
+  type: 'article'
+  introduction: FrontendContentNode[]
+  content: FrontendContentNode[]
+  exercises: FrontendContentNode[]
+  exerciseFolder: ArticleNodeUuidLink
+  relatedContent?: {
+    articles: ArticleNodeUuidLink[]
+    courses: ArticleNodeUuidLink[]
+    videos: ArticleNodeUuidLink[]
+  }
+  sources: {
+    href: string
+    title: string
+  }[]
+  children?: undefined
+}
+
 export interface FrontendInlineMathNode {
   type: 'inline-math'
   formula: string
@@ -705,6 +728,7 @@ export type FrontendElementNode =
   | FrontendTdNode
 
 export type FrontendRestrictedElementNode =
+  | FrontendArticleNode
   | FrontendSpoilerContainerNode
   | FrontendTableNode
   | FrontendSpoilerContainerNode

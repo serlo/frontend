@@ -75,145 +75,32 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
     const hasRelatedContent = Object.values(relatedContent).some(
       (section) => section.length > 0
     )
-
     return [
-      ...convertPlugin({
-        ...introduction,
-        plugin: 'multimedia',
-      }),
-      ...convert(content),
-      ...(exercises.length > 0 || exerciseFolder.id
-        ? [
-            ...convertSlate({
-              type: 'h',
-              level: 2,
-              // TODO: i18n
-              children: [{ text: 'Übungsaufgaben' }],
-            }),
-            ...exercises
-              .map((exercise) => {
-                return convertPlugin(exercise)
-              })
-              .flat(),
-            ...(exerciseFolder.id
-              ? [
-                  ...convertSlate({
-                    type: 'p',
-                    children: [
-                      {
-                        // TODO: i18n
-                        text: 'Weitere Aufgaben zum Thema findest du im folgenden Aufgabenordner:',
-                      },
-                    ],
-                  }),
-                  ...convertSlate({
-                    type: 'p',
-                    children: [
-                      {
-                        type: 'a',
-                        href: `/${exerciseFolder.id}`,
-                        children: [{ text: exerciseFolder.title }],
-                      },
-                    ],
-                  }),
-                ]
-              : []),
-          ]
-        : []),
-      ...(hasRelatedContent
-        ? [
-            ...convertSlate({
-              type: 'h',
-              level: 2,
-              // TODO: i18n
-              children: [{ text: 'Du hast noch nicht genug vom Thema?' }],
-            }),
-            ...convertSlate({
-              type: 'p',
-              // TODO: i18n
-              children: [
-                {
-                  text: 'Hier findest du noch weitere passende Inhalte zum Thema:',
-                },
-              ],
-            }),
-            ...[
-              relatedContent.articles,
-              relatedContent.courses,
-              relatedContent.videos,
-            ]
-              .map((section, index) => {
-                if (section.length === 0) return []
+      {
+        type: 'article',
+        introduction: convertPlugin({
+          ...introduction,
+          plugin: 'multimedia',
+        }),
+        content: convertPlugin(content),
+        exercises: exercises
+          .map((exercise) => {
+            return convertPlugin(exercise)
+          })
+          .flat(),
+        exerciseFolder,
+        relatedContent: hasRelatedContent ? relatedContent : undefined,
+        sources,
 
-                // TODO: i18n
-                const title = [
-                  'Artikel',
-                  'Kurse',
-                  'Videos',
-                  'Aufgaben und Aufgabenordner',
-                ][index]
-
-                return [
-                  // TODO: icon
-                  ...convertSlate({
-                    type: 'h',
-                    level: 3,
-                    children: [{ text: title }],
-                  }),
-                  ...section
-                    .map((item) => {
-                      return convertSlate({
-                        type: 'unordered-list',
-                        children: [
-                          {
-                            type: 'list-item',
-                            children: [
-                              {
-                                type: 'a',
-                                href: `/${item.id}`,
-                                children: [{ text: item.title }],
-                              },
-                            ],
-                          },
-                        ],
-                      })
-                    })
-                    .flat(),
-                ]
-              })
-              .flat(),
-          ]
-        : []),
-      ...(sources.length > 0
-        ? [
-            ...convertSlate({
-              type: 'h',
-              level: 2,
-              // TODO: i18n
-              children: [{ text: 'Sources' }],
-            }),
-            ...convertSlate({
-              type: 'unordered-list',
-              children: sources.map((source) => {
-                return {
-                  type: 'list-item',
-                  children: [
-                    {
-                      type: 'a',
-                      href: source.href,
-                      children: [
-                        {
-                          text: source.title,
-                        },
-                      ],
-                    },
-                  ],
-                }
-              }),
-            }),
-          ]
-        : []),
+        // children: convert(node.state.explanation as EdtrState),
+      },
     ]
+
+    //children: [{ text: 'Übungsaufgaben' }],
+    //text: 'Weitere Aufgaben zum Thema findest du im folgenden Aufgabenordner:',
+
+    //children: [{ text: 'Du hast noch nicht genug vom Thema?' }],
+    //text: 'Hier findest du noch weitere passende Inhalte zum Thema:',
   }
 
   if (node.plugin === 'rows') {

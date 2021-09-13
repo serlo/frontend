@@ -110,6 +110,11 @@ export const instanceData = {
       strategy: 'Solution Strategy',
       picture: 'Picture',
       previewImage: 'Preview Image',
+      exercisesTitle: 'Exercises',
+      moreExercises: 'You can find more exercises in this folder:',
+      relatedContentTitle: 'You want to learn more?',
+      relatedContentText: 'Here you can find more content on this topic:',
+      sourcesTitle: 'Sources'
     },
     consent: {
       title: 'Consent for external Content',
