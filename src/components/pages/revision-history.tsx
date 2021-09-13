@@ -20,7 +20,7 @@ export interface RevisionHistoryProps {
 export function RevisionHistory({ data }: RevisionHistoryProps) {
   const { strings } = useInstanceData()
   if (!data) return null
-
+  const isPage = data.__typename === 'Page'
   const { changes, status, author, date, view, edit } = strings.revisionHistory
 
   return (
@@ -42,6 +42,9 @@ export function RevisionHistory({ data }: RevisionHistoryProps) {
   function renderRow(entry: HistoryRevisionData) {
     const isCurrent = entry.id === data!.currentRevision?.id
     const viewUrl = `/entity/repository/compare/${data!.id}/${entry.id}`
+    const editUrl = isPage
+      ? `/page/revision/create-old/${data!.id}/${entry.id}`
+      : `/entity/repository/add-revision/${data!.id}/${entry.id}`
 
     return (
       <tr key={entry.id} className={isCurrent ? 'bg-brand-50' : undefined}>
@@ -72,7 +75,7 @@ export function RevisionHistory({ data }: RevisionHistoryProps) {
           <Link
             className="serlo-button serlo-make-interactive-light my-0 mx-auto text-base"
             title={strings.revisionHistory.editLabel}
-            href={`/entity/repository/add-revision/${data!.id}/${entry.id}`}
+            href={editUrl}
           >
             <FontAwesomeIcon icon={faPencilAlt} size="1x" />
           </Link>

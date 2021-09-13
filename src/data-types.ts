@@ -173,6 +173,7 @@ export interface HistoryRevisionData {
 export interface HistoryRevisionsData {
   id: number
   alias: string
+  __typename: string
   currentRevision: {
     id: number
     title?: string
