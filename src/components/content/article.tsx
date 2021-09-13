@@ -68,7 +68,7 @@ export function Article({
         <h3 className="serlo-h3 mb-0">{strings.categories[type]}</h3>
         <ul className="serlo-ul mt-2 mb-4 text-lg">
           {items.map((item) => (
-            <li key={item.id} className="serlo-li !mb-0">
+            <li key={item.id} className="!mb-0">
               <Link href={`/${item.id}`}>{item.title}</Link>
             </li>
           ))}
@@ -84,7 +84,7 @@ export function Article({
         <h2 className="serlo-h2">{strings.content.sourcesTitle}</h2>
         <ul className="serlo-ul mt-2 mb-4 text-lg">
           {sources.map((source) => (
-            <li key={source.href} className="serlo-li !mb-0">
+            <li key={source.href} className="!mb-0">
               <Link href={source.href}>{source.title}</Link>
             </li>
           ))}
