@@ -163,7 +163,7 @@ export function ScMcExercise({
                   selectedArray[i] &&
                   hasFeedback &&
                   renderNested(answer.feedback, `mcfeedback${i}`)}
-                {isRevisionView && hasFeedback && renderRevisionExtra(answer)}
+                {isRevisionView && renderRevisionExtra(answer, hasFeedback)}
               </Fragment>
             )
           })}
@@ -201,8 +201,10 @@ export function ScMcExercise({
   }
 
   function renderRevisionExtra(
-    answer: EdtrPluginScMcExercise['state']['answers'][0]
+    answer: EdtrPluginScMcExercise['state']['answers'][0],
+    hasFeedback?: boolean
   ) {
+    if (!answer.isCorrect && !hasFeedback) return null
     return (
       <RevisionExtraInfo className="bg-yellow-200 rounded-xl py-2 mb-4">
         {answer.isCorrect && (
