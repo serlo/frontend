@@ -19,6 +19,8 @@ const entities = [
   ['Event', '/145590'],
 ]
 
+const specialCases = [['Long Code Block', '/48121']]
+
 const ContentPage: NextPage = () => {
   return (
     <>
@@ -26,7 +28,9 @@ const ContentPage: NextPage = () => {
       <nav>
         <h2>Entities</h2>
         <ul>{renderLis(entities)}</ul>
-        <h2>Review Types</h2>…<h2>Special Cases</h2>…<h2>Logged in Stuff</h2>…
+        <h2>Review Types</h2>…<h2>Special Cases</h2>
+        <ul>{renderLis(specialCases)}</ul>
+        <h2>Logged in Stuff</h2>…
       </nav>
       <iframe name="show" />
     </>
