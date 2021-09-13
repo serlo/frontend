@@ -91,16 +91,8 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
         exerciseFolder,
         relatedContent: hasRelatedContent ? relatedContent : undefined,
         sources,
-
-        // children: convert(node.state.explanation as EdtrState),
       },
     ]
-
-    //children: [{ text: 'Übungsaufgaben' }],
-    //text: 'Weitere Aufgaben zum Thema findest du im folgenden Aufgabenordner:',
-
-    //children: [{ text: 'Du hast noch nicht genug vom Thema?' }],
-    //text: 'Hier findest du noch weitere passende Inhalte zum Thema:',
   }
 
   if (node.plugin === 'rows') {
