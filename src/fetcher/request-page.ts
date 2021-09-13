@@ -52,7 +52,9 @@ export async function requestPage(
   }
 
   if (uuid.__typename === 'Course') {
-    const firstPage = uuid.pages[0]?.alias
+    const firstPage = uuid.pages.filter(
+      (page) => page.currentRevision !== null
+    )[0]?.alias
     if (firstPage) {
       return await requestPage(firstPage, instance)
     } else {

@@ -19,7 +19,10 @@ const entities = [
   ['Event', '/145590'],
 ]
 
-const specialCases = [['Long Code Block', '/48121']]
+const specialCases = [
+  ['Long Code Block', '/48121'],
+  ['Course w/ trashed pages', '/139048'],
+]
 
 const ContentPage: NextPage = () => {
   return (
