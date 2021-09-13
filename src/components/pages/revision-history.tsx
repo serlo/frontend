@@ -11,6 +11,7 @@ import type {
   HistoryRevisionData,
   HistoryRevisionsData,
 } from '@/data-types'
+import { getRevisionEditUrl } from '@/helper/get-revision-edit-url'
 import { theme } from '@/theme'
 
 export interface RevisionHistoryProps {
@@ -42,9 +43,7 @@ export function RevisionHistory({ data }: RevisionHistoryProps) {
   function renderRow(entry: HistoryRevisionData) {
     const isCurrent = entry.id === data!.currentRevision?.id
     const viewUrl = `/entity/repository/compare/${data!.id}/${entry.id}`
-    const editUrl = isPage
-      ? `/page/revision/create-old/${data!.id}/${entry.id}`
-      : `/entity/repository/add-revision/${data!.id}/${entry.id}`
+    const editUrl = getRevisionEditUrl(isPage, data!.id, entry.id)
 
     return (
       <tr key={entry.id} className={isCurrent ? 'bg-brand-50' : undefined}>
