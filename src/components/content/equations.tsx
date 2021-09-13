@@ -35,7 +35,7 @@ export function Equations({ steps, renderNested }: EquationProps) {
     })
 
     return (
-      <>
+      <Fragment key={i}>
         <style jsx>{`
           .formula {
             @apply align-baseline text-lg;
@@ -54,8 +54,12 @@ export function Equations({ steps, renderNested }: EquationProps) {
           <td className="text-left formula">
             {step.right ? renderStepFormula('right') : null}
           </td>
-          <td className="pl-1 formula">
-            {step.transform ? <>|{renderStepFormula('transform')}</> : null}
+          <td className="formula">
+            {step.transform ? (
+              <span className="border-l border-black pl-1">
+                {renderStepFormula('transform')}
+              </span>
+            ) : null}
           </td>
         </tr>
         {hasExplanation ? (
@@ -67,7 +71,7 @@ export function Equations({ steps, renderNested }: EquationProps) {
             </td>
           </tr>
         ) : null}
-      </>
+      </Fragment>
     )
 
     function renderStepFormula(key: 'transform' | 'left' | 'right') {

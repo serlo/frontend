@@ -189,9 +189,7 @@
         @apply mb-0;
       }
 
-      /* this selector causes a bug with postcss-nested > 5.0.1, so we need 5.0.1 for this to work
-       * If the bug is fixed, revert to current version again
-       */
+      /* fixed in postcss-nested 5.0.6 */
       > .serlo-exercise-wrapper:first-child {
         @apply mt-0;
       }

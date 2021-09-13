@@ -133,7 +133,6 @@ export function Revision({ data }: RevisionProps) {
             auth.current && canCheckoutAndReject ? (
               <CheckoutRejectButtons
                 revisionId={data.thisRevision.id}
-                repositoryAlias={repositoryAlias}
                 isRejected={isRejected}
                 isCurrent={isCurrentRevision}
                 isPage={data.typename === 'PageRevision'}
