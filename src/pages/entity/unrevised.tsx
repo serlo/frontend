@@ -15,11 +15,6 @@ import { requestUnrevisedRevisions } from '@/fetcher/unrevisedRevisions/request'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks<UnrevisedRevisionsProps>(({ pageData }) => {
-  console.log('unrevised.tsx ==========')
-  console.log(typeof window !== 'undefined')
-  console.log(
-    pageData?.revisionsData.subjects[0].unrevisedEntities.nodes.length
-  )
   return (
     <FrontendClientBase>
       <Content data={pageData.revisionsData} />

@@ -23,6 +23,11 @@ export function UnrevisedSubject({ subject }: UnrevisedSubjectProps) {
     return null
   }
 
+  console.log('unrevised-subject.tsx ==========')
+  console.log(typeof window !== 'undefined')
+  console.log(subject.unrevisedEntities.nodes.length)
+  console.log(subject.unrevisedEntities.totalCount)
+
   return (
     <section className="mb-16">
       <h2 className="serlo-h2 border-0" id={getSubjectSlug(name)}>
