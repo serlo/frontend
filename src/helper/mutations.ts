@@ -116,7 +116,7 @@ export function useRevisionMutation() {
       }, 200)
       setTimeout(() => {
         NProgress.done()
-        void router.push('/entity/unrevised?_vercel_no_cache=1')
+        void router.push('/entity/unrevised')
       }, 3000)
     }
     return success
