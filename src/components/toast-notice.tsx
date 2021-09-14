@@ -52,7 +52,10 @@ export function ToastNotice() {
       }, 1000)
     }
 
-    if (window.location.hash === '#profile-refresh') {
+    if (
+      window.location.hash === '#profile-refresh' ||
+      window.location.hash === '#reload'
+    ) {
       showToastNotice(strings.loading.oneMomentPlease, 'default', showTime)
 
       setTimeout(() => {

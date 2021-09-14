@@ -116,8 +116,8 @@ export function useRevisionMutation() {
       }, 200)
       setTimeout(() => {
         NProgress.done()
-        void router.push('/entity/unrevised#profile-refresh')
-      }, 4000)
+        void router.push('/entity/unrevised#reload')
+      }, 3500)
     }
     return success
   }

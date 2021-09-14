@@ -4,7 +4,7 @@ import { request } from 'graphql-request'
 
 import { Instance } from '../query-types'
 import { unrevisedRevisionsQuery } from './query'
-import { endpointNoCache } from '@/api/endpoint'
+import { endpoint } from '@/api/endpoint'
 import { UnrevisedRevisionsPage } from '@/data-types'
 
 export async function requestUnrevisedRevisions(
@@ -17,7 +17,7 @@ export async function requestUnrevisedRevisions(
     const { subject, authorization } = await request<{
       subject: { subjects: Subject[] }
       authorization: AuthorizationPayload
-    }>(endpointNoCache, unrevisedRevisionsQuery, variables)
+    }>(endpoint, unrevisedRevisionsQuery, variables)
     return {
       kind: 'unrevisedRevisions',
       revisionsData: subject,
