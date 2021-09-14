@@ -84,50 +84,10 @@ export function Equations({ steps, renderNested }: EquationProps) {
   }
 
   function renderDownArrow() {
-    const downArrow = `
-      <svg xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <marker
-            id="arrow"
-            markerWidth="10"
-            markerHeight="10"
-            orient="auto"
-            markerUnits="strokeWidth"
-            refX="10"
-            refY="5"
-            viewBox="0 0 20 10"
-          >
-            <path
-              d="M 0,0 l 10,5 l -10,5"
-              stroke="${explanationColor}"
-              stroke-width="2"
-              fill="none"
-              vector-effect="non-scaling-size"
-            />
-          </marker>
-        </defs>
-        <line
-          x1="10"
-          y1="0%"
-          x2="10"
-          y2="99%"
-          stroke="${explanationColor}"
-          stroke-width="1.5"
-          marker-end="url(#arrow)"
-          vector-effect="non-scaling-stroke"
-        />
-      </svg>`
-    const downArrowBase64 = Buffer.from(downArrow).toString('base64')
-
     return (
-      <td
-        style={{
-          backgroundImage: `url('data:image/svg+xml;base64,${downArrowBase64}')`,
-          backgroundSize: '20px calc(100% - 10px)',
-          backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center 5px',
-        }}
-      />
+      <td className="text-4xl" style={{ fontFamily: 'serif' }}>
+        <div className="-mt-3">&darr;</div>
+      </td>
     )
   }
 }
