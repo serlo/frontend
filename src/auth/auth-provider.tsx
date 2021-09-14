@@ -13,7 +13,6 @@ import {
 import { Token } from 'simple-oauth2'
 
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
-import { isClient } from '@/helper/client-detection'
 
 export interface AuthContextValue {
   loggedIn: boolean
@@ -78,7 +77,7 @@ function useAuthentication(): [RefObject<AuthenticationPayload>, boolean] {
 
   function parseAuthCookie(): AuthenticationPayload {
     try {
-      const cookies = !isClient ? {} : Cookies.get()
+      const cookies = typeof window === 'undefined' ? {} : Cookies.get()
 
       const { access_token, id_token } = JSON.parse(
         cookies['auth-token']
@@ -101,7 +100,7 @@ function useAuthentication(): [RefObject<AuthenticationPayload>, boolean] {
   // eslint-disable-next-line @typescript-eslint/require-await
   async function refreshToken(usedToken: string) {
     async function startRefreshTokenPromise(): Promise<void> {
-      if (!isClient) return
+      if (typeof window === 'undefined') return
 
       await fetch('/api/auth/refresh-token', {
         method: 'POST',
