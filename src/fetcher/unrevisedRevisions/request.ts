@@ -18,6 +18,8 @@ export async function requestUnrevisedRevisions(
       subject: { subjects: Subject[] }
       authorization: AuthorizationPayload
     }>(endpointNoCache, unrevisedRevisionsQuery, variables)
+    console.log('request.ts Mathe nodes')
+    console.log(subject.subjects[0].unrevisedEntities.nodes.length)
     return {
       kind: 'unrevisedRevisions',
       revisionsData: subject,
