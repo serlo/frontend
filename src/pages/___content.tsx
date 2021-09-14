@@ -20,6 +20,7 @@ const entities = [
 ]
 
 const specialCases = [
+  ['Huge Equation Plugin', '/202374'],
   ['Long Code Block', '/48121'],
   ['Course w/ trashed pages', '/139048'],
 ]
