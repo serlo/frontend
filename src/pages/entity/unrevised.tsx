@@ -15,7 +15,7 @@ import { requestUnrevisedRevisions } from '@/fetcher/unrevisedRevisions/request'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks<UnrevisedRevisionsProps>(({ pageData }) => {
-  console.log('client update ==========')
+  console.log('unrevised.tsx ==========')
   console.log(typeof window !== 'undefined')
   console.log(
     pageData?.revisionsData.subjects[0].unrevisedEntities.nodes.length
@@ -40,10 +40,6 @@ export const getStaticProps: GetStaticProps<UnrevisedRevisionsProps> = async (
   context
 ) => {
   const pageData = await requestUnrevisedRevisions(context.locale as Instance)
-  console.log('server==========')
-  console.log(
-    pageData?.revisionsData.subjects[0].unrevisedEntities.nodes.length
-  )
   return {
     props: {
       pageData: JSON.parse(JSON.stringify(pageData)) as UnrevisedRevisionsPage, // remove undefined values

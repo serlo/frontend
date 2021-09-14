@@ -13,7 +13,11 @@ export function UnrevisedRevisionsOverview({
   data,
 }: UnrevisedRevisionsOverviewProps) {
   const { lang, strings } = useInstanceData()
-
+  console.log('unrevised-revisions.tsx ==========')
+  console.log(typeof window !== 'undefined')
+  console.log(
+    pageData?.revisionsData.subjects[0].unrevisedEntities.nodes.length
+  )
   return (
     <>
       <div className="flex justify-between">
