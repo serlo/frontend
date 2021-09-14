@@ -285,6 +285,10 @@ const sharedIconStyles = css`
 `
 
 const gscMiscResets = css`
+  #___gcse_1 {
+    width: 100%;
+  }
+
   #___gcse_0 {
     flex: 1;
   }
