@@ -16,6 +16,7 @@ import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks<UnrevisedRevisionsProps>(({ pageData }) => {
   console.log('client update ==========')
+  console.log(typeof window !== 'undefined')
   console.log(
     pageData?.revisionsData.subjects[0].unrevisedEntities.nodes.length
   )
