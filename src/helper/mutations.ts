@@ -110,14 +110,16 @@ export function useRevisionMutation() {
     if (success) {
       setTimeout(() => {
         showToastNotice(
-          `✨ Überarbeitung wurde ${isCheckout ? 'angenommen' : 'abgelehnt'}.`,
+          `✨ Überarbeitung wurde ${
+            isCheckout ? 'angenommen' : 'abgelehnt'
+          }. Einen Moment bitte.`,
           'success'
         )
       }, 200)
       setTimeout(() => {
         NProgress.done()
         void router.push('/entity/unrevised')
-      }, 3000)
+      }, 12000)
     }
     return success
   }
