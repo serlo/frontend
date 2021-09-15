@@ -114,7 +114,9 @@ export function useRevisionMutation() {
           'success'
         )
         NProgress.done()
-        void router.push('/entity/unrevised')
+        void router.push(
+          sessionStorage.getItem('previousPathname') || '/entity/unrevised'
+        )
       }, 100)
     }
     return success

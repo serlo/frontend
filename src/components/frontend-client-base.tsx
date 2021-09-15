@@ -78,7 +78,7 @@ export function FrontendClientBase({
       'previousPathname',
       sessionStorage.getItem('currentPathname') || ''
     )
-    sessionStorage.setItem('currentPathname', window.location.pathname)
+    sessionStorage.setItem('currentPathname', window.location.href)
   })
 
   // const auth = useAuthentication('frontend-client-base')
