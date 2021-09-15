@@ -113,11 +113,9 @@ export function useRevisionMutation() {
           `✨ Überarbeitung wurde ${isCheckout ? 'angenommen' : 'abgelehnt'}.`,
           'success'
         )
-      }, 200)
-      setTimeout(() => {
         NProgress.done()
-        void router.push('/entity/unrevised#reload')
-      }, 3500)
+        void router.push('/entity/unrevised')
+      }, 100)
     }
     return success
   }

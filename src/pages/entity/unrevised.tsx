@@ -1,4 +1,4 @@
-import { GetStaticProps } from 'next'
+import { GetServerSideProps } from 'next'
 import React from 'react'
 
 import { PageTitle } from '@/components/content/page-title'
@@ -31,18 +31,18 @@ function Content({ data }: { data: UnrevisedRevisionsData }) {
   )
 }
 
-export const getStaticProps: GetStaticProps<UnrevisedRevisionsProps> = async (
-  context
-) => {
-  const pageData = await requestUnrevisedRevisions(context.locale as Instance)
+export const getServerSideProps: GetServerSideProps<UnrevisedRevisionsProps> =
+  async (context) => {
+    const pageData = await requestUnrevisedRevisions(context.locale as Instance)
 
-  return {
-    props: {
-      pageData: JSON.parse(JSON.stringify(pageData)) as UnrevisedRevisionsPage, // remove undefined values
-    },
-    revalidate: 1,
+    return {
+      props: {
+        pageData: JSON.parse(
+          JSON.stringify(pageData)
+        ) as UnrevisedRevisionsPage, // remove undefined values
+      },
+    }
   }
-}
 
 function Title() {
   const { strings } = useInstanceData()
