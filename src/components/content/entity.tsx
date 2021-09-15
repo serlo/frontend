@@ -26,6 +26,7 @@ const ShareModal = dynamic<ShareModalProps>(() =>
 )
 
 export function Entity({ data }: EntityProps) {
+  // console.log(data)
   // state@/components/comments/comment-area
   const [open, setOpen] = useState(false)
 

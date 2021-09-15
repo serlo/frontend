@@ -10,12 +10,14 @@ export interface UnrevisedSubjectProps {
   subject: Subject
 }
 
+const limiter = 3
+
 export function UnrevisedSubject({ subject }: UnrevisedSubjectProps) {
   const [showAll, setShowAll] = useState(false)
   const { strings } = useInstanceData()
 
   const nodes = Array.from(subject.unrevisedEntities.nodes).reverse()
-  const visibleNodes = showAll ? nodes : nodes.slice(0, 3)
+  const visibleNodes = showAll ? nodes : nodes.slice(0, limiter)
   const name = subject.taxonomyTerm.name
   if (subject.unrevisedEntities.totalCount === 0) {
     return null
@@ -38,7 +40,7 @@ export function UnrevisedSubject({ subject }: UnrevisedSubjectProps) {
   )
 
   function renderShowAll() {
-    if (nodes.length <= 1 || showAll) return null
+    if (nodes.length <= limiter || showAll) return null
     return (
       <button
         className="serlo-button serlo-make-interactive-light mx-side"

@@ -2,7 +2,6 @@ import { ReactNode, useState } from 'react'
 import styled, { css } from 'styled-components'
 
 import { isPrintMode } from '../print-mode'
-import { isClient } from '@/helper/client-detection'
 import { inputFontReset } from '@/helper/css'
 import { submitEventWithPath } from '@/helper/submit-event'
 import { NodePath } from '@/schema/article-renderer'
@@ -49,7 +48,7 @@ function SpoilerTitle({
     <StyledSpoilerTitle
       onClick={!disabled ? onClick : undefined}
       onPointerUp={(e) => e.currentTarget.blur()} //hack, use https://caniuse.com/#feat=css-focus-visible when supported
-      open={!isClient ? true : open}
+      open={typeof window === 'undefined' ? true : open}
       interactive={!disabled}
     >
       {children}
