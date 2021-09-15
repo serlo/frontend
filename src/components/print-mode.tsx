@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 
-import { isClient } from '../helper/client-detection'
 import { removeHash } from '../helper/remove-hash'
 import { showToastNotice } from '../helper/show-toast-notice'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -11,7 +10,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 // #print--preview is used for pdf creation and preview
 
 export const isPrintMode =
-  isClient && window.location.hash.startsWith('#print--')
+  typeof window !== 'undefined' && window.location.hash.startsWith('#print--')
 
 const showSolutions =
   isPrintMode && window.location.hash === '#print--preview-no-solutions'

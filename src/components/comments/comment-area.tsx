@@ -17,7 +17,6 @@ import { Thread } from './thread'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useCanDo } from '@/auth/use-can-do'
 import { useInstanceData } from '@/contexts/instance-context'
-import { isClient } from '@/helper/client-detection'
 import {
   useCreateThreadMutation,
   useCreateCommentMutation,
@@ -47,7 +46,9 @@ export function CommentArea({ id: entityId, noForms }: CommentAreaProps) {
 
   const canDo = useCanDo()
 
-  const showAll = isClient && window.location.hash.startsWith('#comment-')
+  const showAll =
+    typeof window !== 'undefined' &&
+    window.location.hash.startsWith('#comment-')
 
   useEffect(() => {
     if (showAll && highlightedCommentId === undefined) {

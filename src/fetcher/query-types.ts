@@ -193,6 +193,9 @@ export interface Course extends Repository {
   __typename: 'Course'
   pages: {
     alias?: string
+    currentRevision?: {
+      title: string
+    }
   }[]
   currentRevision?: GraphQL.Maybe<Pick<GraphQL.CourseRevision, 'title'>>
   revisions: {
