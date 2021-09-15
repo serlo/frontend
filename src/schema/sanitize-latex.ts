@@ -1,16 +1,9 @@
 const regexMathRm = /\\mathrm(?=[^a-z])/gm
 const regexBeginAlign = /\\begin{align}/gm
 const regexEndAlign = /\\end{align}/gm
-const regexTextSimple = /\\text(?=[^a-z{])/gm
-const regexText = /\\text *{([^{]+)}/gm
 const regexComma = /(?<=[\d]),(?=[\d])/gm
 
 const regexEmptyNewLine = /\\\\(?=[\s]*\\end{)/gm
-
-const regexNewLine = /\\\\/gm
-const regexAmpersand = /(?<=[^\\])&/gm
-const envStart =
-  /(\\begin{(pmatrix|vmatrix|cases|aligned)}|\\begin{array}{[a-z]+})/gm
 
 export function sanitizeLatex(formula: string): string {
   // ignore empty formulas
@@ -24,16 +17,16 @@ export function sanitizeLatex(formula: string): string {
   formula = formula.replace(regexEndAlign, '\\end{aligned}')
 
   // handle text style
-  formula = formula.replace(regexText, '\\text{\\sf $1}')
+  //formula = formula.replace(regexText, '\\text{\\sf $1}')
 
   // remove text command
-  formula = formula.replace(regexTextSimple, '')
+  //formula = formula.replace(regexTextSimple, '')
 
   // remove empty new line in environments
   formula = formula.replace(regexEmptyNewLine, '')
 
   // handle environments
-  formula = formula
+  /*formula = formula
     .split(regexNewLine)
     .map((line, index) => {
       if (index == 0) return line
@@ -41,10 +34,10 @@ export function sanitizeLatex(formula: string): string {
         return '\\\\ ' + line.replace('\\hline', '\\hline \\sf ')
       return ' \\\\ \\sf ' + line
     })
-    .join('')
+    .join('')*/
 
-  formula = formula.replace(regexAmpersand, ' & \\sf ')
-  formula = formula.replace(envStart, (str) => `${str} \\sf `)
+  //formula = formula.replace(regexAmpersand, ' & \\sf ')
+  //formula = formula.replace(envStart, (str) => `${str} \\sf `)
 
   // fix comma style
   formula = formula.replace(regexComma, '{,}')
@@ -62,7 +55,7 @@ export function sanitizeLatex(formula: string): string {
   }
 
   // add nonserif globally
-  formula = '\\sf ' + formula
+  //formula = '\\sf ' + formula
 
   return formula
 }
