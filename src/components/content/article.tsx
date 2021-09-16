@@ -62,7 +62,7 @@ export function Article({
     type: 'articles' | 'courses' | 'videos',
     items: ArticleNodeUuidLink[]
   ) {
-    if (!items || items.length < 1) return null
+    if (items.length === 0) return null
     return (
       <>
         <h3 className="serlo-h3 mb-0">{strings.categories[type]}</h3>
@@ -78,7 +78,7 @@ export function Article({
   }
 
   function renderSources() {
-    if (sources.length < 1) return null
+    if (sources.length === 0) return null
     return (
       <>
         <h2 className="serlo-h2">{strings.content.sourcesTitle}</h2>

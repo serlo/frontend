@@ -111,9 +111,9 @@ export const instanceData = {
       picture: 'Picture',
       previewImage: 'Preview Image',
       exercisesTitle: 'Exercises',
-      moreExercises: 'You can find more exercises in this folder:',
-      relatedContentTitle: 'You want to learn more?',
-      relatedContentText: 'Here you can find more content on this topic:',
+      moreExercises: 'You can find more exercises in the following folder:',
+      relatedContentTitle: 'Still want more?',
+      relatedContentText: 'You can find more content on this topic here:',
       sourcesTitle: 'Sources'
     },
     consent: {
