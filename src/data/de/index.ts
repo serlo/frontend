@@ -109,7 +109,12 @@ export const instanceData = {
       unrevisedNotice: "Dieser Inhalt wurde noch nicht überprüft. Über den %link% kannst du dir die Entwürfe anzeigen lassen.",
       strategy: "Lösungsstrategie",
       picture: "Bild",
-      previewImage: "Vorschaubild"
+      previewImage: "Vorschaubild",
+      exercisesTitle: "Übungsaufgaben",
+      moreExercises: "Weitere Aufgaben zum Thema findest du im folgenden Aufgabenordner",
+      relatedContentTitle: "Du hast noch nicht genug vom Thema?",
+      relatedContentText: "Hier findest du noch weitere passende Inhalte zum Thema:",
+      sourcesTitle: "Quellen"
     },
     consent: {
       title: "Einwilligungen für externe Inhalte",
