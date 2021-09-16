@@ -1,6 +1,6 @@
 export const KaTeXStyles = () => <style jsx global>{`
 .katex {
-  font: normal 1.05em KaTeX_Main, sans-serif; /* different from default */
+  font: normal 1.1em KaTeX_Main, sans-serif; /* different from default */
   line-height: 1.4; /* different from default */
   text-indent: 0;
   text-rendering: auto;
