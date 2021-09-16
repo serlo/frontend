@@ -109,7 +109,12 @@ export const instanceData = {
       unrevisedNotice: 'This content has no accepted revision yet. Please use the %link% to preview.',
       strategy: "Stratégie de solution",
       picture: 'Picture',
-      previewImage: 'Preview Image'
+      previewImage: 'Preview Image',
+      exercisesTitle: 'Exercises',
+      moreExercises: 'You can find more exercises in the following folder:',
+      relatedContentTitle: 'Still want more?',
+      relatedContentText: 'You can find more content on this topic here:',
+      sourcesTitle: 'Sources'
     },
     consent: {
       title: "Consentement pour le contenu externe",
