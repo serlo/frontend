@@ -9,6 +9,7 @@ import { LicenseNotice } from '../components/content/license-notice'
 import { Link } from '../components/content/link'
 import { TableWrapper } from '../components/content/table-wrapper'
 import { theme } from '../theme'
+import { Article } from '@/components/content/article'
 import { Blockquote } from '@/components/content/blockquote'
 import type { CodeProps } from '@/components/content/code'
 import { Equations } from '@/components/content/equations'
@@ -204,6 +205,16 @@ function renderElement({
       </>
     )
   }
+
+  if (element.type === 'article') {
+    return (
+      <Article
+        {...element}
+        renderNested={(value, ...prefix) => renderNested(value, path, prefix)}
+      />
+    )
+  }
+
   if (element.type === 'inline-math') {
     return <Math formula={element.formula} />
   }
