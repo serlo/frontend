@@ -73,7 +73,8 @@
 }
 @font-face {
   font-family: 'KaTeX_Main';
-  src: url(./KaTeX_Main-Regular_sansmod.woff) format('woff');
+  src: url(./KaTeX_Main-Regular_sansmod.woff2) format('woff2'),
+    url(./KaTeX_Main-Regular_sansmod.woff) format('woff');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -89,7 +90,8 @@
 }
 @font-face {
   font-family: 'KaTeX_Math';
-  src: url(./KaTeX_Math-Italic_sansmod.woff) format('woff');
+  src: url(./KaTeX_Math-Italic_sansmod.woff2) format('woff2'),
+    url(./KaTeX_Math-Italic_sansmod.woff) format('woff');
   font-weight: normal;
   font-style: italic;
   font-display: swap;
