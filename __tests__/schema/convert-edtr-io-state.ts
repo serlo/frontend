@@ -460,7 +460,7 @@ describe('text types', () => {
         expect(result).toEqual([
           {
             type: 'math',
-            formula: '\\sf 123',
+            formula: '123',
             formulaSource: '123',
             alignCenter: true,
           },
@@ -474,7 +474,7 @@ describe('text types', () => {
         expect(result).toEqual([
           {
             type: 'math',
-            formula: '\\sf 123',
+            formula: '123',
             formulaSource: '123',
             alignCenter: true,
           },
@@ -567,7 +567,7 @@ describe('text types', () => {
     expect(result).toEqual([
       {
         type: 'inline-math',
-        formula: '\\sf \\tan^{-1}',
+        formula: '\\tan^{-1}',
         formulaSource: '\\tan^{-1}',
       },
     ])
@@ -583,7 +583,7 @@ describe('text types', () => {
     expect(result).toEqual([
       {
         type: 'math',
-        formula: '\\sf Math Block',
+        formula: 'Math Block',
         formulaSource: 'Math Block',
         alignCenter: true,
       },
