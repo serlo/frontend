@@ -43,10 +43,16 @@ export function RevisionHeader({
   return (
     <>
       <MaxWidthDiv className="!mb-0">
-        <BackButton href={repositoryAlias} className="mt-6 mx-side">
-          <FontAwesomeIcon icon={faArrowCircleLeft} />{' '}
+        <Link
+          href={repositoryAlias}
+          className="mt-6 mx-side serlo-button serlo-make-interactive-light"
+        >
+          <FontAwesomeIcon
+            icon={faArrowCircleLeft}
+            className="text-base mr-0.5 pt-0.25"
+          />{' '}
           {strings.revisions.toContent}
-        </BackButton>
+        </Link>
         <RevisionNotice
           hasCurrentRevision={hasCurrentRevision}
           isCurrentRevision={isCurrentRevision}
@@ -95,16 +101,6 @@ export function RevisionHeader({
     )
   }
 }
-
-const BackButton = styled(Link)`
-  ${makeLightButton}
-
-  > svg {
-    font-size: 1rem;
-    margin-right: 2px;
-    padding-top: 1px;
-  }
-`
 
 const StyledIcon = styled(FontAwesomeIcon)`
   color: ${(props) => props.theme.colors.lighterblue};

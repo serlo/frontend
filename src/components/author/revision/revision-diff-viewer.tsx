@@ -32,6 +32,7 @@ export function RevisionDiffViewer({ data, type }: RevisionDiffViewerProps) {
 
         .wrapper-single {
           :global(pre) {
+            @apply font-serlo;
             font-size: 1.125rem !important;
           }
         }
