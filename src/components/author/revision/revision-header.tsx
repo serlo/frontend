@@ -1,7 +1,6 @@
 import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Dispatch, SetStateAction } from 'react'
-import styled from 'styled-components'
 
 import { DisplayModes } from './revision'
 import { RevisionModeSwitcher } from './revision-mode-switcher'
@@ -13,7 +12,6 @@ import { TimeAgo } from '@/components/time-ago'
 import { UserLink } from '@/components/user/user-link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionData } from '@/data-types'
-import { makeLightButton } from '@/helper/css'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 
 export interface RevisionHeaderProps {
@@ -96,13 +94,11 @@ export function RevisionHeader({
     return (
       <span title={strings.entities[data.type]}>
         {' '}
-        <StyledIcon icon={getIconByTypename(data.type)} />{' '}
+        <FontAwesomeIcon
+          className="text-brand-lighter text-2.5xl"
+          icon={getIconByTypename(data.type)}
+        />{' '}
       </span>
     )
   }
 }
-
-const StyledIcon = styled(FontAwesomeIcon)`
-  color: ${(props) => props.theme.colors.lighterblue};
-  font-size: 1.73rem;
-`
