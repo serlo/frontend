@@ -1,5 +1,5 @@
+import clsx from 'clsx'
 import { ReactNode } from 'react'
-import styled from 'styled-components'
 
 import { DisplayModes } from './revision'
 import {
@@ -10,7 +10,6 @@ import { Geogebra } from '@/components/content/geogebra'
 import { Video } from '@/components/content/video'
 import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionData } from '@/data-types'
-import { makePadding } from '@/helper/css'
 import { renderArticle } from '@/schema/article-renderer'
 
 export interface RevisionPreviewBoxesProps {
@@ -104,41 +103,36 @@ export function RevisionPreviewBoxes({
 
     return (
       <>
+        <style jsx>{`
+          .fixH1 {
+            :global(h1) {
+              margin-top: 0;
+              margin-bottom: 0;
+            }
+          }
+        `}</style>
         <p className="serlo-p flex justify-between mt-10 mb-1.5">
           <b title={changes ? strings.revisions.hasChanges : undefined}>
             {title}
             {changes && <span className="text-sm">{' 🟠'}</span>}
           </b>
         </p>
-        <Box
-          withPadding={withPadding}
-          className={
-            data.type === 'exercise' || data.type === 'groupedExercise'
-              ? '!py-2'
-              : ''
-          }
+        <div
+          className={clsx(
+            (data.type === 'exercise' || data.type === 'groupedExercise') &&
+              '!py-2',
+            withPadding && 'p-side',
+            'text-lg py-7 border border-brand-lighter rounded-2xl',
+            'fixH1'
+          )}
         >
           {notDiff ? (
             children
           ) : (
             <RevisionDiffViewer data={data} type={diffType} />
           )}
-        </Box>
+        </div>
       </>
     )
   }
 }
-
-const Box = styled.div<{ withPadding?: boolean }>`
-  ${(props) => props.withPadding && makePadding}
-  font-size: 1.125rem;
-  padding-top: 30px;
-  padding-bottom: 30px;
-  border: 1px solid ${(props) => props.theme.colors.lighterblue};
-  border-radius: 15px;
-
-  > h1 {
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-`
