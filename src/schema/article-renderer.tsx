@@ -6,7 +6,6 @@ import * as React from 'react'
 import { ExerciseGroup } from '../components/content/exercises/exercise-group'
 import { LicenseNotice } from '../components/content/license-notice'
 import { Link } from '../components/content/link'
-import { TableWrapper } from '../components/content/table-wrapper'
 import { theme } from '../theme'
 import { Article } from '@/components/content/article'
 import type { CodeProps } from '@/components/content/code'
@@ -332,11 +331,11 @@ function renderElement({
   }
   if (element.type === 'table') {
     return (
-      <TableWrapper>
+      <div className="mb-block max-w-[100vh] overflow-auto">
         <table className="serlo-table">
           <tbody>{children}</tbody>
         </table>
-      </TableWrapper>
+      </div>
     )
   }
   if (element.type === 'tr') {
