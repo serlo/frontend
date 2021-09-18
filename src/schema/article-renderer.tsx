@@ -3,14 +3,12 @@ import CSS from 'csstype'
 import dynamic from 'next/dynamic'
 import * as React from 'react'
 
-import { Col } from '../components/content/col'
 import { ExerciseGroup } from '../components/content/exercises/exercise-group'
 import { LicenseNotice } from '../components/content/license-notice'
 import { Link } from '../components/content/link'
 import { TableWrapper } from '../components/content/table-wrapper'
 import { theme } from '../theme'
 import { Article } from '@/components/content/article'
-import { Blockquote } from '@/components/content/blockquote'
 import type { CodeProps } from '@/components/content/code'
 import { Equations } from '@/components/content/equations'
 import { Exercise } from '@/components/content/exercises/exercise'
@@ -362,13 +360,17 @@ function renderElement({
     return <div className="flex flex-col mobile:flex-row">{children}</div>
   }
   if (element.type === 'col') {
-    return <Col cSize={element.size}>{children}</Col>
+    return (
+      <div style={{ flexGrow: element.size, flexBasis: 0, flexShrink: 1 }}>
+        {children}
+      </div>
+    )
   }
   if (element.type === 'important') {
     return <div className="serlo-important">{children}</div>
   }
   if (element.type === 'blockquote') {
-    return <Blockquote>{children}</Blockquote>
+    return <blockquote className="serlo-blockquote">{children}</blockquote>
   }
   if (element.type === 'geogebra') {
     return (
