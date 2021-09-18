@@ -4,9 +4,11 @@ import {
   faCreativeCommonsSa,
 } from '@fortawesome/free-brands-svg-icons'
 import { faSlash } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  FontAwesomeIcon,
+  FontAwesomeIconProps,
+} from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
-import styled from 'styled-components'
 
 import { Link } from './link'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -44,7 +46,7 @@ export function LicenseNotice({
 
   function renderFullNotice() {
     return (
-      <Wrapper
+      <div
         className={clsx(
           'border-t-2 border-brand-150 text-truegray-700 text-sm',
           'px-side py-2.5 my-10 mobile:flex'
@@ -52,20 +54,20 @@ export function LicenseNotice({
       >
         {data.default ? (
           <>
-            <FontAwesomeIcon icon={faCreativeCommons} size="2x" />{' '}
-            <FontAwesomeIcon icon={faCreativeCommonsBy} size="2x" />{' '}
-            <FontAwesomeIcon icon={faCreativeCommonsSa} size="2x" />
+            {renderIcon({ icon: faCreativeCommons, size: '2x' })}{' '}
+            {renderIcon({ icon: faCreativeCommonsBy, size: '2x' })}{' '}
+            {renderIcon({ icon: faCreativeCommonsSa, size: '2x' })}
           </>
         ) : isCreativeCommons ? (
-          <FontAwesomeIcon icon={faCreativeCommons} />
+          renderIcon({ icon: faCreativeCommons })
         ) : (
           <span className="fa-layers fa-fw fa-2x">
-            <FontAwesomeIcon icon={faCreativeCommons} />
-            <FontAwesomeIcon
-              icon={faSlash}
-              flip="horizontal"
-              transform="shrink-6"
-            />
+            {renderIcon({ icon: faCreativeCommons })}
+            {renderIcon({
+              icon: faSlash,
+              flip: 'horizontal',
+              transform: 'shrink-6',
+            })}
           </span>
         )}
         <br />
@@ -81,7 +83,7 @@ export function LicenseNotice({
             <b>{strings.license.readMore}</b>
           </Link>
         </span>
-      </Wrapper>
+      </div>
     )
   }
 
@@ -98,8 +100,8 @@ export function LicenseNotice({
 
     return (
       <>
-        <MinimalLink
-          className="serlo-button serlo-make-interactive-transparent-blue font-normal text-base hover:no-underline"
+        <Link
+          className="serlo-button serlo-make-interactive-transparent-blue font-normal text-base hover:no-underline h-[max-content]"
           title={title}
           href={licenseHref}
           noExternalIcon
@@ -109,7 +111,10 @@ export function LicenseNotice({
             <FontAwesomeIcon icon={faCreativeCommons} />
           ) : (
             <>
-              <StyledIcon className="fa-layers fa-fw text-xl mr-0.5">
+              <span
+                className="fa-layers fa-fw text-xl mr-0.5"
+                style={{ verticalAlign: 'sub' }}
+              >
                 <FontAwesomeIcon icon={faCreativeCommons} />
                 {!isCreativeCommons && (
                   <FontAwesomeIcon
@@ -118,11 +123,11 @@ export function LicenseNotice({
                     transform="shrink-6"
                   />
                 )}
-              </StyledIcon>
+              </span>
               {text}
             </>
           )}
-        </MinimalLink>
+        </Link>
       </>
     )
   }
@@ -133,27 +138,11 @@ export function LicenseNotice({
   }
 }
 
-const StyledIcon = styled.span`
-  vertical-align: sub;
-`
-
-const Wrapper = styled.div`
-  > svg {
-    color: ${(props) => props.theme.colors.lighterblue};
-    width: 1.4rem !important;
-    margin-bottom: 1px;
-  }
-
-  @media (min-width: ${(props) => props.theme.breakpoints.mobile}) {
-    > svg {
-      width: 2rem !important;
-      height: 2rem !important;
-      margin-top: 1px;
-      margin-right: 2px;
-    }
-  }
-`
-
-const MinimalLink = styled(Link)`
-  height: max-content;
-`
+function renderIcon(props: FontAwesomeIconProps) {
+  return (
+    <FontAwesomeIcon
+      className="text-brand-lighter  mb-0.25 mobile:text-[2rem] mobile:mt-0.25 mobile:mr-1"
+      {...props}
+    />
+  )
+}
