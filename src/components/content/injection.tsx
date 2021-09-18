@@ -37,6 +37,7 @@ export function Injection({ href, renderNested }: InjectionProps) {
         const pageData = (json as { pageProps: SlugProps }).pageProps.pageData
         dataToState(pageData)
       })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [href, lang])
 
   function dataToState(pageData: SlugPageData) {
