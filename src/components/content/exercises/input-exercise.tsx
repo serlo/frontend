@@ -3,7 +3,6 @@ import clsx from 'clsx'
 import { useState, useEffect } from 'react'
 
 import { Feedback } from './feedback'
-import { RevisionExtraInfo } from './sc-mc-exercise'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EdtrPluginInputExercise } from '@/data-types'
 import { submitEventWithPath } from '@/helper/submit-event'
@@ -148,9 +147,9 @@ export function InputExercise({
 
   function renderRevisionExtra() {
     return data.answers.map((answer) => (
-      <RevisionExtraInfo
+      <div
         key={answer.value}
-        className="bg-yellow-200 rounded-xl py-2 mb-4"
+        className="bg-yellow-200 rounded-xl py-2 mb-4 serlo-revision-extra-info"
       >
         <span className="font-bold text-sm mx-side">
           {strings.content.answer}{' '}
@@ -158,7 +157,7 @@ export function InputExercise({
         </span>
         {answer.value}
         {renderNested(answer.feedback, `mcfeedbackrevision`)}
-      </RevisionExtraInfo>
+      </div>
     ))
   }
 }

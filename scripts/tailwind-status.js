@@ -2,8 +2,6 @@
 
 const fs = require('fs')
 
-
-
 const knownExceptions = [
   'gcse-searchbox-only',
   'formula',
@@ -63,7 +61,6 @@ files.forEach((file) => {
     classNameMatches.push({ file, classNames })
   }
 })
-
 
 console.log(
   '\n' + filesWithStyledComponents.length + ' files using styled-components:\n'
@@ -163,4 +160,3 @@ classNameMatches.forEach(({ file, classNames }) => {
   })
   console.log()
 })*/
-

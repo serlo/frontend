@@ -204,6 +204,15 @@
   .serlo-blockquote {
     @apply border-l-6 border-brand-150 p-2.5 my-block mx-side;
   }
+  .serlo-revision-extra-info {
+    .serlo-p:last-child {
+      margin-bottom: 0;
+    }
+
+    > .serlo-p {
+      font-size: 1rem !important;
+    }
+  }
 }
 
 /* print and pdf styles */
