@@ -8,10 +8,10 @@ import { FooterNew } from '../landing/rework/footer-new'
 import { HeaderNew } from '../landing/rework/header-new'
 import { PartnerListNew } from '../landing/rework/partner-list-new'
 import { WelcomeMessage } from '../landing/rework/welcome-message'
+import { Quickbar } from '../navigation/quickbar'
 import { Link } from '@/components/content/link'
 import { LandingSubjectsNew } from '@/components/landing/rework/landing-subjects-new'
 import { InstanceLandingData } from '@/data-types'
-import { Quickbar } from '../navigation/quickbar'
 
 export interface LandingDEProps {
   data: InstanceLandingData
