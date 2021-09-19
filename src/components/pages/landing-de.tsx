@@ -8,9 +8,9 @@ import { FooterNew } from '../landing/rework/footer-new'
 import { HeaderNew } from '../landing/rework/header-new'
 import { PartnerListNew } from '../landing/rework/partner-list-new'
 import { WelcomeMessage } from '../landing/rework/welcome-message'
+import { Quickbar } from '../navigation/quickbar'
 import { Link } from '@/components/content/link'
 import { LandingSubjectsNew } from '@/components/landing/rework/landing-subjects-new'
-import { SearchInputNew } from '@/components/landing/rework/search-input-new'
 import { InstanceLandingData } from '@/data-types'
 
 export interface LandingDEProps {
@@ -41,8 +41,8 @@ export function LandingDE({ data }: LandingDEProps) {
           >
             Was möchtest du <Underlined className="pb-2">lernen ?</Underlined>
           </h1>
-          <div className="md:hidden mt-10 mb-8">
-            <SearchInputNew />
+          <div className="lg:hidden mt-10 mb-8">
+            <Quickbar />
           </div>
           <p className="text-3xl leading-cozy">
             Hier auf Serlo findest du{' '}
