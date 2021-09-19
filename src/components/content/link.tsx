@@ -80,7 +80,7 @@ export function UnstyledLink({
   unreviewed,
   tabIndex,
   ref,
-}: LinkProps & { ref: React.ForwardedRef<HTMLAnchorElement> }) {
+}: LinkProps & { ref?: React.ForwardedRef<HTMLAnchorElement> }) {
   const { lang } = useInstanceData()
   const entityId = React.useContext(EntityIdContext)
 
