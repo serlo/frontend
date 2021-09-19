@@ -1,9 +1,7 @@
-import styled from 'styled-components'
-
 export interface HSpaceProps {
   amount?: number
 }
 
-export const HSpace = styled.div<HSpaceProps>`
-  height: ${(props) => (props.amount ? props.amount : 30)}px;
-`
+export function HSpace({ amount }: HSpaceProps) {
+  return <div style={{ height: `${amount || 30}px` }} />
+}

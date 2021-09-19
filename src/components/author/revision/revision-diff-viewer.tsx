@@ -1,9 +1,7 @@
 import ReactDiffViewer, { DiffMethod } from 'react-diff-viewer'
-import styled, { css } from 'styled-components'
 
 import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionData } from '@/data-types'
-import { inputFontReset } from '@/helper/css'
 
 type DiffViewerTypes =
   | 'content'
@@ -19,46 +17,49 @@ export interface RevisionDiffViewerProps {
 
 export function RevisionDiffViewer({ data, type }: RevisionDiffViewerProps) {
   const { strings } = useInstanceData()
-  if (type === 'content') {
-    return (
-      <DiffViewerWrapper split>
-        <ReactDiffViewer
-          leftTitle={strings.revisions.currentVersion}
-          rightTitle={strings.revisions.thisVersion}
-          oldValue={JSON.stringify(data.currentRevision.content, null, 2)}
-          newValue={JSON.stringify(data.thisRevision.content, null, 2)}
-          splitView
-          hideLineNumbers
-          compareMethod={DiffMethod.WORDS}
-        />
-      </DiffViewerWrapper>
-    )
-  }
   return (
-    <DiffViewerWrapper>
-      <ReactDiffViewer
-        oldValue={data.currentRevision[type]}
-        newValue={data.thisRevision[type]}
-        splitView={false}
-        hideLineNumbers
-        showDiffOnly={false}
-      />
-    </DiffViewerWrapper>
+    <>
+      <style jsx>{`
+        .wrapper-split {
+          :global(td) {
+            max-width: 45vw;
+            overflow: scroll;
+          }
+          :global(pre) {
+            font-size: 0.9rem;
+          }
+        }
+
+        .wrapper-single {
+          :global(pre) {
+            @apply font-serlo;
+            font-size: 1.125rem !important;
+          }
+        }
+      `}</style>
+      {type == 'content' ? (
+        <div className="wrapper-split">
+          <ReactDiffViewer
+            leftTitle={strings.revisions.currentVersion}
+            rightTitle={strings.revisions.thisVersion}
+            oldValue={JSON.stringify(data.currentRevision.content, null, 2)}
+            newValue={JSON.stringify(data.thisRevision.content, null, 2)}
+            splitView
+            hideLineNumbers
+            compareMethod={DiffMethod.WORDS}
+          />{' '}
+        </div>
+      ) : (
+        <div className="wrapper-single">
+          <ReactDiffViewer
+            oldValue={data.currentRevision[type]}
+            newValue={data.thisRevision[type]}
+            splitView={false}
+            hideLineNumbers
+            showDiffOnly={false}
+          />
+        </div>
+      )}
+    </>
   )
 }
-
-const DiffViewerWrapper = styled.div<{ split?: boolean }>`
-  pre {
-    ${(props) => props.split === undefined && inputFontReset}
-    font-size: ${(props) => (props.split ? '0.9rem' : '1.125rem !important')};
-  }
-
-  ${(props) =>
-    props.split &&
-    css`
-      td {
-        max-width: 45vw;
-        overflow: scroll;
-      }
-    `}
-`

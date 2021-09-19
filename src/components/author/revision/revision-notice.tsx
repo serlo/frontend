@@ -1,9 +1,9 @@
 import { faTimes, faCheck } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { tint } from 'polished'
-import styled from 'styled-components'
 
 import { useInstanceData } from '@/contexts/instance-context'
+import { theme } from '@/theme'
 
 export interface RevisionNoticeProps {
   isCurrentRevision: boolean
@@ -19,24 +19,32 @@ export function RevisionNotice({
   const { strings } = useInstanceData()
 
   if (!hasCurrentRevision) {
-    return <Notice success>{strings.revisions.noCurrentNotice}</Notice>
+    return renderNotice(<>{strings.revisions.noCurrentNotice}</>, true)
   }
   if (!isRejected && !isCurrentRevision) return null
-  return (
-    <Notice success={isCurrentRevision}>
+  return renderNotice(
+    <>
       <FontAwesomeIcon icon={isRejected ? faTimes : faCheck} />{' '}
       {isRejected
         ? strings.revisions.rejectedNotice
         : strings.revisions.currentNotice}
-    </Notice>
+    </>,
+    isCurrentRevision
   )
 }
 
-const Notice = styled.div<{ success?: boolean }>`
-  margin: 50px 0;
-  padding: 16px;
-  border-radius: 20px;
-  font-weight: bold;
-  background-color: ${(props) =>
-    tint(0.7, props.success ? props.theme.colors.brandGreen : '#c56c6c')};
-`
+function renderNotice(content: JSX.Element, success: boolean) {
+  const backgroundColor = tint(
+    0.7,
+    success ? theme.colors.brandGreen : '#c56c6c'
+  )
+
+  return (
+    <div
+      style={{ backgroundColor }}
+      className="my-12 p-4 rounded-3xl font-bold"
+    >
+      {content}
+    </div>
+  )
+}

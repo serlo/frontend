@@ -1,8 +1,5 @@
-import styled from 'styled-components'
-
 import { Modal } from '@/components/modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
-import { makeMargin } from '@/helper/css'
 
 export interface LightBoxProps {
   open: boolean
@@ -19,30 +16,20 @@ export function LightBox(props: LightBoxProps) {
   const pictureString = strings.content.picture
 
   return (
-    <LightBoxModal isOpen={open} onRequestClose={onClose}>
-      <_StyledImg onClick={onClose} src={src} alt={label ?? pictureString} />
-      <p>{label}</p>
-    </LightBoxModal>
+    <>
+      <Modal
+        className="text-center !top-1/2 !pb-7 !w-[inherit]"
+        isOpen={open}
+        onRequestClose={onClose}
+      >
+        <img
+          onClick={onClose}
+          src={src}
+          alt={label ?? pictureString}
+          className="my-0 mx-auto max-w-[100%] h-auto max-h-[86vh] cursor-[zoom-out]"
+        />
+        <p className="pointer-events-auto">{label}</p>
+      </Modal>
+    </>
   )
 }
-
-export const LightBoxModal = styled(Modal)`
-  text-align: center;
-  top: 50%;
-  padding-bottom: 30px;
-  width: inherit;
-
-  pointer-events: none;
-  > p {
-    pointer-events: auto;
-  }
-`
-
-const _StyledImg = styled.img`
-  padding: 50px ${makeMargin};
-  margin: 0 auto;
-  max-width: 100%;
-  height: auto;
-  max-height: 86vh;
-  cursor: zoom-out;
-`

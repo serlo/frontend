@@ -1,6 +1,5 @@
 import { faFilm } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import styled from 'styled-components'
 
 import { LicenseNotice } from './license-notice'
 import { PrivacyWrapper } from './privacy-wrapper'
@@ -68,9 +67,9 @@ export function Video({ src, path, license }: VideoProps) {
           }}
           className="print:hidden"
         >
-          <VideoWrapper className="m-0 p-0">
+          <div className="m-0 p-0">
             {provider === ExternalProvider.WikimediaCommons && (
-              <video controls src={src} />
+              <video controls src={src} className={videoElementCls} />
             )}
             {(provider === ExternalProvider.YouTube ||
               ExternalProvider.Vimeo) && (
@@ -79,9 +78,10 @@ export function Video({ src, path, license }: VideoProps) {
                 frameBorder="0"
                 allow="autoplay; encrypted-media; picture-in-picture"
                 allowFullScreen
+                className={videoElementCls}
               />
             )}
-          </VideoWrapper>
+          </div>
         </PrivacyWrapper>
         {license && !license.default && (
           <p className="serlo-p">
@@ -94,17 +94,5 @@ export function Video({ src, path, license }: VideoProps) {
   }
 }
 
-const VideoWrapper = styled.figure`
-  & > video,
-  & > iframe,
-  & > div {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
-    z-index: 6;
-    background-color: rgba(0, 0, 0, 0.3);
-  }
-`
+const videoElementCls =
+  /* className={ */ 'absolute top-0 left-0 h-full w-full border-none z-20 bg-black/30' /*}*/

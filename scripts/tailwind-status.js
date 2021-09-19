@@ -62,6 +62,11 @@ files.forEach((file) => {
   }
 })
 
+console.log(
+  '\n' + filesWithStyledComponents.length + ' files using styled-components:\n'
+)
+filesWithStyledComponents.forEach((file) => console.log(`  ${file.substr(6)}`))
+
 // process classnames -> check availability and variants
 
 const classes = {}
@@ -155,8 +160,3 @@ classNameMatches.forEach(({ file, classNames }) => {
   })
   console.log()
 })*/
-
-console.log(
-  '\n' + filesWithStyledComponents.length + ' files using styled-components:\n'
-)
-filesWithStyledComponents.forEach((file) => console.log(`  ${file.substr(6)}`))

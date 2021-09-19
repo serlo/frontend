@@ -3,13 +3,11 @@ import { faCheckCircle, faCheckSquare } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 import { useState, Fragment } from 'react'
-import styled, { css } from 'styled-components'
 
 import { Feedback } from './feedback'
 import { isPrintMode } from '@/components/print-mode'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EdtrPluginScMcExercise } from '@/data-types'
-import { makeMargin, makePrimaryButton } from '@/helper/css'
 import { submitEventWithPath } from '@/helper/submit-event'
 import { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
 
@@ -41,14 +39,15 @@ export function ScMcExercise({
 
   function renderSingleChoice() {
     return (
-      <Container>
-        <Choices>
+      <div className="mx-side mb-block">
+        <ul className="flex flex-col flex-wrap p-0 m-0 list-none overflow-auto">
           {answers.map((answer, i) => {
             const id = `${idBase}${i}`
             return (
               <Fragment key={i}>
-                <ChoiceWrapper>
-                  <StyledInput
+                <li className="flex mb-block">
+                  <input
+                    className="opacity-0 w-0.25"
                     id={id}
                     type="radio"
                     checked={selected === i}
@@ -74,7 +73,7 @@ export function ScMcExercise({
                     />
                     {renderNested(answer.content, `scoption${i}`)}
                   </label>
-                </ChoiceWrapper>
+                </li>
                 {showFeedback &&
                   selected !== undefined &&
                   answers[selected] &&
@@ -90,9 +89,15 @@ export function ScMcExercise({
               </Fragment>
             )
           })}
-        </Choices>
-        <CheckButton
-          selectable={selected !== undefined}
+        </ul>
+
+        <button
+          className={clsx(
+            'serlo-button serlo-make-interactive-primary',
+            'mt-4',
+            selected === undefined &&
+              'opacity-100 bg-transparent text-gray-400 pointer-events-none'
+          )}
           onClick={() => {
             setShowFeedback(true)
             submitEventWithPath('checksc', path)
@@ -111,8 +116,8 @@ export function ScMcExercise({
             : isPrintMode
             ? strings.content.printModeChooseOption
             : strings.content.chooseOption}
-        </CheckButton>
-      </Container>
+        </button>
+      </div>
     )
   }
 
@@ -121,8 +126,8 @@ export function ScMcExercise({
       (answer, i) => answer.isCorrect === selectedArray[i]
     )
     return (
-      <Container>
-        <Choices>
+      <div className="mx-side mb-block">
+        <ul className="flex flex-col flex-wrap p-0 m-0 list-none overflow-auto">
           {answers.map((answer, i) => {
             const id = `${idBase}${i}`
 
@@ -132,8 +137,9 @@ export function ScMcExercise({
 
             return (
               <Fragment key={i}>
-                <ChoiceWrapper>
-                  <StyledInput
+                <li className="flex mb-block">
+                  <input
+                    className="opacity-0 w-0.25"
                     id={id}
                     type="checkbox"
                     checked={selectedArray[i]}
@@ -158,7 +164,7 @@ export function ScMcExercise({
                     />
                     {renderNested(answer.content, `mcoption${i}`)}
                   </label>
-                </ChoiceWrapper>
+                </li>
                 {showFeedback &&
                   selectedArray[i] &&
                   hasFeedback &&
@@ -167,14 +173,14 @@ export function ScMcExercise({
               </Fragment>
             )
           })}
-        </Choices>
+        </ul>
         {showFeedback && (
           <Feedback correct={correct}>
             {correct ? strings.content.right : strings.content.wrong}
           </Feedback>
         )}
-        <CheckButton
-          selectable
+        <button
+          className="serlo-button serlo-make-interactive-primary mt-4"
           onClick={() => {
             setShowFeedback(true)
             submitEventWithPath('checkmc', path)
@@ -195,8 +201,8 @@ export function ScMcExercise({
           onPointerUp={(e) => e.currentTarget.blur()}
         >
           {strings.content.check}
-        </CheckButton>
-      </Container>
+        </button>
+      </div>
     )
   }
 
@@ -206,72 +212,14 @@ export function ScMcExercise({
   ) {
     if (!answer.isCorrect && !hasFeedback) return null
     return (
-      <RevisionExtraInfo className="bg-yellow-200 rounded-xl py-2 mb-4">
+      <div className="bg-yellow-200 rounded-xl py-2 mb-4 serlo-revision-extra-info">
         {answer.isCorrect && (
           <span className="font-bold text-sm mx-side">
             [{strings.content.right}]
           </span>
         )}
         {renderNested(answer.feedback, `mcfeedbackrevision`)}
-      </RevisionExtraInfo>
+      </div>
     )
   }
 }
-
-const CheckButton = styled.button<{ selectable: boolean }>`
-  ${makePrimaryButton}
-  margin-top: 16px;
-
-  ${(props) =>
-    !props.selectable &&
-    css`
-      opacity: 1;
-      background-color: transparent;
-      color: ${(props) => props.theme.colors.gray};
-      pointer-events: none;
-    `}
-`
-
-const Choices = styled.ul`
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  padding: 0;
-  margin: 0;
-  list-style-type: none;
-  overflow: auto;
-`
-
-const ChoiceWrapper = styled.li`
-  display: flex;
-  margin-bottom: 15px;
-`
-
-const StyledInput = styled.input`
-  &[type='radio'],
-  &[type='checkbox'] {
-    width: 1px;
-    margin: 0;
-    padding: 0;
-    opacity: 0 !important;
-  }
-`
-
-const Container = styled.div`
-  ${makeMargin}
-  margin-bottom: ${(props) => props.theme.spacing.mb.block};
-
-  &:hover {
-  }
-`
-
-// Only for review view: hack to display feedback more compactly
-export const RevisionExtraInfo = styled.div`
-  .serlo-p:last-child {
-    margin-bottom: 0;
-  }
-
-  > .serlo-p {
-    font-size: 1rem !important;
-  }
-`
