@@ -1,5 +1,6 @@
+import clsx from 'clsx'
 import { shade } from 'polished'
-import { Fragment } from 'react'
+import React, { Fragment } from 'react'
 
 import { FrontendContentNode, Sign } from '@/data-types'
 import { RenderNestedFunction } from '@/schema/article-renderer'
@@ -36,43 +37,46 @@ export function Equations({ steps, renderNested }: EquationProps) {
 
     return (
       <Fragment key={i}>
-        <style jsx>{`
-          .formula {
-            @apply align-baseline text-lg;
-          }
-          tr > td {
-            padding: 3px 3px 13px 3px;
-          }
-        `}</style>
         <tr>
-          <td className="text-right formula">
-            {step.left ? renderStepFormula('left') : null}
-          </td>
-          <td className="text-center formula">
-            {renderFormula(renderSignToString(step.sign), 'sign')}
-          </td>
-          <td className="text-left formula">
-            {step.right ? renderStepFormula('right') : null}
-          </td>
-          <td className="formula">
-            {step.transform ? (
+          {renderTD(step.left ? renderStepFormula('left') : null, 'text-right')}
+          {renderTD(
+            renderFormula(renderSignToString(step.sign), 'sign'),
+            'text-center'
+          )}
+          {renderTD(
+            step.right ? renderStepFormula('right') : null,
+            'text-left'
+          )}
+          {renderTD(
+            step.transform ? (
               <span className="border-l border-black pl-1">
                 {renderStepFormula('transform')}
               </span>
-            ) : null}
-          </td>
+            ) : null
+          )}
         </tr>
         {hasExplanation ? (
           <tr className="whitespace-normal" style={{ color: explanationColor }}>
             <td />
             {renderDownArrow()}
-            <td colSpan={2}>
+            <td colSpan={2} className="px-1 pt-1 pb-3">
               {renderNested(step.explanation, `step${i}`, 'explaination')}
             </td>
           </tr>
         ) : null}
       </Fragment>
     )
+
+    function renderTD(
+      content: JSX.Element | React.ReactNode[] | null,
+      align?: 'text-left' | 'text-right' | 'text-center'
+    ) {
+      return (
+        <td className={clsx('align-baseline text-lg px-1 pt-1 pb-3', align)}>
+          {content}
+        </td>
+      )
+    }
 
     function renderStepFormula(key: 'transform' | 'left' | 'right') {
       return renderFormula('\\displaystyle ' + step[key], key)
@@ -84,50 +88,10 @@ export function Equations({ steps, renderNested }: EquationProps) {
   }
 
   function renderDownArrow() {
-    const downArrow = `
-      <svg xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <marker
-            id="arrow"
-            markerWidth="10"
-            markerHeight="10"
-            orient="auto"
-            markerUnits="strokeWidth"
-            refX="10"
-            refY="5"
-            viewBox="0 0 20 10"
-          >
-            <path
-              d="M 0,0 l 10,5 l -10,5"
-              stroke="${explanationColor}"
-              stroke-width="2"
-              fill="none"
-              vector-effect="non-scaling-size"
-            />
-          </marker>
-        </defs>
-        <line
-          x1="10"
-          y1="0%"
-          x2="10"
-          y2="99%"
-          stroke="${explanationColor}"
-          stroke-width="1.5"
-          marker-end="url(#arrow)"
-          vector-effect="non-scaling-stroke"
-        />
-      </svg>`
-    const downArrowBase64 = Buffer.from(downArrow).toString('base64')
-
     return (
-      <td
-        style={{
-          backgroundImage: `url('data:image/svg+xml;base64,${downArrowBase64}')`,
-          backgroundSize: '20px calc(100% - 10px)',
-          backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center 5px',
-        }}
-      />
+      <td className="text-4xl" style={{ fontFamily: 'serif' }}>
+        <div className="-mt-3">&darr;</div>
+      </td>
     )
   }
 }

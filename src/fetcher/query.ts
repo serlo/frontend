@@ -151,8 +151,11 @@ export const dataQuery = gql`
       }
 
       ... on Course {
-        pages {
+        pages(trashed: false) {
           alias
+          currentRevision {
+            title
+          }
         }
         currentRevision {
           title

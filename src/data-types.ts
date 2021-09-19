@@ -173,6 +173,7 @@ export interface HistoryRevisionData {
 export interface HistoryRevisionsData {
   id: number
   alias: string
+  __typename: string
   currentRevision: {
     id: number
     title?: string
@@ -406,6 +407,29 @@ export interface FrontendANode {
   type: 'a'
   href: string
   children?: FrontendContentNode[]
+}
+
+export interface ArticleNodeUuidLink {
+  id: string
+  title: string
+}
+
+export interface FrontendArticleNode {
+  type: 'article'
+  introduction: FrontendContentNode[]
+  content: FrontendContentNode[]
+  exercises: FrontendContentNode[]
+  exerciseFolder: ArticleNodeUuidLink
+  relatedContent?: {
+    articles: ArticleNodeUuidLink[]
+    courses: ArticleNodeUuidLink[]
+    videos: ArticleNodeUuidLink[]
+  }
+  sources: {
+    href: string
+    title: string
+  }[]
+  children?: undefined
 }
 
 export interface FrontendInlineMathNode {
@@ -705,6 +729,7 @@ export type FrontendElementNode =
   | FrontendTdNode
 
 export type FrontendRestrictedElementNode =
+  | FrontendArticleNode
   | FrontendSpoilerContainerNode
   | FrontendTableNode
   | FrontendSpoilerContainerNode

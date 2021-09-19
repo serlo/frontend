@@ -1,5 +1,3 @@
-import { isClient } from './client-detection'
-
 export enum ExternalProvider {
   YouTube = 'YouTube',
   WikimediaCommons = 'WikimediaCommons',
@@ -13,17 +11,17 @@ export function useConsent() {
   const getKey = (provider: ExternalProvider) => `consent::${provider}`
 
   const checkConsent = (provider: ExternalProvider) => {
-    if (!isClient) return false
+    if (typeof window === 'undefined') return false
     return localStorage.getItem(getKey(provider)) == '1'
   }
 
   const giveConsent = (provider: ExternalProvider) => {
-    if (!isClient) return
+    if (typeof window === 'undefined') return
     localStorage.setItem(getKey(provider), '1')
   }
 
   const revokeConsent = (provider: ExternalProvider) => {
-    if (!isClient) return
+    if (typeof window === 'undefined') return
     localStorage.removeItem(getKey(provider))
   }
 

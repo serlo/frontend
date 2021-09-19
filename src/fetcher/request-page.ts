@@ -27,7 +27,7 @@ export async function requestPage(
   }>(endpoint, dataQuery, {
     alias: { instance, path: alias },
   })
-
+  if (!uuid) return { kind: 'error', errorData: { code: 404 } }
   // Can be deleted if CFWorker redirects those for us
   if (
     uuid.__typename === 'ArticleRevision' ||
@@ -52,7 +52,9 @@ export async function requestPage(
   }
 
   if (uuid.__typename === 'Course') {
-    const firstPage = uuid.pages[0]?.alias
+    const firstPage = uuid.pages.filter(
+      (page) => page.currentRevision !== null
+    )[0]?.alias
     if (firstPage) {
       return await requestPage(firstPage, instance)
     } else {

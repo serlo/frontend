@@ -126,7 +126,7 @@ export function Revision({ data }: RevisionProps) {
         id={data.thisRevision.id}
         aboveContent={above}
         data={{
-          type: 'Revision',
+          type: data.typename,
           id: data.repository.id,
           revisionId: data.thisRevision.id,
           checkoutRejectButtons:

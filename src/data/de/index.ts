@@ -109,7 +109,12 @@ export const instanceData = {
       unrevisedNotice: "Dieser Inhalt wurde noch nicht überprüft. Über den %link% kannst du dir die Entwürfe anzeigen lassen.",
       strategy: "Lösungsstrategie",
       picture: "Bild",
-      previewImage: "Vorschaubild"
+      previewImage: "Vorschaubild",
+      exercisesTitle: "Übungsaufgaben",
+      moreExercises: "Weitere Aufgaben zum Thema findest du im folgenden Aufgabenordner",
+      relatedContentTitle: "Du hast noch nicht genug vom Thema?",
+      relatedContentText: "Hier findest du noch weitere passende Inhalte zum Thema:",
+      sourcesTitle: "Quellen"
     },
     consent: {
       title: "Einwilligungen für externe Inhalte",
@@ -290,7 +295,7 @@ export const instanceData = {
       removeEntityLink: "%actor% hat die Verknüpfung von %child% mit %parent% entfernt.",
       createEntityRevision: "%actor% hat eine %revision% von %entity% erstellt.",
       checkoutRevision: "%actor% hat eine %revision% von %repository% übernommen.",
-      rejectRevision: "%user% hat eine %revision% in %repository% nicht übernommen.",
+      rejectRevision: "%actor% hat eine %revision% in %repository% nicht übernommen.",
       createTaxonomyLink: "%actor% hat %child% in %parent% eingeordnet.",
       removeTaxonomyLink: "%actor% hat %child% aus %parent% entfernt.",
       createTaxonomyTerm: "%actor% hat den %term% erstellt.",
