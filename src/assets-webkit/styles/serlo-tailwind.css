@@ -213,6 +213,18 @@
       font-size: 1rem !important;
     }
   }
+  .serlo-menu-entry-special {
+    &:active,
+    &:hover,
+    &[aria-expanded='true'] {
+      @apply text-white bg-brand;
+
+      /*just for notifications count*/
+      & span.fa-layers {
+        color: #fff;
+      }
+    }
+  }
 }
 
 /* print and pdf styles */

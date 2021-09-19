@@ -17,6 +17,7 @@ export interface LinkProps {
   noCSR?: boolean
   path?: NodePath
   unreviewed?: boolean // e.g. user profiles or comments
+  tabIndex?: number // menu
 }
 
 // note: Previous discussion about fetching this dynamically https://github.com/serlo/frontend/issues/328
@@ -56,12 +57,17 @@ export function isLegacyLink(_href: string) {
   )
 }
 
-export function Link(props: LinkProps) {
-  return UnstyledLink({
-    ...props,
-    className: clsx(props.className, 'serlo-link'),
-  })
-}
+export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
+  (props, ref) => {
+    return UnstyledLink({
+      ...props,
+      className: clsx(props.className, 'serlo-link'),
+      ref,
+    })
+  }
+)
+
+Link.displayName = 'Link'
 
 export function UnstyledLink({
   href,
@@ -72,13 +78,15 @@ export function UnstyledLink({
   noCSR,
   path,
   unreviewed,
-}: LinkProps) {
+  tabIndex,
+  ref,
+}: LinkProps & { ref: React.ForwardedRef<HTMLAnchorElement> }) {
   const { lang } = useInstanceData()
   const entityId = React.useContext(EntityIdContext)
 
   if (!href || href === undefined || href === '')
     return (
-      <a className={className} title={title}>
+      <a className={className} title={title} tabIndex={tabIndex} ref={ref}>
         {children}
       </a>
     )
@@ -184,6 +192,8 @@ export function UnstyledLink({
         onClick={clickHandler}
         rel={unreviewed && isExternal ? 'ugc nofollow noreferrer' : undefined}
         target={unreviewed && isExternal ? '_blank' : undefined}
+        tabIndex={tabIndex}
+        ref={ref}
       >
         {children}
         {isExternal && !noExternalIcon && <ExternalLink />}
