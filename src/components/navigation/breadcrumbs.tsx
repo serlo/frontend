@@ -1,11 +1,12 @@
 import { faArrowCircleLeft, faList } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import { transparentize } from 'polished'
 import styled, { css } from 'styled-components'
 
 import { Link } from '../content/link'
 import { BreadcrumbsData, BreadcrumbEntry } from '@/data-types'
-import { makeTransparentButton, makeMargin } from '@/helper/css'
+import { makeTransparentButton } from '@/helper/css'
 
 export interface BreadcrumbsProps {
   data?: BreadcrumbsData
@@ -18,25 +19,22 @@ export function Breadcrumbs({
   isTaxonomy,
   asBackButton,
 }: BreadcrumbsProps) {
-  if (!data || data.length < 1) {
-    return <BreadcrumbWrapper> </BreadcrumbWrapper>
-  }
-
   return (
-    <BreadcrumbWrapper>
-      {data.map((bcEntry, i, completeArray) => {
-        return (
-          <BreadcrumbEntries
-            bcEntry={bcEntry}
-            i={i}
-            arrayLength={completeArray.length}
-            key={i}
-            isTaxonomy={isTaxonomy}
-            asBackButton={asBackButton}
-          />
-        )
-      })}
-    </BreadcrumbWrapper>
+    <nav className={clsx('mx-side mt-6 sm:mb-11 sm:ml-2.5')}>
+      {data &&
+        data.map((bcEntry, i, completeArray) => {
+          return (
+            <BreadcrumbEntries
+              bcEntry={bcEntry}
+              i={i}
+              arrayLength={completeArray.length}
+              key={i}
+              isTaxonomy={isTaxonomy}
+              asBackButton={asBackButton}
+            />
+          )
+        })}
+    </nav>
   )
 }
 
@@ -92,15 +90,6 @@ function BreadcrumbEntries({
       )
   }
 }
-
-const BreadcrumbWrapper = styled.nav`
-  ${makeMargin};
-  margin-top: 25px;
-
-  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-    margin: 25px 0 45px 10px;
-  }
-`
 
 const BreadcrumbLink = styled(Link)`
   display: inline-block;

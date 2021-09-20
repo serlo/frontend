@@ -1,8 +1,8 @@
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import React from 'react'
 import BaseModal from 'react-modal'
-import styled from 'styled-components'
 
 import { useInstanceData } from '@/contexts/instance-context'
 
@@ -29,52 +29,29 @@ export function ModalWithCloseButton({
   const { strings } = useInstanceData()
 
   return (
-    <Modal
+    <BaseModal
       isOpen={isOpen}
       onRequestClose={onCloseClick}
       shouldReturnFocusAfterClose={false}
+      className={clsx(
+        'absolute top-[40%] left-1/2 -mr-[50%] -translate-x-1/2 -translate-y-1/2',
+        'w-[500px] rounded-xl max-w-[85%] border-none shadow-modal',
+        'bg-white outline-none px-2.5 pt-2.5 pb-10'
+      )}
     >
       {title && <h2 className="serlo-h2">{title}</h2>}
       {children}
-      <CloseButton onClick={onCloseClick} title={strings.share.close}>
+      <button
+        onClick={onCloseClick}
+        title={strings.share.close}
+        className={clsx(
+          'absolute top-3.5 right-3.5 bg-transparent border-none cursor-pointer',
+          'inline-block text-truegray-800 hover:bg-brand hover:text-white leading-tight',
+          'w-9 h-9 rounded-full text-center'
+        )}
+      >
         <FontAwesomeIcon icon={faTimes} size="lg" />
-      </CloseButton>
-    </Modal>
+      </button>
+    </BaseModal>
   )
 }
-
-// this is overriding the styles of the modal-content only. see doc to change overlay etc.
-export const Modal = styled(BaseModal)`
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  margin-right: -50%;
-  transform: translate(-50%, -50%);
-  width: 500px;
-  border-radius: 12px;
-  max-width: 85%;
-  border: 0;
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
-  padding: 10px 10px 38px 10px;
-  background-color: #fff;
-  outline: none;
-`
-
-export const CloseButton = styled.button`
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  display: inline-block;
-  color: ${(props) => props.theme.colors.dark1};
-  &:hover {
-    background-color: ${(props) => props.theme.colors.brand};
-    color: white;
-  }
-  width: 35px;
-  height: 35px;
-  border-radius: 30px;
-  text-align: center;
-`
