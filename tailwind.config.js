@@ -150,6 +150,9 @@ module.exports = {
         '.special-content-space': {
           content: '" "',
         },
+        '.special-content-gt': {
+          content: '">"',
+        },
         '.special-hyphens-auto': {
           hyphens: 'auto',
         },
