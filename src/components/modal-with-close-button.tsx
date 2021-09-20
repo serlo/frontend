@@ -33,11 +33,7 @@ export function ModalWithCloseButton({
       isOpen={isOpen}
       onRequestClose={onCloseClick}
       shouldReturnFocusAfterClose={false}
-      className={clsx(
-        'absolute top-[40%] left-1/2 -mr-[50%] -translate-x-1/2 -translate-y-1/2',
-        'w-[500px] rounded-xl max-w-[85%] border-none shadow-modal',
-        'bg-white outline-none px-2.5 pt-2.5 pb-10'
-      )}
+      className={clsx(ModalClsx, 'w-[500px] top-[40%] pb-10')}
     >
       {title && <h2 className="serlo-h2">{title}</h2>}
       {children}
@@ -47,7 +43,7 @@ export function ModalWithCloseButton({
         className={clsx(
           'absolute top-3.5 right-3.5 bg-transparent border-none cursor-pointer',
           'inline-block text-truegray-800 hover:bg-brand hover:text-white leading-tight',
-          'w-9 h-9 rounded-full text-center'
+          'w-9 h-9 rounded-full text-center '
         )}
       >
         <FontAwesomeIcon icon={faTimes} size="lg" />
@@ -55,3 +51,9 @@ export function ModalWithCloseButton({
     </BaseModal>
   )
 }
+
+export const ModalClsx = /* className={ */ clsx(
+  'absolute left-1/2 -mr-[50%] -translate-x-1/2 -translate-y-1/2',
+  'rounded-xl max-w-[85%] border-none shadow-modal',
+  'bg-white outline-none px-2.5 pt-2.5'
+) /* } */
