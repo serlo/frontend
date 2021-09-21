@@ -40,7 +40,7 @@ export function RevisionHeader({
   const icon = renderEntityIcon()
   return (
     <>
-      <MaxWidthDiv className="!mb-0">
+      <MaxWidthDiv noMarginBottom>
         <Link
           href={repositoryAlias}
           className="mt-6 mx-side serlo-button serlo-make-interactive-light"

@@ -1,22 +1,27 @@
-import styled, { css } from 'styled-components'
+import clsx from 'clsx'
+import { ReactElement } from 'react'
 
-export const MaxWidthDiv = styled.div<{ showNav?: boolean }>`
-  max-width: 800px;
-  margin: 0 auto 100px auto;
+interface MaxWidthDivProps {
+  showNav?: boolean
+  noMarginBottom?: boolean
+  children: JSX.Element | ReactElement[]
+}
 
-  @media (min-width: ${(props) =>
-      props.theme.breakpoints.sm}) AND (max-width: ${(props) =>
-      props.theme.breakpoints.md}) {
-    margin: 0 0 0 51px;
-  }
-
-  ${(props) =>
-    props.showNav &&
-    css`
-      @media (min-width: ${(props) =>
-          props.theme.breakpoints.md}) AND (max-width: ${(props) =>
-          props.theme.breakpoints.lg}) {
-        margin: 0 0 0 200px;
-      }
-    `}
-`
+export function MaxWidthDiv({
+  showNav,
+  noMarginBottom,
+  children,
+}: MaxWidthDivProps) {
+  return (
+    <div
+      className={clsx(
+        'max-w-screen-sm mx-auto',
+        !noMarginBottom && 'mb-24',
+        'sm:ml-[51px]',
+        showNav ? 'md:ml-[200px] lg:ml-auto' : 'md:ml-auto'
+      )}
+    >
+      {children}
+    </div>
+  )
+}
