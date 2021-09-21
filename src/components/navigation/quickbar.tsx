@@ -29,7 +29,7 @@ export function Quickbar() {
 
   useEffect(() => {
     if (query && !data) {
-      void fetch('https://arrrg.de/serlo-stats/quickbar.json')
+      void fetch('https://de.serlo.org/api/stats/quickbar.json')
         .then((res) => res.json())
         .then((data: QuickbarData) => {
           data.forEach((entry) => {
