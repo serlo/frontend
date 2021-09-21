@@ -1,10 +1,9 @@
 import clsx from 'clsx'
-import { ReactElement } from 'react'
 
 interface MaxWidthDivProps {
   showNav?: boolean
   noMarginBottom?: boolean
-  children: JSX.Element | ReactElement[]
+  children?: JSX.Element | (JSX.Element | null)[]
 }
 
 export function MaxWidthDiv({
