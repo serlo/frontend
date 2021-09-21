@@ -1,6 +1,7 @@
 import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { lighten } from 'polished'
+import { Fragment } from 'react'
 
 import AbcSVG from '@/assets-webkit/img/landing/subjects-abc.svg'
 import BiologySVG from '@/assets-webkit/img/landing/subjects-biology.svg'
@@ -48,7 +49,7 @@ export function LandingSubjectsNew({ data }: LandingSubjectsProps) {
 
   function renderSubject({ title, url, icon }: LandingSubjectLink) {
     return (
-      <>
+      <Fragment key={title}>
         <style jsx global>{`
           @keyframes jump {
             16% {
@@ -269,7 +270,7 @@ export function LandingSubjectsNew({ data }: LandingSubjectsProps) {
             </span>
           </h2>
         </Link>
-      </>
+      </Fragment>
     )
   }
 
