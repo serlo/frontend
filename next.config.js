@@ -35,12 +35,4 @@ module.exports = withBundleAnalyzer({
   },
   reactStrictMode: true,
   productionBrowserSourceMaps: true,
-  async rewrites() {
-    return [
-      {
-        source: '/api/pdf/:path*',
-        destination: 'https://pdf.serlo.org/api/:path*',
-      },
-    ]
-  },
 })
