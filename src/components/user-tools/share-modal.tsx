@@ -106,6 +106,8 @@ export function ShareModal({ isOpen, onClose, showPdf }: ShareModalProps) {
 
   const path = window.location.pathname
   const fileName = `serlo__${path.split('/').pop() ?? id}.pdf`
+  const host =
+    window.location.hostname == 'localhost' ? `https://${lang}.serlo.org` : ''
 
   const getPdfData = (noSolutions?: boolean) => {
     return {
@@ -115,7 +117,7 @@ export function ShareModal({ isOpen, onClose, showPdf }: ShareModalProps) {
       onClick: () => {
         showToastNotice('🐒 ' + strings.loading.oneMomentPlease)
       },
-      href: `/api/pdf/${id}${noSolutions ? '?noSolutions' : ''}`,
+      href: `${host}/api/pdf/${id}${noSolutions ? '?noSolutions' : ''}`,
     }
   }
 
