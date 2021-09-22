@@ -1,16 +1,14 @@
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import { useRouter } from 'next/router'
-import { lighten } from 'polished'
 import { useState, useRef, useContext, useEffect } from 'react'
-import styled, { css } from 'styled-components'
 
 import { isLegacyLink } from '../content/link'
 import { LazyTippy } from './lazy-tippy'
 import SearchIcon from '@/assets-webkit/img/search-icon.svg'
 import { EntityIdContext } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
-import { inputFontReset, makeLightButton, makePadding } from '@/helper/css'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { submitEvent } from '@/helper/submit-event'
 import { ExternalProvider, useConsent } from '@/helper/use-consent'
@@ -167,7 +165,8 @@ export function SearchInput() {
           }
         }}
       >
-        <SearchForm
+        <div /*SearchForm*/
+          className="serlo-search-input-hack"
           id="searchform"
           ref={searchFormRef}
           onClick={activateSearch}
@@ -180,14 +179,27 @@ export function SearchInput() {
         >
           {!searchActive && (
             <>
-              <PlaceholderText>{strings.header.search}</PlaceholderText>
-              <PlaceholderButton>
+              <div className="flex-grow flex-shrink" /*PlaceholderText*/>
+                <input
+                  className="gsc-input outline-none mt-2 !ml-0"
+                  placeholder={strings.header.search}
+                ></input>
+              </div>
+              <button
+                style={{ fill: 'white' }}
+                className="gsc-search-button" /*PlaceholderButton*/
+              >
                 {!searchLoaded ? (
-                  <PlaceholderIcon />
+                  <SearchIcon /*PlaceholderIcon*/ className="-mt-1" />
                 ) : (
-                  <LoadingIcon icon={faSpinner} size="1x" spin />
+                  <FontAwesomeIcon
+                    /*LoadingIcon*/ icon={faSpinner}
+                    size="1x"
+                    spin
+                    className="text-white"
+                  />
                 )}
-              </PlaceholderButton>
+              </button>
             </>
           )}
 
@@ -198,15 +210,22 @@ export function SearchInput() {
             data-resultsurl="/search"
             data-enablehistory="true"
           />
-        </SearchForm>
+        </div>
       </LazyTippy>
     </>
   )
   function renderConsentPop() {
     if (searchActive || consentGiven) return null
     return (
-      <ConsentPop>
-        <ConsentButton
+      <div
+        className={clsx(
+          'w-[88vw] sm:w-[277px] bg-brand text-white',
+          'rounded-[10px] shadow-md',
+          'px-side py-3 z-10 outline-none'
+        )} /*ConsentPop*/
+      >
+        <button
+          className="serlo-button mt-1 mb-2 mx-auto block bg-white hover:bg-brand-300 text-brand text-base py-0.5" /*ConsentButton*/
           onClick={onConsentButtonAction}
           onKeyDown={(e) => {
             if (e.key == 'Enter') {
@@ -215,7 +234,7 @@ export function SearchInput() {
           }}
         >
           {strings.search.agree}
-        </ConsentButton>
+        </button>
         {replacePlaceholders(strings.search.privacy, {
           privacypolicy: (
             <a
@@ -227,240 +246,7 @@ export function SearchInput() {
             </a>
           ),
         })}
-      </ConsentPop>
+      </div>
     )
   }
 }
-
-const height = 40
-const heightPx = `${height}px`
-
-const smHeight = 35
-const smHeightPx = `${smHeight}px`
-
-/*
-this is kind of a pattern for lack of better solutions:
-https://github.com/styled-components/styled-components/issues/1209#issue-263146426
-*/
-
-const sharedTextStyles = css`
-  flex: 1;
-  margin-left: 52px;
-  line-height: ${heightPx};
-  font-size: 1rem;
-  font-weight: bold;
-  color: ${(props) => props.theme.colors.brand};
-
-  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-    margin-left: 15px;
-  }
-`
-
-const sharedButtonStyles = css`
-  height: ${heightPx};
-  width: ${heightPx};
-
-  background-color: ${(props) => props.theme.colors.brand};
-  transition: background-color 0.2s ease-in;
-  text-align: center;
-  pointer-events: none;
-  cursor: pointer;
-
-  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-    border-radius: 5rem;
-    width: 35px;
-    height: 35px;
-    margin: 0;
-  }
-
-  &:hover,
-  &:focus {
-    background-color: ${(props) => props.theme.colors.lighterblue};
-  }
-`
-
-const sharedIconStyles = css`
-  width: 18px;
-  height: 18px;
-  fill: #fff;
-  margin-top: ${(height - 19) / 2}px;
-  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-    margin-top: ${(smHeight - 18) / 2}px;
-  }
-  display: inline;
-`
-
-const gscMiscResets = css`
-  #___gcse_0 {
-    flex: 1;
-  }
-
-  .gcse-search {
-    display: none;
-  }
-
-  .gsc-input-box {
-    border: 0;
-    padding: 0;
-    background: none;
-  }
-
-  .gsib_a {
-    padding: 0;
-
-    @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-      padding: 4px 0 0 0;
-      vertical-align: top;
-    }
-  }
-
-  form.gsc-search-box,
-  table.gsc-search-box {
-    margin-bottom: 0 !important;
-  }
-
-  td.gsc-search-button {
-    vertical-align: top;
-  }
-`
-
-const gcsInput = css`
-  background: transparent !important;
-  text-indent: 0 !important;
-
-  &,
-  &::placeholder {
-    ${inputFontReset}
-    ${sharedTextStyles}
-    line-height: inherit;
-    font-size: 1rem !important;
-  }
-
-  &::placeholder {
-    text-indent: 50px !important;
-  }
-
-  @media (min-width: 450px) {
-    text-indent: 50px !important;
-  }
-
-  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-    text-indent: 15px !important;
-
-    &::placeholder {
-      text-indent: 15px !important;
-    }
-  }
-`
-
-const gcsButton = css`
-  ${sharedButtonStyles}
-
-  /*resets*/
-  pointer-events: auto;
-  padding: 0;
-  border: 0;
-  outline: none;
-  border-radius: 0;
-
-  & > svg {
-    /* doesn't need shared styles */
-    width: 18px;
-    height: 18px;
-    display: inline;
-  }
-`
-
-const PlaceholderText = styled.div`
-  ${sharedTextStyles}
-`
-
-const PlaceholderButton = styled.div`
-  ${sharedButtonStyles}
-`
-
-const PlaceholderIcon = styled(SearchIcon)`
-  ${sharedIconStyles}
-`
-
-const LoadingIcon = styled(FontAwesomeIcon)`
-  ${sharedIconStyles}
-  color: #fff;
-  font-size: 20px;
-`
-
-const SearchForm = styled.div`
-  background-color: ${(props) => lighten(0.1, props.theme.colors.lighterblue)};
-  display: flex;
-  transition: background-color 0.4s ease;
-  cursor: pointer;
-  outline: none;
-
-  &:focus-within {
-    background-color: ${(props) =>
-      lighten(0.1, props.theme.colors.lighterblue)};
-  }
-
-  @media (max-width: ${(props) => props.theme.breakpointsMax.sm}) {
-    padding-left: 16px;
-    min-height: 38px;
-  }
-
-  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-    position: absolute;
-    top: 133px;
-    right: 32px;
-    height: ${smHeightPx};
-    width: 300px;
-    background-color: transparent;
-    border-radius: 18px;
-    transition: all 0.4s ease;
-    justify-content: flex-end;
-  }
-
-  @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
-    right: 27px;
-    margin-left: auto;
-  }
-
-  ${gscMiscResets}
-
-  input.gsc-input {
-    ${gcsInput}
-  }
-
-  button.gsc-search-button {
-    ${gcsButton}
-  }
-`
-
-const ConsentPop = styled.div`
-  background-color: ${(props) => props.theme.colors.brand};
-  color: #fff;
-  width: auto;
-  border-radius: 10px;
-  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px;
-  ${makePadding};
-  padding-top: 12px;
-  padding-bottom: 12px;
-  z-index: 5;
-  width: 88vw;
-  outline: 0;
-
-  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-    width: 277px;
-  }
-`
-
-const ConsentButton = styled.button`
-  ${makeLightButton}
-  background-color: #fff;
-  font-size: 1rem;
-  display: block;
-  margin: 3px auto 8px auto;
-  &:hover {
-    background-color: ${(props) =>
-      lighten(0.15, props.theme.colors.lighterblue)};
-    color: ${(props) => props.theme.colors.brand};
-  }
-`
