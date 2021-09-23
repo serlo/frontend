@@ -1,5 +1,3 @@
-import styled from 'styled-components'
-
 import { TopicCategories } from './topic-categories'
 import { Link } from '@/components/content/link'
 import { TaxonomyData, TaxonomySubTerm } from '@/data-types'
@@ -18,13 +16,13 @@ export interface SubTopicProps {
 export function SubTopic({ data, subid, id }: SubTopicProps) {
   return (
     <>
-      <h2 className="my-3 serlo-h2 border-0" style={{ hyphens: 'auto' }}>
+      <h2 className="my-3 serlo-h2 border-0 special-hyphens-auto">
         <Link href={data.url} path={[subid, 'title']}>
           {data.title}
         </Link>
       </h2>
 
-      <Wrapper className="mb-5 pb-6 flex flex-col sm:flex-row border-b border-gray-300">
+      <div className="mb-5 pb-6 flex flex-col sm:flex-row border-b border-gray-300 last:border-b-0">
         <div style={{ flex: '1 1 40%' }}>
           {' '}
           <div className="mt-6 sm:mb-5">
@@ -34,13 +32,7 @@ export function SubTopic({ data, subid, id }: SubTopicProps) {
         </div>
 
         <TopicCategories data={data} subid={subid} />
-      </Wrapper>
+      </div>
     </>
   )
 }
-
-const Wrapper = styled.div`
-  &:last-child {
-    border-bottom: 0;
-  }
-`
