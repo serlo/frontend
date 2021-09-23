@@ -61,7 +61,7 @@ export const instanceData = {
       subscriptions: "Administrar suscripciones",
       revisionHistory: "Historial de revisiones",
       eventLog: "Registro de eventos",
-      unrevisedRevisions: 'Unrevised Revisions'
+      unrevisedRevisions: "Revisiones no revisadas"
     },
     roles: {
       donor: "Donante",
@@ -74,8 +74,8 @@ export const instanceData = {
       copyLink: "Copiar enlace",
       copySuccess: "!Enlace copiado!",
       close: "Cerrar",
-      pdf: 'Download as PDF',
-      pdfNoSolutions: 'PDF without solutions'
+      pdf: "Descargar PDF",
+      pdfNoSolutions: "PDF sin soluciones"
     },
     edit: {
       button: "Editar",
@@ -104,17 +104,17 @@ export const instanceData = {
       check: "Revisa tu respuesta",
       yourAnswer: "Tu respuesta...",
       chooseOption: "Elige una de las opciones.",
-      printModeChooseOption: 'Check one of the options.',
+      printModeChooseOption: "Elige una de las opciones.",
       trashedNotice: "Este contenido está marcado para su eliminación.",
-      unrevisedNotice: 'This content has no accepted revision yet. Please use the %link% to preview.',
+      unrevisedNotice: "Este contenido no tiene ninguna revisión aceptada todavía. Por favor, utiliza este vínculo %link% para previsualizar.",
       strategy: "Estrategia de solución",
       picture: "Imagen",
-      previewImage: 'Preview Image',
-      exercisesTitle: 'Exercises',
-      moreExercises: 'You can find more exercises in the following folder:',
-      relatedContentTitle: 'Still want more?',
-      relatedContentText: 'You can find more content on this topic here:',
-      sourcesTitle: 'Sources'
+      previewImage: "Previsualizar Imagen",
+      exercisesTitle: "Ejercicios",
+      moreExercises: "Puedes encontrar más ejercicios en la siguiente carpeta:",
+      relatedContentTitle: "¿Todavía quieres más?",
+      relatedContentText: "Puedes encontrar más contenido sobre este tema aquí:",
+      sourcesTitle: "Fuentes"
     },
     consent: {
       title: "Consentimiento para contenido externo",
@@ -183,16 +183,16 @@ export const instanceData = {
       status: "Estado"
     },
     unrevisedRevisions: {
-      supportLinks: 'Review support',
-      guideline: 'Guideline for reviewing',
-      showMoreEntities: 'Show all in %subject%',
-      showMoreRevisions: 'Show %number% more…',
-      newLabelText: 'new',
-      newLabelNote: 'This is a new entity',
-      wipLabelText: 'wip',
-      wipLabelNote: 'Marked as work in progress. Do not review yet.',
-      newAuthorText: 'new author',
-      newAuthorNote: 'This is one of the first edits of this author, maybe prioritise this.'
+      supportLinks: "Apoyo de revisión",
+      guideline: "Directrices para la revisión",
+      showMoreEntities: "Mostrar todo en %subject%",
+      showMoreRevisions: "Mostrar %number% más…",
+      newLabelText: "nuevo",
+      newLabelNote: "Esta es una nueva entidad",
+      wipLabelText: "limpiar",
+      wipLabelNote: "Marcado como trabajo en progreso. No revises todavía.",
+      newAuthorText: "Nuevo autor",
+      newAuthorNote: "Esta es una de las primeras ediciones de este autor, quizás priorizar esto."
     },
     errors: {
       title: "😬 Los sitios web a veces cometen errores…",
@@ -205,7 +205,7 @@ export const instanceData = {
       backToHome: "Ir a la página de inicio"
     },
     print: {
-      preparingNotice: 'Preparing print!',
+      preparingNotice: "¡Preparando impresión!",
       warning: "IMPORTANTE: Para asegurarse de que todas las imágenes y fórmulas se puedan imprimir, por favor desplácese hasta el final de la página ANTES de abrir este diálogo. ¡Gracias!"
     },
     profiles: {
@@ -385,8 +385,8 @@ export const loggedInData = {
       editAssignments: "Editar el tema y las asignaciones de currículo",
       moveToTrash: "Mover a la papelera",
       restoreContent: "Restaurar de la papelera",
-      sortCoursePages: 'Sort course pages',
-      sortGroupedExercises: 'Sort grouped Exercises',
+      sortCoursePages: "Ordenar páginas del curso",
+      sortGroupedExercises: "Ordenar ejercicios agrupados",
       edit: "Editar",
       unrevisedEdit: "Mostrar revisiones sin revisar",
       organize: "Organizar",
@@ -425,7 +425,7 @@ export const loggedInData = {
         explanation: "Por favor, indica al autor por qué no aceptas el trabajo."
       },
       confirm: "Confirmar",
-      unrevisedTaxNote: 'New content, not accepted yet'
+      unrevisedTaxNote: "Nuevo contenido, aún no aceptado"
     }
   }
 };
