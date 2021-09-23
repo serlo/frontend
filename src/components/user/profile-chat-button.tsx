@@ -1,12 +1,11 @@
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
 
 import { useAuthentication } from '@/auth/use-authentication'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
-import { makeGreenButton } from '@/helper/css'
 import { shouldUseNewAuth } from '@/helper/feature-auth'
 import { useCreateThreadMutation } from '@/helper/mutations'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
@@ -55,9 +54,26 @@ export function ProfileChatButton({
 
   return (
     <>
-      <ChatButton href={url} onClick={onClickAction} className={className}>
+      <style jsx>{`
+        a {
+          display: block;
+          width: 175px;
+          text-align: center;
+          grid-area: chatButton;
+          align-self: self-start;
+          margin-top: 5px;
+        }
+      `}</style>
+      <a
+        href={url}
+        onClick={onClickAction}
+        className={clsx(
+          className,
+          'serlo-button serlo-make-interactive-green '
+        )}
+      >
         <FontAwesomeIcon icon={faPaperPlane} /> {text}
-      </ChatButton>
+      </a>
       {!isOwnProfile && !isRegistered && renderInviteModal()}
     </>
   )
@@ -108,13 +124,3 @@ export function ProfileChatButton({
     )
   }
 }
-
-const ChatButton = styled.a`
-  ${makeGreenButton}
-  display: block;
-  width: 175px;
-  text-align: center;
-  grid-area: chatButton;
-  align-self: self-start;
-  margin-top: 5px;
-`
