@@ -2,14 +2,12 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { PageInfo } from '@serlo/api'
 import { useState } from 'react'
-import styled from 'styled-components'
 
 import { useAuthentication } from '@/auth/use-authentication'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { Event, EventData } from '@/components/user/event'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { makeLightButton, makeMargin, makePrimaryButton } from '@/helper/css'
 import { useSetNotificationStateMutation } from '@/helper/mutations'
 
 export interface NotificationData {
@@ -46,14 +44,22 @@ export const Notifications = ({
       {renderNotifications(data.nodes)}
       {isLoading && <LoadingSpinner text={strings.loading.isLoading} />}
       {data.pageInfo.hasNextPage && !isLoading ? (
-        <ButtonWrap>
-          <Button onClick={loadMore}>{strings.actions.loadMore}</Button>
+        <div className="flex justify-between">
+          <button
+            className="serlo-button serlo-make-interactive-primary mt-5 mb-12"
+            onClick={loadMore}
+          >
+            {strings.actions.loadMore}
+          </button>
           {data.nodes[0]?.unread && (
-            <LightButton onClick={setAllToRead}>
+            <button
+              className="serlo-button serlo-make-interactive-light mt-5 mb-12"
+              onClick={setAllToRead}
+            >
               <FontAwesomeIcon icon={faCheck} /> {loggedInStrings.setAllToRead}
-            </LightButton>
+            </button>
           )}
-        </ButtonWrap>
+        </div>
       ) : null}
     </>
   )
@@ -95,22 +101,3 @@ export const Notifications = ({
     })
   }
 }
-
-const Button = styled.button`
-  ${makePrimaryButton}
-  ${makeMargin}
-  margin-top: 20px;
-  margin-bottom: 50px;
-`
-
-const LightButton = styled.button`
-  ${makeLightButton}
-  ${makeMargin}
-  margin-top: 20px;
-  margin-bottom: 50px;
-`
-
-const ButtonWrap = styled.div`
-  display: flex;
-  justify-content: space-between;
-`

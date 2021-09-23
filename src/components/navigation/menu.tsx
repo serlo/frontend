@@ -5,9 +5,8 @@ import clsx from 'clsx'
 import { useState, useEffect } from 'react'
 
 import { Link } from '../content/link'
-import { SubButtonStyle } from '../user-tools/sub-button-style'
+import { MenuSubButtonLink } from '../user-tools/menu-sub-button-link'
 import { getAvatarUrl } from '../user/user-link'
-import { SubLink } from './sub-link'
 import { AuthenticationPayload } from '@/auth/auth-provider'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
@@ -245,9 +244,9 @@ function MenuInner({
               : entry.url
             return (
               <li key={entry.title} onClick={onSubMenuInnerClick}>
-                <SubLink href={href} path={['menu', i!, i2]}>
-                  <SubButtonStyle>{entry.title}</SubButtonStyle>
-                </SubLink>
+                <MenuSubButtonLink href={href} path={['menu', i!, i2]}>
+                  {entry.title}
+                </MenuSubButtonLink>
               </li>
             )
           })}

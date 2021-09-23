@@ -1,12 +1,10 @@
 import { faGithubSquare } from '@fortawesome/free-brands-svg-icons'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { lighten } from 'polished'
-import styled from 'styled-components'
+import clsx from 'clsx'
 
 import { Link } from '@/components/content/link'
 import { FooterNavigation } from '@/data-types'
-import { makeResponsivePadding } from '@/helper/css'
 
 const iconMapping = {
   newsletter: faEnvelope,
@@ -19,19 +17,35 @@ interface FooterNavProps {
 
 export function FooterNav({ data }: FooterNavProps) {
   return (
-    <FooterNavGrid>
+    <div className="bg-brand-50 pt-2 pb-10">
       <nav>
-        <FooterNavContainer>
+        <div className="flex flex-wrap">
           {data.map((category, index) => (
-            <ColWithPadding key={index}>
-              <CategoryHeader>{category.title}</CategoryHeader>
-              <NavList>
+            <div
+              key={index}
+              className="px-side mt-4 pt-0.25 w-full sm:w-1/2 md:w-1/3"
+            >
+              <h3 className="font-bold mt-4 mb-2 text-truegray-800">
+                {category.title}
+              </h3>
+              <ul className="list-none">
                 {category.children.map((link, childindex) => (
-                  <NavLi key={index + childindex}>
-                    <NavLink
+                  <li
+                    key={index + childindex}
+                    className={clsx(
+                      "inline-block after:content-['•'] after:text-truegray-600",
+                      'after:mr-1.5 after:ml-1 last-of-type:after:content-none',
+                      'sm:block sm:after:content-none'
+                    )}
+                  >
+                    <Link
                       href={link.url}
                       noExternalIcon
                       path={['footer', index, childindex]}
+                      className={clsx(
+                        'text-truegray-600 hover:text-black hover:no-underline',
+                        'inline-block py-2 sm:py-0 leading-tight sm:border-b-2 hover:border-black border-transparent'
+                      )}
                     >
                       {link.icon && (
                         <FontAwesomeIcon
@@ -40,115 +54,14 @@ export function FooterNav({ data }: FooterNavProps) {
                         />
                       )}{' '}
                       {link.title}
-                    </NavLink>
-                  </NavLi>
+                    </Link>
+                  </li>
                 ))}
-              </NavList>
-            </ColWithPadding>
+              </ul>
+            </div>
           ))}
-        </FooterNavContainer>
+        </div>
       </nav>
-    </FooterNavGrid>
+    </div>
   )
 }
-
-const FooterNavGrid = styled.div`
-  padding: 8px 0 40px;
-  background-color: ${(props) => props.theme.colors.lightBackground};
-`
-
-const FooterNavContainer = styled.div`
-  display: flex;
-  flex-flow: row wrap;
-`
-
-const ColWithPadding = styled.div`
-  margin-top: 16px;
-  padding: 0;
-  ${makeResponsivePadding}
-  box-sizing: border-box;
-  @media (min-width: ${(props) => props.theme.breakpoints.md}) {
-    flex-grow: 1;
-    flex-basis: 0;
-  }
-  @media (max-width: ${(props) =>
-      props.theme.breakpointsMax.md}) and (min-width: ${(props) =>
-      props.theme.breakpoints.sm}) {
-    flex-basis: 50%;
-    max-width: 50%;
-  }
-  @media (max-width: ${(props) => props.theme.breakpointsMax.sm}) {
-    flex-basis: 100%;
-    max-width: 100%;
-  }
-`
-
-const CategoryHeader = styled.h3`
-  font-size: 1rem;
-  margin-bottom: 8px;
-  color: ${(props) => lighten(0.05, props.theme.colors.dark1)};
-  display: block;
-  margin-block-start: 1em;
-  font-weight: bold;
-`
-
-const NavList = styled.ul`
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  line-height: 1.35;
-`
-
-const NavLi = styled.li`
-  display: inline-block;
-
-  &:after {
-    content: ' • ';
-    color: ${(props) => lighten(0.2, props.theme.colors.dark1)};
-    margin-right: 6px;
-  }
-  &:last-child:after {
-    content: '';
-  }
-
-  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-    display: block;
-    margin-top: 2px;
-
-    &:after {
-      content: '';
-      display: none;
-    }
-  }
-`
-
-const NavLink = styled(Link)`
-  @media (max-width: ${(props) => props.theme.breakpointsMax.sm}) {
-    display: inline-block;
-    padding: 8px 0;
-  }
-  color: ${(props) => lighten(0.15, props.theme.colors.dark1)} !important;
-  text-decoration: none !important;
-  border-bottom: 2px solid transparent;
-
-  &:focus {
-    text-decoration: none;
-    color: ${(props) => lighten(0.1, props.theme.colors.dark1)} !important;
-  }
-
-  &:hover,
-  &:active {
-    color: ${(props) => props.theme.colors.black} !important;
-    text-decoration: underline;
-    border-bottom: 2px solid transparent;
-  }
-
-  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-    &:hover,
-    &:active {
-      border-bottom: 2px solid
-        ${(props) => lighten(0.2, props.theme.colors.black)};
-      text-decoration: none;
-    }
-  }
-`
