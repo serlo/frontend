@@ -1,6 +1,5 @@
 import clsx from 'clsx'
 import Head from 'next/head'
-import styled from 'styled-components'
 
 import { HeadTags } from '../head-tags'
 import { CommunityWall } from '../landing/rework/community-wall'
