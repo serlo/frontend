@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 import { NextPage } from 'next'
 import { useState, useEffect } from 'react'
-import styled from 'styled-components'
 
 import { useAuthentication } from '@/auth/use-authentication'
 import { Link } from '@/components/content/link'
@@ -64,27 +63,42 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
 
   function renderHeader() {
     return (
-      <ProfileHeader className="mx-side mt-14 text-center sm:text-left">
-        {renderProfileImage()}
-        <div className="mt-5 sm:mt-0">
-          <h1 className="serlo-h1 mt-4 mb-3">{username}</h1>
-          <ProfileBadges userData={userData} date={date} />
-        </div>
-        <p
-          className="serlo-p text-1.5xl w-full mt-5 sm:mt-0"
-          style={{ gridArea: 'motivation' }}
-        >
-          {motivation && <>&quot;{motivation}&quot;</>}
-          {isOwnProfile && renderEditMotivationLink()}
-        </p>
-        <ProfileChatButton
-          userId={id}
-          username={username}
-          isOwnProfile={isOwnProfile}
-          chatUrl={chatUrl}
-          className="mx-auto sm:mx-0 mb-8"
-        />
-      </ProfileHeader>
+      <>
+        <style jsx>{`
+          header {
+            @screen sm {
+              display: grid;
+              grid-template-columns: 175px auto;
+              grid-template-rows: auto auto;
+              grid-template-areas: 'image badges' 'chatButton motivation';
+              row-gap: 20px;
+              column-gap: 20px;
+              place-items: center start;
+            }
+          }
+        `}</style>
+        <header className="mx-side mt-14 text-center sm:text-left">
+          {renderProfileImage()}
+          <div className="mt-5 sm:mt-0">
+            <h1 className="serlo-h1 mt-4 mb-3">{username}</h1>
+            <ProfileBadges userData={userData} date={date} />
+          </div>
+          <p
+            className="serlo-p text-1.5xl w-full mt-5 sm:mt-0"
+            style={{ gridArea: 'motivation' }}
+          >
+            {motivation && <>&quot;{motivation}&quot;</>}
+            {isOwnProfile && renderEditMotivationLink()}
+          </p>
+          <ProfileChatButton
+            userId={id}
+            username={username}
+            isOwnProfile={isOwnProfile}
+            chatUrl={chatUrl}
+            className="mx-auto sm:mx-0 mb-8"
+          />
+        </header>
+      </>
     )
   }
 
@@ -259,15 +273,3 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
     )
   }
 }
-
-const ProfileHeader = styled.header`
-  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-    display: grid; //grid
-    grid-template-columns: 175px auto;
-    grid-template-rows: auto auto;
-    grid-template-areas: 'image badges' 'chatButton motivation';
-    row-gap: 20px;
-    column-gap: 20px;
-    place-items: center start;
-  }
-`
