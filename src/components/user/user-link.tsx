@@ -46,33 +46,20 @@ export function UserLink({
   function renderBadges() {
     return (
       <>
-        <style jsx>{`
-          .badges-wrap {
-            display: inline-block;
-            vertical-align: sub;
-            margin-left: 3px;
-            :global(> span > svg) {
-              width: 1.1em;
-              height: auto;
-              margin-left: 0.3em;
-              display: inline;
-            }
-          }
-        `}</style>
-        <span className="badges-wrap">
+        <span className="inline-block align-text-bottom ml-[3px]">
           {user.isActiveReviewer && (
             <span title={strings.roles.reviewer}>
-              <ReviewerBadge />
+              <ReviewerBadge className="w-4 h-auto ml-1 inline" />
             </span>
           )}
           {user.isActiveAuthor && (
             <span title={strings.roles.author}>
-              <AuthorBadge />
+              <AuthorBadge className="w-4 h-auto ml-1 inline" />
             </span>
           )}
           {user.isActiveDonor && (
             <span title={strings.roles.donor}>
-              <DonorBadge />
+              <DonorBadge className="w-4 h-auto ml-1 inline" />
             </span>
           )}
         </span>
