@@ -11,7 +11,9 @@ export function HeaderFooter({ children }: HeaderFooterProps) {
   return (
     <>
       <Header />
-      <div className="min-h-[68vh]">{children}</div>
+      <div className="min-h-[68vh] max-w-full overflow-x-hidden">
+        {children}
+      </div>
       <Footer />
     </>
   )
