@@ -15,7 +15,7 @@ export const instanceData = {
     },
     footer: {
       summaryHeading: "Serlo.org est le Wikipedia pour l'apprentissage.",
-      summaryText: "Nous sommes une communauté de visionnaires qui travaille sans relâche pour offrir une éducation gratuite et accessible à tous.",
+      summaryText: "Nous sommes une communauté de visionnaires qui travaillent sans relâche pour offrir une éducation gratuite accessible à tous.",
       learnMore: "En savoir plus",
       participate: "Participer",
       donate: "Faire un don",
@@ -60,8 +60,8 @@ export const instanceData = {
       notifications: "Tes notifications",
       subscriptions: "Gérer les abonnements",
       revisionHistory: "Historique des révisions",
-      eventLog: "Event Log",
-      unrevisedRevisions: 'Unrevised Revisions'
+      eventLog: "Journal des événements",
+      unrevisedRevisions: "Révisions non révisées"
     },
     roles: {
       donor: "Donneur·e",
@@ -74,8 +74,8 @@ export const instanceData = {
       copyLink: "Copier le lien",
       copySuccess: "Lien copié!",
       close: "Fermer",
-      pdf: 'Download as PDF',
-      pdfNoSolutions: 'PDF without solutions'
+      pdf: "Télécharger comme PDF",
+      pdfNoSolutions: "PDF sans solutions"
     },
     edit: {
       button: "Modifier",
@@ -90,7 +90,7 @@ export const instanceData = {
       showPages: "Afficher la vue globale du cours",
       pages: "Vue globale du cours",
       next: "Suivant",
-      back: 'Back'
+      back: "Précédent"
     },
     content: {
       show: "montrer",
@@ -99,21 +99,21 @@ export const instanceData = {
       task: "Tâche",
       right: "Vrai",
       wrong: "Faux",
-      feedback: 'Feedback',
-      answer: 'Answer',
+      feedback: "Ton avis",
+      answer: "Répondre",
       check: "Vérifier",
       yourAnswer: "Ta réponse...",
       chooseOption: "Sélectionne une des options :",
-      printModeChooseOption: 'Check one of the options.',
+      printModeChooseOption: "Sélectionne une des options :",
       trashedNotice: "Ce contenu est marqué pour être supprimé.",
-      unrevisedNotice: 'This content has no accepted revision yet. Please use the %link% to preview.',
+      unrevisedNotice: "Ce contenu n'a pas encore accepté de révision. Veuillez utiliser %link% pour un aperçu.",
       strategy: "Stratégie de solution",
-      picture: 'Picture',
-      previewImage: 'Preview Image',
-      exercisesTitle: 'Exercises',
-      moreExercises: 'You can find more exercises in the following folder:',
-      relatedContentTitle: 'Still want more?',
-      relatedContentText: 'You can find more content on this topic here:',
+      picture: "Image",
+      previewImage: "Aperçu de l'image",
+      exercisesTitle: "Exercices",
+      moreExercises: "Tu peux trouver plus d'exercices dans le dossier suivant :",
+      relatedContentTitle: "Tu en veux encore plus?",
+      relatedContentText: "Tu peux en trouver plus ici :",
       sourcesTitle: 'Sources'
     },
     consent: {
@@ -205,7 +205,7 @@ export const instanceData = {
       backToHome: "Aller à notre page d'accueil"
     },
     print: {
-      preparingNotice: 'Preparing print!',
+      preparingNotice: "Préparation de l'impression !",
       warning: "IMPORTANT : Pour t'assurer que toutes les images et formules sont imprimées, fais défiler la page une fois vers le bas AVANT d'ouvrir ce dialogue. Merci!"
     },
     profiles: {
@@ -216,25 +216,25 @@ export const instanceData = {
       yearsWithSerlo: 'Years with Serlo!',
       yearWithSerlo: 'Year with Serlo!',
       roles: "Rôles",
-      instanceRoles: 'Roles on %lang%.serlo.org:',
-      otherRoles: 'Other roles:',
+      instanceRoles: "Rôles sur %lang%.serlo.org :",
+      otherRoles: "Autres rôles :",
       directMessage: "Message direct ",
-      goToChat: 'Go to Chat',
-      registerChat: 'Register for Chat',
-      inviteToChat: 'Invite to chat',
-      invitation: '💬 %username% has invited you to the Serlo community chat!\nGo to %chatlink% to join.',
+      goToChat: "Aller au chat",
+      registerChat: "S'inscrire au chat",
+      inviteToChat: "Inviter au chat",
+      invitation: "💬 %username% t'a invité dans le chat de la communauté Serlo !\nClique sur %chatlink% pour rejoindre.",
       inviteModal: {
-        part1: '%username% is not yet active in our community chat at %chatLink%.',
-        part2: 'You can invite %username% to the chat to send direct messages:',
-        button: 'Send invitation'
+        part1: "%username% n'est pas encore actif dans notre chat de la communauté à %chatLink%.",
+        part2: "Tu peux inviter %username% dans le chat pour envoyer des messages directs :",
+        button: "Envoyer une invitation"
       },
       activityGraph: {
-        edits: "Edits",
-        comments: "Comments",
-        reviews: "Reviews",
-        taxonomy: "Taxonomy",
-        legendary: "💙 Just wow! 💙",
-        untilNextLevel: "%amount% more to complete this circle 🎉"
+        edits: "Modifications",
+        comments: "Commentaires",
+        reviews: "Révisions",
+        taxonomy: "Taxonomie",
+        legendary: "💙 Wow! 💙",
+        untilNextLevel: "%amount% de plus pour compléter ce cercle 🎉"
       },
       howToEditImage: {
         heading: 'How to edit your profile picture',
@@ -267,7 +267,7 @@ export const instanceData = {
       revisionSavedAccepted: "La révision a été enregistrée avec succès et acceptée ✅"
     },
     loading: {
-      oneMomentPlease: 'One moment please…',
+      oneMomentPlease: "Un instant SVP...",
       isLoading: "Chargement de contenu en cours…",
       unknownProblem: "Désolé,une erreure s'est produite lors du chargement du contenu, veuille réessayer plus tard."
     },
@@ -309,7 +309,7 @@ export const instanceData = {
       entityPlaceholderFallback: "Content"
     },
     actions: {
-      loadMore: "Load more"
+      loadMore: "Charger plus"
     }
   }
 };
@@ -385,33 +385,33 @@ export const loggedInData = {
       editAssignments: "Modifier le sujet et le programme d'études",
       moveToTrash: "Déplacer dans la corbeille",
       restoreContent: "Restaurer à partir de la corbeille",
-      sortCoursePages: 'Sort course pages',
-      sortGroupedExercises: 'Sort grouped Exercises',
+      sortCoursePages: "Trier les pages du cours",
+      sortGroupedExercises: "Trier les exercices groupés",
       edit: "Modifier",
-      unrevisedEdit: 'Show unrevised revisions',
+      unrevisedEdit: "Afficher les révisions non révisées",
       organize: "Organiser",
       moveToGroupedTextExercise: "Déplacer le contenu vers un autre exercice de texte groupé",
       moveToTextExercise: "Déplacer le contenu vers un autre exercice de texte",
       sortEntities: "Trier le contenu",
       newEntity: "Nouveau contenu",
       editProfile: "Modifier profil",
-      directLink: 'Direct link to this content'
+      directLink: "Lien direct vers ce contenu"
     },
     notifications: {
       hide: "Masquer les notifications pour ce contenu.",
       setToRead: "Set notification to read.",
       setAllToRead: "Set all visible to read",
-      showNew: "New",
+      showNew: "Nouveau",
       showRead: "Read"
     },
     subscriptions: {
       mail: "E-mails",
       subscription: "Abonnement",
       noMails: "désactiver",
-      getMails: "activate",
+      getMails: "activer",
       noNotifications: "annuler",
-      loadedSentence: "Loaded %loadedCount% of %totalCount% subscriptions.",
-      loadMoreLink: "Load more!"
+      loadedSentence: "%loadedCount% sur %totalCount% abonnements chargés.",
+      loadMoreLink: "Charger plus!"
     },
     revisions: {
       checkout: {
@@ -422,10 +422,10 @@ export const loggedInData = {
       reject: {
         action: "Rejeter",
         title: "Rejeter la révision",
-        explanation: 'Please tell the author why you will not accept the submission.'
+        explanation: "Veuille indiquer à l'auteur pourquoi tu n'acceptes pas la soumission."
       },
       confirm: "Confirmer",
-      unrevisedTaxNote: 'New content, not accepted yet'
+      unrevisedTaxNote: "Nouveau contenu, pas encore accepté"
     }
   }
 };
