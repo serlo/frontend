@@ -151,48 +151,48 @@ export const instanceData = {
     },
     revisions: {
       toOverview: "Retour à la vue d'ensemble",
-      toContent: "Go to content",
+      toContent: "Aller au contenu",
       changes: "Modifications",
-      context: "Context (current version)",
+      context: "Dans le context (version actuelle)",
       title: "Titre",
       content: "Contenu",
       metaTitle: "Titre-méta",
       metaDescription: "Description-méta",
-      diff: "Source view",
-      sidebyside: "Side By Side",
+      diff: "Voir le code source",
+      sidebyside: "Comparaison",
       currentVersion: "Version actuelle",
-      thisVersion: "Cette Version",
+      thisVersion: "Cette version",
       currentNotice: "Ceci est la version actuellement acceptée.",
-      rejectedNotice: 'This revision was not accepted.',
-      noCurrentNotice: 'There is no accepted revision yet.',
-      unknownNotice: 'This revision was accepted once or was never reviewed.',
+      rejectedNotice: "Cette révision n'a pas été acceptée.",
+      noCurrentNotice: "Il n'existe pas encore une révision acceptée.",
+      unknownNotice: "Cette révision a été actuelle auparavant ou n'a jamais été révisée.",
       by: "De",
-      parentFallbackLink: 'To parent content',
-      hasChanges: 'There have been changes in this area',
-      positionForGrouped: 'This %exercise_or_solution% is part of %title%.',
-      helpLink: 'Revision Help'
+      parentFallbackLink: "Au contenu parent",
+      hasChanges: "Il y a eu des changements de ce contenu",
+      positionForGrouped: "Ce %exercise_or_solution% fait partie de %title%.",
+      helpLink: "Aide pour les réviseurs"
     },
     revisionHistory: {
       changes: "Modifications",
       author: "Auteur·e",
       date: 'Date',
-      edit: 'Edit',
-      editLabel: 'Create a new revision starting from this specific revision',
-      view: 'Show',
-      viewLabel: 'Show this revision',
-      status: 'Status'
+      edit: "Modifier",
+      editLabel: "Créer une nouvelle révision à partir de cette révision",
+      view: "Afficher",
+      viewLabel: "Afficher cette révision",
+      status: "Statut"
     },
     unrevisedRevisions: {
-      supportLinks: 'Review support',
-      guideline: 'Guideline for reviewing',
-      showMoreEntities: 'Show all in %subject%',
-      showMoreRevisions: 'Show %number% more…',
-      newLabelText: 'new',
-      newLabelNote: 'This is a new entity',
-      wipLabelText: 'wip',
-      wipLabelNote: 'Marked as work in progress. Do not review yet.',
-      newAuthorText: 'new author',
-      newAuthorNote: 'This is one of the first edits of this author, maybe prioritise this.'
+      supportLinks: "Comment réviser?",
+      guideline: "Aide à la révision",
+      showMoreEntities: "Tout afficher dans %subject%",
+      showMoreRevisions: "Afficher %number% plus…",
+      newLabelText: "Nouveau",
+      newLabelNote: "Ce contenu est nouveau",
+      wipLabelText: "essuyer",
+      wipLabelNote: "Travail en cours. Ne pas encore réviser.",
+      newAuthorText: "nouvel auteur",
+      newAuthorNote: "C'est l'une des premières modifications de cet auteur. Peut-être, donne-lui la priorité."
     },
     errors: {
       title: "😬 Les sites Web font parfois des erreurs…",
@@ -213,8 +213,8 @@ export const instanceData = {
       recentActivities: "Activités récentes",
       showAllActivities: "Afficher toutes les activités",
       lastLogin: "Dernière connexion",
-      yearsWithSerlo: 'Years with Serlo!',
-      yearWithSerlo: 'Year with Serlo!',
+      yearsWithSerlo: "années chez Serlo!",
+      yearWithSerlo: "année chez Serlo!",
       roles: "Rôles",
       instanceRoles: "Rôles sur %lang%.serlo.org :",
       otherRoles: "Autres rôles :",
@@ -237,25 +237,25 @@ export const instanceData = {
         untilNextLevel: "%amount% de plus pour compléter ce cercle 🎉"
       },
       howToEditImage: {
-        heading: 'How to edit your profile picture',
-        description: 'Currently we use the images from %chatLink% as profile pictures. In order to change your picture, do the following:',
+        heading: "Comment modifier votre photo de profil",
+        description: "Actuellement nous utilisons les images de %chatLink% comme des photos de profil. Pour changer la photo, fais ce qui suit :",
         steps: {
-          goToChat: 'Go to %chatLink%.',
-          signIn: 'Sign in.',
-          goToMyAccount: 'Go in the user menu to %myAccountLink%.',
-          myAccount: 'My Account',
-          uploadPicture: 'Upload a new picture (make sure it is square) and click "Save changes".',
-          refreshPage: 'Come back here and refresh the image using %refreshLink%.',
-          refreshLink: 'this link'
+          goToChat: "Aller à %chatLink%.",
+          signIn: "Se connecter.",
+          goToMyAccount: "Aller dans le menu utilisateur de %myAccountLink%.",
+          myAccount: "Mon Compte",
+          uploadPicture: "Télécharge une nouvelle image (assure-toi qu'elle est carrée) et clique sur \"Enregistrer les modifications\".",
+          refreshPage: "Reviens ici et rafraîchisse l'image en cliquant sur %refreshLink%.",
+          refreshLink: "ce lien"
         }
       },
       motivation: {
-        edit: 'Edit motivation',
-        add: 'Add motivation',
-        heading: 'How to edit your motivation',
-        intro: 'Motivations are a new feature we test at the moment. To edit your motivation you have to fill out a simple form.',
-        privacy: 'The form and data storage is offered by Google and personal data may be transferred to this service when using this feature.',
-        toForm: 'Motivation Form'
+        edit: "Modifier la motivation",
+        add: "Ajouter une motivation",
+        heading: "Comment modifier ta motivation",
+        intro: "Les motivations sont une nouvelle fonctionnalité que nous testons pour le moment. Pour modifier ta motivation, tu dois remplir un formulaire simple.",
+        privacy: "Le formulaire et le stockage des données sont offerts par Google et les données personnelles peuvent être transférées à ce service lors de l'utilisation de cette fonctionnalité.",
+        toForm: "Formulaire de motivation"
       }
     },
     notices: {
@@ -285,28 +285,28 @@ export const instanceData = {
       globalDescription: 'All events that happen somewhere on %lang%.serlo.org'
     },
     events: {
-      setThreadStateArchived: "%actor% archived %thread%.",
-      setThreadStateUnarchived: "%actor% restored %thread%.",
-      createComment: "%actor% commented in %thread%: %comment%.",
-      createThread: "%actor% started %thread% on %object%.",
-      createEntity: "%actor% created %object%.",
-      setLicense: "%actor% changed the license of %repository%.",
-      createEntityLink: "%actor% associated %child% with %parent%.",
-      removeEntityLink: "%actor% dissociated %child% from %parent%.",
-      createEntityRevision: "%actor% created a %revision% of %entity%.",
-      checkoutRevision: "%actor% checked out a %revision% in %repository%.",
-      rejectRevision: "%actor% did not accept a %revision% in %repository%.",
-      createTaxonomyLink: "%actor% added %child% to %parent%.",
-      removeTaxonomyLink: "%actor% removed %child% from %parent%.",
-      createTaxonomyTerm: "%actor% created %term%.",
-      setTaxonomyTerm: "%actor% updated %term%.",
-      setTaxonomyParentDeleted: "%actor% removed the parent of %child%.",
-      setTaxonomyParentChangedFrom: "%actor% changed parent of %child% from %previousparent% to %parent%.",
-      setTaxonomyParentChanged: "%actor% changed parent of %child% to %parent%.",
-      setUuidStateTrashed: "%actor% trashed %object%.",
-      setUuidStateRestored: "%actor% restored %object%.",
-      inviteToChat: "You have been invited to the Chat! %break% Go to %chatLink% to chat with %actor% and others.",
-      entityPlaceholderFallback: "Content"
+      setThreadStateArchived: "%actor% a archivé %thread%.",
+      setThreadStateUnarchived: "%actor% a restauré %thread%.",
+      createComment: "%actor% a commenté dans %thread%: %comment%.",
+      createThread: "%actor% a commencé %thread% dans %object%.",
+      createEntity: "%actor% a créé %object%.",
+      setLicense: "%actor% a modifié la licence de %repository%.",
+      createEntityLink: "%actor% a associé %child% à %parent%.",
+      removeEntityLink: "%actor% a dissocié %child% de %parent%.",
+      createEntityRevision: "%actor% a créé une %revision% de %entity%.",
+      checkoutRevision: "%actor% a accepté une %revision% dans %repository%.",
+      rejectRevision: "%actor% n'a pas accepté une %revision% dans %repository%.",
+      createTaxonomyLink: "%actor% a ajouté %child% à %parent%.",
+      removeTaxonomyLink: "%actor% a retiré %child% de %parent%.",
+      createTaxonomyTerm: "%actor% a créé %term%.",
+      setTaxonomyTerm: "%actor% a mis à jour %term%.",
+      setTaxonomyParentDeleted: "%actor% a supprimé le parent de %child%.",
+      setTaxonomyParentChangedFrom: "%actor% a changé le parent de %child% de %previousparent% à %parent%.",
+      setTaxonomyParentChanged: "%actor% a changé le parent de %child% à %parent%.",
+      setUuidStateTrashed: "%actor% a mis %object% dans la corbeille.",
+      setUuidStateRestored: "%actor% a restauré %object%.",
+      inviteToChat: "T'as été invité dans le Chat! %break% Clique sur %chatLink% pour discuter avec %actor% et d'autres.",
+      entityPlaceholderFallback: "Contenu"
     },
     actions: {
       loadMore: "Charger plus"
@@ -348,7 +348,7 @@ export const loggedInData = {
     icon: 'user',
     children: [{
       url: '/user/me',
-      title: 'Own profile'
+      title: "Mon profil"
     }, {
       url: '/auth/password/change',
       title: "mettre à jour le mot de passe"
@@ -399,10 +399,10 @@ export const loggedInData = {
     },
     notifications: {
       hide: "Masquer les notifications pour ce contenu.",
-      setToRead: "Set notification to read.",
-      setAllToRead: "Set all visible to read",
+      setToRead: "Définir la notification comme lu.",
+      setAllToRead: "Définir tous les visibles comme lus.",
       showNew: "Nouveau",
-      showRead: "Read"
+      showRead: "Lu"
     },
     subscriptions: {
       mail: "E-mails",
