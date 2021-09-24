@@ -11,7 +11,9 @@ export function HeaderFooter({ children }: HeaderFooterProps) {
   return (
     <>
       <Header />
-      <div className="min-h-[68vh] max-w-full overflow-x-hidden">
+      <div
+        className="min-h-[68vh] max-w-full overflow-x-hidden lg:overflow-visible" /* needed for sticky menu*/
+      >
         {children}
       </div>
       <Footer />
