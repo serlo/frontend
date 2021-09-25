@@ -351,11 +351,11 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
               </ul>
             }
           >
-            <li className="block" /* wrapper */>
+            <div>
               <MenuSubButtonLink tabIndex={0}>
                 ◂ {loggedInStrings.authorMenu.newEntity}
               </MenuSubButtonLink>
-            </li>
+            </div>
           </Tippy>
         </li>
       )
