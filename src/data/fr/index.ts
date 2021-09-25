@@ -280,9 +280,9 @@ export const instanceData = {
       return: "touche Entrée"
     },
     eventLog: {
-      currentEvents: 'Current events',
-      oldestEvents: '%amount% oldest events',
-      globalDescription: 'All events that happen somewhere on %lang%.serlo.org'
+      currentEvents: "Évenements actuels",
+      oldestEvents: "%amount% événements les plus anciens",
+      globalDescription: "Tous les événements qui se produisent quelque part sur %lang%.serlo.org"
     },
     events: {
       setThreadStateArchived: "%actor% a archivé %thread%.",
