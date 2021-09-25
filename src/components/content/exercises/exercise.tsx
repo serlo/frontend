@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import dynamic from 'next/dynamic'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { LicenseNotice } from '../license-notice'
 import { ExerciseNumbering } from './exercise-numbering'
@@ -8,6 +8,7 @@ import { InputExercise } from './input-exercise'
 import { ScMcExercise } from './sc-mc-exercise'
 import { useAuthentication } from '@/auth/use-authentication'
 import { CommentAreaProps } from '@/components/comments/comment-area'
+import { Lazy } from '@/components/content/lazy'
 import { isPrintMode, printModeSolutionVisible } from '@/components/print-mode'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
@@ -100,7 +101,9 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
           'tasksol'
         )}
         {license && <div className="px-side">{license}</div>}
-        <CommentArea id={node.context.solutionId!} />
+        <Lazy>
+          <CommentArea id={node.context.solutionId!} />
+        </Lazy>
       </div>
     )
   }
