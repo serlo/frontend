@@ -64,6 +64,27 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   function renderHeader() {
     return (
       <>
+        <header className="mx-side mt-14 text-center sm:text-left">
+          {renderProfileImage()}
+          <div className="mt-5 sm:mt-0">
+            <h1 className="serlo-h1 mt-4 mb-3">{username}</h1>
+            <ProfileBadges userData={userData} date={date} />
+          </div>
+          <div
+            className="serlo-p text-1.5xl w-full mt-5 sm:mt-0"
+            style={{ gridArea: 'motivation' }}
+          >
+            {motivation && <>&quot;{motivation}&quot;</>}
+            {isOwnProfile && renderEditMotivationLink()}
+          </div>
+          <ProfileChatButton
+            userId={id}
+            username={username}
+            isOwnProfile={isOwnProfile}
+            chatUrl={chatUrl}
+            className="mx-auto sm:mx-0 mb-8"
+          />
+        </header>
         <style jsx>{`
           header {
             @screen sm {
@@ -77,27 +98,6 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
             }
           }
         `}</style>
-        <header className="mx-side mt-14 text-center sm:text-left">
-          {renderProfileImage()}
-          <div className="mt-5 sm:mt-0">
-            <h1 className="serlo-h1 mt-4 mb-3">{username}</h1>
-            <ProfileBadges userData={userData} date={date} />
-          </div>
-          <p
-            className="serlo-p text-1.5xl w-full mt-5 sm:mt-0"
-            style={{ gridArea: 'motivation' }}
-          >
-            {motivation && <>&quot;{motivation}&quot;</>}
-            {isOwnProfile && renderEditMotivationLink()}
-          </p>
-          <ProfileChatButton
-            userId={id}
-            username={username}
-            isOwnProfile={isOwnProfile}
-            chatUrl={chatUrl}
-            className="mx-auto sm:mx-0 mb-8"
-          />
-        </header>
       </>
     )
   }
