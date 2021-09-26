@@ -15,7 +15,7 @@ export const instanceData = {
     },
     footer: {
       summaryHeading: "Serlo.org est le Wikipedia pour l'apprentissage.",
-      summaryText: "Nous sommes une communauté de visionnaires qui travaille sans relâche pour offrir une éducation gratuite et accessible à tous.",
+      summaryText: "Nous sommes une communauté de visionnaires qui travaillent sans relâche pour offrir une éducation gratuite accessible à tous.",
       learnMore: "En savoir plus",
       participate: "Participer",
       donate: "Faire un don",
@@ -60,8 +60,8 @@ export const instanceData = {
       notifications: "Tes notifications",
       subscriptions: "Gérer les abonnements",
       revisionHistory: "Historique des révisions",
-      eventLog: "Event Log",
-      unrevisedRevisions: 'Unrevised Revisions'
+      eventLog: "Journal des événements",
+      unrevisedRevisions: "Révisions non révisées"
     },
     roles: {
       donor: "Donneur·e",
@@ -74,8 +74,8 @@ export const instanceData = {
       copyLink: "Copier le lien",
       copySuccess: "Lien copié!",
       close: "Fermer",
-      pdf: 'Download as PDF',
-      pdfNoSolutions: 'PDF without solutions'
+      pdf: "Télécharger comme PDF",
+      pdfNoSolutions: "PDF sans solutions"
     },
     edit: {
       button: "Modifier",
@@ -90,7 +90,7 @@ export const instanceData = {
       showPages: "Afficher la vue globale du cours",
       pages: "Vue globale du cours",
       next: "Suivant",
-      back: 'Back'
+      back: "Précédent"
     },
     content: {
       show: "montrer",
@@ -99,21 +99,21 @@ export const instanceData = {
       task: "Tâche",
       right: "Vrai",
       wrong: "Faux",
-      feedback: 'Feedback',
-      answer: 'Answer',
+      feedback: "Ton avis",
+      answer: "Répondre",
       check: "Vérifier",
       yourAnswer: "Ta réponse...",
       chooseOption: "Sélectionne une des options :",
-      printModeChooseOption: 'Check one of the options.',
+      printModeChooseOption: "Sélectionne une des options :",
       trashedNotice: "Ce contenu est marqué pour être supprimé.",
-      unrevisedNotice: 'This content has no accepted revision yet. Please use the %link% to preview.',
+      unrevisedNotice: "Ce contenu n'a pas encore accepté de révision. Veuillez utiliser %link% pour un aperçu.",
       strategy: "Stratégie de solution",
-      picture: 'Picture',
-      previewImage: 'Preview Image',
-      exercisesTitle: 'Exercises',
-      moreExercises: 'You can find more exercises in the following folder:',
-      relatedContentTitle: 'Still want more?',
-      relatedContentText: 'You can find more content on this topic here:',
+      picture: "Image",
+      previewImage: "Aperçu de l'image",
+      exercisesTitle: "Exercices",
+      moreExercises: "Tu peux trouver plus d'exercices dans le dossier suivant :",
+      relatedContentTitle: "Tu en veux encore plus?",
+      relatedContentText: "Tu peux en trouver plus ici :",
       sourcesTitle: 'Sources'
     },
     consent: {
@@ -151,48 +151,48 @@ export const instanceData = {
     },
     revisions: {
       toOverview: "Retour à la vue d'ensemble",
-      toContent: "Go to content",
+      toContent: "Aller au contenu",
       changes: "Modifications",
-      context: "Context (current version)",
+      context: "Dans le context (version actuelle)",
       title: "Titre",
       content: "Contenu",
       metaTitle: "Titre-méta",
       metaDescription: "Description-méta",
-      diff: "Source view",
-      sidebyside: "Side By Side",
+      diff: "Voir le code source",
+      sidebyside: "Comparaison",
       currentVersion: "Version actuelle",
-      thisVersion: "Cette Version",
+      thisVersion: "Cette version",
       currentNotice: "Ceci est la version actuellement acceptée.",
-      rejectedNotice: 'This revision was not accepted.',
-      noCurrentNotice: 'There is no accepted revision yet.',
-      unknownNotice: 'This revision was accepted once or was never reviewed.',
+      rejectedNotice: "Cette révision n'a pas été acceptée.",
+      noCurrentNotice: "Il n'existe pas encore une révision acceptée.",
+      unknownNotice: "Cette révision a été actuelle auparavant ou n'a jamais été révisée.",
       by: "De",
-      parentFallbackLink: 'To parent content',
-      hasChanges: 'There have been changes in this area',
-      positionForGrouped: 'This %exercise_or_solution% is part of %title%.',
-      helpLink: 'Revision Help'
+      parentFallbackLink: "Au contenu parent",
+      hasChanges: "Il y a eu des changements de ce contenu",
+      positionForGrouped: "Ce %exercise_or_solution% fait partie de %title%.",
+      helpLink: "Aide pour les réviseurs"
     },
     revisionHistory: {
       changes: "Modifications",
       author: "Auteur·e",
       date: 'Date',
-      edit: 'Edit',
-      editLabel: 'Create a new revision starting from this specific revision',
-      view: 'Show',
-      viewLabel: 'Show this revision',
-      status: 'Status'
+      edit: "Modifier",
+      editLabel: "Créer une nouvelle révision à partir de cette révision",
+      view: "Afficher",
+      viewLabel: "Afficher cette révision",
+      status: "Statut"
     },
     unrevisedRevisions: {
-      supportLinks: 'Review support',
-      guideline: 'Guideline for reviewing',
-      showMoreEntities: 'Show all in %subject%',
-      showMoreRevisions: 'Show %number% more…',
-      newLabelText: 'new',
-      newLabelNote: 'This is a new entity',
-      wipLabelText: 'wip',
-      wipLabelNote: 'Marked as work in progress. Do not review yet.',
-      newAuthorText: 'new author',
-      newAuthorNote: 'This is one of the first edits of this author, maybe prioritise this.'
+      supportLinks: "Comment réviser?",
+      guideline: "Aide à la révision",
+      showMoreEntities: "Tout afficher dans %subject%",
+      showMoreRevisions: "Afficher %number% plus…",
+      newLabelText: "Nouveau",
+      newLabelNote: "Ce contenu est nouveau",
+      wipLabelText: "essuyer",
+      wipLabelNote: "Travail en cours. Ne pas encore réviser.",
+      newAuthorText: "nouvel auteur",
+      newAuthorNote: "C'est l'une des premières modifications de cet auteur. Peut-être, donne-lui la priorité."
     },
     errors: {
       title: "😬 Les sites Web font parfois des erreurs…",
@@ -205,7 +205,7 @@ export const instanceData = {
       backToHome: "Aller à notre page d'accueil"
     },
     print: {
-      preparingNotice: 'Preparing print!',
+      preparingNotice: "Préparation de l'impression !",
       warning: "IMPORTANT : Pour t'assurer que toutes les images et formules sont imprimées, fais défiler la page une fois vers le bas AVANT d'ouvrir ce dialogue. Merci!"
     },
     profiles: {
@@ -213,49 +213,49 @@ export const instanceData = {
       recentActivities: "Activités récentes",
       showAllActivities: "Afficher toutes les activités",
       lastLogin: "Dernière connexion",
-      yearsWithSerlo: 'Years with Serlo!',
-      yearWithSerlo: 'Year with Serlo!',
+      yearsWithSerlo: "années chez Serlo!",
+      yearWithSerlo: "année chez Serlo!",
       roles: "Rôles",
-      instanceRoles: 'Roles on %lang%.serlo.org:',
-      otherRoles: 'Other roles:',
+      instanceRoles: "Rôles sur %lang%.serlo.org :",
+      otherRoles: "Autres rôles :",
       directMessage: "Message direct ",
-      goToChat: 'Go to Chat',
-      registerChat: 'Register for Chat',
-      inviteToChat: 'Invite to chat',
-      invitation: '💬 %username% has invited you to the Serlo community chat!\nGo to %chatlink% to join.',
+      goToChat: "Aller au chat",
+      registerChat: "S'inscrire au chat",
+      inviteToChat: "Inviter au chat",
+      invitation: "💬 %username% t'a invité dans le chat de la communauté Serlo !\nClique sur %chatlink% pour rejoindre.",
       inviteModal: {
-        part1: '%username% is not yet active in our community chat at %chatLink%.',
-        part2: 'You can invite %username% to the chat to send direct messages:',
-        button: 'Send invitation'
+        part1: "%username% n'est pas encore actif dans notre chat de la communauté à %chatLink%.",
+        part2: "Tu peux inviter %username% dans le chat pour envoyer des messages directs :",
+        button: "Envoyer une invitation"
       },
       activityGraph: {
-        edits: "Edits",
-        comments: "Comments",
-        reviews: "Reviews",
-        taxonomy: "Taxonomy",
-        legendary: "💙 Just wow! 💙",
-        untilNextLevel: "%amount% more to complete this circle 🎉"
+        edits: "Modifications",
+        comments: "Commentaires",
+        reviews: "Révisions",
+        taxonomy: "Taxonomie",
+        legendary: "💙 Wow! 💙",
+        untilNextLevel: "%amount% de plus pour compléter ce cercle 🎉"
       },
       howToEditImage: {
-        heading: 'How to edit your profile picture',
-        description: 'Currently we use the images from %chatLink% as profile pictures. In order to change your picture, do the following:',
+        heading: "Comment modifier votre photo de profil",
+        description: "Actuellement nous utilisons les images de %chatLink% comme des photos de profil. Pour changer la photo, fais ce qui suit :",
         steps: {
-          goToChat: 'Go to %chatLink%.',
-          signIn: 'Sign in.',
-          goToMyAccount: 'Go in the user menu to %myAccountLink%.',
-          myAccount: 'My Account',
-          uploadPicture: 'Upload a new picture (make sure it is square) and click "Save changes".',
-          refreshPage: 'Come back here and refresh the image using %refreshLink%.',
-          refreshLink: 'this link'
+          goToChat: "Aller à %chatLink%.",
+          signIn: "Se connecter.",
+          goToMyAccount: "Aller dans le menu utilisateur de %myAccountLink%.",
+          myAccount: "Mon Compte",
+          uploadPicture: "Télécharge une nouvelle image (assure-toi qu'elle est carrée) et clique sur \"Enregistrer les modifications\".",
+          refreshPage: "Reviens ici et rafraîchisse l'image en cliquant sur %refreshLink%.",
+          refreshLink: "ce lien"
         }
       },
       motivation: {
-        edit: 'Edit motivation',
-        add: 'Add motivation',
-        heading: 'How to edit your motivation',
-        intro: 'Motivations are a new feature we test at the moment. To edit your motivation you have to fill out a simple form.',
-        privacy: 'The form and data storage is offered by Google and personal data may be transferred to this service when using this feature.',
-        toForm: 'Motivation Form'
+        edit: "Modifier la motivation",
+        add: "Ajouter une motivation",
+        heading: "Comment modifier ta motivation",
+        intro: "Les motivations sont une nouvelle fonctionnalité que nous testons pour le moment. Pour modifier ta motivation, tu dois remplir un formulaire simple.",
+        privacy: "Le formulaire et le stockage des données sont offerts par Google et les données personnelles peuvent être transférées à ce service lors de l'utilisation de cette fonctionnalité.",
+        toForm: "Formulaire de motivation"
       }
     },
     notices: {
@@ -267,7 +267,7 @@ export const instanceData = {
       revisionSavedAccepted: "La révision a été enregistrée avec succès et acceptée ✅"
     },
     loading: {
-      oneMomentPlease: 'One moment please…',
+      oneMomentPlease: "Un instant SVP...",
       isLoading: "Chargement de contenu en cours…",
       unknownProblem: "Désolé,une erreure s'est produite lors du chargement du contenu, veuille réessayer plus tard."
     },
@@ -280,36 +280,36 @@ export const instanceData = {
       return: "touche Entrée"
     },
     eventLog: {
-      currentEvents: 'Current events',
-      oldestEvents: '%amount% oldest events',
-      globalDescription: 'All events that happen somewhere on %lang%.serlo.org'
+      currentEvents: "Évenements actuels",
+      oldestEvents: "%amount% événements les plus anciens",
+      globalDescription: "Tous les événements qui se produisent quelque part sur %lang%.serlo.org"
     },
     events: {
-      setThreadStateArchived: "%actor% archived %thread%.",
-      setThreadStateUnarchived: "%actor% restored %thread%.",
-      createComment: "%actor% commented in %thread%: %comment%.",
-      createThread: "%actor% started %thread% on %object%.",
-      createEntity: "%actor% created %object%.",
-      setLicense: "%actor% changed the license of %repository%.",
-      createEntityLink: "%actor% associated %child% with %parent%.",
-      removeEntityLink: "%actor% dissociated %child% from %parent%.",
-      createEntityRevision: "%actor% created a %revision% of %entity%.",
-      checkoutRevision: "%actor% checked out a %revision% in %repository%.",
-      rejectRevision: "%actor% did not accept a %revision% in %repository%.",
-      createTaxonomyLink: "%actor% added %child% to %parent%.",
-      removeTaxonomyLink: "%actor% removed %child% from %parent%.",
-      createTaxonomyTerm: "%actor% created %term%.",
-      setTaxonomyTerm: "%actor% updated %term%.",
-      setTaxonomyParentDeleted: "%actor% removed the parent of %child%.",
-      setTaxonomyParentChangedFrom: "%actor% changed parent of %child% from %previousparent% to %parent%.",
-      setTaxonomyParentChanged: "%actor% changed parent of %child% to %parent%.",
-      setUuidStateTrashed: "%actor% trashed %object%.",
-      setUuidStateRestored: "%actor% restored %object%.",
-      inviteToChat: "You have been invited to the Chat! %break% Go to %chatLink% to chat with %actor% and others.",
-      entityPlaceholderFallback: "Content"
+      setThreadStateArchived: "%actor% a archivé %thread%.",
+      setThreadStateUnarchived: "%actor% a restauré %thread%.",
+      createComment: "%actor% a commenté dans %thread%: %comment%.",
+      createThread: "%actor% a commencé %thread% dans %object%.",
+      createEntity: "%actor% a créé %object%.",
+      setLicense: "%actor% a modifié la licence de %repository%.",
+      createEntityLink: "%actor% a associé %child% à %parent%.",
+      removeEntityLink: "%actor% a dissocié %child% de %parent%.",
+      createEntityRevision: "%actor% a créé une %revision% de %entity%.",
+      checkoutRevision: "%actor% a accepté une %revision% dans %repository%.",
+      rejectRevision: "%actor% n'a pas accepté une %revision% dans %repository%.",
+      createTaxonomyLink: "%actor% a ajouté %child% à %parent%.",
+      removeTaxonomyLink: "%actor% a retiré %child% de %parent%.",
+      createTaxonomyTerm: "%actor% a créé %term%.",
+      setTaxonomyTerm: "%actor% a mis à jour %term%.",
+      setTaxonomyParentDeleted: "%actor% a supprimé le parent de %child%.",
+      setTaxonomyParentChangedFrom: "%actor% a changé le parent de %child% de %previousparent% à %parent%.",
+      setTaxonomyParentChanged: "%actor% a changé le parent de %child% à %parent%.",
+      setUuidStateTrashed: "%actor% a mis %object% dans la corbeille.",
+      setUuidStateRestored: "%actor% a restauré %object%.",
+      inviteToChat: "T'as été invité dans le Chat! %break% Clique sur %chatLink% pour discuter avec %actor% et d'autres.",
+      entityPlaceholderFallback: "Contenu"
     },
     actions: {
-      loadMore: "Load more"
+      loadMore: "Charger plus"
     }
   }
 };
@@ -348,7 +348,7 @@ export const loggedInData = {
     icon: 'user',
     children: [{
       url: '/user/me',
-      title: 'Own profile'
+      title: "Mon profil"
     }, {
       url: '/auth/password/change',
       title: "mettre à jour le mot de passe"
@@ -385,33 +385,33 @@ export const loggedInData = {
       editAssignments: "Modifier le sujet et le programme d'études",
       moveToTrash: "Déplacer dans la corbeille",
       restoreContent: "Restaurer à partir de la corbeille",
-      sortCoursePages: 'Sort course pages',
-      sortGroupedExercises: 'Sort grouped Exercises',
+      sortCoursePages: "Trier les pages du cours",
+      sortGroupedExercises: "Trier les exercices groupés",
       edit: "Modifier",
-      unrevisedEdit: 'Show unrevised revisions',
+      unrevisedEdit: "Afficher les révisions non révisées",
       organize: "Organiser",
       moveToGroupedTextExercise: "Déplacer le contenu vers un autre exercice de texte groupé",
       moveToTextExercise: "Déplacer le contenu vers un autre exercice de texte",
       sortEntities: "Trier le contenu",
       newEntity: "Nouveau contenu",
       editProfile: "Modifier profil",
-      directLink: 'Direct link to this content'
+      directLink: "Lien direct vers ce contenu"
     },
     notifications: {
       hide: "Masquer les notifications pour ce contenu.",
-      setToRead: "Set notification to read.",
-      setAllToRead: "Set all visible to read",
-      showNew: "New",
-      showRead: "Read"
+      setToRead: "Définir la notification comme lu.",
+      setAllToRead: "Définir tous les visibles comme lus.",
+      showNew: "Nouveau",
+      showRead: "Lu"
     },
     subscriptions: {
       mail: "E-mails",
       subscription: "Abonnement",
       noMails: "désactiver",
-      getMails: "activate",
+      getMails: "activer",
       noNotifications: "annuler",
-      loadedSentence: "Loaded %loadedCount% of %totalCount% subscriptions.",
-      loadMoreLink: "Load more!"
+      loadedSentence: "%loadedCount% sur %totalCount% abonnements chargés.",
+      loadMoreLink: "Charger plus!"
     },
     revisions: {
       checkout: {
@@ -422,10 +422,10 @@ export const loggedInData = {
       reject: {
         action: "Rejeter",
         title: "Rejeter la révision",
-        explanation: 'Please tell the author why you will not accept the submission.'
+        explanation: "Veuille indiquer à l'auteur pourquoi tu n'acceptes pas la soumission."
       },
       confirm: "Confirmer",
-      unrevisedTaxNote: 'New content, not accepted yet'
+      unrevisedTaxNote: "Nouveau contenu, pas encore accepté"
     }
   }
 };

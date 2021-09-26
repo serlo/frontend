@@ -1,6 +1,5 @@
 import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import styled from 'styled-components'
 
 import { Link } from '../content/link'
 import { HeadTags } from '../head-tags'
@@ -9,7 +8,7 @@ import ParticipateSVG from '@/assets-webkit/img/footer-participate.svg'
 import { LandingSubjectsNew } from '@/components/landing/rework/landing-subjects-new'
 import { useInstanceData } from '@/contexts/instance-context'
 import { InstanceLandingData } from '@/data-types'
-import { makeLightButton, makeResponsivePadding } from '@/helper/css'
+import { theme } from '@/theme'
 
 export interface LandingInternationalProps {
   data: InstanceLandingData
@@ -22,161 +21,155 @@ export function LandingInternational({ data }: LandingInternationalProps) {
 
   return (
     <>
+      <style jsx>{`
+        .section {
+          margin-top: 60px;
+          margin-bottom: 60px;
+          @apply px-side lg:px-side-lg;
+
+          @screen sm {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+          }
+
+          @screen lg {
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+          }
+        }
+        .col {
+          margin-top: 40px;
+
+          @screen sm {
+            margin-top: 0;
+            margin-right: 30px;
+            flex: 1;
+
+            & > p {
+              min-height: 80px;
+            }
+
+            &:last-child {
+              margin-right: 0;
+            }
+          }
+
+          @screen lg {
+            margin-right: 50px;
+          }
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+
+          :global(.a) {
+            /* ? */
+            margin-top: auto;
+          }
+
+          margin-bottom: 60px;
+        }
+        .image-section {
+          background-size: contain;
+          background-repeat: no-repeat;
+          padding-top: 43.75%;
+
+          background-image: url('https://packages.serlo.org/serlo-org-client@13.0.4/home_img_launch_sm.570e34cd.jpg');
+
+          @screen sm {
+            background-image: url('https://packages.serlo.org/serlo-org-client@13.0.4/home_img_launch_md.333b0782.jpg');
+          }
+
+          @screen md {
+            background-image: url('https://packages.serlo.org/serlo-org-client@13.0.4/home_img_launch_lg.b46ea2e2.jpg');
+          }
+        }
+        h2 {
+          font-size: 1.66rem;
+          @apply text-brand;
+          border: 0;
+          @screen sm {
+            width: 100%;
+          }
+        }
+        .principles-section {
+          @apply bg-brand px-side lg:px-side-lg;
+          text-align: center;
+          padding-top: 70px;
+          padding-bottom: 70px;
+
+          & > :global(svg) {
+            height: 450px;
+            width: 100%;
+            font-family: inherit;
+          }
+        }
+        .icon-style {
+          & > :global(path),
+          & :global(.st0) {
+            fill: ${theme.colors.brandGreen};
+          }
+          width: 100px;
+          margin-right: 30px;
+          @screen lg {
+            margin-right: 50px;
+            width: 120px;
+          }
+        }
+      `}</style>
       <HeadTags data={{ title: strings.header.slogan }} />
-      <Section>
+      <section className="section">
         <p className="serlo-p ml-0">{landingStrings.vision}</p>
-        <Button href="/serlo">
+        <Link
+          className="serlo-button serlo-make-interactive-light -ml-1"
+          href="/serlo"
+        >
           {landingStrings.learnMore}{' '}
           <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
-        </Button>
-      </Section>
-      <SubjectsSection>
+        </Link>
+      </section>
+      <section className="mb-14">
         <LandingSubjectsNew data={subjectsData} />
-      </SubjectsSection>
+      </section>
 
-      <PrinciplesSection>
+      <section className="principles-section">
         <PrinciplesGraphic strings={landingStrings} />
-      </PrinciplesSection>
+      </section>
 
-      <Section>
-        <StyledH2>{landingStrings.wikiTitle}</StyledH2>
+      <section className="section">
+        <h2>{landingStrings.wikiTitle}</h2>
         <p className="serlo-p ml-0">{landingStrings.wikiText}</p>
-      </Section>
+      </section>
 
-      <ImageSection />
+      <section className="image-section" />
 
-      <Section>
-        <StyledH2>{landingStrings.movementTitle}</StyledH2>
-        <IconStyle>
+      <section className="section">
+        <h2>{landingStrings.movementTitle}</h2>
+        <div className="icon-style">
           <ParticipateSVG />
-        </IconStyle>
-        <FlexCol>
+        </div>
+        <div className="col">
           <p className="serlo-p ml-0">{landingStrings.callForAuthors}</p>
-          <Button href="/community">
+          <Link
+            href="/community"
+            className="serlo-button serlo-make-interactive-light -ml-1"
+          >
             {landingStrings.communityLink}{' '}
             <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
-          </Button>
-        </FlexCol>
-        <FlexCol>
+          </Link>
+        </div>
+        <div className="col">
           <p className="serlo-p ml-0">{landingStrings.callForOther}</p>
-          <Button href="/get-involved">
+          <Link
+            href="/get-involved"
+            className="serlo-button serlo-make-interactive-light -ml-1"
+          >
             {landingStrings.getInvolved}{' '}
             <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
-          </Button>
-        </FlexCol>
-      </Section>
+          </Link>
+        </div>
+      </section>
     </>
   )
 }
-
-const SubjectsSection = styled.section`
-  margin-bottom: 60px;
-`
-const Section = styled.section`
-  margin-top: 60px;
-  margin-bottom: 60px;
-  ${makeResponsivePadding}
-
-  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
-    max-width: 900px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-`
-
-const Col = styled.div`
-  margin-top: 40px;
-
-  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-    margin-top: 0;
-    margin-right: 30px;
-    flex: 1;
-
-    & > p {
-      min-height: 80px;
-    }
-
-    &:last-child {
-      margin-right: 0;
-    }
-  }
-
-  @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
-    margin-right: 50px;
-  }
-`
-
-const ImageSection = styled.section`
-  background-size: contain;
-  background-repeat: no-repeat;
-  padding-top: 43.75%;
-
-  background-image: url('https://packages.serlo.org/serlo-org-client@13.0.4/home_img_launch_sm.570e34cd.jpg');
-
-  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-    background-image: url('https://packages.serlo.org/serlo-org-client@13.0.4/home_img_launch_md.333b0782.jpg');
-  }
-
-  @media (min-width: ${(props) => props.theme.breakpoints.md}) {
-    background-image: url('https://packages.serlo.org/serlo-org-client@13.0.4/home_img_launch_lg.b46ea2e2.jpg');
-  }
-`
-
-const StyledH2 = styled.h2`
-  font-size: 1.66rem;
-  color: ${(props) => props.theme.colors.brand};
-  border: 0;
-  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-    width: 100%;
-  }
-`
-
-const Button = styled(Link)`
-  ${makeLightButton}
-  margin-left: -3px;
-`
-
-const PrinciplesSection = styled.section`
-  background-color: ${(props) => props.theme.colors.brand};
-  text-align: center;
-  ${makeResponsivePadding}
-  padding-top: 70px;
-  padding-bottom: 70px;
-
-  & > svg {
-    height: 450px;
-    width: 100%;
-    font-family: inherit;
-  }
-`
-
-const IconStyle = styled.div`
-  & > path,
-  & .st0 {
-    fill: ${(props) => props.theme.colors.brandGreen};
-  }
-  width: 100px;
-  margin-right: 30px;
-  @media (min-width: ${(props) => props.theme.breakpoints.lg}) {
-    margin-right: 50px;
-    width: 120px;
-  }
-`
-
-const FlexCol = styled(Col)`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-
-  ${Button} {
-    margin-top: auto;
-  }
-
-  margin-bottom: 60px;
-`

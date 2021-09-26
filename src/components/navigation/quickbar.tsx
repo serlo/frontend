@@ -29,7 +29,7 @@ export function Quickbar() {
 
   useEffect(() => {
     if (query && !data) {
-      void fetch('https://arrrg.de/serlo-stats/quickbar.json')
+      void fetch('https://de.serlo.org/api/stats/quickbar.json')
         .then((res) => res.json())
         .then((data: QuickbarData) => {
           data.forEach((entry) => {
@@ -51,8 +51,14 @@ export function Quickbar() {
     const keywords = query.toLowerCase().split(' ')
     for (const entry of data) {
       let score = 0
-      if (entry.titleLower.includes(query.toLowerCase().trim())) {
+      const preparedQuery = query.toLowerCase().trim()
+      if (entry.titleLower.includes(preparedQuery)) {
         score += 100
+        if (entry.titleLower.startsWith(preparedQuery)) {
+          score += 10
+        } else if (entry.titleLower.includes(' ' + preparedQuery)) {
+          score += 8
+        }
       } else {
         let noHit = 0
         let kwCount = 0

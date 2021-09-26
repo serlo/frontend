@@ -1,5 +1,5 @@
+import clsx from 'clsx'
 import * as React from 'react'
-import styled from 'styled-components'
 
 export interface FeedbackProps {
   correct: boolean
@@ -8,20 +8,17 @@ export interface FeedbackProps {
 
 export function Feedback({ children, correct }: FeedbackProps) {
   return (
-    <FeedbackWrapper correct={correct}>
-      <span>⬤</span> <div>{children}</div>
+    <div className="ml-0 mb-0 flex">
+      <span
+        className={clsx(
+          'my-0 mr-0 ml-1',
+          correct ? 'text-brandgreen' : 'text-[#cc1500]'
+        )}
+      >
+        ⬤
+      </span>{' '}
+      <div>{children}</div>
       {correct && '🎉'}
-    </FeedbackWrapper>
+    </div>
   )
 }
-
-const FeedbackWrapper = styled.div<{ correct?: boolean }>`
-  margin-left: 0;
-  margin-bottom: 0;
-  display: flex;
-  > span {
-    margin: 0 0 0 3px;
-    color: ${(props) =>
-      props.correct ? props.theme.colors.brandGreen : '#cc1500'};
-  }
-`

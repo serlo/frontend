@@ -9,9 +9,8 @@ import Tippy from '@tippyjs/react'
 import { useRouter } from 'next/router'
 import { Fragment } from 'react'
 
-import { SubLink } from '../navigation/sub-link'
 import { AuthorToolsData, tippyDefaultProps } from './author-tools-hover-menu'
-import { SubButtonStyle } from './sub-button-style'
+import { MenuSubButtonLink } from './menu-sub-button-link'
 import { useCanDo } from '@/auth/use-can-do'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -219,8 +218,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
           className="block"
           key={loggedInStrings.authorMenu.unsubscribeNotifications}
         >
-          <SubButtonStyle
-            as="button"
+          <MenuSubButtonLink
             onClick={() => {
               void setSubscription({
                 id: [entityId],
@@ -230,7 +228,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
             }}
           >
             {loggedInStrings.authorMenu.unsubscribeNotifications}
-          </SubButtonStyle>
+          </MenuSubButtonLink>
         </li>
       )
     }
@@ -243,8 +241,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
               className="block"
               key={loggedInStrings.authorMenu.subscribeNotifications}
             >
-              <SubButtonStyle
-                as="button"
+              <MenuSubButtonLink
                 onClick={() => {
                   void setSubscription({
                     id: [entityId],
@@ -254,14 +251,13 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
                 }}
               >
                 {loggedInStrings.authorMenu.subscribeNotifications}
-              </SubButtonStyle>
+              </MenuSubButtonLink>
             </li>
             <li
               className="block"
               key={loggedInStrings.authorMenu.subscribeNotificationsAndMail}
             >
-              <SubButtonStyle
-                as="button"
+              <MenuSubButtonLink
                 onClick={() => {
                   void setSubscription({
                     id: [entityId],
@@ -271,17 +267,15 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
                 }}
               >
                 {loggedInStrings.authorMenu.subscribeNotificationsAndMail}
-              </SubButtonStyle>
+              </MenuSubButtonLink>
             </li>
           </ul>
         }
       >
         <li className="block">
-          <SubLink as="div" tabIndex={0}>
-            <SubButtonStyle>
-              ◂ {loggedInStrings.authorMenu.subscribe}
-            </SubButtonStyle>
-          </SubLink>
+          <MenuSubButtonLink tabIndex={0}>
+            ◂ {loggedInStrings.authorMenu.subscribe}
+          </MenuSubButtonLink>
         </li>
       </Tippy>
     )
@@ -293,14 +287,13 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
       : loggedInStrings.authorMenu.moveToTrash
     return (
       <li className="block" key={title}>
-        <SubButtonStyle
-          as="button"
+        <MenuSubButtonLink
           onClick={() => {
             void setUuidState({ id: [data.id], trashed: !data.trashed })
           }}
         >
           {title}
-        </SubButtonStyle>
+        </MenuSubButtonLink>
       </li>
     )
   }
@@ -358,11 +351,11 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
               </ul>
             }
           >
-            <SubLink as="div" tabIndex={0}>
-              <SubButtonStyle>
+            <div>
+              <MenuSubButtonLink tabIndex={0}>
                 ◂ {loggedInStrings.authorMenu.newEntity}
-              </SubButtonStyle>
-            </SubLink>
+              </MenuSubButtonLink>
+            </div>
           </Tippy>
         </li>
       )
@@ -371,9 +364,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   function renderLi(href: string, text: string) {
     return (
       <li className="block" key={text}>
-        <SubLink href={href}>
-          <SubButtonStyle>{text}</SubButtonStyle>
-        </SubLink>
+        <MenuSubButtonLink href={href}>{text}</MenuSubButtonLink>
       </li>
     )
   }

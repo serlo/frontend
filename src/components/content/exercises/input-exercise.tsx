@@ -1,12 +1,10 @@
 import type A from 'algebra.js'
+import clsx from 'clsx'
 import { useState, useEffect } from 'react'
-import styled, { css } from 'styled-components'
 
 import { Feedback } from './feedback'
-import { RevisionExtraInfo } from './sc-mc-exercise'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EdtrPluginInputExercise } from '@/data-types'
-import { makeMargin, makePrimaryButton, inputFontReset } from '@/helper/css'
 import { submitEventWithPath } from '@/helper/submit-event'
 import { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
 
@@ -47,9 +45,15 @@ export function InputExercise({
   }
 
   return (
-    <Wrapper>
-      <StyledInput
-        className="print:hidden"
+    <div className="mx-side mb-7">
+      <input
+        className={clsx(
+          'print:hidden serlo-input-font-reset',
+          'rounded-3xl py-2 px-3 active:font-bold focus:font-bold ',
+          'border-3 border-brand bg-brand mb-5 text-white',
+          'focus:outline-none focus:bg-white focus:text-brand focus:opacity-100 focus:placeholder-opacity-0',
+          'placeholder-white'
+        )}
         type="text"
         value={value}
         onChange={(e) => setValue(e.target.value)}
@@ -65,13 +69,20 @@ export function InputExercise({
       )}
       {A && (
         <>
-          <CheckButton selectable={value !== ''} onClick={evaluate}>
+          <a
+            className={clsx(
+              'serlo-button serlo-make-interactive-primary',
+              'mt-4',
+              value === '' && 'opacity-0 pointer-events-none'
+            )}
+            onClick={evaluate}
+          >
             {strings.content.check}
-          </CheckButton>
+          </a>
           {isRevisionView && renderRevisionExtra()}
         </>
       )}
-    </Wrapper>
+    </div>
   )
 
   function checkAnswer(): FeedbackData {
@@ -136,9 +147,9 @@ export function InputExercise({
 
   function renderRevisionExtra() {
     return data.answers.map((answer) => (
-      <RevisionExtraInfo
+      <div
         key={answer.value}
-        className="bg-yellow-200 rounded-xl py-2 mb-4"
+        className="bg-yellow-200 rounded-xl py-2 mb-4 serlo-revision-extra-info"
       >
         <span className="font-bold text-sm mx-side">
           {strings.content.answer}{' '}
@@ -146,51 +157,7 @@ export function InputExercise({
         </span>
         {answer.value}
         {renderNested(answer.feedback, `mcfeedbackrevision`)}
-      </RevisionExtraInfo>
+      </div>
     ))
   }
 }
-
-const Wrapper = styled.div`
-  ${makeMargin}
-  margin-bottom: 30px;
-`
-
-const CheckButton = styled.a<{ selectable: boolean }>`
-  ${makePrimaryButton}
-  margin-top: 16px;
-
-  ${(props) =>
-    !props.selectable &&
-    css`
-      opacity: 0;
-      pointer-events: none;
-    `}
-`
-
-const StyledInput = styled.input`
-  ${inputFontReset}
-  border-radius: 2em;
-  padding: 9px 12px;
-  font-weight: bold;
-  color: #fff;
-  border: 3px solid ${(props) => props.theme.colors.brand};
-  background-color: ${(props) => props.theme.colors.brand};
-  margin-bottom: 20px;
-
-  &:focus {
-    outline: none;
-    background-color: #fff;
-    color: ${(props) => props.theme.colors.brand};
-    border: 3px solid ${(props) => props.theme.colors.brand};
-    opacity: 1 !important;
-    &::placeholder {
-      opacity: 0;
-    }
-  }
-
-  &::placeholder {
-    color: #fff;
-    font-weight: 400;
-  }
-`

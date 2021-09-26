@@ -174,6 +174,7 @@
     }
 
     & .serlo-important,
+    & .serlo-blockquote,
     & .serlo-spoiler-body,
     & .serlo-solution-box,
     & .serlo-styled-label,
@@ -199,6 +200,179 @@
     @apply text-white text-xl bg-brand rounded-lg font-bold;
     @apply px-8 py-4 mb-5 tracking-tight block text-center;
     @apply hover:bg-brand-light hover:no-underline;
+  }
+  .serlo-blockquote {
+    @apply border-l-6 border-brand-150 p-2.5 my-block mx-side;
+  }
+  .serlo-revision-extra-info {
+    .serlo-p:last-child {
+      margin-bottom: 0;
+    }
+
+    > .serlo-p {
+      font-size: 1rem !important;
+    }
+  }
+  .serlo-menu-entry-special {
+    &:active,
+    &:hover,
+    &[aria-expanded='true'] {
+      @apply text-white bg-brand;
+
+      /*just for notifications count*/
+      & span.fa-layers {
+        color: #fff;
+      }
+    }
+  }
+  .serlo-search-input-hack {
+    @apply bg-brand-300;
+    display: flex;
+    transition: background-color 0.4s ease;
+    cursor: pointer;
+    outline: none;
+
+    &:focus-within {
+      @apply sm:bg-brand-300;
+    }
+
+    padding-left: 16px;
+    min-height: 38px;
+
+    @screen sm {
+      padding-left: 0;
+      min-height: 0;
+      position: absolute;
+      top: 133px;
+      right: 32px;
+      height: 35px;
+      width: 300px;
+      background-color: transparent;
+      border-radius: 18px;
+      transition: all 0.4s ease;
+      justify-content: flex-end;
+    }
+
+    @screen lg {
+      right: 27px;
+      margin-left: auto;
+    }
+
+    #___gcse_0 {
+      flex: 1;
+    }
+
+    .gcse-search {
+      display: none;
+    }
+
+    .gsc-input-box {
+      border: 0;
+      padding: 0;
+      background: none;
+    }
+
+    .gsib_a {
+      padding: 0;
+
+      @screen sm {
+        padding: 4px 0 0 0;
+        vertical-align: top;
+      }
+    }
+
+    form.gsc-search-box,
+    table.gsc-search-box {
+      margin-bottom: 0 !important;
+    }
+
+    td.gsc-search-button {
+      vertical-align: top;
+    }
+
+    input.gsc-input {
+      background: transparent !important;
+      text-indent: 0 !important;
+
+      &,
+      &::placeholder {
+        /*${inputFontReset}*/
+        flex: 1;
+        margin-left: 52px;
+        line-height: 40px;
+        font-size: 1rem;
+        font-weight: bold;
+        @apply text-brand;
+
+        @screen sm {
+          margin-left: 15px;
+        }
+        line-height: inherit;
+        font-size: 1rem !important;
+      }
+
+      &::placeholder {
+        text-indent: 50px !important;
+      }
+
+      @media (min-width: 450px) {
+        text-indent: 50px !important;
+      }
+
+      @screen sm {
+        text-indent: 15px !important;
+
+        &::placeholder {
+          text-indent: 15px !important;
+        }
+      }
+    }
+
+    button.gsc-search-button {
+      /*resets*/
+      pointer-events: auto;
+      padding: 0;
+      border: 0;
+      outline: none;
+      border-radius: 0;
+
+      & > svg {
+        /* doesn't need shared styles */
+        width: 18px;
+        height: 18px;
+        display: inline;
+      }
+
+      height: 40px;
+      width: 40px;
+      @apply bg-brand;
+      transition: background-color 0.2s ease-in;
+      text-align: center;
+      pointer-events: none;
+      cursor: pointer;
+
+      @screen sm {
+        border-radius: 5rem;
+        width: 35px;
+        height: 35px;
+        margin: 0;
+      }
+
+      &:hover,
+      &:focus {
+        @apply bg-brand-lighter;
+      }
+    }
+
+    table.gstl_50.gssb_c {
+      @apply z-50 serlo-input-font-reset;
+      @apply mt-0.5 left-1 !right-1 !w-auto;
+      @apply sm:ml-2.5 sm:mt-0.5 w-auto;
+
+      .gssb_a td {
+        @apply !whitespace-normal;
+      }
+    }
   }
 }
 
@@ -305,6 +479,15 @@
 .nprogress-custom-parent {
   @apply hidden relative;
 }
+table.gstl_50.gssb_c {
+  @apply z-50 serlo-input-font-reset;
+  @apply mt-0.5 left-1 !right-1 !w-auto;
+  @apply sm:ml-2.5 sm:mt-0.5 w-auto;
+
+  .gssb_a td {
+    @apply !whitespace-normal;
+  }
+}
 
 .nprogress-custom-parent #nprogress .spinner,
 .nprogress-custom-parent #nprogress .bar {
@@ -318,14 +501,4 @@ main b {
 }
 body {
   @apply tracking-slightly-tighter;
-}
-
-table.gstl_50.gssb_c {
-  @apply z-50 serlo-input-font-reset;
-  @apply mt-0.5 left-1 !right-1 !w-auto;
-  @apply sm:ml-2.5 sm:mt-0.5 w-auto;
-
-  .gssb_a td {
-    @apply !whitespace-normal;
-  }
 }

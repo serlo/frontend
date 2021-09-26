@@ -1,8 +1,7 @@
 import Tippy, { TippyProps } from '@tippyjs/react'
 
-import { SubLink } from '../navigation/sub-link'
 import { AuthorTools, Tool } from './author-tools'
-import { SubButtonStyle } from './sub-button-style'
+import { MenuSubButtonLink } from './menu-sub-button-link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
@@ -116,11 +115,9 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
           }
         >
           <li className="block">
-            <SubLink>
-              <SubButtonStyle>
-                ◂ {loggedInStrings.authorMenu.thisCoursePage}
-              </SubButtonStyle>
-            </SubLink>
+            <MenuSubButtonLink>
+              ◂ {loggedInStrings.authorMenu.thisCoursePage}
+            </MenuSubButtonLink>
           </li>
         </Tippy>
         <Tippy
@@ -146,11 +143,9 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
           }
         >
           <li className="block">
-            <SubLink>
-              <SubButtonStyle>
-                ◂ {loggedInStrings.authorMenu.wholeCourse}
-              </SubButtonStyle>
-            </SubLink>
+            <MenuSubButtonLink>
+              ◂ {loggedInStrings.authorMenu.wholeCourse}
+            </MenuSubButtonLink>
           </li>
         </Tippy>
       </ul>

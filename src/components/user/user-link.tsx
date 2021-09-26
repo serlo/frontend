@@ -1,5 +1,3 @@
-import styled from 'styled-components'
-
 import AuthorBadge from '@/assets-webkit/img/community/badge-author.svg'
 import DonorBadge from '@/assets-webkit/img/community/badge-donor.svg'
 import ReviewerBadge from '@/assets-webkit/img/community/badge-reviewer.svg'
@@ -33,7 +31,8 @@ export function UserLink({
         path={path ?? []}
       >
         {withIcon && (
-          <UserImage
+          <img
+            className="w-9 rounded-full mr-2 align-middle"
             src={getAvatarUrl(user.username)}
             alt={`User-Avatar: ${user.username}`}
           />
@@ -46,23 +45,25 @@ export function UserLink({
 
   function renderBadges() {
     return (
-      <BadgesWrap>
-        {user.isActiveReviewer && (
-          <span title={strings.roles.reviewer}>
-            <ReviewerBadge />
-          </span>
-        )}
-        {user.isActiveAuthor && (
-          <span title={strings.roles.author}>
-            <AuthorBadge />
-          </span>
-        )}
-        {user.isActiveDonor && (
-          <span title={strings.roles.donor}>
-            <DonorBadge />
-          </span>
-        )}
-      </BadgesWrap>
+      <>
+        <span className="inline-block align-text-bottom ml-[3px]">
+          {user.isActiveReviewer && (
+            <span title={strings.roles.reviewer}>
+              <ReviewerBadge className="w-4 h-auto ml-1 inline" />
+            </span>
+          )}
+          {user.isActiveAuthor && (
+            <span title={strings.roles.author}>
+              <AuthorBadge className="w-4 h-auto ml-1 inline" />
+            </span>
+          )}
+          {user.isActiveDonor && (
+            <span title={strings.roles.donor}>
+              <DonorBadge className="w-4 h-auto ml-1 inline" />
+            </span>
+          )}
+        </span>
+      </>
     )
   }
 }
@@ -70,22 +71,3 @@ export function UserLink({
 export function getAvatarUrl(username: string) {
   return `https://community.serlo.org/avatar/${username}`
 }
-
-const UserImage = styled.img`
-  width: 36px;
-  border-radius: 50%;
-  margin-right: 0.5em;
-  vertical-align: middle;
-`
-
-const BadgesWrap = styled.span`
-  display: inline-block;
-  vertical-align: sub;
-  margin-left: 3px;
-  > span > svg {
-    width: 1.1em;
-    height: auto;
-    margin-left: 0.3em;
-    display: inline;
-  }
-`

@@ -1,5 +1,4 @@
 import * as React from 'react'
-import styled from 'styled-components'
 
 import { Footer } from './navigation/footer'
 import { Header } from './navigation/header'
@@ -12,12 +11,12 @@ export function HeaderFooter({ children }: HeaderFooterProps) {
   return (
     <>
       <Header />
-      <MinHeightDiv>{children}</MinHeightDiv>
+      <div
+        className="min-h-[68vh] max-w-full overflow-x-hidden lg:overflow-visible" /* needed for sticky menu*/
+      >
+        {children}
+      </div>
       <Footer />
     </>
   )
 }
-
-const MinHeightDiv = styled.div`
-  min-height: 68vh;
-`

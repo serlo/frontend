@@ -24,7 +24,6 @@ import {
 import Tippy from '@tippyjs/react'
 import clsx from 'clsx'
 import * as R from 'ramda'
-import styled, { css } from 'styled-components'
 
 import { UserLink } from './user-link'
 import { useAuthentication } from '@/auth/use-authentication'
@@ -79,12 +78,41 @@ export function Event({
   const auth = useAuthentication()
 
   return (
-    <Item className={clsx('py-6 px-side', slim && 'pt-1 pb-1')}>
-      <StyledTimeAgo datetime={eventDate} dateAsTitle />
-      <Title unread={unread}>{renderText()}</Title>
-      {renderReason()}
-      {renderButtons()}
-    </Item>
+    <>
+      <style jsx>{`
+        .unread {
+          font-weight: bold;
+          &:before {
+            content: '';
+            display: inline-block;
+            @apply bg-brand;
+            border-radius: 50%;
+            width: 10px;
+            height: 10px;
+            margin-right: 7px;
+          }
+        }
+      `}</style>
+      <div
+        /*Item*/ className={clsx(
+          'py-6 px-side',
+          slim && 'pt-1 pb-1',
+          'relative my-2.5',
+          'odd:bg-brand-100'
+        )}
+      >
+        <TimeAgo
+          className="text-sm text-truegray-500"
+          /*StyledTimeAgo*/ datetime={eventDate}
+          dateAsTitle
+        />
+        <div className={clsx('mb-2 mt-0.25', unread && 'unread')} /*Title*/>
+          {renderText()}
+        </div>
+        {renderReason()}
+        {renderButtons()}
+      </div>
+    </>
   )
 
   function parseString(
@@ -236,7 +264,7 @@ export function Event({
       event.__typename === 'RejectRevisionNotificationEvent' ||
       event.__typename === 'CheckoutRevisionNotificationEvent'
     ) {
-      return <Content>{event.reason}</Content>
+      return <div className="text-truegray-500" /*Content*/>{event.reason}</div>
     }
   }
 
@@ -278,10 +306,10 @@ export function Event({
   function renderButtons() {
     if (!setToRead) return null
     return (
-      <ButtonWrapper>
+      <div className="absolute flex right-5 top-8" /*ButtonWrapper*/>
         {renderMuteButton()}
         {unread && renderReadButton()}
-      </ButtonWrapper>
+      </div>
     )
   }
 
@@ -292,11 +320,14 @@ export function Event({
         duration={[300, 250]}
         animation="fade"
         placement="bottom"
-        content={<Tooltip>{loggedInStrings?.setToRead}</Tooltip>}
+        content={renderTooltip(loggedInStrings?.setToRead)}
       >
-        <StyledButton onClick={() => setToRead(eventId)}>
+        <a
+          className="serlo-button serlo-make-interactive-transparent-blue text-base"
+          /*StyledButton*/ onClick={() => setToRead(eventId)}
+        >
           <FontAwesomeIcon icon={faCheck} />
-        </StyledButton>
+        </a>
       </Tippy>
     )
   }
@@ -307,89 +338,25 @@ export function Event({
         duration={[300, 250]}
         animation="fade"
         placement="bottom"
-        content={<Tooltip>{loggedInStrings?.hide}</Tooltip>}
+        content={renderTooltip(loggedInStrings?.hide)}
       >
-        <StyledButton href={`/unsubscribe/${event.objectId.toString()}`}>
+        <a
+          className="serlo-button serlo-make-interactive-transparent-blue text-base mr-3"
+          /*StyledButton*/ href={`/unsubscribe/${event.objectId.toString()}`}
+        >
           <FontAwesomeIcon icon={faBellSlash} />
-        </StyledButton>
+        </a>
       </Tippy>
     )
   }
+
+  function renderTooltip(text?: string) {
+    return (
+      <span
+        className="text-sm leading-tight block bg-truegray-800 text-white rounded-md py-2 px-2.5 max-w-[200px]" /*Tooltip*/
+      >
+        {text}
+      </span>
+    )
+  }
 }
-
-const StyledTimeAgo = styled(TimeAgo)`
-  font-size: 0.8rem;
-  color: ${(props) => props.theme.colors.gray};
-`
-
-const ButtonWrapper = styled.div`
-  display: flex;
-  position: absolute;
-  right: 20px;
-  top: 30px;
-`
-
-const StyledButton = styled.a`
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  padding: 10px;
-  margin-left: 10px;
-  border-radius: 2rem;
-  transition: all 0.2s ease-in;
-  color: ${(props) => props.theme.colors.brand};
-
-  &:hover {
-    background-color: ${(props) => props.theme.colors.brand};
-    color: #fff;
-  }
-`
-
-const Tooltip = styled.span`
-  font-size: 0.8rem;
-  line-height: 1.2rem;
-  display: block;
-  background-color: ${(props) => props.theme.colors.darkgray};
-  color: #fff;
-  border-radius: 4px;
-  padding: 8px 10px;
-  max-width: 200px;
-`
-
-const Item = styled.div`
-  position: relative;
-  margin: 10px 0;
-  &:nth-child(odd) {
-    background: ${(props) => props.theme.colors.bluewhite};
-  }
-
-  &:hover ${StyledButton} {
-    opacity: 1;
-  }
-`
-
-const Content = styled.span`
-  color: ${(props) => props.theme.colors.gray};
-  display: block;
-`
-
-const Title = styled.span<{ unread: boolean }>`
-  ${(props) =>
-    props.unread &&
-    css`
-      font-weight: bold;
-      &:before {
-        content: '';
-        display: inline-block;
-        background: ${props.theme.colors.brand};
-        border-radius: 50%;
-        width: 10px;
-        height: 10px;
-        margin-right: 7px;
-      }
-    `};
-
-  display: block;
-  margin-bottom: 9px;
-  margin-top: 1px;
-`

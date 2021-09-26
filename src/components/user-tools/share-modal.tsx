@@ -11,18 +11,12 @@ import {
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { lighten } from 'polished'
+import clsx from 'clsx'
 import * as React from 'react'
-import styled from 'styled-components'
 
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { EntityIdContext } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
-import {
-  makeMargin,
-  makeGreenTransparentButton,
-  inputFontReset,
-} from '@/helper/css'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { submitEvent } from '@/helper/submit-event'
 
@@ -106,6 +100,8 @@ export function ShareModal({ isOpen, onClose, showPdf }: ShareModalProps) {
 
   const path = window.location.pathname
   const fileName = `serlo__${path.split('/').pop() ?? id}.pdf`
+  const host =
+    window.location.hostname == 'localhost' ? `https://${lang}.serlo.org` : ''
 
   const getPdfData = (noSolutions?: boolean) => {
     return {
@@ -115,7 +111,7 @@ export function ShareModal({ isOpen, onClose, showPdf }: ShareModalProps) {
       onClick: () => {
         showToastNotice('🐒 ' + strings.loading.oneMomentPlease)
       },
-      href: `/api/pdf/${id}${noSolutions ? '?noSolutions' : ''}`,
+      href: `${host}/api/pdf/${id}${noSolutions ? '?noSolutions' : ''}`,
     }
   }
 
@@ -143,16 +139,21 @@ export function ShareModal({ isOpen, onClose, showPdf }: ShareModalProps) {
   function renderShareInput() {
     return (
       <>
-        <ShareInput
+        <input /*ShareInput*/
+          className={clsx(
+            'rounded-2xl border-none py-1 px-2.5 w-[250px]',
+            'mx-side mb-2 mr-0 bg-brandgreen-lighter',
+            'focus:outline-none focus:shadow-input'
+          )}
           ref={shareInputRef}
           onFocus={(e) => e.target.select()}
           defaultValue={shareUrl}
         />{' '}
         {document.queryCommandSupported('copy') && (
           <>
-            <Button onClick={copyToClipboard} as="button">
+            <button className={shareButton} onClick={copyToClipboard}>
               <FontAwesomeIcon icon={faCopy} /> {strings.share.copyLink}
-            </Button>
+            </button>
             <br />
           </>
         )}
@@ -162,64 +163,27 @@ export function ShareModal({ isOpen, onClose, showPdf }: ShareModalProps) {
 
   function renderButtons(list: EntryData[]) {
     return (
-      <ButtonWrapper>
+      <div className="flex items-start flex-col sm:flex-row mt-4">
         {list.map((entry: EntryData) => {
           return (
-            <Button
+            <a
+              className={shareButton}
               href={entry.href ?? undefined}
               key={entry.title}
               onClick={entry.onClick ?? undefined}
               download={entry.download}
             >
               <FontAwesomeIcon icon={entry.icon} /> {entry.title}
-            </Button>
+            </a>
           )
         })}
-      </ButtonWrapper>
+      </div>
     )
   }
 }
 
-const ButtonWrapper = styled.div`
-  margin-top: 17px;
-  display: flex;
-  align-items: flex-start;
-  flex-direction: column;
-  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-    flex-direction: row;
-  }
-`
-
-const ShareInput = styled.input`
-  ${inputFontReset}
-
-  border-radius: 18px;
-  border: 0;
-  padding: 5px 10px;
-  width: 250px;
-
-  ${makeMargin}
-  margin-bottom: 8px;
-  margin-right: 0;
-
-  background-color: ${(props) => lighten(0.45, props.theme.colors.brandGreen)};
-
-  &:focus {
-    outline: none;
-    box-shadow: 0 0 4px 0 ${(props) => props.theme.colors.brand};
-  }
-`
-
-const Button = styled.a`
-  ${makeGreenTransparentButton}
-  ${inputFontReset}
-  font-weight: bold;
-  margin-left: 12px;
-  display: inline;
-
-  @media (max-width: ${(props) => props.theme.breakpointsMax.sm}) {
-    ${makeMargin}
-    margin-top: 6px;
-    display: block;
-  }
-`
+const shareButton = /* className={ */ clsx(
+  'serlo-button text-brandgreen hover:bg-brandgreen hover:text-white',
+  'mx-side mt-1.5 block text-base py-0.5',
+  'sm:ml-3 sm:mr-0 sm:inline sm:mt-0'
+) /*}*/

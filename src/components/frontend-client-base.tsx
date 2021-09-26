@@ -2,7 +2,6 @@ import { AuthorizationPayload } from '@serlo/authorization'
 import { Router, useRouter } from 'next/router'
 import NProgress from 'nprogress'
 import * as React from 'react'
-import { ThemeProvider } from 'styled-components'
 
 import { ConditonalWrap } from './conditional-wrap'
 import { HeaderFooter } from './header-footer'
@@ -19,7 +18,6 @@ import type { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { frontendOrigin } from '@/helper/frontent-origin'
 import type { LoggedInStuff } from '@/helper/logged-in-stuff-chunk'
 import { triggerSentry } from '@/helper/trigger-sentry'
-import { theme } from '@/theme'
 
 export type FrontendClientBaseProps = React.PropsWithChildren<{
   noHeaderFooter?: boolean
@@ -100,38 +98,36 @@ export function FrontendClientBase({
   //console.dir(initialProps)
 
   return (
-    <ThemeProvider theme={theme}>
-      <InstanceDataProvider value={instanceData}>
-        <PrintMode />
-        <LoggedInComponentsProvider value={loggedInComponents}>
-          <AuthProvider unauthenticatedAuthorizationPayload={authorization}>
-            <LoggedInDataProvider value={loggedInData}>
-              <EntityIdProvider value={entityId || null}>
+    <InstanceDataProvider value={instanceData}>
+      <PrintMode />
+      <LoggedInComponentsProvider value={loggedInComponents}>
+        <AuthProvider unauthenticatedAuthorizationPayload={authorization}>
+          <LoggedInDataProvider value={loggedInData}>
+            <EntityIdProvider value={entityId || null}>
+              <ConditonalWrap
+                condition={!noHeaderFooter}
+                wrapper={(kids) => <HeaderFooter>{kids}</HeaderFooter>}
+              >
                 <ConditonalWrap
-                  condition={!noHeaderFooter}
-                  wrapper={(kids) => <HeaderFooter>{kids}</HeaderFooter>}
+                  condition={!noContainers}
+                  wrapper={(kids) => (
+                    <div className="relative">
+                      <MaxWidthDiv showNav={showNav}>
+                        <main>{kids}</main>
+                      </MaxWidthDiv>
+                    </div>
+                  )}
                 >
-                  <ConditonalWrap
-                    condition={!noContainers}
-                    wrapper={(kids) => (
-                      <div className="relative">
-                        <MaxWidthDiv showNav={showNav}>
-                          <main>{kids}</main>
-                        </MaxWidthDiv>
-                      </div>
-                    )}
-                  >
-                    {/* should not be necessary…?*/}
-                    {children as JSX.Element}
-                  </ConditonalWrap>
+                  {/* should not be necessary…?*/}
+                  {children as JSX.Element}
                 </ConditonalWrap>
-                <ToastNotice />
-              </EntityIdProvider>
-            </LoggedInDataProvider>
-          </AuthProvider>
-        </LoggedInComponentsProvider>
-      </InstanceDataProvider>
-    </ThemeProvider>
+              </ConditonalWrap>
+              <ToastNotice />
+            </EntityIdProvider>
+          </LoggedInDataProvider>
+        </AuthProvider>
+      </LoggedInComponentsProvider>
+    </InstanceDataProvider>
   )
 
   function getCachedLoggedInData() {
