@@ -10,7 +10,7 @@ import { useState, useRef, useEffect } from 'react'
 
 import { Lazy } from '../content/lazy'
 import { Guard } from '../guard'
-import { PleaseLogIn } from '../user/please-log-in'
+// import { PleaseLogIn } from '../user/please-log-in'
 import { CommentArchive } from './comment-archive'
 import { CommentForm } from './comment-form'
 import { Thread } from './thread'
