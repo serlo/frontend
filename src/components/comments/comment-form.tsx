@@ -1,4 +1,4 @@
-import { Editor } from '@edtr-io/core'
+import { EditorProps } from '@edtr-io/core'
 import { createTextPlugin, TextConfig } from '@edtr-io/plugin-text'
 import {
   faReply,
@@ -7,12 +7,17 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
+import dynamic from 'next/dynamic'
 import { useState, KeyboardEvent, useRef } from 'react'
 
 import { useInstanceData } from '@/contexts/instance-context'
 import { isMac } from '@/helper/client-detection'
 import { EdtrPluginText } from '@/schema/edtr-io-types'
 import { theme } from '@/theme'
+
+const Editor = dynamic<EditorProps>(() =>
+  import('@edtr-io/core').then((mod) => mod.Editor)
+)
 
 interface CommentFormProps {
   onSend: (
@@ -39,7 +44,12 @@ export function CommentForm({
   const commentState = useRef<EdtrPluginText>(initialState)
   const { strings } = useInstanceData()
   const [isSending, setIsSending] = useState(false)
+  const [isActive, setIsActive] = useState(false)
   const editorWrapRef = useRef<null | HTMLDivElement>(null)
+
+  function activateEditor() {
+    setIsActive(true)
+  }
 
   const textPlugin = createTextPlugin({
     placeholder,
@@ -87,18 +97,23 @@ export function CommentForm({
       className={clsx(
         'mx-side mt-4 mb-16 flex items-center rounded-2xl',
         'bg-brandgreen-lighter focus-within:bg-brandgreen-light',
-        'transition-colors duration-200 ease-in py-1'
+        'transition-colors duration-200 ease-in py-1 cursor-pointer'
       )}
       onKeyDown={onKeyDown}
       ref={editorWrapRef}
+      onClick={activateEditor}
     >
-      <Editor
-        onChange={(event) => {
-          commentState.current = event.getDocument() as EdtrPluginText
-        }} // @ts-expect-error think I followed edtr-io example, maybe outdated code in there?
-        plugins={{ text: textPlugin }}
-        initialState={initialState}
-      />
+      {isActive ? (
+        <Editor
+          onChange={(event) => {
+            commentState.current = event.getDocument() as EdtrPluginText
+          }} // @ts-expect-error think I followed edtr-io example, maybe outdated code in there?
+          plugins={{ text: textPlugin }}
+          initialState={initialState}
+        />
+      ) : (
+        <p className="pl-4 text-brandgreen text-lg w-full">{placeholder}</p>
+      )}
       <button
         title={sendTitle}
         onClick={onSendAction}
