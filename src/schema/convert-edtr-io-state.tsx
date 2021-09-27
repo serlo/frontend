@@ -1,7 +1,7 @@
 import { NewNode } from '@edtr-io/plugin-text'
 
-import { converter } from '../../external/markdown'
-import { convertLegacyState } from './convert-legacy-state'
+import type { converter } from '../../external/markdown'
+import type { convertLegacyState } from './convert-legacy-state'
 import {
   EdtrState,
   SlateBlockElement,
@@ -201,12 +201,20 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
     ]
   }
   if (node.plugin === 'table') {
-    const html = converter.makeHtml(node.state)
-    // compat: the markdown converter could return all types of content, only use table nodes.
-    const children = convertLegacyState(html).children.filter(
-      (child) => child.type == 'table'
-    )
-    return children
+    if (typeof window === 'undefined') {
+      const { converter_ } = require('../../external/markdown') as {
+        converter_: typeof converter
+      }
+      const { convertLegacyState_ } = require('./convert-legacy-state') as {
+        convertLegacyState_: typeof convertLegacyState
+      }
+      const html = converter_.makeHtml(node.state)
+      // compat: the markdown converter could return all types of content, only use table nodes.
+      const children = convertLegacyState_(html).children.filter(
+        (child) => child.type == 'table'
+      )
+      return children
+    }
   }
   if (node.plugin === 'video') {
     if (!node.state.src) {

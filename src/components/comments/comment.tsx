@@ -6,10 +6,11 @@ import * as React from 'react'
 import { Link } from '../content/link'
 import { MathSpanProps } from '../content/math-span'
 import { MetaBar } from './meta-bar'
-import { convertState } from '@/fetcher/convert-state'
+import { FrontendContentNode } from '@/data-types'
 import { replaceWithJSX } from '@/helper/replace-with-jsx'
 import { scrollIfNeeded } from '@/helper/scroll'
 import { renderArticle } from '@/schema/article-renderer'
+import { convert } from '@/schema/convert-edtr-io-state'
 
 interface CommentProps {
   threadId: string
@@ -111,5 +112,9 @@ export function Comment({
   function renderEdtrState() {
     const converted = convertState(content)
     return <div className="-mb-3">{renderArticle(converted)}</div>
+  }
+
+  function convertState(raw: string): FrontendContentNode[] {
+    return convert(JSON.parse(raw))
   }
 }
