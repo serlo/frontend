@@ -48,6 +48,11 @@ export interface Article extends EntityWithTaxonomyTerms {
   >
   revisions: {
     totalCount: number
+    nodes: [
+      {
+        title: string
+      }
+    ]
   }
 }
 
@@ -58,6 +63,11 @@ export interface Video extends EntityWithTaxonomyTerms {
   >
   revisions: {
     totalCount: number
+    nodes: [
+      {
+        title: string
+      }
+    ]
   }
 }
 
@@ -71,6 +81,11 @@ export interface Applet extends EntityWithTaxonomyTerms {
   >
   revisions: {
     totalCount: number
+    nodes: [
+      {
+        title: string
+      }
+    ]
   }
 }
 
@@ -81,6 +96,11 @@ export interface CoursePage extends Entity {
   >
   revisions: {
     totalCount: number
+    nodes: [
+      {
+        title: string
+      }
+    ]
   }
   course: {
     id: number
@@ -173,6 +193,9 @@ export interface Course extends Repository {
   __typename: 'Course'
   pages: {
     alias?: string
+    currentRevision?: {
+      title: string
+    }
   }[]
   currentRevision?: GraphQL.Maybe<Pick<GraphQL.CourseRevision, 'title'>>
   revisions: {
@@ -192,6 +215,7 @@ export interface TaxonomyTermChildOnX extends TaxonomyTermChild {
   currentRevision?: {
     title: string
   }
+  revisions?: { nodes?: [{ title: string }] }
 }
 
 export interface TaxonomyTermChildExercise
@@ -330,3 +354,32 @@ export type QueryResponseNoRevision =
   | User
 
 export type QueryResponse = QueryResponseNoRevision | QueryResponseRevision
+
+export type QueryResponseRevisionNoPage = Exclude<
+  QueryResponseRevision,
+  PageRevision
+>
+
+export interface UnrevisedEntityData extends GraphQL.AbstractEntity {
+  currentRevision: {
+    id: number
+    title?: string
+  } | null
+  __typename:
+    | 'Applet'
+    | 'Article'
+    | 'Course'
+    | 'CoursePage'
+    | 'Event'
+    | 'Exercise'
+    | 'ExerciseGroup'
+    | 'GroupedExercise'
+    | 'Video'
+    | 'Solution'
+  revisions?: {
+    nodes: QueryResponseRevisionNoPage[]
+  }
+  solutionRevisions?: {
+    nodes: QueryResponseRevisionNoPage[]
+  }
+}

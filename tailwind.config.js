@@ -18,6 +18,7 @@ module.exports = {
           DEFAULT: brand,
           light: tint(0.3, brand), // <- lightBlue
           lighter: tint(0.55, brand), // <- lighterBlue
+          300: tint(0.73, brand),
           150: tint(0.85, brand), // <-lightBlueBackground
           100: tint(0.94, brand), // <- bluewhite
           50: tint(0.96, brand), // <- lightBackground
@@ -76,6 +77,8 @@ module.exports = {
       boxShadow: {
         brand: `0 0 10px ${brand}, 0 0 5px ${brand}`,
         menu: 'rgba(0, 0, 0, 0.2) 0px 2px 4px;',
+        modal: '0px 0px 10px 0px rgba(0, 0, 0, 0.25)',
+        input: `0 0 4px 0 ${brand}`,
       },
       fontFamily: {
         serlo: 'Karmilla, sans-serif',
@@ -120,11 +123,14 @@ module.exports = {
       sm: '800px',
       md: '1024px',
       lg: '1216px',
+      xl: '1300px',
       print: { raw: 'print' },
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      margin: ['first'],
+    },
   },
   plugins: [
     plugin(function ({ addUtilities, addComponents }) {
@@ -147,8 +153,14 @@ module.exports = {
         '.special-content-space': {
           content: '" "',
         },
+        '.special-content-gt': {
+          content: '">"',
+        },
         '.special-hyphens-auto': {
           hyphens: 'auto',
+        },
+        'special-no-page-breaks-inside': {
+          'page-break-inside': 'avoid',
         },
       })
 

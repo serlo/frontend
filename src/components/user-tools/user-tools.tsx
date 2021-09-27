@@ -20,6 +20,7 @@ import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { getRevisionEditUrl } from '@/helper/get-revision-edit-url'
 
 interface UserToolsProps {
   id: number
@@ -49,7 +50,7 @@ export function UserTools({
   const loggedInData = useLoggedInData()
   const loggedInComponents = useLoggedInComponents()
   const canDo = useCanDo()
-
+  const isRevision = data.type.includes('Revision')
   // note: we hide the ui on ssr and fade it in on the client
   const [firstPass, setFirstPass] = useState(true)
 
@@ -130,7 +131,7 @@ export function UserTools({
 
     return (
       <>
-        {data.type === 'Revision' && renderRevisionTools()}
+        {isRevision && renderRevisionTools()}
         {(!hideEdit || auth.current) && renderEdit()}
         {renderShare()}
         {auth.current && renderExtraTools()}
@@ -163,9 +164,12 @@ export function UserTools({
         return `/taxonomy/term/update/${id}`
       }
     } else {
+      if (data.type === 'PageRevision' && canDo(Uuid.create('PageRevision'))) {
+        return getRevisionEditUrl(true, data.id, id)
+      }
       if (canDo(Uuid.create('EntityRevision'))) {
-        return data.type == 'Revision'
-          ? `/entity/repository/add-revision/${data.id}/${id}`
+        return isRevision
+          ? getRevisionEditUrl(false, data.id, id)
           : `/entity/repository/add-revision/${id}`
       }
     }
@@ -236,7 +240,7 @@ export function UserTools({
       '_ExerciseGroupInline',
       '_SolutionInline',
     ]
-    if (supportedTypes.indexOf(data.type) === -1) return null
+    if (!supportedTypes.includes(data.type)) return null
 
     const AuthorToolsHoverMenu = loggedInComponents?.AuthorToolsHoverMenu
 

@@ -126,16 +126,16 @@ export function Revision({ data }: RevisionProps) {
         id={data.thisRevision.id}
         aboveContent={above}
         data={{
-          type: 'Revision',
+          type: data.typename,
           id: data.repository.id,
           revisionId: data.thisRevision.id,
           checkoutRejectButtons:
             auth.current && canCheckoutAndReject ? (
               <CheckoutRejectButtons
                 revisionId={data.thisRevision.id}
-                repositoryAlias={repositoryAlias}
                 isRejected={isRejected}
                 isCurrent={isCurrentRevision}
+                isPage={data.typename === 'PageRevision'}
               />
             ) : undefined,
         }}

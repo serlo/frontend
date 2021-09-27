@@ -1,4 +1,4 @@
-import { Role, TaxonomyTermType } from '@serlo/api'
+import { Role, Subject, TaxonomyTermType } from '@serlo/api'
 import { AuthorizationPayload } from '@serlo/authorization'
 import { CSSProperties, FunctionComponent } from 'react'
 
@@ -19,6 +19,10 @@ export interface UserProps {
 
 export interface LandingProps {
   pageData: LandingPage
+}
+
+export interface UnrevisedRevisionsProps {
+  pageData: UnrevisedRevisionsPage
 }
 
 // Instance data consists of the language, translation strings, header menu and footer menu.
@@ -169,6 +173,7 @@ export interface HistoryRevisionData {
 export interface HistoryRevisionsData {
   id: number
   alias: string
+  __typename: string
   currentRevision: {
     id: number
     title?: string
@@ -259,9 +264,9 @@ export interface HorizonEntry {
 export interface FrontendUserData {
   username: string
   id: number
-  activeAuthor?: boolean
-  activeDonor?: boolean
-  activeReviewer?: boolean
+  isActiveAuthor?: boolean
+  isActiveDonor?: boolean
+  isActiveReviewer?: boolean
 }
 
 // All entities (except taxonomy) have a shared data structure.
@@ -286,6 +291,7 @@ export interface EntityData {
   courseData?: CourseData
   unrevisedRevisions?: number
   unrevisedCourseRevisions?: number
+  isUnrevised: boolean
 }
 
 export interface RevisionPage extends EntityPageBase {
@@ -325,6 +331,15 @@ export interface RevisionData {
   changes?: string
 }
 
+export interface UnrevisedRevisionsPage extends EntityPageBase {
+  kind: 'unrevisedRevisions'
+  revisionsData: UnrevisedRevisionsData
+}
+
+export interface UnrevisedRevisionsData {
+  subjects: Subject[]
+}
+
 // Entities each should have an translated string and a corresponding icon
 
 export type EntityTypes =
@@ -353,7 +368,7 @@ export type EntityStrings = {
 
 // Entities can belong to a category that we use in the taxonomy
 
-export type CategoryTypes =
+export type TopicCategoryTypes =
   | 'articles'
   | 'courses'
   | 'videos'
@@ -361,10 +376,6 @@ export type CategoryTypes =
   | 'folders'
   | 'exercises'
   | 'events'
-
-export type CategoryStrings = {
-  [K in EntityTypes]: string
-}
 
 // Some flags to control schema.org behaviour. Not very well done yet.
 
@@ -396,6 +407,29 @@ export interface FrontendANode {
   type: 'a'
   href: string
   children?: FrontendContentNode[]
+}
+
+export interface ArticleNodeUuidLink {
+  id: string
+  title: string
+}
+
+export interface FrontendArticleNode {
+  type: 'article'
+  introduction: FrontendContentNode[]
+  content: FrontendContentNode[]
+  exercises: FrontendContentNode[]
+  exerciseFolder: ArticleNodeUuidLink
+  relatedContent?: {
+    articles: ArticleNodeUuidLink[]
+    courses: ArticleNodeUuidLink[]
+    videos: ArticleNodeUuidLink[]
+  }
+  sources: {
+    href: string
+    title: string
+  }[]
+  children?: undefined
 }
 
 export interface FrontendInlineMathNode {
@@ -695,6 +729,7 @@ export type FrontendElementNode =
   | FrontendTdNode
 
 export type FrontendRestrictedElementNode =
+  | FrontendArticleNode
   | FrontendSpoilerContainerNode
   | FrontendTableNode
   | FrontendSpoilerContainerNode
@@ -758,9 +793,9 @@ export interface UserPage extends EntityPageBase {
     lastLogin?: string | null
     date: string
     roles: { role: Role; instance: string | null }[]
-    activeReviewer: boolean
-    activeAuthor: boolean
-    activeDonor: boolean
+    isActiveReviewer: boolean
+    isActiveAuthor: boolean
+    isActiveDonor: boolean
     activityByType: User['activityByType']
   }
 }
@@ -789,6 +824,7 @@ export interface TaxonomyTermBase {
 export interface TaxonomyLink {
   title: string
   url: string
+  unrevised?: boolean
 }
 
 // Second level has folders and exercises as links

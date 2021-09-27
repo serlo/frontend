@@ -17,6 +17,7 @@ export interface LinkProps {
   noCSR?: boolean
   path?: NodePath
   unreviewed?: boolean // e.g. user profiles or comments
+  tabIndex?: number // menu
 }
 
 // note: Previous discussion about fetching this dynamically https://github.com/serlo/frontend/issues/328
@@ -29,11 +30,13 @@ const legacyLinks = [
   '/enable-frontend',
   '/beitreten',
   '/user/settings',
+  '/user/register',
 ]
 
 export function isLegacyLink(_href: string) {
   // compat: this is a special frontend route or force frontend use
   if (_href == '/user/notifications') return false
+  if (_href == '/entity/unrevised') return false
   if (_href.startsWith('/entity/repository/history')) return false
   if (_href.startsWith('/entity/repository/compare')) return false
 
@@ -41,23 +44,30 @@ export function isLegacyLink(_href: string) {
     legacyLinks.includes(_href) ||
     _href.startsWith('/auth/') ||
     _href.startsWith('/api/auth') ||
+    _href.startsWith('/discussions') ||
     _href.startsWith('/entity') ||
+    _href.startsWith('/math/wiki/') || //temporary
+    _href.startsWith('/ref/') || // temporary
     _href.startsWith('/page') ||
     _href.startsWith('/taxonomy') ||
-    _href.startsWith('/discussions') ||
-    _href.startsWith('/subscription/update') ||
     _href.startsWith('/unsubscribe') ||
     _href.startsWith('/user/profile/') ||
-    _href.includes('.serlo.org') //e.g. community.serlo.org or different language
+    _href.startsWith('/subscription/update') ||
+    _href.includes('.serlo.org') // e.g. community.serlo.org or different language
   )
 }
 
-export function Link(props: LinkProps) {
-  return UnstyledLink({
-    ...props,
-    className: clsx(props.className, 'serlo-link'),
-  })
-}
+export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
+  (props, ref) => {
+    return UnstyledLink({
+      ...props,
+      className: clsx(props.className, 'serlo-link'),
+      ref,
+    })
+  }
+)
+
+Link.displayName = 'Link'
 
 export function UnstyledLink({
   href,
@@ -68,13 +78,15 @@ export function UnstyledLink({
   noCSR,
   path,
   unreviewed,
-}: LinkProps) {
+  tabIndex,
+  ref,
+}: LinkProps & { ref?: React.ForwardedRef<HTMLAnchorElement> }) {
   const { lang } = useInstanceData()
   const entityId = React.useContext(EntityIdContext)
 
   if (!href || href === undefined || href === '')
     return (
-      <a className={className} title={title}>
+      <a className={className} title={title} tabIndex={tabIndex} ref={ref}>
         {children}
       </a>
     )
@@ -180,6 +192,8 @@ export function UnstyledLink({
         onClick={clickHandler}
         rel={unreviewed && isExternal ? 'ugc nofollow noreferrer' : undefined}
         target={unreviewed && isExternal ? '_blank' : undefined}
+        tabIndex={tabIndex}
+        ref={ref}
       >
         {children}
         {isExternal && !noExternalIcon && <ExternalLink />}

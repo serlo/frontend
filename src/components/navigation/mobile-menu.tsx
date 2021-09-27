@@ -10,9 +10,8 @@ import {
   faBell,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { transparentize, lighten } from 'polished'
+import clsx from 'clsx'
 import * as React from 'react'
-import styled from 'styled-components'
 
 import { Link } from '../content/link'
 import { AuthenticationPayload } from '@/auth/auth-provider'
@@ -54,7 +53,7 @@ export function MobileMenu({ data, auth }: MobileMenuProps) {
   }
 
   return (
-    <List>
+    <ul>
       {data.map((entry, index) => (
         <Entry
           onToggle={toggle}
@@ -66,7 +65,7 @@ export function MobileMenu({ data, auth }: MobileMenuProps) {
         />
       ))}
       {renderAuthMenu()}
-    </List>
+    </ul>
   )
 
   function renderAuthMenu() {
@@ -85,6 +84,7 @@ export function MobileMenu({ data, auth }: MobileMenuProps) {
           open={openEntryIndex === data.length + i}
           index={data.length + i}
           title={link.title}
+          // children is a "protected" name, but we are using it as prop
           // eslint-disable-next-line react/no-children-prop
           children={link.children}
           icon={link.icon}
@@ -128,22 +128,33 @@ function Entry({
             : undefined
         }
       >
-        <EntryLink
+        <Link
           href={url}
-          isChild={isChild}
-          open={open}
           path={['menu', i, subI!]}
+          className={clsx(
+            'flex border-b border-brand-lighter',
+            'hover:no-underline p-4 hover:bg-brand-300',
+            isChild && 'bg-white',
+            open && 'bg-brand-300'
+          )}
         >
           {!isChild ? (
-            <IconWrapper>
+            <div
+              className={clsx(
+                'w-10 h-10 rounded-full flex justify-center items-center mr-2.5',
+                'bg-brand-150 text-brand-light'
+              )}
+            >
               <FontAwesomeIcon
                 icon={icon !== undefined ? menuIconMapping[icon] : faBars}
                 size="1x"
                 style={{ fontSize: '23px' }}
               />
-            </IconWrapper>
+            </div>
           ) : null}
-          <EntryLinkText isChild={isChild}>
+          <span
+            className={clsx(!isChild && 'text-[1.33rem] mt-1.5', 'font-bold')}
+          >
             {title}
             {children ? (
               <span>
@@ -151,80 +162,19 @@ function Entry({
                 <FontAwesomeIcon icon={faCaretDown} />
               </span>
             ) : null}
-          </EntryLinkText>
-        </EntryLink>
+          </span>
+        </Link>
       </li>
       {open && children ? (
         <>
           {children.map((entry, index) => (
             <Entry {...entry} isChild key={index} i={i} subI={index} />
           ))}{' '}
-          <Seperator />
+          <li
+            className="border-b border-brand-lighter h-7 bg-brand-300" /*Seperator*/
+          />
         </>
       ) : null}
     </>
   )
 }
-
-const EntryLinkText = styled.span<{ isChild?: boolean }>`
-  display: inline-block;
-  vertical-align: middle;
-  margin-top: ${(props) => (props.isChild ? '0' : '0.45rem')};
-`
-
-const List = styled.ul`
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-
-  .Collapsible__trigger.is-open li a {
-    background: ${(props) => transparentize(0.8, props.theme.colors.brand)};
-  }
-`
-
-const Seperator = styled.li`
-  height: 28px;
-  background-color: ${(props) => transparentize(0.8, props.theme.colors.brand)};
-  border-bottom: 1px solid ${(props) => props.theme.colors.lighterblue};
-`
-
-const EntryLink = styled(Link)<{ isChild?: boolean; open?: boolean }>`
-  display: flex;
-  align-items: start;
-  padding: 16px;
-  color: ${(props) => props.theme.colors.brand};
-  border-bottom: 1px solid;
-  border-color: ${(props) => props.theme.colors.lighterblue};
-  font-weight: bold;
-  text-decoration: none !important;
-  font-size: ${(props) => (props.isChild ? '1rem' : '1.33rem')};
-
-  background-color: ${(props) =>
-    props.open
-      ? transparentize(0.8, props.theme.colors.brand)
-      : props.theme.colors.bluewhite};
-
-  ${(props) => (props.isChild ? 'background-color: #fff;' : '')}
-
-  &:active {
-    background: ${(props) => transparentize(0.8, props.theme.colors.brand)};
-  }
-  @media (hover: hover) {
-    &:hover {
-      background: ${(props) => transparentize(0.8, props.theme.colors.brand)};
-    }
-  }
-`
-
-const IconWrapper = styled.div`
-  width: 40px;
-  height: 40px;
-  background-color: ${(props) => lighten(0.3, props.theme.colors.lightblue)};
-  border-radius: 160px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: ${(props) => props.theme.colors.lightblue};
-  text-align: center;
-  margin-right: 10px;
-`

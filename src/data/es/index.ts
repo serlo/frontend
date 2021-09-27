@@ -60,7 +60,8 @@ export const instanceData = {
       notifications: "Tus notificaciones",
       subscriptions: "Administrar suscripciones",
       revisionHistory: "Historial de revisiones",
-      eventLog: "Registro de eventos"
+      eventLog: "Registro de eventos",
+      unrevisedRevisions: "Revisiones no revisadas"
     },
     roles: {
       donor: "Donante",
@@ -72,7 +73,9 @@ export const instanceData = {
       title: "¡Comparte!",
       copyLink: "Copiar enlace",
       copySuccess: "!Enlace copiado!",
-      close: "Cerrar"
+      close: "Cerrar",
+      pdf: "Descargar PDF",
+      pdfNoSolutions: "PDF sin soluciones"
     },
     edit: {
       button: "Editar",
@@ -101,9 +104,17 @@ export const instanceData = {
       check: "Revisa tu respuesta",
       yourAnswer: "Tu respuesta...",
       chooseOption: "Elige una de las opciones.",
+      printModeChooseOption: "Elige una de las opciones.",
       trashedNotice: "Este contenido está marcado para su eliminación.",
+      unrevisedNotice: "Este contenido no tiene ninguna revisión aceptada todavía. Por favor, utiliza este vínculo %link% para previsualizar.",
       strategy: "Estrategia de solución",
-      picture: "Imagen"
+      picture: "Imagen",
+      previewImage: "Previsualizar Imagen",
+      exercisesTitle: "Ejercicios",
+      moreExercises: "Puedes encontrar más ejercicios en la siguiente carpeta:",
+      relatedContentTitle: "¿Todavía quieres más?",
+      relatedContentText: "Puedes encontrar más contenido sobre este tema aquí:",
+      sourcesTitle: "Fuentes"
     },
     consent: {
       title: "Consentimiento para contenido externo",
@@ -135,7 +146,7 @@ export const instanceData = {
       error: "Lo sentimos, no se han podido cargar los comentarios. Inténtalo de nuevo más tarde.",
       showMoreReply: "Mostrar una respuesta más",
       showMoreReplies: "Mostrar %number% respuestas más",
-      showArchived: "Mostrar archivados %threads%",
+      showArchived: "Mostrar  %threads% archivados",
       copyLink: "Copiar el vínculo del comentario"
     },
     revisions: {
@@ -171,6 +182,18 @@ export const instanceData = {
       viewLabel: "Mostrar esta revisión",
       status: "Estado"
     },
+    unrevisedRevisions: {
+      supportLinks: "Apoyo de revisión",
+      guideline: "Directrices para la revisión",
+      showMoreEntities: "Mostrar todo en %subject%",
+      showMoreRevisions: "Mostrar %number% más…",
+      newLabelText: "nuevo",
+      newLabelNote: "Esta es una nueva entidad",
+      wipLabelText: "limpiar",
+      wipLabelNote: "Marcado como trabajo en progreso. No revises todavía.",
+      newAuthorText: "Nuevo autor",
+      newAuthorNote: "Esta es una de las primeras ediciones de este autor, quizás priorizar esto."
+    },
     errors: {
       title: "😬 Los sitios web a veces cometen errores…",
       defaultMessage: "Lo sientimos, hemos encontrado un problema al cargar este contenido.",
@@ -182,6 +205,7 @@ export const instanceData = {
       backToHome: "Ir a la página de inicio"
     },
     print: {
+      preparingNotice: "¡Preparando impresión!",
       warning: "IMPORTANTE: Para asegurarse de que todas las imágenes y fórmulas se puedan imprimir, por favor desplácese hasta el final de la página ANTES de abrir este diálogo. ¡Gracias!"
     },
     profiles: {
@@ -253,7 +277,7 @@ export const instanceData = {
     },
     keys: {
       ctrl: 'ctrl',
-      return: "Volver"
+      return: "retorno"
     },
     eventLog: {
       currentEvents: "Eventos recientes",
@@ -267,7 +291,7 @@ export const instanceData = {
       createThread: "%actor% ha iniciado %thread% en %object%.",
       createEntity: "%actor% creó %object%.",
       setLicense: "%actor% cambió la licencia de %repository%.",
-      createEntityLink: "%actor% vinculó %child% con %parent%.",
+      createEntityLink: "%actor% asoció %child% con %parent%.",
       removeEntityLink: "%actor% disoció %child% de %parent%.",
       createEntityRevision: "%actor% creó una %revision% de %entity%.",
       checkoutRevision: "%actor% revisió una %revision% en %repository%.",
@@ -302,10 +326,10 @@ export const instanceLandingData = {
     adFree: "sin publicidad",
     freeOfCharge: "gratuito",
     wikiTitle: "Serlo es la Wikipedia para el Aprendizaje",
-    wikiText: "Al igual que Wikipedia, esta plataforma es creada por una comunidad de autores comprometidos con la educación. “Serlo Education” es propiedad de varios equipos descentralizados de voluntarios y profesionales, y manejado por ellos mismos alrededor del mundo.",
+    wikiText: "Al igual que Wikipedia, esta plataforma es creada por una comunidad de autores comprometidos con la educación. Serlo Education está dirigido y es propiedad de de varios equipos descentralizados de voluntarios y profesionales alrededor del mundo.",
     movementTitle: "Conviértete en Parte de Nuestro Movimiento para la Educación Abierta",
-    callForAuthors: "Estamos buscando profesores, maestros y educadores entusiastas a quienes les apasionen las materias que enseñan. ¡Conviértete en un autor en serlo.org! Tu puedes crear nuevo material de aprendizaje y ayudarnos a mejorar el contenido existente.",
-    communityLink: "Visita la página para autores",
+    callForAuthors: "Buscamos profesores y educadores apasionados por las materias que enseñan. Forma parte de nuestra comunidad para crear nuevo material didáctico y ayudarnos a mejorar los contenidos existentes.",
+    communityLink: "Visite la página de inicio de los autores",
     callForOther: "Nosotros ofrecemos una diversa gama de trabajo y oportunidades de voluntariado, dentro del campo del desarrollo de software, diseño, traducción, comunicación, administración de proyectos, y más.",
     getInvolved: "¡Participa!"
   }
@@ -361,7 +385,8 @@ export const loggedInData = {
       editAssignments: "Editar el tema y las asignaciones de currículo",
       moveToTrash: "Mover a la papelera",
       restoreContent: "Restaurar de la papelera",
-      sort: "Ordenar los niños",
+      sortCoursePages: "Ordenar páginas del curso",
+      sortGroupedExercises: "Ordenar ejercicios agrupados",
       edit: "Editar",
       unrevisedEdit: "Mostrar revisiones sin revisar",
       organize: "Organizar",
@@ -399,7 +424,8 @@ export const loggedInData = {
         title: "Rechazar la revisión",
         explanation: "Por favor, indica al autor por qué no aceptas el trabajo."
       },
-      confirm: "Confirmar"
+      confirm: "Confirmar",
+      unrevisedTaxNote: "Nuevo contenido, aún no aceptado"
     }
   }
 };

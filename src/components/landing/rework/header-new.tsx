@@ -6,8 +6,8 @@ import { Link } from '../../content/link'
 import { MobileMenu } from '../../navigation/mobile-menu'
 import { MobileMenuButtonNew } from '../../navigation/mobile-menu-button-new'
 import { MenuNew } from './menu-new'
-import { SearchInputNew } from './search-input-new'
 import { useAuthentication } from '@/auth/use-authentication'
+import { Quickbar } from '@/components/navigation/quickbar'
 import { useInstanceData } from '@/contexts/instance-context'
 
 export function HeaderNew() {
@@ -43,8 +43,8 @@ export function HeaderNew() {
             Die freie Lernplattform
           </span>
         </div>
-        <div className="hidden md:block">
-          <SearchInputNew />
+        <div className="hidden lg:block mt-5 flex-grow mx-8">
+          <Quickbar />
         </div>
 
         <MenuNew data={headerData} auth={auth.current} />

@@ -1,10 +1,9 @@
 import { faHeart, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import * as React from 'react'
-import styled from 'styled-components'
 
 import { useInstanceData } from '@/contexts/instance-context'
-import { makeMargin, makePadding, makePrimaryButton } from '@/helper/css'
 import { entityIconMapping } from '@/helper/icon-by-entity-type'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { serloDomain } from '@/helper/serlo-domain'
@@ -15,6 +14,7 @@ import { ExternalProvider, useConsent } from '@/helper/use-consent'
 
 interface PrivacyWrapperProps {
   children: React.ReactChild
+  className?: string
   placeholder?: React.ReactChild
   type: 'video' | 'applet' | 'twingle'
   provider: ExternalProvider
@@ -26,6 +26,7 @@ interface PrivacyWrapperProps {
 export function PrivacyWrapper({
   children,
   placeholder,
+  className,
   type,
   provider,
   embedUrl,
@@ -54,10 +55,18 @@ export function PrivacyWrapper({
   }
 
   return (
-    <Wrapper noMargin={isTwingle}>
+    <div
+      style={{ contain: 'content' }}
+      className={clsx(
+        className,
+        !isTwingle && 'mx-side',
+        'mb-block relative block cursor-pointer',
+        'bg-cover bg-center group'
+      )}
+    >
       {renderPlaceholder()}
       {showIframe && children}
-    </Wrapper>
+    </div>
   )
 
   function renderPlaceholder() {
@@ -74,12 +83,19 @@ export function PrivacyWrapper({
         )}`
 
     return (
-      <Placeholder>
-        <PreviewImageWrapper>
-          <PreviewImage src={previewImageUrl} faded={isTwingle} />
-        </PreviewImageWrapper>
+      <div className="text-center">
+        <div className="relative pb-[56.2%] bg-brand-100">
+          <img
+            className={clsx(
+              'absolute left-0 object-cover w-full h-full',
+              isTwingle ? 'opacity-50' : 'opacity-90'
+            )}
+            src={previewImageUrl}
+            alt={`${strings.content.previewImage} ${provider}`}
+          />
+        </div>
         {!checkConsent(provider) && (
-          <InfoBar>
+          <div className="relative z-10 py-2 text-left px-side bg-brand text-white cursor-default">
             {replacePlaceholders(strings.embed.text, {
               provider: <b>{provider}</b>,
               privacypolicy: (
@@ -88,11 +104,21 @@ export function PrivacyWrapper({
                 </a>
               ),
             })}
-          </InfoBar>
+          </div>
         )}
-        <ButtonWrap onClick={confirmLoad}>
-          <Playbutton onKeyDown={onKeyDown}>
+        <div
+          className="absolute -top-24 inset-0 flex justify-around items-center mobile:-top-12"
+          onClick={confirmLoad}
+        >
+          <button
+            className={clsx(
+              'serlo-button serlo-make-interactive-primary',
+              'text-[1.33rem] group-hover:bg-brand-light group-hover:text-white'
+            )}
+            onKeyDown={onKeyDown}
+          >
             <FontAwesomeIcon
+              className="pt-1"
               icon={
                 showIframe
                   ? faSpinner
@@ -103,81 +129,9 @@ export function PrivacyWrapper({
               spin={showIframe}
             />{' '}
             {buttonLabel}
-          </Playbutton>
-        </ButtonWrap>
-      </Placeholder>
+          </button>
+        </div>
+      </div>
     )
   }
 }
-
-const InfoBar = styled.div`
-  position: relative;
-  z-index: 5;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  text-align: left;
-  ${makePadding};
-  background-color: ${(props) => props.theme.colors.brand};
-  color: #fff;
-  cursor: default;
-
-  > a {
-    color: #fff;
-  }
-`
-
-const Placeholder = styled.div`
-  text-align: center;
-`
-const ButtonWrap = styled.div`
-  position: absolute;
-  top: -6rem;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  @media (min-width: 550px) {
-    top: -3rem;
-  }
-`
-
-const Wrapper = styled.div<{ noMargin?: boolean }>`
-  ${(props) => (props.noMargin ? '' : makeMargin)};
-  margin-bottom: ${(props) => props.theme.spacing.mb.block};
-  position: relative;
-  display: block;
-  contain: content;
-  background-position: center center;
-  background-size: cover;
-  cursor: pointer;
-`
-
-const PreviewImageWrapper = styled.div`
-  position: relative;
-  padding-bottom: 56.2%;
-  background-color: ${(props) => props.theme.colors.bluewhite};
-`
-
-const Playbutton = styled.button`
-  ${makePrimaryButton};
-  font-size: 1.33rem;
-  > svg {
-    padding-top: 3px;
-  }
-
-  ${Wrapper}:hover & {
-    background-color: ${(props) => props.theme.colors.lightblue};
-    color: #fff;
-  }
-`
-
-const PreviewImage = styled.img<{ faded?: boolean }>`
-  position: absolute;
-  left: 0;
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
-  opacity: ${(props) => (props.faded ? '0.55' : '0.9')};
-`

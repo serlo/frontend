@@ -13,6 +13,7 @@ export function ToastNotice() {
   const showTime = 4000
 
   useEffect(() => {
+    // welcome, bye
     if (window.location.hash === '#auth') {
       setTimeout(removeHash, 3000)
       showToastNotice(
@@ -51,13 +52,22 @@ export function ToastNotice() {
       }, 1000)
     }
 
-    if (window.location.hash === '#profile-refresh') {
+    if (
+      window.location.hash === '#profile-refresh' ||
+      window.location.hash === '#reload'
+    ) {
       showToastNotice(strings.loading.oneMomentPlease, 'default', showTime)
 
       setTimeout(() => {
         window.location.hash = '#flush-legacy'
         window.location.reload()
       }, 1000)
+    }
+
+    if (document.referrer.includes('/taxonomy/term/organize/')) {
+      setTimeout(() => {
+        window.location.reload()
+      }, 200)
     }
 
     if (window.location.hash == '#flush-legacy') {

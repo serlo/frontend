@@ -8,12 +8,11 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 import { useState, KeyboardEvent, useRef } from 'react'
-import styled from 'styled-components'
 
 import { useInstanceData } from '@/contexts/instance-context'
 import { isMac } from '@/helper/client-detection'
-import { inputFontReset } from '@/helper/css'
 import { EdtrPluginText } from '@/schema/edtr-io-types'
+import { theme } from '@/theme'
 
 interface CommentFormProps {
   onSend: (
@@ -81,8 +80,10 @@ export function CommentForm({
     isMac ? '⌘' : strings.keys.ctrl
   }↵`
 
+  // const formId = `comment-form${threadId ?? ''}`
+
   return (
-    <StyleWrap
+    <div
       className={clsx(
         'mx-side mt-4 mb-16 flex items-center rounded-2xl',
         'bg-brandgreen-lighter focus-within:bg-brandgreen-light',
@@ -113,57 +114,61 @@ export function CommentForm({
           className={reply ? '' : 'pl-0.5'}
         />
       </button>
-    </StyleWrap>
+      <style jsx>
+        {`
+          div {
+            :global(ul) {
+              list-style: initial;
+            }
+
+            :global(&:focus-within) {
+              overflow: visible;
+            }
+
+            :global(ul) {
+              list-style: initial;
+            }
+
+            :global(ol) {
+              list-style: decimal;
+            }
+
+            :global(a) {
+              text-decoration: underline;
+            }
+            :global(code) {
+              background-color: ${theme.colors.lightBlueBackground};
+              color: ${theme.colors.brand};
+              border-radius: 2px;
+              font-size: 1rem;
+              padding: 2px;
+            }
+
+            :global(> div) {
+              width: 100%;
+              font-size: 1.125rem;
+              color: #000;
+
+              padding: 0 3.5rem 0 0.6rem;
+
+              :global(div) {
+                margin-bottom: 0 !important;
+              }
+
+              /* style placeholder */
+              :global(span[contenteditable='false']) {
+                color: ${theme.colors.brandGreen} !important;
+                opacity: 1 !important;
+              }
+
+              /* hide bottom toolbar*/
+              :global(> div > div > div > div > div:first-child) {
+                opacity: 0;
+              }
+            }
+          }
+        `}
+      </style>
+    </div>
   )
 }
-
-const StyleWrap = styled.div`
-  &:focus-within {
-    overflow: visible;
-  }
-
-  ul {
-    list-style: initial;
-  }
-
-  ol {
-    list-style: decimal;
-  }
-
-  a {
-    text-decoration: underline;
-  }
-
-  code {
-    background-color: ${(props) => props.theme.colors.lightBlueBackground};
-    color: ${(props) => props.theme.colors.brand};
-    border-radius: 2px;
-    font-size: 1rem;
-    padding: 2px;
-  }
-
-  // overwrite some edtr.io styles
-  > div {
-    ${inputFontReset}
-    width: 100%;
-    font-size: 1.125rem;
-    color: #000;
-
-    padding: 0 3.5rem 0 0.6rem;
-
-    div {
-      margin-bottom: 0 !important;
-    }
-
-    /* style placeholder */
-    span[contenteditable='false'] {
-      color: ${(props) => props.theme.colors.brandGreen} !important;
-      opacity: 1 !important;
-    }
-
-    /* hide bottom toolbar*/
-    > div > div > div > div > div:first-child {
-      opacity: 0;
-    }
-  }
-`

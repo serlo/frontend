@@ -60,7 +60,8 @@ export const instanceData = {
       notifications: "आपकी सूचनाएं",
       subscriptions: "सदस्यताओं को प्रबंधित करें",
       revisionHistory: "संशोधन इतिहास",
-      eventLog: "Event Log"
+      eventLog: "Event Log",
+      unrevisedRevisions: 'Unrevised Revisions'
     },
     roles: {
       donor: "दाताओं",
@@ -72,7 +73,9 @@ export const instanceData = {
       title: "सांझा करें",
       copyLink: "लिंक कॉपी करें",
       copySuccess: "लिंक कॉपी किया गया!",
-      close: "बंद करें"
+      close: "बंद करें",
+      pdf: 'Download as PDF',
+      pdfNoSolutions: 'PDF without solutions'
     },
     edit: {
       button: "संपादित करें",
@@ -101,9 +104,17 @@ export const instanceData = {
       check: "जाँच करें",
       yourAnswer: "आपका उत्तर",
       chooseOption: "किसी एक विकल्प पर क्लिक करें",
+      printModeChooseOption: 'Check one of the options.',
       trashedNotice: "यह सामग्री हटाने के लिए चिह्नित है",
+      unrevisedNotice: 'This content has no accepted revision yet. Please use the %link% to preview.',
       strategy: 'Solution Strategy',
-      picture: 'Picture'
+      picture: 'Picture',
+      previewImage: 'Preview Image',
+      exercisesTitle: 'Exercises',
+      moreExercises: 'You can find more exercises in the following folder:',
+      relatedContentTitle: 'Still want more?',
+      relatedContentText: 'You can find more content on this topic here:',
+      sourcesTitle: 'Sources'
     },
     consent: {
       title: "बाहरी सामग्री के लिए सहमति",
@@ -171,6 +182,18 @@ export const instanceData = {
       viewLabel: 'Show this revision',
       status: 'Status'
     },
+    unrevisedRevisions: {
+      supportLinks: 'Review support',
+      guideline: 'Guideline for reviewing',
+      showMoreEntities: 'Show all in %subject%',
+      showMoreRevisions: 'Show %number% more…',
+      newLabelText: 'new',
+      newLabelNote: 'This is a new entity',
+      wipLabelText: 'wip',
+      wipLabelNote: 'Marked as work in progress. Do not review yet.',
+      newAuthorText: 'new author',
+      newAuthorNote: 'This is one of the first edits of this author, maybe prioritise this.'
+    },
     errors: {
       title: "😬 वेबसाइटें कभी-कभी गलतियाँ करती हैं",
       defaultMessage: "क्षमा करें, हमें इस सामग्री को लोड करने में समस्या है।",
@@ -182,6 +205,7 @@ export const instanceData = {
       backToHome: "होमपेज पर जाएं"
     },
     print: {
+      preparingNotice: 'Preparing print!',
       warning: "महत्वपूर्ण: सभी चित्र और सूत्र प्रिंट करने के लिए, कृपया इस संवाद को खोलने से पहले पृष्ठ के अंत में नीचे स्क्रॉल करें। धन्यवाद!"
     },
     profiles: {
@@ -361,7 +385,8 @@ export const loggedInData = {
       editAssignments: "विषय और पाठ्यचर्या असाइनमेंट संपादित करें",
       moveToTrash: "रद्दी में डालें",
       restoreContent: "कचरे से पुनर्स्थापित करें",
-      sort: "सोर्ट चिल्ड्रन",
+      sortCoursePages: 'Sort course pages',
+      sortGroupedExercises: 'Sort grouped Exercises',
       edit: "संपादित",
       unrevisedEdit: 'Show unrevised revisions',
       organize: "आयोजन",
@@ -399,7 +424,8 @@ export const loggedInData = {
         title: "संशोधन अस्वीकारें",
         explanation: 'Please tell the author why you will not accept the submission.'
       },
-      confirm: "पुष्टि करें"
+      confirm: "पुष्टि करें",
+      unrevisedTaxNote: 'New content, not accepted yet'
     }
   }
 };

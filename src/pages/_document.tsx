@@ -5,7 +5,6 @@ import Document, {
   NextScript,
   DocumentContext,
 } from 'next/document'
-import { ServerStyleSheet } from 'styled-components'
 
 import { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { htmlEscapeStringForJson } from '@/helper/html-escape'
@@ -29,29 +28,8 @@ const sentryLoader = `
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
-    const sheet = new ServerStyleSheet()
-    const originalRenderPage = ctx.renderPage
-
-    try {
-      ctx.renderPage = () =>
-        originalRenderPage({
-          enhanceApp: (App) => (props) =>
-            sheet.collectStyles(<App {...props} />),
-        })
-
-      const initialProps = await Document.getInitialProps(ctx)
-      return {
-        ...initialProps,
-        styles: (
-          <>
-            {initialProps.styles}
-            {sheet.getStyleElement()}
-          </>
-        ),
-      }
-    } finally {
-      sheet.seal()
-    }
+    const initialProps = await Document.getInitialProps(ctx)
+    return { ...initialProps }
   }
 
   render() {
@@ -59,7 +37,7 @@ export default class MyDocument extends Document {
       ? getInstanceDataByLang(this.props.__NEXT_DATA__.locale)
       : undefined
     return (
-      <Html>
+      <Html className="print:serlo-print-style">
         <Head>
           <meta property="og:site_name" content="Serlo" />
           <meta property="og:type" content="website" />

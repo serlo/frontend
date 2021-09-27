@@ -1,5 +1,4 @@
 import { Fragment } from 'react'
-import styled from 'styled-components'
 
 import { Link } from '../../content/link'
 import { FooterNavNew } from './footer-nav-new'
@@ -22,32 +21,33 @@ export function FooterNew() {
 
   function renderFooterLine() {
     return (
-      <FooterLineNav className="text-center">
-        {footerData.footerNavigation[2].children.map(({ title, url }) => {
-          return (
-            <Fragment key={title}>
-              <Link
-                className="text-truegray-700 mobile:whitespace-nowrap pr-4"
-                href={url}
-                noExternalIcon
-              >
-                {title}
-              </Link>{' '}
-            </Fragment>
-          )
-        })}
-      </FooterLineNav>
+      <>
+        <style jsx>{`
+          nav > :global(a) {
+            &:not(:last-child):after {
+              content: '•';
+              position: absolute;
+              width: 1.2rem;
+              opacity: 0.4;
+            }
+          }
+        `}</style>
+        <nav className="text-center">
+          {footerData.footerNavigation[2].children.map(({ title, url }) => {
+            return (
+              <Fragment key={title}>
+                <Link
+                  className="text-truegray-700 mobile:whitespace-nowrap pr-4"
+                  href={url}
+                  noExternalIcon
+                >
+                  {title}
+                </Link>{' '}
+              </Fragment>
+            )
+          })}
+        </nav>
+      </>
     )
   }
 }
-
-const FooterLineNav = styled.nav`
-  > a {
-    &:not(:last-child):after {
-      content: '•';
-      position: absolute;
-      width: 1.2rem;
-      opacity: 0.4;
-    }
-  }
-`

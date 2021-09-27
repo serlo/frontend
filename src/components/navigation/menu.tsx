@@ -1,19 +1,17 @@
 import { faCaretDown, faUser, faBell } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import type { TippyProps } from '@tippyjs/react'
+import clsx from 'clsx'
 import { useState, useEffect } from 'react'
-import styled from 'styled-components'
 
 import { Link } from '../content/link'
-import { SubButtonStyle } from '../user-tools/sub-button-style'
+import { MenuSubButtonLink } from '../user-tools/menu-sub-button-link'
 import { getAvatarUrl } from '../user/user-link'
-import { SubLink } from './sub-link'
 import { AuthenticationPayload } from '@/auth/auth-provider'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { HeaderData, HeaderLink } from '@/data-types'
-import { makeTransparentButton } from '@/helper/css'
 import { getAuthData, shouldUseNewAuth } from '@/helper/feature-auth'
 
 // Only show some icons on full menu
@@ -85,7 +83,7 @@ function MenuInner({
   }
 
   return (
-    <ResponsiveNav>
+    <nav className="min-h-[50px] hidden sm:block">
       {Tippy && (
         <Tippy.default
           singleton={source}
@@ -105,7 +103,7 @@ function MenuInner({
         {data.map((link, i) => renderEntry({ link }, i))}
         {renderAuthMenu()}
       </ul>
-    </ResponsiveNav>
+    </nav>
   )
 
   function renderAuthMenu() {
@@ -155,10 +153,23 @@ function MenuInner({
       link.icon !== undefined &&
       menuIconMapping[link.icon] !== undefined
 
+    const styledLinkCls = /* className={ */ clsx(
+      'serlo-button serlo-make-interactive-transparent-blue',
+      'text-base leading-tight block transition mx-[3px] my-0 text-brand-light',
+      hasIcon ? '-mt-[5px] p-[7px]' : 'mt-[11px] py-0.5 px-[7px]',
+      'serlo-menu-entry-special'
+    )
+
     return (
-      <Li
+      <li
+        className={clsx(
+          'inline-block',
+          (authMenuMounted === undefined ? true : authMenuMounted)
+            ? 'opacity-100'
+            : 'opacity-0',
+          'ease-linear duration-700'
+        )}
         key={link.title}
-        show={authMenuMounted === undefined ? true : authMenuMounted}
       >
         {hasChildren ? (
           Tippy ? (
@@ -166,37 +177,28 @@ function MenuInner({
               content={renderSubMenuInner(link.children, i)}
               singleton={target}
             >
-              <StyledLink
-                hasIcon={hasIcon}
-                as="a"
-                tabIndex={0} /*active={true}*/
-              >
+              <Link tabIndex={0} className={styledLinkCls}>
                 {renderIcon()}
                 {!hasIcon && link.title} <FontAwesomeIcon icon={faCaretDown} />
-              </StyledLink>
+              </Link>
             </Tippy.default>
           ) : (
-            <StyledLink
-              hasIcon={hasIcon}
-              as="a"
-              tabIndex={0}
-              /*active={true}*/
-            >
+            <Link tabIndex={0} className={styledLinkCls}>
               {renderIcon()}
               {!hasIcon && link.title} <FontAwesomeIcon icon={faCaretDown} />
-            </StyledLink>
+            </Link>
           )
         ) : (
-          <StyledLink
-            hasIcon={hasIcon}
-            /*active={true}*/ href={link.url}
+          <Link
+            href={link.url}
             path={['menu', i]}
-            className="group"
+            className={clsx('group', styledLinkCls)}
           >
             {renderIcon()} {!hasIcon && link.title}
-          </StyledLink>
+            <span className="sr-only">{strings.pageTitles.notifications}</span>
+          </Link>
         )}
-      </Li>
+      </li>
     )
 
     function renderIcon() {
@@ -242,9 +244,9 @@ function MenuInner({
               : entry.url
             return (
               <li key={entry.title} onClick={onSubMenuInnerClick}>
-                <SubLink href={href} path={['menu', i!, i2]}>
-                  <SubButtonStyle>{entry.title}</SubButtonStyle>
-                </SubLink>
+                <MenuSubButtonLink href={href} path={['menu', i!, i2]}>
+                  {entry.title}
+                </MenuSubButtonLink>
               </li>
             )
           })}
@@ -252,44 +254,3 @@ function MenuInner({
     )
   }
 }
-
-const ResponsiveNav = styled.nav`
-  min-height: 50px;
-  @media (max-width: ${(props) => props.theme.breakpointsMax.sm}) {
-    display: none;
-  }
-`
-
-const Li = styled.li<{ show: boolean }>`
-  display: inline-block;
-  opacity: ${(props) => (props.show ? 1 : 0)};
-  transition: 0.7s linear;
-`
-
-const StyledLink = styled(Link)<{ active?: boolean; hasIcon?: boolean }>`
-  ${makeTransparentButton}
-  &:active,
-  &:hover,
-  &[aria-expanded='true'] {
-    color: #fff;
-    background-color: ${(props) => props.theme.colors.brand};
-
-    /*just for notifications count*/
-    & span.fa-layers {
-      color: #fff;
-    }
-  }
-  font-size: 1rem;
-  color: ${(props) =>
-    props.theme.colors[props.active ? 'darkgray' : 'lightblue']};
-
-  background-color: ${(props) =>
-    props.active ? props.theme.colors.lighterblue : 'inherit'};
-
-  transition: all 0.3s ease-in-out 0s;
-  display: block;
-
-  margin: 0 3px;
-  margin-top: ${(props) => (props.hasIcon ? '-5px' : '11px')};
-  padding: ${(props) => (props.hasIcon ? '7px' : '2px 7px')};
-`

@@ -1,6 +1,5 @@
 import { faFilm } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import styled from 'styled-components'
 
 import { LicenseNotice } from './license-notice'
 import { PrivacyWrapper } from './privacy-wrapper'
@@ -16,10 +15,8 @@ export interface VideoProps {
   license?: LicenseData
 }
 
-export function Video(props: VideoProps) {
+export function Video({ src, path, license }: VideoProps) {
   const { lang } = useInstanceData()
-
-  const { src, path, license } = props
 
   const vimeo = /^(https?:\/\/)?(.*?vimeo\.com\/)(.+)/.exec(src)
   if (vimeo) return renderVimeo(vimeo[3])
@@ -68,10 +65,11 @@ export function Video(props: VideoProps) {
           onLoad={() => {
             submitEventWithPath('loadvideo', path)
           }}
+          className="print:hidden"
         >
-          <VideoWrapper className="m-0 p-0 print:hidden">
+          <div className="m-0 p-0">
             {provider === ExternalProvider.WikimediaCommons && (
-              <video controls src={src} />
+              <video controls src={src} className={videoElementCls} />
             )}
             {(provider === ExternalProvider.YouTube ||
               ExternalProvider.Vimeo) && (
@@ -80,31 +78,21 @@ export function Video(props: VideoProps) {
                 frameBorder="0"
                 allow="autoplay; encrypted-media; picture-in-picture"
                 allowFullScreen
+                className={videoElementCls}
               />
             )}
-          </VideoWrapper>
+          </div>
         </PrivacyWrapper>
         {license && !license.default && (
           <p className="serlo-p">
             <LicenseNotice minimal data={license} type="video" path={path} />
           </p>
         )}
+        <p className="serlo-p hidden print:block">[{src}]</p>
       </>
     )
   }
 }
 
-const VideoWrapper = styled.figure`
-  & > video,
-  & > iframe,
-  & > div {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
-    z-index: 6;
-    background-color: rgba(0, 0, 0, 0.3);
-  }
-`
+const videoElementCls =
+  /* className={ */ 'absolute top-0 left-0 h-full w-full border-none z-20 bg-black/30' /*}*/

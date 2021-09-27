@@ -11,7 +11,7 @@ import { renderedPageNoHooks } from '@/helper/rendered-page'
 export default renderedPageNoHooks<UserProps>(({ pageData }) => {
   if (pageData === undefined) return <ErrorPage code={404} />
   if (pageData.kind === 'user/profile') {
-    const { activeDonor, activeReviewer, activeAuthor, username } =
+    const { isActiveDonor, isActiveReviewer, isActiveAuthor, username } =
       pageData.userData
     return (
       <FrontendClientBase
@@ -20,7 +20,7 @@ export default renderedPageNoHooks<UserProps>(({ pageData }) => {
       >
         <Head>
           <title>{username}</title>
-          {!activeDonor && !activeAuthor && !activeReviewer && (
+          {!isActiveDonor && !isActiveAuthor && !isActiveReviewer && (
             <meta name="robots" content="noindex" />
           )}
         </Head>

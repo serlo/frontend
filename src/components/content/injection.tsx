@@ -16,7 +16,7 @@ export function Injection({ href, renderNested }: InjectionProps) {
   )
 
   const [id, setId] = useState<number | undefined>(undefined)
-  const { lang } = useInstanceData()
+  const { strings, lang } = useInstanceData()
 
   useEffect(() => {
     const encodedHref = encodeURI(href.startsWith('/') ? href : `/${href}`)
@@ -37,23 +37,30 @@ export function Injection({ href, renderNested }: InjectionProps) {
         const pageData = (json as { pageProps: SlugProps }).pageProps.pageData
         dataToState(pageData)
       })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [href, lang])
 
   function dataToState(pageData: SlugPageData) {
     if (pageData.kind === 'single-entity') {
       setId(pageData.entityData.id)
       setValue(pageData.entityData.content)
+      return
     }
-    if (pageData.kind === 'error') {
-      if (pageData.errorData.message) {
-        setValue([
-          {
-            type: 'p',
-            children: [{ type: 'text', text: pageData.errorData.message }],
-          },
-        ])
-      }
+    if (pageData.kind === 'error' && pageData.errorData.message) {
+      setValue([
+        {
+          type: 'p',
+          children: [{ type: 'text', text: pageData.errorData.message }],
+        },
+      ])
+      return
     }
+    setValue([
+      {
+        type: 'p',
+        children: [{ type: 'text', text: strings.errors.defaultMessage }],
+      },
+    ])
   }
 
   if (value) {

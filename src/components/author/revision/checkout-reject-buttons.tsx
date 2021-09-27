@@ -1,26 +1,24 @@
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState, KeyboardEvent } from 'react'
-import styled, { css } from 'styled-components'
 
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { inputFontReset, makeLightButton, makeMargin } from '@/helper/css'
 import { RevisionMutationMode, useRevisionMutation } from '@/helper/mutations'
 
 export interface CheckoutRejectButtonsProps {
   revisionId: number
-  repositoryAlias: string
   isRejected: boolean
   isCurrent: boolean
+  isPage: boolean
   buttonStyle?: string
 }
 
 export function CheckoutRejectButtons({
   revisionId,
-  repositoryAlias,
   isRejected,
   isCurrent,
+  isPage,
   buttonStyle,
 }: CheckoutRejectButtonsProps) {
   const loggedInData = useLoggedInData()
@@ -37,10 +35,7 @@ export function CheckoutRejectButtons({
 
   function onConfirm() {
     if (modalMode) {
-      void revisionMutation(modalMode, repositoryAlias, {
-        revisionId,
-        reason,
-      })
+      void revisionMutation(modalMode, { revisionId, reason }, isPage)
     }
   }
 
@@ -58,7 +53,7 @@ export function CheckoutRejectButtons({
         <FontAwesomeIcon icon={faCheck} className="lg:mr-0.5" />{' '}
         {strings.revisions.checkout.action}
       </button>
-      {!isRejected && (
+      {!isRejected && !isPage && (
         <button
           className={buttonStyle}
           onClick={() => setModalMode('reject')}
@@ -90,55 +85,51 @@ export function CheckoutRejectButtons({
     if (!modalMode) return null
     return (
       <>
-        <Parapgraph>
+        <p className="mx-side mb-1">
           {strings.revisions[modalMode].explanation}
-          <Textarea
-            value={reason}
-            onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
-              setReason(event.target.value)
-            }}
-            onKeyDown={onKeyDown}
-          />
-          <ConfirmButton onClick={onConfirm}>
+          {renderTextArea()}
+          <button
+            className="serlo-button serlo-make-interactive-light"
+            onClick={onConfirm}
+          >
             {strings.revisions.confirm}
-          </ConfirmButton>
-        </Parapgraph>
+          </button>
+        </p>
+      </>
+    )
+  }
+
+  function renderTextArea() {
+    return (
+      <>
+        <style jsx>{`
+          textarea {
+            font-weight: bold;
+
+            width: 100%;
+            border: none;
+            padding: 0.5rem 3.5rem 0.5rem 1rem;
+            box-sizing: border-box;
+            outline: none;
+            min-height: 80px;
+
+            margin: 20px 0;
+            border-radius: 10px;
+            @apply bg-brand-50;
+
+            ::placeholder {
+              @apply text-brandgreen;
+            }
+          }
+        `}</style>
+        <textarea
+          value={reason}
+          onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
+            setReason(event.target.value)
+          }}
+          onKeyDown={onKeyDown}
+        />
       </>
     )
   }
 }
-
-const Parapgraph = styled.p`
-  ${makeMargin}
-  margin-bottom: 5px;
-`
-
-const ConfirmButton = styled.button`
-  ${makeLightButton}
-  ${(props) =>
-    props.disabled &&
-    css`
-      opacity: 0.2;
-      cursor: not-allowed;
-    `}
-`
-
-const Textarea = styled.textarea`
-  ${inputFontReset}
-  font-weight: bold;
-
-  width: 100%;
-  border: none;
-  padding: 0.5rem 3.5rem 0.5rem 1rem;
-  box-sizing: border-box;
-  outline: none;
-  min-height: 80px;
-
-  margin: 20px 0;
-  border-radius: 10px;
-  background-color: ${(props) => props.theme.colors.lightBackground};
-
-  ::placeholder {
-    color: ${(props) => props.theme.colors.brandGreen};
-  }
-`

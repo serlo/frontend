@@ -27,7 +27,7 @@ export async function requestPage(
   }>(endpoint, dataQuery, {
     alias: { instance, path: alias },
   })
-
+  if (!uuid) return { kind: 'error', errorData: { code: 404 } }
   // Can be deleted if CFWorker redirects those for us
   if (
     uuid.__typename === 'ArticleRevision' ||
@@ -52,7 +52,9 @@ export async function requestPage(
   }
 
   if (uuid.__typename === 'Course') {
-    const firstPage = uuid.pages[0]?.alias
+    const firstPage = uuid.pages.filter(
+      (page) => page.currentRevision !== null
+    )[0]?.alias
     if (firstPage) {
       return await requestPage(firstPage, instance)
     } else {
@@ -114,6 +116,7 @@ export async function requestPage(
         content: exercise,
         inviteToEdit: true,
         unrevisedRevisions: uuid.revisions?.totalCount,
+        isUnrevised: !uuid.currentRevision,
       },
       newsletterPopup: false,
       breadcrumbsData:
@@ -151,6 +154,7 @@ export async function requestPage(
         content: exercise,
         inviteToEdit: true,
         unrevisedRevisions: uuid.revisions?.totalCount,
+        isUnrevised: !uuid.currentRevision,
       },
       newsletterPopup: false,
       breadcrumbsData,
@@ -177,6 +181,7 @@ export async function requestPage(
         trashed: uuid.trashed,
         typename: uuid.__typename,
         content,
+        isUnrevised: false,
       },
       newsletterPopup: false,
       horizonData,
@@ -203,6 +208,7 @@ export async function requestPage(
         revisionId: uuid.currentRevision?.id,
         title: uuid.currentRevision?.title ?? '',
         content,
+        isUnrevised: !uuid.currentRevision,
       },
       metaData: {
         title,
@@ -229,7 +235,7 @@ export async function requestPage(
         alias: uuid.alias ?? undefined,
         trashed: uuid.trashed,
         typename: uuid.__typename,
-        title: uuid.currentRevision?.title ?? '',
+        title: uuid.currentRevision?.title ?? uuid.revisions?.nodes[0]?.title,
         content,
         licenseData,
         schemaData: {
@@ -240,6 +246,7 @@ export async function requestPage(
         categoryIcon: 'article',
         inviteToEdit: true,
         unrevisedRevisions: uuid.revisions?.totalCount,
+        isUnrevised: !uuid.currentRevision,
       },
       metaData: {
         title,
@@ -281,6 +288,7 @@ export async function requestPage(
         },
         licenseData,
         unrevisedRevisions: uuid.revisions?.totalCount,
+        isUnrevised: !uuid.currentRevision,
       },
       metaData: {
         title,
@@ -318,6 +326,7 @@ export async function requestPage(
         },
         licenseData,
         unrevisedRevisions: uuid.revisions?.totalCount,
+        isUnrevised: !uuid.currentRevision,
       },
       metaData: {
         title,
@@ -382,6 +391,7 @@ export async function requestPage(
         },
         unrevisedRevisions: uuid.revisions?.totalCount,
         unrevisedCourseRevisions: uuid.course.revisions?.totalCount,
+        isUnrevised: !uuid.currentRevision,
       },
       metaData: {
         title,

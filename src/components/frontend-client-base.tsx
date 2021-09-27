@@ -2,14 +2,13 @@ import { AuthorizationPayload } from '@serlo/authorization'
 import { Router, useRouter } from 'next/router'
 import NProgress from 'nprogress'
 import * as React from 'react'
-import { ThemeProvider } from 'styled-components'
 
 import { ConditonalWrap } from './conditional-wrap'
 import { HeaderFooter } from './header-footer'
 import { MaxWidthDiv } from './navigation/max-width-div'
 import { ToastNotice } from './toast-notice'
 import { AuthProvider } from '@/auth/auth-provider'
-import { PrintWarning } from '@/components/content/print-warning'
+import { PrintMode } from '@/components/print-mode'
 import { EntityIdProvider } from '@/contexts/entity-id-context'
 import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInComponentsProvider } from '@/contexts/logged-in-components'
@@ -18,7 +17,7 @@ import { InstanceData, LoggedInData } from '@/data-types'
 import type { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { frontendOrigin } from '@/helper/frontent-origin'
 import type { LoggedInStuff } from '@/helper/logged-in-stuff-chunk'
-import { theme } from '@/theme'
+import { triggerSentry } from '@/helper/trigger-sentry'
 
 export type FrontendClientBaseProps = React.PropsWithChildren<{
   noHeaderFooter?: boolean
@@ -31,7 +30,16 @@ export type FrontendClientBaseProps = React.PropsWithChildren<{
 Router.events.on('routeChangeStart', () => {
   NProgress.start()
 })
-Router.events.on('routeChangeComplete', () => NProgress.done())
+Router.events.on('routeChangeComplete', (url, { shallow }) => {
+  NProgress.done()
+  // experiment: when using csr and running into an error, try without csr once
+  if (!shallow && document.getElementById('error-page-description') !== null) {
+    triggerSentry({ message: 'trying again without csr' })
+    setTimeout(() => {
+      window.location.reload()
+    }, 300)
+  }
+})
 Router.events.on('routeChangeError', () => NProgress.done())
 
 export function FrontendClientBase({
@@ -68,7 +76,7 @@ export function FrontendClientBase({
       'previousPathname',
       sessionStorage.getItem('currentPathname') || ''
     )
-    sessionStorage.setItem('currentPathname', window.location.pathname)
+    sessionStorage.setItem('currentPathname', window.location.href)
   })
 
   // const auth = useAuthentication('frontend-client-base')
@@ -90,38 +98,36 @@ export function FrontendClientBase({
   //console.dir(initialProps)
 
   return (
-    <ThemeProvider theme={theme}>
-      <PrintWarning warning={instanceData.strings.print.warning} />
-      <InstanceDataProvider value={instanceData}>
-        <LoggedInComponentsProvider value={loggedInComponents}>
-          <AuthProvider unauthenticatedAuthorizationPayload={authorization}>
-            <LoggedInDataProvider value={loggedInData}>
-              <EntityIdProvider value={entityId || null}>
+    <InstanceDataProvider value={instanceData}>
+      <PrintMode />
+      <LoggedInComponentsProvider value={loggedInComponents}>
+        <AuthProvider unauthenticatedAuthorizationPayload={authorization}>
+          <LoggedInDataProvider value={loggedInData}>
+            <EntityIdProvider value={entityId || null}>
+              <ConditonalWrap
+                condition={!noHeaderFooter}
+                wrapper={(kids) => <HeaderFooter>{kids}</HeaderFooter>}
+              >
                 <ConditonalWrap
-                  condition={!noHeaderFooter}
-                  wrapper={(kids) => <HeaderFooter>{kids}</HeaderFooter>}
+                  condition={!noContainers}
+                  wrapper={(kids) => (
+                    <div className="relative">
+                      <MaxWidthDiv showNav={showNav}>
+                        <main>{kids}</main>
+                      </MaxWidthDiv>
+                    </div>
+                  )}
                 >
-                  <ConditonalWrap
-                    condition={!noContainers}
-                    wrapper={(kids) => (
-                      <div className="relative">
-                        <MaxWidthDiv showNav={showNav}>
-                          <main>{kids}</main>
-                        </MaxWidthDiv>
-                      </div>
-                    )}
-                  >
-                    {/* should not be necessary…?*/}
-                    {children as JSX.Element}
-                  </ConditonalWrap>
+                  {/* should not be necessary…?*/}
+                  {children as JSX.Element}
                 </ConditonalWrap>
-                <ToastNotice />
-              </EntityIdProvider>
-            </LoggedInDataProvider>
-          </AuthProvider>
-        </LoggedInComponentsProvider>
-      </InstanceDataProvider>
-    </ThemeProvider>
+              </ConditonalWrap>
+              <ToastNotice />
+            </EntityIdProvider>
+          </LoggedInDataProvider>
+        </AuthProvider>
+      </LoggedInComponentsProvider>
+    </InstanceDataProvider>
   )
 
   function getCachedLoggedInData() {

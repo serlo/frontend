@@ -21,7 +21,7 @@ module.exports = {
     // eslint
     'no-duplicate-imports': 'error',
     'no-unused-vars': 'off',
-    'no-console': 'error',
+    'no-console': 'warn',
     'no-warning-comments': 'warn',
 
     // @typescript-eslint/eslint-plugin

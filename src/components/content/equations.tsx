@@ -1,10 +1,10 @@
+import clsx from 'clsx'
 import { shade } from 'polished'
-import { Fragment } from 'react'
-import styled from 'styled-components'
+import React, { Fragment } from 'react'
 
 import { FrontendContentNode, Sign } from '@/data-types'
-import { makeMargin } from '@/helper/css'
 import { RenderNestedFunction } from '@/schema/article-renderer'
+import { theme } from '@/theme'
 
 export interface StepProps {
   left: string
@@ -20,98 +20,80 @@ export interface EquationProps {
 }
 
 export function Equations({ steps, renderNested }: EquationProps) {
-  return (
-    <Wrapper>
-      <TableWrapper>
-        <table>
-          <TBody>
-            {steps.map((step, i) => {
-              const hasExplanation = step.explanation.some((node) => {
-                return node?.children?.length || node.type == 'math'
-              })
+  const explanationColor = shade(0.3, theme.colors.brandGreen)
 
-              return (
-                <Fragment key={i}>
-                  <tr>
-                    <LeftTd>
-                      {step.left
-                        ? renderNested(
-                            [
-                              {
-                                type: 'inline-math',
-                                formula: '\\displaystyle ' + step.left,
-                              },
-                            ],
-                            `step${i}`,
-                            'left'
-                          )
-                        : null}
-                    </LeftTd>
-                    <SignTd>
-                      {renderNested(
-                        [
-                          {
-                            type: 'inline-math',
-                            formula: renderSignToString(step.sign),
-                          },
-                        ],
-                        `step${i}`,
-                        'sign'
-                      )}
-                    </SignTd>
-                    <RightTd>
-                      {step.right
-                        ? renderNested(
-                            [
-                              {
-                                type: 'inline-math',
-                                formula: '\\displaystyle ' + step.right,
-                              },
-                            ],
-                            `step${i}`,
-                            'right'
-                          )
-                        : null}
-                    </RightTd>
-                    <TransformTd>
-                      {step.transform ? (
-                        <>
-                          |
-                          {renderNested(
-                            [
-                              {
-                                type: 'inline-math',
-                                formula: '\\displaystyle ' + step.transform,
-                              },
-                            ],
-                            `step${i}`,
-                            'transform'
-                          )}
-                        </>
-                      ) : null}
-                    </TransformTd>
-                  </tr>
-                  {hasExplanation ? (
-                    <ExplanationTr>
-                      <td />
-                      <SignTd>{i === steps.length - 1 ? '→' : '↓'}</SignTd>
-                      <td colSpan={2}>
-                        {renderNested(
-                          step.explanation,
-                          `step${i}`,
-                          'explaination'
-                        )}
-                      </td>
-                    </ExplanationTr>
-                  ) : null}
-                </Fragment>
-              )
-            })}
-          </TBody>
-        </table>
-      </TableWrapper>
-    </Wrapper>
+  return (
+    <div className="overflow-x-auto py-2.5 mx-side mb-7">
+      <table>
+        <tbody className="whitespace-nowrap">{steps.map(renderStep)}</tbody>
+      </table>
+    </div>
   )
+
+  function renderStep(step: StepProps, i: number) {
+    const hasExplanation = step.explanation.some((node) => {
+      return node?.children?.length || node.type == 'math'
+    })
+
+    return (
+      <Fragment key={i}>
+        <tr>
+          {renderTD(step.left ? renderStepFormula('left') : null, 'text-right')}
+          {renderTD(
+            renderFormula(renderSignToString(step.sign), 'sign'),
+            'text-center'
+          )}
+          {renderTD(
+            step.right ? renderStepFormula('right') : null,
+            'text-left'
+          )}
+          {renderTD(
+            step.transform ? (
+              <span className="border-l border-black pl-1">
+                {renderStepFormula('transform')}
+              </span>
+            ) : null
+          )}
+        </tr>
+        {hasExplanation ? (
+          <tr className="whitespace-normal" style={{ color: explanationColor }}>
+            <td />
+            {renderDownArrow()}
+            <td colSpan={2} className="px-1 pt-1 pb-3">
+              {renderNested(step.explanation, `step${i}`, 'explaination')}
+            </td>
+          </tr>
+        ) : null}
+      </Fragment>
+    )
+
+    function renderTD(
+      content: JSX.Element | React.ReactNode[] | null,
+      align?: 'text-left' | 'text-right' | 'text-center'
+    ) {
+      return (
+        <td className={clsx('align-baseline text-lg px-1 pt-1 pb-3', align)}>
+          {content}
+        </td>
+      )
+    }
+
+    function renderStepFormula(key: 'transform' | 'left' | 'right') {
+      return renderFormula('\\displaystyle ' + step[key], key)
+    }
+
+    function renderFormula(formula: string, key: string) {
+      return renderNested([{ type: 'inline-math', formula }], `step${i}`, key)
+    }
+  }
+
+  function renderDownArrow() {
+    return (
+      <td className="text-4xl" style={{ fontFamily: 'serif' }}>
+        <div className="-mt-3">&darr;</div>
+      </td>
+    )
+  }
 }
 
 function renderSignToString(sign: Sign): string {
@@ -130,59 +112,3 @@ function renderSignToString(sign: Sign): string {
       return '≈'
   }
 }
-
-const Wrapper = styled.div`
-  margin-bottom: ${(props) => props.theme.spacing.mb.block};
-  ${makeMargin}
-`
-
-const TableWrapper = styled.div`
-  overflow-x: auto;
-  padding: 10px 0;
-`
-
-const TBody = styled.tbody`
-  white-space: nowrap;
-
-  > tr > td {
-    padding: 3px 3px 13px 3px;
-  }
-`
-
-const LeftTd = styled.td`
-  text-align: right;
-  font-size: 1.125rem;
-`
-
-const RightTd = styled.td`
-  font-size: 1.125rem;
-`
-
-const SignTd = styled.td`
-  padding: 0 3px;
-  text-align: center;
-  font-size: 1.125rem;
-`
-
-const TransformTd = styled.td`
-  padding-left: 5px;
-  font-size: 1.125rem;
-`
-
-const ExplanationTr = styled.tr`
-  color: ${(props) => shade(0.3, props.theme.colors.brandGreen)};
-  white-space: normal;
-`
-
-/*
-const RightSide = styled.div`
-  width: 33%;
-  display: flex;
-  flex-direction: row;
-  @media (max-width: 480px) {
-    width: 100%;
-  }
-  @media (max-width: 768px) {
-    width: 50%;
-  }
-`*/

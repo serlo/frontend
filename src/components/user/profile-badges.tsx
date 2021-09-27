@@ -1,5 +1,4 @@
 import { Fragment } from 'react'
-import styled from 'styled-components'
 
 import { UnstyledLink } from '../content/link'
 import AuthorBadge from '@/assets-webkit/img/community/badge-author.svg'
@@ -7,7 +6,6 @@ import DonorBadge from '@/assets-webkit/img/community/badge-donor.svg'
 import ReviewerBadge from '@/assets-webkit/img/community/badge-reviewer.svg'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UserPage } from '@/data-types'
-import { makeMargin } from '@/helper/css'
 import { isDefined } from '@/helper/utils'
 
 export function ProfileBadges({
@@ -20,21 +18,21 @@ export function ProfileBadges({
   const registerDate = new Date(date)
   const { strings, lang } = useInstanceData()
 
-  const { activeDonor, activeReviewer, activeAuthor } = userData
+  const { isActiveDonor, isActiveReviewer, isActiveAuthor } = userData
   const badges = [
-    activeReviewer &&
+    isActiveReviewer &&
       renderBadge({
         Badge: <ReviewerBadge />,
         name: strings.roles.reviewer,
         anchor: 'reviewer',
       }),
-    activeAuthor &&
+    isActiveAuthor &&
       renderBadge({
         Badge: <AuthorBadge />,
         name: strings.roles.author,
         anchor: 'author',
       }),
-    activeDonor &&
+    isActiveDonor &&
       renderBadge({
         Badge: <DonorBadge />,
         name: strings.roles.donor,
@@ -44,11 +42,11 @@ export function ProfileBadges({
   ].filter(isDefined)
 
   return badges.length > 0 ? (
-    <BadgesContainer>
+    <div className="flex justify-center sm:justify-start mx-side">
       {badges.map((badge, index) => (
         <Fragment key={index}>{badge}</Fragment>
       ))}
-    </BadgesContainer>
+    </div>
   ) : null
 
   function renderTimeBadge() {
@@ -91,10 +89,29 @@ export function ProfileBadges({
     anchor?: string
   }) {
     const content = (
-      <BadgeContainer>
-        {Badge}
-        <p className="text-sm leading-tight">{name}</p>
-      </BadgeContainer>
+      <>
+        <style jsx>{`
+          .badge-container {
+            margin-right: 30px;
+            width: 65px;
+            :global(> svg) {
+              height: 40px;
+              margin-top: 15px;
+              margin-bottom: 10px;
+            }
+            :global(> *) {
+              display: block;
+              margin-left: auto;
+              margin-right: auto;
+              text-align: center;
+            }
+          }
+        `}</style>
+        <div className="badge-container">
+          {Badge}
+          <p className="text-sm leading-tight">{name}</p>
+        </div>
+      </>
     )
     return (
       <>
@@ -111,28 +128,3 @@ export function ProfileBadges({
     )
   }
 }
-
-const BadgesContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-    justify-content: left;
-  }
-  ${makeMargin}
-`
-
-const BadgeContainer = styled.div`
-  margin-right: 30px;
-  width: 65px;
-  > svg {
-    height: 40px;
-    margin-top: 15px;
-    margin-bottom: 10px;
-  }
-  > * {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-  }
-`

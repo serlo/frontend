@@ -60,7 +60,8 @@ export const instanceData = {
       notifications: "Deine Benachrichtigungen",
       subscriptions: "Abonnements verwalten",
       revisionHistory: "Bearbeitungsverlauf",
-      eventLog: "Aktivitäten"
+      eventLog: "Aktivitäten",
+      unrevisedRevisions: "Ungeprüfte Bearbeitungen"
     },
     roles: {
       donor: "Spender*in",
@@ -72,7 +73,9 @@ export const instanceData = {
       title: "Weitergeben!",
       copyLink: "Link kopieren",
       copySuccess: "In die Zwischenablage kopiert!",
-      close: "Schließen"
+      close: "Schließen",
+      pdf: "Als PDF herunterladen",
+      pdfNoSolutions: "PDF ohne Lösungen"
     },
     edit: {
       button: "Inhalt überarbeiten",
@@ -101,9 +104,17 @@ export const instanceData = {
       check: "Stimmt's?",
       yourAnswer: "Deine Antwort…",
       chooseOption: "Klicke auf eine der Optionen.",
-      trashedNotice: "Dieser Inhalt wurde zum Löschen markiert.",
+      printModeChooseOption: "Kreuze eine der Optionen an",
+      trashedNotice: "Dieser Inhalt wurde gelöscht.",
+      unrevisedNotice: "Dieser Inhalt wurde noch nicht überprüft. Über den %link% kannst du dir die Entwürfe anzeigen lassen.",
       strategy: "Lösungsstrategie",
-      picture: "Bild"
+      picture: "Bild",
+      previewImage: "Vorschaubild",
+      exercisesTitle: "Übungsaufgaben",
+      moreExercises: "Weitere Aufgaben zum Thema findest du im folgenden Aufgabenordner",
+      relatedContentTitle: "Du hast noch nicht genug vom Thema?",
+      relatedContentText: "Hier findest du noch weitere passende Inhalte zum Thema:",
+      sourcesTitle: "Quellen"
     },
     consent: {
       title: "Einwilligungen für externe Inhalte",
@@ -132,7 +143,7 @@ export const instanceData = {
       placeholder: "Deine Frage oder Vorschlag…",
       placeholderReply: "Deine Antwort…",
       loading: "Kommentare werden geladen…",
-      error: "Die Kommentare konnten leider nicht geladen werden, bitte versuch es später noch einmal.",
+      error: "Die Kommentare konnten leider nicht geladen werden. Bitte versuch es später noch einmal.",
       showMoreReply: "Einen weiteren Kommentar",
       showMoreReplies: "%number% weitere Kommentare",
       showArchived: "Archivierte %threads% anzeigen",
@@ -171,6 +182,18 @@ export const instanceData = {
       viewLabel: "Diese Bearbeitung anzeigen",
       status: 'Status'
     },
+    unrevisedRevisions: {
+      supportLinks: "Wie reviewe ich?",
+      guideline: "Review Hilfeseite",
+      showMoreEntities: "Alle in %subject% anzeigen",
+      showMoreRevisions: "%number weitere anzeigen",
+      newLabelText: "neu",
+      newLabelNote: "Dieser Inhalt ist neu angelegt",
+      wipLabelText: 'wip',
+      wipLabelNote: "Diese Bearbeitung ist noch in Arbeit. Bitte noch nicht reviewen.",
+      newAuthorText: "neuer Autor",
+      newAuthorNote: "Diese Autor*in hat noch nicht viele Bearbeitungen gemacht und freut sich bestimmt über ein schnelles Review."
+    },
     errors: {
       title: "😬 Auch Webseiten machen mal Fehler…",
       defaultMessage: "Es tut uns leid, beim Laden dieses Inhalts ging was schief.",
@@ -182,6 +205,7 @@ export const instanceData = {
       backToHome: "Zur Startseite"
     },
     print: {
+      preparingNotice: "Druck wird vorbereitet!",
       warning: "WICHTIG: Damit alle Bilder und Formeln gedruckt werden, scrolle bitte einmal bis zum Ende der Seite BEVOR du diesen Dialog öffnest. Vielen Dank!"
     },
     profiles: {
@@ -264,14 +288,14 @@ export const instanceData = {
       setThreadStateArchived: "%actor% hat eine %thread% archiviert.",
       setThreadStateUnarchived: "%actor% hat eine %thread% aus dem Archiv geholt.",
       createComment: "%actor% hat einen %comment% in einer %thread% erstellt.",
-      createThread: "%actor% hat eine %thread% in einem %object% erstellt.",
+      createThread: "%actor% hat eine %thread% in einem/einer %object% erstellt.",
       createEntity: "%actor% hat %object% erstellt.",
       setLicense: "%actor% hat die Lizenz von %repository% geändert.",
       createEntityLink: "%actor% hat %child% mit %parent% verknüpft.",
       removeEntityLink: "%actor% hat die Verknüpfung von %child% mit %parent% entfernt.",
       createEntityRevision: "%actor% hat eine %revision% von %entity% erstellt.",
       checkoutRevision: "%actor% hat eine %revision% von %repository% übernommen.",
-      rejectRevision: "%user% hat eine %revision% in %repository% nicht übernommen.",
+      rejectRevision: "%actor% hat eine %revision% in %repository% nicht übernommen.",
       createTaxonomyLink: "%actor% hat %child% in %parent% eingeordnet.",
       removeTaxonomyLink: "%actor% hat %child% aus %parent% entfernt.",
       createTaxonomyTerm: "%actor% hat den %term% erstellt.",
@@ -361,7 +385,8 @@ export const loggedInData = {
       editAssignments: "Zuweisung zu Themen und Lehrplänen bearbeiten",
       moveToTrash: "In den Papierkorb verschieben",
       restoreContent: "Aus dem Papierkorb wiederherstellen",
-      sort: "Unterelemente sortieren",
+      sortCoursePages: "Kursseiten sortieren",
+      sortGroupedExercises: "Teilaufgaben sortieren",
       edit: "Überarbeiten",
       unrevisedEdit: "Zeige neue Bearbeitungen",
       organize: "Baumstruktur bearbeiten",
@@ -399,7 +424,8 @@ export const loggedInData = {
         title: "Bearbeitung nicht akzeptieren",
         explanation: "Bitte sag der Bearbeiter*in, warum die Änderung nicht angenommen wird."
       },
-      confirm: "Bestätigen"
+      confirm: "Bestätigen",
+      unrevisedTaxNote: "Neuer Inhalt, noch nicht akzeptiert"
     }
   }
 };

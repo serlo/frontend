@@ -25,7 +25,7 @@ export function ErrorPage({ code, message }: ErrorData) {
   return (
     <>
       <PageTitle title={strings.errors.title} headTitle />
-      <p className="serlo-p text-2xl">
+      <p className="serlo-p text-2xl" id="error-page-description">
         {strings.errors.defaultMessage}{' '}
         {!isProbablyTemporary && (
           <>

@@ -87,6 +87,7 @@ const query = gql`
     uuid(id: $id) {
       id
       alias
+      __typename
       ... on Applet {
         currentRevision {
           title
@@ -274,8 +275,8 @@ const query = gql`
   fragment authorData on User {
     id
     username
-    activeAuthor
-    activeDonor
-    activeReviewer
+    isActiveAuthor
+    isActiveDonor
+    isActiveReviewer
   }
 `

@@ -42,6 +42,7 @@ describe('edtr io plugins', () => {
         {
           type: 'img',
           src: 'https://assets.serlo.org/logo.jpg',
+          alt: '',
         },
       ])
     })
@@ -210,7 +211,7 @@ describe('edtr io plugins', () => {
           type: 'multimedia',
           mediaWidth: 20,
           float: 'right',
-          media: [{ type: 'img', src: 'test.jpg' }],
+          media: [{ type: 'img', src: 'test.jpg', alt: '' }],
           children: [],
         },
       ])
@@ -236,7 +237,7 @@ describe('edtr io plugins', () => {
           type: 'multimedia',
           mediaWidth: 50,
           float: 'right',
-          media: [{ type: 'img', src: 'test.jpg' }],
+          media: [{ type: 'img', src: 'test.jpg', alt: '' }],
           children: [],
         },
       ])
@@ -459,7 +460,7 @@ describe('text types', () => {
         expect(result).toEqual([
           {
             type: 'math',
-            formula: '\\sf 123',
+            formula: '123',
             formulaSource: '123',
             alignCenter: true,
           },
@@ -473,7 +474,7 @@ describe('text types', () => {
         expect(result).toEqual([
           {
             type: 'math',
-            formula: '\\sf 123',
+            formula: '123',
             formulaSource: '123',
             alignCenter: true,
           },
@@ -566,7 +567,7 @@ describe('text types', () => {
     expect(result).toEqual([
       {
         type: 'inline-math',
-        formula: '\\sf \\tan^{-1}',
+        formula: '\\tan^{-1}',
         formulaSource: '\\tan^{-1}',
       },
     ])
@@ -582,7 +583,7 @@ describe('text types', () => {
     expect(result).toEqual([
       {
         type: 'math',
-        formula: '\\sf Math Block',
+        formula: 'Math Block',
         formulaSource: 'Math Block',
         alignCenter: true,
       },
