@@ -101,7 +101,12 @@ export function CommentArea({ id: entityId, noForms }: CommentAreaProps) {
     return (
       <>
         {renderHeading(faQuestionCircle, ` ${strings.comments.question}`)}
-        {
+        {/* TODO: Skip auth while in developement */}
+        <CommentForm
+          placeholder={strings.comments.placeholder}
+          onSend={onSend}
+        />
+        {/*
           auth.current === null ? (
             <PleaseLogIn />
           ) : canDo(AuthThread.createThread) ? (
@@ -109,8 +114,8 @@ export function CommentArea({ id: entityId, noForms }: CommentAreaProps) {
               placeholder={strings.comments.placeholder}
               onSend={onSend}
             />
-          ) : null /* placeholder while loading permissions */
-        }
+          ) : null // placeholder while loading permissions
+        */}
       </>
     )
   }
