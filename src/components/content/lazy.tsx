@@ -8,6 +8,7 @@ export interface LazyProps {
   children: React.ReactNode
   slim?: boolean
   noPrint?: boolean
+  noAlt?: boolean
 }
 
 export function Lazy(props: LazyProps) {
@@ -32,7 +33,7 @@ export function Lazy(props: LazyProps) {
       >
         {props.children}
       </LazyLoad>
-      <noscript>{props.children}</noscript>
+      {!props.noAlt && <noscript>{props.children}</noscript>}
     </>
   )
 }

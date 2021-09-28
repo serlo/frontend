@@ -101,7 +101,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
           'tasksol'
         )}
         {license && <div className="px-side">{license}</div>}
-        <Lazy>
+        <Lazy noAlt>
           <CommentArea id={node.context.solutionId!} />
         </Lazy>
       </div>

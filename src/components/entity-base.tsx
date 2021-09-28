@@ -46,7 +46,7 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
           {renderBreadcrumbs()}
           <main>{children}</main>
           {!noComments && (
-            <Lazy>
+            <Lazy noAlt>
               <CommentArea id={entityId} />
             </Lazy>
           )}
