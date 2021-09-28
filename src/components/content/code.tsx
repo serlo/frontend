@@ -1,7 +1,19 @@
+/* eslint-disable import/no-internal-modules */
 import * as React from 'react'
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-// eslint-disable-next-line import/no-internal-modules
+import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter'
 import coy from 'react-syntax-highlighter/dist/cjs/styles/prism/coy'
+import css from 'react-syntax-highlighter/dist/esm/languages/prism/css'
+import java from 'react-syntax-highlighter/dist/esm/languages/prism/java'
+import javascript from 'react-syntax-highlighter/dist/esm/languages/prism/javascript'
+import latex from 'react-syntax-highlighter/dist/esm/languages/prism/latex'
+import python from 'react-syntax-highlighter/dist/esm/languages/prism/python'
+
+SyntaxHighlighter.registerLanguage('java', java)
+SyntaxHighlighter.registerLanguage('javascript', javascript)
+SyntaxHighlighter.registerLanguage('python', python)
+SyntaxHighlighter.registerLanguage('css', css)
+SyntaxHighlighter.registerLanguage('latex', latex)
+// hä? what about html
 
 export interface CodeProps {
   content: React.ReactNode
