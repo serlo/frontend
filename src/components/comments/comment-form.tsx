@@ -1,4 +1,4 @@
-import { EditorProps } from '@edtr-io/core'
+import { Editor } from '@edtr-io/core'
 import { createTextPlugin, TextConfig } from '@edtr-io/plugin-text'
 import {
   faReply,
@@ -7,7 +7,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
-import dynamic from 'next/dynamic'
 import { useState, KeyboardEvent, useRef } from 'react'
 
 import { useInstanceData } from '@/contexts/instance-context'
@@ -15,11 +14,7 @@ import { isMac } from '@/helper/client-detection'
 import { EdtrPluginText } from '@/schema/edtr-io-types'
 import { theme } from '@/theme'
 
-const Editor = dynamic<EditorProps>(() =>
-  import('@edtr-io/core').then((mod) => mod.Editor)
-)
-
-interface CommentFormProps {
+export interface CommentFormProps {
   onSend: (
     content: string,
     reply?: boolean,
