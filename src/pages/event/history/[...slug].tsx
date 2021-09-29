@@ -82,7 +82,6 @@ function Content({
   function renderUnrevisedRevisions() {
     return (
       <>
-        <h3 className="serlo-h3">{strings.pageTitles.unrevisedRevisions}</h3>
         <UserUnrevisedRevisions userId={id} />
       </>
     )

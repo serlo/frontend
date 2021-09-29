@@ -19,9 +19,14 @@ export function UserUnrevisedRevisions({
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { data, error, loading } = useUserRevisionsFetch(userId)
 
+  if (data && data.nodes && data.nodes.length === 0) {
+    return null
+  }
+
   return (
     <Guard data={data?.nodes} error={error}>
       <>
+        <h3 className="serlo-h3">{strings.pageTitles.unrevisedRevisions}</h3>
         {data?.nodes.map((entity) => {
           return <UnrevisedEntity key={entity.id} entity={entity} />
         })}
