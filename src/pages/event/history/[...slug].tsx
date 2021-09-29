@@ -5,6 +5,7 @@ import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
 import { ErrorPage } from '@/components/pages/error-page'
 import { Events } from '@/components/user/events'
+import { UserUnrevisedRevisions } from '@/components/user/user-unrevised-revisions'
 import { useInstanceData } from '@/contexts/instance-context'
 import { SlugPageData, SlugProps } from '@/data-types'
 import { fetchPageData } from '@/fetcher/fetch-page-data'
@@ -73,15 +74,33 @@ function Content({
       <Breadcrumbs data={[{ label, url }]} asBackButton />
       <PageTitle title={titleString} headTitle />
 
-      <h3 className="serlo-h3">{strings.eventLog.currentEvents}</h3>
-      <Events
-        objectId={isUser ? undefined : id}
-        userId={isUser ? id : undefined}
-        perPage={10}
-        moreButton
-      />
+      {isUser && renderUnrevisedRevisions()}
+      {renderEvents()}
     </>
   )
+
+  function renderUnrevisedRevisions() {
+    return (
+      <>
+        <h3 className="serlo-h3">{strings.pageTitles.unrevisedRevisions}</h3>
+        <UserUnrevisedRevisions userId={id} />
+      </>
+    )
+  }
+
+  function renderEvents() {
+    return (
+      <>
+        <h3 className="serlo-h3">{strings.eventLog.currentEvents}</h3>
+        <Events
+          objectId={isUser ? undefined : id}
+          userId={isUser ? id : undefined}
+          perPage={10}
+          moreButton
+        />
+      </>
+    )
+  }
 }
 
 export const getStaticProps: GetStaticProps<SlugProps> = async (context) => {
@@ -89,6 +108,7 @@ export const getStaticProps: GetStaticProps<SlugProps> = async (context) => {
 
   // reusing fetchPageData here, it loads too much data, but the request is most likely cached already
   const pageData = await fetchPageData('/' + context.locale! + '/' + alias)
+
   return {
     props: {
       pageData: JSON.parse(JSON.stringify(pageData)) as SlugPageData, // remove undefined values
