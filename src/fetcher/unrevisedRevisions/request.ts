@@ -7,7 +7,7 @@ import { unrevisedRevisionsQuery } from './query'
 import { endpoint } from '@/api/endpoint'
 import { UnrevisedRevisionsPage } from '@/data-types'
 
-export async function requestUnrevisedRevisions(
+export async function requestUnrevisedRevisionsBySubjects(
   instance: Instance
 ): Promise<UnrevisedRevisionsPage | undefined> {
   const variables = {
