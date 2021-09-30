@@ -7,6 +7,7 @@ import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { UnrevisedEntity } from '@/components/revisions/unrevised-entity'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UnrevisedEntityData } from '@/fetcher/query-types'
+import { unrevisedEntitiesFragment } from '@/fetcher/unrevisedRevisions/query'
 
 interface UserUnrevisedRevisionsProps {
   userId: number
@@ -16,6 +17,10 @@ export function UserUnrevisedRevisions({
   userId,
 }: UserUnrevisedRevisionsProps) {
   const { strings } = useInstanceData()
+
+  // This uses SWR for now because we will probably have to move it in the near future
+  // and that is a lot easier with the fetch also encapsulated in the component
+
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { data, error, loading } = useUserRevisionsFetch(userId)
 
@@ -56,191 +61,15 @@ function useUserRevisionsFetch(userId?: number) {
   })
 }
 
-// TODO: merge with existing query (by subjects)
-
 const userRevisionsQuery = gql`
   query uuid($userId: Int) {
     uuid(id: $userId) {
       ... on User {
         unrevisedEntities {
-          nodes {
-            __typename
-            id
-            alias
-            ... on Applet {
-              currentRevision {
-                title
-                id
-              }
-              revisions(unrevised: true) {
-                nodes {
-                  title
-                  id
-                  author {
-                    ...authorData
-                  }
-                  changes
-                  date
-                }
-              }
-            }
-            ... on Article {
-              currentRevision {
-                title
-                id
-              }
-              revisions(unrevised: true) {
-                nodes {
-                  title
-                  id
-                  author {
-                    ...authorData
-                  }
-                  changes
-                  date
-                }
-              }
-            }
-            ... on Course {
-              currentRevision {
-                title
-                id
-              }
-              revisions(unrevised: true) {
-                nodes {
-                  title
-                  id
-                  author {
-                    ...authorData
-                  }
-                  changes
-                  date
-                }
-              }
-            }
-            ... on CoursePage {
-              currentRevision {
-                title
-                id
-              }
-              revisions(unrevised: true) {
-                nodes {
-                  title
-                  id
-                  author {
-                    ...authorData
-                  }
-                  changes
-                  date
-                }
-              }
-            }
-            ... on Event {
-              currentRevision {
-                title
-                id
-              }
-              revisions(unrevised: true) {
-                nodes {
-                  title
-                  id
-                  author {
-                    ...authorData
-                  }
-                  changes
-                  date
-                }
-              }
-            }
-            ... on Exercise {
-              currentRevision {
-                id
-              }
-              revisions(unrevised: true) {
-                nodes {
-                  id
-                  author {
-                    ...authorData
-                  }
-                  changes
-                  date
-                }
-              }
-            }
-            ... on ExerciseGroup {
-              currentRevision {
-                id
-              }
-              revisions(unrevised: true) {
-                nodes {
-                  id
-                  author {
-                    ...authorData
-                  }
-                  changes
-                  date
-                }
-              }
-            }
-            ... on GroupedExercise {
-              currentRevision {
-                id
-              }
-              revisions(unrevised: true) {
-                nodes {
-                  id
-                  author {
-                    ...authorData
-                  }
-                  changes
-                  date
-                }
-              }
-            }
-            ... on Video {
-              currentRevision {
-                title
-                id
-              }
-              revisions(unrevised: true) {
-                nodes {
-                  title
-                  id
-                  author {
-                    ...authorData
-                  }
-                  changes
-                  date
-                }
-              }
-            }
-            ... on Solution {
-              currentRevision {
-                id
-              }
-              solutionRevisions: revisions(unrevised: true) {
-                nodes {
-                  id
-                  author {
-                    ...authorData
-                  }
-                  changes
-                  date
-                }
-              }
-            }
-          }
-          totalCount
+          ...unrevisedEntitiesData
         }
       }
     }
   }
-  fragment authorData on User {
-    id
-    username
-    isActiveAuthor
-    isActiveDonor
-    isActiveReviewer
-    isNewAuthor
-  }
+  ${unrevisedEntitiesFragment}
 `

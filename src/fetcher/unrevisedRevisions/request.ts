@@ -3,7 +3,7 @@ import { AuthorizationPayload } from '@serlo/authorization'
 import { request } from 'graphql-request'
 
 import { Instance } from '../query-types'
-import { unrevisedRevisionsQuery } from './query'
+import { unrevisedRevisionsSubjectsQuery } from './query'
 import { endpoint } from '@/api/endpoint'
 import { UnrevisedRevisionsPage } from '@/data-types'
 
@@ -17,7 +17,7 @@ export async function requestUnrevisedRevisionsBySubjects(
     const { subject, authorization } = await request<{
       subject: { subjects: Subject[] }
       authorization: AuthorizationPayload
-    }>(endpoint, unrevisedRevisionsQuery, variables)
+    }>(endpoint, unrevisedRevisionsSubjectsQuery, variables)
     return {
       kind: 'unrevisedRevisions',
       revisionsData: subject,
