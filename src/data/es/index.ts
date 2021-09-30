@@ -191,7 +191,7 @@ export const instanceData = {
       newLabelNote: "Esta es una nueva entidad",
       wipLabelText: "limpiar",
       wipLabelNote: "Marcado como trabajo en progreso. No revises todavía.",
-      newAuthorText: "Nuevo autor",
+      newAuthorText: "nuevo autor",
       newAuthorNote: "Esta es una de las primeras ediciones de este autor, quizás priorizar esto."
     },
     errors: {
@@ -317,7 +317,7 @@ export const instanceLandingData = {
   lang: "es",
   subjectsData: landingSubjectsData,
   strings: {
-    vision: "Somos una organización de base comunitaria sin ánimo de lucro que apoya el aprendizaje personalizado y trabajando por la igualdad de oportunidades educativas. Esta plataforma de aprendizaje ofrece miles de artículos de instrucción, videos de aprendizaje y ejercicios de práctica para millones de estudiantes en todo el mundo - completamente gratis. Ahora es el momento de unirte a nosotros en tu idioma.",
+    vision: "Somos una organización de base comunitaria sin ánimo de lucro, que apoya el aprendizaje personalizado, y trabaja por la igualdad de oportunidades educativas. Esta plataforma de aprendizaje ofrece miles de artículos de instrucción, videos de aprendizaje y ejercicios de práctica para millones de estudiantes en todo el mundo - completamente gratis. Ahora es el momento de unirte a nosotros en tu idioma.",
     learnMore: "Aprende más",
     democraticallyStructured: "estructurado democráticamente",
     nonProfit: "sin ánimo de lucro",
