@@ -1,8 +1,10 @@
 import { gql } from 'graphql-request'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
+import { PageTitle } from '../content/page-title'
 import { Guard } from '../guard'
 import { useGraphqlSwrPaginationWithAuth } from '@/api/use-graphql-swr'
+import { useAuthentication } from '@/auth/use-authentication'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { UnrevisedEntity } from '@/components/revisions/unrevised-entity'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -11,32 +13,46 @@ import { unrevisedEntitiesFragment } from '@/fetcher/unrevisedRevisions/query'
 
 interface UserUnrevisedRevisionsProps {
   userId: number
+  alias?: string
 }
 
 export function UserUnrevisedRevisions({
   userId,
 }: UserUnrevisedRevisionsProps) {
-  const { strings } = useInstanceData()
-
   // This uses SWR for now because we will probably have to move it in the near future
   // and that is a lot easier with the fetch also encapsulated in the component
+
+  const { strings } = useInstanceData()
+  const auth = useAuthentication()
+  const [isOwn, setIsOwn] = useState(false)
+
+  useEffect(() => {
+    setIsOwn(auth.current?.id === userId)
+  }, [auth, userId])
 
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { data, error, loading } = useUserRevisionsFetch(userId)
 
-  if (data && data.nodes && data.nodes.length === 0) {
-    return null
-  }
+  const title = isOwn
+    ? strings.pageTitles.myUnrevisedRevisions
+    : strings.pageTitles.unrevisedRevisions
 
   return (
     <Guard data={data?.nodes} error={error}>
-      <>
-        <h3 className="serlo-h3">{strings.pageTitles.unrevisedRevisions}</h3>
+      <div className="pb-20">
+        <PageTitle title={title} headTitle />
         {data?.nodes.map((entity) => {
-          return <UnrevisedEntity key={entity.id} entity={entity} />
+          return (
+            <UnrevisedEntity isOwn={isOwn} key={entity.id} entity={entity} />
+          )
         })}
+        {data?.nodes.length === 0 && (
+          <p className="serlo-p">
+            {strings.unrevisedRevisions.noUnrevisedRevisions}
+          </p>
+        )}
         {loading ? renderSpinner() : null}
-      </>
+      </div>
     </Guard>
   )
 

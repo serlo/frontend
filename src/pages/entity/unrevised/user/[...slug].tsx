@@ -1,36 +1,23 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
+import React from 'react'
 
-import { PageTitle } from '@/components/content/page-title'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
 import { ErrorPage } from '@/components/pages/error-page'
-import { Events } from '@/components/user/events'
-import { useInstanceData } from '@/contexts/instance-context'
+import { UserUnrevisedRevisions } from '@/components/user/user-unrevised-revisions'
 import { SlugPageData, SlugProps } from '@/data-types'
 import { fetchPageData } from '@/fetcher/fetch-page-data'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
   if (
-    pageData.kind === 'single-entity' ||
-    pageData.kind === 'taxonomy' ||
-    pageData.kind === 'user/events'
+    pageData.kind === 'user/events' // reusing event page type
   ) {
-    const data =
-      pageData.kind === 'single-entity'
-        ? pageData.entityData
-        : pageData.kind === 'taxonomy'
-        ? pageData.taxonomyData
-        : pageData.userData
+    const data = pageData.userData
 
     return (
       <FrontendClientBase>
-        <Content
-          title={data.title}
-          id={data.id}
-          alias={data.alias}
-          isUser={pageData.kind === 'user/events'}
-        />
+        <Content userId={data.id} alias={data.alias} />
       </FrontendClientBase>
     )
   }
@@ -49,52 +36,20 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
   )
 })
 
-function Content({
-  title,
-  id,
-  alias,
-  isUser,
-}: {
-  title?: string
-  id: number
-  alias?: string
-  isUser?: boolean
-}) {
-  const { strings } = useInstanceData()
-
-  const hasTitle = title && title.length > 1
-  const label = hasTitle ? title : strings.revisions.toContent
-  const url = alias ? alias : id ? `/${id}` : undefined
-  const titleString =
-    strings.pageTitles.eventLog + (hasTitle ? ' – ' + title : '')
+function Content({ userId, alias }: { userId: number; alias?: string }) {
+  const label = alias?.split('/')[3]
+  const url = alias ? alias : `/${userId}`
 
   return (
     <>
-      <Breadcrumbs data={[{ label, url }]} asBackButton />
-      <PageTitle title={titleString} headTitle />
-
-      {renderEvents()}
+      {label && <Breadcrumbs data={[{ label, url }]} asBackButton />}
+      <UserUnrevisedRevisions userId={userId} alias={alias} />
     </>
   )
-
-  function renderEvents() {
-    return (
-      <>
-        <h3 className="serlo-h3">{strings.eventLog.currentEvents}</h3>
-        <Events
-          objectId={isUser ? undefined : id}
-          userId={isUser ? id : undefined}
-          perPage={10}
-          moreButton
-        />
-      </>
-    )
-  }
 }
 
 export const getStaticProps: GetStaticProps<SlugProps> = async (context) => {
   const alias = (context.params?.slug as string[]).join('/')
-
   // reusing fetchPageData here, it loads too much data, but the request is most likely cached already
   const pageData = await fetchPageData('/' + context.locale! + '/' + alias)
 

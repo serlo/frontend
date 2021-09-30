@@ -61,7 +61,8 @@ export const instanceData = {
       subscriptions: "Manage Subscriptions",
       revisionHistory: "Revision History",
       eventLog: "Event Log",
-      unrevisedRevisions: 'Unrevised Revisions'
+      unrevisedRevisions: 'Unrevised Revisions',
+      myUnrevisedRevisions: 'My Unrevised Revisions'
     },
     roles: {
       donor: "Donor",
@@ -193,6 +194,7 @@ export const instanceData = {
       wipLabelNote: 'Marked as work in progress. Do not review yet.',
       newAuthorText: 'new author',
       newAuthorNote: 'This is one of the first edits of this author, maybe prioritise this.',
+      noUnrevisedRevisions: 'No unrevised revisions, all done! 🎉'
     },
     errors: {
       title: '😬 Websites make mistakes sometimes…',
@@ -355,6 +357,9 @@ export const loggedInData = {
     }, {
       url: '/event/history/user/me',
       title: 'Recent activities'
+    }, {
+      url: '/entity/unrevised/user/me',
+      title: "Unrevised Revisions"
     }, {
       url: '/subscriptions/manage',
       title: 'Subscriptions'

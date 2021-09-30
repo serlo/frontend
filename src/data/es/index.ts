@@ -355,6 +355,9 @@ export const loggedInData = {
     }, {
       url: '/event/history/user/me',
       title: "Actividades recientes"
+    },  {
+      url: '/entity/unrevised/user/me',
+      title: "Revisiones no revisadas"
     }, {
       url: '/subscriptions/manage',
       title: "Suscripciones"

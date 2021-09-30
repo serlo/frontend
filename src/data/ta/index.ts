@@ -356,6 +356,9 @@ export const loggedInData = {
       url: '/event/history/user/me',
       title: "சமீபத்திய செய்தவை"
     }, {
+      url: '/entity/unrevised/user/me',
+      title: "Unrevised Revisions"
+    },  {
       url: '/subscriptions/manage',
       title: "சந்தாக்கள்"
     }, {
