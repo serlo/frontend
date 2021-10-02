@@ -1,8 +1,8 @@
 const regexBeginAlign = /\\begin{align}/gm
 const regexEndAlign = /\\end{align}/gm
-const regexComma = /(?<=[\d]),(?=[\d])/gm
+const regexComma = /([\d]),([\d])/gm
 
-const regexEmptyNewLine = /\\\\(?=[\s]*\\end{)/gm
+const regexEmptyNewLine = /\\\\([\s]*\\end{)/gm
 
 export function sanitizeLatex(formula: string): string {
   // ignore empty formulas
@@ -12,11 +12,14 @@ export function sanitizeLatex(formula: string): string {
   formula = formula.replace(regexBeginAlign, '\\begin{aligned}')
   formula = formula.replace(regexEndAlign, '\\end{aligned}')
 
-  // remove empty new line in environments
-  formula = formula.replace(regexEmptyNewLine, '')
+  // remove trailing new line in environments
+  formula = formula.replace(regexEmptyNewLine, (_str, g1: string) => g1)
 
-  // fix comma style
-  formula = formula.replace(regexComma, '{,}')
+  // fix comma style -> somebody is actully fixing this manually within content, so this is not used atm
+  formula = formula.replace(
+    regexComma,
+    (_str, g1: string, g2: string) => `${g1}{,}${g2}`
+  )
 
   // add more array stretch
   if (
