@@ -202,17 +202,19 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
   }
   if (node.plugin === 'table') {
     if (typeof window === 'undefined') {
-      const { converter_ } = require('../../external/markdown') as {
-        converter_: typeof converter
+      // hack: to allow shipping this to the client, use require here to load it only on server
+      // (table-plugin not available in the client)
+      const converter_ = require('../../external/markdown') as {
+        converter: typeof converter
       }
-      const { convertLegacyState_ } = require('./convert-legacy-state') as {
-        convertLegacyState_: typeof convertLegacyState
+      const convertLegacyState_ = require('@/schema/convert-legacy-state') as {
+        convertLegacyState: typeof convertLegacyState
       }
-      const html = converter_.makeHtml(node.state)
+      const html = converter_.converter.makeHtml(node.state)
       // compat: the markdown converter could return all types of content, only use table nodes.
-      const children = convertLegacyState_(html).children.filter(
-        (child) => child.type == 'table'
-      )
+      const children = convertLegacyState_
+        .convertLegacyState(html)
+        .children.filter((child) => child.type == 'table')
       return children
     }
   }
