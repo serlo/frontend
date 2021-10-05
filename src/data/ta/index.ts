@@ -321,7 +321,7 @@ export const instanceLandingData = {
     learnMore: "மேலும் அறிக",
     democraticallyStructured: "ஜனநாயக ரீதியாக",
     nonProfit: "இலாப நோக்கற்றது",
-    transparent: "ஒளி புகும்",
+    transparent: "வெளிப்படைத்தன்மை",
     openlyLicensed: "திறந்த உரிமம்",
     adFree: "விளம்பரமின்றி",
     freeOfCharge: "இலவசம்",
