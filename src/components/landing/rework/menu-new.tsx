@@ -84,7 +84,7 @@ function MenuInner({
   }
   const newData = [data[1], data[4]]
   return (
-    <nav className="min-h-[50px] hidden sm:block">
+    <nav className="min-h-[50px] hidden sm:block mt-6">
       {Tippy && (
         <Tippy.default
           singleton={source}
