@@ -170,5 +170,10 @@ export function FrontendClientBase({
         })
         .catch(() => {})
     }
+    // TODO -> only activate for logged in user
+    if (!cookies['__serlo_preview']) {
+      // bypass cache
+      fetch(frontendOrigin + '/api/frontend/preview').catch(() => {})
+    }
   }
 }
