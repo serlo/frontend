@@ -215,6 +215,7 @@ export const instanceData = {
       aboutMe: 'About me',
       recentActivities: 'Recent activities',
       showAllActivities: 'Show all activities',
+      noActivities: 'No activities so far.',
       lastLogin: 'Last login',
       yearsWithSerlo: 'Years with Serlo!',
       yearWithSerlo: 'Year with Serlo!',

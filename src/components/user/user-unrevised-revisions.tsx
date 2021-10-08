@@ -28,6 +28,16 @@ export function UserUnrevisedRevisions({
 
   return (
     <Guard data={data?.nodes} error={error}>
+      {renderEntries()}
+    </Guard>
+  )
+
+  function renderEntries() {
+    const isEmpty = !loading && data?.nodes.length === 0
+
+    if (isEmpty && !isOwn) return null //only show empty result on own profile
+
+    return (
       <div className="pb-20">
         <h2 className="serlo-h3 mt-20">
           {strings.pageTitles.unrevisedRevisions}
@@ -37,15 +47,15 @@ export function UserUnrevisedRevisions({
             <UnrevisedEntity isOwn={isOwn} key={entity.id} entity={entity} />
           )
         })}
-        {data?.nodes.length === 0 && (
+        {isEmpty && (
           <p className="serlo-p">
             {strings.unrevisedRevisions.noUnrevisedRevisions}
           </p>
         )}
         {loading ? renderSpinner() : null}
       </div>
-    </Guard>
-  )
+    )
+  }
 
   function renderSpinner() {
     return <LoadingSpinner text={strings.loading.isLoading} />

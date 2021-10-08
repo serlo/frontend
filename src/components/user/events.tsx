@@ -37,6 +37,16 @@ export function Events({
 
   return (
     <Guard data={data?.nodes} error={error}>
+      {data?.nodes.length === 0 ? renderEmpty() : renderEntries()}
+    </Guard>
+  )
+
+  function renderEmpty() {
+    return <p className="serlo-p">{strings.profiles.noActivities}</p>
+  }
+
+  function renderEntries() {
+    return (
       <>
         {data?.nodes.map((event) => {
           return (
@@ -52,8 +62,8 @@ export function Events({
         })}
         {moreButton ? (loading ? renderSpinner() : renderButton()) : null}
       </>
-    </Guard>
-  )
+    )
+  }
 
   function renderSpinner() {
     return <LoadingSpinner text={strings.loading.isLoading} />
