@@ -7,7 +7,6 @@ import { EntityIdContext } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { submitEvent } from '@/helper/submit-event'
 import { NodePath } from '@/schema/article-renderer'
-import { useAuth } from '@/auth/auth-provider'
 
 export interface LinkProps {
   href?: string
@@ -83,7 +82,6 @@ export function UnstyledLink({
   ref,
 }: LinkProps & { ref?: React.ForwardedRef<HTMLAnchorElement> }) {
   const { lang } = useInstanceData()
-  const auth = useAuth()
   const entityId = React.useContext(EntityIdContext)
 
   if (!href || href === undefined || href === '')
