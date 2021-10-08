@@ -39,6 +39,11 @@ export function Code({ content, language, showLineNumbers }: CodeProps) {
       >
         {content}
       </SyntaxHighlighter>
+      <style jsx global>{`
+        pre {
+          background-color: transparent !important;
+        }
+      `}</style>
     </div>
   )
 }
