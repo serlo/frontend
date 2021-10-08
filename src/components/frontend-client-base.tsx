@@ -1,4 +1,5 @@
 import { AuthorizationPayload } from '@serlo/authorization'
+import Cookies from 'js-cookie'
 import { Router, useRouter } from 'next/router'
 import NProgress from 'nprogress'
 import * as React from 'react'
@@ -144,27 +145,30 @@ export function FrontendClientBase({
   }
 
   function fetchLoggedInData() {
-    Promise.all([
-      !loggedInData
-        ? fetch(frontendOrigin + '/api/locale/' + instanceData.lang).then(
-            (res) => res.json()
-          )
-        : false,
-      !loggedInComponents ? import('@/helper/logged-in-stuff-chunk') : false,
-    ])
-      .then((values) => {
-        if (values[0]) {
-          sessionStorage.setItem(
-            `___loggedInData_${instanceData.lang}`,
-            JSON.stringify(values[0])
-          )
-          setLoggedInData(values[0])
-        }
-        if (values[1])
-          setLoggedInComponents(
-            (values[1] as { Components: LoggedInStuff }).Components
-          )
-      })
-      .catch(() => {})
+    const cookies = typeof window === 'undefined' ? {} : Cookies.get()
+    if (cookies['auth-token']) {
+      Promise.all([
+        !loggedInData
+          ? fetch(frontendOrigin + '/api/locale/' + instanceData.lang).then(
+              (res) => res.json()
+            )
+          : false,
+        !loggedInComponents ? import('@/helper/logged-in-stuff-chunk') : false,
+      ])
+        .then((values) => {
+          if (values[0]) {
+            sessionStorage.setItem(
+              `___loggedInData_${instanceData.lang}`,
+              JSON.stringify(values[0])
+            )
+            setLoggedInData(values[0])
+          }
+          if (values[1])
+            setLoggedInComponents(
+              (values[1] as { Components: LoggedInStuff }).Components
+            )
+        })
+        .catch(() => {})
+    }
   }
 }
