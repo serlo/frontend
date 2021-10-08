@@ -62,7 +62,8 @@ export const instanceData = {
       revisionHistory: "Revision History",
       eventLog: "Event Log",
       unrevisedRevisions: 'Unrevised Revisions',
-      myUnrevisedRevisions: 'My Unrevised Revisions'
+      userEdits: 'Edits by %user%',
+      userEditsMine: 'My Unrevised Revisions'
     },
     roles: {
       donor: "Donor",
@@ -356,10 +357,7 @@ export const loggedInData = {
       title: 'Change password'
     }, {
       url: '/event/history/user/me',
-      title: 'Recent activities'
-    }, {
-      url: '/entity/unrevised/user/me',
-      title: "Unrevised Revisions"
+      title: 'My Edits'
     }, {
       url: '/subscriptions/manage',
       title: 'Subscriptions'
