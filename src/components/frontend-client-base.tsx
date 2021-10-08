@@ -26,6 +26,7 @@ export type FrontendClientBaseProps = React.PropsWithChildren<{
   showNav?: boolean
   entityId?: number
   authorization?: AuthorizationPayload
+  redirectToPreview?: boolean
 }>
 
 Router.events.on('routeChangeStart', () => {
@@ -50,8 +51,9 @@ export function FrontendClientBase({
   showNav,
   entityId,
   authorization,
+  redirectToPreview,
 }: FrontendClientBaseProps) {
-  const { locale } = useRouter()
+  const { locale, push } = useRouter()
   const [instanceData] = React.useState<InstanceData>(() => {
     if (typeof window === 'undefined') {
       // load instance data for server side rendering
@@ -68,6 +70,14 @@ export function FrontendClientBase({
       ) as ReturnType<typeof getInstanceDataByLang>
     }
   })
+
+  // TODO: only for auth
+  if (typeof window !== 'undefined') {
+    if (redirectToPreview && !window.location.href.startsWith('/preview')) {
+      push('/preview' + window.location.pathname).catch(() => {})
+    }
+  }
+  //
 
   //React.useEffect(storePageData, [initialProps])
 

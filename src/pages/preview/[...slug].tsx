@@ -1,4 +1,4 @@
-import { GetStaticPaths, GetStaticProps } from 'next'
+import { GetServerSideProps } from 'next'
 
 import { Entity } from '@/components/content/entity'
 import { EntityBase } from '@/components/entity-base'
@@ -43,7 +43,6 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
         noContainers
         entityId={entityId}
         authorization={pageData.authorization}
-        redirectToPreview
       >
         <EntityBase page={pageData} entityId={entityId}>
           {page}
@@ -66,20 +65,16 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
   )
 })
 
-export const getStaticProps: GetStaticProps<SlugProps> = async (context) => {
+export const getServerSideProps: GetServerSideProps<SlugProps> = async (
+  context
+) => {
   const alias = (context.params?.slug as string[]).join('/')
-  const pageData = await fetchPageData('/' + context.locale! + '/' + alias)
+  const pageData = await fetchPageData('/' + context.locale! + '/' + alias, {
+    noPrettify: true,
+  })
   return {
     props: {
       pageData: JSON.parse(JSON.stringify(pageData)) as SlugPageData, // remove undefined values
     },
-    revalidate: 1,
-  }
-}
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    paths: [],
-    fallback: 'blocking',
   }
 }
