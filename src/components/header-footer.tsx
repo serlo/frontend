@@ -1,10 +1,10 @@
-import * as React from 'react'
+import { ReactNode } from 'react'
 
 import { Footer } from './navigation/footer'
 import { Header } from './navigation/header'
 
 export interface HeaderFooterProps {
-  children: React.ReactNode
+  children: ReactNode
 }
 
 export function HeaderFooter({ children }: HeaderFooterProps) {

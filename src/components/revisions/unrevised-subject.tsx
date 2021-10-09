@@ -1,5 +1,5 @@
 import { Subject } from '@serlo/api'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 import { getSubjectSlug } from '../pages/unrevised-revisions'
 import { UnrevisedEntity } from './unrevised-entity'

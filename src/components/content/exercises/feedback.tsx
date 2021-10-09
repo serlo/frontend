@@ -1,9 +1,9 @@
 import clsx from 'clsx'
-import * as React from 'react'
+import { ReactNode } from 'react'
 
 export interface FeedbackProps {
   correct: boolean
-  children: React.ReactNode
+  children: ReactNode
 }
 
 export function Feedback({ children, correct }: FeedbackProps) {

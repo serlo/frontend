@@ -29,7 +29,7 @@ export function SearchInput() {
   const consentGiven = checkConsent(ExternalProvider.GoogleSearch)
   const searchFormRef = useRef<HTMLDivElement>(null)
 
-  // const [isSearchPage, setIsSearchPage] = React.useState(false)
+  // const [isSearchPage, setIsSearchPage] = useState(false)
   const { lang, strings } = useInstanceData()
   const router = useRouter()
   const onSearchPage = router.route === '/search'

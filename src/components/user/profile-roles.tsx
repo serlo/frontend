@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import * as R from 'ramda'
+import { partition } from 'ramda'
 
 import { Link } from '../content/link'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -14,7 +14,7 @@ interface ProfileRolesProps {
 export function ProfileRoles({ roles }: ProfileRolesProps) {
   const { strings, lang } = useInstanceData()
 
-  const [instanceRoles, otherRoles] = R.partition(
+  const [instanceRoles, otherRoles] = partition(
     (role) => role.instance === null || role.instance === lang,
     roles
   )

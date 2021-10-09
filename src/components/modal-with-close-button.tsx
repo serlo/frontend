@@ -1,7 +1,7 @@
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
-import React from 'react'
+import { ReactNode } from 'react'
 import BaseModal from 'react-modal'
 
 import { useInstanceData } from '@/contexts/instance-context'
@@ -24,7 +24,7 @@ export function ModalWithCloseButton({
   isOpen: boolean
   title?: string
   onCloseClick: () => void
-  children: React.ReactNode
+  children: ReactNode
 }) {
   const { strings } = useInstanceData()
 

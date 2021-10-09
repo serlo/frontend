@@ -12,7 +12,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
-import * as React from 'react'
+import { MouseEvent, useRef, useContext } from 'react'
 
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { EntityIdContext } from '@/contexts/entity-id-context'
@@ -31,19 +31,19 @@ interface EntryData {
   icon: IconDefinition
   href?: string
   download?: string
-  onClick?: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void
+  onClick?: (event: MouseEvent) => void
 }
 
 export function ShareModal({ isOpen, onClose, showPdf }: ShareModalProps) {
-  const shareInputRef = React.useRef<HTMLInputElement>(null)
+  const shareInputRef = useRef<HTMLInputElement>(null)
   const { strings, lang } = useInstanceData()
-  const id = React.useContext(EntityIdContext)
+  const id = useContext(EntityIdContext)
 
   if (!isOpen || !id) return null
 
   submitEvent(`share_${id}`)
 
-  function copyToClipboard(event: React.MouseEvent, text?: string) {
+  function copyToClipboard(event: MouseEvent, text?: string) {
     const target = event.target as HTMLAnchorElement
     shareInputRef.current!.select()
     document.execCommand('copy')
@@ -89,7 +89,7 @@ export function ShareModal({ isOpen, onClose, showPdf }: ShareModalProps) {
     {
       title: 'Mebis',
       icon: faCompass,
-      onClick: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+      onClick: (event: MouseEvent) => {
         copyToClipboard(
           event,
           'Link in die Zwischenablage kopiert.\r\nEinfach auf Mebis (www.mebis.bayern.de) einfügen!'

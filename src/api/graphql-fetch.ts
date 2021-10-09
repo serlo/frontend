@@ -1,6 +1,6 @@
 import type { GraphQLError } from 'graphql'
 import { ClientError, GraphQLClient } from 'graphql-request'
-import * as React from 'react'
+import { RefObject } from 'react'
 
 import { endpoint } from '@/api/endpoint'
 import { AuthenticationPayload } from '@/auth/auth-provider'
@@ -21,7 +21,7 @@ export function createGraphqlFetch() {
 }
 
 export function createAuthAwareGraphqlFetch(
-  auth: React.RefObject<AuthenticationPayload>
+  auth: RefObject<AuthenticationPayload>
 ) {
   return async function fetch(args: string) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment

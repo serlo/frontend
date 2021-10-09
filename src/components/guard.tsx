@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { ReactElement, useState, useEffect } from 'react'
 
 import { useAuthentication } from '@/auth/use-authentication'
 import { LoadingError } from '@/components/loading/loading-error'
@@ -10,14 +10,14 @@ export interface GuardProps {
   data?: any
   error?: object
   needsAuth?: boolean
-  children: React.ReactElement | null
+  children: ReactElement | null
 }
 
 export function Guard({ children, data, error, needsAuth }: GuardProps) {
   const auth = useAuthentication()
-  const [mounted, setMounted] = React.useState(!shouldUseNewAuth())
+  const [mounted, setMounted] = useState(!shouldUseNewAuth())
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (needsAuth) setMounted(true)
   }, [needsAuth])
 

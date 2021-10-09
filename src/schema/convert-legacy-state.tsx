@@ -1,4 +1,4 @@
-import * as htmlparser2 from 'htmlparser2'
+import { parseDOM } from 'htmlparser2'
 
 import { sanitizeLatex } from './sanitize-latex'
 import {
@@ -30,7 +30,7 @@ interface LegacyNode {
 }
 
 export function convertLegacyState(html: string) {
-  const dom = htmlparser2.parseDOM(html) as unknown as LegacyNode
+  const dom = parseDOM(html) as unknown as LegacyNode
   return { children: convert(dom) }
 }
 
