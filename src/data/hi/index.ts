@@ -356,6 +356,9 @@ export const loggedInData = {
       url: '/event/history/user/me',
       title: "हाल की गतिविधि"
     }, {
+      url: '/entity/unrevised/user/me',
+      title: "Unrevised Revisions"
+    },  {
       url: '/subscriptions/manage',
       title: "सब्सक्रिप्शन"
     }, {
