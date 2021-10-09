@@ -11,7 +11,7 @@ import {
   UnrevisedRevisionsProps,
 } from '@/data-types'
 import { Instance } from '@/fetcher/query-types'
-import { requestUnrevisedRevisionsBySubjects } from '@/fetcher/unrevisedRevisions/request'
+import { requestUnrevisedRevisionsBySubjects } from '@/fetcher/unrevised-revisions/request'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks<UnrevisedRevisionsProps>(({ pageData }) => {

@@ -6,7 +6,7 @@ import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { UnrevisedEntity } from '@/components/revisions/unrevised-entity'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UnrevisedEntityData } from '@/fetcher/query-types'
-import { unrevisedEntitiesFragment } from '@/fetcher/unrevisedRevisions/query'
+import { unrevisedEntitiesFragment } from '@/fetcher/unrevised-revisions/query'
 
 interface UserUnrevisedRevisionsProps {
   userId: number
