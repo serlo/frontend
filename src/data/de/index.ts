@@ -61,7 +61,9 @@ export const instanceData = {
       subscriptions: "Abonnements verwalten",
       revisionHistory: "Bearbeitungsverlauf",
       eventLog: "Aktivitäten",
-      unrevisedRevisions: "Ungeprüfte Bearbeitungen"
+      unrevisedRevisions: "Ungeprüfte Bearbeitungen",
+      userEdits: "Bearbeitungen von %user%",
+      userEditsMine: "Meine ungeprüften Bearbeitungen"
     },
     roles: {
       donor: "Spender*in",
@@ -192,7 +194,8 @@ export const instanceData = {
       wipLabelText: 'wip',
       wipLabelNote: "Diese Bearbeitung ist noch in Arbeit. Bitte noch nicht reviewen.",
       newAuthorText: "neuer Autor",
-      newAuthorNote: "Diese Autor*in hat noch nicht viele Bearbeitungen gemacht und freut sich bestimmt über ein schnelles Review."
+      newAuthorNote: "Diese Autor*in hat noch nicht viele Bearbeitungen gemacht und freut sich bestimmt über ein schnelles Review.",
+      noUnrevisedRevisions: "Aktuell gibt es keine Bearbeitungen von dir, die sich noch im Review befinden."
     },
     errors: {
       title: "😬 Auch Webseiten machen mal Fehler…",
@@ -212,6 +215,7 @@ export const instanceData = {
       aboutMe: "Über mich",
       recentActivities: "Aktivitäten",
       showAllActivities: "Alle Aktivitäten anzeigen",
+      noActivities: "Bisher keine Aktivitäten.",
       lastLogin: "Zuletzt angemeldet",
       yearsWithSerlo: "Jahre dabei!",
       yearWithSerlo: "Jahr dabei!",
@@ -354,7 +358,7 @@ export const loggedInData = {
       title: "Passwort ändern"
     }, {
       url: '/event/history/user/me',
-      title: "Meine Aktivitäten"
+      title: "Meine Bearbeitungen"
     }, {
       url: '/entity/unrevised/user/me',
       title: "Ungeprüfte Bearbeitungen"
