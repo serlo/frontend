@@ -62,8 +62,8 @@ export const instanceData = {
       revisionHistory: "Bearbeitungsverlauf",
       eventLog: "Aktivitäten",
       unrevisedRevisions: "Ungeprüfte Bearbeitungen",
-      userEdits: 'Edits by %user%',
-      userEditsMine: 'My Unrevised Revisions'
+      userEdits: "Bearbeitungen von %user%",
+      userEditsMine: "Meine ungeprüften Bearbeitungen"
     },
     roles: {
       donor: "Spender*in",
@@ -195,7 +195,7 @@ export const instanceData = {
       wipLabelNote: "Diese Bearbeitung ist noch in Arbeit. Bitte noch nicht reviewen.",
       newAuthorText: "neuer Autor",
       newAuthorNote: "Diese Autor*in hat noch nicht viele Bearbeitungen gemacht und freut sich bestimmt über ein schnelles Review.",
-      noUnrevisedRevisions: 'No unrevised revisions, all done! 🎉'
+      noUnrevisedRevisions: "Aktuell gibt es keine Bearbeitungen von dir, die sich noch im Review befinden."
     },
     errors: {
       title: "😬 Auch Webseiten machen mal Fehler…",
@@ -215,7 +215,7 @@ export const instanceData = {
       aboutMe: "Über mich",
       recentActivities: "Aktivitäten",
       showAllActivities: "Alle Aktivitäten anzeigen",
-      noActivities: 'No activities so far.',
+      noActivities: "Bisher keine Aktivitäten.",
       lastLogin: "Zuletzt angemeldet",
       yearsWithSerlo: "Jahre dabei!",
       yearWithSerlo: "Jahr dabei!",
@@ -358,7 +358,7 @@ export const loggedInData = {
       title: "Passwort ändern"
     }, {
       url: '/event/history/user/me',
-      title: 'My Edits'
+      title: "Meine Bearbeitungen"
     }, {
       url: '/subscriptions/manage',
       title: "Abonnements"
