@@ -23,6 +23,7 @@ const specialCases = [
   ['Huge Equation Plugin', '/202374'],
   ['Long Code Block', '/48121'],
   ['Course w/ trashed pages', '/139048'],
+  ['Multimedia w/ Code', '/222271'],
 ]
 
 const ContentPage: NextPage = () => {
