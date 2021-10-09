@@ -358,7 +358,7 @@ export const loggedInData = {
       title: "Actualizar contraseña"
     }, {
       url: '/event/history/user/me',
-      title: 'My Edits'
+      title: "Mis ediciones"
     }, {
       url: '/subscriptions/manage',
       title: "Suscripciones"
