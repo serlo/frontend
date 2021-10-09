@@ -34,7 +34,7 @@ export function Multimedia({
       <div
         onClick={mediaChildIsImage ? openLightBox : undefined}
         className={clsx(
-          'mobile:float-right mobile:mt-1 mobile:-mb-1 mobile:ml-2',
+          'mobile:float-right mobile:mt-1 mobile:-mb-1 mobile:ml-2 relative z-10',
           mediaChildIsImage && 'mobile:cursor-zoom-in',
           width == 25 && 'mobile:w-1/4',
           width == 50 && 'mobile:w-1/2',
