@@ -358,7 +358,7 @@ export const loggedInData = {
       title: "mettre à jour le mot de passe"
     }, {
       url: '/event/history/user/me',
-      title: 'My Edits'
+      title: "Mes modifications"
     }, {
       url: '/subscriptions/manage',
       title: "Abonnements"
