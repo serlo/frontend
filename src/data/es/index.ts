@@ -61,7 +61,9 @@ export const instanceData = {
       subscriptions: "Administrar suscripciones",
       revisionHistory: "Historial de revisiones",
       eventLog: "Registro de eventos",
-      unrevisedRevisions: "Revisiones no revisadas"
+      unrevisedRevisions: "Revisiones no revisadas",
+      userEdits: 'Edits by %user%',
+      userEditsMine: 'My Unrevised Revisions'
     },
     roles: {
       donor: "Donante",
@@ -192,7 +194,8 @@ export const instanceData = {
       wipLabelText: "limpiar",
       wipLabelNote: "Marcado como trabajo en progreso. No revises todavía.",
       newAuthorText: "nuevo autor",
-      newAuthorNote: "Esta es una de las primeras ediciones de este autor, quizás priorizar esto."
+      newAuthorNote: "Esta es una de las primeras ediciones de este autor, quizás priorizar esto.",
+      noUnrevisedRevisions: 'No unrevised revisions, all done! 🎉'
     },
     errors: {
       title: "😬 Los sitios web a veces cometen errores…",
@@ -212,6 +215,7 @@ export const instanceData = {
       aboutMe: "Sobre mi",
       recentActivities: "Actividades recientes",
       showAllActivities: "Mostrar todas las actividades",
+      noActivities: 'No activities so far.',
       lastLogin: "Último inicio de sesion",
       yearsWithSerlo: "¡Años con Serlo!",
       yearWithSerlo: "¡Año con Serlo!",
@@ -354,7 +358,7 @@ export const loggedInData = {
       title: "Actualizar contraseña"
     }, {
       url: '/event/history/user/me',
-      title: "Actividades recientes"
+      title: 'My Edits'
     }, {
       url: '/subscriptions/manage',
       title: "Suscripciones"
