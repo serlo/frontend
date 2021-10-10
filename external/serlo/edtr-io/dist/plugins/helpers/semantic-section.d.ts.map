@@ -1,0 +1,1 @@
+{"version":3,"file":"semantic-section.d.ts","sourceRoot":"","sources":["../../src/plugins/helpers/semantic-section.tsx"],"names":[],"mappings":"AAsBA,OAAO,KAAK,KAAK,MAAM,OAAO,CAAA;AAoB9B,wBAAgB,eAAe,CAAC,KAAK,EAAE,oBAAoB,eAK1D;AAED,MAAM,WAAW,oBAAoB;IACnC,QAAQ,EAAE,KAAK,CAAC,SAAS,CAAA;IACzB,QAAQ,CAAC,EAAE,OAAO,CAAA;CACnB"}

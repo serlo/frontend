@@ -1,0 +1,20 @@
+{
+  "name": "@serlo/mathjax",
+  "version": "0.0.0",
+  "private": true,
+  "main": "dist/index.js",
+  "module": "dist/mathjax.esm.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "build": "ts-node ../../../scripts/build"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/jquery": "^3.0.0",
+    "ts-node": "^10.0.0",
+    "tsdx": "^0.14.0",
+    "typescript": "^4.0.0"
+  }
+}

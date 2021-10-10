@@ -1,0 +1,269 @@
+{
+  "edtr-io": {
+    "Extended Settings": "Erweiterte Einstellungen",
+    "Close": "Schließen",
+    "This content type isn't supported by the new editor, yet.": "Dieser Inhaltstyp wird vom neuen Editor noch nicht unterstützt.",
+    "Edit the content in the old editor.": "Bearbeite den Inhalt im alten Editor.",
+    "An error occurred during the conversion.": "Leider trat ein Fehler bei der Konvertierung auf.",
+    "We found an old revision created by you. Do you want to restore it?": "Wir haben eine alte Bearbeitung von dir gefunden. Möchtest du diese wiederherstellen?",
+    "This entity hasn't been converted to the new editor, yet.": "Dieser Inhalt wurde noch nicht im neuen Editor bearbeitet.",
+    "Text": "Text",
+    "Compose content using rich text and math formulas.": "Schreibe Text und Matheformeln, und formatiere sie.",
+    "Quotation": "Zitat",
+    "Create indented text for quotations.": "Erzeuge eingerückten Text für Zitate.",
+    "GeoGebra Applet": "GeoGebra Applet",
+    "Embed GeoGebra Materials applets via URL or ID.": "Binde Applets von GeoGebra Materials via Link oder ID ein.",
+    "Source Code": "Code",
+    "Highlight the syntax of source code.": "Schreibe Code und hebe ihn je nach Programmiersprache hervor.",
+    "Anchor": "Sprungmarke",
+    "Insert an anchor.": "Füge eine Sprungmarke innerhalb deines Inhalts hinzu.",
+    "Image": "Bild",
+    "Upload images.": "Lade Bilder hoch oder verwende Bilder, die bereits online sind.",
+    "Important Statement": "Merksatz",
+    "A box to highlight important statements.": "Hebe wichtige Aussagen hervor.",
+    "serlo.org Content": "serlo.org Inhalt",
+    "Embed serlo.org content via their ID.": "Binde einen Inhalt von serlo.org via ID ein.",
+    "Multimedia content associated with text": "Erklärung mit Multimedia-Inhalt",
+    "Create an illustrating or explaining multimedia content associated with text.": "Erstelle einen veranschaulichenden oder erklärenden Multimedia-Inhalt mit zugehöriger Erklärung.",
+    "Spoiler": "Spoiler",
+    "A collapsible box.": "In diese ausklappbare Box kannst du zum Beispiel Exkurse hinzufügen.",
+    "Table": "Tabelle",
+    "Create tables using Markdown.": "Erstelle eine Tabelle mit Markdown.",
+    "Video": "Video",
+    "Embed YouTube, Vimeo, Wikimedia Commons or BR videos.": "Binde Videos von YouTube, Vimeo, Wikimedia Commons oder BR ein.",
+    "Solution Separator": "Lösungs-Trenner",
+    "Divide the solution into individual steps.": "Unterteile die Lösung in einzelne Lösungsschritte.",
+    "Save": "Speichern",
+    "Cancel": "Abbrechen",
+    "Saving…": "Speichert…",
+    "You need to fill out the changes you made": "Du musst zuerst die Änderungen ausfüllen.",
+    "You need to accept the license terms": "Du musst zuerst die Lizenzbedingungen akzeptieren.",
+    "You need to fill out the changes you made and accept the license terms": "Du musst zuerst die Lizenzbedingungen akzeptieren und die Änderungen ausfüllen.",
+    "An error occurred during saving.": "Es trat ein Fehler beim Speichern auf.",
+    "You can store the revision locally, refresh the page and try to save again.": "Du kannst die Bearbeitung lokal zwischenspeichern, dann die Seite neu laden und es erneut versuchen.",
+    "Revision saved": "Bearbeitung gespeichert",
+    "Save revision": "Bearbeitung zwischenspeichern",
+    "Changes": "Änderungen",
+    "Skip peer review (not recommended)": "Bearbeitung ohne Review freischalten (nicht empfohlen)",
+    "Enable serlo.org notifications": "Benachrichtigungen auf serlo.org erhalten",
+    "Enable notifications via e-mail": "Benachrichtigungen per E-mail erhalten",
+    "Switch to another revision": "Andere Version auswählen",
+    "Current": "Aktuell",
+    "Author": "Verfasser",
+    "Created at": "Zeitstempel",
+    "Equations": "Gleichungen",
+    "Create mathematical equations and terms.": "Füge mathematische Gleichungen und Terme hinzu.",
+    "Settings": "Einstellungen"
+  },
+  "anchor": {
+    "Identifier": "Name",
+    "ID of the anchor": "Name der Sprungmarke"
+  },
+  "geogebra": {
+    "GeoGebra URL or ID": "GeoGebra Materials URL oder ID"
+  },
+  "highlight": {
+    "Click here and enter your source code…": "Klicke hier und füge deinen Quellcode ein…",
+    "Enter your source code here": "Füge hier deinen Quellcode ein. Verlasse den Bereich, um eine Vorschau zu sehen.",
+    "Language": "Programmiersprache",
+    "Enter language": "Programmiersprache eingeben",
+    "Show line numbers": "Zeilennummern anzeigen"
+  },
+  "inputExercise": {
+    "Text": "Text",
+    "Number": "Zahl",
+    "Mathematical expression": "Mathematischer Ausdruck",
+    "Choose the exercise type": "Wähle den Antworttyp",
+    "Unit": "Einheit (optional)",
+    "Add answer": "Antwort hinzufügen",
+    "Enter the value": "Gib hier die Antwort ein",
+    "Your solution": "Deine Lösung",
+    "Correct": "Richtig",
+    "Wrong": "Falsch"
+  },
+  "multimedia": {
+    "Image": "Bild",
+    "Video": "Video",
+    "GeoGebra Applet": "GeoGebra Applet",
+    "Change the multimedia type": "Tausche das Multimedia Element aus",
+    "How important is the multimedia content?": "Wie wichtig ist der Multimedia Inhalt?",
+    "It is illustrating": "Es ist nur eine Veranschaulichung",
+    "It is essential": "Es spielt eine zentrale Rolle"
+  },
+  "rows": {
+    "Search for tools…": "Suche hier nach Tools…",
+    "Duplicate": "Duplizieren",
+    "Remove": "Löschen",
+    "Close": "Schließen",
+    "Drag the element within the document": "Verschiebe das Element innerhalb des Dokuments",
+    "Add an element": "Füge ein Element hinzu"
+  },
+  "scMcExercise": {
+    "Single-choice": "Single Choice",
+    "Multiple-choice": "Multiple Choice",
+    "Choose the exercise type": "Wähle den Aufgabentyp",
+    "Add answer": "Antwort hinzufügen",
+    "Wrong": "Falsch",
+    "Almost! You missed at least one correct answer": "Fast! Dir fehlt noch mindestens eine richtige Antwort",
+    "Correct": "Richtig"
+  },
+  "spoiler": {
+    "Enter a title": "Titel eingeben"
+  },
+  "text": {
+    "Quote": "Zitat",
+    "Set color": "Einfärben",
+    "Reset color": "Farbe zurücksetzen",
+    "Colors": "Textfarben",
+    "Close sub menu": "Untermenü schließen",
+    "Heading": "Überschrift",
+    "Headings": "Überschriften",
+    "Link (Strg + K)": "Link (Strg + K)",
+    "Enter URL": "Hier Link einfügen",
+    "Open in new tab": "Öffne den Link in einem neuen Tab",
+    "Ordered list": "Nummerierte Liste",
+    "Unordered list": "Aufzählung",
+    "Lists": "Listen",
+    "Math formula (Strg + M)": "Matheformel (Strg + M)",
+    "Display as block": "eigene Zeile",
+    "[formula]": "[neue Formel]",
+    "visual": "visuell",
+    "LaTeX": "LaTeX",
+    "Only LaTeX editor available": "Nur LaTeX verfügbar",
+    "Shortcuts": "Tastenkürzel",
+    "Fraction": "Bruch",
+    "Superscript": "Hochgestellt",
+    "or": "oder",
+    "Subscript": "Tiefgestellt",
+    "Root": "Wurzel",
+    "Math symbols": "Mathematische Symbole",
+    "e.g.": "z.B.",
+    "Functions": "Funktionen",
+    "Bold (Strg + B)": "Fett (Strg + B)",
+    "Italic (Strg + I)": "Kursiv (Strg + I)",
+    "No items found": "keine Einträge gefunden"
+  },
+  "video": {
+    "Video URL": "Video URL",
+    "Description": "Beschreibung",
+    "Title": "Titel",
+    "URL": "URL",
+    "Title for search engines": "Titel für Suchmaschinen"
+  },
+  "error": {
+    "This part of the document could not be converted.": "Dieser Teil des Dokuments konnte nicht automatisch konvertiert werden."
+  },
+  "exercise": {
+    "Add choice exercise": "Auswahlaufgabe hinzufügen",
+    "Choice exercise": "Auswahlaufgabe",
+    "Add input exercise": "Eingabefeld hinzufügen",
+    "Input exercise": "Eingabefeld",
+    "Add an optional interactive exercise:": "Füge optional ein interaktives Element hinzu:"
+  },
+  "injection": {
+    "Illegal injection found": "Ungültige Injection gefunden",
+    "Serlo entity {{src}}": "Serlo Inhalt {{src}}",
+    "Serlo ID:": "Serlo ID"
+  },
+  "layout": {
+    "To make the content draggable, convert them for the new editor:": "Um die Inhalte zu verschieben, konvertiere sie für den neuen Editor:",
+    "One-column layout": "Einspaltiges Layout",
+    "Multimedia content associated with text": "Erklärung mit Multimedia-Inhalt"
+  },
+  "solution": {
+    "Optionally explain the solution strategy here": "Beschreibe hier optional die Lösungsstrategie",
+    "For this exercise, you need the following fundamentals:": "Für diese Aufgabe benötigst du folgendes Grundwissen:",
+    "ID of an article, e.g. 1855": "ID eines Artikels, z.B. 1855",
+    "Open the article in a new tab:": "Öffne den Artikel in einem neuen Tab",
+    "Title of the link": "Titel der Verlinkung",
+    "Show solution": "Lösung anzeigen",
+    "Hide solution": "Lösung ausblenden"
+  },
+  "applet": {
+    "Title for search engines": "Titel für Suchmaschinen",
+    "Description for search engines": "Beschreibung für Suchmaschinen",
+    "Title": "Titel"
+  },
+  "article": {
+    "Title for search engines": "Titel für Suchmaschinen",
+    "Description for search engines": "Beschreibung für Suchmaschinen",
+    "Title": "Titel",
+    "Write a short introduction": "Fasse das Thema des Artikels kurz zusammen",
+    "Exercises": "Übungsaufgaben",
+    "Drag the exercise": "Verschiebe die Aufgabe",
+    "Remove exercise": "Entferne die Aufgabe",
+    "Add optional exercise": "Aufgabe hinzufügen",
+    "Still want more?": "Du hast noch nicht genug vom Thema?",
+    "You can find more content on this topic here": "Hier findest du noch weitere passende Inhalte zum Thema",
+    "Articles": "Artikel",
+    "Add article": "Artikel hinzufügen",
+    "ID of an article, e.g. 1855": "ID eines Artikels, z.B. 1855",
+    "Open the article in a new tab:": "Öffne den Artikel in einem neuen Tab",
+    "Drag the article": "Verschiebe den Artikel",
+    "Courses": "Kurse",
+    "Add course": "Kurs hinzufügen",
+    "ID of a course, e.g. 51979": "ID eines Kurses, z.B. 51979",
+    "Open the course in a new tab:": "Öffne den Kurs in einem neuen Tab",
+    "Drag the course": "Verschiebe den Kurs",
+    "Videos": "Videos",
+    "Add video": "Video hinzufügen",
+    "ID of a video, e.g. 40744": "ID eines Videos, z.B. 40744",
+    "Open the video in a new tab:": "Öffne das Video in einem neuen Tab",
+    "Drag the video": "Verschiebe das Video",
+    "Title of the link": "Titel des Links",
+    "Sources": "Quellen",
+    "URL of the link": "URL des Links",
+    "Open the link in a new tab:": "Öffne den Link in einem neuen Tab",
+    "Drag the source": "Verschiebe die Quellenangabe",
+    "Add source": "Quellenangabe hinzufügen",
+    "You can find more exercises in the following folder": "Weitere Aufgaben zum Thema findest du im folgenden Aufgabenordner",
+    "ID of an exercise folder, e.g. 30560": "ID eines Aufgabenordners, z.B. 30560",
+    "Open the exercise folder in a new tab:": "Öffne den Aufgabenordner in einem neuen Tab"
+  },
+  "coursePage": {
+    "Explanation": "Erklärung",
+    "Video": "Video",
+    "Question": "Frage",
+    "Title": "Titel"
+  },
+  "course": {
+    "Description for search engines": "Beschreibung für Suchmaschinen",
+    "Title": "Titel",
+    "Remove course page": "Kursseite entfernen",
+    "Add course page": "Kursseite hinzufügen"
+  },
+  "event": {
+    "Title for search engines": "Titel für Suchmaschinen",
+    "Description for search engines": "Beschreibung für Suchmaschinen",
+    "Title": "Titel"
+  },
+  "page": {
+    "Title": "Titel"
+  },
+  "taxonomy": {
+    "Title": "Titel"
+  },
+  "textExerciseGroup": {
+    "Remove exercise": "Teilaufgabe entfernen",
+    "Add exercise": "Teilaufgabe hinzufügen",
+    "Kind of exercise group": "Art der Aufgabengruppe",
+    "not cohesive": "nicht zusammenhängend",
+    "cohesive": "zusammenhängend"
+  },
+  "textExercise": {
+    "Remove solution": "Lösung entfernen",
+    "Create solution": "Lösung hinzufügen"
+  },
+  "equations": {
+    "explanation": "Erklärung",
+    "left-hand side": "linke Seite",
+    "right-hand side": "rechte Seite",
+    "transformation": "Umformung"
+  },
+  "mathPuzzle": {
+    "Source code": "Quellcode"
+  },
+  "deprecated": {
+    "This part of the document contains features that are no longer supported.": "Dieser Teil des Dokuments enthält Features, die nicht mehr unterstützt werden."
+  }
+}

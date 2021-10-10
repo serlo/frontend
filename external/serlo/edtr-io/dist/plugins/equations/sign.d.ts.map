@@ -1,0 +1,1 @@
+{"version":3,"file":"sign.d.ts","sourceRoot":"","sources":["../../src/plugins/equations/sign.tsx"],"names":[],"mappings":"AAAA;;;;;;;;;;;;;;;;;;;;GAoBG;AACH,oBAAY,IAAI;IACd,MAAM,WAAW;IACjB,WAAW,iBAAiB;IAC5B,kBAAkB,0BAA0B;IAC5C,QAAQ,cAAc;IACtB,eAAe,uBAAuB;IACtC,aAAa,oBAAoB;IACjC,SAAS,cAAc;CACxB;AAED,wBAAgB,kBAAkB,CAAC,IAAI,EAAE,IAAI,GAAG,MAAM,CAiBrD"}
