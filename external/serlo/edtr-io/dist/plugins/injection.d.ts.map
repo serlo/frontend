@@ -1,1 +1,0 @@
-{"version":3,"file":"injection.d.ts","sourceRoot":"","sources":["../src/plugins/injection.tsx"],"names":[],"mappings":";AAwBA,OAAO,EAA6B,YAAY,EAAE,MAAM,iBAAiB,CAAA;AAWzE,eAAO,MAAM,cAAc;;;;EAAW,CAAA;AAEtC,oBAAY,oBAAoB,GAAG,OAAO,cAAc,CAAA;AAExD,eAAO,MAAM,eAAe,EAAE,YAAY,CAAC,oBAAoB,CAI9D,CAAA;AAED,wBAAgB,iBAAiB,CAAC,KAAK,EAAE;IAAE,GAAG,EAAE,MAAM,CAAA;CAAE,eAkDvD"}

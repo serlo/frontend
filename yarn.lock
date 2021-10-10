@@ -2088,6 +2088,10 @@
 
 "@serlo/i18n@./external/serlo/i18n":
   version "0.0.0"
+
+"@serlo/i18n@Entkenntnis/tmp-serlo-i18n":
+  version "0.0.0"
+  resolved "https://codeload.github.com/Entkenntnis/tmp-serlo-i18n/tar.gz/146d11a59b72f2aad60757656a580943479742ce"
   dependencies:
     i18next "^19.0.0"
     react "^17.0.0"

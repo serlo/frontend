@@ -34,7 +34,7 @@
     "@fortawesome/react-fontawesome": "^0.1.0",
     "@serlo/authorization": "^0.26.0",
     "@serlo/edtr-io": "./external/serlo/edtr-io",
-    "@serlo/i18n": "./external/serlo/i18n",
+    "@serlo/i18n": "Entkenntnis/tmp-serlo-i18n",
     "@tippyjs/react": "^4.0.0",
     "algebra.js": "^0.2.0",
     "autoprefixer": "^10.0.0",
