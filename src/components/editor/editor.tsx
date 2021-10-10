@@ -1,7 +1,7 @@
 import { initI18n } from '@serlo/i18n'
 import { useEffect, useState } from 'react'
 
-import { Editor as SerloEditor } from '../../../external/edtr-io'
+import { Editor as SerloEditor } from '../../../external/edtr-io/editor'
 
 export function Editor({ state }: any) {
   const [init, setInit] = useState(false)
