@@ -1,7 +1,7 @@
 import Head from 'next/head'
-import * as React from 'react'
+import { PropsWithChildren } from 'react'
 
-type PageTitleProps = React.PropsWithChildren<{
+type PageTitleProps = PropsWithChildren<{
   headTitle?: boolean
   title: string
   icon?: JSX.Element

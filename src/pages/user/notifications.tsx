@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { gql } from 'graphql-request'
-import { useState } from 'react'
+import { useState, ReactNode } from 'react'
 
 import { useGraphqlSwrPaginationWithAuth } from '@/api/use-graphql-swr'
 import { PageTitle } from '@/components/content/page-title'
@@ -53,7 +53,7 @@ function Content() {
     children,
   }: {
     setShowUnreadTo: boolean
-    children: React.ReactNode
+    children: ReactNode
   }) {
     // blur-hack, use https://caniuse.com/#feat=css-focus-visible when supported
     return (

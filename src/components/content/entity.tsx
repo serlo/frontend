@@ -2,7 +2,7 @@ import { faTools, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import dynamic from 'next/dynamic'
 import { Router } from 'next/router'
-import { useState, MouseEvent as ReactMouseEvent } from 'react'
+import { useState, MouseEvent } from 'react'
 
 import { HSpace } from './h-space'
 import { Link } from './link'
@@ -32,7 +32,7 @@ export function Entity({ data }: EntityProps) {
 
   // course
   const [courseNavOpen, setCourseNavOpen] = useState(false)
-  const openCourseNav = (e: ReactMouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const openCourseNav = (e: MouseEvent) => {
     e.preventDefault()
     setCourseNavOpen(true)
   }

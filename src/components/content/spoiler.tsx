@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { ReactNode, useState } from 'react'
+import { ReactNode, useState, MouseEvent } from 'react'
 
 import { isPrintMode } from '../print-mode'
 import { submitEventWithPath } from '@/helper/submit-event'
@@ -40,7 +40,7 @@ function SpoilerTitle({
 }: {
   open: boolean
   children: {}
-  onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
+  onClick?: (e: MouseEvent) => void
   disabled?: boolean
 }) {
   const opened = typeof window === 'undefined' ? true : open

@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { shade } from 'polished'
-import React, { Fragment } from 'react'
+import { ReactNode, Fragment } from 'react'
 
 import { FrontendContentNode, Sign } from '@/data-types'
 import { RenderNestedFunction } from '@/schema/article-renderer'
@@ -68,7 +68,7 @@ export function Equations({ steps, renderNested }: EquationProps) {
     )
 
     function renderTD(
-      content: JSX.Element | React.ReactNode[] | null,
+      content: JSX.Element | ReactNode[] | null,
       align?: 'text-left' | 'text-right' | 'text-center'
     ) {
       return (

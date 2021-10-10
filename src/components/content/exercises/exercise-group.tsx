@@ -1,13 +1,13 @@
-import * as React from 'react'
+import { ReactNode, useState, useEffect } from 'react'
 
 import { ExerciseNumbering } from './exercise-numbering'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
 
 export interface ExerciseGroupProps {
-  children: React.ReactNode
-  license: React.ReactNode
-  groupIntro: React.ReactNode
+  children: ReactNode
+  license: ReactNode
+  groupIntro: ReactNode
   positionOnPage?: number
   id: number
   href?: string
@@ -23,8 +23,8 @@ export function ExerciseGroup({
   href,
   unrevisedRevisions,
 }: ExerciseGroupProps) {
-  const [loaded, setLoaded] = React.useState(false)
-  React.useEffect(() => {
+  const [loaded, setLoaded] = useState(false)
+  useEffect(() => {
     setLoaded(true)
   }, [])
   const auth = useAuthentication()

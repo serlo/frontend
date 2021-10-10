@@ -1,7 +1,7 @@
 import { faGraduationCap, faListUl } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
-import * as React from 'react'
+import { MouseEvent } from 'react'
 
 import { Link } from '../content/link'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -9,7 +9,7 @@ import { CourseData } from '@/data-types'
 
 export interface CourseNavigationProps {
   open: boolean
-  onOverviewButtonClick: (e: React.MouseEvent<HTMLButtonElement>) => void
+  onOverviewButtonClick: (e: MouseEvent<HTMLButtonElement>) => void
   data: CourseData
 }
 

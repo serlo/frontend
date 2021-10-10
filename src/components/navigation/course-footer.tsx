@@ -3,13 +3,13 @@ import {
   faArrowCircleUp,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import * as React from 'react'
+import { MouseEvent } from 'react'
 
 import { Link } from '../content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 
 export interface CourseFooterProps extends CourseFooterData {
-  onOverviewButtonClick: (e: React.MouseEvent<HTMLButtonElement>) => void
+  onOverviewButtonClick: (e: MouseEvent<HTMLButtonElement>) => void
   nextHref: string
 }
 
@@ -23,7 +23,7 @@ export function CourseFooter({
   previousHref,
   onOverviewButtonClick,
 }: CourseFooterProps) {
-  const onOverviewClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const onOverviewClick = (e: MouseEvent<HTMLButtonElement>) => {
     location.href = '#course-overview'
     onOverviewButtonClick(e)
   }

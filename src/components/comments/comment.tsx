@@ -1,7 +1,7 @@
 import { Comment as CommentType } from '@serlo/api'
 import clsx from 'clsx'
 import dynamic from 'next/dynamic'
-import * as React from 'react'
+import { useEffect, useRef } from 'react'
 
 import { Link } from '../content/link'
 import { MathSpanProps } from '../content/math-span'
@@ -28,7 +28,7 @@ export function Comment({
   highlight,
   isParent,
 }: CommentProps) {
-  const commentRef = React.useRef<HTMLDivElement>(null)
+  const commentRef = useRef<HTMLDivElement>(null)
   const { author, createdAt, content, id } = data
 
   // Step 1: Replace formulas
@@ -52,7 +52,7 @@ export function Comment({
     )
   )
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isHighlight) {
       setTimeout(() => {
         scrollIfNeeded(commentRef.current)

@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { Dispatch } from 'react'
+import { Dispatch, SetStateAction } from 'react'
 
 import { DisplayModes } from './revision'
 import { Link } from '@/components/content/link'
@@ -10,7 +10,7 @@ export interface RevisionModeSwitcherProps {
   previousRevisionId?: number
   repositoryId: number
   displayMode: DisplayModes
-  setDisplayMode: Dispatch<React.SetStateAction<DisplayModes>>
+  setDisplayMode: Dispatch<SetStateAction<DisplayModes>>
 }
 
 export function RevisionModeSwitcher({

@@ -1,10 +1,10 @@
 import { randomBytes } from 'crypto'
 import { NextApiRequest, NextApiResponse } from 'next'
-import * as util from 'util'
+import { promisify } from 'util'
 
 import { getAuthorizationCode, scope } from '@/auth/oauth2'
 
-const generateSecret = util.promisify(randomBytes)
+const generateSecret = promisify(randomBytes)
 
 async function login(req: NextApiRequest, res: NextApiResponse) {
   const oauth2AuthorizationCode = getAuthorizationCode()

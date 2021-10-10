@@ -1,5 +1,5 @@
 import { Thread as ThreadType } from '@serlo/api'
-import * as React from 'react'
+import { ReactNode } from 'react'
 
 import { Comment } from './comment'
 import { CommentsData } from './comment-area'
@@ -10,7 +10,7 @@ interface ThreadProps {
   thread: ThreadType
   showChildren: boolean
   highlightedCommentId?: number
-  renderReplyForm?: (threadId: string) => React.ReactNode
+  renderReplyForm?: (threadId: string) => ReactNode
   onShowChildren?: (threadId: string) => void
   highlight: (o: number) => void
 }

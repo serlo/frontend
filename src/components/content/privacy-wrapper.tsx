@@ -1,7 +1,7 @@
 import { faHeart, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
-import * as React from 'react'
+import { ReactChild, useState, KeyboardEvent } from 'react'
 
 import { useInstanceData } from '@/contexts/instance-context'
 import { entityIconMapping } from '@/helper/icon-by-entity-type'
@@ -13,9 +13,9 @@ import { ExternalProvider, useConsent } from '@/helper/use-consent'
 // also borrowed some code
 
 interface PrivacyWrapperProps {
-  children: React.ReactChild
+  children: ReactChild
   className?: string
-  placeholder?: React.ReactChild
+  placeholder?: ReactChild
   type: 'video' | 'applet' | 'twingle'
   provider: ExternalProvider
   embedUrl?: string
@@ -33,7 +33,7 @@ export function PrivacyWrapper({
   twingleCallback,
   onLoad,
 }: PrivacyWrapperProps) {
-  const [showIframe, setShowIframe] = React.useState(false)
+  const [showIframe, setShowIframe] = useState(false)
   const isTwingle = provider === ExternalProvider.Twingle
   const { checkConsent, giveConsent } = useConsent()
 
@@ -47,7 +47,7 @@ export function PrivacyWrapper({
     setShowIframe(true)
   }
 
-  function onKeyDown(e: React.KeyboardEvent<HTMLButtonElement>) {
+  function onKeyDown(e: KeyboardEvent<HTMLButtonElement>) {
     if (!showIframe && (e.key === 'Enter' || e.key === ' ')) {
       e.preventDefault()
       confirmLoad()
