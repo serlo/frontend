@@ -48,11 +48,17 @@ export default renderedPageNoHooks<AddRevisionProps>(
           @apply text-2.5xl font-bold special-hyphens-auto;
           @apply text-truegray-900 border-truegray-300 border-b;
         }
+        .edtr-io h3 {
+          @apply mt-0 mb-8 pt-3 font-bold text-1.5xl text-truegray-900;
+        }
         .edtr-io {
           @apply text-lg leading-cozy;
         }
         .edtr-io a {
           @apply text-brand no-underline break-words hover:underline;
+        }
+        .edtr-io [data-slate-object='block'] {
+          @apply mb-block;
         }
       `}</style>
     </FrontendClientBase>
