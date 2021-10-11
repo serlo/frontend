@@ -60,6 +60,39 @@ export default renderedPageNoHooks<AddRevisionProps>(
         .edtr-io [data-slate-object='block'] {
           @apply mb-block;
         }
+        .edtr-io ul {
+          @apply mx-side mb-block mt-4 pl-5 list-none;
+
+          & > li:before {
+            @apply absolute special-content-space bg-brand-lighter;
+            @apply w-2.5 h-2.5 rounded-full -ml-5 mt-2.25;
+          }
+          & > li {
+            @apply mb-2;
+          }
+          & > li > ul,
+          & > li > ol {
+            @apply mt-2 !mb-4;
+          }
+        }
+        .sedtr-io ol {
+          @apply mx-side mb-block mt-0 pl-7 list-none;
+          @apply special-reset-list-counter;
+
+          & > li:before {
+            @apply absolute special-content-list-counter special-increment-list-counter;
+            @apply font-bold text-center rounded-full -ml-7;
+            @apply mt-0.5 bg-brand-150 w-4 h-4 text-xs;
+            @apply leading-tight text-brand pt-0.25;
+          }
+          & > li {
+            @apply mb-2;
+          }
+          & > li > ul,
+          & > li > ol {
+            @apply mt-2 !mb-4;
+          }
+        }
       `}</style>
     </FrontendClientBase>
   )
