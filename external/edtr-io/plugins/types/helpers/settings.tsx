@@ -69,11 +69,11 @@ export function RevisionHistory<T>(
   const [showRevisions, setShowRevisions] = React.useState(false)
   React.useEffect(() => {
     if (props.id !== 0) {
-      fetch(`/entity/repository/get-revisions/${props.id}`)
+      /*fetch(`https://de.serlo.org/entity/repository/get-revisions/${props.id}`)
         .then((response) => response.json())
         .then((data: RevisionData[]) => {
           setAvailableRevisions(data)
-        })
+        })*/
     }
   }, [props.id])
 

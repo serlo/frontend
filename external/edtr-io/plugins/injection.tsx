@@ -26,7 +26,9 @@ import { EditorPluginProps, string, EditorPlugin } from '@edtr-io/plugin'
 import { Icon, faNewspaper } from '@edtr-io/ui'
 import { useI18n } from '@serlo/i18n'
 import * as React from 'react'
-import fetch from 'unfetch'
+
+import { Injection } from '@/components/content/injection'
+import { renderArticle } from '@/schema/article-renderer'
 
 /* global */
 declare const Common: {
@@ -44,67 +46,9 @@ export const injectionPlugin: EditorPlugin<InjectionPluginState> = {
 }
 
 export function InjectionRenderer(props: { src: string }) {
-  const [loaded, setLoaded] = React.useState('')
-  const ref = React.useRef<HTMLDivElement>(null)
-  const i18n = useI18n()
-
-  React.useEffect(() => {
-    const src = createURL(props.src)
-
-    fetch(src, {
-      headers: {
-        'X-Requested-With': 'XMLHttpRequest',
-        'X-From': 'legacy-serlo.org',
-      },
-    })
-      .then((response) => response.json())
-      .then((data: { response: string }) => {
-        setLoaded(data.response)
-        setTimeout(() => {
-          if (ref.current) {
-            Common.trigger('new context', ref.current)
-          }
-        })
-      })
-      .catch(() => {
-        setLoaded(
-          `<div class="alert alert-info">${i18n.t(
-            'injection::Illegal injection found'
-          )}</div>`
-        )
-      })
-  }, [props.src])
-
-  if (loaded) {
-    return (
-      <div className="panel panel-default">
-        <div
-          className="panel-body"
-          ref={ref}
-          dangerouslySetInnerHTML={{ __html: loaded }}
-        />
-      </div>
-    )
-  }
-
-  const src = createURL(props.src)
-  return (
-    <div>
-      <a href={src}>{i18n.t('injection::Serlo entity {{src}}', { src })}</a>
-    </div>
-  )
+  return <Injection href={props.src} renderNested={renderArticle} />
 }
 
-function createURL(id: string) {
-  if (id.startsWith('/') || id.startsWith('\\')) {
-    return '/' + id.substring(1, id.length)
-  }
-  const match = id.match(/^https?:\/\/[^./]+\.serlo\.[^./]+\/(.+)$/g)
-  if (match) {
-    return '/' + match[1]
-  }
-  return '/' + id
-}
 
 const PlaceholderWrapper = styled.div({
   position: 'relative',
@@ -131,7 +75,7 @@ function InjectionEditor(props: EditorPluginProps<typeof injectionState>) {
   }
 
   return (
-    <React.Fragment>
+    <>
       {cache ? (
         <PreviewOverlay
           focused={props.focused || false}
@@ -165,7 +109,7 @@ function InjectionEditor(props: EditorPluginProps<typeof injectionState>) {
         </EditorInlineSettings>
       ) : null}
       {props.renderIntoSettings(
-        <React.Fragment>
+        <>
           <OverlayInput
             label={i18n.t('injection::Serlo ID:')}
             placeholder="123456"
@@ -174,8 +118,8 @@ function InjectionEditor(props: EditorPluginProps<typeof injectionState>) {
               props.state.set(e.target.value)
             }}
           />
-        </React.Fragment>
+        </>
       )}
-    </React.Fragment>
+    </>
   )
 }
