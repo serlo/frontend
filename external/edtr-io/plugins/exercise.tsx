@@ -122,12 +122,12 @@ function ExerciseEditor({ editable, state }: ExerciseProps) {
   const [showOptions, setShowOptions] = React.useState(false)
 
   return (
-    <React.Fragment>
+    <>
       <SemanticSection editable={editable}>{content.render()}</SemanticSection>
       <SemanticSection editable={editable}>
         {renderInteractive()}
       </SemanticSection>
-    </React.Fragment>
+    </>
   )
 
   function renderInteractive() {
@@ -135,7 +135,7 @@ function ExerciseEditor({ editable, state }: ExerciseProps) {
       return interactive.render({
         renderToolbar(children) {
           return (
-            <React.Fragment>
+            <>
               <div
                 style={{ position: 'relative' }}
                 onMouseLeave={() => {
@@ -183,7 +183,7 @@ function ExerciseEditor({ editable, state }: ExerciseProps) {
                 ) : null}
               </div>
               {children}
-            </React.Fragment>
+            </>
           )
         },
       })
@@ -191,7 +191,7 @@ function ExerciseEditor({ editable, state }: ExerciseProps) {
 
     if (editable) {
       return (
-        <React.Fragment>
+        <>
           <p>
             <em>{i18n.t('exercise::Add an optional interactive exercise:')}</em>
           </p>
@@ -211,7 +211,7 @@ function ExerciseEditor({ editable, state }: ExerciseProps) {
               )
             })}
           </ButtonContainer>
-        </React.Fragment>
+        </>
       )
     }
 

@@ -54,7 +54,7 @@ function EventTypeEditor(props: EditorPluginProps<typeof eventTypeState>) {
   const i18n = useI18n()
 
   return (
-    <React.Fragment>
+    <>
       <div className="page-header">
         {props.renderIntoToolbar(
           <RevisionHistory
@@ -91,6 +91,6 @@ function EventTypeEditor(props: EditorPluginProps<typeof eventTypeState>) {
       </div>
       <article>{content.render()}</article>
       <Controls subscriptions {...props.state} />
-    </React.Fragment>
+    </>
   )
 }

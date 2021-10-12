@@ -43,7 +43,7 @@ export function HighlightEditor(props: HighlightProps) {
     }
   }
   return throttledEdit || edit ? (
-    <React.Fragment>
+    <>
       <Textarea
         value={state.code.value}
         name="text"
@@ -81,7 +81,7 @@ export function HighlightEditor(props: HighlightProps) {
           />
         </CheckboxContainer>
       </EditorInlineSettings>
-    </React.Fragment>
+    </>
   ) : (
     <Renderer
       config={config}

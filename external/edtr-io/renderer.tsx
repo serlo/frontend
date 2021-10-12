@@ -19,8 +19,8 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  * @link      https://github.com/serlo-org/serlo.org for the canonical source repository
  */
-import { useI18n } from '@serlo/i18n'
 import { Renderer as Core, RendererProps } from '@edtr-io/renderer'
+import { useI18n } from '@serlo/i18n'
 import * as React from 'react'
 
 import { createPlugins } from './plugins'

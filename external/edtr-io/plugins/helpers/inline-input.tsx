@@ -20,9 +20,9 @@
  * @link      https://github.com/serlo-org/serlo.org for the canonical source repository
  */
 import * as React from 'react'
-// @ts-ignore
+// @ts-expect-error
 import Plain from 'slate-plain-serializer'
-// @ts-ignore
+// @ts-expect-error
 import { Editor } from 'slate-react'
 
 export function InlineInput(props: {

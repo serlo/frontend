@@ -38,9 +38,9 @@ function UserTypeEditor(props: EditorPluginProps<typeof userTypeState>) {
   const { description } = props.state
 
   return (
-    <React.Fragment>
+    <>
       {description.render()}
       <Controls />
-    </React.Fragment>
+    </>
   )
 }

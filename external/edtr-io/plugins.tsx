@@ -20,11 +20,9 @@
  * @link      https://github.com/serlo-org/serlo.org for the canonical source repository
  */
 import { EditorPlugin } from '@edtr-io/plugin'
-import { createTextPlugin } from '@edtr-io/plugin-text'
 import { createAnchorPlugin } from '@edtr-io/plugin-anchor'
 import { createBlockquotePlugin } from '@edtr-io/plugin-blockquote'
 import { createGeogebraPlugin } from '@edtr-io/plugin-geogebra'
-import { createHighlightPlugin } from './plugins/highlight'
 import {
   createInputExercisePlugin,
   InputExerciseType,
@@ -33,10 +31,24 @@ import { createMultimediaExplanationPlugin } from '@edtr-io/plugin-multimedia-ex
 import { createRowsPlugin, RowsConfig } from '@edtr-io/plugin-rows'
 import { createScMcExercisePlugin } from '@edtr-io/plugin-sc-mc-exercise'
 import { createSpoilerPlugin } from '@edtr-io/plugin-spoiler'
+import { createTextPlugin } from '@edtr-io/plugin-text'
 import { createVideoPlugin } from '@edtr-io/plugin-video'
 import { i18n } from 'i18next'
 import * as React from 'react'
 
+import { articlePlugin } from './plugins/article'
+import { deprecatedPlugin } from './plugins/deprecated'
+import { equationsPlugin } from './plugins/equations'
+import { errorPlugin } from './plugins/error'
+import { exercisePlugin } from './plugins/exercise'
+import { createHighlightPlugin } from './plugins/highlight'
+import { createImagePlugin } from './plugins/image'
+import { createImportantPlugin } from './plugins/important'
+import { injectionPlugin } from './plugins/injection'
+import { layoutPlugin } from './plugins/layout'
+import { separatorPlugin } from './plugins/separator'
+import { solutionPlugin } from './plugins/solution'
+import { tablePlugin } from './plugins/table'
 import { appletTypePlugin } from './plugins/types/applet'
 import { articleTypePlugin } from './plugins/types/article'
 import { courseTypePlugin } from './plugins/types/course'
@@ -50,18 +62,6 @@ import { textExerciseGroupTypePlugin } from './plugins/types/text-exercise-group
 import { textSolutionTypePlugin } from './plugins/types/text-solution'
 import { userTypePlugin } from './plugins/types/user'
 import { videoTypePlugin } from './plugins/types/video'
-import { articlePlugin } from './plugins/article'
-import { errorPlugin } from './plugins/error'
-import { equationsPlugin } from './plugins/equations'
-import { exercisePlugin } from './plugins/exercise'
-import { createImagePlugin } from './plugins/image'
-import { createImportantPlugin } from './plugins/important'
-import { injectionPlugin } from './plugins/injection'
-import { layoutPlugin } from './plugins/layout'
-import { separatorPlugin } from './plugins/separator'
-import { solutionPlugin } from './plugins/solution'
-import { tablePlugin } from './plugins/table'
-import { deprecatedPlugin } from './plugins/deprecated'
 import { SerializedDocument } from './serialized-document'
 
 type PluginType =

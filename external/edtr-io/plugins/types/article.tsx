@@ -19,9 +19,9 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  * @link      https://github.com/serlo-org/serlo.org for the canonical source repository
  */
-import * as React from 'react'
 import { EditorPlugin, EditorPluginProps, string } from '@edtr-io/plugin'
 import { useI18n } from '@serlo/i18n'
+import * as React from 'react'
 
 import {
   Controls,
@@ -55,7 +55,7 @@ function ArticleTypeEditor(props: EditorPluginProps<typeof articleTypeState>) {
   const i18n = useI18n()
 
   return (
-    <React.Fragment>
+    <>
       <div className="page-header">
         {props.renderIntoToolbar(
           <RevisionHistory
@@ -92,6 +92,6 @@ function ArticleTypeEditor(props: EditorPluginProps<typeof articleTypeState>) {
       </div>
       <div itemProp="articleBody">{content.render()}</div>
       <Controls subscriptions {...props.state} />
-    </React.Fragment>
+    </>
   )
 }

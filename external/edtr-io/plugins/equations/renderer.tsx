@@ -19,14 +19,14 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  * @link      https://github.com/serlo-org/serlo.org for the canonical source repository
  */
+import { useScopedStore } from '@edtr-io/core'
 import { MathRenderer } from '@edtr-io/math'
+import { isEmpty } from '@edtr-io/store'
 import { styled } from '@edtr-io/ui'
 import * as React from 'react'
 
 import { EquationsProps } from '.'
 import { renderSignToString, Sign } from './sign'
-import { useScopedStore } from '@edtr-io/core'
-import { isEmpty } from '@edtr-io/store'
 
 export const TableWrapper = styled.div({
   overflowX: 'scroll',

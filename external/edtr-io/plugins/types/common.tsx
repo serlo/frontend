@@ -53,12 +53,12 @@ import { useI18n } from '@serlo/i18n'
 import * as R from 'ramda'
 import * as React from 'react'
 import BSAlert from 'react-bootstrap/lib/Alert'
-import BSModal from 'react-bootstrap/lib/Modal'
 import BSButton from 'react-bootstrap/lib/Button'
 import BSCheckbox from 'react-bootstrap/lib/Checkbox'
-import BSFormGroup from 'react-bootstrap/lib/FormGroup'
 import BSControlLabel from 'react-bootstrap/lib/ControlLabel'
 import BSFormControl from 'react-bootstrap/lib/FormControl'
+import BSFormGroup from 'react-bootstrap/lib/FormGroup'
+import BSModal from 'react-bootstrap/lib/Modal'
 import { createPortal } from 'react-dom'
 
 import { CsrfContext } from '../../csrf-context'
@@ -141,7 +141,7 @@ export function Controls(props: OwnProps) {
   }, [hasPendingChanges, pending])
 
   return (
-    <React.Fragment>
+    <>
       {createPortal(
         <div className="btn-group btn-group-community">
           <button
@@ -202,7 +202,7 @@ export function Controls(props: OwnProps) {
           </BSButton>
         </BSModal.Footer>
       </BSModal>
-    </React.Fragment>
+    </>
   )
 
   function renderSaveButton() {
@@ -303,7 +303,7 @@ export function Controls(props: OwnProps) {
   function renderAlert() {
     if (!hasError) return null
     return (
-      <React.Fragment>
+      <>
         <BSAlert
           bsStyle="danger"
           onDismiss={() => {
@@ -330,7 +330,7 @@ export function Controls(props: OwnProps) {
               : i18n.t('edtr-io::Save revision')}
           </BSButton>
         </BSModal.Footer>
-      </React.Fragment>
+      </>
     )
   }
 
@@ -387,7 +387,7 @@ export function Controls(props: OwnProps) {
     const { subscriptions } = props
     if (!subscriptions) return null
     return (
-      <React.Fragment>
+      <>
         <BSCheckbox
           checked={notificationSubscription}
           onChange={(e) => {
@@ -406,7 +406,7 @@ export function Controls(props: OwnProps) {
         >
           {i18n.t('edtr-io::Enable notifications via e-mail')}
         </BSCheckbox>
-      </React.Fragment>
+      </>
     )
   }
 }
@@ -591,7 +591,7 @@ export function OptionalChild(props: {
       if (document.state.id !== 0) return children
 
       return (
-        <React.Fragment>
+        <>
           <PluginToolbarButton
             icon={<Icon icon={faTrashAlt} />}
             label={props.removeLabel}
@@ -600,15 +600,15 @@ export function OptionalChild(props: {
             }}
           />
           {children}
-        </React.Fragment>
+        </>
       )
     },
   })
   return (
-    <React.Fragment>
+    <>
       <hr />
       {children}
-    </React.Fragment>
+    </>
   )
 }
 

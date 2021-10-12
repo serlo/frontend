@@ -32,7 +32,6 @@ import {
   OptionalChild,
   entityType,
 } from './common'
-
 import { RevisionHistory } from './helpers/settings'
 
 export const textExerciseTypeState = entityType(

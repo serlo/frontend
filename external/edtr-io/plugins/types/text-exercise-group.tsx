@@ -23,7 +23,9 @@ import { AddButton } from '@edtr-io/editor-ui/internal'
 import { boolean, EditorPlugin, EditorPluginProps, list } from '@edtr-io/plugin'
 import { useI18n } from '@serlo/i18n'
 import * as React from 'react'
+import { useVirtual } from 'react-virtual'
 
+import { SemanticSection } from '../helpers/semantic-section'
 import {
   editorContent,
   entity,
@@ -33,8 +35,6 @@ import {
   entityType,
 } from './common'
 import { RevisionHistory } from './helpers/settings'
-import { SemanticSection } from '../helpers/semantic-section'
-import { useVirtual } from 'react-virtual'
 
 export const textExerciseGroupTypeState = entityType(
   {
@@ -73,10 +73,10 @@ function TextExerciseGroupTypeEditor(
   const contentRendered = content.render({
     renderSettings(children) {
       return (
-        <React.Fragment>
+        <>
           {children}
           {getSettings()}
-        </React.Fragment>
+        </>
       )
     },
   })

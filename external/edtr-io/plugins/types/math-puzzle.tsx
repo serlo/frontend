@@ -48,7 +48,7 @@ function MathPuzzleTypeEditor(
   const i18n = useI18n()
 
   return (
-    <React.Fragment>
+    <>
       {props.renderIntoToolbar(
         <RevisionHistory
           id={props.state.id.value}
@@ -68,6 +68,6 @@ function MathPuzzleTypeEditor(
         {content.render()}
       </div>
       <Controls subscriptions {...props.state} />
-    </React.Fragment>
+    </>
   )
 }

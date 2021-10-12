@@ -64,16 +64,16 @@ function TextSolutionTypeEditor(props: TextSolutionTypeProps) {
   const i18n = useI18n()
   const renderTitle = React.useCallback((collapsed: boolean) => {
     return (
-      <React.Fragment>
+      <>
         {collapsed
           ? i18n.t('solution::Show solution')
           : i18n.t('solution::Hide solution')}
-      </React.Fragment>
+      </>
     )
   }, [])
 
   return (
-    <React.Fragment>
+    <>
       {props.renderIntoToolbar(
         <RevisionHistory
           id={props.state.id.value}
@@ -89,6 +89,6 @@ function TextSolutionTypeEditor(props: TextSolutionTypeProps) {
       {props.config.skipControls ? null : (
         <Controls subscriptions {...props.state} />
       )}
-    </React.Fragment>
+    </>
   )
 }

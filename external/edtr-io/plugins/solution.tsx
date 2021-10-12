@@ -19,6 +19,7 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  * @link      https://github.com/serlo-org/serlo.org for the canonical source repository
  */
+import { useScopedSelector } from '@edtr-io/core'
 import {
   EditorPlugin,
   EditorPluginProps,
@@ -27,16 +28,15 @@ import {
   string,
   optional,
 } from '@edtr-io/plugin'
-import * as React from 'react'
-import { useScopedSelector } from '@edtr-io/core'
 import { isEmpty } from '@edtr-io/store'
 import { Icon, faExternalLinkAlt, styled } from '@edtr-io/ui'
 import { useI18n } from '@serlo/i18n'
+import * as React from 'react'
 
-import { SemanticSection } from './helpers/semantic-section'
 import { InlineInput } from './helpers/inline-input'
 import { InlineSettings } from './helpers/inline-settings'
 import { InlineSettingsInput } from './helpers/inline-settings-input'
+import { SemanticSection } from './helpers/semantic-section'
 
 const solutionState = object({
   prerequisite: optional(
@@ -69,7 +69,7 @@ function SolutionEditor({ editable, state, focused }: SolutionProps) {
   const hasStrategy = !useScopedSelector(isEmpty(strategy.id))
 
   return (
-    <React.Fragment>
+    <>
       {renderPrerequisite()}
       {hasStrategy || editable ? (
         <SemanticSection editable={editable}>
@@ -85,7 +85,7 @@ function SolutionEditor({ editable, state, focused }: SolutionProps) {
       <SemanticSection editable={editable}>
         {state.steps.render()}
       </SemanticSection>
-    </React.Fragment>
+    </>
   )
 
   function renderPrerequisite() {
@@ -107,7 +107,7 @@ function SolutionEditor({ editable, state, focused }: SolutionProps) {
                     prerequisite.remove()
                   }
                 }}
-                position={'below'}
+                position="below"
               >
                 <InlineSettingsInput
                   value={

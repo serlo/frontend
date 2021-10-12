@@ -20,16 +20,24 @@
  * @link      https://github.com/serlo-org/serlo.org for the canonical source repository
  */
 import { HotKeys, useScopedSelector, useScopedStore } from '@edtr-io/core'
-import { AddButton } from '@edtr-io/editor-ui/internal'
 import { PreferenceContext, setDefaultPreference } from '@edtr-io/core/beta'
+import { AddButton } from '@edtr-io/editor-ui/internal'
 import { MathEditor } from '@edtr-io/math'
 import { StateTypeReturnType, StringStateType } from '@edtr-io/plugin'
+import {
+  focus,
+  focusNext,
+  focusPrevious,
+  getFocused,
+  isEmpty,
+} from '@edtr-io/store'
 import { edtrDragHandle, EdtrIcon, faTimes, Icon, styled } from '@edtr-io/ui'
 import { useI18n } from '@serlo/i18n'
 import * as R from 'ramda'
 import * as React from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 
+import { EquationsProps, stepProps } from '.'
 import {
   EquationsRenderer,
   ExplanationTr,
@@ -41,15 +49,7 @@ import {
   TableWrapper,
   TransformTd,
 } from './renderer'
-import {
-  focus,
-  focusNext,
-  focusPrevious,
-  getFocused,
-  isEmpty,
-} from '@edtr-io/store'
 import { renderSignToString, Sign } from './sign'
-import { EquationsProps, stepProps } from '.'
 
 enum StepSegment {
   Left = 0,

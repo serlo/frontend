@@ -33,8 +33,10 @@ import {
 } from '@serlo/legacy-editor-to-editor'
 import * as R from 'ramda'
 
+import { EditorProps } from './editor'
 import { appletTypeState } from './plugins/types/applet'
 import { articleTypeState } from './plugins/types/article'
+import { Entity, License, Uuid } from './plugins/types/common'
 import { courseTypeState } from './plugins/types/course'
 import { coursePageTypeState } from './plugins/types/course-page'
 import { eventTypeState } from './plugins/types/event'
@@ -46,8 +48,6 @@ import { textExerciseGroupTypeState } from './plugins/types/text-exercise-group'
 import { textSolutionTypeState } from './plugins/types/text-solution'
 import { userTypeState } from './plugins/types/user'
 import { videoTypeState } from './plugins/types/video'
-import { Entity, License, Uuid } from './plugins/types/common'
-import { EditorProps } from './editor'
 
 const empty: RowsPlugin = { plugin: 'rows', state: [] }
 
@@ -363,7 +363,7 @@ export function deserialize({
         return serializeEditorState(toEdtr(deserializedContent))
       }
 
-      const convertedContent = toEdtr(deserializedContent) as RowsPlugin
+      const convertedContent = toEdtr(deserializedContent) // RowsPlugin
       const interactive = scMcExercise || inputExercise
 
       return serializeEditorState({
@@ -602,7 +602,7 @@ export function deserialize({
         return serializeEditorState(toEdtr(deserializedContent))
       }
 
-      const convertedContent = toEdtr(deserializedContent) as RowsPlugin
+      const convertedContent = toEdtr(deserializedContent) // RowsPlugin
 
       return serializeEditorState({
         plugin: 'solution',

@@ -23,8 +23,8 @@ import { useScopedStore } from '@edtr-io/core'
 import { EditorPluginProps, StateTypeReturnType } from '@edtr-io/plugin'
 import { styled } from '@edtr-io/renderer-ui'
 import { DocumentState, replace, serializeDocument } from '@edtr-io/store'
-import { RowsPlugin } from '@serlo/legacy-editor-to-editor'
 import { useI18n } from '@serlo/i18n'
+import { RowsPlugin } from '@serlo/legacy-editor-to-editor'
 import * as React from 'react'
 
 import { layoutState } from '.'
@@ -73,7 +73,7 @@ export const LayoutRenderer: React.FunctionComponent<
   const i18n = useI18n()
 
   return (
-    <React.Fragment>
+    <>
       {props.editable ? (
         <ConvertInfo>
           {i18n.t(
@@ -100,7 +100,7 @@ export const LayoutRenderer: React.FunctionComponent<
           )
         })}
       </LayoutContainer>
-    </React.Fragment>
+    </>
   )
 
   function convertToRow() {

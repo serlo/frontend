@@ -19,6 +19,7 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  * @link      https://github.com/serlo-org/serlo.org for the canonical source repository
  */
+import { PluginToolbarButton } from '@edtr-io/core'
 import { AddButton } from '@edtr-io/editor-ui/internal'
 import {
   child,
@@ -28,12 +29,7 @@ import {
   object,
   string,
 } from '@edtr-io/plugin'
-import * as R from 'ramda'
-import * as React from 'react'
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
-
-import { SemanticSection } from './helpers/semantic-section'
-import { PluginToolbarButton } from '@edtr-io/core'
+import { ExpandableBox } from '@edtr-io/renderer-ui'
 import {
   edtrDragHandle,
   EdtrIcon,
@@ -42,15 +38,21 @@ import {
   Icon,
   styled,
 } from '@edtr-io/ui'
-import { InlineSettings } from './helpers/inline-settings'
-import { InlineSettingsInput } from './helpers/inline-settings-input'
-import { InlineInput } from './helpers/inline-input'
-import { ExpandableBox } from '@edtr-io/renderer-ui'
-import { ThemeProvider } from 'styled-components'
-import { useI18n } from '@serlo/i18n'
-import { faGraduationCap } from '@fortawesome/free-solid-svg-icons/faGraduationCap'
 import { faNewspaper } from '@fortawesome/free-solid-svg-icons'
+import { faGraduationCap } from '@fortawesome/free-solid-svg-icons/faGraduationCap'
 import { faPlayCircle } from '@fortawesome/free-solid-svg-icons/faPlayCircle'
+import { useI18n } from '@serlo/i18n'
+import * as R from 'ramda'
+import * as React from 'react'
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
+
+import { ThemeProvider } from 'styled-components'
+import { InlineInput } from './helpers/inline-input'
+import { InlineSettings } from './helpers/inline-settings'
+import { SemanticSection } from './helpers/semantic-section'
+
+import { InlineSettingsInput } from './helpers/inline-settings-input'
+
 
 const relatedContentItemState = object({ id: string(), title: string() })
 
@@ -141,7 +143,7 @@ function ArticleEditor(props: ArticleProps) {
   }
 
   return (
-    <React.Fragment>
+    <>
       <SemanticSection editable={editable}>
         {introduction.render()}
       </SemanticSection>
@@ -151,7 +153,7 @@ function ArticleEditor(props: ArticleProps) {
         {renderRelatedContent()}
       </SemanticSection>
       <SemanticSection editable={editable}>{renderSources()}</SemanticSection>
-    </React.Fragment>
+    </>
   )
 
   function renderExercises() {
@@ -220,7 +222,7 @@ function ArticleEditor(props: ArticleProps) {
                               {exercise.render({
                                 renderToolbar() {
                                   return (
-                                    <React.Fragment>
+                                    <>
                                       <div>
                                         <BasePluginToolbarButton
                                           icon={<Icon icon={faTrashAlt} />}
@@ -247,7 +249,7 @@ function ArticleEditor(props: ArticleProps) {
                                           exercises.remove(index)
                                         }}
                                       />
-                                    </React.Fragment>
+                                    </>
                                   )
                                 },
                               })}
@@ -332,12 +334,12 @@ function ArticleEditor(props: ArticleProps) {
 
   function renderRelatedContent() {
     const header = (
-      <React.Fragment>
+      <>
         <h2>{i18n.t('article::Still want more?')}</h2>
         <p>
           {i18n.t('article::You can find more content on this topic here')}:
         </p>
-      </React.Fragment>
+      </>
     )
 
     const types: {
@@ -388,7 +390,7 @@ function ArticleEditor(props: ArticleProps) {
     if (!editable && allItems.length === 0) return null
 
     return (
-      <React.Fragment>
+      <>
         {header}
         {types.map((type) => {
           return (
@@ -397,7 +399,7 @@ function ArticleEditor(props: ArticleProps) {
             </React.Fragment>
           )
         })}
-      </React.Fragment>
+      </>
     )
   }
 

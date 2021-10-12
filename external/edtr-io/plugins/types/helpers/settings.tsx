@@ -19,16 +19,16 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  * @link      https://github.com/serlo-org/serlo.org for the canonical source repository
  */
-import { faHistory } from '@fortawesome/free-solid-svg-icons/faHistory'
+import { PluginToolbarButton } from '@edtr-io/core'
 import { StateTypeReturnType, string } from '@edtr-io/plugin'
 import { Icon, faCheck, styled } from '@edtr-io/ui'
-import { PluginToolbarButton } from '@edtr-io/core'
+import { faHistory } from '@fortawesome/free-solid-svg-icons/faHistory'
 import { useI18n } from '@serlo/i18n'
 import moment from 'moment'
 import * as React from 'react'
 import BSButton from 'react-bootstrap/lib/Button'
-import BSFormControl from 'react-bootstrap/lib/FormControl'
 import BSControlLabel from 'react-bootstrap/lib/ControlLabel'
+import BSFormControl from 'react-bootstrap/lib/FormControl'
 import BSFormGroup from 'react-bootstrap/lib/FormGroup'
 import BSModal from 'react-bootstrap/lib/Modal'
 import BSTable from 'react-bootstrap/lib/Table'
@@ -179,7 +179,7 @@ export function RevisionHistory<T>(
 }
 
 export function Settings(props: React.PropsWithChildren<{}>) {
-  return <React.Fragment>{props.children}</React.Fragment>
+  return <>{props.children}</>
 }
 
 Settings.Textarea = function SettingsTextarea({

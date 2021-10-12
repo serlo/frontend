@@ -20,8 +20,8 @@
  * @link      https://github.com/serlo-org/serlo.org for the canonical source repository
  */
 import { Icon, styled } from '@edtr-io/ui'
-import * as React from 'react'
 import { FontAwesomeIconProps } from '@fortawesome/react-fontawesome'
+import * as React from 'react'
 
 const Container = styled.div({
   boxShadow: '0 1px 3px 0 rgba(0,0,0,0.2)',
@@ -42,7 +42,7 @@ const BackgroundIcon = styled.div({
 
 export function SemanticSection(props: SemanticSectionProps) {
   const { children, editable } = props
-  if (!editable) return <React.Fragment>{children}</React.Fragment>
+  if (!editable) return <>{children}</>
 
   return <Container>{props.children}</Container>
 }
