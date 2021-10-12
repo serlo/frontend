@@ -24,7 +24,6 @@ import { PluginToolbarButton } from '@edtr-io/core'
 import { StateTypeReturnType, string } from '@edtr-io/plugin'
 import { Icon, faCheck, styled } from '@edtr-io/ui'
 import { faHistory } from '@fortawesome/free-solid-svg-icons/faHistory'
-import { useI18n } from '@serlo/i18n'
 import moment from 'moment'
 import * as React from 'react'
 import BSButton from 'react-bootstrap/lib/Button'
@@ -36,6 +35,7 @@ import BSTable from 'react-bootstrap/lib/Table'
 import fetch from 'unfetch'
 
 import { deserialize, isError } from '../../../deserialize'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 const StyledTR = styled.tr<{ selected: boolean }>((props) => {
   return props.selected
@@ -62,11 +62,7 @@ export function RevisionHistory<T>(
     onSwitchRevision: (data: T) => void
   }>
 ) {
-  const [availableRevisions] = React.useState<
-    RevisionData[]
-  >([])
-  const i18n = useI18n()
-
+  const [availableRevisions] = React.useState<RevisionData[]>([])
   const [showRevisions, setShowRevisions] = React.useState(false)
   React.useEffect(() => {
     if (props.id !== 0) {
@@ -77,6 +73,10 @@ export function RevisionHistory<T>(
         })*/
     }
   }, [props.id])
+
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return null
+  const editorStrings = loggedInData.strings.editor
 
   return (
     <div>
@@ -89,7 +89,7 @@ export function RevisionHistory<T>(
       >
         <PluginToolbarButton
           icon={<Icon icon={faHistory} size="lg" />}
-          label={i18n.t('edtr-io::Switch to another revision')}
+          label={editorStrings.edtrIo.switchToAnotherRevision}
         />
       </span>
       <BSModal
@@ -101,7 +101,7 @@ export function RevisionHistory<T>(
       >
         <BSModal.Header closeButton>
           <BSModal.Title>
-            {i18n.t('edtr-io::Switch to another revision')}
+            {editorStrings.edtrIo.switchToAnotherRevision}
           </BSModal.Title>
         </BSModal.Header>
         <BSModal.Body>
@@ -109,10 +109,10 @@ export function RevisionHistory<T>(
             <thead>
               <tr>
                 <th>#</th>
-                <th>{i18n.t('edtr-io::Current')}</th>
-                <th>{i18n.t('edtr-io::Changes')}</th>
-                <th>{i18n.t('edtr-io::Author')}</th>
-                <th>{i18n.t('edtr-io::Created at')}</th>
+                <th>{editorStrings.edtrIo.current}</th>
+                <th>{editorStrings.edtrIo.changes}</th>
+                <th>{editorStrings.edtrIo.author}</th>
+                <th>{editorStrings.edtrIo.createdAt}</th>
               </tr>
             </thead>
             <tbody>

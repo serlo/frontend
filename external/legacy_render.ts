@@ -38,9 +38,9 @@ export function render(state: string): string {
   }
 
   return rows
-    .map(row => {
+    .map((row) => {
       const innerHtml = row
-        .map(column => {
+        .map((column) => {
           return `<div class="c${column.col}">${converter.makeHtml(
             column.content
           )}</div>`

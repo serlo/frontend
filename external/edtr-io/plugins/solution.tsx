@@ -30,13 +30,13 @@ import {
 } from '@edtr-io/plugin'
 import { isEmpty } from '@edtr-io/store'
 import { Icon, faExternalLinkAlt, styled } from '@edtr-io/ui'
-import { useI18n } from '@serlo/i18n'
 import * as React from 'react'
 
 import { InlineInput } from './helpers/inline-input'
 import { InlineSettings } from './helpers/inline-settings'
 import { InlineSettingsInput } from './helpers/inline-settings-input'
 import { SemanticSection } from './helpers/semantic-section'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 const solutionState = object({
   prerequisite: optional(
@@ -64,9 +64,11 @@ const OpenInNewTab = styled.span({ margin: '0 0 0 10px' })
 
 function SolutionEditor({ editable, state, focused }: SolutionProps) {
   const { prerequisite, strategy } = state
-  const i18n = useI18n()
-
   const hasStrategy = !useScopedSelector(isEmpty(strategy.id))
+
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return null
+  const editorStrings = loggedInData.strings.editor
 
   return (
     <>
@@ -75,9 +77,8 @@ function SolutionEditor({ editable, state, focused }: SolutionProps) {
         <SemanticSection editable={editable}>
           {strategy.render({
             config: {
-              placeholder: i18n.t(
-                'solution::Optionally explain the solution strategy here'
-              ),
+              placeholder:
+                editorStrings.solution.optionallyExplainTheSolutionStrategyHere,
             },
           })}
         </SemanticSection>
@@ -97,9 +98,10 @@ function SolutionEditor({ editable, state, focused }: SolutionProps) {
       if (editable) {
         return (
           <div>
-            {i18n.t(
-              'solution::For this exercise, you need the following fundamentals:'
-            )}{' '}
+            {
+              editorStrings.solution
+                .forThisExerciseYouNeedTheFollowingFundamentals
+            }{' '}
             {focused ? (
               <InlineSettings
                 onDelete={() => {
@@ -115,7 +117,7 @@ function SolutionEditor({ editable, state, focused }: SolutionProps) {
                       ? `/${prerequisite.id.value}`
                       : ''
                   }
-                  placeholder={i18n.t('solution::ID of an article, e.g. 1855')}
+                  placeholder={editorStrings.solution.idOfAnArticleEG_1855}
                   onChange={(event) => {
                     const newValue = event.target.value.replace(/[^0-9]/g, '')
                     if (prerequisite.defined) {
@@ -138,7 +140,7 @@ function SolutionEditor({ editable, state, focused }: SolutionProps) {
                   rel="noopener noreferrer"
                 >
                   <OpenInNewTab
-                    title={i18n.t('solution::Open the article in a new tab:')}
+                    title={editorStrings.solution.openTheArticleInANewTab}
                   >
                     <Icon icon={faExternalLinkAlt} />
                   </OpenInNewTab>
@@ -155,7 +157,7 @@ function SolutionEditor({ editable, state, focused }: SolutionProps) {
                     prerequisite.create({ id: '', title: value })
                   }
                 }}
-                placeholder={i18n.t('solution::Title of the link')}
+                placeholder={editorStrings.solution.titleOfTheLink}
               />
             </a>
           </div>
@@ -169,9 +171,10 @@ function SolutionEditor({ editable, state, focused }: SolutionProps) {
       ) {
         return (
           <p>
-            {i18n.t(
-              'solution::For this exercise, you need the following fundamentals:'
-            )}{' '}
+            {
+              editorStrings.solution
+                .forThisExerciseYouNeedTheFollowingFundamentals
+            }{' '}
             <a href={`/${prerequisite.id.value}`}>{prerequisite.title.value}</a>
           </p>
         )

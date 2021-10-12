@@ -20,11 +20,11 @@
  * @link      https://github.com/serlo-org/serlo.org for the canonical source repository
  */
 import { EditorPlugin, EditorPluginProps, string } from '@edtr-io/plugin'
-import { useI18n } from '@serlo/i18n'
 import * as React from 'react'
 
 import { entity, Controls, editorContent, entityType } from './common'
 import { RevisionHistory, Settings } from './helpers/settings'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export const mathPuzzleTypeState = entityType(
   {
@@ -45,7 +45,9 @@ function MathPuzzleTypeEditor(
   props: EditorPluginProps<typeof mathPuzzleTypeState>
 ) {
   const { source, content } = props.state
-  const i18n = useI18n()
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return null
+  const editorStrings = loggedInData.strings.editor
 
   return (
     <>
@@ -59,7 +61,7 @@ function MathPuzzleTypeEditor(
       {props.renderIntoSettings(
         <Settings>
           <Settings.Textarea
-            label={i18n.t('mathPuzzle::Source code')}
+            label={editorStrings.mathPuzzle.sourceCode}
             state={source}
           />
         </Settings>

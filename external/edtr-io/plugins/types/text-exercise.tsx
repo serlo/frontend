@@ -22,7 +22,6 @@
 // eslint-disable-next-line import/no-internal-modules
 import { AddButton } from '@edtr-io/editor-ui/internal'
 import { EditorPlugin, EditorPluginProps } from '@edtr-io/plugin'
-import { useI18n } from '@serlo/i18n'
 import * as React from 'react'
 
 import {
@@ -34,6 +33,7 @@ import {
   entityType,
 } from './common'
 import { RevisionHistory } from './helpers/settings'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export const textExerciseTypeState = entityType(
   {
@@ -63,7 +63,9 @@ export function TextExerciseTypeEditor(
   >
 ) {
   const { content, 'text-solution': textSolution } = props.state
-  const i18n = useI18n()
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return null
+  const editorStrings = loggedInData.strings.editor
 
   return (
     <article className="text-exercise">
@@ -78,7 +80,7 @@ export function TextExerciseTypeEditor(
       {textSolution.id ? (
         <OptionalChild
           state={textSolution}
-          removeLabel={i18n.t('textExercise::Remove solution')}
+          removeLabel={editorStrings.textExercise.removeSolution}
           onRemove={() => {
             textSolution.remove()
           }}
@@ -89,7 +91,7 @@ export function TextExerciseTypeEditor(
             textSolution.create()
           }}
         >
-          {i18n.t('textExercise::Create solution')}
+          {editorStrings.textExercise.createSolution}
         </AddButton>
       )}
       {props.config.skipControls ? null : (

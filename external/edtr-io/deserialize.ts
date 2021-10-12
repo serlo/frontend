@@ -322,9 +322,11 @@ export function deserialize({
     'single-choice-wrong-answer': singleChoiceWrongAnswer,
     'multiple-choice-right-answer': multipleChoiceRightAnswer,
     'multiple-choice-wrong-answer': multipleChoiceWrongAnswer,
-    'input-expression-equal-match-challenge': inputExpressionEqualMatchChallenge,
+    'input-expression-equal-match-challenge':
+      inputExpressionEqualMatchChallenge,
     'input-number-exact-match-challenge': inputNumberExactMatchChallenge,
-    'input-string-normalized-match-challenge': inputStringNormalizedMatchChallenge,
+    'input-string-normalized-match-challenge':
+      inputStringNormalizedMatchChallenge,
     ...state
   }: TextExerciseSerializedState): DeserializedState<
     typeof textExerciseTypeState

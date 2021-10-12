@@ -34,7 +34,6 @@ import {
   isEmpty,
 } from '@edtr-io/store'
 import { edtrDragHandle, EdtrIcon, faTimes, Icon, styled } from '@edtr-io/ui'
-import { useI18n } from '@serlo/i18n'
 import * as R from 'ramda'
 import * as React from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
@@ -52,6 +51,7 @@ import {
   TransformTd,
 } from './renderer'
 import { renderSignToString, Sign } from './sign'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 enum StepSegment {
   Left = 0,
@@ -76,8 +76,6 @@ const DragButton = styled.span({
 })
 
 export function EquationsEditor(props: EquationsProps) {
-  const i18n = useI18n()
-
   const { focused, state } = props
 
   const store = useScopedStore()
@@ -111,7 +109,11 @@ export function EquationsEditor(props: EquationsProps) {
       gridFocus.setFocus({ row: 0, column: 0 })
       store.dispatch(focus(props.id))
     }
-  }, [nestedFocus,gridFocus,store, props.id])
+  }, [nestedFocus, gridFocus, store, props.id])
+
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return null
+  const editorStrings = loggedInData.strings.editor
 
   if (!nestedFocus) return <EquationsRenderer {...props} />
 
@@ -233,7 +235,8 @@ export function EquationsEditor(props: EquationsProps) {
                           <td colSpan={2}>
                             {step.explanation.render({
                               config: {
-                                placeholder: i18n.t('equations::explanation'),
+                                placeholder:
+                                  editorStrings.equations.explanation,
                               },
                             })}
                           </td>
@@ -260,7 +263,7 @@ export function EquationsEditor(props: EquationsProps) {
           <td colSpan={3} style={{ textAlign: 'center' }}>
             {state.firstExplanation.render({
               config: {
-                placeholder: i18n.t('equations::frist-explanation'),
+                placeholder: 'First explanation', // TODO: i18n
               },
             })}
           </td>
@@ -301,7 +304,7 @@ export function EquationsEditor(props: EquationsProps) {
 
     return (
       <AddButton onClick={() => insertNewEquationWithFocus(state.steps.length)}>
-        {i18n.t('equations::add new equation')}
+        {'Add new equation' /*TODO: i18n */}
       </AddButton>
     )
   }
@@ -324,7 +327,9 @@ interface StepEditorProps {
 }
 
 function StepEditor(props: StepEditorProps) {
-  const i18n = useI18n()
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return null
+  const editorStrings = loggedInData.strings.editor
   const { gridFocus, row, state } = props
 
   return (
@@ -335,7 +340,7 @@ function StepEditor(props: StepEditorProps) {
         <InlineMath
           focused={gridFocus.isFocused({ row, column: StepSegment.Left })}
           placeholder={
-            row === 0 ? '3x+1' : `[${i18n.t('equations::left-hand side')}]`
+            row === 0 ? '3x+1' : `[${editorStrings.equations.leftHandSide}]`
           }
           state={state.left}
           onChange={(src) => state.left.set(src)}
@@ -374,7 +379,7 @@ function StepEditor(props: StepEditorProps) {
         <InlineMath
           focused={gridFocus.isFocused({ row, column: StepSegment.Right })}
           placeholder={
-            row === 0 ? '7x' : `[${i18n.t('equations::right-hand side')}]`
+            row === 0 ? '7x' : `[${editorStrings.equations.rightHandSide}]`
           }
           state={state.right}
           onChange={(src) => state.right.set(src)}
@@ -391,7 +396,7 @@ function StepEditor(props: StepEditorProps) {
         <InlineMath
           focused={gridFocus.isFocused({ row, column: StepSegment.Transform })}
           placeholder={
-            row === 0 ? '-3x' : `[${i18n.t('equations::transformation')}]`
+            row === 0 ? '-3x' : `[${editorStrings.equations.transformation}]`
           }
           state={state.transform}
           onChange={(src) => state.transform.set(src)}

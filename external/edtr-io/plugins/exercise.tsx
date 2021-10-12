@@ -32,10 +32,11 @@ import {
 } from '@edtr-io/plugin'
 import { getDocument } from '@edtr-io/store'
 import { Icon, faRandom, faTrashAlt } from '@edtr-io/ui'
-import { useI18n, I18n } from '@serlo/i18n'
 import * as React from 'react'
 
 import { SemanticSection } from './helpers/semantic-section'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { LoggedInData } from '@/data-types'
 
 const exerciseState = object({
   content: child({ plugin: 'rows' }),
@@ -59,25 +60,25 @@ const ButtonContainer = styled.div({
 
 const interactivePlugins: {
   name: 'scMcExercise' | 'inputExercise'
-  addLabel: (i18n: I18n) => string
-  title: (i18n: I18n) => string
+  addLabel: (editorStrings: LoggedInData['strings']['editor']) => string
+  title: (editorStrings: LoggedInData['strings']['editor']) => string
 }[] = [
   {
     name: 'scMcExercise',
-    addLabel(i18n) {
-      return i18n.t('exercise::Add choice exercise')
+    addLabel(editorStrings) {
+      return editorStrings.exercise.addChoiceExercise
     },
-    title(i18n) {
-      return i18n.t('exercise::Choice exercise')
+    title(editorStrings) {
+      return editorStrings.exercise.choiceExercise
     },
   },
   {
     name: 'inputExercise',
-    addLabel(i18n) {
-      return i18n.t('exercise::Add input exercise')
+    addLabel(editorStrings) {
+      return editorStrings.exercise.addInputExercise
     },
-    title(i18n) {
-      return i18n.t('exercise::Input exercise')
+    title(editorStrings) {
+      return editorStrings.exercise.inputExercise
     },
   },
 ]
@@ -117,11 +118,13 @@ const Option = styled.div({
 })
 
 function ExerciseEditor({ editable, state }: ExerciseProps) {
-  const i18n = useI18n()
   const store = useScopedStore()
   const { content, interactive } = state
   const [showOptions, setShowOptions] = React.useState(false)
 
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return null
+  const editorStrings = loggedInData.strings.editor
   return (
     <>
       <SemanticSection editable={editable}>{content.render()}</SemanticSection>
@@ -176,7 +179,7 @@ function ExerciseEditor({ editable, state }: ExerciseProps) {
                               setShowOptions(false)
                             }}
                           >
-                            {plugin.title(i18n)}
+                            {plugin.title(editorStrings)}
                           </Option>
                         )
                       })}
@@ -194,7 +197,7 @@ function ExerciseEditor({ editable, state }: ExerciseProps) {
       return (
         <>
           <p>
-            <em>{i18n.t('exercise::Add an optional interactive exercise:')}</em>
+            <em>{editorStrings.exercise.addAnOptionalInteractiveExercise}</em>
           </p>
           <ButtonContainer>
             {interactivePlugins.map((plugin) => {
@@ -207,7 +210,7 @@ function ExerciseEditor({ editable, state }: ExerciseProps) {
                     })
                   }}
                 >
-                  {plugin.addLabel(i18n)}
+                  {plugin.addLabel(editorStrings)}
                 </AddButton>
               )
             })}

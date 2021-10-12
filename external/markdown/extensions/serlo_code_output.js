@@ -21,11 +21,11 @@
  */
 /* global define */
 /* Prepares Github Style Code */
-var codeoutput = function() {
+var codeoutput = function () {
   return [
     {
       type: 'lang',
-      filter: (function() {
+      filter: (function () {
         var charsToEncode = ['~D', '%', '|', '/']
         var replacements = {}
         var regexp
@@ -42,11 +42,11 @@ var codeoutput = function() {
           return replacements[parseInt(match)] || match
         }
 
-        return function(text) {
+        return function (text) {
           return text.replace(regexp, replace)
         }
-      })()
-    }
+      })(),
+    },
   ]
 }
 

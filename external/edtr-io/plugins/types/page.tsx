@@ -25,10 +25,10 @@ import {
   object,
   string,
 } from '@edtr-io/plugin'
-import { useI18n } from '@serlo/i18n'
 import * as React from 'react'
 
 import { Controls, editorContent, HeaderInput, license, uuid } from './common'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export const pageTypeState = object({
   ...uuid,
@@ -45,7 +45,9 @@ export const pageTypePlugin: EditorPlugin<typeof pageTypeState> = {
 
 function PageTypeEditor(props: EditorPluginProps<typeof pageTypeState>) {
   const { title, content } = props.state
-  const i18n = useI18n()
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return null
+  const editorStrings = loggedInData.strings.editor
 
   return (
     <article>
@@ -54,7 +56,7 @@ function PageTypeEditor(props: EditorPluginProps<typeof pageTypeState>) {
           <h1>
             {props.editable ? (
               <HeaderInput
-                placeholder={i18n.t('page::Title')}
+                placeholder={editorStrings.page.title}
                 value={title.value}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   title.set(e.target.value)

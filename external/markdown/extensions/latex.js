@@ -22,50 +22,45 @@
 /* global define */
 var _EncodeCode
 var serloSpecificCharsToEscape
-var latex = function() {
+var latex = function () {
   var filter
 
-  filter = function(text) {
+  filter = function (text) {
     // text = text.replace(/(^|[^\\])(%%)([^\r]*?[^%])\2(?!%)/gm,
-    text = text.replace(/(^|[^\\])(%%)([^\r]*?[^%])(%%?%)/gm, function(
-      wholeMatch,
-      m1,
-      m2,
-      m3,
-      m4
-    ) {
-      var c = m3
-      c = c.replace(/^([ \t]*)/g, '') // leading whitespace
-      c = c.replace(/[ \t]*$/g, '') // trailing whitespace
-      // Solves an issue where the formula would end with %%% and therefore the last %
-      // isn't added to c. However, this is a regex issue and should be solved there instead of here
-      if (m4 === '%%%') {
-        c += '% '
+    text = text.replace(
+      /(^|[^\\])(%%)([^\r]*?[^%])(%%?%)/gm,
+      function (wholeMatch, m1, m2, m3, m4) {
+        var c = m3
+        c = c.replace(/^([ \t]*)/g, '') // leading whitespace
+        c = c.replace(/[ \t]*$/g, '') // trailing whitespace
+        // Solves an issue where the formula would end with %%% and therefore the last %
+        // isn't added to c. However, this is a regex issue and should be solved there instead of here
+        if (m4 === '%%%') {
+          c += '% '
+        }
+        // Escape latex environment thingies
+        text = text.replace(/\$/g, '\\$')
+        text = text.replace(/%/g, '\\%')
+
+        c = _EncodeCode(c)
+
+        return m1 + '<span class="mathInline">%%' + c + '%%</span>'
       }
-      // Escape latex environment thingies
-      text = text.replace(/\$/g, '\\$')
-      text = text.replace(/%/g, '\\%')
+    )
 
-      c = _EncodeCode(c)
-
-      return m1 + '<span class="mathInline">%%' + c + '%%</span>'
-    })
-
-    text = text.replace(/(^|[^\\])(¨D¨D)([^\r]*?[^~])\2(?!¨D)/gm, function(
-      wholeMatch,
-      m1,
-      m2,
-      m3
-    ) {
-      var c = m3
-      c = c.replace(/^([ \t]*)/g, '') // leading whitespace
-      c = c.replace(/[ \t]*$/g, '') // trailing whitespace
-      c = _EncodeCode(c)
-      // Escape already transliterated $
-      // However, do not escape already escaped $s
-      text = text.replace(/[^\\]¨D/g, '\\¨D')
-      return m1 + '<span class="math">¨D¨D' + c + '¨D¨D</span>'
-    })
+    text = text.replace(
+      /(^|[^\\])(¨D¨D)([^\r]*?[^~])\2(?!¨D)/gm,
+      function (wholeMatch, m1, m2, m3) {
+        var c = m3
+        c = c.replace(/^([ \t]*)/g, '') // leading whitespace
+        c = c.replace(/[ \t]*$/g, '') // trailing whitespace
+        c = _EncodeCode(c)
+        // Escape already transliterated $
+        // However, do not escape already escaped $s
+        text = text.replace(/[^\\]¨D/g, '\\¨D')
+        return m1 + '<span class="math">¨D¨D' + c + '¨D¨D</span>'
+      }
+    )
 
     return text
   }
@@ -73,13 +68,13 @@ var latex = function() {
   return [
     {
       type: 'lang',
-      filter: filter
-    }
+      filter: filter,
+    },
   ]
 }
 
 // FROM shodown.js
-_EncodeCode = function(text) {
+_EncodeCode = function (text) {
   //
   // Encode/escape certain characters inside Markdown code runs.
   // The point is that in code, these characters are literals,
@@ -97,7 +92,7 @@ _EncodeCode = function(text) {
   return text
 }
 
-serloSpecificCharsToEscape = (function() {
+serloSpecificCharsToEscape = (function () {
   var regexp = ''
   var chars = ['*', '`', '_', '{', '}', '[', ']', '<', '\\']
   var replacements = {}
@@ -117,7 +112,7 @@ serloSpecificCharsToEscape = (function() {
 
   return {
     regexp: regexp,
-    replace: replace
+    replace: replace,
   }
 })()
 

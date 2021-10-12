@@ -25,12 +25,12 @@
  * Spoilers:
  * Transforms ///.../// blocks into spoilers
  **/
-var spoiler = function() {
+var spoiler = function () {
   var filter
   var findSpoilers = new RegExp(/^<p>=,sp. (.*)<\/p>([\s\S]*?)<p>=,sp.<\/p>/gm)
 
-  filter = function(text) {
-    return text.replace(findSpoilers, function(original, title, content) {
+  filter = function (text) {
+    return text.replace(findSpoilers, function (original, title, content) {
       return (
         '<div class="spoiler panel panel-default"><div class="spoiler-teaser panel-heading"><span class="fa fa-caret-square-o-down"></span>' +
         title +
@@ -44,8 +44,8 @@ var spoiler = function() {
   return [
     {
       type: 'output',
-      filter: filter
-    }
+      filter: filter,
+    },
   ]
 }
 

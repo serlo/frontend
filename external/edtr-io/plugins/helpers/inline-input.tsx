@@ -20,9 +20,7 @@
  * @link      https://github.com/serlo-org/serlo.org for the canonical source repository
  */
 import * as React from 'react'
-// @ts-expect-error
 import Plain from 'slate-plain-serializer'
-// @ts-expect-error
 import { Editor } from 'slate-react'
 
 export function InlineInput(props: {
@@ -37,7 +35,7 @@ export function InlineInput(props: {
     if (Plain.serialize(state) !== value) {
       setState(Plain.deserialize(value))
     }
-  }, [value])
+  }, [value, state])
 
   return (
     <Editor

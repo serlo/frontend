@@ -44,7 +44,6 @@ import { faNewspaper } from '@fortawesome/free-solid-svg-icons'
 import { faGraduationCap } from '@fortawesome/free-solid-svg-icons/faGraduationCap'
 // eslint-disable-next-line import/no-internal-modules
 import { faPlayCircle } from '@fortawesome/free-solid-svg-icons/faPlayCircle'
-import { useI18n } from '@serlo/i18n'
 import * as R from 'ramda'
 import * as React from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
@@ -54,8 +53,7 @@ import { InlineInput } from './helpers/inline-input'
 import { InlineSettings } from './helpers/inline-settings'
 import { InlineSettingsInput } from './helpers/inline-settings-input'
 import { SemanticSection } from './helpers/semantic-section'
-
-
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 const relatedContentItemState = object({ id: string(), title: string() })
 
@@ -130,11 +128,14 @@ function ArticleEditor(props: ArticleProps) {
     sources,
   } = state
 
-  const i18n = useI18n()
   const [focusedInlineSetting, setFocusedInlineSetting] = React.useState<{
     id: string
     index?: number
   } | null>(null)
+
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return null
+  const editorStrings = loggedInData.strings.editor
 
   function isFocused(id: string, index?: number) {
     return (
@@ -160,11 +161,10 @@ function ArticleEditor(props: ArticleProps) {
   )
 
   function renderExercises() {
-    const header = <h2>{i18n.t('article::Exercises')}</h2>
+    const header = <h2>{editorStrings.article.exercises}</h2>
     const folderHeader = (
       <p>
-        {i18n.t('article::You can find more exercises in the following folder')}
-        :
+        {editorStrings.article.youCanFindMoreExercisesInTheFollowingFolder}:
       </p>
     )
 
@@ -229,9 +229,10 @@ function ArticleEditor(props: ArticleProps) {
                                       <div>
                                         <BasePluginToolbarButton
                                           icon={<Icon icon={faTrashAlt} />}
-                                          title={i18n.t(
-                                            'article::Drag the exercise'
-                                          )}
+                                          title={
+                                            editorStrings.article
+                                              .dragTheExercise
+                                          }
                                           {...provided.dragHandleProps}
                                         >
                                           <PluginToolbarButtonIcon>
@@ -245,9 +246,9 @@ function ArticleEditor(props: ArticleProps) {
                                             <Icon icon={faTrashAlt} />
                                           </MinWidthIcon>
                                         }
-                                        label={i18n.t(
-                                          'article::Remove exercise'
-                                        )}
+                                        label={
+                                          editorStrings.article.removeExercise
+                                        }
                                         onClick={() => {
                                           exercises.remove(index)
                                         }}
@@ -273,7 +274,7 @@ function ArticleEditor(props: ArticleProps) {
             exercises.insert(exercises.length)
           }}
         >
-          {i18n.t('article::Add optional exercise')}
+          {editorStrings.article.addOptionalExercise}
         </AddButton>
         {folderHeader}
         {isFocused('exerciseFolder') ? (
@@ -290,9 +291,7 @@ function ArticleEditor(props: ArticleProps) {
                   ? `/${exerciseFolder.id.value}`
                   : ''
               }
-              placeholder={i18n.t(
-                'article::ID of an exercise folder, e.g. 30560'
-              )}
+              placeholder={editorStrings.article.idOfAnExerciseFolderEG_30560}
               onChange={(event) => {
                 const newValue = event.target.value.replace(/[^0-9]/g, '')
                 exerciseFolder.id.set(newValue)
@@ -308,9 +307,7 @@ function ArticleEditor(props: ArticleProps) {
               rel="noopener noreferrer"
             >
               <OpenInNewTab
-                title={i18n.t(
-                  'article::Open the exercise folder in a new tab:'
-                )}
+                title={editorStrings.article.openTheCourseInANewTab}
               >
                 <Icon icon={faExternalLinkAlt} />
               </OpenInNewTab>
@@ -328,7 +325,7 @@ function ArticleEditor(props: ArticleProps) {
             onChange={(value) => {
               exerciseFolder.title.set(value)
             }}
-            placeholder={i18n.t('article::Title of the link')}
+            placeholder={editorStrings.article.titleOfTheLink}
           />
         </a>
       </>
@@ -338,10 +335,8 @@ function ArticleEditor(props: ArticleProps) {
   function renderRelatedContent() {
     const header = (
       <>
-        <h2>{i18n.t('article::Still want more?')}</h2>
-        <p>
-          {i18n.t('article::You can find more content on this topic here')}:
-        </p>
+        <h2>{editorStrings.article.stillWantMore}</h2>
+        <p>{editorStrings.article.youCanFindMoreContentOnThisTopicHere}:</p>
       </>
     )
 
@@ -357,35 +352,32 @@ function ArticleEditor(props: ArticleProps) {
       {
         icon: <Icon icon={faNewspaper} fixedWidth />,
         section: 'articles',
-        label: i18n.t('article::Articles'),
-        addLabel: i18n.t('article::Add article'),
-        idPlaceholder: i18n.t('article::ID of an article, e.g. 1855'),
-        openLinkInNewTabPlaceholder: i18n.t(
-          'article::Open the article in a new tab:'
-        ),
-        dragLabel: i18n.t('article::Drag the article'),
+        label: editorStrings.article.articles,
+        addLabel: editorStrings.article.addArticle,
+        idPlaceholder: editorStrings.article.idOfAnArticleEG_1855,
+        openLinkInNewTabPlaceholder:
+          editorStrings.article.openTheArticleInANewTab,
+        dragLabel: editorStrings.article.dragTheArticle,
       },
       {
         icon: <Icon icon={faGraduationCap} fixedWidth />,
         section: 'courses',
-        label: i18n.t('article::Courses'),
-        addLabel: i18n.t('article::Add course'),
-        idPlaceholder: i18n.t('article::ID of a course, e.g. 51979'),
-        openLinkInNewTabPlaceholder: i18n.t(
-          'article::Open the course in a new tab:'
-        ),
-        dragLabel: i18n.t('article::Drag the course'),
+        label: editorStrings.article.courses,
+        addLabel: editorStrings.article.addCourse,
+        idPlaceholder: editorStrings.article.idOfACourseEG_51979,
+        openLinkInNewTabPlaceholder:
+          editorStrings.article.openTheArticleInANewTab,
+        dragLabel: editorStrings.article.dragTheCourse,
       },
       {
         icon: <Icon icon={faPlayCircle} fixedWidth />,
         section: 'videos',
-        label: i18n.t('article::Videos'),
-        addLabel: i18n.t('article::Add video'),
-        idPlaceholder: i18n.t('article::ID of a video, e.g. 40744'),
-        openLinkInNewTabPlaceholder: i18n.t(
-          'article::Open the video in a new tab:'
-        ),
-        dragLabel: i18n.t('article::Drag the video'),
+        label: editorStrings.article.videos,
+        addLabel: editorStrings.article.addVideo,
+        idPlaceholder: editorStrings.article.idOfAVideoEG_40744,
+        openLinkInNewTabPlaceholder:
+          editorStrings.article.openTheVideoInANewTab,
+        dragLabel: editorStrings.article.dragTheVideo,
       },
     ]
 
@@ -492,10 +484,11 @@ function ArticleEditor(props: ArticleProps) {
                                         }
                                         placeholder={type.idPlaceholder}
                                         onChange={(event) => {
-                                          const newValue = event.target.value.replace(
-                                            /[^0-9]/g,
-                                            ''
-                                          )
+                                          const newValue =
+                                            event.target.value.replace(
+                                              /[^0-9]/g,
+                                              ''
+                                            )
                                           item.id.set(newValue)
                                         }}
                                       />
@@ -530,16 +523,18 @@ function ArticleEditor(props: ArticleProps) {
                                       onChange={(value) => {
                                         item.title.set(value)
                                       }}
-                                      placeholder={i18n.t(
-                                        'article::Title of the link'
-                                      )}
+                                      placeholder={
+                                        editorStrings.article.titleOfTheLink
+                                      }
                                     />
                                   </a>
                                 </div>
                                 <div>
                                   <BasePluginToolbarButton
                                     icon={<Icon icon={faTrashAlt} />}
-                                    title={i18n.t('article::Drag the exercise')}
+                                    title={
+                                      editorStrings.article.dragTheExercise
+                                    }
                                     {...provided.dragHandleProps}
                                   >
                                     <PluginToolbarButtonIcon>
@@ -582,7 +577,7 @@ function ArticleEditor(props: ArticleProps) {
       return (
         <ThemeProvider theme={spoilerTheme}>
           <ExpandableBox
-            renderTitle={() => i18n.t('article::Sources')}
+            renderTitle={() => editorStrings.article.sources}
             editable={editable}
             alwaysVisible
           >
@@ -603,7 +598,7 @@ function ArticleEditor(props: ArticleProps) {
     return (
       <ThemeProvider theme={spoilerTheme}>
         <ExpandableBox
-          renderTitle={() => i18n.t('article::Sources')}
+          renderTitle={() => editorStrings.article.sources}
           editable={editable}
           alwaysVisible
         >
@@ -651,9 +646,9 @@ function ArticleEditor(props: ArticleProps) {
                                         >
                                           <InlineSettingsInput
                                             value={source.href.value}
-                                            placeholder={i18n.t(
-                                              'article::URL of the link'
-                                            )}
+                                            placeholder={
+                                              editorStrings.article.urlOfTheLink
+                                            }
                                             onChange={(event) => {
                                               source.href.set(
                                                 event.target.value
@@ -666,9 +661,10 @@ function ArticleEditor(props: ArticleProps) {
                                             rel="noopener noreferrer"
                                           >
                                             <OpenInNewTab
-                                              title={i18n.t(
-                                                'article::Open the link in a new tab:'
-                                              )}
+                                              title={
+                                                editorStrings.article
+                                                  .openTheLinkInANewTab
+                                              }
                                             >
                                               <Icon icon={faExternalLinkAlt} />
                                             </OpenInNewTab>
@@ -687,9 +683,9 @@ function ArticleEditor(props: ArticleProps) {
                                           onChange={(value) => {
                                             source.title.set(value)
                                           }}
-                                          placeholder={i18n.t(
-                                            'article::Title of the link'
-                                          )}
+                                          placeholder={
+                                            editorStrings.article.titleOfTheLink
+                                          }
                                         />
                                       </a>
                                     </span>
@@ -697,7 +693,9 @@ function ArticleEditor(props: ArticleProps) {
                                   <div>
                                     <BasePluginToolbarButton
                                       icon={<Icon icon={faTrashAlt} />}
-                                      title={i18n.t('article::Drag the source')}
+                                      title={
+                                        editorStrings.article.dragTheSource
+                                      }
                                       {...provided.dragHandleProps}
                                     >
                                       <PluginToolbarButtonIcon>
@@ -724,7 +722,7 @@ function ArticleEditor(props: ArticleProps) {
                 sources.insert(sources.length)
               }}
             >
-              {i18n.t('article::Add source')}
+              {editorStrings.article.addSource}
             </AddButton>
           ) : null}
         </ExpandableBox>

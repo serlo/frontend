@@ -22,7 +22,6 @@
 // eslint-disable-next-line import/no-internal-modules
 import { AddButton } from '@edtr-io/editor-ui/internal'
 import { boolean, EditorPlugin, EditorPluginProps, list } from '@edtr-io/plugin'
-import { useI18n } from '@serlo/i18n'
 import * as React from 'react'
 import { useVirtual } from 'react-virtual'
 
@@ -36,6 +35,7 @@ import {
   entityType,
 } from './common'
 import { RevisionHistory } from './helpers/settings'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export const textExerciseGroupTypeState = entityType(
   {
@@ -60,7 +60,6 @@ function TextExerciseGroupTypeEditor(
   props: EditorPluginProps<typeof textExerciseGroupTypeState>
 ) {
   const { cohesive, content, 'grouped-text-exercise': children } = props.state
-  const i18n = useI18n()
   const isCohesive = cohesive.value ?? false
 
   const virtualParent = React.useRef(null)
@@ -70,6 +69,10 @@ function TextExerciseGroupTypeEditor(
     parentRef: virtualParent,
     estimateSize: React.useCallback(() => 35, []),
   })
+
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return null
+  const editorStrings = loggedInData.strings.editor
 
   const contentRendered = content.render({
     renderSettings(children) {
@@ -131,7 +134,9 @@ function TextExerciseGroupTypeEditor(
                   <div className="col-sm-11 col-xs-12">
                     <OptionalChild
                       state={child}
-                      removeLabel={i18n.t('textExerciseGroup::Remove exercise')}
+                      removeLabel={
+                        editorStrings.textExerciseGroup.removeExercise
+                      }
                       onRemove={() => children.remove(virtualRow.index)}
                     />
                   </div>
@@ -142,7 +147,7 @@ function TextExerciseGroupTypeEditor(
         </div>
       </div>
       <AddButton onClick={() => children.insert()}>
-        {i18n.t('textExerciseGroup::Add exercise')}
+        {editorStrings.textExerciseGroup.addExercise}
       </AddButton>
       <Controls subscriptions {...props.state} />
     </article>
@@ -152,7 +157,7 @@ function TextExerciseGroupTypeEditor(
     return (
       <div>
         <label htmlFor="cohesiveSelect">
-          {i18n.t('textExerciseGroup::Kind of exercise group')}:
+          {editorStrings.textExerciseGroup.kindOfExerciseGroup}:
         </label>{' '}
         <select
           id="cohesiveSelect"
@@ -160,10 +165,10 @@ function TextExerciseGroupTypeEditor(
           onChange={(e) => cohesive.set(e.target.value === 'cohesive')}
         >
           <option value="non-cohesive">
-            {i18n.t('textExerciseGroup::not cohesive')}
+            {editorStrings.textExerciseGroup.notCohesive}
           </option>
           <option value="cohesive">
-            {i18n.t('textExerciseGroup::cohesive')}
+            {editorStrings.textExerciseGroup.cohesive}
           </option>
         </select>
       </div>

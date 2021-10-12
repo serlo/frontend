@@ -20,7 +20,6 @@
  * @link      https://github.com/serlo-org/serlo.org for the canonical source repository
  */
 import { EditorPlugin, EditorPluginProps, string } from '@edtr-io/plugin'
-import { useI18n } from '@serlo/i18n'
 import * as React from 'react'
 
 import {
@@ -31,6 +30,7 @@ import {
   entityType,
 } from './common'
 import { RevisionHistory, Settings } from './helpers/settings'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export const coursePageTypeState = entityType(
   {
@@ -60,13 +60,17 @@ function CoursePageTypeEditor(
   >
 ) {
   const { title, icon, content } = props.state
-  const i18n = useI18n()
 
   React.useEffect(() => {
     if (!['explanation', 'play', 'question'].includes(icon.value)) {
       icon.set('explanation')
     }
   }, [icon])
+
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return null
+  const editorStrings = loggedInData.strings.editor
+
   return (
     <article>
       {props.renderIntoToolbar(
@@ -83,15 +87,15 @@ function CoursePageTypeEditor(
             state={icon}
             options={[
               {
-                label: i18n.t('coursePage::Explanation'),
+                label: editorStrings.coursePage.explanation,
                 value: 'explanation',
               },
               {
-                label: i18n.t('coursePage::Video'),
+                label: editorStrings.coursePage.video,
                 value: 'play',
               },
               {
-                label: i18n.t('coursePage::Question'),
+                label: editorStrings.coursePage.question,
                 value: 'question',
               },
             ]}
@@ -101,7 +105,7 @@ function CoursePageTypeEditor(
       <h1>
         {props.editable ? (
           <HeaderInput
-            placeholder={i18n.t('coursePage::Title')}
+            placeholder={editorStrings.coursePage.title}
             value={title.value}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               title.set(e.target.value)

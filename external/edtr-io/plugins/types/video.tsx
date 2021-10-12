@@ -21,7 +21,6 @@
  */
 import { EditorPlugin, EditorPluginProps, string } from '@edtr-io/plugin'
 import { createVideoPlugin } from '@edtr-io/plugin-video'
-import { useI18n } from '@serlo/i18n'
 import * as React from 'react'
 
 import {
@@ -32,6 +31,7 @@ import {
   entityType,
 } from './common'
 import { RevisionHistory } from './helpers/settings'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export const videoTypeState = entityType(
   {
@@ -54,7 +54,9 @@ export const videoTypePlugin: EditorPlugin<typeof videoTypeState> = {
 
 function VideoTypeEditor(props: EditorPluginProps<typeof videoTypeState>) {
   const { title, description } = props.state
-  const i18n = useI18n()
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return null
+  const editorStrings = loggedInData.strings.editor
 
   return (
     <section>
@@ -69,7 +71,7 @@ function VideoTypeEditor(props: EditorPluginProps<typeof videoTypeState>) {
         <h1>
           {props.editable ? (
             <HeaderInput
-              placeholder={i18n.t('video::Title')}
+              placeholder={editorStrings.video.title}
               value={title.value}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 title.set(e.target.value)
@@ -91,10 +93,10 @@ function VideoTypeEditor(props: EditorPluginProps<typeof videoTypeState>) {
             config={{
               i18n: {
                 src: {
-                  label: i18n.t('video::URL'),
+                  label: editorStrings.video.url,
                 },
                 alt: {
-                  label: i18n.t('video::Title for search engines'),
+                  label: editorStrings.video.titleForSearchEngines,
                 },
               },
             }}

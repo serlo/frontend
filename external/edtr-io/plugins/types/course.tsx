@@ -22,7 +22,6 @@
 // eslint-disable-next-line import/no-internal-modules
 import { AddButton } from '@edtr-io/editor-ui/internal'
 import { EditorPlugin, EditorPluginProps, list, string } from '@edtr-io/plugin'
-import { useI18n } from '@serlo/i18n'
 import * as React from 'react'
 
 import {
@@ -35,6 +34,7 @@ import {
   entityType,
 } from './common'
 import { RevisionHistory, Settings } from './helpers/settings'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export const courseTypeState = entityType(
   {
@@ -57,7 +57,9 @@ export const courseTypePlugin: EditorPlugin<typeof courseTypeState> = {
 
 function CourseTypeEditor(props: EditorPluginProps<typeof courseTypeState>) {
   const { title, meta_description, 'course-page': children } = props.state
-  const i18n = useI18n()
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return null
+  const editorStrings = loggedInData.strings.editor
 
   return (
     <article>
@@ -71,7 +73,7 @@ function CourseTypeEditor(props: EditorPluginProps<typeof courseTypeState>) {
       {props.renderIntoSettings(
         <Settings>
           <Settings.Textarea
-            label={i18n.t('course::Description for search engines')}
+            label={editorStrings.course.descriptionForSearchEngines}
             state={meta_description}
           />
         </Settings>
@@ -79,7 +81,7 @@ function CourseTypeEditor(props: EditorPluginProps<typeof courseTypeState>) {
       <h1>
         {props.editable ? (
           <HeaderInput
-            placeholder={i18n.t('course::Title')}
+            placeholder={editorStrings.course.title}
             value={title.value}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               title.set(e.target.value)
@@ -94,7 +96,7 @@ function CourseTypeEditor(props: EditorPluginProps<typeof courseTypeState>) {
           <OptionalChild
             state={child}
             key={child.id}
-            removeLabel={i18n.t('course::Remove course page')}
+            removeLabel={editorStrings.course.removeCoursePage}
             onRemove={() => {
               children.remove(index)
             }}
@@ -103,7 +105,7 @@ function CourseTypeEditor(props: EditorPluginProps<typeof courseTypeState>) {
       })}
       <hr />
       <AddButton onClick={() => children.insert()}>
-        {i18n.t('course::Add course page')}
+        {editorStrings.course.addCoursePage}
       </AddButton>
       <Controls subscriptions {...props.state} />
     </article>

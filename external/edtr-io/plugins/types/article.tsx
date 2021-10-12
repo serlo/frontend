@@ -20,8 +20,7 @@
  * @link      https://github.com/serlo-org/serlo.org for the canonical source repository
  */
 import { EditorPlugin, EditorPluginProps, string } from '@edtr-io/plugin'
-import { useI18n } from '@serlo/i18n'
-import * as React from 'react'
+import { ChangeEvent } from 'react'
 
 import {
   Controls,
@@ -31,6 +30,7 @@ import {
   entityType,
 } from './common'
 import { RevisionHistory, Settings } from './helpers/settings'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export const articleTypeState = entityType(
   {
@@ -52,7 +52,10 @@ export const articleTypePlugin: EditorPlugin<typeof articleTypeState> = {
 
 function ArticleTypeEditor(props: EditorPluginProps<typeof articleTypeState>) {
   const { title, content, meta_title, meta_description } = props.state
-  const i18n = useI18n()
+
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return null
+  const editorStrings = loggedInData.strings.editor
 
   return (
     <>
@@ -67,11 +70,11 @@ function ArticleTypeEditor(props: EditorPluginProps<typeof articleTypeState>) {
         {props.renderIntoSettings(
           <Settings>
             <Settings.Textarea
-              label={i18n.t('article::Title for search engines')}
+              label={editorStrings.article.titleForSearchEngines}
               state={meta_title}
             />
             <Settings.Textarea
-              label={i18n.t('article::Description for search engines')}
+              label={editorStrings.article.descriptionForSearchEngines}
               state={meta_description}
             />
           </Settings>
@@ -79,9 +82,9 @@ function ArticleTypeEditor(props: EditorPluginProps<typeof articleTypeState>) {
         <h1>
           {props.editable ? (
             <HeaderInput
-              placeholder={i18n.t('article::Title')}
+              placeholder={editorStrings.article.title}
               value={title.value}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              onChange={(e: ChangeEvent<HTMLInputElement>) => {
                 title.set(e.target.value)
               }}
             />

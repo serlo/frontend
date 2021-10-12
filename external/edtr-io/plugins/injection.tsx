@@ -25,10 +25,10 @@ import { EditorInlineSettings, EditorInput, styled } from '@edtr-io/editor-ui'
 import { PreviewOverlay } from '@edtr-io/editor-ui/internal'
 import { EditorPluginProps, string, EditorPlugin } from '@edtr-io/plugin'
 import { Icon, faNewspaper } from '@edtr-io/ui'
-import { useI18n } from '@serlo/i18n'
 import * as React from 'react'
 
 import { Injection } from '@/components/content/injection'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { renderArticle } from '@/schema/article-renderer'
 
 /* global */
@@ -51,7 +51,6 @@ export function InjectionRenderer(props: { src: string }) {
   return <Injection href={props.src} renderNested={renderArticle} />
 }
 
-
 const PlaceholderWrapper = styled.div({
   position: 'relative',
   width: '100%',
@@ -61,7 +60,6 @@ const PlaceholderWrapper = styled.div({
 function InjectionEditor(props: EditorPluginProps<typeof injectionState>) {
   const [cache, setCache] = React.useState(props.state.value)
   const [preview, setPreview] = React.useState(false)
-  const i18n = useI18n()
 
   React.useEffect(() => {
     const timeout = setTimeout(() => {
@@ -71,6 +69,10 @@ function InjectionEditor(props: EditorPluginProps<typeof injectionState>) {
       clearTimeout(timeout)
     }
   }, [props.focused, props.state.value])
+
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return null
+  const editorStrings = loggedInData.strings.editor
 
   if (!props.editable) {
     return <InjectionRenderer src={props.state.value} />
@@ -98,7 +100,7 @@ function InjectionEditor(props: EditorPluginProps<typeof injectionState>) {
       {props.focused && !preview ? (
         <EditorInlineSettings>
           <EditorInput
-            label={i18n.t('injection::Serlo ID:')}
+            label={editorStrings.injection.serloId}
             placeholder="123456"
             value={props.state.value}
             onChange={(e) => {
@@ -113,7 +115,7 @@ function InjectionEditor(props: EditorPluginProps<typeof injectionState>) {
       {props.renderIntoSettings(
         <>
           <OverlayInput
-            label={i18n.t('injection::Serlo ID:')}
+            label={editorStrings.injection.serloId}
             placeholder="123456"
             value={props.state.value}
             onChange={(e) => {

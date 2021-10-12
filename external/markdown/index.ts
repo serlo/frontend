@@ -59,6 +59,6 @@ export const converter: {
     spoiler,
     spoilerPrepare,
     latexOutput,
-    codeOutput
-  ]
+    codeOutput,
+  ],
 })

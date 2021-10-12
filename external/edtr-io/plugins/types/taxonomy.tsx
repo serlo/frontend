@@ -26,10 +26,10 @@ import {
   string,
   number,
 } from '@edtr-io/plugin'
-import { useI18n } from '@serlo/i18n'
 import * as React from 'react'
 
 import { Controls, editorContent, HeaderInput, uuid } from './common'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export const taxonomyTypeState = object({
   ...uuid,
@@ -52,7 +52,9 @@ function TaxonomyTypeEditor(
   props: EditorPluginProps<typeof taxonomyTypeState>
 ) {
   const { term, description } = props.state
-  const i18n = useI18n()
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return null
+  const editorStrings = loggedInData.strings.editor
 
   return (
     <article>
@@ -61,7 +63,7 @@ function TaxonomyTypeEditor(
           <h1>
             {props.editable ? (
               <HeaderInput
-                placeholder={i18n.t('taxonomy::Title')}
+                placeholder={editorStrings.taxonomy.title}
                 value={term.name.value}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   term.name.set(e.target.value)

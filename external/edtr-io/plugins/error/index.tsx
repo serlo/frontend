@@ -26,8 +26,9 @@ import {
   scalar,
   string,
 } from '@edtr-io/plugin'
-import { useI18n } from '@serlo/i18n'
 import * as React from 'react'
+
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export const errorState = object({
   plugin: string(),
@@ -39,12 +40,14 @@ export type ErrorPluginState = typeof errorState
 export const ErrorRenderer: React.FunctionComponent<
   EditorPluginProps<ErrorPluginState>
 > = (props) => {
-  const i18n = useI18n()
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return null
+  const editorStrings = loggedInData.strings.editor
 
   return (
     <div className="panel panel-danger">
       <div className="panel-heading">
-        {i18n.t('error::This part of the document could not be converted.')}
+        {editorStrings.error.thisPartOfTheDocumentCouldNotBeConverted}
       </div>
       <div className="panel-body">
         <pre>

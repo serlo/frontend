@@ -21,18 +21,18 @@
  */
 /* global define */
 var serloSpecificCharsToEncode
-var latexoutput = function() {
+var latexoutput = function () {
   return [
     {
       type: 'output',
-      filter: function(text) {
+      filter: function (text) {
         return encodeSerloSpecificChars(text)
-      }
-    }
+      },
+    },
   ]
 }
 
-serloSpecificCharsToEncode = (function() {
+serloSpecificCharsToEncode = (function () {
   var regexp
   var chars = ['*', '`', '_', '{', '}', '[', ']', '&lt;', '\\']
   var replacements = {}
@@ -51,7 +51,7 @@ serloSpecificCharsToEncode = (function() {
 
   return {
     regexp: regexp,
-    replace: replace
+    replace: replace,
   }
 })()
 

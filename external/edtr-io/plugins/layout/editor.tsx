@@ -23,11 +23,11 @@ import { useScopedStore } from '@edtr-io/core'
 import { EditorPluginProps, StateTypeReturnType } from '@edtr-io/plugin'
 import { styled } from '@edtr-io/renderer-ui'
 import { DocumentState, replace, serializeDocument } from '@edtr-io/store'
-import { useI18n } from '@serlo/i18n'
 import { RowsPlugin } from '@serlo/legacy-editor-to-editor'
 import * as React from 'react'
 
 import { layoutState } from '.'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 const LayoutContainer = styled.div({
   display: 'flex',
@@ -70,22 +70,25 @@ export const LayoutRenderer: React.FunctionComponent<
   }
 > = (props) => {
   const store = useScopedStore()
-  const i18n = useI18n()
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return null
+  const editorStrings = loggedInData.strings.editor
 
   return (
     <>
       {props.editable ? (
         <ConvertInfo>
-          {i18n.t(
-            'layout::To make the content draggable, convert them for the new editor:'
-          )}
+          {
+            editorStrings.layout
+              .toMakeTheContentDraggableConvertThemForTheNewEditor
+          }
           <ButtonContainer>
             <ConvertButton onClick={convertToRow}>
-              {i18n.t('layout::One-column layout')}
+              {editorStrings.layout.oneColumnLayout}
             </ConvertButton>
             {canConvertToMultimediaExplanation() ? (
               <ConvertButton onClick={convertToMultimediaExplanation}>
-                {i18n.t('layout::Multimedia content associated with text')}
+                {editorStrings.layout.multimediaContentAssociatedWithText}
               </ConvertButton>
             ) : null}
           </ButtonContainer>

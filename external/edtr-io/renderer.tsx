@@ -20,17 +20,19 @@
  * @link      https://github.com/serlo-org/serlo.org for the canonical source repository
  */
 import { Renderer as Core, RendererProps } from '@edtr-io/renderer'
-import { useI18n } from '@serlo/i18n'
 import * as React from 'react'
 
 import { createPlugins } from './plugins'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export function Renderer({ state }: { state: RendererProps['state'] }) {
-  const i18n = useI18n()
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return null
+  const editorStrings = loggedInData.strings.editor
   const plugins = createPlugins({
     getCsrfToken: () => '',
     registry: [],
-    i18n: i18n,
+    editorStrings,
   })
   return <Core plugins={plugins} state={state || { plugin: 'text' }} />
 }

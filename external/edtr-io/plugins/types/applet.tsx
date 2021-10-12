@@ -20,7 +20,6 @@
  * @link      https://github.com/serlo-org/serlo.org for the canonical source repository
  */
 import { EditorPlugin, EditorPluginProps, string } from '@edtr-io/plugin'
-import { useI18n } from '@serlo/i18n'
 import * as React from 'react'
 
 import {
@@ -32,6 +31,7 @@ import {
   entityType,
 } from './common'
 import { Settings, RevisionHistory } from './helpers/settings'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export const appletTypeState = entityType(
   {
@@ -54,7 +54,9 @@ export const appletTypePlugin: EditorPlugin<typeof appletTypeState> = {
 
 function AppletTypeEditor(props: EditorPluginProps<typeof appletTypeState>) {
   const { title, url, content, meta_title, meta_description } = props.state
-  const i18n = useI18n()
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return null
+  const editorStrings = loggedInData.strings.editor
 
   return (
     <div>
@@ -69,11 +71,11 @@ function AppletTypeEditor(props: EditorPluginProps<typeof appletTypeState>) {
         {props.renderIntoSettings(
           <Settings>
             <Settings.Textarea
-              label={i18n.t('applet::Title for search engines')}
+              label={editorStrings.applet.titleForSearchEngines}
               state={meta_title}
             />
             <Settings.Textarea
-              label={i18n.t('applet::Description for search engines')}
+              label={editorStrings.applet.descriptionForSearchEngines}
               state={meta_description}
             />
           </Settings>
@@ -81,7 +83,7 @@ function AppletTypeEditor(props: EditorPluginProps<typeof appletTypeState>) {
         <h1>
           {props.editable ? (
             <HeaderInput
-              placeholder={i18n.t('applet::Title')}
+              placeholder={editorStrings.applet.title}
               value={title.value}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 title.set(e.target.value)

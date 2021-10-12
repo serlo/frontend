@@ -20,13 +20,13 @@
  * @link      https://github.com/serlo-org/serlo.org for the canonical source repository
  */
 /* global define */
-var atusername = function() {
+var atusername = function () {
   return [
     // @username syntax
     {
       type: 'lang',
       regex: '\\B(\\\\)?@([\\S]+)\\b',
-      replace: function(match, leadingSlash, username) {
+      replace: function (match, leadingSlash, username) {
         // Check if we matched the leading \ and return nothing changed if so
         if (leadingSlash === '\\') {
           return match
@@ -39,12 +39,12 @@ var atusername = function() {
             '</a>'
           )
         }
-      }
+      },
     },
 
     // Escaped @'s so we don't get into trouble
     //
-    { type: 'lang', regex: '\\\\@', replace: '@' }
+    { type: 'lang', regex: '\\\\@', replace: '@' },
   ]
 }
 

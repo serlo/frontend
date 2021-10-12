@@ -40,25 +40,25 @@ var allowedAttributes = {
   h3: 'id',
   h4: 'id',
   h5: 'id',
-  h6: 'id'
+  h6: 'id',
 }
 var forceProtocol = false
 var testAllowed = new RegExp('^(' + allowedTags.toLowerCase() + ')$')
 var findTags = /<(\/?)\s*([\w:-]+)([^>]*)>/g
 var findAttribs = /(\s*)([\w:-]+)\s*=\s*(?:(?:(["'])([^\3]+?)(?:\3))|([^\s]+))/g
 
-var htmlstrip = function() {
+var htmlstrip = function () {
   var filter
 
-  filter = function(text) {
+  filter = function (text) {
     return stripUnwantedHTML(text)
   }
 
   return [
     {
       type: 'output',
-      filter: filter
-    }
+      filter: filter,
+    },
   ]
 }
 
@@ -76,7 +76,7 @@ function stripUnwantedHTML(html) {
   }
 
   // find and match html tags
-  return html.replace(findTags, function(original, lslash, tag, params) {
+  return html.replace(findTags, function (original, lslash, tag, params) {
     var tagAttr
     var wildcardAttr
     var rslash = (params.substr(-1) === '/' && '/') || ''
@@ -101,48 +101,45 @@ function stripUnwantedHTML(html) {
       }
 
       // find and remove unwanted attributes
-      params = params.replace(findAttribs, function(
-        original,
-        space,
-        name,
-        quot,
-        value
-      ) {
-        name = name.toLowerCase()
+      params = params.replace(
+        findAttribs,
+        function (original, space, name, quot, value) {
+          name = name.toLowerCase()
 
-        if (!value && !quot) {
-          value = ''
-          quot = '"'
-        } else if (!value) {
-          value = quot
-          quot = '"'
+          if (!value && !quot) {
+            value = ''
+            quot = '"'
+          } else if (!value) {
+            value = quot
+            quot = '"'
+          }
+
+          // force data: and javascript: links and images to #
+          if (
+            (name === 'href' || name === 'src') &&
+            (value.trim().substr(0, 'javascript:'.length) === 'javascript:' ||
+              value.trim().substr(0, 'data:'.length) === 'data:')
+          ) {
+            value = '#'
+          }
+
+          // scope links and sources to http protocol
+          if (
+            forceProtocol &&
+            (name === 'href' || name === 'src') &&
+            !/^[a-zA-Z]{3,5}:\/\//.test(value)
+          ) {
+            value = 'http://' + value
+          }
+
+          if (
+            (wildcardAttr && name.match(wildcardAttr)) ||
+            (tagAttr && name.match(tagAttr))
+          ) {
+            return space + name + '=' + quot + value + quot
+          } else return ''
         }
-
-        // force data: and javascript: links and images to #
-        if (
-          (name === 'href' || name === 'src') &&
-          (value.trim().substr(0, 'javascript:'.length) === 'javascript:' ||
-            value.trim().substr(0, 'data:'.length) === 'data:')
-        ) {
-          value = '#'
-        }
-
-        // scope links and sources to http protocol
-        if (
-          forceProtocol &&
-          (name === 'href' || name === 'src') &&
-          !/^[a-zA-Z]{3,5}:\/\//.test(value)
-        ) {
-          value = 'http://' + value
-        }
-
-        if (
-          (wildcardAttr && name.match(wildcardAttr)) ||
-          (tagAttr && name.match(tagAttr))
-        ) {
-          return space + name + '=' + quot + value + quot
-        } else return ''
-      })
+      )
 
       return '<' + lslash + tag + (params ? ' ' + params : '') + rslash + '>'
     }

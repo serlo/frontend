@@ -26,7 +26,7 @@
  * Transforms >[Title](injectionUrl)
  * into <div class="injection"><a href="injectionUrl" class="injection-link">Title</a></div>
  **/
-var injections = function() {
+var injections = function () {
   var filter
   var findInjections = new RegExp(/>\[(.*)\]\((.*)\)/g)
 
@@ -48,8 +48,8 @@ var injections = function() {
     return '/' + url.join('/')
   }
 
-  filter = function(text) {
-    return text.replace(findInjections, function(original, title, url) {
+  filter = function (text) {
+    return text.replace(findInjections, function (original, title, url) {
       const href = correctUrl(url)
 
       if (/assets\.serlo\.org\/legacy\/.*\.xml/.test(href)) {
@@ -69,8 +69,8 @@ var injections = function() {
   return [
     {
       type: 'lang',
-      filter: filter
-    }
+      filter: filter,
+    },
   ]
 }
 

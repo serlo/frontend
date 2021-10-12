@@ -50,7 +50,6 @@ import {
   getPendingChanges,
 } from '@edtr-io/store'
 import { Icon, faTrashAlt, styled } from '@edtr-io/ui'
-import { useI18n } from '@serlo/i18n'
 import * as R from 'ramda'
 import * as React from 'react'
 import BSAlert from 'react-bootstrap/lib/Alert'
@@ -64,6 +63,7 @@ import { createPortal } from 'react-dom'
 
 import { CsrfContext } from '../../csrf-context'
 import { SaveContext, storeState } from '../../editor'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export const licenseState = object({
   id: number(),
@@ -105,7 +105,6 @@ export const HeaderInput = styled.input({
 })
 
 export function Controls(props: OwnProps) {
-  const i18n = useI18n()
   const store = useScopedStore()
   const dispatch = useScopedDispatch()
   const undoable = useScopedSelector(hasUndoActions())
@@ -121,10 +120,8 @@ export function Controls(props: OwnProps) {
   const { onSave, mayCheckout } = React.useContext(SaveContext)
   const [agreement, setAgreement] = React.useState(false)
   const [emailSubscription, setEmailSubscription] = React.useState(true)
-  const [
-    notificationSubscription,
-    setNotificationSubscription,
-  ] = React.useState(true)
+  const [notificationSubscription, setNotificationSubscription] =
+    React.useState(true)
   const [autoCheckout, setAutoCheckout] = React.useState(false)
 
   React.useEffect(() => {
@@ -140,6 +137,10 @@ export function Controls(props: OwnProps) {
   React.useEffect(() => {
     window.onbeforeunload = hasPendingChanges && !pending ? () => '' : null
   }, [hasPendingChanges, pending])
+
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return null
+  const editorStrings = loggedInData.strings.editor
 
   return (
     <>
@@ -174,7 +175,7 @@ export function Controls(props: OwnProps) {
         }}
       >
         <BSModal.Header closeButton>
-          <BSModal.Title>{i18n.t('edtr-io::Save')}</BSModal.Title>
+          <BSModal.Title>{editorStrings.edtrIo.save}</BSModal.Title>
         </BSModal.Header>
         <BSModal.Body>
           {renderAlert()}
@@ -189,7 +190,7 @@ export function Controls(props: OwnProps) {
               setVisibility(false)
             }}
           >
-            {i18n.t('edtr-io::Cancel')}
+            {editorStrings.edtrIo.cancel}
           </BSButton>
           <BSButton
             onClick={() => {
@@ -199,7 +200,7 @@ export function Controls(props: OwnProps) {
             disabled={!maySave() || pending}
             title={getSaveHint()}
           >
-            {pending ? i18n.t('edtr-io::Saving…') : i18n.t('edtr-io::Save')}
+            {pending ? editorStrings.edtrIo.saving : editorStrings.edtrIo.save}
           </BSButton>
         </BSModal.Footer>
       </BSModal>
@@ -244,13 +245,12 @@ export function Controls(props: OwnProps) {
   function getSaveHint() {
     if (maySave()) return undefined
     if (licenseAccepted() && !changesFilledIn()) {
-      return i18n.t('edtr-io::You need to fill out the changes you made')
+      return editorStrings.edtrIo.youNeedToFillOutTheChangesYouMade
     } else if (!licenseAccepted() && changesFilledIn()) {
-      return i18n.t('edtr-io::You need to accept the license terms')
+      return editorStrings.edtrIo.youNeedToAcceptTheLicenseTerms
     } else {
-      return i18n.t(
-        'edtr-io::You need to fill out the changes you made and accept the license terms'
-      )
+      return editorStrings.edtrIo
+        .youNeedToFillOutTheChangesYouMadeAndAcceptTheLicenseTerms
     }
   }
 
@@ -311,11 +311,12 @@ export function Controls(props: OwnProps) {
             setHasError(false)
           }}
         >
-          {i18n.t('edtr-io::An error occurred during saving.')}
+          {editorStrings.edtrIo.anErrorOccurredDuringSaving}
           <br />
-          {i18n.t(
-            'edtr-io::You can store the revision locally, refresh the page and try to save again.'
-          )}
+          {
+            editorStrings.edtrIo
+              .youCanStoreTheRevisionLocallyRefreshThePageAndTryToSaveAgain
+          }
         </BSAlert>
         <BSModal.Footer>
           <BSButton
@@ -327,8 +328,8 @@ export function Controls(props: OwnProps) {
             }}
           >
             {savedToLocalstorage
-              ? i18n.t('edtr-io::Revision saved')
-              : i18n.t('edtr-io::Save revision')}
+              ? editorStrings.edtrIo.revisionSaved
+              : editorStrings.edtrIo.saveRevision}
           </BSButton>
         </BSModal.Footer>
       </>
@@ -340,7 +341,7 @@ export function Controls(props: OwnProps) {
     if (!changes) return null
     return (
       <BSFormGroup controlId="changes">
-        <BSControlLabel>{i18n.t('edtr-io::Changes')}</BSControlLabel>
+        <BSControlLabel>{editorStrings.edtrIo.changes}</BSControlLabel>
         <BSFormControl
           componentClass="textarea"
           value={changes.value}
@@ -363,7 +364,7 @@ export function Controls(props: OwnProps) {
           setAutoCheckout(checked)
         }}
       >
-        {i18n.t('edtr-io::Skip peer review (not recommended)')}
+        {editorStrings.edtrIo.skipPeerReviewNotRecommended}
       </BSCheckbox>
     )
   }
@@ -396,7 +397,7 @@ export function Controls(props: OwnProps) {
             setNotificationSubscription(checked)
           }}
         >
-          {i18n.t('edtr-io::Enable serlo.org notifications')}
+          {editorStrings.edtrIo.enableSerloOrgNotifications}
         </BSCheckbox>
         <BSCheckbox
           checked={emailSubscription}
@@ -405,7 +406,7 @@ export function Controls(props: OwnProps) {
             setEmailSubscription(checked)
           }}
         >
-          {i18n.t('edtr-io::Enable notifications via e-mail')}
+          {editorStrings.edtrIo.enableNotificationsViaEMail}
         </BSCheckbox>
       </>
     )
@@ -418,9 +419,9 @@ export function entityType<
 >(
   ownTypes: Ds,
   children: Childs,
-  getFocusableChildren?: (
-    children: { [K in keyof Ds]: { id: string }[] }
-  ) => { id: string }[]
+  getFocusableChildren?: (children: { [K in keyof Ds]: { id: string }[] }) => {
+    id: string
+  }[]
 ): StateType<
   StateTypesSerializedType<Ds & Childs>,
   StateTypesValueType<Ds & Childs>,
@@ -519,9 +520,7 @@ export function serializedChild(
   }
 }
 
-export function optionalSerializedChild(
-  plugin: string
-): StateType<
+export function optionalSerializedChild(plugin: string): StateType<
   StateTypeSerializedType<ReturnType<typeof serializedChild>> | null,
   StateTypeValueType<ReturnType<typeof serializedChild>> | null,
   StateTypeReturnType<ReturnType<typeof serializedChild>> & {

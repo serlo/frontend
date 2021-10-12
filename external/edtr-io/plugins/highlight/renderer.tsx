@@ -1,4 +1,3 @@
-
 /* eslint-disable import/no-internal-modules */
 import * as React from 'react'
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter'

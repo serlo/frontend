@@ -37,12 +37,12 @@ import {
   faPhotoVideo,
   faQuoteRight,
 } from '@edtr-io/ui'
-import { useI18n } from '@serlo/i18n'
 import * as React from 'react'
 
 import { CsrfContext } from './csrf-context'
 import { deserialize, isError } from './deserialize'
 import { createPlugins } from './plugins'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export interface EditorProps {
   getCsrfToken(): string
@@ -76,22 +76,24 @@ export const SaveContext = React.createContext<{
 })
 
 export function Editor(props: EditorProps) {
-  const i18n = useI18n()
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return null
+  const editorStrings = loggedInData.strings.editor
 
   let result = deserialize(props)
   const plugins = createPlugins({
     // eslint-disable-next-line @typescript-eslint/unbound-method
     getCsrfToken: props.getCsrfToken,
     registry: getRegistry(),
-    i18n,
+    editorStrings,
   })
 
   const DocumentEditor = createDefaultDocumentEditor({
     i18n: {
       settings: {
-        buttonLabel: i18n.t('edtr-io::Settings'),
-        modalTitle: i18n.t('edtr-io::Extended Settings'),
-        modalCloseLabel: i18n.t('edtr-io::Close'),
+        buttonLabel: editorStrings.edtrIo.settings,
+        modalTitle: editorStrings.edtrIo.extendedSettings,
+        modalCloseLabel: editorStrings.edtrIo.close,
       },
     },
   })
@@ -104,20 +106,18 @@ export function Editor(props: EditorProps) {
       case 'type-unsupported':
         return (
           <div className="alert alert-danger" role="alert">
-            {i18n.t(
-              "edtr-io::This content type isn't supported by the new editor, yet."
-            )}{' '}
+            {editorStrings.edtrIo.thisContentTypeIsnTSupportedByTheNewEditorYet}{' '}
             <a href={legacyUrl}>
-              {i18n.t('edtr-io::Edit the content in the old editor.')}
+              {editorStrings.edtrIo.editTheContentInTheOldEditor}
             </a>
           </div>
         )
       case 'failure':
         return (
           <div className="alert alert-danger" role="alert">
-            {i18n.t('edtr-io::An error occurred during the conversion.')}{' '}
+            {editorStrings.edtrIo.anErrorOccurredDuringTheConversion}{' '}
             <a href={legacyUrl}>
-              {i18n.t('edtr-io::Edit the content in the old editor.')}
+              {editorStrings.edtrIo.editTheContentInTheOldEditor}
             </a>
           </div>
         )
@@ -127,9 +127,7 @@ export function Editor(props: EditorProps) {
   if (
     stored &&
     confirm(
-      i18n.t(
-        'edtr-io::We found an old revision created by you. Do you want to restore it?'
-      )
+      editorStrings.edtrIo.weFoundAnOldRevisionCreatedByYouDoYouWantToRestoreIt
     )
   ) {
     result = {
@@ -147,11 +145,9 @@ export function Editor(props: EditorProps) {
       >
         {result.converted ? (
           <div className="alert alert-warning" role="alert">
-            {i18n.t(
-              "edtr-io::This entity hasn't been converted to the new editor, yet."
-            )}{' '}
+            {editorStrings.edtrIo.thisEntityHasnTBeenConvertedToTheNewEditorYet}{' '}
             <a href={legacyUrl}>
-              {i18n.t('edtr-io::Edit the content in the old editor.')}
+              {editorStrings.edtrIo.editTheContentInTheOldEditor}
             </a>
           </div>
         ) : null}
@@ -177,99 +173,92 @@ export function Editor(props: EditorProps) {
     return [
       {
         name: 'text',
-        title: i18n.t('edtr-io::Text'),
-        description: i18n.t(
-          'edtr-io::Compose content using rich text and math formulas.'
-        ),
+        title: editorStrings.edtrIo.text,
+        description:
+          editorStrings.edtrIo.composeContentUsingRichTextAndMathFormulas,
         icon: createIcon(faParagraph),
       },
       {
         name: 'blockquote',
-        title: i18n.t('edtr-io::Quotation'),
-        description: i18n.t('edtr-io::Create indented text for quotations.'),
+        title: editorStrings.edtrIo.quotation,
+        description: editorStrings.edtrIo.createIndentedTextForQuotations,
         icon: createIcon(faQuoteRight),
       },
       {
         name: 'geogebra',
-        title: i18n.t('edtr-io::GeoGebra Applet'),
-        description: i18n.t(
-          'edtr-io::Embed GeoGebra Materials applets via URL or ID.'
-        ),
+        title: editorStrings.edtrIo.geoGebraApplet,
+        description:
+          editorStrings.edtrIo.embedGeoGebraMaterialsAppletsViaUrlOrId,
         icon: createIcon(faCubes),
       },
       {
         name: 'highlight',
-        title: i18n.t('edtr-io::Source Code'),
-        description: i18n.t('edtr-io::Highlight the syntax of source code.'),
+        title: editorStrings.edtrIo.sourceCode,
+        description: editorStrings.edtrIo.highlightTheSyntaxOfSourceCode,
         icon: createIcon(faCode),
       },
       {
         name: 'anchor',
-        title: i18n.t('edtr-io::Anchor'),
-        description: i18n.t('edtr-io::Insert an anchor.'),
+        title: editorStrings.edtrIo.anchor,
+        description: editorStrings.edtrIo.insertAnAnchor,
         icon: createIcon(faAnchor),
       },
       {
         name: 'equations',
-        title: i18n.t('edtr-io::Equations'),
-        description: i18n.t(
-          'edtr-io::Create mathematical equations and terms.'
-        ),
+        title: editorStrings.edtrIo.termsAndEquations,
+        description:
+          editorStrings.edtrIo.writeTermManipulationsAndSolveMultilineEquations,
       },
       {
         name: 'image',
-        title: i18n.t('edtr-io::Image'),
-        description: i18n.t('edtr-io::Upload images.'),
+        title: editorStrings.edtrIo.image,
+        description: editorStrings.edtrIo.uploadImages,
         icon: createIcon(faImages),
       },
       {
         name: 'important',
-        title: i18n.t('edtr-io::Important Statement'),
-        description: i18n.t(
-          'edtr-io::A box to highlight important statements.'
-        ),
+        title: editorStrings.edtrIo.importantStatement,
+        description: editorStrings.edtrIo.aBoxToHighlightImportantStatements,
       },
       {
         name: 'injection',
-        title: i18n.t('edtr-io::serlo.org Content'),
-        description: i18n.t('edtr-io::Embed serlo.org content via their ID.'),
+        title: editorStrings.edtrIo.serloOrgContent,
+        description: editorStrings.edtrIo.embedSerloOrgContentViaTheirId,
         icon: createIcon(faNewspaper),
       },
       {
         name: 'multimedia',
-        title: i18n.t('edtr-io::Multimedia content associated with text'),
-        description: i18n.t(
-          'edtr-io::Create an illustrating or explaining multimedia content associated with text.'
-        ),
+        title: editorStrings.edtrIo.multimediaContentAssociatedWithText,
+        description:
+          editorStrings.edtrIo
+            .createAnIllustratingOrExplainingMultimediaContentAssociatedWithText,
         icon: createIcon(faPhotoVideo),
       },
       {
         name: 'spoiler',
-        title: i18n.t('edtr-io::Spoiler'),
-        description: i18n.t('edtr-io::A collapsible box.'),
+        title: editorStrings.edtrIo.spoiler,
+        description: editorStrings.edtrIo.aCollapsibleBox,
         icon: createIcon(faCaretSquareDown),
       },
       {
         name: 'table',
-        title: i18n.t('edtr-io::Table'),
-        description: i18n.t('edtr-io::Create tables using Markdown.'),
+        title: editorStrings.edtrIo.table,
+        description: editorStrings.edtrIo.createTablesUsingMarkdown,
       },
       {
         name: 'video',
-        title: i18n.t('edtr-io::Video'),
-        description: i18n.t(
-          'edtr-io::Embed YouTube, Vimeo, Wikimedia Commons or BR videos.'
-        ),
+        title: editorStrings.edtrIo.video,
+        description:
+          editorStrings.edtrIo.embedYouTubeVimeoWikimediaCommonsOrBrVideos,
         icon: createIcon(faFilm),
       },
       ...(isExercise
         ? [
             {
               name: 'separator',
-              title: i18n.t('edtr-io::Solution Separator'),
-              description: i18n.t(
-                'edtr-io::Divide the solution into individual steps.'
-              ),
+              title: editorStrings.edtrIo.solutionSeparator,
+              description:
+                editorStrings.edtrIo.divideTheSolutionIntoIndividualSteps,
             },
           ]
         : []),
@@ -285,9 +274,9 @@ function getStored() {
   return state[window.location.pathname]
 }
 
-export function storeState(state: LooseStateData) {
+export function storeState(state?: unknown) {
   const currentValue = localStorage.getItem('edtr')
-  const edtr = currentValue ? (JSON.parse(currentValue) as LooseEdtrData) : {}
+  const edtr = currentValue ? JSON.parse(currentValue) : {}
 
   edtr[window.location.pathname] = state
 
