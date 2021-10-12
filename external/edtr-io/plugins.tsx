@@ -24,7 +24,7 @@ import { createTextPlugin } from '@edtr-io/plugin-text'
 import { createAnchorPlugin } from '@edtr-io/plugin-anchor'
 import { createBlockquotePlugin } from '@edtr-io/plugin-blockquote'
 import { createGeogebraPlugin } from '@edtr-io/plugin-geogebra'
-import { createHighlightPlugin } from '@edtr-io/plugin-highlight'
+import { createHighlightPlugin } from './plugins/highlight'
 import {
   createInputExercisePlugin,
   InputExerciseType,

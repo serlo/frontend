@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import request, { gql } from 'graphql-request'
 import { GetServerSideProps } from 'next'
 
@@ -15,10 +16,10 @@ interface AddRevisionProps {
 
 export default renderedPageNoHooks<AddRevisionProps>(
   ({ id, content, title }) => (
-    <FrontendClientBase>
+    <FrontendClientBase noContainers>
       <div className="controls w-full" />
       <MathSpan formula="" />
-      <div className="edtr-io">
+      <div className={clsx('max-w-[816px] mx-auto mb-24 edtr-io')}>
         <Editor
           state={{
             id,
@@ -54,8 +55,8 @@ export default renderedPageNoHooks<AddRevisionProps>(
         .edtr-io {
           @apply text-lg leading-cozy;
         }
-        .edtr-io a {
-          @apply text-brand no-underline break-words hover:underline;
+        .edtr-io a[data-key] {
+          @apply text-brand no-underline break-words hover:underline special-hyphens-auto;
         }
         .edtr-io [data-slate-object='block'] {
           @apply mb-block;
