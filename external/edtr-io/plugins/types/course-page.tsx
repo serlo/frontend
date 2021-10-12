@@ -66,7 +66,7 @@ function CoursePageTypeEditor(
     if (!['explanation', 'play', 'question'].includes(icon.value)) {
       icon.set('explanation')
     }
-  }, [icon.value])
+  }, [icon])
   return (
     <article>
       {props.renderIntoToolbar(

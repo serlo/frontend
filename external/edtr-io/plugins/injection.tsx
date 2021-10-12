@@ -21,6 +21,7 @@
  */
 import { OverlayInput } from '@edtr-io/core'
 import { EditorInlineSettings, EditorInput, styled } from '@edtr-io/editor-ui'
+// eslint-disable-next-line import/no-internal-modules
 import { PreviewOverlay } from '@edtr-io/editor-ui/internal'
 import { EditorPluginProps, string, EditorPlugin } from '@edtr-io/plugin'
 import { Icon, faNewspaper } from '@edtr-io/ui'
@@ -31,6 +32,7 @@ import { Injection } from '@/components/content/injection'
 import { renderArticle } from '@/schema/article-renderer'
 
 /* global */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 declare const Common: {
   trigger: (type: string, context?: HTMLDivElement | null) => void
 }

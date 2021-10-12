@@ -19,6 +19,7 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  * @link      https://github.com/serlo-org/serlo.org for the canonical source repository
  */
+// eslint-disable-next-line import/no-internal-modules
 import { serializer, slateValueToHtml } from '@edtr-io/plugin-text/internal'
 import { Edtr } from '@serlo/legacy-editor-to-editor'
 import * as R from 'ramda'

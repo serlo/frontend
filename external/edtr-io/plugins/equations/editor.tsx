@@ -20,7 +20,9 @@
  * @link      https://github.com/serlo-org/serlo.org for the canonical source repository
  */
 import { HotKeys, useScopedSelector, useScopedStore } from '@edtr-io/core'
+// eslint-disable-next-line import/no-internal-modules
 import { PreferenceContext, setDefaultPreference } from '@edtr-io/core/beta'
+// eslint-disable-next-line import/no-internal-modules
 import { AddButton } from '@edtr-io/editor-ui/internal'
 import { MathEditor } from '@edtr-io/math'
 import { StateTypeReturnType, StringStateType } from '@edtr-io/plugin'
@@ -109,7 +111,7 @@ export function EquationsEditor(props: EquationsProps) {
       gridFocus.setFocus({ row: 0, column: 0 })
       store.dispatch(focus(props.id))
     }
-  }, [nestedFocus])
+  }, [nestedFocus,gridFocus,store, props.id])
 
   if (!nestedFocus) return <EquationsRenderer {...props} />
 

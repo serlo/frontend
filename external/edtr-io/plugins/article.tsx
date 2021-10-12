@@ -20,6 +20,7 @@
  * @link      https://github.com/serlo-org/serlo.org for the canonical source repository
  */
 import { PluginToolbarButton } from '@edtr-io/core'
+// eslint-disable-next-line import/no-internal-modules
 import { AddButton } from '@edtr-io/editor-ui/internal'
 import {
   child,
@@ -39,19 +40,21 @@ import {
   styled,
 } from '@edtr-io/ui'
 import { faNewspaper } from '@fortawesome/free-solid-svg-icons'
+// eslint-disable-next-line import/no-internal-modules
 import { faGraduationCap } from '@fortawesome/free-solid-svg-icons/faGraduationCap'
+// eslint-disable-next-line import/no-internal-modules
 import { faPlayCircle } from '@fortawesome/free-solid-svg-icons/faPlayCircle'
 import { useI18n } from '@serlo/i18n'
 import * as R from 'ramda'
 import * as React from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
-
 import { ThemeProvider } from 'styled-components'
+
 import { InlineInput } from './helpers/inline-input'
 import { InlineSettings } from './helpers/inline-settings'
+import { InlineSettingsInput } from './helpers/inline-settings-input'
 import { SemanticSection } from './helpers/semantic-section'
 
-import { InlineSettingsInput } from './helpers/inline-settings-input'
 
 
 const relatedContentItemState = object({ id: string(), title: string() })

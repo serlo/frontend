@@ -1,3 +1,4 @@
+/* eslint-disable import/no-internal-modules */
 /**
  * This file is part of Serlo.org.
  *

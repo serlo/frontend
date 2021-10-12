@@ -94,7 +94,7 @@ export function HoveringOverlay(props: {
     // if top becomes negative, place menu below
     setPositionAbove(props.position == 'above' && aboveValue >= 0)
     menu.style.top =
-      (positionAbove ? aboveValue : rect.bottom + 6) - parentRect.top + 'px'
+      `${(positionAbove ? aboveValue : rect.bottom + 6) - parentRect.top}px`
 
     menu.style.left = `${Math.min(
       Math.max(

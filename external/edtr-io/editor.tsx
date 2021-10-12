@@ -19,7 +19,9 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  * @link      https://github.com/serlo-org/serlo.org for the canonical source repository
  */
+// eslint-disable-next-line import/no-internal-modules
 import { Editor as Core } from '@edtr-io/core/beta'
+// eslint-disable-next-line import/no-internal-modules
 import { createDefaultDocumentEditor } from '@edtr-io/default-document-editor/beta'
 import { RowsConfig } from '@edtr-io/plugin-rows'
 import {
@@ -53,6 +55,16 @@ export interface EditorProps {
   type: string
 }
 
+// it's a start
+export interface LooseStateData {
+  plugin: string
+  state?: unknown
+}
+
+export interface LooseEdtrData {
+  [key: string]: LooseStateData | undefined
+}
+
 export const SaveContext = React.createContext<{
   onSave: EditorProps['onSave']
   mayCheckout: boolean
@@ -68,6 +80,7 @@ export function Editor(props: EditorProps) {
 
   let result = deserialize(props)
   const plugins = createPlugins({
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     getCsrfToken: props.getCsrfToken,
     registry: getRegistry(),
     i18n,
@@ -127,6 +140,7 @@ export function Editor(props: EditorProps) {
   }
 
   return (
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     <CsrfContext.Provider value={props.getCsrfToken}>
       <SaveContext.Provider
         value={{ onSave: props.onSave, mayCheckout: props.mayCheckout }}
@@ -263,17 +277,17 @@ export function Editor(props: EditorProps) {
   }
 }
 
-function getStored(): { plugin: string; state?: unknown } | undefined {
+function getStored() {
   const edtr = localStorage.getItem('edtr')
   if (!edtr) return
 
-  const state = JSON.parse(edtr)
+  const state = JSON.parse(edtr) as LooseEdtrData
   return state[window.location.pathname]
 }
 
-export function storeState(state: unknown) {
+export function storeState(state: LooseStateData) {
   const currentValue = localStorage.getItem('edtr')
-  const edtr = currentValue ? JSON.parse(currentValue) : {}
+  const edtr = currentValue ? (JSON.parse(currentValue) as LooseEdtrData) : {}
 
   edtr[window.location.pathname] = state
 

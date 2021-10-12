@@ -19,6 +19,7 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  * @link      https://github.com/serlo-org/serlo.org for the canonical source repository
  */
+// eslint-disable-next-line import/no-internal-modules
 import { AddButton } from '@edtr-io/editor-ui/internal'
 import { boolean, EditorPlugin, EditorPluginProps, list } from '@edtr-io/plugin'
 import { useI18n } from '@serlo/i18n'

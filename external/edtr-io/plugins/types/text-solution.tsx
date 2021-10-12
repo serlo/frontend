@@ -70,7 +70,7 @@ function TextSolutionTypeEditor(props: TextSolutionTypeProps) {
           : i18n.t('solution::Hide solution')}
       </>
     )
-  }, [])
+  }, [i18n])
 
   return (
     <>

@@ -21,6 +21,7 @@
  */
 import { PluginToolbarButton, useScopedStore } from '@edtr-io/core'
 import { styled } from '@edtr-io/editor-ui'
+// eslint-disable-next-line import/no-internal-modules
 import { AddButton } from '@edtr-io/editor-ui/internal'
 import {
   EditorPlugin,

@@ -1,3 +1,4 @@
+/* eslint-disable import/no-internal-modules */
 /**
  * This file is part of Serlo.org.
  *
@@ -61,7 +62,7 @@ export function RevisionHistory<T>(
     onSwitchRevision: (data: T) => void
   }>
 ) {
-  const [availableRevisions, setAvailableRevisions] = React.useState<
+  const [availableRevisions] = React.useState<
     RevisionData[]
   >([])
   const i18n = useI18n()
@@ -128,7 +129,7 @@ export function RevisionHistory<T>(
                       // don't select the current selected
                       if (selected) return
 
-                      fetch(
+                      void fetch(
                         `/entity/repository/get-revision-data/${props.id}/${revisionData.id}`
                       )
                         .then((response) => response.json())

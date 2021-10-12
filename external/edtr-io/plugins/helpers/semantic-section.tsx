@@ -19,8 +19,7 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  * @link      https://github.com/serlo-org/serlo.org for the canonical source repository
  */
-import { Icon, styled } from '@edtr-io/ui'
-import { FontAwesomeIconProps } from '@fortawesome/react-fontawesome'
+import { styled } from '@edtr-io/ui'
 import * as React from 'react'
 
 const Container = styled.div({
@@ -31,7 +30,8 @@ const Container = styled.div({
   position: 'relative',
 })
 
-const BackgroundIcon = styled.div({
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const _BackgroundIcon = styled.div({
   position: 'absolute',
   top: 0,
   right: 0,
