@@ -21,6 +21,7 @@
  */
 import * as React from 'react'
 import Plain from 'slate-plain-serializer'
+// @ts-expect-error missing types?
 import { Editor } from 'slate-react'
 
 export function InlineInput(props: {
