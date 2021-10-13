@@ -64,6 +64,7 @@ import { createPortal } from 'react-dom'
 import { CsrfContext } from '../../csrf-context'
 import { SaveContext, storeState } from '../../editor'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 
 export const licenseState = object({
   id: number(),
@@ -147,36 +148,34 @@ export function Controls(props: OwnProps) {
       {createPortal(
         <div className="btn-group btn-group-community">
           <button
-            className="btn btn-default"
+            className="serlo-button serlo-make-interactive-transparent-blue"
             onClick={() => {
               dispatch(undo())
             }}
             disabled={!undoable}
           >
-            <span className="fa fa-undo" />
+            UNDO
           </button>
           <button
-            className="btn btn-default"
+            className="serlo-button serlo-make-interactive-transparent-blue"
             onClick={() => {
               dispatch(redo())
             }}
             disabled={!redoable}
           >
-            <span className="fa fa-repeat" />
+            REPEAT
           </button>
           {renderSaveButton()}
         </div>,
         document.getElementsByClassName('controls')[0]
       )}
-      <BSModal
-        show={visible}
-        onHide={() => {
+      <ModalWithCloseButton
+        isOpen={visible}
+        onCloseClick={() => {
           setVisibility(false)
         }}
       >
-        <BSModal.Header closeButton>
-          <BSModal.Title>{editorStrings.edtrIo.save}</BSModal.Title>
-        </BSModal.Header>
+        <h1 className="serlo-h1">{editorStrings.edtrIo.save}</h1>
         <BSModal.Body>
           {renderAlert()}
           {renderChanges()}
@@ -185,25 +184,25 @@ export function Controls(props: OwnProps) {
           {renderCheckout()}
         </BSModal.Body>
         <BSModal.Footer>
-          <BSButton
+          <button
             onClick={() => {
               setVisibility(false)
             }}
           >
             {editorStrings.edtrIo.cancel}
-          </BSButton>
-          <BSButton
+          </button>
+          <button
             onClick={() => {
               handleSave()
             }}
-            bsStyle="success"
+            className="serlo-button serlo-make-interactive-green"
             disabled={!maySave() || pending}
             title={getSaveHint()}
           >
             {pending ? editorStrings.edtrIo.saving : editorStrings.edtrIo.save}
-          </BSButton>
+          </button>
         </BSModal.Footer>
-      </BSModal>
+      </ModalWithCloseButton>
     </>
   )
 
@@ -215,21 +214,22 @@ export function Controls(props: OwnProps) {
             setVisibility(true)
           },
           disabled: !hasPendingChanges,
-          children: <span className="fa fa-save" />,
+          children: <span>SAVE</span>,
         }
       : {
           onClick() {
             handleSave()
           },
           disabled: !hasPendingChanges || !maySave() || pending,
-          children: pending ? (
-            <span className="fa fa-spinner fa-spin" />
-          ) : (
-            <span className="fa fa-save" />
-          ),
+          children: pending ? <span>SAVE IN PROGRESS</span> : <span>SAVE</span>,
         }
 
-    return <button className="btn btn-success" {...buttonProps} />
+    return (
+      <button
+        className="serlo-button serlo-make-interactive-green"
+        {...buttonProps}
+      />
+    )
   }
 
   function licenseAccepted() {

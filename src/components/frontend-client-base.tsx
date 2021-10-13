@@ -1,5 +1,5 @@
 import { AuthorizationPayload } from '@serlo/authorization'
-//import Cookies from 'js-cookie'
+import Cookies from 'js-cookie'
 import { Router, useRouter } from 'next/router'
 import NProgress from 'nprogress'
 import { PropsWithChildren, useState, useEffect } from 'react'
@@ -26,6 +26,7 @@ export type FrontendClientBaseProps = PropsWithChildren<{
   showNav?: boolean
   entityId?: number
   authorization?: AuthorizationPayload
+  loadLoggedInData?: boolean
 }>
 
 Router.events.on('routeChangeStart', () => {
@@ -50,6 +51,7 @@ export function FrontendClientBase({
   showNav,
   entityId,
   authorization,
+  loadLoggedInData,
 }: FrontendClientBaseProps) {
   const { locale } = useRouter()
   const [instanceData] = useState<InstanceData>(() => {
@@ -93,6 +95,7 @@ export function FrontendClientBase({
     instanceData.lang,
     loggedInData,
     loggedInComponents,
+    loadLoggedInData,
   ])
 
   // dev
@@ -145,31 +148,30 @@ export function FrontendClientBase({
   }
 
   function fetchLoggedInData() {
-    // TODO: Only for testing
-    //const cookies = typeof window === 'undefined' ? {} : Cookies.get()
-    //if ( cookies['auth-token']) {
-    Promise.all([
-      !loggedInData
-        ? fetch(frontendOrigin + '/api/locale/' + instanceData.lang).then(
-            (res) => res.json()
-          )
-        : false,
-      !loggedInComponents ? import('@/helper/logged-in-stuff-chunk') : false,
-    ])
-      .then((values) => {
-        if (values[0]) {
-          sessionStorage.setItem(
-            `___loggedInData_${instanceData.lang}`,
-            JSON.stringify(values[0])
-          )
-          setLoggedInData(values[0])
-        }
-        if (values[1])
-          setLoggedInComponents(
-            (values[1] as { Components: LoggedInStuff }).Components
-          )
-      })
-      .catch(() => {})
-    //}
+    const cookies = typeof window === 'undefined' ? {} : Cookies.get()
+    if (cookies['auth-token'] || loadLoggedInData) {
+      Promise.all([
+        !loggedInData
+          ? fetch(frontendOrigin + '/api/locale/' + instanceData.lang).then(
+              (res) => res.json()
+            )
+          : false,
+        !loggedInComponents ? import('@/helper/logged-in-stuff-chunk') : false,
+      ])
+        .then((values) => {
+          if (values[0]) {
+            sessionStorage.setItem(
+              `___loggedInData_${instanceData.lang}`,
+              JSON.stringify(values[0])
+            )
+            setLoggedInData(values[0])
+          }
+          if (values[1])
+            setLoggedInComponents(
+              (values[1] as { Components: LoggedInStuff }).Components
+            )
+        })
+        .catch(() => {})
+    }
   }
 }

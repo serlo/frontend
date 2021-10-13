@@ -16,10 +16,10 @@ interface AddRevisionProps {
 
 export default renderedPageNoHooks<AddRevisionProps>(
   ({ id, content, title }) => (
-    <FrontendClientBase noContainers>
-      <div className="controls w-full" />
+    <FrontendClientBase noContainers loadLoggedInData>
       <MathSpan formula="" />
       <div className={clsx('max-w-[816px] mx-auto mb-24 edtr-io')}>
+        <div className="controls w-full h-12 items-center flex justify-around border" />
         <Editor
           state={{
             id,
