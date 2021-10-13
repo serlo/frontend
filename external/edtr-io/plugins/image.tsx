@@ -123,7 +123,7 @@ export function createReadFile(getCsrfToken: () => string) {
           body: formData,
         })
           .then((response) => response.json())
-          .then((data) => {
+          .then((data: { success: boolean; files: { location: string }[] }) => {
             if (!data['success']) reject()
             resolve({
               file,

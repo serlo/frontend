@@ -197,6 +197,8 @@ export function Controls(props: OwnProps) {
             }}
             className="serlo-button serlo-make-interactive-green"
             disabled={!maySave() || pending}
+            // TODO: fix eslint
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             title={getSaveHint()}
           >
             {pending ? editorStrings.edtrIo.saving : editorStrings.edtrIo.save}
@@ -243,12 +245,16 @@ export function Controls(props: OwnProps) {
   }
 
   function getSaveHint() {
+    // TODO: fix i18n
     if (maySave()) return undefined
     if (licenseAccepted() && !changesFilledIn()) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return editorStrings.edtrIo.missingChanges
     } else if (!licenseAccepted() && changesFilledIn()) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return editorStrings.edtrIo.missingLicenseTerms
     } else {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return editorStrings.edtrIo.missingChangesAndLicenseTerms
     }
   }
@@ -440,6 +446,8 @@ export function entityType<
           onChange((previousState, helpers) => {
             return R.mapObjIndexed((_value, key) => {
               if (key in ownTypes) {
+                // TODO: fix eslint
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-return
                 return ownTypes[key].deserialize(newValue[key], helpers)
               } else {
                 return previousState[key]
@@ -462,6 +470,8 @@ export function serialized<S extends StateType>(type: S) {
       serialized: string,
       helpers: Parameters<typeof type.deserialize>[1]
     ) {
+      // TODO: fix eslint
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return type.deserialize(JSON.parse(serialized), helpers)
     },
   }

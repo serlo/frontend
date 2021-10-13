@@ -27,6 +27,8 @@ import { Value } from 'slate'
 import { LooseEdtrData, LooseEdtrDataDefined } from './editor'
 
 export function cleanEdtrState(state: LooseEdtrData) {
+  // TODO: fix eslint
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return cleanJson(state)
 
   /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -41,7 +43,10 @@ export function cleanEdtrState(state: LooseEdtrData) {
             state: slateValueToHtml(slateValue),
           }
         }
+
+        // TODO: fix eslint
         // @ts-expect-error someone with more edtr-io experience should look at this :)
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         return cleanJson(value)
       }, jsonObj as LooseEdtrDataDefined)
     } else {

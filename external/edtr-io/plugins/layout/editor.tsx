@@ -171,6 +171,8 @@ export const LayoutRenderer: React.FunctionComponent<
           plugin: 'multimedia',
           state: {
             explanation,
+            // TODO: fix eslint
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
             multimedia: multimedia.state[0],
             illustrating: true,
             width: 50,
@@ -183,6 +185,8 @@ export const LayoutRenderer: React.FunctionComponent<
   function isMultimediaColumn(column: Column) {
     const columnDocument = serializeDocument(column.child.id)(store.getState())
     if (!columnDocument) return false
+    // TODO: fix eslint
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
     const children: string[] = columnDocument.state.map(
       (child: DocumentState) => child.plugin
     )
