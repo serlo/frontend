@@ -1,10 +1,16 @@
+import { LoadingSpinner } from '../loading/loading-spinner'
 import { Editor } from './editor'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export function SerloEditor({ state }: any) {
   const loggedInData = useLoggedInData()
 
-  if (!loggedInData) return <p>loading ...</p>
+  if (!loggedInData)
+    return (
+      <p className="text-center">
+        <LoadingSpinner />
+      </p>
+    )
 
   return (
     <Editor

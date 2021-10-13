@@ -1,4 +1,3 @@
-/* eslint-disable import/no-internal-modules */
 /**
  * This file is part of Serlo.org.
  *
@@ -56,18 +55,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 import * as R from 'ramda'
 import * as React from 'react'
-import BSAlert from 'react-bootstrap/lib/Alert'
-import BSButton from 'react-bootstrap/lib/Button'
-import BSControlLabel from 'react-bootstrap/lib/ControlLabel'
-import BSFormControl from 'react-bootstrap/lib/FormControl'
-import BSFormGroup from 'react-bootstrap/lib/FormGroup'
-import BSModal from 'react-bootstrap/lib/Modal'
 import { createPortal } from 'react-dom'
 
+import { SaveModal } from '../../components/save-modal'
 import { CsrfContext } from '../../csrf-context'
 import { SaveContext, storeState } from '../../editor'
-import { ModalWithCloseButton } from '@/components/modal-with-close-button'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export const licenseState = object({
   id: number(),
@@ -142,10 +134,6 @@ export function Controls(props: OwnProps) {
     window.onbeforeunload = hasPendingChanges && !pending ? () => '' : null
   }, [hasPendingChanges, pending])
 
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const editorStrings = loggedInData.strings.editor
-
   return (
     <>
       {createPortal(
@@ -160,40 +148,32 @@ export function Controls(props: OwnProps) {
         </>,
         document.getElementsByClassName('controls')[0]
       )}
-      <ModalWithCloseButton
-        isOpen={visible}
-        onCloseClick={() => {
-          setVisibility(false)
-        }}
-      >
-        <h1 className="serlo-h1">{editorStrings.edtrIo.save}</h1>
-        <BSModal.Body>
-          {renderAlert()}
-          {renderChanges()}
-          {renderLicense()}
-          {renderSubscription()}
-          {renderCheckout()}
-        </BSModal.Body>
-        <BSModal.Footer>
-          <button
-            onClick={() => {
-              setVisibility(false)
-            }}
-          >
-            {editorStrings.edtrIo.cancel}
-          </button>
-          <button
-            onClick={() => {
-              handleSave()
-            }}
-            className="serlo-button serlo-make-interactive-green"
-            disabled={!maySave() || pending}
-            title={getSaveHint()}
-          >
-            {pending ? editorStrings.edtrIo.saving : editorStrings.edtrIo.save}
-          </button>
-        </BSModal.Footer>
-      </ModalWithCloseButton>
+      {/* omg this needs some refactoring, but splitting seems like a good first step */}
+      <SaveModal
+        visible={visible}
+        setVisibility={setVisibility}
+        savedToLocalstorage={savedToLocalstorage}
+        maySave={maySave}
+        handleSave={handleSave}
+        pending={pending}
+        setHasError={setHasError}
+        licenseAccepted={licenseAccepted}
+        changesFilledIn={changesFilledIn}
+        setSavedToLocalstorage={setSavedToLocalstorage}
+        changes={props.changes}
+        hasError={hasError}
+        mayCheckout={mayCheckout}
+        autoCheckout={autoCheckout}
+        setAutoCheckout={setAutoCheckout}
+        license={props.license}
+        agreement={agreement}
+        setAgreement={setAgreement}
+        subscriptions={props.subscriptions}
+        setEmailSubscription={setEmailSubscription}
+        setNotificationSubscription={setNotificationSubscription}
+        emailSubscription={emailSubscription}
+        notificationSubscription={notificationSubscription}
+      />
     </>
   )
 
@@ -255,17 +235,6 @@ export function Controls(props: OwnProps) {
     return licenseAccepted() && changesFilledIn()
   }
 
-  function getSaveHint() {
-    if (maySave()) return undefined
-    if (licenseAccepted() && !changesFilledIn()) {
-      return editorStrings.edtrIo.missingChanges
-    } else if (!licenseAccepted() && changesFilledIn()) {
-      return editorStrings.edtrIo.missingLicenseTerms
-    } else {
-      return editorStrings.edtrIo.missingChangesAndLicenseTerms
-    }
-  }
-
   function handleSave() {
     if (!maySave()) return
     const serializedRoot = serializeRootDocument()(store.getState())
@@ -312,135 +281,6 @@ export function Controls(props: OwnProps) {
         setPending(false)
         setHasError(true)
       })
-  }
-
-  function renderAlert() {
-    if (!hasError) return null
-    return (
-      <>
-        <BSAlert
-          bsStyle="danger"
-          onDismiss={() => {
-            setHasError(false)
-          }}
-        >
-          {editorStrings.edtrIo.errorSaving}
-          <br />
-          {editorStrings.edtrIo.saveLocallyAndRefresh}
-        </BSAlert>
-        <BSModal.Footer>
-          <BSButton
-            bsStyle="success"
-            onClick={() => {
-              const serializedRoot = serializeRootDocument()(store.getState())
-              storeState(serializedRoot)
-              setSavedToLocalstorage(true)
-            }}
-          >
-            {savedToLocalstorage
-              ? editorStrings.edtrIo.revisionSaved
-              : editorStrings.edtrIo.saveRevision}
-          </BSButton>
-        </BSModal.Footer>
-      </>
-    )
-  }
-
-  function renderChanges() {
-    const { changes } = props
-    if (!changes) return null
-    return (
-      <BSFormGroup controlId="changes">
-        <BSControlLabel>{editorStrings.edtrIo.changes}</BSControlLabel>
-        <BSFormControl
-          componentClass="textarea"
-          value={changes.value}
-          onChange={(e) => {
-            const { value } = e.target as HTMLTextAreaElement
-            changes.set(value)
-          }}
-        />
-      </BSFormGroup>
-    )
-  }
-
-  function renderCheckout() {
-    if (!mayCheckout) return null
-    return (
-      <>
-        <input
-          type="checkbox"
-          checked={autoCheckout}
-          onChange={(e) => {
-            const { checked } = e.target as HTMLInputElement
-            setAutoCheckout(checked)
-          }}
-          id="edtr-checkout"
-        />{' '}
-        <label htmlFor="edtr-checkout">{editorStrings.edtrIo.skipReview}</label>
-      </>
-    )
-  }
-
-  function renderLicense() {
-    const { license } = props
-    if (!license) return null
-    return (
-      <>
-        <input
-          type="checkbox"
-          checked={agreement}
-          onChange={(e) => {
-            const { checked } = e.target as HTMLInputElement
-            setAgreement(checked)
-          }}
-          id="edtr-checkout-license"
-        />{' '}
-        <label htmlFor="edtr-checkout-license">
-          {' '}
-          <span dangerouslySetInnerHTML={{ __html: license.agreement.value }} />
-        </label>
-      </>
-    )
-  }
-
-  function renderSubscription() {
-    const { subscriptions } = props
-    if (!subscriptions) return null
-    return (
-      <>
-        <div>
-          <input
-            type="checkbox"
-            checked={notificationSubscription}
-            onChange={(e) => {
-              const { checked } = e.target as HTMLInputElement
-              setNotificationSubscription(checked)
-            }}
-            id="edtr-checkout-notif"
-          />{' '}
-          <label htmlFor="edtr-checkout-notif">
-            {' '}
-            {editorStrings.edtrIo.enableNotifs}
-          </label>
-        </div>
-        <div>
-          <input
-            type="checkbox"
-            checked={emailSubscription}
-            onChange={(e) => {
-              const { checked } = e.target as HTMLInputElement
-              setEmailSubscription(checked)
-            }}
-            id="edtr-checkout-notif-mail"
-          />{' '}
-          <label htmlFor="edtr-checkout-notif-mail">
-            {' '}
-            {editorStrings.edtrIo.enableNotifsMail}
-          </label>
-        </div>
-      </>
-    )
   }
 }
 
