@@ -50,6 +50,10 @@ import {
   getPendingChanges,
 } from '@edtr-io/store'
 import { Icon, faTrashAlt, styled } from '@edtr-io/ui'
+import { IconProp } from '@fortawesome/fontawesome-svg-core'
+import { faRedo, faSave, faUndo } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import * as R from 'ramda'
 import * as React from 'react'
 import BSAlert from 'react-bootstrap/lib/Alert'
@@ -146,25 +150,9 @@ export function Controls(props: OwnProps) {
   return (
     <>
       {createPortal(
-        <div className="btn-group btn-group-community">
-          <button
-            className="serlo-button serlo-make-interactive-transparent-blue"
-            onClick={() => {
-              dispatch(undo())
-            }}
-            disabled={!undoable}
-          >
-            UNDO
-          </button>
-          <button
-            className="serlo-button serlo-make-interactive-transparent-blue"
-            onClick={() => {
-              dispatch(redo())
-            }}
-            disabled={!redoable}
-          >
-            REPEAT
-          </button>
+        <div className="btn-group btn-group-community text-right w-full pr-2">
+          {renderUndoRedoButton('Undo', faUndo, undo, !undoable)}
+          {renderUndoRedoButton('Redo', faRedo, redo, !redoable)}
           {renderSaveButton()}
         </div>,
         document.getElementsByClassName('controls')[0]
@@ -197,8 +185,6 @@ export function Controls(props: OwnProps) {
             }}
             className="serlo-button serlo-make-interactive-green"
             disabled={!maySave() || pending}
-            // TODO: fix eslint
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             title={getSaveHint()}
           >
             {pending ? editorStrings.edtrIo.saving : editorStrings.edtrIo.save}
@@ -208,29 +194,46 @@ export function Controls(props: OwnProps) {
     </>
   )
 
+  function renderUndoRedoButton(
+    title: string,
+    icon: IconProp,
+    action: typeof undo | typeof redo,
+    disabled: boolean
+  ) {
+    return (
+      <button
+        className={clsx(
+          'serlo-button',
+          disabled
+            ? 'text-gray-300 cursor-default'
+            : 'serlo-make-interactive-light'
+        )}
+        onClick={() => {
+          dispatch(action())
+        }}
+        disabled={!undoable}
+        title={title}
+      >
+        <FontAwesomeIcon icon={icon} />
+      </button>
+    )
+  }
+
   function renderSaveButton() {
     const useOverlay = props.changes || props.license || props.subscriptions
-    const buttonProps = useOverlay
-      ? {
-          onClick() {
-            setVisibility(true)
-          },
-          disabled: !hasPendingChanges,
-          children: <span>SAVE</span>,
-        }
-      : {
-          onClick() {
-            handleSave()
-          },
-          disabled: !hasPendingChanges || !maySave() || pending,
-          children: pending ? <span>SAVE IN PROGRESS</span> : <span>SAVE</span>,
-        }
+    const action = useOverlay ? () => setVisibility(true) : () => handleSave()
+    const isDisabled = useOverlay
+      ? !hasPendingChanges
+      : !hasPendingChanges || !maySave() || pending
 
     return (
       <button
-        className="serlo-button serlo-make-interactive-green"
-        {...buttonProps}
-      />
+        className="serlo-button serlo-make-interactive-green ml-2"
+        onClick={action}
+        disabled={isDisabled}
+      >
+        <FontAwesomeIcon icon={faSave} title="Save" />
+      </button>
     )
   }
 
