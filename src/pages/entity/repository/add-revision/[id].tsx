@@ -19,6 +19,7 @@ export default renderedPageNoHooks<AddRevisionProps>((props) => (
   </FrontendClientBase>
 ))
 
+// @ts-expect-error not complete yet
 export const getServerSideProps: GetServerSideProps<AddRevisionProps> = async (
   context
 ) => {
