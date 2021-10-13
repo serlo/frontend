@@ -21,17 +21,19 @@
  */
 // eslint-disable-next-line import/no-internal-modules
 import { serializer, slateValueToHtml } from '@edtr-io/plugin-text/internal'
-import { Edtr } from '@serlo/legacy-editor-to-editor'
 import * as R from 'ramda'
 import { Value } from 'slate'
 
-export function cleanEdtrState(state: Edtr) {
+import { LooseEdtrData, LooseEdtrDataDefined } from './editor'
+
+export function cleanEdtrState(state: LooseEdtrData) {
   return cleanJson(state)
 
   /* eslint-disable @typescript-eslint/no-explicit-any */
-  function cleanJson(jsonObj: any): any {
-    if (jsonObj !== null && typeof jsonObj === 'object') {
-      return R.map((value: any) => {
+  function cleanJson(jsonObj: LooseEdtrData): any {
+    if (!jsonObj) return jsonObj
+    if (typeof jsonObj === 'object') {
+      return R.map((value) => {
         if (value.plugin === 'text' && value.state) {
           const slateValue = Value.fromJSON(serializer.deserialize(value.state))
           return {
@@ -39,8 +41,9 @@ export function cleanEdtrState(state: Edtr) {
             state: slateValueToHtml(slateValue),
           }
         }
+        // @ts-expect-error someone with more edtr-io experience should look at this :)
         return cleanJson(value)
-      }, jsonObj)
+      }, jsonObj as LooseEdtrDataDefined)
     } else {
       // jsonObj is a number or string
       return jsonObj

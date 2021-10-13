@@ -58,11 +58,15 @@ export interface EditorProps {
 // it's a start
 export interface LooseStateData {
   plugin: string
-  state?: unknown
+  state: any
 }
 
 export interface LooseEdtrData {
-  [key: string]: LooseStateData | undefined
+  [key: string]: LooseStateData | null | undefined
+}
+
+export interface LooseEdtrDataDefined {
+  [key: string]: LooseStateData
 }
 
 export const SaveContext = React.createContext<{
@@ -256,9 +260,9 @@ function getStored() {
   return state[window.location.pathname]
 }
 
-export function storeState(state?: unknown) {
+export function storeState(state?: LooseStateData | null) {
   const currentValue = localStorage.getItem('edtr')
-  const edtr = currentValue ? JSON.parse(currentValue) : {}
+  const edtr = currentValue ? (JSON.parse(currentValue) as LooseEdtrData) : {}
 
   edtr[window.location.pathname] = state
 

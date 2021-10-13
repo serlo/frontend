@@ -166,7 +166,7 @@ export function EquationsEditor(props: EquationsProps) {
           }}
         >
           <Droppable droppableId="default">
-            {(provided: any) => {
+            {(provided) => {
               return (
                 <Table ref={provided.innerRef} {...provided.droppableProps}>
                   {renderFirstExplanation()}
@@ -177,7 +177,7 @@ export function EquationsEditor(props: EquationsProps) {
                         draggableId={step.explanation.id}
                         index={row}
                       >
-                        {(provided: any) => {
+                        {(provided) => {
                           return (
                             <tbody
                               ref={provided.innerRef}

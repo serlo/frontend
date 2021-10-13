@@ -29,7 +29,7 @@ export function HighlightRenderer(props: HighlightRendererProps) {
     <SyntaxHighlighter
       language={props.language}
       showLineNumbers={props.showLineNumbers}
-      style={style}
+      style={style as unknown}
       customStyle={{
         overflow: 'auto',
       }}

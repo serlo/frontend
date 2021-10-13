@@ -63,8 +63,8 @@ import { createPortal } from 'react-dom'
 
 import { CsrfContext } from '../../csrf-context'
 import { SaveContext, storeState } from '../../editor'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export const licenseState = object({
   id: number(),
@@ -256,6 +256,7 @@ export function Controls(props: OwnProps) {
   function handleSave() {
     if (!maySave()) return
     const serializedRoot = serializeRootDocument()(store.getState())
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const serialized = R.has('state', serializedRoot)
       ? serializedRoot.state
       : null

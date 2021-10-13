@@ -800,18 +800,18 @@ function serializeEditorState(content: Legacy): SerializedLegacyEditorState
 function serializeEditorState(content: EditorState): SerializedEditorState
 function serializeEditorState(
   content: EditorState
-): SerializedEditorState | SerializedLegacyEditorState {
+): SerializedEditorState | SerializedLegacyEditorState | string | undefined {
   if (typeof content === 'string') return content as SerializedLegacyEditorState
-  return content ? (JSON.stringify(content) as any) : undefined
+  return content ? JSON.stringify(content) : undefined
 }
 
 function deserializeEditorState(content: SerializedLegacyEditorState): Legacy
 function deserializeEditorState(content: SerializedEditorState): EditorState
 function deserializeEditorState(
   content: SerializedLegacyEditorState | SerializedEditorState
-): EditorState {
+): EditorState | string | undefined {
   try {
-    return content ? JSON.parse(content) : undefined
+    return content ? (JSON.parse(content) as EditorState) : undefined
   } catch {
     // No valid JSON, so this is interpreted as Markdown
     return content as Legacy

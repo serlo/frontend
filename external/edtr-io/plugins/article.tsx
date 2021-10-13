@@ -202,7 +202,7 @@ function ArticleEditor(props: ArticleProps) {
           }}
         >
           <Droppable droppableId="default">
-            {(provided: any) => {
+            {(provided) => {
               return (
                 <div ref={provided.innerRef} {...provided.droppableProps}>
                   {exercises.map((exercise, index) => {
@@ -212,7 +212,7 @@ function ArticleEditor(props: ArticleProps) {
                         draggableId={exercise.id}
                         index={index}
                       >
-                        {(provided: any) => {
+                        {(provided) => {
                           return (
                             <div
                               ref={provided.innerRef}
@@ -224,7 +224,7 @@ function ArticleEditor(props: ArticleProps) {
                                     <>
                                       <div>
                                         <BasePluginToolbarButton
-                                          icon={<Icon icon={faTrashAlt} />}
+                                          // icon={<Icon icon={faTrashAlt} />}
                                           title={
                                             editorStrings.article
                                               .dragTheExercise
@@ -432,7 +432,7 @@ function ArticleEditor(props: ArticleProps) {
           }}
         >
           <Droppable droppableId="default">
-            {(provided: any) => {
+            {(provided) => {
               return (
                 <div ref={provided.innerRef} {...provided.droppableProps}>
                   {relatedContent[type.section].map((item, index) => {
@@ -442,7 +442,7 @@ function ArticleEditor(props: ArticleProps) {
                         draggableId={`${type.section}-${index}`}
                         index={index}
                       >
-                        {(provided: any) => {
+                        {(provided) => {
                           return (
                             <div
                               ref={provided.innerRef}
@@ -522,7 +522,7 @@ function ArticleEditor(props: ArticleProps) {
                                 </div>
                                 <div>
                                   <BasePluginToolbarButton
-                                    icon={<Icon icon={faTrashAlt} />}
+                                    // icon={<Icon icon={faTrashAlt} />}
                                     title={
                                       editorStrings.article.dragTheExercise
                                     }
@@ -601,7 +601,7 @@ function ArticleEditor(props: ArticleProps) {
             }}
           >
             <Droppable droppableId="default">
-              {(provided: any) => {
+              {(provided) => {
                 return (
                   <ul ref={provided.innerRef} {...provided.droppableProps}>
                     {sources.map((source, index) => {
@@ -611,7 +611,7 @@ function ArticleEditor(props: ArticleProps) {
                           draggableId={`${index}`}
                           index={index}
                         >
-                          {(provided: any) => {
+                          {(provided) => {
                             return (
                               <li
                                 ref={provided.innerRef}
@@ -683,7 +683,7 @@ function ArticleEditor(props: ArticleProps) {
                                   </div>
                                   <div>
                                     <BasePluginToolbarButton
-                                      icon={<Icon icon={faTrashAlt} />}
+                                      // icon={<Icon icon={faTrashAlt} />}
                                       title={
                                         editorStrings.article.dragTheSource
                                       }
