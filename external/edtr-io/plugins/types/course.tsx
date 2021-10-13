@@ -73,7 +73,7 @@ function CourseTypeEditor(props: EditorPluginProps<typeof courseTypeState>) {
       {props.renderIntoSettings(
         <Settings>
           <Settings.Textarea
-            label={editorStrings.course.descriptionForSearchEngines}
+            label={editorStrings.course.seoDesc}
             state={meta_description}
           />
         </Settings>

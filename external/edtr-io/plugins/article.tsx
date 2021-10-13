@@ -162,11 +162,7 @@ function ArticleEditor(props: ArticleProps) {
 
   function renderExercises() {
     const header = <h2>{editorStrings.article.exercises}</h2>
-    const folderHeader = (
-      <p>
-        {editorStrings.article.youCanFindMoreExercisesInTheFollowingFolder}:
-      </p>
-    )
+    const folderHeader = <p>{editorStrings.article.moreInFolder}:</p>
 
     if (!editable) {
       if (exercises.length === 0 || !exerciseFolder.id.value) return null
@@ -291,7 +287,7 @@ function ArticleEditor(props: ArticleProps) {
                   ? `/${exerciseFolder.id.value}`
                   : ''
               }
-              placeholder={editorStrings.article.idOfAnExerciseFolderEG_30560}
+              placeholder={editorStrings.article.exFolderId}
               onChange={(event) => {
                 const newValue = event.target.value.replace(/[^0-9]/g, '')
                 exerciseFolder.id.set(newValue)
@@ -306,9 +302,7 @@ function ArticleEditor(props: ArticleProps) {
               }
               rel="noopener noreferrer"
             >
-              <OpenInNewTab
-                title={editorStrings.article.openTheCourseInANewTab}
-              >
+              <OpenInNewTab title={editorStrings.article.openCourseTab}>
                 <Icon icon={faExternalLinkAlt} />
               </OpenInNewTab>
             </a>
@@ -325,7 +319,7 @@ function ArticleEditor(props: ArticleProps) {
             onChange={(value) => {
               exerciseFolder.title.set(value)
             }}
-            placeholder={editorStrings.article.titleOfTheLink}
+            placeholder={editorStrings.article.linkTitle}
           />
         </a>
       </>
@@ -336,7 +330,7 @@ function ArticleEditor(props: ArticleProps) {
     const header = (
       <>
         <h2>{editorStrings.article.stillWantMore}</h2>
-        <p>{editorStrings.article.youCanFindMoreContentOnThisTopicHere}:</p>
+        <p>{editorStrings.article.moreOnTopic}:</p>
       </>
     )
 
@@ -354,9 +348,8 @@ function ArticleEditor(props: ArticleProps) {
         section: 'articles',
         label: editorStrings.article.articles,
         addLabel: editorStrings.article.addArticle,
-        idPlaceholder: editorStrings.article.idOfAnArticleEG_1855,
-        openLinkInNewTabPlaceholder:
-          editorStrings.article.openTheArticleInANewTab,
+        idPlaceholder: editorStrings.article.idArticle,
+        openLinkInNewTabPlaceholder: editorStrings.article.openArticleTab,
         dragLabel: editorStrings.article.dragTheArticle,
       },
       {
@@ -364,9 +357,8 @@ function ArticleEditor(props: ArticleProps) {
         section: 'courses',
         label: editorStrings.article.courses,
         addLabel: editorStrings.article.addCourse,
-        idPlaceholder: editorStrings.article.idOfACourseEG_51979,
-        openLinkInNewTabPlaceholder:
-          editorStrings.article.openTheArticleInANewTab,
+        idPlaceholder: editorStrings.article.idCourse,
+        openLinkInNewTabPlaceholder: editorStrings.article.openArticleTab,
         dragLabel: editorStrings.article.dragTheCourse,
       },
       {
@@ -374,9 +366,8 @@ function ArticleEditor(props: ArticleProps) {
         section: 'videos',
         label: editorStrings.article.videos,
         addLabel: editorStrings.article.addVideo,
-        idPlaceholder: editorStrings.article.idOfAVideoEG_40744,
-        openLinkInNewTabPlaceholder:
-          editorStrings.article.openTheVideoInANewTab,
+        idPlaceholder: editorStrings.article.idVideo,
+        openLinkInNewTabPlaceholder: editorStrings.article.openVideoTab,
         dragLabel: editorStrings.article.dragTheVideo,
       },
     ]
@@ -524,7 +515,7 @@ function ArticleEditor(props: ArticleProps) {
                                         item.title.set(value)
                                       }}
                                       placeholder={
-                                        editorStrings.article.titleOfTheLink
+                                        editorStrings.article.linkTitle
                                       }
                                     />
                                   </a>
@@ -647,7 +638,7 @@ function ArticleEditor(props: ArticleProps) {
                                           <InlineSettingsInput
                                             value={source.href.value}
                                             placeholder={
-                                              editorStrings.article.urlOfTheLink
+                                              editorStrings.article.linkUrl
                                             }
                                             onChange={(event) => {
                                               source.href.set(
@@ -663,7 +654,7 @@ function ArticleEditor(props: ArticleProps) {
                                             <OpenInNewTab
                                               title={
                                                 editorStrings.article
-                                                  .openTheLinkInANewTab
+                                                  .openInNewTab
                                               }
                                             >
                                               <Icon icon={faExternalLinkAlt} />
@@ -684,7 +675,7 @@ function ArticleEditor(props: ArticleProps) {
                                             source.title.set(value)
                                           }}
                                           placeholder={
-                                            editorStrings.article.titleOfTheLink
+                                            editorStrings.article.linkTitle
                                           }
                                         />
                                       </a>

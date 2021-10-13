@@ -71,11 +71,11 @@ function AppletTypeEditor(props: EditorPluginProps<typeof appletTypeState>) {
         {props.renderIntoSettings(
           <Settings>
             <Settings.Textarea
-              label={editorStrings.applet.titleForSearchEngines}
+              label={editorStrings.applet.seoTitle}
               state={meta_title}
             />
             <Settings.Textarea
-              label={editorStrings.applet.descriptionForSearchEngines}
+              label={editorStrings.applet.seoDesc}
               state={meta_description}
             />
           </Settings>

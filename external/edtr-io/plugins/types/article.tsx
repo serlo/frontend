@@ -70,11 +70,11 @@ function ArticleTypeEditor(props: EditorPluginProps<typeof articleTypeState>) {
         {props.renderIntoSettings(
           <Settings>
             <Settings.Textarea
-              label={editorStrings.article.titleForSearchEngines}
+              label={editorStrings.article.seoTitle}
               state={meta_title}
             />
             <Settings.Textarea
-              label={editorStrings.article.descriptionForSearchEngines}
+              label={editorStrings.article.seoDesc}
               state={meta_description}
             />
           </Settings>

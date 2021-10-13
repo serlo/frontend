@@ -106,30 +106,21 @@ export function Editor(props: EditorProps) {
       case 'type-unsupported':
         return (
           <div className="alert alert-danger" role="alert">
-            {editorStrings.edtrIo.thisContentTypeIsnTSupportedByTheNewEditorYet}{' '}
-            <a href={legacyUrl}>
-              {editorStrings.edtrIo.editTheContentInTheOldEditor}
-            </a>
+            {editorStrings.edtrIo.notSupportedYet}{' '}
+            <a href={legacyUrl}>{editorStrings.edtrIo.editInOld}</a>
           </div>
         )
       case 'failure':
         return (
           <div className="alert alert-danger" role="alert">
-            {editorStrings.edtrIo.anErrorOccurredDuringTheConversion}{' '}
-            <a href={legacyUrl}>
-              {editorStrings.edtrIo.editTheContentInTheOldEditor}
-            </a>
+            {editorStrings.edtrIo.conversionError}{' '}
+            <a href={legacyUrl}>{editorStrings.edtrIo.editInOld}</a>
           </div>
         )
     }
   }
   const stored = getStored()
-  if (
-    stored &&
-    confirm(
-      editorStrings.edtrIo.weFoundAnOldRevisionCreatedByYouDoYouWantToRestoreIt
-    )
-  ) {
+  if (stored && confirm(editorStrings.edtrIo.oldRevisionFound)) {
     result = {
       success: true,
       initialState: stored,
@@ -145,10 +136,8 @@ export function Editor(props: EditorProps) {
       >
         {result.converted ? (
           <div className="alert alert-warning" role="alert">
-            {editorStrings.edtrIo.thisEntityHasnTBeenConvertedToTheNewEditorYet}{' '}
-            <a href={legacyUrl}>
-              {editorStrings.edtrIo.editTheContentInTheOldEditor}
-            </a>
+            {editorStrings.edtrIo.notConverted}{' '}
+            <a href={legacyUrl}>{editorStrings.edtrIo.editInOld}</a>
           </div>
         ) : null}
         <Core
@@ -174,82 +163,76 @@ export function Editor(props: EditorProps) {
       {
         name: 'text',
         title: editorStrings.edtrIo.text,
-        description:
-          editorStrings.edtrIo.composeContentUsingRichTextAndMathFormulas,
+        description: editorStrings.edtrIo.textDesc,
         icon: createIcon(faParagraph),
       },
       {
         name: 'blockquote',
-        title: editorStrings.edtrIo.quotation,
-        description: editorStrings.edtrIo.createIndentedTextForQuotations,
+        title: editorStrings.edtrIo.blockquoteTitle,
+        description: editorStrings.edtrIo.quoteDescription,
         icon: createIcon(faQuoteRight),
       },
       {
         name: 'geogebra',
-        title: editorStrings.edtrIo.geoGebraApplet,
-        description:
-          editorStrings.edtrIo.embedGeoGebraMaterialsAppletsViaUrlOrId,
+        title: editorStrings.edtrIo.geogebraTitle,
+        description: editorStrings.edtrIo.geogebraDesc,
         icon: createIcon(faCubes),
       },
       {
         name: 'highlight',
-        title: editorStrings.edtrIo.sourceCode,
-        description: editorStrings.edtrIo.highlightTheSyntaxOfSourceCode,
+        title: editorStrings.edtrIo.highlightTitle,
+        description: editorStrings.edtrIo.highlightDesc,
         icon: createIcon(faCode),
       },
       {
         name: 'anchor',
         title: editorStrings.edtrIo.anchor,
-        description: editorStrings.edtrIo.insertAnAnchor,
+        description: editorStrings.edtrIo.anchorDesc,
         icon: createIcon(faAnchor),
       },
       {
         name: 'equations',
-        title: editorStrings.edtrIo.termsAndEquations,
-        description:
-          editorStrings.edtrIo.writeTermManipulationsAndSolveMultilineEquations,
+        title: editorStrings.edtrIo.equationsTitle,
+        description: editorStrings.edtrIo.equationsDesc,
       },
       {
         name: 'image',
         title: editorStrings.edtrIo.image,
-        description: editorStrings.edtrIo.uploadImages,
+        description: editorStrings.edtrIo.imageDesc,
         icon: createIcon(faImages),
       },
       {
         name: 'important',
-        title: editorStrings.edtrIo.importantStatement,
-        description: editorStrings.edtrIo.aBoxToHighlightImportantStatements,
+        title: editorStrings.edtrIo.importantTitle,
+        description: editorStrings.edtrIo.importantDesc,
       },
       {
         name: 'injection',
-        title: editorStrings.edtrIo.serloOrgContent,
-        description: editorStrings.edtrIo.embedSerloOrgContentViaTheirId,
+        title: editorStrings.edtrIo.injectionTitle,
+        description: editorStrings.edtrIo.injectionDesc,
         icon: createIcon(faNewspaper),
       },
       {
         name: 'multimedia',
-        title: editorStrings.edtrIo.multimediaContentAssociatedWithText,
-        description:
-          editorStrings.edtrIo
-            .createAnIllustratingOrExplainingMultimediaContentAssociatedWithText,
+        title: editorStrings.edtrIo.multimediaTitle,
+        description: editorStrings.edtrIo.multimediaDesc,
         icon: createIcon(faPhotoVideo),
       },
       {
         name: 'spoiler',
         title: editorStrings.edtrIo.spoiler,
-        description: editorStrings.edtrIo.aCollapsibleBox,
+        description: editorStrings.edtrIo.spoilerDesc,
         icon: createIcon(faCaretSquareDown),
       },
       {
         name: 'table',
         title: editorStrings.edtrIo.table,
-        description: editorStrings.edtrIo.createTablesUsingMarkdown,
+        description: editorStrings.edtrIo.tableDesc,
       },
       {
         name: 'video',
         title: editorStrings.edtrIo.video,
-        description:
-          editorStrings.edtrIo.embedYouTubeVimeoWikimediaCommonsOrBrVideos,
+        description: editorStrings.edtrIo.videoDesc,
         icon: createIcon(faFilm),
       },
       ...(isExercise
@@ -257,8 +240,7 @@ export function Editor(props: EditorProps) {
             {
               name: 'separator',
               title: editorStrings.edtrIo.solutionSeparator,
-              description:
-                editorStrings.edtrIo.divideTheSolutionIntoIndividualSteps,
+              description: editorStrings.edtrIo.solutionSeparatorDesc,
             },
           ]
         : []),

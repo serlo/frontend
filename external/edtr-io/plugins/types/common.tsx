@@ -245,12 +245,11 @@ export function Controls(props: OwnProps) {
   function getSaveHint() {
     if (maySave()) return undefined
     if (licenseAccepted() && !changesFilledIn()) {
-      return editorStrings.edtrIo.youNeedToFillOutTheChangesYouMade
+      return editorStrings.edtrIo.missingChanges
     } else if (!licenseAccepted() && changesFilledIn()) {
-      return editorStrings.edtrIo.youNeedToAcceptTheLicenseTerms
+      return editorStrings.edtrIo.missingLicenseTerms
     } else {
-      return editorStrings.edtrIo
-        .youNeedToFillOutTheChangesYouMadeAndAcceptTheLicenseTerms
+      return editorStrings.edtrIo.missingChangesAndLicenseTerms
     }
   }
 
@@ -311,12 +310,9 @@ export function Controls(props: OwnProps) {
             setHasError(false)
           }}
         >
-          {editorStrings.edtrIo.anErrorOccurredDuringSaving}
+          {editorStrings.edtrIo.errorSaving}
           <br />
-          {
-            editorStrings.edtrIo
-              .youCanStoreTheRevisionLocallyRefreshThePageAndTryToSaveAgain
-          }
+          {editorStrings.edtrIo.saveLocallyAndRefresh}
         </BSAlert>
         <BSModal.Footer>
           <BSButton
@@ -364,7 +360,7 @@ export function Controls(props: OwnProps) {
           setAutoCheckout(checked)
         }}
       >
-        {editorStrings.edtrIo.skipPeerReviewNotRecommended}
+        {editorStrings.edtrIo.skipReview}
       </BSCheckbox>
     )
   }
@@ -397,7 +393,7 @@ export function Controls(props: OwnProps) {
             setNotificationSubscription(checked)
           }}
         >
-          {editorStrings.edtrIo.enableSerloOrgNotifications}
+          {editorStrings.edtrIo.enableNotifs}
         </BSCheckbox>
         <BSCheckbox
           checked={emailSubscription}
@@ -406,7 +402,7 @@ export function Controls(props: OwnProps) {
             setEmailSubscription(checked)
           }}
         >
-          {editorStrings.edtrIo.enableNotificationsViaEMail}
+          {editorStrings.edtrIo.enableNotifsMail}
         </BSCheckbox>
       </>
     )

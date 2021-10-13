@@ -68,11 +68,11 @@ function EventTypeEditor(props: EditorPluginProps<typeof eventTypeState>) {
         {props.renderIntoSettings(
           <Settings>
             <Settings.Textarea
-              label={editorStrings.event.titleForSearchEngines}
+              label={editorStrings.event.seoTitle}
               state={meta_title}
             />
             <Settings.Textarea
-              label={editorStrings.event.descriptionForSearchEngines}
+              label={editorStrings.event.seoDesc}
               state={meta_description}
             />
           </Settings>

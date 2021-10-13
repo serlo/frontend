@@ -89,7 +89,7 @@ export function RevisionHistory<T>(
       >
         <PluginToolbarButton
           icon={<Icon icon={faHistory} size="lg" />}
-          label={editorStrings.edtrIo.switchToAnotherRevision}
+          label={editorStrings.edtrIo.switchRevision}
         />
       </span>
       <BSModal
@@ -100,9 +100,7 @@ export function RevisionHistory<T>(
         bsSize="lg"
       >
         <BSModal.Header closeButton>
-          <BSModal.Title>
-            {editorStrings.edtrIo.switchToAnotherRevision}
-          </BSModal.Title>
+          <BSModal.Title>{editorStrings.edtrIo.switchRevision}</BSModal.Title>
         </BSModal.Header>
         <BSModal.Body>
           <BSTable striped hover>

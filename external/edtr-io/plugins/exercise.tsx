@@ -197,7 +197,7 @@ function ExerciseEditor({ editable, state }: ExerciseProps) {
       return (
         <>
           <p>
-            <em>{editorStrings.exercise.addAnOptionalInteractiveExercise}</em>
+            <em>{editorStrings.exercise.addOptionalInteractiveEx}</em>
           </p>
           <ButtonContainer>
             {interactivePlugins.map((plugin) => {

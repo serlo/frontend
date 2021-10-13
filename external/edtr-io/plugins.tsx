@@ -94,7 +94,7 @@ export function createPlugins({
     anchor: createAnchorPlugin({
       i18n: {
         label: editorStrings.anchor.identifier,
-        placeholder: editorStrings.anchor.idOfTheAnchor,
+        placeholder: editorStrings.anchor.anchorId,
       },
     }),
     article: articlePlugin,
@@ -102,7 +102,7 @@ export function createPlugins({
       explanation: {
         plugin: 'text',
         config: {
-          placeholder: editorStrings.article.writeAShortIntroduction,
+          placeholder: editorStrings.article.writeShortIntro,
         },
       },
       plugins: [
@@ -112,12 +112,12 @@ export function createPlugins({
         },
       ],
       i18n: {
-        changeMultimediaType: editorStrings.multimedia.changeTheMultimediaType,
+        changeMultimediaType: editorStrings.multimedia.changeType,
         illustrating: {
-          label: editorStrings.multimedia.howImportantIsTheMultimediaContent,
+          label: editorStrings.multimedia.howImportant,
           values: {
-            illustrating: editorStrings.multimedia.itIsIllustrating,
-            explaining: editorStrings.multimedia.itIsEssential,
+            illustrating: editorStrings.multimedia.isIllustrating,
+            explaining: editorStrings.multimedia.isEssential,
           },
         },
       },
@@ -133,14 +133,14 @@ export function createPlugins({
     exercise: exercisePlugin,
     geogebra: createGeogebraPlugin({
       i18n: {
-        label: editorStrings.geogebra.geoGebraUrlOrId,
+        label: editorStrings.geogebra.urlOrId,
       },
     }),
     highlight: createHighlightPlugin({
       i18n: {
         code: {
-          label: editorStrings.highlight.clickHereAndEnterYourSourceCode,
-          placeholder: editorStrings.highlight.enterYourSourceCodeHere,
+          label: editorStrings.highlight.clickAndEnter,
+          placeholder: editorStrings.highlight.enterHere,
         },
         language: {
           label: editorStrings.highlight.language,
@@ -163,13 +163,12 @@ export function createPlugins({
           [InputExerciseType.InputStringNormalizedMatchChallenge]:
             editorStrings.inputExercise.text,
           [InputExerciseType.InputNumberExactMatchChallenge]:
-            editorStrings.inputExercise.numberExactSolution,
+            editorStrings.inputExercise.number,
           [InputExerciseType.InputExpressionEqualMatchChallenge]:
-            editorStrings.inputExercise
-              .mathematicalExpressionEquivalentSolution,
+            editorStrings.inputExercise.mathematicalExpressionSolution,
         },
         type: {
-          label: editorStrings.inputExercise.chooseTheExerciseType,
+          label: editorStrings.inputExercise.chooseType,
         },
         unit: {
           label: editorStrings.inputExercise.unit,
@@ -201,16 +200,16 @@ export function createPlugins({
         },
         {
           name: 'geogebra',
-          title: editorStrings.multimedia.geoGebraApplet,
+          title: editorStrings.multimedia.geogebraTitle,
         },
       ],
       i18n: {
-        changeMultimediaType: editorStrings.multimedia.changeTheMultimediaType,
+        changeMultimediaType: editorStrings.multimedia.changeType,
         illustrating: {
-          label: editorStrings.multimedia.howImportantIsTheMultimediaContent,
+          label: editorStrings.multimedia.howImportant,
           values: {
-            illustrating: editorStrings.multimedia.itIsIllustrating,
-            explaining: editorStrings.multimedia.itIsEssential,
+            illustrating: editorStrings.multimedia.isIllustrating,
+            explaining: editorStrings.multimedia.isEssential,
           },
         },
       },
@@ -228,7 +227,7 @@ export function createPlugins({
           closeLabel: editorStrings.rows.close,
         },
         toolbar: {
-          dragLabel: editorStrings.rows.dragTheElementWithinTheDocument,
+          dragLabel: editorStrings.rows.dragElement,
         },
         addLabel: editorStrings.rows.addAnElement,
       },
@@ -242,7 +241,7 @@ export function createPlugins({
           multipleChoice: editorStrings.scMcExercise.multipleChoice,
         },
         isSingleChoice: {
-          label: editorStrings.scMcExercise.chooseTheExerciseType,
+          label: editorStrings.scMcExercise.chooseType,
         },
         answer: {
           addLabel: editorStrings.scMcExercise.addAnswer,
@@ -251,8 +250,7 @@ export function createPlugins({
           },
         },
         globalFeedback: {
-          missingCorrectAnswers:
-            editorStrings.scMcExercise.almostYouMissedAtLeastOneCorrectAnswer,
+          missingCorrectAnswers: editorStrings.scMcExercise.missedSome,
           correct: editorStrings.scMcExercise.correct,
           wrong: editorStrings.scMcExercise.wrong,
         },
@@ -301,14 +299,13 @@ export function createPlugins({
           closeMenuTitle: editorStrings.text.closeSubMenu,
         },
         math: {
-          toggleTitle: editorStrings.text.mathFormulaStrgM,
+          toggleTitle: editorStrings.text.mathFormula,
           displayBlockLabel: editorStrings.text.displayAsBlock,
           placeholder: editorStrings.text.formula,
           editors: {
             visual: editorStrings.text.visual,
             latex: editorStrings.text.laTeX,
-            noVisualEditorAvailableMessage:
-              editorStrings.text.onlyLaTeXEditorAvailable,
+            noVisualEditorAvailableMessage: editorStrings.text.onlyLaTeX,
           },
           helpText(
             KeySpan: React.ComponentType<{ children: React.ReactNode }>
@@ -354,8 +351,8 @@ export function createPlugins({
           },
         },
         richText: {
-          toggleStrongTitle: editorStrings.text.boldStrgB,
-          toggleEmphasizeTitle: editorStrings.text.italicStrgI,
+          toggleStrongTitle: editorStrings.text.bold,
+          toggleEmphasizeTitle: editorStrings.text.italic,
         },
         suggestions: {
           noResultsMessage: editorStrings.text.noItemsFound,

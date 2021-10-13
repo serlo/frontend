@@ -449,7 +449,7 @@ export const loggedInData = {
       edit: 'Überarbeiten',
       unrevisedEdit: 'Zeige neue Bearbeitungen',
       organize: 'Baumstruktur bearbeiten',
-      moveToGroupedTextExercise: 'Inhalt zu anderer Gruppe verschieben',
+      moveToGrouped: 'Inhalt zu anderer Gruppe verschieben',
       moveToTextExercise: 'Inhalt zu anderer Textaufgabe verschieben',
       sortEntities: 'Inhalt sortieren',
       newEntity: 'Neuer Inhalt',
@@ -491,91 +491,91 @@ export const loggedInData = {
       edtrIo: {
         extendedSettings: 'Erweiterte Einstellungen',
         close: 'Schließen',
-        thisContentTypeIsnTSupportedByTheNewEditorYet:
+        notSupportedYet:
           'Dieser Inhaltstyp wird vom neuen Editor noch nicht unterstützt.',
-        editTheContentInTheOldEditor: 'Bearbeite den Inhalt im alten Editor.',
-        anErrorOccurredDuringTheConversion:
+        editInOld: 'Bearbeite den Inhalt im alten Editor.',
+        conversionError:
           'Leider trat ein Fehler bei der Konvertierung auf.',
-        weFoundAnOldRevisionCreatedByYouDoYouWantToRestoreIt:
+        oldRevisionFound:
           'Wir haben eine alte Bearbeitung von dir gefunden. Möchtest du diese wiederherstellen?',
-        thisEntityHasnTBeenConvertedToTheNewEditorYet:
+        notConverted:
           'Dieser Inhalt wurde noch nicht im neuen Editor bearbeitet.',
         text: 'Text',
-        composeContentUsingRichTextAndMathFormulas:
+        textDesc:
           'Schreibe Text und Matheformeln, und formatiere sie.',
-        quotation: 'Zitat',
-        createIndentedTextForQuotations:
+        blockquoteTitle: 'Zitat',
+        quoteDescription:
           'Erzeuge eingerückten Text für Zitate.',
-        geoGebraApplet: 'GeoGebra Applet',
-        embedGeoGebraMaterialsAppletsViaUrlOrId:
+        geogebraTitle: 'GeoGebra Applet',
+        geogebraDesc:
           'Binde Applets von GeoGebra Materials via Link oder ID ein.',
-        sourceCode: 'Code',
-        highlightTheSyntaxOfSourceCode:
+        highlightTitle: 'Code',
+        highlightDesc:
           'Schreibe Code und hebe ihn je nach Programmiersprache hervor.',
         anchor: 'Sprungmarke',
-        insertAnAnchor: 'Füge eine Sprungmarke innerhalb deines Inhalts hinzu.',
+        anchorDesc: 'Füge eine Sprungmarke innerhalb deines Inhalts hinzu.',
         image: 'Bild',
-        uploadImages:
+        imageDesc:
           'Lade Bilder hoch oder verwende Bilder, die bereits online sind.',
-        importantStatement: 'Merksatz',
-        aBoxToHighlightImportantStatements: 'Hebe wichtige Aussagen hervor.',
-        serloOrgContent: 'serlo.org Inhalt',
-        embedSerloOrgContentViaTheirId:
+        importantTitle: 'Merksatz',
+        importantDesc: 'Hebe wichtige Aussagen hervor.',
+        injectionTitle: 'serlo.org Inhalt',
+        injectionDesc:
           'Binde einen Inhalt von serlo.org via ID ein.',
-        multimediaContentAssociatedWithText: 'Erklärung mit Multimedia-Inhalt',
-        createAnIllustratingOrExplainingMultimediaContentAssociatedWithText:
+        multimediaTitle: 'Erklärung mit Multimedia-Inhalt',
+        multimediaDesc:
           'Erstelle einen veranschaulichenden oder erklärenden Multimedia-Inhalt mit zugehöriger Erklärung.',
         spoiler: 'Spoiler',
-        aCollapsibleBox:
+        spoilerDesc:
           'In diese ausklappbare Box kannst du zum Beispiel Exkurse hinzufügen.',
         table: 'Tabelle',
-        createTablesUsingMarkdown: 'Erstelle eine Tabelle mit Markdown.',
+        tableDesc: 'Erstelle eine Tabelle mit Markdown.',
         video: 'Video',
-        embedYouTubeVimeoWikimediaCommonsOrBrVideos:
+        videoDesc:
           'Binde Videos von YouTube, Vimeo, Wikimedia Commons oder BR ein.',
         solutionSeparator: 'Lösungs-Trenner',
-        divideTheSolutionIntoIndividualSteps:
+        solutionSeparatorDesc:
           'Unterteile die Lösung in einzelne Lösungsschritte.',
         save: 'Speichern',
         cancel: 'Abbrechen',
         saving: 'Speichert…',
-        youNeedToFillOutTheChangesYouMade:
+        missingChanges:
           'Du musst zuerst die Änderungen ausfüllen.',
-        youNeedToAcceptTheLicenseTerms:
+        missingLicenseTerms:
           'Du musst zuerst die Lizenzbedingungen akzeptieren.',
-        youNeedToFillOutTheChangesYouMadeAndAcceptTheLicenseTerms:
+        missingChangesAndLicenseTerms:
           'Du musst zuerst die Lizenzbedingungen akzeptieren und die Änderungen ausfüllen.',
-        anErrorOccurredDuringSaving: 'Es trat ein Fehler beim Speichern auf.',
-        youCanStoreTheRevisionLocallyRefreshThePageAndTryToSaveAgain:
+        errorSaving: 'Es trat ein Fehler beim Speichern auf.',
+        saveLocallyAndRefresh:
           'Du kannst die Bearbeitung lokal zwischenspeichern, dann die Seite neu laden und es erneut versuchen.',
         revisionSaved: 'Bearbeitung gespeichert',
         saveRevision: 'Bearbeitung zwischenspeichern',
         changes: 'Änderungen',
-        skipPeerReviewNotRecommended:
+        skipReview:
           'Bearbeitung ohne Review freischalten (nicht empfohlen)',
-        enableSerloOrgNotifications:
+        enableNotifs:
           'Benachrichtigungen auf serlo.org erhalten',
-        enableNotificationsViaEMail: 'Benachrichtigungen per E-mail erhalten',
-        switchToAnotherRevision: 'Andere Version auswählen',
+        enableNotifsMail: 'Benachrichtigungen per E-mail erhalten',
+        switchRevision: 'Andere Version auswählen',
         current: 'Aktuell',
         author: 'Verfasser',
         createdAt: 'Zeitstempel',
         settings: 'Einstellungen',
-        termsAndEquations: 'Terme und Gleichungen',
-        writeTermManipulationsAndSolveMultilineEquations:
+        equationsTitle: 'Terme und Gleichungen',
+        equationsDesc:
           'Erstelle Termumformungen und löse mehrzeilige Gleichungen.',
       },
       anchor: {
         identifier: 'Name',
-        idOfTheAnchor: 'Name der Sprungmarke',
+        anchorId: 'Name der Sprungmarke',
       },
       geogebra: {
-        geoGebraUrlOrId: 'GeoGebra Materials URL oder ID',
+        urlOrId: 'GeoGebra Materials URL oder ID',
       },
       highlight: {
-        clickHereAndEnterYourSourceCode:
+        clickAndEnter:
           'Klicke hier und füge deinen Quellcode ein…',
-        enterYourSourceCodeHere:
+        enterHere:
           'Füge hier deinen Quellcode ein. Verlasse den Bereich, um eine Vorschau zu sehen.',
         language: 'Programmiersprache',
         enterLanguage: 'Programmiersprache eingeben',
@@ -583,44 +583,44 @@ export const loggedInData = {
       },
       inputExercise: {
         text: 'Text',
-        chooseTheExerciseType: 'Wähle den Antworttyp',
+        chooseType: 'Wähle den Antworttyp',
         unit: 'Einheit (optional)',
         addAnswer: 'Antwort hinzufügen',
         enterTheValue: 'Gib hier die Antwort ein',
         yourSolution: 'Deine Lösung',
         correct: 'Richtig',
         wrong: 'Falsch',
-        numberExactSolutionEG_0_5_1_2_2_4:
+        number:
           'Zahl (exakte Lösung, z.B. "0,5" ≠ "1/2" ≠ "2/4")',
-        mathematicalExpressionEquivalentSolutionEG_0_5_1_2_2_4:
+        mathematicalExpression:
           'Mathematischer Ausdruck (äquivalente Lösung, z.B. "0,5" = "1/2" = "2/4")',
       },
       multimedia: {
         image: 'Bild',
         video: 'Video',
-        geoGebraApplet: 'GeoGebra Applet',
-        changeTheMultimediaType: 'Tausche das Multimedia Element aus',
-        howImportantIsTheMultimediaContent:
+        geogebraTitle: 'GeoGebra Applet',
+        changeType: 'Tausche das Multimedia Element aus',
+        howImportant:
           'Wie wichtig ist der Multimedia Inhalt?',
-        itIsIllustrating: 'Es ist nur eine Veranschaulichung',
-        itIsEssential: 'Es spielt eine zentrale Rolle',
+        isIllustrating: 'Es ist nur eine Veranschaulichung',
+        isEssential: 'Es spielt eine zentrale Rolle',
       },
       rows: {
         searchForTools: 'Suche hier nach Tools…',
         duplicate: 'Duplizieren',
         remove: 'Löschen',
         close: 'Schließen',
-        dragTheElementWithinTheDocument:
+        dragElement:
           'Verschiebe das Element innerhalb des Dokuments',
         addAnElement: 'Füge ein Element hinzu',
       },
       scMcExercise: {
         singleChoice: 'Single Choice',
         multipleChoice: 'Multiple Choice',
-        chooseTheExerciseType: 'Wähle den Aufgabentyp',
+        chooseType: 'Wähle den Aufgabentyp',
         addAnswer: 'Antwort hinzufügen',
         wrong: 'Falsch',
-        almostYouMissedAtLeastOneCorrectAnswer:
+        missedSome:
           'Fast! Dir fehlt noch mindestens eine richtige Antwort',
         correct: 'Richtig',
       },
@@ -641,12 +641,12 @@ export const loggedInData = {
         orderedList: 'Nummerierte Liste',
         unorderedList: 'Aufzählung',
         lists: 'Listen',
-        mathFormulaStrgM: 'Matheformel (Strg + M)',
+        mathFormula: 'Matheformel (Strg + M)',
         displayAsBlock: 'eigene Zeile',
         formula: '[neue Formel]',
         visual: 'visuell',
         laTeX: 'LaTeX',
-        onlyLaTeXEditorAvailable: 'Nur LaTeX verfügbar',
+        onlyLaTeX: 'Nur LaTeX verfügbar',
         shortcuts: 'Tastenkürzel',
         fraction: 'Bruch',
         superscript: 'Hochgestellt',
@@ -656,8 +656,8 @@ export const loggedInData = {
         mathSymbols: 'Mathematische Symbole',
         eG: 'z.B.',
         functions: 'Funktionen',
-        boldStrgB: 'Fett (Strg + B)',
-        italicStrgI: 'Kursiv (Strg + I)',
+        bold: 'Fett (Strg + B)',
+        italic: 'Kursiv (Strg + I)',
         noItemsFound: 'keine Einträge gefunden',
       },
       video: {
@@ -665,10 +665,10 @@ export const loggedInData = {
         description: 'Beschreibung',
         title: 'Titel',
         url: 'URL',
-        titleForSearchEngines: 'Titel für Suchmaschinen',
+        seoTitle: 'Titel für Suchmaschinen',
       },
       error: {
-        thisPartOfTheDocumentCouldNotBeConverted:
+        convertionError:
           'Dieser Teil des Dokuments konnte nicht automatisch konvertiert werden.',
       },
       exercise: {
@@ -676,7 +676,7 @@ export const loggedInData = {
         choiceExercise: 'Auswahlaufgabe',
         addInputExercise: 'Eingabefeld hinzufügen',
         inputExercise: 'Eingabefeld',
-        addAnOptionalInteractiveExercise:
+        addOptionalInteractiveEx:
           'Füge optional ein interaktives Element hinzu:',
       },
       injection: {
@@ -685,64 +685,64 @@ export const loggedInData = {
         serloId: 'Serlo ID',
       },
       layout: {
-        toMakeTheContentDraggableConvertThemForTheNewEditor:
+        toDragConvert:
           'Um die Inhalte zu verschieben, konvertiere sie für den neuen Editor:',
         oneColumnLayout: 'Einspaltiges Layout',
-        multimediaContentAssociatedWithText: 'Erklärung mit Multimedia-Inhalt',
+        multimediaTitle: 'Erklärung mit Multimedia-Inhalt',
       },
       solution: {
-        optionallyExplainTheSolutionStrategyHere:
+        optionalExplanation:
           'Beschreibe hier optional die Lösungsstrategie',
-        forThisExerciseYouNeedTheFollowingFundamentals:
+        fundamentalsNote:
           'Für diese Aufgabe benötigst du folgendes Grundwissen:',
-        idOfAnArticleEG_1855: 'ID eines Artikels, z.B. 1855',
-        openTheArticleInANewTab: 'Öffne den Artikel in einem neuen Tab',
-        titleOfTheLink: 'Titel der Verlinkung',
+        idArticle: 'ID eines Artikels, z.B. 1855',
+        openArticleTab: 'Öffne den Artikel in einem neuen Tab',
+        linkTitle: 'Titel der Verlinkung',
         showSolution: 'Lösung anzeigen',
         hideSolution: 'Lösung ausblenden',
       },
       applet: {
-        titleForSearchEngines: 'Titel für Suchmaschinen',
-        descriptionForSearchEngines: 'Beschreibung für Suchmaschinen',
+        seoTitle: 'Titel für Suchmaschinen',
+        seoDesc: 'Beschreibung für Suchmaschinen',
         title: 'Titel',
       },
       article: {
-        titleForSearchEngines: 'Titel für Suchmaschinen',
-        descriptionForSearchEngines: 'Beschreibung für Suchmaschinen',
+        seoTitle: 'Titel für Suchmaschinen',
+        seoDesc: 'Beschreibung für Suchmaschinen',
         title: 'Titel',
-        writeAShortIntroduction: 'Fasse das Thema des Artikels kurz zusammen',
+        writeShortIntro: 'Fasse das Thema des Artikels kurz zusammen',
         exercises: 'Übungsaufgaben',
         dragTheExercise: 'Verschiebe die Aufgabe',
         removeExercise: 'Entferne die Aufgabe',
         addOptionalExercise: 'Aufgabe hinzufügen',
         stillWantMore: 'Du hast noch nicht genug vom Thema?',
-        youCanFindMoreContentOnThisTopicHere:
+        moreOnTopic:
           'Hier findest du noch weitere passende Inhalte zum Thema',
         articles: 'Artikel',
         addArticle: 'Artikel hinzufügen',
-        idOfAnArticleEG_1855: 'ID eines Artikels, z.B. 1855',
-        openTheArticleInANewTab: 'Öffne den Artikel in einem neuen Tab',
+        idArticle: 'ID eines Artikels, z.B. 1855',
+        openArticleTab: 'Öffne den Artikel in einem neuen Tab',
         dragTheArticle: 'Verschiebe den Artikel',
         courses: 'Kurse',
         addCourse: 'Kurs hinzufügen',
-        idOfACourseEG_51979: 'ID eines Kurses, z.B. 51979',
-        openTheCourseInANewTab: 'Öffne den Kurs in einem neuen Tab',
+        idCourse: 'ID eines Kurses, z.B. 51979',
+        openCourseTab: 'Öffne den Kurs in einem neuen Tab',
         dragTheCourse: 'Verschiebe den Kurs',
         videos: 'Videos',
         addVideo: 'Video hinzufügen',
-        idOfAVideoEG_40744: 'ID eines Videos, z.B. 40744',
-        openTheVideoInANewTab: 'Öffne das Video in einem neuen Tab',
+        idVideo: 'ID eines Videos, z.B. 40744',
+        openVideoTab: 'Öffne das Video in einem neuen Tab',
         dragTheVideo: 'Verschiebe das Video',
-        titleOfTheLink: 'Titel des Links',
+        linkTitle: 'Titel des Links',
         sources: 'Quellen',
-        urlOfTheLink: 'URL des Links',
-        openTheLinkInANewTab: 'Öffne den Link in einem neuen Tab',
+        linkUrl: 'URL des Links',
+        openInNewTab: 'Öffne den Link in einem neuen Tab',
         dragTheSource: 'Verschiebe die Quellenangabe',
         addSource: 'Quellenangabe hinzufügen',
-        youCanFindMoreExercisesInTheFollowingFolder:
+        moreInFolder:
           'Weitere Aufgaben zum Thema findest du im folgenden Aufgabenordner',
-        idOfAnExerciseFolderEG_30560: 'ID eines Aufgabenordners, z.B. 30560',
-        openTheExerciseFolderInANewTab:
+        exFolderId: 'ID eines Aufgabenordners, z.B. 30560',
+        openExerciseTab:
           'Öffne den Aufgabenordner in einem neuen Tab',
       },
       coursePage: {
@@ -752,14 +752,14 @@ export const loggedInData = {
         title: 'Titel',
       },
       course: {
-        descriptionForSearchEngines: 'Beschreibung für Suchmaschinen',
+        seoDesc: 'Beschreibung für Suchmaschinen',
         title: 'Titel',
         removeCoursePage: 'Kursseite entfernen',
         addCoursePage: 'Kursseite hinzufügen',
       },
       event: {
-        titleForSearchEngines: 'Titel für Suchmaschinen',
-        descriptionForSearchEngines: 'Beschreibung für Suchmaschinen',
+        seoTitle: 'Titel für Suchmaschinen',
+        seoDesc: 'Beschreibung für Suchmaschinen',
         title: 'Titel',
       },
       page: {
@@ -790,13 +790,13 @@ export const loggedInData = {
         term: 'Term',
         rightHandSide: 'rechte Seite',
         combineLikeTerms: 'Fasse die Terme zusammen.',
-        setTheTermsEqualToEachOther: 'Setze die Terme gleich.',
+        setEqual: 'Setze die Terme gleich.',
       },
       mathPuzzle: {
         sourceCode: 'Quellcode',
       },
       deprecated: {
-        thisPartOfTheDocumentContainsFeaturesThatAreNoLongerSupported:
+        unsupported:
           'Dieser Teil des Dokuments enthält Features, die nicht mehr unterstützt werden.',
       },
     },

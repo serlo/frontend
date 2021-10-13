@@ -77,8 +77,7 @@ function SolutionEditor({ editable, state, focused }: SolutionProps) {
         <SemanticSection editable={editable}>
           {strategy.render({
             config: {
-              placeholder:
-                editorStrings.solution.optionallyExplainTheSolutionStrategyHere,
+              placeholder: editorStrings.solution.optionalExplanation,
             },
           })}
         </SemanticSection>
@@ -98,10 +97,7 @@ function SolutionEditor({ editable, state, focused }: SolutionProps) {
       if (editable) {
         return (
           <div>
-            {
-              editorStrings.solution
-                .forThisExerciseYouNeedTheFollowingFundamentals
-            }{' '}
+            {editorStrings.solution.fundamentalsNote}{' '}
             {focused ? (
               <InlineSettings
                 onDelete={() => {
@@ -117,7 +113,7 @@ function SolutionEditor({ editable, state, focused }: SolutionProps) {
                       ? `/${prerequisite.id.value}`
                       : ''
                   }
-                  placeholder={editorStrings.solution.idOfAnArticleEG_1855}
+                  placeholder={editorStrings.solution.idArticle}
                   onChange={(event) => {
                     const newValue = event.target.value.replace(/[^0-9]/g, '')
                     if (prerequisite.defined) {
@@ -139,9 +135,7 @@ function SolutionEditor({ editable, state, focused }: SolutionProps) {
                   }
                   rel="noopener noreferrer"
                 >
-                  <OpenInNewTab
-                    title={editorStrings.solution.openTheArticleInANewTab}
-                  >
+                  <OpenInNewTab title={editorStrings.solution.openArticleTab}>
                     <Icon icon={faExternalLinkAlt} />
                   </OpenInNewTab>
                 </a>
@@ -157,7 +151,7 @@ function SolutionEditor({ editable, state, focused }: SolutionProps) {
                     prerequisite.create({ id: '', title: value })
                   }
                 }}
-                placeholder={editorStrings.solution.titleOfTheLink}
+                placeholder={editorStrings.solution.linkTitle}
               />
             </a>
           </div>
@@ -171,10 +165,7 @@ function SolutionEditor({ editable, state, focused }: SolutionProps) {
       ) {
         return (
           <p>
-            {
-              editorStrings.solution
-                .forThisExerciseYouNeedTheFollowingFundamentals
-            }{' '}
+            {editorStrings.solution.fundamentalsNote}{' '}
             <a href={`/${prerequisite.id.value}`}>{prerequisite.title.value}</a>
           </p>
         )

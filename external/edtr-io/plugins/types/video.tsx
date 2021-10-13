@@ -96,7 +96,7 @@ function VideoTypeEditor(props: EditorPluginProps<typeof videoTypeState>) {
                   label: editorStrings.video.url,
                 },
                 alt: {
-                  label: editorStrings.video.titleForSearchEngines,
+                  label: editorStrings.video.seoTitle,
                 },
               },
             }}

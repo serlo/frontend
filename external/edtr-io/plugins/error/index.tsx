@@ -46,9 +46,7 @@ export const ErrorRenderer: React.FunctionComponent<
 
   return (
     <div className="panel panel-danger">
-      <div className="panel-heading">
-        {editorStrings.error.thisPartOfTheDocumentCouldNotBeConverted}
-      </div>
+      <div className="panel-heading">{editorStrings.error.convertionError}</div>
       <div className="panel-body">
         <pre>
           {JSON.stringify(

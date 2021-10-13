@@ -78,17 +78,14 @@ export const LayoutRenderer: React.FunctionComponent<
     <>
       {props.editable ? (
         <ConvertInfo>
-          {
-            editorStrings.layout
-              .toMakeTheContentDraggableConvertThemForTheNewEditor
-          }
+          {editorStrings.layout.toDragConvert}
           <ButtonContainer>
             <ConvertButton onClick={convertToRow}>
               {editorStrings.layout.oneColumnLayout}
             </ConvertButton>
             {canConvertToMultimediaExplanation() ? (
               <ConvertButton onClick={convertToMultimediaExplanation}>
-                {editorStrings.layout.multimediaContentAssociatedWithText}
+                {editorStrings.layout.multimediaTitle}
               </ConvertButton>
             ) : null}
           </ButtonContainer>
