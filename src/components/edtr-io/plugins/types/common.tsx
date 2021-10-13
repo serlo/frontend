@@ -58,7 +58,6 @@ import * as R from 'ramda'
 import * as React from 'react'
 import BSAlert from 'react-bootstrap/lib/Alert'
 import BSButton from 'react-bootstrap/lib/Button'
-import BSCheckbox from 'react-bootstrap/lib/Checkbox'
 import BSControlLabel from 'react-bootstrap/lib/ControlLabel'
 import BSFormControl from 'react-bootstrap/lib/FormControl'
 import BSFormGroup from 'react-bootstrap/lib/FormGroup'
@@ -257,16 +256,12 @@ export function Controls(props: OwnProps) {
   }
 
   function getSaveHint() {
-    // TODO: fix i18n
     if (maySave()) return undefined
     if (licenseAccepted() && !changesFilledIn()) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return editorStrings.edtrIo.missingChanges
     } else if (!licenseAccepted() && changesFilledIn()) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return editorStrings.edtrIo.missingLicenseTerms
     } else {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return editorStrings.edtrIo.missingChangesAndLicenseTerms
     }
   }
@@ -372,15 +367,18 @@ export function Controls(props: OwnProps) {
   function renderCheckout() {
     if (!mayCheckout) return null
     return (
-      <BSCheckbox
-        checked={autoCheckout}
-        onChange={(e) => {
-          const { checked } = e.target as HTMLInputElement
-          setAutoCheckout(checked)
-        }}
-      >
-        {editorStrings.edtrIo.skipReview}
-      </BSCheckbox>
+      <>
+        <input
+          type="checkbox"
+          checked={autoCheckout}
+          onChange={(e) => {
+            const { checked } = e.target as HTMLInputElement
+            setAutoCheckout(checked)
+          }}
+          id="edtr-checkout"
+        />{' '}
+        <label htmlFor="edtr-checkout">{editorStrings.edtrIo.skipReview}</label>
+      </>
     )
   }
 
@@ -388,15 +386,21 @@ export function Controls(props: OwnProps) {
     const { license } = props
     if (!license) return null
     return (
-      <BSCheckbox
-        checked={agreement}
-        onChange={(e) => {
-          const { checked } = e.target as HTMLInputElement
-          setAgreement(checked)
-        }}
-      >
-        <span dangerouslySetInnerHTML={{ __html: license.agreement.value }} />
-      </BSCheckbox>
+      <>
+        <input
+          type="checkbox"
+          checked={agreement}
+          onChange={(e) => {
+            const { checked } = e.target as HTMLInputElement
+            setAgreement(checked)
+          }}
+          id="edtr-checkout-license"
+        />{' '}
+        <label htmlFor="edtr-checkout-license">
+          {' '}
+          <span dangerouslySetInnerHTML={{ __html: license.agreement.value }} />
+        </label>
+      </>
     )
   }
 
@@ -405,24 +409,36 @@ export function Controls(props: OwnProps) {
     if (!subscriptions) return null
     return (
       <>
-        <BSCheckbox
-          checked={notificationSubscription}
-          onChange={(e) => {
-            const { checked } = e.target as HTMLInputElement
-            setNotificationSubscription(checked)
-          }}
-        >
-          {editorStrings.edtrIo.enableNotifs}
-        </BSCheckbox>
-        <BSCheckbox
-          checked={emailSubscription}
-          onChange={(e) => {
-            const { checked } = e.target as HTMLInputElement
-            setEmailSubscription(checked)
-          }}
-        >
-          {editorStrings.edtrIo.enableNotifsMail}
-        </BSCheckbox>
+        <div>
+          <input
+            type="checkbox"
+            checked={notificationSubscription}
+            onChange={(e) => {
+              const { checked } = e.target as HTMLInputElement
+              setNotificationSubscription(checked)
+            }}
+            id="edtr-checkout-notif"
+          />{' '}
+          <label htmlFor="edtr-checkout-notif">
+            {' '}
+            {editorStrings.edtrIo.enableNotifs}
+          </label>
+        </div>
+        <div>
+          <input
+            type="checkbox"
+            checked={emailSubscription}
+            onChange={(e) => {
+              const { checked } = e.target as HTMLInputElement
+              setEmailSubscription(checked)
+            }}
+            id="edtr-checkout-notif-mail"
+          />{' '}
+          <label htmlFor="edtr-checkout-notif-mail">
+            {' '}
+            {editorStrings.edtrIo.enableNotifsMail}
+          </label>
+        </div>
       </>
     )
   }
