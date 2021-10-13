@@ -27,8 +27,10 @@ import {
   TablePluginConfig,
 } from '@edtr-io/plugin-table'
 import { converter } from '@serlo/markdown'
-import { initMathJax, typeset } from '@serlo/mathjax'
 import * as React from 'react'
+
+import { renderArticle } from '@/schema/article-renderer'
+import { convertLegacyState } from '@/schema/convert-legacy-state'
 
 const edtrTablePlugin = createTablePlugin({
   MarkdownRenderer,
@@ -36,12 +38,8 @@ const edtrTablePlugin = createTablePlugin({
 
 function MarkdownRenderer(props: { markdown: string }) {
   const html = converter.makeHtml(props.markdown)
-  return (
-    <div
-      className="requires-mathjax"
-      dangerouslySetInnerHTML={{ __html: html }}
-    />
-  )
+  const node = convertLegacyState(html)
+  return <>{renderArticle(node.children)}</>
 }
 
 export const tablePlugin: EditorPlugin<TablePluginState, TablePluginConfig> = {
@@ -50,24 +48,9 @@ export const tablePlugin: EditorPlugin<TablePluginState, TablePluginConfig> = {
 }
 
 function TableEditor(props: TableProps) {
-  const ref = React.useRef<HTMLDivElement>(null)
-  React.useEffect(() => {
-    initMathJax()
-    const timeout = setTimeout(typesetMathjax, 1000)
-    return () => {
-      if (timeout) {
-        clearTimeout(timeout)
-      }
-    }
-  })
   return (
-    <div ref={ref}>
+    <div>
       <edtrTablePlugin.Component {...props} />
     </div>
   )
-
-  function typesetMathjax() {
-    if (!ref.current) return
-    typeset(ref.current)
-  }
 }

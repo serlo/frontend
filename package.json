@@ -60,7 +60,6 @@
     "@serlo/i18n": "Entkenntnis/tmp-serlo-i18n",
     "@serlo/legacy-editor-to-editor": "Entkenntnis/tmp-serlo-legacy-editor-to-editor",
     "@serlo/markdown": "Entkenntnis/tmp-serlo-markdown",
-    "@serlo/mathjax": "Entkenntnis/tmp-serlo-mathjax",
     "@tippyjs/react": "^4.0.0",
     "algebra.js": "^0.2.0",
     "autoprefixer": "^10.0.0",
