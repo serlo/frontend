@@ -49,8 +49,13 @@ export default renderedPageNoHooks<AddRevisionProps>(
           @apply text-2.5xl font-bold special-hyphens-auto;
           @apply text-truegray-900 border-truegray-300 border-b;
         }
-        .edtr-io h3 {
-          @apply mt-0 mb-8 pt-3 font-bold text-1.5xl text-truegray-900;
+        .edtr-io {
+          h3 {
+            @apply mt-5 mb-8 pt-3 font-bold text-1.5xl text-truegray-900;
+          }
+          div[contenteditable] h3 {
+            @apply mt-0;
+          }
         }
         .edtr-io {
           @apply text-lg leading-cozy;
@@ -111,6 +116,15 @@ export default renderedPageNoHooks<AddRevisionProps>(
               @apply bg-brand-150 border-2 border-brand-150 focus-within:outline-none focus-within:border-brand-light;
             }
           }
+        }
+
+        .edtr-io .page-header h1 input {
+          @apply w-full;
+          @apply mb-9 mt-6 p-0 font-bold text-3.5xl special-hyphens-auto;
+        }
+
+        .edtr-io button > div > svg {
+          @apply ml-1.5 mr-1.5 mb-1 mt-2;
         }
       `}</style>
     </FrontendClientBase>
