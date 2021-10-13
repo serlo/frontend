@@ -4,37 +4,17 @@ import { MathSpan } from '@/components/content/math-span'
 import { SerloEditor } from '@/components/edtr-io/serlo-editor'
 
 export interface AddRevisionProps {
-  id: number
-  content: string
-  title: string
+  initialState: unknown
 }
 
-export function AddRevision({ id, content, title }: AddRevisionProps) {
+export function AddRevision({ initialState }: AddRevisionProps) {
+  console.log(initialState)
   return (
     <>
       <MathSpan formula="" />
       <div className={clsx('max-w-[816px] mx-auto mb-24 edtr-io')}>
         <div className="controls w-full h-12 flex justify-between pt-4 pl-5 pr-3" />
-        <SerloEditor
-          state={{
-            id,
-            license: {
-              // Check: Should we just store this in i18n? or does it come from license?
-              agreement:
-                'Mit dem Speichern dieser Seite versicherst du, dass du deinen Beitrag (damit sind auch Änderungen gemeint) selbst verfasst hast bzw. dass er keine fremden Rechte verletzt. Du willigst ein, deinen Beitrag unter der <a href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution/Share-Alike Lizenz 4.0</a> und/oder unter einer gleichwertigen Lizenz zu veröffentlichen, welche die Gesellschaft für freie Bildung e. V. entsprechend der Regelungen in den <a href="/21654">Nutzungsbedingungen</a> festlegen darf. Falls du den Beitrag nicht selbst verfasst hast, muss er unter den <a href="/21654">Nutzungsbedingungen</a> verfügbar sein und du stimmst zu, notwendigen Lizenzanforderungen zu folgen.',
-              iconHref: 'https://i.creativecommons.org/l/by-sa/4.0/88x31.png',
-              id: 1,
-              title: 'Dieses Werk steht unter der freien Lizenz cc-by-sa-4.0',
-              url: 'https://creativecommons.org/licenses/by-sa/4.0/',
-            },
-            changes: '',
-            title,
-            content,
-            reasoning: '',
-            meta_title: '',
-            meta_description: '',
-          }}
-        />
+        <SerloEditor state={initialState} />
       </div>
       <style jsx global>{`
         .edtr-io h1 {

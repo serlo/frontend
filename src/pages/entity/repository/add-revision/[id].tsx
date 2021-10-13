@@ -49,7 +49,9 @@ export const getServerSideProps: GetServerSideProps<AddRevisionProps> = async (
   // TODO: Handle user and taxonomy
 
   return {
-    props: createInitialState(uuid as QueryResponseNoRevision),
+    props: {
+      initialState: createInitialState(uuid as QueryResponseNoRevision),
+    },
   }
 }
 
