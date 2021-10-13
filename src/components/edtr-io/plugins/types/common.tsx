@@ -232,7 +232,12 @@ export function Controls(props: OwnProps) {
 
     return (
       <button
-        className="serlo-button serlo-make-interactive-green ml-2"
+        className={clsx(
+          'serlo-button ml-2',
+          isDisabled
+            ? 'text-gray-300 cursor-default'
+            : 'serlo-make-interactive-green'
+        )}
         onClick={action}
         disabled={isDisabled}
       >
