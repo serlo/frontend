@@ -4,7 +4,7 @@ import { GetServerSideProps } from 'next'
 
 import { endpoint } from '@/api/endpoint'
 import { MathSpan } from '@/components/content/math-span'
-import { Editor } from '@/components/editor/editor'
+import { SerloEditor } from '@/components/edtr-io/serlo-editor'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
@@ -20,7 +20,7 @@ export default renderedPageNoHooks<AddRevisionProps>(
       <MathSpan formula="" />
       <div className={clsx('max-w-[816px] mx-auto mb-24 edtr-io')}>
         <div className="controls w-full h-12 items-center flex justify-around border" />
-        <Editor
+        <SerloEditor
           state={{
             id,
             license: {
