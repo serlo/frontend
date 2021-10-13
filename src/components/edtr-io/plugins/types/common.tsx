@@ -150,11 +150,15 @@ export function Controls(props: OwnProps) {
   return (
     <>
       {createPortal(
-        <div className="btn-group btn-group-community text-right w-full pr-2">
-          {renderUndoRedoButton('Undo', faUndo, undo, !undoable)}
-          {renderUndoRedoButton('Redo', faRedo, redo, !redoable)}
-          {renderSaveButton()}
-        </div>,
+        <>
+          <div className="btn-group btn-group-community">
+            {renderUndoRedoButton('Undo', faUndo, undo, !undoable)}
+            {renderUndoRedoButton('Redo', faRedo, redo, !redoable)}
+          </div>
+          <div className="btn-group btn-group-community">
+            {renderSaveButton()}
+          </div>
+        </>,
         document.getElementsByClassName('controls')[0]
       )}
       <ModalWithCloseButton

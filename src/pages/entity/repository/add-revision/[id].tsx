@@ -19,7 +19,7 @@ export default renderedPageNoHooks<AddRevisionProps>(
     <FrontendClientBase noContainers loadLoggedInData>
       <MathSpan formula="" />
       <div className={clsx('max-w-[816px] mx-auto mb-24 edtr-io')}>
-        <div className="controls w-full h-12 items-center flex justify-around border" />
+        <div className="controls w-full h-12 flex justify-between pt-4 pl-5 pr-3" />
         <SerloEditor
           state={{
             id,
@@ -76,7 +76,7 @@ export default renderedPageNoHooks<AddRevisionProps>(
             @apply mt-2 !mb-4;
           }
         }
-        .sedtr-io ol {
+        .edtr-io ol {
           @apply mx-side mb-block mt-0 pl-7 list-none;
           @apply special-reset-list-counter;
 
@@ -92,6 +92,24 @@ export default renderedPageNoHooks<AddRevisionProps>(
           & > li > ul,
           & > li > ol {
             @apply mt-2 !mb-4;
+          }
+        }
+
+        .ReactModal__Content {
+          @apply rounded-xl border-none shadow-modal;
+          @apply bg-white outline-none px-2.5 pt-2.5;
+
+          h4 {
+            @apply font-bold text-lg mt-5 mb-6;
+          }
+          .form-group {
+            label {
+              @apply font-bold;
+            }
+            textarea {
+              @apply mt-1 mb-7 flex items-center rounded-2xl w-full p-2;
+              @apply bg-brand-150 border-2 border-brand-150 focus-within:outline-none focus-within:border-brand-light;
+            }
           }
         }
       `}</style>
