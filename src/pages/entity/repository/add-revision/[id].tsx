@@ -1,164 +1,195 @@
-import clsx from 'clsx'
-import request, { gql } from 'graphql-request'
+import { AuthorizationPayload } from '@serlo/authorization'
+import request from 'graphql-request'
 import { GetServerSideProps } from 'next'
 
 import { endpoint } from '@/api/endpoint'
-import { MathSpan } from '@/components/content/math-span'
-import { SerloEditor } from '@/components/edtr-io/serlo-editor'
 import { FrontendClientBase } from '@/components/frontend-client-base'
+import { AddRevision, AddRevisionProps } from '@/components/pages/add-revision'
+import { dataQuery } from '@/fetcher/query'
+import {
+  Instance,
+  QueryResponse,
+  QueryResponseNoRevision,
+} from '@/fetcher/query-types'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
-interface AddRevisionProps {
-  id: number
-  content: string
-  title: string
-}
-
-export default renderedPageNoHooks<AddRevisionProps>(
-  ({ id, content, title }) => (
-    <FrontendClientBase noContainers loadLoggedInData>
-      <MathSpan formula="" />
-      <div className={clsx('max-w-[816px] mx-auto mb-24 edtr-io')}>
-        <div className="controls w-full h-12 flex justify-between pt-4 pl-5 pr-3" />
-        <SerloEditor
-          state={{
-            id,
-            license: {
-              // Check: Should we just store this in i18n? or does it come from license?
-              agreement:
-                'Mit dem Speichern dieser Seite versicherst du, dass du deinen Beitrag (damit sind auch Änderungen gemeint) selbst verfasst hast bzw. dass er keine fremden Rechte verletzt. Du willigst ein, deinen Beitrag unter der <a href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution/Share-Alike Lizenz 4.0</a> und/oder unter einer gleichwertigen Lizenz zu veröffentlichen, welche die Gesellschaft für freie Bildung e. V. entsprechend der Regelungen in den <a href="/21654">Nutzungsbedingungen</a> festlegen darf. Falls du den Beitrag nicht selbst verfasst hast, muss er unter den <a href="/21654">Nutzungsbedingungen</a> verfügbar sein und du stimmst zu, notwendigen Lizenzanforderungen zu folgen.',
-              iconHref: 'https://i.creativecommons.org/l/by-sa/4.0/88x31.png',
-              id: 1,
-              title: 'Dieses Werk steht unter der freien Lizenz cc-by-sa-4.0',
-              url: 'https://creativecommons.org/licenses/by-sa/4.0/',
-            },
-            changes: '',
-            title,
-            content,
-            reasoning: '',
-            meta_title: '',
-            meta_description: '',
-          }}
-        />
-      </div>
-      <style jsx global>{`
-        .edtr-io h1 {
-          @apply mx-side mb-9 mt-4 p-0 font-bold text-3.5xl special-hyphens-auto;
-        }
-        .edtr-io h2 {
-          @apply mt-0 mb-6 pb-1 pt-6;
-          @apply text-2.5xl font-bold special-hyphens-auto;
-          @apply text-truegray-900 border-truegray-300 border-b;
-        }
-        .edtr-io {
-          h3 {
-            @apply mt-5 mb-8 pt-3 font-bold text-1.5xl text-truegray-900;
-          }
-          div[contenteditable] h3 {
-            @apply mt-0;
-          }
-        }
-        .edtr-io {
-          @apply text-lg leading-cozy;
-        }
-        .edtr-io a[data-key] {
-          @apply text-brand no-underline break-words hover:underline special-hyphens-auto;
-        }
-        .edtr-io [data-slate-object='block'] {
-          @apply mb-block;
-        }
-        .edtr-io ul {
-          @apply mx-side mb-block mt-4 pl-5 list-none;
-
-          & > li:before {
-            @apply absolute special-content-space bg-brand-lighter;
-            @apply w-2.5 h-2.5 rounded-full -ml-5 mt-2.25;
-          }
-          & > li {
-            @apply mb-2;
-          }
-          & > li > ul,
-          & > li > ol {
-            @apply mt-2 !mb-4;
-          }
-        }
-        .edtr-io ol {
-          @apply mx-side mb-block mt-0 pl-7 list-none;
-          @apply special-reset-list-counter;
-
-          & > li:before {
-            @apply absolute special-content-list-counter special-increment-list-counter;
-            @apply font-bold text-center rounded-full -ml-7;
-            @apply mt-0.5 bg-brand-150 w-4 h-4 text-xs;
-            @apply leading-tight text-brand pt-0.25;
-          }
-          & > li {
-            @apply mb-2;
-          }
-          & > li > ul,
-          & > li > ol {
-            @apply mt-2 !mb-4;
-          }
-        }
-
-        .ReactModal__Content {
-          @apply rounded-xl border-none shadow-modal;
-          @apply bg-white outline-none px-2.5 pt-2.5;
-
-          h4 {
-            @apply font-bold text-lg mt-5 mb-6;
-          }
-          .form-group {
-            label {
-              @apply font-bold;
-            }
-            textarea {
-              @apply mt-1 mb-7 flex items-center rounded-2xl w-full p-2;
-              @apply bg-brand-150 border-2 border-brand-150 focus-within:outline-none focus-within:border-brand-light;
-            }
-          }
-        }
-
-        .edtr-io .page-header h1 input {
-          @apply w-full;
-          @apply mb-9 mt-6 p-0 font-bold text-3.5xl special-hyphens-auto;
-        }
-
-        .edtr-io button > div > svg {
-          @apply ml-1.5 mr-1.5 mb-1 mt-2;
-        }
-      `}</style>
-    </FrontendClientBase>
-  )
-)
+export default renderedPageNoHooks<AddRevisionProps>((props) => (
+  <FrontendClientBase noContainers loadLoggedInData>
+    <AddRevision {...props} />
+  </FrontendClientBase>
+))
 
 export const getServerSideProps: GetServerSideProps<AddRevisionProps> = async (
   context
 ) => {
   const id = parseInt(context.params?.id as string)
-  const data = await request<{
-    uuid: { currentRevision: { title: string; content: string } }
-  }>(
-    endpoint,
-    gql`
-      query uuid($id: Int) {
-        uuid(id: $id) {
-          ... on Article {
-            currentRevision {
-              title
-              content
-            }
-          }
-        }
-      }
-    `,
-    { id }
-  )
+
+  const { uuid } = await request<{
+    uuid: QueryResponse
+    authorization: AuthorizationPayload
+  }>(endpoint, dataQuery, {
+    alias: { instance: context.locale! as Instance, path: `/${id}` },
+  })
+  const types = [
+    'Applet',
+    'Article',
+    'Course',
+    'CoursePage',
+    'Event',
+    'Exercise',
+    'ExerciseGroup',
+    'GroupedExercise',
+    'Video',
+    'Solution',
+  ]
+  if (!uuid || !types.includes(uuid.__typename))
+    return { kind: 'error', errorData: { code: 404 } }
+
+  // TODO: Handle user, taxonomy
+
   return {
-    props: {
-      id,
-      title: data.uuid.currentRevision.title,
-      content: data.uuid.currentRevision.content,
-    },
+    props: createInitialState(uuid as QueryResponseNoRevision),
   }
+}
+
+function createInitialState(uuid: QueryResponseNoRevision) {
+  const license =
+    'license' in uuid
+      ? {
+          agreement: uuid.license.title, // TODO: get agreement
+          iconHref: 'https://i.creativecommons.org/l/by-sa/4.0/88x31.png', // TODO: get or create icon
+          id: uuid.license.id,
+          title: uuid.license.title,
+          url: uuid.license.url,
+        }
+      : undefined
+  const { id } = uuid
+
+  const currentRev =
+    'currentRevision' in uuid ? uuid.currentRevision : undefined
+  const title =
+    currentRev && 'title' in currentRev ? currentRev.title : undefined
+  const content =
+    currentRev && 'content' in currentRev ? currentRev.content : undefined
+
+  if (uuid.__typename === 'Page') {
+    return {
+      id,
+      license,
+      title,
+      content,
+    }
+  }
+
+  if (uuid.__typename === 'Course') {
+    const coursePages = uuid.pages.map((page) => {
+      return {
+        id: id, // TODO: get page id
+        license,
+        changes: '',
+        title: page.currentRevision?.title,
+        icon: 'explanation',
+        content: '', // TODO: check, do we need content here?
+      }
+    })
+
+    return {
+      id,
+      license,
+      title,
+      changes: '',
+      reasoning: '',
+      'course-page': coursePages,
+    }
+  }
+
+  if (uuid.__typename === 'User' || uuid.__typename === 'TaxonomyTerm') {
+    // TODO: handle
+    return null
+  }
+
+  const sharedFields = {
+    id,
+    license,
+    title,
+    content,
+    changes: '',
+    reasoning: '',
+  }
+
+  if (uuid.__typename === 'Article') {
+    return {
+      ...sharedFields,
+      meta_title: uuid.currentRevision?.metaTitle,
+      meta_description: uuid.currentRevision?.metaDescription,
+    }
+  }
+
+  if (uuid.__typename === 'Applet') {
+    return {
+      ...sharedFields,
+      url: uuid.currentRevision?.url,
+      meta_title: uuid.currentRevision?.metaTitle,
+      meta_description: uuid.currentRevision?.metaDescription,
+    }
+  }
+
+  if (uuid.__typename === 'CoursePage') {
+    return {
+      ...sharedFields,
+      icon: 'explanation',
+    }
+  }
+
+  if (uuid.__typename === 'Event') {
+    return {
+      ...sharedFields,
+      title: uuid.currentRevision?.title,
+      meta_description: '',
+    }
+  }
+
+  if (uuid.__typename === 'Exercise') {
+    return {
+      id,
+      license,
+      changes: '',
+      content,
+      'text-solution': {
+        id: uuid.solution?.id,
+        license: uuid.solution?.license,
+        content: uuid.solution?.currentRevision?.content,
+      },
+    }
+  }
+
+  if (uuid.__typename === 'ExerciseGroup') {
+    const exercises = uuid.exercises.map((ex) => {
+      // TODO:
+      return ex
+    })
+
+    return {
+      id,
+      license,
+      changes: '',
+      content,
+      'grouped-text-exercise': exercises,
+    }
+  }
+
+  if (uuid.__typename === 'Video') {
+    return {
+      ...sharedFields,
+      description: uuid.currentRevision?.content, // not sure about this one
+      content: uuid.currentRevision?.url, // not sure about this one
+    }
+  }
+
+  /*return {
+    title: entityData.title,
+    meta_title: uuid.currentRevision?.content
+    meta_description: metaData?.metaDescription,
+    icon: entityData.typename === 'CoursePage' ? 'explanation' : undefined,
+  }*/
 }
