@@ -19,6 +19,7 @@ export default renderedPageNoHooks<AddRevisionProps>((props) => (
   </FrontendClientBase>
 ))
 
+// @ts-expect-error TODO: find the right types that edtr is expecting
 export const getServerSideProps: GetServerSideProps<AddRevisionProps> = async (
   context
 ) => {
@@ -45,7 +46,7 @@ export const getServerSideProps: GetServerSideProps<AddRevisionProps> = async (
   if (!uuid || !types.includes(uuid.__typename))
     return { kind: 'error', errorData: { code: 404 } }
 
-  // TODO: Handle user, taxonomy
+  // TODO: Handle user and taxonomy
 
   return {
     props: createInitialState(uuid as QueryResponseNoRevision),
@@ -185,11 +186,4 @@ function createInitialState(uuid: QueryResponseNoRevision) {
       content: uuid.currentRevision?.url, // not sure about this one
     }
   }
-
-  /*return {
-    title: entityData.title,
-    meta_title: uuid.currentRevision?.content
-    meta_description: metaData?.metaDescription,
-    icon: entityData.typename === 'CoursePage' ? 'explanation' : undefined,
-  }*/
 }
