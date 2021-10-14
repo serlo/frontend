@@ -637,114 +637,126 @@ export function deserialize({
       converted: !isEdtr(deserializeEditorState(state.description) || empty),
     }
   }
+}
 
-  interface AppletSerializedState extends Entity {
-    title?: string
-    url?: string
-    content: SerializedEditorState
-    reasoning: SerializedEditorState
-    meta_title?: string
-    meta_description?: string
+export type EntitySerializedStates =
+  | AppletSerializedState
+  | ArticleSerializedState
+  | CourseSerializedState
+  | CoursePageSerializedState
+  | EventSerializedState
+  | MathPuzzleSerializedState
+  | TextExerciseSerializedState
+  | TextExerciseGroupSerializedState
+  | TextSolutionSerializedState
+  | VideoSerializedState
+
+export interface AppletSerializedState extends Entity {
+  title?: string
+  url?: string
+  content: SerializedEditorState
+  reasoning: SerializedEditorState
+  meta_title?: string
+  meta_description?: string
+}
+
+export interface ArticleSerializedState extends Entity {
+  title?: string
+  content: SerializedEditorState
+  reasoning: SerializedEditorState
+  meta_title?: string
+  meta_description?: string
+}
+
+export interface CourseSerializedState extends Entity {
+  title?: string
+  description: SerializedEditorState
+  reasoning: SerializedEditorState
+  meta_description?: string
+  'course-page'?: CoursePageSerializedState[]
+}
+
+export interface CoursePageSerializedState extends Entity {
+  title?: string
+  icon?: 'explanation' | 'play' | 'question'
+  content: SerializedEditorState
+}
+
+export interface EventSerializedState extends Entity {
+  title?: string
+  content: SerializedEditorState
+  meta_title?: string
+  meta_description?: string
+}
+
+export interface MathPuzzleSerializedState extends Entity {
+  content: SerializedEditorState
+  source?: string
+}
+
+export interface PageSerializedState extends Uuid, License {
+  title?: string
+  content: SerializedEditorState
+}
+
+export interface TaxonomySerializedState extends Uuid {
+  term: {
+    name: string
   }
+  description: SerializedEditorState
+  taxonomy: number
+  parent: number
+  position: number
+}
 
-  interface ArticleSerializedState extends Entity {
-    title?: string
-    content: SerializedEditorState
-    reasoning: SerializedEditorState
-    meta_title?: string
-    meta_description?: string
-  }
-
-  interface CourseSerializedState extends Entity {
-    title?: string
-    description: SerializedEditorState
-    reasoning: SerializedEditorState
-    meta_description?: string
-    'course-page'?: CoursePageSerializedState[]
-  }
-
-  interface CoursePageSerializedState extends Entity {
-    title?: string
-    icon?: 'explanation' | 'play' | 'question'
-    content: SerializedEditorState
-  }
-
-  interface EventSerializedState extends Entity {
-    title?: string
-    content: SerializedEditorState
-    meta_title?: string
-    meta_description?: string
-  }
-
-  interface MathPuzzleSerializedState extends Entity {
-    content: SerializedEditorState
-    source?: string
-  }
-
-  interface PageSerializedState extends Uuid, License {
-    title?: string
-    content: SerializedEditorState
-  }
-
-  interface TaxonomySerializedState extends Uuid {
-    term: {
-      name: string
-    }
-    description: SerializedEditorState
-    taxonomy: number
-    parent: number
-    position: number
-  }
-
-  interface TextExerciseSerializedState extends Entity {
-    content: SerializedEditorState
-    'text-solution'?: TextSolutionSerializedState
-    'single-choice-right-answer'?: {
-      content: SerializedLegacyEditorState
-      feedback: SerializedLegacyEditorState
-    }
-    'single-choice-wrong-answer'?: {
-      content: SerializedLegacyEditorState
-      feedback: SerializedLegacyEditorState
-    }[]
-    'multiple-choice-right-answer'?: { content: SerializedLegacyEditorState }[]
-    'multiple-choice-wrong-answer'?: {
-      content: SerializedLegacyEditorState
-      feedback: SerializedLegacyEditorState
-    }[]
-    'input-expression-equal-match-challenge'?: InputType
-    'input-number-exact-match-challenge'?: InputType
-    'input-string-normalized-match-challenge': InputType
-  }
-
-  interface InputType {
-    solution: string
+export interface TextExerciseSerializedState extends Entity {
+  content: SerializedEditorState
+  'text-solution'?: TextSolutionSerializedState
+  'single-choice-right-answer'?: {
+    content: SerializedLegacyEditorState
     feedback: SerializedLegacyEditorState
-    'input-expression-equal-match-challenge'?: InputType[]
-    'input-number-exact-match-challenge'?: InputType[]
-    'input-string-normalized-match-challenge'?: InputType[]
   }
+  'single-choice-wrong-answer'?: {
+    content: SerializedLegacyEditorState
+    feedback: SerializedLegacyEditorState
+  }[]
+  'multiple-choice-right-answer'?: { content: SerializedLegacyEditorState }[]
+  'multiple-choice-wrong-answer'?: {
+    content: SerializedLegacyEditorState
+    feedback: SerializedLegacyEditorState
+  }[]
+  'input-expression-equal-match-challenge'?: InputType
+  'input-number-exact-match-challenge'?: InputType
+  'input-string-normalized-match-challenge': InputType
+}
 
-  interface TextExerciseGroupSerializedState extends Entity {
-    cohesive?: string
-    content: SerializedEditorState
-    'grouped-text-exercise'?: TextExerciseSerializedState[]
-  }
+interface InputType {
+  solution: string
+  feedback: SerializedLegacyEditorState
+  'input-expression-equal-match-challenge'?: InputType[]
+  'input-number-exact-match-challenge'?: InputType[]
+  'input-string-normalized-match-challenge'?: InputType[]
+}
 
-  interface TextSolutionSerializedState extends Entity {
-    content: SerializedEditorState
-  }
+export interface TextExerciseGroupSerializedState extends Entity {
+  cohesive?: string
+  content: SerializedEditorState
+  'grouped-text-exercise'?: TextExerciseSerializedState[]
+}
 
-  interface UserSerializedState extends Uuid {
-    description: SerializedEditorState
-  }
+export interface TextSolutionSerializedState extends Entity {
+  content: SerializedEditorState
+}
 
-  interface VideoSerializedState extends Entity {
-    title?: string
-    description: SerializedEditorState
-    content?: string
-    reasoning: SerializedEditorState
-  }
+export interface UserSerializedState extends Uuid {
+  description: SerializedEditorState
+}
+
+export interface VideoSerializedState extends Entity {
+  title?: string
+  description: SerializedEditorState
+  content?: string
+  reasoning: SerializedEditorState
 }
 
 export interface DeserializedState<T extends StateType> {

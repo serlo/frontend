@@ -3,6 +3,21 @@ import request from 'graphql-request'
 import { GetServerSideProps } from 'next'
 
 import { endpoint } from '@/api/endpoint'
+import {
+  EntitySerializedStates,
+  ArticleSerializedState,
+  AppletSerializedState,
+  CourseSerializedState,
+  CoursePageSerializedState,
+  EventSerializedState,
+  PageSerializedState,
+  TaxonomySerializedState,
+  TextExerciseSerializedState,
+  UserSerializedState,
+  TextExerciseGroupSerializedState,
+  VideoSerializedState,
+  TextSolutionSerializedState,
+} from '@/components/edtr-io/deserialize'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { AddRevision, AddRevisionProps } from '@/components/pages/add-revision'
 import { dataQuery } from '@/fetcher/query'
@@ -11,11 +26,12 @@ import {
   QueryResponse,
   QueryResponseNoRevision,
 } from '@/fetcher/query-types'
+import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks<AddRevisionProps>((props) => (
   <FrontendClientBase noContainers loadLoggedInData>
-    <AddRevision {...props} />
+    {props.initialState ? <AddRevision {...props} /> : 'whoops'}
   </FrontendClientBase>
 ))
 
@@ -48,13 +64,21 @@ export const getServerSideProps: GetServerSideProps<AddRevisionProps> = async (
 
   return {
     props: {
-      initialState: createInitialState(uuid as QueryResponseNoRevision),
-      type: uuid.__typename.toLowerCase(),
+      initialState: responseToState(uuid as QueryResponseNoRevision),
+      type: uuid.__typename.toLowerCase(), // TODO: check expected format
     },
   }
 }
 
-function createInitialState(uuid: QueryResponseNoRevision) {
+function responseToState(
+  uuid: QueryResponseNoRevision
+):
+  | EntitySerializedStates
+  | PageSerializedState
+  | TaxonomySerializedState
+  | UserSerializedState
+  | null {
+  if (!uuid) return null
   const license =
     'license' in uuid
       ? {
@@ -69,18 +93,46 @@ function createInitialState(uuid: QueryResponseNoRevision) {
 
   const currentRev =
     'currentRevision' in uuid ? uuid.currentRevision : undefined
-  const title =
-    currentRev && 'title' in currentRev ? currentRev.title : undefined
+  const title = currentRev && 'title' in currentRev ? currentRev.title : ''
   const content =
-    currentRev && 'content' in currentRev ? currentRev.content : undefined
+    currentRev && 'content' in currentRev ? currentRev.content : ''
+  const meta_title =
+    currentRev && hasOwnPropertyTs(currentRev, 'meta_title')
+      ? currentRev.meta_title
+      : ''
+  const meta_description =
+    currentRev && hasOwnPropertyTs(currentRev, 'meta_description')
+      ? currentRev.meta_description
+      : ''
 
-  if (uuid.__typename === 'Page') {
+  const reasoning = '' // TODO: query
+
+  const entityFields = {
+    id,
+    license,
+  }
+
+  if (uuid.__typename === 'Applet') {
     return {
-      id,
-      license,
+      ...entityFields,
       title,
       content,
-    }
+      reasoning,
+      meta_title,
+      meta_description,
+      url: uuid.currentRevision?.url,
+    } as AppletSerializedState
+  }
+
+  if (uuid.__typename === 'Article') {
+    return {
+      ...entityFields,
+      title,
+      content,
+      reasoning,
+      meta_title,
+      meta_description,
+    } as ArticleSerializedState
   }
 
   if (uuid.__typename === 'Course') {
@@ -88,103 +140,148 @@ function createInitialState(uuid: QueryResponseNoRevision) {
       return {
         id: id, // TODO: get page id
         license,
-        changes: '',
         title: page.currentRevision?.title,
         icon: 'explanation',
         content: '', // TODO: check, do we need content here?
-      }
+      } as CoursePageSerializedState
     })
 
     return {
-      id,
-      license,
+      ...entityFields,
       title,
-      changes: '',
-      reasoning: '',
+      description: '',
+      reasoning,
+      meta_description,
       'course-page': coursePages,
-    }
-  }
-
-  if (uuid.__typename === 'User' || uuid.__typename === 'TaxonomyTerm') {
-    // TODO: handle
-    return null
-  }
-
-  const sharedFields = {
-    id,
-    license,
-    title,
-    content,
-    changes: '',
-    reasoning: '',
-  }
-
-  if (uuid.__typename === 'Article') {
-    return {
-      ...sharedFields,
-      meta_title: uuid.currentRevision?.metaTitle,
-      meta_description: uuid.currentRevision?.metaDescription,
-    }
-  }
-
-  if (uuid.__typename === 'Applet') {
-    return {
-      ...sharedFields,
-      url: uuid.currentRevision?.url,
-      meta_title: uuid.currentRevision?.metaTitle,
-      meta_description: uuid.currentRevision?.metaDescription,
-    }
+    } as CourseSerializedState
   }
 
   if (uuid.__typename === 'CoursePage') {
     return {
-      ...sharedFields,
-      icon: 'explanation',
-    }
+      ...entityFields,
+      title,
+      content,
+      icon: 'explanation', // TODO: ?
+    } as CoursePageSerializedState
   }
 
   if (uuid.__typename === 'Event') {
     return {
-      ...sharedFields,
-      title: uuid.currentRevision?.title,
-      meta_description: '',
-    }
+      ...entityFields,
+      title,
+      content,
+      meta_title,
+      meta_description,
+    } as EventSerializedState
   }
 
-  if (uuid.__typename === 'Exercise') {
+  // Do we need to support Math Puzzle in any way?
+
+  if (uuid.__typename === 'Exercise' || uuid.__typename === 'GroupedExercise') {
+    // // TODO: build solution
+    // const solutionFields = create…
+
     return {
-      id,
-      license,
-      changes: '',
+      ...entityFields,
       content,
-      'text-solution': {
-        id: uuid.solution?.id,
-        license: uuid.solution?.license,
-        content: uuid.solution?.currentRevision?.content,
+      // ... solutionFields
+    } as TextExerciseSerializedState
+
+    /*
+    'text-solution': { content: uuid.solution?.currentRevision?.content },
+      'single-choice-right-answer': {
+        content: uuid.solution?.currentRevision?.content, 
+        feedback: 'SerializedLegacyEditorState', // TODO
       },
-    }
+  'single-choice-wrong-answer': [{
+    content: 'SerializedLegacyEditorState'
+    feedback: 'SerializedLegacyEditorState'
+  }],
+  'multiple-choice-right-answer': [{ content: 'SerializedLegacyEditorState' }]
+  'multiple-choice-wrong-answer': [{
+    content: 'SerializedLegacyEditorState'
+    feedback: 'SerializedLegacyEditorState'
+  }],
+  'input-expression-equal-match-challenge': 'InputType',
+  'input-number-exact-match-challenge': 'InputType',
+  'input-string-normalized-match-challenge': 'InputType'
+   /*
+  'text-solution'?: TextSolutionSerializedState
+  'single-choice-right-answer'?: {
+    content: SerializedLegacyEditorState
+    feedback: SerializedLegacyEditorState
+  }
+  'single-choice-wrong-answer'?: {
+    content: SerializedLegacyEditorState
+    feedback: SerializedLegacyEditorState
+  }[]
+  'multiple-choice-right-answer'?: { content: SerializedLegacyEditorState }[]
+  'multiple-choice-wrong-answer'?: {
+    content: SerializedLegacyEditorState
+    feedback: SerializedLegacyEditorState
+  }[]
+  'input-expression-equal-match-challenge'?: InputType
+  'input-number-exact-match-challenge'?: InputType
+  'input-string-normalized-match-challenge': InputType
+  */
   }
 
   if (uuid.__typename === 'ExerciseGroup') {
     const exercises = uuid.exercises.map((ex) => {
-      // TODO:
-      return ex
+      // TODO: build exercises with shared function
+      // as TextExerciseSerializedState
+      return ex as unknown as TextExerciseSerializedState
     })
 
     return {
-      id,
-      license,
-      changes: '',
+      ...entityFields,
       content,
+      cohesive: '', // TODO: query
       'grouped-text-exercise': exercises,
-    }
+    } as TextExerciseGroupSerializedState
+  }
+
+  if (uuid.__typename === 'Solution') {
+    return {
+      ...entityFields,
+      content,
+    } as TextSolutionSerializedState
   }
 
   if (uuid.__typename === 'Video') {
     return {
-      ...sharedFields,
-      description: uuid.currentRevision?.content, // not sure about this one
-      content: uuid.currentRevision?.url, // not sure about this one
-    }
+      ...entityFields,
+      title,
+      description: content,
+      content: uuid.currentRevision?.url,
+      reasoning,
+    } as VideoSerializedState
   }
+
+  if (uuid.__typename === 'Page') {
+    return {
+      title,
+      content,
+    } as PageSerializedState
+  }
+
+  if (uuid.__typename === 'User') {
+    return {
+      description: uuid.description,
+    } as UserSerializedState
+  }
+
+  if (uuid.__typename === 'TaxonomyTerm') {
+    return {
+      term: {
+        name: uuid.name,
+      },
+      description: uuid.description,
+      taxonomy: 0, // TODO:
+      parent: 0, // TODO:
+      position: 0, // TODO:
+    } as TaxonomySerializedState
+  }
+
+  return null
 }
