@@ -51,8 +51,6 @@ export function editorResponseToState(
       ? currentRev.meta_description
       : ''
 
-  const reasoning = '' // TODO: query
-
   const entityFields = {
     id,
     license,
@@ -63,7 +61,6 @@ export function editorResponseToState(
       ...entityFields,
       title,
       content,
-      reasoning,
       meta_title,
       meta_description,
       url: uuid.currentRevision?.url,
@@ -75,7 +72,6 @@ export function editorResponseToState(
       ...entityFields,
       title,
       content,
-      reasoning,
       meta_title,
       meta_description,
     } as ArticleSerializedState
@@ -85,7 +81,6 @@ export function editorResponseToState(
     const coursePages = uuid.pages.map((page) => {
       return {
         id: id, // TODO: get page id
-        license,
         title: page.currentRevision?.title,
         icon: 'explanation',
         content: '', // TODO: check, do we need content here?
@@ -96,7 +91,6 @@ export function editorResponseToState(
       ...entityFields,
       title,
       description: '',
-      reasoning,
       meta_description,
       'course-page': coursePages,
     } as CourseSerializedState
@@ -107,7 +101,7 @@ export function editorResponseToState(
       ...entityFields,
       title,
       content,
-      icon: 'explanation', // TODO: ?
+      icon: 'explanation',
     } as CoursePageSerializedState
   }
 
@@ -182,7 +176,7 @@ export function editorResponseToState(
     return {
       ...entityFields,
       content,
-      cohesive: '', // TODO: query
+      cohesive: undefined, // TODO: Currently not exposed in API
       'grouped-text-exercise': exercises,
     } as TextExerciseGroupSerializedState
   }
@@ -200,7 +194,6 @@ export function editorResponseToState(
       title,
       description: content,
       content: uuid.currentRevision?.url,
-      reasoning,
     } as VideoSerializedState
   }
 
@@ -223,7 +216,7 @@ export function editorResponseToState(
         name: uuid.name,
       },
       description: uuid.description,
-      taxonomy: 0, // TODO:
+      taxonomy: uuid.id, // TODO:
       parent: 0, // TODO:
       position: 0, // TODO:
     } as TaxonomySerializedState

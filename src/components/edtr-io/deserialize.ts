@@ -655,7 +655,7 @@ export interface AppletSerializedState extends Entity {
   title?: string
   url?: string
   content: SerializedEditorState
-  reasoning: SerializedEditorState
+  reasoning?: SerializedEditorState
   meta_title?: string
   meta_description?: string
 }
@@ -663,7 +663,7 @@ export interface AppletSerializedState extends Entity {
 export interface ArticleSerializedState extends Entity {
   title?: string
   content: SerializedEditorState
-  reasoning: SerializedEditorState
+  reasoning?: SerializedEditorState
   meta_title?: string
   meta_description?: string
 }
@@ -671,7 +671,7 @@ export interface ArticleSerializedState extends Entity {
 export interface CourseSerializedState extends Entity {
   title?: string
   description: SerializedEditorState
-  reasoning: SerializedEditorState
+  reasoning?: SerializedEditorState
   meta_description?: string
   'course-page'?: CoursePageSerializedState[]
 }
@@ -756,7 +756,7 @@ export interface VideoSerializedState extends Entity {
   title?: string
   description: SerializedEditorState
   content?: string
-  reasoning: SerializedEditorState
+  reasoning?: SerializedEditorState
 }
 
 export interface DeserializedState<T extends StateType> {
