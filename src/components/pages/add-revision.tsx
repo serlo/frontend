@@ -5,16 +5,16 @@ import { SerloEditor } from '@/components/edtr-io/serlo-editor'
 
 export interface AddRevisionProps {
   initialState: unknown
+  type: string
 }
 
-export function AddRevision({ initialState }: AddRevisionProps) {
-  console.log(initialState)
+export function AddRevision({ initialState, type }: AddRevisionProps) {
   return (
     <>
       <MathSpan formula="" />
       <div className={clsx('max-w-[816px] mx-auto mb-24 edtr-io')}>
         <div className="controls w-full h-12 flex justify-between pt-4 pl-5 pr-3" />
-        <SerloEditor state={initialState} />
+        <SerloEditor state={initialState} type={type} />
       </div>
       <style jsx global>{`
         .edtr-io h1 {

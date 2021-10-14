@@ -46,11 +46,10 @@ export const getServerSideProps: GetServerSideProps<AddRevisionProps> = async (
   if (!uuid || !types.includes(uuid.__typename))
     return { kind: 'error', errorData: { code: 404 } }
 
-  // TODO: Handle user and taxonomy
-
   return {
     props: {
       initialState: createInitialState(uuid as QueryResponseNoRevision),
+      type: uuid.__typename.toLowerCase(),
     },
   }
 }

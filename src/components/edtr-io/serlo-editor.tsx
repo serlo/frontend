@@ -2,7 +2,7 @@ import { LoadingSpinner } from '../loading/loading-spinner'
 import { Editor } from './editor'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
-export function SerloEditor({ state }: any) {
+export function SerloEditor({ state, type }: { state: unknown; type: string }) {
   const loggedInData = useLoggedInData()
 
   if (!loggedInData)
@@ -22,7 +22,7 @@ export function SerloEditor({ state }: any) {
           res(undefined)
         })
       }}
-      type="article"
+      type={type}
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       initialState={state}
     />
