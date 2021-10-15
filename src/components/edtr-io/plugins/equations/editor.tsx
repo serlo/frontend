@@ -198,12 +198,13 @@ export function EquationsEditor(props: EquationsProps) {
 
                       return (
                         <ExplanationTr
-                          onFocus={() =>
+                        /* TODO: investigate why this is not working */
+                        /*onFocus={() =>
                             gridFocus.setFocus({
                               row,
                               column: StepSegment.Explanation,
                             })
-                          }
+                          }*/
                         >
                           <td />
                           <td />
