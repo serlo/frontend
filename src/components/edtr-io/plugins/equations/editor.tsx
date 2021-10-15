@@ -85,8 +85,9 @@ export function EquationsEditor(props: EquationsProps) {
 
   React.useEffect(() => {
     if (nestedFocus) {
-      gridFocus.setFocus({ row: 0, column: 0 })
-      store.dispatch(focus(props.id))
+      // TODO: fixing freeze, investigate why this is deadlooping
+      //gridFocus.setFocus({ row: 0, column: 0 })
+      //store.dispatch(focus(props.id))
     }
   }, [nestedFocus, gridFocus, store, props.id])
 
