@@ -43,10 +43,9 @@ import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 
 const empty: RowsPlugin = { plugin: 'rows', state: [] }
 
-// converts query response to deserialized editor state
-
 // TODO: What about revisions?
 
+// converts query response to deserialized editor state
 export function editorResponseToState(
   uuid: QueryResponse,
   type: SerloEditorProps['type'],
@@ -76,11 +75,11 @@ export function editorResponseToState(
   const license =
     'license' in uuid
       ? {
-          agreement: uuid.license.title, // TODO: get agreement
-          iconHref: 'https://i.creativecommons.org/l/by-sa/4.0/88x31.png', // TODO: get or create icon
           id: uuid.license.id,
           title: uuid.license.title,
           url: uuid.license.url,
+          agreement: uuid.license.agreement,
+          iconHref: uuid.license.iconHref,
         }
       : undefined
   const { id } = uuid
@@ -98,6 +97,7 @@ export function editorResponseToState(
     currentRev && hasOwnPropertyTs(currentRev, 'meta_description')
       ? (currentRev.meta_description as string)
       : ''
+  const revision = 0 // TODO:
 
   const entityFields = {
     id,
@@ -133,7 +133,7 @@ export function editorResponseToState(
         plugin: 'type-applet',
         state: {
           ...entityFields,
-          revision: 2, // TODO:
+          revision,
           changes: '',
           title,
           url: uuid.currentRevision?.url || '',
@@ -158,7 +158,7 @@ export function editorResponseToState(
         plugin: 'type-article',
         state: {
           ...entityFields,
-          revision: 0, // TODO:
+          revision,
           changes: '',
           title,
           content: getContent(),
@@ -211,16 +211,22 @@ export function editorResponseToState(
         plugin: 'type-course',
         state: {
           ...entityFields,
-          revision: 0, // TODO:
+          revision,
           changes: '',
           title,
           description: serializeEditorState(
-            toEdtr(convertEditorState('')) // TODO: get description
+            toEdtr(convertEditorState('')) // TODO: is this field still supported?
           ),
           meta_description,
-          'course-page': (uuid.pages || []).map(
-            (s) => convertCoursePage(s.currentRevision as unknown as CoursePage) // TODO: get missing fields
-          ),
+          'course-page': (uuid.pages || []).map((page) => {
+            return convertCoursePage({
+              ...page,
+              currentRevision: {
+                title: page.currentRevision?.title ?? '',
+                content: page.currentRevision?.content ?? '',
+              },
+            })
+          }),
         },
       },
       converted: !isEdtr(convertEditorState('') || empty),
@@ -228,23 +234,23 @@ export function editorResponseToState(
   }
 
   function convertCoursePage(
-    uuid: CoursePage
+    uuid: Pick<CoursePage, 'id' | 'currentRevision'>
   ): DeserializedState<typeof coursePageTypeState> {
     stack.push({ id: uuid.id, type: 'course-page' })
     return {
       initialState: {
         plugin: 'type-course-page',
         state: {
-          id: uuid.id, // TODO: get course page id
-          license: license!, // TODO: check if it's okay to reuse course license here
-          revision: 0, // TODO
+          id: uuid.id,
+          license: license!, // TODO: check if it's okay to use the course license here
+          revision,
           changes: '',
           title: uuid.currentRevision?.title || '',
           icon: 'explanation',
-          content: '', // TODO: check if we need content here
-          // content: serializeEditorState(
-          //   toEdtr(convertEditorState(uuid.currentRevision?.content))
-          // ),
+          // TODO: check if we actually need content here
+          content: serializeEditorState(
+            toEdtr(convertEditorState(uuid.currentRevision?.content || ''))
+          ),
         },
       },
       converted: !isEdtr(convertEditorState('') || empty),
@@ -258,7 +264,7 @@ export function editorResponseToState(
         plugin: 'type-event',
         state: {
           ...entityFields,
-          revision: 0, // TODO:
+          revision,
           changes: '',
           title,
           content: serializeEditorState(toEdtr(convertEditorState(content))),
@@ -270,29 +276,7 @@ export function editorResponseToState(
     }
   }
 
-  // Do we need to support Math Puzzle in any way?
-
-  /*
-  function convertMathPuzzle(
-    state: MathPuzzleSerializedState
-  ): DeserializedState<typeof mathPuzzleTypeState> {
-    stack.push({ id: state.id, type: 'math-puzzle' })
-    return {
-      initialState: {
-        plugin: 'type-math-puzzle',
-        state: {
-          ...state,
-          changes: '',
-          content: serializeEditorState(
-            toEdtr(convertEditorState(state.content))
-          ),
-          source: state.source || '',
-        },
-      },
-      converted: !isEdtr(convertEditorState(state.content) || empty),
-    }
-  }
-  */
+  // TODO: Do we need to support Math Puzzle in any way?
 
   function convertPage(uuid: Page): DeserializedState<typeof pageTypeState> {
     stack.push({ id: uuid.id, type: 'page' })
@@ -318,9 +302,9 @@ export function editorResponseToState(
         plugin: 'type-taxonomy',
         state: {
           id: uuid.id,
-          parent: uuid.id, // TODO: fetch
+          parent: uuid.parent.id,
           position: uuid.id, // TODO: fetch
-          taxonomy: uuid.id, // TODO: fetch
+          taxonomy: uuid.id, // TODO: this or id is probably not the right value
           term: {
             name: uuid.name,
           },
@@ -367,7 +351,7 @@ export function editorResponseToState(
         state: {
           ...entityFields,
           changes: '',
-          revision: 0,
+          revision,
           // TODO: Check if we have all field to build the solution
           'text-solution': uuid.solution
             ? convertTextSolution(uuid.solution as unknown as Solution)
@@ -596,7 +580,7 @@ export function editorResponseToState(
         state: {
           ...entityFields,
           changes: '',
-          revision: 0,
+          revision,
           content: serializeEditorState(toEdtr(convertEditorState(content))),
           cohesive: false, // TODO: Currently not exposed in API: https://github.com/serlo/api.serlo.org/issues/489
           'grouped-text-exercise': exercises,
@@ -616,7 +600,7 @@ export function editorResponseToState(
         plugin: 'type-text-solution',
         state: {
           ...entityFields,
-          revision: 0,
+          revision,
           changes: '',
           content: getContent(),
         },
@@ -667,7 +651,7 @@ export function editorResponseToState(
           ...entityFields,
           changes: '',
           title,
-          revision: 0,
+          revision,
           description: serializeEditorState(
             toEdtr(convertEditorState(content))
           ),

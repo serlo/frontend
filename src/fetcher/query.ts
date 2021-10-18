@@ -153,8 +153,10 @@ export const dataQuery = gql`
       ... on Course {
         pages(trashed: false) {
           alias
+          id
           currentRevision {
             title
+            content # only for editor. maybe split
           }
         }
         currentRevision {
@@ -168,6 +170,9 @@ export const dataQuery = gql`
         type
         name
         description
+        parent {
+          id
+        }
         navigation {
           data
           ...path
@@ -243,6 +248,8 @@ export const dataQuery = gql`
       url
       title
       default
+      agreement
+      iconHref
     }
   }
 
@@ -295,6 +302,11 @@ export const dataQuery = gql`
       revisions(first: 1, unrevised: true) {
         nodes {
           title
+        }
+      }
+      pages {
+        currentRevision {
+          id
         }
       }
     }

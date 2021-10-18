@@ -6,7 +6,10 @@ import * as GraphQL from '@serlo/api'
 export type Instance = 'de' | 'en' | 'fr' | 'es' | 'ta' | 'hi'
 
 // A license has some more attributes, but we are fine with these
-export type License = Pick<GraphQL.License, 'id' | 'url' | 'title' | 'default'>
+export type License = Pick<
+  GraphQL.License,
+  'id' | 'url' | 'title' | 'default' | 'agreement' | 'iconHref'
+>
 
 // This is one breadcrumb path.
 export interface Path {
@@ -192,9 +195,11 @@ export interface User extends GraphQL.User {
 export interface Course extends Repository {
   __typename: 'Course'
   pages: {
+    id: number
     alias?: string
     currentRevision?: {
       title: string
+      content?: string
     }
   }[]
   currentRevision?: GraphQL.Maybe<Pick<GraphQL.CourseRevision, 'title'>>
@@ -255,6 +260,7 @@ export interface TaxonomyTerm
   __typename: 'TaxonomyTerm'
   navigation?: GraphQL.Maybe<Pick<GraphQL.Navigation, 'data' | 'path'>>
   children: { nodes: TaxonomyTermChildrenLevel1[] }
+  parent: { id: number }
 }
 
 export type TaxonomyTermChildrenLevel1 =
