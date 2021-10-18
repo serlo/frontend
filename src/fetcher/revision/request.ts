@@ -54,7 +54,7 @@ export async function requestRevision(
           createExercise({
             ...uuid,
             license: uuid.repository.license,
-            currentRevision: { content: uuid.content },
+            currentRevision: { content: uuid.content, id: uuid.id },
           }),
         ]
       : null
@@ -79,7 +79,7 @@ export async function requestRevision(
               trashed: uuid.trashed,
               license: uuid.license,
               instance: uuid.instance,
-              currentRevision: { content: uuid.content },
+              currentRevision: { content: uuid.content, id: uuid.id },
               exercise: { id: -1 },
             }),
           ]

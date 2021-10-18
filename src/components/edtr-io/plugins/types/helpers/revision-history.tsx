@@ -1,29 +1,15 @@
 import { PluginToolbarButton } from '@edtr-io/core'
-import { Icon, faCheck, styled } from '@edtr-io/ui'
+import { Icon, faCheck } from '@edtr-io/ui'
 import { faHistory } from '@fortawesome/free-solid-svg-icons'
+import clsx from 'clsx'
+import { gql } from 'graphql-request'
 import moment from 'moment'
-import { PropsWithChildren, useState, useEffect } from 'react'
+import { PropsWithChildren, useState } from 'react'
 
+import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-
-const StyledTR = styled.tr<{ selected: boolean }>((props) => {
-  return props.selected
-    ? {
-        border: '3px solid rgb(0,100,0)',
-      }
-    : {
-        cursor: 'pointer',
-      }
-})
-
-interface RevisionData {
-  id: number
-  timestamp: string
-  author: string
-  changes: string
-  active: boolean
-}
+import { HistoryRevisionsData } from '@/data-types'
 
 export function RevisionHistory<T>(
   props: PropsWithChildren<{
@@ -32,28 +18,27 @@ export function RevisionHistory<T>(
     onSwitchRevision: (data: T) => void
   }>
 ) {
-  const [availableRevisions] = useState<RevisionData[]>([])
   const [showRevisions, setShowRevisions] = useState(false)
-  useEffect(() => {
-    if (props.id !== 0) {
-      /*fetch(`https://de.serlo.org/entity/repository/get-revisions/${props.id}`)
-        .then((response) => response.json())
-        .then((data: RevisionData[]) => {
-          setAvailableRevisions(data)
-        })*/
-    }
-  }, [props.id])
+
+  const revisionsResponse = useRevisionsFetch(props.id)
 
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
   const editorStrings = loggedInData.strings.editor
 
+  if (props.id === 0) return null
+
+  if (!revisionsResponse.data?.uuid.revisions) {
+    return <p>…</p>
+  }
+
+  const revisions = revisionsResponse.data?.uuid.revisions.nodes
+
   return (
     <div>
       <span
         onClick={() => {
-          setShowRevisions(true) //TODO: for debug only
-          if (availableRevisions.length) {
+          if (revisions.length) {
             setShowRevisions(true)
           }
         }}
@@ -73,12 +58,18 @@ export function RevisionHistory<T>(
       >
         {renderTable()}
       </ModalWithCloseButton>
+      <style jsx global>{`
+        .ReactModalPortal .ReactModal__Content {
+          @apply w-[900px] max-w-[90vw] max-h-[80vh];
+          @apply translate-y-0 top-8 overflow-y-scroll;
+        }
+      `}</style>
     </div>
   )
 
   function renderTable() {
     return (
-      <table className="serlo-table">
+      <table className="serlo-table relative">
         <thead>
           <tr>
             <th>#</th>
@@ -86,25 +77,68 @@ export function RevisionHistory<T>(
             <th>{editorStrings.edtrIo.changes}</th>
             <th>{editorStrings.edtrIo.author}</th>
             <th>{editorStrings.edtrIo.createdAt}</th>
+            {/* <style jsx>{`
+              th {
+                @apply sticky top-0 bg-white p-1;
+              }
+            `}</style> */}
           </tr>
         </thead>
         <tbody>
-          {availableRevisions.map((revisionData) => {
-            const selected = props.currentRevision
-              ? props.currentRevision === revisionData.id
-              : revisionData.active
+          {revisions.map(({ id, trashed, date, changes, author }) => {
+            const isCurrentlyAccepted = props.currentRevision === id
+            const isCurrentlyOpen = false //TODO!
+            const selected = false // TODO!
 
-            const dateTime = moment.utc(revisionData.timestamp).local()
+            console.log(trashed)
+            console.log(isCurrentlyOpen)
+
+            const dateTime = moment.utc(date).local()
             return (
-              <StyledTR
-                selected={selected}
+              <tr
+                className={clsx(
+                  selected ? 'border-3 border-brand' : 'cursor-pointer'
+                )}
                 onClick={() => {
                   // don't select the current selected
-                  if (selected) return
-                  // TODO: Build fetch
-                  alert('not implemented yet')
-                  /*void fetch(
-                        `/entity/repository/get-revision-data/${props.id}/${revisionData.id}`
+                  if (selected) return null
+                  fetchRevisionData()
+                }}
+                key={id}
+              >
+                <td className="serlo-td">{id}</td>
+                <td className="serlo-td">
+                  {isCurrentlyAccepted ? <Icon icon={faCheck} /> : null}
+                </td>
+                <td className="serlo-td">{changes}</td>
+                <td className="serlo-td">{author.username}</td>
+                <td className="serlo-td" title={dateTime.format('LL, LTS')}>
+                  {dateTime.fromNow()}
+                </td>
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
+    )
+  }
+
+  function useRevisionsFetch(id: number) {
+    return useGraphqlSwr<{ uuid: HistoryRevisionsData }>({
+      //misusing type here…
+      query: revisionsQuery,
+      variables: { id },
+      config: {
+        refreshInterval: 1 * 60 * 1000, //1min
+      },
+    })
+  }
+
+  function fetchRevisionData() {
+    // TODO: Build fetch
+    alert('not implemented yet')
+    /*void fetch(
+                        `/entity/repository/get-revision-data/${props.id}/${id}`
                       )
                         .then((response) => response.json())
                         .then((data: { state: unknown; type: string }) => {
@@ -121,19 +155,158 @@ export function RevisionHistory<T>(
                             setShowRevisions(false)
                           }
                         })*/
-                }}
-                key={revisionData.id}
-              >
-                <td>{revisionData.id}</td>
-                <td>{revisionData.active ? <Icon icon={faCheck} /> : null}</td>
-                <th>{revisionData.changes}</th>
-                <td>{revisionData.author}</td>
-                <td title={dateTime.format('LL, LTS')}>{dateTime.fromNow()}</td>
-              </StyledTR>
-            )
-          })}
-        </tbody>
-      </table>
-    )
   }
 }
+
+const revisionsQuery = gql`
+  query getRevisionIds($id: Int!) {
+    uuid(id: $id) {
+      ... on Applet {
+        revisions {
+          nodes {
+            id
+            trashed
+            author {
+              ...authorData
+            }
+            changes
+            date
+          }
+        }
+      }
+      ... on Article {
+        revisions {
+          nodes {
+            id
+            trashed
+            author {
+              ...authorData
+            }
+            changes
+            date
+          }
+        }
+      }
+      ... on Course {
+        revisions {
+          nodes {
+            id
+            trashed
+            author {
+              ...authorData
+            }
+            changes
+            date
+          }
+        }
+      }
+      ... on CoursePage {
+        revisions {
+          nodes {
+            id
+            trashed
+            author {
+              ...authorData
+            }
+            changes
+            date
+          }
+        }
+      }
+      ... on Event {
+        revisions {
+          nodes {
+            id
+            trashed
+            author {
+              ...authorData
+            }
+            changes
+            date
+          }
+        }
+      }
+      ... on Exercise {
+        revisions {
+          nodes {
+            id
+            trashed
+            author {
+              ...authorData
+            }
+            changes
+            date
+          }
+        }
+      }
+      ... on ExerciseGroup {
+        revisions {
+          nodes {
+            id
+            trashed
+            author {
+              ...authorData
+            }
+            changes
+            date
+          }
+        }
+      }
+      ... on GroupedExercise {
+        revisions {
+          nodes {
+            id
+            trashed
+            author {
+              ...authorData
+            }
+            changes
+            date
+          }
+        }
+      }
+      ... on Page {
+        revisions {
+          nodes {
+            id
+            trashed
+            author {
+              ...authorData
+            }
+            date
+          }
+        }
+      }
+      ... on Video {
+        revisions {
+          nodes {
+            id
+            trashed
+            author {
+              ...authorData
+            }
+            changes
+            date
+          }
+        }
+      }
+      ... on Solution {
+        solutionRevisions: revisions {
+          nodes {
+            id
+            author {
+              ...authorData
+            }
+            changes
+            date
+          }
+        }
+      }
+    }
+  }
+
+  fragment authorData on User {
+    id
+    username
+  }
+`

@@ -97,7 +97,8 @@ export function editorResponseToState(
     currentRev && hasOwnPropertyTs(currentRev, 'meta_description')
       ? (currentRev.meta_description as string)
       : ''
-  const revision = 0 // TODO:
+  const revision =
+    currentRev && hasOwnPropertyTs(currentRev, 'id') ? currentRev.id : 0
 
   const entityFields = {
     id,
@@ -222,6 +223,7 @@ export function editorResponseToState(
             return convertCoursePage({
               ...page,
               currentRevision: {
+                id: page.id,
                 title: page.currentRevision?.title ?? '',
                 content: page.currentRevision?.content ?? '',
               },

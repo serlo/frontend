@@ -46,7 +46,7 @@ export interface Article extends EntityWithTaxonomyTerms {
   currentRevision?: GraphQL.Maybe<
     Pick<
       GraphQL.ArticleRevision,
-      'title' | 'content' | 'metaTitle' | 'metaDescription'
+      'title' | 'content' | 'metaTitle' | 'metaDescription' | 'id'
     >
   >
   revisions: {
@@ -62,7 +62,7 @@ export interface Article extends EntityWithTaxonomyTerms {
 export interface Video extends EntityWithTaxonomyTerms {
   __typename: 'Video'
   currentRevision?: GraphQL.Maybe<
-    Pick<GraphQL.VideoRevision, 'title' | 'url' | 'content'>
+    Pick<GraphQL.VideoRevision, 'title' | 'url' | 'content' | 'id'>
   >
   revisions: {
     totalCount: number
@@ -79,7 +79,7 @@ export interface Applet extends EntityWithTaxonomyTerms {
   currentRevision?: GraphQL.Maybe<
     Pick<
       GraphQL.AppletRevision,
-      'title' | 'content' | 'url' | 'metaTitle' | 'metaDescription'
+      'title' | 'content' | 'url' | 'metaTitle' | 'metaDescription' | 'id'
     >
   >
   revisions: {
@@ -95,7 +95,7 @@ export interface Applet extends EntityWithTaxonomyTerms {
 export interface CoursePage extends Entity {
   __typename: 'CoursePage'
   currentRevision?: GraphQL.Maybe<
-    Pick<GraphQL.CoursePageRevision, 'content' | 'title'>
+    Pick<GraphQL.CoursePageRevision, 'content' | 'title' | 'id'>
   >
   revisions: {
     totalCount: number
@@ -107,11 +107,16 @@ export interface CoursePage extends Entity {
   }
   course: {
     id: number
-    currentRevision?: GraphQL.Maybe<Pick<GraphQL.CourseRevision, 'title'>>
+    currentRevision?: GraphQL.Maybe<
+      Pick<GraphQL.CourseRevision, 'title' | 'id'>
+    >
     pages: {
       alias?: string
       id: number
-      currentRevision: Pick<GraphQL.CoursePageRevision, 'title' | 'trashed'>
+      currentRevision: Pick<
+        GraphQL.CoursePageRevision,
+        'title' | 'trashed' | 'id'
+      >
     }[]
     revisions: {
       totalCount: number
@@ -124,14 +129,16 @@ export interface CoursePage extends Entity {
 export interface BareExercise extends Entity {
   trashed: boolean
   currentRevision?: GraphQL.Maybe<
-    Pick<GraphQL.AbstractExerciseRevision, 'content'>
+    Pick<GraphQL.AbstractExerciseRevision, 'content' | 'id'>
   >
   revisions?: {
     totalCount: number
   }
   solution?: {
     id: number
-    currentRevision?: GraphQL.Maybe<Pick<GraphQL.SolutionRevision, 'content'>>
+    currentRevision?: GraphQL.Maybe<
+      Pick<GraphQL.SolutionRevision, 'content' | 'id'>
+    >
     license: License
   }
   license: License
@@ -152,7 +159,7 @@ export interface GroupedExercise extends BareExercise {
 export interface BareExerciseGroup extends Entity {
   __typename: 'ExerciseGroup'
   currentRevision?: GraphQL.Maybe<
-    Pick<GraphQL.ExerciseGroupRevision, 'content'>
+    Pick<GraphQL.ExerciseGroupRevision, 'content' | 'id'>
   >
   revisions?: {
     totalCount: number
@@ -166,7 +173,9 @@ export type ExerciseGroup = BareExerciseGroup & EntityWithTaxonomyTerms
 export interface Solution extends Repository {
   __typename: 'Solution'
   trashed: boolean
-  currentRevision?: GraphQL.Maybe<Pick<GraphQL.SolutionRevision, 'content'>>
+  currentRevision?: GraphQL.Maybe<
+    Pick<GraphQL.SolutionRevision, 'content' | 'id'>
+  >
   license: License
   exercise: { id: number }
   unrevisedRevisions?: number
@@ -177,7 +186,7 @@ export interface Event extends Repository {
   __typename: 'Event'
   trashed: boolean
   currentRevision?: GraphQL.Maybe<
-    Pick<GraphQL.EventRevision, 'content' | 'title'>
+    Pick<GraphQL.EventRevision, 'content' | 'title' | 'id'>
   >
 }
 
@@ -200,9 +209,10 @@ export interface Course extends Repository {
     currentRevision?: {
       title: string
       content?: string
+      id: number
     }
   }[]
-  currentRevision?: GraphQL.Maybe<Pick<GraphQL.CourseRevision, 'title'>>
+  currentRevision?: GraphQL.Maybe<Pick<GraphQL.CourseRevision, 'title' | 'id'>>
   revisions: {
     totalCount: number
   }
@@ -219,6 +229,7 @@ export interface TaxonomyTermChildOnX extends TaxonomyTermChild {
   __typename: 'Article' | 'Video' | 'Applet' | 'Course' | 'Event'
   currentRevision?: {
     title: string
+    id: number
   }
   revisions?: { nodes?: [{ title: string }] }
 }
