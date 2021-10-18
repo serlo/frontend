@@ -1,5 +1,7 @@
 // eslint-disable-next-line import/no-internal-modules
 import { StateType, StateTypeSerializedType } from '@edtr-io/plugin'
+import { InputExercisePluginState } from '@edtr-io/plugin-input-exercise'
+import { ScMcExercisePluginState } from '@edtr-io/plugin-sc-mc-exercise'
 import {
   convert,
   isEdtr,
@@ -9,6 +11,7 @@ import {
   OtherPlugin,
   Splish,
 } from '@serlo/legacy-editor-to-editor'
+import R from 'ramda'
 
 import { appletTypeState } from './plugins/types/applet'
 import { articleTypeState } from './plugins/types/article'
@@ -48,7 +51,6 @@ const empty: RowsPlugin = { plugin: 'rows', state: [] }
 // converts query response to deserialized editor state
 export function editorResponseToState(
   uuid: QueryResponse,
-  type: SerloEditorProps['type'],
   onError: SerloEditorProps['onError']
 ): DeserializeResult {
   const stack: { id: number; type: string }[] = []
@@ -57,19 +59,19 @@ export function editorResponseToState(
     string,
     { convert: (state: any) => DeserializedState<StateType> }
   > = {
-    applet: { convert: convertApplet },
-    article: { convert: convertArticle },
-    course: { convert: convertCourse },
-    'course-page': { convert: convertCoursePage },
-    event: { convert: convertEvent },
-    page: { convert: convertPage },
-    'grouped-text-exercise': { convert: convertTextExercise },
-    'text-exercise': { convert: convertTextExercise },
-    'text-exercise-group': { convert: convertTextExerciseGroup },
-    'text-solution': { convert: convertTextSolution },
-    user: { convert: convertUser },
-    video: { convert: convertVideo },
-    taxonomy: { convert: convertTaxonomy },
+    Applet: { convert: convertApplet },
+    Article: { convert: convertArticle },
+    Course: { convert: convertCourse },
+    CoursePage: { convert: convertCoursePage },
+    Event: { convert: convertEvent },
+    Page: { convert: convertPage },
+    GroupedExercise: { convert: convertTextExercise },
+    Exercise: { convert: convertTextExercise },
+    ExerciseGroup: { convert: convertTextExerciseGroup },
+    Solution: { convert: convertTextSolution },
+    User: { convert: convertUser },
+    Video: { convert: convertVideo },
+    TaxonomyTerm: { convert: convertTaxonomy },
   }
 
   const license =
@@ -105,12 +107,12 @@ export function editorResponseToState(
   }
 
   try {
-    if (config[type] === undefined) {
+    if (config[uuid.__typename] === undefined) {
       return {
         error: 'type-unsupported',
       }
     }
-    const { convert } = config[type]
+    const { convert } = config[uuid.__typename]
     return convert(uuid)
   } catch (e) {
     const error = e as Error
@@ -334,15 +336,16 @@ export function editorResponseToState(
     //   'input-string-normalized-match-challenge':
     //     inputStringNormalizedMatchChallenge,
     // } = uuid
+    console.log(uuid)
 
     stack.push({ id: uuid.id, type: 'text-exercise' })
     const convertd = convertEditorState(content)
 
-    // const scMcExercise =
-    //   convertd && !isEdtr(convertd) ? convertScMcExercise() : undefined
+    const scMcExercise =
+      convertd && !isEdtr(convertd) ? convertScMcExercise() : undefined
 
-    // const inputExercise =
-    //   convertd && !isEdtr(convertd) ? convertInputExercise() : undefined
+    const inputExercise =
+      convertd && !isEdtr(convertd) ? convertInputExercise() : undefined
 
     return {
       // // TODO: build solution
@@ -352,10 +355,8 @@ export function editorResponseToState(
           ...entityFields,
           changes: '',
           revision,
-          // TODO: Check if we have all field to build the solution
           'text-solution': uuid.solution
-            ? convertTextSolution(uuid.solution as unknown as Solution)
-                .initialState.state
+            ? convertTextSolution(uuid.solution).initialState.state
             : '',
           content: getContent(),
         },
@@ -370,7 +371,7 @@ export function editorResponseToState(
       }
 
       const convertedContent = toEdtr(convertdContent) // RowsPlugin
-      //const interactive = scMcExercise || inputExercise
+      const interactive = scMcExercise || inputExercise
 
       return serializeEditorState({
         plugin: 'exercise',
@@ -379,12 +380,11 @@ export function editorResponseToState(
             plugin: 'rows',
             state: convertedContent.state,
           },
-          interactive: '',
+          interactive,
         },
       })
     }
 
-    /*
     function convertScMcExercise():
       | {
           plugin: 'scMcExercise'
@@ -414,7 +414,7 @@ export function editorResponseToState(
                 },
               ]
             : []
-        
+
         const convertedSCWrongAnswers = singleChoiceWrongAnswer
           ? singleChoiceWrongAnswer
               .filter((answer) => {
@@ -484,8 +484,8 @@ export function editorResponseToState(
           },
         }
       }
-    } */
-    /*
+    }
+
     function convertInputExercise():
       | {
           plugin: 'inputExercise'
@@ -555,13 +555,12 @@ export function editorResponseToState(
       function filterDefined<T>(array: (T | undefined)[]): T[] {
         return array.filter((el) => typeof el !== 'undefined') as T[]
       }
-    } */
+    }
   }
 
-  /*
   function extractChildFromRows(plugin: RowsPlugin) {
     return plugin.state.length ? plugin.state[0] : { plugin: 'text' }
-  }*/
+  }
 
   function convertTextExerciseGroup(
     uuid: ExerciseGroup
@@ -591,25 +590,27 @@ export function editorResponseToState(
   }
 
   function convertTextSolution(
-    uuid: Solution
+    uuid: Pick<Solution, 'id' | 'currentRevision'>
   ): DeserializedState<typeof textSolutionTypeState> {
     stack.push({ id: uuid.id, type: 'text-solution' })
 
+    const solutionContent = uuid.currentRevision?.content ?? ''
     return {
       initialState: {
         plugin: 'type-text-solution',
         state: {
-          ...entityFields,
+          id: uuid.id,
+          license: license!,
           revision,
           changes: '',
           content: getContent(),
         },
       },
-      converted: !isEdtr(convertEditorState(content) || empty),
+      converted: !isEdtr(convertEditorState(solutionContent) || empty),
     }
 
     function getContent() {
-      const convertdContent = convertEditorState(content)
+      const convertdContent = convertEditorState(solutionContent)
       if (convertdContent !== undefined && isEdtr(convertdContent)) {
         return serializeEditorState(toEdtr(convertdContent))
       }

@@ -9,7 +9,6 @@ import {
 } from '@/components/edtr-io/editor-response-to-state'
 import { SerloEditorProps } from '@/components/edtr-io/serlo-editor'
 import { parseLanguageSubfolder } from '@/helper/feature-i18n'
-import { toKebabCase } from '@/helper/to-kebab-case'
 
 export interface EditorPageData {
   initialState: SerloEditorProps['initialState']
@@ -33,22 +32,20 @@ export async function fetchEditorData(
       alias: { instance, path: alias },
     })
 
-    const type = toKebabCase(uuid.__typename)
-
     const onError = (error: Error, context: Record<string, string>) => {
       // TODO: Handle
       console.log(context)
       alert(error)
     }
 
-    const result = editorResponseToState(uuid, type, onError)
+    const result = editorResponseToState(uuid, onError)
 
     if (isError(result)) {
       return { errorType: result.error }
     } else {
       return {
         ...result,
-        type,
+        type: uuid.__typename,
       }
     }
   } catch (e) {
