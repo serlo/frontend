@@ -169,6 +169,10 @@ export function FrontendClientBase({
             )
         })
         .catch(() => {})
+      if (!cookies['__serlo_preview']) {
+        // bypass cache
+        fetch('/api/frontend/preview').catch(() => {})
+      }
     }
   }
 }
