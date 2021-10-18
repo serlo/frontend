@@ -218,7 +218,7 @@ export function editorResponseToState(
       description: uuid.description,
       taxonomy: uuid.id, // TODO: check if that is correct
       parent: 0, // uuid.parent.id, // TODO: fetch
-      position: // uuid.weight, // TODO: fetch
+      position: 0, // uuid.weight, // TODO: fetch
     } as TaxonomySerializedState
   }
 
