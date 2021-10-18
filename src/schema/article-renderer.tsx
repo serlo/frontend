@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import CSS from 'csstype'
 import dynamic from 'next/dynamic'
-import * as React from 'react'
+import { ReactNode, Fragment, createElement } from 'react'
 
 import { ExerciseGroup } from '../components/content/exercises/exercise-group'
 import { LicenseNotice } from '../components/content/license-notice'
@@ -26,7 +26,7 @@ export type NodePath = (number | string)[]
 
 interface RenderElementProps {
   element: FrontendContentNode
-  children: React.ReactNode
+  children: ReactNode
   value: FrontendContentNode
   path: NodePath
 }
@@ -34,7 +34,7 @@ interface RenderElementProps {
 export type RenderNestedFunction = (
   value: FrontendContentNode[],
   ...pathPrefix: string[]
-) => JSX.Element | null | React.ReactNode[]
+) => JSX.Element | null | ReactNode[]
 
 const Math = dynamic<MathSpanProps>(() =>
   import('../components/content/math-span').then((mod) => mod.MathSpan)
@@ -84,10 +84,7 @@ function getNode(
   }
 }
 
-function render(
-  value: FrontendContentNode,
-  path: NodePath = []
-): React.ReactNode {
+function render(value: FrontendContentNode, path: NodePath = []): ReactNode {
   const currentPath: number[] = []
   for (let i = path.length - 1; i >= 0; i--) {
     const index = path[i]
@@ -101,21 +98,21 @@ function render(
   const key = currentPath[currentPath.length - 1]
 
   if (currentNode.type !== 'text') {
-    const children: React.ReactNode[] = []
+    const children: ReactNode[] = []
     if (currentNode.children) {
       currentNode.children.forEach((_child, index) => {
         children.push(render(value, path.concat(index)))
       })
     }
     return (
-      <React.Fragment key={key}>
+      <Fragment key={key}>
         {renderElement({
           element: currentNode,
           children: children.length === 0 ? null : children,
           value,
           path,
         })}
-      </React.Fragment>
+      </Fragment>
     )
   }
   //if (!currentNode) return null
@@ -143,7 +140,7 @@ interface RenderLeafProps {
     code?: boolean
   }
   key: number
-  children: React.ReactNode
+  children: ReactNode
 }
 
 export function renderLeaf({ leaf, key, children }: RenderLeafProps) {
@@ -186,7 +183,7 @@ function renderElement({
   element,
   children,
   path,
-}: RenderElementProps): React.ReactNode {
+}: RenderElementProps): ReactNode {
   const isRevisionView =
     typeof path[0] === 'string' && path[0].startsWith('revision')
 
@@ -249,7 +246,7 @@ function renderElement({
       4: 'serlo-h4',
       5: 'serlo-h5',
     }
-    return React.createElement(
+    return createElement(
       `h${element.level}`,
       {
         className: classNames[element.level],
@@ -259,7 +256,7 @@ function renderElement({
     )
   }
   if (element.type === 'img') {
-    const wrapInA = (comp: React.ReactNode) => {
+    const wrapInA = (comp: ReactNode) => {
       if (element.href) {
         // needs investigation if this could be simplified
         return (

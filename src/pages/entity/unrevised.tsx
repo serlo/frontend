@@ -1,5 +1,4 @@
 import { GetServerSideProps } from 'next'
-import React from 'react'
 
 import { PageTitle } from '@/components/content/page-title'
 import { FrontendClientBase } from '@/components/frontend-client-base'
@@ -11,7 +10,7 @@ import {
   UnrevisedRevisionsProps,
 } from '@/data-types'
 import { Instance } from '@/fetcher/query-types'
-import { requestUnrevisedRevisions } from '@/fetcher/unrevisedRevisions/request'
+import { requestUnrevisedRevisionsBySubjects } from '@/fetcher/unrevised-revisions/request'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks<UnrevisedRevisionsProps>(({ pageData }) => {
@@ -33,7 +32,9 @@ function Content({ data }: { data: UnrevisedRevisionsData }) {
 
 export const getServerSideProps: GetServerSideProps<UnrevisedRevisionsProps> =
   async (context) => {
-    const pageData = await requestUnrevisedRevisions(context.locale as Instance)
+    const pageData = await requestUnrevisedRevisionsBySubjects(
+      context.locale as Instance
+    )
 
     return {
       props: {

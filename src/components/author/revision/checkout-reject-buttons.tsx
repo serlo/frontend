@@ -1,6 +1,6 @@
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useState, KeyboardEvent } from 'react'
+import { useState, KeyboardEvent, ChangeEvent } from 'react'
 
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -124,7 +124,7 @@ export function CheckoutRejectButtons({
         `}</style>
         <textarea
           value={reason}
-          onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
+          onChange={(event: ChangeEvent<HTMLTextAreaElement>) => {
             setReason(event.target.value)
           }}
           onKeyDown={onKeyDown}

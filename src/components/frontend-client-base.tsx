@@ -2,7 +2,7 @@ import { AuthorizationPayload } from '@serlo/authorization'
 import Cookies from 'js-cookie'
 import { Router, useRouter } from 'next/router'
 import NProgress from 'nprogress'
-import * as React from 'react'
+import { PropsWithChildren, useState, useEffect } from 'react'
 
 import { ConditonalWrap } from './conditional-wrap'
 import { HeaderFooter } from './header-footer'
@@ -20,7 +20,7 @@ import { frontendOrigin } from '@/helper/frontent-origin'
 import type { LoggedInStuff } from '@/helper/logged-in-stuff-chunk'
 import { triggerSentry } from '@/helper/trigger-sentry'
 
-export type FrontendClientBaseProps = React.PropsWithChildren<{
+export type FrontendClientBaseProps = PropsWithChildren<{
   noHeaderFooter?: boolean
   noContainers?: boolean
   showNav?: boolean
@@ -52,7 +52,7 @@ export function FrontendClientBase({
   authorization,
 }: FrontendClientBaseProps) {
   const { locale } = useRouter()
-  const [instanceData] = React.useState<InstanceData>(() => {
+  const [instanceData] = useState<InstanceData>(() => {
     if (typeof window === 'undefined') {
       // load instance data for server side rendering
       // Note: using require to avoid webpack bundling it
@@ -69,9 +69,9 @@ export function FrontendClientBase({
     }
   })
 
-  //React.useEffect(storePageData, [initialProps])
+  //useEffect(storePageData, [initialProps])
 
-  React.useEffect(() => {
+  useEffect(() => {
     //tiny history
     sessionStorage.setItem(
       'previousPathname',
@@ -81,15 +81,15 @@ export function FrontendClientBase({
   })
 
   // const auth = useAuthentication('frontend-client-base')
-  const [loggedInData, setLoggedInData] = React.useState<LoggedInData | null>(
+  const [loggedInData, setLoggedInData] = useState<LoggedInData | null>(
     getCachedLoggedInData()
   )
   const [loggedInComponents, setLoggedInComponents] =
-    React.useState<LoggedInStuff | null>(null)
+    useState<LoggedInStuff | null>(null)
 
   //console.log('Comps', loggedInComponents)
 
-  React.useEffect(fetchLoggedInData, [
+  useEffect(fetchLoggedInData, [
     instanceData.lang,
     loggedInData,
     loggedInComponents,
@@ -169,6 +169,10 @@ export function FrontendClientBase({
             )
         })
         .catch(() => {})
+      if (!cookies['__serlo_preview']) {
+        // bypass cache
+        fetch('/api/frontend/preview').catch(() => {})
+      }
     }
   }
 }

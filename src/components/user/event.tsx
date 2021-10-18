@@ -23,7 +23,7 @@ import {
 } from '@serlo/api'
 import Tippy from '@tippyjs/react'
 import clsx from 'clsx'
-import * as R from 'ramda'
+import { hasPath } from 'ramda'
 
 import { UserLink } from './user-link'
 import { useAuthentication } from '@/auth/use-authentication'
@@ -300,7 +300,7 @@ export function Event({
   function hasObject(
     object: unknown
   ): object is { currentRevision: { title: string } } {
-    return R.hasPath(['currentRevision', 'title'], object)
+    return hasPath(['currentRevision', 'title'], object)
   }
 
   function renderButtons() {

@@ -61,7 +61,9 @@ export const instanceData = {
       subscriptions: "Gérer les abonnements",
       revisionHistory: "Historique des révisions",
       eventLog: "Journal des événements",
-      unrevisedRevisions: "Révisions non révisées"
+      unrevisedRevisions: "Révisions non révisées",
+      userEdits: 'Edits by %user%',
+      userEditsMine: 'My Unrevised Revisions'
     },
     roles: {
       donor: "Donneur·e",
@@ -192,7 +194,8 @@ export const instanceData = {
       wipLabelText: "essuyer",
       wipLabelNote: "Travail en cours. Ne pas encore réviser.",
       newAuthorText: "nouvel auteur",
-      newAuthorNote: "C'est l'une des premières modifications de cet auteur. Peut-être, donne-lui la priorité."
+      newAuthorNote: "C'est l'une des premières modifications de cet auteur. Peut-être, donne-lui la priorité.",
+      noUnrevisedRevisions: 'No unrevised revisions, all done! 🎉'
     },
     errors: {
       title: "😬 Les sites Web font parfois des erreurs…",
@@ -212,6 +215,7 @@ export const instanceData = {
       aboutMe: "À propos de moi",
       recentActivities: "Activités récentes",
       showAllActivities: "Afficher toutes les activités",
+      noActivities: 'No activities so far.',
       lastLogin: "Dernière connexion",
       yearsWithSerlo: "années chez Serlo!",
       yearWithSerlo: "année chez Serlo!",
@@ -354,7 +358,7 @@ export const loggedInData = {
       title: "mettre à jour le mot de passe"
     }, {
       url: '/event/history/user/me',
-      title: "Activités récentes"
+      title: "Mes modifications"
     }, {
       url: '/subscriptions/manage',
       title: "Abonnements"

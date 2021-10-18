@@ -16,9 +16,10 @@ import { getTranslatedType } from '@/helper/get-translated-type'
 
 export interface UnrevisedEntityProps {
   entity: UnrevisedEntityData
+  isOwn?: boolean
 }
 
-export function UnrevisedEntity({ entity }: UnrevisedEntityProps) {
+export function UnrevisedEntity({ entity, isOwn }: UnrevisedEntityProps) {
   const { strings } = useInstanceData()
 
   const nodes = entity.revisions?.nodes ?? entity.solutionRevisions?.nodes ?? []
@@ -59,6 +60,7 @@ export function UnrevisedEntity({ entity }: UnrevisedEntityProps) {
     if (!revision) return null
     const viewUrl = `/entity/repository/compare/${entity.id}/${revision.id}`
     const isProbablyWIP = checkWIP(revision.changes)
+
     return (
       <tr className={isProbablyWIP ? 'opacity-50' : undefined}>
         <Td className="pl-0 w-1/2">
@@ -67,10 +69,12 @@ export function UnrevisedEntity({ entity }: UnrevisedEntityProps) {
           </Link>
           {renderLabels(isProbablyWIP)}
         </Td>
-        <Td>
-          <UserLink user={revision.author} />
-          {revision.author.isNewAuthor && renderAuthorLabel()}
-        </Td>
+        {isOwn ? null : (
+          <Td>
+            <UserLink user={revision.author} />
+            {revision.author.isNewAuthor && renderAuthorLabel()}
+          </Td>
+        )}
         <Td className="w-1/6">
           <TimeAgo datetime={new Date(revision.date)} dateAsTitle />
         </Td>

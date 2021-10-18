@@ -61,7 +61,9 @@ export const instanceData = {
       subscriptions: "Manage Subscriptions",
       revisionHistory: "Revision History",
       eventLog: "Event Log",
-      unrevisedRevisions: 'Unrevised Revisions'
+      unrevisedRevisions: 'Unrevised Revisions',
+      userEdits: 'Edits by %user%',
+      userEditsMine: 'My Unrevised Revisions'
     },
     roles: {
       donor: "Donor",
@@ -192,7 +194,8 @@ export const instanceData = {
       wipLabelText: 'wip',
       wipLabelNote: 'Marked as work in progress. Do not review yet.',
       newAuthorText: 'new author',
-      newAuthorNote: 'This is one of the first edits of this author, maybe prioritise this.'
+      newAuthorNote: 'This is one of the first edits of this author, maybe prioritise this.',
+      noUnrevisedRevisions: 'No unrevised revisions, all done! 🎉'
     },
     errors: {
       title: '😬 Websites make mistakes sometimes…',
@@ -212,6 +215,7 @@ export const instanceData = {
       aboutMe: 'About me',
       recentActivities: 'Recent activities',
       showAllActivities: 'Show all activities',
+      noActivities: 'No activities so far.',
       lastLogin: 'Last login',
       yearsWithSerlo: 'Years with Serlo!',
       yearWithSerlo: 'Year with Serlo!',
@@ -354,7 +358,7 @@ export const loggedInData = {
       title: "கடவுச்சொல்லை மாற்று"
     }, {
       url: '/event/history/user/me',
-      title: "சமீபத்திய செய்தவை"
+      title: 'My Edits'
     }, {
       url: '/subscriptions/manage',
       title: "சந்தாக்கள்"

@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import dynamic from 'next/dynamic'
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 import { LicenseNotice } from '../license-notice'
 import { ExerciseNumbering } from './exercise-numbering'

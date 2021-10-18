@@ -61,7 +61,9 @@ export const instanceData = {
       subscriptions: "सदस्यताओं को प्रबंधित करें",
       revisionHistory: "संशोधन इतिहास",
       eventLog: "Event Log",
-      unrevisedRevisions: 'Unrevised Revisions'
+      unrevisedRevisions: 'Unrevised Revisions',
+      userEdits: 'Edits by %user%',
+      userEditsMine: 'My Unrevised Revisions'
     },
     roles: {
       donor: "दाताओं",
@@ -192,7 +194,8 @@ export const instanceData = {
       wipLabelText: 'wip',
       wipLabelNote: 'Marked as work in progress. Do not review yet.',
       newAuthorText: 'new author',
-      newAuthorNote: 'This is one of the first edits of this author, maybe prioritise this.'
+      newAuthorNote: 'This is one of the first edits of this author, maybe prioritise this.',
+      noUnrevisedRevisions: 'No unrevised revisions, all done! 🎉'
     },
     errors: {
       title: "😬 वेबसाइटें कभी-कभी गलतियाँ करती हैं",
@@ -212,6 +215,7 @@ export const instanceData = {
       aboutMe: "मेरे बारे में",
       recentActivities: "हाल की गतिविधि",
       showAllActivities: "समस्त गतिविधयाँ दिखाएँ",
+      noActivities: 'No activities so far.',
       lastLogin: 'Last login',
       yearsWithSerlo: 'Years with Serlo!',
       yearWithSerlo: 'Year with Serlo!',
@@ -354,7 +358,7 @@ export const loggedInData = {
       title: "पासवर्ड परिवर्तित करें"
     }, {
       url: '/event/history/user/me',
-      title: "हाल की गतिविधि"
+      title: 'My Edits'
     }, {
       url: '/subscriptions/manage',
       title: "सब्सक्रिप्शन"

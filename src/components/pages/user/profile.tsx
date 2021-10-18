@@ -147,9 +147,9 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         <p className="serlo-p">
           <Link
             className="serlo-button serlo-make-interactive-primary mt-4"
-            href={`/event/history/${id}`}
+            href={`/event/history/${id}#activities`}
           >
-            Mehr anzeigen
+            {strings.profiles.showAllActivities}
           </Link>
         </p>
       </section>

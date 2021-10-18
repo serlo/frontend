@@ -1,6 +1,12 @@
 import clsx from 'clsx'
 import { default as NextLink } from 'next/link'
-import * as React from 'react'
+import {
+  ReactNode,
+  forwardRef,
+  ForwardedRef,
+  useContext,
+  MouseEvent,
+} from 'react'
 
 import { ExternalLink } from './external-link'
 import { EntityIdContext } from '@/contexts/entity-id-context'
@@ -10,7 +16,7 @@ import { NodePath } from '@/schema/article-renderer'
 
 export interface LinkProps {
   href?: string
-  children: React.ReactNode
+  children: ReactNode
   className?: string
   noExternalIcon?: boolean
   title?: string
@@ -57,15 +63,13 @@ export function isLegacyLink(_href: string) {
   )
 }
 
-export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
-  (props, ref) => {
-    return UnstyledLink({
-      ...props,
-      className: clsx(props.className, 'serlo-link'),
-      ref,
-    })
-  }
-)
+export const Link = forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => {
+  return UnstyledLink({
+    ...props,
+    className: clsx(props.className, 'serlo-link'),
+    ref,
+  })
+})
 
 Link.displayName = 'Link'
 
@@ -80,9 +84,9 @@ export function UnstyledLink({
   unreviewed,
   tabIndex,
   ref,
-}: LinkProps & { ref?: React.ForwardedRef<HTMLAnchorElement> }) {
+}: LinkProps & { ref?: ForwardedRef<HTMLAnchorElement> }) {
   const { lang } = useInstanceData()
-  const entityId = React.useContext(EntityIdContext)
+  const entityId = useContext(EntityIdContext)
 
   if (!href || href === undefined || href === '')
     return (
@@ -147,7 +151,7 @@ export function UnstyledLink({
 
   function renderLink(_href: string, outbound: boolean) {
     const clickHandler = key
-      ? (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+      ? (e: MouseEvent) => {
           if (!outbound) {
             submitEvent(key)
           } else {

@@ -5,7 +5,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
-import { useState, KeyboardEvent, useRef } from 'react'
+import { useState, KeyboardEvent, useRef, ChangeEvent } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
 
 import { useInstanceData } from '@/contexts/instance-context'
@@ -69,7 +69,7 @@ export function CommentForm({
         value={commentValue}
         ref={textareaRef}
         id={formId}
-        onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        onChange={(event: ChangeEvent<HTMLTextAreaElement>) => {
           setCommentValue(event.target.value)
         }}
         onKeyDown={onKeyDown}

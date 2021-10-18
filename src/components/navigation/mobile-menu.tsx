@@ -11,7 +11,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
-import * as React from 'react'
+import { useState, MouseEvent } from 'react'
 
 import { Link } from '../content/link'
 import { AuthenticationPayload } from '@/auth/auth-provider'
@@ -37,16 +37,11 @@ const menuIconMapping = {
 }
 
 export function MobileMenu({ data, auth }: MobileMenuProps) {
-  const [openEntryIndex, setOpenEntryIndex] = React.useState<null | number>(
-    null
-  )
+  const [openEntryIndex, setOpenEntryIndex] = useState<null | number>(null)
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
 
-  function toggle(
-    e: React.MouseEvent<HTMLLIElement, MouseEvent>,
-    index: number
-  ) {
+  function toggle(e: MouseEvent, index: number) {
     e.preventDefault()
     if (index === openEntryIndex) setOpenEntryIndex(null)
     else setOpenEntryIndex(index)
@@ -99,10 +94,7 @@ interface EntryProps extends HeaderLink {
   isChild?: boolean
   open?: boolean
   index?: number
-  onToggle?: (
-    e: React.MouseEvent<HTMLLIElement, MouseEvent>,
-    index: number
-  ) => void
+  onToggle?: (e: MouseEvent, index: number) => void
   i: number | string
   subI?: number | string
 }
