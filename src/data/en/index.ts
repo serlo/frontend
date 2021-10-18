@@ -763,9 +763,6 @@ export const loggedInData = {
         combineLikeTerms: 'Combine like terms.',
         setEqual: 'Set the terms equal to each other.',
       },
-      mathPuzzle: {
-        sourceCode: 'Source code',
-      },
       deprecated: {
         unsupported:
           'This part of the document contains features that are no longer supported.',
