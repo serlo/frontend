@@ -1,7 +1,5 @@
 // eslint-disable-next-line import/no-internal-modules
 import { StateType, StateTypeSerializedType } from '@edtr-io/plugin'
-import { InputExercisePluginState } from '@edtr-io/plugin-input-exercise'
-import { ScMcExercisePluginState } from '@edtr-io/plugin-sc-mc-exercise'
 import {
   convert,
   isEdtr,
@@ -11,7 +9,6 @@ import {
   OtherPlugin,
   Splish,
 } from '@serlo/legacy-editor-to-editor'
-import R from 'ramda'
 
 import { appletTypeState } from './plugins/types/applet'
 import { articleTypeState } from './plugins/types/article'
@@ -34,6 +31,7 @@ import {
   CoursePage,
   Event,
   Exercise,
+  BareExercise,
   ExerciseGroup,
   Page,
   QueryResponse,
@@ -322,7 +320,7 @@ export function editorResponseToState(
   //TODO: !
 
   function convertTextExercise(
-    uuid: Exercise
+    uuid: Exercise | BareExercise
   ): DeserializedState<typeof textExerciseTypeState> {
     // const {
     //   'text-solution': textSolution,
@@ -336,23 +334,22 @@ export function editorResponseToState(
     //   'input-string-normalized-match-challenge':
     //     inputStringNormalizedMatchChallenge,
     // } = uuid
-    console.log(uuid)
 
     stack.push({ id: uuid.id, type: 'text-exercise' })
     const convertd = convertEditorState(content)
 
-    const scMcExercise =
-      convertd && !isEdtr(convertd) ? convertScMcExercise() : undefined
+    // const scMcExercise =
+    //   convertd && !isEdtr(convertd) ? convertScMcExercise() : undefined
 
-    const inputExercise =
-      convertd && !isEdtr(convertd) ? convertInputExercise() : undefined
+    // const inputExercise =
+    //   convertd && !isEdtr(convertd) ? convertInputExercise() : undefined
 
     return {
-      // // TODO: build solution
       initialState: {
         plugin: 'type-text-exercise',
         state: {
-          ...entityFields,
+          id: uuid.id,
+          license: license!,
           changes: '',
           revision,
           'text-solution': uuid.solution
@@ -365,13 +362,15 @@ export function editorResponseToState(
     }
 
     function getContent() {
-      const convertdContent = convertEditorState(content)
+      const convertdContent = convertEditorState(
+        uuid.currentRevision?.content ?? ''
+      )
       if (convertdContent !== undefined && isEdtr(convertdContent)) {
         return serializeEditorState(toEdtr(convertdContent))
       }
 
       const convertedContent = toEdtr(convertdContent) // RowsPlugin
-      const interactive = scMcExercise || inputExercise
+      //const interactive = scMcExercise || inputExercise
 
       return serializeEditorState({
         plugin: 'exercise',
@@ -380,11 +379,13 @@ export function editorResponseToState(
             plugin: 'rows',
             state: convertedContent.state,
           },
-          interactive,
+          interactive: undefined,
         },
       })
     }
 
+    // TODO: fix unconverted exercises
+    /*
     function convertScMcExercise():
       | {
           plugin: 'scMcExercise'
@@ -555,22 +556,20 @@ export function editorResponseToState(
       function filterDefined<T>(array: (T | undefined)[]): T[] {
         return array.filter((el) => typeof el !== 'undefined') as T[]
       }
-    }
+    }*/
   }
 
-  function extractChildFromRows(plugin: RowsPlugin) {
-    return plugin.state.length ? plugin.state[0] : { plugin: 'text' }
-  }
+  // function extractChildFromRows(plugin: RowsPlugin) {
+  //   return plugin.state.length ? plugin.state[0] : { plugin: 'text' }
+  // }
 
   function convertTextExerciseGroup(
     uuid: ExerciseGroup
   ): DeserializedState<typeof textExerciseGroupTypeState> {
     stack.push({ id: uuid.id, type: 'text-exercise-group' })
 
-    const exercises = uuid.exercises.map((ex) => {
-      // TODO: build exercises with shared function
-      // as TextExerciseSerializedState
-      return ex as unknown as DeserializedState<typeof textExerciseTypeState>
+    const exercises = uuid.exercises.map((exercise) => {
+      return convertTextExercise(exercise).initialState.state
     })
 
     return {
