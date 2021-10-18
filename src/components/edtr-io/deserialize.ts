@@ -121,6 +121,7 @@ export function deserialize({
           changes: '',
           title: state.title || '',
           content: getContent(),
+          reasoning: '',
           meta_title: state.meta_title || '',
           meta_description: state.meta_description || '',
         },

@@ -176,7 +176,7 @@ export function editorResponseToState(
     return {
       ...entityFields,
       content,
-      cohesive: undefined, // TODO: Currently not exposed in API
+      cohesive: undefined, // TODO: Currently not exposed in API: https://github.com/serlo/api.serlo.org/issues/489
       'grouped-text-exercise': exercises,
     } as TextExerciseGroupSerializedState
   }
