@@ -9,7 +9,8 @@ import {
   HeaderInput,
   entityType,
 } from './common'
-import { Settings, RevisionHistory } from './helpers/settings'
+import { RevisionHistory } from './helpers/revision-history'
+import { Settings } from './helpers/settings'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export const appletTypeState = entityType(

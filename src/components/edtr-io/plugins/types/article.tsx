@@ -8,7 +8,8 @@ import {
   HeaderInput,
   entityType,
 } from './common'
-import { RevisionHistory, Settings } from './helpers/settings'
+import { RevisionHistory } from './helpers/revision-history'
+import { Settings } from './helpers/settings'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export const articleTypeState = entityType(

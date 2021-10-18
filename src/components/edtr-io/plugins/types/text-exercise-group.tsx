@@ -13,7 +13,7 @@ import {
   OptionalChild,
   entityType,
 } from './common'
-import { RevisionHistory } from './helpers/settings'
+import { RevisionHistory } from './helpers/revision-history'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export const textExerciseGroupTypeState = entityType(

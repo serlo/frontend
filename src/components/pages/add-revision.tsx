@@ -84,24 +84,6 @@ export function AddRevision({ initialState, type }: EditorPageData) {
           }
         }
 
-        .ReactModal__Content {
-          @apply rounded-xl border-none shadow-modal;
-          @apply bg-white outline-none px-2.5 pt-2.5;
-
-          h4 {
-            @apply font-bold text-lg mt-5 mb-6;
-          }
-          .form-group {
-            label {
-              @apply font-bold;
-            }
-            textarea {
-              @apply mt-1 mb-7 flex items-center rounded-2xl w-full p-2;
-              @apply bg-brand-150 border-2 border-brand-150 focus-within:outline-none focus-within:border-brand-light;
-            }
-          }
-        }
-
         .edtr-io .page-header h1 input {
           @apply w-full;
           @apply mb-9 mt-6 p-0 font-bold text-3.5xl special-hyphens-auto;

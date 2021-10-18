@@ -4,7 +4,7 @@ import { ThemeProvider } from '@edtr-io/ui'
 import * as React from 'react'
 
 import { Controls, editorContent, entity, entityType } from './common'
-import { RevisionHistory } from './helpers/settings'
+import { RevisionHistory } from './helpers/revision-history'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export const textSolutionTypeState = entityType(

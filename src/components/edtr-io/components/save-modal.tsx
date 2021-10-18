@@ -1,15 +1,7 @@
-/* eslint-disable import/no-internal-modules */
 import { useScopedStore } from '@edtr-io/core'
 import { StateTypeReturnType } from '@edtr-io/plugin'
 import { serializeRootDocument } from '@edtr-io/store'
 import clsx from 'clsx'
-import React from 'react'
-import BSAlert from 'react-bootstrap/lib/Alert'
-import BSButton from 'react-bootstrap/lib/Button'
-import BSControlLabel from 'react-bootstrap/lib/ControlLabel'
-import BSFormControl from 'react-bootstrap/lib/FormControl'
-import BSFormGroup from 'react-bootstrap/lib/FormGroup'
-import BSModal from 'react-bootstrap/lib/Modal'
 
 import { entity } from '../plugins/types/common'
 import { storeState } from '../serlo-editor'
@@ -49,7 +41,6 @@ export function SaveModal({
   maySave,
   handleSave,
   pending,
-  setHasError,
   licenseAccepted,
   changesFilledIn,
   setSavedToLocalstorage,
@@ -145,19 +136,12 @@ export function SaveModal({
     if (!hasError) return null
     return (
       <>
-        <BSAlert
-          bsStyle="danger"
-          onDismiss={() => {
-            setHasError(false)
-          }}
-        >
+        <div className="bg-yellow p-3 mb-16">
           {editorStrings.edtrIo.errorSaving}
           <br />
           {editorStrings.edtrIo.saveLocallyAndRefresh}
-        </BSAlert>
-        <BSModal.Footer>
-          <BSButton
-            bsStyle="success"
+          <button
+            className="serlo-button serlo-make-interactive-primary mt-3"
             onClick={() => {
               const serializedRoot = serializeRootDocument()(store.getState())
               storeState(serializedRoot)
@@ -167,8 +151,8 @@ export function SaveModal({
             {savedToLocalstorage
               ? editorStrings.edtrIo.revisionSaved
               : editorStrings.edtrIo.saveRevision}
-          </BSButton>
-        </BSModal.Footer>
+          </button>
+        </div>
       </>
     )
   }
@@ -176,24 +160,27 @@ export function SaveModal({
   function renderChanges() {
     if (!changes) return null
     return (
-      <BSFormGroup controlId="changes">
-        <BSControlLabel>{editorStrings.edtrIo.changes}</BSControlLabel>
-        <BSFormControl
-          componentClass="textarea"
+      <label className="font-bold">
+        {editorStrings.edtrIo.changes}
+        <textarea
           value={changes.value}
           onChange={(e) => {
             const { value } = e.target as HTMLTextAreaElement
             changes.set(value)
           }}
+          className={clsx(
+            'mt-1 mb-7 flex items-center rounded-2xl w-full p-2',
+            'bg-brand-150 border-2 border-brand-150 focus-within:outline-none focus-within:border-brand-light'
+          )}
         />
-      </BSFormGroup>
+      </label>
     )
   }
 
   function renderCheckout() {
     if (!mayCheckout) return null
     return (
-      <>
+      <label>
         <input
           type="checkbox"
           checked={autoCheckout}
@@ -201,17 +188,16 @@ export function SaveModal({
             const { checked } = e.target as HTMLInputElement
             setAutoCheckout(checked)
           }}
-          id="edtr-checkout"
         />{' '}
-        <label htmlFor="edtr-checkout">{editorStrings.edtrIo.skipReview}</label>
-      </>
+        {editorStrings.edtrIo.skipReview}
+      </label>
     )
   }
 
   function renderLicense() {
     if (!license) return null
     return (
-      <>
+      <label className="block pb-2">
         <input
           type="checkbox"
           checked={agreement}
@@ -219,23 +205,19 @@ export function SaveModal({
             const { checked } = e.target as HTMLInputElement
             setAgreement(checked)
           }}
-          id="edtr-checkout-license"
         />{' '}
-        <label htmlFor="edtr-checkout-license">
-          {' '}
-          <span
-            className="license-wrapper"
-            dangerouslySetInnerHTML={{ __html: license.agreement.value }}
-          />
-          <style jsx global>
-            {`
-              .license-wrapper a {
-                @apply !text-brand hover:underline;
-              }
-            `}
-          </style>
-        </label>
-      </>
+        <span
+          className="license-wrapper"
+          dangerouslySetInnerHTML={{ __html: license.agreement.value }}
+        />
+        <style jsx global>
+          {`
+            .license-wrapper a {
+              @apply !text-brand hover:underline;
+            }
+          `}
+        </style>
+      </label>
     )
   }
 
@@ -243,7 +225,7 @@ export function SaveModal({
     if (!subscriptions) return null
     return (
       <>
-        <div>
+        <label className="block pb-2">
           <input
             type="checkbox"
             checked={notificationSubscription}
@@ -251,14 +233,10 @@ export function SaveModal({
               const { checked } = e.target as HTMLInputElement
               setNotificationSubscription(checked)
             }}
-            id="edtr-checkout-notif"
           />{' '}
-          <label htmlFor="edtr-checkout-notif">
-            {' '}
-            {editorStrings.edtrIo.enableNotifs}
-          </label>
-        </div>
-        <div>
+          {editorStrings.edtrIo.enableNotifs}
+        </label>
+        <label className="block pb-2">
           <input
             type="checkbox"
             checked={emailSubscription}
@@ -266,13 +244,9 @@ export function SaveModal({
               const { checked } = e.target as HTMLInputElement
               setEmailSubscription(checked)
             }}
-            id="edtr-checkout-notif-mail"
           />{' '}
-          <label htmlFor="edtr-checkout-notif-mail">
-            {' '}
-            {editorStrings.edtrIo.enableNotifsMail}
-          </label>
-        </div>
+          {editorStrings.edtrIo.enableNotifsMail}
+        </label>
       </>
     )
   }
