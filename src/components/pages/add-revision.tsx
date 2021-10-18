@@ -2,19 +2,27 @@ import clsx from 'clsx'
 
 import { MathSpan } from '@/components/content/math-span'
 import { SerloEditor } from '@/components/edtr-io/serlo-editor'
+import { EditorPageData } from '@/fetcher/fetch-editor-data'
 
-export interface AddRevisionProps {
-  initialState: unknown
-  type: string
-}
-
-export function AddRevision({ initialState, type }: AddRevisionProps) {
+export function AddRevision({ initialState, type }: EditorPageData) {
   return (
     <>
       <MathSpan formula="" />
       <div className={clsx('max-w-[816px] mx-auto mb-24 edtr-io')}>
         <div className="controls w-full h-12 flex justify-between pt-4 pl-5 pr-3" />
-        <SerloEditor state={initialState} type={type} />
+        {/* TODO: real props for Token, onSave, mayCheckout */}
+        <SerloEditor
+          getCsrfToken={() => 'stub'}
+          mayCheckout
+          onSave={() => {
+            alert('not implemented')
+            return new Promise((res) => {
+              res(undefined)
+            })
+          }}
+          type={type}
+          initialState={initialState}
+        />
       </div>
       <style jsx global>{`
         .edtr-io h1 {

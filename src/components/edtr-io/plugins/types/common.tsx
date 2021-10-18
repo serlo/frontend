@@ -38,7 +38,7 @@ import { createPortal } from 'react-dom'
 
 import { SaveModal } from '../../components/save-modal'
 import { CsrfContext } from '../../csrf-context'
-import { SaveContext, storeState } from '../../editor'
+import { SaveContext, storeState } from '../../serlo-editor'
 
 export const licenseState = object({
   id: number(),

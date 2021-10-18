@@ -12,9 +12,7 @@ import BSFormControl from 'react-bootstrap/lib/FormControl'
 import BSFormGroup from 'react-bootstrap/lib/FormGroup'
 import BSModal from 'react-bootstrap/lib/Modal'
 import BSTable from 'react-bootstrap/lib/Table'
-import fetch from 'unfetch'
 
-import { deserialize, isError } from '../../../deserialize'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 const StyledTR = styled.tr<{ selected: boolean }>((props) => {
@@ -106,8 +104,9 @@ export function RevisionHistory<T>(
                     onClick={() => {
                       // don't select the current selected
                       if (selected) return
-
-                      void fetch(
+                      // TODO: Build own fetch
+                      alert('not implemented yet')
+                      /*void fetch(
                         `/entity/repository/get-revision-data/${props.id}/${revisionData.id}`
                       )
                         .then((response) => response.json())
@@ -124,7 +123,7 @@ export function RevisionHistory<T>(
                             )
                             setShowRevisions(false)
                           }
-                        })
+                        })*/
                     }}
                     key={revisionData.id}
                   >

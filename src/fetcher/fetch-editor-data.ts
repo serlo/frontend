@@ -1,19 +1,29 @@
 import { request } from 'graphql-request'
 
-import { editorResponseToState } from './editor-response-to-state'
 import { dataQuery } from './query'
 import { QueryResponse } from './query-types'
 import { endpoint } from '@/api/endpoint'
+import {
+  editorResponseToState,
+  isError,
+} from '@/components/edtr-io/editor-response-to-state'
+import { SerloEditorProps } from '@/components/edtr-io/serlo-editor'
 import { parseLanguageSubfolder } from '@/helper/feature-i18n'
+import { toKebabCase } from '@/helper/to-kebab-case'
 
 export interface EditorPageData {
-  initialState: unknown
+  initialState: SerloEditorProps['initialState']
   type: string
+}
+
+export interface EditorFetchErrorData {
+  errorType: 'type-unsupported' | 'failure' | 'failed-fetch'
+  code?: number
 }
 
 export async function fetchEditorData(
   raw_alias: string
-): Promise<EditorPageData> {
+): Promise<EditorPageData | EditorFetchErrorData> {
   try {
     const { alias, instance } = parseLanguageSubfolder(raw_alias)
 
@@ -23,16 +33,30 @@ export async function fetchEditorData(
       alias: { instance, path: alias },
     })
 
-    return {
-      initialState: editorResponseToState(uuid),
-      type: uuid.__typename.toLowerCase(), // TODO: check expected format
+    const type = toKebabCase(uuid.__typename)
+
+    const onError = (error: Error, context: Record<string, string>) => {
+      // TODO: Handle
+      console.log(context)
+      alert(error)
+    }
+
+    const result = editorResponseToState(uuid, type, onError)
+
+    if (isError(result)) {
+      return { errorType: result.error }
+    } else {
+      return {
+        ...result,
+        type,
+      }
     }
   } catch (e) {
     const message = `Error while fetching data: ${(e as Error).message ?? e}`
     const code = message.includes('Code: 503') ? 503 : 500
     return {
-      type: 'error',
-      initialState: { message, code },
+      errorType: 'failed-fetch',
+      code: code,
     }
   }
 }

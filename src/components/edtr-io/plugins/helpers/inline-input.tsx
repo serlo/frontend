@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Plain from 'slate-plain-serializer'
 // @ts-expect-error missing types?
-import { Editor } from 'slate-react'
+import { Editor as SlateEditor } from 'slate-react'
 
 export function InlineInput(props: {
   onChange: (value: string) => void
@@ -18,7 +18,7 @@ export function InlineInput(props: {
   }, [value, state])
 
   return (
-    <Editor
+    <SlateEditor
       placeholder={placeholder}
       value={state}
       onFocus={(event: any, editor: any, next: () => void) => {

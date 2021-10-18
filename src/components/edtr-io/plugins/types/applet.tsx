@@ -17,7 +17,6 @@ export const appletTypeState = entityType(
     ...entity,
     title: string(),
     content: editorContent(),
-    reasoning: editorContent(),
     meta_title: string(),
     meta_description: string(),
     url: serializedChild('geogebra'),

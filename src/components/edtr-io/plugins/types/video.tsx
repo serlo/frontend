@@ -18,7 +18,6 @@ export const videoTypeState = entityType(
     content: string(),
     title: string(),
     description: editorContent(),
-    reasoning: editorContent(),
   },
   {}
 )

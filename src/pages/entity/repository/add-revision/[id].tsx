@@ -1,29 +1,81 @@
 import { GetServerSideProps } from 'next'
 
 import { FrontendClientBase } from '@/components/frontend-client-base'
-import { AddRevision, AddRevisionProps } from '@/components/pages/add-revision'
-import { fetchEditorData } from '@/fetcher/fetch-editor-data'
+import { AddRevision } from '@/components/pages/add-revision'
+import { ErrorPage } from '@/components/pages/error-page'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import {
+  EditorFetchErrorData,
+  EditorPageData,
+  fetchEditorData,
+} from '@/fetcher/fetch-editor-data'
+import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
-export default renderedPageNoHooks<AddRevisionProps>((props) => (
-  <FrontendClientBase noContainers loadLoggedInData>
-    {props.type === 'error' ? 'whoops' : <AddRevision {...props} />}
-  </FrontendClientBase>
-))
+export default renderedPageNoHooks<EditorPageData | EditorFetchErrorData>(
+  (props) => {
+    const isError = hasOwnPropertyTs(props, 'errorType')
 
-export const getServerSideProps: GetServerSideProps<AddRevisionProps> = async (
-  context
-) => {
+    return (
+      <FrontendClientBase noContainers loadLoggedInData>
+        {isError ? (
+          <>
+            {props.errorType === 'failed-fetch' ? (
+              <ErrorPage
+                code={props.code ?? 400}
+                message="Error while fetching data"
+              />
+            ) : (
+              <EditInLegacy type={props.errorType} />
+            )}
+          </>
+        ) : (
+          <AddRevision {...props} />
+        )}
+      </FrontendClientBase>
+    )
+  }
+)
+
+function EditInLegacy({
+  type,
+  converted,
+}: {
+  type?: 'type-unsupported' | 'failure'
+  converted?: boolean
+}) {
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return null
+  const editorStrings = loggedInData.strings.editor
+
+  const legacyUrl = window.location.pathname
+    .replace('add-revision', 'add-revision-old')
+    .replace('create', 'create-old')
+
+  const isFailure = type === 'failure'
+
+  return (
+    <p className="serlo-p bg-yellow">
+      {converted
+        ? editorStrings.edtrIo.notConverted
+        : isFailure
+        ? editorStrings.edtrIo.conversionError
+        : editorStrings.edtrIo.notSupportedYet}{' '}
+      <a href={legacyUrl}>{editorStrings.edtrIo.editInOld}</a>
+    </p>
+  )
+}
+
+export const getServerSideProps: GetServerSideProps<
+  EditorPageData | EditorFetchErrorData
+> = async (context) => {
   const id = parseInt(context.params?.id as string)
 
-  const { type, initialState } = await fetchEditorData(
+  const result = await fetchEditorData(
     '/' + context.locale! + '/' + id.toString()
   )
 
   return {
-    props: {
-      initialState,
-      type,
-    },
+    props: result,
   }
 }

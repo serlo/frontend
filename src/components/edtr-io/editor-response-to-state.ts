@@ -1,6 +1,5 @@
+// eslint-disable-next-line import/no-internal-modules
 import { StateType, StateTypeSerializedType } from '@edtr-io/plugin'
-import { InputExercisePluginState } from '@edtr-io/plugin-input-exercise'
-import { ScMcExercisePluginState } from '@edtr-io/plugin-sc-mc-exercise'
 import {
   convert,
   isEdtr,
@@ -10,16 +9,13 @@ import {
   OtherPlugin,
   Splish,
 } from '@serlo/legacy-editor-to-editor'
-import * as R from 'ramda'
 
-import { EditorProps } from './editor'
 import { appletTypeState } from './plugins/types/applet'
 import { articleTypeState } from './plugins/types/article'
 import { Entity, License, Uuid } from './plugins/types/common'
 import { courseTypeState } from './plugins/types/course'
 import { coursePageTypeState } from './plugins/types/course-page'
 import { eventTypeState } from './plugins/types/event'
-import { mathPuzzleTypeState } from './plugins/types/math-puzzle'
 import { pageTypeState } from './plugins/types/page'
 import { taxonomyTypeState } from './plugins/types/taxonomy'
 import { textExerciseTypeState } from './plugins/types/text-exercise'
@@ -27,42 +23,95 @@ import { textExerciseGroupTypeState } from './plugins/types/text-exercise-group'
 import { textSolutionTypeState } from './plugins/types/text-solution'
 import { userTypeState } from './plugins/types/user'
 import { videoTypeState } from './plugins/types/video'
+import { SerloEditorProps } from './serlo-editor'
+import {
+  Applet,
+  Article,
+  Course,
+  CoursePage,
+  Event,
+  Exercise,
+  ExerciseGroup,
+  Page,
+  QueryResponse,
+  Solution,
+  TaxonomyTerm,
+  User,
+  Video,
+} from '@/fetcher/query-types'
+import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 
 const empty: RowsPlugin = { plugin: 'rows', state: [] }
 
-export function deserialize({
-  initialState,
-  type,
-  onError,
-}: Pick<EditorProps, 'initialState' | 'type' | 'onError'>): DeserializeResult {
+// converts query response to deserialized editor state
+
+// TODO: What about revisions?
+
+export function editorResponseToState(
+  uuid: QueryResponse,
+  type: SerloEditorProps['type'],
+  onError: SerloEditorProps['onError']
+): DeserializeResult {
   const stack: { id: number; type: string }[] = []
+
   const config: Record<
     string,
-    { deserialize: (state: any) => DeserializedState<StateType> }
+    { convert: (state: any) => DeserializedState<StateType> }
   > = {
-    applet: { deserialize: deserializeApplet },
-    article: { deserialize: deserializeArticle },
-    course: { deserialize: deserializeCourse },
-    'course-page': { deserialize: deserializeCoursePage },
-    event: { deserialize: deserializeEvent },
-    'math-puzzle': { deserialize: deserializeMathPuzzle },
-    page: { deserialize: deserializePage },
-    'grouped-text-exercise': { deserialize: deserializeTextExercise },
-    'text-exercise': { deserialize: deserializeTextExercise },
-    'text-exercise-group': { deserialize: deserializeTextExerciseGroup },
-    'text-solution': { deserialize: deserializeTextSolution },
-    user: { deserialize: deserializeUser },
-    video: { deserialize: deserializeVideo },
-    taxonomy: { deserialize: deserializeTaxonomy },
+    applet: { convert: convertApplet },
+    article: { convert: convertArticle },
+    course: { convert: convertCourse },
+    'course-page': { convert: convertCoursePage },
+    event: { convert: convertEvent },
+    page: { convert: convertPage },
+    'grouped-text-exercise': { convert: convertTextExercise },
+    'text-exercise': { convert: convertTextExercise },
+    'text-exercise-group': { convert: convertTextExerciseGroup },
+    'text-solution': { convert: convertTextSolution },
+    user: { convert: convertUser },
+    video: { convert: convertVideo },
+    taxonomy: { convert: convertTaxonomy },
   }
+
+  const license =
+    'license' in uuid
+      ? {
+          agreement: uuid.license.title, // TODO: get agreement
+          iconHref: 'https://i.creativecommons.org/l/by-sa/4.0/88x31.png', // TODO: get or create icon
+          id: uuid.license.id,
+          title: uuid.license.title,
+          url: uuid.license.url,
+        }
+      : undefined
+  const { id } = uuid
+
+  const currentRev =
+    'currentRevision' in uuid ? uuid.currentRevision : undefined
+  const title = currentRev && 'title' in currentRev ? currentRev.title : ''
+  const content =
+    currentRev && 'content' in currentRev ? currentRev.content : ''
+  const meta_title =
+    currentRev && hasOwnPropertyTs(currentRev, 'meta_title')
+      ? (currentRev.meta_title as string)
+      : ''
+  const meta_description =
+    currentRev && hasOwnPropertyTs(currentRev, 'meta_description')
+      ? (currentRev.meta_description as string)
+      : ''
+
+  const entityFields = {
+    id,
+    license: license!,
+  }
+
   try {
     if (config[type] === undefined) {
       return {
         error: 'type-unsupported',
       }
     }
-    const { deserialize } = config[type]
-    return succeed(deserialize(initialState))
+    const { convert } = config[type]
+    return convert(uuid)
   } catch (e) {
     const error = e as Error
     if (typeof onError === 'function') {
@@ -75,70 +124,61 @@ export function deserialize({
     }
   }
 
-  function succeed(
-    deserialized: DeserializedState<StateType>
-  ): DeserializeSuccess {
-    return {
-      success: true,
-      ...deserialized,
-    }
-  }
-
-  function deserializeApplet(
-    state: AppletSerializedState
+  function convertApplet(
+    uuid: Applet
   ): DeserializedState<typeof appletTypeState> {
-    stack.push({ id: state.id, type: 'applet' })
+    stack.push({ id: uuid.id, type: 'applet' })
     return {
       initialState: {
         plugin: 'type-applet',
         state: {
-          ...state,
+          ...entityFields,
+          revision: 2, // TODO:
           changes: '',
-          title: state.title || '',
-          url: state.url || '',
-          content: serializeEditorState(
-            toEdtr(deserializeEditorState(state.content))
-          ),
-          reasoning: '',
-          meta_title: state.meta_title || '',
-          meta_description: state.meta_description || '',
+          title,
+          url: uuid.currentRevision?.url || '',
+          content: serializeEditorState(toEdtr(convertEditorState(content))),
+          meta_title,
+          meta_description,
         },
       },
-      converted: !isEdtr(deserializeEditorState(state.content) || empty),
+      converted: !isEdtr(
+        convertEditorState(uuid.currentRevision?.content ?? '') || empty
+      ),
     }
   }
 
-  function deserializeArticle(
-    state: ArticleSerializedState
+  function convertArticle(
+    uuid: Article
   ): DeserializedState<typeof articleTypeState> {
-    stack.push({ id: state.id, type: 'article' })
+    stack.push({ id: uuid.id, type: 'article' })
 
     return {
       initialState: {
         plugin: 'type-article',
         state: {
-          ...state,
+          ...entityFields,
+          revision: 0, // TODO:
           changes: '',
-          title: state.title || '',
+          title,
           content: getContent(),
-          reasoning: '',
-          meta_title: state.meta_title || '',
-          meta_description: state.meta_description || '',
+          meta_title,
+          meta_description,
         },
       },
-      converted: !isEdtr(deserializeEditorState(state.content) || empty),
+      converted: !isEdtr(convertEditorState(content) || empty),
     }
 
     function getContent() {
-      const deserializedContent = deserializeEditorState(state.content)
+      const convertdContent = convertEditorState(content)
 
-      const convertedContent = toEdtr(deserializedContent) as
+      const convertedContent = toEdtr(convertdContent) as
         | RowsPlugin
         | OtherPlugin
 
       if (
-        deserializedContent !== undefined &&
-        isEdtr(deserializedContent) &&
+        convertdContent !== undefined &&
+        isEdtr(convertdContent) &&
         convertedContent.plugin === 'article'
       ) {
         return serializeEditorState(convertedContent)
@@ -162,75 +202,78 @@ export function deserialize({
     }
   }
 
-  function deserializeCourse(
-    state: CourseSerializedState
+  function convertCourse(
+    uuid: Course
   ): DeserializedState<typeof courseTypeState> {
-    stack.push({ id: state.id, type: 'course' })
+    stack.push({ id: uuid.id, type: 'course' })
     return {
       initialState: {
         plugin: 'type-course',
         state: {
-          ...state,
+          ...entityFields,
+          revision: 0, // TODO:
           changes: '',
-          title: state.title || '',
+          title,
           description: serializeEditorState(
-            toEdtr(deserializeEditorState(state.description))
+            toEdtr(convertEditorState('')) // TODO: get description
           ),
-          reasoning: '',
-          meta_description: state.meta_description || '',
-          'course-page': (state['course-page'] || []).map(
-            (s) => deserializeCoursePage(s).initialState.state
+          meta_description,
+          'course-page': (uuid.pages || []).map(
+            (s) => convertCoursePage(s.currentRevision as unknown as CoursePage) // TODO: get missing fields
           ),
         },
       },
-      converted: !isEdtr(deserializeEditorState(state.description) || empty),
+      converted: !isEdtr(convertEditorState('') || empty),
     }
   }
 
-  function deserializeCoursePage(
-    state: CoursePageSerializedState
+  function convertCoursePage(
+    uuid: CoursePage
   ): DeserializedState<typeof coursePageTypeState> {
-    stack.push({ id: state.id, type: 'course-page' })
+    stack.push({ id: uuid.id, type: 'course-page' })
     return {
       initialState: {
         plugin: 'type-course-page',
         state: {
-          ...state,
+          id: uuid.id, // TODO: get course page id
+          license: license!, // TODO: check if it's okay to reuse course license here
+          revision: 0, // TODO
           changes: '',
-          title: state.title || '',
-          icon: state.icon || 'explanation',
-          content: serializeEditorState(
-            toEdtr(deserializeEditorState(state.content))
-          ),
+          title: uuid.currentRevision?.title || '',
+          icon: 'explanation',
+          content: '', // TODO: check if we need content here
+          // content: serializeEditorState(
+          //   toEdtr(convertEditorState(uuid.currentRevision?.content))
+          // ),
         },
       },
-      converted: !isEdtr(deserializeEditorState(state.content) || empty),
+      converted: !isEdtr(convertEditorState('') || empty),
     }
   }
 
-  function deserializeEvent(
-    state: EventSerializedState
-  ): DeserializedState<typeof eventTypeState> {
-    stack.push({ id: state.id, type: 'event' })
+  function convertEvent(uuid: Event): DeserializedState<typeof eventTypeState> {
+    stack.push({ id: uuid.id, type: 'event' })
     return {
       initialState: {
         plugin: 'type-event',
         state: {
-          ...state,
+          ...entityFields,
+          revision: 0, // TODO:
           changes: '',
-          title: state.title || '',
-          content: serializeEditorState(
-            toEdtr(deserializeEditorState(state.content))
-          ),
-          meta_title: state.meta_title || '',
-          meta_description: state.meta_description || '',
+          title,
+          content: serializeEditorState(toEdtr(convertEditorState(content))),
+          meta_title,
+          meta_description,
         },
       },
-      converted: !isEdtr(deserializeEditorState(state.content) || empty),
+      converted: !isEdtr(convertEditorState(content) || empty),
     }
   }
 
-  function deserializeMathPuzzle(
+  // Do we need to support Math Puzzle in any way?
+
+  /*
+  function convertMathPuzzle(
     state: MathPuzzleSerializedState
   ): DeserializedState<typeof mathPuzzleTypeState> {
     stack.push({ id: state.id, type: 'math-puzzle' })
@@ -241,46 +284,48 @@ export function deserialize({
           ...state,
           changes: '',
           content: serializeEditorState(
-            toEdtr(deserializeEditorState(state.content))
+            toEdtr(convertEditorState(state.content))
           ),
           source: state.source || '',
         },
       },
-      converted: !isEdtr(deserializeEditorState(state.content) || empty),
+      converted: !isEdtr(convertEditorState(state.content) || empty),
     }
   }
+  */
 
-  function deserializePage(
-    state: PageSerializedState
-  ): DeserializedState<typeof pageTypeState> {
-    stack.push({ id: state.id, type: 'page' })
+  function convertPage(uuid: Page): DeserializedState<typeof pageTypeState> {
+    stack.push({ id: uuid.id, type: 'page' })
     return {
       initialState: {
         plugin: 'type-page',
         state: {
-          ...state,
-          title: state.title || '',
-          content: serializeEditorState(
-            toEdtr(deserializeEditorState(state.content))
-          ),
+          ...entityFields,
+          title,
+          content: serializeEditorState(toEdtr(convertEditorState(content))),
         },
       },
-      converted: !isEdtr(deserializeEditorState(state.content) || empty),
+      converted: !isEdtr(convertEditorState(content) || empty),
     }
   }
 
-  function deserializeTaxonomy(
-    state: TaxonomySerializedState
+  function convertTaxonomy(
+    uuid: TaxonomyTerm
   ): DeserializedState<typeof taxonomyTypeState> {
-    stack.push({ id: state.id, type: 'taxonomy' })
+    stack.push({ id: uuid.id, type: 'taxonomy' })
     return {
       initialState: {
         plugin: 'type-taxonomy',
         state: {
-          ...state,
-          term: state.term,
+          id: uuid.id,
+          parent: uuid.id, // TODO: fetch
+          position: uuid.id, // TODO: fetch
+          taxonomy: uuid.id, // TODO: fetch
+          term: {
+            name: uuid.name,
+          },
           description: serializeEditorState(
-            toEdtr(deserializeEditorState(state.description))
+            toEdtr(convertEditorState(uuid.description ?? ''))
           ),
         },
       },
@@ -288,58 +333,60 @@ export function deserialize({
     }
   }
 
-  function deserializeTextExercise({
-    content,
-    'text-solution': textSolution,
-    'single-choice-right-answer': singleChoiceRightAnswer,
-    'single-choice-wrong-answer': singleChoiceWrongAnswer,
-    'multiple-choice-right-answer': multipleChoiceRightAnswer,
-    'multiple-choice-wrong-answer': multipleChoiceWrongAnswer,
-    'input-expression-equal-match-challenge':
-      inputExpressionEqualMatchChallenge,
-    'input-number-exact-match-challenge': inputNumberExactMatchChallenge,
-    'input-string-normalized-match-challenge':
-      inputStringNormalizedMatchChallenge,
-    ...state
-  }: TextExerciseSerializedState): DeserializedState<
-    typeof textExerciseTypeState
-  > {
-    stack.push({ id: state.id, type: 'text-exercise' })
-    const deserialized = deserializeEditorState(content)
+  //TODO: !
 
-    const scMcExercise =
-      deserialized && !isEdtr(deserialized)
-        ? deserializeScMcExercise()
-        : undefined
+  function convertTextExercise(
+    uuid: Exercise
+  ): DeserializedState<typeof textExerciseTypeState> {
+    // const {
+    //   'text-solution': textSolution,
+    //   'single-choice-right-answer': singleChoiceRightAnswer,
+    //   'single-choice-wrong-answer': singleChoiceWrongAnswer,
+    //   'multiple-choice-right-answer': multipleChoiceRightAnswer,
+    //   'multiple-choice-wrong-answer': multipleChoiceWrongAnswer,
+    //   'input-expression-equal-match-challenge':
+    //     inputExpressionEqualMatchChallenge,
+    //   'input-number-exact-match-challenge': inputNumberExactMatchChallenge,
+    //   'input-string-normalized-match-challenge':
+    //     inputStringNormalizedMatchChallenge,
+    // } = uuid
 
-    const inputExercise =
-      deserialized && !isEdtr(deserialized)
-        ? deserializeInputExercise()
-        : undefined
+    stack.push({ id: uuid.id, type: 'text-exercise' })
+    const convertd = convertEditorState(content)
+
+    // const scMcExercise =
+    //   convertd && !isEdtr(convertd) ? convertScMcExercise() : undefined
+
+    // const inputExercise =
+    //   convertd && !isEdtr(convertd) ? convertInputExercise() : undefined
 
     return {
+      // // TODO: build solution
       initialState: {
         plugin: 'type-text-exercise',
         state: {
-          ...state,
+          ...entityFields,
           changes: '',
-          'text-solution': textSolution
-            ? deserializeTextSolution(textSolution).initialState.state
+          revision: 0,
+          // TODO: Check if we have all field to build the solution
+          'text-solution': uuid.solution
+            ? convertTextSolution(uuid.solution as unknown as Solution)
+                .initialState.state
             : '',
           content: getContent(),
         },
       },
-      converted: !isEdtr(deserialized || empty),
+      converted: !isEdtr(convertd || empty),
     }
 
     function getContent() {
-      const deserializedContent = deserializeEditorState(content)
-      if (deserializedContent !== undefined && isEdtr(deserializedContent)) {
-        return serializeEditorState(toEdtr(deserializedContent))
+      const convertdContent = convertEditorState(content)
+      if (convertdContent !== undefined && isEdtr(convertdContent)) {
+        return serializeEditorState(toEdtr(convertdContent))
       }
 
-      const convertedContent = toEdtr(deserializedContent) // RowsPlugin
-      const interactive = scMcExercise || inputExercise
+      const convertedContent = toEdtr(convertdContent) // RowsPlugin
+      //const interactive = scMcExercise || inputExercise
 
       return serializeEditorState({
         plugin: 'exercise',
@@ -348,18 +395,19 @@ export function deserialize({
             plugin: 'rows',
             state: convertedContent.state,
           },
-          interactive,
+          interactive: '',
         },
       })
     }
 
-    function deserializeScMcExercise():
+    /*
+    function convertScMcExercise():
       | {
           plugin: 'scMcExercise'
           state: StateTypeSerializedType<ScMcExercisePluginState>
         }
       | undefined {
-      stack.push({ id: state.id, type: 'sc-mc-exercise' })
+      stack.push({ id: uuid.id, type: 'sc-mc-exercise' })
       if (
         singleChoiceWrongAnswer ||
         singleChoiceRightAnswer ||
@@ -371,19 +419,18 @@ export function deserialize({
             ? [
                 {
                   content: extractChildFromRows(
-                    convert(
-                      deserializeEditorState(singleChoiceRightAnswer.content)
-                    )
+                    convert(convertEditorState(singleChoiceRightAnswer.content))
                   ),
                   isCorrect: true,
                   feedback: extractChildFromRows(
                     convert(
-                      deserializeEditorState(singleChoiceRightAnswer.feedback)
+                      convertEditorState(singleChoiceRightAnswer.feedback)
                     )
                   ),
                 },
               ]
             : []
+        
         const convertedSCWrongAnswers = singleChoiceWrongAnswer
           ? singleChoiceWrongAnswer
               .filter((answer) => {
@@ -392,11 +439,11 @@ export function deserialize({
               .map((answer) => {
                 return {
                   content: extractChildFromRows(
-                    convert(deserializeEditorState(answer.content))
+                    convert(convertEditorState(answer.content))
                   ),
                   isCorrect: false,
                   feedback: extractChildFromRows(
-                    convert(deserializeEditorState(answer.feedback))
+                    convert(convertEditorState(answer.feedback))
                   ),
                 }
               })
@@ -410,7 +457,7 @@ export function deserialize({
               .map((answer) => {
                 return {
                   content: extractChildFromRows(
-                    convert(deserializeEditorState(answer.content))
+                    convert(convertEditorState(answer.content))
                   ),
                   isCorrect: true,
                   feedback: {
@@ -428,11 +475,11 @@ export function deserialize({
               .map((answer) => {
                 return {
                   content: extractChildFromRows(
-                    convert(deserializeEditorState(answer.content))
+                    convert(convertEditorState(answer.content))
                   ),
                   isCorrect: false,
                   feedback: extractChildFromRows(
-                    convert(deserializeEditorState(answer.feedback))
+                    convert(convertEditorState(answer.feedback))
                   ),
                 }
               })
@@ -453,9 +500,9 @@ export function deserialize({
           },
         }
       }
-    }
-
-    function deserializeInputExercise():
+    } */
+    /*
+    function convertInputExercise():
       | {
           plugin: 'inputExercise'
           state: StateTypeSerializedType<InputExercisePluginState>
@@ -502,7 +549,7 @@ export function deserialize({
           return {
             value: exercise.solution,
             feedback: extractChildFromRows(
-              convert(deserializeEditorState(exercise.feedback))
+              convert(convertEditorState(exercise.feedback))
             ),
             isCorrect,
           }
@@ -524,60 +571,66 @@ export function deserialize({
       function filterDefined<T>(array: (T | undefined)[]): T[] {
         return array.filter((el) => typeof el !== 'undefined') as T[]
       }
-    }
+    } */
   }
 
+  /*
   function extractChildFromRows(plugin: RowsPlugin) {
     return plugin.state.length ? plugin.state[0] : { plugin: 'text' }
-  }
+  }*/
 
-  function deserializeTextExerciseGroup(
-    state: TextExerciseGroupSerializedState
+  function convertTextExerciseGroup(
+    uuid: ExerciseGroup
   ): DeserializedState<typeof textExerciseGroupTypeState> {
-    stack.push({ id: state.id, type: 'text-exercise-group' })
+    stack.push({ id: uuid.id, type: 'text-exercise-group' })
+
+    const exercises = uuid.exercises.map((ex) => {
+      // TODO: build exercises with shared function
+      // as TextExerciseSerializedState
+      return ex as unknown as DeserializedState<typeof textExerciseTypeState>
+    })
+
     return {
       initialState: {
         plugin: 'type-text-exercise-group',
         state: {
-          ...state,
+          ...entityFields,
           changes: '',
-          content: serializeEditorState(
-            toEdtr(deserializeEditorState(state.content))
-          ),
-          cohesive: state.cohesive === 'true',
-          'grouped-text-exercise': (state['grouped-text-exercise'] || []).map(
-            (s) => deserializeTextExercise(s).initialState.state
-          ),
+          revision: 0,
+          content: serializeEditorState(toEdtr(convertEditorState(content))),
+          cohesive: false, // TODO: Currently not exposed in API: https://github.com/serlo/api.serlo.org/issues/489
+          'grouped-text-exercise': exercises,
         },
       },
-      converted: !isEdtr(deserializeEditorState(state.content) || empty),
+      converted: !isEdtr(convertEditorState(content) || empty),
     }
   }
 
-  function deserializeTextSolution(
-    state: TextSolutionSerializedState
+  function convertTextSolution(
+    uuid: Solution
   ): DeserializedState<typeof textSolutionTypeState> {
-    stack.push({ id: state.id, type: 'text-solution' })
+    stack.push({ id: uuid.id, type: 'text-solution' })
 
     return {
       initialState: {
         plugin: 'type-text-solution',
         state: {
-          ...state,
+          ...entityFields,
+          revision: 0,
           changes: '',
           content: getContent(),
         },
       },
-      converted: !isEdtr(deserializeEditorState(state.content) || empty),
+      converted: !isEdtr(convertEditorState(content) || empty),
     }
 
     function getContent() {
-      const deserializedContent = deserializeEditorState(state.content)
-      if (deserializedContent !== undefined && isEdtr(deserializedContent)) {
-        return serializeEditorState(toEdtr(deserializedContent))
+      const convertdContent = convertEditorState(content)
+      if (convertdContent !== undefined && isEdtr(convertdContent)) {
+        return serializeEditorState(toEdtr(convertdContent))
       }
 
-      const convertedContent = toEdtr(deserializedContent) // RowsPlugin
+      const convertedContent = toEdtr(convertdContent) // RowsPlugin
 
       return serializeEditorState({
         plugin: 'solution',
@@ -590,17 +643,14 @@ export function deserialize({
     }
   }
 
-  function deserializeUser(
-    state: UserSerializedState
-  ): DeserializedState<typeof userTypeState> {
-    stack.push({ id: state.id, type: 'user' })
+  function convertUser(uuid: User): DeserializedState<typeof userTypeState> {
+    stack.push({ id: uuid.id, type: 'user' })
     return {
       initialState: {
         plugin: 'type-user',
         state: {
-          ...state,
           description: serializeEditorState(
-            toEdtr(deserializeEditorState(state.description))
+            toEdtr(convertEditorState(uuid.description ?? ''))
           ),
         },
       },
@@ -608,25 +658,23 @@ export function deserialize({
     }
   }
 
-  function deserializeVideo(
-    state: VideoSerializedState
-  ): DeserializedState<typeof videoTypeState> {
-    stack.push({ id: state.id, type: 'video' })
+  function convertVideo(uuid: Video): DeserializedState<typeof videoTypeState> {
+    stack.push({ id: uuid.id, type: 'video' })
     return {
       initialState: {
         plugin: 'type-video',
         state: {
-          ...state,
+          ...entityFields,
           changes: '',
-          title: state.title || '',
+          title,
+          revision: 0,
           description: serializeEditorState(
-            toEdtr(deserializeEditorState(state.description))
+            toEdtr(convertEditorState(content))
           ),
-          content: state.content || '',
-          reasoning: '',
+          content: uuid.currentRevision?.url ?? '',
         },
       },
-      converted: !isEdtr(deserializeEditorState(state.description) || empty),
+      converted: !isEdtr(convertEditorState(content) || empty),
     }
   }
 }
@@ -764,10 +812,7 @@ export function isError(result: DeserializeResult): result is DeserializeError {
 }
 
 export type DeserializeResult = DeserializeSuccess | DeserializeError
-export interface DeserializeSuccess
-  extends DeserializedState<StateType<unknown>> {
-  success: true
-}
+export type DeserializeSuccess = DeserializedState<StateType<unknown>>
 export type DeserializeError =
   | { error: 'type-unsupported' }
   | { error: 'failure' }
@@ -788,9 +833,9 @@ function serializeEditorState(
   return content ? JSON.stringify(content) : undefined
 }
 
-function deserializeEditorState(content: SerializedLegacyEditorState): Legacy
-function deserializeEditorState(content: SerializedEditorState): EditorState
-function deserializeEditorState(
+function convertEditorState(content: SerializedLegacyEditorState): Legacy
+function convertEditorState(content: SerializedEditorState): EditorState
+function convertEditorState(
   content: SerializedLegacyEditorState | SerializedEditorState
 ): EditorState | string | undefined {
   try {
@@ -805,8 +850,8 @@ type EditorState = Legacy | Splish | Edtr | undefined
 
 // Fake `__type` property is just here to let TypeScript distinguish between the types
 type SerializedEditorState = (string | undefined) & {
-  __type: 'serialized-editor-state'
+  __type?: 'serialized-editor-state'
 }
 type SerializedLegacyEditorState = (string | undefined) & {
-  __type: 'serialized-legacy-editor-state'
+  __type?: 'serialized-legacy-editor-state'
 }

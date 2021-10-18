@@ -3,7 +3,7 @@ import { serializer, slateValueToHtml } from '@edtr-io/plugin-text/internal'
 import * as R from 'ramda'
 import { Value } from 'slate'
 
-import { LooseEdtrData, LooseEdtrDataDefined } from './editor'
+import { LooseEdtrData, LooseEdtrDataDefined } from './serlo-editor'
 
 export function cleanEdtrState(state: LooseEdtrData) {
   // TODO: fix eslint
@@ -16,6 +16,7 @@ export function cleanEdtrState(state: LooseEdtrData) {
     if (typeof jsonObj === 'object') {
       return R.map((value) => {
         if (value.plugin === 'text' && value.state) {
+          //@ts-expect-error whole file needs working types
           const slateValue = Value.fromJSON(serializer.deserialize(value.state))
           return {
             ...value,

@@ -11,8 +11,8 @@ import BSFormControl from 'react-bootstrap/lib/FormControl'
 import BSFormGroup from 'react-bootstrap/lib/FormGroup'
 import BSModal from 'react-bootstrap/lib/Modal'
 
-import { storeState } from '../editor'
 import { entity } from '../plugins/types/common'
+import { storeState } from '../serlo-editor'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 

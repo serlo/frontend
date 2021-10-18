@@ -20,7 +20,6 @@ export const courseTypeState = entityType(
     ...entity,
     title: string(),
     description: editorContent(),
-    reasoning: editorContent(),
     meta_description: string(),
   },
   {
