@@ -216,13 +216,13 @@ export function editorResponseToState(
         name: uuid.name,
       },
       description: uuid.description,
-      taxonomy: uuid.id, // TODO:
-      parent: 0, // TODO:
-      position: 0, // TODO:
+      taxonomy: uuid.id, // TODO: check if that is correct
+      parent: 0, // uuid.parent.id, // TODO: fetch
+      position: // uuid.weight, // TODO: fetch
     } as TaxonomySerializedState
   }
 
-  //  What about revisions?
+  // TODO: What about revisions?
 
   return null
 }
