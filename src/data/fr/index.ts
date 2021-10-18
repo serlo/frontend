@@ -360,9 +360,6 @@ export const loggedInData = {
       url: '/event/history/user/me',
       title: "Mes modifications"
     }, {
-      url: '/entity/unrevised/user/me',
-      title: "Révisions non révisées"
-    },  {
       url: '/subscriptions/manage',
       title: "Abonnements"
     }, {
