@@ -99,9 +99,7 @@ export function deserialize({
           content: serializeEditorState(
             toEdtr(deserializeEditorState(state.content))
           ),
-          reasoning: serializeEditorState(
-            toEdtr(deserializeEditorState(state.reasoning))
-          ),
+          reasoning: '',
           meta_title: state.meta_title || '',
           meta_description: state.meta_description || '',
         },
@@ -123,9 +121,6 @@ export function deserialize({
           changes: '',
           title: state.title || '',
           content: getContent(),
-          reasoning: serializeEditorState(
-            toEdtr(deserializeEditorState(state.reasoning))
-          ),
           meta_title: state.meta_title || '',
           meta_description: state.meta_description || '',
         },
@@ -180,9 +175,7 @@ export function deserialize({
           description: serializeEditorState(
             toEdtr(deserializeEditorState(state.description))
           ),
-          reasoning: serializeEditorState(
-            toEdtr(deserializeEditorState(state.reasoning))
-          ),
+          reasoning: '',
           meta_description: state.meta_description || '',
           'course-page': (state['course-page'] || []).map(
             (s) => deserializeCoursePage(s).initialState.state
@@ -629,9 +622,7 @@ export function deserialize({
             toEdtr(deserializeEditorState(state.description))
           ),
           content: state.content || '',
-          reasoning: serializeEditorState(
-            toEdtr(deserializeEditorState(state.reasoning))
-          ),
+          reasoning: '',
         },
       },
       converted: !isEdtr(deserializeEditorState(state.description) || empty),
