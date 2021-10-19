@@ -1,6 +1,7 @@
 import { PluginToolbarButton } from '@edtr-io/core'
 import { Icon } from '@edtr-io/ui'
 import { faHistory } from '@fortawesome/free-solid-svg-icons'
+import NProgress from 'nprogress'
 import { PropsWithChildren, useState } from 'react'
 
 import { endpoint } from '@/api/endpoint'
@@ -16,6 +17,8 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { HistoryRevisionsData } from '@/data-types'
 import { QueryResponseRevision } from '@/fetcher/query-types'
 import { revisionQuery } from '@/fetcher/revision/query'
+import { showToastNotice } from '@/helper/show-toast-notice'
+import { triggerSentry } from '@/helper/trigger-sentry'
 import { revisionHistoryQuery } from '@/pages/entity/repository/history/[id]'
 
 export function RevisionHistoryLoader<T>(
@@ -109,6 +112,8 @@ export function RevisionHistoryLoader<T>(
   function fetchRevisionData(id: number) {
     // TODO: Maybe add loading indicator
 
+    NProgress.start()
+
     void fetch(endpoint, {
       method: 'POST',
       headers: {
@@ -123,19 +128,30 @@ export function RevisionHistoryLoader<T>(
     })
       .then((res) => res.json())
       .then((result) => {
-        const { uuid } = (
-          result as unknown as { data: { uuid: QueryResponseRevision } }
-        ).data
-        const prepared = revisionResponseToResponse(uuid)
-        const converted = editorResponseToState(prepared!)
+        try {
+          const { uuid } = (
+            result as unknown as { data: { uuid: QueryResponseRevision } }
+          ).data
+          const prepared = revisionResponseToResponse(uuid)
+          const converted = editorResponseToState(prepared!)
 
-        if (isError(converted)) {
-          // TODO: handle error
-          alert(converted.error)
-        } else {
-          props.onSwitchRevision(converted.initialState.state as T)
-          setShowRevisions(false)
+          if (isError(converted)) {
+            handleError(`editor: revision conversion | ${converted.error}`)
+          } else {
+            props.onSwitchRevision(converted.initialState.state as T)
+            setShowRevisions(false)
+          }
+        } catch (e) {
+          handleError('editor: revision conversion failed')
         }
       })
+      .finally(() => {
+        NProgress.done()
+      })
   }
+}
+
+function handleError(message: string) {
+  void triggerSentry({ message })
+  void showToastNotice('Sorry, could not load revision 🥵', 'warning')
 }
