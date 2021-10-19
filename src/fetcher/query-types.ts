@@ -51,11 +51,9 @@ export interface Article extends EntityWithTaxonomyTerms {
   >
   revisions: {
     totalCount: number
-    nodes: [
-      {
-        title: string
-      }
-    ]
+    nodes: {
+      title: string
+    }[]
   }
 }
 
@@ -66,11 +64,9 @@ export interface Video extends EntityWithTaxonomyTerms {
   >
   revisions: {
     totalCount: number
-    nodes: [
-      {
-        title: string
-      }
-    ]
+    nodes: {
+      title: string
+    }[]
   }
 }
 
@@ -84,11 +80,9 @@ export interface Applet extends EntityWithTaxonomyTerms {
   >
   revisions: {
     totalCount: number
-    nodes: [
-      {
-        title: string
-      }
-    ]
+    nodes: {
+      title: string
+    }[]
   }
 }
 
@@ -99,25 +93,26 @@ export interface CoursePage extends Entity {
   >
   revisions: {
     totalCount: number
-    nodes: [
-      {
-        title: string
-      }
-    ]
+    nodes: {
+      title: string
+    }[]
   }
   course: {
     id: number
     currentRevision?: GraphQL.Maybe<
       Pick<GraphQL.CourseRevision, 'title' | 'id'>
     >
-    pages: {
-      alias?: string
-      id: number
-      currentRevision: Pick<
-        GraphQL.CoursePageRevision,
-        'title' | 'trashed' | 'id'
-      >
-    }[]
+    pages: GraphQL.Maybe<
+      | {
+          alias?: GraphQL.Maybe<string | undefined>
+          id: number
+          currentRevision?: GraphQL.Maybe<
+            | Pick<GraphQL.CoursePageRevision, 'title' | 'trashed' | 'id'>
+            | undefined
+          >
+        }[]
+      | undefined
+    >
     revisions: {
       totalCount: number
     }
@@ -134,13 +129,16 @@ export interface BareExercise extends Entity {
   revisions?: {
     totalCount: number
   }
-  solution?: {
-    id: number
-    currentRevision?: GraphQL.Maybe<
-      Pick<GraphQL.SolutionRevision, 'content' | 'id'>
-    >
-    license: License
-  }
+  solution?: GraphQL.Maybe<
+    | {
+        id: number
+        currentRevision?: GraphQL.Maybe<
+          Pick<GraphQL.SolutionRevision, 'content' | 'id'>
+        >
+        license: License
+      }
+    | undefined
+  >
   license: License
 }
 
@@ -149,11 +147,11 @@ export interface Exercise extends EntityWithTaxonomyTerms, BareExercise {
 }
 export interface GroupedExercise extends BareExercise {
   __typename: 'GroupedExercise'
-  exerciseGroup: {
-    alias: string
+  exerciseGroup: GraphQL.Maybe<{
+    alias?: GraphQL.Maybe<string | undefined>
     id: number
     exercises: { id: number }[]
-  }
+  }>
 }
 
 export interface BareExerciseGroup extends Entity {
@@ -205,12 +203,12 @@ export interface Course extends Repository {
   __typename: 'Course'
   pages: {
     id: number
-    alias?: string
-    currentRevision?: {
+    alias?: GraphQL.Maybe<string | undefined>
+    currentRevision?: GraphQL.Maybe<{
       title: string
       content?: string
       id: number
-    }
+    }>
   }[]
   currentRevision?: GraphQL.Maybe<Pick<GraphQL.CourseRevision, 'title' | 'id'>>
   revisions: {

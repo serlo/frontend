@@ -107,7 +107,7 @@ export async function requestRevision(
           | GroupedExercise
           | Exercise
         if (exercise.__typename === 'GroupedExercise')
-          return exercise.exerciseGroup.id
+          return exercise.exerciseGroup?.id
         return exercise.id
       }
       return uuid.repository.id
@@ -117,10 +117,10 @@ export async function requestRevision(
       if (uuid.__typename === 'SolutionRevision') {
         const exercise = uuid.repository.exercise as unknown as GroupedExercise
         if (exercise.__typename === 'GroupedExercise') {
-          const pos = exercise.exerciseGroup.exercises.findIndex(
+          const pos = exercise.exerciseGroup?.exercises.findIndex(
             (ex) => ex.id === exercise.id
           )
-          return pos > -1 ? pos : undefined
+          return pos && pos > -1 ? pos : undefined
         }
       }
       if (uuid.__typename === 'GroupedExerciseRevision') {

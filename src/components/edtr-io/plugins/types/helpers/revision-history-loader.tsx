@@ -5,13 +5,17 @@ import { PropsWithChildren, useState } from 'react'
 
 import { endpoint } from '@/api/endpoint'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
-import { queryResponseToQueryRevision } from '@/components/edtr-io/editor-response-to-state'
+import {
+  editorResponseToState,
+  isError,
+} from '@/components/edtr-io/editor-response-to-state'
+import { revisionResponseToResponse } from '@/components/edtr-io/revision-response-to-response'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { RevisionHistory as SerloRevisionHistory } from '@/components/pages/revision-history'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { HistoryRevisionsData } from '@/data-types'
+import { QueryResponseRevision } from '@/fetcher/query-types'
 import { revisionQuery } from '@/fetcher/revision/query'
-import { showToastNotice } from '@/helper/show-toast-notice'
 import { revisionHistoryQuery } from '@/pages/entity/repository/history/[id]'
 
 export function RevisionHistoryLoader<T>(
@@ -67,6 +71,8 @@ export function RevisionHistoryLoader<T>(
         }}
         title={editorStrings.edtrIo.switchRevision}
       >
+        {/* // a bit untidy, but it's very nice to reuse this component here.
+        // TODO: find a way to mark currently loaded id */}
         <SerloRevisionHistory
           data={revisionsResponse.data?.uuid}
           hideEdit
@@ -101,7 +107,7 @@ export function RevisionHistoryLoader<T>(
   }
 
   function fetchRevisionData(id: number) {
-    // TODO: Build fetch
+    // TODO: Maybe add loading indicator
 
     void fetch(endpoint, {
       method: 'POST',
@@ -117,30 +123,19 @@ export function RevisionHistoryLoader<T>(
     })
       .then((res) => res.json())
       .then((result) => {
-        const converted = queryResponseToQueryRevision(result.data.uuid)
-        console.log(converted)
+        const { uuid } = (
+          result as unknown as { data: { uuid: QueryResponseRevision } }
+        ).data
+        const prepared = revisionResponseToResponse(uuid)
+        const converted = editorResponseToState(prepared!)
+
+        if (isError(converted)) {
+          // TODO: handle error
+          alert(converted.error)
+        } else {
+          props.onSwitchRevision(converted.initialState.state as T)
+          setShowRevisions(false)
+        }
       })
-
-    showToastNotice('Not implemented yet!', 'warning')
-    setShowRevisions(false)
-
-    /*void fetch(
-                        `/entity/repository/get-revision-data/${props.id}/${id}`
-                      )
-                        .then((response) => response.json())
-                        .then((data: { state: unknown; type: string }) => {
-                          const deserialized = deserialize({
-                            initialState: data.state,
-                            type: data.type,
-                          })
-                          if (isError(deserialized)) {
-                            alert(deserialized.error)
-                          } else {
-                            props.onSwitchRevision(
-                              deserialized.initialState.state as T
-                            )
-                            setShowRevisions(false)
-                          }
-                        })*/
   }
 }

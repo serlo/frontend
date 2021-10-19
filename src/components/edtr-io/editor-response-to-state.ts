@@ -39,13 +39,10 @@ import {
   TaxonomyTerm,
   User,
   Video,
-  QueryResponseRevision,
 } from '@/fetcher/query-types'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 
 const empty: RowsPlugin = { plugin: 'rows', state: [] }
-
-// TODO: What about revisions?
 
 // converts query response to deserialized editor state
 export function editorResponseToState(
@@ -664,52 +661,6 @@ export function editorResponseToState(
     }
   }
 }
-
-export function queryResponseToQueryRevision(
-  uuid: QueryResponseRevision
-): QueryResponse | null {
-  console.log(uuid)
-
-  // mock, just for the types
-  const revisions = {
-    totalCount: 0,
-    nodes: [{ title: 'foo' }, { title: 'bar' }],
-  }
-
-  if (uuid.__typename === 'ArticleRevision') {
-    uuid.__typename
-    return {
-      __typename: 'Article',
-      currentRevision: {
-        id: uuid.id,
-        title: uuid.title,
-        content: uuid.content,
-        metaTitle: uuid.metaTitle,
-        metaDescription: uuid.metaDescription,
-      },
-      revisions,
-      taxonomyTerms: { nodes: [{ title: 'dummy' }] },
-      license: uuid.license,
-      trashed: false,
-      id: uuid.repository.id,
-      instance: 'en',
-    } as Article
-  }
-
-  return null
-}
-
-export type EntitySerializedStates =
-  | AppletSerializedState
-  | ArticleSerializedState
-  | CourseSerializedState
-  | CoursePageSerializedState
-  | EventSerializedState
-  | MathPuzzleSerializedState
-  | TextExerciseSerializedState
-  | TextExerciseGroupSerializedState
-  | TextSolutionSerializedState
-  | VideoSerializedState
 
 export interface AppletSerializedState extends Entity {
   title?: string
