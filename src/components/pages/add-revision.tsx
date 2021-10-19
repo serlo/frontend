@@ -9,7 +9,6 @@ export function AddRevision({ initialState, type }: EditorPageData) {
   return (
     <>
       <MathSpan formula="" />
-      {/* {renderUserTools({ aboveContent: true })} */}
       <div className="controls-portal sticky top-0 z-[99] bg-white" />
       <div className={clsx('max-w-[816px] mx-auto mb-24 edtr-io')}>
         {/* TODO: real props for Token, onSave, mayCheckout */}
@@ -26,7 +25,6 @@ export function AddRevision({ initialState, type }: EditorPageData) {
           initialState={initialState}
         />
       </div>
-      {/* {renderUserTools()} */}
       <style jsx global>{`
         .edtr-io h1 {
           @apply mx-side mb-9 mt-4 p-0 font-bold text-3.5xl special-hyphens-auto;
@@ -98,20 +96,4 @@ export function AddRevision({ initialState, type }: EditorPageData) {
       `}</style>
     </>
   )
-
-  /*
-  function renderUserTools(setting?: { aboveContent?: boolean }) {
-    return (
-      <UserTools
-        aboveContent={setting?.aboveContent}
-        id={-1}
-        hideEdit
-        data={{
-          type: 'Editor',
-          id: -1,
-        }}
-      />
-    )
-  }
-  */
 }
