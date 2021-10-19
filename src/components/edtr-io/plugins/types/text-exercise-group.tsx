@@ -13,7 +13,7 @@ import {
   OptionalChild,
   entityType,
 } from './common'
-import { RevisionHistory } from './helpers/revision-history'
+import { RevisionHistoryLoader } from './helpers/revision-history-loader'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export const textExerciseGroupTypeState = entityType(
@@ -67,7 +67,7 @@ function TextExerciseGroupTypeEditor(
   return (
     <article className="exercisegroup">
       {props.renderIntoToolbar(
-        <RevisionHistory
+        <RevisionHistoryLoader
           id={props.state.id.value}
           currentRevision={props.state.revision.value}
           onSwitchRevision={props.state.replaceOwnState}

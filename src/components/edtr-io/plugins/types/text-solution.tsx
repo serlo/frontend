@@ -4,7 +4,7 @@ import { ThemeProvider } from '@edtr-io/ui'
 import * as React from 'react'
 
 import { Controls, editorContent, entity, entityType } from './common'
-import { RevisionHistory } from './helpers/revision-history'
+import { RevisionHistoryLoader } from './helpers/revision-history-loader'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export const textSolutionTypeState = entityType(
@@ -59,7 +59,7 @@ function TextSolutionTypeEditor(props: TextSolutionTypeProps) {
   return (
     <>
       {props.renderIntoToolbar(
-        <RevisionHistory
+        <RevisionHistoryLoader
           id={props.state.id.value}
           currentRevision={props.state.revision.value}
           onSwitchRevision={props.state.replaceOwnState}

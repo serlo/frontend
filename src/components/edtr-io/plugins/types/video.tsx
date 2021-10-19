@@ -9,7 +9,7 @@ import {
   HeaderInput,
   entityType,
 } from './common'
-import { RevisionHistory } from './helpers/revision-history'
+import { RevisionHistoryLoader } from './helpers/revision-history-loader'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export const videoTypeState = entityType(
@@ -39,7 +39,7 @@ function VideoTypeEditor(props: EditorPluginProps<typeof videoTypeState>) {
   return (
     <section>
       {props.renderIntoToolbar(
-        <RevisionHistory
+        <RevisionHistoryLoader
           id={props.state.id.value}
           currentRevision={props.state.revision.value}
           onSwitchRevision={props.state.replaceOwnState}

@@ -39,6 +39,7 @@ import {
   TaxonomyTerm,
   User,
   Video,
+  QueryResponseRevision,
 } from '@/fetcher/query-types'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 
@@ -49,7 +50,7 @@ const empty: RowsPlugin = { plugin: 'rows', state: [] }
 // converts query response to deserialized editor state
 export function editorResponseToState(
   uuid: QueryResponse,
-  onError: SerloEditorProps['onError']
+  onError?: SerloEditorProps['onError']
 ): DeserializeResult {
   const stack: { id: number; type: string }[] = []
 
@@ -153,7 +154,6 @@ export function editorResponseToState(
     uuid: Article
   ): DeserializedState<typeof articleTypeState> {
     stack.push({ id: uuid.id, type: 'article' })
-
     return {
       initialState: {
         plugin: 'type-article',
@@ -663,6 +663,40 @@ export function editorResponseToState(
       converted: !isEdtr(convertEditorState(content) || empty),
     }
   }
+}
+
+export function queryResponseToQueryRevision(
+  uuid: QueryResponseRevision
+): QueryResponse | null {
+  console.log(uuid)
+
+  // mock, just for the types
+  const revisions = {
+    totalCount: 0,
+    nodes: [{ title: 'foo' }, { title: 'bar' }],
+  }
+
+  if (uuid.__typename === 'ArticleRevision') {
+    uuid.__typename
+    return {
+      __typename: 'Article',
+      currentRevision: {
+        id: uuid.id,
+        title: uuid.title,
+        content: uuid.content,
+        metaTitle: uuid.metaTitle,
+        metaDescription: uuid.metaDescription,
+      },
+      revisions,
+      taxonomyTerms: { nodes: [{ title: 'dummy' }] },
+      license: uuid.license,
+      trashed: false,
+      id: uuid.repository.id,
+      instance: 'en',
+    } as Article
+  }
+
+  return null
 }
 
 export type EntitySerializedStates =

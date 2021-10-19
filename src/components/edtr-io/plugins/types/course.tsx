@@ -12,7 +12,7 @@ import {
   OptionalChild,
   entityType,
 } from './common'
-import { RevisionHistory } from './helpers/revision-history'
+import { RevisionHistoryLoader } from './helpers/revision-history-loader'
 import { Settings } from './helpers/settings'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
@@ -43,7 +43,7 @@ function CourseTypeEditor(props: EditorPluginProps<typeof courseTypeState>) {
   return (
     <article>
       {props.renderIntoToolbar(
-        <RevisionHistory
+        <RevisionHistoryLoader
           id={props.state.id.value}
           currentRevision={props.state.revision.value}
           onSwitchRevision={props.state.replaceOwnState}

@@ -8,7 +8,7 @@ import {
   HeaderInput,
   entityType,
 } from './common'
-import { RevisionHistory } from './helpers/revision-history'
+import { RevisionHistoryLoader } from './helpers/revision-history-loader'
 import { Settings } from './helpers/settings'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
@@ -40,7 +40,7 @@ function ArticleTypeEditor(props: EditorPluginProps<typeof articleTypeState>) {
     <>
       <div className="page-header">
         {props.renderIntoToolbar(
-          <RevisionHistory
+          <RevisionHistoryLoader
             id={props.state.id.value}
             currentRevision={props.state.revision.value}
             onSwitchRevision={props.state.replaceOwnState}
