@@ -531,7 +531,7 @@ export const loggedInData = {
         switchRevision: 'Switch to another revision',
         current: 'Current',
         author: 'Author',
-        createdAt: 'Created at',
+        createdAt: 'when?',
         settings: 'Settings',
         equationsTitle: 'Terms and equations',
         equationsDesc:

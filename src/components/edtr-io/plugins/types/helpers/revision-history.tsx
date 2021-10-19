@@ -1,13 +1,12 @@
 import { PluginToolbarButton } from '@edtr-io/core'
-import { Icon, faCheck } from '@edtr-io/ui'
+import { Icon } from '@edtr-io/ui'
 import { faHistory } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import { gql } from 'graphql-request'
-import moment from 'moment'
 import { PropsWithChildren, useState } from 'react'
 
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
+import { RevisionHistory as SerloRevisionHistory } from '@/components/pages/revision-history'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { HistoryRevisionsData } from '@/data-types'
 
@@ -33,6 +32,14 @@ export function RevisionHistory<T>(
   }
 
   const revisions = revisionsResponse.data?.uuid.revisions.nodes
+  // const currentlyAccepted = revisionsResponse.data?.uuid.currentRevision.id
+
+  const onSelectRevision = (id: number) => {
+    //don't select the current selected
+    const isCurrentlyLoaded = props.currentRevision === id
+    if (isCurrentlyLoaded) return null
+    fetchRevisionData()
+  }
 
   return (
     <div>
@@ -56,7 +63,12 @@ export function RevisionHistory<T>(
         }}
         title={editorStrings.edtrIo.switchRevision}
       >
-        {renderTable()}
+        {/* {renderTable()} */}
+        <SerloRevisionHistory
+          data={revisionsResponse.data?.uuid}
+          hideEdit
+          onSelectRevision={onSelectRevision}
+        />
       </ModalWithCloseButton>
       <style jsx global>{`
         .ReactModalPortal .ReactModal__Content {
@@ -67,61 +79,14 @@ export function RevisionHistory<T>(
     </div>
   )
 
-  function renderTable() {
-    return (
-      <table className="serlo-table relative">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>{editorStrings.edtrIo.current}</th>
-            <th>{editorStrings.edtrIo.changes}</th>
-            <th>{editorStrings.edtrIo.author}</th>
-            <th>{editorStrings.edtrIo.createdAt}</th>
-            {/* <style jsx>{`
-              th {
-                @apply sticky top-0 bg-white p-1;
-              }
-            `}</style> */}
-          </tr>
-        </thead>
-        <tbody>
-          {revisions.map(({ id, trashed, date, changes, author }) => {
-            const isCurrentlyAccepted = props.currentRevision === id
-            const isCurrentlyOpen = false //TODO!
-            const selected = false // TODO!
+  //const isCurrentlyLoaded = props.currentRevision === id
+  //const isCurrentlyAccepted = currentlyAccepted === id
 
-            console.log(trashed)
-            console.log(isCurrentlyOpen)
-
-            const dateTime = moment.utc(date).local()
-            return (
-              <tr
-                className={clsx(
-                  selected ? 'border-3 border-brand' : 'cursor-pointer'
-                )}
-                onClick={() => {
-                  // don't select the current selected
-                  if (selected) return null
-                  fetchRevisionData()
-                }}
-                key={id}
-              >
-                <td className="serlo-td">{id}</td>
-                <td className="serlo-td">
-                  {isCurrentlyAccepted ? <Icon icon={faCheck} /> : null}
-                </td>
-                <td className="serlo-td">{changes}</td>
-                <td className="serlo-td">{author.username}</td>
-                <td className="serlo-td" title={dateTime.format('LL, LTS')}>
-                  {dateTime.fromNow()}
-                </td>
-              </tr>
-            )
-          })}
-        </tbody>
-      </table>
-    )
-  }
+  // onClick={() => {
+  //             // don't select the current selected
+  //             if (isCurrentlyLoaded) return null
+  //             fetchRevisionData()
+  //           }}
 
   function useRevisionsFetch(id: number) {
     return useGraphqlSwr<{ uuid: HistoryRevisionsData }>({
@@ -162,6 +127,9 @@ const revisionsQuery = gql`
   query getRevisionIds($id: Int!) {
     uuid(id: $id) {
       ... on Applet {
+        currentRevision {
+          id
+        }
         revisions {
           nodes {
             id
@@ -175,6 +143,9 @@ const revisionsQuery = gql`
         }
       }
       ... on Article {
+        currentRevision {
+          id
+        }
         revisions {
           nodes {
             id
@@ -188,6 +159,9 @@ const revisionsQuery = gql`
         }
       }
       ... on Course {
+        currentRevision {
+          id
+        }
         revisions {
           nodes {
             id
@@ -201,6 +175,9 @@ const revisionsQuery = gql`
         }
       }
       ... on CoursePage {
+        currentRevision {
+          id
+        }
         revisions {
           nodes {
             id
@@ -214,6 +191,9 @@ const revisionsQuery = gql`
         }
       }
       ... on Event {
+        currentRevision {
+          id
+        }
         revisions {
           nodes {
             id
@@ -227,6 +207,9 @@ const revisionsQuery = gql`
         }
       }
       ... on Exercise {
+        currentRevision {
+          id
+        }
         revisions {
           nodes {
             id
@@ -240,6 +223,9 @@ const revisionsQuery = gql`
         }
       }
       ... on ExerciseGroup {
+        currentRevision {
+          id
+        }
         revisions {
           nodes {
             id
@@ -253,6 +239,9 @@ const revisionsQuery = gql`
         }
       }
       ... on GroupedExercise {
+        currentRevision {
+          id
+        }
         revisions {
           nodes {
             id
@@ -266,6 +255,9 @@ const revisionsQuery = gql`
         }
       }
       ... on Page {
+        currentRevision {
+          id
+        }
         revisions {
           nodes {
             id
@@ -278,6 +270,9 @@ const revisionsQuery = gql`
         }
       }
       ... on Video {
+        currentRevision {
+          id
+        }
         revisions {
           nodes {
             id
@@ -291,6 +286,9 @@ const revisionsQuery = gql`
         }
       }
       ... on Solution {
+        currentRevision {
+          id
+        }
         solutionRevisions: revisions {
           nodes {
             id
