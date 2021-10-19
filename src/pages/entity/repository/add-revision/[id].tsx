@@ -1,6 +1,7 @@
 import { GetServerSideProps } from 'next'
 
 import { FrontendClientBase } from '@/components/frontend-client-base'
+import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { AddRevision } from '@/components/pages/add-revision'
 import { ErrorPage } from '@/components/pages/error-page'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -30,7 +31,15 @@ export default renderedPageNoHooks<EditorPageData | EditorFetchErrorData>(
             )}
           </>
         ) : (
-          <AddRevision {...props} />
+          <>
+            <div className="relative">
+              <MaxWidthDiv>
+                <main>
+                  <AddRevision {...props} />
+                </main>
+              </MaxWidthDiv>{' '}
+            </div>
+          </>
         )}
       </FrontendClientBase>
     )

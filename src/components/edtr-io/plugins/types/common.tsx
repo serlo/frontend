@@ -64,22 +64,16 @@ export const entity = {
 }
 
 export type Uuid = StateTypesSerializedType<typeof uuid>
-
 export type License = StateTypesSerializedType<typeof license>
-
 export type Entity = Uuid & License & { revision: number; changes?: string }
 
-export const HeaderInput = styled.input({
-  border: 'none',
-  width: '100%',
-  borderBottom: '2px solid transparent',
-  '&:focus': {
-    outline: 'none',
-    borderColor: '#007ec1',
-  },
-})
+interface ControlsProps {
+  changes?: StateTypeReturnType<typeof entity['changes']>
+  license?: StateTypeReturnType<typeof entity['license']>
+  subscriptions?: boolean
+}
 
-export function Controls(props: OwnProps) {
+export function Controls(props: ControlsProps) {
   const store = useScopedStore()
   const dispatch = useScopedDispatch()
   const undoable = useScopedSelector(hasUndoActions())
@@ -116,16 +110,16 @@ export function Controls(props: OwnProps) {
   return (
     <>
       {createPortal(
-        <>
-          <div className="btn-group btn-group-community">
+        <nav
+          className={clsx('w-full flex justify-between', 'h-12 pt-4 pl-5 pr-3')}
+        >
+          <div>
             {renderUndoRedoButton('Undo', faUndo, undo, !undoable)}
             {renderUndoRedoButton('Redo', faRedo, redo, !redoable)}
           </div>
-          <div className="btn-group btn-group-community">
-            {renderSaveButton()}
-          </div>
-        </>,
-        document.getElementsByClassName('controls')[0]
+          <div>{renderSaveButton()}</div>
+        </nav>,
+        document.getElementsByClassName('controls-portal')[0]
       )}
       {/* omg this needs some refactoring, but splitting seems like a good first step */}
       <SaveModal
@@ -466,8 +460,12 @@ export function OptionalChild(props: {
   )
 }
 
-interface OwnProps {
-  changes?: StateTypeReturnType<typeof entity['changes']>
-  license?: StateTypeReturnType<typeof entity['license']>
-  subscriptions?: boolean
-}
+export const HeaderInput = styled.input({
+  border: 'none',
+  width: '100%',
+  borderBottom: '2px solid transparent',
+  '&:focus': {
+    outline: 'none',
+    borderColor: '#007ec1',
+  },
+})

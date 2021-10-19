@@ -110,8 +110,6 @@ export function RevisionHistoryLoader<T>(
   }
 
   function fetchRevisionData(id: number) {
-    // TODO: Maybe add loading indicator
-
     NProgress.start()
 
     void fetch(endpoint, {

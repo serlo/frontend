@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import React from 'react'
 
 import { MathSpan } from '@/components/content/math-span'
 import { SerloEditor } from '@/components/edtr-io/serlo-editor'
@@ -8,8 +9,9 @@ export function AddRevision({ initialState, type }: EditorPageData) {
   return (
     <>
       <MathSpan formula="" />
+      {/* {renderUserTools({ aboveContent: true })} */}
+      <div className="controls-portal sticky top-0 z-[99] bg-white" />
       <div className={clsx('max-w-[816px] mx-auto mb-24 edtr-io')}>
-        <div className="controls w-full h-12 flex justify-between pt-4 pl-5 pr-3" />
         {/* TODO: real props for Token, onSave, mayCheckout */}
         <SerloEditor
           getCsrfToken={() => 'stub'}
@@ -24,6 +26,7 @@ export function AddRevision({ initialState, type }: EditorPageData) {
           initialState={initialState}
         />
       </div>
+      {/* {renderUserTools()} */}
       <style jsx global>{`
         .edtr-io h1 {
           @apply mx-side mb-9 mt-4 p-0 font-bold text-3.5xl special-hyphens-auto;
@@ -95,4 +98,20 @@ export function AddRevision({ initialState, type }: EditorPageData) {
       `}</style>
     </>
   )
+
+  /*
+  function renderUserTools(setting?: { aboveContent?: boolean }) {
+    return (
+      <UserTools
+        aboveContent={setting?.aboveContent}
+        id={-1}
+        hideEdit
+        data={{
+          type: 'Editor',
+          id: -1,
+        }}
+      />
+    )
+  }
+  */
 }
