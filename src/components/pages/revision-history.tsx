@@ -14,12 +14,14 @@ export interface RevisionHistoryProps {
   data?: HistoryRevisionsData
   hideEdit?: boolean
   onSelectRevision?: (id: number) => void
+  selectedRevisionId?: number
 }
 
 export function RevisionHistory({
   data,
   hideEdit,
   onSelectRevision,
+  selectedRevisionId,
 }: RevisionHistoryProps) {
   const { strings } = useInstanceData()
   if (!data) return null
@@ -53,8 +55,12 @@ export function RevisionHistory({
     const isEditorLink = onSelectRevision !== undefined
     const isActiveEditorLink = !isCurrent && isEditorLink
 
+    const isImportant =
+      selectedRevisionId === entry.id ||
+      (isCurrent && selectedRevisionId === undefined)
+
     return (
-      <tr key={entry.id} className={isCurrent ? 'bg-brand-50' : undefined}>
+      <tr key={entry.id} className={isImportant ? 'bg-brand-50' : undefined}>
         <td className="serlo-td" style={{ textAlign: 'left' }}>
           <Link
             title={strings.revisionHistory.viewLabel}
@@ -62,7 +68,7 @@ export function RevisionHistory({
           >
             <span
               className={clsx(
-                isCurrent ? 'font-bold' : undefined,
+                isImportant ? 'font-bold' : undefined,
                 isActiveEditorLink ? 'cursor-pointer' : ''
               )}
               onClick={

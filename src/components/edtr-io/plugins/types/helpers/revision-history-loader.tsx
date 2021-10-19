@@ -43,10 +43,9 @@ export function RevisionHistoryLoader<T>(
   }
 
   const revisions = revisionsResponse.data?.uuid.revisions.nodes
-  // const currentlyAccepted = revisionsResponse.data?.uuid.currentRevision.id
 
   const onSelectRevision = (id: number) => {
-    //don't select the current selected
+    //don't select the selected
     const isCurrentlyLoaded = props.currentRevision === id
     if (isCurrentlyLoaded) return null
     fetchRevisionData(id)
@@ -74,12 +73,12 @@ export function RevisionHistoryLoader<T>(
         }}
         title={editorStrings.edtrIo.switchRevision}
       >
-        {/* // a bit untidy, but it's very nice to reuse this component here.
-        // TODO: find a way to mark currently loaded id */}
+        {/* // a bit untidy, but it's very nice to reuse this component here */}
         <SerloRevisionHistory
           data={revisionsResponse.data?.uuid}
           hideEdit
           onSelectRevision={onSelectRevision}
+          selectedRevisionId={props.currentRevision}
         />
       </ModalWithCloseButton>
       <style jsx global>{`
@@ -95,9 +94,6 @@ export function RevisionHistoryLoader<T>(
       `}</style>
     </div>
   )
-
-  //const isCurrentlyLoaded = props.currentRevision === id
-  //const isCurrentlyAccepted = currentlyAccepted === id
 
   function useRevisionsFetch(id: number) {
     return useGraphqlSwr<{ uuid: HistoryRevisionsData }>({
