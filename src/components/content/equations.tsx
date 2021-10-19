@@ -108,7 +108,7 @@ export function Equations({
     return (
       <>
         <tr className="whitespace-normal" style={{ color: explanationColor }}>
-          <td className="text-center" colSpan={3}>
+          <td className="text-center pb-4" colSpan={3}>
             {renderNested(firstExplanation, 'firstExplanation')}
           </td>
         </tr>
@@ -122,7 +122,7 @@ export function Equations({
 
   function renderDownArrow() {
     return (
-      <td className="text-4xl" style={{ fontFamily: 'serif' }}>
+      <td className="text-4xl text-center" style={{ fontFamily: 'serif' }}>
         <div className="-mt-3">&darr;</div>
       </td>
     )
