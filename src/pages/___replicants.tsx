@@ -144,7 +144,7 @@ const Style = () => (
     }
     iframe.loaded {
       background-color: #fff;
-      filter: invert(0%);
+      filter: invert(1);
     }
 
     .tool {
