@@ -1,5 +1,6 @@
 import { gql } from 'graphql-request'
 import { NextPage } from 'next'
+import Head from 'next/head'
 import nProgress from 'nprogress'
 import React, { ChangeEvent, MouseEvent, useEffect, useState } from 'react'
 
@@ -11,6 +12,9 @@ import { showToastNotice } from '@/helper/show-toast-notice'
 const ContentPage: NextPage = () => {
   return (
     <FrontendClientBase noHeaderFooter noContainers showNav={false}>
+      <Head>
+        <meta name="robots" content="noindex" />
+      </Head>
       <ReplicantHunt />
     </FrontendClientBase>
   )
