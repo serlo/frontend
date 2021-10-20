@@ -10,6 +10,7 @@ import {
   ThreadSetCommentStateInput,
   ThreadSetThreadArchivedInput,
   ThreadSetThreadStateInput,
+  UserDeleteBotsInput,
   UuidMutation,
   UuidSetStateInput,
 } from '@serlo/api'
@@ -351,6 +352,7 @@ type MutationInput =
   | SubscriptionSetInput
   | RejectRevisionInput
   | CheckoutRevisionInput
+  | UserDeleteBotsInput
 
 type MutationResponse = ThreadMutation | UuidMutation | NotificationMutation
 
