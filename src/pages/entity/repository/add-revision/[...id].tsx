@@ -78,10 +78,10 @@ function EditInLegacy({
 export const getServerSideProps: GetServerSideProps<
   EditorPageData | EditorFetchErrorData
 > = async (context) => {
-  const id = parseInt(context.params?.id as string)
-
+  // for me it always returns as an array of strings. not sure why the type differs here.
   const result = await fetchEditorData(
-    '/' + context.locale! + '/' + id.toString()
+    context.locale!,
+    context.params?.id as string[] | undefined
   )
 
   return {

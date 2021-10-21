@@ -53,11 +53,11 @@ export function RevisionHistory({
     const viewUrl = `/entity/repository/compare/${data!.id}/${entry.id}`
     const editUrl = getRevisionEditUrl(isPage, data!.id, entry.id)
     const isEditorLink = onSelectRevision !== undefined
-    const isActiveEditorLink = !isCurrent && isEditorLink
 
     const isImportant =
       selectedRevisionId === entry.id ||
       (isCurrent && selectedRevisionId === undefined)
+    const isActiveEditorLink = isEditorLink && !isImportant
 
     return (
       <tr key={entry.id} className={isImportant ? 'bg-brand-50' : undefined}>
