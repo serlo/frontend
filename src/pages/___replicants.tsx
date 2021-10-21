@@ -76,7 +76,7 @@ const ReplicantHunt = () => {
 
   useEffect(() => {
     if (!id || id === true) return
-    const src = `${location.origin}//user/${id}/replicant?#content`
+    const src = `${location.origin}/user/${id}/replicant?#content`
     document.getElementById('profile-preview')?.setAttribute('src', src)
   })
 

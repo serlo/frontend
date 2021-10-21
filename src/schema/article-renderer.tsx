@@ -26,7 +26,7 @@ export type NodePath = (number | string)[]
 
 interface RenderElementProps {
   element: FrontendContentNode
-  children: ReactNode
+  children: ReactNode | ReactNode[]
   value: FrontendContentNode
   path: NodePath
 }
