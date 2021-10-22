@@ -11,6 +11,7 @@ import {
 import { ExternalLink } from './external-link'
 import { EntityIdContext } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
+import { serloDomain } from '@/helper/serlo-domain'
 import { submitEvent } from '@/helper/submit-event'
 import { NodePath } from '@/schema/article-renderer'
 
@@ -45,6 +46,13 @@ export function isLegacyLink(_href: string) {
   if (_href == '/entity/unrevised') return false
   if (_href.startsWith('/entity/repository/history')) return false
   if (_href.startsWith('/entity/repository/compare')) return false
+
+  if (
+    _href.startsWith('/entity/repository/add-revision') &&
+    serloDomain == 'serlo.org'
+  )
+    // compat: don't route editor to frontend in production (yet)
+    return false
 
   return (
     legacyLinks.includes(_href) ||
