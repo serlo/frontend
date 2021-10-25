@@ -1,6 +1,6 @@
 import { NewNode } from '@edtr-io/plugin-text'
+import { converter } from '@serlo/markdown'
 
-import { converter } from '../../external/markdown'
 import { convertLegacyState } from './convert-legacy-state'
 import {
   EdtrState,
@@ -237,6 +237,7 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
     return [{ type: 'geogebra', id }]
   }
   if (node.plugin === 'equations') {
+    const { firstExplanation, transformationTarget } = node.state
     const steps = node.state.steps.map((step) => {
       return {
         left: sanitizeLatex(step.left),
@@ -249,7 +250,14 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
         explanation: convert(step.explanation),
       }
     })
-    return [{ type: 'equations', steps }]
+    return [
+      {
+        type: 'equations',
+        steps,
+        firstExplanation: convert(firstExplanation),
+        transformationTarget,
+      },
+    ]
   }
 
   return []

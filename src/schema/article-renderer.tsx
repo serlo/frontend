@@ -26,7 +26,7 @@ export type NodePath = (number | string)[]
 
 interface RenderElementProps {
   element: FrontendContentNode
-  children: ReactNode
+  children: ReactNode | ReactNode[]
   value: FrontendContentNode
   path: NodePath
 }
@@ -447,6 +447,8 @@ function renderElement({
     return (
       <Equations
         steps={element.steps}
+        firstExplanation={element.firstExplanation}
+        transformationTarget={element.transformationTarget}
         renderNested={(value, ...prefix) => renderNested(value, path, prefix)}
       />
     )

@@ -10,6 +10,7 @@ import {
   ThreadSetCommentStateInput,
   ThreadSetThreadArchivedInput,
   ThreadSetThreadStateInput,
+  UserDeleteBotsInput,
   UuidMutation,
   UuidSetStateInput,
 } from '@serlo/api'
@@ -351,10 +352,15 @@ type MutationInput =
   | SubscriptionSetInput
   | RejectRevisionInput
   | CheckoutRevisionInput
+  | UserDeleteBotsInput
 
 type MutationResponse = ThreadMutation | UuidMutation | NotificationMutation
 
-type ApiErrorType = 'UNAUTHENTICATED' | 'FORBIDDEN' | 'INVALID_TOKEN'
+type ApiErrorType =
+  | 'UNAUTHENTICATED'
+  | 'FORBIDDEN'
+  | 'INVALID_TOKEN'
+  | 'BAD_USER_INPUT'
 type ErrorType = ApiErrorType | 'UNKNOWN'
 
 export interface ApiError extends GraphQLError {
@@ -403,6 +409,7 @@ export async function mutationFetch(
 }
 
 function handleError(type: ErrorType, e?: object): false {
+  // TODO: add i18n
   const message =
     type == 'UNAUTHENTICATED'
       ? 'Für diese Funktion musst du dich einloggen!'
@@ -410,9 +417,14 @@ function handleError(type: ErrorType, e?: object): false {
       ? 'Dafür fehlen dir leider die Rechte!'
       : 'Ein unbekannter Fehler…'
 
+  // eslint-disable-next-line no-console
+  console.log(e)
+
+  if (type == 'BAD_USER_INPUT') {
+    triggerSentry({ message: 'Bad unser input in mutation' })
+  }
+
   if (type == 'UNKNOWN') {
-    // eslint-disable-next-line no-console
-    console.log(e)
     triggerSentry({ message: 'Unknown API error' })
   }
 

@@ -126,7 +126,7 @@ export async function requestPage(
                 label:
                   getInstanceDataByLang(instance).strings.entities
                     .exerciseGroup,
-                url: uuid.exerciseGroup.alias,
+                url: uuid.exerciseGroup?.alias,
               },
             ]
           : breadcrumbsData,
@@ -344,13 +344,17 @@ export async function requestPage(
   }
 
   if (uuid.__typename === 'CoursePage') {
-    const pagesToShow = uuid.course.pages.filter(
-      (page) =>
-        page.alias &&
-        !page.currentRevision.trashed &&
-        page.currentRevision.title &&
-        page.currentRevision.title !== ''
-    )
+    const pagesToShow =
+      uuid.course && uuid.course.pages
+        ? uuid.course.pages.filter(
+            (page) =>
+              page.alias &&
+              page.currentRevision &&
+              !page.currentRevision.trashed &&
+              page.currentRevision.title &&
+              page.currentRevision.title !== ''
+          )
+        : []
 
     let currentPageIndex = -1
     const pages = pagesToShow.map((page, i) => {
