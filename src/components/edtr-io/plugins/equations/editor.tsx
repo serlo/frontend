@@ -244,7 +244,7 @@ export function EquationsEditor(props: EquationsProps) {
           <td colSpan={3} style={{ textAlign: 'center' }}>
             {state.firstExplanation.render({
               config: {
-                placeholder: 'First explanation', // TODO: i18n
+                placeholder: editorStrings.equations.firstExplanation,
               },
             })}
           </td>
@@ -285,7 +285,7 @@ export function EquationsEditor(props: EquationsProps) {
 
     return (
       <AddButton onClick={() => insertNewEquationWithFocus(state.steps.length)}>
-        {'Add new equation' /*TODO: i18n */}
+        {editorStrings.equations.addNew}
       </AddButton>
     )
   }
