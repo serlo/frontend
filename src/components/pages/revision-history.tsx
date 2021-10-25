@@ -6,23 +6,31 @@ import { UserLink } from '../user/user-link'
 import { Link } from '@/components/content/link'
 import { TimeAgo } from '@/components/time-ago'
 import { useInstanceData } from '@/contexts/instance-context'
-import type {
-  CompBaseProps,
-  HistoryRevisionData,
-  HistoryRevisionsData,
-} from '@/data-types'
+import type { HistoryRevisionData, HistoryRevisionsData } from '@/data-types'
 import { getRevisionEditUrl } from '@/helper/get-revision-edit-url'
 import { theme } from '@/theme'
 
 export interface RevisionHistoryProps {
   data?: HistoryRevisionsData
+  hideEdit?: boolean
+  onSelectRevision?: (id: number) => void
+  selectedRevisionId?: number
 }
 
-export function RevisionHistory({ data }: RevisionHistoryProps) {
+export function RevisionHistory({
+  data,
+  hideEdit,
+  onSelectRevision,
+  selectedRevisionId,
+}: RevisionHistoryProps) {
   const { strings } = useInstanceData()
   if (!data) return null
   const isPage = data.__typename === 'Page'
   const { changes, status, author, date, view, edit } = strings.revisionHistory
+
+  function handleOnClick(id: number) {
+    onSelectRevision && onSelectRevision(id)
+  }
 
   return (
     <table className="mx-side border-collapse w-full relative">
@@ -33,7 +41,7 @@ export function RevisionHistory({ data }: RevisionHistoryProps) {
           {renderTh(author)}
           {renderTh(date)}
           {renderTh(view)}
-          {renderTh(edit)}
+          {!hideEdit && renderTh(edit)}
         </tr>
       </thead>
       <tbody>{data.revisions?.nodes.map(renderRow)}</tbody>
@@ -44,41 +52,74 @@ export function RevisionHistory({ data }: RevisionHistoryProps) {
     const isCurrent = entry.id === data!.currentRevision?.id
     const viewUrl = `/entity/repository/compare/${data!.id}/${entry.id}`
     const editUrl = getRevisionEditUrl(isPage, data!.id, entry.id)
+    const isEditorLink = onSelectRevision !== undefined
+
+    const isImportant =
+      selectedRevisionId === entry.id ||
+      (isCurrent && selectedRevisionId === undefined)
+    const isActiveEditorLink = isEditorLink && !isImportant
 
     return (
-      <tr key={entry.id} className={isCurrent ? 'bg-brand-50' : undefined}>
-        <Td>
-          <Link title={strings.revisionHistory.viewLabel} href={viewUrl}>
-            <span className={isCurrent ? 'font-bold' : undefined}>
+      <tr key={entry.id} className={isImportant ? 'bg-brand-50' : undefined}>
+        <td className="serlo-td" style={{ textAlign: 'left' }}>
+          <Link
+            title={strings.revisionHistory.viewLabel}
+            href={isEditorLink ? undefined : viewUrl}
+          >
+            <span
+              className={clsx(
+                isImportant ? 'font-bold' : undefined,
+                isActiveEditorLink ? 'cursor-pointer' : ''
+              )}
+              onClick={
+                isActiveEditorLink ? () => handleOnClick(entry.id) : undefined
+              }
+            >
               {entry.changes || '–'}
             </span>
           </Link>
-        </Td>
-        <Td centered>{getStatus(entry.trashed, isCurrent)}</Td>
-        <Td>
+        </td>
+        <td className="serlo-td"> {getStatus(entry.trashed, isCurrent)}</td>
+        <td className="serlo-td" style={{ textAlign: 'left' }}>
           <UserLink user={entry.author} />
-        </Td>
-        <Td>
+        </td>
+        <td className="serlo-td" style={{ textAlign: 'left' }}>
           <TimeAgo datetime={new Date(entry.date)} dateAsTitle />
-        </Td>
-        <Td centered>
-          <Link
-            className="serlo-button serlo-make-interactive-light my-0 mx-auto text-base"
-            title={strings.revisionHistory.viewLabel}
-            href={viewUrl}
-          >
-            <FontAwesomeIcon icon={faEye} size="1x" />
-          </Link>
-        </Td>
-        <Td centered>
-          <Link
-            className="serlo-button serlo-make-interactive-light my-0 mx-auto text-base"
-            title={strings.revisionHistory.editLabel}
-            href={editUrl}
-          >
-            <FontAwesomeIcon icon={faPencilAlt} size="1x" />
-          </Link>
-        </Td>
+        </td>
+        <td
+          className="serlo-td"
+          onClick={
+            isActiveEditorLink ? () => handleOnClick(entry.id) : undefined
+          }
+        >
+          {(isActiveEditorLink || !isEditorLink) && (
+            <Link
+              className="serlo-button serlo-make-interactive-light my-0 mx-auto text-base"
+              title={strings.revisionHistory.viewLabel}
+              href={isEditorLink ? undefined : viewUrl}
+            >
+              <FontAwesomeIcon icon={faEye} size="1x" />
+            </Link>
+          )}
+        </td>
+        {!hideEdit && (
+          <td className="serlo-td">
+            <Link
+              className="serlo-button serlo-make-interactive-light my-0 mx-auto text-base"
+              title={strings.revisionHistory.editLabel}
+              href={editUrl}
+            >
+              <FontAwesomeIcon icon={faPencilAlt} size="1x" />
+            </Link>
+          </td>
+        )}
+        <style jsx>
+          {`
+            border-left-color: transparent;
+            border-right-color: transparent;
+            text-align: center;
+          `}
+        </style>
       </tr>
     )
   }
@@ -105,14 +146,3 @@ export function RevisionHistory({ data }: RevisionHistoryProps) {
     )
   }
 }
-
-const Td: CompBaseProps<{
-  centered?: boolean
-}> = ({ children, centered }) => (
-  <td
-    className={clsx('serlo-td', centered && 'text-center')}
-    style={{ borderLeftColor: 'transparent', borderRightColor: 'transparent' }}
-  >
-    {children}
-  </td>
-)

@@ -20,10 +20,14 @@ export const revisionQuery = gql`
           isActiveDonor
           isActiveReviewer
         }
+
         ... on ArticleRevision {
           ...articleRevision
           changes
           repository {
+            ...license
+            trashed
+            instance
             id
             alias
             currentRevision {
@@ -41,6 +45,9 @@ export const revisionQuery = gql`
         ... on PageRevision {
           ...pageRevision
           repository {
+            ...license
+            trashed
+            instance
             id
             alias
             currentRevision {
@@ -59,6 +66,9 @@ export const revisionQuery = gql`
           ...appletRevision
           changes
           repository {
+            ...license
+            trashed
+            instance
             id
             alias
             currentRevision {
@@ -77,6 +87,9 @@ export const revisionQuery = gql`
           ...courseRevision
           changes
           repository {
+            ...license
+            trashed
+            instance
             id
             alias
             currentRevision {
@@ -95,6 +108,9 @@ export const revisionQuery = gql`
           ...coursePageRevision
           changes
           repository {
+            ...license
+            trashed
+            instance
             id
             alias
             currentRevision {
@@ -113,6 +129,9 @@ export const revisionQuery = gql`
           ...eventRevision
           changes
           repository {
+            ...license
+            trashed
+            instance
             id
             alias
             currentRevision {
@@ -131,6 +150,9 @@ export const revisionQuery = gql`
           content
           changes
           repository {
+            ...license
+            trashed
+            instance
             id
             alias
             currentRevision {
@@ -154,6 +176,9 @@ export const revisionQuery = gql`
           content
           changes
           repository {
+            ...license
+            trashed
+            instance
             id
             alias
             exerciseGroup {
@@ -183,6 +208,9 @@ export const revisionQuery = gql`
           ...exerciseGroupRevision
           changes
           repository {
+            ...license
+            trashed
+            instance
             id
             alias
             license {
@@ -206,6 +234,9 @@ export const revisionQuery = gql`
           content
           changes
           repository {
+            ...license
+            trashed
+            instance
             id
             alias
             exercise {
@@ -239,6 +270,9 @@ export const revisionQuery = gql`
           ...videoRevision
           changes
           repository {
+            ...license
+            trashed
+            instance
             id
             alias
             currentRevision {
@@ -254,6 +288,17 @@ export const revisionQuery = gql`
           }
         }
       }
+    }
+  }
+
+  fragment license on AbstractRepository {
+    license {
+      id
+      url
+      title
+      default
+      agreement
+      iconHref
     }
   }
 

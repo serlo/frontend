@@ -103,7 +103,9 @@ function createSolutionData(solution: BareExercise['solution']) {
     legacy: solutionLegacy,
     edtrState: solutionEdtrState,
     license:
-      solution && solution.license && createInlineLicense(solution.license),
+      solution && solution.license
+        ? createInlineLicense(solution.license)
+        : undefined,
   }
 }
 

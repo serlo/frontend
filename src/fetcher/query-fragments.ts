@@ -2,6 +2,7 @@ import { gql } from 'graphql-request'
 
 export const sharedRevisionFragments = gql`
   fragment articleRevision on ArticleRevision {
+    id
     title
     content
     metaTitle
@@ -15,12 +16,14 @@ export const sharedRevisionFragments = gql`
   }
 
   fragment videoRevision on VideoRevision {
+    id
     title
     url
     content
   }
 
   fragment appletRevision on AppletRevision {
+    id
     title
     content
     url
@@ -29,15 +32,18 @@ export const sharedRevisionFragments = gql`
   }
 
   fragment coursePageRevision on CoursePageRevision {
+    id
     content
     title
   }
 
   fragment exerciseGroupRevision on ExerciseGroupRevision {
+    id
     content
   }
 
   fragment eventRevision on EventRevision {
+    id
     content
   }
 `

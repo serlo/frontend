@@ -26,6 +26,7 @@ export type FrontendClientBaseProps = PropsWithChildren<{
   showNav?: boolean
   entityId?: number
   authorization?: AuthorizationPayload
+  loadLoggedInData?: boolean
 }>
 
 Router.events.on('routeChangeStart', () => {
@@ -50,6 +51,7 @@ export function FrontendClientBase({
   showNav,
   entityId,
   authorization,
+  loadLoggedInData,
 }: FrontendClientBaseProps) {
   const { locale } = useRouter()
   const [instanceData] = useState<InstanceData>(() => {
@@ -93,6 +95,7 @@ export function FrontendClientBase({
     instanceData.lang,
     loggedInData,
     loggedInComponents,
+    loadLoggedInData,
   ])
 
   // dev
@@ -146,7 +149,7 @@ export function FrontendClientBase({
 
   function fetchLoggedInData() {
     const cookies = typeof window === 'undefined' ? {} : Cookies.get()
-    if (cookies['auth-token']) {
+    if (cookies['auth-token'] || loadLoggedInData) {
       Promise.all([
         !loggedInData
           ? fetch(frontendOrigin + '/api/locale/' + instanceData.lang).then(
