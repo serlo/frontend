@@ -127,16 +127,14 @@ function ExerciseEditor({ editable, state }: ExerciseProps) {
               >
                 <PluginToolbarButton
                   icon={<Icon icon={faRandom} />}
-                  // TODO: i18n
-                  label="Interaktives Element ändern"
+                  label={editorStrings.exercise.changeInteractive}
                   onClick={() => {
                     setShowOptions(true)
                   }}
                 />
                 <PluginToolbarButton
                   icon={<Icon icon={faTrashAlt} />}
-                  // TODO: i18n
-                  label="Interaktives Element entfernen"
+                  label={editorStrings.exercise.removeInteractive}
                   onClick={() => {
                     interactive.remove()
                   }}
