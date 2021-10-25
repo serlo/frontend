@@ -369,44 +369,31 @@ export const serverSideStrings = {
   title: 'सेर्लो के साथ सीखें!',
 }
 export const loggedInData = {
-  authMenu: [
-    {
-      url: '/user/notifications',
-      title: 'सूचनाएँ',
-      icon: 'notifications',
-    },
-    {
-      url: '',
-      title: 'उपयोगकर्ता',
-      icon: 'user',
-      children: [
-        {
-          url: '/user/me',
-          title: 'Own profile',
-        },
-        {
-          url: '/auth/password/change',
-          title: 'पासवर्ड परिवर्तित करें',
-        },
-        {
-          url: '/event/history/user/me',
-          title: 'My Edits',
-        },
-        {
-          url: '/entity/unrevised/user/me',
-          title: 'Unrevised Revisions',
-        },
-        {
-          url: '/subscriptions/manage',
-          title: 'सब्सक्रिप्शन',
-        },
-        {
-          url: '/api/auth/logout',
-          title: 'लॉगआउट करें',
-        },
-      ],
-    },
-  ],
+  authMenu: [{
+    url: '/user/notifications',
+    title: "सूचनाएँ",
+    icon: 'notifications'
+  }, {
+    url: '',
+    title: "उपयोगकर्ता",
+    icon: 'user',
+    children: [{
+      url: '/user/me',
+      title: 'Own profile'
+    }, {
+      url: '/auth/password/change',
+      title: "पासवर्ड परिवर्तित करें"
+    }, {
+      url: '/event/history/user/me',
+      title: 'My Edits'
+    }, {
+      url: '/subscriptions/manage',
+      title: "सब्सक्रिप्शन"
+    }, {
+      url: '/api/auth/logout',
+      title: "लॉगआउट करें"
+    }]
+  }],
   strings: {
     tools: 'अन्य टूल',
     authorMenu: {

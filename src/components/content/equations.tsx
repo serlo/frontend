@@ -16,32 +16,46 @@ export interface StepProps {
 
 export interface EquationProps {
   steps: StepProps[]
+  firstExplanation: FrontendContentNode[]
+  transformationTarget: 'term' | 'equation'
   renderNested: RenderNestedFunction
 }
 
-export function Equations({ steps, renderNested }: EquationProps) {
+export function Equations({
+  steps,
+  firstExplanation,
+  renderNested,
+  transformationTarget,
+}: EquationProps) {
   const explanationColor = shade(0.3, theme.colors.brandGreen)
 
   return (
     <div className="overflow-x-auto py-2.5 mx-side mb-7">
       <table>
-        <tbody className="whitespace-nowrap">{steps.map(renderStep)}</tbody>
+        <tbody className="whitespace-nowrap">
+          {renderFirstExplanation()}
+          {steps.map(renderStep)}
+        </tbody>
       </table>
     </div>
   )
 
   function renderStep(step: StepProps, i: number) {
-    const hasExplanation = step.explanation.some((node) => {
-      return node?.children?.length || node.type == 'math'
-    })
-
     return (
       <Fragment key={i}>
         <tr>
-          {renderTD(step.left ? renderStepFormula('left') : null, 'text-right')}
-          {renderTD(
-            renderFormula(renderSignToString(step.sign), 'sign'),
-            'text-center'
+          {transformationTarget !== 'term' &&
+            renderTD(
+              step.left ? renderStepFormula('left') : null,
+              'text-right'
+            )}
+          {transformationTarget !== 'term' || i !== 0 ? (
+            renderTD(
+              renderFormula(renderSignToString(step.sign), 'sign'),
+              'text-center'
+            )
+          ) : (
+            <td />
           )}
           {renderTD(
             step.right ? renderStepFormula('right') : null,
@@ -55,15 +69,15 @@ export function Equations({ steps, renderNested }: EquationProps) {
             ) : null
           )}
         </tr>
-        {hasExplanation ? (
+        {hasContent(step.explanation) && (
           <tr className="whitespace-normal" style={{ color: explanationColor }}>
             <td />
             {renderDownArrow()}
             <td colSpan={2} className="px-1 pt-1 pb-3">
-              {renderNested(step.explanation, `step${i}`, 'explaination')}
+              {renderNested(step.explanation, `step${i}`, 'explanation')}
             </td>
           </tr>
-        ) : null}
+        )}
       </Fragment>
     )
 
@@ -87,9 +101,28 @@ export function Equations({ steps, renderNested }: EquationProps) {
     }
   }
 
+  function renderFirstExplanation() {
+    if (transformationTarget === 'term') return
+    if (!hasContent(firstExplanation)) return
+
+    return (
+      <>
+        <tr className="whitespace-normal" style={{ color: explanationColor }}>
+          <td className="text-center pb-4" colSpan={3}>
+            {renderNested(firstExplanation, 'firstExplanation')}
+          </td>
+        </tr>
+        <tr style={{ color: explanationColor }}>
+          <td />
+          {renderDownArrow()}
+        </tr>
+      </>
+    )
+  }
+
   function renderDownArrow() {
     return (
-      <td className="text-4xl" style={{ fontFamily: 'serif' }}>
+      <td className="text-4xl text-center" style={{ fontFamily: 'serif' }}>
         <div className="-mt-3">&darr;</div>
       </td>
     )
@@ -111,4 +144,8 @@ function renderSignToString(sign: Sign): string {
     case Sign.AlmostEqualTo:
       return '≈'
   }
+}
+
+function hasContent(content: FrontendContentNode[]) {
+  return content.some((node) => node?.children?.length || node.type == 'math')
 }

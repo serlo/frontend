@@ -384,44 +384,31 @@ export const serverSideStrings = {
   title: 'lernen mit Serlo!',
 }
 export const loggedInData = {
-  authMenu: [
-    {
-      url: '/user/notifications',
-      title: 'Benachrichtigungen',
-      icon: 'notifications',
-    },
-    {
-      url: '',
-      title: 'Benutzer*in',
-      icon: 'user',
-      children: [
-        {
-          url: '/user/me',
-          title: 'Eigenes Profil',
-        },
-        {
-          url: '/auth/password/change',
-          title: 'Passwort ändern',
-        },
-        {
-          url: '/event/history/user/me',
-          title: 'Meine Bearbeitungen',
-        },
-        {
-          url: '/entity/unrevised/user/me',
-          title: 'Ungeprüfte Bearbeitungen',
-        },
-        {
-          url: '/subscriptions/manage',
-          title: 'Abonnements',
-        },
-        {
-          url: '/api/auth/logout',
-          title: 'Abmelden',
-        },
-      ],
-    },
-  ],
+  authMenu: [{
+    url: '/user/notifications',
+    title: "Benachrichtigungen",
+    icon: 'notifications'
+  }, {
+    url: '',
+    title: "Benutzer*in",
+    icon: 'user',
+    children: [{
+      url: '/user/me',
+      title: "Eigenes Profil"
+    }, {
+      url: '/auth/password/change',
+      title: "Passwort ändern"
+    }, {
+      url: '/event/history/user/me',
+      title: "Meine Bearbeitungen"
+    }, {
+      url: '/subscriptions/manage',
+      title: "Abonnements"
+    }, {
+      url: '/api/auth/logout',
+      title: "Abmelden"
+    }]
+  }],
   strings: {
     tools: 'Weitere Optionen',
     authorMenu: {

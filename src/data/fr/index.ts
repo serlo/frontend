@@ -375,44 +375,31 @@ export const serverSideStrings = {
   title: 'Apprendre avec Serlo!',
 }
 export const loggedInData = {
-  authMenu: [
-    {
-      url: '/user/notifications',
-      title: 'Notifications',
-      icon: 'notifications',
-    },
-    {
-      url: '',
-      title: 'Utilisateur·Utilisatrice',
-      icon: 'user',
-      children: [
-        {
-          url: '/user/me',
-          title: 'Mon profil',
-        },
-        {
-          url: '/auth/password/change',
-          title: 'mettre à jour le mot de passe',
-        },
-        {
-          url: '/event/history/user/me',
-          title: 'Mes modifications',
-        },
-        {
-          url: '/entity/unrevised/user/me',
-          title: 'Révisions non révisées',
-        },
-        {
-          url: '/subscriptions/manage',
-          title: 'Abonnements',
-        },
-        {
-          url: '/api/auth/logout',
-          title: 'Se déconnecter',
-        },
-      ],
-    },
-  ],
+  authMenu: [{
+    url: '/user/notifications',
+    title: 'Notifications',
+    icon: 'notifications'
+  }, {
+    url: '',
+    title: "Utilisateur·Utilisatrice",
+    icon: 'user',
+    children: [{
+      url: '/user/me',
+      title: "Mon profil"
+    }, {
+      url: '/auth/password/change',
+      title: "mettre à jour le mot de passe"
+    }, {
+      url: '/event/history/user/me',
+      title: "Mes modifications"
+    }, {
+      url: '/subscriptions/manage',
+      title: "Abonnements"
+    }, {
+      url: '/api/auth/logout',
+      title: "Se déconnecter"
+    }]
+  }],
   strings: {
     tools: 'Autres outils',
     authorMenu: {

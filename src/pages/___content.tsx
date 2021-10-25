@@ -1,4 +1,5 @@
 import { NextPage } from 'next'
+import Head from 'next/head'
 
 type ListData = string[][]
 
@@ -29,7 +30,9 @@ const specialCases = [
 const ContentPage: NextPage = () => {
   return (
     <>
-      <Style />
+      <Head>
+        <meta name="robots" content="noindex" />
+      </Head>
       <nav>
         <h2>Entities</h2>
         <ul>{renderLis(entities)}</ul>
@@ -39,6 +42,7 @@ const ContentPage: NextPage = () => {
         <ul>{renderLis(entities, true)}</ul>
       </nav>
       <iframe name="show" />
+      <Style />
     </>
   )
 

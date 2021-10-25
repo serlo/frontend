@@ -366,44 +366,31 @@ export const serverSideStrings = {
   title: 'Serlo உடன் கற்றுக்கொள்ளுங்கள்!',
 }
 export const loggedInData = {
-  authMenu: [
-    {
-      url: '/user/notifications',
-      title: 'அறிவிப்புகள்',
-      icon: 'notifications',
-    },
-    {
-      url: '',
-      title: 'பயனர்',
-      icon: 'user',
-      children: [
-        {
-          url: '/user/me',
-          title: 'Own profile',
-        },
-        {
-          url: '/auth/password/change',
-          title: 'கடவுச்சொல்லை மாற்று',
-        },
-        {
-          url: '/event/history/user/me',
-          title: 'My Edits',
-        },
-        {
-          url: '/entity/unrevised/user/me',
-          title: 'Unrevised Revisions',
-        },
-        {
-          url: '/subscriptions/manage',
-          title: 'சந்தாக்கள்',
-        },
-        {
-          url: '/api/auth/logout',
-          title: 'வெளியேறு',
-        },
-      ],
-    },
-  ],
+  authMenu: [{
+    url: '/user/notifications',
+    title: "அறிவிப்புகள்",
+    icon: 'notifications'
+  }, {
+    url: '',
+    title: "பயனர்",
+    icon: 'user',
+    children: [{
+      url: '/user/me',
+      title: 'Own profile'
+    }, {
+      url: '/auth/password/change',
+      title: "கடவுச்சொல்லை மாற்று"
+    }, {
+      url: '/event/history/user/me',
+      title: 'My Edits'
+    }, {
+      url: '/subscriptions/manage',
+      title: "சந்தாக்கள்"
+    }, {
+      url: '/api/auth/logout',
+      title: "வெளியேறு"
+    }]
+  }],
   strings: {
     tools: 'Other Tools',
     authorMenu: {
