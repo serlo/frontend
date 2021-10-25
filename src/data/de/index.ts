@@ -592,8 +592,8 @@ export const loggedInData = {
         addInputExercise: "Eingabefeld hinzufügen",
         inputExercise: "Eingabefeld",
         addOptionalInteractiveEx: "Füge optional ein interaktives Element hinzu:",
-        changeInteractive: 'Change interactive element',
-        removeInteractive: 'Remove interactive element'
+        changeInteractive: "Interaktives Element ändern",
+        removeInteractive: "Interaktives Element entfernen"
       },
       injection: {
         illegalInjectionFound: "Ungültige Injection gefunden",
@@ -701,8 +701,8 @@ export const loggedInData = {
         rightHandSide: "rechte Seite",
         combineLikeTerms: "Fasse die Terme zusammen.",
         setEqual: "Setze die Terme gleich.",
-        firstExplanation: 'First explanation',
-        addNew: 'Add new equation'
+        firstExplanation: "Erste Erklärung",
+        addNew: "Neue Gleichung hinzufügen"
       },
       deprecated: {
         unsupported: "Dieser Teil des Dokuments enthält Features, die nicht mehr unterstützt werden."
