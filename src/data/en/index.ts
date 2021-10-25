@@ -648,8 +648,6 @@ export const loggedInData = {
         inputExercise: 'Input exercise',
         addOptionalInteractiveEx:
           'Add an optional interactive exercise:',
-        changeInteractive: 'Change interactive element',
-        removeInteractive: 'Remove interactive element'
       },
       injection: {
         illegalInjectionFound: 'Illegal injection found',
@@ -764,8 +762,6 @@ export const loggedInData = {
         rightHandSide: 'right-hand side',
         combineLikeTerms: 'Combine like terms.',
         setEqual: 'Set the terms equal to each other.',
-        firstExplanation: 'First explanation',
-        addNew: 'Add new equation'
       },
       deprecated: {
         unsupported:
