@@ -137,6 +137,8 @@ export interface EdtrPluginEquations {
       explanation: EdtrPluginText
       sign: string
     }[]
+    firstExplanation: EdtrPluginText
+    transformationTarget: 'term' | 'equation'
   }
 }
 

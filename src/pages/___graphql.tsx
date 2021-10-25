@@ -3,10 +3,75 @@ import { GraphQLError } from 'graphql'
 import { GraphQLResponse } from 'graphql-request/dist/types'
 import { NextPage } from 'next'
 import dynamic from 'next/dynamic'
+import Head from 'next/head'
 
 import { endpoint } from '@/api/endpoint'
 import { AuthProvider } from '@/auth/auth-provider'
 import { useAuthentication } from '@/auth/use-authentication'
+
+const GraphiQL = dynamic<GraphiQLProps>(() => import('graphiql'), {
+  ssr: false,
+})
+
+const GraphQLPage: NextPage = () => {
+  return (
+    <AuthProvider>
+      <Head>
+        <meta name="robots" content="noindex" />
+      </Head>
+      <GraphQL />
+    </AuthProvider>
+  )
+}
+
+function GraphQL() {
+  const auth = useAuthentication()
+
+  return (
+    <>
+      <GraphiQL
+        fetcher={async function fetcher(params) {
+          const usedToken = auth.current?.token
+          const data = await executeQuery()
+          const error = data.errors?.[0] as
+            | (GraphQLError & {
+                extensions: {
+                  code: 'INVALID_TOKEN'
+                }
+              })
+            | undefined
+          if (
+            error?.extensions.code === 'INVALID_TOKEN' &&
+            auth.current !== null
+          ) {
+            await auth.current.refreshToken(usedToken!)
+            return await executeQuery()
+          }
+          return data
+
+          async function executeQuery() {
+            const response = await fetch(endpoint, {
+              method: 'POST',
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                ...(auth.current
+                  ? {
+                      Authorization: `Bearer ${auth.current.token}`,
+                    }
+                  : {}),
+              },
+              body: JSON.stringify(params),
+              credentials: 'same-origin',
+            })
+            return (await response.json()) as GraphQLResponse
+          }
+        }}
+      />
+      <Style />
+    </>
+  )
+}
 
 const Style = () => (
   <style global jsx>{`
@@ -1823,66 +1888,5 @@ const Style = () => (
     }
   `}</style>
 )
-
-const GraphiQL = dynamic<GraphiQLProps>(() => import('graphiql'), {
-  ssr: false,
-})
-
-const GraphQLPage: NextPage = () => {
-  return (
-    <AuthProvider>
-      <GraphQL />
-    </AuthProvider>
-  )
-}
-
-function GraphQL() {
-  const auth = useAuthentication()
-
-  return (
-    <>
-      <Style />
-      <GraphiQL
-        fetcher={async function fetcher(params) {
-          const usedToken = auth.current?.token
-          const data = await executeQuery()
-          const error = data.errors?.[0] as
-            | (GraphQLError & {
-                extensions: {
-                  code: 'INVALID_TOKEN'
-                }
-              })
-            | undefined
-          if (
-            error?.extensions.code === 'INVALID_TOKEN' &&
-            auth.current !== null
-          ) {
-            await auth.current.refreshToken(usedToken!)
-            return await executeQuery()
-          }
-          return data
-
-          async function executeQuery() {
-            const response = await fetch(endpoint, {
-              method: 'POST',
-              headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                ...(auth.current
-                  ? {
-                      Authorization: `Bearer ${auth.current.token}`,
-                    }
-                  : {}),
-              },
-              body: JSON.stringify(params),
-              credentials: 'same-origin',
-            })
-            return (await response.json()) as GraphQLResponse
-          }
-        }}
-      />
-    </>
-  )
-}
 
 export default GraphQLPage
