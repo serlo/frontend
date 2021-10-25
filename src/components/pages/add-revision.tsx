@@ -14,7 +14,7 @@ export function AddRevision({ initialState, type }: EditorPageData) {
         {/* TODO: real props for Token, onSave, mayCheckout */}
         <SerloEditor
           getCsrfToken={() => 'stub'}
-          mayCheckout
+          mayCheckout /* can we use permission here? */
           onSave={() => {
             alert('not implemented')
             return new Promise((res) => {

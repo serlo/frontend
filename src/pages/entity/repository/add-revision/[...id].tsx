@@ -18,7 +18,10 @@ export default renderedPageNoHooks<EditorPageData | EditorFetchErrorData>(
     const isError = hasOwnPropertyTs(props, 'errorType')
 
     return (
-      <FrontendClientBase noContainers loadLoggedInData>
+      <FrontendClientBase
+        noContainers
+        loadLoggedInData /* warn: enables preview editor without login */
+      >
         {isError ? (
           <>
             {props.errorType === 'failed-fetch' ? (

@@ -10,7 +10,6 @@
   "author": "Serlo Education e.V.",
   "scripts": {
     "_eslint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
-    "_eslint_edtr": "eslint \"external/edtr-io/**/*.{js,jsx,ts,tsx}\"",
     "_prettier": "prettier .",
     "analyze": "cross-env ANALYZE=true yarn build",
     "build": "next build",

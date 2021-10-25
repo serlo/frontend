@@ -49,9 +49,9 @@ export function isLegacyLink(_href: string) {
 
   if (
     _href.startsWith('/entity/repository/add-revision') &&
-    serloDomain == 'serlo.org'
+    serloDomain != 'serlo.org'
   )
-    // compat: don't route editor to frontend in production (yet)
+    // enable editor in staging and development
     return false
 
   return (

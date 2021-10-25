@@ -108,6 +108,7 @@ export function RevisionHistoryLoader<T>(
   function fetchRevisionData(id: number) {
     NProgress.start()
 
+    // can we use graphql-fetch here?
     void fetch(endpoint, {
       method: 'POST',
       headers: {

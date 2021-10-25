@@ -9,6 +9,7 @@ export const revisionQuery = gql`
     uuid(id: $id) {
       __typename
       id
+      trashed
 
       ... on AbstractRevision {
         date
