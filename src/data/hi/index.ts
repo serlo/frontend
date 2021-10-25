@@ -59,9 +59,9 @@ export const instanceData = {
       content: 'सामग्री',
     },
     pageTitles: {
-      notifications: 'आपकी सूचनाएं',
-      subscriptions: 'सदस्यताओं को प्रबंधित करें',
-      revisionHistory: 'संशोधन इतिहास',
+      notifications: "आपकी सूचनाएं",
+      subscriptions: "सदस्यताओं को प्रबंधित करें",
+      revisionHistory: "संशोधन इतिहास",
       eventLog: 'Event Log',
       unrevisedRevisions: 'Unrevised Revisions',
       userEdits: 'Edits by %user%',
@@ -160,19 +160,19 @@ export const instanceData = {
       copyLink: 'टिप्पणी लिंक कॉपी करें',
     },
     revisions: {
-      toOverview: 'अवलोकन पर वापस जाएं',
+      toOverview: "अवलोकन पर वापस जाएं",
       toContent: 'Go to content',
-      changes: 'परिवर्तन',
+      changes: "परिवर्तन",
       context: 'Context (current version)',
-      title: 'शीर्षक',
-      content: 'सामग्री',
-      metaTitle: 'मेटा शीर्षक',
-      metaDescription: 'मेटा विवरण',
+      title: "शीर्षक",
+      content: "सामग्री",
+      metaTitle: "मेटा शीर्षक",
+      metaDescription: "मेटा विवरण",
       diff: 'Source view',
       sidebyside: 'Side By Side',
-      currentVersion: 'वर्तमान संस्करण',
-      thisVersion: 'यह संस्करण',
-      currentNotice: 'यह वर्तमान में स्वीकृत संस्करण है।',
+      currentVersion: "वर्तमान संस्करण",
+      thisVersion: "यह संस्करण",
+      currentNotice: "यह वर्तमान में स्वीकृत संस्करण है।",
       rejectedNotice: 'This revision was not accepted.',
       noCurrentNotice: 'There is no accepted revision yet.',
       unknownNotice: 'This revision was accepted once or was never reviewed.',
@@ -251,7 +251,7 @@ export const instanceData = {
         reviews: 'Reviews',
         taxonomy: 'Taxonomy',
         legendary: '💙 Just wow! 💙',
-        untilNextLevel: '%amount% more to complete this circle 🎉',
+        untilNextLevel: '%amount% more to complete this circle 🎉'
       },
       howToEditImage: {
         heading: 'How to edit your profile picture',
@@ -325,21 +325,18 @@ export const instanceData = {
       createTaxonomyTerm: '%actor% created %term%.',
       setTaxonomyTerm: '%actor% updated %term%.',
       setTaxonomyParentDeleted: '%actor% removed the parent of %child%.',
-      setTaxonomyParentChangedFrom:
-        '%actor% changed parent of %child% from %previousparent% to %parent%.',
-      setTaxonomyParentChanged:
-        '%actor% changed parent of %child% to %parent%.',
+      setTaxonomyParentChangedFrom: '%actor% changed parent of %child% from %previousparent% to %parent%.',
+      setTaxonomyParentChanged: '%actor% changed parent of %child% to %parent%.',
       setUuidStateTrashed: '%actor% trashed %object%.',
       setUuidStateRestored: '%actor% restored %object%.',
-      inviteToChat:
-        'You have been invited to the Chat! %break% Go to %chatLink% to chat with %actor% and others.',
-      entityPlaceholderFallback: 'Content',
+      inviteToChat: 'You have been invited to the Chat! %break% Go to %chatLink% to chat with %actor% and others.',
+      entityPlaceholderFallback: 'Content'
     },
     actions: {
-      loadMore: 'Load more',
-    },
-  },
-}
+      loadMore: 'Load more'
+    }
+  }
+};
 export const instanceLandingData = {
   lang: 'hi',
   subjectsData: landingSubjectsData,
@@ -420,30 +417,29 @@ export const loggedInData = {
       sortGroupedExercises: 'Sort grouped Exercises',
       edit: 'संपादित',
       unrevisedEdit: 'Show unrevised revisions',
-      organize: 'आयोजन',
-      moveToGrouped:
-        'सामग्री को अन्य समूहीकृत-पाठ-व्यायाम में ले जाएँ',
-      moveToTextExercise: 'सामग्री को अन्य पाठ-व्यायाम में ले जाएँ',
-      sortEntities: 'सामग्री को क्रमबद्ध करें',
-      newEntity: 'नई इकाई',
-      editProfile: 'प्रोफ़ाइल संपादित करें',
-      directLink: 'Direct link to this content',
+      organize: "आयोजन",
+      moveToGrouped: 'Move content to other grouped-text-exercise',
+      moveToTextExercise: "सामग्री को अन्य पाठ-व्यायाम में ले जाएँ",
+      sortEntities: "सामग्री को क्रमबद्ध करें",
+      newEntity: "नई इकाई",
+      editProfile: "प्रोफ़ाइल संपादित करें",
+      directLink: 'Direct link to this content'
     },
     notifications: {
-      hide: 'इस सामग्री के लिए सूचनाएं छिपाएँ।',
+      hide: "इस सामग्री के लिए सूचनाएं छिपाएँ।",
       setToRead: 'Set notification to read.',
       setAllToRead: 'Set all visible to read',
       showNew: 'New',
-      showRead: 'Read',
+      showRead: 'Read'
     },
     subscriptions: {
-      mail: 'ई-मेल',
-      subscription: 'सदस्यता',
-      noMails: 'निष्क्रिय करें ',
+      mail: "ई-मेल",
+      subscription: "सदस्यता",
+      noMails: "निष्क्रिय करें ",
       getMails: 'activate',
-      noNotifications: 'रद्द करें',
+      noNotifications: "रद्द करें",
       loadedSentence: 'Loaded %loadedCount% of %totalCount% subscriptions.',
-      loadMoreLink: 'Load more!',
+      loadMoreLink: 'Load more!'
     },
     revisions: {
       checkout: {
@@ -452,35 +448,28 @@ export const loggedInData = {
         explanation: 'कृपया लेखक को कुछ प्रतिक्रिया दें',
       },
       reject: {
-        action: 'अस्वीकार करें',
-        title: 'संशोधन अस्वीकारें',
-        explanation:
-          'Please tell the author why you will not accept the submission.',
+        action: "अस्वीकार करें",
+        title: "संशोधन अस्वीकारें",
+        explanation: 'Please tell the author why you will not accept the submission.'
       },
-      confirm: 'पुष्टि करें',
-      unrevisedTaxNote: 'New content, not accepted yet',
+      confirm: "पुष्टि करें",
+      unrevisedTaxNote: 'New content, not accepted yet'
     },
     editor: {
       edtrIo: {
         extendedSettings: 'Extended Settings',
         close: 'Close',
-        notSupportedYet:
-          "This content type isn't supported by the new editor, yet.",
+        notSupportedYet: "This content type isn't supported by the new editor, yet.",
         editInOld: 'Edit the content in the old editor.',
-        conversionError:
-          'An error occurred during the conversion.',
-        oldRevisionFound:
-          'We found an old revision created by you. Do you want to restore it?',
-        notConverted:
-          "This entity hasn't been converted to the new editor, yet.",
+        conversionError: 'An error occurred during the conversion.',
+        oldRevisionFound: 'We found an old revision created by you. Do you want to restore it?',
+        notConverted: "This entity hasn't been converted to the new editor, yet.",
         text: 'Text',
-        textDesc:
-          'Compose content using rich text and math formulas.',
+        textDesc: 'Compose content using rich text and math formulas.',
         blockquoteTitle: 'Quotation',
         quoteDescription: 'Create indented text for quotations.',
         geogebraTitle: 'GeoGebra Applet',
-        geogebraDesc:
-          'Embed GeoGebra Materials applets via URL or ID.',
+        geogebraDesc: 'Embed GeoGebra Materials applets via URL or ID.',
         highlightTitle: 'Source Code',
         highlightDesc: 'Highlight the syntax of source code.',
         anchor: 'Anchor',
@@ -488,35 +477,27 @@ export const loggedInData = {
         image: 'Image',
         imageDesc: 'Upload images.',
         importantTitle: 'Important Statement',
-        importantDesc:
-          'A box to highlight important statements.',
+        importantDesc: 'A box to highlight important statements.',
         injectionTitle: 'serlo.org Content',
         injectionDesc: 'Embed serlo.org content via their ID.',
-        multimediaTitle:
-          'Multimedia content associated with text',
-        multimediaDesc:
-          'Create an illustrating or explaining multimedia content associated with text.',
+        multimediaTitle: 'Multimedia content associated with text',
+        multimediaDesc: 'Create an illustrating or explaining multimedia content associated with text.',
         spoiler: 'Spoiler',
         spoilerDesc: 'A collapsible box.',
         table: 'Table',
         tableDesc: 'Create tables using Markdown.',
         video: 'Video',
-        videoDesc:
-          'Embed YouTube, Vimeo, Wikimedia Commons or BR videos.',
+        videoDesc: 'Embed YouTube, Vimeo, Wikimedia Commons or BR videos.',
         solutionSeparator: 'Solution Separator',
-        solutionSeparatorDesc:
-          'Divide the solution into individual steps.',
+        solutionSeparatorDesc: 'Divide the solution into individual steps.',
         save: 'Save',
         cancel: 'Cancel',
         saving: 'Saving…',
-        missingChanges:
-          'You need to fill out the changes you made',
+        missingChanges: 'You need to fill out the changes you made',
         missingLicenseTerms: 'You need to accept the license terms',
-        missingChangesAndLicenseTerms:
-          'You need to fill out the changes you made and accept the license terms',
+        missingChangesAndLicenseTerms: 'You need to fill out the changes you made and accept the license terms',
         errorSaving: 'An error occurred during saving.',
-        saveLocallyAndRefresh:
-          'You can store the revision locally, refresh the page and try to save again.',
+        saveLocallyAndRefresh: 'You can store the revision locally, refresh the page and try to save again.',
         revisionSaved: 'Revision saved',
         saveRevision: 'Save revision',
         changes: 'Changes',
@@ -526,26 +507,24 @@ export const loggedInData = {
         switchRevision: 'Switch to another revision',
         current: 'Current',
         author: 'Author',
-        createdAt: 'Created at',
+        createdAt: 'when?',
         settings: 'Settings',
         equationsTitle: 'Terms and equations',
-        equationsDesc:
-          'Write term manipulations and solve multiline equations.',
+        equationsDesc: 'Write term manipulations and solve multiline equations.'
       },
       anchor: {
         identifier: 'Identifier',
-        anchorId: 'ID of the anchor',
+        anchorId: 'ID of the anchor'
       },
       geogebra: {
-        urlOrId: 'GeoGebra URL or ID',
+        urlOrId: 'GeoGebra URL or ID'
       },
       highlight: {
-        clickAndEnter:
-          'Click here and enter your source code…',
+        clickAndEnter: 'Click here and enter your source code…',
         enterHere: 'Enter your source code here',
         language: 'Language',
         enterLanguage: 'Enter language',
-        showLineNumbers: 'Show line numbers',
+        showLineNumbers: 'Show line numbers'
       },
       inputExercise: {
         text: 'Text',
@@ -556,20 +535,17 @@ export const loggedInData = {
         yourSolution: 'Your solution',
         correct: 'Correct',
         wrong: 'Wrong',
-        number:
-          'Number (exact solution, e.g. "0,5" ≠ "1/2" ≠ "2/4")',
-        mathematicalExpression:
-          'Mathematical expression (equivalent solution, e.g. "0,5" = "1/2" = "2/4")',
+        number: "Number (exact solution, e.g. '0,5' ≠ '1/2' ≠ '2/4')",
+        mathematicalExpressionSolution: "Mathematical expression (equivalent solution, e.g. '0,5' = '1/2' = '2/4')"
       },
       multimedia: {
         image: 'Image',
         video: 'Video',
         geogebraTitle: 'GeoGebra Applet',
         changeType: 'Change the multimedia type',
-        howImportant:
-          'How important is the multimedia content?',
+        howImportant: 'How important is the multimedia content?',
         isIllustrating: 'It is illustrating',
-        isEssential: 'It is essential',
+        isEssential: 'It is essential'
       },
       rows: {
         searchForTools: 'Search for tools…',
@@ -577,7 +553,7 @@ export const loggedInData = {
         remove: 'Remove',
         close: 'Close',
         dragElement: 'Drag the element within the document',
-        addAnElement: 'Add an element',
+        addAnElement: 'Add an element'
       },
       scMcExercise: {
         singleChoice: 'Single-choice',
@@ -585,12 +561,11 @@ export const loggedInData = {
         chooseType: 'Choose the exercise type',
         addAnswer: 'Add answer',
         wrong: 'Wrong',
-        missedSome:
-          'Almost! You missed at least one correct answer',
-        correct: 'Correct',
+        missedSome: 'Almost! You missed at least one correct answer',
+        correct: 'Correct'
       },
       spoiler: {
-        enterATitle: 'Enter a title',
+        enterATitle: 'Enter a title'
       },
       text: {
         quote: 'Quote',
@@ -623,54 +598,48 @@ export const loggedInData = {
         functions: 'Functions',
         bold: 'Bold (Strg + B)',
         italic: 'Italic (Strg + I)',
-        noItemsFound: 'No items found',
+        noItemsFound: 'No items found'
       },
       video: {
         videoUrl: 'Video URL',
         description: 'Description',
         title: 'Title',
         url: 'URL',
-        seoTitle: 'Title for search engines',
+        seoTitle: 'Title for search engines'
       },
       error: {
-        convertionError:
-          'This part of the document could not be converted.',
+        convertionError: 'This part of the document could not be converted.'
       },
       exercise: {
         addChoiceExercise: 'Add choice exercise',
         choiceExercise: 'Choice exercise',
         addInputExercise: 'Add input exercise',
         inputExercise: 'Input exercise',
-        addOptionalInteractiveEx:
-          'Add an optional interactive exercise:',
+        addOptionalInteractiveEx: 'Add an optional interactive exercise:'
       },
       injection: {
         illegalInjectionFound: 'Illegal injection found',
         serloEntitySrc: 'Serlo entity {{src}}',
-        serloId: 'Serlo ID:',
+        serloId: 'Serlo ID:'
       },
       layout: {
-        toDragConvert:
-          'To make the content draggable, convert them for the new editor:',
+        toDragConvert: 'To make the content draggable, convert them for the new editor:',
         oneColumnLayout: 'One-column layout',
-        multimediaTitle:
-          'Multimedia content associated with text',
+        multimediaTitle: 'Multimedia content associated with text'
       },
       solution: {
-        optionalExplanation:
-          'Optionally explain the solution strategy here',
-        fundamentalsNote:
-          'For this exercise, you need the following fundamentals:',
+        optionalExplanation: 'Optionally explain the solution strategy here',
+        fundamentalsNote: 'For this exercise, you need the following fundamentals:',
         idArticle: 'ID of an article, e.g. 1855',
         openArticleTab: 'Open the article in a new tab:',
         linkTitle: 'Title of the link',
         showSolution: 'Show solution',
-        hideSolution: 'Hide solution',
+        hideSolution: 'Hide solution'
       },
       applet: {
         seoTitle: 'Title for search engines',
         seoDesc: 'Description for search engines',
-        title: 'Title',
+        title: 'Title'
       },
       article: {
         seoTitle: 'Title for search engines',
@@ -682,8 +651,7 @@ export const loggedInData = {
         removeExercise: 'Remove exercise',
         addOptionalExercise: 'Add optional exercise',
         stillWantMore: 'Still want more?',
-        moreOnTopic:
-          'You can find more content on this topic here',
+        moreOnTopic: 'You can find more content on this topic here',
         articles: 'Articles',
         addArticle: 'Add article',
         idArticle: 'ID of an article, e.g. 1855',
@@ -705,45 +673,43 @@ export const loggedInData = {
         openInNewTab: 'Open the link in a new tab:',
         dragTheSource: 'Drag the source',
         addSource: 'Add source',
-        moreInFolder:
-          'You can find more exercises in the following folder',
+        moreInFolder: 'You can find more exercises in the following folder',
         exFolderId: 'ID of an exercise folder, e.g. 30560',
-        openExerciseTab:
-          'Open the exercise folder in a new tab:',
+        openExerciseTab: 'Open the exercise folder in a new tab:'
       },
       coursePage: {
         explanation: 'Explanation',
         video: 'Video',
         question: 'Question',
-        title: 'Title',
+        title: 'Title'
       },
       course: {
         seoDesc: 'Description for search engines',
         title: 'Title',
         removeCoursePage: 'Remove course page',
-        addCoursePage: 'Add course page',
+        addCoursePage: 'Add course page'
       },
       event: {
         seoTitle: 'Title for search engines',
         seoDesc: 'Description for search engines',
-        title: 'Title',
+        title: 'Title'
       },
       page: {
-        title: 'Title',
+        title: 'Title'
       },
       taxonomy: {
-        title: 'Title',
+        title: 'Title'
       },
       textExerciseGroup: {
         removeExercise: 'Remove exercise',
         addExercise: 'Add exercise',
         kindOfExerciseGroup: 'Kind of exercise group',
         notCohesive: 'not cohesive',
-        cohesive: 'cohesive',
+        cohesive: 'cohesive'
       },
       textExercise: {
         removeSolution: 'Remove solution',
-        createSolution: 'Create solution',
+        createSolution: 'Create solution'
       },
       equations: {
         leftHandSide: 'left-hand side',
@@ -756,15 +722,11 @@ export const loggedInData = {
         term: 'Term',
         rightHandSide: 'right-hand side',
         combineLikeTerms: 'Combine like terms.',
-        setEqual: 'Set the terms equal to each other.',
-      },
-      mathPuzzle: {
-        sourceCode: 'Source code',
+        setEqual: 'Set the terms equal to each other.'
       },
       deprecated: {
-        unsupported:
-          'This part of the document contains features that are no longer supported.',
-      },
-    },
-  },
-}
+        unsupported: 'This part of the document contains features that are no longer supported.'
+      }
+    }
+  }
+};
