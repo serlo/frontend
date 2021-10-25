@@ -93,6 +93,77 @@ export function AddRevision({ initialState, type }: EditorPageData) {
         .edtr-io button > div > svg {
           @apply ml-1.5 mr-1.5 mb-1 mt-2;
         }
+
+        .edtr-io {
+          .panel {
+            margin-bottom: 20px;
+            background-color: #fff;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+          }
+          .panel-danger > .panel-heading {
+            color: #a94442;
+            background-color: #f2dede;
+            border-color: #ebccd1;
+          }
+          .panel-danger {
+            border-color: #ebccd1;
+          }
+          .panel-heading {
+            padding: 10px 15px;
+            border-bottom: 1px solid transparent;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+          }
+          .panel-body {
+            padding: 15px;
+          }
+        }
+
+        .edtr-io .page-header {
+          padding-bottom: 9px;
+          margin: 40px 0 20px;
+          border-bottom: 1px solid #eee;
+        }
+
+        .edtr-io {
+          .row {
+            margin-right: -15px;
+            margin-left: -15px;
+          }
+
+          .col-sm-1,
+          .col-sm-11 {
+            float: left;
+          }
+
+          .col-sm-1,
+          .col-sm-11,
+          .col-xs-12 {
+            position: relative;
+            min-height: 1px;
+            padding-right: 15px;
+            padding-left: 15px;
+          }
+          .col-xs-12 {
+            width: 100%;
+          }
+          @media (min-width: 768px) {
+            .col-sm-1 {
+              width: 8.33333333%;
+            }
+            .col-sm-11 {
+              width: 91.66666667%;
+            }
+          }
+
+          .edtr-io .hidden-xs {
+            @media (max-width: 767px) {
+              display: none !important;
+            }
+          }
+        }
       `}</style>
     </>
   )
