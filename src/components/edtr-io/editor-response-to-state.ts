@@ -302,7 +302,7 @@ export function editorResponseToState(
         state: {
           id: uuid.id,
           parent: uuid.parent.id,
-          position: uuid.id, // TODO: fetch
+          position: uuid.weight,
           taxonomy: uuid.id, // TODO: this or id is probably not the right value
           term: {
             name: uuid.name,
