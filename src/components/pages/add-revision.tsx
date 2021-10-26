@@ -1,10 +1,10 @@
 import clsx from 'clsx'
+import Cookies from 'js-cookie'
 import React from 'react'
 
 import { MathSpan } from '@/components/content/math-span'
 import { SerloEditor } from '@/components/edtr-io/serlo-editor'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
-import Cookies from 'js-cookie'
 
 export function AddRevision({ initialState, type }: EditorPageData) {
   return (
