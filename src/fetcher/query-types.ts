@@ -154,11 +154,14 @@ export interface GroupedExercise extends BareExercise {
   }>
 }
 
+// TODO: tmp
+type BareExHelper = Pick<GraphQL.ExerciseGroupRevision, 'content' | 'id'> & {
+  cohesive: boolean
+}
+
 export interface BareExerciseGroup extends Entity {
   __typename: 'ExerciseGroup'
-  currentRevision?: GraphQL.Maybe<
-    Pick<GraphQL.ExerciseGroupRevision, 'content' | 'id'>
-  >
+  currentRevision?: GraphQL.Maybe<BareExHelper>
   revisions?: {
     totalCount: number
   }
@@ -331,6 +334,7 @@ export interface ExerciseGroupRevision
   extends EntityWithTaxonomyTerms,
     GraphQL.ExerciseGroupRevision {
   __typename: 'ExerciseGroupRevision'
+  cohesive: boolean // TODO: remove when api is updated
 }
 export interface GroupedExerciseRevision
   extends EntityWithTaxonomyTerms,

@@ -579,7 +579,7 @@ export function editorResponseToState(
           changes: '',
           revision,
           content: serializeEditorState(toEdtr(convertEditorState(content))),
-          cohesive: false, // TODO: Currently not exposed in API: https://github.com/serlo/api.serlo.org/issues/489
+          cohesive: uuid.currentRevision?.cohesive ?? false,
           'grouped-text-exercise': exercises,
         },
       },

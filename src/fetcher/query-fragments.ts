@@ -40,6 +40,7 @@ export const sharedRevisionFragments = gql`
   fragment exerciseGroupRevision on ExerciseGroupRevision {
     id
     content
+    cohesive
   }
 
   fragment eventRevision on EventRevision {
