@@ -4,6 +4,7 @@ import React from 'react'
 import { MathSpan } from '@/components/content/math-span'
 import { SerloEditor } from '@/components/edtr-io/serlo-editor'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
+import Cookies from 'js-cookie'
 
 export function AddRevision({ initialState, type }: EditorPageData) {
   return (
@@ -11,14 +12,46 @@ export function AddRevision({ initialState, type }: EditorPageData) {
       <MathSpan formula="" />
       <div className="controls-portal sticky top-0 z-[99] bg-white" />
       <div className={clsx('max-w-[816px] mx-auto mb-24 edtr-io')}>
-        {/* TODO: real props for Token, onSave, mayCheckout */}
         <SerloEditor
-          getCsrfToken={() => 'stub'}
+          getCsrfToken={() => {
+            const cookies = typeof window === 'undefined' ? {} : Cookies.get()
+            return cookies['CSRF']
+          }}
           mayCheckout /* can we use permission here? */
-          onSave={() => {
-            alert('not implemented')
-            return new Promise((res) => {
-              res(undefined)
+          onSave={(data) => {
+            return new Promise((resolve, reject) => {
+              fetch(window.location.pathname, {
+                method: 'POST',
+                headers: {
+                  'X-Requested-with': 'XMLHttpRequest',
+                  Accept: 'application/json',
+                  'Content-Type': 'application/json',
+                  'X-From': 'legacy-serlo.org',
+                },
+                body: JSON.stringify(data),
+              })
+                .then((response) => response.json())
+                .then(
+                  (data: {
+                    success: boolean
+                    redirect: Location
+                    errors: object
+                  }) => {
+                    if (data.success) {
+                      resolve()
+                      window.location = data.redirect
+                    } else {
+                      // eslint-disable-next-line no-console
+                      console.log(data.errors)
+                      reject()
+                    }
+                  }
+                )
+                .catch((value) => {
+                  // eslint-disable-next-line no-console
+                  console.log(value)
+                  reject(value)
+                })
             })
           }}
           type={type}
