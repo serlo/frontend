@@ -2,12 +2,15 @@ import { User } from '@serlo/authorization'
 import { gql } from 'graphql-request'
 import { NextPage } from 'next'
 import Head from 'next/head'
-import nProgress from 'nprogress'
-import React, { ChangeEvent, MouseEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, MouseEvent, useState } from 'react'
 
+import { useGraphqlSwrPaginationWithAuth } from '@/api/use-graphql-swr'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useCanDo } from '@/auth/use-can-do'
 import { FrontendClientBase } from '@/components/frontend-client-base'
+import { Guard } from '@/components/guard'
+import { UserPage } from '@/data-types'
+import { sharedUserFragment } from '@/fetcher/user/query'
 import { mutationFetch } from '@/helper/mutations'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
@@ -21,11 +24,15 @@ const ContentPage: NextPage = () => {
     </FrontendClientBase>
   )
 }
+export default ContentPage
 
 const ReplicantHunt = () => {
   const [id, setId] = useState<boolean | number>(false)
 
   const auth = useAuthentication()
+
+  // eslint-disable-next-line @typescript-eslint/unbound-method
+  const { data, error } = usePotentialSpamUsersFetch()
 
   async function onClickHandler(e: MouseEvent<HTMLButtonElement>) {
     if (!(e.target instanceof HTMLButtonElement)) return
@@ -36,8 +43,8 @@ const ReplicantHunt = () => {
       botIds: [id],
     }
 
-    document.getElementById('profile-preview')?.removeAttribute('src')
-    document.getElementById('profile-preview')?.classList.remove('loaded')
+    // document.getElementById('profile-preview')?.removeAttribute('src')
+    // document.getElementById('profile-preview')?.classList.remove('loaded')
 
     const success = await mutationFetch(auth, mutation, input)
     if (success) {
@@ -59,8 +66,8 @@ const ReplicantHunt = () => {
 
   function reset() {
     setId(false)
-    document.getElementById('profile-preview')?.removeAttribute('src')
-    document.getElementById('profile-preview')?.classList.remove('loaded')
+    // document.getElementById('profile-preview')?.removeAttribute('src')
+    // document.getElementById('profile-preview')?.classList.remove('loaded')
   }
 
   function onChangeHandler(e: ChangeEvent<HTMLInputElement>) {
@@ -70,15 +77,14 @@ const ReplicantHunt = () => {
       reset()
     } else {
       setId(id)
-      nProgress.start()
     }
   }
 
-  useEffect(() => {
-    if (!id || id === true) return
-    const src = `${location.origin}/user/${id}/replicant?#content`
-    document.getElementById('profile-preview')?.setAttribute('src', src)
-  })
+  // useEffect(() => {
+  //   if (!id || id === true) return
+  //   const src = `${location.origin}/user/${id}/replicant?#content`
+  //   document.getElementById('profile-preview')?.setAttribute('src', src)
+  // })
 
   const canDo = useCanDo()
   const canDelete = canDo(User.deleteBot)
@@ -86,12 +92,14 @@ const ReplicantHunt = () => {
   return (
     <>
       <div className="flex">
-        <div className="sidebar">{renderSidebar()}</div>
         {canDelete ? (
-          <>
-            {renderTool()}
-            {renderIframe()}
-          </>
+          <Guard data={data} error={error} needsAuth>
+            <>
+              <div className="sidebar">{renderSidebar()}</div>
+              {renderTool()}
+              <div className="userdata">{renderUserData()}</div>
+            </>
+          </Guard>
         ) : (
           <p className="pt-36 text-center w-full">
             sorry, <br />
@@ -122,28 +130,33 @@ const ReplicantHunt = () => {
     )
   }
 
-  function renderIframe() {
+  function renderUserData() {
+    if (!id || !data) return null
+    const user = data.nodes.find((node) => node.id === id)
+    if (!user) return
+    const { description, motivation } = user
     return (
-      <iframe
-        id="profile-preview"
-        name="profile-preview"
-        onLoad={(e) => {
-          void (e.target as HTMLElement).classList.add('loaded')
-          nProgress.done()
-        }}
-      />
+      <>
+        <h2>{user?.username}</h2>
+        <p>
+          {description}
+          <br />
+          --{motivation}
+        </p>
+      </>
     )
   }
 
   function renderSidebar() {
-    return ids.map((id) => {
+    if (!data) return null
+
+    return data.nodes.map(({ username, id }) => {
       return (
         <a
           className="cursor-pointer"
-          key={id}
+          key={username}
           onClick={() => {
             setId(id)
-            nProgress.start()
           }}
         >
           {id}
@@ -152,54 +165,6 @@ const ReplicantHunt = () => {
     })
   }
 }
-
-const ids = [
-  203361, 203360, 203354, 203350, 203349, 203346, 203339, 203332, 203326,
-  203318, 203311, 203309, 203292, 203291, 203290, 203288, 203286, 203281,
-  203280, 203278, 203277, 203275, 203268, 203259, 203258, 203252, 203251,
-  203250, 203249, 203248, 203239, 203237, 203225, 203223, 203207, 203206,
-  203205, 203201, 203200, 203193, 203186, 203185, 203182, 203180, 203168,
-  203165, 203164, 203074, 203073, 203072, 203035, 203032, 203030, 203029,
-  203026, 203025, 203021, 203010, 203009, 202999, 202998, 202983, 202981,
-  202967, 202964, 202958, 202916, 202915, 202906, 202905, 202895, 202892,
-  202883, 202882, 202881, 202880, 202879, 202878, 202877, 202876, 202875,
-  202874, 202873, 202872, 202871, 202870, 202868, 202859, 202847, 202846,
-  202843, 202842, 202841, 202840, 202835, 202834, 202832, 202831, 202829,
-  202827, 202822, 202821, 202819, 202818, 202817, 202816, 202815, 202814,
-  202813, 202812, 202802, 202797, 202763, 202761, 202760, 202759, 202758,
-  202757, 202748, 202735, 202734, 202733, 202731, 202728, 202724, 202722,
-  202719, 202718, 202717, 202712, 202711, 202710, 202709, 202708, 202707,
-  202706, 202705, 202704, 202703, 202702, 202700, 202698, 202695, 202694,
-  202691, 202689, 202688, 202687, 202686, 202685, 202684, 202669, 202659,
-  202658, 202657, 202653, 202652, 202650, 202649, 202648, 202647, 202646,
-  202645, 202644, 202643, 202642, 202640, 202639, 202638, 202636, 202630,
-  202626, 202624, 202615, 202613, 202610, 202609, 202608, 202606, 202605,
-  202604, 202603, 202595, 202594, 202592, 202586, 202558, 202555, 202553,
-  202551, 202550, 202549, 202548, 202547, 202546, 202541, 202539, 202538,
-  202537, 202536, 202535, 202534, 202518, 202515, 202514, 202500, 202497,
-  202496, 202495, 202494, 202492, 202491, 202490, 202489, 202488, 202485,
-  202411, 202401, 202400, 202399, 202398, 202397, 202396, 202395, 202394,
-  202393, 202392, 202391, 202390, 202389, 202388, 202387, 202386, 202385,
-  202384, 202372, 202371, 202370, 202369, 202368, 202355, 202354, 202348,
-  202337, 202334, 202326, 202322, 202321, 202320, 202316, 202313, 202311,
-  202310, 202309, 202306, 202305, 202303, 202302, 202301, 202299, 202296,
-  202295, 202293, 202292, 202291, 202290, 202289, 202288, 202287, 202286,
-  202285, 202284, 202259, 202256, 202255, 202254, 202253, 202252, 202249,
-  202246, 202245, 202218, 202150, 202147, 202135, 202124, 202123, 202122,
-  202121, 202119, 202118, 202109, 202108, 202107, 202106, 202105, 202099,
-  202098, 202091, 202088,
-]
-export default ContentPage
-
-const mutation = gql`
-  mutation deleteBots($input: UserDeleteBotsInput!) {
-    user {
-      deleteBots(input: $input) {
-        success
-      }
-    }
-  }
-`
 
 const Style = () => (
   <style global jsx>{`
@@ -217,14 +182,11 @@ const Style = () => (
       background: #ddd;
     }
 
-    iframe {
+    div.userdata {
       width: 50vw;
       height: 100vh;
       background-color: #151515;
-    }
-    iframe.loaded {
-      background-color: #fff;
-      filter: invert(1);
+      color: #fff;
     }
 
     .tool {
@@ -319,3 +281,44 @@ const Style = () => (
     }
   `}</style>
 )
+
+const mutation = gql`
+  mutation deleteBots($input: UserDeleteBotsInput!) {
+    user {
+      deleteBots(input: $input) {
+        success
+      }
+    }
+  }
+`
+
+function usePotentialSpamUsersFetch() {
+  // eslint-disable-next-line @typescript-eslint/unbound-method
+  return useGraphqlSwrPaginationWithAuth<UserPage['userData']>({
+    query: potentialSpamUsersQuery,
+    variables: { first: 20 },
+    config: {
+      refreshInterval: 10 * 60 * 1000, // 10min
+    },
+    getConnection(data) {
+      // @ts-expect-error
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      return data.user.potentialSpamUsers
+    },
+  })
+}
+
+const potentialSpamUsersQuery = gql`
+  query potentialSpamUsers($first: Int!) {
+    user {
+      potentialSpamUsers(first: $first) {
+        nodes {
+          id
+          ...userData
+        }
+      }
+    }
+  }
+
+  ${sharedUserFragment}
+`
