@@ -54,4 +54,5 @@ module.exports = withBundleAnalyzer({
   },
   reactStrictMode: true,
   productionBrowserSourceMaps: true,
+  swcMinify: true,
 })
