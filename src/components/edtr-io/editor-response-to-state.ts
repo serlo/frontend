@@ -213,7 +213,7 @@ export function editorResponseToState(
           changes: '',
           title,
           description: serializeEditorState(
-            toEdtr(convertEditorState('')) // TODO: is this field still supported?
+            toEdtr(convertEditorState('')) // TODO: If this field is used in Metadata API we need to fetch it in the API
           ),
           meta_description,
           'course-page': (uuid.pages || []).map((page) => {
@@ -698,11 +698,6 @@ export interface EventSerializedState extends Entity {
   content: SerializedEditorState
   meta_title?: string
   meta_description?: string
-}
-
-export interface MathPuzzleSerializedState extends Entity {
-  content: SerializedEditorState
-  source?: string
 }
 
 export interface PageSerializedState extends Uuid, License {
