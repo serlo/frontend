@@ -130,6 +130,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
 
   function renderDescription() {
     if (!description) return null
+    console.log(description)
     return (
       <section>
         <h2 className="serlo-h2">{strings.profiles.aboutMe}</h2>
