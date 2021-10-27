@@ -1,11 +1,10 @@
-import { useScopedStore } from '@edtr-io/core'
 import { StateTypeReturnType } from '@edtr-io/plugin'
-import { serializeRootDocument } from '@edtr-io/store'
 import clsx from 'clsx'
 import { useContext, useState } from 'react'
 
 import { entity } from '../plugins/types/common/common'
-import { SaveContext, storeState } from '../serlo-editor'
+import { SaveContext } from '../serlo-editor'
+import { SaveLocalButton } from './save-local-button'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
@@ -30,12 +29,16 @@ export function SaveModal({
   subscriptions,
   hasError,
 }: SaveModalProps) {
-  const [savedToLocalstorage, setSavedToLocalstorage] = useState(false)
   const { mayCheckout } = useContext(SaveContext)
   const [agreement, setAgreement] = useState(false)
   const [notificationSubscription, setNotificationSubscription] = useState(true)
   const [emailSubscription, setEmailSubscription] = useState(true)
   const [autoCheckout, setAutoCheckout] = useState(false)
+
+  const licenseAccepted = !license || agreement
+  const changesFilled = !changes || changes.value
+  const maySave = licenseAccepted && changesFilled
+  const buttonDisabled = !maySave || pending
 
   // TODO: Check if we really need this
   // useEffect(() => {
@@ -48,10 +51,9 @@ export function SaveModal({
   // }
   // }, [visible])
 
-  const store = useScopedStore()
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
-  const editorStrings = loggedInData.strings.editor
+  const { edtrIo } = loggedInData.strings.editor
 
   return (
     <ModalWithCloseButton
@@ -59,7 +61,7 @@ export function SaveModal({
       onCloseClick={() => {
         setVisibility(false)
       }}
-      title={editorStrings.edtrIo.save}
+      title={edtrIo.save}
     >
       <div className="mx-side">
         {renderAlert()}
@@ -81,8 +83,6 @@ export function SaveModal({
   )
 
   function renderModalButtons() {
-    const isDisabled = !maySave() || pending
-
     return (
       <div className="mt-4 text-right mx-side">
         <button
@@ -91,7 +91,7 @@ export function SaveModal({
             setVisibility(false)
           }}
         >
-          {editorStrings.edtrIo.cancel}
+          {edtrIo.cancel}
         </button>
         <button
           onClick={() => {
@@ -99,27 +99,27 @@ export function SaveModal({
           }}
           className={clsx(
             'serlo-button',
-            isDisabled
+            buttonDisabled
               ? 'cursor-default text-gray-300'
               : 'serlo-make-interactive-green'
           )}
-          disabled={isDisabled}
+          disabled={buttonDisabled}
           title={getSaveHint()}
         >
-          {pending ? editorStrings.edtrIo.saving : editorStrings.edtrIo.save}
+          {pending ? edtrIo.saving : edtrIo.save}
         </button>
       </div>
     )
   }
 
   function getSaveHint() {
-    if (maySave()) return undefined
-    if (licenseAccepted() && !changesFilledIn()) {
-      return editorStrings.edtrIo.missingChanges
-    } else if (!licenseAccepted() && changesFilledIn()) {
-      return editorStrings.edtrIo.missingLicenseTerms
+    if (maySave) return undefined
+    if (licenseAccepted && !changesFilled) {
+      return edtrIo.missingChanges
+    } else if (!licenseAccepted && changesFilled) {
+      return edtrIo.missingLicenseTerms
     } else {
-      return editorStrings.edtrIo.missingChangesAndLicenseTerms
+      return edtrIo.missingChangesAndLicenseTerms
     }
   }
 
@@ -128,21 +128,10 @@ export function SaveModal({
     return (
       <>
         <div className="bg-yellow p-3 mb-16">
-          {editorStrings.edtrIo.errorSaving}
+          {edtrIo.errorSaving}
           <br />
-          {editorStrings.edtrIo.saveLocallyAndRefresh}
-          <button
-            className="serlo-button serlo-make-interactive-primary mt-3"
-            onClick={() => {
-              const serializedRoot = serializeRootDocument()(store.getState())
-              storeState(serializedRoot)
-              setSavedToLocalstorage(true)
-            }}
-          >
-            {savedToLocalstorage
-              ? editorStrings.edtrIo.revisionSaved
-              : editorStrings.edtrIo.saveRevision}
-          </button>
+          {edtrIo.saveLocallyAndRefresh}
+          <SaveLocalButton />
         </div>
       </>
     )
@@ -152,7 +141,7 @@ export function SaveModal({
     if (!changes) return null
     return (
       <label className="font-bold">
-        {editorStrings.edtrIo.changes}
+        {edtrIo.changes}
         <textarea
           value={changes.value}
           onChange={(e) => {
@@ -180,7 +169,7 @@ export function SaveModal({
             setAutoCheckout(checked)
           }}
         />{' '}
-        {editorStrings.edtrIo.skipReview}
+        {edtrIo.skipReview}
       </label>
     )
   }
@@ -225,7 +214,7 @@ export function SaveModal({
               setNotificationSubscription(checked)
             }}
           />{' '}
-          {editorStrings.edtrIo.enableNotifs}
+          {edtrIo.enableNotifs}
         </label>
         <label className="block pb-2">
           <input
@@ -236,19 +225,9 @@ export function SaveModal({
               setEmailSubscription(checked)
             }}
           />{' '}
-          {editorStrings.edtrIo.enableNotifsMail}
+          {edtrIo.enableNotifsMail}
         </label>
       </>
     )
-  }
-
-  function licenseAccepted() {
-    return !license || agreement
-  }
-  function changesFilledIn() {
-    return !changes || changes.value
-  }
-  function maySave() {
-    return licenseAccepted() && changesFilledIn()
   }
 }
