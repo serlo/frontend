@@ -2,62 +2,52 @@ import { useScopedStore } from '@edtr-io/core'
 import { StateTypeReturnType } from '@edtr-io/plugin'
 import { serializeRootDocument } from '@edtr-io/store'
 import clsx from 'clsx'
+import { useContext, useState } from 'react'
 
-import { entity } from '../plugins/types/common'
-import { storeState } from '../serlo-editor'
+import { entity } from '../plugins/types/common/common'
+import { SaveContext, storeState } from '../serlo-editor'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export interface SaveModalProps {
   visible: boolean
   setVisibility: (arg0: boolean) => void
-  setSavedToLocalstorage: (arg0: boolean) => void
-  savedToLocalstorage: boolean
-  maySave: () => string | boolean
-  handleSave: () => void
+  handleSave: (arg0?: boolean, arg1?: boolean, arg2?: boolean) => void
   pending: boolean
-  setHasError: (arg0: boolean) => void
-  setAutoCheckout: (arg0: boolean) => void
-  licenseAccepted: () => boolean
-  changesFilledIn: () => string | boolean
   changes?: StateTypeReturnType<typeof entity['changes']>
   hasError: boolean
-  mayCheckout: boolean
-  autoCheckout: boolean
   license?: StateTypeReturnType<typeof entity['license']>
-  agreement: boolean
-  setAgreement: (arg0: boolean) => void
   subscriptions?: boolean
-  setNotificationSubscription: (arg0: boolean) => void
-  notificationSubscription: boolean
-  setEmailSubscription: (arg0: boolean) => void
-  emailSubscription: boolean
 }
 
 export function SaveModal({
   visible,
   setVisibility,
-  savedToLocalstorage,
-  maySave,
-  handleSave,
   pending,
-  licenseAccepted,
-  changesFilledIn,
-  setSavedToLocalstorage,
-  changes,
-  hasError,
-  mayCheckout,
-  autoCheckout,
-  setAutoCheckout,
   license,
-  agreement,
-  setAgreement,
+  handleSave,
+  changes,
   subscriptions,
-  setEmailSubscription,
-  setNotificationSubscription,
-  emailSubscription,
-  notificationSubscription,
+  hasError,
 }: SaveModalProps) {
+  const [savedToLocalstorage, setSavedToLocalstorage] = useState(false)
+  const { mayCheckout } = useContext(SaveContext)
+  const [agreement, setAgreement] = useState(false)
+  const [notificationSubscription, setNotificationSubscription] = useState(true)
+  const [emailSubscription, setEmailSubscription] = useState(true)
+  const [autoCheckout, setAutoCheckout] = useState(false)
+
+  // Why was this needed?
+  // useEffect(() => {
+  // if (visible) {
+  // Reset license agreement
+  // setPending(false)
+  // setHasError(false)
+  // setSavedToLocalstorage(false)
+  // setAgreement(false)
+  // }
+  // }, [visible])
+
   const store = useScopedStore()
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
@@ -92,6 +82,7 @@ export function SaveModal({
 
   function renderModalButtons() {
     const isDisabled = !maySave() || pending
+
     return (
       <div className="mt-4 text-right mx-side">
         <button
@@ -108,7 +99,7 @@ export function SaveModal({
           }}
           className={clsx(
             'serlo-button',
-            !isDisabled
+            isDisabled
               ? 'cursor-default text-gray-300'
               : 'serlo-make-interactive-green'
           )}
@@ -249,5 +240,15 @@ export function SaveModal({
         </label>
       </>
     )
+  }
+
+  function licenseAccepted() {
+    return !license || agreement
+  }
+  function changesFilledIn() {
+    return !changes || changes.value
+  }
+  function maySave() {
+    return licenseAccepted() && changesFilledIn()
   }
 }

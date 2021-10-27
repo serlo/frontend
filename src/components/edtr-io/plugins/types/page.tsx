@@ -6,7 +6,8 @@ import {
 } from '@edtr-io/plugin'
 import * as React from 'react'
 
-import { Controls, editorContent, HeaderInput, license, uuid } from './common'
+import { editorContent, HeaderInput, license, uuid } from './common/common'
+import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export const pageTypeState = object({
@@ -48,7 +49,7 @@ function PageTypeEditor(props: EditorPluginProps<typeof pageTypeState>) {
         </div>
       </header>
       <section itemProp="articleBody">{content.render()}</section>
-      <Controls {...props.state} />
+      <ToolbarMain {...props.state} />
     </article>
   )
 }

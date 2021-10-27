@@ -1,15 +1,10 @@
 import { EditorPlugin, EditorPluginProps, string } from '@edtr-io/plugin'
 import * as React from 'react'
 
-import {
-  editorContent,
-  entity,
-  Controls,
-  HeaderInput,
-  entityType,
-} from './common'
+import { editorContent, entity, HeaderInput, entityType } from './common/common'
 import { RevisionHistoryLoader } from './helpers/revision-history-loader'
 import { Settings } from './helpers/settings'
+import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export const eventTypeState = entityType(
@@ -72,7 +67,7 @@ function EventTypeEditor(props: EditorPluginProps<typeof eventTypeState>) {
         </h1>
       </div>
       <article>{content.render()}</article>
-      <Controls subscriptions {...props.state} />
+      <ToolbarMain subscriptions {...props.state} />
     </>
   )
 }

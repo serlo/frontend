@@ -12,7 +12,7 @@ import {
 
 import { appletTypeState } from './plugins/types/applet'
 import { articleTypeState } from './plugins/types/article'
-import { Entity, License, Uuid } from './plugins/types/common'
+import { Entity, License, Uuid } from './plugins/types/common/common'
 import { courseTypeState } from './plugins/types/course'
 import { coursePageTypeState } from './plugins/types/course-page'
 import { eventTypeState } from './plugins/types/event'
@@ -274,8 +274,6 @@ export function editorResponseToState(
       converted: !isEdtr(convertEditorState(content) || empty),
     }
   }
-
-  // TODO: Do we need to support Math Puzzle in any way?
 
   function convertPage(uuid: Page): DeserializedState<typeof pageTypeState> {
     stack.push({ id: uuid.id, type: 'page' })

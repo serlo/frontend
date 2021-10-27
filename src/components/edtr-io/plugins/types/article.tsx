@@ -1,15 +1,10 @@
 import { EditorPlugin, EditorPluginProps, string } from '@edtr-io/plugin'
 import { ChangeEvent } from 'react'
 
-import {
-  Controls,
-  editorContent,
-  entity,
-  HeaderInput,
-  entityType,
-} from './common'
+import { editorContent, entity, HeaderInput, entityType } from './common/common'
 import { RevisionHistoryLoader } from './helpers/revision-history-loader'
 import { Settings } from './helpers/settings'
+import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export const articleTypeState = entityType(
@@ -73,7 +68,7 @@ function ArticleTypeEditor(props: EditorPluginProps<typeof articleTypeState>) {
         </h1>
       </div>
       <div itemProp="articleBody">{content.render()}</div>
-      <Controls subscriptions {...props.state} />
+      <ToolbarMain subscriptions {...props.state} />
     </>
   )
 }
