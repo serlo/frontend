@@ -37,7 +37,7 @@ export function SaveModal({
   const [emailSubscription, setEmailSubscription] = useState(true)
   const [autoCheckout, setAutoCheckout] = useState(false)
 
-  // Why was this needed?
+  // TODO: Check if we really need this
   // useEffect(() => {
   // if (visible) {
   // Reset license agreement

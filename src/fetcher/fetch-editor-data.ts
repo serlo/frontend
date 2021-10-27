@@ -7,9 +7,9 @@ import { endpoint } from '@/api/endpoint'
 import {
   editorResponseToState,
   isError,
-} from '@/components/edtr-io/editor-response-to-state'
-import { revisionResponseToResponse } from '@/components/edtr-io/revision-response-to-response'
-import { SerloEditorProps } from '@/components/edtr-io/serlo-editor'
+} from '@/edtr-io/editor-response-to-state'
+import { revisionResponseToResponse } from '@/edtr-io/revision-response-to-response'
+import { SerloEditorProps } from '@/edtr-io/serlo-editor'
 import { parseLanguageSubfolder } from '@/helper/feature-i18n'
 
 export interface EditorPageData {

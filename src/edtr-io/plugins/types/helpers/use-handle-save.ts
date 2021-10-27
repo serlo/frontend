@@ -3,8 +3,8 @@ import { serializeRootDocument } from '@edtr-io/store'
 import * as R from 'ramda'
 import { useContext, useState } from 'react'
 
-import { CsrfContext } from '@/components/edtr-io/csrf-context'
-import { storeState, SaveContext } from '@/components/edtr-io/serlo-editor'
+import { CsrfContext } from '@/edtr-io/csrf-context'
+import { storeState, SaveContext } from '@/edtr-io/serlo-editor'
 
 export function useHandleSave(subscriptions?: boolean) {
   const store = useScopedStore()

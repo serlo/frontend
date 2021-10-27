@@ -14,9 +14,9 @@ import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 
-import { SaveModal } from '../../../components/save-modal'
 import { entity } from '../common/common'
 import { useHandleSave } from '../helpers/use-handle-save'
+import { SaveModal } from '@/edtr-io/components/save-modal'
 
 interface ToolbarMainProps {
   changes?: StateTypeReturnType<typeof entity['changes']>
@@ -24,7 +24,11 @@ interface ToolbarMainProps {
   subscriptions?: boolean
 }
 
-export function ToolbarMain(props: ToolbarMainProps) {
+export function ToolbarMain({
+  subscriptions,
+  changes,
+  license,
+}: ToolbarMainProps) {
   const dispatch = useScopedDispatch()
   const undoable = useScopedSelector(hasUndoActions())
   const redoable = useScopedSelector(hasRedoActions())
@@ -33,7 +37,7 @@ export function ToolbarMain(props: ToolbarMainProps) {
 
   const [visible, setVisibility] = useState(false)
 
-  const { handleSave, pending, hasError } = useHandleSave(props.subscriptions)
+  const { handleSave, pending, hasError } = useHandleSave(subscriptions)
 
   useEffect(() => {
     window.onbeforeunload = hasPendingChanges && !pending ? () => '' : null
@@ -58,10 +62,10 @@ export function ToolbarMain(props: ToolbarMainProps) {
         setVisibility={setVisibility}
         handleSave={handleSave}
         pending={pending}
-        changes={props.changes}
+        changes={changes}
         hasError={hasError}
-        license={props.license}
-        subscriptions={props.subscriptions}
+        license={license}
+        subscriptions={subscriptions}
       />
     </>
   )
