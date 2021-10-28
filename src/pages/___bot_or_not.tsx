@@ -114,6 +114,7 @@ const BotHunt = () => {
               src={imageUrl}
               alt={`Profile image of ${username}`}
               className="block grayscale hover:grayscale-0"
+              style={{ width: 200 }}
             />
             <div className="flex-grow">
               <h2 className="text-xl mb-3 font-bold">
