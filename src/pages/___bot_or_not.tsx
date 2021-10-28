@@ -162,7 +162,7 @@ const BotHunt = () => {
                     <a
                       className="cursor-pointer text-red-brand"
                       onClick={(e: MouseEvent) => {
-                        if (!e.metaKey) return false
+                        if (!e.metaKey && !e.ctrlKey) return false
                         void remove(id)
                       }}
                     >
