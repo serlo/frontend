@@ -267,6 +267,12 @@ const Style = () => (
       }
     }
 
+    @media (prefers-color-scheme: light) {
+      .grayscale {
+        filter: grayscale(0) !important;
+      }
+    }
+
     body {
       color: var(--fg-color);
       background: var(--bg-color);
