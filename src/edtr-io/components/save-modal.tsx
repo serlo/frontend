@@ -95,7 +95,11 @@ export function SaveModal({
         </button>
         <button
           onClick={() => {
-            handleSave()
+            handleSave(
+              notificationSubscription,
+              emailSubscription,
+              autoCheckout
+            )
           }}
           className={clsx(
             'serlo-button',
