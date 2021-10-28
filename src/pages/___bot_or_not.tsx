@@ -14,6 +14,7 @@ import { ProfileRoles } from '@/components/user/profile-roles'
 import { FrontendContentNode, UserPage } from '@/data-types'
 import { convertState } from '@/fetcher/convert-state'
 import { sharedUserFragment } from '@/fetcher/user/query'
+import { isMac } from '@/helper/client-detection'
 import { mutationFetch } from '@/helper/mutations'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { renderArticle } from '@/schema/article-renderer'
@@ -35,7 +36,7 @@ const titles = [
   'Welcome to Whac-A-Mole: Serlo Edition',
   'Ready to retire some replicants?',
   'More Human than Human.',
-  'Ready for you baseline test KD6-3.7?',
+  'Ready for your baseline test KD6-3.7?',
   'You are a robot, right?',
   'BotHunter5000 is ready',
 ]
@@ -169,7 +170,7 @@ const BotHunt = () => {
                       ☠️ Remove
                     </a>
                     <br />
-                    (press cmd/ctrl)
+                    {isMac ? '⌘' : 'CTRL'} + click
                   </p>
                 </div>
               </div>
@@ -255,18 +256,40 @@ const BotHunt = () => {
 const Style = () => (
   <style global jsx>{`
     :root {
-      --off-white: #ccc;
+      --fg-color: #333;
+      --bg-color: #fff;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --fg-color: #ccc;
+        --bg-color: #111;
+      }
+    }
+
+    @media (prefers-color-scheme: light) {
+      .grayscale {
+        filter: grayscale(0) !important;
+      }
     }
 
     body {
-      color: var(--off-white);
-      background: #111;
+      color: var(--fg-color);
+      background: var(--bg-color);
       transition: 0.5s background;
       font-size: 1.1rem;
     }
 
+    h1,
+    h2,
+    h3,
+    h4,
+    p {
+      color: var(--fg-color) !important;
+    }
+
     body.white {
-      background: #ddd;
+      background: var(--fg-color);
     }
 
     #__next {
