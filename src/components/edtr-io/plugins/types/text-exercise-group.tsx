@@ -18,12 +18,14 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 // https://github.com/tannerlinsley/react-virtual/issues/167
 function useVirtualResizeObserver<T>(
-  options: Parameters<typeof useVirtual>[0]
+  options: {
+    size: number,
+    parentRef: React.RefObject<T>
+    estimateSize: () => number
+  }
 ) {
-  const measureRefCacheRef = React.useRef<{
-    [key: string]: (el: HTMLElement | null) => void
-  }>({})
-  const elCacheRef = React.useRef<{ [key: number]: HTMLElement | null }>({})
+  const measureRefCacheRef = React.useRef<Record<string, (el: HTMLElement | null) => void>>({})
+  const elCacheRef = React.useRef<Record<number, HTMLElement | null>>({})
 
   const resizeObserverRef = React.useRef(
     new ResizeObserver((entries) => {
@@ -42,10 +44,10 @@ function useVirtualResizeObserver<T>(
     }
   }, [])
 
-  const rowVirtualizer = useVirtual(options)
+  const rowVirtualizer = useVirtual<T>(options)
 
   const refs = React.useMemo(() => {
-    const obj: { [key: number]: (el: HTMLElement | null) => void } = {}
+    const obj: Record<number, (el: HTMLElement | null) => void> = {}
     for (let i = 0; i < options.size; i++) {
       obj[i] = (el: HTMLElement | null) => {
         const currentElCache = elCacheRef.current[i]
