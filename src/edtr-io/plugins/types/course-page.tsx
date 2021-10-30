@@ -1,15 +1,10 @@
 import { EditorPlugin, EditorPluginProps, string } from '@edtr-io/plugin'
 import * as React from 'react'
 
-import {
-  entity,
-  Controls,
-  editorContent,
-  HeaderInput,
-  entityType,
-} from './common'
+import { entity, editorContent, HeaderInput, entityType } from './common/common'
 import { RevisionHistoryLoader } from './helpers/revision-history-loader'
 import { Settings } from './helpers/settings'
+import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export const coursePageTypeState = entityType(
@@ -97,7 +92,7 @@ function CoursePageTypeEditor(
       </h1>
       {content.render()}
       {props.config.skipControls ? null : (
-        <Controls subscriptions {...props.state} />
+        <ToolbarMain subscriptions {...props.state} />
       )}
     </article>
   )

@@ -7,7 +7,8 @@ import {
 } from '@edtr-io/plugin'
 import * as React from 'react'
 
-import { Controls, editorContent, HeaderInput, uuid } from './common'
+import { editorContent, HeaderInput, uuid } from './common/common'
+import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export const taxonomyTypeState = object({
@@ -55,7 +56,7 @@ function TaxonomyTypeEditor(
         </div>
       </header>
       <section itemProp="articleBody">{description.render()}</section>
-      <Controls />
+      <ToolbarMain />
     </article>
   )
 }

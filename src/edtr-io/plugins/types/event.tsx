@@ -1,37 +1,31 @@
 import { EditorPlugin, EditorPluginProps, string } from '@edtr-io/plugin'
-import { ChangeEvent } from 'react'
+import * as React from 'react'
 
-import {
-  Controls,
-  editorContent,
-  entity,
-  HeaderInput,
-  entityType,
-} from './common'
+import { editorContent, entity, HeaderInput, entityType } from './common/common'
 import { RevisionHistoryLoader } from './helpers/revision-history-loader'
 import { Settings } from './helpers/settings'
+import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
-export const articleTypeState = entityType(
+export const eventTypeState = entityType(
   {
     ...entity,
     title: string(),
-    content: editorContent('article'),
+    content: editorContent(),
     meta_title: string(),
     meta_description: string(),
   },
   {}
 )
 
-export const articleTypePlugin: EditorPlugin<typeof articleTypeState> = {
-  Component: ArticleTypeEditor,
-  state: articleTypeState,
+export const eventTypePlugin: EditorPlugin<typeof eventTypeState> = {
+  Component: EventTypeEditor,
+  state: eventTypeState,
   config: {},
 }
 
-function ArticleTypeEditor(props: EditorPluginProps<typeof articleTypeState>) {
-  const { title, content, meta_title, meta_description } = props.state
-
+function EventTypeEditor(props: EditorPluginProps<typeof eventTypeState>) {
+  const { content, title, meta_title, meta_description } = props.state
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
   const editorStrings = loggedInData.strings.editor
@@ -49,11 +43,11 @@ function ArticleTypeEditor(props: EditorPluginProps<typeof articleTypeState>) {
         {props.renderIntoSettings(
           <Settings>
             <Settings.Textarea
-              label={editorStrings.article.seoTitle}
+              label={editorStrings.event.seoTitle}
               state={meta_title}
             />
             <Settings.Textarea
-              label={editorStrings.article.seoDesc}
+              label={editorStrings.event.seoDesc}
               state={meta_description}
             />
           </Settings>
@@ -61,9 +55,9 @@ function ArticleTypeEditor(props: EditorPluginProps<typeof articleTypeState>) {
         <h1>
           {props.editable ? (
             <HeaderInput
-              placeholder={editorStrings.article.title}
+              placeholder={editorStrings.event.title}
               value={title.value}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => {
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 title.set(e.target.value)
               }}
             />
@@ -72,8 +66,8 @@ function ArticleTypeEditor(props: EditorPluginProps<typeof articleTypeState>) {
           )}
         </h1>
       </div>
-      <div itemProp="articleBody">{content.render()}</div>
-      <Controls subscriptions {...props.state} />
+      <article>{content.render()}</article>
+      <ToolbarMain subscriptions {...props.state} />
     </>
   )
 }

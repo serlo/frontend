@@ -3,7 +3,7 @@ import Cookies from 'js-cookie'
 import React from 'react'
 
 import { MathSpan } from '@/components/content/math-span'
-import { SerloEditor } from '@/components/edtr-io/serlo-editor'
+import { SerloEditor } from '@/edtr-io/serlo-editor'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
 
 export function AddRevision({ initialState, type }: EditorPageData) {

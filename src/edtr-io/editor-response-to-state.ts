@@ -12,7 +12,7 @@ import {
 
 import { appletTypeState } from './plugins/types/applet'
 import { articleTypeState } from './plugins/types/article'
-import { Entity, License, Uuid } from './plugins/types/common'
+import { Entity, License, Uuid } from './plugins/types/common/common'
 import { courseTypeState } from './plugins/types/course'
 import { coursePageTypeState } from './plugins/types/course-page'
 import { eventTypeState } from './plugins/types/event'
@@ -213,7 +213,7 @@ export function editorResponseToState(
           changes: '',
           title,
           description: serializeEditorState(
-            toEdtr(convertEditorState('')) // TODO: is this field still supported?
+            toEdtr(convertEditorState('')) // TODO: If this field is used in Metadata API we need to fetch it in the API
           ),
           meta_description,
           'course-page': (uuid.pages || []).map((page) => {
@@ -275,8 +275,6 @@ export function editorResponseToState(
     }
   }
 
-  // TODO: Do we need to support Math Puzzle in any way?
-
   function convertPage(uuid: Page): DeserializedState<typeof pageTypeState> {
     stack.push({ id: uuid.id, type: 'page' })
     return {
@@ -302,7 +300,7 @@ export function editorResponseToState(
         state: {
           id: uuid.id,
           parent: uuid.parent.id,
-          position: uuid.id, // TODO: fetch
+          position: uuid.weight,
           taxonomy: uuid.id, // TODO: this or id is probably not the right value
           term: {
             name: uuid.name,
@@ -579,7 +577,7 @@ export function editorResponseToState(
           changes: '',
           revision,
           content: serializeEditorState(toEdtr(convertEditorState(content))),
-          cohesive: false, // TODO: Currently not exposed in API: https://github.com/serlo/api.serlo.org/issues/489
+          cohesive: uuid.currentRevision?.cohesive ?? false,
           'grouped-text-exercise': exercises,
         },
       },
@@ -698,11 +696,6 @@ export interface EventSerializedState extends Entity {
   content: SerializedEditorState
   meta_title?: string
   meta_description?: string
-}
-
-export interface MathPuzzleSerializedState extends Entity {
-  content: SerializedEditorState
-  source?: string
 }
 
 export interface PageSerializedState extends Uuid, License {

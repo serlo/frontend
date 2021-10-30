@@ -1,7 +1,8 @@
 import { EditorPlugin, EditorPluginProps, object } from '@edtr-io/plugin'
 import * as React from 'react'
 
-import { Controls, editorContent } from './common'
+import { editorContent } from './common/common'
+import { ToolbarMain } from './toolbar-main/toolbar-main'
 
 export const userTypeState = object({
   description: editorContent(),
@@ -19,7 +20,7 @@ function UserTypeEditor(props: EditorPluginProps<typeof userTypeState>) {
   return (
     <>
       {description.render()}
-      <Controls />
+      <ToolbarMain />
     </>
   )
 }

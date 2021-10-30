@@ -6,12 +6,12 @@ import * as React from 'react'
 import {
   editorContent,
   entity,
-  Controls,
   optionalSerializedChild,
   OptionalChild,
   entityType,
-} from './common'
+} from './common/common'
 import { RevisionHistoryLoader } from './helpers/revision-history-loader'
+import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export const textExerciseTypeState = entityType(
@@ -74,7 +74,7 @@ export function TextExerciseTypeEditor(
         </AddButton>
       )}
       {props.config.skipControls ? null : (
-        <Controls subscriptions {...props.state} />
+        <ToolbarMain subscriptions {...props.state} />
       )}
     </article>
   )

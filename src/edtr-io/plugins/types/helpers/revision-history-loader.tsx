@@ -6,15 +6,15 @@ import { PropsWithChildren, useState } from 'react'
 
 import { endpoint } from '@/api/endpoint'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
-import {
-  editorResponseToState,
-  isError,
-} from '@/components/edtr-io/editor-response-to-state'
-import { revisionResponseToResponse } from '@/components/edtr-io/revision-response-to-response'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { RevisionHistory as SerloRevisionHistory } from '@/components/pages/revision-history'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { HistoryRevisionsData } from '@/data-types'
+import {
+  editorResponseToState,
+  isError,
+} from '@/edtr-io/editor-response-to-state'
+import { revisionResponseToResponse } from '@/edtr-io/revision-response-to-response'
 import { QueryResponseRevision } from '@/fetcher/query-types'
 import { revisionQuery } from '@/fetcher/revision/query'
 import { showToastNotice } from '@/helper/show-toast-notice'

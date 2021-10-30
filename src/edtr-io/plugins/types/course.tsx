@@ -6,14 +6,14 @@ import * as React from 'react'
 import {
   editorContent,
   entity,
-  Controls,
   serializedChild,
   HeaderInput,
   OptionalChild,
   entityType,
-} from './common'
+} from './common/common'
 import { RevisionHistoryLoader } from './helpers/revision-history-loader'
 import { Settings } from './helpers/settings'
+import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export const courseTypeState = entityType(
@@ -86,7 +86,7 @@ function CourseTypeEditor(props: EditorPluginProps<typeof courseTypeState>) {
       <AddButton onClick={() => children.insert()}>
         {editorStrings.course.addCoursePage}
       </AddButton>
-      <Controls subscriptions {...props.state} />
+      <ToolbarMain subscriptions {...props.state} />
     </article>
   )
 }
