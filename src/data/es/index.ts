@@ -436,7 +436,7 @@ export const loggedInData = {
         extendedSettings: "Ajustes extendidos",
         close: "Cerrar",
         notSupportedYet: "Este tipo de contenido aún no está respaldado por el nuevo editor.",
-        editInOld: "Edita el contenido en el antiguo editor.",
+        editInOld: 'You can edit the content in the old editor',
         conversionError: "Se produjo un error durante la conversión.",
         oldRevisionFound: "Hemos encontrado una revisión anterior creada por ti. ¿Deseas restaurarla?",
         notConverted: "Esta entidad aún no ha sido convertida al nuevo editor.",
