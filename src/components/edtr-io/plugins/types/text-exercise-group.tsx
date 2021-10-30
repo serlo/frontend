@@ -17,14 +17,14 @@ import { RevisionHistoryLoader } from './helpers/revision-history-loader'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 // https://github.com/tannerlinsley/react-virtual/issues/167
-function useVirtualResizeObserver<T>(
-  options: {
-    size: number,
-    parentRef: React.RefObject<T>
-    estimateSize: () => number
-  }
-) {
-  const measureRefCacheRef = React.useRef<Record<string, (el: HTMLElement | null) => void>>({})
+function useVirtualResizeObserver<T>(options: {
+  size: number
+  parentRef: React.RefObject<T>
+  estimateSize: () => number
+}) {
+  const measureRefCacheRef = React.useRef<
+    Record<string, (el: HTMLElement | null) => void>
+  >({})
   const elCacheRef = React.useRef<Record<number, HTMLElement | null>>({})
 
   const resizeObserverRef = React.useRef(
