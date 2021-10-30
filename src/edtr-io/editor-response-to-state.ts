@@ -141,9 +141,7 @@ export function editorResponseToState(
           meta_description,
         },
       },
-      converted: !isEdtr(
-        convertEditorState(uuid.currentRevision?.content ?? '') || empty
-      ),
+      converted: false, // no legacy any more
     }
   }
 
@@ -228,7 +226,10 @@ export function editorResponseToState(
           }),
         },
       },
-      converted: !isEdtr(convertEditorState('') || empty),
+      converted: !isEdtr(
+        convertEditorState('') || // TODO: Currently we can't tell?
+          empty
+      ),
     }
   }
 
@@ -252,7 +253,9 @@ export function editorResponseToState(
           ),
         },
       },
-      converted: !isEdtr(convertEditorState('') || empty),
+      converted: !isEdtr(
+        convertEditorState(uuid.currentRevision?.content || '') || empty
+      ),
     }
   }
 
@@ -271,7 +274,7 @@ export function editorResponseToState(
           meta_description,
         },
       },
-      converted: !isEdtr(convertEditorState(content) || empty),
+      converted: false, // no legacy any more
     }
   }
 
@@ -655,7 +658,7 @@ export function editorResponseToState(
           content: uuid.currentRevision?.url ?? '',
         },
       },
-      converted: !isEdtr(convertEditorState(content) || empty),
+      converted: false, // no legacy videos any more
     }
   }
 }

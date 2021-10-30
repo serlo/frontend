@@ -15,6 +15,7 @@ import { parseLanguageSubfolder } from '@/helper/feature-i18n'
 export interface EditorPageData {
   initialState: SerloEditorProps['initialState']
   type: string
+  converted?: boolean
 }
 
 export interface EditorFetchErrorData {

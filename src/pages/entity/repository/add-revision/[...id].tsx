@@ -30,7 +30,7 @@ export default renderedPageNoHooks<EditorPageData | EditorFetchErrorData>(
                 message="Error while fetching data"
               />
             ) : (
-              <EditInLegacy type={props.errorType} />
+              <EditorWarning type={props.errorType} />
             )}
           </>
         ) : (
@@ -38,6 +38,7 @@ export default renderedPageNoHooks<EditorPageData | EditorFetchErrorData>(
             <div className="relative">
               <MaxWidthDiv>
                 <main>
+                  {props.converted ? <EditorWarning converted /> : null}
                   <AddRevision {...props} />
                 </main>
               </MaxWidthDiv>{' '}
@@ -49,7 +50,7 @@ export default renderedPageNoHooks<EditorPageData | EditorFetchErrorData>(
   }
 )
 
-function EditInLegacy({
+function EditorWarning({
   type,
   converted,
 }: {
@@ -67,13 +68,16 @@ function EditInLegacy({
   const isFailure = type === 'failure'
 
   return (
-    <p className="serlo-p bg-yellow">
+    <p className="serlo-p bg-yellow-200 p-4 my-12 rounded-2xl">
       {converted
         ? editorStrings.edtrIo.notConverted
         : isFailure
         ? editorStrings.edtrIo.conversionError
         : editorStrings.edtrIo.notSupportedYet}{' '}
-      <a href={legacyUrl}>{editorStrings.edtrIo.editInOld}</a>
+      <br />
+      <a href={legacyUrl} className="serlo-link">
+        {editorStrings.edtrIo.editInOld}.
+      </a>
     </p>
   )
 }
