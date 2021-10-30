@@ -471,7 +471,7 @@ export const loggedInData = {
         close: 'Close',
         notSupportedYet:
           "This content type isn't supported by the new editor, yet.",
-        editInOld: 'Edit the content in the old editor.',
+        editInOld: 'You can edit the content in the old editor',
         conversionError:
           'An error occurred during the conversion.',
         oldRevisionFound:
