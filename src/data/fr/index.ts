@@ -436,7 +436,7 @@ export const loggedInData = {
         extendedSettings: "Paramètres avancés",
         close: "Fermer",
         notSupportedYet: "Ce type de contenu n'est pas encore pris en charge par le nouvel éditeur.",
-        editInOld: "Modifier le contenu avec l'ancien éditeur.",
+        editInOld: 'You can edit the content in the old editor',
         conversionError: "Une erreur s'est produite lors de la conversion.",
         oldRevisionFound: "Nous avons trouvé une ancienne révision que vous avez créée. Voulez-vous la restaurer?",
         notConverted: "Cette entité n'a pas encore été convertie pour le nouvel éditeur.",
