@@ -170,6 +170,7 @@ export const dataQuery = gql`
         type
         name
         description
+        weight
         parent {
           id
         }

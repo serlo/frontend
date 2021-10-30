@@ -121,6 +121,7 @@ export function revisionResponseToResponse(
       currentRevision: {
         id: uuid.id,
         content,
+        cohesive: uuid.cohesive,
       },
       exercises: uuid.repository.exercises,
       taxonomyTerms,

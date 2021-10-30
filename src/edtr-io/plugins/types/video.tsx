@@ -2,14 +2,9 @@ import { EditorPlugin, EditorPluginProps, string } from '@edtr-io/plugin'
 import { createVideoPlugin } from '@edtr-io/plugin-video'
 import * as React from 'react'
 
-import {
-  entity,
-  Controls,
-  editorContent,
-  HeaderInput,
-  entityType,
-} from './common'
+import { entity, editorContent, HeaderInput, entityType } from './common/common'
 import { RevisionHistoryLoader } from './helpers/revision-history-loader'
+import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export const videoTypeState = entityType(
@@ -82,7 +77,7 @@ function VideoTypeEditor(props: EditorPluginProps<typeof videoTypeState>) {
         </section>
         <section>{description.render()}</section>
       </article>
-      <Controls subscriptions {...props.state} />
+      <ToolbarMain subscriptions {...props.state} />
     </section>
   )
 }

@@ -8,12 +8,12 @@ import { SemanticSection } from '../helpers/semantic-section'
 import {
   editorContent,
   entity,
-  Controls,
   serializedChild,
   OptionalChild,
   entityType,
-} from './common'
+} from './common/common'
 import { RevisionHistoryLoader } from './helpers/revision-history-loader'
+import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export const textExerciseGroupTypeState = entityType(
@@ -128,7 +128,7 @@ function TextExerciseGroupTypeEditor(
       <AddButton onClick={() => children.insert()}>
         {editorStrings.textExerciseGroup.addExercise}
       </AddButton>
-      <Controls subscriptions {...props.state} />
+      <ToolbarMain subscriptions {...props.state} />
     </article>
   )
 

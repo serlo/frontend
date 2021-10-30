@@ -1,44 +1,38 @@
 import { EditorPlugin, EditorPluginProps, string } from '@edtr-io/plugin'
-import * as React from 'react'
+import { ChangeEvent } from 'react'
 
-import {
-  entity,
-  Controls,
-  editorContent,
-  serializedChild,
-  HeaderInput,
-  entityType,
-} from './common'
+import { editorContent, entity, HeaderInput, entityType } from './common/common'
 import { RevisionHistoryLoader } from './helpers/revision-history-loader'
 import { Settings } from './helpers/settings'
+import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
-export const appletTypeState = entityType(
+export const articleTypeState = entityType(
   {
     ...entity,
     title: string(),
-    content: editorContent(),
+    content: editorContent('article'),
     meta_title: string(),
     meta_description: string(),
-    url: serializedChild('geogebra'),
   },
   {}
 )
 
-export const appletTypePlugin: EditorPlugin<typeof appletTypeState> = {
-  Component: AppletTypeEditor,
-  state: appletTypeState,
+export const articleTypePlugin: EditorPlugin<typeof articleTypeState> = {
+  Component: ArticleTypeEditor,
+  state: articleTypeState,
   config: {},
 }
 
-function AppletTypeEditor(props: EditorPluginProps<typeof appletTypeState>) {
-  const { title, url, content, meta_title, meta_description } = props.state
+function ArticleTypeEditor(props: EditorPluginProps<typeof articleTypeState>) {
+  const { title, content, meta_title, meta_description } = props.state
+
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
   const editorStrings = loggedInData.strings.editor
 
   return (
-    <div>
+    <>
       <div className="page-header">
         {props.renderIntoToolbar(
           <RevisionHistoryLoader
@@ -50,11 +44,11 @@ function AppletTypeEditor(props: EditorPluginProps<typeof appletTypeState>) {
         {props.renderIntoSettings(
           <Settings>
             <Settings.Textarea
-              label={editorStrings.applet.seoTitle}
+              label={editorStrings.article.seoTitle}
               state={meta_title}
             />
             <Settings.Textarea
-              label={editorStrings.applet.seoDesc}
+              label={editorStrings.article.seoDesc}
               state={meta_description}
             />
           </Settings>
@@ -62,9 +56,9 @@ function AppletTypeEditor(props: EditorPluginProps<typeof appletTypeState>) {
         <h1>
           {props.editable ? (
             <HeaderInput
-              placeholder={editorStrings.applet.title}
+              placeholder={editorStrings.article.title}
               value={title.value}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              onChange={(e: ChangeEvent<HTMLInputElement>) => {
                 title.set(e.target.value)
               }}
             />
@@ -73,11 +67,8 @@ function AppletTypeEditor(props: EditorPluginProps<typeof appletTypeState>) {
           )}
         </h1>
       </div>
-      <article>
-        {url.render()}
-        {content.render()}
-      </article>
-      <Controls subscriptions {...props.state} />
-    </div>
+      <div itemProp="articleBody">{content.render()}</div>
+      <ToolbarMain subscriptions {...props.state} />
+    </>
   )
 }

@@ -2,41 +2,43 @@ import { EditorPlugin, EditorPluginProps, string } from '@edtr-io/plugin'
 import * as React from 'react'
 
 import {
-  editorContent,
   entity,
-  Controls,
+  editorContent,
+  serializedChild,
   HeaderInput,
   entityType,
-} from './common'
+} from './common/common'
 import { RevisionHistoryLoader } from './helpers/revision-history-loader'
 import { Settings } from './helpers/settings'
+import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
-export const eventTypeState = entityType(
+export const appletTypeState = entityType(
   {
     ...entity,
     title: string(),
     content: editorContent(),
     meta_title: string(),
     meta_description: string(),
+    url: serializedChild('geogebra'),
   },
   {}
 )
 
-export const eventTypePlugin: EditorPlugin<typeof eventTypeState> = {
-  Component: EventTypeEditor,
-  state: eventTypeState,
+export const appletTypePlugin: EditorPlugin<typeof appletTypeState> = {
+  Component: AppletTypeEditor,
+  state: appletTypeState,
   config: {},
 }
 
-function EventTypeEditor(props: EditorPluginProps<typeof eventTypeState>) {
-  const { content, title, meta_title, meta_description } = props.state
+function AppletTypeEditor(props: EditorPluginProps<typeof appletTypeState>) {
+  const { title, url, content, meta_title, meta_description } = props.state
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
   const editorStrings = loggedInData.strings.editor
 
   return (
-    <>
+    <div>
       <div className="page-header">
         {props.renderIntoToolbar(
           <RevisionHistoryLoader
@@ -48,11 +50,11 @@ function EventTypeEditor(props: EditorPluginProps<typeof eventTypeState>) {
         {props.renderIntoSettings(
           <Settings>
             <Settings.Textarea
-              label={editorStrings.event.seoTitle}
+              label={editorStrings.applet.seoTitle}
               state={meta_title}
             />
             <Settings.Textarea
-              label={editorStrings.event.seoDesc}
+              label={editorStrings.applet.seoDesc}
               state={meta_description}
             />
           </Settings>
@@ -60,7 +62,7 @@ function EventTypeEditor(props: EditorPluginProps<typeof eventTypeState>) {
         <h1>
           {props.editable ? (
             <HeaderInput
-              placeholder={editorStrings.event.title}
+              placeholder={editorStrings.applet.title}
               value={title.value}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 title.set(e.target.value)
@@ -71,8 +73,11 @@ function EventTypeEditor(props: EditorPluginProps<typeof eventTypeState>) {
           )}
         </h1>
       </div>
-      <article>{content.render()}</article>
-      <Controls subscriptions {...props.state} />
-    </>
+      <article>
+        {url.render()}
+        {content.render()}
+      </article>
+      <ToolbarMain subscriptions {...props.state} />
+    </div>
   )
 }

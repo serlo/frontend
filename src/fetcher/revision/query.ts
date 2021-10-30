@@ -207,6 +207,7 @@ export const revisionQuery = gql`
         ... on ExerciseGroupRevision {
           ...exerciseGroupRevision
           changes
+          cohesive
           repository {
             ...license
             trashed

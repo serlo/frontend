@@ -3,8 +3,9 @@ import { ExpandableBox } from '@edtr-io/renderer-ui'
 import { ThemeProvider } from '@edtr-io/ui'
 import * as React from 'react'
 
-import { Controls, editorContent, entity, entityType } from './common'
+import { editorContent, entity, entityType } from './common/common'
 import { RevisionHistoryLoader } from './helpers/revision-history-loader'
+import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export const textSolutionTypeState = entityType(
@@ -71,7 +72,7 @@ function TextSolutionTypeEditor(props: TextSolutionTypeProps) {
         </ExpandableBox>
       </ThemeProvider>
       {props.config.skipControls ? null : (
-        <Controls subscriptions {...props.state} />
+        <ToolbarMain subscriptions {...props.state} />
       )}
     </>
   )
