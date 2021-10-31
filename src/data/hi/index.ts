@@ -436,7 +436,7 @@ export const loggedInData = {
         extendedSettings: 'Extended Settings',
         close: 'Close',
         notSupportedYet: "This content type isn't supported by the new editor, yet.",
-        editInOld: 'Edit the content in the old editor.',
+        editInOld: 'You can edit the content in the old editor',
         conversionError: 'An error occurred during the conversion.',
         oldRevisionFound: 'We found an old revision created by you. Do you want to restore it?',
         notConverted: "This entity hasn't been converted to the new editor, yet.",
