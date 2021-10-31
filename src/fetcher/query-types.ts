@@ -372,6 +372,15 @@ export type QueryResponseNoRevision =
   | TaxonomyTerm
   | User
 
+export type QueryResponseWithRevisionAndTitle =
+  | Page
+  | Article
+  | Video
+  | Applet
+  | CoursePage
+  | Event
+  | Course
+
 export type QueryResponse = QueryResponseNoRevision | QueryResponseRevision
 
 export type QueryResponseRevisionNoPage = Exclude<

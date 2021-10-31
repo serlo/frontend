@@ -5,6 +5,7 @@
 
 # testing
 /coverage
+/__tests__/e2e/storage-state
 
 # production
 /build
