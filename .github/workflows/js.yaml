@@ -41,7 +41,7 @@ jobs:
         with:
           node-version: 14.x
       - run: yarn
-      - run: yarn test
+      - run: yarn test:js
   tsc:
     runs-on: ubuntu-latest
     steps:
