@@ -58,7 +58,38 @@ export async function requestPage(
     if (firstPage) {
       return await requestPage(firstPage, instance)
     } else {
-      return { kind: 'error', errorData: { code: 404 } }
+      console.log(uuid.pages)
+      const pages = uuid.pages.map((page) => {
+        return {
+          title: '',
+          url: !hasSpecialUrlChars(page.alias!) ? page.alias! : `/${page.id}`,
+        }
+      })
+
+      return {
+        // show warning if no pages exist or are reviewed yet
+        kind: 'single-entity',
+        newsletterPopup: false,
+        entityData: {
+          id: uuid.id,
+          alias: uuid.alias ?? undefined,
+          typename: uuid.__typename,
+          title: uuid.currentRevision?.title ?? '',
+          categoryIcon: 'course',
+          inviteToEdit: true,
+          isUnrevised: !uuid.currentRevision,
+          courseData: {
+            id: uuid.id,
+            title: uuid.currentRevision?.title ?? '',
+            pages,
+          },
+        },
+        metaData: {
+          title: uuid.currentRevision?.title ?? '',
+          contentType: 'course',
+        },
+        authorization,
+      }
     }
   }
 

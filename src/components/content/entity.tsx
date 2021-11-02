@@ -1,6 +1,13 @@
-import { faTools, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { IconProp } from '@fortawesome/fontawesome-svg-core'
+import {
+  faExclamationCircle,
+  faTools,
+  faTrash,
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import dynamic from 'next/dynamic'
+import Head from 'next/head'
 import { Router } from 'next/router'
 import { useState, MouseEvent } from 'react'
 
@@ -155,7 +162,7 @@ export function Entity({ data }: EntityProps) {
   }
 
   function renderCourseNavigation() {
-    if (data.courseData) {
+    if (data.courseData?.pages && data.courseData?.pages.length > 0) {
       return (
         <CourseNavigation
           open={courseNavOpen}
@@ -163,7 +170,19 @@ export function Entity({ data }: EntityProps) {
           data={data.courseData}
         />
       )
-    } else return null
+    } else
+      return (
+        <>
+          <Head>
+            <meta name="robots" content="noindex" />
+          </Head>
+          {renderNotice(
+            <>{strings.course.noPagesWarning}</>,
+            faExclamationCircle,
+            'bg-yellow-200'
+          )}
+        </>
+      )
   }
 
   function renderCourseFooter() {
@@ -179,10 +198,10 @@ export function Entity({ data }: EntityProps) {
   }
 
   function renderTrashedNotice() {
-    return (
-      <div className="p-4 my-12 bg-truegray-100 rounded-2xl font-bold">
-        <FontAwesomeIcon icon={faTrash} /> {strings.content.trashedNotice}
-      </div>
+    return renderNotice(
+      <>{strings.content.trashedNotice}</>,
+      faTrash,
+      'bg-truegray-100'
     )
   }
 
@@ -192,12 +211,29 @@ export function Entity({ data }: EntityProps) {
         {strings.pageTitles.revisionHistory}
       </Link>
     )
-    return (
-      <div className="p-4 my-12 bg-brand-100 rounded-2xl font-bold">
-        <FontAwesomeIcon icon={faTools} />{' '}
+    return renderNotice(
+      <>
         {replacePlaceholders(strings.content.unrevisedNotice, {
           link,
         })}
+      </>,
+      faTools
+    )
+  }
+
+  function renderNotice(
+    children: JSX.Element,
+    icon: IconProp,
+    colorClass?: string
+  ) {
+    return (
+      <div
+        className={clsx(
+          'p-4 my-12 bg-brand-100 rounded-2xl font-bold',
+          colorClass
+        )}
+      >
+        <FontAwesomeIcon icon={icon} /> {children}
       </div>
     )
   }
