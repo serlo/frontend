@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-const cookie = '__serlo_preview=1; Path=/;'
+const cookie = '__serlo_preview=1; Path=/; max-age=300;'
 
 export default (req: NextApiRequest, res: NextApiResponse) => {
   res.setPreviewData({})
