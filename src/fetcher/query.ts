@@ -155,6 +155,7 @@ export const dataQuery = gql`
           alias
           id
           currentRevision {
+            id
             title
             content # only for editor. maybe split
           }
