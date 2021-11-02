@@ -12,6 +12,7 @@
 # Generated files
 src/data/*/index.ts
 schema.graphql
+__tests__/e2e/storage-state
 
 # Assets
 public

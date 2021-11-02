@@ -3,5 +3,5 @@ module.exports = {
   moduleNameMapper: {
     '^@/(.*)': '<rootDir>/src/$1',
   },
-  testPathIgnorePatterns: ['/e2e/']
+  testPathIgnorePatterns: ['/e2e/'],
 }
