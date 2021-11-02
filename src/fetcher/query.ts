@@ -171,6 +171,7 @@ export const dataQuery = gql`
         name
         description
         weight
+        taxonomyId
         parent {
           id
         }

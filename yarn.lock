@@ -1999,9 +1999,9 @@
   integrity sha512-3Zi2LGbCLDz4IIL7ir6wD0u/ggHotLkK5SlVzFzTcYaNgPR4MAt/9JYZqXWKcofPWEoptfpnCJU8Bq9sxw8QUg==
 
 "@serlo/api@^0.26.0":
-  version "0.26.26"
-  resolved "https://registry.yarnpkg.com/@serlo/api/-/api-0.26.26.tgz#60b6daf111dfc052c624775eae36d0f6ca3bc859"
-  integrity sha512-sfXEuofQ7nABjCaJLfe+XBNawMoiFUkvfNYSn1fjJYiHXKcddQM12o7ARuAGfHxUDYxObK+dQO19Xof+gEHZ4A==
+  version "0.26.27"
+  resolved "https://registry.yarnpkg.com/@serlo/api/-/api-0.26.27.tgz#5665de44b88f9bcf25f55b08a06c65940d910eaa"
+  integrity sha512-SmJVX1gyNkvBUBPkgqjKm1gpx7Mse8u5WCEozBd/bi6KtMNIc53z6QjG3v+lDIz+QMuRxm/C0P/B2l2zSdm2VA==
 
 "@serlo/api@^0.26.22":
   version "0.26.22"
