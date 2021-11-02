@@ -92,7 +92,9 @@ export const instanceData = {
       showPages: "Kursübersicht anzeigen",
       pages: "Kursübersicht",
       next: "Weiter",
-      back: "Zurück"
+      back: "Zurück",
+      noPagesWarning: 'Sorry there seem to be no reviewed pages in this course yet.',
+      noRevisionForPage: 'unreviewed page'
     },
     content: {
       show: "anzeigen",
