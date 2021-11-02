@@ -92,7 +92,9 @@ export const instanceData = {
       showPages: "पाठ्यक्रम का अवलोकन करें",
       pages: "पाठ्यक्रम अवलोकन",
       next: "अगला",
-      back: 'Back'
+      back: 'Back',
+      noPagesWarning: 'Sorry there seem to be no reviewed pages in this course yet.',
+      noRevisionForPage: 'unreviewed page'
     },
     content: {
       show: "दिखाएँ",
