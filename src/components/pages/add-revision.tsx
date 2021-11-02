@@ -8,12 +8,13 @@ import { MathSpan } from '@/components/content/math-span'
 import { SerloEditor } from '@/edtr-io/serlo-editor'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
 
-const noReview = ['TaxonomyTerm', 'Page', 'Event', 'User']
-
-export function AddRevision({ initialState, type }: EditorPageData) {
+export function AddRevision({
+  initialState,
+  type,
+  needsReview,
+}: EditorPageData) {
   const canDo = useCanDo()
-  const showSkipCheckout =
-    canDo(Entity.checkoutRevision) && !noReview.includes(type)
+  const showSkipCheckout = canDo(Entity.checkoutRevision) && !!needsReview
 
   return (
     <>

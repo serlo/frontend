@@ -246,4 +246,23 @@ export const sharedEventFragments = gql`
       }
     }
   }
+
+  fragment path on Navigation {
+    path {
+      nodes {
+        label
+        url
+      }
+    }
+  }
+
+  fragment taxonomyTerms on AbstractTaxonomyTermChild {
+    taxonomyTerms {
+      nodes {
+        navigation {
+          ...path
+        }
+      }
+    }
+  }
 `

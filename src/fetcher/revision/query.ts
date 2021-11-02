@@ -25,6 +25,7 @@ export const revisionQuery = gql`
           ...articleRevision
           changes
           repository {
+            ...taxonomyTerms
             ...license
             trashed
             instance
@@ -66,6 +67,7 @@ export const revisionQuery = gql`
           ...appletRevision
           changes
           repository {
+            ...taxonomyTerms
             ...license
             trashed
             instance
@@ -87,6 +89,7 @@ export const revisionQuery = gql`
           ...courseRevision
           changes
           repository {
+            ...taxonomyTerms
             ...license
             trashed
             instance
@@ -123,6 +126,9 @@ export const revisionQuery = gql`
                 trashed
               }
             }
+            course {
+              ...taxonomyTerms
+            }
           }
         }
         ... on EventRevision {
@@ -150,6 +156,7 @@ export const revisionQuery = gql`
           content
           changes
           repository {
+            ...taxonomyTerms
             ...license
             trashed
             instance
@@ -271,6 +278,7 @@ export const revisionQuery = gql`
           ...videoRevision
           changes
           repository {
+            ...taxonomyTerms
             ...license
             trashed
             instance
@@ -309,5 +317,24 @@ export const revisionQuery = gql`
     content
     title
     metaDescription
+  }
+
+  fragment path on Navigation {
+    path {
+      nodes {
+        label
+        url
+      }
+    }
+  }
+
+  fragment taxonomyTerms on AbstractTaxonomyTermChild {
+    taxonomyTerms {
+      nodes {
+        navigation {
+          ...path
+        }
+      }
+    }
   }
 `
