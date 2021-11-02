@@ -92,7 +92,9 @@ export const instanceData = {
       showPages: "வகுப்பு மேலோட்டத்தைக் காட்டவும்",
       pages: 'Course overview',
       next: "அடுத்து",
-      back: 'Back'
+      back: 'Back',
+      noPagesWarning: 'Sorry there seem to be no reviewed pages in this course yet.',
+      noRevisionForPage: 'unreviewed page'
     },
     content: {
       show: "காட்டு",
