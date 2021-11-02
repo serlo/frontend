@@ -33,14 +33,13 @@ const ShareModal = dynamic<ShareModalProps>(() =>
 )
 
 export function Entity({ data }: EntityProps) {
-  // console.log(data)
   // state@/components/comments/comment-area
   const [open, setOpen] = useState(false)
 
   // course
   const [courseNavOpen, setCourseNavOpen] = useState(false)
-  const openCourseNav = (e: MouseEvent) => {
-    e.preventDefault()
+  const openCourseNav = (e?: MouseEvent) => {
+    e?.preventDefault()
     setCourseNavOpen(true)
   }
 
@@ -52,6 +51,7 @@ export function Entity({ data }: EntityProps) {
   return wrapWithSchema(
     <>
       {renderCourseNavigation()}
+      {renderNoCoursePages()}
       {data.trashed && renderTrashedNotice()}
       {renderStyledH1()}
       {!data.trashed && data.isUnrevised && renderUnrevisedNotice()}
@@ -162,27 +162,34 @@ export function Entity({ data }: EntityProps) {
   }
 
   function renderCourseNavigation() {
-    if (data.courseData?.pages && data.courseData?.pages.length > 0) {
-      return (
-        <CourseNavigation
-          open={courseNavOpen}
-          onOverviewButtonClick={openCourseNav}
-          data={data.courseData}
-        />
-      )
-    } else
-      return (
-        <>
-          <Head>
-            <meta name="robots" content="noindex" />
-          </Head>
-          {renderNotice(
-            <>{strings.course.noPagesWarning}</>,
-            faExclamationCircle,
-            'bg-yellow-200'
-          )}
-        </>
-      )
+    if (!data.courseData) return null
+    return (
+      <CourseNavigation
+        open={courseNavOpen}
+        onOverviewButtonClick={openCourseNav}
+        data={data.courseData}
+      />
+    )
+  }
+
+  function renderNoCoursePages() {
+    if (!data.courseData) return null
+    const validPages = data.courseData.pages.filter(
+      (page) => !page.noCurrentRevision
+    )
+    if (validPages.length > 0) return null
+    return (
+      <>
+        <Head>
+          <meta name="robots" content="noindex" />
+        </Head>
+        {renderNotice(
+          <>{strings.course.noPagesWarning}</>,
+          faExclamationCircle,
+          'bg-yellow-200'
+        )}
+      </>
+    )
   }
 
   function renderCourseFooter() {

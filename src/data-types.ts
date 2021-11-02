@@ -774,6 +774,7 @@ export interface CoursePageEntry {
   title: string
   url: string
   active?: boolean
+  noCurrentRevision?: boolean
 }
 
 // Taxonomy: Folders with other entities, sorted by category, first level of subfolders and exercises are shown directly

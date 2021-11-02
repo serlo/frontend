@@ -58,11 +58,11 @@ export async function requestPage(
     if (firstPage) {
       return await requestPage(firstPage, instance)
     } else {
-      console.log(uuid.pages)
       const pages = uuid.pages.map((page) => {
         return {
-          title: '',
+          title: page.currentRevision?.title ?? '',
           url: !hasSpecialUrlChars(page.alias!) ? page.alias! : `/${page.id}`,
+          noCurrentRevision: !page.currentRevision,
         }
       })
 
