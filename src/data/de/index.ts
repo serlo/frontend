@@ -93,7 +93,7 @@ export const instanceData = {
       pages: "Kursübersicht",
       next: "Weiter",
       back: "Zurück",
-      noPagesWarning: "Sorry, für diesen Kurs gibt es noch keine akzeptierten Seiten.",
+      noPagesWarning: "Leider gibt es für diesen Kurs noch keine akzeptierten Seiten.",
       noRevisionForPage: "Ungegeprüfte Seite"
     },
     content: {
