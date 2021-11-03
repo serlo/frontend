@@ -15,14 +15,21 @@ const options = {
   },
 }
 
-//142218, 145458,
-const events = [
-  145459, 145464, 145590, 146498, 146500, 146512, 147713, 147733, 149177,
-  150501, 179657, 196426,
-]
+// const applets1 = [
+//   111508, 124925, 112291, 112257, 112371, 124904, 124733, 112201, 112561,
+//   212942,
+// ]
+
+// const applets2 = [
+//   112288, 112263, 112595, 112243, 112208, 112238, 138255, 115210, 112578,
+//   124906, 112295,
+// ]
+
+//215525,129914,194450,210085,193828,167875,134372,178851,129891,155850,
+//136989,52411,163197,30222,173320,196539,36766,44309,202941,72181,
 
 // test.use({ storageState: './__tests__/e2e/storage-state/sysadmin.json' })
-test.setTimeout(3 * 60 * 1000) // tmp
+test.setTimeout(10 * 60 * 1000) // tmp
 
 test('is logged in', async () => {
   const browser = await chromium.launch()
@@ -30,7 +37,7 @@ test('is logged in', async () => {
 
   await login(page, 'inyono')
 
-  for (const id of events) {
+  for (const id of uuids) {
     console.log(`checking ${id.toString()}`)
     await checkId(id)
   }
@@ -69,8 +76,8 @@ test('is logged in', async () => {
     await page.click('.ReactModalPortal button.serlo-make-interactive-green')
 
     //make sure data is updated
-    await delay(10 * 1000) //30s
-    await page.screenshot({ path: '__tests__/e2e/saved.png' })
+    await delay(5 * 1000) //30s
+    // await page.screenshot({ path: '__tests__/e2e/saved.png' })
 
     const after = await queryUuid(id)
     compareUuidWithRevisionAndTitle(before, after)
@@ -86,7 +93,6 @@ function compareUuidWithRevisionAndTitle(
   }
   if (after.currentRevision) {
     after.currentRevision.id = 0
-    console.log(before.currentRevision?.title)
     if (after.currentRevision.title) {
       after.currentRevision.title = after.currentRevision.title.slice(0, -1)
     }

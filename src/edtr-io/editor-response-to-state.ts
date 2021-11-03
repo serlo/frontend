@@ -88,11 +88,12 @@ export function editorResponseToState(
   const content =
     currentRev && 'content' in currentRev ? currentRev.content : ''
   const meta_title =
-    currentRev && hasOwnPropertyTs(currentRev, 'meta_title')
+    currentRev && hasOwnPropertyTs(currentRev, 'metaTitle')
       ? (currentRev.meta_title as string)
       : ''
+
   const meta_description =
-    currentRev && hasOwnPropertyTs(currentRev, 'meta_description')
+    currentRev && hasOwnPropertyTs(currentRev, 'metaDescription')
       ? (currentRev.meta_description as string)
       : ''
   const revision =
