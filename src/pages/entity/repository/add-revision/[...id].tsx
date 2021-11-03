@@ -1,9 +1,11 @@
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import { GetServerSideProps } from 'next'
 
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { AddRevision } from '@/components/pages/add-revision'
 import { ErrorPage } from '@/components/pages/error-page'
+import { StaticInfoPanel } from '@/components/static-info-panel'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import {
   EditorFetchErrorData,
@@ -68,17 +70,19 @@ function EditorWarning({
   const isFailure = type === 'failure'
 
   return (
-    <p className="serlo-p bg-yellow-200 p-4 my-12 rounded-2xl">
-      {converted
-        ? editorStrings.edtrIo.notConverted
-        : isFailure
-        ? editorStrings.edtrIo.conversionError
-        : editorStrings.edtrIo.notSupportedYet}{' '}
-      <br />
-      <a href={legacyUrl} className="serlo-link">
-        {editorStrings.edtrIo.editInOld}.
-      </a>
-    </p>
+    <StaticInfoPanel icon={faInfoCircle} type="warning">
+      <>
+        {converted
+          ? editorStrings.edtrIo.notConverted
+          : isFailure
+          ? editorStrings.edtrIo.conversionError
+          : editorStrings.edtrIo.notSupportedYet}{' '}
+        <br />
+        <a href={legacyUrl} className="serlo-link">
+          {editorStrings.edtrIo.editInOld}.
+        </a>
+      </>
+    </StaticInfoPanel>
   )
 }
 

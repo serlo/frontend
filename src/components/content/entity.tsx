@@ -1,16 +1,15 @@
-import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import {
   faExclamationCircle,
   faTools,
   faTrash,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import clsx from 'clsx'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { Router } from 'next/router'
 import { useState, MouseEvent } from 'react'
 
+import { StaticInfoPanel } from '../static-info-panel'
 import { HSpace } from './h-space'
 import { Link } from './link'
 import { LicenseNotice } from '@/components/content/license-notice'
@@ -183,11 +182,9 @@ export function Entity({ data }: EntityProps) {
         <Head>
           <meta name="robots" content="noindex" />
         </Head>
-        {renderNotice(
-          <>{strings.course.noPagesWarning}</>,
-          faExclamationCircle,
-          'bg-yellow-200'
-        )}
+        <StaticInfoPanel icon={faExclamationCircle} type="warning">
+          {strings.course.noPagesWarning}
+        </StaticInfoPanel>
       </>
     )
   }
@@ -205,10 +202,10 @@ export function Entity({ data }: EntityProps) {
   }
 
   function renderTrashedNotice() {
-    return renderNotice(
-      <>{strings.content.trashedNotice}</>,
-      faTrash,
-      'bg-truegray-100'
+    return (
+      <StaticInfoPanel icon={faTrash}>
+        {strings.content.trashedNotice}
+      </StaticInfoPanel>
     )
   }
 
@@ -218,30 +215,12 @@ export function Entity({ data }: EntityProps) {
         {strings.pageTitles.revisionHistory}
       </Link>
     )
-    return renderNotice(
-      <>
+    return (
+      <StaticInfoPanel icon={faTools} type="warning">
         {replacePlaceholders(strings.content.unrevisedNotice, {
           link,
         })}
-      </>,
-      faTools
-    )
-  }
-
-  function renderNotice(
-    children: JSX.Element,
-    icon: IconProp,
-    colorClass?: string
-  ) {
-    return (
-      <div
-        className={clsx(
-          'p-4 my-12 bg-brand-100 rounded-2xl font-bold',
-          colorClass
-        )}
-      >
-        <FontAwesomeIcon icon={icon} /> {children}
-      </div>
+      </StaticInfoPanel>
     )
   }
 }
