@@ -214,16 +214,18 @@ export function editorResponseToState(
             toEdtr(convertEditorState('')) // TODO: If this field is used in Metadata API we need to fetch it in the API
           ),
           meta_description,
-          'course-page': (uuid.pages || []).map((page) => {
-            return convertCoursePage({
-              ...page,
-              currentRevision: {
-                id: page.id,
-                title: page.currentRevision?.title ?? '',
-                content: page.currentRevision?.content ?? '',
-              },
-            }).initialState.state
-          }),
+          'course-page': (uuid.pages || [])
+            .filter((page) => page.currentRevision !== null)
+            .map((page) => {
+              return convertCoursePage({
+                ...page,
+                currentRevision: {
+                  id: page.id,
+                  title: page.currentRevision?.title ?? '',
+                  content: page.currentRevision?.content ?? '',
+                },
+              }).initialState.state
+            }),
         },
       },
       converted: !isEdtr(
