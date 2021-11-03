@@ -67,7 +67,6 @@ export function SerloEditor({
         <LoadingSpinner />
       </p>
     )
-
   const editorStrings = loggedInData.strings.editor
 
   const plugins = createPlugins({

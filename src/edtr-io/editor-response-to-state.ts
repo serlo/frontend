@@ -223,7 +223,7 @@ export function editorResponseToState(
                 title: page.currentRevision?.title ?? '',
                 content: page.currentRevision?.content ?? '',
               },
-            })
+            }).initialState.state
           }),
         },
       },

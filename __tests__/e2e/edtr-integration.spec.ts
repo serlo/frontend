@@ -15,23 +15,26 @@ const options = {
   },
 }
 
-// const applets1 = [
-//   111508, 124925, 112291, 112257, 112371, 124904, 124733, 112201, 112561,
-//   212942,
+// exersice groups
+//15383
+// const uuids = [
+//   43019, 27286, 211077, 207852, 191096, 5803, 189852, 214613, 228003,
 // ]
+//const uuids = [32599,48893,189342,213431,217130,12161,132165,13757,208844,15063]
+//const uuids = [161092,213749,5555,138819,12723,3033,22139,32277,118832,14259]
 
-// const applets2 = [
-//   112288, 112263, 112595, 112243, 112208, 112238, 138255, 115210, 112578,
-//   124906, 112295,
+const uuids = [120634]
+// const course = [
+//   120634, 57668, 113266, 186579, 174933, 178848, 206384, 199276, 207327, 222208,
 // ]
-
-//215525,129914,194450,210085,193828,167875,134372,178851,129891,155850,
-//136989,52411,163197,30222,173320,196539,36766,44309,202941,72181,
+// const course2 = [
+//   179755, 187184, 178833, 215508, 179160, 160492, 168394, 162011, 68149, 207359,
+// ]
 
 // test.use({ storageState: './__tests__/e2e/storage-state/sysadmin.json' })
 test.setTimeout(10 * 60 * 1000) // tmp
 
-test('is logged in', async () => {
+test('save and check uuid results', async () => {
   const browser = await chromium.launch()
   const page = await browser.newPage(options)
 
@@ -50,12 +53,14 @@ test('is logged in', async () => {
     )
 
     //change title
-    const title = page.locator('.page-header h1 input')
-    const newValue = (await title.getAttribute('value')) ?? '' + '$'
-    await page.fill('.page-header h1 input', newValue)
+    const title = page.locator('h1 input')
+    // const newValue = (await title.getAttribute('value')) ?? '' + '$'
+    // await page.fill('h1 input', newValue)
     await title.focus()
     await title.press('$')
-
+    // await delay(2 * 1000)
+    // await page.keyboard.type('$$$$$')
+    // await delay(1 * 1000)
     //save
     await page.click('button.serlo-make-interactive-green')
 
@@ -76,7 +81,7 @@ test('is logged in', async () => {
     await page.click('.ReactModalPortal button.serlo-make-interactive-green')
 
     //make sure data is updated
-    await delay(5 * 1000) //30s
+    await delay(4 * 1000) //30s
     // await page.screenshot({ path: '__tests__/e2e/saved.png' })
 
     const after = await queryUuid(id)
@@ -90,13 +95,22 @@ function compareUuidWithRevisionAndTitle(
 ) {
   if (before.currentRevision) {
     before.currentRevision.id = 0
+    //before.currentRevision.content = 'skipped'
+    // before.course.pages = null
   }
+
   if (after.currentRevision) {
     after.currentRevision.id = 0
-    if (after.currentRevision.title) {
-      after.currentRevision.title = after.currentRevision.title.slice(0, -1)
-    }
+    // after.currentRevision.content = after.currentRevision.content.replace(
+    //   '$$$$$',
+    //   ''
+    // )
+    // if (after.currentRevision.title) {
+    after.currentRevision.title = after.currentRevision.title.slice(0, -1)
+    // after.course.pages = null
+    // }
   }
+
   expect(after).toEqual(before)
 }
 
