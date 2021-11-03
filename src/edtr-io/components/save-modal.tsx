@@ -1,4 +1,5 @@
 import { StateTypeReturnType } from '@edtr-io/plugin'
+import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { useContext, useState } from 'react'
 
@@ -6,6 +7,7 @@ import { entity } from '../plugins/types/common/common'
 import { SaveContext } from '../serlo-editor'
 import { SaveLocalButton } from './save-local-button'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
+import { StaticInfoPanel } from '@/components/static-info-panel'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export interface SaveModalProps {
@@ -130,14 +132,12 @@ export function SaveModal({
   function renderAlert() {
     if (!hasError) return null
     return (
-      <>
-        <div className="bg-yellow p-3 mb-16">
-          {edtrIo.errorSaving}
-          <br />
-          {edtrIo.saveLocallyAndRefresh}
-          <SaveLocalButton />
-        </div>
-      </>
+      <StaticInfoPanel type="warning" icon={faExclamationCircle}>
+        {edtrIo.errorSaving}
+        <br />
+        {edtrIo.saveLocallyAndRefresh}
+        <SaveLocalButton />
+      </StaticInfoPanel>
     )
   }
 

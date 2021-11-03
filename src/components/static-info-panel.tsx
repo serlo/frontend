@@ -4,7 +4,7 @@ import clsx from 'clsx'
 import { ReactNode } from 'react'
 
 const colorClasses = {
-  warning: 'bg-yellow-200',
+  warning: 'bg-orange-200',
   info: 'bg-brand-100',
   success: 'bg-brandgreen-lighter',
   failure: 'bg-red-100',
