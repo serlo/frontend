@@ -1,10 +1,14 @@
 // global-setup.ts
 import { chromium, Page } from '@playwright/test'
+import dotenv from 'dotenv'
+import path from 'path'
+
+dotenv.config({ path: path.resolve(process.cwd(), '.env') })
 
 const options = {
   httpCredentials: {
-    username: 'SECRET', //TODO: figure out why .env is not picked up
-    password: 'SECRET',
+    username: process.env.STAGING_HTTP_USERNAME ?? '',
+    password: process.env.STAGING_HTTP_USERNAME ?? '',
   },
 }
 

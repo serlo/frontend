@@ -45,6 +45,7 @@ export const sharedRevisionFragments = gql`
 
   fragment eventRevision on EventRevision {
     id
+    title
     content
   }
 `
