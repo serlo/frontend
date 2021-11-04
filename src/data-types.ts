@@ -843,6 +843,7 @@ export interface TaxonomyData extends TaxonomyTermBase {
   id: number
   alias?: string
   title: string
+  trashed: boolean
   taxonomyType: TaxonomyTermType
   subterms: TaxonomySubTerm[]
   exercisesContent: (FrontendExerciseNode | FrontendExerciseGroupNode)[]

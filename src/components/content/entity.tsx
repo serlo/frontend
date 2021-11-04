@@ -1,16 +1,14 @@
-import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import {
   faExclamationCircle,
   faTools,
   faTrash,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import clsx from 'clsx'
 import dynamic from 'next/dynamic'
-import Head from 'next/head'
 import { Router } from 'next/router'
 import { useState, MouseEvent } from 'react'
 
+import { StaticInfoPanel } from '../static-info-panel'
 import { HSpace } from './h-space'
 import { Link } from './link'
 import { LicenseNotice } from '@/components/content/license-notice'
@@ -52,9 +50,8 @@ export function Entity({ data }: EntityProps) {
     <>
       {renderCourseNavigation()}
       {renderNoCoursePages()}
-      {data.trashed && renderTrashedNotice()}
+      {renderNotices()}
       {renderStyledH1()}
-      {!data.trashed && data.isUnrevised && renderUnrevisedNotice()}
       {renderUserTools({ aboveContent: true })}
       <div className="min-h-1/4">
         {data.content && renderContent(data.content)}
@@ -180,14 +177,9 @@ export function Entity({ data }: EntityProps) {
     if (validPages.length > 0) return null
     return (
       <>
-        <Head>
-          <meta name="robots" content="noindex" />
-        </Head>
-        {renderNotice(
-          <>{strings.course.noPagesWarning}</>,
-          faExclamationCircle,
-          'bg-yellow-200'
-        )}
+        <StaticInfoPanel icon={faExclamationCircle} type="warning" doNotIndex>
+          {strings.course.noPagesWarning}
+        </StaticInfoPanel>
       </>
     )
   }
@@ -204,44 +196,35 @@ export function Entity({ data }: EntityProps) {
     } else return null
   }
 
-  function renderTrashedNotice() {
-    return renderNotice(
-      <>{strings.content.trashedNotice}</>,
-      faTrash,
-      'bg-truegray-100'
-    )
-  }
+  function renderNotices() {
+    if (data.trashed)
+      return (
+        <StaticInfoPanel icon={faTrash} doNotIndex>
+          {strings.content.trashedNotice}
+        </StaticInfoPanel>
+      )
 
-  function renderUnrevisedNotice() {
-    const link = (
-      <Link href={`/entity/repository/history/${data.id}`}>
-        {strings.pageTitles.revisionHistory}
-      </Link>
-    )
-    return renderNotice(
-      <>
-        {replacePlaceholders(strings.content.unrevisedNotice, {
-          link,
-        })}
-      </>,
-      faTools
-    )
-  }
+    const hasContent = data.title || data.content?.length
+    if (!hasContent)
+      return (
+        <StaticInfoPanel icon={faExclamationCircle} type="warning" doNotIndex>
+          {strings.content.emptyNotice}
+        </StaticInfoPanel>
+      )
 
-  function renderNotice(
-    children: JSX.Element,
-    icon: IconProp,
-    colorClass?: string
-  ) {
-    return (
-      <div
-        className={clsx(
-          'p-4 my-12 bg-brand-100 rounded-2xl font-bold',
-          colorClass
-        )}
-      >
-        <FontAwesomeIcon icon={icon} /> {children}
-      </div>
-    )
+    if (data.isUnrevised) {
+      const link = (
+        <Link href={`/entity/repository/history/${data.id}`}>
+          {strings.pageTitles.revisionHistory}
+        </Link>
+      )
+      return (
+        <StaticInfoPanel icon={faTools} type="warning">
+          {replacePlaceholders(strings.content.unrevisedNotice, {
+            link,
+          })}
+        </StaticInfoPanel>
+      )
+    }
   }
 }
