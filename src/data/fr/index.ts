@@ -111,6 +111,7 @@ export const instanceData = {
       printModeChooseOption: "Sélectionne une des options :",
       trashedNotice: "Ce contenu est marqué pour être supprimé.",
       unrevisedNotice: "Ce contenu n'a pas encore accepté de révision. Veuillez utiliser %link% pour un aperçu.",
+      emptyNotice: 'There is no content here. Please edit or delete.',
       strategy: "Stratégie de solution",
       picture: "Image",
       previewImage: "Aperçu de l'image",
