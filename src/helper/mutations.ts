@@ -31,9 +31,14 @@ import { useAuthentication } from '@/auth/use-authentication'
 import { useEntityId } from '@/contexts/entity-id-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
+const voidFunc = () => {
+  return null
+}
+
 export function useSetUuidStateMutation() {
   const auth = useAuthentication()
-  const loggedInData = useLoggedInData()!
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return voidFunc
   const { mutations } = loggedInData.strings
 
   const mutation = gql`
@@ -97,7 +102,8 @@ const checkoutPageMutation = gql`
 export function useRevisionMutation() {
   const auth = useAuthentication()
   const router = useRouter()
-  const loggedInData = useLoggedInData()!
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return voidFunc
   const { mutations } = loggedInData.strings
 
   const revisionMutation = async function (
@@ -137,7 +143,8 @@ export function useRevisionMutation() {
 
 export function useSetNotificationStateMutation() {
   const auth = useAuthentication()
-  const loggedInData = useLoggedInData()!
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return voidFunc
   const { mutations } = loggedInData.strings
 
   const mutation = gql`
@@ -179,7 +186,8 @@ export function useSetNotificationStateMutation() {
 export function useThreadArchivedMutation() {
   const auth = useAuthentication()
   const entityId = useEntityId()
-  const loggedInData = useLoggedInData()!
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return voidFunc
   const { mutations } = loggedInData.strings
 
   const mutation = gql`
@@ -213,7 +221,8 @@ export function useThreadArchivedMutation() {
 export function useSetThreadStateMutation() {
   const auth = useAuthentication()
   const entityId = useEntityId()
-  const loggedInData = useLoggedInData()!
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return voidFunc
   const { mutations } = loggedInData.strings
 
   const mutation = gql`
@@ -242,7 +251,8 @@ export function useSetThreadStateMutation() {
 export function useSetCommentStateMutation() {
   const auth = useAuthentication()
   const entityId = useEntityId()
-  const loggedInData = useLoggedInData()!
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return voidFunc
   const { mutations } = loggedInData.strings
 
   const mutation = gql`
@@ -270,7 +280,8 @@ export function useSetCommentStateMutation() {
 
 export function useCreateThreadMutation() {
   const auth = useAuthentication()
-  const loggedInData = useLoggedInData()!
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return voidFunc
   const { mutations } = loggedInData.strings
 
   const mutation = gql`
@@ -297,7 +308,8 @@ export function useCreateThreadMutation() {
 export function useCreateCommentMutation() {
   const auth = useAuthentication()
   const entityId = useEntityId()
-  const loggedInData = useLoggedInData()!
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return voidFunc
   const { mutations } = loggedInData.strings
 
   const mutation = gql`
@@ -325,7 +337,8 @@ export function useCreateCommentMutation() {
 
 export function useSubscriptionSetMutation() {
   const auth = useAuthentication()
-  const loggedInData = useLoggedInData()!
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return voidFunc
   const { mutations } = loggedInData.strings
 
   const mutation = gql`
