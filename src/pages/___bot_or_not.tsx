@@ -139,7 +139,6 @@ const BotHunt = () => {
                     {renderActivityRow('reviews', activityByType)}
                     {renderActivityRow('taxonomy', activityByType)}
                     <br />
-                    {/* @ts-expect-error mistreating types here */}
                     {renderRoles(roles)}
                   </p>
                 </div>
