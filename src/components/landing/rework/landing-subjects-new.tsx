@@ -83,14 +83,6 @@ export function LandingSubjectsNew({ data }: LandingSubjectsProps) {
               transform: translateY(0) rotate(0deg);
             }
           }
-          @keyframes worldpane {
-            0% {
-              transform: translateX(0%);
-            }
-            100% {
-              transform: translateX(-54%);
-            }
-          }
           .landing-subjects {
             & svg.superspecial-bio,
             & svg.superspecial-math,
