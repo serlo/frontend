@@ -241,12 +241,11 @@ export function editorResponseToState(
         plugin: 'type-course-page',
         state: {
           id: uuid.id,
-          license: license!, // TODO: check if it's okay to use the course license here
+          license: license!, // there could be cases where this is not correct
           revision,
           changes: '',
           title: uuid.currentRevision?.title || '',
           icon: 'explanation',
-          // TODO: check if we actually need content here
           content: serializeEditorState(
             toEdtr(convertEditorState(uuid.currentRevision?.content || ''))
           ),
