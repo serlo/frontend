@@ -33,8 +33,7 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export function useSetUuidStateMutation() {
   const auth = useAuthentication()
-  const loggedInData = useLoggedInData()!
-  const { mutations } = loggedInData.strings
+  const loggedInData = useLoggedInData()
 
   const mutation = gql`
     mutation setUuidState($input: UuidSetStateInput!) {
@@ -47,12 +46,20 @@ export function useSetUuidStateMutation() {
   `
 
   const setUuidStateMutation = async function (input: UuidSetStateInput) {
-    const success = await mutationFetch(auth, mutation, input, mutations.errors)
+    const success = await mutationFetch(
+      auth,
+      mutation,
+      input,
+      loggedInData?.strings.mutations.errors
+    )
 
     if (success) {
       setTimeout(() => {
+        if (!loggedInData) return
         showToastNotice(
-          mutations.success[input.trashed ? 'trash' : 'restore'],
+          loggedInData.strings.mutations.success[
+            input.trashed ? 'trash' : 'restore'
+          ],
           'success'
         )
       }, 600)
@@ -97,8 +104,7 @@ const checkoutPageMutation = gql`
 export function useRevisionMutation() {
   const auth = useAuthentication()
   const router = useRouter()
-  const loggedInData = useLoggedInData()!
-  const { mutations } = loggedInData.strings
+  const loggedInData = useLoggedInData()
 
   const revisionMutation = async function (
     mode: RevisionMutationMode,
@@ -112,12 +118,20 @@ export function useRevisionMutation() {
       ? checkoutEntityMutation
       : rejectEntityMutation
     NProgress.start()
-    const success = await mutationFetch(auth, mutation, input, mutations.errors)
+    const success = await mutationFetch(
+      auth,
+      mutation,
+      input,
+      loggedInData?.strings.mutations.errors
+    )
 
     if (success) {
       setTimeout(() => {
+        if (!loggedInData) return
         showToastNotice(
-          mutations.success[isCheckout ? 'accept' : 'reject'],
+          loggedInData.strings.mutations.success[
+            isCheckout ? 'accept' : 'reject'
+          ],
           'success'
         )
         NProgress.done()
@@ -137,8 +151,7 @@ export function useRevisionMutation() {
 
 export function useSetNotificationStateMutation() {
   const auth = useAuthentication()
-  const loggedInData = useLoggedInData()!
-  const { mutations } = loggedInData.strings
+  const loggedInData = useLoggedInData()
 
   const mutation = gql`
     mutation setState($input: NotificationSetStateInput!) {
@@ -153,7 +166,12 @@ export function useSetNotificationStateMutation() {
   const setNotificationStateMutation = async function (
     input: NotificationSetStateInput
   ) {
-    const success = await mutationFetch(auth, mutation, input, mutations.errors)
+    const success = await mutationFetch(
+      auth,
+      mutation,
+      input,
+      loggedInData?.strings.mutations.errors
+    )
 
     // note: Maybe implement global cache key management, but this works okay
 
@@ -179,8 +197,7 @@ export function useSetNotificationStateMutation() {
 export function useThreadArchivedMutation() {
   const auth = useAuthentication()
   const entityId = useEntityId()
-  const loggedInData = useLoggedInData()!
-  const { mutations } = loggedInData.strings
+  const loggedInData = useLoggedInData()
 
   const mutation = gql`
     mutation setState($input: ThreadSetThreadArchivedInput!) {
@@ -197,7 +214,12 @@ export function useThreadArchivedMutation() {
   ) {
     NProgress.start()
 
-    const success = await mutationFetch(auth, mutation, input, mutations.errors)
+    const success = await mutationFetch(
+      auth,
+      mutation,
+      input,
+      loggedInData?.strings.mutations.errors
+    )
 
     if (success) {
       await mutate(`comments::${entityId}`)
@@ -213,8 +235,7 @@ export function useThreadArchivedMutation() {
 export function useSetThreadStateMutation() {
   const auth = useAuthentication()
   const entityId = useEntityId()
-  const loggedInData = useLoggedInData()!
-  const { mutations } = loggedInData.strings
+  const loggedInData = useLoggedInData()
 
   const mutation = gql`
     mutation setState($input: ThreadSetThreadStateInput!) {
@@ -229,7 +250,12 @@ export function useSetThreadStateMutation() {
   const setThreadStateMutation = async function (
     input: ThreadSetThreadStateInput
   ) {
-    const success = await mutationFetch(auth, mutation, input, mutations.errors)
+    const success = await mutationFetch(
+      auth,
+      mutation,
+      input,
+      loggedInData?.strings.mutations.errors
+    )
 
     if (success) await mutate(`comments::${entityId}`)
     return success
@@ -242,8 +268,7 @@ export function useSetThreadStateMutation() {
 export function useSetCommentStateMutation() {
   const auth = useAuthentication()
   const entityId = useEntityId()
-  const loggedInData = useLoggedInData()!
-  const { mutations } = loggedInData.strings
+  const loggedInData = useLoggedInData()
 
   const mutation = gql`
     mutation setState($input: ThreadSetCommentStateInput!) {
@@ -258,7 +283,12 @@ export function useSetCommentStateMutation() {
   const setCommentStateMutation = async function (
     input: ThreadSetCommentStateInput
   ) {
-    const success = await mutationFetch(auth, mutation, input, mutations.errors)
+    const success = await mutationFetch(
+      auth,
+      mutation,
+      input,
+      loggedInData?.strings.mutations.errors
+    )
 
     if (success) await mutate(`comments::${entityId}`)
     return success
@@ -286,7 +316,7 @@ export function useCreateThreadMutation() {
       auth,
       mutation,
       input,
-      !loggedInData ? undefined : loggedInData.strings.mutations.errors
+      loggedInData?.strings.mutations.errors
     )
 
     if (success) await mutate(`comments::${input.objectId}`)
@@ -300,8 +330,7 @@ export function useCreateThreadMutation() {
 export function useCreateCommentMutation() {
   const auth = useAuthentication()
   const entityId = useEntityId()
-  const loggedInData = useLoggedInData()!
-  const { mutations } = loggedInData.strings
+  const loggedInData = useLoggedInData()
 
   const mutation = gql`
     mutation createComment($input: ThreadCreateCommentInput!) {
@@ -316,7 +345,12 @@ export function useCreateCommentMutation() {
   const createCommentMutation = async function (
     input: ThreadCreateCommentInput
   ) {
-    const success = await mutationFetch(auth, mutation, input, mutations.errors)
+    const success = await mutationFetch(
+      auth,
+      mutation,
+      input,
+      loggedInData?.strings.mutations.errors
+    )
 
     if (success) await mutate(`comments::${entityId}`)
     return success
@@ -328,8 +362,7 @@ export function useCreateCommentMutation() {
 
 export function useSubscriptionSetMutation() {
   const auth = useAuthentication()
-  const loggedInData = useLoggedInData()!
-  const { mutations } = loggedInData.strings
+  const loggedInData = useLoggedInData()
 
   const mutation = gql`
     mutation subscriptionSet($input: SubscriptionSetInput!) {
@@ -342,7 +375,12 @@ export function useSubscriptionSetMutation() {
   `
 
   const subscriptionSetMutation = async function (input: SubscriptionSetInput) {
-    const success = await mutationFetch(auth, mutation, input, mutations.errors)
+    const success = await mutationFetch(
+      auth,
+      mutation,
+      input,
+      loggedInData?.strings.mutations.errors
+    )
 
     // note: Reconstructing SWR keys here, we need a nice global solution how we handle SWR keys
     // see https://swr.vercel.app/docs/arguments and useGraphqlSwr(WithAuth)

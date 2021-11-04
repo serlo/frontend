@@ -23,7 +23,6 @@ import { textExerciseGroupTypeState } from './plugins/types/text-exercise-group'
 import { textSolutionTypeState } from './plugins/types/text-solution'
 import { userTypeState } from './plugins/types/user'
 import { videoTypeState } from './plugins/types/video'
-import { SerloEditorProps } from './serlo-editor'
 import {
   Applet,
   Article,
@@ -41,14 +40,12 @@ import {
   Video,
 } from '@/fetcher/query-types'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
+import { triggerSentry } from '@/helper/trigger-sentry'
 
 const empty: RowsPlugin = { plugin: 'rows', state: [] }
 
 // converts query response to deserialized editor state
-export function editorResponseToState(
-  uuid: QueryResponse,
-  onError?: SerloEditorProps['onError']
-): DeserializeResult {
+export function editorResponseToState(uuid: QueryResponse): DeserializeResult {
   const stack: { id: number; type: string }[] = []
 
   const config: Record<
@@ -112,12 +109,13 @@ export function editorResponseToState(
     const { convert } = config[uuid.__typename]
     return convert(uuid)
   } catch (e) {
-    const error = e as Error
-    if (typeof onError === 'function') {
-      onError(error, {
-        stack: JSON.stringify(stack),
-      })
-    }
+    // eslint-disable-next-line no-console
+    console.log(e)
+
+    triggerSentry({
+      message: `error while converting: ${JSON.stringify(stack)}`,
+    })
+
     return {
       error: 'failure',
     }
