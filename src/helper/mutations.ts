@@ -31,14 +31,9 @@ import { useAuthentication } from '@/auth/use-authentication'
 import { useEntityId } from '@/contexts/entity-id-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
-const voidFunc = () => {
-  return null
-}
-
 export function useSetUuidStateMutation() {
   const auth = useAuthentication()
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return voidFunc
+  const loggedInData = useLoggedInData()!
   const { mutations } = loggedInData.strings
 
   const mutation = gql`
@@ -102,8 +97,7 @@ const checkoutPageMutation = gql`
 export function useRevisionMutation() {
   const auth = useAuthentication()
   const router = useRouter()
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return voidFunc
+  const loggedInData = useLoggedInData()!
   const { mutations } = loggedInData.strings
 
   const revisionMutation = async function (
@@ -143,8 +137,7 @@ export function useRevisionMutation() {
 
 export function useSetNotificationStateMutation() {
   const auth = useAuthentication()
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return voidFunc
+  const loggedInData = useLoggedInData()!
   const { mutations } = loggedInData.strings
 
   const mutation = gql`
@@ -186,8 +179,7 @@ export function useSetNotificationStateMutation() {
 export function useThreadArchivedMutation() {
   const auth = useAuthentication()
   const entityId = useEntityId()
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return voidFunc
+  const loggedInData = useLoggedInData()!
   const { mutations } = loggedInData.strings
 
   const mutation = gql`
@@ -221,8 +213,7 @@ export function useThreadArchivedMutation() {
 export function useSetThreadStateMutation() {
   const auth = useAuthentication()
   const entityId = useEntityId()
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return voidFunc
+  const loggedInData = useLoggedInData()!
   const { mutations } = loggedInData.strings
 
   const mutation = gql`
@@ -251,8 +242,7 @@ export function useSetThreadStateMutation() {
 export function useSetCommentStateMutation() {
   const auth = useAuthentication()
   const entityId = useEntityId()
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return voidFunc
+  const loggedInData = useLoggedInData()!
   const { mutations } = loggedInData.strings
 
   const mutation = gql`
@@ -281,8 +271,6 @@ export function useSetCommentStateMutation() {
 export function useCreateThreadMutation() {
   const auth = useAuthentication()
   const loggedInData = useLoggedInData()
-  if (!loggedInData) return voidFunc
-  const { mutations } = loggedInData.strings
 
   const mutation = gql`
     mutation createThread($input: ThreadCreateThreadInput!) {
@@ -293,9 +281,13 @@ export function useCreateThreadMutation() {
       }
     }
   `
-
   const createThreadMutation = async function (input: ThreadCreateThreadInput) {
-    const success = await mutationFetch(auth, mutation, input, mutations.errors)
+    const success = await mutationFetch(
+      auth,
+      mutation,
+      input,
+      !loggedInData ? undefined : loggedInData.strings.mutations.errors
+    )
 
     if (success) await mutate(`comments::${input.objectId}`)
     return success
@@ -308,8 +300,7 @@ export function useCreateThreadMutation() {
 export function useCreateCommentMutation() {
   const auth = useAuthentication()
   const entityId = useEntityId()
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return voidFunc
+  const loggedInData = useLoggedInData()!
   const { mutations } = loggedInData.strings
 
   const mutation = gql`
@@ -337,8 +328,7 @@ export function useCreateCommentMutation() {
 
 export function useSubscriptionSetMutation() {
   const auth = useAuthentication()
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return voidFunc
+  const loggedInData = useLoggedInData()!
   const { mutations } = loggedInData.strings
 
   const mutation = gql`
@@ -412,7 +402,7 @@ export async function mutationFetch(
   auth: RefObject<AuthenticationPayload>,
   query: string,
   input: MutationInput,
-  errorStrings: { [key in ErrorType]: string },
+  errorStrings?: { [key in ErrorType]: string },
   isRetry?: boolean
 ): Promise<boolean> {
   if (auth.current === null) return handleError('UNAUTHENTICATED', errorStrings)
@@ -451,9 +441,10 @@ export async function mutationFetch(
 
 function handleError(
   type: ErrorType,
-  errorStrings: { [key in ErrorType]: string },
+  errorStrings?: { [key in ErrorType]: string },
   e?: object
 ): false {
+  if (!errorStrings) return false
   const message = errorStrings[type] ?? errorStrings['UNKNOWN']
 
   // eslint-disable-next-line no-console
