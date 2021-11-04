@@ -13,6 +13,7 @@ import { renderedPageNoHooks } from '@/helper/rendered-page'
 export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
   if (pageData === undefined) return <ErrorPage code={404} />
   //fallback, should be handled by CFWorker
+
   if (pageData.kind === 'redirect') {
     if (typeof window !== 'undefined') {
       setTimeout(() => {

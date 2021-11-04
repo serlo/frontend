@@ -1,6 +1,10 @@
 import { gql } from 'graphql-request'
 
-import { sharedRevisionFragments } from './query-fragments'
+import {
+  sharedExerciseFragments,
+  sharedLicenseFragments,
+  sharedRevisionFragments,
+} from './query-fragments'
 
 export const dataQuery = gql`
   query uuid($id: Int, $alias: AliasInput) {
@@ -153,12 +157,17 @@ export const dataQuery = gql`
       ... on Course {
         pages(trashed: false) {
           alias
+          id
           currentRevision {
+            id
             title
+            content
           }
         }
         currentRevision {
           title
+          content
+          metaDescription
         }
       }
 
@@ -168,6 +177,11 @@ export const dataQuery = gql`
         type
         name
         description
+        weight
+        trashed
+        parent {
+          id
+        }
         navigation {
           data
           ...path
@@ -237,15 +251,6 @@ export const dataQuery = gql`
     }
   }
 
-  fragment license on AbstractRepository {
-    license {
-      id
-      url
-      title
-      default
-    }
-  }
-
   fragment taxonomyTermChild on AbstractRepository {
     ... on Article {
       alias
@@ -297,6 +302,11 @@ export const dataQuery = gql`
           title
         }
       }
+      pages {
+        currentRevision {
+          id
+        }
+      }
     }
 
     ... on Event {
@@ -313,27 +323,7 @@ export const dataQuery = gql`
     }
   }
 
-  fragment exercise on AbstractExercise {
-    id
-    alias
-    instance
-    trashed
-    currentRevision {
-      content
-    }
-    solution {
-      ...solution
-    }
-    ...license
-  }
-
-  fragment solution on Solution {
-    id
-    currentRevision {
-      content
-    }
-    ...license
-  }
-
+  ${sharedLicenseFragments}
+  ${sharedExerciseFragments}
   ${sharedRevisionFragments}
 `

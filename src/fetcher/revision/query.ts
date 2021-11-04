@@ -1,7 +1,11 @@
 // These types are auto-generated from the GraphQL schema
 import { gql } from 'graphql-request'
 
-import { sharedRevisionFragments } from '../query-fragments'
+import {
+  sharedExerciseFragments,
+  sharedLicenseFragments,
+  sharedRevisionFragments,
+} from '../query-fragments'
 
 export const revisionQuery = gql`
   query revisionUuid($id: Int) {
@@ -20,10 +24,14 @@ export const revisionQuery = gql`
           isActiveDonor
           isActiveReviewer
         }
+
         ... on ArticleRevision {
           ...articleRevision
           changes
           repository {
+            ...license
+            trashed
+            instance
             id
             alias
             currentRevision {
@@ -41,6 +49,9 @@ export const revisionQuery = gql`
         ... on PageRevision {
           ...pageRevision
           repository {
+            ...license
+            trashed
+            instance
             id
             alias
             currentRevision {
@@ -59,6 +70,9 @@ export const revisionQuery = gql`
           ...appletRevision
           changes
           repository {
+            ...license
+            trashed
+            instance
             id
             alias
             currentRevision {
@@ -77,6 +91,9 @@ export const revisionQuery = gql`
           ...courseRevision
           changes
           repository {
+            ...license
+            trashed
+            instance
             id
             alias
             currentRevision {
@@ -95,6 +112,9 @@ export const revisionQuery = gql`
           ...coursePageRevision
           changes
           repository {
+            ...license
+            trashed
+            instance
             id
             alias
             currentRevision {
@@ -113,6 +133,9 @@ export const revisionQuery = gql`
           ...eventRevision
           changes
           repository {
+            ...license
+            trashed
+            instance
             id
             alias
             currentRevision {
@@ -131,6 +154,9 @@ export const revisionQuery = gql`
           content
           changes
           repository {
+            ...license
+            trashed
+            instance
             id
             alias
             currentRevision {
@@ -154,6 +180,9 @@ export const revisionQuery = gql`
           content
           changes
           repository {
+            ...license
+            trashed
+            instance
             id
             alias
             exerciseGroup {
@@ -182,7 +211,11 @@ export const revisionQuery = gql`
         ... on ExerciseGroupRevision {
           ...exerciseGroupRevision
           changes
+          cohesive
           repository {
+            ...license
+            trashed
+            instance
             id
             alias
             license {
@@ -200,12 +233,21 @@ export const revisionQuery = gql`
                 trashed
               }
             }
+            exercises {
+              ...exercise
+              revisions(unrevised: true) {
+                totalCount
+              }
+            }
           }
         }
         ... on SolutionRevision {
           content
           changes
           repository {
+            ...license
+            trashed
+            instance
             id
             alias
             exercise {
@@ -239,6 +281,9 @@ export const revisionQuery = gql`
           ...videoRevision
           changes
           repository {
+            ...license
+            trashed
+            instance
             id
             alias
             currentRevision {
@@ -257,6 +302,8 @@ export const revisionQuery = gql`
     }
   }
 
+  ${sharedLicenseFragments}
+  ${sharedExerciseFragments}
   ${sharedRevisionFragments}
 
   fragment courseRevision on CourseRevision {

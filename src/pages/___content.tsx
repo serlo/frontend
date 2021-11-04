@@ -5,7 +5,7 @@ type ListData = string[][]
 
 // from https://github.com/serlo/frontend/wiki/Schema
 const entities = [
-  ['Page', '/serlo'],
+  ['Page', '/18922'],
   ['Article', '/27801'],
   ['CoursePage', '/52020'],
   ['Video', '/40744'],
@@ -38,17 +38,21 @@ const ContentPage: NextPage = () => {
         <ul>{renderLis(entities)}</ul>
         <h2>Review Types</h2>…<h2>Special Cases</h2>
         <ul>{renderLis(specialCases)}</ul>
-        <h2>Logged in Stuff</h2>…
+        <h2>Edtr Test</h2>
+        <ul>{renderLis(entities, true)}</ul>
       </nav>
       <iframe name="show" />
       <Style />
     </>
   )
 
-  function renderLis(lis: ListData) {
+  function renderLis(lis: ListData, edtr?: boolean) {
     return lis.map((li) => (
       <li key={li[0]}>
-        <a href={li[1]} target="show">
+        <a
+          href={edtr ? '/entity/repository/add-revision' + li[1] : li[1]}
+          target="show"
+        >
           {li[0]}
         </a>
       </li>

@@ -58,7 +58,38 @@ export async function requestPage(
     if (firstPage) {
       return await requestPage(firstPage, instance)
     } else {
-      return { kind: 'error', errorData: { code: 404 } }
+      const pages = uuid.pages.map((page) => {
+        return {
+          title: page.currentRevision?.title ?? '',
+          url: !hasSpecialUrlChars(page.alias!) ? page.alias! : `/${page.id}`,
+          noCurrentRevision: !page.currentRevision,
+        }
+      })
+
+      return {
+        // show warning if no pages exist or are reviewed yet
+        kind: 'single-entity',
+        newsletterPopup: false,
+        entityData: {
+          id: uuid.id,
+          alias: uuid.alias ?? undefined,
+          typename: uuid.__typename,
+          title: uuid.currentRevision?.title ?? '',
+          categoryIcon: 'course',
+          inviteToEdit: true,
+          isUnrevised: !uuid.currentRevision,
+          courseData: {
+            id: uuid.id,
+            title: uuid.currentRevision?.title ?? '',
+            pages,
+          },
+        },
+        metaData: {
+          title: uuid.currentRevision?.title ?? '',
+          contentType: 'course',
+        },
+        authorization,
+      }
     }
   }
 
@@ -126,7 +157,7 @@ export async function requestPage(
                 label:
                   getInstanceDataByLang(instance).strings.entities
                     .exerciseGroup,
-                url: uuid.exerciseGroup.alias,
+                url: uuid.exerciseGroup?.alias,
               },
             ]
           : breadcrumbsData,
@@ -344,13 +375,17 @@ export async function requestPage(
   }
 
   if (uuid.__typename === 'CoursePage') {
-    const pagesToShow = uuid.course.pages.filter(
-      (page) =>
-        page.alias &&
-        !page.currentRevision.trashed &&
-        page.currentRevision.title &&
-        page.currentRevision.title !== ''
-    )
+    const pagesToShow =
+      uuid.course && uuid.course.pages
+        ? uuid.course.pages.filter(
+            (page) =>
+              page.alias &&
+              page.currentRevision &&
+              !page.currentRevision.trashed &&
+              page.currentRevision.title &&
+              page.currentRevision.title !== ''
+          )
+        : []
 
     let currentPageIndex = -1
     const pages = pagesToShow.map((page, i) => {

@@ -17,7 +17,7 @@ import {
   coursePageUuidMock,
 } from '../../__fixtures__/api_mockdata'
 import { endpoint } from '@/api/endpoint'
-import { Redirect, SingleEntityPage, TaxonomyPage } from '@/data-types'
+import { SingleEntityPage, TaxonomyPage } from '@/data-types'
 import { fetchPageData } from '@/fetcher/fetch-page-data'
 import { serloDomain } from '@/helper/serlo-domain'
 
