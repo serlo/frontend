@@ -202,7 +202,6 @@ export function editorResponseToState(
     uuid: Course
   ): DeserializedState<typeof courseTypeState> {
     stack.push({ id: uuid.id, type: 'course' })
-    console.log(uuid)
     return {
       initialState: {
         plugin: 'type-course',
@@ -211,7 +210,9 @@ export function editorResponseToState(
           revision,
           changes: '',
           title,
-          description: serializeEditorState(toEdtr(convertEditorState(''))),
+          description: serializeEditorState(
+            toEdtr(convertEditorState(content))
+          ),
           meta_description,
           'course-page': (uuid.pages || [])
             .filter((page) => page.currentRevision !== null)
@@ -227,10 +228,7 @@ export function editorResponseToState(
             }),
         },
       },
-      converted: !isEdtr(
-        convertEditorState('') || // TODO: Currently we can't tell?
-          empty
-      ),
+      converted: !isEdtr(convertEditorState(content ?? '') || empty),
     }
   }
 

@@ -166,6 +166,7 @@ export const dataQuery = gql`
         }
         currentRevision {
           title
+          content
           metaDescription
         }
       }
