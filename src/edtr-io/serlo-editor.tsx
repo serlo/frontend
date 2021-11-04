@@ -26,7 +26,7 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 export interface SerloEditorProps {
   getCsrfToken(): string
   children?: React.ReactNode
-  mayCheckout: boolean
+  showSkipCheckout: boolean
   onSave: (data: unknown) => Promise<void>
   onError?: (error: Error, context: Record<string, string>) => void
   initialState: EditorProps['initialState'] // expects "deserialized" state now
@@ -43,18 +43,18 @@ export interface LooseEdtrDataDefined {
 
 export const SaveContext = React.createContext<{
   onSave: SerloEditorProps['onSave']
-  mayCheckout: boolean
+  showSkipCheckout: boolean
 }>({
   onSave: () => {
     return Promise.reject()
   },
-  mayCheckout: false,
+  showSkipCheckout: false,
 })
 
 export function SerloEditor({
   getCsrfToken,
   onSave,
-  mayCheckout,
+  showSkipCheckout,
   onError,
   initialState,
   children,
@@ -94,7 +94,7 @@ export function SerloEditor({
     // eslint-disable-next-line @typescript-eslint/unbound-method
     <CsrfContext.Provider value={getCsrfToken}>
       <SaveContext.Provider
-        value={{ onSave: onSave, mayCheckout: mayCheckout }}
+        value={{ onSave: onSave, showSkipCheckout: showSkipCheckout }}
       >
         <Editor
           DocumentEditor={DocumentEditor}

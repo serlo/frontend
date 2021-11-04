@@ -274,6 +274,7 @@ export interface TaxonomyTerm
     | 'name'
     | 'description'
     | 'weight'
+    | 'taxonomyId'
     | 'trashed'
   > {
   __typename: 'TaxonomyTerm'

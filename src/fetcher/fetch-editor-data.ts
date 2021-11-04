@@ -1,5 +1,6 @@
 import { request } from 'graphql-request'
 
+import { createBreadcrumbs } from './create-breadcrumbs'
 import { dataQuery } from './query'
 import { QueryResponse, QueryResponseRevision } from './query-types'
 import { revisionQuery } from './revision/query'
@@ -16,6 +17,7 @@ export interface EditorPageData {
   initialState: SerloEditorProps['initialState']
   type: string
   converted?: boolean
+  needsReview?: boolean
 }
 
 export interface EditorFetchErrorData {
@@ -66,12 +68,20 @@ export async function fetchEditorData(
 
     const result = editorResponseToState(data, onError)
 
+    const breadcrumbsData = createBreadcrumbs(data)?.filter(
+      (entry) => entry.url == '/community/106082/sandkasten'
+    )
+    const isSandbox = breadcrumbsData && breadcrumbsData.length > 0
+    const noReviewTypes = ['TaxonomyTerm', 'Page', 'Event', 'User']
+    const typeNeedsReview = !noReviewTypes.includes(data.__typename)
+
     if (isError(result)) {
       return { errorType: result.error }
     } else {
       return {
         ...result,
         type: data.__typename,
+        needsReview: !isSandbox && typeNeedsReview,
       }
     }
   } catch (e) {

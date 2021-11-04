@@ -21,7 +21,10 @@ export function revisionResponseToResponse(
   const metaDescription = hasOwnPropertyTs(uuid, 'metaDescription')
     ? uuid.metaDescription
     : ''
-  const taxonomyTerms = { nodes: [{}] } //needed?
+
+  const taxonomyTerms = hasOwnPropertyTs(uuid.repository, 'taxonomyTerms')
+    ? uuid.repository.taxonomyTerms
+    : { nodes: [{}] }
 
   if (uuid.__typename === 'AppletRevision') {
     uuid.__typename

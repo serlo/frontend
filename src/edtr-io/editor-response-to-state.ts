@@ -303,7 +303,7 @@ export function editorResponseToState(
           id: uuid.id,
           parent: uuid.parent.id,
           position: uuid.weight,
-          taxonomy: uuid.id, // TODO: this or id is probably not the right value
+          taxonomy: uuid.taxonomyId,
           term: {
             name: uuid.name,
           },

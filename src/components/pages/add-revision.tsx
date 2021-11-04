@@ -1,12 +1,21 @@
+import { Entity } from '@serlo/authorization'
 import clsx from 'clsx'
 import Cookies from 'js-cookie'
 import React from 'react'
 
+import { useCanDo } from '@/auth/use-can-do'
 import { MathSpan } from '@/components/content/math-span'
 import { SerloEditor } from '@/edtr-io/serlo-editor'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
 
-export function AddRevision({ initialState, type }: EditorPageData) {
+export function AddRevision({
+  initialState,
+  type,
+  needsReview,
+}: EditorPageData) {
+  const canDo = useCanDo()
+  const showSkipCheckout = canDo(Entity.checkoutRevision) && !!needsReview
+
   return (
     <>
       <MathSpan formula="" />
@@ -17,7 +26,7 @@ export function AddRevision({ initialState, type }: EditorPageData) {
             const cookies = typeof window === 'undefined' ? {} : Cookies.get()
             return cookies['CSRF']
           }}
-          mayCheckout /* can we use permission here? */
+          showSkipCheckout={showSkipCheckout}
           onSave={(data) => {
             return new Promise((resolve, reject) => {
               fetch(window.location.pathname, {
