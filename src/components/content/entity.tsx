@@ -5,7 +5,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import dynamic from 'next/dynamic'
-import Head from 'next/head'
 import { Router } from 'next/router'
 import { useState, MouseEvent } from 'react'
 
@@ -178,10 +177,7 @@ export function Entity({ data }: EntityProps) {
     if (validPages.length > 0) return null
     return (
       <>
-        <Head>
-          <meta name="robots" content="noindex" />
-        </Head>
-        <StaticInfoPanel icon={faExclamationCircle} type="warning">
+        <StaticInfoPanel icon={faExclamationCircle} type="warning" doNotIndex>
           {strings.course.noPagesWarning}
         </StaticInfoPanel>
       </>
@@ -203,7 +199,7 @@ export function Entity({ data }: EntityProps) {
   function renderNotices() {
     if (data.trashed)
       return (
-        <StaticInfoPanel icon={faTrash}>
+        <StaticInfoPanel icon={faTrash} doNotIndex>
           {strings.content.trashedNotice}
         </StaticInfoPanel>
       )
@@ -211,7 +207,7 @@ export function Entity({ data }: EntityProps) {
     const hasContent = data.title || data.content?.length
     if (!hasContent)
       return (
-        <StaticInfoPanel icon={faExclamationCircle} type="warning">
+        <StaticInfoPanel icon={faExclamationCircle} type="warning" doNotIndex>
           {strings.content.emptyNotice}
         </StaticInfoPanel>
       )

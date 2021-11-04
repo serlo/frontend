@@ -72,7 +72,7 @@ export function Topic({ data }: TopicProps) {
 
   function renderTrashedNotice() {
     return (
-      <StaticInfoPanel icon={faTrash}>
+      <StaticInfoPanel icon={faTrash} doNotIndex>
         {strings.content.trashedNotice}
       </StaticInfoPanel>
     )
