@@ -699,6 +699,8 @@ export interface FrontendEquationsNode {
     transformSource?: string
     explanation: FrontendContentNode[]
   }[]
+  firstExplanation: FrontendContentNode[]
+  transformationTarget: 'term' | 'equation'
   children?: undefined
 }
 

@@ -447,6 +447,8 @@ function renderElement({
     return (
       <Equations
         steps={element.steps}
+        firstExplanation={element.firstExplanation}
+        transformationTarget={element.transformationTarget}
         renderNested={(value, ...prefix) => renderNested(value, path, prefix)}
       />
     )
