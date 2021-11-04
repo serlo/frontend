@@ -2,7 +2,6 @@
 import { AddButton } from '@edtr-io/editor-ui/internal'
 import { boolean, EditorPlugin, EditorPluginProps, list } from '@edtr-io/plugin'
 import * as React from 'react'
-import { useVirtual } from 'react-virtual'
 
 import { SemanticSection } from '../helpers/semantic-section'
 import {
@@ -41,14 +40,6 @@ function TextExerciseGroupTypeEditor(
   const { cohesive, content, 'grouped-text-exercise': children } = props.state
   const isCohesive = cohesive.value ?? false
 
-  const virtualParent = React.useRef(null)
-
-  const virtualizer = useVirtual({
-    size: children.length,
-    parentRef: virtualParent,
-    estimateSize: React.useCallback(() => 35, []),
-  })
-
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
   const editorStrings = loggedInData.strings.editor
@@ -78,53 +69,20 @@ function TextExerciseGroupTypeEditor(
           {contentRendered}
         </SemanticSection>
       </section>
-      <div
-        ref={virtualParent}
-        style={{
-          height: '100%',
-          overflow: 'auto',
-        }}
-      >
-        <div
-          style={{
-            height: `${virtualizer.totalSize}px`,
-            width: '100%',
-            position: 'relative',
-          }}
-        >
-          {virtualizer.virtualItems.map((virtualRow) => {
-            const child = children[virtualRow.index]
-            return (
-              <div
-                key={virtualRow.index}
-                ref={virtualRow.measureRef}
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  width: '100%',
-                  transform: `translateY(${virtualRow.start}px)`,
-                }}
-              >
-                <section className="row" key={child.id}>
-                  <div className="col-sm-1 hidden-xs">
-                    <em>{getExerciseIndex(virtualRow.index)})</em>
-                  </div>
-                  <div className="col-sm-11 col-xs-12">
-                    <OptionalChild
-                      state={child}
-                      removeLabel={
-                        editorStrings.textExerciseGroup.removeExercise
-                      }
-                      onRemove={() => children.remove(virtualRow.index)}
-                    />
-                  </div>
-                </section>
-              </div>
-            )
-          })}
-        </div>
-      </div>
+      {children.map((child, index) => (
+        <section className="row" key={child.id}>
+          <div className="col-sm-1 hidden-xs">
+            <em>{getExerciseIndex(index)})</em>
+          </div>
+          <div className="col-sm-11 col-xs-12">
+            <OptionalChild
+              state={child}
+              removeLabel={editorStrings.textExerciseGroup.removeExercise}
+              onRemove={() => children.remove(index)}
+            />
+          </div>
+        </section>
+      ))}
       <AddButton onClick={() => children.insert()}>
         {editorStrings.textExerciseGroup.addExercise}
       </AddButton>
