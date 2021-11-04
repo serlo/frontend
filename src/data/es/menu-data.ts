@@ -2,7 +2,14 @@ import { serloDomain } from '../../helper/serlo-domain'
 import { InstanceData, LandingSubjectsData } from '@/data-types'
 
 export const landingSubjectsData: LandingSubjectsData = {
-  subjects: [{ url: '/169578', title: 'Aprender matemáticas', icon: 'math' }],
+  subjects: [
+    { url: '/169578', title: 'Aprender matemáticas', icon: 'math' },
+    {
+      url: '/community/193306/estudios-en-diásporas-africanas-para-la-escuela',
+      title: 'Diásporas Africanas',
+      icon: 'geography',
+    },
+  ],
   additionalLinks: [
     {
       url: '/195616/p%C3%A1gina-de-inicio-para-padres',
