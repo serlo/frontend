@@ -172,6 +172,7 @@ export const dataQuery = gql`
         name
         description
         weight
+        trashed
         parent {
           id
         }

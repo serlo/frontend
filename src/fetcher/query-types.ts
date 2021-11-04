@@ -267,7 +267,14 @@ export interface SubTaxonomyTermChildTaxonomyTerm
 export interface TaxonomyTerm
   extends Pick<
     GraphQL.TaxonomyTerm,
-    'id' | 'alias' | 'instance' | 'type' | 'name' | 'description' | 'weight'
+    | 'id'
+    | 'alias'
+    | 'instance'
+    | 'type'
+    | 'name'
+    | 'description'
+    | 'weight'
+    | 'trashed'
   > {
   __typename: 'TaxonomyTerm'
   navigation?: GraphQL.Maybe<Pick<GraphQL.Navigation, 'data' | 'path'>>

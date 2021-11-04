@@ -139,6 +139,7 @@ const BotHunt = () => {
                     {renderActivityRow('reviews', activityByType)}
                     {renderActivityRow('taxonomy', activityByType)}
                     <br />
+                    {/* @ts-expect-error mistreating types here */}
                     {renderRoles(roles)}
                   </p>
                 </div>
@@ -215,10 +216,8 @@ const BotHunt = () => {
     )
   }
 
-  function renderRoles(roles: UserPage['userData']['roles']) {
-    // @ts-expect-error
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const nodes = roles.nodes as UserPage['userData']['roles']
+  function renderRoles(roles: { nodes: UserPage['userData']['roles'] }) {
+    const nodes = roles.nodes
 
     if (nodes.length === 1) {
       return null
