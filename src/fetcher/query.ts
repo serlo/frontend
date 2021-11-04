@@ -161,11 +161,12 @@ export const dataQuery = gql`
           currentRevision {
             id
             title
-            content # only for editor. maybe split
+            content
           }
         }
         currentRevision {
           title
+          metaDescription
         }
       }
 
