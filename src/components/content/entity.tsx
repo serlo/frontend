@@ -51,9 +51,8 @@ export function Entity({ data }: EntityProps) {
     <>
       {renderCourseNavigation()}
       {renderNoCoursePages()}
-      {data.trashed && renderTrashedNotice()}
+      {renderNotices()}
       {renderStyledH1()}
-      {!data.trashed && data.isUnrevised && renderUnrevisedNotice()}
       {renderUserTools({ aboveContent: true })}
       <div className="min-h-1/4">
         {data.content && renderContent(data.content)}
@@ -201,26 +200,35 @@ export function Entity({ data }: EntityProps) {
     } else return null
   }
 
-  function renderTrashedNotice() {
-    return (
-      <StaticInfoPanel icon={faTrash}>
-        {strings.content.trashedNotice}
-      </StaticInfoPanel>
-    )
-  }
+  function renderNotices() {
+    if (data.trashed)
+      return (
+        <StaticInfoPanel icon={faTrash}>
+          {strings.content.trashedNotice}
+        </StaticInfoPanel>
+      )
 
-  function renderUnrevisedNotice() {
-    const link = (
-      <Link href={`/entity/repository/history/${data.id}`}>
-        {strings.pageTitles.revisionHistory}
-      </Link>
-    )
-    return (
-      <StaticInfoPanel icon={faTools} type="warning">
-        {replacePlaceholders(strings.content.unrevisedNotice, {
-          link,
-        })}
-      </StaticInfoPanel>
-    )
+    const hasContent = data.title || data.content?.length
+    if (!hasContent)
+      return (
+        <StaticInfoPanel icon={faExclamationCircle} type="warning">
+          {strings.content.emptyNotice}
+        </StaticInfoPanel>
+      )
+
+    if (data.isUnrevised) {
+      const link = (
+        <Link href={`/entity/repository/history/${data.id}`}>
+          {strings.pageTitles.revisionHistory}
+        </Link>
+      )
+      return (
+        <StaticInfoPanel icon={faTools} type="warning">
+          {replacePlaceholders(strings.content.unrevisedNotice, {
+            link,
+          })}
+        </StaticInfoPanel>
+      )
+    }
   }
 }
