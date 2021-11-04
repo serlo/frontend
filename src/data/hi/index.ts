@@ -111,6 +111,7 @@ export const instanceData = {
       printModeChooseOption: 'Check one of the options.',
       trashedNotice: "यह सामग्री हटाने के लिए चिह्नित है",
       unrevisedNotice: 'This content has no accepted revision yet. Please use the %link% to preview.',
+      emptyNotice: 'There is no content here. Please edit or delete.',
       strategy: 'Solution Strategy',
       picture: 'Picture',
       previewImage: 'Preview Image',
