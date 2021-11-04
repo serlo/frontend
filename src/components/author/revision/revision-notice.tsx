@@ -22,7 +22,7 @@ export function RevisionNotice({
 
   if (!hasCurrentRevision) {
     return (
-      <StaticInfoPanel type="success" icon={faInfoCircle}>
+      <StaticInfoPanel type="info" icon={faInfoCircle}>
         {strings.revisions.noCurrentNotice}
       </StaticInfoPanel>
     )
