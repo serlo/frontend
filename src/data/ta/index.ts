@@ -111,6 +111,7 @@ export const instanceData = {
       printModeChooseOption: 'Check one of the options.',
       trashedNotice: "இந்த உள்ளடக்கம் குப்பையாக குறிக்கப்பட்டுள்ளது.",
       unrevisedNotice: 'This content has no accepted revision yet. Please use the %link% to preview.',
+      emptyNotice: 'There is no content here. Please edit or delete.',
       strategy: 'Solution Strategy',
       picture: 'Picture',
       previewImage: 'Preview Image',
