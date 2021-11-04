@@ -88,12 +88,12 @@ export function editorResponseToState(
   const content =
     currentRev && 'content' in currentRev ? currentRev.content : ''
   const meta_title =
-    currentRev && hasOwnPropertyTs(currentRev, 'meta_title')
-      ? (currentRev.meta_title as string)
+    currentRev && hasOwnPropertyTs(currentRev, 'metaTitle')
+      ? (currentRev.metaTitle as string)
       : ''
   const meta_description =
-    currentRev && hasOwnPropertyTs(currentRev, 'meta_description')
-      ? (currentRev.meta_description as string)
+    currentRev && hasOwnPropertyTs(currentRev, 'metaDescription')
+      ? (currentRev.metaDescription as string)
       : ''
   const revision =
     currentRev && hasOwnPropertyTs(currentRev, 'id') ? currentRev.id : 0
@@ -211,25 +211,24 @@ export function editorResponseToState(
           changes: '',
           title,
           description: serializeEditorState(
-            toEdtr(convertEditorState('')) // TODO: If this field is used in Metadata API we need to fetch it in the API
+            toEdtr(convertEditorState(content))
           ),
           meta_description,
-          'course-page': (uuid.pages || []).map((page) => {
-            return convertCoursePage({
-              ...page,
-              currentRevision: {
-                id: page.id,
-                title: page.currentRevision?.title ?? '',
-                content: page.currentRevision?.content ?? '',
-              },
-            })
-          }),
+          'course-page': (uuid.pages || [])
+            .filter((page) => page.currentRevision !== null)
+            .map((page) => {
+              return convertCoursePage({
+                ...page,
+                currentRevision: {
+                  id: page.id,
+                  title: page.currentRevision?.title ?? '',
+                  content: page.currentRevision?.content ?? '',
+                },
+              }).initialState.state
+            }),
         },
       },
-      converted: !isEdtr(
-        convertEditorState('') || // TODO: Currently we can't tell?
-          empty
-      ),
+      converted: !isEdtr(convertEditorState(content ?? '') || empty),
     }
   }
 

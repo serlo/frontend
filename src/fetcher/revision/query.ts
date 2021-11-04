@@ -1,7 +1,11 @@
 // These types are auto-generated from the GraphQL schema
 import { gql } from 'graphql-request'
 
-import { sharedRevisionFragments } from '../query-fragments'
+import {
+  sharedExerciseFragments,
+  sharedLicenseFragments,
+  sharedRevisionFragments,
+} from '../query-fragments'
 
 export const revisionQuery = gql`
   query revisionUuid($id: Int) {
@@ -236,6 +240,12 @@ export const revisionQuery = gql`
                 trashed
               }
             }
+            exercises {
+              ...exercise
+              revisions(unrevised: true) {
+                totalCount
+              }
+            }
           }
         }
         ... on SolutionRevision {
@@ -300,17 +310,8 @@ export const revisionQuery = gql`
     }
   }
 
-  fragment license on AbstractRepository {
-    license {
-      id
-      url
-      title
-      default
-      agreement
-      iconHref
-    }
-  }
-
+  ${sharedLicenseFragments}
+  ${sharedExerciseFragments}
   ${sharedRevisionFragments}
 
   fragment courseRevision on CourseRevision {

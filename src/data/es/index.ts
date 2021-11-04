@@ -92,7 +92,9 @@ export const instanceData = {
       showPages: "Mostrar descripción del curso",
       pages: "Descripción del curso",
       next: "Siguiente",
-      back: "Volver"
+      back: "Volver",
+      noPagesWarning: 'Sorry there seem to be no reviewed pages in this course yet.',
+      noRevisionForPage: 'unreviewed page'
     },
     content: {
       show: "mostrar",
@@ -109,6 +111,7 @@ export const instanceData = {
       printModeChooseOption: "Elige una de las opciones.",
       trashedNotice: "Este contenido está marcado para su eliminación.",
       unrevisedNotice: "Este contenido no tiene ninguna revisión aceptada todavía. Por favor, utiliza este vínculo %link% para previsualizar.",
+      emptyNotice: 'There is no content here. Please edit or delete.',
       strategy: "Estrategia de solución",
       picture: "Imagen",
       previewImage: "Previsualizar Imagen",

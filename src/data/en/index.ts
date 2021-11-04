@@ -96,6 +96,8 @@ export const instanceData = {
       pages: 'Course overview',
       next: 'Next',
       back: 'Back',
+      noPagesWarning: 'Sorry there seem to be no reviewed pages in this course yet.',
+      noRevisionForPage: 'unreviewed page',
     },
     content: {
       show: 'show',
@@ -113,6 +115,8 @@ export const instanceData = {
       trashedNotice: 'This content is marked for deletion.',
       unrevisedNotice:
         'This content has no accepted revision yet. Please use the %link% to preview.',
+      emptyNotice:
+        'There is no content here. Please edit or delete.',
       strategy: 'Solution Strategy',
       picture: 'Picture',
       previewImage: 'Preview Image',

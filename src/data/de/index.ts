@@ -92,7 +92,9 @@ export const instanceData = {
       showPages: "Kursübersicht anzeigen",
       pages: "Kursübersicht",
       next: "Weiter",
-      back: "Zurück"
+      back: "Zurück",
+      noPagesWarning: "Leider gibt es für diesen Kurs noch keine akzeptierten Seiten.",
+      noRevisionForPage: "Ungegeprüfte Seite"
     },
     content: {
       show: "anzeigen",
@@ -109,6 +111,7 @@ export const instanceData = {
       printModeChooseOption: "Kreuze eine der Optionen an",
       trashedNotice: "Dieser Inhalt wurde gelöscht.",
       unrevisedNotice: "Dieser Inhalt wurde noch nicht überprüft. Über den %link% kannst du dir die Entwürfe anzeigen lassen.",
+      emptyNotice: "Hier gibt es keinen Inhalt. Bitte bearbeiten oder löschen.",
       strategy: "Lösungsstrategie",
       picture: "Bild",
       previewImage: "Vorschaubild",

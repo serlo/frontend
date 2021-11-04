@@ -275,6 +275,7 @@ export interface TaxonomyTerm
     | 'description'
     | 'weight'
     | 'taxonomyId'
+    | 'trashed'
   > {
   __typename: 'TaxonomyTerm'
   navigation?: GraphQL.Maybe<Pick<GraphQL.Navigation, 'data' | 'path'>>
