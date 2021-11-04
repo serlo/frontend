@@ -72,7 +72,6 @@ export async function fetchEditorData(
       (entry) => entry.url == '/community/106082/sandkasten'
     )
     const isSandbox = breadcrumbsData && breadcrumbsData.length > 0
-    console.log(isSandbox)
     const noReviewTypes = ['TaxonomyTerm', 'Page', 'Event', 'User']
     const typeNeedsReview = !noReviewTypes.includes(data.__typename)
 
