@@ -75,7 +75,6 @@ export function entityType<
           onChange((previousState, helpers) => {
             return R.mapObjIndexed((_value, key) => {
               if (key in ownTypes) {
-                // TODO: fix eslint
                 // eslint-disable-next-line @typescript-eslint/no-unsafe-return
                 return ownTypes[key].deserialize(newValue[key], helpers)
               } else {
@@ -99,7 +98,6 @@ export function serialized<S extends StateType>(type: S) {
       serialized: string,
       helpers: Parameters<typeof type.deserialize>[1]
     ) {
-      // TODO: fix eslint
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return type.deserialize(JSON.parse(serialized), helpers)
     },
