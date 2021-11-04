@@ -25,7 +25,6 @@ export function buildTaxonomyData(uuid: TaxonomyTerm): TaxonomyData {
     id: uuid.id,
     alias: uuid.alias ?? undefined,
     taxonomyType: uuid.type,
-    trashed: uuid.trashed,
 
     articles: collectType(children, 'Article'),
     exercises: collectTopicFolders(children),

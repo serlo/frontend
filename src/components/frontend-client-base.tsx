@@ -26,7 +26,6 @@ export type FrontendClientBaseProps = PropsWithChildren<{
   showNav?: boolean
   entityId?: number
   authorization?: AuthorizationPayload
-  loadLoggedInData?: boolean
 }>
 
 Router.events.on('routeChangeStart', () => {
@@ -51,7 +50,6 @@ export function FrontendClientBase({
   showNav,
   entityId,
   authorization,
-  loadLoggedInData,
 }: FrontendClientBaseProps) {
   const { locale } = useRouter()
   const [instanceData] = useState<InstanceData>(() => {
@@ -95,7 +93,6 @@ export function FrontendClientBase({
     instanceData.lang,
     loggedInData,
     loggedInComponents,
-    loadLoggedInData,
   ])
 
   // dev
@@ -149,7 +146,7 @@ export function FrontendClientBase({
 
   function fetchLoggedInData() {
     const cookies = typeof window === 'undefined' ? {} : Cookies.get()
-    if (cookies['auth-token'] || loadLoggedInData) {
+    if (cookies['auth-token']) {
       Promise.all([
         !loggedInData
           ? fetch(frontendOrigin + '/api/locale/' + instanceData.lang).then(
@@ -172,7 +169,7 @@ export function FrontendClientBase({
             )
         })
         .catch(() => {})
-      if (!cookies['__serlo_preview__']) {
+      if (!cookies['__serlo_preview']) {
         // bypass cache
         fetch('/api/frontend/preview').catch(() => {})
       }

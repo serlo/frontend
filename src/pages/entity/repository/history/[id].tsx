@@ -74,7 +74,7 @@ function Title({ amount }: { amount?: number }) {
 
 function useFetch(id: number) {
   return useGraphqlSwr<{ uuid: HistoryRevisionsData }>({
-    query: revisionHistoryQuery,
+    query,
     variables: { id },
     config: {
       refreshInterval: 10 * 60 * 1000, //10min
@@ -82,7 +82,7 @@ function useFetch(id: number) {
   })
 }
 
-export const revisionHistoryQuery = gql`
+const query = gql`
   query getRevisions($id: Int!) {
     uuid(id: $id) {
       id

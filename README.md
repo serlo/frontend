@@ -10,8 +10,6 @@ The frontend fetches data from the [API server](https://github.com/serlo/api.ser
 
 In a more complete environment, the frontend sits behind a [cloudflare worker](https://github.com/serlo/serlo.org-cloudflare-worker) that handles routing and redirections. Many editing features are still handled by our [legacy server](https://github.com/serlo/serlo.org).
 
-Deployment of the staging environment: https://frontend-git-staging-serlo.vercel.app
-
 ## Getting started
 
 ### Local installation

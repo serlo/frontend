@@ -19,35 +19,19 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  * @link      https://github.com/serlo-org/serlo.org for the canonical source repository
  */
-import { converter } from './markdown'
-
-export function render(state: string): string {
-  if (state === undefined) {
-    throw new Error('No input given')
-  }
-
-  if (state === '') {
-    return ''
-  }
-
-  let rows: Array<Array<{ col: string; content: string }>>
-  try {
-    rows = JSON.parse(state.trim().replace(/&quot;/g, '"'))
-  } catch (e) {
-    throw new Error('No valid json string given')
-  }
-
-  return rows
-    .map(row => {
-      const innerHtml = row
-        .map(column => {
-          return `<div class="c${column.col}">${converter.makeHtml(
-            column.content
-          )}</div>`
-        })
-        .join('')
-
-      return `<div class="r">${innerHtml}</div>`
-    })
-    .join('')
+/* global define */
+var strikethrough = function() {
+  return [
+    {
+      // strike-through
+      // NOTE: showdown already replaced "~" with "~T", so we need to adjust accordingly.
+      type: 'lang',
+      regex: '(~T){2}([^~]+)(~T){2}',
+      replace: function(match, prefix, content, suffix) {
+        return '<del>' + content + '</del>'
+      }
+    }
+  ]
 }
+
+export default strikethrough

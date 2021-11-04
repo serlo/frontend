@@ -774,7 +774,6 @@ export interface CoursePageEntry {
   title: string
   url: string
   active?: boolean
-  noCurrentRevision?: boolean
 }
 
 // Taxonomy: Folders with other entities, sorted by category, first level of subfolders and exercises are shown directly
@@ -843,7 +842,6 @@ export interface TaxonomyData extends TaxonomyTermBase {
   id: number
   alias?: string
   title: string
-  trashed: boolean
   taxonomyType: TaxonomyTermType
   subterms: TaxonomySubTerm[]
   exercisesContent: (FrontendExerciseNode | FrontendExerciseGroupNode)[]

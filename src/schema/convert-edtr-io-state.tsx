@@ -1,6 +1,6 @@
 import { NewNode } from '@edtr-io/plugin-text'
-import { converter } from '@serlo/markdown'
 
+import { converter } from '../../external/markdown'
 import { convertLegacyState } from './convert-legacy-state'
 import {
   EdtrState,

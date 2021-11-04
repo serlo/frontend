@@ -35,10 +35,6 @@ module.exports = {
           DEFAULT: yellow,
           200: tint(0.75, yellow),
         },
-        orange: {
-          DEFAULT: colors.orange[900],
-          200: colors.orange[200],
-        },
       },
       borderWidth: {
         3: '3px',

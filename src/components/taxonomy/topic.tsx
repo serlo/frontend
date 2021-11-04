@@ -1,9 +1,8 @@
-import { faFile, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faFile } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import dynamic from 'next/dynamic'
 import { useState, Fragment } from 'react'
 
-import { StaticInfoPanel } from '../static-info-panel'
 import { SubTopic } from './sub-topic'
 import { TopicCategories } from './topic-categories'
 import { LicenseNotice } from '@/components/content/license-notice'
@@ -37,7 +36,6 @@ export function Topic({ data }: TopicProps) {
 
   return (
     <>
-      {data.trashed && renderTrashedNotice()}
       {renderHeader()}
       {renderUserTools({ aboveContent: true })}
       <div className="min-h-1/2">
@@ -69,14 +67,6 @@ export function Topic({ data }: TopicProps) {
       />
     </>
   )
-
-  function renderTrashedNotice() {
-    return (
-      <StaticInfoPanel icon={faTrash} doNotIndex>
-        {strings.content.trashedNotice}
-      </StaticInfoPanel>
-    )
-  }
 
   function renderHeader() {
     return (

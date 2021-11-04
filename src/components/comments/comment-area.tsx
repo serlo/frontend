@@ -160,6 +160,7 @@ export function CommentArea({ id: entityId, noForms }: CommentAreaProps) {
   function renderHeading(icon: IconDefinition, text: string) {
     return (
       <h2 className="serlo-h2 border-b-0 mt-10">
+        {/* i18n Note: Pluralisation hack */}
         <FontAwesomeIcon
           className="text-2.5xl text-brand-lighter"
           icon={icon}

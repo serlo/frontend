@@ -19,35 +19,47 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  * @link      https://github.com/serlo-org/serlo.org for the canonical source repository
  */
-import { converter } from './markdown'
-
-export function render(state: string): string {
-  if (state === undefined) {
-    throw new Error('No input given')
-  }
-
-  if (state === '') {
-    return ''
-  }
-
-  let rows: Array<Array<{ col: string; content: string }>>
-  try {
-    rows = JSON.parse(state.trim().replace(/&quot;/g, '"'))
-  } catch (e) {
-    throw new Error('No valid json string given')
-  }
-
-  return rows
-    .map(row => {
-      const innerHtml = row
-        .map(column => {
-          return `<div class="c${column.col}">${converter.makeHtml(
-            column.content
-          )}</div>`
-        })
-        .join('')
-
-      return `<div class="r">${innerHtml}</div>`
-    })
-    .join('')
+/* global define */
+var serloSpecificCharsToEncode
+var latexoutput = function() {
+  return [
+    {
+      type: 'output',
+      filter: function(text) {
+        return encodeSerloSpecificChars(text)
+      }
+    }
+  ]
 }
+
+serloSpecificCharsToEncode = (function() {
+  var regexp
+  var chars = ['*', '`', '_', '{', '}', '[', ']', '&lt;', '\\']
+  var replacements = {}
+  var l = chars.length
+  var i = 0
+
+  for (; i < l; i++) {
+    replacements['' + i] = chars[i]
+  }
+
+  regexp = new RegExp('§LT([0-9])', 'gm')
+
+  function replace(whole, match) {
+    return replacements[parseInt(match)] || match
+  }
+
+  return {
+    regexp: regexp,
+    replace: replace
+  }
+})()
+
+function encodeSerloSpecificChars(text) {
+  return text.replace(
+    serloSpecificCharsToEncode.regexp,
+    serloSpecificCharsToEncode.replace
+  )
+}
+
+export default latexoutput

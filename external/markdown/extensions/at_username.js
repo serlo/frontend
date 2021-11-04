@@ -19,35 +19,33 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  * @link      https://github.com/serlo-org/serlo.org for the canonical source repository
  */
-import { converter } from './markdown'
+/* global define */
+var atusername = function() {
+  return [
+    // @username syntax
+    {
+      type: 'lang',
+      regex: '\\B(\\\\)?@([\\S]+)\\b',
+      replace: function(match, leadingSlash, username) {
+        // Check if we matched the leading \ and return nothing changed if so
+        if (leadingSlash === '\\') {
+          return match
+        } else {
+          return (
+            '<a class="user-mention" href="/user/profile/' +
+            username +
+            '">@' +
+            username +
+            '</a>'
+          )
+        }
+      }
+    },
 
-export function render(state: string): string {
-  if (state === undefined) {
-    throw new Error('No input given')
-  }
-
-  if (state === '') {
-    return ''
-  }
-
-  let rows: Array<Array<{ col: string; content: string }>>
-  try {
-    rows = JSON.parse(state.trim().replace(/&quot;/g, '"'))
-  } catch (e) {
-    throw new Error('No valid json string given')
-  }
-
-  return rows
-    .map(row => {
-      const innerHtml = row
-        .map(column => {
-          return `<div class="c${column.col}">${converter.makeHtml(
-            column.content
-          )}</div>`
-        })
-        .join('')
-
-      return `<div class="r">${innerHtml}</div>`
-    })
-    .join('')
+    // Escaped @'s so we don't get into trouble
+    //
+    { type: 'lang', regex: '\\\\@', replace: '@' }
+  ]
 }
+
+export default atusername

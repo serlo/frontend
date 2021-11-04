@@ -1,14 +1,9 @@
-import {
-  faExclamationCircle,
-  faTools,
-  faTrash,
-} from '@fortawesome/free-solid-svg-icons'
+import { faTools, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import dynamic from 'next/dynamic'
 import { Router } from 'next/router'
 import { useState, MouseEvent } from 'react'
 
-import { StaticInfoPanel } from '../static-info-panel'
 import { HSpace } from './h-space'
 import { Link } from './link'
 import { LicenseNotice } from '@/components/content/license-notice'
@@ -31,13 +26,14 @@ const ShareModal = dynamic<ShareModalProps>(() =>
 )
 
 export function Entity({ data }: EntityProps) {
+  // console.log(data)
   // state@/components/comments/comment-area
   const [open, setOpen] = useState(false)
 
   // course
   const [courseNavOpen, setCourseNavOpen] = useState(false)
-  const openCourseNav = (e?: MouseEvent) => {
-    e?.preventDefault()
+  const openCourseNav = (e: MouseEvent) => {
+    e.preventDefault()
     setCourseNavOpen(true)
   }
 
@@ -49,9 +45,9 @@ export function Entity({ data }: EntityProps) {
   return wrapWithSchema(
     <>
       {renderCourseNavigation()}
-      {renderNoCoursePages()}
-      {renderNotices()}
+      {data.trashed && renderTrashedNotice()}
       {renderStyledH1()}
+      {!data.trashed && data.isUnrevised && renderUnrevisedNotice()}
       {renderUserTools({ aboveContent: true })}
       <div className="min-h-1/4">
         {data.content && renderContent(data.content)}
@@ -159,29 +155,15 @@ export function Entity({ data }: EntityProps) {
   }
 
   function renderCourseNavigation() {
-    if (!data.courseData) return null
-    return (
-      <CourseNavigation
-        open={courseNavOpen}
-        onOverviewButtonClick={openCourseNav}
-        data={data.courseData}
-      />
-    )
-  }
-
-  function renderNoCoursePages() {
-    if (!data.courseData) return null
-    const validPages = data.courseData.pages.filter(
-      (page) => !page.noCurrentRevision
-    )
-    if (validPages.length > 0) return null
-    return (
-      <>
-        <StaticInfoPanel icon={faExclamationCircle} type="warning" doNotIndex>
-          {strings.course.noPagesWarning}
-        </StaticInfoPanel>
-      </>
-    )
+    if (data.courseData) {
+      return (
+        <CourseNavigation
+          open={courseNavOpen}
+          onOverviewButtonClick={openCourseNav}
+          data={data.courseData}
+        />
+      )
+    } else return null
   }
 
   function renderCourseFooter() {
@@ -196,35 +178,27 @@ export function Entity({ data }: EntityProps) {
     } else return null
   }
 
-  function renderNotices() {
-    if (data.trashed)
-      return (
-        <StaticInfoPanel icon={faTrash} doNotIndex>
-          {strings.content.trashedNotice}
-        </StaticInfoPanel>
-      )
+  function renderTrashedNotice() {
+    return (
+      <div className="p-4 my-12 bg-truegray-100 rounded-2xl font-bold">
+        <FontAwesomeIcon icon={faTrash} /> {strings.content.trashedNotice}
+      </div>
+    )
+  }
 
-    const hasContent = data.title || data.content?.length
-    if (!hasContent)
-      return (
-        <StaticInfoPanel icon={faExclamationCircle} type="warning" doNotIndex>
-          {strings.content.emptyNotice}
-        </StaticInfoPanel>
-      )
-
-    if (data.isUnrevised) {
-      const link = (
-        <Link href={`/entity/repository/history/${data.id}`}>
-          {strings.pageTitles.revisionHistory}
-        </Link>
-      )
-      return (
-        <StaticInfoPanel icon={faTools} type="warning">
-          {replacePlaceholders(strings.content.unrevisedNotice, {
-            link,
-          })}
-        </StaticInfoPanel>
-      )
-    }
+  function renderUnrevisedNotice() {
+    const link = (
+      <Link href={`/entity/repository/history/${data.id}`}>
+        {strings.pageTitles.revisionHistory}
+      </Link>
+    )
+    return (
+      <div className="p-4 my-12 bg-brand-100 rounded-2xl font-bold">
+        <FontAwesomeIcon icon={faTools} />{' '}
+        {replacePlaceholders(strings.content.unrevisedNotice, {
+          link,
+        })}
+      </div>
+    )
   }
 }

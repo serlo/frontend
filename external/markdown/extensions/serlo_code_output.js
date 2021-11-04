@@ -19,35 +19,35 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  * @link      https://github.com/serlo-org/serlo.org for the canonical source repository
  */
-import { converter } from './markdown'
+/* global define */
+/* Prepares Github Style Code */
+var codeoutput = function() {
+  return [
+    {
+      type: 'lang',
+      filter: (function() {
+        var charsToEncode = ['~D', '%', '|', '/']
+        var replacements = {}
+        var regexp
+        var i
+        var l
 
-export function render(state: string): string {
-  if (state === undefined) {
-    throw new Error('No input given')
-  }
+        for (i = 0, l = charsToEncode.length; i < l; i++) {
+          replacements['' + i] = charsToEncode[i]
+        }
 
-  if (state === '') {
-    return ''
-  }
+        regexp = new RegExp('§SC([0-9])', 'gm')
 
-  let rows: Array<Array<{ col: string; content: string }>>
-  try {
-    rows = JSON.parse(state.trim().replace(/&quot;/g, '"'))
-  } catch (e) {
-    throw new Error('No valid json string given')
-  }
+        function replace(whole, match) {
+          return replacements[parseInt(match)] || match
+        }
 
-  return rows
-    .map(row => {
-      const innerHtml = row
-        .map(column => {
-          return `<div class="c${column.col}">${converter.makeHtml(
-            column.content
-          )}</div>`
-        })
-        .join('')
-
-      return `<div class="r">${innerHtml}</div>`
-    })
-    .join('')
+        return function(text) {
+          return text.replace(regexp, replace)
+        }
+      })()
+    }
+  ]
 }
+
+export default codeoutput

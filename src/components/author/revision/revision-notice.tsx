@@ -1,11 +1,9 @@
-import {
-  faTimes,
-  faCheck,
-  faInfoCircle,
-} from '@fortawesome/free-solid-svg-icons'
+import { faTimes, faCheck } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { tint } from 'polished'
 
-import { StaticInfoPanel } from '@/components/static-info-panel'
 import { useInstanceData } from '@/contexts/instance-context'
+import { theme } from '@/theme'
 
 export interface RevisionNoticeProps {
   isCurrentRevision: boolean
@@ -21,20 +19,32 @@ export function RevisionNotice({
   const { strings } = useInstanceData()
 
   if (!hasCurrentRevision) {
-    return (
-      <StaticInfoPanel type="success" icon={faInfoCircle}>
-        {strings.revisions.noCurrentNotice}
-      </StaticInfoPanel>
-    )
+    return renderNotice(<>{strings.revisions.noCurrentNotice}</>, true)
   }
   if (!isRejected && !isCurrentRevision) return null
-
-  const type = isCurrentRevision ? 'success' : 'failure'
-  return (
-    <StaticInfoPanel type={type} icon={isRejected ? faTimes : faCheck}>
+  return renderNotice(
+    <>
+      <FontAwesomeIcon icon={isRejected ? faTimes : faCheck} />{' '}
       {isRejected
         ? strings.revisions.rejectedNotice
         : strings.revisions.currentNotice}
-    </StaticInfoPanel>
+    </>,
+    isCurrentRevision
+  )
+}
+
+function renderNotice(content: JSX.Element, success: boolean) {
+  const backgroundColor = tint(
+    0.7,
+    success ? theme.colors.brandGreen : '#c56c6c'
+  )
+
+  return (
+    <div
+      style={{ backgroundColor }}
+      className="my-12 p-4 rounded-3xl font-bold"
+    >
+      {content}
+    </div>
   )
 }

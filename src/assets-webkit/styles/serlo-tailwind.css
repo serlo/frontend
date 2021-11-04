@@ -457,7 +457,6 @@
 #nprogress .bar {
   @apply bg-brand fixed z-50 top-0 left-0;
   @apply w-full h-1;
-  @apply z-[9999];
 }
 
 /* Fancy blur effect */
@@ -470,7 +469,6 @@
 /* Remove these to get rid of the spinner */
 #nprogress .spinner {
   @apply block fixed z-50 top-4 right-4;
-  @apply z-[9999];
 }
 
 #nprogress .spinner-icon {

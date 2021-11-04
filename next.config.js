@@ -23,25 +23,6 @@ module.exports = withBundleAnalyzer({
       }
     }
 
-    // INFO: THIS IS HACKY
-    // very raw hack to avoid including react-dom/server into the client
-    // which is loaded by slate-html-sanitizer
-    const cgs = config.optimization.splitChunks.cacheGroups
-    if (cgs) {
-      // original: (?<!node_modules.*)[\\/]node_modules[\\/](react|react-dom|scheduler|prop-types|use-subscription)[\\/]
-      cgs.framework.test =
-        /(?<!node_modules.*)[\\/]node_modules[\\/](react|react-dom|scheduler|prop-types|use-subscription)[\\/](?!(server|cjs[\\/]react-dom-server))/
-      // code for debugging
-      /*cgs.framework.test = function (module) {
-        const isMatch =
-          /(?<!node_modules.*)[\\/]node_modules[\\/](react|react-dom|scheduler|prop-types|use-subscription)[\\/](?!(server|cjs[\\/]react-dom-server))/.test(
-            module.nameForCondition() || ''
-          )
-        if (isMatch) console.log(module.nameForCondition())
-        return isMatch
-      }*/
-    }
-
     return config
   },
   devIndicators: {

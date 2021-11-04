@@ -19,35 +19,34 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  * @link      https://github.com/serlo-org/serlo.org for the canonical source repository
  */
-import { converter } from './markdown'
+/* global define */
+/**
+ * Serlo Flavored Markdown
+ * Spoilers:
+ * Transforms ///.../// blocks into spoilers
+ **/
+var spoiler = function() {
+  var filter
+  var findSpoilers = new RegExp(/^<p>=,sp. (.*)<\/p>([\s\S]*?)<p>=,sp.<\/p>/gm)
 
-export function render(state: string): string {
-  if (state === undefined) {
-    throw new Error('No input given')
-  }
-
-  if (state === '') {
-    return ''
-  }
-
-  let rows: Array<Array<{ col: string; content: string }>>
-  try {
-    rows = JSON.parse(state.trim().replace(/&quot;/g, '"'))
-  } catch (e) {
-    throw new Error('No valid json string given')
-  }
-
-  return rows
-    .map(row => {
-      const innerHtml = row
-        .map(column => {
-          return `<div class="c${column.col}">${converter.makeHtml(
-            column.content
-          )}</div>`
-        })
-        .join('')
-
-      return `<div class="r">${innerHtml}</div>`
+  filter = function(text) {
+    return text.replace(findSpoilers, function(original, title, content) {
+      return (
+        '<div class="spoiler panel panel-default"><div class="spoiler-teaser panel-heading"><span class="fa fa-caret-square-o-down"></span>' +
+        title +
+        '</div><div class="spoiler-content panel-body">' +
+        content +
+        '</div></div>'
+      )
     })
-    .join('')
+  }
+
+  return [
+    {
+      type: 'output',
+      filter: filter
+    }
+  ]
 }
+
+export default spoiler

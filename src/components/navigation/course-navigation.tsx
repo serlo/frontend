@@ -9,7 +9,7 @@ import { CourseData } from '@/data-types'
 
 export interface CourseNavigationProps {
   open: boolean
-  onOverviewButtonClick: (e?: MouseEvent<HTMLButtonElement>) => void
+  onOverviewButtonClick: (e: MouseEvent<HTMLButtonElement>) => void
   data: CourseData
 }
 
@@ -19,9 +19,6 @@ export function CourseNavigation({
   onOverviewButtonClick,
 }: CourseNavigationProps) {
   const { strings } = useInstanceData()
-
-  //open directly
-  if (data.pages.length < 4) onOverviewButtonClick()
 
   return (
     <nav
@@ -33,37 +30,27 @@ export function CourseNavigation({
       </h1>
       {open ? (
         <ol className="serlo-ol mb-0 mt-7">
-          {data.pages.map(({ url, active, title, noCurrentRevision }) => (
-            <li key={url}>
+          {data.pages.map((page) => (
+            <li key={page.url}>
               <Link
-                className={clsx(
-                  'text-lg leading-browser',
-                  {
-                    'font-semibold text-truegray-800 hover:no-underline':
-                      active,
-                  },
-                  { 'text-brand-300': noCurrentRevision }
-                )}
-                href={active ? undefined : url}
+                className={clsx('text-lg leading-browser', {
+                  'font-semibold text-truegray-800 hover:no-underline':
+                    page.active,
+                })}
+                href={page.active ? undefined : page.url}
               >
-                {noCurrentRevision
-                  ? '(' + strings.course.noRevisionForPage + ')'
-                  : title}
+                {page.title}
               </Link>
             </li>
           ))}
         </ol>
       ) : (
-        <>
-          {data.pages.length > 0 ? (
-            <button
-              onClick={onOverviewButtonClick}
-              className="serlo-button mx-side bg-brand text-white hover:bg-brand-lighter"
-            >
-              <FontAwesomeIcon icon={faListUl} /> {strings.course.showPages}
-            </button>
-          ) : null}
-        </>
+        <button
+          onClick={onOverviewButtonClick}
+          className="serlo-button mx-side bg-brand text-white hover:bg-brand-lighter"
+        >
+          <FontAwesomeIcon icon={faListUl} /> {strings.course.showPages}
+        </button>
       )}
     </nav>
   )

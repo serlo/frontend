@@ -19,35 +19,29 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  * @link      https://github.com/serlo-org/serlo.org for the canonical source repository
  */
-import { converter } from './markdown'
+/* global define */
+/**
+ * Serlo Flavored Markdown
+ * Spoilers:
+ * Transforms ///.../// blocks into spoilers
+ **/
+var spoilerprepare = function() {
+  var filter
+  var findSpoilers = new RegExp(/^\/\/\/ (.*)\n([\s\S]*?)(\n|\r)+\/\/\//gm)
 
-export function render(state: string): string {
-  if (state === undefined) {
-    throw new Error('No input given')
-  }
-
-  if (state === '') {
-    return ''
-  }
-
-  let rows: Array<Array<{ col: string; content: string }>>
-  try {
-    rows = JSON.parse(state.trim().replace(/&quot;/g, '"'))
-  } catch (e) {
-    throw new Error('No valid json string given')
-  }
-
-  return rows
-    .map(row => {
-      const innerHtml = row
-        .map(column => {
-          return `<div class="c${column.col}">${converter.makeHtml(
-            column.content
-          )}</div>`
-        })
-        .join('')
-
-      return `<div class="r">${innerHtml}</div>`
+  filter = function(text) {
+    // convert all "///"s into "=,sp."s
+    return text.replace(findSpoilers, function(original, title, content) {
+      return '<p>=,sp. ' + title + '</p>\n' + content + '<p>=,sp.</p>'
     })
-    .join('')
+  }
+
+  return [
+    {
+      type: 'lang',
+      filter: filter
+    }
+  ]
 }
+
+export default spoilerprepare

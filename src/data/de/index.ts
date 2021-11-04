@@ -92,9 +92,7 @@ export const instanceData = {
       showPages: "Kursübersicht anzeigen",
       pages: "Kursübersicht",
       next: "Weiter",
-      back: "Zurück",
-      noPagesWarning: "Leider gibt es für diesen Kurs noch keine akzeptierten Seiten.",
-      noRevisionForPage: "Ungegeprüfte Seite"
+      back: "Zurück"
     },
     content: {
       show: "anzeigen",
@@ -237,7 +235,7 @@ export const instanceData = {
       activityGraph: {
         edits: "Bearbeitungen",
         comments: "Kommentare",
-        reviews: 'Reviews',
+        reviews: "Reviews",
         taxonomy: "Taxonomie",
         legendary: "💙 Oh wow! 💙",
         untilNextLevel: "%amount% mehr um diesen Kreis zu füllen 🎉"
@@ -357,7 +355,7 @@ export const loggedInData = {
       title: "Eigenes Profil"
     }, {
       url: '/auth/password/change',
-      title: "Abmelden"
+      title: "Passwort ändern"
     }, {
       url: '/event/history/user/me',
       title: "Meine Bearbeitungen"
@@ -396,7 +394,7 @@ export const loggedInData = {
       edit: "Überarbeiten",
       unrevisedEdit: "Zeige neue Bearbeitungen",
       organize: "Baumstruktur bearbeiten",
-      moveToGrouped: "Inhalt zu anderer Gruppe verschieben",
+      moveToGroupedTextExercise: "Inhalt zu anderer Gruppe verschieben",
       moveToTextExercise: "Inhalt zu anderer Textaufgabe verschieben",
       sortEntities: "Inhalt sortieren",
       newEntity: "Neuer Inhalt",
@@ -432,283 +430,6 @@ export const loggedInData = {
       },
       confirm: "Bestätigen",
       unrevisedTaxNote: "Neuer Inhalt, noch nicht akzeptiert"
-    },
-    editor: {
-      edtrIo: {
-        extendedSettings: "Erweiterte Einstellungen",
-        close: "Schließen",
-        notSupportedYet: "Dieser Inhaltstyp wird vom neuen Editor noch nicht unterstützt.",
-        editInOld: "Du kannst den Inhalt im alten Editor bearbeiten",
-        conversionError: "Leider trat ein Fehler bei der Konvertierung auf.",
-        oldRevisionFound: "Wir haben eine alte Bearbeitung von dir gefunden. Möchtest du diese wiederherstellen?",
-        notConverted: "Dieser Inhalt wurde noch nicht im neuen Editor bearbeitet.",
-        text: 'Text',
-        textDesc: "Schreibe Text und Matheformeln, und formatiere sie.",
-        blockquoteTitle: "Zitat",
-        quoteDescription: "Erzeuge eingerückten Text für Zitate.",
-        geogebraTitle: 'GeoGebra Applet',
-        geogebraDesc: "Binde Applets von GeoGebra Materials via Link oder ID ein.",
-        highlightTitle: "Code",
-        highlightDesc: "Schreibe Code und hebe ihn je nach Programmiersprache hervor.",
-        anchor: "Sprungmarke",
-        anchorDesc: "Füge eine Sprungmarke innerhalb deines Inhalts hinzu.",
-        image: "Bild",
-        imageDesc: "Lade Bilder hoch oder verwende Bilder, die bereits online sind.",
-        importantTitle: "Merksatz",
-        importantDesc: "Hebe wichtige Aussagen hervor.",
-        injectionTitle: "serlo.org Inhalt",
-        injectionDesc: "Binde einen Inhalt von serlo.org via ID ein.",
-        multimediaTitle: "Erklärung mit Multimedia-Inhalt",
-        multimediaDesc: "Erstelle einen veranschaulichenden oder erklärenden Multimedia-Inhalt mit zugehöriger Erklärung.",
-        spoiler: 'Spoiler',
-        spoilerDesc: "In diese ausklappbare Box kannst du zum Beispiel Exkurse hinzufügen.",
-        table: "Tabelle",
-        tableDesc: "Erstelle eine Tabelle mit Markdown.",
-        video: 'Video',
-        videoDesc: "Binde Videos von YouTube, Vimeo, Wikimedia Commons oder BR ein.",
-        solutionSeparator: "Lösungs-Trenner",
-        solutionSeparatorDesc: "Unterteile die Lösung in einzelne Lösungsschritte.",
-        save: "Speichern",
-        cancel: "Abbrechen",
-        saving: "Speichert…",
-        missingChanges: "Du musst zuerst die Änderungen ausfüllen.",
-        missingLicenseTerms: "Du musst zuerst die Lizenzbedingungen akzeptieren.",
-        missingChangesAndLicenseTerms: "Du musst zuerst die Lizenzbedingungen akzeptieren und die Änderungen ausfüllen.",
-        errorSaving: "Es trat ein Fehler beim Speichern auf.",
-        saveLocallyAndRefresh: "Du kannst die Bearbeitung lokal zwischenspeichern, dann die Seite neu laden und es erneut versuchen.",
-        revisionSaved: "Bearbeitung gespeichert",
-        saveRevision: "Bearbeitung zwischenspeichern",
-        changes: "Änderungen",
-        skipReview: "Bearbeitung ohne Review freischalten (nicht empfohlen)",
-        enableNotifs: "Benachrichtigungen auf serlo.org erhalten",
-        enableNotifsMail: "Benachrichtigungen per E-mail erhalten",
-        switchRevision: "Andere Version auswählen",
-        current: "Aktuell",
-        author: "Verfasser",
-        createdAt: "Zeitstempel",
-        settings: "Einstellungen",
-        equationsTitle: "Terme und Gleichungen",
-        equationsDesc: "Erstelle Termumformungen und löse mehrzeilige Gleichungen."
-      },
-      anchor: {
-        identifier: "Name",
-        anchorId: "Name der Sprungmarke"
-      },
-      geogebra: {
-        urlOrId: "GeoGebra Materials URL oder ID"
-      },
-      highlight: {
-        clickAndEnter: "Klicke hier und füge deinen Quellcode ein…",
-        enterHere: "Füge hier deinen Quellcode ein. Verlasse den Bereich, um eine Vorschau zu sehen.",
-        language: "Programmiersprache",
-        enterLanguage: "Programmiersprache eingeben",
-        showLineNumbers: "Zeilennummern anzeigen"
-      },
-      inputExercise: {
-        text: 'Text',
-        chooseType: "Wähle den Antworttyp",
-        unit: "Einheit (optional)",
-        addAnswer: "Antwort hinzufügen",
-        enterTheValue: "Gib hier die Antwort ein",
-        yourSolution: "Deine Lösung",
-        correct: "Richtig",
-        wrong: "Falsch",
-        number: "Zahl (exakte Lösung, z.B. \"0,5\" ≠ \"1/2\" ≠ \"2/4\")",
-        mathematicalExpressionSolution: "Mathematischer Ausdruck (äquivalente Lösung, z.B. \"0,5\" = \"1/2\" = \"2/4\")"
-      },
-      multimedia: {
-        image: "Bild",
-        video: 'Video',
-        geogebraTitle: 'GeoGebra Applet',
-        changeType: "Tausche das Multimedia Element aus",
-        howImportant: "Wie wichtig ist der Multimedia Inhalt?",
-        isIllustrating: "Es ist nur eine Veranschaulichung",
-        isEssential: "Es spielt eine zentrale Rolle"
-      },
-      rows: {
-        searchForTools: "Suche hier nach Tools…",
-        duplicate: "Duplizieren",
-        remove: "Löschen",
-        close: "Schließen",
-        dragElement: "Verschiebe das Element innerhalb des Dokuments",
-        addAnElement: "Füge ein Element hinzu"
-      },
-      scMcExercise: {
-        singleChoice: "Single Choice",
-        multipleChoice: "Multiple Choice",
-        chooseType: "Wähle den Aufgabentyp",
-        addAnswer: "Antwort hinzufügen",
-        wrong: "Falsch",
-        missedSome: "Fast! Dir fehlt noch mindestens eine richtige Antwort",
-        correct: "Richtig"
-      },
-      spoiler: {
-        enterATitle: "Titel eingeben"
-      },
-      text: {
-        quote: "Zitat",
-        setColor: "Einfärben",
-        resetColor: "Farbe zurücksetzen",
-        colors: "Textfarben",
-        closeSubMenu: "Untermenü schließen",
-        heading: "Überschrift",
-        headings: "Überschriften",
-        linkStrgK: 'Link (Strg + K)',
-        enterUrl: "Hier Link einfügen",
-        openInNewTab: "Öffne den Link in einem neuen Tab",
-        orderedList: "Nummerierte Liste",
-        unorderedList: "Aufzählung",
-        lists: "Listen",
-        mathFormula: "Matheformel (Strg + M)",
-        displayAsBlock: "eigene Zeile",
-        formula: "[neue Formel]",
-        visual: "visuell",
-        laTeX: 'LaTeX',
-        onlyLaTeX: "Nur LaTeX verfügbar",
-        shortcuts: "Tastenkürzel",
-        fraction: "Bruch",
-        superscript: "Hochgestellt",
-        or: "oder",
-        subscript: "Tiefgestellt",
-        root: "Wurzel",
-        mathSymbols: "Mathematische Symbole",
-        eG: "z.B.",
-        functions: "Funktionen",
-        bold: "Fett (Strg + B)",
-        italic: "Kursiv (Strg + I)",
-        noItemsFound: "keine Einträge gefunden"
-      },
-      video: {
-        videoUrl: 'Video URL',
-        description: "Beschreibung",
-        title: "Titel",
-        url: 'URL',
-        seoTitle: "Titel für Suchmaschinen"
-      },
-      error: {
-        convertionError: "Dieser Teil des Dokuments konnte nicht automatisch konvertiert werden."
-      },
-      exercise: {
-        addChoiceExercise: "Auswahlaufgabe hinzufügen",
-        choiceExercise: "Auswahlaufgabe",
-        addInputExercise: "Eingabefeld hinzufügen",
-        inputExercise: "Eingabefeld",
-        addOptionalInteractiveEx: "Füge optional ein interaktives Element hinzu:",
-        changeInteractive: "Interaktives Element ändern",
-        removeInteractive: "Interaktives Element entfernen"
-      },
-      injection: {
-        illegalInjectionFound: "Ungültige Injection gefunden",
-        serloEntitySrc: "Serlo Inhalt {{src}}",
-        serloId: "Serlo ID"
-      },
-      layout: {
-        toDragConvert: "Um die Inhalte zu verschieben, konvertiere sie für den neuen Editor:",
-        oneColumnLayout: "Einspaltiges Layout",
-        multimediaTitle: "Erklärung mit Multimedia-Inhalt"
-      },
-      solution: {
-        optionalExplanation: "Beschreibe hier optional die Lösungsstrategie",
-        fundamentalsNote: "Für diese Aufgabe benötigst du folgendes Grundwissen:",
-        idArticle: "ID eines Artikels, z.B. 1855",
-        openArticleTab: "Öffne den Artikel in einem neuen Tab",
-        linkTitle: "Titel der Verlinkung",
-        showSolution: "Lösung anzeigen",
-        hideSolution: "Lösung ausblenden"
-      },
-      applet: {
-        seoTitle: "Titel für Suchmaschinen",
-        seoDesc: "Beschreibung für Suchmaschinen",
-        title: "Titel"
-      },
-      article: {
-        seoTitle: "Titel für Suchmaschinen",
-        seoDesc: "Beschreibung für Suchmaschinen",
-        title: "Titel",
-        writeShortIntro: "Fasse das Thema des Artikels kurz zusammen",
-        exercises: "Übungsaufgaben",
-        dragTheExercise: "Verschiebe die Aufgabe",
-        removeExercise: "Entferne die Aufgabe",
-        addOptionalExercise: "Aufgabe hinzufügen",
-        stillWantMore: "Du hast noch nicht genug vom Thema?",
-        moreOnTopic: "Hier findest du noch weitere passende Inhalte zum Thema",
-        articles: "Artikel",
-        addArticle: "Artikel hinzufügen",
-        idArticle: "ID eines Artikels, z.B. 1855",
-        openArticleTab: "Öffne den Artikel in einem neuen Tab",
-        dragTheArticle: "Verschiebe den Artikel",
-        courses: "Kurse",
-        addCourse: "Kurs hinzufügen",
-        idCourse: "ID eines Kurses, z.B. 51979",
-        openCourseTab: "Öffne den Kurs in einem neuen Tab",
-        dragTheCourse: "Verschiebe den Kurs",
-        videos: 'Videos',
-        addVideo: "Video hinzufügen",
-        idVideo: "ID eines Videos, z.B. 40744",
-        openVideoTab: "Öffne das Video in einem neuen Tab",
-        dragTheVideo: "Verschiebe das Video",
-        linkTitle: "Titel des Links",
-        sources: "Quellen",
-        linkUrl: "URL des Links",
-        openInNewTab: "Öffne den Link in einem neuen Tab",
-        dragTheSource: "Verschiebe die Quellenangabe",
-        addSource: "Quellenangabe hinzufügen",
-        moreInFolder: "Weitere Aufgaben zum Thema findest du im folgenden Aufgabenordner",
-        exFolderId: "ID eines Aufgabenordners, z.B. 30560",
-        openExerciseTab: "Öffne den Aufgabenordner in einem neuen Tab"
-      },
-      coursePage: {
-        explanation: "Erklärung",
-        video: 'Video',
-        question: "Frage",
-        title: "Titel"
-      },
-      course: {
-        seoDesc: "Beschreibung für Suchmaschinen",
-        title: "Titel",
-        removeCoursePage: "Kursseite entfernen",
-        addCoursePage: "Kursseite hinzufügen"
-      },
-      event: {
-        seoTitle: "Titel für Suchmaschinen",
-        seoDesc: "Beschreibung für Suchmaschinen",
-        title: "Titel"
-      },
-      page: {
-        title: "Titel"
-      },
-      taxonomy: {
-        title: "Titel"
-      },
-      textExerciseGroup: {
-        removeExercise: "Teilaufgabe entfernen",
-        addExercise: "Teilaufgabe hinzufügen",
-        kindOfExerciseGroup: "Art der Aufgabengruppe",
-        notCohesive: "nicht zusammenhängend",
-        cohesive: "zusammenhängend"
-      },
-      textExercise: {
-        removeSolution: "Lösung entfernen",
-        createSolution: "Lösung hinzufügen"
-      },
-      equations: {
-        leftHandSide: "linke Seite",
-        transformation: "Umformung",
-        mode: "Modus",
-        transformationOfEquations: "Gleichungsumformung",
-        transformationOfTerms: "Termumformung",
-        addNewRow: "Neue Zeile hinzufügen",
-        explanation: "Erklärung",
-        term: 'Term',
-        rightHandSide: "rechte Seite",
-        combineLikeTerms: "Fasse die Terme zusammen.",
-        setEqual: "Setze die Terme gleich.",
-        firstExplanation: "Erste Erklärung",
-        addNew: "Neue Gleichung hinzufügen"
-      },
-      deprecated: {
-        unsupported: "Dieser Teil des Dokuments enthält Features, die nicht mehr unterstützt werden."
-      }
     }
   }
 };

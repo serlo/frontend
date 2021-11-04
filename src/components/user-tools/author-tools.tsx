@@ -169,7 +169,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
     moveToExercise: {
       url: `/entity/link/move/link/${data.id}/${data.parentId!}`,
       title: data.grouped
-        ? loggedInStrings.authorMenu.moveToGrouped
+        ? loggedInStrings.authorMenu.moveToGroupedTextExercise
         : loggedInStrings.authorMenu.moveToTextExercise,
       canDo: canDo(TaxonomyTerm.addChild) && canDo(TaxonomyTerm.removeChild),
     },

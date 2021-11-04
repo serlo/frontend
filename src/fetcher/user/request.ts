@@ -46,7 +46,22 @@ export async function requestUser(
 }
 
 function getDescription(uuid: User) {
-  return uuid.description === null || uuid.description === 'NULL'
-    ? undefined
-    : convertState(uuid.description)
+  if (uuid.description == null) return undefined
+
+  const description =
+    uuid.description === 'NULL'
+      ? JSON.stringify({
+          plugin: 'text',
+          state: [
+            {
+              type: 'p',
+              children: {
+                text: 'This is where we display the description on a the production server.',
+              },
+            },
+          ],
+        })
+      : uuid.description
+
+  return convertState(description)
 }
