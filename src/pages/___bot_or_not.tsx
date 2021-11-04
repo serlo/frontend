@@ -216,8 +216,10 @@ const BotHunt = () => {
     )
   }
 
-  function renderRoles(roles: { nodes: UserPage['userData']['roles'] }) {
-    const nodes = roles.nodes
+  function renderRoles(roles: UserPage['userData']['roles']) {
+    // @ts-expect-error mistreating types here, sorry, not sorry.
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const nodes = roles.nodes as UserPage['userData']['roles']
 
     if (nodes.length === 1) {
       return null
