@@ -358,7 +358,7 @@ export const loggedInData = {
       title: "Eigenes Profil"
     }, {
       url: '/auth/password/change',
-      title: "Abmelden"
+      title: "Passwort ändern"
     }, {
       url: '/event/history/user/me',
       title: "Meine Bearbeitungen"
