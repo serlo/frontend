@@ -358,7 +358,7 @@ export const loggedInData = {
       title: "Mon profil"
     }, {
       url: '/auth/password/change',
-      title: "Se déconnecter"
+      title: "Changer le mot de passe"
     }, {
       url: '/event/history/user/me',
       title: "Mes modifications"
