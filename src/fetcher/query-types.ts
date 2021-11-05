@@ -6,7 +6,10 @@ import * as GraphQL from '@serlo/api'
 export type Instance = 'de' | 'en' | 'fr' | 'es' | 'ta' | 'hi'
 
 // A license has some more attributes, but we are fine with these
-export type License = Pick<GraphQL.License, 'id' | 'url' | 'title' | 'default'>
+export type License = Pick<
+  GraphQL.License,
+  'id' | 'url' | 'title' | 'default' | 'agreement' | 'iconHref'
+>
 
 // This is one breadcrumb path.
 export interface Path {
@@ -43,31 +46,27 @@ export interface Article extends EntityWithTaxonomyTerms {
   currentRevision?: GraphQL.Maybe<
     Pick<
       GraphQL.ArticleRevision,
-      'title' | 'content' | 'metaTitle' | 'metaDescription'
+      'title' | 'content' | 'metaTitle' | 'metaDescription' | 'id'
     >
   >
   revisions: {
     totalCount: number
-    nodes: [
-      {
-        title: string
-      }
-    ]
+    nodes: {
+      title: string
+    }[]
   }
 }
 
 export interface Video extends EntityWithTaxonomyTerms {
   __typename: 'Video'
   currentRevision?: GraphQL.Maybe<
-    Pick<GraphQL.VideoRevision, 'title' | 'url' | 'content'>
+    Pick<GraphQL.VideoRevision, 'title' | 'url' | 'content' | 'id'>
   >
   revisions: {
     totalCount: number
-    nodes: [
-      {
-        title: string
-      }
-    ]
+    nodes: {
+      title: string
+    }[]
   }
 }
 
@@ -76,40 +75,44 @@ export interface Applet extends EntityWithTaxonomyTerms {
   currentRevision?: GraphQL.Maybe<
     Pick<
       GraphQL.AppletRevision,
-      'title' | 'content' | 'url' | 'metaTitle' | 'metaDescription'
+      'title' | 'content' | 'url' | 'metaTitle' | 'metaDescription' | 'id'
     >
   >
   revisions: {
     totalCount: number
-    nodes: [
-      {
-        title: string
-      }
-    ]
+    nodes: {
+      title: string
+    }[]
   }
 }
 
 export interface CoursePage extends Entity {
   __typename: 'CoursePage'
   currentRevision?: GraphQL.Maybe<
-    Pick<GraphQL.CoursePageRevision, 'content' | 'title'>
+    Pick<GraphQL.CoursePageRevision, 'content' | 'title' | 'id'>
   >
   revisions: {
     totalCount: number
-    nodes: [
-      {
-        title: string
-      }
-    ]
+    nodes: {
+      title: string
+    }[]
   }
   course: {
     id: number
-    currentRevision?: GraphQL.Maybe<Pick<GraphQL.CourseRevision, 'title'>>
-    pages: {
-      alias?: string
-      id: number
-      currentRevision: Pick<GraphQL.CoursePageRevision, 'title' | 'trashed'>
-    }[]
+    currentRevision?: GraphQL.Maybe<
+      Pick<GraphQL.CourseRevision, 'title' | 'id'>
+    >
+    pages: GraphQL.Maybe<
+      | {
+          alias?: GraphQL.Maybe<string | undefined>
+          id: number
+          currentRevision?: GraphQL.Maybe<
+            | Pick<GraphQL.CoursePageRevision, 'title' | 'trashed' | 'id'>
+            | undefined
+          >
+        }[]
+      | undefined
+    >
     revisions: {
       totalCount: number
     }
@@ -121,16 +124,21 @@ export interface CoursePage extends Entity {
 export interface BareExercise extends Entity {
   trashed: boolean
   currentRevision?: GraphQL.Maybe<
-    Pick<GraphQL.AbstractExerciseRevision, 'content'>
+    Pick<GraphQL.AbstractExerciseRevision, 'content' | 'id'>
   >
   revisions?: {
     totalCount: number
   }
-  solution?: {
-    id: number
-    currentRevision?: GraphQL.Maybe<Pick<GraphQL.SolutionRevision, 'content'>>
-    license: License
-  }
+  solution?: GraphQL.Maybe<
+    | {
+        id: number
+        currentRevision?: GraphQL.Maybe<
+          Pick<GraphQL.SolutionRevision, 'content' | 'id'>
+        >
+        license: License
+      }
+    | undefined
+  >
   license: License
 }
 
@@ -139,18 +147,21 @@ export interface Exercise extends EntityWithTaxonomyTerms, BareExercise {
 }
 export interface GroupedExercise extends BareExercise {
   __typename: 'GroupedExercise'
-  exerciseGroup: {
-    alias: string
+  exerciseGroup: GraphQL.Maybe<{
+    alias?: GraphQL.Maybe<string | undefined>
     id: number
     exercises: { id: number }[]
-  }
+  }>
+}
+
+// TODO: tmp
+type BareExHelper = Pick<GraphQL.ExerciseGroupRevision, 'content' | 'id'> & {
+  cohesive: boolean
 }
 
 export interface BareExerciseGroup extends Entity {
   __typename: 'ExerciseGroup'
-  currentRevision?: GraphQL.Maybe<
-    Pick<GraphQL.ExerciseGroupRevision, 'content'>
-  >
+  currentRevision?: GraphQL.Maybe<BareExHelper>
   revisions?: {
     totalCount: number
   }
@@ -163,7 +174,9 @@ export type ExerciseGroup = BareExerciseGroup & EntityWithTaxonomyTerms
 export interface Solution extends Repository {
   __typename: 'Solution'
   trashed: boolean
-  currentRevision?: GraphQL.Maybe<Pick<GraphQL.SolutionRevision, 'content'>>
+  currentRevision?: GraphQL.Maybe<
+    Pick<GraphQL.SolutionRevision, 'content' | 'id'>
+  >
   license: License
   exercise: { id: number }
   unrevisedRevisions?: number
@@ -174,7 +187,7 @@ export interface Event extends Repository {
   __typename: 'Event'
   trashed: boolean
   currentRevision?: GraphQL.Maybe<
-    Pick<GraphQL.EventRevision, 'content' | 'title'>
+    Pick<GraphQL.EventRevision, 'content' | 'title' | 'id'>
   >
 }
 
@@ -192,12 +205,15 @@ export interface User extends GraphQL.User {
 export interface Course extends Repository {
   __typename: 'Course'
   pages: {
-    alias?: string
-    currentRevision?: {
+    id: number
+    alias?: GraphQL.Maybe<string | undefined>
+    currentRevision?: GraphQL.Maybe<{
       title: string
-    }
+      content?: string
+      id: number
+    }>
   }[]
-  currentRevision?: GraphQL.Maybe<Pick<GraphQL.CourseRevision, 'title'>>
+  currentRevision?: GraphQL.Maybe<Pick<GraphQL.CourseRevision, 'title' | 'id'>>
   revisions: {
     totalCount: number
   }
@@ -214,6 +230,7 @@ export interface TaxonomyTermChildOnX extends TaxonomyTermChild {
   __typename: 'Article' | 'Video' | 'Applet' | 'Course' | 'Event'
   currentRevision?: {
     title: string
+    id: number
   }
   revisions?: { nodes?: [{ title: string }] }
 }
@@ -250,11 +267,20 @@ export interface SubTaxonomyTermChildTaxonomyTerm
 export interface TaxonomyTerm
   extends Pick<
     GraphQL.TaxonomyTerm,
-    'id' | 'alias' | 'instance' | 'type' | 'name' | 'description'
+    | 'id'
+    | 'alias'
+    | 'instance'
+    | 'type'
+    | 'name'
+    | 'description'
+    | 'weight'
+    | 'taxonomyId'
+    | 'trashed'
   > {
   __typename: 'TaxonomyTerm'
   navigation?: GraphQL.Maybe<Pick<GraphQL.Navigation, 'data' | 'path'>>
   children: { nodes: TaxonomyTermChildrenLevel1[] }
+  parent: { id: number }
 }
 
 export type TaxonomyTermChildrenLevel1 =
@@ -316,6 +342,7 @@ export interface ExerciseGroupRevision
   extends EntityWithTaxonomyTerms,
     GraphQL.ExerciseGroupRevision {
   __typename: 'ExerciseGroupRevision'
+  cohesive: boolean // TODO: remove when api is updated
 }
 export interface GroupedExerciseRevision
   extends EntityWithTaxonomyTerms,

@@ -1,7 +1,11 @@
 // These types are auto-generated from the GraphQL schema
 import { gql } from 'graphql-request'
 
-import { sharedRevisionFragments } from '../query-fragments'
+import {
+  sharedExerciseFragments,
+  sharedLicenseFragments,
+  sharedRevisionFragments,
+} from '../query-fragments'
 
 export const revisionQuery = gql`
   query revisionUuid($id: Int) {
@@ -20,10 +24,15 @@ export const revisionQuery = gql`
           isActiveDonor
           isActiveReviewer
         }
+
         ... on ArticleRevision {
           ...articleRevision
           changes
           repository {
+            ...taxonomyTerms
+            ...license
+            trashed
+            instance
             id
             alias
             currentRevision {
@@ -41,6 +50,9 @@ export const revisionQuery = gql`
         ... on PageRevision {
           ...pageRevision
           repository {
+            ...license
+            trashed
+            instance
             id
             alias
             currentRevision {
@@ -59,6 +71,10 @@ export const revisionQuery = gql`
           ...appletRevision
           changes
           repository {
+            ...taxonomyTerms
+            ...license
+            trashed
+            instance
             id
             alias
             currentRevision {
@@ -77,6 +93,10 @@ export const revisionQuery = gql`
           ...courseRevision
           changes
           repository {
+            ...taxonomyTerms
+            ...license
+            trashed
+            instance
             id
             alias
             currentRevision {
@@ -95,6 +115,9 @@ export const revisionQuery = gql`
           ...coursePageRevision
           changes
           repository {
+            ...license
+            trashed
+            instance
             id
             alias
             currentRevision {
@@ -107,12 +130,18 @@ export const revisionQuery = gql`
                 trashed
               }
             }
+            course {
+              ...taxonomyTerms
+            }
           }
         }
         ... on EventRevision {
           ...eventRevision
           changes
           repository {
+            ...license
+            trashed
+            instance
             id
             alias
             currentRevision {
@@ -131,6 +160,10 @@ export const revisionQuery = gql`
           content
           changes
           repository {
+            ...taxonomyTerms
+            ...license
+            trashed
+            instance
             id
             alias
             currentRevision {
@@ -154,6 +187,9 @@ export const revisionQuery = gql`
           content
           changes
           repository {
+            ...license
+            trashed
+            instance
             id
             alias
             exerciseGroup {
@@ -182,7 +218,11 @@ export const revisionQuery = gql`
         ... on ExerciseGroupRevision {
           ...exerciseGroupRevision
           changes
+          cohesive
           repository {
+            ...license
+            trashed
+            instance
             id
             alias
             license {
@@ -200,12 +240,21 @@ export const revisionQuery = gql`
                 trashed
               }
             }
+            exercises {
+              ...exercise
+              revisions(unrevised: true) {
+                totalCount
+              }
+            }
           }
         }
         ... on SolutionRevision {
           content
           changes
           repository {
+            ...license
+            trashed
+            instance
             id
             alias
             exercise {
@@ -239,6 +288,10 @@ export const revisionQuery = gql`
           ...videoRevision
           changes
           repository {
+            ...taxonomyTerms
+            ...license
+            trashed
+            instance
             id
             alias
             currentRevision {
@@ -257,11 +310,32 @@ export const revisionQuery = gql`
     }
   }
 
+  ${sharedLicenseFragments}
+  ${sharedExerciseFragments}
   ${sharedRevisionFragments}
 
   fragment courseRevision on CourseRevision {
     content
     title
     metaDescription
+  }
+
+  fragment path on Navigation {
+    path {
+      nodes {
+        label
+        url
+      }
+    }
+  }
+
+  fragment taxonomyTerms on AbstractTaxonomyTermChild {
+    taxonomyTerms {
+      nodes {
+        navigation {
+          ...path
+        }
+      }
+    }
   }
 `

@@ -2,6 +2,7 @@ import { gql } from 'graphql-request'
 
 export const sharedRevisionFragments = gql`
   fragment articleRevision on ArticleRevision {
+    id
     title
     content
     metaTitle
@@ -15,12 +16,14 @@ export const sharedRevisionFragments = gql`
   }
 
   fragment videoRevision on VideoRevision {
+    id
     title
     url
     content
   }
 
   fragment appletRevision on AppletRevision {
+    id
     title
     content
     url
@@ -29,15 +32,20 @@ export const sharedRevisionFragments = gql`
   }
 
   fragment coursePageRevision on CoursePageRevision {
+    id
     content
     title
   }
 
   fragment exerciseGroupRevision on ExerciseGroupRevision {
+    id
     content
+    cohesive
   }
 
   fragment eventRevision on EventRevision {
+    id
+    title
     content
   }
 `
@@ -237,6 +245,62 @@ export const sharedEventFragments = gql`
       currentRevision {
         title
       }
+    }
+  }
+
+  fragment path on Navigation {
+    path {
+      nodes {
+        label
+        url
+      }
+    }
+  }
+
+  fragment taxonomyTerms on AbstractTaxonomyTermChild {
+    taxonomyTerms {
+      nodes {
+        navigation {
+          ...path
+        }
+      }
+    }
+  }
+`
+
+export const sharedExerciseFragments = gql`
+  fragment exercise on AbstractExercise {
+    id
+    alias
+    instance
+    trashed
+    currentRevision {
+      content
+    }
+    solution {
+      ...solution
+    }
+    ...license
+  }
+
+  fragment solution on Solution {
+    id
+    currentRevision {
+      content
+    }
+    ...license
+  }
+`
+
+export const sharedLicenseFragments = gql`
+  fragment license on AbstractRepository {
+    license {
+      id
+      url
+      title
+      default
+      agreement
+      iconHref
     }
   }
 `
