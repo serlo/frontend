@@ -313,32 +313,11 @@ export function editorResponseToState(uuid: QueryResponse): DeserializeResult {
     }
   }
 
-  //TODO: !
-
   function convertTextExercise(
     uuid: Exercise | BareExercise
   ): DeserializedState<typeof textExerciseTypeState> {
-    // const {
-    //   'text-solution': textSolution,
-    //   'single-choice-right-answer': singleChoiceRightAnswer,
-    //   'single-choice-wrong-answer': singleChoiceWrongAnswer,
-    //   'multiple-choice-right-answer': multipleChoiceRightAnswer,
-    //   'multiple-choice-wrong-answer': multipleChoiceWrongAnswer,
-    //   'input-expression-equal-match-challenge':
-    //     inputExpressionEqualMatchChallenge,
-    //   'input-number-exact-match-challenge': inputNumberExactMatchChallenge,
-    //   'input-string-normalized-match-challenge':
-    //     inputStringNormalizedMatchChallenge,
-    // } = uuid
-
     stack.push({ id: uuid.id, type: 'text-exercise' })
     const convertd = convertEditorState(content)
-
-    // const scMcExercise =
-    //   convertd && !isEdtr(convertd) ? convertScMcExercise() : undefined
-
-    // const inputExercise =
-    //   convertd && !isEdtr(convertd) ? convertInputExercise() : undefined
 
     return {
       initialState: {
@@ -366,7 +345,6 @@ export function editorResponseToState(uuid: QueryResponse): DeserializeResult {
       }
 
       const convertedContent = toEdtr(convertdContent) // RowsPlugin
-      //const interactive = scMcExercise || inputExercise
 
       return serializeEditorState({
         plugin: 'exercise',
@@ -379,185 +357,7 @@ export function editorResponseToState(uuid: QueryResponse): DeserializeResult {
         },
       })
     }
-
-    // TODO: fix unconverted exercises
-    /*
-    function convertScMcExercise():
-      | {
-          plugin: 'scMcExercise'
-          state: StateTypeSerializedType<ScMcExercisePluginState>
-        }
-      | undefined {
-      stack.push({ id: uuid.id, type: 'sc-mc-exercise' })
-      if (
-        singleChoiceWrongAnswer ||
-        singleChoiceRightAnswer ||
-        multipleChoiceWrongAnswer ||
-        multipleChoiceRightAnswer
-      ) {
-        const convertedSCRightAnswers =
-          singleChoiceRightAnswer && singleChoiceRightAnswer.content
-            ? [
-                {
-                  content: extractChildFromRows(
-                    convert(convertEditorState(singleChoiceRightAnswer.content))
-                  ),
-                  isCorrect: true,
-                  feedback: extractChildFromRows(
-                    convert(
-                      convertEditorState(singleChoiceRightAnswer.feedback)
-                    )
-                  ),
-                },
-              ]
-            : []
-
-        const convertedSCWrongAnswers = singleChoiceWrongAnswer
-          ? singleChoiceWrongAnswer
-              .filter((answer) => {
-                return answer.content
-              })
-              .map((answer) => {
-                return {
-                  content: extractChildFromRows(
-                    convert(convertEditorState(answer.content))
-                  ),
-                  isCorrect: false,
-                  feedback: extractChildFromRows(
-                    convert(convertEditorState(answer.feedback))
-                  ),
-                }
-              })
-          : []
-
-        const convertedMCRightAnswers = multipleChoiceRightAnswer
-          ? multipleChoiceRightAnswer
-              .filter((answer) => {
-                return answer.content
-              })
-              .map((answer) => {
-                return {
-                  content: extractChildFromRows(
-                    convert(convertEditorState(answer.content))
-                  ),
-                  isCorrect: true,
-                  feedback: {
-                    plugin: 'text',
-                  },
-                }
-              })
-          : []
-
-        const convertedMCWrongAnswers = multipleChoiceWrongAnswer
-          ? multipleChoiceWrongAnswer
-              .filter((answer) => {
-                return answer.content
-              })
-              .map((answer) => {
-                return {
-                  content: extractChildFromRows(
-                    convert(convertEditorState(answer.content))
-                  ),
-                  isCorrect: false,
-                  feedback: extractChildFromRows(
-                    convert(convertEditorState(answer.feedback))
-                  ),
-                }
-              })
-          : []
-        const isSingleChoice = !(
-          convertedMCRightAnswers.length || convertedMCWrongAnswers.length
-        )
-        return {
-          plugin: 'scMcExercise',
-          state: {
-            isSingleChoice: isSingleChoice,
-            answers: [
-              ...(isSingleChoice ? convertedSCRightAnswers : []),
-              ...(isSingleChoice ? convertedSCWrongAnswers : []),
-              ...(!isSingleChoice ? convertedMCRightAnswers : []),
-              ...(!isSingleChoice ? convertedMCWrongAnswers : []),
-            ],
-          },
-        }
-      }
-    }
-
-    function convertInputExercise():
-      | {
-          plugin: 'inputExercise'
-          state: StateTypeSerializedType<InputExercisePluginState>
-        }
-      | undefined {
-      if (
-        inputStringNormalizedMatchChallenge ||
-        inputNumberExactMatchChallenge ||
-        inputExpressionEqualMatchChallenge
-      ) {
-        const type = inputStringNormalizedMatchChallenge
-          ? 'input-string-normalized-match-challenge'
-          : inputNumberExactMatchChallenge
-          ? 'input-number-exact-match-challenge'
-          : 'input-expression-equal-match-challenge'
-
-        const inputExercises = filterDefined([
-          inputStringNormalizedMatchChallenge,
-          inputNumberExactMatchChallenge,
-          inputExpressionEqualMatchChallenge,
-        ])
-
-        return {
-          plugin: 'inputExercise',
-          state: {
-            type,
-            answers: extractInputAnswers(inputExercises, true),
-            unit: '',
-          },
-        }
-      }
-
-      function extractInputAnswers(
-        inputExercises: InputType[],
-        isCorrect: boolean
-      ): {
-        value: string
-        isCorrect: boolean
-        feedback: { plugin: string; state?: unknown }
-      }[] {
-        if (inputExercises.length === 0) return []
-
-        const answers = inputExercises.map((exercise) => {
-          return {
-            value: exercise.solution,
-            feedback: extractChildFromRows(
-              convert(convertEditorState(exercise.feedback))
-            ),
-            isCorrect,
-          }
-        })
-
-        const children = R.flatten(
-          inputExercises.map((exercise) => {
-            return filterDefined([
-              exercise['input-string-normalized-match-challenge'],
-              exercise['input-number-exact-match-challenge'],
-              exercise['input-expression-equal-match-challenge'],
-            ])
-          })
-        )
-
-        return R.concat(answers, extractInputAnswers(children, false))
-      }
-
-      function filterDefined<T>(array: (T | undefined)[]): T[] {
-        return array.filter((el) => typeof el !== 'undefined') as T[]
-      }
-    }*/
   }
-
-  // function extractChildFromRows(plugin: RowsPlugin) {
-  //   return plugin.state.length ? plugin.state[0] : { plugin: 'text' }
-  // }
 
   function convertTextExerciseGroup(
     uuid: ExerciseGroup
