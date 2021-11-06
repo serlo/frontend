@@ -19,8 +19,12 @@ export function Article({
       {renderNested(introduction, 'article-intro')}
       {renderNested(content, 'article-content')}
 
-      <h2 className="serlo-h2">{strings.content.exercisesTitle}</h2>
-      {renderNested(exercises, 'article-exercises')}
+      {exercises && exercises.length ? (
+        <>
+          <h2 className="serlo-h2">{strings.content.exercisesTitle}</h2>
+          {renderNested(exercises, 'article-exercises')}
+        </>
+      ) : null}
 
       {renderMoreExLink()}
       {renderRelatedContent()}
@@ -40,11 +44,22 @@ export function Article({
     )
   }
 
+  // should be done in editor before saving imo
+  function isEmpty(idArray: ArticleNodeUuidLink[]) {
+    if (!idArray) return true
+    const filtered = idArray.filter((obj) => {
+      obj.id !== ''
+    })
+    if (filtered.length) return false
+    return true
+  }
+
   function renderRelatedContent() {
     if (
-      !relatedContent?.articles &&
-      !relatedContent?.courses &&
-      !relatedContent?.videos
+      !relatedContent ||
+      (isEmpty(relatedContent?.articles) &&
+        isEmpty(relatedContent?.courses) &&
+        isEmpty(relatedContent?.videos))
     )
       return null
     return (
@@ -83,11 +98,13 @@ export function Article({
       <>
         <h2 className="serlo-h2">{strings.content.sourcesTitle}</h2>
         <ul className="serlo-ul mt-2 mb-4 text-lg">
-          {sources.map((source) => (
-            <li key={source.href} className="!mb-0">
-              <Link href={source.href}>{source.title}</Link>
-            </li>
-          ))}
+          {sources.map((source) =>
+            source.href === '' ? null : (
+              <li key={source.href} className="!mb-0">
+                <Link href={source.href}>{source.title}</Link>
+              </li>
+            )
+          )}
         </ul>
       </>
     )
