@@ -436,17 +436,17 @@ export const loggedInData = {
     },
     mutations: {
       success: {
-        trash: 'Successfully trashed 🗑',
-        restore: 'Successfully restored ♻️',
-        accept: 'Edit was accepted ✅',
-        reject: 'Edit not rejected ❌'
+        trash: "Erfolgreich gelöscht 🗑",
+        restore: "Erfolgreich wiederhergestellt ♻️",
+        accept: "Bearbeitung wurde akzeptiert ✅",
+        reject: "Bearbeitung wurde abgelehnt ❌"
       },
       errors: {
-        UNAUTHENTICATED: 'Für diese Funktion musst du dich einloggen!',
-        FORBIDDEN: 'Dafür fehlen dir leider die Rechte!',
+        UNAUTHENTICATED: 'You have to log in to use this function!',
+        FORBIDDEN: 'Sorry, you are not allowed to do that!',
         INVALID_TOKEN: '',
         BAD_USER_INPUT: '',
-        UNKNOWN: 'Ein unbekannter Fehler…'
+        UNKNOWN: 'An unknown error…'
       }
     },
     editor: {
