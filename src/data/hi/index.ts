@@ -434,6 +434,21 @@ export const loggedInData = {
       confirm: "पुष्टि करें",
       unrevisedTaxNote: 'New content, not accepted yet'
     },
+    mutations: {
+      success: {
+        trash: 'Successfully trashed 🗑',
+        restore: 'Successfully restored ♻️',
+        accept: 'Edit was accepted ✅',
+        reject: 'Edit not rejected ❌'
+      },
+      errors: {
+        UNAUTHENTICATED: 'Für diese Funktion musst du dich einloggen!',
+        FORBIDDEN: 'Dafür fehlen dir leider die Rechte!',
+        INVALID_TOKEN: '',
+        BAD_USER_INPUT: '',
+        UNKNOWN: 'Ein unbekannter Fehler…'
+      }
+    },
     editor: {
       edtrIo: {
         extendedSettings: 'Extended Settings',
