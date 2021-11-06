@@ -442,11 +442,11 @@ export const loggedInData = {
         reject: "Bearbeitung wurde abgelehnt ❌"
       },
       errors: {
-        UNAUTHENTICATED: 'You have to log in to use this function!',
-        FORBIDDEN: 'Sorry, you are not allowed to do that!',
+        UNAUTHENTICATED: "Für diese Funktion musst du dich einloggen!",
+        FORBIDDEN: "Dafür fehlen dir leider die Rechte!",
         INVALID_TOKEN: '',
         BAD_USER_INPUT: '',
-        UNKNOWN: 'An unknown error…'
+        UNKNOWN: "Ein unbekannter Fehler…"
       }
     },
     editor: {
