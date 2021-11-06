@@ -310,16 +310,6 @@ export const revisionQuery = gql`
     }
   }
 
-  ${sharedLicenseFragments}
-  ${sharedExerciseFragments}
-  ${sharedRevisionFragments}
-
-  fragment courseRevision on CourseRevision {
-    content
-    title
-    metaDescription
-  }
-
   fragment path on Navigation {
     path {
       nodes {
@@ -337,5 +327,15 @@ export const revisionQuery = gql`
         }
       }
     }
+  }
+
+  ${sharedLicenseFragments}
+  ${sharedExerciseFragments}
+  ${sharedRevisionFragments}
+
+  fragment courseRevision on CourseRevision {
+    content
+    title
+    metaDescription
   }
 `

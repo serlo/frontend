@@ -11,6 +11,7 @@ import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Guard } from '@/components/guard'
 import { TimeAgo } from '@/components/time-ago'
 import { ProfileRoles } from '@/components/user/profile-roles'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { FrontendContentNode, UserPage } from '@/data-types'
 import { convertState } from '@/fetcher/convert-state'
 import { sharedUserFragment } from '@/fetcher/user/query'
@@ -43,7 +44,6 @@ const titles = [
 
 const BotHunt = () => {
   const auth = useAuthentication()
-
   const [removedIds, setRemovedIds] = useState<number[]>([])
 
   // eslint-disable-next-line @typescript-eslint/unbound-method
@@ -52,12 +52,16 @@ const BotHunt = () => {
   const canDo = useCanDo()
   const canDelete = canDo(User.deleteBot)
 
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return null
+  const { mutations } = loggedInData.strings
+
   async function remove(id: number) {
     const input = {
       botIds: [id],
     }
 
-    const success = await mutationFetch(auth, mutation, input)
+    const success = await mutationFetch(auth, mutation, input, mutations.errors)
     if (success) {
       setRemovedIds([...removedIds, id])
       showToastNotice(`# ${id} removed 💥`, 'warning')

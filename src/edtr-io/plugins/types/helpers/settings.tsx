@@ -1,5 +1,3 @@
-/* eslint-disable import/no-internal-modules */
-
 import { StateTypeReturnType, string } from '@edtr-io/plugin'
 import clsx from 'clsx'
 import { PropsWithChildren } from 'react'
@@ -46,7 +44,6 @@ Settings.Select = function SettingsSelect({
     <div>
       <label className="font-bold">
         {label}
-        {/* TODO: find example, add styling */}
         <select
           placeholder="select"
           value={state.value}
@@ -54,6 +51,7 @@ Settings.Select = function SettingsSelect({
             const { value } = e.target as HTMLSelectElement
             state.set(value)
           }}
+          className="ml-2"
         >
           {options.map((option) => {
             return (
