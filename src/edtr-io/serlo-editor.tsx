@@ -16,17 +16,19 @@ import {
   faPhotoVideo,
   faQuoteRight,
 } from '@edtr-io/ui'
+import { Entity } from '@serlo/authorization'
 import * as React from 'react'
 
 import { CsrfContext } from './csrf-context'
 import { createPlugins } from './plugins'
+import { useCanDo } from '@/auth/use-can-do'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export interface SerloEditorProps {
   getCsrfToken(): string
   children?: React.ReactNode
-  showSkipCheckout: boolean
+  needsReview: boolean
   onSave: (data: unknown) => Promise<void>
   onError?: (error: Error, context: Record<string, string>) => void
   initialState: EditorProps['initialState'] // expects "deserialized" state now
@@ -44,22 +46,27 @@ export interface LooseEdtrDataDefined {
 export const SaveContext = React.createContext<{
   onSave: SerloEditorProps['onSave']
   showSkipCheckout: boolean
+  needsReview: boolean
 }>({
   onSave: () => {
     return Promise.reject()
   },
   showSkipCheckout: false,
+  needsReview: true,
 })
 
 export function SerloEditor({
   getCsrfToken,
   onSave,
-  showSkipCheckout,
+  needsReview,
   onError,
   initialState,
   children,
   type,
 }: SerloEditorProps) {
+  const canDo = useCanDo()
+  const showSkipCheckout = canDo(Entity.checkoutRevision) && needsReview
+
   const loggedInData = useLoggedInData()
   if (!loggedInData)
     return (
@@ -93,9 +100,7 @@ export function SerloEditor({
   return (
     // eslint-disable-next-line @typescript-eslint/unbound-method
     <CsrfContext.Provider value={getCsrfToken}>
-      <SaveContext.Provider
-        value={{ onSave: onSave, showSkipCheckout: showSkipCheckout }}
-      >
+      <SaveContext.Provider value={{ onSave, showSkipCheckout, needsReview }}>
         <Editor
           DocumentEditor={DocumentEditor}
           onError={onError}
