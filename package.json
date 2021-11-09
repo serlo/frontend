@@ -62,7 +62,7 @@
     "algebra.js": "^0.2.0",
     "autoprefixer": "^10.0.0",
     "clsx": "^1.0.0",
-    "graphiql": "^1.0.0",
+    "graphiql": "^1.4.7",
     "graphql": "^15.0.0",
     "graphql-request": "^3.0.0",
     "htmlparser2": "^6.0.0",
