@@ -109,6 +109,13 @@ export const revisionQuery = gql`
                 trashed
               }
             }
+            pages {
+              id
+              currentRevision {
+                title
+                content
+              }
+            }
           }
         }
         ... on CoursePageRevision {

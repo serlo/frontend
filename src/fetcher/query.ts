@@ -304,6 +304,7 @@ export const dataQuery = gql`
         }
       }
       pages {
+        id
         currentRevision {
           id
         }
