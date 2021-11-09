@@ -42,17 +42,6 @@ export function SaveModal({
   const maySave = licenseAccepted && changesFilled
   const buttonDisabled = !maySave || pending
 
-  // TODO: Check if we really need this
-  // useEffect(() => {
-  // if (visible) {
-  // Reset license agreement
-  // setPending(false)
-  // setHasError(false)
-  // setSavedToLocalstorage(false)
-  // setAgreement(false)
-  // }
-  // }, [visible])
-
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
   const { edtrIo } = loggedInData.strings.editor
@@ -136,7 +125,7 @@ export function SaveModal({
         {edtrIo.errorSaving}
         <br />
         {edtrIo.saveLocallyAndRefresh}
-        <SaveLocalButton />
+        <SaveLocalButton visible={visible} />
       </StaticInfoPanel>
     )
   }

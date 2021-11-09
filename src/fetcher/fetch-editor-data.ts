@@ -39,12 +39,6 @@ export async function fetchEditorData(
     const repoId = parseInt(ids[0])
     const revisionId = parseInt(ids[1])
 
-    const onError = (error: Error, context: Record<string, string>) => {
-      // TODO: Handle
-      console.log(context)
-      alert(error)
-    }
-
     if (revisionId && !isNaN(revisionId)) {
       const { uuid } = await request<{
         uuid: QueryResponseRevision
@@ -66,7 +60,7 @@ export async function fetchEditorData(
 
     if (!data) return { errorType: 'failed-fetch' }
 
-    const result = editorResponseToState(data, onError)
+    const result = editorResponseToState(data)
 
     const breadcrumbsData = createBreadcrumbs(data)?.filter(
       (entry) => entry.url == '/community/106082/sandkasten'

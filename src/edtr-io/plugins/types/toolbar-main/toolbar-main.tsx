@@ -37,7 +37,10 @@ export function ToolbarMain({
 
   const [visible, setVisibility] = useState(false)
 
-  const { handleSave, pending, hasError } = useHandleSave(subscriptions)
+  const { handleSave, pending, hasError } = useHandleSave(
+    visible,
+    subscriptions
+  )
 
   useEffect(() => {
     window.onbeforeunload = hasPendingChanges && !pending ? () => '' : null
