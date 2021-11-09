@@ -85,11 +85,12 @@ export function EquationsEditor(props: EquationsProps) {
 
   React.useEffect(() => {
     if (nestedFocus) {
-      // TODO: fixing freeze, investigate why this is deadlooping
-      //gridFocus.setFocus({ row: 0, column: 0 })
-      //store.dispatch(focus(props.id))
+      gridFocus.setFocus({ row: 0, column: 0 })
+      store.dispatch(focus(props.id))
     }
-  }, [nestedFocus, gridFocus, store, props.id])
+    //prevents loop
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [nestedFocus])
 
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
@@ -198,13 +199,12 @@ export function EquationsEditor(props: EquationsProps) {
 
                       return (
                         <ExplanationTr
-                        /* TODO: investigate why this is not working */
-                        /*onFocus={() =>
+                          onFocus={() =>
                             gridFocus.setFocus({
                               row,
                               column: StepSegment.Explanation,
                             })
-                          }*/
+                          }
                         >
                           <td />
                           <td />

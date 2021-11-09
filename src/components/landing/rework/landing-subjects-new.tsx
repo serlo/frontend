@@ -7,6 +7,7 @@ import AbcSVG from '@/assets-webkit/img/landing/subjects-abc.svg'
 import BiologySVG from '@/assets-webkit/img/landing/subjects-biology.svg'
 import BlankSVG from '@/assets-webkit/img/landing/subjects-blank.svg'
 import ChemistrySVG from '@/assets-webkit/img/landing/subjects-chemistry.svg'
+import GeographySVG from '@/assets-webkit/img/landing/subjects-geography.svg'
 import InformaticsSVG from '@/assets-webkit/img/landing/subjects-informatics.svg'
 import MathSVG from '@/assets-webkit/img/landing/subjects-math.svg'
 import NewSVG from '@/assets-webkit/img/landing/subjects-new.svg'
@@ -89,6 +90,7 @@ export function LandingSubjectsNew({ data }: LandingSubjectsProps) {
             & svg.superspecial-sus,
             & svg.superspecial-chem,
             & svg.superspecial-new,
+            & svg.superspecial-geo,
             & svg.superspecial-blank,
             & svg.superspecial-informatics {
               display: block;
@@ -169,6 +171,10 @@ export function LandingSubjectsNew({ data }: LandingSubjectsProps) {
             & .superspecial-new {
               transform-origin: 50% 60%;
             }
+            & .superspecial-geo .world {
+              transform: translateX(-43%);
+              transition: transform 0.4s ease-in-out;
+            }
             &:hover,
             &:focus,
             &:active {
@@ -186,6 +192,9 @@ export function LandingSubjectsNew({ data }: LandingSubjectsProps) {
               }
               & .superspecial-sus .blue.water {
                 transform: scale(1.08);
+              }
+              & .superspecial-geo .world {
+                transform: translateX(0%);
               }
               & .superspecial-new {
                 transform: rotate(180deg);
@@ -288,6 +297,8 @@ export function LandingSubjectsNew({ data }: LandingSubjectsProps) {
         return <InformaticsSVG className="superspecial-informatics" />
       case 'new':
         return <NewSVG className="superspecial-new" />
+      case 'geography':
+        return <GeographySVG className="superspecial-geo" />
       case 'chemistry':
         return <ChemistrySVG className="superspecial-chem" />
       default:

@@ -12,6 +12,7 @@
 # Generated files
 src/data/*/index.ts
 schema.graphql
+tsconfig.json
 
 # Assets
 public

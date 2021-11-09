@@ -23,7 +23,6 @@ import { textExerciseGroupTypeState } from './plugins/types/text-exercise-group'
 import { textSolutionTypeState } from './plugins/types/text-solution'
 import { userTypeState } from './plugins/types/user'
 import { videoTypeState } from './plugins/types/video'
-import { SerloEditorProps } from './serlo-editor'
 import {
   Applet,
   Article,
@@ -41,14 +40,12 @@ import {
   Video,
 } from '@/fetcher/query-types'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
+import { triggerSentry } from '@/helper/trigger-sentry'
 
 const empty: RowsPlugin = { plugin: 'rows', state: [] }
 
 // converts query response to deserialized editor state
-export function editorResponseToState(
-  uuid: QueryResponse,
-  onError?: SerloEditorProps['onError']
-): DeserializeResult {
+export function editorResponseToState(uuid: QueryResponse): DeserializeResult {
   const stack: { id: number; type: string }[] = []
 
   const config: Record<
@@ -88,12 +85,12 @@ export function editorResponseToState(
   const content =
     currentRev && 'content' in currentRev ? currentRev.content : ''
   const meta_title =
-    currentRev && hasOwnPropertyTs(currentRev, 'meta_title')
-      ? (currentRev.meta_title as string)
+    currentRev && hasOwnPropertyTs(currentRev, 'metaTitle')
+      ? (currentRev.metaTitle as string)
       : ''
   const meta_description =
-    currentRev && hasOwnPropertyTs(currentRev, 'meta_description')
-      ? (currentRev.meta_description as string)
+    currentRev && hasOwnPropertyTs(currentRev, 'metaDescription')
+      ? (currentRev.metaDescription as string)
       : ''
   const revision =
     currentRev && hasOwnPropertyTs(currentRev, 'id') ? currentRev.id : 0
@@ -112,12 +109,13 @@ export function editorResponseToState(
     const { convert } = config[uuid.__typename]
     return convert(uuid)
   } catch (e) {
-    const error = e as Error
-    if (typeof onError === 'function') {
-      onError(error, {
-        stack: JSON.stringify(stack),
-      })
-    }
+    // eslint-disable-next-line no-console
+    console.log(e)
+
+    triggerSentry({
+      message: `error while converting: ${JSON.stringify(stack)}`,
+    })
+
     return {
       error: 'failure',
     }
@@ -211,25 +209,24 @@ export function editorResponseToState(
           changes: '',
           title,
           description: serializeEditorState(
-            toEdtr(convertEditorState('')) // TODO: If this field is used in Metadata API we need to fetch it in the API
+            toEdtr(convertEditorState(content))
           ),
           meta_description,
-          'course-page': (uuid.pages || []).map((page) => {
-            return convertCoursePage({
-              ...page,
-              currentRevision: {
-                id: page.id,
-                title: page.currentRevision?.title ?? '',
-                content: page.currentRevision?.content ?? '',
-              },
-            })
-          }),
+          'course-page': (uuid.pages || [])
+            .filter((page) => page.currentRevision !== null)
+            .map((page) => {
+              return convertCoursePage({
+                ...page,
+                currentRevision: {
+                  id: page.id,
+                  title: page.currentRevision?.title ?? '',
+                  content: page.currentRevision?.content ?? '',
+                },
+              }).initialState.state
+            }),
         },
       },
-      converted: !isEdtr(
-        convertEditorState('') || // TODO: Currently we can't tell?
-          empty
-      ),
+      converted: !isEdtr(convertEditorState(content ?? '') || empty),
     }
   }
 
@@ -242,12 +239,11 @@ export function editorResponseToState(
         plugin: 'type-course-page',
         state: {
           id: uuid.id,
-          license: license!, // TODO: check if it's okay to use the course license here
+          license: license!, // there could be cases where this is not correct
           revision,
           changes: '',
           title: uuid.currentRevision?.title || '',
           icon: 'explanation',
-          // TODO: check if we actually need content here
           content: serializeEditorState(
             toEdtr(convertEditorState(uuid.currentRevision?.content || ''))
           ),
@@ -304,7 +300,7 @@ export function editorResponseToState(
           id: uuid.id,
           parent: uuid.parent.id,
           position: uuid.weight,
-          taxonomy: uuid.id, // TODO: this or id is probably not the right value
+          taxonomy: uuid.taxonomyId,
           term: {
             name: uuid.name,
           },
@@ -317,32 +313,11 @@ export function editorResponseToState(
     }
   }
 
-  //TODO: !
-
   function convertTextExercise(
     uuid: Exercise | BareExercise
   ): DeserializedState<typeof textExerciseTypeState> {
-    // const {
-    //   'text-solution': textSolution,
-    //   'single-choice-right-answer': singleChoiceRightAnswer,
-    //   'single-choice-wrong-answer': singleChoiceWrongAnswer,
-    //   'multiple-choice-right-answer': multipleChoiceRightAnswer,
-    //   'multiple-choice-wrong-answer': multipleChoiceWrongAnswer,
-    //   'input-expression-equal-match-challenge':
-    //     inputExpressionEqualMatchChallenge,
-    //   'input-number-exact-match-challenge': inputNumberExactMatchChallenge,
-    //   'input-string-normalized-match-challenge':
-    //     inputStringNormalizedMatchChallenge,
-    // } = uuid
-
     stack.push({ id: uuid.id, type: 'text-exercise' })
     const convertd = convertEditorState(content)
-
-    // const scMcExercise =
-    //   convertd && !isEdtr(convertd) ? convertScMcExercise() : undefined
-
-    // const inputExercise =
-    //   convertd && !isEdtr(convertd) ? convertInputExercise() : undefined
 
     return {
       initialState: {
@@ -370,7 +345,6 @@ export function editorResponseToState(
       }
 
       const convertedContent = toEdtr(convertdContent) // RowsPlugin
-      //const interactive = scMcExercise || inputExercise
 
       return serializeEditorState({
         plugin: 'exercise',
@@ -383,185 +357,7 @@ export function editorResponseToState(
         },
       })
     }
-
-    // TODO: fix unconverted exercises
-    /*
-    function convertScMcExercise():
-      | {
-          plugin: 'scMcExercise'
-          state: StateTypeSerializedType<ScMcExercisePluginState>
-        }
-      | undefined {
-      stack.push({ id: uuid.id, type: 'sc-mc-exercise' })
-      if (
-        singleChoiceWrongAnswer ||
-        singleChoiceRightAnswer ||
-        multipleChoiceWrongAnswer ||
-        multipleChoiceRightAnswer
-      ) {
-        const convertedSCRightAnswers =
-          singleChoiceRightAnswer && singleChoiceRightAnswer.content
-            ? [
-                {
-                  content: extractChildFromRows(
-                    convert(convertEditorState(singleChoiceRightAnswer.content))
-                  ),
-                  isCorrect: true,
-                  feedback: extractChildFromRows(
-                    convert(
-                      convertEditorState(singleChoiceRightAnswer.feedback)
-                    )
-                  ),
-                },
-              ]
-            : []
-
-        const convertedSCWrongAnswers = singleChoiceWrongAnswer
-          ? singleChoiceWrongAnswer
-              .filter((answer) => {
-                return answer.content
-              })
-              .map((answer) => {
-                return {
-                  content: extractChildFromRows(
-                    convert(convertEditorState(answer.content))
-                  ),
-                  isCorrect: false,
-                  feedback: extractChildFromRows(
-                    convert(convertEditorState(answer.feedback))
-                  ),
-                }
-              })
-          : []
-
-        const convertedMCRightAnswers = multipleChoiceRightAnswer
-          ? multipleChoiceRightAnswer
-              .filter((answer) => {
-                return answer.content
-              })
-              .map((answer) => {
-                return {
-                  content: extractChildFromRows(
-                    convert(convertEditorState(answer.content))
-                  ),
-                  isCorrect: true,
-                  feedback: {
-                    plugin: 'text',
-                  },
-                }
-              })
-          : []
-
-        const convertedMCWrongAnswers = multipleChoiceWrongAnswer
-          ? multipleChoiceWrongAnswer
-              .filter((answer) => {
-                return answer.content
-              })
-              .map((answer) => {
-                return {
-                  content: extractChildFromRows(
-                    convert(convertEditorState(answer.content))
-                  ),
-                  isCorrect: false,
-                  feedback: extractChildFromRows(
-                    convert(convertEditorState(answer.feedback))
-                  ),
-                }
-              })
-          : []
-        const isSingleChoice = !(
-          convertedMCRightAnswers.length || convertedMCWrongAnswers.length
-        )
-        return {
-          plugin: 'scMcExercise',
-          state: {
-            isSingleChoice: isSingleChoice,
-            answers: [
-              ...(isSingleChoice ? convertedSCRightAnswers : []),
-              ...(isSingleChoice ? convertedSCWrongAnswers : []),
-              ...(!isSingleChoice ? convertedMCRightAnswers : []),
-              ...(!isSingleChoice ? convertedMCWrongAnswers : []),
-            ],
-          },
-        }
-      }
-    }
-
-    function convertInputExercise():
-      | {
-          plugin: 'inputExercise'
-          state: StateTypeSerializedType<InputExercisePluginState>
-        }
-      | undefined {
-      if (
-        inputStringNormalizedMatchChallenge ||
-        inputNumberExactMatchChallenge ||
-        inputExpressionEqualMatchChallenge
-      ) {
-        const type = inputStringNormalizedMatchChallenge
-          ? 'input-string-normalized-match-challenge'
-          : inputNumberExactMatchChallenge
-          ? 'input-number-exact-match-challenge'
-          : 'input-expression-equal-match-challenge'
-
-        const inputExercises = filterDefined([
-          inputStringNormalizedMatchChallenge,
-          inputNumberExactMatchChallenge,
-          inputExpressionEqualMatchChallenge,
-        ])
-
-        return {
-          plugin: 'inputExercise',
-          state: {
-            type,
-            answers: extractInputAnswers(inputExercises, true),
-            unit: '',
-          },
-        }
-      }
-
-      function extractInputAnswers(
-        inputExercises: InputType[],
-        isCorrect: boolean
-      ): {
-        value: string
-        isCorrect: boolean
-        feedback: { plugin: string; state?: unknown }
-      }[] {
-        if (inputExercises.length === 0) return []
-
-        const answers = inputExercises.map((exercise) => {
-          return {
-            value: exercise.solution,
-            feedback: extractChildFromRows(
-              convert(convertEditorState(exercise.feedback))
-            ),
-            isCorrect,
-          }
-        })
-
-        const children = R.flatten(
-          inputExercises.map((exercise) => {
-            return filterDefined([
-              exercise['input-string-normalized-match-challenge'],
-              exercise['input-number-exact-match-challenge'],
-              exercise['input-expression-equal-match-challenge'],
-            ])
-          })
-        )
-
-        return R.concat(answers, extractInputAnswers(children, false))
-      }
-
-      function filterDefined<T>(array: (T | undefined)[]): T[] {
-        return array.filter((el) => typeof el !== 'undefined') as T[]
-      }
-    }*/
   }
-
-  // function extractChildFromRows(plugin: RowsPlugin) {
-  //   return plugin.state.length ? plugin.state[0] : { plugin: 'text' }
-  // }
 
   function convertTextExerciseGroup(
     uuid: ExerciseGroup

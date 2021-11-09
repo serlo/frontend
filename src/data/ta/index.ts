@@ -111,6 +111,7 @@ export const instanceData = {
       printModeChooseOption: 'Check one of the options.',
       trashedNotice: "இந்த உள்ளடக்கம் குப்பையாக குறிக்கப்பட்டுள்ளது.",
       unrevisedNotice: 'This content has no accepted revision yet. Please use the %link% to preview.',
+      emptyNotice: 'There is no content here. Please edit or delete.',
       strategy: 'Solution Strategy',
       picture: 'Picture',
       previewImage: 'Preview Image',
@@ -432,6 +433,21 @@ export const loggedInData = {
       },
       confirm: 'Confirm',
       unrevisedTaxNote: 'New content, not accepted yet'
+    },
+    mutations: {
+      success: {
+        trash: 'Successfully trashed 🗑',
+        restore: 'Successfully restored ♻️',
+        accept: 'Edit was accepted ✅',
+        reject: 'Edit not rejected ❌'
+      },
+      errors: {
+        UNAUTHENTICATED: 'You have to log in to use this function!',
+        FORBIDDEN: 'Sorry, you are not allowed to do that!',
+        INVALID_TOKEN: '',
+        BAD_USER_INPUT: '',
+        UNKNOWN: 'An unknown error…'
+      }
     },
     editor: {
       edtrIo: {

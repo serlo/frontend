@@ -6,7 +6,11 @@ import { MathSpan } from '@/components/content/math-span'
 import { SerloEditor } from '@/edtr-io/serlo-editor'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
 
-export function AddRevision({ initialState, type }: EditorPageData) {
+export function AddRevision({
+  initialState,
+  type,
+  needsReview,
+}: EditorPageData) {
   return (
     <>
       <MathSpan formula="" />
@@ -17,7 +21,7 @@ export function AddRevision({ initialState, type }: EditorPageData) {
             const cookies = typeof window === 'undefined' ? {} : Cookies.get()
             return cookies['CSRF']
           }}
-          mayCheckout /* can we use permission here? */
+          needsReview={needsReview}
           onSave={(data) => {
             return new Promise((resolve, reject) => {
               fetch(window.location.pathname, {

@@ -93,7 +93,7 @@ export const instanceData = {
       pages: "Kursübersicht",
       next: "Weiter",
       back: "Zurück",
-      noPagesWarning: "Sorry, für diesen Kurs gibt es noch keine akzeptierten Seiten.",
+      noPagesWarning: "Leider gibt es für diesen Kurs noch keine akzeptierten Seiten.",
       noRevisionForPage: "Ungegeprüfte Seite"
     },
     content: {
@@ -111,6 +111,7 @@ export const instanceData = {
       printModeChooseOption: "Kreuze eine der Optionen an",
       trashedNotice: "Dieser Inhalt wurde gelöscht.",
       unrevisedNotice: "Dieser Inhalt wurde noch nicht überprüft. Über den %link% kannst du dir die Entwürfe anzeigen lassen.",
+      emptyNotice: "Hier gibt es keinen Inhalt. Bitte bearbeiten oder löschen.",
       strategy: "Lösungsstrategie",
       picture: "Bild",
       previewImage: "Vorschaubild",
@@ -357,7 +358,7 @@ export const loggedInData = {
       title: "Eigenes Profil"
     }, {
       url: '/auth/password/change',
-      title: "Abmelden"
+      title: "Passwort ändern"
     }, {
       url: '/event/history/user/me',
       title: "Meine Bearbeitungen"
@@ -432,6 +433,21 @@ export const loggedInData = {
       },
       confirm: "Bestätigen",
       unrevisedTaxNote: "Neuer Inhalt, noch nicht akzeptiert"
+    },
+    mutations: {
+      success: {
+        trash: "Erfolgreich gelöscht 🗑",
+        restore: "Erfolgreich wiederhergestellt ♻️",
+        accept: "Bearbeitung wurde akzeptiert ✅",
+        reject: "Bearbeitung wurde abgelehnt ❌"
+      },
+      errors: {
+        UNAUTHENTICATED: "Für diese Funktion musst du dich einloggen!",
+        FORBIDDEN: "Dafür fehlen dir leider die Rechte!",
+        INVALID_TOKEN: '',
+        BAD_USER_INPUT: '',
+        UNKNOWN: "Ein unbekannter Fehler…"
+      }
     },
     editor: {
       edtrIo: {

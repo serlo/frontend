@@ -172,7 +172,7 @@ export function FrontendClientBase({
             )
         })
         .catch(() => {})
-      if (!cookies['__serlo_preview']) {
+      if (!cookies['__serlo_preview__']) {
         // bypass cache
         fetch('/api/frontend/preview').catch(() => {})
       }

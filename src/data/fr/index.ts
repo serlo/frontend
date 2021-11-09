@@ -111,6 +111,7 @@ export const instanceData = {
       printModeChooseOption: "Sélectionne une des options :",
       trashedNotice: "Ce contenu est marqué pour être supprimé.",
       unrevisedNotice: "Ce contenu n'a pas encore accepté de révision. Veuillez utiliser %link% pour un aperçu.",
+      emptyNotice: 'There is no content here. Please edit or delete.',
       strategy: "Stratégie de solution",
       picture: "Image",
       previewImage: "Aperçu de l'image",
@@ -357,7 +358,7 @@ export const loggedInData = {
       title: "Mon profil"
     }, {
       url: '/auth/password/change',
-      title: "Se déconnecter"
+      title: "Changer le mot de passe"
     }, {
       url: '/event/history/user/me',
       title: "Mes modifications"
@@ -432,6 +433,21 @@ export const loggedInData = {
       },
       confirm: "Confirmer",
       unrevisedTaxNote: "Nouveau contenu, pas encore accepté"
+    },
+    mutations: {
+      success: {
+        trash: 'Successfully trashed 🗑',
+        restore: 'Successfully restored ♻️',
+        accept: 'Edit was accepted ✅',
+        reject: 'Edit not rejected ❌'
+      },
+      errors: {
+        UNAUTHENTICATED: 'You have to log in to use this function!',
+        FORBIDDEN: 'Sorry, you are not allowed to do that!',
+        INVALID_TOKEN: '',
+        BAD_USER_INPUT: '',
+        UNKNOWN: 'An unknown error…'
+      }
     },
     editor: {
       edtrIo: {

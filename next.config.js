@@ -53,5 +53,5 @@ module.exports = withBundleAnalyzer({
     localeDetection: false,
   },
   reactStrictMode: true,
-  productionBrowserSourceMaps: true,
+  productionBrowserSourceMaps: true
 })

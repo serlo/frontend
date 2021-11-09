@@ -131,6 +131,7 @@ export type LandingSubjectIcon =
   | 'sustainability'
   | 'chemistry'
   | 'informatics'
+  | 'geography'
   | 'new'
 
 // Error page has some additional data
@@ -843,6 +844,7 @@ export interface TaxonomyData extends TaxonomyTermBase {
   id: number
   alias?: string
   title: string
+  trashed: boolean
   taxonomyType: TaxonomyTermType
   subterms: TaxonomySubTerm[]
   exercisesContent: (FrontendExerciseNode | FrontendExerciseGroupNode)[]

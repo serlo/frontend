@@ -1,19 +1,25 @@
 import { useScopedStore } from '@edtr-io/core'
 import { serializeRootDocument } from '@edtr-io/store'
 import * as R from 'ramda'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 import { CsrfContext } from '@/edtr-io/csrf-context'
 import { storeState, SaveContext } from '@/edtr-io/serlo-editor'
 
-export function useHandleSave(subscriptions?: boolean) {
+export function useHandleSave(visible: boolean, subscriptions?: boolean) {
   const store = useScopedStore()
   const getCsrfToken = useContext(CsrfContext)
-  const { onSave, mayCheckout } = useContext(SaveContext)
+  const { onSave, needsReview, showSkipCheckout } = useContext(SaveContext)
   const [pending, setPending] = useState(false)
   const [hasError, setHasError] = useState(false)
 
-  // if (!maySave()) return // Should be checked already…
+  useEffect(() => {
+    //reset when modal opens
+    if (visible) {
+      setPending(false)
+      setHasError(false)
+    }
+  }, [visible])
 
   const serializedRoot = serializeRootDocument()(store.getState())
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -36,23 +42,29 @@ export function useHandleSave(subscriptions?: boolean) {
     autoCheckout?: boolean
   ) => {
     setPending(true)
+
+    const subscriptionsControls = subscriptions
+      ? {
+          subscription: {
+            subscribe: notificationSubscription ? 1 : 0,
+            mailman: emailSubscription ? 1 : 0,
+          },
+        }
+      : {}
+
+    const checkoutControls =
+      !needsReview || (showSkipCheckout && autoCheckout)
+        ? {
+            checkout: true,
+          }
+        : {}
+
     onSave({
       ...serialized,
       csrf: getCsrfToken(),
       controls: {
-        ...(subscriptions
-          ? {
-              subscription: {
-                subscribe: notificationSubscription ? 1 : 0,
-                mailman: emailSubscription ? 1 : 0,
-              },
-            }
-          : {}),
-        ...(mayCheckout
-          ? {
-              checkout: autoCheckout,
-            }
-          : {}),
+        ...subscriptionsControls,
+        ...checkoutControls,
       },
     })
       .then(() => {
