@@ -192,10 +192,10 @@ function Content() {
           in Höhe von 2%. Sie zahlt also <Gappy index={1} /> € weniger.
         </p>
         <p className="serlo-p mb-block">
-          Als Maria heimkommt, ermahne sie ihre Eltern "Das Rad war aber ganz
-          schön teuer! Auch mit den ganzen Rabatten hast du jetzt 80% deiner
-          Ersparnisse verprasselt. Pass auf dein restliches Geld gut auf!"
-          Marias Ersparnisse sind noch <Gappy index={2} /> €.
+          Als Maria heimkommt, ermahne sie ihre Eltern &quot;Das Rad war aber
+          ganz schön teuer! Auch mit den ganzen Rabatten hast du jetzt 80%
+          deiner Ersparnisse verprasselt. Pass auf dein restliches Geld gut
+          auf!&quot; Marias Ersparnisse sind noch <Gappy index={2} /> €.
         </p>
       </GapEx>
       <div className="h-12" />
