@@ -157,7 +157,7 @@ export interface GroupedExercise extends BareExercise {
 export interface BareExerciseGroup extends Entity {
   __typename: 'ExerciseGroup'
   currentRevision?: GraphQL.Maybe<
-    Pick<GraphQL.ExerciseGroupRevision, 'content' | 'id'>
+    Pick<GraphQL.ExerciseGroupRevision, 'content' | 'id' | 'cohesive'>
   >
   revisions?: {
     totalCount: number
@@ -264,7 +264,15 @@ export interface SubTaxonomyTermChildTaxonomyTerm
 export interface TaxonomyTerm
   extends Pick<
     GraphQL.TaxonomyTerm,
-    'id' | 'alias' | 'instance' | 'type' | 'name' | 'description'
+    | 'id'
+    | 'alias'
+    | 'instance'
+    | 'type'
+    | 'name'
+    | 'description'
+    | 'weight'
+    | 'taxonomyId'
+    | 'trashed'
   > {
   __typename: 'TaxonomyTerm'
   navigation?: GraphQL.Maybe<Pick<GraphQL.Navigation, 'data' | 'path'>>

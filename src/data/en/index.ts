@@ -96,6 +96,8 @@ export const instanceData = {
       pages: 'Course overview',
       next: 'Next',
       back: 'Back',
+      noPagesWarning: 'Sorry there seem to be no reviewed pages in this course yet.',
+      noRevisionForPage: 'unreviewed page',
     },
     content: {
       show: 'show',
@@ -113,6 +115,8 @@ export const instanceData = {
       trashedNotice: 'This content is marked for deletion.',
       unrevisedNotice:
         'This content has no accepted revision yet. Please use the %link% to preview.',
+      emptyNotice:
+        'There is no content here. Please edit or delete.',
       strategy: 'Solution Strategy',
       picture: 'Picture',
       previewImage: 'Preview Image',
@@ -465,13 +469,28 @@ export const loggedInData = {
       confirm: 'Confirm',
       unrevisedTaxNote: 'New content, not accepted yet',
     },
+    mutations: {
+      success: {
+        trash:'Successfully trashed 🗑',
+        restore: 'Successfully restored ♻️',
+        accept: 'Edit was accepted ✅',
+        reject: 'Edit not rejected ❌',
+      }, 
+      errors: {
+        UNAUTHENTICATED: 'You have to log in to use this function!',
+        FORBIDDEN:'Sorry, you are not allowed to do that!',
+        INVALID_TOKEN: '',
+        BAD_USER_INPUT: '',
+        UNKNOWN: 'An unknown error…',
+      }
+    },
     editor: {
       edtrIo: {
         extendedSettings: 'Extended Settings',
         close: 'Close',
         notSupportedYet:
           "This content type isn't supported by the new editor, yet.",
-        editInOld: 'Edit the content in the old editor.',
+        editInOld: 'You can edit the content in the old editor',
         conversionError:
           'An error occurred during the conversion.',
         oldRevisionFound:

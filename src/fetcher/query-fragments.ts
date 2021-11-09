@@ -40,10 +40,12 @@ export const sharedRevisionFragments = gql`
   fragment exerciseGroupRevision on ExerciseGroupRevision {
     id
     content
+    cohesive
   }
 
   fragment eventRevision on EventRevision {
     id
+    title
     content
   }
 `
@@ -243,6 +245,43 @@ export const sharedEventFragments = gql`
       currentRevision {
         title
       }
+    }
+  }
+`
+
+export const sharedExerciseFragments = gql`
+  fragment exercise on AbstractExercise {
+    id
+    alias
+    instance
+    trashed
+    currentRevision {
+      content
+    }
+    solution {
+      ...solution
+    }
+    ...license
+  }
+
+  fragment solution on Solution {
+    id
+    currentRevision {
+      content
+    }
+    ...license
+  }
+`
+
+export const sharedLicenseFragments = gql`
+  fragment license on AbstractRepository {
+    license {
+      id
+      url
+      title
+      default
+      agreement
+      iconHref
     }
   }
 `

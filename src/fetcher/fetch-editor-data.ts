@@ -1,5 +1,6 @@
 import { request } from 'graphql-request'
 
+import { createBreadcrumbs } from './create-breadcrumbs'
 import { dataQuery } from './query'
 import { QueryResponse, QueryResponseRevision } from './query-types'
 import { revisionQuery } from './revision/query'
@@ -7,14 +8,16 @@ import { endpoint } from '@/api/endpoint'
 import {
   editorResponseToState,
   isError,
-} from '@/components/edtr-io/editor-response-to-state'
-import { revisionResponseToResponse } from '@/components/edtr-io/revision-response-to-response'
-import { SerloEditorProps } from '@/components/edtr-io/serlo-editor'
+} from '@/edtr-io/editor-response-to-state'
+import { revisionResponseToResponse } from '@/edtr-io/revision-response-to-response'
+import { SerloEditorProps } from '@/edtr-io/serlo-editor'
 import { parseLanguageSubfolder } from '@/helper/feature-i18n'
 
 export interface EditorPageData {
   initialState: SerloEditorProps['initialState']
   type: string
+  converted?: boolean
+  needsReview?: boolean
 }
 
 export interface EditorFetchErrorData {
@@ -35,12 +38,6 @@ export async function fetchEditorData(
     let data = null
     const repoId = parseInt(ids[0])
     const revisionId = parseInt(ids[1])
-
-    const onError = (error: Error, context: Record<string, string>) => {
-      // TODO: Handle
-      console.log(context)
-      alert(error)
-    }
 
     if (revisionId && !isNaN(revisionId)) {
       const { uuid } = await request<{
@@ -63,7 +60,14 @@ export async function fetchEditorData(
 
     if (!data) return { errorType: 'failed-fetch' }
 
-    const result = editorResponseToState(data, onError)
+    const result = editorResponseToState(data)
+
+    const breadcrumbsData = createBreadcrumbs(data)?.filter(
+      (entry) => entry.url == '/community/106082/sandkasten'
+    )
+    const isSandbox = breadcrumbsData && breadcrumbsData.length > 0
+    const noReviewTypes = ['TaxonomyTerm', 'Page', 'Event', 'User']
+    const typeNeedsReview = !noReviewTypes.includes(data.__typename)
 
     if (isError(result)) {
       return { errorType: result.error }
@@ -71,6 +75,7 @@ export async function fetchEditorData(
       return {
         ...result,
         type: data.__typename,
+        needsReview: !isSandbox && typeNeedsReview,
       }
     }
   } catch (e) {

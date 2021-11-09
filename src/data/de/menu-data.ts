@@ -35,7 +35,6 @@ export const headerData: InstanceData['headerData'] = [
       },
       { url: '/informatik', title: 'Informatik' },
       { url: '/chemie', title: 'Chemie' },
-      { url: '/physik', title: 'Physik' },
       { url: '/lerntipps', title: 'Lerntipps' },
       {
         url: '/community/neue-fächer-themen',

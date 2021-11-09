@@ -1,7 +1,11 @@
 // These types are auto-generated from the GraphQL schema
 import { gql } from 'graphql-request'
 
-import { sharedRevisionFragments } from '../query-fragments'
+import {
+  sharedExerciseFragments,
+  sharedLicenseFragments,
+  sharedRevisionFragments,
+} from '../query-fragments'
 
 export const revisionQuery = gql`
   query revisionUuid($id: Int) {
@@ -25,6 +29,7 @@ export const revisionQuery = gql`
           ...articleRevision
           changes
           repository {
+            ...taxonomyTerms
             ...license
             trashed
             instance
@@ -66,6 +71,7 @@ export const revisionQuery = gql`
           ...appletRevision
           changes
           repository {
+            ...taxonomyTerms
             ...license
             trashed
             instance
@@ -87,6 +93,7 @@ export const revisionQuery = gql`
           ...courseRevision
           changes
           repository {
+            ...taxonomyTerms
             ...license
             trashed
             instance
@@ -123,6 +130,9 @@ export const revisionQuery = gql`
                 trashed
               }
             }
+            course {
+              ...taxonomyTerms
+            }
           }
         }
         ... on EventRevision {
@@ -150,6 +160,7 @@ export const revisionQuery = gql`
           content
           changes
           repository {
+            ...taxonomyTerms
             ...license
             trashed
             instance
@@ -207,6 +218,7 @@ export const revisionQuery = gql`
         ... on ExerciseGroupRevision {
           ...exerciseGroupRevision
           changes
+          cohesive
           repository {
             ...license
             trashed
@@ -226,6 +238,12 @@ export const revisionQuery = gql`
               nodes {
                 id
                 trashed
+              }
+            }
+            exercises {
+              ...exercise
+              revisions(unrevised: true) {
+                totalCount
               }
             }
           }
@@ -270,6 +288,7 @@ export const revisionQuery = gql`
           ...videoRevision
           changes
           repository {
+            ...taxonomyTerms
             ...license
             trashed
             instance
@@ -291,17 +310,27 @@ export const revisionQuery = gql`
     }
   }
 
-  fragment license on AbstractRepository {
-    license {
-      id
-      url
-      title
-      default
-      agreement
-      iconHref
+  fragment path on Navigation {
+    path {
+      nodes {
+        label
+        url
+      }
     }
   }
 
+  fragment taxonomyTerms on AbstractTaxonomyTermChild {
+    taxonomyTerms {
+      nodes {
+        navigation {
+          ...path
+        }
+      }
+    }
+  }
+
+  ${sharedLicenseFragments}
+  ${sharedExerciseFragments}
   ${sharedRevisionFragments}
 
   fragment courseRevision on CourseRevision {

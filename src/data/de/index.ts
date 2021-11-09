@@ -92,7 +92,9 @@ export const instanceData = {
       showPages: "Kursübersicht anzeigen",
       pages: "Kursübersicht",
       next: "Weiter",
-      back: "Zurück"
+      back: "Zurück",
+      noPagesWarning: "Leider gibt es für diesen Kurs noch keine akzeptierten Seiten.",
+      noRevisionForPage: "Ungegeprüfte Seite"
     },
     content: {
       show: "anzeigen",
@@ -109,6 +111,7 @@ export const instanceData = {
       printModeChooseOption: "Kreuze eine der Optionen an",
       trashedNotice: "Dieser Inhalt wurde gelöscht.",
       unrevisedNotice: "Dieser Inhalt wurde noch nicht überprüft. Über den %link% kannst du dir die Entwürfe anzeigen lassen.",
+      emptyNotice: "Hier gibt es keinen Inhalt. Bitte bearbeiten oder löschen.",
       strategy: "Lösungsstrategie",
       picture: "Bild",
       previewImage: "Vorschaubild",
@@ -355,7 +358,7 @@ export const loggedInData = {
       title: "Eigenes Profil"
     }, {
       url: '/auth/password/change',
-      title: "Abmelden"
+      title: "Passwort ändern"
     }, {
       url: '/event/history/user/me',
       title: "Meine Bearbeitungen"
@@ -431,12 +434,27 @@ export const loggedInData = {
       confirm: "Bestätigen",
       unrevisedTaxNote: "Neuer Inhalt, noch nicht akzeptiert"
     },
+    mutations: {
+      success: {
+        trash: "Erfolgreich gelöscht 🗑",
+        restore: "Erfolgreich wiederhergestellt ♻️",
+        accept: "Bearbeitung wurde akzeptiert ✅",
+        reject: "Bearbeitung wurde abgelehnt ❌"
+      },
+      errors: {
+        UNAUTHENTICATED: "Für diese Funktion musst du dich einloggen!",
+        FORBIDDEN: "Dafür fehlen dir leider die Rechte!",
+        INVALID_TOKEN: '',
+        BAD_USER_INPUT: '',
+        UNKNOWN: "Ein unbekannter Fehler…"
+      }
+    },
     editor: {
       edtrIo: {
         extendedSettings: "Erweiterte Einstellungen",
         close: "Schließen",
         notSupportedYet: "Dieser Inhaltstyp wird vom neuen Editor noch nicht unterstützt.",
-        editInOld: "Bearbeite den Inhalt im alten Editor.",
+        editInOld: "Du kannst den Inhalt im alten Editor bearbeiten",
         conversionError: "Leider trat ein Fehler bei der Konvertierung auf.",
         oldRevisionFound: "Wir haben eine alte Bearbeitung von dir gefunden. Möchtest du diese wiederherstellen?",
         notConverted: "Dieser Inhalt wurde noch nicht im neuen Editor bearbeitet.",
