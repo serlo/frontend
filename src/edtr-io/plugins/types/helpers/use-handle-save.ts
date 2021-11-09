@@ -9,7 +9,7 @@ import { storeState, SaveContext } from '@/edtr-io/serlo-editor'
 export function useHandleSave(visible: boolean, subscriptions?: boolean) {
   const store = useScopedStore()
   const getCsrfToken = useContext(CsrfContext)
-  const { onSave, showSkipCheckout } = useContext(SaveContext)
+  const { onSave, needsReview, showSkipCheckout } = useContext(SaveContext)
   const [pending, setPending] = useState(false)
   const [hasError, setHasError] = useState(false)
 
@@ -42,23 +42,29 @@ export function useHandleSave(visible: boolean, subscriptions?: boolean) {
     autoCheckout?: boolean
   ) => {
     setPending(true)
+
+    const subscriptionsControls = subscriptions
+      ? {
+          subscription: {
+            subscribe: notificationSubscription ? 1 : 0,
+            mailman: emailSubscription ? 1 : 0,
+          },
+        }
+      : {}
+
+    const checkoutControls =
+      !needsReview || (showSkipCheckout && autoCheckout)
+        ? {
+            checkout: true,
+          }
+        : {}
+
     onSave({
       ...serialized,
       csrf: getCsrfToken(),
       controls: {
-        ...(subscriptions
-          ? {
-              subscription: {
-                subscribe: notificationSubscription ? 1 : 0,
-                mailman: emailSubscription ? 1 : 0,
-              },
-            }
-          : {}),
-        ...(showSkipCheckout
-          ? {
-              checkout: autoCheckout,
-            }
-          : {}),
+        ...subscriptionsControls,
+        ...checkoutControls,
       },
     })
       .then(() => {

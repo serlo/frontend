@@ -17,7 +17,7 @@ export interface EditorPageData {
   initialState: SerloEditorProps['initialState']
   type: string
   converted?: boolean
-  needsReview?: boolean
+  needsReview: boolean
 }
 
 export interface EditorFetchErrorData {
@@ -66,7 +66,7 @@ export async function fetchEditorData(
       (entry) => entry.url == '/community/106082/sandkasten'
     )
     const isSandbox = breadcrumbsData && breadcrumbsData.length > 0
-    const noReviewTypes = ['TaxonomyTerm', 'Page', 'Event', 'User']
+    const noReviewTypes = ['TaxonomyTerm', 'Page', 'User']
     const typeNeedsReview = !noReviewTypes.includes(data.__typename)
 
     if (isError(result)) {
