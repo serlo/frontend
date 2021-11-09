@@ -1,5 +1,11 @@
 import clsx from 'clsx'
-import { useState } from 'react'
+import React, {
+  createContext,
+  useState,
+  useContext,
+  ReactNode,
+  Fragment,
+} from 'react'
 
 import { ExerciseNumbering } from '@/components/content/exercises/exercise-numbering'
 import { FrontendClientBase } from '@/components/frontend-client-base'
@@ -12,136 +18,22 @@ export default renderedPageNoHooks(() => (
 ))
 
 function Content() {
-  const [g1Mode, setG1Mode] = useState<GapProps['mode']>('inactive')
-  const [g1Text, setG1Text] = useState('')
-
-  const [c1Mode, setC1Mode] = useState<GapProps['mode']>('choice')
-
-  const [c2Mode, setC2Mode] = useState<GapProps['mode']>('choice')
-
-  const [g2Mode, setG2Mode] = useState<GapProps['mode']>('inactive')
-  const [g2Text, setG2Text] = useState('')
-
-  const [g3Mode, setG3Mode] = useState<GapProps['mode']>('inactive')
-  const [g3Text, setG3Text] = useState('')
-
-  const [g4Mode, setG4Mode] = useState<GapProps['mode']>('inactive')
-  const [g4Text, setG4Text] = useState('')
-
-  const [g5Mode, setG5Mode] = useState<GapProps['mode']>('inactive')
-  const [g5Text, setG5Text] = useState('')
-
-  const [g6Mode, setG6Mode] = useState<GapProps['mode']>('inactive')
-  const [g6Text, setG6Text] = useState('')
-
-  const [g7Mode, setG7Mode] = useState<GapProps['mode']>('inactive')
-  const [g7Text, setG7Text] = useState('')
-
-  const [g8Mode, setG8Mode] = useState<GapProps['mode']>('inactive')
-  const [g8Text, setG8Text] = useState('')
-
-  const [g9Mode, setG9Mode] = useState<GapProps['mode']>('inactive')
-  const [g9Text, setG9Text] = useState('')
-
-  const [g10Mode, setG10Mode] = useState<GapProps['mode']>('inactive')
-  const [g10Text, setG10Text] = useState('')
-
-  const [c3Mode, setC3Mode] = useState<GapProps['mode']>('choice')
-
-  const [c4Mode, setC4Mode] = useState<GapProps['mode']>('choice')
-
-  const [c5Mode, setC5Mode] = useState<GapProps['mode']>('choice')
-
-  const [c6Mode, setC6Mode] = useState<GapProps['mode']>('choice')
-
-  const [c7Mode, setC7Mode] = useState<GapProps['mode']>('choice')
-
-  const [c8Mode, setC8Mode] = useState<GapProps['mode']>('choice')
-
-  const [c9Mode, setC9Mode] = useState<GapProps['mode']>('choice')
-
-  const [c10Mode, setC10Mode] = useState<GapProps['mode']>('choice')
-
-  const [c11Mode, setC11Mode] = useState<GapProps['mode']>('choice')
-
   return (
     <>
       <h1 className="serlo-h1 mt-16 mb-20">Lückentext</h1>
       <ExerciseNumbering index={0} href="" />
-      <div>
+      <GapEx choices={['Prozentpunkte', 'Prozent']} count={1}>
         <p className="serlo-p mb-block">Ergänze folgende Lücke:</p>
         <p className="serlo-p mb-block">
           Im Jahr 2007 wurde die Umsatzsteuer von 16% auf 19% erhöht. Die Steuer
-          stieg also um 3{' '}
-          <Gap
-            mode={g1Mode}
-            text={g1Text}
-            onClick={() => {
-              if (g1Mode == 'inactive') {
-                setG1Mode('selected')
-              }
-            }}
-          />
-          .
+          stieg also um 3 <Gappy index={0} />.
         </p>
-        <p className="serlo-p mb-block">
-          <Gap
-            mode={c1Mode}
-            text="Prozentpunkte"
-            onClick={() => {
-              if (g1Mode == 'selected') {
-                setG1Mode('filled')
-                setG1Text('Prozentpunkte')
-                setC1Mode('choice-inactive')
-              }
-            }}
-          />
-          <Gap
-            mode={c2Mode}
-            text="Prozent"
-            onClick={() => {
-              if (g1Mode == 'selected') {
-                setG1Mode('filled')
-                setG1Text('Prozent')
-                setC2Mode('choice-inactive')
-              }
-            }}
-          />
-        </p>
-        <button
-          className={clsx(
-            'serlo-button serlo-make-interactive-primary',
-            'mt-4 mx-side',
-            g1Mode !== 'filled' &&
-              'opacity-100 bg-transparent text-gray-400 pointer-events-none'
-          )}
-          onPointerUp={(e) => e.currentTarget.blur()}
-          onClick={() => {
-            if (g1Text == 'Prozentpunkte') {
-              setG1Mode('right')
-            } else {
-              setG1Mode('wrong')
-            }
-          }}
-        >
-          Stimmt&apos;s?
-        </button>{' '}
-        {(g1Mode == 'right' || g1Mode == 'wrong') && (
-          <button
-            onClick={() => {
-              setG1Mode('inactive')
-              setG1Text('')
-              setC1Mode('choice')
-              setC2Mode('choice')
-            }}
-          >
-            Erneut versuchen
-          </button>
-        )}
-      </div>
+      </GapEx>
       <div className="h-12" />
       <ExerciseNumbering index={1} href="" />
-      <div>
+      <GapEx
+        choices={['42', '10', '45', '15', '450', '440', '0,772', '0,75', '700']}
+      >
         <p className="serlo-p mb-block">Ergänze folgende Lücke:</p>
         <table className="serlo-table serlo-p">
           <tbody>
@@ -153,67 +45,27 @@ function Content() {
             <tr>
               <td className="serlo-td">28%</td>
               <td className="serlo-td">
-                <Gap
-                  mode={g2Mode}
-                  text={g2Text}
-                  onClick={() => {
-                    if (g2Mode == 'inactive') {
-                      resetSelection()
-                      setG2Mode('selected')
-                    }
-                  }}
-                />{' '}
-                €
+                <Gappy index={0} /> €
               </td>
               <td className="serlo-td">150 €</td>
             </tr>
             <tr>
               <td className="serlo-td">12,5 %</td>
               <td className="serlo-td">
-                <Gap
-                  mode={g3Mode}
-                  text={g3Text}
-                  onClick={() => {
-                    if (g3Mode == 'inactive') {
-                      resetSelection()
-                      setG3Mode('selected')
-                    }
-                  }}
-                />{' '}
-                kg
+                <Gappy index={1} /> kg
               </td>
               <td className="serlo-td">80 kg</td>
             </tr>
             <tr>
               <td className="serlo-td">
-                <Gap
-                  mode={g4Mode}
-                  text={g4Text}
-                  onClick={() => {
-                    if (g4Mode == 'inactive') {
-                      resetSelection()
-                      setG4Mode('selected')
-                    }
-                  }}
-                />{' '}
-                %
+                <Gappy index={2} /> %
               </td>
               <td className="serlo-td">162 cm</td>
               <td className="serlo-td">360 cm</td>
             </tr>
             <tr>
               <td className="serlo-td">
-                <Gap
-                  mode={g5Mode}
-                  text={g5Text}
-                  onClick={() => {
-                    if (g5Mode == 'inactive') {
-                      resetSelection()
-                      setG5Mode('selected')
-                    }
-                  }}
-                />{' '}
-                %
+                <Gappy index={3} /> %
               </td>
               <td className="serlo-td">6,81 €</td>
               <td className="serlo-td">45,40 €</td>
@@ -222,66 +74,26 @@ function Content() {
               <td className="serlo-td">18 %</td>
               <td className="serlo-td">81 cm</td>
               <td className="serlo-td">
-                <Gap
-                  mode={g6Mode}
-                  text={g6Text}
-                  onClick={() => {
-                    if (g6Mode == 'inactive') {
-                      resetSelection()
-                      setG6Mode('selected')
-                    }
-                  }}
-                />{' '}
-                cm
+                <Gappy index={4} /> cm
               </td>
             </tr>
             <tr>
               <td className="serlo-td">37,5 %</td>
               <td className="serlo-td">165 g</td>
               <td className="serlo-td">
-                <Gap
-                  mode={g7Mode}
-                  text={g7Text}
-                  onClick={() => {
-                    if (g7Mode == 'inactive') {
-                      resetSelection()
-                      setG7Mode('selected')
-                    }
-                  }}
-                />{' '}
-                g
+                <Gappy index={5} /> g
               </td>
             </tr>
             <tr>
               <td className="serlo-td">0,8 %</td>
               <td className="serlo-td">
-                <Gap
-                  mode={g8Mode}
-                  text={g8Text}
-                  onClick={() => {
-                    if (g8Mode == 'inactive') {
-                      resetSelection()
-                      setG8Mode('selected')
-                    }
-                  }}
-                />{' '}
-                cm²
+                <Gappy index={6} /> cm²
               </td>
               <td className="serlo-td">96,5 cm²</td>
             </tr>
             <tr>
               <td className="serlo-td">
-                <Gap
-                  mode={g9Mode}
-                  text={g9Text}
-                  onClick={() => {
-                    if (g9Mode == 'inactive') {
-                      resetSelection()
-                      setG9Mode('selected')
-                    }
-                  }}
-                />{' '}
-                %
+                <Gappy index={7} /> %
               </td>
               <td className="serlo-td">16,5 €</td>
               <td className="serlo-td">2200 €</td>
@@ -290,269 +102,125 @@ function Content() {
               <td className="serlo-td">120 %</td>
               <td className="serlo-td">840 g</td>
               <td className="serlo-td">
-                <Gap
-                  mode={g10Mode}
-                  text={g10Text}
-                  onClick={() => {
-                    if (g10Mode == 'inactive') {
-                      resetSelection()
-                      setG10Mode('selected')
-                    }
-                  }}
-                />{' '}
-                g
+                <Gappy index={8} /> g
               </td>
             </tr>
           </tbody>
         </table>
-        <p className="serlo-p mb-block">
-          <Gap
-            mode={c5Mode}
-            text="45"
-            onClick={() => {
-              pushToSelected('45')
-              setC5Mode('choice-inactive')
-            }}
-          />
-          <Gap
-            mode={c3Mode}
-            text="42"
-            onClick={() => {
-              pushToSelected('42')
-              setC3Mode('choice-inactive')
-            }}
-          />
-          <Gap
-            mode={c7Mode}
-            text="450"
-            onClick={() => {
-              pushToSelected('450')
-              setC7Mode('choice-inactive')
-            }}
-          />
-          <Gap
-            mode={c11Mode}
-            text="700"
-            onClick={() => {
-              pushToSelected('700')
-              setC11Mode('choice-inactive')
-            }}
-          />
-          <Gap
-            mode={c4Mode}
-            text="10"
-            onClick={() => {
-              pushToSelected('10')
-              setC4Mode('choice-inactive')
-            }}
-          />
-          <Gap
-            mode={c10Mode}
-            text="0,75"
-            onClick={() => {
-              pushToSelected('0,75')
-              setC10Mode('choice-inactive')
-            }}
-          />
-          <Gap
-            mode={c6Mode}
-            text="15"
-            onClick={() => {
-              pushToSelected('15')
-              setC6Mode('choice-inactive')
-            }}
-          />
-          <Gap
-            mode={c8Mode}
-            text="440"
-            onClick={() => {
-              pushToSelected('440')
-              setC8Mode('choice-inactive')
-            }}
-          />
-          <Gap
-            mode={c9Mode}
-            text="0,772"
-            onClick={() => {
-              pushToSelected('0,772')
-              setC9Mode('choice-inactive')
-            }}
-          />
-        </p>
-        <button
-          className={clsx(
-            'serlo-button serlo-make-interactive-primary',
-            'mt-4 mx-side',
-            !(
-              g2Mode == 'filled' &&
-              g3Mode == 'filled' &&
-              g4Mode == 'filled' &&
-              g5Mode == 'filled' &&
-              g6Mode == 'filled' &&
-              g7Mode == 'filled' &&
-              g8Mode == 'filled' &&
-              g9Mode == 'filled' &&
-              g10Mode == 'filled'
-            ) && 'opacity-100 bg-transparent text-gray-400 pointer-events-none'
-          )}
-          onPointerUp={(e) => e.currentTarget.blur()}
-          onClick={() => {
-            if (g2Text == '42') {
-              setG2Mode('right')
-            } else {
-              setG2Mode('wrong')
-            }
-            if (g3Text == '10') {
-              setG3Mode('right')
-            } else {
-              setG3Mode('wrong')
-            }
-            if (g4Text == '45') {
-              setG4Mode('right')
-            } else {
-              setG4Mode('wrong')
-            }
-            if (g5Text == '15') {
-              setG5Mode('right')
-            } else {
-              setG5Mode('wrong')
-            }
-            if (g6Text == '450') {
-              setG6Mode('right')
-            } else {
-              setG6Mode('wrong')
-            }
-            if (g7Text == '440') {
-              setG7Mode('right')
-            } else {
-              setG7Mode('wrong')
-            }
-            if (g8Text == '0,772') {
-              setG8Mode('right')
-            } else {
-              setG8Mode('wrong')
-            }
-            if (g9Text == '0,75') {
-              setG9Mode('right')
-            } else {
-              setG9Mode('wrong')
-            }
-            if (g10Text == '700') {
-              setG10Mode('right')
-            } else {
-              setG10Mode('wrong')
-            }
-          }}
+      </GapEx>
+      <div className="h-12" />
+      <ExerciseNumbering index={2} href="" />
+      <p className="serlo-p">Fülle die Lücken</p>
+      <div className="mt-12 ml-16">
+        <ExerciseNumbering isChild index={0} href="" />
+        <GapEx choices={['Grundwert', 'Prozentwert', 'Prozentsatz']}>
+          <p className="serlo-p mb-block">
+            Von 500 Nüssen, die ein Wichhörnchen vergräbt, sind 200 davon
+            Haselnüsse. Das sind 40% der Nüsse.
+          </p>
+          <p className="serlo-p mb-block">
+            500 Nüsse ≙ <Gappy index={0} />
+          </p>
+          <p className="serlo-p mb-block">
+            200 Haselnüsse ≙ <Gappy index={1} />
+          </p>
+          <p className="serlo-p mb-block">
+            40 % ≙ <Gappy index={2} />
+          </p>
+        </GapEx>
+        <div className="h-12" />
+        <ExerciseNumbering isChild index={1} href="" />
+        <GapEx choices={['Prozentwert', 'Grundwert', 'Prozentsatz']}>
+          <p className="serlo-p mb-block">
+            Von 200 Haselnüssen findet das Eichhörnchen 180 wieder. Das sind
+            90%.
+          </p>
+          <p className="serlo-p mb-block">
+            180 Haselnüsse ≙ <Gappy index={0} />
+          </p>
+          <p className="serlo-p mb-block">
+            200 Haselnüsse ≙ <Gappy index={1} />
+          </p>
+          <p className="serlo-p mb-block">
+            90 % ≙ <Gappy index={2} />
+          </p>
+        </GapEx>
+        <div className="h-12" />
+        <ExerciseNumbering isChild index={2} href="" />
+        <GapEx
+          choices={[
+            'Grundwert',
+            '(ohne Fachbegriff)',
+            'Prozentwert',
+            'Prozentsatz',
+          ]}
         >
-          Stimmt&apos;s?
-        </button>
-        {(g2Mode == 'right' || g2Mode == 'wrong') && (
-          <button
-            onClick={() => {
-              setG2Mode('inactive')
-              setG3Mode('inactive')
-              setG4Mode('inactive')
-              setG5Mode('inactive')
-              setG6Mode('inactive')
-              setG7Mode('inactive')
-              setG8Mode('inactive')
-              setG9Mode('inactive')
-              setG10Mode('inactive')
-              setG2Text('')
-              setG3Text('')
-              setG4Text('')
-              setG5Text('')
-              setG6Text('')
-              setG7Text('')
-              setG8Text('')
-              setG9Text('')
-              setG10Text('')
-              setC3Mode('choice')
-              setC4Mode('choice')
-              setC5Mode('choice')
-              setC6Mode('choice')
-              setC7Mode('choice')
-              setC8Mode('choice')
-              setC9Mode('choice')
-              setC10Mode('choice')
-              setC11Mode('choice')
-            }}
-          >
-            Erneut versuchen
-          </button>
-        )}
+          <p className="serlo-p mb-block">
+            Im Jahr darauf hat das Eichhörnchen 400 Nüsse als Wintervorrat
+            vergrabe. 500 Nüsse findet es. 100 Nüsse sind vom Vorjahr oder
+            anderen Eichhörnchen. Das Eichhörnchen hat also 125% der Nüsse
+            wiedergefunden.
+          </p>
+          <p className="serlo-p mb-block">
+            400 Nüsse ≙ <Gappy index={0} />
+          </p>
+          <p className="serlo-p mb-block">
+            100 Nüsse ≙ <Gappy index={1} />
+          </p>
+          <p className="serlo-p mb-block">
+            500 Nüsse ≙ <Gappy index={2} />
+          </p>
+          <p className="serlo-p mb-block">
+            125 % ≙ <Gappy index={3} />
+          </p>
+        </GapEx>
       </div>
+      <div className="h-12" />
+      <ExerciseNumbering index={3} href="" />
+      <GapEx
+        choices={['25', '9,60', '117,60', '33', '12,80', '588', '120']}
+        count={3}
+      >
+        <p className="serlo-p mb-block">Ergänze die Lücken.</p>
+        <p className="serlo-p mb-block">
+          Maria möchte sich von ihren Ersparnissen ein Mountainbike kaufen,
+          dessen Preis von 640€ auf 480€ reduziert wurde. Der Preis wurde um
+          <Gappy index={0} /> % gesenkt.
+        </p>
+        <p className="serlo-p mb-block">
+          Maria zahlt bar und erhält 2% Skonto, also einen zusätzlichen Rabatt
+          in Höhe von 2%. Sie zahlt also <Gappy index={1} /> € weniger.
+        </p>
+        <p className="serlo-p mb-block">
+          Als Maria heimkommt, ermahne sie ihre Eltern "Das Rad war aber ganz
+          schön teuer! Auch mit den ganzen Rabatten hast du jetzt 80% deiner
+          Ersparnisse verprasselt. Pass auf dein restliches Geld gut auf!"
+          Marias Ersparnisse sind noch <Gappy index={2} /> €.
+        </p>
+      </GapEx>
+      <div className="h-12" />
+      <ExerciseNumbering index={4} href="" />
+      <GapEx
+        choices={[
+          'Prozentrechnung',
+          'Kapital',
+          'Zinsen',
+          'Zinssatz',
+          'Zinseszins',
+        ]}
+      >
+        <p className="serlo-p mb-block">Fülle die Lücken.</p>
+        <p className="serlo-p mb-block">
+          Die Zinsrechnung ist eine besondere Art der <Gappy index={0} />. Der
+          Grundwert heißt in der Zinsrechnung <Gappy index={1} />; der
+          Prozentwert wird als <Gappy index={2} /> bezeichnet. Der Prozentsatz
+          heißt hier <Gappy index={3} />. Als
+          <Gappy index={4} /> bezeichnet man die Verzinsung bereits verzinsten
+          Kapitals.
+        </p>
+      </GapEx>
     </>
   )
-
-  function resetSelection() {
-    if (g2Mode == 'selected') {
-      setG2Mode('inactive')
-    }
-    if (g3Mode == 'selected') {
-      setG3Mode('inactive')
-    }
-    if (g4Mode == 'selected') {
-      setG4Mode('inactive')
-    }
-    if (g5Mode == 'selected') {
-      setG5Mode('inactive')
-    }
-    if (g6Mode == 'selected') {
-      setG6Mode('inactive')
-    }
-    if (g7Mode == 'selected') {
-      setG7Mode('inactive')
-    }
-    if (g8Mode == 'selected') {
-      setG8Mode('inactive')
-    }
-    if (g9Mode == 'selected') {
-      setG9Mode('inactive')
-    }
-    if (g10Mode == 'selected') {
-      setG10Mode('inactive')
-    }
-  }
-
-  function pushToSelected(val: string) {
-    if (g2Mode == 'selected') {
-      setG2Mode('filled')
-      setG2Text(val)
-    }
-    if (g3Mode == 'selected') {
-      setG3Mode('filled')
-      setG3Text(val)
-    }
-    if (g4Mode == 'selected') {
-      setG4Mode('filled')
-      setG4Text(val)
-    }
-    if (g5Mode == 'selected') {
-      setG5Mode('filled')
-      setG5Text(val)
-    }
-    if (g6Mode == 'selected') {
-      setG6Mode('filled')
-      setG6Text(val)
-    }
-    if (g7Mode == 'selected') {
-      setG7Mode('filled')
-      setG7Text(val)
-    }
-    if (g8Mode == 'selected') {
-      setG8Mode('filled')
-      setG8Text(val)
-    }
-    if (g9Mode == 'selected') {
-      setG9Mode('filled')
-      setG9Text(val)
-    }
-    if (g10Mode == 'selected') {
-      setG10Mode('filled')
-      setG10Text(val)
-    }
-  }
 }
 
 interface GapProps {
@@ -652,4 +320,155 @@ function Gap({ mode, text, onClick }: GapProps) {
     )
   }
   return null
+}
+
+interface GapContext {
+  selected: number
+  choices: string[]
+  filled: number[]
+  checked: boolean
+  select: (i: number) => void
+}
+
+const GapContext = createContext<GapContext | null>(null)
+
+interface GapExProps {
+  choices: string[]
+  children: ReactNode
+  count?: number
+}
+
+function GapEx({ choices, children, count }: GapExProps) {
+  const gapCount = count ?? choices.length
+
+  const [selected, setSelected] = useState(-1)
+  const [filled, setFilled] = useState<number[]>(Array(gapCount).fill(-1))
+  const [checked, setChecked] = useState(false)
+
+  const [sortedChoices] = useState(() => {
+    const copy = choices.slice(0)
+    copy.sort()
+    return copy
+  })
+
+  function select(i: number) {
+    setSelected(i)
+  }
+
+  const alright = checked && filled.every((v, i) => v == i)
+
+  const allfilled = filled.every((i) => i >= 0)
+
+  return (
+    <GapContext.Provider value={{ selected, choices, filled, checked, select }}>
+      {children}
+      <p className="serlo-p mb-block">
+        {sortedChoices.map((c) => {
+          return (
+            <Fragment key={c}>
+              <Gap
+                text={c}
+                mode={
+                  filled.some((i) => choices[i] == c) || allfilled
+                    ? 'choice-inactive'
+                    : 'choice'
+                }
+                onClick={() => {
+                  if (allfilled) return
+
+                  let toFill = selected
+                  if (toFill < 0) {
+                    toFill = 0
+                  }
+                  while (filled[toFill] >= 0) toFill++
+
+                  const filledCopy = filled.slice(0)
+                  filledCopy[toFill] = choices.indexOf(c)
+                  setFilled(filledCopy)
+
+                  let next = toFill
+                  do {
+                    next++
+                    if (next >= gapCount) {
+                      next = 0
+                    }
+                    if (next == toFill) {
+                      setSelected(-1)
+                      return
+                    }
+                  } while (filled[next] >= 0)
+                  setSelected(next)
+                }}
+              />
+            </Fragment>
+          )
+        })}
+      </p>
+      {checked && (
+        <p className="serlo-p">
+          {alright
+            ? 'Super! Du hast die Aufgabe richtig gelöst!'
+            : 'Leider noch nicht richtig. Versuch es nochmal!'}
+        </p>
+      )}
+      <button
+        className={clsx(
+          'serlo-button serlo-make-interactive-primary',
+          'mt-4 mx-side',
+          !allfilled &&
+            'opacity-100 bg-transparent text-gray-400 pointer-events-none'
+        )}
+        onPointerUp={(e) => e.currentTarget.blur()}
+        onClick={() => {
+          if (checked) {
+            setChecked(false)
+            setFilled(filled.map(() => -1))
+            setSelected(0)
+          } else {
+            setChecked(true)
+          }
+        }}
+      >
+        {checked ? 'Erneut versuchen' : "Stimmt's?"}
+      </button>
+    </GapContext.Provider>
+  )
+}
+
+interface GappyProps {
+  index: number
+}
+
+function Gappy({ index }: GappyProps) {
+  const context = useContext(GapContext)
+
+  if (context) {
+    if (context.checked) {
+      return (
+        <Gap
+          mode={context.filled[index] == index ? 'right' : 'wrong'}
+          text={context.choices[context.filled[index]]}
+        />
+      )
+    } else {
+      if (context.selected === index) {
+        return <Gap mode="selected" />
+      } else if (context.filled[index] >= 0) {
+        return (
+          <Gap mode="filled" text={context.choices[context.filled[index]]} />
+        )
+      } else {
+        return (
+          <Gap
+            mode="inactive"
+            onClick={() => {
+              context.select(index)
+            }}
+          />
+        )
+      }
+    }
+  }
+
+  return <>Fehler</>
 }
