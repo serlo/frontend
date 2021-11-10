@@ -51,7 +51,7 @@ Settings.Select = function SettingsSelect({
             const { value } = e.target as HTMLSelectElement
             state.set(value)
           }}
-          className="ml-2"
+          className="ml-2 border-2"
         >
           {options.map((option) => {
             return (
