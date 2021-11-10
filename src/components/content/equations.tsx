@@ -28,6 +28,7 @@ export function Equations({
   transformationTarget,
 }: EquationProps) {
   const explanationColor = shade(0.3, theme.colors.brandGreen)
+  console.log(explanationColor)
 
   return (
     <div className="overflow-x-auto py-2.5 mx-side mb-7">
