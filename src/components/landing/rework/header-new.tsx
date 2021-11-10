@@ -9,6 +9,8 @@ import { MenuNew } from './menu-new'
 import { useAuthentication } from '@/auth/use-authentication'
 import { Quickbar } from '@/components/navigation/quickbar'
 import { useInstanceData } from '@/contexts/instance-context'
+import { useWindowWidth } from '@/helper/use-window-width'
+import { theme } from '@/theme'
 
 export function HeaderNew() {
   const [isOpen, setOpen] = useState(false)
@@ -20,9 +22,14 @@ export function HeaderNew() {
     setOpen(false)
   })
 
+  const windowWidth = useWindowWidth()
+  const isMobile = windowWidth < theme.breakpointsInt.sm
+
   return (
     <header className="text-truegray-700">
-      <MobileMenuButtonNew onClick={() => setOpen(!isOpen)} open={isOpen} />
+      {isMobile ? (
+        <MobileMenuButtonNew onClick={() => setOpen(!isOpen)} open={isOpen} />
+      ) : null}
       <div className="flex justify-between pt-3 pb-6 px-side lg:px-side-lg">
         <div>
           <Link href="/" path={['logo']}>
@@ -47,9 +54,11 @@ export function HeaderNew() {
           <Quickbar />
         </div>
 
-        <MenuNew data={headerData} auth={auth.current} />
+        {isMobile ? null : <MenuNew data={headerData} auth={auth.current} />}
       </div>
-      {isOpen && <MobileMenu data={headerData} auth={auth.current} />}
+      {isOpen && isMobile ? (
+        <MobileMenu data={headerData} auth={auth.current} />
+      ) : null}
     </header>
   )
 }

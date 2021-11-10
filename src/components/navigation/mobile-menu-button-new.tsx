@@ -12,7 +12,7 @@ export function MobileMenuButtonNew(props: MobileMenuButtonProps) {
   return (
     <button
       className={clsx(
-        'sm:hidden absolute top-7 right-4',
+        'absolute top-7 right-4',
         'border border-truegray-700 rounded-full w-12 h-12',
         'text-truegray-700 outline-none cursor-pointer'
       )}

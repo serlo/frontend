@@ -83,7 +83,7 @@ function MenuInner({
   }
 
   return (
-    <nav className="min-h-[50px] hidden sm:block">
+    <nav className="min-h-[50px]">
       {Tippy && (
         <Tippy.default
           singleton={source}
