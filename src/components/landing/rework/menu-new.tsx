@@ -13,6 +13,7 @@ import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { HeaderData, HeaderLink } from '@/data-types'
 import { getAuthData, shouldUseNewAuth } from '@/helper/feature-auth'
+import { triggerSentry } from '@/helper/trigger-sentry'
 
 // Only show some icons on full menu
 const menuIconMapping = {
@@ -36,7 +37,14 @@ export function MenuNew(props: MenuProps) {
     null
   )
   useEffect(() => {
-    void import('@tippyjs/react').then((value) => setTippy(value))
+    void import('@tippyjs/react').then(
+      (value) => setTippy(value),
+      (reason) => {
+        // eslint-disable-next-line no-console
+        console.log(reason)
+        triggerSentry({ message: 'tippy chunk load problem: ' })
+      }
+    )
   }, [])
 
   if (!Tippy) {
