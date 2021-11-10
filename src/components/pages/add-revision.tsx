@@ -172,6 +172,10 @@ export function AddRevision({
           @apply border-2;
         }
 
+        .edtr-io a {
+          @apply text-brand hover:underline;
+        }
+
         .edtr-io {
           .row {
             margin-right: -15px;
