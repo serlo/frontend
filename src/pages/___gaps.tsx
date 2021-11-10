@@ -5,11 +5,14 @@ import React, {
   useContext,
   ReactNode,
   Fragment,
+  useEffect,
 } from 'react'
 
+import { Feedback } from '../components/content/exercises/feedback'
 import { ExerciseNumbering } from '@/components/content/exercises/exercise-numbering'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
+import { shuffleArray } from '@/helper/shuffle-array'
 
 export default renderedPageNoHooks(() => (
   <FrontendClientBase>
@@ -345,11 +348,16 @@ function GapEx({ choices, children, count }: GapExProps) {
   const [filled, setFilled] = useState<number[]>(Array(gapCount).fill(-1))
   const [checked, setChecked] = useState(false)
 
-  const [sortedChoices] = useState(() => {
+  const [sortedChoices, setSortedChoices] = useState(() => {
     const copy = choices.slice(0)
     copy.sort()
     return copy
   })
+
+  useEffect(() => {
+    setSortedChoices(shuffleArray(sortedChoices))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   function select(i: number) {
     setSelected(i)
@@ -405,11 +413,14 @@ function GapEx({ choices, children, count }: GapExProps) {
         })}
       </p>
       {checked && (
-        <p className="serlo-p">
-          {alright
-            ? 'Super! Du hast die Aufgabe richtig gelöst!'
-            : 'Leider noch nicht richtig. Versuch es nochmal!'}
-        </p>
+        <div className="mx-side">
+          {' '}
+          <Feedback correct={alright}>
+            {alright
+              ? 'Super! Du hast die Aufgabe richtig gelöst!'
+              : 'Leider noch nicht richtig. Versuch es nochmal!'}
+          </Feedback>
+        </div>
       )}
       <button
         className={clsx(
