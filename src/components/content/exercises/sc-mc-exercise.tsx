@@ -174,11 +174,7 @@ export function ScMcExercise({
             )
           })}
         </ul>
-        {showFeedback && (
-          <Feedback correct={correct}>
-            {correct ? strings.content.right : strings.content.wrong}
-          </Feedback>
-        )}
+        {showFeedback && <Feedback correct={correct} />}
         <button
           className="serlo-button serlo-make-interactive-primary mt-4"
           onClick={() => {
