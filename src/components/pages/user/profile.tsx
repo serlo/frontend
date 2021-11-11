@@ -13,6 +13,7 @@ import { Events } from '@/components/user/events'
 import { ProfileActivityGraphs } from '@/components/user/profile-activity-graphs'
 import { ProfileBadges } from '@/components/user/profile-badges'
 import { ProfileChatButton } from '@/components/user/profile-chat-button'
+import { ProfileExperimental } from '@/components/user/profile-experimental'
 import { ProfileRoles } from '@/components/user/profile-roles'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UserPage } from '@/data-types'
@@ -55,6 +56,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
       <ProfileActivityGraphs values={activityByType} />
       {renderRecentActivities()}
       {renderRoles()}
+      {isOwnProfile && <ProfileExperimental />}
       {renderUserTools()}
       {renderHowToEditImage()}
       {renderHowToEditMotivation()}
