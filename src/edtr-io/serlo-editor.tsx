@@ -16,6 +16,7 @@ import {
   faPhotoVideo,
   faQuoteRight,
 } from '@edtr-io/ui'
+import { faSquare } from '@fortawesome/free-regular-svg-icons'
 import { Entity } from '@serlo/authorization'
 import * as React from 'react'
 
@@ -132,6 +133,12 @@ export function SerloEditor({
         title: editorStrings.edtrIo.blockquoteTitle,
         description: editorStrings.edtrIo.quoteDescription,
         icon: createIcon(faQuoteRight),
+      },
+      {
+        name: 'box',
+        title: 'Nice Box!', //editorStrings.edtrIo.blockquoteTitle,
+        description: 'dinge reintun und so', //editorStrings.edtrIo.quoteDescription,
+        icon: createIcon(faSquare),
       },
       {
         name: 'geogebra',
