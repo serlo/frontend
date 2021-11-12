@@ -19,28 +19,31 @@ export function Article({
       {renderNested(introduction, 'article-intro')}
       {renderNested(content, 'article-content')}
 
-      {exercises && exercises.length ? (
-        <>
-          <h2 className="serlo-h2">{strings.content.exercisesTitle}</h2>
-          {renderNested(exercises, 'article-exercises')}
-        </>
-      ) : null}
+      {renderExercises()}
 
-      {renderMoreExLink()}
       {renderRelatedContent()}
       {renderSources()}
     </div>
   )
 
-  function renderMoreExLink() {
-    if (!exerciseFolder.id || !exerciseFolder.title) return null
+  function renderExercises() {
+    const hasMoreLink = exerciseFolder.id && exerciseFolder.title
+    const hasExercises = exercises && exercises.length
+    if (!hasMoreLink && !hasExercises) return null
+
     return (
-      <p className="serlo-p">
-        {strings.content.moreExercises}{' '}
-        <Link className="font-bold" href={`/${exerciseFolder.id}`}>
-          {exerciseFolder.title}
-        </Link>
-      </p>
+      <>
+        <h2 className="serlo-h2">{strings.content.exercisesTitle}</h2>
+        {hasExercises ? renderNested(exercises, 'article-exercises') : null}
+        {hasMoreLink ? (
+          <p className="serlo-p">
+            {strings.content.moreExercises}:<br />
+            <Link className="font-bold" href={`/${exerciseFolder.id}`}>
+              {exerciseFolder.title}
+            </Link>
+          </p>
+        ) : null}
+      </>
     )
   }
 
