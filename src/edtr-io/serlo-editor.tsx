@@ -14,7 +14,6 @@ import {
   faNewspaper,
   faParagraph,
   faPhotoVideo,
-  faQuoteRight,
 } from '@edtr-io/ui'
 import { faSquare } from '@fortawesome/free-regular-svg-icons'
 import { Entity } from '@serlo/authorization'
@@ -128,12 +127,12 @@ export function SerloEditor({
         description: editorStrings.edtrIo.textDesc,
         icon: createIcon(faParagraph),
       },
-      {
-        name: 'blockquote',
-        title: editorStrings.edtrIo.blockquoteTitle,
-        description: editorStrings.edtrIo.quoteDescription,
-        icon: createIcon(faQuoteRight),
-      },
+      // {
+      //   name: 'blockquote',
+      //   title: editorStrings.edtrIo.blockquoteTitle,
+      //   description: editorStrings.edtrIo.quoteDescription,
+      //   icon: createIcon(faQuoteRight),
+      // },
       {
         name: 'box',
         title: 'Nice Box!', //editorStrings.edtrIo.blockquoteTitle,
@@ -169,11 +168,11 @@ export function SerloEditor({
         description: editorStrings.edtrIo.imageDesc,
         icon: createIcon(faImages),
       },
-      {
-        name: 'important',
-        title: editorStrings.edtrIo.importantTitle,
-        description: editorStrings.edtrIo.importantDesc,
-      },
+      // {
+      //   name: 'important',
+      //   title: editorStrings.edtrIo.importantTitle,
+      //   description: editorStrings.edtrIo.importantDesc,
+      // },
       {
         name: 'injection',
         title: editorStrings.edtrIo.injectionTitle,
