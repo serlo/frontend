@@ -122,6 +122,10 @@ export function AddRevision({
           }
         }
 
+        .edtr-io blockquote {
+          @apply border-l-6 border-brand-150 p-2.5 my-block mx-side;
+        }
+
         .edtr-io .page-header h1 input {
           @apply w-full;
           @apply mb-9 mt-6 p-0 font-bold text-3.5xl special-hyphens-auto;
@@ -162,6 +166,14 @@ export function AddRevision({
           padding-bottom: 9px;
           margin: 40px 0 20px;
           border-bottom: 1px solid #eee;
+        }
+
+        .edtr-io select {
+          @apply border-2;
+        }
+
+        .edtr-io a {
+          @apply text-brand hover:underline;
         }
 
         .edtr-io {

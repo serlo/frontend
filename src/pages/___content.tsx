@@ -25,6 +25,7 @@ const specialCases = [
   ['Long Code Block', '/48121'],
   ['Course w/ trashed pages', '/139048'],
   ['Multimedia w/ Code', '/222271'],
+  ['SC Exercise without feedback', '/7125'],
 ]
 
 const ContentPage: NextPage = () => {

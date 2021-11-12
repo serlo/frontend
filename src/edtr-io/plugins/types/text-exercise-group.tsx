@@ -100,6 +100,7 @@ function TextExerciseGroupTypeEditor(
           id="cohesiveSelect"
           value={isCohesive ? 'cohesive' : 'non-cohesive'}
           onChange={(e) => cohesive.set(e.target.value === 'cohesive')}
+          className="border-2"
         >
           <option value="non-cohesive">
             {editorStrings.textExerciseGroup.notCohesive}

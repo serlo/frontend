@@ -328,7 +328,7 @@ function renderElement({
   }
   if (element.type === 'table') {
     return (
-      <div className="mb-block max-w-[100vh] overflow-auto">
+      <div className="mb-block max-w-[100vw] overflow-auto">
         <table className="serlo-table">
           <tbody>{children}</tbody>
         </table>
@@ -393,10 +393,14 @@ function renderElement({
   if (element.type === 'injection') {
     return (
       <>
-        <Injection
-          href={element.href}
-          renderNested={(value, ...prefix) => renderNested(value, path, prefix)}
-        />
+        {element.href ? (
+          <Injection
+            href={element.href}
+            renderNested={(value, ...prefix) =>
+              renderNested(value, path, prefix)
+            }
+          />
+        ) : null}
         {renderRevisionExtra(isRevisionView, element)}
       </>
     )
