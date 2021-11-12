@@ -33,8 +33,9 @@ type BoxType = keyof typeof boxTypeIcons
 
 export function BoxRenderer(props: BoxProps) {
   const { title, type, content } = props.state
+  const hasNoType = type.value === ''
   const typedValue = type.value as BoxType
-  const isBlank = type.value === 'blank'
+  const isBlank = typedValue === 'blank'
 
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
@@ -43,10 +44,16 @@ export function BoxRenderer(props: BoxProps) {
 
   return (
     <>
-      <div className="border-l-6 pl-4 ml-7 border-brand-light pt-2 pb-2">
-        {renderIcon()}
-        {renderTitle()}
-        {content.render()}
+      <div className="border-l-6 pl-3 ml-8 border-brand-light pt-2 pb-2">
+        {hasNoType ? (
+          renderInlineSettings()
+        ) : (
+          <>
+            {renderIcon()}
+            {renderTitle()}
+            {renderContent()}
+          </>
+        )}
       </div>
       {renderSettings()}
     </>
@@ -62,7 +69,7 @@ export function BoxRenderer(props: BoxProps) {
 
   function renderTitle() {
     return (
-      <div className="pt-1 font-bold flex ml-3">
+      <div className="pt-1 font-bold flex">
         {isBlank ? null : (
           <div>
             <span className="text-brand">
@@ -80,8 +87,32 @@ export function BoxRenderer(props: BoxProps) {
     )
   }
 
+  function renderContent() {
+    return <div className="-ml-3">{content.render()}</div>
+  }
+
+  function renderInlineSettings() {
+    return (
+      <>
+        <b className="block pb-4">{editorStrings.box.type}</b>
+        <ul className="pb-8 unstyled-list">{renderSettingsLis()}</ul>
+      </>
+    )
+  }
+
   function renderSettings() {
-    const optionLis = types.map((boxType) => {
+    return props.renderIntoSettings(
+      <>
+        <b className="serlo-h4 block mt-6 ml-0 mb-4">
+          {editorStrings.box.type}:
+        </b>
+        <ul className="pb-8">{renderSettingsLis()}</ul>
+      </>
+    )
+  }
+
+  function renderSettingsLis() {
+    return types.map((boxType) => {
       const typedBoxType = boxType as BoxType
 
       return (
@@ -99,13 +130,5 @@ export function BoxRenderer(props: BoxProps) {
         </li>
       )
     })
-    return props.renderIntoSettings(
-      <>
-        <b className="serlo-h4 block mt-6 ml-0 mb-4">
-          {editorStrings.box.type}:
-        </b>
-        <ul className="pb-8">{optionLis}</ul>
-      </>
-    )
   }
 }

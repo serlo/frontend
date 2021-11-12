@@ -9,7 +9,7 @@ import {
 import { BoxRenderer } from './renderer'
 
 export const boxState = object({
-  type: string('blank'),
+  type: string(''),
   title: child({ plugin: 'text' }),
   content: child({ plugin: 'rows' }),
 })
