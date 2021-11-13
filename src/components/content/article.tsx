@@ -51,7 +51,7 @@ export function Article({
   function isEmpty(idArray: ArticleNodeUuidLink[]) {
     if (!idArray) return true
     const filtered = idArray.filter((obj) => {
-      obj.id !== ''
+      return obj.id !== ''
     })
     if (filtered.length) return false
     return true
@@ -65,6 +65,7 @@ export function Article({
         isEmpty(relatedContent?.videos))
     )
       return null
+
     return (
       <>
         <h2 className="serlo-h2">{strings.content.relatedContentTitle}</h2>
