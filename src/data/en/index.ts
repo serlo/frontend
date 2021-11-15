@@ -281,8 +281,8 @@ export const instanceData = {
           'The form and data storage is offered by Google and personal data may be transferred to this service when using this feature.',
         toForm: 'Motivation Form',
       },
-      lockedDescriptionTitle: 'Your description currently not visible to the public.',
-      lockedDescriptionText: 'Make your first contributions to Serlo to show it to everybody.',
+      lockedDescriptionTitle: 'Your description currently hidden from the public.',
+      lockedDescriptionText: 'After your first contributions it will become visible to everybody.',
 
     },
     notices: {
