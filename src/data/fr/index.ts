@@ -265,7 +265,7 @@ export const instanceData = {
         toForm: "Formulaire de motivation"
       },
       lockedDescriptionTitle: 'Your description currently not visible to the public.',
-      lockedDescriptionText: ' Make your first contributions to Serlo to show it to everybody.'
+      lockedDescriptionText: 'Make your first contributions to Serlo to show it to everybody.'
     },
     notices: {
       welcome: "👋 Bienvenue %username%!",
