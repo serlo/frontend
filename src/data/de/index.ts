@@ -264,8 +264,8 @@ export const instanceData = {
         privacy: "Das Formular und die Datenspeicherung werden von Google angeboten und persönliche Daten werden zu diesem Anbieter übertragen werden, wenn du dieses Feature benutzt.",
         toForm: "Motivationsformular"
       },
-      lockedDescriptionTitle: 'Your description currently not visible to the public.',
-      lockedDescriptionText: ' Make your first contributions to Serlo to show it to everybody.'
+      lockedDescriptionTitle: "Deine Beschreibung ist aktuell nur für dich sichtbar.",
+      lockedDescriptionText: 'Make your first contributions to Serlo to show it to everybody.'
     },
     notices: {
       welcome: "👋 Willkommen %username%!",
