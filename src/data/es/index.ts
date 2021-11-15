@@ -264,8 +264,8 @@ export const instanceData = {
         privacy: "El formulario y el almacenamiento de datos lo ofrece Google y la información personal puede ser transferida a este servicio cuando se utiliza esta función.",
         toForm: "Formulario de Motivación"
       },
-      lockedDescriptionTitle: "Tu descripción actualmente no es visible para el público.",
-      lockedDescriptionText: "Haz tus primeras contribuciones a Serlo para mostrarlo a todo el mundo."
+      lockedDescriptionTitle: 'Your description currently hidden from the public.',
+      lockedDescriptionText: 'After your first contributions it will become visible to everybody.'
     },
     notices: {
       welcome: "¡Bienvenida/o  %username%!",
