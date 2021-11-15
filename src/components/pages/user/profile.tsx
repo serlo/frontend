@@ -1,4 +1,4 @@
-import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
+import { faInfoCircle, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 import { NextPage } from 'next'
@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react'
 import { useAuthentication } from '@/auth/use-authentication'
 import { Link } from '@/components/content/link'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
+import { StaticInfoPanel } from '@/components/static-info-panel'
 import { TimeAgo } from '@/components/time-ago'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { Events } from '@/components/user/events'
@@ -132,10 +133,26 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
 
   function renderDescription() {
     if (!description) return null
+    const registerDate = new Date(date)
+    const legacyDate = new Date('2021-11-14')
+    const hideDescription =
+      !userData.isActiveDonor &&
+      activityByType.edits + activityByType.reviews === 0 &&
+      registerDate > legacyDate
+
+    if (!isOwnProfile && hideDescription) return null
     return (
       <section>
         <h2 className="serlo-h2">{strings.profiles.aboutMe}</h2>
-        {renderArticle(description, `profile${id}`)}
+        {hideDescription && isOwnProfile ? (
+          <StaticInfoPanel icon={faInfoCircle}>
+            {strings.profiles.lockedDescriptionTitle}
+            <br />
+            {strings.profiles.lockedDescriptionText}
+          </StaticInfoPanel>
+        ) : (
+          renderArticle(description, `profile${id}`)
+        )}
       </section>
     )
   }
