@@ -62,8 +62,8 @@ export const instanceData = {
       revisionHistory: "Historial de revisiones",
       eventLog: "Registro de eventos",
       unrevisedRevisions: "Revisiones no revisadas",
-      userEdits: 'Edits by %user%',
-      userEditsMine: 'My Unrevised Revisions'
+      userEdits: "Ediciones por %user%",
+      userEditsMine: "Mi trabajo aún sin revisar"
     },
     roles: {
       donor: "Donante",
@@ -93,8 +93,8 @@ export const instanceData = {
       pages: "Descripción del curso",
       next: "Siguiente",
       back: "Volver",
-      noPagesWarning: 'Sorry there seem to be no reviewed pages in this course yet.',
-      noRevisionForPage: 'unreviewed page'
+      noPagesWarning: "Lo sentimos, parece que no hay páginas revisadas en este curso todavía.",
+      noRevisionForPage: "página sin revisar"
     },
     content: {
       show: "mostrar",
@@ -111,7 +111,7 @@ export const instanceData = {
       printModeChooseOption: "Elige una de las opciones.",
       trashedNotice: "Este contenido está marcado para su eliminación.",
       unrevisedNotice: "Este contenido no tiene ninguna revisión aceptada todavía. Por favor, utiliza este vínculo %link% para previsualizar.",
-      emptyNotice: 'There is no content here. Please edit or delete.',
+      emptyNotice: "No hay contenido aquí. Por favor, edite o elimine.",
       strategy: "Estrategia de solución",
       picture: "Imagen",
       previewImage: "Previsualizar Imagen",
@@ -198,7 +198,7 @@ export const instanceData = {
       wipLabelNote: "Marcado como trabajo en progreso. No revises todavía.",
       newAuthorText: "nuevo autor",
       newAuthorNote: "Esta es una de las primeras ediciones de este autor, quizás priorizar esto.",
-      noUnrevisedRevisions: 'No unrevised revisions, all done! 🎉'
+      noUnrevisedRevisions: "No hay contenido sin revisar, ¡todo listo! 🎉"
     },
     errors: {
       title: "😬 Los sitios web a veces cometen errores…",
@@ -218,7 +218,7 @@ export const instanceData = {
       aboutMe: "Sobre mi",
       recentActivities: "Actividades recientes",
       showAllActivities: "Mostrar todas las actividades",
-      noActivities: 'No activities so far.',
+      noActivities: "No hay actividades hasta ahora.",
       lastLogin: "Último inicio de sesion",
       yearsWithSerlo: "¡Años con Serlo!",
       yearWithSerlo: "¡Año con Serlo!",
@@ -264,8 +264,8 @@ export const instanceData = {
         privacy: "El formulario y el almacenamiento de datos lo ofrece Google y la información personal puede ser transferida a este servicio cuando se utiliza esta función.",
         toForm: "Formulario de Motivación"
       },
-      lockedDescriptionTitle: 'Your description currently not visible to the public.',
-      lockedDescriptionText: 'Make your first contributions to Serlo to show it to everybody.'
+      lockedDescriptionTitle: "Tu descripción actualmente no es visible para el público.",
+      lockedDescriptionText: "Haz tus primeras contribuciones a Serlo para mostrarlo a todo el mundo."
     },
     notices: {
       welcome: "¡Bienvenida/o  %username%!",
@@ -438,17 +438,17 @@ export const loggedInData = {
     },
     mutations: {
       success: {
-        trash: 'Successfully trashed 🗑',
-        restore: 'Successfully restored ♻️',
-        accept: 'Edit was accepted ✅',
-        reject: 'Edit not rejected ❌'
+        trash: "Borrado exitosamente 🗑",
+        restore: "Restablecido con éxito ♻️",
+        accept: "Edición aceptada ✅",
+        reject: "Edición rechazada ❌ "
       },
       errors: {
-        UNAUTHENTICATED: 'You have to log in to use this function!',
-        FORBIDDEN: 'Sorry, you are not allowed to do that!',
+        UNAUTHENTICATED: "¡Tienes que iniciar sesión para usar esta función!",
+        FORBIDDEN: "Lo sentimos, ¡no estás autorizado para hacer esto!",
         INVALID_TOKEN: '',
         BAD_USER_INPUT: '',
-        UNKNOWN: 'An unknown error…'
+        UNKNOWN: "Un error desconocido…"
       }
     },
     editor: {
@@ -456,7 +456,7 @@ export const loggedInData = {
         extendedSettings: "Ajustes extendidos",
         close: "Cerrar",
         notSupportedYet: "Este tipo de contenido aún no está respaldado por el nuevo editor.",
-        editInOld: 'You can edit the content in the old editor',
+        editInOld: "Edita el contenido en el antiguo editor.",
         conversionError: "Se produjo un error durante la conversión.",
         oldRevisionFound: "Hemos encontrado una revisión anterior creada por ti. ¿Deseas restaurarla?",
         notConverted: "Esta entidad aún no ha sido convertida al nuevo editor.",
@@ -612,8 +612,8 @@ export const loggedInData = {
         addInputExercise: "Añada ejercicio de respuesta escrita",
         inputExercise: "Ejercicio de respuesta escrita",
         addOptionalInteractiveEx: "Añada un ejercicio opcional interactivo:",
-        changeInteractive: 'Change interactive element',
-        removeInteractive: 'Remove interactive element'
+        changeInteractive: "Cambiar elemento interactivo",
+        removeInteractive: "Eliminar elemento interactivo"
       },
       injection: {
         illegalInjectionFound: "Entrada ilegal encontrada",
@@ -721,8 +721,8 @@ export const loggedInData = {
         rightHandSide: "Lado derecho",
         combineLikeTerms: "Combina como términos.",
         setEqual: "Establecer los términos iguales entre sí.",
-        firstExplanation: 'First explanation',
-        addNew: 'Add new equation'
+        firstExplanation: "Primera explicación",
+        addNew: "Añadir nueva ecuación"
       },
       deprecated: {
         unsupported: "Esta parte del documento contiene funciones que ya no son compatibles."
