@@ -263,7 +263,9 @@ export const instanceData = {
         intro: "Les motivations sont une nouvelle fonctionnalité que nous testons pour le moment. Pour modifier ta motivation, tu dois remplir un formulaire simple.",
         privacy: "Le formulaire et le stockage des données sont offerts par Google et les données personnelles peuvent être transférées à ce service lors de l'utilisation de cette fonctionnalité.",
         toForm: "Formulaire de motivation"
-      }
+      },
+      lockedDescriptionTitle: 'Your description currently not visible to the public.',
+      lockedDescriptionText: ' Make your first contributions to Serlo to show it to everybody.'
     },
     notices: {
       welcome: "👋 Bienvenue %username%!",
