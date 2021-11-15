@@ -282,7 +282,7 @@ export const instanceData = {
         toForm: 'Motivation Form',
       },
       lockedDescriptionTitle: 'Your description currently not visible to the public.',
-      lockedDescriptionText: ' Make your first contributions to Serlo to show it to everybody.',
+      lockedDescriptionText: 'Make your first contributions to Serlo to show it to everybody.',
 
     },
     notices: {
