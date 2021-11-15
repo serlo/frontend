@@ -263,7 +263,9 @@ export const instanceData = {
         intro: "La motivación es una función nueva que está a prueba en este momento. Para editar tu motivación tienes que completar un sencillo formulario.",
         privacy: "El formulario y el almacenamiento de datos lo ofrece Google y la información personal puede ser transferida a este servicio cuando se utiliza esta función.",
         toForm: "Formulario de Motivación"
-      }
+      },
+      lockedDescriptionTitle: 'Your description currently not visible to the public.',
+      lockedDescriptionText: ' Make your first contributions to Serlo to show it to everybody.'
     },
     notices: {
       welcome: "¡Bienvenida/o  %username%!",
