@@ -224,7 +224,7 @@ const BotHunt = () => {
             if (!e.metaKey && !e.ctrlKey) return false
             const manualId = parseInt(manualInputRef.current?.value ?? '')
             const idToRemove = id ? id : manualId
-            if (isNaN(idToRemove)) return
+            if (isNaN(idToRemove)) return false
             void remove(idToRemove)
           }}
         >
@@ -237,6 +237,7 @@ const BotHunt = () => {
             text-decoration: underline;
             &:hover {
               text-decoration: none;
+              color: #f00;
             }
           }
         `}</style>
