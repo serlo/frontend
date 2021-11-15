@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import { useState, useEffect } from 'react'
 
 import { PageTitle } from '../content/page-title'
@@ -24,6 +25,9 @@ export function ErrorPage({ code, message }: ErrorData) {
 
   return (
     <>
+      <Head>
+        <meta name="robots" content="noindex" />
+      </Head>
       <PageTitle title={strings.errors.title} headTitle />
       <p className="serlo-p text-2xl" id="error-page-description">
         {strings.errors.defaultMessage}{' '}

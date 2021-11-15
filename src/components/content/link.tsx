@@ -47,12 +47,15 @@ export function isLegacyLink(_href: string) {
   if (_href.startsWith('/entity/repository/history')) return false
   if (_href.startsWith('/entity/repository/compare')) return false
 
-  if (
-    _href.startsWith('/entity/repository/add-revision') &&
-    serloDomain != 'serlo.org'
-  )
-    // enable editor in staging and development
-    return false
+  // exerimental feature: editor in frontend
+  if (_href.startsWith('/entity/repository/add-revision')) {
+    if (serloDomain != 'serlo.org') return false // always in frontend in dev and staging
+    if (
+      typeof window !== 'undefined' &&
+      document.cookie.includes('useEditorInFrontend=1')
+    )
+      return false // in frontend when cookie is set
+  }
 
   return (
     legacyLinks.includes(_href) ||

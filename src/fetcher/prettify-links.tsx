@@ -89,6 +89,10 @@ export async function prettifyLinks(pageData: SlugPageData) {
           walk(node.task.edtrState.content)
         }
       }
+      if (node.type === 'article') {
+        walk(node.introduction)
+        walk(node.content)
+      }
     })
   }
 
