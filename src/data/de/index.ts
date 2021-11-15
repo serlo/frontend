@@ -263,7 +263,9 @@ export const instanceData = {
         intro: "Motivationen sind eine neue Funktion, die wir aktuell testen. Um deinen Motivationstext zu ändern musst du ein kurzes Formular ausfüllen.",
         privacy: "Das Formular und die Datenspeicherung werden von Google angeboten und persönliche Daten werden zu diesem Anbieter übertragen werden, wenn du dieses Feature benutzt.",
         toForm: "Motivationsformular"
-      }
+      },
+      lockedDescriptionTitle: "Deine Beschreibung ist aktuell nur für dich sichtbar.",
+      lockedDescriptionText: "Nach deinen ersten Aktivitäten auf Serlo wird sie für alle sichtbar."
     },
     notices: {
       welcome: "👋 Willkommen %username%!",

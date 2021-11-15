@@ -263,7 +263,9 @@ export const instanceData = {
         intro: "Les motivations sont une nouvelle fonctionnalité que nous testons pour le moment. Pour modifier ta motivation, tu dois remplir un formulaire simple.",
         privacy: "Le formulaire et le stockage des données sont offerts par Google et les données personnelles peuvent être transférées à ce service lors de l'utilisation de cette fonctionnalité.",
         toForm: "Formulaire de motivation"
-      }
+      },
+      lockedDescriptionTitle: 'Your description currently hidden from the public.',
+      lockedDescriptionText: 'After your first contributions it will become visible to everybody.'
     },
     notices: {
       welcome: "👋 Bienvenue %username%!",
