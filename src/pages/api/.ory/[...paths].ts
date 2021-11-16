@@ -17,6 +17,7 @@ export default createApiHandler({
   apiBaseUrlOverride: 'https://kratos.serlo-staging.dev',
   // TODO: read from env
   forceCookieSecure: false,
+  forceCookieDomain: 'serlo-staging.dev',
 })
 
 const encode = (v: string) => v
