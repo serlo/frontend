@@ -1,12 +1,13 @@
-import { useEffect, useState } from 'react'
 import {
   SelfServiceLoginFlow,
   SubmitSelfServiceLoginFlowBody,
 } from '@ory/kratos-client'
-import { useRouter } from 'next/router'
-import { kratos } from '@/helper/kratos'
-import { Flow, handleFlowError } from '@/components/auth/flow'
 import { AxiosError } from 'axios'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+
+import { Flow, handleFlowError } from '@/components/auth/flow'
+import { kratos } from '@/helper/kratos'
 
 export function Login() {
   const [flow, setFlow] = useState<SelfServiceLoginFlow>()
