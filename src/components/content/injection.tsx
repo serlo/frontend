@@ -67,7 +67,7 @@ export function Injection({ href, renderNested }: InjectionProps) {
     //Show only video without description when injecting
     const renderValue = value[0].type === 'video' ? [value[0]] : value
     return (
-      <div className="text-truegray-900 border-truegray-300 border-b mb-4">
+      <div className="text-truegray-900 border-brand-300 border-b-4 mb-4">
         {renderNested(renderValue, `injection${id ?? ''}`)}
       </div>
     )
