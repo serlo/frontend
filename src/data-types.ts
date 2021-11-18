@@ -220,6 +220,7 @@ export type BreadcrumbEntry = BreadcrumbLinkEntry | BreadcrumbEllipsis
 
 export interface BreadcrumbLinkEntry {
   label: string
+  id?: number | null
   url?: string | null
   ellipsis?: boolean
 }
