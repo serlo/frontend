@@ -1,15 +1,13 @@
-import { faQuoteRight } from '@edtr-io/ui'
+import { faLightbulb, faQuoteRight } from '@edtr-io/ui'
 import { faCircle } from '@fortawesome/free-regular-svg-icons'
 import {
-  faBrain,
-  faExclamationCircle,
+  faScroll,
   faHandPointRight,
-  faHeart,
   faMapSigns,
   faThumbtack,
+  faExclamationTriangle,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import * as React from 'react'
 
 import { BoxProps } from '.'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -17,22 +15,22 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 const boxTypeIcons = {
   blank: faCircle,
-  example: faHeart,
+  example: faCircle,
   quote: faQuoteRight,
   approach: faMapSigns,
-  remember: faBrain,
-  attention: faExclamationCircle,
-  observe: faHandPointRight,
+  remember: faScroll,
+  attention: faExclamationTriangle,
+  note: faHandPointRight,
   definition: faThumbtack,
-  proposition: faHeart,
-  proof: faHeart,
+  theorem: faLightbulb,
+  proof: faCircle,
 }
 
 const types = Object.keys(boxTypeIcons)
 type BoxType = keyof typeof boxTypeIcons
 
 export function BoxRenderer(props: BoxProps) {
-  const { title, type, content } = props.state
+  const { title, type, content, anchorId } = props.state
   const hasNoType = type.value === ''
   const typedValue = type.value as BoxType
   const isBlank = typedValue === 'blank'
@@ -42,16 +40,22 @@ export function BoxRenderer(props: BoxProps) {
   if (!loggedInData) return null
   const editorStrings = loggedInData.strings.editor
 
+  // const colorClass = typedValue === 'attention' ? 'text-brand' : 'text-brand'
+  const colorClass =
+    typedValue === 'attention' ? 'text-red-100' : 'text-brand-150'
+  const bgClass =
+    typedValue === 'attention' ? 'border-red-100' : 'border-brand-150'
+
   return (
     <>
-      <div className="border-l-6 pl-3 ml-8 border-brand-light pt-2 pb-2">
+      <div className={'p-4 rounded-2xl relative border-4 ' + bgClass}>
         {hasNoType ? (
           renderInlineSettings()
         ) : (
           <>
-            {renderIcon()}
             {renderTitle()}
             {renderContent()}
+            {renderIcon()}
           </>
         )}
       </div>
@@ -60,25 +64,34 @@ export function BoxRenderer(props: BoxProps) {
   )
 
   function renderIcon() {
+    const icon = boxTypeIcons[typedValue]
     return (
-      <div className="absolute -ml-12 mt-1 text-brand">
-        {isBlank ? null : <FontAwesomeIcon icon={boxTypeIcons[typedValue]} />}
+      <div className={'absolute top-4 right-2 w-16 text-center ' + colorClass}>
+        {icon === faCircle ? null : (
+          <FontAwesomeIcon
+            icon={icon}
+            size="2x"
+            className={'mr-2 ' + colorClass}
+          />
+        )}
       </div>
     )
   }
 
   function renderTitle() {
     return (
-      <div className="pt-1 font-bold flex">
+      <div className="pt-1 flex font-bold" id={anchorId.value}>
         {isBlank ? null : (
           <div>
-            <span className="text-brand">
+            <span
+              className={typedValue === 'attention' ? 'text-red' : 'text-brand'}
+            >
               {strings.content.boxTypes[typedValue]}
             </span>
             {' | '}
           </div>
         )}
-        <div className="block -ml-1 max-h-6 min-w-[15rem]">
+        <div className="block -ml-1 max-h-6 min-w-[15rem] font-bold">
           {title.render({
             config: { placeholder: editorStrings.box.titlePlaceholder },
           })}
@@ -107,6 +120,12 @@ export function BoxRenderer(props: BoxProps) {
           {editorStrings.box.type}:
         </b>
         <ul className="pb-8">{renderSettingsLis()}</ul>
+
+        {anchorId.value === '' ? null : (
+          <p className="mb-4">
+            <b>Anchor ID: </b>#{anchorId.value}
+          </p>
+        )}
       </>
     )
   }
@@ -122,6 +141,7 @@ export function BoxRenderer(props: BoxProps) {
             onClick={(event) => {
               event.preventDefault()
               type.set(typedBoxType)
+              if (anchorId.value === '') generateAnchorId(typedBoxType)
             }}
           >
             <FontAwesomeIcon icon={boxTypeIcons[typedBoxType]} />{' '}
@@ -130,5 +150,11 @@ export function BoxRenderer(props: BoxProps) {
         </li>
       )
     })
+  }
+
+  function generateAnchorId(type: BoxType) {
+    const typeName = strings.content.boxTypes[type].toLowerCase()
+    const random = (Math.random() + 1).toString(36).substr(2, 5) //random string
+    anchorId.set(`${typeName}-${random}`)
   }
 }

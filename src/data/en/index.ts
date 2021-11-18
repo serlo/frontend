@@ -132,9 +132,9 @@ export const instanceData = {
         approach: 'Approach',
         remember: 'Remember',
         attention: 'Attention',
-        observe: 'Observe',
+        note: 'Note',
         definition: 'Definition',
-        proposition: 'Proposition',
+        theorem: 'Theorem',
         proof: 'Proof',
       },
     },
@@ -509,6 +509,9 @@ export const loggedInData = {
           'We found an old revision created by you. Do you want to restore it?',
         notConverted:
           "This entity hasn't been converted to the new editor, yet.",
+        box: 'Container',
+        boxDesc:
+          'A container for examples, quotes, warnings, theorems, notes…',
         text: 'Text',
         textDesc:
           'Compose content using rich text and math formulas.',

@@ -105,7 +105,7 @@ export function createPlugins({
         plugin: 'text',
       },
     }),
-    box: createBoxPlugin(),
+    box: createBoxPlugin(editorStrings),
     error: errorPlugin,
     deprecated: deprecatedPlugin,
     equations: equationsPlugin,
