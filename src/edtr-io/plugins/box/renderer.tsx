@@ -40,7 +40,6 @@ export function BoxRenderer(props: BoxProps) {
   if (!loggedInData) return null
   const editorStrings = loggedInData.strings.editor
 
-  // const colorClass = typedValue === 'attention' ? 'text-brand' : 'text-brand'
   const colorClass =
     typedValue === 'attention' ? 'text-red-100' : 'text-brand-150'
   const bgClass =
@@ -123,7 +122,7 @@ export function BoxRenderer(props: BoxProps) {
 
         {anchorId.value === '' ? null : (
           <p className="mb-4">
-            <b>Anchor ID: </b>#{anchorId.value}
+            <b>{editorStrings.box.anchorId}: </b>#{anchorId.value}
           </p>
         )}
       </>

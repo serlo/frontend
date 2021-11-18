@@ -693,6 +693,7 @@ export const loggedInData = {
       box: {
         type: 'Type of box',
         titlePlaceholder: '(optional title)',
+        anchorId: 'Anchor ID',
       },
       layout: {
         toDragConvert:
