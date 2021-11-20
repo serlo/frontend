@@ -279,8 +279,9 @@ function Gap({ mode, text, onClick }: GapProps) {
       <span
         className={clsx(
           'border-gray-200 border rounded bg-gray-100 inline-block',
-          'h-6 mx-1 px-2 select-none text-gray-400'
+          'h-6 mx-1 px-2 select-none text-gray-400 cursor-pointer'
         )}
+        onClick={onClick}
       >
         {text}
       </span>
@@ -291,8 +292,9 @@ function Gap({ mode, text, onClick }: GapProps) {
       <span
         className={clsx(
           'border-black border rounded bg-brand-100 inline-block',
-          'h-6 mx-1 px-2 select-none'
+          'h-6 mx-1 px-2 select-none cursor-pointer'
         )}
+        onClick={onClick}
       >
         {text}
       </span>
@@ -331,6 +333,7 @@ interface GapContext {
   filled: number[]
   checked: boolean
   select: (i: number) => void
+  deselect: (i: number) => void
 }
 
 const GapContext = createContext<GapContext | null>(null)
@@ -363,12 +366,21 @@ function GapEx({ choices, children, count }: GapExProps) {
     setSelected(i)
   }
 
+  function deselect(i: number) {
+    setSelected(i)
+    const filledCopy = filled.slice(0)
+    filledCopy[i] = -1
+    setFilled(filledCopy)
+  }
+
   const alright = checked && filled.every((v, i) => v == i)
 
   const allfilled = filled.every((i) => i >= 0)
 
   return (
-    <GapContext.Provider value={{ selected, choices, filled, checked, select }}>
+    <GapContext.Provider
+      value={{ selected, choices, filled, checked, select, deselect }}
+    >
       {children}
       <p className="serlo-p mb-block">
         {sortedChoices.map((c) => {
@@ -391,7 +403,12 @@ function GapEx({ choices, children, count }: GapExProps) {
                   while (filled[toFill] >= 0) toFill++
 
                   const filledCopy = filled.slice(0)
-                  filledCopy[toFill] = choices.indexOf(c)
+                  const choiceIndex = choices.indexOf(c)
+                  if (filledCopy.indexOf(choiceIndex) >= 0) {
+                    filledCopy[filledCopy.indexOf(choiceIndex)] = -1
+                  }
+                  filledCopy[toFill] = choiceIndex
+
                   setFilled(filledCopy)
 
                   let next = toFill
@@ -404,7 +421,7 @@ function GapEx({ choices, children, count }: GapExProps) {
                       setSelected(-1)
                       return
                     }
-                  } while (filled[next] >= 0)
+                  } while (filledCopy[next] >= 0)
                   setSelected(next)
                 }}
               />
@@ -466,7 +483,13 @@ function Gappy({ index }: GappyProps) {
         return <Gap mode="selected" />
       } else if (context.filled[index] >= 0) {
         return (
-          <Gap mode="filled" text={context.choices[context.filled[index]]} />
+          <Gap
+            mode="filled"
+            text={context.choices[context.filled[index]]}
+            onClick={() => {
+              context.deselect(index)
+            }}
+          />
         )
       } else {
         return (
