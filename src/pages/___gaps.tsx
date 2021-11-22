@@ -231,6 +231,7 @@ interface GapProps {
     | 'inactive'
     | 'selected'
     | 'filled'
+    | 'filled-selected'
     | 'right'
     | 'wrong'
     | 'choice'
@@ -293,6 +294,19 @@ function Gap({ mode, text, onClick }: GapProps) {
         className={clsx(
           'border-black border rounded bg-brand-100 inline-block',
           'h-6 mx-1 px-2 select-none cursor-pointer'
+        )}
+        onClick={onClick}
+      >
+        {text}
+      </span>
+    )
+  }
+  if (mode == 'filled-selected') {
+    return (
+      <span
+        className={clsx(
+          'border-brand border-2 rounded bg-brand-100 inline-block',
+          'h-6 mx-1 px-2 select-none cursor-pointer animate-pulse'
         )}
         onClick={onClick}
       >
@@ -399,8 +413,8 @@ function GapEx({ choices, children, count }: GapExProps) {
                   let toFill = selected
                   if (toFill < 0) {
                     toFill = 0
+                    while (filled[toFill] >= 0) toFill++
                   }
-                  while (filled[toFill] >= 0) toFill++
 
                   const filledCopy = filled.slice(0)
                   const choiceIndex = choices.indexOf(c)
@@ -479,15 +493,15 @@ function Gappy({ index }: GappyProps) {
         />
       )
     } else {
-      if (context.selected === index) {
+      if (context.selected === index && context.filled[index] < 0) {
         return <Gap mode="selected" />
       } else if (context.filled[index] >= 0) {
         return (
           <Gap
-            mode="filled"
+            mode={context.selected === index ? 'filled-selected' : 'filled'}
             text={context.choices[context.filled[index]]}
             onClick={() => {
-              context.deselect(index)
+              context.select(index)
             }}
           />
         )
