@@ -263,7 +263,9 @@ export const instanceData = {
         intro: 'Motivations are a new feature we test at the moment. To edit your motivation you have to fill out a simple form.',
         privacy: 'The form and data storage is offered by Google and personal data may be transferred to this service when using this feature.',
         toForm: 'Motivation Form'
-      }
+      },
+      lockedDescriptionTitle: 'Your description currently hidden from the public.',
+      lockedDescriptionText: 'After your first contributions it will become visible to everybody.'
     },
     notices: {
       welcome: "आपका स्वागत है",

@@ -2,7 +2,7 @@ import { User } from '@serlo/authorization'
 import { gql } from 'graphql-request'
 import { NextPage } from 'next'
 import Head from 'next/head'
-import { MouseEvent, useState } from 'react'
+import { MouseEvent, useRef, useState } from 'react'
 
 import { useGraphqlSwrPaginationWithAuth } from '@/api/use-graphql-swr'
 import { useAuthentication } from '@/auth/use-authentication'
@@ -45,6 +45,7 @@ const titles = [
 const BotHunt = () => {
   const auth = useAuthentication()
   const [removedIds, setRemovedIds] = useState<number[]>([])
+  const manualInputRef = useRef<HTMLInputElement>(null)
 
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { data, error, loadMore } = usePotentialSpamUsersFetch()
@@ -68,6 +69,8 @@ const BotHunt = () => {
     } else {
       showToastNotice('sorry, that did not work')
     }
+
+    if (manualInputRef.current) manualInputRef.current.value = ''
   }
 
   const randomTitle = titles[Math.floor(Math.random() * titles.length)]
@@ -78,6 +81,7 @@ const BotHunt = () => {
         <Guard data={data} error={error} needsAuth>
           <>
             <div id="logo" dangerouslySetInnerHTML={{ __html: randomTitle }} />
+            {renderManualMode()}
             <ul>{renderLis()}</ul>
             {renderLoadMore()}
           </>
@@ -163,19 +167,7 @@ const BotHunt = () => {
                   <br />
                   <br />
                   <br />
-                  <p>
-                    <a
-                      className="cursor-pointer text-red-brand"
-                      onClick={(e: MouseEvent) => {
-                        if (!e.metaKey && !e.ctrlKey) return false
-                        void remove(id)
-                      }}
-                    >
-                      ☠️ Remove
-                    </a>
-                    <br />
-                    {isMac ? '⌘' : 'CTRL'} + click
-                  </p>
+                  <p>{renderRemoveLink(id)}</p>
                 </div>
               </div>
             </div>
@@ -202,6 +194,54 @@ const BotHunt = () => {
           </li>
         )
       }
+    )
+  }
+
+  function renderManualMode() {
+    return (
+      <p className="serlo-p border-b-2 text-right pb-4">
+        <b>Manual mode</b> (immediate):{' '}
+        <input ref={manualInputRef} type="number" placeholder="bot id" />{' '}
+        {renderRemoveLink()}
+        <style jsx>{`
+          input {
+            padding: 0.2rem 0.4rem;
+            margin-right: 0.5rem;
+            background-color: var(--bg-color-faded);
+            color: var(--fg-color);
+          }
+        `}</style>
+      </p>
+    )
+  }
+
+  function renderRemoveLink(id?: number) {
+    return (
+      <>
+        <a
+          className="cursor-pointer"
+          onClick={(e: MouseEvent) => {
+            if (!e.metaKey && !e.ctrlKey) return false
+            const manualId = parseInt(manualInputRef.current?.value ?? '')
+            const idToRemove = id ? id : manualId
+            if (isNaN(idToRemove)) return false
+            void remove(idToRemove)
+          }}
+        >
+          ☠️ Remove
+        </a>
+        <br />
+        {isMac ? '⌘' : 'CTRL'} + click
+        <style jsx>{`
+          a {
+            text-decoration: underline;
+            &:hover {
+              text-decoration: none;
+              color: #f00;
+            }
+          }
+        `}</style>
+      </>
     )
   }
 
@@ -262,12 +302,14 @@ const Style = () => (
     :root {
       --fg-color: #333;
       --bg-color: #fff;
+      --bg-color-faded: #ccc;
     }
 
     @media (prefers-color-scheme: dark) {
       :root {
         --fg-color: #ccc;
         --bg-color: #111;
+        --bg-color-faded: #444;
       }
     }
 
