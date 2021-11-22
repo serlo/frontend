@@ -408,7 +408,7 @@ function GapEx({ choices, children, count }: GapExProps) {
                     : 'choice'
                 }
                 onClick={() => {
-                  if (allfilled) return
+                  if (selected == -1 && allfilled) return
 
                   let toFill = selected
                   if (toFill < 0) {
@@ -424,6 +424,13 @@ function GapEx({ choices, children, count }: GapExProps) {
                   filledCopy[toFill] = choiceIndex
 
                   setFilled(filledCopy)
+
+                  if (allfilled) {
+                    if (filledCopy.every((x) => x >= 0)) {
+                      setSelected(-1)
+                      return
+                    }
+                  }
 
                   let next = toFill
                   do {
