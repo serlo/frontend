@@ -286,6 +286,8 @@ export async function requestPage(
         metaDescription: uuid.currentRevision?.metaDescription
           ? uuid.currentRevision?.metaDescription
           : getMetaDescription(content),
+        dateCreated: uuid.date,
+        dateModified: uuid.currentRevision?.date,
       },
       horizonData,
       cacheKey,

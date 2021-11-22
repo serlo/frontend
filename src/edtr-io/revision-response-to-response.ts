@@ -21,6 +21,7 @@ export function revisionResponseToResponse(
   const metaDescription = hasOwnPropertyTs(uuid, 'metaDescription')
     ? uuid.metaDescription
     : ''
+  const date = '' // just to make type happy, not used
 
   const taxonomyTerms = hasOwnPropertyTs(uuid.repository, 'taxonomyTerms')
     ? uuid.repository.taxonomyTerms
@@ -37,6 +38,7 @@ export function revisionResponseToResponse(
         content,
         metaTitle,
         metaDescription,
+        date,
       },
       ...repositoryFields,
       taxonomyTerms,
@@ -48,12 +50,14 @@ export function revisionResponseToResponse(
     uuid.__typename
     return {
       __typename: 'Article',
+      date,
       currentRevision: {
         id: uuid.id,
         title,
         content,
         metaTitle,
         metaDescription,
+        date,
       },
       taxonomyTerms,
       ...repositoryFields,
@@ -83,6 +87,7 @@ export function revisionResponseToResponse(
         id: uuid.id,
         title,
         content,
+        date,
       },
       ...repositoryFields,
       revisions: uuid.repository.revisions,
@@ -110,6 +115,7 @@ export function revisionResponseToResponse(
       currentRevision: {
         id: uuid.id,
         content,
+        date,
       },
       taxonomyTerms,
       ...repositoryFields,
@@ -125,6 +131,7 @@ export function revisionResponseToResponse(
         id: uuid.id,
         content,
         cohesive: uuid.cohesive,
+        date,
       },
       exercises: uuid.repository.exercises,
       taxonomyTerms,
@@ -140,6 +147,7 @@ export function revisionResponseToResponse(
       currentRevision: {
         id: uuid.id,
         content,
+        date,
       },
       exerciseGroup: uuid.repository.exerciseGroup,
       ...repositoryFields,
@@ -183,6 +191,7 @@ export function revisionResponseToResponse(
         url: uuid.url,
         title,
         content,
+        date,
       },
       taxonomyTerms,
       ...repositoryFields,

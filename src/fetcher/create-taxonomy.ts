@@ -70,6 +70,7 @@ function collectType(
       if (title) {
         result.push({
           title,
+          id: child.id,
           url: getAlias(child),
           unrevised: !child.currentRevision,
         })
@@ -95,6 +96,7 @@ function collectTopicFolders(
     )
       result.push({
         title: child.name,
+        id: child.id,
         url: getAlias(child),
       })
   })
@@ -140,7 +142,7 @@ function collectSubfolders(children: TaxonomyTermChildrenLevel2[]) {
       child.type !== 'topicFolder' &&
       child.type !== 'curriculumTopicFolder'
     )
-      result.push({ title: child.name, url: getAlias(child) })
+      result.push({ title: child.name, url: getAlias(child), id: child.id })
   })
   return result
 }

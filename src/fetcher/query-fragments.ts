@@ -7,6 +7,7 @@ export const sharedRevisionFragments = gql`
     content
     metaTitle
     metaDescription
+    date
   }
 
   fragment pageRevision on PageRevision {
@@ -29,18 +30,21 @@ export const sharedRevisionFragments = gql`
     url
     metaTitle
     metaDescription
+    date
   }
 
   fragment coursePageRevision on CoursePageRevision {
     id
     content
     title
+    date
   }
 
   fragment exerciseGroupRevision on ExerciseGroupRevision {
     id
     content
     cohesive
+    date
   }
 
   fragment eventRevision on EventRevision {
@@ -255,8 +259,10 @@ export const sharedExerciseFragments = gql`
     alias
     instance
     trashed
+    date
     currentRevision {
       content
+      date
     }
     solution {
       ...solution
