@@ -5,6 +5,7 @@ import { HeadTags } from '../head-tags'
 import { CommunityWall } from '../landing/rework/community-wall'
 import { FooterNew } from '../landing/rework/footer-new'
 import { HeaderNew } from '../landing/rework/header-new'
+import { LandingJsonLd } from '../landing/rework/landing-json-ld'
 import { PartnerListNew } from '../landing/rework/partner-list-new'
 import { WelcomeMessage } from '../landing/rework/welcome-message'
 import { Quickbar } from '../navigation/quickbar'
@@ -216,6 +217,7 @@ export function LandingDE({ data }: LandingDEProps) {
         </section>
       </main>
       <FooterNew />
+      <LandingJsonLd />
     </>
   )
 }
