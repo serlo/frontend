@@ -1,5 +1,4 @@
 import { faLightbulb, faQuoteRight } from '@edtr-io/ui'
-import { faCircle } from '@fortawesome/free-regular-svg-icons'
 import {
   faScroll,
   faHandPointRight,
@@ -8,53 +7,70 @@ import {
   faExclamationTriangle,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 
 import { BoxProps } from '.'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 
-const boxTypeIcons = {
-  blank: faCircle,
-  example: faCircle,
-  quote: faQuoteRight,
-  approach: faMapSigns,
-  remember: faScroll,
-  attention: faExclamationTriangle,
-  note: faHandPointRight,
-  definition: faThumbtack,
-  theorem: faLightbulb,
-  proof: faCircle,
+const boxTypeStyle = {
+  blank: {},
+  example: {},
+  quote: { icon: faQuoteRight },
+  approach: { icon: faMapSigns },
+  remember: { icon: faScroll },
+  attention: {
+    icon: faExclamationTriangle,
+    borderColorClass: 'border-red-100',
+    colorClass: 'text-orange',
+  },
+  note: { icon: faHandPointRight },
+  definition: { icon: faThumbtack },
+  theorem: { icon: faLightbulb },
+  proof: {},
 }
 
-const types = Object.keys(boxTypeIcons)
-type BoxType = keyof typeof boxTypeIcons
+const defaultStyle = {
+  icon: undefined,
+  borderColorClass: 'border-brand-150',
+  colorClass: 'text-brand',
+}
+
+const types = Object.keys(boxTypeStyle)
+type BoxType = keyof typeof boxTypeStyle
 
 export function BoxRenderer(props: BoxProps) {
   const { title, type, content, anchorId } = props.state
   const hasNoType = type.value === ''
-  const typedValue = type.value as BoxType
+  const typedValue = (hasNoType ? 'blank' : type.value) as BoxType
   const isBlank = typedValue === 'blank'
+
+  const style = boxTypeStyle[typedValue]
+  const borderColorClass = hasOwnPropertyTs(style, 'borderColorClass')
+    ? style.borderColorClass
+    : defaultStyle.borderColorClass
+  const colorClass = hasOwnPropertyTs(style, 'colorClass')
+    ? style.colorClass
+    : defaultStyle.colorClass
+  const icon = hasOwnPropertyTs(style, 'icon') ? style.icon : undefined
 
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
   const editorStrings = loggedInData.strings.editor
 
-  const colorClass =
-    typedValue === 'attention' ? 'text-red-100' : 'text-brand-150'
-  const bgClass =
-    typedValue === 'attention' ? 'border-red-100' : 'border-brand-150'
-
   return (
     <>
-      <div className={'p-4 rounded-2xl relative border-4 ' + bgClass}>
+      <div
+        className={clsx('border-3 p-4 rounded-xl relative', borderColorClass)}
+      >
         {hasNoType ? (
           renderInlineSettings()
         ) : (
           <>
             {renderTitle()}
             {renderContent()}
-            {renderIcon()}
           </>
         )}
       </div>
@@ -63,18 +79,11 @@ export function BoxRenderer(props: BoxProps) {
   )
 
   function renderIcon() {
-    const icon = boxTypeIcons[typedValue]
-    return (
-      <div className={'absolute top-4 right-2 w-16 text-center ' + colorClass}>
-        {icon === faCircle ? null : (
-          <FontAwesomeIcon
-            icon={icon}
-            size="2x"
-            className={'mr-2 ' + colorClass}
-          />
-        )}
-      </div>
-    )
+    return icon ? (
+      <>
+        <FontAwesomeIcon icon={icon} />{' '}
+      </>
+    ) : null
   }
 
   function renderTitle() {
@@ -82,9 +91,8 @@ export function BoxRenderer(props: BoxProps) {
       <div className="pt-1 flex font-bold" id={anchorId.value}>
         {isBlank ? null : (
           <div>
-            <span
-              className={typedValue === 'attention' ? 'text-red' : 'text-brand'}
-            >
+            <span className={colorClass}>
+              {renderIcon()}
               {strings.content.boxTypes[typedValue]}
             </span>
             {' | '}
@@ -132,6 +140,10 @@ export function BoxRenderer(props: BoxProps) {
   function renderSettingsLis() {
     return types.map((boxType) => {
       const typedBoxType = boxType as BoxType
+      const listStyle = boxTypeStyle[typedBoxType]
+      const listIcon = hasOwnPropertyTs(listStyle, 'icon')
+        ? listStyle.icon
+        : undefined
 
       return (
         <li key={typedBoxType} className="inline-block pr-4 pb-4">
@@ -143,7 +155,11 @@ export function BoxRenderer(props: BoxProps) {
               if (anchorId.value === '') generateAnchorId(typedBoxType)
             }}
           >
-            <FontAwesomeIcon icon={boxTypeIcons[typedBoxType]} />{' '}
+            {listIcon ? (
+              <>
+                <FontAwesomeIcon icon={listIcon} />{' '}
+              </>
+            ) : null}
             {strings.content.boxTypes[typedBoxType]}
           </button>
         </li>
