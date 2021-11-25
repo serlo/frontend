@@ -62,18 +62,19 @@ export function BoxRenderer(props: BoxProps) {
 
   return (
     <>
-      <div
+      <figure
+        id={anchorId.value}
         className={clsx('border-3 p-4 rounded-xl relative', borderColorClass)}
       >
         {hasNoType ? (
           renderInlineSettings()
         ) : (
           <>
-            {renderTitle()}
+            {renderHeader()}
             {renderContent()}
           </>
         )}
-      </div>
+      </figure>
       {renderSettings()}
     </>
   )
@@ -86,9 +87,9 @@ export function BoxRenderer(props: BoxProps) {
     ) : null
   }
 
-  function renderTitle() {
+  function renderHeader() {
     return (
-      <div className="pt-1 flex font-bold" id={anchorId.value}>
+      <figcaption className="pt-1 flex font-bold">
         {isBlank ? null : (
           <div>
             <span className={colorClass}>
@@ -103,7 +104,7 @@ export function BoxRenderer(props: BoxProps) {
             config: { placeholder: editorStrings.box.titlePlaceholder },
           })}
         </div>
-      </div>
+      </figcaption>
     )
   }
 

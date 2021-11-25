@@ -11,11 +11,14 @@ import {
   faNewspaper,
   faParagraph,
   faPhotoVideo,
+  faQuoteRight,
   faTable,
 } from '@edtr-io/ui'
 import { faSquare } from '@fortawesome/free-regular-svg-icons'
 
+import { features } from '@/components/user/profile-experimental'
 import { LoggedInData } from '@/data-types'
+import { serloDomain } from '@/helper/serlo-domain'
 
 export function getPluginRegistry(
   type: string,
@@ -35,12 +38,12 @@ export function getPluginRegistry(
       description: editorStrings.edtrIo.textDesc,
       icon: createIcon(faParagraph),
     },
-    // {
-    //   name: 'blockquote',
-    //   title: editorStrings.edtrIo.blockquoteTitle,
-    //   description: editorStrings.edtrIo.quoteDescription,
-    //   icon: createIcon(faQuoteRight),
-    // },
+    {
+      name: 'blockquote',
+      title: editorStrings.edtrIo.blockquoteTitle,
+      description: editorStrings.edtrIo.quoteDescription,
+      icon: createIcon(faQuoteRight),
+    },
     {
       name: 'box',
       title: editorStrings.edtrIo.box,
@@ -77,11 +80,11 @@ export function getPluginRegistry(
       description: editorStrings.edtrIo.imageDesc,
       icon: createIcon(faImages),
     },
-    // {
-    //   name: 'important',
-    //   title: editorStrings.edtrIo.importantTitle,
-    //   description: editorStrings.edtrIo.importantDesc,
-    // },
+    {
+      name: 'important',
+      title: editorStrings.edtrIo.importantTitle,
+      description: editorStrings.edtrIo.importantDesc,
+    },
     {
       name: 'injection',
       title: editorStrings.edtrIo.injectionTitle,
@@ -127,5 +130,14 @@ export function getPluginRegistry(
     ? registry.filter((plugin) => include.includes(plugin.name))
     : registry
 
-  return filteredRegistry
+  const showBox =
+    typeof window !== 'undefined' &&
+    serloDomain != 'serlo.org' &&
+    document.cookie.includes(features.boxPlugin.cookieName + '=1')
+
+  const boxFiltered = showBox
+    ? filteredRegistry
+    : filteredRegistry.filter((plugin) => plugin.name != 'box')
+
+  return boxFiltered
 }
