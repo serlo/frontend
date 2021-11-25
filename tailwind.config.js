@@ -42,10 +42,7 @@ module.exports = {
         },
         red: {
           DEFAULT: colors.red[900],
-          700: colors.red[700],
-          200: colors.red[200],
           100: colors.red[100],
-          50: colors.red[50],
         },
       },
       borderWidth: {
