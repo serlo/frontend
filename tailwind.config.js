@@ -38,6 +38,11 @@ module.exports = {
         orange: {
           DEFAULT: colors.orange[900],
           200: colors.orange[200],
+          50: colors.orange[50],
+        },
+        red: {
+          DEFAULT: colors.red[900],
+          100: colors.red[100],
         },
       },
       borderWidth: {

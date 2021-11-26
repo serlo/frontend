@@ -2,24 +2,11 @@
 import { Editor, EditorProps } from '@edtr-io/core/beta'
 // eslint-disable-next-line import/no-internal-modules
 import { createDefaultDocumentEditor } from '@edtr-io/default-document-editor/beta'
-import { RowsConfig } from '@edtr-io/plugin-rows'
-import {
-  createIcon,
-  faAnchor,
-  faCaretSquareDown,
-  faCode,
-  faCubes,
-  faFilm,
-  faImages,
-  faNewspaper,
-  faParagraph,
-  faPhotoVideo,
-  faQuoteRight,
-} from '@edtr-io/ui'
 import { Entity } from '@serlo/authorization'
 import * as React from 'react'
 
 import { CsrfContext } from './csrf-context'
+import { getPluginRegistry } from './get-plugin-registry'
 import { createPlugins } from './plugins'
 import { useCanDo } from '@/auth/use-can-do'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
@@ -80,7 +67,7 @@ export function SerloEditor({
   const plugins = createPlugins({
     // eslint-disable-next-line @typescript-eslint/unbound-method
     getCsrfToken: getCsrfToken,
-    registry: getRegistry(),
+    registry: getPluginRegistry(type, editorStrings),
     editorStrings,
   })
 
@@ -113,100 +100,6 @@ export function SerloEditor({
       </SaveContext.Provider>
     </CsrfContext.Provider>
   )
-
-  function getRegistry(): RowsConfig['plugins'] {
-    const isExercise = [
-      'grouped-text-exercise',
-      'text-exercise',
-      'text-exercise-group',
-    ].includes(type)
-    return [
-      {
-        name: 'text',
-        title: editorStrings.edtrIo.text,
-        description: editorStrings.edtrIo.textDesc,
-        icon: createIcon(faParagraph),
-      },
-      {
-        name: 'blockquote',
-        title: editorStrings.edtrIo.blockquoteTitle,
-        description: editorStrings.edtrIo.quoteDescription,
-        icon: createIcon(faQuoteRight),
-      },
-      {
-        name: 'geogebra',
-        title: editorStrings.edtrIo.geogebraTitle,
-        description: editorStrings.edtrIo.geogebraDesc,
-        icon: createIcon(faCubes),
-      },
-      {
-        name: 'highlight',
-        title: editorStrings.edtrIo.highlightTitle,
-        description: editorStrings.edtrIo.highlightDesc,
-        icon: createIcon(faCode),
-      },
-      {
-        name: 'anchor',
-        title: editorStrings.edtrIo.anchor,
-        description: editorStrings.edtrIo.anchorDesc,
-        icon: createIcon(faAnchor),
-      },
-      {
-        name: 'equations',
-        title: editorStrings.edtrIo.equationsTitle,
-        description: editorStrings.edtrIo.equationsDesc,
-      },
-      {
-        name: 'image',
-        title: editorStrings.edtrIo.image,
-        description: editorStrings.edtrIo.imageDesc,
-        icon: createIcon(faImages),
-      },
-      {
-        name: 'important',
-        title: editorStrings.edtrIo.importantTitle,
-        description: editorStrings.edtrIo.importantDesc,
-      },
-      {
-        name: 'injection',
-        title: editorStrings.edtrIo.injectionTitle,
-        description: editorStrings.edtrIo.injectionDesc,
-        icon: createIcon(faNewspaper),
-      },
-      {
-        name: 'multimedia',
-        title: editorStrings.edtrIo.multimediaTitle,
-        description: editorStrings.edtrIo.multimediaDesc,
-        icon: createIcon(faPhotoVideo),
-      },
-      {
-        name: 'spoiler',
-        title: editorStrings.edtrIo.spoiler,
-        description: editorStrings.edtrIo.spoilerDesc,
-        icon: createIcon(faCaretSquareDown),
-      },
-      {
-        name: 'table',
-        title: editorStrings.edtrIo.table,
-        description: editorStrings.edtrIo.tableDesc,
-      },
-      {
-        name: 'video',
-        title: editorStrings.edtrIo.video,
-        description: editorStrings.edtrIo.videoDesc,
-        icon: createIcon(faFilm),
-      },
-      ...(isExercise
-        ? [
-            {
-              name: 'separator',
-              title: editorStrings.edtrIo.solutionSeparator,
-              description: editorStrings.edtrIo.solutionSeparatorDesc,
-            },
-          ]
-        : []),
-    ]
-  }
 }
 
 function getStored() {

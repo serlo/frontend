@@ -17,7 +17,12 @@ const testUsers = [
   'wolfgang',
 ]
 
-const editorCookieName = 'useEditorInFrontend'
+export const features = {
+  editor: { cookieName: 'useEditorInFrontend', isActive: false },
+  boxPlugin: { cookieName: 'useBoxPlugin', isActive: false },
+}
+
+type Feature = keyof typeof features
 
 export function ProfileExperimental() {
   const auth = useAuthentication()
@@ -27,16 +32,20 @@ export function ProfileExperimental() {
     return null
   }
 
-  const isActive =
-    typeof window === 'undefined'
-      ? undefined
-      : Cookies.get(editorCookieName) === '1'
+  // check cookies
+  Object.keys(features).forEach((feature) => {
+    const _feature = feature as Feature
+    features[_feature].isActive =
+      typeof window === 'undefined'
+        ? false
+        : Cookies.get(features[_feature].cookieName) === '1'
+  })
 
-  function handleButtonClick() {
-    if (isActive) {
-      Cookies.remove(editorCookieName)
+  function handleButtonClick(feature: Feature) {
+    if (features[feature].isActive) {
+      Cookies.remove(features[feature].cookieName)
     } else {
-      Cookies.set(editorCookieName, '1', { expires: 60 })
+      Cookies.set(features[feature].cookieName, '1', { expires: 60 })
     }
     updateState({})
   }
@@ -48,19 +57,7 @@ export function ProfileExperimental() {
       </h2>
       <div>
         <h3 className="serlo-h3 mb-3">
-          ⚠️ Editor im Frontend{' '}
-          <button
-            onClick={handleButtonClick}
-            className={clsx(
-              'serlo-button',
-              isActive
-                ? 'serlo-make-interactive-light'
-                : 'serlo-make-interactive-primary'
-            )}
-            onPointerUp={(e) => e.currentTarget.blur()} // use focus-visible soonish
-          >
-            {isActive ? 'deaktivieren' : 'aktivieren'}{' '}
-          </button>
+          ⚠️ Editor im Frontend {renderFeatureButton('editor')}
         </h3>
         <p className="serlo-p">
           Hier kannst du den Editor im neuen Frontend aktivieren. Prinzipiell
@@ -84,6 +81,29 @@ export function ProfileExperimental() {
           </ul>
         </p>
       </div>
+      <div>
+        <h3 className="serlo-h3 mb-3">
+          ⬛ Editor: Box Plugin {renderFeatureButton('boxPlugin')}
+        </h3>
+        <p className="serlo-p">Das neue Box Plugin, bisher nur für Staging.</p>
+      </div>
     </section>
   )
+
+  function renderFeatureButton(feature: Feature) {
+    return (
+      <button
+        onClick={() => handleButtonClick(feature)}
+        className={clsx(
+          'serlo-button',
+          features[feature].isActive
+            ? 'serlo-make-interactive-light'
+            : 'serlo-make-interactive-primary'
+        )}
+        onPointerUp={(e) => e.currentTarget.blur()}
+      >
+        {features[feature].isActive ? 'deaktivieren' : 'aktivieren'}{' '}
+      </button>
+    )
+  }
 }

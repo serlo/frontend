@@ -125,6 +125,18 @@ export const instanceData = {
       relatedContentTitle: 'Still want more?',
       relatedContentText: 'You can find more content on this topic here:',
       sourcesTitle: 'Sources',
+      boxTypes: {
+        blank: 'Blank',
+        example: 'Example',
+        quote: 'Quote',
+        approach: 'Approach',
+        remember: 'Remember',
+        attention: 'Attention',
+        note: 'Note',
+        definition: 'Definition',
+        theorem: 'Theorem',
+        proof: 'Proof',
+      },
     },
     consent: {
       title: 'Consent for external Content',
@@ -500,6 +512,9 @@ export const loggedInData = {
           'We found an old revision created by you. Do you want to restore it?',
         notConverted:
           "This entity hasn't been converted to the new editor, yet.",
+        box: 'Container',
+        boxDesc:
+          'A container for examples, quotes, warnings, theorems, notes…',
         text: 'Text',
         textDesc:
           'Compose content using rich text and math formulas.',
@@ -677,6 +692,11 @@ export const loggedInData = {
         illegalInjectionFound: 'Illegal injection found',
         serloEntitySrc: 'Serlo entity {{src}}',
         serloId: 'Serlo ID:',
+      },
+      box: {
+        type: 'Type of box',
+        titlePlaceholder: '(optional title)',
+        anchorId: 'Anchor ID',
       },
       layout: {
         toDragConvert:
