@@ -17,6 +17,7 @@ import {
   FrontendTextNode,
   Sign,
 } from '@/data-types'
+import { BoxType } from '@/edtr-io/plugins/box/renderer'
 
 const colors: FrontendTextColor[] = ['blue', 'green', 'orange']
 
@@ -127,6 +128,19 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
       {
         type: 'blockquote',
         children: convert(node.state as EdtrState),
+      },
+    ]
+  }
+  if (node.plugin === 'box') {
+    return [
+      {
+        type: 'box',
+        boxType: node.state.type as BoxType,
+        anchorId: node.state.anchorId,
+        title: (
+          convert(node.state.title as EdtrState) as FrontendTextNode[]
+        )?.[0].children,
+        children: convert(node.state.content.state as EdtrState),
       },
     ]
   }

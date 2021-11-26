@@ -14,7 +14,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 
-const boxTypeStyle = {
+export const boxTypeStyle = {
   blank: {},
   example: {},
   quote: { icon: faQuoteRight },
@@ -31,14 +31,14 @@ const boxTypeStyle = {
   proof: {},
 }
 
-const defaultStyle = {
+export const defaultStyle = {
   icon: undefined,
-  borderColorClass: 'border-brand-150',
+  borderColorClass: 'border-brand-300',
   colorClass: 'text-brand',
 }
 
 const types = Object.keys(boxTypeStyle)
-type BoxType = keyof typeof boxTypeStyle
+export type BoxType = keyof typeof boxTypeStyle
 
 export function BoxRenderer(props: BoxProps) {
   const { title, type, content, anchorId } = props.state
