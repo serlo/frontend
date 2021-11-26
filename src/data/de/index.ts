@@ -121,16 +121,16 @@ export const instanceData = {
       relatedContentText: "Hier findest du noch weitere passende Inhalte zum Thema:",
       sourcesTitle: "Quellen",
       boxTypes: {
-        blank: 'Blank',
-        example: 'Example',
-        quote: 'Quote',
-        approach: 'Approach',
-        remember: 'Remember',
-        attention: 'Attention',
-        note: 'Note',
+        blank: "Blanko",
+        example: "Beispiel",
+        quote: "Zitat",
+        approach: "Vorgehen",
+        remember: "Merke",
+        attention: "Vorsicht",
+        note: "Beachte",
         definition: 'Definition',
-        theorem: 'Theorem',
-        proof: 'Proof'
+        theorem: "Satz",
+        proof: "Beweis"
       }
     },
     consent: {
@@ -472,8 +472,8 @@ export const loggedInData = {
         conversionError: "Leider trat ein Fehler bei der Konvertierung auf.",
         oldRevisionFound: "Wir haben eine alte Bearbeitung von dir gefunden. Möchtest du diese wiederherstellen?",
         notConverted: "Dieser Inhalt wurde noch nicht im neuen Editor bearbeitet.",
-        box: 'Container',
-        boxDesc: 'A container for examples, quotes, warnings, theorems, notes…',
+        box: "Box",
+        boxDesc: "Ein Rahmen für Beispiele, Zitate, Warnungen, Beweise (math.), …",
         text: 'Text',
         textDesc: "Schreibe Text und Matheformeln, und formatiere sie.",
         blockquoteTitle: "Zitat",
@@ -635,9 +635,9 @@ export const loggedInData = {
         serloId: "Serlo ID"
       },
       box: {
-        type: 'Type of box',
-        titlePlaceholder: '(optional title)',
-        anchorId: 'Anchor ID'
+        type: "Art der Box",
+        titlePlaceholder: "(optionaler Titel)",
+        anchorId: "Sprungmarke (anchor id)"
       },
       layout: {
         toDragConvert: "Um die Inhalte zu verschieben, konvertiere sie für den neuen Editor:",
