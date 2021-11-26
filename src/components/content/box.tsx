@@ -32,6 +32,8 @@ export function Box({
     : defaultStyle.colorClass
   const icon = hasOwnPropertyTs(style, 'icon') ? style.icon : undefined
 
+  const content = renderNested(children, 'children')
+
   return (
     <figure
       id={anchorId}
@@ -41,7 +43,11 @@ export function Box({
       )}
     >
       {renderHeader()}
-      <div className="">{renderNested(children, 'children')}</div>
+      {boxType === 'quote' ? (
+        <blockquote>{content}</blockquote>
+      ) : (
+        <div>{content}</div>
+      )}
     </figure>
   )
 
