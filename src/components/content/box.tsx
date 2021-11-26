@@ -1,11 +1,42 @@
+import {
+  faScroll,
+  faHandPointRight,
+  faMapSigns,
+  faThumbtack,
+  faExclamationTriangle,
+  faLightbulb,
+  faQuoteRight,
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 
 import { useInstanceData } from '@/contexts/instance-context'
 import { FrontendBoxNode } from '@/data-types'
-import { boxTypeStyle, defaultStyle } from '@/edtr-io/plugins/box/renderer'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { RenderNestedFunction } from '@/schema/article-renderer'
+
+export const boxTypeStyle = {
+  blank: {},
+  example: {},
+  quote: { icon: faQuoteRight },
+  approach: { icon: faMapSigns },
+  remember: { icon: faScroll },
+  attention: {
+    icon: faExclamationTriangle,
+    borderColorClass: 'border-red-100',
+    colorClass: 'text-orange',
+  },
+  note: { icon: faHandPointRight },
+  definition: { icon: faThumbtack },
+  theorem: { icon: faLightbulb },
+  proof: {},
+}
+
+export const defaultStyle = {
+  icon: undefined,
+  borderColorClass: 'border-brand-300',
+  colorClass: 'text-brand',
+}
 
 type BoxProps = FrontendBoxNode & { renderNested: RenderNestedFunction }
 
