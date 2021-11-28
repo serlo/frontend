@@ -2,6 +2,7 @@ import { Role, Subject, TaxonomyTermType } from '@serlo/api'
 import { AuthorizationPayload } from '@serlo/authorization'
 import { CSSProperties, FunctionComponent } from 'react'
 
+import { BoxType } from './edtr-io/plugins/box/renderer'
 import { Instance, QueryResponse, User } from './fetcher/query-types'
 import { instanceData, instanceLandingData, loggedInData } from '@/data/en'
 
@@ -529,6 +530,14 @@ export interface FrontendBlockquoteNode {
   children?: FrontendContentNode[]
 }
 
+export interface FrontendBoxNode {
+  type: 'box'
+  boxType: BoxType
+  title?: FrontendContentNode[]
+  anchorId: string
+  children?: FrontendContentNode[]
+}
+
 export interface FrontendAnchorNode {
   type: 'anchor'
   id: string
@@ -728,6 +737,7 @@ export type FrontendElementNode =
   | FrontendColNode
   | FrontendImportantNode
   | FrontendBlockquoteNode
+  | FrontendBoxNode
   | FrontendThNode
   | FrontendTdNode
 

@@ -1,44 +1,14 @@
-import { faLightbulb, faQuoteRight } from '@edtr-io/ui'
-import {
-  faScroll,
-  faHandPointRight,
-  faMapSigns,
-  faThumbtack,
-  faExclamationTriangle,
-} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 
 import { BoxProps } from '.'
+import { boxTypeStyle, defaultStyle } from '@/components/content/box'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 
-const boxTypeStyle = {
-  blank: {},
-  example: {},
-  quote: { icon: faQuoteRight },
-  approach: { icon: faMapSigns },
-  remember: { icon: faScroll },
-  attention: {
-    icon: faExclamationTriangle,
-    borderColorClass: 'border-red-100',
-    colorClass: 'text-orange',
-  },
-  note: { icon: faHandPointRight },
-  definition: { icon: faThumbtack },
-  theorem: { icon: faLightbulb },
-  proof: {},
-}
-
-const defaultStyle = {
-  icon: undefined,
-  borderColorClass: 'border-brand-150',
-  colorClass: 'text-brand',
-}
-
 const types = Object.keys(boxTypeStyle)
-type BoxType = keyof typeof boxTypeStyle
+export type BoxType = keyof typeof boxTypeStyle
 
 export function BoxRenderer(props: BoxProps) {
   const { title, type, content, anchorId } = props.state
