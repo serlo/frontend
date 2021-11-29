@@ -272,7 +272,7 @@ const Tasks = () => {
         key: 'date',
         name: 'Angelegt vor',
         width: 150,
-        formatter: ({ row }) => <TimeAgo datetime={row.date} dateAsTitle />,
+        // formatter: ({ row }) => <TimeAgo datetime={row.date} dateAsTitle />,
         headerCellClass: filterColumnClassName,
         headerRenderer: (p) => (
           <FilterRenderer<Row, unknown, HTMLInputElement> {...p}>
