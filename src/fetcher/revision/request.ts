@@ -54,7 +54,11 @@ export async function requestRevision(
           createExercise({
             ...uuid,
             license: uuid.repository.license,
-            currentRevision: { content: uuid.content, id: uuid.id },
+            currentRevision: {
+              content: uuid.content,
+              id: uuid.id,
+              date: uuid.date,
+            },
           }),
         ]
       : null

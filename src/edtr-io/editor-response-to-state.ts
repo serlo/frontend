@@ -221,6 +221,7 @@ export function editorResponseToState(uuid: QueryResponse): DeserializeResult {
                   id: page.id,
                   title: page.currentRevision?.title ?? '',
                   content: page.currentRevision?.content ?? '',
+                  date: '', // not used
                 },
               }).initialState.state
             }),

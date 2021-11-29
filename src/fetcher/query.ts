@@ -35,6 +35,7 @@ export const dataQuery = gql`
       }
 
       ... on Article {
+        date
         currentRevision {
           ...articleRevision
         }
@@ -63,6 +64,7 @@ export const dataQuery = gql`
       }
 
       ... on Applet {
+        date
         currentRevision {
           ...appletRevision
         }
@@ -75,6 +77,7 @@ export const dataQuery = gql`
       }
 
       ... on CoursePage {
+        date
         currentRevision {
           ...coursePageRevision
         }
@@ -122,6 +125,7 @@ export const dataQuery = gql`
       }
 
       ... on ExerciseGroup {
+        date
         currentRevision {
           ...exerciseGroupRevision
         }
@@ -238,6 +242,7 @@ export const dataQuery = gql`
       nodes {
         label
         url
+        id
       }
     }
   }
@@ -269,8 +274,10 @@ export const dataQuery = gql`
     ... on Video {
       alias
       id
+      date
       currentRevision {
         title
+        date
       }
       revisions(first: 1, unrevised: true) {
         nodes {

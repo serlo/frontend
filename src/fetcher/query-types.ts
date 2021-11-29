@@ -46,9 +46,10 @@ export interface Article extends EntityWithTaxonomyTerms {
   currentRevision?: GraphQL.Maybe<
     Pick<
       GraphQL.ArticleRevision,
-      'title' | 'content' | 'metaTitle' | 'metaDescription' | 'id'
+      'title' | 'content' | 'metaTitle' | 'metaDescription' | 'id' | 'date'
     >
   >
+  date: string
   revisions: {
     totalCount: number
     nodes: {
@@ -60,7 +61,7 @@ export interface Article extends EntityWithTaxonomyTerms {
 export interface Video extends EntityWithTaxonomyTerms {
   __typename: 'Video'
   currentRevision?: GraphQL.Maybe<
-    Pick<GraphQL.VideoRevision, 'title' | 'url' | 'content' | 'id'>
+    Pick<GraphQL.VideoRevision, 'title' | 'url' | 'content' | 'id' | 'date'>
   >
   revisions: {
     totalCount: number
@@ -75,7 +76,13 @@ export interface Applet extends EntityWithTaxonomyTerms {
   currentRevision?: GraphQL.Maybe<
     Pick<
       GraphQL.AppletRevision,
-      'title' | 'content' | 'url' | 'metaTitle' | 'metaDescription' | 'id'
+      | 'title'
+      | 'content'
+      | 'url'
+      | 'metaTitle'
+      | 'metaDescription'
+      | 'id'
+      | 'date'
     >
   >
   revisions: {
@@ -89,7 +96,7 @@ export interface Applet extends EntityWithTaxonomyTerms {
 export interface CoursePage extends Entity {
   __typename: 'CoursePage'
   currentRevision?: GraphQL.Maybe<
-    Pick<GraphQL.CoursePageRevision, 'content' | 'title' | 'id'>
+    Pick<GraphQL.CoursePageRevision, 'content' | 'title' | 'id' | 'date'>
   >
   revisions: {
     totalCount: number
@@ -124,7 +131,7 @@ export interface CoursePage extends Entity {
 export interface BareExercise extends Entity {
   trashed: boolean
   currentRevision?: GraphQL.Maybe<
-    Pick<GraphQL.AbstractExerciseRevision, 'content' | 'id'>
+    Pick<GraphQL.AbstractExerciseRevision, 'content' | 'id' | 'date'>
   >
   revisions?: {
     totalCount: number
@@ -157,7 +164,7 @@ export interface GroupedExercise extends BareExercise {
 export interface BareExerciseGroup extends Entity {
   __typename: 'ExerciseGroup'
   currentRevision?: GraphQL.Maybe<
-    Pick<GraphQL.ExerciseGroupRevision, 'content' | 'id' | 'cohesive'>
+    Pick<GraphQL.ExerciseGroupRevision, 'content' | 'id' | 'cohesive' | 'date'>
   >
   revisions?: {
     totalCount: number

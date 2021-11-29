@@ -5,6 +5,7 @@ import { HeadTags } from '../head-tags'
 import { CommunityWall } from '../landing/rework/community-wall'
 import { FooterNew } from '../landing/rework/footer-new'
 import { HeaderNew } from '../landing/rework/header-new'
+import { LandingJsonLd } from '../landing/rework/landing-json-ld'
 import { PartnerListNew } from '../landing/rework/partner-list-new'
 import { WelcomeMessage } from '../landing/rework/welcome-message'
 import { Quickbar } from '../navigation/quickbar'
@@ -108,6 +109,7 @@ export function LandingDE({ data }: LandingDEProps) {
       <Head>
         <link href="_assets/landing-fonts.css" rel="stylesheet" />
       </Head>
+      <LandingJsonLd />
       <HeadTags data={{ title: 'Serlo – Die freie Lernplattform' }} />
       <HeaderNew />
       <main className="text-truegray-700">

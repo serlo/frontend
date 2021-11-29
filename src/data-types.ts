@@ -221,6 +221,7 @@ export type BreadcrumbEntry = BreadcrumbLinkEntry | BreadcrumbEllipsis
 
 export interface BreadcrumbLinkEntry {
   label: string
+  id?: number | null
   url?: string | null
   ellipsis?: boolean
 }
@@ -248,6 +249,8 @@ export interface HeadData {
   contentType?: string
   metaDescription?: string
   metaImage?: string
+  dateCreated?: string
+  dateModified?: string
 }
 
 // The data that fills the horizon (desktop, below content)
@@ -839,12 +842,12 @@ export interface TaxonomyLink {
   title: string
   url: string
   unrevised?: boolean
+  id: number
 }
 
 // Second level has folders and exercises as links
 
 export interface TaxonomySubTerm extends TaxonomyTermBase, TaxonomyLink {
-  id: number
   folders: TaxonomyLink[]
 }
 
