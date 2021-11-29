@@ -28,7 +28,7 @@ export function Article({
 
   function renderExercises() {
     const hasMoreLink = exerciseFolder.id && exerciseFolder.title
-    const hasExercises = exercises && exercises.length
+    const hasExercises = exercises && !!exercises.length
     if (!hasMoreLink && !hasExercises) return null
 
     return (

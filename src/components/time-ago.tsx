@@ -25,7 +25,7 @@ export function TimeAgo({ datetime, dateAsTitle, className }: TimeAgoProps) {
   }
 
   if (!languageLoaded && lang !== 'en')
-    return <>datetime.toLocaleString(lang)</>
+    return <>{datetime.toLocaleString(lang)}</>
 
   return (
     <ReactTimeAgo

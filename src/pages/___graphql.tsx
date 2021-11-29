@@ -1,3 +1,4 @@
+// @ts-nocheck
 import type { GraphiQLProps } from 'graphiql/esm/components/GraphiQL'
 import { GraphQLError } from 'graphql'
 import { GraphQLResponse } from 'graphql-request/dist/types'

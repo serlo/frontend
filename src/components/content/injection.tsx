@@ -55,6 +55,7 @@ export function Injection({ href, renderNested }: InjectionProps) {
       ])
       return
     }
+    console.log('error')
     setValue([
       {
         type: 'p',
