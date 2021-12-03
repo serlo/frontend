@@ -1,13 +1,13 @@
 import clsx from 'clsx'
-import { useState } from 'react';
+import { useState } from 'react'
 
 import { HeadTags } from '../head-tags'
-import { endpointEnmeshed } from "@/api/endpoint";
+import { endpointEnmeshed } from '@/api/endpoint'
 import { PartnerList } from '@/components/landing/partner-list'
-import {LoadingSpinner} from "@/components/loading/loading-spinner";
+import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { FooterNav } from '@/components/navigation/footer-nav'
 import { Logo } from '@/components/navigation/logo'
-import {triggerSentry} from "@/helper/trigger-sentry";
+import { triggerSentry } from '@/helper/trigger-sentry'
 
 const footerEntries = [
   {
@@ -20,24 +20,24 @@ const footerEntries = [
 ]
 
 export function DataWallet() {
-  const [qrCode, setQrCode] = useState("");
+  const [qrCode, setQrCode] = useState('')
 
   function createQRCode() {
-    setQrCode("loading")
+    setQrCode('loading')
     fetch(`${endpointEnmeshed}/init`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Accept": "image/png"
-      }
+        Accept: 'image/png',
+      },
     })
-      .then(res => res.blob())
+      .then((res) => res.blob())
       .then((res) => {
-        const urlCreator = window.URL || window.webkitURL;
-        setQrCode(urlCreator.createObjectURL(res));
+        const urlCreator = window.URL || window.webkitURL
+        setQrCode(urlCreator.createObjectURL(res))
         // TODO: When the workflow has been defined in the future we should revoke the object URL when done with:
         // urlCreator.revokeObjectUrl(qrCode)
       })
-      .catch(e => {
+      .catch((e) => {
         // eslint-disable-next-line no-console
         console.log(JSON.stringify(e))
 
@@ -67,13 +67,15 @@ export function DataWallet() {
             Deine Daten. Deine Rechte.
           </h1>
           <p className="mb-2">
-            Wir gehen verantwortungsvoll mit deinen Daten um. Serlo ist dafür Projektpartner des Bildungsraums Digital
-            (BIRD). BIRD setzt eine sogenannte „Data Wallet“ ein, die es dir ermöglicht, deine Daten sicher und direkt
-            mit uns zu teilen.
+            Wir gehen verantwortungsvoll mit deinen Daten um. Serlo ist dafür
+            Projektpartner des Bildungsraums Digital (BIRD). BIRD setzt eine
+            sogenannte „Data Wallet“ ein, die es dir ermöglicht, deine Daten
+            sicher und direkt mit uns zu teilen.
           </p>
           <p className="mb-2">
-            Das Data Wallet ist auf deinem Smartphone, dort sind deine Daten sicher aufgehoben. Um Serlo dein Vertrauen
-            zu schenken, ist eine einmalige Einrichtung erforderlich:
+            Das Data Wallet ist auf deinem Smartphone, dort sind deine Daten
+            sicher aufgehoben. Um Serlo dein Vertrauen zu schenken, ist eine
+            einmalige Einrichtung erforderlich:
           </p>
           <ol className="serlo-ol text-lg mb-4">
             <li>
@@ -82,7 +84,8 @@ export function DataWallet() {
                 className="serlo-button serlo-make-interactive-transparent-green -ml-1 font-bold pt-1"
                 href="https://enmeshed.eu/use/basics"
                 target="_blank"
-                rel="noreferrer">
+                rel="noreferrer"
+              >
                 Enmeshed App
               </a>
               auf dein Smartphone.
@@ -95,26 +98,26 @@ export function DataWallet() {
               >
                 QR-Code.
               </a>
-              {qrCode && (
-                (qrCode === "loading" && <LoadingSpinner noText />) || (
+              {qrCode &&
+                ((qrCode === 'loading' && <LoadingSpinner noText />) || (
                   <img src={qrCode} />
-                )
-              )}
+                ))}
             </li>
             <li>
-              Lege in deiner Enmeshed App ein neues Profil an und füge Serlo als Kontakt hinzu, indem du den QR-Code
-              scannst.
+              Lege in deiner Enmeshed App ein neues Profil an und füge Serlo als
+              Kontakt hinzu, indem du den QR-Code scannst.
             </li>
             <li>
-              Sobald der Kontakt verifiziert wurde, erhälst du innerhalb weniger Minuten eine Benachrichtigung
-              in deiner Enmashed App.
+              Sobald der Kontakt verifiziert wurde, erhälst du innerhalb weniger
+              Minuten eine Benachrichtigung in deiner Enmashed App.
             </li>
           </ol>
           <p>
             Sollten dabei Probleme auftauchen, kannst du uns gern
             <a
               className="serlo-button serlo-make-interactive-transparent-green -ml-1 font-bold pt-1"
-              href="/kontakt">
+              href="/kontakt"
+            >
               kontaktieren.
             </a>
           </p>
