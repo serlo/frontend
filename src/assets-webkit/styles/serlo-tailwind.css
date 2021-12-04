@@ -84,7 +84,7 @@
     & > li:before {
       @apply absolute special-content-list-counter special-increment-list-counter;
       @apply font-bold text-center rounded-full -ml-7;
-      @apply mt-0.5 bg-brand-150 w-4 h-4 text-xs;
+      @apply mt-1.5 bg-brand-150 w-4 h-4 text-xs;
       @apply leading-tight text-brand pt-0.25;
     }
     & > li {
