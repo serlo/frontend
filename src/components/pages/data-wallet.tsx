@@ -99,7 +99,7 @@ export function DataWallet() {
             </li>
             <li>
               Sobald der Kontakt verifiziert wurde, erhälst du innerhalb weniger
-              Minuten eine Benachrichtigung in deiner Enmashed App.
+              Minuten eine Benachrichtigung in deiner Enmeshed App.
             </li>
           </ol>
           <p className="serlo-p mt-16">
