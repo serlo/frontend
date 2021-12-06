@@ -116,7 +116,7 @@ export function DataWallet() {
         </div>
       </section>
 
-      <footer className="partner font-bold text-center serlo-responsive-padding pb-1 bg-cover">
+      <footer className="partner font-bold text-center serlo-responsive-padding pb-1">
         <h2 className="font-bold pt-16 pb-12 text-center">
           Partner und Unterstützer
         </h2>
@@ -152,9 +152,9 @@ export function DataWallet() {
         <style jsx>
           {`
             .partner {
-              background: url('/_assets/img/landing/about-container.svg')
-                no-repeat;
+              background: url('/_assets/img/landing/about-container.svg');
               border-bottom: 2rem solid #ffefda;
+              background-size: cover;
             }
           `}
         </style>
