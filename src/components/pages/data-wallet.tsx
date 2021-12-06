@@ -116,7 +116,7 @@ export function DataWallet() {
         </div>
       </section>
 
-      <footer className="partner font-bold text-center serlo-responsive-padding pb-1">
+      <footer className="partner font-bold text-center serlo-responsive-padding pb-1 bg-cover">
         <h2 className="font-bold pt-16 pb-12 text-center">
           Partner und Unterstützer
         </h2>
