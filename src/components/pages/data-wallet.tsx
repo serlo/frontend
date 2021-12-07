@@ -98,8 +98,8 @@ export function DataWallet() {
               Kontakt hinzu, indem du den QR-Code scannst.
             </li>
             <li>
-              Sobald der Kontakt verifiziert wurde, erhälst du innerhalb weniger
-              Minuten eine Benachrichtigung in deiner Enmeshed App.
+              Sobald der Kontakt verifiziert wurde, erhältst du innerhalb
+              weniger Minuten eine Benachrichtigung in deiner Enmeshed App.
             </li>
           </ol>
           <p className="serlo-p mt-16">
