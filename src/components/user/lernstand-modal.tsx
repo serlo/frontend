@@ -12,13 +12,17 @@ export function LernstandModal({ callback }: { callback: () => void }) {
     event.preventDefault()
     setShowModal(true)
     createQRCode(setQrCode)
+    setTimeout(() => {
+      setShowModal(false)
+      callback()
+    }, 5500)
   }
 
   const handleMockLoad = () => {
     setTimeout(() => {
       setShowModal(false)
       callback()
-    }, 5000)
+    }, 500)
   }
 
   return (
