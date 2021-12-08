@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { useState } from 'react'
+import { SetStateAction, useState } from 'react'
 
 import { HeadTags } from '../head-tags'
 import { PartnerListNew } from '../landing/rework/partner-list-new'
@@ -8,33 +8,35 @@ import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { Logo } from '@/components/navigation/logo'
 import { triggerSentry } from '@/helper/trigger-sentry'
 
+export function createQRCode(
+  stateSetter: (value: SetStateAction<string>) => void
+) {
+  stateSetter('loading')
+  fetch(`${endpointEnmeshed}/init`, {
+    method: 'POST',
+    headers: {
+      Accept: 'image/png',
+    },
+  })
+    .then((res) => res.blob())
+    .then((res) => {
+      const urlCreator = window.URL || window.webkitURL
+      stateSetter(urlCreator.createObjectURL(res))
+      // TODO: When the workflow has been defined in the future we should revoke the object URL when done with:
+      // urlCreator.revokeObjectUrl(qrCode)
+    })
+    .catch((e) => {
+      // eslint-disable-next-line no-console
+      console.log(JSON.stringify(e))
+
+      triggerSentry({
+        message: `error while creating qr code: ${JSON.stringify(e)}`,
+      })
+    })
+}
+
 export function DataWallet() {
   const [qrCode, setQrCode] = useState('')
-
-  function createQRCode() {
-    setQrCode('loading')
-    fetch(`${endpointEnmeshed}/init`, {
-      method: 'POST',
-      headers: {
-        Accept: 'image/png',
-      },
-    })
-      .then((res) => res.blob())
-      .then((res) => {
-        const urlCreator = window.URL || window.webkitURL
-        setQrCode(urlCreator.createObjectURL(res))
-        // TODO: When the workflow has been defined in the future we should revoke the object URL when done with:
-        // urlCreator.revokeObjectUrl(qrCode)
-      })
-      .catch((e) => {
-        // eslint-disable-next-line no-console
-        console.log(JSON.stringify(e))
-
-        triggerSentry({
-          message: `error while creating qr code: ${JSON.stringify(e)}`,
-        })
-      })
-  }
 
   return (
     <>
@@ -83,7 +85,7 @@ export function DataWallet() {
               Erstelle einen{' '}
               <a
                 className="serlo-link font-bold cursor-pointer"
-                onClick={createQRCode}
+                onClick={() => createQRCode(setQrCode)}
               >
                 QR-Code
               </a>

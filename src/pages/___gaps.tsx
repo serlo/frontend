@@ -246,7 +246,7 @@ function Gap({ mode, text, onClick }: GapProps) {
       <span
         className={clsx(
           'w-20 border-black border rounded bg-gray-50',
-          'inline-block h-6 mx-1 -mb-1.5 cursor-pointer'
+          'inline-block h-6 mx-1 -mb-1.5 cursor-pointer '
         )}
         onClick={onClick}
       ></span>
@@ -267,7 +267,7 @@ function Gap({ mode, text, onClick }: GapProps) {
       <span
         className={clsx(
           'border-black border rounded bg-brand-100 inline-block',
-          'h-6 mx-1 px-2 select-none cursor-pointer'
+          'h-6 mx-1 px-2 select-none cursor-pointer mb-2'
         )}
         onClick={onClick}
       >
@@ -356,9 +356,10 @@ interface GapExProps {
   choices: string[]
   children: ReactNode
   count?: number
+  onFeedback?: (success: boolean) => void
 }
 
-function GapEx({ choices, children, count }: GapExProps) {
+export function GapEx({ choices, children, count, onFeedback }: GapExProps) {
   const gapCount = count ?? choices.length
 
   const [selected, setSelected] = useState(-1)
@@ -475,6 +476,7 @@ function GapEx({ choices, children, count }: GapExProps) {
             setSelected(0)
           } else {
             setChecked(true)
+            if (onFeedback) onFeedback(filled.every((v, i) => v == i))
           }
         }}
       >
@@ -488,7 +490,7 @@ interface GappyProps {
   index: number
 }
 
-function Gappy({ index }: GappyProps) {
+export function Gappy({ index }: GappyProps) {
   const context = useContext(GapContext)
 
   if (context) {

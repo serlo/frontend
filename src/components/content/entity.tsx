@@ -9,6 +9,7 @@ import { Router } from 'next/router'
 import { useState, MouseEvent } from 'react'
 
 import { StaticInfoPanel } from '../static-info-panel'
+import { MockupGaps } from './exercises/mockup-gaps'
 import { HSpace } from './h-space'
 import { Link } from './link'
 import { LicenseNotice } from '@/components/content/license-notice'
@@ -46,6 +47,9 @@ export function Entity({ data }: EntityProps) {
   })
 
   const { strings } = useInstanceData()
+
+  const isMockupCoursePage = data.id === 232014 || data.id === 135381
+
   return wrapWithSchema(
     <>
       {renderCourseNavigation()}
@@ -54,7 +58,11 @@ export function Entity({ data }: EntityProps) {
       {renderStyledH1()}
       {renderUserTools({ aboveContent: true })}
       <div className="min-h-1/4">
-        {data.content && renderContent(data.content)}
+        {isMockupCoursePage ? (
+          <MockupGaps />
+        ) : (
+          data.content && renderContent(data.content)
+        )}
       </div>
       {renderCourseFooter()}
       <HSpace amount={20} />

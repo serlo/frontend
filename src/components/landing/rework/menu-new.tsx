@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react'
 import { Link } from '../../content/link'
 import { getAvatarUrl } from '../../user/user-link'
 import { AuthenticationPayload } from '@/auth/auth-provider'
+import { LogInPopupLink } from '@/components/authentication/log-in-popup-link'
 import { MenuSubButtonLink } from '@/components/user-tools/menu-sub-button-link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
@@ -198,17 +199,26 @@ function MenuInner({
             </Link>
           )
         ) : (
-          <Link
-            href={link.url}
-            path={['menu', i]}
-            className={clsx('group', styledLinkCls)}
-          >
-            {renderIcon()} {!hasIcon && link.title}
-            <span className="sr-only">{strings.pageTitles.notifications}</span>
-          </Link>
+          renderNoChildren()
         )}
       </li>
     )
+
+    function renderNoChildren() {
+      if (link.url === '/api/auth/login')
+        return <LogInPopupLink title={link.title} />
+
+      return (
+        <Link
+          href={link.url}
+          path={['menu', i]}
+          className={clsx('group', styledLinkCls)}
+        >
+          {renderIcon()} {!hasIcon && link.title}
+          <span className="sr-only">{strings.pageTitles.notifications}</span>
+        </Link>
+      )
+    }
 
     function renderIcon() {
       if (!hasIcon) return null
