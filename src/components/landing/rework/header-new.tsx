@@ -10,7 +10,7 @@ import { useAuthentication } from '@/auth/use-authentication'
 import { Quickbar } from '@/components/navigation/quickbar'
 import { useInstanceData } from '@/contexts/instance-context'
 
-export function HeaderNew() {
+export function HeaderNew({ isLanding }: { isLanding?: boolean }) {
   const [isOpen, setOpen] = useState(false)
   const auth = useAuthentication()
   const { headerData } = useInstanceData()
@@ -47,7 +47,7 @@ export function HeaderNew() {
           <Quickbar />
         </div>
 
-        <MenuNew data={headerData} auth={auth.current} />
+        <MenuNew data={headerData} auth={auth.current} isLanding={isLanding} />
       </div>
       {isOpen && <MobileMenu data={headerData} auth={auth.current} />}
     </header>

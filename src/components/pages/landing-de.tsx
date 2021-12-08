@@ -111,7 +111,7 @@ export function LandingDE({ data }: LandingDEProps) {
       </Head>
       <LandingJsonLd />
       <HeadTags data={{ title: 'Serlo – Die freie Lernplattform' }} />
-      <HeaderNew />
+      <HeaderNew isLanding />
       <main className="text-truegray-700">
         <section className="text-center max-w-3xl mx-auto mt-20 md:mt-15vh font-bold px-2">
           <p className="text-brand font-handwritten text-3xl landing-button-with-wings landing-button-with-wink p-with-wink">

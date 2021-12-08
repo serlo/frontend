@@ -24,8 +24,8 @@ export function LogInPopupLink({ title }: { title: string }) {
 
   function onBirdLogin() {
     setTimeout(() => {
-      void router.push('/user/nutzerin')
-    }, 510)
+      void router.push('/user/steff')
+    }, 610)
   }
 
   return (

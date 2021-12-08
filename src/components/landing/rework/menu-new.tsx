@@ -31,6 +31,7 @@ const menuIconMapping = {
 export interface MenuProps {
   data: HeaderData
   auth: AuthenticationPayload
+  isLanding?: boolean
 }
 
 export function MenuNew(props: MenuProps) {
@@ -71,6 +72,7 @@ function MenuInner({
   Tippy,
   source,
   target,
+  isLanding,
 }: MenuProps & {
   Tippy?: typeof import('@tippyjs/react')
   source?: TippyProps['singleton']
@@ -206,7 +208,15 @@ function MenuInner({
 
     function renderNoChildren() {
       if (link.url === '/api/auth/login')
-        return <LogInPopupLink title={link.title} />
+        return isLanding ? (
+          <LogInPopupLink title={link.title} />
+        ) : (
+          <img
+            className="rounded-full w-8 h-8 inline-block -mt-1 ml-3"
+            src="/_assets/img/steff.png"
+            title="Steff"
+          />
+        )
 
       return (
         <Link
