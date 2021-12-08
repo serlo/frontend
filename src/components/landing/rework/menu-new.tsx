@@ -188,7 +188,7 @@ function MenuInner({
           'inline-block',
           (authMenuMounted === undefined ? true : authMenuMounted)
             ? 'opacity-100'
-            : 'opacity-0',
+            : 'opacity-100',
           'ease-linear duration-700'
         )}
         key={link.title}
