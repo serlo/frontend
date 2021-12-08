@@ -3,7 +3,6 @@ import React, { ReactElement, useState } from 'react'
 
 import { Link } from '../content/link'
 import { HeadTags } from '../head-tags'
-import { FooterNew } from '../landing/rework/footer-new'
 import { LandingSubjectsNew } from '../landing/rework/landing-subjects-new'
 import { LernstandModal } from '../user/lernstand-modal'
 import { LandingSubjectsData } from '@/data-types'
@@ -124,7 +123,6 @@ export function Lernstand() {
           </div>
         </section>
       </main>
-      <FooterNew />
       <style jsx>{`
         .underlined {
           padding-right: 1rem;

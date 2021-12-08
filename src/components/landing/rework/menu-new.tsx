@@ -11,7 +11,6 @@ import { LogInPopupLink } from '@/components/authentication/log-in-popup-link'
 import { MenuSubButtonLink } from '@/components/user-tools/menu-sub-button-link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { HeaderData, HeaderLink } from '@/data-types'
 import { getAuthData, shouldUseNewAuth } from '@/helper/feature-auth'
 import { triggerSentry } from '@/helper/trigger-sentry'
@@ -81,7 +80,6 @@ function MenuInner({
   //
   const [mounted, setMounted] = useState(!shouldUseNewAuth())
   const { strings } = useInstanceData()
-  const loggedInData = useLoggedInData()
 
   type TippyRoot = Parameters<NonNullable<TippyProps['onCreate']>>[0]
   const [tippyRoot, setTippyRoot] = useState<TippyRoot | null>(null)
@@ -119,24 +117,34 @@ function MenuInner({
   )
 
   function renderAuthMenu() {
+    const mockedMenu: HeaderLink[] = [
+      {
+        url: '/user/notifications',
+        title: 'Benachrichtigungen',
+        icon: 'notifications',
+      },
+      {
+        url: '',
+        title: 'steff',
+        icon: 'user',
+        children: [
+          { url: '/user/me', title: 'Eigenes Profil' },
+          { url: '/auth/password/change', title: 'Passwort ändern' },
+          { url: '/event/history/user/me', title: 'Meine Bearbeitungen' },
+          { url: '/subscriptions/manage', title: 'Abonnements' },
+          { url: '/api/auth/logout', title: 'Abmelden' },
+        ],
+      },
+    ]
+
     const data = getAuthData(
       mounted && auth !== null,
       strings.header.login,
-      loggedInData?.authMenu
+      mockedMenu
     )
 
     // render placeholder while data is loading
-    if (!data)
-      return renderEntry(
-        {
-          link: {
-            url: '/auth/login',
-            title: strings.header.login,
-          },
-          authMenuMounted: false,
-        },
-        'auth'
-      )
+    if (!data) return null
 
     if (isLanding)
       return renderEntry(
@@ -217,16 +225,8 @@ function MenuInner({
     )
 
     function renderNoChildren() {
-      if (link.url.includes('/auth/login'))
-        return isLanding ? (
-          <LogInPopupLink title={link.title} />
-        ) : (
-          <img
-            className="rounded-full w-8 h-8 inline-block -mt-1 ml-3"
-            src="/_assets/img/steff.png"
-            title="Steff"
-          />
-        )
+      if (link.url.includes('/auth/login') && isLanding)
+        return <LogInPopupLink title={link.title} />
 
       return (
         <Link
