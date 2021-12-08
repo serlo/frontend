@@ -48,7 +48,7 @@ module.exports = withBundleAnalyzer({
     autoPrerender: false,
   },
   i18n: {
-    locales: ['de', 'en', 'ta', 'hi', 'fr', 'es'],
+    locales: ['de'],
     defaultLocale: 'de',
     localeDetection: false,
   },
