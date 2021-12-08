@@ -69,5 +69,6 @@ export function UserLink({
 }
 
 export function getAvatarUrl(username: string) {
+  if (username === 'steff') return '/_assets/img/steff.png'
   return `https://community.serlo.org/avatar/${username}`
 }

@@ -9,7 +9,6 @@ import React, {
 } from 'react'
 
 import { Feedback } from '../components/content/exercises/feedback'
-import { ExerciseNumbering } from '@/components/content/exercises/exercise-numbering'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { shuffleArray } from '@/helper/shuffle-array'

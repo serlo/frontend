@@ -249,7 +249,7 @@ function MenuInner({
       }
 
       return (
-        <span className="fa-layers fa-fw">
+        <span className="fa-layers fa-fw" data-test={link.icon}>
           <FontAwesomeIcon
             // checking for undefined this in hasIcon
             icon={menuIconMapping[link.icon!]!}

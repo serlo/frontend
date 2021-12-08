@@ -44,7 +44,7 @@ function GraphQL() {
             error?.extensions.code === 'INVALID_TOKEN' &&
             auth.current !== null
           ) {
-            await auth.current.refreshToken(usedToken!)
+            void auth.current.refreshToken(usedToken!)
             return await executeQuery()
           }
           return data
