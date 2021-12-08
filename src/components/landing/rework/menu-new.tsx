@@ -217,7 +217,7 @@ function MenuInner({
     )
 
     function renderNoChildren() {
-      if (link.url === '/api/auth/login')
+      if (link.url.includes('/auth/login'))
         return isLanding ? (
           <LogInPopupLink title={link.title} />
         ) : (
