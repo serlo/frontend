@@ -132,9 +132,19 @@ function MenuInner({
           link: {
             url: '/auth/login',
             title: strings.header.login,
-            icon: 'user',
           },
           authMenuMounted: false,
+        },
+        'auth'
+      )
+
+    if (isLanding)
+      return renderEntry(
+        {
+          link: {
+            url: '/api/auth/login',
+            title: strings.header.login,
+          },
         },
         'auth'
       )
