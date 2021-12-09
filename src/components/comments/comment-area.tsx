@@ -25,14 +25,14 @@ import { scrollToPrevious } from '@/helper/scroll'
 import { useCommentData } from '@/helper/use-comment-data'
 
 export interface CommentAreaProps {
-  id: number
+  entityId: number
   noForms?: boolean
 }
 
 export type CommentsData = CommentType[]
 export type ThreadsData = ThreadType[]
 
-export function CommentArea({ id: entityId, noForms }: CommentAreaProps) {
+export function CommentArea({ entityId, noForms }: CommentAreaProps) {
   const [highlightedCommentId, setHighlightedCommentId] = useState<
     number | undefined
   >(undefined)

@@ -101,9 +101,11 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
           'tasksol'
         )}
         {license && <div className="px-side">{license}</div>}
-        <Lazy>
-          <CommentArea id={node.context.solutionId!} />
-        </Lazy>
+        {node.context.solutionId && (
+          <Lazy>
+            <CommentArea entityId={node.context.solutionId} />
+          </Lazy>
+        )}
       </div>
     )
   }
