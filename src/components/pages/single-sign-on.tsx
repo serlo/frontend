@@ -99,21 +99,41 @@ export function SingleSignOn() {
       <nav>
         {keycloak.authenticated ? (
           <>
-            <a className={btnClass} href={keycloak.createAccountUrl()}>
+            <button
+              className={btnClass}
+              onClick={() => {
+                window.location.href = keycloak.createAccountUrl()
+              }}
+            >
               Mein Konto
-            </a>
-            <a className={btnClass} href={keycloak.createLogoutUrl()}>
+            </button>
+            <button
+              className={btnClass}
+              onClick={() => {
+                window.location.href = keycloak.createLogoutUrl()
+              }}
+            >
               Abmelden
-            </a>
+            </button>
           </>
         ) : (
           <>
-            <a className={btnClass} href={keycloak.createRegisterUrl()}>
+            <button
+              className={btnClass}
+              onClick={() => {
+                window.location.href = keycloak.createRegisterUrl()
+              }}
+            >
               Registrieren
-            </a>
-            <a className={btnClass} href={keycloak.createLoginUrl()}>
+            </button>
+            <button
+              className={btnClass}
+              onClick={() => {
+                window.location.href = keycloak.createLoginUrl()
+              }}
+            >
               Anmelden
-            </a>
+            </button>
           </>
         )}
       </nav>
