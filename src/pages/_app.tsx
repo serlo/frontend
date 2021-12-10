@@ -16,7 +16,6 @@ import { isRenderedPage } from '@/helper/rendered-page'
 // Not adding fontawesome styles again
 config.autoAddCss = false
 
-
 // TODO: should maybe go to frontend-client-base
 interface InitialProps {
   cookies: unknown
@@ -27,7 +26,7 @@ function App(props: AppProps & InitialProps) {
   const keycloakCfg = {
     url: 'https://keycloak.serlo-staging.dev/auth',
     realm: 'serlo',
-    clientId: 'frontend', 
+    clientId: 'frontend',
   }
 
   if (isRenderedPage(Component)) {

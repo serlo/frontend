@@ -65,7 +65,6 @@ export function SingleSignOn() {
             <button
               type="button"
               className="serlo-button serlo-make-interactive-transparent-blue"
-
               onClick={() => {
                 if (keycloak) {
                   window.location.href = keycloak.createRegisterUrl()
@@ -78,7 +77,6 @@ export function SingleSignOn() {
             <button
               type="button"
               className="serlo-button serlo-make-interactive-transparent-blue"
-
               onClick={() => {
                 if (keycloak) {
                   window.location.href = keycloak.createLoginUrl()
