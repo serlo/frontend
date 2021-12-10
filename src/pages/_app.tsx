@@ -1,4 +1,6 @@
 import { config } from '@fortawesome/fontawesome-svg-core'
+// eslint-disable-next-line import/no-internal-modules
+import { SessionProvider } from 'next-auth/react'
 import { AppProps } from 'next/app'
 
 // We are adding these styles for fonts and to fontawesome (because it's not integrated in our SSR)
@@ -16,9 +18,14 @@ config.autoAddCss = false
 export default function App(props: AppProps) {
   const { Component } = props
 
-  if (isRenderedPage(Component)) {
-    return Component.renderer(props.pageProps, props)
-  }
-
-  return <Component {...props.pageProps} />
+  return (
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+    <SessionProvider session={props.pageProps.session}>
+      {isRenderedPage(Component) ? (
+        Component.renderer(props.pageProps, props)
+      ) : (
+        <Component {...props.pageProps} />
+      )}
+    </SessionProvider>
+  )
 }
