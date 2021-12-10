@@ -26,7 +26,7 @@ function App(props: AppProps & InitialProps) {
   const keycloakCfg = {
     url: 'https://keycloak.serlo-staging.dev/auth',
     realm: 'serlo',
-    clientId: 'frontend',
+    clientId: process.env.NEXT_PUBLIC_KEYCLOAK_CLIENT_ID,
   }
 
   if (isRenderedPage(Component)) {
