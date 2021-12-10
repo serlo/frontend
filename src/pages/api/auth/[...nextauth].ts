@@ -38,6 +38,7 @@ export default NextAuth({
     brandColor: '#007ec1',
     logo: '/_assets/img/serlo-logo.svg',
   },
+  secret: 'mock-secret',
   providers: [
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     KeycloakProvider({
