@@ -133,6 +133,7 @@ export function getPluginRegistry(
   const showBox =
     typeof window !== 'undefined' &&
     serloDomain != 'serlo.org' &&
+    features.boxPlugin &&
     document.cookie.includes(features.boxPlugin.cookieName + '=1')
 
   const boxFiltered = showBox
