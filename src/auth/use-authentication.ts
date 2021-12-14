@@ -10,9 +10,8 @@ export function useAuthentication(): RefObject<AuthenticationPayload> {
   const { data } = useSession()
 
   if (!data || !data.user?.name) return authenticationPayload
-  console.log(data.user)
-  // otherwise add some mock to sso for lenabi
 
+  // otherwise add some mock to sso for lenabi
   return {
     current: {
       username: data.user.name,
