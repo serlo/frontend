@@ -2,7 +2,6 @@ import { ThreadAware } from '@serlo/api'
 import { gql, GraphQLClient } from 'graphql-request'
 import useSWR from 'swr'
 
-import { triggerSentry } from './trigger-sentry'
 import { endpoint } from '@/api/endpoint'
 
 const query = gql`
@@ -37,7 +36,6 @@ const query = gql`
   }
 `
 export function useCommentData(id: number) {
-  if (!id) triggerSentry({ message: 'trying to fetch comments without id' })
   const client = new GraphQLClient(endpoint)
   const fetcher = () => client.request(query, { id })
   const resp = useSWR<{ uuid: ThreadAware }, object>(

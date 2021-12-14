@@ -51,7 +51,7 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
           <main>{children}</main>
           {!noComments && (
             <Lazy>
-              <CommentArea id={entityId} />
+              <CommentArea entityId={entityId} />
             </Lazy>
           )}
           <HSpace amount={40} />
