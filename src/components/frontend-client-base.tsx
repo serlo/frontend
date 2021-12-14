@@ -149,7 +149,11 @@ export function FrontendClientBase({
 
   function fetchLoggedInData() {
     const cookies = typeof window === 'undefined' ? {} : Cookies.get()
-    if (cookies['auth-token'] || loadLoggedInData) {
+    if (
+      cookies['auth-token'] ||
+      doesHttpOnlyCookieExist('next-auth.session-token') ||
+      loadLoggedInData
+    ) {
       Promise.all([
         !loggedInData
           ? fetch(frontendOrigin + '/api/locale/' + instanceData.lang).then(
@@ -178,4 +182,14 @@ export function FrontendClientBase({
       }
     }
   }
+}
+
+// TODO: This is bad bad bad, find another way to check for session or build one server side
+function doesHttpOnlyCookieExist(cookiename: string) {
+  const d = new Date()
+  d.setTime(d.getTime() + 1000)
+  const expires = 'expires=' + d.toUTCString()
+
+  document.cookie = cookiename + '=new_value;path=/;' + expires
+  return document.cookie.indexOf(cookiename + '=') == -1
 }

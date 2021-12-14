@@ -17,8 +17,8 @@ export function useAuthentication(): RefObject<AuthenticationPayload> {
       username: data.user.name,
       clearToken: () => {},
       id: 32543,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       refreshToken: async (usedToken: string) => {
-        console.log(usedToken)
         return Promise.resolve(undefined)
       },
       token: 'longtoken',
