@@ -44,7 +44,7 @@ const Content = () => {
       </h1>
       <p className="serlo-p text-2xl font-bold tracking-tight">
         Du bist {isLoggedIn ? '' : 'nicht'} angemeldet{' '}
-        <small>{isLoggedIn ? '🟢' : '⚪️'}</small>
+        <small className="font-normal">{isLoggedIn ? '🟢' : '⚪️'}</small>
       </p>
       <p className="serlo-p mt-20">
         Melde dich jetzt{' '}
