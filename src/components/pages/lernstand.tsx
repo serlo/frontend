@@ -5,6 +5,7 @@ import { Link } from '../content/link'
 import { HeadTags } from '../head-tags'
 import { LandingSubjectsNew } from '../landing/rework/landing-subjects-new'
 import { LernstandModal } from '../user/lernstand-modal'
+import { useAuthentication } from '@/auth/use-authentication'
 import { LandingSubjectsData } from '@/data-types'
 
 const landingSubjectsData: LandingSubjectsData = {
@@ -29,6 +30,9 @@ const landingSubjectsData: LandingSubjectsData = {
 
 export function Lernstand() {
   const [learnDataLoaded, setLearnDataLoaded] = useState(false)
+  const auth = useAuthentication()
+
+  if (!auth.current) return <>bitte einloggen</>
 
   return (
     <>
@@ -36,7 +40,10 @@ export function Lernstand() {
       <main className="text-truegray-700">
         <section className="text-center max-w-3xl mx-auto mt-20 md:mt-15vh font-bold px-2">
           <p className="text-brand font-handwritten text-3xl landing-button-with-wings landing-button-with-wink p-with-wink">
-            <span className="italic">Steff! Willkommen zurück.</span> 👋
+            <span className="italic mr-2">
+              Willkommen {auth.current?.username}!
+            </span>{' '}
+            👋
           </p>
           <h1
             className={clsx(

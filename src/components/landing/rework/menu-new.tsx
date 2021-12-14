@@ -7,7 +7,8 @@ import { useState, useEffect } from 'react'
 import { Link } from '../../content/link'
 import { getAvatarUrl } from '../../user/user-link'
 import { AuthenticationPayload } from '@/auth/auth-provider'
-import { LogInPopupLink } from '@/components/authentication/log-in-popup-link'
+import { LenabiLogInLink } from '@/components/authentication/lenabi-log-in-link'
+import { LenabiLogOutLink } from '@/components/authentication/lenabi-log-out-link'
 import { MenuSubButtonLink } from '@/components/user-tools/menu-sub-button-link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
@@ -225,8 +226,8 @@ function MenuInner({
     )
 
     function renderNoChildren() {
-      if (link.url.includes('/auth/login') && isLanding)
-        return <LogInPopupLink title={link.title} />
+      if (link.url.includes('/auth/login'))
+        return <LenabiLogInLink title={link.title} />
 
       return (
         <Link
@@ -282,11 +283,17 @@ function MenuInner({
                 )
               : entry.url
 
+            const isLogout = href === '/api/auth/logout'
+
             return (
               <li key={entry.title} onClick={onSubMenuInnerClick}>
-                <MenuSubButtonLink href={href} path={['menu', i!, i2]}>
-                  {entry.title}
-                </MenuSubButtonLink>
+                {isLogout ? (
+                  <LenabiLogOutLink title={entry.title} />
+                ) : (
+                  <MenuSubButtonLink href={href} path={['menu', i!, i2]}>
+                    {entry.title}
+                  </MenuSubButtonLink>
+                )}
               </li>
             )
           })}

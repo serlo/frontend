@@ -1,7 +1,8 @@
 import { faFlag } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
-import { useRouter } from 'next/router'
+// eslint-disable-next-line import/no-internal-modules
+import { signIn } from 'next-auth/react'
 import { MouseEvent, useState } from 'react'
 
 import { ModalWithCloseButton } from '../modal-with-close-button'
@@ -12,7 +13,7 @@ const styledLinkCls = clsx(
   'serlo-menu-entry-special'
 )
 
-export function LogInPopupLink({ title }: { title: string }) {
+export function LenabiLogInLink({ title }: { title: string }) {
   const [showModal, setShowModal] = useState(false)
 
   const handleOnClick = (event: MouseEvent) => {
@@ -20,12 +21,13 @@ export function LogInPopupLink({ title }: { title: string }) {
     setShowModal(true)
   }
 
-  const router = useRouter()
+  // const router = useRouter()
 
   function onBirdLogin() {
-    setTimeout(() => {
-      void router.push('/user/steff')
-    }, 610)
+    void signIn('bird', { callbackUrl: '/lernstand' })
+    // setTimeout(() => {
+    //   void router.push('/user/steff')
+    // }, 610)
   }
 
   return (
