@@ -37,6 +37,13 @@ const Content = () => {
   const isLoggedIn = !!session
   const username = session && session.user ? session.user.name : undefined
 
+  function signOutHelper() {
+    void signOut({ redirect: false })
+    window.location.href =
+      'https://keycloak.serlo-staging.dev/auth/realms/serlo/protocol/openid-connect/logout?redirect_uri=' +
+      encodeURIComponent(window.location.href)
+  }
+
   return (
     <>
       <h1 className="serlo-h1 text-brand mt-16 mb-5">
@@ -50,7 +57,7 @@ const Content = () => {
         Melde dich jetzt{' '}
         <a
           className="serlo-link cursor-pointer"
-          onClick={() => (isLoggedIn ? signOut() : signIn('bird'))}
+          onClick={() => (isLoggedIn ? signOutHelper() : signIn('bird'))}
         >
           {isLoggedIn ? 'ab' : 'an'}
         </a>
