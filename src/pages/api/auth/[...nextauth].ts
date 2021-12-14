@@ -3,12 +3,12 @@ import NextAuth from 'next-auth'
 import KeycloakProvider from 'next-auth/providers/keycloak'
 
 const KEYCLOAK_CLIENT_IDS = {
+  development: 'local-openid',
+  test: 'local-openid',
   production: 'frontend-nextauth',
-  staging: 'frontend-nextauth',
-  local: 'local-openid',
 }
 
-const KEYCLOAK_CLIENT_ID = KEYCLOAK_CLIENT_IDS[process.env.NEXT_PUBLIC_ENV]
+const KEYCLOAK_CLIENT_ID = KEYCLOAK_CLIENT_IDS[process.env.NODE_ENV]
 
 const HYDRA_HOSTS = {
   production: process.env.HYDRA_HOST_PRODUCTION,
@@ -42,6 +42,7 @@ export default NextAuth({
   providers: [
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     KeycloakProvider({
+      id: 'bird',
       name: 'BIRD',
       clientId: KEYCLOAK_CLIENT_ID,
       clientSecret: 'mock-secret',

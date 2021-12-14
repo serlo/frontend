@@ -50,7 +50,7 @@ const Content = () => {
         Melde dich jetzt{' '}
         <a
           className="serlo-link cursor-pointer"
-          onClick={() => (isLoggedIn ? signOut() : signIn())}
+          onClick={() => (isLoggedIn ? signOut() : signIn('bird'))}
         >
           {isLoggedIn ? 'ab' : 'an'}
         </a>
