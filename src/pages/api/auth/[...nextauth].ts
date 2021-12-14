@@ -42,7 +42,7 @@ export default NextAuth({
   providers: [
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     KeycloakProvider({
-      name: 'BIRD Wallet',
+      name: 'BIRD',
       clientId: KEYCLOAK_CLIENT_ID,
       clientSecret: 'mock-secret',
       issuer: 'https://keycloak.serlo-staging.dev/auth/realms/serlo',
