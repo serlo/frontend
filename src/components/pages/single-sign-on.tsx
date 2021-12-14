@@ -41,7 +41,7 @@ export function SingleSignOn() {
           </h1>
           <p className="serlo-p text-2xl font-bold tracking-tight">
             Du bist {isLoggedIn ? '' : 'nicht'} angemeldet{' '}
-            <small>{isLoggedIn ? '🟢' : '⚪️'}</small>
+            <small className="font-normal">{isLoggedIn ? '🟢' : '⚪️'}</small>
           </p>
         </div>
       </section>
