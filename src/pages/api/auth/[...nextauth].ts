@@ -4,7 +4,7 @@ import KeycloakProvider from 'next-auth/providers/keycloak'
 
 const KEYCLOAK_CLIENT_IDS = {
   production: 'frontend-nextauth',
-  staging: 'frontend-nextauth',
+  staging: 'local-openid',
   local: 'local-openid',
 }
 
