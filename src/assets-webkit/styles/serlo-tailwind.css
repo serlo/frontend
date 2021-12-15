@@ -148,6 +148,16 @@
       }
     }
   }
+  li.serlo-grouped-exercise-wrapper {
+    counter-increment: exercises;
+  }
+  li.serlo-grouped-exercise-wrapper::before {
+    content: counter(exercises, lower-alpha);
+    @apply flex justify-center align-middle;
+    @apply h-7 w-7 mx-side mb-2.5 rounded-full;
+    @apply sm:absolute sm:-mt-1 sm:-ml-10;
+    @apply text-xl font-bold text-brand bg-brand-150;
+  }
   .serlo-responsive-margin {
     @apply mx-side lg:mx-side-lg;
   }
