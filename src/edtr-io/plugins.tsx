@@ -15,6 +15,7 @@ import { createVideoPlugin } from '@edtr-io/plugin-video'
 import * as React from 'react'
 
 import { articlePlugin } from './plugins/article'
+import { createBoxPlugin } from './plugins/box'
 import { deprecatedPlugin } from './plugins/deprecated'
 import { equationsPlugin } from './plugins/equations'
 import { errorPlugin } from './plugins/error'
@@ -104,6 +105,7 @@ export function createPlugins({
         plugin: 'text',
       },
     }),
+    box: createBoxPlugin(editorStrings),
     error: errorPlugin,
     deprecated: deprecatedPlugin,
     equations: equationsPlugin,

@@ -2,6 +2,7 @@ import { Role, Subject, TaxonomyTermType } from '@serlo/api'
 import { AuthorizationPayload } from '@serlo/authorization'
 import { CSSProperties, FunctionComponent } from 'react'
 
+import { BoxType } from './edtr-io/plugins/box/renderer'
 import { Instance, QueryResponse, User } from './fetcher/query-types'
 import { instanceData, instanceLandingData, loggedInData } from '@/data/en'
 
@@ -220,6 +221,7 @@ export type BreadcrumbEntry = BreadcrumbLinkEntry | BreadcrumbEllipsis
 
 export interface BreadcrumbLinkEntry {
   label: string
+  id?: number | null
   url?: string | null
   ellipsis?: boolean
 }
@@ -247,6 +249,8 @@ export interface HeadData {
   contentType?: string
   metaDescription?: string
   metaImage?: string
+  dateCreated?: string
+  dateModified?: string
 }
 
 // The data that fills the horizon (desktop, below content)
@@ -529,6 +533,14 @@ export interface FrontendBlockquoteNode {
   children?: FrontendContentNode[]
 }
 
+export interface FrontendBoxNode {
+  type: 'box'
+  boxType: BoxType
+  title?: FrontendContentNode[]
+  anchorId: string
+  children?: FrontendContentNode[]
+}
+
 export interface FrontendAnchorNode {
   type: 'anchor'
   id: string
@@ -728,6 +740,7 @@ export type FrontendElementNode =
   | FrontendColNode
   | FrontendImportantNode
   | FrontendBlockquoteNode
+  | FrontendBoxNode
   | FrontendThNode
   | FrontendTdNode
 
@@ -829,12 +842,12 @@ export interface TaxonomyLink {
   title: string
   url: string
   unrevised?: boolean
+  id: number
 }
 
 // Second level has folders and exercises as links
 
 export interface TaxonomySubTerm extends TaxonomyTermBase, TaxonomyLink {
-  id: number
   folders: TaxonomyLink[]
 }
 

@@ -5,6 +5,7 @@ import { HSpace } from './content/h-space'
 import { Horizon } from './content/horizon'
 import { Lazy } from './content/lazy'
 import { HeadTags } from './head-tags'
+import { JsonLd } from './json-ld'
 import { Breadcrumbs } from './navigation/breadcrumbs'
 import { MaxWidthDiv } from './navigation/max-width-div'
 import { MetaMenu } from './navigation/meta-menu'
@@ -40,6 +41,9 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
           noindex={'entityData' in page && page.entityData.trashed}
         />
       )}
+      {page.kind === 'single-entity' || page.kind === 'taxonomy' ? (
+        <JsonLd data={page} id={entityId} />
+      ) : null}
       {page.newsletterPopup && <NewsletterPopup />}
       <div className="relative">
         <MaxWidthDiv showNav={!!page.secondaryNavigationData}>
@@ -47,7 +51,7 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
           <main>{children}</main>
           {!noComments && (
             <Lazy>
-              <CommentArea id={entityId} />
+              <CommentArea entityId={entityId} />
             </Lazy>
           )}
           <HSpace amount={40} />

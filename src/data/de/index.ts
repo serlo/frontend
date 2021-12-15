@@ -119,7 +119,19 @@ export const instanceData = {
       moreExercises: "Weitere Aufgaben zum Thema findest du im folgenden Aufgabenordner",
       relatedContentTitle: "Du hast noch nicht genug vom Thema?",
       relatedContentText: "Hier findest du noch weitere passende Inhalte zum Thema:",
-      sourcesTitle: "Quellen"
+      sourcesTitle: "Quellen",
+      boxTypes: {
+        blank: "Blanko",
+        example: "Beispiel",
+        quote: "Zitat",
+        approach: "Vorgehen",
+        remember: "Merke",
+        attention: "Vorsicht",
+        note: "Beachte",
+        definition: 'Definition',
+        theorem: "Satz",
+        proof: "Beweis"
+      }
     },
     consent: {
       title: "Einwilligungen für externe Inhalte",
@@ -460,6 +472,8 @@ export const loggedInData = {
         conversionError: "Leider trat ein Fehler bei der Konvertierung auf.",
         oldRevisionFound: "Wir haben eine alte Bearbeitung von dir gefunden. Möchtest du diese wiederherstellen?",
         notConverted: "Dieser Inhalt wurde noch nicht im neuen Editor bearbeitet.",
+        box: "Box",
+        boxDesc: "Ein Rahmen für Beispiele, Zitate, Warnungen, Beweise (math.), …",
         text: 'Text',
         textDesc: "Schreibe Text und Matheformeln, und formatiere sie.",
         blockquoteTitle: "Zitat",
@@ -619,6 +633,11 @@ export const loggedInData = {
         illegalInjectionFound: "Ungültige Injection gefunden",
         serloEntitySrc: "Serlo Inhalt {{src}}",
         serloId: "Serlo ID"
+      },
+      box: {
+        type: "Art der Box",
+        titlePlaceholder: "(optionaler Titel)",
+        anchorId: "Sprungmarke (anchor id)"
       },
       layout: {
         toDragConvert: "Um die Inhalte zu verschieben, konvertiere sie für den neuen Editor:",

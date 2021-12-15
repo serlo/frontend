@@ -12,6 +12,8 @@ import { TablePluginState } from '@edtr-io/plugin-table'
 import { NewElement, NewText, TextPluginState } from '@edtr-io/plugin-text'
 import { VideoPluginState } from '@edtr-io/plugin-video'
 
+import { BoxPluginState } from '@/edtr-io/plugins/box'
+
 export type SlateBlockElement = NewElement
 export type SlateTextElement = NewText
 
@@ -112,6 +114,11 @@ export interface EdtrPluginBlockquote {
   state: StateTypeSerializedType<BlockquotePluginState>
 }
 
+export interface EdtrPluginBox {
+  plugin: 'box'
+  state: StateTypeSerializedType<BoxPluginState>
+}
+
 export interface EdtrPluginImage {
   plugin: 'image'
   state: StateTypeSerializedType<ImagePluginState>
@@ -155,6 +162,7 @@ export type EdtrState =
   | EdtrPluginSpoiler
   | EdtrPluginImportant
   | EdtrPluginBlockquote
+  | EdtrPluginBox
   | EdtrPluginImage
   | EdtrPluginText
   | EdtrPluginRows

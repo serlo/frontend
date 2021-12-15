@@ -8,6 +8,7 @@ import { LicenseNotice } from '../components/content/license-notice'
 import { Link } from '../components/content/link'
 import { theme } from '../theme'
 import { Article } from '@/components/content/article'
+import { Box } from '@/components/content/box'
 import type { CodeProps } from '@/components/content/code'
 import { Equations } from '@/components/content/equations'
 import { Exercise } from '@/components/content/exercises/exercise'
@@ -367,6 +368,14 @@ function renderElement({
   }
   if (element.type === 'blockquote') {
     return <blockquote className="serlo-blockquote">{children}</blockquote>
+  }
+  if (element.type === 'box') {
+    return (
+      <Box
+        {...element}
+        renderNested={(value, ...prefix) => renderNested(value, path, prefix)}
+      />
+    )
   }
   if (element.type === 'geogebra') {
     return (

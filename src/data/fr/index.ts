@@ -119,7 +119,19 @@ export const instanceData = {
       moreExercises: "Tu peux trouver plus d'exercices dans le dossier suivant :",
       relatedContentTitle: "Tu en veux encore plus?",
       relatedContentText: "Tu peux en trouver plus ici :",
-      sourcesTitle: 'Sources'
+      sourcesTitle: 'Sources',
+      boxTypes: {
+        blank: 'Blank',
+        example: 'Example',
+        quote: 'Quote',
+        approach: 'Approach',
+        remember: 'Remember',
+        attention: 'Attention',
+        note: 'Note',
+        definition: 'Definition',
+        theorem: 'Theorem',
+        proof: 'Proof'
+      }
     },
     consent: {
       title: "Consentement pour le contenu externe",
@@ -460,6 +472,8 @@ export const loggedInData = {
         conversionError: "Une erreur s'est produite lors de la conversion.",
         oldRevisionFound: "Nous avons trouvé une ancienne révision que vous avez créée. Voulez-vous la restaurer?",
         notConverted: "Cette entité n'a pas encore été convertie pour le nouvel éditeur.",
+        box: 'Container',
+        boxDesc: 'A container for examples, quotes, warnings, theorems, notes…',
         text: "Texte",
         textDesc: "Créer contenu en utilisant du texte riche (RTF) et des formules mathématiques.",
         blockquoteTitle: "Citation",
@@ -619,6 +633,11 @@ export const loggedInData = {
         illegalInjectionFound: "Injection illégale trouvée",
         serloEntitySrc: "Entité Serlo {{src}}",
         serloId: 'Serlo ID:'
+      },
+      box: {
+        type: 'Type of box',
+        titlePlaceholder: '(optional title)',
+        anchorId: 'Anchor ID'
       },
       layout: {
         toDragConvert: "Pour rendre le contenu glissable, converte-le pour le nouvel éditeur :",

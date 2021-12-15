@@ -38,6 +38,7 @@ export function RevisionHistoryLoader<T>(
 
   if (props.id === 0) return null
 
+  /* TODO: Not sure whats missing here */
   if (!revisionsResponse.data?.uuid.revisions) {
     return <p>…</p>
   }

@@ -88,7 +88,7 @@ export function AddRevision({
         .edtr-io [data-slate-object='block'] {
           @apply mb-block;
         }
-        .edtr-io ul {
+        .edtr-io ul:not(.unstyled-list) {
           @apply mx-side mb-block mt-4 pl-5 list-none;
 
           & > li:before {
