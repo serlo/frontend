@@ -27,7 +27,6 @@ export function SingleSignOn() {
         <div className="pb-6">
           <Logo subline="" noLink />
         </div>
-        {renderButtons()}
       </header>
       <section
         className={clsx(
@@ -38,14 +37,64 @@ export function SingleSignOn() {
         <div className="max-w-xl sm:mx-auto text-lg">
           <h1 className="serlo-h1 text-brand mt-16 mb-5">
             <span className="font-normal">👋</span> Willkommen
-            {username ? ` zurück ${username}` : ''}!<br />
+            {username ? ` ${username}` : ''}!<br />
           </h1>
-          <p className="serlo-p text-2xl font-bold tracking-tight">
+          <p className="serlo-p">
             Du bist {isLoggedIn ? '' : 'nicht'} angemeldet{' '}
-            <small className="font-normal">{isLoggedIn ? '🟢' : '⚪️'}</small>
+            <span className={isLoggedIn ? 'text-brandgreen' : 'text-gray-200'}>
+              ⬤
+            </span>
+          </p>
+          <p className="serlo-p mt-24">
+            {keycloak === undefined
+              ? null
+              : keycloak.authenticated
+              ? renderLogout()
+              : renderLogin()}
           </p>
         </div>
       </section>
+      {renderFooter()}
+    </>
+  )
+
+  function renderLogin() {
+    if (!keycloak || keycloak?.authenticated) return null
+    return (
+      <>
+        Du kannst dich mit deiner DAAD ID (BIRD) anmelden.
+        <br />
+        <button
+          className="serlo-button serlo-make-interactive-green mt-3"
+          onClick={() => {
+            window.location.href = keycloak?.createLoginUrl()
+          }}
+        >
+          Jetzt anmelden
+        </button>
+      </>
+    )
+  }
+  function renderLogout() {
+    if (!keycloak || !keycloak?.authenticated) return null
+    return (
+      <>
+        Wunderbar, leider gibt&apos;s hier sonst nichts zu sehen 🙈.
+        <br />
+        <button
+          className="serlo-button serlo-make-interactive-green mt-3"
+          onClick={() => {
+            window.location.href = keycloak?.createLogoutUrl()
+          }}
+        >
+          Wieder abmelden
+        </button>
+      </>
+    )
+  }
+
+  function renderFooter() {
+    return (
       <footer className="partner font-bold text-center serlo-responsive-padding pb-1">
         <h2 className="font-bold pt-16 pb-12 text-center">
           Partner und Unterstützer
@@ -89,55 +138,6 @@ export function SingleSignOn() {
           `}
         </style>
       </footer>
-    </>
-  )
-
-  function renderButtons() {
-    if (!keycloak) return null
-    const btnClass = 'serlo-button serlo-make-interactive-transparent-blue'
-
-    return (
-      <nav>
-        {keycloak.authenticated ? (
-          <>
-            <button
-              className={btnClass}
-              onClick={() => {
-                window.location.href = keycloak.createAccountUrl()
-              }}
-            >
-              Mein Konto
-            </button>
-            <button
-              className={btnClass}
-              onClick={() => {
-                window.location.href = keycloak.createLogoutUrl()
-              }}
-            >
-              Abmelden
-            </button>
-          </>
-        ) : (
-          <>
-            <button
-              className={btnClass}
-              onClick={() => {
-                window.location.href = keycloak.createRegisterUrl()
-              }}
-            >
-              Registrieren
-            </button>
-            <button
-              className={btnClass}
-              onClick={() => {
-                window.location.href = keycloak.createLoginUrl()
-              }}
-            >
-              Anmelden
-            </button>
-          </>
-        )}
-      </nav>
     )
   }
 }
