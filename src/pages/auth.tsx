@@ -47,7 +47,8 @@ const Content = () => {
   return (
     <>
       <h1 className="serlo-h1 text-brand mt-16 mb-5">
-        👋 Willkommen{username ? ` zurück ${username}` : ''}!<br />
+        <span className="font-normal">👋</span> Willkommen
+        {username ? ` zurück ${username}` : ''}!<br />
       </h1>
       <p className="serlo-p text-2xl font-bold tracking-tight">
         Du bist {isLoggedIn ? '' : 'nicht'} angemeldet{' '}
