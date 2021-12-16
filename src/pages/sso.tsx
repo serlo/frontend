@@ -37,10 +37,11 @@ const Content = () => {
   const username = session && session.user ? session.user.name : undefined
 
   function signOutHelper() {
-    void signOut({ redirect: false })
-    window.location.href =
-      'https://keycloak.serlo-staging.dev/auth/realms/serlo/protocol/openid-connect/logout?redirect_uri=' +
-      encodeURIComponent(window.location.href)
+    void signOut({ redirect: false }).then(() => {
+      window.location.href =
+        'https://keycloak.serlo-staging.dev/auth/realms/serlo/protocol/openid-connect/logout?redirect_uri=' +
+        encodeURIComponent(window.location.href)
+    })
   }
 
   return (
