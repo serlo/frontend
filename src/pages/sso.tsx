@@ -47,11 +47,13 @@ const Content = () => {
     <>
       <h1 className="serlo-h1 text-brand mt-16 mb-5">
         <span className="font-normal">👋</span> Willkommen
-        {username ? ` zurück ${username}` : ''}!<br />
+        {username ? ` ${username}` : ''}!<br />
       </h1>
-      <p className="serlo-p text-2xl font-bold tracking-tight">
+      <p className="serlo-p">
         Du bist {isLoggedIn ? '' : 'nicht'} angemeldet{' '}
-        <small className="font-normal">{isLoggedIn ? '🟢' : '⚪️'}</small>
+        <span className={isLoggedIn ? 'text-brandgreen' : 'text-gray-200'}>
+          ⬤
+        </span>
       </p>
       <p className="serlo-p mt-24">
         {isLoggedIn ? renderLogout() : renderLogin()}
