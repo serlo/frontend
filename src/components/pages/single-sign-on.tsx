@@ -40,10 +40,7 @@ export function SingleSignOn() {
             {username ? ` ${username}` : ''}!<br />
           </h1>
           <p className="serlo-p">
-            Du bist {isLoggedIn ? '' : 'nicht'} angemeldet{' '}
-            <span className={username ? 'text-brandgreen' : 'text-gray-200'}>
-              ⬤
-            </span>
+            Du bist {isLoggedIn ? '' : 'nicht'} angemeldet.
           </p>
           <p className="serlo-p mt-24">
             {keycloak === undefined
