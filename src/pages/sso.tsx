@@ -1,7 +1,6 @@
 import clsx from 'clsx'
 // eslint-disable-next-line import/no-internal-modules
 import { useSession, signIn, signOut } from 'next-auth/react'
-import React from 'react'
 
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { HeadTags } from '@/components/head-tags'
@@ -54,18 +53,44 @@ const Content = () => {
         Du bist {isLoggedIn ? '' : 'nicht'} angemeldet{' '}
         <small className="font-normal">{isLoggedIn ? '🟢' : '⚪️'}</small>
       </p>
-      <p className="serlo-p mt-20">
-        Melde dich jetzt{' '}
-        <a
-          className="serlo-link cursor-pointer"
-          onClick={() => (isLoggedIn ? signOutHelper() : signIn('bird'))}
-        >
-          {isLoggedIn ? 'ab' : 'an'}
-        </a>
-        .
+      <p className="serlo-p mt-24">
+        {isLoggedIn ? renderLogout() : renderLogin()}
       </p>
     </>
   )
+
+  function renderLogin() {
+    return (
+      <>
+        Du kannst dich mit deiner DAAD-ID (BIRD) anmelden.
+        <br />
+        <button
+          className="serlo-button serlo-make-interactive-green mt-3"
+          onClick={() => {
+            void signIn('bird')
+          }}
+        >
+          Jetzt anmelden
+        </button>
+      </>
+    )
+  }
+  function renderLogout() {
+    return (
+      <>
+        Wunderbar, leider gibt&apos;s hier sonst nichts zu sehen 🙈.
+        <br />
+        <button
+          className="serlo-button serlo-make-interactive-green mt-3"
+          onClick={() => {
+            signOutHelper()
+          }}
+        >
+          Wieder abmelden
+        </button>
+      </>
+    )
+  }
 }
 
 const Footer = () => (
