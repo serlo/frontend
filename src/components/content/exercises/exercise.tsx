@@ -43,32 +43,44 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
   const isRevisionView =
     path && typeof path[0] === 'string' && path[0].startsWith('revision')
 
+  if (node.grouped)
+    return (
+      <li className="serlo-exercise-wrapper serlo-grouped-exercise-wrapper">
+        {renderExerciseContent()}
+      </li>
+    )
+
   return (
-    <div
-      className={clsx('serlo-exercise-wrapper', {
-        'pt-2 mb-10': !node.grouped,
-      })}
-    >
-      <ExerciseNumbering
-        isChild={node.grouped}
-        index={node.grouped ? node.positionInGroup! : node.positionOnPage!}
-        href={node.href ? node.href : `/${node.context.id}`}
-      />
-
-      <div className="flex justify-between">
-        <div>{renderExerciseTask()}</div>
-        {renderToolsButton()}
-      </div>
-
-      {renderInteractive()}
-      <div className="flex">
-        {renderSolutionToggle()}
-        {renderLicense()}
-      </div>
-
-      {solutionVisible && renderSolution()}
+    <div className="serlo-exercise-wrapper pt-2 mb-10">
+      {renderExerciseContent()}
     </div>
   )
+
+  function renderExerciseContent() {
+    return (
+      <>
+        {node.grouped ? null : ( // grouped ex numbering solved in css
+          <ExerciseNumbering
+            index={node.positionOnPage!}
+            href={node.href ? node.href : `/${node.context.id}`}
+          />
+        )}
+
+        <div className="flex justify-between">
+          <div>{renderExerciseTask()}</div>
+          {renderToolsButton()}
+        </div>
+
+        {renderInteractive()}
+        <div className="flex">
+          {renderSolutionToggle()}
+          {renderLicense()}
+        </div>
+
+        {solutionVisible && renderSolution()}
+      </>
+    )
+  }
 
   function renderSolution() {
     const license = node.solution.license && !node.solution.license.default && (
