@@ -1,8 +1,8 @@
-<img src="https://raw.githubusercontent.com/serlo/frontend/staging/public/_assets/img/serlo-logo-gh.svg" alt="Serlo Logo" title="Serlo" align="right" height="75" style="padding-bottom:1rem"/>
+<img src="https://raw.githubusercontent.com/serlo/frontend/staging/public/_assets/img/serlo-logo-gh.svg" alt="Serlo Logo" title="Serlo" align="right" height="75"/>
 
-# serlo/frontend
+# serlo.org – Frontend
 
-Welcome to the new frontend.
+Next.js app that serves [serlo.org](https://serlo.org).
 
 ## Overview
 
