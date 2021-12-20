@@ -43,7 +43,7 @@ function Gap({ mode, text, onClick }: GapProps) {
       <span
         className={clsx(
           'w-20 border-black border rounded bg-gray-50',
-          'inline-block h-6 mx-1 -mb-1.5 cursor-pointer '
+          'inline-block h-7 mx-1 -mb-1.5 cursor-pointer '
         )}
         onClick={onClick}
       ></span>
@@ -54,7 +54,7 @@ function Gap({ mode, text, onClick }: GapProps) {
       <span
         className={clsx(
           'w-20 border-brand border-2 rounded bg-brand-100',
-          'inline-block h-6 mx-1 -mb-1.5 animate-pulse'
+          'inline-block h-7 mx-1 -mb-1.5 animate-pulse'
         )}
       ></span>
     )
@@ -64,7 +64,7 @@ function Gap({ mode, text, onClick }: GapProps) {
       <span
         className={clsx(
           'border-black border rounded bg-brand-100 inline-block',
-          'h-6 mx-1 px-2 select-none cursor-pointer mb-2'
+          'h-7 mx-1 px-2 select-none cursor-pointer mb-2'
         )}
         onClick={onClick}
       >
@@ -77,7 +77,7 @@ function Gap({ mode, text, onClick }: GapProps) {
       <span
         className={clsx(
           'border-gray-200 border rounded bg-gray-100 inline-block',
-          'h-6 mx-1 px-2 select-none text-gray-400 cursor-pointer'
+          'h-7 mx-1 px-2 select-none text-gray-400 cursor-pointer'
         )}
         onClick={onClick}
       >
@@ -90,7 +90,7 @@ function Gap({ mode, text, onClick }: GapProps) {
       <span
         className={clsx(
           'border-black border rounded bg-brand-100 inline-block',
-          'h-6 mx-1 px-2 select-none cursor-pointer'
+          'h-7 mx-1 px-2 select-none cursor-pointer'
         )}
         onClick={onClick}
       >
@@ -103,7 +103,7 @@ function Gap({ mode, text, onClick }: GapProps) {
       <span
         className={clsx(
           'border-brand border-2 rounded bg-brand-100 inline-block',
-          'h-6 mx-1 px-2 select-none cursor-pointer animate-pulse'
+          'h-7 mx-1 px-2 select-none cursor-pointer animate-pulse'
         )}
         onClick={onClick}
       >
@@ -115,8 +115,8 @@ function Gap({ mode, text, onClick }: GapProps) {
     return (
       <span
         className={clsx(
-          'border-black border rounded bg-green-100 inline-block',
-          'h-6 mx-1 px-2 select-none'
+          'border-black border rounded bg-brandgreen-lighter inline-block',
+          'h-7 mx-1 px-2 select-none'
         )}
       >
         {text}
@@ -128,7 +128,7 @@ function Gap({ mode, text, onClick }: GapProps) {
       <span
         className={clsx(
           'border-black border rounded bg-red-100 inline-block',
-          'h-6 mx-1 px-2 select-none'
+          'h-7 mx-1 px-2 select-none'
         )}
       >
         {text}
@@ -249,21 +249,26 @@ export function GapEx({ choices, children, count, onFeedback }: GapExProps) {
         })}
       </p>
       {checked && (
-        <div className="mx-side">
+        <div>
           {' '}
           <Feedback correct={alright}>
-            {alright
-              ? 'Super! Du hast die Aufgabe richtig gelöst!'
-              : 'Leider noch nicht richtig. Versuch es nochmal!'}
+            {alright ? (
+              <>&nbsp;Super! Du hast die Aufgabe richtig gelöst!&nbsp;</>
+            ) : (
+              <>&nbsp;Leider noch nicht richtig. Versuch es nochmal!&nbsp;</>
+            )}
           </Feedback>
         </div>
       )}
       <button
         className={clsx(
-          'serlo-button serlo-make-interactive-primary',
+          'serlo-button',
           'mt-4 mx-side',
           !allfilled &&
-            'opacity-100 bg-transparent text-gray-400 pointer-events-none'
+            'opacity-100 bg-transparent text-gray-400 pointer-events-none',
+          alright
+            ? 'serlo-make-interactive-light'
+            : 'serlo-make-interactive-primary'
         )}
         onPointerUp={(e) => e.currentTarget.blur()}
         onClick={() => {
@@ -277,7 +282,7 @@ export function GapEx({ choices, children, count, onFeedback }: GapExProps) {
           }
         }}
       >
-        {checked ? 'Erneut versuchen' : "Stimmt's?"}
+        {checked ? 'Nochmal versuchen' : "Stimmt's?"}
       </button>
     </GapContext.Provider>
   )
