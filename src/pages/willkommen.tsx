@@ -1,9 +1,9 @@
 import { FrontendClientBase } from '@/components/frontend-client-base'
-import { Lernstand } from '@/components/pages/lernstand'
+import { LenabiWelcome } from '@/components/pages/lenabi-welcome'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks(() => (
   <FrontendClientBase>
-    <Lernstand />
+    <LenabiWelcome />
   </FrontendClientBase>
 ))

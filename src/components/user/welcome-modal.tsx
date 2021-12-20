@@ -4,7 +4,7 @@ import { ModalWithCloseButton } from '../modal-with-close-button'
 import { createQRCode } from '../pages/data-wallet'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 
-export function LernstandModal({ callback }: { callback: () => void }) {
+export function WelcomeModal({ callback }: { callback: () => void }) {
   const [showModal, setShowModal] = useState(false)
   const [qrCode, setQrCode] = useState('')
 

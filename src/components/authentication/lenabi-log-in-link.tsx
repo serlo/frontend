@@ -24,7 +24,7 @@ export function LenabiLogInLink({ title }: { title: string }) {
   // const router = useRouter()
 
   function onBirdLogin() {
-    void signIn('bird', { callbackUrl: '/lernstand' })
+    void signIn('bird', { callbackUrl: '/willkommen' })
     // setTimeout(() => {
     //   void router.push('/user/steff')
     // }, 610)

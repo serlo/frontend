@@ -4,7 +4,7 @@ import React, { ReactElement, useState } from 'react'
 import { Link } from '../content/link'
 import { HeadTags } from '../head-tags'
 import { LandingSubjectsNew } from '../landing/rework/landing-subjects-new'
-import { LernstandModal } from '../user/lernstand-modal'
+import { WelcomeModal } from '../user/welcome-modal'
 import { useAuthentication } from '@/auth/use-authentication'
 import { LandingSubjectsData } from '@/data-types'
 
@@ -28,7 +28,7 @@ const landingSubjectsData: LandingSubjectsData = {
   additionalLinks: [],
 }
 
-export function Lernstand() {
+export function LenabiWelcome() {
   const [learnDataLoaded, setLearnDataLoaded] = useState(false)
   const auth = useAuthentication()
 
@@ -62,30 +62,30 @@ export function Lernstand() {
 
         <section className={clsx('tracking-tight font-bold mt-40 mb-20')}>
           <h2 className="font-handwritten text-brand text-3xl text-center pb-3 border-b-2 mx-side-lg mb-8">
-            Dein Lernstand
+            Lernempfehlungen
           </h2>
 
           <div className="flex justify-around">
             {learnDataLoaded ? (
               renderLearnData()
             ) : (
-              <div className="mt-6 max-w-3xl text-center font-normal">
+              <div className="max-w-3xl text-center font-normal">
                 <p className="serlo-p">
                   Wenn du die Lerndaten aus deiner BIRD Data-Wallet für Serlo
                   freigibts,
                   <br />
-                  kannst du hier deinen Lernstand einsehen und Lernempfehlungen
-                  bekommen.
+                  kannst du hier deine aktuelle Lernempfehlungen und Aufgaben
+                  sehen.
                 </p>
                 <p className="serlo-p">
-                  <LernstandModal callback={() => setLearnDataLoaded(true)} />
+                  <WelcomeModal callback={() => setLearnDataLoaded(true)} />
                 </p>
               </div>
             )}
           </div>
         </section>
 
-        <section className="mt-10 mb-40">
+        <section className="mt-40 mb-40">
           <h2 className="font-handwritten text-brand text-3xl text-center pb-3 border-b-2 mx-side-lg">
             Nach Fächern
           </h2>
@@ -146,30 +146,18 @@ export function Lernstand() {
 
     return (
       <>
-        {renderBox({ title: 'Fächer', content: <>123</> })}
-        {renderBox({ title: 'Badges', content: <>123</> })}
-        {renderBox({ title: '">???</', content: <>123</> })}
-        {renderBox({ title: 'Fünfte Klasse Gymnasium', content: <>123</> })}
         {renderBox({
-          title: 'Aufgaben',
+          title: 'Addition von Brüchen',
           content: (
-            <>
-              <ul className="serlo-ul">
-                <li>
-                  <Link href="/135381">Orginalkurs (mit Lückentext)</Link>
-                </li>
-                <li>
-                  <Link href="/232011">
-                    Kurs den wir eigentlich benutzen wollen (ist noch nicht in
-                    staging, erst ab moin)
-                  </Link>
-                </li>
-                <li>
-                  <Link href="">…</Link>
-                </li>
-              </ul>
-            </>
+            <p className="serlo-p font-normal">
+              <Link href="/232927" className="font-bold">
+                Jetzt zum Kurs
+              </Link>
+              <br />
+              (erstellt von Lehrkraft)
+            </p>
           ),
+          link: '/232927',
         })}
       </>
     )
@@ -178,15 +166,20 @@ export function Lernstand() {
   function renderBox({
     title,
     content,
+    link,
   }: {
     title: string
     content: ReactElement
+    link?: string
   }) {
     return (
-      <div className="bg-brand-100 mx-2 rounded-xl">
+      <Link
+        className="bg-brand-100 mx-2 rounded-xl block !no-underline"
+        href={link}
+      >
         <h3 className="serlo-h3">{title}</h3>
         {content}
-      </div>
+      </Link>
     )
   }
 }

@@ -6,7 +6,6 @@ import { Horizon } from './content/horizon'
 import { Lazy } from './content/lazy'
 import { HeadTags } from './head-tags'
 import { JsonLd } from './json-ld'
-import { Breadcrumbs } from './navigation/breadcrumbs'
 import { MaxWidthDiv } from './navigation/max-width-div'
 import { MetaMenu } from './navigation/meta-menu'
 import { NewsletterPopup } from './scripts/newsletter-popup'
@@ -66,18 +65,19 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
   )
 
   function renderBreadcrumbs() {
-    return (
-      <Breadcrumbs
-        data={page.breadcrumbsData}
-        isTaxonomy={
-          page.kind !== 'single-entity' &&
-          !(page.metaData?.contentType == 'topic-folder')
-        }
-        asBackButton={
-          page.kind == 'single-entity' &&
-          page.entityData.typename == 'GroupedExercise'
-        }
-      />
-    )
+    return null
+    // return (
+    //   <Breadcrumbs
+    //     data={page.breadcrumbsData}
+    //     isTaxonomy={
+    //       page.kind !== 'single-entity' &&
+    //       !(page.metaData?.contentType == 'topic-folder')
+    //     }
+    //     asBackButton={
+    //       page.kind == 'single-entity' &&
+    //       page.entityData.typename == 'GroupedExercise'
+    //     }
+    //   />
+    // )
   }
 }
