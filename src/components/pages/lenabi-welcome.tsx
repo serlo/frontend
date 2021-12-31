@@ -34,7 +34,9 @@ export function LenabiWelcome() {
   const [sessionId, setSessionId] = useState<string | undefined>(undefined)
 
   useEffect(() => {
-    setSessionId(createRandomSessionId())
+    const sessionId = createRandomSessionId()
+    setSessionId(sessionId)
+    sessionStorage.setItem('sessionId', sessionId)
   }, [])
 
   if (!auth.current) return <>bitte einloggen</>

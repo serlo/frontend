@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import nProgress from 'nprogress'
 import { useState } from 'react'
 
+import { endpointEnmeshed } from '@/api/endpoint'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { GapEx, Gappy } from '@/pages/___gaps'
 
@@ -13,14 +14,6 @@ export function MockupGaps() {
   function onFeedbackHandler(success: boolean) {
     setShowWalletNotice(true)
     setSuccess(success)
-  }
-
-  function onSave() {
-    nProgress.start()
-    setTimeout(() => {
-      nProgress.done()
-      showToastNotice('👌 Erfolgreich in deiner Wallet gespeichert', 'success')
-    }, 540)
   }
 
   /*
@@ -68,7 +61,7 @@ export function MockupGaps() {
             <br />
             <button
               className="serlo-button serlo-make-interactive-green mt-2 m-auto text-center"
-              onClick={onSave}
+              onClick={saveLearningProgress}
             >
               <FontAwesomeIcon icon={faSave} /> In deiner Wallet speichern
             </button>
@@ -77,4 +70,35 @@ export function MockupGaps() {
       ) : null}
     </>
   )
+
+  function saveLearningProgress() {
+    const sessionId = sessionStorage.getItem('sessionId')
+    const name = 'Lernstand-Mathe'
+    const value = encodeURIComponent('✓ Bruchaddition')
+
+    if (!sessionId) return
+
+    fetch(
+      `${endpointEnmeshed}/attributes?name=${name}&value=${value}&sessionId=${sessionId}`,
+      { method: 'POST' }
+    )
+      .then((res) => res.json())
+      .then(() => {
+        nProgress.start()
+        setTimeout(() => {
+          nProgress.done()
+          showToastNotice(
+            '👌 Neuer Lernstand erfolgreich deiner Wallet gesendet',
+            'success'
+          )
+        }, 540)
+      })
+      .catch((e) => {
+        // eslint-disable-next-line no-console
+        console.log(JSON.stringify(e))
+        // triggerSentry({
+        //   message: `${JSON.stringify(e)}`,
+        // })
+      })
+  }
 }
