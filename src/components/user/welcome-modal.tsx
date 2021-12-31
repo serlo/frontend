@@ -8,7 +8,13 @@ import { useEnmeshed } from '@/helper/use-enmeshed'
 
 const sessionStorageKey = 'session-id-enmeshed'
 
-export function WelcomeModal({ callback }: { callback: () => void }) {
+export function WelcomeModal({
+  callback,
+  username,
+}: {
+  callback: () => void
+  username: string
+}) {
   const [showModal, setShowModal] = useState(false)
 
   const sessionId = getSessionId()
@@ -87,17 +93,16 @@ export function WelcomeModal({ callback }: { callback: () => void }) {
   )
 
   function fetchQRCode() {
-    //TODO: get name and session id from user
+    //TODO: get session id from user
 
-    fetch(
-      `${endpointEnmeshed}/init?sessionId=${sessionId}&name=Botho%20Willer`,
-      {
-        method: 'POST',
-        headers: {
-          Accept: 'image/png',
-        },
-      }
-    )
+    const name = encodeURIComponent(username)
+
+    fetch(`${endpointEnmeshed}/init?sessionId=${sessionId}&name=${name}`, {
+      method: 'POST',
+      headers: {
+        Accept: 'image/png',
+      },
+    })
       .then((res) => res.blob())
       .then((res) => {
         const urlCreator = window.URL || window.webkitURL
