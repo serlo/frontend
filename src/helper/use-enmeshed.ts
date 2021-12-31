@@ -32,7 +32,6 @@ export function useEnmeshed(
     fetch(`${endpointEnmeshed}/attributes?sessionId=${sessionId}`, {})
       .then((res) => res.json())
       .then((body: EnmeshedResponse) => {
-        console.log(body)
         if (body.status === 'pending') {
           setTimeout(fetchAPI, 1000)
         }

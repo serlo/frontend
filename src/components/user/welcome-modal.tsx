@@ -77,20 +77,6 @@ export function WelcomeModal({ callback }: { callback: () => void }) {
             .
           </button>
         </p>
-        <p className="serlo-p">
-          <button
-            className="serlo-button serlo-make-interactive-light"
-            onClick={queryAttributes}
-          >
-            Query Data
-          </button>
-          <button
-            className="serlo-button serlo-make-interactive-light"
-            onClick={writeAttribute}
-          >
-            Write Data
-          </button>
-        </p>
         <style jsx>{`
           img {
             mix-blend-mode: multiply;
@@ -134,12 +120,18 @@ export function WelcomeModal({ callback }: { callback: () => void }) {
     fetch(`${endpointEnmeshed}/attributes?sessionId=${sessionId}`, {})
       .then((res) => res.json())
       .then((body: EnmeshedResponse) => {
-        console.log(body)
         if (body.status === 'pending') {
+          // eslint-disable-next-line no-console
+          console.log('INFO: RelationshipRequest is pending...')
           setTimeout(fetchAttributes, 1000)
         }
         if (body.status === 'success') {
-          console.log(body.attributes)
+          // eslint-disable-next-line no-console
+          console.log('INFO: RelationshipRequest was accepted.')
+          // eslint-disable-next-line no-console
+          console.log(
+            `INFO: Value of Lernstand-Mathe is "${body.attributes['Lernstand-Mathe']}"`
+          )
           setShowModal(false)
           callback()
         }
@@ -166,6 +158,11 @@ function getSessionId() {
   return newId
 }
 
+export type EnmeshedResponse =
+  | EnmeshedErrorResponse
+  | EnmeshedPendingResponse
+  | EnmeshedSuccessResponse
+
 export interface EnmeshedErrorResponse {
   status: 'error'
   message: string
@@ -177,12 +174,5 @@ export interface EnmeshedPendingResponse {
 
 export interface EnmeshedSuccessResponse {
   status: 'success'
-  attributes: EnmeshedAttributes
+  attributes: Record<string, string>
 }
-
-export type EnmeshedResponse =
-  | EnmeshedErrorResponse
-  | EnmeshedPendingResponse
-  | EnmeshedSuccessResponse
-
-export type EnmeshedAttributes = { name: string; value: string }[] | false
