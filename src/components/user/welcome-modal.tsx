@@ -6,18 +6,16 @@ import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { triggerSentry } from '@/helper/trigger-sentry'
 import { useEnmeshed } from '@/helper/use-enmeshed'
 
-const sessionStorageKey = 'session-id-enmeshed'
-
 export function WelcomeModal({
   callback,
   username,
+  sessionId,
 }: {
   callback: () => void
   username: string
+  sessionId: string
 }) {
   const [showModal, setShowModal] = useState(false)
-
-  const sessionId = getSessionId()
 
   const [qrCodeSrc, setQrCodeSrc] = useState('')
   const [enmeshedAttributes, queryAttributes, writeAttribute] =
@@ -93,8 +91,6 @@ export function WelcomeModal({
   )
 
   function fetchQRCode() {
-    //TODO: get session id from user
-
     const name = encodeURIComponent(username)
 
     fetch(`${endpointEnmeshed}/init?sessionId=${sessionId}&name=${name}`, {
@@ -149,18 +145,6 @@ export function WelcomeModal({
         // })
       })
   }
-}
-
-function getSessionId() {
-  if (typeof window === 'undefined') return 'foo'
-
-  const stored = sessionStorage.getItem(sessionStorageKey)
-  if (stored) return stored
-
-  const newId = (Math.random() + 1).toString(36).substr(2, 13) //random string
-
-  sessionStorage.setItem(sessionStorageKey, newId)
-  return newId
 }
 
 export type EnmeshedResponse =

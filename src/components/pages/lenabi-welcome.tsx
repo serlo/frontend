@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import React, { ReactElement, useState } from 'react'
+import React, { ReactElement, useState, useEffect } from 'react'
 
 import { Link } from '../content/link'
 import { HeadTags } from '../head-tags'
@@ -31,6 +31,11 @@ const landingSubjectsData: LandingSubjectsData = {
 export function LenabiWelcome() {
   const [learnDataLoaded, setLearnDataLoaded] = useState(false)
   const auth = useAuthentication()
+  const [sessionId, setSessionId] = useState<string | undefined>(undefined)
+
+  useEffect(() => {
+    setSessionId(createRandomSessionId())
+  }, [])
 
   if (!auth.current) return <>bitte einloggen</>
 
@@ -78,7 +83,13 @@ export function LenabiWelcome() {
                   sehen.
                 </p>
                 <p className="serlo-p">
-                  <WelcomeModal callback={() => setLearnDataLoaded(true)} />
+                  {sessionId && (
+                    <WelcomeModal
+                      callback={() => setLearnDataLoaded(true)}
+                      username={auth.current.username}
+                      sessionId={sessionId}
+                    />
+                  )}
                 </p>
               </div>
             )}
@@ -182,4 +193,8 @@ export function LenabiWelcome() {
       </Link>
     )
   }
+}
+
+function createRandomSessionId() {
+  return (Math.random() + 1).toString(36).substr(2, 13) //random string
 }
