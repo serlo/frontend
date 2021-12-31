@@ -4,7 +4,6 @@ import { ModalWithCloseButton } from '../modal-with-close-button'
 import { endpointEnmeshed } from '@/api/endpoint'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { triggerSentry } from '@/helper/trigger-sentry'
-import { useEnmeshed } from '@/helper/use-enmeshed'
 
 export function WelcomeModal({
   callback,
@@ -18,8 +17,6 @@ export function WelcomeModal({
   const [showModal, setShowModal] = useState(false)
 
   const [qrCodeSrc, setQrCodeSrc] = useState('')
-  const [enmeshedAttributes, queryAttributes, writeAttribute] =
-    useEnmeshed(sessionId)
 
   const handleOnClick = (event: MouseEvent) => {
     event.preventDefault()
@@ -30,8 +27,6 @@ export function WelcomeModal({
   const handleMockLoad = () => {
     setTimeout(() => {
       setShowModal(false)
-      // eslint-disable-next-line no-console
-      console.log(enmeshedAttributes)
       callback()
     }, 500)
   }
