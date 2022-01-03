@@ -78,19 +78,22 @@ export function MockupGaps() {
 
     if (!sessionId) return
 
+    nProgress.start()
+
     fetch(
       `${endpointEnmeshed}/attributes?name=${name}&value=${value}&sessionId=${sessionId}`,
       { method: 'POST' }
     )
       .then((res) => res.json())
       .then(() => {
-        nProgress.start()
         setTimeout(() => {
           nProgress.done()
           showToastNotice(
             '👌 Neuer Lernstand erfolgreich deiner Wallet gesendet',
-            'success'
+            'success',
+            6000
           )
+          setShowWalletNotice(false)
         }, 540)
       })
       .catch((e) => {
