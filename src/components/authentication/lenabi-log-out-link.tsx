@@ -8,7 +8,7 @@ export function LenabiLogOutLink({ title }: { title: string }) {
     void signOut({ redirect: false })
     window.location.href =
       'https://keycloak.serlo-staging.dev/auth/realms/serlo/protocol/openid-connect/logout?redirect_uri=' +
-      encodeURIComponent(window.location.href)
+      encodeURIComponent(window.location.origin)
   }
 
   return <MenuSubButtonLink onClick={signOutHelper}>{title}</MenuSubButtonLink>
