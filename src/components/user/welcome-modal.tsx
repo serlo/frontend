@@ -140,8 +140,13 @@ export function WelcomeModal({
         console.log(JSON.stringify(e))
 
         triggerSentry({
-          message: `error while creating qr code: ${JSON.stringify(e)}`,
+          message: `Error in User-Journey: Reading QR-Code: ${JSON.stringify(
+            e
+          )}`,
         })
+
+        setShowModal(false)
+        callback()
       })
   }
 
@@ -167,10 +172,14 @@ export function WelcomeModal({
       })
       .catch((e) => {
         // eslint-disable-next-line no-console
-        console.log(JSON.stringify(e))
-        // triggerSentry({
-        //   message: `${JSON.stringify(e)}`,
-        // })
+        console.log(`ERROR: ${JSON.stringify(e)}`)
+        setShowModal(false)
+        callback()
+        triggerSentry({
+          message: `Error in User-Journey: Reading Attributes: ${JSON.stringify(
+            e
+          )}`,
+        })
       })
   }
 }

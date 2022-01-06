@@ -5,6 +5,7 @@ import { useState } from 'react'
 
 import { endpointEnmeshed } from '@/api/endpoint'
 import { showToastNotice } from '@/helper/show-toast-notice'
+import { triggerSentry } from '@/helper/trigger-sentry'
 import { GapEx, Gappy } from '@/pages/___gaps'
 
 export function MockupGaps() {
@@ -99,9 +100,12 @@ export function MockupGaps() {
       .catch((e) => {
         // eslint-disable-next-line no-console
         console.log(JSON.stringify(e))
-        // triggerSentry({
-        //   message: `${JSON.stringify(e)}`,
-        // })
+        triggerSentry({
+          message: `Error in User-Journey: Saving Attribute: ${JSON.stringify(
+            e
+          )}`,
+        })
+        setShowWalletNotice(false)
       })
   }
 }
