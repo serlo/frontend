@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import { MouseEvent, useState } from 'react'
 
 import { ModalWithCloseButton } from '../modal-with-close-button'
@@ -33,6 +34,38 @@ export function WelcomeModal({
 
   return (
     <>
+      <Head>
+        <link
+          rel="preload"
+          href="https://assets.serlo.org/61bc977dedb38_daea31b3bd979c6587f874499713275b330db404.svg"
+          as="image"
+        />
+        <link
+          rel="preload"
+          href="https://assets.serlo.org/61bcbbb4e9f58_99732b5cb071e233e2fabf9f37cd4a245936ad86.png"
+          as="image"
+        />
+        <link
+          rel="preload"
+          href="https://assets.serlo.org/61bcbc3eef914_e5d5f432bbaeb48d2ed2075de1b7014444a798a9.png"
+          as="image"
+        />
+        <link
+          rel="preload"
+          href="https://assets.serlo.org/61bcbcf057f40_9ee0d8d1f69f3ab74aaa825f622eb48ace01f623.png"
+          as="image"
+        />
+        <link
+          rel="preload"
+          href="https://assets.serlo.org/61bcbdcc2ffaf_dc6a0dde8568432b86e76f1d52929402fad4451f.png"
+          as="image"
+        />
+        <link
+          rel="preload"
+          href="https://assets.serlo.org/61bcb7b06f4a3_d36861e75a5d4c4695b21725fe9917e616771a11.svg"
+          as="image"
+        />
+      </Head>
       <button
         className="serlo-button serlo-make-interactive-green"
         onClick={handleOnClick}
