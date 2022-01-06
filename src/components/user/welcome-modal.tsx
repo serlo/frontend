@@ -90,15 +90,15 @@ export function WelcomeModal({
         </p>
 
         <b className="mt-4 mx-side">QR-Code zum freischalten</b>
-        <p className="mx-side bg-brand-100 img-wrapper rounded-xl mt-4 mb-4 w-48 h-48">
-          {qrCodeSrc === '' ? (
-            <div className="ml-1 pt-4">
-              <LoadingSpinner noText />
-            </div>
-          ) : (
+        {qrCodeSrc === '' ? (
+          <div className="ml-1 pt-4">
+            <LoadingSpinner noText />
+          </div>
+        ) : (
+          <p className="mx-side bg-brand-100 img-wrapper rounded-xl mt-4 mb-4 w-48 h-48">
             <img src={qrCodeSrc} />
-          )}
-        </p>
+          </p>
+        )}
         <p className="serlo-p">
           Nachdem du den Code mit der{' '}
           <a className="serlo-link" target="_blank" href="/wallet">

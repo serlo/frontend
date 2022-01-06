@@ -84,15 +84,13 @@ export function LenabiWelcome() {
                   kannst du hier deine aktuelle Lernempfehlungen und Aufgaben
                   sehen.
                 </p>
-                <p className="serlo-p">
-                  {sessionId && (
-                    <WelcomeModal
-                      callback={() => setLearnDataLoaded(true)}
-                      username={auth.current.username}
-                      sessionId={sessionId}
-                    />
-                  )}
-                </p>
+                {sessionId && (
+                  <WelcomeModal
+                    callback={() => setLearnDataLoaded(true)}
+                    username={auth.current.username}
+                    sessionId={sessionId}
+                  />
+                )}
               </div>
             )}
           </div>
@@ -163,9 +161,7 @@ export function LenabiWelcome() {
           title: 'Addition von Brüchen',
           content: (
             <p className="serlo-p font-normal">
-              <Link href="/232927" className="font-bold">
-                Jetzt zum Kurs
-              </Link>
+              <span className="font-bold hover:underline">Jetzt zum Kurs</span>
               <br />
               (erstellt von Lehrkraft)
             </p>
