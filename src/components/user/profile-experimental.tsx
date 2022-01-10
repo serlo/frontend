@@ -1,24 +1,6 @@
 import clsx from 'clsx'
 import Cookies from 'js-cookie'
-import { useState } from 'react'
-
-import { useAuthentication } from '@/auth/use-authentication'
-
-const testUsers = [
-  'botho',
-  'carolinjaser',
-  'claudiar',
-  'dal',
-  'inyono',
-  'kathongi',
-  'kulla',
-  'metzgaria',
-  'simon',
-  'wolfgang',
-  'louisa_h',
-  'annika-hemlein',
-  'korbi_d',
-]
+import { useEffect, useState } from 'react'
 
 export const features = {
   editor: { cookieName: 'useEditorInFrontend', isActive: false },
@@ -30,13 +12,22 @@ export const features = {
 
 type Feature = keyof typeof features
 
+const showExperimentsStorageKey = 'showExperiments'
+
 export function ProfileExperimental() {
-  const auth = useAuthentication()
   const [, updateState] = useState({}) //refresh comp
 
-  if (!testUsers.includes((auth.current?.username ?? '').toLowerCase())) {
-    return null
-  }
+  useEffect(() => {
+    if (window.location.hash === '#enable-experiments') {
+      localStorage.setItem(showExperimentsStorageKey, '1')
+      window.location.hash = ''
+    }
+
+    if (window.location.hash === '#disable-experiments')
+      localStorage.removeItem(showExperimentsStorageKey)
+  })
+
+  if (!localStorage.getItem(showExperimentsStorageKey)) return null
 
   // check cookies
   Object.keys(features).forEach((feature) => {
