@@ -15,6 +15,9 @@ const testUsers = [
   'metzgaria',
   'simon',
   'wolfgang',
+  'louisa_h',
+  'annika-hemlein',
+  'korbi_d',
 ]
 
 export const features = {
