@@ -110,6 +110,12 @@ export function getPluginRegistry(
       icon: createIcon(faTable),
     },
     {
+      name: 'serloTable',
+      title: editorStrings.edtrIo.serloTable,
+      description: editorStrings.edtrIo.serloTableDesc,
+      icon: createIcon(faTable),
+    },
+    {
       name: 'video',
       title: editorStrings.edtrIo.video,
       description: editorStrings.edtrIo.videoDesc,
