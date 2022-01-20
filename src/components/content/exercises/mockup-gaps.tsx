@@ -90,7 +90,7 @@ export function MockupGaps() {
         setTimeout(() => {
           nProgress.done()
           showToastNotice(
-            '👌 Neuer Lernstand erfolgreich deiner Wallet gesendet',
+            '👌 Lernstand wurde erfolgreich an deine Wallet gesendet',
             'success',
             6000
           )
