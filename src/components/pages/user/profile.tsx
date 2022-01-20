@@ -46,6 +46,17 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   const [showMotivationModal, setShowMotivationModal] = useState(false)
   const [isOwnProfile, setIsOwnProfile] = useState(false)
 
+  const registerDate = new Date(date)
+  const legacyDate = new Date('2021-11-14')
+  const isUserWithoutActivities =
+    !userData.isActiveDonor &&
+    activityByType.edits + activityByType.reviews === 0 &&
+    registerDate > legacyDate
+  const hourInMilliseconds = 60 * 60 * 1000
+  const isNewlyRegisteredUser =
+    isUserWithoutActivities &&
+    new Date().getTime() - new Date(date).getTime() < 1 * hourInMilliseconds
+
   useEffect(() => {
     setIsOwnProfile(auth.current?.username === username)
   }, [auth, username])
@@ -78,7 +89,9 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
             style={{ gridArea: 'motivation' }}
           >
             {motivation && <>&quot;{motivation}&quot;</>}
-            {isOwnProfile && renderEditMotivationLink()}
+            {isOwnProfile &&
+              !isNewlyRegisteredUser &&
+              renderEditMotivationLink()}
           </div>
           <ProfileChatButton
             userId={id}
@@ -116,7 +129,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
           alt={`Profile image of ${username}`}
           className="block rounded-full w-full h-full"
         />
-        {isOwnProfile && (
+        {isOwnProfile && !isNewlyRegisteredUser && (
           <a
             onClick={() => setShowImageModal(true)}
             className={clsx(
@@ -133,18 +146,12 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
 
   function renderDescription() {
     if (!description) return null
-    const registerDate = new Date(date)
-    const legacyDate = new Date('2021-11-14')
-    const hideDescription =
-      !userData.isActiveDonor &&
-      activityByType.edits + activityByType.reviews === 0 &&
-      registerDate > legacyDate
 
-    if (!isOwnProfile && hideDescription) return null
+    if (!isOwnProfile && isUserWithoutActivities) return null
     return (
       <section>
         <h2 className="serlo-h2">{strings.profiles.aboutMe}</h2>
-        {hideDescription && isOwnProfile ? (
+        {isUserWithoutActivities && isOwnProfile ? (
           <StaticInfoPanel icon={faInfoCircle}>
             {strings.profiles.lockedDescriptionTitle}
             <br />
