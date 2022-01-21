@@ -494,6 +494,8 @@ export const loggedInData = {
         multimediaDesc: "Erstelle einen veranschaulichenden oder erklärenden Multimedia-Inhalt mit zugehöriger Erklärung.",
         spoiler: 'Spoiler',
         spoilerDesc: "In diese ausklappbare Box kannst du zum Beispiel Exkurse hinzufügen.",
+        serloTable: 'Table',
+        serloTableDesc: '(new plugin in testing) Create tables',
         table: "Tabelle",
         tableDesc: "Erstelle eine Tabelle mit Markdown.",
         video: 'Video',
@@ -574,6 +576,7 @@ export const loggedInData = {
         missedSome: "Fast! Dir fehlt noch mindestens eine richtige Antwort",
         correct: "Richtig"
       },
+      serloTable: {},
       spoiler: {
         enterATitle: "Titel eingeben"
       },
