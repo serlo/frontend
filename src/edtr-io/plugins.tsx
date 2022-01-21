@@ -26,6 +26,7 @@ import { createImportantPlugin } from './plugins/important'
 import { injectionPlugin } from './plugins/injection'
 import { layoutPlugin } from './plugins/layout'
 import { separatorPlugin } from './plugins/separator'
+import { serloTablePlugin } from './plugins/serlo-table'
 import { solutionPlugin } from './plugins/solution'
 import { tablePlugin } from './plugins/table'
 import { appletTypePlugin } from './plugins/types/applet'
@@ -236,6 +237,7 @@ export function createPlugins({
       },
     }),
     separator: separatorPlugin,
+    serloTable: serloTablePlugin,
     solution: solutionPlugin,
     spoiler: createSpoilerPlugin({
       content: { plugin: 'rows' },
