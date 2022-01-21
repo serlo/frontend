@@ -110,6 +110,12 @@ export function getPluginRegistry(
       icon: createIcon(faTable),
     },
     {
+      name: 'serloTable',
+      title: editorStrings.edtrIo.serloTable,
+      description: editorStrings.edtrIo.serloTableDesc,
+      icon: createIcon(faTable),
+    },
+    {
       name: 'video',
       title: editorStrings.edtrIo.video,
       description: editorStrings.edtrIo.videoDesc,
@@ -130,6 +136,7 @@ export function getPluginRegistry(
     ? registry.filter((plugin) => include.includes(plugin.name))
     : registry
 
+  // Testing new box plugin
   const showBox =
     typeof window !== 'undefined' &&
     serloDomain != 'serlo.org' &&
@@ -140,5 +147,11 @@ export function getPluginRegistry(
     ? filteredRegistry
     : filteredRegistry.filter((plugin) => plugin.name != 'box')
 
-  return boxFiltered
+  // Testing new table plugin
+  const tableFiltered =
+    serloDomain === 'serlo.org'
+      ? boxFiltered.filter((plugin) => plugin.name != 'serloTable')
+      : boxFiltered
+
+  return tableFiltered
 }
