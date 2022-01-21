@@ -494,6 +494,8 @@ export const loggedInData = {
         multimediaDesc: "Ajouter du contenu multimédia illustrant ou explicatif associé a un texte.",
         spoiler: 'Spoiler',
         spoilerDesc: "Une boîte réductible.",
+        serloTable: 'Table',
+        serloTableDesc: '(new plugin in testing) Create tables',
         table: "Tableau",
         tableDesc: "Créer un tableau avec Markdown.",
         video: "Vidéo",
@@ -574,6 +576,7 @@ export const loggedInData = {
         missedSome: "Presque ! Tu as manqué au moins une réponse correcte",
         correct: "Correcte"
       },
+      serloTable: {},
       spoiler: {
         enterATitle: "Saisir un titre"
       },
