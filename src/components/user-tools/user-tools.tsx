@@ -157,7 +157,7 @@ export function UserTools({
   function getEditHref(): string | undefined {
     if (data.type == 'Page') {
       if (canDo(Uuid.create('PageRevision'))) {
-        return `/page/revision/create/${data.id}/${data.revisionId || ''}`
+        return `/page/revision/create-old/${data.id}/${data.revisionId || ''}`
       }
     } else if (data.type == 'Taxonomy') {
       if (canDo(TaxonomyTerm.set)) {

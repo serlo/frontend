@@ -494,6 +494,8 @@ export const loggedInData = {
         multimediaDesc: 'Create an illustrating or explaining multimedia content associated with text.',
         spoiler: 'Spoiler',
         spoilerDesc: 'A collapsible box.',
+        serloTable: 'Table',
+        serloTableDesc: '(new plugin in testing) Create tables',
         table: 'Table',
         tableDesc: 'Create tables using Markdown.',
         video: 'Video',
@@ -574,6 +576,7 @@ export const loggedInData = {
         missedSome: 'Almost! You missed at least one correct answer',
         correct: 'Correct'
       },
+      serloTable: {},
       spoiler: {
         enterATitle: 'Enter a title'
       },
