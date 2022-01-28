@@ -15,7 +15,7 @@ interface QuickbarDataEntry {
 
 type QuickbarData = QuickbarDataEntry[]
 
-export function Quickbar() {
+export function Quickbar({ subject }: { subject?: string }) {
   const [data, setData] = useState<QuickbarData | null>(null)
   const [query, setQuery] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
@@ -36,10 +36,18 @@ export function Quickbar() {
             entry.pathLower = entry.path.map((x) => x.toLowerCase())
             entry.titleLower = entry.title.toLowerCase()
           })
-          setData(data)
+          const filteredData = subject
+            ? data.filter(
+                (entry) =>
+                  entry.title.toLowerCase().includes(subject) ||
+                  (entry.path.length > 0 &&
+                    entry.path[0].toLowerCase().includes(subject))
+              )
+            : data
+          setData(filteredData)
         })
     }
-  }, [query, data])
+  }, [query, data, subject])
 
   useEffect(() => {
     setSel(-1)
