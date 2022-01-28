@@ -10,6 +10,7 @@ import { LandingJsonLd } from '../landing/rework/landing-json-ld'
 import { Header } from '../navigation/header'
 import { Quickbar } from '../navigation/quickbar'
 import InformaticsSVG from '@/assets-webkit/img/landing/subjects-informatics.svg'
+import { useInstanceData } from '@/contexts/instance-context'
 import { TaxonomySubTerm } from '@/data-types'
 import { theme } from '@/theme'
 
@@ -638,6 +639,10 @@ const subterms = [
 ] as TaxonomySubTerm[]
 
 export function LandingInformatik() {
+  const { lang } = useInstanceData()
+
+  if (lang !== 'de') return null
+
   return (
     <>
       <Head>
