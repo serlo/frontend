@@ -708,21 +708,6 @@ export function LandingInformatik() {
           {renderTopicOverview()}
         </section>
 
-        {/* <section className="mt-20 mb-20 mx-side">
-          <img src="/_assets/img/landing/birds.svg" className="mx-auto" />
-          <h3
-            style={{ hyphens: 'auto' }}
-            className={clsx(
-              'text-center text-4xl font-bold',
-              'leading-cozy tracking-tight',
-              'max-w-2xl mt-7 mx-auto'
-            )}
-          >
-            Zusammen setzen wir uns für mehr Bildungsgerechtigkeit und die
-            digitale Transformation unserer Schulen ein.
-          </h3>
-        </section> */}
-
         <section className="text-center partner">
           <div className="overflow-hidden">
             <CommunityWallInformatik />
