@@ -125,7 +125,7 @@ const BotHunt = () => {
               className="block grayscale hover:grayscale-0"
               style={{ width: 200 }}
             />
-            <div className="flex-grow">
+            <div className="grow">
               <h2 className="text-xl mb-3 font-bold">
                 <a href={profileUrl}>{username}</a>
               </h2>

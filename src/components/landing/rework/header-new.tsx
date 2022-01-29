@@ -43,7 +43,7 @@ export function HeaderNew() {
             Die freie Lernplattform
           </span>
         </div>
-        <div className="hidden lg:block mt-5 flex-grow mx-8">
+        <div className="hidden lg:block mt-5 grow mx-8">
           <Quickbar />
         </div>
 
