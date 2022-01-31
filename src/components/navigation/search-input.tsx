@@ -179,7 +179,7 @@ export function SearchInput() {
         >
           {!searchActive && (
             <>
-              <div className="flex-grow flex-shrink" /*PlaceholderText*/>
+              <div className="grow shrink" /*PlaceholderText*/>
                 <input
                   className="gsc-input outline-none mt-2 !ml-0"
                   placeholder={strings.header.search}
