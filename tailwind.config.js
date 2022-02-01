@@ -9,8 +9,7 @@ const yellow = '#ffbe5e'
 
 module.exports = {
   mode: 'jit',
-  purge: ['./src/**/*.{js,ts,jsx,tsx}', './tailwind.config.js'],
-  darkMode: false, // or 'media' or 'class'
+  content: ['./src/**/*.{js,ts,jsx,tsx}', './tailwind.config.js'],
   theme: {
     extend: {
       colors: {
@@ -28,7 +27,7 @@ module.exports = {
           light: lighten(0.35, brandGreen),
           lighter: lighten(0.45, brandGreen),
         },
-        truegray: colors.trueGray,
+        truegray: colors.neutral,
         berry: '#857189',
         newgreen: '#2fceb1',
         yellow: {
@@ -85,7 +84,7 @@ module.exports = {
       },
       boxShadow: {
         brand: `0 0 10px ${brand}, 0 0 5px ${brand}`,
-        menu: 'rgba(0, 0, 0, 0.2) 0px 2px 4px;',
+        menu: 'rgba(0, 0, 0, 0.2) 0px 2px 4px',
         modal: '0px 0px 10px 0px rgba(0, 0, 0, 0.25)',
         input: `0 0 4px 0 ${brand}`,
       },
@@ -134,11 +133,6 @@ module.exports = {
       lg: '1216px',
       xl: '1300px',
       print: { raw: 'print' },
-    },
-  },
-  variants: {
-    extend: {
-      margin: ['first'],
     },
   },
   plugins: [

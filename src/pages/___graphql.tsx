@@ -1,6 +1,6 @@
+import { FetcherParams } from 'graphiql'
 import type { GraphiQLProps } from 'graphiql/esm/components/GraphiQL'
-import { GraphQLError } from 'graphql'
-import { GraphQLResponse } from 'graphql-request/dist/types'
+import { ExecutionResult, GraphQLError } from 'graphql'
 import { NextPage } from 'next'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
@@ -27,47 +27,44 @@ const GraphQLPage: NextPage = () => {
 function GraphQL() {
   const auth = useAuthentication()
 
+  const fetcher = async function fetcher(params: FetcherParams) {
+    const usedToken = auth.current?.token
+    const data = await executeQuery()
+    const error = data.errors?.[0] as
+      | (GraphQLError & {
+          extensions: {
+            code: 'INVALID_TOKEN'
+          }
+        })
+      | undefined
+    if (error?.extensions.code === 'INVALID_TOKEN' && auth.current !== null) {
+      await auth.current.refreshToken(usedToken!)
+      return await executeQuery()
+    }
+    return data
+
+    async function executeQuery() {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          ...(auth.current
+            ? {
+                Authorization: `Bearer ${auth.current.token}`,
+              }
+            : {}),
+        },
+        body: JSON.stringify(params),
+        credentials: 'same-origin',
+      })
+      return (await response.json()) as ExecutionResult
+    }
+  }
+
   return (
     <>
-      <GraphiQL
-        fetcher={async function fetcher(params) {
-          const usedToken = auth.current?.token
-          const data = await executeQuery()
-          const error = data.errors?.[0] as
-            | (GraphQLError & {
-                extensions: {
-                  code: 'INVALID_TOKEN'
-                }
-              })
-            | undefined
-          if (
-            error?.extensions.code === 'INVALID_TOKEN' &&
-            auth.current !== null
-          ) {
-            await auth.current.refreshToken(usedToken!)
-            return await executeQuery()
-          }
-          return data
-
-          async function executeQuery() {
-            const response = await fetch(endpoint, {
-              method: 'POST',
-              headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                ...(auth.current
-                  ? {
-                      Authorization: `Bearer ${auth.current.token}`,
-                    }
-                  : {}),
-              },
-              body: JSON.stringify(params),
-              credentials: 'same-origin',
-            })
-            return (await response.json()) as GraphQLResponse
-          }
-        }}
-      />
+      <GraphiQL fetcher={fetcher} />
       <Style />
     </>
   )
