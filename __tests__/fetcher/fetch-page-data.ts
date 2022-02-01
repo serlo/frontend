@@ -1,6 +1,5 @@
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
-import nodeFetch from 'node-fetch'
 
 import {
   articleUuidMock,
@@ -22,8 +21,6 @@ import { fetchPageData } from '@/fetcher/fetch-page-data'
 import { serloDomain } from '@/helper/serlo-domain'
 
 const server = setupServer()
-
-global.fetch = nodeFetch as unknown as typeof global.fetch
 
 beforeAll(() => {
   server.listen()
