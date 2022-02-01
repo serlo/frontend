@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { lighten } from 'polished'
 import React from 'react'
 
+import { Link } from '../content/link'
 import { HeadTags } from '../head-tags'
 import { CommunityWallInformatik } from '../landing/rework/community-wall-informatik'
 import { FooterNew } from '../landing/rework/footer-new'
@@ -227,176 +228,6 @@ const subterms = [
     ],
   },
   {
-    id: 69501,
-    title: 'Datenbanken und Datenbanksysteme',
-    url: '/informatik/69501/datenbanken-und-datenbanksysteme',
-    description: [
-      {
-        type: 'img',
-        src: 'https://assets.serlo.org/legacy/58b4178e26e8e_1723290b59dad596570851a0b730e667ad3b3118.png',
-        alt: 'Datenbank',
-        href: '/69501',
-      },
-    ],
-    articles: [
-      {
-        title: 'Datenbankverwaltungssystem (DBMS)',
-        id: 69730,
-        url: '/informatik/69730/datenbankverwaltungssystem-dbms',
-        unrevised: false,
-      },
-      {
-        title: 'Beziehungen zwischen Tabellen',
-        id: 69732,
-        url: '/informatik/69732/beziehungen-zwischen-tabellen',
-        unrevised: false,
-      },
-      {
-        title: 'Schlüssel ',
-        id: 69734,
-        url: '/informatik/69734/schl%C3%BCssel',
-        unrevised: false,
-      },
-      {
-        title: 'SQL-Abfragen',
-        id: 69747,
-        url: '/informatik/69747/sql-abfragen',
-        unrevised: false,
-      },
-      {
-        title: 'Join-Operationen',
-        id: 93029,
-        url: '/informatik/93029/join-operationen',
-        unrevised: false,
-      },
-      {
-        title: 'Objektorientiertes Datenmodell',
-        id: 160080,
-        url: '/informatik/160080/objektorientiertes-datenmodell',
-        unrevised: false,
-      },
-      {
-        title: 'relationales Datenbankschema',
-        id: 160123,
-        url: '/informatik/160123/relationales-datenbankschema',
-        unrevised: false,
-      },
-      {
-        title: 'Tabellen (Relationen)',
-        id: 160124,
-        url: '/informatik/160124/tabellen-relationen',
-        unrevised: false,
-      },
-      {
-        title: 'Datenintegrität',
-        id: 160140,
-        url: '/informatik/160140/datenintegrit%C3%A4t',
-        unrevised: false,
-      },
-      {
-        title: 'typische Datentypen in DBMS',
-        id: 160143,
-        url: '/informatik/160143/typische-datentypen-in-dbms',
-        unrevised: false,
-      },
-      {
-        title: 'Datenbanktransaktionen',
-        id: 160256,
-        url: '/informatik/160256/datenbanktransaktionen',
-        unrevised: false,
-      },
-      {
-        title: 'ACID-Eigenschaften',
-        id: 160497,
-        url: '/informatik/160497/acid-eigenschaften',
-        unrevised: false,
-      },
-      {
-        title: 'rekursive Beziehungen',
-        id: 161407,
-        url: '/informatik/161407/rekursive-beziehungen',
-        unrevised: false,
-      },
-      {
-        title: 'Redundanz in Datenbanken',
-        id: 161423,
-        url: '/informatik/161423/redundanz-in-datenbanken',
-        unrevised: false,
-      },
-      {
-        title: 'Referenzattribute',
-        id: 161293,
-        url: '/informatik/161293/referenzattribute',
-        unrevised: false,
-      },
-      {
-        title: 'NULL in der Datenbank',
-        id: 161967,
-        url: '/informatik/161967/null-in-der-datenbank',
-        unrevised: false,
-      },
-    ],
-    exercises: [
-      {
-        title: 'Aufgaben zu SQL',
-        id: 161399,
-        url: '/informatik/161399/aufgaben-zu-sql',
-      },
-      {
-        title: 'Umfangreichere Aufgaben zu Datenbanken',
-        id: 161400,
-        url: '/informatik/161400/umfangreichere-aufgaben-zu-datenbanken',
-      },
-      {
-        title: 'Aufgaben zu Datenbankmodellierung',
-        id: 69859,
-        url: '/informatik/69859/aufgaben-zu-datenbankmodellierung',
-      },
-    ],
-    videos: [],
-    applets: [],
-    courses: [
-      {
-        title: 'Datenmodellierung: Realität goes Datenbank',
-        id: 160492,
-        url: '/informatik/160492/datenmodellierung-realit%C3%A4t-goes-datenbank',
-        unrevised: false,
-      },
-      {
-        title: 'Einführung in Abfragen mit SQL',
-        id: 161018,
-        url: '/informatik/161018/einf%C3%BChrung-in-abfragen-mit-sql',
-        unrevised: false,
-      },
-      {
-        title: 'Beziehungen in Datenbanken',
-        id: 161276,
-        url: '/informatik/161276/beziehungen-in-datenbanken',
-        unrevised: false,
-      },
-      {
-        title: 'Anomalien in Datenbanken',
-        id: 161470,
-        url: '/informatik/161470/anomalien-in-datenbanken',
-        unrevised: false,
-      },
-      {
-        title: 'Abfragen über mehrere Tabellen',
-        id: 161964,
-        url: '/informatik/161964/abfragen-%C3%BCber-mehrere-tabellen',
-        unrevised: false,
-      },
-      {
-        title: 'Kardinalitäten in Klassendiagrammen',
-        id: 206351,
-        url: '/informatik/206351/kardinalit%C3%A4ten-in-klassendiagrammen',
-        unrevised: false,
-      },
-    ],
-    events: [],
-    folders: [],
-  },
-  {
     id: 76683,
     title: 'Werkzeuge und Methoden',
     url: '/informatik/76683/werkzeuge-und-methoden',
@@ -471,172 +302,53 @@ const subterms = [
       },
     ],
   },
-  {
-    id: 75211,
-    title: 'Baustelle',
-    url: '/informatik/75211/baustelle',
-    description: [
-      {
-        type: 'img',
-        src: 'https://assets.serlo.org/legacy/590c3f2e45f0c_a908178dee7d3daccf5ed0872ee1ea9ae0aeb67d.png',
-        alt: 'Baustelle',
-      },
-      {
-        type: 'p',
-        children: [
-          {
-            type: 'text',
-            text: 'In diesem Bereich werden Inhalte gesammelt, die gerade überarbeitet werden oder noch nicht fertig gestellt sind. Alle Inhalte sind noch in Arbeit.',
-          },
-        ],
-      },
-    ],
-    articles: [
-      {
-        title: 'Urheberrecht',
-        id: 79220,
-        url: '/informatik/79220/urheberrecht',
-        unrevised: false,
-      },
-      {
-        title: 'Informationssicherheit',
-        id: 79221,
-        url: '/informatik/79221/informationssicherheit',
-        unrevised: false,
-      },
-      {
-        title: 'Geschichte der Informatik',
-        id: 79723,
-        url: '/informatik/79723/geschichte-der-informatik',
-        unrevised: false,
-      },
-      {
-        title: 'Datenschutz im Internet',
-        id: 79389,
-        url: '/informatik/79389/datenschutz-im-internet',
-        unrevised: false,
-      },
-      {
-        title: 'Codierungen',
-        id: 84604,
-        url: '/informatik/84604/codierungen',
-        unrevised: false,
-      },
-      {
-        title: 'Alphanumerische Codes',
-        id: 85855,
-        url: '/informatik/85855/alphanumerische-codes',
-        unrevised: false,
-      },
-      {
-        title: 'Graphische Codes',
-        id: 85858,
-        url: '/informatik/85858/graphische-codes',
-        unrevised: false,
-      },
-      {
-        title: 'Numerische Codes',
-        id: 85864,
-        url: '/informatik/85864/numerische-codes',
-        unrevised: false,
-      },
-      {
-        title: 'Pflichtenheft',
-        id: 160083,
-        url: '/informatik/160083/pflichtenheft',
-        unrevised: false,
-      },
-      {
-        title: 'CamelCase-Schreibweise',
-        id: 176579,
-        url: '/informatik/176579/camelcase-schreibweise',
-        unrevised: false,
-      },
-      {
-        title: 'Datenstruktur Queue',
-        id: 212766,
-        url: '/informatik/212766/datenstruktur-queue',
-        unrevised: false,
-      },
-      {
-        title: 'Datenstruktur Stack',
-        id: 212769,
-        url: '/informatik/212769/datenstruktur-stack',
-        unrevised: false,
-      },
-      {
-        title: 'Queue und Stack implementieren',
-        id: 212771,
-        url: '/informatik/212771/queue-und-stack-implementieren',
-        unrevised: false,
-      },
-      {
-        title: 'Doppelt verkettete Liste',
-        id: 213256,
-        url: '/informatik/213256/doppelt-verkettete-liste',
-        unrevised: false,
-      },
-      {
-        title: 'Editierdistanz - Ähnlichkeit von Wörtern',
-        id: 233516,
-        url: '/informatik/233516/editierdistanz-%C3%A4hnlichkeit-von-w%C3%B6rtern',
-        unrevised: false,
-      },
-    ],
-    exercises: [],
-    videos: [
-      {
-        title: 'Video zur Pixelgrafik',
-        id: 94658,
-        url: '/informatik/94658/video-zur-pixelgrafik',
-        unrevised: false,
-      },
-      {
-        title: 'Video zur Vektorgrafik',
-        id: 94660,
-        url: '/informatik/94660/video-zur-vektorgrafik',
-        unrevised: false,
-      },
-    ],
-    applets: [],
-    courses: [
-      {
-        title: 'Webseite selbst erstellen mit HTML 5 und CSS',
-        id: 176078,
-        url: '/informatik/176078/webseite-selbst-erstellen-mit-html-5-und-css',
-        unrevised: false,
-      },
-    ],
-    events: [],
-    folders: [
-      {
-        title: 'Technische Informatik',
-        url: '/informatik/48965/technische-informatik',
-        id: 48965,
-      },
-      {
-        title: 'Hack The Web',
-        url: '/informatik/200247/hack-the-web',
-        id: 200247,
-      },
-    ],
-  },
-  {
-    id: 60395,
-    title: 'Bayern',
-    url: '/informatik/60395/bayern',
-    articles: [],
-    exercises: [],
-    videos: [],
-    applets: [],
-    courses: [],
-    events: [],
-    folders: [
-      { title: 'Gymnasium', url: '/informatik/60396/gymnasium', id: 60396 },
-      { title: 'Realschule', url: '/informatik/60397/realschule', id: 60397 },
-    ],
-  },
 ] as TaxonomySubTerm[]
+
+interface FeaturedContentData {
+  title: string
+  type: string
+  url: string
+  img: string
+}
+
+const featuredContent = [
+  {
+    title: 'Vektor- und Pixelgrafik',
+    type: 'Artikel',
+    url: '/informatik/57636/vektor-und-pixelgrafik',
+    img: 'https://assets.serlo.org/legacy/573afde7f3fc1_0b64541b7d14bafc97c9ab582b7d480d1b970b39.png',
+  },
+  {
+    title: 'Beispiele: Wie verändert Big Data die Welt?',
+    type: 'Artikel',
+    url: '/informatik/158556/beispiele-wie-verändert-big-data-die-welt',
+    img: 'https://assets.serlo.org/5e6bba021ecc6_8a830acbe9cdd3341b5cc829bd14d6d0fde2ee02.jpg',
+  },
+  {
+    title: 'Einführung in die Pixel- und Vektorgrafik',
+    type: 'Kurs',
+    url: '/informatik/93484/pixelgrafik',
+    img: 'https://assets.serlo.org/5a4f9574a8bba_0e16bbe25658c9d1ceb68425e781f7985817f0ca.png',
+  },
+  {
+    title: 'Caesar-Verschlüsselung',
+    type: 'Artikel',
+    url: '/informatik/48121/caesar-verschlüsselung',
+    img: 'https://upload.wikimedia.org/wikipedia/commons/2/2b/Caesar3.svg',
+  },
+  {
+    title: 'Welche Probleme entstehen durch Big Data?',
+    type: 'Artikel',
+    url: '/informatik/158565/welche-probleme-entstehen-durch-big-data',
+    img: 'https://assets.serlo.org/5e820b77172a8_57299a41c225cec8161139906a807e1d57dd2467.jpg',
+  },
+  {
+    title: 'Hack The Web',
+    type: 'Taxonomy',
+    url: '/informatik/200247/hack-the-web',
+    img: 'https://assets.serlo.org/60f583949b1a6_bf557cf5479ff23e170c34e8a2eef03d0d645bdc.gif',
+  },
+] as FeaturedContentData[]
 
 export function LandingInformatik() {
   const { lang } = useInstanceData()
@@ -694,7 +406,7 @@ export function LandingInformatik() {
           {renderTopicOverview()}
         </section>
 
-        <section className={clsx('text-center', 'mt-20 mb-20')}>
+        <section className={clsx('text-center', 'mt-20 mb-8')}>
           <h2
             className={clsx(
               'text-4xl font-extrabold',
@@ -705,7 +417,7 @@ export function LandingInformatik() {
             <span className="pb-2">Beliebte Inhalte</span>
           </h2>
 
-          {renderTopicOverview()}
+          {renderFeaturedContent()}
         </section>
 
         <section className="text-center partner">
@@ -913,29 +625,90 @@ export function LandingInformatik() {
   }
 
   function renderTopicOverview() {
-    return <ul className="font-lg">{renderTerms()}</ul>
+    return <ul className="font-lg flex text-left">{renderTerms()}</ul>
   }
 
   function renderTerms() {
     return subterms.map((term) => {
-      // const image =
-      //   term.description &&
-      //   term.description.length > 0 &&
-      //   term.description[0].type === 'img'
-      //     ? term.description[0]
-      //     : undefined
+      const image =
+        term.description &&
+        term.description.length > 0 &&
+        term.description[0].type === 'img'
+          ? term.description[0]
+          : undefined
 
       return (
         <li
           // className="transition-all ease-in-out duration-200 inline-block text-brand hover:text-black font-bold py-1 px-2 text-lg m-2 cursor-pointer bg-white rounded-xl "
-          className="serlo-button serlo-make-interactive-light bg-white m-1"
+          className="m-1 flex-1 p-2"
           key={term.title}
         >
-          {term.title}
-          {/* <br />
-          <img src={image?.src} alt={image?.alt} /> */}
+          <img
+            src={image?.src}
+            alt={image?.alt}
+            className="mix-blend-multiply object-center object-contain h-24 mb-3"
+          />
+
+          <h4 className="pb-2 border-b-2 font-bold text-lg border-black mb-2 h-24">
+            {term.title}
+          </h4>
+
+          {term.folders.map((folder) => {
+            return (
+              <>
+                {folder.title}
+                <br />
+              </>
+            )
+          })}
         </li>
       )
     })
+  }
+
+  function renderFeaturedContent() {
+    return (
+      <div
+        className={clsx(
+          'flex items-stretch justify-around',
+          'px-side pb-6 flex-wrap',
+          'w-full mx-auto sm:max-w-3xl lg:max-w-max '
+        )}
+      >
+        {featuredContent.map(renderFeaturedBox)}
+      </div>
+    )
+  }
+
+  function renderFeaturedBox(data: FeaturedContentData) {
+    return (
+      <Link
+        className={clsx(
+          'text-brand hover:no-underline box-border',
+          'p-2.5 leading-cozy',
+          'rounded hover:shadow-menu hover:text-truegray-700',
+          'mb-4 mx-2 w-44 group transition-all'
+        )}
+        href={data.url}
+        key={data.title}
+        path={[]}
+      >
+        <div className="mb-2.5 mx-3 bg-brand-100 group-hover:bg-white rounded-lg transition-all">
+          <img
+            className={clsx(
+              'object-contain object-center',
+              'mix-blend-multiply opacity-70 transition-all',
+              'group-hover:opacity-100'
+            )}
+            style={{ aspectRatio: '1' }}
+            alt={data.title}
+            src={data.img}
+          />
+        </div>
+        <h4 className="font-bold text-xl mx-0 mt-3 mb-1">{data.title}</h4>
+        {/* <p className="m-0">…</p> */}
+        {/* {data.description} */}
+      </Link>
+    )
   }
 }
