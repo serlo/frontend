@@ -107,7 +107,7 @@ export function CommunityWallInformatik() {
         <div
           className={clsx(
             'flex flex-wrap justify-evenly',
-            'md:block md:mb-12 md:h-630 md:relative'
+            'md:block md:mb-12 md:h-630 md:relative lg:h-[770px]'
           )}
         >
           {renderPersons()}

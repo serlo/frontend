@@ -131,7 +131,7 @@ export function LandingInformatik() {
             className={clsx(
               'text-4xl font-extrabold',
               'tracking-tight',
-              'max-w-2xl mt-3 mb-10 mx-auto'
+              'max-w-2xl mt-3 pb-10 mx-auto'
             )}
           >
             <span className="pb-2">Beliebte Inhalte</span>
@@ -141,9 +141,7 @@ export function LandingInformatik() {
         </section>
 
         <section className="text-center partner">
-          <div className="overflow-hidden">
-            <CommunityWallInformatik />
-          </div>
+          <CommunityWallInformatik />
         </section>
       </main>
       <FooterNew />
