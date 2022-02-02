@@ -6,9 +6,15 @@ import { SecondaryNavigationData } from '@/data-types'
 
 export interface MetaMenuProps {
   data: SecondaryNavigationData
+  hackForSubjectLanding?: boolean
+  onClick?: (index: number) => void
 }
 
-export function MetaMenu({ data }: MetaMenuProps) {
+export function MetaMenu({
+  data,
+  hackForSubjectLanding,
+  onClick,
+}: MetaMenuProps) {
   const activeRef = useRef<HTMLLIElement>(null)
   const containerRef = useRef<HTMLUListElement>(null)
 
@@ -25,7 +31,10 @@ export function MetaMenu({ data }: MetaMenuProps) {
         <div
           className={clsx(
             'absolute z-10 w-14 h-16 right-0',
-            'bg-gradient-to-l from-white to-white/0',
+            'bg-gradient-to-l',
+            hackForSubjectLanding
+              ? 'from-[#FFEFDA] to-[#FFEFDA00]'
+              : 'from-white to-white/0',
             'pointer-events-none'
           )}
         />
@@ -55,26 +64,39 @@ export function MetaMenu({ data }: MetaMenuProps) {
       </nav>
       <nav
         className={clsx(
-          'hidden md:block absolute left-side',
-          'w-[170px] z-10 mt-8 xl:w-[200px] xl:ml-side-lg xl:left-0'
+          hackForSubjectLanding
+            ? 'ml-side'
+            : 'mt-8 absolute left-side  xl:left-0',
+          'hidden md:block text-left',
+          'w-[170px] z-10 xl:w-[200px] xl:ml-side-lg'
         )}
       >
         <ul>
           {data.map((entry, i) => {
+            const className = clsx(
+              'serlo-button rounded-xl tracking-slightly-tighter py-[3px]',
+              entry.active
+                ? hackForSubjectLanding
+                  ? 'text-black bg-brand-300'
+                  : 'text-black bg-brand-150'
+                : 'serlo-make-interactive-transparent-blue'
+            )
+
             return (
               <li className="mb-3.5" key={entry.url}>
-                <Link
-                  href={entry.url}
-                  path={[`metamenu${i}`]}
-                  className={clsx(
-                    'serlo-button rounded-xl tracking-slightly-tighter py-[3px]',
-                    entry.active
-                      ? 'text-black bg-brand-150'
-                      : 'serlo-make-interactive-transparent-blue'
-                  )}
-                >
-                  {entry.title}
-                </Link>
+                {onClick ? (
+                  <a onClick={() => onClick(i)} className={className}>
+                    {entry.title}
+                  </a>
+                ) : (
+                  <Link
+                    href={entry.url}
+                    path={[`metamenu${i}`]}
+                    className={className}
+                  >
+                    {entry.title}
+                  </Link>
+                )}
               </li>
             )
           })}
