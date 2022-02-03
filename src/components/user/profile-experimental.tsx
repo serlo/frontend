@@ -8,6 +8,10 @@ export const features = {
     process.env.NEXT_PUBLIC_ENV === 'production'
       ? null
       : { cookieName: 'useBoxPlugin', isActive: false },
+  oldDesign:
+    process.env.NEXT_PUBLIC_ENV === 'production'
+      ? null
+      : { cookieName: 'useFrontend', isActive: false },
 }
 
 type Feature = keyof typeof features
@@ -36,19 +40,25 @@ export function ProfileExperimental() {
       features[_feature]!.isActive =
         typeof window === 'undefined'
           ? false
-          : Cookies.get(features[_feature]!.cookieName) === '1'
+          : Cookies.get(features[_feature]!.cookieName) === '1' ||
+            (_feature === 'oldDesign' &&
+              Cookies.get(features[_feature]!.cookieName) === '1.1')
     }
   })
 
   function handleButtonClick(feature: Feature) {
     if (!features[feature]) return
+    const oldDesign = feature === 'oldDesign'
 
     if (features[feature]!.isActive) {
-      Cookies.remove(features[feature]!.cookieName)
+      if (oldDesign) Cookies.set(features[feature]!.cookieName, '0')
+      else Cookies.remove(features[feature]!.cookieName)
     } else {
-      Cookies.set(features[feature]!.cookieName, '1', { expires: 60 })
+      if (oldDesign) Cookies.set(features[feature]!.cookieName, '1.1')
+      else Cookies.set(features[feature]!.cookieName, '1', { expires: 60 })
     }
     updateState({})
+    if (oldDesign) window.location.reload()
   }
 
   return (
@@ -89,6 +99,17 @@ export function ProfileExperimental() {
           </h3>
           <p className="serlo-p">
             Das neue Box Plugin, bisher nur für Staging.
+          </p>
+        </div>
+      )}
+      {features['oldDesign'] && (
+        <div>
+          <h3 className="serlo-h3 mb-3">
+            👻 Frontend: Altes Design {renderFeatureButton('oldDesign')}
+          </h3>
+          <p className="serlo-p">
+            Zurück ins alte Design, sollte nur noch bei akuten Problemen oder
+            zum Vergleichen mit den neuen Design benutzt werden.
           </p>
         </div>
       )}
