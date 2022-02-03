@@ -1,7 +1,7 @@
+import clsx from 'clsx'
 import { useState } from 'react'
 
 import { MaxWidthDiv } from '../navigation/max-width-div'
-import { MetaMenu } from '../navigation/meta-menu'
 import { SubTopic } from '../taxonomy/sub-topic'
 import { SecondaryNavigationData, TaxonomySubTerm } from '@/data-types'
 
@@ -306,9 +306,14 @@ export function LandingInformatikTopicOverview() {
   }
 
   return (
-    <div className="pt-6 md:flex">
-      <MetaMenu data={navData} hackForSubjectLanding onClick={onMenuClick} />
-      <div className="ml-10 w-full text-left pt-3 md:pt-0 md:-mt-4 image-hack">
+    <div className="">
+      {/* <p className=" text-brand italic font-handwritten text-3xl landing-button-with-wings landing-button-with-wink p-with-wink pb-6">
+        
+      </p> */}
+      {/* <MetaMenu data={navData} hackForSubjectLanding onClick={onMenuClick} /> */}
+      {renderMenu()}
+
+      <div className="pt-3 md:pt-6 image-hack">
         <MaxWidthDiv>
           {selectedIndex > -1 ? (
             <SubTopic
@@ -316,11 +321,7 @@ export function LandingInformatikTopicOverview() {
               subid={subterms[selectedIndex].id}
               id={0}
             />
-          ) : (
-            <p className="hidden md:block text-brand italic font-handwritten text-5xl placeholder mt-8 ml-11">
-              was darf&apos;s denn heute sein?
-            </p>
-          )}
+          ) : null}
         </MaxWidthDiv>
       </div>
       <style jsx>{`
@@ -344,4 +345,30 @@ export function LandingInformatikTopicOverview() {
       </style>
     </div>
   )
+
+  function renderMenu() {
+    return (
+      <nav className="mx-side text-left">
+        <ul className="max-w-full items-end text-center">
+          {navData.map((entry, i) => {
+            const className = clsx(
+              'serlo-button rounded-xl tracking-slightly-tighter py-[3px] block mobile:inline-block',
+              'mobile:mx-2 text-lg sm:text-xl mb-3.5',
+              entry.active
+                ? 'text-white bg-brand'
+                : 'serlo-make-interactive-transparent-blue bg-white'
+            )
+
+            return (
+              <li key={entry.url} className="inline">
+                <a onClick={() => onMenuClick(i)} className={className}>
+                  {entry.title}
+                </a>
+              </li>
+            )
+          })}
+        </ul>
+      </nav>
+    )
+  }
 }

@@ -8,7 +8,6 @@ import { Link } from '../content/link'
 import { HeadTags } from '../head-tags'
 import { CommunityWallInformatik } from '../landing/rework/community-wall-informatik'
 import { FooterNew } from '../landing/rework/footer-new'
-import { LandingJsonLd } from '../landing/rework/landing-json-ld'
 import { Header } from '../navigation/header'
 import { Quickbar } from '../navigation/quickbar'
 import { LandingInformatikTopicOverview } from './landing-informatik-topic-overview'
@@ -74,14 +73,13 @@ export function LandingInformatik() {
       <Head>
         <link href="_assets/landing-fonts.css" rel="stylesheet" />
       </Head>
-      <LandingJsonLd />
       <HeadTags data={{ title: 'Serlo – Die freie Lernplattform' }} />
       <Header />
       <main className="text-truegray-700">
         <section
           className={clsx(
-            'max-w-3xl mx-auto mt-20 px-2',
-            'md:mt-15vh sm:flex',
+            'max-w-3xl mx-auto mt-16',
+            'md:mt-14 sm:flex',
             'text-center sm:text-left'
           )}
         >
@@ -104,12 +102,11 @@ export function LandingInformatik() {
         </section>
 
         <section className="max-w-3xl mx-auto mt-10 px-2 text-center sm:text-left sm:mt-16">
-          <h2 className="text-truegray-700 font-bold text-xl mb-2">
+          <h2 className="text-truegray-700 font-bold text-lg mb-2">
             Durchsuche den Informatikbereich
           </h2>
-          <div className="max-w-sm mx-auto sm:-mx-4">
-            <Quickbar subject="informatik" />
-          </div>
+
+          <Quickbar subject="informatik" className="max-w-sm sm:px-0 sm:ml-0" />
         </section>
 
         <section className={clsx('text-center', 'themen')}>
@@ -117,13 +114,17 @@ export function LandingInformatik() {
             className={clsx(
               'text-4xl font-extrabold',
               'tracking-tight',
-              'max-w-2xl mt-2 mb-10 mx-auto'
+              'max-w-2xl mt-2 mb-8 mx-auto',
+              'landing-button-with-wings landing-button-with-wink p-with-wink'
             )}
           >
-            <span className="pb-2">Alle Themen</span>
+            <span>Alle Themen</span>
           </h2>
 
           <LandingInformatikTopicOverview />
+          {/* <p className="text-brand font-handwritten text-3xl landing-button-with-wings landing-button-with-wink p-with-wink">
+            <span className="italic">was darf&apos;s denn heute sein?</span>
+          </p> */}
         </section>
 
         <section className={clsx('text-center', 'mt-20 mb-8')}>
@@ -149,7 +150,7 @@ export function LandingInformatik() {
         .themen,
         .community {
           padding-top: 3rem;
-          padding-bottom: 5rem;
+          padding-bottom: 1rem;
           margin: 4rem 0 0 0;
           background-image: url('/_assets/img/landing/about-container.svg');
           background-repeat: no-repeat;

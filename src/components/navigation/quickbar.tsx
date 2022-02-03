@@ -17,7 +17,12 @@ interface QuickbarDataEntry {
 
 type QuickbarData = QuickbarDataEntry[]
 
-export function Quickbar({ subject }: { subject?: string }) {
+interface QuickbarProps {
+  subject?: string
+  className?: string
+}
+
+export function Quickbar({ subject, className }: QuickbarProps) {
   const [data, setData] = useState<QuickbarData | null>(null)
   const [query, setQuery] = useState('')
   const [open, setOpen] = useState(false)
@@ -143,7 +148,12 @@ export function Quickbar({ subject }: { subject?: string }) {
   }
 
   return (
-    <div className="max-w-2xl mx-auto px-4 text-left font-normal">
+    <div
+      className={clsx(
+        'max-w-2xl mx-auto px-4 text-left font-normal',
+        className
+      )}
+    >
       <div className="relative">
         {renderInput()}
         {query && renderResetButton()}
