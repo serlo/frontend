@@ -128,6 +128,7 @@ function collectNestedTaxonomyTerms(
         courses: collectType(subChildren, 'Course'),
         events: collectType(subChildren, 'Event'),
         folders: collectSubfolders(subChildren),
+        type: child.type,
       })
     }
   })

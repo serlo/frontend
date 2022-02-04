@@ -8,11 +8,12 @@ import { Link } from '../content/link'
 import { HeadTags } from '../head-tags'
 import { CommunityWallInformatik } from '../landing/rework/community-wall-informatik'
 import { FooterNew } from '../landing/rework/footer-new'
+import { LandingInformatikTopicOverview } from '../landing/subjects/landing-informatik-topic-overview'
 import { Header } from '../navigation/header'
 import { Quickbar } from '../navigation/quickbar'
-import { LandingInformatikTopicOverview } from './landing-informatik-topic-overview'
 import InformaticsSVG from '@/assets-webkit/img/landing/subjects-informatics.svg'
 import { useInstanceData } from '@/contexts/instance-context'
+import { TaxonomySubTerm } from '@/data-types'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { theme } from '@/theme'
@@ -63,7 +64,11 @@ const featuredContent = [
   },
 ] as FeaturedContentData[]
 
-export function LandingInformatik() {
+interface LandingInformatikProps {
+  subterms: TaxonomySubTerm[]
+}
+
+export function LandingInformatik({ subterms }: LandingInformatikProps) {
   const { strings, lang } = useInstanceData()
 
   if (lang !== 'de') return null
@@ -121,10 +126,10 @@ export function LandingInformatik() {
             <span>Alle Themen</span>
           </h2>
 
-          <LandingInformatikTopicOverview />
-          {/* <p className="text-brand font-handwritten text-3xl landing-button-with-wings landing-button-with-wink p-with-wink">
+          <LandingInformatikTopicOverview subterms={subterms} />
+          <p className="text-brand font-handwritten text-2xl">
             <span className="italic">was darf&apos;s denn heute sein?</span>
-          </p> */}
+          </p>
         </section>
 
         <section className={clsx('text-center', 'mt-20 mb-8')}>
