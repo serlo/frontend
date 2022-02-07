@@ -60,9 +60,10 @@ export function SaveModal({
         {renderLicense()}
         {renderSubscription()}
         {renderCheckout()}
-
+        {!showSkipCheckout && !subscriptions && !license && !changes
+          ? edtrIo.ready
+          : null}
         <hr className="mt-8 mb-8" />
-
         {renderModalButtons()}
       </div>
       <style jsx global>{`

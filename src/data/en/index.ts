@@ -66,6 +66,7 @@ export const instanceData = {
       unrevisedRevisions: 'Unrevised Revisions',
       userEdits: 'Edits by %user%',
       userEditsMine: 'My Unrevised Revisions',
+      editProfile: 'Edit Profile & Settings',
     },
     roles: {
       donor: 'Donor',
@@ -575,6 +576,7 @@ export const loggedInData = {
         equationsTitle: 'Terms and equations',
         equationsDesc:
           'Write term manipulations and solve multiline equations.',
+        ready: "Ready to save?",
       },
       anchor: {
         identifier: 'Identifier',
@@ -819,5 +821,8 @@ export const loggedInData = {
           'This part of the document contains features that are no longer supported.',
       },
     },
+    profileSettings: {
+      editAbout: 'Edit: About You'
+    }
   },
 }

@@ -13,13 +13,15 @@ export function useGraphqlSwr<T>({
   query,
   variables,
   config,
+  noKey,
 }: {
   query: string
   variables?: Record<string, unknown>
   config?: SWRConfiguration<T>
+  noKey?: boolean
 }) {
   return useSWR<T, object>(
-    JSON.stringify({ query, variables }),
+    noKey ? null : JSON.stringify({ query, variables }),
     createGraphqlFetch(),
     config
   )

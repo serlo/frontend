@@ -422,6 +422,38 @@ export function useSubscriptionSetMutation() {
     await subscriptionSetMutation(input)
 }
 
+export function useUserSetDescriptionMutation() {
+  const auth = useAuthentication()
+  const loggedInData = useLoggedInData()
+
+  const mutation = gql`
+    mutation setDescription($input: UserSetDescriptionInput!) {
+      user {
+        setDescription(input: $input) {
+          success
+        }
+      }
+    }
+  `
+
+  const setDescriptionMutation = async function (input: {
+    description: string
+  }) {
+    const success = await mutationFetch(
+      auth,
+      mutation,
+      input,
+      loggedInData?.strings.mutations.errors
+    )
+
+    return success
+  }
+
+  return async (
+    input: { description: string } //TODO: use types when available
+  ) => await setDescriptionMutation(input)
+}
+
 type MutationInput =
   | NotificationSetStateInput
   | UuidSetStateInput
@@ -434,6 +466,7 @@ type MutationInput =
   | RejectRevisionInput
   | CheckoutRevisionInput
   | UserDeleteBotsInput
+  | { description: string }
 
 type MutationResponse = ThreadMutation | UuidMutation | NotificationMutation
 
