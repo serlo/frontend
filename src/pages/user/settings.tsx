@@ -3,6 +3,7 @@ import { useAuthentication } from '@/auth/use-authentication'
 import { PageTitle } from '@/components/content/page-title'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Guard } from '@/components/guard'
+import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
 import { PleaseLogIn } from '@/components/user/please-log-in'
 import { ProfileSettings } from '@/components/user/profile-settings'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -34,6 +35,17 @@ function Content() {
 
   return (
     <>
+      <Breadcrumbs
+        data={[
+          {
+            label: strings.entities.userProfile,
+            url: auth.current
+              ? `/user/${auth.current.id}/${auth.current.username}`
+              : '/user/me',
+          },
+        ]}
+        asBackButton
+      />
       <PageTitle title={strings.pageTitles.editProfile} headTitle />
       {auth.current ? renderSettings() : <PleaseLogIn />}
     </>

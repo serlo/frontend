@@ -268,32 +268,8 @@ export const instanceData = {
         legendary: '💙 Just wow! 💙',
         untilNextLevel: '%amount% more to complete this circle 🎉',
       },
-      howToEditImage: {
-        heading: 'How to edit your profile picture',
-        description:
-          'Currently we use the images from %chatLink% as profile pictures. In order to change your picture, do the following:',
-        steps: {
-          goToChat: 'Go to %chatLink%.',
-          signIn: 'Sign in.',
-          goToMyAccount: 'Go in the user menu to %myAccountLink%.',
-          myAccount: 'My Account',
-          uploadPicture:
-            'Upload a new picture (make sure it is square) and click "Save changes".',
-          refreshPage:
-            'Come back here and refresh the image using %refreshLink%.',
-          refreshLink: 'this link',
-        },
-      },
-      motivation: {
-        edit: 'Edit motivation',
-        add: 'Add motivation',
-        heading: 'How to edit your motivation',
-        intro:
-          'Motivations are a new feature we test at the moment. To edit your motivation you have to fill out a simple form.',
-        privacy:
-          'The form and data storage is offered by Google and personal data may be transferred to this service when using this feature.',
-        toForm: 'Motivation Form',
-      },
+      editMotivation: 'Edit motivation',
+      addMotivation: 'Add motivation',
       lockedDescriptionTitle: 'Your description currently hidden from the public.',
       lockedDescriptionText: 'After your first contributions it will become visible to everybody.',
 
@@ -822,7 +798,32 @@ export const loggedInData = {
       },
     },
     profileSettings: {
-      editAbout: 'Edit: About You'
+      editAbout: 'Your description',
+      showInstructions: 'Show instructions',
+      howToEditImage: {
+        heading: 'How to edit your profile picture',
+        description:
+          'Currently we use the images from %chatLink% as profile pictures. In order to change your picture, do the following:',
+        steps: {
+          goToChat: 'Go to %chatLink%.',
+          signIn: 'Sign in.',
+          goToMyAccount: 'Go in the user menu to %myAccountLink%.',
+          myAccount: 'My Account',
+          uploadPicture:
+            'Upload a new picture (make sure it is square) and click "Save changes".',
+          refreshPage:
+            'Come back here and refresh the image using %refreshLink%.',
+          refreshLink: 'this link',
+        },
+      },
+      motivation: {
+        heading: 'How to edit your motivation',
+        intro:
+          'Motivations are a new feature we test at the moment. To edit your motivation you have to fill out a simple form.',
+        privacy:
+          'The form and data storage is offered by Google and personal data may be transferred to this service when using this feature.',
+        toForm: 'Motivation Form',
+      },
     }
   },
 }
