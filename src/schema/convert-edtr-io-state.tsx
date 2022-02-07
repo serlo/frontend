@@ -44,7 +44,7 @@ export type ConvertNode = ConvertData | ConvertData[] | undefined
 
 export function convert(node?: ConvertNode): FrontendContentNode[] {
   // compat: no or empty node, we ignore
-  if (node === undefined || Object.keys(node).length === 0) {
+  if (!node || Object.keys(node).length === 0) {
     return []
   }
 
