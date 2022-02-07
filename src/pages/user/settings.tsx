@@ -7,7 +7,6 @@ import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
 import { PleaseLogIn } from '@/components/user/please-log-in'
 import { ProfileSettings } from '@/components/user/profile-settings'
 import { useInstanceData } from '@/contexts/instance-context'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { User } from '@/fetcher/query-types'
 import { userQuery } from '@/fetcher/user/query'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
@@ -20,8 +19,6 @@ export default renderedPageNoHooks(() => (
 
 function Content() {
   const { lang, strings } = useInstanceData()
-  const loggedInData = useLoggedInData()
-
   const auth = useAuthentication()
 
   // eslint-disable-next-line @typescript-eslint/unbound-method
@@ -29,9 +26,6 @@ function Content() {
     auth.current?.id ? `/${auth.current?.id}` : undefined,
     lang
   )
-
-  if (!loggedInData) return null
-  // const loggedInStrings = loggedInData.strings.subscriptions
 
   return (
     <>

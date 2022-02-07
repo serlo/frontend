@@ -11,6 +11,7 @@ import {
   ThreadSetThreadArchivedInput,
   ThreadSetThreadStateInput,
   UserDeleteBotsInput,
+  UserSetDescriptionInput,
   UuidMutation,
   UuidSetStateInput,
 } from '@serlo/api'
@@ -449,9 +450,8 @@ export function useUserSetDescriptionMutation() {
     return success
   }
 
-  return async (
-    input: { description: string } //TODO: use types when available
-  ) => await setDescriptionMutation(input)
+  return async (input: UserSetDescriptionInput) =>
+    await setDescriptionMutation(input)
 }
 
 type MutationInput =
@@ -466,7 +466,7 @@ type MutationInput =
   | RejectRevisionInput
   | CheckoutRevisionInput
   | UserDeleteBotsInput
-  | { description: string }
+  | UserSetDescriptionInput
 
 type MutationResponse = ThreadMutation | UuidMutation | NotificationMutation
 
