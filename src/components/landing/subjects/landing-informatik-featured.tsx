@@ -52,6 +52,8 @@ const featuredContent = [
   },
 ] as FeaturedContentData[]
 
+const maxOnMobile = 4
+
 export function LandingInformatikFeatured() {
   const { strings } = useInstanceData()
 
@@ -71,15 +73,16 @@ export function LandingInformatikFeatured() {
     )
   }
 
-  function renderFeaturedBox(data: FeaturedContentData) {
+  function renderFeaturedBox(data: FeaturedContentData, index: number) {
     return (
       <Link
         className={clsx(
           'text-brand hover:no-underline box-border',
           'p-2.5 leading-cozy',
           'rounded hover:shadow-menu hover:text-truegray-700',
-          'mb-4 mx-2 w-44 group transition-all text-left',
-          'relative'
+          'mb-4 mx-2 w-36 mobile:w-52 lg:w-44 group xl:w-48 transition-all text-left',
+          'relative',
+          index >= maxOnMobile ? 'hidden mobile:block' : ''
         )}
         href={data.url}
         key={data.title}

@@ -10,11 +10,11 @@ import {
 import { shuffleArray } from '@/helper/shuffle-array'
 
 const positions = [
-  ['8%', '-10%'],
-  ['72%', '-18%'],
-  ['65%', '56%'],
+  ['8%', '-8%'],
+  ['72%', '-14%'],
+  ['60%', '57%'],
   ['82%', '22%'],
-  ['15%', '42%'],
+  ['17%', '39%'],
 ]
 
 export function CommunityWallInformatik() {
@@ -41,16 +41,20 @@ export function CommunityWallInformatik() {
           >
             Lust mitzumachen?
           </h3>
-          <p className="jsx-1406289065 text-2xl leading-cozy text-truegray-700 max-w-2xl mx-auto">
+          <p className="jsx-1406289065 text-xl leading-cozy text-truegray-700 max-w-xl mx-auto">
             Alle Inhalte auf serlo.org werden von einer ehrenamtlichen Community
             aus Lehrkräften, Studierenden, Schüler*innen und anderen
-            Bildungsbegeisterten gestaltet. Erweitere mit uns dieses Angebot um
-            noch mehr Lernenden Bildung frei verfügbar zu machen!
+            Bildungsbegeisterten gestaltet. Erweitere mit uns das Angebot von
+            Serlo Informatik um noch mehr Lernenden Bildung frei verfügbar zu
+            machen!
           </p>
           <div className="group text-center">
             <Link
-              className="mt-10 serlo-new-landing-button inline-block group-hover:bg-brand-light hover:no-underline"
-              href="/mitmachen"
+              className={clsx(
+                'serlo-new-landing-button inline-block group-hover:bg-brand-light hover:no-underline',
+                'mt-6 py-2 px-4 text-lg'
+              )}
+              href="/49982/neu-hier"
             >
               Mehr erfahren
             </Link>
@@ -58,7 +62,7 @@ export function CommunityWallInformatik() {
               <div className="absolute flex justify-center inset-0">
                 <div
                   className={clsx(
-                    'pointer-events-none select-none w-72 h-5',
+                    'pointer-events-none select-none h-5 w-48',
                     'group-hover:opacity-100 opacity-0 group-hover:rotate-1',
                     'transition-all ease-linear duration-200',
                     'bg-underlined bg-contain bg-no-repeat bg-top'
@@ -71,14 +75,14 @@ export function CommunityWallInformatik() {
 
         <div
           className={clsx(
-            'flex flex-wrap justify-evenly',
-            'md:block md:pb-12 md:h-630 md:relative lg:h-[770px]'
+            'flex flex-wrap justify-evenly lg:max-w-[85rem] lg:mx-auto',
+            'md:block md:pb-12 md:h-630 md:relative lg:h-[75vh]'
           )}
         >
           <CommunityWallPersons
             persons={persons}
             positions={positions}
-            mobileLimit={3}
+            mobileLimit={4}
           />
         </div>
       </div>

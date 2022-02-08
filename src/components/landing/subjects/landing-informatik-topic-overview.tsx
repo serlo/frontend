@@ -15,7 +15,7 @@ export function LandingInformatikTopicOverview({
   const [selectedIndex, setSelectedIndex] = useState(-1)
 
   function onMenuClick(index: number) {
-    setSelectedIndex(index)
+    setSelectedIndex(index === selectedIndex ? -1 : index)
   }
 
   return (
@@ -72,9 +72,12 @@ export function LandingInformatikTopicOverview({
 
             return (
               <li key={entry.url} className="inline">
-                <a onClick={() => onMenuClick(index)} className={className}>
+                <button
+                  onClick={() => onMenuClick(index)}
+                  className={className}
+                >
                   {entry.title}
-                </a>
+                </button>
               </li>
             )
           })}

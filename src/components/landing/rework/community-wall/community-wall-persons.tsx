@@ -29,6 +29,7 @@ export function CommunityWallPersons({
             className={clsx(
               'mt-12 mx-1 text-center group',
               'w-1/3v sm:w-1/4v md:w-1/8v md:absolute z-30',
+              'max-w-[13rem]',
               hideMobile && 'hidden md:block'
             )}
             style={{ left, top }}
