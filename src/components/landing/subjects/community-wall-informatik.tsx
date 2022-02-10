@@ -34,19 +34,19 @@ export function CommunityWallInformatik() {
         <div className="md:absolute text-center w-full z-20">
           <h3
             className={clsx(
-              'text-center text-4xl font-extrabold',
+              'text-center text-3xl font-extrabold',
               'leading-cozy tracking-tight',
               'max-w-2xl mt-20 mx-auto relative z-10 mb-8'
             )}
           >
-            Lust mitzumachen?
+            Lust Informatik mitzugestalten?
           </h3>
           <p className="jsx-1406289065 text-xl leading-cozy text-truegray-700 max-w-xl mx-auto">
             Alle Inhalte auf serlo.org werden von einer ehrenamtlichen Community
             aus Lehrkräften, Studierenden, Schüler*innen und anderen
-            Bildungsbegeisterten gestaltet. Erweitere mit uns das Angebot von
-            Serlo Informatik um noch mehr Lernenden Bildung frei verfügbar zu
-            machen!
+            Bildungsbegeisterten gestaltet. Erweitere mit uns das Angebot von{' '}
+            <b>Serlo Informatik</b> um noch mehr Lernenden Bildung frei
+            verfügbar zu machen!
           </p>
           <div className="group text-center">
             <Link
