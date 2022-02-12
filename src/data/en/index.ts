@@ -467,6 +467,7 @@ export const loggedInData = {
         restore: 'Successfully restored ♻️',
         accept: 'Edit was accepted ✅',
         reject: 'Edit not rejected ❌',
+        save: 'Edit successfully saved ✅',
       }, 
       errors: {
         UNAUTHENTICATED: 'You have to log in to use this function!',

@@ -447,6 +447,11 @@ export function useUserSetDescriptionMutation() {
       loggedInData?.strings.mutations.errors
     )
 
+    if (success) {
+      if (!loggedInData) return
+      showToastNotice(loggedInData.strings.mutations.success.save, 'success')
+    }
+
     return success
   }
 

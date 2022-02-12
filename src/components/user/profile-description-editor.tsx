@@ -22,9 +22,10 @@ export function ProfileDescriptionEditor({
       (resolve: (value: void | PromiseLike<void>) => void, reject) => {
         if (success) {
           resolve()
-          setTimeout(() => {
-            window.location.reload()
-          }, 200)
+          //feedback is handled in mutation
+          // setTimeout(() => {
+          //   window.location.reload()
+          // }, 200)
         } else {
           // eslint-disable-next-line no-console
           console.log(success)
