@@ -41,6 +41,7 @@ export function SaveModal({
   const changesFilled = !changes || changes.value
   const maySave = licenseAccepted && changesFilled
   const buttonDisabled = !maySave || pending
+  const isOnlyText = !showSkipCheckout && !subscriptions && !license && !changes
 
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
@@ -60,17 +61,17 @@ export function SaveModal({
         {renderLicense()}
         {renderSubscription()}
         {renderCheckout()}
-        {!showSkipCheckout && !subscriptions && !license && !changes
-          ? edtrIo.ready
-          : null}
+        {isOnlyText ? edtrIo.ready : null}
         <hr className="mt-8 mb-8" />
         {renderModalButtons()}
       </div>
-      <style jsx global>{`
-        .ReactModal__Content {
-          @apply mt-8 overflow-y-scroll top-0 translate-y-0 max-h-full bottom-4;
-        }
-      `}</style>
+      {isOnlyText ? null : (
+        <style jsx global>{`
+          .ReactModal__Content {
+            @apply mt-8 overflow-y-scroll top-0 translate-y-0 max-h-full bottom-4;
+          }
+        `}</style>
+      )}
     </ModalWithCloseButton>
   )
 
