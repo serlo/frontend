@@ -42,6 +42,11 @@ export function ToolbarMain({
     subscriptions
   )
 
+  const localHandleSave: typeof handleSave = (arg0, arg1, arg2) => {
+    handleSave(arg0, arg1, arg2)
+    if (!hasError) setVisibility(false)
+  }
+
   useEffect(() => {
     window.onbeforeunload = hasPendingChanges && !pending ? () => '' : null
   }, [hasPendingChanges, pending])
@@ -63,7 +68,7 @@ export function ToolbarMain({
       <SaveModal
         visible={visible}
         setVisibility={setVisibility}
-        handleSave={handleSave}
+        handleSave={localHandleSave}
         pending={pending}
         changes={changes}
         hasError={hasError}

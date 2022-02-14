@@ -16,7 +16,6 @@ export const userTypePlugin: EditorPlugin<typeof userTypeState> = {
 
 function UserTypeEditor(props: EditorPluginProps<typeof userTypeState>) {
   const { description } = props.state
-
   return (
     <>
       {description.render()}

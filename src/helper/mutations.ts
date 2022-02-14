@@ -11,6 +11,7 @@ import {
   ThreadSetThreadArchivedInput,
   ThreadSetThreadStateInput,
   UserDeleteBotsInput,
+  UserSetDescriptionInput,
   UuidMutation,
   UuidSetStateInput,
 } from '@serlo/api'
@@ -422,6 +423,42 @@ export function useSubscriptionSetMutation() {
     await subscriptionSetMutation(input)
 }
 
+export function useUserSetDescriptionMutation() {
+  const auth = useAuthentication()
+  const loggedInData = useLoggedInData()
+
+  const mutation = gql`
+    mutation setDescription($input: UserSetDescriptionInput!) {
+      user {
+        setDescription(input: $input) {
+          success
+        }
+      }
+    }
+  `
+
+  const setDescriptionMutation = async function (input: {
+    description: string
+  }) {
+    const success = await mutationFetch(
+      auth,
+      mutation,
+      input,
+      loggedInData?.strings.mutations.errors
+    )
+
+    if (success) {
+      if (!loggedInData) return
+      showToastNotice(loggedInData.strings.mutations.success.save, 'success')
+    }
+
+    return success
+  }
+
+  return async (input: UserSetDescriptionInput) =>
+    await setDescriptionMutation(input)
+}
+
 type MutationInput =
   | NotificationSetStateInput
   | UuidSetStateInput
@@ -434,6 +471,7 @@ type MutationInput =
   | RejectRevisionInput
   | CheckoutRevisionInput
   | UserDeleteBotsInput
+  | UserSetDescriptionInput
 
 type MutationResponse = ThreadMutation | UuidMutation | NotificationMutation
 
