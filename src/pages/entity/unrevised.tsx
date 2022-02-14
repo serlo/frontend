@@ -30,20 +30,19 @@ function Content({ data }: { data: UnrevisedRevisionsData }) {
   )
 }
 
-export const getServerSideProps: GetServerSideProps<UnrevisedRevisionsProps> =
-  async (context) => {
-    const pageData = await requestUnrevisedRevisionsBySubjects(
-      context.locale as Instance
-    )
+export const getServerSideProps: GetServerSideProps<
+  UnrevisedRevisionsProps
+> = async (context) => {
+  const pageData = await requestUnrevisedRevisionsBySubjects(
+    context.locale as Instance
+  )
 
-    return {
-      props: {
-        pageData: JSON.parse(
-          JSON.stringify(pageData)
-        ) as UnrevisedRevisionsPage, // remove undefined values
-      },
-    }
+  return {
+    props: {
+      pageData: JSON.parse(JSON.stringify(pageData)) as UnrevisedRevisionsPage, // remove undefined values
+    },
   }
+}
 
 function Title() {
   const { strings } = useInstanceData()

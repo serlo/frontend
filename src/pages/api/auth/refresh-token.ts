@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
+import { Token } from 'simple-oauth2'
 
 import {
   getAuthorizationCode,
@@ -22,7 +23,7 @@ async function refreshToken(req: NextApiRequest, res: NextApiResponse) {
 
   try {
     const accessToken = oauth2ClientCredentials.createToken(
-      JSON.parse(req.cookies['auth-token'])
+      JSON.parse(req.cookies['auth-token']) as Token
     )
     const token = await accessToken.refresh({
       scope,

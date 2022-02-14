@@ -33,13 +33,18 @@ function isTextNode(node: ConvertData): node is SlateTextElement {
   return (node as SlateTextElement).text !== undefined
 }
 
-type ConvertData = EdtrState | NewNode | SlateTextElement | UnsupportedEdtrState
+type ConvertData =
+  | EdtrState
+  | NewNode
+  | SlateTextElement
+  | UnsupportedEdtrState
+  | FrontendContentNode
 
-export function convert(
-  node?: ConvertData | ConvertData[]
-): FrontendContentNode[] {
+export type ConvertNode = ConvertData | ConvertData[] | undefined
+
+export function convert(node?: ConvertNode): FrontendContentNode[] {
   // compat: no or empty node, we ignore
-  if (node === undefined || Object.keys(node).length === 0) {
+  if (!node || Object.keys(node).length === 0) {
     return []
   }
 

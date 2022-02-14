@@ -12,6 +12,7 @@ export function convertState(raw: string | undefined): FrontendContentNode[] {
     return convertLegacyState(legacyHTML).children
   } else if (raw?.startsWith('{')) {
     // Edtr.io state
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     return convert(JSON.parse(raw))
   } else {
     // raw as text

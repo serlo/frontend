@@ -1,9 +1,7 @@
 import { PageInfo } from '@serlo/api'
-import useSWR, {
-  SWRConfiguration,
-  SWRInfiniteConfiguration,
-  useSWRInfinite,
-} from 'swr'
+import useSWR, { SWRConfiguration } from 'swr'
+// eslint-disable-next-line import/no-internal-modules
+import useSWRInfinite, { SWRInfiniteConfiguration } from 'swr/infinite'
 
 import {
   createAuthAwareGraphqlFetch,
