@@ -63,7 +63,8 @@ export const instanceData = {
       eventLog: "Registro de eventos",
       unrevisedRevisions: "Revisiones no revisadas",
       userEdits: "Ediciones por %user%",
-      userEditsMine: "Mi trabajo aún sin revisar"
+      userEditsMine: "Mi trabajo aún sin revisar",
+      editProfile: 'Edit Profile & Settings'
     },
     roles: {
       donor: "Donante",
@@ -255,27 +256,8 @@ export const instanceData = {
         legendary: "💙 Simplemente, ¡guau! 💙",
         untilNextLevel: "%amount% más para completar este círculo 🎉"
       },
-      howToEditImage: {
-        heading: "Como editar tu foto del perfil",
-        description: "Actualmente usamos las imágenes del %chatLink%  como impagen de perfil.  Para cambiar la imágen, haz lo siguiente:",
-        steps: {
-          goToChat: "Ir a %chatLink%.",
-          signIn: "Iniciar sesión.",
-          goToMyAccount: "Ir al menú de usuario a %myAccountLink%",
-          myAccount: "Mi cuenta",
-          uploadPicture: "Sube una nueva imagen (asegúrate de que sea cuadrada) y haz clic en \"Guardar cambios\".",
-          refreshPage: "Vuelve aquí y actualiza la imagen usando %refreshLink%.",
-          refreshLink: "este enlace"
-        }
-      },
-      motivation: {
-        edit: "Editar motivación",
-        add: "Añadir motivación",
-        heading: "Cómo editar tu motivación",
-        intro: "La motivación es una función nueva que está a prueba en este momento. Para editar tu motivación tienes que completar un sencillo formulario.",
-        privacy: "El formulario y el almacenamiento de datos lo ofrece Google y la información personal puede ser transferida a este servicio cuando se utiliza esta función.",
-        toForm: "Formulario de Motivación"
-      },
+      editMotivation: 'Edit motivation',
+      addMotivation: 'Add motivation',
       lockedDescriptionTitle: 'Your description currently hidden from the public.',
       lockedDescriptionText: 'After your first contributions it will become visible to everybody.'
     },
@@ -453,7 +435,8 @@ export const loggedInData = {
         trash: "Borrado exitosamente 🗑",
         restore: "Restablecido con éxito ♻️",
         accept: "Edición aceptada ✅",
-        reject: "Edición rechazada ❌ "
+        reject: "Edición rechazada ❌ ",
+        save: 'Edit successfully saved ✅'
       },
       errors: {
         UNAUTHENTICATED: "¡Tienes que iniciar sesión para usar esta función!",
@@ -522,7 +505,8 @@ export const loggedInData = {
         createdAt: "Creado el",
         settings: "Configuración",
         equationsTitle: "Términos y ecuaciones",
-        equationsDesc: "Escribe manipulaciones de términos y resuelve ecuaciones múltiples."
+        equationsDesc: "Escribe manipulaciones de términos y resuelve ecuaciones múltiples.",
+        ready: "Ready to save?"
       },
       anchor: {
         identifier: "Identificador",
@@ -748,6 +732,29 @@ export const loggedInData = {
       },
       deprecated: {
         unsupported: "Esta parte del documento contiene funciones que ya no son compatibles."
+      }
+    },
+    profileSettings: {
+      editAbout: 'Your description',
+      showInstructions: 'Show instructions',
+      howToEditImage: {
+        heading: 'How to edit your profile picture',
+        description: 'Currently we use the images from %chatLink% as profile pictures. In order to change your picture, do the following:',
+        steps: {
+          goToChat: 'Go to %chatLink%.',
+          signIn: 'Sign in.',
+          goToMyAccount: 'Go in the user menu to %myAccountLink%.',
+          myAccount: 'My Account',
+          uploadPicture: 'Upload a new picture (make sure it is square) and click "Save changes".',
+          refreshPage: 'Come back here and refresh the image using %refreshLink%.',
+          refreshLink: 'this link'
+        }
+      },
+      motivation: {
+        heading: 'How to edit your motivation',
+        intro: 'Motivations are a new feature we test at the moment. To edit your motivation you have to fill out a simple form.',
+        privacy: 'The form and data storage is offered by Google and personal data may be transferred to this service when using this feature.',
+        toForm: 'Motivation Form'
       }
     }
   }
