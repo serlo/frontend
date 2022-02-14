@@ -63,7 +63,8 @@ export const instanceData = {
       eventLog: "Aktivitäten",
       unrevisedRevisions: "Ungeprüfte Bearbeitungen",
       userEdits: "Bearbeitungen von %user%",
-      userEditsMine: "Meine ungeprüften Bearbeitungen"
+      userEditsMine: "Meine ungeprüften Bearbeitungen",
+      editProfile: 'Edit Profile & Settings'
     },
     roles: {
       donor: "Spender*in",
@@ -255,27 +256,8 @@ export const instanceData = {
         legendary: "💙 Oh wow! 💙",
         untilNextLevel: "%amount% mehr um diesen Kreis zu füllen 🎉"
       },
-      howToEditImage: {
-        heading: "So kannst du dein Profilbild ändern",
-        description: "Wir benutzen die Bilder von %chatLink% als Profilbilder. Um dein Bild zu ändern musst du diesen Schritten folgen:",
-        steps: {
-          goToChat: "Gehe zu %chatLink%.",
-          signIn: "Melde dich an.",
-          goToMyAccount: "Gehe im Usermenü auf %myAccountLink%.",
-          myAccount: "Mein Konto",
-          uploadPicture: "Lade ein neues Bild hoch (ein quadratisches!) und klicke oben auf \"Änderungen speichern\".",
-          refreshPage: "Komme hierher zurück und aktualisiere dein Bild mit %refreshLink%.",
-          refreshLink: "diesem magischem Link"
-        }
-      },
-      motivation: {
-        edit: "Motivationstext ändern",
-        add: "Motivation hinzufügen",
-        heading: "So kannst du deinen Motivationstext ändern",
-        intro: "Motivationen sind eine neue Funktion, die wir aktuell testen. Um deinen Motivationstext zu ändern musst du ein kurzes Formular ausfüllen.",
-        privacy: "Das Formular und die Datenspeicherung werden von Google angeboten und persönliche Daten werden zu diesem Anbieter übertragen werden, wenn du dieses Feature benutzt.",
-        toForm: "Motivationsformular"
-      },
+      editMotivation: 'Edit motivation',
+      addMotivation: 'Add motivation',
       lockedDescriptionTitle: "Deine Beschreibung ist aktuell nur für dich sichtbar.",
       lockedDescriptionText: "Nach deinen ersten Aktivitäten auf Serlo wird sie für alle sichtbar."
     },
@@ -453,7 +435,8 @@ export const loggedInData = {
         trash: "Erfolgreich gelöscht 🗑",
         restore: "Erfolgreich wiederhergestellt ♻️",
         accept: "Bearbeitung wurde akzeptiert ✅",
-        reject: "Bearbeitung wurde abgelehnt ❌"
+        reject: "Bearbeitung wurde abgelehnt ❌",
+        save: 'Edit successfully saved ✅'
       },
       errors: {
         UNAUTHENTICATED: "Für diese Funktion musst du dich einloggen!",
@@ -522,7 +505,8 @@ export const loggedInData = {
         createdAt: "Zeitstempel",
         settings: "Einstellungen",
         equationsTitle: "Terme und Gleichungen",
-        equationsDesc: "Erstelle Termumformungen und löse mehrzeilige Gleichungen."
+        equationsDesc: "Erstelle Termumformungen und löse mehrzeilige Gleichungen.",
+        ready: "Ready to save?"
       },
       anchor: {
         identifier: "Name",
@@ -748,6 +732,29 @@ export const loggedInData = {
       },
       deprecated: {
         unsupported: "Dieser Teil des Dokuments enthält Features, die nicht mehr unterstützt werden."
+      }
+    },
+    profileSettings: {
+      editAbout: 'Your description',
+      showInstructions: 'Show instructions',
+      howToEditImage: {
+        heading: 'How to edit your profile picture',
+        description: 'Currently we use the images from %chatLink% as profile pictures. In order to change your picture, do the following:',
+        steps: {
+          goToChat: 'Go to %chatLink%.',
+          signIn: 'Sign in.',
+          goToMyAccount: 'Go in the user menu to %myAccountLink%.',
+          myAccount: 'My Account',
+          uploadPicture: 'Upload a new picture (make sure it is square) and click "Save changes".',
+          refreshPage: 'Come back here and refresh the image using %refreshLink%.',
+          refreshLink: 'this link'
+        }
+      },
+      motivation: {
+        heading: 'How to edit your motivation',
+        intro: 'Motivations are a new feature we test at the moment. To edit your motivation you have to fill out a simple form.',
+        privacy: 'The form and data storage is offered by Google and personal data may be transferred to this service when using this feature.',
+        toForm: 'Motivation Form'
       }
     }
   }
