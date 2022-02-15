@@ -1,5 +1,6 @@
 import clsx from 'clsx'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
+import scrollIntoView from 'smooth-scroll-into-view-if-needed'
 
 import { MaxWidthDiv } from '../../navigation/max-width-div'
 import { SubTopic } from '../../taxonomy/sub-topic'
@@ -13,16 +14,25 @@ export function LandingInformatikTopicOverview({
   subterms,
 }: LandingInformatikTopicOverviewProps) {
   const [selectedIndex, setSelectedIndex] = useState(-1)
+  const topicContainer = useRef<HTMLDivElement>(null)
 
   function onMenuClick(index: number) {
-    setSelectedIndex(index === selectedIndex ? -1 : index)
+    const indexToBeSet = index === selectedIndex ? -1 : index
+    setSelectedIndex(indexToBeSet)
+
+    if (indexToBeSet > -1 && topicContainer.current) {
+      void scrollIntoView(topicContainer.current, {
+        behavior: 'smooth',
+        scrollMode: 'if-needed',
+      })
+    }
   }
 
   return (
-    <div>
+    <div className="">
       {renderMenu()}
 
-      <div className="pt-3 md:pt-6 image-hack">
+      <div className="pt-3 md:pt-6 md:ml-16 image-hack" ref={topicContainer}>
         <MaxWidthDiv>
           {selectedIndex > -1 ? (
             <SubTopic
@@ -57,32 +67,38 @@ export function LandingInformatikTopicOverview({
 
   function renderMenu() {
     return (
-      <nav className="mx-side text-left">
-        <ul className="max-w-full items-end text-center">
-          {subterms.map((entry, index) => {
-            const active = selectedIndex === index
-            const className = clsx(
-              'serlo-button rounded-xl tracking-slightly-tighter py-[3px] block mobile:inline-block',
-              'mobile:mx-2 text-lg sm:text-xl mb-3.5',
-              'hover:bg-brand-light',
-              active
-                ? 'serlo-make-interactive-transparent-blue bg-white hover:bg-white hover:text-brand'
-                : 'text-white bg-brand'
-            )
+      <div
+        className="image-hack grid justify-center"
+        style={{
+          gridTemplateColumns: 'repeat(auto-fit, minmax(12rem, 20rem))',
+        }}
+      >
+        {subterms.map((term, index) => {
+          const isActive = index === selectedIndex
+          const src =
+            term.description?.[0].type === 'img'
+              ? term.description?.[0].src
+              : undefined
 
-            return (
-              <li key={entry.url} className="inline">
-                <button
-                  onClick={() => onMenuClick(index)}
-                  className={className}
-                >
-                  {entry.title}
-                </button>
-              </li>
-            )
-          })}
-        </ul>
-      </nav>
+          return (
+            <button
+              key={term.title}
+              className={clsx(
+                'flex p-2 m-2 text-left font-bold text-brand',
+                'rounded-xl hover:bg-brand/5 transition-colors shadow-menu',
+                isActive ? 'text-black bg-brand/10 hover:bg-brand/10' : '',
+                src ? '' : 'pl-16'
+              )}
+              onClick={() => onMenuClick(index)}
+            >
+              {src ? (
+                <img src={src} className="w-12 h-12 object-cover mr-2" />
+              ) : null}
+              {term.title.replace(' und ', ' & ')}
+            </button>
+          )
+        })}
+      </div>
     )
   }
 }
