@@ -506,7 +506,7 @@ export const loggedInData = {
         settings: "Einstellungen",
         equationsTitle: "Terme und Gleichungen",
         equationsDesc: "Erstelle Termumformungen und löse mehrzeilige Gleichungen.",
-        ready: "Ready to save?"
+        ready: "Bereit zum speichern?"
       },
       anchor: {
         identifier: "Name",
@@ -735,26 +735,26 @@ export const loggedInData = {
       }
     },
     profileSettings: {
-      editAbout: 'Your description',
-      showInstructions: 'Show instructions',
+      editAbout: "Deine Beschreibung",
+      showInstructions: "Anleitung anzeigen",
       howToEditImage: {
-        heading: 'How to edit your profile picture',
-        description: 'Currently we use the images from %chatLink% as profile pictures. In order to change your picture, do the following:',
+        heading: "So kannst du dein Profilbild ändern",
+        description: "Wir benutzen die Bilder von %chatLink% als Profilbilder. Um dein Bild zu ändern musst du diesen Schritten folgen:",
         steps: {
-          goToChat: 'Go to %chatLink%.',
-          signIn: 'Sign in.',
-          goToMyAccount: 'Go in the user menu to %myAccountLink%.',
-          myAccount: 'My Account',
-          uploadPicture: 'Upload a new picture (make sure it is square) and click "Save changes".',
-          refreshPage: 'Come back here and refresh the image using %refreshLink%.',
-          refreshLink: 'this link'
+          goToChat: "Gehe zu %chatLink%.",
+          signIn: "Melde dich an.",
+          goToMyAccount: "Gehe im Usermenü auf %myAccountLink%.",
+          myAccount: "Mein Konto",
+          uploadPicture: "Lade ein neues Bild hoch (ein quadratisches!) und klicke oben auf \"Änderungen speichern\".",
+          refreshPage: "Komme hierher zurück und aktualisiere dein Bild mit %refreshLink%.",
+          refreshLink: "diesem magischem Link"
         }
       },
       motivation: {
-        heading: 'How to edit your motivation',
-        intro: 'Motivations are a new feature we test at the moment. To edit your motivation you have to fill out a simple form.',
-        privacy: 'The form and data storage is offered by Google and personal data may be transferred to this service when using this feature.',
-        toForm: 'Motivation Form'
+        heading: "So kannst du deinen Motivationstext ändern",
+        intro: "Motivationen sind eine neue Funktion, die wir aktuell testen. Um deinen Motivationstext zu ändern musst du ein kurzes Formular ausfüllen.",
+        privacy: "Das Formular und die Datenspeicherung werden von Google angeboten und persönliche Daten werden zu diesem Anbieter übertragen werden, wenn du dieses Feature benutzt.",
+        toForm: "Motivationsformular"
       }
     }
   }
