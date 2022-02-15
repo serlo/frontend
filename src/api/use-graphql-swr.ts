@@ -1,9 +1,7 @@
 import { PageInfo } from '@serlo/api'
-import useSWR, {
-  SWRConfiguration,
-  SWRInfiniteConfiguration,
-  useSWRInfinite,
-} from 'swr'
+import useSWR, { SWRConfiguration } from 'swr'
+// eslint-disable-next-line import/no-internal-modules
+import useSWRInfinite, { SWRInfiniteConfiguration } from 'swr/infinite'
 
 import {
   createAuthAwareGraphqlFetch,
@@ -15,13 +13,15 @@ export function useGraphqlSwr<T>({
   query,
   variables,
   config,
+  noKey,
 }: {
   query: string
   variables?: Record<string, unknown>
   config?: SWRConfiguration<T>
+  noKey?: boolean
 }) {
   return useSWR<T, object>(
-    JSON.stringify({ query, variables }),
+    noKey ? null : JSON.stringify({ query, variables }),
     createGraphqlFetch(),
     config
   )

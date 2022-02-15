@@ -10,7 +10,7 @@ import {
   FrontendSolutionNode,
 } from '@/data-types'
 import { shuffleArray } from '@/helper/shuffle-array'
-import { convert } from '@/schema/convert-edtr-io-state'
+import { convert, ConvertNode } from '@/schema/convert-edtr-io-state'
 
 export function createExercise(
   uuid: BareExercise,
@@ -26,11 +26,11 @@ export function createExercise(
       const taskState = (JSON.parse(content) as { state: TaskEdtrState }).state
 
       if (taskState.content) {
-        taskState.content = convert(taskState.content as any)
+        taskState.content = convert(taskState.content)
         if (taskState.interactive?.plugin == 'scMcExercise') {
           taskState.interactive.state.answers.forEach((answer, i: number) => {
-            answer.feedback = convert(answer.feedback as any)
-            answer.content = convert(answer.content as any)
+            answer.feedback = convert(answer.feedback)
+            answer.content = convert(answer.content)
             answer.originalIndex = i
           })
           taskState.interactive.state.answers = shuffleArray(
@@ -38,7 +38,7 @@ export function createExercise(
           )
         } else if (taskState.interactive?.plugin == 'inputExercise') {
           taskState.interactive.state.answers.forEach((answer) => {
-            answer.feedback = convert(answer.feedback as any)
+            answer.feedback = convert(answer.feedback)
           })
         }
         taskEdtrState = taskState
@@ -79,11 +79,11 @@ function createSolutionData(solution: BareExercise['solution']) {
         | { plugin: ''; state: SolutionEdtrState }
       if (contentJson.plugin == 'rows') {
         // half converted, like 189579
-        solutionLegacy = convert(contentJson as any)
+        solutionLegacy = convert(contentJson as ConvertNode)
       } else {
         // special case here: we know it's a edtr-io solution
         const solutionState = contentJson.state
-        solutionState.strategy = convert(solutionState.strategy as any)
+        solutionState.strategy = convert(solutionState.strategy)
         // compat: (probably quite fragile) if strategy is empty, we ignore it
         if (
           solutionState.strategy.length == 1 &&
@@ -92,7 +92,7 @@ function createSolutionData(solution: BareExercise['solution']) {
         ) {
           solutionState.strategy = []
         }
-        solutionState.steps = convert(solutionState.steps as any)
+        solutionState.steps = convert(solutionState.steps)
         solutionEdtrState = solutionState
       }
     } else {

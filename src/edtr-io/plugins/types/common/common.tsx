@@ -121,6 +121,7 @@ export function editorContent(
       serialized: string,
       helpers: Parameters<typeof originalChild.deserialize>[1]
     ) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       return originalChild.deserialize(JSON.parse(serialized), helpers)
     },
   }

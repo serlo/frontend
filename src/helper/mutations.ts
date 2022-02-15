@@ -11,6 +11,7 @@ import {
   ThreadSetThreadArchivedInput,
   ThreadSetThreadStateInput,
   UserDeleteBotsInput,
+  UserSetDescriptionInput,
   UuidMutation,
   UuidSetStateInput,
 } from '@serlo/api'
@@ -19,7 +20,7 @@ import { ClientError, gql, GraphQLClient } from 'graphql-request'
 import { useRouter } from 'next/router'
 import NProgress from 'nprogress'
 import { RefObject } from 'react'
-import { mutate, cache } from 'swr'
+import { useSWRConfig, mutate } from 'swr'
 
 import { csrReload } from './csr-reload'
 import { showToastNotice } from './show-toast-notice'
@@ -152,6 +153,8 @@ export function useRevisionMutation() {
 export function useSetNotificationStateMutation() {
   const auth = useAuthentication()
   const loggedInData = useLoggedInData()
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-assignment
+  const { cache } = useSWRConfig()
 
   const mutation = gql`
     mutation setState($input: NotificationSetStateInput!) {
@@ -176,13 +179,25 @@ export function useSetNotificationStateMutation() {
     // note: Maybe implement global cache key management, but this works okay
 
     if (success) {
-      const keys = cache.keys().filter(
-        (key) =>
+      if (!(cache instanceof Map)) {
+        throw new Error(
+          'matchMutate requires the cache provider to be a Map instance'
+        )
+      }
+
+      const keys = []
+
+      for (const key of cache.keys() as IterableIterator<string>) {
+        const shouldBeMutated =
           (key.startsWith('arg@') &&
             key.indexOf('query notifications($first') > 0 &&
             key.indexOf('"unread":true') > 0) ||
-          key.indexOf('notifications(unread: true)') > 0 // update count
-      )
+          key.indexOf('notifications(unread: true)') > 0
+
+        if (shouldBeMutated) {
+          keys.push(key)
+        }
+      }
 
       keys.forEach((key) => {
         void mutate(key)
@@ -408,6 +423,42 @@ export function useSubscriptionSetMutation() {
     await subscriptionSetMutation(input)
 }
 
+export function useUserSetDescriptionMutation() {
+  const auth = useAuthentication()
+  const loggedInData = useLoggedInData()
+
+  const mutation = gql`
+    mutation setDescription($input: UserSetDescriptionInput!) {
+      user {
+        setDescription(input: $input) {
+          success
+        }
+      }
+    }
+  `
+
+  const setDescriptionMutation = async function (input: {
+    description: string
+  }) {
+    const success = await mutationFetch(
+      auth,
+      mutation,
+      input,
+      loggedInData?.strings.mutations.errors
+    )
+
+    if (success) {
+      if (!loggedInData) return
+      showToastNotice(loggedInData.strings.mutations.success.save, 'success')
+    }
+
+    return success
+  }
+
+  return async (input: UserSetDescriptionInput) =>
+    await setDescriptionMutation(input)
+}
+
 type MutationInput =
   | NotificationSetStateInput
   | UuidSetStateInput
@@ -420,6 +471,7 @@ type MutationInput =
   | RejectRevisionInput
   | CheckoutRevisionInput
   | UserDeleteBotsInput
+  | UserSetDescriptionInput
 
 type MutationResponse = ThreadMutation | UuidMutation | NotificationMutation
 

@@ -1,14 +1,18 @@
 import type { GraphQLError } from 'graphql'
-import { ClientError, GraphQLClient } from 'graphql-request'
+import { ClientError, GraphQLClient, RequestDocument } from 'graphql-request'
 import { RefObject } from 'react'
 
 import { endpoint } from '@/api/endpoint'
 import { AuthenticationPayload } from '@/auth/auth-provider'
 
+interface ParsedArgs {
+  query: RequestDocument
+  variables: unknown
+}
+
 export function createGraphqlFetch() {
   return async function fetch(args: string) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const { query, variables } = JSON.parse(args)
+    const { query, variables } = JSON.parse(args) as ParsedArgs
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return await executeQuery()
@@ -24,8 +28,7 @@ export function createAuthAwareGraphqlFetch(
   auth: RefObject<AuthenticationPayload>
 ) {
   return async function fetch(args: string) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const { query, variables } = JSON.parse(args)
+    const { query, variables } = JSON.parse(args) as ParsedArgs
     if (auth.current === null) throw new Error('unauthorized')
 
     const usedToken = auth.current.token

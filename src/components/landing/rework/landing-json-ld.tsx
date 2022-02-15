@@ -14,7 +14,12 @@ export function LandingJsonLd() {
     return {
       '@context': [
         'https://w3id.org/kim/lrmi-profile/draft/context.jsonld',
-        { '@language': 'de' },
+        {
+          '@language': 'de',
+          '@vocab': 'http://schema.org',
+          type: '@type',
+          id: '@id',
+        },
       ],
       id: 'https://serlo.org/',
       type: ['EducationalOrganization', 'NGO'],

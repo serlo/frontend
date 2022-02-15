@@ -97,7 +97,12 @@ export function JsonLd({ data, id }: JsonLdProps) {
     return {
       '@context': [
         'https://w3id.org/kim/lrmi-profile/draft/context.jsonld',
-        { '@language': lang },
+        {
+          '@language': lang,
+          '@vocab': 'http://schema.org/',
+          type: '@type',
+          id: '@id',
+        },
       ],
       id: getIRI(id),
       type,

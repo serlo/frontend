@@ -82,8 +82,11 @@ function useAuthentication(): [RefObject<AuthenticationPayload>, boolean] {
       const { access_token, id_token } = JSON.parse(
         cookies['auth-token']
       ) as Token
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-      const decoded = jwt_decode(id_token) as { username: string; id: number }
+
+      const decoded = jwt_decode<{
+        username: string
+        id: number
+      }>(id_token as string)
 
       return {
         username: decoded.username,
