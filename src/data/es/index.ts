@@ -256,9 +256,9 @@ export const instanceData = {
         legendary: "💙 Simplemente, ¡guau! 💙",
         untilNextLevel: "%amount% más para completar este círculo 🎉"
       },
-      editMotivation: 'Edit motivation',
-      addMotivation: 'Add motivation',
-      lockedDescriptionTitle: 'Your description currently hidden from the public.',
+      editMotivation: "Editar motivación",
+      addMotivation: "Añadir motivación",
+      lockedDescriptionTitle: "Tu descripción actualmente no es visible para el público.",
       lockedDescriptionText: 'After your first contributions it will become visible to everybody.'
     },
     notices: {
@@ -735,26 +735,26 @@ export const loggedInData = {
       }
     },
     profileSettings: {
-      editAbout: 'Your description',
-      showInstructions: 'Show instructions',
+      editAbout: "Tu descripción",
+      showInstructions: "Mostrar instrucciones",
       howToEditImage: {
-        heading: 'How to edit your profile picture',
-        description: 'Currently we use the images from %chatLink% as profile pictures. In order to change your picture, do the following:',
+        heading: "Como editar tu foto del perfil",
+        description: "Actualmente usamos las imágenes del %chatLink%  como impagen de perfil.  Para cambiar la imágen, haz lo siguiente:",
         steps: {
-          goToChat: 'Go to %chatLink%.',
-          signIn: 'Sign in.',
-          goToMyAccount: 'Go in the user menu to %myAccountLink%.',
-          myAccount: 'My Account',
-          uploadPicture: 'Upload a new picture (make sure it is square) and click "Save changes".',
-          refreshPage: 'Come back here and refresh the image using %refreshLink%.',
-          refreshLink: 'this link'
+          goToChat: "Ir a %chatLink%.",
+          signIn: "Iniciar sesión.",
+          goToMyAccount: "Ir al menú de usuario a %myAccountLink%",
+          myAccount: "Mi cuenta",
+          uploadPicture: "Sube una nueva imagen (asegúrate de que sea cuadrada) y haz clic en \"Guardar cambios\".",
+          refreshPage: "Vuelve aquí y actualiza la imagen usando %refreshLink%.",
+          refreshLink: "este enlace"
         }
       },
       motivation: {
-        heading: 'How to edit your motivation',
-        intro: 'Motivations are a new feature we test at the moment. To edit your motivation you have to fill out a simple form.',
-        privacy: 'The form and data storage is offered by Google and personal data may be transferred to this service when using this feature.',
-        toForm: 'Motivation Form'
+        heading: "Cómo editar tu motivación",
+        intro: "La motivación es una función nueva que está a prueba en este momento. Para editar tu motivación tienes que completar un sencillo formulario.",
+        privacy: "El formulario y el almacenamiento de datos lo ofrece Google y la información personal puede ser transferida a este servicio cuando se utiliza esta función.",
+        toForm: "Formulario de Motivación"
       }
     }
   }
