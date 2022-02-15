@@ -6,7 +6,6 @@ import { useState, useEffect } from 'react'
 
 import { useAuthentication } from '@/auth/use-authentication'
 import { Link } from '@/components/content/link'
-import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { StaticInfoPanel } from '@/components/static-info-panel'
 import { TimeAgo } from '@/components/time-ago'
 import { UserTools } from '@/components/user-tools/user-tools'
@@ -14,11 +13,9 @@ import { Events } from '@/components/user/events'
 import { ProfileActivityGraphs } from '@/components/user/profile-activity-graphs'
 import { ProfileBadges } from '@/components/user/profile-badges'
 import { ProfileChatButton } from '@/components/user/profile-chat-button'
-import { ProfileExperimental } from '@/components/user/profile-experimental'
 import { ProfileRoles } from '@/components/user/profile-roles'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UserPage } from '@/data-types'
-import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { renderArticle } from '@/schema/article-renderer'
 
 export interface ProfileProps {
@@ -42,8 +39,6 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   } = userData
   const lastLoginDate = lastLogin ? new Date(lastLogin) : undefined
 
-  const [showImageModal, setShowImageModal] = useState(false)
-  const [showMotivationModal, setShowMotivationModal] = useState(false)
   const [isOwnProfile, setIsOwnProfile] = useState(false)
 
   const registerDate = new Date(date)
@@ -68,10 +63,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
       <ProfileActivityGraphs values={activityByType} />
       {renderRecentActivities()}
       {renderRoles()}
-      {isOwnProfile && <ProfileExperimental />}
       {renderUserTools()}
-      {renderHowToEditImage()}
-      {renderHowToEditMotivation()}
     </>
   )
 
@@ -130,15 +122,15 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
           className="block rounded-full w-full h-full"
         />
         {isOwnProfile && !isNewlyRegisteredUser && (
-          <a
-            onClick={() => setShowImageModal(true)}
+          <Link
+            href="/user/settings#image"
             className={clsx(
               'serlo-button serlo-make-interactive-green',
               'block absolute right-1 bottom-1 w-8 h-8'
             )}
           >
             <FontAwesomeIcon icon={faPencilAlt} />
-          </a>
+          </Link>
         )}
       </figure>
     )
@@ -209,93 +201,20 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
     )
   }
 
-  function renderHowToEditImage() {
-    const { heading, description, steps } = strings.profiles.howToEditImage
-    const chatLink = (
-      <a className="serlo-link" href="https://community.serlo.org">
-        community.serlo.org
-      </a>
-    )
-    const myAccountLink = (
-      <a
-        className="serlo-link"
-        href="https://community.serlo.org/account/profile"
-      >
-        {steps.myAccount}
-      </a>
-    )
-    const refreshLink = (
-      <a
-        className="serlo-link cursor-pointer"
-        onClick={async () => {
-          const cache = await caches.open('v1')
-          await cache.delete(imageUrl)
-          location.reload()
-        }}
-      >
-        {steps.refreshLink}
-      </a>
-    )
-
-    return (
-      <ModalWithCloseButton
-        isOpen={showImageModal}
-        onCloseClick={() => setShowImageModal(false)}
-        title={heading}
-      >
-        <p className="serlo-p">
-          {replacePlaceholders(description, { chatLink })}
-        </p>
-        <ol className="serlo-ol">
-          <li>{replacePlaceholders(steps.goToChat, { chatLink })}</li>
-          <li>{steps.signIn}</li>
-          <li>{replacePlaceholders(steps.goToMyAccount, { myAccountLink })}</li>
-          <li>{steps.uploadPicture}</li>
-          <li>{replacePlaceholders(steps.refreshPage, { refreshLink })}</li>
-        </ol>
-      </ModalWithCloseButton>
-    )
-  }
-
   function renderEditMotivationLink() {
     if (lang !== 'de') return null
     return (
       <p className="serlo-p text-sm text-right ml-auto mt-3">
-        <a
-          onClick={() => setShowMotivationModal(true)}
+        <Link
+          href="/user/settings#motivation"
           className="serlo-link cursor-pointer"
         >
           <FontAwesomeIcon icon={faPencilAlt} />{' '}
           {motivation
-            ? strings.profiles.motivation.edit
-            : strings.profiles.motivation.add}
-        </a>
+            ? strings.profiles.editMotivation
+            : strings.profiles.addMotivation}
+        </Link>
       </p>
-    )
-  }
-
-  function renderHowToEditMotivation() {
-    if (lang !== 'de') return null
-    const { heading, intro, privacy, toForm } = strings.profiles.motivation
-    const editUrl = `https://docs.google.com/forms/d/e/1FAIpQLSdb_My7YAVNA7ha9XnBcYCZDk36cOqgcWkBqowatbefX0IzEg/viewform?usp=pp_url&entry.14483495=${username}`
-
-    return (
-      <ModalWithCloseButton
-        isOpen={showMotivationModal}
-        onCloseClick={() => setShowMotivationModal(false)}
-        title={heading}
-      >
-        <p className="serlo-p">{intro}</p>
-        <p className="serlo-p">{privacy}</p>
-        <p className="serlo-p">
-          <a
-            href={editUrl}
-            className="serlo-button serlo-make-interactive-primary"
-          >
-            {toForm}
-          </a>
-        </p>
-      </ModalWithCloseButton>
     )
   }
 }

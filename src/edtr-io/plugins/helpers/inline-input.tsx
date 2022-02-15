@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { Value } from 'slate'
 import Plain from 'slate-plain-serializer'
 // @ts-expect-error missing types?
 import { Editor as SlateEditor } from 'slate-react'
@@ -32,7 +33,7 @@ export function InlineInput(props: {
         })
         next()
       }}
-      onChange={({ value }: any) => {
+      onChange={({ value }: { value: Value }) => {
         setState(value)
         onChange(Plain.serialize(value))
       }}

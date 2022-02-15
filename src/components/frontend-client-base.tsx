@@ -164,7 +164,7 @@ export function FrontendClientBase({
               `___loggedInData_${instanceData.lang}`,
               JSON.stringify(values[0])
             )
-            setLoggedInData(values[0])
+            setLoggedInData(values[0] as LoggedInData)
           }
           if (values[1])
             setLoggedInComponents(

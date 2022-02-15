@@ -17,6 +17,7 @@ export default function App(props: AppProps) {
   const { Component } = props
 
   if (isRenderedPage(Component)) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     return Component.renderer(props.pageProps, props)
   }
 

@@ -41,7 +41,7 @@ export function ExerciseGroup({
           />
         )}
         <div className="flex mb-0.5">
-          <div className="flex-grow">{groupIntro}</div>
+          <div className="grow">{groupIntro}</div>
           <div>{license}</div>
           {loaded && auth.current && ExerciseAuthorTools && (
             <ExerciseAuthorTools

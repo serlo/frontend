@@ -63,7 +63,8 @@ export const instanceData = {
       eventLog: "Registro de eventos",
       unrevisedRevisions: "Revisiones no revisadas",
       userEdits: "Ediciones por %user%",
-      userEditsMine: "Mi trabajo aún sin revisar"
+      userEditsMine: "Mi trabajo aún sin revisar",
+      editProfile: 'Edit Profile & Settings'
     },
     roles: {
       donor: "Donante",
@@ -255,28 +256,9 @@ export const instanceData = {
         legendary: "💙 Simplemente, ¡guau! 💙",
         untilNextLevel: "%amount% más para completar este círculo 🎉"
       },
-      howToEditImage: {
-        heading: "Como editar tu foto del perfil",
-        description: "Actualmente usamos las imágenes del %chatLink%  como impagen de perfil.  Para cambiar la imágen, haz lo siguiente:",
-        steps: {
-          goToChat: "Ir a %chatLink%.",
-          signIn: "Iniciar sesión.",
-          goToMyAccount: "Ir al menú de usuario a %myAccountLink%",
-          myAccount: "Mi cuenta",
-          uploadPicture: "Sube una nueva imagen (asegúrate de que sea cuadrada) y haz clic en \"Guardar cambios\".",
-          refreshPage: "Vuelve aquí y actualiza la imagen usando %refreshLink%.",
-          refreshLink: "este enlace"
-        }
-      },
-      motivation: {
-        edit: "Editar motivación",
-        add: "Añadir motivación",
-        heading: "Cómo editar tu motivación",
-        intro: "La motivación es una función nueva que está a prueba en este momento. Para editar tu motivación tienes que completar un sencillo formulario.",
-        privacy: "El formulario y el almacenamiento de datos lo ofrece Google y la información personal puede ser transferida a este servicio cuando se utiliza esta función.",
-        toForm: "Formulario de Motivación"
-      },
-      lockedDescriptionTitle: 'Your description currently hidden from the public.',
+      editMotivation: "Editar motivación",
+      addMotivation: "Añadir motivación",
+      lockedDescriptionTitle: "Tu descripción actualmente no es visible para el público.",
       lockedDescriptionText: 'After your first contributions it will become visible to everybody.'
     },
     notices: {
@@ -453,7 +435,8 @@ export const loggedInData = {
         trash: "Borrado exitosamente 🗑",
         restore: "Restablecido con éxito ♻️",
         accept: "Edición aceptada ✅",
-        reject: "Edición rechazada ❌ "
+        reject: "Edición rechazada ❌ ",
+        save: 'Edit successfully saved ✅'
       },
       errors: {
         UNAUTHENTICATED: "¡Tienes que iniciar sesión para usar esta función!",
@@ -522,7 +505,8 @@ export const loggedInData = {
         createdAt: "Creado el",
         settings: "Configuración",
         equationsTitle: "Términos y ecuaciones",
-        equationsDesc: "Escribe manipulaciones de términos y resuelve ecuaciones múltiples."
+        equationsDesc: "Escribe manipulaciones de términos y resuelve ecuaciones múltiples.",
+        ready: "Ready to save?"
       },
       anchor: {
         identifier: "Identificador",
@@ -748,6 +732,29 @@ export const loggedInData = {
       },
       deprecated: {
         unsupported: "Esta parte del documento contiene funciones que ya no son compatibles."
+      }
+    },
+    profileSettings: {
+      editAbout: "Tu descripción",
+      showInstructions: "Mostrar instrucciones",
+      howToEditImage: {
+        heading: "Como editar tu foto del perfil",
+        description: "Actualmente usamos las imágenes del %chatLink%  como impagen de perfil.  Para cambiar la imágen, haz lo siguiente:",
+        steps: {
+          goToChat: "Ir a %chatLink%.",
+          signIn: "Iniciar sesión.",
+          goToMyAccount: "Ir al menú de usuario a %myAccountLink%",
+          myAccount: "Mi cuenta",
+          uploadPicture: "Sube una nueva imagen (asegúrate de que sea cuadrada) y haz clic en \"Guardar cambios\".",
+          refreshPage: "Vuelve aquí y actualiza la imagen usando %refreshLink%.",
+          refreshLink: "este enlace"
+        }
+      },
+      motivation: {
+        heading: "Cómo editar tu motivación",
+        intro: "La motivación es una función nueva que está a prueba en este momento. Para editar tu motivación tienes que completar un sencillo formulario.",
+        privacy: "El formulario y el almacenamiento de datos lo ofrece Google y la información personal puede ser transferida a este servicio cuando se utiliza esta función.",
+        toForm: "Formulario de Motivación"
       }
     }
   }

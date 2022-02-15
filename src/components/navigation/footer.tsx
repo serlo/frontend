@@ -38,7 +38,7 @@ function About() {
           <FontAwesomeIcon icon={faChevronUp} size="lg" />
         </div>
       </div>
-      <div className="text-lg flex-shrink">
+      <div className="text-lg shrink">
         <div className="bg-brand-light text-white pt-8 pb-4 px-side md:px-side-lg">
           <div className="font-bold my-1">{strings.footer.summaryHeading}</div>
           <div className="mt-4 leading-browser">
