@@ -64,7 +64,7 @@ export const instanceData = {
       unrevisedRevisions: "Ungeprüfte Bearbeitungen",
       userEdits: "Bearbeitungen von %user%",
       userEditsMine: "Meine ungeprüften Bearbeitungen",
-      editProfile: 'Edit Profile & Settings'
+      editProfile: "Profil bearbeiten & Einstellungen"
     },
     roles: {
       donor: "Spender*in",
@@ -256,8 +256,8 @@ export const instanceData = {
         legendary: "💙 Oh wow! 💙",
         untilNextLevel: "%amount% mehr um diesen Kreis zu füllen 🎉"
       },
-      editMotivation: 'Edit motivation',
-      addMotivation: 'Add motivation',
+      editMotivation: "Motivationstext ändern",
+      addMotivation: "Motivation hinzufügen",
       lockedDescriptionTitle: "Deine Beschreibung ist aktuell nur für dich sichtbar.",
       lockedDescriptionText: "Nach deinen ersten Aktivitäten auf Serlo wird sie für alle sichtbar."
     },
@@ -436,7 +436,7 @@ export const loggedInData = {
         restore: "Erfolgreich wiederhergestellt ♻️",
         accept: "Bearbeitung wurde akzeptiert ✅",
         reject: "Bearbeitung wurde abgelehnt ❌",
-        save: 'Edit successfully saved ✅'
+        save: "Bearbeiten erfolgreich gespeichert ✅"
       },
       errors: {
         UNAUTHENTICATED: "Für diese Funktion musst du dich einloggen!",
@@ -477,8 +477,8 @@ export const loggedInData = {
         multimediaDesc: "Erstelle einen veranschaulichenden oder erklärenden Multimedia-Inhalt mit zugehöriger Erklärung.",
         spoiler: 'Spoiler',
         spoilerDesc: "In diese ausklappbare Box kannst du zum Beispiel Exkurse hinzufügen.",
-        serloTable: 'Table',
-        serloTableDesc: '(new plugin in testing) Create tables',
+        serloTable: "Tabelle",
+        serloTableDesc: "(Testlauf für neues Plugin) Tabellen erstellen",
         table: "Tabelle",
         tableDesc: "Erstelle eine Tabelle mit Markdown.",
         video: 'Video',
