@@ -1,10 +1,10 @@
 import clsx from 'clsx'
 import { useRef, useState } from 'react'
-import scrollIntoView from 'smooth-scroll-into-view-if-needed'
 
 import { MaxWidthDiv } from '../../navigation/max-width-div'
 import { SubTopic } from '../../taxonomy/sub-topic'
 import { TaxonomySubTerm } from '@/data-types'
+import { isPartiallyInView } from '@/helper/is-partially-in-view'
 
 interface LandingInformatikTopicOverviewProps {
   subterms: TaxonomySubTerm[]
@@ -21,15 +21,17 @@ export function LandingInformatikTopicOverview({
     setSelectedIndex(indexToBeSet)
 
     if (indexToBeSet > -1 && topicContainer.current) {
-      void scrollIntoView(topicContainer.current, {
-        behavior: 'smooth',
-        scrollMode: 'if-needed',
-      })
+      if (!isPartiallyInView(topicContainer.current, 150)) {
+        scroll({
+          top: topicContainer.current.offsetTop,
+          behavior: 'smooth',
+        })
+      }
     }
   }
 
   return (
-    <div className="">
+    <div>
       {renderMenu()}
 
       <div className="pt-3 md:pt-6 md:ml-16 image-hack" ref={topicContainer}>

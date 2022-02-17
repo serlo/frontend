@@ -91,7 +91,6 @@
     "slate": "^0.47.0",
     "slate-plain-serializer": "^0.7.0",
     "slate-react": "^0.22.0",
-    "smooth-scroll-into-view-if-needed": "^1.1.33",
     "styled-components": "^5.0.0",
     "swr": "^1.0.0",
     "timeago-react": "^3.0.0",
