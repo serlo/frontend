@@ -18,6 +18,8 @@ import { Icon, faTimes, styled } from '@edtr-io/ui'
 import * as R from 'ramda'
 import React from 'react'
 
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
+
 enum TableType {
   OnlyColumnHeader = 'OnlyColumnHeader',
   OnlyRowHeader = 'OnlyRowHeader',
@@ -113,7 +115,6 @@ const ConvertLink = styled.a({
 function SerloTableEditor(props: SerloTableProps) {
   const { rowHeaders, columnHeaders, rows } = props.state
   const store = useScopedStore()
-
   const focusedElement = useScopedSelector(getFocused())
   const nestedFocus =
     props.focused ||
@@ -128,6 +129,10 @@ function SerloTableEditor(props: SerloTableProps) {
         .map((column) => column.content.id as string | null)
         .includes(focusedElement)
     )
+
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return null
+  const tableStrings = loggedInData.strings.editor.serloTable
 
   const tableType = getTableType(props.state.tableType.value)
   const showRowHeader =
@@ -144,23 +149,19 @@ function SerloTableEditor(props: SerloTableProps) {
       {props.renderIntoSettings(
         <div>
           <label>
-            {/* TODO: i18n */}
-            serloTable::Mode:{' '}
+            {tableStrings.mode}{' '}
             <select
               value={tableType}
               onChange={(e) => props.state.tableType.set(e.target.value)}
             >
               <option value={TableType.OnlyColumnHeader}>
-                {/* TODO: i18n */}
-                Only column headers
+                {tableStrings.columnHeaders}
               </option>
               <option value={TableType.OnlyRowHeader}>
-                {/* TODO: i18n */}
-                Only row headers
+                {tableStrings.rowHeaders}
               </option>
               <option value={TableType.ColumnAndRowHeader}>
-                {/* TODO: i18n */}
-                Column and row headers
+                {tableStrings.columnAndRowHeaders}
               </option>
             </select>
           </label>
@@ -231,8 +232,7 @@ function SerloTableEditor(props: SerloTableProps) {
                   {contentHasFocus && (
                     // TODO: Is there a trick to not use onMouseDown?!
                     <ConvertLink onMouseDown={() => content.replace('text')}>
-                      {/* TODO: i18n */}
-                      convert to text
+                      {tableStrings.convertToText}
                     </ConvertLink>
                   )}
                 </ImageCell>
@@ -244,8 +244,7 @@ function SerloTableEditor(props: SerloTableProps) {
                   {content.render({ config: { placeholder: '' } })}
                   {contentHasFocus && (
                     <ConvertLink onMouseDown={() => content.replace('image')}>
-                      {/* TODO: i18n */}
-                      convert to image
+                      {tableStrings.convertToImage}
                     </ConvertLink>
                   )}
                 </TableCell>
@@ -273,7 +272,7 @@ function SerloTableEditor(props: SerloTableProps) {
                 })
               }}
             >
-              {/* TODO: i18n */}+ Add row
+              + {tableStrings.addRow}
             </AddButton>
           </td>
         </tr>
