@@ -560,7 +560,15 @@ export const loggedInData = {
         missedSome: "Fast! Dir fehlt noch mindestens eine richtige Antwort",
         correct: "Richtig"
       },
-      serloTable: {},
+      serloTable: {
+        mode: 'Mode',
+        columnHeaders: 'Only column headers',
+        rowHeaders: 'Only row headers',
+        columnAndRowHeaders: 'Column and row headers',
+        convertToText: 'convert to text',
+        convertToImage: 'convert to image',
+        addRow: 'Add row'
+      },
       spoiler: {
         enterATitle: "Titel eingeben"
       },
