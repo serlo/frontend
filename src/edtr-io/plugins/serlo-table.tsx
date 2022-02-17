@@ -210,38 +210,30 @@ function SerloTableEditor(props: SerloTableProps) {
               const isImage =
                 getDocument(content.get())(store.getState())?.plugin === 'image'
               const contentHasFocus = isFocused(content.get())(store.getState())
-              const buttonClasses =
-                'serlo-button serlo-make-interactive-light m-2 py-0.5 text-sm'
+              const onClick = isImage
+                ? undefined
+                : () => store.dispatch(focus(content.get()))
 
-              return isImage ? (
+              return (
                 <TableCell
                   key={columnIndex}
                   style={{ width: `${100 / columnHeaders.length}%` }}
+                  onClick={onClick}
                 >
-                  {content.render()}
-                  {contentHasFocus && (
-                    <button
-                      onMouseDown={(e) => e.stopPropagation()}
-                      onClick={() => content.replace('text')}
-                      className={buttonClasses}
-                    >
-                      {tableStrings.convertToText}
-                    </button>
+                  {content.render(
+                    isImage ? undefined : { config: { placeholder: '' } }
                   )}
-                </TableCell>
-              ) : (
-                <TableCell
-                  key={columnIndex}
-                  onClick={() => store.dispatch(focus(content.get()))}
-                >
-                  {content.render({ config: { placeholder: '' } })}
                   {contentHasFocus && (
                     <button
-                      onMouseDown={(e) => e.stopPropagation()}
-                      onClick={() => content.replace('image')}
-                      className={buttonClasses}
+                      onMouseDown={(e) => e.stopPropagation()} // hack to stop edtr from stealing events
+                      onClick={() =>
+                        content.replace(isImage ? 'text' : 'image')
+                      }
+                      className="serlo-button serlo-make-interactive-light m-2 py-0.5 text-sm"
                     >
-                      {tableStrings.convertToImage}
+                      {isImage
+                        ? tableStrings.convertToText
+                        : tableStrings.convertToImage}
                     </button>
                   )}
                 </TableCell>
