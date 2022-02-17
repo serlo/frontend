@@ -561,13 +561,13 @@ export const loggedInData = {
         correct: "Richtig"
       },
       serloTable: {
-        mode: 'Mode',
-        columnHeaders: 'Only column headers',
-        rowHeaders: 'Only row headers',
-        columnAndRowHeaders: 'Column and row headers',
-        convertToText: 'convert to text',
-        convertToImage: 'convert to image',
-        addRow: 'Add row'
+        mode: "Modus",
+        columnHeaders: "Nur Spaltentitel",
+        rowHeaders: "Nur Zeilentitel",
+        columnAndRowHeaders: "Spalten- und Zeilentitel",
+        convertToText: "Zum Textfeld machen",
+        convertToImage: "Zum Bildfeld machen",
+        addRow: "Zeile hinzufügen"
       },
       spoiler: {
         enterATitle: "Titel eingeben"
