@@ -18,6 +18,8 @@ import { Icon, faTimes, styled } from '@edtr-io/ui'
 import * as R from 'ramda'
 import React from 'react'
 
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
+
 enum TableType {
   OnlyColumnHeader = 'OnlyColumnHeader',
   OnlyRowHeader = 'OnlyRowHeader',
@@ -25,8 +27,8 @@ enum TableType {
 }
 
 const tableState = object({
-  // TODO: Dont allow headings, bold, italic
-  // TODO: Make this inline text (option in slate)
+  // Headings, bold, italic should not be allowed and this should be an inline field
+  // see https://github.com/edtr-io/edtr-io/issues/359
   columnHeaders: list(object({ content: child({ plugin: 'text' }) }), 2),
   rowHeaders: list(object({ content: child({ plugin: 'text' }) }), 4),
   rows: list(
@@ -52,8 +54,7 @@ const Table = styled.table({
   width: '100%',
   height: '100%',
   overflowX: 'scroll',
-  // TODO: How to unhack
-  // (Lösung: Slate so machen, dass es inline gerendert werden kann)
+  // hack, can be removed it text plugin can be set to inline
   div: {
     marginBottom: '0px',
   },
@@ -69,10 +70,6 @@ const TableCell = styled.td({
   height: '1em',
 })
 
-// TODO: Can we delete it?
-const ImageCell = styled(TableCell)({})
-
-// TODO: Make AddButton of edtr-io stylable
 const AddButton = styled.button({
   border: '2px solid lightgrey',
   margin: '3px',
@@ -95,7 +92,6 @@ const AddColumnButton = styled(AddButton)({
   height: '100%',
 })
 
-// TODO: From edtor-io -> export it there?!
 const RemoveButton = styled.button({
   outline: 'none',
   width: '35px',
@@ -104,16 +100,9 @@ const RemoveButton = styled.button({
   color: 'lightgrey',
 })
 
-const ConvertLink = styled.a({
-  display: 'block',
-  marginTop: '1em',
-  fontSize: 'smaller',
-})
-
 function SerloTableEditor(props: SerloTableProps) {
   const { rowHeaders, columnHeaders, rows } = props.state
   const store = useScopedStore()
-
   const focusedElement = useScopedSelector(getFocused())
   const nestedFocus =
     props.focused ||
@@ -128,6 +117,10 @@ function SerloTableEditor(props: SerloTableProps) {
         .map((column) => column.content.id as string | null)
         .includes(focusedElement)
     )
+
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return null
+  const tableStrings = loggedInData.strings.editor.serloTable
 
   const tableType = getTableType(props.state.tableType.value)
   const showRowHeader =
@@ -144,23 +137,19 @@ function SerloTableEditor(props: SerloTableProps) {
       {props.renderIntoSettings(
         <div>
           <label>
-            {/* TODO: i18n */}
-            serloTable::Mode:{' '}
+            {tableStrings.mode}{' '}
             <select
               value={tableType}
               onChange={(e) => props.state.tableType.set(e.target.value)}
             >
               <option value={TableType.OnlyColumnHeader}>
-                {/* TODO: i18n */}
-                Only column headers
+                {tableStrings.columnHeaders}
               </option>
               <option value={TableType.OnlyRowHeader}>
-                {/* TODO: i18n */}
-                Only row headers
+                {tableStrings.rowHeaders}
               </option>
               <option value={TableType.ColumnAndRowHeader}>
-                {/* TODO: i18n */}
-                Column and row headers
+                {tableStrings.columnAndRowHeaders}
               </option>
             </select>
           </label>
@@ -221,32 +210,31 @@ function SerloTableEditor(props: SerloTableProps) {
               const isImage =
                 getDocument(content.get())(store.getState())?.plugin === 'image'
               const contentHasFocus = isFocused(content.get())(store.getState())
+              const onClick = isImage
+                ? undefined
+                : () => store.dispatch(focus(content.get()))
 
-              return isImage ? (
-                <ImageCell
-                  key={columnIndex}
-                  style={{ width: `${100 / columnHeaders.length}%` }}
-                >
-                  {content.render()}
-                  {contentHasFocus && (
-                    // TODO: Is there a trick to not use onMouseDown?!
-                    <ConvertLink onMouseDown={() => content.replace('text')}>
-                      {/* TODO: i18n */}
-                      convert to text
-                    </ConvertLink>
-                  )}
-                </ImageCell>
-              ) : (
+              return (
                 <TableCell
                   key={columnIndex}
-                  onClick={() => store.dispatch(focus(content.get()))}
+                  style={{ width: `${100 / columnHeaders.length}%` }}
+                  onClick={onClick}
                 >
-                  {content.render({ config: { placeholder: '' } })}
+                  {content.render(
+                    isImage ? undefined : { config: { placeholder: '' } }
+                  )}
                   {contentHasFocus && (
-                    <ConvertLink onMouseDown={() => content.replace('image')}>
-                      {/* TODO: i18n */}
-                      convert to image
-                    </ConvertLink>
+                    <button
+                      onMouseDown={(e) => e.stopPropagation()} // hack to stop edtr from stealing events
+                      onClick={() =>
+                        content.replace(isImage ? 'text' : 'image')
+                      }
+                      className="serlo-button serlo-make-interactive-light m-2 py-0.5 text-sm"
+                    >
+                      {isImage
+                        ? tableStrings.convertToText
+                        : tableStrings.convertToImage}
+                    </button>
                   )}
                 </TableCell>
               )
@@ -273,7 +261,7 @@ function SerloTableEditor(props: SerloTableProps) {
                 })
               }}
             >
-              {/* TODO: i18n */}+ Add row
+              + {tableStrings.addRow}
             </AddButton>
           </td>
         </tr>
@@ -352,12 +340,12 @@ function SerloTableRenderer(props: SerloTableProps) {
                   'image'
 
                 return isImage ? (
-                  <ImageCell
+                  <TableCell
                     key={columnIndex}
                     style={{ width: `${100 / columnHeaders.length}%` }}
                   >
                     {!isEmpty(content.id)(store.getState()) && content.render()}
-                  </ImageCell>
+                  </TableCell>
                 ) : (
                   <TableCell key={columnIndex}>
                     {!isEmpty(content.id)(store.getState()) && content.render()}
