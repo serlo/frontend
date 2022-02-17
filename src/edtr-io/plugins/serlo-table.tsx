@@ -27,8 +27,8 @@ enum TableType {
 }
 
 const tableState = object({
-  // TODO: Dont allow headings, bold, italic
-  // TODO: Make this inline text (option in slate)
+  // Headings, bold, italic should not be allowed and this should be an inline field
+  // see https://github.com/edtr-io/edtr-io/issues/359
   columnHeaders: list(object({ content: child({ plugin: 'text' }) }), 2),
   rowHeaders: list(object({ content: child({ plugin: 'text' }) }), 4),
   rows: list(
@@ -54,8 +54,7 @@ const Table = styled.table({
   width: '100%',
   height: '100%',
   overflowX: 'scroll',
-  // TODO: How to unhack
-  // (Lösung: Slate so machen, dass es inline gerendert werden kann)
+  // hack, can be removed it text plugin can be set to inline
   div: {
     marginBottom: '0px',
   },
@@ -71,10 +70,6 @@ const TableCell = styled.td({
   height: '1em',
 })
 
-// TODO: Can we delete it?
-const ImageCell = styled(TableCell)({})
-
-// TODO: Make AddButton of edtr-io stylable
 const AddButton = styled.button({
   border: '2px solid lightgrey',
   margin: '3px',
@@ -97,19 +92,12 @@ const AddColumnButton = styled(AddButton)({
   height: '100%',
 })
 
-// TODO: From edtor-io -> export it there?!
 const RemoveButton = styled.button({
   outline: 'none',
   width: '35px',
   border: 'none',
   background: 'transparent',
   color: 'lightgrey',
-})
-
-const ConvertLink = styled.a({
-  display: 'block',
-  marginTop: '1em',
-  fontSize: 'smaller',
 })
 
 function SerloTableEditor(props: SerloTableProps) {
@@ -222,20 +210,25 @@ function SerloTableEditor(props: SerloTableProps) {
               const isImage =
                 getDocument(content.get())(store.getState())?.plugin === 'image'
               const contentHasFocus = isFocused(content.get())(store.getState())
+              const buttonClasses =
+                'serlo-button serlo-make-interactive-light m-2 py-0.5 text-sm'
 
               return isImage ? (
-                <ImageCell
+                <TableCell
                   key={columnIndex}
                   style={{ width: `${100 / columnHeaders.length}%` }}
                 >
                   {content.render()}
                   {contentHasFocus && (
-                    // TODO: Is there a trick to not use onMouseDown?!
-                    <ConvertLink onMouseDown={() => content.replace('text')}>
+                    <button
+                      onMouseDown={(e) => e.stopPropagation()}
+                      onClick={() => content.replace('text')}
+                      className={buttonClasses}
+                    >
                       {tableStrings.convertToText}
-                    </ConvertLink>
+                    </button>
                   )}
-                </ImageCell>
+                </TableCell>
               ) : (
                 <TableCell
                   key={columnIndex}
@@ -243,9 +236,13 @@ function SerloTableEditor(props: SerloTableProps) {
                 >
                   {content.render({ config: { placeholder: '' } })}
                   {contentHasFocus && (
-                    <ConvertLink onMouseDown={() => content.replace('image')}>
+                    <button
+                      onMouseDown={(e) => e.stopPropagation()}
+                      onClick={() => content.replace('image')}
+                      className={buttonClasses}
+                    >
                       {tableStrings.convertToImage}
-                    </ConvertLink>
+                    </button>
                   )}
                 </TableCell>
               )
@@ -351,12 +348,12 @@ function SerloTableRenderer(props: SerloTableProps) {
                   'image'
 
                 return isImage ? (
-                  <ImageCell
+                  <TableCell
                     key={columnIndex}
                     style={{ width: `${100 / columnHeaders.length}%` }}
                   >
                     {!isEmpty(content.id)(store.getState()) && content.render()}
-                  </ImageCell>
+                  </TableCell>
                 ) : (
                   <TableCell key={columnIndex}>
                     {!isEmpty(content.id)(store.getState()) && content.render()}
