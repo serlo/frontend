@@ -16,3 +16,6 @@ tsconfig.json
 
 # Assets
 public
+
+# Yarn
+.yarn/
