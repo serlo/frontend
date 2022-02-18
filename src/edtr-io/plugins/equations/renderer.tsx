@@ -39,6 +39,11 @@ export const ExplanationTr = styled.tr({
   },
 })
 
+export enum TransformationTarget {
+  Equation = 'equation',
+  Term = 'term',
+}
+
 export function EquationsRenderer({ state }: EquationsProps) {
   const store = useScopedStore()
   const transformationTarget = toTransformationTarget(
@@ -163,11 +168,6 @@ export function renderDownArrow() {
       }}
     />
   )
-}
-
-export enum TransformationTarget {
-  Equation = 'equation',
-  Term = 'term',
 }
 
 export function toTransformationTarget(text: string): TransformationTarget {
