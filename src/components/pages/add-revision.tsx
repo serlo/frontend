@@ -2,7 +2,9 @@ import clsx from 'clsx'
 import Cookies from 'js-cookie'
 import React from 'react'
 
+import { Breadcrumbs } from '../navigation/breadcrumbs'
 import { MathSpan } from '@/components/content/math-span'
+import { useInstanceData } from '@/contexts/instance-context'
 import { SerloEditor } from '@/edtr-io/serlo-editor'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
 
@@ -10,9 +12,21 @@ export function AddRevision({
   initialState,
   type,
   needsReview,
+  id,
 }: EditorPageData) {
+  const { strings } = useInstanceData()
+
   return (
     <>
+      <Breadcrumbs
+        data={[
+          {
+            label: strings.revisions.toContent,
+            url: `/${id}`,
+          },
+        ]}
+        asBackButton
+      />
       <MathSpan formula="" />
       <div className="controls-portal sticky top-0 z-[99] bg-white" />
       <div
