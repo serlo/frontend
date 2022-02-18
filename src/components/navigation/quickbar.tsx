@@ -4,6 +4,7 @@ import clsx from 'clsx'
 import { useState, useRef, useEffect, KeyboardEvent } from 'react'
 
 import { Link } from '../content/link'
+import { isMac } from '@/helper/client-detection'
 
 interface QuickbarDataEntry {
   title: string
@@ -58,7 +59,7 @@ export function Quickbar({ subject, className }: QuickbarProps) {
   }, [query, data, subject])
 
   useEffect(() => {
-    setSel(-1)
+    setSel(0)
     setOpen(query && data ? true : false)
   }, [query, data])
 
@@ -138,7 +139,10 @@ export function Quickbar({ subject, className }: QuickbarProps) {
             )}`
           }
           if (sel >= 0 && sel < results.length) {
-            window.location.href = `//${host}/${results[sel].entry.id}`
+            const url = `//${host}/${results[sel].entry.id}`
+            if ((isMac && e.metaKey) || (!isMac && e.ctrlKey)) {
+              window.open(url)
+            } else window.location.href = url
           }
         }
         e.preventDefault()
