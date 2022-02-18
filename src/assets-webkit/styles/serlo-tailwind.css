@@ -383,6 +383,13 @@
         display: none !important;
       }
     }
+
+    /* spoiler title */
+    div > a > label > input {
+      display: inline-block;
+      width: 96%;
+      padding-left: 0;
+    }
   }
 
   .serlo-search-input-hack {
