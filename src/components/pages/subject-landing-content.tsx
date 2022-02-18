@@ -1,35 +1,44 @@
 import clsx from 'clsx'
 import Head from 'next/head'
-import { lighten } from 'polished'
-import React from 'react'
 
 import { HeadTags } from '../head-tags'
 import { FooterNew } from '../landing/rework/footer-new'
-import { CommunityWallInformatik } from '../landing/subjects/community-wall-informatik'
-import { LandingInformatikFeatured } from '../landing/subjects/landing-informatik-featured'
-import { LandingInformatikTopicOverview } from '../landing/subjects/landing-informatik-topic-overview'
+import { SubjectIcon } from '../landing/rework/subject-icon'
+import { CommunityWallSubjectLanding } from '../landing/subjects/community-wall-subject-landing'
+import { SubjectLandingFeatured } from '../landing/subjects/subject-landing-featured'
+import { SubjectLandingTopicOverview } from '../landing/subjects/subject-landing-topic-overview'
 import { Header } from '../navigation/header'
 import { Quickbar } from '../navigation/quickbar'
-import InformaticsSVG from '@/assets-webkit/img/landing/subjects-informatics.svg'
+import { deSubjectLandingSubjects } from './subject-landing'
 import { useInstanceData } from '@/contexts/instance-context'
 import { TaxonomySubTerm } from '@/data-types'
-import { theme } from '@/theme'
+import { deSubjectLandingData } from '@/data/de/de-subject-landing-data'
+import { getServerSideStrings } from '@/helper/feature-i18n'
 
-interface LandingInformatikProps {
+interface SubjectLandingContentProps {
+  subject: deSubjectLandingSubjects
   subterms: TaxonomySubTerm[]
 }
 
-export function LandingInformatik({ subterms }: LandingInformatikProps) {
+export function SubjectLandingContent({
+  subterms,
+  subject,
+}: SubjectLandingContentProps) {
   const { lang } = useInstanceData()
 
   if (lang !== 'de') return null
+  const instanceData = getServerSideStrings(lang)
+
+  const data = deSubjectLandingData[subject]
 
   return (
     <>
       <Head>
         <link href="_assets/landing-fonts.css" rel="stylesheet" />
       </Head>
-      <HeadTags data={{ title: 'Serlo – Die freie Lernplattform' }} />
+      <HeadTags
+        data={{ title: `${data.title} Startseite  - ${instanceData.title}` }}
+      />
       <Header />
       <main className="text-truegray-700">
         <section
@@ -47,35 +56,40 @@ export function LandingInformatik({ subterms }: LandingInformatikProps) {
                 'mt-3 mb-10'
               )}
             >
-              <span className="pb-2 underlined">Informatik</span>
+              <span className="pb-2 underlined inline-block max-w-[27rem] !whitespace-normal">
+                {data.title}
+              </span>
             </h1>
             <p className="text-2xl leading-cozy text-truegray-700">
-              Keine Angst vor Computern.
-              <br /> Lerne ihre Sprache und zähme sie 😉
+              {data.subline1}
+              <br /> {data.subline2}
             </p>
           </div>
           {renderIcon()}
         </section>
 
-        <section className="max-w-3xl mx-auto mt-10 px-2 text-center sm:text-left sm:mt-16">
+        <section className="max-w-3xl mx-auto mt-10 text-center sm:text-left sm:mt-16">
           <h2 className="text-truegray-700 font-bold text-lg mb-2">
-            Durchsuche den Informatikbereich
+            Durchsuche den {data.title}-Bereich
           </h2>
 
-          <Quickbar subject="informatik" className="max-w-sm sm:px-0 sm:ml-0" />
+          <Quickbar
+            subject={subject}
+            className="max-w-sm sm:px-0 sm:-ml-1 md:max-w-2xl md:pr-4"
+          />
         </section>
 
         <section className={clsx('text-center', 'themen')}>
-          <p className="text-brand font-handwritten text-4xl mt-4 mb-12">
-            <span className="italic">Was darf&apos;s denn heute sein?</span>
+          <p className="text-3xl mt-4 mb-12 font-extrabold tracking-tight">
+            <span>Was darf&apos;s denn heute sein?</span>
           </p>
-          <LandingInformatikTopicOverview subterms={subterms} />
+          <SubjectLandingTopicOverview subterms={subterms} />
         </section>
 
         <section className={clsx('text-center', 'mt-20 mb-8')}>
           <h2
             className={clsx(
-              'text-4xl font-extrabold',
+              'text-3xl font-extrabold',
               'tracking-tight',
               'max-w-2xl mt-3 pb-10 mx-auto'
             )}
@@ -83,11 +97,11 @@ export function LandingInformatik({ subterms }: LandingInformatikProps) {
             <span className="pb-2">Beliebte Inhalte</span>
           </h2>
 
-          <LandingInformatikFeatured />
+          <SubjectLandingFeatured subject={subject} />
         </section>
 
         <section className="text-center partner">
-          <CommunityWallInformatik />
+          <CommunityWallSubjectLanding subject={subject} />
         </section>
       </main>
       <FooterNew />
@@ -182,68 +196,16 @@ export function LandingInformatik({ subterms }: LandingInformatikProps) {
     return (
       <>
         <div className="landing-subjects group mx-auto -mt-3">
-          <InformaticsSVG className="superspecial-informatics" />
+          <SubjectIcon subject={subject} />
         </div>
         <style jsx global>{`
-          .landing-subjects {
-            & svg.superspecial-informatics {
-              display: block;
-              margin: 0 auto;
-              min-width: 16rem;
+          .landing-subjects svg.serlo-subject-icon {
+            display: block;
+            margin: 0 auto;
+            min-width: 16rem;
 
-              width: 13rem;
-              height: 13rem;
-
-              .blue {
-                fill: ${theme.colors.lighterblue};
-                transition: all 0.2s ease-in-out;
-              }
-              .green,
-              .drop,
-              .pipette path {
-                fill: #becd2b;
-                transition: all 0.2s ease-in-out;
-              }
-
-              @media (min-width: ${theme.breakpoints.sm}) {
-                .blue {
-                  fill: ${lighten(0.07, theme.colors.lighterblue)};
-                }
-              }
-
-              /* animations */
-              transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-              box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-              animation-play-state: paused;
-            }
-            .eye-closed,
-            .sound {
-              opacity: 0;
-            }
-            .eye-closed {
-              stroke: #000;
-              stroke-width: 2px;
-            }
-            & .superspecial-informatics {
-              transition: fill ease-in 0.5s;
-            }
-            &:hover,
-            &:focus,
-            &:active {
-              && .blue {
-                fill: ${theme.colors.brand};
-              }
-              && .green {
-                fill: #becd2b;
-              }
-              .eye-open {
-                opacity: 0;
-              }
-              .eye-closed,
-              .sound {
-                opacity: 1;
-              }
-            }
+            width: 13rem;
+            height: 13rem;
           }
         `}</style>
       </>

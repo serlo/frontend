@@ -3,10 +3,12 @@ import { useEffect, useState } from 'react'
 
 import { CommunityWallPersons } from '../rework/community-wall/community-wall-persons'
 import { Link } from '@/components/content/link'
+import { deSubjectLandingSubjects } from '@/components/pages/subject-landing'
 import {
   communityWallPersons,
   CommunityWallPerson,
 } from '@/data/de/community-people'
+import { deSubjectLandingData } from '@/data/de/de-subject-landing-data'
 import { shuffleArray } from '@/helper/shuffle-array'
 
 const positions = [
@@ -17,16 +19,20 @@ const positions = [
   ['17%', '39%'],
 ]
 
-export function CommunityWallInformatik() {
+export function CommunityWallSubjectLanding({
+  subject,
+}: {
+  subject: deSubjectLandingSubjects
+}) {
   const [persons, setPersons] = useState<CommunityWallPerson[]>(
-    communityWallPersons.filter((person) =>
-      person.subjects.includes('informatik')
-    )
+    communityWallPersons.filter((person) => person.subjects.includes(subject))
   )
 
   useEffect(() => {
     setPersons((p) => shuffleArray(p))
   }, [])
+
+  const { title } = deSubjectLandingData[subject]
 
   return (
     <>
@@ -39,14 +45,14 @@ export function CommunityWallInformatik() {
               'max-w-2xl mt-20 mx-auto relative z-10 mb-8'
             )}
           >
-            Lust Informatik mitzugestalten?
+            Lust {title} mitzugestalten?
           </h3>
           <p className="jsx-1406289065 text-xl leading-cozy text-truegray-700 max-w-xl mx-auto">
             Alle Inhalte auf serlo.org werden von einer ehrenamtlichen Community
             aus Lehrkräften, Studierenden, Schüler*innen und anderen
             Bildungsbegeisterten gestaltet. Erweitere mit uns das Angebot von{' '}
-            <b>Serlo Informatik</b> um noch mehr Lernenden Bildung frei
-            verfügbar zu machen!
+            <b>Serlo {title}</b> um noch mehr Lernenden Bildung frei verfügbar
+            zu machen!
           </p>
           <div className="group text-center">
             <Link

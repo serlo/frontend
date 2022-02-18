@@ -5,7 +5,7 @@ import { SlugProps } from '@/data-types'
 import { subjectLandingGetStaticProps } from '@/fetcher/subject-landing/subject-landing-get-static-props'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
-const subject = 'informatik'
+const subject = 'biologie'
 
 export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
   return <SubjectLanding subject={subject} pageData={pageData} />

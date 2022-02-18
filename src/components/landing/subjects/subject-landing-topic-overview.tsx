@@ -6,13 +6,13 @@ import { SubTopic } from '../../taxonomy/sub-topic'
 import { TaxonomySubTerm } from '@/data-types'
 import { isPartiallyInView } from '@/helper/is-partially-in-view'
 
-interface LandingInformatikTopicOverviewProps {
+interface SubjectLandingTopicOverviewProps {
   subterms: TaxonomySubTerm[]
 }
 
-export function LandingInformatikTopicOverview({
+export function SubjectLandingTopicOverview({
   subterms,
-}: LandingInformatikTopicOverviewProps) {
+}: SubjectLandingTopicOverviewProps) {
   const [selectedIndex, setSelectedIndex] = useState(-1)
   const topicContainer = useRef<HTMLDivElement>(null)
 
@@ -86,7 +86,7 @@ export function LandingInformatikTopicOverview({
             <button
               key={term.title}
               className={clsx(
-                'flex p-2 m-2 text-left font-bold text-brand',
+                'flex p-2 m-2 text-left font-bold text-brand min-h-[4rem]',
                 'rounded-xl hover:bg-brand/5 transition-colors shadow-menu',
                 isActive ? 'text-black bg-brand/10 hover:bg-brand/10' : '',
                 src ? '' : 'pl-16'

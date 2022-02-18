@@ -31,7 +31,7 @@ export const communityWallPersons = [
     role: 'Team',
     imgSrc:
       'https://assets.serlo.org/5996d7a3e84ff_7c59204083b1095e2995638232d83b0b608cb910.jpg',
-    subjects: ['informatik'],
+    subjects: ['informatik', 'mathe'],
   },
   {
     name: 'karin',
@@ -45,14 +45,14 @@ export const communityWallPersons = [
     role: 'Team',
     imgSrc:
       'https://assets.serlo.org/5a005278ce575_e72a8367c20d1bf53add676fa2893b34c5823fdb.jpg',
-    subjects: ['informatik'],
+    subjects: ['informatik', 'mathe'],
   },
   {
     name: 'Leogato',
     role: 'Team',
     imgSrc:
       'https://assets.serlo.org/60c36164209d0_3808119825ac30f9a58ec4cb0c865d13451f45eb.jpg',
-    subjects: [],
+    subjects: ['mathe'],
   },
   {
     name: 'wo_fo',
@@ -65,7 +65,7 @@ export const communityWallPersons = [
     name: 'corinna',
     role: 'Autorin',
     imgSrc: 'https://community.serlo.org/avatar/Corinna',
-    subjects: ['informatik'],
+    subjects: ['nachhaltigkeit'],
   },
 
   {
@@ -80,6 +80,6 @@ export const communityWallPersons = [
     role: 'Spenderin',
     imgSrc:
       'https://assets.serlo.org/60c5d7dd380cc_61b9718ba853191c16b30798169a669bf9803380.JPG',
-    subjects: [],
+    subjects: ['mathe'],
   },
 ]
