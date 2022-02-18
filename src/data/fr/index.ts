@@ -560,7 +560,15 @@ export const loggedInData = {
         missedSome: "Presque ! Tu as manqué au moins une réponse correcte",
         correct: "Correcte"
       },
-      serloTable: {},
+      serloTable: {
+        mode: 'Mode',
+        columnHeaders: 'Only column headers',
+        rowHeaders: 'Only row headers',
+        columnAndRowHeaders: 'Column and row headers',
+        convertToText: 'convert to text',
+        convertToImage: 'convert to image',
+        addRow: 'Add row'
+      },
       spoiler: {
         enterATitle: "Saisir un titre"
       },

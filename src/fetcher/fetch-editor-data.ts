@@ -18,6 +18,7 @@ export interface EditorPageData {
   type: string
   converted?: boolean
   needsReview: boolean
+  id: number
 }
 
 export interface EditorFetchErrorData {
@@ -76,6 +77,7 @@ export async function fetchEditorData(
         ...result,
         type: data.__typename,
         needsReview: !isSandbox && typeNeedsReview,
+        id: repoId,
       }
     }
   } catch (e) {

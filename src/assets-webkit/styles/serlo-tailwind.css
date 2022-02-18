@@ -235,6 +235,163 @@
       }
     }
   }
+
+  .serlo-editor-hacks {
+    h1 {
+      @apply mx-side mb-9 mt-4 p-0 font-bold text-3.5xl special-hyphens-auto;
+    }
+    h2 {
+      @apply mt-0 mb-6 pb-1 pt-6;
+      @apply text-2.5xl font-bold special-hyphens-auto;
+      @apply text-truegray-900 border-truegray-300 border-b;
+    }
+
+    h3 {
+      @apply mt-5 mb-8 pt-3 font-bold text-1.5xl text-truegray-900;
+    }
+    div[contenteditable] h3 {
+      @apply mt-0;
+    }
+
+    @apply text-lg leading-cozy;
+
+    a[data-key] {
+      @apply text-brand no-underline break-words hover:underline special-hyphens-auto;
+    }
+
+    [data-slate-object='block'] {
+      @apply mb-block;
+    }
+
+    ul:not(.unstyled-list) {
+      @apply mx-side mb-block mt-4 pl-5 list-none;
+
+      & > li:before {
+        @apply absolute special-content-space bg-brand-lighter;
+        @apply w-2.5 h-2.5 rounded-full -ml-5 mt-2.25;
+      }
+      & > li {
+        @apply mb-2;
+      }
+      & > li > ul,
+      & > li > ol {
+        @apply mt-2 !mb-4;
+      }
+    }
+    ol {
+      @apply mx-side mb-block mt-0 pl-7 list-none;
+      @apply special-reset-list-counter;
+
+      & > li:before {
+        @apply absolute special-content-list-counter special-increment-list-counter;
+        @apply font-bold text-center rounded-full -ml-7;
+        @apply mt-0.5 bg-brand-150 w-4 h-4 text-xs;
+        @apply leading-tight text-brand pt-0.25;
+      }
+      & > li {
+        @apply mb-2;
+      }
+      & > li > ul,
+      & > li > ol {
+        @apply mt-2 !mb-4;
+      }
+    }
+
+    blockquote {
+      @apply border-l-6 border-brand-150 p-2.5 my-block mx-side;
+    }
+
+    .page-header h1 input {
+      @apply w-full;
+      @apply mb-9 mt-6 p-0 font-bold text-3.5xl special-hyphens-auto;
+    }
+
+    button > div > svg {
+      @apply ml-1.5 mr-1.5 mb-1 mt-2;
+    }
+    .panel {
+      margin-bottom: 20px;
+      background-color: #fff;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    }
+    .panel-danger > .panel-heading {
+      color: #a94442;
+      background-color: #f2dede;
+      border-color: #ebccd1;
+    }
+    .panel-danger {
+      border-color: #ebccd1;
+    }
+    .panel-heading {
+      padding: 10px 15px;
+      border-bottom: 1px solid transparent;
+      border-top-left-radius: 3px;
+      border-top-right-radius: 3px;
+    }
+    .panel-body {
+      padding: 15px;
+    }
+
+    .page-header {
+      padding-bottom: 9px;
+      margin: 40px 0 20px;
+      border-bottom: 1px solid #eee;
+    }
+
+    select {
+      @apply border-2;
+    }
+
+    a {
+      @apply text-brand hover:underline;
+    }
+
+    .row {
+      margin-right: -15px;
+      margin-left: -15px;
+    }
+
+    .col-sm-1,
+    .col-sm-11 {
+      float: left;
+    }
+
+    .col-sm-1,
+    .col-sm-11,
+    .col-xs-12 {
+      position: relative;
+      min-height: 1px;
+      padding-right: 15px;
+      padding-left: 15px;
+    }
+    .col-xs-12 {
+      width: 100%;
+    }
+    @media (min-width: 768px) {
+      .col-sm-1 {
+        width: 8.33333333%;
+      }
+      .col-sm-11 {
+        width: 91.66666667%;
+      }
+    }
+
+    .hidden-xs {
+      @media (max-width: 767px) {
+        display: none !important;
+      }
+    }
+
+    /* spoiler title */
+    div > a > label > input {
+      display: inline-block;
+      width: 96%;
+      padding-left: 0;
+    }
+  }
+
   .serlo-search-input-hack {
     @apply bg-brand-300;
     display: flex;
