@@ -3377,6 +3377,7 @@ __metadata:
     slate-plain-serializer: ^0.7.0
     slate-react: ^0.22.0
     styled-components: ^5.0.0
+    styled-jsx: ^5.0.0
     styled-jsx-plugin-postcss: ^4.0.0
     swr: ^1.0.0
     tailwindcss: ^3.0.0
@@ -11741,7 +11742,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"styled-jsx@npm:5.0.0":
+"styled-jsx@npm:5.0.0, styled-jsx@npm:^5.0.0":
   version: 5.0.0
   resolution: "styled-jsx@npm:5.0.0"
   peerDependencies:
