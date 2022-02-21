@@ -40,7 +40,7 @@ export function ProfileDescriptionEditor({
 
   return (
     <>
-      <div className="controls-portal sticky top-0 z-[99] bg-white" />
+      <div className="controls-portal sticky top-0 z-[94] bg-white" />
       <div className="edtr-io serlo-editor-hacks">
         <SerloEditor
           getCsrfToken={() => {
