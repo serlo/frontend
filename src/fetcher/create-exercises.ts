@@ -43,7 +43,8 @@ export function createExercise(
         }
         taskEdtrState = taskState
       } else {
-        taskLegacy = convert(undefined) // some weird edge cases where task has no content (e.g. 117384)
+        // @ts-expect-error some weird edge cases where task has no content (e.g. 117384)
+        taskLegacy = convert(taskState)
       }
     } else {
       taskLegacy = convertState(content)
