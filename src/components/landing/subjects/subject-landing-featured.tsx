@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
+import { useEffect, useState } from 'react'
 
 import { Link } from '@/components/content/link'
 import { deSubjectLandingSubjects } from '@/components/pages/subject-landing'
@@ -10,6 +11,7 @@ import {
 } from '@/data/de/de-subject-landing-data'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
+import { shuffleArray } from '@/helper/shuffle-array'
 
 const maxOnMobile = 4
 
@@ -20,6 +22,14 @@ export function SubjectLandingFeatured({
 }) {
   const { strings } = useInstanceData()
 
+  const [content, setFeaturedContent] = useState<
+    typeof featuredContent['mathe']
+  >(featuredContent[subject])
+
+  useEffect(() => {
+    setFeaturedContent((arr) => shuffleArray(arr).slice(0, 6))
+  }, [])
+
   return (
     <div
       className={clsx(
@@ -28,7 +38,7 @@ export function SubjectLandingFeatured({
         'w-full mx-auto sm:max-w-3xl lg:max-w-max '
       )}
     >
-      {featuredContent[subject].map(renderFeaturedBox)}
+      {content.map(renderFeaturedBox)}
     </div>
   )
 
@@ -48,18 +58,32 @@ export function SubjectLandingFeatured({
         path={[]}
       >
         <div className="mb-2.5 mr-5 bg-brand-100 group-hover:bg-white rounded-lg transition-all">
-          <img
-            className={clsx(
-              'object-contain object-center',
-              'mix-blend-multiply opacity-80 transition-all',
-              'group-hover:opacity-100'
-            )}
-            style={{ aspectRatio: '1' }}
-            alt={data.title}
-            src={data.img}
-          />
+          {data.img ? (
+            <img
+              className={clsx(
+                'object-contain object-center',
+                'mix-blend-multiply opacity-80 transition-all',
+                'group-hover:opacity-100',
+                'aspect-square rounded-lg'
+              )}
+              alt={data.title}
+              src={data.img}
+            />
+          ) : (
+            <div
+              className={clsx(
+                'opacity-80 transition-all group-hover:opacity-100 aspect-square',
+                'flex align-middle items-center justify-center text-4xl',
+                'text-brand-300'
+              )}
+            >
+              {renderTypeIcon(data.type)}
+            </div>
+          )}
         </div>
-        <h4 className="font-bold text-xl mx-0 mt-1 mb-10">{data.title}</h4>
+        <h4 className="font-bold text-xl mx-0 mt-1 mb-10 break-normal special-hyphens-auto">
+          {data.title}
+        </h4>
         <span className="block mt-1 font-sm text-brand-lighter absolute bottom-2">
           {renderTypeIcon(data.type)} {getTranslatedType(strings, data.type)}
         </span>

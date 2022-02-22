@@ -42,6 +42,7 @@ export const entityIconMapping = {
   exercise: faFile,
   exercisegroup: faFile,
   folder: faFolderOpen,
+  topicfolder: faFolderOpen,
   groupedexercise: faFile,
   page: faFile,
   solution: faFile,
