@@ -1,6 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
-import { useEffect, useState } from 'react'
 
 import { Link } from '@/components/content/link'
 import { deSubjectLandingSubjects } from '@/components/pages/subject-landing'
@@ -11,7 +10,6 @@ import {
 } from '@/data/de/de-subject-landing-data'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
-import { shuffleArray } from '@/helper/shuffle-array'
 
 const maxOnMobile = 4
 
@@ -21,14 +19,6 @@ export function SubjectLandingFeatured({
   subject: deSubjectLandingSubjects
 }) {
   const { strings } = useInstanceData()
-
-  // const [content, setFeaturedContent] = useState<
-  //   typeof featuredContent['mathe']
-  // >(featuredContent[subject])
-
-  // useEffect(() => {
-  //   setFeaturedContent((arr) => shuffleArray(arr).slice(0, 6))
-  // }, [])
   const content = featuredContent[subject].slice(0, 6)
 
   return (
