@@ -22,13 +22,14 @@ export function SubjectLandingFeatured({
 }) {
   const { strings } = useInstanceData()
 
-  const [content, setFeaturedContent] = useState<
-    typeof featuredContent['mathe']
-  >(featuredContent[subject])
+  // const [content, setFeaturedContent] = useState<
+  //   typeof featuredContent['mathe']
+  // >(featuredContent[subject])
 
-  useEffect(() => {
-    setFeaturedContent((arr) => shuffleArray(arr).slice(0, 6))
-  }, [])
+  // useEffect(() => {
+  //   setFeaturedContent((arr) => shuffleArray(arr).slice(0, 6))
+  // }, [])
+  const content = featuredContent[subject].slice(0, 6)
 
   return (
     <div
