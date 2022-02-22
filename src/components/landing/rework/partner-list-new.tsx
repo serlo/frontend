@@ -4,7 +4,7 @@ const partners = [
   {
     name: 'Beisheim Stiftung',
     logo: '/_assets/img/landing/partners/logo_beisheimstiftung.svg',
-    padding: 8,
+    padding: 10,
   },
   {
     name: 'Ludwig-Maximilians-Universität München',
@@ -14,7 +14,7 @@ const partners = [
   {
     name: 'Wikimedia Deutschland',
     logo: '/_assets/img/landing/partners/logo_wikimedia.svg',
-    padding: 8,
+    padding: 0,
   },
   {
     name: 'Bundesministerium für Bildung und Forschung',
@@ -29,12 +29,12 @@ const partners = [
   {
     name: 'Deloitte',
     logo: '/_assets/img/landing/partners/logo_deloitte.svg',
-    padding: 22,
+    padding: 28,
   },
   {
     name: 'Hasso-Plattner-Institut',
     logo: '/_assets/img/landing/partners/logo_hpi.svg',
-    padding: 8,
+    padding: 14,
   },
   {
     name: 'Ashoka Deutschland',
@@ -68,7 +68,7 @@ export function PartnerListNew() {
     return (
       <img
         key={name}
-        className="max-h-20 max-w-[19rem] px-8 mb-16 sm:px-8"
+        className="max-h-[4.5rem] sm:max-h-[5.3rem] md:max-h-24 max-w-[20rem] px-8 mb-16 sm:px-8"
         style={{
           opacity: '0.6',
           filter: 'grayscale(1)',
@@ -77,7 +77,7 @@ export function PartnerListNew() {
           paddingBottom: `${padding}px`,
         }}
         src={logo}
-        alt={`Logo of ${name}`}
+        alt={`Logo von ${name}`}
         title={name}
       />
     )
