@@ -45,13 +45,13 @@ export function CommunityWallSubjectLanding({
               'max-w-2xl mt-20 mx-auto relative z-10 mb-8'
             )}
           >
-            Lust {title} mitzugestalten?
+            Lust das Fach {title} mitzugestalten?
           </h3>
           <p className="jsx-1406289065 text-xl leading-cozy text-truegray-700 max-w-xl mx-auto">
             Alle Inhalte auf serlo.org werden von einer ehrenamtlichen Community
             aus Lehrkräften, Studierenden, Schüler*innen und anderen
             Bildungsbegeisterten gestaltet. Erweitere mit uns das Angebot von{' '}
-            <b>Serlo {title}</b> um noch mehr Lernenden Bildung frei verfügbar
+            <b>Serlo {title}</b>, um noch mehr Lernenden Bildung frei verfügbar
             zu machen!
           </p>
           <div className="group text-center">
