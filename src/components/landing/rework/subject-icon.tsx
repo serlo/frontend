@@ -42,6 +42,7 @@ export function SubjectIcon({
             `}</style>
           </>
         )
+      case 'lerntipps':
       case 'abc':
         return (
           <>
