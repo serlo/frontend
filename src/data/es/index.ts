@@ -353,14 +353,17 @@ export const loggedInData = {
       url: '/user/me',
       title: "Perfil propio"
     }, {
-      url: '/auth/password/change',
-      title: "Actualizar contraseña"
-    }, {
       url: '/event/history/user/me',
       title: "Mis ediciones"
     }, {
       url: '/subscriptions/manage',
       title: "Suscripciones"
+    }, {
+      url: '/auth/password/change',
+      title: "Actualizar contraseña"
+    }, {
+      url: '/user/settings',
+      title: 'Settings'
     }, {
       url: '/api/auth/logout',
       title: "Cerrar sesión"
@@ -763,6 +766,11 @@ export const loggedInData = {
         intro: "La motivación es una función nueva que está a prueba en este momento. Para editar tu motivación tienes que completar un sencillo formulario.",
         privacy: "El formulario y el almacenamiento de datos lo ofrece Google y la información personal puede ser transferida a este servicio cuando se utiliza esta función.",
         toForm: "Formulario de Motivación"
+      },
+      delete: {
+        heading: 'How to delete your account',
+        text: 'If you want to delete your account, please write us at %mailLink%.%break% Make sure to use your registered email address and %subjectLine% as subject line.',
+        deleteAccount: 'Delete Account'
       }
     }
   }
