@@ -39,6 +39,11 @@ export function ProfileSettings({ rawDescription }: ProfileSettingsProps) {
       {renderHowToEditMotivation()}
 
       <ProfileExperimental />
+
+      <h2 id="delete" className="serlo-h2">
+        {loggedInStrings.delete.heading}
+      </h2>
+      {renderHowToDeleteAcc()}
     </>
   )
 
@@ -122,6 +127,27 @@ export function ProfileSettings({ rawDescription }: ProfileSettingsProps) {
           </>
         }
       />
+    )
+  }
+
+  function renderHowToDeleteAcc() {
+    const subjectLine = `${loggedInStrings.delete.deleteAccount}: ${username}`
+    const encodedSubjectLine = encodeURIComponent(subjectLine)
+    return (
+      <p className="serlo-p">
+        {replacePlaceholders(loggedInStrings.delete.text, {
+          mailLink: (
+            <a
+              href={`mailto:de@serlo.org?subject=${encodedSubjectLine}`}
+              className="serlo-link"
+            >
+              de@serlo.org
+            </a>
+          ),
+          subjectLine: <b>{`"${subjectLine}"`}</b>,
+          break: <br />,
+        })}
+      </p>
     )
   }
 }

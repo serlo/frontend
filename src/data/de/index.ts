@@ -349,18 +349,22 @@ export const loggedInData = {
     url: '',
     title: "Benutzer*in",
     icon: 'user',
-    children: [{
+    children: [
+    {
       url: '/user/me',
       title: "Eigenes Profil"
-    }, {
-      url: '/auth/password/change',
-      title: "Passwort ändern"
     }, {
       url: '/event/history/user/me',
       title: "Meine Bearbeitungen"
     }, {
       url: '/subscriptions/manage',
       title: "Abonnements"
+    }, {
+      url: '/auth/password/change',
+      title: "Passwort ändern"
+    }, {
+      url: '/user/settings',
+      title: "Einstellungen"
     }, {
       url: '/api/auth/logout',
       title: "Abmelden"
