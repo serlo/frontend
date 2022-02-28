@@ -363,7 +363,7 @@ export const loggedInData = {
       title: "Passwort ändern"
     }, {
       url: '/user/settings',
-      title: 'Settings'
+      title: "Einstellungen"
     }, {
       url: '/api/auth/logout',
       title: "Abmelden"
@@ -768,9 +768,9 @@ export const loggedInData = {
         toForm: "Motivationsformular"
       },
       delete: {
-        heading: 'How to delete your account',
-        text: 'If you want to delete your account, please write us at %mailLink%.%break% Make sure to use your registered email address and %subjectLine% as subject line.',
-        deleteAccount: 'Delete Account'
+        heading: "So kannst du dein Konto löschen",
+        text: "Wenn du dein Konto löschen möchtest, schreib uns bitte unter %mailLink%.%break% Bitte schreibe von deiner registrierten E-Mail-Adresse und gib %subjectLine% als Betreff an.",
+        deleteAccount: "Account löschen"
       }
     }
   }
