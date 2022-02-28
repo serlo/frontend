@@ -353,14 +353,17 @@ export const loggedInData = {
       url: '/user/me',
       title: "Eigenes Profil"
     }, {
-      url: '/auth/password/change',
-      title: "Passwort ändern"
-    }, {
       url: '/event/history/user/me',
       title: "Meine Bearbeitungen"
     }, {
       url: '/subscriptions/manage',
       title: "Abonnements"
+    }, {
+      url: '/auth/password/change',
+      title: "Passwort ändern"
+    }, {
+      url: '/user/settings',
+      title: 'Settings'
     }, {
       url: '/api/auth/logout',
       title: "Abmelden"
@@ -763,6 +766,11 @@ export const loggedInData = {
         intro: "Motivationen sind eine neue Funktion, die wir aktuell testen. Um deinen Motivationstext zu ändern musst du ein kurzes Formular ausfüllen.",
         privacy: "Das Formular und die Datenspeicherung werden von Google angeboten und persönliche Daten werden zu diesem Anbieter übertragen werden, wenn du dieses Feature benutzt.",
         toForm: "Motivationsformular"
+      },
+      delete: {
+        heading: 'How to delete your account',
+        text: 'If you want to delete your account, please write us at %mailLink%.%break% Make sure to use your registered email address and %subjectLine% as subject line.',
+        deleteAccount: 'Delete Account'
       }
     }
   }
