@@ -378,16 +378,20 @@ export const loggedInData = {
           title: 'Own profile',
         },
         {
-          url: '/auth/password/change',
-          title: 'Change password',
-        },
-        {
           url: '/event/history/user/me',
           title: 'My Edits',
         },
         {
           url: '/subscriptions/manage',
           title: 'Subscriptions',
+        },
+        {
+          url: '/auth/password/change',
+          title: 'Change password',
+        },
+        {
+          url: '/user/settings',
+          title: 'Settings',
         },
         {
           url: '/api/auth/logout',
@@ -831,6 +835,11 @@ export const loggedInData = {
           'The form and data storage is offered by Google and personal data may be transferred to this service when using this feature.',
         toForm: 'Motivation Form',
       },
+      delete: {
+        heading: 'How to delete your account',
+        text: 'If you want to delete your account, please write us at %mailLink%.%break% Make sure to use your registered email address and %subjectLine% as subject line.',
+        deleteAccount: 'Delete Account',
+      }
     }
   },
 }
