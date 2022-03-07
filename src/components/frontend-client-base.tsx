@@ -80,6 +80,14 @@ export function FrontendClientBase({
       sessionStorage.getItem('currentPathname') || ''
     )
     sessionStorage.setItem('currentPathname', window.location.href)
+    // scroll to comment area to start lazy loading
+    if (window.location.href.includes('#comment-')) {
+      setTimeout(() => {
+        document
+          .querySelector('#comment-area-begin-scrollpoint')
+          ?.scrollIntoView()
+      }, 1000)
+    }
   })
 
   // const auth = useAuthentication('frontend-client-base')
