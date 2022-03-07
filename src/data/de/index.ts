@@ -349,8 +349,7 @@ export const loggedInData = {
     url: '',
     title: "Benutzer*in",
     icon: 'user',
-    children: [
-    {
+    children: [{
       url: '/user/me',
       title: "Eigenes Profil"
     }, {
