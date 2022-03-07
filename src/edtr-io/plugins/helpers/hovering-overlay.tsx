@@ -19,7 +19,7 @@ const InlineOverlayWrapper = styled.div({
   left: '-10000px',
   opacity: 0,
   transition: 'opacity 0.5s',
-  zIndex: 95,
+  zIndex: 105,
   whiteSpace: 'nowrap',
 })
 

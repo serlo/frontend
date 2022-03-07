@@ -66,6 +66,7 @@ export const instanceData = {
       unrevisedRevisions: 'Unrevised Revisions',
       userEdits: 'Edits by %user%',
       userEditsMine: 'My Unrevised Revisions',
+      editProfile: 'Edit Profile & Settings',
     },
     roles: {
       donor: 'Donor',
@@ -267,32 +268,8 @@ export const instanceData = {
         legendary: '💙 Just wow! 💙',
         untilNextLevel: '%amount% more to complete this circle 🎉',
       },
-      howToEditImage: {
-        heading: 'How to edit your profile picture',
-        description:
-          'Currently we use the images from %chatLink% as profile pictures. In order to change your picture, do the following:',
-        steps: {
-          goToChat: 'Go to %chatLink%.',
-          signIn: 'Sign in.',
-          goToMyAccount: 'Go in the user menu to %myAccountLink%.',
-          myAccount: 'My Account',
-          uploadPicture:
-            'Upload a new picture (make sure it is square) and click "Save changes".',
-          refreshPage:
-            'Come back here and refresh the image using %refreshLink%.',
-          refreshLink: 'this link',
-        },
-      },
-      motivation: {
-        edit: 'Edit motivation',
-        add: 'Add motivation',
-        heading: 'How to edit your motivation',
-        intro:
-          'Motivations are a new feature we test at the moment. To edit your motivation you have to fill out a simple form.',
-        privacy:
-          'The form and data storage is offered by Google and personal data may be transferred to this service when using this feature.',
-        toForm: 'Motivation Form',
-      },
+      editMotivation: 'Edit motivation',
+      addMotivation: 'Add motivation',
       lockedDescriptionTitle: 'Your description currently hidden from the public.',
       lockedDescriptionText: 'After your first contributions it will become visible to everybody.',
 
@@ -401,16 +378,20 @@ export const loggedInData = {
           title: 'Own profile',
         },
         {
-          url: '/auth/password/change',
-          title: 'Change password',
-        },
-        {
           url: '/event/history/user/me',
           title: 'My Edits',
         },
         {
           url: '/subscriptions/manage',
           title: 'Subscriptions',
+        },
+        {
+          url: '/auth/password/change',
+          title: 'Change password',
+        },
+        {
+          url: '/user/settings',
+          title: 'Settings',
         },
         {
           url: '/api/auth/logout',
@@ -490,6 +471,7 @@ export const loggedInData = {
         restore: 'Successfully restored ♻️',
         accept: 'Edit was accepted ✅',
         reject: 'Edit not rejected ❌',
+        save: 'Edit successfully saved ✅',
       }, 
       errors: {
         UNAUTHENTICATED: 'You have to log in to use this function!',
@@ -575,6 +557,7 @@ export const loggedInData = {
         equationsTitle: 'Terms and equations',
         equationsDesc:
           'Write term manipulations and solve multiline equations.',
+        ready: "Ready to save?",
       },
       anchor: {
         identifier: 'Identifier',
@@ -634,7 +617,13 @@ export const loggedInData = {
         correct: 'Correct',
       },
       serloTable: {
-
+        mode: 'Mode',
+        columnHeaders: 'Only column headers',
+        rowHeaders: 'Only row headers',
+        columnAndRowHeaders: 'Column and row headers',
+        convertToText: 'convert to text',
+        convertToImage: 'convert to image',
+        addRow: 'Add row',
       },
       spoiler: {
         enterATitle: 'Enter a title',
@@ -819,5 +808,38 @@ export const loggedInData = {
           'This part of the document contains features that are no longer supported.',
       },
     },
+    profileSettings: {
+      editAbout: 'Your description',
+      showInstructions: 'Show instructions',
+      howToEditImage: {
+        heading: 'How to edit your profile picture',
+        description:
+          'Currently we use the images from %chatLink% as profile pictures. In order to change your picture, do the following:',
+        steps: {
+          goToChat: 'Go to %chatLink%.',
+          signIn: 'Sign in.',
+          goToMyAccount: 'Go in the user menu to %myAccountLink%.',
+          myAccount: 'My Account',
+          uploadPicture:
+            'Upload a new picture (make sure it is square) and click "Save changes".',
+          refreshPage:
+            'Come back here and refresh the image using %refreshLink%.',
+          refreshLink: 'this link',
+        },
+      },
+      motivation: {
+        heading: 'How to edit your motivation',
+        intro:
+          'Motivations are a new feature we test at the moment. To edit your motivation you have to fill out a simple form.',
+        privacy:
+          'The form and data storage is offered by Google and personal data may be transferred to this service when using this feature.',
+        toForm: 'Motivation Form',
+      },
+      delete: {
+        heading: 'How to delete your account',
+        text: 'If you want to delete your account, please write us at %mailLink%.%break% Make sure to use your registered email address and %subjectLine% as subject line.',
+        deleteAccount: 'Delete Account',
+      }
+    }
   },
 }

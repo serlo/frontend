@@ -36,13 +36,13 @@ const legacyLinks = [
   '/disable-frontend',
   '/enable-frontend',
   '/beitreten',
-  '/user/settings',
   '/user/register',
 ]
 
 export function isLegacyLink(_href: string) {
   // compat: this is a special frontend route or force frontend use
   if (_href == '/user/notifications') return false
+  if (_href == '/user/settings') return false
   if (_href == '/entity/unrevised') return false
   if (_href.startsWith('/entity/repository/history')) return false
   if (_href.startsWith('/entity/repository/compare')) return false

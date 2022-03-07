@@ -33,23 +33,31 @@ export const TransformTd = styled(MathTd)({
 })
 
 export const ExplanationTr = styled.tr({
-  color: '#688312',
+  color: '#007ec1',
   div: {
     margin: 0,
   },
 })
 
+export enum TransformationTarget {
+  Equation = 'equation',
+  Term = 'term',
+}
+
 export function EquationsRenderer({ state }: EquationsProps) {
   const store = useScopedStore()
+  const transformationTarget = toTransformationTarget(
+    state.transformationTarget.value
+  )
 
   return (
     <TableWrapper>
       <Table>
         <tbody>
           {renderFirstExplanation()}
-          {state.steps.map((step, index) => {
+          {state.steps.map((step, row) => {
             return (
-              <React.Fragment key={index}>
+              <React.Fragment key={row}>
                 <tr>
                   <LeftTd>
                     {step.left.value ? (
@@ -57,10 +65,13 @@ export function EquationsRenderer({ state }: EquationsProps) {
                     ) : null}
                   </LeftTd>
                   <SignTd>
-                    <MathRenderer
-                      inline
-                      state={renderSignToString(step.sign.value as Sign)}
-                    />
+                    {(row !== 0 ||
+                      transformationTarget !== TransformationTarget.Term) && (
+                      <MathRenderer
+                        inline
+                        state={renderSignToString(step.sign.value as Sign)}
+                      />
+                    )}
                   </SignTd>
                   <MathTd>
                     {step.right.value ? (
@@ -126,7 +137,7 @@ export function renderDownArrow() {
         >
           <path
             d="M 0,0 l 10,5 l -10,5"
-            stroke="#688312"
+            stroke="#007ec1"
             stroke-width="2"
             fill="none"
             vector-effect="non-scaling-size"
@@ -139,7 +150,7 @@ export function renderDownArrow() {
         y1="0%"
         x2="10"
         y2="99%"
-        stroke="#688312"
+        stroke="#007ec1"
         stroke-width="2"
         marker-end="url(#arrow)"
         vector-effect="non-scaling-stroke"
@@ -157,4 +168,12 @@ export function renderDownArrow() {
       }}
     />
   )
+}
+
+export function toTransformationTarget(text: string): TransformationTarget {
+  return isTransformationTarget(text) ? text : TransformationTarget.Equation
+}
+
+function isTransformationTarget(text: string): text is TransformationTarget {
+  return Object.values<string>(TransformationTarget).includes(text)
 }

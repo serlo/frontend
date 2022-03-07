@@ -426,17 +426,7 @@ export function editorResponseToState(uuid: QueryResponse): DeserializeResult {
 
   function convertUser(uuid: User): DeserializedState<typeof userTypeState> {
     stack.push({ id: uuid.id, type: 'user' })
-    return {
-      initialState: {
-        plugin: 'type-user',
-        state: {
-          description: serializeEditorState(
-            toEdtr(convertEditorState(uuid.description ?? ''))
-          ),
-        },
-      },
-      converted: false, // no legacy-editor for users
-    }
+    return convertUserByDescription(uuid.description)
   }
 
   function convertVideo(uuid: Video): DeserializedState<typeof videoTypeState> {
@@ -457,6 +447,20 @@ export function editorResponseToState(uuid: QueryResponse): DeserializeResult {
       },
       converted: false, // no legacy videos any more
     }
+  }
+}
+
+export function convertUserByDescription(description?: string | null) {
+  return {
+    initialState: {
+      plugin: 'type-user',
+      state: {
+        description: serializeEditorState(
+          toEdtr(convertEditorState(description ?? ''))
+        ),
+      },
+    },
+    converted: false, // no legacy-editor for users
   }
 }
 

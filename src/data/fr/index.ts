@@ -63,7 +63,8 @@ export const instanceData = {
       eventLog: "Journal des événements",
       unrevisedRevisions: "Révisions non révisées",
       userEdits: 'Edits by %user%',
-      userEditsMine: 'My Unrevised Revisions'
+      userEditsMine: 'My Unrevised Revisions',
+      editProfile: 'Edit Profile & Settings'
     },
     roles: {
       donor: "Donneur·e",
@@ -255,27 +256,8 @@ export const instanceData = {
         legendary: "💙 Wow! 💙",
         untilNextLevel: "%amount% de plus pour compléter ce cercle 🎉"
       },
-      howToEditImage: {
-        heading: "Comment modifier votre photo de profil",
-        description: "Actuellement nous utilisons les images de %chatLink% comme des photos de profil. Pour changer la photo, fais ce qui suit :",
-        steps: {
-          goToChat: "Aller à %chatLink%.",
-          signIn: "Se connecter.",
-          goToMyAccount: "Aller dans le menu utilisateur de %myAccountLink%.",
-          myAccount: "Mon Compte",
-          uploadPicture: "Télécharge une nouvelle image (assure-toi qu'elle est carrée) et clique sur \"Enregistrer les modifications\".",
-          refreshPage: "Reviens ici et rafraîchisse l'image en cliquant sur %refreshLink%.",
-          refreshLink: "ce lien"
-        }
-      },
-      motivation: {
-        edit: "Modifier la motivation",
-        add: "Ajouter une motivation",
-        heading: "Comment modifier ta motivation",
-        intro: "Les motivations sont une nouvelle fonctionnalité que nous testons pour le moment. Pour modifier ta motivation, tu dois remplir un formulaire simple.",
-        privacy: "Le formulaire et le stockage des données sont offerts par Google et les données personnelles peuvent être transférées à ce service lors de l'utilisation de cette fonctionnalité.",
-        toForm: "Formulaire de motivation"
-      },
+      editMotivation: 'Edit motivation',
+      addMotivation: 'Add motivation',
       lockedDescriptionTitle: 'Your description currently hidden from the public.',
       lockedDescriptionText: 'After your first contributions it will become visible to everybody.'
     },
@@ -371,14 +353,17 @@ export const loggedInData = {
       url: '/user/me',
       title: "Mon profil"
     }, {
-      url: '/auth/password/change',
-      title: "Changer le mot de passe"
-    }, {
       url: '/event/history/user/me',
       title: "Mes modifications"
     }, {
       url: '/subscriptions/manage',
       title: "Abonnements"
+    }, {
+      url: '/auth/password/change',
+      title: "Changer le mot de passe"
+    }, {
+      url: '/user/settings',
+      title: 'Settings'
     }, {
       url: '/api/auth/logout',
       title: "Se déconnecter"
@@ -453,7 +438,8 @@ export const loggedInData = {
         trash: 'Successfully trashed 🗑',
         restore: 'Successfully restored ♻️',
         accept: 'Edit was accepted ✅',
-        reject: 'Edit not rejected ❌'
+        reject: 'Edit not rejected ❌',
+        save: 'Edit successfully saved ✅'
       },
       errors: {
         UNAUTHENTICATED: 'You have to log in to use this function!',
@@ -522,7 +508,8 @@ export const loggedInData = {
         createdAt: "Créé le",
         settings: "Paramètres",
         equationsTitle: 'Terms and equations',
-        equationsDesc: 'Write term manipulations and solve multiline equations.'
+        equationsDesc: 'Write term manipulations and solve multiline equations.',
+        ready: "Ready to save?"
       },
       anchor: {
         identifier: "identifiant",
@@ -576,7 +563,15 @@ export const loggedInData = {
         missedSome: "Presque ! Tu as manqué au moins une réponse correcte",
         correct: "Correcte"
       },
-      serloTable: {},
+      serloTable: {
+        mode: 'Mode',
+        columnHeaders: 'Only column headers',
+        rowHeaders: 'Only row headers',
+        columnAndRowHeaders: 'Column and row headers',
+        convertToText: 'convert to text',
+        convertToImage: 'convert to image',
+        addRow: 'Add row'
+      },
       spoiler: {
         enterATitle: "Saisir un titre"
       },
@@ -748,6 +743,34 @@ export const loggedInData = {
       },
       deprecated: {
         unsupported: "Cette partie du document contient des fonctionnalités qui ne sont plus supportées."
+      }
+    },
+    profileSettings: {
+      editAbout: 'Your description',
+      showInstructions: 'Show instructions',
+      howToEditImage: {
+        heading: 'How to edit your profile picture',
+        description: 'Currently we use the images from %chatLink% as profile pictures. In order to change your picture, do the following:',
+        steps: {
+          goToChat: 'Go to %chatLink%.',
+          signIn: 'Sign in.',
+          goToMyAccount: 'Go in the user menu to %myAccountLink%.',
+          myAccount: 'My Account',
+          uploadPicture: 'Upload a new picture (make sure it is square) and click "Save changes".',
+          refreshPage: 'Come back here and refresh the image using %refreshLink%.',
+          refreshLink: 'this link'
+        }
+      },
+      motivation: {
+        heading: 'How to edit your motivation',
+        intro: 'Motivations are a new feature we test at the moment. To edit your motivation you have to fill out a simple form.',
+        privacy: 'The form and data storage is offered by Google and personal data may be transferred to this service when using this feature.',
+        toForm: 'Motivation Form'
+      },
+      delete: {
+        heading: 'How to delete your account',
+        text: 'If you want to delete your account, please write us at %mailLink%.%break% Make sure to use your registered email address and %subjectLine% as subject line.',
+        deleteAccount: 'Delete Account'
       }
     }
   }
