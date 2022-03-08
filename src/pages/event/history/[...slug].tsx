@@ -40,14 +40,7 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
 
   return (
     <FrontendClientBase>
-      <ErrorPage
-        code={pageData.kind === 'error' ? pageData.errorData.code : 400}
-        message={
-          pageData.kind === 'error'
-            ? pageData.errorData.message
-            : 'not supported'
-        }
-      />
+      <ErrorPage code={404} />
     </FrontendClientBase>
   )
 })

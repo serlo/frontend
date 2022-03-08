@@ -5,15 +5,9 @@ import { SlugPageData } from '@/data-types'
 import { parseLanguageSubfolder } from '@/helper/feature-i18n'
 
 export async function fetchPageData(raw_alias: string): Promise<SlugPageData> {
-  try {
-    const { alias, instance } = parseLanguageSubfolder(raw_alias)
+  const { alias, instance } = parseLanguageSubfolder(raw_alias)
 
-    const pageData = await requestPage(alias, instance as Instance)
-    await prettifyLinks(pageData)
-    return pageData
-  } catch (e) {
-    const message = `Error while fetching data: ${(e as Error).message ?? e}`
-    const code = message.includes('Code: 503') ? 503 : 500
-    return { kind: 'error', errorData: { code, message } }
-  }
+  const pageData = await requestPage(alias, instance as Instance)
+  await prettifyLinks(pageData)
+  return pageData
 }

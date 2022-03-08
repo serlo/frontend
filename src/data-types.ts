@@ -6,6 +6,10 @@ import { BoxType } from './edtr-io/plugins/box/renderer'
 import { Instance, QueryResponse, User } from './fetcher/query-types'
 import { instanceData, instanceLandingData, loggedInData } from '@/data/en'
 
+export interface PageNotFound {
+  kind: 'not-found'
+}
+
 export interface SlugProps {
   pageData: SlugPageData
 }
@@ -15,7 +19,7 @@ export interface RevisionProps {
 }
 
 export interface UserProps {
-  pageData: UserPage | ErrorPage
+  pageData: UserPage | PageNotFound
 }
 
 export interface LandingProps {
@@ -93,7 +97,7 @@ export type FooterIcon = 'newsletter' | 'github'
 // We have different types of pages, each with its own set of data:
 
 export type SlugPageData =
-  | ErrorPage
+  | PageNotFound
   | SingleEntityPage
   | TaxonomyPage
   | UserEventsPage
@@ -135,17 +139,6 @@ export type LandingSubjectIcon =
   | 'geography'
   | 'new'
 
-// Error page has some additional data
-
-export interface ErrorPage {
-  kind: 'error'
-  errorData: ErrorData
-}
-
-export interface ErrorData {
-  code: number
-  message?: string
-}
 // License detail page has some additional data and is not part of the PageData type
 
 export interface LicenseDetailProps {

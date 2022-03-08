@@ -30,37 +30,21 @@ export default renderedPageNoHooks<UserProps>(({ pageData }) => {
   }
   return (
     <FrontendClientBase>
-      <ErrorPage
-        code={pageData.kind === 'error' ? pageData.errorData.code : 400}
-        message={
-          pageData.kind === 'error'
-            ? pageData.errorData.message
-            : 'unsupported type'
-        }
-      />
+      <ErrorPage code={404} />
     </FrontendClientBase>
   )
 })
 
 export const getStaticProps: GetStaticProps<UserProps> = async (context) => {
   // /user/{id}/{name}
-  try {
-    const path = '/user/' + (context.params?.userslug as string[]).join('/')
-    const pageData = await requestUser(path, context.locale ?? 'de')
-    return {
-      props: {
-        pageData: JSON.parse(JSON.stringify(pageData)) as UserPage, // remove undefined values
-      },
-      revalidate: 1,
-    }
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.log(e)
-    const message = `Error while fetching data: ${(e as Error).message ?? e}`
-    const code = message.includes('Code: 503') ? 503 : 500
-    return {
-      props: { pageData: { kind: 'error', errorData: { code, message } } },
-    }
+  const path = '/user/' + (context.params?.userslug as string[]).join('/')
+  const pageData = await requestUser(path, context.locale ?? 'de')
+  // todo: pageData could be notFound
+  return {
+    props: {
+      pageData: JSON.parse(JSON.stringify(pageData)) as UserPage, // remove undefined values
+    },
+    revalidate: 1,
   }
 }
 

@@ -46,15 +46,6 @@ export function Injection({ href, renderNested }: InjectionProps) {
       setValue(pageData.entityData.content)
       return
     }
-    if (pageData.kind === 'error' && pageData.errorData.message) {
-      setValue([
-        {
-          type: 'p',
-          children: [{ type: 'text', text: pageData.errorData.message }],
-        },
-      ])
-      return
-    }
     setValue([
       {
         type: 'p',

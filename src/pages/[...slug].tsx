@@ -54,6 +54,13 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
 
   return (
     <FrontendClientBase>
+      <ErrorPage code={404} />
+    </FrontendClientBase>
+  )
+  /*
+  // ? how to handle this?
+  return (
+    <FrontendClientBase>
       <ErrorPage
         code={pageData.kind === 'error' ? pageData.errorData.code : 400}
         message={
@@ -63,25 +70,22 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
         }
       />
     </FrontendClientBase>
-  )
+  )*/
 })
 
 export const getStaticProps: GetStaticProps<SlugProps> = async (context) => {
   const alias = (context.params?.slug as string[]).join('/')
   const pageData = await fetchPageData('/' + context.locale! + '/' + alias)
 
-  const defaultRevalidate = 60 * 15 // 15 min
-
-  const revalidate =
-    pageData.kind === 'error' && pageData.errorData.code >= 500
-      ? 1
-      : defaultRevalidate
+  if (pageData.kind === 'not-found') {
+    return { notFound: true }
+  }
 
   return {
     props: {
       pageData: JSON.parse(JSON.stringify(pageData)) as SlugPageData, // remove undefined values
     },
-    revalidate,
+    revalidate: 60 * 15, // 15 min,
   }
 }
 
