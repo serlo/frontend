@@ -5,12 +5,12 @@ import { convertState } from '../convert-state'
 import { User } from '../query-types'
 import { userQuery } from './query'
 import { endpoint } from '@/api/endpoint'
-import { UserPage } from '@/data-types'
+import { PageNotFound, UserPage } from '@/data-types'
 
 export async function requestUser(
   path: string,
   instance: string
-): Promise<UserPage> {
+): Promise<UserPage | PageNotFound> {
   const { uuid, authorization } = await request<{
     uuid: User
     authorization: AuthorizationPayload
@@ -41,7 +41,7 @@ export async function requestUser(
       authorization,
     }
   } else {
-    throw new Error('User not found')
+    return { kind: 'not-found' }
   }
 }
 
