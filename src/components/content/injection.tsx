@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 
 import { LoadingSpinner } from '../loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
-import { RequestPageData, FrontendContentNode, SlugProps } from '@/data-types'
+import { FrontendContentNode, SlugProps } from '@/data-types'
 import type { RenderNestedFunction } from '@/schema/article-renderer'
 
 export interface InjectionProps {
@@ -35,24 +35,20 @@ export function Injection({ href, renderNested }: InjectionProps) {
       })
       .then((json) => {
         const pageData = (json as { pageProps: SlugProps }).pageProps.pageData
-        dataToState(pageData)
+        if (pageData.kind === 'single-entity') {
+          setId(pageData.entityData.id)
+          setValue(pageData.entityData.content)
+          return
+        } else {
+          setValue([
+            {
+              type: 'p',
+              children: [{ type: 'text', text: strings.errors.defaultMessage }],
+            },
+          ])
+        }
       })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [href, lang])
-
-  function dataToState(pageData: SlugProps['pageData']) {
-    if (pageData.kind === 'single-entity') {
-      setId(pageData.entityData.id)
-      setValue(pageData.entityData.content)
-      return
-    }
-    setValue([
-      {
-        type: 'p',
-        children: [{ type: 'text', text: strings.errors.defaultMessage }],
-      },
-    ])
-  }
+  }, [href, lang, strings])
 
   if (value) {
     //Show only video without description when injecting
