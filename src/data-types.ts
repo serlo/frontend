@@ -11,10 +11,6 @@ export interface SlugProps {
   pageData: Redirect | SingleEntityPage | TaxonomyPage
 }
 
-export interface SlugProps_OLD {
-  pageData: RequestPageData
-}
-
 export interface RevisionProps {
   pageData: RevisionPage
 }
