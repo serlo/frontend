@@ -64,7 +64,7 @@ export const instanceData = {
       unrevisedRevisions: "Revisiones no revisadas",
       userEdits: "Ediciones por %user%",
       userEditsMine: "Mi trabajo aún sin revisar",
-      editProfile: 'Edit Profile & Settings'
+      editProfile: "Editar perfil y ajustes"
     },
     roles: {
       donor: "Donante",
@@ -122,16 +122,16 @@ export const instanceData = {
       relatedContentText: "Puedes encontrar más contenido sobre este tema aquí:",
       sourcesTitle: "Fuentes",
       boxTypes: {
-        blank: 'Blank',
-        example: 'Example',
-        quote: 'Quote',
-        approach: 'Approach',
-        remember: 'Remember',
-        attention: 'Attention',
-        note: 'Note',
-        definition: 'Definition',
-        theorem: 'Theorem',
-        proof: 'Proof'
+        blank: "Espacio en blanco",
+        example: "Ejemplo",
+        quote: "Cita",
+        approach: "Aproximación",
+        remember: "Recuerda",
+        attention: "Atención",
+        note: "Nota",
+        definition: "Definición",
+        theorem: "Teorema",
+        proof: "Prueba"
       }
     },
     consent: {
