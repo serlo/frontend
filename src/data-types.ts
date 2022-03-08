@@ -6,12 +6,13 @@ import { BoxType } from './edtr-io/plugins/box/renderer'
 import { Instance, QueryResponse, User } from './fetcher/query-types'
 import { instanceData, instanceLandingData, loggedInData } from '@/data/en'
 
-export interface PageNotFound {
-  kind: 'not-found'
+// exact props of /[...slug] page
+export interface SlugProps {
+  pageData: Redirect | SingleEntityPage | TaxonomyPage
 }
 
-export interface SlugProps {
-  pageData: SlugPageData
+export interface SlugProps_OLD {
+  pageData: RequestPageData
 }
 
 export interface RevisionProps {
@@ -19,7 +20,7 @@ export interface RevisionProps {
 }
 
 export interface UserProps {
-  pageData: UserPage | PageNotFound
+  pageData: UserPage
 }
 
 export interface LandingProps {
@@ -28,6 +29,10 @@ export interface LandingProps {
 
 export interface UnrevisedRevisionsProps {
   pageData: UnrevisedRevisionsPage
+}
+
+export interface EventHistoryProps {
+  pageData: EventHistoryData
 }
 
 // Instance data consists of the language, translation strings, header menu and footer menu.
@@ -96,12 +101,16 @@ export type FooterIcon = 'newsletter' | 'github'
 
 // We have different types of pages, each with its own set of data:
 
-export type SlugPageData =
+export type RequestPageData =
   | PageNotFound
   | SingleEntityPage
   | TaxonomyPage
   | UserEventsPage
   | Redirect
+
+export interface PageNotFound {
+  kind: 'not-found'
+}
 
 // The landing page is custom built and takes i18n strings
 
@@ -327,6 +336,13 @@ export interface RevisionData {
     url?: string
   }
   changes?: string
+}
+
+export interface EventHistoryData {
+  id: number
+  title: string
+  alias: string
+  isUser: boolean
 }
 
 export interface UnrevisedRevisionsPage extends EntityPageBase {

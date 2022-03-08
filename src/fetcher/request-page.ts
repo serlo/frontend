@@ -13,14 +13,14 @@ import { createTitle } from './create-title'
 import { dataQuery } from './query'
 import { QueryResponse, Instance } from './query-types'
 import { endpoint } from '@/api/endpoint'
-import { SlugPageData } from '@/data-types'
+import { RequestPageData } from '@/data-types'
 import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
 import { getInstanceDataByLang } from '@/helper/feature-i18n'
 
 export async function requestPage(
   alias: string,
   instance: Instance
-): Promise<SlugPageData> {
+): Promise<RequestPageData> {
   const { uuid, authorization } = await request<{
     uuid: QueryResponse
     authorization: AuthorizationPayload

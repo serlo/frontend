@@ -2,7 +2,11 @@ import { useState, useEffect } from 'react'
 
 import { LoadingSpinner } from '../loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
-import { SlugPageData, FrontendContentNode, SlugProps } from '@/data-types'
+import {
+  RequestPageData,
+  FrontendContentNode,
+  SlugProps_OLD,
+} from '@/data-types'
 import type { RenderNestedFunction } from '@/schema/article-renderer'
 
 export interface InjectionProps {
@@ -34,13 +38,14 @@ export function Injection({ href, renderNested }: InjectionProps) {
         return res.json()
       })
       .then((json) => {
-        const pageData = (json as { pageProps: SlugProps }).pageProps.pageData
+        const pageData = (json as { pageProps: SlugProps_OLD }).pageProps
+          .pageData
         dataToState(pageData)
       })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [href, lang])
 
-  function dataToState(pageData: SlugPageData) {
+  function dataToState(pageData: RequestPageData) {
     if (pageData.kind === 'single-entity') {
       setId(pageData.entityData.id)
       setValue(pageData.entityData.content)
