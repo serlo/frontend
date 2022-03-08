@@ -17,7 +17,7 @@ import {
 } from '../../__fixtures__/api_mockdata'
 import { endpoint } from '@/api/endpoint'
 import { SingleEntityPage, TaxonomyPage } from '@/data-types'
-import { fetchPageData_not_in_use_anymore } from '@/fetcher/fetch-page-data'
+import { fetchPageData } from '@/fetcher/fetch-page-data'
 import { serloDomain } from '@/helper/serlo-domain'
 
 const server = setupServer()
@@ -37,9 +37,7 @@ afterAll(() => {
 describe('check all supported typenames with stored api-data', () => {
   test('typename: Page', async () => {
     givenApiReturnsUuid(pageUuidMock)
-    const pageData = (await fetchPageData_not_in_use_anymore(
-      '/de/serlo'
-    )) as SingleEntityPage
+    const pageData = (await fetchPageData('/de/serlo')) as SingleEntityPage
 
     expect(pageData.secondaryNavigationData).toEqual([
       {
@@ -76,9 +74,7 @@ describe('check all supported typenames with stored api-data', () => {
   test('typename: Article', async () => {
     givenApiReturnsUuid(articleUuidMock)
 
-    const pageData = (await fetchPageData_not_in_use_anymore(
-      '/de/27801'
-    )) as SingleEntityPage
+    const pageData = (await fetchPageData('/de/27801')) as SingleEntityPage
 
     expect(pageData.breadcrumbsData).toEqual([
       { label: 'Mathematics', url: '/math' },
@@ -111,9 +107,7 @@ describe('check all supported typenames with stored api-data', () => {
   test('typename: CoursePage', async () => {
     givenApiReturnsUuid(coursePageUuidMock)
 
-    const pageData = (await fetchPageData_not_in_use_anymore(
-      '/de/52020'
-    )) as SingleEntityPage
+    const pageData = (await fetchPageData('/de/52020')) as SingleEntityPage
 
     expect(pageData.breadcrumbsData).toEqual([
       {
@@ -153,9 +147,7 @@ describe('check all supported typenames with stored api-data', () => {
   test('typename: Video', async () => {
     givenApiReturnsUuid(videoUuidMock)
 
-    const pageData = (await fetchPageData_not_in_use_anymore(
-      '/de/40744'
-    )) as SingleEntityPage
+    const pageData = (await fetchPageData('/de/40744')) as SingleEntityPage
 
     expect(pageData.breadcrumbsData).toEqual([
       {
@@ -193,9 +185,7 @@ describe('check all supported typenames with stored api-data', () => {
   test('typename: Applet', async () => {
     givenApiReturnsUuid(appletUuidMock)
 
-    const pageData = (await fetchPageData_not_in_use_anymore(
-      '/de/138114'
-    )) as SingleEntityPage
+    const pageData = (await fetchPageData('/de/138114')) as SingleEntityPage
 
     expect(pageData.breadcrumbsData).toEqual([
       {
@@ -238,9 +228,7 @@ describe('check all supported typenames with stored api-data', () => {
   test('typename: TaxonomyTerm', async () => {
     givenApiReturnsUuid(taxonomyTermUuidMock)
 
-    const pageData = (await fetchPageData_not_in_use_anymore(
-      '/de/5'
-    )) as TaxonomyPage
+    const pageData = (await fetchPageData('/de/5')) as TaxonomyPage
 
     expect(pageData.breadcrumbsData).toEqual([
       {
@@ -308,9 +296,7 @@ describe('check all supported typenames with stored api-data', () => {
   test('typename: Exercise', async () => {
     givenApiReturnsUuid(exerciseUuidMock)
 
-    const pageData = (await fetchPageData_not_in_use_anymore(
-      '/de/54210'
-    )) as SingleEntityPage
+    const pageData = (await fetchPageData('/de/54210')) as SingleEntityPage
 
     expect(pageData.breadcrumbsData).toEqual([
       {
@@ -357,9 +343,7 @@ describe('check all supported typenames with stored api-data', () => {
   test('typename: ExerciseGroup', async () => {
     givenApiReturnsUuid(exerciseGroupUuidMock)
 
-    const pageData = (await fetchPageData_not_in_use_anymore(
-      '/de/53205'
-    )) as SingleEntityPage
+    const pageData = (await fetchPageData('/de/53205')) as SingleEntityPage
 
     expect(pageData.breadcrumbsData).toEqual([
       {
@@ -406,9 +390,7 @@ describe('check all supported typenames with stored api-data', () => {
   test('typename: GroupedExercise', async () => {
     givenApiReturnsUuid(groupedExerciseUuidMock)
 
-    const pageData = (await fetchPageData_not_in_use_anymore(
-      '/de/53209'
-    )) as SingleEntityPage
+    const pageData = (await fetchPageData('/de/53209')) as SingleEntityPage
 
     expect(pageData.metaData?.title).toBe('Teilaufgabe - lernen mit Serlo!')
     expect(pageData.metaData?.contentType).toBe('groupedexercise')
@@ -464,9 +446,7 @@ describe('check all supported typenames with stored api-data', () => {
       })
     )
 
-    const pageData = (await fetchPageData_not_in_use_anymore(
-      '/de/51979'
-    )) as SingleEntityPage
+    const pageData = (await fetchPageData('/de/51979')) as SingleEntityPage
 
     expect(pageData.breadcrumbsData).toEqual([
       {
@@ -510,9 +490,7 @@ describe('check all supported typenames with stored api-data', () => {
 
   test('typename: Event', async () => {
     givenApiReturnsUuid(eventUuidMock)
-    const pageData = (await fetchPageData_not_in_use_anymore(
-      '/de/145590'
-    )) as SingleEntityPage
+    const pageData = (await fetchPageData('/de/145590')) as SingleEntityPage
 
     expect(pageData.metaData?.title).toBe('Serlo')
     expect(pageData.metaData?.contentType).toBe('event')
