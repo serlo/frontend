@@ -17,6 +17,7 @@ import { RequestPageData } from '@/data-types'
 import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
 import { getInstanceDataByLang } from '@/helper/feature-i18n'
 
+// ALWAYS start alias with slash
 export async function requestPage(
   alias: string,
   instance: Instance

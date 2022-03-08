@@ -88,7 +88,7 @@ export const getStaticProps: GetStaticProps<EventHistoryProps> = async (
 ) => {
   const alias = (context.params?.slug as string[]).join('/')
 
-  const pageData = await requestPage(alias, context.locale! as Instance)
+  const pageData = await requestPage('/' + alias, context.locale! as Instance)
 
   if (
     pageData.kind === 'single-entity' ||

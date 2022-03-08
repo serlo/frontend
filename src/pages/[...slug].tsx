@@ -6,7 +6,9 @@ import { FrontendClientBase } from '@/components/frontend-client-base'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { Topic } from '@/components/taxonomy/topic'
 import { SlugProps } from '@/data-types'
-import { fetchPageData } from '@/fetcher/fetch-page-data'
+import { prettifyLinks } from '@/fetcher/prettify-links'
+import { Instance } from '@/fetcher/query-types'
+import { requestPage } from '@/fetcher/request-page'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
@@ -50,7 +52,8 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
 
 export const getStaticProps: GetStaticProps<SlugProps> = async (context) => {
   const alias = (context.params?.slug as string[]).join('/')
-  const pageData = await fetchPageData('/' + context.locale! + '/' + alias)
+  // quite stupid to use fetchPageData here, why not calling requestPage directly?
+  const pageData = await requestPage('/' + alias, context.locale! as Instance)
 
   // we only support theses three kinds - 404 for everything else
   if (
@@ -60,6 +63,8 @@ export const getStaticProps: GetStaticProps<SlugProps> = async (context) => {
   ) {
     return { notFound: true }
   }
+
+  await prettifyLinks(pageData)
 
   return {
     props: {

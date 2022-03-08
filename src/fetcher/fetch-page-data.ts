@@ -4,7 +4,8 @@ import { requestPage } from './request-page'
 import { RequestPageData } from '@/data-types'
 import { parseLanguageSubfolder } from '@/helper/feature-i18n'
 
-export async function fetchPageData(
+// NOTE: This function is not in use anymore and is only kept for debugging and testing
+export async function fetchPageData_not_in_use_anymore(
   raw_alias: string
 ): Promise<RequestPageData> {
   const { alias, instance } = parseLanguageSubfolder(raw_alias)
