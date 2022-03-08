@@ -111,7 +111,7 @@ export const getStaticProps: GetStaticProps<EventHistoryProps> = async (
           isUser: pageData.kind === 'user/events',
         },
       },
-      revalidate: 60 * 15, // 15 min
+      revalidate: 1,
     }
   }
 

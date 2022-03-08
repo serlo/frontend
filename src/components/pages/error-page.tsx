@@ -6,13 +6,12 @@ import { HSpace } from '@/components/content/h-space'
 import { useInstanceData } from '@/contexts/instance-context'
 import { triggerSentry } from '@/helper/trigger-sentry'
 
-export function ErrorPage({
-  code,
-  message,
-}: {
+interface ErrorPageProps {
   code: number
   message?: string
-}) {
+}
+
+export function ErrorPage({ code, message }: ErrorPageProps) {
   const [path, setPath] = useState('')
   const [hasSerloBacklink, setHasSerloBacklink] = useState(false)
   const { strings } = useInstanceData()

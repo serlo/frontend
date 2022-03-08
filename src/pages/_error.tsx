@@ -1,4 +1,4 @@
-import { NextApiResponse } from 'next'
+import { NextPage } from 'next'
 
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { ErrorPage } from '@/components/pages/error-page'
@@ -8,29 +8,21 @@ interface ErrorProps {
   message: string
 }
 
-export default function CustomError(props: ErrorProps) {
+const CustomError: NextPage<ErrorProps> = ({ statusCode, message }) => {
   return (
     <FrontendClientBase>
-      <ErrorPage code={props.statusCode} message={props.message} />
+      <ErrorPage code={statusCode} message={message} />
     </FrontendClientBase>
   )
 }
 
-interface InitialProps {
-  res: NextApiResponse
-  err: Error
+CustomError.getInitialProps = ({ res, err }) => {
+  const message = err?.message ?? ''
+  const statusCode = message.includes('Code: 503')
+    ? 503
+    : err?.statusCode ?? 500
+  if (res) res.statusCode = statusCode
+  return { statusCode, message }
 }
 
-CustomError.getInitialProps = ({ res, err }: InitialProps) => {
-  console.log('calling getInitialProps', err.message)
-  //const statusCode = res ? res.statusCode : err ? err.statusCode : 404
-  /*
-
-    const message = `Error while fetching data: ${(e as Error).message ?? e}`
-    const code = message.includes('Code: 503') ? 503 : 500
-    return { kind: 'error', errorData: { code, message } }
-
-    */
-  res.statusCode = 503
-  return { statusCode: 500, message: err.message }
-}
+export default CustomError
