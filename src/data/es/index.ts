@@ -49,7 +49,7 @@ export const instanceData = {
       comment: "Comentario",
       revision: "Revisión",
       thread: "Hilo de conversación",
-      threads: "Hilo de conversación",
+      threads: "Hilos de conversación",
       topic: "Tema",
       subject: "Asunto",
       userProfile: "Perfil de usuario",
@@ -125,7 +125,7 @@ export const instanceData = {
         blank: "Espacio en blanco",
         example: "Ejemplo",
         quote: "Cita",
-        approach: "Aproximación",
+        approach: "Planteamiento",
         remember: "Recuerda",
         attention: "Atención",
         note: "Nota",
@@ -259,7 +259,7 @@ export const instanceData = {
       editMotivation: "Editar motivación",
       addMotivation: "Añadir motivación",
       lockedDescriptionTitle: "Tu descripción actualmente no es visible para el público.",
-      lockedDescriptionText: 'After your first contributions it will become visible to everybody.'
+      lockedDescriptionText: "Después de tus primeras contribuciones será visible para todos."
     },
     notices: {
       welcome: "¡Bienvenida/o  %username%!",
@@ -363,7 +363,7 @@ export const loggedInData = {
       title: "Actualizar contraseña"
     }, {
       url: '/user/settings',
-      title: 'Settings'
+      title: "Configuración"
     }, {
       url: '/api/auth/logout',
       title: "Cerrar sesión"
@@ -439,7 +439,7 @@ export const loggedInData = {
         restore: "Restablecido con éxito ♻️",
         accept: "Edición aceptada ✅",
         reject: "Edición rechazada ❌ ",
-        save: 'Edit successfully saved ✅'
+        save: "Edición guardada con éxito ✅"
       },
       errors: {
         UNAUTHENTICATED: "¡Tienes que iniciar sesión para usar esta función!",
@@ -458,8 +458,8 @@ export const loggedInData = {
         conversionError: "Se produjo un error durante la conversión.",
         oldRevisionFound: "Hemos encontrado una revisión anterior creada por ti. ¿Deseas restaurarla?",
         notConverted: "Esta entidad aún no ha sido convertida al nuevo editor.",
-        box: 'Container',
-        boxDesc: 'A container for examples, quotes, warnings, theorems, notes…',
+        box: "Contenedor",
+        boxDesc: "Un contenedor para ejemplos, comillas, advertencias, teoremas, notas…",
         text: "Texto",
         textDesc: "Redacta el contenido usando texto enriquecido y fórmulas matemáticas.",
         blockquoteTitle: "Cita",
@@ -478,10 +478,10 @@ export const loggedInData = {
         injectionDesc: "Insertar el contenido de serlo.org a través de su ID.",
         multimediaTitle: "Contenido multimedia asociado con el texto",
         multimediaDesc: "Crear una ilustración o explicación de contenido multimedia asociado con el texto.",
-        spoiler: 'Spoiler',
+        spoiler: "Spoiler/desplegable",
         spoilerDesc: "Una caja colapsable.",
-        serloTable: 'Table',
-        serloTableDesc: '(new plugin in testing) Create tables',
+        serloTable: "Tabla",
+        serloTableDesc: "(nuevo plugin en fase de prueba) Crear tablas",
         table: "Tabla",
         tableDesc: "Crear tablas usando Markdown.",
         video: "Vídeo",
@@ -505,11 +505,11 @@ export const loggedInData = {
         switchRevision: "Cambiar a otra revisión",
         current: "Actual",
         author: "Autor",
-        createdAt: "Creado el",
+        createdAt: "¿Cuándo?",
         settings: "Configuración",
         equationsTitle: "Términos y ecuaciones",
         equationsDesc: "Escribe manipulaciones de términos y resuelve ecuaciones múltiples.",
-        ready: "Ready to save?"
+        ready: "¿Listo para guardar?"
       },
       anchor: {
         identifier: "Identificador",
@@ -519,7 +519,7 @@ export const loggedInData = {
         urlOrId: "URL o ID de GeoGebra"
       },
       highlight: {
-        clickAndEnter: "Haga clic aquí e introduzca su código fuente…",
+        clickAndEnter: "Haz clic aquí e introduce tu código fuente…",
         enterHere: "Introduce tu código fuente aquí",
         language: "Idioma",
         enterLanguage: "Introducir idioma",
@@ -564,13 +564,13 @@ export const loggedInData = {
         correct: "Correcto"
       },
       serloTable: {
-        mode: 'Mode',
-        columnHeaders: 'Only column headers',
-        rowHeaders: 'Only row headers',
-        columnAndRowHeaders: 'Column and row headers',
-        convertToText: 'convert to text',
-        convertToImage: 'convert to image',
-        addRow: 'Add row'
+        mode: "Modalidad",
+        columnHeaders: "Sólo las etiquetas de las columnas",
+        rowHeaders: "Sólo las etiquetas de las filas",
+        columnAndRowHeaders: "Etiquetas de columna y fila",
+        convertToText: "Convertir en texto",
+        convertToImage: "Convertir a imagen",
+        addRow: "Añadir fila"
       },
       spoiler: {
         enterATitle: "Introduzca un título"
@@ -591,17 +591,17 @@ export const loggedInData = {
         lists: "Listas",
         mathFormula: "Fórmula matemática (ctrl + M)",
         displayAsBlock: "Mostrar en bloque",
-        formula: '[formula]',
+        formula: "[fórmula]",
         visual: 'visual',
         laTeX: 'LaTeX',
         onlyLaTeX: "Sólo está disponible el editor LaTeX ",
         shortcuts: "Acceso directo",
         fraction: "Fracción",
-        superscript: "superíndice",
+        superscript: "Superíndice",
         or: "ó",
-        subscript: "subíndice",
+        subscript: "Subíndice",
         root: "Raíz",
-        mathSymbols: "Símbolos de matemáticas",
+        mathSymbols: "Símbolos matemáticos",
         eG: "por ejemplo,",
         functions: "Funciones",
         bold: "Negrilla (ctrl + B)",
@@ -633,13 +633,13 @@ export const loggedInData = {
         serloId: 'Serlo ID:'
       },
       box: {
-        type: 'Type of box',
-        titlePlaceholder: '(optional title)',
-        anchorId: 'Anchor ID'
+        type: "Tipo de caja",
+        titlePlaceholder: "(título opcional)",
+        anchorId: "ID de Ancla (marca de posición)"
       },
       layout: {
         toDragConvert: "Para que el contenido sea arrastrable, conviértalo para el nuevo editor:",
-        oneColumnLayout: "Diseño de una columna",
+        oneColumnLayout: "Diseño con una columna",
         multimediaTitle: "Contenido multimedia asociado con el texto"
       },
       solution: {
@@ -675,17 +675,17 @@ export const loggedInData = {
         courses: "Cursos",
         addCourse: "Añadir un Curso",
         idCourse: "ID de un curso, ej. 51979",
-        openCourseTab: "Abrir el artículo en una nueva pestaña:",
+        openCourseTab: "Abrir el curso en una nueva pestaña:",
         dragTheCourse: "Arrastra el curso",
         videos: "Vídeos",
         addVideo: "Añadir vídeo",
         idVideo: "ID de un vídeo, p. ej., 40744",
-        openVideoTab: "Abrir el vídei en una nueva pestaña",
+        openVideoTab: "Abrir el vídeo en una nueva pestaña:",
         dragTheVideo: "Arrastra el vídeo",
         linkTitle: "Título del enlace",
         sources: "Fuentes",
         linkUrl: "URL del enlace",
-        openInNewTab: "Abrir el vínculo en una nueva pestaña",
+        openInNewTab: "Abrir el vínculo en una nueva pestaña:",
         dragTheSource: "Arrastra la fuente",
         addSource: "Añadir fuente",
         moreInFolder: "Puedes encontrar más ejercicios en la siguiente carpeta:",
@@ -732,12 +732,12 @@ export const loggedInData = {
         mode: "Modalidad",
         transformationOfEquations: "Transformación de ecuaciones",
         transformationOfTerms: "Transformación de términos",
-        addNewRow: "Añadir nuevo renglón",
+        addNewRow: "Añadir nueva fila",
         explanation: "Explicación",
         term: "Término",
         rightHandSide: "Lado derecho",
-        combineLikeTerms: "Combina como términos.",
-        setEqual: "Establecer los términos iguales entre sí.",
+        combineLikeTerms: "Combina términos similares",
+        setEqual: "Coloca los términos iguales entre sí.",
         firstExplanation: "Primera explicación",
         addNew: "Añadir nueva ecuación"
       },
@@ -768,9 +768,9 @@ export const loggedInData = {
         toForm: "Formulario de Motivación"
       },
       delete: {
-        heading: 'How to delete your account',
-        text: 'If you want to delete your account, please write us at %mailLink%.%break% Make sure to use your registered email address and %subjectLine% as subject line.',
-        deleteAccount: 'Delete Account'
+        heading: "¿Cómo eliminar mi cuenta?",
+        text: "Si quieres eliminar tu cuenta, escríbenos a  %mailLink%.%break% Asegúrate de utilizar tu dirección de correo electrónico registrada y  %subjectLine% en el espacio para el asunto.",
+        deleteAccount: "Eliminar cuenta"
       }
     }
   }
