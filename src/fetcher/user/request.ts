@@ -19,6 +19,10 @@ export async function requestUser(
     instance,
   })
 
+  if (!uuid) {
+    return { kind: 'not-found' }
+  }
+
   if (uuid.__typename === 'User') {
     return {
       kind: 'user/profile',
