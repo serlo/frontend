@@ -1,3 +1,10 @@
-export default function Custom500() {
-  return <h1>500 - Server-side error occurred</h1>
+import { FrontendClientBase } from '@/components/frontend-client-base'
+import { ErrorPage } from '@/components/pages/error-page'
+
+export default function Custom404() {
+  return (
+    <FrontendClientBase>
+      <ErrorPage code={500} />
+    </FrontendClientBase>
+  )
 }

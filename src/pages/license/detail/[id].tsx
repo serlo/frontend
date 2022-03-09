@@ -21,6 +21,10 @@ export const getStaticProps: GetStaticProps<LicenseDetailProps> = async (
 
   const licenseData = await requestLicensePage(id)
 
+  if (licenseData.kind == 'not-found') {
+    return { notFound: true }
+  }
+
   return {
     props: {
       pageData: licenseData,
