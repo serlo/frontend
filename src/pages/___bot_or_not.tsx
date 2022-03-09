@@ -22,7 +22,12 @@ import { renderArticle } from '@/schema/article-renderer'
 
 const ContentPage: NextPage = () => {
   return (
-    <FrontendClientBase noHeaderFooter noContainers showNav={false}>
+    <FrontendClientBase
+      noHeaderFooter
+      noContainers
+      showNav={false}
+      authorization={{}}
+    >
       <Head>
         <meta name="robots" content="noindex" />
       </Head>
