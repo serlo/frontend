@@ -83,6 +83,7 @@ export async function requestPage(
             id: uuid.id,
             title: uuid.currentRevision?.title ?? '',
             pages,
+            index: 0,
           },
         },
         metaData: {
@@ -394,7 +395,7 @@ export async function requestPage(
     const pages = pagesToShow.map((page, i) => {
       const active = page.id === uuid.id
       if (active) {
-        currentPageIndex = i + 1
+        currentPageIndex = i
       }
       return {
         title: page.currentRevision?.title ?? '',
@@ -425,8 +426,6 @@ export async function requestPage(
           title: uuid.course.currentRevision?.title ?? '',
           pages,
           index: currentPageIndex,
-          nextPageUrl: pages[currentPageIndex]?.url,
-          previousPageUrl: pages[currentPageIndex - 2]?.url,
         },
         unrevisedRevisions: uuid.revisions?.totalCount,
         unrevisedCourseRevisions: uuid.course.revisions?.totalCount,

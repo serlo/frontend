@@ -1,4 +1,4 @@
-import { faGraduationCap, faListUl } from '@fortawesome/free-solid-svg-icons'
+import { faGraduationCap } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 import { MouseEvent } from 'react'
@@ -31,7 +31,7 @@ export function CourseNavigation({
       <p className="serlo-p mb-0 mt-4 font-bold text-[1rem]">
         <FontAwesomeIcon icon={faGraduationCap} /> Kurs
       </p>
-      <h1 className="mt-0 mb-6 mx-side font-bold text-2xl">{data.title}</h1>
+      <h1 className="mt-0 mb-5 mx-side font-bold text-2xl">{data.title}</h1>
       {data.pages.length > 0 ? (
         <button
           onClick={onOverviewButtonClick}

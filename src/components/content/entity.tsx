@@ -88,7 +88,7 @@ export function Entity({ data }: EntityProps) {
           'rounded-full mr-1.5 -mt-1.5'
         )}
       >
-        {data.courseData.index}
+        {data.courseData.index + 1}
       </span>
     )
   }
@@ -205,8 +205,8 @@ export function Entity({ data }: EntityProps) {
       return (
         <CourseFooter
           onOverviewButtonClick={openCourseNav}
-          nextHref={data.courseData.nextPageUrl ?? ''}
-          previousHref={data.courseData.previousPageUrl ?? ''}
+          pages={data.courseData.pages}
+          index={data.courseData.index}
         />
       )
     } else return null
