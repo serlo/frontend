@@ -418,7 +418,7 @@ export async function requestPage(
           useArticleTag: true,
           setContentAsSection: true,
         },
-        categoryIcon: 'article',
+        categoryIcon: 'coursePage',
         inviteToEdit: true,
         courseData: {
           id: uuid.course.id,

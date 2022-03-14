@@ -68,7 +68,6 @@ export function Entity({ data }: EntityProps) {
 
   function renderStyledH1() {
     if (!data.title) return null
-
     return (
       <h1 className="serlo-h1 mt-12" itemProp="name">
         {data.title}
@@ -78,7 +77,7 @@ export function Entity({ data }: EntityProps) {
   }
 
   function renderEntityIcon() {
-    if (!data.categoryIcon) return null
+    if (!data.categoryIcon || data.categoryIcon === 'coursePage') return null
     return (
       <span title={strings.entities[data.categoryIcon]}>
         {' '}
