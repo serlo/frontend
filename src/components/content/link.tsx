@@ -11,7 +11,6 @@ import {
 import { ExternalLink } from './external-link'
 import { EntityIdContext } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
-import { serloDomain } from '@/helper/serlo-domain'
 import { submitEvent } from '@/helper/submit-event'
 import { NodePath } from '@/schema/article-renderer'
 
