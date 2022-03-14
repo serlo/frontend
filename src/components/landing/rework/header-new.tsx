@@ -33,15 +33,15 @@ export function HeaderNew() {
               width="120"
               height="80"
             />
+            <span
+              className={clsx(
+                'font-handwritten text-xl align-text-top text-truegray-700',
+                'ml-9 mt-2 block mobile:inline-block mobile:ml-2 mobile:mt-4'
+              )}
+            >
+              Die freie Lernplattform
+            </span>
           </Link>
-          <span
-            className={clsx(
-              'font-handwritten text-xl align-text-top',
-              'ml-9 mt-2 block mobile:inline-block mobile:ml-2 mobile:mt-4'
-            )}
-          >
-            Die freie Lernplattform
-          </span>
         </div>
         <div className="hidden lg:block mt-5 flex-grow mx-8">
           <Quickbar />

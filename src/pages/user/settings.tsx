@@ -27,6 +27,11 @@ function Content() {
     lang
   )
 
+  const rawDescription =
+    data?.uuid.description && data.uuid.description !== 'NULL'
+      ? data.uuid.description
+      : ''
+
   return (
     <>
       <Breadcrumbs
@@ -50,7 +55,7 @@ function Content() {
       <>
         <Guard data={data} error={error} needsAuth>
           <>
-            <ProfileSettings rawDescription={data?.uuid.description ?? ''} />
+            <ProfileSettings rawDescription={rawDescription} />
           </>
         </Guard>
       </>

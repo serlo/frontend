@@ -3,11 +3,15 @@ import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
 
 export const features = {
-  editor: { cookieName: 'useEditorInFrontend', isActive: false },
   boxPlugin:
     process.env.NEXT_PUBLIC_ENV === 'production'
       ? null
       : { cookieName: 'useBoxPlugin', isActive: false },
+  legacyEditor: { cookieName: 'useLegacyEditor', isActive: false },
+  legacyDesign:
+    process.env.NEXT_PUBLIC_ENV === 'production'
+      ? null
+      : { cookieName: 'useFrontend', isActive: false },
 }
 
 type Feature = keyof typeof features
@@ -43,11 +47,10 @@ export function ProfileExperimental() {
   function handleButtonClick(feature: Feature) {
     if (!features[feature]) return
 
-    if (features[feature]!.isActive) {
+    if (features[feature]!.isActive)
       Cookies.remove(features[feature]!.cookieName)
-    } else {
-      Cookies.set(features[feature]!.cookieName, '1', { expires: 60 })
-    }
+    else Cookies.set(features[feature]!.cookieName, '1', { expires: 60 })
+
     updateState({})
   }
 
@@ -56,32 +59,6 @@ export function ProfileExperimental() {
       <h2 className="serlo-h2" id="experiments">
         🧪 Experimente
       </h2>
-      <div>
-        <h3 className="serlo-h3 mb-3">
-          ⚠️ Editor im Frontend {renderFeatureButton('editor')}
-        </h3>
-        <p className="serlo-p">
-          Hier kannst du den Editor im neuen Frontend aktivieren. Prinzipiell
-          funktioniert das, aber wir gehen davon aus, dass es in Sonderfällen zu
-          Problemen kommt und brauchen deswegen euch als mutige Tester*innen.{' '}
-        </p>
-        <p className="serlo-p">
-          Bitte besondere Vorsicht beim Review von den Inhalten, die ihr damit
-          bearbeitet.
-        </p>
-        <p className="serlo-p">
-          <b className="block mt-4">Was passieren könnte:</b>
-          <ul className="serlo-ul">
-            <li>Bestimmte Inhalte laden nicht</li>
-            <li>Änderungen könnten nicht gespeichert werden</li>
-            <li>
-              Versteckte Felder (z.B. in den Einstellungen) werden leer
-              abgespeichert
-            </li>
-            <li>… andere unerwartete nervige Sachen?</li>
-          </ul>
-        </p>
-      </div>
       {features['boxPlugin'] && (
         <div>
           <h3 className="serlo-h3 mb-3">
@@ -89,6 +66,41 @@ export function ProfileExperimental() {
           </h3>
           <p className="serlo-p">
             Das neue Box Plugin, bisher nur für Staging.
+          </p>
+        </div>
+      )}
+      {features['legacyDesign'] && (
+        <div>
+          <h3 className="serlo-h3 mb-3">
+            👻 Frontend: Altes Design{' '}
+            <a
+              href="/disable-frontend"
+              className="serlo-button serlo-make-interactive-primary"
+            >
+              aktivieren{' '}
+            </a>
+          </h3>
+          <p className="serlo-p">
+            Zurück ins alte Design, sollte nur noch bei akuten Problemen oder
+            zum Vergleichen mit den neuen Design benutzt werden.
+          </p>
+        </div>
+      )}
+      {features['legacyEditor'] && (
+        <div>
+          <h3 className="serlo-h3 mb-3">
+            ⚠️ Legacy-Editor {renderFeatureButton('legacyEditor')}
+          </h3>
+          <p className="serlo-p">
+            Wenn du Probleme mit dem Editor hast, kannst du hier den alten
+            Editor aktivieren.
+            <br />
+            Zusätzlich die Probleme dann bitte{' '}
+            <a href="https://community.serlo.org/channel/software-features-and-bugs">
+              gleich melden
+            </a>
+            , weil wir den Legacy-Editor in absehbarer Zeit ganz abschalten
+            werden. Danke!
           </p>
         </div>
       )}

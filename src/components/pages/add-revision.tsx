@@ -28,7 +28,7 @@ export function AddRevision({
         asBackButton
       />
       <MathSpan formula="" />
-      <div className="controls-portal sticky top-0 z-[99] bg-white" />
+      <div className="controls-portal sticky top-0 z-[94] bg-white" />
       <div
         className={clsx(
           'max-w-[816px] mx-auto mb-24 edtr-io serlo-editor-hacks'

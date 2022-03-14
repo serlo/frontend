@@ -3,31 +3,43 @@ import clsx from 'clsx'
 const partners = [
   {
     name: 'Beisheim Stiftung',
-    logo: 'https://packages.serlo.org/serlo-org-static-assets@1/de/home/logo-beisheim.png',
+    logo: '/_assets/img/landing/partners/logo_beisheimstiftung.svg',
+    padding: 10,
   },
   {
     name: 'Ludwig-Maximilians-Universität München',
-    logo: 'https://packages.serlo.org/serlo-org-static-assets@1/de/home/logo-lmu.svg',
-  },
-  {
-    name: 'Technische Universität München',
-    logo: 'https://packages.serlo.org/serlo-org-static-assets@1/de/home/logo-tum.svg',
+    logo: '/_assets/img/landing/partners/logo_lmu.svg',
+    padding: 8,
   },
   {
     name: 'Wikimedia Deutschland',
-    logo: 'https://packages.serlo.org/serlo-org-static-assets@1/de/home/logo-wikimedia.svg',
+    logo: '/_assets/img/landing/partners/logo_wikimedia.svg',
+    padding: 0,
+  },
+  {
+    name: 'Bundesministerium für Bildung und Forschung',
+    logo: '/_assets/img/landing/partners/logo_bmbf.svg',
+    padding: 0,
   },
   {
     name: 'Europäische Kommission',
-    logo: 'https://packages.serlo.org/serlo-org-static-assets@1/de/home/logo-eu.svg',
+    logo: '/_assets/img/landing/partners/logo_eu.svg',
+    padding: 8,
   },
   {
-    name: 'Ashoka Deutschland',
-    logo: 'https://packages.serlo.org/serlo-org-static-assets@1/de/home/logo-ashoka.png',
+    name: 'Deloitte',
+    logo: '/_assets/img/landing/partners/logo_deloitte.svg',
+    padding: 28,
   },
   {
     name: 'Hasso-Plattner-Institut',
-    logo: 'https://packages.serlo.org/serlo-org-static-assets@1/de/home/logo-hpi.png',
+    logo: '/_assets/img/landing/partners/logo_hpi.svg',
+    padding: 14,
+  },
+  {
+    name: 'Ashoka Deutschland',
+    logo: '/_assets/img/landing/partners/logo_ashoka.svg',
+    padding: 6,
   },
 ]
 
@@ -44,14 +56,28 @@ export function PartnerListNew() {
     </div>
   )
 
-  function renderPartner({ name, logo }: { name: string; logo: string }) {
+  function renderPartner({
+    name,
+    logo,
+    padding,
+  }: {
+    name: string
+    logo: string
+    padding: number
+  }) {
     return (
       <img
         key={name}
-        className="max-h-12 px-8 mb-16 sm:px-16"
-        style={{ filter: 'invert(1)', opacity: '0.45' }}
+        className="max-h-[4.5rem] sm:max-h-[5.3rem] md:max-h-24 max-w-[20rem] px-8 mb-16 sm:px-8"
+        style={{
+          opacity: '0.6',
+          filter: 'grayscale(1)',
+          mixBlendMode: 'multiply',
+          paddingTop: `${padding}px`,
+          paddingBottom: `${padding}px`,
+        }}
         src={logo}
-        alt={`Logo of ${name}`}
+        alt={`Logo von ${name}`}
         title={name}
       />
     )

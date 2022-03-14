@@ -63,6 +63,7 @@ const Table = styled.table({
 const TableHeader = styled.th({
   border: '1px solid black',
   backgroundColor: '#ddd',
+  minWidth: '4rem',
 })
 
 const TableCell = styled.td({

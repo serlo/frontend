@@ -50,9 +50,12 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
           {renderBreadcrumbs()}
           <main>{children}</main>
           {!noComments && (
-            <Lazy>
-              <CommentArea entityId={entityId} />
-            </Lazy>
+            <>
+              <div id="comment-area-begin-scrollpoint" />
+              <Lazy>
+                <CommentArea entityId={entityId} />
+              </Lazy>
+            </>
           )}
           <HSpace amount={40} />
           {page.horizonData && (
