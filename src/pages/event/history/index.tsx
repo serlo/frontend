@@ -2,10 +2,9 @@ import { PageTitle } from '@/components/content/page-title'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Events } from '@/components/user/events'
 import { useInstanceData } from '@/contexts/instance-context'
-import { SlugProps } from '@/data-types'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
-export default renderedPageNoHooks<SlugProps>(() => {
+export default renderedPageNoHooks(() => {
   return (
     <FrontendClientBase>
       <Content />

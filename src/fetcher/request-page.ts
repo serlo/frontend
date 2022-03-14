@@ -13,21 +13,22 @@ import { createTitle } from './create-title'
 import { dataQuery } from './query'
 import { QueryResponse, Instance } from './query-types'
 import { endpoint } from '@/api/endpoint'
-import { SlugPageData } from '@/data-types'
+import { RequestPageData } from '@/data-types'
 import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
 import { getInstanceDataByLang } from '@/helper/feature-i18n'
 
+// ALWAYS start alias with slash
 export async function requestPage(
   alias: string,
   instance: Instance
-): Promise<SlugPageData> {
+): Promise<RequestPageData> {
   const { uuid, authorization } = await request<{
     uuid: QueryResponse
     authorization: AuthorizationPayload
   }>(endpoint, dataQuery, {
     alias: { instance, path: alias },
   })
-  if (!uuid) return { kind: 'error', errorData: { code: 404 } }
+  if (!uuid) return { kind: 'not-found' }
   // Can be deleted if CFWorker redirects those for us
   if (
     uuid.__typename === 'ArticleRevision' ||
@@ -444,10 +445,6 @@ export async function requestPage(
   }
 
   return {
-    kind: 'error',
-    errorData: {
-      code: 404,
-      message: `Unknown content type!`,
-    },
+    kind: 'not-found', // unknown content type
   }
 }
