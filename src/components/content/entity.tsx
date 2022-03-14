@@ -4,6 +4,7 @@ import {
   faTrash,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import dynamic from 'next/dynamic'
 import { Router } from 'next/router'
 import { useState, MouseEvent } from 'react'
@@ -78,8 +79,18 @@ export function Entity({ data }: EntityProps) {
   }
 
   function renderCoursePageNumber() {
-    console.log(data)
-    return '123'
+    if (!data.courseData) return null
+    return (
+      <span
+        className={clsx(
+          'text-xl text-center font-bold text-brand bg-brand-150',
+          'inline-block justify-center align-middle h-7 w-7',
+          'rounded-full mr-1.5 -mt-1.5'
+        )}
+      >
+        {data.courseData.index}
+      </span>
+    )
   }
 
   function renderEntityIcon() {

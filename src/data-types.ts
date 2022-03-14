@@ -783,6 +783,7 @@ export interface CourseData {
   id: number
   title: string
   pages: CoursePagesData
+  index: number
   nextPageUrl?: string
   previousPageUrl?: string
 }

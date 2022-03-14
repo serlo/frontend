@@ -424,6 +424,7 @@ export async function requestPage(
           id: uuid.course.id,
           title: uuid.course.currentRevision?.title ?? '',
           pages,
+          index: currentPageIndex,
           nextPageUrl: pages[currentPageIndex]?.url,
           previousPageUrl: pages[currentPageIndex - 2]?.url,
         },
