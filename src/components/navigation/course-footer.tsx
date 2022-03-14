@@ -25,8 +25,10 @@ export function CourseFooter({
     location.href = '#course-overview'
     onOverviewButtonClick(e)
   }
-  const previousHref = pages[index]?.url
-  const nextHref = pages[index + 2]?.url
+  const previousIndex = index - 1
+  const nextIndex = index + 1
+  const previousHref = pages[previousIndex]?.url
+  const nextHref = pages[nextIndex]?.url
 
   const { strings } = useInstanceData()
 
@@ -61,9 +63,9 @@ export function CourseFooter({
                 'rounded-full pt-0.25 w-4 h-4 mt-1.5 mr-1.5'
               )}
             >
-              {index + 2}
+              {nextIndex + 1}
             </b>{' '}
-            {pages[index + 2].title}
+            {pages[nextIndex].title}
           </div>
         </Link>
       ) : (
