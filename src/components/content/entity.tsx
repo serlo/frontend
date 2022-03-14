@@ -38,7 +38,7 @@ export function Entity({ data }: EntityProps) {
   const [courseNavOpen, setCourseNavOpen] = useState(false)
   const openCourseNav = (e?: MouseEvent) => {
     e?.preventDefault()
-    setCourseNavOpen(true)
+    setCourseNavOpen(!courseNavOpen)
   }
 
   Router.events.on('routeChangeComplete', () => {
@@ -70,10 +70,16 @@ export function Entity({ data }: EntityProps) {
     if (!data.title) return null
     return (
       <h1 className="serlo-h1 mt-12" itemProp="name">
+        {renderCoursePageNumber()}
         {data.title}
         {renderEntityIcon()}
       </h1>
     )
+  }
+
+  function renderCoursePageNumber() {
+    console.log(data)
+    return '123'
   }
 
   function renderEntityIcon() {
