@@ -1,4 +1,4 @@
-import { faGraduationCap, faListUl } from '@fortawesome/free-solid-svg-icons'
+import { faGraduationCap } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 import { MouseEvent } from 'react'
@@ -26,11 +26,21 @@ export function CourseNavigation({
   return (
     <nav
       id="course-overview"
-      className="mt-6 bg-brand-50 sm:bg-white pt-1 pb-5"
+      className="mt-6 bg-brand-50 sm:bg-white pt-1 pb-5 sm:pb-11 border-b-2 border-brand-150 "
     >
-      <h1 className="mx-side my-4 font-bold text-xl text-brand">
-        <FontAwesomeIcon icon={faGraduationCap} /> {data.title}
-      </h1>
+      <p className="serlo-p mb-0 mt-4 font-bold text-[1rem]">
+        <FontAwesomeIcon icon={faGraduationCap} /> Kurs
+      </p>
+      <h1 className="mt-0 mb-5 mx-side font-bold text-2xl">{data.title}</h1>
+      {data.pages.length > 0 ? (
+        <button
+          onClick={onOverviewButtonClick}
+          className="serlo-button ml-2 serlo-make-interactive-light"
+        >
+          {strings.course.showPages}{' '}
+          <span className={open ? 'rotate-180' : ''}>▾</span>
+        </button>
+      ) : null}
       {open ? (
         <ol className="serlo-ol mb-0 mt-7">
           {data.pages.map(({ url, active, title, noCurrentRevision }) => (
@@ -53,18 +63,7 @@ export function CourseNavigation({
             </li>
           ))}
         </ol>
-      ) : (
-        <>
-          {data.pages.length > 0 ? (
-            <button
-              onClick={onOverviewButtonClick}
-              className="serlo-button mx-side bg-brand text-white hover:bg-brand-lighter"
-            >
-              <FontAwesomeIcon icon={faListUl} /> {strings.course.showPages}
-            </button>
-          ) : null}
-        </>
-      )}
+      ) : null}
     </nav>
   )
 }

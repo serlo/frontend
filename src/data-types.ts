@@ -783,8 +783,7 @@ export interface CourseData {
   id: number
   title: string
   pages: CoursePagesData
-  nextPageUrl?: string
-  previousPageUrl?: string
+  index: number
 }
 
 export type CoursePagesData = CoursePageEntry[]

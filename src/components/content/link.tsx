@@ -11,7 +11,6 @@ import {
 import { ExternalLink } from './external-link'
 import { EntityIdContext } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
-import { serloDomain } from '@/helper/serlo-domain'
 import { submitEvent } from '@/helper/submit-event'
 import { NodePath } from '@/schema/article-renderer'
 
@@ -47,14 +46,12 @@ export function isLegacyLink(_href: string) {
   if (_href.startsWith('/entity/repository/history')) return false
   if (_href.startsWith('/entity/repository/compare')) return false
 
-  // exerimental feature: editor in frontend
+  // exerimental feature: useLegacyEditor
   if (_href.startsWith('/entity/repository/add-revision')) {
-    if (serloDomain != 'serlo.org') return false // always in frontend in dev and staging
-    if (
+    return (
       typeof window !== 'undefined' &&
-      document.cookie.includes('useEditorInFrontend=1')
+      document.cookie.includes('useLegacyEditor=1')
     )
-      return false // in frontend when cookie is set
   }
 
   return (

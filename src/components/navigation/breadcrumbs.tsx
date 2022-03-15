@@ -1,4 +1,7 @@
-import { faArrowCircleLeft, faList } from '@fortawesome/free-solid-svg-icons'
+import {
+  faArrowCircleLeft,
+  faFolderOpen,
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 
@@ -93,12 +96,15 @@ function BreadcrumbEntries({
             path={['breadcrumbs', i]}
           >
             <span className="sm:hidden pt-0.25 pr-1">
-              <FontAwesomeIcon icon={faArrowCircleLeft} size="1x" />
+              <FontAwesomeIcon
+                icon={asBackButton ? faArrowCircleLeft : faFolderOpen}
+                size="1x"
+              />
             </span>
             {!isTaxonomy && (
               <span className="hidden sm:inline text-base pt-0.25 pr-1">
                 <FontAwesomeIcon
-                  icon={asBackButton ? faArrowCircleLeft : faList}
+                  icon={asBackButton ? faArrowCircleLeft : faFolderOpen}
                   size="1x"
                 />
               </span>

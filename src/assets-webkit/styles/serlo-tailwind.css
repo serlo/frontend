@@ -78,12 +78,12 @@
     }
   }
   .serlo-ol {
-    @apply mx-side mb-block mt-0 pl-7 list-none;
+    @apply mx-side mb-block mt-0 pl-6 list-none;
     @apply special-reset-list-counter;
 
     & > li:before {
       @apply absolute special-content-list-counter special-increment-list-counter;
-      @apply font-bold text-center rounded-full -ml-7;
+      @apply font-bold text-center rounded-full -ml-6;
       @apply mt-0.5 bg-brand-150 w-4 h-4 text-xs;
       @apply leading-tight text-brand pt-0.25;
     }

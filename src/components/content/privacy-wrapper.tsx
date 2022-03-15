@@ -95,7 +95,7 @@ export function PrivacyWrapper({
           />
         </div>
         {!checkConsent(provider) && (
-          <div className="relative z-10 py-2 text-left px-side bg-brand text-white cursor-default">
+          <div className="relative z-10 py-2 text-left px-side bg-brand-100 text-brand cursor-default">
             {replacePlaceholders(strings.embed.text, {
               provider: <b>{provider}</b>,
               privacypolicy: (
@@ -107,18 +107,18 @@ export function PrivacyWrapper({
           </div>
         )}
         <div
-          className="absolute -top-24 inset-0 flex justify-around items-center mobile:-top-12"
+          className="absolute inset-0 flex justify-around items-center mobile:-top-12 sm:-top-24"
           onClick={confirmLoad}
         >
           <button
             className={clsx(
-              'serlo-button serlo-make-interactive-primary',
-              'text-[1.33rem] group-hover:bg-brand-light group-hover:text-white'
+              'serlo-button serlo-make-interactive-light',
+              'group-hover:bg-brand-light group-hover:text-white'
             )}
             onKeyDown={onKeyDown}
           >
             <FontAwesomeIcon
-              className="pt-1"
+              className="py-0.5"
               icon={
                 showIframe
                   ? faSpinner
