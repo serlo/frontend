@@ -54,6 +54,7 @@ export function createExercise(
     type: 'exercise',
     grouped: false,
     positionOnPage: index,
+    trashed: uuid.trashed,
     task: {
       legacy: taskLegacy,
       edtrState: taskEdtrState,
