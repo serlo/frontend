@@ -146,6 +146,7 @@ export async function requestPage(
         id: uuid.id,
         alias: uuid.alias ?? undefined,
         typename: uuid.__typename,
+        trashed: uuid.trashed,
         content: exercise,
         inviteToEdit: true,
         unrevisedRevisions: uuid.revisions?.totalCount,
