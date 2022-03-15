@@ -592,6 +592,7 @@ interface BareSolution {
 
 export interface FrontendExerciseNode {
   type: 'exercise'
+  trashed?: boolean
   task: {
     legacy?: FrontendContentNode[]
     edtrState?: TaskEdtrState
