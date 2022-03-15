@@ -57,9 +57,9 @@ export function SerloEditor({
   const loggedInData = useLoggedInData()
   if (!loggedInData)
     return (
-      <p className="text-center">
+      <div className="text-center">
         <LoadingSpinner />
-      </p>
+      </div>
     )
 
   const editorStrings = loggedInData.strings.editor
