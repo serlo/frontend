@@ -108,9 +108,7 @@ export function EquationsRenderer({ state }: EquationsProps) {
     return (
       <>
         <ExplanationTr>
-          <td colSpan={3} style={{ textAlign: 'center' }}>
-            {state.firstExplanation.render()}
-          </td>
+          <td colSpan={3}>{state.firstExplanation.render()}</td>
         </ExplanationTr>
         <tr style={{ height: '30px' }}>
           <td />
