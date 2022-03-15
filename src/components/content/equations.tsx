@@ -108,7 +108,7 @@ export function Equations({
     return (
       <>
         <tr className="whitespace-normal" style={{ color: explanationColor }}>
-          <td className="text-center pb-4" colSpan={3}>
+          <td className="pb-4" colSpan={3}>
             {renderNested(firstExplanation, 'firstExplanation')}
           </td>
         </tr>
