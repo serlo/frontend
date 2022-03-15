@@ -47,7 +47,7 @@ export function isLegacyLink(_href: string) {
   if (_href.startsWith('/entity/repository/compare')) return false
 
   // exerimental feature: useLegacyEditor
-  if (_href.startsWith('/entity/repository/add-revision')) {
+  if (_href.startsWith('/entity/repository/add-revision/')) {
     return (
       typeof window !== 'undefined' &&
       document.cookie.includes('useLegacyEditor=1')
@@ -67,6 +67,7 @@ export function isLegacyLink(_href: string) {
     _href.startsWith('/unsubscribe') ||
     _href.startsWith('/user/profile/') ||
     _href.startsWith('/subscription/update') ||
+    _href.startsWith('/entity/repository/add-revision-old/') ||
     _href.includes('.serlo.org') // e.g. community.serlo.org or different language
   )
 }
