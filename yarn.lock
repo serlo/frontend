@@ -3312,6 +3312,7 @@ __metadata:
     "@types/node": ^14.0.0
     "@types/nprogress": ^0.2.0
     "@types/prismjs": ^1.16.6
+    "@types/qrcode.react": ^1.0.2
     "@types/ramda": ^0.27.0
     "@types/react": ^17.0.0
     "@types/react-beautiful-dnd": ^13.0.0
@@ -3357,6 +3358,7 @@ __metadata:
     prettier: ^2.0.0
     prettier-plugin-packagejson: ^2.0.0
     prop-types: ^15.7.0
+    qrcode.react: ^2.0.0
     ramda: ^0.28.0
     react: ^17.0.0
     react-beautiful-dnd: ^13.0.0
@@ -3969,6 +3971,15 @@ __metadata:
   version: 15.7.4
   resolution: "@types/prop-types@npm:15.7.4"
   checksum: ef6e1899e59b876c273811b1bd845022fc66d5a3d11cb38a25b6c566b30514ae38fe20a40f67622f362a4f4f7f9224e22d8da101cff3d6e97e11d7b4c307cfc1
+  languageName: node
+  linkType: hard
+
+"@types/qrcode.react@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "@types/qrcode.react@npm:1.0.2"
+  dependencies:
+    "@types/react": "*"
+  checksum: be256f0192366b4c0822da43c732bf3e29beb954c89d739aa770f09e5160842a3ca4d6814cb57bbcbbf8997cf7af0b998de318dab957f0820f267bb746c9a329
   languageName: node
   linkType: hard
 
@@ -10300,6 +10311,26 @@ __metadata:
   version: 2.1.1
   resolution: "punycode@npm:2.1.1"
   checksum: 823bf443c6dd14f669984dea25757b37993f67e8d94698996064035edd43bed8a5a17a9f12e439c2b35df1078c6bec05a6c86e336209eb1061e8025c481168e8
+  languageName: node
+  linkType: hard
+
+"qr.js@npm:0.0.0":
+  version: 0.0.0
+  resolution: "qr.js@npm:0.0.0"
+  checksum: 5ac6c393967bdeaa660e7fd3a501a25eb538c1f6008a4d30ab2b97bbe520e5c236530090773f1578aa0a523cdaa6923c866615e21143f9e7cd22abd41c789b69
+  languageName: node
+  linkType: hard
+
+"qrcode.react@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "qrcode.react@npm:2.0.0"
+  dependencies:
+    loose-envify: ^1.4.0
+    prop-types: ^15.6.0
+    qr.js: 0.0.0
+  peerDependencies:
+    react: ^16.3.0 || ^17.0.0
+  checksum: fc782e708def7b32ba218e98e5f94ae532d6f5c40ce7a3edfb62b1fab0f13398e41ee18e1a92fd0e9f863b881ba7806cff874490f22221713ac8e32966dc6845
   languageName: node
   linkType: hard
 

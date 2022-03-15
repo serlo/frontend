@@ -12,6 +12,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
+import QRCode from 'qrcode.react'
 import { MouseEvent, useRef, useContext } from 'react'
 
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
@@ -19,6 +20,7 @@ import { EntityIdContext } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { submitEvent } from '@/helper/submit-event'
+import { theme } from '@/theme'
 
 export interface ShareModalProps {
   isOpen: boolean
@@ -124,12 +126,20 @@ export function ShareModal({ isOpen, onClose, showPdf }: ShareModalProps) {
       onCloseClick={onClose}
       title={strings.share.title}
     >
+      <QRCode
+        value={shareUrl}
+        renderAs="svg"
+        className="float-right mx-side"
+        fgColor={theme.colors.brand}
+      />
       {renderShareInput()}
-      {renderButtons(socialShare)}
+      <hr className="my-4 mx-side" />
       {renderButtons(lmsData)}
+      <hr className="my-4 mx-side" />
+      {renderButtons(socialShare)}
       {showPdf && (
         <>
-          <hr className="mt-8 mb-8 mx-side" />
+          <hr className="my-4 mx-side" />
           {renderButtons(pdfData)}
         </>
       )}
@@ -142,7 +152,7 @@ export function ShareModal({ isOpen, onClose, showPdf }: ShareModalProps) {
         <input /*ShareInput*/
           className={clsx(
             'rounded-2xl border-none py-1 px-2.5 w-[250px]',
-            'mx-side mb-2 mr-0 bg-brandgreen-lighter',
+            'ml-3 mb-2 mr-0 bg-brandgreen-lighter',
             'focus:outline-none focus:shadow-input'
           )}
           ref={shareInputRef}
@@ -151,10 +161,10 @@ export function ShareModal({ isOpen, onClose, showPdf }: ShareModalProps) {
         />{' '}
         {document.queryCommandSupported('copy') && (
           <>
+            <br />
             <button className={shareButton} onClick={copyToClipboard}>
               <FontAwesomeIcon icon={faCopy} /> {strings.share.copyLink}
             </button>
-            <br />
           </>
         )}
       </>
@@ -182,8 +192,8 @@ export function ShareModal({ isOpen, onClose, showPdf }: ShareModalProps) {
   }
 }
 
-const shareButton = /* className={ */ clsx(
-  'serlo-button text-brandgreen hover:bg-brandgreen hover:text-white',
-  'mx-side mt-1.5 block text-base py-0.5',
+const shareButton = clsx(
+  'serlo-button serlo-make-interactive-transparent-green',
+  'mx-side block mt-1.5 text-base py-0.5',
   'sm:ml-3 sm:mr-0 sm:inline sm:mt-0'
-) /*}*/
+)
