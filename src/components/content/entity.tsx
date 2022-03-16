@@ -37,7 +37,7 @@ export function Entity({ data }: EntityProps) {
 
   // courseNav: start opened when only some entries
   const [courseNavOpen, setCourseNavOpen] = useState(
-    data && data.courseData && data.courseData.pages.length < 4 ? true : false
+    (data && data.courseData && data.courseData.pages.length < 4) ?? false
   )
 
   const openCourseNav = (e?: MouseEvent) => {
