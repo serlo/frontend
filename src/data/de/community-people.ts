@@ -17,7 +17,7 @@ export const communityWallPersons = [
     role: 'Lehrerin',
     imgSrc:
       'https://assets.serlo.org/59636d3d8b05b_caf5ac55b28cbd593d03f7ba7812d2016a61ae61.jpg',
-    subjects: ['landing', 'informatik'],
+    subjects: ['landing', 'informatik', 'bio', 'chemie'],
   },
   {
     name: 'wandapaetzold',
@@ -37,14 +37,14 @@ export const communityWallPersons = [
     role: 'Team',
     imgSrc:
       'https://assets.serlo.org/5d1605d55ea14_067f65467fb550862aa307ba6674dba6a5e05776.jpeg',
-    subjects: ['landing', 'informatik'],
+    subjects: ['landing'],
   },
   {
     name: 'flora_jana',
     role: 'Team',
     imgSrc:
       'https://assets.serlo.org/5a005278ce575_e72a8367c20d1bf53add676fa2893b34c5823fdb.jpg',
-    subjects: ['landing', 'informatik', 'mathe'],
+    subjects: ['landing'],
   },
   {
     name: 'Leogato',
@@ -101,7 +101,7 @@ export const communityWallPersons = [
     name: 'corinna',
     role: 'Autorin',
     imgSrc: 'https://community.serlo.org/avatar/Corinna',
-    subjects: ['landing', 'nachhaltigkeit', 'lerntipps'],
+    subjects: ['landing', 'nachhaltigkeit', 'lerntipps', 'biologie'],
   },
   {
     name: 'hwlang',
@@ -128,7 +128,7 @@ export const communityWallPersons = [
     role: 'Autor',
     imgSrc:
       'https://assets.serlo.org/61eec6dcb3eed_6fe113a07160f3d88e4be3efd7246cab64d31628.jpg',
-    subjects: ['mathe'],
+    subjects: ['mathe', 'lerntipps'],
   },
   {
     name: 'Nanami',
