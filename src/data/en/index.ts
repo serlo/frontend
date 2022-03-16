@@ -93,7 +93,7 @@ export const instanceData = {
         'Usage of this content might be more restricted than our other content.',
     },
     course: {
-      showPages: 'Course overview',
+      showPages: 'Show course overview',
       pages: 'Course overview',
       next: 'Next',
       back: 'Back',
