@@ -125,11 +125,12 @@ export function ShareModal({ isOpen, onClose, showPdf }: ShareModalProps) {
       isOpen={isOpen}
       onCloseClick={onClose}
       title={strings.share.title}
+      className="top-1/2"
     >
       <QRCode
         value={shareUrl}
         renderAs="svg"
-        className="float-right mx-side"
+        className="sm:float-right mx-side mb-4 sm:mb-0"
         fgColor={theme.colors.brand}
       />
       {renderShareInput()}
@@ -192,8 +193,8 @@ export function ShareModal({ isOpen, onClose, showPdf }: ShareModalProps) {
   }
 }
 
-const shareButton = clsx(
+const shareButton = /* className={ */ clsx(
   'serlo-button serlo-make-interactive-transparent-green',
   'mx-side block mt-1.5 text-base py-0.5',
   'sm:ml-3 sm:mr-0 sm:inline sm:mt-0'
-)
+) /* } */
