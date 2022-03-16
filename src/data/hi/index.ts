@@ -90,7 +90,7 @@ export const instanceData = {
       nonFree: "इस सामग्री का उपयोग हमारी अन्य सामग्री की तुलना में अधिक प्रतिबंधित हो सकता है।"
     },
     course: {
-      showPages: "पाठ्यक्रम का अवलोकन करें",
+      showPages: 'Course overview',
       pages: "पाठ्यक्रम अवलोकन",
       next: "अगला",
       back: 'Back',
