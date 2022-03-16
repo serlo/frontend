@@ -20,9 +20,6 @@ export function CourseNavigation({
 }: CourseNavigationProps) {
   const { strings } = useInstanceData()
 
-  //open directly
-  if (data.pages.length < 4) onOverviewButtonClick()
-
   return (
     <nav
       id="course-overview"
