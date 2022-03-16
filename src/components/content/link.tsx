@@ -47,7 +47,10 @@ export function isLegacyLink(_href: string) {
   if (_href.startsWith('/entity/repository/compare')) return false
 
   // exerimental feature: useLegacyEditor
-  if (_href.startsWith('/entity/repository/add-revision/')) {
+  if (
+    _href.startsWith('/entity/repository/add-revision/') ||
+    _href.startsWith('/taxonomy/term/update/')
+  ) {
     return (
       typeof window !== 'undefined' &&
       document.cookie.includes('useLegacyEditor=1')
