@@ -42,7 +42,7 @@ export function CommunityWallSubjectLanding({
             className={clsx(
               'text-center text-3xl font-extrabold',
               'leading-cozy tracking-tight',
-              'max-w-2xl mt-20 mx-auto relative z-10 mb-8'
+              'max-w-xl mt-20 mx-auto relative z-10 mb-8'
             )}
           >
             Lust das Fach {title} mitzugestalten?

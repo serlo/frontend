@@ -690,12 +690,6 @@ export const featuredContent = {
       img: 'https://images.pexels.com/photos/6231720/pexels-photo-6231720.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
     },
     {
-      title: 'Negative Emotionen beim Lernen',
-      type: 'course',
-      url: '/lerntipps/118552/%C3%BCbersicht',
-      img: 'https://assets.serlo.org/5bac96c5e1c4e_dbda5d3464866cea7b86d6676f848f880512918f.jpg',
-    },
-    {
       title: 'Übungen zum richtigen Lesen von Aufgabenstellungen',
       type: 'topicFolder',
       url: '/lerntipps/119344/%C3%BCbungen-zum-richtigen-lesen-von-aufgabenstellungen',
@@ -718,12 +712,6 @@ export const featuredContent = {
       type: 'course',
       url: '/lerntipps/120637/%C3%BCbersicht',
       img: 'https://assets.serlo.org/5bbdcd8fdd6fc_a9048ddcdb5dc5abdc61598b5a6eb9c560964e27.jpg',
-    },
-    {
-      title: 'Strategien zum Lernen lernen',
-      type: 'article',
-      url: '/lerntipps/119275/%C3%BCbersicht',
-      img: 'https://assets.serlo.org/5badc0229f088_b9d90bd48f5907374333f8e554d7aed538650328.png',
     },
   ] as FeaturedContentData[],
 }
