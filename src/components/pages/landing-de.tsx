@@ -1,5 +1,4 @@
 import clsx from 'clsx'
-import Head from 'next/head'
 
 import { HeadTags } from '../head-tags'
 import { CommunityWall } from '../landing/rework/community-wall/community-wall'
@@ -23,6 +22,23 @@ export function LandingDE({ data }: LandingDEProps) {
   return (
     <>
       <style jsx>{`
+        @font-face {
+          font-family: 'Caveat';
+          font-style: bold;
+          font-weight: 700;
+          src: url('/_assets/fonts/caveat/caveat-bold.woff2') format('woff2'),
+            url('/_assets/fonts/caveat/caveat-bold.woff') format('woff');
+          font-display: swap;
+        }
+        @font-face {
+          font-family: 'Karmilla';
+          font-style: bolder;
+          font-weight: 800;
+          src: url('/_assets/fonts/karmilla/karmilla-bolder.woff2')
+              format('woff2'),
+            url('/_assets/fonts/karmilla/karmilla-bold.woff') format('woff');
+          font-display: swap;
+        }
         .about {
           padding-top: 7rem;
           padding-bottom: 5rem;
@@ -106,9 +122,6 @@ export function LandingDE({ data }: LandingDEProps) {
           background-size: 100% 100%;
         }
       `}</style>
-      <Head>
-        <link href="_assets/landing-fonts.css" rel="stylesheet" />
-      </Head>
       <LandingJsonLd />
       <HeadTags data={{ title: 'Serlo – Die freie Lernplattform' }} />
       <HeaderNew />

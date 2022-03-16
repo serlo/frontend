@@ -22,9 +22,18 @@ export const getStaticProps: GetStaticProps<RevisionProps> = async (
 ) => {
   const revisionId = parseInt(context.params?.revision_id as string)
 
-  const pageData = isNaN(revisionId)
-    ? undefined
-    : await requestRevision(revisionId, context.locale! as Instance)
+  if (isNaN(revisionId)) {
+    return { notFound: true }
+  }
+
+  const pageData = await requestRevision(
+    revisionId,
+    context.locale! as Instance
+  )
+
+  if (pageData.kind == 'not-found') {
+    return { notFound: true }
+  }
 
   return {
     props: {

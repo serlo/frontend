@@ -1,19 +1,14 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 
 import { FrontendClientBase } from '@/components/frontend-client-base'
-import { ErrorPage } from '@/components/pages/error-page'
 import { LicenseDetail } from '@/components/pages/license-detail'
-import { LicenseDetailPage, LicenseDetailProps } from '@/data-types'
+import { LicenseDetailProps } from '@/data-types'
 import { requestLicensePage } from '@/fetcher/license/request'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks<LicenseDetailProps>(({ pageData }) => (
   <FrontendClientBase>
-    {pageData === undefined ? (
-      <ErrorPage code={404} />
-    ) : (
-      <LicenseDetail {...pageData.licenseData} />
-    )}
+    <LicenseDetail {...pageData.licenseData} />
   </FrontendClientBase>
 ))
 
@@ -22,11 +17,17 @@ export const getStaticProps: GetStaticProps<LicenseDetailProps> = async (
 ) => {
   const id = parseInt(context.params?.id as string)
 
-  const licenseData = isNaN(id) ? undefined : await requestLicensePage(id)
+  if (isNaN(id)) return { notFound: true }
+
+  const licenseData = await requestLicensePage(id)
+
+  if (licenseData.kind == 'not-found') {
+    return { notFound: true }
+  }
 
   return {
     props: {
-      pageData: licenseData as LicenseDetailPage,
+      pageData: licenseData,
     },
     revalidate: 60 * 60 * 24, //one day in seconds
   }

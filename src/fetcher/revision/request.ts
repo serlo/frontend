@@ -14,12 +14,12 @@ import {
 } from '../query-types'
 import { revisionQuery } from './query'
 import { endpoint } from '@/api/endpoint'
-import { EntityTypes, ErrorPage, RevisionPage } from '@/data-types'
+import { EntityTypes, PageNotFound, RevisionPage } from '@/data-types'
 
 export async function requestRevision(
   revisionId: number,
   instance: Instance
-): Promise<RevisionPage | ErrorPage> {
+): Promise<RevisionPage | PageNotFound> {
   const variables = {
     id: revisionId,
   }
@@ -206,10 +206,6 @@ export async function requestRevision(
   }
 
   return {
-    kind: 'error',
-    errorData: {
-      code: 404,
-      message: `Something went wrong, this is not a revision!`,
-    },
+    kind: 'not-found',
   }
 }

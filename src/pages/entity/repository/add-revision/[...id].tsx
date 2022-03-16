@@ -4,53 +4,28 @@ import { GetServerSideProps } from 'next'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { AddRevision } from '@/components/pages/add-revision'
-import { ErrorPage } from '@/components/pages/error-page'
 import { StaticInfoPanel } from '@/components/static-info-panel'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import {
-  EditorFetchErrorData,
-  EditorPageData,
-  fetchEditorData,
-} from '@/fetcher/fetch-editor-data'
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
+import { EditorPageData, fetchEditorData } from '@/fetcher/fetch-editor-data'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
-export default renderedPageNoHooks<EditorPageData | EditorFetchErrorData>(
-  (props) => {
-    const isError = hasOwnPropertyTs(props, 'errorType')
-
-    return (
-      <FrontendClientBase
-        noContainers
-        loadLoggedInData /* warn: enables preview editor without login */
-      >
-        {isError ? (
-          <>
-            {props.errorType === 'failed-fetch' ? (
-              <ErrorPage
-                code={props.code ?? 400}
-                message="Error while fetching data"
-              />
-            ) : (
-              <EditorWarning type={props.errorType} />
-            )}
-          </>
-        ) : (
-          <>
-            <div className="relative">
-              <MaxWidthDiv>
-                <main>
-                  {props.converted ? <EditorWarning converted /> : null}
-                  <AddRevision {...props} />
-                </main>
-              </MaxWidthDiv>{' '}
-            </div>
-          </>
-        )}
-      </FrontendClientBase>
-    )
-  }
-)
+export default renderedPageNoHooks<EditorPageData>((props) => {
+  return (
+    <FrontendClientBase
+      noContainers
+      loadLoggedInData /* warn: enables preview editor without login */
+    >
+      <div className="relative">
+        <MaxWidthDiv>
+          <main>
+            {props.converted ? <EditorWarning converted /> : null}
+            <AddRevision {...props} />
+          </main>
+        </MaxWidthDiv>{' '}
+      </div>
+    </FrontendClientBase>
+  )
+})
 
 function EditorWarning({
   type,
@@ -86,14 +61,18 @@ function EditorWarning({
   )
 }
 
-export const getServerSideProps: GetServerSideProps<
-  EditorPageData | EditorFetchErrorData
-> = async (context) => {
+export const getServerSideProps: GetServerSideProps<EditorPageData> = async (
+  context
+) => {
   // for me it always returns as an array of strings. not sure why the type differs here.
   const result = await fetchEditorData(
     context.locale!,
     context.params?.id as string[] | undefined
   )
+
+  if (result.errorType == 'failed-fetch') {
+    return { notFound: true }
+  }
 
   return {
     props: result,

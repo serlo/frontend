@@ -13,21 +13,22 @@ import { createTitle } from './create-title'
 import { dataQuery } from './query'
 import { QueryResponse, Instance } from './query-types'
 import { endpoint } from '@/api/endpoint'
-import { SlugPageData } from '@/data-types'
+import { RequestPageData } from '@/data-types'
 import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
 import { getInstanceDataByLang } from '@/helper/feature-i18n'
 
+// ALWAYS start alias with slash
 export async function requestPage(
   alias: string,
   instance: Instance
-): Promise<SlugPageData> {
+): Promise<RequestPageData> {
   const { uuid, authorization } = await request<{
     uuid: QueryResponse
     authorization: AuthorizationPayload
   }>(endpoint, dataQuery, {
     alias: { instance, path: alias },
   })
-  if (!uuid) return { kind: 'error', errorData: { code: 404 } }
+  if (!uuid) return { kind: 'not-found' }
   // Can be deleted if CFWorker redirects those for us
   if (
     uuid.__typename === 'ArticleRevision' ||
@@ -82,6 +83,7 @@ export async function requestPage(
             id: uuid.id,
             title: uuid.currentRevision?.title ?? '',
             pages,
+            index: 0,
           },
         },
         metaData: {
@@ -144,6 +146,7 @@ export async function requestPage(
         id: uuid.id,
         alias: uuid.alias ?? undefined,
         typename: uuid.__typename,
+        trashed: uuid.trashed,
         content: exercise,
         inviteToEdit: true,
         unrevisedRevisions: uuid.revisions?.totalCount,
@@ -393,7 +396,7 @@ export async function requestPage(
     const pages = pagesToShow.map((page, i) => {
       const active = page.id === uuid.id
       if (active) {
-        currentPageIndex = i + 1
+        currentPageIndex = i
       }
       return {
         title: page.currentRevision?.title ?? '',
@@ -417,14 +420,13 @@ export async function requestPage(
           useArticleTag: true,
           setContentAsSection: true,
         },
-        categoryIcon: 'article',
+        categoryIcon: 'coursePage',
         inviteToEdit: true,
         courseData: {
           id: uuid.course.id,
           title: uuid.course.currentRevision?.title ?? '',
           pages,
-          nextPageUrl: pages[currentPageIndex]?.url,
-          previousPageUrl: pages[currentPageIndex - 2]?.url,
+          index: currentPageIndex,
         },
         unrevisedRevisions: uuid.revisions?.totalCount,
         unrevisedCourseRevisions: uuid.course.revisions?.totalCount,
@@ -444,10 +446,6 @@ export async function requestPage(
   }
 
   return {
-    kind: 'error',
-    errorData: {
-      code: 404,
-      message: `Unknown content type!`,
-    },
+    kind: 'not-found', // unknown content type
   }
 }
