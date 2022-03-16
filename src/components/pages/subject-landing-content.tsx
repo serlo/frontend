@@ -1,5 +1,4 @@
 import clsx from 'clsx'
-import Head from 'next/head'
 
 import { HeadTags } from '../head-tags'
 import { FooterNew } from '../landing/rework/footer-new'
@@ -33,9 +32,6 @@ export function SubjectLandingContent({
 
   return (
     <>
-      <Head>
-        <link href="_assets/landing-fonts.css" rel="stylesheet" />
-      </Head>
       <HeadTags
         data={{ title: `${data.title} Startseite  - ${instanceData.title}` }}
       />

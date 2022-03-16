@@ -2,6 +2,8 @@ import clsx from 'clsx'
 import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
 
+import { UnstyledLink } from '../content/link'
+
 export const features = {
   boxPlugin:
     process.env.NEXT_PUBLIC_ENV === 'production'
@@ -73,12 +75,12 @@ export function ProfileExperimental() {
         <div>
           <h3 className="serlo-h3 mb-3">
             👻 Frontend: Altes Design{' '}
-            <a
+            <UnstyledLink
               href="/disable-frontend"
               className="serlo-button serlo-make-interactive-primary"
             >
               aktivieren{' '}
-            </a>
+            </UnstyledLink>
           </h3>
           <p className="serlo-p">
             Zurück ins alte Design, sollte nur noch bei akuten Problemen oder
