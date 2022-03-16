@@ -1,16 +1,16 @@
 import { FrontendClientBase } from '../frontend-client-base'
-import { ErrorPage } from './error-page'
 import { SubjectLandingContent } from './subject-landing-content'
-import { SlugProps } from '@/data-types'
+import { TaxonomyPage } from '@/data-types'
 import { deSubjectLandingData } from '@/data/de/de-subject-landing-data'
 
 export type deSubjectLandingSubjects = keyof typeof deSubjectLandingData
 
-export function SubjectLanding({
-  pageData,
-  subject,
-}: SlugProps & { subject: deSubjectLandingSubjects }) {
-  if (pageData.kind === 'taxonomy' && pageData.taxonomyData.subterms) {
+type SubjectLandingProps = { pageData: TaxonomyPage } & {
+  subject: deSubjectLandingSubjects
+}
+
+export function SubjectLanding({ pageData, subject }: SubjectLandingProps) {
+  if (pageData.taxonomyData.subterms) {
     const subterms = pageData.taxonomyData.subterms.filter(
       (term) => term.type !== 'locale' && term.id !== 75211
     )
@@ -20,17 +20,5 @@ export function SubjectLanding({
       </FrontendClientBase>
     )
   }
-
-  return (
-    <FrontendClientBase>
-      <ErrorPage
-        code={pageData.kind === 'error' ? pageData.errorData.code : 400}
-        message={
-          pageData.kind === 'error'
-            ? pageData.errorData.message
-            : 'unsupported type'
-        }
-      />
-    </FrontendClientBase>
-  )
+  return null
 }
