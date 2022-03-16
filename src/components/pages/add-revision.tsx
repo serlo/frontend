@@ -13,19 +13,22 @@ export function AddRevision({
   type,
   needsReview,
   id,
+  breadcrumbsData,
 }: EditorPageData) {
   const { strings } = useInstanceData()
 
   return (
     <>
       <Breadcrumbs
-        data={[
-          {
-            label: strings.revisions.toContent,
-            url: `/${id}`,
-          },
-        ]}
-        asBackButton
+        data={
+          breadcrumbsData ?? [
+            {
+              label: strings.revisions.toContent,
+              url: `/${id}`,
+            },
+          ]
+        }
+        asBackButton={breadcrumbsData ? undefined : true}
       />
       <MathSpan formula="" />
       <div className="controls-portal sticky top-0 z-[94] bg-white" />
