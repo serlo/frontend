@@ -23,8 +23,9 @@ const positions = [
 ]
 
 export function CommunityWall() {
-  const [persons, setPersons] =
-    useState<CommunityWallPerson[]>(communityWallPersons)
+  const [persons, setPersons] = useState<CommunityWallPerson[]>(
+    communityWallPersons.filter((person) => person.subjects.includes('landing'))
+  )
 
   useEffect(() => {
     setPersons((p) => shuffleArray(p))

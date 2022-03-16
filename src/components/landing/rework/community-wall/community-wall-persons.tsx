@@ -50,7 +50,7 @@ export function CommunityWallPersons({
               <img
                 src={imgSrc}
                 alt={`Avatar von ${name}`}
-                className="rounded-full w-full"
+                className="rounded-full w-full aspect-square object-cover"
               />
               <p className="text-base mt-2 mb-2 font-bold text-gray-700">
                 @{name}
