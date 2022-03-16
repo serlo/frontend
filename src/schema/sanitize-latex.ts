@@ -26,7 +26,10 @@ export function sanitizeLatex(formula: string): string {
     formula.includes('\\begin{aligned}') ||
     formula.includes('\\begin{array}')
   ) {
-    if (formula.includes('\\dfrac') || formula.includes('\\int')) {
+    if (
+      (formula.includes('\\dfrac') || formula.includes('\\int')) &&
+      !formula.includes('\\begin{pmatrix}') // opt-out if vectors are present, e.g. 13169
+    ) {
       formula = `\\def\\arraystretch{2} ${formula}`
     } else {
       formula = `\\def\\arraystretch{1.25} ${formula}`
