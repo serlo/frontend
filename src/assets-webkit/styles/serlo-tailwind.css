@@ -259,9 +259,11 @@
       @apply text-brand no-underline break-words hover:underline special-hyphens-auto;
     }
 
+    /* 
+    good for some, bad for others
     [data-slate-object='block'] {
       @apply mb-block;
-    }
+    } */
 
     ul:not(.unstyled-list) {
       @apply mx-side mb-block mt-4 pl-5 list-none;
