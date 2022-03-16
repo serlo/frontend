@@ -90,7 +90,7 @@ export const instanceData = {
       nonFree: "El uso de este contenido podría estar más restringido que nuestro otro contenido."
     },
     course: {
-      showPages: 'Show course overview',
+      showPages: "Mostrar descripción del curso",
       pages: "Descripción del curso",
       next: "Siguiente",
       back: "Volver",
