@@ -122,8 +122,8 @@ export function LandingDE({ data }: LandingDEProps) {
           background-size: 100% 100%;
         }
       `}</style>
-      <LandingJsonLd />
       <HeadTags data={{ title: 'Serlo – Die freie Lernplattform' }} />
+      <LandingJsonLd />
       <HeaderNew />
       <main className="text-truegray-700">
         <section className="text-center max-w-3xl mx-auto mt-20 md:mt-15vh font-bold px-2">
