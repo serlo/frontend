@@ -62,7 +62,13 @@ export function AddRevision({
                   }) => {
                     if (data.success) {
                       resolve()
-                      window.location = data.redirect
+                      if (data.redirect.toString().length < 5) {
+                        setTimeout(() => {
+                          window.location.reload()
+                        }, 1000)
+                      } else {
+                        window.location = data.redirect
+                      }
                     } else {
                       // eslint-disable-next-line no-console
                       console.log(data.errors)
