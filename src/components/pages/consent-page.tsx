@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { Link } from '../content/link'
 import { PageTitle } from '../content/page-title'
 import { useInstanceData } from '@/contexts/instance-context'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
@@ -21,9 +22,7 @@ export function ConsentPage() {
       <p className="serlo-p">
         {replacePlaceholders(strings.consent.intro, {
           privacypolicy: (
-            <a className="serlo-link" href="/privacy">
-              {strings.entities.privacyPolicy}
-            </a>
+            <Link href="/privacy">{strings.entities.privacyPolicy}</Link>
           ),
         })}
       </p>
