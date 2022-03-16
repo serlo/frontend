@@ -365,9 +365,11 @@ export function editorResponseToState(uuid: QueryResponse): DeserializeResult {
   ): DeserializedState<typeof textExerciseGroupTypeState> {
     stack.push({ id: uuid.id, type: 'text-exercise-group' })
 
-    const exercises = uuid.exercises.map((exercise) => {
-      return convertTextExercise(exercise).initialState.state
-    })
+    const exercises = uuid.exercises
+      .filter((exercise) => exercise.trashed === false)
+      .map((exercise) => {
+        return convertTextExercise(exercise).initialState.state
+      })
 
     return {
       initialState: {

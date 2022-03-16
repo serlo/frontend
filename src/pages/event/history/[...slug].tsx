@@ -5,64 +5,28 @@ import { useAuthentication } from '@/auth/use-authentication'
 import { PageTitle } from '@/components/content/page-title'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
-import { ErrorPage } from '@/components/pages/error-page'
 import { Events } from '@/components/user/events'
 import { UserUnrevisedRevisions } from '@/components/user/user-unrevised-revisions'
 import { useInstanceData } from '@/contexts/instance-context'
-import { SlugPageData, SlugProps } from '@/data-types'
-import { fetchPageData } from '@/fetcher/fetch-page-data'
+import { EventHistoryProps } from '@/data-types'
+import { Instance } from '@/fetcher/query-types'
+import { requestPage } from '@/fetcher/request-page'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
-export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
-  if (
-    pageData.kind === 'single-entity' ||
-    pageData.kind === 'taxonomy' ||
-    pageData.kind === 'user/events'
-  ) {
-    const data =
-      pageData.kind === 'single-entity'
-        ? pageData.entityData
-        : pageData.kind === 'taxonomy'
-        ? pageData.taxonomyData
-        : pageData.userData
-
-    return (
-      <FrontendClientBase>
-        <Content
-          title={data.title}
-          id={data.id}
-          alias={data.alias}
-          isUser={pageData.kind === 'user/events'}
-        />
-      </FrontendClientBase>
-    )
-  }
-
+export default renderedPageNoHooks<EventHistoryProps>(({ pageData }) => {
   return (
     <FrontendClientBase>
-      <ErrorPage
-        code={pageData.kind === 'error' ? pageData.errorData.code : 400}
-        message={
-          pageData.kind === 'error'
-            ? pageData.errorData.message
-            : 'not supported'
-        }
+      <Content
+        title={pageData.title}
+        id={pageData.id}
+        alias={pageData.alias}
+        isUser={pageData.isUser}
       />
     </FrontendClientBase>
   )
 })
 
-function Content({
-  title,
-  id,
-  alias,
-  isUser,
-}: {
-  title?: string
-  id: number
-  alias?: string
-  isUser?: boolean
-}) {
+function Content({ title, id, alias, isUser }: EventHistoryProps['pageData']) {
   const { strings } = useInstanceData()
 
   const auth = useAuthentication()
@@ -119,18 +83,39 @@ function Content({
   }
 }
 
-export const getStaticProps: GetStaticProps<SlugProps> = async (context) => {
+export const getStaticProps: GetStaticProps<EventHistoryProps> = async (
+  context
+) => {
   const alias = (context.params?.slug as string[]).join('/')
 
-  // reusing fetchPageData here, it loads too much data, but the request is most likely cached already
-  const pageData = await fetchPageData('/' + context.locale! + '/' + alias)
+  const pageData = await requestPage('/' + alias, context.locale! as Instance)
 
-  return {
-    props: {
-      pageData: JSON.parse(JSON.stringify(pageData)) as SlugPageData, // remove undefined values
-    },
-    revalidate: 1,
+  if (
+    pageData.kind === 'single-entity' ||
+    pageData.kind === 'taxonomy' ||
+    pageData.kind === 'user/events'
+  ) {
+    const data =
+      pageData.kind === 'single-entity'
+        ? pageData.entityData
+        : pageData.kind === 'taxonomy'
+        ? pageData.taxonomyData
+        : pageData.userData
+
+    return {
+      props: {
+        pageData: {
+          id: data.id,
+          title: data.title ?? '',
+          alias,
+          isUser: pageData.kind === 'user/events',
+        },
+      },
+      revalidate: 1,
+    }
   }
+
+  return { notFound: true }
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {

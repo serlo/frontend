@@ -198,6 +198,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
           <ExerciseAuthorTools
             data={{
               type: '_ExerciseInline',
+              trashed: node.trashed,
               id: node.context.id,
               grouped: node.grouped,
               unrevisedRevisions: node.unrevisedRevisions,

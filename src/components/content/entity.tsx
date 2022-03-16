@@ -4,6 +4,7 @@ import {
   faTrash,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import dynamic from 'next/dynamic'
 import { Router } from 'next/router'
 import { useState, MouseEvent } from 'react'
@@ -38,7 +39,7 @@ export function Entity({ data }: EntityProps) {
   const [courseNavOpen, setCourseNavOpen] = useState(false)
   const openCourseNav = (e?: MouseEvent) => {
     e?.preventDefault()
-    setCourseNavOpen(true)
+    setCourseNavOpen(!courseNavOpen)
   }
 
   Router.events.on('routeChangeComplete', () => {
@@ -68,17 +69,32 @@ export function Entity({ data }: EntityProps) {
 
   function renderStyledH1() {
     if (!data.title) return null
-
     return (
       <h1 className="serlo-h1 mt-12" itemProp="name">
+        {renderCoursePageNumber()}
         {data.title}
         {renderEntityIcon()}
       </h1>
     )
   }
 
+  function renderCoursePageNumber() {
+    if (!data.courseData) return null
+    return (
+      <span
+        className={clsx(
+          'text-xl text-center font-bold text-brand bg-brand-150',
+          'inline-block justify-center align-middle h-7 w-7',
+          'rounded-full mr-1.5 -mt-1.5'
+        )}
+      >
+        {data.courseData.index + 1}
+      </span>
+    )
+  }
+
   function renderEntityIcon() {
-    if (!data.categoryIcon) return null
+    if (!data.categoryIcon || data.categoryIcon === 'coursePage') return null
     return (
       <span title={strings.entities[data.categoryIcon]}>
         {' '}
@@ -189,8 +205,8 @@ export function Entity({ data }: EntityProps) {
       return (
         <CourseFooter
           onOverviewButtonClick={openCourseNav}
-          nextHref={data.courseData.nextPageUrl ?? ''}
-          previousHref={data.courseData.previousPageUrl ?? ''}
+          pages={data.courseData.pages}
+          index={data.courseData.index}
         />
       )
     } else return null

@@ -4,10 +4,14 @@ import { useState, useEffect } from 'react'
 import { PageTitle } from '../content/page-title'
 import { HSpace } from '@/components/content/h-space'
 import { useInstanceData } from '@/contexts/instance-context'
-import { ErrorData } from '@/data-types'
 import { triggerSentry } from '@/helper/trigger-sentry'
 
-export function ErrorPage({ code, message }: ErrorData) {
+interface ErrorPageProps {
+  code: number
+  message?: string
+}
+
+export function ErrorPage({ code, message }: ErrorPageProps) {
   const [path, setPath] = useState('')
   const [hasSerloBacklink, setHasSerloBacklink] = useState(false)
   const { strings } = useInstanceData()

@@ -30,6 +30,7 @@ export function HeadTags({ data, breadcrumbsData, noindex }: HeadTagsProps) {
       <link rel="canonical" href={canonicalHref} />
       {renderNoIndexMeta()}
       <meta
+        name="image"
         property="og:image"
         content={
           metaImage

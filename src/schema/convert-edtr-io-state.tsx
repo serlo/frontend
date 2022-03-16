@@ -210,6 +210,7 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
     ]
   }
   if (node.plugin === 'highlight') {
+    if (Object.keys(node.state).length == 0) return [] // ignore empty highlight plugin
     return [
       {
         type: 'code',
