@@ -90,7 +90,7 @@ export const instanceData = {
       nonFree: 'Usage of this content might be more restricted than our other content.'
     },
     course: {
-      showPages: "வகுப்பு மேலோட்டத்தைக் காட்டவும்",
+      showPages: 'Course overview',
       pages: 'Course overview',
       next: "அடுத்து",
       back: 'Back',
