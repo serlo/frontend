@@ -90,7 +90,7 @@ export const instanceData = {
       nonFree: "Die Nutzung könnte vielleicht strengeren Regeln unterliegen als bei unseren anderen Inhalten."
     },
     course: {
-      showPages: 'Show course overview',
+      showPages: "Kursübersicht anzeigen",
       pages: "Kursübersicht",
       next: "Weiter",
       back: "Zurück",
