@@ -33,7 +33,7 @@ export const TransformTd = styled(MathTd)({
 })
 
 export const ExplanationTr = styled.tr({
-  color: '#007ec1',
+  color: '#688312',
   div: {
     margin: 0,
   },
@@ -50,6 +50,8 @@ export function EquationsRenderer({ state }: EquationsProps) {
     state.transformationTarget.value
   )
 
+  const tdPadding = 'px-1 pt-1 pb-3'
+
   return (
     <TableWrapper>
       <Table>
@@ -59,12 +61,12 @@ export function EquationsRenderer({ state }: EquationsProps) {
             return (
               <React.Fragment key={row}>
                 <tr>
-                  <LeftTd>
+                  <LeftTd className={tdPadding}>
                     {step.left.value ? (
                       <MathRenderer inline state={step.left.value} />
                     ) : null}
                   </LeftTd>
-                  <SignTd>
+                  <SignTd className={tdPadding}>
                     {(row !== 0 ||
                       transformationTarget !== TransformationTarget.Term) && (
                       <MathRenderer
@@ -73,7 +75,7 @@ export function EquationsRenderer({ state }: EquationsProps) {
                       />
                     )}
                   </SignTd>
-                  <MathTd>
+                  <MathTd className={tdPadding}>
                     {step.right.value ? (
                       <MathRenderer inline state={step.right.value} />
                     ) : null}
@@ -91,7 +93,9 @@ export function EquationsRenderer({ state }: EquationsProps) {
                   <ExplanationTr>
                     <td />
                     {renderDownArrow()}
-                    <td colSpan={2}>{step.explanation.render()}</td>
+                    <td colSpan={2} className={tdPadding}>
+                      {step.explanation.render()}
+                    </td>
                   </ExplanationTr>
                 )}
               </React.Fragment>
@@ -108,7 +112,7 @@ export function EquationsRenderer({ state }: EquationsProps) {
     return (
       <>
         <ExplanationTr>
-          <td colSpan={3} style={{ textAlign: 'center' }}>
+          <td colSpan={3} className={tdPadding}>
             {state.firstExplanation.render()}
           </td>
         </ExplanationTr>
@@ -137,7 +141,7 @@ export function renderDownArrow() {
         >
           <path
             d="M 0,0 l 10,5 l -10,5"
-            stroke="#007ec1"
+            stroke="#688312"
             stroke-width="2"
             fill="none"
             vector-effect="non-scaling-size"
@@ -150,7 +154,7 @@ export function renderDownArrow() {
         y1="0%"
         x2="10"
         y2="99%"
-        stroke="#007ec1"
+        stroke="#688312"
         stroke-width="2"
         marker-end="url(#arrow)"
         vector-effect="non-scaling-stroke"

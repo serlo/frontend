@@ -73,7 +73,7 @@ export function Equations({
           <tr className="whitespace-normal" style={{ color: explanationColor }}>
             <td />
             {renderDownArrow()}
-            <td colSpan={2} className="px-1 pt-1 pb-3">
+            <td colSpan={2} className="relative -left-side px-1 pt-1 pb-3">
               {renderNested(step.explanation, `step${i}`, 'explanation')}
             </td>
           </tr>
@@ -108,7 +108,7 @@ export function Equations({
     return (
       <>
         <tr className="whitespace-normal" style={{ color: explanationColor }}>
-          <td className="text-center pb-4" colSpan={3}>
+          <td className="relative -left-side pb-4" colSpan={3}>
             {renderNested(firstExplanation, 'firstExplanation')}
           </td>
         </tr>

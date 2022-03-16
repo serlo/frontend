@@ -278,7 +278,7 @@ export function EquationsEditor(props: EquationsProps) {
       <tbody onFocus={() => gridFocus.setFocus('firstExplanation')}>
         <ExplanationTr>
           <td />
-          <td colSpan={3} style={{ textAlign: 'center' }}>
+          <td colSpan={3}>
             {state.firstExplanation.render({
               config: {
                 placeholder: editorStrings.equations.firstExplanation,
