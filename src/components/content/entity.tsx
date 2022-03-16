@@ -35,13 +35,17 @@ export function Entity({ data }: EntityProps) {
   // state@/components/comments/comment-area
   const [open, setOpen] = useState(false)
 
-  // course
-  const [courseNavOpen, setCourseNavOpen] = useState(false)
+  // courseNav: start opened when only some entries
+  const [courseNavOpen, setCourseNavOpen] = useState(
+    data && data.courseData && data.courseData.pages.length < 4 ? true : false
+  )
+
   const openCourseNav = (e?: MouseEvent) => {
     e?.preventDefault()
     setCourseNavOpen(!courseNavOpen)
   }
 
+  // auto close courseNav when switching pages
   Router.events.on('routeChangeComplete', () => {
     setCourseNavOpen(false)
   })
