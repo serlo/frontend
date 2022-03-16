@@ -57,18 +57,15 @@ export function AddRevision({
                 .then(
                   (data: {
                     success: boolean
-                    redirect: Location
+                    redirect: string
                     errors: object
                   }) => {
                     if (data.success) {
                       resolve()
-                      if (data.redirect.toString().length < 5) {
-                        setTimeout(() => {
-                          window.location.reload()
-                        }, 1000)
-                      } else {
-                        window.location = data.redirect
-                      }
+                      window.location.href =
+                        data.redirect.length > 5
+                          ? data.redirect
+                          : window.location.href
                     } else {
                       // eslint-disable-next-line no-console
                       console.log(data.errors)
