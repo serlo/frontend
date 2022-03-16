@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 
 import { HeadTags } from '../head-tags'
-import { CommunityWall } from '../landing/rework/community-wall'
+import { CommunityWall } from '../landing/rework/community-wall/community-wall'
 import { FooterNew } from '../landing/rework/footer-new'
 import { HeaderNew } from '../landing/rework/header-new'
 import { LandingJsonLd } from '../landing/rework/landing-json-ld'
