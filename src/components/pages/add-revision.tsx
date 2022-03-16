@@ -17,18 +17,16 @@ export function AddRevision({
 }: EditorPageData) {
   const { strings } = useInstanceData()
 
+  const backlink = {
+    label: strings.revisions.toContent,
+    url: `/${id}`,
+  }
+
   return (
     <>
       <Breadcrumbs
-        data={
-          breadcrumbsData ?? [
-            {
-              label: strings.revisions.toContent,
-              url: `/${id}`,
-            },
-          ]
-        }
-        asBackButton={breadcrumbsData ? undefined : true}
+        data={breadcrumbsData ? [...breadcrumbsData, backlink] : [backlink]}
+        noIcon
       />
       <MathSpan formula="" />
       <div className="controls-portal sticky top-0 z-[94] bg-white" />
