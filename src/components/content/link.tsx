@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { default as NextLink } from 'next/link'
-import { ReactNode, ForwardedRef, useContext, MouseEvent } from 'react'
+import { ReactNode, useContext, MouseEvent } from 'react'
 
 import { ExternalLink } from './external-link'
 import { EntityIdContext } from '@/contexts/entity-id-context'
@@ -81,14 +81,13 @@ export function Link({
   unreviewed,
   tabIndex,
   unstyled,
-  ref,
-}: LinkProps & { ref?: ForwardedRef<HTMLAnchorElement> }) {
+}: LinkProps) {
   const { lang } = useInstanceData()
   const entityId = useContext(EntityIdContext)
 
   if (!href || href === undefined || href === '')
     return (
-      <a className={className} title={title} tabIndex={tabIndex} ref={ref}>
+      <a className={className} title={title} tabIndex={tabIndex}>
         {children}
       </a>
     )
@@ -195,7 +194,6 @@ export function Link({
         rel={unreviewed && isExternal ? 'ugc nofollow noreferrer' : undefined}
         target={unreviewed && isExternal ? '_blank' : undefined}
         tabIndex={tabIndex}
-        ref={ref}
       >
         {children}
         {isExternal && !noExternalIcon && <ExternalLink />}
