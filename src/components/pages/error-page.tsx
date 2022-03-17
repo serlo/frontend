@@ -1,7 +1,7 @@
 import Head from 'next/head'
-import Link from 'next/link'
 import { useState, useEffect } from 'react'
 
+import { Link } from '../content/link'
 import { PageTitle } from '../content/page-title'
 import { HSpace } from '@/components/content/h-space'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -90,10 +90,13 @@ export function ErrorPage({ code, message }: ErrorPageProps) {
   function renderHomeLink() {
     //no csr here
     return (
-      <Link href="/">
-        <a className="serlo-button serlo-make-interactive-primary mr-4 mt-4">
-          {strings.errors.backToHome}
-        </a>
+      <Link
+        href="/"
+        forceNoCSR
+        unstyled
+        className="serlo-button serlo-make-interactive-primary mr-4 mt-4"
+      >
+        {strings.errors.backToHome}
       </Link>
     )
   }

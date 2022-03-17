@@ -22,7 +22,9 @@ export function ConsentPage() {
       <p className="serlo-p">
         {replacePlaceholders(strings.consent.intro, {
           privacypolicy: (
-            <Link href="/privacy">{strings.entities.privacyPolicy}</Link>
+            <Link href="/privacy" forceNoCSR>
+              {strings.entities.privacyPolicy}
+            </Link>
           ),
         })}
       </p>
