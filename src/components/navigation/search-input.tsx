@@ -2,15 +2,13 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 import { useRouter } from 'next/router'
-import { useState, useRef, useContext, useEffect } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
 import { isLegacyLink } from '../content/link'
 import { LazyTippy } from './lazy-tippy'
 import SearchIcon from '@/assets-webkit/img/search-icon.svg'
-import { EntityIdContext } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
-import { submitEvent } from '@/helper/submit-event'
 import { ExternalProvider, useConsent } from '@/helper/use-consent'
 
 /*
@@ -33,7 +31,6 @@ export function SearchInput() {
   const { lang, strings } = useInstanceData()
   const router = useRouter()
   const onSearchPage = router.route === '/search'
-  const id = useContext(EntityIdContext)
 
   useEffect(() => {
     // note: find a better way to tell search input that it should activate itself
@@ -62,9 +59,6 @@ export function SearchInput() {
   }
 
   function activateSearch() {
-    if (id) {
-      submitEvent(`clicksearch_${id}`)
-    }
     if (searchActive) return
     if (!consentGiven) {
       searchFormRef.current?.focus()

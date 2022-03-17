@@ -19,7 +19,6 @@ import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { EntityIdContext } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
-import { submitEvent } from '@/helper/submit-event'
 import { theme } from '@/theme'
 
 export interface ShareModalProps {
@@ -42,8 +41,6 @@ export function ShareModal({ isOpen, onClose, showPdf }: ShareModalProps) {
   const id = useContext(EntityIdContext)
 
   if (!isOpen || !id) return null
-
-  submitEvent(`share_${id}`)
 
   function copyToClipboard(event: MouseEvent, text?: string) {
     const target = event.target as HTMLAnchorElement

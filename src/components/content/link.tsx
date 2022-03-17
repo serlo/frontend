@@ -1,11 +1,9 @@
 import clsx from 'clsx'
 import { default as NextLink } from 'next/link'
-import { ReactNode, useContext, MouseEvent } from 'react'
+import { ReactNode } from 'react'
 
 import { ExternalLink } from './external-link'
-import { EntityIdContext } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
-import { submitEvent } from '@/helper/submit-event'
 import { NodePath } from '@/schema/article-renderer'
 
 export interface LinkProps {
@@ -77,13 +75,11 @@ export function Link({
   noExternalIcon,
   title,
   forceNoCSR,
-  path,
   unreviewed,
   tabIndex,
   unstyled,
 }: LinkProps) {
   const { lang } = useInstanceData()
-  const entityId = useContext(EntityIdContext)
 
   if (!href || href === undefined || href === '')
     return (
@@ -97,25 +93,8 @@ export function Link({
   const isAnchor = href.startsWith('#') || href.startsWith('/#')
   const isMailto = href.startsWith('mailto:')
 
-  let key = ''
-
-  if (entityId) {
-    if (!path) {
-      // uncomment this line to search for missing links
-      //console.log('!!! !!! link has no path', href)
-    } else if (path.length == 0) {
-      // ignore
-    } else {
-      key = `clicklink_${entityId}_${path
-        .filter((x) => x !== undefined)
-        .map((x) => x.toString())
-        .join('_')}`
-      //console.log('key:', key)
-    }
-  }
-
-  if (isAnchor || isMailto) return renderLink(href, false)
-  if (isExternal || forceNoCSR) return renderLink(href, true)
+  if (isAnchor || isMailto) return renderLink(href)
+  if (isExternal || forceNoCSR) return renderLink(href)
 
   //at this point only internal links should be left
 
@@ -123,7 +102,7 @@ export function Link({
   if (!isLegacyLink(internalLink)) return renderClientSide(internalLink)
 
   //fallback
-  return renderLink(href, true)
+  return renderLink(href)
 
   function normalizeSerloLink(_href: string) {
     // compat: some user are typing \1234 instead of /1234
@@ -141,56 +120,18 @@ export function Link({
   function renderClientSide(_href: string) {
     return (
       <NextLink prefetch={false} href={_href}>
-        {renderLink(_href, false)}
+        {renderLink(_href)}
       </NextLink>
     )
   }
 
-  function renderLink(_href: string, outbound: boolean) {
-    const clickHandler = key
-      ? (e: MouseEvent) => {
-          if (!outbound) {
-            submitEvent(key)
-          } else {
-            let sent = false
-
-            const callback = function () {
-              //console.log('debug - callback', sent)
-              if (!sent) {
-                //console.log('debug - navigate now to', _href)
-                window.location.href = _href
-              }
-              sent = true
-            }
-            try {
-              const result = submitEvent(key, callback)
-
-              //console.log('debug - sending event')
-
-              if (result === false) {
-                //console.log('debug - fallback')
-                callback()
-              }
-
-              window.setTimeout(callback, 1000)
-
-              e.preventDefault()
-              return false
-            } catch (e) {
-              //
-              callback()
-            }
-          }
-        }
-      : undefined
-
+  function renderLink(_href: string) {
     return (
       // eslint-disable-next-line react/jsx-no-target-blank
       <a
         href={_href}
         className={unstyled ? className : clsx(className, 'serlo-link')}
         title={title}
-        onClick={clickHandler}
         rel={unreviewed && isExternal ? 'ugc nofollow noreferrer' : undefined}
         target={unreviewed && isExternal ? '_blank' : undefined}
         tabIndex={tabIndex}

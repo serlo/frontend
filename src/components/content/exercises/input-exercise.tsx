@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react'
 import { Feedback } from './feedback'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EdtrPluginInputExercise } from '@/data-types'
-import { submitEventWithPath } from '@/helper/submit-event'
 import { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
 
 export interface InputExerciseProps {
@@ -22,7 +21,6 @@ interface FeedbackData {
 
 export function InputExercise({
   data,
-  path,
   renderNested,
   isRevisionView,
 }: InputExerciseProps) {
@@ -38,10 +36,6 @@ export function InputExercise({
   function evaluate() {
     const feedbackData = checkAnswer()
     setFeedback(feedbackData)
-    submitEventWithPath('checkinput', path)
-    if (feedbackData.correct) {
-      submitEventWithPath('inputcorrect', path)
-    }
   }
 
   return (
