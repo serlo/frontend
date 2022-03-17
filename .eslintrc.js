@@ -11,6 +11,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'plugin:react/recommended',
     'prettier',
+    'plugin:@next/next/recommended',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -122,6 +123,9 @@ module.exports = {
     // eslint-plugin-react-hooks
     'react-hooks/exhaustive-deps': 'warn',
     'react-hooks/rules-of-hooks': 'error',
+
+    // eslint-plugin-next
+    '@next/next/no-img-element': 'off',
   },
   settings: {
     'import/internal-regex': '^@/',

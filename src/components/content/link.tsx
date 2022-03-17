@@ -1,12 +1,6 @@
 import clsx from 'clsx'
 import { default as NextLink } from 'next/link'
-import {
-  ReactNode,
-  forwardRef,
-  ForwardedRef,
-  useContext,
-  MouseEvent,
-} from 'react'
+import { ReactNode, useContext, MouseEvent } from 'react'
 
 import { ExternalLink } from './external-link'
 import { EntityIdContext } from '@/contexts/entity-id-context'
@@ -20,10 +14,11 @@ export interface LinkProps {
   className?: string
   noExternalIcon?: boolean
   title?: string
-  noCSR?: boolean
+  forceNoCSR?: boolean
   path?: NodePath
   unreviewed?: boolean // e.g. user profiles or comments
   tabIndex?: number // menu
+  unstyled?: boolean // don't add serlo-link class
 }
 
 // note: Previous discussion about fetching this dynamically https://github.com/serlo/frontend/issues/328
@@ -75,34 +70,24 @@ export function isLegacyLink(_href: string) {
   )
 }
 
-export const Link = forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => {
-  return UnstyledLink({
-    ...props,
-    className: clsx(props.className, 'serlo-link'),
-    ref,
-  })
-})
-
-Link.displayName = 'Link'
-
-export function UnstyledLink({
+export function Link({
   href,
   children,
   className,
   noExternalIcon,
   title,
-  noCSR,
+  forceNoCSR,
   path,
   unreviewed,
   tabIndex,
-  ref,
-}: LinkProps & { ref?: ForwardedRef<HTMLAnchorElement> }) {
+  unstyled,
+}: LinkProps) {
   const { lang } = useInstanceData()
   const entityId = useContext(EntityIdContext)
 
   if (!href || href === undefined || href === '')
     return (
-      <a className={className} title={title} tabIndex={tabIndex} ref={ref}>
+      <a className={className} title={title} tabIndex={tabIndex}>
         {children}
       </a>
     )
@@ -130,7 +115,7 @@ export function UnstyledLink({
   }
 
   if (isAnchor || isMailto) return renderLink(href, false)
-  if (isExternal || noCSR) return renderLink(href, true)
+  if (isExternal || forceNoCSR) return renderLink(href, true)
 
   //at this point only internal links should be left
 
@@ -203,13 +188,12 @@ export function UnstyledLink({
       // eslint-disable-next-line react/jsx-no-target-blank
       <a
         href={_href}
-        className={className}
+        className={unstyled ? className : clsx(className, 'serlo-link')}
         title={title}
         onClick={clickHandler}
         rel={unreviewed && isExternal ? 'ugc nofollow noreferrer' : undefined}
         target={unreviewed && isExternal ? '_blank' : undefined}
         tabIndex={tabIndex}
-        ref={ref}
       >
         {children}
         {isExternal && !noExternalIcon && <ExternalLink />}

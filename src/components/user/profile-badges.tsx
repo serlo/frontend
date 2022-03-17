@@ -1,6 +1,6 @@
 import { Fragment } from 'react'
 
-import { UnstyledLink } from '../content/link'
+import { Link } from '../content/link'
 import AuthorBadge from '@/assets-webkit/img/community/badge-author.svg'
 import DonorBadge from '@/assets-webkit/img/community/badge-donor.svg'
 import ReviewerBadge from '@/assets-webkit/img/community/badge-reviewer.svg'
@@ -116,11 +116,12 @@ export function ProfileBadges({
     return (
       <>
         {lang === 'de' && anchor ? (
-          <UnstyledLink
+          <Link
+            unstyled
             href={`/community/202923/rollen-der-serlo-community#${anchor}`}
           >
             {content}
-          </UnstyledLink>
+          </Link>
         ) : (
           content
         )}

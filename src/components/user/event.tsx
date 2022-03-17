@@ -141,7 +141,7 @@ export function Event({
         return parseString(strings.events.createComment, {
           thread: renderThread(event.thread),
           comment: (
-            <Link href={`/${event.comment.id}`} noCSR>
+            <Link href={`/${event.comment.id}`} forceNoCSR>
               {strings.entities.comment}
             </Link>
           ),
@@ -291,7 +291,7 @@ export function Event({
   function renderThread(thread: Thread) {
     const id = thread.comments?.nodes[0]?.id
     return (
-      <Link href={`/${id}`} noCSR>
+      <Link href={`/${id}`} forceNoCSR>
         {strings.entities.thread}
       </Link>
     )
