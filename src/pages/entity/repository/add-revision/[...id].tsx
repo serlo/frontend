@@ -2,6 +2,7 @@ import { faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import { GetServerSideProps } from 'next'
 
 import { FrontendClientBase } from '@/components/frontend-client-base'
+import { Guard } from '@/components/guard'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { AddRevision } from '@/components/pages/add-revision'
 import { StaticInfoPanel } from '@/components/static-info-panel'
@@ -18,8 +19,12 @@ export default renderedPageNoHooks<EditorPageData>((props) => {
       <div className="relative">
         <MaxWidthDiv>
           <main>
-            {props.converted ? <EditorWarning converted /> : null}
-            <AddRevision {...props} />
+            <Guard needsAuth data>
+              <>
+                {props.converted ? <EditorWarning converted /> : null}
+                <AddRevision {...props} />
+              </>
+            </Guard>
           </main>
         </MaxWidthDiv>{' '}
       </div>
