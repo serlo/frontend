@@ -26,7 +26,7 @@ export function AddRevision({
   const [cookieReady, setCookieReady] = useState(false)
 
   useEffect(() => {
-    if (process.env.NEXT_PUBLIC_ENV === 'local') {
+    if (window.location.hostname === 'localhost') {
       setCookieReady(true)
     } else {
       fetch('/auth/password/change')
