@@ -49,7 +49,7 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
         <HeadTags
           data={pageData.metaData}
           breadcrumbsData={pageData.breadcrumbsData}
-          noindex={'entityData' in pageData && pageData.entityData.trashed}
+          noindex
         />
       )}
       <div className="relative">
