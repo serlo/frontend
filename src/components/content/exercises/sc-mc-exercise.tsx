@@ -8,7 +8,6 @@ import { Feedback } from './feedback'
 import { isPrintMode } from '@/components/print-mode'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EdtrPluginScMcExercise } from '@/data-types'
-import { submitEventWithPath } from '@/helper/submit-event'
 import { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
 
 export interface ScMcExerciseProps {
@@ -23,7 +22,6 @@ export function ScMcExercise({
   state,
   idBase,
   renderNested,
-  path,
   isRevisionView,
 }: ScMcExerciseProps) {
   const { strings } = useInstanceData()
@@ -100,13 +98,6 @@ export function ScMcExercise({
           )}
           onClick={() => {
             setShowFeedback(true)
-            submitEventWithPath('checksc', path)
-            if (selected !== undefined && path) {
-              submitEventWithPath('scoption', [
-                ...path,
-                answers[selected].originalIndex,
-              ])
-            }
           }}
           //blur-hack, use https://caniuse.com/#feat=css-focus-visible when supported
           onPointerUp={(e) => e.currentTarget.blur()}
@@ -179,20 +170,6 @@ export function ScMcExercise({
           className="serlo-button serlo-make-interactive-primary mt-4"
           onClick={() => {
             setShowFeedback(true)
-            submitEventWithPath('checkmc', path)
-            if (path) {
-              for (let i = 0; i < selectedArray.length; i++) {
-                if (selectedArray[i]) {
-                  submitEventWithPath('mcoption', [
-                    ...path,
-                    answers[i].originalIndex,
-                  ])
-                }
-              }
-              if (correct) {
-                submitEventWithPath('mccorrect', path)
-              }
-            }
           }}
           onPointerUp={(e) => e.currentTarget.blur()}
         >

@@ -5,7 +5,6 @@ import { LicenseNotice } from './license-notice'
 import { PrivacyWrapper } from './privacy-wrapper'
 import { useInstanceData } from '@/contexts/instance-context'
 import { LicenseData } from '@/data-types'
-import { submitEventWithPath } from '@/helper/submit-event'
 import { ExternalProvider } from '@/helper/use-consent'
 import { NodePath } from '@/schema/article-renderer'
 
@@ -62,9 +61,6 @@ export function Video({ src, path, license }: VideoProps) {
           type="video"
           provider={provider}
           embedUrl={iframeUrl}
-          onLoad={() => {
-            submitEventWithPath('loadvideo', path)
-          }}
           className="print:hidden"
         >
           <div className="m-0 p-0">
