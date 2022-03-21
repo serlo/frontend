@@ -6,7 +6,7 @@ import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import {
   RevisionMutationMode,
-  useRevisionMutation,
+  useRevisionDecideMutation,
 } from '@/helper/mutations/revision'
 
 export interface CheckoutRejectButtonsProps {
@@ -26,7 +26,7 @@ export function CheckoutRejectButtons({
 }: CheckoutRejectButtonsProps) {
   const loggedInData = useLoggedInData()
   const [modalMode, setModalMode] = useState<RevisionMutationMode | null>(null)
-  const revisionMutation = useRevisionMutation()
+  const revisionMutation = useRevisionDecideMutation()
   const [reason, setReason] = useState('')
   if (!loggedInData) return null
   if (isCurrent) return null

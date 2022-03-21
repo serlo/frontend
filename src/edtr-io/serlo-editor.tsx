@@ -12,11 +12,30 @@ import { useCanDo } from '@/auth/use-can-do'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
+export interface OnSaveBaseData {
+  id: number
+  revision?: number
+  changes?: string
+  content: string
+  csrf?: string
+  controls: {
+    subscription?: {
+      subscribe: number
+      mailman: number
+    }
+    checkout?: boolean
+  }
+  license: any
+  metaDescription?: string // make more specific types
+  metaTitle?: string
+  title?: string
+}
+
 export interface SerloEditorProps {
   getCsrfToken(): string
   children?: React.ReactNode
   needsReview: boolean
-  onSave: (data: unknown) => Promise<void>
+  onSave: (data: OnSaveBaseData & any) => Promise<void>
   onError?: (error: Error, context: Record<string, string>) => void
   initialState: EditorProps['initialState'] // expects "deserialized" state now
   type: string

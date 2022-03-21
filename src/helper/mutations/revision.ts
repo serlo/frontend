@@ -8,6 +8,20 @@ import { mutationFetch } from './helper'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
+// TODO: Replace when new version of api releases
+
+export interface AddArticleRevisionInput {
+  changes: string
+  entityId: number
+  needsReview: boolean
+  subscribeThis: boolean
+  subscribeThisByEmail: boolean
+  content: string
+  metaDescription: string
+  metaTitle: string
+  title: string
+}
+
 export type RevisionMutationMode = 'checkout' | 'reject'
 const rejectEntityMutation = gql`
   mutation rejectRevision($input: RejectRevisionInput!) {
@@ -37,7 +51,7 @@ const checkoutPageMutation = gql`
   }
 `
 
-export function useRevisionMutation() {
+export function useRevisionDecideMutation() {
   const auth = useAuthentication()
   const router = useRouter()
   const loggedInData = useLoggedInData()
@@ -84,3 +98,39 @@ export function useRevisionMutation() {
     isPage: boolean
   ) => await revisionMutation(mode, input, isPage)
 }
+
+export function useAddArticleRevisionMutation() {
+  const auth = useAuthentication()
+  const loggedInData = useLoggedInData()
+
+  const mutation = gql`
+    mutation addArticleRevision($input: AddArticleRevisionInput!) {
+      entity {
+        addArticleRevision(input: $input) {
+          success
+          revisionId
+        }
+      }
+    }
+  `
+  const addArticleRevisionMutation = async function (
+    input: AddArticleRevisionInput
+  ) {
+    const success = await mutationFetch(
+      auth,
+      mutation,
+      input,
+      loggedInData?.strings.mutations.errors
+    )
+
+    if (success) {
+      console.log('saved!')
+    }
+    return success
+  }
+
+  return async (input: AddArticleRevisionInput) =>
+    await addArticleRevisionMutation(input)
+}
+
+// export function useRevisionAddMutation()

@@ -1,13 +1,14 @@
 import clsx from 'clsx'
 import Cookies from 'js-cookie'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { LoadingSpinner } from '../loading/loading-spinner'
 import { Breadcrumbs } from '../navigation/breadcrumbs'
 import { MathSpan } from '@/components/content/math-span'
 import { useInstanceData } from '@/contexts/instance-context'
-import { SerloEditor } from '@/edtr-io/serlo-editor'
+import { OnSaveBaseData, SerloEditor } from '@/edtr-io/serlo-editor'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
+import { useAddArticleRevisionMutation } from '@/helper/mutations/revision'
 
 export function AddRevision({
   initialState,
@@ -22,6 +23,8 @@ export function AddRevision({
     label: strings.revisions.toContent,
     url: `/${id}`,
   }
+
+  const addArticleRevision = useAddArticleRevisionMutation()
 
   const [cookieReady, setCookieReady] = useState(false)
 
@@ -59,7 +62,32 @@ export function AddRevision({
             return cookies['CSRF']
           }}
           needsReview={needsReview}
-          onSave={(data) => {
+          onSave={async (data: OnSaveBaseData) => {
+            if (type === 'Article') {
+              console.log('try mutation')
+
+              //TODO: build failsaves (e.g. no empty content&title), improve types, remove legacy hacks
+
+              const input = {
+                changes: data.changes ?? 'x',
+                entityId: data.id,
+                needsReview: needsReview,
+                subscribeThis:
+                  data.controls.subscription?.subscribe === 1 ? true : false, //can be simplified
+                subscribeThisByEmail:
+                  data.controls.subscription?.mailman === 1 ? true : false,
+                content: data.content ?? '', // error instead
+                title: data.title ?? 'x', //error instead,
+                metaDescription: data.metaDescription ?? 'placeholder', //this will be optional in the next api version
+                metaTitle: data.metaTitle ?? 'placeholder', //this will be optional in the next api version
+              }
+
+              await addArticleRevision(input)
+              return new Promise(() => {
+                return
+              })
+            }
+
             return new Promise((resolve, reject) => {
               fetch(window.location.pathname, {
                 method: 'POST',
