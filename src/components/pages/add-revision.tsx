@@ -8,7 +8,7 @@ import { MathSpan } from '@/components/content/math-span'
 import { useInstanceData } from '@/contexts/instance-context'
 import { OnSaveBaseData, SerloEditor } from '@/edtr-io/serlo-editor'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
-import { useAddArticleRevisionMutation } from '@/helper/mutations/revision'
+import { useRevisionAddMutation } from '@/helper/mutations/revision'
 
 export function AddRevision({
   initialState,
@@ -24,7 +24,7 @@ export function AddRevision({
     url: `/${id}`,
   }
 
-  const addArticleRevision = useAddArticleRevisionMutation()
+  const addRevisionMutation = useRevisionAddMutation()
 
   const [cookieReady, setCookieReady] = useState(false)
 
@@ -82,7 +82,7 @@ export function AddRevision({
                 metaTitle: data.metaTitle ?? 'placeholder', //this will be optional in the next api version
               }
 
-              await addArticleRevision(input)
+              await addRevisionMutation(type, input)
               return new Promise(() => {
                 return
               })

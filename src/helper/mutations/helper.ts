@@ -22,7 +22,7 @@ import { RefObject } from 'react'
 import { csrReload } from '../csr-reload'
 import { showToastNotice } from '../show-toast-notice'
 import { triggerSentry } from '../trigger-sentry'
-import { AddArticleRevisionInput } from './revision'
+import { AddRevisionInputTypes } from './revision'
 import { endpoint } from '@/api/endpoint'
 import { AuthenticationPayload } from '@/auth/auth-provider'
 
@@ -39,7 +39,7 @@ type MutationInput =
   | CheckoutRevisionInput
   | UserDeleteBotsInput
   | UserSetDescriptionInput
-  | AddArticleRevisionInput
+  | AddRevisionInputTypes
 
 type MutationResponse = ThreadMutation | UuidMutation | NotificationMutation
 

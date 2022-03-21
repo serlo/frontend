@@ -7,22 +7,10 @@ import { showToastNotice } from '../show-toast-notice'
 import { mutationFetch } from './helper'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-
-// TODO: Replace when new version of api releases
-
-export interface AddArticleRevisionInput {
-  changes: string
-  entityId: number
-  needsReview: boolean
-  subscribeThis: boolean
-  subscribeThisByEmail: boolean
-  content: string
-  metaDescription: string
-  metaTitle: string
-  title: string
-}
+import { UnrevisedEntityData } from '@/fetcher/query-types'
 
 export type RevisionMutationMode = 'checkout' | 'reject'
+
 const rejectEntityMutation = gql`
   mutation rejectRevision($input: RejectRevisionInput!) {
     entity {
@@ -99,23 +87,130 @@ export function useRevisionDecideMutation() {
   ) => await revisionMutation(mode, input, isPage)
 }
 
-export function useAddArticleRevisionMutation() {
+const addAppletRevisionMutation = gql`
+  mutation addAppletRevision($input: AddAppletRevisionInput!) {
+    entity {
+      addAppletRevision(input: $input) {
+        success
+      }
+    }
+  }
+`
+const addArticleRevisionMutation = gql`
+  mutation addArticleRevision($input: AddArticleRevisionInput!) {
+    entity {
+      addArticleRevision(input: $input) {
+        success
+      }
+    }
+  }
+`
+const addCourseRevisionMutation = gql`
+  mutation addCourseRevision($input: AddCourseRevisionInput!) {
+    entity {
+      addCourseRevision(input: $input) {
+        success
+      }
+    }
+  }
+`
+const addCoursePageRevisionMutation = gql`
+  mutation addCoursePageRevision($input: AddCoursePageRevisionInput!) {
+    entity {
+      addCoursePageRevision(input: $input) {
+        success
+      }
+    }
+  }
+`
+const addEventRevisionMutation = gql`
+  mutation addEventRevision($input: AddEventRevisionInput!) {
+    entity {
+      addEventRevision(input: $input) {
+        success
+      }
+    }
+  }
+`
+const addExerciseRevisionMutation = gql`
+  mutation addExerciseRevision($input: AddGenericRevisionInput!) {
+    entity {
+      addExerciseRevision(input: $input) {
+        success
+      }
+    }
+  }
+`
+const addExerciseGroupRevisionMutation = gql`
+  mutation addExerciseGroupRevision($input: AddExerciseGroupRevisionInput!) {
+    entity {
+      addExerciseGroupRevision(input: $input) {
+        success
+      }
+    }
+  }
+`
+const addGroupedExerciseRevisionMutation = gql`
+  mutation addGroupedExerciseRevision($input: AddGenericRevisionInput!) {
+    entity {
+      addGroupedExerciseRevision(input: $input) {
+        success
+      }
+    }
+  }
+`
+const addSolutionRevisionMutation = gql`
+  mutation addSolutionRevision($input: AddGenericRevisionInput!) {
+    entity {
+      addSolutionRevision(input: $input) {
+        success
+      }
+    }
+  }
+`
+const addVideoRevisionMutation = gql`
+  mutation addVideoRevision($input: AddVideoRevisionInput!) {
+    entity {
+      addVideoRevision(input: $input) {
+        success
+      }
+    }
+  }
+`
+
+export function useRevisionAddMutation() {
   const auth = useAuthentication()
   const loggedInData = useLoggedInData()
 
-  const mutation = gql`
-    mutation addArticleRevision($input: AddArticleRevisionInput!) {
-      entity {
-        addArticleRevision(input: $input) {
-          success
-          revisionId
-        }
-      }
-    }
-  `
-  const addArticleRevisionMutation = async function (
-    input: AddArticleRevisionInput
+  const addRevisionMutation = async function (
+    type: UnrevisedEntityData['__typename'],
+    input: AddRevisionInputTypes
   ) {
+    const mutation =
+      type === 'Applet'
+        ? addAppletRevisionMutation
+        : type === 'Article'
+        ? addArticleRevisionMutation
+        : type === 'Course'
+        ? addCourseRevisionMutation
+        : type === 'CoursePage'
+        ? addCoursePageRevisionMutation
+        : type === 'Event'
+        ? addEventRevisionMutation
+        : type === 'Exercise'
+        ? addExerciseRevisionMutation
+        : type === 'ExerciseGroup'
+        ? addExerciseGroupRevisionMutation
+        : type === 'GroupedExercise'
+        ? addGroupedExerciseRevisionMutation
+        : type === 'Solution'
+        ? addSolutionRevisionMutation
+        : type === 'Video'
+        ? addVideoRevisionMutation
+        : null
+
+    if (!mutation) return false
+
     const success = await mutationFetch(
       auth,
       mutation,
@@ -124,13 +219,114 @@ export function useAddArticleRevisionMutation() {
     )
 
     if (success) {
-      console.log('saved!')
+      if (!loggedInData) return
+      showToastNotice(loggedInData.strings.mutations.success.save, 'success')
     }
     return success
   }
 
-  return async (input: AddArticleRevisionInput) =>
-    await addArticleRevisionMutation(input)
+  return async (
+    type: UnrevisedEntityData['__typename'],
+    input: AddRevisionInputTypes
+  ) => await addRevisionMutation(type, input)
 }
 
-// export function useRevisionAddMutation()
+export type AddRevisionInputTypes =
+  | AddGenericRevisionInput
+  | AddAppletRevisionInput
+  | AddArticleRevisionInput
+  | AddCourseRevisionInput
+  | AddCoursePageRevisionInput
+  | AddEventRevisionInput
+  | AddExerciseGroupRevisionInput
+  | AddVideoRevisionInput
+
+// TODO: Replace when new version of api releases
+
+export interface AddAppletRevisionInput {
+  changes: string
+  entityId: number
+  needsReview: boolean
+  subscribeThis: boolean
+  subscribeThisByEmail: boolean
+  content: string
+  metaDescription: string
+  metaTitle: string
+  title: string
+  url: string
+}
+
+export interface AddArticleRevisionInput {
+  changes: string
+  entityId: number
+  needsReview: boolean
+  subscribeThis: boolean
+  subscribeThisByEmail: boolean
+  content: string
+  metaDescription: string
+  metaTitle: string
+  title: string
+}
+
+export interface AddCourseRevisionInput {
+  changes: string
+  entityId: number
+  needsReview: boolean
+  subscribeThis: boolean
+  subscribeThisByEmail: boolean
+  content: string
+  metaDescription: string
+  title: string
+}
+
+export interface AddCoursePageRevisionInput {
+  changes: string
+  entityId: number
+  needsReview: boolean
+  subscribeThis: boolean
+  subscribeThisByEmail: boolean
+  content: string
+  title: string
+}
+
+export interface AddEventRevisionInput {
+  changes: string
+  entityId: number
+  needsReview: boolean
+  subscribeThis: boolean
+  subscribeThisByEmail: boolean
+  content: string
+  metaDescription: string
+  metaTitle: string
+  title: string
+}
+
+export interface AddExerciseGroupRevisionInput {
+  changes: string
+  entityId: number
+  needsReview: boolean
+  subscribeThis: boolean
+  subscribeThisByEmail: boolean
+  cohesive: boolean
+  content: string
+}
+
+export interface AddGenericRevisionInput {
+  changes: string
+  entityId: number
+  needsReview: boolean
+  subscribeThis: boolean
+  subscribeThisByEmail: boolean
+  content: string
+}
+
+export interface AddVideoRevisionInput {
+  changes: string
+  entityId: number
+  needsReview: boolean
+  subscribeThis: boolean
+  subscribeThisByEmail: boolean
+  content: string
+  title: string
+  url: string
+}
