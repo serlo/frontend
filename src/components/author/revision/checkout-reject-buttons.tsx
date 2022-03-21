@@ -4,7 +4,10 @@ import { useState, KeyboardEvent, ChangeEvent } from 'react'
 
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { RevisionMutationMode, useRevisionMutation } from '@/helper/mutations'
+import {
+  RevisionMutationMode,
+  useRevisionMutation,
+} from '@/helper/mutations/revision'
 
 export interface CheckoutRejectButtonsProps {
   revisionId: number

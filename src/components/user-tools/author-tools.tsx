@@ -14,10 +14,8 @@ import { MenuSubButtonLink } from './menu-sub-button-link'
 import { useCanDo } from '@/auth/use-can-do'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import {
-  useSetUuidStateMutation,
-  useSubscriptionSetMutation,
-} from '@/helper/mutations'
+import { useSubscriptionSetMutation } from '@/helper/mutations/subscription'
+import { useSetUuidStateMutation } from '@/helper/mutations/uuid'
 import { useIsSubscribed } from '@/helper/use-is-subscribed'
 
 export enum Tool {
