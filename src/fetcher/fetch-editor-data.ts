@@ -5,6 +5,7 @@ import { dataQuery } from './query'
 import { QueryResponse, QueryResponseRevision } from './query-types'
 import { revisionQuery } from './revision/query'
 import { endpoint } from '@/api/endpoint'
+import { BreadcrumbsData } from '@/data-types'
 import {
   editorResponseToState,
   isError,
@@ -20,6 +21,7 @@ export interface EditorPageData {
   needsReview: boolean
   id: number
   errorType: 'none'
+  breadcrumbsData?: BreadcrumbsData | null
 }
 
 export interface EditorFetchErrorData {
@@ -61,10 +63,14 @@ export async function fetchEditorData(
 
   const result = editorResponseToState(data)
 
-  const breadcrumbsData = createBreadcrumbs(data)?.filter(
-    (entry) => entry.url == '/community/106082/sandkasten'
-  )
-  const isSandbox = breadcrumbsData && breadcrumbsData.length > 0
+  const breadcrumbsData = createBreadcrumbs(data)
+
+  const isSandbox =
+    breadcrumbsData &&
+    breadcrumbsData.filter(
+      (entry) => entry.url == '/community/106082/sandkasten'
+    ).length > 0
+
   const noReviewTypes = ['TaxonomyTerm', 'Page', 'User']
   const typeNeedsReview = !noReviewTypes.includes(data.__typename)
 
@@ -77,6 +83,7 @@ export async function fetchEditorData(
       needsReview: !isSandbox && typeNeedsReview,
       id: repoId,
       errorType: 'none',
+      breadcrumbsData: breadcrumbsData ?? null,
     }
   }
 }

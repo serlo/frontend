@@ -13,7 +13,6 @@ import { isPrintMode, printModeSolutionVisible } from '@/components/print-mode'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { FrontendExerciseNode } from '@/data-types'
-import { submitEventWithPath } from '@/helper/submit-event'
 import type { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
 
 export interface ExerciseProps {
@@ -134,9 +133,6 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
           solutionVisible && 'bg-brand text-white'
         )}
         onClick={() => {
-          if (!solutionVisible) {
-            submitEventWithPath('opensolution', path)
-          }
           setSolutionVisible(!solutionVisible)
         }}
         onPointerUp={(e) => e.currentTarget.blur()} //hack, use https://caniuse.com/#feat=css-focus-visible when supported

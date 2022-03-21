@@ -14,8 +14,14 @@ export function AddRevision({
   type,
   needsReview,
   id,
+  breadcrumbsData,
 }: EditorPageData) {
   const { strings } = useInstanceData()
+
+  const backlink = {
+    label: strings.revisions.toContent,
+    url: `/${id}`,
+  }
 
   const [cookieReady, setCookieReady] = useState(false)
 
@@ -37,13 +43,8 @@ export function AddRevision({
   return (
     <>
       <Breadcrumbs
-        data={[
-          {
-            label: strings.revisions.toContent,
-            url: `/${id}`,
-          },
-        ]}
-        asBackButton
+        data={breadcrumbsData ? [...breadcrumbsData, backlink] : [backlink]}
+        noIcon
       />
       <MathSpan formula="" />
       <div className="controls-portal sticky top-0 z-[94] bg-white" />
@@ -74,12 +75,15 @@ export function AddRevision({
                 .then(
                   (data: {
                     success: boolean
-                    redirect: Location
+                    redirect: string
                     errors: object
                   }) => {
                     if (data.success) {
                       resolve()
-                      window.location = data.redirect
+                      window.location.href =
+                        data.redirect.length > 5
+                          ? data.redirect
+                          : window.location.href
                     } else {
                       // eslint-disable-next-line no-console
                       console.log(data.errors)

@@ -15,17 +15,21 @@ try {
 
 BaseModal.setAppElement('#__next')
 
+interface ModalWithCloseButtonProps {
+  isOpen: boolean
+  title?: string
+  onCloseClick: () => void
+  children: ReactNode
+  className?: string
+}
+
 export function ModalWithCloseButton({
   isOpen,
   title,
   onCloseClick,
   children,
-}: {
-  isOpen: boolean
-  title?: string
-  onCloseClick: () => void
-  children: ReactNode
-}) {
+  className,
+}: ModalWithCloseButtonProps) {
   const { strings } = useInstanceData()
 
   return (
@@ -33,7 +37,7 @@ export function ModalWithCloseButton({
       isOpen={isOpen}
       onRequestClose={onCloseClick}
       shouldReturnFocusAfterClose={false}
-      className={clsx(ModalClsx, 'w-[500px] top-[40%] pb-10')}
+      className={clsx(ModalClsx, 'w-[500px] top-[40%] pb-10', className)}
     >
       {title && <h2 className="serlo-h2">{title}</h2>}
       {children}

@@ -259,9 +259,11 @@
       @apply text-brand no-underline break-words hover:underline special-hyphens-auto;
     }
 
+    /* 
+    good for some, bad for others
     [data-slate-object='block'] {
       @apply mb-block;
-    }
+    } */
 
     ul:not(.unstyled-list) {
       @apply mx-side mb-block mt-4 pl-5 list-none;
@@ -539,6 +541,36 @@
       .gssb_a td {
         @apply !whitespace-normal;
       }
+    }
+  }
+
+  .serlo-subject-icon-wrapper {
+    &:hover,
+    &:focus,
+    &:active {
+      .blue {
+        @apply fill-brand;
+      }
+      .green {
+        @apply fill-[#becd2b];
+      }
+    }
+  }
+
+  .serlo-subject-icon {
+    @apply block mx-auto mt-4 mb-0 min-w-[10rem] w-32 h-32;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation-play-state: paused;
+
+    .blue {
+      @apply fill-brand-300;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .green {
+      fill: #becd2b;
+      transition: all 0.2s ease-in-out;
     }
   }
 }

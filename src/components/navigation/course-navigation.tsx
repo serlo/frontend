@@ -28,14 +28,21 @@ export function CourseNavigation({
       <p className="serlo-p mb-0 mt-4 font-bold text-[1rem]">
         <FontAwesomeIcon icon={faGraduationCap} /> Kurs
       </p>
-      <h1 className="mt-0 mb-5 mx-side font-bold text-2xl">{data.title}</h1>
+      <h1 className="mt-0 mb-4 mx-side font-bold text-2xl">{data.title}</h1>
       {data.pages.length > 0 ? (
         <button
           onClick={onOverviewButtonClick}
           className="serlo-button ml-2 serlo-make-interactive-light"
         >
-          {strings.course.showPages}{' '}
-          <span className={open ? 'rotate-180' : ''}>▾</span>
+          {strings.course.pages}{' '}
+          <span
+            className={clsx(
+              'inline-block',
+              open && 'rotate-180 translate-y-0.5'
+            )}
+          >
+            ▾
+          </span>
         </button>
       ) : null}
       {open ? (

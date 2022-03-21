@@ -88,7 +88,7 @@ export function UserTools({
     return (
       <nav
         className={clsx(
-          'mr-4 -mt-4 mb-8',
+          'serlo-user-tools mr-4 -mt-4 mb-8',
           'flex lg:hidden justify-end',
           fadeIn()
         )}
@@ -102,7 +102,7 @@ export function UserTools({
     return (
       <nav
         className={clsx(
-          'absolute z-50 right-8 bottom-8 h-full',
+          'serlo-user-tools absolute z-50 right-8 bottom-8 h-full',
           'lg:flex hidden items-end pointer-events-none',
           fadeIn()
         )}

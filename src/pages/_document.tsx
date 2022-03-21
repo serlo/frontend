@@ -81,6 +81,8 @@ export default class MyDocument extends Document {
             crossOrigin=""
           />
           {process.env.NEXT_PUBLIC_SENTRY_DSN !== undefined && (
+            // script is very small and bootstraps sentry
+            // eslint-disable-next-line @next/next/no-sync-scripts
             <script
               src={`/_assets/sentry/${process.env.NEXT_PUBLIC_SENTRY_DSN.substring(
                 8,

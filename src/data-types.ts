@@ -854,6 +854,7 @@ export interface TaxonomyLink {
 
 export interface TaxonomySubTerm extends TaxonomyTermBase, TaxonomyLink {
   folders: TaxonomyLink[]
+  type: TaxonomyTermType
 }
 
 // First level loads second level elements and exercises as content.

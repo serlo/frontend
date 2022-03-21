@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 
 import { HeadTags } from '../head-tags'
-import { CommunityWall } from '../landing/rework/community-wall'
+import { CommunityWall } from '../landing/rework/community-wall/community-wall'
 import { FooterNew } from '../landing/rework/footer-new'
 import { HeaderNew } from '../landing/rework/header-new'
 import { LandingJsonLd } from '../landing/rework/landing-json-ld'
@@ -122,8 +122,8 @@ export function LandingDE({ data }: LandingDEProps) {
           background-size: 100% 100%;
         }
       `}</style>
-      <LandingJsonLd />
       <HeadTags data={{ title: 'Serlo – Die freie Lernplattform' }} />
+      <LandingJsonLd />
       <HeaderNew />
       <main className="text-truegray-700">
         <section className="text-center max-w-3xl mx-auto mt-20 md:mt-15vh font-bold px-2">
