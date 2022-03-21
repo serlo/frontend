@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { default as NextLink } from 'next/link'
-import { ReactNode } from 'react'
+import { ForwardedRef, forwardRef, ReactNode } from 'react'
 
 import { ExternalLink } from './external-link'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -68,7 +68,18 @@ export function isLegacyLink(_href: string) {
   )
 }
 
-export function Link({
+// Add warning here that forwarding ref is crucial
+export const Link = forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => {
+  return InternalLink({
+    ...props,
+    ref,
+  })
+})
+
+Link.displayName = 'Link'
+
+// don't use this outside this component
+function InternalLink({
   href,
   children,
   className,
@@ -78,12 +89,13 @@ export function Link({
   unreviewed,
   tabIndex,
   unstyled,
-}: LinkProps) {
+  ref,
+}: LinkProps & { ref?: ForwardedRef<HTMLAnchorElement> }) {
   const { lang } = useInstanceData()
 
   if (!href || href === undefined || href === '')
     return (
-      <a className={className} title={title} tabIndex={tabIndex}>
+      <a className={className} title={title} tabIndex={tabIndex} ref={ref}>
         {children}
       </a>
     )
@@ -135,6 +147,7 @@ export function Link({
         rel={unreviewed && isExternal ? 'ugc nofollow noreferrer' : undefined}
         target={unreviewed && isExternal ? '_blank' : undefined}
         tabIndex={tabIndex}
+        ref={ref}
       >
         {children}
         {isExternal && !noExternalIcon && <ExternalLink />}
