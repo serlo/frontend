@@ -73,7 +73,7 @@ export function AddRevision({
             ) {
               console.log('using api endpoint to save')
               const success = await addRevisionMutation(
-                type as UnrevisedEntityData['__typename'], // TODO: this should probably not be a string anyway
+                type as UnrevisedEntityData['__typename'],
                 data,
                 needsReview
               )
