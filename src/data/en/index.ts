@@ -479,6 +479,7 @@ export const loggedInData = {
         INVALID_TOKEN: '',
         BAD_USER_INPUT: '',
         UNKNOWN: 'An unknown error…',
+        valueMissing: 'Please fill all required fields'
       }
     },
     editor: {

@@ -18,6 +18,7 @@ import { showToastNotice } from '../show-toast-notice'
 import { mutationFetch } from './helper'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { LoggedInData } from '@/data-types'
 import { OnSaveBaseData } from '@/edtr-io/serlo-editor'
 import { UnrevisedEntityData } from '@/fetcher/query-types'
 
@@ -190,6 +191,95 @@ const addVideoRevisionMutation = gql`
   }
 `
 
+function getAddMutation(type: UnrevisedEntityData['__typename']) {
+  return {
+    Applet: addAppletRevisionMutation,
+    Article: addArticleRevisionMutation,
+    Course: addCourseRevisionMutation,
+    CoursePage: addCoursePageRevisionMutation,
+    Event: addEventRevisionMutation,
+    Exercise: addExerciseRevisionMutation,
+    ExerciseGroup: addExerciseGroupRevisionMutation,
+    GroupedExercise: addGroupedExerciseRevisionMutation,
+    Solution: addSolutionRevisionMutation,
+    Video: addVideoRevisionMutation,
+  }[type]
+}
+
+function getRequiredString(
+  loggedInData: LoggedInData,
+  name: string,
+  value?: string
+) {
+  if (!value) {
+    const msg = `${loggedInData.strings.mutations.errors.valueMissing} ("${name}")`
+    showToastNotice(msg, 'warning')
+    throw msg
+  }
+  return value
+}
+
+function getGenericInputData(
+  loggedInData: LoggedInData,
+  data: OnSaveBaseData,
+  needsReview: boolean
+): AddGenericRevisionInput {
+  return {
+    changes: getRequiredString(loggedInData, 'changes', data.changes),
+    content: getRequiredString(loggedInData, 'content', data.content),
+    entityId: data.id,
+    needsReview: needsReview,
+    subscribeThis: data.controls.subscription?.subscribe === 1 ? true : false, //simplify when old code is unused
+    subscribeThisByEmail:
+      data.controls.subscription?.mailman === 1 ? true : false, //simplify when old code is unused
+  }
+}
+
+function getAdditionalInputData(
+  loggedInData: LoggedInData,
+  data: OnSaveBaseData,
+  type: UnrevisedEntityData['__typename']
+) {
+  switch (type) {
+    case 'Applet':
+      return {
+        title: getRequiredString(loggedInData, 'title', data.title),
+        url: getRequiredString(loggedInData, 'url', data.url),
+        metaTitle: data.metaTitle,
+        metaDescription: data.metaDescription,
+      }
+    case 'Article':
+      return {
+        title: getRequiredString(loggedInData, 'title', data.title),
+        metaTitle: data.metaTitle ?? 'x', //TODO: wait for api deploy
+        metaDescription: data.metaDescription ?? 'x',
+      }
+    case 'Course':
+      return {
+        title: getRequiredString(loggedInData, 'title', data.title),
+        metaDescription: data.metaDescription,
+      }
+    case 'CoursePage':
+      return { title: getRequiredString(loggedInData, 'title', data.title) }
+    case 'Event':
+      return {
+        title: getRequiredString(loggedInData, 'title', data.title),
+        metaTitle: data.metaTitle,
+        metaDescription: data.metaDescription,
+      }
+    case 'Exercise':
+      return { cohesive: data.cohesive }
+    case 'ExerciseGroup':
+      return { cohesive: data.cohesive }
+    case 'Video':
+      return {
+        title: getRequiredString(loggedInData, 'title', data.title),
+        url: getRequiredString(loggedInData, 'url', data.url),
+      }
+  }
+  return {}
+}
+
 export function useRevisionAddMutation() {
   const auth = useAuthentication()
   const loggedInData = useLoggedInData()
@@ -199,58 +289,30 @@ export function useRevisionAddMutation() {
     data: OnSaveBaseData,
     needsReview: boolean
   ) {
-    //TODO: build failsaves (e.g. no empty content&title), improve types, remove legacy hacks
-
-    const input = {
-      changes: data.changes ?? 'x',
-      entityId: data.id,
-      needsReview: needsReview,
-      subscribeThis: data.controls.subscription?.subscribe === 1 ? true : false, //can be simplified
-      subscribeThisByEmail:
-        data.controls.subscription?.mailman === 1 ? true : false,
-      content: data.content ?? '', // error instead
-      title: data.title ?? 'x', //error instead,
-      metaDescription: data.metaDescription ?? 'placeholder', //this will be optional in the next api version
-      metaTitle: data.metaTitle ?? 'placeholder', //this will be optional in the next api version
+    if (!auth || !loggedInData) {
+      showToastNotice('Please make sure you are logged in!', 'warning')
+      return false
     }
+    try {
+      const genericInput = getGenericInputData(loggedInData, data, needsReview)
+      const additionalInput = getAdditionalInputData(loggedInData, data, type)
+      const input = { ...genericInput, ...additionalInput }
 
-    const mutation =
-      type === 'Applet'
-        ? addAppletRevisionMutation
-        : type === 'Article'
-        ? addArticleRevisionMutation
-        : type === 'Course'
-        ? addCourseRevisionMutation
-        : type === 'CoursePage'
-        ? addCoursePageRevisionMutation
-        : type === 'Event'
-        ? addEventRevisionMutation
-        : type === 'Exercise'
-        ? addExerciseRevisionMutation
-        : type === 'ExerciseGroup'
-        ? addExerciseGroupRevisionMutation
-        : type === 'GroupedExercise'
-        ? addGroupedExerciseRevisionMutation
-        : type === 'Solution'
-        ? addSolutionRevisionMutation
-        : type === 'Video'
-        ? addVideoRevisionMutation
-        : null
+      const success = await mutationFetch(
+        auth,
+        getAddMutation(type),
+        input,
+        loggedInData?.strings.mutations.errors
+      )
 
-    if (!mutation) return false
-
-    const success = await mutationFetch(
-      auth,
-      mutation,
-      input,
-      loggedInData?.strings.mutations.errors
-    )
-
-    if (success) {
-      if (!loggedInData) return
-      showToastNotice(loggedInData.strings.mutations.success.save, 'success')
+      if (success) {
+        showToastNotice(loggedInData.strings.mutations.success.save, 'success')
+      }
+      return success
+    } catch (error) {
+      console.log('probably missing value')
+      return false
     }
-    return success
   }
 
   return async (

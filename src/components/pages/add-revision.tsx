@@ -4,10 +4,12 @@ import { useEffect, useState } from 'react'
 
 import { LoadingSpinner } from '../loading/loading-spinner'
 import { Breadcrumbs } from '../navigation/breadcrumbs'
+import { features } from '../user/profile-experimental'
 import { MathSpan } from '@/components/content/math-span'
 import { useInstanceData } from '@/contexts/instance-context'
 import { OnSaveBaseData, SerloEditor } from '@/edtr-io/serlo-editor'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
+import { UnrevisedEntityData } from '@/fetcher/query-types'
 import { useRevisionAddMutation } from '@/helper/mutations/revision'
 
 export function AddRevision({
@@ -63,8 +65,18 @@ export function AddRevision({
           }}
           needsReview={needsReview}
           onSave={async (data: OnSaveBaseData) => {
-            if (type === 'Article') {
-              void addRevisionMutation(type, data, needsReview)
+            if (
+              features.addRevisionMutation &&
+              document.cookie.includes(
+                features.addRevisionMutation.cookieName + '=1'
+              )
+            ) {
+              console.log('using api endpoint to save')
+              void addRevisionMutation(
+                type as UnrevisedEntityData['__typename'], // TODO: this should probably not be a string anyway
+                data,
+                needsReview
+              )
               return new Promise(() => {
                 return
               })

@@ -29,6 +29,8 @@ export interface OnSaveBaseData {
   metaDescription?: string // make more specific types
   metaTitle?: string
   title?: string
+  url?: string
+  cohesive?: boolean
 }
 
 export interface SerloEditorProps {
