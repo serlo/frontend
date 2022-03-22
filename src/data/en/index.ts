@@ -483,6 +483,7 @@ export const loggedInData = {
       }
     },
     editor: {
+      confirmRouteChange: "Are you sure you want to leave without saving?",
       edtrIo: {
         extendedSettings: 'Extended Settings',
         close: 'Close',

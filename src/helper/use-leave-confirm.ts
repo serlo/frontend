@@ -4,6 +4,7 @@ import * as React from 'react'
 
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
+// needed because of https://github.com/vercel/next.js/issues/2476
 export function useLeaveConfirm(dirty: boolean) {
   const Router = useRouter()
   const loggedInData = useLoggedInData()

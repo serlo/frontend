@@ -307,6 +307,7 @@ export function useRevisionAddMutation() {
 
       if (success) {
         showToastNotice(loggedInData.strings.mutations.success.save, 'success')
+        window.location.href = `/entity/repository/history/${data.id}`
       }
       return success
     } catch (error) {

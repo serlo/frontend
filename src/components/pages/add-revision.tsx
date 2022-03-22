@@ -72,13 +72,14 @@ export function AddRevision({
               )
             ) {
               console.log('using api endpoint to save')
-              void addRevisionMutation(
+              const success = await addRevisionMutation(
                 type as UnrevisedEntityData['__typename'], // TODO: this should probably not be a string anyway
                 data,
                 needsReview
               )
-              return new Promise(() => {
-                return
+              return new Promise((resolve, reject) => {
+                if (success) resolve()
+                else reject()
               })
             }
 
