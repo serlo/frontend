@@ -1,9 +1,15 @@
+import { GetServerSideProps } from 'next'
+
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { AddRevision } from '@/components/pages/add-revision'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
-export default renderedPageNoHooks(() => {
+interface TaxonomyTermCreateProps {
+  parent: number
+}
+
+export default renderedPageNoHooks<TaxonomyTermCreateProps>(({ parent }) => {
   return (
     <FrontendClientBase
       noContainers
@@ -11,11 +17,34 @@ export default renderedPageNoHooks(() => {
     >
       <div className="relative">
         <MaxWidthDiv>
-          <main>{/* TODO <AddRevision  /> */}</main>
+          <main>
+            <AddRevision
+              type="taxonomy" /* type is mostly irrelevant? */
+              needsReview={false}
+              id={parent}
+              initialState={{
+                plugin: 'type-taxonomy',
+                state: {
+                  term: { name: '' },
+                  description:
+                    '{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{}]}]}]}' /*hacky way of building valid empty state*/,
+                },
+              }}
+              errorType="none"
+            />
+          </main>
         </MaxWidthDiv>{' '}
       </div>
     </FrontendClientBase>
   )
 })
 
-// TODO
+export const getServerSideProps: GetServerSideProps<
+  TaxonomyTermCreateProps
+> = async (context) => {
+  const parent = parseInt((context.params?.id as string) ?? '')
+
+  return {
+    props: { parent },
+  }
+}
