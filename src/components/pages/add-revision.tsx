@@ -64,25 +64,7 @@ export function AddRevision({
           needsReview={needsReview}
           onSave={async (data: OnSaveBaseData) => {
             if (type === 'Article') {
-              console.log('try mutation')
-
-              //TODO: build failsaves (e.g. no empty content&title), improve types, remove legacy hacks
-
-              const input = {
-                changes: data.changes ?? 'x',
-                entityId: data.id,
-                needsReview: needsReview,
-                subscribeThis:
-                  data.controls.subscription?.subscribe === 1 ? true : false, //can be simplified
-                subscribeThisByEmail:
-                  data.controls.subscription?.mailman === 1 ? true : false,
-                content: data.content ?? '', // error instead
-                title: data.title ?? 'x', //error instead,
-                metaDescription: data.metaDescription ?? 'placeholder', //this will be optional in the next api version
-                metaTitle: data.metaTitle ?? 'placeholder', //this will be optional in the next api version
-              }
-
-              await addRevisionMutation(type, input)
+              void addRevisionMutation(type, data, needsReview)
               return new Promise(() => {
                 return
               })

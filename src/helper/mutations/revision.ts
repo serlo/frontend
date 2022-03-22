@@ -1,4 +1,15 @@
-import { CheckoutRevisionInput, RejectRevisionInput } from '@serlo/api'
+import {
+  AddAppletRevisionInput,
+  AddArticleRevisionInput,
+  AddCoursePageRevisionInput,
+  AddCourseRevisionInput,
+  AddEventRevisionInput,
+  AddExerciseGroupRevisionInput,
+  AddGenericRevisionInput,
+  AddVideoRevisionInput,
+  CheckoutRevisionInput,
+  RejectRevisionInput,
+} from '@serlo/api'
 import { gql } from 'graphql-request'
 import { useRouter } from 'next/router'
 import NProgress from 'nprogress'
@@ -7,6 +18,7 @@ import { showToastNotice } from '../show-toast-notice'
 import { mutationFetch } from './helper'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { OnSaveBaseData } from '@/edtr-io/serlo-editor'
 import { UnrevisedEntityData } from '@/fetcher/query-types'
 
 export type RevisionMutationMode = 'checkout' | 'reject'
@@ -184,8 +196,24 @@ export function useRevisionAddMutation() {
 
   const addRevisionMutation = async function (
     type: UnrevisedEntityData['__typename'],
-    input: AddRevisionInputTypes
+    data: OnSaveBaseData,
+    needsReview: boolean
   ) {
+    //TODO: build failsaves (e.g. no empty content&title), improve types, remove legacy hacks
+
+    const input = {
+      changes: data.changes ?? 'x',
+      entityId: data.id,
+      needsReview: needsReview,
+      subscribeThis: data.controls.subscription?.subscribe === 1 ? true : false, //can be simplified
+      subscribeThisByEmail:
+        data.controls.subscription?.mailman === 1 ? true : false,
+      content: data.content ?? '', // error instead
+      title: data.title ?? 'x', //error instead,
+      metaDescription: data.metaDescription ?? 'placeholder', //this will be optional in the next api version
+      metaTitle: data.metaTitle ?? 'placeholder', //this will be optional in the next api version
+    }
+
     const mutation =
       type === 'Applet'
         ? addAppletRevisionMutation
@@ -227,8 +255,9 @@ export function useRevisionAddMutation() {
 
   return async (
     type: UnrevisedEntityData['__typename'],
-    input: AddRevisionInputTypes
-  ) => await addRevisionMutation(type, input)
+    data: OnSaveBaseData,
+    needsReview: boolean
+  ) => await addRevisionMutation(type, data, needsReview)
 }
 
 export type AddRevisionInputTypes =
@@ -240,93 +269,3 @@ export type AddRevisionInputTypes =
   | AddEventRevisionInput
   | AddExerciseGroupRevisionInput
   | AddVideoRevisionInput
-
-// TODO: Replace when new version of api releases
-
-export interface AddAppletRevisionInput {
-  changes: string
-  entityId: number
-  needsReview: boolean
-  subscribeThis: boolean
-  subscribeThisByEmail: boolean
-  content: string
-  metaDescription: string
-  metaTitle: string
-  title: string
-  url: string
-}
-
-export interface AddArticleRevisionInput {
-  changes: string
-  entityId: number
-  needsReview: boolean
-  subscribeThis: boolean
-  subscribeThisByEmail: boolean
-  content: string
-  metaDescription: string
-  metaTitle: string
-  title: string
-}
-
-export interface AddCourseRevisionInput {
-  changes: string
-  entityId: number
-  needsReview: boolean
-  subscribeThis: boolean
-  subscribeThisByEmail: boolean
-  content: string
-  metaDescription: string
-  title: string
-}
-
-export interface AddCoursePageRevisionInput {
-  changes: string
-  entityId: number
-  needsReview: boolean
-  subscribeThis: boolean
-  subscribeThisByEmail: boolean
-  content: string
-  title: string
-}
-
-export interface AddEventRevisionInput {
-  changes: string
-  entityId: number
-  needsReview: boolean
-  subscribeThis: boolean
-  subscribeThisByEmail: boolean
-  content: string
-  metaDescription: string
-  metaTitle: string
-  title: string
-}
-
-export interface AddExerciseGroupRevisionInput {
-  changes: string
-  entityId: number
-  needsReview: boolean
-  subscribeThis: boolean
-  subscribeThisByEmail: boolean
-  cohesive: boolean
-  content: string
-}
-
-export interface AddGenericRevisionInput {
-  changes: string
-  entityId: number
-  needsReview: boolean
-  subscribeThis: boolean
-  subscribeThisByEmail: boolean
-  content: string
-}
-
-export interface AddVideoRevisionInput {
-  changes: string
-  entityId: number
-  needsReview: boolean
-  subscribeThis: boolean
-  subscribeThisByEmail: boolean
-  content: string
-  title: string
-  url: string
-}
