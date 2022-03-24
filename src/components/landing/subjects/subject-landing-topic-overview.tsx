@@ -3,18 +3,26 @@ import { useRef, useState } from 'react'
 
 import { MaxWidthDiv } from '../../navigation/max-width-div'
 import { SubTopic } from '../../taxonomy/sub-topic'
+import { Link } from '@/components/content/link'
+import { deSubjectLandingSubjects } from '@/components/pages/subject-landing'
 import { TaxonomySubTerm } from '@/data-types'
+import { deSubjectLandingData } from '@/data/de/de-subject-landing-data'
+import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { isPartiallyInView } from '@/helper/is-partially-in-view'
 
 interface SubjectLandingTopicOverviewProps {
   subterms: TaxonomySubTerm[]
+  subject: deSubjectLandingSubjects
 }
 
 export function SubjectLandingTopicOverview({
   subterms,
+  subject,
 }: SubjectLandingTopicOverviewProps) {
   const [selectedIndex, setSelectedIndex] = useState(-1)
   const topicContainer = useRef<HTMLDivElement>(null)
+
+  const extraTerms = deSubjectLandingData[subject].extraTerms
 
   function onMenuClick(index: number) {
     const indexToBeSet = index === selectedIndex ? -1 : index
@@ -75,29 +83,36 @@ export function SubjectLandingTopicOverview({
           gridTemplateColumns: 'repeat(auto-fit, minmax(12rem, 20rem))',
         }}
       >
-        {subterms.map((term, index) => {
+        {[...subterms, ...extraTerms].map((term, index) => {
           const isActive = index === selectedIndex
           const src =
             term.description?.[0].type === 'img'
               ? term.description?.[0].src
               : undefined
+          const isExtraTerm = hasOwnPropertyTs(term, 'href')
 
           return (
-            <button
+            <Link
+              href={isExtraTerm ? term.href : undefined}
+              unstyled
               key={term.title}
               className={clsx(
-                'flex p-2 m-2 text-left font-bold text-brand min-h-[4rem]',
+                'flex w-auto p-2 m-2 text-left min-h-[4rem]',
                 'rounded-xl hover:bg-brand/5 transition-colors shadow-menu',
                 isActive ? 'text-black bg-brand/10 hover:bg-brand/10' : '',
                 src ? '' : 'pl-16'
               )}
-              onClick={() => onMenuClick(index)}
             >
-              {src ? (
-                <img src={src} className="w-12 h-12 object-cover mr-2" />
-              ) : null}
-              {term.title.replace(' und ', ' & ')}
-            </button>
+              <button
+                className="flex font-bold text-brand "
+                onClick={() => (isExtraTerm ? undefined : onMenuClick(index))}
+              >
+                {src ? (
+                  <img src={src} className="w-12 h-12 object-cover mr-2" />
+                ) : null}
+                {term.title.replace(' und ', ' & ')}
+              </button>
+            </Link>
           )
         })}
       </div>

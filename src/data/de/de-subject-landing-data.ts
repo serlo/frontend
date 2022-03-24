@@ -4,36 +4,53 @@ export const deSubjectLandingData = {
     subline1: 'Keine Angst vor Computern.',
     subline2: 'Lerne ihre Sprache und zähme sie 🤖',
     allTopicsTaxonomyId: 47899,
+    extraTerms: [],
   },
   mathe: {
     title: 'Mathe',
     subline1: 'Keine Angst vor Zahlen,',
     subline2: 'die meisten sind kleiner als du 😎',
     allTopicsTaxonomyId: 5,
+    extraTerms: [
+      {
+        title: '↪ Lehrplan Bayern',
+        description: undefined,
+        href: '/mathe/16032/bayern',
+      },
+      {
+        title: '↪ Prüfungsbereich',
+        description: undefined,
+        href: 'https://de.serlo.org/83249/mathematik-pr%C3%BCfungen',
+      },
+    ],
   },
   biologie: {
     title: 'Biologie',
     subline1: 'Gib deinem Hirn einen Evolutionssprung',
     subline2: 'mit frischem Biologiewissen. 🐒',
     allTopicsTaxonomyId: 23362,
+    extraTerms: [],
   },
   nachhaltigkeit: {
     title: 'Angewandte Nachhaltigkeit',
     subline1: 'Unsere Welt gibt es nur einmal. 🌎',
     subline2: '',
     allTopicsTaxonomyId: 17744,
+    extraTerms: [],
   },
   chemie: {
     title: 'Chemie',
     subline1: 'In der Chemie ist nicht alles ätzend 🧪',
     subline2: ' ',
     allTopicsTaxonomyId: 18230,
+    extraTerms: [],
   },
   lerntipps: {
     title: 'Lerntipps',
     subline1: 'Ein Tipp, ein Trick ',
     subline2: 'und es macht Klick 💡',
     allTopicsTaxonomyId: 181883,
+    extraTerms: [],
   },
 }
 
