@@ -79,7 +79,7 @@ export function SubjectLandingContent({
           <p className="text-3xl mt-4 mb-12 font-extrabold tracking-tight">
             <span>Was darf&apos;s denn heute sein?</span>
           </p>
-          <SubjectLandingTopicOverview subterms={subterms} />
+          <SubjectLandingTopicOverview subterms={subterms} subject={subject} />
         </section>
 
         <section className={clsx('text-center', 'mt-20 mb-8')}>
