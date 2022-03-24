@@ -71,11 +71,17 @@ export function AddRevision({
                 features.addRevisionMutation.cookieName + '=1'
               )
             ) {
+              // eslint-disable-next-line no-console
               console.log('using api endpoint to save')
+
+              // refactor and rename when removing legacy code
+              const skipReview = data.controls.checkout
+              const _needsReview = skipReview ? false : needsReview
+
               const success = await addRevisionMutation(
                 type as UnrevisedEntityData['__typename'],
                 data,
-                needsReview
+                _needsReview
               )
               return new Promise((resolve, reject) => {
                 if (success) resolve()
