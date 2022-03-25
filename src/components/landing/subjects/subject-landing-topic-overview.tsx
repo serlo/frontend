@@ -86,6 +86,8 @@ export function SubjectLandingTopicOverview({
         {[...subterms, ...extraTerms].map((term, index) => {
           const isActive = index === selectedIndex
           const src =
+            term.description &&
+            term.description[0] &&
             term.description?.[0].type === 'img'
               ? term.description?.[0].src
               : undefined

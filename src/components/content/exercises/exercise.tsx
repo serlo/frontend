@@ -122,7 +122,11 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
   }
 
   function renderSolutionToggle() {
-    if (!node.solution.edtrState && !node.solution.legacy) return null
+    if (
+      (!node.solution.edtrState && !node.solution.legacy) ||
+      node.solution.trashed
+    )
+      return null
     if (isPrintMode && !printModeSolutionVisible) return null
 
     return (

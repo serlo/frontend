@@ -104,6 +104,7 @@ function createSolutionData(solution: BareExercise['solution']) {
   return {
     legacy: solutionLegacy,
     edtrState: solutionEdtrState,
+    trashed: solution?.trashed ? true : false,
     license:
       solution && solution.license
         ? createInlineLicense(solution.license)
