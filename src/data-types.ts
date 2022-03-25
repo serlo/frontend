@@ -588,6 +588,7 @@ interface BareSolution {
   legacy?: FrontendContentNode[]
   edtrState?: SolutionEdtrState
   license?: LicenseData
+  trashed: boolean
 }
 
 export interface FrontendExerciseNode {
