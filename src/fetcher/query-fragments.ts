@@ -275,6 +275,7 @@ export const sharedExerciseFragments = gql`
     currentRevision {
       content
     }
+    trashed
     ...license
   }
 `
