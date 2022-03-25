@@ -467,6 +467,7 @@ export function convertUserByDescription(description?: string | null) {
 }
 
 export interface AppletSerializedState extends Entity {
+  __typename?: 'Applet'
   title?: string
   url?: string
   content: SerializedEditorState
@@ -476,6 +477,7 @@ export interface AppletSerializedState extends Entity {
 }
 
 export interface ArticleSerializedState extends Entity {
+  __typename?: 'Article'
   title?: string
   content: SerializedEditorState
   reasoning?: SerializedEditorState
@@ -484,6 +486,7 @@ export interface ArticleSerializedState extends Entity {
 }
 
 export interface CourseSerializedState extends Entity {
+  __typename?: 'Course'
   title?: string
   description: SerializedEditorState
   reasoning?: SerializedEditorState
@@ -492,12 +495,14 @@ export interface CourseSerializedState extends Entity {
 }
 
 export interface CoursePageSerializedState extends Entity {
+  __typename?: 'CoursePage'
   title?: string
   icon?: 'explanation' | 'play' | 'question'
   content: SerializedEditorState
 }
 
 export interface EventSerializedState extends Entity {
+  __typename?: 'Event'
   title?: string
   content: SerializedEditorState
   meta_title?: string
@@ -505,11 +510,13 @@ export interface EventSerializedState extends Entity {
 }
 
 export interface PageSerializedState extends Uuid, License {
+  __typename?: 'Page'
   title?: string
   content: SerializedEditorState
 }
 
 export interface TaxonomySerializedState extends Uuid {
+  __typename?: 'Taxonomy'
   term: {
     name: string
   }
@@ -520,6 +527,7 @@ export interface TaxonomySerializedState extends Uuid {
 }
 
 export interface TextExerciseSerializedState extends Entity {
+  __typename?: 'Exercise'
   content: SerializedEditorState
   'text-solution'?: TextSolutionSerializedState
   'single-choice-right-answer'?: {
@@ -549,20 +557,24 @@ interface InputType {
 }
 
 export interface TextExerciseGroupSerializedState extends Entity {
+  __typename?: 'ExerciseGroup'
   cohesive?: string
   content: SerializedEditorState
   'grouped-text-exercise'?: TextExerciseSerializedState[]
 }
 
 export interface TextSolutionSerializedState extends Entity {
+  __typename?: 'Solution'
   content: SerializedEditorState
 }
 
 export interface UserSerializedState extends Uuid {
+  __typename?: 'User'
   description: SerializedEditorState
 }
 
 export interface VideoSerializedState extends Entity {
+  __typename?: 'Video'
   title?: string
   description: SerializedEditorState
   content?: string

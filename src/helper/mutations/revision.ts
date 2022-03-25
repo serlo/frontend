@@ -19,8 +19,14 @@ import { mutationFetch } from './helper'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { LoggedInData } from '@/data-types'
-import { OnSaveBaseData } from '@/edtr-io/serlo-editor'
-import { UnrevisedEntityData } from '@/fetcher/query-types'
+import {
+  AppletSerializedState,
+  ArticleSerializedState,
+  CoursePageSerializedState,
+  EventSerializedState,
+  TextSolutionSerializedState,
+  VideoSerializedState,
+} from '@/edtr-io/editor-response-to-state'
 
 export type RevisionMutationMode = 'checkout' | 'reject'
 
@@ -191,7 +197,7 @@ const addVideoRevisionMutation = gql`
   }
 `
 
-function getAddMutation(type: UnrevisedEntityData['__typename']) {
+function getAddMutation(type: SupportedTypesSerializedState['__typename']) {
   return {
     Applet: addAppletRevisionMutation,
     Article: addArticleRevisionMutation,
@@ -203,7 +209,7 @@ function getAddMutation(type: UnrevisedEntityData['__typename']) {
     GroupedExercise: addGroupedExerciseRevisionMutation,
     Solution: addSolutionRevisionMutation,
     Video: addVideoRevisionMutation,
-  }[type]
+  }[type!]
 }
 
 function getRequiredString(
@@ -221,7 +227,7 @@ function getRequiredString(
 
 function getGenericInputData(
   loggedInData: LoggedInData,
-  data: OnSaveBaseData,
+  data: RevisionAddMutationData,
   needsReview: boolean
 ): AddGenericRevisionInput {
   return {
@@ -237,56 +243,80 @@ function getGenericInputData(
 
 function getAdditionalInputData(
   loggedInData: LoggedInData,
-  data: OnSaveBaseData,
-  type: UnrevisedEntityData['__typename']
+  data: RevisionAddMutationData
 ) {
-  switch (type) {
+  switch (data.__typename) {
     case 'Applet':
       return {
         title: getRequiredString(loggedInData, 'title', data.title),
         url: getRequiredString(loggedInData, 'url', data.url),
-        metaTitle: data.metaTitle,
-        metaDescription: data.metaDescription,
+        metaTitle: data['meta_title'] ?? 'x',
+        metaDescription: data['meta_description'] ?? 'x',
       }
     case 'Article':
       return {
         title: getRequiredString(loggedInData, 'title', data.title),
-        metaTitle: data.metaTitle ?? 'x', //TODO: wait for api deploy
-        metaDescription: data.metaDescription ?? 'x',
+        metaTitle: data['meta_title'] ?? 'x', //TODO: wait for api deploy
+        metaDescription: data['meta_description'] ?? 'x',
       }
-    case 'Course':
-      return {
-        title: getRequiredString(loggedInData, 'title', data.title),
-        metaDescription: data.metaDescription,
-      }
+    // case 'Course':
+    //   return {
+    //     title: getRequiredString(loggedInData, 'title', data.title),
+    //     metaDescription: data['meta_description'],
+    //   }
     case 'CoursePage':
       return { title: getRequiredString(loggedInData, 'title', data.title) }
     case 'Event':
       return {
         title: getRequiredString(loggedInData, 'title', data.title),
-        metaTitle: data.metaTitle,
-        metaDescription: data.metaDescription,
+        metaTitle: data['meta_title'],
+        metaDescription: data['meta_description'],
       }
-    case 'Exercise':
-      return { cohesive: data.cohesive }
-    case 'ExerciseGroup':
-      return { cohesive: data.cohesive }
+    // case 'Exercise':
+    //   // TODO: text-solution is ignored atm. api needs to expect it?
+    //   return { cohesive: data.cohesive }
+    // case 'ExerciseGroup':
+    //   return { cohesive: data.cohesive }
     case 'Video':
       return {
         title: getRequiredString(loggedInData, 'title', data.title),
-        url: getRequiredString(loggedInData, 'url', data.url),
+        url: getRequiredString(loggedInData, 'url', data.content), // url is stored in content for some reason
+        content: getRequiredString(loggedInData, 'content', data.description),
       }
   }
   return {}
 }
+
+export interface OnSaveData {
+  csrf?: string
+  controls: {
+    subscription?: {
+      subscribe: number
+      mailman: number
+    }
+    checkout?: boolean
+  }
+}
+
+export type SupportedTypesSerializedState =
+  | AppletSerializedState
+  | ArticleSerializedState
+  //| CourseSerializedState
+  | CoursePageSerializedState
+  | EventSerializedState
+  // | TextExerciseSerializedState
+  // | TextExerciseGroupSerializedState
+  | TextSolutionSerializedState
+  | VideoSerializedState
+
+export type RevisionAddMutationData = SupportedTypesSerializedState & OnSaveData
 
 export function useRevisionAddMutation() {
   const auth = useAuthentication()
   const loggedInData = useLoggedInData()
 
   const addRevisionMutation = async function (
-    type: UnrevisedEntityData['__typename'],
-    data: OnSaveBaseData,
+    data: RevisionAddMutationData,
     needsReview: boolean
   ) {
     if (!auth || !loggedInData) {
@@ -294,13 +324,19 @@ export function useRevisionAddMutation() {
       return false
     }
     try {
+      console.log('data')
+      console.log(data)
+      if (!data.__typename) return
+
       const genericInput = getGenericInputData(loggedInData, data, needsReview)
-      const additionalInput = getAdditionalInputData(loggedInData, data, type)
+      const additionalInput = getAdditionalInputData(loggedInData, data)
       const input = { ...genericInput, ...additionalInput }
+
+      console.log(input)
 
       const success = await mutationFetch(
         auth,
-        getAddMutation(type),
+        getAddMutation(data.__typename),
         input,
         loggedInData?.strings.mutations.errors
       )
@@ -317,11 +353,8 @@ export function useRevisionAddMutation() {
     }
   }
 
-  return async (
-    type: UnrevisedEntityData['__typename'],
-    data: OnSaveBaseData,
-    needsReview: boolean
-  ) => await addRevisionMutation(type, data, needsReview)
+  return async (data: RevisionAddMutationData, needsReview: boolean) =>
+    await addRevisionMutation(data, needsReview)
 }
 
 export type AddRevisionInputTypes =

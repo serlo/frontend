@@ -7,10 +7,12 @@ import { Breadcrumbs } from '../navigation/breadcrumbs'
 import { features } from '../user/profile-experimental'
 import { MathSpan } from '@/components/content/math-span'
 import { useInstanceData } from '@/contexts/instance-context'
-import { OnSaveBaseData, SerloEditor } from '@/edtr-io/serlo-editor'
+import { SerloEditor } from '@/edtr-io/serlo-editor'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
-import { UnrevisedEntityData } from '@/fetcher/query-types'
-import { useRevisionAddMutation } from '@/helper/mutations/revision'
+import {
+  RevisionAddMutationData,
+  useRevisionAddMutation,
+} from '@/helper/mutations/revision'
 
 export function AddRevision({
   initialState,
@@ -45,6 +47,21 @@ export function AddRevision({
 
   if (!cookieReady) return <LoadingSpinner noText />
 
+  const supportedTypes = [
+    'Applet',
+    'Article',
+    'CoursePage',
+    'Event',
+    'Solution',
+    'Video',
+  ]
+  // 'Course'
+  // 'Page'
+  // 'Taxonomy'
+  // 'Exercise'
+  // 'ExerciseGroup'
+  // 'User'
+
   return (
     <>
       <Breadcrumbs
@@ -64,12 +81,13 @@ export function AddRevision({
             return cookies['CSRF']
           }}
           needsReview={needsReview}
-          onSave={async (data: OnSaveBaseData) => {
+          onSave={async (data: RevisionAddMutationData) => {
             if (
               features.addRevisionMutation &&
               document.cookie.includes(
                 features.addRevisionMutation.cookieName + '=1'
-              )
+              ) &&
+              supportedTypes.includes(type)
             ) {
               // eslint-disable-next-line no-console
               console.log('using api endpoint to save')
@@ -79,8 +97,11 @@ export function AddRevision({
               const _needsReview = skipReview ? false : needsReview
 
               const success = await addRevisionMutation(
-                type as UnrevisedEntityData['__typename'],
-                data,
+                {
+                  ...data,
+                  // @ts-expect-error temporary
+                  __typename: type,
+                },
                 _needsReview
               )
               return new Promise((resolve, reject) => {
