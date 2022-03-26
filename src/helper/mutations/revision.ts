@@ -13,9 +13,11 @@ import {
 import { gql } from 'graphql-request'
 import { useRouter } from 'next/router'
 import NProgress from 'nprogress'
+import { RefObject } from 'react'
 
 import { showToastNotice } from '../show-toast-notice'
 import { mutationFetch } from './helper'
+import { AuthenticationPayload } from '@/auth/auth-provider'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { LoggedInData } from '@/data-types'
@@ -23,7 +25,10 @@ import {
   AppletSerializedState,
   ArticleSerializedState,
   CoursePageSerializedState,
+  CourseSerializedState,
   EventSerializedState,
+  TextExerciseGroupSerializedState,
+  TextExerciseSerializedState,
   TextSolutionSerializedState,
   VideoSerializedState,
 } from '@/edtr-io/editor-response-to-state'
@@ -230,9 +235,12 @@ function getGenericInputData(
   data: RevisionAddMutationData,
   needsReview: boolean
 ): AddGenericRevisionInput {
+  const content = // @ts-expect-error solve later
+  (data.__typename === 'Course' ? data.description : data.content) as string
+
   return {
     changes: getRequiredString(loggedInData, 'changes', data.changes),
-    content: getRequiredString(loggedInData, 'content', data.content),
+    content: getRequiredString(loggedInData, 'content', content),
     entityId: data.id,
     needsReview: needsReview,
     subscribeThis: data.controls.subscription?.subscribe === 1 ? true : false, //simplify when old code is unused
@@ -259,11 +267,11 @@ function getAdditionalInputData(
         metaTitle: data['meta_title'] ?? 'x', //TODO: wait for api deploy
         metaDescription: data['meta_description'] ?? 'x',
       }
-    // case 'Course':
-    //   return {
-    //     title: getRequiredString(loggedInData, 'title', data.title),
-    //     metaDescription: data['meta_description'],
-    //   }
+    case 'Course':
+      return {
+        title: getRequiredString(loggedInData, 'title', data.title),
+        metaDescription: data['meta_description'] ?? 'x',
+      }
     case 'CoursePage':
       return { title: getRequiredString(loggedInData, 'title', data.title) }
     case 'Event':
@@ -272,11 +280,10 @@ function getAdditionalInputData(
         metaTitle: data['meta_title'],
         metaDescription: data['meta_description'],
       }
-    // case 'Exercise':
-    //   // TODO: text-solution is ignored atm. api needs to expect it?
-    //   return { cohesive: data.cohesive }
-    // case 'ExerciseGroup':
-    //   return { cohesive: data.cohesive }
+    case 'Exercise':
+      return {}
+    case 'ExerciseGroup':
+      return { cohesive: data.cohesive }
     case 'Video':
       return {
         title: getRequiredString(loggedInData, 'title', data.title),
@@ -301,11 +308,11 @@ export interface OnSaveData {
 export type SupportedTypesSerializedState =
   | AppletSerializedState
   | ArticleSerializedState
-  //| CourseSerializedState
+  | CourseSerializedState
   | CoursePageSerializedState
   | EventSerializedState
-  // | TextExerciseSerializedState
-  // | TextExerciseGroupSerializedState
+  | TextExerciseSerializedState
+  | TextExerciseGroupSerializedState
   | TextSolutionSerializedState
   | VideoSerializedState
 
@@ -315,46 +322,128 @@ export function useRevisionAddMutation() {
   const auth = useAuthentication()
   const loggedInData = useLoggedInData()
 
-  const addRevisionMutation = async function (
-    data: RevisionAddMutationData,
-    needsReview: boolean
-  ) {
-    if (!auth || !loggedInData) {
-      showToastNotice('Please make sure you are logged in!', 'warning')
-      return false
-    }
-    try {
-      console.log('data')
-      console.log(data)
-      if (!data.__typename) return
+  return async (data: RevisionAddMutationData, needsReview: boolean) =>
+    await addRevisionMutation({ auth, data, needsReview, loggedInData })
+}
 
-      const genericInput = getGenericInputData(loggedInData, data, needsReview)
-      const additionalInput = getAdditionalInputData(loggedInData, data)
-      const input = { ...genericInput, ...additionalInput }
+interface AddRevisionMutationData {
+  auth: RefObject<AuthenticationPayload>
+  data: RevisionAddMutationData
+  needsReview: boolean
+  loggedInData: LoggedInData | null
+}
 
-      console.log(input)
-
-      const success = await mutationFetch(
-        auth,
-        getAddMutation(data.__typename),
-        input,
-        loggedInData?.strings.mutations.errors
-      )
-
-      if (success) {
-        showToastNotice(loggedInData.strings.mutations.success.save, 'success')
-        window.location.href = `/entity/repository/history/${data.id}`
-      }
-      return success
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log('probably missing value?')
-      return false
-    }
+export const addRevisionMutation = async function ({
+  auth,
+  data,
+  needsReview,
+  loggedInData,
+}: AddRevisionMutationData) {
+  if (!auth || !loggedInData) {
+    showToastNotice('Please make sure you are logged in!', 'warning')
+    return false
   }
 
-  return async (data: RevisionAddMutationData, needsReview: boolean) =>
-    await addRevisionMutation(data, needsReview)
+  if (!data.__typename) return false
+
+  const childrenResult = await loopNestedChildren({
+    auth,
+    data,
+    needsReview,
+    loggedInData,
+  })
+
+  try {
+    const genericInput = getGenericInputData(loggedInData, data, needsReview)
+    const additionalInput = getAdditionalInputData(loggedInData, data)
+    const input = { ...genericInput, ...additionalInput }
+
+    const success = await mutationFetch(
+      auth,
+      getAddMutation(data.__typename),
+      input,
+      loggedInData?.strings.mutations.errors
+    )
+
+    if (success && childrenResult) {
+      showToastNotice(loggedInData.strings.mutations.success.save, 'success')
+      window.location.href = `/entity/repository/history/${data.id}`
+      return true
+    }
+    return false
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log('probably missing value?')
+    return false
+  }
+}
+
+const loopNestedChildren = async ({
+  auth,
+  data,
+  needsReview,
+  loggedInData,
+}: AddRevisionMutationData): Promise<boolean> => {
+  if (!data.__typename) return false
+
+  async function mapField<ChildT>(
+    childrenArray: ChildT[] | ChildT,
+    childrenType: RevisionAddMutationData['__typename']
+  ) {
+    //bonus points if we check if they were changed at all
+    const _childrenArray = Array.isArray(childrenArray)
+      ? childrenArray
+      : [childrenArray]
+
+    const results = await Promise.all(
+      _childrenArray.map(async (child) => {
+        const input: ChildT & OnSaveData = {
+          ...child,
+          __typename: childrenType,
+          changes: data.changes,
+          csrf: data.csrf,
+          controls: data.controls,
+        }
+        const success = await addRevisionMutation({
+          auth,
+          data: input as unknown as RevisionAddMutationData,
+          needsReview,
+          loggedInData,
+        })
+        return success
+      })
+    )
+    return results.every((result) => result === true)
+  }
+
+  let success = true
+
+  if (data.__typename === 'Course' && data['course-page']) {
+    success =
+      success &&
+      (await mapField<CoursePageSerializedState>(
+        data['course-page'],
+        'CoursePage'
+      ))
+  }
+  if (data.__typename === 'ExerciseGroup' && data['grouped-text-exercise']) {
+    success =
+      success &&
+      (await mapField<TextExerciseSerializedState>(
+        data['grouped-text-exercise'],
+        'Exercise'
+      ))
+  }
+  if (data.__typename === 'Exercise' && data['text-solution']) {
+    success =
+      success &&
+      (await mapField<TextSolutionSerializedState>(
+        data['text-solution'],
+        'Solution'
+      ))
+  }
+
+  return success
 }
 
 export type AddRevisionInputTypes =

@@ -50,16 +50,17 @@ export function AddRevision({
   const supportedTypes = [
     'Applet',
     'Article',
+    'Course',
     'CoursePage',
     'Event',
     'Solution',
     'Video',
+    'Exercise',
+    'ExerciseGroup',
+    'GroupedExercise',
   ]
-  // 'Course'
   // 'Page'
   // 'Taxonomy'
-  // 'Exercise'
-  // 'ExerciseGroup'
   // 'User'
 
   return (
@@ -100,7 +101,7 @@ export function AddRevision({
                 {
                   ...data,
                   // @ts-expect-error temporary
-                  __typename: type,
+                  __typename: type === 'GroupedExercise' ? 'Exercise' : type,
                 },
                 _needsReview
               )
