@@ -235,9 +235,7 @@ function getGenericInputData(
   data: RevisionAddMutationData,
   needsReview: boolean
 ): AddGenericRevisionInput {
-  const content = ( // @ts-expect-error solve later
-    data.__typename === 'Course' ? data.description : data.content
-  ) as string
+  const content = data.__typename === 'Course' ? data.description : data.content
 
   return {
     changes: getRequiredString(loggedInData, 'changes', data.changes),

@@ -489,6 +489,7 @@ export interface CourseSerializedState extends Entity {
   __typename?: 'Course'
   title?: string
   description: SerializedEditorState
+  content?: SerializedEditorState // just to simplify types, will not be set
   reasoning?: SerializedEditorState
   meta_description?: string
   'course-page'?: CoursePageSerializedState[]
