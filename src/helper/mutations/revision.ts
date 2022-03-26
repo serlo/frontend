@@ -235,8 +235,9 @@ function getGenericInputData(
   data: RevisionAddMutationData,
   needsReview: boolean
 ): AddGenericRevisionInput {
-  const content = // @ts-expect-error solve later
-  (data.__typename === 'Course' ? data.description : data.content) as string
+  const content = ( // @ts-expect-error solve later
+    data.__typename === 'Course' ? data.description : data.content
+  ) as string
 
   return {
     changes: getRequiredString(loggedInData, 'changes', data.changes),
@@ -283,7 +284,7 @@ function getAdditionalInputData(
     case 'Exercise':
       return {}
     case 'ExerciseGroup':
-      return { cohesive: data.cohesive }
+      return { cohesive: data.cohesive === 'true' }
     case 'Video':
       return {
         title: getRequiredString(loggedInData, 'title', data.title),
@@ -331,6 +332,7 @@ interface AddRevisionMutationData {
   data: RevisionAddMutationData
   needsReview: boolean
   loggedInData: LoggedInData | null
+  isRecursiveCall?: boolean
 }
 
 export const addRevisionMutation = async function ({
@@ -338,6 +340,7 @@ export const addRevisionMutation = async function ({
   data,
   needsReview,
   loggedInData,
+  isRecursiveCall,
 }: AddRevisionMutationData) {
   if (!auth || !loggedInData) {
     showToastNotice('Please make sure you are logged in!', 'warning')
@@ -366,8 +369,10 @@ export const addRevisionMutation = async function ({
     )
 
     if (success && childrenResult) {
-      showToastNotice(loggedInData.strings.mutations.success.save, 'success')
-      window.location.href = `/entity/repository/history/${data.id}`
+      if (!isRecursiveCall) {
+        showToastNotice(loggedInData.strings.mutations.success.save, 'success')
+        window.location.href = `/entity/repository/history/${data.id}`
+      }
       return true
     }
     return false
@@ -409,6 +414,7 @@ const loopNestedChildren = async ({
           data: input as unknown as RevisionAddMutationData,
           needsReview,
           loggedInData,
+          isRecursiveCall: true,
         })
         return success
       })
