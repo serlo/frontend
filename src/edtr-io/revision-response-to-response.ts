@@ -179,6 +179,7 @@ export function revisionResponseToResponse(
       },
       exercise: uuid.repository.exercise,
       ...repositoryFields,
+      trashed: uuid.trashed,
     }
   }
 
