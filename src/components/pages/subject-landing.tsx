@@ -12,7 +12,7 @@ type SubjectLandingProps = { pageData: TaxonomyPage } & {
 export function SubjectLanding({ pageData, subject }: SubjectLandingProps) {
   if (pageData.taxonomyData.subterms) {
     const subterms = pageData.taxonomyData.subterms.filter(
-      (term) => term.type !== 'locale' && term.id !== 75211
+      (term) => term.type !== 'locale' && term.id !== 75211 // Informatik "Baustelle"
     )
     return (
       <FrontendClientBase noContainers noHeaderFooter>

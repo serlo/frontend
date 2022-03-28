@@ -143,6 +143,7 @@ export interface BareExercise extends Entity {
           Pick<GraphQL.SolutionRevision, 'content' | 'id'>
         >
         license: License
+        trashed: boolean
       }
     | undefined
   >
