@@ -66,7 +66,7 @@ export function SubjectLandingContent({
 
         <section className="max-w-3xl mx-auto mt-10 text-center sm:text-left sm:mt-16">
           <h2 className="text-truegray-700 font-bold text-lg mb-2">
-            Durchsuche den {data.title}-Bereich
+            Durchsuche den Bereich {data.title}
           </h2>
 
           <Quickbar
