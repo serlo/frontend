@@ -430,7 +430,9 @@ function StepEditor(props: StepEditorProps) {
               column: StepSegment.Transform,
             })}
             placeholder={
-              row === 0 ? '-3x' : `[${editorStrings.equations.transformation}]`
+              row === 0
+                ? editorStrings.equations.transformationExample
+                : `[${editorStrings.equations.transformation}]`
             }
             state={state.transform}
             onChange={(src) => state.transform.set(src)}
