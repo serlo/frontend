@@ -339,23 +339,24 @@ export function createPlugins({
       registry,
       blockquote: 'blockquote',
       i18n: textPluginI18n,
-    }),
+    }) as EditorPlugin<any, any>, //TODO: investigate, this makes no sense at all
     inlineText: createTextPlugin({
       registry,
       plugins: {
         code: true,
         colors: false,
         headings: false,
+        katex: true,
+        links: false,
         lists: false,
         math: true,
+        paragraphs: false,
+        richText: false,
         suggestions: false,
-        //katex: false,
-        //link: false,
-        //paragraph: false,
-        //richtext: false,
       },
+      noLinebreaks: true,
       i18n: textPluginI18n,
-    }),
+    }) as EditorPlugin<any, any>,
     video: createVideoPlugin({
       i18n: {
         src: {

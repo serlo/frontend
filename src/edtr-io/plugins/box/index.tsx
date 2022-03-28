@@ -13,7 +13,7 @@ import { getPluginRegistry } from '@/edtr-io/get-plugin-registry'
 export function createBoxState(
   editorStrings: LoggedInData['strings']['editor']
 ) {
-  const pluginSelection = getPluginRegistry('box', editorStrings, [
+  const plugins = getPluginRegistry('box', editorStrings, [
     'text',
     'image',
     'equations',
@@ -27,7 +27,7 @@ export function createBoxState(
     content: child({
       plugin: 'rows',
       config: {
-        pluginSelection,
+        plugins,
       },
     }),
   })
