@@ -730,7 +730,7 @@ export const loggedInData = {
         leftHandSide: "linke Seite",
         transformation: "Umformung",
         mode: "Modus",
-        transformationExample: "e.g. -3x",
+        transformationExample: "z.B. -3x",
         transformationOfEquations: "Gleichungsumformung",
         transformationOfTerms: "Termumformung",
         addNewRow: "Neue Zeile hinzufügen",
