@@ -242,11 +242,12 @@ export const instanceData = {
       goToChat: "Zum Chat",
       registerChat: "Beim Chat anmelden",
       inviteToChat: "Zum Chat einladen",
-      invitation: "💬 %username% hat dich in den Serlo Community Chat eingeladen!\nGehe zu %chatlink% um dich anzumelden.",
       inviteModal: {
         part1: "%username% ist noch nicht in unserem Community-Chat unter %chatLink% aktiv.",
-        part2: "Du kannst %username% zum Chat einladen, um Direktnachrichten zu senden:",
-        button: "Einladung senden"
+        part2: "Du kannst %username% zum Chat einladen, um Direktnachrichten zu senden.",
+        messagePlaceholder: "Optional: Persönliche Nachricht",
+        button: "Einladung senden",
+        success: "✨ Erfolgreich eingeladen!"
       },
       activityGraph: {
         edits: "Bearbeitungen",
@@ -308,7 +309,7 @@ export const instanceData = {
       setTaxonomyParentChanged: "%actor% hat den Elternknoten von %child% auf %parent% geändert.",
       setUuidStateTrashed: "%actor% hat %object% in den Papierkorb verschoben.",
       setUuidStateRestored: "%actor% hat %object% aus dem Papierkorb wieder hergestellt.",
-      inviteToChat: "Du wurdest in den Chat eingeladen! %break% Gehe zu %chatLink% , um mit %actor% und anderen zu chatten.",
+      inviteToChat: "%actor% hat dich in den Chat eingeladen: %comment% Gehe zu %chatLink% , um mit %actor% und anderen zu chatten.",
       entityPlaceholderFallback: "Inhalt"
     },
     actions: {
