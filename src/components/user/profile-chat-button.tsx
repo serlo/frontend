@@ -1,7 +1,8 @@
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
-import { useEffect, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
+import TextareaAutosize from 'react-textarea-autosize'
 
 import { useAuthentication } from '@/auth/use-authentication'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
@@ -31,6 +32,7 @@ export function ProfileChatButton({
   const auth = useAuthentication()
   const [mounted, setMounted] = useState(!shouldUseNewAuth())
   const [showInviteModal, setShowInviteModal] = useState(false)
+  const [message, setMessage] = useState('')
 
   useEffect(() => {
     setMounted(true)
@@ -54,23 +56,14 @@ export function ProfileChatButton({
 
   return (
     <>
-      <style jsx>{`
-        a {
-          display: block;
-          width: 175px;
-          text-align: center;
-          grid-area: chatButton;
-          align-self: self-start;
-          margin-top: 5px;
-        }
-      `}</style>
       <a
         href={url}
         onClick={onClickAction}
         className={clsx(
           className,
-          'serlo-button serlo-make-interactive-green '
+          'serlo-button serlo-make-interactive-green block text-center mt-[5px] w-44 self-start'
         )}
+        style={{ gridArea: 'chatButton' }}
       >
         <FontAwesomeIcon icon={faPaperPlane} /> {text}
       </a>
@@ -81,14 +74,12 @@ export function ProfileChatButton({
   async function inviteToChat() {
     await createThread({
       title: '',
-      content: strings.profiles.invitation
-        .replace('%username%', auth.current?.username!)
-        .replace('%chatlink%', 'https://community.serlo.org'),
+      content: message ?? '',
       objectId: userId,
       subscribe: false,
       sendEmail: false,
     })
-    showToastNotice('✨ Erfolgreich eingeladen!', 'success')
+    showToastNotice(strings.profiles.inviteModal.success, 'success')
   }
 
   function renderInviteModal() {
@@ -112,6 +103,29 @@ export function ProfileChatButton({
           <br />
           {replacePlaceholders(part2, { username })}
         </p>
+        <div
+          className={clsx(
+            'mx-side mt-4 mb-7 flex items-center rounded-2xl',
+            'bg-brandgreen-lighter focus-within:bg-brandgreen-light',
+            'transition-colors duration-200 ease-in py-1'
+          )}
+        >
+          <TextareaAutosize
+            value={message}
+            id="inviteToChatMessage"
+            onChange={(event: ChangeEvent<HTMLTextAreaElement>) => {
+              setMessage(event.target.value)
+            }}
+            placeholder={strings.profiles.inviteModal.messagePlaceholder}
+            minRows={2}
+            className={clsx(
+              'serlo-input-font-reset w-full text-lg',
+              'text-black border-0 bg-transparent outline-none resize-none',
+              'pr-14 pl-4',
+              'placeholder-brandgreen'
+            )}
+          />
+        </div>
         <p className="serlo-p">
           <a
             onClick={inviteToChat}
