@@ -49,8 +49,7 @@ export function Box({
 }: BoxProps) {
   const { strings } = useInstanceData()
 
-  // @ts-expect-error just a failsave
-  if (boxType == '' || !children || !children.length) return null
+  if (!children || !children.length) return null
 
   const isBlank = boxType === 'blank'
 
@@ -69,7 +68,7 @@ export function Box({
     <figure
       id={anchorId}
       className={clsx(
-        'mx-side border-3 py-side mb-6 rounded-xl relative',
+        'mx-side border-3 pt-[7px] pb-side mb-6 rounded-xl relative',
         borderColorClass
       )}
     >
@@ -84,28 +83,21 @@ export function Box({
 
   function renderHeader() {
     return (
-      <figcaption className="px-side pb-4 pt-1 font-bold">
+      <figcaption className="px-side pb-3 pt-1 text-lg">
         <a className="no-underline" href={'#' + anchorId}>
           {isBlank ? null : (
             <>
-              <span className={colorClass}>
-                {renderIcon()}
+              <span
+                className={clsx(title && !isBlank ? 'mr-1.5' : '', colorClass)}
+              >
+                {icon ? <FontAwesomeIcon className="mr-1" icon={icon} /> : null}
                 {strings.content.boxTypes[boxType]}
               </span>
             </>
           )}
-          {title && !isBlank ? ' | ' : null}
-          {title ? renderNested(title, 'title') : null}
+          {title ? <b>{renderNested(title, 'title')}</b> : null}
         </a>
       </figcaption>
     )
-  }
-
-  function renderIcon() {
-    return icon ? (
-      <>
-        <FontAwesomeIcon icon={icon} />{' '}
-      </>
-    ) : null
   }
 }
