@@ -3,6 +3,7 @@ export const deSubjectLandingData = {
     title: 'Informatik',
     subline1: 'Keine Angst vor Computern.',
     subline2: 'Lerne ihre Sprache und zähme sie 🤖',
+    contributeLink: '/49982/neu-hier',
     allTopicsTaxonomyId: 47899,
     extraTerms: [],
   },
@@ -11,6 +12,7 @@ export const deSubjectLandingData = {
     subline1: 'Keine Angst vor Zahlen,',
     subline2: 'die meisten sind kleiner als du 😎',
     allTopicsTaxonomyId: 5,
+    contributeLink: '/19880/neu-hier',
     extraTerms: [
       {
         title: '↪ Lehrplan Bayern',
@@ -29,6 +31,7 @@ export const deSubjectLandingData = {
     subline1: 'Gib deinem Hirn einen Evolutionssprung',
     subline2: 'mit frischem Biologiewissen. 🐒',
     allTopicsTaxonomyId: 23362,
+    contributeLink: '/25017/neu-hier',
     extraTerms: [],
   },
   nachhaltigkeit: {
@@ -36,6 +39,7 @@ export const deSubjectLandingData = {
     subline1: 'Unsere Welt gibt es nur einmal. 🌎',
     subline2: '',
     allTopicsTaxonomyId: 17744,
+    contributeLink: '/25294/neu-hier',
     extraTerms: [],
   },
   chemie: {
@@ -43,6 +47,7 @@ export const deSubjectLandingData = {
     subline1: 'In der Chemie ist nicht alles ätzend 🧪',
     subline2: ' ',
     allTopicsTaxonomyId: 18230,
+    contributeLink: '/26633/neu-hier',
     extraTerms: [],
   },
   lerntipps: {
@@ -50,6 +55,7 @@ export const deSubjectLandingData = {
     subline1: 'Ein Tipp, ein Trick ',
     subline2: 'und es macht Klick 💡',
     allTopicsTaxonomyId: 181883,
+    contributeLink: '/242472',
     extraTerms: [],
   },
 }
