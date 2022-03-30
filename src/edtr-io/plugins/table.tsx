@@ -1,12 +1,11 @@
 import { EditorPlugin } from '@edtr-io/plugin'
 import {
   createTablePlugin,
-  TableProps,
+  TableConfig,
   TablePluginState,
-  TablePluginConfig,
+  TableProps,
 } from '@edtr-io/plugin-table'
 import { converter } from '@serlo/markdown'
-import * as React from 'react'
 
 import { renderArticle } from '@/schema/article-renderer'
 import { convertLegacyState } from '@/schema/convert-legacy-state'
@@ -21,7 +20,7 @@ function MarkdownRenderer(props: { markdown: string }) {
   return <>{renderArticle(node.children)}</>
 }
 
-export const tablePlugin: EditorPlugin<TablePluginState, TablePluginConfig> = {
+export const tablePlugin: EditorPlugin<TablePluginState, TableConfig> = {
   ...edtrTablePlugin,
   Component: TableEditor,
 }

@@ -22,7 +22,26 @@ export function createBoxState(
 
   return object({
     type: string(''),
-    title: child({ plugin: 'text' }),
+    title: child({
+      plugin: 'text',
+      config: {
+        plugins: {
+          code: true,
+          colors: false,
+          headings: false,
+          katex: true,
+          links: false,
+          lists: false,
+          math: true,
+          paragraphs: false,
+          richText: false,
+          blockquote: false,
+          suggestions: false,
+        },
+        noLinebreaks: true,
+        blockquote: '',
+      },
+    }),
     anchorId: string(''),
     content: child({
       plugin: 'rows',

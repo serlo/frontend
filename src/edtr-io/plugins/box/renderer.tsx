@@ -34,7 +34,10 @@ export function BoxRenderer(props: BoxProps) {
     <>
       <figure
         id={anchorId.value}
-        className={clsx('border-3 p-4 rounded-xl relative', borderColorClass)}
+        className={clsx(
+          'border-3 p-4 pt-2 rounded-xl relative',
+          borderColorClass
+        )}
       >
         {hasNoType ? (
           renderInlineSettings()
@@ -49,24 +52,15 @@ export function BoxRenderer(props: BoxProps) {
     </>
   )
 
-  function renderIcon() {
-    return icon ? (
-      <>
-        <FontAwesomeIcon icon={icon} />{' '}
-      </>
-    ) : null
-  }
-
   function renderHeader() {
     return (
-      <figcaption className="pt-1 flex font-bold">
+      <figcaption className="pt-1 flex text-lg">
         {isBlank ? null : (
           <div>
-            <span className={colorClass}>
-              {renderIcon()}
+            <span className={colorClass + ' mr-1'}>
+              {icon ? <FontAwesomeIcon className="mr-1" icon={icon} /> : null}
               {strings.content.boxTypes[typedValue]}
             </span>
-            {' | '}
           </div>
         )}
         <div className="block -ml-1 max-h-6 min-w-[15rem] font-bold">
@@ -123,13 +117,11 @@ export function BoxRenderer(props: BoxProps) {
             onClick={(event) => {
               event.preventDefault()
               type.set(typedBoxType)
-              if (anchorId.value === '') generateAnchorId(typedBoxType)
+              if (anchorId.value === '') generateAnchorId()
             }}
           >
             {listIcon ? (
-              <>
-                <FontAwesomeIcon icon={listIcon} />{' '}
-              </>
+              <FontAwesomeIcon className="mr-1" icon={listIcon} />
             ) : null}
             {strings.content.boxTypes[typedBoxType]}
           </button>
@@ -138,9 +130,8 @@ export function BoxRenderer(props: BoxProps) {
     })
   }
 
-  function generateAnchorId(type: BoxType) {
-    const typeName = strings.content.boxTypes[type].toLowerCase()
+  function generateAnchorId() {
     const random = (Math.random() + 1).toString(36).substr(2, 5) //random string
-    anchorId.set(`${typeName}-${random}`)
+    anchorId.set(`box-${random}`)
   }
 }

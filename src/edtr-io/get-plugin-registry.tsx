@@ -57,7 +57,7 @@ export function getPluginRegistry(
       icon: createIcon(faCubes),
     },
     {
-      name: 'highlight',
+      name: 'highlight', //source code
       title: editorStrings.edtrIo.highlightTitle,
       description: editorStrings.edtrIo.highlightDesc,
       icon: createIcon(faCode),
@@ -81,7 +81,7 @@ export function getPluginRegistry(
       icon: createIcon(faImages),
     },
     {
-      name: 'important',
+      name: 'important', // old "Merksatz"
       title: editorStrings.edtrIo.importantTitle,
       description: editorStrings.edtrIo.importantDesc,
     },
@@ -144,7 +144,9 @@ export function getPluginRegistry(
     document.cookie.includes(features.boxPlugin.cookieName + '=1')
 
   const boxFiltered = showBox
-    ? filteredRegistry
+    ? filteredRegistry.filter(
+        (plugin) => !['blockquote', 'important'].includes(plugin.name)
+      )
     : filteredRegistry.filter((plugin) => plugin.name != 'box')
 
   // Testing new table plugin
