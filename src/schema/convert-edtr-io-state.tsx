@@ -144,7 +144,7 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
         anchorId: node.state.anchorId,
         title: (
           convert(node.state.title as EdtrState) as FrontendTextNode[]
-        )?.[0].children,
+        )?.[0]?.children,
         children: convert(node.state.content.state as EdtrState),
       },
     ]
