@@ -1357,7 +1357,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.17.2":
+"@babel/runtime@npm:^7.17.8":
   version: 7.17.8
   resolution: "@babel/runtime@npm:7.17.8"
   dependencies:
@@ -1556,22 +1556,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@edtr-io/core@npm:^2.3.2":
-  version: 2.3.2
-  resolution: "@edtr-io/core@npm:2.3.2"
+"@edtr-io/core@npm:^2.5.0":
+  version: 2.5.0
+  resolution: "@edtr-io/core@npm:2.5.0"
   dependencies:
-    "@babel/runtime": ^7.17.2
-    "@edtr-io/default-document-editor": ^2.3.2
-    "@edtr-io/default-plugin-toolbar": ^2.3.2
-    "@edtr-io/internal__document-editor": ^2.3.2
-    "@edtr-io/internal__plugin": ^2.3.2
-    "@edtr-io/internal__plugin-state": ^2.3.2
-    "@edtr-io/internal__plugin-toolbar": ^2.3.2
-    "@edtr-io/store": ^2.3.2
-    "@edtr-io/ui": ^2.3.2
-    "@types/ramda": ^0.28.1
-    "@types/react": ^17.0.40
-    "@types/react-dom": ^17.0.13
+    "@babel/runtime": ^7.17.8
+    "@edtr-io/default-document-editor": ^2.5.0
+    "@edtr-io/default-plugin-toolbar": ^2.5.0
+    "@edtr-io/internal__document-editor": ^2.5.0
+    "@edtr-io/internal__plugin": ^2.5.0
+    "@edtr-io/internal__plugin-state": ^2.5.0
+    "@edtr-io/internal__plugin-toolbar": ^2.5.0
+    "@edtr-io/store": ^2.5.0
+    "@edtr-io/ui": ^2.5.0
+    "@types/ramda": ^0.28.5
+    "@types/react": ^17.0.43
+    "@types/react-dom": ^17.0.14
     "@types/react-redux": ^7.1.23
     "@types/shortid": ^0.0.29
     "@types/styled-components": ^5.1.24
@@ -1587,11 +1587,11 @@ __metadata:
     react-is: ">= 17"
     redux: ">= 4"
     styled-components: ">= 4"
-  checksum: 1c0385c280a9e4f2d869485af33499ab2f8498aa8fa39be9820027d4bd9ca9a93129173b6f524e2571790a229cf6d524305dab2f7c30957eb69ccebd9205803c
+  checksum: 6ba121c3601bb90dcd8919faa5baba4833d274db00588ec16d1c6c914ecb5bb1b9323deb9591e576731df9ed1000d2db39fb4305841d1db159622ec100833f98
   languageName: node
   linkType: hard
 
-"@edtr-io/default-document-editor@npm:^2.0.0, @edtr-io/default-document-editor@npm:^2.3.0":
+"@edtr-io/default-document-editor@npm:^2.3.0":
   version: 2.3.0
   resolution: "@edtr-io/default-document-editor@npm:2.3.0"
   dependencies:
@@ -1609,21 +1609,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@edtr-io/default-document-editor@npm:^2.3.2":
-  version: 2.3.2
-  resolution: "@edtr-io/default-document-editor@npm:2.3.2"
+"@edtr-io/default-document-editor@npm:^2.5.0":
+  version: 2.5.0
+  resolution: "@edtr-io/default-document-editor@npm:2.5.0"
   dependencies:
-    "@edtr-io/document-editor": ^2.3.2
-    "@edtr-io/ui": ^2.3.2
-    "@types/react": ^17.0.40
-    "@types/react-dom": ^17.0.13
+    "@edtr-io/document-editor": ^2.5.0
+    "@edtr-io/ui": ^2.5.0
+    "@types/react": ^17.0.43
+    "@types/react-dom": ^17.0.14
     "@types/styled-components": ^5.1.24
   peerDependencies:
     react: ">= 17"
     react-dom: ">= 17"
     react-is: ">= 17"
     styled-components: ">= 4"
-  checksum: 4cd515932b11210e5081d99a9d972c6a8ed564aa7995a134f0f59def17a308d8b0cc400ed72c3337c85ea47d9bad82cdd9a8236554d386bb851aef6b56fe37d7
+  checksum: d6ce69cb1294853b2269d0c08d75c705ab5a4f17242d96fe1b20809e50cab753eb9e01cfcfbd1eb18eb30567b5156fcb885f608ab7d0136a8677bcdbff22f689
   languageName: node
   linkType: hard
 
@@ -1647,14 +1647,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@edtr-io/default-plugin-toolbar@npm:^2.3.2":
-  version: 2.3.2
-  resolution: "@edtr-io/default-plugin-toolbar@npm:2.3.2"
+"@edtr-io/default-plugin-toolbar@npm:^2.5.0":
+  version: 2.5.0
+  resolution: "@edtr-io/default-plugin-toolbar@npm:2.5.0"
   dependencies:
-    "@edtr-io/plugin-toolbar": ^2.3.2
-    "@edtr-io/ui": ^2.3.2
-    "@types/react": ^17.0.40
-    "@types/react-dom": ^17.0.13
+    "@edtr-io/plugin-toolbar": ^2.5.0
+    "@edtr-io/ui": ^2.5.0
+    "@types/react": ^17.0.43
+    "@types/react-dom": ^17.0.14
     "@types/react-modal": ^3.13.1
     "@types/styled-components": ^5.1.24
     react-modal: ^3.14.4
@@ -1663,7 +1663,7 @@ __metadata:
     react-dom: ">= 17"
     react-is: ">= 17"
     styled-components: ">= 4"
-  checksum: 0ce3c3dbbf79828452f2f4b3c9b1d37093e8626f9b4662e22493cf5967909200669f57a1fb3566c85a9b43b9edf015253a90b337085f1c5ff3bce88a4863d41f
+  checksum: 2f2accaba8e255f6972e86952da13c253e06b1e205cbd6904d028c6009ec26f79f925221e5f9139bc7f2c08cc759eebca0b1e10f93287c0f0f93ea082d2a3799
   languageName: node
   linkType: hard
 
@@ -1678,18 +1678,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@edtr-io/document-editor@npm:^2.3.2":
-  version: 2.3.2
-  resolution: "@edtr-io/document-editor@npm:2.3.2"
+"@edtr-io/document-editor@npm:^2.5.0":
+  version: 2.5.0
+  resolution: "@edtr-io/document-editor@npm:2.5.0"
   dependencies:
-    "@edtr-io/internal__document-editor": ^2.3.2
+    "@edtr-io/internal__document-editor": ^2.5.0
   peerDependencies:
     react: ">= 17"
-  checksum: d946b59a8a803bc636baa2f5c4a18c57900515ba98d48aad49bba7370764e4f85e8d2ccdf1c5dc47e00d22bfc424c367bcbb98e51626026106a2e4e741a045ba
+  checksum: 5e63a3c9821c5901374659e1d4083c3a6ee9898034350b40d4c27dfe9c59e0227a5d6500bd9d5ab9a89af8f15c6c461b077768a106f4f7a00dac58cf6c7edfa1
   languageName: node
   linkType: hard
 
-"@edtr-io/editor-ui@npm:^2.0.0, @edtr-io/editor-ui@npm:^2.3.0":
+"@edtr-io/editor-ui@npm:^2.3.0":
   version: 2.3.0
   resolution: "@edtr-io/editor-ui@npm:2.3.0"
   dependencies:
@@ -1716,14 +1716,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@edtr-io/editor-ui@npm:^2.3.2":
-  version: 2.3.2
-  resolution: "@edtr-io/editor-ui@npm:2.3.2"
+"@edtr-io/editor-ui@npm:^2.5.0":
+  version: 2.5.0
+  resolution: "@edtr-io/editor-ui@npm:2.5.0"
   dependencies:
-    "@edtr-io/ui": ^2.3.2
-    "@types/ramda": ^0.28.1
-    "@types/react": ^17.0.40
-    "@types/react-dom": ^17.0.13
+    "@edtr-io/ui": ^2.5.0
+    "@types/ramda": ^0.28.5
+    "@types/react": ^17.0.43
+    "@types/react-dom": ^17.0.14
     "@types/styled-components": ^5.1.24
     ramda: ^0.28.0
     react-textarea-autosize: ^8.3.3
@@ -1739,7 +1739,7 @@ __metadata:
     react-is: ">= 17"
     redux: ">= 4"
     styled-components: ">= 4"
-  checksum: 41ecfa80a2cd0677920d90d89fc67ffd96d243800d2c2f37a4b73991103aaedf70d464746ccd53968d7ea178a467d7de359539b4c12b6da8cea84684e9e50742
+  checksum: 5fd7ccbc2c54dd9561df053bc8ade548ddbe3a8069f9328887c84331364ad1fe40721a7fa2fecf258c0c82e164b49d4b8d870fc2742ed7a87465bd3c9bc62b99
   languageName: node
   linkType: hard
 
@@ -1775,15 +1775,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@edtr-io/internal__document-editor@npm:^2.3.2":
-  version: 2.3.2
-  resolution: "@edtr-io/internal__document-editor@npm:2.3.2"
+"@edtr-io/internal__document-editor@npm:^2.5.0":
+  version: 2.5.0
+  resolution: "@edtr-io/internal__document-editor@npm:2.5.0"
   dependencies:
-    "@edtr-io/internal__plugin-toolbar": ^2.3.2
-    "@types/react": ^17.0.40
+    "@edtr-io/internal__plugin-toolbar": ^2.5.0
+    "@types/react": ^17.0.43
   peerDependencies:
     react: ">= 17"
-  checksum: ff8d224e3517f48357aaf4d37bd831451ab8116eb375364ca34f2987546e0eb067607223c3959782e79c67af8127da1e6338e794ea70e486c372c890ee2d3c84
+  checksum: bfaa94c3e41a9d6d267b7407f883e4bec504907a789d98791152a3912fb1593e745521f5dbe33ebf683c31b88b881fc6af931f1a0402a6382f89c3f30429be6c
   languageName: node
   linkType: hard
 
@@ -1799,15 +1799,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@edtr-io/internal__plugin-state@npm:^2.3.2":
-  version: 2.3.2
-  resolution: "@edtr-io/internal__plugin-state@npm:2.3.2"
+"@edtr-io/internal__plugin-state@npm:^2.5.0":
+  version: 2.5.0
+  resolution: "@edtr-io/internal__plugin-state@npm:2.5.0"
   dependencies:
-    "@edtr-io/internal__document-editor": ^2.3.2
-    "@types/react": ^17.0.40
+    "@edtr-io/internal__document-editor": ^2.5.0
+    "@types/react": ^17.0.43
   peerDependencies:
     react: ">= 17"
-  checksum: ff96b2762992686bec68ee69f4f4a10b3139f51e258ae6dacf0a5f9b2e6bb747278d717422b49d306d64d2248631cc738b768aaa462bdb42057f750ddd47f6d8
+  checksum: 16499d36f7bf7c075746a4e43ca7674d2428b69a7f4d4dc9779161e02e10fa10c7747ce0395b4d2e91d73a8aec6e9c1f8b7b7dcbe446ac977f7a202818520e5d
   languageName: node
   linkType: hard
 
@@ -1822,14 +1822,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@edtr-io/internal__plugin-toolbar@npm:^2.3.2":
-  version: 2.3.2
-  resolution: "@edtr-io/internal__plugin-toolbar@npm:2.3.2"
+"@edtr-io/internal__plugin-toolbar@npm:^2.5.0":
+  version: 2.5.0
+  resolution: "@edtr-io/internal__plugin-toolbar@npm:2.5.0"
   dependencies:
-    "@types/react": ^17.0.40
+    "@types/react": ^17.0.43
   peerDependencies:
     react: ">= 17"
-  checksum: aef7921e17013ae1976a08084506437c275d058f6e06a67af8aba63572156b3a964927787d39eb4cb5f1fce1d4060d2ead5ada4a4841443ae3272ce93c937a03
+  checksum: eeac7631da160bf4090636d67ddcf0c7101906b13f924ca67a652a3bfe5877a6e50982717a472454f96d589722257a24272f6e094821c16e9ffc308325a85715
   languageName: node
   linkType: hard
 
@@ -1854,15 +1854,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@edtr-io/internal__plugin@npm:^2.3.2":
-  version: 2.3.2
-  resolution: "@edtr-io/internal__plugin@npm:2.3.2"
+"@edtr-io/internal__plugin@npm:^2.5.0":
+  version: 2.5.0
+  resolution: "@edtr-io/internal__plugin@npm:2.5.0"
   dependencies:
-    "@edtr-io/internal__plugin-state": ^2.3.2
-    "@edtr-io/ui": ^2.3.2
-    "@types/ramda": ^0.28.1
-    "@types/react": ^17.0.40
-    "@types/react-dom": ^17.0.13
+    "@edtr-io/internal__plugin-state": ^2.5.0
+    "@edtr-io/ui": ^2.5.0
+    "@types/ramda": ^0.28.5
+    "@types/react": ^17.0.43
+    "@types/react-dom": ^17.0.14
     "@types/styled-components": ^5.1.24
     ramda: ^0.28.0
     shortid: ^2.2.16
@@ -1871,11 +1871,11 @@ __metadata:
     react-dom: ">= 17"
     react-is: ">= 17"
     styled-components: ">= 4"
-  checksum: e8508ca200a71cd4dfc9e559033557f86ac16af9df5b635bb0a1402affe11c4fe9ca607e61e68c8ceec3d24fd2ccb1d39d836e92c92cf984249ce32454f1f0f6
+  checksum: cba0480197b80fbb3dbc16cb9d3c522e794f08325c18346a9adee1f839769d8e5c6eeaa105ea3de258b85561a986f73da3a1e50bf8d8d27c5215f16523427c38
   languageName: node
   linkType: hard
 
-"@edtr-io/math@npm:^2.0.0, @edtr-io/math@npm:^2.3.0":
+"@edtr-io/math@npm:^2.3.0":
   version: 2.3.0
   resolution: "@edtr-io/math@npm:2.3.0"
   dependencies:
@@ -1908,20 +1908,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@edtr-io/math@npm:^2.3.2":
-  version: 2.3.2
-  resolution: "@edtr-io/math@npm:2.3.2"
+"@edtr-io/math@npm:^2.5.0":
+  version: 2.5.0
+  resolution: "@edtr-io/math@npm:2.5.0"
   dependencies:
-    "@edtr-io/editor-ui": ^2.3.2
-    "@edtr-io/ui": ^2.3.2
+    "@edtr-io/editor-ui": ^2.5.0
+    "@edtr-io/ui": ^2.5.0
     "@types/exenv": ^1.2.0
     "@types/katex": ^0.11.1
-    "@types/react": ^17.0.40
-    "@types/react-dom": ^17.0.13
+    "@types/react": ^17.0.43
+    "@types/react-dom": ^17.0.14
     "@types/react-modal": ^3.13.1
     "@types/styled-components": ^5.1.24
     exenv: ^1.2.2
-    katex: ^0.15.2
+    katex: ^0.15.3
     react-mathquill: ^1.0.2
     react-modal: ^3.14.4
   peerDependencies:
@@ -1937,20 +1937,20 @@ __metadata:
     react-is: ">= 17"
     redux: ">= 4"
     styled-components: ">= 4"
-  checksum: afa8662c401ea30ba80939a7e0e027e21fa458684c7c87c2dca4e0c6d17f4ae745a66d711ff52100e1b13c02bb4b3b7da5510644fca3b31c515302d639a57ab4
+  checksum: ba399b5c422fe09d13af75975af00c929ad1884cc354d7e35a4d10ba0dcf104017a67c3895a116ea535c145ffaa792e66f6f3206d08f2ee98a5ca6b1ea67200e
   languageName: node
   linkType: hard
 
-"@edtr-io/plugin-anchor@npm:^2.0.0":
-  version: 2.3.0
-  resolution: "@edtr-io/plugin-anchor@npm:2.3.0"
+"@edtr-io/plugin-anchor@npm:^2.5.0":
+  version: 2.5.0
+  resolution: "@edtr-io/plugin-anchor@npm:2.5.0"
   dependencies:
-    "@edtr-io/editor-ui": ^2.3.0
-    "@edtr-io/plugin": ^2.3.0
-    "@edtr-io/ui": ^2.3.0
-    "@types/react": ^17.0.27
-    "@types/react-dom": ^17.0.9
-    "@types/styled-components": ^5.1.15
+    "@edtr-io/editor-ui": ^2.5.0
+    "@edtr-io/plugin": ^2.5.0
+    "@edtr-io/ui": ^2.5.0
+    "@types/react": ^17.0.43
+    "@types/react-dom": ^17.0.14
+    "@types/styled-components": ^5.1.24
   peerDependencies:
     "@edtr-io/core": ">= 1"
     "@fortawesome/fontawesome-svg-core": ">= 1"
@@ -1963,18 +1963,18 @@ __metadata:
     react-is: ">= 17"
     redux: ">= 4"
     styled-components: ">= 4"
-  checksum: 0fc384d21f3e1957eb9b5a1a08243c5a70912d5ce1738c918b3518afafc08aa63960a8704c0c75810148dfdaf16ec676c7482a543ad74197a3fce80fdc579c78
+  checksum: c0562d1147bb6e08ad19398668c38cd8818e665d1a216b3871da7305f32e2b5f787436c01eb9a8e4a5cda10487449cdc787664464fc87ebe3e60a4a8dad57313
   languageName: node
   linkType: hard
 
-"@edtr-io/plugin-blockquote@npm:^2.0.0":
-  version: 2.3.1
-  resolution: "@edtr-io/plugin-blockquote@npm:2.3.1"
+"@edtr-io/plugin-blockquote@npm:^2.5.0":
+  version: 2.5.0
+  resolution: "@edtr-io/plugin-blockquote@npm:2.5.0"
   dependencies:
-    "@edtr-io/plugin": ^2.3.0
-    "@types/react": ^17.0.27
-    "@types/react-dom": ^17.0.9
-    "@types/styled-components": ^5.1.15
+    "@edtr-io/plugin": ^2.5.0
+    "@types/react": ^17.0.43
+    "@types/react-dom": ^17.0.14
+    "@types/styled-components": ^5.1.24
   peerDependencies:
     "@edtr-io/core": ">= 1"
     "@fortawesome/fontawesome-svg-core": ">= 1"
@@ -1987,21 +1987,21 @@ __metadata:
     react-is: ">= 17"
     redux: ">= 4"
     styled-components: ">= 4"
-  checksum: 27d6dac2875122c96435fe4ed30a4a76b348c5fa7b4d32d21b73e632156d137351c04868ce0471a5d0ebefa388503baeafd952e495bb896439e24daae1996eed
+  checksum: bd79efd59e7a720e57f9b8d6137cdb0088a11b9f7fb4f70f4771e717d8f68de08c59115324ce9082b4d47f320032fcdf06927278ced23d20934950aab97f7402
   languageName: node
   linkType: hard
 
-"@edtr-io/plugin-geogebra@npm:^2.0.0":
-  version: 2.3.0
-  resolution: "@edtr-io/plugin-geogebra@npm:2.3.0"
+"@edtr-io/plugin-geogebra@npm:^2.5.0":
+  version: 2.5.0
+  resolution: "@edtr-io/plugin-geogebra@npm:2.5.0"
   dependencies:
-    "@edtr-io/editor-ui": ^2.3.0
-    "@edtr-io/plugin": ^2.3.0
-    "@edtr-io/ui": ^2.3.0
-    "@types/lodash": ^4.14.175
-    "@types/react": ^17.0.27
-    "@types/react-dom": ^17.0.9
-    "@types/styled-components": ^5.1.15
+    "@edtr-io/editor-ui": ^2.5.0
+    "@edtr-io/plugin": ^2.5.0
+    "@edtr-io/ui": ^2.5.0
+    "@types/lodash": ^4.14.181
+    "@types/react": ^17.0.43
+    "@types/react-dom": ^17.0.14
+    "@types/styled-components": ^5.1.24
     isomorphic-unfetch: ^3.1.0
     lodash: ^4.17.21
     lodash-es: ^4.17.21
@@ -2017,24 +2017,24 @@ __metadata:
     react-is: ">= 17"
     redux: ">= 4"
     styled-components: ">= 4"
-  checksum: cb619b5016a22d116965f250e27f4f7c4271bd8484d3848611a66be9c175ddd7337db7212ca6e910ecfb57446e82c1a18ded0c27926d083095281d922fe631a3
+  checksum: c550331ecd68970b7815bf7aba62291495335235dd1e0746f2f41da7c8763b56ca1b9a65401207d39f32dc079dc3784c07aa6fbcfef991ab86e55db2c76dc5b6
   languageName: node
   linkType: hard
 
-"@edtr-io/plugin-highlight@npm:^2.0.0":
-  version: 2.3.0
-  resolution: "@edtr-io/plugin-highlight@npm:2.3.0"
+"@edtr-io/plugin-highlight@npm:^2.5.0":
+  version: 2.5.0
+  resolution: "@edtr-io/plugin-highlight@npm:2.5.0"
   dependencies:
-    "@edtr-io/editor-ui": ^2.3.0
-    "@edtr-io/plugin": ^2.3.0
-    "@edtr-io/ui": ^2.3.0
-    "@types/ramda": ^0.27.45
-    "@types/react": ^17.0.27
-    "@types/react-dom": ^17.0.9
+    "@edtr-io/editor-ui": ^2.5.0
+    "@edtr-io/plugin": ^2.5.0
+    "@edtr-io/ui": ^2.5.0
+    "@types/ramda": ^0.28.5
+    "@types/react": ^17.0.43
+    "@types/react-dom": ^17.0.14
     "@types/react-syntax-highlighter": ^13.5.2
-    "@types/styled-components": ^5.1.15
-    ramda: ^0.27.1
-    react-syntax-highlighter: ^15.4.4
+    "@types/styled-components": ^5.1.24
+    ramda: ^0.28.0
+    react-syntax-highlighter: ^15.5.0
   peerDependencies:
     "@edtr-io/core": ">= 1"
     "@fortawesome/fontawesome-svg-core": ">= 1"
@@ -2047,22 +2047,22 @@ __metadata:
     react-is: ">= 17"
     redux: ">= 4"
     styled-components: ">= 4"
-  checksum: 78a247dc2e12134c239f4bf2a9dc6f415567ae435ee93de2232e6dead9dbfb838ddd97036dc6f90810661260c4f8e510c5e00a4d376bb461baf0485c9befd1ba
+  checksum: 99167246dcb36d716792105ecc669fc524be64217252ad93724854c4e0031303c785aa3a2c7ed2dbe2821fed3f59f08a0fe6d317d739826cce4a0760a1a54868
   languageName: node
   linkType: hard
 
-"@edtr-io/plugin-image@npm:^2.0.0":
-  version: 2.3.0
-  resolution: "@edtr-io/plugin-image@npm:2.3.0"
+"@edtr-io/plugin-image@npm:^2.5.0":
+  version: 2.5.0
+  resolution: "@edtr-io/plugin-image@npm:2.5.0"
   dependencies:
-    "@edtr-io/editor-ui": ^2.3.0
-    "@edtr-io/plugin": ^2.3.0
-    "@edtr-io/ui": ^2.3.0
-    "@types/ramda": ^0.27.45
-    "@types/react": ^17.0.27
-    "@types/react-dom": ^17.0.9
-    "@types/styled-components": ^5.1.15
-    ramda: ^0.27.1
+    "@edtr-io/editor-ui": ^2.5.0
+    "@edtr-io/plugin": ^2.5.0
+    "@edtr-io/ui": ^2.5.0
+    "@types/ramda": ^0.28.5
+    "@types/react": ^17.0.43
+    "@types/react-dom": ^17.0.14
+    "@types/styled-components": ^5.1.24
+    ramda: ^0.28.0
   peerDependencies:
     "@edtr-io/core": ">= 1"
     "@fortawesome/fontawesome-svg-core": ">= 1"
@@ -2075,27 +2075,27 @@ __metadata:
     react-is: ">= 17"
     redux: ">= 4"
     styled-components: ">= 4"
-  checksum: 9e82074cca6bb25c5ee2fa0f5e1d3f1c56467fcc889c05291f9a98b9e2d1e7c631ecaae81af820cba305b9062e9a3e875e65eb15f1ab518da7184d2012044b4d
+  checksum: 4abe75bd17cd518db93e57a9473e1b8a1a5782fcfae17eef095f6d040a8c133295dc3b6b5df839a9de9634dbddafe0f9757fc2478961f2cbceb6710f84773cbc
   languageName: node
   linkType: hard
 
-"@edtr-io/plugin-input-exercise@npm:^2.0.0":
-  version: 2.3.1
-  resolution: "@edtr-io/plugin-input-exercise@npm:2.3.1"
+"@edtr-io/plugin-input-exercise@npm:^2.5.0":
+  version: 2.5.0
+  resolution: "@edtr-io/plugin-input-exercise@npm:2.5.0"
   dependencies:
-    "@edtr-io/editor-ui": ^2.3.0
-    "@edtr-io/internal__dev-expression": ^2.0.2
-    "@edtr-io/plugin": ^2.3.0
-    "@edtr-io/renderer-ui": ^2.3.0
-    "@edtr-io/store": ^2.3.0
-    "@edtr-io/ui": ^2.3.0
-    "@types/algebra.js": ^0.2.1
-    "@types/ramda": ^0.27.45
-    "@types/react": ^17.0.27
-    "@types/react-dom": ^17.0.9
-    "@types/styled-components": ^5.1.15
+    "@edtr-io/editor-ui": ^2.5.0
+    "@edtr-io/internal__dev-expression": ^2.3.2
+    "@edtr-io/plugin": ^2.5.0
+    "@edtr-io/renderer-ui": ^2.5.0
+    "@edtr-io/store": ^2.5.0
+    "@edtr-io/ui": ^2.5.0
+    "@types/algebra.js": ^0.2.2
+    "@types/ramda": ^0.28.5
+    "@types/react": ^17.0.43
+    "@types/react-dom": ^17.0.14
+    "@types/styled-components": ^5.1.24
     algebra.js: ^0.2.6
-    ramda: ^0.27.1
+    ramda: ^0.28.0
   peerDependencies:
     "@edtr-io/core": ">= 1"
     "@fortawesome/fontawesome-svg-core": ">= 1"
@@ -2108,24 +2108,24 @@ __metadata:
     react-is: ">= 17"
     redux: ">= 4"
     styled-components: ">= 4"
-  checksum: 74ccd816b15ab99c1f6ff620d957cfd44423e338609816abdef92e5d592a609d4bd4d1891a65a7a5824bb00c121e3fa1669c9b468c35571f7e9c029e6f861761
+  checksum: 183a83dda385b5a7f216011886b66fff0d24f6fec065579b84637a4eea86ff2276691b87b3171f3cef731d5bd0e09b88e425585d4b478deb547a2289d82347f6
   languageName: node
   linkType: hard
 
-"@edtr-io/plugin-multimedia-explanation@npm:^2.0.0":
-  version: 2.3.1
-  resolution: "@edtr-io/plugin-multimedia-explanation@npm:2.3.1"
+"@edtr-io/plugin-multimedia-explanation@npm:^2.5.0":
+  version: 2.5.0
+  resolution: "@edtr-io/plugin-multimedia-explanation@npm:2.5.0"
   dependencies:
-    "@edtr-io/editor-ui": ^2.3.0
-    "@edtr-io/plugin": ^2.3.0
-    "@edtr-io/store": ^2.3.0
-    "@edtr-io/ui": ^2.3.0
-    "@types/ramda": ^0.27.45
-    "@types/react": ^17.0.27
-    "@types/react-dom": ^17.0.9
+    "@edtr-io/editor-ui": ^2.5.0
+    "@edtr-io/plugin": ^2.5.0
+    "@edtr-io/store": ^2.5.0
+    "@edtr-io/ui": ^2.5.0
+    "@types/ramda": ^0.28.5
+    "@types/react": ^17.0.43
+    "@types/react-dom": ^17.0.14
     "@types/react-resizable": ^1.7.4
-    "@types/styled-components": ^5.1.15
-    ramda: ^0.27.1
+    "@types/styled-components": ^5.1.24
+    ramda: ^0.28.0
     react-resizable: ^1.11.1
   peerDependencies:
     "@edtr-io/core": ">= 1"
@@ -2139,23 +2139,23 @@ __metadata:
     react-is: ">= 17"
     redux: ">= 4"
     styled-components: ">= 4"
-  checksum: 1d5e8deaf82025dba45a116786e70d37c84fe323ffb0559c4e4832edf11952abe697d60d02165a2162fe7799876c5eabcb14804db1190008b182a1ce42839031
+  checksum: 841102648284b1a5e34d8bbbf318cd96282c84466f92408ac47bb80bb2c692dcc8bd34e0e498441dd5d4eaa7bdf044aaa6d3158f9b3951c6972c18123c0ed15e
   languageName: node
   linkType: hard
 
-"@edtr-io/plugin-rows@npm:^2.0.0":
-  version: 2.3.1
-  resolution: "@edtr-io/plugin-rows@npm:2.3.1"
+"@edtr-io/plugin-rows@npm:^2.5.0":
+  version: 2.5.0
+  resolution: "@edtr-io/plugin-rows@npm:2.5.0"
   dependencies:
-    "@edtr-io/editor-ui": ^2.3.0
-    "@edtr-io/plugin": ^2.3.0
-    "@edtr-io/store": ^2.3.0
-    "@edtr-io/ui": ^2.3.0
-    "@types/ramda": ^0.27.45
-    "@types/react": ^17.0.27
-    "@types/react-dom": ^17.0.9
-    "@types/styled-components": ^5.1.15
-    ramda: ^0.27.1
+    "@edtr-io/editor-ui": ^2.5.0
+    "@edtr-io/plugin": ^2.5.0
+    "@edtr-io/store": ^2.5.0
+    "@edtr-io/ui": ^2.5.0
+    "@types/ramda": ^0.28.5
+    "@types/react": ^17.0.43
+    "@types/react-dom": ^17.0.14
+    "@types/styled-components": ^5.1.24
+    ramda: ^0.28.0
   peerDependencies:
     "@edtr-io/core": ">= 1"
     "@fortawesome/fontawesome-svg-core": ">= 1"
@@ -2168,24 +2168,24 @@ __metadata:
     react-is: ">= 17"
     redux: ">= 4"
     styled-components: ">= 4"
-  checksum: 7eb9d539dccdbf7d42bd27a304598e6fb681df357d212ea92138eb3ac63fb9cfe057b0a798d6be00485fca0f74b78c4669fec839fdf40ee27fa6f1aed125f34a
+  checksum: 978cdf44ef37b4e32b9a43788c8e96a13d7562cef9062d20128888534dc9369fcc0cd5b04f9cf9cda5cbc087c118991ac3ef652ed1e843a1db4bc23e0cdeda7f
   languageName: node
   linkType: hard
 
-"@edtr-io/plugin-sc-mc-exercise@npm:^2.0.0":
-  version: 2.3.1
-  resolution: "@edtr-io/plugin-sc-mc-exercise@npm:2.3.1"
+"@edtr-io/plugin-sc-mc-exercise@npm:^2.5.0":
+  version: 2.5.0
+  resolution: "@edtr-io/plugin-sc-mc-exercise@npm:2.5.0"
   dependencies:
-    "@edtr-io/editor-ui": ^2.3.0
-    "@edtr-io/plugin": ^2.3.0
-    "@edtr-io/renderer-ui": ^2.3.0
-    "@edtr-io/store": ^2.3.0
-    "@edtr-io/ui": ^2.3.0
-    "@types/ramda": ^0.27.45
-    "@types/react": ^17.0.27
-    "@types/react-dom": ^17.0.9
-    "@types/styled-components": ^5.1.15
-    ramda: ^0.27.1
+    "@edtr-io/editor-ui": ^2.5.0
+    "@edtr-io/plugin": ^2.5.0
+    "@edtr-io/renderer-ui": ^2.5.0
+    "@edtr-io/store": ^2.5.0
+    "@edtr-io/ui": ^2.5.0
+    "@types/ramda": ^0.28.5
+    "@types/react": ^17.0.43
+    "@types/react-dom": ^17.0.14
+    "@types/styled-components": ^5.1.24
+    ramda: ^0.28.0
   peerDependencies:
     "@edtr-io/core": ">= 1"
     "@fortawesome/fontawesome-svg-core": ">= 1"
@@ -2198,20 +2198,20 @@ __metadata:
     react-is: ">= 17"
     redux: ">= 4"
     styled-components: ">= 4"
-  checksum: 7b32c57b7ea42a43ca1f5e6c450cfec2e4fc1964a631b4b30caeb6fdf22d46aa1967b94faa8e0f8e8a6ab0a6f6f429947a7540be179f36d5e7b36c4a2ccf9f2f
+  checksum: fed8ade90a2704c5aeaad832b3f5a0f669b86c3f182f908bb57a98ab8c19f64ceb0e83f115a109ba3ae2115b6b7181887fb7349e2594336a904e3f1c451e9b4e
   languageName: node
   linkType: hard
 
-"@edtr-io/plugin-serlo-injection@npm:^2.0.0":
-  version: 2.3.0
-  resolution: "@edtr-io/plugin-serlo-injection@npm:2.3.0"
+"@edtr-io/plugin-serlo-injection@npm:^2.5.0":
+  version: 2.5.0
+  resolution: "@edtr-io/plugin-serlo-injection@npm:2.5.0"
   dependencies:
-    "@edtr-io/editor-ui": ^2.3.0
-    "@edtr-io/plugin": ^2.3.0
-    "@edtr-io/ui": ^2.3.0
-    "@types/react": ^17.0.27
-    "@types/react-dom": ^17.0.9
-    "@types/styled-components": ^5.1.15
+    "@edtr-io/editor-ui": ^2.5.0
+    "@edtr-io/plugin": ^2.5.0
+    "@edtr-io/ui": ^2.5.0
+    "@types/react": ^17.0.43
+    "@types/react-dom": ^17.0.14
+    "@types/styled-components": ^5.1.24
     iframe-resizer-react: ^1.1.0
   peerDependencies:
     "@edtr-io/core": ">= 1"
@@ -2226,23 +2226,23 @@ __metadata:
     react-is: ">= 17"
     redux: ">= 4"
     styled-components: ">= 4"
-  checksum: 4a5b6af94c5d305d09fd9cc25542e06bfd65f6684d3c9119af0a94006999ce2da5f111fb4d8220254660ef49f1f0740de3da9a3c24f2b31036d329f494a255f5
+  checksum: 5871adbb720b1b7ab9dfb2987eaf67a5ce5c185c5ea627d79fc1d9fe2dd9626f5bb82c2f3ed679cc94d4863a7becf5470e1a7ab7c169ebac00ab8a4f622ea6b8
   languageName: node
   linkType: hard
 
-"@edtr-io/plugin-spoiler@npm:^2.0.0":
-  version: 2.3.1
-  resolution: "@edtr-io/plugin-spoiler@npm:2.3.1"
+"@edtr-io/plugin-spoiler@npm:^2.5.0":
+  version: 2.5.0
+  resolution: "@edtr-io/plugin-spoiler@npm:2.5.0"
   dependencies:
-    "@edtr-io/editor-ui": ^2.3.0
-    "@edtr-io/plugin": ^2.3.0
-    "@edtr-io/renderer-ui": ^2.3.0
-    "@edtr-io/ui": ^2.3.0
-    "@types/ramda": ^0.27.45
-    "@types/react": ^17.0.27
-    "@types/react-dom": ^17.0.9
-    "@types/styled-components": ^5.1.15
-    ramda: ^0.27.1
+    "@edtr-io/editor-ui": ^2.5.0
+    "@edtr-io/plugin": ^2.5.0
+    "@edtr-io/renderer-ui": ^2.5.0
+    "@edtr-io/ui": ^2.5.0
+    "@types/ramda": ^0.28.5
+    "@types/react": ^17.0.43
+    "@types/react-dom": ^17.0.14
+    "@types/styled-components": ^5.1.24
+    ramda: ^0.28.0
   peerDependencies:
     "@edtr-io/core": ">= 1"
     "@fortawesome/fontawesome-svg-core": ">= 1"
@@ -2255,20 +2255,20 @@ __metadata:
     react-is: ">= 17"
     redux: ">= 4"
     styled-components: ">= 4"
-  checksum: 6546eee631218d2c9ff76920cea0006fa8b5f2fdbfbe054e5dd2204ece47fcfbbe4a9f2105991e5283bb27344d769967ad397ecdaeccfbf5e0d602f093c08004
+  checksum: c2487d78a7a14494788fd7182f995708edcfc33553c9833293f8bf0260d5b5bd79629bdb258ea5687a3de556ec3138ed534eb018c1649ec78aedfd10750dfe40
   languageName: node
   linkType: hard
 
-"@edtr-io/plugin-table@npm:^2.0.0":
-  version: 2.3.0
-  resolution: "@edtr-io/plugin-table@npm:2.3.0"
+"@edtr-io/plugin-table@npm:^2.5.0":
+  version: 2.5.0
+  resolution: "@edtr-io/plugin-table@npm:2.5.0"
   dependencies:
-    "@edtr-io/editor-ui": ^2.3.0
-    "@edtr-io/plugin": ^2.3.0
-    "@edtr-io/ui": ^2.3.0
-    "@types/react": ^17.0.27
-    "@types/react-dom": ^17.0.9
-    "@types/styled-components": ^5.1.15
+    "@edtr-io/editor-ui": ^2.5.0
+    "@edtr-io/plugin": ^2.5.0
+    "@edtr-io/ui": ^2.5.0
+    "@types/react": ^17.0.43
+    "@types/react-dom": ^17.0.14
+    "@types/styled-components": ^5.1.24
     react-markdown: ^6.0.3
     remark-gfm: ^1.0.0
   peerDependencies:
@@ -2283,7 +2283,7 @@ __metadata:
     react-is: ">= 17"
     redux: ">= 4"
     styled-components: ">= 4"
-  checksum: 4c174178b25c82bd52d6e57368a77b63492781069935a3188c944f61a21c6cbc6df42d3f64bb7222f3b16a32c84814c6e5f8a50bd8bd9d0d991675bc8876fdfb
+  checksum: c39c5790c965f50f0a244d59b0137656ee94e4709c9b9a29da0454b72b1d40a3ff178a2f267839c9c3d4933f148501435359bd4bc8e6dbf7fe577c75e0ddeb08
   languageName: node
   linkType: hard
 
@@ -2324,20 +2324,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@edtr-io/plugin-text@npm:^2.4.0":
-  version: 2.4.0
-  resolution: "@edtr-io/plugin-text@npm:2.4.0"
+"@edtr-io/plugin-text@npm:^2.5.0":
+  version: 2.5.0
+  resolution: "@edtr-io/plugin-text@npm:2.5.0"
   dependencies:
     "@convertkit/slate-lists": ^0.2.11
-    "@edtr-io/editor-ui": ^2.3.2
-    "@edtr-io/math": ^2.3.2
-    "@edtr-io/plugin": ^2.3.2
-    "@edtr-io/store": ^2.3.2
-    "@edtr-io/ui": ^2.3.2
+    "@edtr-io/editor-ui": ^2.5.0
+    "@edtr-io/math": ^2.5.0
+    "@edtr-io/plugin": ^2.5.0
+    "@edtr-io/plugin-rows": ^2.5.0
+    "@edtr-io/store": ^2.5.0
+    "@edtr-io/ui": ^2.5.0
     "@types/is-hotkey": ^0.1.7
-    "@types/ramda": ^0.28.1
-    "@types/react": ^17.0.40
-    "@types/react-dom": ^17.0.13
+    "@types/ramda": ^0.28.5
+    "@types/react": ^17.0.43
+    "@types/react-dom": ^17.0.14
     "@types/styled-components": ^5.1.24
     is-hotkey: ^0.2.0
     ramda: ^0.28.0
@@ -2357,7 +2358,7 @@ __metadata:
     react-is: ">= 17"
     redux: ">= 4"
     styled-components: ">= 4"
-  checksum: 63dafcc740c563ba4a04764cc88bb36df923f6ec9dee6b61e200e61635d8a854b7a4cfd927c1fcdb1184c1b20130c5cf4ad6c27a4c6cc77ebd25a29282b99291
+  checksum: 4428b9419f4781348c9f08293e6dc2cb4798e38355aade1551504795ec6aadfb9f8771941f1853df366db723402b1669454e1422eb03d413a132860b586cec54
   languageName: node
   linkType: hard
 
@@ -2373,30 +2374,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@edtr-io/plugin-toolbar@npm:^2.3.2":
-  version: 2.3.2
-  resolution: "@edtr-io/plugin-toolbar@npm:2.3.2"
+"@edtr-io/plugin-toolbar@npm:^2.5.0":
+  version: 2.5.0
+  resolution: "@edtr-io/plugin-toolbar@npm:2.5.0"
   dependencies:
-    "@edtr-io/internal__plugin-toolbar": ^2.3.2
-    "@types/react": ^17.0.40
+    "@edtr-io/internal__plugin-toolbar": ^2.5.0
+    "@types/react": ^17.0.43
   peerDependencies:
     react: ">= 17"
-  checksum: dcfac90fdeab2825f1d7b8d421bd95f4ef2f2f4f858a7131dea3cde77438398faf03abcdf114abb756a4eebc392067b335a259db76ce6e5c37dd992686ebef47
+  checksum: ccee719db6935df00f0658e102678ef4aaedd331de166cf06d77bc2b09811937f92a39b3a67086485811179211d77c6a695f6e9936eff4c1a7f216ee23e52ec6
   languageName: node
   linkType: hard
 
-"@edtr-io/plugin-video@npm:^2.0.0":
-  version: 2.3.0
-  resolution: "@edtr-io/plugin-video@npm:2.3.0"
+"@edtr-io/plugin-video@npm:^2.5.0":
+  version: 2.5.0
+  resolution: "@edtr-io/plugin-video@npm:2.5.0"
   dependencies:
-    "@edtr-io/editor-ui": ^2.3.0
-    "@edtr-io/plugin": ^2.3.0
-    "@edtr-io/ui": ^2.3.0
-    "@types/ramda": ^0.27.45
-    "@types/react": ^17.0.27
-    "@types/react-dom": ^17.0.9
-    "@types/styled-components": ^5.1.15
-    ramda: ^0.27.1
+    "@edtr-io/editor-ui": ^2.5.0
+    "@edtr-io/plugin": ^2.5.0
+    "@edtr-io/ui": ^2.5.0
+    "@types/ramda": ^0.28.5
+    "@types/react": ^17.0.43
+    "@types/react-dom": ^17.0.14
+    "@types/styled-components": ^5.1.24
+    ramda: ^0.28.0
   peerDependencies:
     "@edtr-io/core": ">= 1"
     "@fortawesome/fontawesome-svg-core": ">= 1"
@@ -2409,11 +2410,11 @@ __metadata:
     react-is: ">= 17"
     redux: ">= 4"
     styled-components: ">= 4"
-  checksum: e7d0262158acf78ea23cade7310acccd75fa18cdf8da64397f8418b8bb037f2c2e85c5d4a19362eec858651164c2acc60f6e1e8b60048b754099fefb329655aa
+  checksum: d7bfe38b5e06e38df6eb298ca01a5de4ab8ff959735c0f5db0b80e9de5c834c4b60d67ca94cf1122b93bb24d18afe95d6fbece64e677c6b489100f6bff29bd79
   languageName: node
   linkType: hard
 
-"@edtr-io/plugin@npm:^2.0.0, @edtr-io/plugin@npm:^2.3.0":
+"@edtr-io/plugin@npm:^2.3.0":
   version: 2.3.0
   resolution: "@edtr-io/plugin@npm:2.3.0"
   dependencies:
@@ -2439,15 +2440,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@edtr-io/plugin@npm:^2.3.2":
-  version: 2.3.2
-  resolution: "@edtr-io/plugin@npm:2.3.2"
+"@edtr-io/plugin@npm:^2.5.0":
+  version: 2.5.0
+  resolution: "@edtr-io/plugin@npm:2.5.0"
   dependencies:
-    "@edtr-io/internal__plugin": ^2.3.2
-    "@edtr-io/internal__plugin-state": ^2.3.2
-    "@types/ramda": ^0.28.1
-    "@types/react": ^17.0.40
-    "@types/react-dom": ^17.0.13
+    "@edtr-io/internal__plugin": ^2.5.0
+    "@edtr-io/internal__plugin-state": ^2.5.0
+    "@types/ramda": ^0.28.5
+    "@types/react": ^17.0.43
+    "@types/react-dom": ^17.0.14
     "@types/shortid": ^0.0.29
     "@types/styled-components": ^5.1.24
     ramda: ^0.28.0
@@ -2461,18 +2462,18 @@ __metadata:
     react-is: ">= 17"
     redux: ">= 4"
     styled-components: ">= 4"
-  checksum: ef261d68b51935f8c012f92bf6fe7bb65667d6d35793c9d96953178f62901e22b9cb04f9907d6a6a34b785b45ca03d7862ba14832f3028bb7910e25c16d4bafd
+  checksum: 5d2b9dea3694b9d1451827718e0afbabf2e4c59d4d7747d1b94ddfdc57a04093871263eda664853a3432c0c0a74e06eb801b74fda156c04265bb2a69aa603d57
   languageName: node
   linkType: hard
 
-"@edtr-io/renderer-ui@npm:^2.0.0, @edtr-io/renderer-ui@npm:^2.3.0":
-  version: 2.3.0
-  resolution: "@edtr-io/renderer-ui@npm:2.3.0"
+"@edtr-io/renderer-ui@npm:^2.5.0":
+  version: 2.5.0
+  resolution: "@edtr-io/renderer-ui@npm:2.5.0"
   dependencies:
-    "@edtr-io/ui": ^2.3.0
-    "@types/react": ^17.0.27
-    "@types/react-dom": ^17.0.9
-    "@types/styled-components": ^5.1.15
+    "@edtr-io/ui": ^2.5.0
+    "@types/react": ^17.0.43
+    "@types/react-dom": ^17.0.14
+    "@types/styled-components": ^5.1.24
   peerDependencies:
     "@edtr-io/core": ">= 1"
     "@fortawesome/fontawesome-svg-core": ">= 1"
@@ -2485,21 +2486,21 @@ __metadata:
     react-is: ">= 17"
     redux: ">= 4"
     styled-components: ">= 4"
-  checksum: 44baa0a4fa1e045716348cdd70fd1ff4093e85ad3624bba53fec9c75fd3b43f67e2e05fad33ae8e62b6cfa32b75de48204577c2f1e1541942b50ae39dd5feaa5
+  checksum: 035a7dd9474b25cf05bacb8a8326471e2ab24682877f710461f0f1af56247415f6a8b97dc93e7cfc6c3c832e167f434622b8b8b22f591206e406ebec51d081d8
   languageName: node
   linkType: hard
 
-"@edtr-io/renderer@npm:^2.0.0":
-  version: 2.3.0
-  resolution: "@edtr-io/renderer@npm:2.3.0"
+"@edtr-io/renderer@npm:^2.5.0":
+  version: 2.5.0
+  resolution: "@edtr-io/renderer@npm:2.5.0"
   dependencies:
-    "@edtr-io/internal__dev-expression": ^2.0.2
-    "@edtr-io/plugin": ^2.3.0
-    "@edtr-io/store": ^2.3.0
-    "@edtr-io/ui": ^2.3.0
-    "@types/react": ^17.0.27
-    "@types/react-dom": ^17.0.9
-    "@types/styled-components": ^5.1.15
+    "@edtr-io/internal__dev-expression": ^2.3.2
+    "@edtr-io/plugin": ^2.5.0
+    "@edtr-io/store": ^2.5.0
+    "@edtr-io/ui": ^2.5.0
+    "@types/react": ^17.0.43
+    "@types/react-dom": ^17.0.14
+    "@types/styled-components": ^5.1.24
   peerDependencies:
     "@edtr-io/core": ">= 1"
     react: ">= 17"
@@ -2509,11 +2510,11 @@ __metadata:
     react-is: ">= 17"
     redux: ">= 4"
     styled-components: ">= 4"
-  checksum: 2f51703af5dfc11870b76a60f3a5464d84e46f7994cd2c6841db61e6a47492b8bc59ea59e162d90ef5c1baa85f4595e642495410bc03f550f2f4705fcccbeb28
+  checksum: 3a75197dc796fc5d4bb363f87bd5f3fabcc860146c830b9d6ed3cc46659af5354d52f625bf829340d81c1ef4fe3b83a6a43ea7597f878f84c3435d662e1f923e
   languageName: node
   linkType: hard
 
-"@edtr-io/store@npm:^2.0.0, @edtr-io/store@npm:^2.3.0":
+"@edtr-io/store@npm:^2.3.0":
   version: 2.3.0
   resolution: "@edtr-io/store@npm:2.3.0"
   dependencies:
@@ -2539,16 +2540,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@edtr-io/store@npm:^2.3.2":
-  version: 2.3.2
-  resolution: "@edtr-io/store@npm:2.3.2"
+"@edtr-io/store@npm:^2.5.0":
+  version: 2.5.0
+  resolution: "@edtr-io/store@npm:2.5.0"
   dependencies:
     "@edtr-io/internal__dev-expression": ^2.3.2
-    "@edtr-io/internal__plugin": ^2.3.2
-    "@edtr-io/internal__plugin-state": ^2.3.2
-    "@types/ramda": ^0.28.1
-    "@types/react": ^17.0.40
-    "@types/react-dom": ^17.0.13
+    "@edtr-io/internal__plugin": ^2.5.0
+    "@edtr-io/internal__plugin-state": ^2.5.0
+    "@types/ramda": ^0.28.5
+    "@types/react": ^17.0.43
+    "@types/react-dom": ^17.0.14
     "@types/shortid": ^0.0.29
     "@types/styled-components": ^5.1.24
     ramda: ^0.28.0
@@ -2561,11 +2562,11 @@ __metadata:
     react-dom: ">= 17"
     react-is: ">= 17"
     styled-components: ">= 4"
-  checksum: b8b121c3ea0b91ed4ba7ba42590e0bb94c0eb517f82968f784931fc182ed53e50ac13ad4241235fe284ce75ebd56314417179346673994e947da817d31178ad7
+  checksum: 675d6274f4f1bec82707a3dbb183ee4b78e13340fc80ad43eaeebf82827d0e59d0c7eb1df7851b354280ef22b1440a17a36e5450b66d8ccb2405d37b85a7a988
   languageName: node
   linkType: hard
 
-"@edtr-io/ui@npm:^2.0.0, @edtr-io/ui@npm:^2.3.0":
+"@edtr-io/ui@npm:^2.3.0":
   version: 2.3.0
   resolution: "@edtr-io/ui@npm:2.3.0"
   dependencies:
@@ -2586,16 +2587,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@edtr-io/ui@npm:^2.3.2":
-  version: 2.3.2
-  resolution: "@edtr-io/ui@npm:2.3.2"
+"@edtr-io/ui@npm:^2.5.0":
+  version: 2.5.0
+  resolution: "@edtr-io/ui@npm:2.5.0"
   dependencies:
-    "@fortawesome/fontawesome-svg-core": ^1.3.0
-    "@fortawesome/free-solid-svg-icons": ^6.0.0
-    "@fortawesome/react-fontawesome": ^0.1.17
-    "@types/ramda": ^0.28.1
-    "@types/react": ^17.0.40
-    "@types/react-dom": ^17.0.13
+    "@fortawesome/fontawesome-svg-core": ^6.1.1
+    "@fortawesome/free-solid-svg-icons": ^6.1.1
+    "@fortawesome/react-fontawesome": ^0.1.18
+    "@types/ramda": ^0.28.5
+    "@types/react": ^17.0.43
+    "@types/react-dom": ^17.0.14
     "@types/styled-components": ^5.1.24
     ramda: ^0.28.0
   peerDependencies:
@@ -2603,7 +2604,7 @@ __metadata:
     react-dom: ">= 17"
     react-is: ">= 17"
     styled-components: ">= 4"
-  checksum: 8cb3ed99d04c97d3fd75e673066d55fadd5548fc63fc6b40c5e7108a8e7fed06bacfce0ca395da1aa4768d096d700783a320bff86a27b3ebd997123361f169f4
+  checksum: 0f5ae84311ebcc203d3e87e625a798ffa0196790fcb533646dc2fbc6b2cf25d804b831f117a28fbf07efa53466e4382d731fa754fcca97c4e950d2cab6c4feda
   languageName: node
   linkType: hard
 
@@ -2735,13 +2736,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fortawesome/fontawesome-common-types@npm:^0.3.0":
-  version: 0.3.0
-  resolution: "@fortawesome/fontawesome-common-types@npm:0.3.0"
-  checksum: f08280e2e6c7df5cf2c80c88092828b367bb824ec21a6ba0e5d290ebf86038de166622152c8845a0aeaeff70bd54df7af17f1ef26dea7b832fdebdcc37412c37
-  languageName: node
-  linkType: hard
-
 "@fortawesome/fontawesome-svg-core@npm:^1.0.0, @fortawesome/fontawesome-svg-core@npm:^1.2.36":
   version: 1.2.36
   resolution: "@fortawesome/fontawesome-svg-core@npm:1.2.36"
@@ -2751,12 +2745,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fortawesome/fontawesome-svg-core@npm:^1.3.0":
-  version: 1.3.0
-  resolution: "@fortawesome/fontawesome-svg-core@npm:1.3.0"
+"@fortawesome/fontawesome-svg-core@npm:^6.1.1":
+  version: 6.1.1
+  resolution: "@fortawesome/fontawesome-svg-core@npm:6.1.1"
   dependencies:
-    "@fortawesome/fontawesome-common-types": ^0.3.0
-  checksum: 78be521be3aac56cf81695c5f3fefda8a0e0dcbd37cd734f09b74a3657dd9c073cb86c5adf60a4904e584936fe9a63ee913d932c03105092bd8c44bb92f3aad6
+    "@fortawesome/fontawesome-common-types": 6.1.1
+  checksum: bf3b09a1ec3c5d6be30ea04c83dffb921c5a457c547fb1b99b814591489efabf939f669878cc5b48deb9771ef705209a1bb1b3088e66f6873cc9b34cbf4c781c
   languageName: node
   linkType: hard
 
@@ -2787,7 +2781,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fortawesome/free-solid-svg-icons@npm:^6.0.0":
+"@fortawesome/free-solid-svg-icons@npm:^6.1.1":
   version: 6.1.1
   resolution: "@fortawesome/free-solid-svg-icons@npm:6.1.1"
   dependencies:
@@ -2808,7 +2802,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fortawesome/react-fontawesome@npm:^0.1.17":
+"@fortawesome/react-fontawesome@npm:^0.1.18":
   version: 0.1.18
   resolution: "@fortawesome/react-fontawesome@npm:0.1.18"
   dependencies:
@@ -3652,29 +3646,29 @@ __metadata:
   dependencies:
     "@babel/core": ^7.0.0
     "@convertkit/slate-lists": ^0.2.11
-    "@edtr-io/core": ^2.3.2
-    "@edtr-io/default-document-editor": ^2.0.0
-    "@edtr-io/editor-ui": ^2.0.0
-    "@edtr-io/math": ^2.0.0
-    "@edtr-io/plugin": ^2.0.0
-    "@edtr-io/plugin-anchor": ^2.0.0
-    "@edtr-io/plugin-blockquote": ^2.0.0
-    "@edtr-io/plugin-geogebra": ^2.0.0
-    "@edtr-io/plugin-highlight": ^2.0.0
-    "@edtr-io/plugin-image": ^2.0.0
-    "@edtr-io/plugin-input-exercise": ^2.0.0
-    "@edtr-io/plugin-multimedia-explanation": ^2.0.0
-    "@edtr-io/plugin-rows": ^2.0.0
-    "@edtr-io/plugin-sc-mc-exercise": ^2.0.0
-    "@edtr-io/plugin-serlo-injection": ^2.0.0
-    "@edtr-io/plugin-spoiler": ^2.0.0
-    "@edtr-io/plugin-table": ^2.0.0
-    "@edtr-io/plugin-text": ^2.4.0
-    "@edtr-io/plugin-video": ^2.0.0
-    "@edtr-io/renderer": ^2.0.0
-    "@edtr-io/renderer-ui": ^2.0.0
-    "@edtr-io/store": ^2.0.0
-    "@edtr-io/ui": ^2.0.0
+    "@edtr-io/core": ^2.5.0
+    "@edtr-io/default-document-editor": ^2.5.0
+    "@edtr-io/editor-ui": ^2.5.0
+    "@edtr-io/math": ^2.5.0
+    "@edtr-io/plugin": ^2.5.0
+    "@edtr-io/plugin-anchor": ^2.5.0
+    "@edtr-io/plugin-blockquote": ^2.5.0
+    "@edtr-io/plugin-geogebra": ^2.5.0
+    "@edtr-io/plugin-highlight": ^2.5.0
+    "@edtr-io/plugin-image": ^2.5.0
+    "@edtr-io/plugin-input-exercise": ^2.5.0
+    "@edtr-io/plugin-multimedia-explanation": ^2.5.0
+    "@edtr-io/plugin-rows": ^2.5.0
+    "@edtr-io/plugin-sc-mc-exercise": ^2.5.0
+    "@edtr-io/plugin-serlo-injection": ^2.5.0
+    "@edtr-io/plugin-spoiler": ^2.5.0
+    "@edtr-io/plugin-table": ^2.5.0
+    "@edtr-io/plugin-text": ^2.5.0
+    "@edtr-io/plugin-video": ^2.5.0
+    "@edtr-io/renderer": ^2.5.0
+    "@edtr-io/renderer-ui": ^2.5.0
+    "@edtr-io/store": ^2.5.0
+    "@edtr-io/ui": ^2.5.0
     "@fortawesome/fontawesome-svg-core": ^1.0.0
     "@fortawesome/free-brands-svg-icons": ^5.0.0
     "@fortawesome/free-regular-svg-icons": ^5.0.0
@@ -4086,10 +4080,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/algebra.js@npm:^0.2.0, @types/algebra.js@npm:^0.2.1":
+"@types/algebra.js@npm:^0.2.0":
   version: 0.2.1
   resolution: "@types/algebra.js@npm:0.2.1"
   checksum: 2461a09197323451b76b8f3af1513b105d0be7bb8082d49277bfe6ad8630ecac75d082d914191e7fc7d4a957703a744b815240b3e20cbdafb2c1e1196db49e56
+  languageName: node
+  linkType: hard
+
+"@types/algebra.js@npm:^0.2.2":
+  version: 0.2.2
+  resolution: "@types/algebra.js@npm:0.2.2"
+  checksum: d17478576b9b746ed711fa3c01d55cce9e49c200a5025f2fa5f1f54e456e577aeabb45c793ee4bee2404032f114ae427df149c205b64aeae2db0aeb6cdc94188
   languageName: node
   linkType: hard
 
@@ -4287,10 +4288,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash@npm:^4.14.149, @types/lodash@npm:^4.14.175":
+"@types/lodash@npm:^4.14.149":
   version: 4.14.178
   resolution: "@types/lodash@npm:4.14.178"
   checksum: a69a04a60bfc5257c3130a554b4efa0c383f0141b7b3db8ab7cf07ad2a46ea085fce66d0242da41da7e5647b133d5dfb2c15add9cbed8d7fef955e4a1e5b3128
+  languageName: node
+  linkType: hard
+
+"@types/lodash@npm:^4.14.181":
+  version: 4.14.181
+  resolution: "@types/lodash@npm:4.14.181"
+  checksum: 0d1863d8383fd2f8bb42e9e3fc1d6255bb88ff034d6df848941063698944313dae944fc1270315613e3d303fae7c7a9a86085ad3235ed6204c56c4b0b3699aa9
   languageName: node
   linkType: hard
 
@@ -4377,12 +4385,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/ramda@npm:^0.28.1":
-  version: 0.28.4
-  resolution: "@types/ramda@npm:0.28.4"
+"@types/ramda@npm:^0.28.5":
+  version: 0.28.5
+  resolution: "@types/ramda@npm:0.28.5"
   dependencies:
     ts-toolbelt: ^6.15.1
-  checksum: 83c947fda3e3fb9d81a8248c088e69a28f79caa46f4bca5d362cdf787df37330328d019fe21496d2fe1bf60e4b4c9515af22cdcb6fdba657a13bbca2d98f443a
+  checksum: 9ef4ff8a6062d00372d3b305fc352f97152ce77ea3540700e3f25707eb641311bc1d45450d43f7037a327b4ccaed2aa4c1dd18bb933ca05e041980731f570240
   languageName: node
   linkType: hard
 
@@ -4404,7 +4412,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^17.0.13":
+"@types/react-dom@npm:^17.0.14":
   version: 17.0.14
   resolution: "@types/react-dom@npm:17.0.14"
   dependencies:
@@ -4502,7 +4510,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:^17.0.40":
+"@types/react@npm:^17.0.43":
   version: 17.0.43
   resolution: "@types/react@npm:17.0.43"
   dependencies:
@@ -9109,7 +9117,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"katex@npm:^0.15.2":
+"katex@npm:^0.15.3":
   version: 0.15.3
   resolution: "katex@npm:0.15.3"
   dependencies:
@@ -10694,6 +10702,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"prismjs@npm:^1.27.0, prismjs@npm:~1.27.0":
+  version: 1.27.0
+  resolution: "prismjs@npm:1.27.0"
+  checksum: 85c7f4a3e999073502cc9e1882af01e3709706369ec254b60bff1149eda701f40d02512acab956012dc7e61cfd61743a3a34c1bd0737e8dbacd79141e5698bbc
+  languageName: node
+  linkType: hard
+
 "prismjs@npm:~1.25.0":
   version: 1.25.0
   resolution: "prismjs@npm:1.25.0"
@@ -11083,7 +11098,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-syntax-highlighter@npm:^15.4.0, react-syntax-highlighter@npm:^15.4.4":
+"react-syntax-highlighter@npm:^15.4.0":
   version: 15.4.5
   resolution: "react-syntax-highlighter@npm:15.4.5"
   dependencies:
@@ -11095,6 +11110,21 @@ __metadata:
   peerDependencies:
     react: ">= 0.14.0"
   checksum: 120bac5cfbd65eb47e513b8057e3cb71843ce15241bbf933c1818c294965b87d8e074c7929a8fc2ced66c3e3f38c4cc6bf04365a8345e3a382cd524d0093949f
+  languageName: node
+  linkType: hard
+
+"react-syntax-highlighter@npm:^15.5.0":
+  version: 15.5.0
+  resolution: "react-syntax-highlighter@npm:15.5.0"
+  dependencies:
+    "@babel/runtime": ^7.3.1
+    highlight.js: ^10.4.1
+    lowlight: ^1.17.0
+    prismjs: ^1.27.0
+    refractor: ^3.6.0
+  peerDependencies:
+    react: ">= 0.14.0"
+  checksum: c082b48f30f8ba8d0c55ed1d761910630860077c7ff5793c4c912adcb5760df06436ed0ad62be0de28113aac9ad2af55eccd995f8eee98df53382e4ced2072fb
   languageName: node
   linkType: hard
 
@@ -11192,6 +11222,17 @@ __metadata:
     parse-entities: ^2.0.0
     prismjs: ~1.25.0
   checksum: e8e8bfe8fc035fb6b0a9427ba19abbd2ec1ad78197dcb0027fca95c94fa046ed14f253682b2dcee42e87591300c9237924714ccddf18173a21a18622521a20b7
+  languageName: node
+  linkType: hard
+
+"refractor@npm:^3.6.0":
+  version: 3.6.0
+  resolution: "refractor@npm:3.6.0"
+  dependencies:
+    hastscript: ^6.0.0
+    parse-entities: ^2.0.0
+    prismjs: ~1.27.0
+  checksum: 39b01c4168c77c5c8486f9bf8907bbb05f257f15026057ba5728535815a2d90eed620468a4bfbb2b8ceefbb3ce3931a1be8b17152dbdbc8b0eef92450ff750a2
   languageName: node
   linkType: hard
 
