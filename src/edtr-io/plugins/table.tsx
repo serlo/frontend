@@ -1,4 +1,9 @@
-import { createTablePlugin, TableProps } from '@edtr-io/plugin-table'
+import { EditorPlugin, StringStateType } from '@edtr-io/plugin'
+import {
+  createTablePlugin,
+  TableConfig,
+  TableProps,
+} from '@edtr-io/plugin-table'
 import { converter } from '@serlo/markdown'
 
 import { renderArticle } from '@/schema/article-renderer'
@@ -14,7 +19,7 @@ function MarkdownRenderer(props: { markdown: string }) {
   return <>{renderArticle(node.children)}</>
 }
 
-export const tablePlugin = {
+export const tablePlugin: EditorPlugin<StringStateType, TableConfig> = {
   ...edtrTablePlugin,
   Component: TableEditor,
 }

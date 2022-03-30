@@ -334,12 +334,12 @@ export function createPlugins({
         },
       },
     }),
-    table: tablePlugin as EditorPlugin<any, any>, // TODO: investigate, this makes no sense at all
+    table: tablePlugin,
     text: createTextPlugin({
       registry,
       blockquote: 'blockquote',
       i18n: textPluginI18n,
-    }) as EditorPlugin<any, any>, // TODO: investigate, this makes no sense at all
+    }),
     video: createVideoPlugin({
       i18n: {
         src: {
