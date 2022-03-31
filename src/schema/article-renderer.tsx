@@ -18,6 +18,7 @@ import { Injection } from '@/components/content/injection'
 import { Lazy } from '@/components/content/lazy'
 import { MathSpanProps } from '@/components/content/math-span'
 import { Multimedia } from '@/components/content/multimedia'
+import { SerloTable } from '@/components/content/serlo-table'
 import { Snack } from '@/components/content/snack'
 import { Spoiler } from '@/components/content/spoiler'
 import { Video } from '@/components/content/video'
@@ -334,6 +335,14 @@ function renderElement({
           <tbody>{children}</tbody>
         </table>
       </div>
+    )
+  }
+  if (element.type === 'serlo-table') {
+    return (
+      <SerloTable
+        {...element.state}
+        renderNested={(value, ...prefix) => renderNested(value, path, prefix)}
+      />
     )
   }
   if (element.type === 'tr') {

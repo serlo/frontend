@@ -7,20 +7,14 @@ import {
   object,
   string,
 } from '@edtr-io/plugin'
-import {
-  focus,
-  getDocument,
-  getFocused,
-  isEmpty,
-  isFocused,
-} from '@edtr-io/store'
+import { focus, getDocument, getFocused, isFocused } from '@edtr-io/store'
 import { Icon, faTimes, styled } from '@edtr-io/ui'
 import * as R from 'ramda'
-import React from 'react'
 
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { SerloTableRenderer, Table, TableCell, TableHeader } from './renderer'
 
-enum TableType {
+export enum TableType {
   OnlyColumnHeader = 'OnlyColumnHeader',
   OnlyRowHeader = 'OnlyRowHeader',
   ColumnAndRowHeader = 'RowAndColumnHeader',
@@ -48,58 +42,6 @@ export const serloTablePlugin: EditorPlugin<SerloTablePluginState> = {
   config: {},
   state: tableState,
 }
-
-const Table = styled.table({
-  borderCollapse: 'collapse',
-  width: '100%',
-  height: '100%',
-  overflowX: 'scroll',
-  // hack, can be removed it text plugin can be set to inline
-  div: {
-    marginBottom: '0px',
-  },
-})
-
-const TableHeader = styled.th({
-  border: '1px solid black',
-  backgroundColor: '#ddd',
-  minWidth: '4rem',
-})
-
-const TableCell = styled.td({
-  border: '1px solid black',
-  height: '1em',
-})
-
-const AddButton = styled.button({
-  border: '2px solid lightgrey',
-  margin: '3px',
-  backgroundColor: 'white',
-  textAlign: 'center',
-  verticalAlign: 'middle',
-  borderRadius: '10px',
-  minHeight: '50px',
-  color: 'lightgrey',
-  fontWeight: 'bold',
-  width: '100%',
-  '&:hover, &:focused': {
-    color: '#007ec1',
-    border: '3px solid #007ec1',
-  },
-})
-
-const AddColumnButton = styled(AddButton)({
-  width: '2em',
-  height: '100%',
-})
-
-const RemoveButton = styled.button({
-  outline: 'none',
-  width: '35px',
-  border: 'none',
-  background: 'transparent',
-  color: 'lightgrey',
-})
 
 function SerloTableEditor(props: SerloTableProps) {
   const { rowHeaders, columnHeaders, rows } = props.state
@@ -296,75 +238,40 @@ function SerloTableEditor(props: SerloTableProps) {
   }
 }
 
-function SerloTableRenderer(props: SerloTableProps) {
-  const store = useScopedStore()
-  const { rowHeaders, columnHeaders, rows } = props.state
-  const tableType = getTableType(props.state.tableType.value)
-  const showRowHeader =
-    tableType === TableType.OnlyRowHeader ||
-    tableType === TableType.ColumnAndRowHeader
-  const showColumnHeader =
-    tableType === TableType.OnlyColumnHeader ||
-    tableType === TableType.ColumnAndRowHeader
-
-  return (
-    <Table>
-      {showColumnHeader && (
-        <thead>
-          <tr>
-            {showRowHeader && <TableHeader />}
-            {columnHeaders.map(({ content }, column) => (
-              <TableHeader key={column}>
-                {isEmpty(content.id)(store.getState())
-                  ? '<Empty>'
-                  : content.render()}
-              </TableHeader>
-            ))}
-          </tr>
-        </thead>
-      )}
-      <tbody>
-        {rows.map(({ columns }, rowIndex) => {
-          const rowHeader = rowHeaders[rowIndex].content
-          return (
-            <tr key={rowIndex}>
-              {showRowHeader && (
-                <TableHeader>
-                  {isEmpty(rowHeader.id)(store.getState())
-                    ? '<Empty>'
-                    : rowHeader.render()}
-                </TableHeader>
-              )}
-              {columns.map(({ content }, columnIndex) => {
-                const isImage =
-                  getDocument(content.get())(store.getState())?.plugin ===
-                  'image'
-
-                return isImage ? (
-                  <TableCell
-                    key={columnIndex}
-                    style={{ width: `${100 / columnHeaders.length}%` }}
-                  >
-                    {!isEmpty(content.id)(store.getState()) && content.render()}
-                  </TableCell>
-                ) : (
-                  <TableCell key={columnIndex}>
-                    {!isEmpty(content.id)(store.getState()) && content.render()}
-                  </TableCell>
-                )
-              })}
-            </tr>
-          )
-        })}
-      </tbody>
-    </Table>
-  )
-}
-
-function getTableType(text: string): TableType {
+export function getTableType(text: string): TableType {
   return isTableType(text) ? text : TableType.OnlyColumnHeader
 }
 
-function isTableType(text: string): text is TableType {
+export function isTableType(text: string): text is TableType {
   return Object.values<string>(TableType).includes(text)
 }
+
+const AddButton = styled.button({
+  border: '2px solid lightgrey',
+  margin: '3px',
+  backgroundColor: 'white',
+  textAlign: 'center',
+  verticalAlign: 'middle',
+  borderRadius: '10px',
+  minHeight: '50px',
+  color: 'lightgrey',
+  fontWeight: 'bold',
+  width: '100%',
+  '&:hover, &:focused': {
+    color: '#007ec1',
+    border: '3px solid #007ec1',
+  },
+})
+
+const AddColumnButton = styled(AddButton)({
+  width: '2em',
+  height: '100%',
+})
+
+const RemoveButton = styled.button({
+  outline: 'none',
+  width: '35px',
+  border: 'none',
+  background: 'transparent',
+  color: 'lightgrey',
+})

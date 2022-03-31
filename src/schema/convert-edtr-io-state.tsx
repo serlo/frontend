@@ -228,6 +228,20 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
     )
     return children
   }
+  if (node.plugin === 'serloTable') {
+    // TODO: find a good structure
+    // const children = node.state.rows.map((row) => {
+    //   const columns = row.columns.map((col) => convert(col.content))
+    //   return convert(row.columns)
+    // })
+    return [
+      {
+        type: 'serlo-table',
+        state: node.state,
+        children,
+      },
+    ]
+  }
   if (node.plugin === 'video') {
     if (!node.state.src) {
       return []

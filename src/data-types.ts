@@ -5,6 +5,8 @@ import { CSSProperties, FunctionComponent } from 'react'
 import { BoxType } from './edtr-io/plugins/box/renderer'
 import { Instance, QueryResponse, User } from './fetcher/query-types'
 import { instanceData, instanceLandingData, loggedInData } from '@/data/en'
+import { StateTypeSerializedType } from '@edtr-io/plugin'
+import { SerloTablePluginState, TableType } from './edtr-io/plugins/serlo-table'
 
 // exact props of /[...slug] page
 export interface SlugProps {
@@ -557,6 +559,14 @@ export interface FrontendTableNode {
   children?: FrontendTrNode[]
 }
 
+export interface FrontendSerloTableNode {
+  type: 'serlo-table'
+  columnHeaders: FrontendTrNode[]
+  rowHeaders: FrontendTrNode[]
+  children?: FrontendTrNode[]
+  tableType: keyof typeof TableType
+}
+
 export interface FrontendTrNode {
   type: 'tr'
   children?: (FrontendThNode | FrontendTdNode)[]
@@ -755,6 +765,7 @@ export type FrontendRestrictedElementNode =
   | FrontendArticleNode
   | FrontendSpoilerContainerNode
   | FrontendTableNode
+  | FrontendSerloTableNode
   | FrontendSpoilerContainerNode
   | FrontendUlNode
   | FrontendOlNode
