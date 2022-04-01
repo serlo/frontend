@@ -18,6 +18,7 @@ import { faSquare } from '@fortawesome/free-regular-svg-icons'
 
 import { features } from '@/components/user/profile-experimental'
 import { LoggedInData } from '@/data-types'
+import { isProduction } from '@/helper/is-production'
 import { serloDomain } from '@/helper/serlo-domain'
 
 export function getPluginRegistry(
@@ -139,7 +140,7 @@ export function getPluginRegistry(
   // Testing new box plugin
   const showBox =
     typeof window !== 'undefined' &&
-    serloDomain != 'serlo.org' &&
+    !isProduction &&
     features.boxPlugin &&
     document.cookie.includes(features.boxPlugin.cookieName + '=1')
 
@@ -150,10 +151,9 @@ export function getPluginRegistry(
     : filteredRegistry.filter((plugin) => plugin.name != 'box')
 
   // Testing new table plugin
-  const tableFiltered =
-    serloDomain === 'serlo.org'
-      ? boxFiltered.filter((plugin) => plugin.name != 'serloTable')
-      : boxFiltered
+  const tableFiltered = isProduction
+    ? boxFiltered.filter((plugin) => plugin.name != 'serloTable')
+    : boxFiltered
 
   return tableFiltered
 }
