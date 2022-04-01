@@ -1,6 +1,10 @@
 import { Fragment } from 'react'
 
-import { TableType } from '.'
+export enum TableType {
+  OnlyColumnHeader = 'OnlyColumnHeader',
+  OnlyRowHeader = 'OnlyRowHeader',
+  ColumnAndRowHeader = 'RowAndColumnHeader',
+}
 
 export interface SerloTableRendererProps {
   tableType: TableType

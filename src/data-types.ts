@@ -3,7 +3,7 @@ import { AuthorizationPayload } from '@serlo/authorization'
 import { CSSProperties, FunctionComponent } from 'react'
 
 import { BoxType } from './edtr-io/plugins/box/renderer'
-import { TableType } from './edtr-io/plugins/serlo-table'
+import { TableType } from './edtr-io/plugins/serlo-table/renderer'
 import { Instance, QueryResponse, User } from './fetcher/query-types'
 import { instanceData, instanceLandingData, loggedInData } from '@/data/en'
 

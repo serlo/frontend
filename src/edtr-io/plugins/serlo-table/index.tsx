@@ -22,14 +22,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 import { KeyboardEvent, useEffect } from 'react'
 
-import { SerloTableRenderer } from './renderer'
+import { SerloTableRenderer, TableType } from './renderer'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-
-export enum TableType {
-  OnlyColumnHeader = 'OnlyColumnHeader',
-  OnlyRowHeader = 'OnlyRowHeader',
-  ColumnAndRowHeader = 'RowAndColumnHeader',
-}
 
 const headerTextPlugins = {
   code: true,
