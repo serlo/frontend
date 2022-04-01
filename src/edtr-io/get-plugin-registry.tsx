@@ -19,7 +19,6 @@ import { faSquare } from '@fortawesome/free-regular-svg-icons'
 import { features } from '@/components/user/profile-experimental'
 import { LoggedInData } from '@/data-types'
 import { isProduction } from '@/helper/is-production'
-import { serloDomain } from '@/helper/serlo-domain'
 
 export function getPluginRegistry(
   type: string,
