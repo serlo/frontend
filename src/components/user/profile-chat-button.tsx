@@ -1,3 +1,4 @@
+import { faSpinner } from '@edtr-io/ui'
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
@@ -32,6 +33,7 @@ export function ProfileChatButton({
   const auth = useAuthentication()
   const [mounted, setMounted] = useState(!shouldUseNewAuth())
   const [showInviteModal, setShowInviteModal] = useState(false)
+  const [pending, setPending] = useState(false)
   const [message, setMessage] = useState('')
 
   useEffect(() => {
@@ -72,14 +74,19 @@ export function ProfileChatButton({
   )
 
   async function inviteToChat() {
-    await createThread({
+    setPending(true)
+    const success = await createThread({
       title: '',
       content: message ?? '',
       objectId: userId,
       subscribe: false,
       sendEmail: false,
     })
-    showToastNotice(strings.profiles.inviteModal.success, 'success')
+    setPending(false)
+    if (success) {
+      setShowInviteModal(false)
+      showToastNotice(strings.profiles.inviteModal.success, 'success')
+    } else showToastNotice(strings.loading.unknownProblem, 'warning')
   }
 
   function renderInviteModal() {
@@ -128,9 +135,13 @@ export function ProfileChatButton({
         </div>
         <p className="serlo-p">
           <a
-            onClick={inviteToChat}
+            onClick={pending ? undefined : inviteToChat}
             className="serlo-button serlo-make-interactive-green"
           >
+            <FontAwesomeIcon
+              icon={pending ? faSpinner : faPaperPlane}
+              spin={pending}
+            />{' '}
             {button}
           </a>
         </p>
