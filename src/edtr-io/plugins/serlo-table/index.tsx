@@ -87,7 +87,7 @@ function SerloTableEditor(props: SerloTableProps) {
   const { focusedRowIndex, focusedColIndex, nestedFocus } = findFocus()
 
   useEffect(() => {
-    trimEmptyRowsAndCols()
+    if (!nestedFocus) trimEmptyRows()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nestedFocus])
 
@@ -310,23 +310,25 @@ function SerloTableEditor(props: SerloTableProps) {
     })
   }
 
-  function trimEmptyRowsAndCols() {
+  function trimEmptyRows() {
     rows.set((rows) => {
       const withoutEmptyRows = rows.filter(
-        (_row, rowIndex) => !isEmptyRow(rowIndex)
+        (_row, rowIndex) => !isEmptyRow(rowIndex) || rowIndex < 2
       )
-      const emptyColIndexes = rows[0].columns.reduce(
-        (result, _col, colIndex) =>
-          isEmptyCol(colIndex) ? [...result, colIndex] : result,
-        [] as number[]
-      )
-      return withoutEmptyRows.map((row) => {
-        return {
-          columns: row.columns.filter(
-            (_col, colIndex) => !emptyColIndexes.includes(colIndex)
-          ),
-        }
-      })
+      return withoutEmptyRows
+      // const emptyColIndexes = rows[0].columns.reduce(
+      //   (result, _col, colIndex) =>
+      //     isEmptyCol(colIndex) ? [...result, colIndex] : result,
+      //   [] as number[]
+      // )
+      // return withoutEmptyRows.map((row) => {
+      //   return {
+      //     columns: row.columns.filter(
+      //       (_col, colIndex) =>
+      //         !emptyColIndexes.includes(colIndex) || colIndex === 0
+      //     ),
+      //   }
+      // })
     })
   }
 
