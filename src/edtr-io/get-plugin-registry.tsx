@@ -152,7 +152,7 @@ export function getPluginRegistry(
   // Testing new table plugin
   const tableFiltered = isProduction
     ? boxFiltered.filter((plugin) => plugin.name != 'serloTable')
-    : boxFiltered
+    : boxFiltered.filter((plugin) => plugin.name !== 'table')
 
   return tableFiltered
 }
