@@ -96,6 +96,7 @@ function render(value: FrontendContentNode, path: NodePath = []): ReactNode {
       break
     }
   }
+
   const currentNode = getNode(value, currentPath)
   const key = currentPath[currentPath.length - 1]
 
@@ -340,7 +341,7 @@ function renderElement({
   if (element.type === 'serlo-table') {
     return (
       <SerloTable
-        {...element.state}
+        {...element}
         renderNested={(value, ...prefix) => renderNested(value, path, prefix)}
       />
     )

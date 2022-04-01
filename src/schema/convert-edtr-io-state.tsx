@@ -13,6 +13,7 @@ import {
   FrontendContentNode,
   FrontendLiNode,
   FrontendMathNode,
+  FrontendSerloTrNode,
   FrontendTextColor,
   FrontendTextNode,
   Sign,
@@ -229,15 +230,22 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
     return children
   }
   if (node.plugin === 'serloTable') {
-    // TODO: find a good structure
-    // const children = node.state.rows.map((row) => {
-    //   const columns = row.columns.map((col) => convert(col.content))
-    //   return convert(row.columns)
-    // })
+    const children = node.state.rows.map((row) => {
+      return {
+        type: 'serlo-tr',
+        children: row.columns.map((cell) => {
+          return {
+            type: 'serlo-td',
+            children: convert(cell.content as EdtrState),
+          }
+        }),
+      }
+    }) as FrontendSerloTrNode[]
+
     return [
       {
         type: 'serlo-table',
-        state: node.state,
+        tableType: node.state.tableType,
         children,
       },
     ]

@@ -1,18 +1,29 @@
 import { useScopedSelector, useScopedStore } from '@edtr-io/core'
 import {
   child,
+  ChildStateType,
   EditorPlugin,
   EditorPluginProps,
   list,
   object,
+  StateTypesReturnType,
   string,
 } from '@edtr-io/plugin'
-import { focus, getDocument, getFocused, isFocused } from '@edtr-io/store'
-import { Icon, faTimes, styled } from '@edtr-io/ui'
-import * as R from 'ramda'
+import {
+  getFocused,
+  isEmpty,
+  focus,
+  getDocument,
+  focusNext,
+  focusPrevious,
+} from '@edtr-io/store'
+import { Icon, faTimes, faImages, faParagraph } from '@edtr-io/ui'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
+import { KeyboardEvent, useEffect } from 'react'
 
+import { SerloTableRenderer } from './renderer'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { SerloTableRenderer, Table, TableCell, TableHeader } from './renderer'
 
 export enum TableType {
   OnlyColumnHeader = 'OnlyColumnHeader',
@@ -20,14 +31,43 @@ export enum TableType {
   ColumnAndRowHeader = 'RowAndColumnHeader',
 }
 
+const headerTextPlugins = {
+  code: true,
+  colors: false,
+  headings: false,
+  katex: true,
+  links: false,
+  lists: false,
+  math: true,
+  paragraphs: false,
+  richText: false,
+  suggestions: false,
+}
+
+const cellTextPlugins = {
+  code: true,
+  colors: true,
+  headings: false,
+  katex: true,
+  links: true,
+  lists: true,
+  math: true,
+  paragraphs: false,
+  richText: true,
+  suggestions: false,
+}
+
 const tableState = object({
-  // Headings, bold, italic should not be allowed and this should be an inline field
-  // see https://github.com/edtr-io/edtr-io/issues/359
-  columnHeaders: list(object({ content: child({ plugin: 'text' }) }), 2),
-  rowHeaders: list(object({ content: child({ plugin: 'text' }) }), 4),
   rows: list(
     object({
-      columns: list(object({ content: child({ plugin: 'text' }) }), 2),
+      columns: list(
+        object({
+          content: child({
+            plugin: 'text',
+          }),
+        }),
+        2
+      ),
     }),
     4
   ),
@@ -43,23 +83,19 @@ export const serloTablePlugin: EditorPlugin<SerloTablePluginState> = {
   state: tableState,
 }
 
+const newCell = { content: { plugin: 'text' } }
+
 function SerloTableEditor(props: SerloTableProps) {
-  const { rowHeaders, columnHeaders, rows } = props.state
+  const { rows } = props.state
   const store = useScopedStore()
+
   const focusedElement = useScopedSelector(getFocused())
-  const nestedFocus =
-    props.focused ||
-    columnHeaders
-      .map((header) => header.content.id as string | null)
-      .includes(focusedElement) ||
-    rowHeaders
-      .map((header) => header.content.id as string | null)
-      .includes(focusedElement) ||
-    rows.some((row) =>
-      row.columns
-        .map((column) => column.content.id as string | null)
-        .includes(focusedElement)
-    )
+  const { focusedRowIndex, focusedColIndex, nestedFocus } = findFocus()
+
+  useEffect(() => {
+    trimEmptyRowsAndCols()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [nestedFocus])
 
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
@@ -73,168 +109,307 @@ function SerloTableEditor(props: SerloTableProps) {
     tableType === TableType.OnlyColumnHeader ||
     tableType === TableType.ColumnAndRowHeader
 
-  if (!nestedFocus) return <SerloTableRenderer {...props} />
+  if (!nestedFocus) return renderInactiveTable()
 
   return (
-    <Table>
-      {props.renderIntoSettings(
-        <div>
-          <label>
-            {tableStrings.mode}{' '}
-            <select
-              value={tableType}
-              onChange={(e) => props.state.tableType.set(e.target.value)}
-            >
-              <option value={TableType.OnlyColumnHeader}>
-                {tableStrings.columnHeaders}
-              </option>
-              <option value={TableType.OnlyRowHeader}>
-                {tableStrings.rowHeaders}
-              </option>
-              <option value={TableType.ColumnAndRowHeader}>
-                {tableStrings.columnAndRowHeaders}
-              </option>
-            </select>
-          </label>
-        </div>
-      )}
-      <tbody>
-        <tr>
-          <td />
-          {showRowHeader && <td />}
-          {R.range(0, columnHeaders.length).map((column, key) => (
-            <td style={{ textAlign: 'center' }} key={key}>
-              <RemoveButton
-                onClick={() => {
-                  if (columnHeaders.length === 1) return
-                  columnHeaders.remove(column)
-                  for (const row of rows) {
-                    row.columns.remove(column)
-                  }
-                }}
-              >
-                <Icon icon={faTimes} />
-              </RemoveButton>
-            </td>
-          ))}
-        </tr>
-        {showColumnHeader && (
-          <tr>
-            <td />
-            {showRowHeader && <TableHeader />}
-            {columnHeaders.map(({ content }, column) => (
-              <TableHeader key={column}>
-                {content.render({ config: { placeholder: '' } })}
-              </TableHeader>
-            ))}
-            {renderAddColumnButton()}
-          </tr>
-        )}
-        {rows.map(({ columns }, rowIndex) => (
-          <tr key={rowIndex}>
-            <td style={{ width: '2em' }}>
-              <RemoveButton
-                onClick={() => {
-                  rows.remove(rowIndex)
-                  rowHeaders.remove(rowIndex)
-                }}
-              >
-                <Icon icon={faTimes} />
-              </RemoveButton>
-            </td>
-            {showRowHeader && (
-              <TableHeader>
-                {rowHeaders[rowIndex].content.render({
-                  config: { placeholder: '' },
-                })}
-              </TableHeader>
-            )}
-            {columns.map(({ content }, columnIndex) => {
-              const isImage =
-                getDocument(content.get())(store.getState())?.plugin === 'image'
-              const contentHasFocus = isFocused(content.get())(store.getState())
-              const onClick = isImage
-                ? undefined
-                : () => store.dispatch(focus(content.get()))
-
-              return (
-                <TableCell
-                  key={columnIndex}
-                  style={{ width: `${100 / columnHeaders.length}%` }}
-                  onClick={onClick}
-                >
-                  {content.render(
-                    isImage ? undefined : { config: { placeholder: '' } }
-                  )}
-                  {contentHasFocus && (
-                    <button
-                      onMouseDown={(e) => e.stopPropagation()} // hack to stop edtr from stealing events
-                      onClick={() =>
-                        content.replace(isImage ? 'text' : 'image')
-                      }
-                      className="serlo-button serlo-make-interactive-light m-2 py-0.5 text-sm"
-                    >
-                      {isImage
-                        ? tableStrings.convertToText
-                        : tableStrings.convertToImage}
-                    </button>
-                  )}
-                </TableCell>
-              )
-            })}
-            {rowIndex === 0 && !showColumnHeader && renderAddColumnButton()}
-          </tr>
-        ))}
-        <tr>
-          <td />
-          <td
-            colSpan={
-              showRowHeader ? columnHeaders.length + 1 : columnHeaders.length
-            }
-          >
-            <AddButton
-              onClick={() => {
-                rows.insert(columnHeaders.length, {
-                  columns: R.range(0, columnHeaders.length).map((_) => {
-                    return { content: { plugin: 'text' } }
-                  }),
-                })
-                rowHeaders.insert(rowHeaders.length, {
-                  content: { plugin: 'text' },
-                })
-              }}
-            >
-              + {tableStrings.addRow}
-            </AddButton>
-          </td>
-        </tr>
-      </tbody>
-    </Table>
+    <>
+      {renderRenderIntoSettings()} {renderActiveTable()}
+    </>
   )
 
-  function renderAddColumnButton() {
+  function renderInactiveTable() {
+    const rowsJSX = rows.map((row) => {
+      return {
+        cells: row.columns.map((cell) => {
+          return (
+            <div className="pr-2" key={cell.content.id}>
+              {!isEmpty(cell.content.id)(store.getState()) &&
+                cell.content.render()}
+            </div>
+          )
+        }),
+      }
+    })
     return (
-      <td
-        rowSpan={showColumnHeader ? rows.length + 1 : rows.length}
-        style={{ height: '100%', width: '2em' }}
-      >
-        <AddColumnButton
-          onClick={() => {
-            columnHeaders.insert(columnHeaders.length, {
-              content: { plugin: 'text' },
-            })
-
-            for (const row of rows) {
-              row.columns.insert(row.columns.length, {
-                content: { plugin: 'text' },
-              })
-            }
-          }}
-        >
-          +
-        </AddColumnButton>
-      </td>
+      <div className="pt-3">
+        <SerloTableRenderer rows={rowsJSX} tableType={tableType} />
+      </div>
     )
+  }
+
+  function renderActiveTable() {
+    const rowsJSX = renderActiveCellsIntoObject()
+
+    return (
+      <div className="flex pt-3">
+        <div className="flex flex-col">
+          <SerloTableRenderer rows={rowsJSX} tableType={tableType} />
+          {renderAddButton(true)}
+        </div>
+
+        {renderAddButton(false)}
+      </div>
+    )
+  }
+
+  function renderActiveCellsIntoObject() {
+    return rows.map((row, rowIndex) => {
+      return {
+        cells: row.columns.map((cell, colIndex) => {
+          const isColHead = showColumnHeader && rowIndex === 0
+          const isRowHead = showRowHeader && colIndex === 0
+          const isHead = isRowHead || isColHead
+          const isLast =
+            rowIndex === rows.length - 1 &&
+            colIndex === rows[0].columns.length - 1
+          const dispatchFocus = () => store.dispatch(focus(cell.content.id))
+          const isClear = isEmpty(cell.content.id)(store.getState())
+          const updateHack = () => {
+            store.dispatch(focusNext())
+            store.dispatch(focusPrevious())
+          }
+          const onKeyUpHandler = (e: KeyboardEvent<HTMLDivElement>) => {
+            // hack: redraw when isEmpty changes. (onKeyUp bc. keyDown is captured for some keys)
+            if (e.key === 'Delete' || e.key === 'Backspace') {
+              if (!isClear) updateHack()
+            } else {
+              if (isClear) updateHack()
+            }
+          }
+          const onKeyDownHandler = (e: KeyboardEvent<HTMLDivElement>) => {
+            if (
+              e.key === 'Tab' &&
+              (e.target as HTMLElement).tagName === 'BUTTON' &&
+              isLast
+            ) {
+              insertRow()
+            }
+          }
+
+          return (
+            <div
+              key={colIndex}
+              tabIndex={0} // capture tab
+              onMouseUp={updateHack} // hack: focus slate directly on click
+              onFocus={dispatchFocus} // hack: focus slate directly on tab
+              onKeyUp={onKeyUpHandler} // keyUp because some onKeyDown keys are not bubbling
+              onKeyDown={onKeyDownHandler}
+              className="hackdiv pr-2"
+            >
+              {renderRemoveButtons(rowIndex, colIndex)}
+              {cell.content.render({
+                config: {
+                  placeholder: '',
+                  plugins: isHead ? headerTextPlugins : cellTextPlugins,
+                },
+              })}
+              {renderSwitchButton(cell, isHead, isClear)}
+              {/* hack: make sure we capture most clicks in cells */}
+              <style jsx global>{`
+                .hackdiv {
+                  padding-bottom: 25px;
+                  > div > div > div {
+                    margin-bottom: 0;
+                  }
+                }
+              `}</style>
+            </div>
+          )
+        }),
+      }
+    })
+  }
+
+  function renderSwitchButton(
+    cell: StateTypesReturnType<{
+      content: ChildStateType<string, unknown>
+    }>,
+    isHead: boolean,
+    isClear: boolean
+  ) {
+    const isFocused = cell.content.id === focusedElement
+    const isImage =
+      getDocument(cell.content.id)(store.getState())?.plugin === 'image'
+
+    if (isHead || !isFocused || !isClear) return null
+
+    return (
+      <button
+        onMouseDown={(e) => e.stopPropagation()} // hack to stop edtr from stealing events
+        onClick={() => {
+          cell.content.replace(isImage ? 'text' : 'image')
+        }}
+        className="serlo-button serlo-make-interactive-light m-2 py-0.5 text-sm ml-auto block absolute"
+        title={
+          isImage ? tableStrings.convertToText : tableStrings.convertToImage
+        }
+      >
+        <FontAwesomeIcon icon={isImage ? faParagraph : faImages} />
+      </button>
+    )
+  }
+
+  function renderRemoveButtons(rowIndex: number, colIndex: number) {
+    return (
+      <>
+        {colIndex === 0
+          ? renderRemoveButton(true, rowIndex === focusedRowIndex)
+          : null}
+        {rowIndex === 0
+          ? renderRemoveButton(false, colIndex === focusedColIndex)
+          : null}
+      </>
+    )
+
+    function renderRemoveButton(isRow: boolean, show: boolean) {
+      if (isRow && rows.length === 1) return
+      if (!isRow && rows[0].columns.length === 1) return
+      const confirmString = replaceWithType(tableStrings.confirmDelete, isRow)
+
+      const onClickHandler = () => {
+        const empty = isRow ? isEmptyRow(rowIndex) : isEmptyCol(colIndex)
+
+        if (!empty && !window.confirm(confirmString)) return
+        if (isRow) removeRow(rowIndex)
+        else removeCol(colIndex)
+      }
+
+      return (
+        <button
+          className={clsx(
+            'serlo-button serlo-make-interactive-transparent-blue absolute',
+            isRow ? '-ml-10 -mt-2' : '-mt-12',
+            show ? '' : 'opacity-0 pointer-events-none'
+          )}
+          title={replaceWithType(tableStrings.deleteType, isRow)}
+          onMouseDown={(e) => e.stopPropagation()} // hack to stop edtr from stealing events
+          onClick={onClickHandler}
+        >
+          <Icon icon={faTimes} />
+        </button>
+      )
+    }
+  }
+
+  function insertRow() {
+    rows.insert(rows.length, {
+      columns: rows[0].columns.map(() => newCell),
+    })
+  }
+
+  function insertCol() {
+    for (const row of rows) {
+      row.columns.insert(row.columns.length, newCell)
+    }
+  }
+
+  function isEmptyRow(rowIndex: number) {
+    return rows[rowIndex].columns.every((cell) =>
+      isEmpty(cell.content.id)(store.getState())
+    )
+  }
+
+  function isEmptyCol(colIndex: number) {
+    return rows.every((row) => {
+      const cell = row.columns[colIndex]
+      return isEmpty(cell.content.id)(store.getState())
+    })
+  }
+
+  function trimEmptyRowsAndCols() {
+    rows.set((rows) => {
+      const withoutEmptyRows = rows.filter(
+        (_row, rowIndex) => !isEmptyRow(rowIndex)
+      )
+      const emptyColIndexes = rows[0].columns.reduce(
+        (result, _col, colIndex) =>
+          isEmptyCol(colIndex) ? [...result, colIndex] : result,
+        [] as number[]
+      )
+      return withoutEmptyRows.map((row) => {
+        return {
+          columns: row.columns.filter(
+            (_col, colIndex) => !emptyColIndexes.includes(colIndex)
+          ),
+        }
+      })
+    })
+  }
+
+  function removeCol(colIndex: number) {
+    for (const row of rows) {
+      row.columns.remove(colIndex)
+    }
+  }
+  function removeRow(rowIndex: number) {
+    rows.remove(rowIndex)
+  }
+
+  function renderAddButton(isRow: boolean) {
+    return (
+      <button
+        className={clsx(
+          'serlo-button serlo-make-interactive-light',
+          isRow ? 'm-4 -mt-4 w-auto' : 'mb-16'
+        )}
+        title={replaceWithType(tableStrings.addType, isRow)}
+        onClick={() => {
+          if (isRow) insertRow()
+          else insertCol()
+        }}
+      >
+        +
+      </button>
+    )
+  }
+
+  function renderRenderIntoSettings() {
+    return props.renderIntoSettings(
+      <div>
+        <label className="font-bold">
+          {tableStrings.mode}:{' '}
+          <select
+            className="my-5"
+            value={tableType}
+            onChange={(e) => props.state.tableType.set(e.target.value)}
+          >
+            <option value={TableType.OnlyColumnHeader}>
+              {tableStrings.columnHeaders}
+            </option>
+            <option value={TableType.OnlyRowHeader}>
+              {tableStrings.rowHeaders}
+            </option>
+            <option value={TableType.ColumnAndRowHeader}>
+              {tableStrings.columnAndRowHeaders}
+            </option>
+          </select>
+        </label>
+      </div>
+    )
+  }
+
+  function findFocus() {
+    let focusedRowIndex = undefined
+    let focusedColIndex = undefined
+
+    rows.some((row, rowIndex) =>
+      row.columns.some((cell, colIndex) => {
+        if (cell.content.id === focusedElement) {
+          focusedRowIndex = rowIndex
+          focusedColIndex = colIndex
+          return true
+        }
+      })
+    )
+    const nestedFocus =
+      props.focused ||
+      (focusedRowIndex !== undefined && focusedColIndex !== undefined)
+
+    return { focusedRowIndex, focusedColIndex, nestedFocus }
+  }
+
+  function replaceWithType(input: string, isRow: boolean) {
+    return input.replace('%type%', tableStrings[isRow ? 'row' : 'column'])
   }
 }
 
@@ -245,33 +420,3 @@ export function getTableType(text: string): TableType {
 export function isTableType(text: string): text is TableType {
   return Object.values<string>(TableType).includes(text)
 }
-
-const AddButton = styled.button({
-  border: '2px solid lightgrey',
-  margin: '3px',
-  backgroundColor: 'white',
-  textAlign: 'center',
-  verticalAlign: 'middle',
-  borderRadius: '10px',
-  minHeight: '50px',
-  color: 'lightgrey',
-  fontWeight: 'bold',
-  width: '100%',
-  '&:hover, &:focused': {
-    color: '#007ec1',
-    border: '3px solid #007ec1',
-  },
-})
-
-const AddColumnButton = styled(AddButton)({
-  width: '2em',
-  height: '100%',
-})
-
-const RemoveButton = styled.button({
-  outline: 'none',
-  width: '35px',
-  border: 'none',
-  background: 'transparent',
-  color: 'lightgrey',
-})
