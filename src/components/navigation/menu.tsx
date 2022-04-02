@@ -14,6 +14,7 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { HeaderData, HeaderLink } from '@/data-types'
 import { getAuthData, shouldUseNewAuth } from '@/helper/feature-auth'
 import { triggerSentry } from '@/helper/trigger-sentry'
+import { FaWrapper } from '../fa-wrapper'
 
 // Only show some icons on full menu
 const menuIconMapping = {
@@ -188,13 +189,15 @@ function MenuInner({
             >
               <Link tabIndex={0} className={styledLinkCls}>
                 {renderIcon()}
-                {!hasIcon && link.title} <FontAwesomeIcon icon={faCaretDown} />
+                {!hasIcon && link.title}{' '}
+                <FaWrapper className="w-2.5" icon={faCaretDown} />
               </Link>
             </Tippy.default>
           ) : (
             <Link tabIndex={0} className={styledLinkCls}>
               {renderIcon()}
-              {!hasIcon && link.title} <FontAwesomeIcon icon={faCaretDown} />
+              {!hasIcon && link.title}{' '}
+              <FontAwesomeIcon className="w-2.5" icon={faCaretDown} />
             </Link>
           )
         ) : (
