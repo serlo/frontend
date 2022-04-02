@@ -7,8 +7,6 @@ export async function subjectLandingGetStaticProps(
   locale: string,
   subject: deSubjectLandingSubjects
 ) {
-  if (locale !== 'de') return { notFound: true }
-
   const pageData = await fetchPageData(
     `/${locale}/${deSubjectLandingData[subject].allTopicsTaxonomyId}`
   )
