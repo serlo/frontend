@@ -5,6 +5,7 @@ import clsx from 'clsx'
 import { useState, useEffect } from 'react'
 
 import { Link } from '../content/link'
+import { FaWrapper } from '../fa-wrapper'
 import { MenuSubButtonLink } from '../user-tools/menu-sub-button-link'
 import { getAvatarUrl } from '../user/user-link'
 import { AuthenticationPayload } from '@/auth/auth-provider'
@@ -14,7 +15,6 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { HeaderData, HeaderLink } from '@/data-types'
 import { getAuthData, shouldUseNewAuth } from '@/helper/feature-auth'
 import { triggerSentry } from '@/helper/trigger-sentry'
-import { FaWrapper } from '../fa-wrapper'
 
 // Only show some icons on full menu
 const menuIconMapping = {
