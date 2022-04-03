@@ -53,19 +53,21 @@ export function CommentForm({
   if (!loggedInData) return null
   const editorStrings = loggedInData.strings.editor
 
-  const textPlugin = createTextPlugin({
-    placeholder,
-    plugins: {
-      suggestions: true,
-      math: true,
-      code: true,
-      headings: false,
-      lists: true,
-      colors: true,
-    },
-    registry: [],
-    i18n: getTextPluginI18n(editorStrings),
-  } as TextConfig)
+  const plugins = {
+    text: createTextPlugin({
+      registry: [],
+      i18n: getTextPluginI18n(editorStrings),
+      placeholder,
+      plugins: {
+        suggestions: true,
+        math: true,
+        code: true,
+        headings: false,
+        lists: true,
+        colors: true,
+      },
+    }),
+  }
 
   async function onSendAction() {
     const content = JSON.stringify(commentState.current)
@@ -110,7 +112,8 @@ export function CommentForm({
             onChange={(event) => {
               commentState.current = event.getDocument() as EdtrPluginText
             }}
-            plugins={{ text: textPlugin }}
+            // @ts-expect-error can't find a solution or a problem
+            plugins={plugins}
             initialState={initialState}
           />
         </>
