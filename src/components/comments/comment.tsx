@@ -6,8 +6,11 @@ import { useEffect, useRef } from 'react'
 import { Link } from '../content/link'
 import { MathSpanProps } from '../content/math-span'
 import { MetaBar } from './meta-bar'
+import { FrontendContentNode, FrontendTextNode } from '@/data-types'
 import { replaceWithJSX } from '@/helper/replace-with-jsx'
 import { scrollIfNeeded } from '@/helper/scroll'
+import { renderArticle } from '@/schema/article-renderer'
+import { convert } from '@/schema/convert-edtr-io-state'
 
 interface CommentProps {
   threadId: string
@@ -30,27 +33,6 @@ export function Comment({
 }: CommentProps) {
   const commentRef = useRef<HTMLDivElement>(null)
   const { author, createdAt, content, id } = data
-
-  // Step 1: Replace formulas
-  const r1 = replaceWithJSX([content], /%%(.+?)%%/g, (str, i) => (
-    <MathSpan key={`math-${i}`} formula={str} />
-  ))
-
-  // Step 2: Replace urls in remaining strings
-  const r2 = replaceWithJSX(
-    r1,
-    /(https?:\/\/(?:www\.)?(?:[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9]{1,6}\b)(?:[-a-zA-Z0-9@:%_+~#?&//=]*))/g,
-    (str, i) => (
-      <Link
-        key={`link-${i}`}
-        href={str}
-        className="serlo-link break-all"
-        unreviewed
-      >
-        {str}
-      </Link>
-    )
-  )
 
   useEffect(() => {
     if (isHighlight) {
@@ -90,7 +72,49 @@ export function Comment({
         id={id}
         highlight={highlight}
       />
-      <p className="serlo-p mb-0 whitespace-pre-line break-words">{r2}</p>
+      {renderContent()}
     </div>
   )
+
+  function renderContent() {
+    if (content.startsWith('{"plugin":"text"')) return renderEdtrState()
+    return renderPlain()
+  }
+
+  function renderPlain() {
+    // Step 1: Replace formulas
+    const withFormulas = replaceWithJSX([content], /%%(.+?)%%/g, (str, i) => (
+      <MathSpan key={`math-${i}`} formula={str} />
+    ))
+
+    // Step 2: Replace urls in remaining strings
+    const withLinks = replaceWithJSX(
+      withFormulas,
+      /(https?:\/\/(?:www\.)?(?:[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b)(?:[-a-zA-Z0-9()@:%_+~#?&//=]*))/g,
+      (str, i) => (
+        <Link
+          key={`link-${i}`}
+          href={str}
+          className="serlo-link break-all"
+          unreviewed
+        >
+          {str}
+        </Link>
+      )
+    )
+    return (
+      <p className="serlo-p mb-0 whitespace-pre-line break-words">
+        {withLinks}
+      </p>
+    )
+  }
+
+  function renderEdtrState() {
+    const converted = convertState(content)
+    return <div className="-mb-3">{renderArticle(converted)}</div>
+  }
+
+  function convertState(raw: string): FrontendContentNode[] {
+    return convert(JSON.parse(raw) as FrontendTextNode)
+  }
 }

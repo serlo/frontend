@@ -113,7 +113,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
         )}
         {license && <div className="px-side">{license}</div>}
         {node.context.solutionId && (
-          <Lazy>
+          <Lazy noNoScript>
             <CommentArea entityId={node.context.solutionId} />
           </Lazy>
         )}

@@ -8,6 +8,7 @@ export interface LazyProps {
   children: ReactNode
   slim?: boolean
   noPrint?: boolean
+  noNoScript?: boolean
 }
 
 export function Lazy(props: LazyProps) {
@@ -32,7 +33,7 @@ export function Lazy(props: LazyProps) {
       >
         {props.children}
       </LazyLoad>
-      <noscript>{props.children}</noscript>
+      {!props.noNoScript && <noscript>{props.children}</noscript>}
     </>
   )
 }

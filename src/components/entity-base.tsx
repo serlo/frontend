@@ -52,7 +52,7 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
           {!noComments && (
             <>
               <div id="comment-area-begin-scrollpoint" />
-              <Lazy>
+              <Lazy noNoScript>
                 <CommentArea entityId={entityId} />
               </Lazy>
             </>

@@ -6,13 +6,14 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Comment as CommentType, Thread as ThreadType } from '@serlo/api'
 import { Thread as AuthThread } from '@serlo/authorization'
+import dynamic from 'next/dynamic'
 import { useState, useRef, useEffect } from 'react'
 
 import { Lazy } from '../content/lazy'
 import { Guard } from '../guard'
-import { PleaseLogIn } from '../user/please-log-in'
+// import { PleaseLogIn } from '../user/please-log-in'
 import { CommentArchive } from './comment-archive'
-import { CommentForm } from './comment-form'
+import { CommentFormProps } from './comment-form'
 import { Thread } from './thread'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useCanDo } from '@/auth/use-can-do'
@@ -31,6 +32,10 @@ export interface CommentAreaProps {
 
 export type CommentsData = CommentType[]
 export type ThreadsData = ThreadType[]
+
+const CommentForm = dynamic<CommentFormProps>(() =>
+  import('./comment-form').then((mod) => mod.CommentForm)
+)
 
 export function CommentArea({ entityId, noForms }: CommentAreaProps) {
   const [highlightedCommentId, setHighlightedCommentId] = useState<
@@ -101,7 +106,12 @@ export function CommentArea({ entityId, noForms }: CommentAreaProps) {
     return (
       <>
         {renderHeading(faQuestionCircle, ` ${strings.comments.question}`)}
-        {
+        {/* TODO: Skip auth while in developement (if reenabled, dynamic loading should work) */}
+        <CommentForm
+          placeholder={strings.comments.placeholder}
+          onSend={onSend}
+        />
+        {/*
           auth.current === null ? (
             <PleaseLogIn />
           ) : canDo(AuthThread.createThread) ? (
@@ -109,8 +119,8 @@ export function CommentArea({ entityId, noForms }: CommentAreaProps) {
               placeholder={strings.comments.placeholder}
               onSend={onSend}
             />
-          ) : null /* placeholder while loading permissions */
-        }
+          ) : null // placeholder while loading permissions
+        */}
       </>
     )
   }
@@ -171,7 +181,6 @@ export function CommentArea({ entityId, noForms }: CommentAreaProps) {
 
   async function onSend(content: string, reply?: boolean, threadId?: string) {
     if (auth.current === null) return false
-
     if (reply) {
       if (threadId === undefined) return false
       setShowThreadChildren([...showThreadChildren, threadId])

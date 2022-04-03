@@ -1,3 +1,5 @@
+import { Editor } from '@edtr-io/core'
+import { createTextPlugin, TextConfig } from '@edtr-io/plugin-text'
 import {
   faReply,
   faArrowRight,
@@ -5,13 +7,14 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
-import { useState, KeyboardEvent, useRef, ChangeEvent } from 'react'
-import TextareaAutosize from 'react-textarea-autosize'
+import { useState, KeyboardEvent, useRef } from 'react'
 
 import { useInstanceData } from '@/contexts/instance-context'
 import { isMac } from '@/helper/client-detection'
+import { EdtrPluginText } from '@/schema/edtr-io-types'
+import { theme } from '@/theme'
 
-interface CommentFormProps {
+export interface CommentFormProps {
   onSend: (
     content: string,
     reply?: boolean,
@@ -22,66 +25,87 @@ interface CommentFormProps {
   threadId?: string
 }
 
+const initialState = {
+  plugin: 'text',
+  state: [{ type: 'p', children: [{ text: '' }] }],
+} as EdtrPluginText
+
 export function CommentForm({
   placeholder,
   onSend,
   reply,
   threadId,
 }: CommentFormProps) {
-  const [commentValue, setCommentValue] = useState('')
+  const commentState = useRef<EdtrPluginText>(initialState)
   const { strings } = useInstanceData()
   const [isSending, setIsSending] = useState(false)
-  const textareaRef = useRef<null | HTMLTextAreaElement>(null)
+  const [isActive, setIsActive] = useState(false)
+  const editorWrapRef = useRef<null | HTMLDivElement>(null)
+
+  function activateEditor() {
+    setIsActive(true)
+  }
+
+  const textPlugin = createTextPlugin({
+    placeholder,
+    plugins: {
+      suggestions: true,
+      math: true,
+      code: true,
+      headings: false,
+      lists: true,
+      colors: true,
+    },
+    registry: [],
+  } as TextConfig)
 
   async function onSendAction() {
-    if (commentValue.length < 1) {
-      textareaRef.current?.focus()
+    const content = JSON.stringify(commentState.current)
+    const isEmpty = content.replace(/\s+/g, '') === JSON.stringify(initialState)
+
+    if (isEmpty) {
+      const slate = editorWrapRef.current?.querySelector(
+        '[data-slate-editor="true"]'
+      ) as HTMLDivElement
+      slate?.focus()
       return
     }
     setIsSending(true)
-    const success = await onSend(commentValue, reply, threadId)
+    const success = await onSend(content, reply, threadId)
+    if (success) commentState.current = initialState
     setIsSending(false)
-    if (success) setCommentValue('')
   }
 
-  function onKeyDown(e: KeyboardEvent<HTMLTextAreaElement>) {
-    if (e.code === 'Enter' && e.metaKey) void onSendAction()
+  function onKeyDown(e: KeyboardEvent<HTMLDivElement>) {
+    if (e.key === 'Enter' && e.metaKey) void onSendAction()
   }
 
   const sendTitle = `${strings.comments.submit}   ${
     isMac ? '⌘' : strings.keys.ctrl
   }↵`
 
-  const formId = `comment-form${threadId ?? ''}`
-
   return (
     <div
       className={clsx(
-        'mx-side mt-4 mb-7 flex items-center rounded-2xl',
+        'mx-side mt-4 mb-16 flex items-center rounded-2xl',
         'bg-brandgreen-lighter focus-within:bg-brandgreen-light',
-        'transition-colors duration-200 ease-in py-1'
+        'transition-colors duration-200 ease-in py-1 cursor-pointer'
       )}
+      onKeyDownCapture={onKeyDown} //onKeyDownCapture to leapfrog Edtr
+      ref={editorWrapRef}
+      onClick={activateEditor}
     >
-      <label htmlFor={formId} className="sr-only">
-        {placeholder}
-      </label>
-      <TextareaAutosize
-        value={commentValue}
-        ref={textareaRef}
-        id={formId}
-        onChange={(event: ChangeEvent<HTMLTextAreaElement>) => {
-          setCommentValue(event.target.value)
-        }}
-        onKeyDown={onKeyDown}
-        placeholder={placeholder}
-        minRows={1}
-        className={clsx(
-          'serlo-input-font-reset w-full text-lg',
-          'text-black border-0 bg-transparent outline-none resize-none',
-          reply ? 'pr-14 pl-4' : 'pr-14 pl-4',
-          'placeholder-brandgreen'
-        )}
-      />
+      {isActive ? (
+        <Editor
+          onChange={(event) => {
+            commentState.current = event.getDocument() as EdtrPluginText
+          }} // @ts-expect-error think I followed edtr-io example, maybe outdated code in there?
+          plugins={{ text: textPlugin }}
+          initialState={initialState}
+        />
+      ) : (
+        <p className="pl-4 text-brandgreen text-lg w-full">{placeholder}</p>
+      )}
       <button
         title={sendTitle}
         onClick={onSendAction}
@@ -97,6 +121,54 @@ export function CommentForm({
           className={reply ? '' : 'pl-0.5'}
         />
       </button>
+      <style jsx>
+        {`
+          div {
+            :global(ul) {
+              list-style: initial;
+            }
+            :global(&:focus-within) {
+              overflow: visible;
+            }
+            :global(ul) {
+              list-style: initial;
+            }
+            :global(ol) {
+              list-style: decimal;
+            }
+            :global(a) {
+              text-decoration: underline;
+            }
+            :global(code) {
+              background-color: ${theme.colors.lightBlueBackground};
+              color: ${theme.colors.brand};
+              border-radius: 2px;
+              font-size: 1rem;
+              padding: 2px;
+            }
+            :global(> div) {
+              width: 100%;
+              font-size: 1.125rem;
+              color: #000;
+
+              padding: 0 3.5rem 0 0.6rem;
+
+              :global(div) {
+                margin-bottom: 0 !important;
+              }
+              /* style placeholder */
+              :global(span[contenteditable='false']) {
+                color: ${theme.colors.brandGreen} !important;
+                opacity: 1 !important;
+              }
+              /* hide bottom toolbar*/
+              :global(> div > div > div > div > div:first-child) {
+                opacity: 0;
+              }
+            }
+          }
+        `}
+      </style>
     </div>
   )
 }
