@@ -25,17 +25,28 @@ export function SerloTableRenderer(props: SerloTableRendererProps) {
 
   return (
     <table className="serlo-table overflow-x-scroll mb-8">
-      {rows.map((row, rowIndex) => {
-        return (
-          <tr key={rowIndex}>
-            {row.cells.map((cell, colIndex) =>
-              renderCell(cell, rowIndex, colIndex)
-            )}
-          </tr>
-        )
-      })}
+      {showColumnHeader ? (
+        <>
+          <thead>{renderRows([rows[0]])}</thead>
+          <tbody>{renderRows(rows.slice(1), 1)}</tbody>
+        </>
+      ) : (
+        <tbody>{renderRows(rows)}</tbody>
+      )}
     </table>
   )
+
+  function renderRows(rows: SerloTableRendererProps['rows'], startIndex = 0) {
+    return rows.map((row, rowIndex) => {
+      return (
+        <tr key={startIndex + rowIndex}>
+          {row.cells.map((cell, colIndex) =>
+            renderCell(cell, startIndex + rowIndex, colIndex)
+          )}
+        </tr>
+      )
+    })
+  }
 
   function renderCell(cell: JSX.Element, rowIndex: number, colIndex: number) {
     const isColHead = showColumnHeader && rowIndex === 0
