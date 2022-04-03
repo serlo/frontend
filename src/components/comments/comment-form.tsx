@@ -1,5 +1,5 @@
 import { Editor } from '@edtr-io/core'
-import { createTextPlugin, TextConfig } from '@edtr-io/plugin-text'
+import { createTextPlugin } from '@edtr-io/plugin-text'
 import {
   faReply,
   faArrowRight,
