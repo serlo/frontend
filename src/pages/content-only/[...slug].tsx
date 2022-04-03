@@ -12,6 +12,9 @@ import { Instance } from '@/fetcher/query-types'
 import { requestPage } from '@/fetcher/request-page'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
+// Fontend to support Content-API
+// https://github.com/serlo/serlo.org/wiki/Content-API
+
 export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
   //fallback, should be handled by CFWorker, (useful for localhost only)
   if (pageData.kind === 'redirect') {
