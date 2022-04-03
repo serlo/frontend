@@ -9,7 +9,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 import { useState, KeyboardEvent, useRef } from 'react'
 
+import { MathSpan } from '../content/math-span'
 import { useInstanceData } from '@/contexts/instance-context'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { getTextPluginI18n } from '@/edtr-io/plugins'
 import { isMac } from '@/helper/client-detection'
 import { EdtrPluginText } from '@/schema/edtr-io-types'
 import { theme } from '@/theme'
@@ -46,6 +49,10 @@ export function CommentForm({
     setIsActive(true)
   }
 
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return null
+  const editorStrings = loggedInData.strings.editor
+
   const textPlugin = createTextPlugin({
     placeholder,
     plugins: {
@@ -57,6 +64,7 @@ export function CommentForm({
       colors: true,
     },
     registry: [],
+    i18n: getTextPluginI18n(editorStrings),
   } as TextConfig)
 
   async function onSendAction() {
@@ -96,13 +104,16 @@ export function CommentForm({
       onClick={activateEditor}
     >
       {isActive ? (
-        <Editor
-          onChange={(event) => {
-            commentState.current = event.getDocument() as EdtrPluginText
-          }} // @ts-expect-error think I followed edtr-io example, maybe outdated code in there?
-          plugins={{ text: textPlugin }}
-          initialState={initialState}
-        />
+        <>
+          <MathSpan formula="" />
+          <Editor
+            onChange={(event) => {
+              commentState.current = event.getDocument() as EdtrPluginText
+            }}
+            plugins={{ text: textPlugin }}
+            initialState={initialState}
+          />
+        </>
       ) : (
         <p className="pl-4 text-brandgreen text-lg w-full">{placeholder}</p>
       )}

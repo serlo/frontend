@@ -69,92 +69,7 @@ export function createPlugins({
   registry: RowsConfig['plugins']
 }): Record<string, EditorPlugin<any, any>> &
   Record<PluginType, EditorPlugin<any, any>> {
-  const textPluginI18n = {
-    blockquote: {
-      toggleTitle: editorStrings.text.quote,
-    },
-    colors: {
-      setColorTitle: editorStrings.text.setColor,
-      resetColorTitle: editorStrings.text.resetColor,
-      openMenuTitle: editorStrings.text.colors,
-      closeMenuTitle: editorStrings.text.closeSubMenu,
-    },
-    headings: {
-      setHeadingTitle(level: number) {
-        return `${editorStrings.text.heading} ${level}`
-      },
-      openMenuTitle: editorStrings.text.headings,
-      closeMenuTitle: editorStrings.text.closeSubMenu,
-    },
-    link: {
-      toggleTitle: editorStrings.text.linkStrgK,
-      placeholder: editorStrings.text.enterUrl,
-      openInNewTabTitle: editorStrings.text.openInNewTab,
-    },
-    list: {
-      toggleOrderedList: editorStrings.text.orderedList,
-      toggleUnorderedList: editorStrings.text.unorderedList,
-      openMenuTitle: editorStrings.text.lists,
-      closeMenuTitle: editorStrings.text.closeSubMenu,
-    },
-    math: {
-      toggleTitle: editorStrings.text.mathFormula,
-      displayBlockLabel: editorStrings.text.displayAsBlock,
-      placeholder: editorStrings.text.formula,
-      editors: {
-        visual: editorStrings.text.visual,
-        latex: editorStrings.text.laTeX,
-        noVisualEditorAvailableMessage: editorStrings.text.onlyLaTeX,
-      },
-      helpText(KeySpan: React.ComponentType<{ children: React.ReactNode }>) {
-        return (
-          <>
-            {editorStrings.text.shortcuts}:
-            <br />
-            <br />
-            <p>
-              {editorStrings.text.fraction}: <KeySpan>/</KeySpan>
-            </p>
-            <p>
-              {editorStrings.text.superscript}: <KeySpan>↑</KeySpan>{' '}
-              {editorStrings.text.or} <KeySpan>^</KeySpan>
-            </p>
-            <p>
-              {editorStrings.text.subscript}: <KeySpan>↓</KeySpan>{' '}
-              {editorStrings.text.or} <KeySpan>_</KeySpan>
-            </p>
-            <p>
-              π, α, β, γ: <KeySpan>pi</KeySpan>, <KeySpan>alpha</KeySpan>,{' '}
-              <KeySpan>beta</KeySpan>,<KeySpan>gamma</KeySpan>
-            </p>
-            <p>
-              ≤, ≥: <KeySpan>{'<='}</KeySpan>, <KeySpan>{'>='}</KeySpan>
-            </p>
-            <p>
-              {editorStrings.text.root}: <KeySpan>\sqrt</KeySpan>,{' '}
-              <KeySpan>\nthroot</KeySpan>
-            </p>
-            <p>
-              {editorStrings.text.mathSymbols}: <KeySpan>{'\\<NAME>'}</KeySpan>,{' '}
-              {editorStrings.text.eG} <KeySpan>\neq</KeySpan> (≠),{' '}
-              <KeySpan>\pm</KeySpan> (±), ...
-            </p>
-            <p>
-              {editorStrings.text.functions}: <KeySpan>sin</KeySpan>,{' '}
-              <KeySpan>cos</KeySpan>, <KeySpan>ln</KeySpan>, ...
-            </p>
-          </>
-        )
-      },
-    },
-    richText: {
-      toggleStrongTitle: editorStrings.text.bold,
-      toggleEmphasizeTitle: editorStrings.text.italic,
-    },
-    suggestions: {
-      noResultsMessage: editorStrings.text.noItemsFound,
-    },
-  }
+  const textPluginI18n = getTextPluginI18n(editorStrings)
 
   return {
     anchor: createAnchorPlugin({
@@ -363,5 +278,96 @@ export function createPlugins({
     'type-text-solution': textSolutionTypePlugin,
     'type-user': userTypePlugin,
     'type-video': videoTypePlugin,
+  }
+}
+
+export function getTextPluginI18n(
+  editorStrings: LoggedInData['strings']['editor']
+) {
+  return {
+    blockquote: {
+      toggleTitle: editorStrings.text.quote,
+    },
+    colors: {
+      setColorTitle: editorStrings.text.setColor,
+      resetColorTitle: editorStrings.text.resetColor,
+      openMenuTitle: editorStrings.text.colors,
+      closeMenuTitle: editorStrings.text.closeSubMenu,
+    },
+    headings: {
+      setHeadingTitle(level: number) {
+        return `${editorStrings.text.heading} ${level}`
+      },
+      openMenuTitle: editorStrings.text.headings,
+      closeMenuTitle: editorStrings.text.closeSubMenu,
+    },
+    link: {
+      toggleTitle: editorStrings.text.linkStrgK,
+      placeholder: editorStrings.text.enterUrl,
+      openInNewTabTitle: editorStrings.text.openInNewTab,
+    },
+    list: {
+      toggleOrderedList: editorStrings.text.orderedList,
+      toggleUnorderedList: editorStrings.text.unorderedList,
+      openMenuTitle: editorStrings.text.lists,
+      closeMenuTitle: editorStrings.text.closeSubMenu,
+    },
+    math: {
+      toggleTitle: editorStrings.text.mathFormula,
+      displayBlockLabel: editorStrings.text.displayAsBlock,
+      placeholder: editorStrings.text.formula,
+      editors: {
+        visual: editorStrings.text.visual,
+        latex: editorStrings.text.laTeX,
+        noVisualEditorAvailableMessage: editorStrings.text.onlyLaTeX,
+      },
+      helpText(KeySpan: React.ComponentType<{ children: React.ReactNode }>) {
+        return (
+          <>
+            {editorStrings.text.shortcuts}:
+            <br />
+            <br />
+            <p>
+              {editorStrings.text.fraction}: <KeySpan>/</KeySpan>
+            </p>
+            <p>
+              {editorStrings.text.superscript}: <KeySpan>↑</KeySpan>{' '}
+              {editorStrings.text.or} <KeySpan>^</KeySpan>
+            </p>
+            <p>
+              {editorStrings.text.subscript}: <KeySpan>↓</KeySpan>{' '}
+              {editorStrings.text.or} <KeySpan>_</KeySpan>
+            </p>
+            <p>
+              π, α, β, γ: <KeySpan>pi</KeySpan>, <KeySpan>alpha</KeySpan>,{' '}
+              <KeySpan>beta</KeySpan>,<KeySpan>gamma</KeySpan>
+            </p>
+            <p>
+              ≤, ≥: <KeySpan>{'<='}</KeySpan>, <KeySpan>{'>='}</KeySpan>
+            </p>
+            <p>
+              {editorStrings.text.root}: <KeySpan>\sqrt</KeySpan>,{' '}
+              <KeySpan>\nthroot</KeySpan>
+            </p>
+            <p>
+              {editorStrings.text.mathSymbols}: <KeySpan>{'\\<NAME>'}</KeySpan>,{' '}
+              {editorStrings.text.eG} <KeySpan>\neq</KeySpan> (≠),{' '}
+              <KeySpan>\pm</KeySpan> (±), ...
+            </p>
+            <p>
+              {editorStrings.text.functions}: <KeySpan>sin</KeySpan>,{' '}
+              <KeySpan>cos</KeySpan>, <KeySpan>ln</KeySpan>, ...
+            </p>
+          </>
+        )
+      },
+    },
+    richText: {
+      toggleStrongTitle: editorStrings.text.bold,
+      toggleEmphasizeTitle: editorStrings.text.italic,
+    },
+    suggestions: {
+      noResultsMessage: editorStrings.text.noItemsFound,
+    },
   }
 }
