@@ -3624,10 +3624,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@serlo/api@npm:^0.28.0, @serlo/api@npm:^0.28.2":
+"@serlo/api@npm:^0.28.2":
   version: 0.28.2
   resolution: "@serlo/api@npm:0.28.2"
   checksum: c609d59ce5744f90a5d16319480f9db8c758c2758ee91277eeb8a94f4a28c552773117cb978b21f5b0b2d00f3ad69b11c88d0b3cead51ca5f79d7f334f04bf7d
+  languageName: node
+  linkType: hard
+
+"@serlo/api@npm:^0.30.0":
+  version: 0.30.0
+  resolution: "@serlo/api@npm:0.30.0"
+  checksum: 8dddad0d715b74e1af5a39b7a3b5e92e219ddda4cc3f8b87756defbd7b7b7c96cbff1efc1636cd5a1a472849105fa2ab771dbf79fdfa7163e9a05c9c3b503a97
   languageName: node
   linkType: hard
 
@@ -3675,7 +3682,7 @@ __metadata:
     "@fortawesome/free-solid-svg-icons": ^6.1.1
     "@fortawesome/react-fontawesome": ^0.1.18
     "@next/bundle-analyzer": ^12.0.0
-    "@serlo/api": ^0.28.0
+    "@serlo/api": ^0.30.0
     "@serlo/authorization": ^0.28.0
     "@serlo/legacy-editor-to-editor": Entkenntnis/tmp-serlo-legacy-editor-to-editor
     "@serlo/markdown": Entkenntnis/tmp-serlo-markdown

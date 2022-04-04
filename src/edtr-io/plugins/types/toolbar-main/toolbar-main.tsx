@@ -11,12 +11,13 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { faRedo, faSave, faUndo } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { createPortal } from 'react-dom'
 
 import { entity } from '../common/common'
 import { useHandleSave } from '../helpers/use-handle-save'
 import { SaveModal } from '@/edtr-io/components/save-modal'
+import { useLeaveConfirm } from '@/helper/use-leave-confirm'
 
 interface ToolbarMainProps {
   changes?: StateTypeReturnType<typeof entity['changes']>
@@ -42,9 +43,7 @@ export function ToolbarMain({
     subscriptions
   )
 
-  useEffect(() => {
-    window.onbeforeunload = hasPendingChanges && !pending ? () => '' : null
-  }, [hasPendingChanges, pending])
+  useLeaveConfirm(hasPendingChanges && !pending)
 
   return (
     <>

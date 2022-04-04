@@ -14,6 +14,10 @@ export const features = {
     process.env.NEXT_PUBLIC_ENV === 'production'
       ? null
       : { cookieName: 'useFrontend', isActive: false },
+  addRevisionMutation:
+    process.env.NEXT_PUBLIC_ENV === 'production'
+      ? null
+      : { cookieName: 'useAddRevisionMutation', isActive: false },
 }
 
 type Feature = keyof typeof features
@@ -105,6 +109,15 @@ export function ProfileExperimental() {
             , weil wir den Legacy-Editor in absehbarer Zeit ganz abschalten
             werden. Danke!
           </p>
+        </div>
+      )}
+      {features['addRevisionMutation'] && (
+        <div>
+          <h3 className="serlo-h3 mb-3">
+            ⚠️ Revisions Speichern über die neue Infrastruktur{' '}
+            {renderFeatureButton('addRevisionMutation')}
+          </h3>
+          <p className="serlo-p">Mutige Freiwillige vor.</p>
         </div>
       )}
     </section>

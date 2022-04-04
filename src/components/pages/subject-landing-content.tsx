@@ -70,7 +70,7 @@ export function SubjectLandingContent({
           </h2>
 
           <Quickbar
-            subject={subject}
+            subject={data.title}
             className="max-w-sm sm:px-0 sm:-ml-1 md:max-w-2xl md:pr-4"
           />
         </section>

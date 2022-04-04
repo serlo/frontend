@@ -13,7 +13,7 @@ import {
   useSetCommentStateMutation,
   useSetThreadStateMutation,
   useThreadArchivedMutation,
-} from '@/helper/mutations'
+} from '@/helper/mutations/thread'
 
 interface DropdownMenuProps {
   isParent?: boolean
