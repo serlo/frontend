@@ -5,7 +5,7 @@ export const landingSubjectsData: LandingSubjectsData = {
   subjects: [
     { url: '/169578', title: 'Aprender matemáticas', icon: 'math' },
     {
-      url: '/community/193306/estudios-en-diásporas-africanas-para-la-escuela',
+      url: '/229701/estudios-en-diásporas-africanas-para-la-escuela',
       title: 'Diásporas Africanas',
       icon: 'geography',
     },

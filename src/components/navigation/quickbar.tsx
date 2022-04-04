@@ -14,6 +14,7 @@ interface QuickbarDataEntry {
   count: number
   pathLower: string[]
   titleLower: string
+  root: string
 }
 
 type QuickbarData = QuickbarDataEntry[]
@@ -45,12 +46,12 @@ export function Quickbar({ subject, className }: QuickbarProps) {
             entry.pathLower = entry.path.map((x) => x.toLowerCase())
             entry.titleLower = entry.title.toLowerCase()
           })
+
+          const subjectLower = subject?.toLowerCase() ?? ''
+
           const filteredData = subject
-            ? data.filter(
-                (entry) =>
-                  entry.titleLower.includes(subject) ||
-                  (entry.path.length > 0 &&
-                    entry.pathLower[0].includes(subject))
+            ? data.filter((entry) =>
+                entry.root?.toLowerCase().startsWith(subjectLower)
               )
             : data
           setData(filteredData)

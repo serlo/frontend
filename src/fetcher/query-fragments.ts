@@ -136,6 +136,7 @@ export const sharedEventFragments = gql`
         comments(first: 1) {
           nodes {
             id
+            content
           }
         }
       }

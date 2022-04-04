@@ -66,11 +66,11 @@ export function SubjectLandingContent({
 
         <section className="max-w-3xl mx-auto mt-10 text-center sm:text-left sm:mt-16">
           <h2 className="text-truegray-700 font-bold text-lg mb-2">
-            Durchsuche den {data.title}-Bereich
+            Durchsuche den Bereich {data.title}
           </h2>
 
           <Quickbar
-            subject={subject}
+            subject={data.title}
             className="max-w-sm sm:px-0 sm:-ml-1 md:max-w-2xl md:pr-4"
           />
         </section>
@@ -79,7 +79,7 @@ export function SubjectLandingContent({
           <p className="text-3xl mt-4 mb-12 font-extrabold tracking-tight">
             <span>Was darf&apos;s denn heute sein?</span>
           </p>
-          <SubjectLandingTopicOverview subterms={subterms} />
+          <SubjectLandingTopicOverview subterms={subterms} subject={subject} />
         </section>
 
         <section className={clsx('text-center', 'mt-20 mb-8')}>

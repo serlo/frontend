@@ -32,7 +32,7 @@ export function CommunityWallSubjectLanding({
     setPersons((p) => shuffleArray(p))
   }, [])
 
-  const { title } = deSubjectLandingData[subject]
+  const { title, contributeLink } = deSubjectLandingData[subject]
 
   return (
     <>
@@ -60,7 +60,7 @@ export function CommunityWallSubjectLanding({
                 'serlo-new-landing-button inline-block group-hover:bg-brand-light hover:no-underline',
                 'mt-6 py-2 px-4 text-lg'
               )}
-              href="/49982/neu-hier"
+              href={contributeLink}
             >
               Mehr erfahren
             </Link>
@@ -82,7 +82,7 @@ export function CommunityWallSubjectLanding({
         <div
           className={clsx(
             'flex flex-wrap justify-evenly lg:max-w-[85rem] lg:mx-auto',
-            'md:block md:pb-12 md:h-630 md:relative lg:h-[75vh]'
+            'md:block md:pb-12 md:h-630 md:relative'
           )}
         >
           <CommunityWallPersons

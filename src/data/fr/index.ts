@@ -242,11 +242,12 @@ export const instanceData = {
       goToChat: "Aller au chat",
       registerChat: "S'inscrire au chat",
       inviteToChat: "Inviter au chat",
-      invitation: "💬 %username% t'a invité dans le chat de la communauté Serlo !\nClique sur %chatlink% pour rejoindre.",
       inviteModal: {
         part1: "%username% n'est pas encore actif dans notre chat de la communauté à %chatLink%.",
-        part2: "Tu peux inviter %username% dans le chat pour envoyer des messages directs :",
-        button: "Envoyer une invitation"
+        part2: 'You can invite %username% to the chat to send direct messages.',
+        messagePlaceholder: 'Optional: Personal message',
+        button: "Envoyer une invitation",
+        success: '✨ Successfully invited!'
       },
       activityGraph: {
         edits: "Modifications",
@@ -308,7 +309,7 @@ export const instanceData = {
       setTaxonomyParentChanged: "%actor% a changé le parent de %child% à %parent%.",
       setUuidStateTrashed: "%actor% a mis %object% dans la corbeille.",
       setUuidStateRestored: "%actor% a restauré %object%.",
-      inviteToChat: "T'as été invité dans le Chat! %break% Clique sur %chatLink% pour discuter avec %actor% et d'autres.",
+      inviteToChat: '%actor% invited you to the Chat: %comment% Go to %chatLink% to chat with %actor% and others.',
       entityPlaceholderFallback: "Contenu"
     },
     actions: {
@@ -730,6 +731,7 @@ export const loggedInData = {
         leftHandSide: "côté gauche",
         transformation: "Transformation",
         mode: 'Mode',
+        transformationExample: "e.g. -3x",
         transformationOfEquations: 'Transformation of equations',
         transformationOfTerms: 'Transformation of terms',
         addNewRow: 'Add new row',

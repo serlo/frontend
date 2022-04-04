@@ -156,9 +156,14 @@ export function Event({
                 community.serlo.org
               </a>
             ),
-            break: <br />,
+            comment: (
+              <p className="font-normal">
+                &quot;{event.thread.comments.nodes[0].content}&quot;
+              </p>
+            ),
           })
         }
+        //default notification
         return parseString(strings.events.createThread, {
           thread: renderThread(event.thread),
           object: renderObject(event.object),

@@ -242,11 +242,12 @@ export const instanceData = {
       goToChat: 'Go to Chat',
       registerChat: 'Register for Chat',
       inviteToChat: 'Invite to chat',
-      invitation: '💬 %username% has invited you to the Serlo community chat!\nGo to %chatlink% to join.',
       inviteModal: {
         part1: '%username% is not yet active in our community chat at %chatLink%.',
-        part2: 'You can invite %username% to the chat to send direct messages:',
-        button: 'Send invitation'
+        part2: 'You can invite %username% to the chat to send direct messages.',
+        messagePlaceholder: 'Optional: Personal message',
+        button: 'Send invitation',
+        success: '✨ Successfully invited!'
       },
       activityGraph: {
         edits: 'Edits',
@@ -308,7 +309,7 @@ export const instanceData = {
       setTaxonomyParentChanged: '%actor% changed parent of %child% to %parent%.',
       setUuidStateTrashed: '%actor% trashed %object%.',
       setUuidStateRestored: '%actor% restored %object%.',
-      inviteToChat: 'You have been invited to the Chat! %break% Go to %chatLink% to chat with %actor% and others.',
+      inviteToChat: '%actor% invited you to the Chat: %comment% Go to %chatLink% to chat with %actor% and others.',
       entityPlaceholderFallback: 'Content'
     },
     actions: {
@@ -730,6 +731,7 @@ export const loggedInData = {
         leftHandSide: 'left-hand side',
         transformation: 'transformation',
         mode: 'Mode',
+        transformationExample: "e.g. -3x",
         transformationOfEquations: 'Transformation of equations',
         transformationOfTerms: 'Transformation of terms',
         addNewRow: 'Add new row',
