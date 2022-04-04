@@ -149,7 +149,7 @@ export function convertTextNode(node: NewText): FrontendContentNode[] {
       text,
       em: node.em,
       strong: node.strong,
-      color: colors[node.color as number],
+      color: node.color ? colors[node.color] : undefined,
       code: node.code,
     },
   ]

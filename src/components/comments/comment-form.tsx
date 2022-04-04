@@ -1,4 +1,4 @@
-import { Editor } from '@edtr-io/core'
+import type { EditorProps } from '@edtr-io/core'
 import { createTextPlugin } from '@edtr-io/plugin-text'
 import {
   faReply,
@@ -7,6 +7,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
+import dynamic from 'next/dynamic'
 import { useState, KeyboardEvent, useRef } from 'react'
 
 import { MathSpan } from '../content/math-span'
@@ -14,8 +15,12 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { getTextPluginI18n } from '@/edtr-io/plugins'
 import { isMac } from '@/helper/client-detection'
-import { EdtrPluginText } from '@/schema/edtr-io-types'
+import type { EdtrPluginText } from '@/schema/edtr-io-types'
 import { theme } from '@/theme'
+
+const Editor = dynamic<EditorProps>(() =>
+  import('@edtr-io/core').then((mod) => mod.Editor)
+)
 
 export interface CommentFormProps {
   onSend: (
@@ -53,21 +58,23 @@ export function CommentForm({
   if (!loggedInData) return null
   const editorStrings = loggedInData.strings.editor
 
-  const plugins = {
-    text: createTextPlugin({
-      registry: [],
-      i18n: getTextPluginI18n(editorStrings),
-      placeholder,
-      plugins: {
-        suggestions: true,
-        math: true,
-        code: true,
-        headings: false,
-        lists: true,
-        colors: true,
-      },
-    }),
-  }
+  const plugins = isActive
+    ? {
+        text: createTextPlugin({
+          registry: [],
+          i18n: getTextPluginI18n(editorStrings),
+          placeholder,
+          plugins: {
+            suggestions: true,
+            math: true,
+            code: true,
+            headings: false,
+            lists: true,
+            colors: true,
+          },
+        }),
+      }
+    : {}
 
   async function onSendAction() {
     const content = JSON.stringify(commentState.current)
