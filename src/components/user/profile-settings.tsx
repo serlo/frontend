@@ -25,18 +25,18 @@ export function ProfileSettings({ rawDescription }: ProfileSettingsProps) {
 
   return (
     <>
-      <h2 className="serlo-h2">{loggedInStrings.editAbout}</h2>
-      <ProfileDescriptionEditor rawDescription={rawDescription} />
-
       <h2 id="image" className="serlo-h2">
-        {loggedInStrings.howToEditImage.heading}
+        {loggedInStrings.editImage.header}
       </h2>
       {renderHowToEditImage()}
 
       <h2 id="motivation" className="serlo-h2">
-        {loggedInStrings.motivation.heading}
+        {loggedInStrings.motivation.header}
       </h2>
       {renderHowToEditMotivation()}
+
+      <h2 className="serlo-h2">{loggedInStrings.editAbout}</h2>
+      <ProfileDescriptionEditor rawDescription={rawDescription} />
 
       <ProfileExperimental />
 
@@ -48,7 +48,7 @@ export function ProfileSettings({ rawDescription }: ProfileSettingsProps) {
   )
 
   function renderHowToEditImage() {
-    const { description, steps } = loggedInStrings.howToEditImage
+    const { buttonText, description, steps } = loggedInStrings.editImage
     const chatLink = (
       <a className="serlo-link" href="https://community.serlo.org">
         community.serlo.org
@@ -78,7 +78,7 @@ export function ProfileSettings({ rawDescription }: ProfileSettingsProps) {
     return (
       <>
         <Spoiler
-          title={loggedInStrings.showInstructions}
+          title={buttonText}
           path={['profile-settings']}
           body={
             <>
@@ -105,12 +105,12 @@ export function ProfileSettings({ rawDescription }: ProfileSettingsProps) {
 
   function renderHowToEditMotivation() {
     if (lang !== 'de') return null
-    const { intro, privacy, toForm } = loggedInStrings.motivation
+    const { buttonText, intro, privacy, toForm } = loggedInStrings.motivation
     const editUrl = `https://docs.google.com/forms/d/e/1FAIpQLSdb_My7YAVNA7ha9XnBcYCZDk36cOqgcWkBqowatbefX0IzEg/viewform?usp=pp_url&entry.14483495=${username}`
 
     return (
       <Spoiler
-        title={loggedInStrings.showInstructions}
+        title={buttonText}
         path={['profile-settings']}
         body={
           <>
