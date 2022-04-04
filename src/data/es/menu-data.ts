@@ -29,6 +29,8 @@ export const headerData: InstanceData['headerData'] = [
     icon: 'subject',
     children: [
       { url: '/169578', title: 'Matemáticas' },
+      { url: '/241982', title: 'Sostenibilidad aplicada' },
+      { url: '/229701', title: 'Estudios en Diásporas Africanas' },
       { url: '/community/sandbox', title: 'Sandbox' },
     ],
   },
