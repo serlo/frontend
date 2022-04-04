@@ -1,4 +1,4 @@
-import { Comment as CommentType } from '@serlo/api'
+import type { Comment as CommentType } from '@serlo/api'
 import clsx from 'clsx'
 import dynamic from 'next/dynamic'
 import { useEffect, useRef } from 'react'
@@ -6,11 +6,11 @@ import { useEffect, useRef } from 'react'
 import { Link } from '../content/link'
 import { MathSpanProps } from '../content/math-span'
 import { MetaBar } from './meta-bar'
-import { FrontendContentNode, FrontendTextNode } from '@/data-types'
 import { replaceWithJSX } from '@/helper/replace-with-jsx'
 import { scrollIfNeeded } from '@/helper/scroll'
 import { renderArticle } from '@/schema/article-renderer'
-import { convert } from '@/schema/convert-edtr-io-state'
+import { convertTextPluginState } from '@/schema/convert-text-plugin'
+import type { EdtrPluginText } from '@/schema/edtr-io-types'
 
 interface CommentProps {
   threadId: string
@@ -110,11 +110,9 @@ export function Comment({
   }
 
   function renderEdtrState() {
-    const converted = convertState(content)
-    return <div className="-mb-3">{renderArticle(converted)}</div>
-  }
-
-  function convertState(raw: string): FrontendContentNode[] {
-    return convert(JSON.parse(raw) as FrontendTextNode)
+    const renderedContent = renderArticle(
+      convertTextPluginState((JSON.parse(content) as EdtrPluginText).state)
+    )
+    return <div className="-mb-3">{renderedContent}</div>
   }
 }

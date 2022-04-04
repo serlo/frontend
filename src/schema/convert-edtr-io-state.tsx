@@ -1,69 +1,25 @@
-import { NewNode } from '@edtr-io/plugin-text'
 import { converter } from '@serlo/markdown'
 
 import { convertLegacyState } from './convert-legacy-state'
-import {
-  EdtrState,
-  SlateBlockElement,
-  SlateTextElement,
-  UnsupportedEdtrState,
-} from './edtr-io-types'
+import { convertTextPluginState } from './convert-text-plugin'
+import { EdtrState, UnsupportedEdtrState } from './edtr-io-types'
 import { sanitizeLatex } from './sanitize-latex'
-import {
-  FrontendContentNode,
-  FrontendLiNode,
-  FrontendMathNode,
-  FrontendTextColor,
-  FrontendTextNode,
-  Sign,
-} from '@/data-types'
+import { FrontendContentNode, FrontendTextNode, Sign } from '@/data-types'
 import { BoxType } from '@/edtr-io/plugins/box/renderer'
-
-const colors: FrontendTextColor[] = ['blue', 'green', 'orange']
 
 function isEdtrState(node: ConvertData): node is EdtrState {
   return (node as EdtrState).plugin !== undefined
 }
 
-function isSlateBlock(node: ConvertData): node is SlateBlockElement {
-  return (node as SlateBlockElement).type !== undefined
-}
-
-function isTextNode(node: ConvertData): node is SlateTextElement {
-  return (node as SlateTextElement).text !== undefined
-}
-
-type ConvertData =
-  | EdtrState
-  | NewNode
-  | SlateTextElement
-  | UnsupportedEdtrState
-  | FrontendContentNode
+export type ConvertData = EdtrState | UnsupportedEdtrState | FrontendContentNode
 
 export type ConvertNode = ConvertData | ConvertData[] | undefined
 
 export function convert(node?: ConvertNode): FrontendContentNode[] {
   // compat: no or empty node, we ignore
-  if (!node || Object.keys(node).length === 0) {
-    return []
-  }
-
-  if (Array.isArray(node)) {
-    return node.flatMap(convert)
-  }
-
-  if (isEdtrState(node)) {
-    return convertPlugin(node)
-  }
-
-  if (isSlateBlock(node)) {
-    return convertSlate(node)
-  }
-
-  if (isTextNode(node)) {
-    return convertText(node)
-  }
-
+  if (!node || Object.keys(node).length === 0) return []
+  if (Array.isArray(node)) return node.flatMap(convert)
+  if (isEdtrState(node)) return convertPlugin(node)
   return []
 }
 
@@ -100,12 +56,11 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
       },
     ]
   }
-
   if (node.plugin === 'rows') {
     return convert(node.state as unknown as EdtrState)
   }
   if (node.plugin === 'text') {
-    return convert(node.state)
+    return convertTextPluginState(node.state)
   }
   if (node.plugin === 'image') {
     // remove images without source
@@ -121,12 +76,7 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
     ]
   }
   if (node.plugin === 'important') {
-    return [
-      {
-        type: 'important',
-        children: convert(node.state),
-      },
-    ]
+    return [{ type: 'important', children: convert(node.state) }]
   }
   if (node.plugin === 'blockquote') {
     return [
@@ -173,7 +123,6 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
       },
     ]
   }
-
   if (node.plugin === 'multimedia') {
     const width = node.state.width ?? 50
     return [
@@ -279,193 +228,5 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
       },
     ]
   }
-
   return []
-}
-
-function convertSlate(node: SlateBlockElement): FrontendContentNode[] {
-  if (node.type === 'p') {
-    return handleSemistructedContentOfP(convert(node.children))
-  }
-  if (node.type === 'a') {
-    const children = convert(node.children)
-    if (!node.href) {
-      // remove empty links
-      return children
-    }
-    return [
-      {
-        type: 'a',
-        href: node.href,
-        children,
-      },
-    ]
-  }
-  if (node.type === 'h') {
-    if (
-      node.level === 1 ||
-      node.level === 2 ||
-      node.level === 3 ||
-      node.level === 4 ||
-      node.level === 5
-    ) {
-      return [
-        {
-          type: 'h',
-          level: node.level,
-          children: convert(node.children),
-        },
-      ]
-    } else {
-      return [
-        {
-          type: 'h',
-          level: 5,
-          children: convert(node.children),
-        },
-      ]
-    }
-  }
-  if (node.type === 'math' && !node.inline) {
-    if (!node.src) {
-      return []
-    }
-    return [
-      {
-        type: 'math',
-        formula: sanitizeLatex(node.src),
-        formulaSource: node.src,
-        alignCenter: true,
-      },
-    ]
-  }
-  if (node.type === 'math' && node.inline) {
-    if (!node.src) {
-      return []
-    }
-    return [
-      {
-        type: 'inline-math',
-        formula: sanitizeLatex(node.src),
-        formulaSource: node.src,
-      },
-    ]
-  }
-  if (node.type === 'unordered-list') {
-    // only allow li nodes
-    const children = convert(node.children).filter(
-      (child) => child.type === 'li'
-    ) as FrontendLiNode[]
-
-    return [
-      {
-        type: 'ul',
-        children,
-      },
-    ]
-  }
-  if (node.type === 'ordered-list') {
-    // only allow li nodes
-    const children = convert(node.children).filter(
-      (child) => child.type === 'li'
-    ) as FrontendLiNode[]
-
-    return [
-      {
-        type: 'ol',
-        children,
-      },
-    ]
-  }
-  if (node.type === 'list-item') {
-    const children = handleSemistructedContentOfP(convert(node.children))
-    return [
-      {
-        type: 'li',
-        children,
-      },
-    ]
-  }
-  if (node.type === 'list-item-child') {
-    return convert(node.children)
-  }
-
-  return []
-}
-
-function convertText(node: SlateTextElement): FrontendContentNode[] {
-  const text = node.text.replace(/\ufeff/g, '')
-  if (text === '') return []
-  return [
-    {
-      type: 'text',
-      text,
-      em: node.em,
-      strong: node.strong,
-      color: colors[node.color as number],
-      code: node.code,
-    },
-  ]
-}
-
-function unwrapSingleMathInline(children: FrontendContentNode[]) {
-  return children.map((child) => {
-    if (
-      child.type == 'p' &&
-      child.children?.length == 1 &&
-      child.children[0].type == 'inline-math'
-    ) {
-      // force conversion
-      ;(child.children[0] as unknown as FrontendMathNode).type = 'math'
-      return child.children[0]
-    }
-    return child
-  })
-}
-
-function handleSemistructedContentOfP(input: FrontendContentNode[]) {
-  // generate children, split text blocks at new lines
-  const children = input.flatMap((child) => {
-    if (child.type == 'text' && child.text.includes('\n')) {
-      return child.text.split('\n').flatMap((text, i) => {
-        const value: FrontendTextNode[] = []
-        if (i != 0) {
-          value.push({ type: 'text', text: '%%%BARRIER%%%' })
-        }
-        if (text) {
-          value.push({ type: 'text', text })
-        }
-        return value
-      })
-    }
-    return child
-  })
-
-  // group inline nodes together in p, don't merge if barrier is present
-  const result: FrontendContentNode[] = []
-  let resultAppendable = false
-  children.forEach((child) => {
-    if (
-      child.type == 'text' ||
-      child.type == 'a' ||
-      child.type == 'inline-math'
-    ) {
-      const last = result[result.length - 1]
-      if (child.type == 'text' && child.text == '%%%BARRIER%%%') {
-        resultAppendable = false
-        return
-      }
-      if (resultAppendable && last && last.type == 'p') {
-        last.children!.push(child)
-      } else {
-        result.push({ type: 'p', children: [child] })
-        resultAppendable = true
-      }
-    } else {
-      result.push(child)
-      resultAppendable = false
-    }
-  })
-
-  return unwrapSingleMathInline(result)
 }
