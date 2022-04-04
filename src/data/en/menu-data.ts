@@ -12,7 +12,8 @@ export const headerData: InstanceData['headerData'] = [
     title: 'Subjects',
     icon: 'subject',
     children: [
-      { url: '/112089', title: 'Applied Sustainability' },
+      { url: '/63179', title: 'Applied Sustainability' },
+      { url: '/23591', title: 'Mathematics' },
       { url: '/106103', title: 'Subjects under construction' },
     ],
   },
