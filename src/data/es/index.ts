@@ -447,10 +447,12 @@ export const loggedInData = {
         FORBIDDEN: "Lo sentimos, ¡no estás autorizado para hacer esto!",
         INVALID_TOKEN: '',
         BAD_USER_INPUT: '',
-        UNKNOWN: "Un error desconocido…"
+        UNKNOWN: "Un error desconocido…",
+        valueMissing: 'Please fill all required fields'
       }
     },
     editor: {
+      confirmRouteChange: "Are you sure you want to leave without saving?",
       edtrIo: {
         extendedSettings: "Ajustes extendidos",
         close: "Cerrar",
@@ -750,21 +752,23 @@ export const loggedInData = {
     profileSettings: {
       editAbout: "Tu descripción",
       showInstructions: "Mostrar instrucciones",
-      howToEditImage: {
-        heading: "Como editar tu foto del perfil",
-        description: "Actualmente usamos las imágenes del %chatLink%  como impagen de perfil.  Para cambiar la imágen, haz lo siguiente:",
+      editImage: {
+        header: 'Profile picture',
+        buttonText: 'How to edit your profile picture',
+        description: 'Currently we use the images from %chatLink% as profile pictures. In order to change your picture, do the following:',
         steps: {
-          goToChat: "Ir a %chatLink%.",
-          signIn: "Iniciar sesión.",
-          goToMyAccount: "Ir al menú de usuario a %myAccountLink%",
-          myAccount: "Mi cuenta",
-          uploadPicture: "Sube una nueva imagen (asegúrate de que sea cuadrada) y haz clic en \"Guardar cambios\".",
-          refreshPage: "Vuelve aquí y actualiza la imagen usando %refreshLink%.",
-          refreshLink: "este enlace"
+          goToChat: 'Go to %chatLink%.',
+          signIn: 'Sign in.',
+          goToMyAccount: 'Go in the user menu to %myAccountLink%.',
+          myAccount: 'My Account',
+          uploadPicture: 'Upload a new picture (make sure it is square) and click "Save changes".',
+          refreshPage: 'Come back here and refresh the image using %refreshLink%.',
+          refreshLink: 'this link'
         }
       },
       motivation: {
-        heading: "Cómo editar tu motivación",
+        header: 'Motivation',
+        buttonText: 'How to edit your motivation',
         intro: "La motivación es una función nueva que está a prueba en este momento. Para editar tu motivación tienes que completar un sencillo formulario.",
         privacy: "El formulario y el almacenamiento de datos lo ofrece Google y la información personal puede ser transferida a este servicio cuando se utiliza esta función.",
         toForm: "Formulario de Motivación"
