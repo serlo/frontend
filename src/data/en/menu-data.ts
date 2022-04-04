@@ -3,8 +3,8 @@ import { InstanceData, LandingSubjectsData } from '@/data-types'
 
 export const landingSubjectsData: LandingSubjectsData = {
   subjects: [
-      { url: '/23591', title: 'Mathematics', icon: 'math' },
-      { url: '/63179', title: 'Applied Sustainability', icon: 'sustainability' },
+    { url: '/23591', title: 'Mathematics', icon: 'math' },
+    { url: '/63179', title: 'Applied Sustainability', icon: 'sustainability' },
   ],
   additionalLinks: [],
 }
