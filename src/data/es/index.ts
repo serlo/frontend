@@ -244,10 +244,10 @@ export const instanceData = {
       inviteToChat: "Invita al chat",
       inviteModal: {
         part1: "%username%  aún no está activo/a en nuestra comunidad del chat en %chatLink%.",
-        part2: 'You can invite %username% to the chat to send direct messages.',
+        part2: "Puedes invitar a %username% al chat para enviar mensajes directos.",
         messagePlaceholder: 'Optional: Personal message',
         button: "Enviar invitación",
-        success: '✨ Successfully invited!'
+        success: "El usuario ha sido invitado correctamente."
       },
       activityGraph: {
         edits: "Ediciones",
@@ -448,11 +448,11 @@ export const loggedInData = {
         INVALID_TOKEN: '',
         BAD_USER_INPUT: '',
         UNKNOWN: "Un error desconocido…",
-        valueMissing: 'Please fill all required fields'
+        valueMissing: "Por favor complete todos los campos requeridos"
       }
     },
     editor: {
-      confirmRouteChange: "Are you sure you want to leave without saving?",
+      confirmRouteChange: "¿Estás seguro de que quieres salir sin guardar?",
       edtrIo: {
         extendedSettings: "Ajustes extendidos",
         close: "Cerrar",
@@ -733,7 +733,7 @@ export const loggedInData = {
         leftHandSide: "Lado izquierdo",
         transformation: "transformación",
         mode: "Modalidad",
-        transformationExample: "e.g. -3x",
+        transformationExample: "ej. -3x",
         transformationOfEquations: "Transformación de ecuaciones",
         transformationOfTerms: "Transformación de términos",
         addNewRow: "Añadir nueva fila",
@@ -753,22 +753,22 @@ export const loggedInData = {
       editAbout: "Tu descripción",
       showInstructions: "Mostrar instrucciones",
       editImage: {
-        header: 'Profile picture',
-        buttonText: 'How to edit your profile picture',
-        description: 'Currently we use the images from %chatLink% as profile pictures. In order to change your picture, do the following:',
+        header: "Foto de perfil",
+        buttonText: "Como editar tu foto del perfil",
+        description: "Actualmente usamos las imágenes del %chatLink%  como impagen de perfil.  Para cambiar la imágen, haz lo siguiente:",
         steps: {
-          goToChat: 'Go to %chatLink%.',
-          signIn: 'Sign in.',
-          goToMyAccount: 'Go in the user menu to %myAccountLink%.',
-          myAccount: 'My Account',
-          uploadPicture: 'Upload a new picture (make sure it is square) and click "Save changes".',
-          refreshPage: 'Come back here and refresh the image using %refreshLink%.',
-          refreshLink: 'this link'
+          goToChat: "Ir a %chatLink%.",
+          signIn: "Iniciar sesión.",
+          goToMyAccount: "Ir al menú de usuario a %myAccountLink%",
+          myAccount: "Mi cuenta",
+          uploadPicture: "Sube una nueva imagen (asegúrate de que sea cuadrada) y haz clic en \"Guardar cambios\".",
+          refreshPage: "Vuelve aquí y actualiza la imagen usando %refreshLink%.",
+          refreshLink: "este enlace"
         }
       },
       motivation: {
-        header: 'Motivation',
-        buttonText: 'How to edit your motivation',
+        header: "Motivación",
+        buttonText: "Cómo editar tu motivación",
         intro: "La motivación es una función nueva que está a prueba en este momento. Para editar tu motivación tienes que completar un sencillo formulario.",
         privacy: "El formulario y el almacenamiento de datos lo ofrece Google y la información personal puede ser transferida a este servicio cuando se utiliza esta función.",
         toForm: "Formulario de Motivación"
