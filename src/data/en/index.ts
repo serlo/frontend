@@ -479,9 +479,11 @@ export const loggedInData = {
         INVALID_TOKEN: '',
         BAD_USER_INPUT: '',
         UNKNOWN: 'An unknown error…',
+        valueMissing: 'Please fill all required fields'
       }
     },
     editor: {
+      confirmRouteChange: "Are you sure you want to leave without saving?",
       edtrIo: {
         extendedSettings: 'Extended Settings',
         close: 'Close',

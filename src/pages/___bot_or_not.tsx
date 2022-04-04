@@ -16,7 +16,7 @@ import { FrontendContentNode, UserPage } from '@/data-types'
 import { convertState } from '@/fetcher/convert-state'
 import { sharedUserFragment } from '@/fetcher/user/query'
 import { isMac } from '@/helper/client-detection'
-import { mutationFetch } from '@/helper/mutations'
+import { mutationFetch } from '@/helper/mutations/helper'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { renderArticle } from '@/schema/article-renderer'
 

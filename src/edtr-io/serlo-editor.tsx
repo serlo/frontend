@@ -11,12 +11,13 @@ import { createPlugins } from './plugins'
 import { useCanDo } from '@/auth/use-can-do'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { RevisionAddMutationData } from '@/helper/mutations/revision'
 
 export interface SerloEditorProps {
   getCsrfToken(): string
   children?: React.ReactNode
   needsReview: boolean
-  onSave: (data: unknown) => Promise<void>
+  onSave: (data: RevisionAddMutationData) => Promise<void>
   onError?: (error: Error, context: Record<string, string>) => void
   initialState: EditorProps['initialState'] // expects "deserialized" state now
   type: string

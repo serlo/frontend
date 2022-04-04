@@ -20,7 +20,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 import {
   useCreateThreadMutation,
   useCreateCommentMutation,
-} from '@/helper/mutations'
+} from '@/helper/mutations/thread'
 import { scrollToPrevious } from '@/helper/scroll'
 import { useCommentData } from '@/helper/use-comment-data'
 

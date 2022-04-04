@@ -19,7 +19,10 @@ export default renderedPageNoHooks<EditorPageData>((props) => {
       <div className="relative">
         <MaxWidthDiv>
           <main>
-            <Guard needsAuth data>
+            <Guard
+              needsAuth={process.env.NEXT_PUBLIC_ENV === 'production'}
+              data
+            >
               <>
                 {props.converted ? <EditorWarning converted /> : null}
                 <AddRevision {...props} />

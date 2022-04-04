@@ -4,6 +4,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
+import { Fragment } from 'react'
 
 import { Link } from '../content/link'
 import { BreadcrumbsData, BreadcrumbEntry } from '@/data-types'
@@ -25,7 +26,9 @@ export function Breadcrumbs({
     <nav className={clsx('mx-side mt-6 sm:mb-11 sm:ml-2.5')}>
       {data &&
         data.map((bcEntry, i) => {
-          return renderBreadcrumbEntry(bcEntry, i)
+          return (
+            <Fragment key={i}>{renderBreadcrumbEntry(bcEntry, i)}</Fragment>
+          )
         })}
     </nav>
   )
