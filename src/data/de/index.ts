@@ -753,22 +753,22 @@ export const loggedInData = {
       editAbout: "Deine Beschreibung",
       showInstructions: "Anleitung anzeigen",
       editImage: {
-        header: 'Profile picture',
-        buttonText: 'How to edit your profile picture',
-        description: 'Currently we use the images from %chatLink% as profile pictures. In order to change your picture, do the following:',
+        header: "Profilbild",
+        buttonText: "So kannst du dein Profilbild ändern",
+        description: "Wir benutzen die Bilder von %chatLink% als Profilbilder. Um dein Bild zu ändern musst du diesen Schritten folgen:",
         steps: {
-          goToChat: 'Go to %chatLink%.',
-          signIn: 'Sign in.',
-          goToMyAccount: 'Go in the user menu to %myAccountLink%.',
-          myAccount: 'My Account',
-          uploadPicture: 'Upload a new picture (make sure it is square) and click "Save changes".',
-          refreshPage: 'Come back here and refresh the image using %refreshLink%.',
-          refreshLink: 'this link'
+          goToChat: "Gehe zu %chatLink%.",
+          signIn: "Melde dich an.",
+          goToMyAccount: "Gehe im Usermenü auf %myAccountLink%.",
+          myAccount: "Mein Konto",
+          uploadPicture: "Lade ein neues Bild hoch (ein quadratisches!) und klicke oben auf \"Änderungen speichern\".",
+          refreshPage: "Komme hierher zurück und aktualisiere dein Bild mit %refreshLink%.",
+          refreshLink: "diesem magischem Link"
         }
       },
       motivation: {
         header: 'Motivation',
-        buttonText: 'How to edit your motivation',
+        buttonText: "So kannst du deinen Motivationstext ändern",
         intro: "Motivationen sind eine neue Funktion, die wir aktuell testen. Um deinen Motivationstext zu ändern musst du ein kurzes Formular ausfüllen.",
         privacy: "Das Formular und die Datenspeicherung werden von Google angeboten und persönliche Daten werden zu diesem Anbieter übertragen werden, wenn du dieses Feature benutzt.",
         toForm: "Motivationsformular"
