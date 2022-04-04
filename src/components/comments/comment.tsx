@@ -9,7 +9,7 @@ import { MetaBar } from './meta-bar'
 import { replaceWithJSX } from '@/helper/replace-with-jsx'
 import { scrollIfNeeded } from '@/helper/scroll'
 import { renderArticle } from '@/schema/article-renderer'
-import { convertTextPluginState } from '@/schema/convert-text-plugin'
+import { convertTextPluginState } from '@/schema/convert-text-plugin-state'
 import type { EdtrPluginText } from '@/schema/edtr-io-types'
 
 interface CommentProps {

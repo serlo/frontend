@@ -1,6 +1,5 @@
 import type { NewElement, NewNode, NewText } from '@edtr-io/plugin-text'
 
-import { EdtrPluginText, SlateBlockElement } from './edtr-io-types'
 import { sanitizeLatex } from './sanitize-latex'
 import type {
   FrontendContentNode,
@@ -21,7 +20,7 @@ export function isTextNode(node: NewNode): node is NewText {
 }
 
 export function convertTextPluginState(
-  node: EdtrPluginText['state'] | NewNode | undefined
+  node: NewNode[] | NewNode | undefined
 ): FrontendContentNode[] {
   if (!node || Object.keys(node).length === 0) return []
   if (Array.isArray(node)) return node.flatMap(convertTextPluginState)
@@ -30,9 +29,7 @@ export function convertTextPluginState(
   return []
 }
 
-export function convertSlateBlock(
-  node: SlateBlockElement
-): FrontendContentNode[] {
+export function convertSlateBlock(node: NewElement): FrontendContentNode[] {
   if (node.type === 'p') {
     return handleSemistructedContentOfP(convertTextPluginState(node.children))
   }

@@ -9,13 +9,10 @@ import { RowsPluginState } from '@edtr-io/plugin-rows'
 import { SerloInjectionPluginState } from '@edtr-io/plugin-serlo-injection'
 import { SpoilerPluginState } from '@edtr-io/plugin-spoiler'
 import { TablePluginState } from '@edtr-io/plugin-table'
-import { NewElement, NewText, TextPluginState } from '@edtr-io/plugin-text'
+import { TextPluginState } from '@edtr-io/plugin-text'
 import { VideoPluginState } from '@edtr-io/plugin-video'
 
 import { BoxPluginState } from '@/edtr-io/plugins/box'
-
-export type SlateBlockElement = NewElement
-export type SlateTextElement = NewText
 
 // types for all supported @edtr-io plugins
 
