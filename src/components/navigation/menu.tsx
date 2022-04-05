@@ -5,7 +5,7 @@ import clsx from 'clsx'
 import { useState, useEffect } from 'react'
 
 import { Link } from '../content/link'
-import { FaWrapper } from '../fa-wrapper'
+import { FaIcon } from '../fa-icon'
 import { MenuSubButtonLink } from '../user-tools/menu-sub-button-link'
 import { getAvatarUrl } from '../user/user-link'
 import { AuthenticationPayload } from '@/auth/auth-provider'
@@ -190,7 +190,7 @@ function MenuInner({
               <Link tabIndex={0} className={styledLinkCls}>
                 {renderIcon()}
                 {!hasIcon && link.title}{' '}
-                <FaWrapper className="w-2.5" icon={faCaretDown} />
+                <FaIcon className="w-2.5" icon={faCaretDown} />
               </Link>
             </Tippy.default>
           ) : (

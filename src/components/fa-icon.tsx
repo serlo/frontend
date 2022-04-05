@@ -1,12 +1,12 @@
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import clsx from 'clsx'
 
-interface FaWrapper {
+interface FaIconProps {
   icon: IconDefinition
   className?: string
 }
 
-export function FaWrapper({ icon, className }: FaWrapper) {
+export function FaIcon({ icon, className }: FaIconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -14,8 +14,7 @@ export function FaWrapper({ icon, className }: FaWrapper) {
       viewBox={`0 0 ${icon.icon[0]} ${icon.icon[1]}`}
       aria-hidden
       focusable={false}
-      className={clsx('inline-block overflow-visible', className)}
-      style={{ verticalAlign: '-.125em' }}
+      className={clsx('serlo-fa-icon', className)}
     >
       <path
         fill="currentColor"

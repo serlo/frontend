@@ -236,6 +236,11 @@
     }
   }
 
+  .serlo-fa-icon {
+    @apply inline-block overflow-visible h-[1em];
+    vertical-align: -0.125em;
+  }
+
   .serlo-editor-hacks {
     h1 {
       @apply mx-side mb-9 mt-4 p-0 font-bold text-3.5xl special-hyphens-auto;
