@@ -1,4 +1,5 @@
-import { faFile, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faFile } from '@fortawesome/free-solid-svg-icons/faFile'
+import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash'
 import dynamic from 'next/dynamic'
 import { useState, Fragment } from 'react'
 

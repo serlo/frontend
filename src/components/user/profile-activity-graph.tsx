@@ -1,4 +1,4 @@
-import { faGrinStars } from '@fortawesome/free-solid-svg-icons'
+import { faGrinStars } from '@fortawesome/free-solid-svg-icons/faGrinStars'
 import { tint } from 'polished'
 import { useState, useEffect } from 'react'
 

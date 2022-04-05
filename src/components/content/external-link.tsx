@@ -1,4 +1,4 @@
-import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons/faExternalLinkAlt'
 
 import { FaIcon } from '../fa-icon'
 

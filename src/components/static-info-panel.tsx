@@ -1,4 +1,4 @@
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import clsx from 'clsx'
 import Head from 'next/head'
 import { ReactNode } from 'react'

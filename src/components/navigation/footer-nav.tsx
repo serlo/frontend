@@ -1,5 +1,5 @@
-import { faGithubSquare } from '@fortawesome/free-brands-svg-icons'
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import { faGithubSquare } from '@fortawesome/free-brands-svg-icons/faGithubSquare'
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
 import clsx from 'clsx'
 
 import { FaIcon } from '../fa-icon'

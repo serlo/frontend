@@ -1,4 +1,5 @@
-import { faInfoCircle, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle'
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons/faPencilAlt'
 import clsx from 'clsx'
 import { NextPage } from 'next'
 import { useState, useEffect } from 'react'

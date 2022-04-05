@@ -1,4 +1,4 @@
-import { faTools } from '@fortawesome/free-solid-svg-icons'
+import { faTools } from '@fortawesome/free-solid-svg-icons/faTools'
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 

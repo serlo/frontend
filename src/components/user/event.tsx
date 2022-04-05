@@ -1,4 +1,5 @@
-import { faBellSlash, faCheck } from '@fortawesome/free-solid-svg-icons'
+import { faBellSlash } from '@fortawesome/free-solid-svg-icons/faBellSlash'
+import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck'
 import {
   CheckoutRevisionNotificationEvent,
   CreateCommentNotificationEvent,

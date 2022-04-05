@@ -1,4 +1,5 @@
-import { faHeart, faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons/faSpinner'
 import clsx from 'clsx'
 import { ReactChild, useState, KeyboardEvent } from 'react'
 

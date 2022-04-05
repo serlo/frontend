@@ -1,7 +1,5 @@
-import {
-  faChevronUp,
-  faChevronCircleRight,
-} from '@fortawesome/free-solid-svg-icons'
+import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons/faChevronCircleRight'
+import { faChevronUp } from '@fortawesome/free-solid-svg-icons/faChevronUp'
 import clsx from 'clsx'
 
 import { FaIcon } from '../fa-icon'

@@ -1,4 +1,4 @@
-import { faHourglassEmpty } from '@fortawesome/free-solid-svg-icons'
+import { faHourglassEmpty } from '@fortawesome/free-solid-svg-icons/faHourglassEmpty'
 import clsx from 'clsx'
 import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'

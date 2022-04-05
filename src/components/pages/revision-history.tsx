@@ -1,4 +1,5 @@
-import { faEye, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
+import { faEye } from '@fortawesome/free-solid-svg-icons/faEye'
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons/faPencilAlt'
 import clsx from 'clsx'
 
 import { FaIcon } from '../fa-icon'

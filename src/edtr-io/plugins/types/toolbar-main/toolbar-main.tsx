@@ -8,7 +8,9 @@ import {
   getPendingChanges,
 } from '@edtr-io/store'
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
-import { faRedo, faSave, faUndo } from '@fortawesome/free-solid-svg-icons'
+import { faRedo } from '@fortawesome/free-solid-svg-icons/faRedo'
+import { faSave } from '@fortawesome/free-solid-svg-icons/faSave'
+import { faUndo } from '@fortawesome/free-solid-svg-icons/faUndo'
 import clsx from 'clsx'
 import { useState } from 'react'
 import { createPortal } from 'react-dom'

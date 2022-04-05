@@ -1,4 +1,4 @@
-import { faCheck } from '@fortawesome/free-solid-svg-icons'
+import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck'
 import { PageInfo } from '@serlo/api'
 import { useState } from 'react'
 

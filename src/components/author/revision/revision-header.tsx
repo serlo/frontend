@@ -1,4 +1,4 @@
-import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons'
+import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons/faArrowCircleLeft'
 import { Dispatch, SetStateAction } from 'react'
 
 import { DisplayModes } from './revision'

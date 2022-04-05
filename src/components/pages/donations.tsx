@@ -1,4 +1,4 @@
-import { faPaypal } from '@fortawesome/free-brands-svg-icons'
+import { faPaypal } from '@fortawesome/free-brands-svg-icons/faPaypal'
 import clsx from 'clsx'
 
 import { FaIcon } from '../fa-icon'
