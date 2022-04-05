@@ -1,11 +1,11 @@
 import { faInfoCircle, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 import { NextPage } from 'next'
 import { useState, useEffect } from 'react'
 
 import { useAuthentication } from '@/auth/use-authentication'
 import { Link } from '@/components/content/link'
+import { FaIcon } from '@/components/fa-icon'
 import { StaticInfoPanel } from '@/components/static-info-panel'
 import { TimeAgo } from '@/components/time-ago'
 import { UserTools } from '@/components/user-tools/user-tools'
@@ -129,7 +129,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
               'block absolute right-1 bottom-1 w-8 h-8'
             )}
           >
-            <FontAwesomeIcon icon={faPencilAlt} />
+            <FaIcon icon={faPencilAlt} />
           </Link>
         )}
       </figure>
@@ -209,7 +209,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
           href="/user/settings#motivation"
           className="serlo-link cursor-pointer"
         >
-          <FontAwesomeIcon icon={faPencilAlt} />{' '}
+          <FaIcon icon={faPencilAlt} />{' '}
           {motivation
             ? strings.profiles.editMotivation
             : strings.profiles.addMotivation}

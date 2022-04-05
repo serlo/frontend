@@ -1,10 +1,10 @@
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import { useState, useRef, useEffect } from 'react'
 
 import { isLegacyLink } from '../content/link'
+import { FaIcon } from '../fa-icon'
 import { LazyTippy } from './lazy-tippy'
 import SearchIcon from '@/assets-webkit/img/search-icon.svg'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -186,11 +186,9 @@ export function SearchInput() {
                 {!searchLoaded ? (
                   <SearchIcon /*PlaceholderIcon*/ className="-mt-1" />
                 ) : (
-                  <FontAwesomeIcon
+                  <FaIcon
                     /*LoadingIcon*/ icon={faSpinner}
-                    size="1x"
-                    spin
-                    className="text-white"
+                    className="text-white animate-spin-slow"
                   />
                 )}
               </button>

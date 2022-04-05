@@ -40,7 +40,8 @@ export function UnreadNotificationsCount({
     <span
       className={clsx(
         'relative inline-block w-5 h-[1em]',
-        count > 0 && 'text-brand'
+        count > 0 && 'text-brand',
+        'notification-count-span'
       )}
     >
       {icon && <FaIcon icon={icon} className="absolute inset-0 w-5 h-6" />}

@@ -230,7 +230,7 @@
       @apply text-white bg-brand;
 
       /*just for notifications count*/
-      & span.fa-layers {
+      & span.notification-count-span {
         color: #fff;
       }
     }

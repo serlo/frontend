@@ -9,11 +9,11 @@ import {
   faUserFriends,
   faBell,
 } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 import { useState, MouseEvent } from 'react'
 
 import { Link } from '../content/link'
+import { FaIcon } from '../fa-icon'
 import { AuthenticationPayload } from '@/auth/auth-provider'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -137,9 +137,8 @@ function Entry({
                 'bg-brand-150 text-brand-light'
               )}
             >
-              <FontAwesomeIcon
+              <FaIcon
                 icon={icon !== undefined ? menuIconMapping[icon] : faBars}
-                size="1x"
                 style={{ fontSize: '23px' }}
               />
             </div>
@@ -151,7 +150,7 @@ function Entry({
             {children ? (
               <span>
                 {' '}
-                <FontAwesomeIcon icon={faCaretDown} />
+                <FaIcon icon={faCaretDown} />
               </span>
             ) : null}
           </span>

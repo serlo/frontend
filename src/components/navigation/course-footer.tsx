@@ -2,11 +2,11 @@ import {
   faArrowCircleRight,
   faArrowCircleUp,
 } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 import { MouseEvent } from 'react'
 
 import { Link } from '../content/link'
+import { FaIcon } from '../fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { CoursePagesData } from '@/data-types'
 
@@ -40,10 +40,7 @@ export function CourseFooter({
           path={['courseback']}
           className="serlo-button serlo-make-interactive-light mx-side hover:no-underline h-fit"
         >
-          <FontAwesomeIcon
-            icon={faArrowCircleRight}
-            className="fa-flip-horizontal"
-          />{' '}
+          <FaIcon icon={faArrowCircleRight} className="-scale-x-100" />{' '}
           {strings.course.back}
         </Link>
       )}
@@ -54,7 +51,7 @@ export function CourseFooter({
           className="ml-auto mr-side text-right hover:no-underline"
         >
           <button className="serlo-button serlo-make-interactive-primary hover:no-underline mb-2">
-            <FontAwesomeIcon icon={faArrowCircleRight} /> {strings.course.next}
+            <FaIcon icon={faArrowCircleRight} /> {strings.course.next}
           </button>
           <div className="flex text-lg">
             <b
@@ -73,7 +70,7 @@ export function CourseFooter({
           className="serlo-button serlo-make-interactive-primary mx-side"
           onClick={onOverviewClick}
         >
-          <FontAwesomeIcon icon={faArrowCircleUp} /> {strings.course.showPages}
+          <FaIcon icon={faArrowCircleUp} /> {strings.course.showPages}
         </button>
       )}
     </nav>

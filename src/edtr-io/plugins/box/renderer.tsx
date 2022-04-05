@@ -1,8 +1,8 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 
 import { BoxProps } from '.'
 import { boxTypeStyle, defaultStyle } from '@/components/content/box'
+import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
@@ -58,7 +58,7 @@ export function BoxRenderer(props: BoxProps) {
         {isBlank ? null : (
           <div>
             <span className={colorClass + ' mr-1'}>
-              {icon ? <FontAwesomeIcon className="mr-1" icon={icon} /> : null}
+              {icon ? <FaIcon className="mr-1" icon={icon} /> : null}
               {strings.content.boxTypes[typedValue]}
             </span>
           </div>
@@ -120,9 +120,7 @@ export function BoxRenderer(props: BoxProps) {
               if (anchorId.value === '') generateAnchorId()
             }}
           >
-            {listIcon ? (
-              <FontAwesomeIcon className="mr-1" icon={listIcon} />
-            ) : null}
+            {listIcon ? <FaIcon className="mr-1" icon={listIcon} /> : null}
             {strings.content.boxTypes[typedBoxType]}
           </button>
         </li>

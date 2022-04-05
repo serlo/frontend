@@ -1,7 +1,7 @@
-import { faEye, faPencilAlt, faCircle } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 
+import { FaIcon } from '../fa-icon'
 import { UserLink } from '../user/user-link'
 import { Link } from '@/components/content/link'
 import { TimeAgo } from '@/components/time-ago'
@@ -98,7 +98,7 @@ export function RevisionHistory({
               title={strings.revisionHistory.viewLabel}
               href={isEditorLink ? undefined : viewUrl}
             >
-              <FontAwesomeIcon icon={faEye} size="1x" />
+              <FaIcon icon={faEye} />
             </Link>
           )}
         </td>
@@ -109,7 +109,7 @@ export function RevisionHistory({
               title={strings.revisionHistory.editLabel}
               href={editUrl}
             >
-              <FontAwesomeIcon icon={faPencilAlt} size="1x" />
+              <FaIcon icon={faPencilAlt} />
             </Link>
           </td>
         )}
@@ -130,11 +130,15 @@ export function RevisionHistory({
 
   function getStatus(trashed?: boolean, isCurrent?: boolean) {
     return (
-      <FontAwesomeIcon
-        icon={faCircle}
-        color={
-          trashed ? '#c56c6c' : isCurrent ? theme.colors.brandGreen : '#eee'
-        }
+      <span
+        className="rounded-full inline-block w-4 h-4"
+        style={{
+          backgroundColor: trashed
+            ? '#c56c6c'
+            : isCurrent
+            ? theme.colors.brandGreen
+            : '#eee',
+        }}
         title={
           trashed
             ? strings.revisions.rejectedNotice
