@@ -1,9 +1,9 @@
 import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Fragment } from 'react'
 
 import { SubjectIcon } from './subject-icon'
 import { Link } from '@/components/content/link'
+import { FaIcon } from '@/components/fa-icon'
 import { LandingSubjectLink, LandingSubjectsData } from '@/data-types'
 import { theme } from '@/theme'
 
@@ -82,7 +82,7 @@ export function LandingSubjectsNew({ data }: LandingSubjectsProps) {
           <h2 className="group-hover:bg-brand-150 group-hover:text-brand serlo-button serlo-make-interactive-transparent-blue">
             {title}
             <span className="align-middle ml-1.5">
-              <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
+              <FaIcon icon={faArrowCircleRight} />
             </span>
           </h2>
         </Link>
