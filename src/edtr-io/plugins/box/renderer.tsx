@@ -131,7 +131,6 @@ export function BoxRenderer(props: BoxProps) {
   }
 
   function generateAnchorId() {
-    const random = (Math.random() + 1).toString(36).substr(2, 5) //random string
-    anchorId.set(`box-${random}`)
+    anchorId.set(`box${Math.floor(10000 + Math.random() * 90000)}`)
   }
 }
