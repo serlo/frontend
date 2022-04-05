@@ -571,9 +571,13 @@ export const loggedInData = {
         columnHeaders: 'Only column headers',
         rowHeaders: 'Only row headers',
         columnAndRowHeaders: 'Column and row headers',
-        convertToText: 'convert to text',
-        convertToImage: 'convert to image',
-        addRow: 'Add row'
+        convertToText: 'Convert to text',
+        convertToImage: 'Convert to image',
+        row: "row",
+        column: "column",
+        addType: 'Add %type%',
+        deleteType: 'Delete %type%',
+        confirmDelete: 'Are you sure you want to delete this %type% and the content in it?'
       },
       spoiler: {
         enterATitle: "Saisir un titre"
