@@ -2,11 +2,11 @@ import {
   faArrowCircleLeft,
   faFolderOpen,
 } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 import { Fragment } from 'react'
 
 import { Link } from '../content/link'
+import { FaIcon } from '../fa-icon'
 import { BreadcrumbsData, BreadcrumbEntry } from '@/data-types'
 
 export interface BreadcrumbsProps {
@@ -91,11 +91,6 @@ export function Breadcrumbs({
 
   function renderIcon() {
     if (noIcon) return null
-    return (
-      <FontAwesomeIcon
-        icon={asBackButton ? faArrowCircleLeft : faFolderOpen}
-        size="1x"
-      />
-    )
+    return <FaIcon icon={asBackButton ? faArrowCircleLeft : faFolderOpen} />
   }
 }

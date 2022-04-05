@@ -3,10 +3,10 @@ import {
   faPaperclip,
   faTrash,
 } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Thread } from '@serlo/authorization'
 import clsx from 'clsx'
 
+import { FaIcon } from '../fa-icon'
 import { useCanDo } from '@/auth/use-can-do'
 import { useInstanceData } from '@/contexts/instance-context'
 import {
@@ -57,14 +57,14 @@ export function DropdownMenu({
       {buildButton(
         onLinkToComment,
         <>
-          <FontAwesomeIcon icon={faPaperclip} /> {strings.comments.copyLink}
+          <FaIcon icon={faPaperclip} /> {strings.comments.copyLink}
         </>
       )}
       {canArchive &&
         buildButton(
           onArchiveThread,
           <>
-            <FontAwesomeIcon icon={faCheck} />{' '}
+            <FaIcon icon={faCheck} />{' '}
             {archived
               ? strings.comments.restoreThread
               : strings.comments.archiveThread}
@@ -74,7 +74,7 @@ export function DropdownMenu({
         buildButton(
           onDelete,
           <>
-            <FontAwesomeIcon icon={faTrash} />{' '}
+            <FaIcon icon={faTrash} />{' '}
             {isParent
               ? strings.comments.deleteThread
               : strings.comments.deleteComment}

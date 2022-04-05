@@ -1,9 +1,9 @@
 import { faGraduationCap } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 import { MouseEvent } from 'react'
 
 import { Link } from '../content/link'
+import { FaIcon } from '../fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { CourseData } from '@/data-types'
 
@@ -26,7 +26,7 @@ export function CourseNavigation({
       className="mt-6 bg-brand-50 sm:bg-white pt-1 pb-5 sm:pb-11 border-b-2 border-brand-150 "
     >
       <p className="serlo-p mb-0 mt-4 font-bold text-[1rem]">
-        <FontAwesomeIcon icon={faGraduationCap} /> Kurs
+        <FaIcon icon={faGraduationCap} /> Kurs
       </p>
       <h1 className="mt-0 mb-4 mx-side font-bold text-2xl">{data.title}</h1>
       {data.pages.length > 0 ? (

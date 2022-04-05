@@ -8,6 +8,7 @@ import { AddRevision } from '@/components/pages/add-revision'
 import { StaticInfoPanel } from '@/components/static-info-panel'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { EditorPageData, fetchEditorData } from '@/fetcher/fetch-editor-data'
+import { isProduction } from '@/helper/is-production'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks<EditorPageData>((props) => {
@@ -19,10 +20,7 @@ export default renderedPageNoHooks<EditorPageData>((props) => {
       <div className="relative">
         <MaxWidthDiv>
           <main>
-            <Guard
-              needsAuth={process.env.NEXT_PUBLIC_ENV === 'production'}
-              data
-            >
+            <Guard needsAuth={isProduction ? true : undefined} data>
               <>
                 {props.converted ? <EditorWarning converted /> : null}
                 <AddRevision {...props} />

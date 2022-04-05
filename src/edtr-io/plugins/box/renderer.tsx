@@ -1,8 +1,8 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 
 import { BoxProps } from '.'
 import { boxTypeStyle, defaultStyle } from '@/components/content/box'
+import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
@@ -58,7 +58,7 @@ export function BoxRenderer(props: BoxProps) {
         {isBlank ? null : (
           <div>
             <span className={colorClass + ' mr-1'}>
-              {icon ? <FontAwesomeIcon className="mr-1" icon={icon} /> : null}
+              {icon ? <FaIcon className="mr-1" icon={icon} /> : null}
               {strings.content.boxTypes[typedValue]}
             </span>
           </div>
@@ -120,9 +120,7 @@ export function BoxRenderer(props: BoxProps) {
               if (anchorId.value === '') generateAnchorId()
             }}
           >
-            {listIcon ? (
-              <FontAwesomeIcon className="mr-1" icon={listIcon} />
-            ) : null}
+            {listIcon ? <FaIcon className="mr-1" icon={listIcon} /> : null}
             {strings.content.boxTypes[typedBoxType]}
           </button>
         </li>
@@ -131,7 +129,6 @@ export function BoxRenderer(props: BoxProps) {
   }
 
   function generateAnchorId() {
-    const random = (Math.random() + 1).toString(36).substr(2, 5) //random string
-    anchorId.set(`box-${random}`)
+    anchorId.set(`box${Math.floor(10000 + Math.random() * 90000)}`)
   }
 }

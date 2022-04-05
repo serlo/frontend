@@ -7,15 +7,15 @@ import {
   hasUndoActions,
   getPendingChanges,
 } from '@edtr-io/store'
-import { IconProp } from '@fortawesome/fontawesome-svg-core'
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { faRedo, faSave, faUndo } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
 
 import { entity } from '../common/common'
 import { useHandleSave } from '../helpers/use-handle-save'
+import { FaIcon } from '@/components/fa-icon'
 import { SaveModal } from '@/edtr-io/components/save-modal'
 import { useLeaveConfirm } from '@/helper/use-leave-confirm'
 
@@ -52,8 +52,8 @@ export function ToolbarMain({
           className={clsx('w-full flex justify-between', 'h-12 pt-4 pl-5 pr-3')}
         >
           <div>
-            {renderUndoRedoButton('Undo', faUndo, undo, !undoable)}
-            {renderUndoRedoButton('Redo', faRedo, redo, !redoable)}
+            {renderHistoryButton('Undo', faUndo, undo, !undoable)}
+            {renderHistoryButton('Redo', faRedo, redo, !redoable)}
           </div>
           <div>{renderSaveButton()}</div>
         </nav>,
@@ -72,9 +72,9 @@ export function ToolbarMain({
     </>
   )
 
-  function renderUndoRedoButton(
+  function renderHistoryButton(
     title: string,
-    icon: IconProp,
+    icon: IconDefinition,
     action: typeof undo | typeof redo,
     disabled: boolean
   ) {
@@ -89,10 +89,10 @@ export function ToolbarMain({
         onClick={() => {
           dispatch(action())
         }}
-        disabled={!undoable}
+        disabled={disabled}
         title={title}
       >
-        <FontAwesomeIcon icon={icon} />
+        <FaIcon icon={icon} />
       </button>
     )
   }
@@ -109,8 +109,9 @@ export function ToolbarMain({
         )}
         onClick={() => setVisibility(true)}
         disabled={isDisabled}
+        title="Save"
       >
-        <FontAwesomeIcon icon={faSave} title="Save" />
+        <FaIcon icon={faSave} />
       </button>
     )
   }

@@ -57,7 +57,7 @@
     @apply mx-side border-collapse whitespace-nowrap mobile:whitespace-normal break-normal;
   }
   .serlo-th {
-    @apply p-2.5 border-0 border-b-3 border-brand-150 text-left pl-3;
+    @apply p-2.5 border-3 border-brand-150 text-left pl-3 bg-brand-100;
   }
   .serlo-td {
     @apply p-2.5 align-top border-3 border-brand-150;
@@ -230,10 +230,15 @@
       @apply text-white bg-brand;
 
       /*just for notifications count*/
-      & span.fa-layers {
+      & span.notification-count-span {
         color: #fff;
       }
     }
+  }
+
+  .serlo-fa-icon {
+    @apply inline-block overflow-visible h-[1em];
+    vertical-align: -0.125em;
   }
 
   .serlo-editor-hacks {

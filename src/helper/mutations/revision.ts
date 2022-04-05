@@ -257,19 +257,19 @@ function getAdditionalInputData(
       return {
         title: getRequiredString(loggedInData, 'title', data.title),
         url: getRequiredString(loggedInData, 'url', data.url),
-        metaTitle: data['meta_title'] ?? 'x',
-        metaDescription: data['meta_description'] ?? 'x',
+        metaTitle: data['meta_title'],
+        metaDescription: data['meta_description'],
       }
     case 'Article':
       return {
         title: getRequiredString(loggedInData, 'title', data.title),
-        metaTitle: data['meta_title'] ?? 'x', //TODO: wait for api deploy
-        metaDescription: data['meta_description'] ?? 'x',
+        metaTitle: data['meta_title'],
+        metaDescription: data['meta_description'],
       }
     case 'Course':
       return {
         title: getRequiredString(loggedInData, 'title', data.title),
-        metaDescription: data['meta_description'] ?? 'x',
+        metaDescription: data['meta_description'],
       }
     case 'CoursePage':
       return { title: getRequiredString(loggedInData, 'title', data.title) }

@@ -13,6 +13,7 @@ import {
   FrontendContentNode,
   FrontendLiNode,
   FrontendMathNode,
+  FrontendSerloTrNode,
   FrontendTextColor,
   FrontendTextNode,
   Sign,
@@ -137,14 +138,23 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
     ]
   }
   if (node.plugin === 'box') {
+    // get rid of wrapping p and inline math in title
+    const convertedTitle = convert(node.state.title as EdtrState)[0] as
+      | FrontendTextNode
+      | FrontendMathNode
+      | undefined
+    const title = convertedTitle
+      ? ((convertedTitle.type === 'math'
+          ? [{ ...convertedTitle, type: 'inline-math' }]
+          : convertedTitle.children) as unknown as FrontendContentNode[])
+      : ([{ type: 'text', text: '' }] as FrontendTextNode[])
+
     return [
       {
         type: 'box',
         boxType: node.state.type as BoxType,
         anchorId: node.state.anchorId,
-        title: (
-          convert(node.state.title as EdtrState) as FrontendTextNode[]
-        )?.[0]?.children,
+        title,
         children: convert(node.state.content.state as EdtrState),
       },
     ]
@@ -227,6 +237,27 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
       (child) => child.type == 'table'
     )
     return children
+  }
+  if (node.plugin === 'serloTable') {
+    const children = node.state.rows.map((row) => {
+      return {
+        type: 'serlo-tr',
+        children: row.columns.map((cell) => {
+          return {
+            type: 'serlo-td',
+            children: convert(cell.content as EdtrState),
+          }
+        }),
+      }
+    }) as FrontendSerloTrNode[]
+
+    return [
+      {
+        type: 'serlo-table',
+        tableType: node.state.tableType,
+        children,
+      },
+    ]
   }
   if (node.plugin === 'video') {
     if (!node.state.src) {

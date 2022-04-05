@@ -3,6 +3,7 @@ import { AuthorizationPayload } from '@serlo/authorization'
 import { CSSProperties, FunctionComponent } from 'react'
 
 import { BoxType } from './edtr-io/plugins/box/renderer'
+import { TableType } from './edtr-io/plugins/serlo-table/renderer'
 import { Instance, QueryResponse, User } from './fetcher/query-types'
 import { instanceData, instanceLandingData, loggedInData } from '@/data/en'
 
@@ -552,6 +553,22 @@ export interface FrontendAnchorNode {
   children?: undefined
 }
 
+export interface FrontendSerloTableNode {
+  type: 'serlo-table'
+  children?: FrontendSerloTrNode[]
+  tableType: keyof typeof TableType | string
+}
+
+export interface FrontendSerloTrNode {
+  type: 'serlo-tr'
+  children?: FrontendSerloTdNode[]
+}
+
+export interface FrontendSerloTdNode {
+  type: 'serlo-td'
+  children?: FrontendContentNode[]
+}
+
 export interface FrontendTableNode {
   type: 'table'
   children?: FrontendTrNode[]
@@ -750,11 +767,14 @@ export type FrontendElementNode =
   | FrontendBoxNode
   | FrontendThNode
   | FrontendTdNode
+  | FrontendSerloTdNode
 
 export type FrontendRestrictedElementNode =
   | FrontendArticleNode
   | FrontendSpoilerContainerNode
   | FrontendTableNode
+  | FrontendSerloTableNode
+  | FrontendSerloTrNode
   | FrontendSpoilerContainerNode
   | FrontendUlNode
   | FrontendOlNode

@@ -1,8 +1,8 @@
 import { faEye } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 import { Fragment } from 'react'
 
+import { FaIcon } from '../fa-icon'
 import { Link } from '@/components/content/link'
 import { TimeAgo } from '@/components/time-ago'
 import { UserLink } from '@/components/user/user-link'
@@ -84,7 +84,7 @@ export function UnrevisedEntity({ entity, isOwn }: UnrevisedEntityProps) {
             title={strings.revisionHistory.viewLabel}
             href={viewUrl}
           >
-            <FontAwesomeIcon icon={faEye} size="1x" />
+            <FaIcon icon={faEye} />
           </Link>
         </Td>
       </tr>

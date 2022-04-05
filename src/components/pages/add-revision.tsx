@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 
 import { LoadingSpinner } from '../loading/loading-spinner'
 import { Breadcrumbs } from '../navigation/breadcrumbs'
-import { features } from '../user/profile-experimental'
+import { shouldUseFeature } from '../user/profile-experimental'
 import { MathSpan } from '@/components/content/math-span'
 import { useInstanceData } from '@/contexts/instance-context'
 import { SerloEditor } from '@/edtr-io/serlo-editor'
@@ -84,10 +84,7 @@ export function AddRevision({
           needsReview={needsReview}
           onSave={async (data: RevisionAddMutationData) => {
             if (
-              features.addRevisionMutation &&
-              document.cookie.includes(
-                features.addRevisionMutation.cookieName + '=1'
-              ) &&
+              shouldUseFeature('addRevisionMutation') &&
               supportedTypes.includes(type)
             ) {
               // eslint-disable-next-line no-console

@@ -3,13 +3,10 @@ import {
   faCreativeCommonsBy,
   faCreativeCommonsSa,
 } from '@fortawesome/free-brands-svg-icons'
-import { faSlash } from '@fortawesome/free-solid-svg-icons'
-import {
-  FontAwesomeIcon,
-  FontAwesomeIconProps,
-} from '@fortawesome/react-fontawesome'
+import { faSlash, IconDefinition } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 
+import { FaIcon } from '../fa-icon'
 import { Link } from './link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { LicenseData } from '@/data-types'
@@ -54,19 +51,18 @@ export function LicenseNotice({
       >
         {data.default ? (
           <>
-            {renderIcon({ icon: faCreativeCommons, size: '2x' })}{' '}
-            {renderIcon({ icon: faCreativeCommonsBy, size: '2x' })}{' '}
-            {renderIcon({ icon: faCreativeCommonsSa, size: '2x' })}
+            {renderIcon({ icon: faCreativeCommons, className: 'h-8' })}{' '}
+            {renderIcon({ icon: faCreativeCommonsBy, className: 'h-8' })}{' '}
+            {renderIcon({ icon: faCreativeCommonsSa, className: 'h-8' })}
           </>
         ) : isCreativeCommons ? (
           renderIcon({ icon: faCreativeCommons })
         ) : (
-          <span className="fa-layers fa-fw fa-2x">
-            {renderIcon({ icon: faCreativeCommons })}
+          <span className="relative inline-block w-10 h-8">
+            {renderIcon({ icon: faCreativeCommons, className: 'absolute' })}
             {renderIcon({
               icon: faSlash,
-              flip: 'horizontal',
-              transform: 'shrink-6',
+              className: '-scale-x-[0.6] absolute -left-[4px] scale-y-[0.6]',
             })}
           </span>
         )}
@@ -108,19 +104,18 @@ export function LicenseNotice({
           path={path}
         >
           {data.default ? (
-            <FontAwesomeIcon icon={faCreativeCommons} />
+            <FaIcon icon={faCreativeCommons} />
           ) : (
             <>
               <span
-                className="fa-layers fa-fw text-xl mr-0.5"
+                className="relative inline-block text-xl mr-0.5 w-6 h-5"
                 style={{ verticalAlign: 'sub' }}
               >
-                <FontAwesomeIcon icon={faCreativeCommons} />
+                <FaIcon icon={faCreativeCommons} className="absolute" />
                 {!isCreativeCommons && (
-                  <FontAwesomeIcon
+                  <FaIcon
                     icon={faSlash}
-                    flip="horizontal"
-                    transform="shrink-6"
+                    className="-scale-x-[0.6] absolute -left-[3px] scale-y-[0.6]"
                   />
                 )}
               </span>
@@ -138,11 +133,14 @@ export function LicenseNotice({
   }
 }
 
-function renderIcon(props: FontAwesomeIconProps) {
+function renderIcon(props: { className?: string; icon: IconDefinition }) {
   return (
-    <FontAwesomeIcon
-      className="text-brand-lighter  mb-0.25 mobile:text-[2rem] mobile:mt-0.25 mobile:mr-1"
-      {...props}
+    <FaIcon
+      className={clsx(
+        'text-brand-lighter mb-0.25 mobile:text-[2rem] mobile:mt-0.25 mobile:mr-1',
+        props.className
+      )}
+      icon={props.icon}
     />
   )
 }
