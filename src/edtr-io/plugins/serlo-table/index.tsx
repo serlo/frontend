@@ -18,11 +18,11 @@ import {
   focusPrevious,
 } from '@edtr-io/store'
 import { Icon, faTimes, faImages, faParagraph } from '@edtr-io/ui'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 import { KeyboardEvent, useEffect } from 'react'
 
 import { SerloTableRenderer, TableType } from './renderer'
+import { FaIcon } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 const headerTextPlugins = {
@@ -238,7 +238,7 @@ function SerloTableEditor(props: SerloTableProps) {
           isImage ? tableStrings.convertToText : tableStrings.convertToImage
         }
       >
-        <FontAwesomeIcon icon={isImage ? faParagraph : faImages} />
+        <FaIcon icon={isImage ? faParagraph : faImages} />
       </button>
     )
   }
