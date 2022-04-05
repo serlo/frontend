@@ -571,9 +571,13 @@ export const loggedInData = {
         columnHeaders: "Sólo las etiquetas de las columnas",
         rowHeaders: "Sólo las etiquetas de las filas",
         columnAndRowHeaders: "Etiquetas de columna y fila",
-        convertToText: "Convertir en texto",
-        convertToImage: "Convertir a imagen",
-        addRow: "Añadir fila"
+        convertToText: 'Convert to text',
+        convertToImage: 'Convert to image',
+        row: "row",
+        column: "column",
+        addType: 'Add %type%',
+        deleteType: 'Delete %type%',
+        confirmDelete: 'Are you sure you want to delete this %type% and the content in it?'
       },
       spoiler: {
         enterATitle: "Introduzca un título"
