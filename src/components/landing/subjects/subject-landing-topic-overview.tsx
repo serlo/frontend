@@ -22,7 +22,7 @@ export function SubjectLandingTopicOverview({
   const [selectedIndex, setSelectedIndex] = useState(-1)
   const topicContainer = useRef<HTMLDivElement>(null)
 
-  const extraTerms = deSubjectLandingData[subject].extraTerms
+  const { extraTerms } = deSubjectLandingData[subject]
 
   function onMenuClick(index: number) {
     const indexToBeSet = index === selectedIndex ? -1 : index
@@ -106,7 +106,7 @@ export function SubjectLandingTopicOverview({
               )}
             >
               <button
-                className="flex font-bold text-brand "
+                className="flex font-bold text-brand text-left"
                 onClick={() => (isExtraTerm ? undefined : onMenuClick(index))}
               >
                 {src ? (

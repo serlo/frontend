@@ -9,7 +9,7 @@ import { useAuthentication } from '@/auth/use-authentication'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
 import { shouldUseNewAuth } from '@/helper/feature-auth'
-import { useCreateThreadMutation } from '@/helper/mutations'
+import { useCreateThreadMutation } from '@/helper/mutations/thread'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { showToastNotice } from '@/helper/show-toast-notice'
 

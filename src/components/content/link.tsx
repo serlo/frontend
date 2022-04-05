@@ -1,5 +1,6 @@
 import clsx from 'clsx'
 import { default as NextLink } from 'next/link'
+import { useRouter } from 'next/router'
 import { ForwardedRef, forwardRef, ReactNode } from 'react'
 
 import { ExternalLink } from './external-link'
@@ -68,7 +69,7 @@ export function isLegacyLink(_href: string) {
   )
 }
 
-// Add warning here that forwarding ref is crucial
+// warning: forwarding ref is crucial for dropdowns to work
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => {
   return InternalLink({
     ...props,
@@ -92,6 +93,7 @@ function InternalLink({
   ref,
 }: LinkProps & { ref?: ForwardedRef<HTMLAnchorElement> }) {
   const { lang } = useInstanceData()
+  const router = useRouter()
 
   if (!href || href === undefined || href === '')
     return (
@@ -104,6 +106,7 @@ function InternalLink({
   const isExternal = isAbsolute && !href.includes('.serlo.org')
   const isAnchor = href.startsWith('#') || href.startsWith('/#')
   const isMailto = href.startsWith('mailto:')
+  const isContentOnly = router.asPath.startsWith('/content-only/')
 
   if (isAnchor || isMailto) return renderLink(href)
   if (isExternal || forceNoCSR) return renderLink(href)
@@ -111,6 +114,7 @@ function InternalLink({
   //at this point only internal links should be left
 
   const internalLink = normalizeSerloLink(href)
+
   if (!isLegacyLink(internalLink)) return renderClientSide(internalLink)
 
   //fallback
@@ -145,7 +149,9 @@ function InternalLink({
         className={unstyled ? className : clsx(className, 'serlo-link')}
         title={title}
         rel={unreviewed && isExternal ? 'ugc nofollow noreferrer' : undefined}
-        target={unreviewed && isExternal ? '_blank' : undefined}
+        target={
+          (unreviewed && isExternal) || isContentOnly ? '_blank' : undefined
+        }
         tabIndex={tabIndex}
         ref={ref}
       >

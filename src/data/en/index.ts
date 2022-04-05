@@ -479,9 +479,11 @@ export const loggedInData = {
         INVALID_TOKEN: '',
         BAD_USER_INPUT: '',
         UNKNOWN: 'An unknown error…',
+        valueMissing: 'Please fill all required fields'
       }
     },
     editor: {
+      confirmRouteChange: "Are you sure you want to leave without saving?",
       edtrIo: {
         extendedSettings: 'Extended Settings',
         close: 'Close',
@@ -812,8 +814,9 @@ export const loggedInData = {
     profileSettings: {
       editAbout: 'Your description',
       showInstructions: 'Show instructions',
-      howToEditImage: {
-        heading: 'How to edit your profile picture',
+      editImage: {
+        header: 'Profile picture',
+        buttonText: 'How to edit your profile picture',
         description:
           'Currently we use the images from %chatLink% as profile pictures. In order to change your picture, do the following:',
         steps: {
@@ -829,7 +832,8 @@ export const loggedInData = {
         },
       },
       motivation: {
-        heading: 'How to edit your motivation',
+        header: 'Motivation',
+        buttonText: 'How to edit your motivation',
         intro:
           'Motivations are a new feature we test at the moment. To edit your motivation you have to fill out a simple form.',
         privacy:
