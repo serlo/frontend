@@ -1,5 +1,4 @@
 import { faCaretDown, faUser, faBell } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import type { TippyProps } from '@tippyjs/react'
 import clsx from 'clsx'
 import { useState, useEffect } from 'react'
@@ -189,15 +188,13 @@ function MenuInner({
             >
               <Link tabIndex={0} className={styledLinkCls}>
                 {renderIcon()}
-                {!hasIcon && link.title}{' '}
-                <FaIcon className="w-2.5" icon={faCaretDown} />
+                {!hasIcon && link.title} <FaIcon icon={faCaretDown} />
               </Link>
             </Tippy.default>
           ) : (
             <Link tabIndex={0} className={styledLinkCls}>
               {renderIcon()}
-              {!hasIcon && link.title}{' '}
-              <FontAwesomeIcon className="w-2.5" icon={faCaretDown} />
+              {!hasIcon && link.title} <FaIcon icon={faCaretDown} />
             </Link>
           )
         ) : (
@@ -231,15 +228,8 @@ function MenuInner({
         )
       }
 
-      return (
-        <span className="fa-layers fa-fw">
-          <FontAwesomeIcon
-            // checking for undefined this in hasIcon
-            icon={menuIconMapping[link.icon!]!}
-            style={{ height: '1.4rem', width: '1.4rem', paddingTop: '0' }}
-          />
-        </span>
-      )
+      // only notification and user are in use and handled above
+      return null
     }
   }
 

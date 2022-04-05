@@ -7,7 +7,7 @@ import {
   hasUndoActions,
   getPendingChanges,
 } from '@edtr-io/store'
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { faRedo, faSave, faUndo } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { useState } from 'react'
