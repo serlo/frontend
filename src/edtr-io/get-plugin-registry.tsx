@@ -16,9 +16,8 @@ import {
 } from '@edtr-io/ui'
 import { faSquare } from '@fortawesome/free-regular-svg-icons'
 
-import { features } from '@/components/user/profile-experimental'
+import { shouldUseFeature } from '@/components/user/profile-experimental'
 import { LoggedInData } from '@/data-types'
-import { isProduction } from '@/helper/is-production'
 
 export function getPluginRegistry(
   type: string,
@@ -137,22 +136,18 @@ export function getPluginRegistry(
     : registry
 
   // Testing new box plugin
-  const showBox =
-    typeof window !== 'undefined' &&
-    !isProduction &&
-    features.boxPlugin &&
-    document.cookie.includes(features.boxPlugin.cookieName + '=1')
-
-  const boxFiltered = showBox
+  const boxFiltered = shouldUseFeature('boxPlugin')
     ? filteredRegistry.filter(
         (plugin) => !['blockquote', 'important'].includes(plugin.name)
       )
-    : filteredRegistry.filter((plugin) => plugin.name != 'box')
+    : filteredRegistry.filter((plugin) => plugin.name !== 'box')
 
   // Testing new table plugin
-  const tableFiltered = isProduction
-    ? boxFiltered.filter((plugin) => plugin.name != 'serloTable')
-    : boxFiltered.filter((plugin) => plugin.name !== 'table')
+  const showNewTable = shouldUseFeature('tablePlugin')
+
+  const tableFiltered = showNewTable
+    ? boxFiltered.filter((plugin) => plugin.name !== 'table')
+    : boxFiltered.filter((plugin) => plugin.name !== 'serloTable')
 
   return tableFiltered
 }

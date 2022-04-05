@@ -1,26 +1,54 @@
+import { faHourglassEmpty } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
 
 import { Link } from '../content/link'
+import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { isProduction } from '@/helper/is-production'
 
 export const features = {
-  boxPlugin: isProduction
-    ? null
-    : { cookieName: 'useBoxPlugin', isActive: false },
-  legacyEditor: { cookieName: 'useLegacyEditor', isActive: false },
-  legacyDesign: isProduction
-    ? null
-    : { cookieName: 'useFrontend', isActive: false },
-  addRevisionMutation: isProduction
-    ? null
-    : { cookieName: 'useAddRevisionMutation', isActive: false },
+  boxPlugin: { cookieName: 'useBoxPlugin', isActive: false, activeInDev: true },
+  tablePlugin: {
+    cookieName: 'useTablePlugin',
+    isActive: false,
+    activeInDev: true,
+  },
+  addRevisionMutation: {
+    cookieName: 'useAddRevisionMutation',
+    isActive: false,
+    activeInDev: true,
+  },
+  legacyEditor: {
+    cookieName: 'useLegacyEditor',
+    isActive: faHourglassEmpty,
+    activeInDev: false,
+  },
+  legacyDesign: {
+    cookieName: 'useFrontend',
+    isActive: false,
+    activeInDev: false,
+  },
 }
 
-type Feature = keyof typeof features
-
 const showExperimentsStorageKey = 'showExperiments'
+
+type FeatureKey = keyof typeof features
+
+export function shouldUseFeature(featureKey: FeatureKey) {
+  if (typeof window === 'undefined' || !hasOwnPropertyTs(features, featureKey))
+    return false
+
+  const hasYesCookie = document.cookie.includes(
+    features[featureKey].cookieName + '=1'
+  )
+  const hasNoCookie = document.cookie.includes(
+    features[featureKey].cookieName + '=0'
+  )
+  return isProduction
+    ? hasYesCookie
+    : hasYesCookie || (features[featureKey].activeInDev && !hasNoCookie)
+}
 
 export function ProfileExperimental() {
   const [, updateState] = useState({}) //refresh comp
@@ -29,31 +57,30 @@ export function ProfileExperimental() {
     if (window.location.hash === '#enable-experiments') {
       localStorage.setItem(showExperimentsStorageKey, '1')
       window.location.hash = ''
+      window.location.reload()
     }
 
     if (window.location.hash === '#disable-experiments')
       localStorage.removeItem(showExperimentsStorageKey)
   })
 
-  if (!localStorage.getItem(showExperimentsStorageKey)) return null
+  if (typeof window === 'undefined') return null
+  if (isProduction && !localStorage.getItem(showExperimentsStorageKey))
+    return null
 
   // check cookies
-  Object.keys(features).forEach((feature) => {
-    const _feature = feature as Feature
-    if (features[_feature]) {
-      features[_feature]!.isActive =
-        typeof window === 'undefined'
-          ? false
-          : Cookies.get(features[_feature]!.cookieName) === '1'
+  Object.keys(features).forEach((featureString) => {
+    const featureKey = featureString as FeatureKey
+    if (features[featureKey]) {
+      features[featureKey].isActive = shouldUseFeature(featureKey)
     }
   })
 
-  function handleButtonClick(feature: Feature) {
-    if (!features[feature]) return
-
-    if (features[feature]!.isActive)
-      Cookies.remove(features[feature]!.cookieName)
-    else Cookies.set(features[feature]!.cookieName, '1', { expires: 60 })
+  function handleButtonClick(featureKey: FeatureKey) {
+    if (!features[featureKey]) return
+    if (features[featureKey].isActive)
+      Cookies.set(features[featureKey].cookieName, '0', { expires: 60 })
+    else Cookies.set(features[featureKey].cookieName, '1', { expires: 60 })
 
     updateState({})
   }
@@ -63,17 +90,35 @@ export function ProfileExperimental() {
       <h2 className="serlo-h2" id="experiments">
         🧪 Experimente
       </h2>
-      {features['boxPlugin'] && (
+      {features.boxPlugin && (
         <div>
           <h3 className="serlo-h3 mb-3">
             ⬛ Editor: Box Plugin {renderFeatureButton('boxPlugin')}
           </h3>
+          <p className="serlo-p">Das neue Box Plugin zum testen.</p>
+        </div>
+      )}
+      {features.tablePlugin && (
+        <div>
+          <h3 className="serlo-h3 mb-3">
+            📋 Editor: New Table Plugin {renderFeatureButton('tablePlugin')}
+          </h3>
+          <p className="serlo-p">Das neue Table Plugin zum testen.</p>
+        </div>
+      )}
+      {features.addRevisionMutation && (
+        <div>
+          <h3 className="serlo-h3 mb-3">
+            ⚠️ Revisions Speichern über die neue Infrastruktur{' '}
+            {renderFeatureButton('addRevisionMutation')}
+          </h3>
           <p className="serlo-p">
-            Das neue Box Plugin, bisher nur für Staging.
+            Bearbeitungen werden direkt über die API gespeichert. Vorsicht: Noch
+            nicht ausführlich getestet.
           </p>
         </div>
       )}
-      {features['legacyDesign'] && (
+      {features.legacyDesign && (
         <div>
           <h3 className="serlo-h3 mb-3">
             👻 Frontend: Altes Design{' '}
@@ -91,7 +136,7 @@ export function ProfileExperimental() {
           </p>
         </div>
       )}
-      {features['legacyEditor'] && (
+      {features.legacyEditor && (
         <div>
           <h3 className="serlo-h3 mb-3">
             ⚠️ Legacy-Editor {renderFeatureButton('legacyEditor')}
@@ -109,19 +154,10 @@ export function ProfileExperimental() {
           </p>
         </div>
       )}
-      {features['addRevisionMutation'] && (
-        <div>
-          <h3 className="serlo-h3 mb-3">
-            ⚠️ Revisions Speichern über die neue Infrastruktur{' '}
-            {renderFeatureButton('addRevisionMutation')}
-          </h3>
-          <p className="serlo-p">Mutige Freiwillige vor.</p>
-        </div>
-      )}
     </section>
   )
 
-  function renderFeatureButton(feature: Feature) {
+  function renderFeatureButton(feature: FeatureKey) {
     if (!features[feature]) return null
     return (
       <button
