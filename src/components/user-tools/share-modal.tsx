@@ -10,11 +10,11 @@ import {
   faDownload,
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 import QRCode from 'qrcode.react'
 import { MouseEvent, useRef, useContext } from 'react'
 
+import { FaIcon } from '../fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { EntityIdContext } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -158,7 +158,7 @@ export function ShareModal({ isOpen, onClose, showPdf }: ShareModalProps) {
           <>
             <br />
             <button className={shareButton} onClick={copyToClipboard}>
-              <FontAwesomeIcon icon={faCopy} /> {strings.share.copyLink}
+              <FaIcon icon={faCopy} /> {strings.share.copyLink}
             </button>
           </>
         )}
@@ -178,7 +178,7 @@ export function ShareModal({ isOpen, onClose, showPdf }: ShareModalProps) {
               onClick={entry.onClick ?? undefined}
               download={entry.download}
             >
-              <FontAwesomeIcon icon={entry.icon} /> {entry.title}
+              <FaIcon icon={entry.icon} /> {entry.title}
             </a>
           )
         })}

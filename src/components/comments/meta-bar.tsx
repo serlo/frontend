@@ -1,10 +1,10 @@
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Tippy from '@tippyjs/react'
 import clsx from 'clsx'
 import { useState } from 'react'
 import { Instance, Props } from 'tippy.js'
 
+import { FaIcon } from '../fa-icon'
 import { UserLink } from '../user/user-link'
 import { DropdownMenu } from './dropdown-menu'
 import { TimeAgo } from '@/components/time-ago'
@@ -74,7 +74,7 @@ export function MetaBar({
             'serlo-button font-normal text-brand-light text-base h-7'
           )}
         >
-          <TimeAgo datetime={date} /> <FontAwesomeIcon icon={faCaretDown} />
+          <TimeAgo datetime={date} /> <FaIcon icon={faCaretDown} />
         </button>
       </Tippy>
     </div>

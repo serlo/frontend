@@ -1,8 +1,8 @@
 import { faHeart, faSpinner } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 import { ReactChild, useState, KeyboardEvent } from 'react'
 
+import { FaIcon } from '../fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { entityIconMapping } from '@/helper/icon-by-entity-type'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
@@ -117,8 +117,8 @@ export function PrivacyWrapper({
             )}
             onKeyDown={onKeyDown}
           >
-            <FontAwesomeIcon
-              className="py-0.5"
+            <FaIcon
+              className={clsx('py-0.5', showIframe && 'animate-spin-slow')}
               icon={
                 showIframe
                   ? faSpinner
@@ -126,7 +126,6 @@ export function PrivacyWrapper({
                   ? faHeart
                   : entityIconMapping[type]
               }
-              spin={showIframe}
             />{' '}
             {buttonLabel}
           </button>

@@ -71,7 +71,6 @@ module.exports = {
       'error',
       {
         allow: [
-          '@fortawesome/fontawesome-svg-core/styles.css',
           'graphiql/esm/components/GraphiQL',
           'graphql-request/dist/types',
           'msw/*',

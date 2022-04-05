@@ -1,5 +1,7 @@
 import { tint, shade } from 'polished'
 
+// Attention! This file is deprecated! Up-to-date values are defined in tailwind.config.js
+
 // base colors
 const brand = '#007ec1'
 const brandGreen = '#95bc1a'

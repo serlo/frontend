@@ -1,10 +1,10 @@
 import { faCircle, faSquare } from '@fortawesome/free-regular-svg-icons'
 import { faCheckCircle, faCheckSquare } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 import { useState, Fragment } from 'react'
 
 import { Feedback } from './feedback'
+import { FaIcon } from '@/components/fa-icon'
 import { isPrintMode } from '@/components/print-mode'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EdtrPluginScMcExercise } from '@/data-types'
@@ -65,7 +65,7 @@ export function ScMcExercise({
                     })}
                     htmlFor={id}
                   >
-                    <FontAwesomeIcon
+                    <FaIcon
                       icon={selected === i ? faCheckCircle : faCircle}
                       className="text-xl mt-0.5 text-brand"
                     />
@@ -149,7 +149,7 @@ export function ScMcExercise({
                     })}
                     htmlFor={id}
                   >
-                    <FontAwesomeIcon
+                    <FaIcon
                       icon={selectedArray[i] ? faCheckSquare : faSquare}
                       className="text-xl mt-0.5 text-brand"
                     />

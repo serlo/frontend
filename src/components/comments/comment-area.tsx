@@ -3,12 +3,12 @@ import {
   faQuestionCircle,
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Comment as CommentType, Thread as ThreadType } from '@serlo/api'
 import { Thread as AuthThread } from '@serlo/authorization'
 import { useState, useRef, useEffect } from 'react'
 
 import { Lazy } from '../content/lazy'
+import { FaIcon } from '../fa-icon'
 import { Guard } from '../guard'
 import { PleaseLogIn } from '../user/please-log-in'
 import { CommentArchive } from './comment-archive'
@@ -160,10 +160,7 @@ export function CommentArea({ entityId, noForms }: CommentAreaProps) {
   function renderHeading(icon: IconDefinition, text: string) {
     return (
       <h2 className="serlo-h2 border-b-0 mt-10">
-        <FontAwesomeIcon
-          className="text-2.5xl text-brand-lighter"
-          icon={icon}
-        />
+        <FaIcon className="text-2.5xl text-brand-lighter" icon={icon} />
         {text}
       </h2>
     )

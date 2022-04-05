@@ -1,7 +1,7 @@
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState, KeyboardEvent, ChangeEvent } from 'react'
 
+import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import {
@@ -53,7 +53,7 @@ export function CheckoutRejectButtons({
         onClick={() => setModalMode('checkout')}
         onPointerUp={(e) => e.currentTarget.blur()}
       >
-        <FontAwesomeIcon icon={faCheck} className="lg:mr-0.5" />{' '}
+        <FaIcon icon={faCheck} className="lg:mr-0.5" />{' '}
         {strings.revisions.checkout.action}
       </button>
       {!isRejected && !isPage && (
@@ -63,11 +63,7 @@ export function CheckoutRejectButtons({
           onPointerUp={(e) => e.currentTarget.blur()}
         >
           &nbsp;
-          <FontAwesomeIcon
-            icon={faTimes}
-            size="1x"
-            className="lg:mr-0.5"
-          />{' '}
+          <FaIcon icon={faTimes} className="lg:mr-0.5" />{' '}
           {strings.revisions.reject.action}
         </button>
       )}

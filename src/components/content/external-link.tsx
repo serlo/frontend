@@ -1,11 +1,15 @@
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+import { FaIcon } from '../fa-icon'
 
 export function ExternalLink() {
   return (
     <>
       {' '}
-      <FontAwesomeIcon icon={faExternalLinkAlt} size="xs" />
+      <FaIcon
+        icon={faExternalLinkAlt}
+        style={{ verticalAlign: 0, fontSize: '0.75em' }}
+      />
     </>
   )
 }
