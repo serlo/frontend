@@ -142,9 +142,12 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
     const convertedTitle = convert(node.state.title as EdtrState)[0] as
       | FrontendTextNode
       | FrontendMathNode
-    const title = (convertedTitle.type === 'math'
-      ? [{ ...convertedTitle, type: 'inline-math' }]
-      : convertedTitle.children) as unknown as FrontendContentNode[]
+      | undefined
+    const title = convertedTitle
+      ? ((convertedTitle.type === 'math'
+          ? [{ ...convertedTitle, type: 'inline-math' }]
+          : convertedTitle.children) as unknown as FrontendContentNode[])
+      : ([{ type: 'text', text: '' }] as FrontendTextNode[])
 
     return [
       {
