@@ -124,12 +124,9 @@ export function ShareModal({ isOpen, onClose, showPdf }: ShareModalProps) {
       title={strings.share.title}
       className="top-1/2"
     >
-      <QRCode
-        value={shareUrl}
-        renderAs="svg"
-        className="sm:float-right mx-side mb-4 sm:mb-0"
-        fgColor={theme.colors.brand}
-      />
+      <div className="sm:float-right mx-side mb-4 sm:mb-0">
+        <QRCode value={shareUrl} renderAs="svg" fgColor={theme.colors.brand} />
+      </div>
       {renderShareInput()}
       <hr className="my-4 mx-side" />
       {renderButtons(lmsData)}

@@ -52,8 +52,8 @@ export function ToolbarMain({
           className={clsx('w-full flex justify-between', 'h-12 pt-4 pl-5 pr-3')}
         >
           <div>
-            {renderUndoRedoButton('Undo', faUndo, undo, !undoable)}
-            {renderUndoRedoButton('Redo', faRedo, redo, !redoable)}
+            {renderHistoryButton('Undo', faUndo, undo, !undoable)}
+            {renderHistoryButton('Redo', faRedo, redo, !redoable)}
           </div>
           <div>{renderSaveButton()}</div>
         </nav>,
@@ -72,7 +72,7 @@ export function ToolbarMain({
     </>
   )
 
-  function renderUndoRedoButton(
+  function renderHistoryButton(
     title: string,
     icon: IconDefinition,
     action: typeof undo | typeof redo,
@@ -89,7 +89,7 @@ export function ToolbarMain({
         onClick={() => {
           dispatch(action())
         }}
-        disabled={!undoable}
+        disabled={disabled}
         title={title}
       >
         <FaIcon icon={icon} />
