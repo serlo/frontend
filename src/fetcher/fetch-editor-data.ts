@@ -73,6 +73,7 @@ export async function fetchEditorData(
 
   const noReviewTypes = ['TaxonomyTerm', 'Page', 'User']
   const typeNeedsReview = !noReviewTypes.includes(data.__typename)
+  const needsReview = !isSandbox && typeNeedsReview
 
   if (isError(result)) {
     throw new Error(result.error)
@@ -80,7 +81,7 @@ export async function fetchEditorData(
     return {
       ...result,
       type: data.__typename,
-      needsReview: !isSandbox && typeNeedsReview,
+      needsReview,
       id: repoId,
       errorType: 'none',
       breadcrumbsData: breadcrumbsData ?? null,

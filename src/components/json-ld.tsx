@@ -81,7 +81,7 @@ export function JsonLd({ data, id }: JsonLdProps) {
 
     const collectionSize = isTaxonomy ? taxonomyDataChildren?.length : undefined
 
-    const about = data.breadcrumbsData?.[0].id
+    const about = data.breadcrumbsData?.[0]?.id
       ? [
           {
             id: getIRI(data.breadcrumbsData[0].id),

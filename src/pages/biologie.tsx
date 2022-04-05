@@ -14,5 +14,6 @@ export default renderedPageNoHooks<{ pageData: TaxonomyPage }>(
 )
 
 export const getStaticProps: GetStaticProps<SlugProps> = async (context) => {
-  return subjectLandingGetStaticProps(context.locale!, subject)
+  if (context.locale !== 'de') return { notFound: true }
+  return subjectLandingGetStaticProps(context.locale, subject)
 }

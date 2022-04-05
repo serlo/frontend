@@ -1,13 +1,18 @@
 import clsx from 'clsx'
 import Cookies from 'js-cookie'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { LoadingSpinner } from '../loading/loading-spinner'
 import { Breadcrumbs } from '../navigation/breadcrumbs'
+import { features } from '../user/profile-experimental'
 import { MathSpan } from '@/components/content/math-span'
 import { useInstanceData } from '@/contexts/instance-context'
 import { SerloEditor } from '@/edtr-io/serlo-editor'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
+import {
+  RevisionAddMutationData,
+  useRevisionAddMutation,
+} from '@/helper/mutations/revision'
 
 export function AddRevision({
   initialState,
@@ -22,6 +27,8 @@ export function AddRevision({
     label: strings.revisions.toContent,
     url: `/${id}`,
   }
+
+  const addRevisionMutation = useRevisionAddMutation()
 
   const [cookieReady, setCookieReady] = useState(false)
 
@@ -39,6 +46,22 @@ export function AddRevision({
   }, [])
 
   if (!cookieReady) return <LoadingSpinner noText />
+
+  const supportedTypes = [
+    'Applet',
+    'Article',
+    'Course',
+    'CoursePage',
+    'Event',
+    'Solution',
+    'Video',
+    'Exercise',
+    'ExerciseGroup',
+    'GroupedExercise',
+  ]
+  // 'Page'
+  // 'Taxonomy'
+  // 'User'
 
   return (
     <>
@@ -59,7 +82,35 @@ export function AddRevision({
             return cookies['CSRF']
           }}
           needsReview={needsReview}
-          onSave={(data) => {
+          onSave={async (data: RevisionAddMutationData) => {
+            if (
+              features.addRevisionMutation &&
+              document.cookie.includes(
+                features.addRevisionMutation.cookieName + '=1'
+              ) &&
+              supportedTypes.includes(type)
+            ) {
+              // eslint-disable-next-line no-console
+              console.log('using api endpoint to save')
+
+              // refactor and rename when removing legacy code
+              const skipReview = data.controls.checkout
+              const _needsReview = skipReview ? false : needsReview
+
+              const success = await addRevisionMutation(
+                {
+                  ...data,
+                  // @ts-expect-error temporary
+                  __typename: type === 'GroupedExercise' ? 'Exercise' : type,
+                },
+                _needsReview
+              )
+              return new Promise((resolve, reject) => {
+                if (success) resolve()
+                else reject()
+              })
+            }
+
             return new Promise((resolve, reject) => {
               fetch(window.location.pathname, {
                 method: 'POST',
