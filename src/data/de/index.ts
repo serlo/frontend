@@ -571,13 +571,13 @@ export const loggedInData = {
         columnHeaders: "Nur Spaltentitel",
         rowHeaders: "Nur Zeilentitel",
         columnAndRowHeaders: "Spalten- und Zeilentitel",
-        convertToText: 'Convert to text',
-        convertToImage: 'Convert to image',
-        row: "row",
-        column: "column",
-        addType: 'Add %type%',
-        deleteType: 'Delete %type%',
-        confirmDelete: 'Are you sure you want to delete this %type% and the content in it?'
+        convertToText: "Text als Inhalt",
+        convertToImage: "Bild als Inhalt",
+        row: "Zeile",
+        column: "Spalte",
+        addType: "%type% hinzufügen",
+        deleteType: "%type% löschen",
+        confirmDelete: "Sicher, dass diese %type% und ihren Inhalt löschen willst?"
       },
       spoiler: {
         enterATitle: "Titel eingeben"
