@@ -7,9 +7,9 @@ import {
   faLightbulb,
   faQuoteRight,
 } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 
+import { FaIcon } from '../fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { FrontendBoxNode } from '@/data-types'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
@@ -90,7 +90,7 @@ export function Box({
               <span
                 className={clsx(title && !isBlank ? 'mr-1.5' : '', colorClass)}
               >
-                {icon ? <FontAwesomeIcon className="mr-1" icon={icon} /> : null}
+                {icon ? <FaIcon className="mr-1" icon={icon} /> : null}
                 {strings.content.boxTypes[boxType]}
               </span>
             </>

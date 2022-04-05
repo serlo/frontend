@@ -54,6 +54,7 @@ module.exports = {
       },
       animation: {
         'spin-fast': 'spin 400ms linear infinite',
+        'spin-slow': 'spin 2s linear infinite',
       },
       borderRadius: {
         '4xl': '4rem',
