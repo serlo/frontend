@@ -138,14 +138,20 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
     ]
   }
   if (node.plugin === 'box') {
+    // get rid of wrapping p and inline math in title
+    const convertedTitle = convert(node.state.title as EdtrState)[0] as
+      | FrontendTextNode
+      | FrontendMathNode
+    const title = (convertedTitle.type === 'math'
+      ? [{ ...convertedTitle, type: 'inline-math' }]
+      : convertedTitle.children) as unknown as FrontendContentNode[]
+
     return [
       {
         type: 'box',
         boxType: node.state.type as BoxType,
         anchorId: node.state.anchorId,
-        title: (
-          convert(node.state.title as EdtrState) as FrontendTextNode[]
-        )?.[0]?.children,
+        title,
         children: convert(node.state.content.state as EdtrState),
       },
     ]

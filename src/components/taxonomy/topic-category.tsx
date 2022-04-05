@@ -1,8 +1,8 @@
 import { faTools } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 
+import { FaIcon } from '../fa-icon'
 import { useAuthentication } from '@/auth/use-authentication'
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -48,7 +48,7 @@ export function TopicCategory({
     >
       <h4 className="text-truegray-900 text-lg mb-4 font-bold">
         {strings.categories[category]}{' '}
-        <FontAwesomeIcon icon={categoryIconMapping[category]} />
+        <FaIcon icon={categoryIconMapping[category]} />
       </h4>
 
       {links.map(renderLink)}
@@ -71,11 +71,9 @@ export function TopicCategory({
         >
           {link.title}
           {link.unrevised && (
-            <FontAwesomeIcon
-              icon={faTools}
-              title={loggedInData?.strings.revisions.unrevisedTaxNote}
-              className="ml-1 text-base"
-            />
+            <span title={loggedInData?.strings.revisions.unrevisedTaxNote}>
+              <FaIcon icon={faTools} className="ml-1 text-base" />
+            </span>
           )}
         </Link>
       </li>

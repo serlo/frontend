@@ -230,10 +230,15 @@
       @apply text-white bg-brand;
 
       /*just for notifications count*/
-      & span.fa-layers {
+      & span.notification-count-span {
         color: #fff;
       }
     }
+  }
+
+  .serlo-fa-icon {
+    @apply inline-block overflow-visible h-[1em];
+    vertical-align: -0.125em;
   }
 
   .serlo-editor-hacks {

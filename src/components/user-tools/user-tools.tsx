@@ -7,11 +7,11 @@ import {
   faTools,
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { TaxonomyTerm, Uuid } from '@serlo/authorization'
 import clsx from 'clsx'
 import { useEffect, useState, cloneElement } from 'react'
 
+import { FaIcon } from '../fa-icon'
 import { LazyTippy } from '../navigation/lazy-tippy'
 import { AuthorToolsData } from './author-tools-hover-menu'
 import { useAuthentication } from '@/auth/use-authentication'
@@ -274,7 +274,7 @@ export function UserTools({
   function renderInner(text: string, icon: IconDefinition) {
     return (
       <>
-        <FontAwesomeIcon icon={icon} className="lg:mr-0.5" /> {text}
+        <FaIcon icon={icon} className="lg:mr-0.5" /> {text}
       </>
     )
   }

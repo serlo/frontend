@@ -1,7 +1,7 @@
 import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import { Link } from '../content/link'
+import { FaIcon } from '../fa-icon'
 import { HeadTags } from '../head-tags'
 import { PrinciplesGraphic } from '../landing/principles-graphic'
 import ParticipateSVG from '@/assets-webkit/img/footer-participate.svg'
@@ -125,8 +125,7 @@ export function LandingInternational({ data }: LandingInternationalProps) {
           className="serlo-button serlo-make-interactive-light -ml-1"
           href="/serlo"
         >
-          {landingStrings.learnMore}{' '}
-          <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
+          {landingStrings.learnMore} <FaIcon icon={faArrowCircleRight} />
         </Link>
       </section>
       <section className="mb-14">
@@ -155,8 +154,7 @@ export function LandingInternational({ data }: LandingInternationalProps) {
             href="/community"
             className="serlo-button serlo-make-interactive-light -ml-1"
           >
-            {landingStrings.communityLink}{' '}
-            <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
+            {landingStrings.communityLink} <FaIcon icon={faArrowCircleRight} />
           </Link>
         </div>
         <div className="col">
@@ -165,8 +163,7 @@ export function LandingInternational({ data }: LandingInternationalProps) {
             href="/get-involved"
             className="serlo-button serlo-make-interactive-light -ml-1"
           >
-            {landingStrings.getInvolved}{' '}
-            <FontAwesomeIcon icon={faArrowCircleRight} size="1x" />
+            {landingStrings.getInvolved} <FaIcon icon={faArrowCircleRight} />
           </Link>
         </div>
       </section>

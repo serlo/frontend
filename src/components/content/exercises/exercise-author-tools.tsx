@@ -1,5 +1,4 @@
 import { faLayerGroup, faTools } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Tippy from '@tippyjs/react'
 import clsx from 'clsx'
 
@@ -7,6 +6,7 @@ import {
   AuthorToolsData,
   AuthorToolsHoverMenu,
 } from '../../user-tools/author-tools-hover-menu'
+import { FaIcon } from '@/components/fa-icon'
 
 export interface ExerciseAuthorToolsProps {
   data: AuthorToolsData
@@ -29,7 +29,7 @@ export function ExerciseAuthorTools({ data }: ExerciseAuthorToolsProps) {
           'w-8 h-8 ml-1 p-0'
         )}
       >
-        <FontAwesomeIcon
+        <FaIcon
           icon={data.type == '_ExerciseGroupInline' ? faLayerGroup : faTools}
         />
       </a>

@@ -1,5 +1,4 @@
 import { faBellSlash, faCheck } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   CheckoutRevisionNotificationEvent,
   CreateCommentNotificationEvent,
@@ -25,6 +24,7 @@ import Tippy from '@tippyjs/react'
 import clsx from 'clsx'
 import { hasPath } from 'ramda'
 
+import { FaIcon } from '../fa-icon'
 import { UserLink } from './user-link'
 import { useAuthentication } from '@/auth/use-authentication'
 import { Link } from '@/components/content/link'
@@ -331,7 +331,7 @@ export function Event({
           className="serlo-button serlo-make-interactive-transparent-blue text-base"
           /*StyledButton*/ onClick={() => setToRead(eventId)}
         >
-          <FontAwesomeIcon icon={faCheck} />
+          <FaIcon icon={faCheck} />
         </a>
       </Tippy>
     )
@@ -349,7 +349,7 @@ export function Event({
           className="serlo-button serlo-make-interactive-transparent-blue text-base mr-3"
           /*StyledButton*/ href={`/unsubscribe/${event.objectId.toString()}`}
         >
-          <FontAwesomeIcon icon={faBellSlash} />
+          <FaIcon icon={faBellSlash} />
         </a>
       </Tippy>
     )

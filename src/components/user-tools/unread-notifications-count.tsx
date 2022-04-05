@@ -1,14 +1,12 @@
-import {
-  FontAwesomeIcon,
-  FontAwesomeIconProps,
-} from '@fortawesome/react-fontawesome'
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import clsx from 'clsx'
 import { gql } from 'graphql-request'
 
+import { FaIcon } from '../fa-icon'
 import { useGraphqlSwrWithAuth } from '@/api/use-graphql-swr'
 
 export interface UnreadNotificationsCountProps {
-  icon?: FontAwesomeIconProps['icon']
+  icon?: IconDefinition
   onlyNumber?: boolean
 }
 
@@ -39,16 +37,17 @@ export function UnreadNotificationsCount({
   if (onlyNumber) return <>{data === undefined ? '…' : count}</>
 
   return (
-    <span className={clsx('fa-layers fa-fw', count > 0 && 'text-brand')}>
-      {icon && (
-        <FontAwesomeIcon
-          icon={icon}
-          style={{ height: '1.45rem', width: '1.25rem', paddingTop: '0' }}
-        />
+    <span
+      className={clsx(
+        'relative inline-block w-5 h-[1em]',
+        count > 0 && 'text-brand',
+        'notification-count-span'
       )}
+    >
+      {icon && <FaIcon icon={icon} className="absolute inset-0 w-5 h-6" />}
       <span
         className={clsx(
-          'block text-sm absolute -mt-0.25 text-white',
+          'block text-sm absolute mt-0.25 text-white',
           'z-50 text-center w-5',
           'group-hover:text-brand group-active:text-brand transition-all'
         )}
