@@ -13,6 +13,7 @@ import {
   FrontendContentNode,
   FrontendLiNode,
   FrontendMathNode,
+  FrontendSerloTrNode,
   FrontendTextColor,
   FrontendTextNode,
   Sign,
@@ -233,6 +234,27 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
       (child) => child.type == 'table'
     )
     return children
+  }
+  if (node.plugin === 'serloTable') {
+    const children = node.state.rows.map((row) => {
+      return {
+        type: 'serlo-tr',
+        children: row.columns.map((cell) => {
+          return {
+            type: 'serlo-td',
+            children: convert(cell.content as EdtrState),
+          }
+        }),
+      }
+    }) as FrontendSerloTrNode[]
+
+    return [
+      {
+        type: 'serlo-table',
+        tableType: node.state.tableType,
+        children,
+      },
+    ]
   }
   if (node.plugin === 'video') {
     if (!node.state.src) {

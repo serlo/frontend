@@ -3,21 +3,19 @@ import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
 
 import { Link } from '../content/link'
+import { isProduction } from '@/helper/is-production'
 
 export const features = {
-  boxPlugin:
-    process.env.NEXT_PUBLIC_ENV === 'production'
-      ? null
-      : { cookieName: 'useBoxPlugin', isActive: false },
+  boxPlugin: isProduction
+    ? null
+    : { cookieName: 'useBoxPlugin', isActive: false },
   legacyEditor: { cookieName: 'useLegacyEditor', isActive: false },
-  legacyDesign:
-    process.env.NEXT_PUBLIC_ENV === 'production'
-      ? null
-      : { cookieName: 'useFrontend', isActive: false },
-  addRevisionMutation:
-    process.env.NEXT_PUBLIC_ENV === 'production'
-      ? null
-      : { cookieName: 'useAddRevisionMutation', isActive: false },
+  legacyDesign: isProduction
+    ? null
+    : { cookieName: 'useFrontend', isActive: false },
+  addRevisionMutation: isProduction
+    ? null
+    : { cookieName: 'useAddRevisionMutation', isActive: false },
 }
 
 type Feature = keyof typeof features

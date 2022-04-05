@@ -13,6 +13,7 @@ import { NewElement, NewText, TextPluginState } from '@edtr-io/plugin-text'
 import { VideoPluginState } from '@edtr-io/plugin-video'
 
 import { BoxPluginState } from '@/edtr-io/plugins/box'
+import { SerloTablePluginState } from '@/edtr-io/plugins/serlo-table'
 
 export type SlateBlockElement = NewElement
 export type SlateTextElement = NewText
@@ -73,6 +74,11 @@ export interface EdtrPluginVideo {
 export interface EdtrPluginTable {
   plugin: 'table'
   state: StateTypeSerializedType<TablePluginState>
+}
+
+export interface EdtrPluginSerloTable {
+  plugin: 'serloTable'
+  state: StateTypeSerializedType<SerloTablePluginState>
 }
 
 export interface EdtrPluginHighlight {
@@ -155,6 +161,7 @@ export type EdtrState =
   | EdtrPluginAnchor
   | EdtrPluginVideo
   | EdtrPluginTable
+  | EdtrPluginSerloTable
   | EdtrPluginHighlight
   | EdtrPluginSerloInjection
   | EdtrPluginLayout
