@@ -1,4 +1,4 @@
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
 import clsx from 'clsx'
 import { useState, useRef, useEffect, KeyboardEvent } from 'react'
 

@@ -1,15 +1,11 @@
-import {
-  faFacebookSquare,
-  faWhatsappSquare,
-  faGoogle,
-} from '@fortawesome/free-brands-svg-icons'
-import {
-  faCopy,
-  faEnvelope,
-  faCompass,
-  faDownload,
-  IconDefinition,
-} from '@fortawesome/free-solid-svg-icons'
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
+import { faFacebookSquare } from '@fortawesome/free-brands-svg-icons/faFacebookSquare'
+import { faGoogle } from '@fortawesome/free-brands-svg-icons/faGoogle'
+import { faWhatsappSquare } from '@fortawesome/free-brands-svg-icons/faWhatsappSquare'
+import { faCompass } from '@fortawesome/free-solid-svg-icons/faCompass'
+import { faCopy } from '@fortawesome/free-solid-svg-icons/faCopy'
+import { faDownload } from '@fortawesome/free-solid-svg-icons/faDownload'
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
 import clsx from 'clsx'
 import QRCode from 'qrcode.react'
 import { MouseEvent, useRef, useContext } from 'react'

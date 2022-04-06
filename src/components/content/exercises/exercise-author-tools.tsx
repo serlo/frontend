@@ -1,4 +1,5 @@
-import { faLayerGroup, faTools } from '@fortawesome/free-solid-svg-icons'
+import { faLayerGroup } from '@fortawesome/free-solid-svg-icons/faLayerGroup'
+import { faTools } from '@fortawesome/free-solid-svg-icons/faTools'
 import Tippy from '@tippyjs/react'
 import clsx from 'clsx'
 

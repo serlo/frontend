@@ -1,6 +1,6 @@
 import { PluginToolbarButton } from '@edtr-io/core'
 import { Icon } from '@edtr-io/ui'
-import { faHistory } from '@fortawesome/free-solid-svg-icons'
+import { faHistory } from '@fortawesome/free-solid-svg-icons/faHistory'
 import NProgress from 'nprogress'
 import { PropsWithChildren, useState } from 'react'
 

@@ -1,8 +1,6 @@
-import {
-  faReply,
-  faArrowRight,
-  faSpinner,
-} from '@fortawesome/free-solid-svg-icons'
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons/faArrowRight'
+import { faReply } from '@fortawesome/free-solid-svg-icons/faReply'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons/faSpinner'
 import clsx from 'clsx'
 import { useState, KeyboardEvent, useRef, ChangeEvent } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'

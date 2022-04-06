@@ -1,12 +1,10 @@
-import {
-  faScroll,
-  faHandPointRight,
-  faMapSigns,
-  faThumbtack,
-  faExclamationTriangle,
-  faLightbulb,
-  faQuoteRight,
-} from '@fortawesome/free-solid-svg-icons'
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExclamationTriangle'
+import { faHandPointRight } from '@fortawesome/free-solid-svg-icons/faHandPointRight'
+import { faLightbulb } from '@fortawesome/free-solid-svg-icons/faLightbulb'
+import { faMapSigns } from '@fortawesome/free-solid-svg-icons/faMapSigns'
+import { faQuoteRight } from '@fortawesome/free-solid-svg-icons/faQuoteRight'
+import { faScroll } from '@fortawesome/free-solid-svg-icons/faScroll'
+import { faThumbtack } from '@fortawesome/free-solid-svg-icons/faThumbtack'
 import clsx from 'clsx'
 
 import { FaIcon } from '../fa-icon'

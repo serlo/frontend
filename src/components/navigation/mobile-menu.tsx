@@ -1,14 +1,12 @@
-import {
-  faCaretDown,
-  faBars,
-  faUser,
-  faInfoCircle,
-  faUserEdit,
-  faGraduationCap,
-  faHandHoldingHeart,
-  faUserFriends,
-  faBell,
-} from '@fortawesome/free-solid-svg-icons'
+import { faBars } from '@fortawesome/free-solid-svg-icons/faBars'
+import { faBell } from '@fortawesome/free-solid-svg-icons/faBell'
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons/faCaretDown'
+import { faGraduationCap } from '@fortawesome/free-solid-svg-icons/faGraduationCap'
+import { faHandHoldingHeart } from '@fortawesome/free-solid-svg-icons/faHandHoldingHeart'
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle'
+import { faUser } from '@fortawesome/free-solid-svg-icons/faUser'
+import { faUserEdit } from '@fortawesome/free-solid-svg-icons/faUserEdit'
+import { faUserFriends } from '@fortawesome/free-solid-svg-icons/faUserFriends'
 import clsx from 'clsx'
 import { useState, MouseEvent } from 'react'
 

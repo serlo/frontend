@@ -1,7 +1,5 @@
-import {
-  faArrowCircleLeft,
-  faFolderOpen,
-} from '@fortawesome/free-solid-svg-icons'
+import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons/faArrowCircleLeft'
+import { faFolderOpen } from '@fortawesome/free-solid-svg-icons/faFolderOpen'
 import clsx from 'clsx'
 import { Fragment } from 'react'
 

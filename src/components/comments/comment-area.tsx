@@ -1,8 +1,6 @@
-import {
-  faComments,
-  faQuestionCircle,
-  IconDefinition,
-} from '@fortawesome/free-solid-svg-icons'
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
+import { faComments } from '@fortawesome/free-solid-svg-icons/faComments'
+import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons/faQuestionCircle'
 import { Comment as CommentType, Thread as ThreadType } from '@serlo/api'
 import { Thread as AuthThread } from '@serlo/authorization'
 import { useState, useRef, useEffect } from 'react'

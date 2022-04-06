@@ -1,5 +1,5 @@
 import { StateTypeReturnType } from '@edtr-io/plugin'
-import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
+import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons/faExclamationCircle'
 import clsx from 'clsx'
 import { useContext, useState } from 'react'
 

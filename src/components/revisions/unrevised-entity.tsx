@@ -1,4 +1,4 @@
-import { faEye } from '@fortawesome/free-solid-svg-icons'
+import { faEye } from '@fortawesome/free-solid-svg-icons/faEye'
 import clsx from 'clsx'
 import { Fragment } from 'react'
 

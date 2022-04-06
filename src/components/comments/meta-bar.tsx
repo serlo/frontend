@@ -1,4 +1,4 @@
-import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons/faCaretDown'
 import Tippy from '@tippyjs/react'
 import clsx from 'clsx'
 import { useState } from 'react'

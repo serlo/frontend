@@ -1,12 +1,10 @@
-import {
-  faClock,
-  faList,
-  faPencilAlt,
-  faQuestionCircle,
-  faShareAlt,
-  faTools,
-  IconDefinition,
-} from '@fortawesome/free-solid-svg-icons'
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
+import { faClock } from '@fortawesome/free-solid-svg-icons/faClock'
+import { faList } from '@fortawesome/free-solid-svg-icons/faList'
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons/faPencilAlt'
+import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons/faQuestionCircle'
+import { faShareAlt } from '@fortawesome/free-solid-svg-icons/faShareAlt'
+import { faTools } from '@fortawesome/free-solid-svg-icons/faTools'
 import { TaxonomyTerm, Uuid } from '@serlo/authorization'
 import clsx from 'clsx'
 import { useEffect, useState, cloneElement } from 'react'

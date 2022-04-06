@@ -1,4 +1,6 @@
-import { faCaretDown, faUser, faBell } from '@fortawesome/free-solid-svg-icons'
+import { faBell } from '@fortawesome/free-solid-svg-icons/faBell'
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons/faCaretDown'
+import { faUser } from '@fortawesome/free-solid-svg-icons/faUser'
 import type { TippyProps } from '@tippyjs/react'
 import clsx from 'clsx'
 import { useState, useEffect } from 'react'

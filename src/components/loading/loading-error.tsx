@@ -1,4 +1,4 @@
-import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
+import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons/faExclamationCircle'
 
 import { FaIcon } from '../fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
