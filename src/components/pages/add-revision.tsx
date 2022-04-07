@@ -13,7 +13,6 @@ import {
   RevisionAddMutationData,
   useRevisionAddMutation,
 } from '@/helper/mutations/use-revision-add-mutation'
-import { EdtrState } from '@/schema/edtr-io-types'
 
 export function AddRevision({
   initialState,
@@ -102,7 +101,7 @@ export function AddRevision({
                   __typename: type === 'GroupedExercise' ? 'Exercise' : type,
                 },
                 _needsReview,
-                initialState as EdtrState
+                initialState
               )
               return new Promise((resolve, reject) => {
                 if (success) resolve()

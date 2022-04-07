@@ -9,6 +9,8 @@ import {
   AddVideoRevisionInput,
 } from '@serlo/api'
 import { gql } from 'graphql-request'
+// eslint-disable-next-line import/no-internal-modules
+import equals from 'ramda/src/equals'
 import { RefObject } from 'react'
 
 import { showToastNotice } from '../show-toast-notice'
@@ -28,7 +30,6 @@ import {
   TextSolutionSerializedState,
   VideoSerializedState,
 } from '@/edtr-io/editor-response-to-state'
-import { EdtrState } from '@/schema/edtr-io-types'
 
 export interface OnSaveData {
   csrf?: string
@@ -71,7 +72,10 @@ export function useRevisionAddMutation() {
   return async (
     data: RevisionAddMutationData,
     needsReview: boolean,
-    initialState: EdtrState
+    initialState: {
+      plugin: 'text'
+      state: unknown
+    }
   ) =>
     await addRevisionMutation({
       auth,
@@ -88,7 +92,10 @@ interface AddRevisionMutationData {
   needsReview: boolean
   loggedInData: LoggedInData | null
   isRecursiveCall?: boolean
-  initialState: EdtrState
+  initialState: {
+    plugin: 'text'
+    state: unknown
+  }
 }
 
 export const addRevisionMutation = async function ({
@@ -155,26 +162,30 @@ const loopNestedChildren = async ({
   if (data.__typename === 'Course' && data['course-page']) {
     success =
       success &&
-      (await mapField<CoursePageSerializedState>(
+      (await mapField(
         data['course-page'],
         'CoursePage',
-        initialState.state['course-page']
+        (initialState.state as CourseSerializedState)['course-page']
       ))
   }
   if (data.__typename === 'ExerciseGroup' && data['grouped-text-exercise']) {
     success =
       success &&
-      (await mapField<TextExerciseSerializedState>(
+      (await mapField(
         data['grouped-text-exercise'],
-        'Exercise'
+        'Exercise',
+        (initialState.state as TextExerciseGroupSerializedState)[
+          'grouped-text-exercise'
+        ]
       ))
   }
   if (data.__typename === 'Exercise' && data['text-solution']) {
     success =
       success &&
-      (await mapField<TextSolutionSerializedState>(
+      (await mapField(
         data['text-solution'],
-        'Solution'
+        'Solution',
+        (initialState.state as TextExerciseSerializedState)['text-solution']
       ))
   }
 
@@ -185,21 +196,33 @@ const loopNestedChildren = async ({
     | TextSolutionSerializedState
     | TextExerciseSerializedState
 
-  async function mapField<ChildFieldsData>(
-    childrenArray: ChildFieldsData[] | ChildFieldsData,
-    childrenType: RevisionAddMutationData['__typename'],
-    childrenInitialState?: ChildFieldsData[] | ChildFieldsData
+  async function mapField(
+    childrenData: ChildFieldsData | ChildFieldsData[],
+    childrenType: ChildFieldsData['__typename'],
+    childrenInitialData?: ChildFieldsData | ChildFieldsData[]
   ) {
-    console.log(childrenInitialState)
-
     //bonus points if we check if they were changed at all
-    const _childrenArray = Array.isArray(childrenArray)
-      ? childrenArray
-      : [childrenArray]
+    const childrenArray = Array.isArray(childrenData)
+      ? childrenData
+      : [childrenData]
+
+    const childrenInitialArray = Array.isArray(childrenInitialData)
+      ? childrenInitialData
+      : [childrenInitialData]
 
     const results = await Promise.all(
-      _childrenArray.map(async (child) => {
-        const input: ChildFieldsData & OnSaveData = {
+      childrenArray.map(async (child) => {
+        const oldVersion = childrenInitialArray.find(
+          (oldChild) => oldChild?.id === child.id
+        )
+
+        if (!oldVersion) {
+          // TODO: is new uuid, call create mutation or combined mutation
+        }
+
+        if (equals(oldVersion, child)) return true // no changes
+
+        const input = {
           ...child,
           __typename: childrenType,
           changes: data.changes,
@@ -208,7 +231,7 @@ const loopNestedChildren = async ({
         }
         const success = await addRevisionMutation({
           auth,
-          data: input as unknown as RevisionAddMutationData,
+          data: input as RevisionAddMutationData,
           needsReview,
           loggedInData,
           isRecursiveCall: true,
