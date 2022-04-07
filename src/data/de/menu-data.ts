@@ -80,10 +80,6 @@ export const footerData: InstanceData['footerData'] = {
           url: `https://en.${serloDomain}/global`,
         },
         {
-          title: 'Ins alte Design zurück',
-          url: `https://de.${serloDomain}/disable-frontend`,
-        },
-        {
           title: 'API',
           url: `https://en.${serloDomain}/community/technology-and-development/content-api`,
         },
@@ -101,6 +97,11 @@ export const footerData: InstanceData['footerData'] = {
           title: 'GitHub',
           url: 'https://github.com/serlo',
           icon: 'github',
+        },
+        {
+          title: 'Jobs',
+          url: `https://de.${serloDomain}/jobs`,
+          icon: 'job',
         },
       ],
     },

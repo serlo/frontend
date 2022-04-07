@@ -1,5 +1,6 @@
 import { faGithubSquare } from '@fortawesome/free-brands-svg-icons/faGithubSquare'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
+import { faHouseLaptop } from '@fortawesome/free-solid-svg-icons/faHouseLaptop'
 import clsx from 'clsx'
 
 import { FaIcon } from '../fa-icon'
@@ -9,6 +10,7 @@ import { FooterNavigation } from '@/data-types'
 const iconMapping = {
   newsletter: faEnvelope,
   github: faGithubSquare,
+  job: faHouseLaptop,
 }
 
 interface FooterNavProps {
