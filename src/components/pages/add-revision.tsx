@@ -126,8 +126,21 @@ export function AddRevision({
                     redirect: string
                     errors: object
                   }) => {
-                    if (data.success) {
+                    if (data.success && data.redirect) {
                       resolve()
+
+                      // override behaviour for taxonomy term
+                      if (
+                        data.redirect.includes('/taxonomy/term/update/') ||
+                        data.redirect.includes('/taxonomy/term/create/')
+                      ) {
+                        const id = data.redirect.match(/[\d]+$/)
+                        if (id && id[0]) {
+                          window.location.href = `/${id[0]}`
+                          return
+                        }
+                      }
+
                       window.location.href =
                         data.redirect.length > 5
                           ? data.redirect
