@@ -8,7 +8,7 @@ import { SubscriptionData } from '@/data-types'
 import { getRawTitle } from '@/fetcher/create-title'
 import { getEntityStringByTypename } from '@/helper/feature-i18n'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
-import { useSubscriptionSetMutation } from '@/helper/mutations/subscription'
+import { useSubscriptionSetMutation } from '@/helper/mutations/use-subscription-set-mutation'
 
 export function ManageSubscriptions({
   subscriptions,

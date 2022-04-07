@@ -7,12 +7,8 @@ import {
   AddExerciseGroupRevisionInput,
   AddGenericRevisionInput,
   AddVideoRevisionInput,
-  CheckoutRevisionInput,
-  RejectRevisionInput,
 } from '@serlo/api'
 import { gql } from 'graphql-request'
-import { useRouter } from 'next/router'
-import NProgress from 'nprogress'
 import { RefObject } from 'react'
 
 import { showToastNotice } from '../show-toast-notice'
@@ -32,83 +28,197 @@ import {
   TextSolutionSerializedState,
   VideoSerializedState,
 } from '@/edtr-io/editor-response-to-state'
+import { EdtrState } from '@/schema/edtr-io-types'
 
-export type RevisionMutationMode = 'checkout' | 'reject'
+export interface OnSaveData {
+  csrf?: string
+  controls: {
+    subscription?: {
+      subscribe: number
+      mailman: number
+    }
+    checkout?: boolean
+  }
+}
 
-const rejectEntityMutation = gql`
-  mutation rejectRevision($input: RejectRevisionInput!) {
-    entity {
-      rejectRevision(input: $input) {
-        success
-      }
-    }
-  }
-`
-const checkoutEntityMutation = gql`
-  mutation checkoutRevision($input: CheckoutRevisionInput!) {
-    entity {
-      checkoutRevision(input: $input) {
-        success
-      }
-    }
-  }
-`
-const checkoutPageMutation = gql`
-  mutation checkoutPageRevision($input: CheckoutRevisionInput!) {
-    page {
-      checkoutRevision(input: $input) {
-        success
-      }
-    }
-  }
-`
+export type AddRevisionInputTypes =
+  | AddGenericRevisionInput
+  | AddAppletRevisionInput
+  | AddArticleRevisionInput
+  | AddCourseRevisionInput
+  | AddCoursePageRevisionInput
+  | AddEventRevisionInput
+  | AddExerciseGroupRevisionInput
+  | AddVideoRevisionInput
 
-export function useRevisionDecideMutation() {
+export type SupportedTypesSerializedState =
+  | AppletSerializedState
+  | ArticleSerializedState
+  | CourseSerializedState
+  | CoursePageSerializedState
+  | EventSerializedState
+  | TextExerciseSerializedState
+  | TextExerciseGroupSerializedState
+  | TextSolutionSerializedState
+  | VideoSerializedState
+
+export type RevisionAddMutationData = SupportedTypesSerializedState & OnSaveData
+
+export function useRevisionAddMutation() {
   const auth = useAuthentication()
-  const router = useRouter()
   const loggedInData = useLoggedInData()
 
-  const revisionMutation = async function (
-    mode: RevisionMutationMode,
-    input: RejectRevisionInput,
-    isPage: boolean
-  ) {
-    const isCheckout = mode === 'checkout'
-    const mutation = isPage
-      ? checkoutPageMutation
-      : isCheckout
-      ? checkoutEntityMutation
-      : rejectEntityMutation
-    NProgress.start()
+  return async (
+    data: RevisionAddMutationData,
+    needsReview: boolean,
+    initialState: EdtrState
+  ) =>
+    await addRevisionMutation({
+      auth,
+      data,
+      needsReview,
+      loggedInData,
+      initialState,
+    })
+}
+
+interface AddRevisionMutationData {
+  auth: RefObject<AuthenticationPayload>
+  data: RevisionAddMutationData
+  needsReview: boolean
+  loggedInData: LoggedInData | null
+  isRecursiveCall?: boolean
+  initialState: EdtrState
+}
+
+export const addRevisionMutation = async function ({
+  auth,
+  data,
+  needsReview,
+  loggedInData,
+  isRecursiveCall,
+  initialState,
+}: AddRevisionMutationData) {
+  if (!auth || !loggedInData) {
+    showToastNotice('Please make sure you are logged in!', 'warning')
+    return false
+  }
+
+  if (!data.__typename) return false
+
+  const childrenResult = await loopNestedChildren({
+    auth,
+    data,
+    needsReview,
+    loggedInData,
+    initialState,
+  })
+
+  try {
+    const genericInput = getGenericInputData(loggedInData, data, needsReview)
+    const additionalInput = getAdditionalInputData(loggedInData, data)
+    const input = { ...genericInput, ...additionalInput }
+
     const success = await mutationFetch(
       auth,
-      mutation,
+      getAddMutation(data.__typename),
       input,
       loggedInData?.strings.mutations.errors
     )
 
-    if (success) {
-      setTimeout(() => {
-        if (!loggedInData) return
-        showToastNotice(
-          loggedInData.strings.mutations.success[
-            isCheckout ? 'accept' : 'reject'
-          ],
-          'success'
-        )
-        NProgress.done()
-        void router.push(
-          sessionStorage.getItem('previousPathname') || '/entity/unrevised'
-        )
-      }, 100)
+    if (success && childrenResult) {
+      if (!isRecursiveCall) {
+        showToastNotice(loggedInData.strings.mutations.success.save, 'success')
+        window.location.href = `/entity/repository/history/${data.id}`
+      }
+      return true
     }
-    return success
+    return false
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log('probably missing value?')
+    return false
   }
-  return async (
-    mode: RevisionMutationMode,
-    input: RejectRevisionInput | CheckoutRevisionInput,
-    isPage: boolean
-  ) => await revisionMutation(mode, input, isPage)
+}
+
+const loopNestedChildren = async ({
+  auth,
+  data,
+  needsReview,
+  loggedInData,
+  initialState,
+}: AddRevisionMutationData): Promise<boolean> => {
+  if (!data.__typename) return false
+
+  let success = true
+
+  if (data.__typename === 'Course' && data['course-page']) {
+    success =
+      success &&
+      (await mapField<CoursePageSerializedState>(
+        data['course-page'],
+        'CoursePage',
+        initialState.state['course-page']
+      ))
+  }
+  if (data.__typename === 'ExerciseGroup' && data['grouped-text-exercise']) {
+    success =
+      success &&
+      (await mapField<TextExerciseSerializedState>(
+        data['grouped-text-exercise'],
+        'Exercise'
+      ))
+  }
+  if (data.__typename === 'Exercise' && data['text-solution']) {
+    success =
+      success &&
+      (await mapField<TextSolutionSerializedState>(
+        data['text-solution'],
+        'Solution'
+      ))
+  }
+
+  return success
+
+  type ChildFieldsData =
+    | CoursePageSerializedState
+    | TextSolutionSerializedState
+    | TextExerciseSerializedState
+
+  async function mapField<ChildFieldsData>(
+    childrenArray: ChildFieldsData[] | ChildFieldsData,
+    childrenType: RevisionAddMutationData['__typename'],
+    childrenInitialState?: ChildFieldsData[] | ChildFieldsData
+  ) {
+    console.log(childrenInitialState)
+
+    //bonus points if we check if they were changed at all
+    const _childrenArray = Array.isArray(childrenArray)
+      ? childrenArray
+      : [childrenArray]
+
+    const results = await Promise.all(
+      _childrenArray.map(async (child) => {
+        const input: ChildFieldsData & OnSaveData = {
+          ...child,
+          __typename: childrenType,
+          changes: data.changes,
+          csrf: data.csrf,
+          controls: data.controls,
+        }
+        const success = await addRevisionMutation({
+          auth,
+          data: input as unknown as RevisionAddMutationData,
+          needsReview,
+          loggedInData,
+          isRecursiveCall: true,
+          initialState,
+        })
+        return success
+      })
+    )
+    return results.every((result) => result === true)
+  }
 }
 
 const addAppletRevisionMutation = gql`
@@ -202,7 +312,9 @@ const addVideoRevisionMutation = gql`
   }
 `
 
-function getAddMutation(type: SupportedTypesSerializedState['__typename']) {
+function getAddMutation(
+  type: Exclude<SupportedTypesSerializedState['__typename'], undefined>
+) {
   return {
     Applet: addAppletRevisionMutation,
     Article: addArticleRevisionMutation,
@@ -214,7 +326,7 @@ function getAddMutation(type: SupportedTypesSerializedState['__typename']) {
     GroupedExercise: addGroupedExerciseRevisionMutation,
     Solution: addSolutionRevisionMutation,
     Video: addVideoRevisionMutation,
-  }[type!]
+  }[type]
 }
 
 function getRequiredString(
@@ -292,170 +404,3 @@ function getAdditionalInputData(
   }
   return {}
 }
-
-export interface OnSaveData {
-  csrf?: string
-  controls: {
-    subscription?: {
-      subscribe: number
-      mailman: number
-    }
-    checkout?: boolean
-  }
-}
-
-export type SupportedTypesSerializedState =
-  | AppletSerializedState
-  | ArticleSerializedState
-  | CourseSerializedState
-  | CoursePageSerializedState
-  | EventSerializedState
-  | TextExerciseSerializedState
-  | TextExerciseGroupSerializedState
-  | TextSolutionSerializedState
-  | VideoSerializedState
-
-export type RevisionAddMutationData = SupportedTypesSerializedState & OnSaveData
-
-export function useRevisionAddMutation() {
-  const auth = useAuthentication()
-  const loggedInData = useLoggedInData()
-
-  return async (data: RevisionAddMutationData, needsReview: boolean) =>
-    await addRevisionMutation({ auth, data, needsReview, loggedInData })
-}
-
-interface AddRevisionMutationData {
-  auth: RefObject<AuthenticationPayload>
-  data: RevisionAddMutationData
-  needsReview: boolean
-  loggedInData: LoggedInData | null
-  isRecursiveCall?: boolean
-}
-
-export const addRevisionMutation = async function ({
-  auth,
-  data,
-  needsReview,
-  loggedInData,
-  isRecursiveCall,
-}: AddRevisionMutationData) {
-  if (!auth || !loggedInData) {
-    showToastNotice('Please make sure you are logged in!', 'warning')
-    return false
-  }
-
-  if (!data.__typename) return false
-
-  const childrenResult = await loopNestedChildren({
-    auth,
-    data,
-    needsReview,
-    loggedInData,
-  })
-
-  try {
-    const genericInput = getGenericInputData(loggedInData, data, needsReview)
-    const additionalInput = getAdditionalInputData(loggedInData, data)
-    const input = { ...genericInput, ...additionalInput }
-
-    const success = await mutationFetch(
-      auth,
-      getAddMutation(data.__typename),
-      input,
-      loggedInData?.strings.mutations.errors
-    )
-
-    if (success && childrenResult) {
-      if (!isRecursiveCall) {
-        showToastNotice(loggedInData.strings.mutations.success.save, 'success')
-        window.location.href = `/entity/repository/history/${data.id}`
-      }
-      return true
-    }
-    return false
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.log('probably missing value?')
-    return false
-  }
-}
-
-const loopNestedChildren = async ({
-  auth,
-  data,
-  needsReview,
-  loggedInData,
-}: AddRevisionMutationData): Promise<boolean> => {
-  if (!data.__typename) return false
-
-  async function mapField<ChildT>(
-    childrenArray: ChildT[] | ChildT,
-    childrenType: RevisionAddMutationData['__typename']
-  ) {
-    //bonus points if we check if they were changed at all
-    const _childrenArray = Array.isArray(childrenArray)
-      ? childrenArray
-      : [childrenArray]
-
-    const results = await Promise.all(
-      _childrenArray.map(async (child) => {
-        const input: ChildT & OnSaveData = {
-          ...child,
-          __typename: childrenType,
-          changes: data.changes,
-          csrf: data.csrf,
-          controls: data.controls,
-        }
-        const success = await addRevisionMutation({
-          auth,
-          data: input as unknown as RevisionAddMutationData,
-          needsReview,
-          loggedInData,
-          isRecursiveCall: true,
-        })
-        return success
-      })
-    )
-    return results.every((result) => result === true)
-  }
-
-  let success = true
-
-  if (data.__typename === 'Course' && data['course-page']) {
-    success =
-      success &&
-      (await mapField<CoursePageSerializedState>(
-        data['course-page'],
-        'CoursePage'
-      ))
-  }
-  if (data.__typename === 'ExerciseGroup' && data['grouped-text-exercise']) {
-    success =
-      success &&
-      (await mapField<TextExerciseSerializedState>(
-        data['grouped-text-exercise'],
-        'Exercise'
-      ))
-  }
-  if (data.__typename === 'Exercise' && data['text-solution']) {
-    success =
-      success &&
-      (await mapField<TextSolutionSerializedState>(
-        data['text-solution'],
-        'Solution'
-      ))
-  }
-
-  return success
-}
-
-export type AddRevisionInputTypes =
-  | AddGenericRevisionInput
-  | AddAppletRevisionInput
-  | AddArticleRevisionInput
-  | AddCourseRevisionInput
-  | AddCoursePageRevisionInput
-  | AddEventRevisionInput
-  | AddExerciseGroupRevisionInput
-  | AddVideoRevisionInput
