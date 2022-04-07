@@ -94,7 +94,7 @@ export interface FooterLink {
   icon?: FooterIcon
 }
 
-export type FooterIcon = 'newsletter' | 'github'
+export type FooterIcon = 'newsletter' | 'github' | 'job'
 
 // We have different types of pages, each with its own set of data:
 
