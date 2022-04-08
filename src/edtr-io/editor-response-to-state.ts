@@ -328,9 +328,10 @@ export function editorResponseToState(uuid: QueryResponse): DeserializeResult {
           license: license!,
           changes: '',
           revision,
-          'text-solution': uuid.solution
-            ? convertTextSolution(uuid.solution).initialState.state
-            : '',
+          'text-solution':
+            uuid.solution && !uuid.solution.trashed
+              ? convertTextSolution(uuid.solution).initialState.state
+              : '',
           content: getContent(),
         },
       },

@@ -38,9 +38,7 @@ export function RevisionHistoryLoader<T>(
 
   if (props.id === 0) return null
 
-  if (!revisionsResponse.data?.uuid.revisions) {
-    return <p>Not sure whats missing here</p>
-  }
+  if (!revisionsResponse.data?.uuid.revisions) return null // no revision loader for solutions
 
   const revisions = revisionsResponse.data?.uuid.revisions.nodes
 
