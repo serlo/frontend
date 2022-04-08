@@ -1,0 +1,16 @@
+overwrite: true
+schema: 'https://api.serlo-staging.dev/graphql'
+documents: 'src/fetcher/*.ts'
+config:
+  gqlImport: graphql-request#gql
+generates:
+  src/fetcher/generated/fetcher-types.ts:
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-graphql-request'
+      - add:
+          content: '/* eslint-disable */'
+  ./graphql.schema.json:
+    plugins:
+      - 'introspection'

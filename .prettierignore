@@ -11,7 +11,8 @@
 
 # Generated files
 src/data/*/index.ts
-schema.graphql
+src/fetcher/generated/*
+graphql.schema.json
 tsconfig.json
 
 # Assets
