@@ -11,7 +11,7 @@
 
 # Generated files
 src/data/*/index.ts
-src/fetcher/generated/*
+src/fetcher/graphql/operations.ts
 graphql.schema.json
 tsconfig.json
 

@@ -2,21 +2,22 @@ overwrite: true
 schema: 'https://api.serlo-staging.dev/graphql'
 documents: 'src/**/*.ts'
 generates:
-  src/fetcher/generated/fetcher-types.ts:
+  src/fetcher/graphql-types/operations.ts:
     plugins:
       - 'typescript'
       - 'typescript-operations'
-      - 'typescript-graphql-request'
       - add:
           content: '/* eslint-disable */'
+      - add:
+          content: '/* THIS FILE IS GENERATED – run `yarn codegen` to update */'
   ./graphql.schema.json:
     plugins:
       - 'introspection'
 config:
   gqlImport: graphql-request#gql
+  onlyOperationTypes: true
   preResolveTypes: true
   declarationKind: interface
-  onlyOperationTypes: true
   scalars:
     DateTime: string
     JSON: string
