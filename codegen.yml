@@ -1,8 +1,6 @@
 overwrite: true
 schema: 'https://api.serlo-staging.dev/graphql'
-documents: 'src/fetcher/*.ts'
-config:
-  gqlImport: graphql-request#gql
+documents: 'src/**/*.ts'
 generates:
   src/fetcher/generated/fetcher-types.ts:
     plugins:
@@ -14,3 +12,8 @@ generates:
   ./graphql.schema.json:
     plugins:
       - 'introspection'
+config:
+  gqlImport: graphql-request#gql
+  scalars:
+    DateTime: string
+    JSON: string
