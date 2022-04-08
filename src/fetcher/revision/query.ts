@@ -1,9 +1,9 @@
-// These types are auto-generated from the GraphQL schema
 import { gql } from 'graphql-request'
 
 import {
   sharedExerciseFragments,
   sharedLicenseFragments,
+  sharedPathFragments,
   sharedRevisionFragments,
 } from '../query-fragments'
 
@@ -317,15 +317,6 @@ export const revisionQuery = gql`
     }
   }
 
-  fragment path on Navigation {
-    path {
-      nodes {
-        label
-        url
-      }
-    }
-  }
-
   fragment taxonomyTerms on AbstractTaxonomyTermChild {
     taxonomyTerms {
       nodes {
@@ -336,13 +327,14 @@ export const revisionQuery = gql`
     }
   }
 
-  ${sharedLicenseFragments}
-  ${sharedExerciseFragments}
-  ${sharedRevisionFragments}
-
   fragment courseRevision on CourseRevision {
     content
     title
     metaDescription
   }
+
+  ${sharedPathFragments}
+  ${sharedLicenseFragments}
+  ${sharedExerciseFragments}
+  ${sharedRevisionFragments}
 `

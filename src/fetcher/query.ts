@@ -3,6 +3,7 @@ import { gql } from 'graphql-request'
 import {
   sharedExerciseFragments,
   sharedLicenseFragments,
+  sharedPathFragments,
   sharedRevisionFragments,
 } from './query-fragments'
 
@@ -237,16 +238,6 @@ export const dataQuery = gql`
     }
   }
 
-  fragment path on Navigation {
-    path {
-      nodes {
-        label
-        url
-        id
-      }
-    }
-  }
-
   fragment taxonomyTerms on AbstractTaxonomyTermChild {
     taxonomyTerms {
       nodes {
@@ -332,6 +323,7 @@ export const dataQuery = gql`
     }
   }
 
+  ${sharedPathFragments}
   ${sharedLicenseFragments}
   ${sharedExerciseFragments}
   ${sharedRevisionFragments}
