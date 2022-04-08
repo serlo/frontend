@@ -523,20 +523,23 @@ function useGridFocus({
     onFocusChanged(state)
     setFocusState(state)
   }
+  const isFocused = (state: GridFocusState) => {
+    if (focus === null) return false
+    if (focus === 'firstExplanation') return state === focus
+
+    return (
+      state !== 'firstExplanation' &&
+      focus.row === state.row &&
+      focus.column === state.column
+    )
+  }
 
   return {
     focus,
-    isFocused(state) {
-      if (focus === null) return false
-      if (focus === 'firstExplanation') return state === focus
-
-      return (
-        state !== 'firstExplanation' &&
-        focus.row === state.row &&
-        focus.column === state.column
-      )
+    isFocused,
+    setFocus(state) {
+      if (!isFocused(state)) setFocus(state)
     },
-    setFocus,
     moveRight() {
       if (focus === null) return
       if (focus === 'firstExplanation') {
