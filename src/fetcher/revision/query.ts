@@ -11,11 +11,10 @@ export const revisionQuery = gql`
   query revisionUuid($id: Int) {
     authorization
     uuid(id: $id) {
-      __typename
-      id
-      trashed
-
       ... on AbstractRevision {
+        __typename
+        id
+        trashed
         date
         author {
           id
@@ -24,292 +23,292 @@ export const revisionQuery = gql`
           isActiveDonor
           isActiveReviewer
         }
+      }
 
-        ... on ArticleRevision {
-          ...articleRevision
-          changes
-          repository {
-            ...taxonomyTerms
-            ...license
-            trashed
-            instance
+      ... on ArticleRevision {
+        ...articleRevision
+        changes
+        repository {
+          ...taxonomyTerms
+          ...license
+          trashed
+          instance
+          id
+          alias
+          currentRevision {
             id
-            alias
-            currentRevision {
+            ...articleRevision
+          }
+          revisions(unrevised: false) {
+            nodes {
               id
-              ...articleRevision
-            }
-            revisions(unrevised: false) {
-              nodes {
-                id
-                trashed
-              }
+              trashed
             }
           }
         }
-        ... on PageRevision {
-          ...pageRevision
-          repository {
-            ...license
-            trashed
-            instance
+      }
+      ... on PageRevision {
+        ...pageRevision
+        repository {
+          ...license
+          trashed
+          instance
+          id
+          alias
+          currentRevision {
             id
-            alias
-            currentRevision {
+            ...pageRevision
+          }
+          revisions(unrevised: false) {
+            nodes {
               id
-              ...pageRevision
-            }
-            revisions(unrevised: false) {
-              nodes {
-                id
-                trashed
-              }
+              trashed
             }
           }
         }
-        ... on AppletRevision {
-          ...appletRevision
-          changes
-          repository {
-            ...taxonomyTerms
-            ...license
-            trashed
-            instance
+      }
+      ... on AppletRevision {
+        ...appletRevision
+        changes
+        repository {
+          ...taxonomyTerms
+          ...license
+          trashed
+          instance
+          id
+          alias
+          currentRevision {
             id
-            alias
-            currentRevision {
+            ...appletRevision
+          }
+          revisions(unrevised: false) {
+            nodes {
               id
-              ...appletRevision
-            }
-            revisions(unrevised: false) {
-              nodes {
-                id
-                trashed
-              }
+              trashed
             }
           }
         }
-        ... on CourseRevision {
-          ...courseRevision
-          changes
-          repository {
-            ...taxonomyTerms
-            ...license
-            trashed
-            instance
+      }
+      ... on CourseRevision {
+        ...courseRevision
+        changes
+        repository {
+          ...taxonomyTerms
+          ...license
+          trashed
+          instance
+          id
+          alias
+          currentRevision {
             id
-            alias
-            currentRevision {
+            ...courseRevision
+          }
+          revisions(unrevised: false) {
+            nodes {
               id
-              ...courseRevision
-            }
-            revisions(unrevised: false) {
-              nodes {
-                id
-                trashed
-              }
-            }
-            pages {
-              id
-              currentRevision {
-                title
-                content
-              }
+              trashed
             }
           }
-        }
-        ... on CoursePageRevision {
-          ...coursePageRevision
-          changes
-          repository {
-            ...license
-            trashed
-            instance
+          pages {
             id
-            alias
             currentRevision {
-              id
-              ...coursePageRevision
-            }
-            revisions(unrevised: false) {
-              nodes {
-                id
-                trashed
-              }
-            }
-            course {
-              ...taxonomyTerms
-            }
-          }
-        }
-        ... on EventRevision {
-          ...eventRevision
-          changes
-          repository {
-            ...license
-            trashed
-            instance
-            id
-            alias
-            currentRevision {
-              id
-              ...eventRevision
-            }
-            revisions(unrevised: false) {
-              nodes {
-                id
-                trashed
-              }
-            }
-          }
-        }
-        ... on ExerciseRevision {
-          content
-          changes
-          repository {
-            ...taxonomyTerms
-            ...license
-            trashed
-            instance
-            id
-            alias
-            currentRevision {
-              id
+              title
               content
             }
-            license {
+          }
+        }
+      }
+      ... on CoursePageRevision {
+        ...coursePageRevision
+        changes
+        repository {
+          ...license
+          trashed
+          instance
+          id
+          alias
+          currentRevision {
+            id
+            ...coursePageRevision
+          }
+          revisions(unrevised: false) {
+            nodes {
               id
-              default
-              title
+              trashed
             }
-            solution {
+          }
+          course {
+            ...taxonomyTerms
+          }
+        }
+      }
+      ... on EventRevision {
+        ...eventRevision
+        changes
+        repository {
+          ...license
+          trashed
+          instance
+          id
+          alias
+          currentRevision {
+            id
+            ...eventRevision
+          }
+          revisions(unrevised: false) {
+            nodes {
               id
-              currentRevision {
-                content
-              }
+              trashed
             }
           }
         }
-        ... on GroupedExerciseRevision {
-          content
-          changes
-          repository {
-            ...license
-            trashed
-            instance
+      }
+      ... on ExerciseRevision {
+        content
+        changes
+        repository {
+          ...taxonomyTerms
+          ...license
+          trashed
+          instance
+          id
+          alias
+          currentRevision {
             id
-            alias
-            exerciseGroup {
-              id
-              exercises {
-                id
-              }
-            }
-            license {
-              id
-              default
-              title
-            }
+            content
+          }
+          license {
+            id
+            default
+            title
+          }
+          solution {
+            id
             currentRevision {
-              id
               content
             }
-            revisions(unrevised: false) {
-              nodes {
-                id
-                trashed
-              }
-            }
           }
         }
-        ... on ExerciseGroupRevision {
-          ...exerciseGroupRevision
-          changes
-          cohesive
-          repository {
-            ...license
-            trashed
-            instance
+      }
+      ... on GroupedExerciseRevision {
+        content
+        changes
+        repository {
+          ...license
+          trashed
+          instance
+          id
+          alias
+          exerciseGroup {
             id
-            alias
-            license {
-              id
-              default
-              title
-            }
-            currentRevision {
-              id
-              ...exerciseGroupRevision
-            }
-            revisions(unrevised: false) {
-              nodes {
-                id
-                trashed
-              }
-            }
             exercises {
-              ...exercise
-              revisions(unrevised: true) {
-                totalCount
-              }
+              id
+            }
+          }
+          license {
+            id
+            default
+            title
+          }
+          currentRevision {
+            id
+            content
+          }
+          revisions(unrevised: false) {
+            nodes {
+              id
+              trashed
             }
           }
         }
-        ... on SolutionRevision {
-          content
-          changes
-          repository {
-            ...license
-            trashed
-            instance
+      }
+      ... on ExerciseGroupRevision {
+        ...exerciseGroupRevision
+        changes
+        cohesive
+        repository {
+          ...license
+          trashed
+          instance
+          id
+          alias
+          license {
             id
-            alias
-            exercise {
-              __typename
-              ... on Exercise {
+            default
+            title
+          }
+          currentRevision {
+            id
+            ...exerciseGroupRevision
+          }
+          revisions(unrevised: false) {
+            nodes {
+              id
+              trashed
+            }
+          }
+          exercises {
+            ...exercise
+            revisions(unrevised: true) {
+              totalCount
+            }
+          }
+        }
+      }
+      ... on SolutionRevision {
+        content
+        changes
+        repository {
+          ...license
+          trashed
+          instance
+          id
+          alias
+          exercise {
+            __typename
+            ... on Exercise {
+              id
+            }
+            ... on GroupedExercise {
+              id
+              exerciseGroup {
                 id
-              }
-              ... on GroupedExercise {
-                id
-                exerciseGroup {
+                exercises {
                   id
-                  exercises {
-                    id
-                  }
                 }
               }
             }
-            currentRevision {
+          }
+          currentRevision {
+            id
+            content
+          }
+          revisions(unrevised: false) {
+            nodes {
               id
-              content
-            }
-            revisions(unrevised: false) {
-              nodes {
-                id
-                trashed
-              }
+              trashed
             }
           }
         }
-        ... on VideoRevision {
-          ...videoRevision
-          changes
-          repository {
-            ...taxonomyTerms
-            ...license
-            trashed
-            instance
+      }
+      ... on VideoRevision {
+        ...videoRevision
+        changes
+        repository {
+          ...taxonomyTerms
+          ...license
+          trashed
+          instance
+          id
+          alias
+          currentRevision {
             id
-            alias
-            currentRevision {
+            ...videoRevision
+          }
+          revisions(unrevised: false) {
+            nodes {
               id
-              ...videoRevision
-            }
-            revisions(unrevised: false) {
-              nodes {
-                id
-                trashed
-              }
+              trashed
             }
           }
         }
