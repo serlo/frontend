@@ -1,12 +1,13 @@
+import { NewElement, NewNode, NewText } from '@edtr-io/plugin-text'
 import { converter } from '@serlo/markdown'
 
 import { convertLegacyState } from './convert-legacy-state'
-import { convertTextPluginState } from './convert-text-plugin'
+import { convertTextPluginState } from './convert-text-plugin-state'
 import { EdtrState, UnsupportedEdtrState } from './edtr-io-types'
 import { sanitizeLatex } from './sanitize-latex'
 import {
-  FrontendMathNode,
   FrontendContentNode,
+  FrontendMathNode,
   FrontendSerloTrNode,
   FrontendTextNode,
   Sign,
@@ -17,15 +18,27 @@ function isEdtrState(node: ConvertData): node is EdtrState {
   return (node as EdtrState).plugin !== undefined
 }
 
-export type ConvertData = EdtrState | UnsupportedEdtrState | FrontendContentNode
+export type ConvertData =
+  | EdtrState
+  | UnsupportedEdtrState
+  | FrontendContentNode
+  | NewNode
 
 export type ConvertNode = ConvertData | ConvertData[] | undefined
+
+export function isTextPluginState(node: ConvertData): node is NewNode {
+  return (
+    (node as NewElement).type !== undefined ||
+    (node as NewText).text !== undefined
+  )
+}
 
 export function convert(node?: ConvertNode): FrontendContentNode[] {
   // compat: no or empty node, we ignore
   if (!node || Object.keys(node).length === 0) return []
   if (Array.isArray(node)) return node.flatMap(convert)
   if (isEdtrState(node)) return convertPlugin(node)
+  if (isTextPluginState(node)) return convertTextPluginState(node)
   return []
 }
 
@@ -66,7 +79,7 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
     return convert(node.state as unknown as EdtrState)
   }
   if (node.plugin === 'text') {
-    return convertTextPluginState(node.state)
+    return convert(node.state)
   }
   if (node.plugin === 'image') {
     // remove images without source
