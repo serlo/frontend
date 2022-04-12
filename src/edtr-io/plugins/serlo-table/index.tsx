@@ -20,7 +20,7 @@ import {
 import { Icon, faImages, faParagraph } from '@edtr-io/ui'
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons/faTrashCan'
 import clsx from 'clsx'
-import { KeyboardEvent, useEffect } from 'react'
+import { KeyboardEvent } from 'react'
 
 import { SerloTableRenderer, TableType } from './renderer'
 import { FaIcon } from '@/components/fa-icon'
@@ -86,11 +86,6 @@ function SerloTableEditor(props: SerloTableProps) {
 
   const focusedElement = useScopedSelector(getFocused())
   const { focusedRowIndex, focusedColIndex, nestedFocus } = findFocus()
-
-  useEffect(() => {
-    if (!nestedFocus) trimEmptyRows()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [nestedFocus])
 
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
@@ -307,28 +302,6 @@ function SerloTableEditor(props: SerloTableProps) {
     return rows.every((row) => {
       const cell = row.columns[colIndex]
       return isEmpty(cell.content.id)(store.getState())
-    })
-  }
-
-  function trimEmptyRows() {
-    rows.set((rows) => {
-      const withoutEmptyRows = rows.filter(
-        (_row, rowIndex) => !isEmptyRow(rowIndex) || rowIndex < 2
-      )
-      return withoutEmptyRows
-      // const emptyColIndexes = rows[0].columns.reduce(
-      //   (result, _col, colIndex) =>
-      //     isEmptyCol(colIndex) ? [...result, colIndex] : result,
-      //   [] as number[]
-      // )
-      // return withoutEmptyRows.map((row) => {
-      //   return {
-      //     columns: row.columns.filter(
-      //       (_col, colIndex) =>
-      //         !emptyColIndexes.includes(colIndex) || colIndex === 0
-      //     ),
-      //   }
-      // })
     })
   }
 
