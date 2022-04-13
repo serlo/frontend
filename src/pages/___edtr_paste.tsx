@@ -13,21 +13,6 @@ import { loggedInData } from '@/data/de'
 import { getPluginRegistry } from '@/edtr-io/get-plugin-registry'
 import { createPlugins } from '@/edtr-io/plugins'
 
-const simpleTextState = {
-  plugin: 'text',
-  state: [
-    {
-      type: 'p',
-      children: [
-        {
-          text: 'Überblick über wichtige Formeln für den Zylinder',
-          strong: true,
-        },
-      ],
-    },
-  ],
-}
-
 interface InitialStateData {
   plugin: string
   state?: unknown
