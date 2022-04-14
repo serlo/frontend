@@ -5,7 +5,7 @@ import { createDefaultDocumentEditor } from '@edtr-io/default-document-editor/be
 import clsx from 'clsx'
 import { NextPage } from 'next'
 import Head from 'next/head'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
@@ -41,6 +41,16 @@ const getErrorState = (msg: string) => {
 const ContentPage: NextPage = () => {
   const [initialState, setInitialState] =
     useState<InitialStateData>(fallbackState)
+
+  useEffect(() => {
+    void fetch(
+      `${window.location.protocol}//${window.location.host}/api/mfnf/convert`
+    )
+      .then((res) => res.json())
+      .then((json) => {
+        setInitialState(json as InitialStateData)
+      })
+  }, [])
 
   const inputField = useRef<HTMLInputElement>(null)
 

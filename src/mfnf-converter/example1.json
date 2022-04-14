@@ -1,0 +1,2821 @@
+{
+  "type": "document",
+  "position": {
+    "start": { "offset": 0, "line": 1, "col": 1 },
+    "end": { "offset": 13322, "line": 90, "col": 1 }
+  },
+  "content": [
+    {
+      "type": "template",
+      "position": {
+        "start": { "offset": 0, "line": 1, "col": 1 },
+        "end": { "offset": 46, "line": 1, "col": 46 }
+      },
+      "name": [
+        {
+          "type": "text",
+          "position": {
+            "start": { "offset": 2, "line": 1, "col": 3 },
+            "end": { "offset": 39, "line": 1, "col": 39 }
+          },
+          "text": "#invoke:Mathe für Nicht-Freaks/Seite"
+        }
+      ],
+      "content": [
+        {
+          "type": "templateargument",
+          "position": {
+            "start": { "offset": 40, "line": 1, "col": 40 },
+            "end": { "offset": 44, "line": 1, "col": 44 }
+          },
+          "name": "1",
+          "value": [
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 40, "line": 1, "col": 40 },
+                "end": { "offset": 44, "line": 1, "col": 44 }
+              },
+              "text": "oben"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "internalreference",
+      "target": [
+        {
+          "type": "text",
+          "position": {
+            "start": { "offset": 49, "line": 2, "col": 3 },
+            "end": { "offset": 78, "line": 2, "col": 32 }
+          },
+          "text": "File:Zahlen - Quatematik.webm"
+        }
+      ],
+      "options": [
+        [
+          {
+            "type": "text",
+            "position": {
+              "start": { "offset": 79, "line": 2, "col": 33 },
+              "end": { "offset": 84, "line": 2, "col": 38 }
+            },
+            "text": "thumb"
+          }
+        ]
+      ],
+      "caption": [
+        {
+          "type": "text",
+          "position": {
+            "start": { "offset": 85, "line": 2, "col": 39 },
+            "end": { "offset": 134, "line": 2, "col": 88 }
+          },
+          "text": "Motivation der unterschiedlichen Zahlen Mengen. ("
+        },
+        {
+          "type": "externalreference",
+          "position": {
+            "start": { "offset": 134, "line": 2, "col": 88 },
+            "end": { "offset": 193, "line": 2, "col": 147 }
+          },
+          "target": "https://www.youtube.com/watch?v=l10ND87STgc",
+          "caption": [
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 179, "line": 2, "col": 133 },
+                "end": { "offset": 192, "line": 2, "col": 146 }
+              },
+              "text": "YouTube-Video"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "position": {
+            "start": { "offset": 193, "line": 2, "col": 147 },
+            "end": { "offset": 204, "line": 2, "col": 158 }
+          },
+          "text": " vom Kanal "
+        },
+        {
+          "type": "externalreference",
+          "position": {
+            "start": { "offset": 204, "line": 2, "col": 158 },
+            "end": { "offset": 273, "line": 2, "col": 227 }
+          },
+          "target": "https://www.youtube.com/channel/UC0LfPSALkn8YDhXZf8-Pl5A",
+          "caption": [
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 262, "line": 2, "col": 216 },
+                "end": { "offset": 272, "line": 2, "col": 226 }
+              },
+              "text": "Quatematik"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "position": {
+            "start": { "offset": 273, "line": 2, "col": 227 },
+            "end": { "offset": 274, "line": 2, "col": 228 }
+          },
+          "text": ")"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "position": {
+        "start": { "offset": 277, "line": 3, "col": 1 },
+        "end": { "offset": 548, "line": 4, "col": 1 }
+      },
+      "content": [
+        {
+          "type": "text",
+          "position": {
+            "start": { "offset": 277, "line": 3, "col": 1 },
+            "end": { "offset": 520, "line": 3, "col": 240 }
+          },
+          "text": "Reelle Zahlen bilden die Grundlage für dieses Lehrbuch. Schließlich wollen wir uns mit Folgen reeller Zahlen oder mit reellwertigen Funktionen beschäftigen. Bevor wir mit dem Studium der Analysis beginnen, sollten wir uns zunächst fragen: "
+        },
+        {
+          "type": "formatted",
+          "position": {
+            "start": { "offset": 520, "line": 3, "col": 240 },
+            "end": { "offset": 547, "line": 3, "col": 267 }
+          },
+          "markup": "italic",
+          "content": [
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 522, "line": 3, "col": 242 },
+                "end": { "offset": 545, "line": 3, "col": 265 }
+              },
+              "text": "Was sind reelle Zahlen?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "position": {
+        "start": { "offset": 549, "line": 5, "col": 1 },
+        "end": { "offset": 672, "line": 6, "col": 1 }
+      },
+      "content": [
+        {
+          "type": "text",
+          "position": {
+            "start": { "offset": 549, "line": 5, "col": 1 },
+            "end": { "offset": 671, "line": 5, "col": 121 }
+          },
+          "text": "Das ist gar keine einfache Frage. Schauen wir uns zunächst auf der Meta-Ebene die Möglichkeiten an, diese zu definieren."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "depth": 2,
+      "caption": [
+        {
+          "type": "text",
+          "text": "Die Beschreibungsmöglichkeiten reeller Zahlen "
+        }
+      ],
+      "content": [
+        {
+          "type": "paragraph",
+          "position": {
+            "start": { "offset": 726, "line": 8, "col": 1 },
+            "end": { "offset": 954, "line": 9, "col": 1 }
+          },
+          "content": [
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 726, "line": 8, "col": 1 },
+                "end": { "offset": 953, "line": 8, "col": 227 }
+              },
+              "text": "Jeder von uns hat bereits eine intuitive Vorstellung, was reelle Zahlen sind, auch wenn nicht alle diese Idee in Worte fassen können. Beispielsweise kann man sich die reellen Zahlen als Punkte auf der Zahlengeraden vorstellen:"
+            }
+          ]
+        },
+        {
+          "type": "internalreference",
+          "position": {
+            "start": { "offset": 955, "line": 10, "col": 1 },
+            "end": { "offset": 1063, "line": 10, "col": 109 }
+          },
+          "target": [
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 957, "line": 10, "col": 3 },
+                "end": { "offset": 984, "line": 10, "col": 30 }
+              },
+              "text": "File:Simple_number_line.svg"
+            }
+          ],
+          "options": [
+            [
+              {
+                "type": "text",
+                "position": {
+                  "start": { "offset": 985, "line": 10, "col": 31 },
+                  "end": { "offset": 991, "line": 10, "col": 37 }
+                },
+                "text": "center"
+              }
+            ],
+            [
+              {
+                "type": "text",
+                "position": {
+                  "start": { "offset": 992, "line": 10, "col": 38 },
+                  "end": { "offset": 997, "line": 10, "col": 43 }
+                },
+                "text": "500px"
+              }
+            ]
+          ],
+          "caption": [
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 998, "line": 10, "col": 44 },
+                "end": { "offset": 1061, "line": 10, "col": 107 }
+              },
+              "text": "Vorstellung der reellen Zahlen als Punkte auf der Zahlengeraden"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "position": {
+            "start": { "offset": 1065, "line": 12, "col": 1 },
+            "end": { "offset": 1265, "line": 13, "col": 1 }
+          },
+          "content": [
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 1065, "line": 12, "col": 1 },
+                "end": { "offset": 1209, "line": 12, "col": 143 }
+              },
+              "text": "Unsere Aufgabe besteht darin, diese intuitive Idee in die exakte Sprache der Mathematik zu übersetzen. Dazu haben wir zwei Möglichkeiten: die "
+            },
+            {
+              "type": "formatted",
+              "position": {
+                "start": { "offset": 1209, "line": 12, "col": 143 },
+                "end": { "offset": 1225, "line": 12, "col": 159 }
+              },
+              "markup": "italic",
+              "content": [
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 1211, "line": 12, "col": 145 },
+                    "end": { "offset": 1223, "line": 12, "col": 157 }
+                  },
+                  "text": "axiomatische"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 1225, "line": 12, "col": 159 },
+                "end": { "offset": 1234, "line": 12, "col": 168 }
+              },
+              "text": " und die "
+            },
+            {
+              "type": "formatted",
+              "position": {
+                "start": { "offset": 1234, "line": 12, "col": 168 },
+                "end": { "offset": 1250, "line": 12, "col": 184 }
+              },
+              "markup": "italic",
+              "content": [
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 1236, "line": 12, "col": 170 },
+                    "end": { "offset": 1248, "line": 12, "col": 182 }
+                  },
+                  "text": "konstruktive"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 1250, "line": 12, "col": 184 },
+                "end": { "offset": 1264, "line": 12, "col": 198 }
+              },
+              "text": " Beschreibung."
+            }
+          ]
+        },
+        {
+          "type": "heading",
+          "position": {
+            "start": { "offset": 1266, "line": 14, "col": 1 },
+            "end": { "offset": 3792, "line": 24, "col": 1 }
+          },
+          "depth": 3,
+          "caption": [
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 1270, "line": 14, "col": 5 },
+                "end": { "offset": 1300, "line": 14, "col": 35 }
+              },
+              "text": "Die axiomatische Beschreibung "
+            }
+          ],
+          "content": [
+            {
+              "type": "internalreference",
+              "position": {
+                "start": { "offset": 1304, "line": 15, "col": 1 },
+                "end": { "offset": 1511, "line": 15, "col": 207 }
+              },
+              "target": [
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 1306, "line": 15, "col": 3 },
+                    "end": { "offset": 1350, "line": 15, "col": 46 }
+                  },
+                  "text": "Datei:Skizze zum mathematischen Gebäude.svg"
+                }
+              ],
+              "options": [
+                [
+                  {
+                    "type": "text",
+                    "position": {
+                      "start": { "offset": 1351, "line": 15, "col": 47 },
+                      "end": { "offset": 1359, "line": 15, "col": 55 }
+                    },
+                    "text": "miniatur"
+                  }
+                ]
+              ],
+              "caption": [
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 1360, "line": 15, "col": 56 },
+                    "end": { "offset": 1509, "line": 15, "col": 205 }
+                  },
+                  "text": "In der axiomatischen Beschreibung der Analysis legen wir mit den Axiomen das Fundament, auf dem wir schrittweise die Theoreme der Analysis herleiten."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "position": {
+                "start": { "offset": 1512, "line": 16, "col": 1 },
+                "end": { "offset": 2333, "line": 17, "col": 1 }
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 1512, "line": 16, "col": 1 },
+                    "end": { "offset": 1908, "line": 16, "col": 390 }
+                  },
+                  "text": "Bei der axiomatischen Beschreibung wird nicht direkt gesagt, was reelle Zahlen sind, es wird vielmehr nur erklärt, welche Eigenschaften sie haben. Bei dieser Herangehensweise sagen wir: „Die reellen Zahlen sind eine Menge von Objekten, die folgende charakteristische Eigenschaften besitzen: <Aufzählung der Eigenschaften reeller Zahlen>“. Die grundlegenden Eigenschaften werden dabei über "
+                },
+                {
+                  "type": "internalreference",
+                  "position": {
+                    "start": { "offset": 1908, "line": 16, "col": 390 },
+                    "end": { "offset": 1967, "line": 16, "col": 447 }
+                  },
+                  "target": [
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 1910, "line": 16, "col": 392 },
+                        "end": { "offset": 1958, "line": 16, "col": 438 }
+                      },
+                      "text": "Mathe für Nicht-Freaks: Wörterbuch#Anker:Axiom"
+                    }
+                  ],
+                  "options": [],
+                  "caption": [
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 1959, "line": 16, "col": 439 },
+                        "end": { "offset": 1965, "line": 16, "col": 445 }
+                      },
+                      "text": "Axiome"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 1967, "line": 16, "col": 447 },
+                    "end": { "offset": 2015, "line": 16, "col": 495 }
+                  },
+                  "text": " festgelegt. Zur Erinnerung: Ein Axiom ist eine "
+                },
+                {
+                  "type": "internalreference",
+                  "position": {
+                    "start": { "offset": 2015, "line": 16, "col": 495 },
+                    "end": { "offset": 2084, "line": 16, "col": 563 }
+                  },
+                  "target": [
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 2017, "line": 16, "col": 497 },
+                        "end": { "offset": 2074, "line": 16, "col": 553 }
+                      },
+                      "text": "Mathe für Nicht-Freaks: Logik und Aussagen#Anker:Aussage"
+                    }
+                  ],
+                  "options": [],
+                  "caption": [
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 2075, "line": 16, "col": 554 },
+                        "end": { "offset": 2082, "line": 16, "col": 561 }
+                      },
+                      "text": "Aussage"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 2084, "line": 16, "col": 563 },
+                    "end": { "offset": 2332, "line": 16, "col": 810 }
+                  },
+                  "text": ", die ohne Beweis als wahr angenommen wird. Jedes mathematische Modell, das alle genannten Eigenschaften/Axiome erfüllt, wird als Modell der reellen Zahlen angesehen. Aussagen, die auf Grundlage der Axiome bewiesen werden, werden Theoreme genannt."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "position": {
+                "start": { "offset": 2334, "line": 18, "col": 1 },
+                "end": { "offset": 2798, "line": 19, "col": 1 }
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 2334, "line": 18, "col": 1 },
+                    "end": { "offset": 2543, "line": 18, "col": 207 }
+                  },
+                  "text": "Bei der Wahl der Axiome müssen wir darauf achten, dass sie widerspruchsfrei sind. Es muss also mindestens ein Modell geben, das alle Axiome erfüllt. Beispielsweise können wir nicht sagen, dass gleichzeitig "
+                },
+                {
+                  "type": "formatted",
+                  "position": {
+                    "start": { "offset": 2543, "line": 18, "col": 207 },
+                    "end": { "offset": 2559, "line": 18, "col": 223 }
+                  },
+                  "markup": "math",
+                  "content": [
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 2549, "line": 18, "col": 213 },
+                        "end": { "offset": 2552, "line": 18, "col": 216 }
+                      },
+                      "text": "1<0"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 2559, "line": 18, "col": 223 },
+                    "end": { "offset": 2569, "line": 18, "col": 233 }
+                  },
+                  "text": " als auch "
+                },
+                {
+                  "type": "formatted",
+                  "position": {
+                    "start": { "offset": 2569, "line": 18, "col": 233 },
+                    "end": { "offset": 2588, "line": 18, "col": 252 }
+                  },
+                  "markup": "math",
+                  "content": [
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 2575, "line": 18, "col": 239 },
+                        "end": { "offset": 2581, "line": 18, "col": 245 }
+                      },
+                      "text": "1\\ge 0"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 2588, "line": 18, "col": 252 },
+                    "end": { "offset": 2797, "line": 18, "col": 459 }
+                  },
+                  "text": " gelten soll. Eine solche Struktur kann es nämlich nicht geben. Außerdem sollten die Axiome nachvollziehbar sein, also wirklich Eigenschaften bezeichnen, die wir auch intuitiv den reellen Zahlen zuschreiben."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "position": {
+                "start": { "offset": 2799, "line": 20, "col": 1 },
+                "end": { "offset": 3362, "line": 21, "col": 1 }
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 2799, "line": 20, "col": 1 },
+                    "end": { "offset": 3124, "line": 20, "col": 322 }
+                  },
+                  "text": "Des Weiteren müssen ausreichend viele Axiome zur Charakterisierung der reellen Zahlen definiert sein. Bei zu wenigen Axiomen könnten auch Strukturen diese erfüllen, die wir intuitiv nicht als Modell reeller Zahlen ansehen. So ist es beispielsweise nicht ausreichend zu sagen, dass es für die reellen Zahlen eine Addition "
+                },
+                {
+                  "type": "formatted",
+                  "position": {
+                    "start": { "offset": 3124, "line": 20, "col": 322 },
+                    "end": { "offset": 3138, "line": 20, "col": 336 }
+                  },
+                  "markup": "math",
+                  "content": [
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 3130, "line": 20, "col": 328 },
+                        "end": { "offset": 3131, "line": 20, "col": 329 }
+                      },
+                      "text": "+"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 3138, "line": 20, "col": 336 },
+                    "end": { "offset": 3143, "line": 20, "col": 341 }
+                  },
+                  "text": " mit "
+                },
+                {
+                  "type": "formatted",
+                  "position": {
+                    "start": { "offset": 3143, "line": 20, "col": 341 },
+                    "end": { "offset": 3163, "line": 20, "col": 361 }
+                  },
+                  "markup": "math",
+                  "content": [
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 3149, "line": 20, "col": 347 },
+                        "end": { "offset": 3156, "line": 20, "col": 354 }
+                      },
+                      "text": "x+y=y+x"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 3163, "line": 20, "col": 361 },
+                    "end": { "offset": 3174, "line": 20, "col": 371 }
+                  },
+                  "text": " für alle "
+                },
+                {
+                  "type": "formatted",
+                  "position": {
+                    "start": { "offset": 3174, "line": 20, "col": 371 },
+                    "end": { "offset": 3188, "line": 20, "col": 385 }
+                  },
+                  "markup": "math",
+                  "content": [
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 3180, "line": 20, "col": 377 },
+                        "end": { "offset": 3181, "line": 20, "col": 378 }
+                      },
+                      "text": "x"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 3188, "line": 20, "col": 385 },
+                    "end": { "offset": 3193, "line": 20, "col": 390 }
+                  },
+                  "text": " und "
+                },
+                {
+                  "type": "formatted",
+                  "position": {
+                    "start": { "offset": 3193, "line": 20, "col": 390 },
+                    "end": { "offset": 3207, "line": 20, "col": 404 }
+                  },
+                  "markup": "math",
+                  "content": [
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 3199, "line": 20, "col": 396 },
+                        "end": { "offset": 3200, "line": 20, "col": 397 }
+                      },
+                      "text": "y"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 3207, "line": 20, "col": 404 },
+                    "end": { "offset": 3361, "line": 20, "col": 555 }
+                  },
+                  "text": " gibt. Allein dieses Axiom ist zu wenig, denn die natürlichen Zahlen erfüllen diese Eigenschaft auch. Sie sind für uns aber kein Modell reeller Zahlen."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "position": {
+                "start": { "offset": 3363, "line": 22, "col": 1 },
+                "end": { "offset": 3791, "line": 23, "col": 1 }
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 3363, "line": 22, "col": 1 },
+                    "end": { "offset": 3619, "line": 22, "col": 255 }
+                  },
+                  "text": "Außerdem soll eine gewisse Sparsamkeit beachtet werden: Es sollten keine Axiome unnötig definiert werden. Dies bedeutet, dass keine Eigenschaften als Axiome benannt werden, die sich bereits aus anderen Axiomen herleiten lassen. Wenn also aus den Axiomen "
+                },
+                {
+                  "type": "formatted",
+                  "position": {
+                    "start": { "offset": 3619, "line": 22, "col": 255 },
+                    "end": { "offset": 3635, "line": 22, "col": 271 }
+                  },
+                  "markup": "math",
+                  "content": [
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 3625, "line": 22, "col": 261 },
+                        "end": { "offset": 3628, "line": 22, "col": 264 }
+                      },
+                      "text": "A_1"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 3635, "line": 22, "col": 271 },
+                    "end": { "offset": 3640, "line": 22, "col": 276 }
+                  },
+                  "text": " und "
+                },
+                {
+                  "type": "formatted",
+                  "position": {
+                    "start": { "offset": 3640, "line": 22, "col": 276 },
+                    "end": { "offset": 3656, "line": 22, "col": 292 }
+                  },
+                  "markup": "math",
+                  "content": [
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 3646, "line": 22, "col": 282 },
+                        "end": { "offset": 3649, "line": 22, "col": 285 }
+                      },
+                      "text": "A_2"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 3656, "line": 22, "col": 292 },
+                    "end": { "offset": 3698, "line": 22, "col": 334 }
+                  },
+                  "text": " bereits folgt, dass auch die Eigenschaft "
+                },
+                {
+                  "type": "formatted",
+                  "position": {
+                    "start": { "offset": 3698, "line": 22, "col": 334 },
+                    "end": { "offset": 3712, "line": 22, "col": 348 }
+                  },
+                  "markup": "math",
+                  "content": [
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 3704, "line": 22, "col": 340 },
+                        "end": { "offset": 3705, "line": 22, "col": 341 }
+                      },
+                      "text": "E"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 3712, "line": 22, "col": 348 },
+                    "end": { "offset": 3743, "line": 22, "col": 378 }
+                  },
+                  "text": " erfüllt sein muss, dann wird "
+                },
+                {
+                  "type": "formatted",
+                  "position": {
+                    "start": { "offset": 3743, "line": 22, "col": 378 },
+                    "end": { "offset": 3757, "line": 22, "col": 392 }
+                  },
+                  "markup": "math",
+                  "content": [
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 3749, "line": 22, "col": 384 },
+                        "end": { "offset": 3750, "line": 22, "col": 385 }
+                      },
+                      "text": "E"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 3757, "line": 22, "col": 392 },
+                    "end": { "offset": 3790, "line": 22, "col": 425 }
+                  },
+                  "text": " nicht extra als Axiom definiert."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "heading",
+          "position": {
+            "start": { "offset": 3792, "line": 24, "col": 1 },
+            "end": { "offset": 5116, "line": 32, "col": 1 }
+          },
+          "depth": 3,
+          "caption": [
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 3796, "line": 24, "col": 5 },
+                "end": { "offset": 3826, "line": 24, "col": 35 }
+              },
+              "text": "Die konstruktive Beschreibung "
+            }
+          ],
+          "content": [
+            {
+              "type": "internalreference",
+              "position": {
+                "start": { "offset": 3830, "line": 25, "col": 1 },
+                "end": { "offset": 4008, "line": 25, "col": 179 }
+              },
+              "target": [
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 3832, "line": 25, "col": 3 },
+                    "end": { "offset": 3881, "line": 25, "col": 52 }
+                  },
+                  "text": "Bild:Konstruktion der reellen Zahlen (Skizze).svg"
+                }
+              ],
+              "options": [
+                [
+                  {
+                    "type": "text",
+                    "position": {
+                      "start": { "offset": 3882, "line": 25, "col": 53 },
+                      "end": { "offset": 3887, "line": 25, "col": 58 }
+                    },
+                    "text": "thumb"
+                  }
+                ],
+                [
+                  {
+                    "type": "text",
+                    "position": {
+                      "start": { "offset": 3888, "line": 25, "col": 59 },
+                      "end": { "offset": 3893, "line": 25, "col": 64 }
+                    },
+                    "text": "400px"
+                  }
+                ],
+                [
+                  {
+                    "type": "text",
+                    "position": {
+                      "start": { "offset": 3894, "line": 25, "col": 65 },
+                      "end": { "offset": 3907, "line": 25, "col": 78 }
+                    },
+                    "text": "class=noprint"
+                  }
+                ]
+              ],
+              "caption": [
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 3908, "line": 25, "col": 79 },
+                    "end": { "offset": 3969, "line": 25, "col": 140 }
+                  },
+                  "text": "Skizze zur Konstruktion reeller Zahlen (hier am Beispiel von "
+                },
+                {
+                  "type": "internalreference",
+                  "position": {
+                    "start": { "offset": 3969, "line": 25, "col": 140 },
+                    "end": { "offset": 4005, "line": 25, "col": 176 }
+                  },
+                  "target": [
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 3971, "line": 25, "col": 142 },
+                        "end": { "offset": 3985, "line": 25, "col": 156 }
+                      },
+                      "text": "w:Cauchy-Folge"
+                    }
+                  ],
+                  "options": [],
+                  "caption": [
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 3986, "line": 25, "col": 157 },
+                        "end": { "offset": 4003, "line": 25, "col": 174 }
+                      },
+                      "text": "Fundamentalfolgen"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 4005, "line": 25, "col": 176 },
+                    "end": { "offset": 4006, "line": 25, "col": 177 }
+                  },
+                  "text": ")"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "position": {
+                "start": { "offset": 4009, "line": 26, "col": 1 },
+                "end": { "offset": 4283, "line": 27, "col": 1 }
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 4009, "line": 26, "col": 1 },
+                    "end": { "offset": 4017, "line": 26, "col": 9 }
+                  },
+                  "text": "Bei der "
+                },
+                {
+                  "type": "formatted",
+                  "position": {
+                    "start": { "offset": 4017, "line": 26, "col": 9 },
+                    "end": { "offset": 4047, "line": 26, "col": 39 }
+                  },
+                  "markup": "italic",
+                  "content": [
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 4019, "line": 26, "col": 11 },
+                        "end": { "offset": 4045, "line": 26, "col": 37 }
+                      },
+                      "text": "konstruktiven Beschreibung"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 4047, "line": 26, "col": 39 },
+                    "end": { "offset": 4082, "line": 26, "col": 74 }
+                  },
+                  "text": " werden die reellen Zahlen aus den "
+                },
+                {
+                  "type": "internalreference",
+                  "position": {
+                    "start": { "offset": 4082, "line": 26, "col": 74 },
+                    "end": { "offset": 4120, "line": 26, "col": 112 }
+                  },
+                  "target": [
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 4084, "line": 26, "col": 76 },
+                        "end": { "offset": 4100, "line": 26, "col": 92 }
+                      },
+                      "text": "w:Rationale Zahl"
+                    }
+                  ],
+                  "options": [],
+                  "caption": [
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 4101, "line": 26, "col": 93 },
+                        "end": { "offset": 4118, "line": 26, "col": 110 }
+                      },
+                      "text": "rationalen Zahlen"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 4120, "line": 26, "col": 112 },
+                    "end": { "offset": 4282, "line": 26, "col": 274 }
+                  },
+                  "text": " konstruiert. Das bedeutet, dass durch ein gewisses Verfahren aus rationalen Zahlen neue Objekte geschaffen werden, welche man danach als reelle Zahlen definiert."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "position": {
+                "start": { "offset": 4284, "line": 28, "col": 1 },
+                "end": { "offset": 4740, "line": 29, "col": 1 }
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 4284, "line": 28, "col": 1 },
+                    "end": { "offset": 4739, "line": 28, "col": 455 }
+                  },
+                  "text": "Anders als bei der axiomatischen Beschreibung, welche die reellen Zahlen nur durch ihre Eigenschaften beschreibt, kann man beim konstruktiven Verfahren genau sagen, was die reellen Zahlen sind. Es sind genau die Objekte, die durch das Konstruktionsverfahren entstanden sind. Die Eigenschaften der reellen Zahlen müssen bei dieser Beschreibung auch nicht durch Axiome definiert werden, sondern ergeben sich aus den Eigenschaften der konstruierten Objekte."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "position": {
+                "start": { "offset": 4741, "line": 30, "col": 1 },
+                "end": { "offset": 5115, "line": 31, "col": 1 }
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 4741, "line": 30, "col": 1 },
+                    "end": { "offset": 4798, "line": 30, "col": 58 }
+                  },
+                  "text": "Es gibt mehrere Konstruktionsverfahren der reellen Zahlen"
+                },
+                {
+                  "type": "htmltag",
+                  "position": {
+                    "start": { "offset": 4798, "line": 30, "col": 58 },
+                    "end": { "offset": 4956, "line": 30, "col": 216 }
+                  },
+                  "name": "ref",
+                  "attributes": [],
+                  "content": [
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 4803, "line": 30, "col": 63 },
+                        "end": { "offset": 4842, "line": 30, "col": 102 }
+                      },
+                      "text": "Beispielsweise gibt es die Methode der "
+                    },
+                    {
+                      "type": "internalreference",
+                      "position": {
+                        "start": { "offset": 4842, "line": 30, "col": 102 },
+                        "end": { "offset": 4878, "line": 30, "col": 138 }
+                      },
+                      "target": [
+                        {
+                          "type": "text",
+                          "position": {
+                            "start": { "offset": 4844, "line": 30, "col": 104 },
+                            "end": { "offset": 4858, "line": 30, "col": 118 }
+                          },
+                          "text": "w:Cauchy-Folge"
+                        }
+                      ],
+                      "options": [],
+                      "caption": [
+                        {
+                          "type": "text",
+                          "position": {
+                            "start": { "offset": 4859, "line": 30, "col": 119 },
+                            "end": { "offset": 4876, "line": 30, "col": 136 }
+                          },
+                          "text": "Fundamentalfolgen"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 4878, "line": 30, "col": 138 },
+                        "end": { "offset": 4899, "line": 30, "col": 159 }
+                      },
+                      "text": " und die Methode der "
+                    },
+                    {
+                      "type": "internalreference",
+                      "position": {
+                        "start": { "offset": 4899, "line": 30, "col": 159 },
+                        "end": { "offset": 4949, "line": 30, "col": 209 }
+                      },
+                      "target": [
+                        {
+                          "type": "text",
+                          "position": {
+                            "start": { "offset": 4901, "line": 30, "col": 161 },
+                            "end": { "offset": 4924, "line": 30, "col": 184 }
+                          },
+                          "text": "w:Dedekindscher Schnitt"
+                        }
+                      ],
+                      "options": [],
+                      "caption": [
+                        {
+                          "type": "text",
+                          "position": {
+                            "start": { "offset": 4925, "line": 30, "col": 185 },
+                            "end": { "offset": 4947, "line": 30, "col": 207 }
+                          },
+                          "text": "Dedekindschen Schnitte"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 4949, "line": 30, "col": 209 },
+                        "end": { "offset": 4950, "line": 30, "col": 210 }
+                      },
+                      "text": "."
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 4956, "line": 30, "col": 216 },
+                    "end": { "offset": 5114, "line": 30, "col": 369 }
+                  },
+                  "text": ". Die dabei entstandenen Strukturen sind jedoch äquivalent in dem Sinne, dass sie dieselben Eigenschaften haben (man nennt solche Strukturen „isomorph“)."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "heading",
+          "position": {
+            "start": { "offset": 5116, "line": 32, "col": 1 },
+            "end": { "offset": 6050, "line": 37, "col": 1 }
+          },
+          "depth": 3,
+          "caption": [
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 5120, "line": 32, "col": 5 },
+                "end": { "offset": 5159, "line": 32, "col": 44 }
+              },
+              "text": "Der Zusammenhang beider Beschreibungen "
+            }
+          ],
+          "content": [
+            {
+              "type": "paragraph",
+              "position": {
+                "start": { "offset": 5163, "line": 33, "col": 1 },
+                "end": { "offset": 5775, "line": 34, "col": 1 }
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 5163, "line": 33, "col": 1 },
+                    "end": { "offset": 5774, "line": 33, "col": 607 }
+                  },
+                  "text": "Beide Vorgehensweisen liefern am Ende dieselben Ergebnisse. Wenn man für ein konstruiertes Modell alle diejenigen Eigenschaften nachweisen kann, die man als Axiome in der axiomatischen Beschreibung definiert hat, dann besitzt das Modell auch die Eigenschaften, die man aus den Axiomen hergeleitet hat. Wenn man umgekehrt in der konstruierten Beschreibung nur diejenigen Eigenschaften des Modells für spätere Argumentationen heranzieht, die man in der axiomatischen Beschreibung als Axiome definieren würde, dann kann man auch alle mit dem Modell bewiesenen Sätze in der axiomatischen Beschreibung beweisen."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "position": {
+                "start": { "offset": 5776, "line": 35, "col": 1 },
+                "end": { "offset": 6049, "line": 36, "col": 1 }
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 5776, "line": 35, "col": 1 },
+                    "end": { "offset": 6048, "line": 35, "col": 270 }
+                  },
+                  "text": "Es ist also egal, welchen Weg wir wählen. Zu Beginn gehen wir den Weg der axiomatischen Beschreibung, weil er leichter zu verstehen ist (für die konstruktive Beschreibung brauchen wir Konzepte, die Studienanfänger in der Regel noch nicht oder nicht ausreichend kennen)."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "position": {
+        "start": { "offset": 6050, "line": 37, "col": 1 },
+        "end": { "offset": 8100, "line": 52, "col": 1 }
+      },
+      "depth": 2,
+      "caption": [
+        {
+          "type": "text",
+          "position": {
+            "start": { "offset": 6053, "line": 37, "col": 4 },
+            "end": { "offset": 6120, "line": 37, "col": 71 }
+          },
+          "text": "Zusammenfassung: Weg zur axiomatischen Beschreibung reeller Zahlen "
+        }
+      ],
+      "content": [
+        {
+          "type": "paragraph",
+          "position": {
+            "start": { "offset": 6123, "line": 38, "col": 1 },
+            "end": { "offset": 6202, "line": 39, "col": 1 }
+          },
+          "content": [
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 6123, "line": 38, "col": 1 },
+                "end": { "offset": 6201, "line": 38, "col": 78 }
+              },
+              "text": "Um die Axiome der reellen Zahlen zu finden, kann man folgendermaßen vorgehen:"
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "position": {
+            "start": { "offset": 6203, "line": 40, "col": 1 },
+            "end": { "offset": 6428, "line": 41, "col": 1 }
+          },
+          "content": [
+            {
+              "type": "listitem",
+              "position": {
+                "start": { "offset": 6203, "line": 40, "col": 1 },
+                "end": { "offset": 6427, "line": 40, "col": 222 }
+              },
+              "depth": 1,
+              "kind": "ordered",
+              "content": [
+                {
+                  "type": "formatted",
+                  "position": {
+                    "start": { "offset": 6205, "line": 40, "col": 3 },
+                    "end": { "offset": 6237, "line": 40, "col": 35 }
+                  },
+                  "markup": "bold",
+                  "content": [
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 6208, "line": 40, "col": 6 },
+                        "end": { "offset": 6234, "line": 40, "col": 32 }
+                      },
+                      "text": "Intuitive Idee entwickeln:"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 6237, "line": 40, "col": 35 },
+                    "end": { "offset": 6427, "line": 40, "col": 222 }
+                  },
+                  "text": " Zunächst brauchen wir eine intuitive Idee der reellen Zahlen. Hierzu können wir beispielsweise auf die intuitive Idee zurückgreifen, dass reelle Zahlen Punkte auf der Zahlengeraden sind."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "position": {
+            "start": { "offset": 6429, "line": 42, "col": 1 },
+            "end": { "offset": 6541, "line": 43, "col": 1 }
+          },
+          "content": [
+            {
+              "type": "listitem",
+              "position": {
+                "start": { "offset": 6429, "line": 42, "col": 1 },
+                "end": { "offset": 6540, "line": 42, "col": 110 }
+              },
+              "depth": 1,
+              "kind": "ordered",
+              "content": [
+                {
+                  "type": "formatted",
+                  "position": {
+                    "start": { "offset": 6431, "line": 42, "col": 3 },
+                    "end": { "offset": 6455, "line": 42, "col": 27 }
+                  },
+                  "markup": "bold",
+                  "content": [
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 6434, "line": 42, "col": 6 },
+                        "end": { "offset": 6452, "line": 42, "col": 24 }
+                      },
+                      "text": "Axiome definieren:"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 6455, "line": 42, "col": 27 },
+                    "end": { "offset": 6540, "line": 42, "col": 110 }
+                  },
+                  "text": " Nun müssen alle Axiome definiert werden. Dazu müssen wir folgende Punkte beachten:"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "position": {
+            "start": { "offset": 6542, "line": 44, "col": 1 },
+            "end": { "offset": 7257, "line": 45, "col": 1 }
+          },
+          "content": [
+            {
+              "type": "listitem",
+              "position": {
+                "start": { "offset": 6542, "line": 44, "col": 1 },
+                "end": { "offset": 7256, "line": 44, "col": 707 }
+              },
+              "depth": 1,
+              "kind": "ordered",
+              "content": [
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 6543, "line": 44, "col": 2 },
+                    "end": { "offset": 6545, "line": 44, "col": 4 }
+                  },
+                  "text": "_ "
+                },
+                {
+                  "type": "formatted",
+                  "position": {
+                    "start": { "offset": 6545, "line": 44, "col": 4 },
+                    "end": { "offset": 6569, "line": 44, "col": 28 }
+                  },
+                  "markup": "italic",
+                  "content": [
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 6547, "line": 44, "col": 6 },
+                        "end": { "offset": 6567, "line": 44, "col": 26 }
+                      },
+                      "text": "Nachvollziehbarkeit:"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 6569, "line": 44, "col": 28 },
+                    "end": { "offset": 6668, "line": 44, "col": 127 }
+                  },
+                  "text": " Die Axiome sollten sinnvoll sein. Das bedeutet, dass jedes Axiom intuitiv nachvollziehbar ist. #_ "
+                },
+                {
+                  "type": "formatted",
+                  "position": {
+                    "start": { "offset": 6668, "line": 44, "col": 127 },
+                    "end": { "offset": 6693, "line": 44, "col": 152 }
+                  },
+                  "markup": "italic",
+                  "content": [
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 6670, "line": 44, "col": 129 },
+                        "end": { "offset": 6691, "line": 44, "col": 150 }
+                      },
+                      "text": "Widerspruchsfreiheit:"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 6693, "line": 44, "col": 152 },
+                    "end": { "offset": 6969, "line": 44, "col": 425 }
+                  },
+                  "text": " Die Axiome müssen in sich widerspruchsfrei sein. Das kann implizit dadurch gezeigt werden, dass ein konkretes Modell der reellen Zahlen konstruiert werden kann. Damit es ein Modell der reellen Zahlen geben kann, müssen die Axiome nämlich in sich widerspruchsfrei sein. #_ "
+                },
+                {
+                  "type": "formatted",
+                  "position": {
+                    "start": { "offset": 6969, "line": 44, "col": 425 },
+                    "end": { "offset": 6990, "line": 44, "col": 445 }
+                  },
+                  "markup": "italic",
+                  "content": [
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 6971, "line": 44, "col": 427 },
+                        "end": { "offset": 6988, "line": 44, "col": 443 }
+                      },
+                      "text": "Vollständigkeit:"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 6990, "line": 44, "col": 445 },
+                    "end": { "offset": 7188, "line": 44, "col": 639 }
+                  },
+                  "text": " Sobald ein Modell alle Axiome erfüllt, sollte es unserer intuitiven Vorstellung von reellen Zahlen entsprechen. Alle Theoreme über reelle Zahlen müssen wir aus den Axiomen herleiten können. #_ "
+                },
+                {
+                  "type": "formatted",
+                  "position": {
+                    "start": { "offset": 7188, "line": 44, "col": 639 },
+                    "end": { "offset": 7204, "line": 44, "col": 655 }
+                  },
+                  "markup": "italic",
+                  "content": [
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 7190, "line": 44, "col": 641 },
+                        "end": { "offset": 7202, "line": 44, "col": 653 }
+                      },
+                      "text": "Sparsamkeit:"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 7204, "line": 44, "col": 655 },
+                    "end": { "offset": 7256, "line": 44, "col": 707 }
+                  },
+                  "text": " Kein Axiom kann aus den anderen hergeleitet werden."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "position": {
+            "start": { "offset": 7258, "line": 46, "col": 1 },
+            "end": { "offset": 7424, "line": 47, "col": 1 }
+          },
+          "content": [
+            {
+              "type": "listitem",
+              "position": {
+                "start": { "offset": 7258, "line": 46, "col": 1 },
+                "end": { "offset": 7423, "line": 46, "col": 165 }
+              },
+              "depth": 1,
+              "kind": "ordered",
+              "content": [
+                {
+                  "type": "formatted",
+                  "position": {
+                    "start": { "offset": 7260, "line": 46, "col": 3 },
+                    "end": { "offset": 7308, "line": 46, "col": 51 }
+                  },
+                  "markup": "bold",
+                  "content": [
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 7263, "line": 46, "col": 6 },
+                        "end": { "offset": 7305, "line": 46, "col": 48 }
+                      },
+                      "text": "Begriffe definieren und Theoreme beweisen:"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 7308, "line": 46, "col": 51 },
+                    "end": { "offset": 7423, "line": 46, "col": 165 }
+                  },
+                  "text": " Aufbauend auf den Axiomen werden wir Grundbegriffe der Analysis einführen und die Theoreme der Analysis beweisen."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "position": {
+            "start": { "offset": 7425, "line": 48, "col": 1 },
+            "end": { "offset": 7941, "line": 49, "col": 1 }
+          },
+          "content": [
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 7425, "line": 48, "col": 1 },
+                "end": { "offset": 7656, "line": 48, "col": 228 }
+              },
+              "text": "In der Analysis werden alle Theoreme mit Hilfe der Axiome reeller Zahlen bewiesen. Dabei wird es zwangsweise vorkommen, dass wir Konzepte einführen oder Sätze beweisen, die schon aus der Schule bekannt sind – wie die Gleichung "
+            },
+            {
+              "type": "formatted",
+              "position": {
+                "start": { "offset": 7656, "line": 48, "col": 228 },
+                "end": { "offset": 7679, "line": 48, "col": 251 }
+              },
+              "markup": "math",
+              "content": [
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 7662, "line": 48, "col": 234 },
+                    "end": { "offset": 7672, "line": 48, "col": 244 }
+                  },
+                  "text": "1\\cdot 0=0"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 7679, "line": 48, "col": 251 },
+                "end": { "offset": 7940, "line": 48, "col": 511 }
+              },
+              "text": ". Bei diesen Beweisen ist es wichtig, dass wir nur solche Eigenschaften reeller Zahlen heranziehen, die entweder in den Axiomen definiert wurden oder die wir bereits bewiesen haben. Bekannte Tatsachen aus der Schule dürfen nicht ohne weiteres verwendet werden!"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "position": {
+            "start": { "offset": 7942, "line": 50, "col": 1 },
+            "end": { "offset": 8099, "line": 51, "col": 1 }
+          },
+          "content": [
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 7942, "line": 50, "col": 1 },
+                "end": { "offset": 8019, "line": 50, "col": 77 }
+              },
+              "text": "Die Axiome der reellen Zahlen können in drei Gruppen aufgeteilt werden: Die "
+            },
+            {
+              "type": "formatted",
+              "position": {
+                "start": { "offset": 8019, "line": 50, "col": 77 },
+                "end": { "offset": 8036, "line": 50, "col": 93 }
+              },
+              "markup": "italic",
+              "content": [
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 8021, "line": 50, "col": 79 },
+                    "end": { "offset": 8034, "line": 50, "col": 91 }
+                  },
+                  "text": "Körperaxiome"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 8036, "line": 50, "col": 93 },
+                "end": { "offset": 8042, "line": 50, "col": 99 }
+              },
+              "text": ", die "
+            },
+            {
+              "type": "formatted",
+              "position": {
+                "start": { "offset": 8042, "line": 50, "col": 99 },
+                "end": { "offset": 8062, "line": 50, "col": 119 }
+              },
+              "markup": "italic",
+              "content": [
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 8044, "line": 50, "col": 101 },
+                    "end": { "offset": 8060, "line": 50, "col": 117 }
+                  },
+                  "text": "Anordnungsaxiome"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 8062, "line": 50, "col": 119 },
+                "end": { "offset": 8071, "line": 50, "col": 128 }
+              },
+              "text": " und das "
+            },
+            {
+              "type": "formatted",
+              "position": {
+                "start": { "offset": 8071, "line": 50, "col": 128 },
+                "end": { "offset": 8097, "line": 50, "col": 153 }
+              },
+              "markup": "italic",
+              "content": [
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 8073, "line": 50, "col": 130 },
+                    "end": { "offset": 8095, "line": 50, "col": 151 }
+                  },
+                  "text": "Vollständigkeitsaxiom"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 8097, "line": 50, "col": 153 },
+                "end": { "offset": 8098, "line": 50, "col": 154 }
+              },
+              "text": "."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "position": {
+        "start": { "offset": 8100, "line": 52, "col": 1 },
+        "end": { "offset": 8660, "line": 57, "col": 1 }
+      },
+      "depth": 2,
+      "caption": [
+        {
+          "type": "text",
+          "position": {
+            "start": { "offset": 8103, "line": 52, "col": 4 },
+            "end": { "offset": 8121, "line": 52, "col": 21 }
+          },
+          "text": "Die Körperaxiome "
+        }
+      ],
+      "content": [
+        {
+          "type": "paragraph",
+          "position": {
+            "start": { "offset": 8124, "line": 53, "col": 1 },
+            "end": { "offset": 8599, "line": 54, "col": 1 }
+          },
+          "content": [
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 8124, "line": 53, "col": 1 },
+                "end": { "offset": 8598, "line": 53, "col": 471 }
+              },
+              "text": "Mit den Körperaxiomen wird die Addition und Multiplikation, also die arithmetische Struktur der reellen Zahlen, definiert. Die reellen Zahlen sind Objekte, die addiert und multipliziert werden können, wobei die grundlegenden Eigenschaften der Additionen und Multiplikationen genannt werden. Die Subtraktion und die Division werden auf die Addition beziehungsweise die Multiplikation zurückgeführt. Diese Axiomengruppe beschreibt, wie man mit reellen Zahlen rechnen kann."
+            }
+          ]
+        },
+        {
+          "type": "template",
+          "position": {
+            "start": { "offset": 8600, "line": 55, "col": 1 },
+            "end": { "offset": 8658, "line": 55, "col": 57 }
+          },
+          "name": [
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 8602, "line": 55, "col": 3 },
+                "end": { "offset": 8645, "line": 55, "col": 44 }
+              },
+              "text": "#lst:Mathe für Nicht-Freaks: Körperaxiome"
+            }
+          ],
+          "content": [
+            {
+              "type": "templateargument",
+              "position": {
+                "start": { "offset": 8646, "line": 55, "col": 45 },
+                "end": { "offset": 8656, "line": 55, "col": 55 }
+              },
+              "name": "1",
+              "value": [
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 8646, "line": 55, "col": 45 },
+                    "end": { "offset": 8656, "line": 55, "col": 55 }
+                  },
+                  "text": "Definition"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "position": {
+        "start": { "offset": 8660, "line": 57, "col": 1 },
+        "end": { "offset": 9453, "line": 62, "col": 1 }
+      },
+      "depth": 2,
+      "caption": [
+        {
+          "type": "text",
+          "position": {
+            "start": { "offset": 8663, "line": 57, "col": 4 },
+            "end": { "offset": 8684, "line": 57, "col": 25 }
+          },
+          "text": "Die Anordnungsaxiome "
+        }
+      ],
+      "content": [
+        {
+          "type": "paragraph",
+          "position": {
+            "start": { "offset": 8687, "line": 58, "col": 1 },
+            "end": { "offset": 9389, "line": 59, "col": 1 }
+          },
+          "content": [
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 8687, "line": 58, "col": 1 },
+                "end": { "offset": 9388, "line": 58, "col": 697 }
+              },
+              "text": "Die Anordnungsaxiome beschreiben die lineare Ordnung der reellen Zahlen. Die reellen Zahlen sind also Objekte, die man miteinander vergleichen kann, wobei für zwei verschiedene reelle Zahlen entweder die eine Zahl größer ist als die andere oder umgekehrt. Dadurch ergibt sich ein wesentlicher Zusammenhang der Struktur der reellen Zahlen mit der einer Geraden, da auch die Punkte einer Geraden in natürlicher Art und Weise geordnet sind. Diese Axiomengruppe ist also wesentlich für die Vorstellung der reellen Zahlen als Punkte auf einer Zahlengeraden. In dieser Axiomengruppe wird auch definiert, wie die Operationen der Addition und Multiplikation mit der Ordnungsstruktur in Verbindung stehen."
+            }
+          ]
+        },
+        {
+          "type": "template",
+          "position": {
+            "start": { "offset": 9390, "line": 60, "col": 1 },
+            "end": { "offset": 9451, "line": 60, "col": 61 }
+          },
+          "name": [
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 9392, "line": 60, "col": 3 },
+                "end": { "offset": 9438, "line": 60, "col": 48 }
+              },
+              "text": "#lst:Mathe für Nicht-Freaks: Anordnungsaxiome"
+            }
+          ],
+          "content": [
+            {
+              "type": "templateargument",
+              "position": {
+                "start": { "offset": 9439, "line": 60, "col": 49 },
+                "end": { "offset": 9449, "line": 60, "col": 59 }
+              },
+              "name": "1",
+              "value": [
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 9439, "line": 60, "col": 49 },
+                    "end": { "offset": 9449, "line": 60, "col": 59 }
+                  },
+                  "text": "Definition"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "position": {
+        "start": { "offset": 9453, "line": 62, "col": 1 },
+        "end": { "offset": 13322, "line": 90, "col": 1 }
+      },
+      "depth": 2,
+      "caption": [
+        {
+          "type": "text",
+          "position": {
+            "start": { "offset": 9456, "line": 62, "col": 4 },
+            "end": { "offset": 9483, "line": 62, "col": 30 }
+          },
+          "text": "Das Vollständigkeitsaxiom "
+        }
+      ],
+      "content": [
+        {
+          "type": "paragraph",
+          "position": {
+            "start": { "offset": 9486, "line": 63, "col": 1 },
+            "end": { "offset": 10286, "line": 64, "col": 1 }
+          },
+          "content": [
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 9486, "line": 63, "col": 1 },
+                "end": { "offset": 9871, "line": 63, "col": 374 }
+              },
+              "text": "Das Vollständigkeitsaxiom beschreibt den Übergang beziehungsweise den markanten Unterschied zwischen den rationalen und den reellen Zahlen. Während die obigen beiden Axiomengruppen noch durch die Menge der rationalen Zahlen erfüllt werden, gilt dies nicht mehr für das Vollständigkeitsaxiom. Der Grund dafür ist, dass es im Zahlenbereich der rationalen Zahlen „Lücken“ wie "
+            },
+            {
+              "type": "formatted",
+              "position": {
+                "start": { "offset": 9871, "line": 63, "col": 374 },
+                "end": { "offset": 9891, "line": 63, "col": 394 }
+              },
+              "markup": "math",
+              "content": [
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 9877, "line": 63, "col": 380 },
+                    "end": { "offset": 9884, "line": 63, "col": 387 }
+                  },
+                  "text": "\\sqrt 2"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 9891, "line": 63, "col": 394 },
+                "end": { "offset": 10285, "line": 63, "col": 777 }
+              },
+              "text": " gibt. Diese Lücken können zwar beliebig durch rationale Zahlen approximiert werden, sind aber selbst keine rationalen Zahlen mehr. Bei den reellen Zahlen gibt es solche Lücken nicht, weil das Vollständigkeitsaxiom die Existenz von Lücken ausschließt. Wenn man irgendetwas beliebig durch reelle Zahlen annähern kann, so existiert dieses „irgendetwas“ und ist wieder eine reelle Zahl."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "position": {
+            "start": { "offset": 10287, "line": 65, "col": 1 },
+            "end": { "offset": 10471, "line": 66, "col": 1 }
+          },
+          "content": [
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 10287, "line": 65, "col": 1 },
+                "end": { "offset": 10470, "line": 65, "col": 183 }
+              },
+              "text": "Eine Approximation einer Zahl kann durch eine Intervallschachtelung realisiert werden. Diese ist eine Folge von Intervallen, die ineinander liegen und deren Länge gegen Null streben:"
+            }
+          ]
+        },
+        {
+          "type": "internalreference",
+          "position": {
+            "start": { "offset": 10472, "line": 67, "col": 1 },
+            "end": { "offset": 10554, "line": 67, "col": 83 }
+          },
+          "target": [
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 10474, "line": 67, "col": 3 },
+                "end": { "offset": 10512, "line": 67, "col": 41 }
+              },
+              "text": "File:Illustration nested intervals.svg"
+            }
+          ],
+          "options": [
+            [
+              {
+                "type": "text",
+                "position": {
+                  "start": { "offset": 10513, "line": 67, "col": 42 },
+                  "end": { "offset": 10519, "line": 67, "col": 48 }
+                },
+                "text": "center"
+              }
+            ],
+            [
+              {
+                "type": "text",
+                "position": {
+                  "start": { "offset": 10520, "line": 67, "col": 49 },
+                  "end": { "offset": 10525, "line": 67, "col": 54 }
+                },
+                "text": "400px"
+              }
+            ]
+          ],
+          "caption": [
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 10526, "line": 67, "col": 55 },
+                "end": { "offset": 10552, "line": 67, "col": 81 }
+              },
+              "text": "Eine Intervallschachtelung"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "position": {
+            "start": { "offset": 10556, "line": 69, "col": 1 },
+            "end": { "offset": 10909, "line": 70, "col": 1 }
+          },
+          "content": [
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 10556, "line": 69, "col": 1 },
+                "end": { "offset": 10908, "line": 69, "col": 352 }
+              },
+              "text": "Eine Intervallschachtelung dient als Approximation einer reellen Zahl. Jedes Intervall schränkt den Bereich ein, in dem die zu approximierende Zahl liegt und im Laufe der Intervallschachtelung wird dieser Bereich immer kleiner. Das Intervallschachtelungsprinzip garantiert, dass durch jede Intervallschachtelung mindestens eine Zahl approximiert wird:"
+            }
+          ]
+        },
+        {
+          "type": "template",
+          "position": {
+            "start": { "offset": 10910, "line": 71, "col": 1 },
+            "end": { "offset": 11231, "line": 74, "col": 211 }
+          },
+          "name": [
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 10912, "line": 71, "col": 3 },
+                "end": { "offset": 10956, "line": 71, "col": 46 }
+              },
+              "text": ":Mathe für Nicht-Freaks: Vorlage:Definition"
+            }
+          ],
+          "content": [
+            {
+              "type": "templateargument",
+              "position": {
+                "start": { "offset": 10959, "line": 72, "col": 3 },
+                "end": { "offset": 11008, "line": 73, "col": 2 }
+              },
+              "name": "titel",
+              "value": [
+                {
+                  "type": "paragraph",
+                  "position": {
+                    "start": { "offset": 10965, "line": 72, "col": 9 },
+                    "end": { "offset": 11007, "line": 73, "col": 1 }
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 10965, "line": 72, "col": 9 },
+                        "end": { "offset": 11006, "line": 72, "col": 50 }
+                      },
+                      "text": "Allgemeines Intervallschachtelungsprinzip"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 11007, "line": 73, "col": 1 },
+                    "end": { "offset": 11008, "line": 73, "col": 2 }
+                  },
+                  "text": " "
+                }
+              ]
+            },
+            {
+              "type": "templateargument",
+              "position": {
+                "start": { "offset": 11009, "line": 73, "col": 3 },
+                "end": { "offset": 11229, "line": 74, "col": 209 }
+              },
+              "name": "definition",
+              "value": [
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 11021, "line": 74, "col": 1 },
+                    "end": { "offset": 11064, "line": 74, "col": 44 }
+                  },
+                  "text": "Zu jeder allgemeinen Intervallschachtelung "
+                },
+                {
+                  "type": "formatted",
+                  "position": {
+                    "start": { "offset": 11064, "line": 74, "col": 44 },
+                    "end": { "offset": 11080, "line": 74, "col": 60 }
+                  },
+                  "markup": "math",
+                  "content": [
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 11070, "line": 74, "col": 50 },
+                        "end": { "offset": 11073, "line": 74, "col": 53 }
+                      },
+                      "text": "I_1"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 11080, "line": 74, "col": 60 },
+                    "end": { "offset": 11082, "line": 74, "col": 62 }
+                  },
+                  "text": ", "
+                },
+                {
+                  "type": "formatted",
+                  "position": {
+                    "start": { "offset": 11082, "line": 74, "col": 62 },
+                    "end": { "offset": 11098, "line": 74, "col": 78 }
+                  },
+                  "markup": "math",
+                  "content": [
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 11088, "line": 74, "col": 68 },
+                        "end": { "offset": 11091, "line": 74, "col": 71 }
+                      },
+                      "text": "I_2"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 11098, "line": 74, "col": 78 },
+                    "end": { "offset": 11100, "line": 74, "col": 80 }
+                  },
+                  "text": ", "
+                },
+                {
+                  "type": "formatted",
+                  "position": {
+                    "start": { "offset": 11100, "line": 74, "col": 80 },
+                    "end": { "offset": 11116, "line": 74, "col": 96 }
+                  },
+                  "markup": "math",
+                  "content": [
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 11106, "line": 74, "col": 86 },
+                        "end": { "offset": 11109, "line": 74, "col": 89 }
+                      },
+                      "text": "I_3"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 11116, "line": 74, "col": 96 },
+                    "end": { "offset": 11229, "line": 74, "col": 209 }
+                  },
+                  "text": "... existiert eine reelle Zahl, die in allen Intervallen liegt und damit von allen Intervallen approximiert wird."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "position": {
+            "start": { "offset": 11233, "line": 76, "col": 1 },
+            "end": { "offset": 12273, "line": 78, "col": 1 }
+          },
+          "content": [
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 11233, "line": 76, "col": 1 },
+                "end": { "offset": 11669, "line": 76, "col": 423 }
+              },
+              "text": "Dieses Vollständigkeitsaxiom beschreibt, dass die Menge der reellen Zahlen keine „Lücken“ besitzt. Um zu beschreiben, dass die reellen Zahlen die kleinstmögliche Erweiterung sind, um die Lücken der rationalen Zahlen zu füllen, müssen wir das Intervallschachtelungsprinzip um ein weiteres Axiom ergänzen. Hierzu müssen wir ausschließen, dass es keine unendlich kleinen bzw. unendlich großen Zahlen gibt. Eine positive Zahl "
+            },
+            {
+              "type": "formatted",
+              "position": {
+                "start": { "offset": 11669, "line": 76, "col": 423 },
+                "end": { "offset": 11683, "line": 76, "col": 437 }
+              },
+              "markup": "math",
+              "content": [
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 11675, "line": 76, "col": 429 },
+                    "end": { "offset": 11676, "line": 76, "col": 430 }
+                  },
+                  "text": "y"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 11683, "line": 76, "col": 437 },
+                "end": { "offset": 11727, "line": 76, "col": 480 }
+              },
+              "text": " wäre im Vergleich zu einer positiven Zahl "
+            },
+            {
+              "type": "formatted",
+              "position": {
+                "start": { "offset": 11727, "line": 76, "col": 480 },
+                "end": { "offset": 11741, "line": 76, "col": 494 }
+              },
+              "markup": "math",
+              "content": [
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 11733, "line": 76, "col": 486 },
+                    "end": { "offset": 11734, "line": 76, "col": 487 }
+                  },
+                  "text": "x"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 11741, "line": 76, "col": 494 },
+                "end": { "offset": 11764, "line": 76, "col": 516 }
+              },
+              "text": " unendlich groß, wenn "
+            },
+            {
+              "type": "formatted",
+              "position": {
+                "start": { "offset": 11764, "line": 76, "col": 516 },
+                "end": { "offset": 11778, "line": 76, "col": 530 }
+              },
+              "markup": "math",
+              "content": [
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 11770, "line": 76, "col": 522 },
+                    "end": { "offset": 11771, "line": 76, "col": 523 }
+                  },
+                  "text": "y"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 11778, "line": 76, "col": 530 },
+                "end": { "offset": 11812, "line": 76, "col": 562 }
+              },
+              "text": " größer als alle Vielfachen von "
+            },
+            {
+              "type": "formatted",
+              "position": {
+                "start": { "offset": 11812, "line": 76, "col": 562 },
+                "end": { "offset": 11826, "line": 76, "col": 576 }
+              },
+              "markup": "math",
+              "content": [
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 11818, "line": 76, "col": 568 },
+                    "end": { "offset": 11819, "line": 76, "col": 569 }
+                  },
+                  "text": "x"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 11826, "line": 76, "col": 576 },
+                "end": { "offset": 11865, "line": 76, "col": 614 }
+              },
+              "text": " wäre, wenn also keine der Vielfachen "
+            },
+            {
+              "type": "formatted",
+              "position": {
+                "start": { "offset": 11865, "line": 76, "col": 614 },
+                "end": { "offset": 11895, "line": 76, "col": 644 }
+              },
+              "markup": "math",
+              "content": [
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 11871, "line": 76, "col": 620 },
+                    "end": { "offset": 11888, "line": 76, "col": 637 }
+                  },
+                  "text": "x,2x,3x,4x,\\ldots"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 11895, "line": 76, "col": 644 },
+                "end": { "offset": 11909, "line": 76, "col": 657 }
+              },
+              "text": " jemals über "
+            },
+            {
+              "type": "formatted",
+              "position": {
+                "start": { "offset": 11909, "line": 76, "col": 657 },
+                "end": { "offset": 11923, "line": 76, "col": 671 }
+              },
+              "markup": "math",
+              "content": [
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 11915, "line": 76, "col": 663 },
+                    "end": { "offset": 11916, "line": 76, "col": 664 }
+                  },
+                  "text": "y"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 11923, "line": 76, "col": 671 },
+                "end": { "offset": 11944, "line": 76, "col": 690 }
+              },
+              "text": " hinauswächst. Für "
+            },
+            {
+              "type": "formatted",
+              "position": {
+                "start": { "offset": 11944, "line": 76, "col": 690 },
+                "end": { "offset": 11952, "line": 76, "col": 698 }
+              },
+              "markup": "italic",
+              "content": [
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 11946, "line": 76, "col": 692 },
+                    "end": { "offset": 11950, "line": 76, "col": 696 }
+                  },
+                  "text": "alle"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 11952, "line": 76, "col": 698 },
+                "end": { "offset": 11973, "line": 76, "col": 718 }
+              },
+              "text": " natürlichen Zahlen "
+            },
+            {
+              "type": "formatted",
+              "position": {
+                "start": { "offset": 11973, "line": 76, "col": 718 },
+                "end": { "offset": 11987, "line": 76, "col": 732 }
+              },
+              "markup": "math",
+              "content": [
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 11979, "line": 76, "col": 724 },
+                    "end": { "offset": 11980, "line": 76, "col": 725 }
+                  },
+                  "text": "n"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 11987, "line": 76, "col": 732 },
+                "end": { "offset": 11999, "line": 76, "col": 743 }
+              },
+              "text": " wäre also "
+            },
+            {
+              "type": "formatted",
+              "position": {
+                "start": { "offset": 11999, "line": 76, "col": 743 },
+                "end": { "offset": 12016, "line": 76, "col": 760 }
+              },
+              "markup": "math",
+              "content": [
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 12005, "line": 76, "col": 749 },
+                    "end": { "offset": 12009, "line": 76, "col": 753 }
+                  },
+                  "text": "nx<y"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 12016, "line": 76, "col": 760 },
+                "end": { "offset": 12082, "line": 77, "col": 63 }
+              },
+              "text": ". Dies wollen wir nun ausschließen. Für je zwei positive Zahlen "
+            },
+            {
+              "type": "formatted",
+              "position": {
+                "start": { "offset": 12082, "line": 77, "col": 63 },
+                "end": { "offset": 12096, "line": 77, "col": 77 }
+              },
+              "markup": "math",
+              "content": [
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 12088, "line": 77, "col": 69 },
+                    "end": { "offset": 12089, "line": 77, "col": 70 }
+                  },
+                  "text": "x"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 12096, "line": 77, "col": 77 },
+                "end": { "offset": 12101, "line": 77, "col": 82 }
+              },
+              "text": " und "
+            },
+            {
+              "type": "formatted",
+              "position": {
+                "start": { "offset": 12101, "line": 77, "col": 82 },
+                "end": { "offset": 12115, "line": 77, "col": 96 }
+              },
+              "markup": "math",
+              "content": [
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 12107, "line": 77, "col": 88 },
+                    "end": { "offset": 12108, "line": 77, "col": 89 }
+                  },
+                  "text": "y"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 12115, "line": 77, "col": 96 },
+                "end": { "offset": 12129, "line": 77, "col": 110 }
+              },
+              "text": " soll es also "
+            },
+            {
+              "type": "formatted",
+              "position": {
+                "start": { "offset": 12129, "line": 77, "col": 110 },
+                "end": { "offset": 12148, "line": 77, "col": 129 }
+              },
+              "markup": "italic",
+              "content": [
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 12131, "line": 77, "col": 112 },
+                    "end": { "offset": 12146, "line": 77, "col": 127 }
+                  },
+                  "text": "mindestens eine"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 12148, "line": 77, "col": 129 },
+                "end": { "offset": 12166, "line": 77, "col": 146 }
+              },
+              "text": " natürliche Zahl "
+            },
+            {
+              "type": "formatted",
+              "position": {
+                "start": { "offset": 12166, "line": 77, "col": 146 },
+                "end": { "offset": 12180, "line": 77, "col": 160 }
+              },
+              "markup": "math",
+              "content": [
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 12172, "line": 77, "col": 152 },
+                    "end": { "offset": 12173, "line": 77, "col": 153 }
+                  },
+                  "text": "n"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 12180, "line": 77, "col": 160 },
+                "end": { "offset": 12185, "line": 77, "col": 165 }
+              },
+              "text": " mit "
+            },
+            {
+              "type": "formatted",
+              "position": {
+                "start": { "offset": 12185, "line": 77, "col": 165 },
+                "end": { "offset": 12205, "line": 77, "col": 185 }
+              },
+              "markup": "math",
+              "content": [
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 12191, "line": 77, "col": 171 },
+                    "end": { "offset": 12198, "line": 77, "col": 178 }
+                  },
+                  "text": "nx\\ge y"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 12205, "line": 77, "col": 185 },
+                "end": { "offset": 12272, "line": 77, "col": 252 }
+              },
+              "text": " geben. Genau diese Eigenschaft beschreibt das archimedische Axiom:"
+            }
+          ]
+        },
+        {
+          "type": "template",
+          "position": {
+            "start": { "offset": 12274, "line": 79, "col": 1 },
+            "end": { "offset": 12688, "line": 85, "col": 72 }
+          },
+          "name": [
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 12276, "line": 79, "col": 3 },
+                "end": { "offset": 12320, "line": 79, "col": 46 }
+              },
+              "text": ":Mathe für Nicht-Freaks: Vorlage:Definition"
+            }
+          ],
+          "content": [
+            {
+              "type": "templateargument",
+              "position": {
+                "start": { "offset": 12322, "line": 80, "col": 2 },
+                "end": { "offset": 12352, "line": 81, "col": 1 }
+              },
+              "name": "titel",
+              "value": [
+                {
+                  "type": "paragraph",
+                  "position": {
+                    "start": { "offset": 12328, "line": 80, "col": 8 },
+                    "end": { "offset": 12352, "line": 81, "col": 1 }
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 12328, "line": 80, "col": 8 },
+                        "end": { "offset": 12351, "line": 80, "col": 31 }
+                      },
+                      "text": "Das Archimedische Axiom"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "templateargument",
+              "position": {
+                "start": { "offset": 12353, "line": 81, "col": 2 },
+                "end": { "offset": 12686, "line": 85, "col": 70 }
+              },
+              "name": "definition",
+              "value": [
+                {
+                  "type": "paragraph",
+                  "position": {
+                    "start": { "offset": 12365, "line": 82, "col": 1 },
+                    "end": { "offset": 12616, "line": 84, "col": 1 }
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 12365, "line": 82, "col": 1 },
+                        "end": { "offset": 12390, "line": 82, "col": 25 }
+                      },
+                      "text": "Für alle reellen Zahlen "
+                    },
+                    {
+                      "type": "formatted",
+                      "position": {
+                        "start": { "offset": 12390, "line": 82, "col": 25 },
+                        "end": { "offset": 12410, "line": 82, "col": 45 }
+                      },
+                      "markup": "math",
+                      "content": [
+                        {
+                          "type": "text",
+                          "position": {
+                            "start": { "offset": 12396, "line": 82, "col": 31 },
+                            "end": { "offset": 12403, "line": 82, "col": 38 }
+                          },
+                          "text": "x,y > 0"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 12410, "line": 82, "col": 45 },
+                        "end": { "offset": 12441, "line": 82, "col": 75 }
+                      },
+                      "text": " gibt es eine natürliche Zahl "
+                    },
+                    {
+                      "type": "formatted",
+                      "position": {
+                        "start": { "offset": 12441, "line": 82, "col": 75 },
+                        "end": { "offset": 12455, "line": 82, "col": 89 }
+                      },
+                      "markup": "math",
+                      "content": [
+                        {
+                          "type": "text",
+                          "position": {
+                            "start": { "offset": 12447, "line": 82, "col": 81 },
+                            "end": { "offset": 12448, "line": 82, "col": 82 }
+                          },
+                          "text": "n"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 12455, "line": 82, "col": 89 },
+                        "end": { "offset": 12465, "line": 82, "col": 99 }
+                      },
+                      "text": ", so dass "
+                    },
+                    {
+                      "type": "formatted",
+                      "position": {
+                        "start": { "offset": 12465, "line": 82, "col": 99 },
+                        "end": { "offset": 12487, "line": 82, "col": 121 }
+                      },
+                      "markup": "math",
+                      "content": [
+                        {
+                          "type": "text",
+                          "position": {
+                            "start": {
+                              "offset": 12471,
+                              "line": 82,
+                              "col": 105
+                            },
+                            "end": { "offset": 12480, "line": 82, "col": 114 }
+                          },
+                          "text": "nx \\geq y"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 12487, "line": 82, "col": 121 },
+                        "end": { "offset": 12515, "line": 83, "col": 22 }
+                      },
+                      "text": " ist. Mit den Abkürzungen \""
+                    },
+                    {
+                      "type": "formatted",
+                      "position": {
+                        "start": { "offset": 12515, "line": 83, "col": 22 },
+                        "end": { "offset": 12535, "line": 83, "col": 42 }
+                      },
+                      "markup": "math",
+                      "content": [
+                        {
+                          "type": "text",
+                          "position": {
+                            "start": { "offset": 12521, "line": 83, "col": 28 },
+                            "end": { "offset": 12528, "line": 83, "col": 35 }
+                          },
+                          "text": "\\forall"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 12535, "line": 83, "col": 42 },
+                        "end": { "offset": 12559, "line": 83, "col": 64 }
+                      },
+                      "text": "\" für \"für alle\" und \""
+                    },
+                    {
+                      "type": "formatted",
+                      "position": {
+                        "start": { "offset": 12559, "line": 83, "col": 64 },
+                        "end": { "offset": 12579, "line": 83, "col": 84 }
+                      },
+                      "markup": "math",
+                      "content": [
+                        {
+                          "type": "text",
+                          "position": {
+                            "start": { "offset": 12565, "line": 83, "col": 70 },
+                            "end": { "offset": 12572, "line": 83, "col": 77 }
+                          },
+                          "text": "\\exists"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 12579, "line": 83, "col": 84 },
+                        "end": { "offset": 12615, "line": 83, "col": 119 }
+                      },
+                      "text": "\" für \"es gibt\" liest sich dies als"
+                    }
+                  ]
+                },
+                {
+                  "type": "template",
+                  "position": {
+                    "start": { "offset": 12617, "line": 85, "col": 1 },
+                    "end": { "offset": 12686, "line": 85, "col": 70 }
+                  },
+                  "name": [
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 12619, "line": 85, "col": 3 },
+                        "end": { "offset": 12625, "line": 85, "col": 9 }
+                      },
+                      "text": "Formel"
+                    }
+                  ],
+                  "content": [
+                    {
+                      "type": "templateargument",
+                      "position": {
+                        "start": { "offset": 12626, "line": 85, "col": 10 },
+                        "end": { "offset": 12684, "line": 85, "col": 68 }
+                      },
+                      "name": "1",
+                      "value": [
+                        {
+                          "type": "formatted",
+                          "position": {
+                            "start": { "offset": 12626, "line": 85, "col": 10 },
+                            "end": { "offset": 12684, "line": 85, "col": 68 }
+                          },
+                          "markup": "math",
+                          "content": [
+                            {
+                              "type": "text",
+                              "position": {
+                                "start": {
+                                  "offset": 12632,
+                                  "line": 85,
+                                  "col": 16
+                                },
+                                "end": {
+                                  "offset": 12677,
+                                  "line": 85,
+                                  "col": 61
+                                }
+                              },
+                              "text": "\\forall x>0, y>0\\, \\exists n \\in \\N: nx \\ge y"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "position": {
+            "start": { "offset": 12690, "line": 87, "col": 1 },
+            "end": { "offset": 13273, "line": 88, "col": 1 }
+          },
+          "content": [
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 12690, "line": 87, "col": 1 },
+                "end": { "offset": 13037, "line": 87, "col": 343 }
+              },
+              "text": "Mit Hilfe des Vollständigkeitsaxioms kann man zeigen, dass reelle Zahlen beliebig durch rationale Zahlen angenähert werden können. Diese Eigenschaft ist wesentlich, denn sie ermöglicht das Rechnen mit rationalen Zahlen anstelle von reellen Zahlen. Beispielsweise werden Computerberechnungen in der Regel nur mit rationalen Zahlen durchgeführt"
+            },
+            {
+              "type": "htmltag",
+              "position": {
+                "start": { "offset": 13037, "line": 87, "col": 343 },
+                "end": { "offset": 13157, "line": 87, "col": 463 }
+              },
+              "name": "ref",
+              "attributes": [],
+              "content": [
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 13042, "line": 87, "col": 348 },
+                    "end": { "offset": 13077, "line": 87, "col": 383 }
+                  },
+                  "text": "Siehe den Wikipedia-Artikel zu den "
+                },
+                {
+                  "type": "internalreference",
+                  "position": {
+                    "start": { "offset": 13077, "line": 87, "col": 383 },
+                    "end": { "offset": 13114, "line": 87, "col": 420 }
+                  },
+                  "target": [
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 13079, "line": 87, "col": 385 },
+                        "end": { "offset": 13095, "line": 87, "col": 401 }
+                      },
+                      "text": "w:Gleitkommazahl"
+                    }
+                  ],
+                  "options": [],
+                  "caption": [
+                    {
+                      "type": "text",
+                      "position": {
+                        "start": { "offset": 13096, "line": 87, "col": 402 },
+                        "end": { "offset": 13112, "line": 87, "col": 418 }
+                      },
+                      "text": "Gleitkommazahlen"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 13114, "line": 87, "col": 420 },
+                    "end": { "offset": 13151, "line": 87, "col": 457 }
+                  },
+                  "text": ", welche stets rationale Zahlen sind."
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 13157, "line": 87, "col": 463 },
+                "end": { "offset": 13272, "line": 87, "col": 576 }
+              },
+              "text": ". Solche Rechnungen sind zwar fehleranfällig, ihre Fehler können aber in der Regel beliebig klein gemacht werden."
+            }
+          ]
+        },
+        {
+          "type": "template",
+          "position": {
+            "start": { "offset": 13274, "line": 89, "col": 1 },
+            "end": { "offset": 13321, "line": 89, "col": 47 }
+          },
+          "name": [
+            {
+              "type": "text",
+              "position": {
+                "start": { "offset": 13276, "line": 89, "col": 3 },
+                "end": { "offset": 13313, "line": 89, "col": 39 }
+              },
+              "text": "#invoke:Mathe für Nicht-Freaks/Seite"
+            }
+          ],
+          "content": [
+            {
+              "type": "templateargument",
+              "position": {
+                "start": { "offset": 13314, "line": 89, "col": 40 },
+                "end": { "offset": 13319, "line": 89, "col": 45 }
+              },
+              "name": "1",
+              "value": [
+                {
+                  "type": "text",
+                  "position": {
+                    "start": { "offset": 13314, "line": 89, "col": 40 },
+                    "end": { "offset": 13319, "line": 89, "col": 45 }
+                  },
+                  "text": "unten"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
