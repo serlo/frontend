@@ -22,7 +22,13 @@ export function SubjectLandingTopicOverview({
   const [selectedIndex, setSelectedIndex] = useState(-1)
   const topicContainer = useRef<HTMLDivElement>(null)
 
-  const { extraTerms } = deSubjectLandingData[subject]
+  const { extraTerms, allTopicsTaxonomyId } = deSubjectLandingData[subject]
+
+  const allTopicsEntry = {
+    title: '↪ Alle Themen',
+    description: undefined,
+    href: `/${allTopicsTaxonomyId}`,
+  }
 
   function onMenuClick(index: number) {
     const indexToBeSet = index === selectedIndex ? -1 : index
@@ -83,7 +89,7 @@ export function SubjectLandingTopicOverview({
           gridTemplateColumns: 'repeat(auto-fit, minmax(12rem, 20rem))',
         }}
       >
-        {[...subterms, ...extraTerms].map((term, index) => {
+        {[...subterms, ...extraTerms, allTopicsEntry].map((term, index) => {
           const isActive = index === selectedIndex
           const src =
             term.description &&
