@@ -8,7 +8,7 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import {
   RevisionMutationMode,
   useRevisionDecideMutation,
-} from '@/helper/mutations/revision'
+} from '@/helper/mutations/use-revision-decide-mutation'
 
 export interface CheckoutRejectButtonsProps {
   revisionId: number

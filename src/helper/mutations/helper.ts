@@ -22,7 +22,7 @@ import { RefObject } from 'react'
 import { csrReload } from '../csr-reload'
 import { showToastNotice } from '../show-toast-notice'
 import { triggerSentry } from '../trigger-sentry'
-import { AddRevisionInputTypes } from './revision'
+import { AddRevisionInputTypes } from './use-revision-add-mutation'
 import { endpoint } from '@/api/endpoint'
 import { AuthenticationPayload } from '@/auth/auth-provider'
 

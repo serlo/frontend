@@ -5,7 +5,7 @@ import { useContext, useEffect, useState } from 'react'
 
 import { CsrfContext } from '@/edtr-io/csrf-context'
 import { storeState, SaveContext } from '@/edtr-io/serlo-editor'
-import { SupportedTypesSerializedState } from '@/helper/mutations/revision'
+import { SupportedTypesSerializedState } from '@/helper/mutations/use-revision-add-mutation'
 
 export function useHandleSave(visible: boolean, subscriptions?: boolean) {
   const store = useScopedStore()

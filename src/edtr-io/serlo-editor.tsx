@@ -11,7 +11,7 @@ import { createPlugins } from './plugins'
 import { useCanDo } from '@/auth/use-can-do'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { RevisionAddMutationData } from '@/helper/mutations/revision'
+import { RevisionAddMutationData } from '@/helper/mutations/use-revision-add-mutation'
 
 export interface SerloEditorProps {
   getCsrfToken(): string

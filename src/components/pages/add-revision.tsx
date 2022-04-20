@@ -12,7 +12,7 @@ import { EditorPageData } from '@/fetcher/fetch-editor-data'
 import {
   RevisionAddMutationData,
   useRevisionAddMutation,
-} from '@/helper/mutations/revision'
+} from '@/helper/mutations/use-revision-add-mutation'
 
 export function AddRevision({
   initialState,
@@ -100,7 +100,8 @@ export function AddRevision({
                   // @ts-expect-error temporary
                   __typename: type === 'GroupedExercise' ? 'Exercise' : type,
                 },
-                _needsReview
+                _needsReview,
+                initialState
               )
               return new Promise((resolve, reject) => {
                 if (success) resolve()
