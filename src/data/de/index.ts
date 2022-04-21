@@ -391,7 +391,7 @@ export const loggedInData = {
       history: "Bearbeitungsverlauf",
       editAssignments: "Zuweisung zu Themen und Lehrplänen bearbeiten",
       moveToTrash: "In den Papierkorb verschieben",
-      confirmTrash: 'Are you sure you want to delete this content?',
+      confirmTrash: "Bist du sicher, dass du diesen Inhalt löschen willst?",
       restoreContent: "Aus dem Papierkorb wiederherstellen",
       sortCoursePages: "Kursseiten sortieren",
       sortGroupedExercises: "Teilaufgaben sortieren",
