@@ -59,6 +59,12 @@ export function Breadcrumbs({
             )}
             href={bcEntry.url ?? undefined}
             path={['breadcrumbs', index]}
+            forceNoCSR={
+              index == 0 /*
+                API is returning wrong alias for subject landing, let cf worker reroute to correct page
+                remove if fixed in database
+              */
+            }
           >
             {bcEntry.label}
           </Link>
