@@ -280,13 +280,14 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   }
 
   function trash() {
-    const title = data.trashed
-      ? loggedInStrings.authorMenu.restoreContent
-      : loggedInStrings.authorMenu.moveToTrash
+    const { restoreContent, moveToTrash, confirmTrash } =
+      loggedInStrings.authorMenu
+    const title = data.trashed ? restoreContent : moveToTrash
     return (
       <li className="block" key={title}>
         <MenuSubButtonLink
           onClick={() => {
+            if (!data.trashed && !window.confirm(confirmTrash)) return
             void setUuidState({ id: [data.id], trashed: !data.trashed })
           }}
         >

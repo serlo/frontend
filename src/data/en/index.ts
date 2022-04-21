@@ -421,6 +421,7 @@ export const loggedInData = {
       history: 'History',
       editAssignments: 'Edit topic and curriculum assignments',
       moveToTrash: 'Move to trash',
+      confirmTrash: 'Are you sure you want to delete this content?',
       restoreContent: 'Restore from trash',
       sortCoursePages: 'Sort course pages',
       sortGroupedExercises: 'Sort grouped Exercises',
