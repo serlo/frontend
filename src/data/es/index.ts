@@ -391,6 +391,7 @@ export const loggedInData = {
       history: "Historial",
       editAssignments: "Editar el tema y las asignaciones de currículo",
       moveToTrash: "Mover a la papelera",
+      confirmTrash: 'Are you sure you want to delete this content?',
       restoreContent: "Restaurar de la papelera",
       sortCoursePages: "Ordenar páginas del curso",
       sortGroupedExercises: "Ordenar ejercicios agrupados",
