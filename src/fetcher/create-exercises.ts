@@ -89,8 +89,10 @@ function createSolutionData(solution: BareExercise['solution']) {
         // compat: (probably quite fragile) if strategy is empty, we ignore it
         if (
           solutionState.strategy.length == 1 &&
-          solutionState.strategy[0].type == 'p' &&
-          solutionState.strategy[0].children?.length === 0
+          solutionState.strategy[0].type == 'slate-container' &&
+          solutionState.strategy[0].children?.length === 1 &&
+          solutionState.strategy[0].children[0].type == 'slate-p' &&
+          solutionState.strategy[0].children[0].children?.length === 0
         ) {
           solutionState.strategy = []
         }

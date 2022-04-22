@@ -243,14 +243,14 @@ function renderElement({
   }
   if (element.type === 'slate-p') {
     return (
-      <p className="serlo-p mb-0">
+      <p className="serlo-p mb-0 slate-p">
         {children}
         <br />
       </p>
     )
   }
   if (element.type === 'slate-container') {
-    return <div className="mb-block">{children}</div>
+    return <div className="mb-block slate-container">{children}</div>
   }
   if (element.type === 'h') {
     const classNames = {

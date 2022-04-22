@@ -107,9 +107,9 @@
     @apply h-auto inline max-w-full;
   }
   .serlo-math-wrapper {
-    @apply px-4 text-left mb-block py-0.5;
+    @apply px-4 text-left py-0.5;
     @apply text-lg leading-browser overflow-x-auto overflow-y-hidden;
-    @apply px-side;
+    @apply px-side my-[1em];
   }
   .serlo-important {
     @apply border-l-6 border-brand p-2.5 mb-block mx-4;
@@ -171,7 +171,7 @@
     /* this feels really hacky */
     @apply break-words;
 
-    & p + ul {
+    & p:not(.slate-p) + ul {
       @apply -mt-3.5;
     }
 
@@ -188,6 +188,7 @@
     & .serlo-spoiler-body,
     & .serlo-solution-box,
     & .serlo-styled-label,
+    & .slate-container,
     & li,
     & th,
     & td {
@@ -196,7 +197,8 @@
       > ul:last-child,
       > ol:last-child,
       > .serlo-image-centered:last-child,
-      > .serlo-exercise-wrapper:last-child {
+      > .serlo-exercise-wrapper:last-child,
+      > .slate-container:last-child {
         @apply mb-0;
       }
 
