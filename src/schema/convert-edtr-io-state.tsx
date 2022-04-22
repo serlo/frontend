@@ -79,7 +79,7 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
     return convert(node.state as unknown as EdtrState)
   }
   if (node.plugin === 'text') {
-    return convert(node.state)
+    return [{ type: 'slate-container', children: convert(node.state) }]
   }
   if (node.plugin === 'image') {
     // remove images without source

@@ -29,7 +29,9 @@ export function convertTextPluginState(
 
 export function convertSlateBlock(node: NewElement): FrontendContentNode[] {
   if (node.type === 'p') {
-    return [{ type: 'p', children: convertTextPluginState(node.children) }]
+    return [
+      { type: 'slate-p', children: convertTextPluginState(node.children) },
+    ]
   }
   if (node.type === 'a') {
     const children = convertTextPluginState(node.children)
