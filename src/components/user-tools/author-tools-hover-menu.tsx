@@ -83,6 +83,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
           Tool.SortEntities,
           Tool.CopyItems,
           Tool.MoveItems,
+          Tool.Trash,
         ]
     }
     return []
