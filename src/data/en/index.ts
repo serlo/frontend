@@ -706,6 +706,9 @@ export const loggedInData = {
         multimediaTitle:
           'Multimedia content associated with text',
       },
+      pageLayoutColums: {
+        chooseRatio: 'Choose column ratio'
+      },
       solution: {
         optionalExplanation:
           'Optionally explain the solution strategy here',

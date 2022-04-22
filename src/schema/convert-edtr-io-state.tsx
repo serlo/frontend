@@ -13,6 +13,7 @@ import {
   Sign,
 } from '@/data-types'
 import { BoxType } from '@/edtr-io/plugins/box/renderer'
+import { convertState } from '@/fetcher/convert-state'
 
 function isEdtrState(node: ConvertData): node is EdtrState {
   return (node as EdtrState).plugin !== undefined
@@ -274,6 +275,16 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
         steps,
         firstExplanation: convert(firstExplanation),
         transformationTarget,
+      },
+    ]
+  }
+  if (node.plugin === 'pageLayout') {
+    return [
+      {
+        type: 'pageLayout',
+        column1: convertState(node.state.column1),
+        column2: convertState(node.state.column2),
+        widthPercent: node.state.widthPercent,
       },
     ]
   }

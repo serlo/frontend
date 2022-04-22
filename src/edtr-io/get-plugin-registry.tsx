@@ -15,6 +15,7 @@ import {
   faTable,
 } from '@edtr-io/ui'
 import { faSquare } from '@fortawesome/free-regular-svg-icons/faSquare'
+import { faGripLinesVertical } from '@fortawesome/free-solid-svg-icons'
 
 import { shouldUseFeature } from '@/components/user/profile-experimental'
 import { LoggedInData } from '@/data-types'
@@ -149,5 +150,19 @@ export function getPluginRegistry(
     ? boxFiltered.filter((plugin) => plugin.name !== 'table')
     : boxFiltered.filter((plugin) => plugin.name !== 'serloTable')
 
-  return tableFiltered
+  // Add special plugin for pages
+  const withPagePlugins =
+    type === 'Page'
+      ? [
+          ...tableFiltered,
+          {
+            name: 'pageLayout',
+            title: 'Layout Column for Pages',
+            description: "The plugin the people want but don't get 🤫",
+            icon: createIcon(faGripLinesVertical),
+          },
+        ]
+      : tableFiltered
+
+  return withPagePlugins
 }

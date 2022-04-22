@@ -741,6 +741,14 @@ export interface FrontendEquationsNode {
   children?: undefined
 }
 
+export interface FrontendPageLayoutNode {
+  type: 'pageLayout'
+  column1: FrontendContentNode[]
+  column2: FrontendContentNode[]
+  widthPercent: number
+  children?: undefined
+}
+
 export type FrontendVoidNode =
   | FrontendInlineMathNode
   | FrontendMathNode
@@ -782,6 +790,7 @@ export type FrontendRestrictedElementNode =
   | FrontendMultiMediaNode
   | FrontendTrNode
   | FrontendExerciseGroupNode
+  | FrontendPageLayoutNode
 
 export type FrontendContentNode =
   | FrontendTextNode
