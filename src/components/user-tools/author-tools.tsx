@@ -120,7 +120,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
         !(data.type === '_ExerciseInline' && data.grouped) &&
         canDo(TaxonomyTerm.set) &&
         canDo(TaxonomyTerm.orderChildren) &&
-        canDo(TaxonomyTerm.addChild) &&
+        canDo(TaxonomyTerm.change) &&
         canDo(TaxonomyTerm.removeChild),
     },
     trash: {
@@ -142,7 +142,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
     },
     organize: {
       url: `/taxonomy/term/organize/${data.id}`,
-      canDo: canDo(TaxonomyTerm.addChild) && canDo(TaxonomyTerm.removeChild),
+      canDo: canDo(TaxonomyTerm.change) && canDo(TaxonomyTerm.removeChild),
     },
     sortEntities: {
       url: `/taxonomy/term/sort/entities/${data.id}`,
@@ -150,7 +150,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
     },
     copyItems: {
       url: `/taxonomy/term/copy/batch/${data.id}`,
-      canDo: canDo(TaxonomyTerm.addChild),
+      canDo: canDo(TaxonomyTerm.change),
     },
     addGroupedTextExercise: {
       url: `/entity/create/grouped-text-exercise?link%5Btype%5D=link&link%5Bchild%5D=${data.id}`,
@@ -162,14 +162,14 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
     },
     moveItems: {
       url: `/taxonomy/term/move/batch/${data.id}`,
-      canDo: canDo(TaxonomyTerm.addChild) && canDo(TaxonomyTerm.removeChild),
+      canDo: canDo(TaxonomyTerm.change) && canDo(TaxonomyTerm.removeChild),
     },
     moveToExercise: {
       url: `/entity/link/move/link/${data.id}/${data.parentId!}`,
       title: data.grouped
         ? loggedInStrings.authorMenu.moveToGrouped
         : loggedInStrings.authorMenu.moveToTextExercise,
-      canDo: canDo(TaxonomyTerm.addChild) && canDo(TaxonomyTerm.removeChild),
+      canDo: canDo(TaxonomyTerm.change) && canDo(TaxonomyTerm.removeChild),
     },
     addCoursePage: {
       url: `/entity/create/course-page?link%5Btype%5D=link&link%5Bchild%5D=${data.courseId!}`,
