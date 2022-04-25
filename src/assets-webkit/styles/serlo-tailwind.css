@@ -203,6 +203,10 @@
         @apply mb-0;
       }
 
+      > .serlo-math-wrapper:first-child {
+        @apply mt-0;
+      }
+
       /* fixed in postcss-nested 5.0.6 */
       > .serlo-exercise-wrapper:first-child {
         @apply mt-0;
