@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react'
 import { LoadingSpinner } from '../loading/loading-spinner'
 import { Breadcrumbs } from '../navigation/breadcrumbs'
 import { shouldUseFeature } from '../user/profile-experimental'
-import { MathSpan } from '@/components/content/math-span'
 import { useInstanceData } from '@/contexts/instance-context'
 import { SerloEditor } from '@/edtr-io/serlo-editor'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
@@ -69,7 +68,6 @@ export function AddRevision({
         data={breadcrumbsData ? [...breadcrumbsData, backlink] : [backlink]}
         noIcon
       />
-      <MathSpan formula="" />
       <div className="controls-portal sticky top-0 z-[94] bg-white" />
       <div
         className={clsx(
