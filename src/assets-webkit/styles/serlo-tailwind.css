@@ -175,7 +175,8 @@
       @apply -mt-3.5;
     }
 
-    & li > p {
+    & li > p,
+    & li > .slate-container > p {
       @apply mx-0 mb-2;
     }
 

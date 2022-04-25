@@ -5,6 +5,7 @@ import type {
   FrontendContentNode,
   FrontendLiNode,
   FrontendTextColor,
+  FrontendTextNode,
 } from '@/data-types'
 
 const colors: FrontendTextColor[] = ['blue', 'green', 'orange']
@@ -125,7 +126,12 @@ export function convertSlateBlock(node: NewElement): FrontendContentNode[] {
   }
   if (node.type === 'list-item') {
     const children: FrontendContentNode[] = [
-      { type: 'p', children: convertTextPluginState(node.children) },
+      {
+        type: 'slate-container',
+        children: handleSemistructedContentOfPForListItems(
+          convertTextPluginState(node.children)
+        ),
+      },
     ]
 
     return [
@@ -154,4 +160,53 @@ export function convertTextNode(node: NewText): FrontendContentNode[] {
       code: node.code,
     },
   ]
+}
+
+function handleSemistructedContentOfPForListItems(
+  input: FrontendContentNode[]
+) {
+  // generate children, split text blocks at new lines
+  const children = input.flatMap((child) => {
+    if (child.type == 'text' && child.text.includes('\n')) {
+      return child.text.split('\n').flatMap((text, i) => {
+        const value: FrontendTextNode[] = []
+        if (i != 0) {
+          value.push({ type: 'text', text: '%%%BARRIER%%%' })
+        }
+        if (text) {
+          value.push({ type: 'text', text })
+        }
+        return value
+      })
+    }
+    return child
+  })
+
+  // group inline nodes together in p, don't merge if barrier is present
+  const result: FrontendContentNode[] = []
+  let resultAppendable = false
+  children.forEach((child) => {
+    if (
+      child.type == 'text' ||
+      child.type == 'a' ||
+      child.type == 'inline-math'
+    ) {
+      const last = result[result.length - 1]
+      if (child.type == 'text' && child.text == '%%%BARRIER%%%') {
+        resultAppendable = false
+        return
+      }
+      if (resultAppendable && last && last.type == 'slate-p') {
+        last.children!.push(child)
+      } else {
+        result.push({ type: 'slate-p', children: [child] })
+        resultAppendable = true
+      }
+    } else {
+      result.push(child)
+      resultAppendable = false
+    }
+  })
+
+  return result
 }
