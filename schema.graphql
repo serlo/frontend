@@ -1,1231 +1,1428 @@
-# This file was generated based on ".graphqlconfig". Do not edit manually.
-
-schema {
-    query: Query
-    mutation: Mutation
+interface AbstractEntity {
+  alias: String
+  date: DateTime!
+  events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
+  id: Int!
+  instance: Instance!
+  license: License!
+  subject: Subject
+  trashed: Boolean!
 }
 
-interface AbstractEntity {
-    alias: String
-    "extends AbstractRepository"
-    date: DateTime!
-    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
-    "extends AbstractUuid"
-    id: Int!
-    instance: Instance!
-    license: License!
-    trashed: Boolean!
+type AbstractEntityConnection {
+  edges: [AbstractEntityCursor!]!
+  nodes: [AbstractEntity!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type AbstractEntityCursor {
+  cursor: String!
+  node: AbstractEntity!
 }
 
 interface AbstractEntityRevision {
-    "extends AbstractRevision"
-    author: User!
-    changes: String!
-    content: String!
-    date: DateTime!
-    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
-    "extends AbstractUuid"
-    id: Int!
-    trashed: Boolean!
+  author: User!
+  changes: String!
+  content: String!
+  date: DateTime!
+  events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
+  id: Int!
+  trashed: Boolean!
 }
 
 interface AbstractExercise {
-    alias: String
-    currentRevision: AbstractExerciseRevision
-    date: DateTime!
-    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
-    "extends AbstractEntity"
-    id: Int!
-    instance: Instance!
-    license: License!
-    solution: Solution
-    trashed: Boolean!
+  alias: String
+  currentRevision: AbstractExerciseRevision
+  date: DateTime!
+  events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
+  id: Int!
+  instance: Instance!
+  license: License!
+  solution: Solution
+  trashed: Boolean!
 }
 
 interface AbstractExerciseRevision {
-    alias: String
-    author: User!
-    changes: String!
-    content: String!
-    date: DateTime!
-    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
-    "extends AbstractEntityRevision"
-    id: Int!
-    trashed: Boolean!
+  alias: String
+  author: User!
+  changes: String!
+  content: String!
+  date: DateTime!
+  events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
+  id: Int!
+  trashed: Boolean!
 }
 
 interface AbstractNavigationChild {
-    navigation: Navigation
+  navigation: Navigation
 }
 
 interface AbstractNotificationEvent {
-    actor: User!
-    date: DateTime!
-    id: Int!
-    instance: Instance!
-    objectId: Int!
-}
-
-interface AbstractRepository {
-    alias: String
-    date: DateTime!
-    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
-    "extends AbstractUuid"
-    id: Int!
-    instance: Instance!
-    license: License!
-    "extends ThreadAware"
-    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
-    trashed: Boolean!
-}
-
-interface AbstractRevision {
-    alias: String
-    """
-
-    Implicitly has the following field
-    repository: AbstractRepository!
-    """
-    author: User!
-    content: String!
-    date: DateTime!
-    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
-    "extends AbstractUuid"
-    id: Int!
-    "extends ThreadAware"
-    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
-    trashed: Boolean!
-}
-
-interface AbstractTaxonomyTermChild {
-    alias: String
-    date: DateTime!
-    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
-    "extends AbstractEntity"
-    id: Int!
-    instance: Instance!
-    license: License!
-    taxonomyTerms(after: String, before: String, first: Int, last: Int): TaxonomyTermConnection!
-    trashed: Boolean!
-}
-
-interface AbstractUuid {
-    alias: String
-    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
-    id: Int!
-    trashed: Boolean!
-}
-
-interface InstanceAware {
-    instance: Instance!
-}
-
-interface ThreadAware {
-    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
+  actor: User!
+  date: DateTime!
+  id: Int!
+  instance: Instance!
+  objectId: Int!
 }
 
 type AbstractNotificationEventConnection {
-    edges: [AbstractNotificationEventEdge!]!
-    nodes: [AbstractNotificationEvent!]!
-    pageInfo: PageInfo!
-    totalCount: Int!
+  edges: [AbstractNotificationEventEdge!]!
+  nodes: [AbstractNotificationEvent!]!
+  pageInfo: HasNextPageInfo!
 }
 
 type AbstractNotificationEventEdge {
-    cursor: String!
-    node: AbstractNotificationEvent!
+  cursor: String!
+  node: AbstractNotificationEvent!
+}
+
+interface AbstractRepository {
+  alias: String
+  date: DateTime!
+  events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
+  id: Int!
+  instance: Instance!
+  license: License!
+  threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
+  trashed: Boolean!
+}
+
+interface AbstractRevision {
+  alias: String
+  author: User!
+  content: String!
+  date: DateTime!
+  events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
+  id: Int!
+  threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
+  trashed: Boolean!
+}
+
+interface AbstractTaxonomyTermChild {
+  alias: String
+  date: DateTime!
+  events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
+  id: Int!
+  instance: Instance!
+  license: License!
+  taxonomyTerms(after: String, before: String, first: Int, last: Int): TaxonomyTermConnection!
+  trashed: Boolean!
+}
+
+interface AbstractUuid {
+  alias: String
+  events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
+  id: Int!
+  trashed: Boolean!
 }
 
 type AbstractUuidConnection {
-    edges: [AbstractUuidCursor!]!
-    nodes: [AbstractUuid!]!
-    pageInfo: PageInfo!
-    totalCount: Int!
+  edges: [AbstractUuidCursor!]!
+  nodes: [AbstractUuid!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
 }
 
 type AbstractUuidCursor {
-    cursor: String!
-    node: AbstractUuid!
-}
-
-type Applet implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid & InstanceAware & ThreadAware {
-    alias: String
-    currentRevision: AppletRevision
-    date: DateTime!
-    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
-    id: Int!
-    instance: Instance!
-    license: License!
-    revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): AppletRevisionConnection!
-    taxonomyTerms(after: String, before: String, first: Int, last: Int): TaxonomyTermConnection!
-    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
-    trashed: Boolean!
-}
-
-type AppletRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid & ThreadAware {
-    alias: String
-    author: User!
-    changes: String!
-    content: String!
-    date: DateTime!
-    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
-    id: Int!
-    metaDescription: String!
-    metaTitle: String!
-    repository: Applet!
-    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
-    title: String!
-    trashed: Boolean!
-    url: String!
-}
-
-type AppletRevisionConnection {
-    edges: [AppletRevisionCursor!]!
-    nodes: [AppletRevision!]!
-    pageInfo: PageInfo!
-    totalCount: Int!
-}
-
-type AppletRevisionCursor {
-    cursor: String!
-    node: AppletRevision!
-}
-
-type Article implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid & InstanceAware & ThreadAware {
-    alias: String
-    currentRevision: ArticleRevision
-    date: DateTime!
-    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
-    id: Int!
-    instance: Instance!
-    license: License!
-    revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): ArticleRevisionConnection!
-    taxonomyTerms(after: String, before: String, first: Int, last: Int): TaxonomyTermConnection!
-    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
-    trashed: Boolean!
-}
-
-type ArticleRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid & ThreadAware {
-    alias: String
-    author: User!
-    changes: String!
-    content: String!
-    date: DateTime!
-    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
-    id: Int!
-    metaDescription: String!
-    metaTitle: String!
-    repository: Article!
-    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
-    title: String!
-    trashed: Boolean!
-}
-
-type ArticleRevisionConnection {
-    edges: [ArticleRevisionCursor!]!
-    nodes: [ArticleRevision!]!
-    pageInfo: PageInfo!
-    totalCount: Int!
-}
-
-type ArticleRevisionCursor {
-    cursor: String!
-    node: ArticleRevision!
-}
-
-type CacheRemoveResponse {
-    query: Query!
-    success: Boolean!
-}
-
-type CacheSetResponse {
-    query: Query!
-    success: Boolean!
-}
-
-type CacheUpdateResponse {
-    query: Query!
-    success: Boolean!
-}
-
-type CheckoutRevisionNotificationEvent implements AbstractNotificationEvent & InstanceAware {
-    actor: User!
-    date: DateTime!
-    id: Int!
-    instance: Instance!
-    objectId: Int!
-    reason: String!
-    repository: AbstractRepository!
-    revision: AbstractRevision!
-}
-
-type CheckoutRevisionResponse {
-    query: Query!
-    success: Boolean!
-}
-
-type Comment implements AbstractUuid {
-    alias: String!
-    archived: Boolean!
-    author: User!
-    content: String!
-    createdAt: DateTime!
-    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
-    id: Int!
-    """
-
-    This property is only temporarily used to redirect requests of individual comments to its object
-    (Will be deleted when separate Comments module has been deployed)
-    e.g. Comment with id 35695 -> object: Article with id 1573
-    see https://github.com/serlo/serlo.org-cloudflare-worker/issues/152
-    """
-    legacyObject: AbstractUuid!
-    title: String!
-    trashed: Boolean!
-}
-
-type CommentConnection {
-    edges: [CommentEdge!]!
-    nodes: [Comment!]!
-    pageInfo: PageInfo!
-    totalCount: Int!
-}
-
-type CommentEdge {
-    cursor: String!
-    node: Comment!
-}
-
-type Course implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid & InstanceAware & ThreadAware {
-    alias: String
-    currentRevision: CourseRevision
-    date: DateTime!
-    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
-    id: Int!
-    instance: Instance!
-    license: License!
-    pages(hasCurrentRevision: Boolean, trashed: Boolean): [CoursePage!]!
-    revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): CourseRevisionConnection!
-    taxonomyTerms(after: String, before: String, first: Int, last: Int): TaxonomyTermConnection!
-    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
-    trashed: Boolean!
-}
-
-type CoursePage implements AbstractEntity & AbstractRepository & AbstractUuid & InstanceAware & ThreadAware {
-    alias: String
-    course: Course!
-    currentRevision: CoursePageRevision
-    date: DateTime!
-    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
-    id: Int!
-    instance: Instance!
-    license: License!
-    revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): CoursePageRevisionConnection!
-    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
-    trashed: Boolean!
-}
-
-type CoursePageRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid & ThreadAware {
-    alias: String
-    author: User!
-    changes: String!
-    content: String!
-    date: DateTime!
-    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
-    id: Int!
-    repository: CoursePage!
-    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
-    title: String!
-    trashed: Boolean!
-}
-
-type CoursePageRevisionConnection {
-    edges: [CoursePageRevisionCursor!]!
-    nodes: [CoursePageRevision!]!
-    pageInfo: PageInfo!
-    totalCount: Int!
-}
-
-type CoursePageRevisionCursor {
-    cursor: String!
-    node: CoursePageRevision!
-}
-
-type CourseRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid & ThreadAware {
-    alias: String
-    author: User!
-    changes: String!
-    content: String!
-    date: DateTime!
-    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
-    id: Int!
-    metaDescription: String!
-    repository: Course!
-    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
-    title: String!
-    trashed: Boolean!
-}
-
-type CourseRevisionConnection {
-    edges: [CourseRevisionCursor!]!
-    nodes: [CourseRevision!]!
-    pageInfo: PageInfo!
-    totalCount: Int!
-}
-
-type CourseRevisionCursor {
-    cursor: String!
-    node: CourseRevision!
-}
-
-type CreateCommentNotificationEvent implements AbstractNotificationEvent & InstanceAware {
-    actor: User!
-    comment: Comment!
-    date: DateTime!
-    id: Int!
-    instance: Instance!
-    objectId: Int!
-    thread: Thread!
-}
-
-type CreateEntityLinkNotificationEvent implements AbstractNotificationEvent & InstanceAware {
-    actor: User!
-    child: AbstractEntity!
-    date: DateTime!
-    id: Int!
-    instance: Instance!
-    objectId: Int!
-    parent: AbstractEntity!
-}
-
-type CreateEntityNotificationEvent implements AbstractNotificationEvent & InstanceAware {
-    actor: User!
-    date: DateTime!
-    entity: AbstractEntity!
-    id: Int!
-    instance: Instance!
-    objectId: Int!
-}
-
-type CreateEntityRevisionNotificationEvent implements AbstractNotificationEvent & InstanceAware {
-    actor: User!
-    date: DateTime!
-    entity: AbstractEntity!
-    entityRevision: AbstractEntityRevision!
-    id: Int!
-    instance: Instance!
-    objectId: Int!
-}
-
-type CreateTaxonomyLinkNotificationEvent implements AbstractNotificationEvent & InstanceAware {
-    actor: User!
-    child: AbstractUuid!
-    date: DateTime!
-    id: Int!
-    instance: Instance!
-    objectId: Int!
-    parent: TaxonomyTerm!
-}
-
-type CreateTaxonomyTermNotificationEvent implements AbstractNotificationEvent & InstanceAware {
-    actor: User!
-    date: DateTime!
-    id: Int!
-    instance: Instance!
-    objectId: Int!
-    taxonomyTerm: TaxonomyTerm!
-}
-
-type CreateThreadNotificationEvent implements AbstractNotificationEvent & InstanceAware {
-    actor: User!
-    date: DateTime!
-    id: Int!
-    instance: Instance!
-    object: AbstractUuid!
-    objectId: Int!
-    thread: Thread!
-}
-
-type EntityMutation {
-    checkoutRevision(input: CheckoutRevisionInput!): CheckoutRevisionResponse!
-    rejectRevision(input: RejectRevisionInput!): RejectRevisionResponse!
-}
-
-type Event implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid & InstanceAware & ThreadAware {
-    alias: String
-    currentRevision: EventRevision
-    date: DateTime!
-    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
-    id: Int!
-    instance: Instance!
-    license: License!
-    revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): EventRevisionConnection!
-    taxonomyTerms(after: String, before: String, first: Int, last: Int): TaxonomyTermConnection!
-    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
-    trashed: Boolean!
-}
-
-type EventRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid & ThreadAware {
-    alias: String
-    author: User!
-    changes: String!
-    content: String!
-    date: DateTime!
-    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
-    id: Int!
-    metaDescription: String!
-    metaTitle: String!
-    repository: Event!
-    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
-    title: String!
-    trashed: Boolean!
-}
-
-type EventRevisionConnection {
-    edges: [EventRevisionCursor!]!
-    nodes: [EventRevision!]!
-    pageInfo: PageInfo!
-    totalCount: Int!
-}
-
-type EventRevisionCursor {
-    cursor: String!
-    node: EventRevision!
-}
-
-type Exercise implements AbstractEntity & AbstractExercise & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid & InstanceAware & ThreadAware {
-    alias: String
-    currentRevision: ExerciseRevision
-    date: DateTime!
-    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
-    id: Int!
-    instance: Instance!
-    license: License!
-    revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): ExerciseRevisionConnection!
-    solution: Solution
-    taxonomyTerms(after: String, before: String, first: Int, last: Int): TaxonomyTermConnection!
-    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
-    trashed: Boolean!
-}
-
-type ExerciseGroup implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid & InstanceAware & ThreadAware {
-    alias: String
-    currentRevision: ExerciseGroupRevision
-    date: DateTime!
-    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
-    exercises: [GroupedExercise!]!
-    id: Int!
-    instance: Instance!
-    license: License!
-    revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): ExerciseGroupRevisionConnection!
-    taxonomyTerms(after: String, before: String, first: Int, last: Int): TaxonomyTermConnection!
-    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
-    trashed: Boolean!
-}
-
-type ExerciseGroupRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid & ThreadAware {
-    alias: String
-    author: User!
-    changes: String!
-    content: String!
-    date: DateTime!
-    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
-    id: Int!
-    repository: ExerciseGroup!
-    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
-    trashed: Boolean!
-}
-
-type ExerciseGroupRevisionConnection {
-    edges: [ExerciseGroupRevisionCursor!]!
-    nodes: [ExerciseGroupRevision!]!
-    pageInfo: PageInfo!
-    totalCount: Int!
-}
-
-type ExerciseGroupRevisionCursor {
-    cursor: String!
-    node: ExerciseGroupRevision!
-}
-
-type ExerciseRevision implements AbstractEntityRevision & AbstractExerciseRevision & AbstractRevision & AbstractUuid & ThreadAware {
-    alias: String
-    author: User!
-    changes: String!
-    content: String!
-    date: DateTime!
-    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
-    id: Int!
-    repository: Exercise!
-    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
-    trashed: Boolean!
-}
-
-type ExerciseRevisionConnection {
-    edges: [ExerciseRevisionCursor!]!
-    nodes: [ExerciseRevision!]!
-    pageInfo: PageInfo!
-    totalCount: Int!
-}
-
-type ExerciseRevisionCursor {
-    cursor: String!
-    node: ExerciseRevision!
-}
-
-type GroupedExercise implements AbstractEntity & AbstractExercise & AbstractRepository & AbstractUuid & InstanceAware & ThreadAware {
-    alias: String
-    currentRevision: GroupedExerciseRevision
-    date: DateTime!
-    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
-    exerciseGroup: ExerciseGroup!
-    id: Int!
-    instance: Instance!
-    license: License!
-    revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): GroupedExerciseRevisionConnection!
-    solution: Solution
-    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
-    trashed: Boolean!
-}
-
-type GroupedExerciseRevision implements AbstractEntityRevision & AbstractExerciseRevision & AbstractRevision & AbstractUuid & ThreadAware {
-    alias: String
-    author: User!
-    changes: String!
-    content: String!
-    date: DateTime!
-    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
-    id: Int!
-    repository: GroupedExercise!
-    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
-    trashed: Boolean!
-}
-
-type GroupedExerciseRevisionConnection {
-    edges: [GroupedExerciseRevisionCursor!]!
-    nodes: [GroupedExerciseRevision!]!
-    pageInfo: PageInfo!
-    totalCount: Int!
-}
-
-type GroupedExerciseRevisionCursor {
-    cursor: String!
-    node: GroupedExerciseRevision!
-}
-
-type License {
-    agreement: String!
-    content: String!
-    default: Boolean!
-    iconHref: String!
-    id: Int!
-    instance: Instance!
-    title: String!
-    url: String!
-}
-
-type Mutation {
-    _cache: _cacheMutation!
-    entity: EntityMutation!
-    notification: NotificationMutation!
-    subscription: SubscriptionMutation!
-    thread: ThreadMutation!
-    user: UserMutation!
-    uuid: UuidMutation!
-}
-
-type Navigation {
-    data: JSON!
-    path(after: String, before: String, first: Int, last: Int): NavigationNodeConnection!
-}
-
-type NavigationNode {
-    id: Int
-    label: String!
-    url: String
-}
-
-type NavigationNodeConnection {
-    edges: [NavigationNodeEdge]
-    nodes: [NavigationNode!]!
-    pageInfo: PageInfo!
-    totalCount: Int!
-}
-
-type NavigationNodeEdge {
-    cursor: String!
-    node: NavigationNode!
-}
-
-type Notification {
-    event: AbstractNotificationEvent!
-    id: Int!
-    unread: Boolean!
-}
-
-type NotificationConnection {
-    edges: [NotificationEdge!]!
-    nodes: [Notification!]!
-    pageInfo: PageInfo!
-    totalCount: Int!
-}
-
-type NotificationEdge {
-    cursor: String!
-    node: Notification!
-}
-
-type NotificationMutation {
-    setState(input: NotificationSetStateInput!): NotificationSetStateResponse
-}
-
-type NotificationSetStateResponse {
-    query: Query!
-    success: Boolean!
-}
-
-type Page implements AbstractNavigationChild & AbstractRepository & AbstractUuid & InstanceAware & ThreadAware {
-    alias: String
-    currentRevision: PageRevision
-    date: DateTime!
-    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
-    id: Int!
-    instance: Instance!
-    license: License!
-    navigation: Navigation
-    revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): PageRevisionConnection!
-    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
-    trashed: Boolean!
-}
-
-type PageInfo {
-    endCursor: String
-    hasNextPage: Boolean!
-    hasPreviousPage: Boolean!
-    startCursor: String
-}
-
-type PageRevision implements AbstractRevision & AbstractUuid & ThreadAware {
-    alias: String
-    author: User!
-    content: String!
-    date: DateTime!
-    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
-    id: Int!
-    repository: Page!
-    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
-    title: String!
-    trashed: Boolean!
-}
-
-type PageRevisionConnection {
-    edges: [PageRevisionCursor!]!
-    nodes: [PageRevision!]!
-    pageInfo: PageInfo!
-    totalCount: Int!
-}
-
-type PageRevisionCursor {
-    cursor: String!
-    node: PageRevision!
-}
-
-type Query {
-    activeAuthors(after: String, before: String, first: Int, last: Int): UserConnection!
-    activeDonors(after: String, before: String, first: Int, last: Int): UserConnection!
-    activeReviewers(after: String, before: String, first: Int, last: Int): UserConnection!
-    authorization: JSON!
-    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int, objectId: Int): AbstractNotificationEventConnection!
-    license(id: Int!): License
-    notificationEvent(id: Int!): AbstractNotificationEvent
-    notifications(after: String, before: String, first: Int, last: Int, unread: Boolean): NotificationConnection!
-    subscription: SubscriptionQuery!
-    subscriptions(after: String, before: String, first: Int, last: Int): AbstractUuidConnection!
-    uuid(alias: AliasInput, id: Int): AbstractUuid
-}
-
-type RejectRevisionNotificationEvent implements AbstractNotificationEvent & InstanceAware {
-    actor: User!
-    date: DateTime!
-    id: Int!
-    instance: Instance!
-    objectId: Int!
-    reason: String!
-    repository: AbstractRepository!
-    revision: AbstractRevision!
-}
-
-type RejectRevisionResponse {
-    query: Query!
-    success: Boolean!
-}
-
-type RemoveEntityLinkNotificationEvent implements AbstractNotificationEvent & InstanceAware {
-    actor: User!
-    child: AbstractEntity!
-    date: DateTime!
-    id: Int!
-    instance: Instance!
-    objectId: Int!
-    parent: AbstractEntity!
-}
-
-type RemoveTaxonomyLinkNotificationEvent implements AbstractNotificationEvent & InstanceAware {
-    actor: User!
-    child: AbstractUuid!
-    date: DateTime!
-    id: Int!
-    instance: Instance!
-    objectId: Int!
-    parent: TaxonomyTerm!
-}
-
-type ScopedRole {
-    role: Role!
-    scope: String
-}
-
-type ScopedRoleConnection {
-    edges: [ScopedRoleCursor!]!
-    nodes: [ScopedRole!]!
-    pageInfo: PageInfo!
-    totalCount: Int!
-}
-
-type ScopedRoleCursor {
-    cursor: String!
-    node: ScopedRole!
-}
-
-type SetLicenseNotificationEvent implements AbstractNotificationEvent & InstanceAware {
-    actor: User!
-    date: DateTime!
-    id: Int!
-    instance: Instance!
-    objectId: Int!
-    repository: AbstractRepository!
-}
-
-type SetTaxonomyParentNotificationEvent implements AbstractNotificationEvent & InstanceAware {
-    actor: User!
-    child: TaxonomyTerm!
-    date: DateTime!
-    id: Int!
-    instance: Instance!
-    objectId: Int!
-    parent: TaxonomyTerm
-    previousParent: TaxonomyTerm
-}
-
-type SetTaxonomyTermNotificationEvent implements AbstractNotificationEvent & InstanceAware {
-    actor: User!
-    date: DateTime!
-    id: Int!
-    instance: Instance!
-    objectId: Int!
-    taxonomyTerm: TaxonomyTerm!
-}
-
-type SetThreadStateNotificationEvent implements AbstractNotificationEvent & InstanceAware {
-    actor: User!
-    archived: Boolean!
-    date: DateTime!
-    id: Int!
-    instance: Instance!
-    objectId: Int!
-    thread: Thread!
-}
-
-type SetUuidStateNotificationEvent implements AbstractNotificationEvent & InstanceAware {
-    actor: User!
-    date: DateTime!
-    id: Int!
-    instance: Instance!
-    object: AbstractUuid!
-    objectId: Int!
-    trashed: Boolean!
-}
-
-type Solution implements AbstractEntity & AbstractRepository & AbstractUuid & InstanceAware & ThreadAware {
-    alias: String
-    currentRevision: SolutionRevision
-    date: DateTime!
-    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
-    exercise: AbstractExercise!
-    id: Int!
-    instance: Instance!
-    license: License!
-    revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): SolutionRevisionConnection
-    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
-    trashed: Boolean!
-}
-
-type SolutionRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid & ThreadAware {
-    alias: String
-    author: User!
-    changes: String!
-    content: String!
-    date: DateTime!
-    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
-    id: Int!
-    repository: Solution!
-    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
-    trashed: Boolean!
-}
-
-type SolutionRevisionConnection {
-    edges: [SolutionRevisionCursor!]!
-    nodes: [SolutionRevision!]!
-    pageInfo: PageInfo!
-    totalCount: Int!
-}
-
-type SolutionRevisionCursor {
-    cursor: String!
-    node: SolutionRevision!
-}
-
-type SubscriptionMutation {
-    set(input: SubscriptionSetInput!): SubscriptionSetResponse
-}
-
-type SubscriptionQuery {
-    currentUserHasSubscribed(id: Int!): Boolean!
-}
-
-type SubscriptionSetResponse {
-    query: Query!
-    success: Boolean!
-}
-
-type TaxonomyTerm implements AbstractNavigationChild & AbstractUuid & InstanceAware & ThreadAware {
-    alias: String
-    children(after: String, before: String, first: Int, last: Int): AbstractUuidConnection!
-    description: String
-    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
-    id: Int!
-    instance: Instance!
-    name: String!
-    navigation: Navigation
-    parent: TaxonomyTerm
-    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
-    trashed: Boolean!
-    type: TaxonomyTermType!
-    weight: Int!
-}
-
-type TaxonomyTermConnection {
-    edges: [TaxonomyTermEdge]
-    nodes: [TaxonomyTerm!]!
-    pageInfo: PageInfo!
-    totalCount: Int!
-}
-
-type TaxonomyTermEdge {
-    cursor: String!
-    node: TaxonomyTerm!
-}
-
-type Thread {
-    archived: Boolean!
-    comments(after: String, before: String, first: Int, last: Int): CommentConnection!
-    createdAt: DateTime!
-    id: String!
-    object: AbstractUuid!
-    title: String
-    trashed: Boolean!
-}
-
-type ThreadCreateCommentResponse {
-    query: Query!
-    record: Comment
-    success: Boolean!
-}
-
-type ThreadCreateThreadResponse {
-    query: Query!
-    record: Thread
-    success: Boolean!
-}
-
-type ThreadMutation {
-    createComment(input: ThreadCreateCommentInput!): ThreadCreateCommentResponse
-    createThread(input: ThreadCreateThreadInput!): ThreadCreateThreadResponse
-    setCommentState(input: ThreadSetCommentStateInput!): ThreadSetCommentStateResponse
-    setThreadArchived(input: ThreadSetThreadArchivedInput!): ThreadSetThreadArchivedResponse
-    setThreadState(input: ThreadSetThreadStateInput!): ThreadSetThreadStateResponse
-}
-
-type ThreadSetCommentStateResponse {
-    query: Query!
-    success: Boolean!
-}
-
-type ThreadSetThreadArchivedResponse {
-    query: Query!
-    success: Boolean!
-}
-
-type ThreadSetThreadStateResponse {
-    query: Query!
-    success: Boolean!
-}
-
-type ThreadsConnection {
-    edges: [ThreadsCursor!]!
-    nodes: [Thread!]!
-    pageInfo: PageInfo!
-    totalCount: Int!
-}
-
-type ThreadsCursor {
-    cursor: String!
-    node: Thread!
-}
-
-type User implements AbstractUuid & ThreadAware {
-    activeAuthor: Boolean!
-    activeDonor: Boolean!
-    activeReviewer: Boolean!
-    alias: String
-    date: DateTime!
-    description: String
-    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
-    eventsByUser(after: String, before: String, first: Int, instance: Instance, last: Int, objectId: Int): AbstractNotificationEventConnection!
-    id: Int!
-    lastLogin: DateTime
-    roles(after: String, before: String, first: Int, last: Int): ScopedRoleConnection!
-    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
-    trashed: Boolean!
-    username: String!
-}
-
-type UserConnection {
-    edges: [UserEdge!]!
-    nodes: [User!]!
-    pageInfo: PageInfo!
-    totalCount: Int!
-}
-
-type UserDeleteBotsResponse {
-    reason: String
-    success: Boolean!
-    username: String!
-}
-
-type UserDeleteRegularUsersResponse {
-    reason: String
-    success: Boolean!
-    username: String
-}
-
-type UserEdge {
-    cursor: String!
-    node: User!
-}
-
-type UserMutation {
-    deleteBots(input: UserDeleteBotsInput!): [UserDeleteBotsResponse!]!
-    deleteRegularUsers(input: UserDeleteRegularUsersInput!): [UserDeleteRegularUsersResponse!]!
-    setEmail(input: UserSetEmailInput!): UserSetEmailResponse!
-}
-
-type UserSetEmailResponse {
-    email: String!
-    success: Boolean!
-    username: String!
-}
-
-type UuidMutation {
-    setState(input: UuidSetStateInput!): UuidSetStateResponse
-}
-
-type UuidSetStateResponse {
-    query: Query!
-    success: Boolean!
-}
-
-type Video implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid & InstanceAware & ThreadAware {
-    alias: String
-    currentRevision: VideoRevision
-    date: DateTime!
-    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
-    id: Int!
-    instance: Instance!
-    license: License!
-    revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): VideoRevisionConnection!
-    taxonomyTerms(after: String, before: String, first: Int, last: Int): TaxonomyTermConnection!
-    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
-    trashed: Boolean!
-}
-
-type VideoRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid & ThreadAware {
-    alias: String
-    author: User!
-    changes: String!
-    content: String!
-    date: DateTime!
-    events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
-    id: Int!
-    repository: Video!
-    threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
-    title: String!
-    trashed: Boolean!
-    url: String!
-}
-
-type VideoRevisionConnection {
-    edges: [VideoRevisionCursor!]!
-    nodes: [VideoRevision!]!
-    pageInfo: PageInfo!
-    totalCount: Int!
-}
-
-type VideoRevisionCursor {
-    cursor: String!
-    node: VideoRevision!
-}
-
-type _cacheMutation {
-    remove(input: CacheRemoveInput!): CacheRemoveResponse!
-    set(input: CacheSetInput!): CacheSetResponse!
-    update(input: CacheUpdateInput!): CacheUpdateResponse!
-}
-
-enum CacheControlScope {
-    PRIVATE
-    PUBLIC
-}
-
-enum Instance {
-    de
-    en
-    es
-    fr
-    hi
-    ta
-}
-
-enum Role {
-    admin
-    architect
-    guest
-    login
-    moderator
-    reviewer
-    staticPagesBuilder
-    sysadmin
-}
-
-enum TaxonomyTermType {
-    blog
-    curriculum
-    curriculumTopic
-    curriculumTopicFolder
-    forum
-    forumCategory
-    locale
-    root
-    subject
-    topic
-    topicFolder
+  cursor: String!
+  node: AbstractUuid!
+}
+
+input AddAppletRevisionInput {
+  changes: String!
+  content: String!
+  entityId: Int!
+  metaDescription: String!
+  metaTitle: String!
+  needsReview: Boolean!
+  subscribeThis: Boolean!
+  subscribeThisByEmail: Boolean!
+  title: String!
+  url: String!
+}
+
+input AddArticleRevisionInput {
+  changes: String!
+  content: String!
+  entityId: Int!
+  metaDescription: String!
+  metaTitle: String!
+  needsReview: Boolean!
+  subscribeThis: Boolean!
+  subscribeThisByEmail: Boolean!
+  title: String!
+}
+
+input AddCoursePageRevisionInput {
+  changes: String!
+  content: String!
+  entityId: Int!
+  needsReview: Boolean!
+  subscribeThis: Boolean!
+  subscribeThisByEmail: Boolean!
+  title: String!
+}
+
+input AddCourseRevisionInput {
+  changes: String!
+  content: String!
+  entityId: Int!
+  metaDescription: String!
+  needsReview: Boolean!
+  subscribeThis: Boolean!
+  subscribeThisByEmail: Boolean!
+  title: String!
+}
+
+input AddEventRevisionInput {
+  changes: String!
+  content: String!
+  entityId: Int!
+  metaDescription: String!
+  metaTitle: String!
+  needsReview: Boolean!
+  subscribeThis: Boolean!
+  subscribeThisByEmail: Boolean!
+  title: String!
+}
+
+input AddExerciseGroupRevisionInput {
+  changes: String!
+  cohesive: Boolean!
+  content: String!
+  entityId: Int!
+  needsReview: Boolean!
+  subscribeThis: Boolean!
+  subscribeThisByEmail: Boolean!
+}
+
+input AddGenericRevisionInput {
+  changes: String!
+  content: String!
+  entityId: Int!
+  needsReview: Boolean!
+  subscribeThis: Boolean!
+  subscribeThisByEmail: Boolean!
+}
+
+type AddRevisionResponse {
+  query: Query!
+  revisionId: Int
+  success: Boolean!
+}
+
+input AddVideoRevisionInput {
+  changes: String!
+  content: String!
+  entityId: Int!
+  needsReview: Boolean!
+  subscribeThis: Boolean!
+  subscribeThisByEmail: Boolean!
+  title: String!
+  url: String!
 }
 
 input AliasInput {
-    instance: Instance!
-    path: String!
+  instance: Instance!
+  path: String!
+}
+
+type Applet implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid & InstanceAware & ThreadAware {
+  alias: String
+  currentRevision: AppletRevision
+  date: DateTime!
+  events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
+  id: Int!
+  instance: Instance!
+  license: License!
+  revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): AppletRevisionConnection!
+  subject: Subject
+  taxonomyTerms(after: String, before: String, first: Int, last: Int): TaxonomyTermConnection!
+  threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
+  trashed: Boolean!
+}
+
+type AppletRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid & ThreadAware {
+  alias: String
+  author: User!
+  changes: String!
+  content: String!
+  date: DateTime!
+  events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
+  id: Int!
+  metaDescription: String!
+  metaTitle: String!
+  repository: Applet!
+  threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
+  title: String!
+  trashed: Boolean!
+  url: String!
+}
+
+type AppletRevisionConnection {
+  edges: [AppletRevisionCursor!]!
+  nodes: [AppletRevision!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type AppletRevisionCursor {
+  cursor: String!
+  node: AppletRevision!
+}
+
+type Article implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid & InstanceAware & ThreadAware {
+  alias: String
+  currentRevision: ArticleRevision
+  date: DateTime!
+  events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
+  id: Int!
+  instance: Instance!
+  license: License!
+  revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): ArticleRevisionConnection!
+  subject: Subject
+  taxonomyTerms(after: String, before: String, first: Int, last: Int): TaxonomyTermConnection!
+  threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
+  trashed: Boolean!
+}
+
+type ArticleRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid & ThreadAware {
+  alias: String
+  author: User!
+  changes: String!
+  content: String!
+  date: DateTime!
+  events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
+  id: Int!
+  metaDescription: String!
+  metaTitle: String!
+  repository: Article!
+  threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
+  title: String!
+  trashed: Boolean!
+}
+
+type ArticleRevisionConnection {
+  edges: [ArticleRevisionCursor!]!
+  nodes: [ArticleRevision!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type ArticleRevisionCursor {
+  cursor: String!
+  node: ArticleRevision!
 }
 
 input CacheRemoveInput {
-    key: String!
+  key: String!
+}
+
+type CacheRemoveResponse {
+  query: Query!
+  success: Boolean!
 }
 
 input CacheSetInput {
-    key: String!
-    value: JSON!
+  key: String!
+  value: JSON!
+}
+
+type CacheSetResponse {
+  query: Query!
+  success: Boolean!
 }
 
 input CacheUpdateInput {
-    keys: [String!]!
+  keys: [String!]!
+}
+
+type CacheUpdateResponse {
+  success: Boolean!
 }
 
 input CheckoutRevisionInput {
-    reason: String!
-    revisionId: Int!
+  reason: String!
+  revisionId: Int!
 }
 
-input NotificationSetStateInput {
-    id: [Int!]!
-    unread: Boolean!
+type CheckoutRevisionNotificationEvent implements AbstractNotificationEvent & InstanceAware {
+  actor: User!
+  date: DateTime!
+  id: Int!
+  instance: Instance!
+  objectId: Int!
+  reason: String!
+  repository: AbstractRepository!
+  revision: AbstractRevision!
 }
 
-input RejectRevisionInput {
-    reason: String!
-    revisionId: Int!
+type CheckoutRevisionResponse {
+  query: Query!
+  success: Boolean!
 }
 
-input SubscriptionSetInput {
-    id: [Int!]!
-    sendEmail: Boolean!
-    subscribe: Boolean!
+type Comment implements AbstractUuid {
+  alias: String!
+  archived: Boolean!
+  author: User!
+  content: String!
+  createdAt: DateTime!
+  events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
+  id: Int!
+  legacyObject: AbstractUuid!
+  title: String!
+  trashed: Boolean!
 }
 
-input ThreadCreateCommentInput {
-    content: String!
-    sendEmail: Boolean!
-    subscribe: Boolean!
-    threadId: String!
+type CommentConnection {
+  edges: [CommentEdge!]!
+  nodes: [Comment!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
 }
 
-input ThreadCreateThreadInput {
-    content: String!
-    objectId: Int!
-    sendEmail: Boolean!
-    subscribe: Boolean!
-    title: String!
+type CommentEdge {
+  cursor: String!
+  node: Comment!
 }
 
-input ThreadSetCommentStateInput {
-    id: [Int!]!
-    trashed: Boolean!
+type Course implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid & InstanceAware & ThreadAware {
+  alias: String
+  currentRevision: CourseRevision
+  date: DateTime!
+  events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
+  id: Int!
+  instance: Instance!
+  license: License!
+  pages(hasCurrentRevision: Boolean, trashed: Boolean): [CoursePage!]!
+  revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): CourseRevisionConnection!
+  subject: Subject
+  taxonomyTerms(after: String, before: String, first: Int, last: Int): TaxonomyTermConnection!
+  threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
+  trashed: Boolean!
 }
 
-input ThreadSetThreadArchivedInput {
-    archived: Boolean!
-    id: [String!]!
+type CoursePage implements AbstractEntity & AbstractRepository & AbstractUuid & InstanceAware & ThreadAware {
+  alias: String
+  course: Course!
+  currentRevision: CoursePageRevision
+  date: DateTime!
+  events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
+  id: Int!
+  instance: Instance!
+  license: License!
+  revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): CoursePageRevisionConnection!
+  subject: Subject
+  threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
+  trashed: Boolean!
 }
 
-input ThreadSetThreadStateInput {
-    id: [String!]!
-    trashed: Boolean!
+type CoursePageRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid & ThreadAware {
+  alias: String
+  author: User!
+  changes: String!
+  content: String!
+  date: DateTime!
+  events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
+  id: Int!
+  repository: CoursePage!
+  threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
+  title: String!
+  trashed: Boolean!
 }
 
-input UserDeleteBotsInput {
-    botIds: [Int!]!
+type CoursePageRevisionConnection {
+  edges: [CoursePageRevisionCursor!]!
+  nodes: [CoursePageRevision!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
 }
 
-input UserDeleteRegularUsersInput {
-    userIds: [Int!]!
+type CoursePageRevisionCursor {
+  cursor: String!
+  node: CoursePageRevision!
 }
 
-input UserSetEmailInput {
-    email: String!
-    userId: Int!
+type CourseRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid & ThreadAware {
+  alias: String
+  author: User!
+  changes: String!
+  content: String!
+  date: DateTime!
+  events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
+  id: Int!
+  metaDescription: String!
+  repository: Course!
+  threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
+  title: String!
+  trashed: Boolean!
 }
 
-input UuidSetStateInput {
-    id: [Int!]!
-    trashed: Boolean!
+type CourseRevisionConnection {
+  edges: [CourseRevisionCursor!]!
+  nodes: [CourseRevision!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
 }
 
+type CourseRevisionCursor {
+  cursor: String!
+  node: CourseRevision!
+}
+
+type CreateCommentNotificationEvent implements AbstractNotificationEvent & InstanceAware {
+  actor: User!
+  comment: Comment!
+  date: DateTime!
+  id: Int!
+  instance: Instance!
+  objectId: Int!
+  thread: Thread!
+}
+
+type CreateEntityLinkNotificationEvent implements AbstractNotificationEvent & InstanceAware {
+  actor: User!
+  child: AbstractEntity!
+  date: DateTime!
+  id: Int!
+  instance: Instance!
+  objectId: Int!
+  parent: AbstractEntity!
+}
+
+type CreateEntityNotificationEvent implements AbstractNotificationEvent & InstanceAware {
+  actor: User!
+  date: DateTime!
+  entity: AbstractEntity!
+  id: Int!
+  instance: Instance!
+  objectId: Int!
+}
+
+type CreateEntityRevisionNotificationEvent implements AbstractNotificationEvent & InstanceAware {
+  actor: User!
+  date: DateTime!
+  entity: AbstractRepository!
+  entityRevision: AbstractRevision!
+  id: Int!
+  instance: Instance!
+  objectId: Int!
+}
+
+input CreatePageInput {
+  content: String!
+  discussionsEnabled: Boolean!
+  forumId: Int
+  instance: Instance!
+  licenseId: Int!
+  title: String!
+}
+
+type CreateTaxonomyLinkNotificationEvent implements AbstractNotificationEvent & InstanceAware {
+  actor: User!
+  child: AbstractUuid!
+  date: DateTime!
+  id: Int!
+  instance: Instance!
+  objectId: Int!
+  parent: TaxonomyTerm!
+}
+
+type CreateTaxonomyTermNotificationEvent implements AbstractNotificationEvent & InstanceAware {
+  actor: User!
+  date: DateTime!
+  id: Int!
+  instance: Instance!
+  objectId: Int!
+  taxonomyTerm: TaxonomyTerm!
+}
+
+type CreateThreadNotificationEvent implements AbstractNotificationEvent & InstanceAware {
+  actor: User!
+  date: DateTime!
+  id: Int!
+  instance: Instance!
+  object: AbstractUuid!
+  objectId: Int!
+  thread: Thread!
+}
 
 scalar DateTime
 
-"The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf)."
+type EntityMetadataConnection {
+  edges: [EntityMetadataCursor!]!
+  nodes: [JSONObject!]!
+  pageInfo: HasNextPageInfo!
+}
+
+type EntityMetadataCursor {
+  cursor: String!
+  node: JSONObject!
+}
+
+type EntityMutation {
+  addAppletRevision(input: AddAppletRevisionInput!): AddRevisionResponse!
+  addArticleRevision(input: AddArticleRevisionInput!): AddRevisionResponse!
+  addCoursePageRevision(input: AddCoursePageRevisionInput!): AddRevisionResponse!
+  addCourseRevision(input: AddCourseRevisionInput!): AddRevisionResponse!
+  addEventRevision(input: AddEventRevisionInput!): AddRevisionResponse!
+  addExerciseGroupRevision(input: AddExerciseGroupRevisionInput!): AddRevisionResponse!
+  addExerciseRevision(input: AddGenericRevisionInput!): AddRevisionResponse!
+  addGroupedExerciseRevision(input: AddGenericRevisionInput!): AddRevisionResponse!
+  addSolutionRevision(input: AddGenericRevisionInput!): AddRevisionResponse!
+  addVideoRevision(input: AddVideoRevisionInput!): AddRevisionResponse!
+  checkoutRevision(input: CheckoutRevisionInput!): CheckoutRevisionResponse!
+  rejectRevision(input: RejectRevisionInput!): RejectRevisionResponse!
+}
+
+type Event implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid & InstanceAware & ThreadAware {
+  alias: String
+  currentRevision: EventRevision
+  date: DateTime!
+  events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
+  id: Int!
+  instance: Instance!
+  license: License!
+  revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): EventRevisionConnection!
+  subject: Subject
+  taxonomyTerms(after: String, before: String, first: Int, last: Int): TaxonomyTermConnection!
+  threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
+  trashed: Boolean!
+}
+
+type EventRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid & ThreadAware {
+  alias: String
+  author: User!
+  changes: String!
+  content: String!
+  date: DateTime!
+  events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
+  id: Int!
+  metaDescription: String!
+  metaTitle: String!
+  repository: Event!
+  threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
+  title: String!
+  trashed: Boolean!
+}
+
+type EventRevisionConnection {
+  edges: [EventRevisionCursor!]!
+  nodes: [EventRevision!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type EventRevisionCursor {
+  cursor: String!
+  node: EventRevision!
+}
+
+type Exercise implements AbstractEntity & AbstractExercise & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid & InstanceAware & ThreadAware {
+  alias: String
+  currentRevision: ExerciseRevision
+  date: DateTime!
+  events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
+  id: Int!
+  instance: Instance!
+  license: License!
+  revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): ExerciseRevisionConnection!
+  solution: Solution
+  subject: Subject
+  taxonomyTerms(after: String, before: String, first: Int, last: Int): TaxonomyTermConnection!
+  threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
+  trashed: Boolean!
+}
+
+type ExerciseGroup implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid & InstanceAware & ThreadAware {
+  alias: String
+  currentRevision: ExerciseGroupRevision
+  date: DateTime!
+  events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
+  exercises: [GroupedExercise!]!
+  id: Int!
+  instance: Instance!
+  license: License!
+  revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): ExerciseGroupRevisionConnection!
+  subject: Subject
+  taxonomyTerms(after: String, before: String, first: Int, last: Int): TaxonomyTermConnection!
+  threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
+  trashed: Boolean!
+}
+
+type ExerciseGroupRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid & ThreadAware {
+  alias: String
+  author: User!
+  changes: String!
+  cohesive: Boolean!
+  content: String!
+  date: DateTime!
+  events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
+  id: Int!
+  repository: ExerciseGroup!
+  threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
+  trashed: Boolean!
+}
+
+type ExerciseGroupRevisionConnection {
+  edges: [ExerciseGroupRevisionCursor!]!
+  nodes: [ExerciseGroupRevision!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type ExerciseGroupRevisionCursor {
+  cursor: String!
+  node: ExerciseGroupRevision!
+}
+
+type ExerciseRevision implements AbstractEntityRevision & AbstractExerciseRevision & AbstractRevision & AbstractUuid & ThreadAware {
+  alias: String
+  author: User!
+  changes: String!
+  content: String!
+  date: DateTime!
+  events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
+  id: Int!
+  repository: Exercise!
+  threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
+  trashed: Boolean!
+}
+
+type ExerciseRevisionConnection {
+  edges: [ExerciseRevisionCursor!]!
+  nodes: [ExerciseRevision!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type ExerciseRevisionCursor {
+  cursor: String!
+  node: ExerciseRevision!
+}
+
+type GroupedExercise implements AbstractEntity & AbstractExercise & AbstractRepository & AbstractUuid & InstanceAware & ThreadAware {
+  alias: String
+  currentRevision: GroupedExerciseRevision
+  date: DateTime!
+  events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
+  exerciseGroup: ExerciseGroup!
+  id: Int!
+  instance: Instance!
+  license: License!
+  revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): GroupedExerciseRevisionConnection!
+  solution: Solution
+  subject: Subject
+  threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
+  trashed: Boolean!
+}
+
+type GroupedExerciseRevision implements AbstractEntityRevision & AbstractExerciseRevision & AbstractRevision & AbstractUuid & ThreadAware {
+  alias: String
+  author: User!
+  changes: String!
+  content: String!
+  date: DateTime!
+  events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
+  id: Int!
+  repository: GroupedExercise!
+  threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
+  trashed: Boolean!
+}
+
+type GroupedExerciseRevisionConnection {
+  edges: [GroupedExerciseRevisionCursor!]!
+  nodes: [GroupedExerciseRevision!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type GroupedExerciseRevisionCursor {
+  cursor: String!
+  node: GroupedExerciseRevision!
+}
+
+type HasNextPageInfo {
+  endCursor: String
+  hasNextPage: Boolean!
+}
+
+enum Instance {
+  de
+  en
+  es
+  fr
+  hi
+  ta
+}
+
+interface InstanceAware {
+  instance: Instance!
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
 scalar JSON
 
-"The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf)."
+"""
+The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
 scalar JSONObject
 
-"The `Upload` scalar type represents a file upload."
-scalar Upload
+type License {
+  agreement: String!
+  content: String!
+  default: Boolean!
+  iconHref: String!
+  id: Int!
+  instance: Instance!
+  title: String!
+  url: String!
+}
+
+type MetadataQuery {
+  entities(after: String, first: Int, instance: Instance, modifiedAfter: String): EntityMetadataConnection!
+  publisher: JSONObject!
+}
+
+type Mutation {
+  _cache: _cacheMutation!
+  entity: EntityMutation!
+  notification: NotificationMutation!
+  page: PageMutation!
+  subscription: SubscriptionMutation!
+  thread: ThreadMutation!
+  user: UserMutation!
+  uuid: UuidMutation!
+}
+
+type Navigation {
+  data: JSON!
+  path(after: String, before: String, first: Int, last: Int): NavigationNodeConnection!
+}
+
+type NavigationNode {
+  id: Int
+  label: String!
+  url: String
+}
+
+type NavigationNodeConnection {
+  edges: [NavigationNodeEdge]
+  nodes: [NavigationNode!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type NavigationNodeEdge {
+  cursor: String!
+  node: NavigationNode!
+}
+
+type Notification {
+  event: AbstractNotificationEvent!
+  id: Int!
+  unread: Boolean!
+}
+
+type NotificationConnection {
+  edges: [NotificationEdge!]!
+  nodes: [Notification!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type NotificationEdge {
+  cursor: String!
+  node: Notification!
+}
+
+type NotificationMutation {
+  setState(input: NotificationSetStateInput!): NotificationSetStateResponse
+}
+
+input NotificationSetStateInput {
+  id: [Int!]!
+  unread: Boolean!
+}
+
+type NotificationSetStateResponse {
+  query: Query!
+  success: Boolean!
+}
+
+type Page implements AbstractNavigationChild & AbstractRepository & AbstractUuid & InstanceAware & ThreadAware {
+  alias: String
+  currentRevision: PageRevision
+  date: DateTime!
+  events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
+  id: Int!
+  instance: Instance!
+  license: License!
+  navigation: Navigation
+  revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): PageRevisionConnection!
+  threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
+  trashed: Boolean!
+}
+
+input PageAddRevisionInput {
+  content: String!
+  pageId: Int!
+  title: String!
+}
+
+type PageCreateResponse {
+  query: Query!
+  record: Page
+  success: Boolean!
+}
+
+type PageInfo {
+  endCursor: String
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+}
+
+type PageMutation {
+  addRevision(input: PageAddRevisionInput!): AddRevisionResponse!
+  checkoutRevision(input: CheckoutRevisionInput!): CheckoutRevisionResponse!
+  create(input: CreatePageInput!): PageCreateResponse!
+  rejectRevision(input: RejectRevisionInput!): RejectRevisionResponse!
+}
+
+type PageRevision implements AbstractRevision & AbstractUuid & ThreadAware {
+  alias: String
+  author: User!
+  content: String!
+  date: DateTime!
+  events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
+  id: Int!
+  repository: Page!
+  threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
+  title: String!
+  trashed: Boolean!
+}
+
+type PageRevisionConnection {
+  edges: [PageRevisionCursor!]!
+  nodes: [PageRevision!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type PageRevisionCursor {
+  cursor: String!
+  node: PageRevision!
+}
+
+type Query {
+  activeAuthors(after: String, before: String, first: Int, last: Int): UserConnection!
+  activeDonors(after: String, before: String, first: Int, last: Int): UserConnection!
+  activeReviewers(after: String, before: String, first: Int, last: Int): UserConnection!
+  authorization: JSON!
+  events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int, objectId: Int): AbstractNotificationEventConnection!
+  license(id: Int!): License
+  metadata: MetadataQuery!
+  notificationEvent(id: Int!): AbstractNotificationEvent
+  notifications(after: String, before: String, first: Int, last: Int, unread: Boolean): NotificationConnection!
+  subject: SubjectQuery!
+  subscription: SubscriptionQuery!
+  user: UserQuery!
+  uuid(alias: AliasInput, id: Int): AbstractUuid
+}
+
+input RejectRevisionInput {
+  reason: String!
+  revisionId: Int!
+}
+
+type RejectRevisionNotificationEvent implements AbstractNotificationEvent & InstanceAware {
+  actor: User!
+  date: DateTime!
+  id: Int!
+  instance: Instance!
+  objectId: Int!
+  reason: String!
+  repository: AbstractRepository!
+  revision: AbstractRevision!
+}
+
+type RejectRevisionResponse {
+  query: Query!
+  success: Boolean!
+}
+
+type RemoveEntityLinkNotificationEvent implements AbstractNotificationEvent & InstanceAware {
+  actor: User!
+  child: AbstractEntity!
+  date: DateTime!
+  id: Int!
+  instance: Instance!
+  objectId: Int!
+  parent: AbstractEntity!
+}
+
+type RemoveTaxonomyLinkNotificationEvent implements AbstractNotificationEvent & InstanceAware {
+  actor: User!
+  child: AbstractUuid!
+  date: DateTime!
+  id: Int!
+  instance: Instance!
+  objectId: Int!
+  parent: TaxonomyTerm!
+}
+
+enum Role {
+  admin
+  architect
+  guest
+  login
+  moderator
+  reviewer
+  staticPagesBuilder
+  sysadmin
+}
+
+type ScopedRole {
+  role: Role!
+  scope: String
+}
+
+type ScopedRoleConnection {
+  edges: [ScopedRoleCursor!]!
+  nodes: [ScopedRole!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type ScopedRoleCursor {
+  cursor: String!
+  node: ScopedRole!
+}
+
+type SetLicenseNotificationEvent implements AbstractNotificationEvent & InstanceAware {
+  actor: User!
+  date: DateTime!
+  id: Int!
+  instance: Instance!
+  objectId: Int!
+  repository: AbstractRepository!
+}
+
+type SetTaxonomyParentNotificationEvent implements AbstractNotificationEvent & InstanceAware {
+  actor: User!
+  child: TaxonomyTerm!
+  date: DateTime!
+  id: Int!
+  instance: Instance!
+  objectId: Int!
+  parent: TaxonomyTerm
+  previousParent: TaxonomyTerm
+}
+
+type SetTaxonomyTermNotificationEvent implements AbstractNotificationEvent & InstanceAware {
+  actor: User!
+  date: DateTime!
+  id: Int!
+  instance: Instance!
+  objectId: Int!
+  taxonomyTerm: TaxonomyTerm!
+}
+
+type SetThreadStateNotificationEvent implements AbstractNotificationEvent & InstanceAware {
+  actor: User!
+  archived: Boolean!
+  date: DateTime!
+  id: Int!
+  instance: Instance!
+  objectId: Int!
+  thread: Thread!
+}
+
+type SetUuidStateNotificationEvent implements AbstractNotificationEvent & InstanceAware {
+  actor: User!
+  date: DateTime!
+  id: Int!
+  instance: Instance!
+  object: AbstractUuid!
+  objectId: Int!
+  trashed: Boolean!
+}
+
+type Solution implements AbstractEntity & AbstractRepository & AbstractUuid & InstanceAware & ThreadAware {
+  alias: String
+  currentRevision: SolutionRevision
+  date: DateTime!
+  events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
+  exercise: AbstractExercise!
+  id: Int!
+  instance: Instance!
+  license: License!
+  revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): SolutionRevisionConnection!
+  subject: Subject
+  threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
+  trashed: Boolean!
+}
+
+type SolutionRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid & ThreadAware {
+  alias: String
+  author: User!
+  changes: String!
+  content: String!
+  date: DateTime!
+  events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
+  id: Int!
+  repository: Solution!
+  threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
+  trashed: Boolean!
+}
+
+type SolutionRevisionConnection {
+  edges: [SolutionRevisionCursor!]!
+  nodes: [SolutionRevision!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type SolutionRevisionCursor {
+  cursor: String!
+  node: SolutionRevision!
+}
+
+type Subject {
+  id: String!
+  taxonomyTerm: TaxonomyTerm!
+  unrevisedEntities(after: String, before: String, first: Int, last: Int): AbstractEntityConnection!
+}
+
+type SubjectQuery {
+  subject(id: String!): Subject
+  subjects(instance: Instance!): [Subject!]!
+}
+
+type SubscriptionConnection {
+  edges: [SubscriptionCursor!]!
+  nodes: [SubscriptionInfo!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type SubscriptionCursor {
+  cursor: String!
+  node: SubscriptionInfo!
+}
+
+type SubscriptionInfo {
+  object: AbstractUuid!
+  sendEmail: Boolean!
+}
+
+type SubscriptionMutation {
+  set(input: SubscriptionSetInput!): SubscriptionSetResponse
+}
+
+type SubscriptionQuery {
+  currentUserHasSubscribed(id: Int!): Boolean!
+  getSubscriptions(after: String, before: String, first: Int, last: Int): SubscriptionConnection!
+}
+
+input SubscriptionSetInput {
+  id: [Int!]!
+  sendEmail: Boolean!
+  subscribe: Boolean!
+}
+
+type SubscriptionSetResponse {
+  query: Query!
+  success: Boolean!
+}
+
+type TaxonomyTerm implements AbstractNavigationChild & AbstractUuid & InstanceAware & ThreadAware {
+  alias: String
+  children(after: String, before: String, first: Int, last: Int): AbstractUuidConnection!
+  description: String
+  events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
+  id: Int!
+  instance: Instance!
+  name: String!
+  navigation: Navigation
+  parent: TaxonomyTerm
+  taxonomyId: Int!
+  threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
+  trashed: Boolean!
+  type: TaxonomyTermType!
+  weight: Int!
+}
+
+type TaxonomyTermConnection {
+  edges: [TaxonomyTermEdge]
+  nodes: [TaxonomyTerm!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type TaxonomyTermEdge {
+  cursor: String!
+  node: TaxonomyTerm!
+}
+
+enum TaxonomyTermType {
+  blog
+  curriculum
+  curriculumTopic
+  curriculumTopicFolder
+  forum
+  forumCategory
+  locale
+  root
+  subject
+  topic
+  topicFolder
+}
+
+type Thread {
+  archived: Boolean!
+  comments(after: String, before: String, first: Int, last: Int): CommentConnection!
+  createdAt: DateTime!
+  id: String!
+  object: AbstractUuid!
+  title: String
+  trashed: Boolean!
+}
+
+interface ThreadAware {
+  threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
+}
+
+input ThreadCreateCommentInput {
+  content: String!
+  sendEmail: Boolean!
+  subscribe: Boolean!
+  threadId: String!
+}
+
+type ThreadCreateCommentResponse {
+  query: Query!
+  record: Comment
+  success: Boolean!
+}
+
+input ThreadCreateThreadInput {
+  content: String!
+  objectId: Int!
+  sendEmail: Boolean!
+  subscribe: Boolean!
+  title: String!
+}
+
+type ThreadCreateThreadResponse {
+  query: Query!
+  record: Thread
+  success: Boolean!
+}
+
+type ThreadMutation {
+  createComment(input: ThreadCreateCommentInput!): ThreadCreateCommentResponse
+  createThread(input: ThreadCreateThreadInput!): ThreadCreateThreadResponse
+  setCommentState(input: ThreadSetCommentStateInput!): ThreadSetCommentStateResponse
+  setThreadArchived(input: ThreadSetThreadArchivedInput!): ThreadSetThreadArchivedResponse
+  setThreadState(input: ThreadSetThreadStateInput!): ThreadSetThreadStateResponse
+}
+
+input ThreadSetCommentStateInput {
+  id: [Int!]!
+  trashed: Boolean!
+}
+
+type ThreadSetCommentStateResponse {
+  query: Query!
+  success: Boolean!
+}
+
+input ThreadSetThreadArchivedInput {
+  archived: Boolean!
+  id: [String!]!
+}
+
+type ThreadSetThreadArchivedResponse {
+  query: Query!
+  success: Boolean!
+}
+
+input ThreadSetThreadStateInput {
+  id: [String!]!
+  trashed: Boolean!
+}
+
+type ThreadSetThreadStateResponse {
+  query: Query!
+  success: Boolean!
+}
+
+type ThreadsConnection {
+  edges: [ThreadsCursor!]!
+  nodes: [Thread!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type ThreadsCursor {
+  cursor: String!
+  node: Thread!
+}
+
+type User implements AbstractUuid & ThreadAware {
+  activityByType: UserActivityByType!
+  alias: String
+  chatUrl: String
+  date: DateTime!
+  description: String
+  events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
+  eventsByUser(after: String, before: String, first: Int, instance: Instance, last: Int, objectId: Int): AbstractNotificationEventConnection!
+  id: Int!
+  imageUrl: String!
+  isActiveAuthor: Boolean!
+  isActiveDonor: Boolean!
+  isActiveReviewer: Boolean!
+  isNewAuthor: Boolean!
+  lastLogin: DateTime
+  motivation: String
+  roles(after: String, before: String, first: Int, last: Int): ScopedRoleConnection!
+  threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
+  trashed: Boolean!
+  unrevisedEntities(after: String, before: String, first: Int, last: Int): AbstractEntityConnection!
+  username: String!
+}
+
+type UserActivityByType {
+  comments: Int!
+  edits: Int!
+  reviews: Int!
+  taxonomy: Int!
+}
+
+type UserConnection {
+  edges: [UserEdge!]!
+  nodes: [User!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+input UserDeleteBotsInput {
+  botIds: [Int!]!
+}
+
+type UserDeleteBotsResponse {
+  success: Boolean!
+}
+
+input UserDeleteRegularUsersInput {
+  userIds: [Int!]!
+}
+
+type UserDeleteRegularUsersResponse {
+  reason: String
+  success: Boolean!
+  username: String
+}
+
+type UserEdge {
+  cursor: String!
+  node: User!
+}
+
+type UserMutation {
+  deleteBots(input: UserDeleteBotsInput!): UserDeleteBotsResponse!
+  deleteRegularUsers(input: UserDeleteRegularUsersInput!): [UserDeleteRegularUsersResponse!]!
+  setDescription(input: UserSetDescriptionInput!): UserSetDescriptionResponse!
+  setEmail(input: UserSetEmailInput!): UserSetEmailResponse!
+}
+
+type UserQuery {
+  potentialSpamUsers(after: String, first: Int): UserConnection!
+}
+
+input UserSetDescriptionInput {
+  description: String!
+}
+
+type UserSetDescriptionResponse {
+  success: Boolean!
+}
+
+input UserSetEmailInput {
+  email: String!
+  userId: Int!
+}
+
+type UserSetEmailResponse {
+  email: String!
+  success: Boolean!
+  username: String!
+}
+
+type UuidMutation {
+  setState(input: UuidSetStateInput!): UuidSetStateResponse
+}
+
+input UuidSetStateInput {
+  id: [Int!]!
+  trashed: Boolean!
+}
+
+type UuidSetStateResponse {
+  query: Query!
+  success: Boolean!
+}
+
+type Video implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid & InstanceAware & ThreadAware {
+  alias: String
+  currentRevision: VideoRevision
+  date: DateTime!
+  events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
+  id: Int!
+  instance: Instance!
+  license: License!
+  revisions(after: String, before: String, first: Int, last: Int, unrevised: Boolean): VideoRevisionConnection!
+  subject: Subject
+  taxonomyTerms(after: String, before: String, first: Int, last: Int): TaxonomyTermConnection!
+  threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
+  trashed: Boolean!
+}
+
+type VideoRevision implements AbstractEntityRevision & AbstractRevision & AbstractUuid & ThreadAware {
+  alias: String
+  author: User!
+  changes: String!
+  content: String!
+  date: DateTime!
+  events(actorId: Int, after: String, before: String, first: Int, instance: Instance, last: Int): AbstractNotificationEventConnection!
+  id: Int!
+  repository: Video!
+  threads(after: String, archived: Boolean, before: String, first: Int, last: Int, trashed: Boolean): ThreadsConnection!
+  title: String!
+  trashed: Boolean!
+  url: String!
+}
+
+type VideoRevisionConnection {
+  edges: [VideoRevisionCursor!]!
+  nodes: [VideoRevision!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type VideoRevisionCursor {
+  cursor: String!
+  node: VideoRevision!
+}
+
+type _cacheMutation {
+  remove(input: CacheRemoveInput!): CacheRemoveResponse!
+  set(input: CacheSetInput!): CacheSetResponse!
+  update(input: CacheUpdateInput!): CacheUpdateResponse!
+}

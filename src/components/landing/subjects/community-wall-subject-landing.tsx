@@ -24,13 +24,14 @@ export function CommunityWallSubjectLanding({
 }: {
   subject: deSubjectLandingSubjects
 }) {
-  const [persons, setPersons] = useState<CommunityWallPerson[]>(
-    communityWallPersons.filter((person) => person.subjects.includes(subject))
-  )
+  const [persons, setPersons] = useState<CommunityWallPerson[]>([])
 
   useEffect(() => {
-    setPersons((p) => shuffleArray(p))
-  }, [])
+    const persons = communityWallPersons.filter((person) =>
+      person.subjects.includes(subject)
+    )
+    setPersons(shuffleArray(persons))
+  }, [subject])
 
   const { title, contributeLink } = deSubjectLandingData[subject]
 

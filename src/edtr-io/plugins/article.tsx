@@ -18,10 +18,8 @@ import {
   Icon,
   styled,
 } from '@edtr-io/ui'
-import { faNewspaper } from '@fortawesome/free-solid-svg-icons'
-// eslint-disable-next-line import/no-internal-modules
 import { faGraduationCap } from '@fortawesome/free-solid-svg-icons/faGraduationCap'
-// eslint-disable-next-line import/no-internal-modules
+import { faNewspaper } from '@fortawesome/free-solid-svg-icons/faNewspaper'
 import { faPlayCircle } from '@fortawesome/free-solid-svg-icons/faPlayCircle'
 import * as R from 'ramda'
 import * as React from 'react'

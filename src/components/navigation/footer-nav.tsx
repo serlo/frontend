@@ -1,14 +1,16 @@
-import { faGithubSquare } from '@fortawesome/free-brands-svg-icons'
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faGithubSquare } from '@fortawesome/free-brands-svg-icons/faGithubSquare'
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
+import { faHouseLaptop } from '@fortawesome/free-solid-svg-icons/faHouseLaptop'
 import clsx from 'clsx'
 
+import { FaIcon } from '../fa-icon'
 import { Link } from '@/components/content/link'
 import { FooterNavigation } from '@/data-types'
 
 const iconMapping = {
   newsletter: faEnvelope,
   github: faGithubSquare,
+  job: faHouseLaptop,
 }
 
 interface FooterNavProps {
@@ -47,12 +49,7 @@ export function FooterNav({ data }: FooterNavProps) {
                         'inline-block py-2 sm:py-0 leading-tight sm:border-b-2 hover:border-black border-transparent'
                       )}
                     >
-                      {link.icon && (
-                        <FontAwesomeIcon
-                          icon={iconMapping[link.icon]}
-                          size="1x"
-                        />
-                      )}{' '}
+                      {link.icon && <FaIcon icon={iconMapping[link.icon]} />}{' '}
                       {link.title}
                     </Link>
                   </li>

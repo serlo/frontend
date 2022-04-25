@@ -1,5 +1,4 @@
-import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons/faArrowCircleLeft'
 import { Dispatch, SetStateAction } from 'react'
 
 import { DisplayModes } from './revision'
@@ -7,6 +6,7 @@ import { RevisionModeSwitcher } from './revision-mode-switcher'
 import { RevisionNotice } from './revision-notice'
 import { Link } from '@/components/content/link'
 import { PageTitle } from '@/components/content/page-title'
+import { FaIcon } from '@/components/fa-icon'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { TimeAgo } from '@/components/time-ago'
 import { UserLink } from '@/components/user/user-link'
@@ -45,10 +45,7 @@ export function RevisionHeader({
           href={repositoryAlias}
           className="mt-6 mx-side serlo-button serlo-make-interactive-light"
         >
-          <FontAwesomeIcon
-            icon={faArrowCircleLeft}
-            className="text-base mr-0.5 pt-0.25"
-          />{' '}
+          <FaIcon icon={faArrowCircleLeft} className="text-base mr-0.5" />{' '}
           {strings.revisions.toContent}
         </Link>
         <RevisionNotice
@@ -94,7 +91,7 @@ export function RevisionHeader({
     return (
       <span title={strings.entities[data.type]}>
         {' '}
-        <FontAwesomeIcon
+        <FaIcon
           className="text-brand-lighter text-2.5xl"
           icon={getIconByTypename(data.type)}
         />{' '}

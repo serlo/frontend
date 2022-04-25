@@ -391,6 +391,7 @@ export const loggedInData = {
       history: "Bearbeitungsverlauf",
       editAssignments: "Zuweisung zu Themen und Lehrplänen bearbeiten",
       moveToTrash: "In den Papierkorb verschieben",
+      confirmTrash: "Bist du sicher, dass du diesen Inhalt löschen willst?",
       restoreContent: "Aus dem Papierkorb wiederherstellen",
       sortCoursePages: "Kursseiten sortieren",
       sortGroupedExercises: "Teilaufgaben sortieren",
@@ -447,10 +448,12 @@ export const loggedInData = {
         FORBIDDEN: "Dafür fehlen dir leider die Rechte!",
         INVALID_TOKEN: '',
         BAD_USER_INPUT: '',
-        UNKNOWN: "Ein unbekannter Fehler…"
+        UNKNOWN: "Ein unbekannter Fehler…",
+        valueMissing: "Bitte alle Pflichtfelder ausfüllen"
       }
     },
     editor: {
+      confirmRouteChange: "Willst du wirklich die Seite verlassen ohne zu speichern?",
       edtrIo: {
         extendedSettings: "Erweiterte Einstellungen",
         close: "Schließen",
@@ -569,9 +572,13 @@ export const loggedInData = {
         columnHeaders: "Nur Spaltentitel",
         rowHeaders: "Nur Zeilentitel",
         columnAndRowHeaders: "Spalten- und Zeilentitel",
-        convertToText: "Zum Textfeld machen",
-        convertToImage: "Zum Bildfeld machen",
-        addRow: "Zeile hinzufügen"
+        convertToText: "Text als Inhalt",
+        convertToImage: "Bild als Inhalt",
+        row: "Zeile",
+        column: "Spalte",
+        addType: "%type% hinzufügen",
+        deleteType: "%type% löschen",
+        confirmDelete: "Sicher, dass diese %type% und ihren Inhalt löschen willst?"
       },
       spoiler: {
         enterATitle: "Titel eingeben"
@@ -750,8 +757,9 @@ export const loggedInData = {
     profileSettings: {
       editAbout: "Deine Beschreibung",
       showInstructions: "Anleitung anzeigen",
-      howToEditImage: {
-        heading: "So kannst du dein Profilbild ändern",
+      editImage: {
+        header: "Profilbild",
+        buttonText: "So kannst du dein Profilbild ändern",
         description: "Wir benutzen die Bilder von %chatLink% als Profilbilder. Um dein Bild zu ändern musst du diesen Schritten folgen:",
         steps: {
           goToChat: "Gehe zu %chatLink%.",
@@ -764,7 +772,8 @@ export const loggedInData = {
         }
       },
       motivation: {
-        heading: "So kannst du deinen Motivationstext ändern",
+        header: 'Motivation',
+        buttonText: "So kannst du deinen Motivationstext ändern",
         intro: "Motivationen sind eine neue Funktion, die wir aktuell testen. Um deinen Motivationstext zu ändern musst du ein kurzes Formular ausfüllen.",
         privacy: "Das Formular und die Datenspeicherung werden von Google angeboten und persönliche Daten werden zu diesem Anbieter übertragen werden, wenn du dieses Feature benutzt.",
         toForm: "Motivationsformular"

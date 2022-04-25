@@ -1,9 +1,9 @@
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
 import clsx from 'clsx'
 import { useState, useRef, useEffect, KeyboardEvent } from 'react'
 
 import { Link } from '../content/link'
+import { FaIcon } from '../fa-icon'
 import { isMac } from '@/helper/client-detection'
 
 interface QuickbarDataEntry {
@@ -199,7 +199,7 @@ export function Quickbar({ subject, className }: QuickbarProps) {
           }, 0)
         }}
       >
-        <FontAwesomeIcon icon={faTimes} />
+        <FaIcon icon={faTimes} />
       </div>
     )
   }

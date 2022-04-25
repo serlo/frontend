@@ -1,13 +1,11 @@
-import {
-  faReply,
-  faArrowRight,
-  faSpinner,
-} from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons/faArrowRight'
+import { faReply } from '@fortawesome/free-solid-svg-icons/faReply'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons/faSpinner'
 import clsx from 'clsx'
 import { useState, KeyboardEvent, useRef, ChangeEvent } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
 
+import { FaIcon } from '../fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { isMac } from '@/helper/client-detection'
 
@@ -91,10 +89,12 @@ export function CommentForm({
           reply ? 'text-base w-8 h-8 mr-1' : 'text-2xl w-10 my-1 mr-2'
         )}
       >
-        <FontAwesomeIcon
-          spin={isSending}
+        <FaIcon
           icon={isSending ? faSpinner : reply ? faReply : faArrowRight}
-          className={reply ? '' : 'pl-0.5'}
+          className={clsx(
+            reply ? '' : 'pl-0.5',
+            isSending && 'animate-spin-slow'
+          )}
         />
       </button>
     </div>

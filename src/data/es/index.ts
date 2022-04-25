@@ -244,10 +244,10 @@ export const instanceData = {
       inviteToChat: "Invita al chat",
       inviteModal: {
         part1: "%username%  aún no está activo/a en nuestra comunidad del chat en %chatLink%.",
-        part2: 'You can invite %username% to the chat to send direct messages.',
+        part2: "Puedes invitar a %username% al chat para enviar mensajes directos.",
         messagePlaceholder: 'Optional: Personal message',
         button: "Enviar invitación",
-        success: '✨ Successfully invited!'
+        success: "El usuario ha sido invitado correctamente."
       },
       activityGraph: {
         edits: "Ediciones",
@@ -391,6 +391,7 @@ export const loggedInData = {
       history: "Historial",
       editAssignments: "Editar el tema y las asignaciones de currículo",
       moveToTrash: "Mover a la papelera",
+      confirmTrash: 'Are you sure you want to delete this content?',
       restoreContent: "Restaurar de la papelera",
       sortCoursePages: "Ordenar páginas del curso",
       sortGroupedExercises: "Ordenar ejercicios agrupados",
@@ -447,10 +448,12 @@ export const loggedInData = {
         FORBIDDEN: "Lo sentimos, ¡no estás autorizado para hacer esto!",
         INVALID_TOKEN: '',
         BAD_USER_INPUT: '',
-        UNKNOWN: "Un error desconocido…"
+        UNKNOWN: "Un error desconocido…",
+        valueMissing: "Por favor complete todos los campos requeridos"
       }
     },
     editor: {
+      confirmRouteChange: "¿Estás seguro de que quieres salir sin guardar?",
       edtrIo: {
         extendedSettings: "Ajustes extendidos",
         close: "Cerrar",
@@ -569,9 +572,13 @@ export const loggedInData = {
         columnHeaders: "Sólo las etiquetas de las columnas",
         rowHeaders: "Sólo las etiquetas de las filas",
         columnAndRowHeaders: "Etiquetas de columna y fila",
-        convertToText: "Convertir en texto",
-        convertToImage: "Convertir a imagen",
-        addRow: "Añadir fila"
+        convertToText: 'Convert to text',
+        convertToImage: 'Convert to image',
+        row: "row",
+        column: "column",
+        addType: 'Add %type%',
+        deleteType: 'Delete %type%',
+        confirmDelete: 'Are you sure you want to delete this %type% and the content in it?'
       },
       spoiler: {
         enterATitle: "Introduzca un título"
@@ -731,7 +738,7 @@ export const loggedInData = {
         leftHandSide: "Lado izquierdo",
         transformation: "transformación",
         mode: "Modalidad",
-        transformationExample: "e.g. -3x",
+        transformationExample: "ej. -3x",
         transformationOfEquations: "Transformación de ecuaciones",
         transformationOfTerms: "Transformación de términos",
         addNewRow: "Añadir nueva fila",
@@ -750,8 +757,9 @@ export const loggedInData = {
     profileSettings: {
       editAbout: "Tu descripción",
       showInstructions: "Mostrar instrucciones",
-      howToEditImage: {
-        heading: "Como editar tu foto del perfil",
+      editImage: {
+        header: "Foto de perfil",
+        buttonText: "Como editar tu foto del perfil",
         description: "Actualmente usamos las imágenes del %chatLink%  como impagen de perfil.  Para cambiar la imágen, haz lo siguiente:",
         steps: {
           goToChat: "Ir a %chatLink%.",
@@ -764,7 +772,8 @@ export const loggedInData = {
         }
       },
       motivation: {
-        heading: "Cómo editar tu motivación",
+        header: "Motivación",
+        buttonText: "Cómo editar tu motivación",
         intro: "La motivación es una función nueva que está a prueba en este momento. Para editar tu motivación tienes que completar un sencillo formulario.",
         privacy: "El formulario y el almacenamiento de datos lo ofrece Google y la información personal puede ser transferida a este servicio cuando se utiliza esta función.",
         toForm: "Formulario de Motivación"

@@ -1,8 +1,9 @@
-import { faFile, faTrash } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFile } from '@fortawesome/free-solid-svg-icons/faFile'
+import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash'
 import dynamic from 'next/dynamic'
 import { useState, Fragment } from 'react'
 
+import { FaIcon } from '../fa-icon'
 import { StaticInfoPanel } from '../static-info-panel'
 import { SubTopic } from './sub-topic'
 import { TopicCategories } from './topic-categories'
@@ -85,7 +86,7 @@ export function Topic({ data }: TopicProps) {
         {isFolder && (
           <span title={strings.entities.topicFolder}>
             {' '}
-            <FontAwesomeIcon
+            <FaIcon
               icon={faFile}
               className="text-[1.43rem] align-baseline text-brand-lighter"
             />{' '}

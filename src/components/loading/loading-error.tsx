@@ -1,6 +1,6 @@
-import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons/faExclamationCircle'
 
+import { FaIcon } from '../fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 
 export function LoadingError({ error }: { error: string }) {
@@ -9,8 +9,7 @@ export function LoadingError({ error }: { error: string }) {
   console.log(error)
   return (
     <p className="serlo-p mt-12 text-brand">
-      <FontAwesomeIcon icon={faExclamationCircle} />{' '}
-      {strings.loading.unknownProblem}
+      <FaIcon icon={faExclamationCircle} /> {strings.loading.unknownProblem}
     </p>
   )
 }

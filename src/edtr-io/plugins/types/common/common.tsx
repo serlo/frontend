@@ -241,7 +241,7 @@ export function OptionalChild(props: {
   })
   return (
     <>
-      <hr />
+      <hr className="my-12" />
       {children}
     </>
   )

@@ -1,19 +1,17 @@
-import {
-  faCaretDown,
-  faBars,
-  faUser,
-  faInfoCircle,
-  faUserEdit,
-  faGraduationCap,
-  faHandHoldingHeart,
-  faUserFriends,
-  faBell,
-} from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBars } from '@fortawesome/free-solid-svg-icons/faBars'
+import { faBell } from '@fortawesome/free-solid-svg-icons/faBell'
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons/faCaretDown'
+import { faGraduationCap } from '@fortawesome/free-solid-svg-icons/faGraduationCap'
+import { faHandHoldingHeart } from '@fortawesome/free-solid-svg-icons/faHandHoldingHeart'
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle'
+import { faUser } from '@fortawesome/free-solid-svg-icons/faUser'
+import { faUserEdit } from '@fortawesome/free-solid-svg-icons/faUserEdit'
+import { faUserFriends } from '@fortawesome/free-solid-svg-icons/faUserFriends'
 import clsx from 'clsx'
 import { useState, MouseEvent } from 'react'
 
 import { Link } from '../content/link'
+import { FaIcon } from '../fa-icon'
 import { AuthenticationPayload } from '@/auth/auth-provider'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -137,9 +135,8 @@ function Entry({
                 'bg-brand-150 text-brand-light'
               )}
             >
-              <FontAwesomeIcon
+              <FaIcon
                 icon={icon !== undefined ? menuIconMapping[icon] : faBars}
-                size="1x"
                 style={{ fontSize: '23px' }}
               />
             </div>
@@ -151,7 +148,7 @@ function Entry({
             {children ? (
               <span>
                 {' '}
-                <FontAwesomeIcon icon={faCaretDown} />
+                <FaIcon icon={faCaretDown} />
               </span>
             ) : null}
           </span>

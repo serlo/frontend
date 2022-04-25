@@ -391,6 +391,7 @@ export const loggedInData = {
       history: "Histoire",
       editAssignments: "Modifier le sujet et le programme d'études",
       moveToTrash: "Déplacer dans la corbeille",
+      confirmTrash: 'Are you sure you want to delete this content?',
       restoreContent: "Restaurer à partir de la corbeille",
       sortCoursePages: "Trier les pages du cours",
       sortGroupedExercises: "Trier les exercices groupés",
@@ -447,10 +448,12 @@ export const loggedInData = {
         FORBIDDEN: 'Sorry, you are not allowed to do that!',
         INVALID_TOKEN: '',
         BAD_USER_INPUT: '',
-        UNKNOWN: 'An unknown error…'
+        UNKNOWN: 'An unknown error…',
+        valueMissing: 'Please fill all required fields'
       }
     },
     editor: {
+      confirmRouteChange: "Are you sure you want to leave without saving?",
       edtrIo: {
         extendedSettings: "Paramètres avancés",
         close: "Fermer",
@@ -569,9 +572,13 @@ export const loggedInData = {
         columnHeaders: 'Only column headers',
         rowHeaders: 'Only row headers',
         columnAndRowHeaders: 'Column and row headers',
-        convertToText: 'convert to text',
-        convertToImage: 'convert to image',
-        addRow: 'Add row'
+        convertToText: 'Convert to text',
+        convertToImage: 'Convert to image',
+        row: "row",
+        column: "column",
+        addType: 'Add %type%',
+        deleteType: 'Delete %type%',
+        confirmDelete: 'Are you sure you want to delete this %type% and the content in it?'
       },
       spoiler: {
         enterATitle: "Saisir un titre"
@@ -750,8 +757,9 @@ export const loggedInData = {
     profileSettings: {
       editAbout: 'Your description',
       showInstructions: 'Show instructions',
-      howToEditImage: {
-        heading: 'How to edit your profile picture',
+      editImage: {
+        header: 'Profile picture',
+        buttonText: 'How to edit your profile picture',
         description: 'Currently we use the images from %chatLink% as profile pictures. In order to change your picture, do the following:',
         steps: {
           goToChat: 'Go to %chatLink%.',
@@ -764,7 +772,8 @@ export const loggedInData = {
         }
       },
       motivation: {
-        heading: 'How to edit your motivation',
+        header: 'Motivation',
+        buttonText: 'How to edit your motivation',
         intro: 'Motivations are a new feature we test at the moment. To edit your motivation you have to fill out a simple form.',
         privacy: 'The form and data storage is offered by Google and personal data may be transferred to this service when using this feature.',
         toForm: 'Motivation Form'

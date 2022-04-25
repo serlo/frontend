@@ -1,14 +1,14 @@
-import { faCheck } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck'
 import { PageInfo } from '@serlo/api'
 import { useState } from 'react'
 
 import { useAuthentication } from '@/auth/use-authentication'
+import { FaIcon } from '@/components/fa-icon'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { Event, EventData } from '@/components/user/event'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { useSetNotificationStateMutation } from '@/helper/mutations'
+import { useSetNotificationStateMutation } from '@/helper/mutations/use-set-notification-state-mutation'
 
 export interface NotificationData {
   id: number
@@ -56,7 +56,7 @@ export const Notifications = ({
               className="serlo-button serlo-make-interactive-light mt-5 mb-12"
               onClick={setAllToRead}
             >
-              <FontAwesomeIcon icon={faCheck} /> {loggedInStrings.setAllToRead}
+              <FaIcon icon={faCheck} /> {loggedInStrings.setAllToRead}
             </button>
           )}
         </div>

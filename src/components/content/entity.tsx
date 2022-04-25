@@ -1,14 +1,12 @@
-import {
-  faExclamationCircle,
-  faTools,
-  faTrash,
-} from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons/faExclamationCircle'
+import { faTools } from '@fortawesome/free-solid-svg-icons/faTools'
+import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash'
 import clsx from 'clsx'
 import dynamic from 'next/dynamic'
 import { Router } from 'next/router'
 import { useState, MouseEvent } from 'react'
 
+import { FaIcon } from '../fa-icon'
 import { StaticInfoPanel } from '../static-info-panel'
 import { HSpace } from './h-space'
 import { Link } from './link'
@@ -102,7 +100,7 @@ export function Entity({ data }: EntityProps) {
     return (
       <span title={strings.entities[data.categoryIcon]}>
         {' '}
-        <FontAwesomeIcon
+        <FaIcon
           icon={getIconByTypename(data.categoryIcon)}
           className="text-brand-lighter text-2.5xl"
         />{' '}

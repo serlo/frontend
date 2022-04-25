@@ -5,18 +5,21 @@ import {
   undo,
   hasRedoActions,
   hasUndoActions,
-  getPendingChanges,
+  hasPendingChanges,
 } from '@edtr-io/store'
-import { IconProp } from '@fortawesome/fontawesome-svg-core'
-import { faRedo, faSave, faUndo } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
+import { faRedo } from '@fortawesome/free-solid-svg-icons/faRedo'
+import { faSave } from '@fortawesome/free-solid-svg-icons/faSave'
+import { faUndo } from '@fortawesome/free-solid-svg-icons/faUndo'
 import clsx from 'clsx'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { createPortal } from 'react-dom'
 
 import { entity } from '../common/common'
 import { useHandleSave } from '../helpers/use-handle-save'
+import { FaIcon } from '@/components/fa-icon'
 import { SaveModal } from '@/edtr-io/components/save-modal'
+import { useLeaveConfirm } from '@/helper/use-leave-confirm'
 
 interface ToolbarMainProps {
   changes?: StateTypeReturnType<typeof entity['changes']>
@@ -32,8 +35,7 @@ export function ToolbarMain({
   const dispatch = useScopedDispatch()
   const undoable = useScopedSelector(hasUndoActions())
   const redoable = useScopedSelector(hasRedoActions())
-  const pendingChanges = useScopedSelector(getPendingChanges())
-  const hasPendingChanges = pendingChanges !== 0
+  const isChanged = useScopedSelector(hasPendingChanges())
 
   const [visible, setVisibility] = useState(false)
 
@@ -42,9 +44,7 @@ export function ToolbarMain({
     subscriptions
   )
 
-  useEffect(() => {
-    window.onbeforeunload = hasPendingChanges && !pending ? () => '' : null
-  }, [hasPendingChanges, pending])
+  useLeaveConfirm(isChanged && !pending)
 
   return (
     <>
@@ -53,8 +53,8 @@ export function ToolbarMain({
           className={clsx('w-full flex justify-between', 'h-12 pt-4 pl-5 pr-3')}
         >
           <div>
-            {renderUndoRedoButton('Undo', faUndo, undo, !undoable)}
-            {renderUndoRedoButton('Redo', faRedo, redo, !redoable)}
+            {renderHistoryButton('Undo', faUndo, undo, !undoable)}
+            {renderHistoryButton('Redo', faRedo, redo, !redoable)}
           </div>
           <div>{renderSaveButton()}</div>
         </nav>,
@@ -73,9 +73,9 @@ export function ToolbarMain({
     </>
   )
 
-  function renderUndoRedoButton(
+  function renderHistoryButton(
     title: string,
-    icon: IconProp,
+    icon: IconDefinition,
     action: typeof undo | typeof redo,
     disabled: boolean
   ) {
@@ -90,16 +90,16 @@ export function ToolbarMain({
         onClick={() => {
           dispatch(action())
         }}
-        disabled={!undoable}
+        disabled={disabled}
         title={title}
       >
-        <FontAwesomeIcon icon={icon} />
+        <FaIcon icon={icon} />
       </button>
     )
   }
 
   function renderSaveButton() {
-    const isDisabled = !hasPendingChanges
+    const isDisabled = !isChanged
     return (
       <button
         className={clsx(
@@ -110,8 +110,9 @@ export function ToolbarMain({
         )}
         onClick={() => setVisibility(true)}
         disabled={isDisabled}
+        title="Save"
       >
-        <FontAwesomeIcon icon={faSave} title="Save" />
+        <FaIcon icon={faSave} />
       </button>
     )
   }

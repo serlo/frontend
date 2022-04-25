@@ -1,6 +1,6 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState } from 'react'
 
+import { FaIcon } from '../fa-icon'
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -8,7 +8,7 @@ import { SubscriptionData } from '@/data-types'
 import { getRawTitle } from '@/fetcher/create-title'
 import { getEntityStringByTypename } from '@/helper/feature-i18n'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
-import { useSubscriptionSetMutation } from '@/helper/mutations'
+import { useSubscriptionSetMutation } from '@/helper/mutations/use-subscription-set-mutation'
 
 export function ManageSubscriptions({
   subscriptions,
@@ -64,7 +64,7 @@ export function ManageSubscriptions({
         <td className="serlo-td">
           <span title={entityString}>
             {' '}
-            <FontAwesomeIcon className="text-brand" icon={icon} />{' '}
+            <FaIcon className="text-brand" icon={icon} />{' '}
           </span>
           <Link href={object.alias ?? ''}>{title}</Link>
         </td>

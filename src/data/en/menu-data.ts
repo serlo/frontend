@@ -2,7 +2,10 @@ import { serloDomain } from '../../helper/serlo-domain'
 import { InstanceData, LandingSubjectsData } from '@/data-types'
 
 export const landingSubjectsData: LandingSubjectsData = {
-  subjects: [],
+  subjects: [
+    { url: '/23591', title: 'Mathematics', icon: 'math' },
+    { url: '/63179', title: 'Applied Sustainability', icon: 'sustainability' },
+  ],
   additionalLinks: [],
 }
 
@@ -12,7 +15,8 @@ export const headerData: InstanceData['headerData'] = [
     title: 'Subjects',
     icon: 'subject',
     children: [
-      { url: '/112089', title: 'Applied Sustainability' },
+      { url: '/63179', title: 'Applied Sustainability' },
+      { url: '/23591', title: 'Mathematics' },
       { url: '/106103', title: 'Subjects under construction' },
     ],
   },

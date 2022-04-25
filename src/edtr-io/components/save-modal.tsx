@@ -1,5 +1,5 @@
 import { StateTypeReturnType } from '@edtr-io/plugin'
-import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
+import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons/faExclamationCircle'
 import clsx from 'clsx'
 import { useContext, useState } from 'react'
 
@@ -56,13 +56,13 @@ export function SaveModal({
       title={edtrIo.save}
     >
       <div className="mx-side">
-        {renderAlert()}
         {renderChanges()}
         {renderLicense()}
         {renderSubscription()}
         {renderCheckout()}
         {isOnlyText ? edtrIo.ready : null}
         <hr className="mt-8 mb-8" />
+        {renderAlert()}
         {renderModalButtons()}
       </div>
       {isOnlyText ? null : (

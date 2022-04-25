@@ -1,10 +1,12 @@
-import { faCaretDown, faUser, faBell } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBell } from '@fortawesome/free-solid-svg-icons/faBell'
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons/faCaretDown'
+import { faUser } from '@fortawesome/free-solid-svg-icons/faUser'
 import type { TippyProps } from '@tippyjs/react'
 import clsx from 'clsx'
 import { useState, useEffect } from 'react'
 
 import { Link } from '../content/link'
+import { FaIcon } from '../fa-icon'
 import { MenuSubButtonLink } from '../user-tools/menu-sub-button-link'
 import { getAvatarUrl } from '../user/user-link'
 import { AuthenticationPayload } from '@/auth/auth-provider'
@@ -188,13 +190,13 @@ function MenuInner({
             >
               <Link tabIndex={0} className={styledLinkCls}>
                 {renderIcon()}
-                {!hasIcon && link.title} <FontAwesomeIcon icon={faCaretDown} />
+                {!hasIcon && link.title} <FaIcon icon={faCaretDown} />
               </Link>
             </Tippy.default>
           ) : (
             <Link tabIndex={0} className={styledLinkCls}>
               {renderIcon()}
-              {!hasIcon && link.title} <FontAwesomeIcon icon={faCaretDown} />
+              {!hasIcon && link.title} <FaIcon icon={faCaretDown} />
             </Link>
           )
         ) : (
@@ -228,15 +230,8 @@ function MenuInner({
         )
       }
 
-      return (
-        <span className="fa-layers fa-fw">
-          <FontAwesomeIcon
-            // checking for undefined this in hasIcon
-            icon={menuIconMapping[link.icon!]!}
-            style={{ height: '1.4rem', width: '1.4rem', paddingTop: '0' }}
-          />
-        </span>
-      )
+      // only notification and user are in use and handled above
+      return null
     }
   }
 

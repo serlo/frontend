@@ -1,8 +1,8 @@
-import { faGrinStars } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faGrinStars } from '@fortawesome/free-solid-svg-icons/faGrinStars'
 import { tint } from 'polished'
 import { useState, useEffect } from 'react'
 
+import { FaIcon } from '../fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { theme } from '@/theme'
 
@@ -57,17 +57,16 @@ export function ProfileActivityGraph({
       }
     >
       <h3 className="text-xl font-bold mt-5 mb-2">{title}</h3>
-      {isLegendary ? renderLegendary() : renderGraphInProgress()}
+      {!isLegendary ? renderLegendary() : renderGraphInProgress()}
     </figure>
   )
 
   function renderLegendary() {
     return (
       <>
-        <FontAwesomeIcon
+        <FaIcon
           icon={faGrinStars}
-          size="8x"
-          style={{ color: theme.colors.lighterBrandGreen }}
+          className="text-brandgreen-light h-32 w-32"
         />
         <p
           className="font-bold text-xl"

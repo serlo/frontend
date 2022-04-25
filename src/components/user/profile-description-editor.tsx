@@ -2,7 +2,7 @@ import Cookies from 'js-cookie'
 
 import { convertUserByDescription } from '@/edtr-io/editor-response-to-state'
 import { SerloEditor } from '@/edtr-io/serlo-editor'
-import { useUserSetDescriptionMutation } from '@/helper/mutations'
+import { useUserSetDescriptionMutation } from '@/helper/mutations/use-user-set-description-mutation'
 
 export interface ProfileDescriptionEditorProps {
   rawDescription?: string | null

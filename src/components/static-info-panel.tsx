@@ -1,8 +1,9 @@
-import { IconProp } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import clsx from 'clsx'
 import Head from 'next/head'
 import { ReactNode } from 'react'
+
+import { FaIcon } from './fa-icon'
 
 const colorClasses = {
   warning: 'bg-orange-200',
@@ -14,7 +15,7 @@ const colorClasses = {
 
 interface StaticInfoPanelProps {
   children: ReactNode
-  icon: IconProp
+  icon: IconDefinition
   type?: keyof typeof colorClasses
   doNotIndex?: boolean
 }
@@ -35,7 +36,7 @@ export function StaticInfoPanel({
         </Head>
       ) : null}
       <div className={clsx('p-4 my-12 rounded-2xl font-bold', colorClass)}>
-        <FontAwesomeIcon icon={icon} /> {children}
+        <FaIcon icon={icon} /> {children}
       </div>
     </>
   )

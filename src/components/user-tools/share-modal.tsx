@@ -1,20 +1,16 @@
-import {
-  faFacebookSquare,
-  faWhatsappSquare,
-  faGoogle,
-} from '@fortawesome/free-brands-svg-icons'
-import {
-  faCopy,
-  faEnvelope,
-  faCompass,
-  faDownload,
-  IconDefinition,
-} from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
+import { faFacebookSquare } from '@fortawesome/free-brands-svg-icons/faFacebookSquare'
+import { faGoogle } from '@fortawesome/free-brands-svg-icons/faGoogle'
+import { faWhatsappSquare } from '@fortawesome/free-brands-svg-icons/faWhatsappSquare'
+import { faCompass } from '@fortawesome/free-solid-svg-icons/faCompass'
+import { faCopy } from '@fortawesome/free-solid-svg-icons/faCopy'
+import { faDownload } from '@fortawesome/free-solid-svg-icons/faDownload'
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
 import clsx from 'clsx'
 import QRCode from 'qrcode.react'
 import { MouseEvent, useRef, useContext } from 'react'
 
+import { FaIcon } from '../fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { EntityIdContext } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -124,12 +120,9 @@ export function ShareModal({ isOpen, onClose, showPdf }: ShareModalProps) {
       title={strings.share.title}
       className="top-1/2"
     >
-      <QRCode
-        value={shareUrl}
-        renderAs="svg"
-        className="sm:float-right mx-side mb-4 sm:mb-0"
-        fgColor={theme.colors.brand}
-      />
+      <div className="sm:float-right mx-side mb-4 sm:mb-0">
+        <QRCode value={shareUrl} renderAs="svg" fgColor={theme.colors.brand} />
+      </div>
       {renderShareInput()}
       <hr className="my-4 mx-side" />
       {renderButtons(lmsData)}
@@ -161,7 +154,7 @@ export function ShareModal({ isOpen, onClose, showPdf }: ShareModalProps) {
           <>
             <br />
             <button className={shareButton} onClick={copyToClipboard}>
-              <FontAwesomeIcon icon={faCopy} /> {strings.share.copyLink}
+              <FaIcon icon={faCopy} /> {strings.share.copyLink}
             </button>
           </>
         )}
@@ -181,7 +174,7 @@ export function ShareModal({ isOpen, onClose, showPdf }: ShareModalProps) {
               onClick={entry.onClick ?? undefined}
               download={entry.download}
             >
-              <FontAwesomeIcon icon={entry.icon} /> {entry.title}
+              <FaIcon icon={entry.icon} /> {entry.title}
             </a>
           )
         })}

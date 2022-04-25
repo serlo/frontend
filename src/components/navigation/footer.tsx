@@ -1,10 +1,8 @@
-import {
-  faChevronUp,
-  faChevronCircleRight,
-} from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons/faChevronCircleRight'
+import { faChevronUp } from '@fortawesome/free-solid-svg-icons/faChevronUp'
 import clsx from 'clsx'
 
+import { FaIcon } from '../fa-icon'
 import DonateIcon from '@/assets-webkit/img/footer-donate.svg'
 import ParticipateIcon from '@/assets-webkit/img/footer-participate.svg'
 import { Link } from '@/components/content/link'
@@ -35,7 +33,7 @@ function About() {
           onClick={() => window.scrollTo(0, 0)}
           title={strings.footer.toTop}
         >
-          <FontAwesomeIcon icon={faChevronUp} size="lg" />
+          <FaIcon icon={faChevronUp} className="h-5" />
         </div>
       </div>
       <div className="text-lg shrink">
@@ -50,7 +48,7 @@ function About() {
               path={['footer_about']}
               className="serlo-button py-0.5 serlo-make-interactive-transparent-blue text-white my-4"
             >
-              <FontAwesomeIcon icon={faChevronCircleRight} size="sm" />{' '}
+              <FaIcon icon={faChevronCircleRight} className="h-4" />{' '}
               {strings.footer.learnMore}
             </Link>
           </div>

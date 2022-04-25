@@ -1,8 +1,8 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 
 import { Link } from '@/components/content/link'
+import { FaIcon } from '@/components/fa-icon'
 import { deSubjectLandingSubjects } from '@/components/pages/subject-landing'
 import { useInstanceData } from '@/contexts/instance-context'
 import {
@@ -93,8 +93,6 @@ export function SubjectLandingFeatured({
 
   function renderTypeIcon(type: string) {
     const icon = getIconByTypename(type)
-    return (
-      <FontAwesomeIcon icon={icon} title={getTranslatedType(strings, type)} />
-    )
+    return <FaIcon icon={icon} />
   }
 }

@@ -16,12 +16,13 @@ import { Solution } from '@/components/content/exercises/solution'
 import { Geogebra } from '@/components/content/geogebra'
 import { Injection } from '@/components/content/injection'
 import { Lazy } from '@/components/content/lazy'
-import { MathSpanProps } from '@/components/content/math-span'
+import type { MathSpanProps } from '@/components/content/math-span'
 import { Multimedia } from '@/components/content/multimedia'
+import { SerloTable } from '@/components/content/serlo-table'
 import { Snack } from '@/components/content/snack'
 import { Spoiler } from '@/components/content/spoiler'
 import { Video } from '@/components/content/video'
-import { FrontendContentNode } from '@/data-types'
+import type { FrontendContentNode } from '@/data-types'
 
 export type NodePath = (number | string)[]
 
@@ -95,6 +96,7 @@ function render(value: FrontendContentNode, path: NodePath = []): ReactNode {
       break
     }
   }
+
   const currentNode = getNode(value, currentPath)
   const key = currentPath[currentPath.length - 1]
 
@@ -334,6 +336,14 @@ function renderElement({
           <tbody>{children}</tbody>
         </table>
       </div>
+    )
+  }
+  if (element.type === 'serlo-table') {
+    return (
+      <SerloTable
+        {...element}
+        renderNested={(value, ...prefix) => renderNested(value, path, prefix)}
+      />
     )
   }
   if (element.type === 'tr') {

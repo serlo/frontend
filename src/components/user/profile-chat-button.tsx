@@ -1,15 +1,15 @@
 import { faSpinner } from '@edtr-io/ui'
-import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons/faPaperPlane'
 import clsx from 'clsx'
 import { ChangeEvent, useEffect, useState } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
 
+import { FaIcon } from '../fa-icon'
 import { useAuthentication } from '@/auth/use-authentication'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
 import { shouldUseNewAuth } from '@/helper/feature-auth'
-import { useCreateThreadMutation } from '@/helper/mutations'
+import { useCreateThreadMutation } from '@/helper/mutations/thread'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
@@ -67,7 +67,7 @@ export function ProfileChatButton({
         )}
         style={{ gridArea: 'chatButton' }}
       >
-        <FontAwesomeIcon icon={faPaperPlane} /> {text}
+        <FaIcon icon={faPaperPlane} /> {text}
       </a>
       {!isOwnProfile && !isRegistered && renderInviteModal()}
     </>
@@ -138,9 +138,9 @@ export function ProfileChatButton({
             onClick={pending ? undefined : inviteToChat}
             className="serlo-button serlo-make-interactive-green"
           >
-            <FontAwesomeIcon
+            <FaIcon
               icon={pending ? faSpinner : faPaperPlane}
-              spin={pending}
+              className={clsx(pending && 'animate-spin-slow')}
             />{' '}
             {button}
           </a>

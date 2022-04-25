@@ -1,17 +1,15 @@
-import {
-  faClock,
-  faList,
-  faPencilAlt,
-  faQuestionCircle,
-  faShareAlt,
-  faTools,
-  IconDefinition,
-} from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
+import { faClock } from '@fortawesome/free-solid-svg-icons/faClock'
+import { faList } from '@fortawesome/free-solid-svg-icons/faList'
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons/faPencilAlt'
+import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons/faQuestionCircle'
+import { faShareAlt } from '@fortawesome/free-solid-svg-icons/faShareAlt'
+import { faTools } from '@fortawesome/free-solid-svg-icons/faTools'
 import { TaxonomyTerm, Uuid } from '@serlo/authorization'
 import clsx from 'clsx'
 import { useEffect, useState, cloneElement } from 'react'
 
+import { FaIcon } from '../fa-icon'
 import { LazyTippy } from '../navigation/lazy-tippy'
 import { AuthorToolsData } from './author-tools-hover-menu'
 import { useAuthentication } from '@/auth/use-authentication'
@@ -274,7 +272,7 @@ export function UserTools({
   function renderInner(text: string, icon: IconDefinition) {
     return (
       <>
-        <FontAwesomeIcon icon={icon} className="lg:mr-0.5" /> {text}
+        <FaIcon icon={icon} className="lg:mr-0.5" /> {text}
       </>
     )
   }

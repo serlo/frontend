@@ -14,10 +14,8 @@ import { MenuSubButtonLink } from './menu-sub-button-link'
 import { useCanDo } from '@/auth/use-can-do'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import {
-  useSetUuidStateMutation,
-  useSubscriptionSetMutation,
-} from '@/helper/mutations'
+import { useSetUuidStateMutation } from '@/helper/mutations/use-set-uuid-state-mutation'
+import { useSubscriptionSetMutation } from '@/helper/mutations/use-subscription-set-mutation'
 import { useIsSubscribed } from '@/helper/use-is-subscribed'
 
 export enum Tool {
@@ -282,13 +280,14 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   }
 
   function trash() {
-    const title = data.trashed
-      ? loggedInStrings.authorMenu.restoreContent
-      : loggedInStrings.authorMenu.moveToTrash
+    const { restoreContent, moveToTrash, confirmTrash } =
+      loggedInStrings.authorMenu
+    const title = data.trashed ? restoreContent : moveToTrash
     return (
       <li className="block" key={title}>
         <MenuSubButtonLink
           onClick={() => {
+            if (!data.trashed && !window.confirm(confirmTrash)) return
             void setUuidState({ id: [data.id], trashed: !data.trashed })
           }}
         >

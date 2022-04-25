@@ -102,13 +102,15 @@ export function Article({
       <>
         <h2 className="serlo-h2">{strings.content.sourcesTitle}</h2>
         <ul className="serlo-ul mt-2 mb-4 text-lg">
-          {sources.map((source) =>
-            source.href === '' ? null : (
-              <li key={source.href} className="!mb-0">
+          {sources.map((source) => (
+            <li key={source.href} className="!mb-0">
+              {source.href ? (
                 <Link href={source.href}>{source.title}</Link>
-              </li>
-            )
-          )}
+              ) : (
+                source.title
+              )}
+            </li>
+          ))}
         </ul>
       </>
     )

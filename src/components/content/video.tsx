@@ -1,6 +1,6 @@
-import { faFilm } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFilm } from '@fortawesome/free-solid-svg-icons/faFilm'
 
+import { FaIcon } from '../fa-icon'
 import { LicenseNotice } from './license-notice'
 import { PrivacyWrapper } from './privacy-wrapper'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -31,7 +31,7 @@ export function Video({ src, path, license }: VideoProps) {
 
   return (
     <div className="text-center print:hidden">
-      <FontAwesomeIcon icon={faFilm} size="5x" />
+      <FaIcon icon={faFilm} className="h-16" />
       <p className="serlo-p">Loading video failed: {src}</p>
     </div>
   )

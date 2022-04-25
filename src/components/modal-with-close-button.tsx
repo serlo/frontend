@@ -1,9 +1,9 @@
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
 import clsx from 'clsx'
 import { ReactNode } from 'react'
 import BaseModal from 'react-modal'
 
+import { FaIcon } from './fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 
 try {
@@ -50,7 +50,7 @@ export function ModalWithCloseButton({
           'w-9 h-9 rounded-full text-center '
         )}
       >
-        <FontAwesomeIcon icon={faTimes} size="lg" />
+        <FaIcon icon={faTimes} className="h-5" />
       </button>
     </BaseModal>
   )

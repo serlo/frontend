@@ -1,6 +1,8 @@
-import { faTimes, faBars } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBars } from '@fortawesome/free-solid-svg-icons/faBars'
+import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
 import clsx from 'clsx'
+
+import { FaIcon } from '../fa-icon'
 
 interface MobileMenuButtonProps {
   open: boolean
@@ -19,7 +21,7 @@ export function MobileMenuButton(props: MobileMenuButtonProps) {
         'outline-none'
       )}
     >
-      <FontAwesomeIcon icon={open ? faTimes : faBars} size="2x" />
+      <FaIcon icon={open ? faTimes : faBars} className="h-8 mt-1" />
     </button>
   )
 }

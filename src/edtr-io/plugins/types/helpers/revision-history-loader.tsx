@@ -1,6 +1,6 @@
 import { PluginToolbarButton } from '@edtr-io/core'
 import { Icon } from '@edtr-io/ui'
-import { faHistory } from '@fortawesome/free-solid-svg-icons'
+import { faHistory } from '@fortawesome/free-solid-svg-icons/faHistory'
 import NProgress from 'nprogress'
 import { PropsWithChildren, useState } from 'react'
 
@@ -38,9 +38,7 @@ export function RevisionHistoryLoader<T>(
 
   if (props.id === 0) return null
 
-  if (!revisionsResponse.data?.uuid.revisions) {
-    return <p>Not sure whats missing here</p>
-  }
+  if (!revisionsResponse.data?.uuid.revisions) return null // no revision loader for solutions
 
   const revisions = revisionsResponse.data?.uuid.revisions.nodes
 

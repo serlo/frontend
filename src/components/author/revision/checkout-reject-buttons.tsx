@@ -1,10 +1,14 @@
-import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck'
+import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
 import { useState, KeyboardEvent, ChangeEvent } from 'react'
 
+import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { RevisionMutationMode, useRevisionMutation } from '@/helper/mutations'
+import {
+  RevisionMutationMode,
+  useRevisionDecideMutation,
+} from '@/helper/mutations/use-revision-decide-mutation'
 
 export interface CheckoutRejectButtonsProps {
   revisionId: number
@@ -23,7 +27,7 @@ export function CheckoutRejectButtons({
 }: CheckoutRejectButtonsProps) {
   const loggedInData = useLoggedInData()
   const [modalMode, setModalMode] = useState<RevisionMutationMode | null>(null)
-  const revisionMutation = useRevisionMutation()
+  const revisionMutation = useRevisionDecideMutation()
   const [reason, setReason] = useState('')
   if (!loggedInData) return null
   if (isCurrent) return null
@@ -50,7 +54,7 @@ export function CheckoutRejectButtons({
         onClick={() => setModalMode('checkout')}
         onPointerUp={(e) => e.currentTarget.blur()}
       >
-        <FontAwesomeIcon icon={faCheck} className="lg:mr-0.5" />{' '}
+        <FaIcon icon={faCheck} className="lg:mr-0.5" />{' '}
         {strings.revisions.checkout.action}
       </button>
       {!isRejected && !isPage && (
@@ -60,11 +64,7 @@ export function CheckoutRejectButtons({
           onPointerUp={(e) => e.currentTarget.blur()}
         >
           &nbsp;
-          <FontAwesomeIcon
-            icon={faTimes}
-            size="1x"
-            className="lg:mr-0.5"
-          />{' '}
+          <FaIcon icon={faTimes} className="lg:mr-0.5" />{' '}
           {strings.revisions.reject.action}
         </button>
       )}

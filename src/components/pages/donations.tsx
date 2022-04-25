@@ -1,7 +1,7 @@
-import { faPaypal } from '@fortawesome/free-brands-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPaypal } from '@fortawesome/free-brands-svg-icons/faPaypal'
 import clsx from 'clsx'
 
+import { FaIcon } from '../fa-icon'
 import { HeadTags } from '../head-tags'
 import { PrivacyWrapper } from '@/components/content/privacy-wrapper'
 import { PartnerList } from '@/components/landing/partner-list'
@@ -99,7 +99,7 @@ export function Donations() {
               className="serlo-button serlo-make-interactive-transparent-green -ml-1 font-bold pt-1"
               href="https://www.paypal.me/serlo"
             >
-              <FontAwesomeIcon icon={faPaypal} size="1x" /> Über PayPal spenden
+              <FaIcon icon={faPaypal} /> Über PayPal spenden
             </a>
           </p>
         </div>
