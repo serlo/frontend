@@ -30,7 +30,7 @@ export function Multimedia({
   const width = convertToClosestQuarter(mediaWidth) // we can do this becaues witdth is only 25%, 50%, 75% or 100%
 
   return (
-    <div className="flex flex-col mobile:block">
+    <div className="flex flex-col-reverse mobile:block">
       <div
         onClick={mediaChildIsImage ? openLightBox : undefined}
         className={clsx(
