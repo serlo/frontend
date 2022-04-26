@@ -38,7 +38,7 @@ export const instanceData = {
       event: "Veranstaltung",
       exercise: "Aufgabe",
       exerciseGroup: "Aufgabe mit Teilaufgaben",
-      folder: "Bereich",
+      folder: "Themenbereich",
       groupedExercise: "Teilaufgabe",
       page: "Seite",
       solution: "Lösung",
