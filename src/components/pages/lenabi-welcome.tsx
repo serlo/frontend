@@ -158,7 +158,7 @@ export function LenabiWelcome() {
     return (
       <>
         {renderBox({
-          title: 'Addition von Brüchen',
+          title: 'Logistisches Wachstum',
           content: (
             <p className="serlo-p font-normal">
               <span className="font-bold hover:underline">Jetzt zum Kurs</span>
@@ -166,7 +166,7 @@ export function LenabiWelcome() {
               (erstellt von Lehrkraft)
             </p>
           ),
-          link: '/232927',
+          link: '/244309',
         })}
       </>
     )

@@ -18,37 +18,56 @@ export function MockupGaps() {
   }
 
   /*
-  Brüche lassen sich nur addieren, wenn sie den gleichen [Nenner] besitzen. Man addiert sie, indem man die Zähler [addiert]. Die Nenner werden [nicht verändert].
-  Wenn Brüche nicht [gleichnamig] sind, müssen diese erst [erweitert] werden auf [ein gemeinsames Vielfaches] der Nenner. Danach erst lassen sich die Brüche addieren.
-  [\Zähler] [\kürzen] [\gleichzählig] [\einen gemeinsamen Teiler]
+  Wähle die richtigen Begriffe für die Lücken.
+  Das [logistische] Wachstum verläuft in drei Phasen:
+  Zunächst wächst die Größe [exponentiell] und der Graph steigt [stark].
+  In der zweiten Phase ist das Wachstum [annähernd linear]. In diesem Bereich liegt auch [der Wendepunkt].
+  Der Graph [steigt] in der dritten Phase [schwach]. Das Wachstum ist [beschränkt].
+
+  [die Asymptote] [kubisch] [fällt] [logarithmische]
   */
 
   return (
     <>
       <GapEx
         choices={[
-          'Nenner',
-          'addiert',
-          'nicht verändert',
-          'gleichnamig',
-          'erweitert',
-          'ein gemeinsames Vielfaches',
-          'Zähler',
-          'kürzen',
-          'gleichzählig',
-          'einen gemeinsamen Teiler',
+          'logistische',
+          'exponentiell',
+          'stark',
+          'annähernd linear',
+          'der Wendepunkt',
+          'steigt',
+          'schwach',
+          'beschränkt',
+          'die Asymptote',
+          'kubisch',
+          'fällt',
+          'logarithmische',
         ]}
-        count={6}
+        count={8}
         onFeedback={onFeedbackHandler}
       >
-        <p className="serlo-p mb-block leading-relaxed">
-          Brüche lassen sich nur addieren, wenn sie den gleichen{' '}
-          <Gappy index={0} /> besitzen. Man addiert sie, indem man die Zähler{' '}
-          <Gappy index={1} />. Die Nenner werden <Gappy index={2} />. Wenn
-          Brüche nicht <Gappy index={3} /> sind, müssen diese erst{' '}
-          <Gappy index={4} /> werden auf <Gappy index={5} /> der Nenner. Danach
-          erst lassen sich die Brüche addieren.
-        </p>
+        <div className="serlo-p mb-block leading-relaxed">
+          <p className="mb-4">
+            <b>Wähle die richtigen Begriffe für die Lücken.</b>
+          </p>
+          <p className="mb-4">
+            Das <Gappy index={0} /> Wachstum verläuft in drei Phasen:
+          </p>
+          <p className="mb-4">
+            Zunächst wächst die Größe <Gappy index={1} /> und der Graph steigt{' '}
+            <Gappy index={2} />.
+          </p>
+          <p className="mb-4">
+            In der zweiten Phase ist das Wachstum <Gappy index={3} />.<br /> In
+            diesem Bereich liegt auch <Gappy index={4} />.
+          </p>
+          <p className="mb-4">
+            Der Graph <Gappy index={5} /> in der dritten Phase{' '}
+            <Gappy index={6} />
+            . Das Wachstum ist <Gappy index={7} />.
+          </p>
+        </div>
       </GapEx>
       {showWalletNotice ? (
         <div className="bg-brand-100 mx-side p-side my-20 text-center rounded-xl">

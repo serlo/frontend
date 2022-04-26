@@ -48,7 +48,7 @@ export function Entity({ data }: EntityProps) {
 
   const { strings } = useInstanceData()
 
-  const isMockupCoursePage = data.id === 233011
+  const isMockupCoursePage = data.id === 244386
 
   return wrapWithSchema(
     <>
