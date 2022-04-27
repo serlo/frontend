@@ -1,12 +1,12 @@
 import {
-  AddAppletRevisionInput,
-  AddArticleRevisionInput,
-  AddCoursePageRevisionInput,
-  AddCourseRevisionInput,
-  AddEventRevisionInput,
-  AddExerciseGroupRevisionInput,
-  AddGenericRevisionInput,
-  AddVideoRevisionInput,
+  SetAppletInput,
+  SetGenericEntityInput,
+  SetArticleInput,
+  SetCourseInput,
+  SetCoursePageInput,
+  SetEventInput,
+  SetExerciseGroupInput,
+  SetVideoInput,
 } from '@serlo/api'
 import { gql } from 'graphql-request'
 // eslint-disable-next-line import/no-internal-modules
@@ -42,15 +42,15 @@ export interface OnSaveData {
   }
 }
 
-export type AddRevisionInputTypes =
-  | AddGenericRevisionInput
-  | AddAppletRevisionInput
-  | AddArticleRevisionInput
-  | AddCourseRevisionInput
-  | AddCoursePageRevisionInput
-  | AddEventRevisionInput
-  | AddExerciseGroupRevisionInput
-  | AddVideoRevisionInput
+export type SetEntityInputTypes =
+  | SetGenericEntityInput
+  | SetAppletInput
+  | SetArticleInput
+  | SetCourseInput
+  | SetCoursePageInput
+  | SetEventInput
+  | SetExerciseGroupInput
+  | SetVideoInput
 
 export type SupportedTypesSerializedState =
   | AppletSerializedState
@@ -63,21 +63,21 @@ export type SupportedTypesSerializedState =
   | TextSolutionSerializedState
   | VideoSerializedState
 
-export type RevisionAddMutationData = SupportedTypesSerializedState & OnSaveData
+export type SetEntityMutationData = SupportedTypesSerializedState & OnSaveData
 
-export function useRevisionAddMutation() {
+export function useSetEntityMutation() {
   const auth = useAuthentication()
   const loggedInData = useLoggedInData()
 
   return async (
-    data: RevisionAddMutationData,
+    data: SetEntityMutationData,
     needsReview: boolean,
     initialState: {
       plugin: 'text'
       state: unknown
     }
   ) =>
-    await addRevisionMutation({
+    await setEntityMutationRunner({
       auth,
       data,
       needsReview,
@@ -86,9 +86,9 @@ export function useRevisionAddMutation() {
     })
 }
 
-interface AddRevisionMutationData {
+interface SetEntityMutationRunnerData {
   auth: RefObject<AuthenticationPayload>
-  data: RevisionAddMutationData
+  data: SetEntityMutationData
   needsReview: boolean
   loggedInData: LoggedInData | null
   isRecursiveCall?: boolean
@@ -96,16 +96,18 @@ interface AddRevisionMutationData {
     plugin: 'text'
     state: unknown
   }
+  parentId?: number
 }
 
-export const addRevisionMutation = async function ({
+export const setEntityMutationRunner = async function ({
   auth,
   data,
   needsReview,
   loggedInData,
   isRecursiveCall,
   initialState,
-}: AddRevisionMutationData) {
+  parentId,
+}: SetEntityMutationRunnerData) {
   if (!auth || !loggedInData) {
     showToastNotice('Please make sure you are logged in!', 'warning')
     return false
@@ -124,7 +126,7 @@ export const addRevisionMutation = async function ({
   try {
     const genericInput = getGenericInputData(loggedInData, data, needsReview)
     const additionalInput = getAdditionalInputData(loggedInData, data)
-    const input = { ...genericInput, ...additionalInput }
+    const input = { ...genericInput, ...additionalInput, parentId }
 
     const success = await mutationFetch(
       auth,
@@ -154,7 +156,7 @@ const loopNestedChildren = async ({
   needsReview,
   loggedInData,
   initialState,
-}: AddRevisionMutationData): Promise<boolean> => {
+}: SetEntityMutationRunnerData): Promise<boolean> => {
   if (!data.__typename) return false
 
   let success = true
@@ -216,10 +218,6 @@ const loopNestedChildren = async ({
           (oldChild) => oldChild?.id === child.id
         )
 
-        if (!oldVersion) {
-          // TODO: is new uuid, call create mutation or combined mutation
-        }
-
         if (equals(oldVersion, child)) return true // no changes
 
         const input = {
@@ -229,12 +227,13 @@ const loopNestedChildren = async ({
           csrf: data.csrf,
           controls: data.controls,
         }
-        const success = await addRevisionMutation({
+        const success = await setEntityMutationRunner({
           auth,
-          data: input as RevisionAddMutationData,
+          data: input as SetEntityMutationData,
           needsReview,
           loggedInData,
           isRecursiveCall: true,
+          parentId: oldVersion ? undefined : data.id, //only needed for creating new entity
           initialState,
         })
         return success
@@ -244,91 +243,91 @@ const loopNestedChildren = async ({
   }
 }
 
-const addAppletRevisionMutation = gql`
-  mutation addAppletRevision($input: AddAppletRevisionInput!) {
+const setAppletMutation = gql`
+  mutation setApplet($input: SetAppletInput!) {
     entity {
-      addAppletRevision(input: $input) {
+      setApplet(input: $input) {
         success
       }
     }
   }
 `
-const addArticleRevisionMutation = gql`
-  mutation addArticleRevision($input: AddArticleRevisionInput!) {
+const setArticleMutation = gql`
+  mutation setArticle($input: SetArticleInput!) {
     entity {
-      addArticleRevision(input: $input) {
+      setArticle(input: $input) {
         success
       }
     }
   }
 `
-const addCourseRevisionMutation = gql`
-  mutation addCourseRevision($input: AddCourseRevisionInput!) {
+const setCourseMutation = gql`
+  mutation setCourse($input: SetCourseInput!) {
     entity {
-      addCourseRevision(input: $input) {
+      setCourse(input: $input) {
         success
       }
     }
   }
 `
-const addCoursePageRevisionMutation = gql`
-  mutation addCoursePageRevision($input: AddCoursePageRevisionInput!) {
+const setCoursePageMutation = gql`
+  mutation setCoursePage($input: SetCoursePageInput!) {
     entity {
-      addCoursePageRevision(input: $input) {
+      setCoursePage(input: $input) {
         success
       }
     }
   }
 `
-const addEventRevisionMutation = gql`
-  mutation addEventRevision($input: AddEventRevisionInput!) {
+const setEventMutation = gql`
+  mutation setEvent($input: SetEventInput!) {
     entity {
-      addEventRevision(input: $input) {
+      setEvent(input: $input) {
         success
       }
     }
   }
 `
-const addExerciseRevisionMutation = gql`
-  mutation addExerciseRevision($input: AddGenericRevisionInput!) {
+const setExerciseMutation = gql`
+  mutation setExercise($input: SetGenericEntityInput!) {
     entity {
-      addExerciseRevision(input: $input) {
+      setExercise(input: $input) {
         success
       }
     }
   }
 `
-const addExerciseGroupRevisionMutation = gql`
-  mutation addExerciseGroupRevision($input: AddExerciseGroupRevisionInput!) {
+const setExerciseGroupMutation = gql`
+  mutation setExerciseGroup($input: SetExerciseGroupInput!) {
     entity {
-      addExerciseGroupRevision(input: $input) {
+      setExerciseGroup(input: $input) {
         success
       }
     }
   }
 `
-const addGroupedExerciseRevisionMutation = gql`
-  mutation addGroupedExerciseRevision($input: AddGenericRevisionInput!) {
+const setGroupedExerciseMutation = gql`
+  mutation setGroupedExercise($input: SetGenericEntityInput!) {
     entity {
-      addGroupedExerciseRevision(input: $input) {
+      setGroupedExercise(input: $input) {
         success
       }
     }
   }
 `
-const addSolutionRevisionMutation = gql`
-  mutation addSolutionRevision($input: AddGenericRevisionInput!) {
+const setSolutionMutation = gql`
+  mutation setSolution($input: SetGenericEntityInput!) {
     entity {
-      addSolutionRevision(input: $input) {
+      setSolution(input: $input) {
         success
       }
     }
   }
 `
-const addVideoRevisionMutation = gql`
-  mutation addVideoRevision($input: AddVideoRevisionInput!) {
+const setVideoMutation = gql`
+  mutation setVideo($input: SetVideoInput!) {
     entity {
-      addVideoRevision(input: $input) {
+      setVideo(input: $input) {
         success
       }
     }
@@ -339,16 +338,16 @@ function getAddMutation(
   type: Exclude<SupportedTypesSerializedState['__typename'], undefined>
 ) {
   return {
-    Applet: addAppletRevisionMutation,
-    Article: addArticleRevisionMutation,
-    Course: addCourseRevisionMutation,
-    CoursePage: addCoursePageRevisionMutation,
-    Event: addEventRevisionMutation,
-    Exercise: addExerciseRevisionMutation,
-    ExerciseGroup: addExerciseGroupRevisionMutation,
-    GroupedExercise: addGroupedExerciseRevisionMutation,
-    Solution: addSolutionRevisionMutation,
-    Video: addVideoRevisionMutation,
+    Applet: setAppletMutation,
+    Article: setArticleMutation,
+    Course: setCourseMutation,
+    CoursePage: setCoursePageMutation,
+    Event: setEventMutation,
+    Exercise: setExerciseMutation,
+    ExerciseGroup: setExerciseGroupMutation,
+    GroupedExercise: setGroupedExerciseMutation,
+    Solution: setSolutionMutation,
+    Video: setVideoMutation,
   }[type]
 }
 
@@ -367,9 +366,9 @@ function getRequiredString(
 
 function getGenericInputData(
   loggedInData: LoggedInData,
-  data: RevisionAddMutationData,
+  data: SetEntityMutationData,
   needsReview: boolean
-): AddGenericRevisionInput {
+): SetGenericEntityInput {
   const content = data.__typename === 'Course' ? data.description : data.content
 
   return {
@@ -377,15 +376,15 @@ function getGenericInputData(
     content: getRequiredString(loggedInData, 'content', content),
     entityId: data.id,
     needsReview: needsReview,
-    subscribeThis: data.controls.subscription?.subscribe === 1 ? true : false, //simplify when old code is unused
+    subscribeThis: data.controls.subscription?.subscribe === 1 ? true : false, //simplify when old code is removed
     subscribeThisByEmail:
-      data.controls.subscription?.mailman === 1 ? true : false, //simplify when old code is unused
+      data.controls.subscription?.mailman === 1 ? true : false, //simplify when old code is removed
   }
 }
 
 function getAdditionalInputData(
   loggedInData: LoggedInData,
-  data: RevisionAddMutationData
+  data: SetEntityMutationData
 ) {
   switch (data.__typename) {
     case 'Applet':
