@@ -94,7 +94,7 @@ export function MockupGaps() {
   function saveLearningProgress() {
     const sessionId = sessionStorage.getItem('sessionId')
     const name = 'Lernstand-Mathe'
-    const value = encodeURIComponent('✓ Bruchaddition')
+    const value = encodeURIComponent('✓ Logistisches Wachstum')
 
     if (!sessionId) return
 
