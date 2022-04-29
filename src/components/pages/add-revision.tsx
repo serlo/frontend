@@ -8,10 +8,8 @@ import { shouldUseFeature } from '../user/profile-experimental'
 import { useInstanceData } from '@/contexts/instance-context'
 import { SerloEditor } from '@/edtr-io/serlo-editor'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
-import {
-  SetEntityMutationData,
-  useSetEntityMutation,
-} from '@/helper/mutations/use-set-entity-mutation'
+import { SetEntityMutationData } from '@/helper/mutations/use-set-entity-mutation/types'
+import { useSetEntityMutation } from '@/helper/mutations/use-set-entity-mutation/use-set-entity-mutation'
 
 export function AddRevision({
   initialState,

@@ -1,69 +1,23 @@
-import {
-  SetAppletInput,
-  SetGenericEntityInput,
-  SetArticleInput,
-  SetCourseInput,
-  SetCoursePageInput,
-  SetEventInput,
-  SetExerciseGroupInput,
-  SetVideoInput,
-} from '@serlo/api'
-import { gql } from 'graphql-request'
+import { SetGenericEntityInput } from '@serlo/api'
 // eslint-disable-next-line import/no-internal-modules
 import equals from 'ramda/src/equals'
-import { RefObject } from 'react'
 
-import { showToastNotice } from '../show-toast-notice'
-import { mutationFetch } from './helper'
-import { AuthenticationPayload } from '@/auth/auth-provider'
+import { showToastNotice } from '../../show-toast-notice'
+import { mutationFetch } from '../helper'
+import { getSetMutation } from './get-set-mutation'
+import {
+  ChildFieldsData,
+  SetEntityMutationData,
+  SetEntityMutationRunnerData,
+} from './types'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { LoggedInData } from '@/data-types'
 import {
-  AppletSerializedState,
-  ArticleSerializedState,
-  CoursePageSerializedState,
   CourseSerializedState,
-  EventSerializedState,
   TextExerciseGroupSerializedState,
   TextExerciseSerializedState,
-  TextSolutionSerializedState,
-  VideoSerializedState,
 } from '@/edtr-io/editor-response-to-state'
-
-export interface OnSaveData {
-  csrf?: string
-  controls: {
-    subscription?: {
-      subscribe: number
-      mailman: number
-    }
-    checkout?: boolean
-  }
-}
-
-export type SetEntityInputTypes =
-  | SetGenericEntityInput
-  | SetAppletInput
-  | SetArticleInput
-  | SetCourseInput
-  | SetCoursePageInput
-  | SetEventInput
-  | SetExerciseGroupInput
-  | SetVideoInput
-
-export type SupportedTypesSerializedState =
-  | AppletSerializedState
-  | ArticleSerializedState
-  | CourseSerializedState
-  | CoursePageSerializedState
-  | EventSerializedState
-  | TextExerciseSerializedState
-  | TextExerciseGroupSerializedState
-  | TextSolutionSerializedState
-  | VideoSerializedState
-
-export type SetEntityMutationData = SupportedTypesSerializedState & OnSaveData
 
 export function useSetEntityMutation() {
   const auth = useAuthentication()
@@ -84,19 +38,6 @@ export function useSetEntityMutation() {
       loggedInData,
       initialState,
     })
-}
-
-interface SetEntityMutationRunnerData {
-  auth: RefObject<AuthenticationPayload>
-  data: SetEntityMutationData
-  needsReview: boolean
-  loggedInData: LoggedInData | null
-  isRecursiveCall?: boolean
-  initialState: {
-    plugin: 'text'
-    state: unknown
-  }
-  parentId?: number
 }
 
 export const setEntityMutationRunner = async function ({
@@ -130,7 +71,7 @@ export const setEntityMutationRunner = async function ({
 
     const success = await mutationFetch(
       auth,
-      getAddMutation(data.__typename),
+      getSetMutation(data.__typename),
       input,
       loggedInData?.strings.mutations.errors
     )
@@ -193,17 +134,11 @@ const loopNestedChildren = async ({
 
   return success
 
-  type ChildFieldsData =
-    | CoursePageSerializedState
-    | TextSolutionSerializedState
-    | TextExerciseSerializedState
-
   async function mapField(
     childrenData: ChildFieldsData | ChildFieldsData[],
     childrenType: ChildFieldsData['__typename'],
     childrenInitialData?: ChildFieldsData | ChildFieldsData[]
   ) {
-    //bonus points if we check if they were changed at all
     const childrenArray = Array.isArray(childrenData)
       ? childrenData
       : [childrenData]
@@ -241,114 +176,6 @@ const loopNestedChildren = async ({
     )
     return results.every((result) => result === true)
   }
-}
-
-const setAppletMutation = gql`
-  mutation setApplet($input: SetAppletInput!) {
-    entity {
-      setApplet(input: $input) {
-        success
-      }
-    }
-  }
-`
-const setArticleMutation = gql`
-  mutation setArticle($input: SetArticleInput!) {
-    entity {
-      setArticle(input: $input) {
-        success
-      }
-    }
-  }
-`
-const setCourseMutation = gql`
-  mutation setCourse($input: SetCourseInput!) {
-    entity {
-      setCourse(input: $input) {
-        success
-      }
-    }
-  }
-`
-const setCoursePageMutation = gql`
-  mutation setCoursePage($input: SetCoursePageInput!) {
-    entity {
-      setCoursePage(input: $input) {
-        success
-      }
-    }
-  }
-`
-const setEventMutation = gql`
-  mutation setEvent($input: SetEventInput!) {
-    entity {
-      setEvent(input: $input) {
-        success
-      }
-    }
-  }
-`
-const setExerciseMutation = gql`
-  mutation setExercise($input: SetGenericEntityInput!) {
-    entity {
-      setExercise(input: $input) {
-        success
-      }
-    }
-  }
-`
-const setExerciseGroupMutation = gql`
-  mutation setExerciseGroup($input: SetExerciseGroupInput!) {
-    entity {
-      setExerciseGroup(input: $input) {
-        success
-      }
-    }
-  }
-`
-const setGroupedExerciseMutation = gql`
-  mutation setGroupedExercise($input: SetGenericEntityInput!) {
-    entity {
-      setGroupedExercise(input: $input) {
-        success
-      }
-    }
-  }
-`
-const setSolutionMutation = gql`
-  mutation setSolution($input: SetGenericEntityInput!) {
-    entity {
-      setSolution(input: $input) {
-        success
-      }
-    }
-  }
-`
-const setVideoMutation = gql`
-  mutation setVideo($input: SetVideoInput!) {
-    entity {
-      setVideo(input: $input) {
-        success
-      }
-    }
-  }
-`
-
-function getAddMutation(
-  type: Exclude<SupportedTypesSerializedState['__typename'], undefined>
-) {
-  return {
-    Applet: setAppletMutation,
-    Article: setArticleMutation,
-    Course: setCourseMutation,
-    CoursePage: setCoursePageMutation,
-    Event: setEventMutation,
-    Exercise: setExerciseMutation,
-    ExerciseGroup: setExerciseGroupMutation,
-    GroupedExercise: setGroupedExerciseMutation,
-    Solution: setSolutionMutation,
-    Video: setVideoMutation,
-  }[type]
 }
 
 function getRequiredString(

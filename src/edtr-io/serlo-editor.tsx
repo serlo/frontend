@@ -12,7 +12,7 @@ import { useCanDo } from '@/auth/use-can-do'
 import { MathSpan } from '@/components/content/math-span'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { SetEntityMutationData } from '@/helper/mutations/use-set-entity-mutation'
+import { SetEntityMutationData } from '@/helper/mutations/use-set-entity-mutation/types'
 
 export interface SerloEditorProps {
   getCsrfToken(): string
