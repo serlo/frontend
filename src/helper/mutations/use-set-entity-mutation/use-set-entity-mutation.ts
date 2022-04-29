@@ -63,11 +63,20 @@ export const setEntityMutationRunner = async function ({
     loggedInData,
     initialState,
   })
+  console.log('childrenResult:')
+  console.log(childrenResult)
 
   try {
     const genericInput = getGenericInputData(loggedInData, data, needsReview)
     const additionalInput = getAdditionalInputData(loggedInData, data)
-    const input = { ...genericInput, ...additionalInput, parentId }
+    const input = {
+      ...genericInput,
+      ...additionalInput,
+      parentId: genericInput.entityId ? undefined : parentId,
+    }
+
+    console.log(data.__typename)
+    console.log(input)
 
     const success = await mutationFetch(
       auth,
@@ -162,13 +171,14 @@ const loopNestedChildren = async ({
           csrf: data.csrf,
           controls: data.controls,
         }
+
         const success = await setEntityMutationRunner({
           auth,
           data: input as SetEntityMutationData,
           needsReview,
           loggedInData,
           isRecursiveCall: true,
-          parentId: oldVersion ? undefined : data.id, //only needed for creating new entity
+          parentId: data.id,
           initialState,
         })
         return success
