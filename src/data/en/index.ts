@@ -733,7 +733,6 @@ export const loggedInData = {
         addLabel: 'Add',
         removeLabel: 'Remove',
         dragLabel: 'Drag to change order',
-        placeholder: 'Paste Serlo ID or URL',
         openInTab: 'Open in new tab',
         linkTitle: 'Title of the link',
         sources: 'Sources',
@@ -748,6 +747,10 @@ export const loggedInData = {
         loading: 'Loading…',
         notFound: 'Could not find that content',
         unsupportedType: 'Sorry, type [%type%] is not supported here',
+        modalTitle: 'Add related Content or Exercises',
+        addFromFolderTitle: 'From the folder',
+        addInputTitle: 'Via ID or URL',
+        placeholder: 'Paste Serlo ID or URL',
       },
       coursePage: {
         explanation: 'Explanation',

@@ -8,8 +8,11 @@ import {
 } from '@edtr-io/plugin'
 import { styled } from '@edtr-io/ui'
 import * as React from 'react'
+import { useState } from 'react'
 
 import { SemanticSection } from '../helpers/semantic-section'
+import { SerloAddButton } from '../helpers/serlo-editor-button'
+import { ArticleAddModal } from './add-modal/article-add-modal'
 import { ArticleExercises } from './article-exercises'
 import { ArticleRelatedContent } from './article-related-content'
 import { ArticleSources } from './article-sources'
@@ -86,8 +89,9 @@ function ArticleEditor(props: ArticleProps) {
     relatedContent,
     sources,
   } = state
+  const [modalOpen, setModalOpen] = useState(false)
 
-  const [focusedInlineSetting, setFocusedInlineSetting] = React.useState<{
+  const [focusedInlineSetting, setFocusedInlineSetting] = useState<{
     id: string
     index?: number
   } | null>(null)
@@ -115,9 +119,11 @@ function ArticleEditor(props: ArticleProps) {
           isFocused={isFocused}
           setFocusedInlineSetting={setFocusedInlineSetting}
         />
+        <SerloAddButton onClick={() => setModalOpen(true)} className="my-3" />
       </SemanticSection>
       <SemanticSection editable={editable}>
         <ArticleRelatedContent data={relatedContent} editable={editable} />
+        <SerloAddButton onClick={() => setModalOpen(true)} className="my-3" />
       </SemanticSection>
       <SemanticSection editable={editable}>
         <ArticleSources
@@ -127,6 +133,13 @@ function ArticleEditor(props: ArticleProps) {
           setFocusedInlineSetting={setFocusedInlineSetting}
         />
       </SemanticSection>
+      {editable && (
+        <ArticleAddModal
+          data={state}
+          open={modalOpen}
+          setModalOpen={setModalOpen}
+        />
+      )}
     </>
   )
 }

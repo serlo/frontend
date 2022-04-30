@@ -184,7 +184,7 @@ export function ArticleSources({
               sources.insert(sources.length)
             }}
           >
-            {articleStrings.addLabel + articleStrings.source}
+            {articleStrings.addLabel + ' ' + articleStrings.source}
           </AddButton>
         ) : null}
       </ExpandableBox>

@@ -10,7 +10,6 @@ import {
 } from 'react-beautiful-dnd'
 
 import { ArticleProps } from '.'
-import { ArticleRelatedMagicInput } from './article-related-magic-input'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { getTranslatedType } from '@/helper/get-translated-type'
@@ -46,7 +45,6 @@ export function ArticleRelatedContent({
           </div>
         )
       })}
-      {editable ? <ArticleRelatedMagicInput relatedContent={data} /> : null}
     </>
   )
 
@@ -140,7 +138,7 @@ export function ArticleRelatedContent({
     dragHandleProps?: DraggableProvidedDragHandleProps
   ) {
     const buttonClass =
-      'serlo-button serlo-make-interactive-transparent-green opacity-50 hover:opacity-100'
+      'serlo-button text-amber-200 hover:bg-amber-200 hover:text-black w-8'
 
     return (
       <>

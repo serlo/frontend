@@ -1,26 +1,9 @@
-import { PluginToolbarButton } from '@edtr-io/core'
-// eslint-disable-next-line import/no-internal-modules
-import { AddButton } from '@edtr-io/editor-ui/internal'
-import {
-  edtrDragHandle,
-  EdtrIcon,
-  faExternalLinkAlt,
-  faTrashAlt,
-  Icon,
-} from '@edtr-io/ui'
+import { faTrashAlt, Icon } from '@edtr-io/ui'
+import { faGripVertical } from '@fortawesome/free-solid-svg-icons'
 import { Fragment } from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 
-import {
-  ArticleProps,
-  BasePluginToolbarButton,
-  MinWidthIcon,
-  OpenInNewTab,
-  PluginToolbarButtonIcon,
-} from '.'
-import { InlineInput } from '../helpers/inline-input'
-import { InlineSettings } from '../helpers/inline-settings'
-import { InlineSettingsInput } from '../helpers/inline-settings-input'
+import { ArticleProps } from '.'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
@@ -41,8 +24,6 @@ export function ArticleExercises({
   exercises,
   exerciseFolder,
   editable,
-  isFocused,
-  setFocusedInlineSetting,
 }: ArticleExercisesProps) {
   const loggedInData = useLoggedInData()
   const { strings } = useInstanceData()
@@ -89,118 +70,65 @@ export function ArticleExercises({
           {(provided) => {
             return (
               <div ref={provided.innerRef} {...provided.droppableProps}>
-                {exercises.map((exercise, index) => {
-                  return (
-                    <Draggable
-                      key={exercise.id}
-                      draggableId={exercise.id}
-                      index={index}
-                    >
-                      {(provided) => {
-                        return (
-                          <div
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                          >
-                            {exercise.render({
-                              renderToolbar() {
-                                return (
-                                  <>
-                                    <div>
-                                      <BasePluginToolbarButton
-                                        // icon={<Icon icon={faTrashAlt} />}
-                                        title={articleStrings.dragLabel}
-                                        {...provided.dragHandleProps}
-                                      >
-                                        <PluginToolbarButtonIcon>
-                                          <EdtrIcon icon={edtrDragHandle} />
-                                        </PluginToolbarButtonIcon>
-                                      </BasePluginToolbarButton>
-                                    </div>
-                                    <PluginToolbarButton
-                                      icon={
-                                        <MinWidthIcon>
-                                          <Icon icon={faTrashAlt} />
-                                        </MinWidthIcon>
-                                      }
-                                      label={articleStrings.removeLabel}
-                                      onClick={() => {
-                                        exercises.remove(index)
-                                      }}
-                                    />
-                                  </>
-                                )
-                              },
-                            })}
-                          </div>
-                        )
-                      }}
-                    </Draggable>
-                  )
-                })}
+                {renderDraggables()}
                 {provided.placeholder}
               </div>
             )
           }}
         </Droppable>
       </DragDropContext>
-      <AddButton
-        onClick={() => {
-          exercises.insert(exercises.length)
-        }}
-      >
-        {articleStrings.addOptionalExercise}
-      </AddButton>
-      {folderHeader}
-      {isFocused('exerciseFolder') ? (
-        <InlineSettings
-          onDelete={() => {
-            exerciseFolder.title.set('')
-            exerciseFolder.id.set('')
-          }}
-          position="below"
-        >
-          <InlineSettingsInput
-            value={
-              exerciseFolder.id.value !== ''
-                ? `/${exerciseFolder.id.value}`
-                : ''
-            }
-            placeholder={articleStrings.exFolderId}
-            onChange={(event) => {
-              const newValue = event.target.value.replace(/[^0-9]/g, '')
-              exerciseFolder.id.set(newValue)
-            }}
-          />
-          <a
-            target="_blank"
-            href={
-              exerciseFolder.id.value !== ''
-                ? `/${exerciseFolder.id.value}`
-                : ''
-            }
-            rel="noopener noreferrer"
-          >
-            <OpenInNewTab title={articleStrings.openInTab}>
-              <Icon icon={faExternalLinkAlt} />
-            </OpenInNewTab>
-          </a>
-        </InlineSettings>
-      ) : null}
-      <a>
-        <InlineInput
-          value={exerciseFolder.title.value}
-          onFocus={() => {
-            setFocusedInlineSetting({
-              id: 'exerciseFolder',
-            })
-          }}
-          onChange={(value) => {
-            exerciseFolder.title.set(value)
-          }}
-          placeholder={articleStrings.linkTitle}
-        />
-      </a>
+      <p className="mt-4 mb-1">
+        {exerciseFolder.title.value ? (
+          <>
+            {folderHeader}
+            <a href={`/${exerciseFolder.id.value}`}>
+              {exerciseFolder.title.value ? exerciseFolder.title.value : '…'}
+            </a>
+          </>
+        ) : null}
+      </p>
     </>
   )
+
+  function renderDraggables() {
+    const buttonClass =
+      'serlo-button bg-amber-100 hover:bg-amber-300 mb-2 mr-2 w-8'
+
+    return exercises.map((exercise, index) => {
+      return (
+        <Draggable key={exercise.id} draggableId={exercise.id} index={index}>
+          {(provided) => {
+            return (
+              <div ref={provided.innerRef} {...provided.draggableProps}>
+                {exercise.render({
+                  renderToolbar() {
+                    return (
+                      <>
+                        <button
+                          title={articleStrings.dragLabel}
+                          {...provided.dragHandleProps}
+                          className={buttonClass}
+                        >
+                          <Icon icon={faGripVertical} />
+                        </button>
+                        <button
+                          title={articleStrings.removeLabel}
+                          className={buttonClass}
+                          onClick={() => {
+                            exercises.remove(index)
+                          }}
+                        >
+                          <Icon icon={faTrashAlt} />
+                        </button>
+                      </>
+                    )
+                  },
+                })}
+              </div>
+            )
+          }}
+        </Draggable>
+      )
+    })
+  }
 }

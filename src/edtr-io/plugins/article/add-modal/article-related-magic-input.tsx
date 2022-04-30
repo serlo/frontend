@@ -2,38 +2,49 @@ import { Icon } from '@edtr-io/ui'
 import { gql } from 'graphql-request'
 import { useState } from 'react'
 
-import { ArticleProps } from '.'
+import { SerloAddButton } from '../../helpers/serlo-editor-button'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
+import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { getTranslatedType } from '@/helper/get-translated-type'
+import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 
 interface ArticleRelatedMagicInputProps {
-  relatedContent: ArticleProps['state']['relatedContent']
+  addEntry: (id: number, typename: string, title?: string) => void
 }
 
 export function ArticleRelatedMagicInput({
-  relatedContent,
+  addEntry,
 }: ArticleRelatedMagicInputProps) {
   const [maybeUuid, setMaybeUuid] = useState<null | false | number>(null)
   const { data, error } = useSimpleUuidFetch(maybeUuid)
 
+  const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
   const articleStrings = loggedInData.strings.editor.article
 
   return (
-    <div className="flex">
-      <input
-        className="serlo-input-font-reset outline-none rounded-xl bg-brand-100 p-2 my-2"
-        placeholder={articleStrings.placeholder}
-        onChange={(event) => {
-          const numbers = event.target.value.match(/[1-9]?[0-9]+/)
-          const input = numbers ? parseInt(numbers[0]) : false
-          event.target.value = input ? input.toString() : ''
-          setMaybeUuid(input)
-        }}
-      />
-      <p className="ml-4 mt-4">{renderFeedback()}</p>
+    <div className="my-5">
+      <b>{articleStrings.addInputTitle}</b>
+      <div className="flex">
+        <input
+          className="serlo-input-font-reset outline-none rounded-xl bg-amber-200 p-2 my-2 border-2 border-transparent focus:border-brand"
+          placeholder={articleStrings.placeholder}
+          onChange={(event) => {
+            if (event.target.value.length === 0) {
+              setMaybeUuid(null)
+              return
+            }
+            const numbers = event.target.value.match(/[1-9]?[0-9]+/)
+            const input = numbers ? parseInt(numbers[0]) : false
+            event.target.value = input ? input.toString() : ''
+            setMaybeUuid(input)
+          }}
+        />
+        <p className="ml-4 mt-[1.1rem] text-base">{renderFeedback()}</p>
+      </div>
     </div>
   )
 
@@ -57,41 +68,50 @@ export function ArticleRelatedMagicInput({
             uuid.course?.currentRevision?.title,
             uuid.__typename,
           ]
+        : uuid.__typename === 'TaxonomyTerm'
+        ? [uuid.id, uuid.name, uuid.__typename]
+        : uuid.__typename.includes('Exercise')
+        ? [
+            uuid.id,
+            getTranslatedType(strings, uuid.__typename),
+            uuid.__typename,
+          ]
         : [uuid.id, uuid.currentRevision?.title, uuid.__typename]
 
-    if (!['Article', 'Course', 'CoursePage', 'Video'].includes(uuid.__typename))
+    if (
+      ![
+        'Article',
+        'Course',
+        'CoursePage',
+        'Video',
+        'Exercise',
+        'ExerciseGroup',
+        'GroupedExercise',
+        'TaxonomyTerm',
+      ].includes(uuid.__typename)
+    )
       return articleStrings.unsupportedType.replace('%type%', uuid.__typename)
 
-    if (!id || !title) return articleStrings.notFound
+    if (hasOwnPropertyTs(uuid, 'type') && uuid.type !== 'topicFolder')
+      return articleStrings.unsupportedType.replace('%type%', uuid.type ?? '')
+
+    if (!id) return articleStrings.notFound
+    if (!uuid.__typename.includes('Exercise') && !title)
+      return articleStrings.notFound
 
     return (
       <>
-        <a href={`/${id}`} target="_blank" rel="noreferrer">
+        <a className="mr-3" href={`/${id}`} target="_blank" rel="noreferrer">
           <Icon icon={getIconByTypename(__typename)} /> {title}
         </a>
-        <button
-          className="serlo-button serlo-make-interactive-primary ml-3"
+        <SerloAddButton
           onClick={() => {
-            const category =
-              uuid.__typename === 'Article'
-                ? 'articles'
-                : uuid.__typename === 'Video'
-                ? 'videos'
-                : 'courses'
-
-            const duplicate = relatedContent[category].some(
-              (field) => field.id.value === id.toString()
-            )
-            if (duplicate) return
-
-            relatedContent[category].insert(relatedContent[category].length, {
-              id: id.toString(),
-              title,
-            })
+            addEntry(id, uuid.__typename, title)
+            setTimeout(() => {
+              setMaybeUuid(null)
+            }, 200)
           }}
-        >
-          {articleStrings.addLabel}
-        </button>
+        />
       </>
     )
   }
@@ -125,6 +145,10 @@ const uuidSimpleQuery = gql`
           title
         }
       }
+      ... on TaxonomyTerm {
+        name
+        type
+      }
     }
   }
 `
@@ -136,6 +160,8 @@ function useSimpleUuidFetch(maybeUuid: null | false | number) {
       __typename: string
       currentRevision?: { title?: string }
       course?: { id: number; currentRevision?: { title?: string } }
+      name?: string
+      type?: string
     }
   }>({
     noKey: maybeUuid === false,
