@@ -1,3 +1,5 @@
+import clsx from 'clsx'
+
 import { ArticleProps } from '..'
 import { ArticleRelatedMagicInput } from './article-related-magic-input'
 import { ArticleRelatedTaxonomy } from './article-related-taxonomy'
@@ -78,12 +80,17 @@ export function ArticleAddModal({
     <ModalWithCloseButton
       isOpen={open}
       onCloseClick={() => setModalOpen(false)}
-      title={articleStrings.modalTitle}
-      className="!top-1/3 bottom-0 translate-y-0 max-h-full"
+      className={clsx(
+        'left-auto mr-0 translate-x-0 translate-y-0',
+        'rounded-none max-w-[19rem] border-l-2 border-amber-300',
+        'bg-amber-50 outline-none px-2.5 pt-2.5',
+        'right-0 !w-72 !top-0 !max-h-full !bottom-0'
+      )}
     >
+      <h3 className="serlo-h3 mt-8 mb-4">{articleStrings.modalTitle}</h3>
       <div className="mx-side">
+        <p>Infotext TODO</p>
         <ArticleRelatedMagicInput addEntry={addEntry} />
-        <hr />
         <ArticleRelatedTaxonomy
           checkDuplicates={checkDuplicates}
           addEntry={addEntry}
