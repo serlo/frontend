@@ -9,7 +9,7 @@ import {
   Droppable,
 } from 'react-beautiful-dnd'
 
-import { ArticleProps } from '.'
+import { ArticleProps, buttonClass } from '.'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { getTranslatedType } from '@/helper/get-translated-type'
@@ -137,9 +137,6 @@ export function ArticleRelatedContent({
     category: typeof categories[number],
     dragHandleProps?: DraggableProvidedDragHandleProps
   ) {
-    const buttonClass =
-      'serlo-button text-amber-200 hover:bg-amber-200 hover:text-black w-8'
-
     return (
       <>
         <button

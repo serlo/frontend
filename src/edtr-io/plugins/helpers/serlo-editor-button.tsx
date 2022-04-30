@@ -13,7 +13,7 @@ export function SerloAddButton({ onClick, className }: SerloAddButtonProps) {
   const articleStrings = loggedInData.strings.editor.article
   return (
     <button
-      className={`serlo-button bg-amber-100 hover:bg-amber-300 ${
+      className={`serlo-button bg-amber-100 hover:bg-amber-300 text-base leading-browser ${
         className ?? ''
       }`}
       onClick={onClick}

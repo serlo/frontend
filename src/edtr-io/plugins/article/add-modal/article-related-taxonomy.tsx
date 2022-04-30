@@ -1,3 +1,4 @@
+import { Icon } from '@edtr-io/ui'
 import { gql } from 'graphql-request'
 
 import { SerloAddButton } from '../../helpers/serlo-editor-button'
@@ -7,6 +8,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { getCategoryByTypename } from '@/helper/get-category-by-typename'
 import { getTranslatedType } from '@/helper/get-translated-type'
+import { getIconByTypename } from '@/helper/icon-by-entity-type'
 
 interface ArticleRelatedTaxonomyProps {
   addEntry: (id: number, typename: string, title?: string) => void
@@ -66,9 +68,11 @@ export function ArticleRelatedTaxonomy({
     })
 
     return (
-      <div>
-        {articleStrings.addFromFolderTitle} <b>{term?.name}:</b>
-        <div className="mt-6">
+      <div className="border-t-2 border-truegray-500 pt-4">
+        {articleStrings.addFromFolderTitle}
+        <br />
+        <b>{term?.name}:</b>
+        <div className="mt-4">
           {Object.entries(categorisedData).map(([_key, categoryData]) => {
             return renderList(categoryData)
           })}
@@ -81,9 +85,12 @@ export function ArticleRelatedTaxonomy({
     if (dataArray.length === 0) return null
     const typename = dataArray[0].__typename
     return (
-      <>
-        <b>{strings.categories[getCategoryByTypename(typename)]}</b>
-        <div className="mt-4 pb-4 mb-4 border-b-2" style={{ columnCount: 3 }}>
+      <div className="py-3 border-t-2">
+        <b>
+          <Icon icon={getIconByTypename(typename)} />{' '}
+          {strings.categories[getCategoryByTypename(typename)]}
+        </b>
+        <div>
           {dataArray.map((item) => {
             const title = typename.includes('Exercise')
               ? getTranslatedType(strings, typename)
@@ -99,7 +106,12 @@ export function ArticleRelatedTaxonomy({
 
             return (
               <div key={item.id} className="group">
-                <a href={`/${item.id}`} target="_blank" rel="noreferrer">
+                <a
+                  href={`/${item.id}`}
+                  className="text-brand"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   {title}
                 </a>{' '}
                 <SerloAddButton
@@ -113,7 +125,7 @@ export function ArticleRelatedTaxonomy({
             )
           })}
         </div>
-      </>
+      </div>
     )
   }
 }

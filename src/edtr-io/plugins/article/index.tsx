@@ -48,36 +48,8 @@ export const articlePlugin: EditorPlugin<ArticlePluginState> = {
 
 export const OpenInNewTab = styled.span({ margin: '0 0 0 10px' })
 
-export const BasePluginToolbarButton = styled.button({
-  background: 'none',
-  border: 'none',
-})
-
-export const MinWidthIcon = styled.div({
-  width: '24px',
-})
-
-export const PluginToolbarButtonIcon = styled.div({
-  height: '24px',
-  width: '24px',
-  opacity: 0.8,
-  cursor: 'pointer',
-  color: 'rgba(51, 51, 51, 0.95)',
-
-  '&:hover': {
-    color: '#469bff',
-  },
-})
-
-export const spoilerTheme = {
-  rendererUi: {
-    expandableBox: {
-      toggleBackgroundColor: '#f5f5f5',
-      toggleColor: '#333',
-      containerBorderColor: '#f5f5f5',
-    },
-  },
-}
+export const buttonClass =
+  'serlo-button text-amber-300 hover:bg-amber-300 hover:text-black w-8'
 
 function ArticleEditor(props: ArticleProps) {
   const { editable, state } = props

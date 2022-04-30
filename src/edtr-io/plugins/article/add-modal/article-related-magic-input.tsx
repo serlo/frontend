@@ -26,25 +26,23 @@ export function ArticleRelatedMagicInput({
   const articleStrings = loggedInData.strings.editor.article
 
   return (
-    <div className="my-5">
+    <div className="my-5 pt-5 border-t-2 border-truegray-500">
       <b>{articleStrings.addInputTitle}</b>
-      <div className="flex">
-        <input
-          className="serlo-input-font-reset outline-none rounded-xl bg-amber-200 p-2 my-2 border-2 border-transparent focus:border-brand"
-          placeholder={articleStrings.placeholder}
-          onChange={(event) => {
-            if (event.target.value.length === 0) {
-              setMaybeUuid(null)
-              return
-            }
-            const numbers = event.target.value.match(/[1-9]?[0-9]+/)
-            const input = numbers ? parseInt(numbers[0]) : false
-            event.target.value = input ? input.toString() : ''
-            setMaybeUuid(input)
-          }}
-        />
-        <p className="ml-4 mt-[1.1rem] text-base">{renderFeedback()}</p>
-      </div>
+      <input
+        className="serlo-input-font-reset outline-none rounded-xl bg-amber-200 p-2 my-2 focus:bg-amber-300"
+        placeholder={articleStrings.placeholder}
+        onChange={(event) => {
+          if (event.target.value.length === 0) {
+            setMaybeUuid(null)
+            return
+          }
+          const numbers = event.target.value.match(/[1-9]?[0-9]+/)
+          const input = numbers ? parseInt(numbers[0]) : false
+          event.target.value = input ? input.toString() : ''
+          setMaybeUuid(input)
+        }}
+      />
+      <p className="text-base italic">{renderFeedback()}</p>
     </div>
   )
 
@@ -101,7 +99,12 @@ export function ArticleRelatedMagicInput({
 
     return (
       <>
-        <a className="mr-3" href={`/${id}`} target="_blank" rel="noreferrer">
+        <a
+          className="mr-3 not-italic"
+          href={`/${id}`}
+          target="_blank"
+          rel="noreferrer"
+        >
           <Icon icon={getIconByTypename(__typename)} /> {title}
         </a>
         <SerloAddButton
