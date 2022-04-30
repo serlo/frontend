@@ -63,20 +63,6 @@ function ArticleEditor(props: ArticleProps) {
   } = state
   const [modalOpen, setModalOpen] = useState(false)
 
-  const [focusedInlineSetting, setFocusedInlineSetting] = useState<{
-    id: string
-    index?: number
-  } | null>(null)
-
-  function isFocused(id: string, index?: number) {
-    return (
-      focusedInlineSetting &&
-      focusedInlineSetting.id === id &&
-      (focusedInlineSetting.index === undefined ||
-        focusedInlineSetting.index === index)
-    )
-  }
-
   return (
     <>
       <SemanticSection editable={editable}>
@@ -88,8 +74,6 @@ function ArticleEditor(props: ArticleProps) {
           exercises={exercises}
           exerciseFolder={exerciseFolder}
           editable={editable}
-          isFocused={isFocused}
-          setFocusedInlineSetting={setFocusedInlineSetting}
         />
         <SerloAddButton onClick={() => setModalOpen(true)} className="my-3" />
       </SemanticSection>
@@ -98,12 +82,7 @@ function ArticleEditor(props: ArticleProps) {
         <SerloAddButton onClick={() => setModalOpen(true)} className="my-3" />
       </SemanticSection>
       <SemanticSection editable={editable}>
-        <ArticleSources
-          sources={sources}
-          editable={editable}
-          isFocused={isFocused}
-          setFocusedInlineSetting={setFocusedInlineSetting}
-        />
+        <ArticleSources sources={sources} editable={editable} />
       </SemanticSection>
       {editable && (
         <ArticleAddModal

@@ -13,21 +13,9 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 interface ArticleSourcesProps {
   sources: ArticleProps['state']['sources']
   editable: boolean
-  isFocused: (arg1: string, arg2?: number) => boolean | null
-  setFocusedInlineSetting: React.Dispatch<
-    React.SetStateAction<{
-      id: string
-      index?: number | undefined
-    } | null>
-  >
 }
 
-export function ArticleSources({
-  sources,
-  editable,
-  isFocused,
-  setFocusedInlineSetting,
-}: ArticleSourcesProps) {
+export function ArticleSources({ sources, editable }: ArticleSourcesProps) {
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
   const articleStrings = loggedInData.strings.editor.article
@@ -81,7 +69,7 @@ export function ArticleSources({
           onClick={() => {
             sources.insert(sources.length)
           }}
-          className="ml-4 mb-4"
+          className="mb-4"
         />
       ) : null}
     </>
@@ -93,7 +81,11 @@ export function ArticleSources({
         <Draggable key={index} draggableId={`${index}`} index={index}>
           {(provided) => {
             return (
-              <li ref={provided.innerRef} {...provided.draggableProps}>
+              <li
+                ref={provided.innerRef}
+                {...provided.draggableProps}
+                className="group"
+              >
                 <div
                   style={{
                     display: 'flex',
@@ -105,7 +97,7 @@ export function ArticleSources({
                     }}
                   >
                     <span>
-                      {isFocused('source', index) ? (
+                      <span className="hidden group-focus-within:inline">
                         <InlineSettings
                           onDelete={() => {
                             sources.remove(index)
@@ -114,7 +106,7 @@ export function ArticleSources({
                         >
                           <InlineSettingsInput
                             value={source.href.value}
-                            placeholder={articleStrings.linkUrl}
+                            placeholder={articleStrings.sourceUrl}
                             onChange={(event) => {
                               source.href.set(event.target.value)
                             }}
@@ -129,20 +121,14 @@ export function ArticleSources({
                             </OpenInNewTab>
                           </a>
                         </InlineSettings>
-                      ) : null}
+                      </span>
                       <a>
                         <InlineInput
                           value={source.title.value}
-                          onFocus={() => {
-                            setFocusedInlineSetting({
-                              id: 'source',
-                              index,
-                            })
-                          }}
                           onChange={(value) => {
                             source.title.set(value)
                           }}
-                          placeholder={articleStrings.linkTitle}
+                          placeholder={articleStrings.sourceText}
                         />
                       </a>
                     </span>

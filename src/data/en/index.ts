@@ -734,10 +734,9 @@ export const loggedInData = {
         removeLabel: 'Remove',
         dragLabel: 'Drag to change order',
         openInTab: 'Open in new tab',
-        linkTitle: 'Title of the link',
         sources: 'Sources',
-        source: 'Source',
-        linkUrl: 'URL of the link',
+        sourceText: 'Source Text',
+        sourceUrl: 'Optional URL',
         moreInFolder:
         'You can find more exercises in the following folder',
         addOptionalExercise: 'Add optional exercise',

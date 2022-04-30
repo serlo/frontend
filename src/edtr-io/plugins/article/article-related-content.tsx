@@ -49,9 +49,9 @@ export function ArticleRelatedContent({
   )
 
   function renderRelatedContentSection(category: typeof categories[number]) {
-    if (!editable) {
-      if (data[category].length === 0) return null
+    if (data[category].length === 0) return null
 
+    if (!editable) {
       return (
         <>
           {renderHeader()}

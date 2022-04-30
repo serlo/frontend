@@ -11,13 +11,6 @@ interface ArticleExercisesProps {
   exercises: ArticleProps['state']['exercises']
   exerciseFolder: ArticleProps['state']['exerciseFolder']
   editable: boolean
-  isFocused: (arg1: string, arg2?: number) => boolean | null
-  setFocusedInlineSetting: React.Dispatch<
-    React.SetStateAction<{
-      id: string
-      index?: number | undefined
-    } | null>
-  >
 }
 
 export function ArticleExercises({
