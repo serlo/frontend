@@ -117,12 +117,7 @@ function ArticleEditor(props: ArticleProps) {
         />
       </SemanticSection>
       <SemanticSection editable={editable}>
-        <ArticleRelatedContent
-          data={relatedContent}
-          editable={editable}
-          isFocused={isFocused}
-          setFocusedInlineSetting={setFocusedInlineSetting}
-        />
+        <ArticleRelatedContent data={relatedContent} editable={editable} />
       </SemanticSection>
       <SemanticSection editable={editable}>
         <ArticleSources

@@ -21,6 +21,7 @@ import {
 import { InlineInput } from '../helpers/inline-input'
 import { InlineSettings } from '../helpers/inline-settings'
 import { InlineSettingsInput } from '../helpers/inline-settings-input'
+import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 interface ArticleExercisesProps {
@@ -44,11 +45,12 @@ export function ArticleExercises({
   setFocusedInlineSetting,
 }: ArticleExercisesProps) {
   const loggedInData = useLoggedInData()
+  const { strings } = useInstanceData()
   if (!loggedInData) return null
-  const editorStrings = loggedInData.strings.editor
+  const articleStrings = loggedInData.strings.editor.article
 
-  const header = <h2>{editorStrings.article.exercises}</h2>
-  const folderHeader = <p>{editorStrings.article.moreInFolder}:</p>
+  const header = <h2>{strings.categories.exercises}</h2>
+  const folderHeader = <p>{articleStrings.moreInFolder}:</p>
 
   if (!editable) {
     if (exercises.length === 0 || !exerciseFolder.id.value) return null
@@ -107,9 +109,7 @@ export function ArticleExercises({
                                     <div>
                                       <BasePluginToolbarButton
                                         // icon={<Icon icon={faTrashAlt} />}
-                                        title={
-                                          editorStrings.article.dragTheExercise
-                                        }
+                                        title={articleStrings.dragLabel}
                                         {...provided.dragHandleProps}
                                       >
                                         <PluginToolbarButtonIcon>
@@ -123,9 +123,7 @@ export function ArticleExercises({
                                           <Icon icon={faTrashAlt} />
                                         </MinWidthIcon>
                                       }
-                                      label={
-                                        editorStrings.article.removeExercise
-                                      }
+                                      label={articleStrings.removeLabel}
                                       onClick={() => {
                                         exercises.remove(index)
                                       }}
@@ -151,7 +149,7 @@ export function ArticleExercises({
           exercises.insert(exercises.length)
         }}
       >
-        {editorStrings.article.addOptionalExercise}
+        {articleStrings.addOptionalExercise}
       </AddButton>
       {folderHeader}
       {isFocused('exerciseFolder') ? (
@@ -168,7 +166,7 @@ export function ArticleExercises({
                 ? `/${exerciseFolder.id.value}`
                 : ''
             }
-            placeholder={editorStrings.article.exFolderId}
+            placeholder={articleStrings.exFolderId}
             onChange={(event) => {
               const newValue = event.target.value.replace(/[^0-9]/g, '')
               exerciseFolder.id.set(newValue)
@@ -183,7 +181,7 @@ export function ArticleExercises({
             }
             rel="noopener noreferrer"
           >
-            <OpenInNewTab title={editorStrings.article.openCourseTab}>
+            <OpenInNewTab title={articleStrings.openInTab}>
               <Icon icon={faExternalLinkAlt} />
             </OpenInNewTab>
           </a>
@@ -200,7 +198,7 @@ export function ArticleExercises({
           onChange={(value) => {
             exerciseFolder.title.set(value)
           }}
-          placeholder={editorStrings.article.linkTitle}
+          placeholder={articleStrings.linkTitle}
         />
       </a>
     </>

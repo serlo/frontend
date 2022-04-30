@@ -42,7 +42,7 @@ export function ArticleSources({
 }: ArticleSourcesProps) {
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
-  const editorStrings = loggedInData.strings.editor
+  const articleStrings = loggedInData.strings.editor.article
 
   if (!editable) {
     if (sources.length === 0) return null
@@ -50,7 +50,7 @@ export function ArticleSources({
     return (
       <ThemeProvider theme={spoilerTheme}>
         <ExpandableBox
-          renderTitle={() => editorStrings.article.sources}
+          renderTitle={() => articleStrings.sources}
           editable={editable}
           alwaysVisible
         >
@@ -71,7 +71,7 @@ export function ArticleSources({
   return (
     <ThemeProvider theme={spoilerTheme}>
       <ExpandableBox
-        renderTitle={() => editorStrings.article.sources}
+        renderTitle={() => articleStrings.sources}
         editable={editable}
         alwaysVisible
       >
@@ -119,9 +119,7 @@ export function ArticleSources({
                                       >
                                         <InlineSettingsInput
                                           value={source.href.value}
-                                          placeholder={
-                                            editorStrings.article.linkUrl
-                                          }
+                                          placeholder={articleStrings.linkUrl}
                                           onChange={(event) => {
                                             source.href.set(event.target.value)
                                           }}
@@ -132,9 +130,7 @@ export function ArticleSources({
                                           rel="noopener noreferrer"
                                         >
                                           <OpenInNewTab
-                                            title={
-                                              editorStrings.article.openInNewTab
-                                            }
+                                            title={articleStrings.openInTab}
                                           >
                                             <Icon icon={faExternalLinkAlt} />
                                           </OpenInNewTab>
@@ -153,9 +149,7 @@ export function ArticleSources({
                                         onChange={(value) => {
                                           source.title.set(value)
                                         }}
-                                        placeholder={
-                                          editorStrings.article.linkTitle
-                                        }
+                                        placeholder={articleStrings.linkTitle}
                                       />
                                     </a>
                                   </span>
@@ -163,7 +157,7 @@ export function ArticleSources({
                                 <div>
                                   <BasePluginToolbarButton
                                     // icon={<Icon icon={faTrashAlt} />}
-                                    title={editorStrings.article.dragTheSource}
+                                    title={articleStrings.dragLabel}
                                     {...provided.dragHandleProps}
                                   >
                                     <PluginToolbarButtonIcon>
@@ -190,7 +184,7 @@ export function ArticleSources({
               sources.insert(sources.length)
             }}
           >
-            {editorStrings.article.addSource}
+            {articleStrings.addLabel + articleStrings.source}
           </AddButton>
         ) : null}
       </ExpandableBox>
