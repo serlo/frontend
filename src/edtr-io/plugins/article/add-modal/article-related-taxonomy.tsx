@@ -60,7 +60,12 @@ export function ArticleRelatedTaxonomy({
           <Icon icon={getIconByTypename(typename)} />{' '}
           {strings.categories[getCategoryByTypename(typename)]}
         </b>
-        <ul style={{ columnCount: 3 }}>
+        <ul
+          style={{
+            columnCount: dataArray.length > 5 ? 3 : 1,
+            maxWidth: dataArray.length > 5 ? undefined : '14rem',
+          }}
+        >
           {dataArray.map((item) => renderLi(item, typename))}
         </ul>
       </div>
