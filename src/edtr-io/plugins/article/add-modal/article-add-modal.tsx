@@ -82,9 +82,9 @@ export function ArticleAddModal({
       onCloseClick={() => setModalOpen(false)}
       className={clsx(
         'left-auto mr-0 translate-x-0 translate-y-0',
-        'rounded-none max-w-[19rem] border-l-2 border-amber-300',
+        'rounded-none max-w-[19rem]',
         'bg-amber-50 outline-none px-2.5 pt-2.5',
-        'right-0 !w-72 !top-0 !max-h-full !bottom-0'
+        'left-0 !w-72 !top-0 !max-h-full !bottom-0'
       )}
     >
       <h3 className="serlo-h3 mt-8 mb-4">{articleStrings.modalTitle}</h3>

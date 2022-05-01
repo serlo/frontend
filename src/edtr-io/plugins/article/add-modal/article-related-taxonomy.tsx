@@ -43,13 +43,7 @@ export function ArticleRelatedTaxonomy({
     if (!term || term.children.nodes.length === 0) return null
 
     const categorisedData = {} as {
-      [key: string]: {
-        __typename: string
-        id: number
-        currentRevision?: {
-          title: string
-        }
-      }[]
+      [key: string]: ChildNode[]
     }
 
     term.children.nodes.map((child) => {
@@ -62,6 +56,8 @@ export function ArticleRelatedTaxonomy({
       )
         return
 
+      if (!child.currentRevision || child.trashed) return
+
       const category = isEx ? 'Exercise' : child.__typename
       if (!categorisedData[category]) categorisedData[category] = []
       categorisedData[category].push(child)
@@ -71,7 +67,15 @@ export function ArticleRelatedTaxonomy({
       <div className="border-t-2 border-truegray-500 pt-4">
         {articleStrings.addFromFolderTitle}
         <br />
-        <b>{term?.name}:</b>
+        <a
+          className="font-bold text-brand"
+          target="_blank"
+          href={`/${term?.id}`}
+          rel="noreferrer"
+        >
+          <Icon icon={getIconByTypename('folder')} /> {term?.name}
+        </a>
+        :
         <div className="mt-4">
           {Object.entries(categorisedData).map(([_key, categoryData]) => {
             return renderList(categoryData)
@@ -105,22 +109,21 @@ export function ArticleRelatedTaxonomy({
             if (checkDuplicates(item.id, typename)) return null
 
             return (
-              <div key={item.id} className="group">
+              <div key={item.id} className="group flex justify-between">
                 <a
                   href={`/${item.id}`}
-                  className="text-brand"
+                  className="text-brand mt-1 mb-2 leading-tight"
                   target="_blank"
                   rel="noreferrer"
                 >
                   {title}
                 </a>{' '}
                 <SerloAddButton
-                  className="invisible group-hover:visible"
+                  className="invisible group-hover:visible group-focus-within:visible whitespace-nowrap ml-2 max-h-8 self-center"
                   onClick={() => {
                     addEntry(item.id, item.__typename, title)
                   }}
                 />
-                <br />
               </div>
             )
           })}
@@ -143,12 +146,14 @@ const fetchParentQuery = gql`
 
   fragment taxonomyTerm on TaxonomyTermConnection {
     nodes {
+      id
       type
       name
       children {
         nodes {
           id
           __typename
+          trashed
           ... on Article {
             currentRevision {
               title
@@ -168,6 +173,11 @@ const fetchParentQuery = gql`
             name
             type
           }
+          ... on Exercise {
+            currentRevision {
+              id
+            }
+          }
         }
       }
     }
@@ -177,8 +187,10 @@ const fetchParentQuery = gql`
 interface ChildNode {
   __typename: string
   id: number
+  trashed: boolean
   currentRevision?: {
-    title: string
+    title?: string
+    id?: string
   }
   type?: string
   name?: string
@@ -191,6 +203,7 @@ function useFetchParentTaxonomy(id: number) {
         nodes: {
           type: string
           name: string
+          id: number
           children: {
             nodes: ChildNode[]
           }
