@@ -45,9 +45,6 @@ export function ArticleAddModal({
     )
   }
 
-  //TODO: add explanation text in popup modal
-  //TODO: test more
-
   const addEntry = (id: number, typename: string, title?: string) => {
     const category = getCategoryByTypename(typename)
     if (
