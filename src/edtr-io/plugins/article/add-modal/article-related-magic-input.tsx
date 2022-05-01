@@ -23,14 +23,13 @@ export function ArticleRelatedMagicInput({
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
-  const articleStrings = loggedInData.strings.editor.article
+  const modalStrings = loggedInData.strings.editor.article.addModal
 
   return (
-    <div className="my-5 pt-5 border-t-2 border-truegray-500">
-      <b>{articleStrings.addInputTitle}</b>
+    <div className="my-4 pt-5 border-t-2">
       <input
-        className="serlo-input-font-reset outline-none rounded-xl bg-amber-200 p-2 my-2 focus:bg-amber-300"
-        placeholder={articleStrings.placeholder}
+        className="serlo-input-font-reset outline-none rounded-xl bg-amber-200 p-2 focus:bg-amber-300 w-72"
+        placeholder={modalStrings.placeholder}
         onChange={(event) => {
           if (event.target.value.length === 0) {
             setMaybeUuid(null)
@@ -48,16 +47,16 @@ export function ArticleRelatedMagicInput({
 
   function renderFeedback() {
     if (maybeUuid === null) return null
-    if (maybeUuid === false) return articleStrings.invalidInput
+    if (maybeUuid === false) return modalStrings.invalidInput
     if (error) {
       // eslint-disable-next-line no-console
       console.log(error)
-      return articleStrings.fetchError
+      return modalStrings.fetchError
     }
-    if (!data) return articleStrings.loading
+    if (!data) return modalStrings.loading
 
     const { uuid } = data
-    if (!uuid) return articleStrings.notFound
+    if (!uuid) return modalStrings.notFound
 
     const [id, title, __typename] =
       uuid.__typename === 'CoursePage'
@@ -88,14 +87,14 @@ export function ArticleRelatedMagicInput({
         'TaxonomyTerm',
       ].includes(uuid.__typename)
     )
-      return articleStrings.unsupportedType.replace('%type%', uuid.__typename)
+      return modalStrings.unsupportedType.replace('%type%', uuid.__typename)
 
     if (hasOwnPropertyTs(uuid, 'type') && uuid.type !== 'topicFolder')
-      return articleStrings.unsupportedType.replace('%type%', uuid.type ?? '')
+      return modalStrings.unsupportedType.replace('%type%', uuid.type ?? '')
 
-    if (!id) return articleStrings.notFound
+    if (!id) return modalStrings.notFound
     if (!uuid.__typename.includes('Exercise') && !title)
-      return articleStrings.notFound
+      return modalStrings.notFound
 
     return (
       <>

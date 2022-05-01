@@ -80,16 +80,23 @@ export function ArticleAddModal({
     <ModalWithCloseButton
       isOpen={open}
       onCloseClick={() => setModalOpen(false)}
-      className={clsx(
-        'left-auto mr-0 translate-x-0 translate-y-0',
-        'rounded-none max-w-[19rem]',
-        'bg-amber-50 outline-none px-2.5 pt-2.5',
-        'left-0 !w-72 !top-0 !max-h-full !bottom-0'
-      )}
+      className={clsx()}
     >
-      <h3 className="serlo-h3 mt-8 mb-4">{articleStrings.modalTitle}</h3>
+      <h3 className="serlo-h3 mt-5 mb-4">{articleStrings.addModal.title}</h3>
       <div className="mx-side">
-        <p>Infotext TODO</p>
+        <p>
+          After reading the article, what could help out learners next?
+          <br />
+          Here you can add some <b>Exercises</b> or link to a single{' '}
+          <b>Exercise Folder.</b>
+          <br />
+          Or you can suggest <b>Articles</b>, <b>Courses</b> or <b>Videos</b> to
+          follow up with.
+        </p>
+        <p className="mt-4">
+          You can either paste an Serlo ID or URL or choose content from the
+          parent folder below.
+        </p>
         <ArticleRelatedMagicInput addEntry={addEntry} />
         <ArticleRelatedTaxonomy
           checkDuplicates={checkDuplicates}

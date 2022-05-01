@@ -64,18 +64,16 @@ export function ArticleRelatedTaxonomy({
     })
 
     return (
-      <div className="border-t-2 border-truegray-500 pt-4">
-        {articleStrings.addFromFolderTitle}
-        <br />
+      <div className="border-t-2 pt-6">
+        {articleStrings.addModal.addFromFolderTitle}
         <a
-          className="font-bold text-brand"
+          className="font-bold text-brand ml-2"
           target="_blank"
           href={`/${term?.id}`}
           rel="noreferrer"
         >
           <Icon icon={getIconByTypename('folder')} /> {term?.name}
         </a>
-        :
         <div className="mt-4">
           {Object.entries(categorisedData).map(([_key, categoryData]) => {
             return renderList(categoryData)
@@ -89,12 +87,12 @@ export function ArticleRelatedTaxonomy({
     if (dataArray.length === 0) return null
     const typename = dataArray[0].__typename
     return (
-      <div className="py-3 border-t-2">
-        <b>
+      <div className="py-2">
+        <b className="block mb-2">
           <Icon icon={getIconByTypename(typename)} />{' '}
           {strings.categories[getCategoryByTypename(typename)]}
         </b>
-        <div>
+        <div style={{ columnCount: 3 }}>
           {dataArray.map((item) => {
             const title = typename.includes('Exercise')
               ? getTranslatedType(strings, typename)
