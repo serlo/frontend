@@ -15,7 +15,7 @@ import {
   faTable,
 } from '@edtr-io/ui'
 import { faSquare } from '@fortawesome/free-regular-svg-icons/faSquare'
-import { faGripLinesVertical } from '@fortawesome/free-solid-svg-icons'
+import { faGripLinesVertical, faUsers } from '@fortawesome/free-solid-svg-icons'
 
 import { shouldUseFeature } from '@/components/user/profile-experimental'
 import { LoggedInData } from '@/data-types'
@@ -160,6 +160,12 @@ export function getPluginRegistry(
             title: 'Layout Column for Pages',
             description: "The plugin the people want but don't get 🤫",
             icon: createIcon(faGripLinesVertical),
+          },
+          {
+            name: 'pageSpecialContent',
+            title: 'Special Content for Pages',
+            description: 'Only Teampage for now',
+            icon: createIcon(faUsers),
           },
         ]
       : tableFiltered

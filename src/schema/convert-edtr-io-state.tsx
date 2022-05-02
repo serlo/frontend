@@ -278,6 +278,7 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
       },
     ]
   }
+  // TODO: Add pageSpecialContent
   if (node.plugin === 'pageLayout') {
     return [
       {

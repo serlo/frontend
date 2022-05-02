@@ -709,6 +709,10 @@ export const loggedInData = {
       pageLayoutColums: {
         chooseRatio: 'Choose column ratio'
       },
+      pageSpecialContent: {
+        choose: 'Choose a type',
+        data: 'Supply data to plugin'
+      },
       solution: {
         optionalExplanation:
           'Optionally explain the solution strategy here',
