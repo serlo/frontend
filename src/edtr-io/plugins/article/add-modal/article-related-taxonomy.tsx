@@ -42,32 +42,28 @@ export function ArticleRelatedTaxonomy({
       >
         <Icon icon={getIconByTypename('folder')} /> {term.name}
       </a>
-      <div className="mt-4">
-        {Object.entries(categorisedData).map(([_key, categoryData]) => {
-          return renderList(categoryData)
+      <div className="mt-4 flex flex-wrap">
+        {Object.entries(categorisedData).map(([typename, categoryData]) => {
+          return renderList(typename, categoryData)
         })}
       </div>
     </div>
   )
 
-  function renderList(dataArray: ChildNode[]) {
+  function renderList(typename: string, dataArray: ChildNode[]) {
     if (dataArray.length === 0) return null
-    const typename = dataArray[0].__typename
+    const isTax = typename === 'TaxonomyTerm'
 
     return (
-      <div className="py-2" key={typename}>
+      <div className="py-2 max-w-[30%] mr-4" key={typename}>
         <b className="block mb-2">
           <Icon icon={getIconByTypename(typename)} />{' '}
-          {strings.categories[getCategoryByTypename(typename)]}
+          {isTax
+            ? strings.entities.topicFolder
+            : strings.categories[getCategoryByTypename(typename)]}
         </b>
-        <ul
-          style={{
-            columnCount: dataArray.length > 5 ? 3 : 1,
-            maxWidth: dataArray.length > 5 ? undefined : '14rem',
-          }}
-        >
-          {dataArray.map((item) => renderLi(item, typename))}
-        </ul>
+        {isTax ? articleStrings.addModal.topicFolderNote : null}
+        <ul>{dataArray.map((item) => renderLi(item, typename))}</ul>
       </div>
     )
   }
@@ -80,7 +76,6 @@ export function ArticleRelatedTaxonomy({
       : item.currentRevision?.title
 
     if (!title) return null
-    if (typename === 'TaxonomyTerm' && item.type !== 'topicFolder') return null
 
     if (checkDuplicates(item.id, typename)) return null
 
@@ -95,6 +90,7 @@ export function ArticleRelatedTaxonomy({
           {title}
         </a>{' '}
         <SerloAddButton
+          text=""
           className="invisible group-hover:visible group-focus-within:visible whitespace-nowrap ml-2 max-h-8 self-center"
           onClick={() => {
             addEntry(item.id, item.__typename, title)
@@ -212,15 +208,20 @@ function getCategorisedDataAndTerm(data?: FetchParentType, error?: object) {
 
   term.children.nodes.map((child) => {
     const isEx = child.__typename.includes('Exercise')
+    const isTax = child.__typename === 'TaxonomyTerm'
+
     if (
-      !['Article', 'Course', 'CoursePage', 'TaxonomyTerm'].includes(
+      !['Article', 'Course', 'CoursePage', 'Video'].includes(
         child.__typename
       ) &&
-      !isEx
+      !isEx &&
+      !isTax
     )
       return
 
-    if (!child.currentRevision || child.trashed) return
+    if (isTax && child.type !== 'topicFolder') return
+
+    if ((!isTax && !child.currentRevision) || child.trashed) return
 
     const category = isEx ? 'Exercise' : child.__typename
     if (!categorisedData[category]) categorisedData[category] = []

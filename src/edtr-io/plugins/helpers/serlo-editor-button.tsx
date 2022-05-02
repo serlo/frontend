@@ -1,16 +1,18 @@
 import { faPlus, Icon } from '@edtr-io/ui'
 
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
-
 interface SerloAddButtonProps {
   onClick: () => void
   className?: string
+  text: string
+  noIcon?: boolean
 }
 
-export function SerloAddButton({ onClick, className }: SerloAddButtonProps) {
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const articleStrings = loggedInData.strings.editor.article
+export function SerloAddButton({
+  onClick,
+  className,
+  text,
+  noIcon,
+}: SerloAddButtonProps) {
   return (
     <button
       className={`serlo-button bg-amber-100 hover:bg-amber-300 text-base leading-browser ${
@@ -18,7 +20,7 @@ export function SerloAddButton({ onClick, className }: SerloAddButtonProps) {
       }`}
       onClick={onClick}
     >
-      <Icon icon={faPlus} /> {articleStrings.addLabel}
+      {noIcon ? null : <Icon icon={faPlus} />} {text}
     </button>
   )
 }

@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-internal-modules
-import { faExternalLinkAlt, Icon } from '@edtr-io/ui'
+import { faExternalLinkAlt, faTrashAlt, Icon } from '@edtr-io/ui'
 import { faGripVertical } from '@fortawesome/free-solid-svg-icons'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 
@@ -66,6 +66,7 @@ export function ArticleSources({ sources, editable }: ArticleSourcesProps) {
       </DragDropContext>
       {editable ? (
         <SerloAddButton
+          text={articleStrings.addSource}
           onClick={() => {
             sources.insert(sources.length)
           }}
@@ -84,64 +85,57 @@ export function ArticleSources({ sources, editable }: ArticleSourcesProps) {
               <li
                 ref={provided.innerRef}
                 {...provided.draggableProps}
-                className="group"
+                className="group flex"
               >
-                <div
-                  style={{
-                    display: 'flex',
-                  }}
-                >
-                  <div
-                    style={{
-                      flexGrow: 1,
-                    }}
-                  >
-                    <span>
-                      <span className="hidden group-focus-within:inline">
-                        <InlineSettings
-                          onDelete={() => {
-                            sources.remove(index)
+                <div className="flex-grow">
+                  <span>
+                    <span className="hidden group-focus-within:inline">
+                      <InlineSettings position="below">
+                        <InlineSettingsInput
+                          value={source.href.value}
+                          placeholder={articleStrings.sourceUrl}
+                          onChange={(event) => {
+                            source.href.set(event.target.value)
                           }}
-                          position="below"
-                        >
-                          <InlineSettingsInput
-                            value={source.href.value}
-                            placeholder={articleStrings.sourceUrl}
-                            onChange={(event) => {
-                              source.href.set(event.target.value)
-                            }}
-                          />
-                          <a
-                            target="_blank"
-                            href={source.href.value}
-                            rel="noopener noreferrer"
-                          >
-                            <OpenInNewTab title={articleStrings.openInTab}>
-                              <Icon icon={faExternalLinkAlt} />
-                            </OpenInNewTab>
-                          </a>
-                        </InlineSettings>
-                      </span>
-                      <a>
-                        <InlineInput
-                          value={source.title.value}
-                          onChange={(value) => {
-                            source.title.set(value)
-                          }}
-                          placeholder={articleStrings.sourceText}
                         />
-                      </a>
+                        <a
+                          target="_blank"
+                          href={source.href.value}
+                          rel="noopener noreferrer"
+                          className="p-1 inline-block"
+                        >
+                          <OpenInNewTab title={articleStrings.openInTab}>
+                            <Icon icon={faExternalLinkAlt} />
+                          </OpenInNewTab>
+                        </a>
+                      </InlineSettings>
                     </span>
-                  </div>
-                  <div>
-                    <button
-                      title={articleStrings.dragLabel}
-                      {...provided.dragHandleProps}
-                      className={buttonClass}
-                    >
-                      <Icon icon={faGripVertical} />
-                    </button>
-                  </div>
+                    <a>
+                      <InlineInput
+                        value={source.title.value}
+                        onChange={(value) => {
+                          source.title.set(value)
+                        }}
+                        placeholder={articleStrings.sourceText}
+                      />
+                    </a>
+                  </span>
+                </div>
+                <div>
+                  <button
+                    title={articleStrings.removeLabel}
+                    className={buttonClass}
+                    onClick={() => sources.remove(index)}
+                  >
+                    <Icon icon={faTrashAlt} />
+                  </button>
+                  <button
+                    title={articleStrings.dragLabel}
+                    {...provided.dragHandleProps}
+                    className={buttonClass}
+                  >
+                    <Icon icon={faGripVertical} />
+                  </button>
                 </div>
               </li>
             )

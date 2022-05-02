@@ -41,7 +41,9 @@ export function ArticleRelatedMagicInput({
           setMaybeUuid(input)
         }}
       />
-      <p className="text-base italic">{renderFeedback()}</p>
+      <div className="text-base italic inline-block ml-3">
+        {renderFeedback()}
+      </div>
     </div>
   )
 
@@ -99,7 +101,7 @@ export function ArticleRelatedMagicInput({
     return (
       <>
         <a
-          className="mr-3 not-italic"
+          className="mr-3 not-italic font-bold text-brand"
           href={`/${id}`}
           target="_blank"
           rel="noreferrer"
@@ -107,6 +109,7 @@ export function ArticleRelatedMagicInput({
           <Icon icon={getIconByTypename(__typename)} /> {title}
         </a>
         <SerloAddButton
+          text=""
           onClick={() => {
             addEntry(id, uuid.__typename, title)
             setTimeout(() => {

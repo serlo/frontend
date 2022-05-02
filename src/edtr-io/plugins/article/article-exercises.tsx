@@ -4,7 +4,6 @@ import { Fragment } from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 
 import { ArticleProps } from '.'
-import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 interface ArticleExercisesProps {
@@ -19,11 +18,9 @@ export function ArticleExercises({
   editable,
 }: ArticleExercisesProps) {
   const loggedInData = useLoggedInData()
-  const { strings } = useInstanceData()
   if (!loggedInData) return null
   const articleStrings = loggedInData.strings.editor.article
 
-  const header = <h2>{strings.categories.exercises}</h2>
   const folderHeader = <p>{articleStrings.moreInFolder}:</p>
 
   if (!editable) {
@@ -31,18 +28,15 @@ export function ArticleExercises({
 
     return (
       <>
-        {header}
         {exercises.map((exercise) => {
           return <Fragment key={exercise.id}>{exercise.render()}</Fragment>
         })}
         {exerciseFolder.id.value ? (
           <>
             {folderHeader}
-            <div>
-              <a href={`/${exerciseFolder.id.value}`}>
-                {exerciseFolder.title.value}
-              </a>
-            </div>
+            <a href={`/${exerciseFolder.id.value}`}>
+              {exerciseFolder.title.value}
+            </a>
           </>
         ) : null}
       </>
@@ -51,7 +45,6 @@ export function ArticleExercises({
 
   return (
     <>
-      {header}
       <DragDropContext
         onDragEnd={(result) => {
           const { source, destination } = result

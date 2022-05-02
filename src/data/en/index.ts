@@ -730,7 +730,7 @@ export const loggedInData = {
         stillWantMore: 'Still want more?',
         moreOnTopic:
         'You can find more content on this topic here',
-        addLabel: 'Add',
+        addSource: 'Add source',
         removeLabel: 'Remove',
         dragLabel: 'Drag to change order',
         openInTab: 'Open in new tab',
@@ -740,6 +740,9 @@ export const loggedInData = {
         moreInFolder:
           'You can find more exercises in the following folder',
         addModal: {
+          buttonEx: 'Add exercises',
+          buttonExFolder: 'Select exercise folder',
+          buttonContent: 'Add content',
           title: 'Add related Content or Exercises',
           invalidInput: 'Invalid id or url',
           fetchError: 'Something went wrong, please try later',
@@ -748,6 +751,7 @@ export const loggedInData = {
           unsupportedType: 'Sorry, type [%type%] is not supported here',
           addFromFolderTitle: 'From the folder',
           placeholder: 'Paste Serlo ID or URL here',
+          topicFolderNote: 'Only one can be selected here'
         }
       },
       coursePage: {

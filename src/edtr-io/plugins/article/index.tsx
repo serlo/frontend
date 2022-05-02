@@ -16,6 +16,8 @@ import { ArticleAddModal } from './add-modal/article-add-modal'
 import { ArticleExercises } from './article-exercises'
 import { ArticleRelatedContent } from './article-related-content'
 import { ArticleSources } from './article-sources'
+import { useInstanceData } from '@/contexts/instance-context'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 const relatedContentItemState = object({ id: string(), title: string() })
 
@@ -46,7 +48,9 @@ export const articlePlugin: EditorPlugin<ArticlePluginState> = {
   config: {},
 }
 
-export const OpenInNewTab = styled.span({ margin: '0 0 0 10px' })
+export const OpenInNewTab = styled.span({
+  margin: '0 0 0 10px',
+})
 
 export const buttonClass =
   'serlo-button text-amber-300 hover:bg-amber-300 hover:text-black w-8'
@@ -63,6 +67,11 @@ function ArticleEditor(props: ArticleProps) {
   } = state
   const [modalOpen, setModalOpen] = useState(false)
 
+  const { strings } = useInstanceData()
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return null
+  const modalStrings = loggedInData.strings.editor.article.addModal
+
   return (
     <>
       <SemanticSection editable={editable}>
@@ -70,16 +79,18 @@ function ArticleEditor(props: ArticleProps) {
       </SemanticSection>
       <SemanticSection editable={editable}>{content.render()}</SemanticSection>
       <SemanticSection editable={editable}>
+        <h2>{strings.categories.exercises}</h2>
+        {renderButton(modalStrings.buttonEx)}
         <ArticleExercises
           exercises={exercises}
           exerciseFolder={exerciseFolder}
           editable={editable}
         />
-        <SerloAddButton onClick={() => setModalOpen(true)} className="my-3" />
+        {renderButton(modalStrings.buttonExFolder, true)}
       </SemanticSection>
       <SemanticSection editable={editable}>
         <ArticleRelatedContent data={relatedContent} editable={editable} />
-        <SerloAddButton onClick={() => setModalOpen(true)} className="my-3" />
+        {renderButton(modalStrings.buttonContent)}
       </SemanticSection>
       <SemanticSection editable={editable}>
         <ArticleSources sources={sources} editable={editable} />
@@ -93,4 +104,15 @@ function ArticleEditor(props: ArticleProps) {
       )}
     </>
   )
+
+  function renderButton(text: string, noIcon?: boolean) {
+    return (
+      <SerloAddButton
+        text={text}
+        noIcon={noIcon}
+        onClick={() => setModalOpen(true)}
+        className="my-3"
+      />
+    )
+  }
 }
