@@ -1,7 +1,6 @@
 import { convertState } from './convert-state'
 import { createInlineLicense } from './create-inline-license'
-import { MainPageQuery } from './graphql-types/operations'
-import { Solution } from './query-types'
+import { MainPageQuery, RevisionUuidQuery } from './graphql-types/operations'
 import {
   FrontendExerciseNode,
   FrontendContentNode,
@@ -19,7 +18,7 @@ export function createExercise(
       NonNullable<MainPageQuery['uuid']>,
       { __typename: 'Exercise' | 'GroupedExercise' }
     >,
-    'exerciseGroup' | '__typename'
+    'exerciseGroup' | '__typename' | 'instance'
   >,
   index?: number
 ): FrontendExerciseNode {
@@ -124,15 +123,26 @@ function createSolutionData(
   }
 }
 
-export function createSolution(uuid: Solution): FrontendSolutionNode {
+export function createSolution(
+  uuid: Extract<
+    NonNullable<RevisionUuidQuery['uuid']>,
+    { __typename: 'SolutionRevision' }
+  >
+): FrontendSolutionNode {
   return {
     type: 'solution',
-    solution: createSolutionData(uuid),
+    solution: createSolutionData({
+      __typename: 'Solution',
+      license: uuid.repository.license,
+      id: uuid.id,
+      trashed: uuid.trashed,
+      currentRevision: uuid.repository.currentRevision,
+    }),
     context: {
       id: uuid.id,
     },
-    href: uuid.alias ? uuid.alias : undefined,
-    unrevisedRevisions: uuid.unrevisedRevisions,
+    href: uuid.repository.alias ? uuid.repository.alias : undefined,
+    /* not part of the schema anymore, obsolete? unrevisedRevisions: uuid.unrevisedRevisions, */
   }
 }
 

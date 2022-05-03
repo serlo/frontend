@@ -8,7 +8,7 @@ import {
 } from '../query-fragments'
 
 export const revisionQuery = gql`
-  query revisionUuid($id: Int) {
+  query RevisionUuid($id: Int) {
     authorization
     uuid(id: $id) {
       ... on AbstractRevision {
@@ -176,12 +176,9 @@ export const revisionQuery = gql`
           currentRevision {
             id
             content
+            date
           }
-          license {
-            id
-            default
-            title
-          }
+          ...license
           solution {
             id
             currentRevision {
@@ -213,6 +210,7 @@ export const revisionQuery = gql`
           currentRevision {
             id
             content
+            date
           }
           revisions(unrevised: false) {
             nodes {

@@ -9,7 +9,7 @@ import { Guard } from '@/components/guard'
 import { ManageSubscriptions } from '@/components/pages/manage-subscriptions'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { SubscriptionData } from '@/data-types'
+import { SubscriptionQuery } from '@/fetcher/graphql-types/operations'
 import { getEntityStringByTypename } from '@/helper/feature-i18n'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
@@ -107,7 +107,9 @@ function Content() {
 }
 
 function useFetch() {
-  return useGraphqlSwrPaginationWithAuth<SubscriptionData>({
+  return useGraphqlSwrPaginationWithAuth<
+    SubscriptionQuery['subscription']['getSubscriptions']['nodes'][0]
+  >({
     query: subscriptionsQuery,
     variables: { first: 300 },
     config: {

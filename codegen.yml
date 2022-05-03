@@ -3,6 +3,8 @@ schema: 'https://api.serlo-staging.dev/graphql'
 documents:
   - 'src/fetcher/query.ts'
   - 'src/fetcher/query-fragments.ts'
+  - 'src/fetcher/revision/query.ts'
+  - 'src/pages/subscriptions/manage.tsx'
 generates:
   src/fetcher/graphql-types/operations.ts:
     plugins:

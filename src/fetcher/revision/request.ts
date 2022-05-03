@@ -3,12 +3,15 @@ import { request } from 'graphql-request'
 
 import { convertState } from '../convert-state'
 import { createExercise, createSolution } from '../create-exercises'
-import { createTitle_with_old_types_for_revision } from '../create-title'
+import { createTitle } from '../create-title'
 import {
   Instance,
+  RevisionUuidQuery,
+  RevisionUuidQueryVariables,
+} from '../graphql-types/operations'
+import {
   ArticleRevision,
   VideoRevision,
-  QueryResponseRevision,
   GroupedExercise,
   Exercise,
 } from '../query-types'
@@ -24,13 +27,22 @@ export async function requestRevision(
     id: revisionId,
   }
 
-  const { uuid, authorization } = await request<{
-    uuid: QueryResponseRevision
-    authorization: AuthorizationPayload
-  }>(endpoint, revisionQuery, variables)
+  const response = await request<RevisionUuidQuery, RevisionUuidQueryVariables>(
+    endpoint,
+    revisionQuery,
+    variables
+  )
+
+  const uuid = response.uuid
+
+  if (!uuid)
+    return {
+      kind: 'not-found',
+    }
+
+  const authorization = response.authorization as AuthorizationPayload
 
   const cacheKey = `/${instance}/${revisionId}`
-  const title = createTitle_with_old_types_for_revision(uuid, instance)
 
   if (
     uuid.__typename === 'ArticleRevision' ||
@@ -48,6 +60,8 @@ export async function requestRevision(
     const isExercise =
       uuid.__typename === 'ExerciseRevision' ||
       uuid.__typename === 'GroupedExerciseRevision'
+
+    const title = createTitle(uuid, instance)
 
     const thisExercise = isExercise
       ? [
@@ -77,19 +91,7 @@ export async function requestRevision(
         : null
 
     const thisSolution =
-      uuid.__typename === 'SolutionRevision'
-        ? [
-            createSolution({
-              __typename: 'Solution',
-              id: uuid.id,
-              trashed: uuid.trashed,
-              license: uuid.license,
-              instance: uuid.instance,
-              currentRevision: { content: uuid.content, id: uuid.id },
-              exercise: { id: -1 },
-            }),
-          ]
-        : null
+      uuid.__typename === 'SolutionRevision' ? [createSolution(uuid)] : null
     const currentSolution =
       uuid.__typename === 'SolutionRevision'
         ? [

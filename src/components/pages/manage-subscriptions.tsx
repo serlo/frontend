@@ -4,8 +4,7 @@ import { FaIcon } from '../fa-icon'
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { SubscriptionData } from '@/data-types'
-import { getRawTitle_with_old_types_for_revision } from '@/fetcher/create-title'
+import { SubscriptionQuery } from '@/fetcher/graphql-types/operations'
 import { getEntityStringByTypename } from '@/helper/feature-i18n'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { useSubscriptionSetMutation } from '@/helper/mutations/use-subscription-set-mutation'
@@ -13,7 +12,7 @@ import { useSubscriptionSetMutation } from '@/helper/mutations/use-subscription-
 export function ManageSubscriptions({
   subscriptions,
 }: {
-  subscriptions: SubscriptionData[]
+  subscriptions: SubscriptionQuery['subscription']['getSubscriptions']['nodes']
 }) {
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
@@ -52,11 +51,13 @@ export function ManageSubscriptions({
     if (subscribe) setMailOverwrite({ ...mailOverwrite, [id]: sendEmail })
   }
 
-  function renderLine({ object, sendEmail }: SubscriptionData) {
+  function renderLine({
+    object,
+    sendEmail,
+  }: SubscriptionQuery['subscription']['getSubscriptions']['nodes'][0]) {
     if (hidden.includes(object.id)) return null
     const entityString = getEntityStringByTypename(object.__typename, strings)
-    const title =
-      getRawTitle_with_old_types_for_revision(object, 'de') ?? entityString
+    const title = generateTitle(object) ?? entityString
     const icon = getIconByTypename(object.__typename)
     const sendEmailOverwrite = mailOverwrite[object.id] ?? sendEmail
 
@@ -90,4 +91,21 @@ export function ManageSubscriptions({
       </tr>
     )
   }
+}
+
+function generateTitle(
+  object: SubscriptionQuery['subscription']['getSubscriptions']['nodes'][0]['object']
+) {
+  if (object.__typename == 'User') {
+    return object.username
+  }
+  if (object.__typename == 'TaxonomyTerm') {
+    return object.name
+  }
+  if (object.__typename == 'Exercise' || object.__typename == 'ExerciseGroup') {
+    return object.taxonomyTerms.nodes[0].navigation?.path.nodes[0].label // is this useful?
+  }
+  // TODO: Complete this (can't test at the moment because of https://github.com/serlo/api.serlo.org/issues/614)
+
+  return null
 }
