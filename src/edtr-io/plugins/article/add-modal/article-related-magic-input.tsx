@@ -1,4 +1,4 @@
-import { Icon } from '@edtr-io/ui'
+import { faSearch, Icon } from '@edtr-io/ui'
 import { gql } from 'graphql-request'
 import { useState } from 'react'
 
@@ -12,10 +12,12 @@ import { getIconByTypename } from '@/helper/icon-by-entity-type'
 
 interface ArticleRelatedMagicInputProps {
   addEntry: (id: number, typename: string, title?: string) => void
+  showTopicFolderPreview: (id: number) => void
 }
 
 export function ArticleRelatedMagicInput({
   addEntry,
+  showTopicFolderPreview,
 }: ArticleRelatedMagicInputProps) {
   const [maybeUuid, setMaybeUuid] = useState<null | false | number>(null)
   const { data, error } = useSimpleUuidFetch(maybeUuid)
@@ -108,6 +110,17 @@ export function ArticleRelatedMagicInput({
         >
           <Icon icon={getIconByTypename(__typename)} /> {title}
         </a>
+        {uuid.__typename === 'TaxonomyTerm' ? (
+          <button
+            className="serlo-button bg-amber-100 hover:bg-amber-300 text-base leading-browser mr-2"
+            onClick={() => {
+              showTopicFolderPreview(id)
+            }}
+            title="Preview"
+          >
+            <Icon icon={faSearch} />
+          </button>
+        ) : null}
         <SerloAddButton
           text=""
           onClick={() => {

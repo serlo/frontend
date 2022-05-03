@@ -1,4 +1,4 @@
-import { Icon } from '@edtr-io/ui'
+import { faSearch, Icon } from '@edtr-io/ui'
 import { gql } from 'graphql-request'
 
 import { SerloAddButton } from '../../helpers/serlo-editor-button'
@@ -13,11 +13,13 @@ import { getIconByTypename } from '@/helper/icon-by-entity-type'
 interface ArticleRelatedTaxonomyProps {
   addEntry: (id: number, typename: string, title?: string) => void
   checkDuplicates: (id: number, typename: string) => boolean
+  showTopicFolderPreview: (id: number) => void
 }
 
 export function ArticleRelatedTaxonomy({
   addEntry,
   checkDuplicates,
+  showTopicFolderPreview,
 }: ArticleRelatedTaxonomyProps) {
   const entityId = useEntityId()
   const { data, error } = useFetchParentTaxonomy(entityId)
@@ -77,6 +79,8 @@ export function ArticleRelatedTaxonomy({
 
     if (!title) return null
 
+    const isTax = typename === 'TaxonomyTerm'
+
     if (checkDuplicates(item.id, typename)) return null
 
     return (
@@ -89,6 +93,17 @@ export function ArticleRelatedTaxonomy({
         >
           {title}
         </a>{' '}
+        {isTax ? (
+          <button
+            className="invisible group-hover:visible group-focus-within:visible whitespace-nowrap ml-2 max-h-8 self-center serlo-button bg-amber-100 hover:bg-amber-300 text-base leading-browser"
+            onClick={() => {
+              showTopicFolderPreview(item.id)
+            }}
+            title="Preview"
+          >
+            <Icon icon={faSearch} />
+          </button>
+        ) : null}
         <SerloAddButton
           text=""
           className="invisible group-hover:visible group-focus-within:visible whitespace-nowrap ml-2 max-h-8 self-center"

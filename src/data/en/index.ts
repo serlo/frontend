@@ -743,6 +743,7 @@ export const loggedInData = {
           buttonEx: 'Add exercises',
           buttonExFolder: 'Select exercise folder',
           buttonContent: 'Add content',
+          buttonAddType: 'Add %type%',
           title: 'Add related Content or Exercises',
           invalidInput: 'Invalid id or url',
           fetchError: 'Something went wrong, please try later',

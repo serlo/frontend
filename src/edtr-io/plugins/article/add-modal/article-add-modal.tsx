@@ -1,6 +1,8 @@
 import clsx from 'clsx'
+import { useState } from 'react'
 
 import { ArticleProps } from '..'
+import { ArticleRelatedExercises } from './article-related-exercises'
 import { ArticleRelatedMagicInput } from './article-related-magic-input'
 import { ArticleRelatedTaxonomy } from './article-related-taxonomy'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
@@ -18,6 +20,10 @@ export function ArticleAddModal({
   data,
   setModalOpen,
 }: ArticleAddModalProps) {
+  const [topicFolderId, setTopicFolderId] = useState<undefined | number>(
+    undefined
+  )
+
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
   const articleStrings = loggedInData.strings.editor.article
@@ -94,11 +100,21 @@ export function ArticleAddModal({
           You can either paste an Serlo ID or URL or choose content from the
           parent folder below.
         </p>
-        <ArticleRelatedMagicInput addEntry={addEntry} />
+        <ArticleRelatedMagicInput
+          addEntry={addEntry}
+          showTopicFolderPreview={(id: number) => setTopicFolderId(id)}
+        />
         <ArticleRelatedTaxonomy
           checkDuplicates={checkDuplicates}
           addEntry={addEntry}
+          showTopicFolderPreview={(id: number) => setTopicFolderId(id)}
         />
+        {topicFolderId ? (
+          <ArticleRelatedExercises
+            topicFolderId={topicFolderId}
+            addEntry={addEntry}
+          />
+        ) : null}
       </div>
     </ModalWithCloseButton>
   )
