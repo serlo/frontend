@@ -17,9 +17,10 @@ import {
   focusNext,
   focusPrevious,
 } from '@edtr-io/store'
-import { Icon, faTimes, faImages, faParagraph } from '@edtr-io/ui'
+import { Icon, faImages, faParagraph } from '@edtr-io/ui'
+import { faTrashCan } from '@fortawesome/free-solid-svg-icons/faTrashCan'
 import clsx from 'clsx'
-import { KeyboardEvent, useEffect } from 'react'
+import { KeyboardEvent } from 'react'
 
 import { SerloTableRenderer, TableType } from './renderer'
 import { FaIcon } from '@/components/fa-icon'
@@ -85,11 +86,6 @@ function SerloTableEditor(props: SerloTableProps) {
 
   const focusedElement = useScopedSelector(getFocused())
   const { focusedRowIndex, focusedColIndex, nestedFocus } = findFocus()
-
-  useEffect(() => {
-    if (!nestedFocus) trimEmptyRows()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [nestedFocus])
 
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
@@ -188,7 +184,7 @@ function SerloTableEditor(props: SerloTableProps) {
               onFocus={dispatchFocus} // hack: focus slate directly on tab
               onKeyUp={onKeyUpHandler} // keyUp because some onKeyDown keys are not bubbling
               onKeyDown={onKeyDownHandler}
-              className="hackdiv pr-2"
+              className="hackdiv pr-2 pb-6"
             >
               {renderRemoveButtons(rowIndex, colIndex)}
               {cell.content.render({
@@ -201,7 +197,6 @@ function SerloTableEditor(props: SerloTableProps) {
               {/* hack: make sure we capture most clicks in cells */}
               <style jsx global>{`
                 .hackdiv {
-                  padding-bottom: 25px;
                   > div > div > div {
                     margin-bottom: 0;
                   }
@@ -271,7 +266,7 @@ function SerloTableEditor(props: SerloTableProps) {
       return (
         <button
           className={clsx(
-            'serlo-button serlo-make-interactive-transparent-blue absolute',
+            'serlo-button serlo-make-interactive-transparent-blue text-brand-lighter absolute',
             isRow ? '-ml-10 -mt-2' : '-mt-12',
             show ? '' : 'opacity-0 pointer-events-none'
           )}
@@ -279,7 +274,7 @@ function SerloTableEditor(props: SerloTableProps) {
           onMouseDown={(e) => e.stopPropagation()} // hack to stop edtr from stealing events
           onClick={onClickHandler}
         >
-          <Icon icon={faTimes} />
+          <Icon icon={faTrashCan} />
         </button>
       )
     }
@@ -307,28 +302,6 @@ function SerloTableEditor(props: SerloTableProps) {
     return rows.every((row) => {
       const cell = row.columns[colIndex]
       return isEmpty(cell.content.id)(store.getState())
-    })
-  }
-
-  function trimEmptyRows() {
-    rows.set((rows) => {
-      const withoutEmptyRows = rows.filter(
-        (_row, rowIndex) => !isEmptyRow(rowIndex) || rowIndex < 2
-      )
-      return withoutEmptyRows
-      // const emptyColIndexes = rows[0].columns.reduce(
-      //   (result, _col, colIndex) =>
-      //     isEmptyCol(colIndex) ? [...result, colIndex] : result,
-      //   [] as number[]
-      // )
-      // return withoutEmptyRows.map((row) => {
-      //   return {
-      //     columns: row.columns.filter(
-      //       (_col, colIndex) =>
-      //         !emptyColIndexes.includes(colIndex) || colIndex === 0
-      //     ),
-      //   }
-      // })
     })
   }
 

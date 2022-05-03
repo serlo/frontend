@@ -605,7 +605,12 @@ function toEdtr(content: EditorState): Edtr {
   if (!content)
     return { plugin: 'rows', state: [{ plugin: 'text', state: undefined }] }
   if (isEdtr(content)) return content
-  return convert(content)
+
+  // fixes https://github.com/serlo/frontend/issues/1563
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const sanitized = JSON.parse(JSON.stringify(content).replace(/```/g, ''))
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+  return convert(sanitized)
 }
 
 function serializeEditorState(content: Legacy): SerializedLegacyEditorState

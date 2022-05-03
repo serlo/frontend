@@ -391,6 +391,7 @@ export const loggedInData = {
       history: "इतिहास",
       editAssignments: "विषय और पाठ्यचर्या असाइनमेंट संपादित करें",
       moveToTrash: "रद्दी में डालें",
+      confirmTrash: 'Are you sure you want to delete this content?',
       restoreContent: "कचरे से पुनर्स्थापित करें",
       sortCoursePages: 'Sort course pages',
       sortGroupedExercises: 'Sort grouped Exercises',

@@ -14,8 +14,8 @@ import { MenuSubButtonLink } from './menu-sub-button-link'
 import { useCanDo } from '@/auth/use-can-do'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { useSubscriptionSetMutation } from '@/helper/mutations/subscription'
-import { useSetUuidStateMutation } from '@/helper/mutations/uuid'
+import { useSetUuidStateMutation } from '@/helper/mutations/use-set-uuid-state-mutation'
+import { useSubscriptionSetMutation } from '@/helper/mutations/use-subscription-set-mutation'
 import { useIsSubscribed } from '@/helper/use-is-subscribed'
 
 export enum Tool {
@@ -120,7 +120,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
         !(data.type === '_ExerciseInline' && data.grouped) &&
         canDo(TaxonomyTerm.set) &&
         canDo(TaxonomyTerm.orderChildren) &&
-        canDo(TaxonomyTerm.addChild) &&
+        canDo(TaxonomyTerm.change) &&
         canDo(TaxonomyTerm.removeChild),
     },
     trash: {
@@ -142,7 +142,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
     },
     organize: {
       url: `/taxonomy/term/organize/${data.id}`,
-      canDo: canDo(TaxonomyTerm.addChild) && canDo(TaxonomyTerm.removeChild),
+      canDo: canDo(TaxonomyTerm.change) && canDo(TaxonomyTerm.removeChild),
     },
     sortEntities: {
       url: `/taxonomy/term/sort/entities/${data.id}`,
@@ -150,7 +150,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
     },
     copyItems: {
       url: `/taxonomy/term/copy/batch/${data.id}`,
-      canDo: canDo(TaxonomyTerm.addChild),
+      canDo: canDo(TaxonomyTerm.change),
     },
     addGroupedTextExercise: {
       url: `/entity/create/grouped-text-exercise?link%5Btype%5D=link&link%5Bchild%5D=${data.id}`,
@@ -162,14 +162,14 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
     },
     moveItems: {
       url: `/taxonomy/term/move/batch/${data.id}`,
-      canDo: canDo(TaxonomyTerm.addChild) && canDo(TaxonomyTerm.removeChild),
+      canDo: canDo(TaxonomyTerm.change) && canDo(TaxonomyTerm.removeChild),
     },
     moveToExercise: {
       url: `/entity/link/move/link/${data.id}/${data.parentId!}`,
       title: data.grouped
         ? loggedInStrings.authorMenu.moveToGrouped
         : loggedInStrings.authorMenu.moveToTextExercise,
-      canDo: canDo(TaxonomyTerm.addChild) && canDo(TaxonomyTerm.removeChild),
+      canDo: canDo(TaxonomyTerm.change) && canDo(TaxonomyTerm.removeChild),
     },
     addCoursePage: {
       url: `/entity/create/course-page?link%5Btype%5D=link&link%5Bchild%5D=${data.courseId!}`,
@@ -280,13 +280,14 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   }
 
   function trash() {
-    const title = data.trashed
-      ? loggedInStrings.authorMenu.restoreContent
-      : loggedInStrings.authorMenu.moveToTrash
+    const { restoreContent, moveToTrash, confirmTrash } =
+      loggedInStrings.authorMenu
+    const title = data.trashed ? restoreContent : moveToTrash
     return (
       <li className="block" key={title}>
         <MenuSubButtonLink
           onClick={() => {
+            if (!data.trashed && !window.confirm(confirmTrash)) return
             void setUuidState({ id: [data.id], trashed: !data.trashed })
           }}
         >
@@ -344,6 +345,19 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
                         `/entity/create/event?taxonomy%5Bterm%5D=${data.id}`,
                         entities.event
                       )}
+                  </>
+                )}
+
+                {data.taxonomyTopic && canDo(TaxonomyTerm.change) && (
+                  <>
+                    {renderLi(
+                      `/taxonomy/term/create/4/${data.id}`,
+                      entities.folder
+                    )}
+                    {renderLi(
+                      `/taxonomy/term/create/9/${data.id}`,
+                      entities.topicFolder
+                    )}
                   </>
                 )}
               </ul>

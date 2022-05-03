@@ -8,7 +8,7 @@ import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { Event, EventData } from '@/components/user/event'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { useSetNotificationStateMutation } from '@/helper/mutations/notification'
+import { useSetNotificationStateMutation } from '@/helper/mutations/use-set-notification-state-mutation'
 
 export interface NotificationData {
   id: number

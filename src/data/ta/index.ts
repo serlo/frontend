@@ -391,6 +391,7 @@ export const loggedInData = {
       history: "வரலாறு",
       editAssignments: "தலைப்பு மற்றும் பாடத்திட்ட பணிகளை உருவாக்கவும்.",
       moveToTrash: "குப்பைக்கு நகர்த்தவும்",
+      confirmTrash: 'Are you sure you want to delete this content?',
       restoreContent: 'Restore from trash',
       sortCoursePages: 'Sort course pages',
       sortGroupedExercises: 'Sort grouped Exercises',

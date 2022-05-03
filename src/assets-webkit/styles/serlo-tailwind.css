@@ -54,7 +54,7 @@
     @apply mx-side mt-0 mb-5;
   }
   .serlo-table {
-    @apply mx-side border-collapse whitespace-nowrap mobile:whitespace-normal break-normal;
+    @apply mx-side border-collapse whitespace-nowrap mobile:whitespace-normal break-normal special-hyphens-auto;
   }
   .serlo-th {
     @apply p-2.5 border-3 border-brand-150 text-left pl-3 bg-brand-100;

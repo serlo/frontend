@@ -109,7 +109,7 @@ function InternalLink({
   const isContentOnly = router.asPath.startsWith('/content-only/')
 
   if (isAnchor || isMailto) return renderLink(href)
-  if (isExternal || forceNoCSR) return renderLink(href)
+  if (isExternal || forceNoCSR || isContentOnly) return renderLink(href)
 
   //at this point only internal links should be left
 

@@ -15,9 +15,9 @@ export const deSubjectLandingData = {
     contributeLink: '/19880/neu-hier',
     extraTerms: [
       {
-        title: '↪ Lehrplan Bayern',
+        title: '↪ Themen nach Lehrplan',
         description: undefined,
-        href: '/mathe/16032/bayern',
+        href: '/mathe/16030/deutschland',
       },
       {
         title: '↪ Prüfungsbereich',

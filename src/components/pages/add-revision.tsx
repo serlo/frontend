@@ -5,14 +5,13 @@ import { useEffect, useState } from 'react'
 import { LoadingSpinner } from '../loading/loading-spinner'
 import { Breadcrumbs } from '../navigation/breadcrumbs'
 import { shouldUseFeature } from '../user/profile-experimental'
-import { MathSpan } from '@/components/content/math-span'
 import { useInstanceData } from '@/contexts/instance-context'
 import { SerloEditor } from '@/edtr-io/serlo-editor'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
 import {
   RevisionAddMutationData,
   useRevisionAddMutation,
-} from '@/helper/mutations/revision'
+} from '@/helper/mutations/use-revision-add-mutation'
 
 export function AddRevision({
   initialState,
@@ -69,7 +68,6 @@ export function AddRevision({
         data={breadcrumbsData ? [...breadcrumbsData, backlink] : [backlink]}
         noIcon
       />
-      <MathSpan formula="" />
       <div className="controls-portal sticky top-0 z-[94] bg-white" />
       <div
         className={clsx(
@@ -100,7 +98,8 @@ export function AddRevision({
                   // @ts-expect-error temporary
                   __typename: type === 'GroupedExercise' ? 'Exercise' : type,
                 },
-                _needsReview
+                _needsReview,
+                initialState
               )
               return new Promise((resolve, reject) => {
                 if (success) resolve()

@@ -391,6 +391,7 @@ export const loggedInData = {
       history: "Histoire",
       editAssignments: "Modifier le sujet et le programme d'études",
       moveToTrash: "Déplacer dans la corbeille",
+      confirmTrash: 'Are you sure you want to delete this content?',
       restoreContent: "Restaurer à partir de la corbeille",
       sortCoursePages: "Trier les pages du cours",
       sortGroupedExercises: "Trier les exercices groupés",
